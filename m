@@ -1,55 +1,55 @@
 Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC5EC1CEAAC
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 20:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4806E1D9A57
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 20:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730491916; cv=none; b=bQIjLnfOa4fHkOSUJLPinQWAkGXGQe17lOUG8eidxiBdmT89r/S9/p6x8X4Zl/OKXS6xwZ6UFxDkQ4m1DWhAjRY/iQZszckxlVVFCcfvFjq8/ve/fkcSyZoHIz1fRT0V2wFuV10zFREHagCC/OZkFkAYDa3kXFb4uG+Zyo++UgI=
+	t=1730491918; cv=none; b=sl6XGl2XxYKfeSo6ET3sV64iFaJub5nczIckpb86kYKR6sYSY1YDlUcGBNw7tkUGpiXp1PDHyzb8C6xT8YXLvdFicUdjuD0qDgdt26PNSkTJzfn1qIzus+mkK3Uo9l2Wlf5CSVm5WmFb5p2PogypRKI/TYlzS2JZQJyNG4NbJj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730491916; c=relaxed/simple;
-	bh=lu8JzHccqjbSGPWN5wp60tmQpAYxOLI0jgxmtQqFYFI=;
+	s=arc-20240116; t=1730491918; c=relaxed/simple;
+	bh=CBY6ZRcItV8jd3RaKg0oqcyEvANKGc3oambRlLKpO88=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Kx1KlJJZypuejZbce78tXDIJHtaYkLiqyjN+K08gXhcEXiIobepJ407sryhI7E1YPf/3WEFa6UkYPYqStUirVNicU8yfPsiouxdImKfKIBgdt8MZCXIiCzYqFCa3OyWL+6PikOdaf+dTB/dOwPlvgfYNMP7PrqlgAhksYC69ojE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M8Qd0nnc; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=EWRVJkP4oaIbAg+Ncez+osGczSGv7kM58oE/Z+tcRpDq4HxZ6fkG51xE8zs6zMvrEhEEaTtB0caaCSR3gTL2tWAEOTYXxuNa5EaAi+4bkddCDnzabswsNAtris2CuM0Ik77jpzg/9tC1eVPJ120LO08rwokDsgNqZuWtycz02HI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EH1oQrye; arc=none smtp.client-ip=209.85.128.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M8Qd0nnc"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e59dc7df64so35048827b3.1
-        for <git@vger.kernel.org>; Fri, 01 Nov 2024 13:11:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EH1oQrye"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e35bdb6a31so45586287b3.1
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 13:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730491914; x=1731096714; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1730491916; x=1731096716; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qArcyT9B1tS2X2BzAtvme6q83X0H/CDdvhzRr8ACm7k=;
-        b=M8Qd0nncUXJ/1IGV4t11UPmsE+J62lhFpvLvtX39Ce3NYJY3m3CZsnxZxe7BDV401M
-         MPy/2qRaAgaSYqRvBOEdsW9HaYF1NAdKSZa2EdbKRxIP9ZSJVHeFWTZDEgp2p9AzT3EJ
-         bUwE8fXc0bpUxCL44cd1RALaDFSXAm0FY2ahF7PktOWr9/63dzB13w/XDdJrSj50u0gu
-         JC89BclF4Hjz22CZK1ku4BUZjA7z3w2gHT3YRU9CR2Ng3ia9pTpeX4F0IMhga5yCcmfQ
-         jd9wO3iA240PD46+s6xxu/NRjKQB72wP2dXRQ6gwOWSdNO1Rw3NxYYD9xO+c68LelLAC
-         vYPQ==
+        bh=IenHT4ncR9jBiOFQaeJAxLJEe8uXsfg94YgBvVnmQAs=;
+        b=EH1oQryeyylYL+Nfwd8j47apyT+gCNWsFMGIejsSbWWTtun6aADpEjiikz0nZTGI/V
+         KddO3Lv/eZ8a5TSucaPyWsJSln4QkozIgyaVw0l7CXb42s5W0pJTL1KUmJoNiHM32CVP
+         MHgdLuRpK/bT76hl/oL8lSh4eEKeD+zLF7NedXgzzdYUJef8TBL7PGJnEahctk5E7lfS
+         oX9L14MAF1hVETK9OJiUAlgVK0gVeeLXiFo9fNZbbjpiv/lBjBeZiyeFkh1yOSt6WYwz
+         jSQAvX2QK8AMckdA7NplUWzfro4LRV5+mma4ANYtrSqm3usXIgPBWT2V2xI62v9mWhAj
+         WSnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730491914; x=1731096714;
+        d=1e100.net; s=20230601; t=1730491916; x=1731096716;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qArcyT9B1tS2X2BzAtvme6q83X0H/CDdvhzRr8ACm7k=;
-        b=BgsawW9nMvEGDQcVj9aWrSOw7j0plvQ37HzPrSTnshrPbPtSuBpkJRPUc3ZgqqreWH
-         xy4/UWvEFLgX/m5yoqGlfGEaahHfLY/8U9tde3K9p1a4rGlO3Aursp+goDKArdRKtHhM
-         KffQs7+ks94WFgHLQpp5GRLfuE3vqCxULfguVC7UoqwDyzJH3cPVj9pV2EbJdkYXqENd
-         /Lr+pCsg825B88gDyKpDiXh3SIlSX2jKOqQAmSWZeg5bAk1C+MeDkwd7FcWBhriVGCnY
-         EUrpE0LQstxCUsfSReiXWm6iXeonp4hvHLBQRImRGDCHB1v8Lcc6jDgaGMg45ymOZrL4
-         DHNA==
-X-Gm-Message-State: AOJu0Yxcew5UHk/sch0d5/koRCUKzBE5y8JPRSFf8li5V5bedp/zb/hh
-	zsNmtK9supU/qV16TNzGdQSmG2VfnTbRqEM02NFXxgBDaoyrAJZVkGd0Z4lWNh23aNKMYjJpBa+
-	DTvq0xYf56D2RqBIwiYZPX2nFxvYWazo6EkebjR/pBN/VuCj+il8g85txj2ZmCiK78LHmOBbmlH
-	I1/0JsN53V9wcVxnNYB/diwwssbIL5UjK6Z0FLroiRCWRic7AnXoJqNkdwLePG9Ilxvw==
-X-Google-Smtp-Source: AGHT+IFWbh2YsHiBL5D3gRc2B+Q8OWGyO/6TeT+gNjZ8H5dtUOEvs3OtTjyJWezEMZfXqXCeW4XbJJzV069dTVWbabJH
+        bh=IenHT4ncR9jBiOFQaeJAxLJEe8uXsfg94YgBvVnmQAs=;
+        b=lzmfob3+mOxbJKElHNhLYdgti/iNm9JGZ9NnwBwtGSIJM8RDkOJt5hCWZPSu6OsLpv
+         ovgifdDjxaUzs9+BuVcEmDhYYs6vtrmMhFP4fozjyd/V+1VpGtkuvSkEfNXPqS+HYz6A
+         /FlTXmwB4pgm6h32RtBMxP6ClRewG7cjB2yjcg7iGEoKE6ovQPujmoSDC+hi0903IpeB
+         RE6QAlr4xDyBWTWsPgQaY3OgUhINDPCleLmC2lU+TgDwMDfEa4ilGRtTg/MuXzb2V/eE
+         XOQnxl5eVkKZFfc+LC0XiDdtKpqzSUPZYASF1wzLju2usn144L3tBNf6q2WDheZ84V7W
+         LXWg==
+X-Gm-Message-State: AOJu0YzzfZIYbETbp857qO1C1pmPyikKblZmij5r+T6l/3cEz0tJvrKq
+	I186Jd7FQCtF1vpJWLK4S6HQCBQgNdRjFLJl9YlnbO1n1ctwTTyMGQ8VAnqlwHwcXIaardGKhgS
+	5h2tXhN6J6Ux76MpyIpma1KxYbMfvNWaPSVCeziXVRRK438Oc6ADShJYnUvNOBnO/lc5tZ35zI4
+	DPSEC3Au0fo8tjD+i0bD/6TJ1JMabHKPNZ+cCnypkCB2uUvvmhqOhz1jR6/ido6g7mqQ==
+X-Google-Smtp-Source: AGHT+IFaF2uUgZsbk1hxhbSuQ2l+k0ALUapObfU77hL1weD6gV0KOjoQbPmbnvO0a7MDdBdazalrU/cKNgAL6DB1stfd
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:87c0:a56e:d0ff:807f])
- (user=jonathantanmy job=sendgmr) by 2002:a05:690c:6f8a:b0:6d3:e7e6:8460 with
- SMTP id 00721157ae682-6ea5576c8bdmr982317b3.1.1730491913866; Fri, 01 Nov 2024
- 13:11:53 -0700 (PDT)
-Date: Fri,  1 Nov 2024 13:11:45 -0700
+ (user=jonathantanmy job=sendgmr) by 2002:a05:690c:630f:b0:6b0:d571:3540 with
+ SMTP id 00721157ae682-6ea525367a4mr120117b3.6.1730491915469; Fri, 01 Nov 2024
+ 13:11:55 -0700 (PDT)
+Date: Fri,  1 Nov 2024 13:11:46 -0700
 In-Reply-To: <cover.1730491845.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,51 +59,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1729792911.git.jonathantanmy@google.com> <cover.1730491845.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.47.0.163.g1226f6d8fa-goog
-Message-ID: <f405c9c9aab39984d27ff31ed03186a713f79035.1730491845.git.jonathantanmy@google.com>
-Subject: [PATCH v2 1/4] t0410: make test description clearer
+Message-ID: <ce9d5af42a50ba115fb9b11f9063f207b471b672.1730491845.git.jonathantanmy@google.com>
+Subject: [PATCH v2 2/4] t0410: use from-scratch server
 From: Jonathan Tan <jonathantanmy@google.com>
 To: git@vger.kernel.org
 Cc: Jonathan Tan <jonathantanmy@google.com>, steadmon@google.com, 
 	hanyang.tony@bytedance.com, me@ttaylorr.com
 Content-Type: text/plain; charset="UTF-8"
 
-Commit 9a4c507886 (t0410: test fetching from many promisor remotes,
-2019-06-25) adds some tests that demonstrate not the automatic fetching
-of missing objects, but the direct fetching from another promisor remote
-(configured explicitly in one test and implicitly via --filter on the
-"git fetch" CLI invocation in the other test) - thus demonstrating
-support for multiple promisor remotes, as described in the commit
-message.
+A subsequent commit will add functionality: when fetching from a
+promisor remote, existing non-promisor objects that are ancestors of any
+fetched object will be repacked into promisor packs (since if a promisor
+remote has an object, it also has all its ancestors).
 
-Change the test descriptions accordingly to make this clearer.
+This means that sometimes, a fetch from a promisor remote results in 2
+new promisor packs (instead of the 1 that you would expect). There is a
+test that fetches a descendant of a local object from a promisor remote,
+but also specifically tests that there is exactly 1 promisor pack as
+a result of the fetch. This means that this test will fail when the
+subsequent commit is added.
+
+Since the ancestry of the fetched object is not the concern of this
+test, make the fetched objects have no ancestry in common with the
+objets in the client repo. This is done by making the server from
+scratch, instead of using an existing repo that has objects in common
+with the client.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- t/t0410-partial-clone.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t0410-partial-clone.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 818700fbec..eadb69473f 100755
+index eadb69473f..e2b317db65 100755
 --- a/t/t0410-partial-clone.sh
 +++ b/t/t0410-partial-clone.sh
-@@ -241,7 +241,7 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
- 	grep "fetch< fetch=.*ref-in-want" trace
+@@ -265,7 +265,7 @@ test_expect_success 'fetching from another promisor remote' '
  '
  
--test_expect_success 'fetching of missing objects from another promisor remote' '
-+test_expect_success 'fetching from another promisor remote' '
- 	git clone "file://$(pwd)/server" server2 &&
- 	test_commit -C server2 bar &&
- 	git -C server2 repack -a -d --write-bitmap-index &&
-@@ -264,7 +264,7 @@ test_expect_success 'fetching of missing objects from another promisor remote' '
- 	grep "$HASH2" out
- '
- 
--test_expect_success 'fetching of missing objects configures a promisor remote' '
-+test_expect_success 'fetching with --filter configures a promisor remote' '
- 	git clone "file://$(pwd)/server" server3 &&
+ test_expect_success 'fetching with --filter configures a promisor remote' '
+-	git clone "file://$(pwd)/server" server3 &&
++	test_create_repo server3 &&
  	test_commit -C server3 baz &&
  	git -C server3 repack -a -d --write-bitmap-index &&
+ 	HASH3=$(git -C server3 rev-parse baz) &&
 -- 
 2.47.0.163.g1226f6d8fa-goog
 
