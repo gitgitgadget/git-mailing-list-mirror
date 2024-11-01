@@ -1,54 +1,54 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2693132106
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 02:22:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1DE1474B7
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 04:25:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730427748; cv=none; b=Y0nevFZw1KV+DdcReHwbg6qYEvNIzq2d951T+Y3AbvGkwOrZdXC4LsyQJKAaX8wniopsAJ8iEsdlFXlW3mVA1hOoSdbcpR0kaziKOBe6CyQ9pRNIW6ITeleygPQ9dtqN/uBNgARplZ//6pPp7N/qNgL4gr+FFlANwT0XwXXq3wU=
+	t=1730435112; cv=none; b=IqsDM+agNKNuOUYNkLVRNt5AFXqyKFG1mCfzLeD4XjwhsiRvXeFi60Rp/4lCyuSwet4EypdlCzNyqPfqsJwhmDZq39iS8iI3MkIq6G5vIzjaZO2r+u8J4Lmhv6Ca6B0VSQcezr3AbQijK+ftrfyIExUx4J5QTIG5ncBaVRyU0+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730427748; c=relaxed/simple;
-	bh=DfODXLf5EkjNXgqnmSzCzwbbBBGRjwH2YgCu0LYfzeQ=;
+	s=arc-20240116; t=1730435112; c=relaxed/simple;
+	bh=1Vuu6cJAJz2m2E3gsTJcr8r2D18GPTvet5zMiABfuxg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Sin3X01o5rCUNFwm2m+PJdHfN7NWVFfyDtr4vlgD7GvBo/KzmNQ1lZ6kknuADiBDl7PcjtLZNtbPugptXZsiqQwrrJjrpMTmK1Q4kl7NlIZDfwq4OMDlGtlU2+8A10Ld2JeJQr5Hzs9u6H6l4PNqDtU9BTfUQEVo8EcyuCtjoTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hexMAFtl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Re8ceO82; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=C56QYk/4bA5daBMPeOv92kR0Ll+IS9Cfzds3epKGfX1GZnGd2b/5hZMoex5RNGLBAaXPcNHRhcSZz6WBpDKpLeuK3FgjNypXpXkBTAzDE3Vw+9iEIjJHyVQMQjLg5x0F90vN91PYRM3R+AZ3H8PEeHTjY8h3c/xtT5ZCVjNBGeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CVqD9pWC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oMRuDT/Q; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hexMAFtl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Re8ceO82"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9FF8111400D5;
-	Thu, 31 Oct 2024 22:22:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CVqD9pWC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oMRuDT/Q"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 230AD11400FE;
+	Fri,  1 Nov 2024 00:25:08 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 31 Oct 2024 22:22:20 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 01 Nov 2024 00:25:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730427740; x=1730514140; bh=kbceiEGBCH
-	XOG2EIPUBIMSbj6CQhcNs2Y6guiILFbb0=; b=hexMAFtlGbRJRd3XFHXlsxIndr
-	aI+phn2ZNxPX1Bjgvxx3jaW/RvAGyNxtEhvu4g3TW7kOukEzPTWbwqg2PB3z5r09
-	4GsEqEDRhZjakTebJ07sPQDH37OzZXYvsBG2p22pq/cTNFgYJoDeNDBFvEaUv8mh
-	HXR0xctdnoVK0nju5UehuAfwCfkgdFydsh4JC0/rBqGk8cAUfBA7y0lxpy51AblS
-	wTV6Q/I+akypijKJgR6noezSFIJN+TaJnK5o5FpaXdDNmduPmfQ6gooXi1yMDFQB
-	r6W5axjhHQ8K2NOGEaNVUZ72+Warq9JIZ2BUM+Y11bEg0DyGh4hQ+5B27tjQ==
+	:subject:to:to; s=fm2; t=1730435107; x=1730521507; bh=x7Q16a/Pw8
+	EILq3Co3XQtAqBxhBjRsHUMhz2E4IZEn0=; b=CVqD9pWC6Y6yzgj5Qy+ta9T4er
+	6Vm9z3m2/5mFBqAFn3FVkcs23cw6yCsXPs3FhkLzX1rasQFFNQRW4M9h+phdv5uf
+	ypJnlsK5mxNjhOEO9F1RYvEs9xOZtiugCA2PpfC4E7WDEjOkCC9JfAwq2GjV5Y5i
+	YZrhMBw8x8nmIMJQuDAHN5cEAwCplkNz11zd+Y+xwp6ys3br3TCGFUvGKPclBI0z
+	Lvjyb9By4R1NIPHnXtarTbQ0zuXWGzqMZCJqMRiel14oofh2+gf3qnOzFxEGio1x
+	w3k0Tj4LawdqmAIXiF0CMoaNSGv6ur/S/N24EyqlYRaMLLEljOYoM3/pvFEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730427740; x=1730514140; bh=kbceiEGBCHXOG2EIPUBIMSbj6CQhcNs2Y6g
-	uiILFbb0=; b=Re8ceO82mPd1pBhvtVwEPlXQNzLm4ODDiW1Xp2Bl68nAWkC1+wN
-	6CcN+wnpfuro4pYOhkhizwt/IE/+1ufFCW9xGtZsTOPgiE612WwpXNnCY688jBF0
-	OlmXwaoZ/OIRrTCBBBpG0lzod0BPVd07Fefkdu/LZkNp/H7uEb5eRPVZeU+z+MDs
-	u0lsA52VDwQqlHBirCxQPTcwnPvp5tSkQbYvdVvp+NbpmlAU/0Y7VfiqZF43XMpx
-	vvLYRMSJ9bFrEWemkh6weh0Kf5ntcSmHeZknhpTTkpGdMdsM6SMeEiQMirYUcPh6
-	/Ah9/drLqVb7TWef77fmAnP6SjpP01NLW+g==
-X-ME-Sender: <xms:XDskZxLWH5acW4CvwTE3DK5Ndy5H1-70UH8jMs1vPRChuZg8MTeV9Q>
-    <xme:XDskZ9JtcML4yOITKUZm4v723GotUvGWlJ8tSpFm0AnALTFP1TziUasnKmMKuW0py
-    mWGgjCWt3U6K6FDdg>
-X-ME-Received: <xmr:XDskZ5vGgR2NzzYYLaGHQHteKUb1yqFnnqf-LxNHkz-B7j-AN_6Q2t862aOeTOj7OYJ7fsMIkbXHJQdxWOCWgqWlFTbUsioV0Yul>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedggeegucetufdoteggodetrfdotf
+	1730435107; x=1730521507; bh=x7Q16a/Pw8EILq3Co3XQtAqBxhBjRsHUMhz
+	2E4IZEn0=; b=oMRuDT/QKWsbX0cmPyQzw+ySAqI9TOTpeE/J1Vno2CTZaJDsuxz
+	frRWcS8H5JOXj9+lECYXbIzHeABJSURfv9/M9wCcyecTLf1GQp6s2ppCIhPaHbTx
+	7raEJpU7p+xwdGhlwnbLNnWQyh30OnuP54wk5qC7Ptnt0mHFpEaPwQS6GZMashU9
+	MQOIiCuaCQGDCHd2MuVsTBVKdmrXu6xMwHIho/vMoshzPowrqgHJEpvcdttShvFF
+	oSZpjIwfv3KpnaTlBbHpvWA05ljI1lz/wdC+m8ebvn+X8E3LL1XSyJ6V+yo71a8c
+	k5oM7Z3sSE7sVMQhU9bgIQXUS4EHxpAYiDQ==
+X-ME-Sender: <xms:I1gkZ6lf5bsgH_sQYHosqibRt1Gb7eSh0eDau46_apCImfIAMHnB2A>
+    <xme:I1gkZx2tXRoJe1FSeijBArZpo_vdhzPdal4UTWlxUYuCMQ4fJtTi6RKo7JQLuc7bG
+    7WAo5EkB7GzxV8vdw>
+X-ME-Received: <xmr:I1gkZ4obhxdQybFo-rbTkybwVz1BuWhpK7Svk4riQj9vhxb6lmyPXoDclRr9RSY9uPxd5Ox2qJ0Xj1i1A8QmyXI58bzJkTW1nR-a>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedgieekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
     gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
@@ -61,26 +61,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedggeegucetufdoteggod
     ughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
     gtohhmpdhrtghpthhtohephhgrnhigihhnrdhhgiessgihthgvuggrnhgtvgdrtghomhdp
     rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XDskZyY-eO6ITNzIrwroD40fyCbf3Z2iiGO0MGyaUaQC_0NrfQYU9w>
-    <xmx:XDskZ4ZeVAwPhKTR0mhuPFWW90cBvnvGCjIvAuqgqQ-Cd3xNA0NFfA>
-    <xmx:XDskZ2A_R-WONVAPknwLRXGsD10q7DLQnBLI329YHCErPs6rVkmPFw>
-    <xmx:XDskZ2bNY8E7Wo2U8W0gNufA7lW79Wtw4iODnWkvqS8Yj4I6tXcL1w>
-    <xmx:XDskZ9PjVskEtBf00ibXtUPzTQ6TQ0HYzqxXcBdKNIJj5_ewFvG1_cCa>
+X-ME-Proxy: <xmx:I1gkZ-khYLtHivYmlwzWcIKLNzlaW_uumrgF59D4A40vhz6xj9SnnQ>
+    <xmx:I1gkZ42KdbMWEQRspX1iaFNQTwUGzYpDlmj8MYlLSA8NHmbnpSNjLQ>
+    <xmx:I1gkZ1tIaYQHFriL5Ml4YGi4mdhiwXASZ0deFwoFWNPPSN9pXQ6vjQ>
+    <xmx:I1gkZ0UiVwiid6jVH1XLJs-hAuB6_KzANEZsNseVH5IT-RpVvXwY4Q>
+    <xmx:I1gkZyoB_uOBW6VHPzwAeo_2qdSxwlAlDKXeErXpKAH_tF68s_V9Ibfu>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 31 Oct 2024 22:22:19 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 1 Nov 2024 00:25:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jonathan Tan <jonathantanmy@google.com>
 Cc: git@vger.kernel.org,  steadmon@google.com,  me@ttaylorr.com,
   hanxin.hx@bytedance.com
 Subject: Re: [PATCH v2 2/2] fetch-pack: warn if in commit graph but not obj db
-In-Reply-To: <631b9a86778f15b7086e5f17fe850ffa151dd341.1730409376.git.jonathantanmy@google.com>
-	(Jonathan Tan's message of "Thu, 31 Oct 2024 14:19:01 -0700")
+In-Reply-To: <xmqqikt74rs5.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	31 Oct 2024 19:22:18 -0700")
 References: <cover.1730235646.git.jonathantanmy@google.com>
 	<cover.1730409376.git.jonathantanmy@google.com>
 	<631b9a86778f15b7086e5f17fe850ffa151dd341.1730409376.git.jonathantanmy@google.com>
-Date: Thu, 31 Oct 2024 19:22:18 -0700
-Message-ID: <xmqqikt74rs5.fsf@gitster.g>
+	<xmqqikt74rs5.fsf@gitster.g>
+Date: Thu, 31 Oct 2024 21:25:06 -0700
+Message-ID: <xmqqcyjf4m3h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,35 +91,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
->  static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
-> -					       int mark_tags_complete)
-> +					       int mark_tags_complete_and_check_obj_db)
->  {
->  	enum object_type type;
->  	struct object_info info = { .typep = &type };
->  	struct commit *commit;
->  
->  	commit = lookup_commit_in_graph(the_repository, oid);
-> -	if (commit)
-> +	if (commit) {
-> +		if (mark_tags_complete_and_check_obj_db) {
-> +			if (!has_object(the_repository, oid, 0))
-> +				die_in_commit_graph_only(oid);
-> +		}
->  		return commit;
-> +	}
+>>  	commit = lookup_commit_in_graph(the_repository, oid);
+>> -	if (commit)
+>> +	if (commit) {
+>> +		if (mark_tags_complete_and_check_obj_db) {
+>> +			if (!has_object(the_repository, oid, 0))
+>> +				die_in_commit_graph_only(oid);
+>> +		}
+>>  		return commit;
+>> +	}
+>
+> Hmph, even when we are not doing the mark-tags-complete thing,
+> wouldn't it be a fatal error if the commit graph claims a commit
+> exists but we are missing it?
+>
+> It also makes me wonder if it would be sufficient to prevent us from
+> saying "have X" if we just pretend as if lookup_commit_in_graph()
+> returned NULL in this case.
 
-Hmph, even when we are not doing the mark-tags-complete thing,
-wouldn't it be a fatal error if the commit graph claims a commit
-exists but we are missing it?
+Again, sorry for the noise.
 
-It also makes me wonder if it would be sufficient to prevent us from
-saying "have X" if we just pretend as if lookup_commit_in_graph()
-returned NULL in this case.
+I think the posted patch is better without either of these two,
+simply because the "commit graph lies" case is a repository
+corruption, and "git fsck" should catch such a corruption (and if
+not, we should make sure it does).
 
-In any case, infinitely recursing to lazily fetch a single commit is
-definitely worth fixing.  Thanks for digging to the bottom of the
-problem and fixing it.
+The normal codepaths should assume a healthy working repository.
 
+As has_object() is not without cost, an extra check is warranted
+only because not checking will go into infinite recursion.  If it
+does not make us fail in such an unpleasant way if we return such a
+commit when we are not doing the mark-tags-complete thing (but makes
+us fail in some other controlled way), not paying cost for an extra
+check is the right thing.
+
+Thanks.
