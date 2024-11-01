@@ -1,64 +1,66 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C2D1537C3
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 14:33:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDA71A7AF7
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 14:36:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730471586; cv=none; b=hMa0Hh3q4cvfl1/qJDL0AwDZ1XrRQITHSVGSSs+IFhu8UPW5t/Mzdzei/6LcTpWxXqfXFMBNTOKIFcDiOkO0NlfP0rjUjzrkh0ljjnW5JQyK4d2S9+8H2EpWCb5w5mQUusBXd3K17syiLGp6nWvNb2HIcWkVRRCqM9xj5cF5660=
+	t=1730471819; cv=none; b=qFVmcrxEaQwU8JysjZDluCTDtvpyes6ytpMRjYRoNkT2sfDZ0B4QWi7OInIOwJD0vtEmYwXX5TOq/DeIQkbQMJbtjiWMzeSqMMG9cYg2vf7gXNdtZuslCRC0ZFHTpFhVo7LbwPnKt5Bz5MHhZ3PWQRGZKoj7+gtBTKAs5+WguL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730471586; c=relaxed/simple;
-	bh=vcR//FSrA3YlDsl/PwK7Ym8DFFbKOug+yB/qc/KFo9M=;
+	s=arc-20240116; t=1730471819; c=relaxed/simple;
+	bh=c+UydtTTIR1uVqXPPRqrE+vFJpFxthD7MAtOqu7gzoQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Jf0jT0+OJ07mHIUKSb8b0+yh0HOjrCqs9x9K2rxMMq8Ll2F4p+/GL7jpSBTjIX460rLga0bCeuZyGMe9xYk+qaoKT7d1orZ4wu3opMPFx92o7P+Rk6vQzVyW7QqjqB3F5vBlarPnXxj39EDRvBHHccUy6h4SOZyIDSY+SLk3VnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=yafhWiyt; arc=none smtp.client-ip=209.85.128.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=N/xcoPESudEcBCREe24ZhF2fRkCyxOluhEDCg4lxDH68C33tolbbUFRY6fvyhBHpZtvi43X69kKQv9GtN+0VHOz8rrTJ7h7AYsEDuN0HjSTpifrmSS+lz8PdGZ9MVWv3MwmiXfOaJPo3YzUzSOYjBCA02M9TF6Pe3Ha1E9sMG/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=qIIvWakv; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yafhWiyt"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6ea656c60a4so10547437b3.3
-        for <git@vger.kernel.org>; Fri, 01 Nov 2024 07:33:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="qIIvWakv"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e34339d41bso18176127b3.0
+        for <git@vger.kernel.org>; Fri, 01 Nov 2024 07:36:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730471583; x=1731076383; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730471816; x=1731076616; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vcR//FSrA3YlDsl/PwK7Ym8DFFbKOug+yB/qc/KFo9M=;
-        b=yafhWiytHRfhj4BfkDQqz6R59rQoxSCNfCUjiQvxVAO8nl0BjDsgJ/ltnfljJJyrCE
-         fymUZgdDgfvttXqHIN1kx0SLG2LccBlOuOGcbnLzZVULIDctUdNpUHofqIZ1Ca7J4AAI
-         o2R5UsirAZfBDW42ScOaw8nrVX9Kv9SzKKhgj87pIbYdvfixR9MYAo3A89hLtboEvMA+
-         u/1JVUmdjXodX8HKOK0t7TSimhUsB8Km6H5jV8ZYPqhs7KswsM0SbaBKbzRReekIuYuc
-         8JUWrbjc1lLqZY7aYz7XJYOzg4lAycuEfvKIEgepMt20cJrNG/DVbjUeOuOmLKufL/0I
-         dFrQ==
+        bh=05KSXYaoUDpWXni7T1Jh/zjIZOUDlAH8j7GEmVvjo8s=;
+        b=qIIvWakvjlGcn7FH+IWmDUeb20orLHwWv2eZXX/t+p/OEIGiDlUT4UOEzkwGWlpQ83
+         lLzF6cXkvrcGkop7gtLSzGPnNBB++6sQp4Wt3CT8M2Wz3cY40cx2CPI0gnS0sPjw83O2
+         rfghEq81R/OncCgSQES0fAR1r2SiQMKvfOK7x5mwsMBxchiQswcuPev4A8OGAW55P8JH
+         qSOX2wXi/0tsKwZ7afJ6NuHd8YQVBBs5yE8m7IuFSu6AeJWDTIdoHcSo4S1lWEv0gvF5
+         5sQhLaZbeSwA1Cbzn21PB8REyzea9J4isWMPLqwpjr/oskuMDLK84SvKV7HHwR6DxQND
+         ymKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730471583; x=1731076383;
+        d=1e100.net; s=20230601; t=1730471816; x=1731076616;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vcR//FSrA3YlDsl/PwK7Ym8DFFbKOug+yB/qc/KFo9M=;
-        b=pi04qiNTsBAhOcTJAtz27LkiX/SPFqImn2Kc1EiNoJGJ8QMkh5rrC1+wOSgG4WMXk5
-         1wmm7jFBhBUbHeTxu32DgTmOrYFd3XA2ysz9Hsz9Nr9yNpn2NgmoUKfkVwQE5r5Zuqzu
-         zzxjITIDSvP+bm+ejWcVfuFytyoNbEnaLATLGPE92mcfI4UWC0vfdSh3GcHgk81/rWnn
-         Ddl08HCHBVCyb567Ueu5lcjgUdw39YEIwN7QKYwhTYodkbBrAI0gAg14EOEdGFY9Fd5W
-         xSi+uHh0y5GaVlkxB7UhlU6V4uAZWaMmDXPGw1TEI66Uw5+dt8i7c2gYkVOCerLzpRw9
-         tH4w==
-X-Gm-Message-State: AOJu0YyEUGYN9Ac/fjpSVu6+4kcFFK2hA5RacIcjYRJeiIqyQSepnJ7O
-	j/XorNh3c3IAIV2q5A5zX4Akl0i+4SSqqIyx1v3LBE9v2UaFaCO0GJ6i07ez2057xtguLHDHJtP
-	46T4=
-X-Google-Smtp-Source: AGHT+IEZANvPXkrTgIE4U1opoBXDAmCDgtfho6RUtvQLZan8+pJFxSUwzhI1/Bgb5wgTtVUHTVRmGQ==
-X-Received: by 2002:a05:690c:6610:b0:6e5:cb46:4641 with SMTP id 00721157ae682-6ea3b8961efmr131348167b3.13.1730471582570;
-        Fri, 01 Nov 2024 07:33:02 -0700 (PDT)
+        bh=05KSXYaoUDpWXni7T1Jh/zjIZOUDlAH8j7GEmVvjo8s=;
+        b=cjuIN9mpPHkP91VEYLYvfAhf3pzNGGradP4LxhDxAU3Jqt+NJ7iw2xwqNsr9YupavS
+         G5Dty82SJeqnmcOUBID/ORVDR9wM1AfpEf5+QQHf6kkOqBBNoZaAw/URDTGDD7NYVZVw
+         COEyUDZsur/ECrkqgdF1Wt0sHpvY7umR25szGwLMwSRnWXl21WQ6/J1/0Gi/393yUUon
+         xHyvN8wdj1aCj2YqJXauiJa1RYigb8pjAku9J3NHeu6MPOGl/3BUK8o48qcBTEZZuX9j
+         ccz42FvPtqEUFP0kP+EOBUsHLl8moHEwv/yyyvDBvNdIEpCkVA3jmzIT/BtGqttPqNIZ
+         4oHg==
+X-Gm-Message-State: AOJu0Yx3MalRcIi9J6G90qjl7u0I3A1rfdDCJDstvVruDRvJAT2VXx3q
+	6Ih1QKaOlBc80UYlIBeERiOl1Eojo7DT3tuKVYSt/cNUjxNxfmK/oljCK+XXeaDONdVZheOgcUW
+	y/qw=
+X-Google-Smtp-Source: AGHT+IEx6CboZYtKI57LYOVzDSVzuNJqoXqL3qxIDD931aSitL/Byxf155b6LdlfypSx8T4qq7HgpA==
+X-Received: by 2002:a05:690c:2906:b0:6dd:bba1:b86d with SMTP id 00721157ae682-6e9d8939dbbmr175341227b3.10.1730471816147;
+        Fri, 01 Nov 2024 07:36:56 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea765dc5aasm923817b3.140.2024.11.01.07.33.01
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55c4de6csm6999087b3.77.2024.11.01.07.36.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Nov 2024 07:33:02 -0700 (PDT)
-Date: Fri, 1 Nov 2024 10:33:00 -0400
+        Fri, 01 Nov 2024 07:36:55 -0700 (PDT)
+Date: Fri, 1 Nov 2024 10:36:54 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fetch-pack: warn if in commit graph but not obj db
-Message-ID: <ZyTmnDHGdblD3/FU@nand.local>
-References: <ZyPvqPK1s5lUtH+N@nand.local>
- <20241031214319.550776-1-jonathantanmy@google.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4 0/9] packfile: avoid using the 'the_repository' global
+ variable
+Message-ID: <ZyTnhrBLuvesK1yB@nand.local>
+References: <cover.1729504640.git.karthik.188@gmail.com>
+ <cover.1730366765.git.karthik.188@gmail.com>
+ <ZyPjJKYZzeFGLxin@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,39 +69,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241031214319.550776-1-jonathantanmy@google.com>
+In-Reply-To: <ZyPjJKYZzeFGLxin@nand.local>
 
-On Thu, Oct 31, 2024 at 02:43:19PM -0700, Jonathan Tan wrote:
-> > Another thought about this whole thing is that we essentially have a
-> > code path that says: "I found this object from the commit-graph, but
-> > don't know if I actually have it on disk, so mark it to be checked later
-> > via has_object()".
-> >
-> > I wonder if it would be more straightforward to replace the call to
-> > lookup_commit_in_graph() with a direct call to has_object() in the
-> > deref_without_lazy_fetch() function, which I think would both (a)
-> > eliminate the need for a new flag bit to be allocated, and (b) prevent
-> > looking up the object twice.
-> >
-> > Thoughts?
+On Thu, Oct 31, 2024 at 04:05:56PM -0400, Taylor Blau wrote:
+> Hi Karthik,
 >
-> This would undo the optimization in 62b5a35a33 (fetch-pack: optimize
-> loading of refs via commit graph, 2021-09-01), and also would not work
-> without changes to the fetch negotiation code - I tried to describe it
-> in the commit message, perhaps not very clearly, but the issue is that
-> even if we emit "want X", the fetch negotiation code would emit "have
-> X" (the X is the same in both), and at least for our JGit server at
-> $DAYJOB, the combination of "want X" and "have X" results in the server
-> sending an empty packfile (reasonable behavior, I think). (And I don't
-> think the changes to the fetch negotiation code are worth it.)
+> On Thu, Oct 31, 2024 at 10:39:43AM +0100, Karthik Nayak wrote:
+> > Range-diff against v3:
+>
+> Skimming the range-diff, this new version looks good to me. It would be
+> nice to hear from another reviewer or two before we start merging it
+> down, but I think that this is looking good to me.
 
-Thanks for the clarifications above. What I was trying to poke at here
-was... doesn't the change as presented undo that optimization, just in a
-different way?
+Hmmph. I spoke too soon, this new version appears to break CI on
+Windows, and thus broke the builds of 'jch' (and 'seen', by extension).
 
-In 62b5a35a33 we taught deref_without_lazy_fetch() to lookup commits
-through the commit-graph. But in this patch, we now call has_object()
-on top of that existing check. Am I missing something obvious?
+    https://github.com/ttaylorr/git/actions/runs/11602969593/job/32309061019
+
+Can you have a look?
+
+In the meantime, I'm going to move this out of 'jch' to let CI run there
+again.
 
 Thanks,
 Taylor
