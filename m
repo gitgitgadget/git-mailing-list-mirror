@@ -1,45 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1AB1684A0
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 11:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F843C13C
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 12:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730461155; cv=none; b=GYlXQN/PPOP3Yt+07PqJ3xHeAIWo8K/ETcUxzmZEFHotlMkSygoOTXnBigPw7ojZk6q55nxzlM0VFSWx7JXA/tyVtUmjk9pAx5n1uEURlGaVyR/ZUgxVSTBK3AA1LxcoZ4xjmnuipl/X6dwNa/xqvvi3yfnWWp9ddAigxsD461c=
+	t=1730463378; cv=none; b=RX+Ri4JuFhtwp986ITPtq5ldEfufrzI/RJoSMkEcx8Uc6pp18ynafjpo3jLc+z46vbM8943S4H4ojfa3zY2WMIQyAUVovNFWmvTOE2fFedh6XYQtdgCNl0MYsapFk35Z9kA1hBE3NBFlqk2q91aPMpecH5J4eCo0u8SOIRYm3GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730461155; c=relaxed/simple;
-	bh=3SoP8x8m5o9y7LnNjfPUjFXp2N0IEr7pkwnQ5VpRQP4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZAp3dl+iYG/lvnofmmtMIPhzRzRYyhl7q0BEZCsKulhwfLnhx2mB8Ym0OjkoH6pL6UhASGWC83G4lNs0QpudrNxzZHGj+soXn49rx7CxhHzrI0iwpEVj8qcY+6eE9qAzHV6PABV3cfGOq2TIhwODO9TVnVv9OBmFhV+HZxhFnaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZNPAPsmO; arc=none smtp.client-ip=104.130.231.41
+	s=arc-20240116; t=1730463378; c=relaxed/simple;
+	bh=usw6WeDTNuUzMzS5JEbNtzCGtiKyWIQOUPCEOnXpBFA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=AQvOi7Lxo+sWaME74oNJVjFBsUrn4QvFgIrMPFLqHfRZRkh6YALBcTD4ydixgVWFeghjkTPPFCcpYspufA25CxJLxGuzEUcZ/CODrrvR7ft15YYtFUo5EyI2uGNGyFEpYtaw8b+sr3S9WvzSLDuo8a2KvY6uwLx7zhtjNxyH3Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=YSaOml2Z; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZNPAPsmO"
-Received: (qmail 28018 invoked by uid 109); 1 Nov 2024 11:39:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3SoP8x8m5o9y7LnNjfPUjFXp2N0IEr7pkwnQ5VpRQP4=; b=ZNPAPsmOQjIxa1LX+pNSQ5t7ilBAC5LsDzBAlzvfas5MkodK8Tw1LLxKHQLtmdWPly503QtKiN+ZTOCGIrI6Ac/55gO176uZvMz2e33Uvaem7Bvy3UY31EbRlB7vr7BupQamrLAJqOXEsZuWcS6MYsWjYHZuEivMSj2YAupM/HwYkGwyfQQxUHfLghQtTjfuYghhSY21ZltkJREogGLqMHFVvJz7f5UGf/NUjG0Zm9kCyUcGRGl5Ltf/bNYuOkH77R+G1JPmbwvX7Qqaft1nSC2lAbaYEk+dOQIZKvJA/9/OdxOe6Ae1HYPzFyotiGpKa/0rfRRW2wwykrTGbDJ6vA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="YSaOml2Z"
+Received: (qmail 28161 invoked by uid 109); 1 Nov 2024 12:16:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:mime-version:content-type; s=20240930; bh=usw6WeDTNuUzMzS5JEbNtzCGtiKyWIQOUPCEOnXpBFA=; b=YSaOml2Zcchzvq3Nngd/t+nET7YkePISp5E8ZMq5QStO30bNT+cXw+Dazwl1jeedZCPxgyLsOanwaPwQBLSJvR57lIPX+pFRUunLLZgxwiGOjJZcrN88Igo5+2pQ7oX4h2aiPJQdF1E/zqMgHpefg93mYJHUYANh0woAGPTkxcJlakPzkQCS6s51+/gRZ57GjOWI4ARxqhjAOFuMtPYHN9JMlY9jCXq0EKW8jqUNR7bg5fOKkrW5UKyCmL5AF70OMo/jOvwz+Pu3bFOZ9E+RqyRARlWud/EWkNJO4jA/xDkRAuItuGPyI6AvUosz+uWMi4HDE8C5eFN/hQOEB11gcQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Nov 2024 11:39:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Nov 2024 12:16:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12296 invoked by uid 111); 1 Nov 2024 11:39:11 -0000
+Received: (qmail 12550 invoked by uid 111); 1 Nov 2024 12:16:06 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Nov 2024 07:39:11 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Nov 2024 08:16:06 -0400
 Authentication-Results: peff.net; auth=none
-Date: Fri, 1 Nov 2024 07:39:10 -0400
+Date: Fri, 1 Nov 2024 08:16:06 -0400
 From: Jeff King <peff@peff.net>
-To: Rasmus Villemoes <ravi@prevas.dk>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
-	git@vger.kernel.org
-Subject: Re: [PATCH] setlocalversion: Add workaround for "git describe"
- performance issue
-Message-ID: <20241101113910.GA2301440@coredump.intra.peff.net>
-References: <309549cafdcfe50c4fceac3263220cc3d8b109b2.1730337435.git.jpoimboe@kernel.org>
- <87bjz0k17c.fsf@prevas.dk>
- <20241031114210.GA593548@coredump.intra.peff.net>
- <20241031122456.GB593548@coredump.intra.peff.net>
- <8734kbjlrq.fsf@prevas.dk>
+To: git@vger.kernel.org
+Subject: [PATCH] rev-list: skip bitmap traversal for --left-right
+Message-ID: <20241101121606.GA2327410@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,69 +38,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <8734kbjlrq.fsf@prevas.dk>
 
-On Fri, Nov 01, 2024 at 11:23:05AM +0100, Rasmus Villemoes wrote:
+Running:
 
-> Perhaps we could on the kernel side replace the "git describe --match"
-> calls with a helper, something like this (needs a lot of polishing):
+  git rev-list --left-right --use-bitmap-index one...two
 
-Yeah, if you are describing off of a single tag, it may just be easier
-to query things about the tag directly. Though I do still think
-git-describe should be faster here. I'm still pondering what to do about
-the disjoint history tests, but otherwise have a polished series to
-send.
+will produce output without any left-right markers, since the bitmap
+traversal returns only a single set of reachable commits. Instead we
+should refuse to use bitmaps here and produce the correct output using a
+traditional traversal.
 
-> ===
-> # Produce output similar to what "git describe --match=$tag 2>
-> # /dev/null" would.  It doesn't have to match exactly as the caller is
-> # only interested in whether $tag == HEAD, and if not, the number
-> # between the tag and the short sha1.
-> describe()
-> {
->     # Is $tag an annotated tag? Could/should probably be written using
->     # some plumbing instead of git describe, but with --exact-match,
->     # we avoid the walk-to-the-start-of-history behaviour, so fine for
->     # this demo.
->     git describe --exact-match --match=$tag $tag >/dev/null 2>/dev/null || return 1
+This is probably not the only remaining option that misbehaves with
+bitmaps, but it's particularly egregious in that it feels like it
+_could_ work. Doing two separate traversals for the left/right sides and
+then taking the symmetric set differences should yield the correct
+answer, but our traversal code doesn't know how to do that.
 
-Probably "git cat-file -t $tag" is the simplest way to see if it points
-to a tag.
+It's not clear if naively doing two separate traversals would always be
+a performance win. A traditional traversal only needs to walk down to
+the merge base, but bitmaps always fill out the full reachability set.
+So depending on your bitmap coverage, we could end up walking old bits
+of history twice to fill out the same uninteresting bits on both sides.
+We'd also of course end up with a very large --boundary set, if the user
+asked for that.
 
->     # Can it be used to describe HEAD, i.e. is it an ancestor of HEAD?
->     git merge-base --is-ancestor $tag HEAD || return 1
-> 
->     # Find the number that "git describe" would append.
->     count=$(git rev-list --count $tag..HEAD)
->     if [ $count -eq 0 ] ; then
->         echo "$tag"
->     else
->         echo "$tag-$count-$head"
->     fi
+So this might or might not be something worth implementing later. But
+for now, let's make sure we don't produce the wrong answer if somebody
+tries it.
 
-You can query both of these at once with:
+The test covers this, but also the same thing with "--count" (which is
+what I originally tried in a real-world case). Ironically the
+try_bitmap_count() code already realizes that "--left-right" won't work
+there. But that just causes us to fall back to the regular bitmap
+traversal code, which itself doesn't handle counting (we produce a list
+of objects rather than a count).
 
-  git rev-list --count --left-right $tag...HEAD
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/rev-list.c      |  7 +++++++
+ t/t5310-pack-bitmaps.sh | 12 ++++++++++++
+ 2 files changed, 19 insertions(+)
 
-That will traverse down to the merge base and give you two counts. If
-the first one is 0, then $tag is a direct ancestor. And the second one
-is the count of what's in HEAD.
-
-At first glance, it seems like you'd waste time counting the HEAD side
-when the --is-ancestor check could have rejected the tag earlier. But in
-practice I think the time will always be dominated by walking down to
-the merge base in all commands.
-
-> I also don't know if either the --is-ancestor or the rev-list count
-> could end up doing the same walk-all-commits we're trying to avoid.
-
-It shouldn't. In all of those cases we'll generally walk breadth-first
-down to the merge base. They're also operations that can take advantage
-of other optimizations that git-describe never learned about. E.g.,
-generation numbers in the commit graph.
-
-We can even do fast --count with reachability bitmaps, though I wouldn't
-expect most dev repos to have bitmaps built. Also, it looks like
-"--left-right --count" does not support bitmaps. IMHO that is a bug. ;)
-
--Peff
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index f62bcbf2b1..3078787115 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -485,6 +485,13 @@ static int try_bitmap_traversal(struct rev_info *revs,
+ 	if (revs->max_count >= 0)
+ 		return -1;
+ 
++	/*
++	 * We can't know which commits were left/right in a single traversal,
++	 * and we don't yet know how to traverse them separately.
++	 */
++	if (revs->left_right)
++		return -1;
++
+ 	bitmap_git = prepare_bitmap_walk(revs, filter_provided_objects);
+ 	if (!bitmap_git)
+ 		return -1;
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 7044c7d7c6..6bcbea64cc 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -503,6 +503,18 @@ test_expect_success 'boundary-based traversal is used when requested' '
+ 	done
+ '
+ 
++test_expect_success 'left-right not confused by bitmap index' '
++	git rev-list --left-right other...HEAD >expect &&
++	git rev-list --use-bitmap-index --left-right other...HEAD >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'left-right count not confused by bitmap-index' '
++	git rev-list --left-right --count other...HEAD >expect &&
++	git rev-list --use-bitmap-index --left-right --count other...HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_bitmap_cases "pack.writeBitmapLookupTable"
+ 
+ test_expect_success 'verify writing bitmap lookup table when enabled' '
+-- 
+2.47.0.441.g1a09955689
