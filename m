@@ -1,181 +1,139 @@
-Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
+Received: from 18.mo581.mail-out.ovh.net (18.mo581.mail-out.ovh.net [188.165.56.163])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C1E148FE8
-	for <git@vger.kernel.org>; Fri,  1 Nov 2024 04:39:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD6810F4
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 05:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.56.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730435951; cv=none; b=pBPGEZjABJt6AZg0AaY08cSa2JFhvnMureY1Xw0aHb18Sg7C7tmT9OlCc7TRz8tg3Qo9xduJfMXkZ9tcaYVidSuaVWxN+Y4nAsoSFYRiIcXI+hlxaA6BUN2gFi12as6+uWwasYD1cVFWD1JUKtb968kh4/5urFSLE+iyAVrHrLY=
+	t=1730437398; cv=none; b=afdmP7TAKaoTKI0W8xlQPL2Oa65lDfdlBrLkni/81/ktc6Ftd3QKkehxXbzmqXdljgyNjf7zPsVyqo2gojBf6vIcA7+uzAutd9w+22/ULZSrjg3YB7+ovMUBXDz8Kmk4UKi/8PJ2sSFH9BU7DdWGsKRhjkyXXLZ/Tacy5Jz0a0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730435951; c=relaxed/simple;
-	bh=Ugjkf74Fo1MulgkqG7G9TkIq657STI4NcK+koZ9BYvo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C4ye/eL0bLzdoy04gZjsp2qcC8DyUcxT44b8b0EqIr30C+gBdUOM5CGsebfvHTyqPBtqIRCjoGhIHhwat3O7zlPdkxlp8Hm1ssBFF3V+ldNofc9RuBCpANTHvEXtIWZw8ewpkGlvMyagPQJ1cPq4FhG/929aM61buBuQpea9AYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=pYSgU7iT; arc=none smtp.client-ip=185.70.40.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1730437398; c=relaxed/simple;
+	bh=c01SjdLwsTXHi4jN1o4nmnXSSW1utpAO/JtcpJ0z3OI=;
+	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=OT1zQmllO4D3H4iRulsQ3MP5BQ7eeVfIsmO4OwhwlfJILX1bNurmqRwk7wzEpjdHvrnI7mNBFC8hbltx0P/E0yINamagSOwZbEx3WfVGwUDnOWnAUCvy/cNhDF3X9TCdP4RpI6gvxze97jQbzUmLNBTr1cfjYjSiaJpIuOZszCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cleb.io; spf=pass smtp.mailfrom=cleb.io; dkim=pass (2048-bit key) header.d=cleb.io header.i=@cleb.io header.b=Oxr02GO/; arc=none smtp.client-ip=188.165.56.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cleb.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cleb.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="pYSgU7iT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1730435946; x=1730695146;
-	bh=U7NPavXSWlhmJ/iw0vxNYrKPBygr4STXhsC4rw5z1yA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=pYSgU7iTFOvJrCJvg7RKRFYeu36Lth5YSkeHIEvOmH9alfg354wW00YTYhOe2QQjV
-	 BFipcHUWrIA70CgZuIx5YlRUm/MSjKS75UQnkuphEbtXOYIBGpwGr0DMk+5apRiCU9
-	 89H6YIen8eW8rrLKkMacTp6JoM/Uz3KQmhvcyKrXrL1T9rE8n1TZETeyDriwF317N5
-	 FC62b8Yr/5uCRKeml1BiRRkn1fkbmkbwaLGiW0muu2lrUMaBaUkSX1A3WzmX+/Rnii
-	 syRbThYd+G7ZSwPk21PYDg34V2z93N8k3LyGtk1zY2WDGn2QBJYw1l/5yU81IVMWD0
-	 1aZo/Csre4qPA==
-Date: Fri, 01 Nov 2024 04:39:01 +0000
+	dkim=pass (2048-bit key) header.d=cleb.io header.i=@cleb.io header.b="Oxr02GO/"
+Received: from director4.ghost.mail-out.ovh.net (unknown [10.109.148.87])
+	by mo581.mail-out.ovh.net (Postfix) with ESMTP id 4XfhJN0Czzz1Q0Z
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 00:17:24 +0000 (UTC)
+Received: from ghost-submission-5b5ff79f4f-2gkmb (unknown [10.110.101.130])
+	by director4.ghost.mail-out.ovh.net (Postfix) with ESMTPS id B84E61FD38
+	for <git@vger.kernel.org>; Fri,  1 Nov 2024 00:17:23 +0000 (UTC)
+Received: from cleb.io ([37.59.142.110])
+	by ghost-submission-5b5ff79f4f-2gkmb with ESMTPSA
+	id YHFEIRMeJGcsGQkALo/peQ
+	(envelope-from <iago-lito@cleb.io>)
+	for <git@vger.kernel.org>; Fri, 01 Nov 2024 00:17:23 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-110S00497c697dc-165c-4c8d-82e1-748ae4d2a1e8,
+                    46D1B4683961587D9DEF0E4191837953488DDB30) smtp.auth=iago-lito@cleb.io
+X-OVh-ClientIp:92.184.100.142
+Date: Fri, 1 Nov 2024 01:17:20 +0100 (GMT+01:00)
+From: Iago-lito <iago-lito@cleb.io>
 To: git@vger.kernel.org
-From: Caleb White <cdwhite3@pm.me>
-Cc: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, Caleb White <cdwhite3@pm.me>
-Subject: [PATCH v4 8/8] worktree: refactor `repair_worktree_after_gitdir_move()`
-Message-ID: <20241031-wt_relative_options-v4-8-07a3dc0f02a3@pm.me>
-In-Reply-To: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
-References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 557b30894e8167020c1bd960151900ec37f740a4
+Message-ID: <3af246eb-3473-4964-9aed-ecff62b215b7@cleb.io>
+Subject: `git apply -p` doesn't remove source prefix in 'rename' diff
+ entries.
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Correlation-ID: <3af246eb-3473-4964-9aed-ecff62b215b7@cleb.io>
+X-Ovh-Tracer-Id: 2167075846063340283
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeftddrvdekkedgudelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvkffugggtgfesthejredttddtjeenucfhrhhomhepkfgrghhoqdhlihhtohcuoehirghgohdqlhhithhosegtlhgvsgdrihhoqeenucggtffrrghtthgvrhhnpeffudehveegtddugfdtledufeehheefiedvvedutefhhefhfffgfeevheelgedtjeenucfkphepuddvjedrtddrtddruddpledvrddukeegrddutddtrddugedvpdefjedrheelrddugedvrdduuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehirghgohdqlhhithhosegtlhgvsgdrihhopdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheekuddpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=c01SjdLwsTXHi4jN1o4nmnXSSW1utpAO/JtcpJ0z3OI=;
+ c=relaxed/relaxed; d=cleb.io; h=From; s=ovhmo4982009-selector1;
+ t=1730420244; v=1;
+ b=Oxr02GO/4vnQ6plYOdrKOXczY/CqQp1GT7hLDu0mUIhJNOjW2yR+LihaBxt366dZPPMsZIzJ
+ p98AnhAFG+FWl7cE0oPN655SD1HWsDK4OumGd7lmixZRuJBwi/IiTfZ+niA/2QeWe51SkgBbDuN
+ dRseUe+vbzl28LaAp+bsUbNKsxxGKuSyIxQurn/vO9BzH9ehTs/9gDIJPn7ATT72+uhspl8orpd
+ 4zW7GzqC1qawWjcUAXfqKzUhmYeG3HDWuMVtodA99f+R3B7IZssB2t9vNhEwSp4M3mDC8OGytWw
+ yBtZu2PkqJnTW15m3R/zop9RQmXuC0O0qnOrgOA7z2wIQ==
 
-This refactors `repair_worktree_after_gitdir_move()` to use the new
-`write_worktree_linking_files` function. It also preserves the
-relativity of the linking files; e.g., if an existing worktree used
-absolute paths then the repaired paths will be absolute (and visa-versa).
+Hello,
 
-This also adds a test case for reinitializing a repository that has
-relative worktrees.
+I have troubles understanding the behaviour of `git apply` with respect to renames in a `--no-index` context.
 
-Signed-off-by: Caleb White <cdwhite3@pm.me>
----
- t/t0001-init.sh | 22 ++++++++++++++++++----
- worktree.c      | 29 ++++++++---------------------
- 2 files changed, 26 insertions(+), 25 deletions(-)
+Let us craft a toy folder:
+```sh
+$ mkdir x
+$ echo a > x/a # To be modified.
+$ echo b > x/b # To be renamed.
+```
 
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 0178aa62a41f1606f2382a4a10ab593ccf11e0e8..264951592a711f6879555b78590=
-5e799db6c5dd4 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -434,6 +434,12 @@ test_expect_success SYMLINKS 're-init to move gitdir s=
-ymlink' '
- sep_git_dir_worktree ()  {
- =09test_when_finished "rm -rf mainwt linkwt seprepo" &&
- =09git init mainwt &&
-+=09if test "relative" =3D $2
-+=09then
-+=09=09git -C mainwt config worktree.useRelativePaths true
-+=09else
-+=09=09git -C mainwt config worktree.useRelativePaths false
-+=09fi
- =09test_commit -C mainwt gumby &&
- =09git -C mainwt worktree add --detach ../linkwt &&
- =09git -C "$1" init --separate-git-dir ../seprepo &&
-@@ -442,12 +448,20 @@ sep_git_dir_worktree ()  {
- =09test_cmp expect actual
- }
-=20
--test_expect_success 're-init to move gitdir with linked worktrees' '
--=09sep_git_dir_worktree mainwt
-+test_expect_success 're-init to move gitdir with linked worktrees (absolut=
-e)' '
-+=09sep_git_dir_worktree mainwt absolute
-+'
-+
-+test_expect_success 're-init to move gitdir within linked worktree (absolu=
-te)' '
-+=09sep_git_dir_worktree linkwt absolute
-+'
-+
-+test_expect_success 're-init to move gitdir with linked worktrees (relativ=
-e)' '
-+=09sep_git_dir_worktree mainwt relative
- '
-=20
--test_expect_success 're-init to move gitdir within linked worktree' '
--=09sep_git_dir_worktree linkwt
-+test_expect_success 're-init to move gitdir within linked worktree (relati=
-ve)' '
-+=09sep_git_dir_worktree linkwt relative
- '
-=20
- test_expect_success MINGW '.git hidden' '
-diff --git a/worktree.c b/worktree.c
-index 2cb994ac462debf966ac51b5a4f33c30cfebd4ef..2c2e9fd8fdc22d4fe3705227d72=
-b8dbd293038b2 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -653,45 +653,32 @@ void repair_worktrees(worktree_repair_fn fn, void *cb=
-_data, int use_relative_pat
-=20
- void repair_worktree_after_gitdir_move(struct worktree *wt, const char *ol=
-d_path)
- {
--=09struct strbuf path =3D STRBUF_INIT;
--=09struct strbuf repo =3D STRBUF_INIT;
- =09struct strbuf gitdir =3D STRBUF_INIT;
- =09struct strbuf dotgit =3D STRBUF_INIT;
--=09struct strbuf olddotgit =3D STRBUF_INIT;
--=09struct strbuf tmp =3D STRBUF_INIT;
-+=09int is_relative_path;
-=20
- =09if (is_main_worktree(wt))
- =09=09goto done;
-=20
--=09strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
--=09strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
-+=09strbuf_realpath(&gitdir, git_common_path("worktrees/%s/gitdir", wt->id)=
-, 1);
-=20
--=09if (strbuf_read_file(&olddotgit, gitdir.buf, 0) < 0)
-+=09if (strbuf_read_file(&dotgit, gitdir.buf, 0) < 0)
- =09=09goto done;
-=20
--=09strbuf_rtrim(&olddotgit);
--=09if (is_absolute_path(olddotgit.buf)) {
--=09=09strbuf_addbuf(&dotgit, &olddotgit);
--=09} else {
--=09=09strbuf_addf(&dotgit, "%s/worktrees/%s/%s", old_path, wt->id, olddotg=
-it.buf);
-+=09strbuf_rtrim(&dotgit);
-+=09is_relative_path =3D ! is_absolute_path(dotgit.buf);
-+=09if (is_relative_path) {
-+=09=09strbuf_insertf(&dotgit, 0, "%s/worktrees/%s/", old_path, wt->id);
- =09=09strbuf_realpath_forgiving(&dotgit, dotgit.buf, 0);
- =09}
-=20
- =09if (!file_exists(dotgit.buf))
- =09=09goto done;
-=20
--=09strbuf_addbuf(&path, &dotgit);
--=09strbuf_strip_suffix(&path, "/.git");
--
--=09write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, path.buf, =
-&tmp));
--=09write_file(gitdir.buf, "%s", relative_path(dotgit.buf, repo.buf, &tmp))=
-;
-+=09write_worktree_linking_files(dotgit, gitdir, is_relative_path);
- done:
--=09strbuf_release(&path);
--=09strbuf_release(&repo);
- =09strbuf_release(&gitdir);
- =09strbuf_release(&dotgit);
--=09strbuf_release(&olddotgit);
--=09strbuf_release(&tmp);
- }
-=20
- void repair_worktrees_after_gitdir_move(const char *old_path)
+Duplicate it twice to get three identical folders `x = y = z`.
 
---=20
-2.47.0
+```sh
+$ cp -r x y
+$ cp -r x z
+```
+
+Modify `y`:
+```sh
+$ echo newline >> y/a # Edit.
+$ mv y/b y/c # Rename.
+```
+
+Now I would like to use git as a "better GNU patch".
+Calculate the diff from `x` to `y`:
+```sh
+$ git diff --no-prefix x y | tee patch
+diff --git x/a y/a
+index 7898192..4030aa5 100644
+--- x/a
++++ y/a
+@@ -1 +1,2 @@
+a
++newline
+diff --git x/b y/c
+similarity index 100%
+rename from x/b
+rename to y/c
+```
+
+Then apply this patch to `z` so as to end up with `x != y = z`:
+```sh
+$ git apply -p1 --directory z patch
+error: z/x/b: No such file or directory
+```
+
+I would expect `z/b` to be renamed into `z/c`, but I get the above error instead.
+
+Although understand that `z/x/b` is not a valid path, I don't understand that git produces such a path, because I'm assuming that `-p1` is supposed to remove the `x/` part.
+
+Interestingly, the procedure works fine without the rename. The rename also worth fine if I manually remove the `x/` and `y/` prefixes from the rename lines in the patch.
+
+This makes the behaviour of `git apply` appear inconsistent. It is nonetheless expected ? If so, why ? If not, then is it a bug ?
+
+Thank you for support,
+
+[System Info]
+git version:
+git version 2.46.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.10.1
+OpenSSL: OpenSSL 3.3.2 3 Sep 2024
+zlib: 1.3.1
+uname: Linux 6.10.10-arch1-1 #1 SMP PREEMPT_DYNAMIC Thu, 12 Sep 2024
+17:21:02 +0000 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /usr/bin/zsh
 
 
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+--
+Iago-lito
