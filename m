@@ -1,104 +1,160 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from redcrew.org (redcrew.org [37.157.195.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E40D16E895
-	for <git@vger.kernel.org>; Sat,  2 Nov 2024 10:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A2D23CB
+	for <git@vger.kernel.org>; Sat,  2 Nov 2024 10:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730542154; cv=none; b=G7Kq3HtpKknNXo3D9TrXFuyBbMUAOjoMj+rmeHbNKPZnvWk3gGgGmF4nFKWaI7axHJGyz3o6mZi7jTzWMWVR95t6gq6v3vXO3zfp7BtFjjX+lST4Fu62ZGpwKHp02TwhHnqmd/wjXXBAPVfuJr8cYZYLEAfFCH6tRnMYtlhuBf8=
+	t=1730542745; cv=none; b=Mbr1wgFC9Ibnw1XrA0XkjLCMoVzg/K6Hr9NsNrZ9nwOFWE/bTDoX94dzuniVFK12sJtLX8OFqbWRVnuZ2QhY+PMS5YLct7BajP7wdPjlvQ9ZLGXIMzS6alBaJP8gtusFw0bEOOP20ka0AMOYexMlwvxd3+CUZ3fP8Cua7fUd5hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730542154; c=relaxed/simple;
-	bh=h5uWtqHkVT5t2GGrlJvWL7C5TDFeUTO9cQzUT0H8RtM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WN8Az8h89bQr2danJ2c6CiuGKG/Z/VT+AnHJJNyELTvY764wDsz73AxD4XoGI9rfeoLpt6Vz8qh7ncNqLKBCg7VKIefml0SUEgGqY0Jo0xe1wxEy5qtWixX+Mx5ezeeTi8vIxmozBQFQyzvlBrm35wPAt1SdAYyO+Vy28Z5bGLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ePyOFVJT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CtMuwWOt; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730542745; c=relaxed/simple;
+	bh=9yiYrXSS8XT7m9CiHN1xTVpo1SViKjw88Rd9TX4lMXg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=SlhCKE1V2b9LQQwmo0F8PJZjQCLom/s3xTHLnoJhrOqDdAImu4MIL5djYMuSLhTjLlN+SQSoDYuH/jUij/hN3EawRCYqm4vtRvox2ne/RgRdhx+k1ia2P4wXPHxflT3nPTMlkpTxXbz+yMAjlB+QFXJsGyohLD8D08XT9nwA6bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=dSZypwhC; arc=none smtp.client-ip=37.157.195.192
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ePyOFVJT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CtMuwWOt"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3D29411400E5;
-	Sat,  2 Nov 2024 06:09:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Sat, 02 Nov 2024 06:09:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730542150; x=1730628550; bh=RtO1OER0zy
-	+PoVIzm7pCgjbXnaTVJUbtO3SlKtoISw0=; b=ePyOFVJTdplukbF8Z/kQl2y05j
-	Yq6NMQyXx4B0fL4AfVm63+gDqhjzFUKAW8dbobqDVYTh+XCeT0p3fY60gl5+LGOJ
-	WQY249dGj1C4GK+WYkX0lNEtJQOL/L8p+oiHD/yOrx/d5N5T82pERIEgWvHqC+EG
-	JQGo4Py65kGMeX0AdmXumoluI6mqvvIaIJU/adRCgQnT3mA3mxedGMMv/CmEwWMJ
-	Jp/6VQsuHFjq64hhPWrUC6TpTyr9xirbwPnpCTpyfhSR5oERwXiSAe5oXoLQt5b1
-	zQ2wlsF2gfgxQfARJQX6IjjEmheZ7B4jzs515TvNx8uQT3s6dcUz5RPDOh1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730542150; x=1730628550; bh=RtO1OER0zy+PoVIzm7pCgjbXnaTVJUbtO3S
-	lKtoISw0=; b=CtMuwWOtAIbpYPV+ooNUT28ZN60/64cPuXaadxobOzlDdsvQv1n
-	sxuraWSnTdtl8/pyRyP0+KLW48iP6M45EGFRsIChynQX05f5PM2H6Rwmgt/4G0tD
-	oF9eHRDYWKFLqbyxxDpHr7kPToR9rJN2e2z/menu7K/h1A5kauw9295nFBNcoVpO
-	B+r4zrWD/ZCS5KxcQjZ0Yes7JErNi/RAAoJ1k2jzwVwYPHmkw2OdUf2x+ZbTBz3R
-	s5s1rgSkq+R42WmjpIbWsNia0paELZCNfBo4QF+V7oKpvEs+tT5wnNuu3JLUXZVw
-	9xVAAtD4MH1e8nGbbM27Lwg54V1401mX89Q==
-X-ME-Sender: <xms:RfolZ_XLbCTiMf_9Hz1XeHdJ-3BNRfiz9NwlpnHKFTRhUNZzdNyCUQ>
-    <xme:RfolZ3kRYwXtd7P06zl3fhLSwZ7svF5FLoh6xc3ptCI9sBakV2LmInst4ROxMp2LT
-    yq3LJHf4UAS_fBF2Q>
-X-ME-Received: <xmr:RfolZ7Z-zU0vVI_hXXP9G5psmKA7RoSjfQhNIB8dr2ZjY458gMNNm-aN4UhhJs5bDuDa-wNovrKgOtcYeziKsiBpHgpI189Ukhc2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeluddgudduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggufihhihhtvgefse
-    hpmhdrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvges
-    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:RfolZ6XjAan1m9LqmvV05Z5JMu5Gjfvgya7uwJyveb0hEfe9VK3spQ>
-    <xmx:RvolZ5nvs9YRZTmfSweGvFCOUJq4dZZCaMQTKpSUMySaEp9UqgFTQw>
-    <xmx:RvolZ3cW0yNawgTc7hQB1q0dHb-rEvcJAYVgfTxVw9QJ8iqJEybZcw>
-    <xmx:RvolZzEMYUEHMjyjuOdI8coDXnd043-A0WwqgWAbe3qCRIXbnrdT7g>
-    <xmx:RvolZ3YYqQ8ohP239R8aCLycWlbijTgUSZorgkKeQXrSN-sF-gZjxr-i>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 2 Nov 2024 06:09:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 0/8] Allow relative worktree linking to be configured
- by the user
-In-Reply-To: <D5AVE5JXJ2AE.29R7FKWCHWIKQ@pm.me> (Caleb White's message of
-	"Fri, 01 Nov 2024 13:18:28 +0000")
-References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
-	<xmqqzfmj2zp9.fsf@gitster.g> <D5AVE5JXJ2AE.29R7FKWCHWIKQ@pm.me>
-Date: Sat, 02 Nov 2024 03:09:07 -0700
-Message-ID: <xmqqh68qymkc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="dSZypwhC"
+Received: from localhost (unknown [185.22.237.37])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by redcrew.org (Postfix) with ESMTPSA id 6908EC3BC;
+	Sat,  2 Nov 2024 11:09:53 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org 6908EC3BC
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
+	t=1730542193; bh=wRUnJnvpNSINtdSxI1M+ap+pBPSjdWBdPqItl82EpXc=;
+	h=Date:Subject:From:To:References:In-Reply-To:From;
+	b=dSZypwhCpkCN1Bj7XqIqloXvYNYWD3OvKPzkjaJnW6kWTjV2/O7RqfhFfO1cT5zZO
+	 0OjGfVruxqj06Id3kJqB9AHVtK6wdtSiejeGyh7ztqYtKuTO0KsiHjsr2dfQmaEacd
+	 M3Iq2oKxPHQX3vTEPvfSwtCqI5GATpOYnakdGHo0=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1;
+ micalg=pgp-sha1; protocol="application/pgp-signature"
+Date: Sat, 02 Nov 2024 11:09:52 +0100
+Message-Id: <D5BM0CBSPT9I.97E2CAX9DE17@cepl.eu>
+Subject: Re: Synchronous replication on push
+From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+To: "Taylor R Campbell" <git@campbell.mumble.net>, <git@vger.kernel.org>
+X-Mailer: aerc 0.18.2
+References: <20241102020653.766D1609AC@jupiter.mumble.net>
+In-Reply-To: <20241102020653.766D1609AC@jupiter.mumble.net>
 
-Caleb White <cdwhite3@pm.me> writes:
+--081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1
+Content-Type: multipart/mixed;
+ boundary=0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334
 
-> Ah, my apologies. I will make sure to do that in the future. When
-> I first added this note, a topic branch[1] had not been created yet and
-> I forgot to update it when it was.
+--0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334
+Content-Type: multipart/alternative;
+ boundary=1eb398e98261444f0d22d7ae7408e47f59f20cca64b252279df6cd084752
 
-I see.  I think Taylor has done a great job maintaining these
-topics, so I'll see how well they have been reviewed during the past
-few weeks.
+--1eb398e98261444f0d22d7ae7408e47f59f20cca64b252279df6cd084752
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 
-Thanks.
+On Sat Nov 2, 2024 at 3:06 AM CET, Taylor R Campbell wrote:
+> Suppose I have a front end repository:
+>
+> user@frontend.example.com:/repo.git
+>
+> Whenever I push anything to it, I want the push -- that is, all the
+> objects, and all the ref updates -- to be synchronously replicated to
+> another remote repository, the back end:
+>
+> git@backend.example.com:/repo.git
+
+https://stackoverflow.com/q/14290113/164233
+
+--=20
+http://matej.ceplovi.cz/blog/, @mcepl@floss.social
+GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
+=20
+We understand our competition isn=E2=80=99t with Caldera or SuSE--our
+competition is with Microsoft.
+    -- Bob Young of Red Hat
+       http://www.linuxjournal.com/article/3553
+
+
+--1eb398e98261444f0d22d7ae7408e47f59f20cca64b252279df6cd084752--
+
+--0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
+Content-Type: application/pgp-keys; charset=UTF-8
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
+LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
+NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
+emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
+alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
+VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
+TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
+bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
+MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
+TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
+c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
+YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
+UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
+N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
+Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
+d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
+em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
+WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
+Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
+N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
+TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
+b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
+RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
+dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
+ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
+b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
+Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
+SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
+cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
+K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
+a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
+QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
+d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
+YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
+RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
+Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
+CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
+RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
+Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
+ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
+UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
+RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
+RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
+TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
+SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
+aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
+S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
+ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
+U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
+RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
+SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
+YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
+Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
+YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
+UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
+--0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334--
+
+--081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZyX6cQ4cbWNlcGxAY2Vw
+bC5ldQAKCRDgn+8l2WSErEYdAJ9YYp4yDKxPQxzTs8BJiB84073MDQCferGQEFOh
+RpGAEBsQC1hG4JgJ8/w=
+=hnFN
+-----END PGP SIGNATURE-----
+
+--081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1--
