@@ -1,160 +1,213 @@
-Received: from redcrew.org (redcrew.org [37.157.195.192])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A2D23CB
-	for <git@vger.kernel.org>; Sat,  2 Nov 2024 10:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE5145016
+	for <git@vger.kernel.org>; Sat,  2 Nov 2024 10:28:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730542745; cv=none; b=Mbr1wgFC9Ibnw1XrA0XkjLCMoVzg/K6Hr9NsNrZ9nwOFWE/bTDoX94dzuniVFK12sJtLX8OFqbWRVnuZ2QhY+PMS5YLct7BajP7wdPjlvQ9ZLGXIMzS6alBaJP8gtusFw0bEOOP20ka0AMOYexMlwvxd3+CUZ3fP8Cua7fUd5hg=
+	t=1730543312; cv=none; b=tYQE0QYu0hSpYTNGTSkoYlPOYle9FhjKdOt2IUMniH7PvuSCn2DZ7CTTf8ZLpwKqpz2ciDQuVernBSEB65F6AN3ONKfREyYX0XbWqA4uvkxWsz6WneKIrqLy7sYzcsVMWQX2wGdcN+qFO+rxzmzoEZKlpDn0rFKxgW7btTO2Pok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730542745; c=relaxed/simple;
-	bh=9yiYrXSS8XT7m9CiHN1xTVpo1SViKjw88Rd9TX4lMXg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=SlhCKE1V2b9LQQwmo0F8PJZjQCLom/s3xTHLnoJhrOqDdAImu4MIL5djYMuSLhTjLlN+SQSoDYuH/jUij/hN3EawRCYqm4vtRvox2ne/RgRdhx+k1ia2P4wXPHxflT3nPTMlkpTxXbz+yMAjlB+QFXJsGyohLD8D08XT9nwA6bE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=dSZypwhC; arc=none smtp.client-ip=37.157.195.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1730543312; c=relaxed/simple;
+	bh=oPx9lgDXaox2Un7YMm1Q9ickcjP3kSqHrMC3jykZpxs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ctuuzX34rPc+JRqoOI1IHzhF3E513PcLjr9AP/dNzewAm2CAcHzrtcoTVyLs1GT61QLPX214qhDqP7jEdwOOUQTmpsqeMO6oVEmEGz4JXfpYwfqIEXIWZTGC6bMRt/LGztvkv0CXFR3yVmO2xByAsIH8nKMhPgP0E2nt4p3C62k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GAF3Y3K1; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="dSZypwhC"
-Received: from localhost (unknown [185.22.237.37])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by redcrew.org (Postfix) with ESMTPSA id 6908EC3BC;
-	Sat,  2 Nov 2024 11:09:53 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org 6908EC3BC
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
-	t=1730542193; bh=wRUnJnvpNSINtdSxI1M+ap+pBPSjdWBdPqItl82EpXc=;
-	h=Date:Subject:From:To:References:In-Reply-To:From;
-	b=dSZypwhCpkCN1Bj7XqIqloXvYNYWD3OvKPzkjaJnW6kWTjV2/O7RqfhFfO1cT5zZO
-	 0OjGfVruxqj06Id3kJqB9AHVtK6wdtSiejeGyh7ztqYtKuTO0KsiHjsr2dfQmaEacd
-	 M3Iq2oKxPHQX3vTEPvfSwtCqI5GATpOYnakdGHo0=
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GAF3Y3K1"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-431688d5127so20831425e9.0
+        for <git@vger.kernel.org>; Sat, 02 Nov 2024 03:28:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730543309; x=1731148109; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dS916Ry/hfwr5a1lH3Kd0nANpJt2uf1sYANwhC3DIkM=;
+        b=GAF3Y3K1c50hWsCURZ6XsAkK4o2VDbi9dmDpzcfxNPax3ARFtpjGgmt86HElpuiX3m
+         6YbTp4qkf79tw4KGRN+uDlWmab5MKxtGVQkoLM9UX0lIx4fF5RMrJ/8KvQN6jjf3+b5h
+         s94o/yH7rrPNKQF3/q0j9YUkrOi/gudAQQEUeJar6qpp5ZvPoIevEKOXlhOdRpxRuZTK
+         pvBx68VxxPLQcsHpdZLjx+Hotrv23TXm4bYShsSA0DVtBb0KuXtWN83iclTd6b3nVXZ7
+         seXEJY59XmljyJMnVSYJgEWt48JpQiIiBf+HOlj87gP7oI4jmF9bw0LS2ozSYOc90Kvj
+         h2Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730543309; x=1731148109;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dS916Ry/hfwr5a1lH3Kd0nANpJt2uf1sYANwhC3DIkM=;
+        b=FBCiXv6iEE381vp0O8Bzue1pKAaGQFv+VdhpFzjfXRr31+ltTQOr3pHzSWLUypvY8e
+         YWasZSX332HNMPgrbq5FNwdBVmFMUCDBgX6Sua+zRk7PakuNBJIsKsPhwAel3SV0VCeU
+         LOm58UhsA4i6OJLU2ACQFIe2JsR1txjrAZgl7W9DCpp4vv63MfxOQ1fx3FJUR1R4JJjh
+         BuAyn2TVIc+HSIJ6ZSAmihHYDsmN3fKNdPsszTgnIL2jI/6Ct8TiXQefBDMxXw2SUb4i
+         Og03fUN5/JgeqnC3CQOfMEn5Jd8V3O0Z5htValLfl7jyVk30KMQgsufwGOeAS498v6ZL
+         Qgyw==
+X-Gm-Message-State: AOJu0Yxor0RHKmhgz9R1FZhKzsBWpPZ7sirqfeFXNrEKw0vC6qh10OGF
+	0EIi+Gea2/S4nYh/eQBmxo4OyHep8T2mqPGhwRcKpbrLPCFfWJrUNCst+0wfH0pBcA==
+X-Google-Smtp-Source: AGHT+IFxCIEcqXKQy+dsHdf6rCzUUVC/S4Fw+ohoVcJQ7JWVctfOUAGveZ+4bt9V1hxGvCD25wxUkA==
+X-Received: by 2002:a05:600c:46d4:b0:427:ff3b:7a20 with SMTP id 5b1f17b1804b1-4319ad049a8mr211532905e9.27.1730543308732;
+        Sat, 02 Nov 2024 03:28:28 -0700 (PDT)
+Received: from localhost.localdomain ([41.217.55.85])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-381c1189123sm7649570f8f.115.2024.11.02.03.28.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Nov 2024 03:28:27 -0700 (PDT)
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	phillip.wood@dunelm.org.uk,
+	kristofferhaugsbakk@fastmail.com,
+	me@ttaylorr.com,
+	Seyi Kuforiji <kuforiji98@gmail.com>
+Subject: [PATCH v2] t9101: Refactor test_expect_success format
+Date: Sat,  2 Nov 2024 11:28:01 +0100
+Message-ID: <20241102102801.26432-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.47.0.86.g15030f9556
+In-Reply-To: <20241031094554.68916-1-kuforiji98@gmail.com>
+References: <20241031094554.68916-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1;
- micalg=pgp-sha1; protocol="application/pgp-signature"
-Date: Sat, 02 Nov 2024 11:09:52 +0100
-Message-Id: <D5BM0CBSPT9I.97E2CAX9DE17@cepl.eu>
-Subject: Re: Synchronous replication on push
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: "Taylor R Campbell" <git@campbell.mumble.net>, <git@vger.kernel.org>
-X-Mailer: aerc 0.18.2
-References: <20241102020653.766D1609AC@jupiter.mumble.net>
-In-Reply-To: <20241102020653.766D1609AC@jupiter.mumble.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
---081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1
-Content-Type: multipart/mixed;
- boundary=0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334
+The current script uses an outdated formatting style for
+test_expect_success blocks, where each argument is separated by a
+backslash and newline. This style can lead to readability issues and
+makes it harder to maintain the script.The modern style consolidates the
+multi-line command arguments into a single quoted block, which improves
+readability, maintainability, and aligns the code with current coding
+standards.
 
---0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334
-Content-Type: multipart/alternative;
- boundary=1eb398e98261444f0d22d7ae7408e47f59f20cca64b252279df6cd084752
+Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+---
+ t/t9101-git-svn-props.sh | 48 ++++++++++++++++++++++------------------
+ 1 file changed, 26 insertions(+), 22 deletions(-)
 
---1eb398e98261444f0d22d7ae7408e47f59f20cca64b252279df6cd084752
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
+diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+index b2ee626b9a..792f7896e4 100755
+--- a/t/t9101-git-svn-props.sh
++++ b/t/t9101-git-svn-props.sh
+@@ -73,12 +73,13 @@ test_expect_success 'initialize git svn' 'git svn init "$svnrepo"'
+ test_expect_success 'fetch revisions from svn' 'git svn fetch'
+ 
+ name='test svn:keywords ignoring'
+-test_expect_success "$name" \
+-	'git checkout -b mybranch remotes/git-svn &&
++test_expect_success "$name" '
++	git checkout -b mybranch remotes/git-svn &&
+ 	echo Hi again >>kw.c &&
+ 	git commit -a -m "test keywords ignoring" &&
+ 	git svn set-tree remotes/git-svn..mybranch &&
+-	git pull . remotes/git-svn'
++	git pull . remotes/git-svn
++'
+ 
+ expect='/* $Id$ */'
+ got="$(sed -ne 2p kw.c)"
+@@ -94,10 +95,11 @@ test_expect_success "propset CR on crlf files" '
+ 	 )
+ '
+ 
+-test_expect_success 'fetch and pull latest from svn and checkout a new wc' \
+-	'git svn fetch &&
+-	 git pull . remotes/git-svn &&
+-	 svn_cmd co "$svnrepo" new_wc'
++test_expect_success 'fetch and pull latest from svn and checkout a new wc' '
++	git svn fetch &&
++	git pull . remotes/git-svn &&
++	svn_cmd co "$svnrepo" new_wc
++'
+ 
+ for i in crlf ne_crlf lf ne_lf cr ne_cr empty_cr empty_lf empty empty_crlf
+ do
+@@ -110,15 +112,17 @@ cd test_wc
+ 	printf '$Id$\rHello\rWorld' >ne_cr
+ 	a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
+ 	a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
+-	test_expect_success 'Set CRLF on cr files' \
+-	'svn_cmd propset svn:eol-style CRLF cr &&
+-	 svn_cmd propset svn:eol-style CRLF ne_cr &&
+-	 svn_cmd propset svn:keywords Id cr &&
+-	 svn_cmd propset svn:keywords Id ne_cr &&
+-	 svn_cmd commit -m "propset CRLF on cr files"'
++	test_expect_success 'Set CRLF on cr files' '
++		svn_cmd propset svn:eol-style CRLF cr &&
++		svn_cmd propset svn:eol-style CRLF ne_cr &&
++		svn_cmd propset svn:keywords Id cr &&
++		svn_cmd propset svn:keywords Id ne_cr &&
++		svn_cmd commit -m "propset CRLF on cr files"
++	'
+ cd ..
+-test_expect_success 'fetch and pull latest from svn' \
+-	'git svn fetch && git pull . remotes/git-svn'
++test_expect_success 'fetch and pull latest from svn' '
++	git svn fetch && git pull . remotes/git-svn
++'
+ 
+ b_cr="$(git hash-object cr)"
+ b_ne_cr="$(git hash-object ne_cr)"
+@@ -141,7 +145,7 @@ cat >show-ignore.expect <<\EOF
+ /deeply/nested/directory/no-such-file*
+ EOF
+ 
+-test_expect_success 'test show-ignore' "
++test_expect_success 'test show-ignore' '
+ 	(
+ 		cd test_wc &&
+ 		mkdir -p deeply/nested/directory &&
+@@ -155,7 +159,7 @@ no-such-file*
+ 	) &&
+ 	git svn show-ignore >show-ignore.got &&
+ 	cmp show-ignore.expect show-ignore.got
+-"
++'
+ 
+ cat >create-ignore.expect <<\EOF
+ /no-such-file*
+@@ -170,7 +174,7 @@ cat >create-ignore-index.expect <<EOF
+ 100644 $expectoid 0	deeply/nested/directory/.gitignore
+ EOF
+ 
+-test_expect_success 'test create-ignore' "
++test_expect_success 'test create-ignore' '
+ 	git svn fetch && git pull . remotes/git-svn &&
+ 	git svn create-ignore &&
+ 	cmp ./.gitignore create-ignore.expect &&
+@@ -179,7 +183,7 @@ test_expect_success 'test create-ignore' "
+ 	cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
+ 	git ls-files -s >ls_files_result &&
+ 	grep gitignore ls_files_result | cmp - create-ignore-index.expect
+-	"
++'
+ 
+ cat >prop.expect <<\EOF
+ 
+@@ -207,7 +211,7 @@ test_expect_success 'test propget' '
+ 	test_propget svn:ignore nested/ ../prop.expect &&
+ 	test_propget svn:ignore ./nested ../prop.expect &&
+ 	test_propget svn:ignore .././deeply/nested ../prop.expect
+-	'
++'
+ 
+ cat >prop.expect <<\EOF
+ Properties on '.':
+@@ -225,12 +229,12 @@ Properties on 'nested/directory/.keep':
+   svn:entry:uuid
+ EOF
+ 
+-test_expect_success 'test proplist' "
++test_expect_success 'test proplist' '
+ 	git svn proplist . >actual &&
+ 	cmp prop.expect actual &&
+ 
+ 	git svn proplist nested/directory/.keep >actual &&
+ 	cmp prop2.expect actual
+-	"
++'
+ 
+ test_done
+-- 
+2.47.0.86.g15030f9556
 
-On Sat Nov 2, 2024 at 3:06 AM CET, Taylor R Campbell wrote:
-> Suppose I have a front end repository:
->
-> user@frontend.example.com:/repo.git
->
-> Whenever I push anything to it, I want the push -- that is, all the
-> objects, and all the ref updates -- to be synchronously replicated to
-> another remote repository, the back end:
->
-> git@backend.example.com:/repo.git
-
-https://stackoverflow.com/q/14290113/164233
-
---=20
-http://matej.ceplovi.cz/blog/, @mcepl@floss.social
-GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
-=20
-We understand our competition isn=E2=80=99t with Caldera or SuSE--our
-competition is with Microsoft.
-    -- Bob Young of Red Hat
-       http://www.linuxjournal.com/article/3553
-
-
---1eb398e98261444f0d22d7ae7408e47f59f20cca64b252279df6cd084752--
-
---0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
-Content-Type: application/pgp-keys; charset=UTF-8
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
-LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
-NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
-emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
-alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
-VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
-TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
-bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
-MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
-TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
-c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
-YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
-UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
-N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
-Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
-d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
-em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
-WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
-Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
-N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
-TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
-b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
-RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
-dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
-ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
-b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
-Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
-SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
-cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
-K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
-a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
-QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
-d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
-YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
-RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
-Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
-CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
-RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
-Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
-ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
-UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
-RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
-RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
-TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
-SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
-aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
-S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
-ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
-U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
-RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
-SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
-YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
-Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
-YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
-UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
---0bf7afe69b5db447f2be433ac02c136ef54606cef4552e2e5d5ebe962334--
-
---081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZyX6cQ4cbWNlcGxAY2Vw
-bC5ldQAKCRDgn+8l2WSErEYdAJ9YYp4yDKxPQxzTs8BJiB84073MDQCferGQEFOh
-RpGAEBsQC1hG4JgJ8/w=
-=hnFN
------END PGP SIGNATURE-----
-
---081a304d2cd5caa22ac84312458edd7c4e8df3aaf07d83ef4e762dc2cfd1--
