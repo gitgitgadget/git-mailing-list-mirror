@@ -1,244 +1,405 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51842155336
-	for <git@vger.kernel.org>; Sat,  2 Nov 2024 16:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECD11A01BD
+	for <git@vger.kernel.org>; Sat,  2 Nov 2024 16:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730564790; cv=none; b=E+rkSOePCHLC3OgiDzdqh+AqZwMcRSTEq0n81nz48VQ+f31+xECMNTaW3o3mF7pL5bD2AFWeJu9RLaqW7OhfiiBlL35WWlW+Z8bHYE7WeG4s8hwO3BgFlc516WPYLdflaIFdMQkNX6+/qs4GIjDnnfOPllRj2EUVrtAHQTh9IGo=
+	t=1730566544; cv=none; b=jP9pvHq9rsCupfKtqDqJzehMi5gWJv1BLB5i0V1OCKuaf6XyNDJkRH5A9MHI+6kcAatrFmHZm4trON39eHy9U/WC9gj8FTp1PUpkP8gnWcCDXeSydkd6kCFxsvbjsFpZkRXSQp8zhR9YXVtjSEPTzT/WQ8OfnAo15h0bMwWVFGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730564790; c=relaxed/simple;
-	bh=Zlh/urkT1azboRrPWTFVykxCxhVw/Md6rUeoyg/shDE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lH6d7eMuQ25Hx/4ptQ//M4kUGr4vQCwCXgzl5Hnq0DaheY3bjg7RCVZ5gYOQMJO1zk0Aog+TOTcSnXuMuwn3QOoNS2U8RgCrE+musfeslDsQNHMl6opqjTSkXC9Q4/Oh4jVHbXrB+v/cg2U1nCOl1MC+svk7c4DVdTi2puRYai4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cL7kvRMs; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1730566544; c=relaxed/simple;
+	bh=/XMKdsTBtEwnIAFgT03kflGGJNBd6NVRw2UgmvxcvIU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mdCziW+QMD985EFfbSLaA9ybgDxNdk1bOIHorI5g0cqmEkgbH3l2XG4f1z+NDlVAO0fPGJVAgAyW7nQBHLNaPR0QDGDeO4S3TmeJyMZj4KziP65/dfqdVYGwffbFl2QvX0e1L+fMgmq5Zpl3BoBUMIPPykwVh/HI0wHGNxELS+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SS/bXllG; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cL7kvRMs"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-7ede6803585so2881699a12.0
-        for <git@vger.kernel.org>; Sat, 02 Nov 2024 09:26:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SS/bXllG"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-431481433bdso25342595e9.3
+        for <git@vger.kernel.org>; Sat, 02 Nov 2024 09:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730564787; x=1731169587; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PAAkqS/ZEoxnhnycwYu8SWryrnHchJJtRFu5MRwQrrI=;
-        b=cL7kvRMsElBBusihlTGQKfFoKvSLfx7YiaUbQqiL02QGSTlLteqxPBjKRwuiUz1Mbq
-         aJAro4oJXUIFpIyx8e0krLN/jnHPo5amRH7LxZDeJVHGj19IWMiu55yFu/ek9olPUs06
-         KyTiZ3vHr/EabVw84DThxk9VFsMomsTW9Q8iK+Ye2iuHpZjyQAJd6AHD8/Rakpei+Ixa
-         VtdnSxLeicAbt4vi9At7AzRxy+VvnnBQLVtaLU4ZZwHnOevWSEWztEzJEAdrV3gUqSNs
-         y5yMKBLAKH9p1aCuIXl2uZKv0LEplh3woZYqs++ooC6Nrhwcw/a67o9e3fOugEpyG3F3
-         2Oeg==
+        d=gmail.com; s=20230601; t=1730566540; x=1731171340; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lX8fHt9iju84SHPSmtJBj5fjnpIw85PeE3AJdPuAPSs=;
+        b=SS/bXllGmXQC+4ChDlVdG0S9SltoG8z0E06wVWoCS6QoyIaqTNV5WxskhDQvPcpez5
+         XasB9MevOskXBvjgk/thUwloEljWnNBAxwKWuki5QhlW8c/rXYjEt14nGseJtFMmdTTS
+         0aukeSAgNwAj/MGejv2/qOSd9yKJsqoy3ju9TjkscUMLAAij9pEOmgsD+6t+viio8Ucz
+         eDoN7x4wpQtH98Vh9O2Q4dYP/W1wEOz44v+n5OW9EOZ/MmlByp4fnfCfw33og+0SZZNA
+         RwGbcnfx7uwt0eCnOwmAreL6SWMnLBUKCdj9EPuvwL2ZH+o1JnhCfAQEzGg3kISdewaF
+         Ynng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730564787; x=1731169587;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PAAkqS/ZEoxnhnycwYu8SWryrnHchJJtRFu5MRwQrrI=;
-        b=LR7GelnIVlk2ezy+d54WfBnWfszzhc0BsbvHTz/re+VYNLvu8mEREQNNqy0PJH9aas
-         tgjJuPp7rnKl/mAThFQOYgvXA2RRh+BS7215pDEiNTap9XXue8rWh7h3NSrK6DeOfbGR
-         2o18+UyjkMOYruSG4a8Bq2lqXVy1XYxLtZwspdK8xb/1at5APg3ohDfF7Q3fZlKOjVwL
-         QOyuMhr/Px/0wH9mUe6O+0aVJzEmsuLaaZbmWMufELT8CGb/nRuEPswzvrkavN1p6pF9
-         YoiyT6xvBSg00Hl6yVuIQdL5eSIdlPvsjV78QwTtTzCkKwutiDoMyzXXDPQxSK1My6V5
-         L1Ig==
-X-Forwarded-Encrypted: i=1; AJvYcCUcPcKm/lg6jsq1ix0S130aibA61osMCOaRP1qSrP3H7maGO3PMT92Z/LzN9B8YSY69xYM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHurqgPVhEYJtBCWzt4vSPlf8tWSfJEOGMWH++2dpzM1F3T1pD
-	tA2AbnZU0DHbo2vP9nBOmGzdUtBzP4RRkAt+Nwtu2t99DEVNXOdf/vyh7Q==
-X-Google-Smtp-Source: AGHT+IGe/YTsFTWsDS4TxqduMmvB/TAqkbpjzI0DeO8EcMkKfSuNNh8yriqhpO5+JsvwjfJTNWEQfA==
-X-Received: by 2002:a17:90b:388d:b0:2c9:6abd:ca64 with SMTP id 98e67ed59e1d1-2e93e0abfb7mr15085322a91.9.1730564787228;
-        Sat, 02 Nov 2024 09:26:27 -0700 (PDT)
-Received: from ?IPV6:2409:40c2:8053:9c02:ad48:afdd:946a:640b? ([2409:40c2:8053:9c02:ad48:afdd:946a:640b])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211057a60d6sm35200055ad.124.2024.11.02.09.26.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Nov 2024 09:26:26 -0700 (PDT)
-Message-ID: <74c0eddf-8bf9-4fb7-a0cd-edea8acaa938@gmail.com>
-Date: Sat, 2 Nov 2024 21:56:20 +0530
+        d=1e100.net; s=20230601; t=1730566540; x=1731171340;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lX8fHt9iju84SHPSmtJBj5fjnpIw85PeE3AJdPuAPSs=;
+        b=wqtDwJyG5q/IXH5Cex4WzcoppxelRXzxqGquyxth2TvIVbpt2EGhmc3f7YvKQknz2I
+         yq4HHfJoUJFg8EuKcJ5eh6LdtodfBDGZgOwJ624W0tYy3w8jMfUsXVIVcLWy3VS6G9lX
+         zyEXmOJjEU98NZvUElCrZbekC5LYhrHX5zcEcLK8XmMGLpFHVvYENelb2XlinvOUpGoc
+         WO7qqymLRiku2hoyBQuM0j2aBGMWczZC/1i6StzlQkzEwkUrdaTOmgmlUFwQZHp7JH2c
+         tlTqvjueVwullGR5Cx4r89N2mmX+XSLN5P3k1G3bh4MAtNQaARKaQ4X7ukHyZiPc1/1M
+         9dtg==
+X-Gm-Message-State: AOJu0YxgU4/V4exLLHkzhu6r6f/tHB37Wt4XL14igM72KBS0x4qej9kB
+	/vkOYqQVGXaSp7Tuf9nGeSHy14LEUn56q8WqgbP+QsHNERIPhX42faNM28cV
+X-Google-Smtp-Source: AGHT+IGBdEJYpKSOmF+K+mHSfwkgXOZhzap9X4gsUrC9KJtSv217JkWwt+8ax423S1d38TvLIPCPaw==
+X-Received: by 2002:a05:600c:3b94:b0:42c:b74c:d8c3 with SMTP id 5b1f17b1804b1-4327b82138dmr84653525e9.32.1730566540152;
+        Sat, 02 Nov 2024 09:55:40 -0700 (PDT)
+Received: from void.void ([31.210.180.123])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d5bf4e7sm99146015e9.15.2024.11.02.09.55.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Nov 2024 09:55:39 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
+To: git@vger.kernel.org
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH] t1016: clean up style
+Date: Sat,  2 Nov 2024 18:53:10 +0200
+Message-ID: <20241102165534.17112-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.47.0.170.g23d289d273.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] show-index: fix uninitialized hash function
-To: Junio C Hamano <gitster@pobox.com>
-Cc: me@ttaylorr.com, git@vger.kernel.org, ps@pks.im,
- sandals@crustytoothpaste.net
-References: <Zx/NE/9HFNr9V2H7@nand.local>
- <20241101172800.21997-1-abhijeet.nkt@gmail.com> <xmqq1pzuylm6.fsf@gitster.g>
-Content-Language: en-US
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-In-Reply-To: <xmqq1pzuylm6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 02/11/24 15:59, Junio C Hamano wrote:
-> Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
-> 
->> In c8aed5e8da (repository: stop setting SHA1 as the default object
->> hash), we got rid of the default hash algorithm for the_repository.
->> Due to this change, it is now the responsibility of the callers to set
->> thier own default when this is not present.
-> 
-> "their own default".
-> 
->> As stated in the docs, show-index should use SHA1 as the default hash
->> algorithm when ran outsize of a repository. Make sure this promise is
-> 
-> "outside a repository".
-> 
+Remove whitespace after redirect operator.
 
-I will address those in v5, thanks
+Align mixed space/tab usages.
 
->> met by falling back to SHA1 when the_hash_algo is not present (i.e.
->> when the command is ran outside of a repository). Also add a test that
->> verifies this behaviour.
->>
->> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
->> ---
->>  builtin/show-index.c   | 6 ++++++
->>  rm                     | 3 +++
-> 
-> Huh?
-> 
->>  t/t5300-pack-object.sh | 4 ++++
->>  3 files changed, 13 insertions(+)
->>  create mode 100755 rm
->>
->> diff --git a/builtin/show-index.c b/builtin/show-index.c
->> index f164c01bbe..645c2548fb 100644
->> --- a/builtin/show-index.c
->> +++ b/builtin/show-index.c
->> @@ -38,6 +38,12 @@ int cmd_show_index(int argc,
->>  		repo_set_hash_algo(the_repository, hash_algo);
->>  	}
->>  
->> +	// Fallback to SHA1 if we are running outside of a repository.
->> +	// TODO: Figure out and implement a way to detect the hash algorithm in use by the
->> +	//       the index file passed in and use that instead.
-> 
-> 	/*
-> 	 * A multi-line comment in our codebase looks
-> 	 * like this; slash-asterisk and asterisk-slash
-> 	 * are placed on their own lines.  We do not do
-> 	 * double-slash comments.
-> 	 */
-> 
->> +	if (!the_hash_algo)
->> +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> 
-> OK.  This is in line with how the command is documented to behave.
-> 
-> Having said that, I am not sure if it was an omission by mistake
-> when 8e42eb0e (doc: sha256 is no longer experimental, 2023-07-31)
-> marked SHA-256 as non-experimental, or it was deliberate.  It would
-> have been an equally plausible, if not more sensible, position to
-> take to say that, since SHA-1 and SHA-256 are now on equal footing,
-> we won't "default" to SHA-1 anymore, when 8e42eb0e declared that
-> SHA-256 is no longer a second-class citizen.>
-> In any case, we can further remedy that, if we really wanted to, by
-> tweaking the documentation to require the option outside a
-> repository without any default, for example, and then change this to
-> die().
-> 
-> Of course, we may want to use the hash that is used in the index
-> file we are reading, if we can, as your comment said.
-> 
-> These incremental improvements can be left outside the scope of this
-> change.
->
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+---
+ t/t1016-compatObjectFormat.sh | 261 +++++++++++++++++-----------------
+ 1 file changed, 130 insertions(+), 131 deletions(-)
 
-I see. So while this behavior not completely ideal, we are at least able
-to resolve a segfault. I take it that it is OK to leave it like this in
-this patch and address it separately after.
-
->> diff --git a/rm b/rm
->> new file mode 100755
->> index 0000000000..2237506bf2
->> --- /dev/null
->> +++ b/rm
->> @@ -0,0 +1,3 @@
->> +#!/bin/sh
->> +
->> +echo rm $@
-> 
-> Please don't.
-> 
-
-Oops, this is embarrassing, that probably slipped in from a different
-thing I was experimenting with which is unrelated to this patch. I will
-verify that my patches are free of such errors in future before sending
-them, apologies.
-
->> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
->> index 3b9dae331a..51fed26cc4 100755
->> --- a/t/t5300-pack-object.sh
->> +++ b/t/t5300-pack-object.sh
->> @@ -523,6 +523,10 @@ test_expect_success 'index-pack --strict <pack> works in non-repo' '
->>  	test_path_is_file foo.idx
->>  '
->>  
->> +test_expect_success SHA1 'show-index works OK outside a repository' '
->> +	nongit git show-index <foo.idx
->> +'
-> 
-> If we are not using a hash that is not SHA-1, we should then be able
-> to do the same check with
-> 
->     nongit git show-index --object-format=<hash> <foo.idx
-> 
-> i.e., with an explicit argument.  I do not think we have any hits
-> in the t/ directory from
-> 
->     $ git grep -e 'show-index .*--object-format' t/
-> 
-
-Would that look something like this?
-
-```
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 51fed26cc4..78047604e4 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -527,6 +527,22 @@ test_expect_success SHA1 'show-index works OK
-outside a repository' '
-        nongit git show-index <foo.idx
- '
-
-+for hash in sha1 sha256
-+do
-+       test_expect_success 'show-index works OK outside a repository
-with hash algo passed in via --object-format' '
-+               git init --object-format=$hash $hash-repo &&
-+               echo foo >$hash-repo/foo &&
-+               git -C $hash-repo add foo &&
-+               git -C $hash-repo commit -m "commit foo" &&
-+               oid=$(git -C $hash-repo rev-parse HEAD) &&
-+               echo $oid | git -C $hash-repo pack-objects $hash &&
-+               mv $hash-repo/$hash-*.idx $hash.idx &&
-+               nongit git show-index --object-format=$hash <$hash.idx &&
-+               wow &&
-+               rm -fr $hash/ $hash.idx
-+       '
-+done
+diff --git a/t/t1016-compatObjectFormat.sh b/t/t1016-compatObjectFormat.sh
+index 8341a2fe83..06449937a3 100755
+--- a/t/t1016-compatObjectFormat.sh
++++ b/t/t1016-compatObjectFormat.sh
+@@ -24,84 +24,84 @@ TEST_PASSES_SANITIZE_LEAK=true
+ # the commit is identical to the commit in the other repository.
+ 
+ compat_hash () {
+-    case "$1" in
+-    "sha1")
+-	echo "sha256"
+-	;;
+-    "sha256")
+-	echo "sha1"
+-	;;
+-    esac
++	case "$1" in
++	"sha1")
++		echo "sha256"
++		;;
++	"sha256")
++		echo "sha1"
++		;;
++	esac
+ }
+ 
+ hello_oid () {
+-    case "$1" in
+-    "sha1")
+-	echo "$hello_sha1_oid"
+-	;;
+-    "sha256")
+-	echo "$hello_sha256_oid"
+-	;;
+-    esac
++	case "$1" in
++	"sha1")
++		echo "$hello_sha1_oid"
++		;;
++	"sha256")
++		echo "$hello_sha256_oid"
++		;;
++	esac
+ }
+ 
+ tree_oid () {
+-    case "$1" in
+-    "sha1")
+-	echo "$tree_sha1_oid"
+-	;;
+-    "sha256")
+-	echo "$tree_sha256_oid"
+-	;;
+-    esac
++	case "$1" in
++	"sha1")
++		echo "$tree_sha1_oid"
++		;;
++	"sha256")
++		echo "$tree_sha256_oid"
++		;;
++	esac
+ }
+ 
+ commit_oid () {
+-    case "$1" in
+-    "sha1")
+-	echo "$commit_sha1_oid"
+-	;;
+-    "sha256")
+-	echo "$commit_sha256_oid"
+-	;;
+-    esac
++	case "$1" in
++	"sha1")
++		echo "$commit_sha1_oid"
++		;;
++	"sha256")
++		echo "$commit_sha256_oid"
++		;;
++	esac
+ }
+ 
+ commit2_oid () {
+-    case "$1" in
+-    "sha1")
+-	echo "$commit2_sha1_oid"
+-	;;
+-    "sha256")
+-	echo "$commit2_sha256_oid"
+-	;;
+-    esac
++	case "$1" in
++	"sha1")
++		echo "$commit2_sha1_oid"
++		;;
++	"sha256")
++		echo "$commit2_sha256_oid"
++		;;
++	esac
+ }
+ 
+ del_sigcommit () {
+-    local delete="$1"
+-
+-    if test "$delete" = "sha256" ; then
+-	local pattern="gpgsig-sha256"
+-    else
+-	local pattern="gpgsig"
+-    fi
+-    test-tool delete-gpgsig "$pattern"
++	local delete="$1"
 +
- test_expect_success !PTHREADS,!FAIL_PREREQS \
-        'index-pack --threads=N or pack.threads=N warns when no pthreads' '
-        test_must_fail git index-pack --threads=2 2>err &&
-```
-
-> so such a test might be worth adding, either as a part of this
-> change or as a separate patch.
->    
->>  test_expect_success !PTHREADS,!FAIL_PREREQS \
->>  	'index-pack --threads=N or pack.threads=N warns when no pthreads' '
->>  	test_must_fail git index-pack --threads=2 2>err &&
-> 
-> 
-> Except for these minor nits, everything else looks great.
-> 
-> Thanks.
-
-
++	if test "$delete" = "sha256" ; then
++		local pattern="gpgsig-sha256"
++	else
++		local pattern="gpgsig"
++	fi
++	test-tool delete-gpgsig "$pattern"
+ }
+ 
+ 
+ del_sigtag () {
+-    local storage="$1"
+-    local delete="$2"
+-
+-    if test "$storage" = "$delete" ; then
+-	local pattern="trailer"
+-    elif test "$storage" = "sha256" ; then
+-	local pattern="gpgsig"
+-    else
+-	local pattern="gpgsig-sha256"
+-    fi
+-    test-tool delete-gpgsig "$pattern"
++	local storage="$1"
++	local delete="$2"
++
++	if test "$storage" = "$delete" ; then
++		local pattern="trailer"
++	elif test "$storage" = "sha256" ; then
++		local pattern="gpgsig"
++	else
++		local pattern="gpgsig-sha256"
++	fi
++	test-tool delete-gpgsig "$pattern"
+ }
+ 
+ base=$(pwd)
+@@ -146,9 +146,9 @@ do
+ 	'
+ 	test_expect_success "create a $hash branch" '
+ 		git checkout -b branch $(commit_oid $hash) &&
+-		echo "More more more give me more!" > more &&
++		echo "More more more give me more!" >more &&
+ 		eval more_${hash}_oid=$(git hash-object more) &&
+-		echo "Another and another and another" > another &&
++		echo "Another and another and another" >another &&
+ 		eval another_${hash}_oid=$(git hash-object another) &&
+ 		git update-index --add more another &&
+ 		git commit -m "Add more files!" &&
+@@ -165,15 +165,15 @@ do
+ 	'
+ 	test_expect_success GPG2 "create additional $hash signed commits" '
+ 		git commit --gpg-sign --allow-empty -m "This is an additional signed commit" &&
+-		git cat-file commit HEAD | del_sigcommit sha256 > "../${hash}_signedcommit3" &&
+-		git cat-file commit HEAD | del_sigcommit sha1 > "../${hash}_signedcommit4" &&
++		git cat-file commit HEAD | del_sigcommit sha256 >"../${hash}_signedcommit3" &&
++		git cat-file commit HEAD | del_sigcommit sha1 >"../${hash}_signedcommit4" &&
+ 		eval signedcommit3_${hash}_oid=$(git hash-object -t commit -w ../${hash}_signedcommit3) &&
+ 		eval signedcommit4_${hash}_oid=$(git hash-object -t commit -w ../${hash}_signedcommit4)
+ 	'
+ 	test_expect_success GPG2 "create additional $hash signed tags" '
+ 		git tag -s -m "This is an additional signed tag" signedtag34 HEAD &&
+-		git cat-file tag signedtag34 | del_sigtag "${hash}" sha256 > ../${hash}_signedtag3 &&
+-		git cat-file tag signedtag34 | del_sigtag "${hash}" sha1 > ../${hash}_signedtag4 &&
++		git cat-file tag signedtag34 | del_sigtag "${hash}" sha256 >../${hash}_signedtag3 &&
++		git cat-file tag signedtag34 | del_sigtag "${hash}" sha1 >../${hash}_signedtag4 &&
+ 		eval signedtag3_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag3) &&
+ 		eval signedtag4_${hash}_oid=$(git hash-object -t tag -w ../${hash}_signedtag4)
+ 	'
+@@ -181,81 +181,80 @@ done
+ cd "$base"
+ 
+ compare_oids () {
+-    test "$#" = 5 && { local PREREQ="$1"; shift; } || PREREQ=
+-    local type="$1"
+-    local name="$2"
+-    local sha1_oid="$3"
+-    local sha256_oid="$4"
+-
+-    echo ${sha1_oid} > ${name}_sha1_expected
+-    echo ${sha256_oid} > ${name}_sha256_expected
+-    echo ${type} > ${name}_type_expected
+-
+-    git --git-dir=repo-sha1/.git rev-parse --output-object-format=sha256 ${sha1_oid} > ${name}_sha1_sha256_found
+-    git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha256_sha1_found
+-    local sha1_sha256_oid="$(cat ${name}_sha1_sha256_found)"
+-    local sha256_sha1_oid="$(cat ${name}_sha256_sha1_found)"
+-
+-    test_expect_success $PREREQ "Verify ${type} ${name}'s sha1 oid" '
+-	git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
+-	test_cmp ${name}_sha1 ${name}_sha1_expected
+-'
+-
+-    test_expect_success $PREREQ "Verify ${type} ${name}'s sha256 oid" '
+-	git --git-dir=repo-sha1/.git rev-parse --output-object-format=sha256 ${sha1_oid} > ${name}_sha256 &&
+-	test_cmp ${name}_sha256 ${name}_sha256_expected
+-'
++	test "$#" = 5 && { local PREREQ="$1"; shift; } || PREREQ=
++	local type="$1"
++	local name="$2"
++	local sha1_oid="$3"
++	local sha256_oid="$4"
++
++	echo ${sha1_oid} >${name}_sha1_expected
++	echo ${sha256_oid} >${name}_sha256_expected
++	echo ${type} >${name}_type_expected
++
++	git --git-dir=repo-sha1/.git rev-parse --output-object-format=sha256 ${sha1_oid} >${name}_sha1_sha256_found
++	git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} >${name}_sha256_sha1_found
++	local sha1_sha256_oid="$(cat ${name}_sha1_sha256_found)"
++	local sha256_sha1_oid="$(cat ${name}_sha256_sha1_found)"
++
++	test_expect_success $PREREQ "Verify ${type} ${name}'s sha1 oid" '
++		git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} >${name}_sha1 &&
++		test_cmp ${name}_sha1 ${name}_sha1_expected
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha1 type" '
+-	git --git-dir=repo-sha1/.git cat-file -t ${sha1_oid} > ${name}_type1 &&
+-	git --git-dir=repo-sha256/.git cat-file -t ${sha256_sha1_oid} > ${name}_type2 &&
+-	test_cmp ${name}_type1 ${name}_type2 &&
+-	test_cmp ${name}_type1 ${name}_type_expected
+-'
++	test_expect_success $PREREQ "Verify ${type} ${name}'s sha256 oid" '
++		git --git-dir=repo-sha1/.git rev-parse --output-object-format=sha256 ${sha1_oid} >${name}_sha256 &&
++		test_cmp ${name}_sha256 ${name}_sha256_expected
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha256 type" '
+-	git --git-dir=repo-sha256/.git cat-file -t ${sha256_oid} > ${name}_type3 &&
+-	git --git-dir=repo-sha1/.git cat-file -t ${sha1_sha256_oid} > ${name}_type4 &&
+-	test_cmp ${name}_type3 ${name}_type4 &&
+-	test_cmp ${name}_type3 ${name}_type_expected
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha1 type" '
++		git --git-dir=repo-sha1/.git cat-file -t ${sha1_oid} >${name}_type1 &&
++		git --git-dir=repo-sha256/.git cat-file -t ${sha256_sha1_oid} >${name}_type2 &&
++		test_cmp ${name}_type1 ${name}_type2 &&
++		test_cmp ${name}_type1 ${name}_type_expected
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha1 size" '
+-	git --git-dir=repo-sha1/.git cat-file -s ${sha1_oid} > ${name}_size1 &&
+-	git --git-dir=repo-sha256/.git cat-file -s ${sha256_sha1_oid} > ${name}_size2 &&
+-	test_cmp ${name}_size1 ${name}_size2
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha256 type" '
++		git --git-dir=repo-sha256/.git cat-file -t ${sha256_oid} >${name}_type3 &&
++		git --git-dir=repo-sha1/.git cat-file -t ${sha1_sha256_oid} >${name}_type4 &&
++		test_cmp ${name}_type3 ${name}_type4 &&
++		test_cmp ${name}_type3 ${name}_type_expected
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha256 size" '
+-	git --git-dir=repo-sha256/.git cat-file -s ${sha256_oid} > ${name}_size3 &&
+-	git --git-dir=repo-sha1/.git cat-file -s ${sha1_sha256_oid} > ${name}_size4 &&
+-	test_cmp ${name}_size3 ${name}_size4
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha1 size" '
++		git --git-dir=repo-sha1/.git cat-file -s ${sha1_oid} >${name}_size1 &&
++		git --git-dir=repo-sha256/.git cat-file -s ${sha256_sha1_oid} >${name}_size2 &&
++		test_cmp ${name}_size1 ${name}_size2
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha1 pretty content" '
+-	git --git-dir=repo-sha1/.git cat-file -p ${sha1_oid} > ${name}_content1 &&
+-	git --git-dir=repo-sha256/.git cat-file -p ${sha256_sha1_oid} > ${name}_content2 &&
+-	test_cmp ${name}_content1 ${name}_content2
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha256 size" '
++		git --git-dir=repo-sha256/.git cat-file -s ${sha256_oid} >${name}_size3 &&
++		git --git-dir=repo-sha1/.git cat-file -s ${sha1_sha256_oid} >${name}_size4 &&
++		test_cmp ${name}_size3 ${name}_size4
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha256 pretty content" '
+-	git --git-dir=repo-sha256/.git cat-file -p ${sha256_oid} > ${name}_content3 &&
+-	git --git-dir=repo-sha1/.git cat-file -p ${sha1_sha256_oid} > ${name}_content4 &&
+-	test_cmp ${name}_content3 ${name}_content4
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha1 pretty content" '
++		git --git-dir=repo-sha1/.git cat-file -p ${sha1_oid} >${name}_content1 &&
++		git --git-dir=repo-sha256/.git cat-file -p ${sha256_sha1_oid} >${name}_content2 &&
++		test_cmp ${name}_content1 ${name}_content2
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha1 content" '
+-	git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_oid} > ${name}_content5 &&
+-	git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_sha1_oid} > ${name}_content6 &&
+-	test_cmp ${name}_content5 ${name}_content6
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha256 pretty content" '
++		git --git-dir=repo-sha256/.git cat-file -p ${sha256_oid} >${name}_content3 &&
++		git --git-dir=repo-sha1/.git cat-file -p ${sha1_sha256_oid} >${name}_content4 &&
++		test_cmp ${name}_content3 ${name}_content4
++	'
+ 
+-    test_expect_success $PREREQ "Verify ${name}'s sha256 content" '
+-	git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_oid} > ${name}_content7 &&
+-	git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_sha256_oid} > ${name}_content8 &&
+-	test_cmp ${name}_content7 ${name}_content8
+-'
++	test_expect_success $PREREQ "Verify ${name}'s sha1 content" '
++		git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_oid} >${name}_content5 &&
++		git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_sha1_oid} >${name}_content6 &&
++		test_cmp ${name}_content5 ${name}_content6
++	'
+ 
++	test_expect_success $PREREQ "Verify ${name}'s sha256 content" '
++		git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_oid} >${name}_content7 &&
++		git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_sha256_oid} >${name}_content8 &&
++		test_cmp ${name}_content7 ${name}_content8
++	'
+ }
+ 
+ compare_oids 'blob' hello "$hello_sha1_oid" "$hello_sha256_oid"
+-- 
+2.47.0.170.g23d289d273.dirty
 
