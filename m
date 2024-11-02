@@ -1,157 +1,104 @@
-Received: from jupiter.mumble.net (jupiter.mumble.net [74.50.56.165])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84905588F
-	for <git@vger.kernel.org>; Sat,  2 Nov 2024 02:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.50.56.165
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E40D16E895
+	for <git@vger.kernel.org>; Sat,  2 Nov 2024 10:09:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730513699; cv=none; b=oZoICWsQXxgcVGFG2oqyRRpTD4AnJsp2rpJ2rMGxoqSl3spEdsT1rNR8Lw++Jf3guJ9bucedL/OGjv1GFYsDW7tpIEE2cAi4p8sm3U8u8hKicG7fUlRFsYiFzSoQAiZZg8FHXtOOsfdu3MgezSKhHNwQuMSROOK2mcvUATgfM3s=
+	t=1730542154; cv=none; b=G7Kq3HtpKknNXo3D9TrXFuyBbMUAOjoMj+rmeHbNKPZnvWk3gGgGmF4nFKWaI7axHJGyz3o6mZi7jTzWMWVR95t6gq6v3vXO3zfp7BtFjjX+lST4Fu62ZGpwKHp02TwhHnqmd/wjXXBAPVfuJr8cYZYLEAfFCH6tRnMYtlhuBf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730513699; c=relaxed/simple;
-	bh=UuvE2MjPTh0aotXPSh4kX9oSrnagwUed+xvnMCDCUVE=;
-	h=To:Subject:Date:From:MIME-Version:Content-Type:Message-Id; b=qoJiY6zT/yI2nHRaVMoLsLkYEkbjNRWysu2pJ9VxNcG4i02xoYOBA8H149jp6Ii27JCXrAaa3dE3BcAwagf1QJsxPSoHCYcKsQZzQOE6co3amZ4iniZWJjaZpAeGJuT9kU6X5qVT5bAugJcU8JJBH3d9RvLTmALGuZfO5ha8NLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=campbell.mumble.net; spf=pass smtp.mailfrom=mumble.net; dkim=pass (1024-bit key) header.d=mumble.net header.i=@mumble.net header.b=EqxtY0C3; arc=none smtp.client-ip=74.50.56.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=campbell.mumble.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mumble.net
+	s=arc-20240116; t=1730542154; c=relaxed/simple;
+	bh=h5uWtqHkVT5t2GGrlJvWL7C5TDFeUTO9cQzUT0H8RtM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WN8Az8h89bQr2danJ2c6CiuGKG/Z/VT+AnHJJNyELTvY764wDsz73AxD4XoGI9rfeoLpt6Vz8qh7ncNqLKBCg7VKIefml0SUEgGqY0Jo0xe1wxEy5qtWixX+Mx5ezeeTi8vIxmozBQFQyzvlBrm35wPAt1SdAYyO+Vy28Z5bGLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ePyOFVJT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CtMuwWOt; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mumble.net header.i=@mumble.net header.b="EqxtY0C3"
-Received: by jupiter.mumble.net (Postfix, from userid 1014)
-	id 766D1609AC; Sat,  2 Nov 2024 02:06:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mumble.net; s=20240127;
-	t=1730513213;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=L7Af1sXvUNsHiZ/ZmIOOQ/tweCBffCQY5iKFkTKBlKQ=;
-	b=EqxtY0C3MTuw4jX5/tEL4lVzDtLoOEKRVYLYjSG1pDiQBNmVBKlF3v4pybCSaqsMhn3luk
-	8qUXiFfikrKjW+6NZ7heuD19K/s6ZR1JvHS2Qt8AJCo7hahWWU+djk9VmiQBThudZsTBbV
-	u/xYccVPPmox6T0Fy38dg4s9FR7CXks=
-To: git@vger.kernel.org
-Subject: Synchronous replication on push
-Date: Sat, 2 Nov 2024 02:06:53 +0000
-From: Taylor R Campbell <git@campbell.mumble.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ePyOFVJT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CtMuwWOt"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3D29411400E5;
+	Sat,  2 Nov 2024 06:09:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Sat, 02 Nov 2024 06:09:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1730542150; x=1730628550; bh=RtO1OER0zy
+	+PoVIzm7pCgjbXnaTVJUbtO3SlKtoISw0=; b=ePyOFVJTdplukbF8Z/kQl2y05j
+	Yq6NMQyXx4B0fL4AfVm63+gDqhjzFUKAW8dbobqDVYTh+XCeT0p3fY60gl5+LGOJ
+	WQY249dGj1C4GK+WYkX0lNEtJQOL/L8p+oiHD/yOrx/d5N5T82pERIEgWvHqC+EG
+	JQGo4Py65kGMeX0AdmXumoluI6mqvvIaIJU/adRCgQnT3mA3mxedGMMv/CmEwWMJ
+	Jp/6VQsuHFjq64hhPWrUC6TpTyr9xirbwPnpCTpyfhSR5oERwXiSAe5oXoLQt5b1
+	zQ2wlsF2gfgxQfARJQX6IjjEmheZ7B4jzs515TvNx8uQT3s6dcUz5RPDOh1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1730542150; x=1730628550; bh=RtO1OER0zy+PoVIzm7pCgjbXnaTVJUbtO3S
+	lKtoISw0=; b=CtMuwWOtAIbpYPV+ooNUT28ZN60/64cPuXaadxobOzlDdsvQv1n
+	sxuraWSnTdtl8/pyRyP0+KLW48iP6M45EGFRsIChynQX05f5PM2H6Rwmgt/4G0tD
+	oF9eHRDYWKFLqbyxxDpHr7kPToR9rJN2e2z/menu7K/h1A5kauw9295nFBNcoVpO
+	B+r4zrWD/ZCS5KxcQjZ0Yes7JErNi/RAAoJ1k2jzwVwYPHmkw2OdUf2x+ZbTBz3R
+	s5s1rgSkq+R42WmjpIbWsNia0paELZCNfBo4QF+V7oKpvEs+tT5wnNuu3JLUXZVw
+	9xVAAtD4MH1e8nGbbM27Lwg54V1401mX89Q==
+X-ME-Sender: <xms:RfolZ_XLbCTiMf_9Hz1XeHdJ-3BNRfiz9NwlpnHKFTRhUNZzdNyCUQ>
+    <xme:RfolZ3kRYwXtd7P06zl3fhLSwZ7svF5FLoh6xc3ptCI9sBakV2LmInst4ROxMp2LT
+    yq3LJHf4UAS_fBF2Q>
+X-ME-Received: <xmr:RfolZ7Z-zU0vVI_hXXP9G5psmKA7RoSjfQhNIB8dr2ZjY458gMNNm-aN4UhhJs5bDuDa-wNovrKgOtcYeziKsiBpHgpI189Ukhc2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeluddgudduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggufihhihhtvgefse
+    hpmhdrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvges
+    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:RfolZ6XjAan1m9LqmvV05Z5JMu5Gjfvgya7uwJyveb0hEfe9VK3spQ>
+    <xmx:RvolZ5nvs9YRZTmfSweGvFCOUJq4dZZCaMQTKpSUMySaEp9UqgFTQw>
+    <xmx:RvolZ3cW0yNawgTc7hQB1q0dHb-rEvcJAYVgfTxVw9QJ8iqJEybZcw>
+    <xmx:RvolZzEMYUEHMjyjuOdI8coDXnd043-A0WwqgWAbe3qCRIXbnrdT7g>
+    <xmx:RvolZ3YYqQ8ohP239R8aCLycWlbijTgUSZorgkKeQXrSN-sF-gZjxr-i>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 2 Nov 2024 06:09:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 0/8] Allow relative worktree linking to be configured
+ by the user
+In-Reply-To: <D5AVE5JXJ2AE.29R7FKWCHWIKQ@pm.me> (Caleb White's message of
+	"Fri, 01 Nov 2024 13:18:28 +0000")
+References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
+	<xmqqzfmj2zp9.fsf@gitster.g> <D5AVE5JXJ2AE.29R7FKWCHWIKQ@pm.me>
+Date: Sat, 02 Nov 2024 03:09:07 -0700
+Message-ID: <xmqqh68qymkc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20241102020653.766D1609AC@jupiter.mumble.net>
+Content-Type: text/plain
 
-Suppose I have a front end repository:
+Caleb White <cdwhite3@pm.me> writes:
 
-user@frontend.example.com:/repo.git
+> Ah, my apologies. I will make sure to do that in the future. When
+> I first added this note, a topic branch[1] had not been created yet and
+> I forgot to update it when it was.
 
-Whenever I push anything to it, I want the push -- that is, all the
-objects, and all the ref updates -- to be synchronously replicated to
-another remote repository, the back end:
+I see.  I think Taylor has done a great job maintaining these
+topics, so I'll see how well they have been reviewed during the past
+few weeks.
 
-git@backend.example.com:/repo.git
-
-If this replication fails -- whether because the back end is down, or
-because the front end crashed and rolled back to an earlier state, or
-because the back end has been updated independently and rejects a
-force push, or whatever -- I want the push to fail.  But, absent these
-failures, I want frontend and backend to store the same set of objects
-and refs.
-
-(Actually, I want to replicate it to a quorum of multiple back ends
-with a three-phase commit protocol -- but I'll start with the
-single-replica case for simplicity.)
-
-How can I do this with git?
-
-
-One option, of course, is to use a replicated file system like
-glusterfs, or replicated block store like DRBD.  But that
-
-(a) likely requires a lot more round-trips than git push/send-pack,
-(b) can't be used for replication to other git hosts like Github, and
-(c) can't be used for other remote transports like git-cinnabar.
-
-So I'd like to do this at the git level, not at the file system or
-block store level.
-
-
-Here are some approaches I've tried:
-
-1. `git clone --mirror -o backend git@backend.example.com:/repo.git'
-   to create the front end repository, plus the following pre-receive
-   hook in the front end:
-
-	#!/bin/sh
-	exec git push backend
-
-   This doesn't work because the pre-receive hook runs in the
-   quarantine environment, and `git push' wants to update
-   `refs/heads/main', which is forbidden in the quarantine
-   environment.
-
-   (However, git push to frontend doesn't actually fail with nonzero
-   exit status -- it prints an error message, `ref updates forbidden
-   inside quarantine environment', but exits wtih status 0.)
-
-   But maybe the ref update is harmless in this environment.
-
-2. Same as (1), but the pre-receive hook is:
-
-	#!/bin/sh
-	unset GIT_QUARANTINE_PATH
-	exec git push backend
-
-   This doesn't work because `git push' in the pre-receive hook
-   doesn't find anything it needs to push -- the ref update hasn't
-   happened yet.
-
-3. Same as (1), but the pre-receive hook assembles a command line of
-
-	exec git push backend ${new0}:${ref0} ${new1}:${ref1} ...,
-
-   with all the ref updates passed on stdin (ignoring the old values).
-
-   This fails because `--mirror can't be combined with refspecs'.
-
-4. Same as (3), but remote.backend.mirror is explicitly disabled after
-   `git clone --mirror' finishes.
-
-   On push to the primary, this prints an error message
-
-	remote: error: update_ref failed for ref 'refs/heads/main': ref updates fo=
-rbidden inside quarantine environment
-
-   but somehow the push succeeds in spite of this message, and the
-   primary and replica both get updated.
-
-   And if I inject an error on push to the replica, by making the
-   replica's pre-receive hook fail with nonzero exit status, neither
-   primary nor replica is updated and the push fails with an error
-   message (`pre-receive hook declined') _and_ nonzero exit status --
-   as desired.
-
-   So maybe this actually works, but the error message on _successful_
-   pushes is unsettling!
-
-5. Same as (1), but the pre-receive hook assembles a command line of
-
-	exec git send-pack git@backend.example.com:/repo.git \
-		${new0}:${ref0} ${new1}:${ref1} ...
-
-   with all the ref updates passed on stdin (ignoring the old values).
-
-   This seems to work, and it propagates errors injected on push to
-   the replica, but it is limited to local or ssh remotes, as far as I
-   can tell -- it does not appear that git-send-pack works with custom
-   remote transports.
-
-Perhaps using mirror clones is the wrong approach here, and perhaps I
-should instead explicitly create tracking branches in the primary that
-are only updated if the push succeeds -- but this will still require
-getting around the quarantine restrictions on git push in the
-pre-receive hook.
-
-
-Is there a way to achieve this (ideally, with plausible extension to a
-three-phase commit protocol) that doesn't trigger unsettling nonfatal
-error messages and that works with custom remote transports?
+Thanks.
