@@ -1,142 +1,86 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7736C2FB
-	for <git@vger.kernel.org>; Sun,  3 Nov 2024 02:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1A415A8
+	for <git@vger.kernel.org>; Sun,  3 Nov 2024 13:49:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730601761; cv=none; b=WUaJkiJHatWKebvloQOG+Oa2Jb7LK8Ku7mt7kX/FCga817STlkVDOxaRLyNPrznr7sAAx1TAJ5qeXGJ6DXClttCjh0emmdmkKQd0cb4eWudjwOci77R9VJFykL56nMM4VhglkgQIt+2JdzJtXhI327hcQRVDv1ZvIQmXkzkeVXw=
+	t=1730641749; cv=none; b=crCB/zGvLKB1x0pcZojmibOCRDKyyZdo60fZdLEf9ec4QA7boMQwGYXnLBpVJArpop25AYBTb9Oi1iolOF/Q20TPqpXCm9aUqPEfxYV+jmmTpq6CQ2s1SIRQFjEeYybEsZCrJoIYCREkwtatpZY2nOzNB9J/ocnyDd6Ckyk0Ja8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730601761; c=relaxed/simple;
-	bh=jxKPq9dJsPdmvKq/KsL6bVo00bEFu4UTLA2ypHIYz4E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R0J0ILndNF27emCil+iCHL7ozjYTpV9C//i/gx53bre4lWvqloMKOhOJgsVMx4UZWTzFDcMH5rfdg45yEZ8MtJe6BeFPfmV7IE6bhcJd1paZCfOYAw7Z0wBCZp+gRQRWsS7xCHPk1/brjc9B6R+ijRV/zdENe9CeLkVHxZq4lyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ET+m5Bsp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ME8fmCmT; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730641749; c=relaxed/simple;
+	bh=qo+tMNhCqOVmol+zv+b+T37WYa3mhQzSvgA5P/aVxhs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QamWrGCIMcnvwD2ZbXkYmkdG/+9Bgb0VN0Mti++PCj7xBQNoC7dTaM5yv3aQo/Wr61psSDHh98NJMHWgtVuC48w6PMPaKxoVkEew5/aRjzxhVTRUJTzDo5XICpEPX7519gzBP3xnBzSkFDKOg+j2l7vnQ3R1Mp5MuCB/+9PEsXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PiDWeTRY; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ET+m5Bsp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ME8fmCmT"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A1F7911400B4;
-	Sat,  2 Nov 2024 22:42:37 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sat, 02 Nov 2024 22:42:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1730601757;
-	 x=1730688157; bh=7aQjkeEfZNTabB3dswHOiBr7My56p+3plKEvzliDkoI=; b=
-	ET+m5BspAIz/TeBO2giJmoaAOjvHJ4LG1weEn6reoIHGYM/bF27ql4GW9Octkf1r
-	48U5PXeHb5X9WICeEWhphNJx3ju8hY/3LZAULnRzJvwxEWQjxEYUqjDP/XaPn/Hu
-	Tpgd8GFWAiyQT++uEeVyhKik0DRj7pTdJDLCUVeKWbnRRTSp3EohRBt/kycXt6hv
-	psGRjkog5Qt6GK02f4vAndt+q7qOM+wzeniRwQ/oJiMF57o4QPsHSVLTg+eSfrC6
-	OnL3YAjxiC0KFzxU+fxmETJG4l7dq6UwdABNQAId4gVszCWgzs+4baXfga4M4Jm1
-	KWaQWQiezTmlJOUOdd5NHw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730601757; x=
-	1730688157; bh=7aQjkeEfZNTabB3dswHOiBr7My56p+3plKEvzliDkoI=; b=M
-	E8fmCmTOMXK1IcGxyP1JKqy0+Lw+KjFDmLHUJBdnzY6USO+P82lGVs/P4qY5a6M7
-	t1LGmztdptIPoKM1L2lIkFvr/1naF8Z4WbkpasRfWBluGBZQWTu8pnq/3yC7pYUu
-	k+l7q60EGmHXKbEHEZNRfwCQPDeTOU5dLUwfynMwdt6sIOKxz5rffEc1v4Gu2/qi
-	38CP2uuGwcQiwKeaLT61RsF4gv+LqkBweNNxJOEmWCtLxtMZRbfngTqW07e8mydX
-	kWCtvj+IjWhkZw5bm8q8qcfzkqpjLmae+ZJRETnJ17JDWRhjJ5EReagabzrgKIPH
-	pEDlgE7RgZtHiLTtktI+A==
-X-ME-Sender: <xms:HeMmZx44BmvV25OjRxQzXERReogPVfeDqF7BVffDZn-TtMjoG969qg>
-    <xme:HeMmZ-70ri_CAmkzM9hsaaG1pZOoEsi8xUeOrRkUKi4fpggKXyM5aI9oQ4y40bC1z
-    9BJT0G_g6EonMqWiA>
-X-ME-Received: <xmr:HeMmZ4d1VKS19EdGECMXGzMv38TPCilaQwsuk2BbvqxhmuD6El19pGWGjhkNXiPSmyIEHs0iB-uSMIxtgUmALW6gXUGS1XAs3vQR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdelvddggeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopegrlhhg
-    ohhnvghllhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HeMmZ6LA5IgP1V9gecQkSmMC9S2SNaJ135sbJsWR9g10fTC2YwB5ig>
-    <xmx:HeMmZ1JVExwhWSPCUSF_jmVONagrYRaM14u7QEyMIDcbYOhDRNEQvA>
-    <xmx:HeMmZzycYZc6xUN1vOTElYChSb9KvDM-5TtOShxmfbEsmAjWyYNAAQ>
-    <xmx:HeMmZxL_2qgLBxnbc8g8M-8pi5Hn7kUR9KznFyF-z2R0yN2JLKwZug>
-    <xmx:HeMmZyGeMiliHF0mCO-Z4u8YyjVPRJtFcT8HZvCqpye537cMDwH6xkNY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 2 Nov 2024 22:42:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Andrew Kreimer" <algonell@gmail.com>,  git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PiDWeTRY"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-431ac30d379so27322375e9.1
+        for <git@vger.kernel.org>; Sun, 03 Nov 2024 05:49:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730641746; x=1731246546; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=a3pya/w1u4ybDFRg4CBx4WSqPhCifzF9gzr4ngU19To=;
+        b=PiDWeTRYIiJRoRunJoP2UDhmTpwGVd7Bah9XmHFy0rRkzvFyYTLVKl76Hez1REu751
+         6KKXAk+URC4MnWiJdrO9pTB17l+CxUsvINNJRepVyg6DeF7/RnXtNZUoY5ldO7UsBmSY
+         AfaTovEtdeG1a8qUZW29JuSjg7s5Nhag7sveAqvZVoiZWp9OWBsXzX4PGHbUeYRC/ZvY
+         9tSJAumom8byHoZ9uow6wUzLkuuq6tJJp5Lv0HBZO+w2/uPfTYmkw5alHRk7fxLau6NX
+         1HImiM+vMblXKKmu8dxX6m5k8rebUFiOt58VtpudwlboaVSJPPmxwbtPDNqLZJwh93e2
+         Dwlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730641746; x=1731246546;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a3pya/w1u4ybDFRg4CBx4WSqPhCifzF9gzr4ngU19To=;
+        b=VL7DwSU6NYIlLngRYW+n6NFm/V2Q+nMqi3qcxnzjipeItMdNtiNAPPri4hUrbtmDB5
+         Jx/Jb/GJAkeSGEQNz6UA5xMw//7FrcN7MWqK7N/erSa+z7e+Af96DgDlBjpcUKn4cMnr
+         eZPMUjoJBIIvR77Upzkld5Hw43kUTEHrXbf7wvkFfeca42Hb197szLiqJYz20Sr8M3Nt
+         E7hCYjmMqi2FjZuhCO/T5uMfUxC3lw9+xeJNi0QUYARMwneAlimpXIgasVYeOH9W+zgJ
+         eZP6zmg6m5hd8VFNA/FjAulcN3OmrWFqHk0htgQ8ZnBwqXS64JuWLs9abAFjIc6CaRW7
+         6nMg==
+X-Forwarded-Encrypted: i=1; AJvYcCWrkxXNPyyZiYjBqBmiJBCzVmFgOGhB08xaCKSnrs/YaQC1azH2i/0JiCWNiDUiXpYMG1o=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw01M3DhGdVrXeNb8kcHX0dWOG0PM1BE54Upkyr1qhOvRajri45
+	9oOg/ex4RE65ybukhbWUkWd8d0HxHKELHmrTuX3DCSCMvQ6aCqBP
+X-Google-Smtp-Source: AGHT+IEouyKTkTmPyd3+Cj77e6UXxIDnr8wDW/ZMTHrYR0SO4XF/eqpUqPwYe5jplN43go7I3CFctA==
+X-Received: by 2002:a05:600c:1d16:b0:42e:d4a2:ce67 with SMTP id 5b1f17b1804b1-431ae9c440cmr228052925e9.17.1730641746002;
+        Sun, 03 Nov 2024 05:49:06 -0800 (PST)
+Received: from void.void ([141.226.12.41])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c116b11esm10638455f8f.104.2024.11.03.05.49.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Nov 2024 05:49:05 -0800 (PST)
+Date: Sun, 3 Nov 2024 15:49:02 +0200
+From: Andrew Kreimer <algonell@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org
 Subject: Re: [PATCH] t1016: clean up style
-In-Reply-To: <2a385fcd-7cb2-4d6c-8372-2139f11c85a8@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Sat, 02 Nov 2024 20:11:02 +0100")
+Message-ID: <Zyd_ToxE-KVYSwHl@void.void>
 References: <20241102165534.17112-1-algonell@gmail.com>
-	<2a385fcd-7cb2-4d6c-8372-2139f11c85a8@app.fastmail.com>
-Date: Sat, 02 Nov 2024 19:42:35 -0700
-Message-ID: <xmqqikt5xckk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <2a385fcd-7cb2-4d6c-8372-2139f11c85a8@app.fastmail.com>
+ <xmqqikt5xckk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqikt5xckk.fsf@gitster.g>
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Sat, Nov 02, 2024 at 07:42:35PM -0700, Junio C Hamano wrote:
+> Good eyes.  I suspect that it is from a separate topic, and this
+> patch is supposed to be preliminary clean-up for this change, or
+> something?
 
-> Hi
->
-> This looks correct according to CodingGuidelines, part “For shell
-> scripts”.
->
-> • Whitespace and redirect operator
-> • Case arms indentation
-> • Tabs for indentation.  It might look like some of the lines in the
->   preimage (term?) use two nesting levels set to four columns, but that
->   is because the first line is indented by four spaces and the next line
->   is indented with one tab (eight columns).  The postimage changes them
->   to use one tab per level.
+I did all of the clean ups again from scratch, the resulting patch
+files are almost the same.
 
-Thanks for an easy-to-follow-concise-and-to-the-point review
-summary.  Very much appreciated.
+By eyeballig the instaweb, it seems that the chunks are interleaved
+far apart, and not side by side as usual.
 
->
-> On Sat, Nov 2, 2024, at 17:53, Andrew Kreimer wrote:
->> Remove whitespace after redirect operator.
->>
->> Align mixed space/tab usages.
->>
->> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
->> ...
->> +		test_cmp ${name}_content5 ${name}_content6
->> +	'
->
-> Everything up to here looks like whitespace changes.  Indeed.
-
-
-
->> +	test_expect_success $PREREQ "Verify ${name}'s sha256 content" '
->> +		git --git-dir=repo-sha256/.git cat-file ${type} ${sha256_oid}
->> >${name}_content7 &&
->> +		git --git-dir=repo-sha1/.git cat-file ${type} ${sha1_sha256_oid}
->> >${name}_content8 &&
->> +		test_cmp ${name}_content7 ${name}_content8
->> +	'
->>  }
->
-> But this is diffed as an addition.  Seems like either a mistake or the
-> commit message and/or patch comment (`---`) didn’t mention this kind of
-> change.
-
-Good eyes.  I suspect that it is from a separate topic, and this
-patch is supposed to be preliminary clean-up for this change, or
-something?
-
+Will send v2 anyway with improved message body and an extra line to
+be removed, thank you both.
