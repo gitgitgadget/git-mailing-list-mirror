@@ -1,67 +1,65 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF5E1E3DCF
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 20:50:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDE41F7553
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 21:00:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730753445; cv=none; b=g1PNIlOLfTibCgRwktmBrHIRS0y3yVKKvHDt2zfs9m/j0z1Rspv4ZTbfbcj+OK2OV9PBv6AQL0dTQzhWMX+UjuPPfAdf+CwVt+Ub/fLQaySDS9JVyxofIkMySOAU9eoxPLfRKLXVWxySYj/BBsFkOK+4m7BvGjn7Amv1sGTvvuU=
+	t=1730754013; cv=none; b=LR9TXyQDk3rxAOroFOD96+tLxhFsZY2NdbdK1KXrFJc6H3AqVrOL3WXvzdQiUwkuy9nNqcADxhBteRxT2wv4lpWXzTRVo/bXdaElOcwroLGlM01KNPUco6BAv448V0dft6fC7j/oyzh5j+WR2F1Z1pTeWwtIHxl72894mzkqxeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730753445; c=relaxed/simple;
-	bh=ZrT58cD18otwyvELfRkEstlA5irtWF8sWq8WiaagogU=;
+	s=arc-20240116; t=1730754013; c=relaxed/simple;
+	bh=NFaB8DGcfDfZRJVVfjd0Eca8Y8qd74IO64qaLbfGAmg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hPTxEHxsFuAvxXCRrc6J2/NxaQIi295bfH0IyMEeYgZsTnhbf1fhnBig9EL/Hh/NBATFjIRdEg+/qPxTmMa2fMdkvNt8yhjPsxln3xj1SiGG49OHEsHXSgJgA6Jqz4WB+gMjAWcudN6epHnAG+hjuXyk2uHO/0yQdkrIgUl2g5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=jHhepgFQ; arc=none smtp.client-ip=209.85.128.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tm+hMlznsGPAYwH50cuJCRpKqlY4y6SrjoHbYlqACIsHAwDaoex03y2OYfDSoA9GmDIZGkYsrscS068EcQeMKUatIfuwY3QY+ke8ac3DBAufYlgk/JmaPUQkq6PaNTfFNXoffc7KrsW543TBnQJHCNiQ8N/atZ9mKeHBDmF5O5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=NrC66cym; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="jHhepgFQ"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ea7c26e195so26779387b3.0
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 12:50:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="NrC66cym"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e5a5a59094so42152907b3.3
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 13:00:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730753443; x=1731358243; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730754010; x=1731358810; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZrT58cD18otwyvELfRkEstlA5irtWF8sWq8WiaagogU=;
-        b=jHhepgFQ2xxsXqkge06w/JEcHOyJ3rAnQ+fcsdgK09tl9msJVwfAWWqGg6WV/xe/aV
-         Og2C/pmLLi6KGZjHI2XXTeE/iAH7UfNgsipHYtJnBXv4PwvE0tcYqUJYwH90e6bUoCb2
-         wjy6S/zo0SqOZHs6ASci51RHpRA/JfiRqJZUv3G2FrcHtsI7yF1GK1TM7TafNBQpmSr2
-         4+BdGwGib5eX7C38J+Tu3evxMEBRxCzZLnkcNHEG5TMpuoJzGI4KP1G3OSyLB8znhrYc
-         B/TANbYxv5sv4mzOQw/gfVNF9WtuOmJZ7e8NhuIN8H99f8mVwZs/c/yHmb4qT/8RZPBt
-         IZyQ==
+        bh=fNdsIKzRTpGVwLozqnF76E3ZGvLhtiuWtoSNjnUymcQ=;
+        b=NrC66cymny6+i9LeNCl7w6g7maJFkPGvxyYwuAOLMvXRt6vdyta1ySYQatQJL3PHU9
+         IhQvaPMTn90tKpvT0cCAG17kdtvvlUkQuuH7UgRw8zt+T05IcmBBMc0yNFaevVFm86cv
+         D/hOdklpRqhklz7kb/zSBgnsjL/juwReNSKrULZ3XjcfsWqQKuBwwLLLXU+6jHw/QRRC
+         PkN3Fzd/0yHQ7KuQcbi3rYAkQCYLjd7f5SLigYxE60wHAS/6v1F+oHeLp4ude/7T1BIn
+         JG8mmLrteynalBocc2hSj6/qel2jypdbywnN4oA8ZjHDQRqieL7udTkE7tQojQGzwo66
+         utVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730753443; x=1731358243;
+        d=1e100.net; s=20230601; t=1730754010; x=1731358810;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZrT58cD18otwyvELfRkEstlA5irtWF8sWq8WiaagogU=;
-        b=RRY5QMZHRUeKrrhAe/R/4UzkAVvBQn4/jUQ2J/Y4EKTpkU2AuXEAyXpxahIz6KrQ1C
-         6U+n4ctGr53wvxS1eHEZOVMmt8Vjm04irV562MYJAZmTZ0br/rk8X0IXRTKFXojbuHdN
-         Ekd2Bclvakpx3UoP7XbGf8r/JdAYYMrKF92CxqCu4gUuu9DHtXZN9Vo6DZjx6STwCpxL
-         ZvE538iDrqHa72R6C446zuQnVkly14OaYGEfOJY4qcH4Fd7WxYfR0joUCygcUQczi4al
-         4p56zV3nAy8w5BVQYmc03WVXgz3NvjBIivgTg0i64oBxSZNXyxGbiJfgzCFjwZMxUCCI
-         igpg==
-X-Gm-Message-State: AOJu0YzVuGWBDEPQ3IITZrUXdBXhtu98Tlhh52rxRuHDMskTwCrpJ+KT
-	J2bQGsPC82BfFjK2EOKPpl9zG1JvWsga7t+rV1zI8LgYzbB1eMy2R+NW7a6BXOABkaDvT0BcwCb
-	DV4U=
-X-Google-Smtp-Source: AGHT+IEzx7qj37dCw4JUw23wiyLq2GSSsskMSjamlx2/2wDufZbcyHi0PdyCDUWzbIy3cqm9yt5JoQ==
-X-Received: by 2002:a05:690c:c8e:b0:6e3:2be1:a2dc with SMTP id 00721157ae682-6ea52374db0mr167892657b3.11.1730753442977;
-        Mon, 04 Nov 2024 12:50:42 -0800 (PST)
+        bh=fNdsIKzRTpGVwLozqnF76E3ZGvLhtiuWtoSNjnUymcQ=;
+        b=HbLZRuQTlNkZMLyqiulYIe1676N4sLEzeR4aviam0D0zNjC6+vVsTheDDK4g20G+51
+         nRUMG4+oTKp1NMl5QnPMwrVBOfwur6QNThLIpxuUm2Pe8tcgyAQ/rbUzwE5gvzVfC9Sp
+         ponPf1xUeCItzjXyt043kmVt3s1HJL1O2qJBdyY5IkAiUqid+HCxcZjaaGEcdyEFvgvQ
+         rebvwi7kL74q+FkjfjxC166YI+Ts+jiN57cMGsM0X75/sv+GVtDd1Emf2gSWQqmgE/mX
+         v4ajNzWBu9S5s99B44xITb7Ru8wEUVfBR0xFPjDpLjCZClNjqIeB0IgNx3jc6jP7OchI
+         CRkw==
+X-Gm-Message-State: AOJu0Yy0s39NxsQzUQvtipca6SAHiXKqHrDB166DZbIBSyLiJ+03KMcJ
+	ArwHs3c8EJfZu6BVrUKRMxZ1Ac/06QsOQRk6h+Lghz/biOksaQtR6+NYMIo5HOo=
+X-Google-Smtp-Source: AGHT+IHajx5GW6AlqRKATOjYi02cEWiXpNsZXHpHBuLQma87lHNnuOgp7vs/LnkH3df+jcpM/EvYuQ==
+X-Received: by 2002:a05:690c:6e8e:b0:6dd:ce14:a245 with SMTP id 00721157ae682-6ea64a8d443mr133493337b3.6.1730754010384;
+        Mon, 04 Nov 2024 13:00:10 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55b107b8sm19557907b3.34.2024.11.04.12.50.42
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e30e8a6101esm2185723276.11.2024.11.04.13.00.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 12:50:42 -0800 (PST)
-Date: Mon, 4 Nov 2024 15:50:41 -0500
+        Mon, 04 Nov 2024 13:00:09 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:00:08 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 08/11] t5332: enable OFS_DELTAs via
- test_pack_objects_reused
-Message-ID: <Zykzobmfaun/Ojz0@nand.local>
+Subject: Re: [PATCH 09/11] pack-bitmap: enable cross-pack delta reuse
+Message-ID: <Zyk12FZ+NcOUALAz@nand.local>
 References: <cover.1728505840.git.me@ttaylorr.com>
- <9d81d890402f94f4126aedef0845d615d10455bc.1728505840.git.me@ttaylorr.com>
- <20241011081939.GF18010@coredump.intra.peff.net>
+ <ca3a916cd6e93aaa09ccff9f77fc127254222068.1728505840.git.me@ttaylorr.com>
+ <20241011083134.GG18010@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,43 +68,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241011081939.GF18010@coredump.intra.peff.net>
+In-Reply-To: <20241011083134.GG18010@coredump.intra.peff.net>
 
-On Fri, Oct 11, 2024 at 04:19:39AM -0400, Jeff King wrote:
-> On Wed, Oct 09, 2024 at 04:31:24PM -0400, Taylor Blau wrote:
+On Fri, Oct 11, 2024 at 04:31:34AM -0400, Jeff King wrote:
+> On Wed, Oct 09, 2024 at 04:31:28PM -0400, Taylor Blau wrote:
 >
-> > Back when test_pack_objects_reused was introduced via commit
-> > 7c01878eeb (t5332-multi-pack-reuse.sh: extract pack-objects helper
-> > functions, 2024-02-05), we converted bare pack-objects invocations
-> > into one of two wrapped variants, either test_pack_objects_reused or
-> > test_pack_objects_reused_all.
+> > In order to do this, the pack-reuse code within pack-bitmap.c marks
+> > bits in a separate bitmap called 'reuse_as_ref_delta'. Objects whose
+> > bits are marked in that bitmap must be converted from OFS_DELTAs to
+> > REF_DELTAs.
 > >
-> > The latter passes `--delta-base-offset`, allowing pack-objects to
-> > generate OFS_DELTAs in its output pack. But the former does not, for
-> > no good reason.
+> > To mark bits in that bitmap, we adjust find_base_bitmap_pos() to
+> > return the bitmap position of any delta object's base regardless of
+> > whether or not it came from the same pack. This is done by:
 > >
-> > As we do not want to convert OFS_DELTAs to REF_DELTAs unnecessarily,
-> > let's unify these two and pass `--delta-base-offset` to both.
+> >   1. First converting the base object's into a pack position (via
+> >      `offset_to_pack_pos()`).
+> >
+> >   2. Then converting from pack position into into lexical order (via
+> >      `pack_pos_to_index()`).
+> >
+> >   3. Then into an object ID (via `nth_packed_object_id()`).
+> >
+> >   4. Then into a position in the MIDX's lexical order of object IDs
+> >      (via `bsearch_midx()`).
+> >
+> >   5. And finally into a position in the MIDX's pseudo-pack order (via
+> >      `midx_pair_to_pack_pos()`).
+> >
+> > If we can find that base object in the MIDX, then we use its position
+> > in the MIDX's pseudo-pack order to determine whether or not it was
+> > selected from the same pack. If it is, no adjustment is necessary.
+> > Otherwise, we mark the delta object's position in the new
+> > `reuse_as_ref_delta` bitmap, and convert accordingly from within
+> > `write_reused_pack_one()`.
 >
-> I think that matches what happens in the real world. I am puzzled that
-> your BUG() instrumenting turns up some conversion cases. Why are we
-> still converting in those cases?
+> OK, that makes sense. It does feel like a non-trivial amount of work to
+> do for each delta we're going to (potentially) reuse from a midx'd pack.
+> Can we recognize the common case that the base is in the same pack and
+> also being sent/reused without doing the full conversion to oid and the
+> resulting bsearch?
 
-These are cases where we're calling pack-objects directly without
-passing the --delta-base-offset flag, so all deltas get converted into
-REF_DELTAs.
+I don't think it ends up saving you anything if you don't find anything
+matching the pack/offset pair in the MIDX. If you perform that lookup
+with bsearch_midx() and get nothing back, then you have to take the
+slower path above anyway.
 
-> > diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> > index 0fc0680b402..0f1b22b8674 100644
-> > --- a/builtin/pack-objects.c
-> > +++ b/builtin/pack-objects.c
+My figuring here was that it would be better to uniformly take a
+slightly slower path instead of taking a hopefully-faster path which
+might fail, only to then go back to the slower path on top.
+
+Of course, you could do both, or apply some heuristics like avoiding the
+cross-pack lookup if you know you're in the preferred pack, etc. I'm not
+sure how much it is worth doing so, TBH.
+
+> > @@ -1182,10 +1188,24 @@ static size_t write_reused_pack_verbatim(struct bitmapped_pack *reuse_packfile,
+> >  	if (pos >= end)
+> >  		return reuse_packfile->bitmap_pos / BITS_IN_EWORD;
+> >
+> > -	while (pos < end &&
+> > -	       reuse_packfile_bitmap->words[pos / BITS_IN_EWORD] == (eword_t)~0)
+> > +	while (pos < end) {
+> > +		size_t wpos = pos / BITS_IN_EWORD;
+> > +		eword_t reuse;
+> > +
+> > +		reuse = reuse_packfile_bitmap->words[wpos];
+> > +		if (reuse_as_ref_delta_packfile_bitmap) {
+> > +			/*
+> > +			 * Can't reuse verbatim any objects which need
+> > +			 * to be first rewritten as REF_DELTAs.
+> > +			 */
+> > +			reuse &= ~reuse_as_ref_delta_packfile_bitmap->words[wpos];
+> > +		}
+> > +
+> > +		if (reuse != (eword_t)~0)
+> > +			break;
+> > +
+> >  		pos += BITS_IN_EWORD;
+> > -
+> > +	}
 >
-> You need to indent or otherwise comment-out this diff. Otherwise "git
-> am" will pick it up as the start of the actual diff, adding the bogus
-> BUG() call to the applied patch (and dropping the rest of your commit
-> message).
+> This is accessing reuse_as_ref_delta_packfile_bitmap->words directly
+> using pos/end as limits. But those come from reuse_packfile_bitmap. Are
+> we guaranteed to have zero-extended the reuse_as_ref_delta bitmap as far
+> as the original went?
 
-Oops, of course. Thanks for spotting again.
+Yeah, we know this is OK because both are allocated with the same size
+in reuse_partial_packfile_from_bitmap(), where the relevant portion is:
+
+    word_alloc = objects_nr / BITS_IN_EWORD;
+    if (objects_nr % BITS_IN_EWORD)
+            word_alloc++;
+
+    reuse = bitmap_word_alloc(word_alloc);
+    reuse_as_ref_delta = bitmap_word_alloc(word_alloc);
+
+all of the bitmap_set() operations on the former are bounded in
+try_partial_reuse(), but adding a length check can be done here as an
+extra safety measure.
+
+> Could we just be calling bitmap_get() here, which would do the length
+> check for us? Though I guess we would miss out on some whole-word magic
+> it is doing. So maybe we need to just do that length check ourselves.
+
+Yeah, we don't use bitmap_get() because we want to access the whole word
+at a time.
 
 Thanks,
 Taylor
