@@ -1,39 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105011C4A04
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 17:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58DC33FE
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 17:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730741542; cv=none; b=QvIrEbup8gKUn8efJdxEuAblL2qHYC8Z701Eam2E5hm7/MYYRoiyCx0zaxQTij9Ktdq6SFjso7aNB09hklwna1V6gIknVT5cnm0cJcLUBFWtX7K/1JjrwCyBy1t/pkqOEp5sCC3QOUFLzF9jFa37vXhG+1vcnzhKZzZEadPsNAw=
+	t=1730741911; cv=none; b=LRMOa2DgYmxwtf2ecljXzKvAFV3LipNEsdfR/OVIt2yY+Vc+br3RAAYUodbhZejp8b8tNkzeA0vkYuMo026OWqW+4dTMlbk3R/aR9kijcXGUIzCWqgZW9gJUY/1COcE53unvZKNNUhrqv7Qt4yu9jUUVmJZih1agLMCrg7KRg3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730741542; c=relaxed/simple;
-	bh=ComYpIDEdz4PXzYEp7r4+2trTFT38kDorInTyvFuJDo=;
+	s=arc-20240116; t=1730741911; c=relaxed/simple;
+	bh=lYfj3YEQWqE9/e0U3gm+GjEWW++fiDfOeExExxyIbec=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GdYV3JzUMZCU5Ysz8f8umtHqNhJ7X4Go5Nd2VNoKRvDuZUQCUYRyabVYqMy6w5mrTzi5Gvp2wq7PwfeDCcd5s3aMiPjLzcOFZND/9U6R9qYvGS8ZKDPbEgdt0NJ6gHeGXBf0ANHvYFn91t73lBlyBoAmECBJMEJTL2XZGanflEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XBbfgJsB; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=uYjJ4FVMpqZi3H4NH4mMUhiIkadDWfMBalTQ3VzvZvdg6F3WQ8UTPpL7T3zbPo++bbAyn9KmrSmetGQ7F4WzIL1Va0XEe7FMjZlXek5CG2fUrgSzEHqu41ifEh8huQmbbKzvawwiLPhye5BqIABkQAd/2ySjQGjPMJydeJ2XZ+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I/F3AGxZ; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XBbfgJsB"
-Received: (qmail 12649 invoked by uid 109); 4 Nov 2024 17:32:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ComYpIDEdz4PXzYEp7r4+2trTFT38kDorInTyvFuJDo=; b=XBbfgJsBXTR7W7Zs7Z7powz+TBhPH9EJWpupqDEqOPbgrfmO2P2gfSm5bb0zg9qHIpZLBbjOJQbzkWGk7+haQKcK+J4vb7QbviTfAoyFZy2fhMGX/tNiBD1jMzADOo1uvHI6IrhXHHkHozn3qt7bqG7X8/mDPcpyAR565n7wwe/7fVyK9jlzCL7sYhheCqW2GJu7p2057u9Gp7osvGwAkf1FC28ofEOapK7lnCy2Mtjp5FMM8Wdo9ZFUW/3XRtp9l7eOuBd5R8BgIGVLo4K6EYAt4T0asQ0vtAqXQhSMxakBVpFGcOKC835gIg6GuWZW47zydK0obek1a1FscJBBtg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I/F3AGxZ"
+Received: (qmail 12803 invoked by uid 109); 4 Nov 2024 17:38:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lYfj3YEQWqE9/e0U3gm+GjEWW++fiDfOeExExxyIbec=; b=I/F3AGxZJ/nuWgJczvVTEOhCzZ1ST/o0b7jNSXq7Uev/vn5qVSxnS795RgGWlTpEFPkn86ABRB/x3oNdRljnbEUbr4ee7gm8gZZ0O0EDdWAKsXC8lCpX6Ffqsgl/cLyfuq1nhk/v4UJ8n+lUdqefL0Q4FL1mwCXgCd3qUormTmmx1tdqNGJR9U5hGOuODpX0Tp3I5stw1J9wBduRHRF6d4B9bzeDf2YA8B8QX73ke6z/2krY5iSAdk2ZrgXVyFOyQLVslsOde5Gx5heeCRfmw0zi6nVuBVood9/GA/GAbXMLMWysy4oHbqccxuhdnGVIwmeLZHRe5DCb7PhFAI5hSg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Nov 2024 17:32:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Nov 2024 17:38:29 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14572 invoked by uid 111); 4 Nov 2024 17:32:18 -0000
+Received: (qmail 14659 invoked by uid 111); 4 Nov 2024 17:38:28 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Nov 2024 12:32:18 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Nov 2024 12:38:28 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 4 Nov 2024 12:32:18 -0500
+Date: Mon, 4 Nov 2024 12:38:28 -0500
 From: Jeff King <peff@peff.net>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, me@ttaylorr.com
-Subject: Re: [PATCH v5 0/9] packfile: avoid using the 'the_repository' global
- variable
-Message-ID: <20241104173218.GB2989472@coredump.intra.peff.net>
-References: <cover.1729504640.git.karthik.188@gmail.com>
- <cover.1730714298.git.karthik.188@gmail.com>
+Subject: Re: [PATCH v5 8/9] config: make `packed_git_(limit|window_size)`
+ non-global variables
+Message-ID: <20241104173828.GC2989472@coredump.intra.peff.net>
+References: <cover.1730714298.git.karthik.188@gmail.com>
+ <2730aacd8e5add0918d806131d0f31a0b2474915.1730714298.git.karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,37 +42,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1730714298.git.karthik.188@gmail.com>
+In-Reply-To: <2730aacd8e5add0918d806131d0f31a0b2474915.1730714298.git.karthik.188@gmail.com>
 
-On Mon, Nov 04, 2024 at 12:41:38PM +0100, Karthik Nayak wrote:
+On Mon, Nov 04, 2024 at 12:41:46PM +0100, Karthik Nayak wrote:
 
-> Range-diff against v4:
->  1:  b3d518e998 =  1:  6c00e25c86 packfile: add repository to struct `packed_git`
->  2:  bb9d9aa744 =  2:  70fc8a79af packfile: use `repository` from `packed_git` directly
->  3:  d5df50fa36 =  3:  167a1f3a11 packfile: pass `repository` to static function in the file
->  4:  0107801c3b =  4:  b7cfe78217 packfile: pass down repository to `odb_pack_name`
->  5:  2d7608a367 =  5:  5566f5554c packfile: pass down repository to `has_object[_kept]_pack`
->  6:  2c84026d02 =  6:  1b26e45a9b packfile: pass down repository to `for_each_packed_object`
->  7:  84b89c8a0e !  7:  7654bf5e7e config: make `delta_base_cache_limit` a non-global variable
->     @@ Commit message
->          this value from the repository config, since the value is only used once
->          in the entire subsystem.
->      
->     +    The type of the value is changed from `size_t` to an `unsigned long`
->     +    since the default value is small enough to fit inside the latter on all
->     +    platforms.
->     +
+> @@ -652,8 +651,11 @@ unsigned char *use_pack(struct packed_git *p,
+>  				break;
+>  		}
+>  		if (!win) {
+> -			size_t window_align = packed_git_window_size / 2;
+> +			size_t window_align;
+>  			off_t len;
+> +			struct repo_settings *settings = &p->repo->settings;
+> +
+> +			window_align = settings->packed_git_window_size / 2;
+>  
+>  			if (p->pack_fd == -1 && open_packed_git(p))
+>  				die("packfile %s cannot be accessed", p->pack_name);
+> @@ -661,11 +663,12 @@ unsigned char *use_pack(struct packed_git *p,
+>  			CALLOC_ARRAY(win, 1);
+>  			win->offset = (offset / window_align) * window_align;
+>  			len = p->pack_size - win->offset;
+> -			if (len > packed_git_window_size)
+> -				len = packed_git_window_size;
+> +			if (len > settings->packed_git_window_size)
+> +				len = settings->packed_git_window_size;
+>  			win->len = (size_t)len;
+>  			pack_mapped += win->len;
+> -			while (packed_git_limit < pack_mapped
+> +
+> +			while (settings->packed_git_limit < pack_mapped
+>  				&& unuse_one_window(p))
+>  				; /* nothing */
 
-I think this change is not ideal, for the same reason that the other
-type changes were: you can conceivably have a 4GB or larger cache here.
-On Windows using "unsigned long" would prevent that. (On most other
-systems it is OK either way since "unsigned long" and "size_t" are
-generally the same size).
+Much nicer than the earlier version of the patch.
 
-I do think the config parsing should change to use size_t here (like I
-mentioned elsewhere in the thread), which would fix it on Windows.
-That's outside the scope of your patch, but in the meantime we should
-not be making things worse by moving the variable itself to the inferior
-type.
+Do we need to call prepare_repo_settings() here? It looks like the
+intent is that it would be lazy-loaded, and I don't think there's any
+guarantee that somebody else would have done so.
+
+> @@ -123,6 +124,19 @@ void prepare_repo_settings(struct repository *r)
+>  	 * removed.
+>  	 */
+>  	r->settings.command_requires_full_index = 1;
+> +
+> +	if (!repo_config_get_ulong(r, "core.packedgitwindowsize", &longval)) {
+> +		int pgsz_x2 = getpagesize() * 2;
+> +
+> +		/* This value must be multiple of (pagesize * 2) */
+> +		longval /= pgsz_x2;
+> +		if (longval < 1)
+> +			longval = 1;
+> +		r->settings.packed_git_window_size = longval * pgsz_x2;
+> +	}
+> +
+> +	if (!repo_config_get_ulong(r, "core.packedgitlimit", &longval))
+> +		r->settings.packed_git_limit = longval;
+
+And this looks like a faithful conversion of the existing parsing. Since
+we're switching from git_config_ulong() to repo_config_get_ulong(), we
+could take the opportunity to swap out for the size_t parser, but:
+
+  1. I'm just as happy for that to happen separately, and leave this as
+     a patch which should not have any behavior change.
+
+  2. It looks like we do not yet have a size_t variant for the configset
+     accessors. :)
 
 -Peff
