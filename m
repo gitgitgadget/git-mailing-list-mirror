@@ -1,119 +1,226 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDE51D5CC2
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 23:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AE61C760A
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 23:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730763557; cv=none; b=L95jvVM0bUPN0DBnsKhSW7M77WxCx7PmBzX9uvN2QeLK+v+B5S+rlfu2y5XKtkn7apveGj9+y6LfaxxzPWaa7V7fd4qsj+wlCVh3PkfLsC3e7Bz0SdiDFFCjIHVlswUG6J3TxR+ws5nW2NgfNdC/BCZOYpznMZffMc2zkQ+rhDs=
+	t=1730764032; cv=none; b=FltgRm63wIuGZ82Rm4U2e1+gZjb+d+tJVQd7FLRD1My3ch0A6fUqaI7XjbqNhwNcQEAh7IBb0pKI2u/BlAMSwBA9xv1oYjR5fL1V8KTiIgopFDJLeM768T7btW8ExJ+3LPzpLWdQpuQU37TIzbHYaizoBSulbhHh4kuTczqqZAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730763557; c=relaxed/simple;
-	bh=oVv62QpyV70fdJrjyOp8nusGjSJx3Dew9eiCx+GaF30=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=W2NxjmB/f+ZEOmvXlgIx3eo6/2o3d+aKSb82KWZydJ4ysrjHEGYeteJhLto/1KKB593s6zREnD9iI4t6CTGu7725dx7JTwJKgd6UcH/c79i0AdituQLgdsxLuVwS4GcG9kpse0tU/+mqAXDYvUlFEmlWpszUkYOiV3cGrM2ZCL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=YL/yloQH; arc=none smtp.client-ip=209.85.128.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1730764032; c=relaxed/simple;
+	bh=JYp9GwMSMPqoIvczIrOdN8J1WBMyZI8SUYAy+oATuzQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=agkP/2Vokclv9xTdSGfNq7b7eEnHiideZaXKXqgXGW5VgAGUH4WY+Z7MjW2blX3tYFzda9ucllIk7ZZws7YPi0UQZXte9L26LUbCytyihSv3X4xZKJe4NmehDhhn3IkTg7V+wPEd9e/PnQyMfVHpNFuQmm4PlwOkyhoBSGdKhuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Hf2w/dR3; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YL/yloQH"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6ea8a5e86e9so36851867b3.2
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 15:39:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730763554; x=1731368354; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hiV2jVWWeVrru067YNQo0c3q0GSFiyemWooBwZpGhfw=;
-        b=YL/yloQHvDmhu1kO08ns0lB1al81q/KO+9mvjFKxRzjFRGolTxvhKrWsz8iB42X8IX
-         9tMUGnDvfugU5eFIr0lfYQTGxq+kXjzP6InOAMH2xtnJmukCHjLYRhTiftaZN2zer2K6
-         W0tn/fC6Z3c+JXbXDi2UXAJOopS1VVTvyiwGhLedd4ZixYCgkMc4tFH6jZiFwfOXLb5A
-         hV04doE/gWq7CBfw2WOfxey3+z04fee5nk2z1FNkfxI+WTURGl07NiAK1v6hqd1RP/IM
-         K/xm7MXogcA5McD0KHDQxwZLGrJya+6jZH8NWkFI+A81NoYP/8YBinHmQWlM46CHMg/l
-         +7sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730763554; x=1731368354;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hiV2jVWWeVrru067YNQo0c3q0GSFiyemWooBwZpGhfw=;
-        b=wSpar43U/QwQePvM5IfIVr1ykqNW9MCRC8K8RkQf/6i+CjpeoAc589zyFXTC4kW8ur
-         pVpgriqQq3I4MGIfyKxyXAdhg10s5LEkfQ9EOqDsNIVJM1QEyQcs8k4W/Lmth14DvxXK
-         4AeN/BQCeaGBkHbE10Szyrg5KAEt4smMMqSGEx8CRNJ4gHUhvf9KdtD1rid0mm2BOx0C
-         1Stucbrt9Ps/vp9otU+pNlTqoxYmJN4fCMB6pqIE1/Q1883F0U6X/9pvPSG7rWaWzuBP
-         vyBxDQzzPDDskjpby3rwmWNnGMMly2sbWcbCreaNSmFzGeuydAmHSaBcc5wLr6cx98ha
-         cteQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWgiiHeI+8gRqIr9oFVAL2CvBEav0dAsAZZp6ULZ4dnVr0PgwGYARiJ0lUtSIkvINDRWqg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3u8tqvF2nB3bYVSB061TSCusAQWlqZOxX+QN3fH2QJ9+YFwZ/
-	GjMwShCBfr1Hrz0yuUpTju3fcW9KOOoPbku7/dAMy4Uyi3DOyB/xwKc3JqXnP0ZECWABT0rvoKo
-	2csOa4sml38KCTzTZxyXWZqNKdIpfGg==
-X-Google-Smtp-Source: AGHT+IHvkil2yAJWhNvYeYVMI91SluTXFaDzIrsnjW4Ip8W9vd8rzDIb8LNGrxEW53B3F8zJdKt7JEsGvsNwafoiProj
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:2aa0:4fe8:8e66:1c8b])
- (user=jonathantanmy job=sendgmr) by 2002:a05:690c:998d:b0:6ea:34c5:1634 with
- SMTP id 00721157ae682-6ea525566admr954387b3.8.1730763554582; Mon, 04 Nov 2024
- 15:39:14 -0800 (PST)
-Date: Mon,  4 Nov 2024 15:39:12 -0800
-In-Reply-To: <58e2e41e-ff67-4d4b-98f0-48be5eb3df27@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Hf2w/dR3"
+Received: (qmail 17248 invoked by uid 109); 4 Nov 2024 23:47:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=JYp9GwMSMPqoIvczIrOdN8J1WBMyZI8SUYAy+oATuzQ=; b=Hf2w/dR3LvUWY0FMKeQHHSULpXGTbkJXtU3g511yrkklWVL5pP/KeghRWJ22TnUHbh0cxnQjz3NhmmU7QgoSzsXQQlVl1ahfcKB1tEKST9/AKNj8Pw/nXCUuOzROmSpnGiqfVn1HViy7XastZ8wf1s4+HywHhX79dg2V1InAo14+sG7q8RjFU9Q3wZm2/bLyzKhHOqavOCxjMkD8kue/3hLHbBamduzUXX07LRe10mgW5wdHUFtanVp9d3gpv1CKa/koVQDkCIqV6/NptFhBmuHa8VI1DdExMWKCd7cA9bG0OG3yj9GUy6/w6iRqsVtt5vttRqiADTJfhgbCHGmrvQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 04 Nov 2024 23:47:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18638 invoked by uid 111); 4 Nov 2024 23:47:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 04 Nov 2024 18:47:05 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 4 Nov 2024 18:47:05 -0500
+From: Jeff King <peff@peff.net>
+To: Taylor R Campbell <git@campbell.mumble.net>
+Cc: git@vger.kernel.org
+Subject: Re: Synchronous replication on push
+Message-ID: <20241104234705.GA3017597@coredump.intra.peff.net>
+References: <20241102020653.766D1609AC@jupiter.mumble.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.199.ga7371fff76-goog
-Message-ID: <20241104233912.2493936-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 3/6] t6601: add helper for testing path-walk API
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, 
-	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
-	johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, me@ttaylorr.com, 
-	johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com, 
-	kristofferhaugsbakk@fastmail.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241102020653.766D1609AC@jupiter.mumble.net>
 
-Derrick Stolee <stolee@gmail.com> writes:
-> You are correct that if the path-walk API emitted multiple batches
-> with the same path name, then we would not detect that via the current
-> testing strategy.
+On Sat, Nov 02, 2024 at 02:06:53AM +0000, Taylor R Campbell wrote:
+
+> Whenever I push anything to it, I want the push -- that is, all the
+> objects, and all the ref updates -- to be synchronously replicated to
+> another remote repository, the back end:
+
+This isn't quite how replication works at, say, GitHub. But let me first
+explain some of what you're seeing, and then I'll give some higher level
+comments at the end.
+
+> Here are some approaches I've tried:
 > 
-> The main reason to use the sort is to avoid adding a restriction on
-> the order in which objects appear within the batch.
+> 1. `git clone --mirror -o backend git@backend.example.com:/repo.git'
+>    to create the front end repository, plus the following pre-receive
+>    hook in the front end:
 > 
-> Your recommendation to group a batch into a single line does not
-> strike me as a suitable approach, because long lines become hard to
-> read and difficult to parse diffs. (Also, the order within the batch
-> becomes baked in as a requirement.)
-
-The hashes in a line can be abbreviated if line length is a concern.
-Also, note that I am suggesting sorting the OIDs within a line (that is,
-a batch), and also sorting the lines (batches) as a whole.
-
-> The biggest question I'd like to ask is this: do you see a risk of
-> a path being repeated? There are cases where it will happen, such as
-> indexed objects that are not reachable anywhere else.
-
-I was thinking that the whole point of this feature is that we group
-objects by path, so it seems desirable to test that paths are not
-repeated. (Or repeated as little as possible, if it is not possible
-to avoid repetition e.g. in the case you describe.)
-
-> The way I would consider modifying these tests to reflect the batching
-> would be to associate each batch with a number, causing the order of
-> the paths to become hard-coded in the test. Something like
+> 	#!/bin/sh
+> 	exec git push backend
 > 
->    0:COMMIT::$(git rev-parse ...)
->    0:COMMIT::$(git rev-parse ...)
->    1:TREE::$(git rev-parse ...)
->    1:TREE::$(git rev-parse ...)
->    2:TREE:right/:$(git rev-parse ...)
->    3:BLOB:right/a:$(...)
->    4:TREE:left/:$(git rev-parse ...)
->    5:BLOB:left/b:$(...)
+>    This doesn't work because the pre-receive hook runs in the
+>    quarantine environment, and `git push' wants to update
+>    `refs/heads/main', which is forbidden in the quarantine
+>    environment.
 > 
-> This would imply some amount of order that maybe should become a
-> requirement of the API.
+>    (However, git push to frontend doesn't actually fail with nonzero
+>    exit status -- it prints an error message, `ref updates forbidden
+>    inside quarantine environment', but exits wtih status 0.)
 > 
-> Thanks,
-> -Stolee
+>    But maybe the ref update is harmless in this environment.
 
-If we're willing to declare an order in which we will return paths to
-the user, that would work too. (I'm not sure that we need to declare an
-order, though.)
+I think the quarantine error is working as designed. If your push
+updates local refs in the frontend repo, any object-existence checks it
+does from the quarantine area are not necessarily valid if the
+quarantine environment goes away without migrating the objects (e.g., if
+you reject the push).
+
+So this:
+
+> 2. Same as (1), but the pre-receive hook is:
+> 
+> 	#!/bin/sh
+> 	unset GIT_QUARANTINE_PATH
+> 	exec git push backend
+
+is potentially dangerous. Instead, you should disable push's attempt to
+update the local tracking refs. There isn't an option to do that, but
+if you don't have a "fetch" config line, then there are no tracking
+refs. I.e., rather than using "clone --mirror", create your frontend
+repo like this:
+
+  git init --bare
+  git config remote.backend.url git@backend.example.com:/repo.git
+  git fetch backend refs/*:refs/*
+
+And then push won't try to update anything in the frontend repo.
+
+  Side note: there's a small maybe-bug here that I noticed if the
+  backend is on the same local filesystem. In that case
+  GIT_QUARANTINE_PATH remains set for the receive-pack process running
+  on the backend repo, and will refuse to update refs (where it should
+  be safe to do so!). In your example that doesn't happen because
+  GIT_QUARANTINE_PATH does not make it across the ssh connection. But
+  arguably we should be clearing GIT_QUARANTINE_PATH in local_repo_env
+  like we do for GIT_DIR, etc. I don't think you ran into this, but just
+  another hiccup I found while trying to reproduce your situation.
+
+Moving on...
+
+>    This doesn't work because `git push' in the pre-receive hook
+>    doesn't find anything it needs to push -- the ref update hasn't
+>    happened yet.
+
+Right. You could do it from a post-receive, but if the point is to be
+able to reject the push to the frontend, it must happen before the refs
+have been updated! So...
+
+> 3. Same as (1), but the pre-receive hook assembles a command line of
+> 
+> 	exec git push backend ${new0}:${ref0} ${new1}:${ref1} ...,
+> 
+>    with all the ref updates passed on stdin (ignoring the old values).
+
+...yes, this is the correct approach. You're not _quite_ passing all of
+the relevant info, though, because you're ignoring the old value of each
+ref. And ideally you'd make sure you were moving backend's ref0 from
+"old0" to "new0"; otherwise you risk overwriting something that happened
+independently on the backend. Of course that creates new questions,
+like what happens when the frontend and backend get out of sync.
+
+>    This fails because `--mirror can't be combined with refspecs'.
+
+Yes. I don't think you really want "--mirror" in the first place, since
+you won't be fetching from the backend (or will you? If you are, that
+creates new questions about atomicity and syncing). If you do the
+init+fetch above, it won't be set.
+
+> 4. Same as (3), but remote.backend.mirror is explicitly disabled after
+>    `git clone --mirror' finishes.
+> 
+>    On push to the primary, this prints an error message
+> 
+> 	remote: error: update_ref failed for ref 'refs/heads/main': ref updates forbidden inside quarantine environment
+> 
+>    but somehow the push succeeds in spite of this message, and the
+>    primary and replica both get updated.
+
+This is again the quarantine issue updating local tracking branches.
+However, we don't consider that a hard error, as updating them is
+opportunistic (we'd get the new values on the next fetch anyway).
+
+If you drop the refspec as above, you shouldn't see that any more.
+
+> 5. Same as (1), but the pre-receive hook assembles a command line of
+> 
+> 	exec git send-pack git@backend.example.com:/repo.git \
+> 		${new0}:${ref0} ${new1}:${ref1} ...
+> 
+>    with all the ref updates passed on stdin (ignoring the old values).
+> 
+>    This seems to work, and it propagates errors injected on push to
+>    the replica, but it is limited to local or ssh remotes, as far as I
+>    can tell -- it does not appear that git-send-pack works with custom
+>    remote transports.
+
+I don't remember all of the limitations of send-pack anymore. Even
+though "push" is more porcelain than plumbing, I'd probably still
+recommend it for a script, just because I think direct use of send-pack
+isn't going to be all that exercised, so you are likely to find missing
+bits of functionality and so forth. I think just dropping the refspecs
+and using push would be following the more well-trodden path.
+
+
+Now back to the main point: is this a good way to do replication? I
+don't think it's _terrible_, but there are two flaws I can see:
+
+  1. You're not kicking off the backend push until the frontend has
+     received and processed the whole pack. So you're doubling the
+     end-to-end latency of the push. In an ideal world you'd actually
+     stream the incoming packfile to the backend, which would doing its
+     own quarantined index-pack[*] on it in real-time. And then when you
+     get to the pre-receive hook, all that's left is for all of the
+     replicas to agree to commit to the ref update.
+
+     [*] That would fix the latency, but of course you'd be spending a
+     bunch of CPU on each replica to do the same indexing computation.
+     You _could_ do that once, streaming the result out to the replicas,
+     and then sending them just the resulting index. But there is some
+     safety in repeating the computation on each replica (they _should_
+     all have the same objects, but if that isn't the case, you'd notice
+     if one of them was missing, say, a delta base that the others
+     have). GitHub's original replication design did repeat the
+     computation, and AFAIK that is still the case today.
+
+  2. Using "push" isn't a very atomic way of updating refs. The backends
+     will either accept the push or not, and then the frontend will try
+     to update its refs. What if it fails? What if another push comes in
+     simultaneously? Can they overwrite each other or lose pushed data?
+     Or get the frontend and backends out of sync?
+
+     Git's ref atomicity strategy is generally to take a lock on a ref,
+     then check that its current value is the expected "old" value, and
+     then update it to the "new" value and release the lock atomically.
+     So you probably want to ask each backend replica to take the ref
+     locks and check the old values, then respond "yes, I'm ready to
+     commit", and then you send back "OK, commit" at which point they do
+     the update.
+
+     But "push" doesn't give you that kind of granularity (neither for
+     the backends or on the frontend). Back when GitHub's replication
+     system was designed, nothing did, and we had to use custom code.
+     These days the reference-transaction lets you act in that stage
+     where the ref lock is held (and my understanding is that GitLab
+     implemented it to do the same kind of three-phase commit).
+
+     But I don't have much experience with it myself. It might be
+     enough if the frontend transaction hook talked to the backends,
+     initiating an update-ref there with a transaction hook to pause and
+     wait for the three-phase agreement.
+
+Maybe some of that points you in the right direction.
+
+-Peff
