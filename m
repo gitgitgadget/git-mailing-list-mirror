@@ -1,287 +1,142 @@
-Received: from slateblue.cherry.relay.mailchannels.net (slateblue.cherry.relay.mailchannels.net [23.83.223.168])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF6718CC0C
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 19:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.168
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730748267; cv=pass; b=IK/6hc2UTIBGqMuI2z3ANEudceAzHFJa4aNB83cjL4kKuhtUYHRbKn4bYhyvBaj0FR1eUBPoGfd+0IMu53HtOC8Snmsv1m4nCjlh7pHDeXCUpIuj4r3MOd4evmHm5LSIBxujbv3VTdAAlbU3XkcFxdmqHdzIk+V1GtIjNVIamEQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730748267; c=relaxed/simple;
-	bh=R46NRWLvYXTr+A+k9XJrrmP+qIDc4inog8o8qOd4eOQ=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=Sr4QbA3Z8We4vU6ttY7QYg5Z0cYQOKu08ExvW9OApqDtLVv69G/zz/a9DfSxRaF8Sd/RNb/r9/yKVyzA3QTfGT8MHvhrYFgnIy7WSJEVKt3C8bDD5eDXamKKr7Cs2dm7wqkznr9U4LBNhPCTW+PmAq7yYa7I4REbHOaTPqLEn8E=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.223.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 478B090460A
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 19:24:18 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (trex-5.trex.outbound.svc.cluster.local [100.107.241.166])
-	(Authenticated sender: instrampxe0y3a)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 865A4905523
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 19:24:17 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1730748257; a=rsa-sha256;
-	cv=none;
-	b=zQinaAroAwOxWWIJLC8Y+qLafSCj+WXp5QZ18kO2GPVMZgUud8xaRjSYjo7jXTJ7XWsBBQ
-	c18x8hB4iKSJJ39C81k5FbPxmoD5PUxnIj7Oy4cdbkcG4O1cF+u8f0zRiBMhgcuuJzBcG6
-	g0HPW33bnHT0Y/P7/ebTSK5eLEto6gnLHb4wtwI+rk2eZEFWQJfX5ipkLIH38gNEY4E1WM
-	65FeIYjTtSUrsGOKmici0QEwT64/FqbQf/HHglWWUnHaRR9hdz268aosotoSF8DLZ8+xeT
-	CRJSk4c+rPRvJy3MJ+NL5xXYA3/xkeGtX6xDYZh+rfH/xq8VBhKNZ6JW0hU6Pg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1730748257;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=0QjPndBVzFVyI2K3LHtI8OomI5u91zMXMrlpWtLtzxY=;
-	b=zlBsq0BuNntUXYXitZ3XVQUg93YBMacW28ayZ/GzD354Q8ZCvLBTeLNtFg82dMsVi2huVE
-	HxQtC1B79b390iu0rabu4rBk0tblx6YxMbUAnejGpLgew9o54Q8xB1OdttNyJSZKu+phA+
-	lXU3tK1FC2R4I8FcKLAhNvAkIveRsr3ja4wZpbjNlnOlIJ2JGdixy3r4iE7/inUq/5iS2h
-	uLIW8RV1Z7T8x1d8NhmjIbKV5//rbqkTHaI4TSBg5uw2ha3Rdwj3MwoGIA6DqGJIaknIVS
-	Azqnmjf7OLBwKyH5NBwNEINCSTopTOhVQpczXEoGrPsj4H3l7OrlIFiEJ1WdbQ==
-ARC-Authentication-Results: i=1;
-	rspamd-78f87fbb6-9hvhs;
-	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Blushing-Trail: 1bbf2da31cb2ea2c_1730748258037_2806029123
-X-MC-Loop-Signature: 1730748258037:1082806759
-X-MC-Ingress-Time: 1730748258037
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.107.241.166 (trex/7.0.2);
-	Mon, 04 Nov 2024 19:24:18 +0000
-Received: from p5b0ed864.dip0.t-ipconnect.de ([91.14.216.100]:60482 helo=heisenberg.fritz.box)
-	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <calestyo@scientia.org>)
-	id 1t82gR-000000045Ul-3EMb
-	for git@vger.kernel.org;
-	Mon, 04 Nov 2024 19:24:15 +0000
-Message-ID: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
-Subject: git format-patch escaping issues in the patch format
-From: Christoph Anton Mitterer <calestyo@scientia.org>
-To: git@vger.kernel.org
-Date: Mon, 04 Nov 2024 20:24:14 +0100
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.1-1 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2310C16C687
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 19:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730748630; cv=none; b=LVVz4ePqeO4nPcUFW8vTAfuStiR7WuivbQDqpn6+JQJkHVNhizMRavln7MsV8aaKvSNUMsvlt4kOLHFV8H6pQLI8z6AciLJZpCnmG1cjv8hzh2mShHzkZIiQ71EDtffuYdjTdtmfAPVzylREzV5GnF4pExZtqUGjvrHRxzS0vg0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730748630; c=relaxed/simple;
+	bh=CtfV6Xclv5+5zHmStoG16z8WCQbm879YW+H2GsW4HTI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=h08Q6C9yz0uWhfrflqd2lgpXAAzQXOxIZ7vrO57lNbkFfHMjvqbLeflnulyPtYdfE/VjGqQOhQDpXVXt5xSlAz5zHqlFRYAFiFXW40NrND991Iv3ZF2qkuDNy2RBP/pJJLRNNYlORuk6E9olWkPpZ+pIS6PJ1iBUkmg48FoESyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=my4dXyMS; arc=none smtp.client-ip=209.85.167.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="my4dXyMS"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3e619057165so2232678b6e.1
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 11:30:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730748628; x=1731353428; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ESlYcF/PMrGPYFsBBlqhDciEpd7YCNQMwcdB+3WulnA=;
+        b=my4dXyMSJ+y6Am2FVv/rTizKd1XO/WT/Un4It6Q8VIlLmHYInUPmd4ccQR+gGgYAn6
+         otw3+Qo39t6wnRU/yoOzGWXSSA68ImuqgrP2QKBmqFmTcuiWGgOKrXBYqtuUSl1KTRoJ
+         qVitKzHuoNxgWbA2+LInYLOHMVoRq4hUOEdSAvtm8vnosUKXvsaUBVXN3YR1Zxb072NF
+         hZOotzbhl7ef0aBV7miuNNOSAH4e1dcBkVnOjTTAy758JXZF/q117kgjyaSEiUx/powF
+         +aK24yDvd6sh7VEXCSH/riaRnhvulDDohSaifxAlsYcu/v2mCYiLTz3Dl8vL3ootkjik
+         AM8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730748628; x=1731353428;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ESlYcF/PMrGPYFsBBlqhDciEpd7YCNQMwcdB+3WulnA=;
+        b=wTS+n3ycooqAmxIvvHVXfTF91UG8a7ZEAuQLrD/u7AkmAO4sn/4xFFbd2rQhItW7Vs
+         6Ggrt5rolLdkkQ6GjDfeNOKVGQtWgUmrOOSXL7jwnO5nnOCRXA1/YMqcWbt1ASlVOQnz
+         j0FbqVqe5JByju5Tdw1/JnPjz07E0+iQ3w7aGVAp6Zz2dTmxbTm67AKZ66AiC8VvDscN
+         K8+pqRP3a/HMjYelp8z4kygplSOAhCHyshAveqPyN63a6BceGH4i56QLsUsmMy4XUsmf
+         com68jfBNX/wH2zM5wegsi0AFR8lMBeOpoxegPwQHxDEsZthfFyTPSxXZPaXzMSwWvDu
+         5FEg==
+X-Forwarded-Encrypted: i=1; AJvYcCVIFjxGK1Cu46YR9yGMCNqGDK9VWtwXeyPsv9UU+2Wb5BzeFUtq2H/vGZg/MKbpn7rEN5Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKax872XXV050gw4piEmiC8mJZ1QZylHoKWh1ccdTEiq2ymXAi
+	6S5Jr1P2LW5DyGstHrOgOVqol3D09vdXGI54EnNd2xFE7GV8dBLw
+X-Google-Smtp-Source: AGHT+IHuX+uvw1nqlxCUfjbejx+unbhpNWRjpgYKcS9rvjO01s7Yikf/SO5UYE4RVLiFl75vjA7XRQ==
+X-Received: by 2002:a05:6808:14d6:b0:3e5:c7dc:ac60 with SMTP id 5614622812f47-3e6384a1b2dmr29209822b6e.43.1730748628148;
+        Mon, 04 Nov 2024 11:30:28 -0800 (PST)
+Received: from localhost.localdomain ([2409:40c2:8017:2f6f:26a1:2e1:5d4c:875])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7ee452a8b3fsm7570018a12.28.2024.11.04.11.30.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Nov 2024 11:30:27 -0800 (PST)
+From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+To: gitster@pobox.com
+Cc: abhijeet.nkt@gmail.com,
+	git@vger.kernel.org,
+	me@ttaylorr.com,
+	ps@pks.im,
+	sandals@crustytoothpaste.net
+Subject: [PATCH v5 0/2] show-index: fix uninitialized hash function
+Date: Tue,  5 Nov 2024 00:59:56 +0530
+Message-ID: <20241104192958.64310-1-abhijeet.nkt@gmail.com>
+X-Mailer: git-send-email 2.47.0.107.g34b6ce9b30
+In-Reply-To: <xmqq1pzuylm6.fsf@gitster.g>
+References: <xmqq1pzuylm6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-AuthUser: calestyo@scientia.org
+Content-Transfer-Encoding: 8bit
 
-Hey there.
+In this iteration, I have fixed some typos along with a stylistisc issue
+that were noted in v4.
 
-For some special use case, I wanted to write a parser for the patch
-format created by git format-patch, especially where I can separate
-headers, commit message and the actual unified diffs.
+I have also added an additional patch that adds a test for --object-format
+option in show-index as it was noted we don't already have any.
 
-There seems unfortunately only little (written) definition of that
-format, git-format-patch(1) merely says it's in UNIX mailbox format
-(which itself is, AFAIK, not really formally defined).
+Abhijeet Sonar (2):
+  show-index: fix uninitialized hash function
+  t5300: add test for 'show-index --object-format'
 
+ builtin/show-index.c   |  9 +++++++++
+ t/t5300-pack-object.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-Anyway, it seems to turn out, that no escaping is done for the commit
-message in the patch format and that this can cause actual breakage
-with valid commit messages.
+Range-diff against v4:
+1:  c75175ad9b ! 1:  05ee1e2ea5 show-index: fix uninitialized hash function
+    @@ Commit message
+         In c8aed5e8da (repository: stop setting SHA1 as the default object
+         hash), we got rid of the default hash algorithm for the_repository.
+         Due to this change, it is now the responsibility of the callers to set
+    -    thier own default when this is not present.
+    +    their own default when this is not present.
+     
+         As stated in the docs, show-index should use SHA1 as the default hash
+    -    algorithm when ran outsize of a repository. Make sure this promise is
+    +    algorithm when run outside a repository. Make sure this promise is
+         met by falling back to SHA1 when the_hash_algo is not present (i.e.
+    -    when the command is ran outside of a repository). Also add a test that
+    -    verifies this behaviour.
+    +    when the command is run outside a repository). Also add a test that
+    +    verifies this behavior.
+     
+         Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
+     
+    @@ builtin/show-index.c: int cmd_show_index(int argc,
+      		repo_set_hash_algo(the_repository, hash_algo);
+      	}
+      
+    -+	// Fallback to SHA1 if we are running outside of a repository.
+    -+	// TODO: Figure out and implement a way to detect the hash algorithm in use by the
+    -+	//       the index file passed in and use that instead.
+    ++	/*
+    ++	 * Fallback to SHA1 if we are running outside of a repository.
+    ++	 *
+    ++	 * TODO: Figure out and implement a way to detect the hash algorithm in use by the
+    ++	 *       the index file passed in and use that instead.
+    ++	 */
+     +	if (!the_hash_algo)
+     +		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
+     +
+    @@ builtin/show-index.c: int cmd_show_index(int argc,
+      
+      	if (fread(top_index, 2 * 4, 1, stdin) != 1)
+     
+    - ## rm (new) ##
+    -@@
+    -+#!/bin/sh
+    -+
+    -+echo rm $@
+    -
+      ## t/t5300-pack-object.sh ##
+     @@ t/t5300-pack-object.sh: test_expect_success 'index-pack --strict <pack> works in non-repo' '
+      	test_path_is_file foo.idx
+-:  ---------- > 2:  c8a28aae55 t5300: add test for 'show-index --object-format'
+-- 
+2.47.0.107.g34b6ce9b30
 
-Consider the following example:
-1. I create a fresh repo, add a test file and use a commit message,
-   which contains a From line (even with the "magic" timestamp) and
-   some made up commit id (0000...)
-
-   ~/test$ git init foo; cd foo
-   Initialized empty Git repository in /home/calestyo/test/foo/.git/
-   ~/test/foo$ echo a >f; git add f
-   ~/test/foo$ git commit -m "msg1
-  =20
-   From 0000000000000000000000000000000061603705 Mon Sep 17 00:00:00 2001
-   --
-   ---"
-   [master (root-commit) c08debc] msg1
-    1 file changed, 1 insertion(+)
-    create mode 100644 f
-  =20
-  =20
-2. The format-patch for that looks already suspicious:
-   - The From line is not escaped (as some variants of mbox would do,
-     some properly some, causing corruption by the escaping with >
-     itself).
-   - What the format may think of as a separator after the commit
-     message (namely the ---) cannot be used as that either, as a ---
-     in the commit message is again not escaped.
-  =20
-   ~/test/foo$ git format-patch --root; cat 0001-msg1.patch; rm -f 0001-msg=
-1.patch
-   0001-msg1.patch
-   From c08debcc502c78786ec71d50686ff0445a13b654 Mon Sep 17 00:00:00 2001
-   From: Christoph Anton Mitterer <mail@christoph.anton.mitterer.name>
-   Date: Mon, 4 Nov 2024 19:58:45 +0100
-   Subject: [PATCH] msg1
-  =20
-   From 0000000000000000000000000000000061603705 Mon Sep 17 00:00:00 2001
-   --
-   ---
-   ---
-    f | 1 +
-    1 file changed, 1 insertion(+)
-    create mode 100644 f
-  =20
-   diff --git a/f b/f
-   new file mode 100644
-   index 0000000..7898192
-   --- /dev/null
-   +++ b/f
-   @@ -0,0 +1 @@
-   +a
-   --=20
-   2.45.2
-  =20
-  =20
-3. Adding a 2nd commit, this time using the unified diff from the above
-   patch as commit message body(!).
-  =20
-   ~/test/foo$ echo b >>f; git add f
-   ~/test/foo$ git commit -m "msg2
-  =20
-   diff --git a/f b/f
-   new file mode 100644
-   index 0000000..7898192
-   --- /dev/null
-   +++ b/f
-   @@ -0,0 +1 @@
-   +a
-   --=20
-   2.45.2"
-   [master 6bbe38c] msg2
-    1 file changed, 1 insertion(+)
-   ~/test/foo$ git format-patch --root
-   0001-msg1.patch
-   0002-msg2.patch
-  =20
-  =20
-4. To no surprise, git itself of course knows the difference between
-   commit message and actual patch, as show e.g. by the following,
-   where the commit message is indented (by git):
-
-   $ git log --patch | cat
-   commit 6bbe38c33680239ac9767e0e5095f9f32ad41ade
-   Author: Christoph Anton Mitterer <mail@christoph.anton.mitterer.name>
-   Date:   Mon Nov 4 20:00:20 2024 +0100
-  =20
-       msg2
-      =20
-       diff --git a/f b/f
-       new file mode 100644
-       index 0000000..7898192
-       --- /dev/null
-       +++ b/f
-       @@ -0,0 +1 @@
-       +a
-       --
-       2.45.2
-  =20
-   diff --git a/f b/f
-   index 7898192..422c2b7 100644
-   --- a/f
-   +++ b/f
-   @@ -1 +1,2 @@
-    a
-   +b
-  =20
-   commit c08debcc502c78786ec71d50686ff0445a13b654
-   Author: Christoph Anton Mitterer <mail@christoph.anton.mitterer.name>
-   Date:   Mon Nov 4 19:58:45 2024 +0100
-  =20
-       msg1
-      =20
-       From 0000000000000000000000000000000061603705 Mon Sep 17 00:00:00 20=
-01
-       --
-       ---
-  =20
-   diff --git a/f b/f
-   new file mode 100644
-   index 0000000..7898192
-   --- /dev/null
-   +++ b/f
-   @@ -0,0 +1 @@
-   +a
-  =20
-
-5. Next I try whether git am can use the patches created above in a
-   fresh repo:
-  =20
-   ~/test/foo$ cd ..; git init bar; cd bar
-   Initialized empty Git repository in /home/calestyo/test/bar/.git/
-   ~/test/bar$ git am ../foo/0001-msg1.patch
-   Patch is empty.
-   hint: When you have resolved this problem, run "git am --continue".
-   hint: If you prefer to skip this patch, run "git am --skip" instead.
-   hint: To record the empty patch as an empty commit, run "git am --allow-=
-empty".
-   hint: To restore the original branch and stop patching, run "git am --ab=
-ort".
-   hint: Disable this message with "git config advice.mergeConflict false"
-  =20
-   That already fails for the first patch, the reason probably being my
-      From 0000...
-   line in the commit message.
-  =20
-  =20
-6. So trying again with simply that From 000.. line removed
-  =20
-   ~/test/bar$ sed -i '/^From 00000/d' ../foo/0001-msg1.patch
-   ~/test/bar$ git am ../foo/0001-msg1.patch
-   fatal: previous rebase directory .git/rebase-apply still exists but mbox=
- given.
-  =20
-   and again on a freshly created repo:
-  =20
-   ~/test/bar$ cd ..; rm -rf bar; git init bar; cd bar
-   Initialized empty Git repository in /home/calestyo/test/bar/.git/
-   ~/test/bar$ git am ../foo/0001-msg1.patch
-   Applying: msg1
-   applying to an empty history
-  =20
-   Ah, now it works, so it was indeed the (unusual but still valid commit m=
-essage).
-  =20
-  =20
-7. Now that 0001-msg1.patch is applied, let's try the 2nd patch:
-  =20
-   ~/test/bar$ git am ../foo/0002-msg2.patch
-   Applying: msg2
-   error: f: already exists in index
-   Patch failed at 0001 msg2
-   hint: Use 'git am --show-current-patch=3Ddiff' to see the failed patch
-   hint: When you have resolved this problem, run "git am --continue".
-   hint: If you prefer to skip this patch, run "git am --skip" instead.
-   hint: To restore the original branch and stop patching, run "git am --ab=
-ort".
-   hint: Disable this message with "git config advice.mergeConflict false"
-   ~/test/bar$=20
-  =20
-   And again, ... the reason most likely git not being able to get that
-   the "first diff" is not actually a diff but part of the commit message.
-  =20
-
-btw and shamelessly off-topic question:
-Any chance that git format-patch / am will ever support keeping track
-of the branch/merge history of generated / applied patches?
-That would be really neat.
-
-
-Thanks,
-Chris.
-
-PS: Not subscribed, so please keep me CCed in case you want me to read
-    any possible replies :-)
