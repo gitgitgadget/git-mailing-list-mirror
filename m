@@ -1,69 +1,63 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32FE376E0
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC84C78685
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730733506; cv=none; b=fZAGmm88RJRQHKE1HkincYt3mL+6rTjDvBM4Qo7luS6gX/KuhZUD9MNjUW/UdxM6BkkMW66IjRH3guFd/8TLy+4FFXYn9dcgiEXpnyzfC32Xzfidar+QN0tNHid6/256CWrgfXuQ096fhdoPmaH4pmUjNOTsmv0N8C/OpdwJodQ=
+	t=1730734161; cv=none; b=C5oZBIPCaUVuNTavwSSUVBoZCAG9PE5CPyvXw2ZWMWLENl2RgysX4iM/oMzPPTr1EwWTV0QzDOaBMtjN4pvOACIn5Dr30d6BbcmgxTxXkNVR/jrrZ024QPdcr/WHapxu0a3Bu6RAZ+7/L34c9BSyvm6HAW1bE+TRY55klQ2aeTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730733506; c=relaxed/simple;
-	bh=u9NdV20eL69s87cXB+3DV3NrJOoOLXmEgLsnH13nP6c=;
+	s=arc-20240116; t=1730734161; c=relaxed/simple;
+	bh=7+5uWZiuB5wyYaBVyMijVh8jdRewuGFoujx/v1/BjLE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RRqBTsO7WuhwDw1qXA8ywT3s9HrBILplSvxSr519Ejw1rn/mia4p9Zy26asx7zI4L0DBqxvTHfi85CXRBjccbrjPzbFUzxS6invgThzDe+Qm3U34OXXoEKgJxzECc91MLvlgfPy0CphMBW/HEnSafTA9NSod2ktEXwOh2Bn8R1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=yZNE9xxg; arc=none smtp.client-ip=209.85.128.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=MPaY9IlQVq4u8M2rNiM4dtQW07rJ4z654fo6h0MOF2w0edMMBQ28sX1buIo4FpbW8c/rwazzfXLiIF/S6B+kx9gjdSGLSsjZQoiiu6MeczaHqSg2yM2cU40P+YJf97RgP+qqfbBNYUGod0Yao8f+JKOStvB3umPi2dtB9NVpevI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Ot8nISbV; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yZNE9xxg"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6ea8419a57eso15608177b3.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 07:18:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Ot8nISbV"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ea8419a57eso15776627b3.1
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 07:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730733503; x=1731338303; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730734159; x=1731338959; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rn6b2TEyzf8foBEH4/22bwr5Ir6kKxaFWVFYQCScOJA=;
-        b=yZNE9xxgCZso3vq4070M4yXZjFRDoFA7O/yJItYjLIIyIuM8NemHOzjmxQQYl5FwZ2
-         EGnIwp9tgboBQ3OtVsKOr71u5q5zxgk/s2xJ4NYHba3sQ0+N8co0dOJ+RtoFLJ4SI7Du
-         Svw6P/R/IRMpMihCh4jVTEI2e6uLo4Jc9h86q909kri6Jbq/clj3vWN51g0l31sX3n49
-         144UYx99vG7RPCs2SasjjI1N9aHQf51EJ01sgJpBDRo702nOlEqNkQsp70aAoK76IIOo
-         ntDwYEqGuTO3V7ATBgwzR4Hs4PmB4JI6EQCILByD9NZBHr+X/Tfwu1kSevvKdKWXcOu4
-         ++Gw==
+        bh=CHr2PYjUMWXEAmXOSs6PJ+jOsnvA9JFBZym10qvploc=;
+        b=Ot8nISbV4OccDtaBpwDvVHr3SU4IJ/XipN7NnXOBZowMaX+Fjkplj3P9MwvINj1Wtu
+         qnsovNOZMarTUIsrdmzXCnbexhbvDPLuUGMfFQ3gn1w4q9kFvHCiGZSYhTdjdvcq09B7
+         9XELcu8igHQvgYcwKRSwiKL3VrsAdG0o7IY9fjNrrOvn0LRL77sjb+FpbJbdBcJooHfb
+         /C2xPky79/rKeDbipwp/AT9rjinlmIZifDT+WvP28k6SAikZ2MEBJ4ausyXkv0BkV+Jf
+         R4sJkcffRuwrVVqQeFvh8A/OKCUorTMYK5YtARxeOe4+iDNPlHiTsG3r2dsQ3xEeHFB/
+         U8Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730733503; x=1731338303;
+        d=1e100.net; s=20230601; t=1730734159; x=1731338959;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Rn6b2TEyzf8foBEH4/22bwr5Ir6kKxaFWVFYQCScOJA=;
-        b=lWVRlePggLWFdXjd3KjNUbyKeMMRLTNlUB5wmUqodJOVCJH5LyNrLQJhHiFrm4nlbU
-         U8TonAnnXr2u946gLD1ou0N3xnYt3yxwrZAxWJHUygrsgy2yOsBoaN3DaFr2VrlaoNf2
-         kybjSFYqXmmSNdFt4jlOW2Preo89oibrgFXYFna1dhIWY0JWo1Wkxi+J2AIB/GjCLFxe
-         y+1KBU7f+NHuzWDKcU+8wodN9CaXeNgNyrBV4QhjErt1S7xvF8WLT6J8gvNuL7rXGAeN
-         66PK6yC2XkdDRqbCWXpLXw8gK+3BybswT1NB4K/Nx8MguVOHDgjoIw7khUTd5RQ7edU9
-         2bkA==
-X-Gm-Message-State: AOJu0Yyynpah4NgRx6GBb/q4EgYKGA5XkHjEKInB6q6HDR+yrNH3axdI
-	2pYmSY09VrWZYVsR2+mTpTEnfDVQvKBBcMVMQ8XTZQizRC0UNx5etgBvD2uStzk=
-X-Google-Smtp-Source: AGHT+IH0gZLFDmiXdc9oJCcNfOpOOTdrbRizIUiW/1WR3IngCHN+JQ1TVn34kvkQRgWjttAwjggnjQ==
-X-Received: by 2002:a05:690c:39b:b0:6ea:408a:3aca with SMTP id 00721157ae682-6ea408a3d83mr165344487b3.12.1730733502544;
-        Mon, 04 Nov 2024 07:18:22 -0800 (PST)
+        bh=CHr2PYjUMWXEAmXOSs6PJ+jOsnvA9JFBZym10qvploc=;
+        b=aw6SPTHDaPuM5c2GZZW5wRyXyGJZwNGZMHmI2jycxdPyPOGkA5MM/u2KB8k7g8CCMI
+         4PcUX/6xXad2Z4vEx/rZ73BDe0dkLi2LFOpPUXNCYpN2TDpzcgPeeeDkAz0g0wOw9K7j
+         glScdoItgeCl6Bs5Wg6aDSuZAeIanEOE1i1bsHnluAV0xU7GnRpdtFv5V++7EUNkcavg
+         3j5w6JS8L5x1YDWHP7nIxHRh1/8RuANZn/JVjGBjciwbSoIeFKKN6ydojwneuDOztrtj
+         jVPgMF6TxqA0RyXBK2zY7QdBEcUK6zh+nRBQBq+S8+vsHJ37ox//3H1lfuIbgvQLqLV1
+         cLBQ==
+X-Gm-Message-State: AOJu0YxsTv/jdB8cH8zt5a45zfjTkoAqOCOcPGreVUeL7ttBLLdfV09f
+	kZSGzBi0VF+GpeaIwN3v1IP/Tm/VY6nI9fb5Cz91ry5SAPg0IeX9E0nzgtTV/U6L6P1AaXclHNP
+	fQEU=
+X-Google-Smtp-Source: AGHT+IHxykYxf4VOm5KmmuiKQ2MQVsbzWq60fle9EKYXZ7RC+/uKWI8SZ6U9feAUb5INca+VJTp9Qw==
+X-Received: by 2002:a05:690c:c15:b0:6e3:1781:1e2b with SMTP id 00721157ae682-6e9d893fb2dmr334667547b3.16.1730734158810;
+        Mon, 04 Nov 2024 07:29:18 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55c459f3sm18091137b3.95.2024.11.04.07.18.21
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55c83723sm18090007b3.106.2024.11.04.07.29.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 07:18:22 -0800 (PST)
-Date: Mon, 4 Nov 2024 10:18:20 -0500
+        Mon, 04 Nov 2024 07:29:18 -0800 (PST)
+Date: Mon, 4 Nov 2024 10:29:17 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-Message-ID: <ZyjlvNJ4peffmGZ1@nand.local>
-References: <cover.1727881164.git.ps@pks.im>
- <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local>
- <Zyi7PA2m2YX9MpBu@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2024, #02; Fri, 1)
+Message-ID: <ZyjoTVhP0xn/Qcvx@nand.local>
+References: <xmqqr07rwsmd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,122 +66,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zyi7PA2m2YX9MpBu@pks.im>
+In-Reply-To: <xmqqr07rwsmd.fsf@gitster.g>
 
-On Mon, Nov 04, 2024 at 01:17:00PM +0100, Patrick Steinhardt wrote:
-> > I admittedly have a hard time squaring the benefits and goals we have
-> > with Meson with the cost of learning a new build system, and/or moving
-> > away from Make entirely.
+On Sun, Nov 03, 2024 at 08:05:46PM -0800, Junio C Hamano wrote:
+> Thanks everybody, especially Taylor, for keeping things going while
+> I was away.  Unfortunately, we seem to have acquired way too many
+> topics that were posted and picked up without getting reviewed.  As
+> we discussed a few months ago in <xmqqployf6z5.fsf@gitster.g>, I'll
+> start discarding topics that have seen no activities for 3 or more
+> weeks.  Interested parties can of course revive these topics.
+
+Welcome back, and thanks for trusting me to keep the patches moving
+between integration branches while you were gone.
+
+> With all the integration branches and topics broken out:
 >
-> I guess this depends on the exact persona you're optimizing for. There
-> are three main personas involved here:
+> 	https://github.com/gitster/git/
+
+Now that we are no longer referring to my tree here to list the
+broken-out topics, I have cleaned out topics besides my own that would
+ordinarily reside in this tree.
+
+> [Graduated to 'master']
 >
->   - Long-time Git contributors. I don't worry about that persona too
->     much. Folks in this category tend to be highly skilled, and they
->     should not have much of an issue with adapting to Meson.
+> * ds/path-walk-1 (2024-10-31) 6 commits
+>  - path-walk: mark trees and blobs as UNINTERESTING
+>  - path-walk: visit tags and cached objects
+>  - path-walk: allow consumer to specify object types
+>  - t6601: add helper for testing path-walk API
+>  - test-lib-functions: add test_cmp_sorted
+>  - path-walk: introduce an object walk by path
 >
->   - New contributors. This is a group of people that I think would
->     benefit from Meson. They get integration with their favorite IDE,
->     have easy ways to discover how to tweak build instructions and can
->     use standard invocations for Meson that they might already know from
->     other projects.
+>  Introduce a new API to visit objects in batches based on a common
+>  path, or by type.
 >
->   - Packagers. This is another group of people that would benefit from
->     my point of view. This is mostly because Meson has certain standards
->     for how to approach problems, and thus the packager would know for
->     how to handle things. They don't have to manually track build
->     options and changes thereof, as these can be easily discovered and
->     because Meson will error out in case invalid options are passed.
+>  Under discussion.
+>  cf. <ZyUqr/wb5K4Og9j9@nand.local>
+>  source: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
 
-I appreciate your thoughtful response to my concerns here. Please feel
-free to correct me if I am wrong, but I think the bulk of your argument
-is captured fairly well by these three points, so I want to focus my
-response here.
+This is marked as "Graduated to 'master'", although I suspect it isn't.
+I thought that it would have been because the topic went away, although
+I still see this in 'jch' via your 3503a15e17 (Merge branch
+'kh/bundle-docs' into jch, 2024-11-03).
 
-Responding in turn, I think my feeling is something like:
+Perhaps this WC report was generated before moving the topic back into
+'jch'? In either event, as noted by <ZyUqr/wb5K4Og9j9@nand.local>, this
+topic is still under discussion and is not ready to be merged (yet).
 
-  - Long-time Git contributors are going to be the ones who will most
-    frequently use the new build system. I am definitely sympathetic to
-    getting too comfortable with our existing tools, but so far in your
-    response I have not seen a compelling reason to switch the project
-    to use Meson.
-
-    What I really want to say here is that I don't think we should be
-    over-correcting on things that we are all comfortable with when they
-    are indeed not the optimal solution.
-
-    We can and should challenge those assumptions. But I think what I
-    see here is us challenging the assumption that 'make' is not the
-    right tool for the project, and (at least personally) not seeing
-    that it isn't.
-
-  - New contributors are a group that we should be optimizing for, I
-    certainly agree with you there. But I think there are a couple of
-    points that your response glosses over:
-
-      * New contributors should be telling us what build system they
-        prefer, not the other way around. If we are going to switch to
-        using a new build system to better accommodate new contributors,
-        it should be because either (a) they have told us what doesn't
-        work with 'make', or (b) we have a bulk of evidence that new
-        contributors cannot easily build the project.
-
-      * New contributors do not interact with build system internals
-        nearly as much as more experienced contributors. I would imagine
-        that the vast majority of those interactions are simply running
-        "make" or "make test".
-
-        You mention a handful of other niceties that Meson provides,
-        like language server support, but I am not sure that I agree
-        those are (a) the responsibility of the build system to provide,
-        or (b) that those needs aren't already well met by the vast
-        number of existing tools and IDE integrations that can work with
-        ctags.
-
-  - Packagers are something that I admittedly have less exposure to than
-    the other groups listed here, but I think my feeling there is
-    similar. While they are more likely to exercise far more parts of
-    the build system, I think we should also only be switching to a new
-    build system if there is evidence of significant, unmet needs by
-    packagers, which I have not seen.
-
-> > I feel that if we are going to pursue Meson over CMake and/or Make, we
-> > should have a clear plan to either get rid of CMake, keep it up-to-date,
-> > or something else.
+> * tb/cross-pack-delta-reuse (2024-10-11) 11 commits
+>  . pack-bitmap: enable reusing deltas with base objects in 'haves' bitmap
+>  . pack-bitmap.c: record whether the result was filtered
+>  . pack-bitmap: enable cross-pack delta reuse
+>  . t5332: enable OFS_DELTAs via test_pack_objects_reused
+>  . write_reused_pack_one(): translate bit positions directly
+>  . pack-bitmap: drop `from_midx` field from `bitmapped_pack`
+>  . pack-bitmap.c: extract `find_base_bitmap_pos()`
+>  . pack-bitmap.c: compare `base_offset` to `delta_obj_offset`
+>  . pack-bitmap.c: delay calling 'offset_to_pack_pos()'
+>  . pack-bitmap.c: avoid unnecessary `offset_to_pack_pos()`
+>  . pack-bitmap.c: do not pass `pack_pos` to `try_partial_reuse()`
 >
-> I fully agree with all you're saying here. Whatever the solution, the
-> new build system should be a proper first-class citizen and should be
-> exercised by our CI systems such that they don't silently break.
+>  Allow pack-objects to reuse an existing delta in a packfile, when
+>  it ends up sending the base object from a different packfile.
 >
-> I also agree that it's going to be a hassle to maintain three (or three
-> and a half if you count autoconf) build systems. But I don't want to
-> break any users out there by dropping everything but Meson immediately,
-> so I think we just have to accept multiple build systems as an
-> intermediate step. How exactly that would look like is certainly up for
-> debate. My take would be:
->
->   1. Adopt the new build system and start exercising it via CI.
->
->   2. Drop CMake.
->
->   3. Drop autoconf.
->
->   4. Drop Makefiles.
->
-> This should happen over multiple releases such that every step will pull
-> in additional user groups, which will make the new build system more
-> solid overall. I could see that one step corresponds to one release
-> cycle, but I'm also happy to adapt the pacing as necessary.
+>  Needs review.
+>  source: <cover.1728505840.git.me@ttaylorr.com>
 
-I have a hard time imagining the project ever dropping its Makefile
-entirely, if for no other reason that make is available nearly
-everywhere that we want to build Git, and the Makefile is the product of
-nearly two decades of work to make it compile anywhere.
+This topic was ejected, which is fine since it hasn't seen any review in
+a few weeks. It's on my list of things to resend.
 
-If our tree really is going to have a Makefile in it forever, then I
-think adding Meson (even if we remove CMake support) has many of the
-same challenges as the state we're in today "supporting" Make and CMake
-in parallel.
+> * tb/incremental-midx-part-2 (2024-10-04) 17 commits
+>  . fixup! pack-bitmap.c: open and store incremental bitmap layers
+>  . fixup! midx: implement writing incremental MIDX bitmaps
+>  . midx: implement writing incremental MIDX bitmaps
+>  . pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+>  . pack-bitmap.c: keep track of each layer's type bitmaps
+>  . ewah: implement `struct ewah_or_iterator`
+>  . pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+>  . pack-bitmap.c: compute disk-usage with incremental MIDXs
+>  . pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+>  . pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+>  . pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+>  . pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+>  . pack-bitmap.c: open and store incremental bitmap layers
+>  . pack-revindex: prepare for incremental MIDX bitmaps
+>  . Documentation: describe incremental MIDX bitmaps
+>  . Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+>  . Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+>
+>  Incremental updates of multi-pack index files.
+>
+>  Needs review.
+>  source: <cover.1723760847.git.me@ttaylorr.com>
+>  source: <ZwBsbW5jsFw0mxKk@nand.local>
+
+Ditto.
 
 Thanks,
 Taylor
