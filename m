@@ -1,65 +1,64 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3851AB6EA
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950F51AB6EA
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730760320; cv=none; b=WPfywK9uGRBpiAeJ2jClffg3+B//N8M9YbKzWqJolqxGF1uTmwG0e1O6T+/Yt8QqZVPx6NI2pB7Rjye2ZiMavl/wdviBRqr+34BymSI/YPjtGSFMhDNjzJkSo1vQIsxdsroVzRaFg9OIL6ayQvKDlflEDy8LegMBxzqvmvaF0h4=
+	t=1730760517; cv=none; b=KCanLgA3kOjY4GWxU+vRMXBvTIdddKMueMPJXhe70njzMLANzO3JikDlmkxUfeuXAp2QvPo82JixyIy7WeRr/Dc1p3o33oK6KqLvZSSy9pQNzQgPviqRcjfEe2oLnR2NFx2ivw/L6B5NClmjJIM3/3Tw6udnlZDyMDPgG5Zx1SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730760320; c=relaxed/simple;
-	bh=pvAAN3bsr+05NDijJx5YNoR2HCeFixWvTY/7679aufA=;
+	s=arc-20240116; t=1730760517; c=relaxed/simple;
+	bh=HFHi3ZMVH5lgiSiA3WCqWcbg4qmPhuj6FxekvJ86rUk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hAX5x05RHUlwsSOoWqiFX4qzqliYt1R+7sAE5KtsuNKyf5zdzVx5QQwGbxv72WYbN47um/aV6sNE5Ew/yHWzc7knY1xTZjZSC89nGAgljMd3w6Ww1FvQs6+u2/T7VvGalSWygWVS3fZjhssRzRg4lCZYVP3J50zHI5OUWyk0txw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VJfTNJ61; arc=none smtp.client-ip=209.85.210.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=iRak4/ONLj0ER1abK0Mrn9LKoockVY8HXq/ic4c+ENb5OiKni6qu7f0kTXEJ/rKzWHM3YfJEjmtgO4wxJ+MulKp2MdWqJH6IGTJ6TlA+FgdQOD5xtiWrBBXzTPU01j+5dhPWCGp/gtdqvoTwuecQNC2Uexlyx1uEoBStmUQwfN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiiMxqGe; arc=none smtp.client-ip=209.85.161.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VJfTNJ61"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-71815313303so2354584a34.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 14:45:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiiMxqGe"
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-5ebc27fdc30so2548155eaf.2
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 14:48:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730760318; x=1731365118; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730760514; x=1731365314; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fiqgYfbAYo4qPbtXZyjepmxzpWHtVoipQzi7/L+FJb4=;
-        b=VJfTNJ61XmQCfYb0fnJ2hQgyanjcp0/mKu4sBzyd9/WG5YHY7BM6kx0Wc1uB+1QMgV
-         0sQtCSsELon/epY8ZrugJdJW0w1H9LiUppmeKZeLHHAC8kDbKCi3ax/KKqJpUBitMbqF
-         jh90zf4C6mWCbzNjGCilIMvA9DtBHXe5Weu5MdNM1pdyypL8wwdmGgyn5B0hmLC+0Qh3
-         wvsq3Qs60hoF/5E0AOPnkGDYX3Ne2MyhvOj15GhPdO/qAYsOK6/+XVQakHx/VgCjqYa2
-         pD0kqog5l2BfC5B5KeGPtepzUiLQuJFU2uoY2UM1sy0GW9DW70CYfxbu9i4MgWFXdeXd
-         DACg==
+        bh=U0aiMks8aW8yFc+aO981PVGCZlgQn+CSBgirVwg7JEs=;
+        b=hiiMxqGeGK0WyBceZFGDjpTRRn4n9/b+gYuDkZDyEmdh20YBXaFZHT5qqVZANX6I6Y
+         lf3HIO6UngisM0j2eaqY7Msq2VvlSwoKvDRnt7s0Vpj3/ux/aRY8aW1rAMPFF+g27y5u
+         st0XI1M0ZxVcAyuX5EcIbz/n07cU9eTX+SF1zI65+lXgOK+sPBoPexnT15gANMXpS3F9
+         8kf0lBXhRI9n2DX0WkmyrWZb+emm7vEfQ5iN3gU/upjScsTLfAiMXS/upTG6ji2TLnXA
+         cGnlKYqB8s7Zkip4bH8WQFvaEiDBJcXDbWUJLmfjIe9DUFMHqVNgBi/c+QuFn3DcKMLz
+         b3eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730760318; x=1731365118;
+        d=1e100.net; s=20230601; t=1730760514; x=1731365314;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fiqgYfbAYo4qPbtXZyjepmxzpWHtVoipQzi7/L+FJb4=;
-        b=HSh3i5oHoWqv2xe03Rp1djbUWYAfW5Xv4a1yf76e3eSVIdFSoN3TObmmDU76DPPGHB
-         DBVm8t9Tw8WvWL1rwFU5pWdqmaO0RjsJXyBF6InzpbhPidOCU5Xun+dNDkwDG2TqArV4
-         IGyY8PfebUGK5Nez1DRKGnPgJkNrj+B2JrnuI2z/PfpZ9+eaHWtANtXOlwA3RcXzoDjY
-         NpyDjWNAFi7wtSuWt61Ujkrc+2aUL41ryO89GTshC9iWaz+xGzGE+TxtikXiqG4iyTRM
-         T4j223X2TC8jdTzKFxPbZkMDyVMCUIc7o+Xo1G72olFNdMeVdpNrR4GeIY7xZNkrB6m/
-         MetQ==
-X-Gm-Message-State: AOJu0Ywg5INqbmRYvhfDQ2q+spqc1vY8AZrX3IPZ1COuXotew42KlrEk
-	V1pCAVewV9bxN8QSb+KulYLr+a91Xb0il6SaeB5brsZoTmItcOCuF4ZfkqKk
-X-Google-Smtp-Source: AGHT+IFJvcAkAX6+ZNEEcVrDLTrDprBUpn/2zv+pR+9X5uzMUyOe7er2q8H5s3y9hgCcDZzyMb5Z1g==
-X-Received: by 2002:a05:6830:3489:b0:718:c7f:5cbd with SMTP id 46e09a7af769-71868295b3cmr32501358a34.28.1730760318226;
-        Mon, 04 Nov 2024 14:45:18 -0800 (PST)
+        bh=U0aiMks8aW8yFc+aO981PVGCZlgQn+CSBgirVwg7JEs=;
+        b=medliQFN56DyYDMzg2awYAdKNUrYabhe4U88FB4rfimJaqcXKYdPtcfoYe+JyYzMA3
+         o3zQ723qilzvDJ3psXLdOC6/FFytn2GUK8xgNJn0L905kvBnJVdLGDlb2KS9dFJyDRDM
+         xGQFjgg2k20Rzf0+bbyT2xWKLYGI7TXnBkEo+q5db9+ciU7Svsf3paa9NvVRp7Ve8VGz
+         WcXlSpvL49/lLgj+rkzB65zFy6T1L4qWxG9wheZU31raYnF4/1FTZ5kz50OQG2gHoNOk
+         VBcwkDMYQph4/8hZUlB5YAU/FXFmcN7SS+MeCy1ru4sCaw3UIHaSZ/o8xTyWvjHqjMQI
+         nDhw==
+X-Gm-Message-State: AOJu0Yw2vwPKVxX2LxAlKayYZtVet9fx+IwmC5ErmUWo/7+bXo2wazHv
+	LdZEoSAIShY+VeqquF2N0ly1el28fW0Fo+2dVH8DkN6XDjrSzTz/
+X-Google-Smtp-Source: AGHT+IEvDYDI8mHyyh5oqWO6rZDiUVlR7yob7pc1hka+iJ9RyDYQJGDuDe4vpRdHds7h0/36UlU9jg==
+X-Received: by 2002:a05:6870:9112:b0:277:fe14:e68c with SMTP id 586e51a60fabf-29051d75b27mr26971292fac.33.1730760514685;
+        Mon, 04 Nov 2024 14:48:34 -0800 (PST)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7189cc7e489sm2194195a34.33.2024.11.04.14.45.17
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7189ccb122bsm2232445a34.49.2024.11.04.14.48.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 14:45:17 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:43:38 -0600
+        Mon, 04 Nov 2024 14:48:34 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:46:57 -0600
 From: Justin Tobler <jltobler@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
 	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 15/22] combine-diff: fix leaking lost lines
-Message-ID: <rbjmoxqrfpcpz2b5oqxcchuwpbvw4uz4ps4j7ctkd4ux5h4xwj@n4mngoog4ffd>
+Subject: Re: [PATCH v2 00/22] Memory leak fixes (pt.9)
+Message-ID: <v4cfsfnmvqhedtsoykax4wkq2ug6ke4c2rrtbwmtanmc2fonzj@4il4rzkuyffa>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1729502823.git.ps@pks.im>
- <76bbcb3fe301fe273578a71849f99953ea94695c.1729502824.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,55 +67,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <76bbcb3fe301fe273578a71849f99953ea94695c.1729502824.git.ps@pks.im>
+In-Reply-To: <cover.1729502823.git.ps@pks.im>
 
-On 24/10/21 11:28AM, Patrick Steinhardt wrote:
-> The `cnt` variable tracks the number of lines in a patch diff. It can
-> happen though that there are no newlines, in which case we'd still end
-> up allocating our array of `sline`s. In fact, we always allocate it with
-> `cnt + 2` entries. But when we loop through the array to clear it at the
-> end of this function we only loop until `lno < cnt`, and thus we may not
-> end up releasing whatever the two extra `sline`s contain.
+On 24/10/21 11:27AM, Patrick Steinhardt wrote:
+> Hi,
 > 
-> Plug this memory leak.
+> this is the second version of my 9th series of memory leak fixes.
 > 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  combine-diff.c           | 2 +-
->  t/t4038-diff-combined.sh | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
+> Changes compared to v1:
 > 
-> diff --git a/combine-diff.c b/combine-diff.c
-> index f6b624dc288..3c6d9507fec 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -1220,7 +1220,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
->  	}
->  	free(result);
->  
-> -	for (lno = 0; lno < cnt; lno++) {
-> +	for (lno = 0; lno < cnt + 2; lno++) {
+>   - Split up the trailer fixes into two separate patches so that we can
+>     explain them standalone.
+> 
+>   - Adapt the second trailer memory leak fix to instead pull up the
+>     strbufs out of the loop such that we can reuse them. This makes the
+>     code flow more naturally and optimizes the loop.
+> 
+> Thanks!
+> 
+> Patrick
 
-From looking only at the code, its not very obvious to me where the "+2"
-comes from. Not really worth a reroll, but it might be nice to leave a
-note with some context.
+I've reviewed all the patches in this version and left a few
+non-blocking thoughts. Overall, this version looks good to me though. :)
 
->  		if (sline[lno].lost) {
->  			struct lline *ll = sline[lno].lost;
->  			while (ll) {
-> diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
-> index 2ce26e585c9..00190802d83 100755
-> --- a/t/t4038-diff-combined.sh
-> +++ b/t/t4038-diff-combined.sh
-> @@ -5,6 +5,7 @@ test_description='combined diff'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
-> +TEST_PASSES_SANITIZE_LEAK=true
->  . ./test-lib.sh
->  . "$TEST_DIRECTORY"/lib-diff.sh
->  
-> -- 
-> 2.47.0.72.gef8ce8f3d4.dirty
-> 
-> 
+-Justin
