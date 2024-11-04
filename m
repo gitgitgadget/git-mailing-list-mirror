@@ -1,114 +1,88 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE871AF0AE
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 09:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7351ABEB1
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 10:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730714132; cv=none; b=FqikhHbEWIKZO442A5qM8b+5SkARnRAbie9bEKvCnnvocSqOeXg7bvXG+E8RPY2RLVsPvx5fJ00DwGn9oC4pxSE0itD5iOkGRz4zyn4p2cfox1rGK0gENJX+xRCrg2KM3x1xhrrZYW6qngjI9d3DMtBa+x/8CEeJUO8K+yJHXAI=
+	t=1730714996; cv=none; b=rLxU9UPuPeQ6c5k1WQJDjSqgDYZb1JeVUyjhxjJzOqxqXmQq4KKtAVrpgsnCmdh0V4y1eM5T1JpIkcrgSxeLH5CXJDBLmvx4lg/af5BY0MlL2c1MB9t2KWMKroDTZ6whSM8UitPGkgWR9LsQQztToCbQ5EiTOgZaA0L25HdI+D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730714132; c=relaxed/simple;
-	bh=v4Us2fwP4dSiOmiPMy9SsbhRHOrG2xYHqhzfpIEY6Ek=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=XmBw+ZjYmB0brc0f1VvecQxCubldsztHB8EdJSFPJwgo6yWSDIuVYeOevS3YStfTRqu8uNiOYF9SPkpd4H2PzJ+Udc/Cb/itbCPKtva0VDR1jkKGAZWuPUG0N2hLyNyZoXvzYRZcht2gik3Mh1E5diML306YiwPADGdOOveeco8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mQwToB/n; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1730714996; c=relaxed/simple;
+	bh=aQXcN5hpmUFZMttwbTM5aD8Dp8wWV9qtJvMJL7jble0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=afBglM8hmmDMB8BF6TSnkC2gahbz/mopUNJztXu+NLZKrao5mc5ou0dnXffhVnTyc8Za0ZvekZXqAsTamy5w76mYEibJDkv/BXRBm8DmzEl9xw72lswgHTGnQx3IhVDWei5wsTSJ4y0ztjpzYoP1nGd7KblUMOKbzOI9HVFKVpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d8X/sg4C; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQwToB/n"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37ed7eb07a4so2976462f8f.2
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 01:55:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d8X/sg4C"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539e59dadebso4674865e87.0
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 02:09:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730714129; x=1731318929; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=0KfDz7pMbC6i7MZkRaSI8/QbWbqstIFHDhb18BwWGzU=;
-        b=mQwToB/njCZEpHFlE5UJor3qMCyxxhF6JOXg+kl5vmP+rbdbcLSj9Hg+47blWzpz3l
-         AZK7aH5FakEAeCmE29PMEYtY3g6iXoZ6goky+Z/st5hAc7UclJGMq+OyiYXq3h6sn6ps
-         OKR4n6oiJU2KYgl8aXr4Q7425QKxtAhMWY7UFWkV8OMNXwq9e+knh8dHMusmVZLMUGtA
-         NfEkws+c6HqKp6S6/30nsS+HQZAOoLKSaJRiCWBpaSsMfoDuZnU2mwNgs4C3yrppgv0G
-         2B5DQqbokfwCHyE9Yzw7VRzO8fIonHupaR6H4hruGq8GiBQfQ0GMooGEU7dDK8eCOt58
-         Dgxw==
+        d=gmail.com; s=20230601; t=1730714993; x=1731319793; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=aQXcN5hpmUFZMttwbTM5aD8Dp8wWV9qtJvMJL7jble0=;
+        b=d8X/sg4Cju0IJUgk2fd8w23w1fecVtvjgeAL3E7Xv+GI6i7LJp3D/M0iUnGRgcBaJ2
+         +BuKSu0uKNDrJYkzaHmDcziaoGxWlMsbah1swS161LIiSh5Tvqqt9SdFEpyTlOi2MiLv
+         YXSWfCj5WQBW4vMIkOwtcmJ5bC+hNsZaf73rJ5viAkVVem0EBrUJW1ea8dS/6G8EAWNq
+         ZXN1BsqzXuDb0yEb3G/5jKDPt1+wTRLHvyMYdUoXoQxdpfbQ/9cRYE0VkZa8fVrMhLNZ
+         fIBlPPPWYhKDO8uh3tLcNZt9r0BCX8l90GLOsYz2qGcmi893amIRDkpIn8zKHLLD1VaM
+         9a3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730714129; x=1731318929;
-        h=content-transfer-encoding:in-reply-to:cc:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1730714993; x=1731319793;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0KfDz7pMbC6i7MZkRaSI8/QbWbqstIFHDhb18BwWGzU=;
-        b=uzGAUmzNEZhmAoyfjZaSVAMsu2z2Al2qvoTkzFI+XPmswsDWbhxGpslTyD5wln8USK
-         okqs1gzoGjZ4cO2cGHgf7D0BLJ1uLf6Fbm2HqpKH2liLz9AWYCHfjIDhWWMgH4JxOJlC
-         BhG16B0Fkq/uaEoBj0217d3M7NqgSWJVN+bkSt7t6KbGqkgsRo5Kp0Iut8gsNN0L7z2N
-         8FjDc+ifbWSKRYZ3rM6tVGEkAL9r5yCod3cxkgYDJ0Z2rauIQFunClO0l+AS6WVzFoIJ
-         Nh+CDAU3dxqKv7pMV+HtoFPV/5DuYqZpXlCV+sg8+Tdoq3bR5+XPpYQMq+nTnXxRPhiO
-         PX5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXoKzEv7S048pKkdj7f33dlf/VNjSUiTkLScKHxSgb3KNMly9GQ0aeLLJ9In2k0t2Ojd1w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzl1QjjoeLDClS7Wo6709MTJSZ+Zw6x6UIeHEpFg25lhUBUkUxb
-	/ntzH3xvvP50zy7GcLgeu7W623OJ1m8nGp75VoN01UaLS/yeM6Sa
-X-Google-Smtp-Source: AGHT+IEcxJiWHYgyAxLu2aLtxazqV7ZKdXJtJF/FeK4M8PWAIDzC6j4yFMIL4//Dy89S/9FZGvPD5g==
-X-Received: by 2002:a05:6000:1863:b0:37e:f8a1:596a with SMTP id ffacd0b85a97d-381be76517cmr12227795f8f.3.1730714129059;
-        Mon, 04 Nov 2024 01:55:29 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c1168afcsm12768829f8f.91.2024.11.04.01.55.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Nov 2024 01:55:28 -0800 (PST)
-Message-ID: <c1a8eb10-ac62-49f2-a40e-36c41bbdc991@gmail.com>
-Date: Mon, 4 Nov 2024 09:55:23 +0000
+        bh=aQXcN5hpmUFZMttwbTM5aD8Dp8wWV9qtJvMJL7jble0=;
+        b=KR7HqMCgWiC/kxRdl8YV5xYUTMd6zpub5L9pqFXtVQEdQ757SBZJIGuIvMIS+WxA8s
+         ZyLZLpW5w3VDRWVNacPwVn16CBPNdofKi3YEJJY27schN4ZY7vTtuMlFJtVTnEYmyf2L
+         rvTk2iqMfWjlsuonN/joccdvLKI8eUpDe0eNJYL1/iuByQaIfsjllDf3yq0oD3l32A7p
+         Dms1Ikm+bzK7EUf068SbMpN42/OcqLzxSOMN0JBkExdv7Z4MOaBOL/ocH5urwroYHl3N
+         vkYarAwmY+9LAKsN0xUPXxKTh8mfaZ1C9BBZ09+lP/TstpsHzrCmTYU6zZMeCe81Fute
+         zxdQ==
+X-Gm-Message-State: AOJu0YxE0zDB0+2Q5jlZyBdS7VM1+XLQZaNmrzQtzxc3D4cJhF35XKq3
+	yCE49ZW34uAml1hugroasfLFJ86t9Qd2PNzyEMx3myikGeG2TfiM/8IYgBGmETORz4VzXwA1+N+
+	NekeR0yQLXw/DHnlkhGoakvy5+/bzVKI5
+X-Google-Smtp-Source: AGHT+IFvMyzi0vFgvkTQs95pE/7dqmrUyt3LVXN3d1keRLdTdiLRBlrikkgEVO26ldSfqJRnK2TlBLwMtCHf9AmqF/Q=
+X-Received: by 2002:a05:651c:1a0c:b0:2fb:519e:b784 with SMTP id
+ 38308e7fff4ca-2fcbdf60e13mr157424591fa.3.1730714992116; Mon, 04 Nov 2024
+ 02:09:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git revert cannot be aborted if the repository directory has been
- copied
-To: Marco Stephan <marc.stephan96@hotmail.de>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <AM0PR02MB4980D186BDC087336C760132E6502@AM0PR02MB4980.eurprd02.prod.outlook.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-Cc: Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <AM0PR02MB4980D186BDC087336C760132E6502@AM0PR02MB4980.eurprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <CANM0SV0KKd+WN4MQ1_8fEvFyD4tYY3qAUsUh9Njcy1xo1hNSBw@mail.gmail.com>
+ <CANM0SV0Muk8KT6Mv=14ui07c6OzaNDDQwg2bUVRb8JyJWTyHnQ@mail.gmail.com> <Zx7O3VsZX2B9d9qN@nand.local>
+In-Reply-To: <Zx7O3VsZX2B9d9qN@nand.local>
+From: Devste Devste <devstemail@gmail.com>
+Date: Mon, 4 Nov 2024 11:09:40 +0100
+Message-ID: <CANM0SV3vNBwoNw08AevHE-3cOjUTG4AGVJdpwfKCr=CX5DSW8w@mail.gmail.com>
+Subject: Re: 2.43+ git checkout --theirs on stash error - no alternative?
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 03/11/2024 01:25, Marco Stephan wrote:
-> Hello,
-> 
-> I have encountered the following bug:
-> If you copy a Git repository directory to another path while there is a revert in progress for the Git repository, "git revert --abort" does not work anymore for the copied repository. Instead, it will report an error of the following format:
->       error: Entry '...' not uptodate. Cannot merge.
->       fatal: Could not reset index file to revision '...'.
+"--theirs" was necessary since I want the file exactly as it is in the
+stash - any conflicts from applying the file from stash should be
+automatically resolved using the hunk from the stash
 
-"git revert --abort" is a wrapper around "git reset --merge" so I wonder 
-if we should change "git reset --merge" to refresh the index.
-
-Best Wishes
-
-Phillip
-
-> I can reproduce the bug consistently with the latest version of Git that is available for Windows (git version 2.47.0.windows.2) by performing the following steps (all command line except step 12):
-> 1. mkdir test_repo
-> 2. cd test_repo
-> 3. git init
-> 4. type nul > test.txt
-> 5. git add .
-> 6. git commit -m "Initial commit"
-> 7. echo test > test.txt
-> 8. git add .
-> 9. git commit -m "Changes"
-> 10. git revert HEAD --no-commit
-> 11. cd ..
-> 12. Manually copy test_repo to a new directory test_repo_copy using the file explorer (using e.g. "robocopy test_repo test_repo_copy /E" does not corrupt the repository)
-> 13. cd test_repo_copy
-> 14. git revert --abort
-> This consistently produces the error "error: Entry 'test.txt' not uptodate. Cannot merge.". I would expect step 14 to work regardless of how the repository directory itself has been created. Running "git status" or "git update --really-refresh" fixes the seemingly corrupt data and the revert in progress can be aborted.
-> 
-> I have not verified if the bug is present on other operation systems, too.
-> 
-> With best regards
-> Marco Stephan
-
+On Mon, 28 Oct 2024 at 00:38, Taylor Blau <me@ttaylorr.com> wrote:
+>
+> On Sun, Oct 27, 2024 at 11:31:05PM +0100, Devste Devste wrote:
+> > Turns out the previous behavior can be achieved with
+> > git restore --source='stash@{0}' -- "some-file.txt"
+>
+> Hmm. What you wrote above here makes sense, but I agree with the
+> original change from Junio (CC'd) that using `--theirs` does not make
+> sense when the source is a tree-ish and not the index directly.
+>
+> This is different, though, since here you are just trying to check out
+> the contents of some-file.txt at stash@{0}, without `--theirs`. What did
+> you mean in the previous example, and why was `--theirs` necessary in
+> the call there?
+>
+> Thanks,
+> Taylor
