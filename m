@@ -1,166 +1,266 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC84C78685
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9177A1BF804
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730734161; cv=none; b=C5oZBIPCaUVuNTavwSSUVBoZCAG9PE5CPyvXw2ZWMWLENl2RgysX4iM/oMzPPTr1EwWTV0QzDOaBMtjN4pvOACIn5Dr30d6BbcmgxTxXkNVR/jrrZ024QPdcr/WHapxu0a3Bu6RAZ+7/L34c9BSyvm6HAW1bE+TRY55klQ2aeTU=
+	t=1730735334; cv=none; b=h2a0oTqB9oKkWxrLbPE7hKOV2rW/Cs+DzCeFe08Sz1PCFQqyvwye3imNjVre3YeehWDhoaqVLOziZmCw1BDPCC7T/k9obE3eTq+2t1HTI4+afNAdX3kBu5ekPgmNSxAiDoT+KkxQH8kQHPbaaxNZSRBBkMocOAMvsepk7LVr5Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730734161; c=relaxed/simple;
-	bh=7+5uWZiuB5wyYaBVyMijVh8jdRewuGFoujx/v1/BjLE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MPaY9IlQVq4u8M2rNiM4dtQW07rJ4z654fo6h0MOF2w0edMMBQ28sX1buIo4FpbW8c/rwazzfXLiIF/S6B+kx9gjdSGLSsjZQoiiu6MeczaHqSg2yM2cU40P+YJf97RgP+qqfbBNYUGod0Yao8f+JKOStvB3umPi2dtB9NVpevI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Ot8nISbV; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1730735334; c=relaxed/simple;
+	bh=sZgFv4nfB560wtKaSPvaGU4X5AB0x79Ot7cTc36h/ZE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WS0llWtSx3Kn2ieh8rh3hqElD9HUIV6akaObeBlpP1XsmOqzT7vEN6h5J0radzW/h8uVXFCQNZHUGsN81uyVFpmNu0SofbI3lJWgPiKNOgv5+1YMczCo5erX4d2GyvMJGFFXa59LSRMkpZtWPSTDMHsJAGNbHU385NNIxXsSzpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUg0HWEN; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Ot8nISbV"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ea8419a57eso15776627b3.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 07:29:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUg0HWEN"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6e2e41bd08bso45312317b3.2
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 07:48:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1730734159; x=1731338959; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CHr2PYjUMWXEAmXOSs6PJ+jOsnvA9JFBZym10qvploc=;
-        b=Ot8nISbV4OccDtaBpwDvVHr3SU4IJ/XipN7NnXOBZowMaX+Fjkplj3P9MwvINj1Wtu
-         qnsovNOZMarTUIsrdmzXCnbexhbvDPLuUGMfFQ3gn1w4q9kFvHCiGZSYhTdjdvcq09B7
-         9XELcu8igHQvgYcwKRSwiKL3VrsAdG0o7IY9fjNrrOvn0LRL77sjb+FpbJbdBcJooHfb
-         /C2xPky79/rKeDbipwp/AT9rjinlmIZifDT+WvP28k6SAikZ2MEBJ4ausyXkv0BkV+Jf
-         R4sJkcffRuwrVVqQeFvh8A/OKCUorTMYK5YtARxeOe4+iDNPlHiTsG3r2dsQ3xEeHFB/
-         U8Bg==
+        d=gmail.com; s=20230601; t=1730735331; x=1731340131; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TfEfuvdqrgOTVH4sZuJ8NndlSGWmuTaHvYzB2D6rHwI=;
+        b=DUg0HWENI0K/7Qx5mirCtXEzHx6UaKnZDWzjEg9jZlbpGmeuCpw6ddq87rtchc/bQ6
+         YfQbEyIKf1LX/WCIecQLMumzHzEUX2j2aJByAWO2yqFD4PwtfiLwHop26MFy28W/ERh3
+         vIj5eXceMpNzkEdifxjA9Ljib03/ijkjNAfHWd9x3bdhZpi6xspu63YYK8QP5hCOueOh
+         GLV/j/OWM0klnwCce/LJo9P+8Ajn/5uc/9WXgw3ILImfjNrTNEhLOVuPMFOy4EqaXCMI
+         FJW6a7ZKeBa84UJxalfYWNheaAd0OG9ICX6znmg6OE05tdnQSDpT8O56/B/KudayJgPI
+         UMvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730734159; x=1731338959;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CHr2PYjUMWXEAmXOSs6PJ+jOsnvA9JFBZym10qvploc=;
-        b=aw6SPTHDaPuM5c2GZZW5wRyXyGJZwNGZMHmI2jycxdPyPOGkA5MM/u2KB8k7g8CCMI
-         4PcUX/6xXad2Z4vEx/rZ73BDe0dkLi2LFOpPUXNCYpN2TDpzcgPeeeDkAz0g0wOw9K7j
-         glScdoItgeCl6Bs5Wg6aDSuZAeIanEOE1i1bsHnluAV0xU7GnRpdtFv5V++7EUNkcavg
-         3j5w6JS8L5x1YDWHP7nIxHRh1/8RuANZn/JVjGBjciwbSoIeFKKN6ydojwneuDOztrtj
-         jVPgMF6TxqA0RyXBK2zY7QdBEcUK6zh+nRBQBq+S8+vsHJ37ox//3H1lfuIbgvQLqLV1
-         cLBQ==
-X-Gm-Message-State: AOJu0YxsTv/jdB8cH8zt5a45zfjTkoAqOCOcPGreVUeL7ttBLLdfV09f
-	kZSGzBi0VF+GpeaIwN3v1IP/Tm/VY6nI9fb5Cz91ry5SAPg0IeX9E0nzgtTV/U6L6P1AaXclHNP
-	fQEU=
-X-Google-Smtp-Source: AGHT+IHxykYxf4VOm5KmmuiKQ2MQVsbzWq60fle9EKYXZ7RC+/uKWI8SZ6U9feAUb5INca+VJTp9Qw==
-X-Received: by 2002:a05:690c:c15:b0:6e3:1781:1e2b with SMTP id 00721157ae682-6e9d893fb2dmr334667547b3.16.1730734158810;
-        Mon, 04 Nov 2024 07:29:18 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea55c83723sm18090007b3.106.2024.11.04.07.29.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 07:29:18 -0800 (PST)
-Date: Mon, 4 Nov 2024 10:29:17 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2024, #02; Fri, 1)
-Message-ID: <ZyjoTVhP0xn/Qcvx@nand.local>
-References: <xmqqr07rwsmd.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1730735331; x=1731340131;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TfEfuvdqrgOTVH4sZuJ8NndlSGWmuTaHvYzB2D6rHwI=;
+        b=ANPxmzebpYLRqak6LrbnNf6lwf/u7vUxSohiG+PrNdOi1hl8yDQPPy/Aax78NgKU38
+         1GJscdg2D2gERX0Z1E5T5MQRXRr+QjD2txN0d8S+5JU7MornRjpFZ6Fw2ZCMdBp0axYo
+         e+z5dTwi7QnNUleE1Xt6KrZVPd1fatTwYcEm3lJI5y3zeQajjCKrSuGKoULrSi4UGFEp
+         y0dXUA1lxdC+qSZkXq++wB4B7So7f0lZg+hqIBVsOccbmgEMk4W+FjahcnNGVApWq2j9
+         kgAfhaSHBdbxXpAWZb3LVF5zfZ/Xuyax9xIlnWgyTlzxqx9kISO1rmIIMtg7ZbldkM0b
+         LHxw==
+X-Gm-Message-State: AOJu0YwK6gq7gbhBLGFZoSnRKA0+VZEYuwm03RUxTZCvR1177yHOp8h0
+	GpodqweVTOKlv85DH1XmN8mZqn4zqx/f+IMTWLJ0f7OfbLfKwwlx
+X-Google-Smtp-Source: AGHT+IGLosSOZc5CMwGmlwdyb5zBtaYJ55vMLutbyRxE2v7ucYJYl6L/Z0oX1gRzp3YWJtY2+bIPwQ==
+X-Received: by 2002:a05:690c:4513:b0:6db:deb7:d693 with SMTP id 00721157ae682-6ea64b27585mr118488327b3.22.1730735331376;
+        Mon, 04 Nov 2024 07:48:51 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:2db7:73fd:372e:bf53? ([2600:1700:60ba:9810:2db7:73fd:372e:bf53])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea8c8b0673sm7409057b3.26.2024.11.04.07.48.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Nov 2024 07:48:50 -0800 (PST)
+Message-ID: <2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
+Date: Mon, 4 Nov 2024 10:48:49 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqr07rwsmd.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
+To: Taylor Blau <me@ttaylorr.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+ peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+ christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
+ jonathantanmy@google.com
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+ <ZyUqr/wb5K4Og9j9@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <ZyUqr/wb5K4Og9j9@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Nov 03, 2024 at 08:05:46PM -0800, Junio C Hamano wrote:
-> Thanks everybody, especially Taylor, for keeping things going while
-> I was away.  Unfortunately, we seem to have acquired way too many
-> topics that were posted and picked up without getting reviewed.  As
-> we discussed a few months ago in <xmqqployf6z5.fsf@gitster.g>, I'll
-> start discarding topics that have seen no activities for 3 or more
-> weeks.  Interested parties can of course revive these topics.
+On 11/1/24 3:23 PM, Taylor Blau wrote:
+> Hi Stolee,
+> 
+> On Thu, Oct 31, 2024 at 06:26:57AM +0000, Derrick Stolee via GitGitGadget wrote:
+>>
+>> Introduction and relation to prior series
+>> =========================================
+>>
+>> This is a new series that rerolls the initial "path-walk API" patches of my
+>> RFC [1] "Path-walk API and applications". This new API (in path-walk.c and
+>> path-walk.h) presents a new way to walk objects such that trees and blobs
+>> are walked in batches according to their path.
+>>
+>> This also replaces the previous version of ds/path-walk that was being
+>> reviewed in [2]. The consensus was that the series was too long/dense and
+>> could use some reduction in size. This series takes the first few patches,
+>> but also makes some updates (which will be described later).
+>>
+>> [1]
+>> https://lore.kernel.org/git/pull.1786.git.1725935335.gitgitgadget@gmail.com/
+>> [RFC] Path-walk API and applications
+>>
+>> [2]
+>> https://lore.kernel.org/git/pull.1813.v2.git.1729431810.gitgitgadget@gmail.com/
+>> [PATCH v2 00/17] pack-objects: add --path-walk option for better deltas
+> 
+> I apologize for not having a better place to start discussing a topic
+> which pertains to more than just this immediate patch series, but I
+> figure here is as good a place as any to do so.
+> 
+>  From our earlier discussion, it seems to stand that the path-walk API
+> is fundamentally incompatible with reachability bitmaps and
+> delta-islands, making the series a non-starter in environments that
+> rely significantly one or both of those features. My understanding as a
+> result is that the path-walk API and feature are more targeted towards
+> improving client-side repacks and push performance, where neither of the
+> aforementioned two features are used quite as commonly.
 
-Welcome back, and thanks for trusting me to keep the patches moving
-between integration branches while you were gone.
+This is correct. I would go even farther to say that this approach was
+designed first and foremost for Git clients and specifically their
+performance while computing a thin packfile during "git push". The same
+logic to help the push case happens to also help the "git repack" case
+significantly.
 
-> With all the integration branches and topics broken out:
->
-> 	https://github.com/gitster/git/
+> I was discussing this a bit off-list with Peff (who I hope will join the
+> thread and share his own thoughts), but I wonder if it was a mistake to
+> discard your '--full-name-hash' idea (or something similar, which I'll
+> discuss in a bit below) from earlier.
 
-Now that we are no longer referring to my tree here to list the
-broken-out topics, I have cleaned out topics besides my own that would
-ordinarily reside in this tree.
+I'd be happy to resurrect that series, adding in the learnings from
+working on the path-walk feature. It helps that the current series adds
+the path-walk API and has no conflicting changes in the pack-objects or
+repack builtins. (I can handle those conflicts as things merge down.)
 
-> [Graduated to 'master']
->
-> * ds/path-walk-1 (2024-10-31) 6 commits
->  - path-walk: mark trees and blobs as UNINTERESTING
->  - path-walk: visit tags and cached objects
->  - path-walk: allow consumer to specify object types
->  - t6601: add helper for testing path-walk API
->  - test-lib-functions: add test_cmp_sorted
->  - path-walk: introduce an object walk by path
->
->  Introduce a new API to visit objects in batches based on a common
->  path, or by type.
->
->  Under discussion.
->  cf. <ZyUqr/wb5K4Og9j9@nand.local>
->  source: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+> (Repeating a few things that I am sure are obvious to you out loud so
+> that I can get a grasp on them for my own understanding):
+> 
+> It seems that the problems you've identified which result in poor repack
+> performance occur when you have files at the same path, but they get
+> poorly sorted in the delta selection window due to other paths having
+> the same final 16 characters, so Git doesn't see that much better delta
+> opportunities exist.
+> 
+> Your series takes into account the full name when hashing, which seems
+> to produce a clear win in many cases. I'm sure that there are some cases
+> where it presents a modest regression in pack sizes, but I think that's
+> fine and probably par for the course when making any changes like this,
+> as there is probably no easy silver bullet here that uniformly improves
+> all cases.
+> 
+> I suspect that you could go even further and intern the full path at
+> which each object occurs, and sort lexically by that. Just stringing
+> together all of the paths in linux.git only takes 3.099 MiB on my clone.
+> (Of course, that's unbounded in the number of objects and length of
+> their pathnames, but you could at least bound the latter by taking only
+> the last, say, 128 characters, which would be more than good enough for
+> the kernel, whose longest path is only 102 characters).
 
-This is marked as "Graduated to 'master'", although I suspect it isn't.
-I thought that it would have been because the topic went away, although
-I still see this in 'jch' via your 3503a15e17 (Merge branch
-'kh/bundle-docs' into jch, 2024-11-03).
+When the optimization idea is to focus on the full path and not care
+about the "locality" of the path name by its later bits, storing the
+full name in a list and storing an index into that list would have a
+very similar effect.
 
-Perhaps this WC report was generated before moving the topic back into
-'jch'? In either event, as noted by <ZyUqr/wb5K4Og9j9@nand.local>, this
-topic is still under discussion and is not ready to be merged (yet).
+I'd be interested to explore the idea of storing the full path name.
+Based on my exploration with the 'test-tool name-hash' test helper in
+that series, I'm not sure that we will make significant gains by doing
+so. Worth trying.
 
-> * tb/cross-pack-delta-reuse (2024-10-11) 11 commits
->  . pack-bitmap: enable reusing deltas with base objects in 'haves' bitmap
->  . pack-bitmap.c: record whether the result was filtered
->  . pack-bitmap: enable cross-pack delta reuse
->  . t5332: enable OFS_DELTAs via test_pack_objects_reused
->  . write_reused_pack_one(): translate bit positions directly
->  . pack-bitmap: drop `from_midx` field from `bitmapped_pack`
->  . pack-bitmap.c: extract `find_base_bitmap_pos()`
->  . pack-bitmap.c: compare `base_offset` to `delta_obj_offset`
->  . pack-bitmap.c: delay calling 'offset_to_pack_pos()'
->  . pack-bitmap.c: avoid unnecessary `offset_to_pack_pos()`
->  . pack-bitmap.c: do not pass `pack_pos` to `try_partial_reuse()`
->
->  Allow pack-objects to reuse an existing delta in a packfile, when
->  it ends up sending the base object from a different packfile.
->
->  Needs review.
->  source: <cover.1728505840.git.me@ttaylorr.com>
+> Some of the repositories that you've tested on I don't have easy access
+> to, so I wonder if either doing (a) that, or (b) using some fancier
+> context-sensitive hash (like SimHash or MinHash) would be beneficial.
 
-This topic was ejected, which is fine since it hasn't seen any review in
-a few weeks. It's on my list of things to resend.
+I don't know too much about SimHash or MinHash, but based on what I
+could gather from some initial reading I'm not sure that they would be
+effective without increasing the hash length. We'd also get a different
+kind of locality, such as the appearance of a common word would be more
+likely to affect the locality than the end of the path.
 
-> * tb/incremental-midx-part-2 (2024-10-04) 17 commits
->  . fixup! pack-bitmap.c: open and store incremental bitmap layers
->  . fixup! midx: implement writing incremental MIDX bitmaps
->  . midx: implement writing incremental MIDX bitmaps
->  . pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
->  . pack-bitmap.c: keep track of each layer's type bitmaps
->  . ewah: implement `struct ewah_or_iterator`
->  . pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
->  . pack-bitmap.c: compute disk-usage with incremental MIDXs
->  . pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
->  . pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
->  . pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
->  . pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
->  . pack-bitmap.c: open and store incremental bitmap layers
->  . pack-revindex: prepare for incremental MIDX bitmaps
->  . Documentation: describe incremental MIDX bitmaps
->  . Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
->  . Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
->
->  Incremental updates of multi-pack index files.
->
->  Needs review.
->  source: <cover.1723760847.git.me@ttaylorr.com>
->  source: <ZwBsbW5jsFw0mxKk@nand.local>
+The size of the hash could probably be mitigated by storing it in the
+list of all full paths and accessing them from the index stored on each
+to-pack object.
 
-Ditto.
+> I realize that this is taking us back to an idea you've already
+> presented to the list, but I think (to me, at least) the benefit and
+> simplicity of that approach has only become clear to me in hindsight
+> when seeing some alternatives. I would like to apologize for the time
+> you spent reworking this series back and forth to have the response be
+> "maybe we should have just done the first thing you suggested". Like I
+> said, I think to me it was really only clear in hindsight.
+
+I always assumed that we'd come back to it eventually. There is also the
+extra bit about making the change to the name-hash compatible with the
+way name-hashes are stored in the reachability bitmaps. That will need
+some work before it is ready for prime time.
+
+> In any event, the major benefit to doing --full-name-hash would be that
+> *all* environments could benefit from the size reduction, not just those
+> that don't rely on certain other features.
+
+I disagree that all environments will prefer the --full-name-hash. I'm
+currently repeating the performance tests right now, and I've added one.
+The issues are:
+
+  1. The --full-name-hash approach sometimes leads to a larger pack when
+     using "git push" on the client, especially when the name-hash is
+     already effective for compressing across paths.
+
+  2. A depth 1 shallow clone cannot use previous versions of a path, so
+     those situations will want to use the normal name hash. This can be
+     accomplished simply by disabling the --full-name-hash option when
+     the --shallow option is present; a more detailed version could be
+     used to check for a large depth before disabling it. This case also
+     disables bitmaps, so that isn't something to worry about.
+
+> Perhaps just --full-name-hash isn't quite as good by itself as the
+> --path-walk implementation that this series starts us off implementing.
+> So in that sense, maybe we want both, which I understand was the
+> original approach. I see a couple of options here:
+> 
+>    - We take both, because doing --path-walk on top represents a
+>      significant enough improvement that we are collectively OK with
+>      taking on more code to improve a more narrow (but common) use-case.
+
+Doing both doesn't help at all, since the --path-walk approach already
+batches by the full path name. The --path-walk approach has a significant
+benefit by doing a second pass by the standard name-hash to pick up on the
+cross-path deltas. This is why the --path-walk approach with the standard
+name hash as consistently provided the most-compact pack-files in all
+tests.
+
+   Aside: there were some initial tests that showed the --path-walk option
+   led to slightly larger packfiles, but I've since discovered that those
+   cases were due to an incorrect walking of indexed paths. This is fixed
+   by the code in patch 5 of the current series and my WIP patches in [3]
+   have the performance numbers with this change.
+
+[3] https://github.com/gitgitgadget/git/pull/1819
+PATH WALK II: Add --path-walk option to 'git pack-objects'
+
+>    - Or we decide that either the benefit isn't significant enough to
+>      warrant an additional and relatively complex implementation, or in
+>      other words that --full-name-hash by itself is good enough.
+
+I hope that I've sufficiently communicated that --full-name-hash is not
+good enough by itself.
+
+The point I was trying to make by submitting it first was that I believed
+it was likely the easiest way for Git servers to gain 90% of the benefits
+that the --path-walk approach provides while making it relatively easy to
+integrate with other server-side features such as bitmaps and delta islands.
+
+(Maybe the --path-walk approach could also be extended to be compatible
+with those features, but it would be a significant investment that rebuilds
+those features within the context of the new object walk instead of relying
+on the existing implementations. That could easily be a blocker.)
+
+> Again, I apologize for not having a clearer picture of this all to start
+> with, and I want to tell you specifically and sincerely that I
+> appreciate your patience as I wrap my head around all of this. I think
+> the benefit of --full-name-hash is much clearer and appealing to me now
+> having had both more time and seeing the series approached in a couple
+> of different ways. Let me know what you think.
+Thanks for taking the time to engage with the patches. I'm currently
+rerunning my performance tests on a rebased copy of the --full-name-hash
+patches and will submit a new version when it's ready.
 
 Thanks,
-Taylor
+-Stolee
+
