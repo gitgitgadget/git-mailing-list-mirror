@@ -1,79 +1,81 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7011B9835
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:12:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F431C174E
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:12:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730733123; cv=none; b=MR2edlE9FF17Sy7RSCPDHPOT+hdL6YvIVTsOFLL4QLOtJmYOTAxANcJQ6XHws/pv6DoO7b/6/qFo6IznprFtPrXFCApNAkQiPboq18FgTUz1vjXzNARhgyr6o1iVF46hdlA7LSIIChLkVQvliyuBG2mGiUDxr+Jd9cCugrMOapI=
+	t=1730733126; cv=none; b=W7Ewq6Yfrzb/jdfmwI2y3m3cNysO67qz0FpkWIhBJ4TK03Z9z4bLPltClhjPWJa4kWTJtDxH9WxqnJSdmZKQlT4VddRuZdGtslFifRMatNqYGwUI3XRU4INrbDSLbcLxzMT8P67Yrj1X3tiWcOpUh7FVRnFLmRqZn+6NAj4Hczs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730733123; c=relaxed/simple;
-	bh=3zrfyq68pmwDzglkLG5z9b+oNsADTN/LWNFthdb68HA=;
+	s=arc-20240116; t=1730733126; c=relaxed/simple;
+	bh=jKtoGVTbzHHbF+uv5dwT2ETwcP5KhFpeswfMytevXdQ=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lgNHiunYjBIXw9X99TeCd/hIUgHAqU5M/j7Qt2T+wMoCvQL1AggQz3ifJAoWBp/RLVvUcvRPaqkN9tATcmbjr7gPK6cPJOfWzPb/zEHd47utL1Q12j7tIIAQ4CF28cvKMYmgM/5EW1rRScuJ//cDMsL7ezEsbqK1CfzY+07ttC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TVl3X4V8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZcpFTB61; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=LNOW6chLDi5aD5ul+h9Pk86q/IaQGbZnyeyWDxu2j6DcxnIxp73rPBRAvwy1Q2oAjbMUzw8klZqnrorWXfx81FEKBJFXJ5x/FPM0hvfs1Qp14VAiNFHVUM10OPECO7NYW25TaORyAIhJIvytmCdIc2GJOQ/Jv96oVRWSp2XMuh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PAAUJL2z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=malmlFHu; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TVl3X4V8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZcpFTB61"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3417113804AF
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 10:12:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PAAUJL2z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="malmlFHu"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E02611400CC
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 10:12:04 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 04 Nov 2024 10:12:01 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 04 Nov 2024 10:12:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730733121; x=1730819521; bh=M5Gi/cJ3S0
-	q4LRQZQufEFabvg5V13Owoa+RRfQwq7M0=; b=TVl3X4V8Okq2/WUmxNWpXWMSPi
-	b7/0DXWbnjKBnHCkAC4Nz+EJggXARYkLY6DE7UXfu4AFRRktYyYKLwlixQpjTnCf
-	Awyaya78J3g6oIJ95Pf6jLcP1KroR7rU5RPU7UZ+f/7z3Q8Nk4cDZQ/KBLqvxn5R
-	RQO7174y+kebZ4uTFDSLGmxGo0W59sP2mrc5cN9SJx811yF/ozT+kjfd80rFJEVO
-	DaQS41ezBx+9PCB0Ii6ZqIoer45u35GabLgrKb16SlJtEOHFTVTsGZB3ff2I7yRL
-	1R1KqfSiBHQ+Rf1nANPZqSMXXQGh/olzJ7L0pyeeC2IhYZDo2T8fxQrE/dTQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1730733124;
+	 x=1730819524; bh=nCaWGSuF62W9wDdAO2kqcwglUAild5ASPO+9YQFa5KE=; b=
+	PAAUJL2zrmWkmxAlXqIzVjgKyaxoT+K4AW1jmAHHmy6/gOoJfsHM6STCANFLGBg5
+	Bmb+LPqG9QL3l638ZE+pw43bzTypUQDt294d2cGH+M7EoXLUDyn/lStbJKgyUr4x
+	nhBQVOb4no/SR5JuPOP1atKJVSNgw/vqm481/H1WiUIXF7EnjHN36SsbrXAIZqyO
+	qvhcSYP1C04+dV7wdBNyZKtc7AFh4bl9utRKLqMg4I6bWA8+sveX4TunqMLKfaos
+	Ukqsv4UlXLyK6rebJS32Y4iS/zD1L4KcwnoKMw2/9RlqZdTH2WJ3Q7wQxCwiCcVR
+	26t2XOpmG6AYbKhaMVVPWw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730733121; x=1730819521; bh=M5Gi/cJ3S0q4LRQZQufEFabvg5V13Owoa+R
-	RfQwq7M0=; b=ZcpFTB61MQbSxvBFAoW+FVGcpDELf74H7KDqfSHW6JfPSba295A
-	ZroEknRjCSl2iVGdxkcRS4wotORBxgaiS+giXXnQzQkGmnPDK1aMWMqquU7zIgbR
-	wb4XT3uxwtj7CBvJW4LD+JJ1cASCAeytsqrxZq8YGVqkKErbbkxvv9p+oWaS6OYn
-	r401vcNOdn3so1QPa6TBtOoEEUenu/wct6n/N0LEKPltoDUsSzayKUE3GjNYpTDS
-	uBX89M8e7rGf2oMbwl49ufOd35SylL6DORxVKuduAObLlPaFIRikrl27TRwLLZf9
-	glUtrCzNzQXOY3amAXB6DBtdDGt9T9Eqx2w==
-X-ME-Sender: <xms:QeQoZ4AeEMZUqmRS-UwMa3VipIiKzE4Ir0ksFRBFFl_PsbPbYo87Tw>
-    <xme:QeQoZ6gYOjaiC79FsxmPKfLOrJHEjKGvG3EpGf-4y6ht5lSnOhHEi3NdgNpiTtjy4
-    Y35EkfQGNS75bPItg>
-X-ME-Received: <xmr:QeQoZ7nHI6tORCvi1KBRUg1qx-6t-upw318x80HjA0JtG7MFJjIj7rJ9mTncyi-ONwQsEVkkVYAIPh8RD0cS6VoeiHAcW5OAnRQbXEMj8JiOVaJmKg>
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1730733124; x=1730819524; bh=n
+	CaWGSuF62W9wDdAO2kqcwglUAild5ASPO+9YQFa5KE=; b=malmlFHuT1lMagAPR
+	tTXWMakYp+6DiSz0gHL9Fuj3PbX+RTmQ0Va4tpH5RWzrHDNw4MED0koHMoSdqgz+
+	VV9wRj7DgNckvi6SNO61MZMdjZILezbHl+e0AW5KPGgi+NVJEYEW54/0WLxmHmHZ
+	/QOksrM8Y6PcwngHLDhfIDaI0/jAk7PpE7V742WP1IX51ZwrSouG/SO3WkVMIpUo
+	HWx+Z7wczenoo3vJttf8DVBDNNSWVu/AbEC/Jx7cm+tuWolqzLmjUovZuh5mX/OM
+	/FGO1qJvvvri1uHgCYvTR/l4HJfJFG2+h7Tou6/pQXtOZ6cgrigm3ZYdMM+s9FT3
+	PTzLw==
+X-ME-Sender: <xms:Q-QoZ9r2_OXzhYPnxAhkaOrJbSs0gFz5BX5InVZZvNf9Hf6FvCUJRw>
+    <xme:Q-QoZ_oSaxdBF84JcT7x8eVTm8zoeDzBSHfCPTsk94Jwf-tzd4Np8FC7qm3Qu8Asf
+    -aAT2vhgKzm7wL5ew>
+X-ME-Received: <xmr:Q-QoZ6MIfG2xdxiBYFrLsLQsgsT4VIArXmRRa3Q-w7LFEVsn93UuABMJjX5-36fgKX7l05UKHw3KytbednztpHVZ3SVJZAQlAMp_fWG7RYElmB3mbQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeliedgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuf
-    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefgeegvd
-    egvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgvrhfu
-    ihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:QeQoZ-yrG9WJqqb8z-JEJQryDYZxy6t0zsDS7U9jBJMBJEbrLkBvlw>
-    <xmx:QeQoZ9T_EfvQjhlu5HoYpjCiLThJfgY9-Vq3xpwEYkgUmVRqXRt1hg>
-    <xmx:QeQoZ5YB2UKe1l2w1NzdO9RUSvy_SNIQBn4stRskIkMaYD5Avbg41g>
-    <xmx:QeQoZ2QCuGqoK_pXnEj3JuoVCpr8Bu11v3VvnFUqUtwAowLcbrFx0A>
-    <xmx:QeQoZ8LIyzBM9DW3xZeLkOtK6fg2JGa_3rRiV41_bnrm_P6EHK5MRjLb>
+    fkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeelheffgfegie
+    eufeehieethfegveejvddvjedtueduvedvvddtkedtgfegjeffkeenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Q-QoZ46LuaLAHsjqHXSQwH1GVuvufdvz9eAvzza1gSfwtG1Qe6uH6Q>
+    <xmx:Q-QoZ87DjQO339opXpdTlKFwn6dKwW_iGqAodszssue9CNEOzVcgVw>
+    <xmx:Q-QoZwgPFoiUof0BwDV-ZdY2v7bqF-lXzxuCIKuwEAZqMV9aXZUVeg>
+    <xmx:Q-QoZ-4n4wAWDG8aE4RkxSKl5YnZjuBnizH_Q3Gs8TMRK_aKM_CO-w>
+    <xmx:ROQoZ6Q6dbDDMkYYWV6bDKdV50iI44RGvpBxbpJjueuCIidIebnWuKSt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 4 Nov 2024 10:12:00 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 4 Nov 2024 10:12:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2e15aad4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9b30d6a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 4 Nov 2024 15:11:40 +0000 (UTC)
-Date: Mon, 4 Nov 2024 16:11:53 +0100
+	Mon, 4 Nov 2024 15:11:42 +0000 (UTC)
+Date: Mon, 4 Nov 2024 16:11:56 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 7/8] reftable/merged: drain priority queue on reseek
-Message-ID: <45f397b563fe88524a2063bde8cad31ab9a2ccbb.1730732881.git.ps@pks.im>
+Subject: [PATCH 8/8] refs/reftable: reuse iterators when reading refs
+Message-ID: <feb4e6a36f960914ee6967b95d877d97065b5384.1730732881.git.ps@pks.im>
 References: <cover.1730732881.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,151 +83,138 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1730732881.git.ps@pks.im>
 
-In 5bf96e0c39 (reftable/generic: move seeking of records into the
-iterator, 2024-05-13) we have refactored the reftable codebase such that
-iterators can be initialized once and then re-seeked multiple times.
-This feature is used by 1869525066 (refs/reftable: wire up support for
-exclude patterns, 2024-09-16) in order to skip records based on exclude
-patterns provided by the caller.
+When reading references the reftable backend has to:
 
-The logic to re-seek the merged iterator is insufficient though because
-we don't drain the priority queue on a re-seek. This means that the
-queue may contain stale entries and thus reading the next record in the
-queue will return the wrong entry. While this is an obvious bug, it is
-harmless in the context of above exclude patterns:
+  1. Create a new ref iterator.
 
-  - If the queue contained stale entries that match the pattern then the
-    caller would already know to filter out such refs. This is because
-    our codebase is prepared to handle backends that don't have a way to
-    efficiently implement exclude patterns.
+  2. Seek the iterator to the record we're searching for.
 
-  - If the queue contained stale entries that don't match the pattern
-    we'd eventually filter out any duplicates. This is because the
-    reftable code discards items with the same ref name and sorts any
-    remaining entries properly.
+  3. Read the record.
 
-So things happen to work in this context regardless of the bug, and
-there is no other use case yet where we re-seek iterators. We're about
-to introduce a caching mechanism though where iterators are reused by
-the reftable backend, and that will expose the bug.
+We cannot really avoid the last two steps, but re-creating the iterator
+every single time we want to read a reference is kind of expensive and a
+waste of resources. We couldn't help it in the past though because it
+was not possible to reuse iterators. But starting with 5bf96e0c39
+(reftable/generic: move seeking of records into the iterator,
+2024-05-13) we have split up the iterator lifecycle such that creating
+the iterator and seeking are two different concerns.
 
-Fix the issue by draining the priority queue when seeking and add a
-testcase that surfaces the issue.
+Refactor the code such that we cache iterators in the reftable backend.
+This cache is invalidated whenever the respective stack is reloaded such
+that we know to recreate the iterator in that case. This leads to a
+sizeable speedup when creating many refs, which requires a lot of random
+reference reads:
+
+    Benchmark 1: update-ref: create many refs (refcount = 100000, revision = master)
+      Time (mean ± σ):      1.793 s ±  0.010 s    [User: 0.954 s, System: 0.835 s]
+      Range (min … max):    1.781 s …  1.811 s    10 runs
+
+    Benchmark 2: update-ref: create many refs (refcount = 100000, revision = HEAD)
+      Time (mean ± σ):      1.680 s ±  0.013 s    [User: 0.846 s, System: 0.831 s]
+      Range (min … max):    1.664 s …  1.702 s    10 runs
+
+    Summary
+      update-ref: create many refs (refcount = 100000, revision = HEAD) ran
+        1.07 ± 0.01 times faster than update-ref: create many refs (refcount = 100000, revision = master)
+
+While 7% is not a huge win, you have to consider that the benchmark is
+_writing_ data, so _reading_ references is only one part of what we do.
+Flame graphs show that we spend around 40% of our time reading refs, so
+the speedup when reading refs is approximately ~2.5x that. I could not
+find better benchmarks where we perform a lot of random ref reads.
+
+You can also see a sizeable impact on memory usage when creating 100k
+references. Before this change:
+
+    HEAP SUMMARY:
+        in use at exit: 19,112,538 bytes in 200,170 blocks
+      total heap usage: 8,400,426 allocs, 8,200,256 frees, 454,367,048 bytes allocated
+
+After this change:
+
+    HEAP SUMMARY:
+        in use at exit: 674,416 bytes in 169 blocks
+      total heap usage: 7,929,872 allocs, 7,929,703 frees, 281,509,985 bytes allocated
+
+As an additional factor, this refactoring opens up the possibility for
+more performance optimizations in how we re-seek iterators. Any change
+that allows us to optimize re-seeking by e.g. reusing data structures
+would thus also directly speed up random reads.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c                |  2 +
- t/unit-tests/t-reftable-merged.c | 73 ++++++++++++++++++++++++++++++++
- 2 files changed, 75 insertions(+)
+ refs/reftable-backend.c | 32 +++++++++++++++++++++++++++++---
+ 1 file changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/reftable/merged.c b/reftable/merged.c
-index 514d6facf4..84d6e933f4 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -66,6 +66,8 @@ static int merged_iter_seek(struct merged_iter *mi, struct reftable_record *want
- 	int err;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 98a070f5a7..e0577d666f 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -34,19 +34,30 @@
  
- 	mi->advance_index = -1;
-+	while (!merged_iter_pqueue_is_empty(mi->pq))
-+		merged_iter_pqueue_remove(&mi->pq);
+ struct reftable_backend {
+ 	struct reftable_stack *stack;
++	struct reftable_iterator it;
+ };
  
- 	for (size_t i = 0; i < mi->subiters_len; i++) {
- 		err = iterator_seek(&mi->subiters[i].iter, want);
-diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
-index 4c25ee5334..99ca33f973 100644
---- a/t/unit-tests/t-reftable-merged.c
-+++ b/t/unit-tests/t-reftable-merged.c
-@@ -273,6 +273,78 @@ static void t_merged_seek_multiple_times(void)
- 	reftable_free(sources);
- }
- 
-+static void t_merged_seek_multiple_times_without_draining(void)
++static void reftable_backend_on_reload(void *payload)
 +{
-+	struct reftable_ref_record r1[] = {
-+		{
-+			.refname = (char *) "a",
-+			.update_index = 1,
-+			.value_type = REFTABLE_REF_VAL1,
-+			.value.val1 = { 1 },
-+		},
-+		{
-+			.refname = (char *) "c",
-+			.update_index = 1,
-+			.value_type = REFTABLE_REF_VAL1,
-+			.value.val1 = { 2 },
-+		}
-+	};
-+	struct reftable_ref_record r2[] = {
-+		{
-+			.refname = (char *) "b",
-+			.update_index = 2,
-+			.value_type = REFTABLE_REF_VAL1,
-+			.value.val1 = { 3 },
-+		},
-+		{
-+			.refname = (char *) "d",
-+			.update_index = 2,
-+			.value_type = REFTABLE_REF_VAL1,
-+			.value.val1 = { 4 },
-+		},
-+	};
-+	struct reftable_ref_record *refs[] = {
-+		r1, r2,
-+	};
-+	size_t sizes[] = {
-+		ARRAY_SIZE(r1), ARRAY_SIZE(r2),
-+	};
-+	struct reftable_buf bufs[] = {
-+		REFTABLE_BUF_INIT, REFTABLE_BUF_INIT,
-+	};
-+	struct reftable_block_source *sources = NULL;
-+	struct reftable_reader **readers = NULL;
-+	struct reftable_ref_record rec = { 0 };
-+	struct reftable_iterator it = { 0 };
-+	struct reftable_merged_table *mt;
-+	int err;
-+
-+	mt = merged_table_from_records(refs, &sources, &readers, sizes, bufs, 2);
-+	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
-+
-+	err = reftable_iterator_seek_ref(&it, "b");
-+	check(!err);
-+	err = reftable_iterator_next_ref(&it, &rec);
-+	check(!err);
-+	err = reftable_ref_record_equal(&rec, &r2[0], GIT_SHA1_RAWSZ);
-+	check(err == 1);
-+
-+	err = reftable_iterator_seek_ref(&it, "a");
-+	check(!err);
-+	err = reftable_iterator_next_ref(&it, &rec);
-+	check(!err);
-+	err = reftable_ref_record_equal(&rec, &r1[0], GIT_SHA1_RAWSZ);
-+	check(err == 1);
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
-+		reftable_buf_release(&bufs[i]);
-+	readers_destroy(readers, ARRAY_SIZE(refs));
-+	reftable_ref_record_release(&rec);
-+	reftable_iterator_destroy(&it);
-+	reftable_merged_table_free(mt);
-+	reftable_free(sources);
++	struct reftable_backend *be = payload;
++	reftable_iterator_destroy(&be->it);
 +}
 +
- static struct reftable_merged_table *
- merged_table_from_log_records(struct reftable_log_record **logs,
- 			      struct reftable_block_source **source,
-@@ -467,6 +539,7 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 	TEST(t_merged_logs(), "merged table with multiple log updates for same ref");
- 	TEST(t_merged_refs(), "merged table with multiple updates to same ref");
- 	TEST(t_merged_seek_multiple_times(), "merged table can seek multiple times");
-+	TEST(t_merged_seek_multiple_times_without_draining(), "merged table can seek multiple times without draining");
- 	TEST(t_merged_single_record(), "ref occurring in only one record can be fetched");
+ static int reftable_backend_init(struct reftable_backend *be,
+ 				 const char *path,
+-				 const struct reftable_write_options *opts)
++				 const struct reftable_write_options *_opts)
+ {
+-	return reftable_new_stack(&be->stack, path, opts);
++	struct reftable_write_options opts = *_opts;
++	opts.on_reload = reftable_backend_on_reload;
++	opts.on_reload_payload = be;
++	return reftable_new_stack(&be->stack, path, &opts);
+ }
  
- 	return test_done();
+ static void reftable_backend_release(struct reftable_backend *be)
+ {
+ 	reftable_stack_destroy(be->stack);
+ 	be->stack = NULL;
++	reftable_iterator_destroy(&be->it);
+ }
+ 
+ static int reftable_backend_read_ref(struct reftable_backend *be,
+@@ -58,10 +69,25 @@ static int reftable_backend_read_ref(struct reftable_backend *be,
+ 	struct reftable_ref_record ref = {0};
+ 	int ret;
+ 
+-	ret = reftable_stack_read_ref(be->stack, refname, &ref);
++	if (!be->it.ops) {
++		ret = reftable_stack_init_ref_iterator(be->stack, &be->it);
++		if (ret)
++			goto done;
++	}
++
++	ret = reftable_iterator_seek_ref(&be->it, refname);
+ 	if (ret)
+ 		goto done;
+ 
++	ret = reftable_iterator_next_ref(&be->it, &ref);
++	if (ret)
++		goto done;
++
++	if (strcmp(ref.refname, refname)) {
++		ret = 1;
++		goto done;
++	}
++
+ 	if (ref.value_type == REFTABLE_REF_SYMREF) {
+ 		strbuf_reset(referent);
+ 		strbuf_addstr(referent, ref.value.symref);
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
