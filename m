@@ -1,128 +1,122 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6609A1FC3
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:39:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3851AB6EA
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730759959; cv=none; b=AYJgfjJZ5n2QETfKuDQAQhRSu1R0ZhFYLPuOqItavNC28QfjrwNXbxAw+b2EmdoWNFkFo/acWb0Y/g91FFVvfThECXYolNpQPiGl8zpSGCS0WR/hXrQxvexbqKIkg08zat4Ta+Yr7t9z6obtO0nM9pmvCAOTygpSgWwiGIJ+w1k=
+	t=1730760320; cv=none; b=WPfywK9uGRBpiAeJ2jClffg3+B//N8M9YbKzWqJolqxGF1uTmwG0e1O6T+/Yt8QqZVPx6NI2pB7Rjye2ZiMavl/wdviBRqr+34BymSI/YPjtGSFMhDNjzJkSo1vQIsxdsroVzRaFg9OIL6ayQvKDlflEDy8LegMBxzqvmvaF0h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730759959; c=relaxed/simple;
-	bh=4MGa2G/gyJ0voEYsydAL6me0c+CR5Uaz1iawSw7eoAo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f0COM4wOgE6qtMm1OrLOJ0R9ZmrNJaOdx316LRA9J6zfskbZYlU/VmfiG+/te02yc9wk1Em1j5yMTmlMJblNEHaISc0cGciSloDqhkBZa1fzHCcrtSLCf7DZjbRL6/X6j9yv0WoxTwJdHg+6AJW7zWfmSj4D1YkI8hTOMwV84Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J37zwUdM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NQKeCdNd; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730760320; c=relaxed/simple;
+	bh=pvAAN3bsr+05NDijJx5YNoR2HCeFixWvTY/7679aufA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hAX5x05RHUlwsSOoWqiFX4qzqliYt1R+7sAE5KtsuNKyf5zdzVx5QQwGbxv72WYbN47um/aV6sNE5Ew/yHWzc7knY1xTZjZSC89nGAgljMd3w6Ww1FvQs6+u2/T7VvGalSWygWVS3fZjhssRzRg4lCZYVP3J50zHI5OUWyk0txw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VJfTNJ61; arc=none smtp.client-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J37zwUdM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NQKeCdNd"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E5A32540187;
-	Mon,  4 Nov 2024 17:39:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 04 Nov 2024 17:39:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730759956; x=1730846356; bh=TVGs+1uang
-	yJuLmfFKze07g5VLkiViY6kDAPWYv3pTE=; b=J37zwUdMj5YN0yPcv2OfDvHQQi
-	gJKGJxsS+zIw5y5jT1/d7NH3Q+lP2nyafcgBoED819gOVl5DxDF4sV0q3XwXYuEQ
-	JgHy7yY+1ZCKTJaxxZ/BW1Tny8vfdmbvApfWYFWJb6mTMLZEANxEfMMp7SCWbqgG
-	3Tk9MofwbYtnFvTIgiF6ZTXXE3G6FjGMGGd9GhiGUUbiBp1EBHDUuLOIc7n40Hgu
-	Q1jIhfpQC/f8dWmCHfa9G37cbEjNUfon/oMYSZl1zkaMihLqyvAA0YHuueFiQutY
-	IPQoNE6XRabrJ2/FCtE15IJLk10QhfF0WQjr8FUt/FiWAjTjLDJUHdXvsyqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730759956; x=1730846356; bh=TVGs+1uangyJuLmfFKze07g5VLkiViY6kDA
-	PWYv3pTE=; b=NQKeCdNdE6tKEXf9YsqnrvQxf+WlqhnhIX+dlrkkaqq5/EeuoJE
-	bIOKLxGOrUUZvvh4KNFZWohN0Wxu8CYAIrs2KTaURBL6zgZxRzmXa/rANnNQdzel
-	lLIbU7KnXWzdbE3y/cxEVh/XRoSKHc/LP3xdT26lKJCYKtKGWpDes0q5Y8amLk3q
-	fBS29rtOcqP2tiwh0epGC73z4D8azYpNjftGRsIUQZY2OJQkAYtPUckEUBvRKNIp
-	VYUc50pGF55ahTlfz9U7afL5isr9780hH6J9fRIj0ksEPOFK/xLOEf79qJb+fR3K
-	zrxvgNNDmZ49ptuiF2IQyLpP3dF5S6PX1tw==
-X-ME-Sender: <xms:FE0pZ0qySPL_MjBGQVgFEgSEe7ORuVOaLnj6GqrkHGm2Kfz-zMUVUw>
-    <xme:FE0pZ6qBUEnMmlHuim3G7YKNIuHm8w4I18WcOovNmn3RIS6xLXwAwis1ZfihWyStr
-    sHnb0KPdsL1p9m65Q>
-X-ME-Received: <xmr:FE0pZ5NJ3nemR-_VWQapVHlMdGAHZG1VzFpQffbgBzNvq1Lr2A8sCa4ZkwbD3RYZ4OZJKkl7uC1_DgxFa0FAwdiLaRn7N8tAyFBM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:FE0pZ77RJlKolRM_w_hoZG7_868p79LluDcktg4pJyAuZekSL2-Ftg>
-    <xmx:FE0pZz7GYzbXPZBL4_r-BqtVtvyh-N8q3Zt3lN-pz5E7y7C5jCusKw>
-    <xmx:FE0pZ7i4pdIZD-AnQDM6-IpVYnNQl0r_NcBS7ThvqXRXbyiN_7FVeg>
-    <xmx:FE0pZ96HwuDHmjh-coUCRtvpphCJ5AiVJ5vd4dqSia4GTA_HUfyNWw>
-    <xmx:FE0pZ1l9V_Wb_tp8xYeYVbyv1SzgyrMaHM_Go1x4RKrg0ChMay7grGew>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Nov 2024 17:39:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2024, #02; Fri, 1)
-In-Reply-To: <ZyjoTVhP0xn/Qcvx@nand.local> (Taylor Blau's message of "Mon, 4
-	Nov 2024 10:29:17 -0500")
-References: <xmqqr07rwsmd.fsf@gitster.g> <ZyjoTVhP0xn/Qcvx@nand.local>
-Date: Mon, 04 Nov 2024 14:39:14 -0800
-Message-ID: <xmqqikt2wrn1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VJfTNJ61"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-71815313303so2354584a34.1
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 14:45:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730760318; x=1731365118; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fiqgYfbAYo4qPbtXZyjepmxzpWHtVoipQzi7/L+FJb4=;
+        b=VJfTNJ61XmQCfYb0fnJ2hQgyanjcp0/mKu4sBzyd9/WG5YHY7BM6kx0Wc1uB+1QMgV
+         0sQtCSsELon/epY8ZrugJdJW0w1H9LiUppmeKZeLHHAC8kDbKCi3ax/KKqJpUBitMbqF
+         jh90zf4C6mWCbzNjGCilIMvA9DtBHXe5Weu5MdNM1pdyypL8wwdmGgyn5B0hmLC+0Qh3
+         wvsq3Qs60hoF/5E0AOPnkGDYX3Ne2MyhvOj15GhPdO/qAYsOK6/+XVQakHx/VgCjqYa2
+         pD0kqog5l2BfC5B5KeGPtepzUiLQuJFU2uoY2UM1sy0GW9DW70CYfxbu9i4MgWFXdeXd
+         DACg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730760318; x=1731365118;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fiqgYfbAYo4qPbtXZyjepmxzpWHtVoipQzi7/L+FJb4=;
+        b=HSh3i5oHoWqv2xe03Rp1djbUWYAfW5Xv4a1yf76e3eSVIdFSoN3TObmmDU76DPPGHB
+         DBVm8t9Tw8WvWL1rwFU5pWdqmaO0RjsJXyBF6InzpbhPidOCU5Xun+dNDkwDG2TqArV4
+         IGyY8PfebUGK5Nez1DRKGnPgJkNrj+B2JrnuI2z/PfpZ9+eaHWtANtXOlwA3RcXzoDjY
+         NpyDjWNAFi7wtSuWt61Ujkrc+2aUL41ryO89GTshC9iWaz+xGzGE+TxtikXiqG4iyTRM
+         T4j223X2TC8jdTzKFxPbZkMDyVMCUIc7o+Xo1G72olFNdMeVdpNrR4GeIY7xZNkrB6m/
+         MetQ==
+X-Gm-Message-State: AOJu0Ywg5INqbmRYvhfDQ2q+spqc1vY8AZrX3IPZ1COuXotew42KlrEk
+	V1pCAVewV9bxN8QSb+KulYLr+a91Xb0il6SaeB5brsZoTmItcOCuF4ZfkqKk
+X-Google-Smtp-Source: AGHT+IFJvcAkAX6+ZNEEcVrDLTrDprBUpn/2zv+pR+9X5uzMUyOe7er2q8H5s3y9hgCcDZzyMb5Z1g==
+X-Received: by 2002:a05:6830:3489:b0:718:c7f:5cbd with SMTP id 46e09a7af769-71868295b3cmr32501358a34.28.1730760318226;
+        Mon, 04 Nov 2024 14:45:18 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7189cc7e489sm2194195a34.33.2024.11.04.14.45.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Nov 2024 14:45:17 -0800 (PST)
+Date: Mon, 4 Nov 2024 16:43:38 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v2 15/22] combine-diff: fix leaking lost lines
+Message-ID: <rbjmoxqrfpcpz2b5oqxcchuwpbvw4uz4ps4j7ctkd4ux5h4xwj@n4mngoog4ffd>
+References: <cover.1728624670.git.ps@pks.im>
+ <cover.1729502823.git.ps@pks.im>
+ <76bbcb3fe301fe273578a71849f99953ea94695c.1729502824.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <76bbcb3fe301fe273578a71849f99953ea94695c.1729502824.git.ps@pks.im>
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 24/10/21 11:28AM, Patrick Steinhardt wrote:
+> The `cnt` variable tracks the number of lines in a patch diff. It can
+> happen though that there are no newlines, in which case we'd still end
+> up allocating our array of `sline`s. In fact, we always allocate it with
+> `cnt + 2` entries. But when we loop through the array to clear it at the
+> end of this function we only loop until `lno < cnt`, and thus we may not
+> end up releasing whatever the two extra `sline`s contain.
+> 
+> Plug this memory leak.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  combine-diff.c           | 2 +-
+>  t/t4038-diff-combined.sh | 1 +
+>  2 files changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/combine-diff.c b/combine-diff.c
+> index f6b624dc288..3c6d9507fec 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -1220,7 +1220,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+>  	}
+>  	free(result);
+>  
+> -	for (lno = 0; lno < cnt; lno++) {
+> +	for (lno = 0; lno < cnt + 2; lno++) {
 
->> [Graduated to 'master']
->>
->> * ds/path-walk-1 (2024-10-31) 6 commits
->> ...
-> This is marked as "Graduated to 'master'", although I suspect it isn't.
-> I thought that it would have been because the topic went away, although
-> I still see this in 'jch' via your 3503a15e17 (Merge branch
-> 'kh/bundle-docs' into jch, 2024-11-03).
->
-> Perhaps this WC report was generated before moving the topic back into
-> 'jch'? In either event, as noted by <ZyUqr/wb5K4Og9j9@nand.local>, this
-> topic is still under discussion and is not ready to be merged (yet).
+From looking only at the code, its not very obvious to me where the "+2"
+comes from. Not really worth a reroll, but it might be nice to leave a
+note with some context.
 
-I am not sure how exactly it happened, but IIRC, the topic branch for
-this one was missing for some time after I grabbed the broken-out
-topics from you.  As I didn't rebuild 'seen' I managed to pull it
-out of master..seen chain locally, but that was before I generated
-the "What's cooking" report and I think that is how this entry was
-mistakenly moved.
-
-Thanks for spotting.
-
->> * tb/cross-pack-delta-reuse (2024-10-11) 11 commits
->> ...
->>  Needs review.
->>  source: <cover.1728505840.git.me@ttaylorr.com>
->
-> This topic was ejected, which is fine since it hasn't seen any review in
-> a few weeks. It's on my list of things to resend.
->
->> * tb/incremental-midx-part-2 (2024-10-04) 17 commits
->> ...
->>  Needs review.
->>  source: <cover.1723760847.git.me@ttaylorr.com>
->>  source: <ZwBsbW5jsFw0mxKk@nand.local>
->
-> Ditto.
-
-Thanks.  I'll eject them then.
+>  		if (sline[lno].lost) {
+>  			struct lline *ll = sline[lno].lost;
+>  			while (ll) {
+> diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+> index 2ce26e585c9..00190802d83 100755
+> --- a/t/t4038-diff-combined.sh
+> +++ b/t/t4038-diff-combined.sh
+> @@ -5,6 +5,7 @@ test_description='combined diff'
+>  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>  
+> +TEST_PASSES_SANITIZE_LEAK=true
+>  . ./test-lib.sh
+>  . "$TEST_DIRECTORY"/lib-diff.sh
+>  
+> -- 
+> 2.47.0.72.gef8ce8f3d4.dirty
+> 
+> 
