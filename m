@@ -1,72 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4E52AE93
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 14:40:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA39270805
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:03:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730731209; cv=none; b=u9QYMOFDbrojQG24BTRu1SQCEyLwZA5h0+VW4X65J6tPAw/JOkmF/Ndm3rlRI4PRHCM7A0o1ay0cYSVbxoDw+xc5iI22TXXUL9lxNYRZUl5/m6+tq90Ajs9QSxGl3E84vV4+alxTA7Cs6rsc5YY+T28EDXSJmIcyS3zP87CBHpw=
+	t=1730732603; cv=none; b=WJ9FMbr6aIEl3mBRPgPhDxo4QVuwStzKcOY2vwMwLtN6AsuDZjQUTmKK0jmPyP07LgBvJvFHOpr0CpqL7nJ3SM3tCLQBv9Axmz/7kS09V8OfZXkeY1Li2U7h9Nm0YWZYIGqn/0nLxKTXGDMU8pyLiwPzuBNX8yC/66Q4IzGEJ9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730731209; c=relaxed/simple;
-	bh=vv0LzXSXSdeG6u0qeVQG74WmDz/hADGJKQStDoUltGw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IqoOQdAwGTgUmuF3aE34Fiom27w8l+o4kWrpbX2KgCrjObE0y0/FHMQE95zg9DkXten0V+CtccwMM2kI+mQ+QB3uylouN0cC1OdhtUQYiQETSplccQDBBrDtoInrvlkkP+0U6Y3u5kZO3bFRCHBrggXSTJdY/AUD+WrnMpZYsqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sarqS5Pr; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sarqS5Pr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244DAC4CED0;
-	Mon,  4 Nov 2024 14:40:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1730731208;
-	bh=vv0LzXSXSdeG6u0qeVQG74WmDz/hADGJKQStDoUltGw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sarqS5PrYQ4Tj501Nac+7nPovdSwXI3U8779DYm3CVCwPg6EzFB5UZ+QVYiDMvPyy
-	 8hqV8J7fXOgTtoIIPCYSnPv8FxY7+9cm5iCQe4ZA99oekOdo7KS+JKkNNb2tmcVOB6
-	 YN/ZwuQhb6YnvSIyo5NrlJYTnUJP/WO958OaSBc4=
-Date: Mon, 4 Nov 2024 09:40:06 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Taylor R Campbell <git@campbell.mumble.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	=?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>, git@vger.kernel.org
-Subject: Re: Synchronous replication on push
-Message-ID: <20241104-real-marmoset-of-success-9a6c8e@meerkat>
-References: <ZyY74N_NjmaJ2677@tapette.crustytoothpaste.net>
- <20241104133544.A04D760A95@jupiter.mumble.net>
+	s=arc-20240116; t=1730732603; c=relaxed/simple;
+	bh=+XVDopMtThitzcMOk28ZixeXlIbeGvF0f+PKiEkZr+M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I5Hh5oPwb5BbufaOffdlCRPiTikzYivG24MMZez7FhMI4ZueyxywZuxjJ93yQh4Ex/eR9D68XtR2XksHZvEcCV6vgVqFvMMeO+oLRIv6dwwVooUuRK6S/okEl7UuqQY73eX5Qrdk3wpC1MBYb0Or91Ufs5Q6QQaPgAm/4Zw6gI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Message-ID: <2dc3433a-4440-4216-8fd1-3776c8293674@gentoo.org>
+Date: Mon, 4 Nov 2024 10:03:17 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241104133544.A04D760A95@jupiter.mumble.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+To: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <Zyi7PA2m2YX9MpBu@pks.im>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------ia3mHAxn0G5pXIKMzTQI8KR4"
 
-On Mon, Nov 04, 2024 at 01:35:44PM +0000, Taylor R Campbell wrote:
-> > > I'm asking about how to configure a _single_ frontend remote, from the
-> > > perspective of developers who are pushing from their development
-> > > workstations, so that it replicates to one or many backend stores.
-> > > This is, for example, the usage model of Github's proprietary
-> > > implementation.
-> > 
-> > I don't think there's built-in functionality for this and I'm not sure
-> > that it can be done without additional software.
-> 
-> I'm happy to write some additional software.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------ia3mHAxn0G5pXIKMzTQI8KR4
+Content-Type: multipart/mixed; boundary="------------crX9MZsdvpDslL25PckV2zVC";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <2dc3433a-4440-4216-8fd1-3776c8293674@gentoo.org>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+In-Reply-To: <Zyi7PA2m2YX9MpBu@pks.im>
 
-Alternatively, you can take a look at grokmirror, which is what kernel.org
-uses:
-https://pypi.org/project/grokmirror/
+--------------crX9MZsdvpDslL25PckV2zVC
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-It's pull-based instead of push-based, for several reasons:
+On 11/4/24 7:17 AM, Patrick Steinhardt wrote:
+> The solution to that problem is autoconfiguration by detecting platform=
 
-1. We replicate to multiple worldwide frontends, and we expect that some of
-   them may be unreachable at the time when we attempt a push
-2. This allows us to propagate repository deletes
-3. This allows us to propagate details like descriptions and authors
+> specific bits and pieces. And we _also_ have such a build system in the=
 
-Grokmirror also has a listener daemon that can trigger a pull, so it's
-possible to have near-instantaneous replication by notifying the remote node
-that a repository has been updated and should be pulled.
+> form of autoconf, but now we're entering territory that is awfully hard=
 
--K
+> to maintain. Most people don't use it at all, the only user seems to
+> really be distros. And they tend to hit many issues with autoconf
+> because we devs don't use that infra in the first place, creating a bit=
+
+> of an awkward situation. Unifying this infrastructure such that devs an=
+d
+> packagers use the same build infra is thus another goal of my series.
+
+
+As a distro packager (not of git specifically), my understanding was
+that *no* distros use the autoconf, and that at least some distros say
+the reason for this is that the autoconf is so unused that it doesn't
+actually work.
+
+We tried to use the autoconf but failed.
+
+
+--=20
+Eli Schwartz
+
+--------------crX9MZsdvpDslL25PckV2zVC--
+
+--------------ia3mHAxn0G5pXIKMzTQI8KR4
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZyjiNgUDAAAAAAAKCRCEp9ErcA0vV2+M
+AP9qoJ0iF2pDnzM9RDFoWghomMG7yonJ3kblsFIoklXWLgEA4UNrimUBW7OhLenKvN9J2IhD7Ymt
+y6tQCns+5xsarQc=
+=QKMx
+-----END PGP SIGNATURE-----
+
+--------------ia3mHAxn0G5pXIKMzTQI8KR4--
