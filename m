@@ -1,109 +1,128 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B391FC3
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6609A1FC3
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730759791; cv=none; b=mdMmrJ032s1IoHWt9OK5bw+s4dS3K+7Sz7Lo5QKwH0F6ABVQPT8OZBLcpMR22vZzg0N0kSKj/czoqw+soseuTVq2vCZYVYR3sdLZxgj74vjnOnmcB5ADlgRppy9gIhgNX84AYSri2pW4OWWv0e74zgvPLufNgbWRHEnGAaffn7s=
+	t=1730759959; cv=none; b=AYJgfjJZ5n2QETfKuDQAQhRSu1R0ZhFYLPuOqItavNC28QfjrwNXbxAw+b2EmdoWNFkFo/acWb0Y/g91FFVvfThECXYolNpQPiGl8zpSGCS0WR/hXrQxvexbqKIkg08zat4Ta+Yr7t9z6obtO0nM9pmvCAOTygpSgWwiGIJ+w1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730759791; c=relaxed/simple;
-	bh=W8roL/lLXXGFO0A5JyXl30z5OH+xKrti2UUFLKuwzLU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y3O74NKsOYsyq4XqSEnuGsCbyU0X7XPSYIBHEsdY1whHrj+N3G1/86oWKHuaZKAFIeMW/idW+sr5mIHUdl3Vi1hkHirKe38T6ikQKGtEOF7us9OrFrF0bYKycWW/99jl6vbj22OOrl4HrgWRhDyLQNRg4/tplWXnUIYSwcdhtpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=a+uiIAfh; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1730759959; c=relaxed/simple;
+	bh=4MGa2G/gyJ0voEYsydAL6me0c+CR5Uaz1iawSw7eoAo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=f0COM4wOgE6qtMm1OrLOJ0R9ZmrNJaOdx316LRA9J6zfskbZYlU/VmfiG+/te02yc9wk1Em1j5yMTmlMJblNEHaISc0cGciSloDqhkBZa1fzHCcrtSLCf7DZjbRL6/X6j9yv0WoxTwJdHg+6AJW7zWfmSj4D1YkI8hTOMwV84Zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J37zwUdM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NQKeCdNd; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="a+uiIAfh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1730759782;
-	bh=W8roL/lLXXGFO0A5JyXl30z5OH+xKrti2UUFLKuwzLU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=a+uiIAfhmnA5gT458nZZhzup8/qoarVlijA7701oEkM9DehOBEV219rbbjdy0Dq2c
-	 T42114FnJuVXIPYR4Wg1Rg2jAUh9Uux/PFwba3KJNFGKowiWooW42AHPamnNnjZZkk
-	 yeMFXCSX6UxYUK8eo0Fvrkqmv7Nlx/dA7pOIVvmea7HST7ENR69psFSf/+W++xcUnI
-	 YKKQ2kVQbOHCTuE65uOm9kjN4L7fvDKquErO35CZhoRWnf9oeQtaXNIeS/n9skCkKF
-	 FFXvynmWwWG2K0+3ltJR2egqH7I6imq35DW41/Mg/jSCAfTD+zFRGOECoKv67z5xEv
-	 2h8Fu/1fSQ3JwEBAsJ9OJLe/XcGPMCq/ypnGaRhr0Q8dDY2d8fjgzIbHJ9GeNb5RsP
-	 vjcowQdWajoDX94qfesSusLbbjzzondy2rWcckbq356uCVkgs/q0z/mXCEN2hhAyz5
-	 SGadOSAEq9oqFJb6IwohpAo1ZrR9ES4ourfT6OyYZAolh+bur+n
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3B666200B7;
-	Mon,  4 Nov 2024 22:36:22 +0000 (UTC)
-Date: Mon, 4 Nov 2024 22:36:20 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Taylor R Campbell <git@campbell.mumble.net>
-Cc: =?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>, git@vger.kernel.org
-Subject: Re: Synchronous replication on push
-Message-ID: <ZylMZGLdwVDFcAwF@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Taylor R Campbell <git@campbell.mumble.net>,
-	=?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>, git@vger.kernel.org
-References: <ZyY74N_NjmaJ2677@tapette.crustytoothpaste.net>
- <20241104133544.A04D760A95@jupiter.mumble.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J37zwUdM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NQKeCdNd"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8E5A32540187;
+	Mon,  4 Nov 2024 17:39:16 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 04 Nov 2024 17:39:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1730759956; x=1730846356; bh=TVGs+1uang
+	yJuLmfFKze07g5VLkiViY6kDAPWYv3pTE=; b=J37zwUdMj5YN0yPcv2OfDvHQQi
+	gJKGJxsS+zIw5y5jT1/d7NH3Q+lP2nyafcgBoED819gOVl5DxDF4sV0q3XwXYuEQ
+	JgHy7yY+1ZCKTJaxxZ/BW1Tny8vfdmbvApfWYFWJb6mTMLZEANxEfMMp7SCWbqgG
+	3Tk9MofwbYtnFvTIgiF6ZTXXE3G6FjGMGGd9GhiGUUbiBp1EBHDUuLOIc7n40Hgu
+	Q1jIhfpQC/f8dWmCHfa9G37cbEjNUfon/oMYSZl1zkaMihLqyvAA0YHuueFiQutY
+	IPQoNE6XRabrJ2/FCtE15IJLk10QhfF0WQjr8FUt/FiWAjTjLDJUHdXvsyqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1730759956; x=1730846356; bh=TVGs+1uangyJuLmfFKze07g5VLkiViY6kDA
+	PWYv3pTE=; b=NQKeCdNdE6tKEXf9YsqnrvQxf+WlqhnhIX+dlrkkaqq5/EeuoJE
+	bIOKLxGOrUUZvvh4KNFZWohN0Wxu8CYAIrs2KTaURBL6zgZxRzmXa/rANnNQdzel
+	lLIbU7KnXWzdbE3y/cxEVh/XRoSKHc/LP3xdT26lKJCYKtKGWpDes0q5Y8amLk3q
+	fBS29rtOcqP2tiwh0epGC73z4D8azYpNjftGRsIUQZY2OJQkAYtPUckEUBvRKNIp
+	VYUc50pGF55ahTlfz9U7afL5isr9780hH6J9fRIj0ksEPOFK/xLOEf79qJb+fR3K
+	zrxvgNNDmZ49ptuiF2IQyLpP3dF5S6PX1tw==
+X-ME-Sender: <xms:FE0pZ0qySPL_MjBGQVgFEgSEe7ORuVOaLnj6GqrkHGm2Kfz-zMUVUw>
+    <xme:FE0pZ6qBUEnMmlHuim3G7YKNIuHm8w4I18WcOovNmn3RIS6xLXwAwis1ZfihWyStr
+    sHnb0KPdsL1p9m65Q>
+X-ME-Received: <xmr:FE0pZ5NJ3nemR-_VWQapVHlMdGAHZG1VzFpQffbgBzNvq1Lr2A8sCa4ZkwbD3RYZ4OZJKkl7uC1_DgxFa0FAwdiLaRn7N8tAyFBM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
+    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:FE0pZ77RJlKolRM_w_hoZG7_868p79LluDcktg4pJyAuZekSL2-Ftg>
+    <xmx:FE0pZz7GYzbXPZBL4_r-BqtVtvyh-N8q3Zt3lN-pz5E7y7C5jCusKw>
+    <xmx:FE0pZ7i4pdIZD-AnQDM6-IpVYnNQl0r_NcBS7ThvqXRXbyiN_7FVeg>
+    <xmx:FE0pZ96HwuDHmjh-coUCRtvpphCJ5AiVJ5vd4dqSia4GTA_HUfyNWw>
+    <xmx:FE0pZ1l9V_Wb_tp8xYeYVbyv1SzgyrMaHM_Go1x4RKrg0ChMay7grGew>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 4 Nov 2024 17:39:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2024, #02; Fri, 1)
+In-Reply-To: <ZyjoTVhP0xn/Qcvx@nand.local> (Taylor Blau's message of "Mon, 4
+	Nov 2024 10:29:17 -0500")
+References: <xmqqr07rwsmd.fsf@gitster.g> <ZyjoTVhP0xn/Qcvx@nand.local>
+Date: Mon, 04 Nov 2024 14:39:14 -0800
+Message-ID: <xmqqikt2wrn1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gN+D0iRddr0UNiY+"
-Content-Disposition: inline
-In-Reply-To: <20241104133544.A04D760A95@jupiter.mumble.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Taylor Blau <me@ttaylorr.com> writes:
 
---gN+D0iRddr0UNiY+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> [Graduated to 'master']
+>>
+>> * ds/path-walk-1 (2024-10-31) 6 commits
+>> ...
+> This is marked as "Graduated to 'master'", although I suspect it isn't.
+> I thought that it would have been because the topic went away, although
+> I still see this in 'jch' via your 3503a15e17 (Merge branch
+> 'kh/bundle-docs' into jch, 2024-11-03).
+>
+> Perhaps this WC report was generated before moving the topic back into
+> 'jch'? In either event, as noted by <ZyUqr/wb5K4Og9j9@nand.local>, this
+> topic is still under discussion and is not ready to be merged (yet).
 
-On 2024-11-04 at 13:35:44, Taylor R Campbell wrote:
-> Thanks, can you expand on how this would work with the constraints I
-> listed in my question?  Recapitulating:
->=20
->    One option, of course, is to use a replicated file system like
->    glusterfs, or replicated block store like DRBD.  But that
->=20
->    (a) likely requires a lot more round-trips than git push/send-pack,
->    (b) can't be used for replication to other git hosts like Github, and
->    (c) can't be used for other remote transports like git-cinnabar.
->=20
-> It sounds like rsyncing over ssh is incompatible with (b) and (c), but
-> perhaps I misunderstood what you're getting at.  I tried to see if
-> there is some way that reference-transaction hooks help me here but
-> there wasn't anything obvious to me.
+I am not sure how exactly it happened, but IIRC, the topic branch for
+this one was missing for some time after I grabbed the broken-out
+topics from you.  As I didn't rebuild 'seen' I managed to pull it
+out of master..seen chain locally, but that was before I generated
+the "What's cooking" report and I think that is how this entry was
+mistakenly moved.
 
-It should be noted that you cannot do what GitHub does with the
-three-phase commit with arbitrary remotes.  A three-phase commit
-provides a prepared-to-commit stage where the backends agree that they
-(or at least a majority of them) will make the change.  The Git protocol
-doesn't offer such functionality, so you can't use arbitrary remotes for
-this purpose.  You'll need to either replicate to only hosts you control
-(as GitHub does), or you'll need to give up on having your three-phase
-commit operation.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Thanks for spotting.
 
---gN+D0iRddr0UNiY+
-Content-Type: application/pgp-signature; name="signature.asc"
+>> * tb/cross-pack-delta-reuse (2024-10-11) 11 commits
+>> ...
+>>  Needs review.
+>>  source: <cover.1728505840.git.me@ttaylorr.com>
+>
+> This topic was ejected, which is fine since it hasn't seen any review in
+> a few weeks. It's on my list of things to resend.
+>
+>> * tb/incremental-midx-part-2 (2024-10-04) 17 commits
+>> ...
+>>  Needs review.
+>>  source: <cover.1723760847.git.me@ttaylorr.com>
+>>  source: <ZwBsbW5jsFw0mxKk@nand.local>
+>
+> Ditto.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZylMZAAKCRB8DEliiIei
-gYEwAQDJpprTZSMwLjb01kSNqsYdTNJIukp+dFSVu6Y+dob7zgD/UlCkgf0WKkwb
-8pqnHSkOazZkAi9eKT0aePjxD9HiYgE=
-=NJ9/
------END PGP SIGNATURE-----
-
---gN+D0iRddr0UNiY+--
+Thanks.  I'll eject them then.
