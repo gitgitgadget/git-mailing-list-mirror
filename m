@@ -1,21 +1,21 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA39270805
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8849A4A08
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 15:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730732603; cv=none; b=WJ9FMbr6aIEl3mBRPgPhDxo4QVuwStzKcOY2vwMwLtN6AsuDZjQUTmKK0jmPyP07LgBvJvFHOpr0CpqL7nJ3SM3tCLQBv9Axmz/7kS09V8OfZXkeY1Li2U7h9Nm0YWZYIGqn/0nLxKTXGDMU8pyLiwPzuBNX8yC/66Q4IzGEJ9Y=
+	t=1730733104; cv=none; b=NTsEiFSYes7vN4W0bj+oqSl1Fc3wVJPySbCOQbOuOKCfdSZSWa68QAOf4scX6lzS5/p8Td10FUBSWlzq6cF2SuqHOz9Qe670ZNkn1NzV4xxszW6xT3nvD0U/ACX901NqjkFMhaW5mK2kbqh8HW4vrOXpuFGpB9Yr2f/Dih+gpuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730732603; c=relaxed/simple;
-	bh=+XVDopMtThitzcMOk28ZixeXlIbeGvF0f+PKiEkZr+M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I5Hh5oPwb5BbufaOffdlCRPiTikzYivG24MMZez7FhMI4ZueyxywZuxjJ93yQh4Ex/eR9D68XtR2XksHZvEcCV6vgVqFvMMeO+oLRIv6dwwVooUuRK6S/okEl7UuqQY73eX5Qrdk3wpC1MBYb0Or91Ufs5Q6QQaPgAm/4Zw6gI0=
+	s=arc-20240116; t=1730733104; c=relaxed/simple;
+	bh=0l2JX1RnNAZu7JjAwLxe2R9l6bxeoF/r48WvpHusFSs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Out0UTEGU+pPg6arOIUYOzeJkGc+5+xIc0Nl7SDh2N4BNQAdVH5HyywDm5SZ4nsxJFcMtk3MhR6EnCOBtsnI3drZ/74fYPMQqC2kvcGGCHQlBbaaorjdXOINDIobszWnOzZK5X4p43pxLO0zHTangr1OZDwsClstO9JOzeV5IFc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <2dc3433a-4440-4216-8fd1-3776c8293674@gentoo.org>
-Date: Mon, 4 Nov 2024 10:03:17 -0500
+Message-ID: <eb9d26be-b0c3-4120-a5ea-a8b5236277d5@gentoo.org>
+Date: Mon, 4 Nov 2024 10:11:36 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -23,15 +23,15 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Eli Schwartz <eschwartz@gentoo.org>
 Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
+To: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
  Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
  <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
 References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local>
 Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
 Autocrypt: addr=eschwartz@gentoo.org; keydata=
  xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
  I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
@@ -41,70 +41,91 @@ Autocrypt: addr=eschwartz@gentoo.org; keydata=
  1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
  Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
  TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <Zyi7PA2m2YX9MpBu@pks.im>
+In-Reply-To: <Zxv4osnjmuiGzy94@nand.local>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------ia3mHAxn0G5pXIKMzTQI8KR4"
+ boundary="------------Jn0x7qms2ipzu1bR1VZBL00x"
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ia3mHAxn0G5pXIKMzTQI8KR4
-Content-Type: multipart/mixed; boundary="------------crX9MZsdvpDslL25PckV2zVC";
+--------------Jn0x7qms2ipzu1bR1VZBL00x
+Content-Type: multipart/mixed; boundary="------------oFgXAPP03WnSe5I1Rvl6Ko7I";
  protected-headers="v1"
 From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
+To: Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
  Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
  <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <2dc3433a-4440-4216-8fd1-3776c8293674@gentoo.org>
+Message-ID: <eb9d26be-b0c3-4120-a5ea-a8b5236277d5@gentoo.org>
 Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
 References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
-In-Reply-To: <Zyi7PA2m2YX9MpBu@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local>
+In-Reply-To: <Zxv4osnjmuiGzy94@nand.local>
 
---------------crX9MZsdvpDslL25PckV2zVC
+--------------oFgXAPP03WnSe5I1Rvl6Ko7I
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 11/4/24 7:17 AM, Patrick Steinhardt wrote:
-> The solution to that problem is autoconfiguration by detecting platform=
+On 10/25/24 3:59 PM, Taylor Blau wrote:
 
-> specific bits and pieces. And we _also_ have such a build system in the=
+> =3D=3D Conclusion
+>=20
+> To step back, I want to say that I appreciate your work on this series
+> and am certainly not opposed[^1] to the idea that we may need to make
+> significant changes to our build infrastructure to support the project'=
+s
+> goals.
+>=20
+> But I think that what I'm missing currently is a clear picture of what
+> goals we *can't* achieve with the existing build system (or could, but
+> only at significant cost/awkwardness), and why Meson is the right choic=
+e
+> to address those gaps.
+>=20
+> If the project can agree that pursuing Meson as a replacement for Make,=
 
-> form of autoconf, but now we're entering territory that is awfully hard=
+> CMake, or both, then I think we would need further clarification on wha=
+t
+> we want to do with CMake (and more generally how we want to support new=
 
-> to maintain. Most people don't use it at all, the only user seems to
-> really be distros. And they tend to hit many issues with autoconf
-> because we devs don't use that infra in the first place, creating a bit=
-
-> of an awkward situation. Unifying this infrastructure such that devs an=
-d
-> packagers use the same build infra is thus another goal of my series.
+> efforts to add additional build systems to Git in the future).
 
 
-As a distro packager (not of git specifically), my understanding was
-that *no* distros use the autoconf, and that at least some distros say
-the reason for this is that the autoconf is so unused that it doesn't
-actually work.
+One extremely big distinction is that Make is not a configuration
+system, and cannot be, and git has many configuration options that are
+currently underserved to the point of nonexistence. This causes a *lot*
+of trouble to people attempting to build git as it's not often clear how
+to do so other than by building a stock no-options build.
 
-We tried to use the autoconf but failed.
+When you do try it, you frequently end up with broken option passing
+resulting in an inconsistent git installation where some parts of the
+code are built with one option, and other parts of the code are built
+with its inverse, and neither of them are the third set of options that
+you had finally settled on. This also affects distro maintainers.
+
+The configure.ac tries to solve this problem and fails because it
+appears no one bothers to maintain it. The CMake files try to solve this
+problem but only for Windows (?). Possibly the reason people struggle
+with both is because both feel quite painful to use -- the initial
+premise of this patch series is, after all, "I the submitter believe
+this build system is nicer than the other option".
 
 
 --=20
 Eli Schwartz
 
---------------crX9MZsdvpDslL25PckV2zVC--
+--------------oFgXAPP03WnSe5I1Rvl6Ko7I--
 
---------------ia3mHAxn0G5pXIKMzTQI8KR4
+--------------Jn0x7qms2ipzu1bR1VZBL00x
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZyjiNgUDAAAAAAAKCRCEp9ErcA0vV2+M
-AP9qoJ0iF2pDnzM9RDFoWghomMG7yonJ3kblsFIoklXWLgEA4UNrimUBW7OhLenKvN9J2IhD7Ymt
-y6tQCns+5xsarQc=
-=QKMx
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZyjkKAUDAAAAAAAKCRCEp9ErcA0vVxDP
+AQC8jvIlTbwdctRYAjaXl0zy0mL6NvdKieHGakPgK60lAAD+PiSdJ34wy7lOJ4dFeHq+GsZBvywY
+BJK5p2TqdEr2mAw=
+=lcO3
 -----END PGP SIGNATURE-----
 
---------------ia3mHAxn0G5pXIKMzTQI8KR4--
+--------------Jn0x7qms2ipzu1bR1VZBL00x--
