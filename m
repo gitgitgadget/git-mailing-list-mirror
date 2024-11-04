@@ -1,64 +1,64 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1946F23A6
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 11:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CD11B218D
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 11:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730720517; cv=none; b=ZZ5ecEdalu4qMNKttVtq25p2+7sMtj2JVzhTzOUL2BNU8ofAs0x6BLOyL2xCI4NdPzDugN/vv25OOa7RLHm7n2Jlcpp8w3iBC4p+sH58YD/maP/vgxHpO0UKeEa34u8vpVQQLit8HlXKfQTpsPkvmKcotRXgfPuLCQ7Z11fETkw=
+	t=1730720518; cv=none; b=Fn4/EVcwYbTGLdfu9GHejKBUE0cc7EvywlfubiTiRTZc03GWA6WqnmCge2/BHJLZNslG/zZbPCC9BN02CTNzRAaDumWxQGhDIbsAGO2Qasq4CJwgaRX8PeoVK1pEAC+o8vr7KNY5lxLgMRP8vBEGQ2oJrfBI5GmIgSIKRJV0qi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730720517; c=relaxed/simple;
-	bh=ZGBi6zmz94/KIX2/rj7sYLQbWHx3l/hmB4KOeZCa/6w=;
+	s=arc-20240116; t=1730720518; c=relaxed/simple;
+	bh=qxp0Ozw+zCWuTQo007UtLe+1E8WpD5QWWMUEpKRGJ8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uErogTKZF3KngBKGlx4BFclSSp4hqY13hi7taJLRKnl2Fe7xufkYmTWt5lG3SOcjTLnVZyWvcelGUPtTyJ0KOHGECCan+vB00Q8ErMQoCR7CGK+/JT4I20MJPb/viia+CvbmySJuNKGRFLawpSDD5X06fWBUKJi679uVr1h67SQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j7oK4M0T; arc=none smtp.client-ip=209.85.208.46
+	 MIME-Version; b=LqGuffim/Gst1WPq2BK3VIZYIT9jNpe6FxFVvOIhzZ7EKUBKigQzmb3TD/yqUd3Pga0KSdvHdViqrBwY8gYP4hSorfj0wMRraOQrrDZzX1/dpZaotFFogV60dX2OvDLp/TXMXicJGWyK6J4pPPnYJTahAFsXNFboow8nEb2vOVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hShGwBoZ; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j7oK4M0T"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5ced377447bso1487515a12.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 03:41:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hShGwBoZ"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5cec7cde922so3144295a12.3
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 03:41:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730720514; x=1731325314; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730720515; x=1731325315; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TsmUY+zYGc++3aDdKHLhdgz3wvb8VAJjQs8Ok+OhWTs=;
-        b=j7oK4M0TuPBCjUUTUN5r6ZIfHXj56qIyQZowIC7sXN1S6CVAc0O8Ei7hVqkzBiDSTV
-         ZJL4oBQhAVud32TQJBDefJUUFoFZpsauxTACsa24mqKBA+JRt1G2hytYXGq1oXK+Fqac
-         JNaOOS1HkNYTIb8Llr4gnogipHljMVpwq8pe+fm4SPpNFdZ+J260drM7rBtmz/N1Ngkj
-         PqHg5KAAIH792utLfOK9/t79gyC2DLgIJ/iCVa1Hx80UvUFh5YeiGpzFCqsn7Wp5WSyx
-         7dxxUIbEas1kW/ITP5JwleSGWCQXdL6c8p0be9NlUHcKSK6ZmY+iOIzic2C3MQ1c0W+o
-         qaHA==
+        bh=sYwIcge5SJJbrF270tR/At3Pl0zP9dh3BUyu3jDlrIg=;
+        b=hShGwBoZCD4gs/hHqutakEISu75ioEfM5vvUZKf3xe2rH5ryNT/6/BXqPcy03yXTcB
+         qtG90uM1IsECyQIyIIHDJY94wgtFEkxH7GZ87HlTzXfzE8y0Vnkz3csZwPIlR+YRtFTH
+         lLwAsP2PbOkAoL0adeU9xpYxb9beWpoBoau01H7eISWpszSnR+otJREZjcayvTI3/G8Y
+         WgP6N0uZ/sRgkR4kSsu6Nh5EuWTREwZEdWBCn9Y0uYjnMZSo7IerAHTijOHZYiCvQhX5
+         zStokFMc1PANPe82BGuHXAEipcHpKEdNCQuts6+HL0sUgQ/mr/48TgchOV3FmThIHdMA
+         5KFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730720514; x=1731325314;
+        d=1e100.net; s=20230601; t=1730720515; x=1731325315;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TsmUY+zYGc++3aDdKHLhdgz3wvb8VAJjQs8Ok+OhWTs=;
-        b=wAaeDLq04he+2JgkqjqxHCgx6Ff2fXgsv07Dl+mDFWIsaVmurIXd8IeX1B64zoyvxZ
-         dq/QG612NGY0C/dTREM8Sqq4AAgeYGl2ZI+Fgohdsr76D+GUFBGtqKjwh8ptYVAPZWy7
-         fS11Dk/jBQncdsGE7jBJU0ZhlAGsHwn9FinB9SqhPDWg9M2wTeqoih9O2ylJ8nu/tla4
-         rRAuvbUxX3p5y4pZgnRWu8Q6Z50y/qp9h9+XIxhuu68aOvmEebunTaXuXLhoTH7iZb2N
-         B/T7UoS6oqjAILMIDPOaw2gQ/hMgWEkPxoKgyJ5oAhxnnYcRiKKJBVO3WjkYucmecgXb
-         PgHw==
-X-Gm-Message-State: AOJu0YwE1yM8M3qZKiaUe4YmAKDO2pbNc02GRqUMTMcGoayihzcMmfo5
-	YWJ6I6GPxm3ILlajQDz+tkxwAw+dN/nc1YDk7+pDAk+eRPxSrtA495mrFQix
-X-Google-Smtp-Source: AGHT+IHa76FftEy5JPdyFfINlcdbdoTRyihoDM3qswYwUN+fn89NVc9onZgyq139TGkKWC7UdDSigA==
-X-Received: by 2002:a05:6402:5cb:b0:5c9:3ff:2734 with SMTP id 4fb4d7f45d1cf-5cd54a84c79mr14760129a12.12.1730720514197;
-        Mon, 04 Nov 2024 03:41:54 -0800 (PST)
+        bh=sYwIcge5SJJbrF270tR/At3Pl0zP9dh3BUyu3jDlrIg=;
+        b=FrnciJDsVp4cLBgnB483xtGUDBL/WS3Fqz6zBVyinEeyJHstfM188ockjGKIRafLWQ
+         e2Im5MbN8oG5uzWI4zy+CI8MA+sedPEzZbktuMZTJCwI1RJGU2sD3qmF9yr8TdrhVqon
+         AzbGmvQLSaKTELTjxTPDLeUHzL5ougMC3jimz43zi98xRICX3X6qbDDDUPMhnONbs0RC
+         0SCJ2EtHjPoBCH+LXXLoS97Idj8BNub+IbElIvd6j0oqgTUJY4KfzoBa1vF3WOIF0GfT
+         3AuPd6Qk3tLKaZytn75F7ggO5fGv8IQZn+nG3c/EXi5f4WOUGIO3t2rsmrs0Bfx9yATk
+         IN0Q==
+X-Gm-Message-State: AOJu0YxZ8SHQDt/hRux+yfdSifMURuWxW1f9Oll2QKcLC+g4m2bKJFW0
+	sTVijDWi9cgWqbndIG4vQ13KKM48kZ0dtgd+v8Gma+aiGR48n05f0xoYcs8f
+X-Google-Smtp-Source: AGHT+IE7ogUG9tRD0WnMczM/tymMtBBdsSU5DZtB+mUCbLD5UTqk9IZJvwcwmjF9Ts170Q0493/hQw==
+X-Received: by 2002:a05:6402:2748:b0:5ce:ddd4:7c2f with SMTP id 4fb4d7f45d1cf-5ceddd47c77mr1223090a12.7.1730720515017;
+        Mon, 04 Nov 2024 03:41:55 -0800 (PST)
 Received: from localhost.localdomain ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ceac7e97f2sm4157219a12.87.2024.11.04.03.41.52
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ceac7e97f2sm4157219a12.87.2024.11.04.03.41.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 03:41:53 -0800 (PST)
+        Mon, 04 Nov 2024 03:41:54 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	me@ttaylorr.com,
 	peff@peff.net
-Subject: [PATCH v5 2/9] packfile: use `repository` from `packed_git` directly
-Date: Mon,  4 Nov 2024 12:41:40 +0100
-Message-ID: <70fc8a79afe6d1d91dd2a820d868f063a83de8f0.1730714298.git.karthik.188@gmail.com>
+Subject: [PATCH v5 3/9] packfile: pass `repository` to static function in the file
+Date: Mon,  4 Nov 2024 12:41:41 +0100
+Message-ID: <167a1f3a111958df7e1841aeae37addcdf04c411.1730714298.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1730714298.git.karthik.188@gmail.com>
 References: <cover.1730714298.git.karthik.188@gmail.com>
@@ -70,207 +70,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the previous commit, we introduced the `repository` structure inside
-`packed_git`. This provides an alternative route instead of using the
-global `the_repository` variable. Let's modify `packfile.c` now to use
-this field wherever possible instead of relying on the global state.
-There are still a few instances of `the_repository` usage in the file,
-where there is no struct `packed_git` locally available, which will be
-fixed in the following commits.
+Some of the static functions in the `packfile.c` access global
+variables, which can simply be avoiding by passing the `repository`
+struct down to them. Let's do that.
 
-Helped-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- packfile.c | 50 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 27 insertions(+), 23 deletions(-)
+ packfile.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index 6058eddf35..5bfa1e17c2 100644
+index 5bfa1e17c2..c96ebc4c69 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -79,7 +79,7 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
- 	size_t idx_size;
- 	int fd = git_open(path), ret;
- 	struct stat st;
--	const unsigned int hashsz = the_hash_algo->rawsz;
-+	const unsigned int hashsz = p->repo->hash_algo->rawsz;
- 
- 	if (fd < 0)
- 		return -1;
-@@ -243,7 +243,7 @@ struct packed_git *parse_pack_index(struct repository *r, unsigned char *sha1,
- 
- 	memcpy(p->pack_name, path, alloc); /* includes NUL */
- 	free(path);
--	hashcpy(p->hash, sha1, the_repository->hash_algo);
-+	hashcpy(p->hash, sha1, p->repo->hash_algo);
- 	if (check_packed_git_idx(idx_path, p)) {
- 		free(p);
- 		return NULL;
-@@ -278,7 +278,7 @@ static int unuse_one_window(struct packed_git *current)
- 
- 	if (current)
- 		scan_windows(current, &lru_p, &lru_w, &lru_l);
--	for (p = the_repository->objects->packed_git; p; p = p->next)
-+	for (p = current->repo->objects->packed_git; p; p = p->next)
- 		scan_windows(p, &lru_p, &lru_w, &lru_l);
- 	if (lru_p) {
- 		munmap(lru_w->base, lru_w->len);
-@@ -540,7 +540,7 @@ static int open_packed_git_1(struct packed_git *p)
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	unsigned char *idx_hash;
- 	ssize_t read_result;
--	const unsigned hashsz = the_hash_algo->rawsz;
-+	const unsigned hashsz = p->repo->hash_algo->rawsz;
- 
- 	if (open_pack_index(p))
- 		return error("packfile %s index unavailable", p->pack_name);
-@@ -597,7 +597,7 @@ static int open_packed_git_1(struct packed_git *p)
- 	if (read_result != hashsz)
- 		return error("packfile %s signature is unavailable", p->pack_name);
- 	idx_hash = ((unsigned char *)p->index_data) + p->index_size - hashsz * 2;
--	if (!hasheq(hash, idx_hash, the_repository->hash_algo))
-+	if (!hasheq(hash, idx_hash, p->repo->hash_algo))
- 		return error("packfile %s does not match index", p->pack_name);
- 	return 0;
+@@ -460,13 +460,13 @@ static void find_lru_pack(struct packed_git *p, struct packed_git **lru_p, struc
+ 	*accept_windows_inuse = has_windows_inuse;
  }
-@@ -637,7 +637,7 @@ unsigned char *use_pack(struct packed_git *p,
+ 
+-static int close_one_pack(void)
++static int close_one_pack(struct repository *r)
+ {
+ 	struct packed_git *p, *lru_p = NULL;
+ 	struct pack_window *mru_w = NULL;
+ 	int accept_windows_inuse = 1;
+ 
+-	for (p = the_repository->objects->packed_git; p; p = p->next) {
++	for (p = r->objects->packed_git; p; p = p->next) {
+ 		if (p->pack_fd == -1)
+ 			continue;
+ 		find_lru_pack(p, &lru_p, &mru_w, &accept_windows_inuse);
+@@ -555,7 +555,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 			pack_max_fds = 1;
+ 	}
+ 
+-	while (pack_max_fds <= pack_open_fds && close_one_pack())
++	while (pack_max_fds <= pack_open_fds && close_one_pack(p->repo))
+ 		; /* nothing */
+ 
+ 	p->pack_fd = git_open(p->pack_name);
+@@ -610,7 +610,8 @@ static int open_packed_git(struct packed_git *p)
+ 	return -1;
+ }
+ 
+-static int in_window(struct pack_window *win, off_t offset)
++static int in_window(struct repository *r, struct pack_window *win,
++		     off_t offset)
+ {
+ 	/* We must promise at least one full hash after the
+ 	 * offset is available from this window, otherwise the offset
+@@ -620,7 +621,7 @@ static int in_window(struct pack_window *win, off_t offset)
  	 */
- 	if (!p->pack_size && p->pack_fd == -1 && open_packed_git(p))
- 		die("packfile %s cannot be accessed", p->pack_name);
--	if (offset > (p->pack_size - the_hash_algo->rawsz))
-+	if (offset > (p->pack_size - p->repo->hash_algo->rawsz))
- 		die("offset beyond end of packfile (truncated pack?)");
+ 	off_t win_off = win->offset;
+ 	return win_off <= offset
+-		&& (offset + the_hash_algo->rawsz) <= (win_off + win->len);
++		&& (offset + r->hash_algo->rawsz) <= (win_off + win->len);
+ }
+ 
+ unsigned char *use_pack(struct packed_git *p,
+@@ -642,11 +643,11 @@ unsigned char *use_pack(struct packed_git *p,
  	if (offset < 0)
  		die(_("offset before end of packfile (broken .idx?)"));
-@@ -711,6 +711,7 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
- 	struct stat st;
- 	size_t alloc;
- 	struct packed_git *p;
-+	struct object_id oid;
  
- 	/*
- 	 * Make sure a corresponding .pack file exists and that
-@@ -751,9 +752,13 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
- 	p->pack_size = st.st_size;
- 	p->pack_local = local;
- 	p->mtime = st.st_mtime;
--	if (path_len < the_hash_algo->hexsz ||
--	    get_hash_hex(path + path_len - the_hash_algo->hexsz, p->hash))
--		hashclr(p->hash, the_repository->hash_algo);
-+	if (path_len < r->hash_algo->hexsz ||
-+	    get_oid_hex_algop(path + path_len - r->hash_algo->hexsz, &oid,
-+			      r->hash_algo))
-+		hashclr(p->hash, r->hash_algo);
-+	else
-+		hashcpy(p->hash, oid.hash, r->hash_algo);
-+
- 	return p;
- }
- 
-@@ -1243,9 +1248,9 @@ off_t get_delta_base(struct packed_git *p,
- 	} else if (type == OBJ_REF_DELTA) {
- 		/* The base entry _must_ be in the same pack */
- 		struct object_id oid;
--		oidread(&oid, base_info, the_repository->hash_algo);
-+		oidread(&oid, base_info, p->repo->hash_algo);
- 		base_offset = find_pack_entry_one(&oid, p);
--		*curpos += the_hash_algo->rawsz;
-+		*curpos += p->repo->hash_algo->rawsz;
- 	} else
- 		die("I am totally screwed");
- 	return base_offset;
-@@ -1266,7 +1271,7 @@ static int get_delta_base_oid(struct packed_git *p,
- {
- 	if (type == OBJ_REF_DELTA) {
- 		unsigned char *base = use_pack(p, w_curs, curpos, NULL);
--		oidread(oid, base, the_repository->hash_algo);
-+		oidread(oid, base, p->repo->hash_algo);
- 		return 0;
- 	} else if (type == OBJ_OFS_DELTA) {
- 		uint32_t base_pos;
-@@ -1608,7 +1613,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
- 				goto out;
- 			}
- 		} else
--			oidclr(oi->delta_base_oid, the_repository->hash_algo);
-+			oidclr(oi->delta_base_oid, p->repo->hash_algo);
- 	}
- 
- 	oi->whence = in_delta_base_cache(p, obj_offset) ? OI_DBCACHED :
-@@ -1897,7 +1902,7 @@ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32
- {
- 	const unsigned char *index_fanout = p->index_data;
- 	const unsigned char *index_lookup;
--	const unsigned int hashsz = the_hash_algo->rawsz;
-+	const unsigned int hashsz = p->repo->hash_algo->rawsz;
- 	int index_lookup_width;
- 
- 	if (!index_fanout)
-@@ -1922,7 +1927,7 @@ int nth_packed_object_id(struct object_id *oid,
- 			 uint32_t n)
- {
- 	const unsigned char *index = p->index_data;
--	const unsigned int hashsz = the_hash_algo->rawsz;
-+	const unsigned int hashsz = p->repo->hash_algo->rawsz;
- 	if (!index) {
- 		if (open_pack_index(p))
- 			return -1;
-@@ -1933,11 +1938,10 @@ int nth_packed_object_id(struct object_id *oid,
- 	index += 4 * 256;
- 	if (p->index_version == 1) {
- 		oidread(oid, index + st_add(st_mult(hashsz + 4, n), 4),
--			the_repository->hash_algo);
-+			p->repo->hash_algo);
- 	} else {
- 		index += 8;
--		oidread(oid, index + st_mult(hashsz, n),
--			the_repository->hash_algo);
-+		oidread(oid, index + st_mult(hashsz, n), p->repo->hash_algo);
- 	}
- 	return 0;
- }
-@@ -1959,7 +1963,7 @@ void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
- off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
- {
- 	const unsigned char *index = p->index_data;
--	const unsigned int hashsz = the_hash_algo->rawsz;
-+	const unsigned int hashsz = p->repo->hash_algo->rawsz;
- 	index += 4 * 256;
- 	if (p->index_version == 1) {
- 		return ntohl(*((uint32_t *)(index + st_mult(hashsz + 4, n))));
-@@ -2159,7 +2163,7 @@ int for_each_object_in_pack(struct packed_git *p,
- 	int r = 0;
- 
- 	if (flags & FOR_EACH_OBJECT_PACK_ORDER) {
--		if (load_pack_revindex(the_repository, p))
-+		if (load_pack_revindex(p->repo, p))
- 			return -1;
- 	}
- 
-@@ -2227,7 +2231,7 @@ int for_each_packed_object(each_packed_object_fn cb, void *data,
- }
- 
- static int add_promisor_object(const struct object_id *oid,
--			       struct packed_git *pack UNUSED,
-+			       struct packed_git *pack,
- 			       uint32_t pos UNUSED,
- 			       void *set_)
- {
-@@ -2235,12 +2239,12 @@ static int add_promisor_object(const struct object_id *oid,
- 	struct object *obj;
- 	int we_parsed_object;
- 
--	obj = lookup_object(the_repository, oid);
-+	obj = lookup_object(pack->repo, oid);
- 	if (obj && obj->parsed) {
- 		we_parsed_object = 0;
- 	} else {
- 		we_parsed_object = 1;
--		obj = parse_object(the_repository, oid);
-+		obj = parse_object(pack->repo, oid);
- 	}
- 
- 	if (!obj)
+-	if (!win || !in_window(win, offset)) {
++	if (!win || !in_window(p->repo, win, offset)) {
+ 		if (win)
+ 			win->inuse_cnt--;
+ 		for (win = p->windows; win; win = win->next) {
+-			if (in_window(win, offset))
++			if (in_window(p->repo, win, offset))
+ 				break;
+ 		}
+ 		if (!win) {
 -- 
 2.47.0
 
