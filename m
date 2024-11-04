@@ -1,139 +1,142 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA931AC448
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 09:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182B81ADFE2
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 09:39:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730712953; cv=none; b=QuIu/LIrsXfTVEEvLum8AlUDQqv1VdG3eHMO5Q7FGl9ml6SaD0OmM9RtrN5ZxlRDf43LRhjY/pwc54KSpuV6OVkjw6kW83h38Htxs97sxYAKvduoDAEDvoyTk80frJUb86uAIEulWGJRB80i+78RTfOskMnsY4ngGH182Gdew/w=
+	t=1730713174; cv=none; b=vGXhEi16H0N5EZ9UR34yj9vaKeCsb4E9uoLxOjPJ4DHs2/HdmWG15/ORHUt1L6TqAOsqlJZp0Swoklpc+YnuBxlsBr4iqzHRu7qYOGuOErMBl33uRQepTWEDCckLkg02aTipX7z+xMecIPNfdcjnYU7WIv5tv6dzD0Tw8uA0Ig4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730712953; c=relaxed/simple;
-	bh=1ML7lTTlK96ShGY7cJal4IWpog4T/q0D/I3XTEdou1s=;
+	s=arc-20240116; t=1730713174; c=relaxed/simple;
+	bh=BOmOWELgcOLufSU5nySZHWXcfsJL7xIBtpsSTmUjp7w=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I+fAQckfeQ6MMmCEFndabgFlkMj9cZqlqqp+QwpzFh0kmNNy9ypNYiUuJpvNH8RbKZ5Soy+huRQH89ORN0j8Q0LRXyyg3xWXP+kF7Sy/8dOWSmz6ozVle7egIIIudF2P9qCXmhsqK+qaMa35vhMxvxPtIyeICtVB/setUU90QmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sox9hOEb; arc=none smtp.client-ip=209.85.221.170
+	 To:Cc:Content-Type; b=AzmxYEs7H8bT6rnfKS08QKI/R/qloS/3ClTlnFUvKXH+IJ8C1vpRxf4udPrgKDh6rkp0zRRLwj0FpTUXQzDwn0Ute8mYxYCbmqiHdhvSz7cBVhcjWF9d6h3m1FNX1RCiTH74ADiBmFYwkQ8CVMDWhd5Qp+85NER7NpI/72QNN7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a4QZ0C13; arc=none smtp.client-ip=209.85.222.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sox9hOEb"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-50d46cfcbc1so1377979e0c.0
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 01:35:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a4QZ0C13"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-84fc0212a60so1072647241.2
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 01:39:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730712951; x=1731317751; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730713172; x=1731317972; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hAIcxIDKDzpv7KCdHDKvVdP0+ouUIQPsEHCNTbWjPZ0=;
-        b=Sox9hOEbuiw5F+m7PHIISQ1g1/0swFZvKnNEPFfvhmerPqAtItgE4GjKOuMMUiz8pn
-         UkpEDNfZJqem9b6LrekJg/kXWFeQ4yNifWFoxgKogjDx8PN92TylfeJvfVy+vbpuUL0b
-         xsXv+ljKl1HTxCzXks+M7SVP8joSLAEmz3cPKep4QEcnDfmE+2tJ5Cf5yWFGq5p7lspZ
-         HlnlbAtpPkL1jbq8umu1nRJhRXdvDGAhaXuEPmUeuUNxZPFngFWgYyzt6KhO0EfM9iNK
-         n4sDQBaR40lwk5/92NYPpIYQNhkRgZVihRpWSUsnMgCppEuG+vzcEKp7OPygr94zyY4Q
-         pdxg==
+        bh=DZXyX4JBlXXe4WE/AUPG3lVY8M9EXWsUCxsowEteRuk=;
+        b=a4QZ0C136znWs0CUxW7enuOFjyNEeOMmsPboZrti+Qp/0CcDOpzIz3jlfO3ItRThon
+         oah+Z9Sn8CTdBYnaafBCJoY+JaDKymIude1PWwsrKrQELXMPjAFH9a52JRaU4pTxOEA1
+         8YFHIdZ0vbL3shMlY9T9Nf7Qy9/yXFpHedUSA1tda0zZfmS/JJDbrsQhbak/kVV74/Am
+         JcJM8murEAtDCTfWhp1/f90hZaZLPsoefPRxBvRvdJF3artPYoNLMK5uFAsx36ARRQUJ
+         99im46++eY8qNc5jiRedPPEBvht1QZLGDz66CW2FcdLHGaw8ecLhBD9xfdCgFdEdsOaQ
+         8tnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730712951; x=1731317751;
+        d=1e100.net; s=20230601; t=1730713172; x=1731317972;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hAIcxIDKDzpv7KCdHDKvVdP0+ouUIQPsEHCNTbWjPZ0=;
-        b=w+HV16PR7KYmjMZ7ouvRKk0RHShQQSrnl4PMNds/esaZuMcKS9Ig8j1xayVYDIp4bc
-         buMwkfJv07d9zLSVEviRQ7unx8aQUvkCXlGX+Gkw2GzK7ILyV4pY5z2WZ2PzVeTNdWUr
-         xbYv3lHBQ1QiFhMc/6B82n7S9/v87MBluukeiI0Cci1rwojcnME+JDCJDtOclr8r5eHC
-         dC5tg8xoLJ5vzZz5GL8hhjVweM6SSiJI9OiR/vobtuOes9ykwfZQBweV2CV66nYYYgbe
-         SqIKn4sjqB+woclDWqRnZamhANYNu0yAgJsaARmfCAb+H0SQQwFXsDWh5eTFMPT6WFSp
-         DePg==
-X-Gm-Message-State: AOJu0Yx0tlEirFEIDg/66/91TyJbY6kBp0cb7A96lHMa3x7dyWQrYfkT
-	G497SZVX7WhKlBrlusf7fJ9oAMTCThq99hwn7ba9Ul9+cSfkyrDAx6SbUWOPpo38wqNRnibprPt
-	daH4e/vuxfxO275gKVw5I4tFTqGhL377x
-X-Google-Smtp-Source: AGHT+IEIC8pTELXaZS9HdxB9lLGcCaswF7V4XRPaKIeb5Bm2hsB9pgsB2rQIBwj08NIpCnpA893Wf7tDmnqUVTvWopE=
-X-Received: by 2002:a05:6122:c97:b0:50d:56ee:b9d1 with SMTP id
- 71dfb90a1353d-5105d0fc9f4mr17337918e0c.12.1730712951033; Mon, 04 Nov 2024
- 01:35:51 -0800 (PST)
+        bh=DZXyX4JBlXXe4WE/AUPG3lVY8M9EXWsUCxsowEteRuk=;
+        b=TEuOp2nXSaKKynwwZmxLvFzIPvN/nwtI1HwqkpMnoLi5kqjZ5Mj0Wuv7+PtSyY6pRK
+         C+EgEVtO4rya0+pqPnwBLVde10mmU8zV9WNKrfaRP+pVu6MoWPXo9iU4mAXHshbcWkvy
+         jqituOB/9UtX7VCLhVybcS3uWbpN1yDaEFOpfAX5SNXaf2on4AVPNlfKwq3HF3r/++Zp
+         V6u0OkPCTzW+wVDx5bgmdfVaaI4ka85rHDJk7jn0OvfGfN7sCcyxkK1ZA13CH75qg0kJ
+         xGymd0KK+ZWgqVPCDleHwpRk7eNVU7F/iaL01Xbzn0aHoVpoZtk9r0/CiEBu/UYQE6UT
+         KidA==
+X-Forwarded-Encrypted: i=1; AJvYcCXGi4n4SSSmuC8Sbm92q7D1ngkKx+5/B9KQ/O+uYoLHVKmfovbiy1wVKnPPqUijmxYrr3c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxheicK2JMfV30yn3UASfOb3ofgoouIhjGndDq+rNDALdPb+I0n
+	+PYRzZMLSn+bgfPaX8SP3dwfTPXNZdU22i2irE1gTfNAFlt1m54u0vU7mVMajO5C2A0pK8/ErUK
+	JZOBEd7FoXfkK4V9hTMtIjZa3mr0=
+X-Google-Smtp-Source: AGHT+IH1Hoo+TCNxu10XTaNTekcRvgGaOVeHxeWZjjfKO7L/mpsmthE2V0TvAFe3n1NmP59wsnLpP+OuRXFMJ1Pc3fY=
+X-Received: by 2002:a05:6102:290b:b0:4a5:b712:2c94 with SMTP id
+ ada2fe7eead31-4a95430e304mr13855482137.14.1730713171965; Mon, 04 Nov 2024
+ 01:39:31 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 4 Nov 2024 03:35:50 -0600
+ HTTPREST; Mon, 4 Nov 2024 01:39:31 -0800
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241101174547.GB2337295@coredump.intra.peff.net>
-References: <cover.1730366765.git.karthik.188@gmail.com> <5bbdc7124d58526a7a2d7b3bdc807ddd204a6df1.1730366765.git.karthik.188@gmail.com>
- <20241101174547.GB2337295@coredump.intra.peff.net>
+In-Reply-To: <20241101172939.GA2337295@coredump.intra.peff.net>
+References: <cover.1729504640.git.karthik.188@gmail.com> <cover.1730366765.git.karthik.188@gmail.com>
+ <ZyPjJKYZzeFGLxin@nand.local> <ZyTnhrBLuvesK1yB@nand.local>
+ <CAOLa=ZTp=QqD0P2zhGunrOfmAebwvLJ20bQq9Tog3eLaO9pwoA@mail.gmail.com> <20241101172939.GA2337295@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 4 Nov 2024 03:35:50 -0600
-Message-ID: <CAOLa=ZSb929S97H_UPY7-wNUeE2Rx-Ez7FdEcZPG6fCUUUFLvQ@mail.gmail.com>
-Subject: Re: [PATCH v4 8/9] config: make `packed_git_(limit|window_size)`
- non-global variables
+Date: Mon, 4 Nov 2024 01:39:31 -0800
+Message-ID: <CAOLa=ZT8dvpvJ75Oe_PV4_osi7rw3EJnH2SSzUVame-eQvOruA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/9] packfile: avoid using the 'the_repository' global variable
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, me@ttaylorr.com
-Content-Type: multipart/mixed; boundary="000000000000a7b1e7062613025d"
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000d2df170626130fff"
 
---000000000000a7b1e7062613025d
+--000000000000d2df170626130fff
 Content-Type: text/plain; charset="UTF-8"
 
 Jeff King <peff@peff.net> writes:
 
-> On Thu, Oct 31, 2024 at 10:39:51AM +0100, Karthik Nayak wrote:
+> On Fri, Nov 01, 2024 at 11:07:48AM -0500, karthik nayak wrote:
 >
->> @@ -652,20 +688,25 @@ unsigned char *use_pack(struct packed_git *p,
->>  				break;
->>  		}
->>  		if (!win) {
->> -			size_t window_align = packed_git_window_size / 2;
->> +			struct packfile_config config = PACKFILE_CONFIG_INIT;
->> +			size_t window_align;
->>  			off_t len;
+>> Thanks for letting me know, I think the fix is simply
 >>
->> +			repo_config(p->repo, packfile_config, &config);
->> +			window_align = config.packed_git_window_size / 2;
->> +
+>> diff --git a/packfile.c b/packfile.c
+>> index f626d38071..737cd60377 100644
+>> --- a/packfile.c
+>> +++ b/packfile.c
+>> @@ -27,8 +27,8 @@
+>>  #include "pack-objects.h"
+>>
+>>  struct packfile_config {
+>> -	unsigned long packed_git_window_size;
+>> -	unsigned long packed_git_limit;
+>> +	unsigned long long packed_git_window_size;
+>> +	unsigned long long packed_git_limit;
+>>  };
+>>
+>>  #define PACKFILE_CONFIG_INIT \
 >
-> Parsing config like this is somewhat expensive (remember we're going to
-> hit your callback for every single config key in the system, user, and
-> repo-level config files).
+> Wait, why did these change from "size_t" to "unsigned long" in your
+> series in the first place? If the goal is moving them into a struct,
+> they should otherwise retain the same types, no?
 >
-> And use_pack() is a relatively hot code path, as we call it any time we
-> need to access bytes from a mapped pack! This "!win" conditional isn't
-> quite as hot, as it only triggers when we establish a new window for a
-> pack. But that still happens at least once per pack, more if we need to
-> move the window around in a big pack, and lots more if we are under
-> memory pressure and need to open/close windows a lot.
+> Two asides, one for your series and one #leftoverbits:
+>
+>   1. Since these are now fields of packfile_config, do they need the
+>      long packed_git_ prefix anymore? Just window_size and limit would
+>      be nicer, I'd think.
 >
 
-I must admit, I'm not too aware of the pack objects code base, but that
-was my assumption indeed, that this conditional wasn't the hot path. But
-even once per pack seems like quite the regression then.
+Moving them to repo_settings means we'd have to keep the long names,
+otherwise, I agree the shorter names would be better.
 
-> I think we need to parse these values once and then store them somewhere
-> with cheaper access. Can we grab them in prepare_repo_settings(), for
-> example, which would cache them? We need a repo struct, but we have one
-> (the same packed_git->repo you are using to call repo_config()).
+>   2. I can imagine you might have used "unsigned long" because they are
+>      parsed with git_config_ulong(). That is OK on Linux, where size_t
+>      and "unsigned long" are the same size (either 32- or 64-bits). But
+>      on Windows I think it means that you cannot configure a window
+>      larger than 4GB on a 64-bit system. Or ironically you cannot set a
+>      total limit larger than 4GB, even though the default is 32TB. ;)
+
+Yup that's the reason I changed them. TIL about size_t and how it works.
+Thanks, I'll change the types accordingly and push a new version soon.
+
 >
 > -Peff
 
-This seems like a good idea, I will amend this commit to move the config
-to `repo_settings`. I think the previous commit doesn't require any
-changes and can stay.
-
-Thanks
-- Karthik
-
---000000000000a7b1e7062613025d
+--000000000000d2df170626130fff
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: bfc578651bdb6aba_0.1
+X-Attachment-Id: 61bd644a78d000f0_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jb2xYTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mejVHQy93TUdEdGRXME5aVit2Z2d1a1NQUHAyNFpOOQpHMDgrZHgwUWdO
-VGk3MHhISXBaQWRqZlZWcnJNbTBuRnY0S3cydFVRazNSWFJ6YTNJV1pRRi9zbE56RkpCdlV5CkJW
-ZFJSKzVlS3duejVtdDUxQVRtcmJ2OVZKQXhFUkU0SzI4ZG9xWW9KbTU1M3dmRjBqUEFXVjc4c0dK
-UUZ3bVUKdXJlNHY0OXRVckJ3bkNJaFNzbUp2SWtGYU5IdXVRUmhWR2FyQjVsMnBEU1Z0a2hNcWJa
-R3Zmb1N6SjR3UG53RQpsbDIrZFV6dmsxNGUxOEZraFNFUmxsYnNlTVJFUnpqZzlaWXR4ZHhiSHdG
-WHdJcStGdlhlWTB4dkoyemlaV2FNCmdSMEkwMldYaEFYOTZRYWxHWW0wTlJPdXV1SEtVUFlRKzJW
-clF4RS9aQ0x0N1ZqK3JPYlBKRlBNMGRmVElZaC8KZ3JKcWM0VW42dWMvdVNNcEZYdVZFK0pqVlJG
-ZEtXQis3Y2d1a3B3RnpwMks3RjFMc0ZSRytNcHJQUlhXYmtBcQpHdzFWQmJsd04rZHBqZWViTEpz
-RjRqZS9RTFJYQUlPaTBSNXg3R3VOdmNSRll6VGZPY29uUkdpQnZOZmZybUNKCmgxbk9KVWR3OS96
-dCs5cWp1TmRaS2kraGJ5QlM2ZGdzOTJpTlE1az0KPUNOR3IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jb2xsSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMllWQy80cnFSQmQxdXVoaXRUeERsdG93WVNPTFBlcwpvL0RaQTlLWTdB
+ZkwzS2lseG95aHhjTFAwSmRVVTk5RTQ5cDhKTzVUV2JDSjZUQzZ1VStwTTRCR3ZpMXhGWHo4Cmxa
+TEg3TDlNUTd6N2YrakcyNE5OWU00UGZ0Z2MwWlJaeXRWdjRKNHZreWdrRHljczY0MFBzUnprN2Nr
+RXVhZ24KQU9wN3l3aXRNUmpVRlpqNzV6Y001elJ5SzlZR2paVk9YSEpuejRSMFpCNzF1akhaQ2pp
+bGZtUytMVStXb2EwUwp2WHh2cFpqQkErSEdSZCt1WU5Xaklqc1RCci9rVWFCVGMrNEFNRXdBRWU4
+cnN5czdZM1ljaDc3V0luMVhtTE9QCk4xTldXSWtpenRoRDVSNEFndjg1VU9tM1RQTDY2TCtqdEdV
+WFRhTUVmcXpjVEc1aUx2ejIxZDZ0c2d3SkZJK0cKenM5Y05vckhuUGVpaGwzRG1PcDl1SzVkd1R6
+cXdGdDA4QTgzNndmN1ArTk5jOFArMU9STHhveDNtRDgraThHQgpaSEV6L0x4THhxZ2swa1Y3cURJ
+dUxzcmQ5TVRTeXlEMm1pOGRKK205S2hnemRIMzdaU2RRNEQwS1B3aEszZWF5Ck1IR0ZuS0VlYXFw
+WVhrQ1NCZ01sT283ck9nSnpLa0g2aDRmRFBPTT0KPVlIVnoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000a7b1e7062613025d--
+--000000000000d2df170626130fff--
