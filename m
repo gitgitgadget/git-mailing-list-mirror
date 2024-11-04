@@ -1,106 +1,107 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250151FCC6B
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:16:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3911D5CE7
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 22:18:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730758614; cv=none; b=TmFf+uPv0k2MMPQh6bbr32Vn9Df0HdCE3kcbRESuhKwP6XdFayFIJvrPquqQpOIKfTK2V2I4wfpTPbSrXGdiTXgOhukxb97mkf3yYZrJmGMom0xiY9yBmIU876ps6iiTcn7LGCPLMbIpjGI7EsXFa5YHBSfyv4rSl3RfSvcRzMI=
+	t=1730758728; cv=none; b=kcmUK8nqXZ1XftgtTuEozEuDjJWb4qB29dCX4Q39qo1tVLcszNv4WRb6Ca3Y7djBKWU9ZQPAT+UphVK/DlgcBSEoPbcR2SI1Tkg0qlyaPk2+jYYAuJhlC7B/qxIk40Sf4BQCblm8DCBmAgtwvuzFq8G0sodJNmuOrvPqCX7Dr5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730758614; c=relaxed/simple;
-	bh=SwczSiG696/JBrVrGtKQD41f6UUJODTCkQM1mKY/u4U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uERS4pm+qsZXjmT8HVC9deRiuqVxgs+XPXZzKzM66JIP4PMbZ05WfC18dS2CWh1obUE820VkWk+oSr7O4eScV4NCQhUplmmJYCYMW6v/ZjIZOe/Jkprve9e/3PoqUEe3nJ1zvQBQRBvtIqLS14HkBwmfFKFo8RJuciDQENppD8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M9ROJOeo; arc=none smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730758728; c=relaxed/simple;
+	bh=3l+R/qDdz932oOWZfdhctdGZBspQCoW0DpedAyv/UB8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=SkDkbPhlrokWTBgZjlX4uJxasbQfqLCKvinWGLr7rPWYJeIZHHGzbxrkWXi2BEf2Kr7Ad9PuHaUapB+rN2n4LIW71AxaHq6Ot3gyB5s1tuGibR7/KCj7Yl7LECZKTbDUfBz/GFSur4atOckW1THsWV2J2WjlMCU6FJk6NkSOBqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KPWLcnyA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KPuJZw3Q; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9ROJOeo"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-5ebc52deca0so2394063eaf.3
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 14:16:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730758612; x=1731363412; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fvs8OWww0vaQ7zYWUgaqW5mu/Fz2GD9FpiV7ktf8xLI=;
-        b=M9ROJOeokvjat10KHySSHXDNj7+Pyt/TU1HVApfH1VIUUGYHyj3seK/6W7Rq9A2rC1
-         SezRBGrlpYW7SE6EailzyddREwzLr63l9glWBgVVhAtEx102C7N1t0jpeIRzR4Gxr7dX
-         ggLAaxv57wiBW+RV1UIDWMW0/LFPB5+mTgbXcM2EhwlnlAcdhDMMM0xaEJeGs9j0Y6lj
-         27s66XjwhEfeaYTvV+XFh0z/BXM9rmar/Xa0Grd92d2J/SPK7ehkbOetuhazHS4js059
-         jnExWGkpI31G5LgSQvwxKpB4AwP3nzsfJOEh567pNLBIS1W20+7Yo1661mcEl4Z9gMjZ
-         nOPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730758612; x=1731363412;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Fvs8OWww0vaQ7zYWUgaqW5mu/Fz2GD9FpiV7ktf8xLI=;
-        b=wzB9cbAOvz0M9SFPEJCcJcxZFQmlQMTUkjy2PzM6szra/2GIe5wjveZjbXvJXuoaij
-         xCidcKKX595goRU+g7CclYC3UFSEycqzazBegDDu/27mXG4sGvHwY+tTkKOsSPr0J4it
-         bEWtjYDFxCSJC11SjonR/wp0KAA7SEZLAgckuBxKfQqX6GZePnMVDj930VJzLaiOTXvG
-         EgUq5Y4EGNgAaUgsXc+HqW4wDRc65cxub363C6DvNmoJlFK2WwjpxorOt4qFHhC3HD7g
-         YL7hmofAHLBlXlCukWp0QZJ27lajoiQBi2uHEItRSLT9nETZ61cHPYpnwZ1/Lyjo/sF8
-         ng9Q==
-X-Gm-Message-State: AOJu0YxH2YCmKuC5XqIg538ir1lf3v0DtX2pLEbyvdO+zDTYEmKyvluk
-	Cg3O8K1uAtRl3nNisTjdHrLDjc/ul9zbfY1zxDtkI5Jhov03dTILx/JRYUf/
-X-Google-Smtp-Source: AGHT+IEa0WJ1UvYgMY1HQnMTYUBsdx54/AgMdU1V81xeMF9NXfKmpZv6rXpsnqrE2PBXnjDS6iUXJw==
-X-Received: by 2002:a05:6820:1c95:b0:5eb:6c26:1ca0 with SMTP id 006d021491bc7-5ede633c074mr7891581eaf.1.1730758612187;
-        Mon, 04 Nov 2024 14:16:52 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5ec7064a839sm2006403eaf.44.2024.11.04.14.16.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 14:16:51 -0800 (PST)
-Date: Mon, 4 Nov 2024 16:15:14 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 07/22] pretty: clear signature check
-Message-ID: <oujqbaznoam2vbvw3vzkg47axqisfutihrc6dtfl5ij7iufn47@7e73cxaz4pna>
-References: <cover.1728624670.git.ps@pks.im>
- <cover.1729502823.git.ps@pks.im>
- <5d5f6867f918460001f62aaa78f24cf3cbe53a3c.1729502824.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KPWLcnyA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KPuJZw3Q"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 03C0113801DC;
+	Mon,  4 Nov 2024 17:18:46 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 04 Nov 2024 17:18:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1730758725;
+	 x=1730845125; bh=mrpPnkPxPzW9D6jJUAwEzuT1JG5Hgnj0vIYWf40wAgw=; b=
+	KPWLcnyA1/29e1vFlViQJq1TZuxRqx/WU8N0iH32G2+EQk5SYt6ZC+qiae+nWRWs
+	QnNJaqvbpiQ9f5XwT3KPhtvYhSrqJyH3W4c/+pMqPalhoKP0DIQdvxc/Na/amly0
+	5DT1GAoQJihcsGJaXJ0p8vP0ttH/Wm+mtW16NQldN/pJYW5zuzU1dVbY02Ck2fE9
+	JWQ56VNqVY5qI0XVS+IQXlbEbK07uiJjGviOABnAKBdftWO0Q2x779JDxVrYk8a2
+	MpLKnZlYRTDLc8gDUOh6OUtYkmF9BL7JR8+dOMVpZqPVwbZkEnCkEW+y/6RbeGj1
+	MZ2c8NR65rFQpbu+2SjJ6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730758725; x=
+	1730845125; bh=mrpPnkPxPzW9D6jJUAwEzuT1JG5Hgnj0vIYWf40wAgw=; b=K
+	PuJZw3Q9jw4+oS3ZgZX0v1BXqC60sI2KZT4+tbRqNOXD7h2fxfMwTDSo3MaKuedb
+	lrjTMw1RPa1781Z58XcZte9n0oTC/Dx2pO/e0sodaWJZAP55molCM/dm03cwxxVK
+	C0ttqQJpP6ik2sPnXGzLn5YlERGLkAKy8gWQUQJmKz5ZKDOgmGaSqpw07Px2wFUc
+	BM5NJggofkUhrlA0WKE4LF+OdHQE0wN7HCQYs0I2vYxgfGoVUxuP/5FpbLtgH7rx
+	H+mYgD9MAhtP65xPSdUxsMiiAMvoIc1+wPMQLEZuhMHkYBt7kJyjdSckvU/8QvSB
+	ASnYBr/xIb+mHGoizU8wA==
+X-ME-Sender: <xms:REgpZ9ddATpPV5ZSkvpABF2vetU9RadVxBEwicPjfEG6A_IA4tRaLaQ>
+    <xme:REgpZ7M6DinQqn6KA6uL2mStKahx2uaU0_mgkhenlcWPdUV1jmGcnV_a1uyKSncCT
+    UQOg4tH2xGJtVHZYw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeliedgudehkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
+    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
+    gspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtoh
+    hmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhho
+    rhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:REgpZ2goMJJ0VSt25UMcvgCwRubwoht04iSgEgIqH9DN8zaLmw8Czw>
+    <xmx:REgpZ28QkjfWt5n5DnQJ2-kBshF04mi_BmZ6KMW4HRtzKEqrXyEhKw>
+    <xmx:REgpZ5t9jIjAwFLwpuQF7a7J7pHGn2Y5BA0h4eyErpgUE75xN3dX4w>
+    <xmx:REgpZ1FZdRJwiHTtpPdZQc2-bV4szdHPhW0GyOEwd66qDvLkZF9o2w>
+    <xmx:RUgpZzKrzoqnCikjQoGgup9SCZQBEnsMzIGngqkhMtTtZWlOOdK9neWc>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id C1004780068; Mon,  4 Nov 2024 17:18:44 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5d5f6867f918460001f62aaa78f24cf3cbe53a3c.1729502824.git.ps@pks.im>
+Date: Mon, 04 Nov 2024 23:18:23 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Justin Tobler" <jltobler@gmail.com>, "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org, "Taylor Blau" <me@ttaylorr.com>,
+ "Toon Claes" <toon@iotcl.com>
+Message-Id: <e007decf-0156-44b2-bf76-66a91593d233@app.fastmail.com>
+In-Reply-To: 
+ <qxtstkkch5toz6t7jdknwkdzrlkfu3b7gtw3wpg2iuqsmliqlq@w2qz65ujwj4r>
+References: <cover.1728624670.git.ps@pks.im> <cover.1729502823.git.ps@pks.im>
+ <89b66411354437a1e3a97751f185889dffb84126.1729502824.git.ps@pks.im>
+ <qxtstkkch5toz6t7jdknwkdzrlkfu3b7gtw3wpg2iuqsmliqlq@w2qz65ujwj4r>
+Subject: Re: [PATCH v2 01/22] builtin/ls-remote: plug leaking server options
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 24/10/21 11:28AM, Patrick Steinhardt wrote:
-> The signature check in of the formatting context is never getting
+On Mon, Nov 4, 2024, at 23:10, Justin Tobler wrote:
+> On 24/10/21 11:28AM, Patrick Steinhardt wrote:
+>> The server options populated via `OPT_STRING_LIST()` is never cleared,
+>
+> s/is/are/
 
-s/in of/in/
+I guess =E2=80=9Cis=E2=80=9D was chosen because =E2=80=9Cthe list is=E2=80=
+=9D.
 
-> released. Fix this to plug the resulting memory leak.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  pretty.c                         | 1 +
->  t/t4202-log.sh                   | 1 +
->  t/t7031-verify-tag-signed-ssh.sh | 1 +
->  t/t7510-signed-commit.sh         | 1 +
->  t/t7528-signed-commit-ssh.sh     | 1 +
->  5 files changed, 5 insertions(+)
-> 
-> diff --git a/pretty.c b/pretty.c
-> index 6403e268900..098378720a4 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -2032,6 +2032,7 @@ void repo_format_commit_message(struct repository *r,
->  
->  	free(context.commit_encoding);
->  	repo_unuse_commit_buffer(r, commit, context.message);
-> +	signature_check_clear(&context.signature_check);
+   The [list] populated via `OPT_STRING_LIST()` is never cleared,
 
-Initially I was thinking it might be nice to see the
-`format_commit_context` cleanup extracted to its own function, but being
-that it only has a single use internal to "pretty.c" it probably isn't
-worth it.
-
->  }
->  
->  static void pp_header(struct pretty_print_context *pp,
+--=20
+Kristoffer Haugsbakk
