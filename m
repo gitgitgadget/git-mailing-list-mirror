@@ -1,122 +1,106 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pine.sfconservancy.org (pine.sfconservancy.org [192.237.253.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4B01CC17F
-	for <git@vger.kernel.org>; Mon,  4 Nov 2024 19:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D4D1CC178
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 20:22:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.237.253.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730748637; cv=none; b=pASoUhCC3O6hzWXV3adht+fl+efSQ69rWKOzuLPMVfNRU5zPD/UKZDOL8bVe9C03gBGmsauKT6ncCXsV7bO5eznl5Ci0ubEj2MOtz/eJyp3L6o7Wf5md0XiUBsbsM6/fuCwbLXkGQU4c3ArjaZ3A1Vv+oPxMu/m7XKMMOWxo9h8=
+	t=1730751765; cv=none; b=eMKqE3evKJr8g94mSIHBhHD3IXjz5ofSbaIQcNM0Hpcu9cHKXgnNkU7O/teXJwwApJZ73SvC7EHJQVWchjJTWPhl8DjvAabQs4NUdr3NfslgVlN5vHN30yrhQvCONuGODeGhh9LWMJZAUgQa94F28xaxByRPeRQOSAdWUjcfpEA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730748637; c=relaxed/simple;
-	bh=22+mzHtuYhjCkUiFDy3nlxW5qBClR+FUa7VXEdevEtQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KpcXtpXPCFQvxmQ3FWVMfKczYcufun7tklc627saoVCFYp6JOAA5JfsWTOmV0mRa7DfoOQOZsfXkuadUWIIU8McjtByN6ExdBsRm+pLyhJVvaQocf7KfYMmibTKQ5d/yaEhJj+3APHymEZ9Hwre72mDbkkbCa289jRm7oBtC3LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bsmMCW+r; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730751765; c=relaxed/simple;
+	bh=8uWzfJEF2zgGVsiJ7SKnPUgczHeq143mz7AVb1DnNLg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S7HfeusyDPJ7s21SeZSp+8RjZ4JSsAh5y8RF6EOpFsW9pBXSJjD/geDo9ftb2Tk3BYlB8yyETs1lLz9m4k4+YYGIIHNzx7Rfvt5xYP/unZXI9k/1yyPaapqXfL5YZtlh+Xv9KPU2og7h+W8woEyZmGAVFVA3movuewybwnrIQpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sfconservancy.org; spf=pass smtp.mailfrom=sfconservancy.org; dkim=pass (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b=eckqbIvc; arc=none smtp.client-ip=192.237.253.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sfconservancy.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sfconservancy.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bsmMCW+r"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7203c431f93so3933188b3a.1
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 11:30:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730748635; x=1731353435; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=68JkCidPpTHQiUDC2+fSjRZ9TNeKt28M95tCg4AZyAQ=;
-        b=bsmMCW+rzMaFxXrvqwC3x1y+mdRN1lvMhwaHpxmElo1QDox+loySM9C9CBgcdUxhOS
-         Ab1wD6Wxhqz/zIyBY1lRZFWvrgE5S7Pov314VPU92zOG9bfnBCqQML2PO+XzjTKknzhh
-         9NR0hLBqsjJAhkQIrECKRDyy4qRgNYmZ3lXd/7OJF0S+mMp8YmCauSY1tOUSrxu0z/Br
-         YghDTa4Dv4Ejj9JPW8m/8tYY8zSto3oD9hRxtk7AGh+timZbhZc7UQWEYixWzIlu+FtO
-         Bv/TCwOTpOSDQY80FtuSHsrWP9V8x36Ww3vYwf43MPaBc5uBsOyKVrXoU/R38FiWisxn
-         kHrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730748635; x=1731353435;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=68JkCidPpTHQiUDC2+fSjRZ9TNeKt28M95tCg4AZyAQ=;
-        b=Q13ukyviFOf5nk1bApU2qwdDVhRWQz++m+gpoQsiL2rIIAbk/oErl6CHWVhwgOEfdW
-         qYMXtfkOE6vlRzXS79eYz7+dmqvu/Tr3KwcWlDnN5Qou6ZNZr86DfWP8mpMt0M1l4X25
-         4GhIvA+DttQApmXUinqartJ9PGdRZ/O3Ar/0NajJx1R3jkgt4dQIdrkrwiPrVU9cs1os
-         edfHVLyaX1+zrQs2yycqyCl6bEGHqc4yQXuhN385cmeUM0sL+hzB3dVSmCgw/qAibt7m
-         gj4VAed00Td2Z8w95q1dgucSXILHM54JUJk7WRgUYxJ+J4xi7dDKiNMNVHysldrneJiW
-         X3ow==
-X-Forwarded-Encrypted: i=1; AJvYcCVfRrcBCPiWL0Q3RkfqGR2HvaAVTUHDWjP31s/N+vpr3W9Zc9kBgMmIx7wWZwWD1/f/rU0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3Ciod18RtIvHRVpuuBaRd3axvius1puhZD6O0j7plkeqs1iYb
-	hPOQeDoW98qdwWqTWG7NDrNxjmLh2eP3lNxTkNuTHbdUfc6m7VHllOCm1g==
-X-Google-Smtp-Source: AGHT+IFeWW6M75jwpwaEe/js+YKkNVcFuuGpC6tRYVZ/XI828HxEuQsuM/YGpeYJnPjOxvHaE7SucQ==
-X-Received: by 2002:a05:6a21:2715:b0:1d9:3456:b702 with SMTP id adf61e73a8af0-1db91d892f7mr18841971637.17.1730748635194;
-        Mon, 04 Nov 2024 11:30:35 -0800 (PST)
-Received: from localhost.localdomain ([2409:40c2:8017:2f6f:26a1:2e1:5d4c:875])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7ee452a8b3fsm7570018a12.28.2024.11.04.11.30.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 11:30:34 -0800 (PST)
-From: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-To: gitster@pobox.com
-Cc: abhijeet.nkt@gmail.com,
-	git@vger.kernel.org,
-	me@ttaylorr.com,
-	ps@pks.im,
-	sandals@crustytoothpaste.net
-Subject: [PATCH v5 2/2] t5300: add test for 'show-index --object-format'
-Date: Tue,  5 Nov 2024 00:59:58 +0530
-Message-ID: <20241104192958.64310-3-abhijeet.nkt@gmail.com>
-X-Mailer: git-send-email 2.47.0.107.g34b6ce9b30
-In-Reply-To: <20241104192958.64310-1-abhijeet.nkt@gmail.com>
-References: <xmqq1pzuylm6.fsf@gitster.g>
- <20241104192958.64310-1-abhijeet.nkt@gmail.com>
+	dkim=pass (2048-bit key) header.d=sfconservancy.org header.i=@sfconservancy.org header.b="eckqbIvc"
+Received: from localhost.localdomain (c-73-25-52-37.hsd1.or.comcast.net [73.25.52.37])
+	(Authenticated sender: pono)
+	by pine.sfconservancy.org (Postfix) with ESMTPSA id 5FB66E7AC
+	for <git@vger.kernel.org>; Mon,  4 Nov 2024 20:15:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=sfconservancy.org;
+	s=pine; t=1730751358;
+	bh=8uWzfJEF2zgGVsiJ7SKnPUgczHeq143mz7AVb1DnNLg=;
+	h=Date:From:To:Subject:References:In-Reply-To:From;
+	b=eckqbIvc1vHQQ7479+cglry9saDWfofr6rnPZn276VdxcQz0ZSkj5qMl6vHYm01QG
+	 VMZlZBrpDwwISKb1g3nnxwS3k9SXomHmB3CXbgzUwssMRfJl5tjyGcNS/NJ5R5wrwZ
+	 f2wEa0yfesnyTntVrG7TIrxciWRTDIMGqNt7UPah/wCTG3OHMPTKi/EXbpiYys/X/N
+	 4ItS3JvbSS7ggs/lsswDGwe9tUH0E+ThpMu6Ejtbz/hghOergAAiK965axVYRBfwsx
+	 3U3r3Rqe9V38rtEYbBDV4NBxxcI63sxS45alP9PMAjhfTZgbUk3kS0g5DcIU09ZTIX
+	 hGxqL6w5PYSPg==
+Date: Mon, 4 Nov 2024 12:17:05 -0800
+From: Daniel Pono Takamori <pono@sfconservancy.org>
+To: git@vger.kernel.org
+Subject: Re: Seeking your thoughts on LLM-generated contributions
+Message-ID: <ZykrwZ0Id6aUuK0b@localhost.localdomain>
+References: <ZxF9jawbd8eIeb4-@localhost.localdomain>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxF9jawbd8eIeb4-@localhost.localdomain>
 
-In 88a09a557c (builtin/show-index: provide options to determine hash
-algo), the flag --object-format was added to show-index builtin as a way
-to provide a hash algorithm explicitly. However, we do not have tests in
-place for that functionality. Add them.
+Hi git contributors!
 
-Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
----
- t/t5300-pack-object.sh | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Thanks so much for those of you who joined out first and second calls
+regarding LLM-generated contributions. We were incredibly happy to hear
+new perspectives and the community sentiment around these tools. As we
+incorporate some of the new ideas into our thinking we are adding one
+more session (we realize our last session aimed for EU timezones fell on
+a holiday there). That will be:
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 51fed26cc4..301d5f1b61 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -527,6 +527,28 @@ test_expect_success SHA1 'show-index works OK outside a repository' '
- 	nongit git show-index <foo.idx
- '
- 
-+for hash in sha1 sha256
-+do
-+	test_expect_success 'setup: show-index works OK outside a repository with hash algo passed in via --object-format' '
-+		git init explicit-hash-$hash --object-format=$hash &&
-+		test_commit -C explicit-hash-$hash one &&
-+
-+		cat >in <<-EOF &&
-+		$(git -C explicit-hash-$hash rev-parse one)
-+		EOF
-+
-+		git -C explicit-hash-$hash pack-objects explicit-hash-$hash <in
-+	'
-+
-+	test_expect_success 'show-index works OK outside a repository with hash algo passed in via --object-format' '
-+		idx=$(echo explicit-hash-$hash/explicit-hash-$hash*.idx) &&
-+		nongit git show-index --object-format=$hash <"$idx" >actual &&
-+		test_line_count = 1 actual &&
-+
-+		rm -rf explicit-hash-$hash
-+	'
-+done
-+
- test_expect_success !PTHREADS,!FAIL_PREREQS \
- 	'index-pack --threads=N or pack.threads=N warns when no pthreads' '
- 	test_must_fail git index-pack --threads=2 2>err &&
--- 
-2.47.0.107.g34b6ce9b30
+date -d "2024-11-12 15:00 UTC"
 
+And a reminder for the one coming up soon targetting Asia-Pacific
+timezones.
+
+date -d "2024-11-06 04:00 UTC"
+
+Both of the above will happen in the same BigBlueButton room as before:
+
+  https://bbb.sfconservancy.org/b/oss-nnj-obi-jea
+
+If these times do not work for you, please feel free to write us at
+info@sfconservancy.org with any thoughts you'd like us to consider.
+
+Thanks!
+-Pono
+
+On Thu, Oct 17, 2024 at 02:11:43PM -0700, Daniel Pono Takamori wrote:
+> Heya git developers,
+> 
+> We at Software Freedom Conservancy have been hearing from member
+> projects that people are asking whether they can submit code to these
+> projects that was generated by large language models (LLMs), sometimes
+> called AI coding assistants.  We'd like to better understand the nature
+> of these requests, how much LLM-generated code has been offered to these
+> projects, and generally how you're feeling about the situation.
+> 
+> To do this, we will be holding three different sessions, where you are
+> welcome to join and share your thoughts and any details so far on these
+> types of contributions.  The sessions will all be run in the same way
+> with the same topic - we are running three in order to hopefully allow
+> as many people from around the world to attend as possible.
+> 
+> Our Director of Compliance, Denver Gingerich, will be hosting some sessions
+> at the times below for all our member projects to discuss the issue.
+> 
+> date -d "2024-10-29 20:00 UTC"
+> date -d "2024-11-01 14:00 UTC"
+> date -d "2024-11-06 04:00 UTC"
+> 
+> We'll be meeting in this room for the sessions:
+> 
+>   https://bbb.sfconservancy.org/b/oss-nnj-obi-jea
+> 
+> We are excited to see some of you there and are looking forward to
+> drafting appropriate recommendations based on what we hear!
+> 
+> Thanks,
+> -Pono at Software Freedom Conservancy
