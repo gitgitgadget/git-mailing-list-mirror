@@ -1,53 +1,53 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2749D1CACEF
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2A11B6D04
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730787421; cv=none; b=XcePBgCXaPH2wzaUaUD//Wv7PrRQ2bG18GbrSF7YxnJJOCwqJ0xMjnRarcb3BfcAksF2tPXPc8fUX66sHu4d43fS1kxaCVhc1rN/YfDY2qnFiQ3qcNkcaDUItaLdRgyK9us8Aea3mPUxE0oRAxHVVfRPMU/a9Q2RDqOuKQhdqr0=
+	t=1730787426; cv=none; b=mXQMGyWWdb2sMuBcv+VGPMaXhjU3twU8ajr27P3OxDx3xV+9V6fO1FG2Rs2q9Hglruinf5wYgSHF4VhcEoWunE/QKYOjlKyKGsfEqAg6z0o4j9SJ3K4ewHpCpE02KiUE7J78QqdlSRZWfIeWdjnnxOYIeOlkAYMtY59iNhsE+j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730787421; c=relaxed/simple;
-	bh=G7tZqCi0CVju4B2rtHxuoVkvqGJbrcrJxaQ2Ji1Mc5A=;
+	s=arc-20240116; t=1730787426; c=relaxed/simple;
+	bh=TWDd2MZ4m3r4gK7/RsRXm+qIM26EHfeUjYYkQWpN9jM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ap8sbmkq98vIINhR9Wxt891o+iUCg6hvp8rBlWs6NObyYebkWOcppt6Ag8tIM3QQGAGZoDcxh5wY+XduzFiQ9Q5K9G0SQ+3nl7E4Gv7uSb+lgVjn2YOR1IhABMOHs4mXWto6+fy55NOKuoGFhq+4yIBGwSjBQrKHqRhwIYhUQVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=2QppbHde; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Iihp0I1h; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=I5YDM9ao7rSk0/xvrvzkJaB2+Ltqh16bfWPd01sOl0i6xAs9B6kEerJ2DCtMXZ26L1qR0SMYwmyV6JQu2bclVAh+ifUslGzt3uzUQM5kC7SGZ48/QOY94sEZKJnLhbEYpGwaNFxuS57gFHIgGbV8x4WrfZgBCudF20JUwdyZSEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ec6fAywC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+G9BZKv; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="2QppbHde";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Iihp0I1h"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ec6fAywC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+G9BZKv"
 Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 05B2225401A9;
-	Tue,  5 Nov 2024 01:16:58 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id B53AB114016D;
+	Tue,  5 Nov 2024 01:17:03 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 01:16:59 -0500
+  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 01:17:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730787418; x=1730873818; bh=1Xevuea/r4
-	DjKYwI98hRImH/XC9cv9WAastaqy4Zjiw=; b=2QppbHdeaDhQIb96n8Ro3n1pfN
-	s0D1jE1AQn8euQpwopW/5lepmwpF7FpjKWdEh1W+/OL7JRfGZd3xFAhwkHQYlN7i
-	THABvAx3AFObEYTsUePdOC2H/7Em/0YDO7JTW+7LqIuHdaRGTsOLEIYAjm4W+dgF
-	jqEAEuKBGZNjBlkDD5k7U3OEBpSF1efZp5xOGZEqq7SgGov/Xi/BJFZm4UBtMBfe
-	VPhdAdaCg2P42rk/40Dfn1W8//MC/AN0egdPqryw5dj7Medierr7gf6EomuQAGjS
-	W5HTePrTgdwPPm9onTItqK5HXFXxGqg/Z2HP9ROPCKVpzYN1NROKmQwtOd3A==
+	:subject:to:to; s=fm3; t=1730787423; x=1730873823; bh=v+wOuqPYeP
+	QZ4nSvEMO0RUZTg/18UUqRdIndd1MEBg8=; b=ec6fAywCZGTq2UXCDFLSlAYKWR
+	FViXpmoTOdDtpbYFGr3NU0guiRQRgrceyeqPWcmFVvDOKdKtQU9697mxsqkgJq+y
+	OQ9T/mB8m3P01rVc7HFlDg03ZDaycxvbfoZZr2kwGhWancpDgKoa2o5o8vksK4Mf
+	Kebpx21eMbvrOyLElcvaJ0H5O4tG43IGmGno+TW6df3M4vQJAu5dZV/wfP9JxmzM
+	OBZU/HAEIntBBTR7fZLI1TTqDkpbw17X4aseOJurrWIVnZSybv/jr1Z+n9vTZEyZ
+	V9ocq/nu2kwQK8MHukyjISgaAof5AfIdJlXrM97far2Fr1JBx7TuieWpyojg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730787418; x=1730873818; bh=1Xevuea/r4DjKYwI98hRImH/XC9cv9WAast
-	aqy4Zjiw=; b=Iihp0I1hDCUj+l+X9vogVYNyvMqbEv4inbOubsLkoFUtUm9wcbe
-	CGNZ9qtFshv7qjta3laWOotPqWlqqOpMi5+seTYkjzfFn0ey8FqHpOmJ/vGKOpPS
-	w+1puyYvi7cXDHHDULjA7yx6ZnEPOxgkjrH4UR23KgzKPysS3AoPfQwhx0Vw2pb0
-	TLaB6b1S8W2Gy6C+lWagDNDGxucceomkGb/EMn85mPttBYQRKQLlxLAbpW6NG25Y
-	4oW6JA3QUfXDvXvVYa9CqL/jMdZBYzApc4thys+0CbVcacFXL3UGA38HeljElFaG
-	Wcz+g418ZfYUL2BLvDhg7K2OKsTL5LxnYCA==
-X-ME-Sender: <xms:WrgpZ2pNVGalSw7EHGGn7MwLMbum3NK-dRduw4nHnJduTcp9fRf9gA>
-    <xme:WrgpZ0pOIOHME9HDEdNB7LbJrMt3RAZ7Sjg5c2ys-2KwXya4Ql9af6fLRrwq_UgXc
-    xiGalfHDlLQ3ei7-w>
-X-ME-Received: <xmr:WrgpZ7MpsDAsuMDzuhEbitSvFw8IReJfqAvxlZlD1gFiEp8CxKmLN18V7qeoB1oU57c7VSlWvmCZrgPJcPG8mx-6bo-q3qP5y25-Us6uTRMEVA>
+	1730787423; x=1730873823; bh=v+wOuqPYePQZ4nSvEMO0RUZTg/18UUqRdIn
+	dd1MEBg8=; b=W+G9BZKvoW3biDx2SO96yLXzVcMI2U7UJ434mfP2Fn03AEf7BAX
+	zgSt0NjDxLcmOXrRgtydPwbk6wWyBXEQv/83ULkVEkW+WxNWixQmd1y9NIOq1vKa
+	XaBDX76J25W+/SioJiOG2ElTq4Y3Ot3OiE60j6GHQraVt+/LIYhZL6qQIah6YIhl
+	F5kzrPxeJUAA4q+UOtEstJ4RU8T/7a+cGgI4IF31gbuUko5qq0thPoR0dCtoRQGO
+	+hPGLmkxwb9QujYYW2SHjIkviYzmLrGO2TP2wUcHcoMeEVDCoxNVFqkIJFIkbBEf
+	JsZkddQ0OFioiZzLoY1b8JekpQ6zF2Rx6eg==
+X-ME-Sender: <xms:X7gpZwBo_gq-wScqZ0zDa_3aF9SOoPsu0iuvPi-8DjhKeiPCqkQOTQ>
+    <xme:X7gpZyhkuGdQe3QovlMGLXzmk2KsjfsFRjZNQNcQ_YbHO0haSVkkGDJgLEH89LV3c
+    8uYsZ-KQ6gpEznVtA>
+X-ME-Received: <xmr:X7gpZzntvs8q8aUPXuxk1DmMLs5nq38vvQKfk-bNqcdAkqnNogk7TRpIP1yGlt3qNho5yUh-YZ-YFhOR0jq8ltYADWcSzLQWY3rUth0x-fJtvw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,30 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvges
-    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghl
-    rdgtohhm
-X-ME-Proxy: <xmx:WrgpZ17_X_BOw3iR8a7nTN_bjEBWZ6WTTQfZ6X9jcbGcRHt7mD2hLQ>
-    <xmx:WrgpZ17zOcNXZ1KrYTkAXGUR1Ve2gsJMZfPmD1dTH4yX_cH4LnCk0g>
-    <xmx:WrgpZ1iv4Y_vwID6J5IYxevYUnf1yUW3Nzgv4MUZYbT5Iroftw044w>
-    <xmx:WrgpZ_5JXm4F0wPiTSym1jOYvsS4AotsgpjywpkAW31h-h10Zfscbg>
-    <xmx:WrgpZzSyA2gXzPoCVLLfFOvjQkyqM-O9H4KjuiU-e3fZvWLnIZioNxT2>
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:X7gpZ2yj22BU6szUMjmGVUQStQErUzS9ac7wXCqs_ZEgkMVpj0Blig>
+    <xmx:X7gpZ1RhKx7JTMxaXdq8h35_x5zvuTYzTE6dnJrARJ8vtLzXm3hFfg>
+    <xmx:X7gpZxaFQOT5HSlIpAn_HNOGjmoe0RNQA6oBaf1bMHKWYOwKCvm8bw>
+    <xmx:X7gpZ-T_711wiDMxAgHMvm_zTwY7Qy4EXuXl77okbezgmkkmYo0-VQ>
+    <xmx:X7gpZ-J4CVhLUGLndTqy4V2bF_bYKeL1ouKq2VMsO2N5AzGLRFg-7AcA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 01:16:57 -0500 (EST)
+ 5 Nov 2024 01:17:02 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 604fc5e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 06:16:35 +0000 (UTC)
-Date: Tue, 5 Nov 2024 07:16:50 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ecb4a12b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 06:16:40 +0000 (UTC)
+Date: Tue, 5 Nov 2024 07:16:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 03/22] grep: fix leak in `grep_splice_or()`
-Message-ID: <74b214701942b6412965b53b3aec4580ef6fd242.1730786196.git.ps@pks.im>
+Subject: [PATCH v3 04/22] builtin/grep: fix leak with `--max-count=0`
+Message-ID: <d716f93169a5a7c2352684998f75e85cf70b9224.1730786196.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1730786195.git.ps@pks.im>
 Precedence: bulk
@@ -92,30 +92,68 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730786195.git.ps@pks.im>
 
-In `grep_splice_or()` we search for the next `TRUE` node in our tree of
-grep expressions and replace it with the given new expression. But we
-don't free the old node, which causes a memory leak. Plug it.
-
-This leak is exposed by t7810, but plugging it alone isn't sufficient to
-make the test suite pass.
+When executing with `--max-count=0` we'll return early from git-grep(1)
+without performing any cleanup, which causes memory leaks. Plug these.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- grep.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/grep.c  | 13 ++++++++++---
+ t/t7810-grep.sh |  1 +
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/grep.c b/grep.c
-index 701e58de04e..e9337f32cbf 100644
---- a/grep.c
-+++ b/grep.c
-@@ -756,6 +756,7 @@ static struct grep_expr *grep_splice_or(struct grep_expr *x, struct grep_expr *y
- 		assert(x->node == GREP_NODE_OR);
- 		if (x->u.binary.right &&
- 		    x->u.binary.right->node == GREP_NODE_TRUE) {
-+			free(x->u.binary.right);
- 			x->u.binary.right = y;
- 			break;
- 		}
+diff --git a/builtin/grep.c b/builtin/grep.c
+index f17d46a06e4..98b85c7fcac 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -906,6 +906,7 @@ int cmd_grep(int argc,
+ 	int dummy;
+ 	int use_index = 1;
+ 	int allow_revs;
++	int ret;
+ 
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "cached", &cached,
+@@ -1172,8 +1173,10 @@ int cmd_grep(int argc,
+ 	 * Optimize out the case where the amount of matches is limited to zero.
+ 	 * We do this to keep results consistent with GNU grep(1).
+ 	 */
+-	if (opt.max_count == 0)
+-		return 1;
++	if (opt.max_count == 0) {
++		ret = 1;
++		goto out;
++	}
+ 
+ 	if (show_in_pager) {
+ 		if (num_threads > 1)
+@@ -1267,10 +1270,14 @@ int cmd_grep(int argc,
+ 		hit |= wait_all();
+ 	if (hit && show_in_pager)
+ 		run_pager(&opt, prefix);
++
++	ret = !hit;
++
++out:
+ 	clear_pathspec(&pathspec);
+ 	string_list_clear(&path_list, 0);
+ 	free_grep_patterns(&opt);
+ 	object_array_clear(&list);
+ 	free_repos();
+-	return !hit;
++	return ret;
+ }
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index af2cf2f78ab..9e7681f0831 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -9,6 +9,7 @@ test_description='git grep various.
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_invalid_grep_expression() {
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
