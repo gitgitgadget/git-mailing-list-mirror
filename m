@@ -1,118 +1,98 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6BC1E7C28
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 18:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242D61CAA4
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 18:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730831724; cv=none; b=MqGpoOfwmRmIY4983FG6BuMmZS20TXICDmIx+wR42qcBHJQs4BtVEFy1YDwldrFKt8iUQOmUa8NhkWuxLU5mjCiIC9R08hSzJ0DGgPBfaXGIk7mseoW7+I0K+HRDGv20uOo1K0fBX65U4nVAau1v8Tu+s0fOlaZQYJyYY+4bRTU=
+	t=1730832883; cv=none; b=liZHurFhTyNjwqP2rM+ZKNmwnyn1pPKo3R3DMxdFqsqT/Ed5G+1dVVOy1pS9uIzgvVuplXvLZ4BP1/mC/RVzciX28M2sGrXDfHF6sCtLa4hEprUdr5Bv4hiYcQAtW8J/VUwOQqFSupQqOLLjHoAWR2muazdaMg1CW8xo8May9lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730831724; c=relaxed/simple;
-	bh=MEnXj5mshuP9am6QxEeekhtUduAQ3AWwrEFU0knavD8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gRLuiIXLkdCVG0Jn0VQiG3oG6UijgSrpQOd9LHXVBhrnrPrzSANgR0i0NRSe9p1BwB25CxXYGh+efITFz5VngqLndzD89UVGsY/RAfXBcu3Yo3JzaQ2b5bCI705VJYWZ8c7NceDntXk0+Vb/dLmtUOMr527tZBO9ibbzMlcvrh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WtXL5iJZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SUJEZqQt; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730832883; c=relaxed/simple;
+	bh=mgjoKUkBfKBt8fzofDMFZyakKggVMjOwOppwWoik3p0=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=LSF5FoQiUkcFgNGcposcgjxNxvh40IPZLQKWmd2ew7OFcjc0PCy5rnG2TZT4/04tvnpZo0mj51BWR/5dHKcwnFAHse1RyzyGG27lsKCOvo7EU1Nz3wHjypGZX8bI4loWqZoMlSBjAuLyIGU3nQGm/fIhA+gO37EkAUPbsvCGzDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Stkg1gDy; arc=none smtp.client-ip=209.85.128.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WtXL5iJZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SUJEZqQt"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C6AAF1140221;
-	Tue,  5 Nov 2024 13:35:20 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 05 Nov 2024 13:35:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730831720; x=1730918120; bh=fBK7W2hQn4
-	Z2BqL0LF9+hy9/iQsLQICLoX72WJBMPjk=; b=WtXL5iJZGXZ1tIE9IoG/2c451W
-	SFHVyKlQNN9HeZphE9PPhi2BUJD2cylxVbRmSQlOKspCX84CGXcS1HeENMa29lpR
-	GysbI4z6oPf6EDaEpS2fF3wjdzXF0kUUkfvDMIPA0SPvj0/q0McL0FMBxM8x1kzC
-	4SBsYJ8gj63S4PdKP1JZi2cw4ZZ8S2M+sVoje2VyvvYqo/Q7/M9rdze7ND31zESk
-	XFcylOBrBak8y2aIvNJqM7nftYdq84RWGwc7KkKJzl3cWinDZVNkMVy8iLIOo/et
-	YMeIlYngnz/Z//CjO/VQtcnsnLtYFEL1lbTb17Xp6obtuIZ0r4dPYgGvlJaA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730831720; x=1730918120; bh=fBK7W2hQn4Z2BqL0LF9+hy9/iQsLQICLoX7
-	2WJBMPjk=; b=SUJEZqQtvo6kuyYpf4l+AKMF9hUtRJScOkbfvDwZo56M1lg8Cc1
-	uHZNVWrhff2NX4Wmcw6/DS40DtQBuGiv85e0/5frKCbVMpcrM2hzHfMWh5j5rkNX
-	sPtTAa2oEmBdb6xTa04EwS69JAde5LvHaPB5Gd4UA46a4OTnX6OQ7qIUHVqh1tyF
-	RJ2T7ptAMxXxuHq4w+jy6Dws8PouUT2z/7y32tkJKtEIF6s06QbPXRuOCNCF0jQg
-	ZSbt65CmDah7ufbAYRScRLcrFZW1KXTCPb9Bx9KPp6KOqhlWohoMpZ6MLhtfg9iE
-	s46cEJPft6LUVJeEFWHUgf+4CecT/ws9ysQ==
-X-ME-Sender: <xms:aGUqZ55tTgc2q1r2-eaEaWeeT5m1Ls-skPrp5hlPtX6HAS4FZbhwDQ>
-    <xme:aGUqZ268fuwqO8TgiJVXorTrOzylK3hBuvXtRd2gcyd9TD9LHVZBkHKapEJr9QHeu
-    cTorQKiSoM2LD08mA>
-X-ME-Received: <xmr:aGUqZwdnCaCBAwmCN1cwi87h0jxbFvYdYMNG7trZRb-DGl5nEuwYNwgwnvglmbBVLj69TxSS0Vv-3Tu6AsTrv9D5zlEkk0zIKITZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddtgdekhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsohhrthhivgesmhgrgi
-    hsihdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:aGUqZyKU6Od84ale5XdU3tdPNvLKFUVogFZCiG_SM3Rnnel7RuW_tg>
-    <xmx:aGUqZ9JiufqUm4XCkf4RsOYQDWaUh6OUVstbN0NWnwdxROODVZg_tQ>
-    <xmx:aGUqZ7xbNgbbOgi9ufbxHKPlNOZ4HdHCLRp-HMhD_9McyftrR_QwkA>
-    <xmx:aGUqZ5KIfYc2wUjQhkteOGXzSwproY6XcjSLXcqT7zlLZMmB9KNkgw>
-    <xmx:aGUqZ938z3ssdTeBQ4e4amzGm67fOIPRow173O1Kh8LANgO8415TldYf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 13:35:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonas 'Sortie' Termansen <sortie@maxsi.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Makefile: don't remove configure on distclean
-In-Reply-To: <76f4dfe6-3724-472b-9b42-c91926e61fd1@maxsi.org> (Jonas
-	Termansen's message of "Tue, 5 Nov 2024 11:13:49 +0100")
-References: <76f4dfe6-3724-472b-9b42-c91926e61fd1@maxsi.org>
-Date: Tue, 05 Nov 2024 10:35:18 -0800
-Message-ID: <xmqqldxxsf4p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Stkg1gDy"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6e7fb84f999so90191517b3.2
+        for <git@vger.kernel.org>; Tue, 05 Nov 2024 10:54:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1730832881; x=1731437681; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=T1hUBeqmQ922MHKupqdZrqMdwQb37UgL0l1SLmMNbN0=;
+        b=Stkg1gDyMkrubMtfT+kZZ9h2dF8xMEk+Nlsp4Vj0OvHbfKvJoaKoDvHjPrtdhAqF2Z
+         XwbRkYrVBl+MI33NOqqM/giR4TK/8ptcWoVP5MSnqiB3MPVNuodEzjSKwac998RBo7CR
+         WU8ktLB8D4194jVvAb3DlWJyWEIEEd/cMK1qBbWziN6+xz993kl41ifWafrgwU8Tz1oa
+         VbesWtPZK2vkTZeWUedeYC00tPZGofaFS/jmdmc8TheAxPbkQQewMb3SvIViAzEhjSbd
+         OUqY9pNO0pKa1uEyHbsSgy0oV74JhotQnPvTb4f1ym2+jeH/+4qS0waSSiy/HsEqSkln
+         1NUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730832881; x=1731437681;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T1hUBeqmQ922MHKupqdZrqMdwQb37UgL0l1SLmMNbN0=;
+        b=U9g8CR5em9/DNaPRAm5YU40TgZwnVnwGgR/U9jsf7XTBJhmuOXWIuBwurFVJ97vED9
+         SmWF6JTLA+dovHTCvVPw1WRKtzapiEbIZR/TlzuH6gs7L4U+bdiBkRYmXUQ7CzMTzpNW
+         Rk2K+9Abf72yOkG3YolUG9E7XBo+DhHBVqpimaBtOg9P+tiXi5Jv95Fu8c3jK5aXIFib
+         kC3k6+FSmZHMBd8b+gvdRfD/WkijZXu/M2WzHd4pZV1KsP30dBIcB5+3FvYLMf0q0pMM
+         7XJ76VLR/4jKbvJ+MXwG7bQ2YASqvf4DbqP4BIH2D4QGxZKaygYZNgdxlyj5cyDKlxPR
+         jgMg==
+X-Forwarded-Encrypted: i=1; AJvYcCX4mv01CwN+jX50tcG7yWEPQiJ2Fw3M3Z5Keif/lMxnynWZE823Fr+LKQNCPi9QLYvHcWM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx0yVAIZgr99B3C3NGfRk/5jmFVHwNmT5osxBUdhalkRh+Ee6MU
+	vQS9vdxJ41L5EWqjjxwwxAjgTukwF2ZKr5f9iJlO/sh5u/kvjyP3hgMsB+IZWV8C4ReeFs6dz7I
+	tq1F+Hi2XhRwHfgtPPciYO0joe2jo4Q==
+X-Google-Smtp-Source: AGHT+IFQuDicZ4cLnsT2EYN9s9t9gnmco/RyHAE4iNavJWHIMMs2Vzk5BLjxMPx/0TukkHjw4fY9sLTyJtOZaifIebZb
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:af5d:b903:295d:2c17])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:690c:408a:b0:6e3:19d7:382a with
+ SMTP id 00721157ae682-6ea64a7e14cmr554077b3.1.1730832881161; Tue, 05 Nov 2024
+ 10:54:41 -0800 (PST)
+Date: Tue,  5 Nov 2024 10:54:39 -0800
+In-Reply-To: <xmqqbjyuted3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
+Message-ID: <20241105185439.3230561-1-jonathantanmy@google.com>
+Subject: Re: What's so special about almalinux-8?
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jonas 'Sortie' Termansen <sortie@maxsi.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> Everybody else seems to pass tests, but not this one
+> 
+>   https://github.com/git/git/actions/runs/11677884048/job/32516504151#step:6:1995
+> 
+> I am not (yet) so familiar with the topics in flight at this point,
+> but there are a few topics that deal with packing, lazy fetching,
+> and commit-graph and object database being out of sync, which were
+> handled by a few topics by Jonathan, so I am CC'ing this if it rings
+> bell for him.
 
-> make distclean conventionally restores the extracted release tarball to
-> its original distributed contents by cleaning the source code for
-> distribution. However, the configure script is part of the distribution
-> and should not be removed. This behavior is creating problems on my
-> package infrastructure where configure-based packages have make
-> distclean run afterwards and then the subsequent git build fails.
+That run refers to 95dcd58, so I fetched it and tried rerunning it on
+CI. It seems to pass:
 
-Without a target that truly cleans any build artifacts over what is
-recorded in the commit to replace "make distclean", this is a
-regression.  It seems people use "make reallyclean" or something for
-that, perhaps?
+  https://github.com/jonathantanmy/git/actions/runs/11690124087
 
-> Signed-off-by: Jonas 'Sortie' Termansen <sortie@maxsi.org>
-> ---
->  Makefile | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/Makefile b/Makefile
-> index 6f5986b66e..c488b914a0 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -3723,7 +3723,6 @@ dist-doc: git$X
->  ### Cleaning rules
->  
->  distclean: clean
-> -	$(RM) configure
->  	$(RM) config.log config.status config.cache
->  	$(RM) config.mak.autogen config.mak.append
->  	$(RM) -r autom4te.cache
+Having said that, I'm not sure what caused it to fail.
+
+>   ++ git -C dst rev-list --missing=error --objects main
+>   fatal: You are attempting to fetch 957c60b67968d2ab4144e7e2fbba99d6ad864e4e, which is in the commit graph file but not in the object database.
+>   This is probably due to repo corruption.
+>   If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object.
+>   fatal: could not fetch 3246c304205324149983025431c5211438f41931 from promisor remote
+>   error: last command exited with $?=128
+>   not ok 22 - use fsck before and after manually fetching a missing subtree
+
+This is supposed to happen when we have a commit in the commit graph
+file but not in the object DB, but the test is not testing that case -
+"dst" was cloned normally and we did not manipulate its object DB in any
+way (outside regular Git commands). So I'm not sure what happened.
+ 
