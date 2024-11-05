@@ -1,222 +1,137 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B655B1D04A9
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 09:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E2A18E363
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 09:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730797951; cv=none; b=thmTCgvkagaN0E+Q4pkcKwIPZqMP9ku8H88isDm7hjYL8pfcOra5sT0HEFj0nynQuO4JWuqB4RxW4nCX4RTm2A1ojpypSBaxCIrmeDPLeP9mivNIqvVJRK84kW1UU3Q3yYxpervZNF2NbEk02q2gCb2BnWRbMg0ZRYG0dZxl6m0=
+	t=1730799810; cv=none; b=RDUIYolhsdtFHaKzQLqQhgOrG1k8X5HII4kKIUEM9Rb1Fo0lQXU0n1krhbY/BxEH/q0p3cUuIEo7gwz+5ZB9OtS0e5kZj65cIAhfR5n6zYJmZh1FL4QANBSThqubOLDliWF6GzVLTn8uMyyLYqi0Ac7i4FtchsB5K86h5XoQN3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730797951; c=relaxed/simple;
-	bh=/PuXU3Z/DKlGCXSMcRCMREyi0uzuubH0dVd9ZiZGMAg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r2CuCzu1NSEZFfXkUQQVA1VlMNfPKvCtbSiBY5ljETlE2Y6yIIckjofTTucxwDHpQxM93wGeFnlOlbO2IxTrRlTni9UVaB07EVH6QHUO/06m1e6gbMFsiTCwtFc655AK8Biu3LgyRV0iyNhP6UPVHfYpAsG/uwOD77XH101LbSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=xCUQewvO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K8awN/oY; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1730799810; c=relaxed/simple;
+	bh=MTA1sWvYxlnVmi59Q+ZCscvwBsiJAj7ozgGkRYuuWs0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RnLiYWSNQk40gOrbRm884kkppdiVtSI0t5gLR7OuILX3hg3HH686em/jnx8t8UfhgnHkBIcs2a+IKLTm5jVpxUL5Xu61CukJ1R0oh+k8r/9GztUFC+V3ezKRVzb7Z2nSoPw70/JfMwHdqyjM1ZdLwaXP9durrD07GXAazzfyQRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXnmd0Am; arc=none smtp.client-ip=209.85.221.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xCUQewvO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K8awN/oY"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id BB9CD1140171;
-	Tue,  5 Nov 2024 04:12:28 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 04:12:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1730797948;
-	 x=1730884348; bh=r3USq8gIBRthfs8tV8A6Jiwa7hsE2GVK7eSPH18idj4=; b=
-	xCUQewvOggD/GkESD69Q91M+gogqrB8wigK6Pey33832NTkHDoN/Jj0zPX6Wi2E1
-	YPF8UrIyhFGIkgj2Hwru9DSXSRyxnTO4DDT8YDQz9/QAUWMr2+EJuA+3h/q5s/Ia
-	gyJpb0OVTVJZDg5MytwhnktdFm23ClWzeqTFTgkof86wSW0YsMgty0ozSu2AOZmw
-	MKd1JYyd/b9kJ5WPntncOt4sbWs3w0tBAo6Dd2Q7GNW1dRHTISBJks8C10SSXJ/B
-	ZJeJkrB8BIdS/wKS8Q5UHypzmxto0YgvbsK0YqTtNisXBZxhJP/2T/sCvIiaujpy
-	ON7EjoQAs56MEH3AmalSVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730797948; x=
-	1730884348; bh=r3USq8gIBRthfs8tV8A6Jiwa7hsE2GVK7eSPH18idj4=; b=K
-	8awN/oYJDk5NrnUXi1Z6K35OjepiCdtkqfstKBd1+RLjXgPQuzJy3SjPWkquOe4m
-	JrzsriGoHyDAWUJ5VwL7+RUuUnkovioakiCBgM28g/iNIBh5ea4Jm/A90D3OdXee
-	mcvRmx9IfVknTRrt6J3uSYeXfPRl6qB2K1zcvh/zJcnlPcbfWiXkqtV6Q3YvCi5L
-	v+JvSYxdkbuxzPKG3E39JzJf51+3f9QGSsFx0XYCoqyBR8X9lWac/lyElyB3J3r/
-	AkKQ87VgOCspnB1RHj5OMGKjPWd4uhulR+TrXDLRSeg1xiA1zY/aIZnG6JF/cZwF
-	ptocb3Nmc+mnzeWZhJWHg==
-X-ME-Sender: <xms:fOEpZ5Z7_D8ZgxluUIsCb-7NAZD8WISGqfMPPvncJgeuMFPG15z7Kw>
-    <xme:fOEpZwZ_x1_RSgUMenu3Oo2QDruV4hHRv36RqYg61awo3_bN9FASybXng5P0wXKTo
-    79AjdExkIc4c1fwkQ>
-X-ME-Received: <xmr:fOEpZ7_R-EgR-tLmsYnU8iHS3UnmeytrQChuoR-PMcCOAKpFlLKQswvbE-zaAXnwsQu9XHA7eikx1daIZSdMowDwRTY07isQmdMGcgnkPjBIfw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdelkedgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitd
-    etleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhg
-X-ME-Proxy: <xmx:fOEpZ3pUWuGkvsZQUUPZyFUAhd2pHMTojOjPxtQ_MI52wSm0OSUu3w>
-    <xmx:fOEpZ0pYFwQsMokHvU9z_8iiFcc3vmCUy6SZzWiX9NsdHncyEhCoxw>
-    <xmx:fOEpZ9SvYcgxJC1KxzvikqOlXf9VslkaWqrvQTiVX8WPnum7D4ANQg>
-    <xmx:fOEpZ8rmnXcBkPsk_-uSjqgalHlPJEOszDEy8gNZwFT1hy2X3q8Pdw>
-    <xmx:fOEpZ71kVXxRUZFtjqXmCLJPG7Sue09LJbCXCoRGHuZ4YyCqJaFc5Scr>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 04:12:27 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 19b682d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 09:12:06 +0000 (UTC)
-Date: Tue, 5 Nov 2024 10:12:20 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 8/8] refs/reftable: reuse iterators when reading refs
-Message-ID: <276c27e770ace7030bdd83106c05f4fe5b07dbe5.1730792627.git.ps@pks.im>
-References: <cover.1730732881.git.ps@pks.im>
- <cover.1730792627.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXnmd0Am"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-50d3d4d2ad2so2231200e0c.0
+        for <git@vger.kernel.org>; Tue, 05 Nov 2024 01:43:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730799807; x=1731404607; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vq6USQoX7Xu2bLJ3WgYELVuUsQPdgwtwdtQ0P7s3HP0=;
+        b=QXnmd0AmbMl0ovcZcwlrm6A0XM99r5ZA45fK/Y+RKABAOPubJt0kn6Fg1XiUfseA/d
+         KYQadwlrZXfe/4YpHPMUNqEdDpAu4jZs89YILkXnIdQCpgUMQvCIP74hPH7xGFR+/gw4
+         9Pn+n2HZ1Kymy8tnetYBXEtlktmo9FgvTbePGh5R81IteOVSZYVAafF6udCOHxKhoPyR
+         UU9HKzWLuoRlka8yb88Nq3Z9b7+l/1HONmG8gqUs8Nx/zKHaPAD3ENr6tgoQ9bMGMIiI
+         ECI7Fl6UuqKNsAUMttr8JRziwgMRjS+NfjMOVDaAn3t/LYOVNGH0D7Cqv9CmPnLDAQeK
+         WMCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730799807; x=1731404607;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vq6USQoX7Xu2bLJ3WgYELVuUsQPdgwtwdtQ0P7s3HP0=;
+        b=ACbrVMLJYihHBKhH3zDgUcprZcHVEfei2BN4mWfrQ8I1Zub9ZQve0gAS6zGhaXVklz
+         CcUi+Phgqa0uYrTfeT1zNeoBNO1guL0x6PDK8SxFeLzaTlQVWdQN4fKm3WtCSz1RVqlz
+         SvnaLRp1WRCRPSd1cAWu68lNYl/sDgU/tUniPiV1TNc77z9c2FLHftM6DcBJGqB+TYyu
+         dUazveiyBo9Xe9KnPpfSmfz9P/Y1GAX7e57JrVx+WhiU4RrIW9C7/WPzXuPr7+94qMbl
+         hrG9xUYO4QiqpZ/SwNr8jwlBL0Oci+wjuw5BCly9e+iTKNI+BPUGMI5M1RPYhDUhUcff
+         KE+g==
+X-Gm-Message-State: AOJu0YxSMJSIdJaJZPtFtUXwoZZilBOFX7Ix/vrpamZwTQNjmTbS2Cvh
+	Fp2wEkwhB/+lQEFYjWnevgTQP/MlSlCmj2I+oEBdpZBR94Kx4dCxQMQUimkEuj9O3FvzscYqW5e
+	CdAguHkXiKh3TdSuIK+5QIbOy/qeVRIhc
+X-Google-Smtp-Source: AGHT+IHkfT1O4JL3mGTxsxB5qha12OoEGUN5+b8TPQO82kIGjAFL0vfZo5WvsKqP2bZzwmLdTQ0BAQSwTN0NeDruPKU=
+X-Received: by 2002:a05:6102:2921:b0:4a3:d215:427f with SMTP id
+ ada2fe7eead31-4a962f7cbc8mr12239508137.23.1730799807587; Tue, 05 Nov 2024
+ 01:43:27 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 5 Nov 2024 03:43:26 -0600
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <20241104173218.GB2989472@coredump.intra.peff.net>
+References: <cover.1729504640.git.karthik.188@gmail.com> <cover.1730714298.git.karthik.188@gmail.com>
+ <20241104173218.GB2989472@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1730792627.git.ps@pks.im>
+Date: Tue, 5 Nov 2024 03:43:26 -0600
+Message-ID: <CAOLa=ZR4G52kZt==80xNiEvRAabNHUMC7587qqwAuD6snLGAXA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] packfile: avoid using the 'the_repository' global variable
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, me@ttaylorr.com
+Content-Type: multipart/mixed; boundary="000000000000b58b6c0626273b50"
 
-When reading references the reftable backend has to:
+--000000000000b58b6c0626273b50
+Content-Type: text/plain; charset="UTF-8"
 
-  1. Create a new ref iterator.
+Jeff King <peff@peff.net> writes:
 
-  2. Seek the iterator to the record we're searching for.
+> On Mon, Nov 04, 2024 at 12:41:38PM +0100, Karthik Nayak wrote:
+>
+>> Range-diff against v4:
+>>  1:  b3d518e998 =  1:  6c00e25c86 packfile: add repository to struct `packed_git`
+>>  2:  bb9d9aa744 =  2:  70fc8a79af packfile: use `repository` from `packed_git` directly
+>>  3:  d5df50fa36 =  3:  167a1f3a11 packfile: pass `repository` to static function in the file
+>>  4:  0107801c3b =  4:  b7cfe78217 packfile: pass down repository to `odb_pack_name`
+>>  5:  2d7608a367 =  5:  5566f5554c packfile: pass down repository to `has_object[_kept]_pack`
+>>  6:  2c84026d02 =  6:  1b26e45a9b packfile: pass down repository to `for_each_packed_object`
+>>  7:  84b89c8a0e !  7:  7654bf5e7e config: make `delta_base_cache_limit` a non-global variable
+>>     @@ Commit message
+>>          this value from the repository config, since the value is only used once
+>>          in the entire subsystem.
+>>
+>>     +    The type of the value is changed from `size_t` to an `unsigned long`
+>>     +    since the default value is small enough to fit inside the latter on all
+>>     +    platforms.
+>>     +
+>
+> I think this change is not ideal, for the same reason that the other
+> type changes were: you can conceivably have a 4GB or larger cache here.
+> On Windows using "unsigned long" would prevent that. (On most other
+> systems it is OK either way since "unsigned long" and "size_t" are
+> generally the same size).
+>
+> I do think the config parsing should change to use size_t here (like I
+> mentioned elsewhere in the thread), which would fix it on Windows.
+> That's outside the scope of your patch, but in the meantime we should
+> not be making things worse by moving the variable itself to the inferior
+> type.
+>
 
-  3. Read the record.
+There is a subtle difference though. Both the configs (this and next
+commit) although are initialized with 'size_t' they are bounded by
+'unsigned long's range, since they do to the functions used to obtain
+the information. The only difference being the defaults, which could've
+been greater than the range of 'unsigned long'.
 
-We cannot really avoid the last two steps, but re-creating the iterator
-every single time we want to read a reference is kind of expensive and a
-waste of resources. We couldn't help it in the past though because it
-was not possible to reuse iterators. But starting with 5bf96e0c39
-(reftable/generic: move seeking of records into the iterator,
-2024-05-13) we have split up the iterator lifecycle such that creating
-the iterator and seeking are two different concerns.
+While having said that, keeping it 'size_t' makes it easier to know
+which configs need to use the yet_to_be introduced 'size_t' variants of
+the config parsers. So let me change this too. Thanks.
 
-Refactor the code such that we cache iterators in the reftable backend.
-This cache is invalidated whenever the respective stack is reloaded such
-that we know to recreate the iterator in that case. This leads to a
-sizeable speedup when creating many refs, which requires a lot of random
-reference reads:
+Karthik
 
-    Benchmark 1: update-ref: create many refs (refcount = 100000, revision = master)
-      Time (mean ± σ):      1.793 s ±  0.010 s    [User: 0.954 s, System: 0.835 s]
-      Range (min … max):    1.781 s …  1.811 s    10 runs
+--000000000000b58b6c0626273b50
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: bba6ede4348fc52e_0.1
 
-    Benchmark 2: update-ref: create many refs (refcount = 100000, revision = HEAD)
-      Time (mean ± σ):      1.680 s ±  0.013 s    [User: 0.846 s, System: 0.831 s]
-      Range (min … max):    1.664 s …  1.702 s    10 runs
-
-    Summary
-      update-ref: create many refs (refcount = 100000, revision = HEAD) ran
-        1.07 ± 0.01 times faster than update-ref: create many refs (refcount = 100000, revision = master)
-
-While 7% is not a huge win, you have to consider that the benchmark is
-_writing_ data, so _reading_ references is only one part of what we do.
-Flame graphs show that we spend around 40% of our time reading refs, so
-the speedup when reading refs is approximately ~2.5x that. I could not
-find better benchmarks where we perform a lot of random ref reads.
-
-You can also see a sizeable impact on memory usage when creating 100k
-references. Before this change:
-
-    HEAP SUMMARY:
-        in use at exit: 19,112,538 bytes in 200,170 blocks
-      total heap usage: 8,400,426 allocs, 8,200,256 frees, 454,367,048 bytes allocated
-
-After this change:
-
-    HEAP SUMMARY:
-        in use at exit: 674,416 bytes in 169 blocks
-      total heap usage: 7,929,872 allocs, 7,929,703 frees, 281,509,985 bytes allocated
-
-As an additional factor, this refactoring opens up the possibility for
-more performance optimizations in how we re-seek iterators. Any change
-that allows us to optimize re-seeking by e.g. reusing data structures
-would thus also directly speed up random reads.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs/reftable-backend.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 9c6e9c8374..4942363712 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -36,19 +36,30 @@
- 
- struct reftable_backend {
- 	struct reftable_stack *stack;
-+	struct reftable_iterator it;
- };
- 
-+static void reftable_backend_on_reload(void *payload)
-+{
-+	struct reftable_backend *be = payload;
-+	reftable_iterator_destroy(&be->it);
-+}
-+
- static int reftable_backend_init(struct reftable_backend *be,
- 				 const char *path,
--				 const struct reftable_write_options *opts)
-+				 const struct reftable_write_options *_opts)
- {
--	return reftable_new_stack(&be->stack, path, opts);
-+	struct reftable_write_options opts = *_opts;
-+	opts.on_reload = reftable_backend_on_reload;
-+	opts.on_reload_payload = be;
-+	return reftable_new_stack(&be->stack, path, &opts);
- }
- 
- static void reftable_backend_release(struct reftable_backend *be)
- {
- 	reftable_stack_destroy(be->stack);
- 	be->stack = NULL;
-+	reftable_iterator_destroy(&be->it);
- }
- 
- static int reftable_backend_read_ref(struct reftable_backend *be,
-@@ -60,10 +71,25 @@ static int reftable_backend_read_ref(struct reftable_backend *be,
- 	struct reftable_ref_record ref = {0};
- 	int ret;
- 
--	ret = reftable_stack_read_ref(be->stack, refname, &ref);
-+	if (!be->it.ops) {
-+		ret = reftable_stack_init_ref_iterator(be->stack, &be->it);
-+		if (ret)
-+			goto done;
-+	}
-+
-+	ret = reftable_iterator_seek_ref(&be->it, refname);
- 	if (ret)
- 		goto done;
- 
-+	ret = reftable_iterator_next_ref(&be->it, &ref);
-+	if (ret)
-+		goto done;
-+
-+	if (strcmp(ref.refname, refname)) {
-+		ret = 1;
-+		goto done;
-+	}
-+
- 	if (ref.value_type == REFTABLE_REF_SYMREF) {
- 		strbuf_reset(referent);
- 		strbuf_addstr(referent, ref.value.symref);
--- 
-2.47.0.229.g8f8d6eee53.dirty
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jcDZMc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meTk2Qy85WUZ3bk0wUWw2Z0YyNjNDR1NJQ1JYVEdkawpEWVBTenRibldK
+azhhTG05aC9EQzJOV3JMbWM3VDNFMUwrOHBTS092ZXNyOWNZamxvQnJtZGdQQWFsdk5hSXJJCi9T
+WlBrdkk5VlhkM0dGR2pqK0VaeThQdmNTZWYxQU5ZdnRPa3RsZm04VXJla1p3VHUrdEtPTTkzWGRR
+QnhsaDgKeU4vYVVocWg3d3lkcU9qOHBFN05HK0RBMU1uelVEZ1NobVNvSEpBUU9GaEd4eUllRThY
+Zk8xbTZmS1dMV2hkbgpmbU9IaDF2aXVESEhuSHBkMzU4KzJOZHJQTGxGb1Q2THZjZUx5aElYOHp4
+UWFRZUhOQVZHaG5yM0xrMG1SdjBkCjJ2dHNTWVQwNmhtaUdoaUkzSkMvRzI2ZzUzcGNZTmx6Y0tu
+cnNxZFAxcU1vNEQ0dWl6UUFiVEkxSDV2OXgrWVAKYm55dWlTQml2YWwzeXhkbUhSQ2YzbHN3VW9n
+SXQ1MlR4T0ZPZzI2ZlhvQUNERmpuVEZWcmpwTnBaeUZJdUpiTAp3QjJZQnpwMExnNWRKVGRLN1N6
+MzVnY1Y3SW03VFZBVUxCRmxvdkd4Q3Q0ZllrU3BnTlNmRy8rZlQvcGM5MFBaCnEvcVBQZmtjS3g0
+V0JQTVltd1hlcGd6VzkvYTlFUzlZcjlBemxTcz0KPVppeWcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000b58b6c0626273b50--
