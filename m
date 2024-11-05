@@ -1,86 +1,84 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152B61FDFAB
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 07:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7AF1B3951
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 07:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730790723; cv=none; b=Pz2SRS1p6wsv+lYOSm2pDwW5chqR7uOYxyCriy68D92S7j52gY6AjfgH2kF3jgmtuskI1d+T3FWKu49ANYh3CUxOGKJx4C1POEw9k387BZBGGchdVXogTphNjHfGNV4BdWhoWfW7cp7lVd1Wej6Bd/RA5LkZ9q0yC4OCbQwKNro=
+	t=1730790889; cv=none; b=bQSMJzbPcIG2LEK3xgMlKJG/86sbh1ioZjSyeeSbbv9lPpkZFYt+LG8Fme+au8z59/8UZP1ItmpeXdMlXIRJ8a3RNu9Q9A8Fia9w2e6YPBECZnMtUe/TTL+dx6AZAH3YIosBiPg/Q8M1qgP0Plhd5hfATikQi6lCDBaJKUOpSqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730790723; c=relaxed/simple;
-	bh=3Hlx6iYIciypU5cTn4RvSsDlsXLLBpB5vPM7mK+QxWE=;
+	s=arc-20240116; t=1730790889; c=relaxed/simple;
+	bh=HbhyYelXu06PCXi8CNcZHL0cbZGePCkAk41pSg5nq1c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BWNrP2tr9hy/Y5n2URKt5rO8ZE+vg/dDiBZujs2fFNV+SqxmePB3MxG1UUcU8PhWEL9akT3WMGx5A6+/T+iX7dtlBWq7AwEanhsN6dGWoKX1O0ykFNmjF/5ycA9ut6anvRkahORj09aF3yq1bYa03d/hCY6XPkBRWH7c57e3rnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Sq10H5Q2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SwXojZx6; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=e2QT7WokwknJlm412DTQik0yVSIgixvbb/CwztY/o0WO9wGrsxXT18M6QnyWfq7nkuINB2HcI6QuCrvD7xpLRrgryHhAMkc0qooTVy/JloUIMeeT3QmknBiCdHlHX4GuOVLznv6eoQdVsmeGIbOJj/GFyPcVra2t67S5jG76S6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iQfRJmyR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XX0xVlZQ; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Sq10H5Q2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SwXojZx6"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 31E82114019B;
-	Tue,  5 Nov 2024 02:12:01 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 05 Nov 2024 02:12:01 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iQfRJmyR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XX0xVlZQ"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2031E11401AF;
+	Tue,  5 Nov 2024 02:14:47 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 05 Nov 2024 02:14:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730790721; x=1730877121; bh=5Y0xmi1+jz
-	pQNUwdUsD14gNVL228kKkmZvSpsHTfVpw=; b=Sq10H5Q2Mr8XZ5gzax/O2BREN7
-	BH5hOuSEu5DA2ddGPwgRM/JX6mCnDRwTS1W7F2PSoS79JjyJjH2EjVUUeeOvdxWs
-	hdTtj1rr1FlauWaFPL+mkZAhEPYE/2TXaKMPCMf+sq8AtzLD/VOl7MbCM2erVD3P
-	KfvMtgqIr9VtnG6ra97cgn6ItqpsEATv14Ovc2eS7MbTyO6UCSX1HLHJDNhKeEaO
-	I0h6x0knNyNajI+b2D4fYj+/UfWZISepQGdhkM8uwtNv+Oo7UbC3nzxW3LLaM46I
-	q6nr4/8+x8Rh3PLuETb+R0/0IqTCfYadWIZ5/N1O0XbhDgw5H0U7kYvlloDg==
+	:subject:to:to; s=fm3; t=1730790886; x=1730877286; bh=Ehp9CY2CIY
+	BIwuR96FA+z02yvCEtb4PkOZpIcP2rvuU=; b=iQfRJmyRImxU4xORlax9IOlb4z
+	Cdo65jzTI1Zn087YajC4AR1USSF8AhqtY5rw+UlOUFr3QNpmrXpvrpOiZFmpFx3d
+	XQvTS0amJCzV5efi+sce8R4gfX2RdeXCa8rP1ginDF5sLu85MJGjwfyEbh3b6mbJ
+	S5lrYR1/khc3mxw41Epgqhw7+wQ8iSHwJD6TUyX0mo3vGY1mwySOgsKdXcoxZMXW
+	rvlZ2/Ea5Stb8O5kPPEHrDcv4R/dXcNbA5XnJL0WeGFIu1+TTRIpE+di07VoEqgS
+	8YErl2Kszp1AItQfJkH/eaqvziqtKeW4Sb6e/UjuWyN3a6j64EwRPcWrjJmA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730790721; x=1730877121; bh=5Y0xmi1+jzpQNUwdUsD14gNVL228kKkmZvS
-	psHTfVpw=; b=SwXojZx69ezoCFt1q0ePaSPs28tc06/NqPZBW3O6VSwDRz5phBF
-	dUvcDdoi0ce5aU1Jsq2vtt0rsUHo+ouzduJn4AtSnaLIgl/e4/RinjF3Rj8X1qVP
-	vC2rw4hOQaKo+UQ3QKc9fwakMgE03PnBaEaTH1T14YF2zx1suiNZPbKz3OnZ0kxC
-	LtOzs3ZooNtBoPkO+8h5qlFjQSIPm9yymsfdKLPnQB8Fr6NKrcxiIYNDF08aFwC0
-	uGvD+zLfCKiZ0wPyWpRSfUSeCejEmaPzA+oSuGRw/7YQGesaadhdFuMO96uB+Lyd
-	khwVrAnlEGQPUl2bGuxjPHP6ITq8Lm6Rhkw==
-X-ME-Sender: <xms:QMUpZ7vA97nIQpWfGNLIT1qPtQdiQvXDoYBVM0CHQSBQpBTLcBC31Q>
-    <xme:QMUpZ8ct_-PNkuPRF7yA0LNPSufrhylJqfz1HSRqzVx_gAxNMFmpgNYBXyOupBTBP
-    aIEpxG5BL6RYzcnrg>
-X-ME-Received: <xmr:QMUpZ-yfmxM7VHhMlOlIIeH7Gn3S2Z_8qMT-oN3zomhq94y8cv_K15eThDv2QCSp6VBfoCoC55vJm2eUBOnrwwh4poQkXlAMa-LRbwpgAmwflg>
+	1730790886; x=1730877286; bh=Ehp9CY2CIYBIwuR96FA+z02yvCEtb4PkOZp
+	IcP2rvuU=; b=XX0xVlZQG2OiD3zbRoQzbojHDfU6rFj3ktt822ioXQFpsC3Rfh2
+	SfbN4SvQWYZpPGHuAxm9D24ZJQU/Vmz8PTRYD7eC57P0UxBJeyh6dXBV2xwfIIpG
+	O7PXSV5HTgwFeuv8RZsSzTEFMPFWdfFbHWWeMegUVnyee81r+zMPvdEPwnygQMw6
+	MBul+vcO1ST0dHfwMYX8Pt4y8opDi4FnIWPQTGvoNj9N/TVU48K8l7WTKChjfGvg
+	0YfvxXxQ6+Fznb5qBytmCVcDECKDVUeRbJROHzBxRyM2tC+Ts+KbQtiYXevCHTf6
+	uWFTF22b0pyy2RzM+fM01Jfm+YUtTm5AWgw==
+X-ME-Sender: <xms:5sUpZ3zm6sVs7xe4PiBDxUwbx7aegvG6N76UIeXk09QinxDB8-pwtw>
+    <xme:5sUpZ_SmXZrgHxdxqDA2XbSAWXjHBUGv03e9mbLhgu_-U9JRrJ3KrU48lvB-XWZc_
+    MAtYSNPJFPSKsn7HA>
+X-ME-Received: <xmr:5sUpZxWmL1ZKOP7uv0-Gp3AHUAFPciFQGSjNrPLQF_BhlYAb4MbSJmmiVv1ZwM7FESZ6Y5i65AEvOHohVXAaR5vl4Q2LdStjBFs2p5E0CJq32g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdortddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejtddtgeffkedujeejgeduhefghedtgfdtieduleeu
-    lefgueetheeludegueeuveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:QMUpZ6OLZIXu5LsNEAZQQFrCzLBk9rMvbGwy1oVhEy8nX3w4p_hTow>
-    <xmx:QMUpZ7-qy3GdV5UiXURBGvj66DgYAfl8Q72k_hAafrhjVjtCm4bXFw>
-    <xmx:QMUpZ6XpGfqPRYQ4rBs9KBLB52gMRhijIsRuV56bQxenxYEhdyQLkA>
-    <xmx:QMUpZ8dKrLEJCa81WoF4CDNZQ4Z-WfuNATv7L0wV3wUsxv5t8blm1w>
-    <xmx:QcUpZ3bLW6YAUSSE5qjUfplkL0HLFHSZ58HzV69gIgMPmy61-7pAInnL>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptddtjedtie
+    ffheejheekfeeiffevtddvffdthfeihfehtdduvdejtdeileduveefnecuffhomhgrihhn
+    pehtqdhrvghfthgrsghlvgdqmhgvrhhgvggurdgtfienucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphht
+    thhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:5sUpZxgBwBd9_khTi11ulv536bDWLoECV_V3MstgN9tPd_ZZkqboDQ>
+    <xmx:5sUpZ5DLH6yj0POVImIDrwdhWlfXkgGJD35NjNRYJNQ12oVCsrlhpg>
+    <xmx:5sUpZ6KoE-SzpnwPtGml303waynQ6AUJVNu9_a-XAW3hwr9s6XgGhA>
+    <xmx:5sUpZ4Dq1SlCHhn6uWubnoHfHP16AnY6LHM12xTx_48ox6issh0fsQ>
+    <xmx:5sUpZ8O6Ioiai6Wp7hiCt3HR2ZNZsKy7xkJSg8iI3-tC5wMJR8mHSA9N>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 02:11:59 -0500 (EST)
+ 5 Nov 2024 02:14:46 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8180b660 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 07:11:38 +0000 (UTC)
-Date: Tue, 5 Nov 2024 08:11:53 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1a481a4b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 07:14:23 +0000 (UTC)
+Date: Tue, 5 Nov 2024 08:14:36 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 5/9] ref: port git-fsck(1) regular refs check for
- files backend
-Message-ID: <ZynFOUSUXAtTtWTk@pks.im>
-References: <ZxZX5HDdq_R0C77b@ArchLinux>
- <ZxZYd1qL6LxAc9-Y@ArchLinux>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 7/8] reftable/merged: drain priority queue on reseek
+Message-ID: <ZynF3Ai9FDVRAYOc@pks.im>
+References: <cover.1730732881.git.ps@pks.im>
+ <45f397b563fe88524a2063bde8cad31ab9a2ccbb.1730732881.git.ps@pks.im>
+ <xmqqv7x2tlnk.fsf@gitster.g>
+ <xmqqr07qtlcm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,44 +87,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZxZYd1qL6LxAc9-Y@ArchLinux>
+In-Reply-To: <xmqqr07qtlcm.fsf@gitster.g>
 
-On Mon, Oct 21, 2024 at 09:34:47PM +0800, shejialuo wrote:
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 24ad73faba..2861980bdd 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3505,6 +3505,48 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
->  				  const char *target_name,
->  				  struct dir_iterator *iter);
->  
-> +static int files_fsck_refs_content(struct ref_store *ref_store,
-> +				   struct fsck_options *o,
-> +				   const char *target_name,
-> +				   struct dir_iterator *iter)
-> +{
-> +	struct strbuf ref_content = STRBUF_INIT;
-> +	struct strbuf referent = STRBUF_INIT;
-> +	struct fsck_ref_report report = { 0 };
-> +	unsigned int type = 0;
-> +	int failure_errno = 0;
-> +	struct object_id oid;
-> +	int ret = 0;
-> +
-> +	report.path = target_name;
-> +
-> +	if (S_ISLNK(iter->st.st_mode))
-> +		goto cleanup;
-> +
-> +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
-> +		ret = fsck_report_ref(o, &report,
-> +				      FSCK_MSG_BAD_REF_CONTENT,
-> +				      "cannot read ref file '%s': (%s)",
-> +				      iter->path.buf, strerror(errno));
-> +		goto cleanup;
-> +	}
+On Mon, Nov 04, 2024 at 07:23:21PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Did you mean REFTABLE_HASH_SIZE_SHA1 instead?
+> 
+> Ah, that transition hasn't happened yet on 'master'.  I'll carry the
+> semantic conflict resoluion in merge-fix hierarchy then.
+> 
+> > diff --git i/t/unit-tests/t-reftable-merged.c w/t/unit-tests/t-reftable-merged.c
+> > index 620803e0ed..a12bd0e1a3 100644
+> > --- i/t/unit-tests/t-reftable-merged.c
+> > +++ w/t/unit-tests/t-reftable-merged.c
+> > @@ -326,14 +326,14 @@ static void t_merged_seek_multiple_times_without_draining(void)
+> >  	check(!err);
+> >  	err = reftable_iterator_next_ref(&it, &rec);
+> >  	check(!err);
+> > -	err = reftable_ref_record_equal(&rec, &r2[0], GIT_SHA1_RAWSZ);
+> > +	err = reftable_ref_record_equal(&rec, &r2[0], REFTABLE_HASH_SIZE_SHA1);
+> >  	check(err == 1);
+> >  
+> >  	err = reftable_iterator_seek_ref(&it, "a");
+> >  	check(!err);
+> >  	err = reftable_iterator_next_ref(&it, &rec);
+> >  	check(!err);
+> > -	err = reftable_ref_record_equal(&rec, &r1[0], GIT_SHA1_RAWSZ);
+> > +	err = reftable_ref_record_equal(&rec, &r1[0], REFTABLE_HASH_SIZE_SHA1);
+> >  	check(err == 1);
+> >  
+> >  	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
 
-Let's drop the braces around `(%s)`, we don't print such braces in
-`warning_errno()` or `die_errno()`, either.
+This looks good to me. I guess I may end up resending this topic with a
+new merge base in case the other failures are caused by that semantic
+merge conflict, too.
+
+Thanks!
 
 Patrick
