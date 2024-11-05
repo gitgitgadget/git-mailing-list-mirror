@@ -1,53 +1,53 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE51C9B81
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 05:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3731C4A1B
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 05:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730786101; cv=none; b=VHOf7+75lnSt8+rWm+LjyFZkk2PP6nsHairhpoByu6sdBSUETTz8vSwXLEXIYpxzi2P4ahUevwBh1totyO5LhavV/gXVZ6iOMeRRFGK8SjN5FhiymqnAL7qY/eTuyl908WcjzkN9ISsA0P6HF9EvKG9d0QYFTWkXge4mx7pepiU=
+	t=1730786103; cv=none; b=it709pvYTalfreF9EeXGmNeO4ahulwXAgQ4gOPyzj7qvVHFhvpMJHDVfev1u42ZABXPQEaZdDkfixojyVS0zMZFSlRbh1bVT8lC/5vYGMtjz3w0BXKlOs0s72g/a2odwMpZC1gTlDgEO528C3dKZqz972fZdhpGRA7ib/bJIW3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730786101; c=relaxed/simple;
-	bh=B6x0F7Pu5ybVp/wr7+EFIgcy9QD8ROx1/qHN/Mzpuok=;
+	s=arc-20240116; t=1730786103; c=relaxed/simple;
+	bh=d5aCrweTs0kkjiO8/LzDM1lBOZQtiPYu9jLfe5Qh0dA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=selMCKBAr/wJeR/j4ibitn7phz37gIab207ZYsuaUK45/xGtPJClFOFNwZxkaUirKoHK1o0Dwy/xuKw0WSQv+w5vd79S1WNR5coWflvitO436Gi1xkd2qLn7TMXj8cDB/JQT+M0qpgPUG8uRRXsl7m63gVWNItxr9buPqxVoh2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RZCB8Na0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a/iCxs2B; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=KRDuYSuBs1vUT8HPEBTgQMvV5/R1jKDN2P0gYL5lvE2DqWOXxylg+RDqtNXFhMCZCbwzN19KSsdJb430YmH0MBkBBY8Od/459PxlNErwB9J6TCYmYqID3FvC7+AmFA2XC4qUbBBNf9PBemrYZzcWFRC4/wlGVecT8dKitiyrYP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YGBZmwlh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B1e+HX1R; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RZCB8Na0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a/iCxs2B"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8A1FC13804D1;
-	Tue,  5 Nov 2024 00:54:57 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YGBZmwlh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B1e+HX1R"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id D0DE61380540;
+	Tue,  5 Nov 2024 00:55:00 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 00:54:57 -0500
+  by phl-compute-12.internal (MEProxy); Tue, 05 Nov 2024 00:55:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730786097; x=1730872497; bh=THXHFdkLcl
-	uu01IYGm/2NGbTVGQxdhA/OcfmOswG1NY=; b=RZCB8Na0+0N8jCR8Dr/9kYP5Hq
-	IxAKFpSk/LBrQilES++eihvcMspwDksJzTbANxsLwo/Kx4eI6/gYuMgn2jsFYJvZ
-	Yv4vdwBfpQXuJLTla5o6QVFEybX8Vx06tePfDL8HKxXgFxXjocrflbNx7RpnCveK
-	a/EpRJJElXWDbq944nBkXGvKt30hx2C+tnoNcK7l8/PtBcHVLT88iZYr2YQft2Fq
-	gKnffb6bUoQKFMjs28WtNXKL5B+ighMgAoWSH+Qt8UwhlNyJF2ClwlMyDPUKQTHf
-	cYuHH4P7Migxy5/iHAZEIz6GXVziOF9NyYOOXngI3dUzyD/lCeurklFG8q7A==
+	:subject:to:to; s=fm3; t=1730786100; x=1730872500; bh=SxsVuhLztF
+	D+2diNzM7UOkepO4Z0yTFFk/bqRnbRdEs=; b=YGBZmwlhvANM7RLFv46Qr/CqR4
+	5mioCrNWpox6vH3D2MDrOLjkifE/IwkMHDwV4vxkATY/WuBhr+4HPgGuv+J2pKVn
+	h5wZH18iwAgSwkFYsUzvZrvgobU7KKtw34t1sv5yr9jreYn8fJLL9hxchGkgeSV8
+	XKgAblBNNy5H9MSsPp0TaoWBXrB3XJjhcM/sVK40p1wJTpdq8H4jhBcpTaFQ2QX5
+	/lbQTRRFsGs5zx7vsC7hlfzJNVjSKKFPcO5s91NXThBUTHQ+OLgRt1ugeGq71kiO
+	M1/SUWp1t/hWtMv3laNEd3Y1S7NRK53sRLiES49nJChdtTnta6VSz0xff1GQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730786097; x=1730872497; bh=THXHFdkLcluu01IYGm/2NGbTVGQxdhA/Ocf
-	mOswG1NY=; b=a/iCxs2B3QuqhCXV8KRrjiPZXLS1lLSuUtB/OFcO+r7jUgQJVNH
-	ddi9st3sv9H9jL0GS35len41BR4jQJGLStos8vocnw1cHunLM7SFk2vbG6sRZVx3
-	/k6qtYPC6DO35CkKtphEnYVS92pPWgYCLpC0UW4c4jLvCpUMcuz3b0EWnD1aogWB
-	A0sRgqQQFUV6j8jD4dbQuktCLXY7gaCV04zNlIfag+MK0t9Swb4+TMtPyhHfd++k
-	Sfzl54DHKA7tFMHdnOWQD9nsqo7XjPu/i+dTuS5Dct0zV7PYg6WMq/F+TKuHGMGi
-	nccb4G1nrokPS8wmHLIUwHEnQo6y309kW5g==
-X-ME-Sender: <xms:MLMpZ2A33xC44HvQ8ypgnKhbIgtQq6Cn395dJUlJBsOGMjs6qVVgBw>
-    <xme:MLMpZwjwQE9qneqdCAkBdAw--apadUAhPbdab6Kcw0DmAMKtioqgXhBPbE0BE7SiS
-    k4WpxzAOGD-TMho7A>
-X-ME-Received: <xmr:MLMpZ5m7DUUUDsL2XLltzkcJ1f7kav-P9I4nW6uMG9ktFQjnlSp4gT4kETZj-Hf6wagh95QrIt4eLEKDiSYWQv8izpRIKpLb-5naM4l0m4YSqA>
+	1730786100; x=1730872500; bh=SxsVuhLztFD+2diNzM7UOkepO4Z0yTFFk/b
+	qRnbRdEs=; b=B1e+HX1ROgpk/HsWoVdTzO8m/HGPAza+TP5KC4NenOEFh/G9H3+
+	en1Bur6c+jgkvk6BB1xKQahvAHPzA2HUsd1MgLhSA19r6lK6f7kfg4g4d9/IX23V
+	X+xQ4MebmDjmteLwJcRCqwZrdO4yuR7pkrBGqb1x5PntUhPK3ojRpM0+hC+ET6vQ
+	YuMaYbyIlomQebJfw28wopgyK5xARrwv0r5iuYHfeeSdZKYMQ86CZEaOj4FyR6Mo
+	Dcfz7d5QBjRXE/daHXbcueg0kCespouOGNjC3Dl1bpDKU3isNQJPG5BWajrEe4Ex
+	wlF9TOp9ngMA194A4zR0MbTKAYnRLQ84FIw==
+X-ME-Sender: <xms:NLMpZ9kFOzdEPvhRF-HZILT6qGV5asgEceKAcfssZjmV2J91rU5hnQ>
+    <xme:NLMpZ42PZGVjU2b-6MFiYnHXm5-8XtoP26o0kPCeBP1puBuvC0S1KpbjsDhkM760M
+    wYN2LuGdEtVTWHi0Q>
+X-ME-Received: <xmr:NLMpZzolJhh4UxxaJAGJp181xPiC3U8aLxu0t23yBd8lGg7iVXhOXS07rd60LjxdctkuWEZRYVkgdTOnzlMp-7KjKzK2pEb_cGkiFXGVhlo_eA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgledtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,31 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgledtucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvges
-    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
-X-ME-Proxy: <xmx:MLMpZ0zCU6FpNTv2NEJWtcRL2zuXznn8sAVX2ucyx2hdA1PImGcVJg>
-    <xmx:MLMpZ7TGjTNSMiE0unbXq8em8p52H_HobJ1-GpGsDHU3W1up6oofoQ>
-    <xmx:MLMpZ_buuRr2QtKSmRz9ysL86ynIWLNtk2L-nnj-sTSoAFXndluLEw>
-    <xmx:MLMpZ0RUQX8iuZ7mOU1HoDaIGn3BHH4OkQ4YTmzatVC3ur-g4-6ENg>
-    <xmx:MbMpZ5Onh7n8x-0HgYWom1zjxp80ndDxkTGORSTWu8j4_QCxUJo2WBMH>
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:NLMpZ9lhC3D7keL9IU4hJYrospGZU2mfJZUiSH-B61_4r_oglZ4QVA>
+    <xmx:NLMpZ71jEY2yfmpHsLPjWMGF0gHkFiWsdAxjDMOiwkfioFg8mneR-g>
+    <xmx:NLMpZ8vhJQl4LO0F08P_jh1hE8DPrHYJwVlTZkr7VHliW_BtVL0Tnw>
+    <xmx:NLMpZ_UWv5HEtwiSEbQ4D25OUoH1wtF7t3x8kStrjBJ31Ib9XXG7XQ>
+    <xmx:NLMpZ2SvPkrjGTGEbCqTdszuwU9oQt7O78lOg3k9gx8hjPSnqTya_RYn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 00:54:55 -0500 (EST)
+ 5 Nov 2024 00:54:59 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 44b7b2ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 05:54:32 +0000 (UTC)
-Date: Tue, 5 Nov 2024 06:54:46 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 468ece52 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 05:54:38 +0000 (UTC)
+Date: Tue, 5 Nov 2024 06:54:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
 	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 10/22] trailer: fix leaking trailer values
-Message-ID: <ZymzIZpQV8FHKpVI@pks.im>
+Subject: Re: [PATCH v2 11/22] trailer: fix leaking strbufs when formatting
+ trailers
+Message-ID: <ZymzLJ4p7AK_V92K@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1729502823.git.ps@pks.im>
- <e3ffd59123f23f53c0bee930ef7602acf2d800c2.1729502824.git.ps@pks.im>
- <wh227vmiokssq532pqfefzxlbt6ylonwza3sxumgohpwuojxbv@k2ujsz5upvop>
+ <5b851453bcea945f95c3f29138e510d8448e96e6.1729502824.git.ps@pks.im>
+ <ye7hagpn5xmtlndgk5usx7i4xrg2s32eyukcy6fapxitye24ws@ddrg5zrnxkn3>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,40 +90,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <wh227vmiokssq532pqfefzxlbt6ylonwza3sxumgohpwuojxbv@k2ujsz5upvop>
+In-Reply-To: <ye7hagpn5xmtlndgk5usx7i4xrg2s32eyukcy6fapxitye24ws@ddrg5zrnxkn3>
 
-On Mon, Nov 04, 2024 at 04:25:38PM -0600, Justin Tobler wrote:
+On Mon, Nov 04, 2024 at 04:31:34PM -0600, Justin Tobler wrote:
 > On 24/10/21 11:28AM, Patrick Steinhardt wrote:
-> > Fix leaking trailer values when replacing the value with a command or
-> > when the token value is empty.
-> > 
-> > This leak is exposed by t7513, but plugging it does not make the whole
-> > test suite pass.
-> > 
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  trailer.c | 12 +++++++++---
-> >  1 file changed, 9 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/trailer.c b/trailer.c
-> > index 682d74505bf..f1eca6d5d15 100644
-> > --- a/trailer.c
-> > +++ b/trailer.c
-> > @@ -249,17 +249,23 @@ static char *apply_command(struct conf_info *conf, const char *arg)
-> >  static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
-> >  {
-> >  	if (arg_tok->conf.command || arg_tok->conf.cmd) {
-> > -		const char *arg;
-> > +		char *value_to_free = NULL;
-> > +		char *arg;
-> > +
-> >  		if (arg_tok->value && arg_tok->value[0]) {
-> > -			arg = arg_tok->value;
-> > +			arg = (char *)arg_tok->value;
+> > We are populating, but never releasing two string buffers in
+> > `format_trailers()`, causing a memory leak. Plug this leak by lifting
+> > those buffers outside of the loop and releasing them on function return.
+> > This fixes the memory leaks, but also optimizes the loop as we don't
+> > have to reallocate the buffers on every single iteration.
 > 
-> Naive question, is this cast not redundant? From looking at `struct
-> arg_item`, `value` already looks to be this type.
+> I see that we were previously calling `strbuf_release()` inside of the
+> loop. In practice were these never hit? Or just sometimes skipped my the
+> "continue" in the loop? The commit message makes it sound like the
+> former.
 
-Indeed it is, good catch!
+True, "never" is definitely too strong of a wording here. Will adapt,
+thanks!
 
 Patrick
