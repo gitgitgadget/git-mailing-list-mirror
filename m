@@ -1,175 +1,128 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16A11FF045
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 05:54:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBFE51C9B81
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 05:54:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730786062; cv=none; b=r34FcHEmy0210zeS7FSEUmCUZZn4Zsm1Lmfxsp0lXxMb5B2HdDAAp6E8r+tITW4Xzm2wxRsaYCwt7qHKxEwXoqkicrNZ0chWDhMVbWXMVl4UgYRK5HIVXM+ohyP54gMD0xJv5e80QqwuvdraSVAxsP4HD+qjfTMYgkUFmn/5c4g=
+	t=1730786101; cv=none; b=VHOf7+75lnSt8+rWm+LjyFZkk2PP6nsHairhpoByu6sdBSUETTz8vSwXLEXIYpxzi2P4ahUevwBh1totyO5LhavV/gXVZ6iOMeRRFGK8SjN5FhiymqnAL7qY/eTuyl908WcjzkN9ISsA0P6HF9EvKG9d0QYFTWkXge4mx7pepiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730786062; c=relaxed/simple;
-	bh=aVIJ/MYzcOhioHIEgo0SpU28eSF7BIkocdd1VPWVeZQ=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UGx4wdSiRuZUeoNeFNE/Ma9cFNcg+2EWP3icwCEd82DiwQmKGJkzVnD296k/ZhcA00IvtsQMuxy1Dk0g9bmejpL1sOIhtbsKf+TyDjFo71oXQm89th1X3APIsj7BXiC7MG9LCkUg+8Z3bPfa9Q53jxsFhurgYNYDNZkbxkG3xro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gOS6jqjz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y6PRR4yg; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730786101; c=relaxed/simple;
+	bh=B6x0F7Pu5ybVp/wr7+EFIgcy9QD8ROx1/qHN/Mzpuok=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=selMCKBAr/wJeR/j4ibitn7phz37gIab207ZYsuaUK45/xGtPJClFOFNwZxkaUirKoHK1o0Dwy/xuKw0WSQv+w5vd79S1WNR5coWflvitO436Gi1xkd2qLn7TMXj8cDB/JQT+M0qpgPUG8uRRXsl7m63gVWNItxr9buPqxVoh2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RZCB8Na0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a/iCxs2B; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gOS6jqjz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y6PRR4yg"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8E5C911401E2;
-	Tue,  5 Nov 2024 00:54:18 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 05 Nov 2024 00:54:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RZCB8Na0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a/iCxs2B"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8A1FC13804D1;
+	Tue,  5 Nov 2024 00:54:57 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 00:54:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1730786058; x=1730872458; bh=6DsMXhQdrtM2pPgYlanUGgBdx6Cty5lz
-	jAnsrHTwGcI=; b=gOS6jqjzA+noOLuvBMtbjh7Z2xL3tfIYqib1r7Z25dJg3i75
-	Iz9SYmIzsBmdp4BCH6COb6gzEkVRyQDk2meIPf5fhV539TWu9hSQaT1JcgCir5dM
-	uqzpKlEI/+md4jS9YX5lDJlTrTAgjXwT7X9CvvqVWrqTZASl11Z/OV/Nx/4/E+s4
-	dXVE3MVda160XjJfa+154QT+9v2CrJALurkpnuOIQHSOivFjdflW8hFmGxO2u2Hb
-	/Ywxdt6Gj5snDXjqsMiYrwvA5OaQ79c2077L1C+XLnywlO5pMi5hXu51VK3NAiHg
-	7P4ut1iJ+yPK7yYcvofG8ovmAwuWjY/3LvKwvQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1730786097; x=1730872497; bh=THXHFdkLcl
+	uu01IYGm/2NGbTVGQxdhA/OcfmOswG1NY=; b=RZCB8Na0+0N8jCR8Dr/9kYP5Hq
+	IxAKFpSk/LBrQilES++eihvcMspwDksJzTbANxsLwo/Kx4eI6/gYuMgn2jsFYJvZ
+	Yv4vdwBfpQXuJLTla5o6QVFEybX8Vx06tePfDL8HKxXgFxXjocrflbNx7RpnCveK
+	a/EpRJJElXWDbq944nBkXGvKt30hx2C+tnoNcK7l8/PtBcHVLT88iZYr2YQft2Fq
+	gKnffb6bUoQKFMjs28WtNXKL5B+ighMgAoWSH+Qt8UwhlNyJF2ClwlMyDPUKQTHf
+	cYuHH4P7Migxy5/iHAZEIz6GXVziOF9NyYOOXngI3dUzyD/lCeurklFG8q7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730786058; x=
-	1730872458; bh=6DsMXhQdrtM2pPgYlanUGgBdx6Cty5lzjAnsrHTwGcI=; b=Y
-	6PRR4ygBckWd4P+KPlr5ZNI9pt0vuJDRtzjtUwzfx0bRZ/iowAVzcZ6XzKnR6mE8
-	rEiPUpenPcOrHvI5S9j/zHPOlY3WsKDQHDzl/6n5KaiQobDKvE3R1RSNiUe4GcFe
-	tpwExMq3gel2nJ/KP+QrZz/f4gyaJIWxfMd3TQrAyUgR+VePcAcD1oscH6P7w/zV
-	IcdAnUyJckBLH+BPVK9g4FwlXuWdbORdXu8gU2EXZSRihMrS4JF1gbIXLrui4vWS
-	glSf9rhGYxO1O24O1VvNelbFFbENxTYtCMCVLQDp1FadpahGseW/o9qWyBMDwkqQ
-	1+C4e597leIY4TOa6/zWA==
-X-ME-Sender: <xms:CrMpZ6uOMJClkg9wQffCtNxQJ0yLR0k2JOlLKF1VtkCtF-40DLhcOA>
-    <xme:CrMpZ_d8dByOy7H-d1Q8hFylAQq-KdjwdIiVE2r9YScywJVCJyQYLv8Zz8WnT4tFi
-    bSxLN4uSUlNmpQr2Q>
-X-ME-Received: <xmr:CrMpZ1x38yI9BkBHrc3R0_z7COfPR9qLqpziHDBKSZF1LXGNbnFSTyeUP-iGqFkG-qZboGOlwGYS0ekb6aPdb2zaWELSEkYT49wZ>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1730786097; x=1730872497; bh=THXHFdkLcluu01IYGm/2NGbTVGQxdhA/Ocf
+	mOswG1NY=; b=a/iCxs2B3QuqhCXV8KRrjiPZXLS1lLSuUtB/OFcO+r7jUgQJVNH
+	ddi9st3sv9H9jL0GS35len41BR4jQJGLStos8vocnw1cHunLM7SFk2vbG6sRZVx3
+	/k6qtYPC6DO35CkKtphEnYVS92pPWgYCLpC0UW4c4jLvCpUMcuz3b0EWnD1aogWB
+	A0sRgqQQFUV6j8jD4dbQuktCLXY7gaCV04zNlIfag+MK0t9Swb4+TMtPyhHfd++k
+	Sfzl54DHKA7tFMHdnOWQD9nsqo7XjPu/i+dTuS5Dct0zV7PYg6WMq/F+TKuHGMGi
+	nccb4G1nrokPS8wmHLIUwHEnQo6y309kW5g==
+X-ME-Sender: <xms:MLMpZ2A33xC44HvQ8ypgnKhbIgtQq6Cn395dJUlJBsOGMjs6qVVgBw>
+    <xme:MLMpZwjwQE9qneqdCAkBdAw--apadUAhPbdab6Kcw0DmAMKtioqgXhBPbE0BE7SiS
+    k4WpxzAOGD-TMho7A>
+X-ME-Received: <xmr:MLMpZ5m7DUUUDsL2XLltzkcJ1f7kav-P9I4nW6uMG9ktFQjnlSp4gT4kETZj-Hf6wagh95QrIt4eLEKDiSYWQv8izpRIKpLb-5naM4l0m4YSqA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgledtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
-    fkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
-    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepiedtffeike
-    egleeltdelleegffeiueehhfehvdettdejkedtvdffueeigeevieetnecuffhomhgrihhn
-    pehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthho
-    peefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgv
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:CrMpZ1PmmbR_0TmNYfpbXtoro1f3Iv-lY9DQSu7gtLIeKcqNO9alGA>
-    <xmx:CrMpZ69nPbVi9BvKiWSeG9ZZmwlZG761dEC-7COUfi4o3ikRX3y4Ug>
-    <xmx:CrMpZ9X7hi4ung3cXSS_TJkb7xQDt2zw54XGM9tHOsnpvE9ITNI9dw>
-    <xmx:CrMpZzcptGbGU_KFQo9jJCy6-J-qY5hBYsDo93fIKfsJTL21K59SgA>
-    <xmx:CrMpZxYnQWyOJhjPZD3kOS6a8MpOs25rix411X012HWQtp5pKJffYhxd>
-Feedback-ID: if26b431b:Fastmail
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvges
+    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:MLMpZ0zCU6FpNTv2NEJWtcRL2zuXznn8sAVX2ucyx2hdA1PImGcVJg>
+    <xmx:MLMpZ7TGjTNSMiE0unbXq8em8p52H_HobJ1-GpGsDHU3W1up6oofoQ>
+    <xmx:MLMpZ_buuRr2QtKSmRz9ysL86ynIWLNtk2L-nnj-sTSoAFXndluLEw>
+    <xmx:MLMpZ0RUQX8iuZ7mOU1HoDaIGn3BHH4OkQ4YTmzatVC3ur-g4-6ENg>
+    <xmx:MbMpZ5Onh7n8x-0HgYWom1zjxp80ndDxkTGORSTWu8j4_QCxUJo2WBMH>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 00:54:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: What's so special about almalinux-8?
-Date: Mon, 04 Nov 2024 21:54:16 -0800
-Message-ID: <xmqqbjyuted3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 5 Nov 2024 00:54:55 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 44b7b2ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 05:54:32 +0000 (UTC)
+Date: Tue, 5 Nov 2024 06:54:46 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v2 10/22] trailer: fix leaking trailer values
+Message-ID: <ZymzIZpQV8FHKpVI@pks.im>
+References: <cover.1728624670.git.ps@pks.im>
+ <cover.1729502823.git.ps@pks.im>
+ <e3ffd59123f23f53c0bee930ef7602acf2d800c2.1729502824.git.ps@pks.im>
+ <wh227vmiokssq532pqfefzxlbt6ylonwza3sxumgohpwuojxbv@k2ujsz5upvop>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wh227vmiokssq532pqfefzxlbt6ylonwza3sxumgohpwuojxbv@k2ujsz5upvop>
 
-Everybody else seems to pass tests, but not this one
+On Mon, Nov 04, 2024 at 04:25:38PM -0600, Justin Tobler wrote:
+> On 24/10/21 11:28AM, Patrick Steinhardt wrote:
+> > Fix leaking trailer values when replacing the value with a command or
+> > when the token value is empty.
+> > 
+> > This leak is exposed by t7513, but plugging it does not make the whole
+> > test suite pass.
+> > 
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  trailer.c | 12 +++++++++---
+> >  1 file changed, 9 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/trailer.c b/trailer.c
+> > index 682d74505bf..f1eca6d5d15 100644
+> > --- a/trailer.c
+> > +++ b/trailer.c
+> > @@ -249,17 +249,23 @@ static char *apply_command(struct conf_info *conf, const char *arg)
+> >  static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
+> >  {
+> >  	if (arg_tok->conf.command || arg_tok->conf.cmd) {
+> > -		const char *arg;
+> > +		char *value_to_free = NULL;
+> > +		char *arg;
+> > +
+> >  		if (arg_tok->value && arg_tok->value[0]) {
+> > -			arg = arg_tok->value;
+> > +			arg = (char *)arg_tok->value;
+> 
+> Naive question, is this cast not redundant? From looking at `struct
+> arg_item`, `value` already looks to be this type.
 
-  https://github.com/git/git/actions/runs/11677884048/job/32516504151#step:6:1995
+Indeed it is, good catch!
 
-I am not (yet) so familiar with the topics in flight at this point,
-but there are a few topics that deal with packing, lazy fetching,
-and commit-graph and object database being out of sync, which were
-handled by a few topics by Jonathan, so I am CC'ing this if it rings
-bell for him.
-
-
-
-failure: t5616.22 use fsck before and after manually fetching a missing subtree 
-  	# push new commit so server has a subtree
-  	mkdir src/dir &&
-  	echo "in dir" >src/dir/file.txt &&
-  	git -C src add dir/file.txt &&
-  	git -C src commit -m "file in dir" &&
-  	git -C src push -u srv main &&
-  	SUBTREE=$(git -C src rev-parse HEAD:dir) &&
-  
-  	rm -rf dst &&
-  	git clone --no-checkout --filter=tree:0 "file://$(pwd)/srv.bare" dst &&
-  	git -C dst fsck &&
-  
-  	# Make sure we only have commits, and all trees and blobs are missing.
-  	git -C dst rev-list --missing=allow-any --objects main \
-  		>fetched_objects &&
-  	awk -f print_1.awk fetched_objects |
-  	xargs -n1 git -C dst cat-file -t >fetched_types &&
-  
-  	sort -u fetched_types >unique_types.observed &&
-  	echo commit >unique_types.expected &&
-  	test_cmp unique_types.expected unique_types.observed &&
-  
-  	# Auto-fetch a tree with cat-file.
-  	git -C dst cat-file -p $SUBTREE >tree_contents &&
-  	grep file.txt tree_contents &&
-  
-  	# fsck still works after an auto-fetch of a tree.
-  	git -C dst fsck &&
-  
-  	# Auto-fetch all remaining trees and blobs with --missing=error
-  	git -C dst rev-list --missing=error --objects main >fetched_objects &&
-  	test_line_count = 88 fetched_objects &&
-  
-  	awk -f print_1.awk fetched_objects |
-  	xargs -n1 git -C dst cat-file -t >fetched_types &&
-  
-  	sort -u fetched_types >unique_types.observed &&
-  	test_write_lines blob commit tree >unique_types.expected &&
-  	test_cmp unique_types.expected unique_types.observed
-  
-  ++ mkdir src/dir
-  ++ echo 'in dir'
-  ++ git -C src add dir/file.txt
-  ++ git -C src commit -m 'file in dir'
-  [main 957c60b] file in dir
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 dir/file.txt
-  ++ git -C src push -u srv main
-  To file:///__w/git/git/t/trash directory.t5616-partial-clone/srv.bare
-     129c8a2..957c60b  main -> main
-  branch 'main' set up to track 'srv/main'.
-  +++ git -C src rev-parse HEAD:dir
-  ++ SUBTREE=bc1967ebf96a4e914801c7ef8328140456a10f41
-  ++ rm -rf dst
-  +++ pwd
-  ++ git clone --no-checkout --filter=tree:0 'file:///__w/git/git/t/trash directory.t5616-partial-clone/srv.bare' dst
-  Cloning into 'dst'...
-  ++ git -C dst fsck
-  ++ git -C dst rev-list --missing=allow-any --objects main
-  ++ awk -f print_1.awk fetched_objects
-  ++ xargs -n1 git -C dst cat-file -t
-  ++ sort -u fetched_types
-  ++ echo commit
-  ++ test_cmp unique_types.expected unique_types.observed
-  ++ test 2 -ne 2
-  ++ eval 'diff -u' '"$@"'
-  +++ diff -u unique_types.expected unique_types.observed
-  ++ git -C dst cat-file -p bc1967ebf96a4e914801c7ef8328140456a10f41
-  ++ grep file.txt tree_contents
-  100644 blob d2cebd4f0a9e97a48a6139d09cafdb513ad8fee3	file.txt
-  ++ git -C dst fsck
-  dangling tree bc1967ebf96a4e914801c7ef8328140456a10f41
-  ++ git -C dst rev-list --missing=error --objects main
-  fatal: You are attempting to fetch 957c60b67968d2ab4144e7e2fbba99d6ad864e4e, which is in the commit graph file but not in the object database.
-  This is probably due to repo corruption.
-  If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object.
-  fatal: could not fetch 3246c304205324149983025431c5211438f41931 from promisor remote
-  error: last command exited with $?=128
-  not ok 22 - use fsck before and after manually fetching a missing subtree
+Patrick
