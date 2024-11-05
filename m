@@ -1,53 +1,53 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D076B1DA62E
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6A41DA62E
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730787458; cv=none; b=AFmizGWZgFOoOyLmvJRQz/542dfYJi/DOcl7+RB78DpxsWeZhbXFY8l8Ith+1iHnh37GLGW11dgSol5r2mVNEsbTDPhChoCSLTZIjk3+MCTaQOkuJm4xXeqfZ0Jv0MetC0C0sN94efwiKKkhjTRyOiJjNdYbNWY0y90nPWVONnw=
+	t=1730787463; cv=none; b=LeecgoWLb+9Sh23Px5dNoykFpr/gl8nxF14DkOK5uNUr8k3u0AR/LF1kXMjkycHAKR/SEDqC7YqDCpfid3HL1LDsIoKRLJGgyO7nQnTGy2GhCSYthUGD+1w+blWth7XpzNphKDE5l+FGKpidQ0uKa7k+bnlrDbADWX5byohKHAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730787458; c=relaxed/simple;
-	bh=MijheuAVZ5v+gMRF3XZQ3ZBAn/gQcpWejfjTeGCcYgA=;
+	s=arc-20240116; t=1730787463; c=relaxed/simple;
+	bh=peNPAG5HXnOhjqQraobEJTx5uAd5/U588XKDVi1pDV8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dpNibri80AgFDUmNv5yrvSEqU7aDp/fpOWHZ/EaazkgsFVst1cpa0w6S9c0pfBMunOs1wxfZfaYOHZc+r8kd9xXb8iwD98Y4ixIGwjofpp6dqFP/KsB+Kr+OQ/NebBQCWqF3eP9yCS8qvSHrZBSP4UgQoTWTrEJqnK5LGXke6/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pbgva2NR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EizvqUHD; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=ohrRGl02UQlKc/Tu2gO0CwP5QpyfE14o7e/XTkWtZELW1uTCiIJQ4OodLet6OVZeXk9gVTNgH0IhfIvqu8C/R5gqtoO6E3rBbyokWdjrzaHa5wT+WzapPEfJ9riGNxoUfri8yxsiN28uC8dM/t7qACRUc9PffUdJgr+auzyWpMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MDje9zD8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JwcFM9Bk; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pbgva2NR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EizvqUHD"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C989625401A8;
-	Tue,  5 Nov 2024 01:17:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MDje9zD8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JwcFM9Bk"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8373A2540076;
+	Tue,  5 Nov 2024 01:17:40 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 05 Nov 2024 01:17:34 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 05 Nov 2024 01:17:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730787454; x=1730873854; bh=fRi5cI/FTz
-	nLvpXmwUZpENUbnQFkYQuvD5MHZYxqPhE=; b=pbgva2NRpkKnwLTRgIk/y5Wf8r
-	a0Q25Q1um6+NCI7K/DrB7bwlBE34L36t8WIdPy1ZVrJeGqO6PfbSgyn2YmWqEz7k
-	xwAu8j6dcrRbfuTymscAohYCOcraDH4plafzsivuoUFkfliC2k6waEQfvKgZpcZp
-	ddgVfEc0x/AQpFyxjxU712jDCYqOfg4yucmqbF3MGM7A1Vx6+XqIGqi7voBK8u0g
-	cNB/m61o8bFmduRR/ErfhrJe/c4UgTeJ0Za290JNKtmYrmC/nWl3QmeGVJmCL8kd
-	mS9SmEn7WEax6vw0WZYZwnqGN5/n5BmLDoHGwIia0CMd2yNNqW2Pm7fK5BCw==
+	:subject:to:to; s=fm3; t=1730787460; x=1730873860; bh=ioWPSsncQo
+	I64+VugMot5A/Azew+Sw1bWew3uDxc194=; b=MDje9zD87CQmCc0SlE4/9IBhmR
+	QMt7LodPVyufoGye1LyjRf2mvj/LlmDnwPhHG1WFw0mbjC4/iUu0YUtak2p4gjEp
+	CyoOPw930P8nxGBoos8H7XKrP1CXj56LdK9ltCapodE7p2NWobcbNiiAYrI5lXtk
+	nXx6OlpQZLqH/6nm5gtx1FOjgGJA21Ph60iQMe1Ylo21QkgaWxWt4KWySyGPbvMH
+	PvJans3DsIKHNA+vqW5b5efMcpQ0/DJaZPlUn0C+Dz57rUp+s6CrpuPFH927U3YA
+	fV7BAQ7tigFpkZ+gP8J8cCwjrTDayXcT2hU8vPB8D8RmuROjIHjqD/ui65FQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730787454; x=1730873854; bh=fRi5cI/FTznLvpXmwUZpENUbnQFkYQuvD5M
-	HZYxqPhE=; b=EizvqUHDy2e8m8vcxE3j3dJIqzpJQQf4HX/oZnBpJQHIIHxS5zw
-	cCm2DCNXq0uQnZ1/nCtpM5bTrCvTHXEClJPzrXKPQQUdhgTEon0iD8WzKR36qgu4
-	y7Yqbslu/DSIvjTKA68rqylDuRupdT9qBfjEubgNPmuhjy/0daV0FeA+idfspFZo
-	hLFaXcelqJNEhmjxxX2TSauCcAw4PbT7P51fPaCix708p+BCYoGcnzOsGopnA1Bd
-	Aj8kPGrT/rxKknK5wxhurIWSax9x7nv5XR5B+NbiozjLwxE1M8gpHCib+ZQBe2Go
-	QHtM4YXBwAHaIPGYMquZZrnbr7CAIbTa2Xw==
-X-ME-Sender: <xms:frgpZyg72XLoYtuixpqc5o6DUwnBIa9gAgMsz8ksJw8PFOxGVOVCTQ>
-    <xme:frgpZzA8epKT1Lux8mB2m5qSit7kII20scpYJ_UyvBzfO_xc7vSlNmS7bxyRmNSHr
-    ABHvpxjS3rF7gNXuA>
-X-ME-Received: <xmr:frgpZ6EYv0PWx4p5SDfw5oL35Djgu_nYU1G0kATbtBtj6ZsagIrA1SfybGU5XpTzLxyvocobSE5ilBALyoQWvnpekgBhxj1h3b8arYOhkZJbRg>
+	1730787460; x=1730873860; bh=ioWPSsncQoI64+VugMot5A/Azew+Sw1bWew
+	3uDxc194=; b=JwcFM9Bk0LwN0KjwvkvTn46V1BOoVHQaR9wnH2ECguGWZtdwIyb
+	OC25AFu9L4x1WI9n4SQr5qGd8XfwqZMO/q5uh5RQENJvH3Sw3AxM3GHqNoNfxViL
+	EtxLAJUjZYBDMysn0nmSToTDsFir04jw1Utb+j9vRtjaDhWGAKOk4g8CfS098y+U
+	Nhq2k4aWbzi7IvJ9rF5O368lFil4ds9uZhgDO2sx1OHM1L6NINPkJBz2JCP8ROWX
+	HkpPg8BNwhxDlzx2H2cB8gb3pe+JjdWfjXyjWK4LfMhOQoW6mjNbTkPv4Yt4dnmW
+	yLIDZBb5cCSkzzrvusnIaK4FdmKpAYWlEcg==
+X-ME-Sender: <xms:hLgpZ5OGVzQcK0WntMDLBLW5gYg9cq5XdCqRXkmVIB-xibA7NWDlwQ>
+    <xme:hLgpZ796pr2WzZttPZSCpdMoPwikWXGU92POHrlKnKAc3mJg9FsKA8983udVP4pu7
+    jk04dkhgUEKVr1miA>
+X-ME-Received: <xmr:hLgpZ4Q1nhMiq9M80sm8LT-ad_tfWy8_EPwBTOFi39AMudYqM1RkixlWV8OFmuxfxMAhoG5f4FjUyOk60i1jClrBpfZikGNakaDLa75YXmXcGw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,30 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvg
-    esthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhl
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehtohhonhesihho
+    thgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
     rdgtohhm
-X-ME-Proxy: <xmx:frgpZ7SOzR_D649-zr8hGgfJzvedJaDkpNrMxkL_-yEeFydSOF3JuQ>
-    <xmx:frgpZ_w-7xp4jEqP-yMsNOrf_nmOfdusDNfAOJQkrmH6x_4f_NMNDQ>
-    <xmx:frgpZ57VqoOmmHqRnMs86wK1Mgtg003z4bGnYPcko1IFyM0UddShMg>
-    <xmx:frgpZ8x57u_iihN5DxYX4FwLg2K_f6kPKPoU4n-v46tZCIAllbpx9w>
-    <xmx:frgpZ6oBQqtoHujxGTgFvQh0Z02p7mAAPfkdUBjk60nGw12znsgMFzux>
+X-ME-Proxy: <xmx:hLgpZ1vNBJFZlPJC4hld9yLsX1hM7v0AAlZal09DQdkZKHivjH6Arg>
+    <xmx:hLgpZxf2soUKPlOUJG5Alczz7jmATAqhe3gd9CX5C7wxeMzde8ikrQ>
+    <xmx:hLgpZx0OZgZYtyzaPTWFWiVYQVtIBQZqox0K3Wvkx92_9f_av24ZUQ>
+    <xmx:hLgpZ9-hewWktTT8VJmRKstpOO5EBSHiVe_Fv7I6O7GRvTtOdGmdtQ>
+    <xmx:hLgpZ6GvRHb2Z7EcqR85t18mWjg2i_3qCXlSpqAx7slGWBqe9mI8nFtQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 01:17:33 -0500 (EST)
+ 5 Nov 2024 01:17:39 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8771e964 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 06:17:11 +0000 (UTC)
-Date: Tue, 5 Nov 2024 07:17:26 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id eb62ead1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 06:17:18 +0000 (UTC)
+Date: Tue, 5 Nov 2024 07:17:28 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 14/22] builtin/tag: fix leaking key ID on failure to sign
-Message-ID: <ffa5d9eae7ec13cfca12199274e79c1e2de57a90.1730786196.git.ps@pks.im>
+Subject: [PATCH v3 15/22] combine-diff: fix leaking lost lines
+Message-ID: <70dd0cb6933c31064f6084bb5a51794a7691b154.1730786196.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1730786195.git.ps@pks.im>
 Precedence: bulk
@@ -92,40 +92,65 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730786195.git.ps@pks.im>
 
-We do not free the key ID when signing a tag fails. Do so by using
-the common exit path.
+The `cnt` variable tracks the number of lines in a patch diff. It can
+happen though that there are no newlines, in which case we'd still end
+up allocating our array of `sline`s. In fact, we always allocate it with
+`cnt + 2` entries: one extra entry for the deletion hunk at the end, and
+another entry that we don't seem to ever populate at all but acts as a
+kind of sentinel value.
+
+When we loop through the array to clear it at the end of this function
+we only loop until `lno < cnt`, and thus we may not end up releasing
+whatever the two extra `sline`s contain. While that shouldn't matter for
+the sentinel value, it does matter for the extra deletion hunk sline.
+Regardless of that, plug this memory leak by releasing both extra
+entries, which makes the logic a bit easier to reason about.
+
+While at it, fix the formatting of a local comment, which incidentally
+also provides the necessary context for why we overallocate the `sline`
+array.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/tag.c  | 2 +-
- t/t7004-tag.sh | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ combine-diff.c           | 5 +++--
+ t/t4038-diff-combined.sh | 1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 93d10d59157..c37c0a68fda 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -164,7 +164,7 @@ static int do_sign(struct strbuf *buffer, struct object_id **compat_oid,
- 	int ret = -1;
+diff --git a/combine-diff.c b/combine-diff.c
+index f6b624dc288..33d0ed70975 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1185,7 +1185,8 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 	result_file.ptr = result;
+ 	result_file.size = result_size;
  
- 	if (sign_buffer(buffer, &sig, keyid))
--		return -1;
-+		goto out;
+-	/* Even p_lno[cnt+1] is valid -- that is for the end line number
++	/*
++	 * Even p_lno[cnt+1] is valid -- that is for the end line number
+ 	 * for deletion hunk at the end.
+ 	 */
+ 	CALLOC_ARRAY(sline[0].p_lno, st_mult(st_add(cnt, 2), num_parent));
+@@ -1220,7 +1221,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 	}
+ 	free(result);
  
- 	if (compat) {
- 		const struct git_hash_algo *algo = the_repository->hash_algo;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index b1316e62f46..42b3327e69b 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -10,6 +10,7 @@ Tests for operations with tags.'
+-	for (lno = 0; lno < cnt; lno++) {
++	for (lno = 0; lno < cnt + 2; lno++) {
+ 		if (sline[lno].lost) {
+ 			struct lline *ll = sline[lno].lost;
+ 			while (ll) {
+diff --git a/t/t4038-diff-combined.sh b/t/t4038-diff-combined.sh
+index 2ce26e585c9..00190802d83 100755
+--- a/t/t4038-diff-combined.sh
++++ b/t/t4038-diff-combined.sh
+@@ -5,6 +5,7 @@ test_description='combined diff'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-gpg.sh
- . "$TEST_DIRECTORY"/lib-terminal.sh
+ . "$TEST_DIRECTORY"/lib-diff.sh
+ 
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
