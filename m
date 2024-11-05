@@ -1,183 +1,118 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D161E6DCD
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 17:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6BC1E7C28
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 18:35:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730828685; cv=none; b=cNwtmbaDBRYOOTnfibX2SZHAUtnjOWBBfuhvMmgolsMEKoYxYpEylY9iBYmf4ZFlIOnDro+T3t+E12pjEFTbugRsK9dgsrd/iwgXTfLePPAsM1YBRkjwAsaHkGybeHkgUa7b9RC90cy7n7Ni0IQmu6B8Ie6EIRCZX8XW9bs3t2s=
+	t=1730831724; cv=none; b=MqGpoOfwmRmIY4983FG6BuMmZS20TXICDmIx+wR42qcBHJQs4BtVEFy1YDwldrFKt8iUQOmUa8NhkWuxLU5mjCiIC9R08hSzJ0DGgPBfaXGIk7mseoW7+I0K+HRDGv20uOo1K0fBX65U4nVAau1v8Tu+s0fOlaZQYJyYY+4bRTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730828685; c=relaxed/simple;
-	bh=po8c/8RPD75LTOPFC8uMXOp9UJHeempePD4/j5Rpwkk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d5J9bwaOlH2pN4J1XM424BemeUunRifMvtINyR0wHRZIINmuvE1f+RkfcfkSOKSg/x+H/rfSqJ50XwORo1gjCx0bk0HIbStbjxt9SXeri8+UasVRjsI1yJoDVzN1srJ8eITLWgU7CDuU9qRD18eBCwlx2V43oPNGHHbSte6HOY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TzcipvUU; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730831724; c=relaxed/simple;
+	bh=MEnXj5mshuP9am6QxEeekhtUduAQ3AWwrEFU0knavD8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gRLuiIXLkdCVG0Jn0VQiG3oG6UijgSrpQOd9LHXVBhrnrPrzSANgR0i0NRSe9p1BwB25CxXYGh+efITFz5VngqLndzD89UVGsY/RAfXBcu3Yo3JzaQ2b5bCI705VJYWZ8c7NceDntXk0+Vb/dLmtUOMr527tZBO9ibbzMlcvrh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WtXL5iJZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SUJEZqQt; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TzcipvUU"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539e690479cso6048350e87.3
-        for <git@vger.kernel.org>; Tue, 05 Nov 2024 09:44:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730828681; x=1731433481; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IRNzVMSYp1uGCdS4xgKNhr6TCMC2aGYxKtfV3Dw/mlM=;
-        b=TzcipvUUZcWowvCtWdy2X1vFtzfroKhIN58o3kLHk0Ltpak9uN9zYldzhoMoCqJRh8
-         Zz9HnHIYik9JQFhOD19Zcx/oF98TJqzmeJVDmiEmPitxFwqe4a+4n7BT8Bg66UhaA9Ix
-         NPV9VjN+FR0wZ+qJ9RN3xUvnQ4IBl9ouPAcAyAsA9loxTkKR2vyFXla7X//GJWIjewrg
-         y4mhKvGhQZCOuX6901uWlTBspk/etaTRknl/E7/j0O9p5M3E4XWgXGmg59xgCA/zVoFx
-         fLl4sniAtOHacn0Z3l7/QRsiVoO/iVK6KiE7zOr3yg1x7T18xGTttV5JALpHnSEFBFyz
-         j4FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730828681; x=1731433481;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IRNzVMSYp1uGCdS4xgKNhr6TCMC2aGYxKtfV3Dw/mlM=;
-        b=tBEfA3hTG4OMCOTYcsHLRxOeS9+ZmMeYc8grUfjXbk+8u3iVkd5FbDH8IY4OZAhDLX
-         9sEqQz3RGhiri5kbHpe/6+JgCNIUXgYd8vbzVYCzJelVl3G/ekt19eBhPCZFx1e9Hdzz
-         NjC4jWi7q0KWy/U9shD8+pZX281NTK5G0AFenvNK/+ju9Xmk63IHgzldryRx7u51AUTR
-         CCbCi8IE5miqOprvKqb+H0BohgbQhp3diDhsViz2qo1vIkU88DCP2lyvB43H0ktyOpf4
-         p7baYav3AsmlDy9zuCpNF1J1awOzmUuRVkkXUmrvb49roRrwiDqN529BrJ4lar4G+mNh
-         zl/w==
-X-Gm-Message-State: AOJu0YyXRzpZoalDV2AgOO/QgVAkxFA6NE+vOjXCvwVVZoDkdiqgvbJw
-	zzoyMgF2cMgK8ei5RoycB77N0d4Fv0qvfQGdMzHtvBBf5LVLsdFVleUzu+O9WoXEPxlhVItEk4E
-	BunzTwYNs0/HqqxaRRjeTfiojgZY=
-X-Google-Smtp-Source: AGHT+IFswFiNG77S1CPylDDL0e7QyHavrAtP6YJ7uf00D/iOw/SmlF28Vm1Ht7vricnsi47WYPUoIdRxlt8k09O2ycI=
-X-Received: by 2002:a05:6512:31cb:b0:539:e436:f1cd with SMTP id
- 2adb3069b0e04-53d65de60eamr8706557e87.16.1730828681184; Tue, 05 Nov 2024
- 09:44:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WtXL5iJZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SUJEZqQt"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C6AAF1140221;
+	Tue,  5 Nov 2024 13:35:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 05 Nov 2024 13:35:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1730831720; x=1730918120; bh=fBK7W2hQn4
+	Z2BqL0LF9+hy9/iQsLQICLoX72WJBMPjk=; b=WtXL5iJZGXZ1tIE9IoG/2c451W
+	SFHVyKlQNN9HeZphE9PPhi2BUJD2cylxVbRmSQlOKspCX84CGXcS1HeENMa29lpR
+	GysbI4z6oPf6EDaEpS2fF3wjdzXF0kUUkfvDMIPA0SPvj0/q0McL0FMBxM8x1kzC
+	4SBsYJ8gj63S4PdKP1JZi2cw4ZZ8S2M+sVoje2VyvvYqo/Q7/M9rdze7ND31zESk
+	XFcylOBrBak8y2aIvNJqM7nftYdq84RWGwc7KkKJzl3cWinDZVNkMVy8iLIOo/et
+	YMeIlYngnz/Z//CjO/VQtcnsnLtYFEL1lbTb17Xp6obtuIZ0r4dPYgGvlJaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1730831720; x=1730918120; bh=fBK7W2hQn4Z2BqL0LF9+hy9/iQsLQICLoX7
+	2WJBMPjk=; b=SUJEZqQtvo6kuyYpf4l+AKMF9hUtRJScOkbfvDwZo56M1lg8Cc1
+	uHZNVWrhff2NX4Wmcw6/DS40DtQBuGiv85e0/5frKCbVMpcrM2hzHfMWh5j5rkNX
+	sPtTAa2oEmBdb6xTa04EwS69JAde5LvHaPB5Gd4UA46a4OTnX6OQ7qIUHVqh1tyF
+	RJ2T7ptAMxXxuHq4w+jy6Dws8PouUT2z/7y32tkJKtEIF6s06QbPXRuOCNCF0jQg
+	ZSbt65CmDah7ufbAYRScRLcrFZW1KXTCPb9Bx9KPp6KOqhlWohoMpZ6MLhtfg9iE
+	s46cEJPft6LUVJeEFWHUgf+4CecT/ws9ysQ==
+X-ME-Sender: <xms:aGUqZ55tTgc2q1r2-eaEaWeeT5m1Ls-skPrp5hlPtX6HAS4FZbhwDQ>
+    <xme:aGUqZ268fuwqO8TgiJVXorTrOzylK3hBuvXtRd2gcyd9TD9LHVZBkHKapEJr9QHeu
+    cTorQKiSoM2LD08mA>
+X-ME-Received: <xmr:aGUqZwdnCaCBAwmCN1cwi87h0jxbFvYdYMNG7trZRb-DGl5nEuwYNwgwnvglmbBVLj69TxSS0Vv-3Tu6AsTrv9D5zlEkk0zIKITZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddtgdekhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsohhrthhivgesmhgrgi
+    hsihdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:aGUqZyKU6Od84ale5XdU3tdPNvLKFUVogFZCiG_SM3Rnnel7RuW_tg>
+    <xmx:aGUqZ9JiufqUm4XCkf4RsOYQDWaUh6OUVstbN0NWnwdxROODVZg_tQ>
+    <xmx:aGUqZ7xbNgbbOgi9ufbxHKPlNOZ4HdHCLRp-HMhD_9McyftrR_QwkA>
+    <xmx:aGUqZ5KIfYc2wUjQhkteOGXzSwproY6XcjSLXcqT7zlLZMmB9KNkgw>
+    <xmx:aGUqZ938z3ssdTeBQ4e4amzGm67fOIPRow173O1Kh8LANgO8415TldYf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 Nov 2024 13:35:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonas 'Sortie' Termansen <sortie@maxsi.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: don't remove configure on distclean
+In-Reply-To: <76f4dfe6-3724-472b-9b42-c91926e61fd1@maxsi.org> (Jonas
+	Termansen's message of "Tue, 5 Nov 2024 11:13:49 +0100")
+References: <76f4dfe6-3724-472b-9b42-c91926e61fd1@maxsi.org>
+Date: Tue, 05 Nov 2024 10:35:18 -0800
+Message-ID: <xmqqldxxsf4p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241028203457.19715-1-eric.peijian@gmail.com> <20241028203457.19715-2-eric.peijian@gmail.com>
-In-Reply-To: <20241028203457.19715-2-eric.peijian@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 5 Nov 2024 18:44:29 +0100
-Message-ID: <CAP8UFD0Yk1Twv9DMOYwO4R+7P0YHj1CgK8xN=2YdE8sdi4ukow@mail.gmail.com>
-Subject: Re: [PATCH v5 1/6] fetch-pack: refactor packet writing
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Oct 28, 2024 at 9:35=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> wr=
-ote:
+Jonas 'Sortie' Termansen <sortie@maxsi.org> writes:
 
->  connect.c    | 34 ++++++++++++++++++++++++++++++++++
->  connect.h    |  4 ++++
->  fetch-pack.c | 36 ++----------------------------------
->  3 files changed, 40 insertions(+), 34 deletions(-)
+> make distclean conventionally restores the extracted release tarball to
+> its original distributed contents by cleaning the source code for
+> distribution. However, the configure script is part of the distribution
+> and should not be removed. This behavior is creating problems on my
+> package infrastructure where configure-based packages have make
+> distclean run afterwards and then the subsequent git build fails.
+
+Without a target that truly cleans any build artifacts over what is
+recorded in the commit to replace "make distclean", this is a
+regression.  It seems people use "make reallyclean" or something for
+that, perhaps?
+
+> Signed-off-by: Jonas 'Sortie' Termansen <sortie@maxsi.org>
+> ---
+>  Makefile | 1 -
+>  1 file changed, 1 deletion(-)
 >
-> diff --git a/connect.c b/connect.c
-> index 58f53d8dcb..bb4e4eec44 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -688,6 +688,40 @@ int server_supports(const char *feature)
->         return !!server_feature_value(feature, NULL);
->  }
->
-> +void write_command_and_capabilities(struct strbuf *req_buf, const char *=
-command,
-> +                                                                       c=
-onst struct string_list *server_options)
-
-When I apply your patches this line doesn't seem well indented.
-
-> +{
-> +       const char *hash_name;
-> +       int advertise_sid;
-> +
-> +       git_config_get_bool("transfer.advertisesid", &advertise_sid);
-
-It looks like moving the function to connect.c required adding the
-above line into it. There are a few other small changes, including
-probably spurious indentation changes, in the moved function which
-make it a bit more difficult than necessary to check that the moved
-code is the same as the original one.
-
-This makes me wonder if it was actually a good idea to move the
-function, or if moving the function should have been done in a
-separate step than the step making the small changes. Perhaps patch
-5/6 "cat-file: add declaration of variable i inside its for loop"
-could have been moved before this patch and could have included some
-of the small changes related to the i variable that are made in this
-patch.
-
-It might have been nice to mention the changes in the commit message anyway=
-.
-
-> +       ensure_server_supports_v2(command);
-> +       packet_buf_write(req_buf, "command=3D%s", command);
-> +       if (server_supports_v2("agent"))
-> +               packet_buf_write(req_buf, "agent=3D%s", git_user_agent_sa=
-nitized());
-> +       if (advertise_sid && server_supports_v2("session-id"))
-> +               packet_buf_write(req_buf, "session-id=3D%s", trace2_sessi=
-on_id());
-> +       if (server_options && server_options->nr) {
-> +               ensure_server_supports_v2("server-option");
-> +               for (int i =3D 0; i < server_options->nr; i++)
-> +                       packet_buf_write(req_buf, "server-option=3D%s",
-> +                                        server_options->items[i].string)=
-;
-> +       }
-> +
-> +       if (server_feature_v2("object-format", &hash_name)) {
-> +               const int hash_algo =3D hash_algo_by_name(hash_name);
-> +               if (hash_algo_by_ptr(the_hash_algo) !=3D hash_algo)
-> +                       die(_("mismatched algorithms: client %s; server %=
-s"),
-> +                               the_hash_algo->name, hash_name);
-> +               packet_buf_write(req_buf, "object-format=3D%s", the_hash_=
-algo->name);
-> +       } else if (hash_algo_by_ptr(the_hash_algo) !=3D GIT_HASH_SHA1) {
-> +               die(_("the server does not support algorithm '%s'"),
-> +                       the_hash_algo->name);
-> +       }
-> +       packet_buf_delim(req_buf);
-> +}
-> +
->  enum protocol {
->         PROTO_LOCAL =3D 1,
->         PROTO_FILE,
-> diff --git a/connect.h b/connect.h
-> index 1645126c17..2ed009066e 100644
-> --- a/connect.h
-> +++ b/connect.h
-> @@ -1,6 +1,7 @@
->  #ifndef CONNECT_H
->  #define CONNECT_H
->
-> +#include "string-list.h"
->  #include "protocol.h"
->
->  #define CONNECT_VERBOSE       (1u << 0)
-> @@ -30,4 +31,7 @@ void check_stateless_delimiter(int stateless_rpc,
->                                struct packet_reader *reader,
->                                const char *error);
->
-> +void write_command_and_capabilities(struct strbuf *req_buf, const char *=
-command,
-> +                                                                       c=
-onst struct string_list *server_options);
-
-When I apply your patches the above line doesn't seem well indented either.
-
-You might want to make sure that your editor uses 8 spaces for each
-tab, see Documentation/CodingGuidelines, or just that your editor
-properly follows our .editorconfig file.
-
-It looks like other patches in the series, like patch 4/6, have
-similar issues. Otherwise the other patches in the series look good to
-me.
-
-Thanks.
+> diff --git a/Makefile b/Makefile
+> index 6f5986b66e..c488b914a0 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3723,7 +3723,6 @@ dist-doc: git$X
+>  ### Cleaning rules
+>  
+>  distclean: clean
+> -	$(RM) configure
+>  	$(RM) config.log config.status config.cache
+>  	$(RM) config.mak.autogen config.mak.append
+>  	$(RM) -r autom4te.cache
