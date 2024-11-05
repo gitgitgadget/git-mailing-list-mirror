@@ -1,99 +1,108 @@
-Received: from black.elm.relay.mailchannels.net (black.elm.relay.mailchannels.net [23.83.212.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF0411CA9
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 01:42:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730770976; cv=pass; b=PNp3v2OJX274B3lGdnluBpvwcmyiHtgrIqJrc7kwML674X5G+GPQkHVu4y+2YpgODTw2TMxMTRuRwig8nzOMHs5+R0IO1Mf9rVckRTUwWe4uG6VjHLL/3nGi9RKxCAi0DtjT5aIROy9Df5/rR3TEddWvvRH5wVseJSk5OVW/pQ0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730770976; c=relaxed/simple;
-	bh=x8VscqDuCr8pzqZArf06SVla2qRzRXO95fkToF4sgLk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=SZHcoEjZxOelkPGD42te7GpYagPVB36daMU8CgdTwC1+e7v5cxBfydo0js+OGUzazFIubexoN3q91SVBX3Zm2qdTu8dBQ4cuaqS3ukA1iMM17i8+hZNSeS801l6qdfiCxz0JsZH57K5rGFQF7seWS18FQkF6+3pu9OuBmD0K9fI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.212.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 2F3731839AF;
-	Tue,  5 Nov 2024 01:03:25 +0000 (UTC)
-Received: from cpanel-007-fra.hostingww.com (100-103-134-71.trex-nlb.outbound.svc.cluster.local [100.103.134.71])
-	(Authenticated sender: instrampxe0y3a)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 7395F183A53;
-	Tue,  5 Nov 2024 01:03:24 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1730768604; a=rsa-sha256;
-	cv=none;
-	b=j+Pc94b8HES91/7LEb4Hkq/fDjxOSyyD7wfIQYokJkmTbDNIYCup+KlS9ZG74V/rpa2Z2n
-	i0b5AAyLLZ6QRQimcOq6Xc5jLN7O0NKHLklBWIg+rNOEWv4wbzpZyJ9P4UbPq/uh1bVZb5
-	NlY7JE8FDCdV2QhlQAGrCguh1D8W/sr+h02zIYdBjayY5w4qFuX61MAmHDXqBZkQTv2pWt
-	Q8kpatUZKZMm0iYEBor1LfqbOG8M8uk2Zhd4kdckKkrHJbAvovRSd2NNliMZDQQaa7HSID
-	rNhOjPS+e5yooYr00gHI7bT2oa6BpAKI7W9kbEYMVIbvZW9kWrqdHOj/0zIdBA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1730768604;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=x8VscqDuCr8pzqZArf06SVla2qRzRXO95fkToF4sgLk=;
-	b=8tf+8eJP7V7uYGbfQmFRPisGlS+9tIM152L1LiRaGU2ReS5cPNwJGv/aBqBlUSSK1zLAC5
-	RiYRB7VHJTKdtJfmdXKAGEdrfeAej2GooiHS0u3J8yFzX8L74qZTlFc7v0GN3jKzC92pye
-	qGhWi1TO7kjme8s7S5BHLildPOLvVpoeYf5OFL/2UXsbQ7x6RUSZa+mRA6/QhlnMQEQp08
-	S3aNuhC2mv0rCQ69TSn67uid2lK5vhifq2BrPja03SFGcZQyk2xV6y6c+f9SFo2gRUU4ba
-	Xxfr1TsV7kKUva+pP3N1OaNoQjNDUuGP30KZyuo/VZw/rqFLeJmiymVROXL3wA==
-ARC-Authentication-Results: i=1;
-	rspamd-696f47875-5sk66;
-	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
-X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
-X-MailChannels-Auth-Id: instrampxe0y3a
-X-Arch-Eight: 4dc23822236442bb_1730768605090_2367769593
-X-MC-Loop-Signature: 1730768605090:604836838
-X-MC-Ingress-Time: 1730768605090
-Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
- [3.69.87.180])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.103.134.71 (trex/7.0.2);
-	Tue, 05 Nov 2024 01:03:25 +0000
-Received: from p5b0ed864.dip0.t-ipconnect.de ([91.14.216.100]:63324 helo=heisenberg.fritz.box)
-	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.97.1)
-	(envelope-from <calestyo@scientia.org>)
-	id 1t87yc-00000005yHw-0U4b;
-	Tue, 05 Nov 2024 01:03:22 +0000
-Message-ID: <3a96888e76e4dd26a3b0a81a19cda8ec7de72662.camel@scientia.org>
-Subject: Re: git format-patch escaping issues in the patch format
-From: Christoph Anton Mitterer <calestyo@scientia.org>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Date: Tue, 05 Nov 2024 02:03:21 +0100
-In-Reply-To: <20241104235432.GB3017597@coredump.intra.peff.net>
-References: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
-	 <20241104235432.GB3017597@coredump.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.1-1 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CEF3C30
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 01:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730771509; cv=none; b=EEkrHnFqNr9/YfP6UOXpfdJ7cdJXboAK4VLIEELfuvK7hrJ/2NWY2YOloynOfWQrLmjglzuDOQQ1lSzwVW1cmjluO++zSgLfoaP1qsLb70qOVoI/Vx/TWM4cZiXvuUPL6vaqkVmDGUuqsB8ci5Zb3xjiaC7k+vHX4Vy9QctLCRw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730771509; c=relaxed/simple;
+	bh=pTLMYn5RUjKGhjI+4KdvKknzn2iQK+IZzd0UH6MnH5M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c9Vh+YabYBf2H3OIjj/rujx+LAB5eeJpOja4xizybCqfIS5D1ikpu8GGDjbP4vRhAdt+httcgv4EFPUbFAIEZL4SxkE2UnY0zlpnrlF/Rrp8NQ7ztECQZWd0i9Ql4raX1EL9q5Bu99QflrQHyJpJD8EppFVCHXDoB5rAtY60I18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jGMert1d; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jGMert1d"
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6ea85f7f445so21250277b3.0
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 17:51:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730771505; x=1731376305; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6mf+2uKXt562o2VXMbtBsZYcHuvelTsUcSM83p5LOQ0=;
+        b=jGMert1dkdSrowXybKUiPEmi+YUv7/N+tb40UVLumStrxzDHI0TQn7q8yWLt9+uPL1
+         OqhjJeD2JUkyFvQcOIGzYkrlGz5BInFPqo5UdTMzDWFMaReeTqwzTnbjBFLqrdN/wvQ5
+         S3TFKyugRc/1CSdZxH9x8V2tZu/Cw3gd0qViIDOt5ZtHaRljjupjpLl6EsuzDtISIYzY
+         nwCgI0c1humplTantaSOO3oNu7YTEdueY9QkI6O7K9weIQdOdngRuFQn4Le6Ry94DHgr
+         Q9yzNYm3MaG0KSvp4vROGzy32nPoSw5DGfOH5U2AbtOgdj9MEQz+efEtT3mAA9fgwxCB
+         M7iA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730771505; x=1731376305;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6mf+2uKXt562o2VXMbtBsZYcHuvelTsUcSM83p5LOQ0=;
+        b=VGmveHGjVcNriQUsreUdUHLXIgoPn5tfTrAiQUXy+0za+jUgvkCP7ym+JVvtxAEZgI
+         RBsqfVJXzoOPs6n2EZ+EiN8GooIT7NhkdcnaWWWRwtCRyBB6EaL+VePm9TLxraB5k3dO
+         3Vj9npRb0BHkdCwwc7fAVTr/+Q/fT/a5KSWKICeOoHlD9sxbx+9szDskD7Y/LUAB2qP8
+         RZxzhZJzHXKljzt1ky+B7Qpep6IH8lJot0Ih2lSWGWpnBAuJ2PeviImfTzXBYZC7Xgup
+         VE3Ea2SGk1awjF6qXgkqcfVFWK49NPoQrnRxxIQEBtDcwYf7t4n9Wvp32Cpb2KDI3iKF
+         CFaw==
+X-Gm-Message-State: AOJu0YzkZTxiSP3izahbVUXf0sN+0IDn3dOczeblASk4BbHbi4oQ6NAE
+	du90PAkwswZrj8NQYlRXHjojDL8AwShyY6rZDZxrfGisZFI9shlg
+X-Google-Smtp-Source: AGHT+IHAMhY8OaGiHHadL3Nq01NsJBTQBmReMOPP2AxU6LK4xlR1tI4VfSY3gpvN6Ti/2Wmz8jw8jg==
+X-Received: by 2002:a05:690c:25c8:b0:6e5:e571:108b with SMTP id 00721157ae682-6ea523216f0mr178337317b3.8.1730771505409;
+        Mon, 04 Nov 2024 17:51:45 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:2db7:73fd:372e:bf53? ([2600:1700:60ba:9810:2db7:73fd:372e:bf53])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ea96bf32e1sm6934087b3.61.2024.11.04.17.51.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Nov 2024 17:51:44 -0800 (PST)
+Message-ID: <7be6cc82-e566-4425-b663-71e53117af3d@gmail.com>
+Date: Mon, 4 Nov 2024 20:51:43 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-AuthUser: calestyo@scientia.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: What's cooking in git.git (Nov 2024, #02; Fri, 1)
+To: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+References: <xmqqr07rwsmd.fsf@gitster.g> <ZyjoTVhP0xn/Qcvx@nand.local>
+ <xmqqikt2wrn1.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqikt2wrn1.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, 2024-11-04 at 18:54 -0500, Jeff King wrote:
-> As you note, the mbox format is not well defined. :) The variant with
-> ">"-quoting of "From" lines is often called "mboxrd", and you can get
-> it
-> with the "--format=3Dmboxrd" option.
+On 11/4/24 5:39 PM, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+> 
+>>> [Graduated to 'master']
+>>>
+>>> * ds/path-walk-1 (2024-10-31) 6 commits
+  - path-walk: mark trees and blobs as UNINTERESTING
+  - path-walk: visit tags and cached objects
+  - path-walk: allow consumer to specify object types
+  - t6601: add helper for testing path-walk API
+  - test-lib-functions: add test_cmp_sorted
+  - path-walk: introduce an object walk by path
 
-But as you've said below, here too, the receiving side most likely
-doesn=E2=80=99t know that and then a wrong commit message would be applied
-(with no unescaping being performed or it would simply break again when
-the magic From is used).
+>> This is marked as "Graduated to 'master'", although I suspect it isn't.
+>> I thought that it would have been because the topic went away, although
+>> I still see this in 'jch' via your 3503a15e17 (Merge branch
+>> 'kh/bundle-docs' into jch, 2024-11-03).
+>>
+>> Perhaps this WC report was generated before moving the topic back into
+>> 'jch'? In either event, as noted by <ZyUqr/wb5K4Og9j9@nand.local>, this
+>> topic is still under discussion and is not ready to be merged (yet).
+> 
+> I am not sure how exactly it happened, but IIRC, the topic branch for
+> this one was missing for some time after I grabbed the broken-out
+> topics from you.  As I didn't rebuild 'seen' I managed to pull it
+> out of master..seen chain locally, but that was before I generated
+> the "What's cooking" report and I think that is how this entry was
+> mistakenly moved.
+It is possible that things got confusing when this replaced
+ds/path-walk, which was a longer series that started with these same
+patches.
 
+Thanks,
+-Stolee
 
-Cheers,
-Chris.
