@@ -1,55 +1,55 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EEB1E7C27
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 19:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A2B1DD0D0
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 19:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730834666; cv=none; b=Tmv1bcjjIyhftmdpj94C69LJ8D7hWwvbfG19Dj11sa0L1dcWidJCszBNSBmVADk49G6fqfEaAJrYBsm5aMaYqCnCqOTM7FmZ98Md3b2vbXYefBGboxMgQsJuVKfY5izw9S9hu61BV9UWMgp3kXLdaVYe12d6KHLp933XSgNScnA=
+	t=1730834667; cv=none; b=UddjHg/N1ROU8MVbfkblAWaiiXNZ09/pBUy4LZW/g8hB1IvOnR2RpNvWlgaQtOo67JZtPKxslry3BgeGfurcUuw0z7cmHpsdrM3kW9WU6oQqYnl+S6QnrmkR7duoIox95WGZ/s6NSqqIf6rSMIaYW8xnCstuLvgGePiFMEjGP9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730834666; c=relaxed/simple;
-	bh=TT0E0grESMdAvYeOWLZmMAHXiZduPhp9HsYtXQnbBTs=;
+	s=arc-20240116; t=1730834667; c=relaxed/simple;
+	bh=0ofXPlHMgcqG/P/N1e5jFnpc/607bYtQNFN4YjIiJI4=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=sQs1a+SihDISXYC28BzfFoZyE71mWYPv/nEo91DOr783KXfKY9uleqSYqYaPJkRD5WnTPJ7jwOAWD62s70T9+FZK5ppV5AvBSQbGYaDorVsojfGFdg93LQl1R3bM8S10Z6w2eCalBB16eKQ1jTHdWogFjgV1bPy5fYhX+SOUD+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oIWPzKzJ; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=YHf+GSuS1Jy7ldQDstob3s1J/OSSeMwDPjbPGK6xVfd51Xk6R0LOqdiAqLhwKE0aM/IOahGwyFn/WTtKXbLGTSIHuiBCEVGEsorrMNEl0atg0VyzkT6LyM5AD0jEdssXfyx/UXDXHYpaHzJKJZevESii9PRD1Hp/u5suhAsVamY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qgjKpOQh; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oIWPzKzJ"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e376aa4586so110799277b3.1
-        for <git@vger.kernel.org>; Tue, 05 Nov 2024 11:24:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qgjKpOQh"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-6e3705b2883so115375407b3.3
+        for <git@vger.kernel.org>; Tue, 05 Nov 2024 11:24:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1730834664; x=1731439464; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1730834665; x=1731439465; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AOWADm0GAx8KxjldMDZJgWwnYk5ilMVzSY537NVZiuA=;
-        b=oIWPzKzJstDy9V0Zqh1BQOPr+9WsewTYp5CJqs5r1BsdnICOY3mrKwTyIHADxdtpHL
-         V5lPOYWU9f0Ipv2rGGYmSfSHYzIbyFLfomYg+J+1tb7D60CaVMS9m3bfcRHqhYlOu2jY
-         KV7gpfEvx4yazPUcp0v1yGX8gjco9O6y7gmqaqjqguDYPdIUC7cP89ATlhYA9ocWDDFq
-         xKv6kDHAYBbHLEFQ7fPjmPBvoIERB8CY6w5WUx5RupK3xLe1zCqZ7ESWXOgXxZ7xoNaE
-         p80Xyf/9XQYM7sWfgqY2+d4ZU2qUPFsNeFlgA7g/ShbSvoVDSoFYzeLS4gM938yU2BVN
-         ZEAg==
+        bh=3BXgvJ9UIKwX0KvUx6c3yo7U1uC1Z8b2AkEsiymCBVE=;
+        b=qgjKpOQhWlLxU9vT4Q+38G9TlxH2WJzfaaMt7DITWEZPioYABx1gKb5cXfy1ULHmYW
+         im0BhqYdvgHUVV1N4RRH9fSL9F9DXsnOU+9Q6FcmmXKxoiozG2a8aCsud9vpSShjiYb7
+         7HUsJvFdE0aEghVDpnk4v0YIVMLcL9F4GBdB4b0BRrcEXVydG9YwAjow7iohYHez8s7X
+         TZqGhikT+z415jtVMCPBhBrwRoPsoR10j6XqASYu7zhKs6c6WgWbrdyB56nGWitnmdF+
+         yaBGP9N/exz9f0/e0b1ISRyWt+it0yRQgrHsH6p4e+pIPu7/PI8rcYkLTs9bjbUhhm6w
+         5GAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730834664; x=1731439464;
+        d=1e100.net; s=20230601; t=1730834665; x=1731439465;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AOWADm0GAx8KxjldMDZJgWwnYk5ilMVzSY537NVZiuA=;
-        b=Nb1lPMDSHr+twueNny73y8rVRk/GPLU4sCFwND1UFBXYiBkk6sY17OT6Ty0+gWmIPu
-         FofFOexEA7i0AtTJ72vW1Ejp4gF8t/Z6hBQCp72+PsI/XEOSm2ncr+x4O/8mWDyyWWdz
-         qgvmU5ej2mbIqxAqWjzMbQOFNZeKAYeCeZc+eWwAMO9DupX4ltxSZFI8P7nbW7vvDRCv
-         +5yO/dF0HG9LRaSVi6Vs5g9IQasyVMOWGHDvQ5k5cizr5Fgmp2VTBrU69hIBJrwLD2Y8
-         Gu1YnfXhC6ZKOiEq7rpoxcE6N9f4A8zNBTYKtO2EO30lHjARcvuHnphoPpwr4AHCYfqh
-         HitQ==
-X-Gm-Message-State: AOJu0YwSG1lVokjCa7yj7e2kkKFiz7nv0qP3UJohvusb8gsV2QPX6Hx8
-	NUC3iBiFje28IDuZDX85R6MvSgs0oCFWxFPMaMdKZsOHMD6r41Hd4FNspvEZ8Iu4IW2XFAsObr8
-	F882bksjkJwyXXJLoEdhBs05LvlIg7dUzj86d6kl3i7mOwqRaGE1l139T5RHUiXloakqIXAegXq
-	YZGN0N1WdF+8M5tLphNYQfNc4Vp9r1LZB3fUAhW9jEcc3rlKGqDU/PG9cSnPVhnElE4w==
-X-Google-Smtp-Source: AGHT+IFL3Lcf0gBuctALOr6YTBwEDxaOXVxos7jGx1nwOcInpSS3ppA5W/6fiE/KllOLauIfCaCMxyjNLZxggAzZlkUp
+        bh=3BXgvJ9UIKwX0KvUx6c3yo7U1uC1Z8b2AkEsiymCBVE=;
+        b=ke052IfVXCeOGvNsJLGeAadflN1QbiIArgqyvzwV+tC783HDl+GP/rf4dQ5oxPoOIc
+         cb4Py1vuQ6jaPWaUBhOAy6u+3emKB2E+8d4ZiVH0KCSvNQMxwSWyK/5cPe3sV8S6pZIk
+         0aAuKphjaVAaJjNYYtuBd69J2dmZnJydI5UA3/J/e1oG047SJhuF0ucbpoptXufKOWJu
+         I3RmAujmyqqxsEHpXfCaXlXKmPNF2bWrz0ZN/4GIGqLwMbnUXnCDvZOWbWofj9gkENoJ
+         V0c4Y0/XkESHE4oXhJupPiehfr28ujCc5gWKfJQEQ2jDxKMJ5rpmzOl3isPtlGJMTW2h
+         k21g==
+X-Gm-Message-State: AOJu0YzD1O/ferC+dbtxxN5V7EDKDl7vSIrF1Jygb+Kwl2x4oPCbtRRG
+	Tgm+OpjZB1P4Jlny7ADgkz6nhCfhGh8VWnR1l3ZVPf2PlxvlZ6njy7FGtFDXrPVkB+chPdrXvu1
+	cO0cRHtBRms2WCG1NpSvQGYzCm2PcnWO8BmGi683CMtMrurDkPUha5yfniFsxFYsenOV89v+eex
+	CK8u6VIpcspWOoYf4AUtdPSofB3vGZiuuxFbX1JBCBWsNoCiZalvo72MCGLWFJt0iv7w==
+X-Google-Smtp-Source: AGHT+IHb4mbeDnP+WWNjfbEK3zcFmKdMmDmjpBw6/5sM6wL0NW88fBA3mFlHd8OL/8QvAWUVQoekk+iMy09FHeQLh22+
 X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:af5d:b903:295d:2c17])
- (user=jonathantanmy job=sendgmr) by 2002:a05:690c:6f06:b0:6e3:2f0b:b595 with
- SMTP id 00721157ae682-6ea3b968a7bmr3092307b3.5.1730834663841; Tue, 05 Nov
- 2024 11:24:23 -0800 (PST)
-Date: Tue,  5 Nov 2024 11:24:18 -0800
+ (user=jonathantanmy job=sendgmr) by 2002:a25:a291:0:b0:e28:e510:6ab1 with
+ SMTP id 3f1490d57ef6-e33026b3c56mr11516276.8.1730834665211; Tue, 05 Nov 2024
+ 11:24:25 -0800 (PST)
+Date: Tue,  5 Nov 2024 11:24:19 -0800
 In-Reply-To: <cover.1730833754.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,85 +59,118 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1730235646.git.jonathantanmy@google.com> <cover.1730833754.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
-Message-ID: <34e87b83884e27e421a64cb4a3594b1dacc2a391.1730833754.git.jonathantanmy@google.com>
-Subject: [PATCH v3 1/2] Revert "fetch-pack: add a deref_without_lazy_fetch_extended()"
+Message-ID: <c92b2c9e50975cab217a93b3e3a962107d60d0de.1730833754.git.jonathantanmy@google.com>
+Subject: [PATCH v3 2/2] fetch-pack: die if in commit graph but not obj db
 From: Jonathan Tan <jonathantanmy@google.com>
 To: git@vger.kernel.org
 Cc: Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
-This reverts commit a6e65fb39caf18259c660c1c7910d5bf80bc15cb.
+When fetching, there is a step in which sought objects are first checked
+against the local repository; only objects that are not in the local
+repository are then fetched. This check first looks up the commit graph
+file, and returns "present" if the object is in there.
 
-This revert simplifies the next patch in this patch set.
+However, the action of first looking up the commit graph file is not
+done everywhere in Git, especially if the type of the object at the time
+of lookup is not known. This means that in a repo corruption situation,
+a user may encounter an "object missing" error, attempt to fetch it, and
+still encounter the same error later when they reattempt their original
+action, because the object is present in the commit graph file but not in
+the object DB.
 
-The commit message of that commit mentions that the new function "will
-be used for the bundle-uri client in a subsequent commit", but it seems
-that eventually it wasn't used.
+Therefore, make it a fatal error when this occurs. (Note that we cannot
+proceed to include this object in the list of objects to be fetched
+without changing at least the fetch negotiation code: what would happen
+is that the client will send "want X" and "have X" and when I tested
+at $DAYJOB with a work server that uses JGit, the server reasonably
+returned an empty packfile. And changing the fetch negotiation code to
+only use the object DB when deciding what to report as "have" would be
+an unnecessary slowdown, I think.)
+
+This was discovered when a lazy fetch of a missing commit completed with
+nothing actually fetched, and the writing of the commit graph file after
+every fetch then attempted to read said missing commit, triggering a
+lazy fetch of said missing commit, resulting in an infinite loop with no
+user-visible indication (until they check the list of processes running
+on their computer). With this fix, there is no infinite loop. Note that
+although the repo corruption we discovered was caused by a bug in GC in
+a partial clone, the behavior that this patch teaches Git to warn about
+applies to any repo with commit graph enabled and with a missing commit,
+whether it is a partial clone or not.
+
+t5330, introduced in 3a1ea94a49 (commit-graph.c: no lazy fetch in
+lookup_commit_in_graph(), 2022-07-01), tests that an interaction between
+fetch and the commit graph does not cause an infinite loop. This patch
+changes the exit code in that situation, so that test had to be changed.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- fetch-pack.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
+ fetch-pack.c                               | 19 ++++++++++++++++---
+ t/t5330-no-lazy-fetch-with-commit-graph.sh |  4 ++--
+ 2 files changed, 18 insertions(+), 5 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index f752da93a8..6728a0d2f5 100644
+index 6728a0d2f5..fe1fb3c1b7 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -122,12 +122,11 @@ static void for_each_cached_alternate(struct fetch_negotiator *negotiator,
+@@ -122,16 +122,29 @@ static void for_each_cached_alternate(struct fetch_negotiator *negotiator,
  		cb(negotiator, cache.items[i]);
  }
  
--static struct commit *deref_without_lazy_fetch_extended(const struct object_id *oid,
--							int mark_tags_complete,
--							enum object_type *type,
--							unsigned int oi_flags)
-+static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
-+					       int mark_tags_complete)
++static void die_in_commit_graph_only(const struct object_id *oid)
++{
++	die(_("You are attempting to fetch %s, which is in the commit graph file but not in the object database.\n"
++	      "This is probably due to repo corruption.\n"
++	      "If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object."),
++	      oid_to_hex(oid));
++}
++
+ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+-					       int mark_tags_complete)
++					       int mark_tags_complete_and_check_obj_db)
  {
--	struct object_info info = { .typep = type };
-+	enum object_type type;
-+	struct object_info info = { .typep = &type };
+ 	enum object_type type;
+ 	struct object_info info = { .typep = &type };
  	struct commit *commit;
  
  	commit = lookup_commit_in_graph(the_repository, oid);
-@@ -136,9 +135,9 @@ static struct commit *deref_without_lazy_fetch_extended(const struct object_id *
+-	if (commit)
++	if (commit) {
++		if (mark_tags_complete_and_check_obj_db) {
++			if (!has_object(the_repository, oid, 0))
++				die_in_commit_graph_only(oid);
++		}
+ 		return commit;
++	}
  
  	while (1) {
  		if (oid_object_info_extended(the_repository, oid, &info,
--					     oi_flags))
-+					     OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK))
- 			return NULL;
--		if (*type == OBJ_TAG) {
-+		if (type == OBJ_TAG) {
- 			struct tag *tag = (struct tag *)
- 				parse_object(the_repository, oid);
+@@ -143,7 +156,7 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
  
-@@ -152,7 +151,7 @@ static struct commit *deref_without_lazy_fetch_extended(const struct object_id *
- 		}
- 	}
- 
--	if (*type == OBJ_COMMIT) {
-+	if (type == OBJ_COMMIT) {
- 		struct commit *commit = lookup_commit(the_repository, oid);
- 		if (!commit || repo_parse_commit(the_repository, commit))
- 			return NULL;
-@@ -162,16 +161,6 @@ static struct commit *deref_without_lazy_fetch_extended(const struct object_id *
- 	return NULL;
- }
- 
--
--static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
--					       int mark_tags_complete)
--{
--	enum object_type type;
--	unsigned flags = OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK;
--	return deref_without_lazy_fetch_extended(oid, mark_tags_complete,
--						 &type, flags);
--}
--
- static int rev_list_insert_ref(struct fetch_negotiator *negotiator,
- 			       const struct object_id *oid)
- {
+ 			if (!tag->tagged)
+ 				return NULL;
+-			if (mark_tags_complete)
++			if (mark_tags_complete_and_check_obj_db)
+ 				tag->object.flags |= COMPLETE;
+ 			oid = &tag->tagged->oid;
+ 		} else {
+diff --git a/t/t5330-no-lazy-fetch-with-commit-graph.sh b/t/t5330-no-lazy-fetch-with-commit-graph.sh
+index 5eb28f0512..21f36eb8c3 100755
+--- a/t/t5330-no-lazy-fetch-with-commit-graph.sh
++++ b/t/t5330-no-lazy-fetch-with-commit-graph.sh
+@@ -38,9 +38,9 @@ test_expect_success 'fetch any commit from promisor with the usage of the commit
+ 	git -C with-commit-graph config remote.origin.partialclonefilter blob:none &&
+ 	test_commit -C with-commit any-commit &&
+ 	anycommit=$(git -C with-commit rev-parse HEAD) &&
+-	GIT_TRACE="$(pwd)/trace.txt" \
++	test_must_fail env GIT_TRACE="$(pwd)/trace.txt" \
+ 		git -C with-commit-graph fetch origin $anycommit 2>err &&
+-	! grep "fatal: promisor-remote: unable to fork off fetch subprocess" err &&
++	test_grep ! "fatal: promisor-remote: unable to fork off fetch subprocess" err &&
+ 	grep "git fetch origin" trace.txt >actual &&
+ 	test_line_count = 1 actual
+ '
 -- 
 2.47.0.277.g8800431eea-goog
 
