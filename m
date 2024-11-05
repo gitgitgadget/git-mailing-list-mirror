@@ -1,172 +1,205 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59371D799C
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 12:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A6914A91
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 14:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730811122; cv=none; b=oF1PJIfcZlp8U2pv+8G8DhUZxPBXI6bZ57z7m5m/zrEeE4dyge2IGV61wdwR2OmEMKOGuOJ+kMkB+f42h9qrATz50h06h168sPpu3ZuKVaZeb+qFDYBsuQQwFrbX/wVAWWRQo2RdyGxFzPctbXephv/grSyNu6rVn8IwQ/4PPAI=
+	t=1730817175; cv=none; b=Ok3OAtVxPjEA0km1vETOioire9bKt5IpqdkXD89aIoMUixVesccryW2UxHgQe/5YubcnJdUrILjPQ3Rh2DKiTtbn1ytk1hIjl/ug1rSRehOBIA/5xCL/gBDjnCSbgoL8REVA9nSM8Z34JAijaNIKNSs82cV0kooI0hrGMZraeEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730811122; c=relaxed/simple;
-	bh=b7uOA/VtuY5thTcDX7KEcXUFxntxXQCHargTnidzeag=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HIG9ZkcVplt0XAEpYOV4b0/eU3SvzY6TqtW1OLn2UK9eQR8w+tiJ15M59L+jLoModnXWD6iFzO87dej+BrTFEejE1f0g5f2752wpn3C/iVpIkpnI4pssWXEvcutSijIM5m30LZBvUbxOmA/NWASsb8IBFrMjjX8oV7873HkxmRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WOnaQje4; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730817175; c=relaxed/simple;
+	bh=9uc0i9Eu4u+ZhpgkCO084+NkEenVxQwpd9JfLKuSZnU=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=RqGPFIHvQ2/05GtMXpXpibIyboWsSh7gfupOUfQat/PWYqI1dxOxsqjk9eQiw0GzIGFBrfoBxvPmwdvNh0TvtQ67RW39rEq2vJf0MEVeFh1rgkuNTzeFeBl4EpuqD5RBzHpoqHGDLsvpmZIBUqTqp4KdQapYdl+OjXk4r3HEXX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fD29zkmU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WJWvlLKq; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WOnaQje4"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20cdda5cfb6so52610195ad.3
-        for <git@vger.kernel.org>; Tue, 05 Nov 2024 04:52:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730811120; x=1731415920; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aZvNTw2xBPyWuZMTre9IilF3Ot+Hkq4MiBEuCHrk9j8=;
-        b=WOnaQje47mCuLNMMdibCFfvYhnXC17SA7OQEH57xUIbEr2piDYhGbjRPTLmLc1TqGK
-         dW4NRLVuvIPKfSfQCn2wS5Xe9/d1w/7HwX9CfJ9fDqYeMDfrwrhBUCr/gfmzt5loJcPz
-         xNQcAs3f+aH2Q3kF+euBp8aUgKBnzFfBi7GVZKhMCj8AZEK+VFYPacbXiK2Y3oX2hSja
-         SKXVX3T4hZ6HnMgtv4Wg1gAepDpBkpVPlqUpjJTbsB/JvmgfIs6+oaFx42NaDHUDYeDw
-         4GZTNoq7oHWB4vDmJWOY7X6V9ZNjcRsNsP9NJbg+UhBqs4+igweqGdn0h8B3/hwV604G
-         cw/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730811120; x=1731415920;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aZvNTw2xBPyWuZMTre9IilF3Ot+Hkq4MiBEuCHrk9j8=;
-        b=gDn+XYhsYaHQd4hnAItxBocet7Zbc8JXhoZ2c9w7mmX12NmOrTsczsX79Q9KMsxnnH
-         9Vw210+VW65vNgt92VvqTmXyFQnTGFAjj0D8LDgMIQG82X6SE2Jv0FyeX6rlQKu8aHkG
-         bXaE8ttQYC1lWhPX+ks6vQrLTAEBeB578RkY1C33qBwLuVf/fNlDw6G2buhNO/gj7dDC
-         zAf/d4iL1a8Dk94c6xAtH2FycEDjFAJDbSe26FtqQEO3R7yJP6Qi0FvGVT8Y7AiaDRfw
-         Ty/4khONbiU3goZ40vOY0SQ98a7oDk0vyQgVPRCx/ocQehNuP08f5caYTKBtmOc66WtO
-         XLDw==
-X-Gm-Message-State: AOJu0Ywqtm9ggqz43rYPM734JlKUfcU0g5+UxwtMj7kCKcOKSPpUrQLk
-	GdHUUTebMqxwWxx8uAtI1R0TgqJoDWeoSBY212GtkIqTsNI2sNsp
-X-Google-Smtp-Source: AGHT+IEzAQyHaLXVvJ7dGqXIdKMAwiFn6ojqrZYA9Z7P4KNMzVeCznPY/MMJGKKWdTgYSFGLIe1Llw==
-X-Received: by 2002:a17:902:ecd2:b0:20c:5263:247a with SMTP id d9443c01a7336-21103c5c5abmr268744385ad.38.1730811119761;
-        Tue, 05 Nov 2024 04:51:59 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211057d380fsm77699665ad.240.2024.11.05.04.51.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Nov 2024 04:51:59 -0800 (PST)
-Date: Tue, 5 Nov 2024 20:52:19 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 4/9] ref: support multiple worktrees check for refs
-Message-ID: <ZyoVA-p4JXPaKTny@ArchLinux>
-References: <ZxZX5HDdq_R0C77b@ArchLinux>
- <ZxZYcPwLB5oLTFUo@ArchLinux>
- <ZynFNQ8SnvTJlVdN@pks.im>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fD29zkmU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WJWvlLKq"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 62F1C2540118;
+	Tue,  5 Nov 2024 09:32:51 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 05 Nov 2024 09:32:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1730817171;
+	 x=1730903571; bh=/c8+M1pBzhdXey4pCeNHR6IRLK+FNKlOcw4jpm4incw=; b=
+	fD29zkmU177P4Rue0/25YCqWYXAYEmiAICDy5Pxtj8f0GMxBQ+9mJoEjE4hgGBcG
+	9nw4/TeJHoZd8/HlbLPuNwOgqxak8apKkMgBYvz5udOzVqXRq30FcTrM2yRIXKSc
+	wcELQSODIhnav2O7tVCDnWrsRB0nlUDrxQ4mOP0s4U6qcFwi/7ENwymiN80pDE89
+	mBRn9Ea8msKALtBObP8uAE3Ox/lVHGJFiqkJPZW5U4fv0UhsbT4XDfFqK96GIhvn
+	owRW6qqMnSVyRTvPkPyPekDPV2jl2LiEoMuXViiPQHvvpbpjEXKVPqFVcXj4Egng
+	BBjqtDouAjc8+dCp80YEag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1730817171; x=1730903571; bh=/
+	c8+M1pBzhdXey4pCeNHR6IRLK+FNKlOcw4jpm4incw=; b=WJWvlLKqMU2RsYy3S
+	GUk4QAY5Jk7uzyIsMd7dq1eV8Sz4Mjm5tZMgdyDv9AMWAOsV7Ut1UsSN8sroFR5D
+	uwrIjcVG5tLr3/EdQItFvVwUODn+zk5LSBaDipUNDmKpL9AVSlOoSli4byCcOpmw
+	72i8oniZ3ZdovjHNRumjk36udw1pF0xQFKNqnTZaH++hS21m0XYSSTZXZZPgRc3X
+	lZV1Tc3SHvb9W1ZoihsSYkRmVZfsTGLij2iuw8c0YFrHUvlIiKQTa70AVHngWeIm
+	r78p4Us835Z9zhDsUYncO3T81KgRnJRBfEGbb4uwFrxSa90dd+HO6/FjDHl2zzoE
+	q24Vw==
+X-ME-Sender: <xms:kywqZ2xrOeHuRqakAxJyST8A9nNPhDamqQEG8EPZi_Pib4JSwMwlA1s>
+    <xme:kywqZyThe3OASmuQ1nlfd_bT600RiTr8lO6p98-Js784TkRYxfarXbbieLslsS3-_
+    l1_JDaMkqWkGFIyZw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddtgdefjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggfffhvf
+    fkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgr
+    uhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeef
+    jeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
+    rghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtoheptggrlhgvshhthihosehstghivghnthhirgdrohhrghdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:kywqZ4WMlTTGYL9tR-zn1_oQlbcmVSNw-yQSrVzVqw6tLp15FAhW_Q>
+    <xmx:kywqZ8i-a-U5atzIw5UwB6uukCKJUPZmYv_W2S6jPJ7ElFkHTA41XQ>
+    <xmx:kywqZ4Cv6whhoRQXStNfou4H3fncSxNnahWHxXlhLJfYgUkT1L6_0w>
+    <xmx:kywqZ9JV7dbof-LCcwrtBQnJgkn0n0LvTePPpOFvoBljKpR_PE5qlQ>
+    <xmx:kywqZx7boGSrY7jqw2tv53PqFpUkSF-NxrF6i7mXbeAQg4q7v_0sTTR9>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F2BF1780068; Tue,  5 Nov 2024 09:32:50 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZynFNQ8SnvTJlVdN@pks.im>
+Date: Tue, 05 Nov 2024 15:32:21 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Christoph Anton Mitterer" <calestyo@scientia.org>, git@vger.kernel.org
+Message-Id: <43b401e0-df86-4849-8747-d5ab172becb6@app.fastmail.com>
+In-Reply-To: <83639e75d9d04208aa0dee345d9ef3536de105c9.camel@scientia.org>
+References: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
+ <305dc9f7-4bdb-40c5-92f4-7438a9ecd482@app.fastmail.com>
+ <83639e75d9d04208aa0dee345d9ef3536de105c9.camel@scientia.org>
+Subject: Re: git format-patch escaping issues in the patch format
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 05, 2024 at 08:11:49AM +0100, Patrick Steinhardt wrote:
-> On Mon, Oct 21, 2024 at 09:34:40PM +0800, shejialuo wrote:
-> > We have already set up the infrastructure to check the consistency for
-> > refs, but we do not support multiple worktrees. As we decide to add more
-> > checks for ref content, we need to set up support for multiple
-> > worktrees.
-> 
-> I don't quite follow that logic: the fact that we perform more checks
-> for the ref content doesn't necessarily mean that we also have to check
-> worktree refs. We rather want to do that so that we get feature parity
-> with git-fsck(1) eventually, don't we?
-> 
+On Tue, Nov 5, 2024, at 02:26, Christoph Anton Mitterer wrote:
+> On Mon, 2024-11-04 at 23:15 +0100, Kristoffer Haugsbakk wrote:
+>> It seems to me (totally na=C3=AFve) that you would do something like
+>>
+>> 1. Blank line terminates headers
+>> 2. Then there might be some optional commit-headers which can
+>> override
+>> =C2=A0=C2=A0 things (`From`)
+>> 3. Commit message
+>> 4. `---`
+>> 5. Look for a regex `^diff` line
+>> =C2=A0=C2=A0 =E2=80=A2 Now the indentation will tell you when it ends
+>> 6. `^Range-diff` and `^Interdiff` can also make an appearance in this
+>> =C2=A0=C2=A0 section
+>
+> Well as you've seen by the follow-up, such a naive approach is not
+> really possible, as the commit message may also contain ---, unified
+> diffs, etc.
 
-Yes, I agree. I come across why I wrote such message. Actually, in the
-very early implementation, I didn't consider about worktree situation
-for the "escape". And I thought I should add support for worktree. So, I
-made a mistake.
+It=E2=80=99s possible in the sense that it would work just as well as
+git-format-patch(1).
 
-[snip]
+You could make it more robust with some backtracking, like finding the
+last `^diff` and movig back.  That=E2=80=99s OK in a file with only one =
+patch
+(`.patch`) but harder to do for an mbox file.
 
-> > @@ -3558,6 +3560,9 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
-> >  		} else if (S_ISREG(iter->st.st_mode) ||
-> >  			   S_ISLNK(iter->st.st_mode)) {
-> >  			strbuf_reset(&target_name);
-> > +
-> > +			if (!is_main_worktree(wt))
-> > +				strbuf_addf(&target_name, "worktrees/%s/", wt->id);
-> >  			strbuf_addf(&target_name, "%s/%s", refs_check_dir,
-> >  				    iter->relative_path);
-> >  
-> 
-> Hm. Isn't it somewhat duplicate to pass both the prepended target name
-> _and_ the worktree to the callback? I imagine that we'd have to
-> eventually strip the worktree prefix to find the correct ref, unless we
-> end up using the main ref store to look up the ref.
-> 
+> [=E2=80=A6]
+>> It seems like it would be nice if format-patch complained if it found
+>> regex `^---$` in the commit body.
+>
+> Actually already when committing... cause there it's taken as valid and
+> then it should also work with any following tools.
 
-Actually, the worktree won't be passed to the callback. The
-`fsck_refs_fn` function will never use worktree `wt`. The reason why I
-use `wt` is that we need to print _full_ path information to the user
-when error happens for the situation where worktree A and worktree B has
-the same ref name "refs/worktree/foo".
+That would inconvenience all users that never use format-patch.  You
+could provide an advice/hint about some configuration variable which
+turns off this new default.  But that=E2=80=99s a lot of work to benefit
+format-patch users.
 
-I agree that we will strip the worktree prefix to find the correct ref
-in the file system. This is done by the following statement:
+Such an error would have to be a default because an opt-in would only be
+discovered (in practice) after you=E2=80=99ve been burned once.  And the=
+n the
+opt-in error is of very little value.  You=E2=80=99re realistically not =
+going to
+forget and write commit messages with `^---$` after that.
 
-	strbuf_addf(&sb, "%s/%s", ref_store->gitdir, refs_check_dir);
+>> The magic string is unlikely but could happen.=C2=A0 The solution is =
+to
+>> use
+>> an indented block.=C2=A0 Same for the diff.=C2=A0 (Hopefully few have=
+ to
+>> code-quote diffs)
+>
+> As written in the other mail, there is nothing real obvious for the
+> user that this wouldn=E2=80=99t be allowed, and in fact committing and=
+ such
+> works.
+> The simple problem here is the fuzzy format which cannot be parsed
+> properly.
 
-For worktree, `ref_store->gitdir` will automatically be
-`.git/worktrees/<id>`.
+It=E2=80=99s not non-obvious either.  The simple format is apparent if y=
+ou
+review your patches before sending them out into the world.  (I=E2=80=99m
+paranoid so I do that)
 
-In the v5, I didn't print the full path and we even didn't need the
-parameter `wt`. However, if we want to print the following info:
+>> But escaping things in this format?
+>
+> Coudln't one do something like this:
+>
+> If the line consisting of three - is the line that ends the commit
+> message, check during format-patch whether it's contained in that.
+> If not, generate the patch as now.
+> If so, use another magic timestamp and/or (since that might get lost
+> when sending as mail, set some X-git-patch-format: header, there adding
+> perhaps a flag like "escaped" and if that's set, any line that matches
+> the regexp:
+>>*---
+> get's another > prepended when escaping, and one removed when
+> unescaping (well in the latter only lines that match >+---).
+> * =3D 0..n
+> + =3D 1..n
+>
+> Or probably thinking about some more sophisticated solution or at least
+> a better character than > .
 
-	worktrees/<id>/refs/worktree/a
+That=E2=80=99s interesting and a good idea to use an email header to sig=
+nal the
+escaping.
 
-So, just because we need the `worktrees/<id>` information. Actually, we
-could also get the information by using "ref_store->gitdir" and
-"ref_store->repo->gitdir". However, this is cumbersome and it's a bad
-idea. So I change the prototype of "fsck_fn" to add a new parameter
-"struct worktree *".
+Thinking just about `^---$`: an email header could be generated if
+`^---$` occurs in the commit message.  Then it could suggest something
+non-occurring instead.  Simply `-----` or `***` or something.
 
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index 07c57fd541..46dcaec654 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -13,6 +13,7 @@
-> >  #include "../lockfile.h"
-> >  #include "../chdir-notify.h"
-> >  #include "../statinfo.h"
-> > +#include "../worktree.h"
-> >  #include "../wrapper.h"
-> >  #include "../write-or-die.h"
-> >  #include "../trace2.h"
-> > @@ -1754,8 +1755,13 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
-> >  }
-> >  
-> >  static int packed_fsck(struct ref_store *ref_store UNUSED,
-> > -		       struct fsck_options *o UNUSED)
-> > +		       struct fsck_options *o UNUSED,
-> > +		       struct worktree *wt)
-> >  {
-> > +
-> > +	if (!is_main_worktree(wt))
-> > +		return 0;
-> > +
-> >  	return 0;
-> >  }
-> 
-> It's somewhat funny to have this condition here, but it does make sense
-> overall as worktrees never have packed refs in the first place.
-> 
+But this might not just help with the commit message separator.
+Apparently the status quo is that git-am(1) will try to apply the diff
+in a commit message.  Even though it hasn=E2=80=99t seen `^---$` yet.  B=
+ut if it
+was required to see that first then you could do something like:
 
-Yes, there is no packed-refs in the worktree. And we need to prevent
-calling multiple times.
+```
+diff ...
+<diff content>
+```
 
-> Patrick
+And not have any issues.
 
-Thanks,
-Jialuo
+Of course you can=E2=80=99t change the magic mbox string.  But I don=E2=80=
+=99t see how
+you can=E2=80=99t do some more expensive parsing and require that you se=
+e the
+end of the commit message before parsing this string as the
+marker/delimiter.
+
+Some niggles: the commit message might just be the subject line and
+there might be no diff (empty patch).  Then looking for `^---$` will
+take you too far.  Maybe just look for the signature line.
