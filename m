@@ -1,108 +1,98 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C643FEAD2
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 14:47:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A4433080
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 15:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730818035; cv=none; b=g2TZXbcDP3RAH5FDfSk1BHtAG/1o6tozejX4bdpUsVKj4aOF88WbaQQxcLX+JB24sSksyABH4IGqLpmYXfyWiR5CoghUx+1Io1q5B93dUF54n5qbBcesLnl4Rt8qg2FDqs26IWPrXkaQ4dGqFYmna9d7wNtHuxaaz88brm/24eE=
+	t=1730819148; cv=none; b=RfV3b6sVeMwlpu2THJWfA4oikMUos0sv/XFBdWSmA6VEn7cWPlN2ntn+zQ7Jgufd4cg40R9px5q3l/NHlsSRyFgbhUOX/0tiAw6w97eBIkZuxiZhCTr3BghqDQNb3l6pXYoED21OCUwwAFyFeMVYnBWweqz5HhszFU4SaquZzDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730818035; c=relaxed/simple;
-	bh=sjVsNtu8NkO7FqU7d4r7727MeGYMNETUioPckV+C3kM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Fr03EC0cdjEyBipA/hzIyD8OlE1zf9N/POqn3/U6yNu+GCnVyRh3ZB1mCDr3PkElE8ebVMEBfnJtUgVHhKHHJ/x9hy4JgNJiWfo6QiWSngirZq3E7shFtswhEAD813vTZKmExPU8jmq9EHiu0Zii5gjxR0XqHpmm3i0rkk95KMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UdqucD2T; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730819148; c=relaxed/simple;
+	bh=METvBhAifPVSQqQRtToS/S6YSDnmIQkkyyrCeI+ezec=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T/UtCUGo8S1NddEBVDCazNgdoQ8yBWRfFQwwu9zhJQ5H37lTT3x+uTDdNfeUQJr4oGTYndoTZ7EE2mAt3p4alOPGcB0N6tidYNIcCMBty9TBm4hJ6IZE53SZkK/sZyC+uBkyOL/HoQQa/qbHHiaPHT/ZYxugjrx6loH72P+158A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=chE+y/om; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UdqucD2T"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43152b79d25so47579695e9.1
-        for <git@vger.kernel.org>; Tue, 05 Nov 2024 06:47:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730818032; x=1731422832; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=oBfAeG6Zyv2Qq2T7uph+KHalesEkd3IkGA/ljx4/QxQ=;
-        b=UdqucD2TgB9kXrf8SOA3Io1NLleruY8sSmlj0nYEZlzolQ3rs1Bj4chZdEtkjf/MBf
-         8gFmnZurlzAUn2/80z3hYDgrl815+k+TT6iUbW6b0ElMZRfw7Uy69IkrKUao6cRAzl8J
-         rgGSixtZrHg5yrwzhd8TAIBhQI7F8HD5KpzvhzGorC6/4cmHVkfpgf3ogatKFZ39uIyQ
-         cTdkxGpYqaCPW2538CG1rw9N93tpaSkNgKen9yiZwx9amEQ/QLYeI4sEonBKFf3T1xz/
-         oqk+kUD/nkBVrYTLCmA1g29szYRoT16z9/6AfvEgPx8oopXyKoYNcMZTl/VPsZXTJkbG
-         UEkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730818032; x=1731422832;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oBfAeG6Zyv2Qq2T7uph+KHalesEkd3IkGA/ljx4/QxQ=;
-        b=ivruQtOXi31pMKWzcfIAVcZdeNaoP8bh2B8UVVC/nCgZaSHGs1Lg228nLXpnjnZgSS
-         UdYw7PncpdKftELwgIhZXgpJKawV6YlLfgMxb5C/RFlf4fvB6fvLmZvRHCUEVM31/qac
-         a1DExA9DDBpS6Wl+f3RRPG2B6EWZwjTVHh8jkxDxp+k4cqrkDgQ366s/5FmJ5OezgNCu
-         UJGpZlT0fuYwxJMB5HWEcIQ4j8e2lXEdn528N2JdAtOT7C7iB5s/HfGDdkmJnizxPrcA
-         2OthylDW+t7kYtIbCqtB6u+q26ti2pasqouolWOLWJmJp1yn0hG5mfKPk9ObmVSm3iqP
-         fmOA==
-X-Gm-Message-State: AOJu0Yz0wyo1k3xPqE64htocgqAy0tzm3JAufbjRP/WltFmy3e8HD36L
-	S4sL70bQupq0NTym0/9n75hDIHZ6BjYEBsbY9SmR7ZYoOrnjicpoeelh7g==
-X-Google-Smtp-Source: AGHT+IERVp5rn826JXKKUhYfshFFh5pdRHDbj3VWPjs41DnNZh5FZoBCOI0lKol7S8kMDauK8ieEfw==
-X-Received: by 2002:a5d:59a2:0:b0:37d:5129:f454 with SMTP id ffacd0b85a97d-381be776c81mr16392880f8f.15.1730818031817;
-        Tue, 05 Nov 2024 06:47:11 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10e565csm16369746f8f.48.2024.11.05.06.47.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Nov 2024 06:47:11 -0800 (PST)
-Message-ID: <b548c532-e54a-4edc-94aa-f3c2925602e6@gmail.com>
-Date: Tue, 5 Nov 2024 14:47:11 +0000
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="chE+y/om"
+Received: (qmail 25545 invoked by uid 109); 5 Nov 2024 15:05:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=METvBhAifPVSQqQRtToS/S6YSDnmIQkkyyrCeI+ezec=; b=chE+y/omPfL3/Lba2qL7oqbvFvG6Y2KE6GcaDrjo+Xd0DiDGUKGYAtJ4KRJonZsW9/2PKbtwcOpottaNSfpO2KIiYVZyY0ExLvMOeAXjcqn+F6kBCI5KWEg3bEXHiYDeP2+/JsEi3S2vwlaizt7Kt1+emSBCTW3kckaGEROYa9v4F/idqfHSh5J2T5rtMd6ZyAP+QrlKF9RjiouiHsnqhSr9yZNuLPVyVg3fWdAQvQAk35BDYfArnoxaBcAFRn3vGD5aiugUbA9Hb8DxQ7+ejw4RXEjY1KWV6BoI2jfI7u2Aof4r7DYpkz7wTJueHCYFMPMQafDfF9yyt+z/QhX4TQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 05 Nov 2024 15:05:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25687 invoked by uid 111); 5 Nov 2024 15:05:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2024 10:05:41 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 5 Nov 2024 10:05:40 -0500
+From: Jeff King <peff@peff.net>
+To: Christoph Anton Mitterer <calestyo@scientia.org>
+Cc: git@vger.kernel.org
+Subject: Re: git format-patch escaping issues in the patch format
+Message-ID: <20241105150540.GA3043294@coredump.intra.peff.net>
+References: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
+ <20241104235432.GB3017597@coredump.intra.peff.net>
+ <3a96888e76e4dd26a3b0a81a19cda8ec7de72662.camel@scientia.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v4] remote: allow specifying refs to prefetch
-To: Patrick Steinhardt <ps@pks.im>,
- Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee <stolee@gmail.com>,
- Shubham Kanodia <shubham.kanodia10@gmail.com>
-References: <pull.1782.v3.git.1726741439445.gitgitgadget@gmail.com>
- <pull.1782.v4.git.1728073292874.gitgitgadget@gmail.com>
- <Zym--GVNJt_lsQEz@pks.im>
-Content-Language: en-US
-In-Reply-To: <Zym--GVNJt_lsQEz@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3a96888e76e4dd26a3b0a81a19cda8ec7de72662.camel@scientia.org>
 
-On 05/11/2024 06:45, Patrick Steinhardt wrote:
-> On Fri, Oct 04, 2024 at 08:21:32PM +0000, Shubham Kanodia via GitGitGadget wrote:
+On Tue, Nov 05, 2024 at 02:03:21AM +0100, Christoph Anton Mitterer wrote:
+
+> On Mon, 2024-11-04 at 18:54 -0500, Jeff King wrote:
+> > As you note, the mbox format is not well defined. :) The variant with
+> > ">"-quoting of "From" lines is often called "mboxrd", and you can get
+> > it
+> > with the "--format=mboxrd" option.
 > 
->> diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
->> index 8efc53e836d..186f439ed7b 100644
->> --- a/Documentation/config/remote.txt
->> +++ b/Documentation/config/remote.txt
->> @@ -33,6 +33,13 @@ remote.<name>.fetch::
->>   	The default set of "refspec" for linkgit:git-fetch[1]. See
->>   	linkgit:git-fetch[1].
->>   
->> +remote.<name>.prefetchref::
->> +	Specify the refs to be prefetched when fetching from this
->> +	remote. The value is a space-separated list of ref patterns
->> +	(e.g., "refs/heads/main !refs/heads/develop*"). This can be
->> +	used to optimize fetch operations by specifying exactly which
->> +	refs should be prefetched.
-> 
-> I'm a bit surprised that we use a space-separated list here instead of
-> accepting a multi-valued config like we do for "remote.<name>.fetch".
-> Shouldn't we use the format here to make things more consistent?
+> But as you've said below, here too, the receiving side most likely
+> doesn’t know that and then a wrong commit message would be applied
+> (with no unescaping being performed or it would simply break again when
+> the magic From is used).
 
-I agree that would be a good idea. I also think that it would be helpful 
-to expand the documentation to explain exactly how the patterns are 
-matched. I think "remote.<name>.prefetch" would better match the 
-existing "remote.<name>.fetch" and "remote.<push>.name" config key names.
+I think there are two differences between ">From" and quote "---":
 
-Best Wishes
+  1. There are already mbox parsers that understand and unquote ">From".
+     If you know you are feeding your patches to such a parser (e.g.,
+     the one in mutt) then using "mboxrd" makes sense.
 
-Phillip
+  2. The consumer of the mbox format is much "closer" than the consumer
+     of the "---" line.
 
+     If you produce some patches with format-patch, you might feed them
+     to your MUA or another local tool, and you know how that tool will
+     unquote them. Once you email the patches, that ">From" quoting is
+     irrelevant, because the receiver will get individual emails without
+     the quoting. They may themselves choose to store them in an mbox,
+     of course, but the details are up to them.
+
+     Whereas the "---" line is inside the email, and will be interpreted
+     on the other end by a tool like "git am". So if we introduce
+     quoting in format-patch and unquoting in git-am, then correctly
+     unquoting will depend on the version that the other side is using.
+
+IMHO that is not necessarily a reason to avoid implementing quoting. If
+you do accidentally put "---" in a commit message, the current outcome
+is for your commit message to get silently cut off by "git am". But in a
+world where we quote it and the other side is too old to unquote, then
+they may end up with an extra quoting character in the result. But that
+is probably a less bad outcome overall.
+
+  There's also another flip-side mistake, which is somebody who doesn't
+  quote sends to somebody who unquotes, and the result is similarly
+  slightly corrupted. The mbox equivalent is that you meant to say
+  ">From" with the ">", but the receiver turned it into just "From".
+
+So I don't think it's a totally wrong direction to go. But like I said,
+it doesn't seem to happen often enough in practice that anybody has been
+motivated to add the feature.
+
+-Peff
