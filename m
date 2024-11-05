@@ -1,85 +1,85 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01AC1D79A0
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E481DFE8
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730787435; cv=none; b=Z13Qh6Z6Detk9gZI3HL02oLaD6L5oSLikbTEE1rZcmTGmv6HVSJRgiCJKMWsM5HLcneQXR5qIsm0Ptt2Ynk8AKe7/YTl3kovN9Yxc2N2Y5+gnc0fNh6QcBp17Gra02rsQjfv1jSzXz+Wblxs+0RXpgbEKzHqS1TpYaQ2hePuldY=
+	t=1730787437; cv=none; b=iJx5prvRq0ELXMauwdoyvoYGF1rI81pn5BYkvQYD/sEcaLEm31YcvPeKq12xwJkk9qNVlL4lzDw22VUqrCA1pLzNe/vmjSrpP5qg0YChrVFNq6+EaFCKNjzccloLb9eurlFWLJYFokmNgHiDo8ix67fUkht05slevv+1/yt/wmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730787435; c=relaxed/simple;
-	bh=2TMfsOTIh3JnTCD9b7qzzyJwvE245Yzp/a3IFACQGu8=;
+	s=arc-20240116; t=1730787437; c=relaxed/simple;
+	bh=jeDgV6xmnE8Hg6BGySLVEiBIJtsBlhbI4LTRIR5Nl+k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XjfCemU8WSdSaijhDJD5wgBT4/P8iNUva6js1lG+UIwq6Cp4BuZo3XhnxGM8Mpw0J7ZfGUv/EAoCBkjDE3Oyl0wcEWWzqq+PQZH4M3P6J/t51fycXAJmfnxQNJJ0rmWGTZVJgeDi+HLWvMloqlTLpri5a9sFhkj+ZUYQ9hWeAa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YgFijdEJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QWfkl17C; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=JosND+GsHXEa3VDYvjPeH8D/ldrPf1VSFBb7diAqdnUer0nXU2PZuMF6i0iB5I/sHdBT0b0kqzEoQ0vXT+ggAzlcjZ6mf5GzgqhiVYREhUraJDBv6bMIaiuPRbxZvhqVcNE7/hsj0aT0JZ52rD9cxN+k5xrug/FquBCHKzxEKjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WvV3p96k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WWHnkP/9; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YgFijdEJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWfkl17C"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D4E7D2540076;
-	Tue,  5 Nov 2024 01:17:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WvV3p96k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WWHnkP/9"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 84E3311401C3;
+	Tue,  5 Nov 2024 01:17:15 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 05 Nov 2024 01:17:13 -0500
+  by phl-compute-05.internal (MEProxy); Tue, 05 Nov 2024 01:17:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730787432; x=1730873832; bh=DtfNjyoyKH
-	ah2GOxH1ObLOaR8hni855r4j0yqFHbY34=; b=YgFijdEJ7UaXP4z8jWOPIYkqFD
-	czUJpYjr/3nSkRVxG8qjn14eHE5+3jaF3QzuUHJxVTRF5zwv05RlqYIAr2smK/0+
-	Z0VtPiIVKCxrsc4I92uD8qIrLigG2clu4eVzMltycx6YWAxYgXSDyDS9muYGmxDK
-	EeO67lPJCWeVTjiLZ9D+fmWQcJ+cg5Wi78FiyYLNJet6ryDmWVSu5foiEZ90J74y
-	dUpnjnJPBgRFW2HF4WacjDnfjg6ikODeUQWbbcxdT5DCx+1PxWV/x9u6RHXrKUdG
-	mJ0E1LKI65PgvNKcyenTv62UihDLn/KOdKCL5dguUt7gMH3PwtZNtbocS/pQ==
+	:subject:to:to; s=fm3; t=1730787435; x=1730873835; bh=dYdnbtXUXj
+	61tzkzZZcrdct4dMcUhhKwFB3yh7/LGT8=; b=WvV3p96kIkFlL96rwxdHgq3DOK
+	GuwVBnsW8blsbjm3i5uWFNOi+o3k7t38jfGdF8mZajte1yu84iu9CMrfSabSLs+w
+	ccqhu9KQwfiqJ4cJKmDQbK5SroA9Ky8mX1cD9jsfZdIc3zeBZigC5J9BNavyTOjb
+	WxMYcKHyxwg+1OJ//27OZsvBSc6jaWvwm18/GHp4ndOciHjEr4p/BNjScweXFDoC
+	QJHs0GfNVpMewUx59a4WJMw9uXhN0ac6QtgmCeVnTa5yy8LuqgO3JVeEtttXnMxG
+	4jtcX51OA8Cw2xwz+H6QvGdVrfmpM7MxKZDU7AWkSyUkCWGZKnPbpO2WEGbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730787432; x=1730873832; bh=DtfNjyoyKHah2GOxH1ObLOaR8hni855r4j0
-	yqFHbY34=; b=QWfkl17CtSsRZ2hRKrO5ekmL0wGs2gQt1HyDxtBxSicKIVyEaV+
-	gS7W82pJ+49TouaYm2EUpFUQVcR0HyyWzyA+vUSMNBVyia1iWWB83n29X5bW2GT3
-	cB74fl/q3M3F7aLLlgWJFbp1ygMbVsD7QmnoPqLeMN+U7ntJqJpFX+3T5oDBigHV
-	KJL2Hbwd6ZblAZ/eIc2Wzt0XkK0X7uyN8IjnjJaaMfBDM9WNvRJGx6GmFXSU/Um2
-	m8QQkcVAn2GydzhrcnA/xxwDdn/vIqcgMOfvy2ciX6nZX+6j0MgV5f+r4VGO09wB
-	u/UXR89dZCem6aJ9rQnJZDBgOo/k16pAVyw==
-X-ME-Sender: <xms:aLgpZxzIA0eP705iU0j2FIEcNiMea1xKnzGDkhw7VU9eDiIDwUq0nQ>
-    <xme:aLgpZxR4K6ytJp43c4DEnV5UvZi_opUjDQQNON-3TAn_eEoHytT7-PFHlBwdMyiX0
-    LCBOteNSCji9YF4qw>
-X-ME-Received: <xmr:aLgpZ7VwNF5Y5uVfYrdVg3yYELwENlIZtgYoX9KzYO6uTV11IevK32Tb511dUgJgc-0d2r-UPvAb1Czjz0iniSupz21-DDIeVva2vC7-uSIrdA>
+	1730787435; x=1730873835; bh=dYdnbtXUXj61tzkzZZcrdct4dMcUhhKwFB3
+	yh7/LGT8=; b=WWHnkP/9o53xjswlIXaWZrZmDQ+NknheKQTfc3pdz+GouICopFf
+	6OD9fktRpISUMu60k6O9HVVd/J9wkbON6/XnjIQD1uLXYYjKKJwVjpmWVTwmYv80
+	2xy3Bexo+uxo5wrACSI4BTtpFPswXNkXmN+7RqeBVNN6kkuvWet7pr/s9ObKY0aF
+	nN/+Fg7gkSHMZV085lRAhPL0mGCV9bOIQytZieC5XwOc+Z9rSvjmak83d1U1u42j
+	pm6QSV0S88K4Pxp4pogHAl7jAKiDq+2jONYVBt+thsEh51GrehgLIdVOhicrjUiL
+	xd21JPVwMIhu++864Yn7W68Ut9JlsOTF8iA==
+X-ME-Sender: <xms:a7gpZ1A65zPtTtT06gS-zUXOm4sF-zbddwG_advh0asw2HlAYSl5Fg>
+    <xme:a7gpZzjQjUHamaWTz52I7-BCFHUyw7GRZVVvsoUqbjPivKf93bErq1z4Xvfrowj-D
+    Dt0VEaMOfp5xgVuCQ>
+X-ME-Received: <xmr:a7gpZwlQdM3BHpEwX9dOLlVu5bWYRjVufGe8Lf1GAya3QEzzL5Ixdfvmim5odVzld_PVfwlsgy7PXjKJakhxIYhxCTEyhZj8j5NUWQHiwYx0SA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhr
-    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:aLgpZzgHVluJWJOWDh-fCc01eStBgUsXZQ5AuQmsiQuaSTG6KmpY-w>
-    <xmx:aLgpZzAnAaKQH6xEkFs9gF-AlvkCn3-UPoNsL1bPsTOvLVrLEBLKKg>
-    <xmx:aLgpZ8Jr2UTLHNy-F8wg5_k0ML6n-QhtaHNTBM31pywz_TW7r6SEhA>
-    <xmx:aLgpZyC_2Kwx7kuiK1SSC6t6zDq3Ynq6Bz84a4ENqZrb51q8ncuUtg>
-    <xmx:aLgpZ-5SLC-XALgjTo5BIk59RN4y7B2pYL4ChzgCrCm_P6YUfUzQHurQ>
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhf
+    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehjlh
+    htohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhr
+    rdgtohhm
+X-ME-Proxy: <xmx:a7gpZ_yVndVbPutGnHVtoIq703sjYyuuD87IWcdvlYwNeuuvVygRUQ>
+    <xmx:a7gpZ6QIbZHLQtjQJGGmU1cq2GXKpNpGeSg9mHG38Uyl8jxv_Y0wbg>
+    <xmx:a7gpZyaiRpHv_DbgcACPOmI0Jbjy0G8Rn-IqzJI81uHMVuSZPfNaaw>
+    <xmx:a7gpZ7S_ZjJzkLYXHzPMYmlEXnqTrJZGrrZoRGOfSRoTG5mWHzwalQ>
+    <xmx:a7gpZ3LmvdWQE8sIpa2CosvC-plZ4DrV-goSoR-QEUYNxMgoxF33AeQx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 01:17:11 -0500 (EST)
+ 5 Nov 2024 01:17:14 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 96da6a67 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 06:16:49 +0000 (UTC)
-Date: Tue, 5 Nov 2024 07:17:03 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 48e94aa3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 06:16:52 +0000 (UTC)
+Date: Tue, 5 Nov 2024 07:17:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 07/22] pretty: clear signature check
-Message-ID: <58ebef7e757803bd7c2292f0494386464f2c581d.1730786196.git.ps@pks.im>
+Subject: [PATCH v3 08/22] upload-pack: fix leaking URI protocols
+Message-ID: <c5813079d44ff8959f21b7b8b19414ada475c133.1730786196.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1730786195.git.ps@pks.im>
 Precedence: bulk
@@ -92,78 +92,39 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730786195.git.ps@pks.im>
 
-The signature check in the formatting context is never getting released.
-Fix this to plug the resulting memory leak.
+We don't clear `struct upload_pack::uri_protocols`, which causes a
+memory leak. Fix this.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- pretty.c                         | 1 +
- t/t4202-log.sh                   | 1 +
- t/t7031-verify-tag-signed-ssh.sh | 1 +
- t/t7510-signed-commit.sh         | 1 +
- t/t7528-signed-commit-ssh.sh     | 1 +
- 5 files changed, 5 insertions(+)
+ t/t5702-protocol-v2.sh | 1 +
+ upload-pack.c          | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/pretty.c b/pretty.c
-index 6403e268900..098378720a4 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -2032,6 +2032,7 @@ void repo_format_commit_message(struct repository *r,
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 1ef540f73d3..ed55a2f7f95 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -7,6 +7,7 @@ TEST_NO_CREATE_REPO=1
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- 	free(context.commit_encoding);
- 	repo_unuse_commit_buffer(r, commit, context.message);
-+	signature_check_clear(&context.signature_check);
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # Test protocol v2 with 'git://' transport
+diff --git a/upload-pack.c b/upload-pack.c
+index 6d6e0f9f980..b4a59c3518b 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -166,6 +166,7 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
+ 	object_array_clear(&data->extra_edge_obj);
+ 	list_objects_filter_release(&data->filter_options);
+ 	string_list_clear(&data->allowed_filters, 0);
++	string_list_clear(&data->uri_protocols, 0);
+ 
+ 	free((char *)data->pack_objects_hook);
  }
- 
- static void pp_header(struct pretty_print_context *pp,
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 51f7beb59f8..35bec4089a3 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -5,6 +5,7 @@ test_description='git log'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
- . "$TEST_DIRECTORY/lib-terminal.sh"
-diff --git a/t/t7031-verify-tag-signed-ssh.sh b/t/t7031-verify-tag-signed-ssh.sh
-index 20913b37134..2ee62c07293 100755
---- a/t/t7031-verify-tag-signed-ssh.sh
-+++ b/t/t7031-verify-tag-signed-ssh.sh
-@@ -4,6 +4,7 @@ test_description='signed tag tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
- 
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 0d2dd29fe6a..eb229082e40 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -4,6 +4,7 @@ test_description='signed commit tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- GNUPGHOME_NOT_USED=$GNUPGHOME
- . "$TEST_DIRECTORY/lib-gpg.sh"
-diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
-index 065f7806362..68e18856b66 100755
---- a/t/t7528-signed-commit-ssh.sh
-+++ b/t/t7528-signed-commit-ssh.sh
-@@ -4,6 +4,7 @@ test_description='ssh signed commit tests'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- GNUPGHOME_NOT_USED=$GNUPGHOME
- . "$TEST_DIRECTORY/lib-gpg.sh"
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
