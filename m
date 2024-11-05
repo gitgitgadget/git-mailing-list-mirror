@@ -1,85 +1,85 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F5B1B5336
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EB11B5336
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730787440; cv=none; b=s+VbEP47kadXsz0PdHYFF7juP7dRT4RzQ8vebJX7XpvHDeXvVqQHXoL9RJKXsWXL8udwzeLi6yZIYaNdCZpgBW+DPJ4wFI6+LZxbGlRYY1DFH+w0YTWK19Hd6PXhrfuV2vkdixV0aIhZ0C3b06p0+FDD19NjE0Dl7DeTYjRwFlM=
+	t=1730787445; cv=none; b=A9MBUgaoSK2SAFa0+lyZPnSWc+RbPzkCz1HWdK8uDJmhE9TpkXop9EUp6UxGfgeeUIHlhUsaOMJA4FObQWf29l7SQTPvT6NOlU8u53MK++RwNWDvaOxNr8+CdfVWwyuo1IxatEOh0B7uXMMh3L6aAnYPf3vYJrayb4fee1V7Ew0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730787440; c=relaxed/simple;
-	bh=AHj12aPbiHWS0uT00uKb8x1tEpfNZwM6VzMgIYEBXoQ=;
+	s=arc-20240116; t=1730787445; c=relaxed/simple;
+	bh=kE9CG+AKANsk+W+5/LZNpEMG4u/baXAte8+JqkzM9Fk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UMYDDX+teSkUmbnmKwHqZm5UWqJYbluPp32b3DHm2QJ0BqewsXRuDI5sTsV5fmpEh9F2SJ8Wd/UQeKGFwmO7VKHvrhezhaiDiUzK4B9sSCwb7+NcVffIOxU1hMLAXj1ZAoFx7MkUdUiYyRaJ6qboyq9IGXuwj4SOJid8wjqqbp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PcPIyp5U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nLJ6wwLC; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=jfXGMdIoJAf+0vijZ5G83KD1jgIPNx4pRD8hHAPklcRIFPYf1bSwizyUwGuiOgE96wHDQjCJ4QvhcmR3vADI4vrh3Fu4jjye5uFLur++QVJfv8qz1P6b0I6Y5YxVpClVpYl1qTUH/jrr+xaOFXklhWqFf+1t85lxx7AcIcSENRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e60k5Xfk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lpfekX4Z; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PcPIyp5U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nLJ6wwLC"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3D18F254018A;
-	Tue,  5 Nov 2024 01:17:18 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e60k5Xfk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lpfekX4Z"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id EF3EB114016D;
+	Tue,  5 Nov 2024 01:17:22 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 05 Nov 2024 01:17:18 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 05 Nov 2024 01:17:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730787438; x=1730873838; bh=e+UpPi9o6i
-	oJNhf/Hp4D4oNtN6bpU3HATOuD2XSABtg=; b=PcPIyp5U832Pl+LqeWcCNI8MIr
-	RML7q7lp5LwAziaRRnEd5GoPjNjgUSyvB8av2TLW4lijIM3S63GJKHzQ8Js62C7s
-	zDXkVRdmm4/4A4ApGWzfmbK8H0gT3azQeaLwRrfifuody+wZt6lrD9hDU8LNPd5M
-	cqXRUKgCR6ct0yF0HZ/2i+Mqk4RHe90Hkh870ljKF+TmBjk5bExLJ1gqYbhOiXDq
-	i+2SPbWCKTxZ1Gd24jGkPPAazuqrPxOC28pjZjkPmk8EjHSRbdMjfYBIQjjuxyFW
-	HBnuIoI5xXp2ImbfAfpxvmiAki91RuIC7McIZPk3MCfVyT5NNrFOntHw/YEQ==
+	:subject:to:to; s=fm3; t=1730787442; x=1730873842; bh=pWdazviE/S
+	mKHExwZ4qusnmGTDZvg50nQoKlog/2OuI=; b=e60k5XfkpQPt7kT4hMm3uKelAS
+	RTWSaGJLWMfNHTPIBNR7nG/iBxcO29lTbnHHaQNEmjSnL+50CyxgdemZwixG+QO5
+	qCmpUYF9rnaxe8e9KeyXo9dHLW6wlvqqSGxUfQxOLFykitrsaN/XZk2/LtEOMUIn
+	/FEFEECxRKV8G6AlAasV5mUX9f9M5Lqn4kQMznZgDjnPsZ7S/qwqui0vJ+3WWcOn
+	Ds8IOIjM5QcJotDBaVPHRGvkEQR2GRGOZXOdPA1UojPLjx4rhhwFu/1s+rDXAswi
+	/z73WkNkpfT2knpQOYkZQIhk7pxAKxYWac2/xw8hD+aNfwV49MH4M9DkbY3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730787438; x=1730873838; bh=e+UpPi9o6ioJNhf/Hp4D4oNtN6bpU3HATOu
-	D2XSABtg=; b=nLJ6wwLCT1W4wgEGcZHUkCs3Z0DPpLUVrG3OTOyCkAWw3Nc2uTX
-	PZ6LnHQmjxiiK3z9H6x1E9jEprZkubAJEPLCdR4PPtqAJMf01aqNNhVb77tw3U7i
-	69yyIix33cOOUaUtQJ6T42UPUVKeOuQubR1NxlwtgI8oqmpQgueBv345EJ54ODAu
-	2INSNHzJemE0TuWSHL50c6cNxwjxpo3Vx9HqtyRyf414QnB8U6Tw6dnSVQMZ48Yu
-	XoIJP1cN70eSs1YiFD9JRdd1pHs85M+i68/oW6BxcV3nmke0Ud/RMaYQygu1D1ub
-	3DsSz7Sa2gaj4ju2IYQpwGiVeifD31c49dA==
-X-ME-Sender: <xms:bbgpZxL3w2o-9_af8NrVMc8k8JxxCjR7gObanAKCkUOsetii8BfEbw>
-    <xme:bbgpZ9J6-C2X7LxsqeZmsS41f6qIo95Em4tSqErHWYxKWERfsJyZO0JUZ2QOI6lxr
-    7kmIcpaG6KlR_qhSg>
-X-ME-Received: <xmr:bbgpZ5tPHR4rzneCYGrK_yS2wRvC3JqBkbSP9JH7GrbYeChHZbmnOKO4YV9TRkivU6jGiP3gpNNQ5mHIiEgzwt3b-3SM3L1nBQFa025T6M0V4A>
+	1730787442; x=1730873842; bh=pWdazviE/SmKHExwZ4qusnmGTDZvg50nQoK
+	log/2OuI=; b=lpfekX4Z8YNq/ukD7qMZsx3YQfOlSkrWXLsV1JorMrpU+Pjiq0d
+	uvCvL4QOJsU5BJScU6uiBqflOljEhVYSzrpENW7VMCVq36cK1SwB6bpfF3eFCZR7
+	lO7AoIc24SuVPlhU+X+2SN0YLwNpOMFj7pDvdDW6usjlgdgPSt962Fn6gNYtMJQo
+	BHBLJanbmXVjyIcGLjU+owvLAS+cRYePTg1z47IFPcQjjIie9AFe6AyFsyjDIVsO
+	eCNSLkr45BP9xbZyRmbLSUOjw1QX1YXSa1ymXLMcYD9Pe2pQ544SWNI0V9dKLnN2
+	w+qPmWLRaVXbLPS9FMTtBedtG1QKDGz+RQQ==
+X-ME-Sender: <xms:crgpZ0RjHqRx1l5rlqopOrIv_OAaKJz_bkxVtbSGrGFM18qbDGOEuA>
+    <xme:crgpZxx4xfDrDwJcp36WXBDyO1QPRej3_l9iuw55u0u2WW6mB9_FzIAEW4QvZvSZN
+    0nAYYJLig71KvEaEA>
+X-ME-Received: <xmr:crgpZx2kLeebgFEGiEmY6FtfOcs7bQQP3oP9x0FqE3HY580ld91a_Xw_V40wv_GWbQ3egrshgu-uHuqM2CVUZ2zR0xnW5XaYi2cqPxtH3ZYZWw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehjlhhtohgslhgv
-    rhesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhr
-    rdgtohhm
-X-ME-Proxy: <xmx:brgpZyaTxzn-nOqrcHSoSfpT9kEZvWSb-3UvjEvt-x7ju_eC1dr0lQ>
-    <xmx:brgpZ4aPeb9K9QICNirQ6YME5xKwhE-TtFm2Qr2GVTiEvXEvOmsOow>
-    <xmx:brgpZ2AcI8Lpuk_6-GfA8RAfxayupruySmaLHHxIKlbqBE8KRwfPHQ>
-    <xmx:brgpZ2bmjg-y94zj0TC3pAAPZAx_GbkWgq0HlL2nT606x5tT4w7Pqw>
-    <xmx:brgpZ3x7qbBozim6aYQiy3gF_DrUIlcvjgOOObNWuSG9tf5mQm9gRvHN>
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehtoh
+    honhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:crgpZ4BagCVWVPWVnFqIhJvVq-lsbHOB5w6Mic6he6zIuKKIGdWmWw>
+    <xmx:crgpZ9hMOfOPqqXfrqeJOu6WkCOS7p8EMq70BCeinrp2drSTIs6Kbg>
+    <xmx:crgpZ0pkdrKBJ1m-luRgNmUho-t2UmXWMjfNj1NBRwO00VKO4H9s5g>
+    <xmx:crgpZwjBWG1eC-wtKRWKEU9rgNq71yU-pf1SIR7lJke3uS7zEaaAew>
+    <xmx:crgpZ7bDsDymOtR1yt9o4Pg541c_NXlYKEUNEWAK7tNknPKc0AWSLGp7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 01:17:16 -0500 (EST)
+ 5 Nov 2024 01:17:21 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f379c41e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 06:16:54 +0000 (UTC)
-Date: Tue, 5 Nov 2024 07:17:09 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 382ff353 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 06:16:59 +0000 (UTC)
+Date: Tue, 5 Nov 2024 07:17:12 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 09/22] builtin/commit: fix leaking change data contents
-Message-ID: <f66fa4e0e25b0696c0b52ebc765a5dff18c8597e.1730786196.git.ps@pks.im>
+Subject: [PATCH v3 10/22] trailer: fix leaking trailer values
+Message-ID: <dac63bae39e01e612621b36b698d13d06a21a2ae.1730786196.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1730786195.git.ps@pks.im>
 Precedence: bulk
@@ -92,54 +92,47 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730786195.git.ps@pks.im>
 
-While we free the worktree change data, we never free its contents. Fix
-this.
+Fix leaking trailer values when replacing the value with a command or
+when the token value is empty.
+
+This leak is exposed by t7513, but plugging it does not make the whole
+test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit.c                          | 9 ++++++++-
- t/t7500-commit-template-squash-signoff.sh | 1 +
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ trailer.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 8db4e9df0c9..18a55bd1b91 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -728,6 +728,13 @@ static void prepare_amend_commit(struct commit *commit, struct strbuf *sb,
- 	repo_unuse_commit_buffer(the_repository, commit, buffer);
+diff --git a/trailer.c b/trailer.c
+index 682d74505bf..6bafe92b326 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -249,7 +249,9 @@ static char *apply_command(struct conf_info *conf, const char *arg)
+ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg_tok)
+ {
+ 	if (arg_tok->conf.command || arg_tok->conf.cmd) {
+-		const char *arg;
++		char *value_to_free = NULL;
++		char *arg;
++
+ 		if (arg_tok->value && arg_tok->value[0]) {
+ 			arg = arg_tok->value;
+ 		} else {
+@@ -257,9 +259,13 @@ static void apply_item_command(struct trailer_item *in_tok, struct arg_item *arg
+ 				arg = xstrdup(in_tok->value);
+ 			else
+ 				arg = xstrdup("");
++			value_to_free = arg_tok->value;
+ 		}
++
+ 		arg_tok->value = apply_command(&arg_tok->conf, arg);
+-		free((char *)arg);
++
++		free(value_to_free);
++		free(arg);
+ 	}
  }
  
-+static void change_data_free(void *util, const char *str UNUSED)
-+{
-+	struct wt_status_change_data *d = util;
-+	free(d->rename_source);
-+	free(d);
-+}
-+
- static int prepare_to_commit(const char *index_file, const char *prefix,
- 			     struct commit *current_head,
- 			     struct wt_status *s,
-@@ -991,7 +998,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		s->use_color = 0;
- 		committable = run_status(s->fp, index_file, prefix, 1, s);
- 		s->use_color = saved_color_setting;
--		string_list_clear(&s->change, 1);
-+		string_list_clear_func(&s->change, change_data_free);
- 	} else {
- 		struct object_id oid;
- 		const char *parent = "HEAD";
-diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 4dca8d97a77..379d3ed3413 100755
---- a/t/t7500-commit-template-squash-signoff.sh
-+++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -7,6 +7,7 @@ test_description='git commit
- 
- Tests for template, signoff, squash and -F functions.'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- . "$TEST_DIRECTORY"/lib-rebase.sh
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
