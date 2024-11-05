@@ -1,703 +1,462 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90461C1AA9
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 08:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0220F1D0178
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 09:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730796325; cv=none; b=ikJ1A+4o56FN6IWHmKBV1dfm+5U3FJrKclvZKerwE+an8cnZ26239dGE9iXeAs15MjQJA+gCK5Sp9loO5O/5BoIYDCNLcDJ6CqJdoAuXlgZWhrrL35QDtmxTVpqDFch/lP0BXLzZEiMhhJf+qBRAog6mICeELiHZhJzqKeFP3Oo=
+	t=1730797930; cv=none; b=UcninI+L9G2YhI3Ag588vl28Lze6zkTsewEmVVebNxWYnwTOfcyRnaJbH+50LDy0+wYCLdpHn7tZLVqNrA9qx5aR3bRO7uShRqZCZZ2CRK8uXWBgcYzvQP2RMrgoi4X6Sn5LfDF1CSCEk+SS9wpEYqKctaEndthbyu022Mv46Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730796325; c=relaxed/simple;
-	bh=NCW5lGoQUrQRQPLBir5hNU7Y9NMToBxuYTe9MhAAwbw=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=iSxlcaE6/xzuAA0Ulsia5ze/SxUYet/Gy5lGfmd+8BTL6BEb0d/lY9p2mQFXZljBJlxQ3M+tLGAo6gNCMJ7Vp+PuzH2s5hPpE4uJOJACosy/RTSZyLzzWA/VZ8TKh8VX0SXPG5jvr9J3758w8HUQoT8Od8L5h1fNUof0XCw/Sdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CFL7Pdjm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HSDaMLEC; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730797930; c=relaxed/simple;
+	bh=Tm1oNdX9U6in/xWokSHxBUDwSGLPW+NLibKjijzcEEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pK9l0HBUuk/IXplPVtks5HNlWcmRtJtBC3kODYHO37vDhq9WJFCr/eQpwV4MHo5Mk6avcTPifxvij9yim1XkLu/BHeX87aptu5dwd8v6UW1rJLljc+Kj+dJbqxGkYXefhRqWbcyQhpry28JtrKWdLeam115oBlNWoxM+C6yxeus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JGiDuFXA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iqCN7wmW; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CFL7Pdjm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HSDaMLEC"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id CDB8711401E7;
-	Tue,  5 Nov 2024 03:45:20 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 05 Nov 2024 03:45:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1730796320; x=1730882720; bh=WksVmhui69
-	h/iOUpPgK3p6D9L9337BvMGjE77Gl3jow=; b=CFL7PdjmO+31orYGQknPCCrC72
-	wbiHkx9SZf+6aBl29qGt3GQpO4yEoSM5x3Dy7ea9tvfiKr97RUzv1Nea3Z+5yuZh
-	AcTwAvnrffp6hdy/CKQ9EeYOvGzpc3S0HWeRWFKYoTf/QzKwYRnN7Y/b6uXSg4wg
-	7JOY/K2C/BqMi6fhGZ0+au5xObqXVTu+lvZsSOmBJJf9aRpRFlS19vwVWTtZJOo1
-	xKrn/i+DBnSs2GLFW4/ShXJKbTGzi+t+5V6GZ0DZOHvjN3WdONqbo9urp/90Wwqi
-	vKO/PJh4nutHUUiaDHYUguXnhY+Mfcp9W2f69AQfAAgxdy8frmHesZxcxBeQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JGiDuFXA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iqCN7wmW"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 04884254012F;
+	Tue,  5 Nov 2024 04:12:06 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 05 Nov 2024 04:12:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1730797926; x=1730884326; bh=wYHPK8fOUi
+	o7+oxZJpDpyLQkA6xgtH6hjFcp9Fy2bMU=; b=JGiDuFXA6LHpM5Qan+16RmaYhp
+	nSGpyYlhVKKtV+y99wbxTdeoZI235ILgP7Gqyl4aQHHW5pjFdx4pm6KcHjCkQqpD
+	Up2377C+Wb6lE88znnhSGNR4ze8Y6J5nZZdju1OdXkYzq5zVq/N2M+tVzwicNS+b
+	RcNbbs1QcfqR1zhuIU25Qh52zEMo8RdglI8zgJJblpiUL2g2+4xmuBbOlqzwqRxO
+	TvyIspMGF6S0DwsjtXPfktkw6Zi4OZog/wxWz3tYcWq7ih+1rpSHEvj7UcCGwMhG
+	wJ9S4vFUTmrvOUnZyGzbpGjpdtVUNekDduTzJ2z/BcDlQH7dCb3OjXmMaLxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730796320; x=1730882720; bh=WksVmhui69h/iOUpPgK3p6D9L9337BvMGjE
-	77Gl3jow=; b=HSDaMLEC2wvns9oiEwaZeoett9x6TneVFM/7R8+UYrrfHw0cOx+
-	73DU3N160x1bkRxh/upawQv4rpFIuCCSkludMOAUSgNEx7dw8owLepGldOlJeKj+
-	1v8EoP7JfYbtjeIlPzFaUvy5sZczdM/4jW9p4+Wv6XRlnvxjjF4zN8DLaU1W0jum
-	pdk75uS2Pg9mETVDmbRP0X+wJbsTYjm9VA8WKXidinwbJ+zIc5V4wenEWANpQ45I
-	Jk8j2u4NHCJ6bMidbcQy81v18n8lwQlthS0JVZd7ubOHh8hNa4KOB03fqXX0AnU0
-	QjNqrUzwK7hDMeszr8sQIkipjl5xmtd0mhA==
-X-ME-Sender: <xms:INspZ5CCaHP1PYcI1UrL64t-pnO9rTHfk8O1cSbL7osYfep3uIAy5Q>
-    <xme:INspZ3gTg40a7j8P7f7QUoKVy2WXQzGr7m_3NaoCsMFZW89ke3dGxkBP8kRDZ-Hbq
-    lm7swo9lAGNV9luSw>
-X-ME-Received: <xmr:INspZ0lyTf5_zKj2YUFNCW_S62XQ9zj6a9VTv_D6ZRMPbQqUfnDtKLvptY2qF3vR8EkL_O3N5oLVAWk92hQafsCz9l-5R_qbGf0w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedguddvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvuf
-    ffkfgfgggtgfesthekofdttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgfehge
-    dtteekkefgteelffefudethfevgfdvueehgfetfeevhfettdejgfekgfevnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtoh
-    hmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmpdhpkhhsrdhimhdptghlrghr
-    qdguvggtlhhsrdhhthenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeef
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheplhifnheslhifnhdrnhgvthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:INspZzyr1skjNR44hLF10qNylR8lS3lpSQeAGqzBZEblQMmmUr60xg>
-    <xmx:INspZ-SU0u2LQhDQWgqUSZ855AjjfGqonw-idelgwLnbCmG5O1CkQQ>
-    <xmx:INspZ2bZhO-BqzFoDFdEjDdZoGrwYZvLPtLjPIABD8OVReT5A0Xojw>
-    <xmx:INspZ_TFh6cQk1xLcxAm-0FMT0uj1iaT_HJETI3RL6kHrrf7M3rjNg>
-    <xmx:INspZ8fFjA5t1hGv_YOmr5sd2VTJ8Gp2EDMmlYFwwx5D7g_hPFHYDOKU>
-Feedback-ID: if26b431b:Fastmail
+	1730797926; x=1730884326; bh=wYHPK8fOUio7+oxZJpDpyLQkA6xgtH6hjFc
+	p9Fy2bMU=; b=iqCN7wmW7owe9R60m41yD5agJ5VgTgrwet1ueToglooGIBrUqnf
+	FBSfhF3tOB61meSwqkzUTJdgWM5nXU8V6XbPG1aww3FCesi18xzBakZXwZ35ObsJ
+	tlGm1RvHy3eRJPXPvNbO+odx+YxljmyGIhY7Fh0DV2nXkDdDYEYUMgCqvEyQNP/R
+	lOzkTLU6B9EEpHJIZJhQyL6y9nd9XKIoJz2pwHFJxwf4xLoDP09Ualu2ZNwRieHI
+	aPNk9i3DdDysMEzvvPZ94fK2Grb06rX81t5SApptuBzj3ZOScGbVRUG43BDz+11a
+	XJ4kbYsiNIclyHX8zMixrjPkm3KEE0Ar+IQ==
+X-ME-Sender: <xms:ZuEpZ8viA7s0s8eeGk7EkHg4HAmzEelDpTfwYoPfIPbt7IbD-5gysQ>
+    <xme:ZuEpZ5cOhINgmJBRNwHaZeqg7qXXmKAd6Fn_d2TcDcz_hX0c_tghun_eDOzUr7fKN
+    4mkU5HYOMd36YQ7WQ>
+X-ME-Received: <xmr:ZuEpZ3w46gAC2shIveI-VQl7BAhMk4WnDf-zkzRPj5ZIFaX_NHEfjnazZTji88VY3dvrs_uMmrpYB7NR1zo-OoqQbN5cCHpmiK_0_50f63Z-2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdelkedgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrgh
+X-ME-Proxy: <xmx:ZuEpZ_PgrLGf7Zob5t1FZHE2ZRxPFdgtuuNJ8YO1xCI434Gg-u_ewA>
+    <xmx:ZuEpZ8_d_U49U18HS2D-D4tyfJSo7EvgEnmuDkqy8A4DAWbTMrG7sw>
+    <xmx:ZuEpZ3UHGjWvULiJvpbstFlqsuHbXi-0iV_cSmarb8nD_oRdFOGQGQ>
+    <xmx:ZuEpZ1fcQcdGfZdN2WhNzmf8AHUukxJK2mOTBFcFajIHWW3T3Eob6A>
+    <xmx:ZuEpZ-I1MzhFCYkwcBYdO5_bdEa34EtvWDunblARTy0NvHo8HyAqq-8x>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 03:45:20 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+ 5 Nov 2024 04:12:06 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id dfd7a2c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 09:11:44 +0000 (UTC)
+Date: Tue, 5 Nov 2024 10:11:59 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: What's cooking in git.git (Nov 2024, #03; Mon, 4)
-X-master-at: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
-X-next-at: c08e6fccd86136592273e319042f44cc8eadbb2a
-Date: Tue, 05 Nov 2024 00:45:18 -0800
-Message-ID: <xmqqwmhirrvl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 1/8] refs/reftable: encapsulate reftable stack
+Message-ID: <ac01c06c4177d1b07678972115648d125c2bdc66.1730792627.git.ps@pks.im>
+References: <cover.1730732881.git.ps@pks.im>
+ <cover.1730792627.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1730792627.git.ps@pks.im>
 
-The last issue was somewhat botched in that I had a few topics
-missing in my tree in the broken-out form, which confused the script
-that updates this report.  Let's see if I fixed them all...
+The reftable ref store needs to keep track of multiple stacks, one for
+the main worktree and an arbitrary number of stacks for worktrees. This
+is done by storing pointers to `struct reftable_stack`, which we then
+access directly.
 
+Wrap the stack in a new `struct reftable_backend`. This will allow us to
+attach more data to each respective stack in subsequent commits.
 
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ refs/reftable-backend.c | 129 +++++++++++++++++++++++-----------------
+ 1 file changed, 73 insertions(+), 56 deletions(-)
 
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* ak/t1016-style (2024-11-03) 1 commit
- - t1016: clean up style
-
- Test modernization.
-
- Will merge to 'next'.
- source: <20241103135111.13508-1-algonell@gmail.com>
-
-
-* en/shallow-exclude-takes-a-ref-fix (2024-11-04) 2 commits
- - doc: correct misleading descriptions for --shallow-exclude
- - upload-pack: fix ambiguous error message
-
- The "--shallow-exclude=<ref>" option to various history transfer
- commands takes a ref, not an arbitrary revision.
-
- Will merge to 'next'.
- source: <pull.1822.git.1730746964.gitgitgadget@gmail.com>
-
-
-* kh/sequencer-comment-char (2024-10-23) 1 commit
- - sequencer: comment checked-out branch properly
-
- The sequencer failed to honor core.commentString in some places.
-
- Expecting a reroll.
- cf. <c05e603f-1fd4-4ad2-ba03-21269f464ed2@gmail.com>
- source: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
-
-
-* ds/full-name-hash (2024-11-04) 7 commits
- - test-tool: add helper for name-hash values
- - pack-objects: disable --full-name-hash when shallow
- - p5313: add size comparison test
- - git-repack: update usage to match docs
- - pack-objects: add GIT_TEST_FULL_NAME_HASH
- - repack: add --full-name-hash option
- - pack-objects: add --full-name-hash option
-
- "git pack-objects" and its wrapper "git repack" learned an option
- to use an alternative path-hash function to improve delta-base
- selection to produce a packfile with deeper history than window
- size.
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index f560bc2b67..116cc5ec23 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -34,6 +34,23 @@
+  */
+ #define REF_UPDATE_VIA_HEAD (1 << 8)
  
- Needs review.
- source: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
++struct reftable_backend {
++	struct reftable_stack *stack;
++};
++
++static int reftable_backend_init(struct reftable_backend *be,
++				 const char *path,
++				 const struct reftable_write_options *opts)
++{
++	return reftable_new_stack(&be->stack, path, opts);
++}
++
++static void reftable_backend_release(struct reftable_backend *be)
++{
++	reftable_stack_destroy(be->stack);
++	be->stack = NULL;
++}
++
+ struct reftable_ref_store {
+ 	struct ref_store base;
+ 
+@@ -41,17 +58,17 @@ struct reftable_ref_store {
+ 	 * The main stack refers to the common dir and thus contains common
+ 	 * refs as well as refs of the main repository.
+ 	 */
+-	struct reftable_stack *main_stack;
++	struct reftable_backend main_backend;
+ 	/*
+ 	 * The worktree stack refers to the gitdir in case the refdb is opened
+ 	 * via a worktree. It thus contains the per-worktree refs.
+ 	 */
+-	struct reftable_stack *worktree_stack;
++	struct reftable_backend worktree_backend;
+ 	/*
+ 	 * Map of worktree stacks by their respective worktree names. The map
+ 	 * is populated lazily when we try to resolve `worktrees/$worktree` refs.
+ 	 */
+-	struct strmap worktree_stacks;
++	struct strmap worktree_backends;
+ 	struct reftable_write_options write_options;
+ 
+ 	unsigned int store_flags;
+@@ -97,21 +114,21 @@ static struct reftable_ref_store *reftable_be_downcast(struct ref_store *ref_sto
+  * like `worktrees/$worktree/refs/heads/foo` as worktree stacks will store
+  * those references in their normalized form.
+  */
+-static struct reftable_stack *stack_for(struct reftable_ref_store *store,
+-					const char *refname,
+-					const char **rewritten_ref)
++static struct reftable_backend *backend_for(struct reftable_ref_store *store,
++					    const char *refname,
++					    const char **rewritten_ref)
+ {
+ 	const char *wtname;
+ 	int wtname_len;
+ 
+ 	if (!refname)
+-		return store->main_stack;
++		return &store->main_backend;
+ 
+ 	switch (parse_worktree_ref(refname, &wtname, &wtname_len, rewritten_ref)) {
+ 	case REF_WORKTREE_OTHER: {
+ 		static struct strbuf wtname_buf = STRBUF_INIT;
+ 		struct strbuf wt_dir = STRBUF_INIT;
+-		struct reftable_stack *stack;
++		struct reftable_backend *be;
+ 
+ 		/*
+ 		 * We're using a static buffer here so that we don't need to
+@@ -125,37 +142,39 @@ static struct reftable_stack *stack_for(struct reftable_ref_store *store,
+ 		/*
+ 		 * There is an edge case here: when the worktree references the
+ 		 * current worktree, then we set up the stack once via
+-		 * `worktree_stacks` and once via `worktree_stack`. This is
++		 * `worktree_backends` and once via `worktree_backend`. This is
+ 		 * wasteful, but in the reading case it shouldn't matter. And
+ 		 * in the writing case we would notice that the stack is locked
+ 		 * already and error out when trying to write a reference via
+ 		 * both stacks.
+ 		 */
+-		stack = strmap_get(&store->worktree_stacks, wtname_buf.buf);
+-		if (!stack) {
++		be = strmap_get(&store->worktree_backends, wtname_buf.buf);
++		if (!be) {
+ 			strbuf_addf(&wt_dir, "%s/worktrees/%s/reftable",
+ 				    store->base.repo->commondir, wtname_buf.buf);
+ 
+-			store->err = reftable_new_stack(&stack, wt_dir.buf,
+-							&store->write_options);
++			CALLOC_ARRAY(be, 1);
++			store->err = reftable_backend_init(be, wt_dir.buf,
++							   &store->write_options);
+ 			assert(store->err != REFTABLE_API_ERROR);
+-			strmap_put(&store->worktree_stacks, wtname_buf.buf, stack);
++
++			strmap_put(&store->worktree_backends, wtname_buf.buf, be);
+ 		}
+ 
+ 		strbuf_release(&wt_dir);
+-		return stack;
++		return be;
+ 	}
+ 	case REF_WORKTREE_CURRENT:
+ 		/*
+ 		 * If there is no worktree stack then we're currently in the
+ 		 * main worktree. We thus return the main stack in that case.
+ 		 */
+-		if (!store->worktree_stack)
+-			return store->main_stack;
+-		return store->worktree_stack;
++		if (!store->worktree_backend.stack)
++			return &store->main_backend;
++		return &store->worktree_backend;
+ 	case REF_WORKTREE_MAIN:
+ 	case REF_WORKTREE_SHARED:
+-		return store->main_stack;
++		return &store->main_backend;
+ 	default:
+ 		BUG("unhandled worktree reference type");
+ 	}
+@@ -292,7 +311,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 	umask(mask);
+ 
+ 	base_ref_store_init(&refs->base, repo, gitdir, &refs_be_reftable);
+-	strmap_init(&refs->worktree_stacks);
++	strmap_init(&refs->worktree_backends);
+ 	refs->store_flags = store_flags;
+ 	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
+ 
+@@ -337,8 +356,8 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 		strbuf_realpath(&path, gitdir, 0);
+ 	}
+ 	strbuf_addstr(&path, "/reftable");
+-	refs->err = reftable_new_stack(&refs->main_stack, path.buf,
+-				       &refs->write_options);
++	refs->err = reftable_backend_init(&refs->main_backend, path.buf,
++					  &refs->write_options);
+ 	if (refs->err)
+ 		goto done;
+ 
+@@ -354,8 +373,8 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+ 		strbuf_reset(&path);
+ 		strbuf_addf(&path, "%s/reftable", gitdir);
+ 
+-		refs->err = reftable_new_stack(&refs->worktree_stack, path.buf,
+-					       &refs->write_options);
++		refs->err = reftable_backend_init(&refs->worktree_backend, path.buf,
++						  &refs->write_options);
+ 		if (refs->err)
+ 			goto done;
+ 	}
+@@ -374,19 +393,17 @@ static void reftable_be_release(struct ref_store *ref_store)
+ 	struct strmap_entry *entry;
+ 	struct hashmap_iter iter;
+ 
+-	if (refs->main_stack) {
+-		reftable_stack_destroy(refs->main_stack);
+-		refs->main_stack = NULL;
+-	}
++	if (refs->main_backend.stack)
++		reftable_backend_release(&refs->main_backend);
++	if (refs->worktree_backend.stack)
++		reftable_backend_release(&refs->worktree_backend);
+ 
+-	if (refs->worktree_stack) {
+-		reftable_stack_destroy(refs->worktree_stack);
+-		refs->worktree_stack = NULL;
++	strmap_for_each_entry(&refs->worktree_backends, &iter, entry) {
++		struct reftable_backend *be = entry->value;
++		reftable_backend_release(be);
++		free(be);
+ 	}
+-
+-	strmap_for_each_entry(&refs->worktree_stacks, &iter, entry)
+-		reftable_stack_destroy(entry->value);
+-	strmap_clear(&refs->worktree_stacks, 0);
++	strmap_clear(&refs->worktree_backends, 0);
+ }
+ 
+ static int reftable_be_create_on_disk(struct ref_store *ref_store,
+@@ -781,7 +798,7 @@ static struct ref_iterator *reftable_be_iterator_begin(struct ref_store *ref_sto
+ 		required_flags |= REF_STORE_ODB;
+ 	refs = reftable_be_downcast(ref_store, required_flags, "ref_iterator_begin");
+ 
+-	main_iter = ref_iterator_for_stack(refs, refs->main_stack, prefix,
++	main_iter = ref_iterator_for_stack(refs, refs->main_backend.stack, prefix,
+ 					   exclude_patterns, flags);
+ 
+ 	/*
+@@ -789,14 +806,14 @@ static struct ref_iterator *reftable_be_iterator_begin(struct ref_store *ref_sto
+ 	 * right now. If we aren't, then we return the common reftable
+ 	 * iterator, only.
+ 	 */
+-	 if (!refs->worktree_stack)
++	 if (!refs->worktree_backend.stack)
+ 		return &main_iter->base;
+ 
+ 	/*
+ 	 * Otherwise we merge both the common and the per-worktree refs into a
+ 	 * single iterator.
+ 	 */
+-	worktree_iter = ref_iterator_for_stack(refs, refs->worktree_stack, prefix,
++	worktree_iter = ref_iterator_for_stack(refs, refs->worktree_backend.stack, prefix,
+ 					       exclude_patterns, flags);
+ 	return merge_ref_iterator_begin(&worktree_iter->base, &main_iter->base,
+ 					ref_iterator_select, NULL);
+@@ -811,7 +828,7 @@ static int reftable_be_read_raw_ref(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	int ret;
+ 
+ 	if (refs->err < 0)
+@@ -838,7 +855,7 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "read_symbolic_ref");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct reftable_ref_record ref = {0};
+ 	int ret;
+ 
+@@ -898,7 +915,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
+ 				      struct ref_update *update,
+ 				      struct strbuf *err)
+ {
+-	struct reftable_stack *stack = stack_for(refs, update->refname, NULL);
++	struct reftable_stack *stack = backend_for(refs, update->refname, NULL)->stack;
+ 	struct write_transaction_table_arg *arg = NULL;
+ 	size_t i;
+ 	int ret;
+@@ -1031,7 +1048,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 		goto done;
+ 	}
+ 
+-	ret = read_ref_without_reload(refs, stack_for(refs, "HEAD", NULL), "HEAD",
++	ret = read_ref_without_reload(refs, backend_for(refs, "HEAD", NULL)->stack, "HEAD",
+ 				      &head_oid, &head_referent, &head_type);
+ 	if (ret < 0)
+ 		goto done;
+@@ -1043,7 +1060,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 		struct reftable_stack *stack;
+ 		const char *rewritten_ref;
+ 
+-		stack = stack_for(refs, u->refname, &rewritten_ref);
++		stack = backend_for(refs, u->refname, &rewritten_ref)->stack;
+ 
+ 		/* Verify that the new object ID is valid. */
+ 		if ((u->flags & REF_HAVE_NEW) && !is_null_oid(&u->new_oid) &&
+@@ -1525,9 +1542,9 @@ static int reftable_be_pack_refs(struct ref_store *ref_store,
+ 	if (refs->err)
+ 		return refs->err;
+ 
+-	stack = refs->worktree_stack;
++	stack = refs->worktree_backend.stack;
+ 	if (!stack)
+-		stack = refs->main_stack;
++		stack = refs->main_backend.stack;
+ 
+ 	if (opts->flags & PACK_REFS_AUTO)
+ 		ret = reftable_stack_auto_compact(stack);
+@@ -1782,7 +1799,7 @@ static int reftable_be_rename_ref(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "rename_ref");
+-	struct reftable_stack *stack = stack_for(refs, newrefname, &newrefname);
++	struct reftable_stack *stack = backend_for(refs, newrefname, &newrefname)->stack;
+ 	struct write_copy_arg arg = {
+ 		.refs = refs,
+ 		.stack = stack,
+@@ -1814,7 +1831,7 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "copy_ref");
+-	struct reftable_stack *stack = stack_for(refs, newrefname, &newrefname);
++	struct reftable_stack *stack = backend_for(refs, newrefname, &newrefname)->stack;
+ 	struct write_copy_arg arg = {
+ 		.refs = refs,
+ 		.stack = stack,
+@@ -1952,11 +1969,11 @@ static struct ref_iterator *reftable_be_reflog_iterator_begin(struct ref_store *
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "reflog_iterator_begin");
+ 	struct reftable_reflog_iterator *main_iter, *worktree_iter;
+ 
+-	main_iter = reflog_iterator_for_stack(refs, refs->main_stack);
+-	if (!refs->worktree_stack)
++	main_iter = reflog_iterator_for_stack(refs, refs->main_backend.stack);
++	if (!refs->worktree_backend.stack)
+ 		return &main_iter->base;
+ 
+-	worktree_iter = reflog_iterator_for_stack(refs, refs->worktree_stack);
++	worktree_iter = reflog_iterator_for_stack(refs, refs->worktree_backend.stack);
+ 
+ 	return merge_ref_iterator_begin(&worktree_iter->base, &main_iter->base,
+ 					ref_iterator_select, NULL);
+@@ -1995,7 +2012,7 @@ static int reftable_be_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "for_each_reflog_ent_reverse");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct reftable_log_record log = {0};
+ 	struct reftable_iterator it = {0};
+ 	int ret;
+@@ -2035,7 +2052,7 @@ static int reftable_be_for_each_reflog_ent(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "for_each_reflog_ent");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct reftable_log_record *logs = NULL;
+ 	struct reftable_iterator it = {0};
+ 	size_t logs_alloc = 0, logs_nr = 0, i;
+@@ -2084,7 +2101,7 @@ static int reftable_be_reflog_exists(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_READ, "reflog_exists");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct reftable_log_record log = {0};
+ 	struct reftable_iterator it = {0};
+ 	int ret;
+@@ -2169,7 +2186,7 @@ static int reftable_be_create_reflog(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "create_reflog");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct write_reflog_existence_arg arg = {
+ 		.refs = refs,
+ 		.stack = stack,
+@@ -2243,7 +2260,7 @@ static int reftable_be_delete_reflog(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "delete_reflog");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct write_reflog_delete_arg arg = {
+ 		.stack = stack,
+ 		.refname = refname,
+@@ -2352,7 +2369,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ 	 */
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "reflog_expire");
+-	struct reftable_stack *stack = stack_for(refs, refname, &refname);
++	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+ 	struct reftable_log_record *logs = NULL;
+ 	struct reftable_log_record *rewritten = NULL;
+ 	struct reftable_ref_record ref_record = {0};
+-- 
+2.47.0.229.g8f8d6eee53.dirty
 
---------------------------------------------------
-[Cooking]
-
-* jt/repack-local-promisor (2024-11-03) 5 commits
- - fixup! index-pack: repack local links into promisor packs
- - index-pack: repack local links into promisor packs
- - t5300: move --window clamp test next to unclamped
- - t0410: use from-scratch server
- - t0410: make test description clearer
-
- "git gc" discards any objects that are outside promisor packs that
- are referred to by an object in a promisor pack, and we do not
- refetch them from the promisor at runtime, resulting an unusable
- repository.  Work it around by including these objects in the
- referring promisor pack at the receiving end of the fetch.
-
- Needs review.
- Breaks CI (with a known fix).
- source: <cover.1730491845.git.jonathantanmy@google.com>
-
-
-* ds/path-walk-1 (2024-10-31) 6 commits
- - path-walk: mark trees and blobs as UNINTERESTING
- - path-walk: visit tags and cached objects
- - path-walk: allow consumer to specify object types
- - t6601: add helper for testing path-walk API
- - test-lib-functions: add test_cmp_sorted
- - path-walk: introduce an object walk by path
-
- Introduce a new API to visit objects in batches based on a common
- path, or by type.
-
- Under discussion.
- cf. <ZyUqr/wb5K4Og9j9@nand.local>
- source: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
-
-
-* bc/ancient-ci (2024-11-01) 3 commits
- - Add additional CI jobs to avoid accidental breakage
- - ci: remove clause for Ubuntu 16.04
- - gitlab-ci: switch from Ubuntu 16.04 to 20.04
-
- Drop support for ancient environments in various CI jobs.
-
- Needs review.
- source: <20241031234934.3451390-1-sandals@crustytoothpaste.net>
-
-
-* cw/worktree-extension (2024-11-01) 9 commits
- - worktree: refactor `repair_worktree_after_gitdir_move()`
- - worktree: add relative cli/config options to `repair` command
- - worktree: add relative cli/config options to `move` command
- - worktree: add relative cli/config options to `add` command
- - worktree: add `write_worktree_linking_files()` function
- - worktree: refactor infer_backlink return
- - worktree: add `relativeWorktrees` extension
- - setup: correctly reinitialize repository version
- - Merge branch 'cw/config-extensions' into cw/worktree
- (this branch uses cw/config-extensions.)
-
- Introduce a new repository extension to prevent older Git versions
- from mis-interpreting worktrees created with relative paths.
-
- Needs review.
- source: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
-
-
-* jk/left-right-bitmap (2024-11-01) 1 commit
-  (merged to 'next' on 2024-11-01 at f1d0c395f5)
- + rev-list: skip bitmap traversal for --left-right
-
- When called with '--left-right' and '--use-bitmap-index', 'rev-list'
- will produce output without any left/right markers, which has been
- corrected.
-
- Will merge to 'master'.
- source: <20241101121606.GA2327410@coredump.intra.peff.net>
-
-
-* kh/bundle-docs (2024-10-29) 3 commits
- - Documentation/git-bundle.txt: discuss naïve backups
- - Documentation/git-bundle.txt: mention --all in spec. refs
- - Documentation/git-bundle.txt: mention full backup example
-
- Documentation improvements to more prominently call out the use of
- '--all' when creating bundles.
-
- Expecting a reroll.
- source: <cover.1730234365.git.code@khaugsbakk.name>
-
-
-* as/show-index-uninitialized-hash (2024-11-04) 2 commits
- - t5300: add test for 'show-index --object-format'
- - show-index: fix uninitialized hash function
-
- Regression fix for 'show-index' when run outside of a repository.
-
- Expecting a reroll.
- cf. <xmqq4j4mv5o6.fsf@gitster.g>
- source: <20241104192958.64310-1-abhijeet.nkt@gmail.com>
-
-
-* ps/mingw-rename (2024-10-27) 3 commits
- - compat/mingw: support POSIX semantics for atomic renames
- - compat/mingw: allow deletion of most opened files
- - compat/mingw: share file handles created via `CreateFileW()`
-
- Teaches the MinGW compatibility layer to support POSIX semantics for
- atomic renames when other process(es) have a file opened at the
- destination path.
-
- Waiting for final ack before 'next'.
- source: <cover.1730042775.git.ps@pks.im>
-
-
-* ps/reftable-detach (2024-10-23) 8 commits
- - reftable/system: provide thin wrapper for lockfile subsystem
- - reftable/stack: drop only use of `get_locked_file_path()`
- - reftable/system: provide thin wrapper for tempfile subsystem
- - reftable/stack: stop using `fsync_component()` directly
- - reftable/system: stop depending on "hash.h"
- - reftable: explicitly handle hash format IDs
- - reftable/system: move "dir.h" to its only user
- - Merge branch 'ps/reftable-strbuf' into ps/reftable-detach
-
- Isolates the reftable subsystem from the rest of Git's codebase by
- using fewer pieces of Git's infrastructure.
-
- Needs review.
- source: <cover.1729677003.git.ps@pks.im>
-
-
-* cw/config-extensions (2024-10-22) 1 commit
-  (merged to 'next' on 2024-10-30 at 875fa0b619)
- + doc: consolidate extensions in git-config documentation
- (this branch is used by cw/worktree-extension.)
-
- Centralize documentation for repository extensions into a single place.
-
- Will merge to 'master'.
- source: <20241021-cleanup-extension-docs-v1-1-ab02cece3132@pm.me>
-
-
-* km/config-remote-by-name (2024-10-21) 1 commit
- - config: support remote name in includeIf.hasconfig condition
-
- Support conditionally including configuration by remote name, instead
- of just URL.
-
- Needs review.
- source: <20241020173216.40852-2-ken@kmatsui.me>
-
-
-* kn/arbitrary-suffixes (2024-10-24) 1 commit
-  (merged to 'next' on 2024-10-30 at 3eedf30c6c)
- + CodingGuidelines: discourage arbitrary suffixes in function names
-
- Update the project's CodingGuidelines to discourage naming functions
- with a "_1()" suffix.
-
- Will merge to 'master'.
- source: <20241024105357.2605168-1-karthik.188@gmail.com>
-
-
-* ps/leakfixes-part-9 (2024-10-21) 22 commits
- - list-objects-filter-options: work around reported leak on error
- - builtin/merge: release outbut buffer after performing merge
- - dir: fix leak when parsing "status.showUntrackedFiles"
- - t/helper: fix leaking buffer in "dump-untracked-cache"
- - t/helper: stop re-initialization of `the_repository`
- - sparse-index: correctly free EWAH contents
- - dir: release untracked cache data
- - combine-diff: fix leaking lost lines
- - builtin/tag: fix leaking key ID on failure to sign
- - transport-helper: fix leaking import/export marks
- - builtin/commit: fix leaking cleanup config
- - trailer: fix leaking strbufs when formatting trailers
- - trailer: fix leaking trailer values
- - builtin/commit: fix leaking change data contents
- - upload-pack: fix leaking URI protocols
- - pretty: clear signature check
- - diff-lib: fix leaking diffopts in `do_diff_cache()`
- - revision: fix leaking bloom filters
- - builtin/grep: fix leak with `--max-count=0`
- - grep: fix leak in `grep_splice_or()`
- - t/helper: fix leaks in "reach" test tool
- - builtin/ls-remote: plug leaking server options
-
- More leakfixes.
-
- Needs review.
- source: <cover.1729502823.git.ps@pks.im>
-
-
-* y5/diff-pager (2024-10-21) 1 commit
- - diff: setup pager only before diff contents truly ready
-
- Delay setting up the pager in 'git diff' until after the diff contents
- itself is fully prepared.
-
- Needs review.
- source: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-
-
-* kn/ci-clang-format-tidy (2024-10-18) 2 commits
-  (merged to 'next' on 2024-10-30 at d063e828d5)
- + clang-format: align consecutive macro definitions
- + clang-format: re-adjust line break penalties
-
- Updates the '.clang-format' to match project conventions.
-
- Will merge to 'master'.
- source: <cover.1729241030.git.karthik.188@gmail.com>
-
-
-* la/trailer-info (2024-10-14) 1 commit
- - trailer: spread usage of "trailer_block" language
-
- Refactoring.
-
- Needs review.
- source: <pull.1811.git.git.1728820722580.gitgitgadget@gmail.com>
-
-
-* ps/upgrade-clar (2024-10-21) 5 commits
-  (merged to 'next' on 2024-10-30 at b8b092bb78)
- + cmake: set up proper dependencies for generated clar headers
- + cmake: fix compilation of clar-based unit tests
- + Makefile: extract script to generate clar declarations
- + Makefile: adjust sed command for generating "clar-decls.h"
- + t/unit-tests: update clar to 206accb
- (this branch is used by ps/build.)
-
- Buildfix and upgrade of Clar to a newer version.
-
- Will merge to 'master'.
- source: <cover.1729506329.git.ps@pks.im>
-
-
-* bc/drop-ancient-libcurl-and-perl (2024-10-23) 12 commits
- - gitweb: make use of s///r
- - Require Perl 5.26.0
- - INSTALL: document requirement for libcurl 7.61.0
- - git-curl-compat: remove check for curl 7.56.0
- - git-curl-compat: remove check for curl 7.53.0
- - git-curl-compat: remove check for curl 7.52.0
- - git-curl-compat: remove check for curl 7.44.0
- - git-curl-compat: remove check for curl 7.43.0
- - git-curl-compat: remove check for curl 7.39.0
- - git-curl-compat: remove check for curl 7.34.0
- - git-curl-compat: remove check for curl 7.25.0
- - git-curl-compat: remove check for curl 7.21.5
-
- Drop support for older libcURL and Perl.
-
- Under discussion.
- source: <20241023004600.1645313-1-sandals@crustytoothpaste.net>
-
-
-* es/oss-fuzz (2024-10-16) 3 commits
- - fuzz: port fuzz-url-decode-mem from OSS-Fuzz
- - fuzz: port fuzz-parse-attr-line from OSS-Fuzz
- - fuzz: port fuzz-credential-from-url-gently from OSS-Fuzz
-
- Backport oss-fuzz tests for us to our codebase.
-
- Needs review.
- source: <cover.1728939687.git.steadmon@google.com>
-
-
-* bf/set-head-symref (2024-10-23) 8 commits
- - fetch set_head: handle mirrored bare repositories
- - fetch: set remote/HEAD if it does not exist
- - refs: add create_only option to refs_update_symref_extended
- - refs: add TRANSACTION_CREATE_EXISTS error
- - remote set-head: better output for --auto
- - remote set-head: refactor for readability
- - refs: atomically record overwritten ref in update_symref
- - t/t5505-remote: set default branch to main
-
- When "git fetch $remote" notices that refs/remotes/$remote/HEAD is
- missing and discovers what branch the other side points with its
- HEAD, refs/remotes/$remote/HEAD is updated to point to it.
-
- Needs review.
- source: <20241023153736.257733-1-bence@ferdinandy.com>
-
-
-* ps/build (2024-10-24) 21 commits
- - meson: fix conflicts with in-flight topics
- - Introduce support for the Meson build system
- - Documentation: add comparison of build systems
- - t: allow overriding build dir
- - t: better support for out-of-tree builds
- - Documentation: extract script to generate a list of mergetools
- - Documentation: teach "cmd-list.perl" about out-of-tree builds
- - Documentation: allow sourcing generated includes from separate dir
- - Makefile: simplify building of templates
- - Makefile: allow "bin-wrappers/" directory to exist
- - Makefile: refactor generators to be PWD-independent
- - Makefile: refactor GIT-VERSION-GEN to be reusable
- - Makefile: extract script to generate gitweb.cgi
- - Makefile: extract script to massage Shell scripts
- - Makefile: use "generate-perl.sh" to massage Perl library
- - Makefile: extract script to massage Perl scripts
- - Makefile: consistently use PERL_PATH
- - Makefile: consistently use @PLACEHOLDER@ to substitute
- - Makefile: use common template for GIT-BUILD-OPTIONS
- - Merge branch 'ps/platform-compat-fixes' into ps/build
- - Merge branch 'ps/upgrade-clar' into ps/build
- (this branch uses ps/upgrade-clar.)
-
- Build procedure update plus introduction of Mason based builds
-
- Under discussion.
- source: <cover.1729771605.git.ps@pks.im>
-
-
-* ej/cat-file-remote-object-info (2024-10-31) 6 commits
- - cat-file: add remote-object-info to batch-command
- - cat-file: add declaration of variable i inside its for loop
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Needs review.
- source: <20241028203457.19715-1-eric.peijian@gmail.com>
-
-
-* cc/promisor-remote-capability (2024-09-10) 4 commits
- - promisor-remote: check advertised name or URL
- - Add 'promisor-remote' capability to protocol v2
- - strbuf: refactor strbuf_trim_trailing_ch()
- - version: refactor strbuf_sanitize()
-
- The v2 protocol learned to allow the server to advertise possible
- promisor remotes, and the client to respond with what promissor
- remotes it uses, so that the server side can omit objects that the
- client can lazily obtain from these other promissor remotes.
-
- Comments?  I got an impression that this is premature without
- finishing the discussion on a larger picture.
- cf. <ZvpZv_fed_su4w2-@pks.im>
- source: <20240910163000.1985723-1-christian.couder@gmail.com>
-
-
-* sj/ref-contents-check (2024-10-21) 9 commits
- - ref: add symlink ref content check for files backend
- - ref: check whether the target of the symref is a ref
- - ref: add basic symref content check for files backend
- - ref: add more strict checks for regular refs
- - ref: port git-fsck(1) regular refs check for files backend
- - ref: support multiple worktrees check for refs
- - ref: initialize target name outside of check functions
- - ref: check the full refname instead of basename
- - ref: initialize "fsck_ref_report" with zero
-
- "git fsck" learned to issue warnings on "curiously formatted" ref
- contents that have always been taken valid but something Git
- wouldn't have written itself (e.g., missing terminating end-of-line
- after the full object name).
-
- Needs review.
- cf. <ZxZ+xteOnm0im5vC@nand.local>
- source: <ZxZX5HDdq_R0C77b@ArchLinux>
-
-
-* js/libgit-rust (2024-10-16) 5 commits
- - Makefile: add option to build and test libgit-rs and libgit-rs-sys
- - libgit: add higher-level libgit crate
- - libgit-sys: also export some config_set functions
- - libgit-sys: introduce Rust wrapper for libgit.a
- - common-main: split init and exit code into new files
-
- An rust binding to libgit.a functions has been introduced.
-
- Needs review.
- source: <cover.1729032373.git.steadmon@google.com>
-
-
-* jt/commit-graph-missing (2024-11-04) 3 commits
- - SQUASH???
- - fetch-pack: warn if in commit graph but not obj db
- - Revert "fetch-pack: add a deref_without_lazy_fetch_extended()"
-
- A regression where commit objects missing from a commit-graph can
- cause an infinite loop when doing a fetch in a partial clone has
- been fixed.
-
- Waiting an ack for CI breakage fix and possibly a reroll.
- source: <cover.1730409376.git.jonathantanmy@google.com>
-
-
-* kn/the-repository (2024-11-04) 9 commits
- - midx: add repository to `multi_pack_index` struct
- - config: make `packed_git_(limit|window_size)` non-global variables
- - config: make `delta_base_cache_limit` a non-global variable
- - packfile: pass down repository to `for_each_packed_object`
- - packfile: pass down repository to `has_object[_kept]_pack`
- - packfile: pass down repository to `odb_pack_name`
- - packfile: pass `repository` to static function in the file
- - packfile: use `repository` from `packed_git` directly
- - packfile: add repository to struct `packed_git`
-
- Various implicit uses of 'the_repoository' in the packfile code
- have been eliminated.
-
- Needs review.
- source: <cover.1730714298.git.karthik.188@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* wf/diff-highlight-install (2024-10-14) 1 commit
- . diff-highlight: make install link into DESTDIR
-
- Adds an 'install' recipe to diff-highlight's Makefile.
-
- Discarded.
- Have been in stalled state for too long without activity.
- cf. <Zw2YXD6XEiQVKj9j@nand.local>
- source: <pull.938.v3.git.git.1728764613835.gitgitgadget@gmail.com>
-
-
-* am/git-blame-ignore-revs-by-default (2024-10-14) 2 commits
- . blame: introduce --override-ignore-revs to bypass ignore revisions list
- . blame: respect .git-blame-ignore-revs automatically
-
- Teaches 'git blame' to treat '.git-blame-ignore-revs' as if it were
- passed as '--ignore-revs-file' by default.
-
- Discarded.
- Stalled for too long, with many questions unanswered.
- source: <pull.1809.v2.git.1728707867.gitgitgadget@gmail.com>
-
-
-* jc/optional-path (2024-10-14) 3 commits
- . parseopt: values of pathname type can be prefixed with :(optional)
- . config: values of pathname type can be prefixed with :(optional)
- . t7500: make each piece more independent
-
- Teach configuration values of type "pathname" a new ':(optional)'
- suffix.
-
- Discarded.
- In " Needs review." state for too long.
- source: <20241014204427.1712182-1-gitster@pobox.com>
-
-
-* jc/too-many-arguments (2024-08-06) 4 commits
- . miscellaneous: avoid "too many arguments"
- . notes: avoid "too many arguments"
- . cat-file: avoid "too many arguments"
- . refs: avoid "too many arguments"
-
- Error message clarification.
-
- Discarded.
- In "On hold." state for too long.
- source: <20240806003539.3292562-1-gitster@pobox.com>
-
-
-* jc/strbuf-commented-something (2024-09-12) 2 commits
- . strbuf: retire strbuf_commented_lines()
- . strbuf: retire strbuf_commented_addf()
-
- Update two functions whose callers always pass the same global
- variable to omit the redundant parameter and use the global in the
- callee themselves.
-
- Discarded.
- In "On hold." state for too long.
- source: <20240912205301.1809355-1-gitster@pobox.com>
-
-
-* ew/cat-file-optim (2024-08-25) 10 commits
- . cat-file: use writev(2) if available
- . cat-file: batch_write: use size_t for length
- . cat-file: batch-command uses content_limit
- . object_info: content_limit only applies to blobs
- . packfile: packed_object_info avoids packed_to_object_type
- . cat-file: use delta_base_cache entries directly
- . packfile: inline cache_or_unpack_entry
- . packfile: fix off-by-one in content_limit comparison
- . packfile: allow content-limit for cat-file
- . packfile: move sizep computation
-
- "git cat-file --batch" has been optimized.
-
- Discarded.
- In "Waiting for review responses" state for too long.
- source: <20240823224630.1180772-1-e@80x24.org>
-
-
-* hy/partial-repack-fix (2024-10-16) 3 commits
- . partial-clone: update doc
- . t0410: adapt tests to repack changes
- . repack: pack everything into packfile
-
- "git repack" avoids losing local objects that are reachable from
- objects in a packfile fetched from a promisor remote.
-
- Retracted.
- cf. <CAG1j3zHXThL_JXP=9xqvg=wg0R1wZYnA-okfFxqmcUQ9w0M36g@mail.gmail.com>
- source: <20241014032546.68427-1-hanyang.tony@bytedance.com>
-
-
-* cw/fix-reachable-in-repo-with-promisor (2024-09-19) 2 commits
- . fetch-pack.c: do not declare local commits as "have" in partial repos
- . packfile: split promisor objects oidset into two
-
- "git gc" in a partial clone (i.e. lacking objects that can be
- lazily fetched from promisor remotes) collected more than objects
- that promisor-remote can give.
-
- Appears to break CI.
- cf. https://github.com/ttaylorr/git/actions/runs/11523538245
- source: <20240802073143.56731-1-hanyang.tony@bytedance.com>
