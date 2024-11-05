@@ -1,205 +1,199 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A6914A91
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 14:32:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A543398B
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 14:45:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730817175; cv=none; b=Ok3OAtVxPjEA0km1vETOioire9bKt5IpqdkXD89aIoMUixVesccryW2UxHgQe/5YubcnJdUrILjPQ3Rh2DKiTtbn1ytk1hIjl/ug1rSRehOBIA/5xCL/gBDjnCSbgoL8REVA9nSM8Z34JAijaNIKNSs82cV0kooI0hrGMZraeEs=
+	t=1730817921; cv=none; b=a6SetLukAri0fFBr/9lC9w7mvgW4prd79mvmC/Eb7zX0s/gb+xQEMj9OBDHcbBYhL59W+I4m+fGcSJ1gIgp6Ibcjmj1jtkMwUfSHQBp3JxxbxuNT8KJKTxturUj8Qx5ZysRIs7l7i3osQlnrlvhrHfUNIj2WJUuw/7phMVNlhfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730817175; c=relaxed/simple;
-	bh=9uc0i9Eu4u+ZhpgkCO084+NkEenVxQwpd9JfLKuSZnU=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=RqGPFIHvQ2/05GtMXpXpibIyboWsSh7gfupOUfQat/PWYqI1dxOxsqjk9eQiw0GzIGFBrfoBxvPmwdvNh0TvtQ67RW39rEq2vJf0MEVeFh1rgkuNTzeFeBl4EpuqD5RBzHpoqHGDLsvpmZIBUqTqp4KdQapYdl+OjXk4r3HEXX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fD29zkmU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WJWvlLKq; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1730817921; c=relaxed/simple;
+	bh=OBe9Lxe0Nq9RncU+Rhjh1l10O7YgI8FbnYb6i3qgZ/Q=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Dvv/6BBfb5YTv9BZkjooM21X1416hxLvfRiVJ4/19rqpk1eW8VNLCpNVjl9j1+JyZ5xcfnbFOnVXqkjXhbH5+mnI+HCXcT/QkWqWq87Q5LjsJ9T89UYY0k8llgS46pi46Ym/ZdrTO4eZOybigtxwP8bMzaHIIMtnHWcTulvqbMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mXFEH2bw; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fD29zkmU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WJWvlLKq"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 62F1C2540118;
-	Tue,  5 Nov 2024 09:32:51 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 05 Nov 2024 09:32:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1730817171;
-	 x=1730903571; bh=/c8+M1pBzhdXey4pCeNHR6IRLK+FNKlOcw4jpm4incw=; b=
-	fD29zkmU177P4Rue0/25YCqWYXAYEmiAICDy5Pxtj8f0GMxBQ+9mJoEjE4hgGBcG
-	9nw4/TeJHoZd8/HlbLPuNwOgqxak8apKkMgBYvz5udOzVqXRq30FcTrM2yRIXKSc
-	wcELQSODIhnav2O7tVCDnWrsRB0nlUDrxQ4mOP0s4U6qcFwi/7ENwymiN80pDE89
-	mBRn9Ea8msKALtBObP8uAE3Ox/lVHGJFiqkJPZW5U4fv0UhsbT4XDfFqK96GIhvn
-	owRW6qqMnSVyRTvPkPyPekDPV2jl2LiEoMuXViiPQHvvpbpjEXKVPqFVcXj4Egng
-	BBjqtDouAjc8+dCp80YEag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1730817171; x=1730903571; bh=/
-	c8+M1pBzhdXey4pCeNHR6IRLK+FNKlOcw4jpm4incw=; b=WJWvlLKqMU2RsYy3S
-	GUk4QAY5Jk7uzyIsMd7dq1eV8Sz4Mjm5tZMgdyDv9AMWAOsV7Ut1UsSN8sroFR5D
-	uwrIjcVG5tLr3/EdQItFvVwUODn+zk5LSBaDipUNDmKpL9AVSlOoSli4byCcOpmw
-	72i8oniZ3ZdovjHNRumjk36udw1pF0xQFKNqnTZaH++hS21m0XYSSTZXZZPgRc3X
-	lZV1Tc3SHvb9W1ZoihsSYkRmVZfsTGLij2iuw8c0YFrHUvlIiKQTa70AVHngWeIm
-	r78p4Us835Z9zhDsUYncO3T81KgRnJRBfEGbb4uwFrxSa90dd+HO6/FjDHl2zzoE
-	q24Vw==
-X-ME-Sender: <xms:kywqZ2xrOeHuRqakAxJyST8A9nNPhDamqQEG8EPZi_Pib4JSwMwlA1s>
-    <xme:kywqZyThe3OASmuQ1nlfd_bT600RiTr8lO6p98-Js784TkRYxfarXbbieLslsS3-_
-    l1_JDaMkqWkGFIyZw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddtgdefjecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggfffhvf
-    fkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgr
-    uhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
-    grihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeef
-    jeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
-    rghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtoheptggrlhgvshhthihosehstghivghnthhirgdrohhrghdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:kywqZ4WMlTTGYL9tR-zn1_oQlbcmVSNw-yQSrVzVqw6tLp15FAhW_Q>
-    <xmx:kywqZ8i-a-U5atzIw5UwB6uukCKJUPZmYv_W2S6jPJ7ElFkHTA41XQ>
-    <xmx:kywqZ4Cv6whhoRQXStNfou4H3fncSxNnahWHxXlhLJfYgUkT1L6_0w>
-    <xmx:kywqZ9JV7dbof-LCcwrtBQnJgkn0n0LvTePPpOFvoBljKpR_PE5qlQ>
-    <xmx:kywqZx7boGSrY7jqw2tv53PqFpUkSF-NxrF6i7mXbeAQg4q7v_0sTTR9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id F2BF1780068; Tue,  5 Nov 2024 09:32:50 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mXFEH2bw"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-431688d5127so43941125e9.0
+        for <git@vger.kernel.org>; Tue, 05 Nov 2024 06:45:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730817918; x=1731422718; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=feYEPI9vfW5+MkK+N0rqYwnTJPeLDOUBX2ehYo7acqU=;
+        b=mXFEH2bwK0S8dDKcphGa5tHrveTNwxOjiuMSPps7PxdNji23zlKlYYVoCGp0Y84Y2U
+         nH2Eu3x0Hy6z/8i9MXG7VQNjUArnBclz+GJb6pCZ0dAhhN0yGZDW4Qg3A9xqsONr7gnF
+         kggJQXKxJJzEP9bzRaE9ndr8pHhtm3XYBvM7aSoQnUWF3/vukY1PQTeJFGbGpjdHWr9z
+         Zxfld7QgR8ksahoqPTYCpz8CYcxcd6JeXMPsuL1SlzI1Zf/TJUzOQgFgl0l0awJvjVSl
+         PiYobasS1TA8B7Bl4AB5/hN0yfUDmpfRlULOSPzF8UxxYK6hWAT253dBz0+XuwQA+CtA
+         g1HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730817918; x=1731422718;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=feYEPI9vfW5+MkK+N0rqYwnTJPeLDOUBX2ehYo7acqU=;
+        b=E2VTT+Mu/AEhMy2u7eR3Q3svLcv3h7CL7OcY2l2BWSlTBhQuiQLoDFMAjWxaKmIDtR
+         MFmNM62EDxBsXlH7KpG63F9GQ4hIFkBLIcIPnM1F3V0cw+4lkwozH/SvxNSXlIf5dXnL
+         NmQaPx5swKC+gZymBFFxj751YCe96/Kv2fHkJWKMHGvVPmzIkCxGYDrA6Tgak4fbUSmo
+         9KF4IxnHhkMXD7P5tlxiL2+ZO+XmF7pHm00SIShLlTeeE48rCAo4M7MP55+Gu9Hjhu47
+         cSjgAPdAYkXnsaQFIq8U58I6Hi5xQmdAvCc0K999WThMQvxKZPpSWoZPbkf3jYPo7t7o
+         W4Kw==
+X-Forwarded-Encrypted: i=1; AJvYcCXgonJg5I8TtRtotCr0oYqEZNxfx7rRi5CCjE9Ds8o4YEgb10BnOu++3cw1rs1oTp1lcwk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxdJMXV+gTe7rkEa+Ez9lmijDT1G0KeLuCC5bH9W0qYT7GmSvea
+	efjQNxViOzAnesO62os0dVnpnZW6vR+GsyGDazdSGbhI2yWUs/6V2Oophg==
+X-Google-Smtp-Source: AGHT+IExvUsnAT2OFqo86PIfr6n71XzfjJ+YCI/Jop5XhFJXv8UcBbDb8cX7hyN3b0JvhM4w1dsfiw==
+X-Received: by 2002:a05:600c:4f4a:b0:431:50fa:89c4 with SMTP id 5b1f17b1804b1-4319ac6fb17mr343146715e9.3.1730817918055;
+        Tue, 05 Nov 2024 06:45:18 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4327d5bf429sm187453265e9.12.2024.11.05.06.45.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Nov 2024 06:45:17 -0800 (PST)
+Message-ID: <8c4e5911-d908-437a-8eec-385e272c8847@gmail.com>
+Date: Tue, 5 Nov 2024 14:45:17 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 05 Nov 2024 15:32:21 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Christoph Anton Mitterer" <calestyo@scientia.org>, git@vger.kernel.org
-Message-Id: <43b401e0-df86-4849-8747-d5ab172becb6@app.fastmail.com>
-In-Reply-To: <83639e75d9d04208aa0dee345d9ef3536de105c9.camel@scientia.org>
-References: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
- <305dc9f7-4bdb-40c5-92f4-7438a9ecd482@app.fastmail.com>
- <83639e75d9d04208aa0dee345d9ef3536de105c9.camel@scientia.org>
-Subject: Re: git format-patch escaping issues in the patch format
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4] remote: allow specifying refs to prefetch
+To: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee <stolee@gmail.com>,
+ Shubham Kanodia <shubham.kanodia10@gmail.com>
+References: <pull.1782.v3.git.1726741439445.gitgitgadget@gmail.com>
+ <pull.1782.v4.git.1728073292874.gitgitgadget@gmail.com>
+Content-Language: en-US
+In-Reply-To: <pull.1782.v4.git.1728073292874.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 5, 2024, at 02:26, Christoph Anton Mitterer wrote:
-> On Mon, 2024-11-04 at 23:15 +0100, Kristoffer Haugsbakk wrote:
->> It seems to me (totally na=C3=AFve) that you would do something like
->>
->> 1. Blank line terminates headers
->> 2. Then there might be some optional commit-headers which can
->> override
->> =C2=A0=C2=A0 things (`From`)
->> 3. Commit message
->> 4. `---`
->> 5. Look for a regex `^diff` line
->> =C2=A0=C2=A0 =E2=80=A2 Now the indentation will tell you when it ends
->> 6. `^Range-diff` and `^Interdiff` can also make an appearance in this
->> =C2=A0=C2=A0 section
->
-> Well as you've seen by the follow-up, such a naive approach is not
-> really possible, as the commit message may also contain ---, unified
-> diffs, etc.
+Hi Shubham
 
-It=E2=80=99s possible in the sense that it would work just as well as
-git-format-patch(1).
+On 04/10/2024 21:21, Shubham Kanodia via GitGitGadget wrote:
+> From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+> 
 
-You could make it more robust with some backtracking, like finding the
-last `^diff` and movig back.  That=E2=80=99s OK in a file with only one =
-patch
-(`.patch`) but harder to do for an mbox file.
+I agree with the Patrick's comments on the implementation, I've left a 
+couple of test comments below.
 
-> [=E2=80=A6]
->> It seems like it would be nice if format-patch complained if it found
->> regex `^---$` in the commit body.
->
-> Actually already when committing... cause there it's taken as valid and
-> then it should also work with any following tools.
+> +test_expect_success 'prefetch with positive prefetch ref patterns' '
+> +	test_create_repo filter-prefetch-positive &&
+> +	(
+> +		cd filter-prefetch-positive &&
+> +		test_commit initial &&
+> +		git clone . clone2 &&
+> +		git remote add remote2 "file://$(pwd)/clone2" &&
+> +
+> +		cd clone2 &&
+> +		git checkout -b feature && test_commit feature-commit-2 &&
+> +		git checkout -b wip/test && test_commit wip-test-commit-2 &&
+> +		git checkout -b topic/x && test_commit topic-x-commit-2 &&
+> +		git push -f origin feature wip/test topic/x &&
+> +		cd .. &&
 
-That would inconvenience all users that never use format-patch.  You
-could provide an advice/hint about some configuration variable which
-turns off this new default.  But that=E2=80=99s a lot of work to benefit
-format-patch users.
+I think it would make sense to have a blank line before this rather than 
+after it so "cd" is grouped with the commands executed in that directory.
 
-Such an error would have to be a default because an opt-in would only be
-discovered (in practice) after you=E2=80=99ve been burned once.  And the=
-n the
-opt-in error is of very little value.  You=E2=80=99re realistically not =
-going to
-forget and write commit messages with `^---$` after that.
+> +		git config remote.remote2.prefetchref "refs/heads/feature" &&
+> +		fetchargs="--prefetch --prune --no-tags --no-write-fetch-head \
+> +			--recurse-submodules=no --quiet" &&
+> +		GIT_TRACE2_EVENT="$(pwd)/prefetch-positive.txt" \
+> +			git maintenance run --task=prefetch 2>/dev/null &&
+> +		test_subcommand git fetch remote2 $fetchargs <prefetch-positive.txt &&
 
->> The magic string is unlikely but could happen.=C2=A0 The solution is =
-to
->> use
->> an indented block.=C2=A0 Same for the diff.=C2=A0 (Hopefully few have=
- to
->> code-quote diffs)
->
-> As written in the other mail, there is nothing real obvious for the
-> user that this wouldn=E2=80=99t be allowed, and in fact committing and=
- such
-> works.
-> The simple problem here is the fuzzy format which cannot be parsed
-> properly.
+This seems to be testing what "git maintenance" runs which is not really 
+related to testing the prefetch ref pattern matching. I think just
 
-It=E2=80=99s not non-obvious either.  The simple format is apparent if y=
-ou
-review your patches before sending them out into the world.  (I=E2=80=99m
-paranoid so I do that)
+	git maintenance run --task=prefetch &&
 
->> But escaping things in this format?
->
-> Coudln't one do something like this:
->
-> If the line consisting of three - is the line that ends the commit
-> message, check during format-patch whether it's contained in that.
-> If not, generate the patch as now.
-> If so, use another magic timestamp and/or (since that might get lost
-> when sending as mail, set some X-git-patch-format: header, there adding
-> perhaps a flag like "escaped" and if that's set, any line that matches
-> the regexp:
->>*---
-> get's another > prepended when escaping, and one removed when
-> unescaping (well in the latter only lines that match >+---).
-> * =3D 0..n
-> + =3D 1..n
->
-> Or probably thinking about some more sophisticated solution or at least
-> a better character than > .
+would be sufficient. We certainly should not be redirecting stderr to 
+/dev/null as that hides any error messages that are helpful when 
+debugging test failures.
 
-That=E2=80=99s interesting and a good idea to use an email header to sig=
-nal the
-escaping.
+> +		git rev-parse refs/prefetch/remotes/remote2/feature &&
+> +		test_must_fail git rev-parse refs/prefetch/remotes/remote2/wip/test &&
+> +		test_must_fail git rev-parse refs/prefetch/remotes/remote2/topic/x
 
-Thinking just about `^---$`: an email header could be generated if
-`^---$` occurs in the commit message.  Then it could suggest something
-non-occurring instead.  Simply `-----` or `***` or something.
+these are the important tests for checking the prefetch pattern 
+matching. We should perhaps be using "git rev-parse --verify"
 
-But this might not just help with the commit message separator.
-Apparently the status quo is that git-am(1) will try to apply the diff
-in a commit message.  Even though it hasn=E2=80=99t seen `^---$` yet.  B=
-ut if it
-was required to see that first then you could do something like:
+The test coverage looks good
 
-```
-diff ...
-<diff content>
-```
+Best Wishes
 
-And not have any issues.
+Phillip
 
-Of course you can=E2=80=99t change the magic mbox string.  But I don=E2=80=
-=99t see how
-you can=E2=80=99t do some more expensive parsing and require that you se=
-e the
-end of the commit message before parsing this string as the
-marker/delimiter.
+> +	)
+> +'
+> +
+> +test_expect_success 'prefetch with negative prefetch ref patterns' '
+> +	test_create_repo filter-prefetch-negative &&
+> +	(
+> +		cd filter-prefetch-negative &&
+> +		test_commit initial &&
+> +		git clone . clone3 &&
+> +		git remote add remote3 "file://$(pwd)/clone3" &&
+> +		cat .git/config &&
+> +
+> +		cd clone3 &&
+> +		git checkout -b feature && test_commit feature-commit-3 &&
+> +		git checkout -b wip/test && test_commit wip-test-commit-3 &&
+> +		git checkout -b topic/x && test_commit topic-x-commit-3 &&
+> +		git push -f origin feature wip/test topic/x &&
+> +		cd .. &&
+> +
+> +		git config remote.remote3.prefetchref "!refs/heads/wip/*" &&
+> +		fetchargs="--prefetch --prune --no-tags --no-write-fetch-head \
+> +			--recurse-submodules=no --quiet" &&
+> +		GIT_TRACE2_EVENT="$(pwd)/prefetch-negative.txt" \
+> +			git maintenance run --task=prefetch 2>/dev/null &&
+> +		test_subcommand git fetch remote3 $fetchargs <prefetch-negative.txt &&
+> +		git rev-parse refs/prefetch/remotes/remote3/feature &&
+> +		git rev-parse refs/prefetch/remotes/remote3/topic/x &&
+> +		test_must_fail git rev-parse refs/prefetch/remotes/remote3/wip/test
+> +	)
+> +'
+> +
+> +test_expect_success 'prefetch with positive & negative prefetch ref patterns' '
+> +	test_create_repo filter-prefetch-mixed &&
+> +	(
+> +		cd filter-prefetch-mixed &&
+> +		test_commit initial &&
+> +		git clone . clone4 &&
+> +		git remote add remote4 "file://$(pwd)/clone4" &&
+> +
+> +		cd clone4 &&
+> +		git checkout -b feature && test_commit feature-commit-4 &&
+> +		git checkout -b topic/x && test_commit topic-x-commit-4 &&
+> +		git checkout -b topic/y && test_commit topic-y-commit-4 &&
+> +		git push -f origin feature topic/x topic/y &&
+> +		cd .. &&
+> +
+> +		git config remote.remote4.prefetchref \
+> +			"refs/heads/topic/* !refs/heads/topic/y" &&
+> +		fetchargs="--prefetch --prune --no-tags --no-write-fetch-head \
+> +			--recurse-submodules=no --quiet" &&
+> +		GIT_TRACE2_EVENT="$(pwd)/prefetch-mixed.txt" \
+> +			git maintenance run --task=prefetch 2>/dev/null &&
+> +		test_subcommand git fetch remote4 $fetchargs <prefetch-mixed.txt &&
+> +
+> +		test_must_fail git rev-parse refs/prefetch/remotes/remote4/feature &&
+> +		test_must_fail git rev-parse refs/prefetch/remotes/remote4/topic/y &&
+> +		git rev-parse refs/prefetch/remotes/remote4/topic/x
+> +	)
+> +'
+> +
+>   test_expect_success 'loose-objects task' '
+>   	# Repack everything so we know the state of the object dir
+>   	git repack -adk &&
+> 
+> base-commit: 2e7b89e038c0c888acf61f1b4ee5a43d4dd5e94c
 
-Some niggles: the commit message might just be the subject line and
-there might be no diff (empty patch).  Then looking for `^---$` will
-take you too far.  Maybe just look for the signature line.
