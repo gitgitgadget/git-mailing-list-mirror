@@ -1,85 +1,85 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2A11B6D04
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700841F754A
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730787426; cv=none; b=mXQMGyWWdb2sMuBcv+VGPMaXhjU3twU8ajr27P3OxDx3xV+9V6fO1FG2Rs2q9Hglruinf5wYgSHF4VhcEoWunE/QKYOjlKyKGsfEqAg6z0o4j9SJ3K4ewHpCpE02KiUE7J78QqdlSRZWfIeWdjnnxOYIeOlkAYMtY59iNhsE+j8=
+	t=1730787429; cv=none; b=Skl4mbO98IBi5/uNeqnF6F12PXy+m7ugBvf158lau0wcVaY5hfugeuvGzwRJbgFHL5WS7mIxbrjCV/bO2cUIMKIeMGs4GD9RwLl3HDlQm1DOlnXamTmHEkk1UGLn9sFgUutZU6bUuv4PqHgzir1yiMZeFoGAAIEdE1NHmpf5tEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730787426; c=relaxed/simple;
-	bh=TWDd2MZ4m3r4gK7/RsRXm+qIM26EHfeUjYYkQWpN9jM=;
+	s=arc-20240116; t=1730787429; c=relaxed/simple;
+	bh=kneY1QSORzARx5Ng/w+RbzYBwGdX4fkj937wxi39PqE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I5YDM9ao7rSk0/xvrvzkJaB2+Ltqh16bfWPd01sOl0i6xAs9B6kEerJ2DCtMXZ26L1qR0SMYwmyV6JQu2bclVAh+ifUslGzt3uzUQM5kC7SGZ48/QOY94sEZKJnLhbEYpGwaNFxuS57gFHIgGbV8x4WrfZgBCudF20JUwdyZSEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ec6fAywC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W+G9BZKv; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=UcgLY/7L0uSyuZlfXEY9LdRrkSgrc9nI73ZGW1XQ3Kp4vuB+D1OlNSxRSUAXN8HUOsbkMgU3tX6BMxoIsKpy3E01KU10RlJmn29HiRSUc1Kx0UapoBmRZF7sJEm+7v6pNntLjqh2cdJPat8WtiUfi4ic/bzF3Nv0o02218wBv38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OT25LXCq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nSwywtWN; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ec6fAywC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W+G9BZKv"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OT25LXCq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nSwywtWN"
 Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id B53AB114016D;
-	Tue,  5 Nov 2024 01:17:03 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 6F5061140162;
+	Tue,  5 Nov 2024 01:17:06 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 01:17:03 -0500
+  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 01:17:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730787423; x=1730873823; bh=v+wOuqPYeP
-	QZ4nSvEMO0RUZTg/18UUqRdIndd1MEBg8=; b=ec6fAywCZGTq2UXCDFLSlAYKWR
-	FViXpmoTOdDtpbYFGr3NU0guiRQRgrceyeqPWcmFVvDOKdKtQU9697mxsqkgJq+y
-	OQ9T/mB8m3P01rVc7HFlDg03ZDaycxvbfoZZr2kwGhWancpDgKoa2o5o8vksK4Mf
-	Kebpx21eMbvrOyLElcvaJ0H5O4tG43IGmGno+TW6df3M4vQJAu5dZV/wfP9JxmzM
-	OBZU/HAEIntBBTR7fZLI1TTqDkpbw17X4aseOJurrWIVnZSybv/jr1Z+n9vTZEyZ
-	V9ocq/nu2kwQK8MHukyjISgaAof5AfIdJlXrM97far2Fr1JBx7TuieWpyojg==
+	:subject:to:to; s=fm3; t=1730787426; x=1730873826; bh=5jJ1K5EsbA
+	HNvVPvIVNIaiiBV/BkQeW1zHmtuZxF8H0=; b=OT25LXCqBTzGXy13FDmb/YfLiW
+	hHrTK6YZ1kCuHhxe1vmDyhcuSs7w3PeQHtDQvg0ltXHVCyMBVC6Dku3DziZXFl7+
+	m84KMJaxX2xuEO+R6OpRBZCkBkKx1EJcLSyvZv8s46FVANU3z4qVbrdA+MeL/pCj
+	UQUNTJxYWjgItRZWDoas2GCKQnEneN43Nk0gUeNzhYtNOaBkq5T37/RxIZLY5qFC
+	PwNG09rkxeNphyA4gFbocVBC7YR7w4BbUjswFqlgOI32kkXKn/TE2UiRSTRq+Tp7
+	bgFkDjJ8RuTH3Tcdq7QK+pxmo4Wb7aH2eATuSNxQpAfrXXIdAk0Mj009Ej4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730787423; x=1730873823; bh=v+wOuqPYePQZ4nSvEMO0RUZTg/18UUqRdIn
-	dd1MEBg8=; b=W+G9BZKvoW3biDx2SO96yLXzVcMI2U7UJ434mfP2Fn03AEf7BAX
-	zgSt0NjDxLcmOXrRgtydPwbk6wWyBXEQv/83ULkVEkW+WxNWixQmd1y9NIOq1vKa
-	XaBDX76J25W+/SioJiOG2ElTq4Y3Ot3OiE60j6GHQraVt+/LIYhZL6qQIah6YIhl
-	F5kzrPxeJUAA4q+UOtEstJ4RU8T/7a+cGgI4IF31gbuUko5qq0thPoR0dCtoRQGO
-	+hPGLmkxwb9QujYYW2SHjIkviYzmLrGO2TP2wUcHcoMeEVDCoxNVFqkIJFIkbBEf
-	JsZkddQ0OFioiZzLoY1b8JekpQ6zF2Rx6eg==
-X-ME-Sender: <xms:X7gpZwBo_gq-wScqZ0zDa_3aF9SOoPsu0iuvPi-8DjhKeiPCqkQOTQ>
-    <xme:X7gpZyhkuGdQe3QovlMGLXzmk2KsjfsFRjZNQNcQ_YbHO0haSVkkGDJgLEH89LV3c
-    8uYsZ-KQ6gpEznVtA>
-X-ME-Received: <xmr:X7gpZzntvs8q8aUPXuxk1DmMLs5nq38vvQKfk-bNqcdAkqnNogk7TRpIP1yGlt3qNho5yUh-YZ-YFhOR0jq8ltYADWcSzLQWY3rUth0x-fJtvw>
+	1730787426; x=1730873826; bh=5jJ1K5EsbAHNvVPvIVNIaiiBV/BkQeW1zHm
+	tuZxF8H0=; b=nSwywtWNTZUVzOUyUmlwpfrj0liYPzDQFIYw1t9PuKV5J0deJfR
+	f6iK2Kq2sRD1l/r4bneJ1JJhXAYfthpCjKqzizyF4zS7AvAkH3Hr+mHSQjYIp727
+	DWnCELbp4qAe3V5lryLkl2wc7M3+TAB/kL2+qpR2UGdcSCNA3r4tHgXxRPj3iyRM
+	IFGWwo/II41LBXs32xKUa2zsSc1WnIB7Xhto3cJVNrULOq3tojBW55hQc4SNUSFa
+	NXs82V6h+KuxwM0ptH1nb8+jdgeWEjjwyqNz0IW/xs8dM8cY47D5qDzqbeHK+O1L
+	x4apJs30Z0O1wljOE3sUVVA4iayBQ4w2ogg==
+X-ME-Sender: <xms:YrgpZ2-ON7WrTkwvBeSiF_4JEaxyn-h6WuqSf-OFiiMzuMSrllJSaQ>
+    <xme:YrgpZ2t76eqRtRJLjVGvh3s1vAK-2QxD6i5PJy-oZrhxmyyKlk2qFUewgojBM9JWh
+    6uT465_kj_ebty8Fg>
+X-ME-Received: <xmr:YrgpZ8AGUFLCKOP5TPIIcf6mASlRfKWSNe0fZ_Adtiy_Rs1GRuFkY4LaJ2rthfpBVQ47ciZDCDu1QusJUBVdnjJvyiTLi-DHfHGQkwQSkyrk1A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepmhgvse
-    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:X7gpZ2yj22BU6szUMjmGVUQStQErUzS9ac7wXCqs_ZEgkMVpj0Blig>
-    <xmx:X7gpZ1RhKx7JTMxaXdq8h35_x5zvuTYzTE6dnJrARJ8vtLzXm3hFfg>
-    <xmx:X7gpZxaFQOT5HSlIpAn_HNOGjmoe0RNQA6oBaf1bMHKWYOwKCvm8bw>
-    <xmx:X7gpZ-T_711wiDMxAgHMvm_zTwY7Qy4EXuXl77okbezgmkkmYo0-VQ>
-    <xmx:X7gpZ-J4CVhLUGLndTqy4V2bF_bYKeL1ouKq2VMsO2N5AzGLRFg-7AcA>
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohho
+    nhesihhothgtlhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhr
+    rdgtohhm
+X-ME-Proxy: <xmx:YrgpZ-fLBvBI1U_JANTlWitWk9OQLd2uyFLt8Q-SIzyWmPuUOly3dA>
+    <xmx:YrgpZ7MfTtXiUTitKzt4vHblkX5XCjlr8XO_EK--X8CJbfvHDPGGHg>
+    <xmx:YrgpZ4ntqPbcuumvZmHibPxtw54XoHoS5apzNEsKKFaIQOMtXHuKtg>
+    <xmx:YrgpZ9vKPwY1lUPSBrJQ_XMiBQ2I9bUJv7klNVZAwuPwioNckoOUmw>
+    <xmx:YrgpZ20oGJPB3McZxrGDLJ-M0kCVL74nj8eZ6698713i-pdm1SphHmEB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 01:17:02 -0500 (EST)
+ 5 Nov 2024 01:17:05 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ecb4a12b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 06:16:40 +0000 (UTC)
-Date: Tue, 5 Nov 2024 07:16:52 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5b5f4c55 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 06:16:43 +0000 (UTC)
+Date: Tue, 5 Nov 2024 07:16:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 04/22] builtin/grep: fix leak with `--max-count=0`
-Message-ID: <d716f93169a5a7c2352684998f75e85cf70b9224.1730786196.git.ps@pks.im>
+Subject: [PATCH v3 05/22] revision: fix leaking bloom filters
+Message-ID: <aeb8a19d28d28e0eb1a80b0969eff7621f381a9c.1730786196.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1730786195.git.ps@pks.im>
 Precedence: bulk
@@ -92,68 +92,43 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730786195.git.ps@pks.im>
 
-When executing with `--max-count=0` we'll return early from git-grep(1)
-without performing any cleanup, which causes memory leaks. Plug these.
+The memory allocated by `prepare_to_use_bloom_filter()` is not released
+by `release_revisions()`, causing a memory leak. Plug it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/grep.c  | 13 ++++++++++---
- t/t7810-grep.sh |  1 +
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ revision.c           | 5 +++++
+ t/t4216-log-bloom.sh | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index f17d46a06e4..98b85c7fcac 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -906,6 +906,7 @@ int cmd_grep(int argc,
- 	int dummy;
- 	int use_index = 1;
- 	int allow_revs;
-+	int ret;
- 
- 	struct option options[] = {
- 		OPT_BOOL(0, "cached", &cached,
-@@ -1172,8 +1173,10 @@ int cmd_grep(int argc,
- 	 * Optimize out the case where the amount of matches is limited to zero.
- 	 * We do this to keep results consistent with GNU grep(1).
- 	 */
--	if (opt.max_count == 0)
--		return 1;
-+	if (opt.max_count == 0) {
-+		ret = 1;
-+		goto out;
-+	}
- 
- 	if (show_in_pager) {
- 		if (num_threads > 1)
-@@ -1267,10 +1270,14 @@ int cmd_grep(int argc,
- 		hit |= wait_all();
- 	if (hit && show_in_pager)
- 		run_pager(&opt, prefix);
+diff --git a/revision.c b/revision.c
+index f5f5b84f2b0..8df75b82249 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3227,6 +3227,11 @@ void release_revisions(struct rev_info *revs)
+ 	clear_decoration(&revs->treesame, free);
+ 	line_log_free(revs);
+ 	oidset_clear(&revs->missing_commits);
 +
-+	ret = !hit;
-+
-+out:
- 	clear_pathspec(&pathspec);
- 	string_list_clear(&path_list, 0);
- 	free_grep_patterns(&opt);
- 	object_array_clear(&list);
- 	free_repos();
--	return !hit;
-+	return ret;
++	for (int i = 0; i < revs->bloom_keys_nr; i++)
++		clear_bloom_key(&revs->bloom_keys[i]);
++	FREE_AND_NULL(revs->bloom_keys);
++	revs->bloom_keys_nr = 0;
  }
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index af2cf2f78ab..9e7681f0831 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -9,6 +9,7 @@ test_description='git grep various.
+ 
+ static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index 3f163dc3969..8d22338f6aa 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -4,6 +4,7 @@ test_description='git log for a path with Bloom filters'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-chunk.sh
  
- test_invalid_grep_expression() {
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
