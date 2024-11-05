@@ -1,86 +1,86 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0E0F1FEFD8
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2B81FE0EE
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 06:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730787477; cv=none; b=ut6RQcptf2dpTxugYNoFLRRpYpaChiv5XejtqXjMfEQtS4Px4ECHXdDphBhiio1VxXVgjzYilTjL+VVdSaZX8EKRwUGiOzJczaSt1k6qnyG/5XhfmXWaxoVP6ojv24T2wwhwTVlv/yX0MuIRoP/zCKm2aUrsNC+Fdd3ntxII4E8=
+	t=1730787483; cv=none; b=qXe6IEP4RtsZn9Qnmtw2r5ts+F4cDw5YUE2JnBccEp98AtXfVKCCg7SM3houRVqfpaijwQfQ2IhlcOd5HZB/RbmeHCuu7+ssi+59aOhPpuVhvUbKwb3rLj2Ps/QTML33WfEuU+3kxIXLf3TjOaZ58HDxNS/bw2/lowGzfrgN1ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730787477; c=relaxed/simple;
-	bh=A0SZLAqdki/rAYZrLvUeU4q5usOSsZLvs+lux8pEUB0=;
+	s=arc-20240116; t=1730787483; c=relaxed/simple;
+	bh=nzBCfE0uQtHPTfedz8g0girMrHWUDV8clALDP9Ln6XE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eLDczuXsHbdI8ZPqTTIsb6eOEftrQvpc/Vu8kDBXdcNJHA9nue0yIzndpp2dmbtixwboEOzUk9rgsORW0JLpyJk7TzBif9QrSnAVWylBVufUf9dxXu57eBN/FKgA5mAMKs2nulES75l/1Zz1LY5Y0Y+XdGIacSZvInetYSUVTY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ORB0Z9Pf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iVNE9QOi; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=ePHM/ITG2QecUmLKP1yRsRSIu0jCfsavPHvY/qz4XoOSiJD4GLZ7R8mI6+YW9J8Yb6+cXcTp4h/gg7grSu6h+acIlCOrqsb0u6stuSpqrKz4KqbpjbIPNMdDFTwfijbdDqm2Ie/FpscW9+1xqXtVVjuWnP2GMHxYI+UFKe+34IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=01+lWVXa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PULjGNIT; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ORB0Z9Pf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iVNE9QOi"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0ED19114018C;
-	Tue,  5 Nov 2024 01:17:55 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="01+lWVXa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PULjGNIT"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id BD2F511401BD;
+	Tue,  5 Nov 2024 01:18:00 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 01:17:55 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 05 Nov 2024 01:18:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730787474; x=1730873874; bh=znr72vC7qW
-	4uhoGtCgyCkuytqAkVC4l+Zx6cG6ciiBY=; b=ORB0Z9Pf15fwps8fQDo8lvtllt
-	yUfq9mwVDYRjm6YqjZKvIByggkX1dLh8aNe3SzKVWYG3PSZ4hkRvs6WJdLmF2tJE
-	oPN21NRzjDrb/UMwGnzUsVXpbYfj6WH+y5YevRkZH3Ymy9pUO9/cniwPeajOHclU
-	5taSht5f4CmLdycXBaoEvkPkvAvNZUXDUvwGbrGXmLjOick4I3OOf2AYc95XKmXs
-	dd9WDtYdqDJNPBlKy6H0pZu6uudry/9p4gYB87LYTsQ/fh29BcGcNc3os0XOCaTO
-	5+IqinVmYm38lxqGjUooUq62KC/q1rei8dqzDnuV4LXXdwcNoy3yw9l1TESQ==
+	:subject:to:to; s=fm3; t=1730787480; x=1730873880; bh=HHoBFb33Wz
+	5ywAmLAnRYaKiXTsJlEqx2TZ0vQR3gKg4=; b=01+lWVXaKNHIRXnQd/4afx2bMl
+	6MC1WCQhJpaY5ziagvUaEKsY74fH9/YXI8R4Rzhu37eoBuOwafSoCmPsyAqXKUDd
+	GMcFT2cXfKQMF3HUlQ7ThO/qQhCINPX+FKMjvb20ljuLT3K7Jqs6T5CKD3om2jyy
+	OFZALH0X0bXBfgEDZ/+xnwfuWFLO1A4+cf7E1oo4H8RgHuxAboTuAj6IsUH7jjnB
+	TaYNSsNe5y+3HMiGLVGO61OMRSz6drCTng5NDiStZKkkzV3CKUAYjiJA7wHeuUqx
+	pNNAUq/cQdK0VUFvalXu2/ZAzJTcwLcyxT34Ml538fgfalU2oW3aMFayTnrg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730787474; x=1730873874; bh=znr72vC7qW4uhoGtCgyCkuytqAkVC4l+Zx6
-	cG6ciiBY=; b=iVNE9QOiCWIDvsKlG3Vcpqdh0Fyn74qn31M8EdqTsrbER7Ii5OX
-	oLvwhPH5+ROLevYFDT3w9EDC1ISVkmmaHlaPlIjYaWWMIVCpYR0qjFfOuHTlpmFj
-	j4kQ9UzK9lMcKS9we9k2oRzkoVNYTlis9ell2MHjbFpVYLa3WbYTyWFugy3ARH0J
-	YrCMlUsVw10k7Jg3vCd0NKo67j5cIvj3B8WHiQXMYwJwPJvdbu4tc4Y/wW1pwks9
-	BdqR738K1T40ReAnUXBIUzsGTnC722QbjxWhRVe3DgMGMP6xSIuJXG+lxQJyZxPm
-	W0JPHFGMgs2TTRNA/Jk6b49NftzenW8em6w==
-X-ME-Sender: <xms:krgpZyjG7Lyt3vOGPEW2CfuBrb8mT7oXHg_ep-wsKGd9ftJjpAzCnA>
-    <xme:krgpZzBrrs_mK-t1kNpBa0vbxsxcZ314ZIkp9kEw4G1eazM2L9VHVIY2agCpUYEga
-    1p8QDACcKml5gvMOw>
-X-ME-Received: <xmr:krgpZ6EbMYnq1aTcmiqe9GHTQVra7fkyqMjoCe2hMDmWWwIeuDV82gqO5BfxYO4qjsMNyoVju5sLi6OluqKuOGWzogbFTJlCS6OjrLjyU9qzNg>
+	1730787480; x=1730873880; bh=HHoBFb33Wz5ywAmLAnRYaKiXTsJlEqx2TZ0
+	vQR3gKg4=; b=PULjGNITNL46ze8/IhrVU083ECmHxzuKMXAnlAm6bddAG3hpTPw
+	1X1EhYZxOQ+H8zNGfn/8E2b5JrxILtYCk8mvb1VQETbyoXQ5jXkNY7nPNkQtJPqu
+	4ssh2Vz6iSQ/iEBosQ6H9+dBBYW0B9TzsjX3TLcI/F1+XKEFMkSC2Px0bLWFiptt
+	QwP7T2WyfwYtDt/d5zeY46NomEEU3ko/YvbCdkvCDrACQnaPHCvKAEqmWffPY8G1
+	gyoQ8GncmWLPT+IAP7BcKDU751ZOE+xATRM7qKkXTEKteQ0Wn199AOxgl+0y/UjC
+	p6fcYQ8lKtrgTBA3bk+fnKqEHAFdWTB/9bA==
+X-ME-Sender: <xms:mLgpZ53xy_2xqCyZVB-58C_gtO1uUb4uNMQfhuWqLTIU5d1I2Jswcw>
+    <xme:mLgpZwEKm3UBjODhCOIMkqTBblkUGO7FbqO_pFY6WM_EObM9XzAicr4Oqzrj2WtFr
+    9W8QX00Nqk-ZntFgw>
+X-ME-Received: <xmr:mLgpZ56ATGxxDu_h2yK0VDsu1nFR0vqThghNmB_30B2i3EPq7RoFlqPK24G6lpk1kuFlqVPpRWC5rfsghMSMOQOxK7vax5k0zZPRj9P6c9Mxjw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvg
-    esthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhl
+    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhl
     rdgtohhm
-X-ME-Proxy: <xmx:krgpZ7TVCuQCR-AxjCPVdn5WouftDFkTY53Nrea95J2dWQQbJV0aFQ>
-    <xmx:krgpZ_x50CqJYJ_Hp4BmfRy0b0gwkbIIXDDzlj83gkQG2KxKA2eEnA>
-    <xmx:krgpZ570kgUDaR9ZiYrg5-4nbXVLHNtT6L_NdWaxKRotmbeo620sjQ>
-    <xmx:krgpZ8ysnV-CydylntbItyZwmzv0jvV_iUtE79hMc0itngcNxiwERg>
-    <xmx:krgpZ6qYrIy4tgW6CFG7qv8bI2t9RufrwOQscKuUmzMNtGOx8xrfx8Tx>
+X-ME-Proxy: <xmx:mLgpZ20jrLKg6SvcvdOFT_KlN5xaLxI5gqRzyVLx6rQQY-57p2TE8Q>
+    <xmx:mLgpZ8HH3iWg3jxmMe99Vm1UhryT5LmeNHdThxDinGmIwOJWO5BUYg>
+    <xmx:mLgpZ38PJUx1kXFFRuTQgR0QsCfoykeXWH02fLGNWMDhgRYiDyY0Qg>
+    <xmx:mLgpZ5lEZZXeSa5ZTw6491zjB0RU2CN2F0SwXZx_z9YkkvdXxSmMHw>
+    <xmx:mLgpZxPJKqGVtr7IvQf6BxB-McDAdArG6tGL0tQ2riuSGp7kuIZd-slx>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 01:17:53 -0500 (EST)
+ 5 Nov 2024 01:17:59 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ba0e01c4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 06:17:32 +0000 (UTC)
-Date: Tue, 5 Nov 2024 07:17:46 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5caf40be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 06:17:37 +0000 (UTC)
+Date: Tue, 5 Nov 2024 07:17:49 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 20/22] dir: fix leak when parsing
- "status.showUntrackedFiles"
-Message-ID: <714c9286e7a466f5693cb9ab70177f46d51afe04.1730786196.git.ps@pks.im>
+Subject: [PATCH v3 21/22] builtin/merge: release output buffer after
+ performing merge
+Message-ID: <0ff65c1213b7034c35d80796800d29de5ee74b52.1730786196.git.ps@pks.im>
 References: <cover.1728624670.git.ps@pks.im>
  <cover.1730786195.git.ps@pks.im>
 Precedence: bulk
@@ -93,53 +93,50 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730786195.git.ps@pks.im>
 
-We use `repo_config_get_string()` to read "status.showUntrackedFiles"
-from the config subsystem. This function allocates the result, but we
-never free the result after parsing it.
+The `obuf` member of `struct merge_options` is used to buffer output in
+some cases. In order to not discard its allocated memory we only release
+its contents in `merge_finalize()` when we're not currently recursing
+into a subtree.
 
-The value never leaves the scope of the calling function, so refactor it
-to instead use `repo_config_get_string_tmp()`, which does not hand over
-ownership to the caller.
+This results in some situations where we seemingly do not release the
+buffer reliably. We thus have calls to `strbuf_release()` for this
+buffer scattered across the codebase. But we're missing one callsite in
+git-merge(1), which causes a memory leak.
+
+We should ideally refactor this interface so that callers don't have to
+know about any such internals. But for now, paper over the issue by
+adding one more `strbuf_release()` call.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- dir.c                             | 4 ++--
- t/t7063-status-untracked-cache.sh | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ builtin/merge.c                          | 1 +
+ t/t6424-merge-unrelated-index-changes.sh | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/dir.c b/dir.c
-index cb9782fa11f..7f35a3e3175 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2872,14 +2872,14 @@ static void set_untracked_ident(struct untracked_cache *uc)
- static unsigned new_untracked_cache_flags(struct index_state *istate)
- {
- 	struct repository *repo = istate->repo;
--	char *val;
-+	const char *val;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 84d0f3604bc..51038eaca84 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -754,6 +754,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			clean = merge_recursive(&o, head, remoteheads->item,
+ 						reversed, &result);
+ 		free_commit_list(reversed);
++		strbuf_release(&o.obuf);
  
- 	/*
- 	 * This logic is coordinated with the setting of these flags in
- 	 * wt-status.c#wt_status_collect_untracked(), and the evaluation
- 	 * of the config setting in commit.c#git_status_config()
- 	 */
--	if (!repo_config_get_string(repo, "status.showuntrackedfiles", &val) &&
-+	if (!repo_config_get_string_tmp(repo, "status.showuntrackedfiles", &val) &&
- 	    !strcmp(val, "all"))
- 		return 0;
+ 		if (clean < 0) {
+ 			rollback_lock_file(&lock);
+diff --git a/t/t6424-merge-unrelated-index-changes.sh b/t/t6424-merge-unrelated-index-changes.sh
+index 7677c5f08d0..a7ea8acb845 100755
+--- a/t/t6424-merge-unrelated-index-changes.sh
++++ b/t/t6424-merge-unrelated-index-changes.sh
+@@ -2,6 +2,7 @@
  
-diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
-index 8929ef481f9..13fea7931cd 100755
---- a/t/t7063-status-untracked-cache.sh
-+++ b/t/t7063-status-untracked-cache.sh
-@@ -5,6 +5,7 @@ test_description='test untracked cache'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ test_description="merges with unrelated index changes"
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- # On some filesystems (e.g. FreeBSD's ext2 and ufs) directory mtime
+ # Testcase for some simple merges
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
