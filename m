@@ -1,54 +1,54 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14177AD51
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 00:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5B8BA53
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 00:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730766166; cv=none; b=Cbb/QfCbgymYsvjstFPb278vAOkzhdmU9hQBge8RGWOXnBDHhtDVZLUra99LMfZwxQo/wnTKFHLG5E0A7pKnyfKZDyrJyACqhwEENe9j7Cl3Hz8BNn7shmPgIMlD/dr1LmduZFj8+L1BWSMQDStpy0SlM7+rEAFQlx39P1Gtuis=
+	t=1730766984; cv=none; b=h3UAPd+Ga8/kDTybeTL6bLjT0vdRBG45W85YzxPwbn1ocoMNA3jWbyatSVQoSMzj+/B7qmm9FOvlxRbc0Yswbqglbsya3SYOrZhhLQYFougbtB2VEFiHyzBnoklsfgGJgpNhe7U6VcJZsTzY9Ty82r3NoELTBL/zeUXvBFWQGN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730766166; c=relaxed/simple;
-	bh=p/WUbxTtEuDCKImX8k9XiTJG8YLP/Gi4akMKZ8xkrJk=;
+	s=arc-20240116; t=1730766984; c=relaxed/simple;
+	bh=d9cZ7V+aA4ytXZQ0rELT1WuiAZ+elBcwkx1Z45Fdpc0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KbwlXgDnhJ53IM0+ZQTmbcsVNsUeQQnaMJOwqb9TLA5EYOk3nuofg7teJ3pX141nadrrGFPDWeDfvy6+aXbF5kekveLaElHACXCzqCiwoVjr417Sl+Sjv1ULow+k0Hb+Rq8Uf/yybh1NNhDTNCA0qVbZ0EJrUiIN2BmyUR+eCQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FsQx+6GD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Toc/CY0K; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=Krz6sYJzxBDCvqdf8epTkwxnAlIhbu5aEUF446/HvxKnJJgYmtSoROuMoAQtBvJoXb5HKor2+TiPKSAAay61eU6qp9hHSCN2EFNZue+VEnCWzHpslv37KEXNHVM+xa+VEVua44UBgBItJy68JklE+IuJEVDPLiGBI4vSp2eFj0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d4kkLxWL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gtseptk9; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FsQx+6GD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Toc/CY0K"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F056B1140107;
-	Mon,  4 Nov 2024 19:22:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d4kkLxWL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gtseptk9"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 31C0F13802C1;
+	Mon,  4 Nov 2024 19:36:22 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 04 Nov 2024 19:22:42 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 04 Nov 2024 19:36:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730766162; x=1730852562; bh=rGXgaqerCn
-	F1VQvN7ei8FY0jtk34KuBYfQjsi1nI/0A=; b=FsQx+6GDxVG1eekdlE5Dzb7+rt
-	szKMbigzrauwMHUX0Df6jeHqiTfQ97wBUQu7oKKCorO7fyg47+zj9Aist5zb27GR
-	6A4kvFrR1grnvi1MQRHe4PKcRvQxO7qghLhailbIsG7+H4NrLHo4eI5vy9EfYOCR
-	ICMjEKq0S41asSmNKrIuuHlYiHfGm7hhGNjbbGLp7jG38YpZEmb44NKb/dfgTu9c
-	CdoDU3a5mKEzdsTwouZHs8CVYGH6xpoF4y6yduOlJcNsTX9TsIqnxiNkDjYKEguD
-	oe5mjInP2qMPGJr37pE5LP6319M1RkshsIZ3cbvM8FTFVqLPTANXCyEH83nw==
+	:subject:to:to; s=fm2; t=1730766982; x=1730853382; bh=YIwqQDnGAo
+	XvOOAUK2PwQWgUkZaLblJH+M3YxhOKO9s=; b=d4kkLxWLVkH4ug3mHvlB9AybEG
+	POf2tQo6nEYq/ZC0KS7Eb3g/Pl7iVxJJTaM5OD6gGa68EQr2BSXvWLYfF/YATKX6
+	gipYFg17GDYDc5Je2m64/+/6tk0vqHz6nkH4lqg7ZowAb+BjkLnOpHJ+pArq4y1o
+	mz1dGAjQzVR1FBCNpwuoOURz7va0n8HB4cqfy1NYb/Ag7illbPXRuT6vQx/dhOrZ
+	NXCFUHOAYwJGEQHxq1AtoKxhbnizDVWsKvdjIjvQ57XkOsxyECsNJIgZgpDd9g2U
+	ZH6Nmun8KVIxNvawn55ee96TF7h/YZsIgSQxpEZIZRILRQXzH9WSKscdLDGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730766162; x=1730852562; bh=rGXgaqerCnF1VQvN7ei8FY0jtk34KuBYfQj
-	si1nI/0A=; b=Toc/CY0KVC9HMqEbf2kYIR2Om0SyyHwUc9tfGN2ZuDtee0Ag+MQ
-	W8HspBCOhNue4zYJXOaK2iZFsOoSCM1be34fHdqcI0U1fsdVTBJQV9kazQ8gpMfc
-	f0p+SlwxCD/Y7ce69MUzXhW0oN0WhZtnwaegCrlqnE2FQBbv7TMiFu8LLVLOGN+g
-	jUTd2e8qvF9EqOfvcfvAZaDe+C4rj4A+nsAsJdSvv2mH5YZl841IAa2vzwU6rlaL
-	Hz/9kyFAiYEPHfyDYiBcCffHWb2tSPgW70P4ujPsVLpqjTtzNfeMi45fvrohrd8B
-	IPtc3KONPQIfbjWfgRk1vr6mwd0HwGBCxwg==
-X-ME-Sender: <xms:UmUpZ_d4LCS1IfQSykMGHU6Oc-2p2YjCalI8C0At5piMdHJOPfeQqQ>
-    <xme:UmUpZ1OHR1m1UtLHXNF918i2iaCLCfcjN7Tk_C9VQ6KAlcNT8x3dMxejrPPVVNHs0
-    AAhmu_vjSMAGuxLyw>
-X-ME-Received: <xmr:UmUpZ4iI7fhiwTjN6wXxNNoKW4D_SG2rZ7izlmBO3BVwh-zMxLG0Cy1P18djewfPT4wq4SwXscY2BUbNes78T5OuiaVVCZSHCV9b>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgvddvucetufdoteggodetrfdotf
+	1730766982; x=1730853382; bh=YIwqQDnGAoXvOOAUK2PwQWgUkZaLblJH+M3
+	YxhOKO9s=; b=gtseptk9vY780oWFFyznRYA2Q92+jdv8chZLoSXWfOrthc8oo2U
+	Y9rb9BVHDlOxTQUKggy8FkywGcgh55SBbegMRWL2WywFbCoIx/5xMAkwDbwSFVZe
+	xqVs1iFLIPp7vm1wqyW438IFOts3HXvp6eXJ9VEsz2HLbP8rE+m+o0rk5OSxymhX
+	2FQsnPofTkpxH/+MoUSOMcF2DXPikZu70xFhG3NoFlhlETTFkozfBTSleSMnbRWp
+	wmvUVnBE8Dqo+oRUVXxT8GFpXZ7dHGZHAQGrYyuQYWC7qil6+7OL/MJKUfGtKgJw
+	h5jyThQ3AtY0nREQaIzcWiTrXXrvEzFb55w==
+X-ME-Sender: <xms:hWgpZ7tuSzGowyQ7Q2rMTjWRnVgssd0DMfWETb7hHbUw-_MHLqt8yA>
+    <xme:hWgpZ8dD9Ehlmmg-FQhyeG1BzlXO6ePdSIW6xLV-926JHpcYtIcI7TSLEBpniHJuO
+    Lfqm6HUkNVKy5_4LA>
+X-ME-Received: <xmr:hWgpZ-z9uYlAFKls4Od5MrvQEJY-R9Gno_5kRPZwytjDqg0huWhCRjpcOTJc3YyHGGWmXIkbM3XRbDsyPk2M32alO2qGd86cJN3E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgvdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
     gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
@@ -56,27 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgvddvucetufdoteggod
     etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
     shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
     hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopegtrghlvghsthihohesshgtihgvnhhtihgrrdhorhhgpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:UmUpZw--EHha5p1U-RfdOeUTRKRShZNz1qdUkZTlVucWKX676mJIgg>
-    <xmx:UmUpZ7sq-p3yJI2py1mvZ6oM5uJenbA_hY94QAblrYu2bXeKAqztDQ>
-    <xmx:UmUpZ_HPMhVv0aG2xJkJrCDe0p-LS3-KY0XhBXApbsb22YssLehV7A>
-    <xmx:UmUpZyOhPtAmFoMIbpC9pBhwECUS_iILf3VvuIYH_7gqT0EC1vCKnA>
-    <xmx:UmUpZ7LiMO0ZzUg7gPCkoRpswXJasa1LcFyeiSnmRwTLtFnfpMEf5oDZ>
+    rhgtphhtthhopehirghgohdqlhhithhosegtlhgvsgdrihhopdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:hWgpZ6ORxsBZRzXMtU2xeFrR7KjDWg0KAYKQvf8Z9y9mTrifABaxkQ>
+    <xmx:hWgpZ7847FOzU8kvy5-syzszj4gVh6gyuJwE5pC72gPSwXhvmYZUaA>
+    <xmx:hWgpZ6VfimkrNODpX8OpNG0vYT8-Zb8897NRVqkY-OIn3o9nf5zn4Q>
+    <xmx:hWgpZ8eIkvYd043vENrQFamSJBCGQKqKelnbrpgU_a7-pJbfSrdMAw>
+    <xmx:hmgpZ-Y0v797HaW18-jTrLp5wtLNDSI2LFDO5N0JkAtxWoHe13q6hkTs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Nov 2024 19:22:42 -0500 (EST)
+ 4 Nov 2024 19:36:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christoph Anton Mitterer <calestyo@scientia.org>
+To: Iago-lito <iago-lito@cleb.io>
 Cc: git@vger.kernel.org
-Subject: Re: git format-patch escaping issues in the patch format
-In-Reply-To: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
-	(Christoph Anton Mitterer's message of "Mon, 04 Nov 2024 20:24:14
-	+0100")
-References: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
-Date: Mon, 04 Nov 2024 16:22:41 -0800
-Message-ID: <xmqqttcmv8a6.fsf@gitster.g>
+Subject: Re: `git apply -p` doesn't remove source prefix in 'rename' diff
+ entries.
+In-Reply-To: <d67e133c-f287-4009-9244-eaeffd84daeb@cleb.io>
+	(iago-lito@cleb.io's message of "Mon, 4 Nov 2024 21:35:47 +0100")
+References: <3af246eb-3473-4964-9aed-ecff62b215b7@cleb.io>
+	<xmqq4j4r4enh.fsf@gitster.g>
+	<d67e133c-f287-4009-9244-eaeffd84daeb@cleb.io>
+Date: Mon, 04 Nov 2024 16:36:20 -0800
+Message-ID: <xmqqjzdiv7nf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,38 +88,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christoph Anton Mitterer <calestyo@scientia.org> writes:
+Iago-lito <iago-lito@cleb.io> writes:
 
-> There seems unfortunately only little (written) definition of that
-> format, git-format-patch(1) merely says it's in UNIX mailbox format
-> (which itself is, AFAIK, not really formally defined).
+> Hello @Junio, and thank you for feedback :)
 >
->
-> Anyway, it seems to turn out, that no escaping is done for the commit
-> message in the patch format and that this can cause actual breakage
-> with valid commit messages.
+> If I understand correctly, you are suggesting that `git diff`/`git
+> apply` are behaving correctly here, but they might not be the right
+> tool for the job?
 
-Yes, so ...
+No.  
 
-> Consider the following example:
->    ~/test/foo$ git commit -m "msg1
->    
->    From 0000000000000000000000000000000061603705 Mon Sep 17 00:00:00 2001
->    --
+"git diff --no-index" is giving "wrong" information in the
+rename/copy extended diff headers, but regular "git diff" is
+perfectly fine.  Also "git apply" is perfectly fine.
 
-... this falls squarely into "if it hurts, don't do it" category.
+And the "wrong"-ness above is in the eyes of beholder, in the sense
+that the original folks who coaxed "these two directories are not
+controlled by Git, but unlike GNU diff, "git diff" has a few nice
+bells and whistles, so instead of adding these properly to GNU diff,
+abuse "git diff" to add a mode where two directories are compared"
+probably did not view that "git diff --no-index X Y" must be
+equivalent to committing the contents of X first and then Y next,
+and then doing "git show" on the resulting history.
 
-A commonly used trick, when you are working on Git and have to
-include such a line in the commit log message, e.g., when you
-discuss how the output produced by "git log --format=email" looks
-like, is to indent such lines in the paragraph you talk about them,
-e.g.
+I do not know why being different and showing X and Y as part of the
+paths reported on the "rename from" etc. extended diff headers could
+sometimes be useful, but they must have had some use cases I am not
+seeing offhand.
 
-    In a format-patch output file, the contents of each commit
-    begins with
-
-	From 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772 Mon Sep 17 00:00:00 2001
-
-    where the string 8f8d... is replaced with the name of the commit
-    object the patch was taken from.
-
+So in order to lift this "wrong"-ness, you'd probably want an option
+to the "no-index" mode of the "git diff" (in "diff-no-index.c") to
+omit the leading directory name (i.e. X/ and Y/) from these
+rename/copy extended diff headers.  Then your toy example would work
+when the "git diff --no-index --fixed-rename-copy-path-info" is used.
