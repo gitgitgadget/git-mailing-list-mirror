@@ -1,115 +1,160 @@
-Received: from mailrelay3-3.pub.mailoutpod2-cph3.one.com (mailrelay3-3.pub.mailoutpod2-cph3.one.com [46.30.212.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B241C07C8
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 11:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.30.212.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500871CB53F
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 11:14:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730804648; cv=none; b=BHMXxeDQIWh/jP7TlcibCnnvlI2ZNPk+AeHBO/T7DGh1WBGUV4312mj5sYf72antsjIRol3pUPjFHcWB+wE2rpwQUCozpZQASC7jGgz8wr6tp651pg0aE33SUkMuizk1YMxrWjNmauv8LtJ4lwhYRC1VPyjA4yGxyqxZJXB0sPg=
+	t=1730805258; cv=none; b=ffsdu8yOuF4EjYdjgxdWP3KeP4xmf5FRmAiOQwSOF+8zWul3IBodUXhCVNqFvFnSD0UrKGRyR4ZzfRInVG6BC6kQ2oh6W3UnyffGz4dWTem1S9SyDctKmuN2KS1fK/UaH1BLAFzBJLGLrlFMf1B1EVJyGWP2k3LYJpjne/B6H7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730804648; c=relaxed/simple;
-	bh=Aa2SlMuk7mymT5CAqp0LVKtNlYPWxPgl1bnt5VqRQPg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=orCt4xWvbwr+9Uh3yhm75z9NCiJqHiXIUqYqtWjXWuDu8jOEpSMKWeUJ1YmyMiYXQ9uwyUrLevvJy/gTCir0kj1SkYu/kOH6yfNRFyvgA4vG8gbTrqDIsQmGhYCoy/4okmHQ7123+lhL/9LJCM1JCZmzqzeMWCJdroe6PhL0Gso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maxsi.org; spf=none smtp.mailfrom=maxsi.org; dkim=pass (2048-bit key) header.d=maxsi.org header.i=@maxsi.org header.b=fxjUiCeu; dkim=permerror (0-bit key) header.d=maxsi.org header.i=@maxsi.org header.b=e3rpHhBe; arc=none smtp.client-ip=46.30.212.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maxsi.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=maxsi.org
+	s=arc-20240116; t=1730805258; c=relaxed/simple;
+	bh=WfTvv7sghTgwE0pmS3Cv4N9BWuZk8u/zD3hpAiHHCl0=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=XbZ8wBCajpcNBRYAPxtjt+eZzUkygKOzFiAkzCzL1/1+PgDEYyIJeKny8v/jnk7DD2mnMZFsPH4VSRlieS2RMDSPcttUKz57p86U2Qh545oKUf+aOnob2AxFBC4BLMt/FAg5irGPTAsvyW1ZnZx2bRYviBbsQj/xKLwxa/qnyr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LismWTzO; arc=none smtp.client-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=maxsi.org header.i=@maxsi.org header.b="fxjUiCeu";
-	dkim=permerror (0-bit key) header.d=maxsi.org header.i=@maxsi.org header.b="e3rpHhBe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LismWTzO"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-5101c527611so1930689e0c.3
+        for <git@vger.kernel.org>; Tue, 05 Nov 2024 03:14:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=maxsi.org; s=rsa1;
-	h=content-transfer-encoding:content-type:cc:to:subject:from:mime-version:date:
-	 message-id:from;
-	bh=fc/cgSfLxIvUjO2LJDWjIt4XsldLKcrVDrwomamH2nA=;
-	b=fxjUiCeuqM+XhLWmFHGscmnw9deG+z39HeK/Kbc1+qHcric8U5Fa1pHyqy1IT4EhbvTJ/qHRkOl4W
-	 1vMIhrfKDN8F6DuuIdwr9hVIwM7QSoX1P4P2IUW63XZwKSyRil6zya2ggdsjsn5ttM9YFOmF3IJlhM
-	 TaFr02Y4wlo7e8/yM5L0Dle4pzAYxR27UyKF6YDHvSjJfKkbgLMc3THVrRzCj8GRjlaOoONTOJmq21
-	 1HRoUXyrU82dupDsGX2BkYwkmdIZMhpXXgv29RxvUNBz2E50OEm43riQLHERPgBpBtUR01d2J1EluH
-	 kfGClvaDqVnIzeftMn5oHuAC9J22CmQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-	d=maxsi.org; s=ed1;
-	h=content-transfer-encoding:content-type:cc:to:subject:from:mime-version:date:
-	 message-id:from;
-	bh=fc/cgSfLxIvUjO2LJDWjIt4XsldLKcrVDrwomamH2nA=;
-	b=e3rpHhBeROF3vHCXPn+aZC0DMycoBGnF0W7pn1t3rPP1ztu6ILDSP0jgE0izZcrgTPS3MBTf+rRVf
-	 UTHeIReBg==
-X-HalOne-ID: 8076115b-9b65-11ef-bf35-dd3f8b2e2fd4
-Received: from [192.168.87.156] (unknown [85.203.218.213])
-	by mailrelay3.pub.mailoutpod2-cph3.one.com (Halon) with ESMTPSA
-	id 8076115b-9b65-11ef-bf35-dd3f8b2e2fd4;
-	Tue, 05 Nov 2024 11:02:53 +0000 (UTC)
-Message-ID: <0e949a77-0c49-4c06-9f47-d8455e9bb58f@maxsi.org>
-Date: Tue, 5 Nov 2024 12:02:52 +0100
+        d=gmail.com; s=20230601; t=1730805256; x=1731410056; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bT8MS0GbTvKfyCtTi9gIho480E7ZjDmp3AdwNQGTEJ4=;
+        b=LismWTzONZBTylOx6rSEQDpo0Y2LGhzp5LfRs07SixBVZM4ZGNJp5d+nuAvmlnMilu
+         FqGh3IQUr5dCHlACbl4nKfFsq548wvY71U3Y0Vr7TTDWiccmVs1hMHwFumY3WZ7d20rq
+         8+UJxLEueWlmstu4LpdRfu3Tsh5rgYHWTYHgcqf2tNFff1cLq6amcskMh5VdQNHV99p6
+         NquKJwUFo8sGFNfR/7ALtE8TNPyUrfdwdZkn1ln+AwpX/6h8C9NUVPLhe7k90CTno9T9
+         Q8k0YTGO0Qw+X5m1KKfPPa85jsSKSux89WWnn4QoSfU3yg8Nu5HJ/eM4NpJOtwf4Y6im
+         PUCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730805256; x=1731410056;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bT8MS0GbTvKfyCtTi9gIho480E7ZjDmp3AdwNQGTEJ4=;
+        b=ixcmKzJ9Vj8afgLcNqvjak3uCypvEE9luD/kZ+SJDg5RJfO55mtHtl540ktfW9s+O1
+         zVJ73CAyfenTjdN23SOczZC7S9GyNx5TOJayCbmwJ3NlvHMixdpO+pyqsjzq/4jYv8fv
+         y/kClcLaTAfcV5PfPJ+YX+H6nlpNLSmlGPASC+zoScVXY4Q8VqqEXNDWAcdyhkuO2/b2
+         spC9heTr5Y0UvPRKHh5GWue30OQazrg0Puebn7ULSTBU0IDwyuW9MEoaF2Cksml/g3rA
+         3Mu6uWrm0pN1rqg/AEfupiIOSs/LsnS5g6tCYO0Ala019jaR9ITqnMdMtOpC6xbibac0
+         z6NQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWR+QI0NHWdFyJJ6bfLi5fd9JOcu40tpdhnhDp8WA/2TIDlmf70k60x2ro3f/eYr2usoPM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRpNCvGzEwOFZAorHl4WiRH2BjIresoFSBdeZ8U4A4XlJn6fy3
+	k1nz3dUiUu8FJKK+c9ZBnQHj+yKKs62mm2m4d9R/8SdvQNoDcnM/6EsIKWQXYPGGdc6RTyNi6Xm
+	Rv/Kc50xJf/95M4v/bCaDy2552EjE8Huc
+X-Google-Smtp-Source: AGHT+IE0j1usY1t5prAvH01tIMKahb9spJigFyKuvGrZeHrlx573ORvrlN8QP+fzywMiU4xzVx0/zosQRwxJ5RFMPU4=
+X-Received: by 2002:a05:6102:508e:b0:4a3:d7ef:40c8 with SMTP id
+ ada2fe7eead31-4a962d72fecmr14272885137.1.1730805256072; Tue, 05 Nov 2024
+ 03:14:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 5 Nov 2024 05:14:15 -0600
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <b81ce63589e0380baf2b977a6abd706a66b08bee.1730732881.git.ps@pks.im>
+References: <cover.1730732881.git.ps@pks.im> <b81ce63589e0380baf2b977a6abd706a66b08bee.1730732881.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Jonas 'Sortie' Termansen <sortie@maxsi.org>
-Subject: [PATCH] configure.ac: detect sysinfo
-To: git@vger.kernel.org
-Cc: Neeraj Singh <neerajsi@microsoft.com>, Junio C Hamano
- <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Tue, 5 Nov 2024 05:14:15 -0600
+Message-ID: <CAOLa=ZQwUGzjmvCv8TKuwbeePTG6+HNjU3ngO6hD8=xSOQ5kaQ@mail.gmail.com>
+Subject: Re: [PATCH 2/8] refs/reftable: handle reloading stacks in the
+ reftable backend
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000076caa50626288022"
 
-This change helps cross-compilation from Linux systems by not assuming
-the host system has sysinfo(2) because it was built on Linux.
+--00000000000076caa50626288022
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Jonas 'Sortie' Termansen <sortie@maxsi.org>
----
- Makefile         | 4 ++++
- config.mak.uname | 2 +-
- configure.ac     | 5 +++++
- 3 files changed, 10 insertions(+), 1 deletion(-)
+Patrick Steinhardt <ps@pks.im> writes:
 
-diff --git a/Makefile b/Makefile
-index 6f5986b66e..639760661c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2087,6 +2087,10 @@ ifdef HAVE_STRINGS_H
- 	BASIC_CFLAGS += -DHAVE_STRINGS_H
- endif
- 
-+ifdef HAVE_SYSINFO
-+	BASIC_CFLAGS += -DHAVE_SYSINFO
-+endif
-+
- ifdef HAVE_DEV_TTY
- 	BASIC_CFLAGS += -DHAVE_DEV_TTY
- endif
-diff --git a/config.mak.uname b/config.mak.uname
-index d5112168a4..470b953581 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -59,7 +59,7 @@ ifeq ($(uname_S),Linux)
- 	HAVE_SYNC_FILE_RANGE = YesPlease
- 	HAVE_GETDELIM = YesPlease
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
--	BASIC_CFLAGS += -DHAVE_SYSINFO
-+	HAVE_SYSINFO = YesPlease
- 	PROCFS_EXECUTABLE_PATH = /proc/self/exe
- 	HAVE_PLATFORM_PROCINFO = YesPlease
- 	COMPAT_OBJS += compat/linux/procinfo.o
-diff --git a/configure.ac b/configure.ac
-index d1a96da14e..ea777644d5 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1164,6 +1164,11 @@ GIT_CHECK_FUNC(getdelim,
- [HAVE_GETDELIM=YesPlease],
- [HAVE_GETDELIM=])
- GIT_CONF_SUBST([HAVE_GETDELIM])
-+# Define HAVE_SYSINFO if you have sysinfo in the C library.
-+GIT_CHECK_FUNC(sysinfo,
-+[HAVE_SYSINFO=YesPlease],
-+[HAVE_SYSINFO=])
-+GIT_CONF_SUBST([HAVE_SYSINFO])
- #
- #
- # Define NO_MMAP if you want to avoid mmap.
--- 
-2.45.2
+[snip]
 
+> @@ -898,27 +915,31 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
+>  				      struct ref_update *update,
+>  				      struct strbuf *err)
+>  {
+> -	struct reftable_stack *stack = backend_for(refs, update->refname, NULL)->stack;
+>  	struct write_transaction_table_arg *arg = NULL;
+> +	struct reftable_backend *be;
+>  	size_t i;
+>  	int ret;
+>
+> +	ret = backend_for(&be, refs, update->refname, NULL, 0);
+
+So here, we don't reload the stack, it would be nice to add a comment
+why, in the places we don't. Here, it seems to be because we possibly
+already have an update which would have pushed us to reload the stack.
+
+> +	if (ret)
+> +		return ret;
+> +
+
+[snip]
+
+> @@ -1995,15 +2022,19 @@ static int reftable_be_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+>  {
+>  	struct reftable_ref_store *refs =
+>  		reftable_be_downcast(ref_store, REF_STORE_READ, "for_each_reflog_ent_reverse");
+> -	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
+>  	struct reftable_log_record log = {0};
+>  	struct reftable_iterator it = {0};
+> +	struct reftable_backend *be;
+>  	int ret;
+>
+>  	if (refs->err < 0)
+>  		return refs->err;
+>
+> -	ret = reftable_stack_init_log_iterator(stack, &it);
+> +	ret = backend_for(&be, refs, refname, &refname, 0);
+
+Like here, I'm not entirely sure why we don't reload the stack.
+
+> +	if (ret)
+> +		goto done;
+> +
+> +	ret = reftable_stack_init_log_iterator(be->stack, &it);
+>  	if (ret < 0)
+>  		goto done;
+>
+
+[snip]
+
+> @@ -2462,7 +2498,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+>  	arg.refs = refs;
+>  	arg.records = rewritten;
+>  	arg.len = logs_nr;
+> -	arg.stack = stack,
+> +	arg.stack = be->stack,
+>  	arg.refname = refname,
+>
+
+Shouldn't these lines end with ';'?
+
+>  	ret = reftable_addition_add(add, &write_reflog_expiry_table, &arg);
+> --
+> 2.47.0.229.g8f8d6eee53.dirty
+
+--00000000000076caa50626288022
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 38b7a8d98b64df4b_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jcC9nQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNGk4Qy85Q1h5MlYrVlphTnVHaFRkN25wUGpQS1BqWQoyV2djZGlsUUFM
+Unc0WlZMYy9LdmpsbFpjaHFhUWk5K2xzY2pUYnBMNWplSWlYNWZSVkJMY2Jqcll0RHRjNlN4CklK
+UTRTcy9uMEVsNnNsMTFPUGcyUVJheDlJN0V0amUyaGF6QklvTjdWUHpZSmxtRG9icWpDQzdYREsr
+dGxORHIKeDNmd3VwRkgzR2lDRUhra0pqRTNZTnZaaERrSmtnR2JKR0xhZktrL1VRejFncnNFRkFz
+MkllQ2FrSGN3RTlZNwpQWDB0UFRtNGR5RHFRdnNTbEMveWJLSTRNVzVtSkNUbG9BamIva29xMGFt
+M0Z1dmQ0YksyN2htamVIR29hRnB2CndrTGI3Z3BDcFdueU5tMml4ZTRaWDcyeWZlaHBTdXBpRGJI
+WDEyUysxQVVPZ0xoTU5ZY002cGt4c2xZcU1wTGcKUER1bkVKYjJ4WVFISTd3UEVnM0l2Z0RTdWJN
+eThLcEgzV25jdUtQaTZ4ZldYMGZYbFc0QXFMbm1sRzRjVU1lMApwcFM5b1prbmtJN0xzaWYzUnBv
+YURGOVdUa0FLSWFhMS9rS281SWMzQnVSMjRhNHpLMDludmdYRjJ4OTQ1NTZVCjFYOHNsNjBDSDQ0
+UWlTd1R1ODdBeThRa21LY1RaRlNsUWFkRklkND0KPUE2aHEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000076caa50626288022--
