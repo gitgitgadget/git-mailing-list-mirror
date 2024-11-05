@@ -1,85 +1,86 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761271714A0
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 07:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD1F1B5336
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 07:11:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730790715; cv=none; b=L3xkbzS6bwwB0zHmYBaYWXBfuMe7WqntAGNUr7EjTchCU566AF40DksXDyA7s5+PC78qwoNLJ/N6FCaqpxoNaFyJmifc0R04fALBLWOgsQuKuL7VuqWKed05Jl1mswGdbQLHHPZ0gFJptzkDTADUMZg+ohIufmuMMpoftC/hoxw=
+	t=1730790716; cv=none; b=ik6VLjmC9I3QyoEa61bc2eevitCnHbD5p5hksdyHYffFogjsLLFOIziQy/MIQuH17q7a41Wjr0lW4smxF2p2IU3r/XW34AGSweXN5KIXkRu5cqh4BRM/4UcJmZW7cKklQeSzfOs6hX9U/qyQoZLZGdbPYKyBKOI1FGWeWEULt1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730790715; c=relaxed/simple;
-	bh=xmcamdwJXlq4WNuXIuK9OrTlLLFj6kbB0tpx0RKeUgk=;
+	s=arc-20240116; t=1730790716; c=relaxed/simple;
+	bh=7+ANiNJXx88ngNs69iLiNAYWnRlrniEB+AgxvIBp6M4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BdY4VkDIc/pgvRPaZ6n3PlntJAo1QnDHuFVXRRFaejTgLethFhafcwcitqi9SD/DXEs8u/NgTS4Uk+ojdJp/W39Y78cfSBgHqpVRGgjAtkD7JvSCEKIdpUEq56w3607fxiguMlAkTBxSOKixUZrzUbEJ2CL/zZOJ5WINmeVoWEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O+ZI1N4/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=frRTjlpp; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=HM9QJRcwROkUyzLIzPyJbT2/3ChIIeAEN9xHdOUPHZoVIYZN4Hz5XlmeLIt9fW8RyTGQeC9MIB8XxvYYE0KxCNFn6SE6IEVR6lMgk9MRfjxP7LUobx8ec3aczV4M0fyJ9ctERiPtSfl6wO8xfIXx1cDi6wxO4UzsTdyDFVX4wes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=5YF65H26; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PBzXkdWP; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O+ZI1N4/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="frRTjlpp"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8090E254014E;
-	Tue,  5 Nov 2024 02:11:52 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="5YF65H26";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PBzXkdWP"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 155C31140176;
+	Tue,  5 Nov 2024 02:11:54 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 05 Nov 2024 02:11:52 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 05 Nov 2024 02:11:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730790712; x=1730877112; bh=/6G0KZcKp8
-	DClKId5rUoJUknoC+1Wzqyle9INnbBudg=; b=O+ZI1N4/ZTrzURn3tNsIH3Unaw
-	FMJPQM5skjVsZk90BTMhbEolU2JazIDeUR7ENM7s2NYypLAdOiZdL7oDw49sniAc
-	VCoigO5V8wUxZMXcDMZ0CaAsSpPconIgMLq6rQmqhrpTftEskMO7Z/zD0XneORQO
-	KOgVT6JP8VnLRweOVVXlaPITXRta/RMR+cOdhNWyi5/g336IxAt6RXxupBDMNlqf
-	mqbp7q0lBHbSK75j5/Fk3heQ1E9xOX/8xj6NF4rQxR0zosWgsUfTac4f3IjyabS/
-	8KGjq1luFrgDdR+PlOhoWk6XjUXQ6fGTIAPqvQ9AiYBatPLZjEMC8EhCLHrw==
+	:subject:to:to; s=fm3; t=1730790713; x=1730877113; bh=VmPlpTzPKh
+	sNMcSqyRJJtpDnElYG5/riqN6sJdoAAjw=; b=5YF65H26wos3HrsBjrvfdDRmLn
+	+AkB5SDxHBsuaQ6dgEB/HYb0lz59QcNZdmnUm5Br2KEUOmmOXk5VFscoOJVTr+iw
+	SfHb/Dils9PAA9qhJWHJsaHT/indx4mi+LrIEEUZJr9Swx6U+kKeHc06OE3SLfwA
+	v81567L58eD7QSapv/LAfZ3J8db28mbTIYb6O5KeUgAecmL16TAONhbkE86bqbEs
+	GPcYQgxOB5IAMKynMSHeHhXMh7wxQeYGEkXS9LRgXYsBDHZvw6zTinZOqzoae7zf
+	sKq3YKpkqtz63kDFGUSGPzqkcdHQupSfyg4FJ5J3ODUMLqEdgPiQ5F9LVJzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730790712; x=1730877112; bh=/6G0KZcKp8DClKId5rUoJUknoC+1Wzqyle9
-	INnbBudg=; b=frRTjlpp5S8Gmd45MsPcbqhOoE8rfAm32km+7pPiCvgYcjWSrdn
-	2IT6LfoVkh9m11btDaTvAYklaQAZzghkW3m6OB2JW/wnyQ7rEfXKM7EEgSENwSbJ
-	zZB04FrhVRjBuiDO8unyCGGKhvCMqFCj/1fUvYj/KtOUT847MJM8rMvucbCbrYXh
-	zGhCgU6VGuzX0UIvckX65OMHn0Gy8Fn1OnvPgBQohjFxqqsAn+GzdynKnR6xJPQD
-	955dgzGEPUryobIG+KBWCp2CGCdP/oesIB4KoCUgKT8CC8Web1JDmnindzrwPvwO
-	aGKHs+7PdOghYX1ZI4D/I2EsQ7V1QbloNXg==
-X-ME-Sender: <xms:OMUpZ5GXilb3cKm9D2Ky73NLRhcbvz0YoLTpzWcS_I2sU42Bt6WvRQ>
-    <xme:OMUpZ-Xq0BzP2WWUtltTOONTkMyQcIDgj22vKvl5x22lcIHpindlauob1Nr3Ww10k
-    Vq-OWAOLeQhB5UnAg>
-X-ME-Received: <xmr:OMUpZ7IZehBIPh0aHKPSSe2JzfrERj3mjZL0ztMoxClZxmjWNuh6qyEeu0xSKoVSgsrv_40WpZhMFz6-1XGw-PYL7_BubLqz6gZ34z4QAK5yCw>
+	1730790713; x=1730877113; bh=VmPlpTzPKhsNMcSqyRJJtpDnElYG5/riqN6
+	sJdoAAjw=; b=PBzXkdWPCSbhXstbGZdiwEarYgoGY2wyEjJPkLEj5jeBF/DTINB
+	XaqeJmK73CHlXrRBJ/JkCOCDLrp4LXEW+INOL26RoMwuxfODmeHfVL6IKzciXBsI
+	TDPSua/sAM1oAXaBKL6Phh9X+YIjRciePN1UU5WObWZJC/WWRr/zKz7+t5cspl6B
+	rhI6TxWf+gx8s6TNOXJ3W4HwjvAEN88pDjcB8UQNxbbYiwWmRzPHOJg59r7jcJAB
+	FKHh+gq1E4w2qQbJdH568ss99tY3j5WMfQaxg7CX4Ad7hqDKZ5qKfDtbYIWFiSgF
+	GGOC7mtlD9tQ5I0dnEVFJ6C/U0GeWTApIIg==
+X-ME-Sender: <xms:OcUpZ0qkjTqaZEd51WpawBGPNrJc-ovMO9o-FkzmqrARtjHKdt0z7w>
+    <xme:OcUpZ6qLFxhn13GEAZEgT4ZUiA5BLnNQjNQ8LVEXA4jMqAM82ZiSDRDZv31mdhtzG
+    V7hPH5MklYjvS3umA>
+X-ME-Received: <xmr:OcUpZ5OLmY0jzzPd0cKhvjdXII46filHOWNx4RDWNW1qEGYfVIZSBdeHLww5FRWjvFo_JPgwcYtcT_js0HAYOJCSNubtSvhDIa4h1vKrAweK9Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdortddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    hmqeenucggtffrrghtthgvrhhnpeejtddtgeffkedujeejgeduhefghedtgfdtieduleeu
+    lefgueetheeludegueeuveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgv
-    jhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:OMUpZ_FIDgg5Ex0tBUTPAETFGoBlASoZIXmfhwbfRNKeWknslfNaNQ>
-    <xmx:OMUpZ_VYDbyGf2FQJZzrwkIEIDifCYvVX4jOmtmBYF3LJaF8KVKnfA>
-    <xmx:OMUpZ6OaXQgCVDAw0bXPMk2ZYC75QvG8ioByVNgNiDJnkxGOkoz1Sw>
-    <xmx:OMUpZ-3aqgP0Vx2mdTQLoVUJaJpH6xXaxwZvw1oS4M_eZYwvrZqalQ>
-    <xmx:OMUpZ1z6McPKTvzAUMT1LrhZVzb9jIJO0wyn4Stk3VYW63yyncXXOQpc>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehk
+    rghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:OcUpZ77rLahKdQKG5dbklNmf7i-YUP8tF5Fa3HVQmS-9Rh5RC5-Nog>
+    <xmx:OcUpZz7YxTA-1iqZhoM9MiHJHrcglaYLJl8jBYxVcvTXxA1M-izw6A>
+    <xmx:OcUpZ7hikyIi2ckZIYWSw9OAlFspz5rbxa_1RqdiIwNjpUHKJcDCVQ>
+    <xmx:OcUpZ97pryeF9WJpq-JIP7iGQrkbLx50oAbYBVsPFZGQv3hC4M4cPQ>
+    <xmx:OcUpZ22W9WP7myFpjaGynv_awAVExONRcMtHJNO5QLf7DMVATSNUPEer>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 02:11:51 -0500 (EST)
+ 5 Nov 2024 02:11:52 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2a81b091 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 5 Nov 2024 07:11:27 +0000 (UTC)
-Date: Tue, 5 Nov 2024 08:11:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d73222ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 5 Nov 2024 07:11:31 +0000 (UTC)
+Date: Tue, 5 Nov 2024 08:11:46 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/9] ref: check the full refname instead of basename
-Message-ID: <ZynFKPFcNQILce3E@pks.im>
+Subject: Re: [PATCH v6 3/9] ref: initialize target name outside of check
+ functions
+Message-ID: <ZynFMnYgpCbYwQOs@pks.im>
 References: <ZxZX5HDdq_R0C77b@ArchLinux>
- <ZxZYXpuCD2I_3bNh@ArchLinux>
+ <ZxZYZy-9deyT6I9a@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,88 +89,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZxZYXpuCD2I_3bNh@ArchLinux>
+In-Reply-To: <ZxZYZy-9deyT6I9a@ArchLinux>
 
-On Mon, Oct 21, 2024 at 09:34:22PM +0800, shejialuo wrote:
-> In "files-backend.c::files_fsck_refs_name", we validate the refname
-> format by using "check_refname_format" to check the basename of the
-> iterator with "REFNAME_ALLOW_ONELEVEL" flag.
-> 
-> However, this is a bad implementation. Although we doesn't allow a
-> single "@" in ".git" directory, we do allow "refs/heads/@". So, we will
-> report an error wrongly when there is a "refs/heads/@" ref by using one
-> level refname "@".
-> 
-> Because we just check one level refname, we either cannot check the
-> other parts of the full refname. And we will ignore the following
-> errors:
-> 
->   "refs/heads/ new-feature/test"
->   "refs/heads/~new-feature/test"
-> 
-> In order to fix the above problem, enhance "files_fsck_refs_name" to use
-> the full name for "check_refname_format". Then, replace the tests which
-> are related to "@" and add tests to exercise the above situations.
+On Mon, Oct 21, 2024 at 09:34:31PM +0800, shejialuo wrote:
+> We passes "refs_check_dir" to the "files_fsck_refs_name" function which
+> allows it to create the checked ref name later. However, when we
+> introduce a new check function, we have to re-calculate the target name.
+> It's bad for us to do repeat calculation. Instead, we should calculate
+> it only once and pass the target name to the check functions.
 
-Okay, makes sense.
+It would be nice to clarify what exactly is bad about it. Does it create
+extra memory churn? Or is this about not duplicating logic?
 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 03d2503276..f246c92684 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3519,10 +3519,10 @@ static int files_fsck_refs_name(struct ref_store *ref_store UNUSED,
->  	if (iter->basename[0] != '.' && ends_with(iter->basename, ".lock"))
->  		goto cleanup;
->  
-> -	if (check_refname_format(iter->basename, REFNAME_ALLOW_ONELEVEL)) {
-> +	strbuf_addf(&sb, "%s/%s", refs_check_dir, iter->relative_path);
-> +	if (check_refname_format(sb.buf, 0)) {
->  		struct fsck_ref_report report = { 0 };
->  
-> -		strbuf_addf(&sb, "%s/%s", refs_check_dir, iter->relative_path);
->  		report.path = sb.buf;
->  		ret = fsck_report_ref(o, &report,
->  				      FSCK_MSG_BAD_REF_NAME,
+> In order not to do repeat calculation, rename "refs_check_dir" to
+> "target_name". And in "files_fsck_refs_dir", create a new strbuf
+> "target_name", thus whenever we handle a new target, calculate the
+> name and call the check functions one by one.
 
-So this only works right now because we never check root refs in the
-first place? Maybe that is worth a comment.
+"target_name" is somewhat of a weird name. I'd expect that this is
+either the path to the reference, in which case I'd call this "path", or
+the name of the reference that is to be checked, in which case I'd call
+this "refname".
 
-> diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> index 71a4d1a5ae..0aee377439 100755
-> --- a/t/t0602-reffiles-fsck.sh
-> +++ b/t/t0602-reffiles-fsck.sh
-> @@ -25,6 +25,13 @@ test_expect_success 'ref name should be checked' '
->  	git tag tag-2 &&
->  	git tag multi_hierarchy/tag-2 &&
->  
-> +	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/@ &&
-> +	git refs verify 2>err &&
-> +	cat >expect <<-EOF &&
-> +	EOF
-> +	test_must_be_empty err &&
-> +	rm $branch_dir_prefix/@ &&
+> @@ -3539,6 +3538,7 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+>  			       const char *refs_check_dir,
+>  			       files_fsck_refs_fn *fsck_refs_fn)
+>  {
+> +	struct strbuf target_name = STRBUF_INIT;
+>  	struct strbuf sb = STRBUF_INIT;
+>  	struct dir_iterator *iter;
+>  	int iter_status;
+> @@ -3557,11 +3557,15 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+>  			continue;
+>  		} else if (S_ISREG(iter->st.st_mode) ||
+>  			   S_ISLNK(iter->st.st_mode)) {
+> +			strbuf_reset(&target_name);
+> +			strbuf_addf(&target_name, "%s/%s", refs_check_dir,
+> +				    iter->relative_path);
+> +
+>  			if (o->verbose)
+> -				fprintf_ln(stderr, "Checking %s/%s",
+> -					   refs_check_dir, iter->relative_path);
+> +				fprintf_ln(stderr, "Checking %s", target_name.buf);
+> +
+>  			for (size_t i = 0; fsck_refs_fn[i]; i++) {
+> -				if (fsck_refs_fn[i](ref_store, o, refs_check_dir, iter))
+> +				if (fsck_refs_fn[i](ref_store, o, target_name.buf, iter))
+>  					ret = -1;
+>  			}
+>  		} else {
 
-`expect` isn't used here as you use `test_must_be_empty`.
+The change itself does make sense though. We indeed avoid reallocating
+the array for every single ref, which is a worthwhile change.
 
->  	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
->  	test_must_fail git refs verify 2>err &&
->  	cat >expect <<-EOF &&
-> @@ -33,20 +40,20 @@ test_expect_success 'ref name should be checked' '
->  	rm $branch_dir_prefix/.branch-1 &&
->  	test_cmp expect err &&
->  
-> -	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/@ &&
-> +	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/'\'' branch-1'\'' &&
->  	test_must_fail git refs verify 2>err &&
->  	cat >expect <<-EOF &&
-> -	error: refs/heads/@: badRefName: invalid refname format
-> +	error: refs/heads/ branch-1: badRefName: invalid refname format
->  	EOF
-> -	rm $branch_dir_prefix/@ &&
-> +	rm $branch_dir_prefix/'\'' branch-1'\'' &&
->  	test_cmp expect err &&
-
-Okay, we now allow `refs/heads/@`, but still don't allow other bad
-formatting like spaces in the refname.
+I was wondering whether we could reuse `sb` here, but we do use it at
+the end of the function to potentially print an error message.
 
 Patrick
