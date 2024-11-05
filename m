@@ -1,62 +1,62 @@
 Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EE953365
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 03:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E2E6BFC0
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 03:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730775915; cv=none; b=SutYz3dAQC9hXvJliQ17+6XCm2c7f/RLCTWhSZ0NNjB11sTzSJzfJaZ1UOtZD9xwfL5CaWmaMhoeg4FAjp5lY1H4BzvxDPPj25TgmKWXJeyUc/R8zuwsXjhW5ZN0gRNnz70I+NmOg4NJps0bMjobfwUY1ht8SdGsnHAqMarX2SI=
+	t=1730775917; cv=none; b=Da13K6vRAcbwWv5IEshuGv+nU4E0YVQVfKaQpjO8yt/BtT5kDNp9FNjspl8euj8fXXR3FN7XV3iJIi3kDARATpPfljn8X7MyxDeO7D4pUMnzH74qgV9CSL1iogh4MbJaqKyHx0MP7nA+Y6YQICl66Pj2R9Wl50UF44p9kkXNQoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730775915; c=relaxed/simple;
-	bh=oZJtK4/Bt2qoVs7VRGKxAoXkn5HNOnhj+R51AbiGhb8=;
+	s=arc-20240116; t=1730775917; c=relaxed/simple;
+	bh=eAo96qY6/EbSNcuQ2FZIHjOU94K0gCO+1nRUlcO+Zyw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kkKMmf9blk0WGqngEMTmCJXZJny0fZuy+3EKjISOCSrskFd8G1ASqZSWZ0ZB32oa9fDF0Wsb4iqjwQLVYfakFG9bXyBXmBTTcOZ2EHKWspggb8bBERZ8zNDa7YD7rYnn2hMrMNod0O/TypVOeClL9ekAIiXI0X8TYf+FmK3hPUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zedw80Up; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version:To:Cc; b=C79v1ryenUiEnkfD6ZBNnzU9RbNdcJkh+7lhHQrdTCBTRsQFDHeornccNbrjyrH+QRndQBEn1U21il0Cc5HUzeOt3XnPhscGBRSt/5iDVf3uarzuDwrgsy0xKJi+wdFOkIJQG12h0/MCihA/hbbQLhvZGcdIhpDxqjS46FxNP4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cZuGncV2; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zedw80Up"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43161e7bb25so38044985e9.2
-        for <git@vger.kernel.org>; Mon, 04 Nov 2024 19:05:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cZuGncV2"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-431481433bdso43775195e9.3
+        for <git@vger.kernel.org>; Mon, 04 Nov 2024 19:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730775911; x=1731380711; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1730775913; x=1731380713; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IxKfgM7YMgrRt8jxV/3v61hBhNF4q0lgepI0Yc6tu+Y=;
-        b=Zedw80Upe7PuywvXzgEnmuuOFiV12CJV7V4OAsBWR83HO6jz4HLbUuUehiijOlxzDf
-         WuAHs+MZDkwKlD9FMl5sxaFX4rDthF4Lc/ocK6D1Cng8XYy5GnwL3V4QBL2UZmFgm1d9
-         vtPaIj8Nq22XuFRyNPBn3gZ50i6Ro8rB8xDKRrAWHR7pb//hFXP1foOKCPlxkIAGBWSa
-         QJ0eaKbgccy/S/TW31NBXKb2t2lP6eOaUpFhizOiFenMJ+b8YPN3VM+WFMVJqhwOfRaG
-         yFENhd2pXYjD4V+nZNWg1azEnKwW86DUvILCnTTM8G+nb2EEt76FCW5uX0yujzf/nc0S
-         A1HQ==
+        bh=Nci9vv6OQD8LWYJR589D2UrzLcX5tEFQKizvZ3JWrIQ=;
+        b=cZuGncV25UlXS6VAu5bNyzSLUIMJgZlEz8gZQ9+JH6Xlpk1Yg/Nt0g/HJUfDv9LUwA
+         FJ0eIVqyQjHiCAYXrqFtpIApRtDEEmEjLkBFePQuZqiehFRKIi1J6U5lHtLcEDQSr7Ql
+         jyLLRfX8LfWcOKV2nrm7n3LK3kyZ03vUFIN0CkrVNwgLhUzjNGptY3An9eZQRy2EnPG9
+         F9JMxwHycoxu2Bbpw0OgC7d6L+jbxWrf/ZzIIa6ZD8bDhH0ok0/2ixtXo01hde8qmPaH
+         u5Yr5VM3P2fUUaJPyN2BiUlesYjZoEeOXVxgDmThEd5E/kKhIlMcwMvrLPnVJ2Rg4nD4
+         VhGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730775911; x=1731380711;
+        d=1e100.net; s=20230601; t=1730775913; x=1731380713;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IxKfgM7YMgrRt8jxV/3v61hBhNF4q0lgepI0Yc6tu+Y=;
-        b=GEBI7ZScSDYunmo/SQ4P/TNs5T2PaygtDTOVgkRipHo8U8d7Qqx/rECviwvcaK7FH1
-         3qaBq7tNXpqcHp1S0EVV32JV4YAbjTc5D/gUP+6+EziF78NgUqZ/xT+OnW7iqRwdqriX
-         3YpV91f1dgkRjWZpnqaDwhg/ij/1EdCO9vNZ8pdmmiE1OjxlRp6AZbJokcK5u5Q5Yi5F
-         q8kpXnUa5OPzR0g3yh73KWWFSBP8sfuSMWKMMqIL5EFQCiUvGTCai1wBpvW9E8ahKZZ2
-         P7ogmXuPiKPDMrOc+TqMNH84paUBOozjZXVSkFJGf8130A54ppOv8ySuWHYRSlR46l+6
-         kM0g==
-X-Gm-Message-State: AOJu0YwTqGNB2f7aJnyCJwFbQ2DHkFq5uthLTald7uLGCqAnxhLgCOty
-	KTEgFr5pUIzBJJQEN/vOo5CTsXJ+QhUi9YaK9T7oqW2zaSsza9d+o+dqmQ==
-X-Google-Smtp-Source: AGHT+IFmwR+6yhLwRAgSNsXXB3JRyXEZQy2Ax8Tui5sRqsN8zvwN7Y/Dqj2VSqLbsEAuoq7dhLfM9A==
-X-Received: by 2002:a05:600c:458f:b0:431:5ed4:7e7d with SMTP id 5b1f17b1804b1-4327a82f755mr180771975e9.18.1730775910569;
-        Mon, 04 Nov 2024 19:05:10 -0800 (PST)
+        bh=Nci9vv6OQD8LWYJR589D2UrzLcX5tEFQKizvZ3JWrIQ=;
+        b=c16dOjQ409of4/amVqdj61lmanz4iFa2gvd/XZr/ffq6FLFng+PgMU2gb8vps/Im2W
+         r2ZM2nM4CamZWr3U53gic0XqAebtZo/U7Bb96FREOyEEyoOjD+MmIs4cwyF7VqrxIKkP
+         Mu5Mfm6KLTZmC7Lb5FF52+7SdhL968zWpC+xMuNgBnGYtMsojbC3e8o7bx65FNNiuS7z
+         Gb4YD96XDU2lX/xnQfbYM9Fi0FjCy+kEDvps4/ruXpHILPd+bGvTDyWwW4T3zMzO569Q
+         CwxOwwP1wKKf35fC6037N8Iy6GlZrXDyT+snA9tIIOl8rSNtBFe0QewekYBa64YJOANY
+         Yw+Q==
+X-Gm-Message-State: AOJu0Yz5tzDlukDX9xU/4Bdu6FzwNIO0hJY/xuOWCmrsQu2IEnW0n0IN
+	EUUNGA+y3sMilO3XsQchM5ZwYRojO+nrODqraAykL1t10pyUkehNMt3w7w==
+X-Google-Smtp-Source: AGHT+IExd+H7U1QMbzZASroT+/cIBIi9KVI3PgVFJGwm5+4Na6gtWj1YZA5eNU+7JShN25dBOqk79A==
+X-Received: by 2002:a05:600c:a09:b0:42c:b52b:4335 with SMTP id 5b1f17b1804b1-4327b6fda39mr147306535e9.10.1730775912759;
+        Mon, 04 Nov 2024 19:05:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10b7b75sm14661657f8f.15.2024.11.04.19.05.10
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-431bd9caae6sm201031135e9.44.2024.11.04.19.05.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 19:05:10 -0800 (PST)
-Message-Id: <812257e197cfe30bd0d3c68ea6ec0d062631185f.1730775907.git.gitgitgadget@gmail.com>
+        Mon, 04 Nov 2024 19:05:11 -0800 (PST)
+Message-Id: <259734e0bcea952c2c09b0fb3a017e139922b975.1730775908.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
 References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 05 Nov 2024 03:05:01 +0000
-Subject: [PATCH 1/7] pack-objects: add --full-name-hash option
+Date: Tue, 05 Nov 2024 03:05:03 +0000
+Subject: [PATCH 3/7] pack-objects: add GIT_TEST_FULL_NAME_HASH
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,333 +79,250 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The pack_name_hash() method has not been materially changed since it was
-introduced in ce0bd64299a (pack-objects: improve path grouping
-heuristics., 2006-06-05). The intention here is to group objects by path
-name, but also attempt to group similar file types together by making
-the most-significant digits of the hash be focused on the final
-characters.
+Add a new environment variable to opt-in to the --full-name-hash option
+in 'git pack-objects'. This allows for extra testing of the feature
+without repeating all of the test scenarios.
 
-Here's the crux of the implementation:
+But this option isn't free. There are a few tests that change behavior
+with the variable enabled.
 
-	/*
-	 * This effectively just creates a sortable number from the
-	 * last sixteen non-whitespace characters. Last characters
-	 * count "most", so things that end in ".c" sort together.
-	 */
-	while ((c = *name++) != 0) {
-		if (isspace(c))
-			continue;
-		hash = (hash >> 2) + (c << 24);
-	}
+First, there are a few tests that are very sensitive to certain delta
+bases being picked. These are both involving the generation of thin
+bundles and then counting their objects via 'git index-pack --fix-thin'
+which pulls the delta base into the new packfile. For these tests,
+disable the option as a decent long-term option.
 
-As the comment mentions, this only cares about the last sixteen
-non-whitespace characters. This cause some filenames to collide more
-than others. Here are some examples that I've seen while investigating
-repositories that are growing more than they should be:
+Second, there are two tests in t5616-partial-clone.sh that I believe are
+actually broken scenarios. While the client is set up to clone the
+'promisor-server' repo via a treeless partial clone filter (tree:0),
+that filter does not translate to the 'server' repo. Thus, fetching from
+these repos causes the server to think that the client has all reachable
+trees and blobs from the commits advertised as 'haves'. This leads the
+server to providing a thin pack assuming those objects as delta bases.
+Changing the name-hash algorithm presents new delta bases and thus
+breaks the expectations of these tests. An alternative could be to set
+up 'server' as a promisor server with the correct filter enabled. This
+may also point out more issues with partial clone being set up as a
+remote-based filtering mechanism and not a repository-wide setting. For
+now, do the minimal change to make the test work by disabling the test
+variable.
 
- * "/CHANGELOG.json" is 15 characters, and is created by the beachball
-   [1] tool. Only the final character of the parent directory can
-   differntiate different versions of this file, but also only the two
-   most-significant digits. If that character is a letter, then this is
-   always a collision. Similar issues occur with the similar
-   "/CHANGELOG.md" path, though there is more opportunity for
-   differences in the parent directory.
-
- * Localization files frequently have common filenames but differentiate
-   via parent directories. In C#, the name "/strings.resx.lcl" is used
-   for these localization files and they will all collide in name-hash.
-
-[1] https://github.com/microsoft/beachball
-
-I've come across many other examples where some internal tool uses a
-common name across multiple directories and is causing Git to repack
-poorly due to name-hash collisions.
-
-It is clear that the existing name-hash algorithm is optimized for
-repositories with short path names, but also is optimized for packing a
-single snapshot of a repository, not a repository with many versions of
-the same file. In my testing, this has proven out where the name-hash
-algorithm does a good job of finding peer files as delta bases when
-unable to use a historical version of that exact file.
-
-However, for repositories that have many versions of most files and
-directories, it is more important that the objects that appear at the
-same path are grouped together.
-
-Create a new pack_full_name_hash() method and a new --full-name-hash
-option for 'git pack-objects' to call that method instead. Add a simple
-pass-through for 'git repack --full-name-hash' for additional testing in
-the context of a full repack, where I expect this will be most
-effective.
-
-The hash algorithm is as simple as possible to be reasonably effective:
-for each character of the path string, add a multiple of that character
-and a large prime number (chosen arbitrarily, but intended to be large
-relative to the size of a uint32_t). Then, shift the current hash value
-to the right by 5, with overlap. The addition and shift parameters are
-standard mechanisms for creating hard-to-predict behaviors in the bits
-of the resulting hash.
-
-This is not meant to be cryptographic at all, but uniformly distributed
-across the possible hash values. This creates a hash that appears
-pseudorandom. There is no ability to consider similar file types as
-being close to each other.
-
-In a later change, a test-tool will be added so the effectiveness of
-this hash can be demonstrated directly.
-
-For now, let's consider how effective this mechanism is when repacking a
-repository with and without the --full-name-hash option. Specifically,
-let's use 'git repack -adf [--full-name-hash]' as our test.
-
-On the Git repository, we do not expect much difference. All path names
-are short. This is backed by our results:
-
-| Stage                 | Pack Size | Repack Time |
-|-----------------------|-----------|-------------|
-| After clone           | 260 MB    | N/A         |
-| Standard Repack       | 127MB     | 106s        |
-| With --full-name-hash | 126 MB    | 99s         |
-
-This example demonstrates how there is some natural overhead coming from
-the cloned copy because the server is hosting many forks and has not
-optimized for exactly this set of reachable objects. But the full repack
-has similar characteristics with and without --full-name-hash.
-
-However, we can test this in a repository that uses one of the
-problematic naming conventions above. The fluentui [2] repo uses
-beachball to generate CHANGELOG.json and CHANGELOG.md files, and these
-files have very poor delta characteristics when comparing against
-versions across parent directories.
-
-| Stage                 | Pack Size | Repack Time |
-|-----------------------|-----------|-------------|
-| After clone           | 694 MB    | N/A         |
-| Standard Repack       | 438 MB    | 728s        |
-| With --full-name-hash | 168 MB    | 142s        |
-
-[2] https://github.com/microsoft/fluentui
-
-In this example, we see significant gains in the compressed packfile
-size as well as the time taken to compute the packfile.
-
-Using a collection of repositories that use the beachball tool, I was
-able to make similar comparisions with dramatic results. While the
-fluentui repo is public, the others are private so cannot be shared for
-reproduction. The results are so significant that I find it important to
-share here:
-
-| Repo     | Standard Repack | With --full-name-hash |
-|----------|-----------------|-----------------------|
-| fluentui |         438 MB  |               168 MB  |
-| Repo B   |       6,255 MB  |               829 MB  |
-| Repo C   |      37,737 MB  |             7,125 MB  |
-| Repo D   |     130,049 MB  |             6,190 MB  |
-
-Future changes could include making --full-name-hash implied by a config
-value or even implied by default during a full repack.
-
-It is important to point out that the name hash value is stored in the
-.bitmap file format, so we must disable the --full-name-hash option when
-bitmaps are being read or written. Later, the bitmap format could be
-updated to be aware of the name hash version so deltas can be quickly
-computed across the bitmapped/not-bitmapped boundary.
+Third, there are some tests that compare the exact output of a 'git
+pack-objects' process when using bitmaps. The warning that disables the
+--full-name-hash option causes these tests to fail. Disable the
+environment variable to get around this issue.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-pack-objects.txt |  3 ++-
- builtin/pack-objects.c             | 25 ++++++++++++++++++++-----
- builtin/repack.c                   |  5 +++++
- pack-objects.h                     | 21 +++++++++++++++++++++
- t/t5300-pack-object.sh             | 15 +++++++++++++++
- 5 files changed, 63 insertions(+), 6 deletions(-)
+ builtin/pack-objects.c          |  7 +++++--
+ ci/run-build-and-tests.sh       |  1 +
+ t/README                        |  4 ++++
+ t/t5310-pack-bitmaps.sh         |  3 +++
+ t/t5333-pseudo-merge-bitmaps.sh |  4 ++++
+ t/t5510-fetch.sh                |  7 ++++++-
+ t/t5616-partial-clone.sh        | 26 ++++++++++++++++++++++++--
+ t/t6020-bundle-misc.sh          |  6 +++++-
+ t/t7406-submodule-update.sh     |  2 ++
+ t/t7700-repack.sh               |  6 ++++++
+ 10 files changed, 60 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index e32404c6aae..93861d9f85b 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -15,7 +15,8 @@ SYNOPSIS
- 	[--revs [--unpacked | --all]] [--keep-pack=<pack-name>]
- 	[--cruft] [--cruft-expiration=<time>]
- 	[--stdout [--filter=<filter-spec>] | <base-name>]
--	[--shallow] [--keep-true-parents] [--[no-]sparse] < <object-list>
-+	[--shallow] [--keep-true-parents] [--[no-]sparse]
-+	[--full-name-hash] < <object-list>
- 
- 
- DESCRIPTION
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 08007142671..85595dfcd88 100644
+index 85595dfcd88..7cb6f0e0942 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -266,6 +266,14 @@ struct configured_exclusion {
+@@ -266,7 +266,7 @@ struct configured_exclusion {
  static struct oidmap configured_exclusions;
  
  static struct oidset excluded_by_config;
-+static int use_full_name_hash;
-+
-+static inline uint32_t pack_name_hash_fn(const char *name)
-+{
-+	if (use_full_name_hash)
-+		return pack_full_name_hash(name);
-+	return pack_name_hash(name);
-+}
+-static int use_full_name_hash;
++static int use_full_name_hash = -1;
  
- /*
-  * stats
-@@ -1698,7 +1706,7 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
- 		return 0;
- 	}
- 
--	create_object_entry(oid, type, pack_name_hash(name),
-+	create_object_entry(oid, type, pack_name_hash_fn(name),
- 			    exclude, name && no_try_delta(name),
- 			    found_pack, found_offset);
- 	return 1;
-@@ -1912,7 +1920,7 @@ static void add_preferred_base_object(const char *name)
+ static inline uint32_t pack_name_hash_fn(const char *name)
  {
- 	struct pbase_tree *it;
- 	size_t cmplen;
--	unsigned hash = pack_name_hash(name);
-+	unsigned hash = pack_name_hash_fn(name);
- 
- 	if (!num_preferred_base || check_pbase_path(hash))
- 		return;
-@@ -3422,7 +3430,7 @@ static void show_object_pack_hint(struct object *object, const char *name,
- 	 * here using a now in order to perhaps improve the delta selection
- 	 * process.
- 	 */
--	oe->hash = pack_name_hash(name);
-+	oe->hash = pack_name_hash_fn(name);
- 	oe->no_try_delta = name && no_try_delta(name);
- 
- 	stdin_packs_hints_nr++;
-@@ -3572,7 +3580,7 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
- 	entry = packlist_find(&to_pack, oid);
- 	if (entry) {
- 		if (name) {
--			entry->hash = pack_name_hash(name);
-+			entry->hash = pack_name_hash_fn(name);
- 			entry->no_try_delta = no_try_delta(name);
- 		}
- 	} else {
-@@ -3595,7 +3603,7 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
- 			return;
- 		}
- 
--		entry = create_object_entry(oid, type, pack_name_hash(name),
-+		entry = create_object_entry(oid, type, pack_name_hash_fn(name),
- 					    0, name && no_try_delta(name),
- 					    pack, offset);
- 	}
-@@ -4429,6 +4437,8 @@ int cmd_pack_objects(int argc,
- 		OPT_STRING_LIST(0, "uri-protocol", &uri_protocols,
- 				N_("protocol"),
- 				N_("exclude any configured uploadpack.blobpackfileuri with this protocol")),
-+		OPT_BOOL(0, "full-name-hash", &use_full_name_hash,
-+			 N_("optimize delta compression across identical path names over time")),
- 		OPT_END(),
- 	};
- 
-@@ -4576,6 +4586,11 @@ int cmd_pack_objects(int argc,
+@@ -4586,7 +4586,10 @@ int cmd_pack_objects(int argc,
  	if (pack_to_stdout || !rev_list_all)
  		write_bitmap_index = 0;
  
-+	if (write_bitmap_index && use_full_name_hash) {
-+		warning(_("currently, the --full-name-hash option is incompatible with --write-bitmap-index"));
-+		use_full_name_hash = 0;
-+	}
+-	if (write_bitmap_index && use_full_name_hash) {
++	if (use_full_name_hash < 0)
++		use_full_name_hash = git_env_bool("GIT_TEST_FULL_NAME_HASH", 0);
 +
- 	if (use_delta_islands)
- 		strvec_push(&rp, "--topo-order");
++	if (write_bitmap_index && use_full_name_hash > 0) {
+ 		warning(_("currently, the --full-name-hash option is incompatible with --write-bitmap-index"));
+ 		use_full_name_hash = 0;
+ 	}
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 2e28d02b20f..75b40f07bbd 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -30,6 +30,7 @@ linux-TEST-vars)
+ 	export GIT_TEST_NO_WRITE_REV_INDEX=1
+ 	export GIT_TEST_CHECKOUT_WORKERS=2
+ 	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
++	export GIT_TEST_FULL_NAME_HASH=1
+ 	;;
+ linux-clang)
+ 	export GIT_TEST_DEFAULT_HASH=sha1
+diff --git a/t/README b/t/README
+index 8c0319b58e5..fe3f89b5b28 100644
+--- a/t/README
++++ b/t/README
+@@ -492,6 +492,10 @@ a test and then fails then the whole test run will abort. This can help to make
+ sure the expected tests are executed and not silently skipped when their
+ dependency breaks or is simply not present in a new environment.
  
-diff --git a/builtin/repack.c b/builtin/repack.c
-index d6bb37e84ae..ab2a2e46b20 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -58,6 +58,7 @@ struct pack_objects_args {
- 	int no_reuse_object;
- 	int quiet;
- 	int local;
-+	int full_name_hash;
- 	struct list_objects_filter_options filter_options;
- };
++GIT_TEST_FULL_NAME_HASH=<boolean>, when true, sets the default name-hash
++function in 'git pack-objects' to be the one used by the --full-name-hash
++option.
++
+ Naming Tests
+ ------------
  
-@@ -306,6 +307,8 @@ static void prepare_pack_objects(struct child_process *cmd,
- 		strvec_pushf(&cmd->args, "--no-reuse-delta");
- 	if (args->no_reuse_object)
- 		strvec_pushf(&cmd->args, "--no-reuse-object");
-+	if (args->full_name_hash)
-+		strvec_pushf(&cmd->args, "--full-name-hash");
- 	if (args->local)
- 		strvec_push(&cmd->args,  "--local");
- 	if (args->quiet)
-@@ -1203,6 +1206,8 @@ int cmd_repack(int argc,
- 				N_("pass --no-reuse-delta to git-pack-objects")),
- 		OPT_BOOL('F', NULL, &po_args.no_reuse_object,
- 				N_("pass --no-reuse-object to git-pack-objects")),
-+		OPT_BOOL(0, "full-name-hash", &po_args.full_name_hash,
-+				N_("pass --full-name-hash to git-pack-objects")),
- 		OPT_NEGBIT('n', NULL, &run_update_server_info,
- 				N_("do not run git-update-server-info"), 1),
- 		OPT__QUIET(&po_args.quiet, N_("be quiet")),
-diff --git a/pack-objects.h b/pack-objects.h
-index b9898a4e64b..88360aa3e8e 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -207,6 +207,27 @@ static inline uint32_t pack_name_hash(const char *name)
- 	return hash;
- }
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 7044c7d7c6d..caa3c125548 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -420,6 +420,9 @@ test_bitmap_cases () {
+ 			cat >expect <<-\EOF &&
+ 			error: missing value for '\''pack.preferbitmaptips'\''
+ 			EOF
++
++			# Disable --full-name-hash test due to stderr comparison.
++			GIT_TEST_FULL_NAME_HASH=0 \
+ 			git repack -adb 2>actual &&
+ 			test_cmp expect actual
+ 		)
+diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
+index eca4a1eb8c6..0c7c3e33986 100755
+--- a/t/t5333-pseudo-merge-bitmaps.sh
++++ b/t/t5333-pseudo-merge-bitmaps.sh
+@@ -209,6 +209,10 @@ test_expect_success 'bitmapPseudoMerge.stableThreshold creates stable groups' '
+ '
  
-+static inline uint32_t pack_full_name_hash(const char *name)
-+{
-+	const uint32_t bigp = 1234572167U;
-+	uint32_t c, hash = bigp;
+ test_expect_success 'out of order thresholds are rejected' '
++	# Disable this option to avoid stderr message
++	GIT_TEST_FULL_NAME_HASH=0 &&
++	export GIT_TEST_FULL_NAME_HASH &&
 +
-+	if (!name)
-+		return 0;
+ 	test_must_fail git \
+ 		-c bitmapPseudoMerge.test.pattern="refs/*" \
+ 		-c bitmapPseudoMerge.test.threshold=1.month.ago \
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 0890b9f61c5..be79c72495e 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -1062,7 +1062,12 @@ test_expect_success 'all boundary commits are excluded' '
+ 	test_tick &&
+ 	git merge otherside &&
+ 	ad=$(git log --no-walk --format=%ad HEAD) &&
+-	git bundle create twoside-boundary.bdl main --since="$ad" &&
 +
-+	/*
-+	 * Do the simplest thing that will resemble pseudo-randomness: add
-+	 * random multiples of a large prime number with a binary shift.
-+	 * The goal is not to be cryptographic, but to be generally
-+	 * uniformly distributed.
-+	 */
-+	while ((c = *name++) != 0) {
-+		hash += c * bigp;
-+		hash = (hash >> 5) | (hash << 27);
-+	}
-+	return hash;
-+}
-+
- static inline enum object_type oe_type(const struct object_entry *e)
- {
- 	return e->type_valid ? e->type_ : OBJ_BAD;
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 3b9dae331a5..7585cac6595 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -674,4 +674,19 @@ do
- 	'
- done
++	# If the --full-name-hash function is used here, then no delta
++	# pair is found and the bundle does not expand to three objects
++	# when fixing the thin object.
++	GIT_TEST_FULL_NAME_HASH=0 \
++		git bundle create twoside-boundary.bdl main --since="$ad" &&
+ 	test_bundle_object_count --thin twoside-boundary.bdl 3
+ '
  
-+# The following test is not necessarily a permanent choice, but since we do not
-+# have a "name hash version" bit in the .bitmap file format, we cannot write the
-+# full-name hash values into the .bitmap file without risking breakage later.
-+#
-+# TODO: Make these compatible in the future and replace this test with the
-+# expected behavior when both are specified.
-+test_expect_success '--full-name-hash and --write-bitmap-index are incompatible' '
-+	git pack-objects base --all --full-name-hash --write-bitmap-index 2>err &&
-+	test_grep incompatible err &&
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index c53e93be2f7..425aa8d8789 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -516,7 +516,18 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas' '
+ 	# Exercise to make sure it works. Git will not fetch anything from the
+ 	# promisor remote other than for the big tree (because it needs to
+ 	# resolve the delta).
+-	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
++	#
++	# TODO: the --full-name-hash option is disabled here, since this test
++	# is fundamentally broken! When GIT_TEST_FULL_NAME_HASH=1, the server
++	# recognizes delta bases in a different way and then sends a _blob_ to
++	# the client with a delta base that the client does not have! This is
++	# because the client is cloned from "promisor-server" with tree:0 but
++	# is now fetching from "server" withot any filter. This is violating the
++	# promise to the server that all reachable objects exist and could be
++	# used as delta bases!
++	GIT_TRACE_PACKET="$(pwd)/trace" \
++	GIT_TEST_FULL_NAME_HASH=0 \
++		git -C client \
+ 		fetch "file://$(pwd)/server" main &&
+ 
+ 	# Verify the assumption that the client needed to fetch the delta base
+@@ -535,7 +546,18 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas, protocol v2' '
+ 	# Exercise to make sure it works. Git will not fetch anything from the
+ 	# promisor remote other than for the big blob (because it needs to
+ 	# resolve the delta).
+-	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
++	#
++	# TODO: the --full-name-hash option is disabled here, since this test
++	# is fundamentally broken! When GIT_TEST_FULL_NAME_HASH=1, the server
++	# recognizes delta bases in a different way and then sends a _blob_ to
++	# the client with a delta base that the client does not have! This is
++	# because the client is cloned from "promisor-server" with tree:0 but
++	# is now fetching from "server" withot any filter. This is violating the
++	# promise to the server that all reachable objects exist and could be
++	# used as delta bases!
++	GIT_TRACE_PACKET="$(pwd)/trace" \
++	GIT_TEST_FULL_NAME_HASH=0 \
++		git -C client \
+ 		fetch "file://$(pwd)/server" main &&
+ 
+ 	# Verify that protocol version 2 was used.
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 34b5cd62c20..553a20d10e9 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -247,7 +247,11 @@ test_expect_success 'create bundle with --since option' '
+ 	EOF
+ 	test_cmp expect actual &&
+ 
+-	git bundle create since.bdl \
++	# If the --full-name-hash option is used, then one fewer
++	# delta base is found and this counts a different number
++	# of objects after performing --fix-thin.
++	GIT_TEST_FULL_NAME_HASH=0 \
++		git bundle create since.bdl \
+ 		--since "Thu Apr 7 15:27:00 2005 -0700" \
+ 		--all &&
+ 
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index 0f0c86f9cb2..03f8c976720 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -1094,6 +1094,8 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
+ 	) &&
+ 	git clone super4 super5 &&
+ 	(cd super5 &&
++	 # This test var can mess with the stderr output checked in this test.
++	 GIT_TEST_FULL_NAME_HASH=0 \
+ 	 git submodule update --quiet --init --depth=1 submodule3 >out 2>err &&
+ 	 test_must_be_empty out &&
+ 	 test_must_be_empty err
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index fc2cc9d37be..e3787bacdad 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -309,6 +309,9 @@ test_expect_success 'no bitmaps created if .keep files present' '
+ 	keep=${pack%.pack}.keep &&
+ 	test_when_finished "rm -f \"\$keep\"" &&
+ 	>"$keep" &&
 +
-+	# --stdout option silently removes --write-bitmap-index
-+	git pack-objects --stdout --all --full-name-hash --write-bitmap-index >out 2>err &&
-+	! test_grep incompatible err
-+'
++	# Disable --full-name-hash test due to stderr comparison.
++	GIT_TEST_FULL_NAME_HASH=0 \
+ 	git -C bare.git repack -ad 2>stderr &&
+ 	test_must_be_empty stderr &&
+ 	find bare.git/objects/pack/ -type f -name "*.bitmap" >actual &&
+@@ -320,6 +323,9 @@ test_expect_success 'auto-bitmaps do not complain if unavailable' '
+ 	blob=$(test-tool genrandom big $((1024*1024)) |
+ 	       git -C bare.git hash-object -w --stdin) &&
+ 	git -C bare.git update-ref refs/tags/big $blob &&
 +
- test_done
++	# Disable --full-name-hash test due to stderr comparison.
++	GIT_TEST_FULL_NAME_HASH=0 \
+ 	git -C bare.git repack -ad 2>stderr &&
+ 	test_must_be_empty stderr &&
+ 	find bare.git/objects/pack -type f -name "*.bitmap" >actual &&
 -- 
 gitgitgadget
 
