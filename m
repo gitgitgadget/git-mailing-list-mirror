@@ -1,162 +1,203 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from dormouse.elm.relay.mailchannels.net (dormouse.elm.relay.mailchannels.net [23.83.212.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603172905
-	for <git@vger.kernel.org>; Tue,  5 Nov 2024 01:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730769551; cv=none; b=EZVt8yQ2yVlEo2maj06K4eDI5wCr1E5eQ3XHsJgPRZzfE54bOPO1ZWC2VMQtFL79+27Uj2a7N1Tia8hsROl0X+PekerZ6w8NpMAO0GmXz/aSTHoTRVf0ROeNT2a3CKQ7hVP+3T4wdxncFsJqHFQum8iMCSdHli/OBwhhjVK692Q=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730769551; c=relaxed/simple;
-	bh=N+pvnS2gLCtLxyvAZGgYNxroo/fR/UG/vmNzFf/EIJY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OqqT6lepYgl99yY/HrK2hbaGA3cq7Qo8HqHj7HrlGdDy8tbJvpqtYxRJY0MB/Behz/9T5wxzp4311LDK1UQ6NpiWvx1+6ULIRVHxP84/F4bLdRAlEUcw048koIYKdtLDjOKpKkblh8wm4wLZzOhUptuV7z4k8GNEPlHX9DdAYSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A8Yl9OFp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYRd04sc; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A8Yl9OFp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYRd04sc"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4FED51380061;
-	Mon,  4 Nov 2024 20:19:07 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 04 Nov 2024 20:19:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730769547; x=1730855947; bh=G47Jy7evGd
-	ENmj+iL3ssoSjoS8irDMLU7yN6BHgkpx0=; b=A8Yl9OFpWn612WRiI07AoUCh+T
-	p4oDHvVYVx7OxtOI6uzHTrqMNVUqHNXu1mZ1dRClglGzvj2AVdHancn0xJYEEjw3
-	YfhK4lhfxPZbqo2rrg5rKyPF1Qn7OXgLpkECzS4o7MY3bf7ALwDir3OkOtmdpVwg
-	WUIZ6wq9uEMsGUYegBWSHaNqkJ5AE7TXOaB0VdVX3XuqaYDgge+2zjDg9KJfOGZ3
-	wloys+AAOqn4CtWkYLOCkedD2kWTgjCDRHhMPCpP0HFvG6qTxy1Q79X1FkkQrcH1
-	bBe7koZCdmB9aDQ/YXrhIIbuZCnezoOM630qzSo6EOy3yEHv1JF/94Natncg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730769547; x=1730855947; bh=G47Jy7evGdENmj+iL3ssoSjoS8irDMLU7yN
-	6BHgkpx0=; b=gYRd04sc+9zS/aX/6PgdG12ONFshXVjR8fPyQKfQD6NgAgZEgSA
-	47X+4SVDEz2IBfr+ZtZ5ojPCmqud6azVRweisesL8a4lfCGtPcD7o778e+/RZ+Ju
-	MbOpwSj6pdEV3a4/HPAq3TAZxSxCD4zOK/ZP9JgIcC+HkVshoahCZAx7Zc9W8oUp
-	0k6cj/jgzIS62e5Zj8a6sy38csEI/lDL4UT1BAK7WhjsbBkWLO0RIDXqZTq8RWZC
-	xYKgSBpb6YUNS+ErRat/hzeGyfYBsgWx2qPpUGLMCV6wKweG/S1v2fq22xzNWph2
-	JM2WxHW+CeoB72AsYJTc039zheo5DzvSAJA==
-X-ME-Sender: <xms:i3IpZ2enYkPgpsBdfcKD_crqg0g5mmrP8h-FmwB0SeD4wmIdSHsHJw>
-    <xme:i3IpZwPtUUBFRoz_Eq1LBVWgvVm5_jmymXh7S1SEduDabe79bOWm_bnQBQ4U02Ksn
-    PmH5NKxWHwUDSVEOw>
-X-ME-Received: <xmr:i3IpZ3j09g24oS8EBmvjaxs-E8DpfG_LsYZ1lkY5W31642Dkyi-_8lT5cMPx10CFvfmmpkA8mBmXm5MiCYazycMB9qBztqxB_wXB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdeljedgfeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopegrsghhihhjvggvthdrnhhkthesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgr
-    hihlohhrrhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepsh
-    grnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:i3IpZz9TTYX2sFzO-ZKMV3AMAA5p6474S67rBZPTv-gB_DwiF7GXeQ>
-    <xmx:i3IpZyvQDtcybaxFKMmHw66SFFGjgwPxb_wVNy7QVVLdJ1cqEo-MtA>
-    <xmx:i3IpZ6Hg35KiJQNmtjme-eDy8OfEKQ8IwFvbfL05GEdIeys0fFDlHw>
-    <xmx:i3IpZxPcLNL73mo5-7agtObyZrw5qf8cVsTapjoJeR74lF93fe07zw>
-    <xmx:i3IpZ2i0dAc6nSEF9tkN5lsw8q938ZiciFi9nrUyrLtFhVzxziQZvRK0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Nov 2024 20:19:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-Cc: git@vger.kernel.org,  me@ttaylorr.com,  ps@pks.im,
-  sandals@crustytoothpaste.net
-Subject: Re: [PATCH v5 2/2] t5300: add test for 'show-index --object-format'
-In-Reply-To: <20241104192958.64310-3-abhijeet.nkt@gmail.com> (Abhijeet Sonar's
-	message of "Tue, 5 Nov 2024 00:59:58 +0530")
-References: <xmqq1pzuylm6.fsf@gitster.g>
-	<20241104192958.64310-1-abhijeet.nkt@gmail.com>
-	<20241104192958.64310-3-abhijeet.nkt@gmail.com>
-Date: Mon, 04 Nov 2024 17:19:05 -0800
-Message-ID: <xmqq4j4mv5o6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1988B65C
+	for <git@vger.kernel.org>; Tue,  5 Nov 2024 01:26:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.50
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1730769966; cv=pass; b=FRla53vl2VhFxD2nEhKV9QQFfB2XJGGzohqIxtFvl8njgjJJgaNFNIGiHjZGKcISlm2XLOT4ly0bQMRQy/PRm6p0sAQiZxw3l2c0SI1djy7gdD55cUP/FBGE2TnNijHuS2g8jEhVga+lHFBx7DkLEkpQpnrKR1wlpx0Qh6RfJLE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1730769966; c=relaxed/simple;
+	bh=NXBSO9gW3goMpB/YxLakb6NlQzIFajB2RVdL+nVmAFM=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=kvKzX/042HAbokhX4i4FRe2pjTv/AjV3CUB5ObLcJutVVUf6+zdQ09PWsT5Rj8mwOePg0h9sZ2xjbnclWG0YqbpVNB1S+g1SaDZQm2t5yv/CYRCRjEI27wSDkNXRzEEJtniQAv/xiDFf+nEan+t2ljGco1pbN7U8UZ8y1nlymzE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org; spf=pass smtp.mailfrom=scientia.org; arc=pass smtp.client-ip=23.83.212.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=scientia.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id F12C28A6B7E;
+	Tue,  5 Nov 2024 01:26:03 +0000 (UTC)
+Received: from cpanel-007-fra.hostingww.com (100-107-236-127.trex-nlb.outbound.svc.cluster.local [100.107.236.127])
+	(Authenticated sender: instrampxe0y3a)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 3A7148A73AE;
+	Tue,  5 Nov 2024 01:26:03 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1730769963; a=rsa-sha256;
+	cv=none;
+	b=3DMgId65QaXl/1JuHgLHKIRQNMOobb6PU46F8ydQghwb1T6J3GXUOCK/Cutb20nxaeq15x
+	OKFkKuGA+qT2wgg7D9qLgGP8X1a3nbDGCSQ7KG5YYyfvI1SSeZnxtdFCrYFO4HLoF66Xwx
+	iQhqWSxhOABEX15QW9lwrJ/4lWB1nDmOI8ZNDYcSJTTMUa8Z18fXlglD4sT4NnyigsgClV
+	ZYEvSQztPqZeiaVgg5I5/wWOpW+Q6R9N3oV0Lo6dp+AGDVZ+mItWw50LD5DrPdBQ4ycVlq
+	mKOFPRiz1FxhGB2e2jWSEBt3/c18KVCS7PoqsBvKR21H25xzdkgHd/wdBQIXZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1730769963;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NXBSO9gW3goMpB/YxLakb6NlQzIFajB2RVdL+nVmAFM=;
+	b=RnR35nJ89Iz+qMi1Eidae2fnBGp8Z5HYj+yePWg1WehN9wee1OZFObiFVEyKrBq3EJjSQ+
+	blW8sNFMwttvT24v7nsPxiPGI+0Qm8v1A7rA4e5CHQ1p/SqbNPy4uETjE4Ts/qcHQx3Uu5
+	8onwVqwwFTX0CjBJBhI9oHwLDIbotgx9ncaTkGzmt2jUB2RXzvy943i6kVya3Y3sw0EIUU
+	zFyrBaSJ4wQwZO7zw41firbxejiQHeeghrQp0MFjo8nxDHGNLXQT52CXJdkrIgZeuiJsBW
+	mngJQVL43C+zInTqmhzsH46NJ3826kj/mKmR7TusNIlx0+D2AfQOxa0uMRhjmA==
+ARC-Authentication-Results: i=1;
+	rspamd-6c6b6c849d-drj77;
+	auth=pass smtp.auth=instrampxe0y3a smtp.mailfrom=calestyo@scientia.org
+X-Sender-Id: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: instrampxe0y3a|x-authuser|calestyo@scientia.org
+X-MailChannels-Auth-Id: instrampxe0y3a
+X-Hysterical-Harmony: 6781ec53112a6729_1730769963853_1346184606
+X-MC-Loop-Signature: 1730769963853:2051222892
+X-MC-Ingress-Time: 1730769963853
+Received: from cpanel-007-fra.hostingww.com (cpanel-007-fra.hostingww.com
+ [3.69.87.180])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.107.236.127 (trex/7.0.2);
+	Tue, 05 Nov 2024 01:26:03 +0000
+Received: from p5b0ed864.dip0.t-ipconnect.de ([91.14.216.100]:63330 helo=heisenberg.fritz.box)
+	by cpanel-007-fra.hostingww.com with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.97.1)
+	(envelope-from <calestyo@scientia.org>)
+	id 1t88KX-000000069zy-19az;
+	Tue, 05 Nov 2024 01:26:01 +0000
+Message-ID: <83639e75d9d04208aa0dee345d9ef3536de105c9.camel@scientia.org>
+Subject: Re: git format-patch escaping issues in the patch format
+From: Christoph Anton Mitterer <calestyo@scientia.org>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	git@vger.kernel.org
+Date: Tue, 05 Nov 2024 02:26:00 +0100
+In-Reply-To: <305dc9f7-4bdb-40c5-92f4-7438a9ecd482@app.fastmail.com>
+References: <ca13705ae4817ffba16f97530637411b59c9eb19.camel@scientia.org>
+	 <305dc9f7-4bdb-40c5-92f4-7438a9ecd482@app.fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.1-1 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-AuthUser: calestyo@scientia.org
 
-Abhijeet Sonar <abhijeet.nkt@gmail.com> writes:
+On Mon, 2024-11-04 at 23:15 +0100, Kristoffer Haugsbakk wrote:
+> It seems to me (totally na=C3=AFve) that you would do something like
+>=20
+> 1. Blank line terminates headers
+> 2. Then there might be some optional commit-headers which can
+> override
+> =C2=A0=C2=A0 things (`From`)
+> 3. Commit message
+> 4. `---`
+> 5. Look for a regex `^diff` line
+> =C2=A0=C2=A0 =E2=80=A2 Now the indentation will tell you when it ends
+> 6. `^Range-diff` and `^Interdiff` can also make an appearance in this
+> =C2=A0=C2=A0 section
 
-> In 88a09a557c (builtin/show-index: provide options to determine hash
-> algo), the flag --object-format was added to show-index builtin as a way
-> to provide a hash algorithm explicitly. However, we do not have tests in
-> place for that functionality. Add them.
->
-> Signed-off-by: Abhijeet Sonar <abhijeet.nkt@gmail.com>
-> ---
->  t/t5300-pack-object.sh | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
-
-Nicely described.
+Well as you've seen by the follow-up, such a naive approach is not
+really possible, as the commit message may also contain ---, unified
+diffs, etc.
 
 
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index 51fed26cc4..301d5f1b61 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -527,6 +527,28 @@ test_expect_success SHA1 'show-index works OK outside a repository' '
->  	nongit git show-index <foo.idx
->  '
->  
-> +for hash in sha1 sha256
-> +do
-> +	test_expect_success 'setup: show-index works OK outside a repository with hash algo passed in via --object-format' '
-> +		git init explicit-hash-$hash --object-format=$hash &&
 
-"git help cli"; dashed options first and then other arguments.
+> At first I thought that it is a magic string for a reason.
 
-> +		test_commit -C explicit-hash-$hash one &&
-> +
-> +		cat >in <<-EOF &&
-> +		$(git -C explicit-hash-$hash rev-parse one)
-> +		EOF
+I think such magic cookies can always only (safely) be used to detect a
+type, but not as a separator, at least not when free text is allowed,
+too.
 
-Hmph, is the above a roundabout way to say
 
-		git -C explicit-hash-$hash rev-parse one >in &&
+> It did the right thing for me with this (last part) of the commit
+> message:
+>=20
+> =C2=A0=C2=A0=C2=A0 We should look into Pedro=E2=80=99s backup system.=C2=
+=A0 Why does he use
+> email?
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 diff --git a/a.txt b/a.txt
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 index ce01362503..a32119c8aa 1=
+00644
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 --- a/a.txt
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 +++ b/a.txt
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 @@ -1 +1,2 @@
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hello
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 +goodbye
+>=20
+> ***
 
-or am I missing some subtlety?
+But yours look indented? I mean then it's clear it works.
 
-> +		git -C explicit-hash-$hash pack-objects explicit-hash-$hash <in
 
-> +	'
-> +
-> +	test_expect_success 'show-index works OK outside a repository with hash algo passed in via --object-format' '
-> +		idx=$(echo explicit-hash-$hash/explicit-hash-$hash*.idx) &&
-> +		nongit git show-index --object-format=$hash <"$idx" >actual &&
-> +		test_line_count = 1 actual &&
-> +
-> +		rm -rf explicit-hash-$hash
+> It seems like it would be nice if format-patch complained if it found
+> regex `^---$` in the commit body.
 
-When this test fails (e.g., the number of lines in the show-index
-output is not 1), explicit-hash-$hash is not removed, because &&-
-chain short-circuits.
+Actually already when committing... cause there it's taken as valid and
+then it should also work with any following tools.
 
-Perhaps join thw two into one and use test_when_finished, like this?
 
-	test_expect_success 'show-index with explicit --object-format=$hash outside repo' '
-		test_when_finished "rm -fr explicit-hash-$hash" &&
-		git init --object-format=$hash explicit-hash-$hash &&
-		...
-                nongit git show-index --object-format=$hash <"$idx" >actual &&
-		test_line_count 1 actual
-	'
+> The magic string is unlikely but could happen.=C2=A0 The solution is to
+> use
+> an indented block.=C2=A0 Same for the diff.=C2=A0 (Hopefully few have to
+> code-quote diffs)
 
-Other than that, very nicely done.
+As written in the other mail, there is nothing real obvious for the
+user that this wouldn=E2=80=99t be allowed, and in fact committing and such
+works.
+The simple problem here is the fuzzy format which cannot be parsed
+properly.
 
-Thanks.
+
+
+
+> But escaping things in this format?
+
+Coudln't one do something like this:
+
+If the line consisting of three - is the line that ends the commit
+message, check during format-patch whether it's contained in that.
+If not, generate the patch as now.
+If so, use another magic timestamp and/or (since that might get lost
+when sending as mail, set some X-git-patch-format: header, there adding
+perhaps a flag like "escaped" and if that's set, any line that matches
+the regexp:
+>*---
+get's another > prepended when escaping, and one removed when
+unescaping (well in the latter only lines that match >+---).
+* =3D 0..n
++ =3D 1..n
+
+Or probably thinking about some more sophisticated solution or at least
+a better character than > .
+
+
+> > btw and shamelessly off-topic question:
+> > Any chance that git format-patch / am will ever support keeping
+> > track
+> > of the branch/merge history of generated / applied patches?
+> > That would be really neat.
+>=20
+> What does this mean more concretely?=C2=A0 :)
+
+I guess I want what's been asked there:
+https://stackoverflow.com/questions/2285699/git-how-to-create-patches-for-a=
+-merge
+
+
+In short, imagine I have the following commit tree (just a simple
+example with --no-ff):
+*
+|\
+|*
+|/
+*
+
+And I make a series of git format-patch patches from that, it would be
+nice if git am *.patches, give back that structure (i.e. with the
+branch and the merge).
+
+
+Cheers,
+Chris.
