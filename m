@@ -1,113 +1,115 @@
-Received: from 1.mo550.mail-out.ovh.net (1.mo550.mail-out.ovh.net [178.32.127.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AEC20C498
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 20:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.32.127.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988DD14F9D9
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 20:48:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730925637; cv=none; b=aKBX7ms4esgNm29+LOKEA4cjkKdNqE+u05VjsR4fDMBD2OCaoQY5n8gmYWjwcZp5Y2dEuPiX3PhxT0Q6OO29WNfWVdrA832h8nadHjhmgo6LgR2oDQ+obaUYjlb5vmFnehqonYdiJLrib8ThLEWgcRB8s4jDu1SdqUSIEQZ7Ak8=
+	t=1730926088; cv=none; b=pmUaseU11ePi6rhlM9zVgeFdGLvf2+ZHY45BClHlcVWaJLmuWNklSo22zRoTub6zklT/7cM18nHTWobJ8nMdTuhLxEzVN3DtrfNSHplhkBIWpi6S4WwhIcTavVx98tvj0W89H2Wh1vP38TzrEXTdhhTmVJUfn9iovHE86N0gNjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730925637; c=relaxed/simple;
-	bh=F9nhVQhDv8CbaEwmYaujhGPdVJU7QTdwRMCHst4P/bo=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=n7xKxKgs3pD905NdVCzt+VOufmfyvnTbPvb0Def9KcG+CFypHxy2JJwH1CRIW2Po7ye6MNrmh47pKu83h9KiGki75JSkJtY7RuQXdFC1lR2MinNYAB/W9NV4IbizinnqPF1/GmIcUSuM2ZMSC9DzjIs27Y/AHzu7epauvz6H/6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maurel.me; spf=pass smtp.mailfrom=maurel.me; dkim=pass (2048-bit key) header.d=maurel.me header.i=@maurel.me header.b=hytFtgHY; arc=none smtp.client-ip=178.32.127.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=maurel.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=maurel.me
+	s=arc-20240116; t=1730926088; c=relaxed/simple;
+	bh=nlge4v3ZCYKcIEu8AdWz1cw3BJ53xb04KVTDltXygrI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=aGS2KIPSGFHCYM7F/IrtruFf4sghwxbghh7G4htJMbO3LfrHQh37S6dJ4dwyARyiCR+AwFftomS3TJLG3ixKT0NwJ2/KZSs1gGlTVEoh1NXO7/KwMZvIX0lcLYkcNDpb2eRQ2Gne3ntAWn/LzSR3kjDfoibHQlVfOrEIS17V6Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A75AIze3; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=maurel.me header.i=@maurel.me header.b="hytFtgHY"
-Received: from director3.ghost.mail-out.ovh.net (unknown [10.109.139.72])
-	by mo550.mail-out.ovh.net (Postfix) with ESMTP id 4XkGs05M5Fz1XPB
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 20:24:36 +0000 (UTC)
-Received: from ghost-submission-5b5ff79f4f-cc4p9 (unknown [10.110.178.46])
-	by director3.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 6F5031FD3D
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 20:24:36 +0000 (UTC)
-Received: from maurel.me ([37.59.142.107])
-	by ghost-submission-5b5ff79f4f-cc4p9 with ESMTPSA
-	id mJrED4TQK2eCAAAAxmmxUA
-	(envelope-from <julien@maurel.me>)
-	for <git@vger.kernel.org>; Wed, 06 Nov 2024 20:24:36 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-107S0019f1227f9-db58-444d-af6c-0a805b05e41e,
-                    34AE11586F26B73916293453D1B005C8F15421DB) smtp.auth=julien@maurel.me
-X-OVh-ClientIp:176.138.87.53
-Message-ID: <711a0faa-6d82-48b6-819d-9ddbeda03f6a@maurel.me>
-Date: Wed, 6 Nov 2024 21:24:35 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A75AIze3"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43159c9f617so1905285e9.2
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 12:48:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730926084; x=1731530884; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fadim5Wdfesdt5Xq2l9k6x/ccLfFHDJDghTB0+/YwCc=;
+        b=A75AIze3+GZ89tP+wjBUxN2iMp/Cgksk7PJNeM0uHmq5O+MFT7xlt07H7cvlJplWfP
+         L8IkZxIosa20iNYEqRj3iXmsjziCxEEnJjI/m9opwTkiVzP7PQ4aqx7Nq9bipACUCfsg
+         86t8xNpICI3E/oGp7yTW2lPeP5+KmMKW1ISkVIAF006dmUhL7uXyzsvpy5wQ7bU0aCY/
+         iIieZLNlzxetpflqYOZcnRkoULqLmHj4o9Pnp8Pt10ujJVakI4RJvrHnzH3wMKD9cIZ1
+         yJKMEg3KR7vfACa5SyHTVpTVzmgqP4qCESsmqXwGSB0eZbHy22RUITW0qC9leAOc3mBu
+         nsJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730926084; x=1731530884;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fadim5Wdfesdt5Xq2l9k6x/ccLfFHDJDghTB0+/YwCc=;
+        b=d84ztbPUuRgYHsbpOOk2K9W23kAR4BTaS1Zksu13VgCTigQxsYGe/U5UPSrNOgh9jn
+         ZvFSy/5G4g03Gy3AQmJ6SZKgTe+vpuu19032LoT0bLOc2V5t+UOG/ftk6Bf95C/IVhbV
+         ojtlr7cQZE2AmTMBo8tpe3fq8Zjsmays6twujPwiXyOUPbQKcQ6MTa8ySrP7tZG2ij1b
+         LiLnJHjx/Foc1ntqnaQCF0BZ5ybHy2Y6hp4IScjtVvVfsRR+yQYPZPPKmc4pHJPkuTuV
+         wslGnnchvr8ftSd1ZsNbocz/YfsAiKzLEI9lyTkVUsaDFOsGBYG+tgYvZ3/GJxzR4nFW
+         stRQ==
+X-Gm-Message-State: AOJu0YwA4dBbK5PLBrNFCUDiyn9cDJBhu9n6YFKZy+QFTtiuzas5dgk6
+	6Zz0inZZU6Fxgytq6NL1nO1784JUUiYJiiAh1H6JvpbOHNkAnR0cIWzXfg==
+X-Google-Smtp-Source: AGHT+IGTqMEyVVWBdm4+Lk/pBxeRr40BwD9EsN6BRewZX+VGDvt8NkG98cdL6yjACWjQRSlIKo1ziA==
+X-Received: by 2002:a05:600c:2d81:b0:431:93dd:8e77 with SMTP id 5b1f17b1804b1-431b172b3bemr333454195e9.31.1730926084230;
+        Wed, 06 Nov 2024 12:48:04 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa6ae615sm36468575e9.8.2024.11.06.12.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2024 12:48:03 -0800 (PST)
+Message-Id: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
+From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 06 Nov 2024 20:47:59 +0000
+Subject: [PATCH 0/3] Remove is_bare_repository_cfg global state
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
 To: git@vger.kernel.org
-From: Julien Maurel <julien@maurel.me>
-Subject: Question about merge & cherry pick
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Ovh-Tracer-Id: 15025134259535262459
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgddufeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpefkffggfgfvhffutgfgsehtjeertddtvdejnecuhfhrohhmpefluhhlihgvnhcuofgruhhrvghluceojhhulhhivghnsehmrghurhgvlhdrmhgvqeenucggtffrrghtthgvrhhnpedvveevjefggefgueehhfdvtdffkeeuieeftdetjefgveeiteehfeduiefhhffhhfenucfkphepuddvjedrtddrtddruddpudejiedrudefkedrkeejrdehfedpfeejrdehledrudegvddruddtjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhhulhhivghnsehmrghurhgvlhdrmhgvpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheehtdgmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=OG7t+pAUCk/DTLkjaIbptEIjchjHBOa4myRJeKEIAmc=;
- c=relaxed/relaxed; d=maurel.me; h=From; s=ovhmo4520387-selector1;
- t=1730924676; v=1;
- b=hytFtgHYOdSS2L9RB7ZKs1dsdOwuOp0JDmVebj4Yw6nul6sWB0XOsVOKZfJHmVAX7kG3o18G
- K5Z/Z5/Zvk9iYqaemu+xGIzB46a+Ro+JcBrVrGZ+41WnZVvlOT+pmg+Zc1ywmPK6soHS00BWXHQ
- HrMvqJrSi0ur3Cvo7CBDmDJtm3jsFFD7l8zpFXpj5uAOVfLCm5TMpuyLz4107MkCEuhpfHW7vCb
- gTLluVNYbE5UHkaF+HscVYH7n94aI0H5MF2J2VeV6opuLkyUIMUdDd1NaA9AA62GBF8yEqkuaJy
- XG9Swj1YbfgMQpKbM9HnSleVAtbvw4Wda0u5+tz1qA/PQ==
+Cc: John Cai <johncai86@gmail.com>
 
-Hi,
-I detect a potential issue with usage of merge and cherry pick.
-I do a short script to reproduce my use case.
- From my point of view, after these operations, content on branch master 
-and dev should be same with "zZz" on second line and "eDe" on last one.
-But it's not the case on second line...
-I test the same thing with first commit on master, cherrypick on dev, 
-second update on dev, merge dev on master, result is same.
-And I test to cherry pick second commit on master after final merge, 
-cherry pick is ok and "fix" master content.
-Can you help me to understand if it's normal or not ?
+This patch series removes the global state introduced by the
+is_bare_repository_cfg variable by moving it into the repository struct.
+Most of the refactor is done by patch 1. Patch 2 initializes the member in
+places that left it unInitialized, while patch 3 adds a safety measure by
+BUG()ing when the variable has not been properly initialized.
 
-The script :
-mkdir repo
-cd repo
+John Cai (3):
+  git: remove is_bare_repository_cfg global variable
+  setup: initialize is_bare_cfg
+  repository: BUG when is_bare_cfg is not initialized
 
-# Create a file and init 2 branches with same content
-git init
-echo -e "aAa\nzZz\nqQq\neEe" > file
-git add .
-git commit -a -m "init"
-git checkout -b dev
-
-# Update on dev
-sed -i "s#Z#Y#" file
-git commit -a -m "update"
-
-# Cherrypick on master
-git checkout master
-git cherry-pick -x dev
-
-# Second update on dev
-git checkout dev
-sed -i "s#Y#Z#" file
-sed -i "s#E#D#" file
-git commit -a -m "update that change second line as before first update 
-and do another change"
-
-# Merge on master
-git checkout master
-git merge dev --no-ff -m "Merge"
-
-# Display result
-echo
-echo
-echo MASTER
-cat file
-git checkout dev > /dev/null 2>&1
-echo
-echo DEV
-cat file
+ attr.c                        |  4 ++--
+ builtin/bisect.c              |  2 +-
+ builtin/blame.c               |  2 +-
+ builtin/check-attr.c          |  2 +-
+ builtin/clone.c               |  4 ++--
+ builtin/gc.c                  |  2 +-
+ builtin/init-db.c             | 14 +++++++-------
+ builtin/repack.c              |  2 +-
+ builtin/reset.c               |  2 +-
+ builtin/rev-parse.c           |  2 +-
+ builtin/submodule--helper.c   |  2 +-
+ config.c                      |  2 +-
+ dir.c                         |  2 +-
+ environment.c                 |  7 -------
+ environment.h                 |  3 +--
+ git.c                         |  2 +-
+ mailmap.c                     |  4 ++--
+ refs/files-backend.c          |  2 +-
+ refs/reftable-backend.c       |  2 +-
+ repository.c                  | 23 +++++++++++++++++++----
+ repository.h                  | 12 +++++++++++-
+ scalar.c                      |  2 +-
+ setup.c                       | 19 +++++++++++++------
+ submodule.c                   |  2 +-
+ t/helper/test-partial-clone.c |  2 +-
+ t/helper/test-repository.c    |  4 ++--
+ transport.c                   |  4 ++--
+ worktree.c                    |  4 ++--
+ 28 files changed, 79 insertions(+), 55 deletions(-)
 
 
-Thanks
+base-commit: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1826%2Fjohn-cai%2Fjc%2Fremove_is_bare_global-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1826/john-cai/jc/remove_is_bare_global-v1
+Pull-Request: https://github.com/git/git/pull/1826
+-- 
+gitgitgadget
