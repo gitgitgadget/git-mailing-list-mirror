@@ -1,53 +1,53 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4ABC1D6DB4
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98779202F96
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:10:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730905834; cv=none; b=Tkv1N9Tp9/O7hHVvPBEt6ZStqXxREQl2hIu1OfcJXb2ErT+Dbe9DwnCUohmqBJ7UtuQCgE0X9FKlaN7b1qm/q7EhXTHROJllDT2pAZX2ltFWpy3dt9cbroate9WUZx9eqQCmXzmZdecFkGoeZB/0puHmwalFBm1A3FLSOKYx+YE=
+	t=1730905837; cv=none; b=OCUcxVu05ir+BrvjxS2VU7Y9SoQ4ZzWivC72GJH35UjEGCedJdJpZMc9BKEchY0d/3+JJPnKTJ1RaLyBBVwR22L81fK+yHH1vr6kccer36yivgCMTe71IT2yDs51ci5o3NJ4cs5Gxlum9tGR0bzqcxE1icB2Vqyfaw3a9siLcjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730905834; c=relaxed/simple;
-	bh=67sIWxvKkHNkwt7uzGHIBFcpaEaOrHY/pvy9iGJtgms=;
+	s=arc-20240116; t=1730905837; c=relaxed/simple;
+	bh=DSQuuFGovHcsYu0/Xd1zeF+EvEq4FgNF8vGRNuPVNDU=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QhInekoGwOUbBr7J/rMLu4S2W/CkTOQKX9gUh/RJBgtay+wZZs5arWugtMddHjYI1At//TflIwXN87hHlBKOkDK63/6nDKw80+fV4BxiS4QW11ZVRLZ3/XyOint8zscUqhoYFXvE4nqeat4msRRJvnISfQa9xI81HEBb6QMWQFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s2sn27W6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhfQ7+PA; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=mJ9UONWmbMB8WiA66rpocdlSMdRonjCr86nBWe1uEL7C2Sw/pLh70SIzdUsbkwE+hEIne8VANn78bTQhIye8T0BAmvr4fDukwaBoP/r9ihWeGpLZnB8mkm/QHz9Oysbh3EX3aLotgX/saGknDjzUY9jRboXHIADPA1QJhfJtio4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zL9zGrAa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I2RW14LD; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s2sn27W6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhfQ7+PA"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B47EF1140178
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:10:31 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zL9zGrAa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I2RW14LD"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9FB7A13800E3
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:10:34 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 06 Nov 2024 10:10:31 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 06 Nov 2024 10:10:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730905831; x=1730992231; bh=YfEa6uhKL1
-	n44pdDa4P4R1qufsyWk5q35kx2LnXzqQ0=; b=s2sn27W6wmMPxjZzlcqYaHzp5t
-	oVC118nITGuf6UC4pN5LruBTSXPlZrc6Ay/VTdSafjwwUuvdnrvz8fkimepjzyyv
-	Ac2L1K/Kn5Fp2CWll1D2ygmSecBK+C9JKdjw4fd3hq2NZS8JbS6dymLUzmO4lV0V
-	jYignTPAwwnpid86RpEn3eWNzVMRmjfSkExiIW1y5lJ5Yy5yvTfecQb1hTyUlnfc
-	OaLf985VZ5TXcRn+juMW604F4RMl6KwUIhHPzXSm+QJnyeUYPmAQi6kdN9TL4Qm6
-	Dl8YtWdG8OYj/hJnZw2nDoGmww5wwPOr7kWgjHP7c36yehgpnNBlhnTn3TVg==
+	:subject:to:to; s=fm3; t=1730905834; x=1730992234; bh=TF12vISPeD
+	19HsaWqXQS5sg2wM3jMkRaYj9UlQ6nnyo=; b=zL9zGrAahcaThfVz7O/ybtEpCK
+	w9y8IJckA7lBB3TKn1Dbk0lHdhp0XGxYqhPY0kTQv3zhFAQQCBLiArBFfoKmO2XP
+	t6buRT26cQEo8V6iO7tP3+UgOt/xDTMmTWvERfA88JytAVp9t71IvDTy/OoLXDNX
+	V9CDRISkhBNdNa39GCIU4ZJy/3s6eHbtaqQK/P1c0F5403U0Mhx4sygaZ1a5ZW/o
+	nLzH6EqzNB+Jqfl1OqZCvY+PQqgZpTORhW0aoCJ6Bih4RIbQgUigGOpAvtkh8h/q
+	DyUazTwHsMu8U+OUrSdTDD2ty+J/+m4WBHqcqIn7pTcLomCEs/Oop+9HZqPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730905831; x=1730992231; bh=YfEa6uhKL1n44pdDa4P4R1qufsyWk5q35kx
-	2LnXzqQ0=; b=IhfQ7+PA1BRQx8TdIYHmCRMXDnHoAORZSBeYI8kJ4R8FFLhTrGa
-	AVM1fzqt2HRv2T8gx7GvpOe4rlO7QPAzTRpUXyGQI4TstcQ3k80qKwrx04nYWGxf
-	+dqUkNAzoD1LzLcyW6GunUKKFAUI2SHwAggMTNtv57cZO/iHb3x8IyfOfSAPL0Gd
-	hFZwMKubkcl7UlvXnrEVqMGLe04w3JT0TWb13sysbZMGAbSSBM/xg7bQC4vQJIDp
-	q4c0t+8V8v09zaBb76lH7G8hWWiUtny0YNEqSQK1ZUu4N98mKfEk1vTNRBhUOC0e
-	8/cGziMjk/ZHBXMPEtlQePwcJqtp73k+Y3w==
-X-ME-Sender: <xms:54YrZ8XfZTy9Crk7kHmanFrm1_yxfAAyW3xHbwxABE6dwx1zAodNkQ>
-    <xme:54YrZwlh_aUiBG63wUwK7nDw-VrzaDMmzzBATZEy6Af4LqdfH2-v66UudeGzFV842
-    pBdIwhQO9UkyFYuCw>
-X-ME-Received: <xmr:54YrZwa_vIvXGnSPcR_YuPHX5-6KhKRBx4uhvDPJjBJhfHBOSv4_zeXiRlxI8pgzWHdwlgHwGQMLnFB0bn4bu2N8QteDXhQOkLjzKH4cUXXlWw>
+	1730905834; x=1730992234; bh=TF12vISPeD19HsaWqXQS5sg2wM3jMkRaYj9
+	UlQ6nnyo=; b=I2RW14LDKQr40OgW4/WaMlY0JUvVMF2otcQPJiCNT71TwsmwHX7
+	QlE+R8Eh9IoEtD2qn9CPXfT7LCV14HlpxKR8NQwzplL+tJjDjzFxDvhH0G3vvIVK
+	hpI+zVVlZgXkravyaQoJfloxCuFyUDe4ao2qPZcqlf9o/aFR8GK2OQSxXBksqafh
+	78MwsvbW8a62DNBddq/sYUb9Tk4UDDPdoUIKvkXcl7+/qDes1d6m2Y3tDIkZ010o
+	GK01cBfFJ3Sa2VgewbsfrVEzLeOxxsLc9D1BAWhikNUvWEb1Y/FiBiV7xlzxK6rL
+	Rs9mfZc0p56sgA5HBPsA4LC+4GHSmAj+wFg==
+X-ME-Sender: <xms:6oYrZyzsIu_2bcNQukIW5TSZrtaKcuyayV-PFWKJOEBuOQlNB5u2Yw>
+    <xme:6oYrZ-QylFr-WFuBTyHFb2SDTINXqI0xXRnIWxzCFfmsySTSXH6vuujduc5SwIgL9
+    eqAuV1p0uInXSUEdw>
+X-ME-Received: <xmr:6oYrZ0XbYlCmDyd_hQ3RS17ZWk9qMswIfrXepVdBLRlIKadLR2iXOnGyjzFVg-073Dkz2GNQnCGcKSQDctY12f5h83bwn2sofq6VdzjmcU6CIg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdejudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukf
@@ -57,24 +57,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdejudcutefuodetggdote
     iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
     gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
     rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:54YrZ7UlaKWBc4EkG0zReof5uJrjYuOrNqhOe660ny-MB3k8zU9ARw>
-    <xmx:54YrZ2lwWPTXRFl1XSwDeH8ijyFs9OlPKS4bxkVZ_wO9OeNJcxtmGg>
-    <xmx:54YrZwfPWK5tZt3F2NkV2pSBp82SPbdBy0ChSoeYxAfZaWj0guiE0w>
-    <xmx:54YrZ4EB4mTLGjAsnk512mWIsh8nsmvC4Ohfzu6zkZSe6dyhdQFY_A>
-    <xmx:54YrZ6tSWPu68JZbQMDC0x2T6F9cG1hv2d9KjC2t697K_a3TOYSxDBHD>
+X-ME-Proxy: <xmx:6oYrZ4jGlkloA040x_zswPFXLb83_rI0JctZ-9byzFWVRWGoEcJjkg>
+    <xmx:6oYrZ0B8NP21qt2rDQXc0qp7rCekOqpjjat36Dky8t0P_07315CoaQ>
+    <xmx:6oYrZ5ID4YLemULV8npzRaHElINuklyRarOlQMofLNOqHiePV0lCAQ>
+    <xmx:6oYrZ7BCOTwCGEf0ysOvHuUWfXe1M6AIqD5tEXpk-d-2-ybCwK6XuA>
+    <xmx:6oYrZ94avWaRv1hx0pQtOJS5o12xE0U6Jl_W2eJiVicVcW_K191BkAUG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 6 Nov 2024 10:10:30 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 6 Nov 2024 10:10:33 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 50a1f3fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9f92ed68 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 6 Nov 2024 15:10:06 +0000 (UTC)
-Date: Wed, 6 Nov 2024 16:10:23 +0100
+	Wed, 6 Nov 2024 15:10:09 +0000 (UTC)
+Date: Wed, 6 Nov 2024 16:10:25 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 02/26] bisect: fix leaking good/bad terms when reading
- multipe times
-Message-ID: <cdc06afa6dbb11a0a6ffcdaf20053b66a2fe3974.1730901926.git.ps@pks.im>
+Subject: [PATCH 03/26] bisect: fix leaking string in `handle_bad_merge_base()`
+Message-ID: <4a554ab10409e4cfb3c42b817cae3d026284663c.1730901926.git.ps@pks.im>
 References: <cover.1730901926.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,99 +85,34 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730901926.git.ps@pks.im>
 
-Even though `read_bisect_terms()` is declared as assigning string
-constants, it in fact assigns allocated strings to the `read_bad` and
-`read_good` out parameters. The only callers of this function assign the
-result to global variables and thus don't have to free them in order to
-be leak-free. But that changes when executing the function multiple
-times because we'd then overwrite the previous value and thus make it
-unreachable.
+When handling a bad merge base we print an error, which includes the set
+of good revisions joined by spaces. This string is allocated, but never
+freed.
 
-Fix the function signature and free the previous values. This leak is
-exposed by t0630, but plugging it does not make the whole test suite
-pass.
+Fix this memory leak. Note that the local `bad_hex` varible also looks
+like a string that we should free. But in fact, `oid_to_hex()` returns
+an address to a static variable even though it is declared to return a
+non-constant string. The function signature is thus quite misleading and
+really should be fixed, but doing so is outside of the scope of this
+patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c   | 14 +++++++++-----
- bisect.h   |  2 +-
- revision.c |  4 ++--
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ bisect.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/bisect.c b/bisect.c
-index 4713226fad4..9c52241050c 100644
+index 9c52241050c..e9e603877eb 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -28,8 +28,8 @@ static struct oid_array skipped_revs;
- 
- static struct object_id *current_bad_oid;
- 
--static const char *term_bad;
--static const char *term_good;
-+static char *term_bad;
-+static char *term_good;
- 
- /* Remember to update object flag allocation in object.h */
- #define COUNTED		(1u<<16)
-@@ -985,7 +985,7 @@ static void show_commit(struct commit *commit)
-  * We read them and store them to adapt the messages accordingly.
-  * Default is bad/good.
-  */
--void read_bisect_terms(const char **read_bad, const char **read_good)
-+void read_bisect_terms(char **read_bad, char **read_good)
- {
- 	struct strbuf str = STRBUF_INIT;
- 	const char *filename = git_path_bisect_terms();
-@@ -993,16 +993,20 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
- 
- 	if (!fp) {
- 		if (errno == ENOENT) {
--			*read_bad = "bad";
--			*read_good = "good";
-+			free(*read_bad);
-+			*read_bad = xstrdup("bad");
-+			free(*read_good);
-+			*read_good = xstrdup("good");
- 			return;
- 		} else {
- 			die_errno(_("could not read file '%s'"), filename);
+@@ -801,6 +801,8 @@ static enum bisect_error handle_bad_merge_base(void)
+ 				"between %s and [%s].\n"),
+ 				bad_hex, term_bad, term_good, bad_hex, good_hex);
  		}
- 	} else {
- 		strbuf_getline_lf(&str, fp);
-+		free(*read_bad);
- 		*read_bad = strbuf_detach(&str, NULL);
- 		strbuf_getline_lf(&str, fp);
-+		free(*read_good);
- 		*read_good = strbuf_detach(&str, NULL);
++
++		free(good_hex);
+ 		return BISECT_MERGE_BASE_CHECK;
  	}
- 	strbuf_release(&str);
-diff --git a/bisect.h b/bisect.h
-index ee3fd65f3bd..944439bfac7 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -75,7 +75,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix);
- 
- int estimate_bisect_steps(int all);
- 
--void read_bisect_terms(const char **bad, const char **good);
-+void read_bisect_terms(char **bad, char **good);
- 
- int bisect_clean_state(void);
- 
-diff --git a/revision.c b/revision.c
-index 8df75b82249..347dabf7f9a 100644
---- a/revision.c
-+++ b/revision.c
-@@ -51,8 +51,8 @@
- 
- volatile show_early_output_fn_t show_early_output;
- 
--static const char *term_bad;
--static const char *term_good;
-+static char *term_bad;
-+static char *term_good;
- 
- implement_shared_commit_slab(revision_sources, char *);
  
 -- 
 2.47.0.229.g8f8d6eee53.dirty
