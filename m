@@ -1,39 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F4513A26F
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 21:17:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078A713A26F
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 21:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730927831; cv=none; b=L47rSP3gXJ9qkuqGEsHrnUcOuuepGfi+APL4POHb+KHUP/ejGOQAfDimRMIcojXwXgIosahOrPwmDwBpU8QVUeZ9KmmXKChKK6ZCu/iodzLQqyS4JoUGg67ALaPsuRMQIYvCVQraINZdKPzTh0uxxinp4tvqggLe6jP7PmvnuHQ=
+	t=1730927837; cv=none; b=stv0cjq2Umn4DTWZk9zIFL2Bryo1Xq+thDtLHDwwWM2+HZJzzB83aI/EQVRUBwa9oc5ma/33QBcXmzY47T3xQFIjTqfuM6hT+AMWMkO8J4AQfYyfas5e3zuC7SwyzF+kntZHSPsVKQwsxMaRfILkomSi916C5guHquIPWY6C+Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730927831; c=relaxed/simple;
-	bh=hygOXaqGLOQiY0hSs+DTl3n66gq84P8lja0zaeveLl0=;
+	s=arc-20240116; t=1730927837; c=relaxed/simple;
+	bh=KfkgKkj+16YOE96qsPRAw/isziZbMbhyBlAmFfzNLaM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rrKSoBI7KZFUUiF0iuU1GLVJaVpqBgJrcbP6P+0UcSaJhZp9raOJrkrjIEQDJ74L5c5C+tgN5D+wMTVHUmRMOQUJwjYJfga50HOvOg2EJ8zG90kgsRog/76wwC4MKhJi8h0q5pF47RVoIn1CO5fv1JxRGn7wcbvkdVdGUoOlXlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gOGYxLmG; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lk7p/5TVLrKUJ7yc41gvgtafkaJM6NzIi9C67kCk4a7WGCsUFbR4Q+mi/Aqkpgmr6ZK7WTrjsPr72qSfVIJvZt13reGFmcqRertZJhhbAWyT4NhIsXGS5zK7GS1SZ5UX0xwT1br/9bBxjUzA2CweuaoyumyLk4w+R7CzXUglP+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L8KyDuwX; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gOGYxLmG"
-Received: (qmail 15317 invoked by uid 109); 6 Nov 2024 21:17:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=hygOXaqGLOQiY0hSs+DTl3n66gq84P8lja0zaeveLl0=; b=gOGYxLmGM+GECyz0DewFSH/+zZF8SxNImBUpnvTrQyZuSva+Hu6boSmHLqfiaPHHGoduALzMv9uOVAZGkTPnAahACgNMry6LQmPd8Xy2VlilBJ7BgozuDECqq6eJXXo0WvlbY4+Gky3ieRQMOHWFMqkSDtYFwnMVovIwyT1aOiuBddNmZIBYDjkBZG7nVuBZePjeHYrobcEuUymlS8bUF0NkJJ9VSS9ujvRAM+FoXfCLOqim904byYbb4UKZZIFNABaQY0RgAMu0Mhkig4G/YBR6ryEKwxaND6XqwV3jv3JdnmC49hcQS3NOuWV0se/v6bkRxlLcEvk8EUylahmpmw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L8KyDuwX"
+Received: (qmail 15336 invoked by uid 109); 6 Nov 2024 21:17:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KfkgKkj+16YOE96qsPRAw/isziZbMbhyBlAmFfzNLaM=; b=L8KyDuwXIawhfTLxsMo0CL0GFRkfTiIAEobeMLY/SkxRZxvakWVS5c5ADwWvRXP6VAN07lVfD6muEpDGmskVLDuMyg/cc+hotVAmUFHFcIzFG40PCyuSkkkbqMyXkuK6sa2BzRjsyPe55+VFOREFCEyBEycRVhdm99zu8i4s9EhZHLyEW2G+c46fBJ188lrMzn7VAfoI0t/TPSS5mNp/w2iMQyhF/W1fvKgQO8HB/6eDdQO+/qhf18kFdOQPXCTI76+aEUznX3kWJWZebO+5NpDXqLIcY8PRBs9cLURLly1PBiR5on0qdZd4a8a7oje/5oXCD72l7NK7jg+yaCu+Hg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Nov 2024 21:17:09 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Nov 2024 21:17:15 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8145 invoked by uid 111); 6 Nov 2024 21:17:08 -0000
+Received: (qmail 8153 invoked by uid 111); 6 Nov 2024 21:17:14 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2024 16:17:08 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2024 16:17:14 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 6 Nov 2024 16:17:08 -0500
+Date: Wed, 6 Nov 2024 16:17:14 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Benno Evers <benno.martin.evers@gmail.com>,
 	Rasmus Villemoes <ravi@prevas.dk>, Benno Evers <benno@bmevers.de>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 2/4] t/perf: add tests for git-describe
-Message-ID: <20241106211708.GB956383@coredump.intra.peff.net>
+Subject: [PATCH 3/4] describe: stop digging for max_candidates+1
+Message-ID: <20241106211714.GC956383@coredump.intra.peff.net>
 References: <20241106192236.GC880133@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -45,77 +45,121 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20241106192236.GC880133@coredump.intra.peff.net>
 
-We don't have a perf script for git-describe, despite it often being
-accused of slowness. Let's add a few simple tests to start with.
+By default, describe considers only 10 candidate matches, and stops
+traversing when we have enough. This makes things much faster in a large
+repository, where collecting all candidates requires walking all the way
+down to the root (or at least to the oldest tag). This goes all the way
+back to 8713ab3079 (Improve git-describe performance by reducing
+revision listing., 2007-01-13).
 
-Rather than use the existing tags from our test repo, we'll make our own
-so that we have a known quantity and position. We'll add a "new" tag
-near the tip of HEAD, and an "old" one that is at the very bottom. And
-then our tests are:
+However, we don't stop immediately when we have enough candidates. We
+keep traversing and only bail when we find one more candidate that we're
+ignoring. Usually this is not too expensive, if the tags are sprinkled
+evenly throughout history. But if you are unlucky, you might hit the max
+candidate quickly, and then have a huge swath of history before finding
+the next one.
 
-  1. Describing HEAD naively requires walking all the way down to the
-     old tag as we collect candidates. This gives us a baseline for what
-     "slow" looks like.
+Our p6100 test has exactly this unlucky case: with a max of "1", we find
+a recent tag quickly and then have to go all the way to the root to find
+the old tag that will be discarded.
 
-  2. Doing the same with --candidates=1 can potentially be fast, because
-     we can quie after finding "new". But we don't, and it's also slow.
+A more interesting real-world case is:
 
-  3. Likewise we should be able to quit when there are no more tags to
-     find. This can happen naturally if a repo has few tags, but also if
-     you restrict the set of tags with --match.
+  git describe --candidates=1 --match=v6.12-rc4 HEAD
 
-Here are the results running against linux.git. Note that I have a
-commit-graph built for the repo, so "slow" here is ~700ms. Without a
-commit graph it's more like 9s!
+in the linux.git repo. There we restrict the set of tags to a single
+one, so there is no older candidate to find at all! But despite
+--candidates=1, we keep traversing to the root only to find nothing.
 
-  Test                                           HEAD
-  --------------------------------------------------------------
-  6100.2: describe HEAD                          0.70(0.66+0.04)
-  6100.3: describe HEAD with one max candidate   0.70(0.66+0.04)
-  6100.4: describe HEAD with one tag             0.70(0.64+0.06)
+So why do we keep traversing after hitting thet max? There are two
+reasons I can see:
 
+  1. In theory the extra information that there was another candidate
+     could be useful, and we record it in the gave_up_on variable. But
+     we only show this information with --debug.
+
+  2. After finding the candidate, there's more processing we do in our
+     loop. The most important of this is propagating the "within" flags
+     to our parent commits, and putting them in the commit_list we'll
+     use for finish_depth_computation().
+
+     That function continues the traversal until we've counted all
+     commits reachable from the starting point but not reachable from
+     our best candidate tag (so essentially counting "$tag..$start", but
+     avoiding re-walking over the bits we've seen).  If we break
+     immediately without putting those commits into the list, our depth
+     computation will be wrong (in the worst case we'll count all the
+     way down to the root, not realizing those commits are included in
+     our tag).
+
+But we don't need to find a new candidate for (2). As soon as we finish
+the loop iteration where we hit max_candidates, we can then quit on the
+next iteration. This should produce the same output as the original code
+(which could, after all, find a candidate on the very next commit
+anyway) but ends the traversal with less pointless digging.
+
+We still have to set "gave_up_on"; we've popped it off the list and it
+has to go back. An alternative would be to re-order the loop so that it
+never gets popped, but it's perhaps still useful to show in the --debug
+output, so we need to know it anyway. We do have to adjust the --debug
+output since it's now just a commit where we stopped traversing, and not
+the max+1th candidate.
+
+p6100 shows the speedup using linux.git:
+
+  Test                                           HEAD^             HEAD
+  ---------------------------------------------------------------------------------------
+  6100.2: describe HEAD                          0.70(0.63+0.06)   0.71(0.66+0.04) +1.4%
+  6100.3: describe HEAD with one max candidate   0.70(0.64+0.05)   0.01(0.00+0.00) -98.6%
+  6100.4: describe HEAD with one tag             0.70(0.67+0.03)   0.70(0.63+0.06) +0.0%
+
+Reported-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Helped-by: Rasmus Villemoes <ravi@prevas.dk>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- t/perf/p6100-describe.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
- create mode 100755 t/perf/p6100-describe.sh
+ builtin/describe.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/t/perf/p6100-describe.sh b/t/perf/p6100-describe.sh
-new file mode 100755
-index 0000000000..069f91ce49
---- /dev/null
-+++ b/t/perf/p6100-describe.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 7330a77b38..69f2d942be 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -366,6 +366,12 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ 		struct commit_name **slot;
+ 
+ 		seen_commits++;
 +
-+test_description='performance of git-describe'
-+. ./perf-lib.sh
++		if (match_cnt == max_candidates) {
++			gave_up_on = c;
++			break;
++		}
 +
-+test_perf_default_repo
-+
-+# clear out old tags and give us a known state
-+test_expect_success 'set up tags' '
-+	git for-each-ref --format="delete %(refname)" refs/tags >to-delete &&
-+	git update-ref --stdin <to-delete &&
-+	new=$(git rev-list -1000 HEAD | tail -n 1) &&
-+	git tag -m new new $new &&
-+	old=$(git rev-list       HEAD | tail -n 1) &&
-+	git tag -m old old $old
-+'
-+
-+test_perf 'describe HEAD' '
-+	git describe HEAD
-+'
-+
-+test_perf 'describe HEAD with one max candidate' '
-+	git describe --candidates=1 HEAD
-+'
-+
-+test_perf 'describe HEAD with one tag' '
-+	git describe --match=new HEAD
-+'
-+
-+test_done
+ 		slot = commit_names_peek(&commit_names, c);
+ 		n = slot ? *slot : NULL;
+ 		if (n) {
+@@ -381,10 +387,6 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ 				if (n->prio == 2)
+ 					annotated_cnt++;
+ 			}
+-			else {
+-				gave_up_on = c;
+-				break;
+-			}
+ 		}
+ 		for (cur_match = 0; cur_match < match_cnt; cur_match++) {
+ 			struct possible_tag *t = &all_matches[cur_match];
+@@ -470,9 +472,8 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+ 		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
+ 		if (gave_up_on) {
+ 			fprintf(stderr,
+-				_("more than %i tags found; listed %i most recent\n"
+-				"gave up search at %s\n"),
+-				max_candidates, max_candidates,
++				_("found %i tags; gave up search at %s\n"),
++				max_candidates,
+ 				oid_to_hex(&gave_up_on->object.oid));
+ 		}
+ 	}
 -- 
 2.47.0.441.g1a09955689
 
