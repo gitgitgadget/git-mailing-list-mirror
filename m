@@ -1,54 +1,54 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551823A1DB
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 01:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1176F41AAC
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 01:18:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730855198; cv=none; b=gcZ9K6ysjxTbcALpS3p885RNTyhJd+SN+XEm5LXJ5/93r8/zWGBnLbply0xEfjEnGO6z+BtBezmOmdahMk6VAKpbbVtDug48qxNfTZMIxTSeRmQ9PUGhh0ZLCAp18aSeG6mkM00hF6NjwnPCIq5/Va57RjGGEJltJ36eLY8BgDk=
+	t=1730855895; cv=none; b=WsPQuX0tvaqjNF2o1ayB5v82s6uHaDEbDY1anMhODNgdxlCXldUBHdcP9o/7XZtl7HH8wgabaUsVa9+J1UjFZkAznaSN0mBVMQlVDRifG+tQMcv3fmuObpcvN9N9cGiqX1R2dZP7uPWZTvYpKtK58Tk6EMRJtK8XaHjBPPTWx0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730855198; c=relaxed/simple;
-	bh=NoQLhl/8mfjpw+4pGKlhWvUiiBwVuE56YWieFL7E1Zs=;
+	s=arc-20240116; t=1730855895; c=relaxed/simple;
+	bh=z+DILCxX1Y4ir1ZSd1DZ48j2pRTffD6FK/FI54B7b7Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BJ5Lww6ajgorjxRt9Nq2kpSVckswQuE3FGwZWM7fcsVQLYAi6XfU0LUU/9pts/OqbQNhIGV42a9sffz30xZ0EnMqoMqpkTqpHW+Rh0IBKN5gbtwg53ylNQhJypGnACAxSXDlnQb6Nv7F5mxIHJuBzM97xQJ9ep6SkERJvtoD0IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KTFomUpM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HrNCa/Rt; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=YvEJYjiqm00kQ90fvEq9UMwfffG7BmlNKtzSBeHaSVTicfvLdT+nS9HCVsqUS/LOBZn2LHpbxcN93FBEI8pu81jlATu6cGUz9lTfWwUN1dFnza7QC9SI1Ipv8OKNMvSBvDK+haTmEGP41p/F3/5wabUAJwBkszdYZ2rA1SnLTGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TaKhwBdi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y2m5+lNI; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KTFomUpM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HrNCa/Rt"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TaKhwBdi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y2m5+lNI"
 Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B2D3D25400C9;
-	Tue,  5 Nov 2024 20:06:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 05 Nov 2024 20:06:35 -0500
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E85E52540150;
+	Tue,  5 Nov 2024 20:18:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 05 Nov 2024 20:18:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730855194; x=1730941594; bh=NoQLhl/8mf
-	jpw+4pGKlhWvUiiBwVuE56YWieFL7E1Zs=; b=KTFomUpMktoXm4xTVeE/I11Mtv
-	qfknZo6p1lQVeSyHhti+LTNNdUb+NSQb7a7jp7pNO8S01aEVuDKm2/aqEffML3Se
-	sZmPllgrrJHb4q35ufAk0GutTs4I8cSRMX3Fj/Jow6qHVunIun45aoUR0keb/moW
-	R+c4SYYvs6hPPUjp1RzzZmz+H6Z9339lIRN4XQTISPCAleWOj1zUq63P4GmXXdLm
-	OvIQqvrvrNLcjYuLcTgke9Orckxk/vZwZt31t76Z8y2y9+8yfLhRPdw42ukKe6fW
-	a4QPbLsaxRi0lFWbW4uDQYH9H/YMCA7clFxFkaXKSvZG85vkrD2QCao21rQA==
+	:subject:to:to; s=fm2; t=1730855891; x=1730942291; bh=NoF72r5DT4
+	DMctjagHUNUej+Op+D6LamswYUVdTaVWE=; b=TaKhwBdi8jdcfGQTty9Bfq8ths
+	2iNUJCH0TN6LRUImZYREVKHt9h52oaBnTJ09NhBvBP6ezQeElQN1b/XnpXWgUtMS
+	Tlb+BHul6jyh1apM2xdkt1c91Ix6Svz86+Yl5Maqi22fCX9Y/JqR2XJrwIMYc9N5
+	dK8FVISxtrmMAxi3ew+drhnBHPW3BWzb1WQheUQDkG5O+QLqMQ1c0wo6oAtja9GY
+	qkt4hsjDgpmzEx0JEtKYMqtsmth5YEANsujcow6DnuC49UDgq1/USdKh8/wrEpvq
+	rvp30N63GR15bHrA0dQbQJ3KaqOmH9igVJmbGblHFBXqVfq+U8xtIwZLk6OQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730855194; x=1730941594; bh=NoQLhl/8mfjpw+4pGKlhWvUiiBwVuE56YWi
-	eFL7E1Zs=; b=HrNCa/RtOg6cndo3qofXFHwCJYpB19eeylMvYXdQ6ASPXeLrpSS
-	MAPpMsH8QCNE4Xq7L/a1fu4KxIJFkLs3AQxVR5Pg0HRhXMbNGYyNWmMmqMVKXYjX
-	1EFRkgJYQt0kR0Pwp7hXsbQ8/NsF67jhJS+6ybQ1f+oB6LEbSADXGiJGrP0l2/SS
-	0zBYhq600fWWn4W0CFNO96pRw0KyjQvjY3CIwYVG/04FnvyAlAh3czY4Np40Z+LA
-	zYW2sPm0OV4CTgRvYPVrAM+C6fiS5lwsucOB2mhXjVVcQ+s2aAl6vi8mQxHvjkq6
-	n+jLt6sh49lG+jys2PIKp3VMTtw7ldWilVA==
-X-ME-Sender: <xms:GcEqZz1uGX-rUc_aBg_jSH0-0aHPmC4UP01hO2mu2lI9iJUE19D3pA>
-    <xme:GcEqZyHaEMXLkaM7jrxPKkN0SqOuqaSyjnwKO-zFzVPXtzilQ3FYCw-TIP664By03
-    L1zaf3gIYE0ba6jqg>
-X-ME-Received: <xmr:GcEqZz7e8re8i8q9nHA321gDgLS1Zg3n037zUz1Ex5IBep3sNIdB8UqGfB5X8ezlV6K2sAUWEdCQFZsdGmPiXcye7VBl5f2B3uXD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddugdefvdcutefuodetggdotefrodftvf
+	1730855891; x=1730942291; bh=NoF72r5DT4DMctjagHUNUej+Op+D6LamswY
+	UVdTaVWE=; b=Y2m5+lNIn/bVJmHftPR9RcAZdHdsOR0Io5aSEwMdz1ZtFOBWlKx
+	7ubGx8wTAL912HkxvGVxHsKI7p0EkB2OmeFdAEsaq/Tndhjx3IVsPiWil8/rh+lL
+	TqmI/QASxyW2dRLtjswzJm4MEs+hZpwJUQHJPAsT3o1QVtd6CY5S7X5Sh12kz6h8
+	WezFHDclh0G6PucLpxtSbbIJpSK5XTqwLbHYTyfVp4uvXcxjOWFtLjuDavOBD4/Q
+	jVAJ5KxicplIxWyszQu/Aby/sCOHVJFI+z1/b+O2WHV7JOIgIAZYWqkGbqVSXDuo
+	54y5sDIyqN8vOehsnNC/X9p1B/c6I4xQDGA==
+X-ME-Sender: <xms:08MqZxxcjqxKRlfNTP0AZwKi979qa6bpiMWAKr8CsWddyiXmlC24Sw>
+    <xme:08MqZxR8JNmpE2UYsEifsjU84QoBxC_D_hFCIQG4sD-jMesdxdDhHVzlvwRnnMw7b
+    wxEBWu4-4njVnk56Q>
+X-ME-Received: <xmr:08MqZ7Uk0-1UltsTw2c2dTC9XSB4CGxVpxJuoRDkP6-2CiO0ae1gz1vFnWuEvgXEW156sMrwgjZuR0RVNLk7hWjxQ_dlFZEBxueT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddugdefgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -56,37 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddugdefvdcutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghrihgtrdhpvghijhhi
-    rghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgt
-    phhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtth
-    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepkhgr
-    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhoth
-    gtlhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:GcEqZ43AH3DJ6JI31ZjbMqQWxwH2E6aqQjmzXdCE-QWM6kRZwnBd_Q>
-    <xmx:GcEqZ2Fuw0hfld7S6hYGDgAlOOkmc2V2oMNKui_ZE8KxNOFKUnb3Cg>
-    <xmx:GcEqZ5_Bs_BVrRJ93XPdAIbckakwbVWOLTZBZTltDprQd-sOzQlZtQ>
-    <xmx:GcEqZzncr8_4W5jx5JG_VSopPb3Cq6dp2uqVF-HkAsmtlEOLCq9N9w>
-    <xmx:GsEqZ-9a1vTXKO8mqPhaTN1itmgE-Vbif9UcLAE3Vb9_cQJc-GhQbeOj>
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehfihhvvgdvfedutddtfe
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:08MqZziroAd4HHfoqyBzEIa1hKhCw5WmN1-btNSi7mOy_YNq1HGfCQ>
+    <xmx:08MqZzD7ID1F1rYP_WqgsIaNfspr-Et-M3Tc1O1yYkHVixv__Dz9Qg>
+    <xmx:08MqZ8Kv3lnHsYiSPy3Cp2sK5Rl0L4n-JxUDrenwF509c8I3-OFMYg>
+    <xmx:08MqZyCzLguJUr_lT0TSqffGR4_2PEJqZLgZrtv5sEc0hbQfrlxS3Q>
+    <xmx:08MqZ--F14qKcS-e6pHR0XAY4mGIrKQ5LQ8Tc_wsMK8kggz9dBS3aPoK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 20:06:33 -0500 (EST)
+ 5 Nov 2024 20:18:11 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Eric Ju <eric.peijian@gmail.com>,  git@vger.kernel.org,
-  calvinwan@google.com,  jonathantanmy@google.com,
-  chriscool@tuxfamily.org,  karthik.188@gmail.com,  toon@iotcl.com,
-  jltobler@gmail.com
-Subject: Re: [PATCH v5 1/6] fetch-pack: refactor packet writing
-In-Reply-To: <CAP8UFD0Yk1Twv9DMOYwO4R+7P0YHj1CgK8xN=2YdE8sdi4ukow@mail.gmail.com>
-	(Christian Couder's message of "Tue, 5 Nov 2024 18:44:29 +0100")
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
-	<20241028203457.19715-1-eric.peijian@gmail.com>
-	<20241028203457.19715-2-eric.peijian@gmail.com>
-	<CAP8UFD0Yk1Twv9DMOYwO4R+7P0YHj1CgK8xN=2YdE8sdi4ukow@mail.gmail.com>
-Date: Tue, 05 Nov 2024 17:06:31 -0800
-Message-ID: <xmqqo72tqig8.fsf@gitster.g>
+To: Kousik Sanagavarapu <five231003@gmail.com>
+Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
+In-Reply-To: <20241105190235.13502-1-five231003@gmail.com> (Kousik
+	Sanagavarapu's message of "Wed, 6 Nov 2024 00:11:34 +0530")
+References: <20241105190235.13502-1-five231003@gmail.com>
+Date: Tue, 05 Nov 2024 17:18:10 -0800
+Message-ID: <xmqqikt1qhwt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,10 +86,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Kousik Sanagavarapu <five231003@gmail.com> writes:
 
-> It looks like other patches in the series, like patch 4/6, have
-> similar issues. Otherwise the other patches in the series look good to
-> me.
+> Document that values containing ')' in formats are not parsed correctly
+> in ref-filter.
 
-Thanks for a review.
+The problem is probably lack of a way to quote such a closing
+parenthesis.
+
+> However formats having a '(' instead in "value" will parse correctly
+> because in a general format string we also mark start of the format by
+> making note of '%(' instead of just '('.
+
+So if you wanted to have a two-char sequence '%(' in value, you'd
+see a similar problem?  If so, it is not quite a "bug" or "not
+parsed correctly"---it is "because there is no way to include
+closing ')' in the value (e.g., by quoting), you cannot write such a
+string in the value part".
+
+> This raises the question of what can be done to parse ')' in values of
+> the format correctly.  It seems to me like a clean solution would
+> involve a huge refactoring involving a large portion of ref-filter but I
+> maybe wrong.
+
+Yes, so I wouldn't even call the current behaviour "bug".  The
+language is merely "limited" and the user cannot express certain
+values with it at all.
+
+
+Having said that, I just tried this
+
+    $ git for-each-ref --format='%28%(refname)%29' refs/heads/master
+    (refs/heads/master)
+
+So, if there is anything that needs "fixing", wouldn't it be
+documentation?
+
+If I knew (or easily find out from "git for-each-ref --help") that
+hex escapes %XX can be used, I wouldn't have written any of what I
+said before "Having said that" in this response.
+
