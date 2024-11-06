@@ -1,80 +1,79 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D298420493B
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43D5202F6A
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730905876; cv=none; b=pUe4zFX9yCivtzeu1jViMQwkJpiiO8LU1DunMF9CIdksrXjQxa6VfzWssRmHE9Lg28GqtRhO5+XVqzfevVA7U9hbmGDqrkhzK0sbZR6l68ucr1DGEIr19S9DkTzgpprR/LoplWPHwq0btutd+vqdoo/EbxLev6cYlj+aj6By9JU=
+	t=1730905881; cv=none; b=eosuQRfDCe7jYPswVRQjvKEpntLUZTm/VmW7lUnWlM7HRUQcq5XojazLnXdAFITWHQQukJZm2FbDeXf/sxRA1/x1Ew6Tsy1/DJy8scaUmsIEgDezFDRTMaSt/t87WCl0Ih5Ar49x+8PL3AftAr2VfMYMDZyftS9I4N7YY5iVeeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730905876; c=relaxed/simple;
-	bh=UqIuKkuFrOkcnR/mu3Zh7LP2sgM7ybvf7And3Cf8N9Q=;
+	s=arc-20240116; t=1730905881; c=relaxed/simple;
+	bh=4IRJO0eEdpq1z5NV2a0T8ecAT30GK6n3z4fz/Yhkfbc=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EwCv2dFE2USJegYuwtOCVs78FK1k2BTgYXWnAghFxk0LgT11csVuBWIAKCrx3OsJY7LbzBDpRnZhC/uFtzkaXaoqF5TBVY7CwVY3tyGTX/qb5J2dj56zS8GDgPitDu5P6JExxTLfOfGet3SvZv3pN/TIXLXLio4shRivZfvrSf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jZx9yqjR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qrnxa/W9; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=p4wEi5y/CArcyFwFTdNDUH31WjxRLJPUgsyYlvQlFf0hpnRhVbfV6ssnmzv1fVcf1vG9NSFGpLAu41doqIuboCgaRChI69wd80TnglUgaQeJXP3tv7ovNBN72e5DuRf9n0uJQzSUsMdvav/X0Y0GmpLn8C6qtn3C/5XZbNkHJds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=0c8IU5IB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UauRFhD/; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jZx9yqjR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qrnxa/W9"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0531B1140129
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:11:14 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="0c8IU5IB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UauRFhD/"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id E2B061380687
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:11:16 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 06 Nov 2024 10:11:14 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 06 Nov 2024 10:11:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730905874; x=1730992274; bh=mR1W0rIhWC
-	KWi+sjqRpK8KdRIVoPu84XICp+yZ4KZVg=; b=jZx9yqjRdTZxjBlF0ymOK8yrjK
-	bhBxfGRJD4n6mrkSR6gZMBy3X4eNvhKfi4OHTAxngxZfrA/DLYC8rkjoeVJ1+tBT
-	umL0P12p6IEjCzGZcnk+Wq3YOpsGc2RWEP10QXpedy1arbopn/VyoDnlRMgvaLfI
-	0EJmZ6Opj95Oc9NaEcG5PW4bl1cHpqGVV9aB+FF/6pRZAlJqTSq6dE3bLd7E3zMR
-	beOy+MkcJgLDtrmwPLBPMt+peXCfkbwYQkZapdApUjoqlOAofSYcwreuRKHo8lTG
-	NZt/Z5/zbHgPPJFRp29AITGLUu9KtvpTmcMsvE6WtDd1FR70ngj5AoEezV/w==
+	:subject:to:to; s=fm3; t=1730905876; x=1730992276; bh=AEhmSuPG8W
+	AzNW2+lsz3oeQ+L8gJ56waokRIn2HR0+8=; b=0c8IU5IBTyzBFqJflNJJ/DYaDc
+	N0hiJPrU50KzPvRzhFQ7eRXxFGU7P2+dMDefDkOHw4ZdWUMwM4gfmlbSUyEfiGlS
+	gSXpNzeQSRtKZISXfsaRDRb0/p/eu5JMQdqhX3ZSZOlMrlmeKdb8IBRRVXlagb78
+	Kt082diDcbpE1yN3CrPryxDyBl2DDEDopuAiPIm64skU0DPQ4d56VBAXS4Da05Fj
+	k4mWMvv21KEOyFZDdTShCGigl4zZZpeVBT11TkI268LU3VTgFTmzJGC++XiOOmIF
+	mgZBvDMyL4j2U8LSI+qjWHA08a6iCdkkQuEST0Vbbe7JhfbHxPpgR+CxvRuw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730905874; x=1730992274; bh=mR1W0rIhWCKWi+sjqRpK8KdRIVoPu84XICp
-	+yZ4KZVg=; b=Qrnxa/W9WlLZlzOyDjzv6ndAUBGQ5fbX0JYYfpTexMA2plSAwgD
-	I04cfR0lHcQCI51NgEbn9HfHTHxDJKFaYl8WMzr0Lmt73VpBqQMEVsARToFoMLcF
-	dnanGFHHIAXsUhr+PmxiLr1kGtLmPl3gY4fMMeFKlnedZqelMM+Vil9hm95CFu6G
-	sdfY054qXqHIRk2uAodvsvIhVECMRwUeaoReGAHEPBOcRpXuxOKPS+V7LJhl6NsZ
-	WGMrpuzv2FmbPgT2BCAB3um0v9PAEqcSUy3dIKhDh7NlpSnMsztNHsCyRjU1mx25
-	mdm7n3balGqX7oAoWeBvGntucaXTdX0Pepw==
-X-ME-Sender: <xms:EYcrZ42oo8PdxeaejT7_c0UnKAOOor66DwOCKvAiwMYoqGP0lOQ7sA>
-    <xme:EYcrZzGOD0axzqM4TFpIpHlDO3eRGPCr3aA4MCN2yLePrMK9qHAtks4WVRcQFP5Ig
-    4dEr87-nWcaF-5xGg>
-X-ME-Received: <xmr:EYcrZw7p61jOJZgVL019zpP80nMfBw3joi3ECdHR_9aYSwCDNDsA3jNVjsQoPVAOrxBk3bk5LPW0hEnjVcmwq9muckIsoeJUZFHy5NCpwkLMsA>
+	1730905876; x=1730992276; bh=AEhmSuPG8WAzNW2+lsz3oeQ+L8gJ56waokR
+	In2HR0+8=; b=UauRFhD/MmdJme2PCPpIHH2myDm51wjQXV4YmmuIE2gLvZrrJ/e
+	TUt2dbb6jT24z2GsUX5OeHXLNR7zX8ZKDvs9T5yY8dfszDjsE+EsKzkfS3DnyCng
+	QfAzhXCDnz8++dkvBKS3G+5d+PhEZRtcfOSXZTk5D7NS/R7aqLmfBKNw4Nfb9LDS
+	m5fOn8eMRyI3aGxFVgIX5q6bGFNSyez3W8779VxE+2NzJVxBRIoKc7qIH0kZDAIE
+	pWTARVFATfpcU/opTvX07dJDGF/nFpXnhTMl13HPbj1pEWyophATmAj6cIwyWyYt
+	tOq7kjIAT2rC4AurJXl1bJKymVQBqUrLKVg==
+X-ME-Sender: <xms:FIcrZ_OZohTp34krqy9bG_VHmtcmAeY8PbIRB9j23QWeadFnDTN1yA>
+    <xme:FIcrZ5_6hc0UqLVuG1b03MeczQwrIUREJ3gEkdEl7EtlMN6YcUi0n2OV7K1vZG1Le
+    4AyTTPPfRQt7OnQpA>
+X-ME-Received: <xmr:FIcrZ-TnKsXHY1-lqPnQ9xWSV_U7f-jJCbk1x00I7sALvF6RiVWoQqhh1u33RLFz_2QbNNRevnchFlo9As-zkkwhqgJBVHSHiPdGzWl0TyNhgA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukf
     hfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
     rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeehkeeffeeggedvge
     dvfeefheettddtffejuefflefggfehfeelffeljedvfeehieenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    iigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
     gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
     rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:EYcrZx07oBF0Y9zB6PxUs7c2HPeY9lWvKpV3WHfQEA9VEkyoYQweqQ>
-    <xmx:EYcrZ7H9VFfliA-EFzQmcJ-RGNejFcC_mop98gCOCihf6QzLaPfNkg>
-    <xmx:EYcrZ6-mL2mjOJfZJ8BgbBOKRaW-m-KiFB4L3__x1-LX15yQPGYpAA>
-    <xmx:EYcrZwnE_HaM3IS00Y0_sV0v8NBY6-O7nU4mEp5Z23zQakcSN3PKwA>
-    <xmx:EYcrZxOt5nNbs_nGXhOj_ihpPU9jl-zTb3oeMWCLcuVx_Ze5EWoylH6U>
+X-ME-Proxy: <xmx:FIcrZzsAr0IttJ4cEERd1wHlvpefeskPCGGDUu2UgZ0CXLqcfXNF7w>
+    <xmx:FIcrZ3ffXzuroZq4TNcuPMNwghWjMYvOhOUS4UjQ8-iqDiHfIU32Ww>
+    <xmx:FIcrZ_2rMR86e41uPQCcmiBxA8qzDO14vhU65yrMtRyozN05xHJP_Q>
+    <xmx:FIcrZz8ahU74ibFbK76RNKvrwK3pqTVFyn-J_XsQUsmqJXzpcPmVxg>
+    <xmx:FIcrZ_G3kRJpcSdb7_LMD-W4fNlbGpfseIJWXAi0sZVKSSrfEftCnglp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 6 Nov 2024 10:11:13 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 6 Nov 2024 10:11:16 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 58682150 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 683fa0eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 6 Nov 2024 15:10:49 +0000 (UTC)
-Date: Wed, 6 Nov 2024 16:11:06 +0100
+	Wed, 6 Nov 2024 15:10:52 +0000 (UTC)
+Date: Wed, 6 Nov 2024 16:11:08 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 16/26] help: fix leaking return value from
- `help_unknown_cmd()`
-Message-ID: <ea8677ff965711ebca140f130c62c704e0ab0753.1730901926.git.ps@pks.im>
+Subject: [PATCH 17/26] builtin/help: fix leaks in `check_git_cmd()`
+Message-ID: <b1a7761d9b00545560c03c7aafe6d4db64c7ef60.1730901926.git.ps@pks.im>
 References: <cover.1730901926.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,97 +85,87 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730901926.git.ps@pks.im>
 
-While `help_unknown_cmd()` would usually die on an unknown command, it
-instead returns an autocorrected command when "help.autocorrect" is set.
-But while the function is declared to return a string constant, it
-actually returns an allocated string in that case. Callers thus aren't
-aware that they have to free the string, leading to a memory leak.
+The `check_git_cmd()` function is declared to return a string constant.
+And while it sometimes does return a constant, it may also return an
+allocated string in two cases:
 
-Fix the function return type to be non-constant and free the returned
-value at its only callsite.
+  - When handling aliases. This case is already marked with `UNLEAK()`
+    to work around the leak.
 
-Note that we cannot simply take ownership of `main_cmds.names[0]->name`
-and then eventually free it. This is because the `struct cmdname` is
-using a flex array to allocate the name, so the name pointer points into
-the middle of the structure and thus cannot be freed.
+  - When handling unknown commands in case "help.autocorrect" is
+    enabled. This one is not marked with `UNLEAK()`.
+
+The function only has a single caller, so let's fix its return type to
+be non-constant, consistently return an allocated string and free it at
+its callsite to plug the leak.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- git.c  |  4 +++-
- help.c | 11 +++++------
- help.h |  2 +-
- 3 files changed, 9 insertions(+), 8 deletions(-)
+ builtin/help.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/git.c b/git.c
-index 159dd45b082..46b3c740c5d 100644
---- a/git.c
-+++ b/git.c
-@@ -961,7 +961,9 @@ int cmd_main(int argc, const char **argv)
- 			exit(1);
- 		}
- 		if (!done_help) {
--			strvec_replace(&args, 0, help_unknown_cmd(cmd));
-+			char *assumed = help_unknown_cmd(cmd);
-+			strvec_replace(&args, 0, assumed);
-+			free(assumed);
- 			cmd = args.v[0];
- 			done_help = 1;
- 		} else {
-diff --git a/help.c b/help.c
-index 51adc530d7a..0290aba9f38 100644
---- a/help.c
-+++ b/help.c
-@@ -612,14 +612,14 @@ static const char bad_interpreter_advice[] =
- 	N_("'%s' appears to be a git command, but we were not\n"
- 	"able to execute it. Maybe git-%s is broken?");
+diff --git a/builtin/help.c b/builtin/help.c
+index 4a5a0790704..6a72d991a84 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -551,12 +551,12 @@ static void show_html_page(const char *page)
+ 	open_html(page_path.buf);
+ }
  
--const char *help_unknown_cmd(const char *cmd)
-+char *help_unknown_cmd(const char *cmd)
+-static const char *check_git_cmd(const char* cmd)
++static char *check_git_cmd(const char *cmd)
  {
- 	struct help_unknown_cmd_config cfg = { 0 };
- 	int i, n, best_similarity = 0;
- 	struct cmdnames main_cmds = { 0 };
- 	struct cmdnames other_cmds = { 0 };
- 	struct cmdname_help *common_cmds;
--	const char *assumed = NULL;
-+	char *assumed = NULL;
+ 	char *alias;
  
- 	read_early_config(the_repository, git_unknown_cmd_config, &cfg);
+ 	if (is_git_command(cmd))
+-		return cmd;
++		return xstrdup(cmd);
  
-@@ -696,9 +696,8 @@ const char *help_unknown_cmd(const char *cmd)
- 			; /* still counting */
+ 	alias = alias_lookup(cmd);
+ 	if (alias) {
+@@ -589,14 +589,13 @@ static const char *check_git_cmd(const char* cmd)
+ 			die(_("bad alias.%s string: %s"), cmd,
+ 			    split_cmdline_strerror(count));
+ 		free(argv);
+-		UNLEAK(alias);
+ 		return alias;
  	}
- 	if (cfg.autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
--		assumed = main_cmds.names[0]->name;
--		main_cmds.names[0] = NULL;
--		cmdnames_release(&main_cmds);
-+		assumed = xstrdup(main_cmds.names[0]->name);
-+
- 		fprintf_ln(stderr,
- 			   _("WARNING: You called a Git command named '%s', "
- 			     "which does not exist."),
-@@ -716,7 +715,7 @@ const char *help_unknown_cmd(const char *cmd)
- 			strbuf_release(&msg);
- 			if (!(starts_with(answer, "y") ||
- 			      starts_with(answer, "Y"))) {
--				assumed = NULL;
-+				FREE_AND_NULL(assumed);
- 				goto out;
- 			}
- 		} else {
-diff --git a/help.h b/help.h
-index e716ee27ea1..67207b3073c 100644
---- a/help.h
-+++ b/help.h
-@@ -32,7 +32,7 @@ void list_all_other_cmds(struct string_list *list);
- void list_cmds_by_category(struct string_list *list,
- 			   const char *category);
- void list_cmds_by_config(struct string_list *list);
--const char *help_unknown_cmd(const char *cmd);
-+char *help_unknown_cmd(const char *cmd);
- void load_command_list(const char *prefix,
- 		       struct cmdnames *main_cmds,
- 		       struct cmdnames *other_cmds);
+ 
+ 	if (exclude_guides)
+ 		return help_unknown_cmd(cmd);
+ 
+-	return cmd;
++	return xstrdup(cmd);
+ }
+ 
+ static void no_help_format(const char *opt_mode, enum help_format fmt)
+@@ -642,6 +641,7 @@ int cmd_help(int argc,
+ {
+ 	int nongit;
+ 	enum help_format parsed_help_format;
++	char *command = NULL;
+ 	const char *page;
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_help_options,
+@@ -713,9 +713,9 @@ int cmd_help(int argc,
+ 	if (help_format == HELP_FORMAT_NONE)
+ 		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
+ 
+-	argv[0] = check_git_cmd(argv[0]);
++	command = check_git_cmd(argv[0]);
+ 
+-	page = cmd_to_page(argv[0]);
++	page = cmd_to_page(command);
+ 	switch (help_format) {
+ 	case HELP_FORMAT_NONE:
+ 	case HELP_FORMAT_MAN:
+@@ -729,5 +729,6 @@ int cmd_help(int argc,
+ 		break;
+ 	}
+ 
++	free(command);
+ 	return 0;
+ }
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
