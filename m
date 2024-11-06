@@ -1,206 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C87D1DE2A3;
-	Wed,  6 Nov 2024 11:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24CEF1DE3B3
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 11:04:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730890809; cv=none; b=CpBjhq9mGpgSK1/JyP1/GsAz2xgFnycQlw+6a8psk2kORAgAVyN7FeXIvxFgEkl9se/vu7YoJ7o4Rh032Bq6N5wogvc8jU/iBli3dhtR47TCxGblMsMq/HqfBnebSoFQ/IbmZ/+8TQ81KkkEyHd8nE+Rk++324wVDc3w2evqOLg=
+	t=1730891093; cv=none; b=HwiOyiFmRvPdDPrlSO4D6+ghRsTqqiO3ETSeGktURZJTiQrkp+O1Yj+ouYJYO0Yf2owOHLiUw/Tmdo4WdMYJWs6swzAQZ08bfMsLABZDB3qWtBLMfdL0MjEkItkWh6sp+gC5ey9tQsuqv1lWCBf5aliRlDoMdNGX/nKPmk03Lf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730890809; c=relaxed/simple;
-	bh=1Q0/6L+orPd3CIKPBSbg7iBE2QDqKCO3jFRd8P7qQtg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UWKdzijZM7IO+sCiXYntbxAbXTunP9aTP1XUxOyjgt8/2Oj9jnKEThQlyPSYI49yqyy8/X8ITGC9yh9/ZwkY24PGxz11dBfngQfbmwytvCz4ZDXTRrkEzrRoSq3QzXvDRRiiAbuEk6jbGIQWMBlUud92RXfCsQ64M7Zv+7O4vj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DAHtn0U5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1730891093; c=relaxed/simple;
+	bh=FNdKtjS9d6w9bnBYkX6xq/0zdT3nn4yCGT2P9CRfUgY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IqZMuqteDIzzG29ReTPmixq7rLekRS7dnI0ldOcrZRtRt2FWwr+MgWG7Qp7p6H8Al2ad/7R5wxfXQ54NSTbiBCjqmtIRJYy/BGcXw8fgZIDxTwZDXVbzUYHa18ejllhId+6jAAmykz63teAmMfmGTI0JgejFNb/6p4avZesqP1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cyego6x5; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DAHtn0U5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C80C4CECD;
-	Wed,  6 Nov 2024 11:00:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1730890808;
-	bh=1Q0/6L+orPd3CIKPBSbg7iBE2QDqKCO3jFRd8P7qQtg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DAHtn0U5z1IGh7huksg3s96zpfMOA1fE6ACMxenKhBWJ9KPzvAQCCJwU+MAl/Cu09
-	 bluNfckBufg8cQ5KukSY4sanDnMgER0LVydFJm/GjRcNs9MAsyUQmbPo9LOLWKXmDS
-	 Vw5cIJN+z6B5QyEgi9/ygOBoZngy4RMI9ErlVWcaGd3rwxJ0g3mA6D8dcJFO6Wc+TK
-	 Ql7lFBuqBXaT6eY71Usume0hAFj7vfJKfs3euZ6swYUB+acZ41Pf1ou7b/IndFnDuF
-	 wlVtd9VaBApxA2FNfsdnN53k+4us/cS4YW7z6ChrtZ9dBQi55K6op2F+vOsguf3tCL
-	 eJS16yC4r7iYg==
-Date: Wed, 6 Nov 2024 12:00:05 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: Philipp Takacs <philipp@bureaucracy.de>, git@vger.kernel.org
-Cc: linux-man@vger.kernel.org
-Subject: diff-algorithm to work better with color-moved, and issue with
- am.messageid (was: [PATCH] bind.2: move EADDRNOTAVAIL to general errors)
-Message-ID: <imng4gsmiins23rrpb7zppeambm4wdwfvyhgp4rbzqkc5dyjah@3bckcsvdg42r>
-References: <eee2fe5c6c3d6203e1e528a998b0de2c.philipp@bureaucracy.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cyego6x5"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-431695fa98bso51361475e9.3
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 03:04:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730891090; x=1731495890; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aVfnJwL7xKDjp7r3r056t3q2KUq3GrAftpPTKesR9rE=;
+        b=Cyego6x5GfapXQAEVDAj005lmwWJvMI3iGqMf7InmD0DQerJsD0j6V/TPUIfhier8R
+         Kn+x84KEtrZM6rakqBCqA/cMn4+TWcYhlQRhxpq6gUGdt8E2lsCiDN0QESjXUm00PkM+
+         TpHU9GGXbdNFmPxYeYGxI/Ipm06Ixufre4dJywhlqtvIUtW74W6JWWYSksibyo68K7Df
+         42oErk9xoLBJgJiom8ocGGdeYhpMVDqU1Vs7YELNPqb2uPEVKX06IDC64hfUMnOqiBWv
+         I45lRO95h1JUdo22n5/fZvGwwWcNegnM8gomFVCAXLzogj/dL9U/4TcC9XloO6c+5l9C
+         X5OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730891090; x=1731495890;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aVfnJwL7xKDjp7r3r056t3q2KUq3GrAftpPTKesR9rE=;
+        b=NiYru9aa1At2Cd4MJEZAQOzzoIf/qgs8IsejTYzcGnl47YZPdxAl9sERSaxs4BlPq5
+         6Uept4kpdSQUiL8I1sQGkWHGWzob0kUhpnLCF/mKLh0HZ73LDv4MEW4bDM/WUMob+KeD
+         AXesXHdemVnPZFrzl7Uz5rd6wHquJrTOq+rky8RN4uv7GWVnDMiOkPcXPD3o+7sGfoMn
+         2H/SNuevkrmLgfq4K7lWmud6xoXopxKGtkh6AZzcqeDRued6yyvXzboJvJO7jMeR0n3d
+         EjeQJ9o9f3yNdebGehDgof5pXg4vsgULJScf4dlq+AsAIK0AsFd18Vp5jlrwFASzcxWx
+         uGQw==
+X-Forwarded-Encrypted: i=1; AJvYcCVhH3BcdMktOSiQuGPxMvPRbSjWOiyADYTU76lOIV44RoOwwDCDCigKTgxvrcME1vuCYvI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPS+t2eAAnHYMjqb4RHOE8FcMw/fMerlDlZSw6yp3am2Wzh08m
+	//MFPZzqpFMhNB+YSoLSOwQ22BNcMssD6E7mm0B7/9TI/z/IGbte
+X-Google-Smtp-Source: AGHT+IFvP22gijk1tQWQMF7U4h4bo/aXsN85Okbh9EaQiIUAfV8ANikR19t8xcDFVGr5mQ9A9/bUPA==
+X-Received: by 2002:a05:600c:3b1f:b0:42f:310f:de9 with SMTP id 5b1f17b1804b1-4319acac7fdmr318113095e9.15.1730891090236;
+        Wed, 06 Nov 2024 03:04:50 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381c10d4392sm18793726f8f.36.2024.11.06.03.04.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Nov 2024 03:04:49 -0800 (PST)
+Message-ID: <43dd8960-4438-402e-ad45-973565a6860e@gmail.com>
+Date: Wed, 6 Nov 2024 11:04:48 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xwp7c4fc74ox7cxx"
-Content-Disposition: inline
-In-Reply-To: <eee2fe5c6c3d6203e1e528a998b0de2c.philipp@bureaucracy.de>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4] remote: allow specifying refs to prefetch
+To: Patrick Steinhardt <ps@pks.im>,
+ Shubham Kanodia <shubham.kanodia10@gmail.com>
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee <stolee@gmail.com>
+References: <pull.1782.v3.git.1726741439445.gitgitgadget@gmail.com>
+ <pull.1782.v4.git.1728073292874.gitgitgadget@gmail.com>
+ <Zym--GVNJt_lsQEz@pks.im> <b548c532-e54a-4edc-94aa-f3c2925602e6@gmail.com>
+ <CAG=Um+3D3iGPRv4t4DcCP=Bh7gbAQ6cSJ79jmg2h-qbSiQRkUA@mail.gmail.com>
+ <ZysQvUyxgdRqjvj2@pks.im>
+Content-Language: en-US
+In-Reply-To: <ZysQvUyxgdRqjvj2@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+On 06/11/2024 06:46, Patrick Steinhardt wrote:
+> On Tue, Nov 05, 2024 at 09:56:52PM +0530, Shubham Kanodia wrote:
+>>
+>> Let me add context here based on a few things that have already been discussed
+>> as a part of this thread or an earlier discussion on
+>> https://lore.kernel.org/git/CAG=Um+1wTbXn_RN+LOCrpZpSNR_QF582PszxNyhz5anVHtBp+w@mail.gmail.com/
+>>
+>>> I'm coming rather late to the party and simply want to review this so
+>>> that the thread gets revived. So my context may be lacking, please
+>>> forgive me if I am reopening things that were already discussed.
+>>
+>> I don't have a particular preference here, and this was discussed in
+>> an earlier thread
+>> where Junio opined (https://lore.kernel.org/git/xmqq5xrcn2k1.fsf@gitster.g/—
+> 
+> Fair enough, thanks for the pointer! The reason stated by Junio is that
+> having a space-separated list of refspecs makes it easier to reset the
+> refspec again, as we can simply use a "last-one-wins" pattern. And while
+> I understand that, I would claim that we already have a properly
+> established way to reset multi-valued lists by first assigning an empty
+> value:
+> 
+>      [remote "origin"]
+>          prefetchref = refs/heads/*
+>          prefetchref = refs/tags/*
+>          prefetchref =
+>          prefetchref = refs/heads/*
+> 
+> The final value would be only "refs/heads/*" due to the reset.
+> 
+> So overall I'm still leaning into the direction of making this a
+> multi-valued list for the sake of consistency with other refspec
+> configs. @Junio Let me know in case you disagree though.
 
---xwp7c4fc74ox7cxx
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: Philipp Takacs <philipp@bureaucracy.de>, git@vger.kernel.org
-Cc: linux-man@vger.kernel.org
-Subject: diff-algorithm to work better with color-moved, and issue with
- am.messageid (was: [PATCH] bind.2: move EADDRNOTAVAIL to general errors)
-References: <eee2fe5c6c3d6203e1e528a998b0de2c.philipp@bureaucracy.de>
-MIME-Version: 1.0
-In-Reply-To: <eee2fe5c6c3d6203e1e528a998b0de2c.philipp@bureaucracy.de>
+It is also easier to manipulate the list with "git config" when it is 
+multivalued as one can add values and "git config --add" and remove 
+specific entries with "git config --unset <key> <pattern>". With a 
+single entry to append a new value one has to resort to something like
 
-[To +=3D git@, to report some issue with git(1)]
+	git config <key> "$(echo $(git config <key>) <new-value>)"
 
-Hi Philipp, git people,
+which is not very user friendly. Deleting a value is even less friendly.
 
-On Wed, Nov 06, 2024 at 10:53:47AM GMT, Philipp Takacs wrote:
-> EADDRNOTAVAIL is not a socket specific error
+Best Wishes
 
-Thanks!  I've applied the patch.
+Phillip
 
-> ---
->  man/man2/bind.2 | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->=20
-> diff --git a/man/man2/bind.2 b/man/man2/bind.2
-> index a59ac16f9..330a808b7 100644
-> --- a/man/man2/bind.2
-> +++ b/man/man2/bind.2
-> @@ -147,6 +147,10 @@ .SH ERRORS
-
-Wow, thanks for configuring git(1) for that!  :)
-
->  The file descriptor
->  .I sockfd
->  does not refer to a socket.
-> +.TP
-> +.B EADDRNOTAVAIL
-> +A nonexistent interface was requested or the requested
-> +address was not local.
->  .P
->  The following errors are specific to UNIX domain
->  .RB ( AF_UNIX )
-> @@ -157,10 +161,6 @@ .SH ERRORS
->  (See also
->  .BR path_resolution (7).)
->  .TP
-> -.B EADDRNOTAVAIL
-> -A nonexistent interface was requested or the requested
-> -address was not local.
-> -.TP
-
-And here goes some question to git@ people.  Here, either the .TP from
-below or above the rest of the removed text is correct for a diff.
-However, when you ask git to --color-moved, it will think the .TP was
-not moved, as it's in a different position.   Maybe some diffing
-algorithm could have this in mind and favor when in doubt a line that
-makes the removed part consistent with the added part, so that more text
-is considered to have been moved.  What do you think?  Would that be
-doable, or is it easier said than done?  :)
-
-
-Below is a reproducer.
-
-BTW, now I've noticed that the Message-ID line was written in the wrong
-position, next to the commit message body, and not in the trailer
-signature fields.  That's the first time I see that happening.  It might
-be interesting to check that.  I can consistently reproduce it when
-applying this patch.  It might be interesting to investigate why it
-happens.
-
-
-Have a lovely day!
-Alex
-
-alx@debian:~$ cd /tmp/
-alx@debian:/tmp$ git clone https://git.kernel.org/pub/scm/docs/man-pages/ma=
-n-pages.git
-Cloning into 'man-pages'...
-remote: Enumerating objects: 172347, done.
-remote: Counting objects: 100% (358/358), done.
-remote: Compressing objects: 100% (332/332), done.
-remote: Total 172347 (delta 180), reused 0 (delta 0), pack-reused 171989
-Receiving objects: 100% (172347/172347), 33.72 MiB | 17.49 MiB/s, done.
-Resolving deltas: 100% (141272/141272), done.
-alx@debian:/tmp$ cd man-pages/
-alx@debian:/tmp/man-pages$ git show --color-moved 577251dfb1d2
-commit 577251dfb1d2c63d8022944d12ed567d8409c17a (HEAD -> master, origin/mas=
-ter, origin/HEAD)
-Author: Philipp Takacs <philipp@bureaucracy.de>
-Date:   Wed Nov 6 10:53:47 2024 +0100
-
-    bind.2: move EADDRNOTAVAIL to general errors
-   =20
-    EADDRNOTAVAIL is not a socket specific error
-    Message-ID: <eee2fe5c6c3d6203e1e528a998b0de2c.philipp@bureaucracy.de>
-   =20
-    Signed-off-by: Alejandro Colomar <alx@kernel.org>
-
-diff --git a/man/man2/bind.2 b/man/man2/bind.2
-index a59ac16f9..330a808b7 100644
---- a/man/man2/bind.2
-+++ b/man/man2/bind.2
-@@ -147,6 +147,10 @@ .SH ERRORS
- The file descriptor
- .I sockfd
- does not refer to a socket.
-+.TP
-+.B EADDRNOTAVAIL
-+A nonexistent interface was requested or the requested
-+address was not local.
- .P
- The following errors are specific to UNIX domain
- .RB ( AF_UNIX )
-@@ -157,10 +161,6 @@ .SH ERRORS
- (See also
- .BR path_resolution (7).)
- .TP
--.B EADDRNOTAVAIL
--A nonexistent interface was requested or the requested
--address was not local.
--.TP
- .B EFAULT
- .I addr
- points outside the user's accessible address space.
-
->  .B EFAULT
->  .I addr
->  points outside the user's accessible address space.
-> --=20
-> 2.39.5
->=20
-
---=20
-<https://www.alejandro-colomar.es/>
-
---xwp7c4fc74ox7cxx
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmcrTDUACgkQnowa+77/
-2zKNNQ//dG45vs1IluQZkQGDaIdh2qAXh8o/hwWEZ1cOOfT6gyYl0eaOUJc7mvCT
-uG1Z9tEryRC/vm7gSPDG0NP4rHboN1tMu/k+eP3cHf1f4yiwy77eiYw98iifhb8b
-Qkyx8W1j5kMvkdJaYGB+MIH7mZe9Ev9WVL8NXW3eDdYMgWAKWjzZe2asQcH0S32I
-wPSQAoP+0+oK0y6clcP56mDFpZiOaO8rg8gGIolW6b6cviDUFZjIf4gHH3qa1Sxw
-uT8ywKOvIeKCwxThucj3I0JPP3IFK8nKuhD2nHlGCjC9k6K8I5fnQbDwsiYF4WXS
-ZSPA8fEZusRDe5ZAcguSV+aWBewNI5dYYZOqJZlh5vieFrro8eq6sXR4VNwm2t5b
-ZKZMObSWSlRwUP0GEpRErO2BWlKL+HXRqgigaW/5JY01jhnG1q0rsXAiLK6FYrs/
-gaU2bYSiivTK983rybb+rZbCK6mdp72F2WlIwwCn9YGWjYI/u+RaoN9bafGF3G1H
-9zMdngztoOUOz1ztSqQY1JHKNz0rRLTy4h+YUZ17R0sTekN8XxUIzmtFBKl/UlHm
-mDV+upYS5XXFfLovrHIea0X357Z7LprHluLVUTPBAApjm+Pe6X5HVjUyoN6SxnfU
-EgHjxrCJrP8sPBaIywN6L7HEo0Mhc7JmG+hZf/OB5XkwrszVaXw=
-=64GG
------END PGP SIGNATURE-----
-
---xwp7c4fc74ox7cxx--
