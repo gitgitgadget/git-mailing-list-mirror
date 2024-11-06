@@ -1,128 +1,196 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B27D1DE2BB
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:43:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197821DE3C2
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:59:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730889820; cv=none; b=HyTTobqX3WNPUhLjjKI+cJh9EpfNT9q6r/hFuPWpxLdv+DXEcI7X3U5kKzPc8iEOC2dDdaCMxDsQHk17XeuVdnMGOwfKEMY51UdsGE5DtYSoq1hhweW00n+XUrZJPA4j4oo5NyY/Wsc2aY6SeW7X/OZAayyfZZRHrR72KkH/XCA=
+	t=1730890752; cv=none; b=DSPItH7ODIDtWtaBObJf8H1oEjwGawfImk7ztlWFCHMa0cWim+6iN2Kr9j91UyOHARTHb8uVdLUGfmOq8rcqyu2vshcw1E2fvXRAiljbkA//sdHcnK/V9n+lGC3H4GWeDCkWmEDBEEMKbtIAo5ZMzSGCFrLCYZE2oWE9wzeE0To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730889820; c=relaxed/simple;
-	bh=BVFZdyYwd0bFxB4Dla/WZ5+ji11pA8cjPpMv9EktJiQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mrs5l7IRM5xTtg0XVMWyRgsStrIrT0n6PKgcQxNj/pfy6ZJWoH97FRR6M4cScEHjo9Bk78h39X3oswE0tRRNgLJveFAnOJ3Uta156WjTLeLLKfpPbY4fRvJwiAu4bjQ4jafdXPWPP1AJ7OOp4/wg8Jv7iZRI383fwo7T/cDZJrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y+jTYthX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kZ/h6NkU; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1730890752; c=relaxed/simple;
+	bh=aT+e3uZajVIB49B48+2lPFjjI2jWEM0bCMdF8V95oyc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZbDW41rgfIScsQe/hVdBK3oWlQAYtEZSau0CmoM8td7ds5QiACK5bqyaAQuwkLCA2+8hxkR8yZhOxFepRTvmN4OAXTyOll2Zatf8nukzzfHjdjmF4gmOmaTnjnDF4ewwMyjgiSiZwIdHGIBuJkK36TTsYUTpmrTOUxSmIitTf94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FUmubLHs; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y+jTYthX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kZ/h6NkU"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1B9EF1380444;
-	Wed,  6 Nov 2024 05:43:37 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 06 Nov 2024 05:43:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730889817; x=1730976217; bh=ZiykG1j0Sz
-	GWoR0dLpMHtB2T7YonD7qpxxVl4xw0UDA=; b=y+jTYthXyq9ZeX7DQ1foXmPqw5
-	k0vNnxGPhQIo9CVozkYLlKVRPHhp0o70k96Ld3RlgYRkyJwxzZ6SBnJkcXkB5ZAx
-	imrqc89ro3C3WyKNrRCOxMbhIIYmr9yhaC3cUBs5rs1ECpSnINGq9fkcH6xCqpOh
-	RLEpEoTv202Ju3PMZKe6WzGteEp6HKNmmbLQDbWwm/jaFevW+FCV0mLpAZUogq9X
-	Jmqi//GGnexSF0qzbdMBffUo3/nSyyCBnL1ffxaH/vKmtpaBZN+3vQ74dcygC0UO
-	M+nriNgarFbdo1XP9050TMhaaQBmF36EFnMFLTQrHtB/2pZ+fS5WByRGZPfg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730889817; x=1730976217; bh=ZiykG1j0SzGWoR0dLpMHtB2T7YonD7qpxxV
-	l4xw0UDA=; b=kZ/h6NkUV5L56G+0kCq4gArAcDohWsNsmQHi8yMgpJeCTxK8RSs
-	ZIVwtJtCkxQhF43LcO8sg8Rn0ubItTVdY2xjnsHdT4Ljti/x5zIWp18XI1oV8xqN
-	X0pPF1fz509eMGePTywhqUflXxoCNHCbH/uwD3nr8kVfayv6lm4HzSEFTgaLrKGt
-	8e4f0D14rBEdrAvy7k75MZ2hbYq5mmIYdKXPMgsEjVolkc/xyqWLi6RWjsQ5N0UT
-	B0sX40Qf4rcw7rUOMaYMoJgnhr5Y6VsESTWwpdb8e+RlawExmwXq0Rz+MSUGvUdu
-	aHJtizprN4lkAmcBPqIdf9tqTLAP5O6W0uw==
-X-ME-Sender: <xms:WEgrZ6Ho5547X4vobk50uz0DvvbQjYG9BLxOv9i6y2EiFxshkK3MlQ>
-    <xme:WEgrZ7XOIF4-XLo69x9Q2a6wTQa0OGO2QP2lrychikFW_JGKep_BQRHktY5rnRa8C
-    pUVWorin1CrWKwx1A>
-X-ME-Received: <xmr:WEgrZ0L56gmxzThhXjzejwGWh4cU3f-8U9Fp9E70T10G-ZlwzFuyzHzv_RJ9gig-huVQ668hnxXYmqhWsvbMggLbYp0PIWAUfLy7O73bPD4U-Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgddujecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:WEgrZ0HZuJ5rMi8hl0Qej6rdOrTMwK4hnHY6oD0JwYa9B4X9NjIJxQ>
-    <xmx:WEgrZwWrFIrixzlTHhj7IhvlZzkBZbzPahkpjr3yT0bSpm6CGIyT8Q>
-    <xmx:WEgrZ3Pr9duX9utu3at6CDW4yptDsNtpIXzlpSUIu_X5BfDiinupzQ>
-    <xmx:WEgrZ30j4NMDmSzPUo_LK_xXNCc9xi8WC5tehTDMzsR27iebZt1vYA>
-    <xmx:WUgrZ9gzZjJWP10NKF_PtVapaWHY35x1pq9mOBsf4qCDaeHMoZeAmw0j>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Nov 2024 05:43:36 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1094bf1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 6 Nov 2024 10:43:09 +0000 (UTC)
-Date: Wed, 6 Nov 2024 11:43:24 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/8] refs/reftable: handle reloading stacks in the
- reftable backend
-Message-ID: <ZytISDjXYp41caZW@pks.im>
-References: <cover.1730732881.git.ps@pks.im>
- <b81ce63589e0380baf2b977a6abd706a66b08bee.1730732881.git.ps@pks.im>
- <CAOLa=ZQwUGzjmvCv8TKuwbeePTG6+HNjU3ngO6hD8=xSOQ5kaQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FUmubLHs"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43169902057so51038805e9.0
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 02:59:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730890749; x=1731495549; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PmBxG+8WWPETbUqbAKuRVzrTvrkM3fiWkK3M927vygo=;
+        b=FUmubLHsjJkmfnDpyoREeWqBjR197bp3wquJBNCvNLKD8pA4fEYVf0fmhM25fqAR0W
+         j1pneaD2ECUS7MAYhpUJ5Q9R0GvTaChkFp/M7ixh7Za9Ou2vZgUiwxo6vc5awQY2+lbk
+         +GNPpqm+klM4IoEb7JDiDMC3Tj2FYK+7/LobP+6WVnJz8lE74mDHBrcKmlhmhPRnmDZ+
+         4PMkbsYwKTt/VkVFlcEAuYIBcUOcuTdexmN9kVZfZU5FNLfOlwTe6ipEJVi1XOhc+Hvv
+         E5RBPVqDRlcF5xbC7etnJXwTB4Q3LGm6Gbo8iX+9lDkX4b5v9i7NDBNkpnHkYLCMinWo
+         67VQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730890749; x=1731495549;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PmBxG+8WWPETbUqbAKuRVzrTvrkM3fiWkK3M927vygo=;
+        b=cQ9sijVxz9qNRJ7dEdzX6uDQmptWaSfPPkNFpnIFuRNUCuem3t8dIr4aaWZZditF4F
+         AqIvqTg8Y8WtkhKDbIiI1iotUBP9m1GL/0KYVHT/Ui0etbDFZnceL4jQAuWP4mbr4zbw
+         +ODjaOl5jbg91ahtF/wmLUFhbqJ9ethupjBcZ9iBObQ46fY6bjSio7Oes/9F+U3mnZuR
+         G0+Zr/Xq4bbDRWp6rooIA4D8XjNKIL/Vz1arGM4vzdJ4NtZfE9RPQv3AWDCZVMYEY98n
+         /9ehEIF9A6hZsES8wHZn14m9ZYWzNy3elTc1Wcx0J+LvlPs82pg+BMTFcI8McKRQQkhV
+         +vrg==
+X-Gm-Message-State: AOJu0YxGC8xgVf9q59NKzSlRSmq1au3BTVJwkLDNhdhxj4zPjcjS9NOU
+	jsUipN2EmhJPGvNRYbD+M8eTmF071JWnG+ObSZmZbCLdXWhQF2MdRY5vuA==
+X-Google-Smtp-Source: AGHT+IGmnn4y/g29KupRz58HaBqqGJgHOG3PcLJhbZPso1QNmuwKD53XtLLjMT2xFMHLh2L325P6Yw==
+X-Received: by 2002:a05:600c:4691:b0:431:2460:5574 with SMTP id 5b1f17b1804b1-431bb9d1425mr232990965e9.27.1730890749145;
+        Wed, 06 Nov 2024 02:59:09 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa6bf546sm18316885e9.21.2024.11.06.02.59.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 06 Nov 2024 02:59:08 -0800 (PST)
+Message-ID: <829fe630-e46a-4a3a-82dd-4e5feedd190c@gmail.com>
+Date: Wed, 6 Nov 2024 10:59:08 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQwUGzjmvCv8TKuwbeePTG6+HNjU3ngO6hD8=xSOQ5kaQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 5/5] cmake: set up proper dependencies for generated
+ clar headers
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Alejandro_R=2E_Sede=C3=B1o?=
+ <asedeno@mit.edu>, Toon Claes <toon@iotcl.com>, Taylor Blau
+ <me@ttaylorr.com>, Ed Reel <edreel@gmail.com>,
+ Bagas Sanjaya <bagasdotme@gmail.com>, Edgar Bonet <bonet@grenoble.cnrs.fr>,
+ Jeff King <peff@peff.net>, "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
+ <cover.1729506329.git.ps@pks.im>
+ <bb005979e7eb335b0178094251b5c37682d7d47b.1729506329.git.ps@pks.im>
+ <3b2cb360-297a-915c-ae27-c45f38fa49b9@gmx.de>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <3b2cb360-297a-915c-ae27-c45f38fa49b9@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 05, 2024 at 05:14:15AM -0600, karthik nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+Hi Johannes
+
+On 05/11/2024 19:55, Johannes Schindelin wrote:
+> Hi Patrick,
 > 
-> [snip]
+> On Mon, 21 Oct 2024, Patrick Steinhardt wrote:
 > 
-> > @@ -898,27 +915,31 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
-> >  				      struct ref_update *update,
-> >  				      struct strbuf *err)
-> >  {
-> > -	struct reftable_stack *stack = backend_for(refs, update->refname, NULL)->stack;
-> >  	struct write_transaction_table_arg *arg = NULL;
-> > +	struct reftable_backend *be;
-> >  	size_t i;
-> >  	int ret;
-> >
-> > +	ret = backend_for(&be, refs, update->refname, NULL, 0);
+>> The auto-generated headers used by clar are written at configure time
+>> and thus do not get regenerated automatically. Refactor the build
+>> recipes such that we use custom commands instead, which also has the
+>> benefit that we can reuse the same infrastructure as our Makefile.
 > 
-> So here, we don't reload the stack, it would be nice to add a comment
-> why, in the places we don't. Here, it seems to be because we possibly
-> already have an update which would have pushed us to reload the stack.
-
-I'll add comments.
-
-> > @@ -2462,7 +2498,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
-> >  	arg.refs = refs;
-> >  	arg.records = rewritten;
-> >  	arg.len = logs_nr;
-> > -	arg.stack = stack,
-> > +	arg.stack = be->stack,
-> >  	arg.refname = refname,
-> >
+> For the record: I did not use a shell script to generate the header for a
+> specific reason: Unix shell scripts are not native to Windows. Therefore
+> they cannot in general be run on Windows, however that was precisely the
+> idea for the CMake definition: to be run on a vanilla Windows with Visual
+> Studio installed.
 > 
-> Shouldn't these lines end with ';'?
+> Sadly, even Git's CI definition sets things up in a way that Git for
+> Windows' Bash can be used in the CMake definition, but in the intended use
+> case (opening a checkout of git/git in Visual Studio without any further
+> tools required) won't have a usable Bash.
+> 
+> Therefore I am unsure whether this patch is desirable.
 
-Yup, they should. It's harmless, but certainly confusing.
+CMakeLists.txt tries to find sh.exe from git-for-windows and errors out 
+if it cannot be found. It then uses that shell to run a number of 
+scripts. Perhaps we should do the same in this patch? It would certainly 
+be a worthwhile improvement to regenerate this file at build time if the 
+source has changed.
 
-Patrick
+Best Wishes
+
+Phillip
+
+> Ciao,
+> Johannes
+> 
+>>
+>> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>> ---
+>>   contrib/buildsystems/CMakeLists.txt | 50 +++++++----------------------
+>>   1 file changed, 12 insertions(+), 38 deletions(-)
+>>
+>> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+>> index 093852ad9d6..9f80ab92656 100644
+>> --- a/contrib/buildsystems/CMakeLists.txt
+>> +++ b/contrib/buildsystems/CMakeLists.txt
+>> @@ -1002,46 +1002,20 @@ foreach(unit_test ${unit_test_PROGRAMS})
+>>   endforeach()
+>>
+>>   parse_makefile_for_scripts(clar_test_SUITES "CLAR_TEST_SUITES" "")
+>> -
+>> -set(clar_decls "")
+>> -set(clar_cbs "")
+>> -set(clar_cbs_count 0)
+>> -set(clar_suites "static struct clar_suite _clar_suites[] = {\n")
+>> -list(LENGTH clar_test_SUITES clar_suites_count)
+>> -foreach(suite ${clar_test_SUITES})
+>> -	file(STRINGS "${CMAKE_SOURCE_DIR}/t/unit-tests/${suite}.c" decls
+>> -		REGEX "^void test_${suite}__[a-zA-Z_0-9][a-zA-Z_0-9]*\\(void\\)$")
+>> -
+>> -	list(LENGTH decls decls_count)
+>> -	string(REGEX REPLACE "void (test_${suite}__([a-zA-Z_0-9]*))\\(void\\)" "    { \"\\2\", &\\1 },\n" cbs ${decls})
+>> -	string(JOIN "" cbs ${cbs})
+>> -	list(TRANSFORM decls PREPEND "extern ")
+>> -	string(JOIN ";\n" decls ${decls})
+>> -
+>> -	string(APPEND clar_decls "${decls};\n")
+>> -	string(APPEND clar_cbs
+>> -		"static const struct clar_func _clar_cb_${suite}[] = {\n"
+>> -		${cbs}
+>> -		"};\n")
+>> -	string(APPEND clar_suites
+>> -		"    {\n"
+>> -		"        \"${suite}\",\n"
+>> -		"        { NULL, NULL },\n"
+>> -		"        { NULL, NULL },\n"
+>> -		"        _clar_cb_${suite}, ${decls_count}, 1\n"
+>> -		"    },\n")
+>> -	math(EXPR clar_cbs_count "${clar_cbs_count}+${decls_count}")
+>> -endforeach()
+>> -string(APPEND clar_suites
+>> -	"};\n"
+>> -	"static const size_t _clar_suite_count = ${clar_suites_count};\n"
+>> -	"static const size_t _clar_callback_count = ${clar_cbs_count};\n")
+>> -file(WRITE "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" "${clar_decls}")
+>> -file(WRITE "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite" "${clar_decls}" "${clar_cbs}" "${clar_suites}")
+>> -
+>>   list(TRANSFORM clar_test_SUITES PREPEND "${CMAKE_SOURCE_DIR}/t/unit-tests/")
+>>   list(TRANSFORM clar_test_SUITES APPEND ".c")
+>> -add_library(unit-tests-lib ${clar_test_SUITES} "${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c")
+>> +add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
+>> +	COMMAND ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" ${clar_test_SUITES}
+>> +	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh ${clar_test_SUITES})
+>> +add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>> +	COMMAND awk -f "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" > "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>> +	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
+>> +
+>> +add_library(unit-tests-lib ${clar_test_SUITES}
+>> +	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
+>> +	"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
+>> +	"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>> +)
+>>   target_include_directories(unit-tests-lib PUBLIC "${CMAKE_BINARY_DIR}/t/unit-tests")
+>>   add_executable(unit-tests "${CMAKE_SOURCE_DIR}/t/unit-tests/unit-test.c")
+>>   target_link_libraries(unit-tests unit-tests-lib common-main)
+>> --
+>> 2.47.0.72.gef8ce8f3d4.dirty
+>>
+>>
+> 
+
