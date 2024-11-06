@@ -1,53 +1,53 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4740020110E
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:10:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E4D20110E
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730905841; cv=none; b=h6j5W8iEtpiqpP4U+FOImod9iXq7x6zrT1h3N93K7irMMH8Bw2eRqYc0nnGzb7Q3TKfnsf3lfVoM7hdn8QDlvA4x5AmXODCzd5dlwju/nHbUBM2CZuOOEtmQUCBmU+SOsEREVrNmTo/3Nu4VR1JY2brgM+MaDzIDJjY8Me+PtjI=
+	t=1730905846; cv=none; b=sCGdCnBy9JIHlexg43e0qFtDDEfCz95pf312IoMqIbOsfWv6zxdJnNxleYfJYWZXtoF4nzGP33OH8m8GC1VX5MPIsvEw+BCVjFsOJzj6ywA92pATnquCKrmZNwxRCD2K68ekOcMV8Ty6a0a86GDP2UeV6VfTS2FVJkqeD+bD4Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730905841; c=relaxed/simple;
-	bh=0aIHMliTptdkIsA+OSWuQ1zCzegf/1jwiJICht89o10=;
+	s=arc-20240116; t=1730905846; c=relaxed/simple;
+	bh=63KZEWUfhak87goU2RvcXFx3/yk3F1T1npVDm7cCe2A=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nG3aC85vGf4J9tpNoGBICJH4VDKybOK3/PF/kP6Nmp9Dmv5dYmXw4sz6o7KoYSjxcpZzdY3uKHRl7fj/QzLh5gNInvqcX9Sw7vnpTbqxAZoJuUutYxMYCHmKqWIXsxWjJRY0tKQVrfY9ZrQ4TjSLTfUGUjIG6S29t21YyqLr/kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y9RSk1g3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VLvN3Bs4; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=lcOeRAWxstbCI6D96KHxmaC6Pap0kWgPnv+97OldcksYBBCoVLa85sWySiXuSYkQ11UrL3YTUf9dVfpw5vQzO3Qfd5txfDmx2y+K9RI5N/Pqr0T68xI67PnFET2FLFQduiKo9r9n3QcEvjHVkm6hzYRn9gUQFikVFT+jjtZxOT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XLhc/mwb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZpQOxi/n; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y9RSk1g3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VLvN3Bs4"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 70E131140151
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:10:39 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XLhc/mwb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZpQOxi/n"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 50F891140178
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:10:44 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Wed, 06 Nov 2024 10:10:39 -0500
+  by phl-compute-08.internal (MEProxy); Wed, 06 Nov 2024 10:10:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730905839; x=1730992239; bh=xc8CXmQKbn
-	GgX3Rb7nU0trt5RYcA5Qz6tmQmfvrXNkM=; b=y9RSk1g3MmAY3MOkYwUi0NKqVo
-	YBqMKxLY57OYREHJ264Gh7M6q69OopWhqQaqRFMRW0vEVPYC/mhqDpTZI3+T3SxH
-	3fjSmVoSyrFPDHJQSsg3RowIBQmUps8gKbeLCFOEkDF5wbOb/m1eOQhSW5s/WLGw
-	xoiwq8Ki49jba7bexnvCAHpoG1GkmjXN1kt35/P5VvOkvsIIBUZ4UrMO+nlnFMxm
-	yd1Jl1d3GzY+mjkiow0UWvhpwO+n4ei17c/dg6CHCQOgaG6B2nvN8V5g5+CauK0s
-	UCcNtxjeYzRFUCHHmgzHPcn8ttELPcCvUPKwx8qf2CgYJtTgnPDr0/dIx+aA==
+	:subject:to:to; s=fm3; t=1730905844; x=1730992244; bh=xWWwbZbEyQ
+	zdXhxEIlGbJSUsn5Zp1BZxyLYBbEXSBoI=; b=XLhc/mwbbpHhbPYPD0niXSiohg
+	2rVaVAVEZpXbwwmxtOwVJHix6IWSsgtpfnkYX/zkIjPyywl4Xgvn48WcQhXvjnEt
+	1TPK++RJcldhFgWuB7rqmGgTRlYdHzCdXosd/6A+IJ9Q7xDbZwKlwwKrB6nx1U8B
+	Yt7oomBVXqFEP6M+k68gF6F2nIzP/hhAlpuYStwj1pzkbg8IC3+sN8FHRVKmc/rX
+	QFV1v/aVxqqCPbQgK6W2ROXmWHp0Wu4ecPfOgtGnIlmu/HlAZFvpyPXdNwHL+4kf
+	4uhhGm0N49MITRXmXL4vxh94psldv3tYmNikrLuVeKNPHpsYsYfimCAOe/fA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730905839; x=1730992239; bh=xc8CXmQKbnGgX3Rb7nU0trt5RYcA5Qz6tmQ
-	mfvrXNkM=; b=VLvN3Bs4ccOvKNWgq/xPenlR67AfX3FXEZmHaTS+iLbDQZIP7gL
-	42XhYziSVXl9/EtgTjfOPu3wxiOQaQY16Rqb3FUly8HSE6Pm5NpJxlCYCd6iVUF9
-	kSp0mbPuLjTH+WZLBMKqCSNWYOCdvoiMQrZ2wsQbhV/2H9Y7P37UCs1Ce25ydG0s
-	y/J4HC+FNb96u8x3L3eaBk3KPjx4vFsPH5PH4cgb2aDbNZAPyIaGu1UL24ov9UA9
-	ubRKw4f0U4mcywZcvtY6jg3BExBxHSDKu+Zc5Ja5AP6JQhkDU3wYMwEloucjDSoL
-	FaNgblq+SJxaJB7eKfqrDiU2vCcZ4W/1Etg==
-X-ME-Sender: <xms:74YrZ_EQ6WFjn8ot1FJydIOfaWtlGebKol-zJNeTS9gKoSZAEyIzdw>
-    <xme:74YrZ8XYlvlSlcbWjFG1v8Ia2Sa8ehW-5L0vBX0ZokJo7myAKW8po2d3qdagpOmAK
-    yIn7uRMeVAyBFtoXA>
-X-ME-Received: <xmr:74YrZxKi925PYIKsVI46Ey3qA4K8Wv9_Aj7FRmhivqOV74S-0leu53NF5LZM2thi2TYrQfzP0E3MXf0ouiTuX70pD3CN6z_dPQddpEW4H3avrw>
+	1730905844; x=1730992244; bh=xWWwbZbEyQzdXhxEIlGbJSUsn5Zp1BZxyLY
+	BbEXSBoI=; b=ZpQOxi/nbYYGe9lXdDt8yn21Ny99rGK2sNpajhlC7iZCgQp9M4m
+	5n33Du1BWI8+2YB6mRy4VqyMxJ6HJ4eRQCeg3DVA7LpsI1ydLq1BM8qUQML9n/Z6
+	vNxVz5h54jeMaMzpFnRBej/OT5mTrzux7IhBAFARDOVW0vLWFtP3UZdIUHyXhovO
+	4GwNWFIQAAtm9kvmSLXPY0H+Zf+xaR5WVQII8bhZphrqEPqCYO+GgOJRnluqEvhe
+	qVvdzAz+xqHQ7l09Pho0wH2i3m7L4KwxGe+MFtIB4Dcu7+Q2UxKFaylrs408qo1x
+	jEHsIXFpFBThEDXMczlhKML8npUqtBqMrKA==
+X-ME-Sender: <xms:9IYrZ6eha6ROjdm80JpGXGaxUM5X7ypKwWa3dWHhJwEFxti5RuTndQ>
+    <xme:9IYrZ0P6-dSYXznTcqdpv_i-XGR5iKFlC_cyKqBdJRq4f-Pa1Nw8tPb9ymWdJnq-v
+    _BsImpTjYLwIakvQg>
+X-ME-Received: <xmr:9IYrZ7gYbAzrHa258FdigJKlB02Fn1ObTJItvQhxn0qcjQNEOSsFFuvRIuFTMiRDbc_Pt7jC1BDDpbNlTtTtidZc2nJBTUqoDbm3J8ISvzQ9-A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdejudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukf
@@ -57,23 +57,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdejudcutefuodetggdote
     iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
     gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
     rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:74YrZ9GZhwRH7triwzpURNcJ4F1iPYPjnM469aSz4pffIFPt4gMM4A>
-    <xmx:74YrZ1UI3gj8j5cJPCVlbf0FJF4_qxs9IGTCpSaxC-VNOIiXSYHHfA>
-    <xmx:74YrZ4OGSCc2wPT9l0Rd_zjysvgE0clo6ewGAOo18qSHsPQrVG1RVA>
-    <xmx:74YrZ02JHPBkr680ZLupuezsP1ueGFD7wXA5c6HfsjCyyfsDqXG3tA>
-    <xmx:74YrZ0euj_MZv42_lpikojC2Nkktydx4fyBYf0mDLQN5HqJg5PaZDshO>
+X-ME-Proxy: <xmx:9IYrZ39CvwYnNQoK9kjwc98IeBCLwCUAs7V5KYpGgpP3OctyCerkvA>
+    <xmx:9IYrZ2suhWAlyLK8Tl0qajCg8Ek1-r7I9mvaoOj4CPwWiB-w000IgA>
+    <xmx:9IYrZ-GB89Vtk0iyQfi76zav3qpuC9wX95Oq5MqYMlVciANnjCJpMw>
+    <xmx:9IYrZ1MEaCtXYTDdue2qwOdq98Fgyk-A-uyJlWqBbOjJZLTpB3uC-Q>
+    <xmx:9IYrZ7V-pkGGsYcIAcQNLYzos3ggQuUckXcerQ_jzJb_DzBXZ2LbU3KW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 6 Nov 2024 10:10:38 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 6 Nov 2024 10:10:43 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6a3413c5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d85d83c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 6 Nov 2024 15:10:14 +0000 (UTC)
-Date: Wed, 6 Nov 2024 16:10:31 +0100
+	Wed, 6 Nov 2024 15:10:19 +0000 (UTC)
+Date: Wed, 6 Nov 2024 16:10:34 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 05/26] bisect: fix multiple leaks in `bisect_next_all()`
-Message-ID: <6dd1a56aa45a5b9b1302b4ecb629bdf9bd5fe331.1730901926.git.ps@pks.im>
+Subject: [PATCH 06/26] bisect: fix leaking commit list items in
+ `check_merge_base()`
+Message-ID: <fba5b4b9f60c4d22aacb2c66ac96fefe6fd8f5fd.1730901926.git.ps@pks.im>
 References: <cover.1730901926.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,48 +86,33 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730901926.git.ps@pks.im>
 
-There are multiple leaks in `bisect_next_all()`. For one we don't free
-the `tried` commit list. Second, one of the branches uses a direct
-return instead of jumping to the cleanup code.
+While we free the result commit list at the end of `check_merge_base()`,
+we forget to free any items that we have already iterated over. Fix this
+by using a separate variable to iterate through them.
 
-Fix these by freeing the commit list and converting the return to a
-goto.
+This leak is exposed by t6030, but plugging it does not make the whole
+test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ bisect.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 6dbc22f84fc..04e9a63f11c 100644
+index 04e9a63f11c..12efcff2e3c 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -1031,7 +1031,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- {
- 	struct strvec rev_argv = STRVEC_INIT;
- 	struct rev_info revs = REV_INFO_INIT;
--	struct commit_list *tried;
-+	struct commit_list *tried = NULL;
- 	int reaches = 0, all = 0, nr, steps;
- 	enum bisect_error res = BISECT_OK;
- 	struct object_id *bisect_rev;
-@@ -1098,7 +1098,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 	if (oideq(bisect_rev, current_bad_oid)) {
- 		res = error_if_skipped_commits(tried, current_bad_oid);
- 		if (res)
--			return res;
-+			goto cleanup;
- 		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
- 			term_bad);
+@@ -851,8 +851,8 @@ static enum bisect_error check_merge_bases(int rev_nr, struct commit **rev, int
+ 				      rev + 1, &result) < 0)
+ 		exit(128);
  
-@@ -1132,6 +1132,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 
- 	res = bisect_checkout(bisect_rev, no_checkout);
- cleanup:
-+	free_commit_list(tried);
- 	release_revisions(&revs);
- 	strvec_clear(&rev_argv);
- 	return res;
+-	for (; result; result = result->next) {
+-		const struct object_id *mb = &result->item->object.oid;
++	for (struct commit_list *l = result; l; l = l->next) {
++		const struct object_id *mb = &l->item->object.oid;
+ 		if (oideq(mb, current_bad_oid)) {
+ 			res = handle_bad_merge_base();
+ 			break;
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
