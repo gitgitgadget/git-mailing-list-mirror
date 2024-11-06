@@ -1,223 +1,221 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770661F9EB5
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 19:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD8420969B
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 19:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730921525; cv=none; b=tZbkN24+Fje5ubXEh6BQuvNseQW0atI0i0J4QJv7d5Ld4n4CY+iXoNkhWW7s9edPhem+0Vb3S8nxR1PhWWScz41XiuCiAnajXMKMoNcP1eLKns5XnNBcM3ysAndJ9ib0877hqY+CUjsng7g2hu/90CtvieSxxtASZVuT5tAxnZc=
+	t=1730922646; cv=none; b=JEVSn47jY34GrRzgP+8ERfEgCaZ0hwh5HT5+h/mdYJXICrirbq+TbSaaE+6qM4WlJBVBuqGq9jB3aqMycJ4dB05KwwB6fZlBlEjqhBAwbt+h0nIV8vqAh8pWH1ET3/SSRdav8AYpxZH2ysHVSKQlnLiw3BPTTc8BBB+qvg1Xnxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730921525; c=relaxed/simple;
-	bh=f5YpdMPdZ9HVN8bobsJXC843GIvqJZ6B4egwN5IpxCQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=LiPsiCweL5DGs2XxU4cCIn9OYV1sA16Ou3CbEZGGyQCKym7K71wBh6iQAvAhszYq1rPVi4SS7Iu3JAMShYMwEUEeWx5T5vzeudlCq29AXrvZCWo+lbxdOKJW/Fi800fTdk0Tuy0e4W614nsOiCT79nacAk9G7jPpVqp5ItxFp6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=p4jHWORO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JH3Q4+dq; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1730922646; c=relaxed/simple;
+	bh=OcAPsbm+bmveKy5GtS57WvRVkUaJHlI+h0E7VzeNOnE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sz8TIOTJyIIq/ZY3ZdXpomWQrTODVqBjxUhjDMBbsyUcPE9yzK91UT8d9umBMhY44+r/EI1WyoZ/nzzb4NVdiNCXLMQ5uduGmbx6JZSpWZUdgzDjh/ula8TJztlA+NBVe6bQzaJNsoIfThg8SB6PR6XcHhwdeTxTPWhfR2rPXB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m7XBaJgS; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="p4jHWORO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JH3Q4+dq"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A545311400D3;
-	Wed,  6 Nov 2024 14:32:01 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 06 Nov 2024 14:32:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1730921521;
-	 x=1731007921; bh=FPhU0G38BjgUe0VfDlekpDFWtgaYccnaUdNiXaYzUro=; b=
-	p4jHWORODWyMgcnrts/gIb41kR5sE4Z16yFiyuFGeeOKnZR2kSaw8wGA1Bg6qKLS
-	pTksjEYuC8C6iOp/MXgLrbKB816bAlQGNZ1ZpEFuzL6x2kAhOGf81xvPx88utDPS
-	yrq+a8KaMjAq+PaKpwNeBFi2ZZ6IZ4F46n2x39LjGNWx8D63cn5JibE9YHDMelpD
-	wyyY0iMQoSifsZnrm4dKur71le+3mBY25EZp3cWgiKNpzs3Fw7bNDOJsbslQAG/1
-	Urgv2y8RYRwMN9VcnosFv1Mrm+DWkvDlERIqqIENIegVccnVvRmHIP39k+Y2iS5t
-	9YFan3t5JDXlk7SYZIb84g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1730921521; x=
-	1731007921; bh=FPhU0G38BjgUe0VfDlekpDFWtgaYccnaUdNiXaYzUro=; b=J
-	H3Q4+dqrzE3UcK9WapNIlfulEhYOZKMi1Fs0gulT8O7N/BwsY1GZVCpIhQ5xFN0E
-	fMtVOhzre5T5sQkWGt+CilfjcNAvYxajXvo6EfPG7mIIcbEVUmRufK+qZ6aa/SON
-	4teav9UdplPbMnMJDHHFRa4ifGyL+fnkKYHUFLAJeU0GqbGN4HNUBWyAjKQYIdnC
-	x9/LKrUkKFyfEvn/Mz9s+ExtsXK8OnKGoOErWFFfo0skUbDZIPxYrgqtZtjgrbGD
-	5CGx7QSxEmHgHF9HnZtwRCDZAoi4Q0hNPMcgtRmqo7aBFlUhFoZenkk0KP13rwoP
-	/cEXyGDXNrFxR5w41iIkg==
-X-ME-Sender: <xms:McQrZzbGg4NQX8udhjB-zfALEBVyw5DICh5FiHViG4q-eF2Av2iy-I8>
-    <xme:McQrZyYF7jiRYffDd1veKV5Nd4vw6FdsaDhbuTL8tjmNqzXMZMB-wO1iv_AV8j8nc
-    kqYsXSxHAsfjA1rvQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdduvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
-    fvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
-    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeej
-    keelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:McQrZ1-tYMDHRmQzUGtAQO_tUbONHyNfIYiGdm67iULPZRmCP4o-pQ>
-    <xmx:McQrZ5qXZD8C-SoUDN41gHuK92Kv-mrPSC513QE7_0OrumpJhKEqDA>
-    <xmx:McQrZ-qsROheY3Wsswxkr4oHn7UPVmNaX66vPXuCw8xMeqp1kzP0Mw>
-    <xmx:McQrZ_R3Nm2x6aMZDd8bVqt-cAhWrxAd4oL4Omkk9XH4bZ5yujOGrw>
-    <xmx:McQrZ3nOKOxDT7jHuQi06a1EKiuvUrBLQD2ceRdCxVsYwimMfxM9BeBz>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5B03B780068; Wed,  6 Nov 2024 14:32:01 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m7XBaJgS"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e35bf59cf6so13129637b3.0
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 11:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730922644; x=1731527444; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YmlVu9ulaVjxiBGr8DlFJuELJLjdKrJ55AT1qNnv5TA=;
+        b=m7XBaJgScguIuw2cOTT87eW73pLIXo4rbhGbrglVDJ6qZH9dv0zMCReKGKxiYdZHG2
+         FlalE8UIt+/Of2O9GVO233UF1swxfBElWaF64skCoz452wjWKb/pMEQTbjNIalmNwD5z
+         kttQPTryZ4jOZ6fyZ9/9OCkiJ9LvZxVEwCCR+R2q/+AS4DAHmPY05JqOQpIgh9it5xGf
+         hZg8sF7I+xq/IMCaugEs9STPAhuxkHp8S1mKWEirsi0m/NB2rGmWD6og0J790p8aL+Mq
+         U+gkvIqmddGXTEeufUAO+x56QpunaqdK/NeIbnbgq6j/NPC8ofPd0XGH/PfO3MIgigMf
+         ja6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730922644; x=1731527444;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YmlVu9ulaVjxiBGr8DlFJuELJLjdKrJ55AT1qNnv5TA=;
+        b=QKsXePTZ6XfyI96QHJhcy8R/ykpRGq0pEe35CXB/FCtVzjixWmuDNcNp4wHTttR9nL
+         UDMHOgS5wsJ4e39cXVgKXh2BI7Q5Ed9PxaAFintCXiavgoUgxm/acYlmcC2zQZ6Ms6CC
+         8VwpbFsHSoexE+jw69BkZva2zNDklsGf5FeO8QiF7rRjPCic8pKWXBj5EzGA+ZEiqz5c
+         cVwlDkZn3yQUtEichSxmLAT5RvG3e/jokcNGJtDlHPtQAUi3ksblwhWEfJF6WrQ/fjpJ
+         8sPg6asNsJKhOsxRC+ked1rp+Lo3lFPA5U9w5Ls+BbdOdu9NhrDvGP0ks1UM+ICzPrkF
+         09Xg==
+X-Gm-Message-State: AOJu0YyDw02e/mDHfdx5Oi8V5ne+3B91wNyQ53GAmo415je7vQViqWP1
+	z2yZtF+jewtN+XFqes43ue97wDR3O3bEgxqmS8bIzDyDeRGOC1MnhXeuLPU2UXZcMLwAMnaTa3s
+	jZN+ENdtHNr+mFwUHXC5U/qEFRqM=
+X-Google-Smtp-Source: AGHT+IHzTjYtDW/azB9Kf2RscGi/hge2H6UAjr7pAYDdRHitQ9JA1y063JCvu/m8Zk4DNKC+0YwwB257/HQcna8B49g=
+X-Received: by 2002:a05:690c:6309:b0:6e2:41fa:9d4 with SMTP id
+ 00721157ae682-6eacc04ca30mr4814577b3.15.1730922643819; Wed, 06 Nov 2024
+ 11:50:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 06 Nov 2024 20:31:41 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>,
- "Taylor Blau" <me@ttaylorr.com>
-Message-Id: <9ce2d94d-2baf-416a-9368-502d08886f9b@app.fastmail.com>
-In-Reply-To: <xmqqh68q1l37.fsf@gitster.g>
-References: <cover.1729451376.git.code@khaugsbakk.name>
- <cover.1730234365.git.code@khaugsbakk.name>
- <e9be866f33daab2d4038f8b3f1140fe41e5f49c5.1730234365.git.code@khaugsbakk.name>
- <xmqqh68q1l37.fsf@gitster.g>
-Subject: Re: [PATCH v2 1/3] Documentation/git-bundle.txt: mention full backup example
-Content-Type: text/plain; charset=utf-8
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20241028203457.19715-1-eric.peijian@gmail.com> <20241028203457.19715-2-eric.peijian@gmail.com>
+ <CAP8UFD0Yk1Twv9DMOYwO4R+7P0YHj1CgK8xN=2YdE8sdi4ukow@mail.gmail.com>
+In-Reply-To: <CAP8UFD0Yk1Twv9DMOYwO4R+7P0YHj1CgK8xN=2YdE8sdi4ukow@mail.gmail.com>
+From: Peijian Ju <eric.peijian@gmail.com>
+Date: Wed, 6 Nov 2024 14:50:33 -0500
+Message-ID: <CAN2LT1COKBNukbMZz+AHJu-Fyx+SfrW5fo3=sFVuw-LSZwnyMw@mail.gmail.com>
+Subject: Re: [PATCH v5 1/6] fetch-pack: refactor packet writing
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
+	jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 2, 2024, at 02:27, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
+On Tue, Nov 5, 2024 at 12:44=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
->> Tell the user how to make a full backup of the repository right at the
->> start of the doc.
->>
->> This is a requested use-case.[1]  But the doc is a bit unassuming
->> about it:
->>
->>   =E2=80=9C If you want to match `git clone --mirror`, which would in=
-clude your
->>     refs such as `refs/remotes/*`, use `--all`.
+> On Mon, Oct 28, 2024 at 9:35=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> =
+wrote:
 >
-> What's the open fancy quote followed by a SP doing there, apparently
-> without the matching closing one?  Can we replace it with a SP?
-
-I=E2=80=99ll replace it.
-
-The idea came from merge commits like:
-
-```
-Pull more 9p reverts from Dominique Martinet:
- "Revert patches causing inode collision problems.
-
-  The code simplification introduced significant regressions on servers
-  that do not remap inode numbers when exporting multiple underlying
-  filesystems with colliding inodes. See the top-most revert (commit
-  be2ca3825372) for details.
-
-  This problem had been ignored for too long and the reverts will also
-  head to stable (6.9+).
-
-  I'm confident this set of patches gets us back to previous behaviour
-  (another related patch had already been reverted back in April and
-  we're almost back to square 1, and the rest didn't touch inode
-  lifecycle)"
-```
-
-But (1) space between the quote char and the text to make it stand out
-and (2) no trailing close quote (the deindent closes the quote).
-
+> >  connect.c    | 34 ++++++++++++++++++++++++++++++++++
+> >  connect.h    |  4 ++++
+> >  fetch-pack.c | 36 ++----------------------------------
+> >  3 files changed, 40 insertions(+), 34 deletions(-)
+> >
+> > diff --git a/connect.c b/connect.c
+> > index 58f53d8dcb..bb4e4eec44 100644
+> > --- a/connect.c
+> > +++ b/connect.c
+> > @@ -688,6 +688,40 @@ int server_supports(const char *feature)
+> >         return !!server_feature_value(feature, NULL);
+> >  }
+> >
+> > +void write_command_and_capabilities(struct strbuf *req_buf, const char=
+ *command,
+> > +                                                                      =
+ const struct string_list *server_options)
 >
->> The user cannot be expected to formulate =E2=80=9CI want a full backu=
-p=E2=80=9D as =E2=80=9CI
->> want to match `git clone --mirror`=E2=80=9D for a bundle file or some=
-thing.
->> Let=E2=80=99s drop this mention of `--all` later in the doc and front=
-load it.
+> When I apply your patches this line doesn't seem well indented.
 >
->> diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.=
-txt
->> index 3ab42a19cae..0fa181c749d 100644
->> --- a/Documentation/git-bundle.txt
->> +++ b/Documentation/git-bundle.txt
->> @@ -23,8 +23,8 @@ the "offline" transfer of Git objects without an ac=
-tive "server"
->>  sitting on the other side of the network connection.
->>
->>  They can be used to create both incremental and full backups of a
->> -repository, and to relay the state of the references in one reposito=
-ry
->> -to another.
->> +repository (`git bundle create <file> --all`), and to relay the stat=
-e of
->> +the references in one repository to another.
+
+Thank you.  I will make sure my IDE respects
+the .editorconfig and revise them in v6.
+
+> > +{
+> > +       const char *hash_name;
+> > +       int advertise_sid;
+> > +
+> > +       git_config_get_bool("transfer.advertisesid", &advertise_sid);
 >
-> In the new construction, it is unclear if the new command line
-> example is about making a "full backup" and not "incremental", or it
-> applies to both.  I am not sure if this, especially with the removal
-> of "--all" from the later section, is an improvement.  Let me try if
-> I can come up with a better version by elaborating the later section
-> without touching this part.
+> It looks like moving the function to connect.c required adding the
+> above line into it. There are a few other small changes, including
+> probably spurious indentation changes, in the moved function which
+> make it a bit more difficult than necessary to check that the moved
+> code is the same as the original one.
 >
-> This is not a new issue, but na=C3=AFvely, one would expect "full back=
-up"
-> to allow one to recover lost .git/config entries.  We should tighten
-> the phrasing for "backups of a repository" to avoid such misleading
-> false promises.  As it is the primary motivation of this series to
-> clarify how you would use the command for "full backup", I think
-> this point is worth tackling as part of this series.
-
-Good point.  The change is biased by the groove I=E2=80=99ve gotten into=
- in the
-last years: (1) of never leaving unstaged changes for such a long time
-that I would be said if I lost them, and (2) never using git-stash(1)
-unless I=E2=80=99m popping the stack within the next fifteen seconds.  S=
-o there
-is not much non-ref data (including the stash ref) that I would miss.
-
-(But I have started using local repo config more so that could be lost)
-
-And with worktrees, people could have a *quite a lot* of uncommitted
-state lying around.  Since some people use worktrees like branches.
-
-So yes.  There is absolutely a need to make clear that this =E2=80=9Cfull
-backup=E2=80=9D doesn=E2=80=99t cover those things.
-
+> This makes me wonder if it was actually a good idea to move the
+> function, or if moving the function should have been done in a
+> separate step than the step making the small changes. Perhaps patch
+> 5/6 "cat-file: add declaration of variable i inside its for loop"
+> could have been moved before this patch and could have included some
+> of the small changes related to the i variable that are made in this
+> patch.
 >
-> This also is not a new issue, but the dashed-option "--all" after
-> "<file>" is an oddball from "git help cli"'s point of view.  It
-> perfectly fits within the SYNOPSIS for this command in that "--all"
-> is merely a form of valid arguments you can give to "git rev-list",
-> so I do not see anything that needs to be done on this point, though.
+> It might have been nice to mention the changes in the commit message anyw=
+ay.
 >
-> So, here is my attempt.
+
+Thank you. In v6, I will move small changes commit "cat-file: add
+declaration of variable i inside its for loop" to the very first
+commit, where I will include small changes related to the i variable
+that are made in this patch.
+
+About the extra charges related to `advertise_sid`. I did a bit of
+analysis, please feel free to correct me.
+In the original fetch-pack.c code, there are only two places that
+write `advertise_sid` :
+1. line 1221 (function do_fetch_pack):
+        if (!server_supports("session-id"))
+                advertise_sid =3D 0;
+2. line 1895 (function fetch_pack_config)
+        git_config_get_bool("transfer.advertisesid", &advertise_sid);
+
+In 1, do_fetch_pack() is called when protocol is NOT v2. While
+write_fetch_command_and_capabilities() or the new
+write_command_and_capabilities() is only used in protocol v2, I think
+it is safe so it is safe to ignore 1, and only consider 2.
+
+In 2, git_config_get_bool is from config.h and it is an out-of-box
+dependency of connect.c, so I just directly use it.
+
+
+> > +       ensure_server_supports_v2(command);
+> > +       packet_buf_write(req_buf, "command=3D%s", command);
+> > +       if (server_supports_v2("agent"))
+> > +               packet_buf_write(req_buf, "agent=3D%s", git_user_agent_=
+sanitized());
+> > +       if (advertise_sid && server_supports_v2("session-id"))
+> > +               packet_buf_write(req_buf, "session-id=3D%s", trace2_ses=
+sion_id());
+> > +       if (server_options && server_options->nr) {
+> > +               ensure_server_supports_v2("server-option");
+> > +               for (int i =3D 0; i < server_options->nr; i++)
+> > +                       packet_buf_write(req_buf, "server-option=3D%s",
+> > +                                        server_options->items[i].strin=
+g);
+> > +       }
+> > +
+> > +       if (server_feature_v2("object-format", &hash_name)) {
+> > +               const int hash_algo =3D hash_algo_by_name(hash_name);
+> > +               if (hash_algo_by_ptr(the_hash_algo) !=3D hash_algo)
+> > +                       die(_("mismatched algorithms: client %s; server=
+ %s"),
+> > +                               the_hash_algo->name, hash_name);
+> > +               packet_buf_write(req_buf, "object-format=3D%s", the_has=
+h_algo->name);
+> > +       } else if (hash_algo_by_ptr(the_hash_algo) !=3D GIT_HASH_SHA1) =
+{
+> > +               die(_("the server does not support algorithm '%s'"),
+> > +                       the_hash_algo->name);
+> > +       }
+> > +       packet_buf_delim(req_buf);
+> > +}
+> > +
+> >  enum protocol {
+> >         PROTO_LOCAL =3D 1,
+> >         PROTO_FILE,
+> > diff --git a/connect.h b/connect.h
+> > index 1645126c17..2ed009066e 100644
+> > --- a/connect.h
+> > +++ b/connect.h
+> > @@ -1,6 +1,7 @@
+> >  #ifndef CONNECT_H
+> >  #define CONNECT_H
+> >
+> > +#include "string-list.h"
+> >  #include "protocol.h"
+> >
+> >  #define CONNECT_VERBOSE       (1u << 0)
+> > @@ -30,4 +31,7 @@ void check_stateless_delimiter(int stateless_rpc,
+> >                                struct packet_reader *reader,
+> >                                const char *error);
+> >
+> > +void write_command_and_capabilities(struct strbuf *req_buf, const char=
+ *command,
+> > +                                                                      =
+ const struct string_list *server_options);
 >
-> [=E2=80=A6]
+> When I apply your patches the above line doesn't seem well indented eithe=
+r.
+>
+> You might want to make sure that your editor uses 8 spaces for each
+> tab, see Documentation/CodingGuidelines, or just that your editor
+> properly follows our .editorconfig file.
+>
+> It looks like other patches in the series, like patch 4/6, have
+> similar issues. Otherwise the other patches in the series look good to
+> me.
+>
+> Thanks.
 
-Thank you.  I=E2=80=99ve adopted some of this for the next version.
-
-> +
-> +    $ git bundle create incremental.bundle --all --not \
-> +	$(git bundle list-heads old.bundle | awk '{print $1}')
-> +
-> +which tells the command to include all refs (as if cloning with the
-> +`--mirror` option), but without duplicating the objects already
-> +available in the `old.bundle` bundle.
-
-This approach seems less manual than the incremental backup examples in
-the existing doc (Examples section).  But I think I=E2=80=99ll stick to =
-just the
-simple dump-to-file approach and leave the incremental backup example
-for the existing example.
-
->  The 'git bundle verify' command can be used to check whether your
->  recipient repository has the required prerequisite commits for a
+Thank you. I will make sure my IDE respects
+the .editorconfig and revise them in v6.
