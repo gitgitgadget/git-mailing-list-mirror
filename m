@@ -1,126 +1,89 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C621E531
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 00:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0DF1CD2C
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 00:31:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730852402; cv=none; b=Bcld5AIrpkDMRWrFTdBcDXoaVAEJFnOgr/4GlnILTff2zUQ4xgIqVbdPqZcFm+RQbhzt6qL+OjA3xy0y76hd5DEJUmaPxFtD55ZiHLK8+pZG2o+ZVcM0Dr3Tprjjo9E0UqG/LkbJUMzeGVH1edZnuxcDY8Br6AtXghF2IgVYx9E=
+	t=1730853081; cv=none; b=TxGATkTf+JHvB55cJM/AIlzY+3D5jSmAlcYXOnYEneb5dYem9pcQsbYLLJlN2iRnncfzEsesX2pjrWWLgP6YW6Qiu+mD6TQyIwGe8eqrvHShK2esHMjoa2AycG8mfGTUVmmn9hhCsYAW4tq4a76KTKdVOsRvaFRIdivlhmS9jU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730852402; c=relaxed/simple;
-	bh=S0PQQOUUp6030vf3MMdwhoTnloAaVgOK9BvP1PY0wTM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YCQlak5d8ZRydUgrKY5+IbymI5F5a+dANCuBkegrNJpsnIb4rzNsuCXyoz7Z/nUPXuMXCmMQJH4ba6YG2fnJDVSQrVn7QTIg1JB683cx5tnggh+a9GlJI6R3vOa5yN9duyiu9DWl5/qqoBxCB4gqfo4SXZWydQFYKcBWMD4TJQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eWHtYGIg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jtltTCAh; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730853081; c=relaxed/simple;
+	bh=g+02nziRTEYwyHjp3sFBHxhK6/xc/qJ7NeEchivU+nY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=odd2ThQIDQcR7EH6Ru2wq+rUN+NWQenAVVSq9f63Bh4xuy4o3RWNVDJLAa/7i29MB3zUpF7sNVEbeSUXivajK0jJBAlbbDoip3xMOpAhaFePMaYLHRdAoFj6GrY/tsGhsCOrc4x2I21uEWK8vjMVAcLZ6ULSyJeofKoMJfq96/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=iCltz7mP; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eWHtYGIg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jtltTCAh"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A0034254012B;
-	Tue,  5 Nov 2024 19:19:59 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 05 Nov 2024 19:19:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730852399; x=1730938799; bh=ZMW3EhHGbx
-	+9U7gevGEHKQzzlb+92uRtMeduGpZ4PHw=; b=eWHtYGIgym+LsiENMApLovFoyY
-	ydYLZs62P4KCiNqurInVfk3TcLbhnV6Wwp8voqsgmfzV1xinFQTUv6lsJ8XUUDkl
-	FCEq0PSTzD90YK3qVUdt3R8c/Wnf/I8kMW471fzjtNmxZkS5w1g8cDZFxWIUYRX+
-	CLrmEzRiB78f4oh6PNljRCwgUFteRXajB8SOIoeTsDdBPFv2L5HpcE4wpsarYExy
-	WCLQa5NnA6aUxf9wGiWQYQ6bdBcJSck/0tV+D4v6nZCMm28TQeWf41XL8uwSPN4E
-	571uSc8OCAOAAbOp6ZSqWqv3SnQH8lTqpWxqNbxax1l655ihxMwWsoqmzltw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730852399; x=1730938799; bh=ZMW3EhHGbx+9U7gevGEHKQzzlb+92uRtMed
-	uGpZ4PHw=; b=jtltTCAhsPbGNAZHJ/3N1eyd5Kf3fCHlXP0zsv1yxsPD3nv+05x
-	4fboRxih+9ogodQHYniSBt1tU03UcS53Oe0nvHliPllWNTeD6rMPlNcBp4z1bSo3
-	X3dvXs+b+uUoQK0MRYbO2W+aHLgMtaj0QNwb7mghf5vP2gRRAJsoFzcwD0eINqbG
-	+uKLI3xLMUDH1Z55fxnDNUZ8bTER0V5tzQ+xMMfIgaqWrsI0Y2qePov+VDxqcQ9m
-	bZH3nw1h8FKhasnYz++gJu7gyNrZ533D5bP/BLWHlBZADUWCiC+LgMlFDu9SYq5b
-	mZQci5E+NR01mLxNJXatXxl+OfDJryu8EzQ==
-X-ME-Sender: <xms:L7YqZ4UPXnw5LIUCg7wlNP8afu6cG9n6Ko3SNPTIvoux32vmwZWo5A>
-    <xme:L7YqZ8k1kGI7OUrF7BY5WhTKWN-tWyv57R9J0tY-ZrLHoEPxo4xbfRk4LQL9LSpoK
-    19C-XiTWv2XRQrcgw>
-X-ME-Received: <xmr:L7YqZ8bUZWJDL506lIkqV-NKcq9zoayhcGiJ_8dMcW2pg9-PMlVY89te7-thZrjVJ1ogPApelMYljxNUlaZUJE8K7ReV6gxd0g1V>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddugddvudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghntggvsehfvghrug
-    hinhgrnhguhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:L7YqZ3Xo8IF5oqB_szVUgGhlXjxXir5JZovpDuYCm6Oaz4NnCRNSWQ>
-    <xmx:L7YqZynci8I0f64EuzULGU6_9VZlFT0qkt54ShozXNKh6OnGdwiIAw>
-    <xmx:L7YqZ8cvDIIgTsb_V02kfgXSYAhy0n0aawZadS9Zyu7lYIVkbkXS6g>
-    <xmx:L7YqZ0GzLmLaDNN8jerTKQVd3oc65XRqoOvZIyxecxPCcHJg4Vx9_Q>
-    <xmx:L7YqZ0gnqrs9JNqgiL9Ko20HVJZE51K33y84hVaBZaA1_ifduC_joaeV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Nov 2024 19:19:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Bence Ferdinandy" <bence@ferdinandy.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Nov 2024, #02; Fri, 1)
-In-Reply-To: <D5EJL736B135.2ZP7G9GHUY0YL@ferdinandy.com> (Bence Ferdinandy's
-	message of "Tue, 05 Nov 2024 21:54:03 +0100")
-References: <xmqqr07rwsmd.fsf@gitster.g>
-	<D5EJL736B135.2ZP7G9GHUY0YL@ferdinandy.com>
-Date: Tue, 05 Nov 2024 16:19:57 -0800
-Message-ID: <xmqqcyj9rz6a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="iCltz7mP"
+Received: (qmail 32281 invoked by uid 109); 6 Nov 2024 00:31:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=g+02nziRTEYwyHjp3sFBHxhK6/xc/qJ7NeEchivU+nY=; b=iCltz7mPvaLDrS/Lx3ugdw7rwoYuMOny4GS6CwYslBya54NZ6NtIyCv2xOe87ppRMgARmCM06JLq6LtrdxUhYIrKpcdjxuPHClAItnHWzDImKwhhkeuPeD2P0fBY1wqFbVmP0894+V9Y3NOQjzyz9K2OS2/5N/BIp4nLCmUkdr7ty9A3ALnraM08DQRxG9n6QoUFIictg7cIRZqgv0nCN3NFPSKYXEOYIH52y2DVZo2Whp05fghEyd2/C+UHpX4RaNh3JribCVQVfC/BssHRXjcvHuxJLiRJ4JrKM6t9AbDbuFFSzNzcQmOolblnnSWxdn1H48suMdSJP58djkkKxw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Nov 2024 00:31:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30405 invoked by uid 111); 6 Nov 2024 00:31:11 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2024 19:31:11 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 5 Nov 2024 19:31:10 -0500
+From: Jeff King <peff@peff.net>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: What's so special about almalinux-8?
+Message-ID: <20241106003110.GA814887@coredump.intra.peff.net>
+References: <xmqqbjyuted3.fsf@gitster.g>
+ <20241105185439.3230561-1-jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241105185439.3230561-1-jonathantanmy@google.com>
 
-"Bence Ferdinandy" <bence@ferdinandy.com> writes:
+On Tue, Nov 05, 2024 at 10:54:39AM -0800, Jonathan Tan wrote:
 
->> Thanks everybody, especially Taylor, for keeping things going while
->> I was away.  Unfortunately, we seem to have acquired way too many
->> topics that were posted and picked up without getting reviewed.  As
->> we discussed a few months ago in <xmqqployf6z5.fsf@gitster.g>, I'll
->> start discarding topics that have seen no activities for 3 or more
->> weeks.  Interested parties can of course revive these topics.
->
-> [snip]
->
-> Considering the above,
-> ...
-> and that this version of the series has been in for two weeks: is there
-> something I should/can be doing so as not to hit the 3 week mark?
+> Junio C Hamano <gitster@pobox.com> writes:
+> > Everybody else seems to pass tests, but not this one
+> > 
+> >   https://github.com/git/git/actions/runs/11677884048/job/32516504151#step:6:1995
+> > 
+> > I am not (yet) so familiar with the topics in flight at this point,
+> > but there are a few topics that deal with packing, lazy fetching,
+> > and commit-graph and object database being out of sync, which were
+> > handled by a few topics by Jonathan, so I am CC'ing this if it rings
+> > bell for him.
+> 
+> That run refers to 95dcd58, so I fetched it and tried rerunning it on
+> CI. It seems to pass:
+> 
+>   https://github.com/jonathantanmy/git/actions/runs/11690124087
 
-The "manual" to run the project on the maintainer side has this:
+I ran:
 
-   - If a topic that was picked up to 'seen' becomes and stays
-     inactive for 3 calendar weeks without having seen a clear
-     consensus that it is good enough to be moved to 'next', the
-     topic may be discarded from 'seen'.  Interested parties are
-     still free to revive the topic.  For the purpose of this
-     guideline, the definition of being "inactive" is that nobody
-     has discussed the topic, no new iteration of the topic was
-     posted, and no responses to the review comments were given.
+  ./t5616-partial-clone.sh --run=1-22  --stress
 
-If the topic has been updated large-ish-ly since the previous
-rounds, it may deserve a fresh review, or the reviewers of the
-previous rounds may find it sufficient that they judge based on the
-change since the previous round (assuming that the earlier reviews
-did a good job of hunting problems in the previous rounds).  I do
-not offhand know who read the topic and how big a course-change the
-topic took during my absense, so hopefully somebody who is more
-familiar with the latest round can chime in before I dig the topic
-out from the bottom of my pile of backlog.
+and got the same familiar, though it took a while (about 40 iterations).
+So I think the test is just flaky and the almalinux CI just got unlucky.
+As for what causes the race, I have no idea. I don't see anything
+obviously timing oriented, so it could be something like
+non-deterministic hashes. In my run this:
 
-Thanks.
+> >   ++ git -C dst rev-list --missing=error --objects main
+> >   fatal: You are attempting to fetch 957c60b67968d2ab4144e7e2fbba99d6ad864e4e, which is in the commit graph file but not in the object database.
+> >   This is probably due to repo corruption.
+> >   If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object.
+> >   fatal: could not fetch 3246c304205324149983025431c5211438f41931 from promisor remote
+> >   error: last command exited with $?=128
+> >   not ok 22 - use fsck before and after manually fetching a missing subtree
+
+Had the same 957c60b679 for the first message, but the "could not fetch
+$hash from promisor remote" was 3cbc3c292cd156cbe9693f32a935a42c92351583,
+rather than what is shown above. So maybe relevant?
+
+I'm not planning to dig further, but maybe that gives you an avenue for
+reproducing.
+
+-Peff
