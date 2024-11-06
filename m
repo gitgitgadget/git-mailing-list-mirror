@@ -1,79 +1,80 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA66E20408A
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C730201256
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 15:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730905861; cv=none; b=QrlUffVvmA93p7KnbgdW5cCigS7JlXPCr8wGaL1aeK/REoOFSh3TSd+nMIoZvEvC613TMcLYS9ndYsIX36q5FOaJ45h01+elueGLOqOdw2VHF294BLNcPsZMc6X+JBNh6M0Cpn5ZzQbGawPAXJ34Rpdu687zU7NchB9jLofmio8=
+	t=1730905865; cv=none; b=NAuNR9ghElKj0bpSwM1x8tVXZ2C/rda0JBjEyoyqbcdd4XJh5ro42S+oF8gMKD2adHisGtZ3eQjVzCij2sTn/Ps0BB5n4Y3yZ+XVi1ggqIoADkctcWk7b5NOrkWr5RIJq4hbI5LcO1v8KkdoAl38ahKYLxsNrHNQqR7DP/DKfhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730905861; c=relaxed/simple;
-	bh=SrK+5qkyOWcyUh0/VHLc/mHOVBoqx7xSUJybG1FZo1g=;
+	s=arc-20240116; t=1730905865; c=relaxed/simple;
+	bh=RwoFxamEH7jTMKoPgW0OF5hw4sZwaz50ZU3z3/BrftE=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jwbh2fazaieac6h2CEnQGZSLIsZLEJlTNKrAV3/ja6TeCSpjX2f7LrDO68gEfdD5bl/me+cfIdqmeF5vMStGHt7vHyeeysKDOn9jLoPYa9EmFs/Msb3Vs/LVMvS6TpKV7Szj42g+fe2ltX0EuC9mm6H5nXz2PwW/1E56XIOP7c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nof/PbqB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CK/IdXs7; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qhf0zjshzGpeY9N5nXVsiOPGOwynheGt/kqooNwF4IJIGqalLj7wyRNI7+o7LqfT5dwox1a+z9fV8lvNu0XZj2ysmpYNHeIO2a4nzhiHiB6w5xx1/5VPRWlejHkxI1ZNnFPnKTptHwk681lNxcItxvGqOApJP5s+v1XGH0USynw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vP3Go9Yx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GR1ejy70; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nof/PbqB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CK/IdXs7"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id BC2D51380689
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:10:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vP3Go9Yx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GR1ejy70"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 94D8F114008D
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 10:11:03 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Wed, 06 Nov 2024 10:10:58 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 06 Nov 2024 10:11:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1730905858; x=1730992258; bh=4vMHyFLCY/
-	PuK3weqTrAbKwSBDpX20gDbrQIQ8b4lHM=; b=nof/PbqBpgzrvgO1GQ+RjjxNYV
-	BeKVlp7fATmeEkFzFu8baaZxZrNr7mkmBtMbE+kjUYoCxNwsFSxF+rhBsHUA7kCI
-	pbu/NWxoHs3OVbsBoSpoboGKEw6gVlVVmBvMSGMzejY3GZjCG4woefahPTLCPCsb
-	7h7lcuznv8LGtPGe1lDL9GR8hDjPPKLj7qhtluylr1qCjDXSVtSL9TIVo9kj6/SF
-	ZYwtiLMcXVjkCfBE/GnFxUyT+fStmrDW3fktTXU8z54mmFwgaVRShUT7wlQiJrVl
-	zKVyPtZ/jkPgih5PVeKUkRMAv71MfEFgVotAshwV7LYfVbB6xVhSSmdWJ4JA==
+	:subject:to:to; s=fm3; t=1730905863; x=1730992263; bh=tMo/EEfWgh
+	iWYGNLJ+9z6EdA7i/jNEbiNFzskvfoxrE=; b=vP3Go9YxNpS5/I1CwQe/7fWZBV
+	aCspj4/JtaOdouqHTpSpS8oXg8ENFxpeu2LNLpF5XCqFHIqSNsxywGwUtzuvWNPS
+	rjIWvwQufIBiPq4qiruNSCt8IBxG/+N13ArK0wNfptsIqcYfGS1VyNsY7UMqdrhA
+	r3oxtWtnJBrQNM1pOg6usmQkW+OiZ23oHXT5n/u0Gjj0KF1LRH2FV2poCst085sR
+	/hcePgA49f7uSiQjlxtKDW/3w3xIu/474ywsR91paEkAizJO9XoGqLDmYfgoMbaV
+	vxG8TlRsqmOHPFr2zv8e+7Yhazh42tcUf8lZsW7uYaYFCOnpgDRqcfrx7sig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730905858; x=1730992258; bh=4vMHyFLCY/PuK3weqTrAbKwSBDpX20gDbrQ
-	IQ8b4lHM=; b=CK/IdXs7VvOM+KDFduued/VjbWZMMjr/kmCvejy8CUa4ZKapsZj
-	c3bPPWnpe6BgWl0ET0UWC90g50FP8L6TL31Xq2xRBPw3ANqRZe/zV8eBHp9YCCx+
-	EjBJ6V9+waM8YHWVTOQCYDEEImgl5ZwaDee3+lDP2hlfhHUPKRk2U0ZdZGoI/0DC
-	lLijka9TSD/2Va2UOWXsBBJnCGcxx3Ul6Dy+Du/7iET0g3sRX+z5F9VZAabSx4WA
-	Jr3M14UiJoExnSD+QYswfAAurZTk69CEUGPkS/XKtp+9vZkSsOw4+LedUJ6MLDQo
-	dDNQLfLcaSoZjpqOCaxTN9vel2mlfCTBQEA==
-X-ME-Sender: <xms:AocrZ5pIt7tOBMdBZ2kQAiLuFsXwC7ZByrupqkb-ydOnzXZ_7_dPfg>
-    <xme:AocrZ7phMloxfvuxZXQgbj__6wYz1RyEHbXLXZYsco4QYRUZVtRP10p8r3ZhZpPvc
-    gw_zJdHwHyZP3wQYQ>
-X-ME-Received: <xmr:AocrZ2MQGQYgxkXrqQCqzXwdnjEf8ZR6YuzVuSV6Ho0OdIe1-Fvutdh9J-Gpw8xOBkDF3nVApgnRq-R-SeBZYXb68uIu6XD629iYtSTCHq0REg>
+	1730905863; x=1730992263; bh=tMo/EEfWghiWYGNLJ+9z6EdA7i/jNEbiNFz
+	skvfoxrE=; b=GR1ejy70gQ0jePBWt/1568LeG9kp5mmS3nGMRxuFiD+c8b7SWzP
+	BiOuB3Jgqf7yoVyxhX9uX25f9E/Mj8AFRHeWZ1kisZOr1OelKjgy7W+PNKojRjhU
+	9iJAVsA5H1ZjwEbQGJ+toVHNzTu0zAxUFaA8N3n5EGQqA0xs1dTgsKeRonTfmB1e
+	dEDB+nsXNEwOdH7evKJ99qi7JFkUFPja5asjDqQzIF50GFOAMGEG0IoXtadSI/ry
+	tTh32StowI6J0SxOVYF0HSBNClAlSCoCOGY7KTi29QXLVZLK6GGsnMNHq26WdDM2
+	TkgKDUP9YJxrdzjAh4uQXHJRvoB/yyFwWhQ==
+X-ME-Sender: <xms:B4crZ584etFoesSt4mCnN97vIvhNBBqyhnbKjxszbX6_riZES3eSRg>
+    <xme:B4crZ9sRc1zgo2Q9KAIJxPAO-rDH6sbe26llLFEoqsZ_ByeV_qciT9q0huu1PM8xs
+    8r-TL7f7T16twlggA>
+X-ME-Received: <xmr:B4crZ3C0TRYl1L50WDI8qnzafxtr2trM8eL5TYm4twyC1Qf8Ni6sMV5oqLb0_pyHUnLWOamU40pCqYfsMqH9s27OsVlJTp_LOi0wXFjZ59H4NQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtddvgdejudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukf
     hfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
     rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeehkeeffeeggedvge
     dvfeefheettddtffejuefflefggfehfeelffeljedvfeehieenucevlhhushhtvghrufhi
-    iigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    iigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
     gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
     rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:AocrZ05YjFddKDkjBoN2g8eNSjodi0bV1_nn9dqrFif-PsJ9fk2qSA>
-    <xmx:AocrZ45xQ6YJfqm0YwfNYSn7X0v_b9nN25D5ygpey2rD8uJ3DobMnw>
-    <xmx:AocrZ8iJi7YpH3gTY30zXMgSFClXL-cmWjX6ViHzg5zFG670jLSm1w>
-    <xmx:AocrZ67rMP6vxgmG-VLf_auj3e8ODYvvQp1h5-3uJiWLS-o_pFGfVg>
-    <xmx:AocrZ2TfjMRFAMC5SfVXFWLZFa3KHdZ_U6bIZZfLRXGHqHDoCmWo6kFG>
+X-ME-Proxy: <xmx:B4crZ9ffVQs9bi42GS47lknVkLvyrxm8-ICYbFOWn_oHED0MykHgiw>
+    <xmx:B4crZ-M8IwOCbabGFwqLUa9vbQqm_SzIOLShH633GlKb37B60aTwew>
+    <xmx:B4crZ_l633qrxd7GedurxV2KEOKEDGB0L5zW0SMPb-XuH-rDIVqfRA>
+    <xmx:B4crZ4ujzNfIRuY_f6J5J1oiaeDO60V7FFlrmtykDmRBM29f6khAlg>
+    <xmx:B4crZw1vgso33AlJlYbu1jAlyXAjb-4SucETn4myTv_fRe30NuMbGpiX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 6 Nov 2024 10:10:58 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 6 Nov 2024 10:11:02 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 668d6c2f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 42d0e54f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 6 Nov 2024 15:10:33 +0000 (UTC)
-Date: Wed, 6 Nov 2024 16:10:50 +0100
+	Wed, 6 Nov 2024 15:10:38 +0000 (UTC)
+Date: Wed, 6 Nov 2024 16:10:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 11/26] git: refactor builtin handling to use a `struct strvec`
-Message-ID: <eae8f7e223f9ec9cbb35a001be75536fbcbe8c66.1730901926.git.ps@pks.im>
+Subject: [PATCH 12/26] split-index: fix memory leak in
+ `move_cache_to_base_index()`
+Message-ID: <88e727407242248173f1e0f39d7b85b681234f4a.1730901926.git.ps@pks.im>
 References: <cover.1730901926.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,148 +86,48 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1730901926.git.ps@pks.im>
 
-Similar as with the preceding commit, `handle_builtin()` does not
-properly track lifetimes of the `argv` array and its strings. As it may
-end up modifying the array this can lead to memory leaks in case it
-contains allocated strings.
+In `move_cache_to_base_index()` we move the index cache of the main
+index into the split index, which is used when writing a shared index.
+But we don't release the old split index base in case we already had a
+split index before this operation, which can thus leak memory.
 
-Refactor the function to use a `struct strvec` instead.
+Plug the leak by releasing the previous base.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- git.c                  | 66 ++++++++++++++++++++----------------------
- t/t0211-trace2-perf.sh |  2 +-
- 2 files changed, 32 insertions(+), 36 deletions(-)
+ split-index.c          | 6 +++++-
+ t/t1700-split-index.sh | 1 +
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/git.c b/git.c
-index 88356afe5fb..159dd45b082 100644
---- a/git.c
-+++ b/git.c
-@@ -696,63 +696,57 @@ void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
- }
+diff --git a/split-index.c b/split-index.c
+index 120c8190b18..cfbc773e6cd 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -97,7 +97,11 @@ void move_cache_to_base_index(struct index_state *istate)
+ 		mem_pool_combine(istate->ce_mem_pool, istate->split_index->base->ce_mem_pool);
+ 	}
  
- #ifdef STRIP_EXTENSION
--static void strip_extension(const char **argv)
-+static void strip_extension(struct strvec *args)
- {
- 	size_t len;
- 
--	if (strip_suffix(argv[0], STRIP_EXTENSION, &len))
--		argv[0] = xmemdupz(argv[0], len);
-+	if (strip_suffix(args->v[0], STRIP_EXTENSION, &len)) {
-+		char *stripped = xmemdupz(args->v[0], len);
-+		strvec_replace(args, 0, stripped);
-+		free(stripped);
-+	}
- }
- #else
- #define strip_extension(cmd)
- #endif
- 
--static void handle_builtin(int argc, const char **argv)
-+static void handle_builtin(struct strvec *args)
- {
--	struct strvec args = STRVEC_INIT;
--	const char **argv_copy = NULL;
- 	const char *cmd;
- 	struct cmd_struct *builtin;
- 
--	strip_extension(argv);
--	cmd = argv[0];
-+	strip_extension(args);
-+	cmd = args->v[0];
- 
- 	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
--	if (argc > 1 && !strcmp(argv[1], "--help")) {
--		int i;
--
--		argv[1] = argv[0];
--		argv[0] = cmd = "help";
--
--		for (i = 0; i < argc; i++) {
--			strvec_push(&args, argv[i]);
--			if (!i)
--				strvec_push(&args, "--exclude-guides");
--		}
-+	if (args->nr > 1 && !strcmp(args->v[1], "--help")) {
-+		const char *exclude_guides_arg[] = { "--exclude-guides" };
+-	ALLOC_ARRAY(si->base, 1);
++	if (si->base)
++		release_index(si->base);
++	else
++		ALLOC_ARRAY(si->base, 1);
 +
-+		strvec_replace(args, 1, args->v[0]);
-+		strvec_replace(args, 0, "help");
-+		cmd = "help";
-+		strvec_splice(args, 2, 0, exclude_guides_arg,
-+			      ARRAY_SIZE(exclude_guides_arg));
-+	}
+ 	index_state_init(si->base, istate->repo);
+ 	si->base->version = istate->version;
+ 	/* zero timestamp disables racy test in ce_write_index() */
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index ac4a5b2734c..2625ac44889 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -5,6 +5,7 @@ test_description='split index mode tests'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
--		argc++;
-+	builtin = get_builtin(cmd);
-+	if (builtin) {
-+		const char **argv_copy = NULL;
-+		int ret;
- 
- 		/*
- 		 * `run_builtin()` will modify the argv array, so we need to
- 		 * create a shallow copy such that we can free all of its
- 		 * strings.
- 		 */
--		CALLOC_ARRAY(argv_copy, argc + 1);
--		COPY_ARRAY(argv_copy, args.v, argc);
-+		if (args->nr)
-+			DUP_ARRAY(argv_copy, args->v, args->nr + 1);
- 
--		argv = argv_copy;
--	}
--
--	builtin = get_builtin(cmd);
--	if (builtin) {
--		int ret = run_builtin(builtin, argc, argv, the_repository);
--		strvec_clear(&args);
-+		ret = run_builtin(builtin, args->nr, argv_copy, the_repository);
-+		strvec_clear(args);
- 		free(argv_copy);
- 		exit(ret);
- 	}
--
--	strvec_clear(&args);
--	free(argv_copy);
- }
- 
- static void execv_dashed_external(const char **argv)
-@@ -815,7 +809,7 @@ static int run_argv(struct strvec *args)
- 		 * process.
- 		 */
- 		if (!done_alias)
--			handle_builtin(args->nr, args->v);
-+			handle_builtin(args);
- 		else if (get_builtin(args->v[0])) {
- 			struct child_process cmd = CHILD_PROCESS_INIT;
- 			int i;
-@@ -916,8 +910,10 @@ int cmd_main(int argc, const char **argv)
- 	 * that one cannot handle it.
- 	 */
- 	if (skip_prefix(cmd, "git-", &cmd)) {
--		argv[0] = cmd;
--		handle_builtin(argc, argv);
-+		strvec_push(&args, cmd);
-+		strvec_pushv(&args, argv + 1);
-+		handle_builtin(&args);
-+		strvec_clear(&args);
- 		die(_("cannot handle %s as a builtin"), cmd);
- 	}
- 
-diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
-index dddc130560b..91260ce97e5 100755
---- a/t/t0211-trace2-perf.sh
-+++ b/t/t0211-trace2-perf.sh
-@@ -2,7 +2,7 @@
- 
- test_description='test trace2 facility (perf target)'
- 
--TEST_PASSES_SANITIZE_LEAK=false
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- # Turn off any inherited trace2 settings for this test.
+ # We need total control of index splitting here
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
