@@ -1,86 +1,95 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD702076C8
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 18:00:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6630820969F
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 18:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730916058; cv=none; b=Phoing30N4bVHsNa+QD1YurlQtNtczKPJW3hc/lvfIyNsDQnSZs/fU28F1TSqx+LYCrD1KBBvNhCPIK7HfgyBIaTZy1S3KRi+wEJlwhVHNCR42jEp5RQtK8lrCfRr6XeMPVpM1FgjI0SkcBW5JORM3XUDRdI/tt2oF1+mN4qPvc=
+	t=1730919069; cv=none; b=ERy5O8gPoGu+lF8p+z+W+qTO569YYPh6XjDU+XZp0Z0+oMeCmNgz/QJlifsRraWrxEc7rwcsAMPvXzAc6JMxFOYWF0V6HUCCtW62ciyvPtXA4B758ODPZclkKpU5CHfvDZTxkO4w/MLQWoc3CG/V3nTywPff3Jb1bYQlRc+81eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730916058; c=relaxed/simple;
-	bh=E6Fp305VaEbD/WqX5tqPy/SxX4spXQkKPSYru0gEMgE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TiBS6AFCUztvU75mjkxIrm41vvhq7Z6Ki6x4a6EoLD7v0V4RJCjdvBWswDCRm4TDr5jASa6WoWNrZijsI2XSsqYjpAUwq7tWr7I/2gRi7H8HUtiewclWf8pgDcMSnQ2lerexRiF5igIo5oOJdPdqCTWv850H556d9Odf36vHA04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gckQ3uAX; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1730919069; c=relaxed/simple;
+	bh=HP2Ai7YKlAOwKnbxksjSZI9DzEUL0/oYOrkoAxr32ek=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=idc+gF8qCrskRhrQIrAR2ik60QTD4fYUbDcHsAVHcTFfikM/b8p2ctIZmEjQSmIoHqFfbBW42qgA9qnuw0BaLmmxYQIzg2jaHdK3LKmRwYw0rPoCrUoG1mtnfZxJWQDvuREoWUmACiC+GLLIpBlt5IpAVAqbqQPg7ZJrT7jxSi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ys+JqJQF; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gckQ3uAX"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e3cdbc25a0so277857b3.2
-        for <git@vger.kernel.org>; Wed, 06 Nov 2024 10:00:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730916056; x=1731520856; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E6Fp305VaEbD/WqX5tqPy/SxX4spXQkKPSYru0gEMgE=;
-        b=gckQ3uAXJxVdzOuluAT6MgqAIxMKv1GLYwhpY4PQ7mPpmkwcN3jyKZlzIUlAYdfZ3t
-         sarX826oJD5Th6yfIblmLT/B1s5IRQJpJ8l6wIHECjeZ4dIPmRh1xHlD5FHFBbrUkjOd
-         c5GSfFRC/KA2H/a10O57YGoVm8l94JnjaSIiDgE2Cj0hW6a0E9A3sPN9QRpt185OFvWF
-         jVHHP3Qb22zfgoSHXfYgZeNaUfjmfnMNZcOIWkrGR14oFvpQaIKTtyXeytt+h4isGN4p
-         o7vNA5CEHNw+1/xkHt0h5JyYP5UhnxsKkQIwEP/ldQ+dq9DQTW9Uj+egtH5a7HstenUE
-         vlTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730916056; x=1731520856;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E6Fp305VaEbD/WqX5tqPy/SxX4spXQkKPSYru0gEMgE=;
-        b=NLZI1hBxNVtj0ICgpP9Zf5bp74qxq5MhyUMTyxDdfn0qu63rQglvIRAno+8rwPFIoB
-         Z5Z2R1sdULj8OXJMuL/yhImMbINeXp4th6FjCzrW3MRXekuUI4XuIsmTJ5+TWrtGxOU6
-         hoDphsZ2cTQa0G00AbX7s6xeTuLgFJ+NAXuJzabaE2qOifMvXnZVhFxtM68J9nHXdXAj
-         fQGSuwueLXGJzq3YktGUCT/RWRX3nWBz2M5GohqxBfdL7C8n8YdKiY7ZZc5GXJTZpe4U
-         j9htMH9SW71nQ5/ZH8eVAPmCeeDZaeo8wZGdDKAvA155I/Pwi+HSKlyyqh7jH+gtWE/c
-         77SA==
-X-Forwarded-Encrypted: i=1; AJvYcCXvKJOSwVbkNH7kTIpjv0l6HR/307KmRQypcLQb843dY0d+kzdM8LfQT7MmCpoO5bjETeo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwF/OZInEZSoNRwH+8P3rtc2UAfgXbQRLuZ+tXJGER+cZrqS43U
-	8OQ8Zzq0ZShH+Z5Xkxff0spemq4U+xgb9KoobzioOd82pCKr28e9kNgY9DCDeXCih8M4lGmb7up
-	3L1Dfx0XzF7aeuK+wrtxKuYDr4dM=
-X-Google-Smtp-Source: AGHT+IG+/qRIWqx4ZSDGKaYMyf4B9riukTjTmGEZEAZv5Dir0qxOhi+OcQga4vfnKrhyu2H9vLJaBfdpgiiiTMTDZQU=
-X-Received: by 2002:a81:d805:0:b0:6ea:7b00:4aa5 with SMTP id
- 00721157ae682-6ea7b004ecemr130776087b3.33.1730916056121; Wed, 06 Nov 2024
- 10:00:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ys+JqJQF"
+Received: (qmail 14093 invoked by uid 109); 6 Nov 2024 18:51:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HP2Ai7YKlAOwKnbxksjSZI9DzEUL0/oYOrkoAxr32ek=; b=Ys+JqJQF4FeXQXPSRscxvNfP7CW3raGheksX4vURuv4ZIpvIGqZA/RE8w4mieuPUVuVyvGGUjP/MO0hMVPP6QtdEKLZrVzim6BILWW/Ie7q9PnD2X/W5jq1KnTdYVWYXuyOQjAaoXAGpee0Qz0aKJFuWMmMl8NWXYhKa6dJtrVmjvsMBkC+2m8FBE6n1tdcTyEPjsy4WVf1rqi3AE9Aq0KEWtMTt1UlUWxOxVQ4YKeXmbhhT1aBHy5pU91fZPVu3t1f35nwRfh8uSQ6LkJWilWy6vaJvTK9fJ8QmGIa1K4B7PPEoyvkvPTBO8QyodN7EVz2hbBxmf8LLahpWqkSfkQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Nov 2024 18:51:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7086 invoked by uid 111); 6 Nov 2024 18:51:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2024 13:51:03 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 6 Nov 2024 13:51:02 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
+Message-ID: <20241106185102.GA880133@coredump.intra.peff.net>
+References: <20241105190235.13502-1-five231003@gmail.com>
+ <xmqqikt1qhwt.fsf@gitster.g>
+ <20241106022552.GA816908@coredump.intra.peff.net>
+ <xmqq8qtxqcye.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241028203457.19715-1-eric.peijian@gmail.com> <20241028203457.19715-2-eric.peijian@gmail.com>
- <CAP8UFD0Yk1Twv9DMOYwO4R+7P0YHj1CgK8xN=2YdE8sdi4ukow@mail.gmail.com> <xmqqo72tqig8.fsf@gitster.g>
-In-Reply-To: <xmqqo72tqig8.fsf@gitster.g>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Wed, 6 Nov 2024 13:00:45 -0500
-Message-ID: <CAN2LT1CvM2oWD3Eni_f5agpzgycAjzaN5gPVU_9_KG9GxwP8dQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/6] fetch-pack: refactor packet writing
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, calvinwan@google.com, 
-	jonathantanmy@google.com, chriscool@tuxfamily.org, karthik.188@gmail.com, 
-	toon@iotcl.com, jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8qtxqcye.fsf@gitster.g>
 
-On Tue, Nov 5, 2024 at 8:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > It looks like other patches in the series, like patch 4/6, have
-> > similar issues. Otherwise the other patches in the series look good to
-> > me.
->
-> Thanks for a review.
+On Tue, Nov 05, 2024 at 07:05:13PM -0800, Junio C Hamano wrote:
 
-Thank you, sir. Yes, I noticed that. I will make sure my IDE respects
-the .editorconfig and revise them in v6.
+> Jeff King <peff@peff.net> writes:
+> 
+> > I am tempted to say the solution is to expand that "equals" value, and
+> > possibly add some less-arcane version of the character (maybe "%)"?).
+> > But it be a break in backwards compatibility if somebody is trying to
+> > match literal %-chars in their "if" block.
+> 
+> If they were trying to write a literal %, wouldn't they be writing
+> %% already, not because % followed by a byte without any special
+> meaning happens to be passed intact by the implementation, but
+> because that is _the_ right thing to do, when % is used as an
+> introducer for escape sequences?  So I do agree it would be a change
+> that breaks backward compatibility but I do not think we want to
+> stay bug to bug compatible with the current behaviour here.
+
+I think "because that is the right thing to do" is what is in question.
+It is not like we happen to allow "%", but you should be writing "%%" in
+an if:equals value already. They mean two different things, and anybody
+who is doing:
+
+  %(if:equals=%%foo)
+
+to match the literal "%%foo" will be broken if we change that. They are
+not doing anything wrong; that is the only way to make it work now.
+
+I wouldn't go so far as to call the current behavior a bug. It's
+just...not very flexible. I also think it is unlikely that anybody would
+care in practice (though I find matching refs with ")" in them already a
+bit far-fetched).
+
+If we wanted to be extra careful, we could introduce a variant of
+"equals" that indicates that it will be expanded before comparison.  Or
+even an extra tag, like:
+
+  %(if:expand:equals=%%foo)
+
+> I am not sure with the wisdom of %) though.  Wouldn't "%(foo %)" look
+> as if %( opens and %) closes a group in our language?
+
+Yeah, I agree it is ugly and possibly confusing. Normally I'd suggest
+"\" for escaping, but it isn't otherwise syntactically important within
+these formats (I don't think, anyway). The magic character is "%" so
+that is what we have to work with.
+
+-Peff
