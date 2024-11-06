@@ -1,37 +1,61 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901CA1CF2A8
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 02:25:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27E418D649
+	for <git@vger.kernel.org>; Wed,  6 Nov 2024 02:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730859956; cv=none; b=OZYeQFOpb6AFM24kKuzMobHsMLFym4sHPP3sfj3BQzUT9KTsX/+QP+2oPf9lJo29B+Bj5FrQnvQqZiYzkgIcIdbcJiOUit0hiRFm+cgkSzpMGnT4dLaALTHJZDGSCHHXo8ccjC9JNl3BAt5BHFjBopgXuTP0mtDpcZVc8H6aDos=
+	t=1730860840; cv=none; b=RSodLQue33IXULO1vWgS+O03e8rSWClAflFnpVEKVaqFGThjvM5KerYvB8A5Eiga2EKKCkJX6+uxMDR5PhqJ+VN8cCVUtBpcd3vGvL99rH7HmAaM/aVBK33ACKAl6n3aD7PObklWjB5JRrmxIexuH7KFLYiHhM6LXBKhGnAqOiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730859956; c=relaxed/simple;
-	bh=R0Z4SynQsfLss/FmD7Gfe+5YycB2xWek4PLbTIy8C2o=;
+	s=arc-20240116; t=1730860840; c=relaxed/simple;
+	bh=eTVh7y3DB+flylbUeM9mtDwQvBGCagxdXxsWffSss0M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S7teiZPVynq9CTsiHVwP89b+RbclxOZO4ZMjx8aVNC+7f28+lUcZKgwRZx69dURQ3AT/nHwb5gSadfYJqo00+/l1JpD+ezLBX3Dbk66Jb0SUTXhlz48eHYhkU08+b1XjdHQkuhHtW6u3S7QNTOlv8zjGYz3kJmJ1lEEwAT/eImA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WKc6ksRs; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=UsCTfzTy7x+27I+v0npXGVeBN57rIjVB3vl1tocS1nYBVW493PmkQDISiOgsh/VZps1l79FCJgPMpbGUFRO4Zuky+11p9YtdXOkCzxDnJnJ+OVoqDPAPjkSQhNa+K6mSg5KyLyEljskpEhPeVJiA+rBbbC/5uSSYQl8Uny3Zlng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FaX/+QVQ; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WKc6ksRs"
-Received: (qmail 1537 invoked by uid 109); 6 Nov 2024 02:25:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=R0Z4SynQsfLss/FmD7Gfe+5YycB2xWek4PLbTIy8C2o=; b=WKc6ksRsyQrmx4laH2Pu9Z1XYekZ63MfJNVH/1ckJ7in9Y/s1Xvy13yXDLu6KM0K/3oQK9E5skGfaO3CZ8i1MkRYtatHYYn+Sz9yb6PljvmobRRn7zyP56ICaDxbVB0dgg9ZcP1oB5O9USATXlN44tUoHtTg5b+dCLFD2eart/OhIBiYlJ8ZX3ovkiwHh/Y3C/KUkGizVs9SkUeOT8Hj2Q+Grkvt5w1L34R/pS3zlvgPDgqgMct4G0KHKonPw4ky0DAgQhy1WifKIDvAr2AS1MF06wXFm1BS0i6E7t70eJ0DV2144QWy9x/2RRoPvH4FcGqnRUUM2fesZ2/D7TKaYA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Nov 2024 02:25:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31763 invoked by uid 111); 6 Nov 2024 02:25:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Nov 2024 21:25:53 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 5 Nov 2024 21:25:52 -0500
-From: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FaX/+QVQ"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-20cdda5cfb6so60724575ad.3
+        for <git@vger.kernel.org>; Tue, 05 Nov 2024 18:40:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730860837; x=1731465637; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+UedZEkPBsKTLUuEn4WLM7Pl13ew6GOFwlZkuBJGWgM=;
+        b=FaX/+QVQ3zowYkwVAWDqVI1tsHLS3aqhETjJtA3SMRu4KsFFZ4LUQHwpCucSv4wNqt
+         FCaa0tT0VRkDzo6KfGyom87Yjxja00OoB23S4yQBaH/3O3TXkMPpZsec2Qe5M+RjxRMT
+         Mp956uxu/Ftaas7OXSZO6weFT2CoaRxrSVGmUspDC0NO5qb+wjq16V1/jrf+4E1N4Jnb
+         HMKx9B5QtQzCr41WAJ23HS9UlDLsolQsI0s/K9Vt1I0BCZ1K56nN+qhHHdGRfEG79bXC
+         p6Hai1OH8ZGQkCejOsdDkRrKNaqD3wFB5yThnI9o9Oh2alQMgq+f8E6UlVm7cvf1PlzH
+         ZARQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730860837; x=1731465637;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+UedZEkPBsKTLUuEn4WLM7Pl13ew6GOFwlZkuBJGWgM=;
+        b=V4RROKzuuLqAUUG6eRKBex0nw/+rX4L2+UbmPwdMhpXF2v30kvy5gv7QbNrxnto7n0
+         YvOX7mgZimJMofhlWlScLwYAzngAQFV6sM9RuifAOrUaza8LBhl3g9GPxit1BMrG5dce
+         ifqgdLB4OlKT9UZZe7Q/022MDnKvOW7+FTePBmuKadfvlCO2fgqeHKWLWEwps6p69Aks
+         or5wBTh+Ac3ngVrP7PWfhxtIG6BwkOyxEeTUBk1OenCafyHTwAOZB/YXb8yRqa/VD9ZM
+         e0jEc+vhb4locVHUIZ4xIaqFCKKfxjH/3xkZJ7TvKkpreSoPT6fBrRfC8J9ysWRLWq+v
+         wOTw==
+X-Gm-Message-State: AOJu0YyxZ7cgM0/+whdXhNTpSaEhUsgg5hRpYI48TDeqB0ynPIDJ08w7
+	pNZ9Vy3jwNrCY6oy74dyVxRA5q11VZQQUoR3MXbLX/EU9MVAPdW2
+X-Google-Smtp-Source: AGHT+IFAAe2x8V28jYEITWBBp0iQpcOB6r8fECIGYBFoP1UFD3TIiSS2qtvtVe0UuPDWyaActTUopw==
+X-Received: by 2002:a17:903:1ca:b0:211:ebd:e370 with SMTP id d9443c01a7336-2110ebde811mr295304135ad.25.1730860836734;
+        Tue, 05 Nov 2024 18:40:36 -0800 (PST)
+Received: from five231003 ([2405:201:c006:3236:43c1:69a9:7a27:f52e])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e99a5a436fsm326392a91.37.2024.11.05.18.40.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Nov 2024 18:40:36 -0800 (PST)
+Date: Wed, 6 Nov 2024 08:10:32 +0530
+From: Kousik Sanagavarapu <five231003@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
 Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
-Message-ID: <20241106022552.GA816908@coredump.intra.peff.net>
+Message-ID: <ZyrXIKU8Qn46Z0LF@five231003>
 References: <20241105190235.13502-1-five231003@gmail.com>
  <xmqqikt1qhwt.fsf@gitster.g>
 Precedence: bulk
@@ -45,7 +69,27 @@ Content-Disposition: inline
 In-Reply-To: <xmqqikt1qhwt.fsf@gitster.g>
 
 On Tue, Nov 05, 2024 at 05:18:10PM -0800, Junio C Hamano wrote:
+> Kousik Sanagavarapu <five231003@gmail.com> writes:
+> 
+> > Document that values containing ')' in formats are not parsed correctly
+> > in ref-filter.
+> 
+> The problem is probably lack of a way to quote such a closing
+> parenthesis.
 
+Yes correct.  We currently don't have a way to quote such strings in
+"value" of "%(atom:someparam=value)"
+
+> > However formats having a '(' instead in "value" will parse correctly
+> > because in a general format string we also mark start of the format by
+> > making note of '%(' instead of just '('.
+> 
+> So if you wanted to have a two-char sequence '%(' in value, you'd
+> see a similar problem?  If so, it is not quite a "bug" or "not
+> parsed correctly"---it is "because there is no way to include
+> closing ')' in the value (e.g., by quoting), you cannot write such a
+> string in the value part".
+> 
 > > This raises the question of what can be done to parse ')' in values of
 > > the format correctly.  It seems to me like a clean solution would
 > > involve a huge refactoring involving a large portion of ref-filter but I
@@ -54,15 +98,8 @@ On Tue, Nov 05, 2024 at 05:18:10PM -0800, Junio C Hamano wrote:
 > Yes, so I wouldn't even call the current behaviour "bug".  The
 > language is merely "limited" and the user cannot express certain
 > values with it at all.
-
-Agreed. I think we may have discussed this quoting problem before, but
-it's not usually a big deal because the set of likely values is quite
-limited. Most of them are just keywords or numeric values. I _think_
-that the equals/notequals parameters of %(if) are the only ones.
-
-Which isn't to say we shouldn't make things better if we can. Just that
-I am not too surprised nobody has run into it before.
-
+> 
+> 
 > Having said that, I just tried this
 > 
 >     $ git for-each-ref --format='%28%(refname)%29' refs/heads/master
@@ -75,30 +112,47 @@ I am not too surprised nobody has run into it before.
 > hex escapes %XX can be used, I wouldn't have written any of what I
 > said before "Having said that" in this response.
 
-I tried something similar, but I don't think it quite works for the case
-in question. Within %(if:equals=<foo>) we do not further expand the
-<foo> value (at least from my limited tests). And so something like:
+Hmm, but hex escapes do work as intended and the problem here is not the
+')' outside the atom but within it.  To be more clear, let's take
 
-  git for-each-ref --format='%(if:equals=ref-with-%29)%(refname:short)...etc'
+	$ git for-each-ref --format="%(if:equals=refs/heads/step-1)start)%(refname)%(then)%(objectname:short)%(end)" refs/heads/
 
-would never match "ref-with-(", but only a literal "ref-with-%29".
+(Sorry for not wrapping the line above x<)
 
-I am tempted to say the solution is to expand that "equals" value, and
-possibly add some less-arcane version of the character (maybe "%)"?).
-But it be a break in backwards compatibility if somebody is trying to
-match literal %-chars in their "if" block.
+First let's notice the difference between what these two commands are
+trying to do.  Your command asks to print all the refs matching
+"refs/heads/master" in the format of (%(refname)) and since we support
+escaping literals in the form of %xx, where xx is the hexcode of the
+literal to be escaped during the parsing of the format, this would
+obviously work as intended.
 
-Another option: in the rest of the "if" design we tried to keep
-arbitrary text outside of the parentheses. So you could imagine a syntax
-like:
+Now let's come to my command.  My command asks to print all the
+abbreviated commit ids of the refs which compare equal to
+"refs/heads/step-1)start" from all of "refs/heads/".  Now here, since
+ref-filter parses the format string by making note of '%(' and ')', it
+accidentally thinks that I want to compare equality with
+"refs/heads/step-1" instead of "refs/heads/step-1)start", which I
+actually wanted.  If my local repo contained both the "refs/heads/step1"
+and "refs/heads/step1)start", wouldn't this be a bug?
 
-  %(if:equals)ref-with-)%(foo)%(refname:short)%(then)...%(end)
+So I do agree that it is a lack of quoting when entering the "value"
+part of "%(atom:someparam=value)", but another part of me also thinks
+that ref-filter should be intelligent enough while parsing the format
+string to acknowledge where exactly the atom ends and which is the last
+closing ')' and hence follows whatever I wrote below the "---" line,
+till the script.
 
-where %(foo) is some placeholder that separate the two arguments to the
-"equals". In sane languages that is a space or a comma, but I'm not sure
-that works here. We have %(end) which would otherwise be a syntax error
-here, but it feels word. I dunno. The whole language is kind of
-hideously verbose. I feel sorry for anybody trying to write non-trivial
-formats. :)
+Also, I'm thinking the commit msg was not clear as it lead you (perhaps
+someone else too when they visit this topic) to think about escape
+literals while that not exactly is the problem I'm trying to get at.
 
--Peff
+Also if you think a change to the documentation would be more proper
+than reflecting this with a test breakage, I'll do that.  My intention
+with the test was that - in the future if we parse the "value" correctly
+then that commit would also include a
+
+s/test_expect_failure/test_expect_success
+
+change.
+
+Thanks!
