@@ -1,115 +1,106 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5E2D6FBF
-	for <git@vger.kernel.org>; Thu,  7 Nov 2024 03:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C3F186E2D
+	for <git@vger.kernel.org>; Thu,  7 Nov 2024 04:17:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730948897; cv=none; b=E1Whsh5DFDw+HQ9qBfsho4X9XMv97BBMsIxZxouHSdQGGf07jtMsldZk7R21bDFq//ZCOueiclLiZEtaCFhrFr9BIwH2I0Npg/yJyd1ZBtaI0yU+tjjSQbsBBXRu4C2aZjNlUMCezufmxjaZFBe5LBSI6TnMMbfj74YzuYqFACU=
+	t=1730953035; cv=none; b=h3vT/w9cZu5zZtU1NDZdlELgWEPxlvoElAtx+gU8RIBsuYynikrXFsno5fuesKHJPEoobxUXbZGs4Ol+5Kgb8wbqx43RBg+NqehfX6MqgAggAn1ZNwHcyHeTCUAUqYpDlTaZgP+g2MYsHyLkTBVncDPTUqCqDh30KA4lOMze7ZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730948897; c=relaxed/simple;
-	bh=vOiV6deAYeCJrInfpqA+0JamMcpAjZCqx7J+W/zK24Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m1qDvlWkPN8G/pdd/hQkF6FEPB1ktdC5QaRXEDEFE+DRGEclCtS0ALPJWLZYLyaDe9I+EGTwlcltuxkvpL6ohLpfc8kxcyJ7h6ldnfair5/o8IUctvm2TM3AOWnA74MZcdk5AoQ3CsiEEfBBfMpb4eDUi9fZwCWEBLzeugR82Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ayxY3Mev; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VrCGCa8Q; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1730953035; c=relaxed/simple;
+	bh=LBPO7rdta21az92R/OGmHhQRdCnXpb9tpOIk0T/n9qA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=a66CKpFnCVglgK4XBX4xWuohTDQA3cotmr3Pq9KklilUOWFHFLpcIyT2LaLSK3+cQo3ZnzRMD8jsd0bQoPg3MVl6Mr8uha8LOQRtUCDHLaMvETRSoHm/lsi9xrpts4VkVHxpxan0h7yIw6HiF2mQmkslBHflEYV+CY+FUJFAPF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BzXdA1rb; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ayxY3Mev";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VrCGCa8Q"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C1DC2540178;
-	Wed,  6 Nov 2024 22:08:14 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 06 Nov 2024 22:08:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730948894; x=1731035294; bh=4a62wIjS1s
-	FNEA79XNNboCzRxS2CSvRjj2+ExbAmwz8=; b=ayxY3MevRKKFJpxzV3NggE5nbw
-	Zs6VR+lLaTuIC3S+7TmSNwL5r2bN9q6QaJDwlXATM/HEPJ6BWys1Yos4/j0YEWsO
-	mJkSrmUaQ6NFUWzxneCIWJOpHrUNnkh6apDPaxUGjjQJSpHOwVcPQFQCe2hXNgs8
-	XHcmW32dKqM+Qx2dEze0IZ7AJ+rPbOxTP9HbzH7CJmqW+Zamt/OfZ5kvFSSNIcpQ
-	5rvCf+ogmDeJK/mRafBjo3UqsKvTl0f0viEpB63iIClfEhEP/snyvl3Ll66cZZrH
-	kkLP1HsTQxZ/XNSyZBHrIci6emSBYe2piyXLdTHSDLdTSjdkqlHr3YtrBKDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730948894; x=1731035294; bh=4a62wIjS1sFNEA79XNNboCzRxS2CSvRjj2+
-	ExbAmwz8=; b=VrCGCa8QFdjVqsrnX02fLW4TSNnarntYV0RAvHeYakyJFXKlkza
-	N3nqZ2wnxAhp+4YRCg68bwS56IZXqP1g+/insow46OejYL5O251Ho2S1xvx4W/Lr
-	/dqw/rptKzIWCDnymXVIUxnl3XJB6qYSipA1Y//JB7gUm17P5eakiv7xkzjDp/dj
-	kZOc7fReEZYbb5KEXHGC8OhXT2HzVHnpnJUrO/PaL0Ds4p2M4aBLsghzse0s8BW9
-	iOrS11jIozAXiwtkRDHOKmiWHTXp0RHg6bAVjxxTbVFq0lynOr/bYIaB56GLIUn3
-	nQuhA/H5iz5jcyRHbPVwc6LQYVZoEDOa8Rw==
-X-ME-Sender: <xms:Hi8sZ1z2aUGbcT1t3rXbwx0VHeB4ZeJIJAQ-dpo2LRsooiTrYOWdrA>
-    <xme:Hi8sZ1SpOjpcmwnDZ5VDWQGZNEx-xZyfSejZMgHaiHENi_MtlNRwSWyuwxLYw82b9
-    r3D5YhQxDwJJpAHiw>
-X-ME-Received: <xmr:Hi8sZ_Xo62eLKpAG22_J-C9gonOlNCR0cJP5ldgymtsj09x3tqPXaK1v9kdZoKNmmWoDBx_m5SJVBkz6eg2unJ7xEcR3pd4vtIr0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdefgdehiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Hi8sZ3i6fa_Vmb2nANzDLMi-_pq9g9ZBJ5sTA2suSX7nLI7Eugzjww>
-    <xmx:Hi8sZ3D58-Ba57syPf4hEPX2U0hPLLaDzebFsxo-oS8m8kLfIRYz1w>
-    <xmx:Hi8sZwJxIo6LfUGr1XYbu-baIJk3Br3Y2CNVZkPytXP9a3CdW803fg>
-    <xmx:Hi8sZ2B7p9IeZowCuwWClXrJjTsd9pDuCdUehgX7FTGqxV9RD2zgcA>
-    <xmx:Hi8sZ52q8Tzp241j-cBxgXJdaugbrXRiueYDZbjMAuOQwwfV35yDsn0R>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Nov 2024 22:08:13 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Taylor Blau
- <me@ttaylorr.com>,  git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/2] t/helper/test-sha1: prepare for an unsafe mode
-In-Reply-To: <20241107020810.GD961214@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 6 Nov 2024 21:08:10 -0500")
-References: <cover.1730833506.git.me@ttaylorr.com>
-	<0e2fcee6894b7b16136ff09a69f199bea9f8c882.1730833507.git.me@ttaylorr.com>
-	<xmqqcyj9qgyf.fsf@gitster.g>
-	<ZywOWn08cGBnBWM-@tapette.crustytoothpaste.net>
-	<20241107013915.GA961214@coredump.intra.peff.net>
-	<Zywcr2lMM_Ij8suu@tapette.crustytoothpaste.net>
-	<20241107020810.GD961214@coredump.intra.peff.net>
-Date: Thu, 07 Nov 2024 12:08:12 +0900
-Message-ID: <xmqqed3nvizn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BzXdA1rb"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c9362c26d8so2834312a12.1
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 20:17:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730953031; x=1731557831; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gj0ETZ57V1NY7oZxqHPFsZ5zIobtbS+b2BQYE9CBpj0=;
+        b=BzXdA1rbfVBU9lS0uTE/9j63l7wuIwo5D5Roby66VK4lgPDpn1sExNO++KRTknQZa0
+         TnIFBOBRfi93bWhzsUckjlhhOFUqQ3ndnG2+GwNfGGsYdAHyZIXHS21r+TQJCcAT9t8H
+         Lkn5kXwg12Ok5+uPUO8ldnQVLgf6C9XpOmev03/LYclQNOs51ZMKOdXi6BPlbMXYBX0m
+         la8DQsgyKUFhxf6oFSzN3gO9mfihvGyc/ukN4MihJgYEGiKgict0Br1GadcV7zZASM8K
+         dMBi4+dudNF/T/P3mul9tGkMZbvnH0mQZIipX4Nl81YfiRRPYNS3g/3Xh4pYdQnamjXP
+         6FIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730953031; x=1731557831;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gj0ETZ57V1NY7oZxqHPFsZ5zIobtbS+b2BQYE9CBpj0=;
+        b=TG1kJC+jGdhjHkkUCuduf/ceFXm/Jr/Xw0hURRszoBGICeY13ynYJpxUVd+9jHefQq
+         kUOmGtml5L5b+Si8+ArpjGG8xhnRBH/YZfqszRZgqkwNWtWkagXP+POuXSXkwNqBAlvH
+         HVTmO+4dBHXzinuUFtlFldAqKEZH/sGT3AeMxBJQRBoIVxQKjXbIEOlge5e6eVawCrm1
+         EMGYsSGymkp+2vNw7kMMLdkVGHJRYHdySUE58RbxAJcFhdxe7REJkmKWQrSre8+USsuD
+         9QED+Wo95GEqSS667xIxjY0IQFa8V2JJ4CGkATLFadcYBpY2wEua1ZN/ZHyoSzayktr9
+         LjhA==
+X-Gm-Message-State: AOJu0YzScSC4rmaO94NwjWJI1Cbyw72DhCgbK7kKnpLX+LzigCxQxv4/
+	9AxPKccEq6yxnyOOasw9B5H0nln347yXgZbzkKp0IhLkGckhvXsaBVX9wOR6VMEMy1sEUQq7mZd
+	qXpqej9ujvI//3n3TiodpSrtBFQvpyR7D
+X-Google-Smtp-Source: AGHT+IGLMOT+fjWdCiw5pFHV8EAXv5GGpaP53ozAYgnJDvoSVN8kT8EkBLSUENl5zej+2na27X164tcXDG8Bc7kQh+o=
+X-Received: by 2002:a17:906:d551:b0:a9a:a3a:6c48 with SMTP id
+ a640c23a62f3a-a9ed4c5f8e5mr162037766b.2.1730953031195; Wed, 06 Nov 2024
+ 20:17:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Yarden Bar <ayash.jorden@gmail.com>
+Date: Wed, 6 Nov 2024 20:16:34 -0800
+Message-ID: <CAJPGt+U1icoNJHPtiFcidtwN6ts03jH9WpaGxDGoE5RBQSCCLA@mail.gmail.com>
+Subject: gpg-ssh signing with AgentForwarding
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+Hello Git community,
+Not sure what search terms I haven't used, but I'll try to describe the use-case
 
-> Me too. If we were fixing something ugly or error-prone that we expected
-> to come up in real code, it might be worth it. But it's probably not for
-> trying to accommodate a one-off test helper.
+On my local machine I have a SSH key, and I use AgentForwarding when I
+go out and about to other hosts (dev machines)
+The usual workflow of using the forwarded socket works for pull and push.
 
-I 100% agree that it would not matter all that much within the
-context of the project because this is merely a test helper.
+Where it gets pitch-dark is when I try to use my ssh key to sign git commits.
+Following is my git config on the remote host:
+=====================
+[user]
+    name = John Doe
+    email = jdoe@jdoe.com
+# on my local machine(gpg-ssh signing works): signingkey =
+/Users/jdoe/.ssh/id_ecdsa.pub
+    signingkey = WHAT_SHOULD_I_PUT_HERE # on my laptop its the path to
+the public key from Secretive, or just omit it?
+[gpg]
+    format = ssh
+[commit]
+    gpgsign = true
+[gpg "ssh"]
+    allowedSignersFile = /Users/jdoe/.gpg.ssh.allowedSignersFile #
+contents is: "email1,email2 key-type public_key comment"
+=====================
 
-It looked odd not to have sha1-unsafe as a first class citizen next
-to sha1 and sha256, with an entry for it in the list enums and list
-of hash algos.  If there is a good reason why adding the "unsafe"
-variant as a first class citizen among algos, the approach posted
-patch took is fine.
+I've tried
+1. `ssh-agent -a /path/to/ssh.sock` - errored with address already in use
+2. signingkey set to a path on the remote host with my public key,
+errored with "no private key found"
 
-Thanks.
+I sense that I should be able to employ `gpg.ssh.defaultKeyCommand` to
+use the socket somehow, but I can't wrap my head around it or find
+some docs/guidance.
 
+Other (related) links
+https://developer.1password.com/docs/ssh/git-commit-signing/ - I think
+that 1Password invested the time to make it work
+https://github.com/maxgoedjen/secretive/discussions/338#discussioncomment-11170722
+- asked the same on Secretive repo, which is one way to store keys
+https://github.com/maxgoedjen/secretive/issues/405#issuecomment-2460948732
+- also here.
 
-
+Thank you,
+Jordan
