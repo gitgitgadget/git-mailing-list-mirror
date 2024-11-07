@@ -1,107 +1,133 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541D913A26F
-	for <git@vger.kernel.org>; Wed,  6 Nov 2024 21:17:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CAD366
+	for <git@vger.kernel.org>; Thu,  7 Nov 2024 00:04:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730927841; cv=none; b=lAIW4BRwyzZNO0vR24xFFGsX0tLLWv+CsugvyNk5rfsWTwXmPQxmBXUnzZvpcuDfY+9byDHulmEcO88B/F9aWG8xLrkDLh7ekUVU57eSEPZvDLH+Y0mcp+O0ctGjFQGQGs95/5wgIyveDe6YDy0NagmNFJJeRCZZ04G4A1A2Ytg=
+	t=1730937894; cv=none; b=D4wz7/5YKpC/dAj/v60zJO6Rdhy3wGZ3XdbbWTXmvYptUtJPnBTJakw2enhb8DS6DSPLGdJReINKQ2n8RJOgyMCMDJgLc2bAfsjklP0rvdk/O5mHn4ZzQl9qFtrkq6Hoa4+xAhXywN4eWMO/uucpf5B0Sz4/nZqxHF82Qi1ExFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730927841; c=relaxed/simple;
-	bh=NyIbO+48Z9DzYkKOTStLWJJPk2xTmNqjQV3ZBpDF9Ow=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ibnzv4o1HEgKSQahgztoA/3UXhM7XG/qHrthpMf+WjhMtGBYRCfUGYTPdX9UcKbtp+EKoB0WqrlfbB4MNds1jb2WObY/R2SmhsA98DzpoLkEM7qlz+0L9gHGCW1upkar6O9IWOe7gHbhHU+G3qWcQvZeBXfOccUIu9d+Ptu1Et8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dTBkytPP; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1730937894; c=relaxed/simple;
+	bh=P6KD0yPLRVpikRAng6QUsaDD65DWpTAkQzR3u206wS4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZzMRlPAkvfJv57AhAj9EZTF4hrfIDheCmKtDbCNZJUCv0FKCTxdqITLxr7TIqwllJ/VThbbVOK0at8eepIMCg5m38a/53RJCzs29EQI1R2mPw4mJXH4kp0xYgu4NH4ijmSmT95FWm2qNS3J7veR/BrOy+9X2XYrWQHhVGLkviqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Taibw7iP; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dTBkytPP"
-Received: (qmail 15355 invoked by uid 109); 6 Nov 2024 21:17:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NyIbO+48Z9DzYkKOTStLWJJPk2xTmNqjQV3ZBpDF9Ow=; b=dTBkytPPioS/xA5BICOfBHCF0eMJfrVVgqNLJJrSOZItHlWAB9vizkCJ3y7SxrzE2RybAyni6Bhera6wrVV/pyQIQVobCUjgZNGE7W239FJrHxSn6d/IiuM+BSkG7L/HQ8dOLVaUlU1fBU7Jc1vKJrkNNEsOt9VR1gREH5IQFpXuzijdMSok6gh5W5gd8mFBGitA8FXqkKvGK9YLSIayV95ZWrUIadnwRy1iq7wOOvWhCUAY2o4r8R9nx6pMFi1MYomhXmAAAne29MX4yAko+Yb5951BHoBSdEf1kr/de4VC9UIepRZCJWw6z+6AUxnGaTw8rAKoa3NivT7OfdESoA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Nov 2024 21:17:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8161 invoked by uid 111); 6 Nov 2024 21:17:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2024 16:17:17 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 6 Nov 2024 16:17:17 -0500
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Cc: Benno Evers <benno.martin.evers@gmail.com>,
-	Rasmus Villemoes <ravi@prevas.dk>, Benno Evers <benno@bmevers.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 4/4] describe: stop traversing when we run out of names
-Message-ID: <20241106211717.GD956383@coredump.intra.peff.net>
-References: <20241106192236.GC880133@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Taibw7iP"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43169902057so3238475e9.0
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 16:04:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730937891; x=1731542691; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3g2vyVLXWE4bMPub6ghUYQQkpOZE+WhG+fqNQXlQPg8=;
+        b=Taibw7iP4e4//WPIPW7FbNn6hg8obFEfhFjVD9enhOo8DW5aGKXgY7U58KRPkl0z8O
+         dBpWyOYYYxSzkF+zCeKLvF99mL3ojfufZvcSyHEdfUKlbtf30JluF2+bE5wlWoFsCN7s
+         KuWkR9oaYZs5yEJOZBIjIs5AlZ/o+HrrY+uiOo8WAdmUWNxOniQ2lf2HLynFIDipKGgu
+         AwSnVcE5PWiuMJlWH74MNNKVytqiUMoaDdP8EJqFS/ibAV67IAGwJSQtCY1IEgVCCOhQ
+         Vkchrv06pI7sywv3OI7m5MIvLgGAfEgQQslv5Q4fiDGXzwBAYwuQ+1QCN/lRzjgMUCxA
+         u4GA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730937891; x=1731542691;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3g2vyVLXWE4bMPub6ghUYQQkpOZE+WhG+fqNQXlQPg8=;
+        b=hRepq5mWo9xeJQPWY1KwjCRSX+voQUTZqSKBr/VqehvAlJUGW+FjsjfWhMBhicg0ri
+         ShOtKq02wiO7rsi6oWQy5GqvCAYMtGaV7yFQx7hBgdQNKEcwnruF9wxO0149bplwXchh
+         kGiaxQ9WBIMmI0DWVGJoE8uKP9CTWjHqIpqc4hQZO345cUosaqyhxWAkr16rs8ZPVTqT
+         r8gx4Md79OcOBpVvp7X+UrqVzxcAKp89GFl8CUdQdeCDCwkeEehAsRCAL9g6fIAcmycP
+         YgWQrWCy748jd/fBbM+ma1aTVAgyyI/6T81wDUIZB/RYzeK4Cx2wiJ87n+XR8dIWiW24
+         Y8Aw==
+X-Gm-Message-State: AOJu0YyRjNoEp7QnnOXwmKR35uh18/HNef9pyxhY9mOCgjkSCoEQBwcL
+	mEODydY+jUBZcTJs6ztL2fk+X+XxxnvKIpPr9EKx6VaR1hXXtBv1YYT5JQ==
+X-Google-Smtp-Source: AGHT+IE01Gs1JPAftEUozrE9f6ozu3q6oPmn2Gbt2RtHeif8er/o58RKvyc2fIKF/fqAP3yc/HkbzA==
+X-Received: by 2002:a05:600c:19d3:b0:431:5044:e388 with SMTP id 5b1f17b1804b1-431bb9d0aeamr264122605e9.22.1730937890885;
+        Wed, 06 Nov 2024 16:04:50 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b05e5d29sm3578145e9.39.2024.11.06.16.04.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2024 16:04:50 -0800 (PST)
+Message-Id: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
+From: "Adam Murray via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 07 Nov 2024 00:04:48 +0000
+Subject: [PATCH] trace2: prevent segfault on config collection where no value
+ specified
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241106192236.GC880133@coredump.intra.peff.net>
+To: git@vger.kernel.org
+Cc: Adam Murray <ad@canva.com>,
+    Adam Murray <ad@canva.com>
 
-When trying to describe a commit, we'll traverse from the commit,
-collecting candidate tags that point to its ancestors. But once we've
-seen all of the tags in the repo, there's no point in traversing
-further. There's nothing left to find!
+From: Adam Murray <ad@canva.com>
 
-For a default "git describe", this isn't usually a big problem. In a
-large repo you'll probably have multiple tags, so we'll eventually find
-10 candidates (the default for max_candidates) and stop there. And in a
-small repo, it's quick to traverse to the root.
+When TRACE2 analytics is enabled, a git config option that has no value
+causes a segfault.
 
-But you can imagine a large repo with few tags. Or, as we saw in a real
-world case, explicitly limiting the set of matches like this (on
-linux.git):
+Steps to Reproduce
+GIT_TRACE2=true GIT_TRACE2_CONFIG_PARAMS=status.*
+git -c status.relativePaths version
+Expected Result
+git version 2.46.0
+Actual Result
+zsh: segmentation fault GIT_TRACE2=true
 
-  git describe --match=v6.12-rc4 HEAD
+This adds a null check to prevent the segfault and instead return
+the "empty config value" error.
 
-which goes all the way to the root before realizing that no, there are
-no other tags under consideration besides the one we fed via --match.
-If we add in "--candidates=1" there, it's much faster (at least as of
-the previous commit).
-
-But we should be able to speed this up without the user asking for it.
-After expanding all matching tags, we know the total number of names. We
-could just stop the traversal there, but as hinted at above we already
-have a mechanism for doing that: the max_candidate limit. So we can just
-reduce that limit to match the number of possible candidates.
-
-Our p6100 test shows this off:
-
-  Test                                           HEAD^             HEAD
-  ---------------------------------------------------------------------------------------
-  6100.2: describe HEAD                          0.71(0.65+0.06)   0.72(0.68+0.04) +1.4%
-  6100.3: describe HEAD with one max candidate   0.01(0.00+0.00)   0.01(0.00+0.00) +0.0%
-  6100.4: describe HEAD with one tag             0.72(0.66+0.05)   0.01(0.00+0.00) -98.6%
-
-Now we are fast automatically, just as if --candidates=1 were supplied
-by the user.
-
-Reported-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Helped-by: Rasmus Villemoes <ravi@prevas.dk>
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Adam Murray <ad@canva.com>
 ---
- builtin/describe.c | 2 ++
- 1 file changed, 2 insertions(+)
+    trace2: prevent segfault on config collection where no value specified
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 69f2d942be..8ec3be87df 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -667,6 +667,8 @@ int cmd_describe(int argc,
- 			     NULL);
- 	if (!hashmap_get_size(&names) && !always)
- 		die(_("No names found, cannot describe anything."));
-+	if (hashmap_get_size(&names) < max_candidates)
-+		max_candidates = hashmap_get_size(&names);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1814%2Fad-murray%2Ffix-trace2-segfault-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1814/ad-murray/fix-trace2-segfault-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1814
+
+ t/t0210-trace2-normal.sh | 8 ++++++++
+ trace2.c                 | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
+index b9adc94aab4..4047ab562a4 100755
+--- a/t/t0210-trace2-normal.sh
++++ b/t/t0210-trace2-normal.sh
+@@ -244,6 +244,14 @@ test_expect_success 'bug messages followed by BUG() are written to trace2' '
+ 	test_cmp expect actual
+ '
  
- 	if (argc == 0) {
- 		if (broken) {
++test_expect_success 'empty configuration values are handled' '
++  test_when_finished "rm trace2.normal actual expect" &&
++  echo >expect &&
++  GIT_TRACE2="$(pwd)/trace2.normal"  GIT_TRACE2_CONFIG_PARAMS=foo.empty \
++	  git -c foo.empty config foo.empty >actual &&
++	test_cmp expect actual
++'
++
+ sane_unset GIT_TRACE2_BRIEF
+ 
+ # Now test without environment variables and get all Trace2 settings
+diff --git a/trace2.c b/trace2.c
+index f894532d053..5df43478b8f 100644
+--- a/trace2.c
++++ b/trace2.c
+@@ -759,7 +759,7 @@ void trace2_def_param_fl(const char *file, int line, const char *param,
+ 	int j;
+ 	const char *redacted;
+ 
+-	if (!trace2_enabled)
++	if (!trace2_enabled || !value)
+ 		return;
+ 
+ 	redacted = redact_arg(value);
+
+base-commit: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
 -- 
-2.47.0.441.g1a09955689
+gitgitgadget
