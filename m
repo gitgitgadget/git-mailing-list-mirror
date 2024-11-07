@@ -1,84 +1,151 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA2017C79
-	for <git@vger.kernel.org>; Thu,  7 Nov 2024 01:47:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C122215E88
+	for <git@vger.kernel.org>; Thu,  7 Nov 2024 01:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730944061; cv=none; b=etLaLvIsx6pXQmJNHa3/e3AnaDe8Wn4N60sboO754nnJSpZfn8kY3WknMLHJ0jgoLgyJaJ2DsD/LW1nCYhTHBAQMqnPAuG+5Mmw5CrH6crHTSW50w33KvpfqDR+bsHO2Oxh+5jSKNFz8SGLwWYQ7dJPkeggUl/f22lNNBeHCr+Q=
+	t=1730944181; cv=none; b=IOBgeUKxknVIEkTb/dAO3ViGUCMkCamAgYJwxWpHNtCj+ebRBeFMKVxLcBGqs2gUSPqSXVK4iXCVStvgzrvU/epxXlVmdzByw4D+wekPSGCTcWxnGNVFesMtaPSHNsrR/96eJZJ/ncxHZFHjxIu1CKzNbA0bxcsRmS0/V4DP2KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730944061; c=relaxed/simple;
-	bh=GdR4moFLkC+1HmtlzzsoT1g0yhfba1WqU11IHLyrntM=;
+	s=arc-20240116; t=1730944181; c=relaxed/simple;
+	bh=6+O/O0FAsucqgA0yihLBDtGeO51bcu1qet4867yduEk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fQD4zf3kcuwqcZsoAr69JnLp57iOvnWRTuHptgl5qPwzYGep0Ed3FsNMvy/peM+M5BCsn+yNSsp3QWYITSEmVBRobLAR6WGluaYB/8fn/7/WPYBbpmO9UCXg0oBKSlpILFyujPIvGmLYUvbnavgIhKmCh8x6+llUa4fUxwF8b3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RKCZMoEb; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=j39JCKvJSWIYsLn2yEwfrpkPj0Qa3NbrxG3H72TQFgakO58y2T+ea0OH4SVVyKbscj1FgSRFpFwXJLm0011rly5fQLPINaprA83Yywa1kDG6fMAkWBHSmb37hXKgQz5eMPJ5IoEClwuS7V9Ws7zZb9aKRG4wY9UTIal13Dr1ji0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uDB9TbF2; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RKCZMoEb"
-Received: (qmail 17461 invoked by uid 109); 7 Nov 2024 01:47:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GdR4moFLkC+1HmtlzzsoT1g0yhfba1WqU11IHLyrntM=; b=RKCZMoEbDu8oKxXK1mbYQwYbcYpilhEx3/7MhrntZUgRaXmt28DUvY6LpQpieGDmtvjVehAmImV9DVtRoyWaWLO+GdEaMu80p1krwLa+BIbqG8rVYps+K3bR1jUMzGwp8HbkCGnbr+tUKOrZvfKosBNNx0AI9ZSYZA4P7MV5M+G317ogQ0WeXH/0suLwfRkRdADtv9tDssGp5UHEm7+k9cMF45NlCk5xoBY6Fmo3LiArWizve3UTC1izFmX/F7f37F9fO6KSalIRHxbN2lAaDtwSPVvpAGQv8beAE4VwTckdth0NolEnhmBS2K375OXyPUY9kcRA+I6X47+g5xOI3g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Nov 2024 01:47:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10277 invoked by uid 111); 7 Nov 2024 01:47:37 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2024 20:47:37 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 6 Nov 2024 20:47:37 -0500
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 0/2] t/helper/test-tool: implement 'sha1-unsafe' helper
-Message-ID: <20241107014737.GB961214@coredump.intra.peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uDB9TbF2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1730944177;
+	bh=6+O/O0FAsucqgA0yihLBDtGeO51bcu1qet4867yduEk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=uDB9TbF250THIfXMvyDb7tzR2EiYDXryXK0CZLIgkrEx2jQQzKYf5rWExqB4v3n1v
+	 e5J+3PM8660XT71VuC0sRwogZJNY/zs5r/rnTtG2DM2TVSi+xyXVNMY9Mh067GE/4L
+	 oW0+k2G2AA79WmhzcNHnMP8dexQ4/3xXQ5z5tYHQ/TPV88A9Lz2UMN62E8IEKXBal7
+	 s7Vt9J11O2eIz7RwtOriiKCtCKpiwbtNmopoms96+eUVUrkHY6h3ZsFq81pnaeoYVE
+	 l1GZBdOjaLhixvLxV+CMSTYGBGyc/nfUo60s8vzCIXezhMV1oCn54j7zq30medkyf/
+	 KRAiLUIHqdIduk3C1H3Ie6X3ETTpWbcM+dR3Jq24p+NFXECD6ga2BcAgarFOHY05sX
+	 vh0slHIQMXmjBLNrJ/TsYp2ObQYdNuoB+iCZZeS6PXT2PMsnBWmyE4akmsWCtIFSPD
+	 IJ1eTRCIJTNAJH+QM45wdBxyDIJ37nJovmPZgfMTCf5wZxYTuOY
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0E6D320073;
+	Thu,  7 Nov 2024 01:49:37 +0000 (UTC)
+Date: Thu, 7 Nov 2024 01:49:35 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 1/2] t/helper/test-sha1: prepare for an unsafe mode
+Message-ID: <Zywcr2lMM_Ij8suu@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>
 References: <cover.1730833506.git.me@ttaylorr.com>
+ <0e2fcee6894b7b16136ff09a69f199bea9f8c882.1730833507.git.me@ttaylorr.com>
+ <xmqqcyj9qgyf.fsf@gitster.g>
+ <ZywOWn08cGBnBWM-@tapette.crustytoothpaste.net>
+ <20241107013915.GA961214@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="oIWPVcPBeDsTW+KK"
+Content-Disposition: inline
+In-Reply-To: <20241107013915.GA961214@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--oIWPVcPBeDsTW+KK
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1730833506.git.me@ttaylorr.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Nov 05, 2024 at 02:05:10PM -0500, Taylor Blau wrote:
+On 2024-11-07 at 01:39:15, Jeff King wrote:
+> So I think you wouldn't want to allocate an enum or a slot in the
+> hash_algos array, because it is not really an independent algorithm.
+> But I think it _could_ work as a separate struct that the caller derives
+> from the main hash algorithm. For example, imagine that the
+> git_hash_algo struct didn't have unsafe_init_fn, etc, but instead had:
+>=20
+>   struct git_hash_algo *unsafe_implementation;
+>=20
+> with a matching accessor like:
+>=20
+>   struct git_hash_algo *unsafe_hash_algo(struct git_hash_algo *algo)
+>   {
+> 	/* if we have a faster "unsafe" implementation, use that */
+> 	if (algo->unsafe_implementation)
+> 		return algo->unsafe_implementation;
+> 	/* otherwise just use the default one */
+> 	return algo;
+>   }
+>=20
+> And then csum-file.c, rather than calling:
+>=20
+>   the_hash_algo->unsafe_init_fn(...);
+>   ...
+>   the_hash_algo->unsafe_final_fn(...);
+>=20
+> would do this:
+>=20
+>   struct git_hash_algo *algo =3D unsafe_hash_algo(the_hash_algo);
+>   algo->init_fn(...);
+>   ...
+>   algo->final_fn(...);
+>=20
+> And likewise this test helper would have a single conditional at the
+> start:
+>=20
+>   if (unsafe)
+> 	algo =3D unsafe_hash_algo(algo);
+>=20
+> and the rest of the code would just use that.
 
-> This series implements a new 'sha1-unsafe' test helper, similar to
-> 't/helper/test-tool sha1'.
-> 
-> I have found such a helper to be really handy when debugging the new
-> SHA1_UNSAFE build knobs, e.g., to easily compare the performance of the
-> safe versus unsafe routines, different unsafe variants, etc.
-> 
-> The first patch prepares us by setting up the existing cmd_hash_impl()
-> function to be able to conditionally use the unsafe variant. The final
-> patch introduces a new 'sha1-unsafe' test helper which calls the new
-> variant.
+Ah, yes, I think that approach would be simpler and nicer to work with
+than a separate entry in the `hash_algos` array.  We do, however, have
+some places that assume that a `struct git_hash_algo *` points into the
+`hash_algos` array (notably `hash_algo_by_ptr`), so we'd have to adjust
+for that, move the function pointers out into their own struct which
+we'd use for `unsafe_hash_algo`, or be careful never to call the
+relevant functions on our special `git_hash_algo` struct.
 
-I think this is a useful thing to have, and I didn't see anything wrong
-in the implementation. I did notice some oddities that existed before
-your series:
+> All that said, I do not think it buys us anything for "real" code. There
+> the decision between safe/unsafe is in the context of how we are using
+> it, and not based on some conditional. So while the code in this test
+> helper is ugly, I don't think we'd ever write anything like that for
+> real. So it may not be worth the effort to refactor into a more virtual
+> object-oriented way.
 
-  1. Why do we have "test-tool sha256" at all? Nobody in the test suite
-     calls it. It feels like the whole test-sha1/sha256/hash split is
-     overly complicated. A single "test-tool hash" seems like it would
-     be simpler, and it could take an "--algo" parameter (and an
-     "--unsafe" one). I guess in the end we end up with the same options
-     ,but the proliferation of top-level test-tool commands seems ugly
-     to me (likewise "sha1_is_sha1dc").
+Yeah, I don't have a strong opinion one way or the other.  I think, with
+the limitation I mentioned above, it would probably require a decent
+amount of refactoring if we took a different approach, and I'm fine with
+going with Taylor's current approach unless he wants to do that
+refactoring (in which case, great).
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-  2. You modified test-sha1.sh, but I've wondered if we should just
-     delete that script. It is not ever invoked in the test suite AFAIK.
-     If we want correctness tests, they should go into a real t[0-9]*.sh
-     script (though one imagines we exercise the sha1 code quite a lot
-     in the rest of the tests). And it starts with a weird ad-hoc
-     performance test that doesn't really tell us much. A t/perf test
-     would be better (if it is even worth measuring at all).
+--oIWPVcPBeDsTW+KK
+Content-Type: application/pgp-signature; name="signature.asc"
 
-So I dunno. None of those are the fault of your series, but it is piling
-on yet another test-tool command.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
--Peff
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZywcrgAKCRB8DEliiIei
+gWurAP0SWwyAvNTvKTp3xSboX4c5Ds+xsuPuPZYChOJcsFIj/AD/RITX7GURz6Fk
+g4yltbEjiP10bDVi+C0/hS2shVWvHw8=
+=W4UH
+-----END PGP SIGNATURE-----
+
+--oIWPVcPBeDsTW+KK--
