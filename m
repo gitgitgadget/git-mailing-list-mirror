@@ -1,106 +1,280 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4234DFC08
-	for <git@vger.kernel.org>; Thu,  7 Nov 2024 21:36:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0EB218306
+	for <git@vger.kernel.org>; Thu,  7 Nov 2024 22:24:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731015368; cv=none; b=ebGfn8yRQZJuL7yyDL+zQI42LKvyLYG3Gm+tCkVjU4s398JgL92oxaQw7ZX8h0BJILT1sf4u9ttjmxRnbr+rr9388siVZf+IoNcQ3eOwEG56VNQ4KpyCwmr1UeYfdOSJ5N/zgaI3lXzwwIro6AUEBVUDjLd0ykXfJdcQyzHO70I=
+	t=1731018287; cv=none; b=ouk4IGdPM0tmcmzXQrSE/LUq1woSD0R8NbpV2lgyYahoZtiD7KYBu+rRYWGH41HUtUsigCey5+su3itKrIYeuOOD3IBMrtnGtxq6hkll2z2THOieYw+35fOb8eNR3/sx0zu5JM15O7owgPZhn97wyJa39r61yg7lZeDr2XVpIJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731015368; c=relaxed/simple;
-	bh=g7GVLGWuDXnCi9w0rAx51h/nMzk7wYypx+G0lm1z9Os=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AxzgDvzu/HbdcUR4/j0D2ox9XKDmGH2I+xUsfRljpJU9I7LTSdyqm7gTxx8s7CsR466GDRwC7VgQoHNcuZ9fnZLdXm0b3wy8VvqVO0NytH2jyImiYNMCvE1TDhtkSxr0Xbky8FlTB5J28Sc5EYKpcI49uA38WI5BS+evHitaQc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=DO4tCWj/; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1731018287; c=relaxed/simple;
+	bh=mLowo3cF+mRnBHPjcUaOwl3EjLX/afZ6wXmuidrAIBU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=N1TFKfZfs9pWJzy6/ID+Rej9oKhT00wY1wqa7bPx8hxwPTz9q/dpm8EA4wtd9za9Ux8gva4CHN4obBhRdjBAjLqzwsqadwwdDFUy3Mo4qsR12Z+XHsTs/H3Wn87eeJ+y6bYFw0XrcGjLcs+npS6obWubznCghSriHgaBRReqOI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NTj8aB8q; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="DO4tCWj/"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e28fd8cdfb8so1463263276.3
-        for <git@vger.kernel.org>; Thu, 07 Nov 2024 13:36:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NTj8aB8q"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-84fc818f518so507556241.2
+        for <git@vger.kernel.org>; Thu, 07 Nov 2024 14:24:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731015366; x=1731620166; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gFrgiMGaOEuGMP4qlEGpx+hnN6L9T+eq+d9fAKY5MyE=;
-        b=DO4tCWj/A1wHHPSoi/asWHGeaJsvL7hMps3LyRebCneomJD+F9CBQwfYUAWBAFF+Fk
-         JD5doluQDMvQvw6orQEp/9Ql40Ur1w+tt1PLnd5ifHrD/pCXU+DHBia+j1ygvs1h1+Hd
-         YTJNn1WFcGsft4731+AO71LtEFXKqdToThXojj3nWtJaNGeK16HzLbt1kP96rQqJlMZv
-         WQDb2sokjTB64FQDTkejwRM5srRiT8ydmjpZzfPgovBrOPTJVQNh3VL8qOeAyDYLDA7n
-         QHDvs+1urrkSjqSiMTaLschrKspmQkH3VpDeNKkLGw5NUM7g32F+tGuY8gUzHMqJc8gS
-         uqwg==
+        d=gmail.com; s=20230601; t=1731018285; x=1731623085; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mLowo3cF+mRnBHPjcUaOwl3EjLX/afZ6wXmuidrAIBU=;
+        b=NTj8aB8q2Ub/450uNfdkOH+hIHJFEPFZohaMwW5r9IMLZlC+TOFVC+ve5eofwWwGZC
+         yb0I0r4Gq00UIAu2efUCpCbb36QMHCzXFLNAUlGNjbqHvtITplw0aPgRJGldOTndX/mQ
+         eBFqN4sJk4v40Dxi53TFnSzP/R+xGjjFvPOkSFko2Wxwlcp1jj+DTRKIze+O+TyuqgTD
+         /ugpubOBns6hAGwrPdS9bFjZCEwQcCCI9zA+sbnMZJLGvSOsZOCV8G2sMOBepkIxh1ID
+         /h2V1lTQ3sdFo7JfuI0O8keRfh5owz4FTT8fw2LsGaOkXpxEIdnwph5WULJJ2t3A3fWU
+         nq5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731015366; x=1731620166;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gFrgiMGaOEuGMP4qlEGpx+hnN6L9T+eq+d9fAKY5MyE=;
-        b=C2cfzTbPPT95dq/7OVK8+epvcSL985Carjgn/s2aQU8ZOANpj9g4keNT8MRYigQvx7
-         fNyObGiCFo6TdVZcHdLqKgvzkGZaSSWsdOF62j70kYjsIPL0qghuvFiCscn1DRAYPLJl
-         kETJ9IVm46GG5y78HG6mrzNxO+oiTbqS0mN8XU+KVOpayAzUr/Bk0fUeO/0DaD4Av8bp
-         9p2OmoPSBGB0GpL3Ig/2+JL6uhyyVP4yOmTwSlan0a+cZHFMe+VU2g6c+usCc6kay7e4
-         Md4oh6LELBazicVar7XlY7Ffs1KPNUTjaAI6Dec6NTBv2J8ugVizRV2DDCHzqrxhE2TR
-         NMuQ==
-X-Gm-Message-State: AOJu0YyDSI8lxA9YPrhO9egkiVd9yRC0LvWl9PBFUkPK84MXrVqbJ6mG
-	vKvRcIxP841ad6/i2pMmyANRIck+vxLKCEqo2s+juEwGvyXUtF4Ej5AKv0OCOLk=
-X-Google-Smtp-Source: AGHT+IGz78lwBqiXfa7T4qyvzfLlAqrEd8qROQzPYc6VpQm4N6mYUCCqFR9P5iY3ryDgDb2eu9y3Wg==
-X-Received: by 2002:a05:690c:650f:b0:6ea:8a73:c0b with SMTP id 00721157ae682-6eaddd86cfcmr6567427b3.7.1731015365767;
-        Thu, 07 Nov 2024 13:36:05 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eace8d543bsm4559157b3.24.2024.11.07.13.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 13:36:05 -0800 (PST)
-Date: Thu, 7 Nov 2024 16:36:04 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 0/2] t/helper/test-tool: implement 'sha1-unsafe' helper
-Message-ID: <Zy0yxDIgEmKtec/0@nand.local>
-References: <cover.1730833506.git.me@ttaylorr.com>
- <20241107014737.GB961214@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1731018285; x=1731623085;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mLowo3cF+mRnBHPjcUaOwl3EjLX/afZ6wXmuidrAIBU=;
+        b=XnRN91r71IHYCRgvWljjXUfSONjRnm6GJRQPVQXSjEdIvU5b3yg7ZYhprAOFkt4b7v
+         5ieILRVKkwaCmimx3PhBfMbcior+u/JCdB0mXEpHaUlBriNAvmyvXzAG8EUUuhfzznR8
+         qVOyz+wfuACk62075Gmd5JFvcA3YTPOqGA70ZZ/A6LljIerzOWfAXtqBBjm9u5E8AlIC
+         +FEWDLAPdXbQaZ/4Pb8LGvw9TKQ0t+t0AYUJ0njLIuHr1wsGoQI3RXo6xXGm8jI/Gl2F
+         N2RrK+ewJvWgc+/DGz8nDbd+VC16kXw5/wNysG4tYjTCtBPE08dGKfKo6i7G/QVXoSAK
+         0afA==
+X-Gm-Message-State: AOJu0Yzb2YyYuHUR2JKI8/7SVD8Bo459Pu/ADbhOb8b/ApaNoVZV9q8X
+	m9Ozsre/cYVb+vXZhhT4A/GclvLDNPWLB3AMxTmZErTYVNjnbGtgimuQbHIG8teBRwJ7+I97fDu
+	NKM0BszBHhf3URdZdUedfsaJQog5yMV5e
+X-Google-Smtp-Source: AGHT+IEzq66pJh7eJr8PwJSwCU/yJHJ3wrDHTgU+Yfbabi0gv87WevKrRwmSKiqAhkaXlfJxNgnWbjCKVIyvcMiYW6E=
+X-Received: by 2002:a05:6102:26c4:b0:4a3:db98:4458 with SMTP id
+ ada2fe7eead31-4aae1634785mr764300137.18.1731018284979; Thu, 07 Nov 2024
+ 14:24:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241107014737.GB961214@coredump.intra.peff.net>
+From: Evangeline Rome <kolya007.klass@gmail.com>
+Date: Fri, 8 Nov 2024 01:24:29 +0300
+Message-ID: <CAFBPeVD7pSOZkaCs_sWfhz6A7EWrV1SmLcCxVErK6GEs7KeYbQ@mail.gmail.com>
+Subject: Crash report: git maintenance start/stop
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Nov 06, 2024 at 08:47:37PM -0500, Jeff King wrote:
->   2. You modified test-sha1.sh, but I've wondered if we should just
->      delete that script. It is not ever invoked in the test suite AFAIK.
->      If we want correctness tests, they should go into a real t[0-9]*.sh
->      script (though one imagines we exercise the sha1 code quite a lot
->      in the rest of the tests). And it starts with a weird ad-hoc
->      performance test that doesn't really tell us much. A t/perf test
->      would be better (if it is even worth measuring at all).
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Yeah, I was sort of puzzled and thinking the same thing as I wrote the
-patch.
+I'm sorry but i can't remember exactly. I learned about cool new feature ca=
+lled
+maintenance and tried to apply it for every cloned local repo I have
+using shell scripts. something went wrong. I'm not sure if its my fault
+or not. I tried to reproduce it:
 
-I wouldn't be opposed to deleting it in the future, and certainly have
-no strong feelings about keeping it around in the meantime. It just
-seemed like the path of least resistance to bring it along for the
-sha1-unsafe ride instead of deleting it outright.
+```bash
+cd $(mktemp -d);
+git init;
+echo '# header' >> ./readme;
+git add .;
+git commit -m 'initial commit';
+echo 'line 2' >> ./readme;
+git add .;
+git commit -m 'second commit';
+# All commands above prepare basic repo successfully
 
-> So I dunno. None of those are the fault of your series, but it is piling
-> on yet another test-tool command.
+# I initially have no timers
+/sbin/systemctl --user list-timers --all;
+# output:
+# NEXT LEFT LAST PASSED UNIT ACTIVATES
+# 0 timers listed.
 
-Yeah, I think there was a fair amount of interesting discussion about
-possible alternatives in this thread, which I am appreciative of.
+# And also I initially have no cron jobs
+crontab -l
+# output:
+# no crontab for nikel
 
-I think that if nobody has strong feelings or issues with the current
-implementation to add the sha1-unsafe test-tool, that we should do so
-and take these patches.
 
-In the future we can consider other things on top, like dropping the
-test-sha1.sh script, having an unsafe pointer embedded within
-the_hash_algo, or something else entirely. But those can be done on top,
-or not at all, and I don't want to hold up this series for them.
+# git maintenance start crashes first time:
+GIT_TRACE=3D1 git maintenance start;
+# output:
+# 00:11:17.328757 git.c:479 trace: built-in: git maintenance start
+# 00:11:17.328808 run-command.c:666 trace: run_command: systemctl
+--user list-timers
+# 00:11:17.328835 run-command.c:758 trace: start_command:
+/sbin/systemctl --user list-timers
+# 00:11:17.336026 run-command.c:666 trace: run_command: systemctl
+--user list-timers
+# 00:11:17.336066 run-command.c:758 trace: start_command:
+/sbin/systemctl --user list-timers
+# 00:11:17.342491 run-command.c:666 trace: run_command:
+'H=EF=BF=BDLH=EF=BF=BD=EF=BF=BDH=EF=BF=BD=EF=BF=BD=EF=BF=BDL9=EF=BF=BDr0H=
+=EF=BF=BDCH=EF=BF=BD=CB=B7' -l
+# free(): invalid pointer
+# Aborted (core dumped)
 
-Thanks,
-Taylor
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!!!! Notice those strange symbols: 'H=EF=BF=BDLH=EF=BF=BD=EF=BF=BDH=EF=
+=BF=BD=EF=BF=BD=EF=BF=BDL9=EF=BF=BDr0H=EF=BF=BDCH=EF=BF=BD=CB=B7'!!!!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+# After the crash, git maintenance with {start,stop} fails with
+# different error
+
+# No new timers were created
+/sbin/systemctl --user list-timers --all;
+# output:
+# NEXT LEFT LAST PASSED UNIT ACTIVATES
+# 0 timers listed.
+
+# No new cron jobs were created
+crontab -l
+# output:
+# no crontab for nikel
+
+# can't stop because it didn't start (?). Here you can see new error
+GIT_TRACE=3D1 git maintenance stop;
+# output:
+# After that running git maintenance start fails with different error:
+# 00:13:48.005648 git.c:479 trace: built-in: git maintenance stop
+# error: another process is scheduling background maintenance
+
+# restarting also doesn't work because previous start created lock file
+# `error: another process is scheduling background maintenance` is forever
+GIT_TRACE=3D1 git maintenance start;
+# output:
+# 00:14:31.483902 git.c:479 trace: built-in: git maintenance start
+# 00:14:31.483951 run-command.c:666 trace: run_command: systemctl
+--user list-timers
+# 00:14:31.483990 run-command.c:758 trace: start_command:
+/sbin/systemctl --user list-timers
+# 00:14:31.491288 run-command.c:666 trace: run_command: systemctl
+--user list-timers
+# 00:14:31.491320 run-command.c:758 trace: start_command:
+/sbin/systemctl --user list-timers
+# error: another process is scheduling background maintenance
+# fatal: failed to set up maintenance schedule
+
+# No new timers were created
+/sbin/systemctl --user list-timers --all;
+# output:
+# NEXT LEFT LAST PASSED UNIT ACTIVATES
+# 0 timers listed.
+
+# No new cron jobs were created
+crontab -l
+# output:
+# no crontab for nikel
+
+# After first crash it forever fails with "another process is schedul..."
+# until I delete lock file
+rm ./.git/objects/schedule.lock;
+
+# then `GIT_TRACE=3D1 git maintenance start` is able to crash with the same
+# useless error again
+# Here are the most detailed logs I know how to create:
+GIT_TRACE=3D1 gdb --args git maintenance start --scheduler=3Dsystemd-timer;
+# output:
+# GNU gdb (GDB) 15.2
+# Reading symbols from git...
+#
+# (gdb) run
+#
+# Starting program: /usr/bin/git maintenance start --scheduler=3Dsystemd-ti=
+mer
+# [Thread debugging using libthread_db enabled]
+# Using host libthread_db library "/usr/lib/libthread_db.so.1".
+# 00:32:49.043634 git.c:479 trace: built-in: git maintenance start
+--scheduler=3Dsystemd-timer
+# 00:32:49.043720 run-command.c:666 trace: run_command: systemctl
+--user list-timers
+# 00:32:49.043760 run-command.c:758 trace: start_command:
+/sbin/systemctl --user list-timers
+# [Detaching after fork from child process 30180]
+# 00:32:49.053174 run-command.c:666 trace: run_command:
+'H=EF=BF=BDLH=EF=BF=BD=EF=BF=BDH=EF=BF=BD=EF=BF=BD=EF=BF=BDL9=EF=BF=BDr0H=
+=EF=BF=BDCH=EF=BF=BD=CB=B7' -l
+# free(): invalid pointer
+#
+# Program received signal SIGABRT, Aborted.
+# __pthread_kill_implementation (threadid=3D<optimized out>,
+signo=3Dsigno@entry=3D6, no_tid=3Dno_tid@entry=3D0) at pthread_kill.c:44
+# 44 return INTERNAL_SYSCALL_ERROR_P (ret) ? INTERNAL_SYSCALL_ERRNO (ret) :=
+ 0;
+#
+# (gdb) where
+#
+# #0 __pthread_kill_implementation (threadid=3D<optimized out>,
+signo=3Dsigno@entry=3D6, no_tid=3Dno_tid@entry=3D0) at pthread_kill.c:44
+# #1 0x00007ffff7d7c463 in __pthread_kill_internal
+(threadid=3D<optimized out>, signo=3D6) at pthread_kill.c:78
+# #2 0x00007ffff7d23120 in __GI_raise (sig=3Dsig@entry=3D6) at
+../sysdeps/posix/raise.c:26
+# #3 0x00007ffff7d0a4c3 in __GI_abort () at abort.c:79
+# #4 0x00007ffff7d0b354 in __libc_message_impl
+(fmt=3Dfmt@entry=3D0x7ffff7e992f5 "%s\n") at
+../sysdeps/posix/libc_fatal.c:132
+# #5 0x00007ffff7d86765 in malloc_printerr
+(str=3Dstr@entry=3D0x7ffff7e97082 "free(): invalid pointer") at
+malloc.c:5772
+# #6 0x00007ffff7d88c4c in _int_free (av=3D<optimized out>,
+p=3Dp@entry=3D0x555555822b16 <strbuf_add+38>, have_lock=3Dhave_lock@entry=
+=3D0)
+at malloc.c:4507
+# #7 0x00007ffff7d8b5ce in __GI___libc_free
+(mem=3Dmem@entry=3D0x555555822b26 <strbuf_add+54>) at malloc.c:3398
+# #8 0x00005555555d3ec8 in is_crontab_available () at builtin/gc.c:2349
+# #9 0x00005555555dc248 in update_background_schedule
+(opts=3Dopts@entry=3D0x7fffffffd0cc, enable=3Denable@entry=3D1) at
+builtin/gc.c:2897
+# #10 0x00005555555dc46d in maintenance_start (argc=3D<optimized out>,
+argv=3D<optimized out>, prefix=3D<optimized out>) at builtin/gc.c:2937
+# #11 0x00005555555cf61f in cmd_maintenance (argc=3D<optimized out>,
+argv=3D0x7fffffffda20, prefix=3D0x0, repo=3D<optimized out>) at
+builtin/gc.c:2984
+# #12 0x000055555555e454 in run_builtin (p=3D0x55555596efd0
+<commands.lto_priv+1584>, argc=3D3, argv=3D0x7fffffffda20,
+repo=3D0x55555597de40 <the_repo.lto_priv>) at
+/usr/src/debug/git/git-2.47.0/git.c:483
+# #13 handle_builtin (argc=3D3, argv=3D0x7fffffffda20) at
+/usr/src/debug/git/git-2.47.0/git.c:749
+# #14 0x000055555555ead9 in run_argv (argcp=3D0x7fffffffd7cc,
+argv=3D0x7fffffffd7f0) at /usr/src/debug/git/git-2.47.0/git.c:819
+# #15 0x00005555555597eb in cmd_main (argc=3D<optimized out>,
+argv=3D<optimized out>) at /usr/src/debug/git/git-2.47.0/git.c:954
+# #16 main (argc=3D<optimized out>, argv=3D<optimized out>) at
+/usr/src/debug/git/git-2.47.0/common-main.c:64
+#
+# (gdb) quit
+```
+
+I hope it would be helpful. Let me know if you need anything else
+
+What did you expect to happen? (Expected behavior)
+
+`git maintenance start` doesn't crash.
+
+What happened instead? (Actual behavior)
+
+`git maintenance start` crashes.
+
+What's different between what you expected and what actually happened?
+
+Crashing vs not crashing.
+
+[System Info]
+git version:
+git version 2.47.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.10.1
+OpenSSL: OpenSSL 3.3.2 3 Sep 2024
+zlib: 1.3.1
+uname: Linux 6.11.6-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 01 Nov 2024
+03:30:41 +0000 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
