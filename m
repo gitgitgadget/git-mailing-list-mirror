@@ -1,54 +1,54 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4CEDDA9
-	for <git@vger.kernel.org>; Thu,  7 Nov 2024 02:52:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69DF52FB2
+	for <git@vger.kernel.org>; Thu,  7 Nov 2024 03:02:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730947928; cv=none; b=iRD5cHLjtW/xKnckP1HkYznwpnjLKg9hIeTycy2ZlAZN66P8zkkrYQURqFV9z1SBxmsTdCx1sowxCwEJ3txQdQidprJGdBSZfrhioI6CLGWHtUVLqR/vaSuONU4irZpdBeoeJSlem/v3PPyGtSEIUV/fhdH5OdQqR38df2gGbBA=
+	t=1730948572; cv=none; b=N32NelguAaGIkGk0wZRxhq4NC9bAXlEwbF9/jwSvyHscHM/PTXjTdR92M2MBE/0dnjVWntGjxjwTq/E2VHw6GldgISU93ujgM6YsTo1hrg95D7i8V1YtZrncmgkpiYyaS6X+XDuWdOoTOqG4erDmwRGfeKET08vDcSMBb/leKYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730947928; c=relaxed/simple;
-	bh=N7eIFgLd1leyt4o6HE42NffRioUW5qLH16pk7P8f0J8=;
+	s=arc-20240116; t=1730948572; c=relaxed/simple;
+	bh=aFuMqybBmcPFmnz36Zckz2k1f8Hi6ec8ss5PXv7aCnU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X07Bq01ee6GII/+iUnYGHm46pJq7QWA3GnxrzgWSkvXzppe8kSeaFgsG258fXUpz1KjlEhnHoxI0QrU2By/Q+w8jdIbSc4yjRCNCwtGY8D+XyRTzCdibVvFUeb2Wakwq9AMXRYugTsZYqr2rJcS3LSVFhtocEFqOwjwAcmn2Gmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cvRJ3xHU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UescLKH9; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=dTnsrXWhoSW8zENpGIqRHj/eLGb9FcuxpRw4XaiD9WkcYSK/Y4OVxSYEX8lCc0novsQInMRAkj27xvlW0vPUmDQ3og5Ky7P1KU8OdKH9mie5q6mEr1aF88E9PTJyF1J2y1oyTVqLEF0Ty/eYmvKuiRzO195ztLrJpT0VRIyn31w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YZTOed+Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IVJlq+oR; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cvRJ3xHU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UescLKH9"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YZTOed+Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IVJlq+oR"
 Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id E795A11400FE;
-	Wed,  6 Nov 2024 21:52:04 -0500 (EST)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7202E254012B;
+	Wed,  6 Nov 2024 22:02:49 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 06 Nov 2024 21:52:05 -0500
+  by phl-compute-02.internal (MEProxy); Wed, 06 Nov 2024 22:02:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1730947924; x=1731034324; bh=66ks4LKIH+
-	h1DKu6ZkkjXFWPED2inFRGQM4sbJMeL9U=; b=cvRJ3xHUklaK5JIcKjSbu3fnh7
-	aeZG7vLsDB035/PWLLEGLxS5mzN+ndIBwxh+SKfeoKHqI17mpQJklXXZdruvcKGe
-	KJ2NRvU/UpiBZNymANV1F/pbJvq/BYFYA8MuDkr8e7K0UPBj4W2DxdZrcA1cqP0D
-	Mz5D3PWQAMiSh8GbTtsXiUEAKv8glmhxv3P4usc7F+XwSxtDoMNYI6+95+agQq5S
-	nDjpsn4YG4fCYSxDO4BWoVbmBbFej4rtORAYtK/Q1rv421wclPyMVZHFGIWGzOZT
-	bl9jlZTuksdpJkU/ll4Nu81meiaotfeF0GEBDIo9h4LupN3gOSj3KfhQ1/Ng==
+	:subject:to:to; s=fm2; t=1730948569; x=1731034969; bh=DiId8XVpCj
+	+zZ1v6HPa7+R5DEPg5ro6bVn0vw30MmsQ=; b=YZTOed+Y2HbuKstti8QZQjYoRP
+	1Numw2waVf2Z1svgTYazVxUyacpVxxVLqO2gsXJCFz3tdzwVQbF7g+zJYi+c3VNm
+	fMISqz9/BSzRV3gJ4iUOfhccvbgHDTkrBL2gE+I+k1NaBF21uuCX1UYscUavFOpL
+	jna3cqaYesnhLwKXiPLiuVPJwsSeRnlnGhPfwyT72unzTP/9bDUuu9e2ZXXFFg4o
+	othj3POcxbhIirtyEBBwIBF+CPzcEhnqDMKpY0biCmg6XP0ANebojUOkFvawtzjx
+	JmwAM0I6h0g4AJfQ0z61RZLin42bfpoCybszvW+oNAUG0w04iklO3lq0sDaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1730947924; x=1731034324; bh=66ks4LKIH+h1DKu6ZkkjXFWPED2inFRGQM4
-	sbJMeL9U=; b=UescLKH9NafE6XEa1jmCYkJTtbotMVe4lMuvBj58ecapBHQaHi8
-	J/AFlXXlHLqgy5syKoBVx8XFvR6IucnpWhyVj8uNdQ8d4Ctvklf4Y6TbTL5R50UP
-	bZVYga7YG971Na3Vxo6OYMXJ4jcR5ku6PMSYX4ivF6fpfoyJYEZ1hhh0yrLJH5m1
-	Bco5QnCGD61QVzj6kYsXdHAxt03Lr3YK5/7o9HgtqA93ENJtcYEXMTP+L21ym6Ve
-	kOSLsV1szjhaZw0F6CkHIOXF1zTeNstOZFwk5mtUeIqIKcKDDzagqkD2eUwpTwVE
-	jwQ2WB6dxx48t5Txm5rH1jvFtoWZfiYiplg==
-X-ME-Sender: <xms:VCssZ9TOODruoSiAozNMZHHTuxfw56dtqHPfSsg3TocYn1ZWZhDYww>
-    <xme:VCssZ2ykaJ-2aDibX92kumtW7CRxYF6helRszEb8dm28nw3HTle0md6DlKX9piWeL
-    Cyrs32Qtc-qHSR-1w>
-X-ME-Received: <xmr:VCssZy1iNxYtXFG-fA-mIHNVicTNvivSqcGoBC4LVFRwBwNDiW6SEMR-ZcEVPDhQE4qNV-Pdgs5prGov2TRFSvlJ4fpWuGR7hxix>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdefgdehvdcutefuodetggdotefrodftvf
+	1730948569; x=1731034969; bh=DiId8XVpCj+zZ1v6HPa7+R5DEPg5ro6bVn0
+	vw30MmsQ=; b=IVJlq+oRXQewhXZXXitGPG4wokxkXftbM2zHo6RnvVpQsZyLcX2
+	4WwQnoEHgr5XisOCTa61rtqcbVwEvlIfFtYDO3qhleXw9ray7UVo7owxWrl6HSc4
+	K5RaD99W0RSpH4Vpq4iSE8BoKXMcr6Td7+01iCBDfOYNMi8wKQDyBEaLaRB309eR
+	6UQ5KEoJOgas/Ja10ZZP4Qutn1aAT4XH6gkmRtpmi6oiIOPix3n7ucUwxcTD7490
+	rV8kgRTCJUs1vHnZ5JnJix+D2kcHr1wyE5zOKqLcaL0oUhE5XV3E4Yz8LuY1DCsK
+	0/kmm8AWt/9wIxzXtELx2P4wsjMrxWCWzfg==
+X-ME-Sender: <xms:2S0sZ_Ojl_W0dXQ7tnooRd2Utz-tbZ0HasgoE8ntV8yqbkhw9gARzA>
+    <xme:2S0sZ5881_RVpexSraWygJxLGsiLSjRw0omrfvyW5hk99LOfFSQfkSrZwdtkAh6XC
+    ULZtPspR5oLFXEDow>
+X-ME-Received: <xmr:2S0sZ-QBEFwauY9jSpnXUcW01BzSWdpS5shAyj_JybAzxEO9CXvqq09kTCmyJFQMga6TWzvoTqBkS1r9skMW6TRA1eImmkvDQdrV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdefgdehgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -57,32 +57,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdefgdehvdcutefuodetggdote
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
     thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepfhhivhgvvdefuddttdefsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrih
-    hsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:VCssZ1CnKAR_ARK4rkXT3ls7Z_VDMQkj7qjs9MEdEt16Liussr76ew>
-    <xmx:VCssZ2jhpCWbAFxK5Ntucuec9bJ9qX7O70JQRVtyviktp0fDBNZXFw>
-    <xmx:VCssZ5oFfqYRczcF9W_XobKWLmwAhpCZYvySUhQNODEU4dw5r7OrIw>
-    <xmx:VCssZxhQRkWqRPrPj2kBL1GzD6v4HVA-pWCyk0C0M189-J9DGSmkpg>
-    <xmx:VCssZ4Z30OYz67gHfCrdaY2JZULdejrffEfuU5WxojTQhg3B92qnEeqZ>
+    hnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrug
+    estggrnhhvrgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2S0sZzsSl09PA1A8afgvhIVts-sQfmGVJo7SGTbBBEZvAFQ9ERM76g>
+    <xmx:2S0sZ3eJW9JfWICqL8lWSsgPdHoDJQtEZIDMYvttM3poJtJlLGpWvA>
+    <xmx:2S0sZ_0NFTuyJ1X8S5YXupUDlGwIEEHQvL1A88xhyf2Purr7CWUcVQ>
+    <xmx:2S0sZz_UYdD66VBt2O0334TCs8iHs8SZlUIr--disrlmcIaM3bzEQA>
+    <xmx:2S0sZ4HeOdmP9UjQ8a2JDZ8SF4_Lyyd7YPEGu3r7i_8XMnBnLmQ7RVTf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Nov 2024 21:52:04 -0500 (EST)
+ 6 Nov 2024 22:02:48 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Kousik Sanagavarapu <five231003@gmail.com>,  git@vger.kernel.org,
-  Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
-In-Reply-To: <20241106185102.GA880133@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 6 Nov 2024 13:51:02 -0500")
-References: <20241105190235.13502-1-five231003@gmail.com>
-	<xmqqikt1qhwt.fsf@gitster.g>
-	<20241106022552.GA816908@coredump.intra.peff.net>
-	<xmqq8qtxqcye.fsf@gitster.g>
-	<20241106185102.GA880133@coredump.intra.peff.net>
-Date: Thu, 07 Nov 2024 11:52:03 +0900
-Message-ID: <xmqqo72rvjqk.fsf@gitster.g>
+Cc: Adam Murray via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Adam Murray <ad@canva.com>
+Subject: Re: [PATCH] trace2: prevent segfault on config collection where no
+ value specified
+In-Reply-To: <20241107020100.GC961214@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 6 Nov 2024 21:01:00 -0500")
+References: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
+	<20241107020100.GC961214@coredump.intra.peff.net>
+Date: Thu, 07 Nov 2024 12:02:47 +0900
+Message-ID: <xmqqikszvj8o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,54 +91,65 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> who is doing:
+> I.e., doing this, with an explicit value for the config option:
 >
->   %(if:equals=%%foo)
+>   GIT_TRACE2=true GIT_TRACE2_CONFIG_PARAMS=status.* git -c status.relativePaths=true version
 >
-> to match the literal "%%foo" will be broken if we change that. They are
-> not doing anything wrong; that is the only way to make it work now.
-
-Ah, you're absolutely right.  Unescaping would start breaking them.
-
-> I wouldn't go so far as to call the current behavior a bug. It's
-> just...not very flexible. I also think it is unlikely that anybody would
-> care in practice (though I find matching refs with ")" in them already a
-> bit far-fetched).
-
-100% agreed.  For that matter, I find "if:equals=%%foo" equally
-implausible.
-
-> If we wanted to be extra careful, we could introduce a variant of
-> "equals" that indicates that it will be expanded before comparison.  Or
-> even an extra tag, like:
+> should (and does) show:
 >
->   %(if:expand:equals=%%foo)
+>   20:48:11.662470 trace2.c:437                      def_param scope:command status.relativepaths=true
+>
+> If we swap that our for "-c status.relativePaths", then the outcome is
+> the same: we've turned on that config option. But with your patch, the
+> trace won't mention it at all.
 
-Surely, but if nobody screams, I am tempted to suggest fixing the
-equals/notequals---we do not have to be bug-to-bug compatible with a
-buggy old implementation. After all, we do expand the string being
-inspected that appears between %(if) and %(then).  I do not think of
-a good excuse for us to limit the string that it gets compared with
-to literals.
+which may be improvement, but ideally, the "valueless truth" case
+should be given differently, perhaps like 
 
-The implementation may be a bit involved, but shouldn't be too bad.
+   20:48:11.662470 trace2.c:437                      def_param scope:command status.relativepaths
 
-When .str is an empty string in if_atom_handler(), we can follow
-what the current code does.  If .str is not empty, allocate a new
-stack element in order to parse the .str to its end by pointing
-.at_end of the new stack element to a new handler (call it
-if_cond_handler()), and pass the if_then_else structure it allocated
-as .at_end_data to it.
+to allow showing what exactly the system has seen.  After all, trace
+output is often used for debugging, and it is not unusual for a
+buggy code path to behave on explicit truth and valueless truth
+differently.
 
-And in the if_cond_handler(), grab the cur->output and overwrite the
-.str member with it (while being careful to avoid leaks).  At the
-end of the if_cond_handler(), pass control to if_then_else_handler()
-by arranging the if_then_else_handler is called, imitating the way
-how if_atom_handler() passes control to if_then_else_handler() in
-the current code.
+> So here I think we need to either:
+>
+>   1. Just quietly substitute "true" for the value. For a bool, the two
+>      are equivalent, and this is probably an acceptable fiction for a
+>      trace to show. For a non-bool (e.g., something like "author.name"),
+>      though, it's an error, and the trace is somewhat misleading.
+>
+>   2. Put in some special marker for the NULL value. Something like
+>      "(null)" works, but it's ambiguous with a config of the same value
+>      (which obviously you wouldn't expect in normal use, but since the
+>      point of tracing is often to debug, I could see it being
+>      misleading).
+>
+> All of this is made harder by the fact that there are multiple output
+> targets. So you'd have to pass the NULL down to them and let them handle
+> it. Something like:
+> ...
+> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
+> index baef48aa69..924736ab36 100644
+> --- a/trace2/tr2_tgt_normal.c
+> +++ b/trace2/tr2_tgt_normal.c
+> @@ -307,8 +307,9 @@ static void fn_param_fl(const char *file, int line, const char *param,
+>  	enum config_scope scope = kvi->scope;
+>  	const char *scope_name = config_scope_name(scope);
+>  
+> -	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
+> -		    value);
+> +	strbuf_addf(&buf_payload, "def_param scope:%s %s", scope_name, param);
+> +	if (value)
+> +		strbuf_addf(&buf_payload, "=%s", value);
 
-Then things like
+Yes, exactly.
 
-  %(if:equals=%(upstream:lstrip=3))%(refname:short)%(then)...
+>  	normal_io_write_fl(file, line, &buf_payload);
+>  	strbuf_release(&buf_payload);
+>  }
+>
+> but you'd need to do the same for each target implementation.
 
-would work as expected ;-)
+Thanks.
