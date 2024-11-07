@@ -1,43 +1,68 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83C44C6E
-	for <git@vger.kernel.org>; Thu,  7 Nov 2024 02:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA292219FF
+	for <git@vger.kernel.org>; Thu,  7 Nov 2024 02:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730945294; cv=none; b=NJvDw/otEZI8gt1+hUZJECbBtnT615+u7clBbEd5jpkHSuGpff5coZnD2SAy0llkYaeS1djdIzfqaurjP8MQwwTJimG9O05J36lmRsrGBexfb0jrPRQma5bb0TATjDPoFO4O4tlDM5VeFMvv62Jgrrj3YZftvUsQN+fWDznoWZA=
+	t=1730946585; cv=none; b=UslqtQWmNYyUfEIi9twuPmAd8wN5p0zfECTjkp5du/HlqZ1uzQo1Q2ezrFHka0HKJA3Xy8C3Q2ze+jbSvFv67dNefkes4v8Ahim0H0dXLN5OI0TXKmVXQg4Dnb2D21Ousyi6CH9WfFv4g0LAFliElFWAgEaK+IRzYlGxMQOh/Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730945294; c=relaxed/simple;
-	bh=XNfP1fOVZEL1gJYcZsfXxbkSxCDccCfEpjCJEIAx1jE=;
+	s=arc-20240116; t=1730946585; c=relaxed/simple;
+	bh=3q2wi0iJjsQIzbGtBAiZu5I82ztOgZwvlL2R9C72TCo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JYqZeMK/ogyvcNMiPTKU6sSP7rI8K0FCcby3kd+HhOO1pmEkeFgq8YvZkzEg8mjrgcASqUU0wGlaSaAgrXc9cHyco2BobPYO10LPn4v4U5DVdpiIQbcu7uCMngElgPO8jOi6MfJPtuHWoHWfVhMvK5IbfSXeY3EMsAxneH7X/bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WQqDEIIR; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=NkwvaC9l/85w14fyeSR+oglynOTXVyDf2cEl+8hBRl2BX9wPoqwctrkPF8aRN95AVzlri+I1Zx92j/5SU/Z3VAIa/A2jPixYFMyRO8dD0ggdSu3iFG55OrV027DkNd7JYJY+X/PSs0KX1KJZY73Ui0Kqc98LcytZ8NL/jixOJas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kHUvHC1i; arc=none smtp.client-ip=209.85.215.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WQqDEIIR"
-Received: (qmail 17686 invoked by uid 109); 7 Nov 2024 02:08:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=XNfP1fOVZEL1gJYcZsfXxbkSxCDccCfEpjCJEIAx1jE=; b=WQqDEIIRaHU7AUpvEE720z38/4K0npmsUPw79tf+GkADuMlHfvanbjRYqqi5SAE//JsSL1Rup+qAgdW0TCpOCvy4IRXJHmCPcJ0loU8uqZwX4KBNyidoE3hZ1ztiJJxXycSA7gPe0KrElESDjbux5kw0sEDVECv52zSuN/1dJRNlAnrucoIx/KAOkZLFgsnnqTYJ4db5U+tufsMMbVlaJOrAIsUj2/WTLtVPzn2JxGQxkPhGHISzpNga+Ju2RtU8E7u/IEtMjp3v/RsTJJ31pWGQyRpFQRa007J/1dDVZ9cEc/2b7pvU+byRFAhINt9/y47Yn4XMmTVmBe2LwI9zAw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Nov 2024 02:08:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10517 invoked by uid 111); 7 Nov 2024 02:08:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 06 Nov 2024 21:08:11 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 6 Nov 2024 21:08:10 -0500
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/2] t/helper/test-sha1: prepare for an unsafe mode
-Message-ID: <20241107020810.GD961214@coredump.intra.peff.net>
-References: <cover.1730833506.git.me@ttaylorr.com>
- <0e2fcee6894b7b16136ff09a69f199bea9f8c882.1730833507.git.me@ttaylorr.com>
- <xmqqcyj9qgyf.fsf@gitster.g>
- <ZywOWn08cGBnBWM-@tapette.crustytoothpaste.net>
- <20241107013915.GA961214@coredump.intra.peff.net>
- <Zywcr2lMM_Ij8suu@tapette.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHUvHC1i"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7eae96e6624so378102a12.2
+        for <git@vger.kernel.org>; Wed, 06 Nov 2024 18:29:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1730946583; x=1731551383; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=peCN+6IzC/bzpGnmKzx2fSUdxruSGStACrOF+eB7vx4=;
+        b=kHUvHC1ikwu/Xmq6gXrmAjdfHCcrjHKf8pjSSLvtiL/cclbwectTbZmJrPjygv/oYd
+         ED/uTYDz6av1ZFeoh5G+roA0KbLOMz/e4zj6M2lQxawaBDgszQ26vjnRsY++RA6zrjfL
+         4ts/scUQfVElzrybzAoXwdIuQ26W27maas/Rp7vS/Xny1X4r/v0USim2BhRQ2hTGZtYj
+         DLonRZKI7igzeUl8taPaFdkx9kl9bA3/l6vvffVHhFzxUEuK/bELtceliU8M0nEVb4y1
+         XKReodx2QC7D19PTSy4IfPSAPIjCUw7RrpXSpnJwSheSzSyfMRMvc45vWlYQbLqfyiQZ
+         PNOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1730946583; x=1731551383;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=peCN+6IzC/bzpGnmKzx2fSUdxruSGStACrOF+eB7vx4=;
+        b=k4MU08wbKOIGvLoV054ZiBwy0y7WvVbvL20qlorrXLJkokJZJPXsKHdwjnryfiJi4s
+         FoBLSYB8GBIie6mcEt1vWabbhJNncFjmqNBIpY6k4txv4D8rjcfAmAHjC+Gu4j5lyLeq
+         Kepmyjflq8xezCMwofAy1lxN2OKS+UqKU/1x5M5+89Qddoa3nyth97ttKvwl34EHYx40
+         QEUHDWnzAy6v6uVIhThFp+rcPCrnb8lTJTk1FBh3TygaRIi3XMYN3qCE9NYrCLeGWVoz
+         AON96zGe0Y4pRB+fGaOIUnpcM6AwPT6Y07tj09WuFkkcHq8mydLpmOOl6snnTJlg0V2s
+         BGOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWCj8i1e/lyNBQBbZor1ZpYmxbEiWrQLqp/XX95f7WE1qk2d8YLT5wvp0iqEN7gr+/DcaM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/gdv7L7VuY3K+Bw4xOVbNvwB4IvLgLMdTvKd2NacaeTAjaJ5Q
+	/V8VnGqde5rYVoEXpAV7DCQvgUGpUWeR/zCf9F3ByVAtdy05l84cDl4vCDUb
+X-Google-Smtp-Source: AGHT+IHOAbZ69F7/dhWoiOTYHr16dPoDxlDvamDt2hQY3cXUEzgvnbeEItJY7ybEYLbCppDr/55XJg==
+X-Received: by 2002:a05:6a20:490a:b0:1d9:c64a:9f72 with SMTP id adf61e73a8af0-1d9c64aa072mr40783394637.2.1730946582833;
+        Wed, 06 Nov 2024 18:29:42 -0800 (PST)
+Received: from five231003 ([2405:201:c006:3236:7331:d3a7:3ff8:4094])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f41f5c9af3sm230571a12.31.2024.11.06.18.29.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Nov 2024 18:29:42 -0800 (PST)
+Date: Thu, 7 Nov 2024 07:59:38 +0530
+From: Kousik Sanagavarapu <five231003@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
+Message-ID: <ZywmElhgd1om2Y3E@five231003>
+References: <20241105190235.13502-1-five231003@gmail.com>
+ <xmqqikt1qhwt.fsf@gitster.g>
+ <20241106022552.GA816908@coredump.intra.peff.net>
+ <xmqq8qtxqcye.fsf@gitster.g>
+ <20241106185102.GA880133@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,43 +71,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zywcr2lMM_Ij8suu@tapette.crustytoothpaste.net>
+In-Reply-To: <20241106185102.GA880133@coredump.intra.peff.net>
 
-On Thu, Nov 07, 2024 at 01:49:35AM +0000, brian m. carlson wrote:
+On Wed, Nov 06, 2024 at 01:51:02PM -0500, Jeff King wrote:
+> On Tue, Nov 05, 2024 at 07:05:13PM -0800, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > I am tempted to say the solution is to expand that "equals" value, and
+> > > possibly add some less-arcane version of the character (maybe "%)"?).
+> > > But it be a break in backwards compatibility if somebody is trying to
+> > > match literal %-chars in their "if" block.
+> > 
+> > If they were trying to write a literal %, wouldn't they be writing
+> > %% already, not because % followed by a byte without any special
+> > meaning happens to be passed intact by the implementation, but
+> > because that is _the_ right thing to do, when % is used as an
+> > introducer for escape sequences?  So I do agree it would be a change
+> > that breaks backward compatibility but I do not think we want to
+> > stay bug to bug compatible with the current behaviour here.
+> 
+> I think "because that is the right thing to do" is what is in question.
+> It is not like we happen to allow "%", but you should be writing "%%" in
+> an if:equals value already. They mean two different things, and anybody
+> who is doing:
+> 
+>   %(if:equals=%%foo)
+> 
+> to match the literal "%%foo" will be broken if we change that. They are
+> not doing anything wrong; that is the only way to make it work now.
 
-> Ah, yes, I think that approach would be simpler and nicer to work with
-> than a separate entry in the `hash_algos` array.  We do, however, have
-> some places that assume that a `struct git_hash_algo *` points into the
-> `hash_algos` array (notably `hash_algo_by_ptr`), so we'd have to adjust
-> for that, move the function pointers out into their own struct which
-> we'd use for `unsafe_hash_algo`, or be careful never to call the
-> relevant functions on our special `git_hash_algo` struct.
+True.
 
-Yeah, I wondered if some code might be surprised by having a separate
-hash algo. Another weird thing is that the sub-implementation algo
-struct will have its own rawsz, hexsz, etc, even though those _must_ be
-the same its parent.
+> I wouldn't go so far as to call the current behavior a bug. It's
+> just...not very flexible. I also think it is unlikely that anybody would
+> care in practice (though I find matching refs with ")" in them already a
+> bit far-fetched).
 
-If all of the virtual implementation functions were in a git_hash_impl
-struct, then each git_hash_algo struct could have one embedded for the
-main implementation (which in sha1's case would be a collision detecting
-one), and an optional pointer to another unsafe _impl struct.
+Yeah.  I really don't think anyone in practice will hit upon this case.
+As I mentioned already before, I was just trying to pick out a corner
+case for another implementation in ref-filter and stumbled upon this.
 
-And then you get more type-safety, because you can never confuse the
-_impl struct for a parent git_hash_algo.
+> If we wanted to be extra careful, we could introduce a variant of
+> "equals" that indicates that it will be expanded before comparison.  Or
+> even an extra tag, like:
+> 
+>   %(if:expand:equals=%%foo)
 
-The downside is that every single caller, even if it doesn't care about
-the unsafe variant, needs to refer to the_hash_algo->impl.init_fn(),
-etc, due to the extra layer of indirection. Probably not worth it.
-
-> Yeah, I don't have a strong opinion one way or the other.  I think, with
-> the limitation I mentioned above, it would probably require a decent
-> amount of refactoring if we took a different approach, and I'm fine with
-> going with Taylor's current approach unless he wants to do that
-> refactoring (in which case, great).
-
-Me too. If we were fixing something ugly or error-prone that we expected
-to come up in real code, it might be worth it. But it's probably not for
-trying to accommodate a one-off test helper.
-
--Peff
+This seems like a nice idea, if we are thinking about not breaking
+backwards compatibility but then there is also this discussion about the
+formats being too verbose but I dunno.
