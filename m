@@ -1,189 +1,128 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4105CDDC3
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 02:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB6C23AD
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 02:11:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731031321; cv=none; b=BCcscrI4OHSK3MPTv32Tjd+8g7Eys7tEXAO3ERYGLOlqgGh06VVTehIzZPVvYaXilrmPol2d98sfN9SQUpGVjrFFK9MRk5F71PXMSFsVoVrnp/H0d1+bS0E2YwcMVjVmxUUT/ehI+a5TqC3r9Gzpbv3Slywo4kqToeqTOgGETN4=
+	t=1731031866; cv=none; b=LhroskvzF0/KNWpZYfPjCnZ3qDm1G/uZ1OHgbEmwFJ5d25lZ5us1+2uY6xGimQqeT7ItAESZocdBACr3ACwscIpEmYMrDtKvPkzDAjURVAEW7ekhlQYLIVAdPhvtyv/1ZRoDr2hHkVTxwDem6DTAO+ssLXX6Oyh+Y6/mt9AQbQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731031321; c=relaxed/simple;
-	bh=u+ckhqqPJEsdHML5/gj091nJtD9E1fS86ROX/JKDPSY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lDSRP6seJo93J4Jd1XGLBDi9gKTDL+a/cJmFEG3Z8VXaLoBMk6Nl/1hOTmmp/tvnx+45HVsDAXSje0b+fisiikcOJ1eRaywli3TyFs8GKEktK/prDKT6Py+pNwdj8gTua32gWqwnp6sEj9UejcGWe8kWFll4mUXlEH0GvxYTqus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fjX0NoqK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IqOy3azT; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731031866; c=relaxed/simple;
+	bh=SXmp1Cb25AUtk+udH2QQA6YDl6o1aUhrPLnkDbxrMro=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=McXrS5mmlclkT8YW2C9rRQX9UXerUPtyV6rWVeZvGK/0l7nYf+DSSSpPsZs7HNEjmMD9GcRNmSVEm1VALdFQkutdCSVHKYOTVTC/T6yIq6aWGuytxQT3cUblAWjqEw+RKak4DsbGZUWdwHgR4vs2M0UJzylBCqWhnewfsxZ64Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bmLw4l29; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fjX0NoqK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IqOy3azT"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 42D441380479;
-	Thu,  7 Nov 2024 21:01:58 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 07 Nov 2024 21:01:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731031318; x=1731117718; bh=rGytHCaLRa
-	uNWtq3NwUi6KzYaIgitVX348heffwJvEU=; b=fjX0NoqKJWo7tXsXYJSeuyzGEu
-	dB2XCqsdgF2upuDf+0wBrjF6LlhxfiMc7620psuiM1i4ClV6ACbkjCsw7dFzEQY+
-	DpqFVP7InEY15ZmdZ7wteNJ2Rcj+xm+gIbVeEE4qCtOE361leG3C3HfYuMEgAEEW
-	dnvxrx99WovbpTOtW+1EHRgBCMh6PLFUb7r1Qpc0RRBUQVJtBvrJJ93PJkiyDLgb
-	70BzEDYpSvC2wGe4dUwLmV0XtvS3973WFoP9LjKwJglZLwBklTzLnE1qfCAr5Upp
-	7Kd5PhPQkj47dHhYgmC0QRSILv/ZgVG6zdI1gWgPIyi7n82xKOhI+535OybA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731031318; x=1731117718; bh=rGytHCaLRauNWtq3NwUi6KzYaIgitVX348h
-	effwJvEU=; b=IqOy3azT79K4VxzaRTJWMmPLRL4ANrtP+CyCCKsuKlOS82Ax2iM
-	QEObWMl8RHvbAPWxyBNJuvwhZjZFLeDlwLYOB0Ji+JmtnRBco8POoN5yXZoQ8iX9
-	ND7A1rSaQkJBU4LSAUAJhFkijTKo/OODVyLZJNexVLHtwC4az5FFmASdPpGXepbj
-	Ud1OGAlYFoSV7u8QD8q+0Zmxe/Q+PW3HmWe1mDrYVUqN+1v+mV+6INgqBFZnvUqU
-	PxJy9qbu33YGappIyqGLpIdINOUpDE9wKT5ZMKJelWySCU3uzMqNxiK23VidJjVK
-	Gi6q1c8qFcFenrX6ZZlfMKwdMWYyBnpksug==
-X-ME-Sender: <xms:FXEtZ-o3tlJxKR2rZV1ge76Za96Fzstp0ewryF4Qp6wInIGoKTMHHg>
-    <xme:FXEtZ8omgK39Zv30qdzktVSZb1pMLBd-oWS-Qf1FQBLHv0TLyuNnSntbJ9bYv6aYW
-    GhvObuk-gDnAgmjZQ>
-X-ME-Received: <xmr:FXEtZzNYAugJ2hWk49oQEz3HQHblj5Ti5p3ExNxFym8alL0ChFqosObuNZlLfiDt6rkcCgg3wuizSY30Iy4vmx9m4hpQixKvnbjn>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdehgdegudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopegrvhgrrh
-    grsgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FnEtZ97LJLIrBQc4NOUkByCqQvJwoTUZN5LiaDryrZEV0vT4s4KzjQ>
-    <xmx:FnEtZ94FwJn24Yqpq54p7LFozX1v3TqNcqnHWIz_vUPpiKLy0U_NAw>
-    <xmx:FnEtZ9iPlmlr-1v9lFJkdptRO9NG31tSvqNNl4_ftqF83ojAbN7VcQ>
-    <xmx:FnEtZ37gFJi7N4iv9d-Xa7vj_U3mLBP79w65tIzfosVJhkNAnRIMqg>
-    <xmx:FnEtZ6trKS4Vi8PFxhOBn9QEa4BRU__5-_cFvSjjy86EpU57zab8vuG5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Nov 2024 21:01:57 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  avarab@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v3 1/4] Documentation/git-bundle.txt: mention full
- backup example
-In-Reply-To: <b222c6787a79c852442969721dadc629ca84cd5b.1730979849.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Thu, 7 Nov 2024
-	12:57:33 +0100")
-References: <cover.1730234365.git.code@khaugsbakk.name>
-	<cover.1730979849.git.code@khaugsbakk.name>
-	<b222c6787a79c852442969721dadc629ca84cd5b.1730979849.git.code@khaugsbakk.name>
-Date: Fri, 08 Nov 2024 11:01:56 +0900
-Message-ID: <xmqq1pzmqy97.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmLw4l29"
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3e5f86e59f1so1032227b6e.1
+        for <git@vger.kernel.org>; Thu, 07 Nov 2024 18:11:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731031864; x=1731636664; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ob3FAyVMlfEJg5TFasMy6rCOA5rwyla7NWnWldInQgk=;
+        b=bmLw4l29hHWliHzyDdBllQNYoqcCHmi+bysKdvGFLCzFLOtDA7OyGf7EtDdbTD4X09
+         Rk/a3LmlSd8ammIDHq23zlaOQ0y/ygYZ5J9fliyVQxhisvoPw9gFBiCCvA3MqliFyDJy
+         zHfw5Zdhx02pFknYBA1iWRVxSpJPwr/M5uXMyi9+PwKJeHtSip+aIm7q8hNezcgZVfHD
+         XkSge4QoiW8wFOS1GhrX8ozFR2RHFNDrwi+5QV5zLM5ThcaDYGvkPD6tqyAIcyquNIdv
+         zGbX/nmpw8o9f43HI3tYXU5l/JGCG+pyQH4yX8khzV/hoMHmywWwzz4RbegY4GNvlMjN
+         dr6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731031864; x=1731636664;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ob3FAyVMlfEJg5TFasMy6rCOA5rwyla7NWnWldInQgk=;
+        b=dD0+juOXmUPKr8/oEJXmufZNKjVaGzvhP6/xWvSvyPYnyp9OlrOZKb5gSytZpEF+TW
+         PRh06KTGG6hm1IMPF5e5Yc8wTTbjudxX+VpQzKv3TOA8RXPrVTlkzq2guNKQgUs0EPC1
+         7S3qjjYtc2YtKIFpGTfq2eeguzqCCbg7EOcf8L/9f6vDfjj+JohQtS5Jtoq6FRQkE7rk
+         BjnQ7dmTvLGsJeiYpnLe+LL0gVw4dpA4itc0I1bGUc1Fh0RgXNk8YSchnBr2MKzOUR8B
+         FMCUqbtwnOWXRsORm2LKEkOXhyVyeNeeDTk6F/vsZUXGOstxaYuDMOEhm0QSrhazx9Jb
+         S7Ng==
+X-Gm-Message-State: AOJu0YxZneEcMP3588ZIeGGGUVjY40YBSSldPrky+Shq3YV6oa0sFkql
+	hLOC217OSsniXCBvEfIRVKEm8Fy6Amb07mXxsQrgcT2HDvaDn5ao
+X-Google-Smtp-Source: AGHT+IFUD6pwe+GIcnojbk3qd7eLF5YhG8jPZDlEZUruJ/91W356Q+OqYWCvzVFJNDd/32jrXMiTAA==
+X-Received: by 2002:a05:6808:1825:b0:3e6:63bb:ed4e with SMTP id 5614622812f47-3e7946c80b4mr1578050b6e.27.1731031864294;
+        Thu, 07 Nov 2024 18:11:04 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3e78cc67256sm566846b6e.5.2024.11.07.18.11.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Nov 2024 18:11:03 -0800 (PST)
+Date: Thu, 7 Nov 2024 20:09:21 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH 4/7] reftable/stack: stop using `fsync_component()`
+ directly
+Message-ID: <6ghxx5fmuzujegducuva77vpybihz6b5cnk75wdgv4pv2knac5@m3trfmg2dk5s>
+References: <cover.1729677003.git.ps@pks.im>
+ <86269fc4fcad9a97709aa0d080c4c077a85ca667.1729677003.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <86269fc4fcad9a97709aa0d080c4c077a85ca667.1729677003.git.ps@pks.im>
 
-kristofferhaugsbakk@fastmail.com writes:
+On 24/10/23 11:56AM, Patrick Steinhardt wrote:
+[snip]
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 9ae716ff375..df4f3237007 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -8,7 +8,6 @@ license that can be found in the LICENSE file or at
+>  
+>  #include "stack.h"
+>  
+> -#include "../write-or-die.h"
+>  #include "system.h"
+>  #include "constants.h"
+>  #include "merged.h"
+> @@ -43,17 +42,28 @@ static int stack_filename(struct reftable_buf *dest, struct reftable_stack *st,
+>  	return 0;
+>  }
+>  
+> -static ssize_t reftable_fd_write(void *arg, const void *data, size_t sz)
+> +static int stack_fsync(struct reftable_stack *st, int fd)
+>  {
+> -	int *fdp = (int *)arg;
+> -	return write_in_full(*fdp, data, sz);
+> +	if (st->opts.fsync)
+> +		return st->opts.fsync(fd);
+> +	return fsync(fd);
+>  }
+>  
+> -static int reftable_fd_flush(void *arg)
+> +struct fd_writer {
+> +	struct reftable_stack *stack;
 
-> +We'll discuss two cases:
+Out of curiousity, from the stack I think we only need the callback in
+the options. Any reason we provide the whole stack here?
+
+> +	int fd;
+> +};
 > +
-> +1. Taking a full backup of a repository
-> +2. Transfer the history of a repository to another machine when the two
-> +   machines have no direct connection
+> +static ssize_t fd_writer_write(void *arg, const void *data, size_t sz)
+>  {
+> -	int *fdp = (int *)arg;
+> +	struct fd_writer *writer = arg;
+> +	return write_in_full(writer->fd, data, sz);
+> +}
+>  
+> -	return fsync_component(FSYNC_COMPONENT_REFERENCE, *fdp);
 
-Contrasting (1) taking a backup and (2) extracting a backup later is
-a very useful way to frame the problem, but then, I'd say
+Previously when the writer was flushed it would invoke
+`fsync_component()`. Now that a callback can be configured in the stack
+options, the callback needs to also be propagated to
+`fd_writer_write()` in addition to the file descriptor being synced.
+This explains why `fd_writer` is now used.
 
- 1. taking a backup, either full or incremental, of a repository
+The rest of the patch updates writer configuration and fsync call sites.
+Looks good.
 
- 2. using the backup, either full or incremental, to transfer the
-    history of the origin repository to any repository (including
-    itself) without needing any other connection between the two
-    repositories.
-
-Whether a full or an incremental, the resulting bundle file can be
-used as an offline medium and then later extracted elsewhere, even
-if there is no direct network connection between the origin
-repository and the destination repository.  But you can extract in
-the origin repository as well.
-
-But that would require a bit more surgery to the presentation order
-of the text, so I do not mind deferrring it to a later and separate
-series.  If we were to go that route, it would be helpful to have a
-paragraph to describe how you use your "full backup" bundle to recover
-lost data from, though.  To those of us who know what is happening,
-there is not much difference between the extraction side of the
-sneaker-net example, but as we framed the use in two distinct cases,
-it would be helpful to make each case stand on its own.
-
-> +First let's consider a full backup of the repository.  The following
-> +command will take a full backup of the repository in the sense that all
-> +refs are included in the bundle (except `refs/stash`, i.e. the stash):
-
-Are you sure the "except" part is factually correct?
-
-I did
-
-    $ git bundle create x.bndl --all && git ls-remote x.bndl |
-      grep stash
-
-and I see refs/stash listed there just fine.  You should be able to
-extract them all with
-
-    $ git clone --mirror x.bndl xxx && cd xxx && git for-each-ref |
-      grep stash
-
-and see that refs/stash gets propagated.
-
-Fix is a simple s/except/including/ ;-)
-
-> +----------------
-> +$ git bundle create <file> --all
-> +----------------
-> +
-> +But note again that this is only for the refs, i.e. you will only
-> +include refs and commits reachable from those refs.  You will not
-> +include other local state, such as the contents of the index, working
-> +tree, per-repository configuration, hooks, etc.
-
-And to make each case stand on its own, we would want to teach
-readers how to use the full backup to recover data from here, before
-moving on to the "next example".
-
-    You can use the resulting bundle file as if it is a repository,
-    a snapshot of it at the time the bundle was created.  You can
-    use
-
-    ---
-    $ git ls-remote full.bndl
-    ---
-
-    to inspect what refs are recorded in it, and you can fetch from or
-    even merge a branch out of it, with commands like:
-
-    ---
-    $ git fetch full.bndl my-butchered-topic
-    $ git show-branch my-butchered-topic FETCH_HEAD
-    $ git branch -f my-butchered-topic FETCH_HEAD
-    $ git pull full.bndl  my-butchered-topic
-    ---
-
-    after you screwed up one of your branches and resurrect it from
-    the backup.
-
-or something like that.
-
-> +For the next example, assume you want to transfer the history from a
-> +repository R1 on machine A to another repository R2 on machine B.
->  For whatever reason, direct connection between A and B is not allowed,
->  but we can move data from A to B via some mechanism (CD, email, etc.).
->  We want to update R2 with development made on the branch master in R1.
+-Justin
