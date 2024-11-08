@@ -1,161 +1,188 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654191DED5A
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 09:28:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2691D0F47
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 09:35:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731058088; cv=none; b=mnVbaeJJtz0CsUEFBe3Den2vlm3bkxiIZRJPTTWUg0aecFthTNBN6bFjkvKk+TTTLski5w145Gb7Gdx9XDtvhC6yFm8rswRuOJgCsT7MJHh8PwCm8aX18sdGk12ldYKrydcekVbAKap9A4aArqYjaozpkN4vdZ7y4d1oPnMZnVM=
+	t=1731058506; cv=none; b=exkq377I/CDxV8WUkXSrxqHc6+TTCoJ/7xNT5ZYRgYcV9l5VtKQ1/v8LDkGDo+VAQfsO3harFpQLNS90bEDFpQZL8REqXKuBCU2pjTrwJATtbKpHekbCjzw4sJRfpynZc9xPNU5UssPtxl6O6bizlkCcWfzZvWS4MONfB4J2Itc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731058088; c=relaxed/simple;
-	bh=L97lvKDLxBf6ooTrtisC5/U9tyOlfWollrnS9Dd+9ec=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s7/wBcRzBJ+SWwORz+et13zGN5OgMHRAdJhovsFgx7vDep+5honaovToYCsRBzPpg8gQe03zAo+pge2MoNAhyeMps+43MCc0RV70ImK1+GLXxCb+GPfxODAQ2/FvtZVoPjpuLXGXlUGozr3eZIeBt5jRGk5ykA2+sj5DMoMsdQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Te66W87A; arc=none smtp.client-ip=209.85.222.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731058506; c=relaxed/simple;
+	bh=ooZA4elBAMKIYoiazagzstzJ1ZuYjDEtj0t5YN61bOk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=dxZWiGNFd5s+AKZJtQ/WAmRNSVVIJb+QIdghspDB/eCbtQ/kdwM6REnucUJWwWTRk8bfGBlw72PMsem2Zm6zmndyBJTKJZrwJRqpy6BNNk0rEioxJDPPaGh1Fld4SxabWCRVSAURq/WW8LAC8Dq2ebzkbL8DKo+sfJBH42Qaqk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L3Ncir1t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LojOj7BO; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Te66W87A"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-84fd50f2117so848680241.1
-        for <git@vger.kernel.org>; Fri, 08 Nov 2024 01:28:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731058086; x=1731662886; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=47sun8Jay7p5vPbpHRkZisxINMwt1HbR1UtaaQejtD0=;
-        b=Te66W87AryaInuJ1lS6ONQzHjqWrKd+18dCYR7YKxZfTW5WvTXkC4TkI7ocvhyLx/A
-         ujyZbUs8pAGOiIIHeqmkrZ9VYKcXgVwTl6ghwt4H03IybWsnyu0ajD7DBqmZLxFiBW7B
-         4aEupEESXba327njyepI3jb8VNNitJF9XsTCmX43aDbOv8wcPMu3iIiePvw78rZGLV1a
-         oLmkHduKyjKCw40y9rXGO7p1ltgyr/nTN3Z3fYtjecIaC516I7dwtQ6ZTLrZvydc18Rn
-         zZ4LBudBE4eOEOU4gHo0Sh/gX2tOE0Ek3O6lqWAXjAdEfci7EexBwcCZvcX3V0lYWNOQ
-         pqcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731058086; x=1731662886;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=47sun8Jay7p5vPbpHRkZisxINMwt1HbR1UtaaQejtD0=;
-        b=eO4prxapDnC93Ke3QE6QMD729FicieaO8Tl/sRT8eIbgmFRyLeMnOF4uq5aHmRY9ZO
-         z0Y1DP4fdPc9Szdp+Icx+AbIPxbl8omR2yzrfyFVCSnhy3NVjaAjP8Y3bY5P46sAXh9u
-         eGWd+DQsHmueMguMp7t/aewEjFLz58SXjDR0K89/eIj7oH0cMcxK/urbQ9JP/h84qLKp
-         H8CCjLzlkv2igv/593CAv3ltvQUbQz+ufy4nV8ND0Vh/dlfJUVar0aNxjCu2GVgBp486
-         xqmDQcqNAKjX4xRWQ98Wqrdp21DtqoUuHsb12CifE/VJxpNc1qcldJipApOvw1RtcMGD
-         RtcQ==
-X-Gm-Message-State: AOJu0YwHtXlxAL5BKAxRM6Mkcm9Ewq1C5dqo3pw6Y7Wnn5BIU8Um/9GA
-	GjSsUdJU8jYF5DSr0o3FkfBA3jx/4cTP8LrIL0EdtWLhgvnx6N0cb/OJR3gtsur0/xgyjM8uzAT
-	7FSxyo/s+b1pctB93EgZbpNkZZ29+LQ9i
-X-Google-Smtp-Source: AGHT+IGYa58Ddkvwaew88aibDcENSpVRA7nGA7MdLxyirdulnAo+ShaaTpGWAuhYf4rPMWz/HNPeN0MjTXWb7+atyEk=
-X-Received: by 2002:a05:6102:b07:b0:4a4:93d0:df13 with SMTP id
- ada2fe7eead31-4aae13b3c22mr2455760137.16.1731058086255; Fri, 08 Nov 2024
- 01:28:06 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 8 Nov 2024 04:28:04 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqo72qnp1o.fsf@gitster.g>
-References: <cover.1729504640.git.karthik.188@gmail.com> <cover.1730976185.git.karthik.188@gmail.com>
- <xmqqo72qnp1o.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L3Ncir1t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LojOj7BO"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 58EAD1140155
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 04:35:03 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 08 Nov 2024 04:35:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1731058503; x=1731144903; bh=Tbf76HDpbI
+	NWbCe3ITpQEkSwYjJ9hmUiMaOUlcWqTaQ=; b=L3Ncir1tnYR4gS0ZTRVdzDoeMM
+	4BEjY5r753cUqRPgPZcdcqEJ4ORYK7TeuA4F6ZV0qxQDPWW14Z9l5uY37T67uV3D
+	Qsu9uGpkQpuR/HNRjjy0ti4Iv4mpK1AW6MoowJbGFyUjMxPhfUYZPHOpF23EfnDx
+	3VnDLzjvjY3bj/WGcL03JtMEh6I5utRRxScrC6uM1FW9bOBkJz3DSdKYSNtS9hq5
+	/LeGsgpPEb49lXNkaAhLkuiEZcA9wgV1aLX3cMgSCPmTu/1E3Z43L6sJuuEE9b2k
+	0cv2++l9uted6IJivDI0sOXyvfYSy4KvxP3Zzn3EyimDoW0BE1/0NCei4UwA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1731058503; x=1731144903; bh=Tbf76HDpbINWbCe3ITpQEkSwYjJ9
+	hmUiMaOUlcWqTaQ=; b=LojOj7BOud0fnpS3dsKTzNtvbCdBMJ9X0QOc2H9auMhn
+	ssGW4DjcVYq8wTvWlmW8ZGj+GSnX83a4g3CyJAoTVEpJjK/1D+H6vDytYXG6lu4V
+	7mdBtEXWD1BAEGEcKOARfERiueHVZmqvrlzHTSQUK6cEbe+E0kQ4LQj7N2oQoL/H
+	y62cg3UAgch41sYR6swzGa9Um0sXZaPYV0ILq2r4KY9wwDvIECcdJ/qVQnYZ9CvZ
+	2s3gGBiM/xGBOfvqW9q4E28yHvIEHvlO6450iH2o29/CeKtvlyq5z7UXjH3w5L/1
+	so3EA8AxQwaW8aHowKn+1mM4HxLeZmiHuT0GuhNE4g==
+X-ME-Sender: <xms:RtstZyuHcYBOVNPNcAWyEi4_aZvUz5sUpg9DaGNMR7a7b5q9zzsYBw>
+    <xme:RtstZ3dLYd0Hvqsu4l2t5VM4YprjuKWdtzGo2nybKzgh7f03h9tuY10BR1_j3hQHs
+    bLoquq949TMFq-bhw>
+X-ME-Received: <xmr:RtstZ9xjTmeSV9lbJropvgdBGkdIvrE_ohtXuA7L3hgxUgdERb539V_pIiWmqYUAGp8NyclUNexb_uEfR5eJqWyXSAOkO7udJDaXLTXm9GxGTGI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdeigddtvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffufffkgg
+    gtgffvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
+    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffleeghfejfeejtd
+    eufeffgfekkeejhfeiffdugedtgfeuvdegtdelhfejueegjeenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:RtstZ9OYy4WequNfq3b2WxmblsH69S0zHH2yw7vJv_F7bI0oe03W3w>
+    <xmx:RtstZy9oxfsq4tDTurXTail-7v71AmI108GMOnvE7nv8PboByaXC3Q>
+    <xmx:RtstZ1Uy4tzaFqzapQ1T2oJm1nyKk7uzWUX2qeWXROfThelTq5WADA>
+    <xmx:RtstZ7ddgdSVNGFpomub95fwvKHwZnHjgM2YzGehWFAyKj7WghiKKQ>
+    <xmx:R9stZ4nL__H8IaIpxCAuG7D0TVaY-Xt9khIv2Pv3tD54qbRGZ93mZnJK>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 8 Nov 2024 04:35:02 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 82dffbe8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 8 Nov 2024 09:34:31 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/10] refs: optimize ref format migrations
+Date: Fri, 08 Nov 2024 10:34:40 +0100
+Message-Id: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 8 Nov 2024 04:28:04 -0500
-Message-ID: <CAOLa=ZRoiG=CTxkCV2TZ6Ko22Fh+KMiVmubWsaU-WLdGGjZEZA@mail.gmail.com>
-Subject: Re: [PATCH v6 0/9] packfile: avoid using the 'the_repository' global variable
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, me@ttaylorr.com, peff@peff.net
-Content-Type: multipart/mixed; boundary="0000000000005149890626635e04"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIADHbLWcC/x2MwQqDMBAFf0X23IVExBZ/RXqI5pkuRQ1ZkVLx3
+ 108DszMQYoiUOqqgwp2UVkXA/+oaPyEJYElGlPt6sZ79+L8VS6YlNe8ySx/8CyphM065Ta6EUA
+ ThuFJtshmyu/e9+/zvABWHUqibgAAAA==
+X-Change-ID: 20241108-pks-refs-optimize-migrations-6d0ceee4abb7
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+X-Mailer: b4 0.14.2
 
---0000000000005149890626635e04
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Junio C Hamano <gitster@pobox.com> writes:
+I have recently learned that ref format migrations can take a
+significant amount of time in the order of minutes when migrating
+millions of refs. This is probably not entirely surprising: the initial
+focus for the logic to migrate ref backends was mostly focussed on
+getting the basic feature working, and I didn't yet invest any time into
+optimizing the code path at all. But I was still mildly surprised that
+the migration of a couple million refs was taking minutes to finish.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Changes in v6:
->> - Lazy load repository settings in packfile.c. This ensures that the settings are
->> available for sure and we do not rely on callees setting it.
->> - Use `size_t` for `delta_base_cache_limit`.
->
-> I'll trust the reviews made while I was gone and will comment only
-> on the differences between the last iteration.
->
->> diff --git c/builtin/gc.c w/builtin/gc.c
->> index 9a10eb58bc..ad80c3aed2 100644
->> --- c/builtin/gc.c
->> +++ w/builtin/gc.c
->> @@ -138,7 +138,7 @@ struct gc_config {
->>  	char *repack_filter_to;
->>  	unsigned long big_pack_threshold;
->>  	unsigned long max_delta_cache_size;
->> -	unsigned long delta_base_cache_limit;
->> +	size_t delta_base_cache_limit;
->>  };
->
-> Makes sense.
->
->> @@ -170,6 +170,7 @@ static void gc_config(struct gc_config *cfg)
->>  {
->>  	const char *value;
->>  	char *owned = NULL;
->> +	unsigned long longval;
->>
->>  	if (!git_config_get_value("gc.packrefs", &value)) {
->>  		if (value && !strcmp(value, "notbare"))
->> @@ -207,7 +208,9 @@ static void gc_config(struct gc_config *cfg)
->>
->>  	git_config_get_ulong("gc.bigpackthreshold", &cfg->big_pack_threshold);
->>  	git_config_get_ulong("pack.deltacachesize", &cfg->max_delta_cache_size);
->> -	git_config_get_ulong("core.deltabasecachelimit", &cfg->delta_base_cache_limit);
->> +
->> +	if(!git_config_get_ulong("core.deltabasecachelimit", &longval))
->> +		cfg->delta_base_cache_limit = longval;
->
-> And this is a sensible way to fill size_t member with the value read
-> into a ulong.  Should "longval" be named after "unsigned long" instead
-> of "long", by the way?
->
-> There is a required SP missing inside "if(!".
->
+This patch series thus optimizes how we migrate ref formats. This is
+mostly done by expanding upon the "initial transaction" semantics that
+we already use for git-clone(1). These semantics allow us to assume that
+the ref backend is completely empty and that there are no concurrent
+writers, and thus we are free to perform certain optimizations that
+wouldn't have otherwise been possible. On the one hand this allows us to
+drop needless collision checks. On the other hand, it also allows us to
+write regular refs directly into the "packed-refs" file when migrating
+from the "reftable" backend to the "files" backend.
 
-Agreed, will fix both and send in a new version.
+This leads to some significant speedups. Migrating 1 million refs from
+"files" to "reftable":
 
->> diff --git c/packfile.c w/packfile.c
->> index e1b04a2a6a..46f5369173 100644
->> --- c/packfile.c
->> +++ w/packfile.c
->> @@ -653,7 +653,11 @@ unsigned char *use_pack(struct packed_git *p,
->>  		if (!win) {
->>  			size_t window_align;
->>  			off_t len;
->> -			struct repo_settings *settings = &p->repo->settings;
->> +			struct repo_settings *settings;
->> +
->> +			/* lazy load the settings incase it hasn't been setup */
->> +			prepare_repo_settings(p->repo);
->> +			settings = &p->repo->settings;
->
-> This is a bit curious.  I'll read the individual patch that has this
-> change before commenting on it.
+    Benchmark 1: migrate files:reftable (refcount = 1000000, revision = origin/master)
+      Time (mean ± σ):      4.580 s ±  0.062 s    [User: 1.818 s, System: 2.746 s]
+      Range (min … max):    4.534 s …  4.743 s    10 runs
 
---0000000000005149890626635e04
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 80f5cca7cf20d1d7_0.1
+    Benchmark 2: migrate files:reftable (refcount = 1000000, revision = pks-refs-optimize-migrations)
+      Time (mean ± σ):     767.7 ms ±   9.5 ms    [User: 629.2 ms, System: 126.1 ms]
+      Range (min … max):   755.8 ms … 786.9 ms    10 runs
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jdDJhTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN0xrQy85V2JDYjVoSUpiZlBqQW5LNCtFak50UU83TQoyYTdWU2x6SCsy
-UDdJVkE4U1RPOWFWeDZ2cExYQ3NpcmsyRFB0dCtwbE5oOGtqUTNSYkdpK25lb3NINlZYNFcvCjR5
-dy8vNTNoSjhYTWJBVGMxbmlZN1NKZzlWR0VSemFqL1N1Y2NaKzh4aXpQUmJJd1ZobXFhRnNib1Yz
-cVEyNysKaCsySlJTaG9JQzdaeFNOdTc5SnVhWW1WQS9kamlnUTA3UjFIbzZCbVMrWUMyTGN3RE5N
-clZ4UjJtSGVJTW9sbwpReFM4QWZiRERzbzZuQ2RteEh4bnZvdk01eHU3N0hpUm1rWUFXOGoyRnFY
-NytZRW40Yk80RU5JR3ZYcU5lZnRVCkNlYllGUVJNSWRyVFF1emd3NDZZcktxL0o2S3IwT1piZ1d2
-TmdEUzF0SU5RTTdkYk41Z2dQUkVOVHY5QUh0Y1QKVWN2M2xFbjR1dzEzVFhoOVJqbHRiUlQrdDZU
-eTRuUHl4VmJvMllJMStqKzRRWUEwVnU1a1V1S2U4eTY0V3g5MwpUYVJ4dlhHRHpXdU93Z0NiM0Y0
-cWV0OXdBYnpmTmt0eGFTNW9QVU9VUVpNK21ISUU4ckx6TVpvSmRmM01ETVFuCjJSS3k2cHlhU20x
-L3gya3FPY3dYK1FYWDhmdWVqUUw3ZVIvV3V2MD0KPWtzbm8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000005149890626635e04--
+    Summary
+      migrate files:reftable (refcount = 1000000, revision = pks-refs-optimize-migrations) ran
+        5.97 ± 0.11 times faster than migrate files:reftable (refcount = 1000000, revision = origin/master)
+
+And migrating from "reftable" to "files:
+
+    Benchmark 1: migrate reftable:files (refcount = 1000000, revision = origin/master)
+      Time (mean ± σ):     35.409 s ±  0.302 s    [User: 5.061 s, System: 29.244 s]
+      Range (min … max):   35.055 s … 35.898 s    10 runs
+
+    Benchmark 2: migrate reftable:files (refcount = 1000000, revision = pks-refs-optimize-migrations)
+      Time (mean ± σ):     855.9 ms ±  61.5 ms    [User: 646.7 ms, System: 187.1 ms]
+      Range (min … max):   830.0 ms … 1030.3 ms    10 runs
+
+    Summary
+      migrate reftable:files (refcount = 1000000, revision = pks-refs-optimize-migrations) ran
+       41.37 ± 2.99 times faster than migrate reftable:files (refcount = 1000000, revision = origin/master)
+
+Thanks!
+
+Patrick
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Patrick Steinhardt (10):
+      refs: allow passing flags when setting up a transaction
+      refs/files: move logic to commit initial transaction
+      refs: introduce "initial" transaction flag
+      refs/files: support symbolic and root refs in initial transaction
+      refs: use "initial" transaction semantics to migrate refs
+      refs: skip collision checks in initial transactions
+      refs: don't normalize log messages with `REF_SKIP_CREATE_REFLOG`
+      reftable/writer: optimize allocations by using a scratch buffer
+      reftable/block: rename `block_writer::buf` variable
+      reftable/block: optimize allocations by using scratch buffer
+
+ branch.c                  |   2 +-
+ builtin/clone.c           |   4 +-
+ builtin/fast-import.c     |   4 +-
+ builtin/fetch.c           |   4 +-
+ builtin/receive-pack.c    |   4 +-
+ builtin/replace.c         |   2 +-
+ builtin/tag.c             |   2 +-
+ builtin/update-ref.c      |   4 +-
+ refs.c                    |  70 ++++++-------
+ refs.h                    |  45 +++++----
+ refs/debug.c              |  13 ---
+ refs/files-backend.c      | 244 +++++++++++++++++++++++++---------------------
+ refs/packed-backend.c     |   8 --
+ refs/refs-internal.h      |   2 +-
+ refs/reftable-backend.c   |  14 +--
+ reftable/block.c          |  33 +++----
+ reftable/block.h          |   9 +-
+ reftable/writer.c         |  23 +++--
+ reftable/writer.h         |   1 +
+ sequencer.c               |   6 +-
+ t/helper/test-ref-store.c |   2 +-
+ t/t1460-refs-migrate.sh   |   2 +-
+ walker.c                  |   2 +-
+ 23 files changed, 247 insertions(+), 253 deletions(-)
+---
+base-commit: facbe4f633e4ad31e641f64617bc88074c659959
+change-id: 20241108-pks-refs-optimize-migrations-6d0ceee4abb7
+
+Best regards,
+-- 
+Patrick Steinhardt <ps@pks.im>
+
