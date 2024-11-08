@@ -1,142 +1,125 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756A51D0F5C
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 12:59:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D580C8CE
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 13:16:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731070763; cv=none; b=Ib+RwsfozGajVHAvyGWA88/WuFJgXYbzRAOl+GGy0UeNj1O/KNeJiKXJDTumxa8ES7+u/awKt3mEnEm0Tm85MkeKGJFpZsPflUFEBXnHxdt65qvNRwUfIzlhunOoDqXLudOSZdcrZMiNp8bYDsc9xA4434ZqTHgwHGg43KSph3k=
+	t=1731071809; cv=none; b=g18glekeQMUOugNqh2JGA/m/78RR0SoySxFk4Afq8QTzKVt9OkVFHK358EA5miE9O2kQ5iwrA7Mfs3+qIM4V7RboOVlgRnE0pznCMel0vVHK/PuySuBzUqFFPOCfYXF1ZzUT/CFAyNaWQBffyRPRtcPkv4yWE1ua0AlkkfzYuqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731070763; c=relaxed/simple;
-	bh=XZMi70wqT25G+nbD/KVvyin5Ahkcj9GXMp0TeQK4ea8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kho7Csw9A0Ae1XihOYkfZH+kA6C4Q60EdrD0vbvDF+dZtwTwN+tnomMKmd9LQY0Puo4sE1N34dqIQC7g/NAfzZF5FkCBTe057qGzTmQFCo9nh0o9DfYcfajLs9nwZgUtpKhcqsp736+kFGsFSXUufKLhgoNsWVFkYupyiJQOEnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yFwm0Ntj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KizhIifD; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1731071809; c=relaxed/simple;
+	bh=8MN/6Z+gl/oF9Tqq2Xc9cRUaWXk16poUXkVWbUDEQ/E=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=X2+QE/g47FrVOObPAyyhZ/VMDV1V/HdxC/Jl4WMzd+0vgV4G29A9IamyKEYzsKIP3maAObD4r1AuzDS3UssjB0RDIVAxJGzYIr++jaHfzfRBvdrSDsCpdFInYx0cVnyAAKL5aZq9pEDvapgQIwdGaPE1nQIslEKAnYTJpC/FBiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m4GAIEs/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QMNx2okj; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yFwm0Ntj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KizhIifD"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 460BA13801DA;
-	Fri,  8 Nov 2024 07:59:18 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 08 Nov 2024 07:59:18 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m4GAIEs/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QMNx2okj"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 85B4C114018B;
+	Fri,  8 Nov 2024 08:16:46 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 08 Nov 2024 08:16:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731070758; x=1731157158; bh=SU7OcvWnoB
-	tYfLHL2fEiI/nB0DCunqy941nXss7l+YY=; b=yFwm0Ntjbz8sIvZ73oWZxC/nzX
-	Mr6JRO2VdEiXPN8M6JkR2+IZXCe8mD6X+xignc55b06Vvmp/B80VttCt2jQoL5QM
-	NvuDjUVc6gQRrbpOwOxd01sn9sUBmy74ZoYsXIqgZwQZsE68vpT9yw64ei4NS44D
-	Q8L/mw7xmJULk3sSTaiBzVa1Ef+QGh9L4hErD7xQz7DL56qI5H1K4kGR1Gr1KNN7
-	IvrLXbjG5qH2wqODqPyddIbaUrCBum5S8IUcLvyqfdbgmezqaB1gH/tTdxCIOC7Y
-	6HVb1lVpCagiNeCQ4VZ3zIEkFjpHKqfnv6dkJI9Mg22m00KBWZM1nmgBeAzQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1731071806; x=1731158206; bh=FBG8X8AKcG
+	2TV4Q6Abl45DK0hwwIbSEDkDqTJ6GuCnI=; b=m4GAIEs/cs8evEDJix1UHzPzAO
+	RrLSN2c7KiVPeEqsDhZ8b6ftZ9k/lP8+L+8bT2UA/KyKTkmU9Qm83vxh03bOoYo7
+	IoivOADBQK1m6sHl9XRFICDmPHzuhfdHmaJad64+/zSpBGeUnDf20LasmTHOHMJi
+	s2jt/+sGUDfbdgX813IO+Vd/bGXR9iGx6Gq8Y0bG+qQwUGXwr8vaHNZoTMIysMHN
+	csod2yuLjWv3X6Epw3vzdkywQtnSyms+HTN57Hvu+poaatXM2w2ckKQ75SXT8YTn
+	Y3I1OW33I9C7BGOpwRjpEIHRI5J2f2qxdg+hsUdpdNp9ADCCvIFrZMd8x4Cw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731070758; x=1731157158; bh=SU7OcvWnoBtYfLHL2fEiI/nB0DCunqy941n
-	Xss7l+YY=; b=KizhIifD9tZ5VPvG/ZWc33nQlNi69GtS2Amg5BSH35Xqdz+OhVg
-	EgUQiqA3L6XdFgZ5toFLC5hIMNS/WQxZq3uYOVaa2cQvqoapz32Pb6a8TeVQwlci
-	ChSrSTuK4T9VJbW+9NLHAMCQAPALR0fvcPc24gFO4cmBFUBI7Vr+aufxcyx6SIp+
-	ii1p6/pmzzHZv17fKfN6+2+jDHUHgO4qLHVIKHrXfm0wxFJvhzoJVxhjEgNTIUzL
-	MTUv0ZfsgpFRP9vPwYAGydk1JIEbIGMjLwxxOU7cluoY0U8KZyyz74ma+1k6hZUq
-	Bn1TjSUeIDWqB1jRCE0HcYLWMHBxJzqyl+g==
-X-ME-Sender: <xms:JAsuZ-gjN_3dn7uMToli9rHn0-INktiNNih3gsuzVYxgPiJBSWZu_w>
-    <xme:JAsuZ_DVkuxwqIgqVg9L2N6olp2qersIkGEpvCb9cnmHabcxVbQ5vU1Ntic05lsW-
-    6ZEELyskCcUKaALXA>
-X-ME-Received: <xmr:JAsuZ2EPW_fuzsYRetgiNsRTCTL9qHGLsq1c6Lrqp8FCe2ENDlRFeY4IO1AIGQT1sqCkQ5Tbgn0f1vw4xf-3DTojSWsv01UMDFm5mVMi0ZfuFcA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdeigdegfecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1731071806; x=1731158206; bh=FBG8X8AKcG2TV4Q6Abl45DK0hwwI
+	bSEDkDqTJ6GuCnI=; b=QMNx2okjOIqFQvNckd3burFYmcPTaWTDCiU+H3Q2mo2n
+	OUyozzin1TmkN7mz4lns/jq/mgwuuD+VGN++XOqd9ZSY+9Eo+wXhQoRCJ+yd6tNR
+	vVmovEcHXG/e4iN5kGBr0HPeISQejVXV5gEwC+31wfxkquba9Hh9/m2aNh7cV7/+
+	Zr+51gUMBA4/adUxp6EgEe0zw7iZn6zdISdqtKKlYWNmOb9OUnK9vye0tGJ1LkaE
+	FPJyc3+RIeemtlouBAJUMZo7pBoailLjlKbagJYs7g2csqTaoWdZPcCfFD1C/CH4
+	Ye39/9SIsYZZzFM3JowCd0hFlF5W5KKIKUl+y4l7mA==
+X-ME-Sender: <xms:Pg8uZ1XsTzVPTdq3Y0Ckw3tqpufPvW3pLI2LdFEkz1TTECaEd33CbQ>
+    <xme:Pg8uZ1karl1h5YHua4z7hRMFXcqeaxym6PGD5eyLjptcn_1uTasottEKiOfFbpZW3
+    1Cdac8auZkujyzdcw>
+X-ME-Received: <xmr:Pg8uZxaGOb78wZYen6g9eUeCCcOGDpAyraLFAwmQW2iX2NToAOvc8mNd31QI2mImiWj6Ahd9H04ewL6iMWSdXOORrpT0xBWikZyHRYi6ZuWH2lI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdeigdegjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    htohhonhesihhothgtlhdrtghomhdprhgtphhtthhopegrshgvuggvnhhosehmihhtrdgv
-    ughupdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrd
-    hnvghtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdr
-    uhhkpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidrug
-    gvpdhrtghpthhtohepsggrghgrshguohhtmhgvsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepsghonhgvthesghhrvghnohgslhgvrdgtnhhrshdrfhhrpdhrtghpthhtohepvggurh
-    gvvghlsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:JAsuZ3Qe5rFAouEYG3LAqozPFGElooxU_oh3om1A-lOHp3D-fmOhWA>
-    <xmx:JAsuZ7zzimWjO66tLVsBvKRN1R9kgwbLxTQNNGtQCcatWCggM_TmlA>
-    <xmx:JAsuZ15LW03vrRSSyc6x-b18GlxbPMUv6NE6bX6siY1noetwfWnxYA>
-    <xmx:JAsuZ4wc22ZuBsmucY0rQVuO3VrQ2P2fyNw4DvUyVGNe1fhBe7Z-Sg>
-    <xmx:JgsuZ57x8v82RzKNjVrIpTki-4v7i2-EKBzWtQvKhGsGggprr6Hd1qQH>
+    hsucdlqddutddtmdenucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfh
+    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
+    cuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevheeuhefgteff
+    ffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
+    druggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Pg8uZ4VHIaJ7Hxk8uhwJUR9y-f-uuAn97NUHUq2_oG5ttgEZzzfDpw>
+    <xmx:Pg8uZ_m1TG8PA418biXBcMb9tRGHyAeGcQutcWASZ0gEW672IaVMBA>
+    <xmx:Pg8uZ1fNmX92BfptSyVdoQ06_m3CaOFttS2Z2mSJM1-5ichHOyY1DQ>
+    <xmx:Pg8uZ5EpyrN2FJbwjDT5c8G7TzSp0phqeXjRn7Orz5cvhPGwYNtp2g>
+    <xmx:Pg8uZ9jml5WsEJEM8vr75NpWmixS3qOeoBeekXrepY5OvPQ-YMmABwMZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 8 Nov 2024 07:59:14 -0500 (EST)
+ 8 Nov 2024 08:16:45 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cc321ec9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 8 Nov 2024 12:58:44 +0000 (UTC)
-Date: Fri, 8 Nov 2024 13:59:05 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 786a3a0e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 8 Nov 2024 13:16:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org,
-	Alejandro =?utf-8?Q?R=2E_Sede=C3=B1o?= <asedeno@mit.edu>,
-	Toon Claes <toon@iotcl.com>, Taylor Blau <me@ttaylorr.com>,
-	Ed Reel <edreel@gmail.com>, Bagas Sanjaya <bagasdotme@gmail.com>,
-	Edgar Bonet <bonet@grenoble.cnrs.fr>, Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 5/5] cmake: set up proper dependencies for generated
- clar headers
-Message-ID: <Zy4K_rcyGlwv64JZ@pks.im>
-References: <CAOO-Oz3KsyeSjxbRpU-SdPgU5K+mPDcntT6Y4s46Mg_0ko9e_w@mail.gmail.com>
- <cover.1729506329.git.ps@pks.im>
- <bb005979e7eb335b0178094251b5c37682d7d47b.1729506329.git.ps@pks.im>
- <3b2cb360-297a-915c-ae27-c45f38fa49b9@gmx.de>
- <829fe630-e46a-4a3a-82dd-4e5feedd190c@gmail.com>
+Subject: [PATCH 0/3] Build improvements for clar
+Date: Fri, 08 Nov 2024 14:16:22 +0100
+Message-Id: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <829fe630-e46a-4a3a-82dd-4e5feedd190c@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACYPLmcC/x3MwQqDMAwA0F+RnA3YOqbdr8gOtUYN01qSKYL47
+ ys7vsu7QEmYFF7FBUIHK28xw5QFhNnHiZCHbLCVfRhTtZg+imHxgv3Oy4C8JtkOWil+FU2o3dN
+ 65xs3Qh6S0Mjnf+/e9/0DFsQCAm0AAAA=
+X-Change-ID: 20241108-pks-clar-build-improvements-1c3962a9a79f
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Phillip Wood <phillip.wood123@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Wed, Nov 06, 2024 at 10:59:08AM +0000, Phillip Wood wrote:
-> Hi Johannes
-> 
-> On 05/11/2024 19:55, Johannes Schindelin wrote:
-> > Hi Patrick,
-> > 
-> > On Mon, 21 Oct 2024, Patrick Steinhardt wrote:
-> > 
-> > > The auto-generated headers used by clar are written at configure time
-> > > and thus do not get regenerated automatically. Refactor the build
-> > > recipes such that we use custom commands instead, which also has the
-> > > benefit that we can reuse the same infrastructure as our Makefile.
-> > 
-> > For the record: I did not use a shell script to generate the header for a
-> > specific reason: Unix shell scripts are not native to Windows. Therefore
-> > they cannot in general be run on Windows, however that was precisely the
-> > idea for the CMake definition: to be run on a vanilla Windows with Visual
-> > Studio installed.
-> > 
-> > Sadly, even Git's CI definition sets things up in a way that Git for
-> > Windows' Bash can be used in the CMake definition, but in the intended use
-> > case (opening a checkout of git/git in Visual Studio without any further
-> > tools required) won't have a usable Bash.
-> > 
-> > Therefore I am unsure whether this patch is desirable.
-> 
-> CMakeLists.txt tries to find sh.exe from git-for-windows and errors out if
-> it cannot be found. It then uses that shell to run a number of scripts.
-> Perhaps we should do the same in this patch? It would certainly be a
-> worthwhile improvement to regenerate this file at build time if the source
-> has changed.
+Hi,
 
-Yeah, I think this solution makes most sense. I'll send a patch in a bit
-to address this.
+Dscho has reported in [1] that the CMake build instructions for clar do
+not work well on Windows/MSVC because we execute the shell scripts
+directly instead of using the discovered `SH_EXE`. This small patch
+series fixes the issue.
 
-Thanks, both of you!
+[1]: <3b2cb360-297a-915c-ae27-c45f38fa49b9@gmx.de>
+
+Thanks!
 
 Patrick
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Patrick Steinhardt (3):
+      t/unit-tests: convert "clar-generate.awk" into a shell script
+      cmake: use SH_EXE to execute clar scripts
+      Makefile: let clar header targets depend on their scripts
+
+ Makefile                             |  6 ++--
+ contrib/buildsystems/CMakeLists.txt  |  6 ++--
+ t/unit-tests/clar-generate.awk       | 50 ----------------------------
+ t/unit-tests/generate-clar-suites.sh | 63 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 69 insertions(+), 56 deletions(-)
+---
+base-commit: facbe4f633e4ad31e641f64617bc88074c659959
+change-id: 20241108-pks-clar-build-improvements-1c3962a9a79f
+
+Best regards,
+-- 
+Patrick Steinhardt <ps@pks.im>
+
