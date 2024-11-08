@@ -1,86 +1,88 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0684C33E7
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 01:24:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4105CDDC3
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 02:01:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731029076; cv=none; b=HVYkcodCiiL6N8EQ3XPnBAag2M5Ak/swVKruibqZ7NnxnMraS4V4/1x48A88pXSNbNoQ9xsUg5snsHmCqXuSW1AQQtlLOGv/r1ugYtiiKdgoLHglgdNTt4Xl3s2HMvo9cnt3xyLWG9fVaIrN9YEsM6r/XScI4VSbn2q2rYUhgq0=
+	t=1731031321; cv=none; b=BCcscrI4OHSK3MPTv32Tjd+8g7Eys7tEXAO3ERYGLOlqgGh06VVTehIzZPVvYaXilrmPol2d98sfN9SQUpGVjrFFK9MRk5F71PXMSFsVoVrnp/H0d1+bS0E2YwcMVjVmxUUT/ehI+a5TqC3r9Gzpbv3Slywo4kqToeqTOgGETN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731029076; c=relaxed/simple;
-	bh=m+pZCYFWGM6DdH4GBZqytZHgd9oYmU8gS+vrCAVcYro=;
+	s=arc-20240116; t=1731031321; c=relaxed/simple;
+	bh=u+ckhqqPJEsdHML5/gj091nJtD9E1fS86ROX/JKDPSY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u83sG22UVS4IXQoU7039XGM8ErZFovwh5LNkgDHkeszJszW1/Hy8A/x/L+Fk3ck/5aa4cS1bWx8g09kWjnyA4mgCv2vdK2SojbA0xEE9WpZkVYdHO5OWL9do5fieGhbxQb8e9GrJoAPLy92JvUVYeiYxuHCI2v95BscZDV893gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Di6Y/Fkd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WvO3g9TJ; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=lDSRP6seJo93J4Jd1XGLBDi9gKTDL+a/cJmFEG3Z8VXaLoBMk6Nl/1hOTmmp/tvnx+45HVsDAXSje0b+fisiikcOJ1eRaywli3TyFs8GKEktK/prDKT6Py+pNwdj8gTua32gWqwnp6sEj9UejcGWe8kWFll4mUXlEH0GvxYTqus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fjX0NoqK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IqOy3azT; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Di6Y/Fkd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WvO3g9TJ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E97311400BD;
-	Thu,  7 Nov 2024 20:24:33 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fjX0NoqK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IqOy3azT"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 42D441380479;
+	Thu,  7 Nov 2024 21:01:58 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 07 Nov 2024 20:24:33 -0500
+  by phl-compute-10.internal (MEProxy); Thu, 07 Nov 2024 21:01:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731029073; x=1731115473; bh=S7fPUg84Wx
-	WLSzPJ8UwOhYtv9T8CYMOR/jJyImtfyuU=; b=Di6Y/Fkd+LxhRAPjPSaxWV9weU
-	R86rTJQw40oLmbS7q2lsgUCYq6CHxhc0s3MVXmvwBT67xebQOpVmkNyptqkDPrQG
-	X3EP3H/agOf8y4Bpd4al0Kzd5luKMK6BQnc8ukk1+BMLrtDOQGx7GcSvXCR1D5nV
-	GitbvQODQYQh308btP/8+z2gbJOCyg7i1VU6OjW/XTXUX5KcvcPV82lXLUiP+E5k
-	R35x3R47LSEMxqfR3CjA7SqXa3XDWCP2PCnMGllLUZZFp40gbF1mcf93x6f4gpZc
-	D5y32GwT1bgsAig47FCT2aKUaQ+EyCj3ocq+meryS65Sxbiz1eYIg5OfNDPw==
+	:subject:to:to; s=fm2; t=1731031318; x=1731117718; bh=rGytHCaLRa
+	uNWtq3NwUi6KzYaIgitVX348heffwJvEU=; b=fjX0NoqKJWo7tXsXYJSeuyzGEu
+	dB2XCqsdgF2upuDf+0wBrjF6LlhxfiMc7620psuiM1i4ClV6ACbkjCsw7dFzEQY+
+	DpqFVP7InEY15ZmdZ7wteNJ2Rcj+xm+gIbVeEE4qCtOE361leG3C3HfYuMEgAEEW
+	dnvxrx99WovbpTOtW+1EHRgBCMh6PLFUb7r1Qpc0RRBUQVJtBvrJJ93PJkiyDLgb
+	70BzEDYpSvC2wGe4dUwLmV0XtvS3973WFoP9LjKwJglZLwBklTzLnE1qfCAr5Upp
+	7Kd5PhPQkj47dHhYgmC0QRSILv/ZgVG6zdI1gWgPIyi7n82xKOhI+535OybA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731029073; x=1731115473; bh=S7fPUg84WxWLSzPJ8UwOhYtv9T8CYMOR/jJ
-	yImtfyuU=; b=WvO3g9TJJlGNwFHLGzosgFiUXHTvlqBAPtrepcyeFRiwrwfxzzE
-	Vgxxeem0fCwt4CtSPC/DiIXggOPPX1oSxBQGzqjIcBoOEY4d1DV7kbmAO+RaElsB
-	ADVNSkRRd4Sm5bFHx+sJdyIcdPS42QdfSfZKsXfZr06Gy9G033RNIa2HIf5qgOHI
-	qRsEOU7YpU0uhHwcp4M0kYR+UHkfpQv+xBJEBVrSUOytXnVlYoWYsJYgA7IAueqF
-	gqfv7vGjPqWZ2njuP2MSEoD1Qel5jWZwLxjdas/UWGBjDl7KeyPTjjqKI6Poh9WZ
-	EQVXSSRKnOBlsPuqcVA7rLOCx0JU9tLSqYA==
-X-ME-Sender: <xms:UGgtZz7XRCbcuHuKJCYgaPIZo4R0UvpAD40ltKgJamTl_iH-IuK-vQ>
-    <xme:UGgtZ451z527bP0a9T4wA2OvWVe2ILOhr5bGL9wLSKlCIqWhephPgMFKW5HFcHY2o
-    1YQgw4ae3cl_Mk7TA>
-X-ME-Received: <xmr:UGgtZ6f5Og9oztYRnCqMZ5Bdr4GpA3dIUx2vMsrpjE7j63-4DkU2PyUX6qkOvNOCE9mhjyZ5tXTqU9qffwZ820Bzi6nDz_AQYMpI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdehgdeffecutefuodetggdotefrodftvf
+	1731031318; x=1731117718; bh=rGytHCaLRauNWtq3NwUi6KzYaIgitVX348h
+	effwJvEU=; b=IqOy3azT79K4VxzaRTJWMmPLRL4ANrtP+CyCCKsuKlOS82Ax2iM
+	QEObWMl8RHvbAPWxyBNJuvwhZjZFLeDlwLYOB0Ji+JmtnRBco8POoN5yXZoQ8iX9
+	ND7A1rSaQkJBU4LSAUAJhFkijTKo/OODVyLZJNexVLHtwC4az5FFmASdPpGXepbj
+	Ud1OGAlYFoSV7u8QD8q+0Zmxe/Q+PW3HmWe1mDrYVUqN+1v+mV+6INgqBFZnvUqU
+	PxJy9qbu33YGappIyqGLpIdINOUpDE9wKT5ZMKJelWySCU3uzMqNxiK23VidJjVK
+	Gi6q1c8qFcFenrX6ZZlfMKwdMWYyBnpksug==
+X-ME-Sender: <xms:FXEtZ-o3tlJxKR2rZV1ge76Za96Fzstp0ewryF4Qp6wInIGoKTMHHg>
+    <xme:FXEtZ8omgK39Zv30qdzktVSZb1pMLBd-oWS-Qf1FQBLHv0TLyuNnSntbJ9bYv6aYW
+    GhvObuk-gDnAgmjZQ>
+X-ME-Received: <xmr:FXEtZzNYAugJ2hWk49oQEz3HQHblj5Ti5p3ExNxFym8alL0ChFqosObuNZlLfiDt6rkcCgg3wuizSY30Iy4vmx9m4hpQixKvnbjn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdehgdegudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
-    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhose
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:UGgtZ0LCP7VKrvOoTcngJUAGRoY4slyk0rkyegdoXdayFst7Px-ViA>
-    <xmx:UGgtZ3LGyAH2b6RWnu4fmXanUSWazQrHRDZd7ka_nyrN0t1Z6Addaw>
-    <xmx:UGgtZ9yGxXLM7gLtcA8KJ7TLu63hy6fWEglEA4ACpZb-ANt5ujoITQ>
-    <xmx:UGgtZzKlseJ5KCQ0oh-76x6mpBBEUf2vg3RTBMmy_tVK9zWbgu5w6w>
-    <xmx:UWgtZ9g_EWeZ0h6MOX8W_U3tnS8oGbXkIIUm1Ham7x5m0j6SO7Q_OLbc>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
+    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopegrvhgrrh
+    grsgesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FnEtZ97LJLIrBQc4NOUkByCqQvJwoTUZN5LiaDryrZEV0vT4s4KzjQ>
+    <xmx:FnEtZ94FwJn24Yqpq54p7LFozX1v3TqNcqnHWIz_vUPpiKLy0U_NAw>
+    <xmx:FnEtZ9iPlmlr-1v9lFJkdptRO9NG31tSvqNNl4_ftqF83ojAbN7VcQ>
+    <xmx:FnEtZ37gFJi7N4iv9d-Xa7vj_U3mLBP79w65tIzfosVJhkNAnRIMqg>
+    <xmx:FnEtZ6trKS4Vi8PFxhOBn9QEa4BRU__5-_cFvSjjy86EpU57zab8vuG5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Nov 2024 20:24:32 -0500 (EST)
+ 7 Nov 2024 21:01:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 1/3] git: remove is_bare_repository_cfg global variable
-In-Reply-To: <ZyzlBZnL-K3S7Env@ArchLinux> (shejialuo@gmail.com's message of
-	"Fri, 8 Nov 2024 00:04:21 +0800")
-References: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
-	<3d341a9ae4ef1d2776734fa82a45913f91e6083c.1730926082.git.gitgitgadget@gmail.com>
-	<xmqqv7wzsijc.fsf@gitster.g> <ZyzlBZnL-K3S7Env@ArchLinux>
-Date: Fri, 08 Nov 2024 10:24:31 +0900
-Message-ID: <xmqqjzdeqzzk.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  avarab@gmail.com,  me@ttaylorr.com
+Subject: Re: [PATCH v3 1/4] Documentation/git-bundle.txt: mention full
+ backup example
+In-Reply-To: <b222c6787a79c852442969721dadc629ca84cd5b.1730979849.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Thu, 7 Nov 2024
+	12:57:33 +0100")
+References: <cover.1730234365.git.code@khaugsbakk.name>
+	<cover.1730979849.git.code@khaugsbakk.name>
+	<b222c6787a79c852442969721dadc629ca84cd5b.1730979849.git.code@khaugsbakk.name>
+Date: Fri, 08 Nov 2024 11:01:56 +0900
+Message-ID: <xmqq1pzmqy97.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,45 +92,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-shejialuo <shejialuo@gmail.com> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
-> I also want to ask this question. Actually, I feel quite strange about
-> why we need to add a new parameter `is_bare` to `repo_init` function.
->
-> For this call:
->
->     repo_init(the_repository, git_dir, work_tree, -1);
->
-> We add a new field "is_bare_cfg" to the "struct repository". So, at now,
-> `the_repository` variable should contain the information about whether
-> the repo is bare(1), is not bare(0) or unknown(-1). However, in this
-> call, we pass "-1" to the parameter `is_bare` for "repo_init" function.
+> +We'll discuss two cases:
+> +
+> +1. Taking a full backup of a repository
+> +2. Transfer the history of a repository to another machine when the two
+> +   machines have no direct connection
 
-Isn't this merely trying to be faithful to the original to avoid
-unintended behaviour change?  We initialize the global variable
-is_bare_repository_cfg to unspecified(-1) in the original, and
-for a rewrite to move the global to a member in the singleton
-instance of the_repo, it would need to be able to do the same.
+Contrasting (1) taking a backup and (2) extracting a backup later is
+a very useful way to frame the problem, but then, I'd say
 
-And for callers of repo_init() that prepares _another_ in-core
-repository instance, which is different from the_repository, because
-the original has a process-wide singleton global variable, copying
-the value from the_repository->is_bare to a newly initialized one
-would hopefully give us the most faithful rewrite to avoid
-unintended behaviour change.
+ 1. taking a backup, either full or incremental, of a repository
 
-At least, that is how I understood why the patch does it this way.
-As you noticed, too, there are ...
+ 2. using the backup, either full or incremental, to transfer the
+    history of the origin repository to any repository (including
+    itself) without needing any other connection between the two
+    repositories.
 
-> When I first look at this code, I have thought that we will set
-> "repo->is_bare_cfg = -1" to indicate that we cannot tell whether the
-> repo is bare or not. But it just sets the "repo->is_bare_cfg = is_bare"
-> if `bare > 0`. Junio has already commented on this.
+Whether a full or an incremental, the resulting bundle file can be
+used as an offline medium and then later extracted elsewhere, even
+if there is no direct network connection between the origin
+repository and the destination repository.  But you can extract in
+the origin repository as well.
 
-... places in the updated code that makes it unclear what the
-is_bare member really means.  The corresponding global variable used
-to be "this is what we were told by config or env or command line",
-but it is unclear, with conditional assignments like the above, what
-it means in the updated code.
+But that would require a bit more surgery to the presentation order
+of the text, so I do not mind deferrring it to a later and separate
+series.  If we were to go that route, it would be helpful to have a
+paragraph to describe how you use your "full backup" bundle to recover
+lost data from, though.  To those of us who know what is happening,
+there is not much difference between the extraction side of the
+sneaker-net example, but as we framed the use in two distinct cases,
+it would be helpful to make each case stand on its own.
 
-Thanks.
+> +First let's consider a full backup of the repository.  The following
+> +command will take a full backup of the repository in the sense that all
+> +refs are included in the bundle (except `refs/stash`, i.e. the stash):
+
+Are you sure the "except" part is factually correct?
+
+I did
+
+    $ git bundle create x.bndl --all && git ls-remote x.bndl |
+      grep stash
+
+and I see refs/stash listed there just fine.  You should be able to
+extract them all with
+
+    $ git clone --mirror x.bndl xxx && cd xxx && git for-each-ref |
+      grep stash
+
+and see that refs/stash gets propagated.
+
+Fix is a simple s/except/including/ ;-)
+
+> +----------------
+> +$ git bundle create <file> --all
+> +----------------
+> +
+> +But note again that this is only for the refs, i.e. you will only
+> +include refs and commits reachable from those refs.  You will not
+> +include other local state, such as the contents of the index, working
+> +tree, per-repository configuration, hooks, etc.
+
+And to make each case stand on its own, we would want to teach
+readers how to use the full backup to recover data from here, before
+moving on to the "next example".
+
+    You can use the resulting bundle file as if it is a repository,
+    a snapshot of it at the time the bundle was created.  You can
+    use
+
+    ---
+    $ git ls-remote full.bndl
+    ---
+
+    to inspect what refs are recorded in it, and you can fetch from or
+    even merge a branch out of it, with commands like:
+
+    ---
+    $ git fetch full.bndl my-butchered-topic
+    $ git show-branch my-butchered-topic FETCH_HEAD
+    $ git branch -f my-butchered-topic FETCH_HEAD
+    $ git pull full.bndl  my-butchered-topic
+    ---
+
+    after you screwed up one of your branches and resurrect it from
+    the backup.
+
+or something like that.
+
+> +For the next example, assume you want to transfer the history from a
+> +repository R1 on machine A to another repository R2 on machine B.
+>  For whatever reason, direct connection between A and B is not allowed,
+>  but we can move data from A to B via some mechanism (CD, email, etc.).
+>  We want to update R2 with development made on the branch master in R1.
