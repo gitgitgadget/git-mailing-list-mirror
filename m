@@ -1,44 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B17208C4
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 17:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBF515B0F7
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 17:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731086208; cv=none; b=lIRKX7ehyrs59Nktp3u2VOBi/piYihpZ7E0I7ZrJVBd/Zt6hXclpSaczGZtFqM+qjuRWbGXlP9g2Mok5zEDMrmciJwgE3rwQhi0pUjEPmmZKTtSZxJKvR3CPIRV24QPRzspbaYCbS3vIwl0nzlJbq6wnycaaCeZiuuL8FiOVz5A=
+	t=1731086562; cv=none; b=GWU4j7xxif3PK12Jvk43y6oTJfHrTicNJ6uPQXIcFXCk5/wlR3ueYGVXMI5eniC0JLW/lx0lqMEZD+bhupqaqDpUVKcJB0lHLYu8WQ85OfJF3DjcW9rd2aMEXtYXrNbD1WfOcJDlmBqg+dWCsE0G7CTDRnuvIlKlDVuZi25XstU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731086208; c=relaxed/simple;
-	bh=fjQBXJ7bTch5uoEMFdr6ZiwN7mhbCwSD/zngM/th0Fo=;
+	s=arc-20240116; t=1731086562; c=relaxed/simple;
+	bh=cnW+knUlbcf6frH6ges/GQzrIqwI7PtjeWQAdGEL3+Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u9DxKE2z7bk+f7QbwY9yGdw3HYHD6ENq94A3KO6NflguJlFEJ5XcJeTeEO8PhyN/7ZPM1bpV99Uj5VLDVTfo4UitqxlHa9oa+qOQ9983wFnGvwH1YqUtKgm9V9eRVzWvjMvFjusdvynr+g3NUvmJ3zHc1U7jv6gL2e1t21pw9po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Y2EqeYdj; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=WuBccAkKIwCbe6WYa6plBXfC6FccAQ7u9039syRVS8IGcBau2OyYpqrXyKGcbDocEJ3wnzK64bES9Gh0IszYoRQ3GJMNXQylep75tLl+X3uG1QxXzn7vTPyujRRUAHRcb5ZONak4ZSFvlbx50ps+N825BqK/KXzTujE3I19go7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dUrLHKiD; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Y2EqeYdj"
-Received: (qmail 13312 invoked by uid 109); 8 Nov 2024 17:16:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fjQBXJ7bTch5uoEMFdr6ZiwN7mhbCwSD/zngM/th0Fo=; b=Y2EqeYdjCMDFafXxfBiFIqr1wAxUZmZMWclUDPfzMIpe0NokOAVlhWuRmj770b+7pIn7vPV686IbjWvhSdANcmZj9OJENah+vfDzUqNcSfkvWlAF1+iUCnsdtdvnBSirSxLqutOAePqvYEgy813i/lW/fEUS/yzvXYgLGm9+GRxWbs9bKx8nlpi56gml/axuac6pMKJ8msxeP4apkSTNjkup7c3YqzS6FxYRZkhs7iDKb9FqGQrZimZWBtzp55foDeoGxDTa+igEabw2HLUa+Aq7bsREPGauwZutSxWFV7Zsmjd3+g0pHUs7VclkTnmsqySARvxa+11awdDB+q1gRg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dUrLHKiD"
+Received: (qmail 13718 invoked by uid 109); 8 Nov 2024 17:22:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=cnW+knUlbcf6frH6ges/GQzrIqwI7PtjeWQAdGEL3+Q=; b=dUrLHKiDrzzd/ynBRBsInT5raGK+acSmWWvcS/TejkKh+xB/8LYYD6NXBBbaInSI8g7nvvBOrjVNjuvNlz9OR0Hn5FSlb6NG0lqkrlvuSSYcEQfY8YzugsDfBdblCZgOGAfIkKtrFRCucwee7eN+rQChx2t1nhBxPuVw5XRDHQypLJINHVQGg9OOXc1mSHUIeG2KZtGi5y8v4pIqG4QXftprRwIsyVCq4XSoBNHAeBrmNdHW4H8mjaxaGduPfPLmQsgt7PZIl0JsUlC6GfC+T627euqk80rNcXpekEYx6D5m+ElBgBMdwaiJuHmnlsv6wR7qYj41MvIrK40ePvUGow==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Nov 2024 17:16:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 08 Nov 2024 17:22:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29938 invoked by uid 111); 8 Nov 2024 17:16:38 -0000
+Received: (qmail 29982 invoked by uid 111); 8 Nov 2024 17:22:38 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Nov 2024 12:16:38 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Nov 2024 12:22:38 -0500
 Authentication-Results: peff.net; auth=none
-Date: Fri, 8 Nov 2024 12:16:37 -0500
+Date: Fri, 8 Nov 2024 12:22:38 -0500
 From: Jeff King <peff@peff.net>
-To: Kousik Sanagavarapu <five231003@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
-Message-ID: <20241108171637.GA548990@coredump.intra.peff.net>
-References: <20241105190235.13502-1-five231003@gmail.com>
- <xmqqikt1qhwt.fsf@gitster.g>
- <20241106022552.GA816908@coredump.intra.peff.net>
- <xmqq8qtxqcye.fsf@gitster.g>
- <20241106185102.GA880133@coredump.intra.peff.net>
- <xmqqo72rvjqk.fsf@gitster.g>
- <Zy2PV+yywkS64D1p@five231003>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/2] t/helper/test-tool: implement 'sha1-unsafe' helper
+Message-ID: <20241108172238.GB548990@coredump.intra.peff.net>
+References: <cover.1730833506.git.me@ttaylorr.com>
+ <20241107014737.GB961214@coredump.intra.peff.net>
+ <ZywgZt419SfPUVkQ@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,68 +44,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zy2PV+yywkS64D1p@five231003>
+In-Reply-To: <ZywgZt419SfPUVkQ@tapette.crustytoothpaste.net>
 
-On Fri, Nov 08, 2024 at 09:41:03AM +0530, Kousik Sanagavarapu wrote:
+On Thu, Nov 07, 2024 at 02:05:26AM +0000, brian m. carlson wrote:
 
-> > Then things like
-> > 
-> >   %(if:equals=%(upstream:lstrip=3))%(refname:short)%(then)...
+> >   1. Why do we have "test-tool sha256" at all? Nobody in the test suite
+> >      calls it. It feels like the whole test-sha1/sha256/hash split is
+> >      overly complicated. A single "test-tool hash" seems like it would
+> >      be simpler, and it could take an "--algo" parameter (and an
+> >      "--unsafe" one). I guess in the end we end up with the same options
+> >      ,but the proliferation of top-level test-tool commands seems ugly
+> >      to me (likewise "sha1_is_sha1dc").
 > 
-> So if I understand correctly, we grab the .str and operate on it so that
-> we expand the atom within it and then do the comparision.
+> I think we do in `pack_trailer` in `t/lib-pack.sh`, but not in a
+> greppable way:
 > 
-> This seems nice, but there is a problem.  Since we always look for the
-> first occurring ')' in our format string to indicate the end of the atom,
-> we end up with
+>   # Compute and append pack trailer to "$1"
+>   pack_trailer () {
+>   	test-tool $(test_oid algo) -b <"$1" >trailer.tmp &&
+>   	cat trailer.tmp >>"$1" &&
+>   	rm -f trailer.tmp
+>   }
 > 
-> 	.str = %(upstream:lstrip=3
-> 
-> (the call chain is
-> 
-> 	verify_ref_format() -> parse_ref_filter_atom() -> if_atom_parser()
-> )
-> 
-> Since we have now left out a ')', this ')' gets appended to our output
-> buf, which would also show up in cur->output when we do the comparision
-> in then_atom_handler().  For example, in this case our cur->output would
-> be ")master" instead of "master" after we get the value of
-> %(refname:short), meaning our comparision always fails.
+> When you posed the question above, I wasn't sure why I added this
+> functionality: was it just to test my SHA-256 implementation adequately
+> or did it have some actual utility in the testsuite?  However, I knew if
+> it didn't appear straightforwardly in `git grep`, any uses would involve
+> `test_oid`, and boom, I was right.
 
-Yes, though I think the parser _could_ be improved here. This is
-different the earlier case of matching "ref-with-)". In that case it is
-syntactically ambiguous. For example given:
+Ah, good catch. Or good recall, I suppose. ;)
 
-  %(if:equals=ref-with-))foo
+It feels a tiny bit hacky that we have to specify the algo here. If
+there were a plumbing tool to work with the trailing hash of a
+csum-file, then naturally it would use the repo's algorithm instead of
+having to specify it. And I have run into situations once or twice where
+that might have been a useful debugging tool, rather than hacking
+together shell tools like dd. But since we have already done that
+hacking together in the test suite, and this is the only spot that has
+needed it so far, it's probably worth letting sleeping dogs lie.
 
-you cannot tell the difference between:
+> I think a single helper with `--algo` and `--unsafe` parameters would
+> also be fine and would probably be a little more tidy, as you mention.
 
-  - matching "ref-with-)", followed by "foo"
-
-  - matching "ref-with-", followed by ")foo"
-
-But if the parenthesis in question is closing a %() item, like:
-
-  %(if:equals=%(refname))foo
-
-then we know that the inner ")" is closing %(refname), since parsing it
-as "%(refname" followed by ")foo" would leave an unbalanced pair. But
-finding that would require a real recursive descent parser, rather than
-a blind strchr() for the closing ")"[1].
-
-In the meantime yeah, you'd have to spell it as:
-
-  %(if:equals=%(refname%29)
-
-which is...deeply unsatisfying.
-
-I have long dreamed of throwing out all of this format code in favor of
-a recursive parser which generates an actual tree of nodes, and
-implements all of the ref-filter/pretty.c/cat-file format placeholders.
-But I think it's a non-trivial task.
+Yup.
 
 -Peff
-
-[1] Incidentally, the "%)" I proposed earlier would also fall afoul of
-    this problem. The search for the closing ")" is done blindly without
-    regard to possible quoting.
