@@ -1,115 +1,93 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F05233D6B
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 18:12:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D57029CF4
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 21:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731089553; cv=none; b=o9UYFqu/0aKjCbtO7dnUocu9/rlvGP7KoceL/W54IMP2vITTzNOr5OO6IgpFvix3tIu2E8dg/dE8TAr0gkqHJ9vjHAORinOWZiTnnQbuOoXlg9V7w37DQj3a0rHChAMSlbPn2iv6JDO/Q44fzcc/Gz/EmzehvUCDAGjefMrfUsM=
+	t=1731102021; cv=none; b=o+g84O+NUKp8VN1zos3fhE1WOqNyCy1XBdJPA0RAyVKAfEzv8SONQkT0SWh/td/eoj8tolkjh0S745C/b7VXQsPiuCkRQlhy1ecbMMZcPacSKBPw3vC1+tUzRHkK/zn8linbPA8IMCPjAunTw89m+a7e7x1oPnqjN+U/yJCqPeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731089553; c=relaxed/simple;
-	bh=aL9agYmjYiWwjjMC0VWFQznPmmoDvBjlnZr2qTG7dZk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LpuSmvAZLxCPtKRRC484hMSJ4vyCY7KOMUhaPE7mCW5kA8jWQnuY4UJqTllJnj9e77knCx6s4/WYt7zHne68DCzl0LndvnAcRKFtEDPbj/ptqL1T5MR5uueJsirNs457w/0PPk78w418RqUHJYG2J78bRdoBKvuQY7UTwJe14HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gurdMFDm; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1731102021; c=relaxed/simple;
+	bh=oGd97KwWC0SH2j1DaVrtV4TJx6gHnqsHCyKv89p42X4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=a7Kspmv+UrSCN+Gayzr7HqfoxV26GJugy+oTmOaEuCpbV1A+Le+xuYQCrgPBBUg8S8Y+wfJCFX6GpTCXqVTFQxMJtzaxs0647Of+6xYogMF+DJxBmSl/ZrtUC5tF+bPATrrfqsAxpObFafF+ok1EBG0clTbwH2+J2a39ZpIcNkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OezADbut; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gurdMFDm"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-71e681bc315so1890302b3a.0
-        for <git@vger.kernel.org>; Fri, 08 Nov 2024 10:12:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OezADbut"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-20c714cd9c8so28934395ad.0
+        for <git@vger.kernel.org>; Fri, 08 Nov 2024 13:40:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731089552; x=1731694352; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VPxyuU7W9FBYV7esHRBUxZ5baFgEn/evhIuWEMoaj6E=;
-        b=gurdMFDmcuLTzyt3PqIT28VgISTuLYcNjQPOlWN7C+lXVD2DVNLT+/7y2SpVOuJhwX
-         ftFaLXP/n3nPOnDa8bakuUHF4MGgjcC9cxv+7sTLvGzcC5OeXuRlUDj4q6LoqNfQjHpM
-         a/p7YpT3bh+6El8nRxD67A2CBWusgoEK0d5LUqCXrNv2XLTlvZKJd3b+VCAzn9AaKbMa
-         U9Ak5lGTmSwVSImjZw4ojkAoaCyaU+ghKDW+PksRbJ9ipDKmGJX+nNzmlMymRi00xNHx
-         YAP561lS6mqQzi38zGeU4Jl2rINZrENb2Aixz5iuXjrSsmNRboVJ72Go25xTMjco9vaC
-         L4ew==
+        d=gmail.com; s=20230601; t=1731102020; x=1731706820; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=oGd97KwWC0SH2j1DaVrtV4TJx6gHnqsHCyKv89p42X4=;
+        b=OezADbutsHoJ8HGxkfqm/Iw8jU43c7ijJVCSa6JIna5Fjq1t8eObYFrqQGYkwxF/10
+         G5vtIgRfto+hMt/GxFcxBeFsor2vZ5BRIcYsB/RpKRaiRegJ6xeaNpdDD4YURZV4GZdb
+         udHIBXk2sNYI5j7F4wLQa7LC9TC+hPf9Wq3rPoK8ofG9aZeTQZQgirEm/DpOq+5VHsNf
+         NhRN9AHf9Y6Xxf7sWytbZ2io/xzkG9wESg4nIIwefXCDJABA+s8efve6XI+1puLHoXV4
+         vCMnxxj/yk8bzQHUbD9rUDu6m0ozStTcbakOe0pUOYRiGwmDdZXbHxqaRvO93eouZuWC
+         NOlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731089552; x=1731694352;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VPxyuU7W9FBYV7esHRBUxZ5baFgEn/evhIuWEMoaj6E=;
-        b=L9nAJl7sQaOIaAR+6inWHyNJ4NCmQpO0DzZNKT5O1V36t69To20wM9+v4cy9ZST9Ob
-         QNQuWQ93ifovQVJu4dZeZpKCXNm+POuwpS1n7FRNdGP36jZJdZbzJSYzg8Mqb8ueACAg
-         LR7HMLMWZNHrvmMy5C6vyxNMaFcpQJdFIqODNfpqyE51akGXfMQLb215T6hIXukjivLf
-         5W17RGHoEPQSyF/L6oE8jjSIOwL9bxhg0VukQVFKNCNg2Tl3JoKGbISg23fxTcacbsHT
-         sJH0oYGv4SSftdlMWnfOuOG6LpWvPd47JXtmbuk6MF5lSAKI5i8oyyR0jbgrrvsOgpLs
-         mwpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUulX4KZUnMNDZPMf2UStrfa9SI78JxVGPKXR6PTGJp1dMepTTu/xpyZcD/me4SYop3d90=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyga4CxLIvYUTdZQ0nusLo33LMbFh1qWsEpLtJZmFWou6e6+y79
-	XKSlUv0ZfWWoqPBDV+Xx7GPffhFqQd322asCXinmO91yPI+HI+um
-X-Google-Smtp-Source: AGHT+IHdMzR6uXNoycGAsiMwSO4f7B4839+gutqnwJ+JwflLmg8T+oUpkH3OORi13pL3VtgSqbIN+g==
-X-Received: by 2002:a05:6a00:4b56:b0:71e:7174:3a6 with SMTP id d2e1a72fcca58-72413da856cmr5563734b3a.0.1731089551561;
-        Fri, 08 Nov 2024 10:12:31 -0800 (PST)
-Received: from five231003 ([2405:201:c006:3236:9e01:5014:d905:84d1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72407864ebasm4041430b3a.14.2024.11.08.10.12.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Nov 2024 10:12:31 -0800 (PST)
-Date: Fri, 8 Nov 2024 23:42:27 +0530
-From: Kousik Sanagavarapu <five231003@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] t6300: values containing ')' are broken in ref formats
-Message-ID: <Zy5Ui0tHtKL1vYpw@five231003>
-References: <20241105190235.13502-1-five231003@gmail.com>
- <xmqqikt1qhwt.fsf@gitster.g>
- <20241106022552.GA816908@coredump.intra.peff.net>
- <xmqq8qtxqcye.fsf@gitster.g>
- <20241106185102.GA880133@coredump.intra.peff.net>
- <xmqqo72rvjqk.fsf@gitster.g>
- <Zy2PV+yywkS64D1p@five231003>
- <20241108171637.GA548990@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1731102020; x=1731706820;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oGd97KwWC0SH2j1DaVrtV4TJx6gHnqsHCyKv89p42X4=;
+        b=vA49CFZY/+mArUKyq7SBtE62om228IAuNLghV9VIoCkf8mSNMs/l1b3EEW4sychN4L
+         ycLYyeOdZ92+ZSOl9E4+HkW9kPUn9IwCfeHtorCs3moALzzSJe70agVvfMKqXasjZzvz
+         D1CmF4+QNvGkx2opEN3VU7049waj9pJoLE/m6zNMSkw1982qgxrQZYiDKs50REqW9TGx
+         +uTnNszvMUIcvt9aL4Mms3CB2nlcs84ZiQ/I6ptOrPrtSgZJD8/kw3En9W8oRDs2R2W0
+         ZoaQi7e9sP5naXtq1s37xI9KBaQpYIc6fnYt1XlSPbSfdvpRk55JUEE7uJ6UNa3EXUcz
+         awDw==
+X-Gm-Message-State: AOJu0YwSRQFSq6v4A65Ka+DApkv6hIwxGh431dd/FY+aPcO7WLmPxPJN
+	t/ADEIln4HiBGrjzYmEyqR94ZrntuCRhO+q3VuVwwxITMy2zYZxyleur84zd6w8PpA/Qos2/FVd
+	1hhvXOMgfmaPPr4zvtmSeZKZdyI/1yEvw
+X-Google-Smtp-Source: AGHT+IFiMVKD9mS9BndtFkkyXKx8UyXsdfx2BMAbslzG3PnOb2AEtL6nQ/mQ5emCtv+TEdzV2pg0+toeIpdsx4e/gVs=
+X-Received: by 2002:a17:902:ce8d:b0:211:2b2:2086 with SMTP id
+ d9443c01a7336-21183e4a253mr48976825ad.49.1731102019818; Fri, 08 Nov 2024
+ 13:40:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241108171637.GA548990@coredump.intra.peff.net>
+From: Peter Kassak <cache.sk@gmail.com>
+Date: Fri, 8 Nov 2024 22:40:08 +0100
+Message-ID: <CADYnh+Fudpy9kfg8npUMutMjzYNDy-XxJCCJ_9O4kLoB807_3Q@mail.gmail.com>
+Subject: Extremely long subtree split duration
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Nov 08, 2024 at 12:16:37PM -0500, Jeff King wrote:
-> On Fri, Nov 08, 2024 at 09:41:03AM +0530, Kousik Sanagavarapu wrote:
-> 
-> [...]
-> 
-> In the meantime yeah, you'd have to spell it as:
-> 
->   %(if:equals=%(refname%29)
-> 
-> which is...deeply unsatisfying.
-> 
-> I have long dreamed of throwing out all of this format code in favor of
-> a recursive parser which generates an actual tree of nodes, and
-> implements all of the ref-filter/pretty.c/cat-file format placeholders.
+Windows has always been a bit slower with subtree split, but now we
+encountered an extreme difference.
 
-Oh!  I remember this, let me search up the thread...
+The test is on the opensource repository of bitnami charts:
 
-Quoting you from
+git clone https://github.com/bitnami/charts.git
+cd charts
+git subtree split -P bitnami/minio -b split
 
-	https://lore.kernel.org/git/20230901191639.GA1955435@coredump.intra.peff.net/
+On live Ubuntu 24.04 booted from usb stick, it took about one and a
+half minutes.
 
-    IMHO the code would be a lot easier to work with if the atoms were
-    structured as a parse tree with child pointers (especially when you get
-    into things like "if" that have sub-expressions). I think one of the
-    reasons that used_atom is an array is to de-duplicate repeated mentions
-    (so if you formatted "%(foo) %(foo)" it would only have to store the
-    computed value once).
+On Windows 11 installed on internal nvme, it took almost 4 hours.
 
-    But I think that is the wrong way to optimize it. We shouldn't be
-    storing any strings per-atom, but rather walking the parse tree to
-    produce a single output buffer. And the values should be cheap to fill
-    in, because we should parse the object as necessary up front. This is
-    more or less the way the pretty.c parser does it.
+Yes, it sounds crazy, but it really took three hours and 53 minutes on
+the same hardware.
 
-> But I think it's a non-trivial task.
+Main difference (except OS) is git version. On Ubuntu is latest
+installed via apt 2.43.0, on Windows is 2.47.0.windows.2.
 
-True.
+I have tried several different OS in docker, virtualbox, different HW,
+different git versions..
+
+Long story short, it looks like since version 2.44.0-rc0, probably
+after merging 'zf/subtree-split-fix', subtree split is much much
+slower.
+
+And practically unusable on Windows.
+
+Can this be fixed?
+
+Thanks, Peter "Cache" Kassak
