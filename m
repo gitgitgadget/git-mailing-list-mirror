@@ -1,128 +1,134 @@
-Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106B07462
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 01:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0684C33E7
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 01:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731028318; cv=none; b=JFzSssLmkSgwhcFZDZqoNvcaw9s0R0hLMZ0fr9MrLX49RyZYprmDQSaJj06eS1ndeCopF8r9ApuLE70Q9ho0N/g67utMABSMfpfjNXFZsE6e4Gq4c65JtZgmEgGQ/fwLE/OSkfapkP7Prhee11rjYsmxdf/XmCliRrOagMMYXho=
+	t=1731029076; cv=none; b=HVYkcodCiiL6N8EQ3XPnBAag2M5Ak/swVKruibqZ7NnxnMraS4V4/1x48A88pXSNbNoQ9xsUg5snsHmCqXuSW1AQQtlLOGv/r1ugYtiiKdgoLHglgdNTt4Xl3s2HMvo9cnt3xyLWG9fVaIrN9YEsM6r/XScI4VSbn2q2rYUhgq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731028318; c=relaxed/simple;
-	bh=q9VwAODYum9flN98jI2SlIqP8fEcQfPYqNpy3Du+m7c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cz1P7arPlJF8ihjE/GKb045KTcFmL/jpzV0s3znpZgSyY5Ud5ktKJT/QFxFfX5tG9PUWquIGJpDduQvaJIWTALAMFUJlnPtyD4T5dZgiJ2GyhPvcYRw9ZUxyX95temvW7nguFP+lF83Q+Ob00l1Ame0f/dFMwpDw2a6mMLTRMrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSEmHkpr; arc=none smtp.client-ip=209.85.161.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731029076; c=relaxed/simple;
+	bh=m+pZCYFWGM6DdH4GBZqytZHgd9oYmU8gS+vrCAVcYro=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=u83sG22UVS4IXQoU7039XGM8ErZFovwh5LNkgDHkeszJszW1/Hy8A/x/L+Fk3ck/5aa4cS1bWx8g09kWjnyA4mgCv2vdK2SojbA0xEE9WpZkVYdHO5OWL9do5fieGhbxQb8e9GrJoAPLy92JvUVYeiYxuHCI2v95BscZDV893gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Di6Y/Fkd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WvO3g9TJ; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSEmHkpr"
-Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5ebc0dbc65dso906136eaf.1
-        for <git@vger.kernel.org>; Thu, 07 Nov 2024 17:11:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731028316; x=1731633116; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6a1UIekrixOCZ7mYyBNfGmZxP2MQ+kYOKue1d8exOhs=;
-        b=VSEmHkpre1K1dHyW6se1Sgv6dqLfxT4nIRUh9OjpRCCchE3qL0EYCUBOVlBUs4t4Hg
-         fEiZNv1ewNus7Gpq0cMIsVtfeAKDTKr5E9TPb//ycSV5nIhhLBzFsbZCxP8GZw4OBXVG
-         vOC4WdDdPCj6BXQN3ciL6CebZdsx9schPhpihKYsYtmijwIXtHrrpsB0y7BS4xr6JLdc
-         N2FF3x7zZvRSswld+Lt94bhh19HnCAxUTD/5uC8bSYS6Jn7sZs3SKdclZTmc6r1MA8ar
-         r0n99bmumTkq50CaKVM95W4F9068o5YAe6bcgpi47p/VLnlrPqa5n5k2HIOIOGa9lw2i
-         ei5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731028316; x=1731633116;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6a1UIekrixOCZ7mYyBNfGmZxP2MQ+kYOKue1d8exOhs=;
-        b=SOGPVgbL6XsC89G7JCardq64VqEuJitOnKLvtZBZdEKhBhJC1wBEDjdB63hxgXnuDL
-         29A1WZthNKyrsWwDRjOJh7TaHm63z8+tfwNa/rju5XTQqrwwSK/2iJlf1GUT8mpf8QJX
-         kYr91hBi7UcHxT9I6FGRrbK7GLQCCMq4i2MrAcZXHFNlQk20v4P3Q8eXUg+7ZyHHc1UC
-         OVGALzadHx+Stl4Cibghrb7HgweazKD2oVVeflQkbtH7+9y2HYAIv649BQ7GivT2Azg5
-         7j9SUMN7MPI6RpYsjspP7aAXdnBXNEM/OA/Ft2xjPKgHkKpV+G3wSQiIdvBYipDXvdeO
-         vmLg==
-X-Gm-Message-State: AOJu0Yw1U/bxoth8/VgSTs3xRvlTW/nkwRkt+KkBVf1yTLXT0ml/zljY
-	sZWZGQLUdQjj35AKAVnoNAMuz6BUtnP82rV+zAFR/qK8BzVqDLQy
-X-Google-Smtp-Source: AGHT+IH2HF844LDT0P3mSsAWx9dUb+b4zA0tku9PP5CLdnm8SO9dWrgmz62mbPQ/yF7UBX9J6pSnhA==
-X-Received: by 2002:a05:6820:8c8:b0:5eb:75a9:3aac with SMTP id 006d021491bc7-5ee57c61091mr1124355eaf.6.1731028315886;
-        Thu, 07 Nov 2024 17:11:55 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5ee494fb90csm501526eaf.2.2024.11.07.17.11.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 17:11:55 -0800 (PST)
-Date: Thu, 7 Nov 2024 19:10:11 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
-Subject: Re: [PATCH 3/7] reftable/system: stop depending on "hash.h"
-Message-ID: <hhlsmyyqt2y6ue3abnlwjmrmsslewwjcoiu44aadp6nqkscict@m55ip4ibqgoq>
-References: <cover.1729677003.git.ps@pks.im>
- <b595668a5cdae0dff4a7271a3547c5821aa6e912.1729677003.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Di6Y/Fkd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WvO3g9TJ"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E97311400BD;
+	Thu,  7 Nov 2024 20:24:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 07 Nov 2024 20:24:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1731029073; x=1731115473; bh=S7fPUg84Wx
+	WLSzPJ8UwOhYtv9T8CYMOR/jJyImtfyuU=; b=Di6Y/Fkd+LxhRAPjPSaxWV9weU
+	R86rTJQw40oLmbS7q2lsgUCYq6CHxhc0s3MVXmvwBT67xebQOpVmkNyptqkDPrQG
+	X3EP3H/agOf8y4Bpd4al0Kzd5luKMK6BQnc8ukk1+BMLrtDOQGx7GcSvXCR1D5nV
+	GitbvQODQYQh308btP/8+z2gbJOCyg7i1VU6OjW/XTXUX5KcvcPV82lXLUiP+E5k
+	R35x3R47LSEMxqfR3CjA7SqXa3XDWCP2PCnMGllLUZZFp40gbF1mcf93x6f4gpZc
+	D5y32GwT1bgsAig47FCT2aKUaQ+EyCj3ocq+meryS65Sxbiz1eYIg5OfNDPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731029073; x=1731115473; bh=S7fPUg84WxWLSzPJ8UwOhYtv9T8CYMOR/jJ
+	yImtfyuU=; b=WvO3g9TJJlGNwFHLGzosgFiUXHTvlqBAPtrepcyeFRiwrwfxzzE
+	Vgxxeem0fCwt4CtSPC/DiIXggOPPX1oSxBQGzqjIcBoOEY4d1DV7kbmAO+RaElsB
+	ADVNSkRRd4Sm5bFHx+sJdyIcdPS42QdfSfZKsXfZr06Gy9G033RNIa2HIf5qgOHI
+	qRsEOU7YpU0uhHwcp4M0kYR+UHkfpQv+xBJEBVrSUOytXnVlYoWYsJYgA7IAueqF
+	gqfv7vGjPqWZ2njuP2MSEoD1Qel5jWZwLxjdas/UWGBjDl7KeyPTjjqKI6Poh9WZ
+	EQVXSSRKnOBlsPuqcVA7rLOCx0JU9tLSqYA==
+X-ME-Sender: <xms:UGgtZz7XRCbcuHuKJCYgaPIZo4R0UvpAD40ltKgJamTl_iH-IuK-vQ>
+    <xme:UGgtZ451z527bP0a9T4wA2OvWVe2ILOhr5bGL9wLSKlCIqWhephPgMFKW5HFcHY2o
+    1YQgw4ae3cl_Mk7TA>
+X-ME-Received: <xmr:UGgtZ6f5Og9oztYRnCqMZ5Bdr4GpA3dIUx2vMsrpjE7j63-4DkU2PyUX6qkOvNOCE9mhjyZ5tXTqU9qffwZ820Bzi6nDz_AQYMpI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdehgdeffecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
+    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhose
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:UGgtZ0LCP7VKrvOoTcngJUAGRoY4slyk0rkyegdoXdayFst7Px-ViA>
+    <xmx:UGgtZ3LGyAH2b6RWnu4fmXanUSWazQrHRDZd7ka_nyrN0t1Z6Addaw>
+    <xmx:UGgtZ9yGxXLM7gLtcA8KJ7TLu63hy6fWEglEA4ACpZb-ANt5ujoITQ>
+    <xmx:UGgtZzKlseJ5KCQ0oh-76x6mpBBEUf2vg3RTBMmy_tVK9zWbgu5w6w>
+    <xmx:UWgtZ9g_EWeZ0h6MOX8W_U3tnS8oGbXkIIUm1Ham7x5m0j6SO7Q_OLbc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 7 Nov 2024 20:24:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 1/3] git: remove is_bare_repository_cfg global variable
+In-Reply-To: <ZyzlBZnL-K3S7Env@ArchLinux> (shejialuo@gmail.com's message of
+	"Fri, 8 Nov 2024 00:04:21 +0800")
+References: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
+	<3d341a9ae4ef1d2776734fa82a45913f91e6083c.1730926082.git.gitgitgadget@gmail.com>
+	<xmqqv7wzsijc.fsf@gitster.g> <ZyzlBZnL-K3S7Env@ArchLinux>
+Date: Fri, 08 Nov 2024 10:24:31 +0900
+Message-ID: <xmqqjzdeqzzk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b595668a5cdae0dff4a7271a3547c5821aa6e912.1729677003.git.ps@pks.im>
+Content-Type: text/plain
 
-On 24/10/23 11:56AM, Patrick Steinhardt wrote:
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 3c6107c7ce5..7d86d920970 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -15,6 +15,7 @@
->  #include "../object.h"
->  #include "../path.h"
->  #include "../refs.h"
-> +#include "../reftable/reftable-basics.h"
->  #include "../reftable/reftable-stack.h"
->  #include "../reftable/reftable-record.h"
->  #include "../reftable/reftable-error.h"
-> @@ -289,7 +290,16 @@ static struct ref_store *reftable_be_init(struct repository *repo,
->  	refs->store_flags = store_flags;
->  	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
->  
-> -	refs->write_options.hash_id = repo->hash_algo->format_id;
-> +	switch (repo->hash_algo->format_id) {
-> +	case GIT_SHA1_FORMAT_ID:
-> +		refs->write_options.hash_id = REFTABLE_HASH_SHA1;
-> +		break;
-> +	case GIT_SHA256_FORMAT_ID:
-> +		refs->write_options.hash_id = REFTABLE_HASH_SHA256;
-> +		break;
-> +	default:
-> +		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
-> +	}
+shejialuo <shejialuo@gmail.com> writes:
 
-Here we define the mapping between the Git's format ID and the reftable
-hash external to the reftable library. This facilitates swapping uses of
-`GIT_*_FORMAT_ID` to `REFTABLE_HASH_*` as done in the rest of the patch
-which looks good.
+> I also want to ask this question. Actually, I feel quite strange about
+> why we need to add a new parameter `is_bare` to `repo_init` function.
+>
+> For this call:
+>
+>     repo_init(the_repository, git_dir, work_tree, -1);
+>
+> We add a new field "is_bare_cfg" to the "struct repository". So, at now,
+> `the_repository` variable should contain the information about whether
+> the repo is bare(1), is not bare(0) or unknown(-1). However, in this
+> call, we pass "-1" to the parameter `is_bare` for "repo_init" function.
 
->  	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
->  	refs->write_options.disable_auto_compact =
->  		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
-[snip]
-> diff --git a/reftable/merged.h b/reftable/merged.h
-> index 89bd0c4b35b..13a5fe4154e 100644
-> --- a/reftable/merged.h
-> +++ b/reftable/merged.h
-> @@ -10,11 +10,12 @@ license that can be found in the LICENSE file or at
->  #define MERGED_H
->  
->  #include "system.h"
-> +#include "basics.h"
+Isn't this merely trying to be faithful to the original to avoid
+unintended behaviour change?  We initialize the global variable
+is_bare_repository_cfg to unspecified(-1) in the original, and
+for a rewrite to move the global to a member in the singleton
+instance of the_repo, it would need to be able to do the same.
 
-Naive question, being that "merged.h" only depends on
-`reftable-basics.h:reftable_hash` and not any of the internal reftable
-basics components, would it be best to instead reference it directly? Or
-because "merged.h" is also internal do we also prefer to use the
-internal "basics.h"? 
+And for callers of repo_init() that prepares _another_ in-core
+repository instance, which is different from the_repository, because
+the original has a process-wide singleton global variable, copying
+the value from the_repository->is_bare to a newly initialized one
+would hopefully give us the most faithful rewrite to avoid
+unintended behaviour change.
 
-Probably doesn't really matter, but I was just curious if there was any
-reasoning. :)
+At least, that is how I understood why the patch does it this way.
+As you noticed, too, there are ...
 
--Justin
+> When I first look at this code, I have thought that we will set
+> "repo->is_bare_cfg = -1" to indicate that we cannot tell whether the
+> repo is bare or not. But it just sets the "repo->is_bare_cfg = is_bare"
+> if `bare > 0`. Junio has already commented on this.
+
+... places in the updated code that makes it unclear what the
+is_bare member really means.  The corresponding global variable used
+to be "this is what we were told by config or env or command line",
+but it is unclear, with conditional assignments like the above, what
+it means in the updated code.
+
+Thanks.
