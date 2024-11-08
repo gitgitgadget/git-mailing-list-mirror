@@ -1,186 +1,128 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8394F19B5B1
-	for <git@vger.kernel.org>; Thu,  7 Nov 2024 23:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 106B07462
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 01:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731021640; cv=none; b=VHF7sQK5uoKZzyQCNzqwXBSkteRQRz7MlEvwElpAGu65fgIo3pKrbvih7wjAiM1cs3Qu4i0yT6g5Qg7zCZIFGBMpreNQv41suuPct3vhQ98fOWG8xXHOvGXpnARxCAjTMIFfksm6Q95jYYBsJRcUyRh1OXZIBDT6MC0OL1QkQLo=
+	t=1731028318; cv=none; b=JFzSssLmkSgwhcFZDZqoNvcaw9s0R0hLMZ0fr9MrLX49RyZYprmDQSaJj06eS1ndeCopF8r9ApuLE70Q9ho0N/g67utMABSMfpfjNXFZsE6e4Gq4c65JtZgmEgGQ/fwLE/OSkfapkP7Prhee11rjYsmxdf/XmCliRrOagMMYXho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731021640; c=relaxed/simple;
-	bh=EBtoghIvqEE+ngKqzomi/dgv0Nb+kN98KR7nh1mMrAw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RFZ4upXqFjm4F/JtZGhX+9AIoqCuU0n1MvojyAQxNx/Pt2/6H+EoxY5Gcq+raNL6wJ7ZnLV2dQcN73k0NRXfC9TAR0U4brQXhSKskj1Y683x7GUaQexAGCvuZ4SdQYpWqKxRMx8RJKBbJk2a8s1gcTcVFUfdaZXgK7lRY+PO0fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=e1OFq+5S; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1731028318; c=relaxed/simple;
+	bh=q9VwAODYum9flN98jI2SlIqP8fEcQfPYqNpy3Du+m7c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cz1P7arPlJF8ihjE/GKb045KTcFmL/jpzV0s3znpZgSyY5Ud5ktKJT/QFxFfX5tG9PUWquIGJpDduQvaJIWTALAMFUJlnPtyD4T5dZgiJ2GyhPvcYRw9ZUxyX95temvW7nguFP+lF83Q+Ob00l1Ame0f/dFMwpDw2a6mMLTRMrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSEmHkpr; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="e1OFq+5S"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e38fc62b9fso13538677b3.2
-        for <git@vger.kernel.org>; Thu, 07 Nov 2024 15:20:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSEmHkpr"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5ebc0dbc65dso906136eaf.1
+        for <git@vger.kernel.org>; Thu, 07 Nov 2024 17:11:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731021637; x=1731626437; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731028316; x=1731633116; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yUnU2ECzYedS3ip15ZqRh7PKsN9TQcEMcUGEmDbrs8A=;
-        b=e1OFq+5SBCfTyUxD0N6fLWNR+7HoZgdZGYVluhYsDgoKZkkmMygbnCrTIPu36XUJtn
-         1dxFcsLnWVjuaNyHAbxhf/BF2OwIMC/0NtD580r/3tQSuUsMbBtvZR8CL5lcRYBjlM2o
-         4Dw+6di7NrNEawzwz+YONNcq1OELEUqFb2OtIcFVCdnqH9E6a4CwDYCmDMUHQJ2uSmCD
-         FX2HdMEXcd/VnlQAX0pfFEpBogtRwIl3hjaLEOBfIgy+6Uzz27bmym2ZLAiG7yT5dc6d
-         uxnvtEb/ddWdnHbZOmQEler1nDHMWwBtguswyf3DHUdUStwiJU8I10s5zgkMIVR9ruZJ
-         kdLQ==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6a1UIekrixOCZ7mYyBNfGmZxP2MQ+kYOKue1d8exOhs=;
+        b=VSEmHkpre1K1dHyW6se1Sgv6dqLfxT4nIRUh9OjpRCCchE3qL0EYCUBOVlBUs4t4Hg
+         fEiZNv1ewNus7Gpq0cMIsVtfeAKDTKr5E9TPb//ycSV5nIhhLBzFsbZCxP8GZw4OBXVG
+         vOC4WdDdPCj6BXQN3ciL6CebZdsx9schPhpihKYsYtmijwIXtHrrpsB0y7BS4xr6JLdc
+         N2FF3x7zZvRSswld+Lt94bhh19HnCAxUTD/5uC8bSYS6Jn7sZs3SKdclZTmc6r1MA8ar
+         r0n99bmumTkq50CaKVM95W4F9068o5YAe6bcgpi47p/VLnlrPqa5n5k2HIOIOGa9lw2i
+         ei5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731021637; x=1731626437;
+        d=1e100.net; s=20230601; t=1731028316; x=1731633116;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yUnU2ECzYedS3ip15ZqRh7PKsN9TQcEMcUGEmDbrs8A=;
-        b=QpwTg0i/EUnNZ99BJgqLWZzcpApBwFYVgXzEyYBvGAg3zy5zIIB7D0dEENlZVtBX7B
-         l7wFNRGzYKFE22/zvpQQ4IfsQGR0frVBFPjKSXjk5Oqo/dUC7BLVSwf13n2HgAcQjqtQ
-         qfJy7WF6lBiXwBsIWIIiegCff4kElWr61ODNHJ4J5EaEDcrzAw3Jf9qVrKnC+ROjQvkn
-         SXofrfOh4cLznbRM+tEIx4NEnel4Am0FZyfej1lZjZH/dbD9nJPSOHxU7Bk0cfwRBvZn
-         9HIziizM4Uu42bWRq6ccRzcWYTtBhXIRuH2TUYBb9lmaMYcuyYTsbNBGDVWFsrAyo881
-         syzg==
-X-Forwarded-Encrypted: i=1; AJvYcCVFBsqkVXu+JsaxVd801L9lIfcxMfSWAjwcFd7pbflqrAtenl5u2f4WbrF2nfTRF78vqiM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIqj+qYao4+rl/SttKIHpV65ZlsnKnY68CxnIWOikziyvgTgb3
-	70QpdB0h5SGoxCBIs2Q79/7KUv34xL/0ICH98rRlSvCQTwvJ54kgqM8y3btxe8s=
-X-Google-Smtp-Source: AGHT+IEqskBO6MRAijM7J2lbwdmo946mZaW5ynYO9QGHlHxgm2zqfDtThMt4/O2r9cDMItAhtv4yNA==
-X-Received: by 2002:a05:690c:4512:b0:6ea:4e1f:2b42 with SMTP id 00721157ae682-6eaddd71b3bmr10403037b3.8.1731021637340;
-        Thu, 07 Nov 2024 15:20:37 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eaceb65302sm4879037b3.73.2024.11.07.15.20.36
+        bh=6a1UIekrixOCZ7mYyBNfGmZxP2MQ+kYOKue1d8exOhs=;
+        b=SOGPVgbL6XsC89G7JCardq64VqEuJitOnKLvtZBZdEKhBhJC1wBEDjdB63hxgXnuDL
+         29A1WZthNKyrsWwDRjOJh7TaHm63z8+tfwNa/rju5XTQqrwwSK/2iJlf1GUT8mpf8QJX
+         kYr91hBi7UcHxT9I6FGRrbK7GLQCCMq4i2MrAcZXHFNlQk20v4P3Q8eXUg+7ZyHHc1UC
+         OVGALzadHx+Stl4Cibghrb7HgweazKD2oVVeflQkbtH7+9y2HYAIv649BQ7GivT2Azg5
+         7j9SUMN7MPI6RpYsjspP7aAXdnBXNEM/OA/Ft2xjPKgHkKpV+G3wSQiIdvBYipDXvdeO
+         vmLg==
+X-Gm-Message-State: AOJu0Yw1U/bxoth8/VgSTs3xRvlTW/nkwRkt+KkBVf1yTLXT0ml/zljY
+	sZWZGQLUdQjj35AKAVnoNAMuz6BUtnP82rV+zAFR/qK8BzVqDLQy
+X-Google-Smtp-Source: AGHT+IH2HF844LDT0P3mSsAWx9dUb+b4zA0tku9PP5CLdnm8SO9dWrgmz62mbPQ/yF7UBX9J6pSnhA==
+X-Received: by 2002:a05:6820:8c8:b0:5eb:75a9:3aac with SMTP id 006d021491bc7-5ee57c61091mr1124355eaf.6.1731028315886;
+        Thu, 07 Nov 2024 17:11:55 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5ee494fb90csm501526eaf.2.2024.11.07.17.11.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 15:20:36 -0800 (PST)
-Date: Thu, 7 Nov 2024 18:20:35 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 1/2] t/helper/test-sha1: prepare for an unsafe mode
-Message-ID: <Zy1LQ7uJbut7JTHM@nand.local>
-References: <cover.1730833506.git.me@ttaylorr.com>
- <0e2fcee6894b7b16136ff09a69f199bea9f8c882.1730833507.git.me@ttaylorr.com>
- <xmqqcyj9qgyf.fsf@gitster.g>
- <ZywOWn08cGBnBWM-@tapette.crustytoothpaste.net>
- <20241107013915.GA961214@coredump.intra.peff.net>
- <Zywcr2lMM_Ij8suu@tapette.crustytoothpaste.net>
- <Zy0xfVqtOXhEVDQB@nand.local>
+        Thu, 07 Nov 2024 17:11:55 -0800 (PST)
+Date: Thu, 7 Nov 2024 19:10:11 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH 3/7] reftable/system: stop depending on "hash.h"
+Message-ID: <hhlsmyyqt2y6ue3abnlwjmrmsslewwjcoiu44aadp6nqkscict@m55ip4ibqgoq>
+References: <cover.1729677003.git.ps@pks.im>
+ <b595668a5cdae0dff4a7271a3547c5821aa6e912.1729677003.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zy0xfVqtOXhEVDQB@nand.local>
+In-Reply-To: <b595668a5cdae0dff4a7271a3547c5821aa6e912.1729677003.git.ps@pks.im>
 
-On Thu, Nov 07, 2024 at 04:30:37PM -0500, Taylor Blau wrote:
-> > > All that said, I do not think it buys us anything for "real" code. There
-> > > the decision between safe/unsafe is in the context of how we are using
-> > > it, and not based on some conditional. So while the code in this test
-> > > helper is ugly, I don't think we'd ever write anything like that for
-> > > real. So it may not be worth the effort to refactor into a more virtual
-> > > object-oriented way.
-> >
-> > Yeah, I don't have a strong opinion one way or the other.  I think, with
-> > the limitation I mentioned above, it would probably require a decent
-> > amount of refactoring if we took a different approach, and I'm fine with
-> > going with Taylor's current approach unless he wants to do that
-> > refactoring (in which case, great).
->
-> I think it does buy you something for real code, which is that you don't
-> have to remember to consistently call the unsafe_ variants of all of the
-> various function pointers.
->
-> For instance, if you do
->
->     the_hash_algo->unsafe_init_fn(...);
->
-> early on, and then later on by mistake write:
->
->     the_hash_algo->update_fn(...);
->
-> Then your code is broken and will (as brian said) either in the best
-> case produce wrong results, or likely segfault.
->
-> So in that sense it is worth doing as it avoids the caller from having
-> to keep track of what "mode" they are using the_hash_algo in. But let's
-> take it up later, I think.
+On 24/10/23 11:56AM, Patrick Steinhardt wrote:
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 3c6107c7ce5..7d86d920970 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -15,6 +15,7 @@
+>  #include "../object.h"
+>  #include "../path.h"
+>  #include "../refs.h"
+> +#include "../reftable/reftable-basics.h"
+>  #include "../reftable/reftable-stack.h"
+>  #include "../reftable/reftable-record.h"
+>  #include "../reftable/reftable-error.h"
+> @@ -289,7 +290,16 @@ static struct ref_store *reftable_be_init(struct repository *repo,
+>  	refs->store_flags = store_flags;
+>  	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
+>  
+> -	refs->write_options.hash_id = repo->hash_algo->format_id;
+> +	switch (repo->hash_algo->format_id) {
+> +	case GIT_SHA1_FORMAT_ID:
+> +		refs->write_options.hash_id = REFTABLE_HASH_SHA1;
+> +		break;
+> +	case GIT_SHA256_FORMAT_ID:
+> +		refs->write_options.hash_id = REFTABLE_HASH_SHA256;
+> +		break;
+> +	default:
+> +		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
+> +	}
 
-The idea seemed too fun to play with, so I tried my hand at implementing
-it and was quite pleased with the result.
+Here we define the mapping between the Git's format ID and the reftable
+hash external to the reftable library. This facilitates swapping uses of
+`GIT_*_FORMAT_ID` to `REFTABLE_HASH_*` as done in the rest of the patch
+which looks good.
 
-The WIP-quality patches are available in my tree under the
-wip/tb/unsafe-hash-algop[1] branch. The result, at least as it applies
-to the test-tool modified here, is quite pleasing IMHO:
+>  	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
+>  	refs->write_options.disable_auto_compact =
+>  		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
+[snip]
+> diff --git a/reftable/merged.h b/reftable/merged.h
+> index 89bd0c4b35b..13a5fe4154e 100644
+> --- a/reftable/merged.h
+> +++ b/reftable/merged.h
+> @@ -10,11 +10,12 @@ license that can be found in the LICENSE file or at
+>  #define MERGED_H
+>  
+>  #include "system.h"
+> +#include "basics.h"
 
---- 8< ---
-Subject: [PATCH] t/helper/test-hash.c: use unsafe_hash_algo()
+Naive question, being that "merged.h" only depends on
+`reftable-basics.h:reftable_hash` and not any of the internal reftable
+basics components, would it be best to instead reference it directly? Or
+because "merged.h" is also internal do we also prefer to use the
+internal "basics.h"? 
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/helper/test-hash.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+Probably doesn't really matter, but I was just curious if there was any
+reasoning. :)
 
-diff --git a/t/helper/test-hash.c b/t/helper/test-hash.c
-index d0ee668df95..aa82638c621 100644
---- a/t/helper/test-hash.c
-+++ b/t/helper/test-hash.c
-@@ -9,6 +9,8 @@ int cmd_hash_impl(int ac, const char **av, int algo, int unsafe)
- 	int binary = 0;
- 	char *buffer;
- 	const struct git_hash_algo *algop = &hash_algos[algo];
-+	if (unsafe)
-+		algop = unsafe_hash_algo(algop);
-
- 	if (ac == 2) {
- 		if (!strcmp(av[1], "-b"))
-@@ -27,10 +29,7 @@ int cmd_hash_impl(int ac, const char **av, int algo, int unsafe)
- 			die("OOPS");
- 	}
-
--	if (unsafe)
--		algop->unsafe_init_fn(&ctx);
--	else
--		algop->init_fn(&ctx);
-+	algop->init_fn(&ctx);
-
- 	while (1) {
- 		ssize_t sz, this_sz;
-@@ -49,15 +48,9 @@ int cmd_hash_impl(int ac, const char **av, int algo, int unsafe)
- 		}
- 		if (this_sz == 0)
- 			break;
--		if (unsafe)
--			algop->unsafe_update_fn(&ctx, buffer, this_sz);
--		else
--			algop->update_fn(&ctx, buffer, this_sz);
-+		algop->update_fn(&ctx, buffer, this_sz);
- 	}
--	if (unsafe)
--		algop->unsafe_final_fn(hash, &ctx);
--	else
--		algop->final_fn(hash, &ctx);
-+	algop->final_fn(hash, &ctx);
-
- 	if (binary)
- 		fwrite(hash, 1, algop->rawsz, stdout);
-
-base-commit: d8c1fc78b57e02a140b5c363caaa14c2dc2bb274
-prerequisite-patch-id: 5df87a6ba8a596bc7834ce8b5a656a3c4f1a869f
-prerequisite-patch-id: c3f346e57f98b067eef8adf1e20c70ac23f41c36
-prerequisite-patch-id: c5d1ec4f5e9796c5c9232442a3fc3be79379b8c4
-prerequisite-patch-id: bdc2d6cbc23c467b24f184a889a5242e5c9fe774
---
-2.47.0.238.g87615aecf12
---- >8 ---
-
-To be clear: I think that we should still take this series as-is, and
-I'll send the additional half dozen or so patches on top as a new series
-dependent on this one.
-
-Thanks,
-Taylor
-
-[1]: https://github.com/ttaylorr/git/compare/tb/sha1-unsafe-helper...ttaylorr:git:wip/tb/unsafe-hash-algop
+-Justin
