@@ -1,156 +1,135 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99D621C172
-	for <git@vger.kernel.org>; Fri,  8 Nov 2024 15:47:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EE721B438
+	for <git@vger.kernel.org>; Fri,  8 Nov 2024 15:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731080838; cv=none; b=Y6rCGxkaq7t95FrHTpkCxCDwpx4UpQWpcPVBH1vb1O40duwqcv9aNEFmkzhgBv21AXUwWzFcvKfREBjSWbpA2M5kFxywvVW0qIOuTwVy1EXxm7qrmOROxASLTsaknpFNyylJg9EZpuf2b9d7VHZ5Bb4PDxx0KQVsApf+XCnon6A=
+	t=1731081219; cv=none; b=HVphLUvCAbd0ouuSYjwpHqGW3Z+2paQWtoOcAmFG3eHyBlaLrGGkoPyU02t1dmpab00GLnPry/SyCw9mhXXB2a+JMDAQZDYWMgQm3r3wnFy3fHgumavrx5ZfJ5Xxu7eQUUQy2dyXK5WA1NX3d3YR7AyGlm75aSNB8FwAvzwJZoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731080838; c=relaxed/simple;
-	bh=u54/RKIvg8jtEkzOLyFErMEK1zNe4WnJ2VZkjk3BY3A=;
+	s=arc-20240116; t=1731081219; c=relaxed/simple;
+	bh=mPshKwAPjlTvkJZFMfWrFlexc2uaFtfJ4Z1KkQv2+ck=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gygennn9Bv1PeVzHmy2sCqWD3Eq+kWzMQhr2AeISt9bNK1euJJOdC7jJrbHlKZKc4iZdrp3YXktygt9GpeFf7WFDQ5QZBQpODaDyvnKh8BKhyQAtyj6HtqzBA3HYFSDxMqbAENkKgKANB06yaS24ZZhfNod5f9oNqTp5BDtQrnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VuEtOsKX; arc=none smtp.client-ip=209.85.166.51
+	 To:Cc:Content-Type; b=u9SJeMXsM810fPh3azNWDStYQMMZ1EaqaN2RtDUK/d9fhp2juGUtSWumqfWN0k6Awv4BigIfTQsCQClzCzQ5xeGdIm8xgRKbbVTobeeVi7uC47bqS4WM4vICWRmFPp9uk36CLK1ljGbJN7qDPzPev8nInP/3MM9HPJ3kKD4gDRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZszfPMl; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VuEtOsKX"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-83ab94452a7so91970839f.3
-        for <git@vger.kernel.org>; Fri, 08 Nov 2024 07:47:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZszfPMl"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3a6bf539cabso8173585ab.3
+        for <git@vger.kernel.org>; Fri, 08 Nov 2024 07:53:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731080836; x=1731685636; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731081217; x=1731686017; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fNsFxR4FrJ3Pn2rosGWm68rjCnIbiUdvsIbdF/TE0gE=;
-        b=VuEtOsKX1WoMHp0r6cM7w9Mrbyur9yIOLH29W4MvxJdF3Gycof1ccU8gZIMZ5s5EdN
-         PB3wxoDrTBsdgaAYiOv8oXCugBugkSEm/nzlQfJmdwQgpunxEilOS6gGq+Vnv8xTTfou
-         SXMA6SyIksyGY9lDwqypBkC4SU6bO6R1RRt0ibYW2eSyTizEP7deI5uXadbrIIc2XGD+
-         wtO47x9aDl8cV3KsFwbo29F4S4hjRGakjto2/ZCHe+TFn59c77pIycdhgKNEvjsUISxm
-         0rvLusfmp+xopHsLGR6Le8okKWV5ZDBGQXQMn9khW4GP4wzaAkw42elvEA4BKlST3kc2
-         W+Fw==
+        bh=8RdhfVvcchGaXoRuIjkdC1qMflYeWf/KcHPZdmLpiIQ=;
+        b=VZszfPMlV6pcpe7zqWqm/O+SL+FiLc+NWNzEAhf78jY97RPN1N6jjLZEDnYAnahMMA
+         07ZSm8TZmBGnjh7EQTXylBiqOCvroaHS2LbqBBDeBHKjJwKjov1ZdxdNwE6aRUffqv/P
+         kf9sQSTExavVs7DP14t1DoRZ7YhMYmPsw1JZjuu/ksjy/n19IHHflCarx4aSBvU4d63u
+         h10o4NkbUAU/oRPgdviOZ5AiqTklWH/iEdXpYXI5HefRl8oKHZjql4ttaoTax5t0lcKW
+         XTdAO4b4PhINMggN9hLgrqqQTBctOcmrjJaVLj9JmSUhZI3EsTLI4yYS7At1WbsJMLAF
+         Pc/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731080836; x=1731685636;
+        d=1e100.net; s=20230601; t=1731081217; x=1731686017;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fNsFxR4FrJ3Pn2rosGWm68rjCnIbiUdvsIbdF/TE0gE=;
-        b=ji2wDvbdmrYiG55qw+CrrJQtEKAawTTC1AvEMAaA8C+tRBFNbrray5HRRmISNBuJsy
-         uvr2lh7gLGks4zBljTSTZGA+DXthJMMuSe/HcgEM+zVdhuLkNqNk0wIosqe31hILztSo
-         T9CtRfQS+nL9Ywpec8ElZAfGVp9qNa9IMWnri+2v8292orfFVY+XWSmVGQ8K032YRsZx
-         Z7xh4l8dAESMyOU+qokoMbKhi6MV11/OUldtp9NCStctYHSVhVzoNiS1NGaZ3x5df1DJ
-         3Uz8dnuKbdtsNIdMJft5ixtAREXnVXCUGInYuPq5+RwZbNe/8skGsCADdACL9SMzsfza
-         RmiQ==
-X-Gm-Message-State: AOJu0Yze6jPr6gxXs3Y3M2RgBvm25Hgf8C0uT1mvpCGgbhLUKFk+TnQr
-	OaXDKW3TkqagqQHIYjmnu54vJCQQNi0ey9ZD02+edn4yQgjtrIXUb2xb75BCDqYp5SJczGDJ8wa
-	7Q25Jv9Jo1wGRXcGbo1G+m+rKmCE=
-X-Google-Smtp-Source: AGHT+IGGkWjqucO+hTLDzESQc8YSv22epnlrImx0JiTFMUe4PJetW1knoYpokgSIcpEhao6DkSFU0Fyimn3li4+5tHI=
-X-Received: by 2002:a05:6602:6c1c:b0:83a:b98e:9240 with SMTP id
- ca18e2360f4ac-83e03386a5bmr372910239f.10.1731080835799; Fri, 08 Nov 2024
- 07:47:15 -0800 (PST)
+        bh=8RdhfVvcchGaXoRuIjkdC1qMflYeWf/KcHPZdmLpiIQ=;
+        b=jU785s9Y/ElL2rHyvxP79LjygdVxzNRJPKJwCCY1Dun9O7ZjV3/FqSAL/LMN+dSoc7
+         lEjuTx6u7yidbaFpXMHneharhpCmPeOss2sBlR0Zi38ZRClKJyuGI0Lt4okYK55pKZRI
+         o/7Iijh2DMn6BI/jML1QKMWdzLpz16w2ridsU5vCHu/VCyK+swATSLy6Xv7WBKTuD+LI
+         dYYHjWT9QfmFMJB73j0efOp/RM1n4VmqongNy95SH70Vs9xFz5c9CYxed8zKtE0SmpTN
+         2YcqkuKKrwRX97kVpJCOCiwL1bFEEh8O+Yi69OZFH0wgOuJqiyBwGOAXqtfzjKC33PYd
+         KPNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6AS26sjPbwqjeZUNXzV6dkjao6/zMsg1/I8/ucKzzCJyfrf5vP9Dz13lII4H2tThq5dQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfpBCBw/r+5JOFrn/H+IPDuRpj4VPJbOhqKkm1737mYsKKWqhI
+	G1w/wGWJUrzfJYaIY03cwkCMif7o8dEp0MQzZtuo7t889pjBQ3IcDx2KwK/quWu1M+FXsXJ86Sh
+	0ZtMKzGiuhcFRQdXwdbKCuEZiTp0=
+X-Google-Smtp-Source: AGHT+IFirqx2QOLNGP/4As7VsBE2c/Mssk7LKkk6kVpSyXDMD6ea7XCEu4qzYGCHcmQPUWUnw/ybdvfj1csovsEWN8E=
+X-Received: by 2002:a05:6e02:1806:b0:3a6:ab82:db5e with SMTP id
+ e9e14a558f8ab-3a6f1a4c4c6mr42557265ab.22.1731081216845; Fri, 08 Nov 2024
+ 07:53:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1825.git.1731073435641.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1825.git.1731073435641.gitgitgadget@gmail.com>
+References: <pull.1734.git.1731000007391.gitgitgadget@gmail.com> <abc2453b-f7df-4601-8834-595881f9ceca@kdbg.org>
+In-Reply-To: <abc2453b-f7df-4601-8834-595881f9ceca@kdbg.org>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 8 Nov 2024 07:47:04 -0800
-Message-ID: <CABPp-BHauuserYU8t5ybn+ghqRb-c85qwwjLWVe-e5EC8sVVxQ@mail.gmail.com>
-Subject: Re: [PATCH] log: --remerge-diff needs to keep around commit parents
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Fri, 8 Nov 2024 07:53:25 -0800
+Message-ID: <CABPp-BFCe6wSQDGJ-Bo4+u1OE9Py2mYroX9qsvxFXJ_kePmTfg@mail.gmail.com>
+Subject: Re: [PATCH] range-diff: optionally include merge commits' diffs in
+ the analysis
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>, git@vger.kernel.org, 
+	Philippe Blain <levraiphilippeblain@gmail.com>, 
+	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 8, 2024 at 5:43=E2=80=AFAM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Thu, Nov 7, 2024 at 10:54=E2=80=AFPM Johannes Sixt <j6t@kdbg.org> wrote:
 >
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Am 07.11.24 um 18:20 schrieb Johannes Schindelin via GitGitGadget:
+> > +--diff-merges=3D<format>::
+> > +     Instead of ignoring merge commits, generate diffs for them using =
+the
+> > +     corresponding `--diff-merges=3D<format>` option of linkgit:git-lo=
+g[1],
+> > +     and include them in the comparison.
+> > ++
+> > +Note: Some of the formats supported by linkgit:git-log[1] make less se=
+nse in
+> > +the context of the `range-diff` command than other formats, so choose =
+wisely!
 >
-> To show a remerge diff, the merge needs to be recreated. For that to
-> work, the merge base(s) need to be found, which means that the commits'
-> parents have to be traversed until common ancestors are found (if any).
->
-> However, one optimization that hails all the way back to
-> cb115748ec0d (Some more memory leak avoidance, 2006-06-17) is to release
-> the commit's list of parents immediately after showing it. This can break
-> the merge base computation.
->
-> Note that it matters more clearly when traversing the commits in
-> reverse: In that instance, if a parent of a merge commit has been shown
-> as part of the `git log` command, by the time the merge commit's diff
-> needs to be computed, that parent commit's list of parent commits will
-> have been set to `NULL` and as a result no merge base will be found.
->
-> Let's fix this by special-casing the `remerge_diff` mode, similar to
-> what we did with reflogs in f35650dff6a4 (log: do not free parents when
-> walking reflog, 2017-07-07).
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->     log: --remerge-diff needs to keep around commit parents
->
->     This fixes a bug that is pretty much as old as the remerge-diff
->     machinery itself. I noticed it while writing my reply to Hannes Sixt'=
-s
->     concerns about my range-diff --diff-merges=3D<mode> patch
->     (https://lore.kernel.org/git/af576487-5de2-fba3-b341-3c082322c9ec@gmx=
-.de/).
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1825%2F=
-dscho%2Flog-remerge-diff-needs-commit-parents-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1825/dscho=
-/log-remerge-diff-needs-commit-parents-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1825
->
->  builtin/log.c           | 2 +-
->  t/t4069-remerge-diff.sh | 7 +++++++
->  2 files changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/log.c b/builtin/log.c
-> index c0a8bb95e98..a297c6caf59 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -522,7 +522,7 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
->                          * but we didn't actually show the commit.
->                          */
->                         rev->max_count++;
-> -               if (!rev->reflog_info) {
-> +               if (!rev->reflog_info && !rev->remerge_diff) {
->                         /*
->                          * We may show a given commit multiple times when
->                          * walking the reflogs.
+> Can we please be a bit more specific which options are usable or which
+> are not usable? Perhaps you even mean to say that 'first-parent' is the
+> only one that makes sense? At a minimum, we should mention that it is
+> the one that makes most sense (if that is the case).
 
-Should this comment be updated to reflect the expanded rationale for
-this block's purpose?
+Here's my guesses I mostly typed up last night before getting tired
+and going to bed:
 
-> diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-> index 07323ebafe0..a68c6bfa036 100755
-> --- a/t/t4069-remerge-diff.sh
-> +++ b/t/t4069-remerge-diff.sh
-> @@ -317,4 +317,11 @@ test_expect_success 'remerge-diff turns off history =
-simplification' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'remerge-diff with --reverse' '
-> +       git log -1 --remerge-diff --oneline ab_resolution^ >expect &&
-> +       git log -1 --remerge-diff --oneline ab_resolution >>expect &&
-> +       git log -2 --remerge-diff --oneline ab_resolution --reverse >actu=
-al &&
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
->
-> base-commit: bea9ecd24b0c3bf06cab4a851694fe09e7e51408
-> --
-> gitgitgadget
+separate: makes no sense; showing two diffs for each merge and then
+trying to diff the two sets of two diffs seems crazy, especially since
+the whole point of rebasing is usually to change the first parent
+somewhere in the ancestry; that'll cascade up and cause the diffs to
+the second parents to differ wildly and make this format uselessly
+noisy in general.
 
-Wow, nice find, and I appreciate the nice simple testcase
-demonstrating what had been the problem.
+combined: much better than separate, but probably still quite noisy and
+confusing, especially since combined-diff and range-diff are both
+complicated in that they have two diffs each, and combining the two
+means you have a diff of a dual diff.  I suspect that might be hard for use=
+rs to
+process.
+
+dense-combined: much better than combined, you at least have the diff
+down to the smallest relevant pieces.  You may still deal with the
+diff of a dual diff problem.
+
+first-parent: useful, but only when keeping the series of patches largely
+intact and transplanting them; any insertion, deletion, or
+modification of intermediate patches will result in those
+modifications being shown
+not just for the patch in question but rolled up into the merge commit
+and shown there as well, making the diff for the merge very noisy
+(possibly to the point of uselessness).  When
+keeping the series of patches intact and transplanting them, though,
+likely a useful mode.
+
+remerge-diff: generally useful, even if you insert, delete, or modify
+intermediate patches while rebasing.  Since it also shows how conflict
+resolutions are done, you'd see how conflicts are resolved
+differently.  Actually, that might be one drawback to this method;
+since conflict markers try to provide labels involving a short commit
+ID and the commit message, and those short commit IDs will differ,
+this mode would just end up showing how the two merges had different
+parents, which you already know.  We could probably make this option
+much more useful by surpressing the conflict labels, or at least the
+short commit ID parts of those labels.  If we do that, and take
+Johannes' nice fix he sent to the list separately, then I suspect this
+mode is generally the most useful one to use with range-diff.
