@@ -1,91 +1,69 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487E0C8FF
-	for <git@vger.kernel.org>; Sat,  9 Nov 2024 11:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA1A18FC99
+	for <git@vger.kernel.org>; Sat,  9 Nov 2024 12:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731152482; cv=none; b=IXvPDwMylfNX37GHdIqKjMEqVZyyAXK1XxVHdGlxf8nkFBLy5xTaiPjKnMqey4EVdaSvYzqXEPw5IbJORYRSrJRiAhr3iNPZXH6MUeIo7XmybqJghJGE88RlHF8H06RzWzAdvIVoIyOVQeDirGM/CYrt0g5RKBPo7PjSxjOEjjQ=
+	t=1731154134; cv=none; b=QZ789fa5Ec0HO4OMEpvhkjHV/LHTfPGeTanwXeJ+M/xcTn5nzH8X4+7XSsNUr8sQ86bJ0J0jeTKLweFR+Hqiz2DleHYm8Dps7nPdN+vh5Revw7TXr03aW//wFPU1/sFCh75dY4lRTtBTNCKUKIGGIXV/urWqAgfOksBp3UJIw6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731152482; c=relaxed/simple;
-	bh=ebEmuWSv29ZRkDbQBwdAbp4Sqt01AP4ur6NcIjlvqBw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=dlRIyeKz3ypj1asr/N0tQZdT339QpvYEj40jgVeVYK6XTC76FpDy3LvBTeFSmoZUn1qUM54jnCrYDG9PgxnmYd4ByXV7IEWAEnM7BT5h8d9hP2TISy2rWIml8YPiH7cCtzzOIOaZkZ4grqoaRO7I8GpIURlq8fNJwqYcjCKL68E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MFoXjveo; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731154134; c=relaxed/simple;
+	bh=DCorfdDA2o+36/AwUaebqouFajTyTyUWmpN7DHg/Ah0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W6xxjNJ06yzDIjoGlisSAZK4qxerkgO6DIW3bHYnpcj1VUIBsJ0hzB+/v8uoaU5+BBVSc7EnQA53maZxp2PIBwC/DUdtpdFrasb3+RKuvDsb7/HAsTM1VRyyKwc7kzJq5dTsShb7oPh+RB8FpPreeQTsgR9bH0Jykj0W5Sqf5ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=i1BJKPei; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MFoXjveo"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2e2bd0e2c4fso2475915a91.3
-        for <git@vger.kernel.org>; Sat, 09 Nov 2024 03:41:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731152480; x=1731757280; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ebEmuWSv29ZRkDbQBwdAbp4Sqt01AP4ur6NcIjlvqBw=;
-        b=MFoXjveo05Ip1+3EyrFeeZ/jY5z5LmoX7AcHWFW7NPpg33e7t48frur15eznzKQ1uq
-         MJZJGDK9nP43mMCfXfQA1TqBVloB8SS5zj3bbJRSPXBiXjr2C4XgKwrw1O+L9Wg9pxNB
-         AcoZRrqcWG0Scq/zeQvkm5SL86+igjFmrVN7PnKRgtxAxZF/H1X5W4F2gXb2HzDesdWb
-         Pp92O+LeoIAJpDoz5fshoJipTS8M4FPOntI2iED/R8l9k0SuMwbPm3Fasj6zQeC3qzVD
-         m2WL8P3B8EDeL2ISKu/ejSIOeOomXUYeKINm6ojceF3SSsYxQnLxI3RQGqyZv55FJZ/v
-         vimg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731152480; x=1731757280;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ebEmuWSv29ZRkDbQBwdAbp4Sqt01AP4ur6NcIjlvqBw=;
-        b=JiEW5lqcUmt6ctRGY9dJJ9x6tlEJi1GHv2YCNOc8p1sXe4NLG42227k9B/tQ84c9RJ
-         RcmZfM0INH3UBsQ9GqwH0IcROUH4Hj3enaLdLECINKbd5cby6Axgyglq9wy6+RnwPvU2
-         dmclwg9Ot+lK7tYfbbBQE2saHgGBKl0xbCxXWG02yYFqC/riIIhjGxqcNrbU1qtfcEAO
-         gHDfSzgVX7Wz+PRyEs/EUzkmuzceflePtIdn5eOEl2QlTJ0JeNKJxrU0IjygcGC6weBM
-         D4hDcPwsQ3oM2btPHbf9yfkHWnXqgo7TYlSlcJyOG6s/1A0/CFO9x5gkKl8olUfoVui9
-         /kRQ==
-X-Gm-Message-State: AOJu0Yx1ecMzlPhal4CrDqZOL/BDShnFZ8GX08+kksBRga+sHX3tvxVg
-	mgWEwvBLjk0ftANoHVA9n5Z/8zSM09PhjOzVNX9wLnIYFgrJFWwwsRauEFRcbM1QG5AgeCaJuwU
-	+5wWvwWa36dXT07as8r5qrMVC+an0JN7h
-X-Google-Smtp-Source: AGHT+IFEH9A71Mk5zcNCFJ6+9ZeP/TMPV8MgB+s9Dg8jV9A343ir7R6CEwxEO1WZlY3F0FLacrZsOD/u+7JkNigd26A=
-X-Received: by 2002:a17:90b:1c92:b0:2e2:e743:7501 with SMTP id
- 98e67ed59e1d1-2e9b166bbe8mr8084786a91.8.1731152480226; Sat, 09 Nov 2024
- 03:41:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="i1BJKPei"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=jf8QSel6Rl588hxKkXt87KL0R/DTdaNl2qREK68QB10=; b=i1BJKPeicdflfYHir6kVVWE31M
+	jW7hZe47QqRh2MYCRpiRNafL3zlifRYlP7D2UXKHjwGjYWMl5/DC5ohV818urJcnSogZ7MyDgfjnE
+	Vr3tHSrZXjESuZdkYu5V/8zJ7rK3umE9F2eloKkmEReFgOnr25AH+FkZuzFT4+MFDw0IIdgZAIffL
+	kpnNAh2/XV3iI5Whks+LgIprt3pFGdh8ktviAJwQ2ML807ZlaLBBxNHLIbhjlSBGU8B1Q/h1d1pYY
+	8Pugt2DFTvR9m7LKGwL8I6mZfnMK0/EZVYbU481nlda6CCjvgCMsWui8S4Nnq8BSnXfwBgPS7uHSj
+	gUJmRryA==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.94.2)
+	(envelope-from <zeha@debian.org>)
+	id 1t9kGi-00GXj3-2I; Sat, 09 Nov 2024 12:08:44 +0000
+Date: Sat, 9 Nov 2024 13:08:42 +0100
+From: Chris Hofstaedtler <zeha@debian.org>
+To: M Hickford <mirth.hickford@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>, jrnieder@gmail.com, 
+	Anders Kaseorg <andersk@mit.edu>, debian-devel@lists.debian.org
+Subject: Re: Debian packaging for git-credential-libsecret
+Message-ID: <s3ropj6j7mg2gbvtsu7suxeafht7kw6utzwjfiw7apip7psh3i@yf4kf5np4odm>
+References: <CAGJzqsmOu-2kcOOAoXWkk3W=RQkdTE_AgZiY6Cj10_DdEnUVGQ@mail.gmail.com>
+ <CAGJzqsmF7DVHw81z-eKTTtMc62YWeG4OgQ-R3k-bwV-8nmETHQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Martin Imre <martinimre25@gmail.com>
-Date: Sat, 9 Nov 2024 12:41:08 +0100
-Message-ID: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
-Subject: Feature Request: Interactively pick fixup revision
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGJzqsmF7DVHw81z-eKTTtMc62YWeG4OgQ-R3k-bwV-8nmETHQ@mail.gmail.com>
+X-Debian-User: zeha
 
-Hi,
+* M Hickford <mirth.hickford@gmail.com> [241109 12:45]:
+> On Mon, 1 Apr 2024 at 21:42, M Hickford <mirth.hickford@gmail.com> wrote:
+> >
+> > Hi. It'd be great to package Git credential helper
+> > git-credential-libsecret in Debian. There's a patch prepared, but it
+> > needs the attention of a Debian developer. Is anyone here able to
+> > help?  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=878599
+> 
+> Hi. Is any Debian developer able to please look at patch to package
+> Git credential helper git-credential-libsecret?
 
-first email to this list, so please forgive me if I'm doing something wrong.
+I think Debian is mostly waiting for Jonathan to show up again, and
+we won't disturb his circles, more than necessary, in the meantime.
 
-My usual workflow is using `git commit --fixup <revision>` quite
-frequently, as it eases the code reviewing process and allows for a
-clean history later on.
+Chris
 
-One thing that is always cumbersome is to first find the SHA of the
-revision that I plan to commit a fixup to.
-I usually use git log and then copy the revision.
-I even wrote a script that eases this process using fzf:
-```
-#!/bin/bash
-
-res=$(git log --oneline | fzf)
-ref=$(echo $res | cut -d ' ' -f1)
-
-git commit --fixup ${ref}
-```
-
-I don't think fzf is really necessary here, but it speeds things up.
-
-Anyhow, I'm really surprised that this isn't a feature of git.
-I could see a `git commit --fixup` (without a revision) or `git commit
---fixup --interactive` open up the git log and let one pick the
-revision they want to commit a fixup to.
-
-Cheers,
-Martin
