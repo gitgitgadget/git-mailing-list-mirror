@@ -1,461 +1,158 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from redcrew.org (redcrew.org [37.157.195.192])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27481A262A
-	for <git@vger.kernel.org>; Sat,  9 Nov 2024 19:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5132D1537C9
+	for <git@vger.kernel.org>; Sat,  9 Nov 2024 19:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731181286; cv=none; b=f+zFWjTbcjwqj9Tf/lk1kbuVibFObZ+nijwjynlFZsJYMyqDKZABQa1T3JFMkKRORU9hN1pO1As+jfgGfqt5h70VZcVGXy/6kV8wvQ0R72/pF9T2Ir4YSBxF7YsFAyJkcvH/7uA3xS0+XtsK/QE9840xrd+r5ysWMbviNHa1H4A=
+	t=1731181396; cv=none; b=uKGGQA2z+UQlHtprod27RHF+OZ/cQfryAyjYHMrOHaNG4/U9D8A7XPmhaoIMXy8FMpaU9Y/2KwlsrcR5vOHNqZfGNfqxH1tJbl98r4qKEzde3U+Ggg65x5VqGuC/DOjqqXWRXCP+bLBH1HZ63vmkpWw+y1I9huE6GHfKcPsxURY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731181286; c=relaxed/simple;
-	bh=Ie08kIgiQaGBVuzd23wXE3upY+qBECOiNgI8xKAx6Pc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=cCIgKop67m/Hf59iZWwtm8nW+v5erwCQHezzsx3SO9NYJyWdpNqB6mFlyp+mItz9z/dy2waHDmv74TlfExZ+5n8RpwGHPOIBnQrBlNlif7P0gxQhptvCqWpBJdKrEe63RuZmo4aKfEbhmDBkwXn1/MZCbERVLClZSpOejjDEkTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TbFmBk0A; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731181396; c=relaxed/simple;
+	bh=pOtUyp3jT2qw6t7POeHDX4Pk8LzE/9jhVIeBcYy1SwE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=KUUYPDpXYhfHJoJn4OJNUFX2cvyxBa57ho4td9oisFewopFYiUx4QrO1NdhCd50z2SPIPmbPdoe/nAWdvXndBV5M12UCrsPGwWaKVkPAa/+ib7ZrLlR3VUdhtUm3fAaxlMaTLUYXgy4Mw1gytkE7CSbGoET3lEQghaP5AgcexOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=U2wdPmkA; arc=none smtp.client-ip=37.157.195.192
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbFmBk0A"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so39811985e9.2
-        for <git@vger.kernel.org>; Sat, 09 Nov 2024 11:41:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731181282; x=1731786082; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tLFT/VSU03/ZBWro0ppu7EqnscWtnVkhTdodi8DvWM8=;
-        b=TbFmBk0AsCjAVCKDElVk5jvHSQrg8v7xQCwrzBSBhIgRq5G6gKmzt/77/aGbwFH3D0
-         VSFfgDCYbmzIdgcvuPwDdT1mL2QjdFmafnI+YAMl4gdmjFOt6h+oNPGJ5gYEsLDK8u60
-         HVwATNfAEl5zCHtfdAVP+YamMDXY1vphOEfS5VsrR4i4aIic9UKv8rDMAkKhylOjb6Ti
-         HrNUbDj8lbUXC20cuTBjrx4O/+sHs3nxP1Mqu/EUICvBnGb+kJlqQnCoJZvV5PYmsu6U
-         Bn4JcDB//bYO9Dd+WGH5maFzv6+ziwBsmvz+bz5VYCMl/0mRt4hxUu4zTABSPh4jjqXN
-         CHhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731181282; x=1731786082;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tLFT/VSU03/ZBWro0ppu7EqnscWtnVkhTdodi8DvWM8=;
-        b=msNmWsAsHWphB5nbRLyNVIwzGoj5O3ZVVtpWxyYu3qQiiNGry3rInO+KsrN0sHhVEr
-         x6Mvdpgr9ddyZHLZbL/KMRdjuJfaC3eoUfsf4MAbh6KX2ypEmgZEZH2zKKhhdEy362OS
-         Xpq7VHFffkMzSU0um+aRMFW7P2g6CBi2ZL2O+X4dNSZ3kb/SkgPVknc5BT0Jb7Sht+ja
-         kmvts0d+Z7Gs3Ny4WeN0U9gs6y0jd1ra1jUmrDYoMnFumJlMI65xTOLXqxk273ulRQgi
-         28K7e1vako+L0VaHfkO65Vqo+2Z8HQScXE/YxEk7Pj4n1+dlXS+bSDqoZL6l0FPSlZ7E
-         rrRA==
-X-Gm-Message-State: AOJu0Yx1OSln2W7J4JmtX5SYQAaFcPhJ4wzij6PY53XzjfagfPRQ79VK
-	URURWBaIYf3TyIxza55RzYO/z9rWBwU0xTr/FZ6MRPbuz5AdEF+wuAXgaA==
-X-Google-Smtp-Source: AGHT+IH/1ihuADUiZhfIJw2vQnEa62OIhD29OhkOOwLfuxAona6XkjQkcRtJO/d8/cIf+f+EJ03+mA==
-X-Received: by 2002:a05:6000:385:b0:37d:4a16:81d7 with SMTP id ffacd0b85a97d-381f1866abfmr7151644f8f.8.1731181281787;
-        Sat, 09 Nov 2024 11:41:21 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed97ce1bsm8461567f8f.36.2024.11.09.11.41.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Nov 2024 11:41:20 -0800 (PST)
-Message-Id: <a4aaa3b001b75c19c96130f1c057157a29f9a7f5.1731181273.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
-References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
-	<pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 09 Nov 2024 19:41:12 +0000
-Subject: [PATCH v2 6/6] path-walk: mark trees and blobs as UNINTERESTING
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="U2wdPmkA"
+Received: from localhost (unknown [185.22.237.37])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by redcrew.org (Postfix) with ESMTPSA id 97053C413;
+	Sat,  9 Nov 2024 20:43:07 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org 97053C413
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
+	t=1731181387; bh=xpPFRXz5CEYPlhyDI/kHaQ7/btk++4tCkSys80/LZh4=;
+	h=Date:Subject:From:To:References:In-Reply-To:From;
+	b=U2wdPmkA2+tRLU33I4CsvavYGeWNdDeTlVQSLM5MD/VZIqDupG/QPNoIqIKA2JKyq
+	 W07CzjXiOIqZOp73KGNX4Uq5D2UrSgvg0cmIxHNXfUenWBbH0+GZCls+ku2+NV4JAD
+	 Fdne0wSStZdvDSsq2aX3GF2BsrHmcTVLCkiPrwco=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    johannes.schindelin@gmx.de,
-    peff@peff.net,
-    ps@pks.im,
-    me@ttaylorr.com,
-    johncai86@gmail.com,
-    newren@gmail.com,
-    christian.couder@gmail.com,
-    kristofferhaugsbakk@fastmail.com,
-    jonathantanmy@google.com,
-    karthik nayak <karthik.188@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=1d6f7432970bcca2e0bab7ec5b2c35531058b5336325ed4daa39c60af965;
+ micalg=pgp-sha1; protocol="application/pgp-signature"
+Date: Sat, 09 Nov 2024 20:43:07 +0100
+Message-Id: <D5HWL26B3HOT.1ZVXUC37BCGL@cepl.eu>
+Subject: Re: Feature Request: Interactively pick fixup revision
+From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>, "Martin Imre"
+ <martinimre25@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.18.2
+References: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com> <D5HQH12Y4SWF.2W70SKEDB7HBF@cepl.eu> <debabf92-7d23-4d17-bb0e-36691c94430a@app.fastmail.com>
+In-Reply-To: <debabf92-7d23-4d17-bb0e-36691c94430a@app.fastmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+--1d6f7432970bcca2e0bab7ec5b2c35531058b5336325ed4daa39c60af965
+Content-Type: multipart/mixed;
+ boundary=ad11517cb00d0796e6c7219c533f6d4b7630388ea8e12d441031070a2596
 
-When the input rev_info has UNINTERESTING starting points, we want to be
-sure that the UNINTERESTING flag is passed appropriately through the
-objects. To match how this is done in places such as 'git pack-objects', we
-use the mark_edges_uninteresting() method.
+--ad11517cb00d0796e6c7219c533f6d4b7630388ea8e12d441031070a2596
+Content-Type: multipart/alternative;
+ boundary=06106a1a57630b898729b49c9efe841bb643d5581f6e611f36716ea4a587
 
-This method has an option for using the "sparse" walk, which is similar in
-spirit to the path-walk API's walk. To be sure to keep it independent, add a
-new 'prune_all_uninteresting' option to the path_walk_info struct.
+--06106a1a57630b898729b49c9efe841bb643d5581f6e611f36716ea4a587
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 
-To check how the UNINTERSTING flag is spread through our objects, extend the
-'test-tool path-walk' command to output whether or not an object has that
-flag. This changes our tests significantly, including the removal of some
-objects that were previously visited due to the incomplete implementation.
+On Sat Nov 9, 2024 at 6:13 PM CET, Kristoffer Haugsbakk wrote:
+> I haven=E2=80=99t heard of lsdiff(1) though.  That=E2=80=99s something I =
+have been
+> wanting lately.  Thanks.
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- Documentation/technical/api-path-walk.txt |  8 +++
- path-walk.c                               | 73 +++++++++++++++++++++
- path-walk.h                               |  8 +++
- t/helper/test-path-walk.c                 | 12 +++-
- t/t6601-path-walk.sh                      | 79 +++++++++++++++++------
- 5 files changed, 158 insertions(+), 22 deletions(-)
+https://github.com/twaugh/patchutils (part of any Linux distro)
+=E2=80=A6 it is absolutely indispensable set of tools for any developer,
+IMHO.
 
-diff --git a/Documentation/technical/api-path-walk.txt b/Documentation/technical/api-path-walk.txt
-index 6022c381b7c..7075d0d5ab5 100644
---- a/Documentation/technical/api-path-walk.txt
-+++ b/Documentation/technical/api-path-walk.txt
-@@ -48,6 +48,14 @@ commits.
- While it is possible to walk only commits in this way, consumers would be
- better off using the revision walk API instead.
- 
-+`prune_all_uninteresting`::
-+	By default, all reachable paths are emitted by the path-walk API.
-+	This option allows consumers to declare that they are not
-+	interested in paths where all included objects are marked with the
-+	`UNINTERESTING` flag. This requires using the `boundary` option in
-+	the revision walk so that the walk emits commits marked with the
-+	`UNINTERESTING` flag.
-+
- Examples
- --------
- 
-diff --git a/path-walk.c b/path-walk.c
-index a1f539dcd46..896ec0c4779 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -8,6 +8,7 @@
- #include "dir.h"
- #include "hashmap.h"
- #include "hex.h"
-+#include "list-objects.h"
- #include "object.h"
- #include "oid-array.h"
- #include "revision.h"
-@@ -24,6 +25,7 @@ struct type_and_oid_list
- {
- 	enum object_type type;
- 	struct oid_array oids;
-+	int maybe_interesting;
- };
- 
- #define TYPE_AND_OID_LIST_INIT { \
-@@ -140,6 +142,9 @@ static int add_children(struct path_walk_context *ctx,
- 		if (o->flags & SEEN)
- 			continue;
- 		o->flags |= SEEN;
-+
-+		if (!(o->flags & UNINTERESTING))
-+			list->maybe_interesting = 1;
- 		oid_array_append(&list->oids, &entry.oid);
- 	}
- 
-@@ -167,6 +172,43 @@ static int walk_path(struct path_walk_context *ctx,
- 	if (!list->oids.nr)
- 		return 0;
- 
-+	if (ctx->info->prune_all_uninteresting) {
-+		/*
-+		 * This is true if all objects were UNINTERESTING
-+		 * when added to the list.
-+		 */
-+		if (!list->maybe_interesting)
-+			return 0;
-+
-+		/*
-+		 * But it's still possible that the objects were set
-+		 * as UNINTERESTING after being added. Do a quick check.
-+		 */
-+		list->maybe_interesting = 0;
-+		for (size_t i = 0;
-+		     !list->maybe_interesting && i < list->oids.nr;
-+		     i++) {
-+			if (list->type == OBJ_TREE) {
-+				struct tree *t = lookup_tree(ctx->repo,
-+							     &list->oids.oid[i]);
-+				if (t && !(t->object.flags & UNINTERESTING))
-+					list->maybe_interesting = 1;
-+			} else if (list->type == OBJ_BLOB) {
-+				struct blob *b = lookup_blob(ctx->repo,
-+							     &list->oids.oid[i]);
-+				if (b && !(b->object.flags & UNINTERESTING))
-+					list->maybe_interesting = 1;
-+			} else {
-+				/* Tags are always interesting if visited. */
-+				list->maybe_interesting = 1;
-+			}
-+		}
-+
-+		/* We have confirmed that all objects are UNINTERESTING. */
-+		if (!list->maybe_interesting)
-+			return 0;
-+	}
-+
- 	/* Evaluate function pointer on this data, if requested. */
- 	if ((list->type == OBJ_TREE && ctx->info->trees) ||
- 	    (list->type == OBJ_BLOB && ctx->info->blobs) ||
-@@ -201,6 +243,26 @@ static void clear_strmap(struct strmap *map)
- 	strmap_init(map);
- }
- 
-+static struct repository *edge_repo;
-+static struct type_and_oid_list *edge_tree_list;
-+
-+static void show_edge(struct commit *commit)
-+{
-+	struct tree *t = repo_get_commit_tree(edge_repo, commit);
-+
-+	if (!t)
-+		return;
-+
-+	if (commit->object.flags & UNINTERESTING)
-+		t->object.flags |= UNINTERESTING;
-+
-+	if (t->object.flags & SEEN)
-+		return;
-+	t->object.flags |= SEEN;
-+
-+	oid_array_append(&edge_tree_list->oids, &t->object.oid);
-+}
-+
- static void setup_pending_objects(struct path_walk_info *info,
- 				  struct path_walk_context *ctx)
- {
-@@ -309,6 +371,7 @@ static void setup_pending_objects(struct path_walk_info *info,
- 		if (tagged_blobs->oids.nr) {
- 			const char *tagged_blob_path = "/tagged-blobs";
- 			tagged_blobs->type = OBJ_BLOB;
-+			tagged_blobs->maybe_interesting = 1;
- 			push_to_stack(ctx, tagged_blob_path);
- 			strmap_put(&ctx->paths_to_lists, tagged_blob_path, tagged_blobs);
- 		} else {
-@@ -320,6 +383,7 @@ static void setup_pending_objects(struct path_walk_info *info,
- 		if (tags->oids.nr) {
- 			const char *tag_path = "/tags";
- 			tags->type = OBJ_TAG;
-+			tags->maybe_interesting = 1;
- 			push_to_stack(ctx, tag_path);
- 			strmap_put(&ctx->paths_to_lists, tag_path, tags);
- 		} else {
-@@ -362,6 +426,7 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	/* Insert a single list for the root tree into the paths. */
- 	CALLOC_ARRAY(root_tree_list, 1);
- 	root_tree_list->type = OBJ_TREE;
-+	root_tree_list->maybe_interesting = 1;
- 	strmap_put(&ctx.paths_to_lists, root_path, root_tree_list);
- 	push_to_stack(&ctx, root_path);
- 
-@@ -375,6 +440,14 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	if (prepare_revision_walk(info->revs))
- 		die(_("failed to setup revision walk"));
- 
-+	/* Walk trees to mark them as UNINTERESTING. */
-+	edge_repo = info->revs->repo;
-+	edge_tree_list = root_tree_list;
-+	mark_edges_uninteresting(info->revs, show_edge,
-+				 info->prune_all_uninteresting);
-+	edge_repo = NULL;
-+	edge_tree_list = NULL;
-+
- 	info->revs->blob_objects = info->revs->tree_objects = 0;
- 
- 	trace2_region_enter("path-walk", "pending-walk", info->revs->repo);
-diff --git a/path-walk.h b/path-walk.h
-index ca839f873e4..de0db007dc9 100644
---- a/path-walk.h
-+++ b/path-walk.h
-@@ -39,6 +39,14 @@ struct path_walk_info {
- 	int trees;
- 	int blobs;
- 	int tags;
-+
-+	/**
-+	 * When 'prune_all_uninteresting' is set and a path has all objects
-+	 * marked as UNINTERESTING, then the path-walk will not visit those
-+	 * objects. It will not call path_fn on those objects and will not
-+	 * walk the children of such trees.
-+	 */
-+	int prune_all_uninteresting;
- };
- 
- #define PATH_WALK_INFO_INIT {   \
-diff --git a/t/helper/test-path-walk.c b/t/helper/test-path-walk.c
-index 265bd0b443b..7e791cfaf97 100644
---- a/t/helper/test-path-walk.c
-+++ b/t/helper/test-path-walk.c
-@@ -62,10 +62,14 @@ static int emit_block(const char *path, struct oid_array *oids,
- 		printf("%"PRIuMAX":%s:%s:EMPTY\n",
- 		       tdata->batch_nr, typestr, path);
- 
--	for (size_t i = 0; i < oids->nr; i++)
--		printf("%"PRIuMAX":%s:%s:%s\n",
-+	for (size_t i = 0; i < oids->nr; i++) {
-+		struct object *o = lookup_unknown_object(the_repository,
-+							 &oids->oid[i]);
-+		printf("%"PRIuMAX":%s:%s:%s%s\n",
- 		       tdata->batch_nr, typestr, path,
--		       oid_to_hex(&oids->oid[i]));
-+		       oid_to_hex(&oids->oid[i]),
-+		       o->flags & UNINTERESTING ? ":UNINTERESTING" : "");
-+	}
- 
- 	tdata->batch_nr++;
- 	return 0;
-@@ -86,6 +90,8 @@ int cmd__path_walk(int argc, const char **argv)
- 			 N_("toggle inclusion of tag objects")),
- 		OPT_BOOL(0, "trees", &info.trees,
- 			 N_("toggle inclusion of tree objects")),
-+		OPT_BOOL(0, "prune", &info.prune_all_uninteresting,
-+			 N_("toggle pruning of uninteresting paths")),
- 		OPT_END(),
- 	};
- 
-diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index bf43ab0e22a..d3c0015319a 100755
---- a/t/t6601-path-walk.sh
-+++ b/t/t6601-path-walk.sh
-@@ -211,11 +211,11 @@ test_expect_success 'topic, not base' '
- 	0:COMMIT::$(git rev-parse topic)
- 	1:TREE::$(git rev-parse topic^{tree})
- 	2:TREE:right/:$(git rev-parse topic:right)
--	3:BLOB:right/d:$(git rev-parse topic:right/d)
-+	3:BLOB:right/d:$(git rev-parse topic:right/d):UNINTERESTING
- 	4:BLOB:right/c:$(git rev-parse topic:right/c)
--	5:TREE:left/:$(git rev-parse topic:left)
--	6:BLOB:left/b:$(git rev-parse topic:left/b)
--	7:BLOB:a:$(git rev-parse topic:a)
-+	5:TREE:left/:$(git rev-parse topic:left):UNINTERESTING
-+	6:BLOB:left/b:$(git rev-parse topic:left/b):UNINTERESTING
-+	7:BLOB:a:$(git rev-parse topic:a):UNINTERESTING
- 	blobs:4
- 	commits:1
- 	tags:0
-@@ -225,15 +225,38 @@ test_expect_success 'topic, not base' '
- 	test_cmp_sorted expect out
- '
- 
-+test_expect_success 'fourth, blob-tag2, not base' '
-+	test-tool path-walk -- fourth blob-tag2 --not base >out &&
-+
-+	cat >expect <<-EOF &&
-+	0:COMMIT::$(git rev-parse topic)
-+	1:TAG:/tags:$(git rev-parse fourth)
-+	2:BLOB:/tagged-blobs:$(git rev-parse refs/tags/blob-tag2^{})
-+	3:TREE::$(git rev-parse topic^{tree})
-+	4:TREE:right/:$(git rev-parse topic:right)
-+	5:BLOB:right/d:$(git rev-parse base~1:right/d):UNINTERESTING
-+	6:BLOB:right/c:$(git rev-parse topic:right/c)
-+	7:TREE:left/:$(git rev-parse base~1:left):UNINTERESTING
-+	8:BLOB:left/b:$(git rev-parse base~1:left/b):UNINTERESTING
-+	9:BLOB:a:$(git rev-parse base~1:a):UNINTERESTING
-+	blobs:5
-+	commits:1
-+	tags:1
-+	trees:3
-+	EOF
-+
-+	test_cmp_sorted expect out
-+'
-+
- test_expect_success 'topic, not base, only blobs' '
- 	test-tool path-walk --no-trees --no-commits \
- 		-- topic --not base >out &&
- 
- 	cat >expect <<-EOF &&
--	0:BLOB:right/d:$(git rev-parse topic:right/d)
-+	0:BLOB:right/d:$(git rev-parse topic:right/d):UNINTERESTING
- 	1:BLOB:right/c:$(git rev-parse topic:right/c)
--	2:BLOB:left/b:$(git rev-parse topic:left/b)
--	3:BLOB:a:$(git rev-parse topic:a)
-+	2:BLOB:left/b:$(git rev-parse topic:left/b):UNINTERESTING
-+	3:BLOB:a:$(git rev-parse topic:a):UNINTERESTING
- 	blobs:4
- 	commits:0
- 	tags:0
-@@ -267,7 +290,7 @@ test_expect_success 'topic, not base, only trees' '
- 	cat >expect <<-EOF &&
- 	0:TREE::$(git rev-parse topic^{tree})
- 	1:TREE:right/:$(git rev-parse topic:right)
--	2:TREE:left/:$(git rev-parse topic:left)
-+	2:TREE:left/:$(git rev-parse topic:left):UNINTERESTING
- 	commits:0
- 	blobs:0
- 	tags:0
-@@ -282,17 +305,17 @@ test_expect_success 'topic, not base, boundary' '
- 
- 	cat >expect <<-EOF &&
- 	0:COMMIT::$(git rev-parse topic)
--	0:COMMIT::$(git rev-parse base~1)
-+	0:COMMIT::$(git rev-parse base~1):UNINTERESTING
- 	1:TREE::$(git rev-parse topic^{tree})
--	1:TREE::$(git rev-parse base~1^{tree})
-+	1:TREE::$(git rev-parse base~1^{tree}):UNINTERESTING
- 	2:TREE:right/:$(git rev-parse topic:right)
--	2:TREE:right/:$(git rev-parse base~1:right)
--	3:BLOB:right/d:$(git rev-parse base~1:right/d)
--	4:BLOB:right/c:$(git rev-parse base~1:right/c)
-+	2:TREE:right/:$(git rev-parse base~1:right):UNINTERESTING
-+	3:BLOB:right/d:$(git rev-parse base~1:right/d):UNINTERESTING
-+	4:BLOB:right/c:$(git rev-parse base~1:right/c):UNINTERESTING
- 	4:BLOB:right/c:$(git rev-parse topic:right/c)
--	5:TREE:left/:$(git rev-parse base~1:left)
--	6:BLOB:left/b:$(git rev-parse base~1:left/b)
--	7:BLOB:a:$(git rev-parse base~1:a)
-+	5:TREE:left/:$(git rev-parse base~1:left):UNINTERESTING
-+	6:BLOB:left/b:$(git rev-parse base~1:left/b):UNINTERESTING
-+	7:BLOB:a:$(git rev-parse base~1:a):UNINTERESTING
- 	blobs:5
- 	commits:2
- 	tags:0
-@@ -302,6 +325,27 @@ test_expect_success 'topic, not base, boundary' '
- 	test_cmp_sorted expect out
- '
- 
-+test_expect_success 'topic, not base, boundary with pruning' '
-+	test-tool path-walk --prune -- --boundary topic --not base >out &&
-+
-+	cat >expect <<-EOF &&
-+	0:COMMIT::$(git rev-parse topic)
-+	0:COMMIT::$(git rev-parse base~1):UNINTERESTING
-+	1:TREE::$(git rev-parse topic^{tree})
-+	1:TREE::$(git rev-parse base~1^{tree}):UNINTERESTING
-+	2:TREE:right/:$(git rev-parse topic:right)
-+	2:TREE:right/:$(git rev-parse base~1:right):UNINTERESTING
-+	3:BLOB:right/c:$(git rev-parse base~1:right/c):UNINTERESTING
-+	3:BLOB:right/c:$(git rev-parse topic:right/c)
-+	blobs:2
-+	commits:2
-+	tags:0
-+	trees:4
-+	EOF
-+
-+	test_cmp_sorted expect out
-+'
-+
- test_expect_success 'trees are reported exactly once' '
- 	test_when_finished "rm -rf unique-trees" &&
- 	test_create_repo unique-trees &&
-@@ -309,15 +353,12 @@ test_expect_success 'trees are reported exactly once' '
- 		cd unique-trees &&
- 		mkdir initial &&
- 		test_commit initial/file &&
--
- 		git switch -c move-to-top &&
- 		git mv initial/file.t ./ &&
- 		test_tick &&
- 		git commit -m moved &&
--
- 		git update-ref refs/heads/other HEAD
- 	) &&
--
- 	test-tool -C unique-trees path-walk -- --all >out &&
- 	tree=$(git -C unique-trees rev-parse HEAD:) &&
- 	grep "$tree" out >out-filtered &&
--- 
-gitgitgadget
+Mat=C4=9Bj
+
+--=20
+http://matej.ceplovi.cz/blog/, @mcepl@floss.social
+GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
+=20
+The state is the great fictitious entity by which everyone seeks
+to live at the expense of everyone else.
+      -- Frederick Bastiat
+
+
+--06106a1a57630b898729b49c9efe841bb643d5581f6e611f36716ea4a587--
+
+--ad11517cb00d0796e6c7219c533f6d4b7630388ea8e12d441031070a2596
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
+Content-Type: application/pgp-keys; charset=UTF-8
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
+LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
+NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
+emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
+alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
+VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
+TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
+bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
+MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
+TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
+c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
+YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
+UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
+N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
+Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
+d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
+em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
+WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
+Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
+N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
+TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
+b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
+RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
+dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
+ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
+b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
+Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
+SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
+cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
+K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
+a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
+QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
+d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
+YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
+RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
+Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
+CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
+RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
+Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
+ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
+UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
+RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
+RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
+TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
+SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
+aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
+S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
+ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
+U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
+RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
+SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
+YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
+Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
+YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
+UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
+--ad11517cb00d0796e6c7219c533f6d4b7630388ea8e12d441031070a2596--
+
+--1d6f7432970bcca2e0bab7ec5b2c35531058b5336325ed4daa39c60af965
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZy+7Sw4cbWNlcGxAY2Vw
+bC5ldQAKCRDgn+8l2WSErPEwAJ9jEot+gS4mCHvUByytOkuYhj5NHQCdGVnhSbEH
+pYvWKPXb4RJFLX6ZnbU=
+=m+gg
+-----END PGP SIGNATURE-----
+
+--1d6f7432970bcca2e0bab7ec5b2c35531058b5336325ed4daa39c60af965--
