@@ -1,110 +1,130 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6E413BC12
-	for <git@vger.kernel.org>; Sat,  9 Nov 2024 19:00:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A6013BC12
+	for <git@vger.kernel.org>; Sat,  9 Nov 2024 19:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731178825; cv=none; b=R5hCic0RFDcC1wIouaXS/as6TnM2FDO5li1X5ZKcybWgzuMoYa+qvzWfVVEF342Qzoc/OxGKbEd9Y/Ka3QdRB45BAN2CRC4MnUpV25h+soovc6gXLHZ08zzRYcpT4/pC6NzDlLO/qAnws46eDtserJUCfuSUoFGEAW89jisEcnI=
+	t=1731179394; cv=none; b=CSgAsp6ILC+iMGxYuzdpq7mlZzNFT/axd3mUn4TZybPOb8UsTOCEPTiCooauhfqDMRRAgVZDSZrP7nyzwiKy0x0dFBpm5FdxbXCXt17LVukD5c9gRSlEspHXrBKoSOlNF+3Ssuje9FW0OwMutOfwzgOA3NZ2cjSL3VbKzn+Gvb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731178825; c=relaxed/simple;
-	bh=f8GoVa+muOTEo9EbrmuAu0DvORHujnmkwZKTK4V36Q0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q9WWyMCrVso66RkWN7UVjIRCA9g8bORa913HgJd3vFx61zkBXhRakt/Yt/hB7RsltWaflQJtR78enjr2N/UDS925fnYImofpjWlijlqdmkLZ/K7odkCyC9O0g0fbGWg9PW0Dbyc8p96yfAOMEbZ9urf+fPFY8iPYHT1Oadvs/ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dI2e7FoV; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1731179394; c=relaxed/simple;
+	bh=5ambCAdjX7kCeIcecg1rGVKldJQueruIpSPEvgWoTts=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oEAsXsNppMurW/7bTS+BLoS1b+6ADnLtsfYk2qMIgcwZZ1Dwcak34V2mtHhx+jNcFO5uDe6hjn+uKQ9OAMGhWsUClfqSxiHUxPnyp9z3azD+ZuHNFHlHkpJ3MyPtl0VqWHDp93ETfg5TRQ1Dsi10KNJdHpJ36Jo5XYvc0b2IlbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IpfKwmbq; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dI2e7FoV"
-Received: (qmail 23420 invoked by uid 109); 9 Nov 2024 19:00:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=f8GoVa+muOTEo9EbrmuAu0DvORHujnmkwZKTK4V36Q0=; b=dI2e7FoV6yxpHmWBgwpPkpVjaDWKSjr3u0WmhDI2eyuPSXe4X2pzOzIlesiiIAm4CmVg8ym3mTDrRtJHbr4iMEW2f0MwGwK0mBOCWtwPYEDLE/io/tp04016kOPszIh/ywFbMlR4mN8X8DFnd6+KoEogV3H43jcwP3zG06EaAlfulb/UxbvgS4iVVyjOcepHzjHpX9nnk93GrBj9P2Qu1DNP9IAyW7mydutS9xuYhnjvbu1D6UC3ioQzvzp3ewFf3kAmHOKKEd1pNtIeNxrXQl/5lhvt4gK+CIva08cq0HxzrXh1fDEFr3HUwO5h+xAeVaE3Cv3sIteY8xIFDFEfkw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 09 Nov 2024 19:00:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12350 invoked by uid 111); 9 Nov 2024 19:00:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 09 Nov 2024 14:00:13 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sat, 9 Nov 2024 14:00:12 -0500
-From: Jeff King <peff@peff.net>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>,
-	Usman Akinyemi <usmanakinyemi202@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC]: Test Were failing on Fedora Linux.
-Message-ID: <20241109190012.GA588841@coredump.intra.peff.net>
-References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
- <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
- <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
- <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com>
- <87msi85vc9.fsf@igel.home>
- <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
- <Zy-IYwjb_RO5NW-s@teonanacatl.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IpfKwmbq"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-513de426719so1320348e0c.0
+        for <git@vger.kernel.org>; Sat, 09 Nov 2024 11:09:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731179392; x=1731784192; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FP5mUF1sbo94yFEMa6Wpq6Eq9Cj+/YAPbZvHEsez2y4=;
+        b=IpfKwmbqwtRL3lhSffQQ8+LSBH/b4TAOQrWzCFA6mj+kEVr1pXsApNGLoRIr0ILkmp
+         i3ox4tGC6PnVqkwchFy5XYEM+AX+FsOp87paQh9qpch58p5c3KKfg6ZAiqvhQN0X+nN8
+         vXxiwVcY5d+8jnwwjdzdty5yeAjBMZKmto3qb2JaxGP165Whxho/XoHLYYn1Ofal0KhT
+         8SZ6dINzuHFFKQ4v1Yl8iYUZfYSYGPa2PdcEKON4vUOQRPNxTtsiA7egP3p9eJSeBtbH
+         bow5uZ+C7WQw5Uho90ShtXRKZZAjBPl+P4K49nWW0Be5rw/QHGrdv9GwVb524bh/G+4y
+         4nsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731179392; x=1731784192;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FP5mUF1sbo94yFEMa6Wpq6Eq9Cj+/YAPbZvHEsez2y4=;
+        b=VUI+tGLVy3gcpK5/ahoERcZ4XeWMGixle8cF3FT1A3SFM8DEMyJRoLM8vQN211cl6E
+         wHhyGZ0ug26SRZF9j8/A2H/OSpjcsWxwldcrDVdtBtB9nZUa2IVSisLyJep042EWxxsI
+         OqdDn8Xbez6fkafbHuBpzyWnk9Mf7zJKQHGaGcYToz5EpjUSttVTnS09X4PdMcrG+og5
+         oGnnW2sfJVYrvNjzy1qWonCsoezaV5rI72Xzkj6q8bc/GMWvJMY99SnWheUCGFNiHYAf
+         Fs/fpZgI5Oos2+p7oYM8wWfCgojT5bH+OL0EplLcd8xB8bFE83jx885zsodnRw4un1CO
+         68sw==
+X-Forwarded-Encrypted: i=1; AJvYcCUHc9R83rDqT9E+X+l1OKNdXuecM0FkdIudchoQ2IWTEmMHPCJqtqCHO1Am4BkYiy8eqic=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEzOmnt8XyzJceUj+ajlbqlT+jMaI+wJsivm4TLg6ePMm2GDKb
+	IUkIiI2r8Cou5cUC3vdqrKiSeqrBKt/LGQcTgMqBmDl03eHHzq9CHZYojiZ9eK/bFzZ9Gi7SKG+
+	LGuXVyPKZzJKKeEVaW1KAxqEC+QM9SA2t
+X-Google-Smtp-Source: AGHT+IEe+dcubdRJGKwtyf8ANInZcCPNAnxcIvkrFOqWPKguMClmO5m/Kd4nOSeA5ZJVP6q5ecMdIJ3T8M/tN1XhV6g=
+X-Received: by 2002:a05:6102:1626:b0:4a4:938e:222c with SMTP id
+ ada2fe7eead31-4aae1629fc3mr7063074137.17.1731179391857; Sat, 09 Nov 2024
+ 11:09:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
+ <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
+ <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
+ <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com>
+ <87msi85vc9.fsf@igel.home> <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
+ <Zy-IYwjb_RO5NW-s@teonanacatl.net>
 In-Reply-To: <Zy-IYwjb_RO5NW-s@teonanacatl.net>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sat, 9 Nov 2024 14:09:40 -0500
+Message-ID: <CAPSxiM9=4be8X=Tjz1BJ_uO-bobi4LR=aR=zcq3XgbL0J6ZMvg@mail.gmail.com>
+Subject: Re: [RFC]: Test Were failing on Fedora Linux.
+To: Todd Zullinger <tmz@pobox.com>
+Cc: Andreas Schwab <schwab@linux-m68k.org>, Christian Couder <christian.couder@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 09, 2024 at 11:05:55AM -0500, Todd Zullinger wrote:
-
+On Sat, Nov 9, 2024 at 11:05=E2=80=AFAM Todd Zullinger <tmz@pobox.com> wrot=
+e:
+>
+> Usman Akinyemi wrote:
+> > On Sat, Nov 9, 2024 at 9:35=E2=80=AFAM Andreas Schwab <schwab@linux-m68=
+k.org> wrote:
+> >>
+> >> On Nov 09 2024, Christian Couder wrote:
+> >>
+> >>> Yeah, not sure why it doesn't work while you have it.
+> >>
+> >> It's probably of the wrong architecture.
+> > Hi Andreas,
+> > Thanks for responding.
+> > It was actually the wrong Architecture. Thank you. Just curious, any
+> > reason why the 32bit was present instead of the
+> > 64bit ?, I will normally think the operating system should ship 64bit
+> > by default.
+>
 > The 64-bit libc_malloc_debug.so.0 is in /lib64 and was moved
 > to the glibc-utils package in Fedora 40, with 2c1b0f0 (Move
-> memory tracing libraries to glibc-utils, 2024-05-15)¹.  The
+> memory tracing libraries to glibc-utils, 2024-05-15)=C2=B9.  The
 > commit message notes:
-> 
+>
 >     On x86_64, glibc-utils will now only contain the 64-bit
 >     version of these libraries but still need the 32-bit
 >     version (in order to support tracing i686 applications).
 >     Therefore, on i686 the libraries remain in the main
 >     glibc package.
-> 
+>
 > If you're interested in installing the various dependencies
 > needed to run the test suite on Fedora, take a look at the
-> Fedora git package spec file².
+> Fedora git package spec file=C2=B2.
+>
+> The BuildRequires contain a substantial set of dependencies
+> which enable as many of the tests as practical to run when
+> building the packages (I believe more tests are run there
+> than are run in the git project's CI for most runs,
+> actually :).
+>
+Hi Todd,
 
-Hmm. I wonder if our test scripts could be a little more forgiving here.
+Thanks for the explanation,
 
-The glibc malloc debugging stuff has always been turned on by default
-since a731fa916e (Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the
-test suite for detecting heap corruption, 2012-09-14). Back then the
-setup just involved setting some environment variables. If we were on a
-system where it didn't exist, it was no big deal. We'd just run without
-it.
+I really appreciate it.
 
-That changed in 131b94a10a (test-lib.sh: Use GLIBC_TUNABLES instead of
-MALLOC_CHECK_ on glibc >= 2.34, 2022-03-04). Now that glibc split this
-out into libc_malloc_debug.so, we have to add it to LD_PRELOAD. We only
-do that when we detect glibc, but it sounds like it's possible to have
-glibc but not the malloc debug library. In which case we'll produce
-errors (at the very least it seems like ld.so will complain to stderr,
-which perhaps is the source of the test failures here).
-
-Can we do a better job of detecting that the library is available?
-
-I don't offhand know of a good portable way to ask the system about
-available libraries. But I guess just doing something like:
-
-  err=$(LD_PRELOAD=libc_malloc.so.0 git version 2>&1 >/dev/null)
-  if test -z "$err"
-  then
-	...seemed to work...
-  fi
-
-would do it? I dunno. Maybe this is not a common enough thing to worry
-about. It just seems bad for us to make life harder for people running
-the tests for an optional thing.
-
-  Side note: The glibc malloc stuff seems a bit more redundant these
-  days, since we run with ASan in CI (which I'd expect to catch a
-  superset of what the malloc debugging would). There is some value in
-  catching things sooner, though (I don't usually do an ASan run on my
-  workstation, and of course some people may not use CI at all).
-
--Peff
+Usman.
+> See also the %check section of the test suite for some tests
+> which are skipped and other comments which might be useful.
+>
+> =C2=B9 https://src.fedoraproject.org/rpms/glibc/c/2c1b0f0
+> =C2=B2 https://src.fedoraproject.org/rpms/git/blob/rawhide/f/git.spec
+>
+> --
+> Todd
