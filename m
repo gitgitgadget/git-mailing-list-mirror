@@ -1,165 +1,159 @@
-Received: from redcrew.org (redcrew.org [37.157.195.192])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426F8199397
-	for <git@vger.kernel.org>; Sat,  9 Nov 2024 15:04:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C02146A71
+	for <git@vger.kernel.org>; Sat,  9 Nov 2024 16:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731164693; cv=none; b=fE2HHGHcvdFQe+m6aypiA2qarDow4gpu3NtKliz5AS5iE54H1O5DLsLI5BMhr+D0MOEGGU1NjlBCPtXZvR2zrdBkxsv0E0B2qG7Th+P0tte3fMUnMWBsXOTOi67dMOIXZ1I9WTFFDxHYkAmJt+n87is6zx112ipbFSY33q7odTE=
+	t=1731168362; cv=none; b=VfaROsQWEdcwWgM+C0qYeh2El0lDEP6lbKxYVDlMCFdfUjGeqMWI7WItkWKMdia8XQiBqDE26JpI5ChsD24e0vnD0Ot118Y1m4mBwTe1vBCu0GaaJQG8fiMlN1wwPK6bnvunnyKlihGm7XnYrgI1XFOB8Md6OauxotD2uwdywrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731164693; c=relaxed/simple;
-	bh=kzsQbBrLCcl7k/tP1vF+/nsINKNhArIWmbDAvwBzkWQ=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
-	 References:In-Reply-To; b=IfPagZ8lsUjMs4VdY8+UCFM7t+T7wEUo7uN8jbuL04oNPVxk8StFY2chRkr/p6GTRLI4cyeiEwDcFJI+YljzsKdB+DrVZKwIGiBgMe4CxvcdpR348ZK9MuMJtraiKLY11xZ7+5FAyaHkDjcXKPXJwSrec3csI0XXNZ77MOfoQCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=Y60y6bzb; arc=none smtp.client-ip=37.157.195.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1731168362; c=relaxed/simple;
+	bh=H5JC2tzYT9/kskN5Li8AmEsN/LnT+YHilwY2Er6O3R0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l+VfQSyiqQY4vLDAisN0T894avr7CrbdVWzMntUdjjvLASuaIIgHIHTasfl5QadLFtWZlD1n2bZy97zlsXB4a6VWOtYx5LgQ4sPp678PLaYe8IyPWdKrsybT02+8CWEjPaZCGDuXkNQ0lz4sWDXvGq1MGFJwjg4MOZS1BE4TIAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Izn6FIPZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DMH3e8l8; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="Y60y6bzb"
-Received: from localhost (unknown [185.22.237.37])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by redcrew.org (Postfix) with ESMTPSA id E9E3BB3DE;
-	Sat,  9 Nov 2024 15:55:44 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org E9E3BB3DE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
-	t=1731164145; bh=bqpAu2MF6sNm4bNIw/4ei6l+AUmJ483G7uV7ZthiQRk=;
-	h=Date:Subject:From:To:References:In-Reply-To:From;
-	b=Y60y6bzbWiPOR9OlVmvxz+o4E6WfiYZJjsFX9dkulmG1yg18N3q9enbtXcG0isp2q
-	 zUwaGH0OxCdmcjSWpg5mXbhMDoLJRw46u9fP8UqEJmM3vyKh2bYLbY8F5ifE1pmSi4
-	 xSc/faEsRe4nZ2VgMNfjDtH+cGYbosPT3FSH/LSI=
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Izn6FIPZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DMH3e8l8"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B88AC11400E1;
+	Sat,  9 Nov 2024 11:05:57 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 09 Nov 2024 11:05:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1731168357; x=1731254757; bh=dqrjsfe9lI
+	W6XU/qOoLe1+fUVIyFFgKi5xPu+Cfp/To=; b=Izn6FIPZ0Ez+FzeokTUUr7sShz
+	EYR0knMu9MhczVNC/wTQmHHbdoHbiX+qNjV2oZ/MVJNO2UzUchxbQF2/vA2iEVTq
+	IELPs0OpIcIr8pjZA+Fd5mj8TJ+gng8bE0jwST3sCawPeYPCrMVaHtBVFlQY8rPC
+	UeBa3tjQbFkQKTB6henfYKglkaPmAfzratYOn5Gsk90EyPcF6HG0eKawYbqtQ6wp
+	j6cbXpNMU1v/UCCETGJa2b7yGOlbVHNNI/cQ9L3LUWsO8JPtvKyPm8n/r2sY+xAl
+	tGatTCQgk+G4hizqC4jB67fsMLaoZdPv+G10TMGWIFscleak9/PnZXkplEzg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731168357; x=1731254757; bh=dqrjsfe9lIW6XU/qOoLe1+fUVIyFFgKi5xP
+	u+Cfp/To=; b=DMH3e8l8e9TSw08SRkbkxfXlRHyEhIHcmA/E/lkP6a27MZewR6C
+	U7utWmjk6AVXCywt9aNJlQ0OnSjjqECPC+UA52FUL0T/zzASLVwGgmlhrQHqpb2l
+	nbZxdlaRaW8/v1vkuDuFM31GXytZ7E7PDE4dZ245uNTDFyKanHCQJIfAvDaX2AS7
+	C7/A6P/WDQiVcGYaiQGwGKGQ8X8Fz/gk9S3UtybpFVznDWVI1X7Glql/zmOYU480
+	ONZ1Yui0zmFjOwnuW/rtgrZkwu3XbLpUHA9UU5EcwUSxcvLHOA42Py0u71+QNuNK
+	9eqKlkIZDCwMfoL0neTB6I2vwjwr3JDLa8A==
+X-ME-Sender: <xms:ZYgvZxch_yISzLrDtTB9llMa4mIc88tiEYxqnlZI5kMu-ulPxX129w>
+    <xme:ZYgvZ_Pchdk7BVyg2MPyVnrTo7739zX9ypldFQBzQaURIWA0_gsAn7iAak3o8EQTY
+    Av-eV_6gg3Fa09aOw>
+X-ME-Received: <xmr:ZYgvZ6i95UMpF27WiMv4OVfo17ZdZIKt1QVk-l_BJ8Qqx9xUfSahAiNewUGl_w3FEeHEySUYWbYHKUD32Hkm7EpzXs4mw5ioTcyUl6XgT9LrmuxNE--E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdekgdekfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecu
+    hfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqe
+    enucggtffrrghtthgvrhhnpeeihfeltdelhffgudekgfeguefhfeetteevlefgledvieek
+    udekfffhvdegfeevheenucffohhmrghinhepfhgvughorhgrphhrohhjvggtthdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhii
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtoh
+    eptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ZYgvZ68c-hzt_PN1EEPUCRTwPAVST8mhkZuyrJcj1MT7ZtMJdrjCxA>
+    <xmx:ZYgvZ9s023tXJeOMfw_RynICi47FdgKKwmE8_KKYhWRqrWYivUkhqw>
+    <xmx:ZYgvZ5HfnNK-Az3BpB5iChc71U0ufFit6S5bUgPEfD8l7DsrWNtY3Q>
+    <xmx:ZYgvZ0MI8edKkqa5A_HhEmPBxk_vpthaSuGZ0sTB8fJi1tXBb2zZeA>
+    <xmx:ZYgvZ3I81L0UEiPP0reM4eVFiWke9hZAjrYsBf_j-veWGa1PfJ8V7bkK>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 9 Nov 2024 11:05:57 -0500 (EST)
+Date: Sat, 9 Nov 2024 11:05:55 -0500
+From: Todd Zullinger <tmz@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC]: Test Were failing on Fedora Linux.
+Message-ID: <Zy-IYwjb_RO5NW-s@teonanacatl.net>
+References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
+ <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
+ <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
+ <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com>
+ <87msi85vc9.fsf@igel.home>
+ <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2;
- micalg=pgp-sha1; protocol="application/pgp-signature"
-Date: Sat, 09 Nov 2024 15:55:44 +0100
-Message-Id: <D5HQH12Y4SWF.2W70SKEDB7HBF@cepl.eu>
-Subject: Re: Feature Request: Interactively pick fixup revision
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: "Martin Imre" <martinimre25@gmail.com>, <git@vger.kernel.org>
-X-Mailer: aerc 0.18.2
-References: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
-In-Reply-To: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
-
---aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2
-Content-Type: multipart/mixed;
- boundary=0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec
-
---0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec
-Content-Type: multipart/alternative;
- boundary=06e43f58c16ffa72087c6f88ceb9b4e3f09fbadc6e7cb09431e8fbae504b
-
---06e43f58c16ffa72087c6f88ceb9b4e3f09fbadc6e7cb09431e8fbae504b
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="/PrRsFgA//Ac24GW"
 Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
 
-On Sat Nov 9, 2024 at 12:41 PM CET, Martin Imre wrote:
-> My usual workflow is using `git commit --fixup <revision>` quite
-> frequently, as it eases the code reviewing process and allows for a
-> clean history later on.
 
-https://github.com/keis/git-fixup/
+--/PrRsFgA//Ac24GW
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-but at least as a minimal improvement, I would limit list of
-commits to those which are touched in the staging area:
+Usman Akinyemi wrote:
+> On Sat, Nov 9, 2024 at 9:35=E2=80=AFAM Andreas Schwab <schwab@linux-m68k.=
+org> wrote:
+>>
+>> On Nov 09 2024, Christian Couder wrote:
+>>
+>>> Yeah, not sure why it doesn't work while you have it.
+>>
+>> It's probably of the wrong architecture.
+> Hi Andreas,
+> Thanks for responding.
+> It was actually the wrong Architecture. Thank you. Just curious, any
+> reason why the 32bit was present instead of the
+> 64bit ?, I will normally think the operating system should ship 64bit
+> by default.
 
-  ref=3D$(git log --oneline -- $(git diff --cached|lsdiff --strip 1)|fzf|cu=
-t -d ' ' -f1)
+The 64-bit libc_malloc_debug.so.0 is in /lib64 and was moved
+to the glibc-utils package in Fedora 40, with 2c1b0f0 (Move
+memory tracing libraries to glibc-utils, 2024-05-15)=C2=B9.  The
+commit message notes:
 
-(lsdiff is from patchutils)
+    On x86_64, glibc-utils will now only contain the 64-bit
+    version of these libraries but still need the 32-bit
+    version (in order to support tracing i686 applications).
+    Therefore, on i686 the libraries remain in the main
+    glibc package.
 
-Best,
+If you're interested in installing the various dependencies
+needed to run the test suite on Fedora, take a look at the
+Fedora git package spec file=C2=B2.
 
-Mat=C4=9Bj
+The BuildRequires contain a substantial set of dependencies
+which enable as many of the tests as practical to run when
+building the packages (I believe more tests are run there
+than are run in the git project's CI for most runs,
+actually :).
+
+See also the %check section of the test suite for some tests
+which are skipped and other comments which might be useful.
+
+=C2=B9 https://src.fedoraproject.org/rpms/glibc/c/2c1b0f0
+=C2=B2 https://src.fedoraproject.org/rpms/git/blob/rawhide/f/git.spec
 
 --=20
-http://matej.ceplovi.cz/blog/, @mcepl@floss.social
-GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
-=20
-Ty zl=C3=BD d=C3=A1vaj=E2=80=99 ty hodn=C3=BD pry=C4=8D. // Those evil ones=
- put away those good ones.
-  -- Magda Ceplov=C3=A1
+Todd
 
-
---06e43f58c16ffa72087c6f88ceb9b4e3f09fbadc6e7cb09431e8fbae504b--
-
---0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
-Content-Type: application/pgp-keys; charset=UTF-8
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
-LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
-NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
-emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
-alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
-VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
-TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
-bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
-MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
-TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
-c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
-YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
-UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
-N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
-Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
-d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
-em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
-WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
-Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
-N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
-TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
-b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
-RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
-dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
-ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
-b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
-Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
-SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
-cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
-K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
-a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
-QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
-d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
-YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
-RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
-Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
-CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
-RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
-Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
-ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
-UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
-RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
-RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
-TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
-SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
-aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
-S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
-ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
-U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
-RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
-SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
-YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
-Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
-YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
-UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
---0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec--
-
---aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2
+--/PrRsFgA//Ac24GW
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZy938A4cbWNlcGxAY2Vw
-bC5ldQAKCRDgn+8l2WSErP1yAKCBbKYKpACehir1/tzVYEkNFPsomQCfQ+FWmu2a
-cK5twtXxon89RO+TcOI=
-=O/R4
+iHUEARYIAB0WIQSvlwC4tRNlCF6x+moHOcdGE+n45gUCZy+IXAAKCRAHOcdGE+n4
+5mMnAQDcBzm4U3GNjKoM41H88EcPFkeUXAXZCWv3Diq+fpmsIAEA3XqVMq5x5f+U
+zrDzMMw8P0O3ooHqp8pShLkYRoqndA0=
+=qCVg
 -----END PGP SIGNATURE-----
 
---aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2--
+--/PrRsFgA//Ac24GW--
