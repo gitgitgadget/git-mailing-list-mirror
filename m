@@ -1,159 +1,148 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C02146A71
-	for <git@vger.kernel.org>; Sat,  9 Nov 2024 16:05:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B695129CF4
+	for <git@vger.kernel.org>; Sat,  9 Nov 2024 17:08:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731168362; cv=none; b=VfaROsQWEdcwWgM+C0qYeh2El0lDEP6lbKxYVDlMCFdfUjGeqMWI7WItkWKMdia8XQiBqDE26JpI5ChsD24e0vnD0Ot118Y1m4mBwTe1vBCu0GaaJQG8fiMlN1wwPK6bnvunnyKlihGm7XnYrgI1XFOB8Md6OauxotD2uwdywrE=
+	t=1731172142; cv=none; b=ZRolpWKrxa8Mn4m8rUCLZGNopwQV3cLyoG26fIjVSRrT5/9yr+ysvUcAJvPqpWHTSRyl4nGnnsNs5UvXeo6fv5XNwWnhPan1j9GnDz3h+3n7ptLHupgqWvlLjPI8LtcpLPFxy20qau/Q4V6QbDowBpA6Sn5OLsZyk35NyxjdYXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731168362; c=relaxed/simple;
-	bh=H5JC2tzYT9/kskN5Li8AmEsN/LnT+YHilwY2Er6O3R0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l+VfQSyiqQY4vLDAisN0T894avr7CrbdVWzMntUdjjvLASuaIIgHIHTasfl5QadLFtWZlD1n2bZy97zlsXB4a6VWOtYx5LgQ4sPp678PLaYe8IyPWdKrsybT02+8CWEjPaZCGDuXkNQ0lz4sWDXvGq1MGFJwjg4MOZS1BE4TIAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Izn6FIPZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DMH3e8l8; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731172142; c=relaxed/simple;
+	bh=WbP+IG4UbzzQmLCr2BgmAG1hHoORtxyXee2RE0AAPoM=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=M4Vs1JfK8c9vd1iV0uI3+gkiKpV72vNGJxd37cp8SYIq67XcQsMdBkoKuMpbCg6JWtYVcRiPDJopW0EZfFWNfybSK/tdCDndVnxu+kyOF/m2vsdmDxpVxCVXMZht1fP7hxMPEeEbf2LeXmUG/ngTnmT1HkIGD+G17Bp9alz2azM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=hKZ912OT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I1FliXtb; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Izn6FIPZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DMH3e8l8"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B88AC11400E1;
-	Sat,  9 Nov 2024 11:05:57 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 09 Nov 2024 11:05:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731168357; x=1731254757; bh=dqrjsfe9lI
-	W6XU/qOoLe1+fUVIyFFgKi5xPu+Cfp/To=; b=Izn6FIPZ0Ez+FzeokTUUr7sShz
-	EYR0knMu9MhczVNC/wTQmHHbdoHbiX+qNjV2oZ/MVJNO2UzUchxbQF2/vA2iEVTq
-	IELPs0OpIcIr8pjZA+Fd5mj8TJ+gng8bE0jwST3sCawPeYPCrMVaHtBVFlQY8rPC
-	UeBa3tjQbFkQKTB6henfYKglkaPmAfzratYOn5Gsk90EyPcF6HG0eKawYbqtQ6wp
-	j6cbXpNMU1v/UCCETGJa2b7yGOlbVHNNI/cQ9L3LUWsO8JPtvKyPm8n/r2sY+xAl
-	tGatTCQgk+G4hizqC4jB67fsMLaoZdPv+G10TMGWIFscleak9/PnZXkplEzg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="hKZ912OT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I1FliXtb"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id B8CD911400D6;
+	Sat,  9 Nov 2024 12:08:58 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sat, 09 Nov 2024 12:08:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731172138;
+	 x=1731258538; bh=L+XA6tlhoRE93IRwZjmM4O1nE869C9OWn9WlvstWDHw=; b=
+	hKZ912OTB76049w9kts50J693AKYqHzei6pvCMZmTXidGGjVlSP4IiaIaXR+3PuH
+	0Bz1jc9n/qO8qJfEE/hGXf1jVBD4vcZTnISjaPrSHYxFFMeXSVnKCqyJ0EPqmnCR
+	SwWq6AX4U6kLRMzHtsiSdARLREPrBh2e661STYJz6l8eN3AHjSxA+5n9PPwzPiOL
+	rKXXT2tfAyOWGwnfpJY6w/ML+YpjTzOXNcGdxmfGv8dIu4balkRDLE9Lp98J9d01
+	JDFclLvpSugSHvLToQ6nG4Bs2iPWyXHcQePDEWZEXPPUFhPHDtYd+mP/oTgE5OgL
+	7IlkEDuGvsEWoegMsba49Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731168357; x=1731254757; bh=dqrjsfe9lIW6XU/qOoLe1+fUVIyFFgKi5xP
-	u+Cfp/To=; b=DMH3e8l8e9TSw08SRkbkxfXlRHyEhIHcmA/E/lkP6a27MZewR6C
-	U7utWmjk6AVXCywt9aNJlQ0OnSjjqECPC+UA52FUL0T/zzASLVwGgmlhrQHqpb2l
-	nbZxdlaRaW8/v1vkuDuFM31GXytZ7E7PDE4dZ245uNTDFyKanHCQJIfAvDaX2AS7
-	C7/A6P/WDQiVcGYaiQGwGKGQ8X8Fz/gk9S3UtybpFVznDWVI1X7Glql/zmOYU480
-	ONZ1Yui0zmFjOwnuW/rtgrZkwu3XbLpUHA9UU5EcwUSxcvLHOA42Py0u71+QNuNK
-	9eqKlkIZDCwMfoL0neTB6I2vwjwr3JDLa8A==
-X-ME-Sender: <xms:ZYgvZxch_yISzLrDtTB9llMa4mIc88tiEYxqnlZI5kMu-ulPxX129w>
-    <xme:ZYgvZ_Pchdk7BVyg2MPyVnrTo7739zX9ypldFQBzQaURIWA0_gsAn7iAak3o8EQTY
-    Av-eV_6gg3Fa09aOw>
-X-ME-Received: <xmr:ZYgvZ6i95UMpF27WiMv4OVfo17ZdZIKt1QVk-l_BJ8Qqx9xUfSahAiNewUGl_w3FEeHEySUYWbYHKUD32Hkm7EpzXs4mw5ioTcyUl6XgT9LrmuxNE--E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdekgdekfecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1731172138; x=1731258538; bh=L
+	+XA6tlhoRE93IRwZjmM4O1nE869C9OWn9WlvstWDHw=; b=I1FliXtbfcs94OMf6
+	YWW6/Kox+7qpC2N+wjbJxhPA6l8c3nLy2LoPZQY6G3e8X/w9et3Ed/f7Mfm9xzp9
+	OS8OywfFOSZ6JMJFBl8e6OHSphpRYdzw0KYOTnP9AK3N7ZcIJnb8sSbc360ljC75
+	qnDxOwLWR/gE11PakME2VPxs7shuTb/6j2cPnzhPfiqifqixMVZt16iM5h55vgxk
+	wP0qNf0OLyhM363kDeNvhedV1Ly0UEgVlnjbPjH70zjVEwptkWIIWGigTylVAo6C
+	vEU7/VGXKXigG1R5iEUg8PwlfJJ5lGP6pYnJzvCmYlEeyHw4K99lnmnccrr9wKKl
+	iMw7Q==
+X-ME-Sender: <xms:KpcvZ5NUaJ_bZClbS46NhWOIyrTcOn1GpyLr0MGzubIJNI5Xq8lhH3Y>
+    <xme:KpcvZ78w4lSlRnQzxHtehl5Bpw9IrTqoF7mCQu2kI6ZIN-jJQSjFit7JT_fG3_UpN
+    V6-K59PgIYGBh7H_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrtdekgdeliecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecu
-    hfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqe
-    enucggtffrrghtthgvrhhnpeeihfeltdelhffgudekgfeguefhfeetteevlefgledvieek
-    udekfffhvdegfeevheenucffohhmrghinhepfhgvughorhgrphhrohhjvggtthdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhii
-    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuth
-    dprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtoh
-    eptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ZYgvZ68c-hzt_PN1EEPUCRTwPAVST8mhkZuyrJcj1MT7ZtMJdrjCxA>
-    <xmx:ZYgvZ9s023tXJeOMfw_RynICi47FdgKKwmE8_KKYhWRqrWYivUkhqw>
-    <xmx:ZYgvZ5HfnNK-Az3BpB5iChc71U0ufFit6S5bUgPEfD8l7DsrWNtY3Q>
-    <xmx:ZYgvZ0MI8edKkqa5A_HhEmPBxk_vpthaSuGZ0sTB8fJi1tXBb2zZeA>
-    <xmx:ZYgvZ3I81L0UEiPP0reM4eVFiWke9hZAjrYsBf_j-veWGa1PfJ8V7bkK>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 9 Nov 2024 11:05:57 -0500 (EST)
-Date: Sat, 9 Nov 2024 11:05:55 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC]: Test Were failing on Fedora Linux.
-Message-ID: <Zy-IYwjb_RO5NW-s@teonanacatl.net>
-References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
- <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
- <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
- <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com>
- <87msi85vc9.fsf@igel.home>
- <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
+    hsucdlqddutddtmdenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecu
+    hfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthht
+    vghrnhepffejkedvjeegieegfeejkeegleevheeiteettddvvdeghfegheegleelleevff
+    dunecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedt
+    necurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepmhgrrhhtihhnihhmrhgvvdehsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:KpcvZ4SzjuVMp1je-1QKds3McfIO9WAvDouevynI9un3WPwPekOWJQ>
+    <xmx:KpcvZ1tzni1FQrASzfuQtjiaTTIxzr5VIBkp58EJ8XvQJdeNT_DRpw>
+    <xmx:KpcvZxekQkZPJG9lVunwD6vI-Dpvt1_QUpV4WPdgyJtnoujPV2oarw>
+    <xmx:KpcvZx0k54HTES9Qo_x9_zaqohFDc2DTJ-Zy8FW7M8JmPEFN0RKYaw>
+    <xmx:KpcvZxFvkJcFimrOtOeguudq9-HUS7vLR7D0hJurjxXV5Bt2WyDdDUae>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 60419780068; Sat,  9 Nov 2024 12:08:58 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="/PrRsFgA//Ac24GW"
-Content-Disposition: inline
-In-Reply-To: <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
-
-
---/PrRsFgA//Ac24GW
+Date: Sat, 09 Nov 2024 18:08:36 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Martin Imre" <martinimre25@gmail.com>, git@vger.kernel.org
+Message-Id: <1d383dbd-a409-4199-84bc-652784835167@app.fastmail.com>
+In-Reply-To: 
+ <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
+References: 
+ <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
+Subject: Re: Feature Request: Interactively pick fixup revision
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Usman Akinyemi wrote:
-> On Sat, Nov 9, 2024 at 9:35=E2=80=AFAM Andreas Schwab <schwab@linux-m68k.=
-org> wrote:
->>
->> On Nov 09 2024, Christian Couder wrote:
->>
->>> Yeah, not sure why it doesn't work while you have it.
->>
->> It's probably of the wrong architecture.
-> Hi Andreas,
-> Thanks for responding.
-> It was actually the wrong Architecture. Thank you. Just curious, any
-> reason why the 32bit was present instead of the
-> 64bit ?, I will normally think the operating system should ship 64bit
-> by default.
+On Sat, Nov 9, 2024, at 12:41, Martin Imre wrote:
+> Hi,
+>
+> first email to this list, so please forgive me if I'm doing something =
+wrong.
+>
+> My usual workflow is using `git commit --fixup <revision>` quite
+> frequently, as it eases the code reviewing process and allows for a
+> clean history later on.
+>
+> One thing that is always cumbersome is to first find the SHA of the
+> revision that I plan to commit a fixup to.
+> I usually use git log and then copy the revision.
+> I even wrote a script that eases this process using fzf:
+> ```
+> #!/bin/bash
+>
+> res=3D$(git log --oneline | fzf)
+> ref=3D$(echo $res | cut -d ' ' -f1)
+>
+> git commit --fixup ${ref}
+> ```
+>
+> I don't think fzf is really necessary here, but it speeds things up.
+>
+> Anyhow, I'm really surprised that this isn't a feature of git.
+> I could see a `git commit --fixup` (without a revision) or `git commit
+> --fixup --interactive` open up the git log and let one pick the
+> revision they want to commit a fixup to.
+>
+> Cheers,
+> Martin
 
-The 64-bit libc_malloc_debug.so.0 is in /lib64 and was moved
-to the glibc-utils package in Fedora 40, with 2c1b0f0 (Move
-memory tracing libraries to glibc-utils, 2024-05-15)=C2=B9.  The
-commit message notes:
+This could be useful for a lot of commands.  I use git-notes(1) a lot
+(just as a niche example).  I often wanna just get a list of the last
+commits (e.g. `@{u}..`) when I want to edit a note.  (I should try to
+use fzf for that, thanks by the way!)
 
-    On x86_64, glibc-utils will now only contain the 64-bit
-    version of these libraries but still need the 32-bit
-    version (in order to support tracing i686 applications).
-    Therefore, on i686 the libraries remain in the main
-    glibc package.
+I=E2=80=99m imagining that some RFC implementation of this could get rep=
+lies
+like =E2=80=9Cbut why just for `git commit --fixup/--squash=E2=80=A6`?=E2=
+=80=9D
 
-If you're interested in installing the various dependencies
-needed to run the test suite on Fedora, take a look at the
-Fedora git package spec file=C2=B2.
+As far as third-party programs are concerned: see this section of the
+Lazygit readme:[1]
 
-The BuildRequires contain a substantial set of dependencies
-which enable as many of the tests as practical to run when
-building the packages (I believe more tests are run there
-than are run in the git project's CI for most runs,
-actually :).
+> Pressing shift+a on any commit will amend that commit with the
+> currently staged changes (running an interactive rebase in the
+> background).
 
-See also the %check section of the test suite for some tests
-which are skipped and other comments which might be useful.
+Not the exact same thing of course.  You don=E2=80=99t get intermediary =
+fixup
+commit since it just runs interactive rebase in the background (so it
+runs an uninteractive rebase=E2=80=A6).
 
-=C2=B9 https://src.fedoraproject.org/rpms/glibc/c/2c1b0f0
-=C2=B2 https://src.fedoraproject.org/rpms/git/blob/rawhide/f/git.spec
+I haven=E2=80=99t tried Lazygit myself.
 
---=20
-Todd
-
---/PrRsFgA//Ac24GW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYIAB0WIQSvlwC4tRNlCF6x+moHOcdGE+n45gUCZy+IXAAKCRAHOcdGE+n4
-5mMnAQDcBzm4U3GNjKoM41H88EcPFkeUXAXZCWv3Diq+fpmsIAEA3XqVMq5x5f+U
-zrDzMMw8P0O3ooHqp8pShLkYRoqndA0=
-=qCVg
------END PGP SIGNATURE-----
-
---/PrRsFgA//Ac24GW--
+=F0=9F=94=97 1: https://github.com/jesseduffield/lazygit
