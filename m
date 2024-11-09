@@ -1,94 +1,165 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from redcrew.org (redcrew.org [37.157.195.192])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FE8149C52
-	for <git@vger.kernel.org>; Sat,  9 Nov 2024 15:02:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426F8199397
+	for <git@vger.kernel.org>; Sat,  9 Nov 2024 15:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731164541; cv=none; b=QjYXmFPL7g8ovW9vFOMOvkZMsHVy+ocKpILmCc59VY2f/3qTh8D7ciusAgmu7jJUw1N4Gr9fd4wyAT+kaYMXgqt6piq2Gz+QtiMbU818skIjci0cXt06X9XGHRgIpoCoFjUk1tE/8d/hbN/4lJHMLGoC0hmjIGqAEKdTDajhsbc=
+	t=1731164693; cv=none; b=fE2HHGHcvdFQe+m6aypiA2qarDow4gpu3NtKliz5AS5iE54H1O5DLsLI5BMhr+D0MOEGGU1NjlBCPtXZvR2zrdBkxsv0E0B2qG7Th+P0tte3fMUnMWBsXOTOi67dMOIXZ1I9WTFFDxHYkAmJt+n87is6zx112ipbFSY33q7odTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731164541; c=relaxed/simple;
-	bh=Z1FAR9SQeu7+BDSxFUVC7hkhVrhgPwH+FFfqVBciPYc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ALUi/l/rA5wEM/mthwMbvmQL6lnZE2tctpaqUeXLv7CU0g5Jh1N9Imk7QmI5osW0zpYFycwZABgb8X068LhVhVnQOfd8p7w/2DTxMH859hNTle/4QQdUpVHffmAvxNTyQbtgI//A53od0C2YXbDFqrGBIMjwtoU41Ra52oudsgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UGXUSmG1; arc=none smtp.client-ip=209.85.161.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731164693; c=relaxed/simple;
+	bh=kzsQbBrLCcl7k/tP1vF+/nsINKNhArIWmbDAvwBzkWQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=IfPagZ8lsUjMs4VdY8+UCFM7t+T7wEUo7uN8jbuL04oNPVxk8StFY2chRkr/p6GTRLI4cyeiEwDcFJI+YljzsKdB+DrVZKwIGiBgMe4CxvcdpR348ZK9MuMJtraiKLY11xZ7+5FAyaHkDjcXKPXJwSrec3csI0XXNZ77MOfoQCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=Y60y6bzb; arc=none smtp.client-ip=37.157.195.192
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UGXUSmG1"
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-5ee3c2e79aaso1444771eaf.3
-        for <git@vger.kernel.org>; Sat, 09 Nov 2024 07:02:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731164539; x=1731769339; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C/62hGSnMoqW/TZ5qSFnE//5Ic8qh4O1PIud1AL93rk=;
-        b=UGXUSmG1WpwZrm+pXNZS6qvtFO2ISbgqfjtqq5biCvaLLgtdV5AF+yv4WCh+A3sFzi
-         DZAzzVzWn0ucUeTotYnNLD66MiAcknRbhUAkNJnkeio4D0079R/P9nPfoR4YxMYDInmY
-         URq8Dw74o8CGisnNPx7nbb30+h6YNDluFLEBzVNyCAbDJmBREOo15GQc/ROEla5YKVfk
-         tdhfzvaI1DOdsUite8nWq3qfC7uCVe8FcHvOJI4aGoek5tTPKR8HlK+9qs7hDvxO9ahV
-         6T0y/j3iIevlWtkJFVOH/jlRn/JDF0IIgVPVSVlbzpbMRGWKJQW/MuTbxc5ci6QIowfu
-         84ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731164539; x=1731769339;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C/62hGSnMoqW/TZ5qSFnE//5Ic8qh4O1PIud1AL93rk=;
-        b=T99RYK5tsoPvCTnYi012CF1Tga1GVH9MfRymJNR9Uw/H4Hm+QqHLJYVIIk1OTlGRku
-         wfQZGdr02l2qQGRrWnaGSOq4oPI54YQy2oMmd6H87RVkoqqtRLYH5SmRlsRFE67/hXlF
-         U+BAlTf061t0+hIupqzgb5W+ifPyrvI7OzpGFDwrBAQGOFYrFmUOe/dapReKvyucSvY9
-         VxoM8foZ/K8L7W5av8TWj4fvDTBi/JOgzEpRiRsAkM6YLY2An9fArZVhuKy39iNsFHDU
-         nTXZd1rdNmIpfHpTHLcULvIQ9dzGsTXL1e6O+T4GK7Gs4IogCu5s+3YgWRNyjZjVb0/e
-         T7LQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUvPGo4jqzhHyIHQy4MB+rrb0dmM0gzIfBXrMOlU7mgapSGajmgSaXMm0F8klWUs5UgV9g=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4ka1IR0Mn/v7Z030dZ4J5ThIkFHo82jjFAeib3CD3TzIEREV3
-	kR/5IlNgR4gaccTKKaJMwA8zTi89Jy5tP62SfZuzdybFcO6G7nKdcbFOrQZm05hbJMiLGBkbdzJ
-	h6MGspJHHbGswTVhxBi+Z9uZkpkryuyom
-X-Google-Smtp-Source: AGHT+IGYMKB/KyKQAflGzdoTSN6bgmQqYeV8ixdMpRENGXbpUqAzasP5QEu+mG2331tfWgfGuhaAAQMAuN5pTg0A+ps=
-X-Received: by 2002:a05:6358:2741:b0:1c3:98de:facf with SMTP id
- e5c5f4694b2df-1c641ece5e0mr410148955d.13.1731164538922; Sat, 09 Nov 2024
- 07:02:18 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="Y60y6bzb"
+Received: from localhost (unknown [185.22.237.37])
+	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by redcrew.org (Postfix) with ESMTPSA id E9E3BB3DE;
+	Sat,  9 Nov 2024 15:55:44 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org E9E3BB3DE
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
+	t=1731164145; bh=bqpAu2MF6sNm4bNIw/4ei6l+AUmJ483G7uV7ZthiQRk=;
+	h=Date:Subject:From:To:References:In-Reply-To:From;
+	b=Y60y6bzbWiPOR9OlVmvxz+o4E6WfiYZJjsFX9dkulmG1yg18N3q9enbtXcG0isp2q
+	 zUwaGH0OxCdmcjSWpg5mXbhMDoLJRw46u9fP8UqEJmM3vyKh2bYLbY8F5ifE1pmSi4
+	 xSc/faEsRe4nZ2VgMNfjDtH+cGYbosPT3FSH/LSI=
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
- <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
- <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
- <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com> <87msi85vc9.fsf@igel.home>
-In-Reply-To: <87msi85vc9.fsf@igel.home>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sat, 9 Nov 2024 10:02:08 -0500
-Message-ID: <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
-Subject: Re: [RFC]: Test Were failing on Fedora Linux.
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2;
+ micalg=pgp-sha1; protocol="application/pgp-signature"
+Date: Sat, 09 Nov 2024 15:55:44 +0100
+Message-Id: <D5HQH12Y4SWF.2W70SKEDB7HBF@cepl.eu>
+Subject: Re: Feature Request: Interactively pick fixup revision
+From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+To: "Martin Imre" <martinimre25@gmail.com>, <git@vger.kernel.org>
+X-Mailer: aerc 0.18.2
+References: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
+In-Reply-To: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
+
+--aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2
+Content-Type: multipart/mixed;
+ boundary=0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec
+
+--0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec
+Content-Type: multipart/alternative;
+ boundary=06e43f58c16ffa72087c6f88ceb9b4e3f09fbadc6e7cb09431e8fbae504b
+
+--06e43f58c16ffa72087c6f88ceb9b4e3f09fbadc6e7cb09431e8fbae504b
 Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 
-On Sat, Nov 9, 2024 at 9:35=E2=80=AFAM Andreas Schwab <schwab@linux-m68k.or=
-g> wrote:
->
-> On Nov 09 2024, Christian Couder wrote:
->
-> > Yeah, not sure why it doesn't work while you have it.
->
-> It's probably of the wrong architecture.
-Hi Andreas,
-Thanks for responding.
-It was actually the wrong Architecture. Thank you. Just curious, any
-reason why the 32bit was present instead of the
-64bit ?, I will normally think the operating system should ship 64bit
-by default.
+On Sat Nov 9, 2024 at 12:41 PM CET, Martin Imre wrote:
+> My usual workflow is using `git commit --fixup <revision>` quite
+> frequently, as it eases the code reviewing process and allows for a
+> clean history later on.
 
-Usman Akinyemi.
->
-> --
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint =3D 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC=
-1
-> "And now for something completely different."
+https://github.com/keis/git-fixup/
+
+but at least as a minimal improvement, I would limit list of
+commits to those which are touched in the staging area:
+
+  ref=3D$(git log --oneline -- $(git diff --cached|lsdiff --strip 1)|fzf|cu=
+t -d ' ' -f1)
+
+(lsdiff is from patchutils)
+
+Best,
+
+Mat=C4=9Bj
+
+--=20
+http://matej.ceplovi.cz/blog/, @mcepl@floss.social
+GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
+=20
+Ty zl=C3=BD d=C3=A1vaj=E2=80=99 ty hodn=C3=BD pry=C4=8D. // Those evil ones=
+ put away those good ones.
+  -- Magda Ceplov=C3=A1
+
+
+--06e43f58c16ffa72087c6f88ceb9b4e3f09fbadc6e7cb09431e8fbae504b--
+
+--0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
+Content-Type: application/pgp-keys; charset=UTF-8
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
+LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
+NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
+emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
+alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
+VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
+TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
+bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
+MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
+TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
+c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
+YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
+UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
+N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
+Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
+d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
+em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
+WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
+Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
+N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
+TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
+b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
+RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
+dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
+ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
+b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
+Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
+SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
+cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
+K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
+a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
+QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
+d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
+YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
+RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
+Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
+CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
+RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
+Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
+ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
+UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
+RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
+RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
+TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
+SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
+aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
+S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
+ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
+U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
+RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
+SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
+YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
+Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
+YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
+UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
+--0cb622ba6ad1a583277f2e212d136ab4786fcb7eecae66a3a58746f460ec--
+
+--aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZy938A4cbWNlcGxAY2Vw
+bC5ldQAKCRDgn+8l2WSErP1yAKCBbKYKpACehir1/tzVYEkNFPsomQCfQ+FWmu2a
+cK5twtXxon89RO+TcOI=
+=O/R4
+-----END PGP SIGNATURE-----
+
+--aab8cee792dd132f58a77ecf2af1f631a620a567556c1f18db1aa4b8bfd2--
