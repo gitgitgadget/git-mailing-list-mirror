@@ -1,291 +1,129 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD60155300
-	for <git@vger.kernel.org>; Sun, 10 Nov 2024 12:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06E91D554
+	for <git@vger.kernel.org>; Sun, 10 Nov 2024 14:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731240633; cv=none; b=cDMQn5PxGMje7EtRVpSTxstbqBfI6eQTg492UXvogXLDF5tXMvoOPkLAY+KXLJVsxnUxFsNpwSVucI8LogOHlqQIvGsfdZrtLmE6bIMAq9mHVZg8NVbsHmig+fBLW85QIFCeEFSpVja8t0p9bRywI+0HAH5wK9ustvuJKkNdrzQ=
+	t=1731249065; cv=none; b=OY0HzdOqwoLXhc1+mQpZcB/TPwIauYn63SMS0ViuEjOTOUXGVgbaW4mAZnWZ7W2DmA4AE6oOSzjs2AE2zcbTuEOvA4QqyMZAHBfg9JKZPmCX5CBsw5yQjArt9pim3hH2nwG2kLMDPrjqCVvmqLQWJ6VeYg3koojPLJ4w+JrEFnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731240633; c=relaxed/simple;
-	bh=mozBS4WCRR5ACm1EGYA93JDGzTk4WjAiIKg1vdGVcKA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rlFQMOzUB3UpRP/PBPvOypFzCukp+Oo1zRjeWn6G14B5uL0M5FR+TV6fq4tGT9tbeD/a9ZtzvPfMSNF8rvuYegalt1DUPpDAL1m78okRTC6Qoqgs+3WSeMtlHxJUuD70s9A+R4zugythtM0Jx5qWE7bBWmCdPH/JIO9mUs8C6aM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hRS2hqdc; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1731249065; c=relaxed/simple;
+	bh=a0E81GlhhMCwcoKRpd0ltT+9/CuAGbmvzv++DTjNIVw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=GY6woEJ+Cys5HpYSupk2ebmmJPmPRKsn3pxIFB8jcXOCUMDtxLvzJr++LFZHO7SISpkBjnHhxnvBCuAENku1pVqTxhiKOqmfygcyV/ypXdTGN1Ws9/NmhhdxtXi+3rGaWmf56z1nFxvYOMDlCpRaWOp3vgw8UR1CD2PWQuk7pFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jOsV2/2p; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hRS2hqdc"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-720c286bcd6so3065109b3a.3
-        for <git@vger.kernel.org>; Sun, 10 Nov 2024 04:10:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jOsV2/2p"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43167ff0f91so32358305e9.1
+        for <git@vger.kernel.org>; Sun, 10 Nov 2024 06:31:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731240631; x=1731845431; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lzFoboD1+JUayKVMziqruojj8Znx34nL/4YO57+HUNo=;
-        b=hRS2hqdczqgFlQmjFrO3r7+PL7WutccCY46YLo9oaBCqcivIrbUFi7BF6vHDQYVTyf
-         UU7I2xC3knHxRIoeFxbDS+G+eneeOM4F05ZK7L7ySJ4U9C2dRO/BlC8r9ok4wcHQkihB
-         nVx0ahKMEhEcsU7cSJeR1JeS0wSEt8S8q9KudDu+wygIPxcrP1diBmft/Dbpv4bKpnQ0
-         ChjpYunFeeDQPJW+lR7yOYhMYQR6mUCf3hpMOsLbvbh8EzXlvfSUaMgVnPaa05gDh86M
-         XHukkzR2fO1zvBObMNI+0lruww8szCA0O3xeNXI1qfsdV/AiUbYYJmO5+I7tGeAD6Ezr
-         PvFQ==
+        d=gmail.com; s=20230601; t=1731249062; x=1731853862; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7b9dwfKmpFTnAlq8G+R12cAfyGXrtX/T0dCWY2oDKyE=;
+        b=jOsV2/2pjDQKcik5kgJ9o8BHi8HXMEc2cS/RR9NMcrxbKz03GhYPZiKg/FK/cOOD7d
+         M6stR1lxqlcw7S6HobdZunbBLupS6yVQlJpkLUJCmRgTNZmFhMe/jaYOX6DfbtCaQusP
+         Y8ptdjkXnlMB7ONr9Go/LR91x9PMpF9jC9aMHIiP2IHJ1uVxsexK903wLShhyo6FkHYu
+         TSkUUWODceINIj9VTnKeGnydkSzWNdQdEAyN3Y373sZpIOZEqjfcQs6Qx3CqxeE7fGpG
+         ZFuXr7op//m0FNKSx8B2qNI8qRfAXhrz4oR4tSZpiyV1rFCVrR5O+f9pjPYh8vXPXz7V
+         7+RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731240631; x=1731845431;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lzFoboD1+JUayKVMziqruojj8Znx34nL/4YO57+HUNo=;
-        b=WbEhGUgZ2IJjqRmMCrEZlmWuxrVQCcGGqpdUj1Ub/41EQ+O89eTm8eoapRKf4jE27G
-         OIJdZRJDW1aIfBnPKJb1tl2hE7K67QNiJbfj3/eWM5+XeKSQYerbbPvsYCPxS2S2gPpx
-         1tmrJ8wiI535L+Z8CgHK+jkV837jvQxp8VCrmCRK/ywd18ChwiTYCkkiV9SuU0WGsqG4
-         fIbF2e7bHKAChszv2htEbEpEleq9zW+WG3rOCt+jSVkRanujHyZBMZZMjfnIEYNYB6Va
-         Lg4Nm2zojHzD6GzasNC9c39zbTnPLiDt+bWXilBOkM7Gl7Y+h99tfu2nvoV/rdhFDbFt
-         7o3g==
-X-Gm-Message-State: AOJu0YxAG0ifexFr6k3xzNo8kw6fmL0nALZZIs0/JWEfoCqyvqYTBOEL
-	KI+DBoksbzPbxM5qi8w0oHpYdg6ApiJup0hk+rEE65nP3VwoIachXHIeWoeVEtE=
-X-Google-Smtp-Source: AGHT+IHQUEi2AqJ38U+Jbzy3sZUEaECOsTl8cPxLkwzjUG20tVc1dxux0V/4tvl7ypkMoPfVtYN8Qg==
-X-Received: by 2002:aa7:888c:0:b0:71e:4e2a:38bf with SMTP id d2e1a72fcca58-724133632a1mr12811249b3a.18.1731240631143;
-        Sun, 10 Nov 2024 04:10:31 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72407a58528sm7024571b3a.197.2024.11.10.04.10.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 Nov 2024 04:10:30 -0800 (PST)
-Date: Sun, 10 Nov 2024 20:10:27 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v7 9/9] ref: add symlink ref content check for files backend
-Message-ID: <ZzCis8E49O10O1zr@ArchLinux>
-References: <ZzCiCGxL4Adnd_eq@ArchLinux>
+        d=1e100.net; s=20230601; t=1731249062; x=1731853862;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7b9dwfKmpFTnAlq8G+R12cAfyGXrtX/T0dCWY2oDKyE=;
+        b=xUjvlwgmshW1mXvsYkdk1YHig01msNSUzpTRS8R6vYUcnHiMdwhkEQ60UyEc+tNXUu
+         FLC9LOBEWpZmG5/ZLsdnGRh7wrk//ewiXM0YRpKQtBSQyUIpfZ/8MDZHlpSgUrAMG6Ve
+         DLHeEJbUip72f78+34BEPndljlX78Nq5eF/B1YSlo3CGDA6RZWBz04gEK1pWCmsk4G2W
+         7+IOky1yc2RHhOHBaurKdN7hcF3kzR2RZJJl0fGe+Q1XC5RydNlxFgrQJ9JmVAKVppbg
+         xQQInKrWx4FHcCrl2z3/NFa+301TiaQaK9MOR0f5ijnHoyp3VHZovSO/fr7VaGqRkIQo
+         7WNA==
+X-Forwarded-Encrypted: i=1; AJvYcCV/6/NiX8/aE8l816Q2bJkS8lmFMEJMiZXJKe3RzoA2V3VWXVMk47b/S0Ym7LDciQwJP8U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrgOW7NinMigv94jeu4d9TZBv8GJVN95nQGYb+Nytwe1QHzF76
+	DFL3C6f3j+14lcGwDFglfDu76+0N8KpPN+KenMs5vEZSvOi1MS4BX83FJg==
+X-Google-Smtp-Source: AGHT+IGx2s6NBToLAPpPzTZ/a68JaF5VIIZCK22SNAoU8vAUuIt2YMZTeKld7JPi8ocDiDGKEQbdCQ==
+X-Received: by 2002:a05:600c:4ecc:b0:430:582f:3a9d with SMTP id 5b1f17b1804b1-432b751b68bmr85613345e9.26.1731249061535;
+        Sun, 10 Nov 2024 06:31:01 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b053051fsm141188405e9.6.2024.11.10.06.31.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 10 Nov 2024 06:31:00 -0800 (PST)
+Message-ID: <890b423c-9756-4e1b-a6d0-3990f1091f5b@gmail.com>
+Date: Sun, 10 Nov 2024 14:30:59 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZzCiCGxL4Adnd_eq@ArchLinux>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/3] Build improvements for clar
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
+Content-Language: en-US
+In-Reply-To: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Besides the textual symref, we also allow symbolic links as the symref.
-So, we should also provide the consistency check as what we have done
-for textual symref. And also we consider deprecating writing the
-symbolic links. We first need to access whether symbolic links still
-be used. So, add a new fsck message "symlinkRef(INFO)" to tell the
-user be aware of this information.
+Hi Patrick
 
-We have already introduced "files_fsck_symref_target". We should reuse
-this function to handle the symrefs which use legacy symbolic links. We
-should not check the trailing garbage for symbolic refs. Add a new
-parameter "symbolic_link" to disable some checks which should only be
-executed for textual symrefs.
+On 08/11/2024 13:16, Patrick Steinhardt wrote:
+> Hi,
+> 
+> Dscho has reported in [1] that the CMake build instructions for clar do
+> not work well on Windows/MSVC because we execute the shell scripts
+> directly instead of using the discovered `SH_EXE`. This small patch
+> series fixes the issue.
 
-And we need to also generate the "referent" parameter for reusing
-"files_fsck_symref_target" by the following steps:
+I've been using the CMake build in Visual Studio the last couple of days
+as my hard drive with linux on it died. I ended up with a slightly
+different fix using "sh -c" rather than putting the awk script inside
+a shell script. See the diff below. I don't have a strong preference
+either way but it would be nice to fix the line wrapping and add
+VERBATIM so that paths containing special characters are quoted correctly
 
-1. Use "strbuf_add_real_path" to resolve the symlink and get the
-   absolute path "ref_content" which the symlink ref points to.
-2. Generate the absolute path "abs_gitdir" of "gitdir" and combine
-   "ref_content" and "abs_gitdir" to extract the relative path
-   "relative_referent_path".
-3. If "ref_content" is outside of "gitdir", we just set "referent" with
-   "ref_content". Instead, we set "referent" with
-   "relative_referent_path".
+Best Wishes
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- Documentation/fsck-msgids.txt |  6 +++++
- fsck.h                        |  1 +
- refs/files-backend.c          | 38 +++++++++++++++++++++++++----
- t/t0602-reffiles-fsck.sh      | 45 +++++++++++++++++++++++++++++++++++
- 4 files changed, 86 insertions(+), 4 deletions(-)
+Phillip
 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index f82ebc58e8..b14bc44ca4 100644
---- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -183,6 +183,12 @@
- 	git@vger.kernel.org mailing list if you see this error, as
- 	we need to know what tools created such a file.
- 
-+`symlinkRef`::
-+	(INFO) A symbolic link is used as a symref. Report to the
-+	git@vger.kernel.org mailing list if you see this error, as we
-+	are assessing the feasibility of dropping the support to drop
-+	creating symbolic links as symrefs.
-+
- `symrefTargetIsNotARef`::
- 	(INFO) The target of a symbolic reference points neither to
- 	a root reference nor to a reference starting with "refs/".
-diff --git a/fsck.h b/fsck.h
-index 53a47612e6..a44c231a5f 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -86,6 +86,7 @@ enum fsck_msg_type {
- 	FUNC(MAILMAP_SYMLINK, INFO) \
- 	FUNC(BAD_TAG_NAME, INFO) \
- 	FUNC(MISSING_TAGGER_ENTRY, INFO) \
-+	FUNC(SYMLINK_REF, INFO) \
- 	FUNC(REF_MISSING_NEWLINE, INFO) \
- 	FUNC(SYMREF_TARGET_IS_NOT_A_REF, INFO) \
- 	FUNC(TRAILING_REF_CONTENT, INFO) \
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b3ec409920..37c669a30f 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1,6 +1,7 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "../git-compat-util.h"
-+#include "../abspath.h"
- #include "../config.h"
- #include "../copy.h"
- #include "../environment.h"
-@@ -3511,7 +3512,8 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
- 
- static int files_fsck_symref_target(struct fsck_options *o,
- 				    struct fsck_ref_report *report,
--				    struct strbuf *referent)
-+				    struct strbuf *referent,
-+				    unsigned int symbolic_link)
- {
- 	int is_referent_root;
- 	char orig_last_byte;
-@@ -3520,7 +3522,8 @@ static int files_fsck_symref_target(struct fsck_options *o,
- 
- 	orig_len = referent->len;
- 	orig_last_byte = referent->buf[orig_len - 1];
--	strbuf_rtrim(referent);
-+	if (!symbolic_link)
-+		strbuf_rtrim(referent);
- 
- 	is_referent_root = is_root_ref(referent->buf);
- 	if (!is_referent_root &&
-@@ -3539,6 +3542,9 @@ static int files_fsck_symref_target(struct fsck_options *o,
- 		goto out;
- 	}
- 
-+	if (symbolic_link)
-+		goto out;
-+
- 	if (referent->len == orig_len ||
- 	    (referent->len < orig_len && orig_last_byte != '\n')) {
- 		ret = fsck_report_ref(o, report,
-@@ -3562,6 +3568,7 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 				   struct dir_iterator *iter)
- {
- 	struct strbuf ref_content = STRBUF_INIT;
-+	struct strbuf abs_gitdir = STRBUF_INIT;
- 	struct strbuf referent = STRBUF_INIT;
- 	struct fsck_ref_report report = { 0 };
- 	const char *trailing = NULL;
-@@ -3572,8 +3579,30 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 
- 	report.path = target_name;
- 
--	if (S_ISLNK(iter->st.st_mode))
-+	if (S_ISLNK(iter->st.st_mode)) {
-+		const char* relative_referent_path = NULL;
-+
-+		ret = fsck_report_ref(o, &report,
-+				      FSCK_MSG_SYMLINK_REF,
-+				      "use deprecated symbolic link for symref");
-+
-+		strbuf_add_absolute_path(&abs_gitdir, ref_store->gitdir);
-+		strbuf_normalize_path(&abs_gitdir);
-+		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
-+			strbuf_addch(&abs_gitdir, '/');
-+
-+		strbuf_add_real_path(&ref_content, iter->path.buf);
-+		skip_prefix(ref_content.buf, abs_gitdir.buf,
-+			    &relative_referent_path);
-+
-+		if (relative_referent_path)
-+			strbuf_addstr(&referent, relative_referent_path);
-+		else
-+			strbuf_addbuf(&referent, &ref_content);
-+
-+		ret |= files_fsck_symref_target(o, &report, &referent, 1);
- 		goto cleanup;
-+	}
- 
- 	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
- 		ret = fsck_report_ref(o, &report,
-@@ -3607,13 +3636,14 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 			goto cleanup;
- 		}
- 	} else {
--		ret = files_fsck_symref_target(o, &report, &referent);
-+		ret = files_fsck_symref_target(o, &report, &referent, 0);
- 		goto cleanup;
- 	}
- 
- cleanup:
- 	strbuf_release(&ref_content);
- 	strbuf_release(&referent);
-+	strbuf_release(&abs_gitdir);
- 	return ret;
- }
- 
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 692b30727a..0d5eda6d22 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -395,6 +395,51 @@ test_expect_success 'the target of the textual symref should be checked' '
- 	done
- '
- 
-+test_expect_success SYMLINKS 'symlink symref content should be checked' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	branch_dir_prefix=.git/refs/heads &&
-+	tag_dir_prefix=.git/refs/tags &&
-+	cd repo &&
-+	test_commit default &&
-+	mkdir -p "$branch_dir_prefix/a/b" &&
-+
-+	ln -sf ./main $branch_dir_prefix/branch-symbolic-good &&
-+	git refs verify 2>err &&
-+	cat >expect <<-EOF &&
-+	warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
-+	EOF
-+	rm $branch_dir_prefix/branch-symbolic-good &&
-+	test_cmp expect err &&
-+
-+	ln -sf ../../logs/branch-escape $branch_dir_prefix/branch-symbolic &&
-+	git refs verify 2>err &&
-+	cat >expect <<-EOF &&
-+	warning: refs/heads/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
-+	warning: refs/heads/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
-+	EOF
-+	rm $branch_dir_prefix/branch-symbolic &&
-+	test_cmp expect err &&
-+
-+	ln -sf ./"branch   " $branch_dir_prefix/branch-symbolic-bad &&
-+	test_must_fail git refs verify 2>err &&
-+	cat >expect <<-EOF &&
-+	warning: refs/heads/branch-symbolic-bad: symlinkRef: use deprecated symbolic link for symref
-+	error: refs/heads/branch-symbolic-bad: badReferentName: points to invalid refname '\''refs/heads/branch   '\''
-+	EOF
-+	rm $branch_dir_prefix/branch-symbolic-bad &&
-+	test_cmp expect err &&
-+
-+	ln -sf ./".tag" $tag_dir_prefix/tag-symbolic-1 &&
-+	test_must_fail git refs verify 2>err &&
-+	cat >expect <<-EOF &&
-+	warning: refs/tags/tag-symbolic-1: symlinkRef: use deprecated symbolic link for symref
-+	error: refs/tags/tag-symbolic-1: badReferentName: points to invalid refname '\''refs/tags/.tag'\''
-+	EOF
-+	rm $tag_dir_prefix/tag-symbolic-1 &&
-+	test_cmp expect err
-+'
-+
- test_expect_success 'ref content checks should work with worktrees' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--- 
-2.47.0
+---- >8 ----
+
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index f0a1a75382a..b8a37b3870d 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -989,11 +989,21 @@ parse_makefile_for_scripts(clar_test_SUITES "CLAR_TEST_SUITES" "")
+  list(TRANSFORM clar_test_SUITES PREPEND "${CMAKE_SOURCE_DIR}/t/unit-tests/")
+  list(TRANSFORM clar_test_SUITES APPEND ".c")
+  add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
+-        COMMAND ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" ${clar_test_SUITES}
+-        DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh ${clar_test_SUITES})
++        COMMAND ${SH_EXE}
++                "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh"
++                "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
++                ${clar_test_SUITES}
++        DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh"
++                ${clar_test_SUITES}
++        VERBATIM)
+  add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+-        COMMAND awk -f "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" > "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+-        DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
++        COMMAND ${SH_EXE} "-c" [[awk -f "$1" "$2" >"$3"]] awk
++                "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk"
++                "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
++                "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
++        DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk"
++                "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
++        VERBATIM)
+  
+  add_library(unit-tests-lib ${clar_test_SUITES}
+          "${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
+
 
