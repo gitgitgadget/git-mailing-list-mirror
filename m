@@ -1,59 +1,36 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA122744E
-	for <git@vger.kernel.org>; Sun, 10 Nov 2024 14:42:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B1FC17C8D
+	for <git@vger.kernel.org>; Sun, 10 Nov 2024 16:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731249733; cv=none; b=LhvA1+RR7vEAB/6iyf7jd6VlVpv7zXoCbZ73uSNYZ8DkDSvlln7ej1vAYGlOmNDfkxi5KGbXoXpIKD5Z259I9u5nl/RFGmVAEoE51ubyP03o4n2yQwwBdD+s5Z+AzBx5ao+5mj8wtLxVvRZRLkUZYNu7wInYjqALI2LiOigEai8=
+	t=1731255551; cv=none; b=dHEW03xj/Ik/GucQkeil+579AG7IaL5RxptKYdjx+SsdVHZQBKk/KwVqv4Z1ycXg3qEALCiDtzbpAPkleXr1EKtfsOwFtkaBq4yMi374V7UA74x/mZYventOYEvZNpbjEMqlPcqQbXptHxV7XIA7wc12+/Eq22iRM/es9vKmykY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731249733; c=relaxed/simple;
-	bh=GzviRl2Eji0ULHyrESBNwGIQx4MRQNBt81lXcDoRvw4=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=qSMVwA+AFDhcb2sHEknrAfJPXbx39ln84bwdVAZoJwrtfGZTUicTEHlf+WY3VHjQQqDP53OMDMMRpMb9AHOPiuY2L9mYzQOtGyO/cas73lAq34uPnXIe2kztKBDEYnO9F+uoGnEAM+uqXDT4v0SvPG1xDm5B2z95SRcPZ+O4oYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSv3Vt6y; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731255551; c=relaxed/simple;
+	bh=BkVoOyOrClv1X7lUijxhjdysUHze226aWhEquatIGl8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CxbZ/EjQw0XOkYzYpESxBb9xPEKeqT3dndyok6n+6npY68iMIXaeA2P37BzEuwGHOsMe0YTpkJI1ac0jlrjOJn94dKENnLHXEStL7OttloJjGxZEwuqlhRvj/iG1Qb8I8i3sdVVYd2/dC3i8yxDvF2jDJsRl05vdk7fCz9oimhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=gQW8rCbd; arc=none smtp.client-ip=85.13.153.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSv3Vt6y"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-431616c23b5so21023615e9.0
-        for <git@vger.kernel.org>; Sun, 10 Nov 2024 06:42:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731249730; x=1731854530; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nRJpwdhsrlR/AjpkXOf4bo21pEi7Gz9OmtRQSiAffig=;
-        b=VSv3Vt6yR5BOSy3dKxZUw1D38HTsRhdSh9T9TLyKqjRlV310gh2atJBG3ByxYyjsMx
-         K8M4moSBC1D1hiRM+j9kMWYhVWx6ZdyZxdlmIaleQzeGpVMHTdaaZnzmr0fcdjlYbGNI
-         w9xCs23sOSFr1lacC86L9vekq7jI4m7EqCnLbzXwM9Q+Yv0v+VSaPvMa34mKNKst5qCR
-         v+L3/UfuRQ671rNeqVKMGacnXVvOJ/ZZJXCLzTeMXCV61N1EdyCwyUVYT2ABLssZp/p+
-         FFfVf6Yodz3wNS8mXowDNz535vsRorFXlgh00IEuUEwJW/JbhduGmwTSxMRtg5YAoDaw
-         8mgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731249730; x=1731854530;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nRJpwdhsrlR/AjpkXOf4bo21pEi7Gz9OmtRQSiAffig=;
-        b=j8Y3O8gaB7U9jYA50D+0409ZYyh5SzNbS3UBL+On5OqqGxUryQTu9ZO85r5heUP081
-         Pe1vvB/NOPkurd9Uk4hYyLpN0REPEonDguIGwM+TelzRwgW0NRXameyYvGvx7ekVGnbb
-         OYHyISn0wwobCKjV7EvhCzcx2PZ2VwLdFbK49RLf1c6dpFps6ZTfDYQ8idEzk6lCoTc6
-         XGSoAoOR5ZS4cuZyiMQGFBrJYPAAu6Q929ZP5dWA9hmZytTLty/GJ6WjcMJ7ysZVCxBx
-         F6R2TdC+UVht50Ud45E4Nn/UMyYvRe16CCXJXu6WWA5/XF71qPDEk5jxRZZXlFAhbWie
-         Se5w==
-X-Forwarded-Encrypted: i=1; AJvYcCWxKUZvlLRBqXiOw7F9LyYCSCgnP50BLJbCrJvSvS3C5tBZuxxTHpWzj0Wkxes7lEcKPZ0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWge5fGl4MfULvOck7vtQU55w3bjS7WsSm/QFbkr3Y4G0JDt9c
-	kOKrCbmSGThS56nYJYhh1Ga+QrsgD1D6ijg/K9RvM7n8XQemvid8
-X-Google-Smtp-Source: AGHT+IHw/zUR3bE+/IkguFOz+gxUp7PM4C2tjRb/UMYFaIb/7N2/ObyfDy80J3gWxlcQPvlvs4Yeaw==
-X-Received: by 2002:a05:600c:501e:b0:42c:b98d:b993 with SMTP id 5b1f17b1804b1-432b74357b7mr82595795e9.2.1731249729912;
-        Sun, 10 Nov 2024 06:42:09 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b0530694sm146947065e9.7.2024.11.10.06.42.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Nov 2024 06:42:08 -0800 (PST)
-Message-ID: <9d807eeb-db00-4d17-b909-b73944cff2c6@gmail.com>
-Date: Sun, 10 Nov 2024 14:42:08 +0000
+	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="gQW8rCbd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+	s=kas202408171023; t=1731254953;
+	bh=k1o/Do2tbH/YKrDnx6J1UiUUMaoqIP93jpQ6cn7/IrQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gQW8rCbd48j7twfRxyjDVGV4NlRJuY0yaYACgMYClTk6IR8fGUM8vb38oo0jT5nES
+	 VnN7gfaGbLiAe0ay5XtXqhqIi70DY8q8QGoFfuiSo4w67cKOVmyC6ZRziH9XFN+QKw
+	 /wfnRIbCc7fQHlx9Aj+AHvsZnG3JK91n6nc7yr4gUbRI2uwjErvd9VSxPNwOK0QBay
+	 QXz0+PjkRu6d8ShMg4zddQiqGT/HFFUhxjs1+txm6lJoPpSyhsSalFKtQbA9l3ZX81
+	 r46Db2axsl4EkRGJ6DWdjwMkAmAYk/IyBo7h///cvCIh+yJpp2otFTHAHbtrxaQBYf
+	 BsaxNqv5ym+KA==
+Received: from [192.168.42.22] (78-99-142-46.pool.kielnet.net [46.142.99.78])
+	by dd36226.kasserver.com (Postfix) with ESMTPSA id 2D6A53C19D2;
+	Sun, 10 Nov 2024 17:09:13 +0100 (CET)
+Message-ID: <d9832c11-7c2b-43a8-a7d7-a1de137a5b13@haller-berlin.de>
+Date: Sun, 10 Nov 2024 17:09:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,41 +38,42 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH v4 06/19] Makefile: extract script to massage Shell
- scripts
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
- Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>, Taylor Blau <me@ttaylorr.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <2cf8cf86218e0cb1f3477897cb3d0be950d452ac.1729771605.git.ps@pks.im>
-Content-Language: en-US
-In-Reply-To: <2cf8cf86218e0cb1f3477897cb3d0be950d452ac.1729771605.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: Feature Request: Interactively pick fixup revision
+Content-Language: de-DE, en-US
+To: Martin Imre <martinimre25@gmail.com>
+Cc: git@vger.kernel.org
+References: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com>
+ <D5HQH12Y4SWF.2W70SKEDB7HBF@cepl.eu>
+ <debabf92-7d23-4d17-bb0e-36691c94430a@app.fastmail.com>
+ <D5HWL26B3HOT.1ZVXUC37BCGL@cepl.eu>
+ <CABg7He0upi8kmagGO13UMwSWOLeHoryZQU5CGsfbhgqedBKw=Q@mail.gmail.com>
+From: Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <CABg7He0upi8kmagGO13UMwSWOLeHoryZQU5CGsfbhgqedBKw=Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: /
 
-Hi Patrick
-
-On 24/10/2024 13:40, Patrick Steinhardt wrote:
+On 10.11.24 08:55, Martin Imre wrote:
+> Thanks for pointing me towards https://github.com/keis/git-fixup/ and
+> git-absorb (https://github.com/tummychow/git-absorb).
+> I'll try them out and see if I like the ergonomics of them.
 > 
-> +	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/${shell_gen_path}
-> +		COMMAND ${CMAKE_SOURCE_DIR}/generate-script.sh
+> Just as a general question: With 2 (or even more) different
+> implementations that solve the same problem, wouldn't this be a good
+> addition for a future version of git?
 
-Same comments as the other patch - this need ${SH_EXE} as the command name
+I'll throw a third one into the mix: lazygit. It's a TUI client that has
+similar functionality built in. (See [1])
 
-> @@ -1156,6 +1160,10 @@ string(REPLACE "@GIT_INTEROP_MAKE_OPTS@" "" git_build_options "${git_build_optio
->   string(REPLACE "@GIT_TEST_INDEX_VERSION@" "" git_build_options "${git_build_options}")
->   string(REPLACE "@GIT_TEST_PERL_FATAL_WARNINGS@" "" git_build_options "${git_build_options}")
->   string(REPLACE "@RUNTIME_PREFIX@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
-> +string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" git_build_options "${git_build_options}")
-> +string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
-> +string(REPLACE "@LOCALEDIR@" "LOCALEDIR" git_build_options "${git_build_options}")
+As for why this isn't built in: there are a lot of subtleties to how
+exactly it works, and people might not agree on these. For example,
+git-absorb seems to have certain design goals that I don't agree with; I
+have written a longish document about that if you're interested. [2]
 
-s/"LOCALEDIR"/"${LOCALEDIR}"/
 
-Best Wishes
+[1] <https://github.com/jesseduffield/lazygit/blob/master/
+     docs/Fixup_Commits.md#finding-the-commit-to-create-a-fixup-for>
 
-Phillip
+[2] <https://github.com/jesseduffield/lazygit/blob/master/docs/
+     dev/Find_Base_Commit_For_Fixup_Design.md>
 
