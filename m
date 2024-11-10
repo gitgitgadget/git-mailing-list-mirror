@@ -1,59 +1,59 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0966E224FD
-	for <git@vger.kernel.org>; Sun, 10 Nov 2024 21:47:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B306224FD
+	for <git@vger.kernel.org>; Sun, 10 Nov 2024 21:47:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731275235; cv=none; b=gsA0U7qXFLSjPWUq1yr4DP0+/6InlDKIWawkbRqo4hzmnzTC3Vv8fIPmM3HQKy2LinAw1gMK6mYxvmA/EynfPAMZ9i+1s1V0scNAyJDPhaMTG9qlmfR9pY2GnXEynBtibgZSWObqS2dhPw6RNnCWijT+NKbTdcvZiqnP40QiZgk=
+	t=1731275256; cv=none; b=QYg8OdshTg7e7KeMrtCjKumsOu20bHOcBK5wY9igZXeBBAXFjdWHvcmB+QBNSuQEdnDIRDyC2ijRv4spylh+arVUTTg4dil8+D5vVP1K2ajxR/7uo72yfyEaBW9mRIVfn1OzzX6xs+7SUbCli0dQjDgXTJ0ebUjttWsmYehSqIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731275235; c=relaxed/simple;
-	bh=9XMg20x2ZxOhuETmb5dFmBeRDReSLbYZAZVIxUZzXc4=;
+	s=arc-20240116; t=1731275256; c=relaxed/simple;
+	bh=KEiq1PvWJxV1vcRM3ENeCvc7p4rW27iCNaynu78byLA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=DUW1RijxDbWxO35MoRIzj+IV2aDWKpjUrxJig1/SmcYY/SrZ/9YZh8iT8H5+ypCN8h4JTSW0kfm+OoqNcNJCgNxumUjGaAOZwWEv31PTw4JUlfCRTWxrKeMhfVzUe+ratUamAarLeAUL0bdcM2lsC5DXPmtVvcz5ie32DTW55zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SU8stnf6; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=gEq/3Cz3bzNk6c6JgMKRkxFv69ha0dqs6v/dPx2I2DOOiha7D8A35cJpgGQ+BN72BMmM2HVZEwetDrBAHJTtK9eCOzL0oqa2uPHGwv095LcGo/iyBfsXgc5shuU/q02K4WR6z8kWteFQHqVzl3LdvBs4gmd4higAXUlnZXMvzmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DVw1TDYt; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SU8stnf6"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43193678216so37347675e9.0
-        for <git@vger.kernel.org>; Sun, 10 Nov 2024 13:47:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DVw1TDYt"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-37d4fd00574so2125495f8f.0
+        for <git@vger.kernel.org>; Sun, 10 Nov 2024 13:47:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731275232; x=1731880032; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731275253; x=1731880053; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/p9eu+eADkcvmzad2lN7Jg7e0HfQWqb40zyGRuj6Rlo=;
-        b=SU8stnf6+Rb6sSW6mjHp2xXjNW/6Cb0/TJbXerdyalEtMFPL7OXzea0uhfFV0DdiKw
-         /+taNUTRug7cOd0mywnLF83j32c1SsHM4Ka3n7TnU7EfyWQ79229V66aUpSXQg58Wsbh
-         UFy4XedD4c2NpiQPmj3opDpXlsowIbvMykzNbCTlHwAbMLbm1Aj3/VeE59li/2mmhhLv
-         WDmUGyPGs5uBjgvMvK1DE6I+Oki0Zr9aSKP56cExsDhIbGo6EmpVXpS1Og3ncpf2vkv0
-         swiGNBd/BCcOC9llsYjrBzh+WFGUxYj0yLlOZXU0SDMJsq/2Lps2Ag+UBbrO89jQnhY/
-         jjfg==
+        bh=TAZVrRtM224E6mv9ejk3x7Uj472YD4RkOOzU27maCqk=;
+        b=DVw1TDYtSKeyj9i7lA50Xbrj83zPuYyJBIecUSeBFqG7qtuplzEPVN6kq7cZQuZa3q
+         9EGn4bic3/rO+qzr6rj/Z3Dpbo6rfAkN3vUjdJ/9h2Wo9HXWwHVTJsuwxAkEBLMuTbFB
+         uW6NuSc043uAC5bL7TjMDnKolGsXJgHfKruiqfVwZfwoJPVcZuiWv5OXhQoj9F4wDQJu
+         ukENZTzHvehtfC6YYxIKnsBwi7PfYF8RWBLX/qVNb7706sMf/NtJNbUs4RbQNDmdojjg
+         B6E6Fo2oSOotK74RywW96y0qYwZ88M3r4L6cFv1EZCG8G/U1/BP6bROK1I2gpNVV2tGX
+         jwrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731275232; x=1731880032;
+        d=1e100.net; s=20230601; t=1731275253; x=1731880053;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/p9eu+eADkcvmzad2lN7Jg7e0HfQWqb40zyGRuj6Rlo=;
-        b=UsIIIhIPkoa8H1ckAJmEN3X8+9z9Guo/Tm1VazoA4E53NDn4cnn+/ZhGtf9uW6Y/Ns
-         UOqBxV/0jzur5ReakWiVlloOo8LoL+vqgWu2apYHO69Z2ovkdcENNgFFs5JCRsGligxu
-         A0Z4L1/YTfowjqfC437LgWwyH12tng2dQOZH1Pb8Twf/kywj1f5oOsfbj2cja2gNnSni
-         ILfKzad4MB9UleV+4DZGXIFgR6IuxuFh1HMQ53oVsHJaG/Oq5UqYHPs5olx3HiWkFILH
-         HLUzrm84fuHvFdeuSi5JgEpL0UqPtAy7JyVlAuG928hqtEQZ6BdkdNl21QuPy3OYDuHo
-         B5wg==
-X-Forwarded-Encrypted: i=1; AJvYcCXhl88NmAor8xxD6rE1HLXYM/NEFpxevxKE27+5dVKJMPSpCBRIxJ3aoMAIUe2C5YlqeWY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5XenXRIGuhCUdgGhNip2JcfaYwdBkAgsYjX4BtFmofk2LMEBW
-	J1SsQv/BqEB9UdokT4sKMes5RSHN9ZxIph+tM5WVyiJ5Pp9dtsmwzDKGOw==
-X-Google-Smtp-Source: AGHT+IGKe8mt4Pe9nc0M1i8BSf11c0ZIJSvpsHE1ONRrzIBfE1236aQQF2didMrQhGdUbKgyL/h1wA==
-X-Received: by 2002:a05:600c:5493:b0:42e:75a6:bb60 with SMTP id 5b1f17b1804b1-432b7508b8amr92035445e9.19.1731275232272;
-        Sun, 10 Nov 2024 13:47:12 -0800 (PST)
+        bh=TAZVrRtM224E6mv9ejk3x7Uj472YD4RkOOzU27maCqk=;
+        b=sAnnFctRlnJu90c6sz0uvLNio4cmSETm2LG9NQRYNeFxmXnQdkcIPGorF/raC4dL++
+         wLlpQ3mGfFAKDnf9caZp/P+ojrxCHDYsmCSsx1nklQAjTPK9tHABpNMdknVFsfSmMUst
+         IeRQzQqRGUhY8yeGZ6jqb9jWd6yOdIZx20eEJ1V1c80WZKiW3Yd7kgJVOCYPeFtl9/eJ
+         He3W6AoXlmQi4wWFBsjVqHYpmP2/VQM4FNJnKgMDtMOl6n+3VTYF/iIYgj5nli1LhnKs
+         YMB+iNejFIL+RgEY3IM9nx1xzAFRkb+Df356UQDIfJW5kPiICFIJrZnyYfjT1XZVGL8e
+         0fwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWKOuMTAmWoO+sFQ8/WJ+E+3ECF+1aOZI0qXkVNXf4OcwcYWqwJuvWBeKSMiJMyEd7O8NI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIEvEpO3yDyONPZI77YZEGTx3Dwe94Hf9QSExQD0RYYrk4QL5U
+	JMZmKPIQhBr4cHwZYpSAzD3VvleqqSqigr/n6swLfnvedo2lwSqD
+X-Google-Smtp-Source: AGHT+IG694v6tDC10X2aK31WhGxf5xpecVsdgL5sMOAjWxTsnxcSQ4bkiUHZaEOiiNLdzS4XarZj+w==
+X-Received: by 2002:a05:6000:18af:b0:37e:d6b9:a398 with SMTP id ffacd0b85a97d-381f0f58473mr10065448f8f.9.1731275252842;
+        Sun, 10 Nov 2024 13:47:32 -0800 (PST)
 Received: from gmail.com ([178.237.229.35])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa709f3fsm195250335e9.32.2024.11.10.13.47.11
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432b05e6042sm153267965e9.44.2024.11.10.13.47.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Nov 2024 13:47:11 -0800 (PST)
-Message-ID: <5d18abb7-52a1-41d0-8207-066a012d41e7@gmail.com>
-Date: Sun, 10 Nov 2024 22:47:10 +0100
+        Sun, 10 Nov 2024 13:47:32 -0800 (PST)
+Message-ID: <a8f782b6-9e5b-4df2-83b7-8000eaeca8d0@gmail.com>
+Date: Sun, 10 Nov 2024 22:47:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,113 +61,126 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/26] builtin/init-db: fix leaking directory paths
+Subject: Re: [PATCH 19/26] builtin/branch: fix leaking sorting options
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <cover.1730901926.git.ps@pks.im>
- <256427084f63c9b2141bd468d633ee4d079fd33f.1730901926.git.ps@pks.im>
+ <e0aa2c5bb258589bb2cac19c54fddbb70614a487.1730901926.git.ps@pks.im>
 Content-Language: en-US
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <256427084f63c9b2141bd468d633ee4d079fd33f.1730901926.git.ps@pks.im>
+In-Reply-To: <e0aa2c5bb258589bb2cac19c54fddbb70614a487.1730901926.git.ps@pks.im>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Wed, Nov 06, 2024 at 04:11:11PM +0100, Patrick Steinhardt wrote:
-> We've got a couple of leaking directory paths in git-init(1), all of
-> which are marked with `UNLEAK()`. Fixing them is trivial, so let's do
-> that instead so that we can get rid of `UNLEAK()` entirely.
+On Wed, Nov 06, 2024 at 04:11:16PM +0100, Patrick Steinhardt wrote:
+> The sorting options are leaking, but given that they are marked with
+> `UNLEAK()` the leak sanitizer doesn't complain.
+> 
+> Fix the leak by creating a common exit path and clearing the vector such
+> that we can get rid of the `UNLEAK()` annotation entirely.
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  builtin/init-db.c | 30 +++++++++++++++++-------------
->  1 file changed, 17 insertions(+), 13 deletions(-)
+>  builtin/branch.c | 33 ++++++++++++++++++++++-----------
+>  1 file changed, 22 insertions(+), 11 deletions(-)
 > 
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> index 7e00d57d654..9e069e27426 100644
-> --- a/builtin/init-db.c
-> +++ b/builtin/init-db.c
-> @@ -75,10 +75,12 @@ int cmd_init_db(int argc,
->  		const char *prefix,
->  		struct repository *repo UNUSED)
->  {
-> -	const char *git_dir;
-> +	char *git_dir;
->  	const char *real_git_dir = NULL;
-> -	const char *work_tree;
-> +	char *real_git_dir_to_free = NULL;
-> +	char *work_tree = NULL;
->  	const char *template_dir = NULL;
-> +	char *template_dir_to_free = NULL;
->  	unsigned int flags = 0;
->  	const char *object_format = NULL;
->  	const char *ref_format = NULL;
-> @@ -106,6 +108,7 @@ int cmd_init_db(int argc,
->  			   N_("specify the reference format to use")),
->  		OPT_END()
->  	};
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index fd1611ebf55..05ba4cd7a64 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -722,6 +722,7 @@ int cmd_branch(int argc,
+>  	static struct ref_sorting *sorting;
+>  	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+>  	struct ref_format format = REF_FORMAT_INIT;
 > +	int ret;
 >  
->  	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
+>  	struct option options[] = {
+>  		OPT_GROUP(N_("Generic options")),
+> @@ -851,15 +852,15 @@ int cmd_branch(int argc,
+>  	if (list)
+>  		setup_auto_pager("branch", 1);
 >  
-> @@ -113,12 +116,10 @@ int cmd_init_db(int argc,
->  		die(_("options '%s' and '%s' cannot be used together"), "--separate-git-dir", "--bare");
->  
->  	if (real_git_dir && !is_absolute_path(real_git_dir))
-> -		real_git_dir = real_pathdup(real_git_dir, 1);
-> +		real_git_dir = real_git_dir_to_free = real_pathdup(real_git_dir, 1);
->  
-> -	if (template_dir && *template_dir && !is_absolute_path(template_dir)) {
-> -		template_dir = absolute_pathdup(template_dir);
-> -		UNLEAK(template_dir);
-> -	}
-> +	if (template_dir && *template_dir && !is_absolute_path(template_dir))
-> +		template_dir = template_dir_to_free = absolute_pathdup(template_dir);
->  
->  	if (argc == 1) {
->  		int mkdir_tried = 0;
-> @@ -192,7 +193,7 @@ int cmd_init_db(int argc,
->  	 * Set up the default .git directory contents
->  	 */
->  	if (!git_dir)
-> -		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
-> +		git_dir = xstrdup(DEFAULT_GIT_DIR_ENVIRONMENT);
->  
->  	/*
->  	 * When --separate-git-dir is used inside a linked worktree, take
-> @@ -213,6 +214,7 @@ int cmd_init_db(int argc,
->  			if (chdir(mainwt.buf) < 0)
->  				die_errno(_("cannot chdir to %s"), mainwt.buf);
->  			strbuf_release(&mainwt);
-> +			free(git_dir);
->  			git_dir = strbuf_detach(&sb, NULL);
->  		}
->  		strbuf_release(&sb);
-> @@ -245,12 +247,14 @@ int cmd_init_db(int argc,
->  			set_git_work_tree(work_tree);
->  	}
->  
-> -	UNLEAK(real_git_dir);
-> -	UNLEAK(git_dir);
-
-We were doing this, out of simplicity, even in cases where it wasn't
-necessary ...
-
-> -	UNLEAK(work_tree);
-
-... and this line is now the `free()` we are doing below.
-
-OK.  Nice clean up.
-
+> -	UNLEAK(sorting_options);
 > -
->  	flags |= INIT_DB_EXIST_OK;
-> -	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
-> +	ret =  init_db(git_dir, real_git_dir, template_dir, hash_algo,
->  		       ref_storage_format, initial_branch,
->  		       init_shared_repository, flags);
+>  	if (delete) {
+>  		if (!argc)
+>  			die(_("branch name required"));
+> -		return delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+> +		ret = delete_branches(argc, argv, delete > 1, filter.kind, quiet);
+> +		goto out;
+>  	} else if (show_current) {
+>  		print_current_branch_name();
+> -		return 0;
+> +		ret = 0;
+> +		goto out;
+>  	} else if (list) {
+>  		/*  git branch --list also shows HEAD when it is detached */
+>  		if ((filter.kind & FILTER_REFS_BRANCHES) && filter.detached)
+> @@ -882,12 +883,13 @@ int cmd_branch(int argc,
+>  		ref_sorting_release(sorting);
+>  		ref_filter_clear(&filter);
+>  		ref_format_clear(&format);
+> -		return 0;
 > +
-> +	free(template_dir_to_free);
-> +	free(real_git_dir_to_free);
-> +	free(work_tree);
-> +	free(git_dir);
+> +		ret = 0;
+> +		goto out;
+>  	} else if (edit_description) {
+>  		const char *branch_name;
+>  		struct strbuf branch_ref = STRBUF_INIT;
+>  		struct strbuf buf = STRBUF_INIT;
+> -		int ret = 1; /* assume failure */
+
+Now we assume failure ...
+
+>  
+>  		if (!argc) {
+>  			if (filter.detached)
+> @@ -901,18 +903,22 @@ int cmd_branch(int argc,
+>  		}
+>  
+>  		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
+> -		if (!refs_ref_exists(get_main_ref_store(the_repository), branch_ref.buf))
+> +		if (!refs_ref_exists(get_main_ref_store(the_repository), branch_ref.buf)) {
+>  			error((!argc || branch_checked_out(branch_ref.buf))
+>  			      ? _("no commit on branch '%s' yet")
+>  			      : _("no branch named '%s'"),
+>  			      branch_name);
+> -		else if (!edit_branch_description(branch_name))
+> +			ret = 1;
+> +		} else if (!edit_branch_description(branch_name)) {
+>  			ret = 0; /* happy */
+> +		} else {
+> +			ret = 1;
+
+... here.  OK.
+
+> +		}
+>  
+>  		strbuf_release(&branch_ref);
+>  		strbuf_release(&buf);
+>  
+> -		return ret;
+> +		goto out;
+>  	} else if (copy || rename) {
+>  		if (!argc)
+>  			die(_("branch name required"));
+> @@ -1000,12 +1006,17 @@ int cmd_branch(int argc,
+>  			create_branches_recursively(the_repository, branch_name,
+>  						    start_name, NULL, force,
+>  						    reflog, quiet, track, 0);
+> -			return 0;
+> +			ret = 0;
+> +			goto out;
+>  		}
+>  		create_branch(the_repository, branch_name, start_name, force, 0,
+>  			      reflog, quiet, track, 0);
+>  	} else
+>  		usage_with_options(builtin_branch_usage, options);
+>  
+> -	return 0;
+> +	ret = 0;
+> +
+> +out:
+> +	string_list_clear(&sorting_options, 0);
 > +	return ret;
 >  }
 > -- 
