@@ -1,55 +1,55 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F9C15B554
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F8E16F265
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731321531; cv=none; b=AQM92hAJC0GqCE1ayIzMrRg7vDAWw5akk4Bsrv7/w3E23VwFhKFuiS/5cCbfHsaXxM1lf1mJcHSprpeqOwCCRWWFvXVodYGAEVls1aeVM2tdvHda4QCYvkImIsnQHSGG05sc+OY4xuhtoFmSBbtIVHXzn364Bi72NLpRafNQHAE=
+	t=1731321532; cv=none; b=ayGRX8X+Mam/tFPbPDPHe11zMZMaaWkIfTiUODSWGXBXBOtlwWoMnABtaUhi/uEBe9POJxun+mYDCXFGTOq6/8mdFgSQeQ4F/4Tlzbj9VoUI5DomQID25iaUFvF5HBBcel5GDYV7CoALG4pgHoaTAhxR1D0VK8HmhETGrNGw71s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731321531; c=relaxed/simple;
-	bh=ly+eOXAkODhvN6tv6GAk4l1iDmyIBduAlm1S8cjy9Yg=;
+	s=arc-20240116; t=1731321532; c=relaxed/simple;
+	bh=XBr3ST446l54yPj/D0VJra8dw0f/W03f0AFUmY1izkE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ThwRxL5FfdP1l6t7gBDoCzhTx8bfh6d0As/DrotFIaTG4F4CpUiDHzCfWkw+Qqt+px4ZCQzAW8w9//jntENlk+zKbGAlo+46+H+amUxSieIsG+H8pYnXvw/9BndUR5bdfqWI4KN1itcumgR48WPfracA9L+/I36VNaC0g6w1MDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fQOWl0c8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VlIDOJH6; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=usBIA+BV9Mt31x7mEN9ViMDBCur+7qjdMD9f9X3pXb5wRYq7M8vIEDTaF4z6K2KlU56oG/jVHINyPJggN9IGApxHu7TbApeTbAauVoTYRyfZlLQzER9DufowkpMOs1S8h4Ec9hLLrpYgCmd5v6PQux6oFrBAkJarTRcYYBoiU1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FiOvTsfl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X8qrKnJ1; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fQOWl0c8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VlIDOJH6"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 15FBA114010D;
-	Mon, 11 Nov 2024 05:38:49 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 11 Nov 2024 05:38:49 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FiOvTsfl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X8qrKnJ1"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4E62D114015D;
+	Mon, 11 Nov 2024 05:38:50 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 11 Nov 2024 05:38:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731321529;
-	 x=1731407929; bh=nxt2WpzGZ7nLQLyMMr2hROFkLq2LfmU7Q1xmh9W9Zvc=; b=
-	fQOWl0c8SrVRoS6/KSTz5TNqldbcZwY3ES5ZeRtt980Yrpj6f5oQvAIOoJGxkIiO
-	uar72v9ayt3ucyZ3BMhCKx6PRQPkRyQDLB1aDSF4KFdG+0QMpK3SJ4DhugTZTcwX
-	F5hfDb2/BGVKN0tXCCd8ppZ0KylimR2s9kY6yITfrX4YUDKeXA96TIQoLpp3UTDh
-	j2i30YKRoqoAIgFYw6qnp5vS50JgGYZSe3rDgLXJjt6g8w6vr+t5GQNNr558gaWA
-	Bq2BHCVpMxomYLwVwQz9HPDz7p/pQoVT48Op/mLC8VFGISXIyIj0xLF9/9+iXfo6
-	R71oyYAyKrWpJoMGUXNBTA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731321530;
+	 x=1731407930; bh=mwmriR+9a9T2xF5nv77q4h3VSuHLM7smmNo5QQ4CnEQ=; b=
+	FiOvTsflSi3leCbnD/V4J21N3btS9aAmgyvm8b8Vz9kmJGQSu4dlslFhr5hNsuL0
+	a1yfZHS5n7M+65FjDlulpGSV0mQwo51wK1PyLiI0HL3PzSFT5hjfNcf+skpnECkH
+	t9RXpdkucV8ACxd/UacE1AFPLK+pkBiYBQbPiyU12QJVVE5KpAKVA/JeDbCLMsMr
+	88Eq0t4nUE0gkdc1nnii0Bj4G7Qto0sKAgCOPQJhoe9Ag4ZI7jgZ93qftyNUebdv
+	hDqxNYwleuzEvn+KHX5OwNfCf/fxgJlQ5OPi1c1/xZrEfbvu6oFm9fOkcKZAbZiQ
+	+queyPfcBcSR7pWpIP7Xsg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731321529; x=
-	1731407929; bh=nxt2WpzGZ7nLQLyMMr2hROFkLq2LfmU7Q1xmh9W9Zvc=; b=V
-	lIDOJH6JxTiIdoIKIZFD8j0fKw7/MFSnVi1VcHU8sckXv/vva9sv3H1QAFNmuD1U
-	whUPRrfzad1fCbY0vmszdQyL/87pp75OzhqlDS89hdb4dGuNKpTARXSeIWBTeHtf
-	lvOXAAD0v/yKtnWne9B59EdmJcF0L6JTOj1EAEIpdk8NyD7lePgqNBO8/IcMmvGp
-	XiI8OgDfrtAobzFKgMKX70egUBfkEGanfpq84WzYL2/iukskinpWz5dIfggZq1CY
-	RvJFIXRfLvBCfHQ8lldTNWOIh9xA7iSe3Z70rycC4TZaaonLgPlBA0EQYq2FtaAS
-	+y0hfUn/L0KqBxDzs96tg==
-X-ME-Sender: <xms:uN4xZ2VOz_sQwlZV_1PoT8DkD6Jr3IQm5g3DF7Z-NY678Ek6GG5roA>
-    <xme:uN4xZyk7xZq3mZkjIAQG5-tFN20410zlkKVkjcPwbSucBmJ0tcWDwlalYzHn0lWk8
-    Yw57XkQF30CzEZ_aA>
-X-ME-Received: <xmr:uN4xZ6ZeTShJBrn5PAm2ku66gd_syMYMKcUvmLC2kSiduGusMKvaXH_jZ_TJoNv6lQcNFnQvJXb6lM-LcCIAfVl31QAgIVLxfgJe9DVfs01ETPZE>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731321530; x=
+	1731407930; bh=mwmriR+9a9T2xF5nv77q4h3VSuHLM7smmNo5QQ4CnEQ=; b=X
+	8qrKnJ1RnrRb3WNKcCqit1jhVhi8qfJTCo4cBqJVM9dNsLYmmDyPDYiA4B+iTuVN
+	E/Te4u22K9vQiOrzqot1xJhkhAxqrkXQCYhGNDW0h9zuhCie0bwPauUfDzwLSmMg
+	zr7j33oBKLaiOMuQs3V/0QehRk7joTE9SnSHr1xBN3nNtMRbhNRbI2BQ9oWYypvE
+	WMeyyUCMOqcLQHmm+0fOn3Dq4cjxgr1xLAfzQRSa5EcQN0H1An073EhgyoZD+mzk
+	9icma6RiCTZXH7NtKXuCihezC8II5i0kxiOBd/R/Ijj0gyz4qqt8jADIHW50hF6x
+	arm97OOKhilLF6D1etL/A==
+X-ME-Sender: <xms:ut4xZ3sVsJiIEarji4Ec7qQTE2CmwVBiT0urXInhIUEQc7sVB7PJPA>
+    <xme:ut4xZ4fDn_UVZqZrJa7dOEnC5faDbw02zpG0giYxFtURd4fnBdWYTKXXOjS6cGH3J
+    pT3Ldk1xgLUMPpsCg>
+X-ME-Received: <xmr:ut4xZ6zihWi2SfP9Jt4FjSY7CpV2U9P5wNfgvnLFKE_J6r5yMYzCr8JznrHjfpJ8_nPCZc3f3VsggAi0Cc0m0LMKnE6shdgGO5JGInxRHnbvPdFG>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -60,21 +60,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdote
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpth
     htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:uN4xZ9Xc5SXxnlRECCuSdtVY00mKLwwuS_cGlnCvteYyolKNOdlzpQ>
-    <xmx:uN4xZwkp5i0-8b6i1PLyT_LwuxuxPs7w0-SuhVQDQ_Yxn7jR0ikriA>
-    <xmx:uN4xZycrEHer9fUCRTodxyrn1Kmbe526NfebMQVYkpUoJB1UW0D41g>
-    <xmx:uN4xZyH7OEU3kNfawEma_72qyppiTo9bPTl33986IJWA2tYJemGHHg>
-    <xmx:ud4xZ1zuPyDkXT2Dc2jaZf9Cw4H5Lox3eNvp1vhnQuAcMrWWFfAgpwv4>
+X-ME-Proxy: <xmx:ut4xZ2N3Gy5OlMr6mIUofT8tc9SA1we0Wl2XttA4k8SC7E7ol1Wspw>
+    <xmx:ut4xZ3-LfHRESnQXZo2y7YWI8e8beNHzEQcqLGAOMy7XGOX8P6JqQw>
+    <xmx:ut4xZ2UbVrqocVgZ93WrvWaF0jqARyEO-zD2T2TeBPzU8lJ32HQvUQ>
+    <xmx:ut4xZ4f5__xF7_R0UprMw1Deo_jVdPWErp7UQkVAPSilmG7luIKrjw>
+    <xmx:ut4xZ5Lp1yXIO18z0xeItOeDsre5u1al96uIQhS7rsyJd_UuWbN4iFK6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 05:38:48 -0500 (EST)
+ 11 Nov 2024 05:38:49 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 082c0434 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 10:38:13 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id bf08ea2a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 10:38:14 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 11 Nov 2024 11:38:30 +0100
-Subject: [PATCH v2 01/27] builtin/blame: fix leaking blame entries with
- `--incremental`
+Date: Mon, 11 Nov 2024 11:38:32 +0100
+Subject: [PATCH v2 03/27] bisect: fix leaking string in
+ `handle_bad_merge_base()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,97 +83,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241111-b4-pks-leak-fixes-pt10-v2-1-6154bf91f0b0@pks.im>
+Message-Id: <20241111-b4-pks-leak-fixes-pt10-v2-3-6154bf91f0b0@pks.im>
 References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
 In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 X-Mailer: b4 0.14.2
 
-When passing `--incremental` to git-blame(1) we exit early by jumping to
-the `cleanup` label. But some of the cleanups we perform are handled
-between the `goto` and its label, and thus we leak the data.
+When handling a bad merge base we print an error, which includes the set
+of good revisions joined by spaces. This string is allocated, but never
+freed.
 
-Move the cleanups after the `cleanup` label. While at it, move the logic
-to free the scoreboard's `final_buf` into `cleanup_scoreboard()` and
-drop its `const` declaration.
+Fix this memory leak. Note that the local `bad_hex` varible also looks
+like a string that we should free. But in fact, `oid_to_hex()` returns
+an address to a static variable even though it is declared to return a
+non-constant string. The function signature is thus quite misleading and
+really should be fixed, but doing so is outside of the scope of this
+patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- blame.c               |  1 +
- blame.h               |  2 +-
- builtin/blame.c       | 12 ++++++------
- t/t8005-blame-i18n.sh |  2 ++
- 4 files changed, 10 insertions(+), 7 deletions(-)
+ bisect.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/blame.c b/blame.c
-index 90633380cd583b689693e6cfe65c26a79448b00d..bf69768a7de6d2b989b85339a06af0a4763db4ad 100644
---- a/blame.c
-+++ b/blame.c
-@@ -2931,6 +2931,7 @@ void setup_blame_bloom_data(struct blame_scoreboard *sb)
- void cleanup_scoreboard(struct blame_scoreboard *sb)
- {
- 	free(sb->lineno);
-+	free(sb->final_buf);
- 	clear_prio_queue(&sb->commits);
- 	oidset_clear(&sb->ignore_list);
- 
-diff --git a/blame.h b/blame.h
-index 5b4e47d44c613e31fc4788c12ee9d8dc2a49d571..3b34be0e5c6932666bf5f738eb645da25adc0997 100644
---- a/blame.h
-+++ b/blame.h
-@@ -116,7 +116,7 @@ struct blame_scoreboard {
- 	 * Used by many functions to obtain contents of the nth line,
- 	 * indexed with scoreboard.lineno[blame_entry.lno].
- 	 */
--	const char *final_buf;
-+	char *final_buf;
- 	unsigned long final_buf_size;
- 
- 	/* linked list of blames */
-diff --git a/builtin/blame.c b/builtin/blame.c
-index e407a22da3bacf6bd26a6738e0ab0292ffadc216..6a7bb3b07248fbdfeb5ac3a05fed20fff4989a48 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1216,12 +1216,6 @@ int cmd_blame(int argc,
- 		output_option &= ~(OUTPUT_COLOR_LINE | OUTPUT_SHOW_AGE_WITH_COLOR);
- 
- 	output(&sb, output_option);
--	free((void *)sb.final_buf);
--	for (ent = sb.ent; ent; ) {
--		struct blame_entry *e = ent->next;
--		free(ent);
--		ent = e;
--	}
- 
- 	if (show_stats) {
- 		printf("num read blob: %d\n", sb.num_read_blob);
-@@ -1230,6 +1224,12 @@ int cmd_blame(int argc,
+diff --git a/bisect.c b/bisect.c
+index 9c52241050c14ecbf3f7950a0c5e7b962fcaa541..e9e603877eba059c878ff92bc11dd84553d0649e 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -801,6 +801,8 @@ static enum bisect_error handle_bad_merge_base(void)
+ 				"between %s and [%s].\n"),
+ 				bad_hex, term_bad, term_good, bad_hex, good_hex);
+ 		}
++
++		free(good_hex);
+ 		return BISECT_MERGE_BASE_CHECK;
  	}
  
- cleanup:
-+	for (ent = sb.ent; ent; ) {
-+		struct blame_entry *e = ent->next;
-+		free(ent);
-+		ent = e;
-+	}
-+
- 	free(path);
- 	cleanup_scoreboard(&sb);
- 	release_revisions(&revs);
-diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
-index 7a1f581c240c71106c709a830d3897d84fd8b32d..fa765aff99aa7fbfc4737cc91aab2a6a1bce30bb 100755
---- a/t/t8005-blame-i18n.sh
-+++ b/t/t8005-blame-i18n.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='git blame encoding conversion'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- if ! test_have_prereq ICONV
 
 -- 
 2.47.0.229.g8f8d6eee53.dirty
