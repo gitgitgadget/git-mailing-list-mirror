@@ -1,53 +1,53 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45885339A0
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 15:30:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4894683
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 15:30:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731339053; cv=none; b=DDaf+JXYiRSZ6VDOWlfFlOrJ4Dm3L4rC0S4aKsRsiV4V3auJAM2c6bV0w23UYG3vNqsc2SdMyM5mNwJIqSy/zALE+QrSrBN1M3jfATn6mPLekpMh8HwKRwYjHyOx4eMh9T8JdEQZb00QiyCeRvdvrGtQce8YLh3JdNNWS56B8S4=
+	t=1731339054; cv=none; b=NYXtVd2a94LmVQGjZC2I+rGK7ksLU2C6FkeB6qLF37lRXtj2lAbDM8hz1NMOF2PaRQvymjtwVgSgyyu4+7fNPuyC2aI/Z9VvaY4Tlb3oEtspnPvKY3yzUwbYz8yKu0Cbm674NBLfSO/6y09gigijZ77AxKfqNrGfe1qZu+2zydw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731339053; c=relaxed/simple;
-	bh=o9oYLEsVsFSMCfPUVd2TESsZbpkC9THXsnRRqSA/bMQ=;
+	s=arc-20240116; t=1731339054; c=relaxed/simple;
+	bh=rjD916m2XRteskDrAWg7dme+anp/9ICKS/HRtSJqVao=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sNDyJvRkAR4yP88H5UQulESeq7QSIpdqomqQLDMiTU8qdFlMj0npoJYp593v/3lBIk4MRILwmnn9xaAjOrVr3tYWEBPQvxViqUS8SVikDrBC6Pf6M6eHbJR1WuUn69fY2/xV6bjPi+PFlAaC8z3uC4kTOM9jZYQJejGy85k3BIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cPtYMOkT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oGtx8Mp0; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=EW6yNfh5qMOL3nVz8bUl+yplfWsnW4aEERgLrjWFO9AFxj0E9tPlCneXDJlrkNylhBs7SIMBkyS0wG/8yv0szlhp6U4B55EuqgfoeTWk+qHEOjNzqafNKgLMw4hjO7pEWoeRp+e+9gQKuBRBc8eVwRS7SGToSU/PXWh7JIUz3XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jsTR4609; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b3qyv7YI; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cPtYMOkT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oGtx8Mp0"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C5BB114019C;
-	Mon, 11 Nov 2024 10:30:50 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 11 Nov 2024 10:30:50 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jsTR4609";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b3qyv7YI"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id E25A513806D8;
+	Mon, 11 Nov 2024 10:30:48 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Mon, 11 Nov 2024 10:30:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731339050; x=1731425450; bh=t//jhJWslW
-	l0rSDkqNmzOzIzGomRwK6jO5iSANyFl4k=; b=cPtYMOkTR3oUGmjBbx0rQjoNbp
-	qmwZnrQwY9nY+N2AfKnLRfUk+uIuAZedcriFLPGilCIMZTvLHrI6HUIT5hTMmpnj
-	Woc59nAN8heqUfTe686/hUA+A1CaAx1VBJeXuZwgLyqonu9Q19QS3rWAkApb91mH
-	Z54p0W2g+5fQF4PGG69Ga12s9+eLuhJnAFoDlb9MdAdQUQWSmjT7UD7plt/4Xcut
-	FebrSIAi+5LNLwWdqNVcg85EW5pL2Smnt4koJwpSTyBsJ6i+pvkU6tWo7LdptW7f
-	UF+Xjfar2lwmsTSvLmvP+RcCjua5z0Zr7rMRiNhxoMTke8zkz2bMmqNa8PLg==
+	:subject:to:to; s=fm3; t=1731339048; x=1731425448; bh=PgtJFNjd2x
+	CM7NINCoX/lrQ2gO5WDGT+ZWnu+XxGXVY=; b=jsTR4609eUOFgFARJ1lrDcLfJP
+	v8zSyNVJMB3h0w3kV0IWDVY/EKq6w7UmqK0TEpvDdB4VnMQbYCPw06oCY4plM04d
+	KSvSw/wENYy1O1mLfsVCnH5pdx3Vf4zNgppiPm0/OnsBHUKd39WzBYem7Oe9zqAR
+	LCYWGsPkm98TKypeZKFPgJQu0hnFsE3VKFDSBegzFtO2hU0o5uig32iHZJ6YwTwz
+	6ffSBWYER9Ithcs67jRx0VqbTkjeud39z3ZLJPTqMHF+m/XanHcv2gkOmPxwkh2v
+	vXhuD/xoW/j4bbwijO/kVDJ8uvIbPqGemkKVyqvYY9R+T1Hfb1mXQoOo7+7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731339050; x=1731425450; bh=t//jhJWslWl0rSDkqNmzOzIzGomRwK6jO5i
-	SANyFl4k=; b=oGtx8Mp0rBnytG+gAIJnZwJRqJ5InmqrZ8AcF78hB2x1NCdmUa9
-	/DyguhIAtZXZBVsuhOvRn5PGPENq6O6FZtZcY8cUap64UjWYc+HgpdfzNDAJ/9uD
-	jN9omzGUFMGTegaROBZm8hWKlDUe/z6ICElTjTtdk/JQ3xbKSl/hpqOqf62MoGGX
-	w3TbJjIxqCMQRjvWZm+LoT7BnthaoD8P3hIWN2SyXt5bdSOTBgkkjVLEOa5ICPzD
-	zbmUiG5j3tA/2L6P4RedqV3CLPhMV44l5p4vmzo4kvrKh0Y2hTK4qkg88+JQE1Uf
-	ZiYVeRGM5Mwjr7yyVGwanKRY+frQjcbKJmw==
-X-ME-Sender: <xms:KiMyZytv-eW-FUiP5ZO63hAIs5l9XD2bgpLE0XjiolrWY9KvzcDzhg>
-    <xme:KiMyZ3cTrxImXRIrRRaTPiNzyNDgP05G0Ja0B0R2AW6gtdgSEpSZOu-g6ZEnJi2FL
-    0aLUKlxrwxQXGs6sg>
-X-ME-Received: <xmr:KiMyZ9yLHFuL2VRbN4YX2iPeWu9HmGRbu_7GowwdIihYvKz2jMsc3GsknvcqDZy_PFqduWEtCu633oXfL96Hd5gjdNumi9jMaJety5khLa6Muzcp>
+	1731339048; x=1731425448; bh=PgtJFNjd2xCM7NINCoX/lrQ2gO5WDGT+ZWn
+	u+XxGXVY=; b=b3qyv7YIqIxLbH1ci9yvIpMBXao7pT0/wLtCEdN4ZsyYQy0va3n
+	gRWgO4dGWbCfcG4RzB/31ZFEF9gxl6LETE0cP4JoIj45ulv1X/MJ+tjUqoBSQhym
+	h4j9EGt+SMqCUPAQrPKyn+8Nv1sjZZK9r9IGIGsOweO4VHnofSMxHPxWx3zFkqLq
+	BMurcJsdXD97W67JxTyQbkbFNFETC6l4P/dxfmzTmneIl2BxXQ8B7OgfSH7n8YwM
+	5Hr/pBqPFbIxoW3Rb7MJwldpWTRqWC17G5ya8gBrfpowLjaYCcTfTXVRamR8dttD
+	Ts6GYQgAu+4qsAy/g1vBx67UaYOr/f1yWnA==
+X-ME-Sender: <xms:KCMyZxWhBF4S95M1ppb8UrrZymHLQdE3FqPa2VVYmAEp_SQb3TcL5w>
+    <xme:KCMyZxmQAy6OA70pUw9qaTAYFJ1dlSeaYnZvRWBDv6VsTTVeZBBodvXTSEWEZM5It
+    sdXNcZ4ZyV7wTkKtw>
+X-ME-Received: <xmr:KCMyZ9YoZ0d3Vx9vLQypWlD0oaItKftWSltyXXM71ZAnUCOTAMly7YNSLBRbRxWUQobICHmVh-7m3GgSLe2Chb6fpQYvzabUcMYGpgb4SBjCWiB8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdejiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdejiecutefuodetggdote
     enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghstghhfigrrhht
-    iiesghgvnhhtohhordhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilh
-    hlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrmhhsrgih
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghp
+    thhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhope
+    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheprhgrmhhsrgih
     sehrrghmshgrhihjohhnvghsrdhplhhushdrtghomh
-X-ME-Proxy: <xmx:KiMyZ9OggmwK5q1qUtkgNH6FaB8AzJIdhGV7Z4nNrSkpP4WFiDmFMg>
-    <xmx:KiMyZy_Q4wieJrQK0CWQ2EBY1oZf8F8bk5GneEVmSbdGNW0tQoMJng>
-    <xmx:KiMyZ1V6RKRzh_jBpciOiZTLvjIKAdRvXU4WgUMw6MDFvKE_NJMYCg>
-    <xmx:KiMyZ7cFCmac53mQTbAL5-Zkty0nZfwPU_B2oWTiz0rM9TQAKzjMmQ>
-    <xmx:KiMyZ2QjtnKvqYea9i9J86M20cg3f2ZBbGeVfcvgW12gfX50yyinXlMc>
+X-ME-Proxy: <xmx:KCMyZ0UTyJPmXzHi-68K3JpII9kAO7byCCUjNGobAtWg06dvr-otug>
+    <xmx:KCMyZ7n2X4MUCaTLm5ZJpZineJNRJpGA2Y2YMnq1oV3iwVxFqWlLwg>
+    <xmx:KCMyZxff-Ig-LgZj2Y6B6M0DfkYuWbyOUBuKuNjkNKb2NMkLCHXCdg>
+    <xmx:KCMyZ1E4N_hTefo5durtvbr0FPKKK3Xyl2ydiTfZudHFua3geMR8Ng>
+    <xmx:KCMyZ97yKej9iPci6Prq3IBksBJN42zidyDGSJCePc4xxkx5E-KAoHlr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 10:30:48 -0500 (EST)
+ 11 Nov 2024 10:30:46 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 45aeb2f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 15:30:12 +0000 (UTC)
-Date: Mon, 11 Nov 2024 16:30:38 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1e7002ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 15:30:09 +0000 (UTC)
+Date: Mon, 11 Nov 2024 16:30:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>,
@@ -83,11 +83,9 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>
-Subject: [RFC PATCH v5 01/19] Makefile: use common template for
- GIT-BUILD-OPTIONS
-Message-ID: <8c481cb9e0102133ad265af4750c49380b9dcd4c.1731335939.git.ps@pks.im>
+Subject: [RFC PATCH v5 00/19] Modernize the build system
+Message-ID: <cover.1731335938.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
- <cover.1731335938.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,311 +94,347 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1731335938.git.ps@pks.im>
+In-Reply-To: <cover.1727881164.git.ps@pks.im>
 
-The "GIT-BUILD-OPTIONS" file is generated by our build systems to
-propagate built-in features and paths to our tests. The generation is
-done ad-hoc, where both our Makefile and the CMake build instructions
-simply echo a bunch of strings into the file. This makes it very hard to
-figure out what variables are expected to exist and what format they
-have, and the written variables can easily get out of sync between build
-systems.
+Hi,
 
-Introduce a new "GIT-BUILD-OPTIONS.in" template to address this issue.
-This has multiple advantages:
+this is the fourth version of my patch series that modernizes our build
+system. It refactors various parts of it to make it possible to perform
+out-of-tree builds in theory and then wires up Meson.
 
-  - It demonstrates which built options exist in the first place.
+Changes compared to v4:
 
-  - It can serve as a spot to document the build options.
+  - Improve our CMake build instructions tot use `SH_EXE` to execute
+    scripts.
 
-  - Some build systems complain when not all variables could be
-    substituted, alerting us of mismatches. Others don't, but if we
-    forgot to substitute such variables we now have a bogus string that
-    will likely cause our tests to fail, if they have any meaning in the
-    first place.
+  - Create Perl build directories in our CMake build instructions.
 
-Backfill values that we didn't yet set in our CMake build instructions.
-While at it, remove the `SUPPORTS_SIMPLE_IPC` variable that we only set
-up in CMake as it isn't used anywhere.
+  - Remove superfluous use of basename(1).
 
-Note that this change requires us to move around the setup of
-TEST_OUTPUT_DIRECTORY in "test-lib.sh" such that it comes after sourcing
-the "GIT-BUILD-OPTIONS" file. This is the only instance I could find
-where we rely on ordering on variables.
+  - Remove timeout for unit tests in Meson.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- GIT-BUILD-OPTIONS.in                |  36 +++++++++
- Makefile                            | 109 ++++++++++------------------
- contrib/buildsystems/CMakeLists.txt |  58 ++++++++++-----
- t/test-lib.sh                       |  13 ++--
- 4 files changed, 121 insertions(+), 95 deletions(-)
+Thanks!
+
+Patrick
+
+Patrick Steinhardt (19):
+  Makefile: use common template for GIT-BUILD-OPTIONS
+  Makefile: consistently use @PLACEHOLDER@ to substitute
+  Makefile: consistently use PERL_PATH
+  Makefile: extract script to massage Perl scripts
+  Makefile: use "generate-perl.sh" to massage Perl library
+  Makefile: extract script to massage Shell scripts
+  Makefile: extract script to generate gitweb.cgi
+  Makefile: refactor GIT-VERSION-GEN to be reusable
+  Makefile: refactor generators to be PWD-independent
+  Makefile: allow "bin-wrappers/" directory to exist
+  Makefile: simplify building of templates
+  Documentation: allow sourcing generated includes from separate dir
+  Documentation: teach "cmd-list.perl" about out-of-tree builds
+  Documentation: extract script to generate a list of mergetools
+  t: better support for out-of-tree builds
+  t: allow overriding build dir
+  Documentation: add comparison of build systems
+  Introduce support for the Meson build system
+  meson: fix conflicts with in-flight topics
+
+ .gitignore                                    |    1 -
+ Documentation/CodingGuidelines                |    2 +-
+ Documentation/Makefile                        |   28 +-
+ Documentation/build-docdep.perl               |    2 +
+ Documentation/cmd-list.perl                   |   23 +-
+ Documentation/config/diff.txt                 |    2 +-
+ Documentation/config/merge.txt                |    2 +-
+ Documentation/generate-mergetool-list.sh      |   17 +
+ Documentation/git.txt                         |   24 +-
+ Documentation/meson.build                     |  317 ++++
+ Documentation/technical/build-systems.txt     |  224 +++
+ GIT-BUILD-OPTIONS.in                          |   47 +
+ GIT-VERSION-GEN                               |   12 +-
+ Makefile                                      |  209 +--
+ bin-wrappers/.gitignore                       |    9 +
+ bin-wrappers/meson.build                      |   28 +
+ bin-wrappers/wrap-for-bin.sh                  |   37 +
+ configure.ac                                  |    2 +-
+ contrib/buildsystems/CMakeLists.txt           |  230 ++-
+ contrib/completion/meson.build                |    8 +
+ contrib/meson.build                           |    1 +
+ generate-cmdlist.sh                           |   42 +-
+ generate-configlist.sh                        |   20 +-
+ generate-hooklist.sh                          |   15 +-
+ generate-perl.sh                              |   36 +
+ generate-script.sh                            |   34 +
+ git-cvsserver.perl                            |    2 +-
+ git-instaweb.sh                               |    8 +-
+ git-request-pull.sh                           |    2 +-
+ git-send-email.perl                           |    2 +-
+ git-sh-i18n.sh                                |    6 +-
+ git-sh-setup.sh                               |    6 +-
+ git-svn.perl                                  |    2 +-
+ gitk-git/po/vi.po                             |    2 +-
+ gitweb/GITWEB-BUILD-OPTIONS.in                |   25 +
+ gitweb/Makefile                               |   58 +-
+ gitweb/generate-gitweb.sh                     |   45 +
+ gitweb/gitweb.perl                            |   44 +-
+ gitweb/meson.build                            |   63 +
+ meson.build                                   | 1618 +++++++++++++++++
+ meson_options.txt                             |   73 +
+ perl/FromCPAN/Mail/meson.build                |    7 +
+ perl/FromCPAN/meson.build                     |    9 +
+ perl/Git/I18N.pm                              |    6 +-
+ perl/Git/LoadCPAN.pm                          |    6 +-
+ perl/Git/LoadCPAN/Mail/meson.build            |    7 +
+ perl/Git/LoadCPAN/meson.build                 |    9 +
+ perl/Git/SVN/Memoize/meson.build              |    7 +
+ perl/Git/SVN/meson.build                      |   20 +
+ perl/Git/meson.build                          |   18 +
+ .../header_templates/fixed_prefix.template.pl |    2 +-
+ .../runtime_prefix.template.pl                |    8 +-
+ perl/meson.build                              |   12 +
+ po/meson.build                                |   27 +
+ subprojects/.gitignore                        |    1 +
+ subprojects/curl.wrap                         |   13 +
+ subprojects/expat.wrap                        |   13 +
+ subprojects/openssl.wrap                      |   15 +
+ subprojects/pcre2.wrap                        |   16 +
+ subprojects/zlib.wrap                         |   13 +
+ t/helper/meson.build                          |   92 +
+ t/lib-gettext.sh                              |    4 +-
+ t/meson.build                                 | 1111 +++++++++++
+ t/t7609-mergetool--lib.sh                     |    2 +-
+ t/test-lib.sh                                 |   22 +-
+ templates/Makefile                            |   39 +-
+ templates/branches--                          |    1 -
+ templates/{this--description => description}  |    0
+ .../applypatch-msg.sample}                    |    0
+ .../commit-msg.sample}                        |    0
+ .../fsmonitor-watchman.sample}                |    0
+ templates/hooks/meson.build                   |   24 +
+ .../post-update.sample}                       |    0
+ .../pre-applypatch.sample}                    |    0
+ .../pre-commit.sample}                        |    0
+ .../pre-merge-commit.sample}                  |    0
+ .../pre-push.sample}                          |    0
+ .../pre-rebase.sample}                        |    0
+ .../pre-receive.sample}                       |    0
+ .../prepare-commit-msg.sample}                |    0
+ .../push-to-checkout.sample}                  |    0
+ .../sendemail-validate.sample}                |    0
+ .../update.sample}                            |    0
+ templates/{info--exclude => info/exclude}     |    0
+ templates/info/meson.build                    |    5 +
+ templates/meson.build                         |   13 +
+ unimplemented.sh                              |    2 +-
+ wrap-for-bin.sh                               |   36 -
+ 88 files changed, 4441 insertions(+), 447 deletions(-)
+ create mode 100755 Documentation/generate-mergetool-list.sh
+ create mode 100644 Documentation/meson.build
+ create mode 100644 Documentation/technical/build-systems.txt
  create mode 100644 GIT-BUILD-OPTIONS.in
+ create mode 100644 bin-wrappers/.gitignore
+ create mode 100644 bin-wrappers/meson.build
+ create mode 100755 bin-wrappers/wrap-for-bin.sh
+ create mode 100644 contrib/completion/meson.build
+ create mode 100644 contrib/meson.build
+ create mode 100755 generate-perl.sh
+ create mode 100755 generate-script.sh
+ create mode 100644 gitweb/GITWEB-BUILD-OPTIONS.in
+ create mode 100755 gitweb/generate-gitweb.sh
+ create mode 100644 gitweb/meson.build
+ create mode 100644 meson.build
+ create mode 100644 meson_options.txt
+ create mode 100644 perl/FromCPAN/Mail/meson.build
+ create mode 100644 perl/FromCPAN/meson.build
+ create mode 100644 perl/Git/LoadCPAN/Mail/meson.build
+ create mode 100644 perl/Git/LoadCPAN/meson.build
+ create mode 100644 perl/Git/SVN/Memoize/meson.build
+ create mode 100644 perl/Git/SVN/meson.build
+ create mode 100644 perl/Git/meson.build
+ create mode 100644 perl/meson.build
+ create mode 100644 po/meson.build
+ create mode 100644 subprojects/.gitignore
+ create mode 100644 subprojects/curl.wrap
+ create mode 100644 subprojects/expat.wrap
+ create mode 100644 subprojects/openssl.wrap
+ create mode 100644 subprojects/pcre2.wrap
+ create mode 100644 subprojects/zlib.wrap
+ create mode 100644 t/helper/meson.build
+ create mode 100644 t/meson.build
+ delete mode 100644 templates/branches--
+ rename templates/{this--description => description} (100%)
+ rename templates/{hooks--applypatch-msg.sample => hooks/applypatch-msg.sample} (100%)
+ rename templates/{hooks--commit-msg.sample => hooks/commit-msg.sample} (100%)
+ rename templates/{hooks--fsmonitor-watchman.sample => hooks/fsmonitor-watchman.sample} (100%)
+ create mode 100644 templates/hooks/meson.build
+ rename templates/{hooks--post-update.sample => hooks/post-update.sample} (100%)
+ rename templates/{hooks--pre-applypatch.sample => hooks/pre-applypatch.sample} (100%)
+ rename templates/{hooks--pre-commit.sample => hooks/pre-commit.sample} (100%)
+ rename templates/{hooks--pre-merge-commit.sample => hooks/pre-merge-commit.sample} (100%)
+ rename templates/{hooks--pre-push.sample => hooks/pre-push.sample} (100%)
+ rename templates/{hooks--pre-rebase.sample => hooks/pre-rebase.sample} (100%)
+ rename templates/{hooks--pre-receive.sample => hooks/pre-receive.sample} (100%)
+ rename templates/{hooks--prepare-commit-msg.sample => hooks/prepare-commit-msg.sample} (100%)
+ rename templates/{hooks--push-to-checkout.sample => hooks/push-to-checkout.sample} (100%)
+ rename templates/{hooks--sendemail-validate.sample => hooks/sendemail-validate.sample} (100%)
+ rename templates/{hooks--update.sample => hooks/update.sample} (100%)
+ rename templates/{info--exclude => info/exclude} (100%)
+ create mode 100644 templates/info/meson.build
+ create mode 100644 templates/meson.build
+ delete mode 100644 wrap-for-bin.sh
 
-diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
-new file mode 100644
-index 00000000000..f0ca240493c
---- /dev/null
-+++ b/GIT-BUILD-OPTIONS.in
-@@ -0,0 +1,36 @@
-+SHELL_PATH=@SHELL_PATH@
-+TEST_SHELL_PATH=@TEST_SHELL_PATH@
-+PERL_PATH=@PERL_PATH@
-+DIFF=@DIFF@
-+PYTHON_PATH=@PYTHON_PATH@
-+TAR=@TAR@
-+NO_CURL=@NO_CURL@
-+NO_ICONV=@NO_ICONV@
-+NO_EXPAT=@NO_EXPAT@
-+USE_LIBPCRE2=@USE_LIBPCRE2@
-+NO_PERL=@NO_PERL@
-+NO_PTHREADS=@NO_PTHREADS@
-+NO_PYTHON=@NO_PYTHON@
-+NO_REGEX=@NO_REGEX@
-+NO_UNIX_SOCKETS=@NO_UNIX_SOCKETS@
-+PAGER_ENV=@PAGER_ENV@
-+SANITIZE_LEAK=@SANITIZE_LEAK@
-+SANITIZE_ADDRESS=@SANITIZE_ADDRESS@
-+X=@X@
-+FSMONITOR_DAEMON_BACKEND=@FSMONITOR_DAEMON_BACKEND@
-+FSMONITOR_OS_SETTINGS=@FSMONITOR_OS_SETTINGS@
-+TEST_OUTPUT_DIRECTORY=@TEST_OUTPUT_DIRECTORY@
-+GIT_TEST_OPTS=@GIT_TEST_OPTS@
-+GIT_TEST_CMP=@GIT_TEST_CMP@
-+GIT_TEST_CMP_USE_COPIED_CONTEXT=@GIT_TEST_CMP_USE_COPIED_CONTEXT@
-+GIT_TEST_UTF8_LOCALE=@GIT_TEST_UTF8_LOCALE@
-+NO_GETTEXT=@NO_GETTEXT@
-+GIT_PERF_REPEAT_COUNT=@GIT_PERF_REPEAT_COUNT@
-+GIT_PERF_REPO=@GIT_PERF_REPO@
-+GIT_PERF_LARGE_REPO=@GIT_PERF_LARGE_REPO@
-+GIT_PERF_MAKE_OPTS=@GIT_PERF_MAKE_OPTS@
-+GIT_PERF_MAKE_COMMAND=@GIT_PERF_MAKE_COMMAND@
-+GIT_INTEROP_MAKE_OPTS=@GIT_INTEROP_MAKE_OPTS@
-+GIT_TEST_INDEX_VERSION=@GIT_TEST_INDEX_VERSION@
-+GIT_TEST_PERL_FATAL_WARNINGS=@GIT_TEST_PERL_FATAL_WARNINGS@
-+RUNTIME_PREFIX=@RUNTIME_PREFIX@
-diff --git a/Makefile b/Makefile
-index 6ad330fc582..457f36487cb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3164,76 +3164,45 @@ GIT-LDFLAGS: FORCE
- # that runs GIT-BUILD-OPTIONS, and then again to protect it
- # and the first level quoting from the shell that runs "echo".
- GIT-BUILD-OPTIONS: FORCE
--	@echo SHELL_PATH=\''$(subst ','\'',$(SHELL_PATH_SQ))'\' >$@+
--	@echo TEST_SHELL_PATH=\''$(subst ','\'',$(TEST_SHELL_PATH_SQ))'\' >>$@+
--	@echo PERL_PATH=\''$(subst ','\'',$(PERL_PATH_SQ))'\' >>$@+
--	@echo DIFF=\''$(subst ','\'',$(subst ','\'',$(DIFF)))'\' >>$@+
--	@echo PYTHON_PATH=\''$(subst ','\'',$(PYTHON_PATH_SQ))'\' >>$@+
--	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@+
--	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
--	@echo NO_ICONV=\''$(subst ','\'',$(subst ','\'',$(NO_ICONV)))'\' >>$@+
--	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
--	@echo USE_LIBPCRE2=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE2)))'\' >>$@+
--	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
--	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
--	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
--	@echo NO_REGEX=\''$(subst ','\'',$(subst ','\'',$(NO_REGEX)))'\' >>$@+
--	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
--	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
--	@echo SANITIZE_LEAK=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_LEAK)))'\' >>$@+
--	@echo SANITIZE_ADDRESS=\''$(subst ','\'',$(subst ','\'',$(SANITIZE_ADDRESS)))'\' >>$@+
--	@echo X=\'$(X)\' >>$@+
--ifdef FSMONITOR_DAEMON_BACKEND
--	@echo FSMONITOR_DAEMON_BACKEND=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_DAEMON_BACKEND)))'\' >>$@+
--endif
--ifdef FSMONITOR_OS_SETTINGS
--	@echo FSMONITOR_OS_SETTINGS=\''$(subst ','\'',$(subst ','\'',$(FSMONITOR_OS_SETTINGS)))'\' >>$@+
--endif
--ifdef TEST_OUTPUT_DIRECTORY
--	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
--endif
--ifdef GIT_TEST_OPTS
--	@echo GIT_TEST_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_OPTS)))'\' >>$@+
--endif
--ifdef GIT_TEST_CMP
--	@echo GIT_TEST_CMP=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_CMP)))'\' >>$@+
--endif
--ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
--	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@+
--endif
--ifdef GIT_TEST_UTF8_LOCALE
--	@echo GIT_TEST_UTF8_LOCALE=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_UTF8_LOCALE)))'\' >>$@+
--endif
--	@echo NO_GETTEXT=\''$(subst ','\'',$(subst ','\'',$(NO_GETTEXT)))'\' >>$@+
--ifdef GIT_PERF_REPEAT_COUNT
--	@echo GIT_PERF_REPEAT_COUNT=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPEAT_COUNT)))'\' >>$@+
--endif
--ifdef GIT_PERF_REPO
--	@echo GIT_PERF_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_REPO)))'\' >>$@+
--endif
--ifdef GIT_PERF_LARGE_REPO
--	@echo GIT_PERF_LARGE_REPO=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_LARGE_REPO)))'\' >>$@+
--endif
--ifdef GIT_PERF_MAKE_OPTS
--	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@+
--endif
--ifdef GIT_PERF_MAKE_COMMAND
--	@echo GIT_PERF_MAKE_COMMAND=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_COMMAND)))'\' >>$@+
--endif
--ifdef GIT_INTEROP_MAKE_OPTS
--	@echo GIT_INTEROP_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_INTEROP_MAKE_OPTS)))'\' >>$@+
--endif
--ifdef GIT_TEST_INDEX_VERSION
--	@echo GIT_TEST_INDEX_VERSION=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_INDEX_VERSION)))'\' >>$@+
--endif
--ifdef GIT_TEST_PERL_FATAL_WARNINGS
--	@echo GIT_TEST_PERL_FATAL_WARNINGS=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_PERL_FATAL_WARNINGS)))'\' >>$@+
--endif
--ifdef RUNTIME_PREFIX
--	@echo RUNTIME_PREFIX=\'true\' >>$@+
--else
--	@echo RUNTIME_PREFIX=\'false\' >>$@+
--endif
-+	@sed \
-+		-e "s|@SHELL_PATH@|\'$(SHELL_PATH_SQ)\'|" \
-+		-e "s|@TEST_SHELL_PATH@|\'$(TEST_SHELL_PATH_SQ)\'|" \
-+		-e "s|@PERL_PATH@|\'$(PERL_PATH_SQ)\'|" \
-+		-e "s|@DIFF@|\'$(DIFF)\'|" \
-+		-e "s|@PYTHON_PATH@|\'$(PYTHON_PATH_SQ)\'|" \
-+		-e "s|@TAR@|\'$(TAR)\'|" \
-+		-e "s|@NO_CURL@|\'$(NO_CURL)\'|" \
-+		-e "s|@NO_ICONV@|\'$(NO_ICONV)\'|" \
-+		-e "s|@NO_EXPAT@|\'$(NO_EXPAT)\'|" \
-+		-e "s|@USE_LIBPCRE2@|\'$(USE_LIBPCRE2)\'|" \
-+		-e "s|@NO_PERL@|\'$(NO_PERL)\'|" \
-+		-e "s|@NO_PTHREADS@|\'$(NO_PTHREADS)\'|" \
-+		-e "s|@NO_PYTHON@|\'$(NO_PYTHON)\'|" \
-+		-e "s|@NO_REGEX@|\'$(NO_REGEX)\'|" \
-+		-e "s|@NO_UNIX_SOCKETS@|\'$(NO_UNIX_SOCKETS)\'|" \
-+		-e "s|@PAGER_ENV@|\'$(PAGER_ENV)\'|" \
-+		-e "s|@SANITIZE_LEAK@|\'$(SANITIZE_LEAK)\'|" \
-+		-e "s|@SANITIZE_ADDRESS@|\'$(SANITIZE_ADDRESS)\'|" \
-+		-e "s|@X@|\'$(X)\'|" \
-+		-e "s|@FSMONITOR_DAEMON_BACKEND@|\'$(FSMONITOR_DAEMON_BACKEND)\'|" \
-+		-e "s|@FSMONITOR_OS_SETTINGS@|\'$(FSMONITOR_OS_SETTINGS)\'|" \
-+		-e "s|@TEST_OUTPUT_DIRECTORY@|\'$(TEST_OUTPUT_DIRECTORY)\'|" \
-+		-e "s|@GIT_TEST_OPTS@|\'$(GIT_TEST_OPTS)\'|" \
-+		-e "s|@GIT_TEST_CMP@|\'$(GIT_TEST_CMP)\'|" \
-+		-e "s|@GIT_TEST_CMP_USE_COPIED_CONTEXT@|\'$(GIT_TEST_CMP_USE_COPIED_CONTEXT)\'|" \
-+		-e "s|@GIT_TEST_UTF8_LOCALE@|\'$(GIT_TEST_UTF8_LOCALE)\'|" \
-+		-e "s|@NO_GETTEXT@|\'$(NO_GETTEXT)\'|" \
-+		-e "s|@GIT_PERF_REPEAT_COUNT@|\'$(GIT_PERF_REPEAT_COUNT)\'|" \
-+		-e "s|@GIT_PERF_REPO@|\'$(GIT_PERF_REPO)\'|" \
-+		-e "s|@GIT_PERF_LARGE_REPO@|\'$(GIT_PERF_LARGE_REPO)\'|" \
-+		-e "s|@GIT_PERF_MAKE_OPTS@|\'$(GIT_PERF_MAKE_OPTS)\'|" \
-+		-e "s|@GIT_PERF_MAKE_COMMAND@|\'$(GIT_PERF_MAKE_COMMAND)\'|" \
-+		-e "s|@GIT_INTEROP_MAKE_OPTS@|\'$(GIT_INTEROP_MAKE_OPTS)\'|" \
-+		-e "s|@GIT_TEST_INDEX_VERSION@|\'$(GIT_TEST_INDEX_VERSION)\'|" \
-+		-e "s|@GIT_TEST_PERL_FATAL_WARNINGS@|\'$(GIT_TEST_PERL_FATAL_WARNINGS)\'|" \
-+		-e "s|@RUNTIME_PREFIX@|\'$(RUNTIME_PREFIX)\'|" \
-+		GIT-BUILD-OPTIONS.in >$@+
-+	@if grep -q '^[A-Z][A-Z_]*=@.*@$$' $@+; then echo "Unsubstituted build options in $@" >&2 && exit 1; fi
- 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
- 	@if test -f GIT-BUILD-DIR; then rm GIT-BUILD-DIR; fi
- 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 8974bb9fa20..680e5b3c8b0 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1117,27 +1117,47 @@ if(NOT PYTHON_TESTS)
- 	set(NO_PYTHON 1)
- endif()
- 
--file(WRITE ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SHELL_PATH='${SHELL_PATH}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TEST_SHELL_PATH='${TEST_SHELL_PATH}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PERL_PATH='${PERL_PATH}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "DIFF='${DIFF}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PYTHON_PATH='${PYTHON_PATH}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TAR='${TAR}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_CURL='${NO_CURL}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_ICONV='${NO_ICONV}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_EXPAT='${NO_EXPAT}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PERL='${NO_PERL}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_UNIX_SOCKETS='${NO_UNIX_SOCKETS}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PAGER_ENV='${PAGER_ENV}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "X='${EXE_EXTENSION}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_GETTEXT='${NO_GETTEXT}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "RUNTIME_PREFIX='${RUNTIME_PREFIX}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PYTHON='${NO_PYTHON}'\n")
--file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "SUPPORTS_SIMPLE_IPC='${SUPPORTS_SIMPLE_IPC}'\n")
-+file(STRINGS ${CMAKE_SOURCE_DIR}/GIT-BUILD-OPTIONS.in git_build_options NEWLINE_CONSUME)
-+string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" git_build_options "${git_build_options}")
-+string(REPLACE "@TEST_SHELL_PATH@" "${TEST_SHELL_PATH}" git_build_options "${git_build_options}")
-+string(REPLACE "@PERL_PATH@" "${PERL_PATH}" git_build_options "${git_build_options}")
-+string(REPLACE "@DIFF@" "${DIFF}" git_build_options "${git_build_options}")
-+string(REPLACE "@PYTHON_PATH@" "${PYTHON_PATH}" git_build_options "${git_build_options}")
-+string(REPLACE "@TAR@" "${TAR}" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_CURL@" "${NO_CURL}" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_ICONV@" "${NO_ICONV}" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_EXPAT@" "${NO_EXPAT}" git_build_options "${git_build_options}")
-+string(REPLACE "@USE_LIBPCRE2@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_PERL@" "${NO_PERL}" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_PTHREADS@" "${NO_PTHREADS}" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_PYTHON@" "${NO_PYTHON}" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_REGEX@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_UNIX_SOCKETS@" "${NO_UNIX_SOCKETS}" git_build_options "${git_build_options}")
-+string(REPLACE "@PAGER_ENV@" "${PAGER_ENV}" git_build_options "${git_build_options}")
-+string(REPLACE "@SANITIZE_LEAK@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@SANITIZE_ADDRESS@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@X@" "${EXE_EXTENSION}" git_build_options "${git_build_options}")
-+string(REPLACE "@FSMONITOR_DAEMON_BACKEND@" "win32" git_build_options "${git_build_options}")
-+string(REPLACE "@FSMONITOR_OS_SETTINGS@" "win32" git_build_options "${git_build_options}")
-+string(REPLACE "@TEST_OUTPUT_DIRECTORY@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_TEST_OPTS@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_TEST_CMP@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_TEST_CMP_USE_COPIED_CONTEXT@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_TEST_UTF8_LOCALE@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_GETTEXT@" "${NO_GETTEXT}" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_PERF_REPEAT_COUNT@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_PERF_REPO@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_PERF_LARGE_REPO@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_PERF_MAKE_OPTS@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_PERF_MAKE_COMMAND@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_INTEROP_MAKE_OPTS@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_TEST_INDEX_VERSION@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@GIT_TEST_PERL_FATAL_WARNINGS@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@RUNTIME_PREFIX@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
- if(USE_VCPKG)
--	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
-+	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
- endif()
-+file(WRITE ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS ${git_build_options})
- 
- #Make the tests work when building out of the source tree
- get_filename_component(CACHE_PATH ${CMAKE_CURRENT_LIST_DIR}/../../CMakeCache.txt ABSOLUTE)
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index a278181a056..4dd641baefe 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -35,12 +35,6 @@ else
- 	# needing to exist.
- 	TEST_DIRECTORY=$(cd "$TEST_DIRECTORY" && pwd) || exit 1
- fi
--if test -z "$TEST_OUTPUT_DIRECTORY"
--then
--	# Similarly, override this to store the test-results subdir
--	# elsewhere
--	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
--fi
- GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
- if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
- then
-@@ -100,6 +94,13 @@ fi
- . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
- export PERL_PATH SHELL_PATH
- 
-+if test -z "$TEST_OUTPUT_DIRECTORY"
-+then
-+	# Similarly, override this to store the test-results subdir
-+	# elsewhere
-+	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
-+fi
-+
- # In t0000, we need to override test directories of nested testcases. In case
- # the developer has TEST_OUTPUT_DIRECTORY part of his build options, then we'd
- # reset this value to instead contain what the developer has specified. We thus
+Range-diff against v4:
+ 1:  8c481cb9e01 =  1:  8c481cb9e01 Makefile: use common template for GIT-BUILD-OPTIONS
+ 2:  308dcbe0bd4 =  2:  308dcbe0bd4 Makefile: consistently use @PLACEHOLDER@ to substitute
+ 3:  20e77ffc5f5 =  3:  20e77ffc5f5 Makefile: consistently use PERL_PATH
+ 4:  50b607a412a !  4:  44297298476 Makefile: extract script to massage Perl scripts
+    @@ contrib/buildsystems/CMakeLists.txt: foreach(script ${git_shell_scripts})
+     -	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+     +	string(REPLACE ".perl" "" perl_gen_path "${script}")
+     +
+    -+	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/${perl_gen_path}
+    -+		COMMAND ${CMAKE_SOURCE_DIR}/generate-perl.sh
+    -+			${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS
+    -+			${PROJECT_VERSION}
+    -+			${CMAKE_BINARY_DIR}/PERL-HEADER
+    -+			${CMAKE_SOURCE_DIR}/${script}
+    -+			${CMAKE_BINARY_DIR}/${perl_gen_path}
+    -+		DEPENDS ${CMAKE_SOURCE_DIR}/generate-perl.sh
+    -+			${CMAKE_SOURCE_DIR}/${script})
+    ++	add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${perl_gen_path}"
+    ++		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-perl.sh"
+    ++			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
+    ++			"${PROJECT_VERSION}"
+    ++			"${CMAKE_BINARY_DIR}/PERL-HEADER"
+    ++			"${CMAKE_SOURCE_DIR}/${script}"
+    ++			"${CMAKE_BINARY_DIR}/${perl_gen_path}"
+    ++		DEPENDS "${CMAKE_SOURCE_DIR}/generate-perl.sh"
+    ++			"${CMAKE_SOURCE_DIR}/${script}"
+    ++		VERBATIM)
+     +	list(APPEND perl_gen ${CMAKE_BINARY_DIR}/${perl_gen_path})
+      endforeach()
+     +add_custom_target(perl-gen ALL DEPENDS ${perl_gen})
+ 5:  eddafe1cf89 !  5:  87dc74adfd4 Makefile: use "generate-perl.sh" to massage Perl library
+    @@ contrib/buildsystems/CMakeLists.txt: string(REPLACE "@PATHSEP@" ":" perl_header
+     +foreach(script ${git_perl_scripts} ${perl_modules})
+      	string(REPLACE ".perl" "" perl_gen_path "${script}")
+      
+    - 	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/${perl_gen_path}
+    ++	get_filename_component(perl_gen_dir "${perl_gen_path}" DIRECTORY)
+    ++	file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${perl_gen_dir}")
+    ++
+    + 	add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${perl_gen_path}"
+    + 		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-perl.sh"
+    + 			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
+     @@ contrib/buildsystems/CMakeLists.txt: file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
+      string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content "${content}")
+      file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
+    @@ generate-perl.sh: OUTPUT="$5"
+          "$INPUT" >"$OUTPUT"
+     -chmod a+x "$OUTPUT"
+     +
+    -+case "$(basename "$INPUT")" in
+    ++case "$INPUT" in
+     +*.perl)
+     +	chmod a+x "$OUTPUT";;
+     +*)
+ 6:  2cf8cf86218 !  6:  180655bbab8 Makefile: extract script to massage Shell scripts
+    @@ contrib/buildsystems/CMakeLists.txt: set(git_shell_scripts
+     +		set(shell_gen_path "${script}")
+     +	endif()
+     +
+    -+	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/${shell_gen_path}
+    -+		COMMAND ${CMAKE_SOURCE_DIR}/generate-script.sh
+    -+			${CMAKE_SOURCE_DIR}/${script}.sh
+    -+			${CMAKE_BINARY_DIR}/${shell_gen_path}
+    -+			${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS
+    -+		DEPENDS ${CMAKE_SOURCE_DIR}/generate-script.sh
+    -+			${CMAKE_SOURCE_DIR}/${script}.sh)
+    ++	add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${shell_gen_path}"
+    ++		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-script.sh"
+    ++			"${CMAKE_SOURCE_DIR}/${script}.sh"
+    ++			"${CMAKE_BINARY_DIR}/${shell_gen_path}"
+    ++			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
+    ++		DEPENDS "${CMAKE_SOURCE_DIR}/generate-script.sh"
+    ++			"${CMAKE_SOURCE_DIR}/${script}.sh"
+    ++		VERBATIM)
+     +	list(APPEND shell_gen ${CMAKE_BINARY_DIR}/${shell_gen_path})
+      endforeach()
+     +add_custom_target(shell-gen ALL DEPENDS ${shell_gen})
+    @@ contrib/buildsystems/CMakeLists.txt: string(REPLACE "@GIT_INTEROP_MAKE_OPTS@" ""
+      string(REPLACE "@RUNTIME_PREFIX@" "${RUNTIME_PREFIX}" git_build_options "${git_build_options}")
+     +string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" git_build_options "${git_build_options}")
+     +string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
+    -+string(REPLACE "@LOCALEDIR@" "LOCALEDIR" git_build_options "${git_build_options}")
+    ++string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" git_build_options "${git_build_options}")
+     +string(REPLACE "@BROKEN_PATH_FIX@" "" git_build_options "${git_build_options}")
+      if(USE_VCPKG)
+      	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+ 7:  e8abda661cf =  7:  07d5a9c2957 Makefile: extract script to generate gitweb.cgi
+ 8:  0e682b68e25 !  8:  065d03468f0 Makefile: refactor GIT-VERSION-GEN to be reusable
+    @@ contrib/buildsystems/CMakeLists.txt: if(NOT SH_EXE)
+     -	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN
+     -		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+     -endif()
+    -+execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN
+    -+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    ++execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
+    ++	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+     +	OUTPUT_VARIABLE git_version
+     +	OUTPUT_STRIP_TRAILING_WHITESPACE)
+      
+ 9:  46b7760fbcd !  9:  817d58cbaf9 Makefile: refactor generators to be PWD-independent
+    @@ contrib/buildsystems/CMakeLists.txt: set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS
+     -	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-cmdlist.sh ${EXCLUSION_PROGS} command-list.txt
+     -			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+     -			OUTPUT_FILE ${CMAKE_BINARY_DIR}/command-list.h)
+    -+	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-cmdlist.sh ${EXCLUSION_PROGS} ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/command-list.h)
+    ++	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-cmdlist.sh"
+    ++				${EXCLUSION_PROGS}
+    ++				"${CMAKE_SOURCE_DIR}"
+    ++				"${CMAKE_BINARY_DIR}/command-list.h")
+      endif()
+      
+      if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-list.h)
+    @@ contrib/buildsystems/CMakeLists.txt: set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS
+     -	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-configlist.sh
+     -			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+     -			OUTPUT_FILE ${CMAKE_BINARY_DIR}/config-list.h)
+    -+	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-configlist.sh ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/config-list.h)
+    ++	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-configlist.sh"
+    ++				"${CMAKE_SOURCE_DIR}"
+    ++				"${CMAKE_BINARY_DIR}/config-list.h")
+      endif()
+      
+      if(NOT EXISTS ${CMAKE_BINARY_DIR}/hook-list.h)
+    @@ contrib/buildsystems/CMakeLists.txt: set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS
+     -	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
+     -			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+     -			OUTPUT_FILE ${CMAKE_BINARY_DIR}/hook-list.h)
+    -+	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-hooklist.sh ${CMAKE_SOURCE_DIR} ${CMAKE_BINARY_DIR}/hook-list.h)
+    ++	execute_process(COMMAND "${SH_EXE}" ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
+    ++				"${CMAKE_SOURCE_DIR}"
+    ++				"${CMAKE_BINARY_DIR}/hook-list.h")
+      endif()
+      
+      include_directories(${CMAKE_BINARY_DIR})
+10:  ec4a9e65ec3 = 10:  33c9c322853 Makefile: allow "bin-wrappers/" directory to exist
+11:  b330fd783d4 = 11:  a193157a2d8 Makefile: simplify building of templates
+12:  fb7231ae4c7 = 12:  46667dc608c Documentation: allow sourcing generated includes from separate dir
+13:  cf1743667e9 = 13:  7079149d6a1 Documentation: teach "cmd-list.perl" about out-of-tree builds
+14:  6926a282a80 = 14:  4ef7262aa04 Documentation: extract script to generate a list of mergetools
+15:  ed3affb794c = 15:  565c3d149f6 t: better support for out-of-tree builds
+16:  205b038f961 = 16:  8ebb9184043 t: allow overriding build dir
+17:  bef26dd67c5 = 17:  a39f9a4547b Documentation: add comparison of build systems
+18:  780180568d9 ! 18:  de2239fbfcd Introduce support for the Meson build system
+    @@ t/meson.build (new)
+     +  )
+     +  test(unit_test_name, unit_test,
+     +    workdir: meson.current_source_dir(),
+    ++    timeout: 0,
+     +  )
+     +endforeach
+     +
+19:  45e2ab4044a = 19:  0be293e8bff meson: fix conflicts with in-flight topics
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
