@@ -1,47 +1,46 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB1338F83
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 21:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A3C1B95B
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 22:04:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731362107; cv=none; b=rJKtTFGiDb7qbRUdmTGHt9DnSCztvKn3s+nFddVtRkGfpLUEWHUUzdV5J0Lq7cSVdPW2txmU4roJaeS5mXPOZorUS4g13UfUzT6ilZ9YAZoOZs8Jr9WU/rslDnV/WEd1MRmrtNbCWOeQeln/fQ/hNR1WSoMj8v8m85PmDfLf650=
+	t=1731362691; cv=none; b=ij2CbCao//yGEGUXKYa1f0YkJ94vLVJUqgFeVMr0pL5u3jkld/T79tOlwQU9tyjmg9Z5HAknhMAoRJZvwvlJ7utymE6uNH6Cz5kSdXDzNhG33FhmGqKW3jLkux3aXlUYHPSMJZS4KwKewhOfTXS7CN78ijWErfEyu7EZbLqjpnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731362107; c=relaxed/simple;
-	bh=xqM8ypDO36VTY+LStEqK2e6ckQn0EQnOwFlqm3cfeso=;
+	s=arc-20240116; t=1731362691; c=relaxed/simple;
+	bh=XZegv9O1j0fLPL4IEaBdTX6dIXS0d6h75+3VV5HzEq4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rDmgwWHZXihBvXqmcOVVhRCSwXaxNpgS98bzGZ3qGcayVNRB25TqbylnhQ/xVdxEZSvGO6X9/I5Q8SgsEMz7ZeUcnZW7T0l9DAeYv8MbhC7ehpSceXV7mn3gVOnpO3StZbQdCl/0FIHGtLJM9uBE72a+eqkoYk3IifxD8vSUlIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=azVHa3LM; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=GYTKYrEGcVa/ovr8BoSER5jKwNkeIYTRcE07wrcY0Dbyd1Nwft6YM2O1r+i1xLw1Oo4P+v7BDWGDMGSYfpPASPVuapJoR6lzLyT+RegoIKPpuTuA7wAN6ZROJfraC9Yehmc2ZbMLg69qVVLtLE/5BDsxBdigFuyJfHR3eq23V0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ym4Zt3L5; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="azVHa3LM"
-Received: (qmail 21839 invoked by uid 109); 11 Nov 2024 21:55:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xqM8ypDO36VTY+LStEqK2e6ckQn0EQnOwFlqm3cfeso=; b=azVHa3LMDbD72m2wYNGTAln87b+fPkixDFheemA6luUsc8NWwNwgJiD6SQHGqBvUsHQ4b+cpQNvbNgET9652iesxo0nsMiXQXPiJvhKE2qkZTRTIYcRuMUXWX4zf/Kq74ldOYfxqJNjZFqkYotXldL832Vgmwsp9OkK+ZFCTiSpKP8MXW93VNQYZA22xZyUaE8PTt6StbrZzQcxs7DOFGOx8aOyEdrbThqHvxgm3mRo9THNhE9cJcSz7BkmofVgHKpr3viYJHJhgkO+JubNTZFBRExSmwZHvDqE/rH8nDLXtMkfcZ13pSaQX9sPEqP54PLk3yGL4SBPgtMz6nFuD0A==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ym4Zt3L5"
+Received: (qmail 21960 invoked by uid 109); 11 Nov 2024 22:04:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=XZegv9O1j0fLPL4IEaBdTX6dIXS0d6h75+3VV5HzEq4=; b=Ym4Zt3L5imX+b0qwpFNnfipMXZ7QhhJIxRM0QHu8IG2dFjLZCcd/FvsV0WNSkyIdoaTjIUGjuHIc8tsmiJABkPmjIDHeRzACV6e+CCm0JuRTPYgPrjXVB+jlU4ZCqFGwAChKdLNBZzVZSDyz7Gbp0el8MhQC4GqAoCYhNjHdDlrPxq20thBHfnVlNEsNi1UilJupem9WH3AHvrBwbE9E3cGsqCQ5V4ppA8c310O4xlkfqG8MtUkOaNKpo6BLd3WceaAW6Pal6lBvpqBfy+H/alnyCnn3Q+WfCq2pi1i64hyJZipzeeZR1TIXYh5WcBJ3Al174FsX/nU2RoVtbbSRMw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Nov 2024 21:55:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Nov 2024 22:04:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20486 invoked by uid 111); 11 Nov 2024 21:55:05 -0000
+Received: (qmail 20559 invoked by uid 111); 11 Nov 2024 22:04:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2024 16:55:05 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2024 17:04:50 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 11 Nov 2024 16:55:02 -0500
+Date: Mon, 11 Nov 2024 17:04:47 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
 	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
 	git@vger.kernel.org, johannes.schindelin@gmx.de, ps@pks.im,
 	johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com,
 	kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com
 Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
-Message-ID: <20241111215502.GC5019@coredump.intra.peff.net>
+Message-ID: <20241111220447.GD5019@coredump.intra.peff.net>
 References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
  <ZyUqr/wb5K4Og9j9@nand.local>
  <2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
  <20241104172533.GA2985568@coredump.intra.peff.net>
  <xmqq1pzqwnck.fsf@gitster.g>
  <f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
- <xmqqo72miim6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -50,80 +49,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo72miim6.fsf@gitster.g>
+In-Reply-To: <f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
 
-On Mon, Nov 11, 2024 at 11:56:01AM +0900, Junio C Hamano wrote:
+On Fri, Nov 08, 2024 at 10:17:24AM -0500, Derrick Stolee wrote:
 
-> > Yes. This is the downside of the --full-name-hash compared to the
-> > standard name hash. When repacking an entire repository, the effect
-> > of these renames is typically not important in the long run as it's
-> > basically a single break in the delta chain. The downside comes in
-> > when doing a small fetch or push where the rename has more impact.
+> > > I'm not sure why a larger hash would be worse in a shallow clone. As you
+> > > note, with only one version of each path the name-similarity heuristic
+> > > is not likely to buy you much. But I'd have thought that would be true
+> > > for the existing name hash as well as a longer one. Maybe this is the
+> > > "over-emphasizing" case.
 > 
-> Yes.  Due to --depth limit, we need to break delta chains somewhere
-> anyway, and a rename boundary is just as good place as any other in
-> a sufficiently long chain.
+> I'm confused by your wording of "larger hash" because the hash size
+> is the exact same: 32 bits. It's just that the --full-name-hash option
+> has fewer collisions by abandoning the hope of locality.
+> 
+> In a depth 1 shallow clone, there are no repeated paths, so any hash
+> collisions are true collisions instead of good candidates for deltas.
+> The full name hash is essentially random, so the delta compression
+> algorithm basically says:
+> 
+>   1. Sort by type.
+>   2. Within each type, sort the objects randomly.
+> 
+> With that sort, the delta compression scan is less effective than the
+> standard name hash.
 
-We don't necessarily have to break the chains due to depth limits,
-because they are not always linear. They can end up as bushy trees,
-like:
+Ah, OK. I'm sorry, I had not really investigated the full-name-hash and
+misunderstood what it was doing. I thought we were using a larger hash
+in order to give more locality hints. I.e., to let us distinguish
+"foo/long-path.c" from "bar/long-path.c", but still retain some locality
+between them.
 
+But it is throwing away all locality outside of the exact name. So yes,
+it would never find a rename from "foo/" to "bar/", as those mean the
+name-hash is effectively random.
 
-  A <- B <- C
-   \
-    <- D <- E
-     \
-      <- F
+So I guess getting back to what Taylor and I had talked about off-list:
+we were wondering if there was a way to provide a better "slider" for
+locality as part of the normal delta candidate sorting process. I think
+you could store the full pathname and then doing a sort based on the
+reverse of the string (so "foo.c" and "bar.c" would compare "c", then
+".", etc). And that would let you tell the difference between
+"foo/long-path.c" and "bar/long-path.c" (preferring the identical
+filenames over the merely similar ones), but still sort them together
+versus "some-unrelated-path.c".
 
-We might get that way because it mirrors the shape of history (e.g., if
-D and E happened on a side branch from B and C). But we can also get
-there from a linear history by choosing a delta that balances size
-versus depth. In the above example, the smallest sequence might be:
-
-  A <- B <- C <- D <- E <- F
-
-but if we have a limit of 3 and A-B-C already exists, then we might
-reject the C-D delta and choose A-D instead (or I guess if it really is
-linear, probably B-D is more likely). That may be a larger delta by
-itself, but it is still better than storing a full copy of the object.
-And we find it by having those candidates close together in the sorted
-list, reject C-D based on depth, and then moving on to the next
-candidate.
-
-
-I'm not sure in practice how often we find these kinds of deltas. If you
-look at, say, all the deltas for "Makefile" in git.git like this:
-
-  git rev-list --objects --all --reflog --full-history -- Makefile |
-  perl -lne 'print $1 if /(.*) Makefile/' |
-  git cat-file --batch-check='%(objectsize:disk) %(objectname) %(deltabase)'
-
-my repo has 33 full copies (you can see non-deltas by grepping for
-"0{40}$" in the output) out of 4473 total. So it's not like we never
-break chains. But we can use graphviz to visualize it by piping the
-above through:
-
-  perl -alne '
-    BEGIN { print "digraph {" }
-    print "node_$F[1] [label=$F[0]]";
-    print "node_$F[1] -> node_$F[2]" if $F[2] !~ /^0+$/;
-    END { print "}" }
-  '
-
-and then piping it through "dot" to make an svg, or using an interactive
-viewer like "xdot" (the labels are the on-disk size of each object). I
-see a lot of wide parts of the graph in the output.
-
-Of course this may all depend on packing patterns, too. I did my
-investigations after running "git repack -adf" to generate what should
-be a pretty reasonable pack. You might see something different from
-incremental repacking over time.
-
-
-I'm not sure what any of this means for --path-walk, of course. ;)
-Ultimately we care about resulting size and time to compute, so if it
-can do better on those metrics then it doesn't matter what the graph
-looks like. But maybe those tools can help us understand where things
-might go better (or worse) with various approaches.
+And what I wondered (and what I had initially thought full-name-hash was
+doing) was whether we could store some fixed-size hash that produces a
+similar distribution (modulo collisions) to what that reverse-name sort
+would do.
 
 -Peff
