@@ -1,55 +1,55 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C1C1865E5
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019C2189F42
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:38:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731321535; cv=none; b=BEc657u1o/xslr3kVjS/SjjnC5ndPdM6XqMcMqe33tNLcfGgBDED9lg2pKOvuYRWLY6TJGkVGLMVPsXg6HWwGZTPSLbE9oIActLAVUyj3KEVcz8LvjgUABUCJBNjRZjCvcL+XBgk5IgiPWE3WSm/FdcZp3rY3k7E0xELQEgmxXE=
+	t=1731321536; cv=none; b=L/BKjfXMiuRcE2PRYsoQXh4wKw6mueUnESTyZAr/y4zv7u2Sx43a8yqbjIXw8hYdqJB212DUeocAFskP+7VnlQh8Cz/3oUssYMTyQo33ZH92JRV61GbW+d7vjKVEDN+9vVPUo+ryorYQC+xqbbLcWFi456r0yzyKIGcRj5OTzMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731321535; c=relaxed/simple;
-	bh=ZX88ZI+VMC+xQ71eZMVlvY0QbRqdleoyhCHBZ82fdi0=;
+	s=arc-20240116; t=1731321536; c=relaxed/simple;
+	bh=K+4NJTDZLDbxI7Cv/0K3Pzg2hX1EY5xszX+RkxInH9Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J8JWes43rYuPDioO3VcO6Z7wyKneQHELGe+WPu4kJFb5+0hcwqPMONp2j+KXHrd9wMspDDqmyO7g+2+2vvofJx3QNwUgybOmGct+zSgGsnH7rQ0y0FJOwsf7ivaCZZCZaYgvn4seQAb2hwBblK0OGLywJ2gvQ8XQwxDDW8gl8iI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dg7ZBNpN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UUcSdDMe; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=kAgzuYkiFKhljJU+/RUX925msPfw6kRMajd4210QHQnzK3U+t0xWWXXsQfY3nRHxv5VB4VrmgSDBeaL3Vv9li47bqDezu8pMNKwSeDdoltHO9f23slXv5pyeYmX9H3ZsRDh6mSv/QR7bctf3irru4y7Gz0V3Xrk/i1qd9OE2+OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jkRaNcEI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c6Y/sFiU; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dg7ZBNpN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UUcSdDMe"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0DBF31140114;
-	Mon, 11 Nov 2024 05:38:53 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jkRaNcEI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c6Y/sFiU"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1176613801F5;
+	Mon, 11 Nov 2024 05:38:54 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 11 Nov 2024 05:38:53 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 11 Nov 2024 05:38:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731321533;
-	 x=1731407933; bh=zXcIttR+sShVfG/aI5oCQJZrOy86bcjQU00EI7nkT1o=; b=
-	Dg7ZBNpNTMJiTOCnDOFwpzQEE3uNaiVi4mpii+B2f2m24OptEf/ioz05dIU+kdlQ
-	7u1S0QfIqFQlmtfetxdJgzyT/3fTGCn4j8noxMeeaYm8TxSjzGHlTo/+z8jgO8Su
-	msKRE72/JzxW7wjQo9eHr/SW1FaD9qk6TsPMsemTJ05jMj298jxLVl9mn/Ql6a+c
-	ESXZH38grF2AryOiwJa3wosPUBecqhkFGRbgMkDgxNQWMje6jwi8NFeASz74kibY
-	bFNJHXQujuR//H2KZ/oXMtKTAKEsa1r6Ln5B7IARGRIoeLfDn9G5ZucQtudl4QKD
-	ETZK8EN4GEySGM5xs3RWDg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731321534;
+	 x=1731407934; bh=+n0CumCDI+clQ9ReQlJQlO/QyzI5zyp9cGfEqreGZYM=; b=
+	jkRaNcEIKfcTjIFpLhHTMzSlATB6aYpsCzb54SX5PbBbramX9bsyxL7qjCR8CW6h
+	n8GlW0tBhZyFP6s1NnuOdiF+O8hu98TuS4k0xesJ1bb0Z3VMAbfipsD0Gx5V1QwB
+	hzafzx9ASYUXA1TGrU9b0TSV1dekrHw47QMbYCu+37BDQFRE5g3cafM0W6OqZkv5
+	aUFfekABMC39LH/qOKIpnwuWVhg8yVEFnj5HGoNcHJgnJl7187ncr+vSWoQz03a4
+	BxjwaZ6qugdzH0mk+H+m+bfitFft4LLng/GvKrNgY4LZ7kFjRnayoZk+jviL48ru
+	1TCSAgmLXm23sNxmP/7lHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731321533; x=
-	1731407933; bh=zXcIttR+sShVfG/aI5oCQJZrOy86bcjQU00EI7nkT1o=; b=U
-	UcSdDMeB310SEVjf1/+1EvtpAXDKsS4QiRBcE/2GlBezE4f7JuJdpEmRcIM5Walt
-	G6HP2bFyKbyJln4bsguFwNkC2S1nHnvKVwHe7dxElT3Q0WfUm9Chk8hyp4EuyY4W
-	CgtjsqvOJUqWWbmkc/rfKiAy8BHVElDFdcaFJFVjrMLeEMkz9vURWOErwWW+sJSp
-	r2kNXMZTo8Gs1SRy4J6HxXw8lbbzOnF7UFsLpNJ99VxZnpLCPKuFT1Wjba9WtQ1J
-	6B5SKtzv2yL1JMGJhjb0ZTjFwdsSOVQfAuq9Kv+O8DayFnVvUn6X7SXP63fyyuVe
-	i6OApr4dDyKbcLQUpgD+w==
-X-ME-Sender: <xms:vN4xZ54glSmLhlKwkM9KB02ODuhz9V-rvWO6_hkPIgS9I2LrRL_3vQ>
-    <xme:vN4xZ27zag306h0PPLAeko9pN1Fz10n36KgS3qbdLMdaVdjfHhzKUZpZtwLrymUMi
-    gTeVuGYNJxurQRtdw>
-X-ME-Received: <xmr:vN4xZwfSBpJXFdiTsmfQ3tKGLAiFYBy6WLb2_EfTR98xqmjJC0eDNF_vLhik9twSQIVlLtpITDTSheFvXDYdfciGfXgoUA21jwZNZd2x1roV1-p6>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731321534; x=
+	1731407934; bh=+n0CumCDI+clQ9ReQlJQlO/QyzI5zyp9cGfEqreGZYM=; b=c
+	6Y/sFiUY6b5MwYzATJOT82MopLEbn2f3GGOlSIlKHeDbfEAmIB7ng7M8ZhJ6aWop
+	a8mJ2/AUKy0Qs9sISPxlZTqbfBb32+iTXIqmajLWZKRcMrII7kONtpM7AId0xLgd
+	IpAppvhQ2UM1kPwDAmt3VdHUOH6URQXl7d0SgOdX0JpCshucPNV+STpwJmUvIfW2
+	+mxsREaaPd1xSErcE8Gz2ST/3BEVKo0CkfuusVMi73Zi2n1Gpw5yya6agGvYTqiT
+	QJzQElD8EbQhLfyLS8CBbaYmHo58a9r6BTIwyTS81JPaUAjgvxapCKyeYLxD32Qc
+	W0vR8ybNSOlQ4K9UrUzWA==
+X-ME-Sender: <xms:vd4xZ2fLvfInqrx4XYaEQJ_RXq1jZ14iY9Vgt-pgf2Jdy52vnz-dWg>
+    <xme:vd4xZwNBePx4bGY1SUNb1SUazbxyY3LAn0x6dkKPe7Aejdubf4Bb-K36mmZQ3Q3-x
+    sgliAYf-zr4I-qx-g>
+X-ME-Received: <xmr:vd4xZ3i4wAkF6xwom2LhcdiCB1mVq7uLdnQSQ1R2L28V4uIBT2mV0YukhL0L_GDKzLkSsOy7qEasV6opB3FjatcVIvlkBXPgpsInZj1hPvjqu87z>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,23 +58,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehrjhhushhtohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:vN4xZyIj8UL-eEDOAJFsOuQvun1i_7kzUhLjyeqJCG-S-Jg63DU2-Q>
-    <xmx:vN4xZ9JF2EEgkTaLZXlDYHaVXJcs8z5WsuTmMvjYT83cg-7t0vv74Q>
-    <xmx:vN4xZ7wCT1JmuP_wgkuua4gbk6gYWFMqlafkzuvrI5chzfSmc5KJWw>
-    <xmx:vN4xZ5KjBgi6G_NukEiMxgWhH9pfz_BbFqa9IKIG8CLT-fwZhgqdOA>
-    <xmx:vd4xZ0V7YxLfBLpc41xln7fR2gslQXcNLY20gNnyInnLGGYDpVevJQE9>
+    mhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:vd4xZz_HTbDJmbYv7AeAbto5e7nuG28m9M8yGZBTyoR5_4w-6R56YQ>
+    <xmx:vd4xZys0eH5Mv_8lUFVWeTOpXhWryQGRfoYkNIUe1U9rqprK4VADyg>
+    <xmx:vd4xZ6F0l7pMi27nv5MkIBwpZWdAqvtinvvkeG5HENrNDpVicxpsbw>
+    <xmx:vd4xZxPgThqxPUcBbJMv3916ffdAWgmT81tqQKD4Ma6ifc-g7KWEnQ>
+    <xmx:vt4xZ7575_E967Z07xGA0UWLKTicYOBkQl4I8wrJPa0gReA0WxKZtek->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 05:38:52 -0500 (EST)
+ 11 Nov 2024 05:38:53 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dc943081 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 10:38:18 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 64f3d87e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 10:38:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 11 Nov 2024 11:38:36 +0100
-Subject: [PATCH v2 07/27] bisect: fix various cases where we leak commit
- list items
+Date: Mon, 11 Nov 2024 11:38:37 +0100
+Subject: [PATCH v2 08/27] line-log: fix leak when rewriting commit parents
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,110 +82,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241111-b4-pks-leak-fixes-pt10-v2-7-6154bf91f0b0@pks.im>
+Message-Id: <20241111-b4-pks-leak-fixes-pt10-v2-8-6154bf91f0b0@pks.im>
 References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
 In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are various cases where we leak commit list items because we
-evict items from the list, but don't free them. Plug those.
+In `process_ranges_merge_commit()` we try to figure out which of the
+parents can be blamed for the given line changes. When we figure out
+that none of the files in the line-log have changed we assign the
+complete blame to that commit and rewrite the parents of the current
+commit to only use that single parent.
+
+This is done via `commit_list_append()`, which is misleadingly _not_
+appending to the list of parents. Instead, we overwrite the parents with
+the blamed parent. This makes us lose track of the old pointers,
+creating a memory leak.
+
+Fix this issue by freeing the parents before we overwrite them.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c                    | 35 +++++++++++++++++++++++++++--------
- t/t6030-bisect-porcelain.sh |  1 +
- 2 files changed, 28 insertions(+), 8 deletions(-)
+ line-log.c          | 1 +
+ t/t4211-line-log.sh | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/bisect.c b/bisect.c
-index 12efcff2e3c1836ab6e63d36e4d42269fbcaeaab..0e804086cbf6a02d42bda98b62fb86daf099b82d 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -440,11 +440,19 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
- 			free_commit_list(list->next);
- 			best = list;
- 			best->next = NULL;
-+		} else {
-+			for (p = list; p != best; p = next) {
-+				next = p->next;
-+				free(p);
-+			}
- 		}
- 		*reaches = weight(best);
-+	} else {
-+		free_commit_list(*commit_list);
- 	}
--	free(weights);
- 	*commit_list = best;
-+
-+	free(weights);
- 	clear_commit_weight(&commit_weight);
- }
+diff --git a/line-log.c b/line-log.c
+index bca9bd804073df9b77b2859063ac5ad4d3b24e0f..bc67b75d10d34edc726c00c887d57016e40f3a00 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1237,6 +1237,7 @@ static int process_ranges_merge_commit(struct rev_info *rev, struct commit *comm
+ 			 * don't follow any other path in history
+ 			 */
+ 			add_line_range(rev, parents[i], cand[i]);
++			free_commit_list(commit->parents);
+ 			commit_list_append(parents[i], &commit->parents);
  
-@@ -557,8 +565,11 @@ struct commit_list *filter_skipped(struct commit_list *list,
- 			tried = &list->next;
- 		} else {
- 			if (!show_all) {
--				if (!skipped_first || !*skipped_first)
-+				if (!skipped_first || !*skipped_first) {
-+					free_commit_list(next);
-+					free_commit_list(filtered);
- 					return list;
-+				}
- 			} else if (skipped_first && !*skipped_first) {
- 				/* This means we know it's not skipped */
- 				*skipped_first = -1;
-@@ -614,7 +625,7 @@ static int sqrti(int val)
- 
- static struct commit_list *skip_away(struct commit_list *list, int count)
- {
--	struct commit_list *cur, *previous;
-+	struct commit_list *cur, *previous, *result = list;
- 	int prn, index, i;
- 
- 	prn = get_prn(count);
-@@ -626,15 +637,23 @@ static struct commit_list *skip_away(struct commit_list *list, int count)
- 	for (i = 0; cur; cur = cur->next, i++) {
- 		if (i == index) {
- 			if (!oideq(&cur->item->object.oid, current_bad_oid))
--				return cur;
--			if (previous)
--				return previous;
--			return list;
-+				result = cur;
-+			else if (previous)
-+				result = previous;
-+			else
-+				result = list;
-+			break;
- 		}
- 		previous = cur;
- 	}
- 
--	return list;
-+	for (cur = list; cur != result; ) {
-+		struct commit_list *next = cur->next;
-+		free(cur);
-+		cur = next;
-+	}
-+
-+	return result;
- }
- 
- static struct commit_list *managed_skipped(struct commit_list *list,
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index cdc02706404b34b17b29692d72d97fab7eba58b1..310affadebed321fcc93ee5bd785abf4ca013cc1 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -9,6 +9,7 @@ exec </dev/null
+ 			ret = 0;
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 950451cf6a66e6c099aa5303ce19230c34cd1fc4..1d6dd982a2a858e9ca03635eb83b1463c9c9caed 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -4,6 +4,7 @@ test_description='test log -L'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- add_line_into_file()
+ test_expect_success 'setup (import history)' '
 
 -- 
 2.47.0.229.g8f8d6eee53.dirty
