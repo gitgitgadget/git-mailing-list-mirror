@@ -1,99 +1,133 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1632C15575E
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 13:20:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0A2156C52
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 14:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731331234; cv=none; b=XTMXb7YTCjvc1Msk+2DmEZpd6tKiemMMO12/9I2tYOfJnQCNray/iOEKNzILbazctftWJMze1mP9xvj9L3dN4GjnFHcRGuqFPbwElO/qop2yyRGHeQMoG8bKVi1zZ1xIyH0B+aXfaYsFgaJ8ISXZEp5echmlkavQncL8O+MTFwE=
+	t=1731334413; cv=none; b=hBJzqklmJfRC57yJqp9/olZv5zKU2rIw1xmQw0J3P+gx/AdYRvWz82eqIjtymI+bsjSR1DzO3Q/Eg0isSbKpiCVtcUZyEm9c7b164Dy7HQ6iGvIcygP5G9rFiQMS2Lh3Tx4gnKslFtURn259UsQbzu7hRLKAESA4EPsrE5h0NxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731331234; c=relaxed/simple;
-	bh=/YeVLa0hgw0B1IymlP9wQ+GONldMwHQrSIyyDDYLEXI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tfnkSvDidt1InkAK/k/jRIKmHNbqSGxsl8UItxTniDazSeGtj54Xwf1gbE34Tq5e1Y4XlVnLars4ppirs+GH+mt1ztuGYlyi5+qfiWykxon+7o4HoY2mLooQ/3QjsLbXxSsXF1lvlauMl1Y9jSD1Hq8VbhIjkhXzYPSNzdiYkys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHrJdd/f; arc=none smtp.client-ip=209.85.219.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731334413; c=relaxed/simple;
+	bh=h9M01ViILJNPcW0FrVOFOtHIVtKjCl9mgFeTTAFdtVg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=idF8edo7ZLYhiCKi01t2wxLEtaw+K4GGsocfXPqX4lUZxyweZePZfXVlYSAF87qdWb2xjTEmaV0zi2e1J1ZJpBH9cp05P+/cYtkppwr+ST7mu/Pf2sdNaOs95DgyFbiOKjJFROB/o90lU976d00SqEonW4WGjkcI7vWGScWB9Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YDS91c8u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V1pFnAa0; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHrJdd/f"
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e30d0d84d23so3909034276.3
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 05:20:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731331232; x=1731936032; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=haDxIywD5pFr3R79GByNmrXc1xw7CzYb0xxJbKOMnG8=;
-        b=iHrJdd/fHLia/LKUrNy6Yu4ce/+yzjJjyhNZelsFm/n0+potTdb5PBhMCajiQ1fWb/
-         QbeA810A2ihIilSIs9M23w83y4sqRMTESlE9m8KOxUTUkCwNEcnGBBPEnEsDwLl2Ps2W
-         wfDYQKSxSetIVxN4/S8EHn2w2Bh9OaJOr4JJ3aFHRTzd4FNDCh772El2H6D271fOsYg/
-         ThX8CNILZd1Wnj8sMN/fjEXUJ28IyPKhYwLNqKP60tSmBTwwef/u7LQbqkM12oH3kI5/
-         eDigzOnNisVI1MwqZbb0YGkF/G7ayN+DgAcOU+9sd2vvhDgoPr/YRNNwfpVEBprqdFGm
-         8B2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731331232; x=1731936032;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=haDxIywD5pFr3R79GByNmrXc1xw7CzYb0xxJbKOMnG8=;
-        b=kgbKlFD5uQ+7rhGwyPR50w36oARvTtQzXFXtlvZ3ytTSf17eKuZOubxSJPm+6Zs/AX
-         3f5JNngTzCc8QJYuCcjyQ79YkocxwpujTc4C7pih+Mc05Z2pWzDFoWz3w+fG3TVTeJuC
-         /eHpUdLYFdPSD/Kv9w7NyLuirWrPB2J5WaCPl7jr7G3xbRwkH5NCrWV/S8z9/5lCwjjX
-         Y+AcoH5ml3NVolK/8gsGDxnk8OyA5xUgK8hx6Jt1aVXoHbenpmnPbH0WiO6EUZ1dAhRq
-         Ovaqb2rDxStNaNJEPDtApnFuzxIc2xWSi5p4co7io1/vxTJvQqcctnCkC9nhQqsSAatk
-         epgg==
-X-Forwarded-Encrypted: i=1; AJvYcCVhFYrJdLe+loquNAGdyu8oILOFaTbb9moRrYewIzVKde+t+XZ+CBQUmtZ4UCfnQHqzL4o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJQupjuj2IWECLrUMmzgAM6kPuYK6nVG+ZrOgQgJ9ezDO5xp77
-	FxVhWuARhMi4w3oVfn7VlHc7PvvwotYKcqI+NuPhJsq02ecBoron
-X-Google-Smtp-Source: AGHT+IG6R450CvBBev8/KKCZaqregq3JUWrDnk7BnpNgMhZpgkdiSPz2gpvBPCrA3xfitgMbugfzXw==
-X-Received: by 2002:a05:6902:728:b0:e2b:dff3:bda with SMTP id 3f1490d57ef6-e337f843c06mr13245335276.6.1731331231858;
-        Mon, 11 Nov 2024 05:20:31 -0800 (PST)
-Received: from ?IPV6:2600:1700:60ba:9810:cdf0:7186:dd7d:aa91? ([2600:1700:60ba:9810:cdf0:7186:dd7d:aa91])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e336f1ed085sm2275316276.52.2024.11.11.05.20.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Nov 2024 05:20:31 -0800 (PST)
-Message-ID: <db91e3ec-9c08-453f-bf76-4aa131f8b798@gmail.com>
-Date: Mon, 11 Nov 2024 08:20:30 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YDS91c8u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V1pFnAa0"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6F18B13806DC;
+	Mon, 11 Nov 2024 09:13:29 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 11 Nov 2024 09:13:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731334409; x=1731420809; bh=dZIYWobXGd
+	YzXuFMRFb4S6DFrsVpae+b/0pQx+6yzpM=; b=YDS91c8u51AMR3s9KRtZKo/iju
+	UquHJB8TsfZ30wujl+3LRsBRcxGvZmqz1RrwZPviCG2Evks8rE2fDpo+IgqX3eMH
+	+THHBSWs/H70rvp/ULW7LYXxitr4jaI9aiOsLtru/m7Ho3tdn2pR1OrO20kiVOxI
+	UYODToE6uDMVUsXryaI3MupQ/dsRlPxafARb39q0pt1kceX3s+K7VtuL6IzxSbGt
+	aMlt3SEIN7xVTSYSdO5CHricm6UcJaC1ckPzpa2OKScKdLDjga8whMT8CAcHESBb
+	4GGTntmOdjfrVQJ8efhD7BotO2w23OMZ84bgex/l4TermlPbz4+UtOJzmvHA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731334409; x=1731420809; bh=dZIYWobXGdYzXuFMRFb4S6DFrsVpae+b/0p
+	Qx+6yzpM=; b=V1pFnAa0oQ40FWxV5qwda0WY1LNhZsB1ItXK77teL/3yutxDOtx
+	kECpoyjg/j8HtfzQ4mosRXXWECOYtKNeDYhyCxGSiU7rwdIDQa6Iq/Ay9pdIwUib
+	sLQ+O5eHTsGyg2oG5WACjGEK8QIb4GijGCqXhipZglorvnXy6ezIshmFttK10BjU
+	M65e2FPZG47WJ2rNTGElgWf0z03xqJyU4igfE15kWcc3J9tXkHfj0H/Ouec6gt9V
+	CQDqLYGyO6e5JsGk7YQP9S8lcii8GBC+wJFf3/v6xHGn6v01Keb51IyJX8K1O8Sz
+	YqGZf7IfSTusbAsir7eFJNnUV9OXRsDXdWQ==
+X-ME-Sender: <xms:CBEyZ9WLrPOuNU2EWfci_C3fTMQMzzRBjgWXUaWqANZNXy-JoXNsrQ>
+    <xme:CBEyZ9kDa6x63oHzXLUXVX_1wYX1HBqc0mXtmoHTi9q_1-iUaiA5CQh9dk7WcpKaV
+    xITPP5jLwMahgid-g>
+X-ME-Received: <xmr:CBEyZ5bxcUD2FoB7SNfv1ukA-FJ54CpJS0HeUzOGMCbw9SJpcE1YcjlgSJO7I4GLfTCc6vfBf2QTq1lT_O5ojWhHm7QhDetyfuwBGd079RjeXVtr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdeiudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
+    eprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghstghhfigrrhht
+    iiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhih
+    hnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:CBEyZwUNvN6DKfTkpRLMVxU3ZznWGznYt1JBLpWqFIzRlkGyc7S2vw>
+    <xmx:CBEyZ3nNo1wI9AH996v5Vln1vwaFZHCDsyL05bnzGf4U9zH6ihFkow>
+    <xmx:CBEyZ9fOy3aQ1RRu36jW29pWKyGWl1Rt2GcnXw0mH_RwekjPy_xwtg>
+    <xmx:CBEyZxHNbUMAdAiDBS5anpL9y3gnyksP2vFuVmKwQjtP1dlLmkUyFA>
+    <xmx:CREyZ1U28a2QroXt-uDTM08IJv5wuI6K0h5IGG3RPgnn-DVubcjuRuC6>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Nov 2024 09:13:26 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id f50347b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 14:12:49 +0000 (UTC)
+Date: Mon, 11 Nov 2024 15:13:15 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [RFC PATCH v4 05/19] Makefile: use "generate-perl.sh" to massage
+ Perl library
+Message-ID: <ZzIQ8zENlz-0CZBX@pks.im>
+References: <cover.1727881164.git.ps@pks.im>
+ <cover.1729771605.git.ps@pks.im>
+ <eddafe1cf8935fd25d107645168ace3f65e1064c.1729771605.git.ps@pks.im>
+ <6a608200-2dd5-4505-9e1d-1e161ae2896c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, johannes.schindelin@gmx.de, ps@pks.im,
- johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com,
- kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com
-References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
- <ZyUqr/wb5K4Og9j9@nand.local>
- <2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
- <20241104172533.GA2985568@coredump.intra.peff.net>
- <xmqq1pzqwnck.fsf@gitster.g> <f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
- <xmqqo72miim6.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqo72miim6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6a608200-2dd5-4505-9e1d-1e161ae2896c@gmail.com>
 
-On 11/10/24 9:56 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-
->> The --path-walk approach does not suffer from this problem because
->> it has a second pass that sorts by the name hash and looks for
->> better deltas than the ones that already exist. Thus, it gets the
->> best of both worlds.
+On Mon, Nov 11, 2024 at 10:53:58AM +0000, Phillip Wood wrote:
+> Hi Patrick
 > 
-> Yes, at the cost of being more complex :-)
+> On 24/10/2024 13:39, Patrick Steinhardt wrote:
+> > diff --git a/generate-perl.sh b/generate-perl.sh
+> > index 12e116b76e5..cb1629857c6 100755
+> > --- a/generate-perl.sh
+> > +++ b/generate-perl.sh
+> > @@ -17,10 +17,20 @@ OUTPUT="$5"
+> >   . "$GIT_BUILD_OPTIONS"
+> 
+> I need to add
+> 
+> case "$OUTPUT" in
+> *.pm)
+> 	dir="$(dirname $OUTPUT)"
+> 	if ! test -d "$dir"
+> 	then
+> 		mkdir -p "$dir"
+> 	fi
+>     ;;
+> esac
+> 
+> to create the output directories when building out of tree using CMake on
+> Linux. I'm not sure why it works on Windows without this, or why we don't
+> need to create the leading directories when generating clar-decls.h or
+> clar.suite as CMake seems to do it for us when it initializes the build
+> directory.
 
-True. I hope that the results sufficiently justify the complexity.
-Further, the later uses of the path-walk API (git backfill and git
-survey) build upon this up-front investment.
+Ah, indeed, I can reproduce this when using Makefiles. I'll solve this
+via `file(MAKE_DIRECTORY)`.
 
-Thanks,
--Stolee
-
+Patrick
