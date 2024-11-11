@@ -1,268 +1,164 @@
-Received: from YQZPR01CU011.outbound.protection.outlook.com (mail-canadaeastazon11020078.outbound.protection.outlook.com [52.101.191.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D7CC1EB36
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 21:22:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.191.78
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731360153; cv=fail; b=pCRGmN3ICmVDIANGcAy2fuQPM2lwYA1bjHlqYfUpbJkB7muUfnVSmiCURNoq4ttrsLCCxzkhnbo4SIQq1TpuoTofK5IEy41aQzgN2YaS8Z6vQiwD1LEnTVSTBsXhOOfCW76AkQ/EHWVOQqCs9MUf4cqiqIKrZrKrmaPjWLRiCFI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731360153; c=relaxed/simple;
-	bh=VEgHtBnlk0iC7shSK79R5587AQWbWRLCPPjUGYTTQGE=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=mn/IiehaZ5FIYNTfAu2jNHYQG5qOdC1I7kYtmLmij3fd8s2VeHr+8mvkdpuO7UuxCeGylvG0ImRVDeWdOO29twv1ECqtzS1zFpDdsyLKQSDvgeoAWDqCzSzws6v1pHsSYb4lzd0CCM9GnqXtSG3zfx1Xy5+Daw7YziqfGGHPo24=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com; spf=pass smtp.mailfrom=efficios.com; dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b=soHf903b; arc=fail smtp.client-ip=52.101.191.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=efficios.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=efficios.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=efficios.com header.i=@efficios.com header.b="soHf903b"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v3EN44Od44jtxFX4ZQrvX5+pzpIz4uuB4cAbuudvQtWz6sWDwZsMgV5GDO/Lk0BhnMqJgvLEGVkTgPubwL8SqOizBvZObVkNJWS7u3tW66b+86LFCG7A2o5UWFA4NWIst/cwUco7YEw8Ki13GOlNR3V2DcyM/HpPOiW9CuxYNpkWFw/+YucGsITJiAG2Kn2ltKHfba1t7JMOwkZggHjwkiY74g8IUZgggPlkG8dVyJg3rFkW9g9KecT+xCat0yqLaWtslFNxOxuXcn5zQIPqVPMJ6rLpqgWod2AqoIkfyOyNe8zw+Fvy+1kI3GSfwTbwEMoofahdkMoQPxqRTvXk0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/68LOC067WNZ0QPavSyRB0kdBwoiES2WJEuwI9HeO3k=;
- b=Ja15r1QXkS0LKolm/Zj9lfQ4JiDHyKI9/xnKmPqMQTQ5WZFruVxsOi5iZmGPH7n74Xrc1A8dOCJxsIRA8NXkUSYpx5JphwJU6D8vTfp1YUmibEpa2WMicPP09719BGPRHSU3aZ2Ylg0YMuwx4gmAlWN1HPet3VVKfnQXDT8i6F4XtGAEelM9NzvDZeEyHafyX/7vpYOy4JZj8Fulo6k+CkFBTIM0aymJyS/Vt3fkExBClAm0OlMWyZKSHYW8ovMs8AmjJ7BJ3bbcH/fSckI3MSUvyY+J0aNUG43EhphJefM61gmVcC4cCSSwVa3uc02uj5uN4ssAwm0REVlP+Qp7TA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=efficios.com; dmarc=pass action=none header.from=efficios.com;
- dkim=pass header.d=efficios.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/68LOC067WNZ0QPavSyRB0kdBwoiES2WJEuwI9HeO3k=;
- b=soHf903b9XjxqKNj8hXaNRs72ZkNjECNWW8veqUolAfdq6m5ojHdC5ajr76Mlk+1nqPbE//mtv73WycarF01Z9s++794u5vQlsoovbXWaPSO8z+VmPrNGdzuBVnhcXeB8YoMS3707PA29ayFcG4wgqA0x1U3lPh1Z2uFL2FxtVhdcdW7h9wRU/boAci5mUX6wqDCB0IIeXBMbNFljA9QDG/wfRZ9Eeh4lJaQ5Tf3CNguBcTDthEpTQ6ysoW5T7rdDRfmls9ly8gO9Zr9CTE7yygIQ3uLDwhKN9yAca8HGIHHlTQ12iwLthgDl9y2bFLIdbshCT230PMRuGMNCzcaqQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=efficios.com;
-Received: from YT2PPF061CB2B82.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b08::406)
- by YT1PR01MB8844.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b01:cb::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.29; Mon, 11 Nov
- 2024 21:22:27 +0000
-Received: from YT2PPF061CB2B82.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::aaf2:73d5:542d:b917]) by YT2PPF061CB2B82.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::aaf2:73d5:542d:b917%5]) with mapi id 15.20.8137.027; Mon, 11 Nov 2024
- 21:22:27 +0000
-Message-ID: <09bf8815-320b-494a-87c4-34bb0df08595@efficios.com>
-Date: Mon, 11 Nov 2024 16:22:26 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] builtin/difftool: intialize some hashmap variables
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Taylor Blau <me@ttaylorr.com>,
- Patrick Steinhardt <ps@pks.im>
-References: <20241111162148.337375-1-simon.marchi@efficios.com>
- <20241111205453.GA5019@coredump.intra.peff.net>
-Content-Language: fr
-From: Simon Marchi <simon.marchi@efficios.com>
-In-Reply-To: <20241111205453.GA5019@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQBPR01CA0007.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01::15)
- To YT2PPF061CB2B82.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:b08::406)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C70916DC0E
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 21:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731361156; cv=none; b=KkP5jZsepgTDcOHOxpYV/B8JWnTT0PAGRlb2euQFdvHcoEn7Ex0Jr69jhA3oveg0f7DYm8OvddIjqDMYFghcZ65MstQheEHprFaGFY02NcQzPV0BnMhfnUipQQaXyuzY7lA+fAaMIv0PiORGpfsMprRKlBlydSoDn1+w0qoP6+k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731361156; c=relaxed/simple;
+	bh=jciiRrTwOjyGMoCMYcylnMNmHocmri5Dxr8p/YO8168=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jK+GztBaFWxhhkXSLqnBCPDXoPeilak/WNhsrBdDzr3c3iBC1xuvWSMPp5ZhKf/ePLtYKRHQvsXfnbIu2bU/aOaH59ABZEH4eTu4UtcNjf0ccqPs6as5HQ7jGQK+pt0Wjs4O7dy3lYuKMiPbAIs3XygVryeyf0B92H6t33LFz9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Message-ID: <bfc876ea-1a90-4e78-8756-efdcd53e7525@gentoo.org>
+Date: Mon, 11 Nov 2024 16:39:08 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: YT2PPF061CB2B82:EE_|YT1PR01MB8844:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0619ac1-6e90-48ab-2628-08dd0296f179
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?Y0pxTFB2TnFFUzFBVEUwRkNmL2d0cjJzQSs5T2QxVDBLdEFtNFlRRDhpREtm?=
- =?utf-8?B?eDFmaVVPMUcyb3NYVWZBUGVuU3R4MnNNeUZyU3U4ZnVpRDNGVG9WTEo4OU9H?=
- =?utf-8?B?SlNhK251Snc1K2g2R2l2VVlBT29IckFVcllyWkFVUUlEY2N1T0lXMDJjZ3VH?=
- =?utf-8?B?c0xTMEZDSldLMlRycXBoMDJiN2ZOZmxVRFlCL2dzTlcvQ0NpVDBnUXNXMnpl?=
- =?utf-8?B?dGxlZzZ2QTZGOVp4bGs4dC9tMXFHQW1yZzY0YXFNSHkxcHlwNjNrSmliSmhH?=
- =?utf-8?B?WS9CZ1RTVW1GU3hZTk05c2tyUFhWZjdnMStoSzl5QVRwNmlpbS9ZUXRHN1cr?=
- =?utf-8?B?R1Y3S2h6TGtPbWFpdlBuK1ZKUzlpMUFMQnY3OXllTDl5V0cyVG5Ra29qdVUy?=
- =?utf-8?B?ZFNzVEtLYi9yVmNmNmRKL2Y4eFFZRjN4dHBHVFdxN1ZTMk5WY3A1VTh3YmtI?=
- =?utf-8?B?VkJENEwxcEhlNXBVb0pEcWxJbW54MEVZRUlXWkl0OUo3Z2ZqVkpobTVTVjMw?=
- =?utf-8?B?d1EraFBoZTZRWGhEeGZTMlZ4Zyt4SkRvV1N3Z01ab3dNYjFOdlhhNUxiV05B?=
- =?utf-8?B?OGZGdjV2bWM2a21OM245VEg0bjUxWVhVUlhzcHEyOFlPWDNzaGRrQ2tUY0x5?=
- =?utf-8?B?UkZveXpTeEczRktZRlUreDJFUlFGZHNTdEhFRWtOdnJrUklEcXFXVXBQMTlS?=
- =?utf-8?B?cy84SUdsWHBGUmZLUnQ1cjhzc1dzZnNXQUw4Mnd6ZEs3elJ2RG14eTRwdVh0?=
- =?utf-8?B?S1lWRkhDTzVsSW9oOXBvTXQ3SDNTN2pmQVNaemlqcERWWkR0OVBuemwwc0lH?=
- =?utf-8?B?RVZFbkMxZzQyQzdob2pHQmNXTkh6WHFFcitHalJDT1pDS09LbUU5R2RCQVlN?=
- =?utf-8?B?aW9SdWR1ZkxKOUZYYnd5eFI1SmdheDJjS3Fia3hWTVJwcXVWT1ZOQ0dHdUhY?=
- =?utf-8?B?d29zZVdyRzlsZkVLbzBabkVoMW8yZnk4SXNCcHJzQldpRG4wblR3VVpBa1hx?=
- =?utf-8?B?dVFiYUFhM0UwMXRmSVFFblF5T3JUb3FENU1WNkMwUXVCL0JiVFhMUmRjUFFs?=
- =?utf-8?B?OG14d1QyZFJMMExibW1ZM2Y4NThSNUlQaEg4VmlSeW5tQ0FFbVFtUVZoeUd0?=
- =?utf-8?B?cmRIajBJRmMxUHdmUkJpTlJodklyaW1rUHF1ZkdrTjZWSWN6TjN5U0gxM0Q5?=
- =?utf-8?B?dHk1S2hkc21mNTNUeHpabWQra2hRVjQvZDZlc3dwSlVUMnZxT00xTWR6YUFI?=
- =?utf-8?B?UHdJTEdwcDQ4YTVIQThHc2Q2bm9LbUJRdWYyeXdzNXVNZmdmU2thaENhNjJp?=
- =?utf-8?B?SjNOS2dhV3hjMXdzaTlicmhCN1ZpVVNha25JMjdhZ3JTVGpqamFGRTVPMGlM?=
- =?utf-8?B?ZEliRlZqbEhKNHViK3g0L1dSUWtZY21aVi9DOHdTeHNmelRMUHdxK3JjeGtB?=
- =?utf-8?B?R2tKcDBmNjNkZmdocHNBREdJQ3BzSkVWZEp1S2txRUNmY3FWdjdjV1dwMUpG?=
- =?utf-8?B?Tk0yREowandWVTFITHB1VU5UVk5BdlBMZFR2SmlxbDRTbmFXenFncHdZY25j?=
- =?utf-8?B?ZS9ZUGhpT29UZFFyNFhZRi9paEtPZ2pCWTE2eWNyVnZRWFVXcktFeVJPaFlN?=
- =?utf-8?B?VUZyT2VaWlVleTVoWHJOSlZXZGFaNnk5V09RN3dpdnJWQjM5Sll1a01RbTV4?=
- =?utf-8?B?SkJGN1I4VUVhcXBjdUZBdDdlM1FkVG5JbnJ5dUw4VERmbGRaWC95UU55Uldt?=
- =?utf-8?Q?otHSDM9qWzmwHZVBD7pv7J1VATN7HOxaQkcKwvT?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:YT2PPF061CB2B82.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?aFRzdzJYQ1lobzJmWlNQZUd6emQ3SFV2cGl4VzVhVkhRYXE4dVNxSUZRbTAx?=
- =?utf-8?B?Q2VXSVpHODYzZS9BUkpMQnRPeEkzbUZmbWIvVnQxZnU4WE9KYk9WTWgyejVI?=
- =?utf-8?B?Yk5DNDg0TGtqbHF1Z1VNNU92OGdQYWFjOGtpaDR4QjJBd2dTOFd4Qm1qdEh6?=
- =?utf-8?B?d3RWUGs5VWJybHREN3QrQ2c4d0hFdmNPZkd0WWtBNWNUWWNKUFM1UW1FQU9D?=
- =?utf-8?B?ZDFUemFVd3VoanlleTVraGZ4MjZBa09adjF4TmV1TnM5a2dTMklraUg4ZXBU?=
- =?utf-8?B?NmFxbmR5Nm5UeE1DUGZBc2FaUmN0aG1DT1FHWmVobEc1R3RHOG5ZSjFpd3Bo?=
- =?utf-8?B?SERVY3RMcGloMkdydEdtZzFoSm9Sd0xKaHNqOCtoejJISGRYazNMandDbUxi?=
- =?utf-8?B?RFJ4SHpIcWdBdEo4WHFNZVBYM0ZpV2NTdEN2cDkzK1BYdG1kRFlTRUV6dmQy?=
- =?utf-8?B?Sy9UMEY4LzRmc0dVZ29JMzJOL09vUVJuUW5MUTFHL2p0MjN0RStFcVdLMVQ2?=
- =?utf-8?B?M25pWWVUT3FhNi9Sbm91ckFlNHJKYTNFeFlaN1h5ZEg1ZU9GZjNyVGFsK1VO?=
- =?utf-8?B?THNmMC9zQlc4dFBLcDF1enJHaDNNRXc4VVZYZE4yMHRyTmt4VW5ZZWJhMXkw?=
- =?utf-8?B?U2lCOFNmSmRwQ0pjNmF6UGh5VnpnTzh0S2pOV0NQOVd0T2lyeVhvU3hCMFNY?=
- =?utf-8?B?dkkvQVhmdUtNa3NaTFhCODlzOS95QTlQUmorNW1BR0xiZ2dCT2srWE0rU1Ev?=
- =?utf-8?B?OTFnMXNwVWVodGtJOUIycHFqWWNhdUFZUnVWNHRwbStwQTEvbTJuTDFGbTE0?=
- =?utf-8?B?dWdDTVVaRGcyVWRVNDd4cm5tWTdwZFArSDd0UUNmV1FscFp1N0Rsd3F0YVlq?=
- =?utf-8?B?amFEWmVGYXViZUtESFN1RDFvNC9GeEFPQk9GcUdZazU5MS9iYXR5THVWNUly?=
- =?utf-8?B?S2V6OWRRZmdFakV4amRYUXM3RytNenFtT1dhbWdySlZEU1FRenRrUUx6NXlN?=
- =?utf-8?B?eEI0WEdJZm9XVlVPK290MFFZWVlDS0pjSDVEOFdmY2x5cXk1cEdHRTUrc2g0?=
- =?utf-8?B?MDkyajM3M2NGKzJhYzB1anJQNVJZZFJ3dnlwakdCdTFVdHJzWUxxVFRrZHpt?=
- =?utf-8?B?dCt5cDEzWTlSVnJ6WDloL2d2b1VDSCtSZXJoelBuSlprKzlxUDlaak5vdVFW?=
- =?utf-8?B?RmZkNTFIcnhxb1RIMVljVWpJd3hyMFVoMDlFbGhOUTRCOW9aZkRuYWNTc2h6?=
- =?utf-8?B?a2lMYmJ2NEJ1aUtIYUh4akdQcTVwdmt6Ukl4dXRvYWVQSUdCcGJYM2g4d2pL?=
- =?utf-8?B?SkRJQmFhQnd5M0RVUk5WaE95VWFqODZ3dVZ3VWlwRmg2SWt1eVhwQkgrMjR0?=
- =?utf-8?B?Qm45blJRQkdFYVRpd0llVHFBQ1dBdkpJb2U1akdhQXJ1U0wyTHJNeUplOE42?=
- =?utf-8?B?Smc4MEVwMW1HaDdRalhEWWNXVDZrRWpGMUE0Y3pTRUZ4cXJBWHczUjBWejc0?=
- =?utf-8?B?TVJaRmlidEVWQ1haeTUzVlZKaHQzNDlTem1tMVhSdFJvcFU5UGdKc1cwNU5w?=
- =?utf-8?B?T05iMmtHd1JWazBvK0EwN0ZGWEJSSkM1Z1c5MXc1WXNTc2tKRlNxeFVMSkNm?=
- =?utf-8?B?Ry93NjRKYTQrZ2hHQ1Y5eDQwdUtKZVhtQm1adW5OeEZkQkM0MCsrUEdpVHFo?=
- =?utf-8?B?WnJKNUh0a0VaWGtLR0sxd2xsYU5CMjVTR2RDVU9uZXRrWHVQbjRES2FSRCti?=
- =?utf-8?B?TlpwNTBkTzVVamlLcTFmU01YajFPeHhTOGRxVjllTmFhY3dvZTcwWkRlZU9C?=
- =?utf-8?B?bStwN2F6c0h1cHprNjlwaklXc1FSZWVJSGNpcHJWQm90ZHducUoyc01nalhp?=
- =?utf-8?B?elgxd3gxL2hQUGxuVlhzaWdHQ0RUN3k5WDYyZmNwWlAyZFdramRPRGEyaFor?=
- =?utf-8?B?L244YnhoQVkyWEJSN2dIK3B5bGI3Mzg0K1hOUGFWMURmYVQ0SXpoenh6cUFo?=
- =?utf-8?B?ZCs3bk9KbGR3ZEFRcmgyNHFLN3Z6d25xeHNmNVdoL0tJajZHd0xuVHNPcHd3?=
- =?utf-8?B?UXViRUNqV2J6TjlTLy8vYXJNdVBQNnVEcStjSk9Kb0xCRTIxeXcrUDNwR1Jj?=
- =?utf-8?Q?u7yvKQYZuNVnWwP6E2I76pxI1?=
-X-OriginatorOrg: efficios.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0619ac1-6e90-48ab-2628-08dd0296f179
-X-MS-Exchange-CrossTenant-AuthSource: YT2PPF061CB2B82.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Nov 2024 21:22:27.7164
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4f278736-4ab6-415c-957e-1f55336bd31e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hBHgGrdI5rAuoCLLa4WNrL45FBz26TYOLHuG0qUiGBfDsieASL+dNTXVzLgDCVUp1ZqIRr9Pa40gLELQrWF0jw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YT1PR01MB8844
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+To: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local> <ZzHeLlYu8Gwk1FPj@pks.im>
+ <20241111210629.GB5019@coredump.intra.peff.net>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <20241111210629.GB5019@coredump.intra.peff.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------4JjFs71Cr0bw5ZRVRoS8CAZw"
 
-On 11/11/24 3:54 PM, Jeff King wrote:
-> On Mon, Nov 11, 2024 at 11:21:44AM -0500, Simon Marchi wrote:
-> 
->> When running a dir-diff command that produces no diff, variables
->> `wt_modified` and `tmp_modified` are used while uninitialized, causing:
->>
->>     $ /home/smarchi/src/git/git-difftool --dir-diff master
->>     free(): invalid pointer
->>     [1]    334004 IOT instruction (core dumped)  /home/smarchi/src/git/git-difftool --dir-diff master
->>     $ valgrind --track-origins=yes /home/smarchi/src/git/git-difftool --dir-diff master
->>     ...
->>     Invalid free() / delete / delete[] / realloc()
->>        at 0x48478EF: free (vg_replace_malloc.c:989)
->>        by 0x422CAC: hashmap_clear_ (hashmap.c:208)
->>        by 0x283830: run_dir_diff (difftool.c:667)
->>        by 0x284103: cmd_difftool (difftool.c:801)
->>        by 0x238E0F: run_builtin (git.c:484)
->>        by 0x2392B9: handle_builtin (git.c:750)
->>        by 0x2399BC: cmd_main (git.c:921)
->>        by 0x356FEF: main (common-main.c:64)
->>      Address 0x1ffefff180 is on thread 1's stack
->>      in frame #2, created by run_dir_diff (difftool.c:358)
->>     ...
->>
->> If taking any `goto finish` path before these variables are initialized,
->> `hashmap_clear_and_free()` operates on uninitialized data, sometimes
->> causing a crash.
->>
->> Fix it by zero-initializing these variables, making
->> `hashmap_clear_and_free()` a no-op in that case.
-> 
-> The fix makes sense. I wondered if this had been broken for a long time,
-> and if so, how we managed not to notice it. But it looks like it is a
-> recent problem, via 7f795a1715 (builtin/difftool: plug several trivial
-> memory leaks, 2024-09-26).
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------4JjFs71Cr0bw5ZRVRoS8CAZw
+Content-Type: multipart/mixed; boundary="------------x05TDS0LF4Wh8bsiDCt00jqG";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <bfc876ea-1a90-4e78-8756-efdcd53e7525@gentoo.org>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local> <ZzHeLlYu8Gwk1FPj@pks.im>
+ <20241111210629.GB5019@coredump.intra.peff.net>
+In-Reply-To: <20241111210629.GB5019@coredump.intra.peff.net>
 
-Are there tests for this specific scenario (no diff between the two
-versions)?
+--------------x05TDS0LF4Wh8bsiDCt00jqG
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> 
->> diff --git a/builtin/difftool.c b/builtin/difftool.c
->> index ca1b0890659b..b902f5d2ae17 100644
->> --- a/builtin/difftool.c
->> +++ b/builtin/difftool.c
->> @@ -376,7 +376,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->>  	struct checkout lstate, rstate;
->>  	int err = 0;
->>  	struct child_process cmd = CHILD_PROCESS_INIT;
->> -	struct hashmap wt_modified, tmp_modified;
->> +	struct hashmap wt_modified = {0};
->> +	struct hashmap tmp_modified = {0};
->>  	int indices_loaded = 0;
-> 
-> That commit likewise frees some other local variables, but they are all
-> properly initialized. So touching these two are sufficient.
+On 11/11/24 4:06 PM, Jeff King wrote:
+> The number one thing I care about as a developer is that the build is
+> _reliable_. Right now, if I move forwards and backwards in history and
+> type "make" I will almost[1] always get a correct result based on the
+> current tree, with the minimal required amount of building. This is
+> important for bisecting.
+>=20
+> When I have worked on other projects, especially those that use
+> autotools, I quite frequently run into cases where building from a dirt=
+y
+> state cause bizarre problems that go away with a "git clean &&
+> ./configure && make". But then bisection is _much_ slower because we're=
 
-Indeed, I checked the other variables, they look fine.
+> building from scratch (not to mention that autoconf itself is
+> horrifically slow).
+>=20
+> How does the meson build do here? I don't have any reason to think it
+> would be bad, but I am nervous of any change.
 
-> I'm not sure if zero-initialization is being a little too familiar with
-> the hashmap internals, though.
 
-Up to you.  In other C projects I worked on, it was typical that
-zero-ing an object would get it in a valid initial empty state, properly
-handled by the destruction functions.  This way, a big struct containing
-other objects could be initialized simply by zero-ing it, without having
-to initialize each component explicitly.
+This is something that has bothered me about autoconf as well. Meson is
+much more reliable about:
 
-> The other variables use HASHMAP_INIT().
-> Should we do the same here, like this:
-> 
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> index 1a68ab6699..86995390c7 100644
-> --- a/builtin/difftool.c
-> +++ b/builtin/difftool.c
-> @@ -374,7 +374,8 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->  	struct checkout lstate, rstate;
->  	int err = 0;
->  	struct child_process cmd = CHILD_PROCESS_INIT;
-> -	struct hashmap wt_modified, tmp_modified;
-> +	struct hashmap wt_modified = HASHMAP_INIT(path_entry_cmp, NULL);
-> +	struct hashmap tmp_modified = HASHMAP_INIT(path_entry_cmp, NULL);
->  	int indices_loaded = 0;
->  
->  	workdir = get_git_work_tree();
-> @@ -594,14 +595,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
->  	 * should be copied back to the working tree.
->  	 * Do not copy back files when symlinks are used and the
->  	 * external tool did not replace the original link with a file.
-> -	 *
-> -	 * These hashes are loaded lazily since they aren't needed
-> -	 * in the common case of --symlinks and the difftool updating
-> -	 * files through the symlink.
->  	 */
-> -	hashmap_init(&wt_modified, path_entry_cmp, NULL, wtindex.cache_nr);
-> -	hashmap_init(&tmp_modified, path_entry_cmp, NULL, wtindex.cache_nr);
-> -
->  	for (i = 0; i < wtindex.cache_nr; i++) {
->  		struct hashmap_entry dummy;
->  		const char *name = wtindex.cache[i]->name;
-> 
-> That loses the initial table growth that the original had, but I think
-> letting it grow in the usual way is fine here.
+- forcing a buildsystem reconfigure on any changes to the buildsystem
+  files
 
-I thought about it, but was indeed afraid to be told that this removes
-an optimization.  If you think it's fine, I'm happy with it too.
+- due to using ninja, forcing any object files to be rebuilt on e.g. any
+  changes to compiler flags, since the *entire* compiler command line is
+  part of the key that determines staleness
 
-Please let me know if you want a v2 or if you are just going to merge an
-updated version of this patch.
+- keeping your existing objects between buildsystem reconfigures, if the
+  resulting reconfigure didn't change the compiler command line for that
+  specific object file
 
-Thanks,
 
-Simon
+>> Out of curiosity: did you try the Meson build? I personally have to sa=
+y
+>> that I already prefer working with it because the workflow with it is =
+so
+>> much nicer. It has nicer output, is faster, has out-of-tree builds,
+>> makes it easier to configure and test execution feels way nicer compar=
+ed
+>> to my previous workflow with make.
+>=20
+> I hadn't tried it. I did now, checking out origin/ps/build^ (to drop th=
+e
+> "seen" resolution topic), but it didn't work:
+>=20
+>   $ meson setup build
+>   [...]
+>   Program msgfmt found: NO
+>   po/meson.build:3: WARNING: Gettext not found, all translation (po) ta=
+rgets will be ignored.
+>=20
+>   po/meson.build:3:20: ERROR: Can not assign void to variable.
+>=20
+> I guess the assignment of "translations" there needs to be made
+> conditional?
+
+
+Yeah, this is an interesting quirk. Many projects would tend to figure
+that translation (po) targets are "optional" because if you don't have
+msgfmt installed then you can just install the project without any
+translations and then non-English speakers will be inconvenienced but at
+least the entire project isn't completely un-buildable. So meson
+automatically disables the target and logs a warning, but then this
+project *also* wants to depend on the translations for the testsuite.
+
+So this should be taken into account. Do the tests actually need
+translations, though?
+
+
+--=20
+Eli Schwartz
+
+--------------x05TDS0LF4Wh8bsiDCt00jqG--
+
+--------------4JjFs71Cr0bw5ZRVRoS8CAZw
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzJ5fQUDAAAAAAAKCRCEp9ErcA0vV5/l
+AQDRwmIsIt/GDW9vbqoAHFsC5s1p+lFrXesC8UyfEqB74QEAhe+1l7EXa/NS/KV/EL2y8J/fNs+j
+G5lMMaqpsoOYPw0=
+=RbTf
+-----END PGP SIGNATURE-----
+
+--------------4JjFs71Cr0bw5ZRVRoS8CAZw--
