@@ -1,101 +1,99 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E000915853B
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 12:53:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1632C15575E
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 13:20:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731329604; cv=none; b=iqEVM7M0Y4C1OzgowYbpKqRYeFGNYE7Vik4I1YPA4fTAXYn+0OqA1PIJcmi72p+wPa2F80TabKXwn1mpQkRUCeOLpVh4JOCfjDUzF2PcqCdcSpR83uAq+oDpC9EbwrZxCGeGcoO/mLZbkyZTguO5UtvLcNMncuZVLqlKyf0jfo4=
+	t=1731331234; cv=none; b=XTMXb7YTCjvc1Msk+2DmEZpd6tKiemMMO12/9I2tYOfJnQCNray/iOEKNzILbazctftWJMze1mP9xvj9L3dN4GjnFHcRGuqFPbwElO/qop2yyRGHeQMoG8bKVi1zZ1xIyH0B+aXfaYsFgaJ8ISXZEp5echmlkavQncL8O+MTFwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731329604; c=relaxed/simple;
-	bh=5fpMsZE/NuOVc+qoiez8gXDvQpUk6kdpnqZo/29eXj4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=deFeMu1azBD9Ac+kn0VUOui1mA8YWfP35lWYw5zzEAoeM+HrQewu/glYtiw3HYywBoGDvqe7UYhN93VVfrzzujdw2E/dhHsOM055xRK33SBAQsNbKKc6sMGM3om8ZBnGMMhwIg4lCqFnh8oroAiO2cLs8LBYdM07LQWY3dVLxcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N0MBw3nu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TG7+pF5D; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731331234; c=relaxed/simple;
+	bh=/YeVLa0hgw0B1IymlP9wQ+GONldMwHQrSIyyDDYLEXI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tfnkSvDidt1InkAK/k/jRIKmHNbqSGxsl8UItxTniDazSeGtj54Xwf1gbE34Tq5e1Y4XlVnLars4ppirs+GH+mt1ztuGYlyi5+qfiWykxon+7o4HoY2mLooQ/3QjsLbXxSsXF1lvlauMl1Y9jSD1Hq8VbhIjkhXzYPSNzdiYkys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHrJdd/f; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N0MBw3nu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TG7+pF5D"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 03EE21140143;
-	Mon, 11 Nov 2024 07:53:22 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 11 Nov 2024 07:53:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731329602; x=1731416002; bh=5fpMsZE/Nu
-	OVc+qoiez8gXDvQpUk6kdpnqZo/29eXj4=; b=N0MBw3nuhlFl114ZGSc/wA3Bv3
-	xIsojJNArWbht9pdToNfneBWTw79HwTbr8wgQBH6zj8+ycxRqIS4ZS2WnzwcIxVy
-	FJ69XULhtPnOMb8WQtL+eajzrOch0A22JcvSGXID2vPwpnGSZ7r17f36Khv3Xgpy
-	UScQxcMs2+At+CWdrk0i330d189uS6DQDXsmk5nN0xYsK87EZd8B6RleiQrolouJ
-	NM+8RlkqrLtZh+yMPHvIMx3cRKXnz1SXxasMdekFYmSbzMl91cA99RenhnIM42eM
-	QzUmJm+lqSynxnc3wCMtBxb9IUhpbJwsUlxwYMX9P5xTsCTK+GZWSgLglGXA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731329602; x=1731416002; bh=5fpMsZE/NuOVc+qoiez8gXDvQpUk6kdpnqZ
-	o/29eXj4=; b=TG7+pF5DjqmQtsoSar71DJeb1NczytDHL0zc2Zu/6FJeoOEcF1B
-	HXV6rWCO2dLQ5YfIzAeVTh717t4pofapvfGNDWKRj9MXlMl+k2Mf8TzuvIsa+Nn8
-	JgCJSwOTs+7pSV2x9Q6s9RAPPvnpXVivT4Yg8GPg/GPgzpRnUSplwJBmLC5eEkda
-	lIDZGrxYapmeO9PYp1FuUX+P9dTZm3oU7JSRCG2Pygg9kTf5K1x2OTR4seDNG+dA
-	HFmk9qXRIIVdueErr8n+/g+ScJfAb9jYWOx2KXIEDtujZi8RO27q9cz1s3aCsZNt
-	SgW7pR2O5XU+xP9R0kJkr1RqiyrY03fB1gA==
-X-ME-Sender: <xms:Qf4xZxR9E6Pbl6eFA-QIsika6xXvf3w9ch-wHgR7mmilXYSCIcIBEA>
-    <xme:Qf4xZ6xVEuAQVJUZMiiuaSHjKsogwYGmRzlXKnsceMzJXxiEYPJF5N58wxHug4JcH
-    idFBa4WoBdeFWC78A>
-X-ME-Received: <xmr:Qf4xZ21at_qu-qT91yBc15sAGiq3s1I8FOXp6lHZf9hpJaE7xTSQs2rBbsnrH9I4pihJMn49n4CeP958aTBiVh9KTEDO0AtzKshEhJ9BvLug8Z1U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdeghecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Qf4xZ5DarqKvIOr_iZINKurAvSeFWYpgDDMMLTUHWWQDDU0HZ7nikw>
-    <xmx:Qf4xZ6gz1PUx5jpNX2o1KwCTjgL589Yro511qR7nBPVMci2CL2IKvw>
-    <xmx:Qf4xZ9qKiSHqNiGbraQUd7QFWnfKBTxZStK4XBqADDu0z0C1MHq7Rg>
-    <xmx:Qf4xZ1iM5VlqNx0_bBUBpBCQUXWiuhuXD5dAwqhDjZnciX8VAXTj8Q>
-    <xmx:Qf4xZ9sNgwiXxqTA3p_3B7HxSKds-PZfLicZUUMqBWiLiOn-7G8kyx3c>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 07:53:21 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 350a036b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 12:52:47 +0000 (UTC)
-Date: Mon, 11 Nov 2024 13:53:13 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/10] refs: optimize ref format migrations
-Message-ID: <ZzH-OaXmFcZkGE43@pks.im>
-References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
- <CAOLa=ZTGtGJDnMmuv++FS9Rv4KiRQewOepo_qOY=6h1xtNmNZA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHrJdd/f"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e30d0d84d23so3909034276.3
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 05:20:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731331232; x=1731936032; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=haDxIywD5pFr3R79GByNmrXc1xw7CzYb0xxJbKOMnG8=;
+        b=iHrJdd/fHLia/LKUrNy6Yu4ce/+yzjJjyhNZelsFm/n0+potTdb5PBhMCajiQ1fWb/
+         QbeA810A2ihIilSIs9M23w83y4sqRMTESlE9m8KOxUTUkCwNEcnGBBPEnEsDwLl2Ps2W
+         wfDYQKSxSetIVxN4/S8EHn2w2Bh9OaJOr4JJ3aFHRTzd4FNDCh772El2H6D271fOsYg/
+         ThX8CNILZd1Wnj8sMN/fjEXUJ28IyPKhYwLNqKP60tSmBTwwef/u7LQbqkM12oH3kI5/
+         eDigzOnNisVI1MwqZbb0YGkF/G7ayN+DgAcOU+9sd2vvhDgoPr/YRNNwfpVEBprqdFGm
+         8B2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731331232; x=1731936032;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=haDxIywD5pFr3R79GByNmrXc1xw7CzYb0xxJbKOMnG8=;
+        b=kgbKlFD5uQ+7rhGwyPR50w36oARvTtQzXFXtlvZ3ytTSf17eKuZOubxSJPm+6Zs/AX
+         3f5JNngTzCc8QJYuCcjyQ79YkocxwpujTc4C7pih+Mc05Z2pWzDFoWz3w+fG3TVTeJuC
+         /eHpUdLYFdPSD/Kv9w7NyLuirWrPB2J5WaCPl7jr7G3xbRwkH5NCrWV/S8z9/5lCwjjX
+         Y+AcoH5ml3NVolK/8gsGDxnk8OyA5xUgK8hx6Jt1aVXoHbenpmnPbH0WiO6EUZ1dAhRq
+         Ovaqb2rDxStNaNJEPDtApnFuzxIc2xWSi5p4co7io1/vxTJvQqcctnCkC9nhQqsSAatk
+         epgg==
+X-Forwarded-Encrypted: i=1; AJvYcCVhFYrJdLe+loquNAGdyu8oILOFaTbb9moRrYewIzVKde+t+XZ+CBQUmtZ4UCfnQHqzL4o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJQupjuj2IWECLrUMmzgAM6kPuYK6nVG+ZrOgQgJ9ezDO5xp77
+	FxVhWuARhMi4w3oVfn7VlHc7PvvwotYKcqI+NuPhJsq02ecBoron
+X-Google-Smtp-Source: AGHT+IG6R450CvBBev8/KKCZaqregq3JUWrDnk7BnpNgMhZpgkdiSPz2gpvBPCrA3xfitgMbugfzXw==
+X-Received: by 2002:a05:6902:728:b0:e2b:dff3:bda with SMTP id 3f1490d57ef6-e337f843c06mr13245335276.6.1731331231858;
+        Mon, 11 Nov 2024 05:20:31 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:cdf0:7186:dd7d:aa91? ([2600:1700:60ba:9810:cdf0:7186:dd7d:aa91])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e336f1ed085sm2275316276.52.2024.11.11.05.20.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 05:20:31 -0800 (PST)
+Message-ID: <db91e3ec-9c08-453f-bf76-4aa131f8b798@gmail.com>
+Date: Mon, 11 Nov 2024 08:20:30 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTGtGJDnMmuv++FS9Rv4KiRQewOepo_qOY=6h1xtNmNZA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, johannes.schindelin@gmx.de, ps@pks.im,
+ johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com,
+ kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+ <ZyUqr/wb5K4Og9j9@nand.local>
+ <2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
+ <20241104172533.GA2985568@coredump.intra.peff.net>
+ <xmqq1pzqwnck.fsf@gitster.g> <f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
+ <xmqqo72miim6.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqo72miim6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Nov 11, 2024 at 05:57:43AM -0500, karthik nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> I read through the series, apart from a few small nits, the patches
-> look good and straightforward.
+On 11/10/24 9:56 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 
-I've queued the single change to the first commit message locally, but
-don't think that this is sufficient reason yet to reroll the patch
-series, so I'll wait for additional feedback.
+>> The --path-walk approach does not suffer from this problem because
+>> it has a second pass that sorts by the name hash and looks for
+>> better deltas than the ones that already exist. Thus, it gets the
+>> best of both worlds.
+> 
+> Yes, at the cost of being more complex :-)
 
-Thanks for your review!
+True. I hope that the results sufficiently justify the complexity.
+Further, the later uses of the path-walk API (git backfill and git
+survey) build upon this up-front investment.
 
-Patrick
+Thanks,
+-Stolee
+
