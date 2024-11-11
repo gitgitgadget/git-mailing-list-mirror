@@ -1,53 +1,53 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3324119E82A
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 15:30:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263581A08D7
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 15:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731339057; cv=none; b=Dp5+BqJmOQCPVw67cjKNQUcJSW5szehMdv0zoiDXW2rzPzpe5lT+cnLDsl+AsSkfhLVC7/OC1334iV2HJis8M6H5feBg1QgOcBRK0mJKn1J4DHUD1YXdprTPel+RoGEqz9A/e4rkM6EM6YPRlBddReyCTLtltxUdEV2n9OmzCS0=
+	t=1731339060; cv=none; b=iqgwqNtybSLpBSQQUR+ykWUBn/VGHt8PEEV/Hk44Ug2TTLCG6w1fb7FbTBr9vfHrdItxmKMllIgCoZa3w2QDV1FreK4grDrKoyc9YxCOVG0G/Mkc1+cEgT/Ktcbzy83Dy+Dl2rmPqkeXJ0wQxSVcDyBaXBgNr/XNwgmQZH0Nluw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731339057; c=relaxed/simple;
-	bh=aJahixFxk8of3FbsdvBQ21yELY6r41ZjFZE0/pRRMEM=;
+	s=arc-20240116; t=1731339060; c=relaxed/simple;
+	bh=jy7KjcOgLUoG7IpsfaKzZvLFE/NPyBRExKESVCPDdcg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bhuM9Qg+psyi/swbmIqRJPD1fPdclmuGbeTPAaFKxjXKLLJsnVYrpG5I4jj4Lh9Gl447diKe5XrKyjk3ktBlurnH4JgOgpMmpDgQIrYfrtRFCR1wCgDYBfQ5LBSGWVrNT9ltZ3k522RAVdmvxtszskDWZKsbEc2eMdTqYchcLBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Da+uHo+3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mjsGxu25; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=OOMLeJLs17nI7/t+bJKKE8u+o28bOnDXma/3XeZtWTgw3S/q6S8sq1mtibF6OsCaiWwnuiXMtRL9Kl0LjgZOs9qCNLrtOWB2ZvNpl83RCi85EqK8dcLmtWCRTuObOvqvYkhoQ2Lk+WV4jWdxgJ71CvIS0CfGw3dLYsTdIS/UXHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=revl7nPQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OpTvE9S5; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Da+uHo+3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mjsGxu25"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2248D13806E3;
-	Mon, 11 Nov 2024 10:30:54 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="revl7nPQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OpTvE9S5"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 429D5114019D;
+	Mon, 11 Nov 2024 10:30:56 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 11 Nov 2024 10:30:54 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 11 Nov 2024 10:30:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731339054; x=1731425454; bh=KcJrDRTByb
-	Xd2Uctt9Nz/0Sd7rTC04FEuhqS7SGrKSE=; b=Da+uHo+304IS1vJe1Bf9mQ1gcQ
-	9lBC9J+WJZMYhR1w/V20umXWZCaGNcHSu0eRyDUyn8tiL9B5H3nV9xuXCwi+pBVU
-	N+OXQRP0EKv+J65IA0e3c14Pfu8gJU+B2UXJ9455Yq+eJ4I7CWH2RXbpF5W/YhJ3
-	roKsBC3stWjnrJA3N3ZnGpByd2Rm+M+bAY1kw7i+R1t3VnEBEyTYfToBHOPYHdpT
-	OKesrH8huB0l+gm24yMcJ9MA+J034doj3mnAxfAhnhSF2DAo+xgTyGk53apgUkOd
-	K8tVbP71MLbgf4r6iYnLxjgKN0e0UGOb/VxN5BB7j4aDpBTj2p2JvPHgN0IA==
+	:subject:to:to; s=fm3; t=1731339056; x=1731425456; bh=VUmprZBNlV
+	/FX0TcCZtSL4g+MKSgKtLZZb1IhpkCFfY=; b=revl7nPQTbZUpxskMaNI3y0YFW
+	Y3jYVosIsWangoG/4RjiiR/DAeKJcUbeCOORlQG+BrddQpyXEbMzaSFCFAKSIeb0
+	QL5VV3uJAl69RQceCVQp2T1wJXHJqQ2lyTN1NyZamWMpAcpNe9dasP1TCuhgR8TF
+	nxinIDVBryN3ewZ/ssbVs1gc6h0yxUOB3RmBIvkoHl3SJMDS1GgktSX6Lm1xDQg/
+	nbtM6eaW5qw572Sfd8OuEAO0vPoavEuBRHh+dUNJn+n/rODzwkzFjkR75SE9nSsc
+	wIuxmBA2g8d3OFJ4408slS5CLFN+I7iNi2FYHvBQPB8RSdzwnN87kWL+ph8Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731339054; x=1731425454; bh=KcJrDRTBybXd2Uctt9Nz/0Sd7rTC04FEuhq
-	S7SGrKSE=; b=mjsGxu250LplyHESgEQbZhVTbpLmkqaK4Y3sV3clR14z9FIm4pU
-	m2aWCV+t7qedMCY/fTYarzUmQ2PdG6hQ5RAWiXvHvpv8GueUF76xvLko8NLS/NnM
-	eMv9kvYL5piZIfiXFnTnpbbEcKQiETlzhob/Y66G9UF+1aGbNKDH2rngXFl3CuX1
-	pX1GsixSbxN3Np9QWwofCQrsNAXOEJxkBXYBjsdBcEnIVT57kMbL3tzCmW4T9AQD
-	6wi4yCoBF9QgWum1DzZ5VJnnhjqT+7wAZYyYZC4AsD0zvme/UZIiFawa3ZKXxz45
-	tkQDwI3L1aQA2yZfJ842JDQ2n1wUm8zkSRA==
-X-ME-Sender: <xms:LSMyZ0IsR9hVhzr-jAdjj0tdeSvw7rSsWSuSSGE-J7fqjnBlGqR6tQ>
-    <xme:LSMyZ0JA31g5CWKteFYVZKkAWmzUwhlhJjRF5LukOjgEDt6_1gm_VBAYJgPDMQu02
-    k79csNxMS408MQUqg>
-X-ME-Received: <xmr:LSMyZ0sAAtvqzY2MycEiIQdZk_-3vovKOd9d1MBCySs2Fs4iMzPRDJiYxU0U4diMvq1mMzVD8HJEhbSQFOgUOHceg7hihdYA9Vue9VoE3ax65mC7>
+	1731339056; x=1731425456; bh=VUmprZBNlV/FX0TcCZtSL4g+MKSgKtLZZb1
+	IhpkCFfY=; b=OpTvE9S58UOJEptgx+4XlNIyMf77T5uMTBZgq6yhfThpA5UdMSR
+	KiaBpE+ukzg2UeOCyCVM/4Q9pZyXDz80QrG8q0GNmczBZZPzzZY411/VEYCt3+dN
+	/0eAaZBInOMbuNk8YjjkzduExXAdWzJvEY+grf2FPeqIBOXGg4o9NV+76+57NtUY
+	nj7fPPGr3tt2DK5NqZxlXFbzXtTp3fwF2kmpvIfER2q9fyuYAvmToMhmiEY/0w1v
+	1jAdWN/qLbE83MzrtX2bx+li6LCIL8WXnT4ORFqlp1gnZVGlYa3p0M3QB9cmnh2l
+	DrLX8PZMk5ONeQX80k7uZz5QRAznePRlZ1g==
+X-ME-Sender: <xms:LyMyZ3jFdYmVmw_YLDcbcmTe18Md0OTEHHz0YmwZUIK9E6my8x4NaQ>
+    <xme:LyMyZ0AAJbm5AJjqnJ09lV51wyx-jZjbDHYxb4R7urdxtEpgif7paRR0r5YspoGc3
+    9ilCXeWwZfdaivmug>
+X-ME-Received: <xmr:LyMyZ3HzWsWUJtpfZjFF1wn7-Az-9bEk49o5qWuR4KjCdNtsZK96X0u3DIyMCrLPMBXEHTZ5YPjGTUYsvsl6HJh-6ccOyAwLb9PI48apLq9Oxomf>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdejiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdejiecutefuodetggdote
     enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehrrghmshgrhies
-    rhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthii
-    sehgvghnthhoohdrohhrghdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhu
-    nhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:LSMyZxbuJKB5wmmxj33aI2twWXRiGBWcfQfgpMo_RRZ6QH2-6x9PVg>
-    <xmx:LSMyZ7bnLCpIqXZR9BM0e17JW5bT4RTy16NzsUs_0Z-pH7RTTWxoZw>
-    <xmx:LSMyZ9DI-j2ssZqNHZpr8l1Lw-tyheNc-HNHAKV731TdtneoIIucdQ>
-    <xmx:LSMyZxbyj6bqO4hiK-uyVnm177-jcLJjZLL_JobujugOqnOakkdiCA>
-    <xmx:LiMyZ5ORLRk3E5eqbjembKult9-cC79n10W6g0BuY7Uvdm9x7NmeCYcI>
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghstg
+    hhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprh
+    gtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:MCMyZ0SZgG0jfggHjaEstbRM7iPRhdFUUOUMnmZItQUHqLCbagHnVw>
+    <xmx:MCMyZ0weaKgaTd4xwzuc_-qMptEykKGD7NxQF7_lMrntoHPYhyjq8g>
+    <xmx:MCMyZ67Kg5b9_GF-1FWyXNDBbIQZFg7aKnfhw5glVdUFvgGR2be4Ow>
+    <xmx:MCMyZ5wxO61uViubLIHRUDLUxpcOQht5XYVglEkBozolWuRoN-YvvA>
+    <xmx:MCMyZweTvt7bNXTBq3nOt08mXxIVFmFiL31WtK0pTudVJlCNNCq8qwjc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 10:30:52 -0500 (EST)
+ 11 Nov 2024 10:30:54 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e7efdec3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 15:30:17 +0000 (UTC)
-Date: Mon, 11 Nov 2024 16:30:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8bc54c4b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 15:30:19 +0000 (UTC)
+Date: Mon, 11 Nov 2024 16:30:46 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eli Schwartz <eschwartz@gentoo.org>,
@@ -83,8 +83,8 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>
-Subject: [RFC PATCH v5 03/19] Makefile: consistently use PERL_PATH
-Message-ID: <20e77ffc5f5a5b4222a4882dc7429dd482f1fbab.1731335939.git.ps@pks.im>
+Subject: [RFC PATCH v5 04/19] Makefile: extract script to massage Perl scripts
+Message-ID: <442972984763cbc5ba768a2d7968576a8ed10e2e.1731335939.git.ps@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
  <cover.1731335938.git.ps@pks.im>
 Precedence: bulk
@@ -97,80 +97,113 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <cover.1731335938.git.ps@pks.im>
 
-When injecting the Perl path into our scripts we sometimes use '@PERL@'
-while we othertimes use '@PERL_PATH@'. Refactor the code use the latter
-consistently, which makes it easier to reuse the same logic for multiple
-scripts.
+Extract the script to inject various build-time parameters into our Perl
+scripts into a standalone script. This is done such that we can reuse it
+in other build systems.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                            | 2 +-
- contrib/buildsystems/CMakeLists.txt | 2 +-
- git-instaweb.sh                     | 4 ++--
- git-request-pull.sh                 | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ Makefile                            | 12 ++----------
+ contrib/buildsystems/CMakeLists.txt | 21 ++++++++++++++++-----
+ generate-perl.sh                    | 26 ++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 15 deletions(-)
+ create mode 100755 generate-perl.sh
 
 diff --git a/Makefile b/Makefile
-index 8a2b292e3d2..22ed53f39e7 100644
+index 22ed53f39e7..e04a381e8f0 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2553,7 +2553,7 @@ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's/@USE_GETTEXT_SCHEME@/$(USE_GETTEXT_SCHEME)/g' \
-     -e $(BROKEN_PATH_FIX) \
-     -e 's|@GITWEBDIR@|$(gitwebdir_SQ)|g' \
--    -e 's|@PERL@|$(PERL_PATH_SQ)|g' \
-+    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' \
-     -e 's|@PAGER_ENV@|$(PAGER_ENV_SQ)|g' \
-     $@.sh >$@+
- endef
+@@ -2604,16 +2604,8 @@ endif
+ 
+ PERL_DEFINES += $(gitexecdir) $(perllibdir) $(localedir)
+ 
+-$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+-	$(QUIET_GEN) \
+-	sed -e '1{' \
+-	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+-	    -e '	r GIT-PERL-HEADER' \
+-	    -e '	G' \
+-	    -e '}' \
+-	    -e 's/@GIT_VERSION@/$(GIT_VERSION)/g' \
+-	    $< >$@+ && \
+-	chmod +x $@+ && \
++$(SCRIPT_PERL_GEN): % : %.perl generate-perl.sh GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
++	$(QUIET_GEN)$(SHELL_PATH) generate-perl.sh ./GIT-BUILD-OPTIONS $(GIT_VERSION) GIT-PERL-HEADER "$<" "$@+" && \
+ 	mv $@+ $@
+ 
+ PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index a41540458b7..608ad9714d4 100644
+index 608ad9714d4..2ae337c61b5 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -842,7 +842,7 @@ foreach(script ${git_shell_scripts})
- 	string(REPLACE "@NO_CURL@" "" content "${content}")
- 	string(REPLACE "@USE_GETTEXT_SCHEME@" "" content "${content}")
- 	string(REPLACE "# @BROKEN_PATH_FIX@" "" content "${content}")
--	string(REPLACE "@PERL@" "${PERL_PATH}" content "${content}")
-+	string(REPLACE "@PERL_PATH@" "${PERL_PATH}" content "${content}")
- 	string(REPLACE "@PAGER_ENV@" "LESS=FRX LV=-c" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+@@ -848,19 +848,30 @@ foreach(script ${git_shell_scripts})
  endforeach()
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index c8efb1205a8..5ad50160bb0 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2006 Eric Wong
- #
  
--PERL='@PERL@'
-+PERL='@PERL_PATH@'
- OPTIONS_KEEPDASHDASH=
- OPTIONS_STUCKLONG=
- OPTIONS_SPEC="\
-@@ -716,7 +716,7 @@ EOF
+ #perl scripts
+-parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
++parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" "")
  
- gitweb_conf() {
- 	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
--#!@PERL@
-+#!@PERL_PATH@
- our \$projectroot = "$(dirname "$fqgitdir")";
- our \$git_temp = "$fqgitdir/gitweb/tmp";
- our \$projects_list = \$projectroot;
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 10c88639e28..775ba8ea11a 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -112,7 +112,7 @@ find_matching_ref='
- 	}
- '
+ #create perl header
+ file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
+ string(REPLACE "@PATHSEP@" ":" perl_header "${perl_header}")
+ string(REPLACE "@INSTLIBDIR@" "${INSTLIBDIR}" perl_header "${perl_header}")
++file(WRITE ${CMAKE_BINARY_DIR}/PERL-HEADER ${perl_header})
  
--set fnord $(git ls-remote "$url" | @PERL@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
-+set fnord $(git ls-remote "$url" | @PERL_PATH@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
- remote_sha1=$2
- ref=$3
+ foreach(script ${git_perl_scripts})
+-	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
+-	string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
+-	string(REPLACE "@GIT_VERSION@" "${PROJECT_VERSION}" content "${content}")
+-	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
++	string(REPLACE ".perl" "" perl_gen_path "${script}")
++
++	add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${perl_gen_path}"
++		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-perl.sh"
++			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
++			"${PROJECT_VERSION}"
++			"${CMAKE_BINARY_DIR}/PERL-HEADER"
++			"${CMAKE_SOURCE_DIR}/${script}"
++			"${CMAKE_BINARY_DIR}/${perl_gen_path}"
++		DEPENDS "${CMAKE_SOURCE_DIR}/generate-perl.sh"
++			"${CMAKE_SOURCE_DIR}/${script}"
++		VERBATIM)
++	list(APPEND perl_gen ${CMAKE_BINARY_DIR}/${perl_gen_path})
+ endforeach()
++add_custom_target(perl-gen ALL DEPENDS ${perl_gen})
  
+ #python script
+ file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
+diff --git a/generate-perl.sh b/generate-perl.sh
+new file mode 100755
+index 00000000000..12e116b76e5
+--- /dev/null
++++ b/generate-perl.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++set -e
++
++if test $# -ne 5
++then
++	echo "USAGE: $0 <GIT_BUILD_OPTIONS> <GIT_VERSION> <PERL_HEADER> <INPUT> <OUTPUT>" >&2
++	exit 1
++fi
++
++GIT_BUILD_OPTIONS="$1"
++GIT_VERSION="$2"
++PERL_HEADER="$3"
++INPUT="$4"
++OUTPUT="$5"
++
++. "$GIT_BUILD_OPTIONS"
++
++sed -e '1{' \
++    -e "	s|#!.*perl|#!$PERL_PATH|" \
++    -e "	r $PERL_HEADER" \
++    -e '	G' \
++    -e '}' \
++    -e "s/@GIT_VERSION@/$GIT_VERSION/g" \
++    "$INPUT" >"$OUTPUT"
++chmod a+x "$OUTPUT"
 -- 
 2.47.0.229.g8f8d6eee53.dirty
 
