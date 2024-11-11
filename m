@@ -1,55 +1,55 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBC4176ABA
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:38:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCC917B51A
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:38:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731321533; cv=none; b=R0bSuNDDCvHY6on/qhxXZ+l85pcknDI5OowuDwC2o6cATgypzOY+z/emsij0orua+Gip7dQxajq0r7rkqw0p68lFUqHoLsFJftfg0cIjbtRHv/P2JIW8H5FNTM0kWAiJfDpeh2JXBVlZOqWSeyuWBWPlpB8YJIAn5voopqE/hwE=
+	t=1731321534; cv=none; b=t8vKj5mwHoChE1ia7vnWWFfokv8itVe6DVsLaVdcsPy1wpiRCpmPt2J4nLU2maerGBjWSpMBnWR1vwPXfItslDsA51g37mB+2Lz0KbPi+TtD2GcQEYa52MUppsPgJNgirfi1SvBav85LsQRl9NLYTULnNZQlciQsMtqtWwU3US0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731321533; c=relaxed/simple;
-	bh=mJ6qIKCut5hsdmitnUvT8Ib5UZmYc4vlYUVPt+J0/fc=;
+	s=arc-20240116; t=1731321534; c=relaxed/simple;
+	bh=FUITSsWuKf+6OoHBFvKAvt4z1atjfdf0/OsGcqzvQaE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d0yukI8a1CafJ4I9UV40avMrJ/nXJnH21nNRN0c4/MqRWEoda/t7cfR4YDD69FHNy3L3EYm1vti/YYfjAX5Jmg+DJdGoIoDCDjwIBBAvuhZ2Yz/ZcWP7XhPj47WCZ1FnddUrp37DSohJMfjkvVPG6mVMUksFWR4oQWDZIaTCFdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CV8mfX6s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i46j6/Q7; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=uUZ+LMTP4cWBTskM9bZRok59YKE2cxdtXAmDDrGB6hXA6DC56HDmccLnnLJMU5g3aoS39DmkpSqCZeKUFBZQPgnLGQiyEd7iAQ8c27wLIPyPg4B7QHCQfXZ55AgZVCHSv9At6ImeK07Cgrw0SPeJpfUOxICDI76vIadrWA7Dtvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J+gZ6ipK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tsc9p1a1; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CV8mfX6s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i46j6/Q7"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 584B91140162;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J+gZ6ipK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tsc9p1a1"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id F0B7D13802D7;
 	Mon, 11 Nov 2024 05:38:51 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 11 Nov 2024 05:38:51 -0500
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Mon, 11 Nov 2024 05:38:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1731321531;
-	 x=1731407931; bh=2ZxOkV71neIxtFoVno2DEgw+GHy3pqE/E1Hf/8OqHHg=; b=
-	CV8mfX6sZNR7DP2efAxyq40plyxbEwZdAPeS2KwOTbSVNzhMIUhe9IPfi3tG3gab
-	M7lSP+YT8G7XbJ/A2AdjII7uT7F0xGZFME3kyEhdIsJ64p80vzF6LWmOtRjjzbeU
-	JJ50epkYbtGjUv+Tvtpd/iff4HQ7ACNsC26foiGFNGahxMzf6siLvSVSMxRvG+Zf
-	YEMtkHU/f6ykf8d5MRyutxT89DHj/ReEy3l4caQI0Dfe/nyMyFXaLvFwuWSBYofk
-	0EUMpSR7UNvoaoheCTUJXPcxNe+j8yJLqNqVIwaoDzPq+sa3GaK4mIcwCVZvwbru
-	QYcRObu4AhSIUCQyLqGPmw==
+	 x=1731407931; bh=oOtBi9rj+Bdmq5qxV9FHytYFcwhoLUjxCrJ+lwgL5yc=; b=
+	J+gZ6ipKB7wsgZxzM3YR4X+iL2+xIlQqh1WxKEq8pmT+zDulN88OikilahnCvOAv
+	BsSYb6VLHSIDj7wQny/ED6QOxnOveKmfku9Cu63M6d+NK+Yb/3k+u46xO9yiqAZY
+	T+iCqMITr9V4qZovjRDbAkAC50CBFBWX3VzqCh22Zdyo7W84wuWVOAJ44lLrMkVh
+	miFJ2ig/H8sOUhoEcmi6p+h0ACRiE4FKxFkQXTWAw5beiEh7DsM4ZXd8YkRGD3SA
+	yqttaiAk3V7Kljhd2dzbFARgOtuuNoTdNH2NNVdPiSv0lLhPNK0DYusgdH610DRR
+	APpjqhCqb1oizgRZfRBXlQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731321531; x=
-	1731407931; bh=2ZxOkV71neIxtFoVno2DEgw+GHy3pqE/E1Hf/8OqHHg=; b=i
-	46j6/Q7eO1xkJIKtUrWBfjpnDi22c6FYLvEqSllp+LN5sg3+XZB/WvhJ3cA0EZJM
-	ElqwyO101fkCxpDzthItSW5LG9VnpEkqnt5uNbFOqk5442vE2E33QA7Wx2ZHm3zK
-	yIpJA/eP/a8i/sOaScZjdVVb6oWROObd7tcO8GUA0HKhi1ZBNYjVsWeYUTVP2h0I
-	h7sfnNK5fuBsSjXjsWZz6ATHuqgUwWGSl39usvqjCO1aS0b+J5spmHoeiJK9WqUS
-	srQ1Fwth4CNOrY3Wb6QhD2fs86plKTBKaQH0XiAbjSDkQGJ8hOmLPuUMetX+9/K0
-	L7xKHkVi8HutNrMEmptIA==
-X-ME-Sender: <xms:u94xZxnZ22KwyAcN7jBXz_AJOyn6ofcr6vzE1FXJTVNcjGI7q2FilA>
-    <xme:u94xZ80BqrV26HZBj5Mx0gnnVCejICb8fS7VO6r_CdChnJNlm8lDwWAg7A7llgTv-
-    MzfiRuHHnWr3yku6Q>
-X-ME-Received: <xmr:u94xZ3pKXX0_annGAbwV_9QSKDn1hRB_jvQ77z_Q571gA6PaIusTZEg8BBeW1eTRNm3Hn5qXM9_X1Mg4x_7IHoq8HCSIR3Q4ZOf5pvcG4yuyADkh>
+	1731407931; bh=oOtBi9rj+Bdmq5qxV9FHytYFcwhoLUjxCrJ+lwgL5yc=; b=T
+	sc9p1a1z46aRK1VX43u3dHB+F5+oKhaXxaNT+brjFWHEc/voO6Q23/bjpxTKGYZt
+	Wy5ygey3Z9Y0AXp+GSyiqGSg+HIbdBm9SlGWWf76rwhtT4x/1kcu3mM0Y6HvCUcb
+	g3H0kxhwc7Doq+1Jo0arlyO/svISfz0edxfXciTPfLZCpK/s0BTY1OuHzRwAflP1
+	0udoTHlkbt3uBhwtRLcB8EE0FxZnf8PGNKr3/xi8Gp7+4aPLRmC5BGcNu9/ZlIdG
+	bLBj9DUoepfBCM8qw22BSU/b5q3ryva1jqYOPn9GU6b/yY7vwpveOYhLTw9X1O+x
+	lAaxqREXzREm69ZMgCl+A==
+X-ME-Sender: <xms:u94xZ-CvZiC7vxd_Z7F7i5iLp74nRloORHW9EnMnRWOyzONuLlHX5A>
+    <xme:u94xZ4g-Mrjvgmj9Yl5iivBefxlwgcJMVYHAcEWUeaqfHQwzxk_qmSXHEhi4hsPH-
+    MugwjxEgAQ5JSlDFA>
+X-ME-Received: <xmr:u94xZxkoUx6cTOmoThhycUH9gaKPII-7u3-FAndNAKMPFDs9cvrgtLZ5ghivZiKyhiz4WpXpoMQHC044a7JzcdB7LGGTRahhwuOzqgcGx0l1bS3P>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,22 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:u94xZxm-_eq2fXW_wE0M1w9Ht3T9-FKW5ZmAU0SRkmKsMIbEhNnIlQ>
-    <xmx:u94xZ_0qJDC6LhxY_vPGxlqO2e6n7hqSp1RL6Y5VZ6GDwIAwtEyIow>
-    <xmx:u94xZws4KIZynrCLCn8Dq3Nbbv2Ds7qvXrilibl5JLAhz5HZUSi-_g>
-    <xmx:u94xZzVQO-jB4m3vl0i2lNaRzgRAAJBa4sHR9DI_XEqG_hLPMa2RCw>
-    <xmx:u94xZ9C6uMEjNFgmMEdUWXq3QxZ-Exdx3A-IF4_oQxy205Od_WFPgw5E>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehrjhhushhtohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:u94xZ8z0XYl2tioBjvHNLNbLrm34x1S9N5JILOfolmakxhVBIb4-Yg>
+    <xmx:u94xZzRHRLekmbfQ9Qk0VNeATlhMNCW1aEhtuuSH5cpcr6Ocd9OBXA>
+    <xmx:u94xZ3al4Zxm16NRngv5IdIwUDfx_IOAkaLhILTVeECmZ2Vo_nOtew>
+    <xmx:u94xZ8QIIdaX2FCyjevELseUJcymqjUSrDFPx0arKqDZeT6dTDujXA>
+    <xmx:u94xZ-eGVVsSYMru9b5C3-oxODb6lf_w2pmA4OT7d-swxryV2yXkpwe9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 05:38:50 -0500 (EST)
+ 11 Nov 2024 05:38:51 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6a6215b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 10:38:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id ecfa0da6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 10:38:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 11 Nov 2024 11:38:34 +0100
-Subject: [PATCH v2 05/27] bisect: fix multiple leaks in `bisect_next_all()`
+Date: Mon, 11 Nov 2024 11:38:35 +0100
+Subject: [PATCH v2 06/27] bisect: fix leaking commit list items in
+ `check_merge_base()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,55 +83,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241111-b4-pks-leak-fixes-pt10-v2-5-6154bf91f0b0@pks.im>
+Message-Id: <20241111-b4-pks-leak-fixes-pt10-v2-6-6154bf91f0b0@pks.im>
 References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
 In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
 To: git@vger.kernel.org
 Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 X-Mailer: b4 0.14.2
 
-There are multiple leaks in `bisect_next_all()`. For one we don't free
-the `tried` commit list. Second, one of the branches uses a direct
-return instead of jumping to the cleanup code.
+While we free the result commit list at the end of `check_merge_base()`,
+we forget to free any items that we have already iterated over. Fix this
+by using a separate variable to iterate through them.
 
-Fix these by freeing the commit list and converting the return to a
-goto.
+This leak is exposed by t6030, but plugging it does not make the whole
+test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ bisect.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 6dbc22f84fce11743f0e79eb4f8100c7ec07238f..04e9a63f11c7fa1a9dd11d3f193c500a4cb937c6 100644
+index 04e9a63f11c7fa1a9dd11d3f193c500a4cb937c6..12efcff2e3c1836ab6e63d36e4d42269fbcaeaab 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -1031,7 +1031,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- {
- 	struct strvec rev_argv = STRVEC_INIT;
- 	struct rev_info revs = REV_INFO_INIT;
--	struct commit_list *tried;
-+	struct commit_list *tried = NULL;
- 	int reaches = 0, all = 0, nr, steps;
- 	enum bisect_error res = BISECT_OK;
- 	struct object_id *bisect_rev;
-@@ -1098,7 +1098,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 	if (oideq(bisect_rev, current_bad_oid)) {
- 		res = error_if_skipped_commits(tried, current_bad_oid);
- 		if (res)
--			return res;
-+			goto cleanup;
- 		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
- 			term_bad);
+@@ -851,8 +851,8 @@ static enum bisect_error check_merge_bases(int rev_nr, struct commit **rev, int
+ 				      rev + 1, &result) < 0)
+ 		exit(128);
  
-@@ -1132,6 +1132,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix)
- 
- 	res = bisect_checkout(bisect_rev, no_checkout);
- cleanup:
-+	free_commit_list(tried);
- 	release_revisions(&revs);
- 	strvec_clear(&rev_argv);
- 	return res;
+-	for (; result; result = result->next) {
+-		const struct object_id *mb = &result->item->object.oid;
++	for (struct commit_list *l = result; l; l = l->next) {
++		const struct object_id *mb = &l->item->object.oid;
+ 		if (oideq(mb, current_bad_oid)) {
+ 			res = handle_bad_merge_base();
+ 			break;
 
 -- 
 2.47.0.229.g8f8d6eee53.dirty
