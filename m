@@ -1,65 +1,65 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63AD18870C
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 11:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83BD153BF6
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 11:14:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731323658; cv=none; b=A6QDkoTihbU7Wpvh7cOWcTW1OhbEeSLC4PRRUyfNfgjZXXZ78Cf6w94VZ7taEPqfX2vlrwh1lSbtrYs7/Y1Su2gv++Fg6+Nl1TpV4O6mMVBE68lm/AbRLPXIaWQ8SNL9HK5zzxa6xPcfxrGnYgczxOS5cy/9ypeFbYEj6a/Fch0=
+	t=1731323659; cv=none; b=sfXGyxd5Oj7uNiqZMKfceU9OJayk7JpIHtzPHGr9LD8c3n9YhwjnsWcZDuqyhGuW/LxJOaxGGZkpkR8/kszpKGjyh9p6nusi2K4KuX9GE/EaQ3z8x8NeFQmdYNU+nmIHHzR/ke2lqc2pUULLR0MbpabYYQ4bihxo2qYwlMm5R50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731323658; c=relaxed/simple;
-	bh=qxp0Ozw+zCWuTQo007UtLe+1E8WpD5QWWMUEpKRGJ8U=;
+	s=arc-20240116; t=1731323659; c=relaxed/simple;
+	bh=qaGGC/h/mhbdPMor0R4nO6l0oLU7vmJ2PqNl4EeyQpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=spF/umF1JvK8ZUQKMSymG+QItYdJzqrvkWOiLYGOcvGq9knZi/Ml/mo225QZGir1IIPkeGHZqP8mGjQQHqiShiZqcfKAJxBWR6LeiuynDgzSI7Zc7ez/BrxJxLBbDf5p3SYkWFhukWDQo9Fb75HtMuU3vAPSQ17I/bPHD1uRuow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a152eTWm; arc=none smtp.client-ip=209.85.218.46
+	 MIME-Version; b=F3Wl5V9EVauQwasFTt3jSuxLqpjYsFrp0nGrJQNRaoxcZ1iPbrzQpvRQ4/Oqpf1syPwnfO2TPgdFPsN6HWj86AV2/Ao8Ttq32dxVHdpWdwZa5zCkx7KZFJnmemy+Odz0l9+H6ZJOxjmy3v9an2htGYgHNk09OaNxmNfRB/hbr8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jlZJeOOd; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a152eTWm"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a99fa009adcso301474766b.0
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 03:14:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jlZJeOOd"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5cef772621eso5586380a12.3
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 03:14:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731323655; x=1731928455; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731323656; x=1731928456; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sYwIcge5SJJbrF270tR/At3Pl0zP9dh3BUyu3jDlrIg=;
-        b=a152eTWmvW0LpenZ4KsW1QvYdhu51sgBkGPMO0Oukf1A9c2YzuirNsYKYNRlU5hiYo
-         vVz5LtqBQuoiaNh/A1FSfINnwuhfG0ozt7bnM8bQos9++FYGvHcoKmWzkxIJjSkZku4s
-         RAyeKjTuAagDuRaaGB9IDnNrcythY7D45sONyX561EjRpIp/thwB7asqOxZAJ8NoBnEq
-         +h7utOs6OEhzgkSgE5qvsnmC3EjW69KOk6S1cAtZm/zyNlcGfAJEczgog8HAjK+fiPRB
-         A9PyK1fZSb8Ex77IcYvuMqd+pmnOM/kvsbePPeoUHGsgrITLcGAj83aKKMG0UxVQA4VF
-         vp9w==
+        bh=+wwTwyZ0lwJvJ0FEJmRcNAc1S3+SrI2Oc833xqu6ox0=;
+        b=jlZJeOOdRKn6dmvIYb1/IOHIN+QL5AJnQntG1trcEDfAafOdvFSQXyKer1/3uP10Oi
+         R5rtVZOL9v7+hKh/srrInzzOBPm/MsevUbc7ZkVSNo40JgX9Z9po8GinaFimf6ne24G7
+         dfdRW9yWXEbYROs4I2vmmOAYTnDFCLvAZk2oo84O7k5ggC632e8W7+FYoBCWuy3uZBUW
+         eBNcIQcV/uV+sg0UK9rfHTmI65syZ7EeCFe/DoA5JioJ9wvPvROfzCjZE0aqY/kbYl3Q
+         VXLNJyroNQsMf5vXXjDCkusvhVxGOPxTw8W24o58zgIrLh9VQJKI4NvKGBWYFsaiE6Ar
+         NlwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731323655; x=1731928455;
+        d=1e100.net; s=20230601; t=1731323656; x=1731928456;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=sYwIcge5SJJbrF270tR/At3Pl0zP9dh3BUyu3jDlrIg=;
-        b=GG5flRi77vfroFyJbGR5u0wzGoVe00gicoT1yHlq9Ta5+NVh525zc1SvXMgA43+ObW
-         g+Uvx7fJC6fKtMO1//9LSATIexJim6a6oY7qXrfuDAhSnA+Ho7taehsI5rlVbECmzx5D
-         JAaD2XgR0ffovmtrP44fHnnueWIMCewERnV8XoSS3aGqLYOsthY+aPwidQ3SEi0br2/8
-         r5AWNhEoRl/iyVVlHlI9AUZnR5BhxzkAxXIaNIGAmBEviQhRmgmNDDB11fTYxJU/ERYq
-         Biahz2TGbq2OjOFRvFcxbsPRBK9dWlUcO0XDSt1yEJhtho7f80d4QRJCfser6YLaKWTB
-         9q4Q==
-X-Gm-Message-State: AOJu0YzX8mnB6/W1zG1Baio0HP0YoCpgjDORdGetuYpr5/Vt+A2XYBMV
-	lpACwJRjzl9mjLD2xB5o8komgxDaA6kE1Bvc4vmNHiVq6rhevvk1
-X-Google-Smtp-Source: AGHT+IH/5WUoZ7wQJVfgFG5cKFPJNhVpr/u1RusW3K8KbmpNd8i5WQhj4c+9CHvIFutYUYstzTdLAg==
-X-Received: by 2002:a05:6402:354b:b0:5ca:8b9:6e06 with SMTP id 4fb4d7f45d1cf-5cf0a311112mr16542812a12.12.1731323654578;
-        Mon, 11 Nov 2024 03:14:14 -0800 (PST)
+        bh=+wwTwyZ0lwJvJ0FEJmRcNAc1S3+SrI2Oc833xqu6ox0=;
+        b=BQZmbSxmr3daUfNhe2lEG7d13/OaFoWwavJJP1cFRHjUlQRBlrdFMT44sfFg77A9oC
+         r/t6HgMmdnmXLFdKi0+ABp18Vl/1MqcNDLYlrfkjjfrQVhRhb20spHRRRu+fGa/aHewd
+         WCwgfH1PXvWEBBxvAaVr9gp+1fuEjGLXm5SccF91jor8I/FyNbo5t5icm9StF9TWKd1X
+         jz8/RZrvIW3AkJxhbGM3XEVmGAGrCTbtpmf5N0dy9T4bwJ+2pvXnyl1DQq326DsArCYd
+         rIl5moEfqZKMYs4bkrRJ59vzpnsXEce0i76j6erh93RgD+oVMg4beM8B3mE1ymG90z6e
+         V+Aw==
+X-Gm-Message-State: AOJu0YzDfiOWUQfdtNsE4Q4+a39k/Ipp1cZTTSf8+wz+e2kIk5TYoAL2
+	FCTcVULlG/IWSmzV7+BpwsZT9A04sdqS1zsg8OctGTb5aDTDWeGKZIwLTMMZ
+X-Google-Smtp-Source: AGHT+IESwdBKMdsEAE7kGaU/07eAYNq3LfrPiNmxyonPs4cz7ZhDJ7OFQpHxAdg3PkSbGgXGixPGcQ==
+X-Received: by 2002:a05:6402:2114:b0:5cf:a20:527c with SMTP id 4fb4d7f45d1cf-5cf0a44227fmr9434187a12.21.1731323656007;
+        Mon, 11 Nov 2024 03:14:16 -0800 (PST)
 Received: from localhost.localdomain ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf03c7c625sm5012959a12.82.2024.11.11.03.14.13
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf03c7c625sm5012959a12.82.2024.11.11.03.14.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2024 03:14:14 -0800 (PST)
+        Mon, 11 Nov 2024 03:14:15 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	me@ttaylorr.com,
 	peff@peff.net,
 	gitster@pobox.com
-Subject: [PATCH v7 3/9] packfile: pass `repository` to static function in the file
-Date: Mon, 11 Nov 2024 12:14:03 +0100
-Message-ID: <167a1f3a111958df7e1841aeae37addcdf04c411.1731323350.git.karthik.188@gmail.com>
+Subject: [PATCH v7 5/9] packfile: pass down repository to `has_object[_kept]_pack`
+Date: Mon, 11 Nov 2024 12:14:05 +0100
+Message-ID: <5566f5554cb9af260c598b6ac7db80ee6e0b4228.1731323350.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1731323350.git.karthik.188@gmail.com>
 References: <cover.1731323350.git.karthik.188@gmail.com>
@@ -71,77 +71,201 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some of the static functions in the `packfile.c` access global
-variables, which can simply be avoiding by passing the `repository`
-struct down to them. Let's do that.
+The functions `has_object[_kept]_pack` currently rely on the global
+variable `the_repository`. To eliminate global variable usage in
+`packfile.c`, we should progressively shift the dependency on
+the_repository to higher layers. Let's remove its usage from these
+functions and any related ones.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- packfile.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ builtin/count-objects.c | 2 +-
+ builtin/fsck.c          | 2 +-
+ builtin/pack-objects.c  | 4 ++--
+ diff.c                  | 3 ++-
+ list-objects.c          | 3 ++-
+ pack-bitmap.c           | 2 +-
+ packfile.c              | 9 +++++----
+ packfile.h              | 5 +++--
+ prune-packed.c          | 2 +-
+ reachable.c             | 2 +-
+ revision.c              | 4 ++--
+ 11 files changed, 21 insertions(+), 17 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 5bfa1e17c2..c96ebc4c69 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -460,13 +460,13 @@ static void find_lru_pack(struct packed_git *p, struct packed_git **lru_p, struc
- 	*accept_windows_inuse = has_windows_inuse;
- }
- 
--static int close_one_pack(void)
-+static int close_one_pack(struct repository *r)
- {
- 	struct packed_git *p, *lru_p = NULL;
- 	struct pack_window *mru_w = NULL;
- 	int accept_windows_inuse = 1;
- 
--	for (p = the_repository->objects->packed_git; p; p = p->next) {
-+	for (p = r->objects->packed_git; p; p = p->next) {
- 		if (p->pack_fd == -1)
- 			continue;
- 		find_lru_pack(p, &lru_p, &mru_w, &accept_windows_inuse);
-@@ -555,7 +555,7 @@ static int open_packed_git_1(struct packed_git *p)
- 			pack_max_fds = 1;
+diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+index 04d80887e0..1e89148ed7 100644
+--- a/builtin/count-objects.c
++++ b/builtin/count-objects.c
+@@ -67,7 +67,7 @@ static int count_loose(const struct object_id *oid, const char *path,
+ 	else {
+ 		loose_size += on_disk_bytes(st);
+ 		loose++;
+-		if (verbose && has_object_pack(oid))
++		if (verbose && has_object_pack(the_repository, oid))
+ 			packed_loose++;
+ 	}
+ 	return 0;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 7f4e2f0414..bb56eb98ac 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -272,7 +272,7 @@ static void check_reachable_object(struct object *obj)
+ 	if (!(obj->flags & HAS_OBJ)) {
+ 		if (is_promisor_object(&obj->oid))
+ 			return;
+-		if (has_object_pack(&obj->oid))
++		if (has_object_pack(the_repository, &obj->oid))
+ 			return; /* it is in pack - forget about it */
+ 		printf_ln(_("missing %s %s"),
+ 			  printable_type(&obj->oid, obj->type),
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0800714267..0f32e92a3a 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1529,7 +1529,7 @@ static int want_found_object(const struct object_id *oid, int exclude,
+ 			return 0;
+ 		if (ignore_packed_keep_in_core && p->pack_keep_in_core)
+ 			return 0;
+-		if (has_object_kept_pack(oid, flags))
++		if (has_object_kept_pack(p->repo, oid, flags))
+ 			return 0;
  	}
  
--	while (pack_max_fds <= pack_open_fds && close_one_pack())
-+	while (pack_max_fds <= pack_open_fds && close_one_pack(p->repo))
- 		; /* nothing */
+@@ -3627,7 +3627,7 @@ static void show_cruft_commit(struct commit *commit, void *data)
  
- 	p->pack_fd = git_open(p->pack_name);
-@@ -610,7 +610,8 @@ static int open_packed_git(struct packed_git *p)
- 	return -1;
- }
- 
--static int in_window(struct pack_window *win, off_t offset)
-+static int in_window(struct repository *r, struct pack_window *win,
-+		     off_t offset)
+ static int cruft_include_check_obj(struct object *obj, void *data UNUSED)
  {
- 	/* We must promise at least one full hash after the
- 	 * offset is available from this window, otherwise the offset
-@@ -620,7 +621,7 @@ static int in_window(struct pack_window *win, off_t offset)
- 	 */
- 	off_t win_off = win->offset;
- 	return win_off <= offset
--		&& (offset + the_hash_algo->rawsz) <= (win_off + win->len);
-+		&& (offset + r->hash_algo->rawsz) <= (win_off + win->len);
+-	return !has_object_kept_pack(&obj->oid, IN_CORE_KEEP_PACKS);
++	return !has_object_kept_pack(to_pack.repo, &obj->oid, IN_CORE_KEEP_PACKS);
  }
  
- unsigned char *use_pack(struct packed_git *p,
-@@ -642,11 +643,11 @@ unsigned char *use_pack(struct packed_git *p,
- 	if (offset < 0)
- 		die(_("offset before end of packfile (broken .idx?)"));
+ static int cruft_include_check(struct commit *commit, void *data)
+diff --git a/diff.c b/diff.c
+index dceac20d18..266ddf18e7 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4041,7 +4041,8 @@ static int reuse_worktree_file(struct index_state *istate,
+ 	 * objects however would tend to be slower as they need
+ 	 * to be individually opened and inflated.
+ 	 */
+-	if (!FAST_WORKING_DIRECTORY && !want_file && has_object_pack(oid))
++	if (!FAST_WORKING_DIRECTORY && !want_file &&
++	    has_object_pack(istate->repo, oid))
+ 		return 0;
  
--	if (!win || !in_window(win, offset)) {
-+	if (!win || !in_window(p->repo, win, offset)) {
- 		if (win)
- 			win->inuse_cnt--;
- 		for (win = p->windows; win; win = win->next) {
--			if (in_window(win, offset))
-+			if (in_window(p->repo, win, offset))
- 				break;
- 		}
- 		if (!win) {
+ 	/*
+diff --git a/list-objects.c b/list-objects.c
+index 985d008799..31236a8dc9 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -41,7 +41,8 @@ static void show_object(struct traversal_context *ctx,
+ {
+ 	if (!ctx->show_object)
+ 		return;
+-	if (ctx->revs->unpacked && has_object_pack(&object->oid))
++	if (ctx->revs->unpacked && has_object_pack(ctx->revs->repo,
++						   &object->oid))
+ 		return;
+ 
+ 	ctx->show_object(object, name, ctx->show_data);
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 4fa9dfc771..d34ba9909a 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1889,7 +1889,7 @@ static void filter_packed_objects_from_bitmap(struct bitmap_index *bitmap_git,
+ 		bitmap_unset(result, i);
+ 
+ 	for (i = 0; i < eindex->count; ++i) {
+-		if (has_object_pack(&eindex->objects[i]->oid))
++		if (has_object_pack(the_repository, &eindex->objects[i]->oid))
+ 			bitmap_unset(result, objects_nr + i);
+ 	}
+ }
+diff --git a/packfile.c b/packfile.c
+index 1015dac6db..e7dd270217 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -2143,16 +2143,17 @@ int find_kept_pack_entry(struct repository *r,
+ 	return 0;
+ }
+ 
+-int has_object_pack(const struct object_id *oid)
++int has_object_pack(struct repository *r, const struct object_id *oid)
+ {
+ 	struct pack_entry e;
+-	return find_pack_entry(the_repository, oid, &e);
++	return find_pack_entry(r, oid, &e);
+ }
+ 
+-int has_object_kept_pack(const struct object_id *oid, unsigned flags)
++int has_object_kept_pack(struct repository *r, const struct object_id *oid,
++			 unsigned flags)
+ {
+ 	struct pack_entry e;
+-	return find_kept_pack_entry(the_repository, oid, flags, &e);
++	return find_kept_pack_entry(r, oid, flags, &e);
+ }
+ 
+ int for_each_object_in_pack(struct packed_git *p,
+diff --git a/packfile.h b/packfile.h
+index 51187f2393..b09fb2c530 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -193,8 +193,9 @@ const struct packed_git *has_packed_and_bad(struct repository *, const struct ob
+ int find_pack_entry(struct repository *r, const struct object_id *oid, struct pack_entry *e);
+ int find_kept_pack_entry(struct repository *r, const struct object_id *oid, unsigned flags, struct pack_entry *e);
+ 
+-int has_object_pack(const struct object_id *oid);
+-int has_object_kept_pack(const struct object_id *oid, unsigned flags);
++int has_object_pack(struct repository *r, const struct object_id *oid);
++int has_object_kept_pack(struct repository *r, const struct object_id *oid,
++			 unsigned flags);
+ 
+ /*
+  * Return 1 if an object in a promisor packfile is or refers to the given
+diff --git a/prune-packed.c b/prune-packed.c
+index 2bb99c29df..d1c65ab10e 100644
+--- a/prune-packed.c
++++ b/prune-packed.c
+@@ -24,7 +24,7 @@ static int prune_object(const struct object_id *oid, const char *path,
+ {
+ 	int *opts = data;
+ 
+-	if (!has_object_pack(oid))
++	if (!has_object_pack(the_repository, oid))
+ 		return 0;
+ 
+ 	if (*opts & PRUNE_PACKED_DRY_RUN)
+diff --git a/reachable.c b/reachable.c
+index 3e9b3dd0a4..09d2c50079 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -239,7 +239,7 @@ static int want_recent_object(struct recent_data *data,
+ 			      const struct object_id *oid)
+ {
+ 	if (data->ignore_in_core_kept_packs &&
+-	    has_object_kept_pack(oid, IN_CORE_KEEP_PACKS))
++	    has_object_kept_pack(data->revs->repo, oid, IN_CORE_KEEP_PACKS))
+ 		return 0;
+ 	return 1;
+ }
+diff --git a/revision.c b/revision.c
+index f5f5b84f2b..d1d152a67b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -4103,10 +4103,10 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
+ {
+ 	if (commit->object.flags & SHOWN)
+ 		return commit_ignore;
+-	if (revs->unpacked && has_object_pack(&commit->object.oid))
++	if (revs->unpacked && has_object_pack(revs->repo, &commit->object.oid))
+ 		return commit_ignore;
+ 	if (revs->no_kept_objects) {
+-		if (has_object_kept_pack(&commit->object.oid,
++		if (has_object_kept_pack(revs->repo, &commit->object.oid,
+ 					 revs->keep_pack_cache_flags))
+ 			return commit_ignore;
+ 	}
 -- 
 2.47.0
 
