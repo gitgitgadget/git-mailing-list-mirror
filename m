@@ -1,53 +1,53 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E056015853B
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 12:53:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085A519C56D
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 12:53:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731329600; cv=none; b=U5YJrn6el8obUIEi3ngURmeTPEbbTMWaDBMC8Q6Ku9MhIxfGO/Yxdj2p+UXDVdLVMkNQWJNzgLKBw17nI880I/aoLN7PtR41MzVTEsaB1IxKPy4xIGy7OasIYqcdPxmv7V1enCuDryfLNpUWfCWHlNZV9i6VDENqeX1VZzQ67Ac=
+	t=1731329603; cv=none; b=U2Dzof5YjlQURgrJxLDr1yXSX/tHRwx4J03iEFyS50jzuHbTmLVRKptiu2IvcbsRskdSI/1cumejHeFl1wOK11N9BtXNImuiR/VHbYY0BQK+w500PQiPdKO85ctP3ygLWCsUrY/apcJlttMzTxHvtqyNoSb65mVr8O3UrW4w/3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731329600; c=relaxed/simple;
-	bh=gty9HqccVxtIWzYKcBK0FQTGFDybNzQIU+CHT+KPnEI=;
+	s=arc-20240116; t=1731329603; c=relaxed/simple;
+	bh=kpLqbrR0bs/DkCg7JSZ07f6yLWN8qHBr/GdEasCU06Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ovc2bCvEoKZ0DWoBTBxfBE7mLfe+8WtdmdYwKgc7t58L5iyO8kLDX2qo2ggs3QnSR00Ecr8MMN3S9Zm9GHWgbN2WKoF25QOhxOYS4Wph8sNQY8aULMmr7xSLqaMvVPtX8Z96MDsvA+Y7yPA1IDxv53otcG4ibMFe33NuWlHc72k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F7tkpzW7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IjFrfrWJ; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=mx3FW83M12MjRpK6FwHdTJEZ0n2HRE6cVPCOZUt2eFryDDPUZUkFI8sZHWiAfur5w54GcmPHuyAtxyYP3/jfQeGTByDZUct5J1ZztdPvI95M9UEZmnr3ScfJ/HUw1s50ElVgv2GwcaAV+S5bEfdX6RiAmK4Ah9B6zK4wWd+ll7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pZUL+93C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WYh3c/Xf; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F7tkpzW7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IjFrfrWJ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1476D13805E7;
-	Mon, 11 Nov 2024 07:53:17 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 11 Nov 2024 07:53:17 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pZUL+93C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WYh3c/Xf"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 063D511400C9;
+	Mon, 11 Nov 2024 07:53:19 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Mon, 11 Nov 2024 07:53:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731329597; x=1731415997; bh=cPfmUajR/h
-	HKqSNxagf5YLiiWnNi7ffDfXF9x/N25Ig=; b=F7tkpzW7jJvckgO6AuloBRDxzy
-	TlaYhyHZjPqFuJrx9I1nf4QenqgpaaZbPRbjLnYtgQpKy7rAg+yHOmel4WuxxngG
-	uoR4bEc5pxxwHMUhhOuSjeXVdjIu7UlOp9PT3TdhqhYScyvpqkoZ+0kzcG87c55L
-	pLREvm0K2BLeKWYsIfnuic5QMicnzPz2wRM44v1HMYKt0873osa1R4uV1T2rizQC
-	l6WiL/Z/wwFCn+IjNZtnzMWGim+RebhSNhHz6Pz8HInE0gf04bDpyq7hrq9AlxeB
-	BwenyL/X3v8sjsY9KVWVu2TE7gakQ+P0MW5hjHdNv0gAqxQ1dGVx4VBw+A4A==
+	:subject:to:to; s=fm3; t=1731329599; x=1731415999; bh=t4WRWw2YS+
+	11F5H0iUDmMK0bnSMelgkkVvpeqM4FIgo=; b=pZUL+93C0fZdZFlHNkRSB6NQfP
+	hCRmtrv58GG1/JIG2I5TXfsCVHQ78ZHa8Rgsnh8hvBmPZhXqsIjHP5/aZtngPyrJ
+	FLLm/xA3vCoueOC0cuBGhL7vZrtQMnsvfBqS/cISTu35PhnQtoaytJmiMVWF0O+c
+	5/nhDwsqOhHVYHIZwq0MvMQUrxZ8mFDRk+9Wo4TTVwEs6GdtB/MRPLk1JXO1GauB
+	DPdtmJE6L5XW2h6TBl+xzrq9hJFw/u9HGdYhYZcXMa1BxVfXbwaSiy43ix/p3EAS
+	JpQ5uJE0doL6r19FOP9RnGKXASIl3gPieMQxzMfupROJNj/QiA9605KVcruw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731329597; x=1731415997; bh=cPfmUajR/hHKqSNxagf5YLiiWnNi7ffDfXF
-	9x/N25Ig=; b=IjFrfrWJXBxky5v00REteWnotqt6x9p5orA0dtiC5l4MS7FWgeV
-	BUqh4SfsIgIKHtqMj1JNN4nF4ULJdQPtpGIZunTFNeGDMSFpOm9XQAs1AzqpxtbL
-	kTcFfLX+ErkHebQkawd/VO1biYlW/rO1KIqtuteD0nwX2/VgSyTQuyyAYuju+9hd
-	Qgxd1YFgs3pJGoDVD5R0cgb8bCB1wHMz6ArRGXbxYcQZzYB2yuo+4jH2tgoG9sFX
-	xv2WRGfbi/ajbJOOOIyykhmuW4RuYbEyOKlScjk7zpAgNbFWFX1FX3OMSsBMQ71/
-	+hC4D3Qtth0Y1ZuIzDu9adkjca9kAkgUUZw==
-X-ME-Sender: <xms:PP4xZ5E59k51sX049aw0q_S_83UOv2SsH_L-zmrVUAGYANaT4b6Cgg>
-    <xme:PP4xZ-XkMO6fCQm7zGwzr9bftRUhpALNaleQaqynaXpUpx4hmrXa_YQ18GHNfcln6
-    Fo_aaas3hurY3E7KA>
-X-ME-Received: <xmr:PP4xZ7KL8-j-AP2QOnX-7kSNkFmT4X23tzQ9MJsr-rFWxffb6mmGHeYIHxovxV0nycouPHBojQHeqg70C2PjUm2bTAz3eFf94pIOFbL_Sxu1OUjQ>
+	1731329599; x=1731415999; bh=t4WRWw2YS+11F5H0iUDmMK0bnSMelgkkVvp
+	eqM4FIgo=; b=WYh3c/Xfu6+2BcPjZdJEZCJSpNsimikUwLsIJgNtYrBjDNTUBbK
+	3kNkSrwqnYPffoVgwVeTu0gqyOJLzTyMHQ/OLGH5Fup7zF5AD+tn1JRGLeFP+OCB
+	xopCnOjTXefPoh2MjmCPjjjHqgZuXe1nXo2m68N8Hv87aUUgHljsJhdo34/13pPM
+	SkVWZFoVDR7m74IWSfAmhIkpsCwNsAbM6XXyZaRBELQCO4lAAfNEOqrWNHAUMoPs
+	1rgZVRWVFYA5lH9cUM1i6zXo6QvkL67SvBzrKdRGDRPIETm1KHQ9rv7JOWxLm+Xh
+	YkOG+gYmoYtV/1C8X11kQ1mluv15jdLPbPQ==
+X-ME-Sender: <xms:Pv4xZ_SHdh3ya360K-mYG_mnOOFugX7yATtgC8KOAIltMoJnvwgBFA>
+    <xme:Pv4xZww3gz4BRX1OdyoN6tDn-xSwGsYggCpr2qTOLBCPMzXP6_p_T-efhqufQaH0V
+    chryKbCvgcsATMixA>
+X-ME-Received: <xmr:Pv4xZ02Qw5-nuvTz8aLhIF42bCB1om_vgpC3hqVdY0PP2yFbVxWTKWyMl8UXhG0sHNVx6ctcvDHJZtWaVj_yXIo6WwEBN1Y_Umrn4G-FbJjJuAPq>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdeghecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdeghecutefuodetggdote
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
     hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:PP4xZ_HSL2hQrld0PYo5HzmFLDth_i9Ab7k_PM5GsqFArXoyoHPDMA>
-    <xmx:PP4xZ_UaUQThqU896OsWi61dSjawJna7SXcD64pLBaWarHDbSh8LxA>
-    <xmx:PP4xZ6M0g4WzgdalZ91RiQZ4zzvLlEcgsreqL6S-TtFXEmP8lay3XQ>
-    <xmx:PP4xZ-1sCQ16iwRtdTXtGvprArZ5TvwPQVq2mG22eTuZPnKi3D5grQ>
-    <xmx:Pf4xZ8ixZrv40e6yXy5Qf5dPbQSqTcDMHLC4Mhb1fbOrcVQqbBMad6QO>
+X-ME-Proxy: <xmx:Pv4xZ_AKycvAODg0rtGFpHK5auqFwzRgreEeMwinl_Ujx17npoEylA>
+    <xmx:Pv4xZ4gM8dXFPpMP8RdvZxYzWOMLwrwjU6unSRxpfDgY5mMM0s5noQ>
+    <xmx:Pv4xZzoiK6cR3LP-uY3xQrL6TT01D5GUTwZ6VFRJtOMHMgbFMDMwgQ>
+    <xmx:Pv4xZzhAMzob8StqSQazmIAHV4PhRb56G9DBWJi5pjaGHIPnY5NQzw>
+    <xmx:Pv4xZ7siTk8HJQeTpJRfnQ4NAnvBCOBCNr-74p_YgXF5RlJEO9ksSMm3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 07:53:16 -0500 (EST)
+ 11 Nov 2024 07:53:18 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 47a1ac01 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 12:52:40 +0000 (UTC)
-Date: Mon, 11 Nov 2024 13:53:05 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id fab7f21c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 12:52:43 +0000 (UTC)
+Date: Mon, 11 Nov 2024 13:53:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: karthik nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/10] refs: allow passing flags when setting up a
- transaction
-Message-ID: <ZzH-MZ29Nu9yUu_Y@pks.im>
+Subject: Re: [PATCH 04/10] refs/files: support symbolic and root refs in
+ initial transaction
+Message-ID: <ZzH-NTDJlUH48vRM@pks.im>
 References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
- <20241108-pks-refs-optimize-migrations-v1-1-7fd37fa80e35@pks.im>
- <CAOLa=ZQKJ3Twdze-08t3kh=kiuy6h9GfNSO25PkinjTwF5oG+w@mail.gmail.com>
+ <20241108-pks-refs-optimize-migrations-v1-4-7fd37fa80e35@pks.im>
+ <CAOLa=ZSKH_OY5XG+toFUT2fD+6c7fshNZDfcOOSydxH23D91Zg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,23 +87,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQKJ3Twdze-08t3kh=kiuy6h9GfNSO25PkinjTwF5oG+w@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSKH_OY5XG+toFUT2fD+6c7fshNZDfcOOSydxH23D91Zg@mail.gmail.com>
 
-On Mon, Nov 11, 2024 at 05:30:18AM -0500, karthik nayak wrote:
+On Mon, Nov 11, 2024 at 02:42:11AM -0800, karthik nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Allow passing flags when setting up a transaction such that the
-> > behaviour of the transaction itself can be altered. Adapt callers
-> > accordingly.
+> > The "files" backend has implemented special logic when committing
+> > the first transactions in an otherwise empty ref store: instead of
+> > writing all refs as separate loose files, it instead knows to write them
+> > all into a "packed-refs" file directly. This is significantly more
+> > efficient than having to write each of the refs as separate "loose" ref.
+> >
+> > The only user of this optimization is git-clone(1), which only uses this
+> > mechanism to write regular refs. Consequently, the implementation does
+> > not know how to handle both symbolic and root refs. While fine in the
+> > context of git-clone(1), this keeps us from using the mechanism in more
+> > cases.
+> >
+> > Adapt the logic to also support symbolic and root refs by using a second
+> > transaction that we use for all of the refs that need to be written as
+> > loose refs.
 > >
 > 
-> Maybe it is self-explanatory with the upcoming patches, but it'd be nice
-> to know _why_ this change is being made.
+> The patch looks good. I was wondering if another way would be to just
+> add symref and root ref support to packed-refs. But that might be a
+> bigger undertaking than what we're doing here.
 > 
-> The patch itself looks good.
+> But thinking about it, seems like we can do that in a backwards
+> compatible way too.
 
-Explaining the exact use case here wouldn't make sense, as I'd basically
-have to repeat the explanation given in the subsequent patch that wires
-things up. But I can mention that this will be used in a later patch.
+I don't think you can without introducing a new version of the format,
+mostly because you also have to think about clients that don't support
+the new format. So all of this would be a big undertaking, and given
+that we have the reftable backend nowadays I don't think it'd be all
+that valuable.
 
 Patrick
