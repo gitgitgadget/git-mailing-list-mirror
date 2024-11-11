@@ -1,185 +1,135 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052A81474B9
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176E21474B9
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:54:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731322392; cv=none; b=q9DOhg8zSsEpfOJu2PX1zk5MywwKY40Azqg3T64Mh9ddDnNFYwKd/43iS0AsN8LirlVadirClJscTM0lNnqZXXL9AKj/GndaNuInfQ0VOFNw+VubbHvAujjW8Mk8uVRT6vVV5vLPQSjMgK5WlwNzIHoH3Y3QIlaAv86z/qXhGXU=
+	t=1731322443; cv=none; b=eI/hkIu2H0+hZLG8Zds2uWeclKih5ylP2ccBpqrkuxWNP1N2f2spdZd5iWl7LCiXIPPZ4E3OMwtap3uNNJIkrM2bpiVmGi65ieX3Nj1cmg0lCKH5TIsGES+U/r8gBc1LVVTYuQB3ycfDQhj7/l2qYZfpUz0zPQOCToZ8Jp2zy94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731322392; c=relaxed/simple;
-	bh=2E3KFmB/ttJ0NjeHy09hAJAyrtN/5M/2tUWXVrbA5+4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=YnSVcHq5X0ExVrn53QfqxM16FKkGeOXLreuWmH1k8U4RF/SxFYihed+CjZ20+nB4z9Ueqip0RqPZjB+Sfan9d1vky734JPgBSo/9CCr94A/PwOsnk97TriEc9k/8jTio/XsJG45veCurCZc7WVjIXaK1BF2TRfKCQ5rbifgLNlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=agUgLmny; arc=none smtp.client-ip=209.85.221.181
+	s=arc-20240116; t=1731322443; c=relaxed/simple;
+	bh=gPLTT3Equn+BvsBkv9R8/D5wypburkwdepFLuS1cL38=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=niYEqMQ5Zz3Dc+Y7bk5U5qrojhIYF90bfj7ckt9Vyoabvz7HcTfTtGi2iXtA6Q6/+QBt8Z1bw3oQUH/utR/fPBRa9xcWEzxLWA5m1qSDySUMffBToYvoD8I1z9wk+B11yAxzOCsmPxuwwInQYw0p/RpNdBfaEyDxoblWyhVEWik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RB+7vSgZ; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="agUgLmny"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-50d431b0ae2so4163147e0c.1
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:53:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RB+7vSgZ"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37d8901cb98so3079300f8f.0
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731322390; x=1731927190; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+        d=gmail.com; s=20230601; t=1731322440; x=1731927240; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Wtftw+iV+uwCERPohYEwK1HBxIxVXuVkAUQo6/Fzz+0=;
-        b=agUgLmnyvyeymLnxGumXhl0pvgINnFphXUy6/jige7V33elHIpj/CK7/kB9Varg5MH
-         bbTgCKrhRAv2WXtko60O0BisixJL0dH33FvPxaen/X8zx5epdVfkn1a5e0XFVNOAsj/j
-         k4wE53txgGGpGTHjeNFpooskQ7j+f8YzbN/O4WRL7GNcJotPMIfaNRzls1pPlSPJ8Oqm
-         Mxfsw6JJMJ3FAlt9DEWy05wtA5aEK4dcXK3UKCcw3uKBP+ovBfU+irjVt0vcFm9Sr2Sc
-         0o1T4DKUU/gH6MNwHXAVU/JwOx5uKypA22mZfWI5FQZitirytrh9y6C5Vvlb0yjvTro/
-         n7+Q==
+        bh=WnZN2fUQf360D7m9VMxXlBRoYOrA63LwhMNeaL5HRcE=;
+        b=RB+7vSgZQTYVqCOVRrO3H4bMHaNV+r5R7oPDQVW+Z1umCRmG8FDAKz6j5ksy20nJOI
+         Jk4sGp0N8zUt45a2uf2NWl/vhPe3IYYYKMQ7lD3/eCHhKgZJb2stuu5FWTGiN0wwdF4r
+         A6+5ve/YZS+8pJLuUJr+MjfiPkA2y4M7PLbDCzrONPrBpup9HscYdrkJi49dleEd3gpl
+         NeTAj59jZwp652VcrzOlvKin+dLLcak08XrMqvULuK4iC4ukOaoQFD9v2MlDRSEscsCv
+         kKtcDNCF5qph1125Z/I+5X4/zx6Lc6YtYwb9C+MFJBYJmUopwjW3hogvHT9AVenfEhNU
+         ayBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731322390; x=1731927190;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+        d=1e100.net; s=20230601; t=1731322440; x=1731927240;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wtftw+iV+uwCERPohYEwK1HBxIxVXuVkAUQo6/Fzz+0=;
-        b=sYF5HT6ve7GRSZUTbcOVhDgleC4PS4+qPpOegDqy/MVwpDZdFLCdCz2IlCVStvLacl
-         KpXBr7fP6RtNJ0rFURoOjrsmY3Bxk61B2Jv6phxlA4sq8Ex1fPi7furtY/9YRGKLrxY2
-         Vr4mE7s+ZT4cU2inVkxtsR1m/bnxDKq1kvu+9qxgR+sps/6e8U0mafsm9ww/7R7VKOFO
-         Nm6O3q+U71GZpzEGrWaGSftFVsMiF/HHjbsJ1DUzYYoUTcExgaTqq2Ob/t0o7OLQx4I1
-         78NZ4urCTSf2ym0x2MKFvttCpUCYDIAz+IpTf75848TNrJ7cBDHfoHaXHRe1sqMUSPTu
-         LCCw==
-X-Forwarded-Encrypted: i=1; AJvYcCW4G1lRil84ClufrGSAF+VQ7CcJGb9X01AeqY89sjOo+eKMaFyZh2lqPhCVNF4WITwUd2A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN6z9biPlcrwXostawiwBUdHjWbySuW93ZJF3wQRa5msOZnzuF
-	/0JQrd1R/K+zYmXY92IS4cO7Afuqigk7qNDSOy1eXQPq5WNXmg1bzrLsWJDFQOQXdDJ979mL1IA
-	FQLawAU9qTtIrPykSv4ecJkRf09JmYTBb
-X-Google-Smtp-Source: AGHT+IEKOawxszMOIH0H3VX8CWtVqQGcx1eBoOlRMt2vMgF4wwI9GGRKj4v+Gog30zk3OvtwV09KqMfYJ6CX+hOAnBA=
-X-Received: by 2002:a67:eb18:0:b0:4a4:71e5:eb76 with SMTP id
- ada2fe7eead31-4aadff4decfmr9423948137.10.1731322389747; Mon, 11 Nov 2024
- 02:53:09 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 11 Nov 2024 05:53:08 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241108-pks-refs-optimize-migrations-v1-6-7fd37fa80e35@pks.im>
-References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im> <20241108-pks-refs-optimize-migrations-v1-6-7fd37fa80e35@pks.im>
+        bh=WnZN2fUQf360D7m9VMxXlBRoYOrA63LwhMNeaL5HRcE=;
+        b=CDjpJoN8msc62ZNjCMrz53391+2mKHnZyg17FIXh2JFABpK1jT+b0PUfvti7Or3Ntu
+         Gtf9ErkVrx+P5b/twxXkqddtm8cutPQsqyTsarlVgETgjt9MQbyzAYoDakDfh+jTCxtq
+         wTRTdyuLunDr26xIo5pmE9U3GImVmM1+5T5QWoGYWILqLHxB7L6gbY/chUuiIFS+AoOR
+         Xjn/2+gcCZwiL9GhU7CdkBH7DkvlFK8Fp6uHuCF1RHCqTbphFnEGXyW1YLkUIpEoDubu
+         mBR9UEJbN2fBOx1LMjSkO5iDBZQRo4HzvJDPU6dBkAhCXfow8Fe1uGkdysUEbzrvwNqK
+         Eo8w==
+X-Forwarded-Encrypted: i=1; AJvYcCXFdNbWPyP3u7R2N7uWGfytRgKx+SCa548431nNfk4O3uL1/FLd6PPgrMK7+N/ubI0Dh/c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxE/4f/alwxSZEivZxkJv/64fkq93JkiN3eEAjnjJhg2I3pPth4
+	Vx65w0psFik59zADEiamHphHxw45qP9opCq2tOLYg+eIFhynAG6+
+X-Google-Smtp-Source: AGHT+IFjHE76SidAko1HL8Y0EpfcAhXmWc7xFQD9jtmVNNRsVat0Uwz8i0baI+AUNXb/pXrLpq/SBA==
+X-Received: by 2002:a05:6000:18ac:b0:37d:34e7:6d24 with SMTP id ffacd0b85a97d-381f0f7eedemr10429293f8f.18.1731322440173;
+        Mon, 11 Nov 2024 02:54:00 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6b0:6601:912:e3ec:c1c0:993e? ([2a0a:ef40:6b0:6601:912:e3ec:c1c0:993e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa709f3fsm212975135e9.32.2024.11.11.02.53.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 02:53:59 -0800 (PST)
+Message-ID: <6a608200-2dd5-4505-9e1d-1e161ae2896c@gmail.com>
+Date: Mon, 11 Nov 2024 10:53:58 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 11 Nov 2024 05:53:08 -0500
-Message-ID: <CAOLa=ZRrPx2BMe+b3iOQMK9U+GiY6UVYpRJyqxrUamAG2b2EYg@mail.gmail.com>
-Subject: Re: [PATCH 06/10] refs: skip collision checks in initial transactions
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [RFC PATCH v4 05/19] Makefile: use "generate-perl.sh" to massage
+ Perl library
+Reply-To: phillip.wood@dunelm.org.uk
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000087b520626a0e8d9"
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+ Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>,
+ Ramsay Jones <ramsay@ramsayjones.plus.com>, Taylor Blau <me@ttaylorr.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <eddafe1cf8935fd25d107645168ace3f65e1064c.1729771605.git.ps@pks.im>
+Content-Language: en-US
+In-Reply-To: <eddafe1cf8935fd25d107645168ace3f65e1064c.1729771605.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000087b520626a0e8d9
-Content-Type: text/plain; charset="UTF-8"
+Hi Patrick
 
-Patrick Steinhardt <ps@pks.im> writes:
+On 24/10/2024 13:39, Patrick Steinhardt wrote:
+> diff --git a/generate-perl.sh b/generate-perl.sh
+> index 12e116b76e5..cb1629857c6 100755
+> --- a/generate-perl.sh
+> +++ b/generate-perl.sh
+> @@ -17,10 +17,20 @@ OUTPUT="$5"
+>   . "$GIT_BUILD_OPTIONS"
 
-[snip]
+I need to add
 
-> diff --git a/refs.c b/refs.c
-> index 0f10c565bbb4e0d91210c52a3221a224e4264d28..d690eb19b3fd7083a5309deb98738547e4f48040 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2324,6 +2324,7 @@ int refs_verify_refname_available(struct ref_store *refs,
->  				  const char *refname,
->  				  const struct string_list *extras,
->  				  const struct string_list *skip,
-> +				  int initial_transaction,
->  				  struct strbuf *err)
->  {
->  	const char *slash;
-> @@ -2332,8 +2333,6 @@ int refs_verify_refname_available(struct ref_store *refs,
->  	struct strbuf referent = STRBUF_INIT;
->  	struct object_id oid;
->  	unsigned int type;
-> -	struct ref_iterator *iter;
-> -	int ok;
->  	int ret = -1;
->
->  	/*
-> @@ -2363,7 +2362,8 @@ int refs_verify_refname_available(struct ref_store *refs,
->  		if (skip && string_list_has_string(skip, dirname.buf))
->  			continue;
->
-> -		if (!refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
-> +		if (!initial_transaction &&
-> +		    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
+case "$OUTPUT" in
+*.pm)
+	dir="$(dirname $OUTPUT)"
+	if ! test -d "$dir"
+	then
+		mkdir -p "$dir"
+	fi
+     ;;
+esac
 
-Nit: It would be nice to have a comment here, perhaps something like:
-     /* in initial transaction there are no refs in the ref store */
+to create the output directories when building out of tree using CMake 
+on Linux. I'm not sure why it works on Windows without this, or why we 
+don't need to create the leading directories when generating 
+clar-decls.h or clar.suite as CMake seems to do it for us when it 
+initializes the build directory.
 
->  				       &type, &ignore_errno)) {
->  			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
->  				    dirname.buf, refname);
-> @@ -2388,21 +2388,26 @@ int refs_verify_refname_available(struct ref_store *refs,
->  	strbuf_addstr(&dirname, refname + dirname.len);
->  	strbuf_addch(&dirname, '/');
->
-> -	iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
-> -				       DO_FOR_EACH_INCLUDE_BROKEN);
-> -	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-> -		if (skip &&
-> -		    string_list_has_string(skip, iter->refname))
-> -			continue;
-> +	if (!initial_transaction) {
-> +		struct ref_iterator *iter;
-> +		int ok;
->
-> -		strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-> -			    iter->refname, refname);
-> -		ref_iterator_abort(iter);
-> -		goto cleanup;
-> -	}
-> +		iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
-> +					       DO_FOR_EACH_INCLUDE_BROKEN);
-> +		while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-> +			if (skip &&
-> +			    string_list_has_string(skip, iter->refname))
-> +				continue;
->
-> -	if (ok != ITER_DONE)
-> -		BUG("error while iterating over references");
-> +			strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-> +				    iter->refname, refname);
-> +			ref_iterator_abort(iter);
-> +			goto cleanup;
-> +		}
+>   sed -e '1{' \
+> +    -e "	/^#!.*perl/!b" \
+>       -e "	s|#!.*perl|#!$PERL_PATH|" \
+>       -e "	r $PERL_HEADER" \
+>       -e '	G' \
+>       -e '}' \
+> -    -e "s/@GIT_VERSION@/$GIT_VERSION/g" \
+> +    -e "s|@GIT_VERSION@|$GIT_VERSION|g" \
+> +    -e "s|@LOCALEDIR@|$PERL_LOCALEDIR|g" \
+> +    -e "s|@NO_GETTEXT@|$NO_GETTEXT|g" \
+> +    -e "s|@NO_PERL_CPAN_FALLBACKS@|$NO_PERL_CPAN_FALLBACKS|g" \
+>       "$INPUT" >"$OUTPUT"
+> -chmod a+x "$OUTPUT"
 > +
-> +		if (ok != ITER_DONE)
-> +			BUG("error while iterating over references");
-> +	}
->
->  	extra_refname = find_descendant_ref(dirname.buf, extras, skip);
->  	if (extra_refname)
-> diff --git a/refs.h b/refs.h
-> index 024a370554e013d66febee635e4c0415ba061fe6..980bd20cf24e15144aeff991eeba8b27a936d386 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -101,13 +101,16 @@ int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refname,
->   * both "foo" and with "foo/bar/baz" but not with "foo/bar" or
->   * "foo/barbados".
->   *
-> + * If `initial_transaction` is truish, then all collision checks with
-> + * preexisting refs are skipped.
-> + *
+> +case "$(basename "$INPUT")" in
 
-Okay we have it here, so this should do.
+Nit: there's no need to call "basename" here as "*" will match directory 
+separators in a case statement.
 
-[snip]
+Best Wishes
 
---000000000000087b520626a0e8d9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 68f51ac4dbabc587_0.1
+Phillip
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jeDRoTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNkQ1Qy8wYk4zNVBsNDlYZ3lvTVR5eVpoSHBydFZUcgovWFRQVFphMWVq
-Z2hmQzVTWHVmYkVERDlYOGpCa0diSGhZY2REOXlIbEQwWmtaUE5YQVJSWDl0MVNJUUVDd3ppCm9G
-a3l0blpYUDdjQjZXd3lMZFQ2NWVDc1pKeTR5bjFxREptNGJ6NnVoZ3l0M3FncnZBcVBoV0R2R0Rq
-dE4xalEKOXlxSWlOUms1WlRPOHdCL2x6SkFtT3RORDY5VEJvdXNWZzF0QnlFOEtUNjJzT3dqT3ZG
-cklGSzFDdU9maHVLZQp0UlJ5NGVLcEs5T2VpRFVXMlZObjVhbk5aTTArSlVVSWk4cGdVU00wSFlm
-eDVoRmR5Mm16ekpZQWdldTF2OTNOCjZzdVZJRWpwMFFaaDY0OU5WT2RhSmVGUExDRjdBalZQYlFI
-alBvMXhJUDFtZXI5NWwxQXBkUTZCckRPaG84RmoKM0ZpLzNJUmVrOGg4bVg4UDMrWCtIcDBWbVkw
-L2ZIN0IyNndyMFlsaTRMRHYyWGxVU2JBYmVRVmQzakJvcmpodAo5YXh5cjQycnRldkNEVE9pOVFs
-c0RWT3V1ODVZSDhBdmFMWkM2VlhaTlE4L0ZxczJsZVV5WFhvaHBnY2Rja2J4CmJlWmhlWDg3MDU2
-bnM2cFRadHR1QUtOUWxjd0o3OHQxSnV2N3ZUTT0KPSttN0QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000087b520626a0e8d9--
+> +*.perl)
+> +	chmod a+x "$OUTPUT";;
+> +*)
+> +	;;
+> +esac
+
