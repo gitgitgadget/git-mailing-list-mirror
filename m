@@ -1,83 +1,81 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9218113E02E
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 08:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A2B15B96E
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 08:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731313516; cv=none; b=lkyLRtIK/0al4ZIDp20JGHd8jmAXiokmg3+x+6itdJyUq/uzHE953N6cW5YdPxcLMr8VXtBr16jfUYGcbynumEr5Mtds+Pth24dzcCNCtP6cUbJaxwfYGfyTQnZhnVVWptZJ5DnkzoshJ3lUUmhWs9OrYPHchqMqNC6vVfwv4qs=
+	t=1731313517; cv=none; b=oBkEQfxBFqsBa9cK6/tlIuDvprNQ3RlhOXCld2o9a0bAvM1RY5WCBOPqMjGDvDodTScoNY18x9RjxK8e6uSaOPw0tfkLWwZtOqHbTfKeSE+0os6n/Mpft8Y3lXYQZJXIzS2dINgNrYYVxuLpiBB2TARig3y77aK8vwhe1LKbVNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731313516; c=relaxed/simple;
-	bh=fIduMhsGrBrNOaUV82Rm9WbZX0B/C6iuyugpw0bjMFE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=srOWlQO1pMIdd+NLZ5ozBy30pPDbV87dzW8xm4QzUBFAEiZJtg6R8DaGAQ3vTWQ/MdhOY9QfpHFNpWSWvOIg3DKoF5+4nd1Or51J+jbDDwr38aHZtvFc4jxrayUUCRPNeD0JKqruUa3UJuwA2HCwNhqgLfjI+KCPd+X0n4nSXDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uXK0DLn6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ly6bq7ZQ; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1731313517; c=relaxed/simple;
+	bh=kd6ltjmgpO3Qf68IbmeI+KwV2WTqpZK9n0f9PgiQtdk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Me6nGe7XgiA9uOzZm7ndU8Mvgj5hlvivIu/1UMZplU3HBAP1ZM9jSR2JkmJJP48NV30s4BCqfVyG3bYZnKW1EuMiTvZdqnjf3mo/eyf33Ugi0tuX2DjEXpO+LAMxabHxp+IXWLCAdKZRD5b2MPtYD0RxHuPJgeGQbCaYCfORga4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R2ASmQNu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gX95CzM/; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uXK0DLn6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ly6bq7ZQ"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 71BEC1380136;
-	Mon, 11 Nov 2024 03:25:12 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 11 Nov 2024 03:25:12 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R2ASmQNu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gX95CzM/"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 82A411140102;
+	Mon, 11 Nov 2024 03:25:14 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 11 Nov 2024 03:25:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731313512;
-	 x=1731399912; bh=+QEGQQy5vTS+uhCNkv5jyz7vwQqr7b6dr/g443re6hk=; b=
-	uXK0DLn64gGRf4qzcB/uJ93bbjCgYDJz9uGq84Pm86ukFYVFgCjRrFj8lPUZafCv
-	wjbj2EgJBczr1czV2iE65f3YucDEpYissthydzsp7DAJbDw677JwQEKcLFn9rplG
-	dUS7JVE5hoRIdLkP2k3zDQ8bKFs2M5tJidxAmPPswZY0AJdFEpVlT44w2ju9A2tQ
-	AnTJ3YKIyhUpLbQgwjWn35CYJLeIcvuvRf4xica/pY89fajEGlddlHWDfaQ9bxFL
-	dbDIil939PaL12SKQWtbk86YncaLJv59Ntu5E7uJwJ5nunCxj+g3bjkiIq8GOTfb
-	ZLvRgt2GfIuLpqp5JLxs3Q==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731313514;
+	 x=1731399914; bh=AYeZgubIEeaKJ+0342Ls5pOVn9OIUWOdfg7ZZIqpORo=; b=
+	R2ASmQNu2bR5fcNY3tBijEEVIEwK9lufV5JFitBPYgv1JcSt5yM8OsHXqstIAvEn
+	COaRL+lmkPihhMCvI3KqPwgi+ay1NayPF3l63602Fw14EG/3mjV5vvuURSkuJowf
+	Gvap4L89DCJZcA+3EFbaYKkiJCJSpqyIZ4HSKzoUTLimVAFrD/KOhUrw0cn08BYj
+	i0xbTITBqQVbIWWBgKdt0Sc6W3v5UEEg0Redp5O9qSNbfdVYSyzp6mdR5qHn6Be4
+	IOpzMJse653G7FHI/WbfASe6F9InkSox7f0TZCiNoU5xxvY6YRx5ZP3yXsFMTOTv
+	pGRtNuh4uVUMzmh2rKkrHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731313512; x=
-	1731399912; bh=+QEGQQy5vTS+uhCNkv5jyz7vwQqr7b6dr/g443re6hk=; b=L
-	y6bq7ZQo6tfye/HEByGe4s+QpiwHMTwL2PKeVDIos/4sdWKX37XKfyxUR5hI4+pA
-	3OEo3KXmN/Piiejt2ahUoJ8cQmmWEboMV5bzayzqYu7oagN8tkHjxvz3l0Hc7wyc
-	fJQDMwWm6MmzvMla91uuWJPcR0BXFti85rnFOzJKBhL/AU3kRtn5iDOwf1CE28s7
-	MIC4+7xvNsAKB99iPBE2idJ0CJ4Qkm8jVoS5npsvyNWf1sxbczAWcmcpBM2pJypn
-	fDMY6E0EZgJABgdssmyB4J7ATYchghMzp93P7rKCQAUYqaeK0SzAt9sKMqRdPsf3
-	V8kO2iT3WkOcvg4dRrgqw==
-X-ME-Sender: <xms:aL8xZ4_AA687zEeEIn38h2KLiTV3o2SNUg9DFcBLCHCVhPZoSuODiA>
-    <xme:aL8xZwuTY7F4ik_3IyE1yQvsQ1qDaEl88EvkXZiBQG3aM5jTjxlX09tLNJWR1OwCc
-    lr4SJ0ddAxiyzAzKQ>
-X-ME-Received: <xmr:aL8xZ-DVBQ2M_o5XLRXai335HXJ8vnK7TqK-r3B5ZwnCOB_UFD8rior0ksMiD1QIdzW-35de8lhnyseTMT7ddsp37EipLTRabG1ohrDR6_2OTfcw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731313514; x=
+	1731399914; bh=AYeZgubIEeaKJ+0342Ls5pOVn9OIUWOdfg7ZZIqpORo=; b=g
+	X95CzM/xpLPnxiuhO4rqVwVe6VzuLzbOllP2cAiIBlDA4b4JXGe172nLQCK7xCRo
+	XCLsB8AhELkMymCBBgMx4wuZQN7nCwjUZveQGV3H0cY+GbWBvmkDRMmCWuZLYYbK
+	9b/GL0aS1rD+kP2knYiQxDivO84NJhdTFJ2Qr+GM4ycZm4sEAxAT/LWCImcoHxU9
+	nRn6lSKsMyYU4yEaj1bTXolp7SOU+qvsfbzXw4CgS4elYyknPd3eiEV02p3sYGQ4
+	szB7VU8JGqidNu23VjF66D4o2psObNMTQ6ofq2XhI3dq1Bzo2w1ESGBgvm8wDLke
+	n5gonkmrX96DXmtl2N3fw==
+X-ME-Sender: <xms:ar8xZ12rkI0vhcCbdeitEkAGy5wVmTD2E-7RVx1lMLx7kPyomBkzlQ>
+    <xme:ar8xZ8GgQChTgy26UKhcJAK74tfh2XUCmjWjZeKe6XGnUTtrNHJu8jzsJqy8EPdMq
+    uCYyoRqoK-wp7w61A>
+X-ME-Received: <xmr:ar8xZ14wPrtfSxNVJQ2VPI6i1SitnOD_2qA55zK45BcBFkBjn_q8JrDVC5dO87zlLbckhzb5SIdxAFRNSyZ4DeDlPb2HqizEcNUnJqPFs-Z-gCik>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugdduudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertdertdej
+    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheef
-    hfegffevgeegtdfhheeuvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepph
-    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehg
-    mhigrdguvg
-X-ME-Proxy: <xmx:aL8xZ4e8BnlxIa9IViHOZuVkmndXpJAqzOGy1-A5oayhuA_OoNV7kA>
-    <xmx:aL8xZ9NT96-WvqlyS88r67P4YyIPCxgvspte4cLcz-LxoDKwUvOzAA>
-    <xmx:aL8xZynfCOM6760ocG-CkOyUv2glavMyT4SXCGJOfMHZc9-7ifuR_A>
-    <xmx:aL8xZ_trr10feSKtRZtQ5m23L9Ifru9E3eaZRiIjaoOHHM363vwZDg>
-    <xmx:aL8xZypf5txp8weGDnv1yM7RqqM8_UrXis-K0hnIyM9jY1vUuRxQ-8UH>
+    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
+    hgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ar8xZy14evgiXTOp7xisdaJ7uakCPDxqcurk1aOTaKe9zYnpDOrn9A>
+    <xmx:ar8xZ4Fd3d8k1vIrTiRWm5cFKIxSWxMFmQwdoOyb620dWquffZDamA>
+    <xmx:ar8xZz9SFcWEGkoUnNhBQ0ZfO3YTt0hq4YoL0Tpi809WBxjIEKfQQA>
+    <xmx:ar8xZ1kwqvjAb25pDvPhHerrlA9mATIZML7UQpfnDFxOWnBsJREb9A>
+    <xmx:ar8xZ0gRxlrpiKT_FaekEAmEZDpgQp5LonB6aYHJygCn8_x0eNnZBbZJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 03:25:11 -0500 (EST)
+ 11 Nov 2024 03:25:13 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d4f02a83 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 08:24:34 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 91a32038 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 08:24:36 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/4] Build improvements for clar
-Date: Mon, 11 Nov 2024 09:24:56 +0100
-Message-Id: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
+Date: Mon, 11 Nov 2024 09:24:58 +0100
+Subject: [PATCH v2 2/4] cmake: use SH_EXE to execute clar scripts
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,88 +84,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFi/MWcC/42NQQ6CMBBFr0Jm7RhaBKwr72FY1DKVibSQFhsN4
- e5WTuDyvfy8v0KkwBThUqwQKHHkyWeQhwLMoP2DkPvMIEt5EqI84/yMaEYd8P7isUd2c5gSOfJ
- LRGEq1UitdKss5MIcyPJ7r9+6zAPHZQqf/SyJn/2vmwSWKGsjLDW1oaq95vWRHXTbtn0Bc7KqH
- 8MAAAA=
-X-Change-ID: 20241108-pks-clar-build-improvements-1c3962a9a79f
-In-Reply-To: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
-References: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
+Message-Id: <20241111-pks-clar-build-improvements-v2-2-d4794d8d1b30@pks.im>
+References: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
+In-Reply-To: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
  Phillip Wood <phillip.wood123@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+In 30bf9f0aaa (cmake: set up proper dependencies for generated clar
+headers, 2024-10-21), we have deduplicated the logic to generate our
+clar headers by reusing the same scripts that our Makefile does. Despite
+the deduplication, this refactoring also made us rebuild the headers in
+case the source files change, which didn't happen previously.
 
-Dscho has reported in [1] that the CMake build instructions for clar do
-not work well on Windows/MSVC because we execute the shell scripts
-directly instead of using the discovered `SH_EXE`. This small patch
-series fixes the issue.
+The commit also introduced an issue though: we execute the scripts
+directly, so when the host does not have "/bin/sh" available they will
+fail. This is for example the case on Windows when importing the CMake
+project into Microsoft Visual Studio.
 
-Changes in v2:
+Address the issue by invoking the scripts with `SH_EXE`, which contains
+the discovered path of the shell interpreter.
 
-    - Wrap overly long lines in the CMake build instructions.
-    - Add the VERBATIM option.
+While at it, wrap the overly long lines in the CMake build instructions.
 
-Link to v1: https://lore.kernel.org/r/20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: <3b2cb360-297a-915c-ae27-c45f38fa49b9@gmx.de>
-
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-
-Patrick Steinhardt (4):
-      t/unit-tests: convert "clar-generate.awk" into a shell script
-      cmake: use SH_EXE to execute clar scripts
-      cmake: use verbatim arguments when invoking clar commands
-      Makefile: let clar header targets depend on their scripts
-
- Makefile                             |  6 ++--
- contrib/buildsystems/CMakeLists.txt  | 16 ++++++---
- t/unit-tests/clar-generate.awk       | 50 ----------------------------
- t/unit-tests/generate-clar-suites.sh | 63 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 78 insertions(+), 57 deletions(-)
-
-Range-diff versus v1:
-
-1:  23d84e6c50 ! 1:  832222f7f5 t/unit-tests: convert "clar-generate.awk" into a shell script
-    @@ Commit message
-         may otherwise be a problem with build systems on platforms that use a
-         different shell.
-     
-    +    While at it, wrap the overly lines in the CMake build instructions.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## Makefile ##
-    @@ contrib/buildsystems/CMakeLists.txt: add_custom_command(OUTPUT "${CMAKE_BINARY_D
-      add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-     -	COMMAND awk -f "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" > "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-     -	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
-    -+	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-    -+	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
-    ++	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-    ++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-    ++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-    ++	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-    ++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
-      
-      add_library(unit-tests-lib ${clar_test_SUITES}
-      	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
-2:  a41b1f4746 < -:  ---------- cmake: use SH_EXE to execute clar scripts
--:  ---------- > 2:  38601f7bdf cmake: use SH_EXE to execute clar scripts
--:  ---------- > 3:  146ebd3841 cmake: use verbatim arguments when invoking clar commands
-3:  01c1c51e6a = 4:  341c831192 Makefile: let clar header targets depend on their scripts
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-base-commit: facbe4f633e4ad31e641f64617bc88074c659959
-change-id: 20241108-pks-clar-build-improvements-1c3962a9a79f
+ contrib/buildsystems/CMakeLists.txt | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index da99dc3087a218d30e0fd1044567d7148d0d80a9..2db80b7cc3c6aba840f18ffdc78d2cda1877d8cd 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -1005,10 +1005,13 @@ parse_makefile_for_scripts(clar_test_SUITES "CLAR_TEST_SUITES" "")
+ list(TRANSFORM clar_test_SUITES PREPEND "${CMAKE_SOURCE_DIR}/t/unit-tests/")
+ list(TRANSFORM clar_test_SUITES APPEND ".c")
+ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
+-	COMMAND ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" ${clar_test_SUITES}
+-	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh ${clar_test_SUITES})
++	COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh
++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
++		${clar_test_SUITES}
++	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh
++		${clar_test_SUITES})
+ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+-	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
++	COMMAND ${SH_EXE} "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
+ 		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
+ 		"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+ 	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
+
+-- 
+2.47.0.229.g8f8d6eee53.dirty
 
