@@ -1,123 +1,152 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA5218E1F
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 05:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21959132103
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 07:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731304505; cv=none; b=n9w9FBqPE/VImNBCFBeAe1X5gMULkkJjLLo9Fj9j6P7bIRbTOxY1Fr/udRO9W2m0avexeFre2e6ujfDSLPJxjYMWKXxkbYciH66Jk/jB/iR0tBGI3Gc6e9/TkXK4rY+XCP4eb7SaJgMOqodFyAVubWpxy8EyMUXOlo6T0Lg+x3g=
+	t=1731308504; cv=none; b=SPPnnqL7OpqKcbgPU9GleUZm1KDwswcV3E/hh7bj9qaMq5jnYSdHsBRsQdNbQy03GfmGUYvu5N4508DhS96snRUWhcLhqaEnOhx+BAP0xzjc6kO6ED/gfiDF3k8ObPSfxgpTDZclq+DepCv/dsDQTyT/t3YltOfjGoMSkBJ5+Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731304505; c=relaxed/simple;
-	bh=BLQxX9zM14DPklnV0ZbmOyHHt3YpPLutrcfAR8/kXIY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kcflKdaa2XWuQrGE8tTn0l1e32xZjFCJ3GRW7utM6BF9SDdaBC2Zr3IjKdU6HdxcVwvVTC/uNkKR7TupGF01DyP8Re0A22HEun5VwtqV3XmxesvIbVjtGPgiY2cwCJjzB/UIj/2N6DKXyNwJXJQD8rzhjd17QiefZ95rnvP4Cvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X3LfQgUd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FPomxfrj; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731308504; c=relaxed/simple;
+	bh=jCUieFkuY8CFatjIGIT/o2I2uA7sxTmARwFcw5/4efw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VpYnBat+v3ZFWxu0XfHM/v1UgnOFYeG+JW9ePhCEsvqYsnTXazmAiza7MeEzI2fJc3CJBbu94S+coTLPEo6LbiBAqKDiZxNWdsgpADKsWGnQXRFEtO83vdnFO18tfMjnv46ea7nbspeiKsMsdHtATqp6EpppO8V4c1VM/hLPiI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fRpg8Zym; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X3LfQgUd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FPomxfrj"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 818DE2540188;
-	Mon, 11 Nov 2024 00:55:01 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 11 Nov 2024 00:55:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731304501; x=1731390901; bh=3zveUGQw2t
-	0jmK0P0K1gqoSuBnfPA9FLDF7A2IopC1g=; b=X3LfQgUdIUaW4vZ8boJAjnxd9K
-	bsLRdNvbZufDB6dtlTzOfJ3L1YcEqcOaz0rMN9InpTnWeAYYmbwngTZYkOu+iW/P
-	rznk4qivkK9jTv9CiI6IAhJKRhlsLe+LoDXZ8jv0gFjqRq619eZs78lvPC5W14ce
-	soTH8Pgeonk1Dk66pxIr6xmliSE/JGnqfybHC1cAjjYUdBRVWIboCbzaOrYZ6dFE
-	lU0r9aT8jC9rAsxd24nov+Cgp/wXLy00iBYZd2qEDegEfvsmD51TcPMEN4Fhwq7J
-	gWIjgxgdeDd03ZrLy19TAAcIY4FuyHl8lSLR57YJ+6YCCdJ0Z8QunM9gUoUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731304501; x=1731390901; bh=3zveUGQw2t0jmK0P0K1gqoSuBnfPA9FLDF7
-	A2IopC1g=; b=FPomxfrj4Tuwm3v1ZCwu/K65fu+kimibxGJ3I4sZBxaCWNRM30Z
-	zlots+Lpxo608gVOF//yMuViszfOA3dqNyCM2Hs1mkZJS4AvdkRPkOEMpE318sGj
-	zs6VF7k4Dggs50HregKhZRUw+oKPhkqeFiZqXdIyob7OXbYPMAMOkMsQbnur+wTg
-	k62K2qyet1PYs5PtX48nQphFtcEWWo98ZXVJGxcTwNBe3OIId6eCYQrjbCakeEhC
-	kt3OLWqQoq6+ltm26rA0LnoqYMKaD9jdw4x/05cjd7PG0ZajYE29L2fl3Bby6GT/
-	bdXiaLbXA+A4uzb3Q450N62ZX2HXQCZfCxA==
-X-ME-Sender: <xms:NZwxZy0_P1GBuuWTJGpj5p3nvL-vS_MkC5p5Ny5JK9-4d9_p76L3pg>
-    <xme:NZwxZ1FwIvb199zzUEqwWnhYLWvTEo5zr5HA9plcVRiBs7O10IfZtg4kNyAdtucln
-    aM6kUjC1LBeX7R-ww>
-X-ME-Received: <xmr:NZwxZ67wnn34JKErawxnguaMeANPhdGFIWoxMrwHu_9yRovP86S2oECmhvnnLhTUa2re9tIaM6qUuV7tMzZ24DlYGJXdnaud8i2L>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugdekkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffieejgeefhfdt
-    vdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohgsihgrshdrsghovghstghhse
-    hmihgvlhgvrdgtohhmpdhrtghpthhtohepohhsfigrlhgurdgsuhguuggvnhhhrghgvghn
-    sehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NZwxZz06NFJmF_80j2igkaFoktAG3FKrYnBiXG7VMytP6EsXAdmj6w>
-    <xmx:NZwxZ1FeD78-kmNHysMHYN8wucxUd1pkuR-_RjCFfzLbNt87n4eXzg>
-    <xmx:NZwxZ8-K2tnixmhq3Ssf3d5b0wPUgR4FDumb4U-fKdHcpkJcACSlGQ>
-    <xmx:NZwxZ6mlNAajVzASl_kGpsYwSjc4Bnj-miYGKkApWG5dA4USMaZGog>
-    <xmx:NZwxZ-MmQDqz1kxasFFbtM1S1uhD1aaAArSm8a356cjK2ofeMRxIH4Im>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 00:55:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>,  ToBoMi
- <tobias.boesch@miele.com>,  Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Subject: Re: [GIT PULL] git-gui pull request
-In-Reply-To: <91307087-2934-4037-b4c3-9691f8540c12@kdbg.org> (Johannes Sixt's
-	message of "Sat, 9 Nov 2024 14:50:53 +0100")
-References: <91307087-2934-4037-b4c3-9691f8540c12@kdbg.org>
-Date: Mon, 11 Nov 2024 14:54:59 +0900
-Message-ID: <xmqqbjyme2mk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fRpg8Zym"
+Received: (qmail 11921 invoked by uid 109); 11 Nov 2024 07:01:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jCUieFkuY8CFatjIGIT/o2I2uA7sxTmARwFcw5/4efw=; b=fRpg8ZymI9ZU91VeWO50pcLBExI5o8JvohZhwYcbfNgcOo1Vsma2EtvtsFpLDHkxKoke48Z8Yo5RlgnxTN1EDjO8+NS9bP4GUuwL5wMgJiOx+/KPuTM/l/bAK7ALW7y5v4yGqD40Wz0ODLATVwf1ReT0eab+oOw/EvHeT9SKuYKIlrmjGqxWQ8Yc4f/npetABRuedvmV2IEuh7sQRnFLZQzliwjT6rosyFdoPp4w/cp0fzsaOhqHN1xRMMNh5/3jajxYVTHp64x8x4vHm3QtLWcXwbkNjZraVZNcqoIHs7gaKHJx2LCHzTKMuctIpX/nNqXf07z4mZGmGP6HL3gfuw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Nov 2024 07:01:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12650 invoked by uid 111); 11 Nov 2024 07:01:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2024 02:01:38 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 11 Nov 2024 02:01:34 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Todd Zullinger <tmz@pobox.com>, Elia Pinto <gitter.spiros@gmail.com>,
+	Usman Akinyemi <usmanakinyemi202@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Subject: [PATCH] test-lib: check malloc debug LD_PRELOAD before using
+Message-ID: <20241111070134.GA675125@coredump.intra.peff.net>
+References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
+ <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
+ <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
+ <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com>
+ <87msi85vc9.fsf@igel.home>
+ <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
+ <Zy-IYwjb_RO5NW-s@teonanacatl.net>
+ <20241109190012.GA588841@coredump.intra.peff.net>
+ <xmqq7c9aihvx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7c9aihvx.fsf@gitster.g>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Mon, Nov 11, 2024 at 12:11:46PM +0900, Junio C Hamano wrote:
 
-> The following changes since commit 2864e855932540c3ec6c9bf41ee3fe027d85f642:
->
->   Merge branch 'os/catch-rename' (2024-07-07 14:14:59 +0200)
->
-> are available in the Git repository at:
->
->   https://github.com/j6t/git-gui.git 
->
-> for you to fetch changes up to e5033898da23b6e2f6b77320bd0aa613595a50a1:
->
->   Merge branch 'ob/strip-comments-on-commit' (2024-11-09 14:37:45 +0100)
+> Jeff King <peff@peff.net> writes:
+> 
+> > I don't offhand know of a good portable way to ask the system about
+> > available libraries. But I guess just doing something like:
+> >
+> >   err=$(LD_PRELOAD=libc_malloc.so.0 git version 2>&1 >/dev/null)
+> >   if test -z "$err"
+> >   then
+> > 	...seemed to work...
+> >   fi
+> >
+> > would do it?
+> 
+> I do not necessarily view it as "asking the system about available
+> libraries"; we are checking if we can sensibly run things with this
+> set to LD_PRELOAD.  And presumably the answer was "no" in the
+> original report, so it is a very direct way to ensure that we are
+> setting it to a sensible value.  I like it.
 
-Thanks.
+Yeah, I agree that is a better way to think about it; it is more
+directly asking what we want to know. So here it is as an actual patch.
 
+> The above did not work for me until I did "s/malloc/&_debug/" on the
+> command line.
 
->
-> ----------------------------------------------------------------
-> Johannes Sixt (2):
->       Merge branch 'tb/mergetool-from-config'
->       Merge branch 'ob/strip-comments-on-commit'
->
-> Oswald Buddenhagen (2):
->       git-gui: strip comments and consecutive empty lines from commit messages
->       git-gui: strip commit messages less aggressively
->
-> Tobias Boesch (1):
->       git gui: add directly calling merge tool from configuration
->
->  lib/commit.tcl    | 11 ++++++++++-
->  lib/mergetool.tcl | 21 +++++++++++++++++++--
->  2 files changed, 29 insertions(+), 3 deletions(-)
+Oops, yes. I should have said "not tested". ;) On the other hand,
+writing the wrong name is an easy way to test the failure mode. I pulled
+it out into a variable in the patch below so we only have to write it
+once.
+
+I tested before and after with a typo'd version of the library name and
+it seems to work. But it would be great to get confirmation from Usman
+that this fixes the problem.
+
+-- >8 --
+Subject: [PATCH] test-lib: check malloc debug LD_PRELOAD before using
+
+This fixes test failures across the suite on glibc platforms that don't
+have libc_malloc_debug.so.0.
+
+We added support for glibc's malloc checking routines long ago in
+a731fa916e (Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the test
+suite for detecting heap corruption, 2012-09-14). Back then we didn't
+need to do any checks to see if the platform supported it. We were just
+setting some environment variables which would either enable it or not.
+
+That changed in 131b94a10a (test-lib.sh: Use GLIBC_TUNABLES instead of
+MALLOC_CHECK_ on glibc >= 2.34, 2022-03-04). Now that glibc split this
+out into libc_malloc_debug.so, we have to add it to LD_PRELOAD. We only
+do that when we detect glibc, but it's possible to have glibc but not
+the malloc debug library. In that case LD_PRELOAD will complain to
+stderr, and tests which check for an empty stderr will fail.
+
+You can work around this by setting TEST_NO_MALLOC_CHECK, which disables
+the feature entirely. But it's not obvious to know you need to do that.
+Instead, since this malloc checking is best-effort anyway, let's just
+automatically disable it when the LD_PRELOAD appears not to work. We can
+check it by running something simple that should work (and produce
+nothing on stderr) like "git version".
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/test-lib.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a278181a05..4fe757fe9a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -593,9 +593,12 @@ then
+ 	}
+ else
+ 	_USE_GLIBC_TUNABLES=
++	_USE_GLIBC_PRELOAD=libc_malloc_debug.so.0
+ 	if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
+ 	   _GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
+-	   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
++	   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null &&
++	   stderr=$(LD_PRELOAD=$_USE_GLIBC_PRELOAD git version 2>&1 >/dev/null) &&
++	   test -z "$stderr"
+ 	then
+ 		_USE_GLIBC_TUNABLES=YesPlease
+ 	fi
+@@ -607,7 +610,7 @@ else
+ 		if test -n "$_USE_GLIBC_TUNABLES"
+ 		then
+ 			g=
+-			LD_PRELOAD="libc_malloc_debug.so.0"
++			LD_PRELOAD=$_USE_GLIBC_PRELOAD
+ 			for t in \
+ 				glibc.malloc.check=1 \
+ 				glibc.malloc.perturb=165
+-- 
+2.47.0.495.g1253739cc1
+
