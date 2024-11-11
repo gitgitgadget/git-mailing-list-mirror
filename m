@@ -1,88 +1,127 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E8E1C9EB5
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 23:53:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195B619CC0C
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 23:55:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731369223; cv=none; b=Emgqchur/uLthyxJZUAkANV+r0srVGmMFAYuG9ukIwrZzQ87lNw/1oMZ9Px2zGH/H3e+n9rcIQQHdShFAa9NsaA+NxmRZEKUG+xtrdUZIIBvSTEClZIjCdZDp9CnYh/iDYLuE+HtSkcRZiRZoXe42+XRHzWmsTvabOH8N6mIR+c=
+	t=1731369343; cv=none; b=lcvG3woqxtzTkBLRzlbkf9GZTZGZYs5bt+cbPlTq2mfL48f0RJneC2iuOLEZCQFW/c7k46R/cK5CyTAVXBe2paOypsoetCVvB1T/nQ8PRfLnRF9WgW8XmGVRvxCwDLY88Z79Fnelmxr0KcQiRvsg7VCd9mKhnPTYh6Wh/3+ad5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731369223; c=relaxed/simple;
-	bh=Ex7LuMCB3iMBujf1niUkEV+KbRKSLGH4KeUZUTvBPYM=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=D1YBVduGUVYa8Q+yN7BTQ6BNlyFjBq3Qb0Ki9L9sGZu3UQfPaAnmGadpBkGG8y9g5P/BZGyVWpS02uvWQ6FgZ/YAQKDA1Xgpnx1vCbpId/vOQBPR+Kg/TnJ4QVotYeYqTHw6lo8tYMHqg5d+8Wjxkeghvq0lJGLCAfJvZkqIgQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ve4Ko8RQ; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ve4Ko8RQ"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e29205f6063so8016478276.1
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 15:53:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1731369220; x=1731974020; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FDpT2FDjz9ZdkNnol/oCgX//6HAnwMZHgKxMZMKy9cM=;
-        b=ve4Ko8RQDo2xrSCBMmmdcJNg3byWKo0SU3+32L3B6ahLZTjDzqnSSHXwCLsLJTminp
-         bdohdRvckCYu2IeMRPpWylguIVAWBPpqE0tM9+zKuioqlZg+zKB1iy6tO2cprnDvAmuE
-         Yd+LuxpnUK/NHuGd2nTonVZu7XJBeJZl5Mlov9Hl7GID+8dRqQwJBpBitBzutlFBzZhT
-         tsC68KmV86MwB+w5O8jCvpUGNRMGz848cncsARLulx5+Pfhan6Eh9QykRIlxC9s+POsV
-         oxzp64z4Orz8Ppe4NUEG+f2YZP6WKBnPgeeysZnJhqJfKnSFxtIQkGljAy3Lk/DLAD0t
-         CeSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731369220; x=1731974020;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FDpT2FDjz9ZdkNnol/oCgX//6HAnwMZHgKxMZMKy9cM=;
-        b=aSCvCNnaBSln1uH0p8FYJFyAqXI73Vabhw9VniqT9Zz8bZR4cc1CVnWCs8WDWkYdmV
-         S8hYKVMex/Gq7SCzXNQqTeorbwb2IaVzaWv7hsqIJBjq9eBJ2fxVO93GQEFgiIFs+ZZB
-         TdluNnc57blWeO6AWzdM4/ylCo/y41ttNpDJWOrYXFxXYe16G2KPR0cBselSXdbgnPaB
-         lZeDKmv2my/lXyXP4KOt8OKYVuagvgRs/tA2y7wQtDvZpidYnQcIRw1pF3Zwu8CegRHh
-         Cuvkk1lYLzm844tKZ3d0tGwMAcNHNotH8G14oTjcaWVkUaMKfHBXvtEMATPPk8EYGrpf
-         Vr6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVRmFUx4XUkXXTbGtbw5RuJ2QCCTh6pk3MDAcAGlNIk7las6G7//a+e9M4cECIHpcaUgEs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBEhfGSimAP3MzAN15qWEkvdRbHR7Nygy8bxCH+o5b7nMFXi+e
-	7v0P6Vo7K8C51ZYOyc8iavzQnj9+INv6AUCDi/l7oJdrE+CBhEZgdPgSNjWvFRJ4Qg4jnLY3BwC
-	HzRVq7Y/OCYupxfMCiQAdRQtDpzYfyw==
-X-Google-Smtp-Source: AGHT+IH6Oi2Y8d+IQIo6AU9pMYDZi2LvrW9TCBzBeDyei9hK9DE9LdmA0U/h445NiqKKCEYDmEYwHGVqOrRq3BBb+pJN
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:6b4a:26b6:5856:4314])
- (user=jonathantanmy job=sendgmr) by 2002:a25:d8d1:0:b0:e29:1893:f461 with
- SMTP id 3f1490d57ef6-e337f78051fmr45153276.0.1731369219807; Mon, 11 Nov 2024
- 15:53:39 -0800 (PST)
-Date: Mon, 11 Nov 2024 15:53:37 -0800
-In-Reply-To: <xmqqbjyqnoe7.fsf@gitster.g>
+	s=arc-20240116; t=1731369343; c=relaxed/simple;
+	bh=bt07LulYe9+qH+C95CZzaFlab5jz1c+asWduupKyTes=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AJ8oUUG0OVAJrj/mLPb5hjY2JKVw3XT1bCzFIFJV0njtq4F3VBfMQop3JczkCKUw5pOSBRNHEBvGobatq8+apVme9Cl+exN3SYvVtpy4VFp85pCyhoFdpK/TjZ5344e2XsHsAGWbwa03yOwzwxoOl7ytLkQvnJEMzPHCxrkQysI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Message-ID: <f3b00260-ec3d-4607-aaf7-9cfd9898434f@gentoo.org>
+Date: Mon, 11 Nov 2024 18:55:38 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.277.g8800431eea-goog
-Message-ID: <20241111235337.1691851-1-jonathantanmy@google.com>
-Subject: Re: What's cooking in git.git (Nov 2024, #04; Fri, 8)
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+ git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local> <ZzHeLlYu8Gwk1FPj@pks.im>
+ <20241111210629.GB5019@coredump.intra.peff.net>
+ <bfc876ea-1a90-4e78-8756-efdcd53e7525@gentoo.org>
+ <20241111221320.GF5019@coredump.intra.peff.net>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <20241111221320.GF5019@coredump.intra.peff.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------zX60iaSOPXhufD15R4tFRf3U"
 
-Junio C Hamano <gitster@pobox.com> writes:
-> * jt/repack-local-promisor (2024-11-03) 5 commits
->  - fixup! index-pack: repack local links into promisor packs
->  - index-pack: repack local links into promisor packs
->  - t5300: move --window clamp test next to unclamped
->  - t0410: use from-scratch server
->  - t0410: make test description clearer
-> 
->  "git gc" discards any objects that are outside promisor packs that
->  are referred to by an object in a promisor pack, and we do not
->  refetch them from the promisor at runtime, resulting an unusable
->  repository.  Work it around by including these objects in the
->  referring promisor pack at the receiving end of the fetch.
-> 
->  Will merge to 'next' when the CI breakage fixup is addressed.
->  Breaks CI (with a known fix).
->  source: <cover.1730491845.git.jonathantanmy@google.com>
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------zX60iaSOPXhufD15R4tFRf3U
+Content-Type: multipart/mixed; boundary="------------k7RyDXMgmOXPVaialvfsOO0i";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>,
+ git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <f3b00260-ec3d-4607-aaf7-9cfd9898434f@gentoo.org>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local> <ZzHeLlYu8Gwk1FPj@pks.im>
+ <20241111210629.GB5019@coredump.intra.peff.net>
+ <bfc876ea-1a90-4e78-8756-efdcd53e7525@gentoo.org>
+ <20241111221320.GF5019@coredump.intra.peff.net>
+In-Reply-To: <20241111221320.GF5019@coredump.intra.peff.net>
 
-The fixup in your source tree looks good (verified at
-https://github.com/jonathantanmy/git/actions/runs/11787543288).
- 
+--------------k7RyDXMgmOXPVaialvfsOO0i
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+On 11/11/24 5:13 PM, Jeff King wrote:
+> No, they don't. I don't have msgfmt on my system at all, and always
+> build with NO_GETTEXT.
+
+
+Well, even systems without msgfmt installed may have the gettext()
+family of symbols available. On various systems, it may even be built
+into their libc.
+
+So, detecting and handling this case sensibly out of the box would be
+good, which I guess means checking for find_program('msgfmt') inside of
+po/meson.build
+
+That being said, the meson way to handle NO_GETTEXT is to use the build
+option
+
+meson setup builddir -Dgettext=3Ddisabled
+
+
+That option is a "feature option", which means by default its value is
+auto, not disabled, and it will check for an available libintl / libc
+gettext().
+
+The po/ directory is only processed if libintl / libc gettext() is
+found. Passing -Dgettext=3Ddisabled means that it will be forcibly
+overridden to "not found". Meson will log this configuration message:
+
+
+Dependency intl skipped: feature gettext disabled
+
+
+--=20
+Eli Schwartz
+
+--------------k7RyDXMgmOXPVaialvfsOO0i--
+
+--------------zX60iaSOPXhufD15R4tFRf3U
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzKZegUDAAAAAAAKCRCEp9ErcA0vV59N
+AP9FD8EsRLdaQZFlJyPnCjjogNIL7fD/7MUY4RJjye4E1QEAt0R24LA4a9p3OUqjxaokEobPAREJ
+dtTuQFEwEO/VwgI=
+=UJGB
+-----END PGP SIGNATURE-----
+
+--------------zX60iaSOPXhufD15R4tFRf3U--
