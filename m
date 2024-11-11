@@ -1,219 +1,129 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862DD1BBBE0
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 21:48:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB1338F83
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 21:55:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731361700; cv=none; b=gDjPiIGgWUZVwteaku5o0qwRWz6iSqngOH652LNLZwBgRvwdpaBBAyU6A1UIjS19/6b7eh8x9yxmsYgMKV2NGN6siqCHdanyYB75vMvI0sBWDpPW+8EzwYrWENQhHDMgtrgygRhWbgUx3MDoy048MbJ0pzht3Q0laalKB6Bc8C4=
+	t=1731362107; cv=none; b=rJKtTFGiDb7qbRUdmTGHt9DnSCztvKn3s+nFddVtRkGfpLUEWHUUzdV5J0Lq7cSVdPW2txmU4roJaeS5mXPOZorUS4g13UfUzT6ilZ9YAZoOZs8Jr9WU/rslDnV/WEd1MRmrtNbCWOeQeln/fQ/hNR1WSoMj8v8m85PmDfLf650=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731361700; c=relaxed/simple;
-	bh=2Ytf7PnNjyzaSM19Q+G9fW7C1iiYAUWR1gNbeQdTPMQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KkDfBKDerpRtzd9fcvFyK55eGiMcgZycQEyDZS/6+6WjlebC3jWi8NNmfc6XHIeKtD9P6QiKFUF8/tWTM4jFlgicUHlcPevE8blTOTk4/EKliQ8Wx+6z/Bf+A0ED4biCwKwlIhCR6ejCnipYbw9CTiysU3PZyKLZZ+H9qecXERU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <89a2621f-2c30-473b-9a0c-48135244f33a@gentoo.org>
-Date: Mon, 11 Nov 2024 16:48:14 -0500
+	s=arc-20240116; t=1731362107; c=relaxed/simple;
+	bh=xqM8ypDO36VTY+LStEqK2e6ckQn0EQnOwFlqm3cfeso=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rDmgwWHZXihBvXqmcOVVhRCSwXaxNpgS98bzGZ3qGcayVNRB25TqbylnhQ/xVdxEZSvGO6X9/I5Q8SgsEMz7ZeUcnZW7T0l9DAeYv8MbhC7ehpSceXV7mn3gVOnpO3StZbQdCl/0FIHGtLJM9uBE72a+eqkoYk3IifxD8vSUlIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=azVHa3LM; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="azVHa3LM"
+Received: (qmail 21839 invoked by uid 109); 11 Nov 2024 21:55:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xqM8ypDO36VTY+LStEqK2e6ckQn0EQnOwFlqm3cfeso=; b=azVHa3LMDbD72m2wYNGTAln87b+fPkixDFheemA6luUsc8NWwNwgJiD6SQHGqBvUsHQ4b+cpQNvbNgET9652iesxo0nsMiXQXPiJvhKE2qkZTRTIYcRuMUXWX4zf/Kq74ldOYfxqJNjZFqkYotXldL832Vgmwsp9OkK+ZFCTiSpKP8MXW93VNQYZA22xZyUaE8PTt6StbrZzQcxs7DOFGOx8aOyEdrbThqHvxgm3mRo9THNhE9cJcSz7BkmofVgHKpr3viYJHJhgkO+JubNTZFBRExSmwZHvDqE/rH8nDLXtMkfcZ13pSaQX9sPEqP54PLk3yGL4SBPgtMz6nFuD0A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 11 Nov 2024 21:55:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20486 invoked by uid 111); 11 Nov 2024 21:55:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2024 16:55:05 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 11 Nov 2024 16:55:02 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, johannes.schindelin@gmx.de, ps@pks.im,
+	johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com,
+	kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com
+Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
+Message-ID: <20241111215502.GC5019@coredump.intra.peff.net>
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+ <ZyUqr/wb5K4Og9j9@nand.local>
+ <2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
+ <20241104172533.GA2985568@coredump.intra.peff.net>
+ <xmqq1pzqwnck.fsf@gitster.g>
+ <f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
+ <xmqqo72miim6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>, David Aguilar <davvid@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
- Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
- <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
- <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
- <ZzHeMjqUjzWpdX-Y@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <ZzHeMjqUjzWpdX-Y@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------sN4Ej20OrZWjYdFGD1vVbTy0"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo72miim6.fsf@gitster.g>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------sN4Ej20OrZWjYdFGD1vVbTy0
-Content-Type: multipart/mixed; boundary="------------DM6iya0yZlGA7BDtLU7qRF9V";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>, David Aguilar <davvid@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
- Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
- <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <89a2621f-2c30-473b-9a0c-48135244f33a@gentoo.org>
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
- <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
- <ZzHeMjqUjzWpdX-Y@pks.im>
-In-Reply-To: <ZzHeMjqUjzWpdX-Y@pks.im>
+On Mon, Nov 11, 2024 at 11:56:01AM +0900, Junio C Hamano wrote:
 
---------------DM6iya0yZlGA7BDtLU7qRF9V
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> > Yes. This is the downside of the --full-name-hash compared to the
+> > standard name hash. When repacking an entire repository, the effect
+> > of these renames is typically not important in the long run as it's
+> > basically a single break in the delta chain. The downside comes in
+> > when doing a small fetch or push where the rename has more impact.
+> 
+> Yes.  Due to --depth limit, we need to break delta chains somewhere
+> anyway, and a rename boundary is just as good place as any other in
+> a sufficiently long chain.
 
-On 11/11/24 5:36 AM, Patrick Steinhardt wrote:
-> On Sat, Nov 09, 2024 at 04:58:56AM -0800, David Aguilar wrote:
->> The one thing that no one has mentioned is dependencies.
->>
->> CMake has less dependencies. Python is arguably a liability in the bui=
-ld
->> system arena, and Meson requires it.
->=20
-> Eli has menitoned [muon](https://muon.build/), which is a drop-in
-> replacement for Meson written in plain C99. I don't know whether it is
-> currently able to compile the Git project, but if this is going to be a=
-
-> concern for people I can try to make sure that it does.
-
-I was wondering whether I should say something, because I don't really
-feel the criticism was on-target to begin with. But...
-
-I am delighted to be able to confirm, that muon works quite well here.
-
-It did require two small tweaks for not yet implemented features in
-muon, that meson had and which this patch series depends on:
-
-the iconv special dependency, which I provided a patch for:
-
-https://git.sr.ht/~lattis/muon/commit/75d33f6b6d482344d969e4ad6ce1527353f=
-91cce
-
-using fallback from gnu99 to c11 for the sake of MSVC, which I reported
-and got the muon developer to implement:
-
-https://git.sr.ht/~lattis/muon/commit/a70e9687f3bfb8b9c21baf9acdfe84f97a4=
-2b11f
+We don't necessarily have to break the chains due to depth limits,
+because they are not always linear. They can end up as bushy trees,
+like:
 
 
-(Note the commit author dates by the way. I had the same general thought
-about whether muon could satisfy git users such as, frankly, ones more
-interesting to me than "python has too many dependencies". Such as
-perhaps HPE NonStop users, and I tried muon out a month ago. Yes -- even
-though I am a *meson* maintainer, I consider this a useful alternative
-to have. Meson's FAQ includes discussion about whether it makes sense to
-require Python, and notes that we specifically avoided providing any
-"provide your own python extensions" functionality because it would
-prevent being able to ever rewrite in another not-python language. We
-also document muon as an alternative in our FAQ.)
+  A <- B <- C
+   \
+    <- D <- E
+     \
+      <- F
+
+We might get that way because it mirrors the shape of history (e.g., if
+D and E happened on a side branch from B and C). But we can also get
+there from a linear history by choosing a delta that balances size
+versus depth. In the above example, the smallest sequence might be:
+
+  A <- B <- C <- D <- E <- F
+
+but if we have a limit of 3 and A-B-C already exists, then we might
+reject the C-D delta and choose A-D instead (or I guess if it really is
+linear, probably B-D is more likely). That may be a larger delta by
+itself, but it is still better than storing a full copy of the object.
+And we find it by having those candidates close together in the sorted
+list, reject C-D based on depth, and then moving on to the next
+candidate.
 
 
-With these two small changes, muon compiles git successfully, and passes
-all tests but one:
+I'm not sure in practice how often we find these kinds of deltas. If you
+look at, say, all the deltas for "Makefile" in git.git like this:
+
+  git rev-list --objects --all --reflog --full-history -- Makefile |
+  perl -lne 'print $1 if /(.*) Makefile/' |
+  git cat-file --batch-check='%(objectsize:disk) %(objectname) %(deltabase)'
+
+my repo has 33 full copies (you can see non-deltas by grepping for
+"0{40}$" in the output) out of 4473 total. So it's not like we never
+break chains. But we can use graphviz to visualize it by piping the
+above through:
+
+  perl -alne '
+    BEGIN { print "digraph {" }
+    print "node_$F[1] [label=$F[0]]";
+    print "node_$F[1] -> node_$F[2]" if $F[2] !~ /^0+$/;
+    END { print "}" }
+  '
+
+and then piping it through "dot" to make an svg, or using an interactive
+viewer like "xdot" (the labels are the on-disk size of each object). I
+see a lot of wide parts of the graph in the output.
+
+Of course this may all depend on packing patterns, too. I did my
+investigations after running "git repack -adf" to generate what should
+be a pretty reasonable pack. You might see something different from
+incremental repacking over time.
 
 
+I'm not sure what any of this means for --path-walk, of course. ;)
+Ultimately we care about resulting size and time to compute, so if it
+can do better on those metrics then it doesn't matter what the graph
+looks like. But maybe those tools can help us understand where things
+might go better (or worse) with various approaches.
 
-running tests for project 'git'
-1030/1030 f:1 s:0 j:1
-[=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D]
-finished 1030 tests, 0 expected fail, 1 fail, 0 skipped
-fail    9.32s t5324-split-commit-graph
-stdout: 'ok 1 - setup repo
-ok 2 - tweak umask for modebit tests
-ok 3 - create commits and write commit-graph
-ok 4 - check normal git operations: graph exists
-ok 5 - add more commits, and write a new base graph
-ok 6 - fork and fail to base a chain on a commit-graph file
-ok 7 - add three more commits, write a tip graph
-ok 8 - check normal git operations: split commit-graph: merge 3 vs 2
-ok 9 - add one commit, write a tip graph
-ok 10 - check normal git operations: three-layer commit-graph: commit 11
-vs 6
-ok 11 - add one commit, write a merged graph
-ok 12 - check normal git operations: merged commit-graph: commit 12 vs 6
-ok 13 - create fork and chain across alternate
-ok 14 - check normal git operations: alternate: commit 13 vs 6
-ok 15 - test merge stragety constants
-ok 16 - remove commit-graph-chain file after flattening
-ok 17 - verify hashes along chain, even in shallow
-ok 18 - verify notices chain slice which is bogus (base)
-ok 19 - verify notices chain slice which is bogus (tip)
-ok 20 - verify --shallow does not check base contents
-ok 21 - warn on base graph chunk incorrect
-ok 22 - verify after commit-graph-chain corruption (base)
-ok 23 - verify after commit-graph-chain corruption (tip)
-ok 24 - verify notices too-short chain file
-ok 25 - verify across alternates
-ok 26 - reader bounds-checks base-graph chunk
-ok 27 - add octopus merge
-ok 28 - check normal git operations: graph exists
-ok 29 - split across alternate where alternate is not split
-ok 30 - --split=3Dno-merge always writes an incremental
-ok 31 - --split=3Dreplace replaces the chain
-not ok 32 - handles file descriptor exhaustion
-#=09
-#		git init ulimit &&
-#		(
-#			cd ulimit &&
-#			for i in $(test_seq 64)
-#			do
-#				test_commit $i &&
-#				run_with_limited_open_files test_might_fail git commit-graph write \=
-
-#					--split=3Dno-merge --reachable || return 1
-#			done
-#		)
-#=09
-ok 33 - split commit-graph respects core.sharedrepository 0666
-ok 34 - split commit-graph respects core.sharedrepository 0600
-ok 35 - --split=3Dreplace with partial Bloom data
-ok 36 - prevent regression for duplicate commits across layers
-ok 37 - setup repo for mixed generation commit-graph-chain
-ok 38 - do not write generation data chunk if not present on existing tip=
-
-ok 39 - do not write generation data chunk if the topmost remaining
-layer does not have generation data chunk
-ok 40 - write generation data chunk if topmost remaining layer has
-generation data chunk
-ok 41 - write generation data chunk when commit-graph chain is replaced
-ok 42 - temporary graph layer is discarded upon failure
-# failed 1 among 42 test(s)
-1..42
-'
-
-
---=20
-Eli Schwartz
-
---------------DM6iya0yZlGA7BDtLU7qRF9V--
-
---------------sN4Ej20OrZWjYdFGD1vVbTy0
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzJ7ngUDAAAAAAAKCRCEp9ErcA0vV1Ny
-AP9Z8qoa7/y0j08CJZ6Rml1+vL14Ll8TMtpwrf8diF6smwEA/uYgMfqk1nO76HOxTR+JpnRpQg8J
-P/LuK2PiXJah4wg=
-=3abW
------END PGP SIGNATURE-----
-
---------------sN4Ej20OrZWjYdFGD1vVbTy0--
+-Peff
