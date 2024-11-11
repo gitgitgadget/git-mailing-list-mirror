@@ -1,156 +1,162 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F7116F8E5
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 09:15:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CF5149C4D
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:09:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731316504; cv=none; b=g3v+Dok8gSjdYq3bWSW1kXaAO4umbYNWPVYfGdfsEqfwQbKD7kx47YtYckOxz28oqb5NxAlN+ghxdYuhhpghTNE7BisMWUxYwjpwL+Z+1NpkI0tygnYUD3uXXtXHbe79VZ7sHNe1D51hzRImHVtRLrLZvMel+qCC9TbPlMHejL8=
+	t=1731319787; cv=none; b=cDmepWTxsKavQhBSGc3CEtmbhOqZAM+LNExw0hM8riVQD6TqxqJz3bGfK9EgrpH44Oyrdu8dn+T+vYMrZ/x4rIOU/xioMRSm49En85V9AYakgsEvZGAgpMQO2tLhDA5N3DHvOBxP0kR3lLN+itgf1nwiSEkBg6iM4bW2/e6WWv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731316504; c=relaxed/simple;
-	bh=USYRL8t2YyNDh2vLBI1UA0lJ99jGmmr1bo2w9o93PQ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UzZBzpFJbmtHZmC3nhpdkgozLbhz7GeMF2QKFsJVnWNxKXuiRiFct+LKYxioTl27cxkzn1ReSFHLp4lnYaqjVx1y96HGKv3abq0sbK2i8VnUs1LxYZAluMO02OR2ENSDgpl0DC8FRgjQiKrkyUAv2GbOjhLjlGGKWLQz4rS32Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LAUqjwVF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HQMpJxtn; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731319787; c=relaxed/simple;
+	bh=1Rvo1Lq/rgO47XyHtlDtsz/FZV+dXlHUN6TTTjng5is=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IoTA069FFjbEFxYop4/+o4YBJal0xyHDGTUCgC1crs1vaTDK6VNQQrByp5L1pWomsVlqT5Di/wuitAM+tp35ZskS4XLosN3nKelqZe6fpStm576/YM9t/V+k1em16ApAbUvgO4EftUH7BF6T8z9sQrMuHn1BdIGCeqWP6x38uJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRS34kGN; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LAUqjwVF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HQMpJxtn"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7611213805F2;
-	Mon, 11 Nov 2024 04:15:01 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 11 Nov 2024 04:15:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731316501; x=1731402901; bh=CIPqI8Rx1X
-	QqWjV3+rlJ+eLCP0UsKEFtefbV73UWExU=; b=LAUqjwVFbITnTD8imrQscr9lYe
-	UDEA6MruH6Qi0n+Kgrs5vX1dK8BQpazZCvQcxOyiRUuB7AuPnx1CbbfnyjfmC1fP
-	7BsAKQWRHPY6dhL1Zco2YvGlx0QJC/Tv4DnqOpxbmWRPsf4yUwF2FDWLiwN/mVaA
-	sr1bU33UX27KYshBvJNBR8mMt3qbwLBUhUSVMXkqiwEyy7tC4Z3R/3ZR8jVeOX54
-	dNBvCiNWDRVENA1tPJiA3cvNlVYP32puCE5op+v/f4Deev8jArQEiRQBfQCL1VRu
-	IjEa5/U/O2lIx+MAtnwLMKz+9cYtGmxfXqEIMvigVU5PHE57bK/WlZrWb+3A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731316501; x=1731402901; bh=CIPqI8Rx1XQqWjV3+rlJ+eLCP0UsKEFtefb
-	V73UWExU=; b=HQMpJxtnNsNY4YzhJsbD5beDPF3c5Xs3TID7xrWifhF9bw/imy2
-	DK8Bb8VYFoVrpOxvPfH4axjbOGZLlDJPPJ71vT61kouOScXtQ5StNTF5DXBMWScj
-	4j1/2mavtgDMkzw372N3L1hC9BvquIo+CzXQyatI4+4oz/NpD6344xd1VVzZILBd
-	UO01dJGNE5jyzRnZtXrcYqXSUNOxrjn5b+sjWfpOx6GNFcAEoLkXmTG4HBLulCge
-	92NVIIzI0PN4+sHG/+D5F3Kp5voPAri0xKLR7y7JbqzUavGnpUegZ+IIuiY/ImlM
-	KEuDVCzxrER36X8YMA1cyKhg2rRHo8PvZNg==
-X-ME-Sender: <xms:FcsxZ3yV_pU9NgZzwseNLpzXorZYsyp68sWBOqo6eBGYblxFNmR-_g>
-    <xme:FcsxZ_Qp-TVlYWKcKNbvGpwekTuXvS5ocbMLCDvYm9V9w4kLo282ghQVc7-3mQhLp
-    z6SvBbeTV46Ufj8NA>
-X-ME-Received: <xmr:FcsxZxVtGBPo8ThtG3SpJNpe_m8XHyeLQhfhRDoyTXe1CYPIy8khmPdeijX8K2OhyP09CMH_Yt34Sbj6I-svJqmN6U1m2nODkkc_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddtudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghlvhhinhifrghnse
-    hgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepshhtvggrmhguohhnsehgohhoghhlvgdrtghomhdprhgtphhtth
-    hopegvmhhrrghsshesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
-    mhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:FcsxZxi8ph0GGtwnnbZ7IY-K-pOgFx2LR5ibu2IopxLmUqk_xu6MOA>
-    <xmx:FcsxZ5BqX9-NYiqCDCa-dv1CbBvhUMltPnEbXzf6VN5O7ANoHqt56g>
-    <xmx:FcsxZ6JbBHMyG0x3JkPvziVv9zFJSww_Ef-YgqAgh3dfBffuPQANog>
-    <xmx:FcsxZ4AhJEtOkidC-kJyk_4hM6iO3eN4-z22kf5ym19c2fFOX9XzfA>
-    <xmx:FcsxZ93EQI9dtQJ9Vp8RSeopLq49wdjMBnvFnP1BKJtlQP5Q6lxM8zb4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 04:15:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Calvin Wan <calvinwan@google.com>
-Cc: git@vger.kernel.org,  steamdon@google.com,  emrass@google.com,
-  ps@pks.im,  me@ttaylorr.com,  stolee@gmail.com
-Subject: Re: [RFC PATCH 1/1] maintenance: separate parallelism safe and
- unsafe tasks
-In-Reply-To: <20241108173112.1240584-2-calvinwan@google.com> (Calvin Wan's
-	message of "Fri, 8 Nov 2024 17:31:12 +0000")
-References: <20241108173112.1240584-1-calvinwan@google.com>
-	<20241108173112.1240584-2-calvinwan@google.com>
-Date: Mon, 11 Nov 2024 18:14:59 +0900
-Message-ID: <xmqqv7wub08c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRS34kGN"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4315f24a6bbso33195545e9.1
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:09:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731319783; x=1731924583; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3xY5lorm6Qfyu3um4RNDJXIGnbvtft5cvIJh9G4fXCU=;
+        b=SRS34kGNEDy+ro+vTSk4oFStD01UxTz9NjF9ATfbGNG+kA+orHCwwkEEMG0dY8m4nJ
+         ZwhooXn01OvObZPl+Gstkhd+6WOAISkGTBUwnnZdzq+PBod52TLLWpaU8yS8tuCMdXGW
+         RABUHPO0Jss7vTljfEx3IF/gUKSu0lE0zs22Q1WvtnrZ4bcWuj0lMQiVUraH1OC+Dxdm
+         XvmHcZGnOvUENKbn5siqKz6GL94R/W6Ptcm0cP3q4DGeWrfDrYWOmYgzidAzV48WDqsm
+         f8Qii8XwLSqwA98045kt9wGIgOHgkxezdxcxJzuxRQ+QZsBJrDw4Zzs9QVTRSaaEJb7L
+         k2LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731319783; x=1731924583;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3xY5lorm6Qfyu3um4RNDJXIGnbvtft5cvIJh9G4fXCU=;
+        b=tpRVYA+WzJC7Ap6NJaw/XeRdmzAkvYaR1/4dFNmpXDXYQjflMlBS3ATYItzFDnIbU2
+         IkCxKW4j72m3Rlj3Doj+Mkb3vnyW0Y30PlBARIYD+A07zduK6r0/tr54vxAsiCGNI4OX
+         tLrljoow44yowDhgVwgK5m9L0oe1HYIh9RlnK8/XwETdPgy2hOZsV+L+PoKbL9i4UQT6
+         1IG6uTXSAffcEMir72zI3jCwB7WUpzoIYcRyC1hRH9nYeCtJoKdj1Kuz/KZCBVgAA4cm
+         3JgXqPtc4SWIYgmQPYOaWfBZlqIDvLjnpnE30VQt80ofakpCobBy8IjnRYdYTn+I9+xO
+         TGhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWxDCU9YWBqzlJaOP3Jlb8kWJmMrlpFuhT3dsB3yC9WOZZ63Z+x4JLnGUqsGD2J9wpPnXc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRz7J399VG5deRekmoFieQlQ4V/+poC7BNPRB3XS+SSiwwd5S+
+	egLD0ktMzxp5r8QGX6hZXBnjAZd5h6rR/0bhKjKfRTQmkPPVB8MTRpGptQ==
+X-Google-Smtp-Source: AGHT+IHi57dhmqO7R6F+w+ez9i2wGUYzT1zljU/XuAGVzuK+jFsF2C1C9jb3bX66RxmqzAjgCNkpdg==
+X-Received: by 2002:a05:600c:1e18:b0:431:5d4f:73b9 with SMTP id 5b1f17b1804b1-432b751826fmr108178805e9.26.1731319783149;
+        Mon, 11 Nov 2024 02:09:43 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158? ([2a0a:ef40:6b0:6601:5a4c:6f5b:4f15:3158])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa5b5e56sm212055805e9.2.2024.11.11.02.09.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 02:09:42 -0800 (PST)
+Message-ID: <2757e5ab-6fce-40db-b11d-af9577a66908@gmail.com>
+Date: Mon, 11 Nov 2024 10:09:41 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/4] Build improvements for clar
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Junio C Hamano <gitster@pobox.com>
+References: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
+ <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
+Content-Language: en-US
+In-Reply-To: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Calvin Wan <calvinwan@google.com> writes:
+Hi Patrick
 
-> Since the gc task is partially safe, there are two new tasks -- an async
-> safe gc task and an async unsafe gc task. In order to properly invoke
-> this in gc, `--run-async-safe` and `--run-async-unsafe` have been added
-> as options to gc. Maintenance will only run these two new tasks if it
-> was set to detach, otherwise the original gc task runs.
+I've not actually tested them but having read through them these patches 
+look good to me. While it may be a bit ugly to have an awk script 
+lurking inside a shell script it does mean if we ever change the 
+implementation of the shell script to process the files in a different 
+way we wont have to worry about updating the build system(s).
 
-Would it essentially boil down to ensure that only one "maintenance"
-is running at a time, and when it is running the "unsafe" part,
-somehow the end-user MUST be made aware of that fact and told to
-refrain from touching the repository?
+Best Wishes
 
-> Additionally, if a user passes in tasks thru `--task`, we do not attempt
-> to run separate async/sync tasks since the user sets the order of tasks.
+Phillip
 
-In other words, the rope is long enough that the user can do
-whatever they want, regardless of what we think the order should be.
+On 11/11/2024 08:24, Patrick Steinhardt wrote:
+> Hi,
+> 
+> Dscho has reported in [1] that the CMake build instructions for clar do
+> not work well on Windows/MSVC because we execute the shell scripts
+> directly instead of using the discovered `SH_EXE`. This small patch
+> series fixes the issue.
+> 
+> Changes in v2:
+> 
+>      - Wrap overly long lines in the CMake build instructions.
+>      - Add the VERBATIM option.
+> 
+> Link to v1: https://lore.kernel.org/r/20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im
+> 
+> Thanks!
+> 
+> Patrick
+> 
+> [1]: <3b2cb360-297a-915c-ae27-c45f38fa49b9@gmx.de>
+> 
+> To: git@vger.kernel.org
+> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Cc: Phillip Wood <phillip.wood123@gmail.com>
+> Cc: Junio C Hamano <gitster@pobox.com>
+> 
+> Patrick Steinhardt (4):
+>        t/unit-tests: convert "clar-generate.awk" into a shell script
+>        cmake: use SH_EXE to execute clar scripts
+>        cmake: use verbatim arguments when invoking clar commands
+>        Makefile: let clar header targets depend on their scripts
+> 
+>   Makefile                             |  6 ++--
+>   contrib/buildsystems/CMakeLists.txt  | 16 ++++++---
+>   t/unit-tests/clar-generate.awk       | 50 ----------------------------
+>   t/unit-tests/generate-clar-suites.sh | 63 ++++++++++++++++++++++++++++++++++++
+>   4 files changed, 78 insertions(+), 57 deletions(-)
+> 
+> Range-diff versus v1:
+> 
+> 1:  23d84e6c50 ! 1:  832222f7f5 t/unit-tests: convert "clar-generate.awk" into a shell script
+>      @@ Commit message
+>           may otherwise be a problem with build systems on platforms that use a
+>           different shell.
+>       
+>      +    While at it, wrap the overly lines in the CMake build instructions.
+>      +
+>           Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>       
+>        ## Makefile ##
+>      @@ contrib/buildsystems/CMakeLists.txt: add_custom_command(OUTPUT "${CMAKE_BINARY_D
+>        add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>       -	COMMAND awk -f "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" > "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>       -	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
+>      -+	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>      -+	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
+>      ++	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
+>      ++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
+>      ++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
+>      ++	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
+>      ++		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
+>        
+>        add_library(unit-tests-lib ${clar_test_SUITES}
+>        	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
+> 2:  a41b1f4746 < -:  ---------- cmake: use SH_EXE to execute clar scripts
+> -:  ---------- > 2:  38601f7bdf cmake: use SH_EXE to execute clar scripts
+> -:  ---------- > 3:  146ebd3841 cmake: use verbatim arguments when invoking clar commands
+> 3:  01c1c51e6a = 4:  341c831192 Makefile: let clar header targets depend on their scripts
+> 
+> ---
+> base-commit: facbe4f633e4ad31e641f64617bc88074c659959
+> change-id: 20241108-pks-clar-build-improvements-1c3962a9a79f
+> 
 
-Which probably makes sense.
-
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index d52735354c..375d304c42 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -668,6 +668,8 @@ struct repository *repo UNUSED)
->  	pid_t pid;
->  	int daemonized = 0;
->  	int keep_largest_pack = -1;
-> +	int run_async_safe = 0;
-> +	int run_async_unsafe = 0;
->  	timestamp_t dummy;
->  	struct child_process rerere_cmd = CHILD_PROCESS_INIT;
->  	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
-> @@ -694,6 +696,10 @@ struct repository *repo UNUSED)
->  			   PARSE_OPT_NOCOMPLETE),
->  		OPT_BOOL(0, "keep-largest-pack", &keep_largest_pack,
->  			 N_("repack all other packs except the largest pack")),
-> +		OPT_BOOL(0, "run-async-safe", &run_async_safe,
-> +			 N_("run only background safe gc tasks, should only be invoked thru maintenance")),
-> +		OPT_BOOL(0, "run-async-unsafe", &run_async_unsafe,
-> +			 N_("run only background unsafe gc tasks, should only be invoked thru maintenance")),
->  		OPT_END()
->  	};
->  
-> @@ -718,6 +724,9 @@ struct repository *repo UNUSED)
->  			     builtin_gc_usage, 0);
->  	if (argc > 0)
->  		usage_with_options(builtin_gc_usage, builtin_gc_options);
-> +	
-> +	if (run_async_safe && run_async_unsafe)
-> +		die(_("--run-async-safe cannot be used with --run-async-unsafe"));
-
-So if the caller wants to eventually run both, it has to spawn this
-program twice, the first time with one option and the second time
-with the other option?  Somehow it feels a bit unsatisfying.  If the
-caller says "I want to run both classes", and if your safe/unsafe
-classification system knows which task belongs to which class and
-the classification system that unsafe ones should be run before safe
-ones (or whatever), wouldn't it be easier to use for the caller to
-be able to say "run both", and let your classification system take
-care of the ordering?
