@@ -1,231 +1,170 @@
-Received: from mx0b-002b1501.pphosted.com (mx0b-002b1501.pphosted.com [148.163.154.146])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F01150990
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 22:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.154.146
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731363746; cv=fail; b=q8uPnTAC18XiCgON3mh8gEnokhSiMVYdSodf1ws90z8zIoX8iOtnMmIlKmZocFGg+8P4Eme+sXPYvWF0GrPPefjj4fgtuLZ3aUqYWhTsD+iJ3o/i7BVgiIYZ1uuzeLaXOOwcImUxPdRaGaoL1NieUfdEdlNPld7tUJ8kwNnYWWY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731363746; c=relaxed/simple;
-	bh=zvkUmFY3+3LJU74pUhB8lYm7eNHjD7B8frINYtzywww=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=JpLorb79+1gUElFnWL2UhgJAa5MfsOuVtxjrsvaoZxGDpJ+SFGPMtjLlCkcTCeABHFUnkOTEEmxxze1wiCyXneaZMfuiyF2BfAXXwYxutOXqqGd+GCC9C4Xgoo0tZHXNDuPRNSi5e3kPQMfeUsp9hUtoybGAcbovhJaQT9MJkak=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=epic.com; spf=pass smtp.mailfrom=epic.com; dkim=pass (2048-bit key) header.d=epic.com header.i=@epic.com header.b=W353d00t; dkim=pass (1024-bit key) header.d=epic.com header.i=@epic.com header.b=cS4xfCNu; arc=fail smtp.client-ip=148.163.154.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=epic.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=epic.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7003F150990
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 22:29:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1731364152; cv=none; b=dmfZTauauKxC4EpmLWe3u1uafBawq5Z/s808xS03bHKqmjqO72qf7sDw6QttnBAWAIR3QohAfaEjJ8GFnmJvTCDWYp5G6LsfDCcAZGfxaOlP7N8vBDRYZp7eoDdlQ3GvBj7Gjy0get++lr7osLv/Ia188Z93pjG/8HfMUibVVzI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1731364152; c=relaxed/simple;
+	bh=PY1sMBBySrDrFu0b28xD9xLIk48yi+ApjhdEUTgNWt0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mRCZIFKtYOpBBZWmZplLq/w8DgE2ZUG7cssy7zo/rsUlXIm+IBu3BCoK1OU/E5Y4zHFpoOfCT08tYQLGGUSsu8LiQYD0sqxL2Z+4mFFK9fgPEHzJu06Q2u4w6FIGfYvngD50JVBuBEVaj+TlfFNgWhZDb1YeNWQiRot87LdbWt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nPGbwy12; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mEKbVGmX; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=epic.com header.i=@epic.com header.b="W353d00t";
-	dkim=pass (1024-bit key) header.d=epic.com header.i=@epic.com header.b="cS4xfCNu"
-Received: from pps.filterd (m0119679.ppops.net [127.0.0.1])
-	by mx0b-002b1501.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4ABLWx0V025830
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 16:16:23 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epic.com; h=
-	content-type:date:from:message-id:mime-version:subject:to; s=
-	2k24; bh=Ky+OCNBcWJ9cxNnT6NTM/qj37imsKCQ1vCghtkFRY+s=; b=W353d00
-	tO1IV0nsINoMlIQjT0xIbKcS70c3icl0z1YPEDjCj3WaqgWqmieqIIau5rHdKK+Y
-	Mnnll5b5QO4LnjtV/7/OsusVv3cNhindb2i6AyNMUIqse3iqkdyWJhvRSU183WtX
-	YTaAAWnBnBSDA63tDKh1uwIu0zsb4OTxfr1TkfWRZp8RXhnWhiZoHFl6Aiu5AHjP
-	86CFgzfwxUovyTBP3i0/edD54VmcMueH/SBV8n9yheAE39nat8FOXbQjY+WUpJVP
-	4ylbmFlC/ovGxVW6+chSZmQ9zVnnRK3RMqrNB1AsUidbOrocURYrpgfDoPSs1DgG
-	qOCYN0YS9QqVu1A==
-Received: from nam11-co1-obe.outbound.protection.outlook.com (mail-co1nam11lp2169.outbound.protection.outlook.com [104.47.56.169])
-	by mx0b-002b1501.pphosted.com (PPS) with ESMTPS id 42usxj839q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 16:16:22 -0600 (CST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sFSo03EN02MKV13c0JLYJ05gcalHvcW84QXOIX0ed6jw1nGV+37g6/ONcjlPhzdQB3yx3JgD6Q0l7jI7uQDjKdmb0J6mFTYM6yF/AFKUMswdTTpNe/eTte+ak86dybAMJXfdiqGEdeRG7/H8wR9gucgK1qlwW00yM8CdbJt2CO/WWxTMqIkS7MCQZh/GoEghRRH16id+W+aDztBwPnJr8o0tg4VGUF4RZPkWC10qHVlkbjg8s0tAEZZBfGUwaAooIOX4WhjoZEh1S3RKr3Lv1THqcZQLk4w4Tqkeorq5ZACVOPZyicPz7cnIy84nVJ6uRLUgHbAUj/Cl1JearqFnIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ky+OCNBcWJ9cxNnT6NTM/qj37imsKCQ1vCghtkFRY+s=;
- b=QYEhVOR7PKbgZsPDBoNpYh3KjWmfklEUOz8gFLk7wSvQkWw/gLtkYUhlza/+xl5TCsSPRhql9Yo55SOt5j2dO8dLy7nYdc3q8m/Yg+AR8JU/OM/GrxFfBfea1uerG0qqwfXO224GD6JjVt0hguoAtFznBjjnAdPZHpLUzCyjE/kQH2lH/o7z6ZMv7uz+6DX2F7g+921VfXknMKMdkEQqKnlD9kP6eTXR3jknrlpfJjeuN6C/9oU9bRONEsxDFqNc+qQp/ptiDgLShmdUNrM87DFj17dorfjo76nvMDM+GJeudzEOQy36L4BPacBp1PMltR/HetOKqmUf9F84OZm8EQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epic.com; dmarc=pass action=none header.from=epic.com;
- dkim=pass header.d=epic.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epic.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ky+OCNBcWJ9cxNnT6NTM/qj37imsKCQ1vCghtkFRY+s=;
- b=cS4xfCNumkuS1s8ZOP5Up9Fkl4rTgWO9XKm8qaTwtpWkYlmqj8Hb2Xpn99nAiVgPeU1gPy0uiCG7seqLHFcT45sD3yk5ycLQCmiGThahVwkj2QPEZ4QUEorjQAXBqZ9PVwBUTFn3ICOhIN3AdVqmrhqTEldir+e9ZDDZ+FvrODs=
-Received: from SA1PR17MB6501.namprd17.prod.outlook.com (2603:10b6:806:339::15)
- by SJ0PR17MB5705.namprd17.prod.outlook.com (2603:10b6:a03:387::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8137.19; Mon, 11 Nov
- 2024 22:15:44 +0000
-Received: from SA1PR17MB6501.namprd17.prod.outlook.com
- ([fe80::ec44:513:300e:5d45]) by SA1PR17MB6501.namprd17.prod.outlook.com
- ([fe80::ec44:513:300e:5d45%3]) with mapi id 15.20.8137.027; Mon, 11 Nov 2024
- 22:15:44 +0000
-From: Eric Mills <ermills@epic.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [BUG REPORT] git fetch --prefetch with incorrect options hangs with
- 2.47.0
-Thread-Topic: [BUG REPORT] git fetch --prefetch with incorrect options hangs
- with 2.47.0
-Thread-Index: Ads0hY/TzdkSuGeVSKKmXLBoKSHaKA==
-Date: Mon, 11 Nov 2024 22:15:44 +0000
-Message-ID:
- <SA1PR17MB6501281EF202EA694CF9DC03CA582@SA1PR17MB6501.namprd17.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA1PR17MB6501:EE_|SJ0PR17MB5705:EE_
-x-ms-office365-filtering-correlation-id: aadee521-a58e-414f-b7b4-08dd029e62bf
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|366016|1800799024|10070799003|376014|38070700018;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?fAhZY4fqBdf8mzFAsH27l2uuVfEKAnV0K/UZYeP+xwtLglnMwUg4QROFOQ?=
- =?iso-8859-1?Q?mzafNIaVGhVU5L5oSinEI7uk5HFJx7EcNCzISULR6nEx/pX4FkHtAl4903?=
- =?iso-8859-1?Q?NZfy6S58QIOE1sg4CAHj5sEM+1A3/lVSULEvLodkOb4hIQS+frXyKbRugZ?=
- =?iso-8859-1?Q?0lyEdAy2nsZQt4LANCPywFHxIQzivGnWH+OeLt3+daHON8XCDsW3xzO9ET?=
- =?iso-8859-1?Q?nTWQMt3cdELyfGHFgc8uUh67Uxt43wv5kKD3bNDLOgcvrZHTzCJ7CjwLdv?=
- =?iso-8859-1?Q?BeKe7ZoA+UL88e6hVyU5rDZBx3trmEUn9b6tVgQ0TYEdrcGdQuzyzTbWJG?=
- =?iso-8859-1?Q?Y+xqLdmPB8Gb5OonpCpSeHOg0Dl3XZUaFoEOfHzQSErOhBy7WxQVwrEgHA?=
- =?iso-8859-1?Q?XjLeVP9Xl7xCMLPDzkifYGw6f9vMn/hTCOmhXj5O7SMoOTMmyeumxjb4OB?=
- =?iso-8859-1?Q?j4Yho5wFDvvJG1uenMCO7M6V1x+SXjoY5pusQr0XILvN0TSnjLjZoYYWZ8?=
- =?iso-8859-1?Q?0nmp5bpxBb7qiOLSIBKxstN90DCVUq3xeo2dig2kHt8lorJOuTzOG7PQwe?=
- =?iso-8859-1?Q?7cxKXYpSdR5TUfGRak/WO4ywC+5M/ZWhK7JH/nBkkvs9tCA6G3YUyfu2l8?=
- =?iso-8859-1?Q?LEUI+9toRk8qq1Lv3UifRQhDXH23+FqtZQkQrn8Zxl8kM+mSmTr2c2wL17?=
- =?iso-8859-1?Q?U9PLILgtB717mfbdAQkcn2+YjH+Pds3HT6LZFU0tN//56zxAjPIItzV5dg?=
- =?iso-8859-1?Q?cGH+lsgZEmusgcCknDIZa6XGb29ZF/BOmqVreEpIqpBfO8mvEEO3IQSqGq?=
- =?iso-8859-1?Q?ErRbuumbALu6ZfhEw0CtlIvRwQ+9PwthxvzsMSWUWxkUmh8Fio7icr5WQv?=
- =?iso-8859-1?Q?hH3Jp0hCQH1+A+zSg7jsYzfWNR0VHRGufhewkR4fz4V9s3TNUndbV/0mNB?=
- =?iso-8859-1?Q?K+0BO49xMon8CpTASkpyKyvFUYksnoGPP07uFkptA3QC6VwYHN1Y4a1L3y?=
- =?iso-8859-1?Q?AcnxVpAOq9C1SqvwWUwZUm9q2yb7CHjioORrfxtUr6Ojf8DEXy0RL42PKn?=
- =?iso-8859-1?Q?yuJBZlPIILt/i3yYWK5JhHNn6t2I47q2xotAB5KpE2bQYqhArE9cxtBPYi?=
- =?iso-8859-1?Q?Ar+CUbx2HM633SKCMzJgDp9t2BqmKTTUPcf4FFhrYj0j/QqQ+29hbALbZw?=
- =?iso-8859-1?Q?6npX0bfrCknLgQERuo8cJRhHMd7IidZB+OQlOnTo1xNxf0ejk1zvZGvqlm?=
- =?iso-8859-1?Q?yABwYkCnuRmQC9Y9M33a+yVHqszq3CF/kR39kUWsyN3Z12SfIj6+Q0NgE2?=
- =?iso-8859-1?Q?7ubEANQid56ecG6ZebcvE9TlkKFQxtzbkag710HQVkuq9QEwJYsjV2KeIL?=
- =?iso-8859-1?Q?R/LSKaMPnY+sHaXv/2P5/uYmI6S9CPUmVwo9gkz0/AynM3VspY33T1d67U?=
- =?iso-8859-1?Q?0jnC7PG5clyYQuN/?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR17MB6501.namprd17.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(10070799003)(376014)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?1/2mgC9zLdhjbtz2LO7QjiOGbkgRcAjJE0e/2MqRRaMJez8V5hkfCHCBYr?=
- =?iso-8859-1?Q?LjU9x2Si4xHWha60OiVLGVRh94YvCD5LZ+4EKo8Oe+2JB5ySbgM727Adpg?=
- =?iso-8859-1?Q?K8z4Qdw5WwwGjW2ZLZE68tt4eFEQplj5VuAGEfSSmHdynLAzlPJ25j80DJ?=
- =?iso-8859-1?Q?R88LzAbRCMb5gT8vtu6lHXljNbsmJisZdtIO8BJWVV6FrmRGYXUpg/pCXq?=
- =?iso-8859-1?Q?14CrXOe+x72qLkVkpvgdlXPq49jrgfSqgEpaWoup0wlcSgafdtca19K8sp?=
- =?iso-8859-1?Q?ZPam2XO+Kq3wv6ZPfzq7YbKc8ZPHSi888749f4UVpAD+9wQE0g4i1giCvd?=
- =?iso-8859-1?Q?kI04DU3y/HnqSYaLDWtMSLcB4yBFmUKHvXS2TeRvF3Wqtr/8i0pgh8gQDx?=
- =?iso-8859-1?Q?0/Si50A1sGCxwf2vocDeG4zvHYXQMBgsLmdANgmWwvh6LLAoh1TdK8187G?=
- =?iso-8859-1?Q?mCiVRYzX6Mw7OC7LZmjaMVtRXskIBLzTwI/jo5FLO/ZEW0jEYWO5fN8H3+?=
- =?iso-8859-1?Q?9bBdsOuJxRkSUpv51lExCzZUlfbWdEmtwjxRdDaZIrmLK3PmLRS1uZ9pFx?=
- =?iso-8859-1?Q?VMaTXmW9QNHD2Tc35+dkUuOjwiywQxXN2A9Us6CFmjd7r5a1WalPUuCZ83?=
- =?iso-8859-1?Q?RsGPppfldp0ybl22wq0fLkt1ILRVNE2wWi1tw+qlwWC6hlY8FqSzKg9ao1?=
- =?iso-8859-1?Q?2Fog1jDq+osTzQ2HHa7sMcRTcmOTQJzglgEqdl8iV3ULYcZ83hJZoTACoX?=
- =?iso-8859-1?Q?+TK/b+lZilu8HMZsvVuEpHgTGBxn9b1qkNR7525NvYq2WqaYJmdLY+Rk+w?=
- =?iso-8859-1?Q?9p8B5uHxCqZYje9O2TB3mm07O+Qf3DJhN0yIKeCTKkusWSfmes6LRX012n?=
- =?iso-8859-1?Q?86gpceAqHc2jdooAGMLYtPdUXlg7hP1E8u3fCRvpkneq7ssR6ZmwrCFXKi?=
- =?iso-8859-1?Q?ExL75Mjss0OFeDlhxpAZKZDRlkuoFk+1XzqfTj6Q2HvEkPqwz9JoFW0wTR?=
- =?iso-8859-1?Q?swUHaH0PsITIwjH3xtntWSev3uwhEePcWCC/mAqPSRHvkbGiuLGLs6sNdd?=
- =?iso-8859-1?Q?sh3Hu96pg60PFsmpwmt0uhz/XzA5ZPAJyTMAOhnAS9OIPMkOMytVRUMK9U?=
- =?iso-8859-1?Q?YL7WyjhB91lwqIGjKkNCJ/4rDQplJMYXaHQ73d5LL8/p56a2cQ6KRUgWnm?=
- =?iso-8859-1?Q?MKVvat63bJK6yGhQK5ZnxfcxF0clRyUK7M83IJvvoblP1zcleannVBz7nZ?=
- =?iso-8859-1?Q?KeFpQwyFfr9F0yakOcgmv8I/+NX71Ywdf2h4gL/Te7HXSB9uYcGbEFidL9?=
- =?iso-8859-1?Q?5uNC1IIHdRW5hKzQMtHEi2yZzvEEoIbacrhQyoZfEu1/2/hLEWOClsTSw3?=
- =?iso-8859-1?Q?9qP9zjOKr4Iy1PMbdbBssOlKUqkgAjBDXk/5idgjPceyCN0mkJ59ZrBle5?=
- =?iso-8859-1?Q?7KvwrqpnYvxbTrl6FXAOX2DdHUQWRFnsI/wO1nGhUGQxhcU2wzuEPYBy0Z?=
- =?iso-8859-1?Q?3D1o+M7GyRtU9e4HgsvbGcLs683h+kPx4Fy9K027Ufxrj5LdNO63mPYL2T?=
- =?iso-8859-1?Q?odi80Y8Jpvsc/nLUbpb2iUlKXb3TfUs7ESgTfmj+0JNHglQyxjXhTUqf3W?=
- =?iso-8859-1?Q?zlAgdLImHP8CQDA3RXw814xyhhGyrwTGebzeZSlPUKN7/DSGCwRgk3P79i?=
- =?iso-8859-1?Q?RIzfwkkgB9isVEkPnL8=3D?=
-Content-Type: multipart/mixed;
-	boundary="_002_SA1PR17MB6501281EF202EA694CF9DC03CA582SA1PR17MB6501namp_"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nPGbwy12";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mEKbVGmX"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1FD48254013C;
+	Mon, 11 Nov 2024 17:29:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 11 Nov 2024 17:29:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1731364147; x=1731450547; bh=Am678TtTl9
+	Id4wNifGn562BiCAQRhDtY07p3uagO+tA=; b=nPGbwy126sBQMPXLOcwshsa3PD
+	N/LMJViF+LSAf2epau3R5qHuvLHnHPLt2f4DJ2qohIaVIhl6PKzfCKfTMIdnM1z7
+	C5dCJyWce9sPsGAbMpv+VyUK8ydKlRNRiQxwWk+6fPfdpsK7JRLR+Ig9u+c9olo5
+	TGbgMUd/nd4TsQGxjPTfrj64JlA9G0hvtCd3HRI3QhGlo2eKGzSX5Y6m8NRXVxBR
+	pEl9AqNMf4EJ/HGmbyJ7k9SMVwBEtJSzoahSodh2ai+HxlgJwk0Ce03G+vKvG9CT
+	ymICK+OiL4RAREgysJg1obkfiyriqVcvjKeDcuD2yAgxS3GSJDtbPKmf4uWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731364147; x=1731450547; bh=Am678TtTl9Id4wNifGn562BiCAQRhDtY07p
+	3uagO+tA=; b=mEKbVGmXGoRuiTIhP9aKaV50qFUtlgn8x2VWW+o2ByXZDrFRPgm
+	rWpBzATpqMEJDlWidbkTZWo+0A++8a01L1HQTxnflZvcP61AI01pDbb+5rt7rjCu
+	ax/PsgW41yJSYGFXMatc24B0jB+LxvtKNjWFpQ6//LrKBCwlxTPVRwfDD95H85RQ
+	bLc6uNIwpk+o0Ek7Wzu3RLexH44Su8D4k2qWTPIv86rKf0waUvqM7l4Ult0Lsoia
+	r3d66MNPxFBav5+/5tXYL/V7fMA3ofv0itWVlrBd1ACgzWJCdOemfFkwrTU7sR6I
+	r9I4QQHdYu5soWjzxwlT/7Ibs9tCp2b239g==
+X-ME-Sender: <xms:M4UyZxhYSAa25GhjoZ37Yp0ISJ25e4GE3zFkMDEWpa_e8aBH_aOMMg>
+    <xme:M4UyZ2AuCfpfpUkimayvLxHpbIR5xIid077w_XKnyu5NFcILQMJU5ECSbr3u_3L6o
+    -ubaVcj_hOuuuMTow>
+X-ME-Received: <xmr:M4UyZxFXc625FBTmbLy32w8qK-MrDrTaYbXfN__xolSjZqyVe08h9vC66NrjyeL4LGZBHBUOQ2AK8dFvfnLqBO-OLFtcU_BoIMDT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgdduiedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepudefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggugh
+    gvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgi
+    druggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhnhgtrghi
+    keeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtoh
+    hm
+X-ME-Proxy: <xmx:M4UyZ2TE5MAW9odnfCERvWYDxM58JK1v_EuBDSJ5QqABD2n3Fg9y1g>
+    <xmx:M4UyZ-w6Taqejc06OMwBolNT9OeRG9XilNQ_FDg1O1HIXqmQ4XNAXg>
+    <xmx:M4UyZ866SGBjFSk-bchHrgIJ4eMychcI2nUpUwXLmBP8ejsaS_gkfA>
+    <xmx:M4UyZzwvUqMODrd4rT0_9kUGWbrE6r1uuykaaOMPWh9EUBCxu7ykPA>
+    <xmx:M4UyZyhXUrNBLuWABvjO0tPR8celFdNilGcUiEp-L4MumQZ8ZVutvvgv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Nov 2024 17:29:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Derrick Stolee <stolee@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  johannes.schindelin@gmx.de,  ps@pks.im,
+  johncai86@gmail.com,  newren@gmail.com,  christian.couder@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  jonathantanmy@google.com
+Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
+In-Reply-To: <20241111215502.GC5019@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 11 Nov 2024 16:55:02 -0500")
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+	<ZyUqr/wb5K4Og9j9@nand.local>
+	<2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
+	<20241104172533.GA2985568@coredump.intra.peff.net>
+	<xmqq1pzqwnck.fsf@gitster.g>
+	<f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
+	<xmqqo72miim6.fsf@gitster.g>
+	<20241111215502.GC5019@coredump.intra.peff.net>
+Date: Tue, 12 Nov 2024 07:29:06 +0900
+Message-ID: <xmqq1pzhbe19.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: epic.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA1PR17MB6501.namprd17.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aadee521-a58e-414f-b7b4-08dd029e62bf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2024 22:15:44.0677
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: d8d598e0-2fb2-4605-8514-1967b50e2bd6
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FfzV9reZyFAA6dH+Mszz+Gf+FZ5GAG6UAmFE2dVbV4GIIYTf3PjLy2ZzIjvmG+2TOdxBp3gQiY2vyWWubiAa/g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR17MB5705
-X-Proofpoint-ORIG-GUID: 6G8YOBKMSCf2YM0MLVRgwNFY3g4SFG4C
-X-Proofpoint-GUID: 6G8YOBKMSCf2YM0MLVRgwNFY3g4SFG4C
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=993 mlxscore=0
- bulkscore=0 priorityscore=1501 suspectscore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 adultscore=0 malwarescore=0 phishscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2411110179
+Content-Type: text/plain
 
---_002_SA1PR17MB6501281EF202EA694CF9DC03CA582SA1PR17MB6501namp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Jeff King <peff@peff.net> writes:
 
+>> Yes.  Due to --depth limit, we need to break delta chains somewhere
+>> anyway, and a rename boundary is just as good place as any other in
+>> a sufficiently long chain.
+>
+> We don't necessarily have to break the chains due to depth limits,
+> because they are not always linear. They can end up as bushy trees,
 
+True.  And being able to pair blobs before and after a rename will
+give us more candidates to place in a single bushy tree, so in that
+sense, with a short segment of history, it is understandable that
+the full-name hash fails to have as many candidates as the original
+hash gives us.  But with sufficiently large number of blobs at the
+same path that are similar (i.e. not a "pushing a short segment of
+history", but an initial clone), splitting what could be one delta
+family into two delta families at the rename boundary is not too
+bad, as long as both halves have enough blobs to deltify against
+each other.
 
-Eric Mills (he/him) | Epic | Hyperspace
-ermills@epic.com | (608) 271-9000
+> I'm not sure in practice how often we find these kinds of deltas. If you
+> look at, say, all the deltas for "Makefile" in git.git like this:
+>
+>   git rev-list --objects --all --reflog --full-history -- Makefile |
+>   perl -lne 'print $1 if /(.*) Makefile/' |
+>   git cat-file --batch-check='%(objectsize:disk) %(objectname) %(deltabase)'
+>
+> my repo has 33 full copies (you can see non-deltas by grepping for
+> "0{40}$" in the output) out of 4473 total. So it's not like we never
+> break chains. But we can use graphviz to visualize it by piping the
+> above through:
+>
+>   perl -alne '
+>     BEGIN { print "digraph {" }
+>     print "node_$F[1] [label=$F[0]]";
+>     print "node_$F[1] -> node_$F[2]" if $F[2] !~ /^0+$/;
+>     END { print "}" }
+>   '
+>
+> and then piping it through "dot" to make an svg, or using an interactive
+> viewer like "xdot" (the labels are the on-disk size of each object). I
+> see a lot of wide parts of the graph in the output.
+>
+> Of course this may all depend on packing patterns, too. I did my
+> investigations after running "git repack -adf" to generate what should
+> be a pretty reasonable pack. You might see something different from
+> incremental repacking over time.
 
+That is very true.  I forgot that we do things to encourage bushy
+delta-base selection.  One thing I also am happy to see is the
+effect of our "clever" delta-base selection, where the algorithm
+does not blindly favor the delta-base that makes the resulting delta
+absolutely minimal, but takes the depth of the delta-base into
+account (i.e. a base at a much shallower depth is preferred over a
+base near the depth limit, even if it results in a slightly larger
+delta data).
 
---_002_SA1PR17MB6501281EF202EA694CF9DC03CA582SA1PR17MB6501namp_
-Content-Type: text/plain; name="git-bugreport-2024-11-11-1449.txt"
-Content-Description: git-bugreport-2024-11-11-1449.txt
-Content-Disposition: attachment; filename="git-bugreport-2024-11-11-1449.txt";
-	size=2627; creation-date="Mon, 11 Nov 2024 22:10:12 GMT";
-	modification-date="Mon, 11 Nov 2024 22:15:43 GMT"
-Content-Transfer-Encoding: base64
+> I'm not sure what any of this means for --path-walk, of course. ;)
+> Ultimately we care about resulting size and time to compute, so if it
+> can do better on those metrics then it doesn't matter what the graph
+> looks like.
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQ0KUGxlYXNlIGFuc3dl
-ciB0aGUgZm9sbG93aW5nIHF1ZXN0aW9ucyB0byBoZWxwIHVzIHVuZGVyc3RhbmQgeW91ciBpc3N1
-ZS4NCg0KV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8g
-cmVwcm9kdWNlIHlvdXIgaXNzdWUpDQpJIHJhbiBgZ2l0IGZldGNoIC0tcHJlZmV0Y2ggb3JpZ2lu
-IG1haW5gIHdpdGggZ2l0IDIuNDcgb24gYm90aCBteQ0KV2luZG93cyBtYWNoaW5lICgyLjQ3Lndp
-bmRvd3MuMikgYW5kIG15IE1hYyAoMi40Ny4wKSBhbmQgaXQgaGFuZ3MuDQoNCldoZW4gSSBkb3du
-Z3JhZGUsIHNhbWUgY29tbWFuZCBzdWNjZWVkcyBvbg0KMi40Ni4yLldpbmRvd3MuMSAvIDIuNDYu
-MiAobWFjT1MpLg0KDQpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJl
-aGF2aW9yKQ0KSSBleHBlY3QgdGhlIGZldGNoIHRvIGNvbXBsZXRlIHdpdGhvdXQgaGFuZ2luZyBh
-cyBpdCBkb2VzIGluIDIuNDYuMi4NCg0KTm90ZSB0aGF0IHdoaWxlIGludmVzdGlnYXRpbmcgdGhp
-cywgSSBsZWFybmVkIHRoYXQgYGdpdCBmZXRjaA0KLS1wcmVmZXRjaGAgbWF5IG5vdCBiZSBtZWFu
-dCB0byBiZSBydW4gd2l0aCBzcGVjaWZpYyByZWZzLiBUaGUgaWRlYQ0Kd2FzIHRvIHByZWZldGNo
-IGBtYWluYCwgYnV0IGl0IHNlZW1zIHRoYXQgaW4gMi40Ni4yIHRoaXMgcHJlZmV0Y2hlcw0KYWxs
-IHJlZnMgZnJvbSB0aGF0IHJlbW90ZSBldmVuIHdoZW4gYSBzcGVjaWZpYyByZWYgaXMgZ2l2ZW4u
-IElmDQpwcmVmZXRjaGluZyBzcGVjaWZpYyByZWZzIGlzIGV4cGxpY2l0bHkgbm90IGFsbG93ZWQs
-IEkgd291bGQgZXhwZWN0IGENCm1vcmUgdGFyZ2V0ZWQgZXJyb3IgbWVzc2FnZSBpbnN0ZWFkIG9m
-IGhhbmdpbmcuIElmIGl0IGlzIG1lYW50IHRvIHdvcmssDQpJIHdvdWxkIGV4cGVjdCB0aGF0IG9u
-bHkgdGhhdCByZWYgaXMgcHJlZmV0Y2hlZC4NCg0KV2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0
-dWFsIGJlaGF2aW9yKQ0KSXQgaGFuZ3MgdG8gdGhlIHBvaW50IHRoYXQgSSBoYXZlIHRvIGVuZCB0
-aGUgcHJvY2VzcyBpbiBUYXNrIE1hbmFnZXIuDQoNCldoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3
-aGF0IHlvdSBleHBlY3RlZCBhbmQgd2hhdCBhY3R1YWxseSBoYXBwZW5lZD8NCkkgZG9uJ3QgZXhw
-ZWN0IHRoZSBjb21tYW5kIHRvIGhhbmcuDQoNCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRk
-Og0KVG8gcXVpY2tseSByZWNhcCwgdGhlIGhhbmcgb2NjdXJzIG9uIGJvdGggbWFjT1MgYW5kIFdp
-bmRvd3MuIEl0IGRvZXNuJ3QNCmhhcHBlbiBpbiAyLjQ2LjIsIGJ1dCBkb2VzIGhhcHBlbiBpbiAy
-LjQ3LjAuDQoNCkV2ZW4gdGhvdWdoIEkgbWlnaHQgYmUgdXNpbmcgdGhlIGNvbW1hbmQgaW5jb3Jy
-ZWN0bHksIEkgdGhvdWdodCBpdCB3YXMNCndvcnRoIHJlcG9ydGluZyBiZWNhdXNlIGl0IHNlZW1z
-IHRvIGJlIGEgcmVncmVzc2lvbi4NCg0KSSBmb3VuZCB0aGUgaXNzdWUgb24gV2luZG93cywgYnV0
-IHNpbmNlIEkgY291bGQgcmVwcm9kdWNlIGl0IG9uIG1hY09TDQoob3Igc29tZXRoaW5nIHNpbWls
-YXIgb24gbWFjT1MpLCBJJ20gZmlsaW5nIHRoZSBpc3N1ZSB1cHN0cmVhbS4NCg0KT24gV2luZG93
-cywgSSBkb24ndCBnZXQgYW4gZXJyb3IuIEl0IGhhbmdzIGluZGVmaW5pdGVseS4NCk9uIG1hY09T
-LCBhZnRlciBhIGZldyBzZWNvbmRzIEkgZ290IHRoZSBmb2xsb3dpbmc6DQoNCmdpdCg4NDA1MSww
-eDIwMTcxY2Y0MCkgbWFsbG9jOiAqKiogZXJyb3IgZm9yIG9iamVjdCAweDYwMDAwMTk3ODM5MDoN
-CnBvaW50ZXIgYmVpbmcgZnJlZWQgd2FzIG5vdCBhbGxvY2F0ZWQNCg0KZ2l0KDg0MDUxLDB4MjAx
-NzFjZjQwKSBtYWxsb2M6ICoqKiBzZXQgYSBicmVha3BvaW50IGluDQptYWxsb2NfZXJyb3JfYnJl
-YWsgdG8gZGVidWcNCg0KWzFdICAgIDg0MDUxIGFib3J0ICAgICAgZ2l0IGZldGNoIC0tcHJlZmV0
-Y2ggb3JpZ2luIG1haW4NCg0KUGxlYXNlIHJldmlldyB0aGUgcmVzdCBvZiB0aGUgYnVnIHJlcG9y
-dCBiZWxvdy4NCllvdSBjYW4gZGVsZXRlIGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFy
-ZS4NCg0KDQpbU3lzdGVtIEluZm9dDQpnaXQgdmVyc2lvbjoNCmdpdCB2ZXJzaW9uIDIuNDcuMC53
-aW5kb3dzLjINCmNwdTogeDg2XzY0DQpidWlsdCBmcm9tIGNvbW1pdDogMWY4YTgzY2JhNmU4OGZh
-ZDRiODgxODg1ZTY0Y2ZiODk0NThlMzY1Mw0Kc2l6ZW9mLWxvbmc6IDQNCnNpemVvZi1zaXplX3Q6
-IDgNCnNoZWxsLXBhdGg6IEQ6L2dpdC1zZGstNjQtYnVpbGQtaW5zdGFsbGVycy91c3IvYmluL3No
-DQpmZWF0dXJlOiBmc21vbml0b3ItLWRhZW1vbg0KbGliY3VybDogOC4xMC4xDQpPcGVuU1NMOiBP
-cGVuU1NMIDMuMi4zIDMgU2VwIDIwMjQNCnpsaWI6IDEuMy4xDQp1bmFtZTogV2luZG93cyAxMC4w
-IDIyNjMxDQpjb21waWxlciBpbmZvOiBnbnVjOiAxNC4yDQpsaWJjIGluZm86IG5vIGxpYmMgaW5m
-b3JtYXRpb24gYXZhaWxhYmxlDQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hlbGwp
-OiBDOlxQcm9ncmFtIEZpbGVzXEdpdFx1c3JcYmluXGJhc2guZXhlDQoNCg0KW0VuYWJsZWQgSG9v
-a3NdDQo=
+True, too.  Another thing that we care about is the time to access
+data, and favoring shallow delta chain, even with the help of the
+in-core delta-base cache, has merit.
 
---_002_SA1PR17MB6501281EF202EA694CF9DC03CA582SA1PR17MB6501namp_--
+Thanks.
