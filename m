@@ -1,165 +1,229 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DB515B554
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864FC153BF6
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 11:14:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731322667; cv=none; b=a+6oBrCp6o3Xh0ost15LhW+nVx62kRVJS2k1G6ByZ3CDwXRO/ZcFWoZvlsTRXr/GdzjQxKVrAwSYB1SlQP1VYyQlZLTZuUxgtxIn6Z2f+rAp9UyveAkYgkAj/NFSzCaE9xB7tC5MHeHYgW1CjB5tJfI9an0wXaKeEqLPw8H/WSw=
+	t=1731323656; cv=none; b=t61r7RTEP75nXBigbWkps+1o9vo3w5CCzDiK6Rf8WGROWs/VuE93GdfXnXWM5Pw3fYsLZImfKXSNrSeX99yPhMfAHKZBlTWUw5WGpU/6ucw3MO6/xYzn2tx/taKY7vm+ADQ4fKXBLYSwBUnx7a2cDFl2ps2QMdkq5p2U4OZ7GGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731322667; c=relaxed/simple;
-	bh=y4EnjxMU6ZcGPUweO500WNSEKEfVRfz8qUIR6tWutDo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=DjxmwQVBVN5MRsBYhMnEGESJTKY2k5frsSHNABvuMNxPDpRPjcdzeCdWMmRBsO8Kkvtar0cHVQbLDW5m9FIu3MvNxDFjOWmKlp0IW2RAXbw9UuLn0x/97B/unoKfTvqi+3q3YvKnd5qA5Li6ZhL7mLCEZqJd5mkdqXvkLfKEV+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YdUqfJA4; arc=none smtp.client-ip=209.85.222.41
+	s=arc-20240116; t=1731323656; c=relaxed/simple;
+	bh=ZFSFPXHRsBB98REHPu8L2HiKggzL8QXMfJAJCmcj4UI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CsBlvEWKlxcg42eA2YlGOE5exlm2MRqkO9lWdGr7D4hlYhO/lFGgkw+9rCZSEOrEhdniT+DvLe/c/EN6wwLHW/tc8le8I1Tnsi5FRrN3AlWfBsiGTT3QTXJH2t7SoItdxo5V5AlWsQUSuTh1y1M/5G0DGLPwaTCshTp5u3+TSEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9AS9I2c; arc=none smtp.client-ip=209.85.167.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YdUqfJA4"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-84fccf51df1so1692945241.2
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:57:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9AS9I2c"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539f76a6f0dso4827224e87.1
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 03:14:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731322664; x=1731927464; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=m/Yp8cNgNLVq5Al7W++8giaAOs98UduSg1kmj0xDUo0=;
-        b=YdUqfJA4pW44DLruBVXskaRiuoMqGTZDXn+x+V8OJR0+tPk5ji6rT8Byc7x2Mnmmkx
-         YvGxsb16aFjtymqEJFpRkzdJ2UGHRIcIM891V6W3j9CSe5cs52BkMO7e4TweIFq7+Uvg
-         BkUT6tQa2zntWvtC9msQJRAsTK1aMho+m/tMOMtzm2+Y6PrjSOoIpLFUo7HdRQCb4LfL
-         wRseXR510aWfVEajBvyGYdvebS/5LTm2D9SG3YYTLVyocJiKBXecafiXFPg4OuzvLrdb
-         BBbGBSsPtN1kzj0edf/7ur0ql4hhgz/wurjOriGU4Z8Py7wtPWWoyYwlpHSC+In023IQ
-         BBJg==
+        d=gmail.com; s=20230601; t=1731323653; x=1731928453; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zlB3PXaYLUgA6wLFvML1PLWQNYsIqoS6Rn5Fz7ILOG0=;
+        b=D9AS9I2cX4b12TmZ8GDq9Tf+t+OQbZj8z/SKQlMzyTV0T4eIMF0iTNtDVEgVb+0ye6
+         GlsQYfwGxkvJ1XWBVQpGAlqkr5oPJz7l/WGf2l2j+XemI0xRN3Si7sZE7+so1zcj20m5
+         i9laBhSOdebKuAuLzvNbqh6VNpK8dc+WiUzKIBN3UqoMLGO914/253GVc2TzubMAtLwA
+         bnr/xzdF/xinsQNv+VCls21DcdZElyAYU14kayMKFiSYsAzbPMjDRMcL6IhPyXFqRssM
+         IkP8RHoqpKQq0LSOKxgI2NFHPOO6N/sebnERB19IXuj2EKKVXDTwlYXdlkg9D+KDV9eD
+         C6TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731322664; x=1731927464;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m/Yp8cNgNLVq5Al7W++8giaAOs98UduSg1kmj0xDUo0=;
-        b=EBOxSGbz/uJnR5KtjzNazVXARLXJM6kxA2DvS/Lw0ivrYxPhSM7+wCMXGazaPQxr8C
-         m6iY3QXXTMTPq7U7mgrmm0bXK/m6+PQwYMjQlV6WewNEy+8SmhIOCWtEnrtZRI+d+gue
-         S+nKWyDRa0QUHWg2WDBStdjww7dGObJ5yxoo7e2JB6pdUk+lp2TnpPY4vQcsbgthFy20
-         faJ7kga8AYgL5MWK5Co3ROPlXXSKPMYbpbeX0mdP9aFRQKU0vN90u+fRZ/HCIXCsy2tn
-         xrAbEax0f4/Ch/pbItxpgMZk4ZXA9fk/oytK8fNn3O9AN5moutE/19+soIYXUgMfpDlL
-         DcpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWmGEDyZR10N5cWAwF8gojU0mFcCADi0ovk6EG6sL22gWEhrKrv3A88Lnud+GIwFHmh1jM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwgQ3abWla8j3Xwx+F8lZJDH6yat6qwW67h9QWSQ2EQX3gz9fp3
-	QyOGFS8z1DiLmSGqtwyQU0Q+oc4tnhu4e4NQ6GSw3ftk9fv6+34X6OwpIbW9jADCxzlNnVDWQUv
-	5Z4iNFLu2aSm3ussxNU2CkVRKHuPFwi3f
-X-Google-Smtp-Source: AGHT+IEvRfN/WcdD3ZBvWBOTwzX4AHbAXnmS6NZ1ChPm1KN8GhLM+6cQwoJd2LMyggJXF+JFXTYME4uaFexoJSy7YH0=
-X-Received: by 2002:a05:6102:2ad5:b0:4a4:841f:bb95 with SMTP id
- ada2fe7eead31-4aae166523fmr9629374137.26.1731322664527; Mon, 11 Nov 2024
- 02:57:44 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 11 Nov 2024 05:57:43 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
-References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
+        d=1e100.net; s=20230601; t=1731323653; x=1731928453;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zlB3PXaYLUgA6wLFvML1PLWQNYsIqoS6Rn5Fz7ILOG0=;
+        b=u4oYYKOj+p9DMpVCtkHclWKJND9V+of7KAQcenBt1HjnUtpFvOqyCLDKCGEYvHnGcE
+         CSxOg3kUiOyZGcx24uG5nVvFXDfUkblddI5PfCEVn+/Hyitx8lJhJTFuKJes5SmNHbzp
+         F9iCmTxV2Xoc7Krk7JCffvmJOIb9MyByjMGo7bCYqAZzkcmy+HQzFzns1oCOhL/djxcC
+         vKXECWXhe8GY1bHazULE5nI1zGm97fAjgK0J57uIS9IOP2J5KQiuoOGQDbh1cHC/lu7Z
+         U3v0Jh8I6qSPtANC5jWkv4TK9EpoaWJEyidBzRwszjp7jEyLumbEqdyT8VhxtUt8OwM5
+         mo0Q==
+X-Gm-Message-State: AOJu0YyX9fUnxvYnJANnFpACef1GBTaEqsQpCDFsG25b7uvRxDBz4sq4
+	DlNBUY3ay5cG5Fg/Bbth+cuEPdOJDkE8GthiHLd70oVrtp2gVHM0
+X-Google-Smtp-Source: AGHT+IHM/2Fzb5ku1ly+s0JyCl8q9oq0nVGIvEm0Gw5Y54F9wqZhX5x5tVtA6dnLNAe0SmFoK14BIg==
+X-Received: by 2002:a05:6512:32c8:b0:539:f763:789d with SMTP id 2adb3069b0e04-53d862be333mr5205507e87.43.1731323652251;
+        Mon, 11 Nov 2024 03:14:12 -0800 (PST)
+Received: from localhost.localdomain ([217.110.80.4])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cf03c7c625sm5012959a12.82.2024.11.11.03.14.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Nov 2024 03:14:11 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com
+Cc: git@vger.kernel.org,
+	me@ttaylorr.com,
+	peff@peff.net,
+	gitster@pobox.com
+Subject: [PATCH v7 0/9] packfile: avoid using the 'the_repository' global variable
+Date: Mon, 11 Nov 2024 12:14:00 +0100
+Message-ID: <cover.1731323350.git.karthik.188@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <cover.1729504640.git.karthik.188@gmail.com>
+References: <cover.1729504640.git.karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 11 Nov 2024 05:57:43 -0500
-Message-ID: <CAOLa=ZTGtGJDnMmuv++FS9Rv4KiRQewOepo_qOY=6h1xtNmNZA@mail.gmail.com>
-Subject: Re: [PATCH 00/10] refs: optimize ref format migrations
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000006948a40626a0f86f"
+Content-Transfer-Encoding: 8bit
 
---0000000000006948a40626a0f86f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The `packfile.c` file uses the global variable 'the_repository' extensively
+throughout the code. Let's remove all usecases of this, by modifying the
+required functions to accept a 'struct repository' instead. This is to clean up
+usage of global state.
 
-Patrick Steinhardt <ps@pks.im> writes:
+The first 3 patches are mostly internal to `packfile.c`, we add the repository
+field to the `packed_git` struct and this is used to clear up some useages of
+the global variables.
 
-> Hi,
->
-> I have recently learned that ref format migrations can take a
-> significant amount of time in the order of minutes when migrating
-> millions of refs. This is probably not entirely surprising: the initial
-> focus for the logic to migrate ref backends was mostly focussed on
-> getting the basic feature working, and I didn't yet invest any time into
-> optimizing the code path at all. But I was still mildly surprised that
-> the migration of a couple million refs was taking minutes to finish.
->
-> This patch series thus optimizes how we migrate ref formats. This is
-> mostly done by expanding upon the "initial transaction" semantics that
-> we already use for git-clone(1). These semantics allow us to assume that
-> the ref backend is completely empty and that there are no concurrent
-> writers, and thus we are free to perform certain optimizations that
-> wouldn't have otherwise been possible. On the one hand this allows us to
-> drop needless collision checks. On the other hand, it also allows us to
-> write regular refs directly into the "packed-refs" file when migrating
-> from the "reftable" backend to the "files" backend.
->
-> This leads to some significant speedups. Migrating 1 million refs from
-> "files" to "reftable":
->
->     Benchmark 1: migrate files:reftable (refcount =3D 1000000, revision =
-=3D origin/master)
->       Time (mean =C2=B1 =CF=83):      4.580 s =C2=B1  0.062 s    [User: 1=
-.818 s, System: 2.746 s]
->       Range (min =E2=80=A6 max):    4.534 s =E2=80=A6  4.743 s    10 runs
->
->     Benchmark 2: migrate files:reftable (refcount =3D 1000000, revision =
-=3D pks-refs-optimize-migrations)
->       Time (mean =C2=B1 =CF=83):     767.7 ms =C2=B1   9.5 ms    [User: 6=
-29.2 ms, System: 126.1 ms]
->       Range (min =E2=80=A6 max):   755.8 ms =E2=80=A6 786.9 ms    10 runs
->
->     Summary
->       migrate files:reftable (refcount =3D 1000000, revision =3D pks-refs=
--optimize-migrations) ran
->         5.97 =C2=B1 0.11 times faster than migrate files:reftable (refcou=
-nt =3D 1000000, revision =3D origin/master)
->
-> And migrating from "reftable" to "files:
->
->     Benchmark 1: migrate reftable:files (refcount =3D 1000000, revision =
-=3D origin/master)
->       Time (mean =C2=B1 =CF=83):     35.409 s =C2=B1  0.302 s    [User: 5=
-.061 s, System: 29.244 s]
->       Range (min =E2=80=A6 max):   35.055 s =E2=80=A6 35.898 s    10 runs
->
->     Benchmark 2: migrate reftable:files (refcount =3D 1000000, revision =
-=3D pks-refs-optimize-migrations)
->       Time (mean =C2=B1 =CF=83):     855.9 ms =C2=B1  61.5 ms    [User: 6=
-46.7 ms, System: 187.1 ms]
->       Range (min =E2=80=A6 max):   830.0 ms =E2=80=A6 1030.3 ms    10 run=
-s
->
->     Summary
->       migrate reftable:files (refcount =3D 1000000, revision =3D pks-refs=
--optimize-migrations) ran
->        41.37 =C2=B1 2.99 times faster than migrate reftable:files (refcou=
-nt =3D 1000000, revision =3D origin/master)
->
-> Thanks!
->
-> Patrick
->
+The next 3 patches are more disruptive, they modify the function definition of
+`odb_pack_name`, `has_object[_kept]_pack` and `for_each_packed_object` to receive
+a repository, helping remove other usages of 'the_repository' variable.
 
-I read through the series, apart from a few small nits, the patches
-look good and straightforward.
+Finally, the last two patches deal with global config values. These values are
+localized.
 
-Thanks
+For v5 onwards, I've rebased the series off the new master: 8f8d6eee53 (The
+seventh batch, 2024-11-01), as a dependency for this series 'jk/dumb-http-finalize'
+was merged to master. I've found no conflicts while merging with seen & next. But
+since this series does touch multiple files, there could be future conflicts.
 
---0000000000006948a40626a0f86f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: fa6f4199e08f5180_0.1
+Changes in v7:
+- Cleanup stale commit message.
+- Add missing space in `if` statement.
+- Fix typo s/incase/in case/. 
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jeDR5WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM2dOQy9rQkRiOWRkQm9YbXhLZktCOWVvWSs2SUhkcgpQWm1vTU5TWGJt
-Y0dBeUJVbG1DZGZrUzlrY3BBSi9YZkYrU0hGSUQvb2Uyc1JrWnpFc0gvdzNlUXlwaTVuSnNQCmly
-RGJlQVpiZGVYeTR5NENkMXAwbTdNOW9zNDgwZG1JTjJIQVhUWnJINk04eGxNR28vSUVORUs4bWR0
-MGRxQmgKRjNrTnB4VWZqSGduMkUwem42MTFxV1R1MENFck5wdlUrVGduTXdjN2U1QWMzU0F0V3dt
-K29QWjFzUnA0c29qRAp2K3R1Z014RTl0dytac1RvWG9ZU2t0TmFTaXFCYWhuNFQxdlJhc1M4TmRW
-eXFHcEFXYTdmanN1RlkzT3dOanRiCnh6cnRnOERSQ01YZmV3SkdXamNEUFdreU1Vd1JpUElzdVBO
-cm1UNDhSb21adkczYlZJZnhWUjVEYzB6bkJkZEcKaSt4WWVzdlZFR2plZUNoOWhxb1dpVlVUMHRB
-dHJFNTV2UHgwdzRvbk15ejVCblhoYlRIMThreGNaTXNwc3l6MgpZRDVyU3QwZ080YkJjR3ZqVzlx
-UWRoWmVtdTRkeklrWEQvY2FmWVBGT0U4NnluVTJ3eWtISmprYUV5MEVaR2J6CmV2SHBmVU9odnB3
-V1cxRG5Oa25wbzE0bjVJbm9LNlBiZXRmaW55MD0KPVZ1TFYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000006948a40626a0f86f--
+Changes in v6:
+- Lazy load repository settings in packfile.c. This ensures that the settings are
+available for sure and we do not rely on callees setting it.
+- Use `size_t` for `delta_base_cache_limit`.
+
+Changes in v5:
+- Move packed_git* settings to repo_settings to ensure we don't keep reparsing the
+settings in `use_pack`.
+
+Changes in v4:
+- Renamed the repository field within `packed_git` and `multi_pack_index` from
+`r` to `repo`, while keeping function parameters to be `r`.
+- Fixed bad braces. 
+
+Changes in v3:
+- Improved commit messages. In the first commit to talk about how packed_git
+struct could also be part of the alternates of a repository. In the 7th commit
+to talk about the motive behind removing the global variable.
+- Changed 'packed_git->repo' to 'packed_git->r' to keep it consistent with the
+rest of the code base.
+- Replaced 'the_repository' with locally available access to the repository
+struct in multiple regions.
+- Removed unecessary inclusion of the 'repository.h' header file by forward
+declaring the 'repository' struct.
+- Replace memcpy with hashcpy.
+- Change the logic in the 7th patch to use if else statements.
+- Added an extra commit to cleanup `pack-bitmap.c`. 
+
+Karthik Nayak (9):
+  packfile: add repository to struct `packed_git`
+  packfile: use `repository` from `packed_git` directly
+  packfile: pass `repository` to static function in the file
+  packfile: pass down repository to `odb_pack_name`
+  packfile: pass down repository to `has_object[_kept]_pack`
+  packfile: pass down repository to `for_each_packed_object`
+  config: make `delta_base_cache_limit` a non-global variable
+  config: make `packed_git_(limit|window_size)` non-global variables
+  midx: add repository to `multi_pack_index` struct
+
+ builtin/cat-file.c       |   7 +-
+ builtin/count-objects.c  |   2 +-
+ builtin/fast-import.c    |  15 ++--
+ builtin/fsck.c           |  20 +++---
+ builtin/gc.c             |   8 ++-
+ builtin/index-pack.c     |  20 ++++--
+ builtin/pack-objects.c   |  11 +--
+ builtin/pack-redundant.c |   2 +-
+ builtin/repack.c         |   2 +-
+ builtin/rev-list.c       |   2 +-
+ commit-graph.c           |   4 +-
+ config.c                 |  22 ------
+ connected.c              |   3 +-
+ diff.c                   |   3 +-
+ environment.c            |   3 -
+ environment.h            |   1 -
+ fsck.c                   |   2 +-
+ http.c                   |   4 +-
+ list-objects.c           |   7 +-
+ midx-write.c             |   2 +-
+ midx.c                   |   3 +-
+ midx.h                   |   3 +
+ object-store-ll.h        |   9 ++-
+ pack-bitmap.c            |  90 +++++++++++++++---------
+ pack-objects.h           |   3 +-
+ pack-write.c             |   1 +
+ pack.h                   |   1 +
+ packfile.c               | 148 +++++++++++++++++++++++----------------
+ packfile.h               |  18 +++--
+ promisor-remote.c        |   2 +-
+ prune-packed.c           |   2 +-
+ reachable.c              |   4 +-
+ repo-settings.c          |  14 ++++
+ repo-settings.h          |   5 ++
+ revision.c               |  13 ++--
+ tag.c                    |   2 +-
+ 36 files changed, 268 insertions(+), 190 deletions(-)
+
+Range-diff against v6:
+ -:  ---------- >  1:  6c00e25c86 packfile: add repository to struct `packed_git`
+ -:  ---------- >  2:  70fc8a79af packfile: use `repository` from `packed_git` directly
+ -:  ---------- >  3:  167a1f3a11 packfile: pass `repository` to static function in the file
+ -:  ---------- >  4:  b7cfe78217 packfile: pass down repository to `odb_pack_name`
+ -:  ---------- >  5:  5566f5554c packfile: pass down repository to `has_object[_kept]_pack`
+ -:  ---------- >  6:  1b26e45a9b packfile: pass down repository to `for_each_packed_object`
+ 1:  89313cfed4 !  7:  1bdc34f4d8 config: make `delta_base_cache_limit` a non-global variable
+    @@ builtin/gc.c: static void gc_config(struct gc_config *cfg)
+      {
+      	const char *value;
+      	char *owned = NULL;
+    -+	unsigned long longval;
+    ++	unsigned long ulongval;
+      
+      	if (!git_config_get_value("gc.packrefs", &value)) {
+      		if (value && !strcmp(value, "notbare"))
+    @@ builtin/gc.c: static void gc_config(struct gc_config *cfg)
+      	git_config_get_ulong("gc.bigpackthreshold", &cfg->big_pack_threshold);
+      	git_config_get_ulong("pack.deltacachesize", &cfg->max_delta_cache_size);
+      
+    -+	if(!git_config_get_ulong("core.deltabasecachelimit", &longval))
+    -+		cfg->delta_base_cache_limit = longval;
+    ++	if (!git_config_get_ulong("core.deltabasecachelimit", &ulongval))
+    ++		cfg->delta_base_cache_limit = ulongval;
+     +
+      	if (!git_config_get_string("gc.repackfilter", &owned)) {
+      		free(cfg->repack_filter);
+ 2:  3a8e3b88df !  8:  7b6baa89ac config: make `packed_git_(limit|window_size)` non-global variables
+    @@ Commit message
+         this file, let's change it from being a global config variable to a
+         local variable for the subsystem.
+     
+    -    We do this by introducing a new local `packfile_config` struct in
+    -    `packfile.c` and also adding the required function to parse the said
+    -    config. We then use this within `packfile.c` to obtain the variables.
+    -
+         With this, we rid `packfile.c` from all global variable usage and this
+         means we can also remove the `USE_THE_REPOSITORY_VARIABLE` guard from
+         the file.
+    @@ packfile.c: unsigned char *use_pack(struct packed_git *p,
+      			off_t len;
+     +			struct repo_settings *settings;
+     +
+    -+			/* lazy load the settings incase it hasn't been setup */
+    ++			/* lazy load the settings in case it hasn't been setup */
+     +			prepare_repo_settings(p->repo);
+     +			settings = &p->repo->settings;
+     +
+ 3:  2f9a146978 =  9:  a3667d87ec midx: add repository to `multi_pack_index` struct
+-- 
+2.47.0
+
