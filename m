@@ -1,271 +1,125 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B951C14F9F9
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 08:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3DF165EED
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 08:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731313518; cv=none; b=gj/BwCb37Bk3uQL+6RBSsY5zl57rj3XfxqetIbL1vWHGq2XSSHueU8o9A918K1jjTiODbGRa2TY2yzLy2fch+kQ3wsQXameVSQpj9hIqj3EtpUaB4qmW9x6S5iD0Huc2T4KvqH65oN9ydL/ZQTpDjXsY/5pF75sUKxASPH1i+74=
+	t=1731313803; cv=none; b=Qm0vpy0mQH5V0csr4S12++YuIBNZd1XRXb1apHu3b1VpsSVHVtthOdu9qz+jpntqmae5QEFU5Kx+Na28lDciLFOixyDdr+G8FrmcyTOOc03r4LnvBmWir+gcpa6RIU8k+/5FQCGh9dI0+1w1EOnJ50pkbBWBDuithOsR62lu/oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731313518; c=relaxed/simple;
-	bh=BeVtGXf4a/rJhwe8glmirevg0hzLjpynIf+ofb7MHVM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tPZQgndvACxzE/QpeAfewmFJKRwGs3OFt4OtFJOpcF0W4AsAXAEGvkqV6nlnxZsVYpIz8ikxhUQsbgh7dycrfzxWRnq2YidTJUewZ1FFGyN6liU4mykOQIjpkZKtJTUBE3seL3DvJXNj7BwlDbau8uyL9O+hEFMBBcSARErKzEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nC1jhUF9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q70UHE55; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1731313803; c=relaxed/simple;
+	bh=VDCRclbRyP+G/pFrAsuAAhiVDpTvpV14MXLrXkJ6T4Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q10tHXVfdKzKLiXFpZNM4ZWSyEQ6+P15KakJsh7HIMUJwKqkeg5Aj7SWObhGbH4ysJwlRYEKXPWTPMNvS99fm0/BtDRG71iq4hp5Uys6dYFhHEE+3GVnfrN7B2Vg9zzgxq5E0L8eEfB1XNQnLvTggjkiKOTPz6/gSZUD9kfXJTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=3r48Kjrx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FPGI3l1+; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nC1jhUF9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q70UHE55"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id AF4041380280;
-	Mon, 11 Nov 2024 03:25:13 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 11 Nov 2024 03:25:13 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="3r48Kjrx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FPGI3l1+"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7645A1380280;
+	Mon, 11 Nov 2024 03:30:00 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Mon, 11 Nov 2024 03:30:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731313513;
-	 x=1731399913; bh=0ElWoFd9wQsgt5GQPAjntmxtu0WbNlJo9MtCLEgrHag=; b=
-	nC1jhUF9FgBoo8lmCAEFu1BzWhD8SYZsTKPpMMjoxnn4EVkLITWS8xqhfz/Vu4GF
-	DlEYUQVQE3P6+4sYNW2JkndoGpW0A8KGaWQOBHEZ5PEPE1GO88nPDzzos2LW7tCc
-	ZYPHm7PUIC+L8sZrMmILV0vSXUs4uunZi50H7BWEG21bAKFJzHOqXup3NRoZxTVV
-	KG4K+mXB88LFdwHGTgN6bXnPScqGrZsH2Y062eCHt61n0Ub8J94KFPP5ey5xWZ2A
-	YyfipnWOjp1TvVIyfqzS17otKRVYFLYlw7z4zOCyMgvxHSxPsJV2Jk6ejTCeeF8G
-	TSu/e0yyLvQrb4GrVDYPZQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731313800; x=1731400200; bh=XtZtd2Uu3m
+	9LZ423iG6JyBBIZ10VSiP2rsyTQ0Us/o0=; b=3r48KjrxQZaHdSPMRLC9vCqr7f
+	WHcWKiOL1CXrJ6byF4IoiavvuiQr9AulEHT4d7s1DGherS0X7iyVHGlm/2jh+41B
+	IG7tiovlMnG4Mnh8PKR5vJgodXB3Uz7de8PFfue/F6lCxmv6Xf36k8gumB6dMXDl
+	CEP9bBE0qWlg60DB8hVgu3aBDJDP6NvBlVUJXu5djEWnOOiH7+VVycNpOB/8T0/L
+	3tU56laiLrrtjdXZT/xKWbauiWU245PU5aimiTqr473yOpXxEV5wcQUtgIWjU7ST
+	13OUY1FfufjXm//JE7dMcpFBSLElghM9xPkEurlNgqS+LOA0qDnjoMMq61rQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731313513; x=
-	1731399913; bh=0ElWoFd9wQsgt5GQPAjntmxtu0WbNlJo9MtCLEgrHag=; b=Q
-	70UHE55rrKP4V1tc692QY6930NWT5uq//kBf1ohVyzMJ5DtGR2E2cumUyKgzrjY1
-	mFi7AYZ7flukyDjHOKw5aPsa2kP5diGZGG62XcITml7cViivnxOL2gNDwrkfrPIO
-	2oGTKL5VMA+tBwX7V3npJ4Zlo6G/HbvQBXhG0xx5HzelknEOYWbZ10FYNR0+maiE
-	oQ9VrOzJgVcQBG4fIA/ehmn0xw1HM2SQ6rVajzvDu38LpOlZMbKQwgxM8D0FLajO
-	VHWgAQTKDyI4MxHhUZaOvivUO74jSow9F7lLHVpQC6n8/6zdOsgv0j0yHdwatJD4
-	wfhfyd0yvN7fNAkILlibw==
-X-ME-Sender: <xms:ab8xZ0ZRtv-5rJJAHqnCR7nv9BGAYESlF4oAgfIBfyvy29xW0JT1wQ>
-    <xme:ab8xZ_aaI5ZDWC25T_n6YpEOE9qiAVkjzeg0i0Kl4FIAro_a8IEQBWo9aFCbi219s
-    Xw6bSMqZF1-EWktWg>
-X-ME-Received: <xmr:ab8xZ-9WihABKDk1_aUeyElJwVmroafk7-1meQrXJ0lokiAfgc3zAeh02-z56RzThahFFvbs9o2njYmf7AiXscsGQl7OCZa_pXz0pUnOENLDCJrP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugdduudekucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731313800; x=1731400200; bh=XtZtd2Uu3m9LZ423iG6JyBBIZ10VSiP2rsy
+	TQ0Us/o0=; b=FPGI3l1+fttETLvxFWsBnOMz2uF4WQC0q+1DqoPL4bTae9VIOs3
+	CgCqiOrX12z2zEX7PbwQSrX6Kz5SI9ga0xGpVALinmSC6A+ImcgPvo96axi2SBXy
+	rwcMd4AIjF83/NzvddZaJqAnVQbTNCEIKFQjjqoCc3erb81z2Cfzb1fpHUk+00tp
+	qz0AY9OKlZa5JSd1uCaaMh/adnEJ5Il9Hu1t3rKzbfQhy/EmP0tnIotlWZ2KuWlk
+	NHJDUp9qn7vwJUwZGl6RB9+4oCCXAYo7wChcKjX4pL0ncV/2exNI67PqY9jF/DVC
+	tDMkabsU9JjI4+PNy+GuBmkParVZkLWs/gw==
+X-ME-Sender: <xms:iMAxZyirMl5VTXpKrIEX7pA-Nrb7jucIzKX0AcOjAhrUM9RvoQAYsw>
+    <xme:iMAxZzDsLmJP-Nqmyax5po_fxrsTdaKhWob4oJ0SxuY2AKGpuFW0M6YtLS2Oh4Jgd
+    XPO2QNty-aal1Pd5g>
+X-ME-Received: <xmr:iMAxZ6EIzklKfuGLSy3ATmYz9kqwO-KX0qwWRdSxZRv30lWVuES0QlPMgoCzTKWwkknBFX8KxUVNaP-zKtpAA0ScRovVW6IxmmFePFDUB8z_niuD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugdduudelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilh
-    hlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:ab8xZ-opOQBBBAvV9gxDkRM5H2HYrR7dKpA61THTlP8w7szBaF00sw>
-    <xmx:ab8xZ_rY-j8ikCrgSF1ApKB4kDX-uL_61Z9T7YeJm1LGGsSdC4ygOg>
-    <xmx:ab8xZ8SaHfDmsFQiQLDcb01imB6RS6ubq76OhUX6My1BFFsBNSQE7A>
-    <xmx:ab8xZ_qO9Ozdr_6dPl64LdlbUua5HNHKL9fF36n7KwWYZY3wSOUnIQ>
-    <xmx:ab8xZwlDZ7XOj7p5lxproS968GOmoZH3tNpy6lIpjgpvzHtQmvULMuXu>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnh
+    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:iMAxZ7S-yV-FGBAyWeImfEpZDxf5KCi-oP19wDZOK_CkkkiLPv_PPA>
+    <xmx:iMAxZ_yubyyHM9RhesAmdY-YqnS4lBf_9OG3cvPOkqhpSv9ialUQkg>
+    <xmx:iMAxZ56F-puNqAxyEVXqRqRTbM8SEMa54634cdtJw-kZJCVq32Ii6A>
+    <xmx:iMAxZ8xp_CHkOYK6o-K43xkRhEz1sGjSYGgEbzWgjbgCLTO3zV3vQA>
+    <xmx:iMAxZxvmrHp5dM144B5g7NBgb1wYGwc4iwsvjSBqaNaRZhgtA0nzhx11>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 03:25:12 -0500 (EST)
+ 11 Nov 2024 03:29:59 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 85a0bc31 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 11 Nov 2024 08:24:35 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7dfe3dca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 08:29:24 +0000 (UTC)
+Date: Mon, 11 Nov 2024 09:29:50 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 11 Nov 2024 09:24:57 +0100
-Subject: [PATCH v2 1/4] t/unit-tests: convert "clar-generate.awk" into a
- shell script
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Build improvements for clar
+Message-ID: <ZzHAfgR_NpBfTkpV@pks.im>
+References: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
+ <890b423c-9756-4e1b-a6d0-3990f1091f5b@gmail.com>
+ <xmqqiksuk0yk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241111-pks-clar-build-improvements-v2-1-d4794d8d1b30@pks.im>
-References: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
-In-Reply-To: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Phillip Wood <phillip.wood123@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqiksuk0yk.fsf@gitster.g>
 
-Convert "clar-generate.awk" into a shell script that invokes awk(1).
-This allows us to avoid the shell redirect in the build system, which
-may otherwise be a problem with build systems on platforms that use a
-different shell.
+On Mon, Nov 11, 2024 at 10:34:27AM +0900, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+> > I've been using the CMake build in Visual Studio the last couple of days
+> > as my hard drive with linux on it died. I ended up with a slightly
+> > different fix using "sh -c" rather than putting the awk script inside
+> > a shell script. See the diff below. I don't have a strong preference
+> > either way but it would be nice to fix the line wrapping and add
+> > VERBATIM so that paths containing special characters are quoted correctly
+> 
+> Thanks for comments.
+> 
+> I've committed the same sin number of times, but a scriptlet written
+> in a third language as a string literal in a shell script is
+> somewhat awkward to maintain, so I may have slight preference for
+> your variant.  Either way, we are now letting the shell, and not
+> CMake, to spawn "awk", so if that was the reason why the file needs
+> to be changed (i.e. CMake perhaps failed to or found a wrong awk),
+> either of your two approaches would solve that by delegating the
+> task to the shell.
 
-While at it, wrap the overly lines in the CMake build instructions.
+Yeah, I don't think it's particularly beautiful either. Personally, I'd
+still lean towards my solution, mostly because it allows us to iterate
+more readily in the future in case we ever need more logic in this
+context, and it avoids having to handle the redirect in the build
+system.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Makefile                             |  2 +-
- contrib/buildsystems/CMakeLists.txt  |  7 ++--
- t/unit-tests/clar-generate.awk       | 50 ----------------------------
- t/unit-tests/generate-clar-suites.sh | 63 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 69 insertions(+), 53 deletions(-)
+So I'll take the VERBATIM and line wrapping suggestions, but for now
+keep the shell script. I'll adapt though if you think that this is too
+much of an abomination.
 
-diff --git a/Makefile b/Makefile
-index d06c9a8ffa7b637050c9619a367fbe61e7243a74..5232b913fd20f01a7e5f41d46178e93d52c9f534 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3907,7 +3907,7 @@ GIT-TEST-SUITES: FORCE
- $(UNIT_TEST_DIR)/clar-decls.h: $(patsubst %,$(UNIT_TEST_DIR)/%.c,$(CLAR_TEST_SUITES)) GIT-TEST-SUITES
- 	$(QUIET_GEN)$(SHELL_PATH) $(UNIT_TEST_DIR)/generate-clar-decls.sh "$@" $(filter %.c,$^)
- $(UNIT_TEST_DIR)/clar.suite: $(UNIT_TEST_DIR)/clar-decls.h
--	$(QUIET_GEN)awk -f $(UNIT_TEST_DIR)/clar-generate.awk $< >$(UNIT_TEST_DIR)/clar.suite
-+	$(QUIET_GEN)$(SHELL_PATH) $(UNIT_TEST_DIR)/generate-clar-suites.sh $< $(UNIT_TEST_DIR)/clar.suite
- $(UNIT_TEST_DIR)/clar/clar.o: $(UNIT_TEST_DIR)/clar.suite
- $(CLAR_TEST_OBJS): $(UNIT_TEST_DIR)/clar-decls.h
- $(CLAR_TEST_OBJS): EXTRA_CPPFLAGS = -I$(UNIT_TEST_DIR)
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 8974bb9fa202a0556fd9b16d105836d8cb66f543..da99dc3087a218d30e0fd1044567d7148d0d80a9 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1008,8 +1008,11 @@ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
- 	COMMAND ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" ${clar_test_SUITES}
- 	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh ${clar_test_SUITES})
- add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
--	COMMAND awk -f "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" > "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
--	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/clar-generate.awk" "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
-+	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-+		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-+		"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-+	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-+		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
- 
- add_library(unit-tests-lib ${clar_test_SUITES}
- 	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
-diff --git a/t/unit-tests/clar-generate.awk b/t/unit-tests/clar-generate.awk
-deleted file mode 100644
-index ab71ce6c9fc2c3d49d826f3550a95be893114508..0000000000000000000000000000000000000000
---- a/t/unit-tests/clar-generate.awk
-+++ /dev/null
-@@ -1,50 +0,0 @@
--function add_suite(suite, initialize, cleanup, count) {
--       if (!suite) return
--       suite_count++
--       callback_count += count
--       suites = suites "    {\n"
--       suites = suites "        \"" suite "\",\n"
--       suites = suites "        " initialize ",\n"
--       suites = suites "        " cleanup ",\n"
--       suites = suites "        _clar_cb_" suite ", " count ", 1\n"
--       suites = suites "    },\n"
--}
--
--BEGIN {
--       suites = "static struct clar_suite _clar_suites[] = {\n"
--}
--
--{
--       print
--       name = $3; sub(/\(.*$/, "", name)
--       suite = name; sub(/^test_/, "", suite); sub(/__.*$/, "", suite)
--       short_name = name; sub(/^.*__/, "", short_name)
--       cb = "{ \"" short_name "\", &" name " }"
--       if (suite != prev_suite) {
--               add_suite(prev_suite, initialize, cleanup, count)
--               if (callbacks) callbacks = callbacks "};\n"
--               callbacks = callbacks "static const struct clar_func _clar_cb_" suite "[] = {\n"
--               initialize = "{ NULL, NULL }"
--               cleanup = "{ NULL, NULL }"
--               count = 0
--               prev_suite = suite
--       }
--       if (short_name == "initialize") {
--               initialize = cb
--       } else if (short_name == "cleanup") {
--               cleanup = cb
--       } else {
--               callbacks = callbacks "    " cb ",\n"
--               count++
--       }
--}
--
--END {
--       add_suite(suite, initialize, cleanup, count)
--       suites = suites "};"
--       if (callbacks) callbacks = callbacks "};"
--       print callbacks
--       print suites
--       print "static const size_t _clar_suite_count = " suite_count ";"
--       print "static const size_t _clar_callback_count = " callback_count ";"
--}
-diff --git a/t/unit-tests/generate-clar-suites.sh b/t/unit-tests/generate-clar-suites.sh
-new file mode 100755
-index 0000000000000000000000000000000000000000..d5c712221e46a2eaa288fff5262438e5f04d6f72
---- /dev/null
-+++ b/t/unit-tests/generate-clar-suites.sh
-@@ -0,0 +1,63 @@
-+#!/bin/sh
-+
-+if test $# -lt 2
-+then
-+	echo "USAGE: $0 <CLAR_DECLS_H> <OUTPUT>" 2>&1
-+	exit 1
-+fi
-+
-+CLAR_DECLS_H="$1"
-+OUTPUT="$2"
-+
-+awk '
-+	function add_suite(suite, initialize, cleanup, count) {
-+		if (!suite) return
-+		suite_count++
-+		callback_count += count
-+		suites = suites "    {\n"
-+		suites = suites "        \"" suite "\",\n"
-+		suites = suites "        " initialize ",\n"
-+		suites = suites "        " cleanup ",\n"
-+		suites = suites "        _clar_cb_" suite ", " count ", 1\n"
-+		suites = suites "    },\n"
-+	}
-+
-+	BEGIN {
-+		suites = "static struct clar_suite _clar_suites[] = {\n"
-+	}
-+
-+	{
-+		print
-+		name = $3; sub(/\(.*$/, "", name)
-+		suite = name; sub(/^test_/, "", suite); sub(/__.*$/, "", suite)
-+		short_name = name; sub(/^.*__/, "", short_name)
-+		cb = "{ \"" short_name "\", &" name " }"
-+		if (suite != prev_suite) {
-+			add_suite(prev_suite, initialize, cleanup, count)
-+			if (callbacks) callbacks = callbacks "};\n"
-+			callbacks = callbacks "static const struct clar_func _clar_cb_" suite "[] = {\n"
-+			initialize = "{ NULL, NULL }"
-+			cleanup = "{ NULL, NULL }"
-+			count = 0
-+			prev_suite = suite
-+		}
-+		if (short_name == "initialize") {
-+			initialize = cb
-+		} else if (short_name == "cleanup") {
-+			cleanup = cb
-+		} else {
-+			callbacks = callbacks "    " cb ",\n"
-+			count++
-+		}
-+	}
-+
-+	END {
-+		add_suite(suite, initialize, cleanup, count)
-+		suites = suites "};"
-+		if (callbacks) callbacks = callbacks "};"
-+		print callbacks
-+		print suites
-+		print "static const size_t _clar_suite_count = " suite_count ";"
-+		print "static const size_t _clar_callback_count = " callback_count ";"
-+	}
-+' "$CLAR_DECLS_H" >"$OUTPUT"
-
--- 
-2.47.0.229.g8f8d6eee53.dirty
-
+Patrick
