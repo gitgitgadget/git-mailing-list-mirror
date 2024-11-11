@@ -1,156 +1,130 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA021487DC
-	for <git@vger.kernel.org>; Sun, 10 Nov 2024 21:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D48A29
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 00:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731275339; cv=none; b=l4dKaOuYYJo/l7zl7xl0e3OPRkiPfwGwyV6C2oCNlKor86Ji+ty1MI/8p1dm0viAx2C5+xEVrBKo9/sutp4/3iE9gTY7Ll6Oyi4mS7T89pYqYqmqfRJasZLX71aY7+7rMBNFaQJ749Bw95coVtNaGP1MUV0Dc3BbimgEqxxSvBM=
+	t=1731284424; cv=none; b=uE5H9z4RtF+7aJIKHqo8uMeOfYYkxtRt/+ZA3vzp2RnW8/WpeM5sIvESIakYRwE9rp6YzsyO/DhOvxLKUQ1CBIqd+QbwmJf3Nr6QWUXPH9nfrxuN2aBz3vW5LuJlzIkrxn9guqBolezYOxjurwJ6hmmeLZcWhDtqh/JtIucC8EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731275339; c=relaxed/simple;
-	bh=GCJGsKxxX3NGYUs5q/0QQpSD14cbbeE+CX6DU3GwC/U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=mCxWJchWHY5KdvDwc79L+LQnGOYTIeoPdrXFFMHXJ+2YROdb0BDfnklTHxuRu7kC8PqMh//30JFvFCTRG7yPqEhNCuBbYGdtEfYtBl56ZILXkASrJ8M41JNu7OzHb6DKRdwkktnW9QlkTA1rMlx69+0ttypRY+N8VFNcCNzgsKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cLIpBrlD; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731284424; c=relaxed/simple;
+	bh=cLCCM4esbMGLCpYqt/OOLDpeQhrwiyuuaUV1G9g4r+I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YNAuwHPcA2c/qBfe+hGYk1zbIbumtetYBy7hSB9rs63tPg4vNgZFRSXI/e9hjISzT5noJaInZ6rcDMuYnOZQFI9bt+hG4BriRzjT4H0f/CpLlq+DNyCNfphFC7FAIog4A2vkvOW2xe4Cp8/fiV4JkXBvALBtFUOIYos+JOVSovw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hGCIHQrY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=igDe6PqE; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cLIpBrlD"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43168d9c6c9so33299295e9.3
-        for <git@vger.kernel.org>; Sun, 10 Nov 2024 13:48:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731275336; x=1731880136; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=HcM2fAoYMq2uMJ+Uaq6QjwY/9wErdxXDZ1t1hspBIuc=;
-        b=cLIpBrlDVQ2xzfuv8D49xZv3VcU9aUd+b/LQBVK3d0m0Wwyzd2wtwtKn+DVJi5NKhk
-         G4xLOOHfOi5gYjEnqfSedbfkJcetfBtVluOb5gbt6BPfjI88VxK3LtiBNMuSkmVLX2ne
-         yWMnFR2uZgRG1VzBtyMWYBk/zi6fgSkGWH2Lsu3Ds8wqm3FMQPXdOCrDSMGLX6lfinvP
-         WxCzrmPhEp4MRtIYTXWin9OVJerm7/6bMFvyMHkVeNcp2a1MQSgVzw5hk3TPmK1wCEzO
-         1AqsOkvSTlHHuChK+11NNhv2L6prcSDz9XqDCHDU1V3ovq+WaLfoKVmUTlE1JqPu1fQP
-         hZpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731275336; x=1731880136;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HcM2fAoYMq2uMJ+Uaq6QjwY/9wErdxXDZ1t1hspBIuc=;
-        b=uwNzKoSu/v9tyrT+N7YYOgfKtBJBN7BREaDLKymBomleD/UQRoNHmsyKIwEltFMI0R
-         9l4bjHTnzIoL5s7v5SMJwrGaPHvD6BOAxA+EXcL3wLFgpprau/EyA0Y0+Gt73krC2Or0
-         Cbfvj6CDmFbJwAcytni+HRYx7DWSLZubRT9L2RCv55qFNlx+df0vAuaGoGIqwQPzh5cM
-         lVtuQGvxp51V4RRnyyPNrDOG9QdesypnoGEsgGe6GYQSWdzvLWnUl1Rxr0oatVvShgxJ
-         BaAuQ6K+f86te3XlogQxTOG+K51rKt2N8d8wQj7xlt5WNSZh7a/SJ5s/jGC+sDPrtVmC
-         8PKA==
-X-Forwarded-Encrypted: i=1; AJvYcCWquhYbG6ajKM7N6Z4aLZIdYu4lp+8EtXAkyJqvM/CWUJxFcEvpP/+T7bB/mUI/LaZyBvA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0nsrA+o1MTLjPIexwm8+HiFWkZvj1S4rLhiCWLDqAsSS1q/RF
-	38YD3OTbFWto8biE2LgIKv2zjvLHzcxP6soJlut6a2+fv6ybAPsLbI7Umw==
-X-Google-Smtp-Source: AGHT+IHrh8554+VL5f6RHgJ8Lqo17Fk2Ee7Pwvn0rAw8oIv4Rhq2JiYjs/8j2pF5/SpEuJB+rjr04g==
-X-Received: by 2002:a5d:6d01:0:b0:37d:4e56:9a2a with SMTP id ffacd0b85a97d-381f1885822mr6802343f8f.40.1731275335471;
-        Sun, 10 Nov 2024 13:48:55 -0800 (PST)
-Received: from gmail.com ([178.237.229.35])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed970f68sm11336312f8f.11.2024.11.10.13.48.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Nov 2024 13:48:54 -0800 (PST)
-Message-ID: <b1cf41c5-ec47-43e2-8a99-3f5faba4d261@gmail.com>
-Date: Sun, 10 Nov 2024 22:48:53 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hGCIHQrY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="igDe6PqE"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BED8825400F5;
+	Sun, 10 Nov 2024 19:20:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Sun, 10 Nov 2024 19:20:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1731284420; x=1731370820; bh=06KForFqX8
+	OOTZyjonFWkLDyzRydgXUFa+udAJBjAL0=; b=hGCIHQrYhNk6PIB4fMGtNSm2N3
+	4MSSSLNARmAPcVSh3ZiJwm93zXyhz5yTWaKT8XZsjthMUXUgM+CcZx6iKfK4dPGy
+	FOnfAw/6syAjPSLQYI6rSoHUtoj4+P6M1mtBpRFIQpJVj9X9PP6WWrdH8b3roAjX
+	/EwZG0yZYGBzfGchXwjS7a0dFbI4IS4oj0sojnL5qAKad1hqZbATLg9mW+DgMtAK
+	YGS1mQkzKVgAznNRQwvJWK+AZnVnZp1a+aPkAsrufwTEJmQvyXP4ZBAGyDHKCN8r
+	+d2WXuB2q71xyBPr8F4uFxkr90sqfJpuvAHnR3oolz2nwNMM7vzSsm8ExXdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731284420; x=1731370820; bh=06KForFqX8OOTZyjonFWkLDyzRydgXUFa+u
+	dAJBjAL0=; b=igDe6PqEAbfIncjoENlpJqQOP8Gts6knoCxvgq/5mbZPcFj6gLp
+	OR+xAVWLI/iw/ygyTRLvCZuzw2qHCA/G5qESWHjEmsQrIaIAeof/5vU/4VHKFt2p
+	jj7S7pU6/g+CZE9BHBNFF9bpA4CwY/nLlpXdCmMVa0lNFeZTp4L9LHsZLMOEjFaa
+	/Va/adavkj2yhNtKsxWBiBn6s33nc+rpGBeqgkD5Q09dCxDiSms/qEcqV3neKBAS
+	nORqGc7HPKqvOUDymxCjOj0y01eR8facqfJbhTArt2g67TsTcglt/Se+Ba31w+qi
+	IYP51WiBEFMXddx+7qpcTXnv5aS5rufgavg==
+X-ME-Sender: <xms:xE0xZ_hKFL0UjHtdCMhjkzOdTzk0UCk77UN1ZW0t3kv5JR4SVip4ZA>
+    <xme:xE0xZ8DXlDHIgl28XI14oV6VpcFJy61LSAjvRPbIsX2-JUB8kyLN_BMk2NGjVKbaw
+    ED_Y50dhdUyANJYLg>
+X-ME-Received: <xmr:xE0xZ_G0ljKYVjauDGvyMeBlBo-CEQf8EBZZ28WiI-v9t586XaLLqBasIqiFdw9Ec5vfrRa-B9TxWnHC0ICqrf4_xhVe74kMOgOq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugddvudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehg
+    mhigrdguvgdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhgvvhhrrghiphhhihhl
+    ihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:xE0xZ8T8ygGGFqq2wx3rWU4Op7qLAzGCCpAcYngmyRCstAfaJjllcg>
+    <xmx:xE0xZ8x7eVvpGFg6xU31G16m703EUk0NRn4U2PxSXuK825qXlY1ntQ>
+    <xmx:xE0xZy6a6aBBO9VpNuUzEg5LcFQX_qDLDNh9jQP70RgrEaC1jF1cIQ>
+    <xmx:xE0xZxyLAd0YhtavLtfbZHlA9QEDy4xS7JBos-GK8-F684y--M0Y7A>
+    <xmx:xE0xZ_zR43VX0RTJGU0BFRVCPFwdKdmK_v_ZybDRAafqm-HUzCt25hJh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 10 Nov 2024 19:20:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Johannes Sixt
+ <j6t@kdbg.org>,  git@vger.kernel.org,  Philippe Blain
+ <levraiphilippeblain@gmail.com>,  Johannes Schindelin via GitGitGadget
+ <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] range-diff: optionally include merge commits' diffs in
+ the analysis
+In-Reply-To: <CABPp-BEaZXZ2wSfrkkOAX6W9An8MTf-LEVNKvXvRTxyV9XcKcA@mail.gmail.com>
+	(Elijah Newren's message of "Sat, 9 Nov 2024 00:49:54 -0800")
+References: <pull.1734.git.1731000007391.gitgitgadget@gmail.com>
+	<abc2453b-f7df-4601-8834-595881f9ceca@kdbg.org>
+	<af576487-5de2-fba3-b341-3c082322c9ec@gmx.de>
+	<CABPp-BEaZXZ2wSfrkkOAX6W9An8MTf-LEVNKvXvRTxyV9XcKcA@mail.gmail.com>
+Date: Mon, 11 Nov 2024 09:20:18 +0900
+Message-ID: <xmqqzfm6k4e5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] Memory leak fixes (pt.10, final)
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1730901926.git.ps@pks.im>
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <cover.1730901926.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On Wed, Nov 06, 2024 at 04:10:14PM +0100, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this is the last part of my series of memory leak fixes. This series
-> goes a bit further than past series:
-> 
->   - Patches 1 to 16 plug remaining memory leaks exposed by our test
->     suite.
-> 
->   - Patches 17 to 21 remove the last remaining `UNLEAK()` annotations
->     and ultimately remove the macro itself.
-> 
->   - Patch 22 works around a bug in the leak sanitizer itself.
-> 
->   - Patches 23 and 24 drop annotations where leak-free tests pass with
->     the leak sanitizer.
-> 
->   - Patches 25 and 26 unconditionally enable leak checking in all newly
->     added tests and then drop the `TEST_PASSES_SANITIZE_LEAK`
->     annotation.
+Elijah Newren <newren@gmail.com> writes:
 
-Hi Patrick.
+> That's particularly odd since the first category is the most
+> common, and the third (snuck in unrelated changes or "evil changes")
+> are the most rare.  Maybe we should just call these "user-modified
+> merges" rather than "evil merges"?  Any better suggestions?
 
-Thanks for working on this.
+It is "evil" in the sense that it makes it really tough for those
+who dig history to find out what happened later to figure out where
+the change came from.  It could be an attempt to hide a malicious
+and unrelated change, it could be a resolution for a non-textual
+conflict, or it could be a "while at it I am fixing an unrelated
+typo I spotted nearby while resolving this textual conflict".
 
-It's been a while since 956d2e4639 (tests: add a test mode for SANITIZE=leak,
-run it in CI, 2021-09-23).  This series marks certainly another milestone.
+The change does not have to have an evil intent.  It is just
+something different from and more than what the textual and
+mechanical merge would produce.
 
-I have left a few comments, none of them important.  The series looks
-good to me.  Just in case you re-roll, while reading the series I
-spotted some nits:
-
-diff --git a/bisect.c b/bisect.c
-index 518be70aa3..0e804086cb 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -641,7 +641,7 @@ static struct commit_list *skip_away(struct commit_list *list, int count)
-                        else if (previous)
-                                result = previous;
-                        else
--                               result =  list;
-+                               result = list;
-                        break;
-                }
-                previous = cur;
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 9e069e2742..096f96b9c4 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -248,9 +248,9 @@ int cmd_init_db(int argc,
-        }
- 
-        flags |= INIT_DB_EXIST_OK;
--       ret =  init_db(git_dir, real_git_dir, template_dir, hash_algo,
--                      ref_storage_format, initial_branch,
--                      init_shared_repository, flags);
-+       ret = init_db(git_dir, real_git_dir, template_dir, hash_algo,
-+                     ref_storage_format, initial_branch,
-+                     init_shared_repository, flags);
- 
-        free(template_dir_to_free);
-        free(real_git_dir_to_free);
+"more than" may give us a hint for what we want to convey in the
+name, if we were to pick a new name.  If a new topic changed a
+function signature to add one extra parameter, and updated all the
+callers of the function that existed back when the topic forked, an
+"evil" merge needs to address the semantic conflicts to do a very
+similar update to a new call to the function added on the mainline
+since the topic forked, when the topic is merged back to the
+mainline.  Taken as a whole, the first-parent diff of such a merge
+will show that a function gained a parameter, and all of its callers
+have been adjusted for that change.  Most of such changes would have
+come from the side branch, but on top of that, the merge needed to
+contribute more of the similar changes to callers.
 
 
-> 
-> So once this series lands, the expectation is that any newly added test
-> needs to be leak free by default. We still have an escape hatch in the
-> form of the SANITIZE_LEAK prerequisite, but patch authors are expected
-> to provide good arguments why their test cannot be made leak free.
-> 
-> This series is built on top of 8f8d6eee53 (The seventh batch,
-> 2024-11-01) with ps/leakfixes-part-9 at c810549be1
-> (list-objects-filter-options: work around reported leak on error,
-> 2024-11-05) merged into it.
-> 
-> The series has some trivial conflicts with the removed test annotations
-> when merging with `seen`. There are two topics in-flight that introduce
-> new memory leaks (ds/path-walk and cc/promisor-remote-capability), both
-> of which are fixed by the below patch. I've sent a message in response
-> to the individual commits that introduce the leaks.
-> 
-> Thanks!
-> 
-> Patrick
