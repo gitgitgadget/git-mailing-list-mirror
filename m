@@ -1,132 +1,282 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6647F1AB52B
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 17:49:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D44C914AD3F
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 18:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731347400; cv=none; b=W47vxQ+QJEU4Xa6zRbECTpd/h8dnHuXhLiccXmFYQdLRUz9RnSryqaB1PyvVZ5uaFiVqX1eRJwTzOW1L+IVWx8iVtjhwyHZOzt7ExzMcBJzLNlKeEka/r1D+wBcvMJXPQOZoMK4LnphWkV2KaPj5cUOrBvHXqFhgTAdi36Xx3a4=
+	t=1731348385; cv=none; b=cyvd/fJCRaZfmgJc4NFcuox+74LaVGyOKopCjall4hyhGbyfr7igTJWJDPSLjAMeETTdg3dkG7hkfU3Wrq2tXkDTTwFgMEo68bguZu8tYVIWdjRmNuy/iQ71uOgs5fqO4L6hRk4tKWdXhbmhHAUcdsvjd2KBSa2Ts9645PPZ+zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731347400; c=relaxed/simple;
-	bh=avMvGef2LQtBfoO/8hk+0IB/GsJAHZUKOySXSk4nbgM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Df3wkB53kK6CQ0wHYMoia++wKpYapWLCHxeBtnEB/xQi2aVh3wKP8GyKuJNPjL+1/B0iNc/IGWgJuynb4MJLsVZim1PYR5rEmOGL5hD2dlL/IFqaOYrqIO7SQm34WMdd13i9zJHr3lJ+nl3BESDSaJxAB6+voqNzLxUeaHUJGjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LNAXdJ5i; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731348385; c=relaxed/simple;
+	bh=T8d0oKp57apl00ZlKwPpiESLxUxl5nz/nSvgv5fEjyg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Z6EOxF5Nc6NzhL9mMI2bHG77F5hR/6MyzaiA2jfXMTgAG3+8Jb/FfliSbJ5JveQNG5K12TZLbKqcp/+T1zEkDKe2bPm7GmUjLw/e8XgSQICynHoi/Wyzp/bUVniMk9JHbDc801r4b5FHcQBEn0JfWy1PAvr2geGY1mz8zO2Ql94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=EJuGeMY0; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LNAXdJ5i"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-37ed7eb07a4so3121990f8f.2
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 09:49:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EJuGeMY0"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539e681ba70so772e87.1
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:06:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731347397; x=1731952197; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=OwOf4/01K3tOgsjywvkTn6BfpEAclylqW+ejEj2vXSg=;
-        b=LNAXdJ5iqhu+6j2WnF6bcOD0nBgqfF/IGkOm53uC6E1wd8QRoIO3BJ6EwZUw1tWrGA
-         XjFYxYM+3j92e46GuAxINEe/hXDJ5SkfAugu9DPiF27TQjdNRwDl7SU8wbZgjVb5743A
-         4VE6W2xhFm0IoHNg4yfg4uPNWGWPxNxd844j3IrKfWDuQx4Ah9zrA4ysJAvU9iboNZEU
-         6TBNilFKRgKB7KXKTPoWtue4ZtzWnBxqofBJ/ka3m+dlOZtt1hbYntX7dyyoZoWl/I8u
-         XkQN87K3rYD6R+xkk7TU3TUVDZcPlon4g30K1KZLgC1jvzW2LwfX03bD4Z8z5N8PfJuU
-         EiSQ==
+        d=google.com; s=20230601; t=1731348382; x=1731953182; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sj9QZXxSQtJ+ZeixV1Uveb1eNVCouLqL+q3OrmU4TCo=;
+        b=EJuGeMY0NYDpkYrMzchJVrko7v7vmPg8uNdHma8c8GjTbaKZjhsuxbcILq6WPNwuEt
+         q0mXYvICKdZnHwfSqrU3+3oJmq5tHMwuPqmNe0wQkG1YOT6HvFC/R6RcwSsaaquwU52S
+         g3tr+vXIoZAEpH3iS0ozDCT+WjnK+EXdeaCFGTJvIX3EbiW/+D6vymEiZFRnFX6lm4GC
+         o608IFLR/qIV/xnNmRLmJsbPKBeexQV+gCi42169QOqUeSiJ0Kjc3vovuUaeKshxgs/0
+         gnS1r8Qqyy1XlxSxIe7jmERbaRKWEzs7Mmo9LRYkFNvLDzYO06bOLvFzR9MyrTDbx+Ac
+         tpoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731347397; x=1731952197;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OwOf4/01K3tOgsjywvkTn6BfpEAclylqW+ejEj2vXSg=;
-        b=srO6RPf4VYqGvSzGja0VqnBUVYDMmUnyoiqnJzbUkdmm1dECXCFH21oi2fdDm3vezs
-         rB+BAkyhuAF4vDI3g3jU+Vn8FX1yu6LHiY1nos3o/QOf0q0mP8tXwE6CmWsyQino/gCt
-         WB4IM8HHIVjG0+rtYeFRfBj3n4hANLWamxIgdGis3BhxYmjYvDgjoZ6/Vxfu0XiNRmkB
-         DZG92VMWZ1ki2pJN8c/gv+LPCeyVJJjEgd6aamvVg+XFAcp7x2OD4pDDJweIGw82S9mg
-         9/Giw1R8r8yxWEBnR/HxLm0kEfpbU0d6pu7rNknh0hIlb5bHW7j2iHLVGw/JPXJcg4RE
-         mkYA==
-X-Gm-Message-State: AOJu0Yx8wcxIimt8aGJ2BTEOPqjkPXnx9zij9KpRZLZuGfzzbbNJTWns
-	Uv1LBR9PetT/sdWVcG+u9i1Lbc2IaIlhW4eTcc3ojKsgEMzIOwiypxSazA==
-X-Google-Smtp-Source: AGHT+IEu+sJe3gA6ShDIj90FabRczgxAWJUCjStsAJzUOfKzSa42T98Jk53WMudBEJJuZ4xJU2CEKQ==
-X-Received: by 2002:a05:6000:2a5:b0:381:d88b:21a7 with SMTP id ffacd0b85a97d-381f18472afmr11728120f8f.49.1731347397330;
-        Mon, 11 Nov 2024 09:49:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432cc2086f8sm2473075e9.1.2024.11.11.09.49.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2024 09:49:56 -0800 (PST)
-Message-Id: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
-From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 11 Nov 2024 17:49:55 +0000
-Subject: [PATCH] diff: update conflict handling for whitespace to issue a
- warning
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1731348382; x=1731953182;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Sj9QZXxSQtJ+ZeixV1Uveb1eNVCouLqL+q3OrmU4TCo=;
+        b=kpVe7VDW03WPObJx49burRbSt3ZVe5siCEcL4AJ+FLJV3rIg5WYXsE3chQGjwKIi6x
+         MgRZle448qRrn99ZvFA5oWvP5zgve9MP1SS6Jo18vwtzjlIEFqyr6YtTsfY251pgze4k
+         2bFH1/vBDNXSsNsYUGKJObTKTuXAiyFx8vUeZ5440RpGSoPZcep+732JDG7WFiGtU9mx
+         scFf5t78N7uNgXozuqZWdU5I4eLLJhGIzajRW+skKYyHJQ0peps5jZUPIcMJwZ1/13GF
+         ZBjDEJpZC/W1pYiNA38oCPqAyI7mkBQFVAlKz2Zt+pfD5StnXoEFnBi478vLR9DMdi3U
+         MxzQ==
+X-Gm-Message-State: AOJu0Yy1Z0xhQ77q6pu/lrCmiYrMaDkJFt1+w2vVAvDNhma6YxXW4ef6
+	lFa7Y56sM0qRHnRpn5ycOKSfJvTMGV9zZ4C1+Pz2BCNuTcDowvlwQQjAMVDXvp1XsKfwhOOaDbw
+	93O0NFaGT0UJsUqho2ZiLq3b2uAaD2Bl7V/6w
+X-Gm-Gg: ASbGncudFG3fhryY20ED48K+gH1SKkIYwacVBk7Vdm59mN+IA1hLJZTS+lCoJW9e2W0
+	FojwrQOM7QgB4zQcc7BYb2MM9xU6Vkjdv/743biE6dx7E73/1iAeE6X7YO4U=
+X-Google-Smtp-Source: AGHT+IG8kSSgSHwFM+PmxynJs+fID+IHe4Q+eMqg/t1Sb2KO51mo1MQhVeH5V1bEtghkLO5ycsAXf7jCnu2oFQQJIPs=
+X-Received: by 2002:a05:6512:473:b0:535:3d14:1313 with SMTP id
+ 2adb3069b0e04-53d8bcf3b9emr513799e87.0.1731348381636; Mon, 11 Nov 2024
+ 10:06:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
-    Usman Akinyemi <usmanakinyemi202@gmail.com>
+References: <20241108173112.1240584-1-calvinwan@google.com>
+ <20241108173112.1240584-2-calvinwan@google.com> <ZzGtD4Jz9Wj6n0zH@pks.im>
+In-Reply-To: <ZzGtD4Jz9Wj6n0zH@pks.im>
+From: Calvin Wan <calvinwan@google.com>
+Date: Mon, 11 Nov 2024 10:06:10 -0800
+Message-ID: <CAFySSZCzxfqpMWH5ORv8fYb7f5WU3Fc2N99fW33wD9JOcYVrVA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] maintenance: separate parallelism safe and unsafe tasks
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, steamdon@google.com, emrass@google.com, 
+	me@ttaylorr.com, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+On Sun, Nov 10, 2024 at 11:07=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> On Fri, Nov 08, 2024 at 05:31:12PM +0000, Calvin Wan wrote:
+> > Certain maintenance tasks and subtasks within gc are unsafe to run in
+> > parallel with other commands because they lock up files such as
+> > HEAD.
+>
+> I don't think it is fair to classify this as "unsafe". Nothing is unsafe
+> here: we take locks to guard us against concurrent modifications.
+> What you're having problems with is the fact that this safety mechanism
+> works as expected and keeps other processes from modifying locked the
+> data.
+>
+> > Therefore, tasks are marked whether they are async safe or
+> > not. Async unsafe tasks are run first in the same process before runnin=
+g
+> > async safe tasks in parallel.
+> >
+> > Since the gc task is partially safe, there are two new tasks -- an asyn=
+c
+> > safe gc task and an async unsafe gc task. In order to properly invoke
+> > this in gc, `--run-async-safe` and `--run-async-unsafe` have been added
+> > as options to gc. Maintenance will only run these two new tasks if it
+> > was set to detach, otherwise the original gc task runs.
+> >
+> > Additionally, if a user passes in tasks thru `--task`, we do not attemp=
+t
+> > to run separate async/sync tasks since the user sets the order of tasks=
+.
+> >
+> > WIP: automatically run gc unsafe tasks when gc is invoked but not from
+> >      maintenance
+> > WIP: edit test in t7900-maintainance.sh to match new functionality
+> > WIP: add additional documentation for new options and functionality
+> >
+> > Signed-off-by: Calvin Wan <calvinwan@google.com>
+> > ---
+> >  builtin/gc.c           | 173 ++++++++++++++++++++++++++++++++++++-----
+> >  t/t7900-maintenance.sh |  24 +++---
+> >  2 files changed, 168 insertions(+), 29 deletions(-)
+> >
+> > diff --git a/builtin/gc.c b/builtin/gc.c
+> > index d52735354c..375d304c42 100644
+> > --- a/builtin/gc.c
+> > +++ b/builtin/gc.c
+>
+> It might make sense to split out the git-gc(1) changes into a
+> preparatory commit with its own set of tests.
+>
+> > @@ -815,7 +824,12 @@ struct repository *repo UNUSED)
+> >               atexit(process_log_file_at_exit);
+> >       }
+> >
+> > -     gc_before_repack(&opts, &cfg);
+> > +     if (run_async_unsafe) {
+> > +             gc_before_repack(&opts, &cfg);
+> > +             goto out;
+> > +     } else if (!run_async_safe)
+> > +             gc_before_repack(&opts, &cfg);
+> > +
+> >
+>
+> Style: there should be curly braces around the `else if` here.
+>
+> >       if (!repository_format_precious_objects) {
+> >               struct child_process repack_cmd =3D CHILD_PROCESS_INIT;
+> > @@ -1052,6 +1066,46 @@ static int maintenance_task_prefetch(struct main=
+tenance_run_opts *opts,
+> >       return 0;
+> >  }
+> >
+> > +static int maintenance_task_unsafe_gc(struct maintenance_run_opts *opt=
+s,
+> > +                                   struct gc_config *cfg UNUSED)
+> > +{
+> > +     struct child_process child =3D CHILD_PROCESS_INIT;
+> > +
+> > +     child.git_cmd =3D child.close_object_store =3D 1;
+> > +     strvec_push(&child.args, "gc");
+> > +
+> > +     if (opts->auto_flag)
+> > +             strvec_push(&child.args, "--auto");
+> > +     if (opts->quiet)
+> > +             strvec_push(&child.args, "--quiet");
+> > +     else
+> > +             strvec_push(&child.args, "--no-quiet");
+> > +     strvec_push(&child.args, "--no-detach");
+> > +     strvec_push(&child.args, "--run-async-unsafe");
+> > +
+> > +     return run_command(&child);
+> > +}
+> > +
+> > +static int maintenance_task_safe_gc(struct maintenance_run_opts *opts,
+> > +                                 struct gc_config *cfg UNUSED)
+> > +{
+> > +     struct child_process child =3D CHILD_PROCESS_INIT;
+> > +
+> > +     child.git_cmd =3D child.close_object_store =3D 1;
+> > +     strvec_push(&child.args, "gc");
+> > +
+> > +     if (opts->auto_flag)
+> > +             strvec_push(&child.args, "--auto");
+> > +     if (opts->quiet)
+> > +             strvec_push(&child.args, "--quiet");
+> > +     else
+> > +             strvec_push(&child.args, "--no-quiet");
+> > +     strvec_push(&child.args, "--no-detach");
+> > +     strvec_push(&child.args, "--run-async-safe");
+> > +
+> > +     return run_command(&child);
+> > +}
+>
+> These two functions and `maintenance_task_gc()` all look exactly the
+> same. We should deduplicate them.
+>
+> >  static int maintenance_task_gc(struct maintenance_run_opts *opts,
+> >                              struct gc_config *cfg UNUSED)
+> >  {
+> > @@ -1350,6 +1404,7 @@ struct maintenance_task {
+> >       const char *name;
+> >       maintenance_task_fn *fn;
+> >       maintenance_auto_fn *auto_condition;
+> > +     unsigned daemonize_safe;
+>
+> We can use the enum here to give readers a better hint what this
+> variable is about.
+>
+> >       unsigned enabled:1;
+> >
+> >       enum schedule_priority schedule;
+> > @@ -1362,6 +1417,8 @@ enum maintenance_task_label {
+> >       TASK_PREFETCH,
+> >       TASK_LOOSE_OBJECTS,
+> >       TASK_INCREMENTAL_REPACK,
+> > +     TASK_UNSAFE_GC,
+> > +     TASK_SAFE_GC,
+> >       TASK_GC,
+> >       TASK_COMMIT_GRAPH,
+> >       TASK_PACK_REFS,
+> > @@ -1370,36 +1427,62 @@ enum maintenance_task_label {
+> >       TASK__COUNT
+> >  };
+> >
+> > +enum maintenance_task_daemonize_safe {
+> > +     UNSAFE,
+> > +     SAFE,
+> > +};
+>
+> These names can conflict quite fast. Do we maybe want to rename them to
+> e.g. `MAINTENANCE_TASK_DAEMONIZE_(SAFE|UNSAFE)`?
+>
+> >  static struct maintenance_task tasks[] =3D {
+> >       [TASK_PREFETCH] =3D {
+> >               "prefetch",
+> >               maintenance_task_prefetch,
+> > +             NULL,
+> > +             SAFE,
+> >       },
+>
+> It might make sense to prepare these to take designated field
+> initializers in a preparatory commit.
 
-Modify the conflict resolution between tab-in-indent and
-indent-with-non-tab to issue a warning instead of terminating
-the operation with `die()`. Update the `git diff --check` test to
-capture and verify the warning message output.
+Thanks for all the stylistic feedback. I agree much of this can be
+cleaned up to be simpler, but I sent this as an RFC to gather feedback
+on whether this patch directionally made sense. Will clean everything
+up in the v1.
 
-Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
-    diff: update conflict handling for whitespace to issue a warning
+>
+> >       [TASK_LOOSE_OBJECTS] =3D {
+> >               "loose-objects",
+> >               maintenance_task_loose_objects,
+> >               loose_object_auto_condition,
+> > +             SAFE,
+> >       },
+> >       [TASK_INCREMENTAL_REPACK] =3D {
+> >               "incremental-repack",
+> >               maintenance_task_incremental_repack,
+> >               incremental_repack_auto_condition,
+> > +             SAFE,
+> > +     },
+> > +     [TASK_UNSAFE_GC] =3D {
+> > +             "unsafe-gc",
+> > +             maintenance_task_unsafe_gc,
+> > +             need_to_gc,
+> > +             UNSAFE,
+> > +             0,
+> > +     },
+> > +     [TASK_SAFE_GC] =3D {
+> > +             "safe-gc",
+> > +             maintenance_task_safe_gc,
+> > +             need_to_gc,
+> > +             SAFE,
+> > +             0,
+> >       },
+>
+> Hm. I wonder whether we really want to expose additional tasks to
+> address the issue, which feels like we're leaking implementation details
+> to our users. Would it maybe be preferable to instead introduce a new
+> optional callback function for every task that handles the pre-detach
+> logic?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1828%2FUnique-Usman%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1828/Unique-Usman/master-v1
-Pull-Request: https://github.com/git/git/pull/1828
+This does sound like a good idea. However, would there be any issue
+with running all pre-detach logic before running post-detach logic?
+I'm thinking if pre-detach logic from a different function could
+affect post-detach logic from another. If not, I do agree this would
+be the best solution going forward.
 
- t/t4015-diff-whitespace.sh | 3 ++-
- ws.c                       | 7 +++++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 851cfe4f32c..ada3f90b288 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -808,7 +808,8 @@ test_expect_success 'ditto, but tabwidth=1 (must be irrelevant)' '
- test_expect_success 'check tab-in-indent and indent-with-non-tab conflict' '
- 	git config core.whitespace "tab-in-indent,indent-with-non-tab" &&
- 	echo "foo ();" >x &&
--	test_must_fail git diff --check
-+	git diff --check 2>error &&
-+	test_grep "warning: cannot enforce both tab-in-indent and indent-with-non-tab, removing tab-in-indent" error
- '
- 
- test_expect_success 'check tab-in-indent excluded from wildcard whitespace attribute' '
-diff --git a/ws.c b/ws.c
-index 9456e2fdbe3..2c11715177e 100644
---- a/ws.c
-+++ b/ws.c
-@@ -6,6 +6,7 @@
- #include "git-compat-util.h"
- #include "attr.h"
- #include "strbuf.h"
-+#include "gettext.h"
- #include "ws.h"
- 
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
-@@ -70,8 +71,10 @@ unsigned parse_whitespace_rule(const char *string)
- 		string = ep;
- 	}
- 
--	if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB)
--		die("cannot enforce both tab-in-indent and indent-with-non-tab");
-+	if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB) {
-+		warning(_("cannot enforce both tab-in-indent and indent-with-non-tab, removing tab-in-indent"));
-+		rule &= ~WS_TAB_IN_INDENT;
-+	}
- 	return rule;
- }
- 
-
-base-commit: facbe4f633e4ad31e641f64617bc88074c659959
--- 
-gitgitgadget
+> I wonder whether we also have to adapt the "pack-refs" task to be
+> synchronous instead of asynchronous?
