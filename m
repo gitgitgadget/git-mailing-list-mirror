@@ -1,175 +1,164 @@
-Received: from redcrew.org (redcrew.org [37.157.195.192])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63FC3C3C
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:53:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.157.195.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888CF136E3F
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731293642; cv=none; b=R7Vwh565ziJX/bVsg+SZRZTob/j5hnQHmRY7k2bEnmS4JbzXLvYyTGkBGX9112GWtvlUOW0n6v41+pQ/RD4S10QbISvWVMnDKNSLB9Wdz30L7+ERpCNIbdCf6EwLsH8b2UXi5x38MuDWZZTbR3PK0coeGlPF2u6BCJA7kwmttRQ=
+	t=1731293768; cv=none; b=mg2ZNrESbYln0D3tJwOkxERvCAV7xyzV5ZjzihnxN7Ta7E0LdNzNxEP/RRxHovrn8NGsyx4lyb+vamEExqobH8DOghpsw1vz+r6oSF6OjKo6zRisD1B+IdcsqHrZcX7BWUbHdu2WKfmnXBZN6CW3cPOr4iU+Vw7xYMNguPV9+nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731293642; c=relaxed/simple;
-	bh=BaBH0uArCOlxbisr7CGbw1M0Shvo67VcLgPzVpS75lU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Vk95W7fAp+trTGulTjJKBK4uzdrNHTLsXzimOz1H9OTB71PJXgETbto00gHosDHeL0FfxtT9C+KjMRwN5GA6v+f4jxloK+PM8aLn9cg3++SabBIimJZoKjPUwMp/5/qSBVU9WL5DxDFhEd9Z2C4FOfvrQ3EnSD9gnDhtYEekogA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=Hcdr1EPl; arc=none smtp.client-ip=37.157.195.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1731293768; c=relaxed/simple;
+	bh=7b631q3aOCfhmS612PyDgswxOfa53ljowFZ3hen0XYI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EyW6b1tme7+BLdSuZNpC+1JSrWdK7DeCJo1PiYTKyBkzjUlFy1hy5GbXQHWx9st7LerMYtbDpuPTcnOSH+kZhTpXYLahSytpJaBdgsV0mV/2oDX+2FF/EaFjU5GwERrkLgHW7FInO+/chz2Pmk9k3LrorUm+KLZrldX6zO+7XLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ji36Nhsr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cYN6/quN; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="Hcdr1EPl"
-Received: from localhost (unknown [185.22.237.37])
-	(using TLSv1.2 with cipher AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by redcrew.org (Postfix) with ESMTPSA id D5806C001;
-	Mon, 11 Nov 2024 03:53:47 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.11.0 redcrew.org D5806C001
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; s=default;
-	t=1731293628; bh=1P9BTD8ay4KZzax01GMSjIm/ejVRBoD5RUF0wAiawXM=;
-	h=Date:Cc:Subject:From:To:References:In-Reply-To:From;
-	b=Hcdr1EPlfuhd9eBXazoG4N32FXGcRMEhlZ+z/J4Nt3XxMOQMIFladmoSfiR3Zkw+P
-	 SSc4Pv6iGsizA2ajgE2YeACLVHhPGXVd9OK7jws849YuKlVaoE46M45q+DaicqueZH
-	 Xsnzgg+xvV3nwktV/e1P0LYDR40elxAn+xIh2ckY=
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ji36Nhsr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cYN6/quN"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3C4811140181;
+	Sun, 10 Nov 2024 21:56:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Sun, 10 Nov 2024 21:56:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1731293764; x=1731380164; bh=+UgbajP0/J
+	leO9RzW3jwSM4/T2B77H4DfuDG3F3cfM8=; b=Ji36NhsrPUMJRrIefCSb8F/Fah
+	wisXtfgbD/nPxd05vO3wDL+DEwR+w+zW9U3bMs8Rc2Nn879Pq+Mww9mdkoO4tT5b
+	HnLUdi/4FNJMV70JvSDmt9xARHS7AwH7COBz3crKWbJ2HF8OxG1z43XBU2ui83ai
+	tc06YkI7AyeZeblWfH/71Ct31+SwCRgFYtorlqQtzjj6oIw4lMZVqgUoln/xbZoA
+	WDDQTjPf511nhxAhEwrFUtU/CgNdE8lni/6zYvJbXmx2fA61aPTLXwwAq8BiRHpC
+	cVD41yelDW+fVVC7tKmQv/sHA09F6g+7r9p+2nPfKsDyxXJf2aEjtsJRNxdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731293764; x=1731380164; bh=+UgbajP0/JleO9RzW3jwSM4/T2B77H4DfuD
+	G3F3cfM8=; b=cYN6/quN9q4CPafximPOw2iuXunPv8Z/2ZY9pDDt7tjXXEKAvRY
+	68QuN67Ts2mQUm9Qw9JkQePA4ymUpaP5ASgJSRDwm/bOZX8wolqY1R7cCsJBT9Tj
+	fqIQ5N1xv3l4uF9F8QG4JnRRI4H/0GCa0Mcb9aPGPis5v680c+ETen0CDtrEmfph
+	Myiq/dbeOE8tWIEqDgV/0DfcyVQS2Lqvl1m21XkBHReKk7qkQ2iPL/cAUV8J7aCi
+	YEeUMWfXnyuJPtcrnAVM5/0bk9VKQLvGdJts+VxFsv1AupXrYq7Qzq5+e6/etYHA
+	o3KJN2pd0RjZPM7ANPz4hPxV1GhYrBcwS2Q==
+X-ME-Sender: <xms:Q3IxZ22UJefBugJjkpkIrLsoOp5lul7frQ1CAAOmT6FZg4_Lmr3LHw>
+    <xme:Q3IxZ5E8zNB5e55S3dROLwTrvQ5zDIx_f0EgWNZ81jciO3SwCzO2ByFY-bssoL6aE
+    b4o4XnJfcz0WuGm7w>
+X-ME-Received: <xmr:Q3IxZ-5nbPALAUFVLkvloqsKifNhTBABBtCQJ8Zy8XwT0bHzwZiVZmLwhojS4nDwF7Oe8FCxOQT-UJU84SEEtZNOqNMJh5bFXhXf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddugdehvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopedufedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
+    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvg
+    htsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrd
+    guvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhhntggrihek
+    ieesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Q3IxZ32A0zsppBTgA04lXyqMZnbNG-kpElc-vY6zYZs7UzaY6Lj2kg>
+    <xmx:Q3IxZ5HH_ZOQM441q7OTStrQE0EDjS8UA-SKV9-c2FpvZtmp0JkP3g>
+    <xmx:Q3IxZw_b7Dzr09aIREifPF0fV1ymhspIw_-D1T-gxR0nBCY91G1CFw>
+    <xmx:Q3IxZ-lQGiRyL_tcRb6uoxaWHP9vneRM8FWpI437TnI9sE37IR255Q>
+    <xmx:RHIxZxGYVAmD3Pzv4LOnU2uRwfDp6Z3_8q-nlcLRcOlcUbTVwaIMEE8v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 10 Nov 2024 21:56:03 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Jeff King <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Derrick
+ Stolee via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  johannes.schindelin@gmx.de,  ps@pks.im,  johncai86@gmail.com,
+  newren@gmail.com,  christian.couder@gmail.com,
+  kristofferhaugsbakk@fastmail.com,  jonathantanmy@google.com
+Subject: Re: [PATCH 0/6] PATH WALK I: The path-walk API
+In-Reply-To: <f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com> (Derrick
+	Stolee's message of "Fri, 8 Nov 2024 10:17:24 -0500")
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+	<ZyUqr/wb5K4Og9j9@nand.local>
+	<2d2940ef-0b26-4060-90b6-9b6969f23754@gmail.com>
+	<20241104172533.GA2985568@coredump.intra.peff.net>
+	<xmqq1pzqwnck.fsf@gitster.g>
+	<f02ee8ac-01e4-42e3-b99a-d9616b9ff1bb@gmail.com>
+Date: Mon, 11 Nov 2024 11:56:01 +0900
+Message-ID: <xmqqo72miim6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=1117f86fd9d90b73ea0058c966a7665838786e035e0e5c227207ccde8c3c;
- micalg=pgp-sha1; protocol="application/pgp-signature"
-Date: Mon, 11 Nov 2024 03:53:47 +0100
-Message-Id: <D5J0DCN2Y2V1.3C2JLTMGY8VAM@cepl.eu>
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- <git@vger.kernel.org>
-Subject: Re: Feature Request: Interactively pick fixup revision
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: "Martin Imre" <martinimre25@gmail.com>
-X-Mailer: aerc 0.18.2
-References: <CABg7He2asYQbdRvSvfh1YZ2FRPchVfvta8yBv4PFdVNnhzX6Ow@mail.gmail.com> <D5HQH12Y4SWF.2W70SKEDB7HBF@cepl.eu> <debabf92-7d23-4d17-bb0e-36691c94430a@app.fastmail.com> <D5HWL26B3HOT.1ZVXUC37BCGL@cepl.eu> <CABg7He0upi8kmagGO13UMwSWOLeHoryZQU5CGsfbhgqedBKw=Q@mail.gmail.com>
-In-Reply-To: <CABg7He0upi8kmagGO13UMwSWOLeHoryZQU5CGsfbhgqedBKw=Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 
---1117f86fd9d90b73ea0058c966a7665838786e035e0e5c227207ccde8c3c
-Content-Type: multipart/mixed;
- boundary=9060e650afcbd622dcd9294662aaad81d7c8951c5126fb201c0ddbc27d2b
+Derrick Stolee <stolee@gmail.com> writes:
 
---9060e650afcbd622dcd9294662aaad81d7c8951c5126fb201c0ddbc27d2b
-Content-Type: multipart/alternative;
- boundary=5c1dc6584eb478f710e34bbbfc591fee5b2d4a7ee2aa604b1df76112c4c3
+>> Jeff King <peff@peff.net> writes:
+>> 
+>>> That's interesting. I wonder which cases get worse, and if a larger
+>>> window size might help. I.e., presumably we are pushing the candidates
+>>> further away in the sorted delta list.
+>
+> I think the cases that make things get worse with --full-name-hash are:
+>
+>   1. The presence of renames, partitioning objects that used to fit into
+>      the same bucket (in the case of directory renames).
+>
+>   2. Some standard kinds of files may appear several times across the
+>      tree but do not change very often and are similar across path.
+>
+>   3. Common patterns across similar file types, such as similar includes
+>      in .c and .h files or other kinds of boilerplate in different
+>      languages.
+> ...
+> In a depth 1 shallow clone, there are no repeated paths, so any hash
+> collisions are true collisions instead of good candidates for deltas.
 
---5c1dc6584eb478f710e34bbbfc591fee5b2d4a7ee2aa604b1df76112c4c3
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
+Or #2 and #3 above, where large boilerplates are shared across
+similarly named files.
 
-On Sun Nov 10, 2024 at 8:55 AM CET, Martin Imre wrote:
-> Just as a general question: With 2 (or even more) different
-> implementations that solve the same problem, wouldn=E2=80=99t this be a g=
-ood
-> addition for a future version of git?
+> Yes. This is the downside of the --full-name-hash compared to the
+> standard name hash. When repacking an entire repository, the effect
+> of these renames is typically not important in the long run as it's
+> basically a single break in the delta chain. The downside comes in
+> when doing a small fetch or push where the rename has more impact.
 
-There are few problems, one which is the implementation language:
-git-absorb is Rust and git-fixup is bash (using arrays and other
-non-POSIX constructs).
+Yes.  Due to --depth limit, we need to break delta chains somewhere
+anyway, and a rename boundary is just as good place as any other in
+a sufficiently long chain.
 
-Documentation/howto/new-command.txt declares:
+> The --path-walk approach does not suffer from this problem because
+> it has a second pass that sorts by the name hash and looks for
+> better deltas than the ones that already exist. Thus, it gets the
+> best of both worlds.
 
-    Most subcommands are written in C or shell.  A few are written in
-    Perl.
+Yes, at the cost of being more complex :-)
 
-    (And Python scripts are allowed for some specific tasks, namely GUI)
+> The performance impact of the two passes of the --path-walk
+> approach is interesting, as you'd typically expect this to always
+> be slower. However:
+>
+>  1. The delta compression within each batch only compares the
+>     objects within that batch. We do not compare these objects to
+>     unrelated objects, which can be expensive and wasteful. This
+>     also means that small batches may even be smaller than the
+>     delta window, reducing the number of comparisons.
 
-Shell script here quite emphatically means POSIX shell (or at
-least not using widely non-POSIX constructs like arrays), not
-bash. In order to even be able to consider any of these commands
-to be submitted to git proper, it would have to be ported first.
+Interesting.
 
-Best,
+>  2. In the second pass, the delta calculation can short-circuit if
+>     the computed delta would be larger than the current-best delta.
+>     Thus, the good deltas from the first pass make the second pass
+>     faster.
 
-Mat=C4=9Bj
+Yes, the early give-up codepath helps when you already found
+something semi-decently good delta base.
 
---=20
-http://matej.ceplovi.cz/blog/, @mcepl@floss.social
-GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
-=20
-Never ascribe to malice that which is adequately explained by
-stupidity.
-    -- Napoleon Bonaparte (or many other people to whom this
-       quote is ascribed)
-
-
---5c1dc6584eb478f710e34bbbfc591fee5b2d4a7ee2aa604b1df76112c4c3--
-
---9060e650afcbd622dcd9294662aaad81d7c8951c5126fb201c0ddbc27d2b
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
-Content-Type: application/pgp-keys; charset=UTF-8
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
-LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
-NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
-emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
-alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
-VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
-TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
-bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
-MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
-TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
-c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
-YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
-UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
-N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
-Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
-d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
-em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
-WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
-Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
-N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
-TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
-b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
-RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
-dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
-ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
-b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
-Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
-SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
-cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
-K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
-a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
-QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
-d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
-YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
-RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
-Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
-CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
-RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
-Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
-ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
-UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
-RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
-RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
-TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
-SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
-aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
-S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
-ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
-U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
-RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
-SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
-YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
-Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
-YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
-UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
---9060e650afcbd622dcd9294662aaad81d7c8951c5126fb201c0ddbc27d2b--
-
---1117f86fd9d90b73ea0058c966a7665838786e035e0e5c227207ccde8c3c
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZzFxuw4cbWNlcGxAY2Vw
-bC5ldQAKCRDgn+8l2WSErPOlAJ0dtqtZIaFmytx439UhZ/ic8PdrhwCeP/7R60fX
-nJeeHLAAW1K1cb6b3e4=
-=17ea
------END PGP SIGNATURE-----
-
---1117f86fd9d90b73ea0058c966a7665838786e035e0e5c227207ccde8c3c--
+Thanks for a good summary.
