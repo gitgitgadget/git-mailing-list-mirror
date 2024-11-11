@@ -1,97 +1,1257 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453B21B86CF
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 22:58:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A874316F0D0
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 23:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731365939; cv=none; b=ipHOJYXZX0m64Hl8Q5Y1D9VDUFwzCAqgl95w3zD+Rnebqaz5Djt2HBgfEj9cbGrlGeM5eFOEmwi9a9NWq8eeLAFKUIm6L4uENnB8ca4rqkFFxkJckVCWVDPNmjMTlBcsXfLUYjbnb4HBzksXpsE/LzimTF/oUeeRqi6gNKPLLpY=
+	t=1731368005; cv=none; b=uN6cjSOfnlJXtfLRSUcW/YatiYY2SKb9uIgSSqNoT/3QHXmgFfbS+hRy2fubUtvdCuChcP/1xMrgq1p6mjfuN/Q/bJSYPQRs3EYSPuLe/OPYyfwbYjHOLwHH2ZLJUpmxrSvV5rSBzZGj9DdTSkK7/AXtNoYHc2+UhiPs19ggEi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731365939; c=relaxed/simple;
-	bh=VK5ChDs+tBAhPYMeGeyjj9GYLjhzDc9vw+SE3akXYOg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RdjJfa58XutI4IYpjm/48weR0C4I8kaPRGHG8z/MxKyOlrTFvC6rHEx3PoRlH968vs8RczdQazxE4krJLDgzlIY9R+bh8ZdGdbZCUNCIvqzJCU8hw/pV0VeHinweTX4OB99wKdWCL8AGLJHjL8+nW8jC+QknP62hOWzRAoPlgFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F3pfljIB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U62mgSh4; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731368005; c=relaxed/simple;
+	bh=v+RZlLP0CVCBoUvLj6px63CcPAQNvB+Ocy0r8xhWapI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=fq4tyMEF294Y33INy1JM3NH76hA/fX/QtKGimAipon5wGUSvZAyfJ8noQxC14X675e3eVVqmDaD2eSXS5ns+zXphYnp2R/ow+uRo0SW5TGBEz8tJMvTrDuRmI6c8es/yQA0igllsMGly9jq6MyHIhsS2N3/xsmSpMjN1idzZKN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=keSJb8M3; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F3pfljIB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U62mgSh4"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3B75B2540190;
-	Mon, 11 Nov 2024 17:58:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 11 Nov 2024 17:58:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731365936; x=1731452336; bh=VK5ChDs+tB
-	AhPYMeGeyjj9GYLjhzDc9vw+SE3akXYOg=; b=F3pfljIB1r4CzpBeEf9nddZSdV
-	B4GRtl16IaVFGdm3jCG4LIB4EYY6eO7ksixqqCMFAv3xd7LdJX3g54p8/cPR4enb
-	ZikhMNOZHR98ADmhhtPY+bU1skLpSjtV5lwYx1bZkJJYbXY5YVedpwFIUHD4ajpz
-	WlYrZ6HRHdUiEaMvQeGgeIHjfIRkzquj6hz3p9lsrc+MIRJyP8krQ8qKvEg3Wiot
-	Va3k7fCmxfY2SHfsmCdrrm0gvJrhpncBVYFOGTZR0mC1eyoC5DIIydgukZB8igd3
-	otJGgbL/zw+9liahJ97HFFtP0nh3nM5cu+mJKUOd7b4S6dCWvD0pYm9dQw4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731365936; x=1731452336; bh=VK5ChDs+tBAhPYMeGeyjj9GYLjhzDc9vw+S
-	E3akXYOg=; b=U62mgSh4N19gN+0nQlvyv9AuIPJx9nVquYI3s161FUgFCdI3mVo
-	prVtDhUP6kicAJ3yAFKowpU5RZMzhU5yh6ZYKlEDfPebD81ab43hVBfj1x3E+CgF
-	6CLQb1IdugCnCc4Et8RlgJqQwByWGipDzDb18uGiPTED2DfJJviRvs75/6iENic8
-	Ap/xbUEGClHqb55DPgnAvP+/95R7oGXbP9ebhHG32QavslhNXbsSWrUgvt7U8yDI
-	u1gZOWSNFZPG6Bdu1M6uJzs9NWo6WLhGmDwzZ8gwPabO4LjTqUynGbEHGUWIlZT6
-	9/jyHSapf6sAwOi0ZdqLOc7rXwTeGaxGHBg==
-X-ME-Sender: <xms:L4wyZ0-k6DfG9fPS49h8g3jxMA_pzhMnNwwIsXPbBfZPpvSXeMXf1Q>
-    <xme:L4wyZ8sLdxSolfZsjBlixCCZkNqxMltD9tdj98T6naqnCUJ-I8EzhMQ-Ih5mTJndb
-    jx-DTMXDHIiW1__gA>
-X-ME-Received: <xmr:L4wyZ6C_zIvWCOV3pQy9GjxEfWzmm4bQ3iHijn617mwfCuSR1cvetR0bRWDnvJpyqlbdWrQshxDUZ5yHf_vzdBUZlkN46fywAyeK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgddthecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehj
-    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehphh
-    hilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:L4wyZ0fDuiZSD2RWk0JMhPCaKIBHvowqXwAAtLYgKfwI77p4rf21rg>
-    <xmx:L4wyZ5Ozrhw8m5bJ1Pp14WtYzniHhuBbAuxwIh0DmB-ZklW32vIAtw>
-    <xmx:L4wyZ-kjI7Iz8vrCQcyZ3uaE72j-K_FBHhuO_x6onNxABKMtgY1k8A>
-    <xmx:L4wyZ7sxowatJspdHaJlujomeKgj0YetWcIONB7s72nwADQ1GKfd8Q>
-    <xmx:MIwyZ82BiGHaPHqe3XZKFDRT6JHM-fC0mf4C60_oPDUq4S-KByJoOmDQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 17:58:55 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 1/4] t/unit-tests: convert "clar-generate.awk" into a
- shell script
-In-Reply-To: <20241111-pks-clar-build-improvements-v2-1-d4794d8d1b30@pks.im>
-	(Patrick Steinhardt's message of "Mon, 11 Nov 2024 09:24:57 +0100")
-References: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
-	<20241111-pks-clar-build-improvements-v2-1-d4794d8d1b30@pks.im>
-Date: Tue, 12 Nov 2024 07:58:54 +0900
-Message-ID: <xmqqr07h9y35.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="keSJb8M3"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43193678216so48183775e9.0
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 15:33:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731367999; x=1731972799; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=dCOtQ0AUjRj7h1vZwgqIqYHsOMj4Kv5riDyMEDvnS6k=;
+        b=keSJb8M3IfFA7cdRITRAYFoBfEw4jx81N1Yat9oc+U0A7Sbc4xC0xl5LlSmJdSDkFq
+         zEH8mKeMLtESuMeeOUeY0f+ucqOoY6wxH0S7fsf53xvKzcFzTJxUfEKnbc5siKVhbHC/
+         l8edEFPuEenVQ8biBdp9/IMOz5CcgfrnwLQaN7J2j5DyB40H/+bZTzdhYbXxByjOOkGv
+         BwDmWpiz7mbAfurVhx3HOd/jGTjqjg3atruGfV3Ib07Zk9o7Hsg5lm6ziEJrPVNR/joL
+         h2OapnhxnlimzBU7RunRef867adGGoNaKqFJHtAAh5EPRymvwGvqkwgXzOoLLBbdviJP
+         098A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731367999; x=1731972799;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dCOtQ0AUjRj7h1vZwgqIqYHsOMj4Kv5riDyMEDvnS6k=;
+        b=u8sqKZHn9oyvnLarhQTIRrlA7X83S5gJT7oyh2UwmLGbfaVKiwiRL0VG96imKLF+90
+         7ELSec7OX12u4qUBJz/ZaB6vY7XVITF+fMg+JOfUuuovU44+W5dJFEiKhkvxfVdl7e+x
+         Hq+k5yZ6bsjnK4kyD894ej6IHIMAt0TwbqKgb/zoxljouPZiMyc4HUl0ZxF8IZjEk33I
+         ebDjVuj+326SmHn4puBmXlwqRQdwEYA36fDoZ+FxNArkyVrokamduepKBGZFJh4c9qia
+         FHx+0VwPPgFTfewffbRMJB3W5t+GN7yOzAWBSPQGV1/zOFChQb1AvnZLt0sOr4Pjka5Z
+         t6Bg==
+X-Forwarded-Encrypted: i=1; AJvYcCXYYiRk9asDq9O/SnLMAVYU2syVG1S/adl/dHhx0+VyRTj72meLq8Kod3w07F597wFiqFc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4plSJmlEKzJcSfmpv47LLyp5Tz5OhbkaQDPM2fYLLlMbli5Qo
+	Kb/VdiX8SwoSye7oVmfx66UDgnacmXQgm5n8WRTIaWJp2yCcK5RI
+X-Google-Smtp-Source: AGHT+IG4zT5X40S4EKaYjCYb6MqV8zGHSCgg4/iAFbKLZykYoiYuDzqOpTLIwn1nj/H65xDZMZAtFw==
+X-Received: by 2002:a05:6000:2d84:b0:381:f443:21ca with SMTP id ffacd0b85a97d-381f44325femr7412686f8f.58.1731367998440;
+        Mon, 11 Nov 2024 15:33:18 -0800 (PST)
+Received: from gmail.com ([178.237.229.35])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa6b2c32sm224079845e9.10.2024.11.11.15.33.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 15:33:17 -0800 (PST)
+Message-ID: <894bb8da-fd5d-4352-a31f-3167b3cd7e1b@gmail.com>
+Date: Tue, 12 Nov 2024 00:33:16 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/27] Memory leak fixes (pt.10, final)
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <cover.1730901926.git.ps@pks.im>
+ <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Nov 11, 2024 at 11:38:29AM +0100, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the last part of my series of memory leak fixes. This series
+> goes a bit further than past series:
+> 
+>   - Patches 1 to 16 plug remaining memory leaks exposed by our test
+>     suite.
+> 
+>   - Patches 17 to 22 remove the last remaining `UNLEAK()` annotations
+>     and ultimately remove the macro itself.
+> 
+>   - Patch 23 works around a bug in the leak sanitizer itself.
+> 
+>   - Patches 24 and 25 drop annotations where leak-free tests pass with
+>     the leak sanitizer.
+> 
+>   - Patches 26 and 27 unconditionally enable leak checking in all newly
+>     added tests and then drop the `TEST_PASSES_SANITIZE_LEAK`
+>     annotation.
+> 
+> So once this series lands, the expectation is that any newly added test
+> needs to be leak free by default. We still have an escape hatch in the
+> form of the SANITIZE_LEAK prerequisite, but patch authors are expected
+> to provide good arguments why their test cannot be made leak free.
+> 
+> Changes in v2:
+> 
+>   - Some fixes to code formatting.
+> 
+>   - Simplify the memory leak fixes in "help.c".
+> 
+>   - Split out the removal of `UNLEAK()` into its own commit.
+> 
+> Link to v1: https://lore.kernel.org/r/cover.1730901926.git.ps@pks.im
+> 
+> Thanks!
+> 
+> Patrick
+> 
+> To: git@vger.kernel.org
+> Cc: Rubén Justo <rjusto@gmail.com>
+> 
+> Patrick Steinhardt (27):
+>       builtin/blame: fix leaking blame entries with `--incremental`
+>       bisect: fix leaking good/bad terms when reading multipe times
+>       bisect: fix leaking string in `handle_bad_merge_base()`
+>       bisect: fix leaking `current_bad_oid`
+>       bisect: fix multiple leaks in `bisect_next_all()`
+>       bisect: fix leaking commit list items in `check_merge_base()`
+>       bisect: fix various cases where we leak commit list items
+>       line-log: fix leak when rewriting commit parents
+>       strvec: introduce new `strvec_splice()` function
+>       git: refactor alias handling to use a `struct strvec`
+>       git: refactor builtin handling to use a `struct strvec`
+>       split-index: fix memory leak in `move_cache_to_base_index()`
+>       builtin/sparse-checkout: fix leaking sanitized patterns
+>       help: refactor to not use globals for reading config
+>       help: fix leaking `struct cmdnames`
+>       help: fix leaking return value from `help_unknown_cmd()`
+>       builtin/help: fix leaks in `check_git_cmd()`
+>       builtin/init-db: fix leaking directory paths
+>       builtin/branch: fix leaking sorting options
+>       t/helper: fix leaking commit graph in "read-graph" subcommand
+>       global: drop `UNLEAK()` annotation
+>       git-compat-util: drop now-unused `UNLEAK()` macro
+>       t5601: work around leak sanitizer issue
+>       t: mark some tests as leak free
+>       t: remove unneeded !SANITIZE_LEAK prerequisites
+>       test-lib: unconditionally enable leak checking
+>       t: remove TEST_PASSES_SANITIZE_LEAK annotations
+> 
+>  bisect.c                                           |  61 +++++++---
+>  bisect.h                                           |   2 +-
+>  blame.c                                            |   1 +
+>  blame.h                                            |   2 +-
+>  builtin/blame.c                                    |  12 +-
+>  builtin/branch.c                                   |  33 ++++--
+>  builtin/clone.c                                    |   1 -
+>  builtin/diff.c                                     |   1 -
+>  builtin/help.c                                     |  13 ++-
+>  builtin/init-db.c                                  |  34 +++---
+>  builtin/sparse-checkout.c                          |  61 ++++++----
+>  ci/lib.sh                                          |   1 -
+>  git-compat-util.h                                  |  20 ----
+>  git.c                                              | 124 +++++++++++----------
+>  help.c                                             |  58 +++++-----
+>  help.h                                             |   2 +-
+>  line-log.c                                         |   1 +
+>  revision.c                                         |   4 +-
+>  split-index.c                                      |   6 +-
+>  strvec.c                                           |  19 ++++
+>  strvec.h                                           |   9 ++
+>  t/README                                           |  21 ----
+>  t/helper/test-read-graph.c                         |   3 +-
+>  t/lib-git-svn.sh                                   |   4 -
+>  t/t0001-init.sh                                    |   1 -
+>  t/t0002-gitfile.sh                                 |   1 -
+>  t/t0003-attributes.sh                              |   1 -
+>  t/t0004-unwritable.sh                              |   1 -
+>  t/t0005-signals.sh                                 |   1 -
+>  t/t0006-date.sh                                    |   1 -
+>  t/t0007-git-var.sh                                 |   1 -
+>  t/t0008-ignores.sh                                 |   1 -
+>  t/t0010-racy-git.sh                                |   1 -
+>  t/t0012-help.sh                                    |   1 -
+>  t/t0013-sha1dc.sh                                  |   1 -
+>  t/t0017-env-helper.sh                              |   1 -
+>  t/t0018-advice.sh                                  |   1 -
+>  t/t0019-json-writer.sh                             |   1 -
+>  t/t0020-crlf.sh                                    |   1 -
+>  t/t0021-conversion.sh                              |   1 -
+>  t/t0022-crlf-rename.sh                             |   1 -
+>  t/t0023-crlf-am.sh                                 |   1 -
+>  t/t0024-crlf-archive.sh                            |   1 -
+>  t/t0025-crlf-renormalize.sh                        |   1 -
+>  t/t0026-eol-config.sh                              |   1 -
+>  t/t0027-auto-crlf.sh                               |   1 -
+>  t/t0028-working-tree-encoding.sh                   |   1 -
+>  t/t0029-core-unsetenvvars.sh                       |   1 -
+>  t/t0030-stripspace.sh                              |   1 -
+>  t/t0033-safe-directory.sh                          |   1 -
+>  t/t0035-safe-bare-repository.sh                    |   1 -
+>  t/t0040-parse-options.sh                           |   1 -
+>  t/t0041-usage.sh                                   |   1 -
+>  t/t0050-filesystem.sh                              |   1 -
+>  t/t0052-simple-ipc.sh                              |   1 -
+>  t/t0055-beyond-symlinks.sh                         |   1 -
+>  t/t0056-git-C.sh                                   |   1 -
+>  t/t0060-path-utils.sh                              |   1 -
+>  t/t0061-run-command.sh                             |   1 -
+>  t/t0062-revision-walking.sh                        |   1 -
+>  t/t0063-string-list.sh                             |   1 -
+>  t/t0066-dir-iterator.sh                            |   1 -
+>  t/t0067-parse_pathspec_file.sh                     |   1 -
+>  t/t0068-for-each-repo.sh                           |   1 -
+>  t/t0070-fundamental.sh                             |   1 -
+>  t/t0071-sort.sh                                    |   1 -
+>  t/t0080-unit-test-output.sh                        |   1 -
+>  t/t0081-find-pack.sh                               |   1 -
+>  t/t0090-cache-tree.sh                              |   1 -
+>  t/t0091-bugreport.sh                               |   1 -
+>  t/t0092-diagnose.sh                                |   1 -
+>  t/t0095-bloom.sh                                   |   3 +-
+>  t/t0100-previous.sh                                |   1 -
+>  t/t0101-at-syntax.sh                               |   1 -
+>  t/t0200-gettext-basic.sh                           |   1 -
+>  t/t0201-gettext-fallbacks.sh                       |   1 -
+>  t/t0202-gettext-perl.sh                            |   1 -
+>  t/t0203-gettext-setlocale-sanity.sh                |   1 -
+>  t/t0204-gettext-reencode-sanity.sh                 |   1 -
+>  t/t0210-trace2-normal.sh                           |   1 -
+>  t/t0211-trace2-perf.sh                             |   1 -
+>  t/t0212-trace2-event.sh                            |   1 -
+>  t/t0300-credentials.sh                             |   1 -
+>  t/t0301-credential-cache.sh                        |   1 -
+>  t/t0302-credential-store.sh                        |   1 -
+>  t/t0303-credential-external.sh                     |   1 -
+>  t/t0410-partial-clone.sh                           |   1 -
+>  t/t0411-clone-from-partial.sh                      |   1 -
+>  t/t0450-txt-doc-vs-help.sh                         |   1 -
+>  t/t0500-progress-display.sh                        |   1 -
+>  t/t0600-reffiles-backend.sh                        |   1 -
+>  t/t0601-reffiles-pack-refs.sh                      |   1 -
+>  t/t0602-reffiles-fsck.sh                           |   1 -
+>  t/t0610-reftable-basics.sh                         |   1 -
+>  t/t0611-reftable-httpd.sh                          |   1 -
+>  t/t0612-reftable-jgit-compatibility.sh             |   1 -
+>  t/t0613-reftable-write-options.sh                  |   1 -
+>  t/t1000-read-tree-m-3way.sh                        |   1 -
+>  t/t1001-read-tree-m-2way.sh                        |   1 -
+>  t/t1002-read-tree-m-u-2way.sh                      |   1 -
+>  t/t1003-read-tree-prefix.sh                        |   1 -
+>  t/t1004-read-tree-m-u-wf.sh                        |   1 -
+>  t/t1005-read-tree-reset.sh                         |   1 -
+>  t/t1006-cat-file.sh                                |   1 -
+>  t/t1007-hash-object.sh                             |   1 -
+>  t/t1008-read-tree-overlay.sh                       |   1 -
+>  t/t1009-read-tree-new-index.sh                     |   1 -
+>  t/t1010-mktree.sh                                  |   1 -
+>  t/t1011-read-tree-sparse-checkout.sh               |   1 -
+>  t/t1012-read-tree-df.sh                            |   1 -
+>  t/t1013-read-tree-submodule.sh                     |   1 -
+>  t/t1014-read-tree-confusing.sh                     |   1 -
+>  t/t1015-read-index-unmerged.sh                     |   1 -
+>  t/t1016-compatObjectFormat.sh                      |   1 -
+>  t/t1020-subdirectory.sh                            |   1 -
+>  t/t1021-rerere-in-workdir.sh                       |   1 -
+>  t/t1022-read-tree-partial-clone.sh                 |   1 -
+>  t/t1050-large.sh                                   |   1 -
+>  t/t1051-large-conversion.sh                        |   1 -
+>  t/t1060-object-corruption.sh                       |   1 -
+>  t/t1090-sparse-checkout-scope.sh                   |   1 -
+>  t/t1091-sparse-checkout-builtin.sh                 |   1 -
+>  t/t1092-sparse-checkout-compatibility.sh           |   1 -
+>  t/t1100-commit-tree-options.sh                     |   1 -
+>  t/t1300-config.sh                                  |   1 -
+>  t/t1301-shared-repo.sh                             |   1 -
+>  t/t1302-repo-version.sh                            |   1 -
+>  t/t1303-wacky-config.sh                            |   1 -
+>  t/t1304-default-acl.sh                             |   1 -
+>  t/t1305-config-include.sh                          |   1 -
+>  t/t1306-xdg-files.sh                               |   1 -
+>  t/t1307-config-blob.sh                             |   1 -
+>  t/t1308-config-set.sh                              |   1 -
+>  t/t1309-early-config.sh                            |   1 -
+>  t/t1310-config-default.sh                          |   1 -
+>  t/t1350-config-hooks-path.sh                       |   1 -
+>  t/t1400-update-ref.sh                              |   1 -
+>  t/t1401-symbolic-ref.sh                            |   1 -
+>  t/t1402-check-ref-format.sh                        |   1 -
+>  t/t1403-show-ref.sh                                |   1 -
+>  t/t1404-update-ref-errors.sh                       |   1 -
+>  t/t1405-main-ref-store.sh                          |   1 -
+>  t/t1406-submodule-ref-store.sh                     |   1 -
+>  t/t1407-worktree-ref-store.sh                      |   1 -
+>  t/t1408-packed-refs.sh                             |   1 -
+>  t/t1409-avoid-packing-refs.sh                      |   1 -
+>  t/t1410-reflog.sh                                  |   1 -
+>  t/t1411-reflog-show.sh                             |   1 -
+>  t/t1412-reflog-loop.sh                             |   1 -
+>  t/t1413-reflog-detach.sh                           |   1 -
+>  t/t1414-reflog-walk.sh                             |   1 -
+>  t/t1415-worktree-refs.sh                           |   1 -
+>  t/t1416-ref-transaction-hooks.sh                   |   1 -
+>  t/t1417-reflog-updateref.sh                        |   1 -
+>  t/t1418-reflog-exists.sh                           |   1 -
+>  t/t1419-exclude-refs.sh                            |   1 -
+>  t/t1420-lost-found.sh                              |   1 -
+>  t/t1430-bad-ref-name.sh                            |   1 -
+>  t/t1450-fsck.sh                                    |   1 -
+>  t/t1451-fsck-buffer.sh                             |   1 -
+>  t/t1460-refs-migrate.sh                            |   1 -
+>  t/t1500-rev-parse.sh                               |   1 -
+>  t/t1501-work-tree.sh                               |   1 -
+>  t/t1502-rev-parse-parseopt.sh                      |   1 -
+>  t/t1503-rev-parse-verify.sh                        |   1 -
+>  t/t1504-ceiling-dirs.sh                            |   1 -
+>  t/t1505-rev-parse-last.sh                          |   1 -
+>  t/t1506-rev-parse-diagnosis.sh                     |   1 -
+>  t/t1507-rev-parse-upstream.sh                      |   1 -
+>  t/t1508-at-combinations.sh                         |   1 -
+>  t/t1510-repo-setup.sh                              |   1 -
+>  t/t1511-rev-parse-caret.sh                         |   1 -
+>  t/t1512-rev-parse-disambiguation.sh                |   1 -
+>  t/t1513-rev-parse-prefix.sh                        |   1 -
+>  t/t1514-rev-parse-push.sh                          |   1 -
+>  t/t1515-rev-parse-outside-repo.sh                  |   1 -
+>  t/t1517-outside-repo.sh                            |   1 -
+>  t/t1600-index.sh                                   |   1 -
+>  t/t1601-index-bogus.sh                             |   1 -
+>  t/t1701-racy-split-index.sh                        |   1 -
+>  t/t1800-hook.sh                                    |   1 -
+>  t/t2000-conflict-when-checking-files-out.sh        |   1 -
+>  t/t2002-checkout-cache-u.sh                        |   1 -
+>  t/t2003-checkout-cache-mkdir.sh                    |   1 -
+>  t/t2004-checkout-cache-temp.sh                     |   1 -
+>  t/t2005-checkout-index-symlinks.sh                 |   1 -
+>  t/t2006-checkout-index-basic.sh                    |   1 -
+>  t/t2007-checkout-symlink.sh                        |   1 -
+>  t/t2008-checkout-subdir.sh                         |   1 -
+>  t/t2009-checkout-statinfo.sh                       |   1 -
+>  t/t2010-checkout-ambiguous.sh                      |   1 -
+>  t/t2011-checkout-invalid-head.sh                   |   1 -
+>  t/t2012-checkout-last.sh                           |   1 -
+>  t/t2013-checkout-submodule.sh                      |   1 -
+>  t/t2014-checkout-switch.sh                         |   1 -
+>  t/t2015-checkout-unborn.sh                         |   1 -
+>  t/t2016-checkout-patch.sh                          |   1 -
+>  t/t2017-checkout-orphan.sh                         |   1 -
+>  t/t2018-checkout-branch.sh                         |   1 -
+>  t/t2019-checkout-ambiguous-ref.sh                  |   1 -
+>  t/t2020-checkout-detach.sh                         |   1 -
+>  t/t2021-checkout-overwrite.sh                      |   1 -
+>  t/t2022-checkout-paths.sh                          |   1 -
+>  t/t2023-checkout-m.sh                              |   1 -
+>  t/t2024-checkout-dwim.sh                           |   1 -
+>  t/t2025-checkout-no-overlay.sh                     |   1 -
+>  t/t2026-checkout-pathspec-file.sh                  |   1 -
+>  t/t2027-checkout-track.sh                          |   1 -
+>  t/t2030-unresolve-info.sh                          |   1 -
+>  t/t2050-git-dir-relative.sh                        |   1 -
+>  t/t2060-switch.sh                                  |   1 -
+>  t/t2070-restore.sh                                 |   1 -
+>  t/t2071-restore-patch.sh                           |   1 -
+>  t/t2072-restore-pathspec-file.sh                   |   1 -
+>  t/t2080-parallel-checkout-basics.sh                |   1 -
+>  t/t2081-parallel-checkout-collisions.sh            |   1 -
+>  t/t2082-parallel-checkout-attributes.sh            |   1 -
+>  t/t2100-update-cache-badpath.sh                    |   1 -
+>  t/t2101-update-index-reupdate.sh                   |   1 -
+>  t/t2102-update-index-symlinks.sh                   |   1 -
+>  t/t2103-update-index-ignore-missing.sh             |   1 -
+>  t/t2104-update-index-skip-worktree.sh              |   1 -
+>  t/t2105-update-index-gitfile.sh                    |   1 -
+>  t/t2106-update-index-assume-unchanged.sh           |   1 -
+>  t/t2107-update-index-basic.sh                      |   1 -
+>  t/t2108-update-index-refresh-racy.sh               |   1 -
+>  t/t2200-add-update.sh                              |   1 -
+>  t/t2201-add-update-typechange.sh                   |   1 -
+>  t/t2202-add-addremove.sh                           |   1 -
+>  t/t2203-add-intent.sh                              |   1 -
+>  t/t2204-add-ignored.sh                             |   1 -
+>  t/t2205-add-worktree-config.sh                     |   1 -
+>  t/t2300-cd-to-toplevel.sh                          |   1 -
+>  t/t2400-worktree-add.sh                            |   1 -
+>  t/t2401-worktree-prune.sh                          |   1 -
+>  t/t2402-worktree-list.sh                           |   1 -
+>  t/t2403-worktree-move.sh                           |   1 -
+>  t/t2404-worktree-config.sh                         |   1 -
+>  t/t2405-worktree-submodule.sh                      |   1 -
+>  t/t2406-worktree-repair.sh                         |   1 -
+>  t/t2407-worktree-heads.sh                          |  17 ++-
+>  t/t2408-worktree-relative.sh                       |   1 -
+>  t/t2500-untracked-overwriting.sh                   |   1 -
+>  t/t2501-cwd-empty.sh                               |   1 -
+>  t/t3000-ls-files-others.sh                         |   1 -
+>  t/t3001-ls-files-others-exclude.sh                 |   1 -
+>  t/t3002-ls-files-dashpath.sh                       |   1 -
+>  t/t3003-ls-files-exclude.sh                        |   1 -
+>  t/t3004-ls-files-basic.sh                          |   1 -
+>  t/t3005-ls-files-relative.sh                       |   1 -
+>  t/t3006-ls-files-long.sh                           |   1 -
+>  t/t3007-ls-files-recurse-submodules.sh             |   1 -
+>  t/t3008-ls-files-lazy-init-name-hash.sh            |   1 -
+>  t/t3009-ls-files-others-nonsubmodule.sh            |   1 -
+>  t/t3010-ls-files-killed-modified.sh                |   1 -
+>  t/t3011-common-prefixes-and-directory-traversal.sh |   1 -
+>  t/t3012-ls-files-dedup.sh                          |   1 -
+>  t/t3013-ls-files-format.sh                         |   1 -
+>  t/t3020-ls-files-error-unmatch.sh                  |   1 -
+>  t/t3040-subprojects-basic.sh                       |   1 -
+>  t/t3050-subprojects-fetch.sh                       |   1 -
+>  t/t3060-ls-files-with-tree.sh                      |   1 -
+>  t/t3070-wildmatch.sh                               |   1 -
+>  t/t3100-ls-tree-restrict.sh                        |   1 -
+>  t/t3101-ls-tree-dirname.sh                         |   1 -
+>  t/t3102-ls-tree-wildcards.sh                       |   1 -
+>  t/t3103-ls-tree-misc.sh                            |   1 -
+>  t/t3104-ls-tree-format.sh                          |   1 -
+>  t/t3105-ls-tree-output.sh                          |   1 -
+>  t/t3200-branch.sh                                  |   1 -
+>  t/t3201-branch-contains.sh                         |   1 -
+>  t/t3202-show-branch.sh                             |   1 -
+>  t/t3203-branch-output.sh                           |   1 -
+>  t/t3204-branch-name-interpretation.sh              |   1 -
+>  t/t3205-branch-color.sh                            |   1 -
+>  t/t3206-range-diff.sh                              |   1 -
+>  t/t3207-branch-submodule.sh                        |   1 -
+>  t/t3211-peel-ref.sh                                |   1 -
+>  t/t3300-funny-names.sh                             |   1 -
+>  t/t3301-notes.sh                                   |   1 -
+>  t/t3302-notes-index-expensive.sh                   |   1 -
+>  t/t3303-notes-subtrees.sh                          |   1 -
+>  t/t3304-notes-mixed.sh                             |   1 -
+>  t/t3305-notes-fanout.sh                            |   1 -
+>  t/t3306-notes-prune.sh                             |   1 -
+>  t/t3307-notes-man.sh                               |   1 -
+>  t/t3308-notes-merge.sh                             |   1 -
+>  t/t3309-notes-merge-auto-resolve.sh                |   1 -
+>  t/t3310-notes-merge-manual-resolve.sh              |   1 -
+>  t/t3311-notes-merge-fanout.sh                      |   1 -
+>  t/t3320-notes-merge-worktrees.sh                   |   1 -
+>  t/t3321-notes-stripspace.sh                        |   1 -
+>  t/t3400-rebase.sh                                  |   1 -
+>  t/t3401-rebase-and-am-rename.sh                    |   1 -
+>  t/t3402-rebase-merge.sh                            |   1 -
+>  t/t3403-rebase-skip.sh                             |   1 -
+>  t/t3404-rebase-interactive.sh                      |   1 -
+>  t/t3405-rebase-malformed.sh                        |   1 -
+>  t/t3406-rebase-message.sh                          |   1 -
+>  t/t3407-rebase-abort.sh                            |   1 -
+>  t/t3408-rebase-multi-line.sh                       |   1 -
+>  t/t3409-rebase-environ.sh                          |   1 -
+>  t/t3412-rebase-root.sh                             |   1 -
+>  t/t3413-rebase-hook.sh                             |   1 -
+>  t/t3415-rebase-autosquash.sh                       |   1 -
+>  t/t3416-rebase-onto-threedots.sh                   |   1 -
+>  t/t3417-rebase-whitespace-fix.sh                   |   1 -
+>  t/t3418-rebase-continue.sh                         |   1 -
+>  t/t3419-rebase-patch-id.sh                         |   1 -
+>  t/t3420-rebase-autostash.sh                        |   1 -
+>  t/t3421-rebase-topology-linear.sh                  |   1 -
+>  t/t3422-rebase-incompatible-options.sh             |   1 -
+>  t/t3423-rebase-reword.sh                           |   1 -
+>  t/t3424-rebase-empty.sh                            |   1 -
+>  t/t3425-rebase-topology-merges.sh                  |   1 -
+>  t/t3426-rebase-submodule.sh                        |   1 -
+>  t/t3427-rebase-subtree.sh                          |   1 -
+>  t/t3428-rebase-signoff.sh                          |   1 -
+>  t/t3429-rebase-edit-todo.sh                        |   1 -
+>  t/t3430-rebase-merges.sh                           |   1 -
+>  t/t3431-rebase-fork-point.sh                       |   1 -
+>  t/t3432-rebase-fast-forward.sh                     |   1 -
+>  t/t3433-rebase-across-mode-change.sh               |   1 -
+>  t/t3434-rebase-i18n.sh                             |   1 -
+>  t/t3435-rebase-gpg-sign.sh                         |   1 -
+>  t/t3436-rebase-more-options.sh                     |   1 -
+>  t/t3437-rebase-fixup-options.sh                    |   1 -
+>  t/t3438-rebase-broken-files.sh                     |   1 -
+>  t/t3500-cherry.sh                                  |   1 -
+>  t/t3501-revert-cherry-pick.sh                      |   1 -
+>  t/t3502-cherry-pick-merge.sh                       |   1 -
+>  t/t3503-cherry-pick-root.sh                        |   1 -
+>  t/t3504-cherry-pick-rerere.sh                      |   1 -
+>  t/t3505-cherry-pick-empty.sh                       |   1 -
+>  t/t3506-cherry-pick-ff.sh                          |   1 -
+>  t/t3507-cherry-pick-conflict.sh                    |   1 -
+>  t/t3508-cherry-pick-many-commits.sh                |   1 -
+>  t/t3509-cherry-pick-merge-df.sh                    |   1 -
+>  t/t3510-cherry-pick-sequence.sh                    |   1 -
+>  t/t3511-cherry-pick-x.sh                           |   1 -
+>  t/t3512-cherry-pick-submodule.sh                   |   1 -
+>  t/t3513-revert-submodule.sh                        |   1 -
+>  t/t3514-cherry-pick-revert-gpg.sh                  |   1 -
+>  t/t3600-rm.sh                                      |   1 -
+>  t/t3601-rm-pathspec-file.sh                        |   1 -
+>  t/t3602-rm-sparse-checkout.sh                      |   1 -
+>  t/t3650-replay-basics.sh                           |   1 -
+>  t/t3700-add.sh                                     |   1 -
+>  t/t3701-add-interactive.sh                         |   1 -
+>  t/t3702-add-edit.sh                                |   1 -
+>  t/t3703-add-magic-pathspec.sh                      |   1 -
+>  t/t3704-add-pathspec-file.sh                       |   1 -
+>  t/t3705-add-sparse-checkout.sh                     |   1 -
+>  t/t3800-mktag.sh                                   |   1 -
+>  t/t3900-i18n-commit.sh                             |   1 -
+>  t/t3901-i18n-patch.sh                              |   1 -
+>  t/t3902-quoted.sh                                  |   1 -
+>  t/t3903-stash.sh                                   |   1 -
+>  t/t3904-stash-patch.sh                             |   1 -
+>  t/t3905-stash-include-untracked.sh                 |   1 -
+>  t/t3906-stash-submodule.sh                         |   1 -
+>  t/t3907-stash-show-config.sh                       |   1 -
+>  t/t3908-stash-in-worktree.sh                       |   1 -
+>  t/t3909-stash-pathspec-file.sh                     |   1 -
+>  t/t3920-crlf-messages.sh                           |   1 -
+>  t/t4000-diff-format.sh                             |   1 -
+>  t/t4001-diff-rename.sh                             |   1 -
+>  t/t4002-diff-basic.sh                              |   1 -
+>  t/t4003-diff-rename-1.sh                           |   1 -
+>  t/t4004-diff-rename-symlink.sh                     |   1 -
+>  t/t4005-diff-rename-2.sh                           |   1 -
+>  t/t4006-diff-mode.sh                               |   1 -
+>  t/t4007-rename-3.sh                                |   1 -
+>  t/t4008-diff-break-rewrite.sh                      |   1 -
+>  t/t4009-diff-rename-4.sh                           |   1 -
+>  t/t4010-diff-pathspec.sh                           |   1 -
+>  t/t4011-diff-symlink.sh                            |   1 -
+>  t/t4012-diff-binary.sh                             |   1 -
+>  t/t4013-diff-various.sh                            |   1 -
+>  t/t4014-format-patch.sh                            |   1 -
+>  t/t4015-diff-whitespace.sh                         |   1 -
+>  t/t4016-diff-quote.sh                              |   1 -
+>  t/t4017-diff-retval.sh                             |   1 -
+>  t/t4018-diff-funcname.sh                           |   1 -
+>  t/t4019-diff-wserror.sh                            |   1 -
+>  t/t4020-diff-external.sh                           |   5 +-
+>  t/t4021-format-patch-numbered.sh                   |   1 -
+>  t/t4022-diff-rewrite.sh                            |   1 -
+>  t/t4023-diff-rename-typechange.sh                  |   1 -
+>  t/t4024-diff-optimize-common.sh                    |   1 -
+>  t/t4025-hunk-header.sh                             |   1 -
+>  t/t4026-color.sh                                   |   1 -
+>  t/t4027-diff-submodule.sh                          |   1 -
+>  t/t4028-format-patch-mime-headers.sh               |   1 -
+>  t/t4029-diff-trailing-space.sh                     |   1 -
+>  t/t4030-diff-textconv.sh                           |   1 -
+>  t/t4031-diff-rewrite-binary.sh                     |   1 -
+>  t/t4032-diff-inter-hunk-context.sh                 |   1 -
+>  t/t4033-diff-patience.sh                           |   1 -
+>  t/t4034-diff-words.sh                              |   1 -
+>  t/t4035-diff-quiet.sh                              |   1 -
+>  t/t4036-format-patch-signer-mime.sh                |   1 -
+>  t/t4037-diff-r-t-dirs.sh                           |   1 -
+>  t/t4038-diff-combined.sh                           |   1 -
+>  t/t4039-diff-assume-unchanged.sh                   |   1 -
+>  t/t4040-whitespace-status.sh                       |   1 -
+>  t/t4041-diff-submodule-option.sh                   |   1 -
+>  t/t4042-diff-textconv-caching.sh                   |   1 -
+>  t/t4043-diff-rename-binary.sh                      |   1 -
+>  t/t4044-diff-index-unique-abbrev.sh                |   1 -
+>  t/t4045-diff-relative.sh                           |   1 -
+>  t/t4046-diff-unmerged.sh                           |   1 -
+>  t/t4047-diff-dirstat.sh                            |   1 -
+>  t/t4048-diff-combined-binary.sh                    |   1 -
+>  t/t4049-diff-stat-count.sh                         |   1 -
+>  t/t4050-diff-histogram.sh                          |   1 -
+>  t/t4051-diff-function-context.sh                   |   1 -
+>  t/t4052-stat-output.sh                             |   1 -
+>  t/t4053-diff-no-index.sh                           |   1 -
+>  t/t4054-diff-bogus-tree.sh                         |   1 -
+>  t/t4055-diff-context.sh                            |   1 -
+>  t/t4056-diff-order.sh                              |   1 -
+>  t/t4057-diff-combined-paths.sh                     |   1 -
+>  t/t4058-diff-duplicates.sh                         |   1 -
+>  t/t4059-diff-submodule-not-initialized.sh          |   1 -
+>  t/t4060-diff-submodule-option-diff-format.sh       |   1 -
+>  t/t4061-diff-indent.sh                             |   1 -
+>  t/t4062-diff-pickaxe.sh                            |   1 -
+>  t/t4063-diff-blobs.sh                              |   1 -
+>  t/t4064-diff-oidfind.sh                            |   1 -
+>  t/t4065-diff-anchored.sh                           |   1 -
+>  t/t4066-diff-emit-delay.sh                         |   1 -
+>  t/t4067-diff-partial-clone.sh                      |   1 -
+>  t/t4068-diff-symmetric-merge-base.sh               |   1 -
+>  t/t4069-remerge-diff.sh                            |   1 -
+>  t/t4100-apply-stat.sh                              |   1 -
+>  t/t4101-apply-nonl.sh                              |   1 -
+>  t/t4102-apply-rename.sh                            |   1 -
+>  t/t4103-apply-binary.sh                            |   1 -
+>  t/t4104-apply-boundary.sh                          |   1 -
+>  t/t4105-apply-fuzz.sh                              |   1 -
+>  t/t4106-apply-stdin.sh                             |   1 -
+>  t/t4107-apply-ignore-whitespace.sh                 |   1 -
+>  t/t4108-apply-threeway.sh                          |   1 -
+>  t/t4109-apply-multifrag.sh                         |   1 -
+>  t/t4110-apply-scan.sh                              |   1 -
+>  t/t4111-apply-subdir.sh                            |   1 -
+>  t/t4112-apply-renames.sh                           |   1 -
+>  t/t4113-apply-ending.sh                            |   1 -
+>  t/t4114-apply-typechange.sh                        |   1 -
+>  t/t4115-apply-symlink.sh                           |   1 -
+>  t/t4116-apply-reverse.sh                           |   1 -
+>  t/t4117-apply-reject.sh                            |   1 -
+>  t/t4118-apply-empty-context.sh                     |   1 -
+>  t/t4119-apply-config.sh                            |   1 -
+>  t/t4120-apply-popt.sh                              |   1 -
+>  t/t4121-apply-diffs.sh                             |   1 -
+>  t/t4122-apply-symlink-inside.sh                    |   1 -
+>  t/t4123-apply-shrink.sh                            |   1 -
+>  t/t4124-apply-ws-rule.sh                           |   1 -
+>  t/t4125-apply-ws-fuzz.sh                           |   1 -
+>  t/t4126-apply-empty.sh                             |   1 -
+>  t/t4127-apply-same-fn.sh                           |   1 -
+>  t/t4128-apply-root.sh                              |   1 -
+>  t/t4129-apply-samemode.sh                          |   1 -
+>  t/t4130-apply-criss-cross-rename.sh                |   1 -
+>  t/t4131-apply-fake-ancestor.sh                     |   1 -
+>  t/t4132-apply-removal.sh                           |   1 -
+>  t/t4133-apply-filenames.sh                         |   1 -
+>  t/t4134-apply-submodule.sh                         |   1 -
+>  t/t4135-apply-weird-filenames.sh                   |   1 -
+>  t/t4136-apply-check.sh                             |   1 -
+>  t/t4137-apply-submodule.sh                         |   1 -
+>  t/t4138-apply-ws-expansion.sh                      |   1 -
+>  t/t4139-apply-escape.sh                            |   1 -
+>  t/t4140-apply-ita.sh                               |   1 -
+>  t/t4141-apply-too-large.sh                         |   1 -
+>  t/t4150-am.sh                                      |   1 -
+>  t/t4151-am-abort.sh                                |   1 -
+>  t/t4152-am-subjects.sh                             |   1 -
+>  t/t4153-am-resume-override-opts.sh                 |   1 -
+>  t/t4200-rerere.sh                                  |   1 -
+>  t/t4201-shortlog.sh                                |   1 -
+>  t/t4202-log.sh                                     |   1 -
+>  t/t4203-mailmap.sh                                 |   1 -
+>  t/t4204-patch-id.sh                                |   1 -
+>  t/t4205-log-pretty-formats.sh                      |   1 -
+>  t/t4206-log-follow-harder-copies.sh                |   1 -
+>  t/t4207-log-decoration-colors.sh                   |   1 -
+>  t/t4208-log-magic-pathspec.sh                      |   1 -
+>  t/t4209-log-pickaxe.sh                             |   1 -
+>  t/t4210-log-i18n.sh                                |   1 -
+>  t/t4212-log-corrupt.sh                             |   1 -
+>  t/t4213-log-tabexpand.sh                           |   1 -
+>  t/t4214-log-graph-octopus.sh                       |   1 -
+>  t/t4215-log-skewed-merges.sh                       |   1 -
+>  t/t4216-log-bloom.sh                               |   1 -
+>  t/t4217-log-limit.sh                               |   1 -
+>  t/t4252-am-options.sh                              |   1 -
+>  t/t4253-am-keep-cr-dos.sh                          |   1 -
+>  t/t4254-am-corrupt.sh                              |   1 -
+>  t/t4255-am-submodule.sh                            |   1 -
+>  t/t4256-am-format-flowed.sh                        |   1 -
+>  t/t4257-am-interactive.sh                          |   1 -
+>  t/t4258-am-quoted-cr.sh                            |   1 -
+>  t/t4300-merge-tree.sh                              |   1 -
+>  t/t4301-merge-tree-write-tree.sh                   |   1 -
+>  t/t5000-tar-tree.sh                                |   1 -
+>  t/t5001-archive-attr.sh                            |   1 -
+>  t/t5002-archive-attr-pattern.sh                    |   1 -
+>  t/t5003-archive-zip.sh                             |   1 -
+>  t/t5004-archive-corner-cases.sh                    |   1 -
+>  t/t5100-mailinfo.sh                                |   1 -
+>  t/t5150-request-pull.sh                            |   1 -
+>  t/t5200-update-server-info.sh                      |   1 -
+>  t/t5300-pack-object.sh                             |   1 -
+>  t/t5301-sliding-window.sh                          |   1 -
+>  t/t5302-pack-index.sh                              |   1 -
+>  t/t5303-pack-corruption-resilience.sh              |   1 -
+>  t/t5304-prune.sh                                   |   1 -
+>  t/t5305-include-tag.sh                             |   1 -
+>  t/t5306-pack-nobase.sh                             |   1 -
+>  t/t5307-pack-missing-commit.sh                     |   1 -
+>  t/t5308-pack-detect-duplicates.sh                  |   1 -
+>  t/t5309-pack-delta-cycles.sh                       |   1 -
+>  t/t5310-pack-bitmaps.sh                            |   1 -
+>  t/t5311-pack-bitmaps-shallow.sh                    |   1 -
+>  t/t5312-prune-corruption.sh                        |   1 -
+>  t/t5313-pack-bounds-checks.sh                      |   1 -
+>  t/t5314-pack-cycle-detection.sh                    |   1 -
+>  t/t5315-pack-objects-compression.sh                |   1 -
+>  t/t5316-pack-delta-depth.sh                        |   1 -
+>  t/t5317-pack-objects-filter-objects.sh             |   1 -
+>  t/t5318-commit-graph.sh                            |   1 -
+>  t/t5319-multi-pack-index.sh                        |   1 -
+>  t/t5320-delta-islands.sh                           |   1 -
+>  t/t5321-pack-large-objects.sh                      |   1 -
+>  t/t5322-pack-objects-sparse.sh                     |   1 -
+>  t/t5323-pack-redundant.sh                          |   1 -
+>  t/t5324-split-commit-graph.sh                      |   1 -
+>  t/t5325-reverse-index.sh                           |   1 -
+>  t/t5326-multi-pack-bitmaps.sh                      |   1 -
+>  t/t5327-multi-pack-bitmaps-rev.sh                  |   1 -
+>  t/t5328-commit-graph-64bit-time.sh                 |   1 -
+>  t/t5329-pack-objects-cruft.sh                      |   1 -
+>  t/t5330-no-lazy-fetch-with-commit-graph.sh         |   1 -
+>  t/t5331-pack-objects-stdin.sh                      |   1 -
+>  t/t5332-multi-pack-reuse.sh                        |   1 -
+>  t/t5333-pseudo-merge-bitmaps.sh                    |   1 -
+>  t/t5334-incremental-multi-pack-index.sh            |   1 -
+>  t/t5351-unpack-large-objects.sh                    |   1 -
+>  t/t5400-send-pack.sh                               |   1 -
+>  t/t5401-update-hooks.sh                            |   1 -
+>  t/t5402-post-merge-hook.sh                         |   1 -
+>  t/t5403-post-checkout-hook.sh                      |   1 -
+>  t/t5404-tracking-branches.sh                       |   1 -
+>  t/t5405-send-pack-rewind.sh                        |   1 -
+>  t/t5406-remote-rejects.sh                          |   1 -
+>  t/t5407-post-rewrite-hook.sh                       |   1 -
+>  t/t5408-send-pack-stdin.sh                         |   1 -
+>  t/t5409-colorize-remote-messages.sh                |   1 -
+>  t/t5410-receive-pack-alternates.sh                 |   1 -
+>  t/t5411-proc-receive-hook.sh                       |   1 -
+>  t/t5500-fetch-pack.sh                              |   1 -
+>  t/t5501-fetch-push-alternates.sh                   |   1 -
+>  t/t5502-quickfetch.sh                              |   1 -
+>  t/t5503-tagfollow.sh                               |   1 -
+>  t/t5504-fetch-receive-strict.sh                    |   1 -
+>  t/t5505-remote.sh                                  |   1 -
+>  t/t5506-remote-groups.sh                           |   1 -
+>  t/t5507-remote-environment.sh                      |   1 -
+>  t/t5509-fetch-push-namespaces.sh                   |   1 -
+>  t/t5510-fetch.sh                                   |   1 -
+>  t/t5511-refspec.sh                                 |   1 -
+>  t/t5512-ls-remote.sh                               |   1 -
+>  t/t5513-fetch-track.sh                             |   1 -
+>  t/t5514-fetch-multiple.sh                          |   1 -
+>  t/t5515-fetch-merge-logic.sh                       |   1 -
+>  t/t5516-fetch-push.sh                              |   1 -
+>  t/t5517-push-mirror.sh                             |   1 -
+>  t/t5518-fetch-exit-status.sh                       |   1 -
+>  t/t5519-push-alternates.sh                         |   1 -
+>  t/t5520-pull.sh                                    |   1 -
+>  t/t5521-pull-options.sh                            |   1 -
+>  t/t5522-pull-symlink.sh                            |   1 -
+>  t/t5523-push-upstream.sh                           |   1 -
+>  t/t5524-pull-msg.sh                                |   1 -
+>  t/t5525-fetch-tagopt.sh                            |   1 -
+>  t/t5526-fetch-submodules.sh                        |   1 -
+>  t/t5527-fetch-odd-refs.sh                          |   1 -
+>  t/t5528-push-default.sh                            |   1 -
+>  t/t5529-push-errors.sh                             |   1 -
+>  t/t5530-upload-pack-error.sh                       |   1 -
+>  t/t5531-deep-submodule-push.sh                     |   1 -
+>  t/t5532-fetch-proxy.sh                             |   1 -
+>  t/t5533-push-cas.sh                                |   1 -
+>  t/t5534-push-signed.sh                             |   1 -
+>  t/t5535-fetch-push-symref.sh                       |   1 -
+>  t/t5536-fetch-conflicts.sh                         |   1 -
+>  t/t5537-fetch-shallow.sh                           |   1 -
+>  t/t5538-push-shallow.sh                            |   1 -
+>  t/t5539-fetch-http-shallow.sh                      |   1 -
+>  t/t5540-http-push-webdav.sh                        |   1 -
+>  t/t5541-http-push-smart.sh                         |   1 -
+>  t/t5542-push-http-shallow.sh                       |   1 -
+>  t/t5543-atomic-push.sh                             |   1 -
+>  t/t5544-pack-objects-hook.sh                       |   1 -
+>  t/t5545-push-options.sh                            |   1 -
+>  t/t5546-receive-limits.sh                          |   1 -
+>  t/t5547-push-quarantine.sh                         |   1 -
+>  t/t5548-push-porcelain.sh                          |   1 -
+>  t/t5549-fetch-push-http.sh                         |   1 -
+>  t/t5550-http-fetch-dumb.sh                         |   1 -
+>  t/t5551-http-fetch-smart.sh                        |   1 -
+>  t/t5552-skipping-fetch-negotiator.sh               |   1 -
+>  t/t5553-set-upstream.sh                            |   1 -
+>  t/t5554-noop-fetch-negotiator.sh                   |   1 -
+>  t/t5555-http-smart-common.sh                       |   1 -
+>  t/t5557-http-get.sh                                |   1 -
+>  t/t5560-http-backend-noserver.sh                   |   1 -
+>  t/t5561-http-backend.sh                            |   1 -
+>  t/t5562-http-backend-content-length.sh             |   1 -
+>  t/t5563-simple-http-auth.sh                        |   1 -
+>  t/t5564-http-proxy.sh                              |   1 -
+>  t/t5570-git-daemon.sh                              |   1 -
+>  t/t5571-pre-push-hook.sh                           |   1 -
+>  t/t5572-pull-submodule.sh                          |   1 -
+>  t/t5573-pull-verify-signatures.sh                  |   1 -
+>  t/t5574-fetch-output.sh                            |   1 -
+>  t/t5580-unc-paths.sh                               |   1 -
+>  t/t5581-http-curl-verbose.sh                       |   1 -
+>  t/t5582-fetch-negative-refspec.sh                  |   1 -
+>  t/t5583-push-branches.sh                           |   1 -
+>  t/t5600-clone-fail-cleanup.sh                      |   1 -
+>  t/t5601-clone.sh                                   |  26 +++--
+>  t/t5602-clone-remote-exec.sh                       |   1 -
+>  t/t5603-clone-dirname.sh                           |   1 -
+>  t/t5604-clone-reference.sh                         |   1 -
+>  t/t5605-clone-local.sh                             |   1 -
+>  t/t5606-clone-options.sh                           |   1 -
+>  t/t5607-clone-bundle.sh                            |   1 -
+>  t/t5609-clone-branch.sh                            |   1 -
+>  t/t5610-clone-detached.sh                          |   1 -
+>  t/t5611-clone-config.sh                            |   1 -
+>  t/t5612-clone-refspec.sh                           |   1 -
+>  t/t5613-info-alternate.sh                          |   1 -
+>  t/t5614-clone-submodules-shallow.sh                |   1 -
+>  t/t5615-alternate-env.sh                           |   1 -
+>  t/t5616-partial-clone.sh                           |   1 -
+>  t/t5617-clone-submodules-remote.sh                 |   1 -
+>  t/t5618-alternate-refs.sh                          |   1 -
+>  t/t5619-clone-local-ambiguous-transport.sh         |   1 -
+>  t/t5700-protocol-v1.sh                             |   1 -
+>  t/t5701-git-serve.sh                               |   1 -
+>  t/t5702-protocol-v2.sh                             |   1 -
+>  t/t5703-upload-pack-ref-in-want.sh                 |   1 -
+>  t/t5704-protocol-violations.sh                     |   1 -
+>  t/t5705-session-id-in-capabilities.sh              |   1 -
+>  t/t5730-protocol-v2-bundle-uri-file.sh             |   1 -
+>  t/t5731-protocol-v2-bundle-uri-git.sh              |   1 -
+>  t/t5732-protocol-v2-bundle-uri-http.sh             |   1 -
+>  t/t5750-bundle-uri-parse.sh                        |   1 -
+>  t/t5801-remote-helpers.sh                          |   1 -
+>  t/t5802-connect-helper.sh                          |   1 -
+>  t/t5810-proto-disable-local.sh                     |   1 -
+>  t/t5811-proto-disable-git.sh                       |   1 -
+>  t/t5812-proto-disable-http.sh                      |   1 -
+>  t/t5813-proto-disable-ssh.sh                       |   1 -
+>  t/t5814-proto-disable-ext.sh                       |   1 -
+>  t/t5815-submodule-protos.sh                        |   1 -
+>  t/t5900-repo-selection.sh                          |   1 -
+>  t/t6000-rev-list-misc.sh                           |   1 -
+>  t/t6001-rev-list-graft.sh                          |   1 -
+>  t/t6002-rev-list-bisect.sh                         |   1 -
+>  t/t6003-rev-list-topo-order.sh                     |   1 -
+>  t/t6004-rev-list-path-optim.sh                     |   1 -
+>  t/t6005-rev-list-count.sh                          |   1 -
+>  t/t6006-rev-list-format.sh                         |   1 -
+>  t/t6007-rev-list-cherry-pick-file.sh               |   1 -
+>  t/t6008-rev-list-submodule.sh                      |   1 -
+>  t/t6009-rev-list-parent.sh                         |   1 -
+>  t/t6010-merge-base.sh                              |   1 -
+>  t/t6011-rev-list-with-bad-commit.sh                |   1 -
+>  t/t6012-rev-list-simplify.sh                       |   1 -
+>  t/t6013-rev-list-reverse-parents.sh                |   1 -
+>  t/t6014-rev-list-all.sh                            |   1 -
+>  t/t6016-rev-list-graph-simplify-history.sh         |   1 -
+>  t/t6017-rev-list-stdin.sh                          |   1 -
+>  t/t6018-rev-list-glob.sh                           |   1 -
+>  t/t6019-rev-list-ancestry-path.sh                  |   1 -
+>  t/t6020-bundle-misc.sh                             |   1 -
+>  t/t6021-rev-list-exclude-hidden.sh                 |   1 -
+>  t/t6022-rev-list-missing.sh                        |   1 -
+>  t/t6040-tracking-info.sh                           |   1 -
+>  t/t6041-bisect-submodule.sh                        |   1 -
+>  t/t6050-replace.sh                                 |   1 -
+>  t/t6060-merge-index.sh                             |   1 -
+>  t/t6100-rev-list-in-order.sh                       |   1 -
+>  t/t6101-rev-parse-parents.sh                       |   1 -
+>  t/t6102-rev-list-unexpected-objects.sh             |   1 -
+>  t/t6110-rev-list-sparse.sh                         |   1 -
+>  t/t6111-rev-list-treesame.sh                       |   1 -
+>  t/t6112-rev-list-filters-objects.sh                |   1 -
+>  t/t6113-rev-list-bitmap-filters.sh                 |   1 -
+>  t/t6114-keep-packs.sh                              |   1 -
+>  t/t6115-rev-list-du.sh                             |   1 -
+>  t/t6120-describe.sh                                |   1 -
+>  t/t6130-pathspec-noglob.sh                         |   1 -
+>  t/t6131-pathspec-icase.sh                          |   1 -
+>  t/t6132-pathspec-exclude.sh                        |   1 -
+>  t/t6133-pathspec-rev-dwim.sh                       |   1 -
+>  t/t6134-pathspec-in-submodule.sh                   |   1 -
+>  t/t6135-pathspec-with-attrs.sh                     |   1 -
+>  t/t6136-pathspec-in-bare.sh                        |   1 -
+>  t/t6200-fmt-merge-msg.sh                           |   1 -
+>  t/t6300-for-each-ref.sh                            |   1 -
+>  t/t6301-for-each-ref-errors.sh                     |   1 -
+>  t/t6302-for-each-ref-filter.sh                     |   1 -
+>  t/t6400-merge-df.sh                                |   1 -
+>  t/t6401-merge-criss-cross.sh                       |   1 -
+>  t/t6402-merge-rename.sh                            |   1 -
+>  t/t6403-merge-file.sh                              |   1 -
+>  t/t6404-recursive-merge.sh                         |   1 -
+>  t/t6405-merge-symlinks.sh                          |   1 -
+>  t/t6406-merge-attr.sh                              |   1 -
+>  t/t6407-merge-binary.sh                            |   1 -
+>  t/t6408-merge-up-to-date.sh                        |   1 -
+>  t/t6409-merge-subtree.sh                           |   1 -
+>  t/t6411-merge-filemode.sh                          |   1 -
+>  t/t6412-merge-large-rename.sh                      |   1 -
+>  t/t6413-merge-crlf.sh                              |   1 -
+>  t/t6414-merge-rename-nocruft.sh                    |   1 -
+>  t/t6415-merge-dir-to-symlink.sh                    |   1 -
+>  t/t6416-recursive-corner-cases.sh                  |   1 -
+>  t/t6417-merge-ours-theirs.sh                       |   1 -
+>  t/t6418-merge-text-auto.sh                         |   1 -
+>  t/t6421-merge-partial-clone.sh                     |   1 -
+>  t/t6422-merge-rename-corner-cases.sh               |   1 -
+>  t/t6423-merge-rename-directories.sh                |   1 -
+>  t/t6424-merge-unrelated-index-changes.sh           |   1 -
+>  t/t6425-merge-rename-delete.sh                     |   1 -
+>  t/t6426-merge-skip-unneeded-updates.sh             |   1 -
+>  t/t6427-diff3-conflict-markers.sh                  |   1 -
+>  t/t6428-merge-conflicts-sparse.sh                  |   1 -
+>  t/t6429-merge-sequence-rename-caching.sh           |   1 -
+>  t/t6430-merge-recursive.sh                         |   1 -
+>  t/t6431-merge-criscross.sh                         |   1 -
+>  t/t6432-merge-recursive-space-options.sh           |   1 -
+>  t/t6433-merge-toplevel.sh                          |   1 -
+>  t/t6434-merge-recursive-rename-options.sh          |   1 -
+>  t/t6435-merge-sparse.sh                            |   1 -
+>  t/t6436-merge-overwrite.sh                         |   1 -
+>  t/t6437-submodule-merge.sh                         |   1 -
+>  t/t6438-submodule-directory-file-conflicts.sh      |   1 -
+>  t/t6439-merge-co-error-msgs.sh                     |   1 -
+>  t/t6500-gc.sh                                      |   1 -
+>  t/t6501-freshen-objects.sh                         |   1 -
+>  t/t6600-test-reach.sh                              |   1 -
+>  t/t6700-tree-depth.sh                              |   1 -
+>  t/t7001-mv.sh                                      |   1 -
+>  t/t7002-mv-sparse-checkout.sh                      |   1 -
+>  t/t7003-filter-branch.sh                           |   1 -
+>  t/t7004-tag.sh                                     |   1 -
+>  t/t7005-editor.sh                                  |   1 -
+>  t/t7006-pager.sh                                   |   1 -
+>  t/t7007-show.sh                                    |   1 -
+>  t/t7008-filter-branch-null-sha1.sh                 |   1 -
+>  t/t7010-setup.sh                                   |   1 -
+>  t/t7011-skip-worktree-reading.sh                   |   1 -
+>  t/t7012-skip-worktree-writing.sh                   |   1 -
+>  t/t7030-verify-tag.sh                              |   1 -
+>  t/t7031-verify-tag-signed-ssh.sh                   |   1 -
+>  t/t7060-wtstatus.sh                                |   1 -
+>  t/t7061-wtstatus-ignore.sh                         |   1 -
+>  t/t7062-wtstatus-ignorecase.sh                     |   1 -
+>  t/t7063-status-untracked-cache.sh                  |   1 -
+>  t/t7064-wtstatus-pv2.sh                            |   1 -
+>  t/t7101-reset-empty-subdirs.sh                     |   1 -
+>  t/t7102-reset.sh                                   |   1 -
+>  t/t7103-reset-bare.sh                              |   1 -
+>  t/t7104-reset-hard.sh                              |   1 -
+>  t/t7105-reset-patch.sh                             |   1 -
+>  t/t7106-reset-unborn-branch.sh                     |   1 -
+>  t/t7107-reset-pathspec-file.sh                     |   1 -
+>  t/t7110-reset-merge.sh                             |   1 -
+>  t/t7111-reset-table.sh                             |   1 -
+>  t/t7112-reset-submodule.sh                         |   1 -
+>  t/t7113-post-index-change-hook.sh                  |   1 -
+>  t/t7201-co.sh                                      |   1 -
+>  t/t7300-clean.sh                                   |   1 -
+>  t/t7301-clean-interactive.sh                       |   1 -
+>  t/t7400-submodule-basic.sh                         |   1 -
+>  t/t7401-submodule-summary.sh                       |   1 -
+>  t/t7402-submodule-rebase.sh                        |   1 -
+>  t/t7403-submodule-sync.sh                          |   1 -
+>  t/t7406-submodule-update.sh                        |   1 -
+>  t/t7407-submodule-foreach.sh                       |   1 -
+>  t/t7408-submodule-reference.sh                     |   1 -
+>  t/t7409-submodule-detached-work-tree.sh            |   1 -
+>  t/t7411-submodule-config.sh                        |   1 -
+>  t/t7412-submodule-absorbgitdirs.sh                 |   1 -
+>  t/t7413-submodule-is-active.sh                     |   1 -
+>  t/t7414-submodule-mistakes.sh                      |   1 -
+>  t/t7416-submodule-dash-url.sh                      |   1 -
+>  t/t7417-submodule-path-url.sh                      |   1 -
+>  t/t7418-submodule-sparse-gitmodules.sh             |   1 -
+>  t/t7419-submodule-set-branch.sh                    |   1 -
+>  t/t7420-submodule-set-url.sh                       |   1 -
+>  t/t7421-submodule-summary-add.sh                   |   1 -
+>  t/t7422-submodule-output.sh                        |   1 -
+>  t/t7423-submodule-symlinks.sh                      |   1 -
+>  t/t7424-submodule-mixed-ref-formats.sh             |   1 -
+>  t/t7450-bad-git-dotfiles.sh                        |   1 -
+>  t/t7500-commit-template-squash-signoff.sh          |   1 -
+>  t/t7501-commit-basic-functionality.sh              |   1 -
+>  t/t7502-commit-porcelain.sh                        |   1 -
+>  t/t7503-pre-commit-and-pre-merge-commit-hooks.sh   |   1 -
+>  t/t7504-commit-msg-hook.sh                         |   1 -
+>  t/t7505-prepare-commit-msg-hook.sh                 |   1 -
+>  t/t7506-status-submodule.sh                        |   1 -
+>  t/t7507-commit-verbose.sh                          |   1 -
+>  t/t7508-status.sh                                  |   1 -
+>  t/t7509-commit-authorship.sh                       |   1 -
+>  t/t7510-signed-commit.sh                           |   1 -
+>  t/t7511-status-index.sh                            |   1 -
+>  t/t7512-status-help.sh                             |   1 -
+>  t/t7513-interpret-trailers.sh                      |   1 -
+>  t/t7514-commit-patch.sh                            |   1 -
+>  t/t7515-status-symlinks.sh                         |   1 -
+>  t/t7516-commit-races.sh                            |   1 -
+>  t/t7517-per-repo-email.sh                          |   1 -
+>  t/t7518-ident-corner-cases.sh                      |   1 -
+>  t/t7519-status-fsmonitor.sh                        |   1 -
+>  t/t7520-ignored-hook-warning.sh                    |   1 -
+>  t/t7521-ignored-mode.sh                            |   1 -
+>  t/t7524-commit-summary.sh                          |   1 -
+>  t/t7525-status-rename.sh                           |   1 -
+>  t/t7526-commit-pathspec-file.sh                    |   1 -
+>  t/t7528-signed-commit-ssh.sh                       |   1 -
+>  t/t7600-merge.sh                                   |   1 -
+>  t/t7601-merge-pull-config.sh                       |   1 -
+>  t/t7602-merge-octopus-many.sh                      |   1 -
+>  t/t7603-merge-reduce-heads.sh                      |   1 -
+>  t/t7604-merge-custom-message.sh                    |   1 -
+>  t/t7605-merge-resolve.sh                           |   1 -
+>  t/t7606-merge-custom.sh                            |   1 -
+>  t/t7607-merge-state.sh                             |   1 -
+>  t/t7608-merge-messages.sh                          |   1 -
+>  t/t7609-mergetool--lib.sh                          |   1 -
+>  t/t7610-mergetool.sh                               |   1 -
+>  t/t7611-merge-abort.sh                             |   1 -
+>  t/t7612-merge-verify-signatures.sh                 |   1 -
+>  t/t7614-merge-signoff.sh                           |   1 -
+>  t/t7615-diff-algo-with-mergy-operations.sh         |   1 -
+>  t/t7700-repack.sh                                  |   1 -
+>  t/t7701-repack-unpack-unreachable.sh               |   1 -
+>  t/t7702-repack-cyclic-alternate.sh                 |   1 -
+>  t/t7703-repack-geometric.sh                        |   1 -
+>  t/t7704-repack-cruft.sh                            |   1 -
+>  t/t7800-difftool.sh                                |   1 -
+>  t/t7810-grep.sh                                    |   1 -
+>  t/t7811-grep-open.sh                               |   1 -
+>  t/t7812-grep-icase-non-ascii.sh                    |   1 -
+>  t/t7813-grep-icase-iso.sh                          |   1 -
+>  t/t7814-grep-recurse-submodules.sh                 |   1 -
+>  t/t7815-grep-binary.sh                             |   1 -
+>  t/t7816-grep-binary-pattern.sh                     |   1 -
+>  t/t7817-grep-sparse-checkout.sh                    |   1 -
+>  t/t7900-maintenance.sh                             |   1 -
+>  t/t8001-annotate.sh                                |   1 -
+>  t/t8002-blame.sh                                   |   1 -
+>  t/t8003-blame-corner-cases.sh                      |   1 -
+>  t/t8004-blame-with-conflicts.sh                    |   1 -
+>  t/t8005-blame-i18n.sh                              |   1 +
+>  t/t8006-blame-textconv.sh                          |   1 -
+>  t/t8007-cat-file-textconv.sh                       |   1 -
+>  t/t8008-blame-formats.sh                           |   1 -
+>  t/t8009-blame-vs-topicbranches.sh                  |   1 -
+>  t/t8010-cat-file-filters.sh                        |   1 -
+>  t/t8011-blame-split-file.sh                        |   1 -
+>  t/t8012-blame-colors.sh                            |   1 -
+>  t/t8013-blame-ignore-revs.sh                       |   1 -
+>  t/t8014-blame-ignore-fuzzy.sh                      |   1 -
+>  t/t9001-send-email.sh                              |   1 -
+>  t/t9002-column.sh                                  |   1 -
+>  t/t9003-help-autocorrect.sh                        |   1 -
+>  t/t9200-git-cvsexportcommit.sh                     |   1 -
+>  t/t9210-scalar.sh                                  |   1 -
+>  t/t9211-scalar-clone.sh                            |   1 -
+>  t/t9300-fast-import.sh                             |   1 -
+>  t/t9301-fast-import-notes.sh                       |   1 -
+>  t/t9302-fast-import-unpack-limit.sh                |   1 -
+>  t/t9303-fast-import-compression.sh                 |   1 -
+>  t/t9304-fast-import-marks.sh                       |   1 -
+>  t/t9350-fast-export.sh                             |   1 -
+>  t/t9351-fast-export-anonymize.sh                   |   1 -
+>  t/t9400-git-cvsserver-server.sh                    |   1 -
+>  t/t9401-git-cvsserver-crlf.sh                      |   1 -
+>  t/t9402-git-cvsserver-refs.sh                      |   1 -
+>  t/t9500-gitweb-standalone-no-errors.sh             |   1 -
+>  t/t9501-gitweb-standalone-http-status.sh           |   1 -
+>  t/t9502-gitweb-standalone-parse-output.sh          |   1 -
+>  t/t9600-cvsimport.sh                               |   1 -
+>  t/t9601-cvsimport-vendor-branch.sh                 |   1 -
+>  t/t9602-cvsimport-branches-tags.sh                 |   1 -
+>  t/t9603-cvsimport-patchsets.sh                     |   1 -
+>  t/t9604-cvsimport-timestamps.sh                    |   1 -
+>  t/t9700-perl-git.sh                                |   1 -
+>  t/t9800-git-p4-basic.sh                            |   1 -
+>  t/t9801-git-p4-branch.sh                           |   1 -
+>  t/t9802-git-p4-filetype.sh                         |   1 -
+>  t/t9803-git-p4-shell-metachars.sh                  |   1 -
+>  t/t9804-git-p4-label.sh                            |   1 -
+>  t/t9805-git-p4-skip-submit-edit.sh                 |   1 -
+>  t/t9806-git-p4-options.sh                          |   1 -
+>  t/t9808-git-p4-chdir.sh                            |   1 -
+>  t/t9809-git-p4-client-view.sh                      |   1 -
+>  t/t9810-git-p4-rcs.sh                              |   1 -
+>  t/t9811-git-p4-label-import.sh                     |   1 -
+>  t/t9812-git-p4-wildcards.sh                        |   1 -
+>  t/t9813-git-p4-preserve-users.sh                   |   1 -
+>  t/t9814-git-p4-rename.sh                           |   1 -
+>  t/t9815-git-p4-submit-fail.sh                      |   1 -
+>  t/t9816-git-p4-locked.sh                           |   1 -
+>  t/t9817-git-p4-exclude.sh                          |   1 -
+>  t/t9818-git-p4-block.sh                            |   1 -
+>  t/t9819-git-p4-case-folding.sh                     |   1 -
+>  t/t9820-git-p4-editor-handling.sh                  |   1 -
+>  t/t9821-git-p4-path-variations.sh                  |   1 -
+>  t/t9822-git-p4-path-encoding.sh                    |   1 -
+>  t/t9823-git-p4-mock-lfs.sh                         |   1 -
+>  t/t9825-git-p4-handle-utf16-without-bom.sh         |   1 -
+>  t/t9826-git-p4-keep-empty-commits.sh               |   1 -
+>  t/t9827-git-p4-change-filetype.sh                  |   1 -
+>  t/t9828-git-p4-map-user.sh                         |   1 -
+>  t/t9829-git-p4-jobs.sh                             |   1 -
+>  t/t9830-git-p4-symlink-dir.sh                      |   1 -
+>  t/t9831-git-p4-triggers.sh                         |   1 -
+>  t/t9832-unshelve.sh                                |   1 -
+>  t/t9833-errors.sh                                  |   1 -
+>  t/t9834-git-p4-file-dir-bug.sh                     |   1 -
+>  t/t9835-git-p4-metadata-encoding-python2.sh        |   1 -
+>  t/t9836-git-p4-metadata-encoding-python3.sh        |   1 -
+>  t/t9850-shell.sh                                   |   1 -
+>  t/t9901-git-web--browse.sh                         |   1 -
+>  t/t9902-completion.sh                              |   1 -
+>  t/t9903-bash-prompt.sh                             |   1 -
+>  t/test-lib.sh                                      |  72 +-----------
+>  t/unit-tests/strvec.c                              |  65 +++++++++++
+>  usage.c                                            |  15 ---
+>  950 files changed, 366 insertions(+), 1249 deletions(-)
+> 
+> Range-diff versus v1:
+> 
+>  1:  09dbc39ffb =  1:  76daa9584b builtin/blame: fix leaking blame entries with `--incremental`
+>  2:  15bbe539ea =  2:  6659f0d59b bisect: fix leaking good/bad terms when reading multipe times
+>  3:  739e28c864 =  3:  5a9011e1ef bisect: fix leaking string in `handle_bad_merge_base()`
+>  4:  fa91eb9dc6 =  4:  3afc0a7bfe bisect: fix leaking `current_bad_oid`
+>  5:  4ca01afd9e =  5:  15577aaae6 bisect: fix multiple leaks in `bisect_next_all()`
+>  6:  805b91ce20 =  6:  13ddfed4fc bisect: fix leaking commit list items in `check_merge_base()`
+>  7:  0f183fb264 !  7:  0bc49ed3bb bisect: fix various cases where we leak commit list items
+>     @@ bisect.c: static struct commit_list *skip_away(struct commit_list *list, int cou
+>      +			else if (previous)
+>      +				result = previous;
+>      +			else
+>     -+				result =  list;
+>     ++				result = list;
+>      +			break;
+>       		}
+>       		previous = cur;
+>  8:  163c36c78e =  8:  addba1afce line-log: fix leak when rewriting commit parents
+>  9:  c0bcfbd98b =  9:  6e501effad strvec: introduce new `strvec_splice()` function
+> 10:  cf0ac084c5 = 10:  2271761621 git: refactor alias handling to use a `struct strvec`
+> 11:  c4989aab86 = 11:  7bff5d167f git: refactor builtin handling to use a `struct strvec`
+> 12:  483d2951cc = 12:  e93d461504 split-index: fix memory leak in `move_cache_to_base_index()`
+> 13:  70b12d6347 = 13:  a0643da6f5 builtin/sparse-checkout: fix leaking sanitized patterns
+> 14:  f57d967cd5 = 14:  881feffeb1 help: refactor to not use globals for reading config
+> 15:  45aacddc8a <  -:  ---------- help: fix leaking `struct cmdnames`
+>  -:  ---------- > 15:  f1bbb676f2 help: fix leaking `struct cmdnames`
+> 16:  b61cc4da84 ! 16:  51c7ad993f help: fix leaking return value from `help_unknown_cmd()`
+>     @@ help.c: static const char bad_interpreter_advice[] =
+>       {
+>       	struct help_unknown_cmd_config cfg = { 0 };
+>       	int i, n, best_similarity = 0;
+>     - 	struct cmdnames main_cmds = { 0 };
+>     - 	struct cmdnames other_cmds = { 0 };
+>     - 	struct cmdname_help *common_cmds;
+>     --	const char *assumed = NULL;
+>     -+	char *assumed = NULL;
+>     - 
+>     - 	read_early_config(the_repository, git_unknown_cmd_config, &cfg);
+>     - 
+>      @@ help.c: const char *help_unknown_cmd(const char *cmd)
+>       			; /* still counting */
+>       	}
+>       	if (cfg.autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
+>     --		assumed = main_cmds.names[0]->name;
+>     +-		const char *assumed = main_cmds.names[0]->name;
+>      -		main_cmds.names[0] = NULL;
+>      -		cmdnames_release(&main_cmds);
+>     -+		assumed = xstrdup(main_cmds.names[0]->name);
+>     ++		char *assumed = xstrdup(main_cmds.names[0]->name);
+>      +
+>       		fprintf_ln(stderr,
+>       			   _("WARNING: You called a Git command named '%s', "
+>       			     "which does not exist."),
+>     -@@ help.c: const char *help_unknown_cmd(const char *cmd)
+>     - 			strbuf_release(&msg);
+>     - 			if (!(starts_with(answer, "y") ||
+>     - 			      starts_with(answer, "Y"))) {
+>     --				assumed = NULL;
+>     -+				FREE_AND_NULL(assumed);
+>     - 				goto out;
+>     - 			}
+>     - 		} else {
+>      
+>       ## help.h ##
+>      @@ help.h: void list_all_other_cmds(struct string_list *list);
+> 17:  b38a39ef04 = 17:  38a25da315 builtin/help: fix leaks in `check_git_cmd()`
+> 18:  cd5cde9acb ! 18:  462c9fc110 builtin/init-db: fix leaking directory paths
+>     @@ builtin/init-db.c: int cmd_init_db(int argc,
+>      -
+>       	flags |= INIT_DB_EXIST_OK;
+>      -	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
+>     -+	ret =  init_db(git_dir, real_git_dir, template_dir, hash_algo,
+>     - 		       ref_storage_format, initial_branch,
+>     - 		       init_shared_repository, flags);
+>     +-		       ref_storage_format, initial_branch,
+>     +-		       init_shared_repository, flags);
+>     ++	ret = init_db(git_dir, real_git_dir, template_dir, hash_algo,
+>     ++		      ref_storage_format, initial_branch,
+>     ++		      init_shared_repository, flags);
+>      +
+>      +	free(template_dir_to_free);
+>      +	free(real_git_dir_to_free);
+> 19:  2c7b50461b = 19:  6eabeed343 builtin/branch: fix leaking sorting options
+> 20:  6865dda344 = 20:  2a44bbfba3 t/helper: fix leaking commit graph in "read-graph" subcommand
+>  -:  ---------- > 21:  fc8a96bac3 global: drop `UNLEAK()` annotation
+> 21:  d7d8ece289 ! 22:  10e44976c2 git-compat-util: drop `UNLEAK()` annotation
+>     @@ Metadata
+>      Author: Patrick Steinhardt <ps@pks.im>
+>      
+>       ## Commit message ##
+>     -    git-compat-util: drop `UNLEAK()` annotation
+>     +    git-compat-util: drop now-unused `UNLEAK()` macro
+>      
+>     -    There are two users of `UNLEAK()` left in our codebase:
+>     -
+>     -      - In "builtin/clone.c", annotating the `repo` variable. That leak has
+>     -        already been fixed though as you can see in the context, where we do
+>     -        know to free `repo_to_free`.
+>     -
+>     -      - In "builtin/diff.c", to unleak entries of the `blob[]` array. That
+>     -        leak has also been fixed, because the entries we assign to that
+>     -        array come from `rev.pending.objects`, and we do eventually release
+>     -        `rev`.
+>     -
+>     -    This neatly demonstrates one of the issues with `UNLEAK()`: it is quite
+>     -    easy for the annotation to become stale. A second issue is that its
+>     -    whole intent is to paper over leaks. And while that has been a necessary
+>     -    evil in the past, because Git was leaking left and right, it isn't
+>     -    really much of an issue nowadays where our test suite has no known leaks
+>     +    The `UNLEAK()` macro has been introduced with 0e5bba53af (add UNLEAK
+>     +    annotation for reducing leak false positives, 2017-09-08) to help us
+>     +    reduce the amount of reported memory leaks in cases we don't care about,
+>     +    e.g. when exiting immediately afterwards. We have since removed all of
+>     +    its users in favor of freeing the memory and thus don't need the macro
+>          anymore.
+>      
+>     -    Remove the last two users and drop the now-unused `UNLEAK()` annotation.
+>     +    Remove it.
+>      
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>      
+>     - ## builtin/clone.c ##
+>     -@@ builtin/clone.c: int cmd_clone(int argc,
+>     - 	free(dir);
+>     - 	free(path);
+>     - 	free(repo_to_free);
+>     --	UNLEAK(repo);
+>     - 	junk_mode = JUNK_LEAVE_ALL;
+>     - 
+>     - 	transport_ls_refs_options_release(&transport_ls_refs_options);
+>     -
+>     - ## builtin/diff.c ##
+>     -@@ builtin/diff.c: int cmd_diff(int argc,
+>     - 	release_revisions(&rev);
+>     - 	object_array_clear(&ent);
+>     - 	symdiff_release(&sdiff);
+>     --	UNLEAK(blob);
+>     - 	return result;
+>     - }
+>     -
+>       ## git-compat-util.h ##
+>      @@ git-compat-util.h: int cmd_main(int, const char **);
+>       int common_exit(const char *file, int line, int code);
+> 22:  d52ca35b05 = 23:  218132b7d5 t5601: work around leak sanitizer issue
+> 23:  44b48929fb = 24:  832c87a045 t: mark some tests as leak free
+> 24:  b1fdbe04be = 25:  5fc1319241 t: remove unneeded !SANITIZE_LEAK prerequisites
+> 25:  2b752b71c6 = 26:  06a1e8b27c test-lib: unconditionally enable leak checking
+> 26:  53bc5f7d75 = 27:  19428158c8 t: remove TEST_PASSES_SANITIZE_LEAK annotations
 
-> While at it, wrap the overly lines in the CMake build instructions.
+This iteration addresses all of my comments.
 
-overly "long" lines?
+Thanks again for working on this.  And congratulations, it's not even
+the end of the year and memory leak checks are opt-out.
+
+> 
+> ---
+> base-commit: b0c643d6a710e2b092902a3941655176b358bfd0
+> change-id: 20241111-b4-pks-leak-fixes-pt10-a6fa657f4fac
+> 
