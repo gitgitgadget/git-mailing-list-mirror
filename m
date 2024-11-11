@@ -1,104 +1,120 @@
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4F61C28E
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:30:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19B42B9A9
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:36:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731321022; cv=none; b=OE3eCaqrZpKYP7DFwl38deyVMhmgjCTaaY7PYoxFubfic0V30rEMZycaZdNFa0y9/oq6B+3Lj9UdEh0hjLLbPB61YjzAlK6eg81VO/U0lc4rHIXVbhOwFQpZz4ZqanUmreiKwlHr7Tpdm/k8oJIZcq8pwL0954mi4QWEs+MfeiY=
+	t=1731321400; cv=none; b=qy/7FoAcS9G0UeHhZwJ4+kbUncF9zSHWuGcjda2xgkLh/KvaNlqlUVFbbSqdOzdB9iF6O2O3GfTG1FVfXPB1CH1yUZvlGM6CjBwl1HZrp0O3DOJKSIB1Hr6jyTIUmIt9qtq07O5fSSENADd44h321I/AZYUlRaUoTRtUdwSiE9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731321022; c=relaxed/simple;
-	bh=mG+i2bEhnh5XhLT3ydZjselr7oNfWE6bIf3unlKt6bA=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=C0kTimiwXpmHbKvMzhK3zWDHsZRKoc/Po/tIbrxhmS7VTfQ4aagqkFoyuL//Y6SFZ8P5v9GZ6dJKMd6hNsgfivdX+UtEkguRg8kYye9Ze9a6r0sTSE9EgnkIFmAZ5DB77Mn62sau0D/+Aouom/QAXuPF+3OvR0xKrfj5YcrszE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aM6+LF9R; arc=none smtp.client-ip=209.85.221.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731321400; c=relaxed/simple;
+	bh=B1mPiuXF/JjTKBtxDlz5+IpEN03FhWoFdISWwKcnddc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EpSyLWSFfjk7NvY4FvE0znV39NIFgjwpCiRCmHXjzUUrMr+R0A+5E56VWxNS6t11GzvSA8PpDhFwWEVIyNvz2vvE8cTJvm1VIF5wQUI/L/aQ3uJyTsZznGzson1o/wx8Atsrrh26uudQcc83bKHPUjd+N2mfpdOCnxnsukM/OGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zQdzJq92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q6dvR9T4; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aM6+LF9R"
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5139cd01814so1485884e0c.0
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:30:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731321019; x=1731925819; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mG+i2bEhnh5XhLT3ydZjselr7oNfWE6bIf3unlKt6bA=;
-        b=aM6+LF9RJQ7WcAl6qnha6KrVZfR62VzYVSCgm+rLtPIeLxK7BsJGqMUZr7uBgR5Gc3
-         /ak7iY0NRrrPSsxbo78oRs9LO6ONSAzfAkadGrItqcuGhbQlwtNZJz6lRnkVkMekKh0O
-         UBg2y769OIVQgWmF04Iyg4CSKGLUC0EyIe6rTSxaelboi3Zy9VvOfRXT7yC7GVjcVAcY
-         NuvE7Pp9INAiaH9uZ3pi/gRGEelEVOEjjn4oDovURFNNIi7B18MBq6KToeH5yxehnI+S
-         xqT0LoULPWB5gHr7iZhShhpwXFkP42AGXNpRPg8+S1lPsOEe1ACpHZCBTc147gW1ym57
-         vyAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731321019; x=1731925819;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mG+i2bEhnh5XhLT3ydZjselr7oNfWE6bIf3unlKt6bA=;
-        b=QEqUcKl+Hx17Mk65g4wjVofJrujzqYWD58yXKZ1EZSEafwGP+Hs3+r9aSLUs0Pcceb
-         8xDXJg5oYpd4k7QRtcVahK8AG9fCnMIuANHJNry4WGLTrPVHSFTx9y8zx5T8sHUe5YWD
-         YiHhrDTfjNv8QRBahCyfYtiDKkc94ktTQy6crvI5vzfOCxSnJw/1AxqOFl/aZoj4u4WS
-         A6kCiRCS5noRN1FjakYzVeVfO+dLgpPpZ8wLX3J5HMZ0qPSCueJtK9qeCdRMHdc9M4IM
-         EToVkXbXGzx2F5VvO4wkp3spEIUaKovJ0GoBEiS2C5VjTctf7owjEur2K30eFXYazliX
-         oDYg==
-X-Forwarded-Encrypted: i=1; AJvYcCW3onxnhonGMOfRi3KOxKqP7tuSMISPDsViHBEJm7QXfUD1sS+A7Y/d9rda24uXqmcbDbs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBQYp5QExnMkt7fDE20R3EF/EB2iwGgFWvAKJjlAqschlMcb0m
-	WGKxFawFqmz37xYWIe5p2rYtMVMTHVmriYxjux8/9VjzEfCkgH65msNzS4GhzXbZuXAl8aaUL+x
-	0Glmzjmf8Ki0zsrK+Za0LT1sPgDQvSn12
-X-Google-Smtp-Source: AGHT+IHQOigye7bT+xVtJwfMizieXI4l6x8cTNDXZkgyYQpgHUzHevM9mSFKy5d+Pd+LR61n9jAREAMFsBQVdjnGoWk=
-X-Received: by 2002:a05:6122:2010:b0:4fc:e3c2:2c71 with SMTP id
- 71dfb90a1353d-51401ba19bcmr8729040e0c.2.1731321019005; Mon, 11 Nov 2024
- 02:30:19 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 11 Nov 2024 05:30:18 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241108-pks-refs-optimize-migrations-v1-1-7fd37fa80e35@pks.im>
-References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im> <20241108-pks-refs-optimize-migrations-v1-1-7fd37fa80e35@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zQdzJq92";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q6dvR9T4"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D86AA1140156;
+	Mon, 11 Nov 2024 05:36:36 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 11 Nov 2024 05:36:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731321396; x=1731407796; bh=LkNvXtgG8r
+	/+AQEFXFmV/Pdmc0NO9Rf+sSPuAGwjfUg=; b=zQdzJq921TThSEdOA6SotMk3SK
+	7p3PTjLQF6ggQrNk+yRozasH59rqiVRwQHP+AlsnvXN5T5P0OqKSsHoyo+6pDv+s
+	EMLe7EDiXkSNs4oMBl/ZTDvk4yMTXXybulJpYPiQYZCJj/gOczcGRdYuKprvFg5T
+	GwnI0DHRs0w00dxhXR8LzT0r8PwWTUDjTqyFGUfNfs7TaKxmC5Tce6CCbL0hcc17
+	/rCgcY1u3EtOJGnp8AkZH/GkGKiY1iv/F1RADUr3o4TGJb3W+acXToRAWV0nYP+o
+	gM/9hbbneKAJK0jCKvLUdBVvuasRJrLSN2nDRlppqfwSfcNuve/4MlB+MSJA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731321396; x=1731407796; bh=LkNvXtgG8r/+AQEFXFmV/Pdmc0NO9Rf+sSP
+	uAGwjfUg=; b=Q6dvR9T4k2JHEX4SniTmolXfFqxUbS72pabHMI6gxNzM1VseziN
+	QtdmoVN8D2sYQ8jtUtvEJyQ3eNGF+kOHJKURo92SbQ40PtkORD21pTw5cJFLcciG
+	8BcuLFWD2SsIRScEap0WCk5ftBIFtOMXZFh3kMdGLrcauO33fwswdfW+3VGMUH5D
+	QrWK1tvTYY9SRTDIAozs2wDR04S9BM+bf2bcg51dLx9ANorZr2slX8MYyZik8bJp
+	GwnwqIgBmgp1Pu/+CGtBi7iiOoNTcPw9F/IQGa59eUraLWfChztxpju6KhWGN6vS
+	gP4YWnq5R+gjl3ecRz6AaBcl99n2eJaOl1g==
+X-ME-Sender: <xms:M94xZ-uNy6UdfUBVhtYPd2sVFlKIw04H3tMhir8Ewkm0oKzsToT-Lw>
+    <xme:M94xZzerxl9yHY4A5Tf1YVI83pYq9JRBBf1hoEjI_zRMtwBiJp3MYHnqPSDxKwgv1
+    hpW4ueEr_z_EjNMWQ>
+X-ME-Received: <xmr:M94xZ5yofsW5vyl7qedOQ4CC8kpjJoYQpi08-tFUYOotGyLAgF10yE8xN38iv4VowzJvnyc-I12ObHbiv_fC3aFATrLk5CYNXLSML4GYV7baMqKc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvgddukecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluh
+    hsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
+    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepmhgv
+    sehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnth
+    hoohdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:M94xZ5NeHd8zceX2gVb6ketiRwhMcyoTqmoPxNtzoOTFuVCu0kK5vQ>
+    <xmx:M94xZ-8aQUjNPfkmjrtzpBUaXEsa-iqLpYA2QA3AeBiCo21X_6id7Q>
+    <xmx:M94xZxXOJdnn6QjjjOMkyRrhN_uR_57CDLOgyIs4cAF8W2lWUVZHcA>
+    <xmx:M94xZ3cuORD-sQqWUULUYzN3aoULEISjAbEZgu6WgfDN7EQdCvqwmg>
+    <xmx:NN4xZzNxHQYyCuafuktawX3jsX0_taM2lFmcpAyM80XuO-a8K8v6UuqV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 11 Nov 2024 05:36:34 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1f25544d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 11 Nov 2024 10:35:57 +0000 (UTC)
+Date: Mon, 11 Nov 2024 11:36:22 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [RFC PATCH v4 04/19] Makefile: extract script to massage Perl
+ scripts
+Message-ID: <ZzHeHk8alk4xVyQe@pks.im>
+References: <cover.1727881164.git.ps@pks.im>
+ <cover.1729771605.git.ps@pks.im>
+ <50b607a412afea051a7839b9f3f1b4519b58721a.1729771605.git.ps@pks.im>
+ <c2508eef-bedb-43dd-9d4b-7e980d4ade37@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 11 Nov 2024 05:30:18 -0500
-Message-ID: <CAOLa=ZQKJ3Twdze-08t3kh=kiuy6h9GfNSO25PkinjTwF5oG+w@mail.gmail.com>
-Subject: Re: [PATCH 01/10] refs: allow passing flags when setting up a transaction
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000054af1a0626a09615"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c2508eef-bedb-43dd-9d4b-7e980d4ade37@gmail.com>
 
---00000000000054af1a0626a09615
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Nov 10, 2024 at 02:36:49PM +0000, Phillip Wood wrote:
+> Hi Patrick
+> 
+> On 24/10/2024 13:39, Patrick Steinhardt wrote:
+> > 
+> > +	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/${perl_gen_path}
+> > +		COMMAND ${CMAKE_SOURCE_DIR}/generate-perl.sh
+> 
+> This is missing ${SH_EXE} in order to work with cmd.exe on windows when
+> running the build from Visual Studio. Also do we want to quote the command
+> arguments in case there is a ';' in the path - we seem to be a bit
+> inconsistant in about that in CMakeLists.txt. Also we should add VERBATIM so
+> that special characters in the arguments are quoted when generating the
+> build rules.
 
-Patrick Steinhardt <ps@pks.im> writes:
+Indeed, I also had it in my mind to revisit these patches and fix them
+up based on Dscho's findings in the other thread. Thanks for being
+proactive and pointing them out!
 
-> Allow passing flags when setting up a transaction such that the
-> behaviour of the transaction itself can be altered. Adapt callers
-> accordingly.
->
-
-Maybe it is self-explanatory with the upcoming patches, but it'd be nice
-to know _why_ this change is being made.
-
-The patch itself looks good.
-
-[snip]
-
---00000000000054af1a0626a09615
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: b25de2cf08b578cc_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jeDNMa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNE1FQy8wU1J6aEorUTRBU2UzM0hTRTRabm9NRnF5TAp6NnBJa1lXWFo0
-NmRxb01GZXUyejVCTVFUT01wWW93TEhpVU4rWE43UHA5THBhRzRCSnQ0anVBWldnQnZpeFpJCkNq
-SkYwanJ1bW9sSEU1R0RwSktEQ09SRldRNkhJZVBkajBXd2lYM3NkdFFydWd0aTk1am81YTBhTFo5
-aHdGS3gKUklIQ1owMGZXQmQ2QkFTVnBtdFd5QXNxaFJwaG52OUppcVZ0eTZOeExwOWw4TXdEQ2J3
-b3BqdFEyUkthbkdqbApUTWpnY01OMjJMbEd4WFhmeklieDQ0QXRHQmtlbzc1ZE8vQUZjbUcyVjdJ
-dUpqcURqTCtDd09ZM0hNT0NOa09FCnlXdjh0MldMamNwcmRmY3ZWS2ltd0E0QmNFNHZZRloxcWVQ
-UU5qalV4UkwzVlgrMXdkMUlUMzFvSk4rN2RHc1EKd3NPNjJqL0ZwL1NYNDlKd2FKcnVNTW8zK3Jp
-U3Y4TU5PMmx5bHZtTHpBckRQR2g1dy91ZGc1QTRtaHhTYkt3dApFYWdjRDFvQm5laUhUWkQzN0Vp
-MW1vV0lrTCsramJYL3VyRlV0QXduZVl1NEc4R3lkU2swOEIrQnZwdlQ3a3BFCmhjUDl1N3h1S3Zs
-Vld4N1QwbWd5OUJOVm44R0puTzRDdVB1TnhORT0KPUJEeHoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000054af1a0626a09615--
+Patrick
