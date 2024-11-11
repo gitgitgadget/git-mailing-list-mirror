@@ -1,135 +1,165 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176E21474B9
-	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:54:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DB515B554
+	for <git@vger.kernel.org>; Mon, 11 Nov 2024 10:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731322443; cv=none; b=eI/hkIu2H0+hZLG8Zds2uWeclKih5ylP2ccBpqrkuxWNP1N2f2spdZd5iWl7LCiXIPPZ4E3OMwtap3uNNJIkrM2bpiVmGi65ieX3Nj1cmg0lCKH5TIsGES+U/r8gBc1LVVTYuQB3ycfDQhj7/l2qYZfpUz0zPQOCToZ8Jp2zy94=
+	t=1731322667; cv=none; b=a+6oBrCp6o3Xh0ost15LhW+nVx62kRVJS2k1G6ByZ3CDwXRO/ZcFWoZvlsTRXr/GdzjQxKVrAwSYB1SlQP1VYyQlZLTZuUxgtxIn6Z2f+rAp9UyveAkYgkAj/NFSzCaE9xB7tC5MHeHYgW1CjB5tJfI9an0wXaKeEqLPw8H/WSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731322443; c=relaxed/simple;
-	bh=gPLTT3Equn+BvsBkv9R8/D5wypburkwdepFLuS1cL38=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=niYEqMQ5Zz3Dc+Y7bk5U5qrojhIYF90bfj7ckt9Vyoabvz7HcTfTtGi2iXtA6Q6/+QBt8Z1bw3oQUH/utR/fPBRa9xcWEzxLWA5m1qSDySUMffBToYvoD8I1z9wk+B11yAxzOCsmPxuwwInQYw0p/RpNdBfaEyDxoblWyhVEWik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RB+7vSgZ; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1731322667; c=relaxed/simple;
+	bh=y4EnjxMU6ZcGPUweO500WNSEKEfVRfz8qUIR6tWutDo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=DjxmwQVBVN5MRsBYhMnEGESJTKY2k5frsSHNABvuMNxPDpRPjcdzeCdWMmRBsO8Kkvtar0cHVQbLDW5m9FIu3MvNxDFjOWmKlp0IW2RAXbw9UuLn0x/97B/unoKfTvqi+3q3YvKnd5qA5Li6ZhL7mLCEZqJd5mkdqXvkLfKEV+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YdUqfJA4; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RB+7vSgZ"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-37d8901cb98so3079300f8f.0
-        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:54:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YdUqfJA4"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-84fccf51df1so1692945241.2
+        for <git@vger.kernel.org>; Mon, 11 Nov 2024 02:57:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731322440; x=1731927240; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1731322664; x=1731927464; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=WnZN2fUQf360D7m9VMxXlBRoYOrA63LwhMNeaL5HRcE=;
-        b=RB+7vSgZQTYVqCOVRrO3H4bMHaNV+r5R7oPDQVW+Z1umCRmG8FDAKz6j5ksy20nJOI
-         Jk4sGp0N8zUt45a2uf2NWl/vhPe3IYYYKMQ7lD3/eCHhKgZJb2stuu5FWTGiN0wwdF4r
-         A6+5ve/YZS+8pJLuUJr+MjfiPkA2y4M7PLbDCzrONPrBpup9HscYdrkJi49dleEd3gpl
-         NeTAj59jZwp652VcrzOlvKin+dLLcak08XrMqvULuK4iC4ukOaoQFD9v2MlDRSEscsCv
-         kKtcDNCF5qph1125Z/I+5X4/zx6Lc6YtYwb9C+MFJBYJmUopwjW3hogvHT9AVenfEhNU
-         ayBg==
+        bh=m/Yp8cNgNLVq5Al7W++8giaAOs98UduSg1kmj0xDUo0=;
+        b=YdUqfJA4pW44DLruBVXskaRiuoMqGTZDXn+x+V8OJR0+tPk5ji6rT8Byc7x2Mnmmkx
+         YvGxsb16aFjtymqEJFpRkzdJ2UGHRIcIM891V6W3j9CSe5cs52BkMO7e4TweIFq7+Uvg
+         BkUT6tQa2zntWvtC9msQJRAsTK1aMho+m/tMOMtzm2+Y6PrjSOoIpLFUo7HdRQCb4LfL
+         wRseXR510aWfVEajBvyGYdvebS/5LTm2D9SG3YYTLVyocJiKBXecafiXFPg4OuzvLrdb
+         BBbGBSsPtN1kzj0edf/7ur0ql4hhgz/wurjOriGU4Z8Py7wtPWWoyYwlpHSC+In023IQ
+         BBJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731322440; x=1731927240;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1731322664; x=1731927464;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WnZN2fUQf360D7m9VMxXlBRoYOrA63LwhMNeaL5HRcE=;
-        b=CDjpJoN8msc62ZNjCMrz53391+2mKHnZyg17FIXh2JFABpK1jT+b0PUfvti7Or3Ntu
-         Gtf9ErkVrx+P5b/twxXkqddtm8cutPQsqyTsarlVgETgjt9MQbyzAYoDakDfh+jTCxtq
-         wTRTdyuLunDr26xIo5pmE9U3GImVmM1+5T5QWoGYWILqLHxB7L6gbY/chUuiIFS+AoOR
-         Xjn/2+gcCZwiL9GhU7CdkBH7DkvlFK8Fp6uHuCF1RHCqTbphFnEGXyW1YLkUIpEoDubu
-         mBR9UEJbN2fBOx1LMjSkO5iDBZQRo4HzvJDPU6dBkAhCXfow8Fe1uGkdysUEbzrvwNqK
-         Eo8w==
-X-Forwarded-Encrypted: i=1; AJvYcCXFdNbWPyP3u7R2N7uWGfytRgKx+SCa548431nNfk4O3uL1/FLd6PPgrMK7+N/ubI0Dh/c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxE/4f/alwxSZEivZxkJv/64fkq93JkiN3eEAjnjJhg2I3pPth4
-	Vx65w0psFik59zADEiamHphHxw45qP9opCq2tOLYg+eIFhynAG6+
-X-Google-Smtp-Source: AGHT+IFjHE76SidAko1HL8Y0EpfcAhXmWc7xFQD9jtmVNNRsVat0Uwz8i0baI+AUNXb/pXrLpq/SBA==
-X-Received: by 2002:a05:6000:18ac:b0:37d:34e7:6d24 with SMTP id ffacd0b85a97d-381f0f7eedemr10429293f8f.18.1731322440173;
-        Mon, 11 Nov 2024 02:54:00 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6b0:6601:912:e3ec:c1c0:993e? ([2a0a:ef40:6b0:6601:912:e3ec:c1c0:993e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432aa709f3fsm212975135e9.32.2024.11.11.02.53.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Nov 2024 02:53:59 -0800 (PST)
-Message-ID: <6a608200-2dd5-4505-9e1d-1e161ae2896c@gmail.com>
-Date: Mon, 11 Nov 2024 10:53:58 +0000
+        bh=m/Yp8cNgNLVq5Al7W++8giaAOs98UduSg1kmj0xDUo0=;
+        b=EBOxSGbz/uJnR5KtjzNazVXARLXJM6kxA2DvS/Lw0ivrYxPhSM7+wCMXGazaPQxr8C
+         m6iY3QXXTMTPq7U7mgrmm0bXK/m6+PQwYMjQlV6WewNEy+8SmhIOCWtEnrtZRI+d+gue
+         S+nKWyDRa0QUHWg2WDBStdjww7dGObJ5yxoo7e2JB6pdUk+lp2TnpPY4vQcsbgthFy20
+         faJ7kga8AYgL5MWK5Co3ROPlXXSKPMYbpbeX0mdP9aFRQKU0vN90u+fRZ/HCIXCsy2tn
+         xrAbEax0f4/Ch/pbItxpgMZk4ZXA9fk/oytK8fNn3O9AN5moutE/19+soIYXUgMfpDlL
+         DcpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWmGEDyZR10N5cWAwF8gojU0mFcCADi0ovk6EG6sL22gWEhrKrv3A88Lnud+GIwFHmh1jM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgQ3abWla8j3Xwx+F8lZJDH6yat6qwW67h9QWSQ2EQX3gz9fp3
+	QyOGFS8z1DiLmSGqtwyQU0Q+oc4tnhu4e4NQ6GSw3ftk9fv6+34X6OwpIbW9jADCxzlNnVDWQUv
+	5Z4iNFLu2aSm3ussxNU2CkVRKHuPFwi3f
+X-Google-Smtp-Source: AGHT+IEvRfN/WcdD3ZBvWBOTwzX4AHbAXnmS6NZ1ChPm1KN8GhLM+6cQwoJd2LMyggJXF+JFXTYME4uaFexoJSy7YH0=
+X-Received: by 2002:a05:6102:2ad5:b0:4a4:841f:bb95 with SMTP id
+ ada2fe7eead31-4aae166523fmr9629374137.26.1731322664527; Mon, 11 Nov 2024
+ 02:57:44 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 11 Nov 2024 05:57:43 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
+References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [RFC PATCH v4 05/19] Makefile: use "generate-perl.sh" to massage
- Perl library
-Reply-To: phillip.wood@dunelm.org.uk
+Date: Mon, 11 Nov 2024 05:57:43 -0500
+Message-ID: <CAOLa=ZTGtGJDnMmuv++FS9Rv4KiRQewOepo_qOY=6h1xtNmNZA@mail.gmail.com>
+Subject: Re: [PATCH 00/10] refs: optimize ref format migrations
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
- Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>, Taylor Blau <me@ttaylorr.com>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <eddafe1cf8935fd25d107645168ace3f65e1064c.1729771605.git.ps@pks.im>
-Content-Language: en-US
-In-Reply-To: <eddafe1cf8935fd25d107645168ace3f65e1064c.1729771605.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary="0000000000006948a40626a0f86f"
 
-Hi Patrick
+--0000000000006948a40626a0f86f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 24/10/2024 13:39, Patrick Steinhardt wrote:
-> diff --git a/generate-perl.sh b/generate-perl.sh
-> index 12e116b76e5..cb1629857c6 100755
-> --- a/generate-perl.sh
-> +++ b/generate-perl.sh
-> @@ -17,10 +17,20 @@ OUTPUT="$5"
->   . "$GIT_BUILD_OPTIONS"
+Patrick Steinhardt <ps@pks.im> writes:
 
-I need to add
+> Hi,
+>
+> I have recently learned that ref format migrations can take a
+> significant amount of time in the order of minutes when migrating
+> millions of refs. This is probably not entirely surprising: the initial
+> focus for the logic to migrate ref backends was mostly focussed on
+> getting the basic feature working, and I didn't yet invest any time into
+> optimizing the code path at all. But I was still mildly surprised that
+> the migration of a couple million refs was taking minutes to finish.
+>
+> This patch series thus optimizes how we migrate ref formats. This is
+> mostly done by expanding upon the "initial transaction" semantics that
+> we already use for git-clone(1). These semantics allow us to assume that
+> the ref backend is completely empty and that there are no concurrent
+> writers, and thus we are free to perform certain optimizations that
+> wouldn't have otherwise been possible. On the one hand this allows us to
+> drop needless collision checks. On the other hand, it also allows us to
+> write regular refs directly into the "packed-refs" file when migrating
+> from the "reftable" backend to the "files" backend.
+>
+> This leads to some significant speedups. Migrating 1 million refs from
+> "files" to "reftable":
+>
+>     Benchmark 1: migrate files:reftable (refcount =3D 1000000, revision =
+=3D origin/master)
+>       Time (mean =C2=B1 =CF=83):      4.580 s =C2=B1  0.062 s    [User: 1=
+.818 s, System: 2.746 s]
+>       Range (min =E2=80=A6 max):    4.534 s =E2=80=A6  4.743 s    10 runs
+>
+>     Benchmark 2: migrate files:reftable (refcount =3D 1000000, revision =
+=3D pks-refs-optimize-migrations)
+>       Time (mean =C2=B1 =CF=83):     767.7 ms =C2=B1   9.5 ms    [User: 6=
+29.2 ms, System: 126.1 ms]
+>       Range (min =E2=80=A6 max):   755.8 ms =E2=80=A6 786.9 ms    10 runs
+>
+>     Summary
+>       migrate files:reftable (refcount =3D 1000000, revision =3D pks-refs=
+-optimize-migrations) ran
+>         5.97 =C2=B1 0.11 times faster than migrate files:reftable (refcou=
+nt =3D 1000000, revision =3D origin/master)
+>
+> And migrating from "reftable" to "files:
+>
+>     Benchmark 1: migrate reftable:files (refcount =3D 1000000, revision =
+=3D origin/master)
+>       Time (mean =C2=B1 =CF=83):     35.409 s =C2=B1  0.302 s    [User: 5=
+.061 s, System: 29.244 s]
+>       Range (min =E2=80=A6 max):   35.055 s =E2=80=A6 35.898 s    10 runs
+>
+>     Benchmark 2: migrate reftable:files (refcount =3D 1000000, revision =
+=3D pks-refs-optimize-migrations)
+>       Time (mean =C2=B1 =CF=83):     855.9 ms =C2=B1  61.5 ms    [User: 6=
+46.7 ms, System: 187.1 ms]
+>       Range (min =E2=80=A6 max):   830.0 ms =E2=80=A6 1030.3 ms    10 run=
+s
+>
+>     Summary
+>       migrate reftable:files (refcount =3D 1000000, revision =3D pks-refs=
+-optimize-migrations) ran
+>        41.37 =C2=B1 2.99 times faster than migrate reftable:files (refcou=
+nt =3D 1000000, revision =3D origin/master)
+>
+> Thanks!
+>
+> Patrick
+>
 
-case "$OUTPUT" in
-*.pm)
-	dir="$(dirname $OUTPUT)"
-	if ! test -d "$dir"
-	then
-		mkdir -p "$dir"
-	fi
-     ;;
-esac
+I read through the series, apart from a few small nits, the patches
+look good and straightforward.
 
-to create the output directories when building out of tree using CMake 
-on Linux. I'm not sure why it works on Windows without this, or why we 
-don't need to create the leading directories when generating 
-clar-decls.h or clar.suite as CMake seems to do it for us when it 
-initializes the build directory.
+Thanks
 
->   sed -e '1{' \
-> +    -e "	/^#!.*perl/!b" \
->       -e "	s|#!.*perl|#!$PERL_PATH|" \
->       -e "	r $PERL_HEADER" \
->       -e '	G' \
->       -e '}' \
-> -    -e "s/@GIT_VERSION@/$GIT_VERSION/g" \
-> +    -e "s|@GIT_VERSION@|$GIT_VERSION|g" \
-> +    -e "s|@LOCALEDIR@|$PERL_LOCALEDIR|g" \
-> +    -e "s|@NO_GETTEXT@|$NO_GETTEXT|g" \
-> +    -e "s|@NO_PERL_CPAN_FALLBACKS@|$NO_PERL_CPAN_FALLBACKS|g" \
->       "$INPUT" >"$OUTPUT"
-> -chmod a+x "$OUTPUT"
-> +
-> +case "$(basename "$INPUT")" in
+--0000000000006948a40626a0f86f
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fa6f4199e08f5180_0.1
 
-Nit: there's no need to call "basename" here as "*" will match directory 
-separators in a case statement.
-
-Best Wishes
-
-Phillip
-
-> +*.perl)
-> +	chmod a+x "$OUTPUT";;
-> +*)
-> +	;;
-> +esac
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jeDR5WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM2dOQy9rQkRiOWRkQm9YbXhLZktCOWVvWSs2SUhkcgpQWm1vTU5TWGJt
+Y0dBeUJVbG1DZGZrUzlrY3BBSi9YZkYrU0hGSUQvb2Uyc1JrWnpFc0gvdzNlUXlwaTVuSnNQCmly
+RGJlQVpiZGVYeTR5NENkMXAwbTdNOW9zNDgwZG1JTjJIQVhUWnJINk04eGxNR28vSUVORUs4bWR0
+MGRxQmgKRjNrTnB4VWZqSGduMkUwem42MTFxV1R1MENFck5wdlUrVGduTXdjN2U1QWMzU0F0V3dt
+K29QWjFzUnA0c29qRAp2K3R1Z014RTl0dytac1RvWG9ZU2t0TmFTaXFCYWhuNFQxdlJhc1M4TmRW
+eXFHcEFXYTdmanN1RlkzT3dOanRiCnh6cnRnOERSQ01YZmV3SkdXamNEUFdreU1Vd1JpUElzdVBO
+cm1UNDhSb21adkczYlZJZnhWUjVEYzB6bkJkZEcKaSt4WWVzdlZFR2plZUNoOWhxb1dpVlVUMHRB
+dHJFNTV2UHgwdzRvbk15ejVCblhoYlRIMThreGNaTXNwc3l6MgpZRDVyU3QwZ080YkJjR3ZqVzlx
+UWRoWmVtdTRkeklrWEQvY2FmWVBGT0U4NnluVTJ3eWtISmprYUV5MEVaR2J6CmV2SHBmVU9odnB3
+V1cxRG5Oa25wbzE0bjVJbm9LNlBiZXRmaW55MD0KPVZ1TFYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000006948a40626a0f86f--
