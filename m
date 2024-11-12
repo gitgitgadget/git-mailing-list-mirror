@@ -1,154 +1,102 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D59119E992
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:48:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BE421315C
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:49:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408526; cv=none; b=Fgjct9Y5xZdUimvavfw/zoz5hyX9gI+gTRFlUMxJMZmLJioA05XcT4kBEn0hrz6RqkAwpwJtrIjvCWh3wnXxwInU/ZVCpU8j3jPt6J0OIVx5VthwDA0HLt0hJNyenoIYPdaV/11Ob8NaTu4UjcpXeM7+NPCN4e7ib8yTPb7OSuA=
+	t=1731408556; cv=none; b=I9nr3RbniRHdn/FovzGyjCuyi8Gs5FN/B096vHM3FT1kuYjRP3gMOgoR7coo/TCHC0gvYvnuQnhz0eyJLnI3R94N6xfZdHkb3K9bfP0/zZTJh4AdhOyLPArIz7krGAkwKb8KUhJPbVTW3bnIYT6ZFg7k/5RLjCAZ9ehxeUuRG9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408526; c=relaxed/simple;
-	bh=kfMFy9qHNX7hS/QBgIQbyGSbmfO+cBpR1ZN1TD0ecnw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZZfZIu7R3M9iBfuEBi8lRc63N21u2mtWpxZrnRg/Vwvd3PBewLV9jpZUMtN6j34lTKZH42rq9l+W/PNNjaR+pMTa5N+b9ggwO1Qjp6oYjWfkXtVqqYm3dYpFOgXPPRP3NdYZgbecdd/VbHPEhpAEm3vr9szwpx2c7Whs8dCdE5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hCLM5uKD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GOcY7gsU; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731408556; c=relaxed/simple;
+	bh=gx9Kv53IGf64PMi5wNnBO+DUTz/077zCocTibWulhZs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LcvMxAE6noSZs35ahXeE61d4aN3G4k7n8wAhNHV25FGVYxWSz5WJeNqyqyLq/cmKdrEBcxNeMxK2jKdWP/G3t8Zx/CYL52bfDRsK7SW82Jhrf1CE79aPiUpntM3VHsl7pgmqOEbQ7rlcOnH5rTw57tYJFzI+lbtmQ8VEnkdLT0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b=omCwFszm; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ucla.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hCLM5uKD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GOcY7gsU"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8194A2540195;
-	Tue, 12 Nov 2024 05:48:42 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 12 Nov 2024 05:48:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731408522; x=1731494922; bh=VIzazEr7yj
-	Mstczm7eTQylTpHz4SEPX2i46IyAC7efw=; b=hCLM5uKDY61XNZZeT5FhbG83Pv
-	CEXAnvuXerRWjnrCdO728AGjA2oM3SmaCcx7ye+PlwfyYNv8GzZwRAAGvYlmqOA3
-	pNID6fOqDr8+jsv6QUqEJMmpVMy9Q+oMYnPwBGDC5FXHw1Tv3L5tqqST7jzxtc3s
-	81kBiet8N+t6RVl23az/cEH4jnh39VR7WQDK61hWsXB0RwQHcLYZw7c2mwOSGXL6
-	zJSOeD2b7aVvttN2NKsws3ggTmpjGeizdaTEuzhKk+j3sT/AV4/0DPQDc9FHeruC
-	KXlcsSJ2BRSn/JT+pLWj8xAqkqPi/N4EQR1WASLkenw8m27kWvklJrMiEssg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731408522; x=1731494922; bh=VIzazEr7yjMstczm7eTQylTpHz4SEPX2i46
-	IyAC7efw=; b=GOcY7gsUc6G2dO4aMuE0LHWVpyB5FpivkDV07id96g2OzsT4GCk
-	O18R3U6GkthKd09lOFNvkbvG8EOYtTYw1wIoM9N2ArZPRtNPktA4s/zG//2b50O9
-	/PaqIDjuXnfDBx9MLraUXYwyqsz41Y9fh4bYfbityCW6LvTtEGJV+dlBDrPdsoqF
-	YPZySPymhSpDsKr85aA2MIDPGE+ftEMcy3+/I0st/rco2Eu30+uPMycXsTi7yN8y
-	4KUIa+UY4HxfXtnamPEnt4SgQaGKE0HIQHqawFDF0gjkPA7v0Rnj+xeca12jPaWF
-	3+qMAwDm5ZfYc6zzy1iEhKWxG3fDW8ftSRQ==
-X-ME-Sender: <xms:iTIzZ8zAz_zXGW1PgZ8TsNFueYg1OcwLVv6DfDyatwiTEePxglOSsQ>
-    <xme:iTIzZwR7sje3QAqrgmY6dbP-vPwxoyfcOnuNSLLA1hTu2Wr-V-JihyMcBBgnH2MMg
-    Czm_QZAHV5nmyP-lg>
-X-ME-Received: <xmr:iTIzZ-VQlOjBJ4r0-Zl3NoFR8UsXlHA0gang_gINr2o6ZtPriAamjtYLXg29dgtDbmik7il2FqgdQMBWBFJtFneINmzg8ekel_Mec2m_BiQs_UI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggddujecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeejudehgfevjeehfeeugedvgeekgeeugedvgeeutdefledv
-    vdfgieelvdfgjeejffenucffohhmrghinhepmhhuohhnrdgsuhhilhgupdhsrhdrhhhtne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehp
-    khhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhp
-    lhhushdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepuggrvhhvih
-    gusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:ijIzZ6ib07W_iWkgNyInP7Y4LJybhGmcCEohl9E0K40wxALlDP8eIA>
-    <xmx:ijIzZ-D6FfSLMQF-Ec1ZcFWVHHGwSkrDR2bNBmQE9mUVQ4PCHb9NRw>
-    <xmx:ijIzZ7KtJ7RhzQHxZ3FOZ26D067AUw5YQJFyS45ACOXFlJoR8xKCyg>
-    <xmx:ijIzZ1ByqEnhQFiQyd1EiVEfKvaJkOYlTmBigaCfPq2eTZyvHlRxQw>
-    <xmx:ijIzZ608vfV-nyZALL6OyTNatAwgeQnKlPkgGOwDGTn_Kqs03GfKHj7V>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 05:48:40 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f45e97ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 12 Nov 2024 10:48:03 +0000 (UTC)
-Date: Tue, 12 Nov 2024 11:48:31 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: David Aguilar <davvid@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-Message-ID: <ZzMyf2GOtmpMhKNH@pks.im>
-References: <cover.1727881164.git.ps@pks.im>
- <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local>
- <Zyi7PA2m2YX9MpBu@pks.im>
- <ZyjlvNJ4peffmGZ1@nand.local>
- <Zy9ckDezMSKVA5Qi@gmail.com>
- <ZzHeMjqUjzWpdX-Y@pks.im>
- <89a2621f-2c30-473b-9a0c-48135244f33a@gentoo.org>
+	dkim=pass (2048-bit key) header.d=gmail-com.20230601.gappssmtp.com header.i=@gmail-com.20230601.gappssmtp.com header.b="omCwFszm"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-720be27db74so4099365b3a.1
+        for <git@vger.kernel.org>; Tue, 12 Nov 2024 02:49:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail-com.20230601.gappssmtp.com; s=20230601; t=1731408553; x=1732013353; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=N7CDHuVLfBRFHPe3hhN9DhCBlpe8e3DepYmAl3Kjl0k=;
+        b=omCwFszmwj1ShgGlYVB7sxOCuXQ8tZIwPWWr+K6UsSEaF4LLIXOg9I+f+gMf2YAZN4
+         STAaf/FNa6nYRhiN9zbHnWkmaOYlES8Xh/2zKdu2X84f35/DhB8xWpJtBPQFSCr2dPAE
+         UEuREuRMaUlI2VKMNTUSxgpbbmyDQDbds+ugQSUn53cFSrqiORyppDOo051dKpovk/Pw
+         VMh+nYyQgHfBUn1bdd4IU2MNRjknG/czIqLiNRM82d4hkrYic4EfJclzlUbIx1NkqwFM
+         McNGBuG7+QewoXkC+YCJGsbP5w2lBuCRR3S6kYOf7WP+bue6WRc7iO1Vh7tqcfvnJ+nF
+         xUng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731408553; x=1732013353;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N7CDHuVLfBRFHPe3hhN9DhCBlpe8e3DepYmAl3Kjl0k=;
+        b=AstjlYI+XvFABdJTWGZQdEZlrPSQqbHuMJVQHWH/JgcJ7xjTKgjeolBp8BStqAagpR
+         F6XLTOBotJDUZlNsWLxsUIzmwIZg8pLyhmoBfVhw9eq9I0wEw3VDbjCWMxhRm8K9+rAN
+         HN7Msv88l0fyHdwx5HXAKNhx1hrhfWMOSk/0E+hG6ae5lv6YfBL0BEYmnCZKsSpSgSBB
+         dMudAJlIcX/+dEUyvWRaOX+p33tJ6rKBe3sVaLjfmpMBYJBJTnx9/iQEWlB03MdtZX36
+         NYtsu8izW/9E/4/hEhPODAXZB6MHJjt6eD9pzfp0ES7AbWMprKnaEuXLH3c4wod/fEdZ
+         asJA==
+X-Gm-Message-State: AOJu0Yz0vyzRVR8kAY2T3uLYuqsPpsK7Hm2WG5KAK10adSv6esoYUIMy
+	krK7k0iDfe5MDJgtXDOvUdoC1aCJbeLoKYm/pJgpkSmsyXuRUJCIPS5hHXlHgmNguqeJ2l3zW1v
+	mDj4Bu8FAIrK+qHzGxZqn6KWoe/c=
+X-Google-Smtp-Source: AGHT+IHivLKx2LqBLCix/N9oddilxJ0Xvkryrw257mX/uqxzOE9uxgwTuQH6wDxiNp6D5VaxmDyeqEh8NePsIm2d9/c=
+X-Received: by 2002:a05:6a00:2185:b0:71e:74f6:f83a with SMTP id
+ d2e1a72fcca58-724121c7bd1mr29921228b3a.3.1731408553499; Tue, 12 Nov 2024
+ 02:49:13 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 12 Nov 2024 02:49:13 -0800
+From: Linus Arver <linus@ucla.edu>
+In-Reply-To: <xmqq34jx8adx.fsf@gitster.g>
+References: <pull.1811.git.git.1728820722580.gitgitgadget@gmail.com> <xmqq34jx8adx.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <89a2621f-2c30-473b-9a0c-48135244f33a@gentoo.org>
+Date: Tue, 12 Nov 2024 02:49:13 -0800
+Message-ID: <CAMo6p=GOjmUQWHE9QH0wUY=FCzN4-mjknryWRbp4dQW4MFthqw@mail.gmail.com>
+Subject: Re: [PATCH] trailer: spread usage of "trailer_block" language
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 11, 2024 at 04:48:14PM -0500, Eli Schwartz wrote:
-> On 11/11/24 5:36 AM, Patrick Steinhardt wrote:
-> > On Sat, Nov 09, 2024 at 04:58:56AM -0800, David Aguilar wrote:
-> >> The one thing that no one has mentioned is dependencies.
-> >>
-> >> CMake has less dependencies. Python is arguably a liability in the build
-> >> system arena, and Meson requires it.
-> > 
-> > Eli has menitoned [muon](https://muon.build/), which is a drop-in
-> > replacement for Meson written in plain C99. I don't know whether it is
-> > currently able to compile the Git project, but if this is going to be a
-> > concern for people I can try to make sure that it does.
-> 
-> I was wondering whether I should say something, because I don't really
-> feel the criticism was on-target to begin with. But...
-> 
-> I am delighted to be able to confirm, that muon works quite well here.
-> 
-> It did require two small tweaks for not yet implemented features in
-> muon, that meson had and which this patch series depends on:
-> 
-> the iconv special dependency, which I provided a patch for:
-> 
-> https://git.sr.ht/~lattis/muon/commit/75d33f6b6d482344d969e4ad6ce1527353f91cce
-> 
-> using fallback from gnu99 to c11 for the sake of MSVC, which I reported
-> and got the muon developer to implement:
-> 
-> https://git.sr.ht/~lattis/muon/commit/a70e9687f3bfb8b9c21baf9acdfe84f97a42b11f
-> 
-> 
-> (Note the commit author dates by the way. I had the same general thought
-> about whether muon could satisfy git users such as, frankly, ones more
-> interesting to me than "python has too many dependencies". Such as
-> perhaps HPE NonStop users, and I tried muon out a month ago. Yes -- even
-> though I am a *meson* maintainer, I consider this a useful alternative
-> to have. Meson's FAQ includes discussion about whether it makes sense to
-> require Python, and notes that we specifically avoided providing any
-> "provide your own python extensions" functionality because it would
-> prevent being able to ever rewrite in another not-python language. We
-> also document muon as an alternative in our FAQ.)
-> 
-> 
-> With these two small changes, muon compiles git successfully, and passes
-> all tests but one:
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks, I'll have a look at the test failure.
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Linus Arver <linusa@google.com>
+>>
+>> Deprecate the "trailer_info" struct name and replace it with
+>> "trailer_block". This is more readable, for two reasons:
+>>
+>>   1. "trailer_info" on the surface sounds like it's about a single
+>>      trailer when in reality it is a collection of one or more trailers,
+>>      and
+>>
+>>   2. the "*_block" suffix is more informative than "*_info", because it
+>>      describes a block (or region) of contiguous text which has trailers
+>>      in it, which has been parsed into the trailer_block structure.
+>>
+>> Rename the
+>>
+>>     size_t trailer_block_start, trailer_block_end;
+>>
+>> members of trailer_info to just "start" and "end". Rename the "info"
+>> pointer to "trailer_block" because it is more descriptive. Update
+>> comments accordingly.
+>
+> All makes sense.  Often "_info" suffix has very low information
+> density, as everything is "info" in a sense ;-)
 
-Patrick
+Exactly.
+
+> Will merge to 'next' (unless there is a belated "it may not break,
+> but it is not a good idea because ...", that is).
+
+Yup, sounds good. Thanks!
