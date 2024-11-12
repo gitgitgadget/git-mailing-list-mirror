@@ -1,103 +1,177 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80FF20DD74
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 09:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B0719E992
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:20:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731403809; cv=none; b=WUM1+Uztcp4ZDSN6C8NDtDaJLLKsrJluEjnvJntWPWOMTtB1wGbpwn+7yAhT18ZXgwuYdxNk+ECNF5xS6GwnCYKf+j3XXZX+rKeEdpvHvt8/VNatX6IyLYfoUoiTOqgZ7JGmiD9FTZqTbaUtuwHG6pq+sqw3YdRgVzVvXlBLM8w=
+	t=1731406838; cv=none; b=mGzCwKQB4ze6la6j9kfGniJKLxXwHfw+s6lpUswcXZiSCc6oQgegUnVQTGl/VVNtFlqoD1YqP2xXFuiJ4pl4IRYGnYsyrUehi1KsyFTzbF2oRYqmlHS34/jY7niYGT/IhAhpSqnDUcnRAzCEXw7s2u4jsZ6h2mL299qTHw3qV0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731403809; c=relaxed/simple;
-	bh=yxGpn0ISMb872ixYHy0CL2vZub04WDuSVS352cRe/Kc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Mgm6oEC1MNoUJx1k+ZUElc1XsAa+qhB2u0I3ktbWNNhyEJmjLSsxWDMOHa5WJeSDgbTD1+/QcWU/NVqoKMZUEfIpixFjn4a84p5xmiVQSkzLI7CzArWAxnFjWxmnnolz+aEeLeGowJYJ+FC0yQeBp7zDGbfwkzFl/w7bS41HQ/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EzV/NtdN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UUEEyOZl; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731406838; c=relaxed/simple;
+	bh=UlM1dGCSsOAD+OBQ541pTnkx/ox+G6N8zb4umCSIemA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mZeLRwWdR3wuv/PnVfJOXN2frOANUp+rGM4oHcZJADb68DhCl2npj7AcojefAcw6aRDKuqSpRSjne66ZnZVZCmJrAfDNO8Mylx2JwAOyNlApW0S3uu0ppWbjVEyL18k2O1PWRMjMGExOkvyGK2AcipPEA2lk4HWMF5IARW1AXvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MhF6aJ5k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EvEYSgBO; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EzV/NtdN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UUEEyOZl"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C2D6E254015A;
-	Tue, 12 Nov 2024 04:30:06 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 12 Nov 2024 04:30:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731403806; x=1731490206; bh=yxGpn0ISMb
-	872ixYHy0CL2vZub04WDuSVS352cRe/Kc=; b=EzV/NtdNnlRQUK0/G6+w5dehTn
-	esWBXd6GB3acJxpE4p8b3RSH7TyNwlZky5Fd78MOPLiS+tioA7EVbvTCfi7lhhVh
-	JWKB6linq4Xyhqf1TmW3AuQONI6CoQltMuGp7QUrrzqE88ftUgT59jKKck6m6wy6
-	CUpGoGDqU59rdDU3dJYATSj5WJabJcSAHhmqh6I54grknokm20KsrWp5njeMtsHH
-	tzA34qmMFJEF5HjObRFFXdfIOiCf3t+6Pdr2/9IwzYdPK5v7SKhIyJJgB5xfKSYv
-	VP6EBQUXPtdamT/N6JLAhY4GX8llOWB/v9JAn0P/2vduBJzOIPvvyDuuALFw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MhF6aJ5k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EvEYSgBO"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1259C1380707;
+	Tue, 12 Nov 2024 05:20:35 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Tue, 12 Nov 2024 05:20:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731406835;
+	 x=1731493235; bh=Nc7sowS6AfVseu1fq8vpODwUY/gFLOvfdZ99EEw+NzI=; b=
+	MhF6aJ5knekMlCy7eccxPAh3z/pqNU8CrviEkyjIta6pT1/QRfrOrJhqpAgq/SSX
+	9ZNMhkwbOBy2bp55dXhWuX+aNQkYEzceqXtk7hAGE3U/zDzSojcQIhnxzKHz198/
+	IbpKsbMLMUv6E81H4LQXXVcwGFVufBZ8k0aVahwI3HKLBNNq+m2PyILDoTU3fUKD
+	AwVrZW+npVZ/WjSGJ7dLJ0vz+t5gWZTSPO5odbp6xwUmIUlp+eXsvrnIljYJA/Tz
+	ude/45jRfXEjH7lOw0V+PBWdowqgZZd97CW8WZosYpd66QKlkOFCQIprPLEDDQDM
+	Q1c/+Js3nxBJM/HCYiBPDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731403806; x=1731490206; bh=yxGpn0ISMb872ixYHy0CL2vZub04WDuSVS3
-	52cRe/Kc=; b=UUEEyOZlJkT18UERDa/6dHW47LVlBoJAm5Lx+kO3Vg59F/Ngx44
-	PH+PVJbWCXtYDFfbr4v5/cgIt4Bt3kBdWtl8riAljBDxMph0qD8INcDYn3fHtChr
-	13M8bHx0DdfQW34jkFRO0by4epEqkCqZKpn3+OlUTo2oG/TaXVSBHom0isXO6y2+
-	/5jvNYzG9TmtcwWPKrXnJ1RG5685ztiVnzrk1qRjpWkYPqSIEK1xhX8plQZyVmnb
-	jtr98ZIBUOHaNpemLg1yomXb4lqR4XV6KxV0z0BbTCYaed7pIQOTmxTBs3ZKNoOz
-	GutkEajRQDdMe6Way1aMqSFvDV0e5JRML8A==
-X-ME-Sender: <xms:HiAzZ0gNLIa50y8GEm4bFaUvzta4oFas_gotPT4LG9VixAdmvJVXYg>
-    <xme:HiAzZ9BzBqvRuz9D7uoXvhtyjfJtb4nWhIVeYfOB26PiB_vKmY5mYOojtN-QphES-
-    aaPyWOYYj99AANsJQ>
-X-ME-Received: <xmr:HiAzZ8GH7Li7W8JM7dZ__RduUDembdIJMERx7KB1fI3oZqwkhwyVidNK1y3hI2YTFUuMGZmWUR_TtJkxNlan62yq9UVdT2fdqv5F>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggddtudcutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731406835; x=
+	1731493235; bh=Nc7sowS6AfVseu1fq8vpODwUY/gFLOvfdZ99EEw+NzI=; b=E
+	vEYSgBOTMWA4hSGWUjEG/uACnEGLezmLSqbcqpm1XpeHnF/FDPZ4t5LnW1zRj73E
+	KPiggjjtGXh4cehuQPlUAMZSD+r/NizoHtD3pq5rEdC8LR6L7+Ac6VeFJFNum0jq
+	J/FL9z76lmQSwCjZU6tIeNh7I/gUcL/UlAV/iPngA+R0u0tW83uJcHOwAZCCi+BN
+	aeIkC8MdD9go7J6rDldk/FqdCBOZQPR9k7JSGW4jRG3/G0+/Lqz2D6WKoOYMIsK4
+	BEGLWGfgtxYtcH2s8AaEkRfCkwMmLXDQaHYNxSc1gMXUSwLczLPaUsg1bBjyFsRB
+	v8g3qgz2+bueVUjY2uoPw==
+X-ME-Sender: <xms:8iszZ8xFI4l8dWbAIMAvY12AnVyrxyQQNA8ln03SQrjPHfxVVp2k4I0>
+    <xme:8iszZwQcwJySptP3KnNi24Hc4_W2A2Hoq-YmUt0y-o69TJVgLaYChmj0y_2gOPBvy
+    Oyb2P_wG5Hub6rb1Q>
+X-ME-Received: <xmr:8iszZ-XdB5oHC4fnjyD512QAw-6g9h4m5LmswTksR4aAw3NkH2Di1l9JPh6Co3F2JTY9cszxMIScfmeCN61fWEF_WbAQcJeYhJq4Y_Dcvw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggdduudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepvghrmhhilhhlshesvghpihgtrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HiAzZ1SffAexehhjWS_U5ErX-2qiHBRpqtyLQjHpOGEVRO5lj9xeTA>
-    <xmx:HiAzZxwT6Rzt71MJkG4jbM6jfp-vb7Tyidq8PRnkRpvBcpmPXIIapA>
-    <xmx:HiAzZz7nHh1w6YThm2u6yDlSmvknux1ga4-_bO48fsdmilDv98-mbg>
-    <xmx:HiAzZ-y6r42j0OhCOQsg10d89ikcqEj-BBLF4XFwNykmPMFkiDfJsg>
-    <xmx:HiAzZzs7zVUbjjMefmBi5oy3GCFryO4h_cCZX5pd69G8_sQKCZYJmqqS>
-Feedback-ID: if26b431b:Fastmail
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefuff
+    fkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpeetgfeuve
+    eujedvueejgeetleekvddvffehtdefvdegvdfgveelgeffjeffueekffenucffohhmrghi
+    nhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggv
+    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:8iszZ6iktBCwNOR6vtAFwZPmXUKxn43Z9XCr6AFJWHoJer-BeiIPZw>
+    <xmx:8iszZ-DP_B8wnkXtPn8J7E3L0dr22nNV4lrZsIxrGohqZUo7KGDfOA>
+    <xmx:8iszZ7JeziRAxYQYb8ddmw12r4kuq5CkwUXUQ3z0rFSMJJJF1IUEjA>
+    <xmx:8iszZ1DPpy_cA5FRgrID4HvRNPa7FdJElrXYy3BdhSm6YX_kRF86zg>
+    <xmx:8yszZ151s7ZgTBwsgHpQTFZwWREuRq1DEtsFdnflGPtUhKubjcTuOV4Q>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 04:30:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Eric Mills <ermills@epic.com>,  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] refspec: store raw refspecs inside refspec_item
-In-Reply-To: <20241112083937.GC3529122@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 12 Nov 2024 03:39:37 -0500")
-References: <20241112083204.GA2636868@coredump.intra.peff.net>
-	<20241112083937.GC3529122@coredump.intra.peff.net>
-Date: Tue, 12 Nov 2024 18:30:05 +0900
-Message-ID: <xmqqttcc4x5u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 12 Nov 2024 05:20:33 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	stolee@gmail.com,
+	phillip.wood123@gmail.com,
+	me@ttaylorr.com
+Subject: [PATCH v2 0/3] sequencer: comment out properly in todo list
+Date: Tue, 12 Nov 2024 11:20:10 +0100
+Message-ID: <cover.1731406513.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.47.0.317.g7d2562b9734
+In-Reply-To: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> The refspec struct keeps two matched arrays: one for the refspec_item
-> structs and one for the original raw refspec strings. The main reason
-> for this is that there are other users of refspec_item that do not care
-> about the raw strings. But it does make managing the refspec struct
-> awkward, as we must keep the two arrays in sync. This has led to bugs in
-> the past (both leaks and double-frees).
+Fix three places where the comment char/string is hardcoded (#) in the
+todo list.
 
-Yeah, I was wondering about this while reading [2/3], and it is very
-satisfying to see that the concluding step for the series ends in
-this change.
+This series does not depend on any other topics.
+Topic `jc/strbuf-commented-something` was mentioned on the v1
+discussion.  But it was kicked out of `seen` last week.  Also it doesn’t
+compile when merged into `v2.47.0` or later:
 
-Thanks.
+```
+strbuf.c: In function ‘strbuf_add_comment_lines’:
+strbuf.c:384:24: error: ‘comment_line_str’ undeclared (first use in this function)
+  384 |         add_lines(out, comment_line_str, buf, size, 1);
+      |                        ^~~~~~~~~~~~~~~~
+strbuf.c:384:24: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Makefile:2795: strbuf.o] Error 1
+```
+
+§ Changes in v2
+
+The first version just had patch 1 but this one fixes two other places.
+The two other places where unearthered during the v1 discussion.
+
+Rebased on `master` (b31fb630c0 (Merge https://github.com/j6t/git-gui,
+2024-11-11)).
+
+§ CI
+
+Some failures that didn’t look relevant.
+
+• linux-leaks
+  • t0301-credential-cache
+  • t9211-scalar-clone
+• linux-reftable-leaks
+  • ditto above
+
+§ CC
+
+• Stolee for the first patch
+• Reviewers on the previous round
+
+Kristoffer Haugsbakk (3):
+  sequencer: comment checked-out branch properly
+  sequencer: comment `--reference` subject line properly
+  sequencer: comment commit messages properly
+
+ sequencer.c                     | 26 ++++++++++++++++----------
+ t/t3400-rebase.sh               | 16 ++++++++++++++++
+ t/t3437-rebase-fixup-options.sh | 15 +++++++++++++++
+ t/t3501-revert-cherry-pick.sh   | 12 ++++++++++++
+ 4 files changed, 59 insertions(+), 10 deletions(-)
+
+Range-diff against v1:
+1:  5267b9a9c8c ! 1:  fc3b4438845 sequencer: comment checked-out branch properly
+    @@ Commit message
+     
+         `git rebase --update-ref` does not insert commands for dependent/sub-
+         branches which are checked out.[1]  Instead it leaves a comment about
+    -    that fact.  The comment char is hard-coded (#).  In turn the comment
+    +    that fact.  The comment char is hardcoded (#).  In turn the comment
+         line gets interpreted as an invalid command when `core.commentChar`
+         is in use.
+     
+    @@ Commit message
+     
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+    +
+    + ## Notes (series) ##
+    +    v2:
+    +    • Message: “hardcoded” (more common according to `git grep`)
+    +
+      ## sequencer.c ##
+     @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
+      		/* If the branch is checked out, then leave a comment instead. */
+-:  ----------- > 2:  710c5b1a3f6 sequencer: comment `--reference` subject line properly
+-:  ----------- > 3:  86b4b485e0b sequencer: comment commit messages properly
+
+base-commit: b31fb630c0fc6869a33ed717163e8a1210460d94
+-- 
+2.47.0
+
