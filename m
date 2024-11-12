@@ -1,270 +1,123 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F5520DD75
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 08:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E5C20B7FA
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 08:49:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731400780; cv=none; b=kW3SibzgvmUswChfqz7etFmv+nfqoNWYMD0plA/oI/d19TaTmY7/jw6dlPtNB9lQotpL16aZNeShUdJU7JMHlwQdak4FZDe4ia8scA884a/pJ51UOXurgiJaxwaUkzu9G0K7bAjy6G/yMVP4v/krm9h/48pZkqIlzkbepoK53c4=
+	t=1731401393; cv=none; b=ZlG5b7h0fn3bTGc5IqXsxcbTeBagpGtcW2IG6m0li1Y7EDmOMZYlGL4TWFTiIDSGq+shhfN1XempIem9Z2WCzszbY1epM/Fn4/2YMJKIP3lFg+HbZ5bvN8jrKyBKPf7aRvmoiCBKBTb5JIO0zojLfqntGVykgGxhfoJGM+QXwrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731400780; c=relaxed/simple;
-	bh=vgV7HyAYrSn5zoOe0sTTL5WCuoRwMpBDU4//8vYJwfo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u7Ei8KietEYRDGqSjsLWiora2jBsa/GIKGDQO5LqGDpiVkrDzXCip3D03Dxm3F+asJPa9PatArHYu896fkFVqzRCn09ZvHy7yeGPoimOcc36rj7mrtVMks4zd3LDvlgJqtCf5ir1SceEBv8sXhtAvCZ4n1BDBvtKvSudE1iRx8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=XCERSCo2; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1731401393; c=relaxed/simple;
+	bh=vrfDckJbzd9uu378xAoeFW0Y8bZjwWhlyLydI99AhgM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SkY9u9ger4EIztwowtCiLN6+4pHZoxufqdN/4qAbjEboXegRg2uM9zQMp9not8Ii5cbfW+k2Xix+npJrpZIanaC3hVghB72h/D4KBqC/yD4iuSFiUSvDKY1b6PpyJdLIo7j4y4IgiamDD/0itECSAbLGEBvuIUYI3wxzDHFq1aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=bPOWXgbg; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="XCERSCo2"
-Received: (qmail 30348 invoked by uid 109); 12 Nov 2024 08:39:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vgV7HyAYrSn5zoOe0sTTL5WCuoRwMpBDU4//8vYJwfo=; b=XCERSCo2eZqynJuu56d2zbEDzIFHHo+H4QNluHmDnr2IhHAc8w8gtWBQpagWBEv5oEF4MuoOw7c1Gxzhnnd/2kpLjaS0guTnb8UjEhIzP5NcC2w0sBfYxIxJpsMrRYSm2e6h5wanPMKlGBGi1weJTqXYl/SPAL+E/oDQFUy9EW5IWQLMVhN72pnog1I7XEkbJh1W5SNOtWmwQKflYFN1q4JBVAsXaLwG8WyjtAVGi/nEviluU8AIQcYDkyVWZdW9A8KNcEgnC+c3lZKY6oSTKX77eU/yjQRXWFIu5Z3T6+RTURjK/0nxTanPETjaTd2oeizQQw0ItK/qbmPWdKbkWg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Nov 2024 08:39:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27586 invoked by uid 111); 12 Nov 2024 08:39:42 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Nov 2024 03:39:42 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Nov 2024 03:39:37 -0500
-From: Jeff King <peff@peff.net>
-To: Eric Mills <ermills@epic.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH 3/3] refspec: store raw refspecs inside refspec_item
-Message-ID: <20241112083937.GC3529122@coredump.intra.peff.net>
-References: <20241112083204.GA2636868@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="bPOWXgbg"
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 4AFA74C39F
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 09:40:25 +0100 (CET)
+Received: from [192.168.3.191] (unknown [92.173.128.58])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id D0BB460128;
+	Tue, 12 Nov 2024 09:40:13 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1731400818;
+	bh=vrfDckJbzd9uu378xAoeFW0Y8bZjwWhlyLydI99AhgM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=bPOWXgbgv4eGzvxppvpLNACK8IoNqEZOgm8S3qgO9c25a0NLq0IPJ6/z+76IrsTLv
+	 MQGJ5pgIqlzdK/q9KBk/gXlQMeQ1a4Q4OOdIcJTa2qJeGqFoi0QdoUkfhf5T/yYLKy
+	 yc5UPdDFBwgWJWvUL+yral0RmCZlr9ZC5a/xr0a5g+HC76qsPGoAKHAUfj7eSgcrLK
+	 fNeo0sft2Ib1sXA4Eaiv4znCU2szdDRsoaUiQbAqZIi1+UIrBq64oUZjpTccASXwJm
+	 amT34s/IMCMn7QxuKNMTnr99uwazWnUAdWl7vvngjDU+NcpPYizUqivRvr2u09ujV/
+	 /eWp5bCZf/2jQ==
+Message-ID: <7b42828a-2cbe-47c6-b21e-b8c1e3a2ad01@free.fr>
+Date: Tue, 12 Nov 2024 09:40:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241112083204.GA2636868@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] doc: git-diff: apply new documentation guidelines
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+ Patrick Steinhardt <ps@pks.im>
+References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+ <c104bd50b646646e980905a9294209f381b9e61c.1731343985.git.gitgitgadget@gmail.com>
+ <xmqqo72l8egu.fsf@gitster.g>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr, en-US
+In-Reply-To: <xmqqo72l8egu.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The refspec struct keeps two matched arrays: one for the refspec_item
-structs and one for the original raw refspec strings. The main reason
-for this is that there are other users of refspec_item that do not care
-about the raw strings. But it does make managing the refspec struct
-awkward, as we must keep the two arrays in sync. This has led to bugs in
-the past (both leaks and double-frees).
+Le 12/11/2024 à 01:48, Junio C Hamano a écrit :
+> "Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Let's just store a copy of the raw refspec string directly in each
-refspec_item struct. This simplifies the handling at a small cost:
+> 
+> You may already have explained the rules elsewhere, but please
+> help me refresh my memory with some explanation.
+> 
+>> -'git diff' [<options>] [--] [<path>...]::
+>> +`git diff [<options>] [--] [<path>...]`::
+> 
+> Here, we just say `everything in literal, including placeholders`,
+> which is very pleasant for us writers.
 
-  1. Direct callers of refspec_item_init() will now get an extra copy of
-     the refspec string, even if they don't need it. This should be
-     negligible, as the struct is already allocating two strings for the
-     parsed src/dst values (and we tend to only do it sparingly anyway
-     for things like the TAG_REFSPEC literal).
 
-  2. Users of refspec_appendf() will now generate a temporary string,
-     copy it, and then free the result (versus handing off ownership of
-     the temporary string). We could get around this by having a "nodup"
-     variant of refspec_item_init(), but it doesn't seem worth the extra
-     complexity for something that is not remotely a hot code path.
+With the new document processor extension, the back tick quotes have
+become smarter and they behave basically like an inline synopsis
+section. Here, this means that the line will be formatted roughly as
+follows:
 
-Code which accesses refspec->raw now needs to look at refspec->item.raw.
-Other callers which just use refspec_item directly can remain the same.
-We'll free the allocated string in refspec_item_clear(), which they
-should be calling anyway to free src/dst.
+`git diff` [_<options>_] [`--`] [_<path>_...]
 
-One subtle note: refspec_item_init() can return an error, in which case
-we'll still have set its "raw" field. But that is also true of the "src"
-and "dst" fields, so any caller which does not _clear() the failed item
-is already potentially leaking. In practice most code just calls die()
-on an error anyway, but you can see the exception in valid_fetch_refspec(),
-which does correctly call _clear() even on error.
+All the keywords are literal, the placeholders are emphasized, and the
+syntactic signs ('[', ']', '...') are left without formatting.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/fetch.c  |  8 ++------
- builtin/remote.c |  8 ++++----
- refspec.c        | 25 +++++++++----------------
- refspec.h        |  5 ++---
- submodule.c      |  4 ++--
- 5 files changed, 19 insertions(+), 31 deletions(-)
+The general rule of thumb for the writer is: if it's a singled
+placeholder then quote it with underscores, otherwise use back ticks
+elsewhere.
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d9027e4dc9..0874da55d1 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -454,14 +454,10 @@ static void filter_prefetch_refspec(struct refspec *rs)
- 				 ref_namespace[NAMESPACE_TAGS].ref))) {
- 			int j;
- 
--			free(rs->items[i].src);
--			free(rs->items[i].dst);
--			free(rs->raw[i]);
-+			refspec_item_clear(&rs->items[i]);
- 
--			for (j = i + 1; j < rs->nr; j++) {
-+			for (j = i + 1; j < rs->nr; j++)
- 				rs->items[j - 1] = rs->items[j];
--				rs->raw[j - 1] = rs->raw[j];
--			}
- 			rs->nr--;
- 			i--;
- 			continue;
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 875d6c3bad..9093600965 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -377,7 +377,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 	for (i = 0; i < states->remote->fetch.nr; i++)
- 		if (get_fetch_map(remote_refs, &states->remote->fetch.items[i], &tail, 1))
- 			die(_("Could not get fetch map for refspec %s"),
--				states->remote->fetch.raw[i]);
-+				states->remote->fetch.items[i].raw);
- 
- 	for (ref = fetch_map; ref; ref = ref->next) {
- 		if (omit_name_by_refspec(ref->name, &states->remote->fetch))
-@@ -634,11 +634,11 @@ static int migrate_file(struct remote *remote)
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.push", remote->name);
- 	for (i = 0; i < remote->push.nr; i++)
--		git_config_set_multivar(buf.buf, remote->push.raw[i], "^$", 0);
-+		git_config_set_multivar(buf.buf, remote->push.items[i].raw, "^$", 0);
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
- 	for (i = 0; i < remote->fetch.nr; i++)
--		git_config_set_multivar(buf.buf, remote->fetch.raw[i], "^$", 0);
-+		git_config_set_multivar(buf.buf, remote->fetch.items[i].raw, "^$", 0);
- 	if (remote->origin == REMOTE_REMOTES)
- 		unlink_or_warn(git_path("remotes/%s", remote->name));
- 	else if (remote->origin == REMOTE_BRANCHES)
-@@ -768,7 +768,7 @@ static int mv(int argc, const char **argv, const char *prefix)
- 			char *ptr;
- 
- 			strbuf_reset(&buf2);
--			strbuf_addstr(&buf2, oldremote->fetch.raw[i]);
-+			strbuf_addstr(&buf2, oldremote->fetch.items[i].raw);
- 			ptr = strstr(buf2.buf, old_remote_context.buf);
- 			if (ptr) {
- 				refspec_updated = 1;
-diff --git a/refspec.c b/refspec.c
-index 8e8ee8542d..994901f55b 100644
---- a/refspec.c
-+++ b/refspec.c
-@@ -153,6 +153,7 @@ static int parse_refspec(struct refspec_item *item, const char *refspec, int fet
- int refspec_item_init(struct refspec_item *item, const char *refspec, int fetch)
- {
- 	memset(item, 0, sizeof(*item));
-+	item->raw = xstrdup(refspec);
- 	return parse_refspec(item, refspec, fetch);
- }
- 
-@@ -167,6 +168,7 @@ void refspec_item_clear(struct refspec_item *item)
- {
- 	FREE_AND_NULL(item->src);
- 	FREE_AND_NULL(item->dst);
-+	FREE_AND_NULL(item->raw);
- 	item->force = 0;
- 	item->pattern = 0;
- 	item->matching = 0;
-@@ -179,7 +181,7 @@ void refspec_init(struct refspec *rs, int fetch)
- 	rs->fetch = fetch;
- }
- 
--static void refspec_append_nodup(struct refspec *rs, char *refspec)
-+void refspec_append(struct refspec *rs, const char *refspec)
- {
- 	struct refspec_item item;
- 
-@@ -188,24 +190,20 @@ static void refspec_append_nodup(struct refspec *rs, char *refspec)
- 	ALLOC_GROW(rs->items, rs->nr + 1, rs->alloc);
- 	rs->items[rs->nr] = item;
- 
--	ALLOC_GROW(rs->raw, rs->nr + 1, rs->raw_alloc);
--	rs->raw[rs->nr] = refspec;
--
- 	rs->nr++;
- }
- 
--void refspec_append(struct refspec *rs, const char *refspec)
--{
--	refspec_append_nodup(rs, xstrdup(refspec));
--}
--
- void refspec_appendf(struct refspec *rs, const char *fmt, ...)
- {
- 	va_list ap;
-+	char *buf;
- 
- 	va_start(ap, fmt);
--	refspec_append_nodup(rs, xstrvfmt(fmt, ap));
-+	buf = xstrvfmt(fmt, ap);
- 	va_end(ap);
-+
-+	refspec_append(rs, buf);
-+	free(buf);
- }
- 
- void refspec_appendn(struct refspec *rs, const char **refspecs, int nr)
-@@ -219,18 +217,13 @@ void refspec_clear(struct refspec *rs)
- {
- 	int i;
- 
--	for (i = 0; i < rs->nr; i++) {
-+	for (i = 0; i < rs->nr; i++)
- 		refspec_item_clear(&rs->items[i]);
--		free(rs->raw[i]);
--	}
- 
- 	FREE_AND_NULL(rs->items);
- 	rs->alloc = 0;
- 	rs->nr = 0;
- 
--	FREE_AND_NULL(rs->raw);
--	rs->raw_alloc = 0;
--
- 	rs->fetch = 0;
- }
- 
-diff --git a/refspec.h b/refspec.h
-index 0461c9def6..69d693c87d 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -26,6 +26,8 @@ struct refspec_item {
- 
- 	char *src;
- 	char *dst;
-+
-+	char *raw;
- };
- 
- #define REFSPEC_FETCH 1
-@@ -43,9 +45,6 @@ struct refspec {
- 	int alloc;
- 	int nr;
- 
--	char **raw;
--	int raw_alloc;
--
- 	int fetch;
- };
- 
-diff --git a/submodule.c b/submodule.c
-index 307f73fb5b..7ec564854d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1175,7 +1175,7 @@ static int push_submodule(const char *path,
- 			int i;
- 			strvec_push(&cp.args, remote->name);
- 			for (i = 0; i < rs->nr; i++)
--				strvec_push(&cp.args, rs->raw[i]);
-+				strvec_push(&cp.args, rs->items[i].raw);
- 		}
- 
- 		prepare_submodule_repo_env(&cp.env);
-@@ -1210,7 +1210,7 @@ static void submodule_push_check(const char *path, const char *head,
- 	strvec_push(&cp.args, remote->name);
- 
- 	for (i = 0; i < rs->nr; i++)
--		strvec_push(&cp.args, rs->raw[i]);
-+		strvec_push(&cp.args, rs->items[i].raw);
- 
- 	prepare_submodule_repo_env(&cp.env);
- 	cp.git_cmd = 1;
--- 
-2.47.0.508.g57228aee23
+> 
+>> --1 --base::
+>> --2 --ours::
+>> --3 --theirs::
+>> +`-1` `--base`::
+>> +`-2` `--ours`::
+>> +`-3` `--theirs`::
+> 
+> Why aren't these `-1 --base` and instead mark up individual tokens?
+> 
+
+Here, it is quite awkward, because we are mixing alternate spellings of
+the same option (`-1` and `--base` have the same meaning) with the fact
+that these options are meant to be alternatives. The latter meaning is
+not what is usually conveyed in the lists of options, which blurs the
+following explanation.
+
+To clarify, from what I understand, it would be better to fully spell
+out the way these options are used by using the synopsis syntax:
+
+`(-1|--base) | (-2|--ours) | (-3|--theirs)`::
+
+Is it how it works?
+
+>> -<path>...::
+>> -	The <paths> parameters, when given, are used to limit
+>> +_<path>_...::
+> 
+> This has to do the _italics_ for placeholders, unlike the full
+> command line examples we saw earlier?
+> 
+> Where does this difference come from?
+
+Well, according to the rule of thumb above, the whole segment should
+have been quoted in back ticks. This is a mistake and must be fixed for
+consistency.
+
+
