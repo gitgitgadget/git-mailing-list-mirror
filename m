@@ -1,88 +1,88 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B0719E992
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58DC1F7558
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731406838; cv=none; b=mGzCwKQB4ze6la6j9kfGniJKLxXwHfw+s6lpUswcXZiSCc6oQgegUnVQTGl/VVNtFlqoD1YqP2xXFuiJ4pl4IRYGnYsyrUehi1KsyFTzbF2oRYqmlHS34/jY7niYGT/IhAhpSqnDUcnRAzCEXw7s2u4jsZ6h2mL299qTHw3qV0Y=
+	t=1731406844; cv=none; b=IXFH9S9VZ0KrcG4xCHFoTiP2otUk/bXcIWMLs4s7Qo+5+wCcEXGbJMZGI3XMsnTIdTufdiAcgLg0SE2jfeKgg5H3q7CbfNHF+rp7nJe2dGL1bnqd/5J7a5m37cTkFemtuwSptYGi6l1C/MuojIhwT/fowNTKO1Av7fRMY29PiSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731406838; c=relaxed/simple;
-	bh=UlM1dGCSsOAD+OBQ541pTnkx/ox+G6N8zb4umCSIemA=;
+	s=arc-20240116; t=1731406844; c=relaxed/simple;
+	bh=R+JMQX8AT4QKBmk4gvyCKGY9vq/vH0NvrnuTB3eT8D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mZeLRwWdR3wuv/PnVfJOXN2frOANUp+rGM4oHcZJADb68DhCl2npj7AcojefAcw6aRDKuqSpRSjne66ZnZVZCmJrAfDNO8Mylx2JwAOyNlApW0S3uu0ppWbjVEyL18k2O1PWRMjMGExOkvyGK2AcipPEA2lk4HWMF5IARW1AXvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MhF6aJ5k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EvEYSgBO; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=KBGMaC3R7rRctniVTMgexTC6CX4t4+6bTNErk97DcyKyH+CqWukDuKTX7qX5Q4eRP5onzbR+zOETvLdiQvz8QluOugeumncl4UOaRjiZtgvRCd2rwWjc5I6Yp3ZDBJs2d3pThFMa9QJPvXOwrToCPBq3Bb6xuNeQU8YOg1J3oKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=BOzbgn2x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aW0YfnAH; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MhF6aJ5k";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EvEYSgBO"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1259C1380707;
-	Tue, 12 Nov 2024 05:20:35 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 12 Nov 2024 05:20:35 -0500
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="BOzbgn2x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aW0YfnAH"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id DD1A813804CE;
+	Tue, 12 Nov 2024 05:20:41 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 12 Nov 2024 05:20:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731406835;
-	 x=1731493235; bh=Nc7sowS6AfVseu1fq8vpODwUY/gFLOvfdZ99EEw+NzI=; b=
-	MhF6aJ5knekMlCy7eccxPAh3z/pqNU8CrviEkyjIta6pT1/QRfrOrJhqpAgq/SSX
-	9ZNMhkwbOBy2bp55dXhWuX+aNQkYEzceqXtk7hAGE3U/zDzSojcQIhnxzKHz198/
-	IbpKsbMLMUv6E81H4LQXXVcwGFVufBZ8k0aVahwI3HKLBNNq+m2PyILDoTU3fUKD
-	AwVrZW+npVZ/WjSGJ7dLJ0vz+t5gWZTSPO5odbp6xwUmIUlp+eXsvrnIljYJA/Tz
-	ude/45jRfXEjH7lOw0V+PBWdowqgZZd97CW8WZosYpd66QKlkOFCQIprPLEDDQDM
-	Q1c/+Js3nxBJM/HCYiBPDA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731406841;
+	 x=1731493241; bh=n5wHIGDMXrv01qe41SC9YUV2e/SAP9bN9EGn/vuLeMM=; b=
+	BOzbgn2x0LxEmhqX8C8qH+x2C4A8POq5f773iMMcntzkuuSTf6BYkjM0aQ3Wipdq
+	+1sS1x1F6Lt8hvVjXtRK8zIwjdQKtV03+QmrxveChhgxHwWnzJxVe9kyyel+qvtq
+	N6nrPScaHLlMldRTQdZnxMkDybEtmhqLu6pXed1b8zkwR+4aWekzPWaboD655mzn
+	ulgjltZcrBw0ij5QxjjUPUMYPncCYD8JB+iaxSNpjEux15qtqsGYk4RNG9QlINBZ
+	0lUGW+Q648pMFEEKYj9bvnZFEt09PCbeHNHb6qK9GerWJLDgjyZmnqvr11C38WS2
+	6MNfnkwpCnfng5BruIR0ZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731406835; x=
-	1731493235; bh=Nc7sowS6AfVseu1fq8vpODwUY/gFLOvfdZ99EEw+NzI=; b=E
-	vEYSgBOTMWA4hSGWUjEG/uACnEGLezmLSqbcqpm1XpeHnF/FDPZ4t5LnW1zRj73E
-	KPiggjjtGXh4cehuQPlUAMZSD+r/NizoHtD3pq5rEdC8LR6L7+Ac6VeFJFNum0jq
-	J/FL9z76lmQSwCjZU6tIeNh7I/gUcL/UlAV/iPngA+R0u0tW83uJcHOwAZCCi+BN
-	aeIkC8MdD9go7J6rDldk/FqdCBOZQPR9k7JSGW4jRG3/G0+/Lqz2D6WKoOYMIsK4
-	BEGLWGfgtxYtcH2s8AaEkRfCkwMmLXDQaHYNxSc1gMXUSwLczLPaUsg1bBjyFsRB
-	v8g3qgz2+bueVUjY2uoPw==
-X-ME-Sender: <xms:8iszZ8xFI4l8dWbAIMAvY12AnVyrxyQQNA8ln03SQrjPHfxVVp2k4I0>
-    <xme:8iszZwQcwJySptP3KnNi24Hc4_W2A2Hoq-YmUt0y-o69TJVgLaYChmj0y_2gOPBvy
-    Oyb2P_wG5Hub6rb1Q>
-X-ME-Received: <xmr:8iszZ-XdB5oHC4fnjyD512QAw-6g9h4m5LmswTksR4aAw3NkH2Di1l9JPh6Co3F2JTY9cszxMIScfmeCN61fWEF_WbAQcJeYhJq4Y_Dcvw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731406841; x=
+	1731493241; bh=n5wHIGDMXrv01qe41SC9YUV2e/SAP9bN9EGn/vuLeMM=; b=a
+	W0YfnAHOtze3pT+Cd0QLurD1J7ao54/GTPNtZoJUn1f6j2ovYsKQSTROYrREolP6
+	6+XDCTZRHtdnojzQqyhmBjq37PMhpVgQN8mCoIDGzRFdcpf7bvfFLR9gut1yqDke
+	3RFGZEbOfYHUuBx68Orn/vcbtS1mJqB8DVj4OYkuvmE4alIq5EPvmXCOYLFBMdnA
+	1O0cCN8KSxJGpA5bpXo6RpiezX+bkVmHGjb5Goi/cvJat2NZvn4/EYa/3EfMB5JE
+	XVBhrjugSjRB3GFwv00hF8YI7fv0lQf0uErwtVrHtHaCLW5kINaHH9frY7nEa/i4
+	375aacIrNppEHlXqykZUg==
+X-ME-Sender: <xms:-SszZ1UxfY1FLw_arYTGnFroE4_1sHxhL3yx776EXy2M4YMM1ivLHG8>
+    <xme:-SszZ1l78jA6kDTlQQuO2mIOXHVwcOu46FgKSgyDSO7uQfTF6L2qc1ipEtrNvVmZh
+    aq5nD1JcodGUa1t2A>
+X-ME-Received: <xmr:-SszZxbTfI0FNKjn6ip5YLlBXqI5sZGC8jYR6NvQEOoLOqO0vVtp99ORtblOMu8X1I3ZpqHxJtK3KfZ_ZJn1NFNculMHmrcUaAdHmSth2Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggdduudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefuff
     fkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpeetgfeuve
-    eujedvueejgeetleekvddvffehtdefvdegvdfgveelgeffjeffueekffenucffohhmrghi
-    nhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
-    ihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggv
-    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:8iszZ6iktBCwNOR6vtAFwZPmXUKxn43Z9XCr6AFJWHoJer-BeiIPZw>
-    <xmx:8iszZ-DP_B8wnkXtPn8J7E3L0dr22nNV4lrZsIxrGohqZUo7KGDfOA>
-    <xmx:8iszZ7JeziRAxYQYb8ddmw12r4kuq5CkwUXUQ3z0rFSMJJJF1IUEjA>
-    <xmx:8iszZ1DPpy_cA5FRgrID4HvRNPa7FdJElrXYy3BdhSm6YX_kRF86zg>
-    <xmx:8yszZ151s7ZgTBwsgHpQTFZwWREuRq1DEtsFdnflGPtUhKubjcTuOV4Q>
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpefhgfegle
+    fhjeekgfetleetjefhteeiheegfedtudduffegjefhkeetudeggffhkeenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrh
+    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgt
+    phhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihl
+    ohhrrhdrtghomh
+X-ME-Proxy: <xmx:-SszZ4UQ91SeD4AJX7w43WVepE3OYNeh4LFJVUM6oS7z_CWWgZEF7g>
+    <xmx:-SszZ_lK6fK5ORqyHAhHDB4RKuQ7NAOTOhcJOYJVN06UjVjuGaqfSA>
+    <xmx:-SszZ1c-I5Nveh5gphDgIEGtBC1jBIII4J6wQsZvasknBmJrDb2tBQ>
+    <xmx:-SszZ5FG1awBuS2Bj_ZzfhPqkt0RI-9DmZtj-nU4zg03dTpVEKcQRg>
+    <xmx:-SszZ6uqZa_Vs6TKkykppeTedUkTak5kFzKzjVfo3ltnbuD9VY9-_GXj>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 05:20:33 -0500 (EST)
+ 12 Nov 2024 05:20:40 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	stolee@gmail.com,
 	phillip.wood123@gmail.com,
 	me@ttaylorr.com
-Subject: [PATCH v2 0/3] sequencer: comment out properly in todo list
-Date: Tue, 12 Nov 2024 11:20:10 +0100
-Message-ID: <cover.1731406513.git.code@khaugsbakk.name>
+Subject: [PATCH v2 1/3] sequencer: comment checked-out branch properly
+Date: Tue, 12 Nov 2024 11:20:11 +0100
+Message-ID: <fc3b4438845e9fafd03fb608128099ce37ecd1b9.1731406513.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.47.0.317.g7d2562b9734
-In-Reply-To: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1731406513.git.code@khaugsbakk.name>
+References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name> <cover.1731406513.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,84 +94,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Fix three places where the comment char/string is hardcoded (#) in the
-todo list.
+`git rebase --update-ref` does not insert commands for dependent/sub-
+branches which are checked out.[1]  Instead it leaves a comment about
+that fact.  The comment char is hardcoded (#).  In turn the comment
+line gets interpreted as an invalid command when `core.commentChar`
+is in use.
 
-This series does not depend on any other topics.
-Topic `jc/strbuf-commented-something` was mentioned on the v1
-discussion.  But it was kicked out of `seen` last week.  Also it doesn’t
-compile when merged into `v2.47.0` or later:
+† 1: 900b50c242 (rebase: add --update-refs option, 2022-07-19)
 
-```
-strbuf.c: In function ‘strbuf_add_comment_lines’:
-strbuf.c:384:24: error: ‘comment_line_str’ undeclared (first use in this function)
-  384 |         add_lines(out, comment_line_str, buf, size, 1);
-      |                        ^~~~~~~~~~~~~~~~
-strbuf.c:384:24: note: each undeclared identifier is reported only once for each function it appears in
-make: *** [Makefile:2795: strbuf.o] Error 1
-```
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-§ Changes in v2
+Notes (series):
+    v2:
+    • Message: “hardcoded” (more common according to `git grep`)
 
-The first version just had patch 1 but this one fixes two other places.
-The two other places where unearthered during the v1 discussion.
+ sequencer.c       |  5 +++--
+ t/t3400-rebase.sh | 16 ++++++++++++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-Rebased on `master` (b31fb630c0 (Merge https://github.com/j6t/git-gui,
-2024-11-11)).
-
-§ CI
-
-Some failures that didn’t look relevant.
-
-• linux-leaks
-  • t0301-credential-cache
-  • t9211-scalar-clone
-• linux-reftable-leaks
-  • ditto above
-
-§ CC
-
-• Stolee for the first patch
-• Reviewers on the previous round
-
-Kristoffer Haugsbakk (3):
-  sequencer: comment checked-out branch properly
-  sequencer: comment `--reference` subject line properly
-  sequencer: comment commit messages properly
-
- sequencer.c                     | 26 ++++++++++++++++----------
- t/t3400-rebase.sh               | 16 ++++++++++++++++
- t/t3437-rebase-fixup-options.sh | 15 +++++++++++++++
- t/t3501-revert-cherry-pick.sh   | 12 ++++++++++++
- 4 files changed, 59 insertions(+), 10 deletions(-)
-
-Range-diff against v1:
-1:  5267b9a9c8c ! 1:  fc3b4438845 sequencer: comment checked-out branch properly
-    @@ Commit message
-     
-         `git rebase --update-ref` does not insert commands for dependent/sub-
-         branches which are checked out.[1]  Instead it leaves a comment about
-    -    that fact.  The comment char is hard-coded (#).  In turn the comment
-    +    that fact.  The comment char is hardcoded (#).  In turn the comment
-         line gets interpreted as an invalid command when `core.commentChar`
-         is in use.
-     
-    @@ Commit message
-     
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-     
-    +
-    + ## Notes (series) ##
-    +    v2:
-    +    • Message: “hardcoded” (more common according to `git grep`)
-    +
-      ## sequencer.c ##
-     @@ sequencer.c: static int add_decorations_to_list(const struct commit *commit,
-      		/* If the branch is checked out, then leave a comment instead. */
--:  ----------- > 2:  710c5b1a3f6 sequencer: comment `--reference` subject line properly
--:  ----------- > 3:  86b4b485e0b sequencer: comment commit messages properly
-
-base-commit: b31fb630c0fc6869a33ed717163e8a1210460d94
+diff --git a/sequencer.c b/sequencer.c
+index 353d804999b..1b6fd86f70b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -6382,8 +6382,9 @@ static int add_decorations_to_list(const struct commit *commit,
+ 		/* If the branch is checked out, then leave a comment instead. */
+ 		if ((path = branch_checked_out(decoration->name))) {
+ 			item->command = TODO_COMMENT;
+-			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
+-				    decoration->name, path);
++			strbuf_commented_addf(ctx->buf, comment_line_str,
++					      "Ref %s checked out at '%s'\n",
++					      decoration->name, path);
+ 		} else {
+ 			struct string_list_item *sti;
+ 			item->command = TODO_UPDATE_REF;
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 09f230eefb2..f61a717b190 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -456,4 +456,20 @@ test_expect_success 'rebase when inside worktree subdirectory' '
+ 	)
+ '
+ 
++test_expect_success 'git rebase --update-ref with core.commentChar and branch on worktree' '
++	test_when_finished git branch -D base topic2 &&
++	test_when_finished git checkout main &&
++	test_when_finished git branch -D wt-topic &&
++	test_when_finished git worktree remove wt-topic &&
++	git checkout main &&
++	git checkout -b base &&
++	git checkout -b topic2 &&
++	test_commit msg2 &&
++	git worktree add wt-topic &&
++	git checkout base &&
++	test_commit msg3 &&
++	git checkout topic2 &&
++	git -c core.commentChar=% rebase --update-refs base
++'
++
+ test_done
 -- 
 2.47.0
 
