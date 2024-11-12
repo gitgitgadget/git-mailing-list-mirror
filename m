@@ -1,113 +1,134 @@
-Received: from 1.mo582.mail-out.ovh.net (1.mo582.mail-out.ovh.net [46.105.56.136])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52C9218927
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:43:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.56.136
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FB2212D16
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 10:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731408187; cv=none; b=AXvu9h5p8e0jpBGZpWotDbubyki6Hk5E8O9dNOM99LDHZZAStkotJ1D2y/UAPf3nJgIZNRgpOhd/S3x+EN2WRw0iqHjbdxt+I2q9T8k6IRz+WtTmNGdCBRae+bcXYzvB9fIiWHGn6zbLGkZRM87WIbgZpuaMh3EnWqCBo0wcCJE=
+	t=1731408500; cv=none; b=Ilh0ImJfECwyHZhOK3J3Pd39iBPm87PlGT/PwP0UjKRX7+suaKBAqkHUbtJYWTZsW7kBSJ7Cn2Sa2qrOxxO4af2HOFoaliE0UROkbMzpPFck6nV6KoxYPXBBEuL+TTSJdMLO+Z1UfsESXLNVgQKL0bejY0xibhdbLeAdpSkIFCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731408187; c=relaxed/simple;
-	bh=fs0+XjPDv9ODAUl1/89U7D4kofHTCuFXr6O6jOfSL1U=;
-	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To; b=SfOm7bsjgJwsaMjvFUA1X5gxBnr34GFicGypUfJqjDi2MDBkd3J2VWtz0sEwFdu+jZgrl3C74YXyQuBdwcveXkHg1/nffk7AOIJBrrS6Etk1Go42CAq/olVGerKtQLUdhnUl59TXguPAF6HDhKtrmUHZdQR2lggsXvPRmLAG590=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=scantech.com; spf=pass smtp.mailfrom=scantech.com; arc=none smtp.client-ip=46.105.56.136
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=scantech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scantech.com
-Received: from director8.ghost.mail-out.ovh.net (unknown [10.109.139.40])
-	by mo582.mail-out.ovh.net (Postfix) with ESMTP id 4XngxS3b4Nz1PM7
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 09:25:16 +0000 (UTC)
-Received: from ghost-submission-5b5ff79f4f-wqvsq (unknown [10.110.188.65])
-	by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 014EF1FEB2;
-	Tue, 12 Nov 2024 09:25:15 +0000 (UTC)
-Received: from scantech.com ([37.59.142.105])
-	by ghost-submission-5b5ff79f4f-wqvsq with ESMTPSA
-	id 4DouMfseM2cGMwAAruYUIA
-	(envelope-from <jean-noel.avila@scantech.com>); Tue, 12 Nov 2024 09:25:15 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-105G006796b9148-b60c-4bb2-a8f4-e1178ecdd9be,
-                    DF86D393C21BE984CC250B19F8FDB4784127F9C2) smtp.auth=jean-noel.avila@scantech.com
-X-OVh-ClientIp:92.173.128.58
-Content-Type: multipart/mixed; boundary="------------B2yik8nqYQwtS02CZu0Jvl29"
-Message-ID: <0882542f-8424-4dfc-8358-f5c982aafbd4@scantech.com>
-Date: Tue, 12 Nov 2024 10:25:10 +0100
+	s=arc-20240116; t=1731408500; c=relaxed/simple;
+	bh=Bc7yVlDV/KKHWANF6C4ti4sUJ4jlobpD+m9ryMMvjnY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AZwAF/7YXAiELGi4Yf0Nv46gCYoev0bxSVPokLAK90vEUlkTLSBCrW0Ihz8CTFB/kF5LuU9hzve1sc5ulGFRx6Dg3Gh6xdLJm4FXsd6J16FaJWUovfhuUF2xKgmINFXR1jO+WcGs7vcV+8IZHy0kpR7saEJGKKmxwZinHJbfAuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EacFW6N9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTG0YPy4; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EacFW6N9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTG0YPy4"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 47EDF2540195;
+	Tue, 12 Nov 2024 05:48:17 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Tue, 12 Nov 2024 05:48:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731408497; x=1731494897; bh=3nxU5vx6CE
+	NV1bW1HXmJ7OMBYatFOXr4IHyJfkzpbIM=; b=EacFW6N9hAqcQWMGFqxlQ9AAaI
+	nG9L3oLSVMsCl0jH3JL60Ok0dsCSnkal+pllhsU+GKMa0m0EQtrvuTndGTBZp9xm
+	rCr3gclpBYa23xxsQgzdNpaL5riH9kWv7k/ClijnTq0yN7zCP8SMdshBa42te2N9
+	N40ynnZ6Df6HgUERHDQk9XbeKsMjJ6kg5YxzSjflRyTfYLSOmES+0nqV6KJtEaVH
+	A9IoJFpwovyknzWZJOXJOgd/J0iI5HSRZQGMczePingPNl0M9T5xdkqMqm+LDX1F
+	rw9Wl5qNcPWdGNt2rIir2PE7tOXRUtizS+rpJxrsJDL75RS3qj1rpLjASGPA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731408497; x=1731494897; bh=3nxU5vx6CENV1bW1HXmJ7OMBYatFOXr4IHy
+	JfkzpbIM=; b=lTG0YPy4eJ7i2Zvu2408lLgrY4P+1K6HcgLEMVKzOt+M1Zi7NQY
+	VSGmDzVpGxGrZBeGnSJ+6BxJifU0v+Gln6Xm6zSBsUqKWscFKBOCqbP+H6u2kLPE
+	5BDIgDPlGb9KXNVv979WGli4qTMSPzZ5Hl8WMU/B9PZhAcSvN/J5zwWSH9Skph0C
+	zMpS83mKqLuE8pg6Urm7sUoEc1LI8Hhax2p6bOxG3r9m66QyO28bzkd1t+oNyTAD
+	Yi43OEQIOwGJxEYEd74Uo1t+NKB3Vo8+Tplbbj+mbpWMkpspUh4aV0TaLu8Gv9tv
+	KTLmAhrf8uz2t+CR8uWvdE0wXw81Aw1doJQ==
+X-ME-Sender: <xms:cDIzZ6-T9sgeueD9TMnhhXC6ggEEXAECqGZomQIXTEsH5C__p4xRGw>
+    <xme:cDIzZ6s39khKpjP2bpFY5FMjuJSrBShjnJ1cORDgfQQkXpk-KrcYEwk1iVAwWRWy9
+    HIQIJMzKgCIUF27qQ>
+X-ME-Received: <xmr:cDIzZwCu3dmQemJS7Aqr3ZRnmcyDWq6eOpsBoJMwAzVrBByQMFUiGi_-y3Z6O7uqDhu86IOwrSYOLLgjtszKqDrdoGi5CSqxSMV0CIqa2PqZwq0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggddujecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhs
+    rgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesgh
+    gvnhhtohhordhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:cDIzZyeCmprTAJtRPJDDuFo7IdKgVa2HbwXPmsrmsdYt9JNIDFgrpA>
+    <xmx:cDIzZ_M48K4j4r3kCrIzsVHIDR2LSBWsAD4r9CtGXUrGnOIXh8u7Gw>
+    <xmx:cDIzZ8ktXQp7xp2uuyEBd-72wMToVsthnfPy-iv27-DsiDgeJ6kncg>
+    <xmx:cDIzZxumuBb7wEIcoaAmXrK4D-XUm-3hidCSjINEXstqhvzB2tWAZw>
+    <xmx:cTIzZ4gWVBwiI9Sb_RlXnI0a3aTtxnIGeMQmYEgUibAWVlDaWKYrLXoZ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Nov 2024 05:48:15 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c58cc7a0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 12 Nov 2024 10:47:37 +0000 (UTC)
+Date: Tue, 12 Nov 2024 11:48:04 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Eli Schwartz <eschwartz@gentoo.org>,
+	Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+Message-ID: <ZzMyZLhL-GKFP76c@pks.im>
+References: <ZyjlvNJ4peffmGZ1@nand.local>
+ <ZzHeLlYu8Gwk1FPj@pks.im>
+ <20241111210629.GB5019@coredump.intra.peff.net>
+ <bfc876ea-1a90-4e78-8756-efdcd53e7525@gentoo.org>
+ <20241111221320.GF5019@coredump.intra.peff.net>
+ <f3b00260-ec3d-4607-aaf7-9cfd9898434f@gentoo.org>
+ <20241112022104.GA77521@coredump.intra.peff.net>
+ <941bae7b-83be-43f8-aaa3-43b4d9501690@gentoo.org>
+ <20241112045224.GA98197@coredump.intra.peff.net>
+ <xmqqwmh96nw2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] doc: git-add.txt: convert to new style convention
-To: Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1826.git.1731348891108.gitgitgadget@gmail.com>
- <xmqqserx8ewu.fsf@gitster.g>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jean-noel.avila@scantech.com>
-Content-Language: fr
-In-Reply-To: <xmqqserx8ewu.fsf@gitster.g>
-X-Ovh-Tracer-Id: 2232659518096858875
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrudegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurheptgfkffggfgfuvfevfhfhjgesmhdtreertddvjeenucfhrhhomheplfgvrghnqdfpohotlhcutehvihhlrgcuoehjvggrnhdqnhhovghlrdgrvhhilhgrsehstggrnhhtvggthhdrtghomheqnecuggftrfgrthhtvghrnhepkedvueefvdeitedvfefgieekueeukedvkeffgedvhfegveekvedvudeuteduhfetnecukfhppeduvdejrddtrddtrddupdelvddrudejfedruddvkedrheekpdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjvggrnhdqnhhovghlrdgrvhhilhgrsehstggrnhhtvggthhdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkedvmgdpmhhouggvpehsmhhtphhouhht
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwmh96nw2.fsf@gitster.g>
 
-This is a multi-part message in MIME format.
---------------B2yik8nqYQwtS02CZu0Jvl29
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Le 12/11/2024 à 01:38, Junio C Hamano a écrit :
-> "Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Nov 12, 2024 at 02:07:25PM +0900, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
->> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
->>
->> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
->> ---
->>     doc: git-add.txt: convert to new style convention
+> > [1] I think my gut feeling is that these are questions that Patrick
+> >     should be answering if he wants to sell the project on moving away
+> >     from make. I know we can't expect to be spoon-fed all parts of a
+> >     transition, but I am starting from the point of view of: I am
+> >     perfectly happy with make, why do you want me to switch?
 > 
-> This does slightly more than converting to new style, though,
-> doesn't it?  Is it so annoying to see a link that points at the same
-> page you are reading right now to warrant duplicating some docs with
-> conditional inclusion?
+> Yeah, that is a very fair thing to say.
 > 
->> +`add.ignoreErrors`::
->> +`add.ignore-errors` (deprecated)::
->> +	Tells `git add` to continue adding files when some files cannot be
->> +	added due to indexing errors.
->> +ifdef::git-add[]
->> +	Equivalent to the `--ignore-errors` option.
->> +endif::git-add[]
->> +ifndef::git-add[]
->> +	Equivalent to the `--ignore-errors` option of linkgit:git-add[1].
->> +endif::git-add[]
-> 
+> Even if you personally (or I for that matter) were not 100% happy
+> with make, it is important for somebody who has sufficiently gained
+> respect in the project to play devil's advocate to say it, and I am
+> glad you did. 
 
-This was already performed for git-clone (ebb55042a4) and git-init
-(e7b3a7683c). Should it be separated in a dedicated commit?
+Yup, I agree with you a 100%.
 
+I was first focussing on getting everything set up and then get some
+early signals as to whether this is a direction that we can go into in
+the first place, and because of that I didn't yet provide any docs. But
+based on your feedback I guess I should focus on exactly that as my next
+step. So I'll include docs in the next reroll that demonstrate everyday
+workflows in Git and how to do these with Meson.
 
-If the link is not to a specific anchor in the doc (which is the aim in
-html output), it is considered bad practice (against the "Make your
-visitor confident that the link they're following will take them where
-they want to go" principle). To create a sensible link, we would have to
-bring the visitor to the corresponding option description. This is
-doable, but would require an enhanced linkgit macro and additional anchors.
+Thanks!
 
-
-
---------------B2yik8nqYQwtS02CZu0Jvl29
-Content-Type: text/vcard; charset=UTF-8; name="jean-noel_avila.vcf"
-Content-Disposition: attachment; filename="jean-noel_avila.vcf"
-Content-Transfer-Encoding: base64
-
-YmVnaW46dmNhcmQNCmZuO3F1b3RlZC1wcmludGFibGU6SmVhbi1Obz1DMz1BQmwgQXZpbGEN
-Cm47cXVvdGVkLXByaW50YWJsZTpBdmlsYTtKZWFuLU5vPUMzPUFCbA0Kb3JnOlNjYW50ZWNo
-IFMuQS4NCmFkcjtxdW90ZWQtcHJpbnRhYmxlOlNhdm9pZSBUZWNobm9sYWMgQlAgMjQ0OztC
-PUMzPUEydGltZW50IEFuZHJvbT1DMz1BOGRlIC0gMTA4IEF2ZW51ZSBkdSBMYWMgTD1DMz1B
-OW1hbiA7IExBIE1PVFRFIFNFUlZPTEVYOzs3MzI5MDtGcmFuY2UNCmVtYWlsO2ludGVybmV0
-OmplYW4tbm9lbC5hdmlsYUBzY2FudGVjaC5jb20NCnRpdGxlOkVtYmVkZGVkIHN5c3RlbXMg
-bWFuYWdlcg0KdGVsO3dvcms6KzMzIDQ3OSAyNSA1NCA1MA0KdGVsO2NlbGw6KzMzIDYzMyAw
-NCA2NCAxOA0KeC1tb3ppbGxhLWh0bWw6RkFMU0UNCnVybDpodHRwOi8vd3d3LnNjYW50ZWNo
-LmNvbQ0KdmVyc2lvbjoyLjENCmVuZDp2Y2FyZA0KDQo=
-
---------------B2yik8nqYQwtS02CZu0Jvl29--
+Patrick
