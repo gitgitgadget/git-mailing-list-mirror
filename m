@@ -1,87 +1,86 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4972E1FC7C9
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 17:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA462123FE
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 17:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731431017; cv=none; b=bggnChJVQgBqa5CVR210sShyOYr73BEKsMptVzlgNlkUYyNgt15Mxuz4VfThUVF4mCcL5zXwOJZnHQ2ehToTLcxmwgjQUOmxcKtVrXH6oV9H4p+x6vrd6rvt3fwQRKtzUr23WLAlMqmz6b8Z6vnqOwdER/+8ia29wzOepv+AvR8=
+	t=1731431018; cv=none; b=YkggMAuyVesy/JNxREqCLjVr1ixo9fPzrIUi+NHb+sSR4Lp5l8LwW8r3/EWG+hQXfre2UwX1XwDOklApdQQJKlnczYjkWFPJYsn0IBe+XcHB+kb9eJCcwiGYQIbVlsBk0/vVVzEItBbG69kknS316EkJwnTcxOSpDogx5LEBja0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731431017; c=relaxed/simple;
-	bh=MlsElVWiYFOgW/qhNoEjNnYdXhnaDTfFMeRrL1Zb3dc=;
+	s=arc-20240116; t=1731431018; c=relaxed/simple;
+	bh=XUCBYKpI8hy500fiQGdhUjQ4tWsG5viX1xUzGSQM5HQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hEcECa5FSE+BmKiIY8BwChv2jxAeaBQy0Jq1Fo7mrs0YDNaWeWGN0+axYoE3wbdlw/zL2u+W9KIP4/KLhOYIa8uV3qGAEnp/cc+xk9lLc55F0+XhE1R22QjdofxsMuuNio06ohiMB178WD5a/+e/K77e47GzUx8XIRyTfvYTRoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wffnA7H7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fTVURn25; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=SJ4cGlc5PtCLdoBqt8VdYHGyyoPvn+pZ0dM+7BHGy/8R5PDfiIamJDLs6GgDcJP803/KKKHE8tnbudcnPzbLfpJB4xzxdKm6NEDyfR+6BoyceaZnqfxvg0x6V+OW+kDnZsTlAXqcjZDcA98xbJNObDJG4KWBTq+abeVGXNndURs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ydZzP9JC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U+9UNp6c; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wffnA7H7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fTVURn25"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 38668114013A;
-	Tue, 12 Nov 2024 12:03:32 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 12 Nov 2024 12:03:32 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ydZzP9JC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U+9UNp6c"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 05774114014A;
+	Tue, 12 Nov 2024 12:03:33 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 12 Nov 2024 12:03:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731431012;
-	 x=1731517412; bh=byRz4ErJ9Y76R+UfQ+yckQ/mQ2h9XyoHKwr3L/tPJ/s=; b=
-	wffnA7H7XaS0KjdsYVbOKSi9+uOX1Vgqg1pCQVCadNmIXLGGtwsdEb9SfwdeMogM
-	AtQLyzhTEWaxaqkLVtPDzRcZ2sNEKRxj+dO0gKP8MdDXyQ+8kvGJkbOKPymBs+MW
-	XXKZ7eCju09QjWRlJDvk0IDSgOXvbLLQHjz+qE0mLEG26Yk0TAphuQNCgxd8grKl
-	IB5hk1AB/cqPACVSGkgZGLvsIapEMK7AcqaeTk2fHclUyRLwGCJbNq+PNmAm/1q7
-	xCPvHimhTSoEmEjOET7eGdxc8I4UtlJZnVjtp5+A3gXNf2RwL/ySTkW9wO3cl2L9
-	sVy1tU4DEw7Sw3gYh5StsA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731431013;
+	 x=1731517413; bh=ChABssQd+SolAKeAA39lj0l1/QEaqSf4qtM5ZfURLE0=; b=
+	ydZzP9JCIiq4V6PAcdyCqRXf02WXHaZSf1j4xgc1BsasIG30qUPY7W732bx9p17U
+	HsaBhY/aMKPuAGInQsln/ngbCLzqC4wYVlkMK7qdbbX/hkXEtQy9K0H7cw8huZZ0
+	PZgqzj+XhdqHfsunEZJvQfX9Mtb0vwPio1/No+Yl/AVLQpV+yD2grJicuxgx8Zg8
+	buPUlvM24FOyk9kPqdbXg8uMI7hbq/TMVMIDHWF+tKUMQVcN7YtecCVulufcZ9h0
+	7jSIm588ZEfU09TG/GTt6n5ANfTuk9Yi1nGRGugL8OtUhh3bv2dEhdYq2JhDX8DM
+	3RCOv+g+rIpv5HnmRBJNOQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731431012; x=
-	1731517412; bh=byRz4ErJ9Y76R+UfQ+yckQ/mQ2h9XyoHKwr3L/tPJ/s=; b=f
-	TVURn25VqeygwQJ+oieZ4x6lfSc6YiMNsxZji7aX1tpYxOAmsPEkUFhtNPh5jFA4
-	T919XsMN/gLph0zrBCYzVOwfLlSalgkgfnx1ahFEZZBTK1CADqIj1avQtLdazgEK
-	iMA65OM6OrKMYfuR87iqABzABm1J4S6xofmqAa1h7Q6UmA6Y2yve5Yo9rwrHXzdq
-	roC19dE4CTZGQgnpLPniACU335DVevzx6OKr2MD9hHCz946X1aFZILpZFU7M1Ose
-	WR70mDIvnJ/FN9cv1hJ7qXnaNoVQqmGcfWEW0LkBjdCZvDjj/+3ANsK/OmCvTfvH
-	yKFrscYZdYCnDcfriZd0w==
-X-ME-Sender: <xms:Y4ozZybB27vbGaNUD4lRQfTSfKqbaNbk2SSgHLk2AJ8rshXpLCFSNw>
-    <xme:Y4ozZ1Z9F7e85T_w8NSlTm5TJbj6IQNO2Xg9S1JVYi1_hTq83BhzawKpUzpZQgOWJ
-    dQEn82LQYzwNB6txQ>
-X-ME-Received: <xmr:Y4ozZ8_5QyaCi0-sNV8Q1RzS2lbY4CUyHywG8VbZzq90d1d6yHjvJbnC3C7ZvmWu70cYXGwrkqQIY7KVCoQy8cVgj2L465ahCT-0L3ycYGjgMx8>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731431013; x=
+	1731517413; bh=ChABssQd+SolAKeAA39lj0l1/QEaqSf4qtM5ZfURLE0=; b=U
+	+9UNp6cuEcHZqpAqkQMu5BF7fkuLVYMPmF4XW+1/CUsoGZJObDfggoCxkTGwkT6U
+	BXu9wr7QpLHvq49O7iWfWuF2n769Jlm1ScT08Qw32YH41OAmda5MtYZyCM4KYRVg
+	wdS7jQGxeOrwJR34wvIHj7Fseuyjv83M+rgx+gwBHIN2BejEDOvOlxKwwR2Enpl6
+	LhS6kWUvUH4m+urYt5qB8tHEgU9tGF2v2eR5ros24JvwfZql4t0TU8Hplr3690ar
+	HD16uLdSHzm0s+PsrUWbXTzhw+Pmgl2N1vqy0j+c5xWhCi18NZgXi1w+y3CVvmDQ
+	TdqtwCHvg8NiWOJdhhl0Q==
+X-ME-Sender: <xms:ZIozZ-Enx9L4y5E06FFOWaFUIUXx9JJ5JhlekbdsFqSB1J8qZYFxRA>
+    <xme:ZIozZ_U8AtZToY1Zu9yI01rKS8xSY1Pyac4rAW-fonTPfPMzgtLyNBckvhR2zjHz6
+    fnUHIoPnIrW4fOIjg>
+X-ME-Received: <xmr:ZIozZ4Jq9MDRdoZXTn8JcaNzjDuJm1dc6zspdZ8Qkwmi2kkd4qvthuY018RXcxnIh2jV9s4-wggr030PihM4mm9iPSkw0FyAp9xnKajpokAQS0w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggdelvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepjeevveehfeehteegieeiteefhfeluddtveeggfevhfdu
-    ueellefhkedvueeghefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdprghnughrvg
-    dqshhimhhonhdruggvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdp
-    rhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnsh
-    hhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehr
-    rghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhm
-    rghilhdrtghomh
-X-ME-Proxy: <xmx:Y4ozZ0rDGG--k6LzqRnlCuZrtpm1C2tEpvpZsZ_r0SxyFDDo13syJg>
-    <xmx:Y4ozZ9pme_1xMb1D9Q329eXRZ36n5w5g2yABwNy33ndHvHrohPRheg>
-    <xmx:Y4ozZyRD0SkkeVkHfxz4sr1eFBXYos5l_x4JVlO39wLd9eoXLpvbDQ>
-    <xmx:Y4ozZ9p_OWCIH7EGln4d52kUpavXW0ippCjkXkKKNgrpMLQPoAmTvw>
-    <xmx:ZIozZ41KbcE_N4qC9EgAwzQ6Jc-80CI8Ul4LoCuHBm-j2GoQ0N4ELTjL>
+    eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
+    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheprhgrmhhsrg
+    ihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopegurghvvhhi
+    ugesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhih
+    hnvggtohdrtghomh
+X-ME-Proxy: <xmx:ZIozZ4GRffBHUiks2c3AFylss80c2OUEJXDVx95rXaN_FORlgN45yA>
+    <xmx:ZIozZ0WeYHPQR-nhb02erFb1MZLimksVgX_LEQMAHIvoSEtP1QazQQ>
+    <xmx:ZIozZ7P91yxF8FAOzCGDCuq1CgBTCJhYHJX_dZk5a_CsGjD6NuUHLg>
+    <xmx:ZIozZ71oh7PBtEeTIUJJJG7VDl5C2wkO0ZF5-6W9NfPnogjWlJQyGg>
+    <xmx:ZYozZ4QUjnaahy6T-kb6gZgt6iNe5WEWY7laREzagyVdSjskPBF3809w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 12:03:30 -0500 (EST)
+ 12 Nov 2024 12:03:31 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a52b1d49 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 12 Nov 2024 17:02:50 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 926d6852 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 12 Nov 2024 17:02:52 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 12 Nov 2024 18:02:45 +0100
-Subject: [PATCH RFC v6 02/19] Makefile: consistently use @PLACEHOLDER@ to
- substitute
+Date: Tue, 12 Nov 2024 18:02:47 +0100
+Subject: [PATCH RFC v6 04/19] Makefile: extract script to massage Perl
+ scripts
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241112-pks-meson-v6-2-648b30996827@pks.im>
+Message-Id: <20241112-pks-meson-v6-4-648b30996827@pks.im>
 References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
 In-Reply-To: <20241112-pks-meson-v6-0-648b30996827@pks.im>
 To: git@vger.kernel.org
@@ -102,727 +101,112 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-We have a bunch of placeholders in our scripts that we replace at build
-time, for example by using sed(1). These placeholders come in three
-different formats: @PLACEHOLDER@, @@PLACEHOLDER@@ and ++PLACEHOLDER++.
-
-Next to being inconsistent it also creates a bit of a problem with
-CMake, which only supports the first syntax in its `configure_file()`
-function. To work around that we instead manually replace placeholders
-via string operations, which is a hassle and removes safeguards that
-CMake has to verify that we didn't forget to replace any placeholders.
-Besides that, other build systems like Meson also support the CMake
-syntax.
-
-Unify our codebase to consistently use the syntax supported by such
-build systems.
+Extract the script to inject various build-time parameters into our Perl
+scripts into a standalone script. This is done such that we can reuse it
+in other build systems.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                                         | 44 ++++++++++++------------
- configure.ac                                     |  2 +-
- contrib/buildsystems/CMakeLists.txt              | 34 +++++++++---------
- git-cvsserver.perl                               |  2 +-
- git-instaweb.sh                                  |  8 ++---
- git-request-pull.sh                              |  2 +-
- git-send-email.perl                              |  2 +-
- git-sh-i18n.sh                                   |  6 ++--
- git-sh-setup.sh                                  |  6 ++--
- git-svn.perl                                     |  2 +-
- gitk-git/po/vi.po                                |  2 +-
- gitweb/Makefile                                  | 44 ++++++++++++------------
- gitweb/gitweb.perl                               | 44 ++++++++++++------------
- perl/Git/I18N.pm                                 |  6 ++--
- perl/Git/LoadCPAN.pm                             |  6 ++--
- perl/header_templates/fixed_prefix.template.pl   |  2 +-
- perl/header_templates/runtime_prefix.template.pl |  8 ++---
- unimplemented.sh                                 |  2 +-
- wrap-for-bin.sh                                  | 18 +++++-----
- 19 files changed, 120 insertions(+), 120 deletions(-)
+ Makefile                            | 12 ++----------
+ contrib/buildsystems/CMakeLists.txt | 21 ++++++++++++++++-----
+ generate-perl.sh                    | 26 ++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+), 15 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 962df75635a8cbf7114970ddfe7948ff17c65fdc..d59f6c16868e24a1e13b0c16cc05adb79f81bbc8 100644
+index 2a08473824ede4699e370de7f8b8af183449536a..55e363a83d6ca2561fe1429b072892f9facca9d8 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1555,10 +1555,10 @@ endif
+@@ -2604,16 +2604,8 @@ endif
  
- ifdef SANE_TOOL_PATH
- SANE_TOOL_PATH_SQ = $(subst ','\'',$(SANE_TOOL_PATH))
--BROKEN_PATH_FIX = 's|^\# @@BROKEN_PATH_FIX@@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
-+BROKEN_PATH_FIX = 's|^\# @BROKEN_PATH_FIX@$$|git_broken_path_fix "$(SANE_TOOL_PATH_SQ)"|'
- PATH := $(SANE_TOOL_PATH):${PATH}
- else
--BROKEN_PATH_FIX = '/^\# @@BROKEN_PATH_FIX@@$$/d'
-+BROKEN_PATH_FIX = '/^\# @BROKEN_PATH_FIX@$$/d'
- endif
+ PERL_DEFINES += $(gitexecdir) $(perllibdir) $(localedir)
  
- ifeq (,$(HOST_CPU))
-@@ -2548,13 +2548,13 @@ GIT-SCRIPT-DEFINES: FORCE
- define cmd_munge_script
- sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
--    -e 's|@@DIFF@@|$(DIFF_SQ)|' \
--    -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
--    -e 's/@@USE_GETTEXT_SCHEME@@/$(USE_GETTEXT_SCHEME)/g' \
-+    -e 's|@DIFF@|$(DIFF_SQ)|' \
-+    -e 's|@LOCALEDIR@|$(localedir_SQ)|g' \
-+    -e 's/@USE_GETTEXT_SCHEME@/$(USE_GETTEXT_SCHEME)/g' \
-     -e $(BROKEN_PATH_FIX) \
--    -e 's|@@GITWEBDIR@@|$(gitwebdir_SQ)|g' \
--    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
--    -e 's|@@PAGER_ENV@@|$(PAGER_ENV_SQ)|g' \
-+    -e 's|@GITWEBDIR@|$(gitwebdir_SQ)|g' \
-+    -e 's|@PERL@|$(PERL_PATH_SQ)|g' \
-+    -e 's|@PAGER_ENV@|$(PAGER_ENV_SQ)|g' \
-     $@.sh >$@+
- endef
- 
-@@ -2611,7 +2611,7 @@ $(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
- 	    -e '	r GIT-PERL-HEADER' \
- 	    -e '	G' \
- 	    -e '}' \
--	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+	    -e 's/@GIT_VERSION@/$(GIT_VERSION)/g' \
- 	    $< >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
-@@ -2629,11 +2629,11 @@ GIT-PERL-HEADER: $(PERL_HEADER_TEMPLATE) GIT-PERL-DEFINES Makefile
- 	INSTLIBDIR='$(perllibdir_SQ)' && \
- 	INSTLIBDIR_EXTRA='$(PERLLIB_EXTRA_SQ)' && \
- 	INSTLIBDIR="$$INSTLIBDIR$${INSTLIBDIR_EXTRA:+:$$INSTLIBDIR_EXTRA}" && \
--	sed -e 's=@@PATHSEP@@=$(pathsep)=g' \
--	    -e "s=@@INSTLIBDIR@@=$$INSTLIBDIR=g" \
--	    -e 's=@@PERLLIBDIR_REL@@=$(perllibdir_relative_SQ)=g' \
--	    -e 's=@@GITEXECDIR_REL@@=$(gitexecdir_relative_SQ)=g' \
--	    -e 's=@@LOCALEDIR_REL@@=$(localedir_relative_SQ)=g' \
-+	sed -e 's=@PATHSEP@=$(pathsep)=g' \
-+	    -e "s=@INSTLIBDIR@=$$INSTLIBDIR=g" \
-+	    -e 's=@PERLLIBDIR_REL@=$(perllibdir_relative_SQ)=g' \
-+	    -e 's=@GITEXECDIR_REL@=$(gitexecdir_relative_SQ)=g' \
-+	    -e 's=@LOCALEDIR_REL@=$(localedir_relative_SQ)=g' \
- 	    $< >$@+ && \
+-$(SCRIPT_PERL_GEN): % : %.perl GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
+-	$(QUIET_GEN) \
+-	sed -e '1{' \
+-	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+-	    -e '	r GIT-PERL-HEADER' \
+-	    -e '	G' \
+-	    -e '}' \
+-	    -e 's/@GIT_VERSION@/$(GIT_VERSION)/g' \
+-	    $< >$@+ && \
+-	chmod +x $@+ && \
++$(SCRIPT_PERL_GEN): % : %.perl generate-perl.sh GIT-PERL-DEFINES GIT-PERL-HEADER GIT-VERSION-FILE
++	$(QUIET_GEN)$(SHELL_PATH) generate-perl.sh ./GIT-BUILD-OPTIONS $(GIT_VERSION) GIT-PERL-HEADER "$<" "$@+" && \
  	mv $@+ $@
  
-@@ -2649,7 +2649,7 @@ else # NO_PERL
- $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
- 	$(QUIET_GEN) \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
-+	    -e 's|@REASON@|NO_PERL=$(NO_PERL)|g' \
- 	    unimplemented.sh >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
-@@ -2670,13 +2670,13 @@ else # NO_PYTHON
- $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
- 	$(QUIET_GEN) \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--	    -e 's|@@REASON@@|NO_PYTHON=$(NO_PYTHON)|g' \
-+	    -e 's|@REASON@|NO_PYTHON=$(NO_PYTHON)|g' \
- 	    unimplemented.sh >$@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
- endif # NO_PYTHON
- 
--CONFIGURE_RECIPE = sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+CONFIGURE_RECIPE = sed -e 's/@GIT_VERSION@/$(GIT_VERSION)/g' \
- 			configure.ac >configure.ac+ && \
- 		   autoconf -o configure configure.ac+ && \
- 		   $(RM) configure.ac+
-@@ -3104,9 +3104,9 @@ endif
- perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
- 	$(call mkdir_p_parent_template)
- 	$(QUIET_GEN) \
--	sed -e 's|@@LOCALEDIR@@|$(perl_localedir_SQ)|g' \
--	    -e 's|@@NO_GETTEXT@@|$(NO_GETTEXT_SQ)|g' \
--	    -e 's|@@NO_PERL_CPAN_FALLBACKS@@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
-+	sed -e 's|@LOCALEDIR@|$(perl_localedir_SQ)|g' \
-+	    -e 's|@NO_GETTEXT@|$(NO_GETTEXT_SQ)|g' \
-+	    -e 's|@NO_PERL_CPAN_FALLBACKS@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
- 	< $< > $@
- 
- perl/build/man/man3/Git.3pm: perl/Git.pm
-@@ -3225,8 +3225,8 @@ all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(CLAR_TEST_PR
- bin-wrappers/%: wrap-for-bin.sh
- 	$(call mkdir_p_parent_template)
- 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
--	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
--	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
-+	     -e 's|@BUILD_DIR@|$(shell pwd)|' \
-+	     -e 's|@PROG@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
- 	chmod +x $@
- 
- # GNU make supports exporting all variables by "export" without parameters.
-diff --git a/configure.ac b/configure.ac
-index d1a96da14eb56766e1538da80ab97ed8a99b24f6..5923edc44aa7b6cc355fa6589b6d075b0c0a7772 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -142,7 +142,7 @@ fi
- ## Configure body starts here.
- 
- AC_PREREQ(2.59)
--AC_INIT([git], [@@GIT_VERSION@@], [git@vger.kernel.org])
-+AC_INIT([git], [@GIT_VERSION@], [git@vger.kernel.org])
- 
- AC_CONFIG_SRCDIR([git.c])
- 
+ PERL_DEFINES := $(subst $(space),:,$(PERL_DEFINES))
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 680e5b3c8b0382d2723855f11d7fe9c7d6b28bde..a41540458b7ae4f50ec92c115dc6fab3ef5088ff 100644
+index 608ad9714d460b362e07d7169a9c386ba819d40a..2ae337c61b5fdf54e6ae277053c24696fe91083b 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -836,14 +836,14 @@ set(git_shell_scripts
- foreach(script ${git_shell_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.sh content NEWLINE_CONSUME)
- 	string(REPLACE "@SHELL_PATH@" "${SHELL_PATH}" content "${content}")
--	string(REPLACE "@@DIFF@@" "diff" content "${content}")
-+	string(REPLACE "@DIFF@" "diff" content "${content}")
- 	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
- 	string(REPLACE "@GITWEBDIR@" "${GITWEBDIR}" content "${content}")
--	string(REPLACE "@@NO_CURL@@" "" content "${content}")
--	string(REPLACE "@@USE_GETTEXT_SCHEME@@" "" content "${content}")
--	string(REPLACE "# @@BROKEN_PATH_FIX@@" "" content "${content}")
--	string(REPLACE "@@PERL@@" "${PERL_PATH}" content "${content}")
--	string(REPLACE "@@PAGER_ENV@@" "LESS=FRX LV=-c" content "${content}")
-+	string(REPLACE "@NO_CURL@" "" content "${content}")
-+	string(REPLACE "@USE_GETTEXT_SCHEME@" "" content "${content}")
-+	string(REPLACE "# @BROKEN_PATH_FIX@" "" content "${content}")
-+	string(REPLACE "@PERL@" "${PERL_PATH}" content "${content}")
-+	string(REPLACE "@PAGER_ENV@" "LESS=FRX LV=-c" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+@@ -848,19 +848,30 @@ foreach(script ${git_shell_scripts})
  endforeach()
  
-@@ -852,13 +852,13 @@ parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
+ #perl scripts
+-parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" ".perl")
++parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" "")
  
  #create perl header
  file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
--string(REPLACE "@@PATHSEP@@" ":" perl_header "${perl_header}")
--string(REPLACE "@@INSTLIBDIR@@" "${INSTLIBDIR}" perl_header "${perl_header}")
-+string(REPLACE "@PATHSEP@" ":" perl_header "${perl_header}")
-+string(REPLACE "@INSTLIBDIR@" "${INSTLIBDIR}" perl_header "${perl_header}")
+ string(REPLACE "@PATHSEP@" ":" perl_header "${perl_header}")
+ string(REPLACE "@INSTLIBDIR@" "${INSTLIBDIR}" perl_header "${perl_header}")
++file(WRITE ${CMAKE_BINARY_DIR}/PERL-HEADER ${perl_header})
  
  foreach(script ${git_perl_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
- 	string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
--	string(REPLACE "@@GIT_VERSION@@" "${PROJECT_VERSION}" content "${content}")
-+	string(REPLACE "@GIT_VERSION@" "${PROJECT_VERSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
+-	file(STRINGS ${CMAKE_SOURCE_DIR}/${script}.perl content NEWLINE_CONSUME)
+-	string(REPLACE "#!/usr/bin/perl" "#!/usr/bin/perl\n${perl_header}\n" content "${content}")
+-	string(REPLACE "@GIT_VERSION@" "${PROJECT_VERSION}" content "${content}")
+-	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
++	string(REPLACE ".perl" "" perl_gen_path "${script}")
++
++	add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${perl_gen_path}"
++		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-perl.sh"
++			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
++			"${PROJECT_VERSION}"
++			"${CMAKE_BINARY_DIR}/PERL-HEADER"
++			"${CMAKE_SOURCE_DIR}/${script}"
++			"${CMAKE_BINARY_DIR}/${perl_gen_path}"
++		DEPENDS "${CMAKE_SOURCE_DIR}/generate-perl.sh"
++			"${CMAKE_SOURCE_DIR}/${script}"
++		VERBATIM)
++	list(APPEND perl_gen ${CMAKE_BINARY_DIR}/${perl_gen_path})
  endforeach()
++add_custom_target(perl-gen ALL DEPENDS ${perl_gen})
  
-@@ -873,8 +873,8 @@ file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
- foreach(pm ${perl_modules})
- 	string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
- 	file(STRINGS ${pm} content NEWLINE_CONSUME)
--	string(REPLACE "@@LOCALEDIR@@" "${LOCALEDIR}" content "${content}")
--	string(REPLACE "@@NO_PERL_CPAN_FALLBACKS@@" "" content "${content}")
-+	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
-+	string(REPLACE "@NO_PERL_CPAN_FALLBACKS@" "" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
- #test-lib.sh requires perl/build/lib to be the build directory of perl modules
- endforeach()
-@@ -1056,21 +1056,21 @@ set(wrapper_test_scripts
- 
- foreach(script ${wrapper_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
--	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
--	string(REPLACE "@@PROG@@" "${script}${EXE_EXTENSION}" content "${content}")
-+	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
-+	string(REPLACE "@PROG@" "${script}${EXE_EXTENSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
- endforeach()
- 
- foreach(script ${wrapper_test_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
--	string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
--	string(REPLACE "@@PROG@@" "t/helper/${script}${EXE_EXTENSION}" content "${content}")
-+	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
-+	string(REPLACE "@PROG@" "t/helper/${script}${EXE_EXTENSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
- endforeach()
- 
- file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
--string(REPLACE "@@BUILD_DIR@@" "${CMAKE_BINARY_DIR}" content "${content}")
--string(REPLACE "@@PROG@@" "git-cvsserver" content "${content}")
-+string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
-+string(REPLACE "@PROG@" "git-cvsserver" content "${content}")
- file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
- 
- #options for configuring test options
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 124f598bdc07058b139f8dcbf8245128c52d9176..70ae7cb8e456885ddf2b13a70d21831cdaa7bf06 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -26,7 +26,7 @@
- use File::Basename;
- use Getopt::Long qw(:config require_order no_ignore_case);
- 
--my $VERSION = '@@GIT_VERSION@@';
-+my $VERSION = '@GIT_VERSION@';
- 
- my $log = GITCVS::log->new();
- my $cfg;
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 8dbe21d5887595352bc0159ea9befdf296b8105f..c8efb1205a8e2a66a6aced840980978897e122bc 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2006 Eric Wong
- #
- 
--PERL='@@PERL@@'
-+PERL='@PERL@'
- OPTIONS_KEEPDASHDASH=
- OPTIONS_STUCKLONG=
- OPTIONS_SPEC="\
-@@ -38,8 +38,8 @@ conf="$GIT_DIR/gitweb/httpd.conf"
- # if installed, it doesn't need further configuration (module_path)
- test -z "$httpd" && httpd='lighttpd -f'
- 
--# Default is @@GITWEBDIR@@
--test -z "$root" && root='@@GITWEBDIR@@'
-+# Default is @GITWEBDIR@
-+test -z "$root" && root='@GITWEBDIR@'
- 
- # any untaken local port will do...
- test -z "$port" && port=1234
-@@ -716,7 +716,7 @@ EOF
- 
- gitweb_conf() {
- 	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
--#!@@PERL@@
-+#!@PERL@
- our \$projectroot = "$(dirname "$fqgitdir")";
- our \$git_temp = "$fqgitdir/gitweb/tmp";
- our \$projects_list = \$projectroot;
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 01640a044bb10f4167338fca957c43a240e1b6c0..10c88639e28c02650ffea3d4671afa9a9f0bb182 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -112,7 +112,7 @@ find_matching_ref='
- 	}
- '
- 
--set fnord $(git ls-remote "$url" | @@PERL@@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
-+set fnord $(git ls-remote "$url" | @PERL@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
- remote_sha1=$2
- ref=$3
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index c835d4c11af259242f1128101a15b237302c7f42..02805c43e52570fe5ae5432fb9343ce9165cc16b 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1501,7 +1501,7 @@ sub gen_header {
- 	@recipients = unique_email_list(@recipients,@cc,@initial_bcc);
- 	@recipients = (map { extract_valid_address_or_die($_) } @recipients);
- 	my $date = format_2822_time($time++);
--	my $gitversion = '@@GIT_VERSION@@';
-+	my $gitversion = '@GIT_VERSION@';
- 	if ($gitversion =~ m/..GIT_VERSION../) {
- 	    $gitversion = Git::version();
- 	}
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index a15c0620db6893898152b1c9e363a0af7f1b304e..ae4b2d6ba9dc061ef40ef1867f0cd5e975df8fe5 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -9,7 +9,7 @@ TEXTDOMAIN=git
- export TEXTDOMAIN
- if test -z "$GIT_TEXTDOMAINDIR"
- then
--	TEXTDOMAINDIR="@@LOCALEDIR@@"
-+	TEXTDOMAINDIR="@LOCALEDIR@"
- else
- 	TEXTDOMAINDIR="$GIT_TEXTDOMAINDIR"
- fi
-@@ -17,9 +17,9 @@ export TEXTDOMAINDIR
- 
- # First decide what scheme to use...
- GIT_INTERNAL_GETTEXT_SH_SCHEME=fallthrough
--if test -n "@@USE_GETTEXT_SCHEME@@"
-+if test -n "@USE_GETTEXT_SCHEME@"
- then
--	GIT_INTERNAL_GETTEXT_SH_SCHEME="@@USE_GETTEXT_SCHEME@@"
-+	GIT_INTERNAL_GETTEXT_SH_SCHEME="@USE_GETTEXT_SCHEME@"
- elif test -n "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
- then
- 	: no probing necessary
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index ce273fe0e48d997cb067e77707026616a9302eb2..19aef72ec2553027bb25a5968d4e428ba986fdb2 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -41,7 +41,7 @@ git_broken_path_fix () {
- 	esac
- }
- 
--# @@BROKEN_PATH_FIX@@
-+# @BROKEN_PATH_FIX@
- 
- # Source git-sh-i18n for gettext support.
- . "$(git --exec-path)/git-sh-i18n"
-@@ -154,7 +154,7 @@ git_pager() {
- 	else
- 		GIT_PAGER=cat
- 	fi
--	for vardef in @@PAGER_ENV@@
-+	for vardef in @PAGER_ENV@
- 	do
- 		var=${vardef%%=*}
- 		eval ": \"\${$vardef}\" && export $var"
-@@ -280,7 +280,7 @@ get_author_ident_from_commit () {
- # remove lines from $1 that are not in $2, leaving only common lines.
- create_virtual_base() {
- 	sz0=$(wc -c <"$1")
--	@@DIFF@@ -u -La/"$1" -Lb/"$1" "$1" "$2" | git apply --no-add
-+	@DIFF@ -u -La/"$1" -Lb/"$1" "$1" "$2" | git apply --no-add
- 	sz1=$(wc -c <"$1")
- 
- 	# If we do not have enough common material, it is not
-diff --git a/git-svn.perl b/git-svn.perl
-index 01e7a70de1c0eb37b3feefe364ad78d4c8973097..dcf65cf1d1d4dc53b9f813f931ecff1a387c2657 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -9,7 +9,7 @@
- 		$_revision $_repository
- 		$_q $_authors $_authors_prog %users/;
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
--$VERSION = '@@GIT_VERSION@@';
-+$VERSION = '@GIT_VERSION@';
- 
- use Carp qw/croak/;
- use File::Basename qw/dirname basename/;
-diff --git a/gitk-git/po/vi.po b/gitk-git/po/vi.po
-index 59674986604891d9901e87c163e61dd39db14184..184430dcdeea7cbb76895840f84a889b6abc20bf 100644
---- a/gitk-git/po/vi.po
-+++ b/gitk-git/po/vi.po
-@@ -5,7 +5,7 @@
- #
- msgid ""
- msgstr ""
--"Project-Id-Version: gitk @@GIT_VERSION@@\n"
-+"Project-Id-Version: gitk @GIT_VERSION@\n"
- "Report-Msgid-Bugs-To: \n"
- "POT-Creation-Date: 2015-05-17 14:32+1000\n"
- "PO-Revision-Date: 2015-09-15 07:33+0700\n"
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 3b68ab2d672c4afae62f8f4dc024e0911027b58d..164c8d53757f98599ad14eeb22ca8d542eb7502a 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -79,28 +79,28 @@ GITWEB_JSLIB_FILES += static/js/blame_incremental.js
- 
- 
- GITWEB_REPLACE = \
--	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
--	-e 's|++GIT_BINDIR++|$(bindir)|g' \
--	-e 's|++GITWEB_CONFIG++|$(GITWEB_CONFIG)|g' \
--	-e 's|++GITWEB_CONFIG_SYSTEM++|$(GITWEB_CONFIG_SYSTEM)|g' \
--	-e 's|++GITWEB_CONFIG_COMMON++|$(GITWEB_CONFIG_COMMON)|g' \
--	-e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
--	-e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
--	-e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
--	-e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
--	-e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
--	-e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
--	-e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
--	-e 's|++GITWEB_LIST++|$(GITWEB_LIST)|g' \
--	-e 's|++GITWEB_HOMETEXT++|$(GITWEB_HOMETEXT)|g' \
--	-e 's|++GITWEB_CSS++|$(GITWEB_CSS)|g' \
--	-e 's|++GITWEB_LOGO++|$(GITWEB_LOGO)|g' \
--	-e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
--	-e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
--	-e 's|++GITWEB_SITE_HTML_HEAD_STRING++|$(GITWEB_SITE_HTML_HEAD_STRING)|g' \
--	-e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
--	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
--	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
-+	-e 's|@GIT_VERSION@|$(GIT_VERSION)|g' \
-+	-e 's|@GIT_BINDIR@|$(bindir)|g' \
-+	-e 's|@GITWEB_CONFIG@|$(GITWEB_CONFIG)|g' \
-+	-e 's|@GITWEB_CONFIG_SYSTEM@|$(GITWEB_CONFIG_SYSTEM)|g' \
-+	-e 's|@GITWEB_CONFIG_COMMON@|$(GITWEB_CONFIG_COMMON)|g' \
-+	-e 's|@GITWEB_HOME_LINK_STR@|$(GITWEB_HOME_LINK_STR)|g' \
-+	-e 's|@GITWEB_SITENAME@|$(GITWEB_SITENAME)|g' \
-+	-e 's|@GITWEB_PROJECTROOT@|$(GITWEB_PROJECTROOT)|g' \
-+	-e 's|"@GITWEB_PROJECT_MAXDEPTH@"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
-+	-e 's|@GITWEB_EXPORT_OK@|$(GITWEB_EXPORT_OK)|g' \
-+	-e 's|@GITWEB_STRICT_EXPORT@|$(GITWEB_STRICT_EXPORT)|g' \
-+	-e 's|@GITWEB_BASE_URL@|$(GITWEB_BASE_URL)|g' \
-+	-e 's|@GITWEB_LIST@|$(GITWEB_LIST)|g' \
-+	-e 's|@GITWEB_HOMETEXT@|$(GITWEB_HOMETEXT)|g' \
-+	-e 's|@GITWEB_CSS@|$(GITWEB_CSS)|g' \
-+	-e 's|@GITWEB_LOGO@|$(GITWEB_LOGO)|g' \
-+	-e 's|@GITWEB_FAVICON@|$(GITWEB_FAVICON)|g' \
-+	-e 's|@GITWEB_JS@|$(GITWEB_JS)|g' \
-+	-e 's|@GITWEB_SITE_HTML_HEAD_STRING@|$(GITWEB_SITE_HTML_HEAD_STRING)|g' \
-+	-e 's|@GITWEB_SITE_HEADER@|$(GITWEB_SITE_HEADER)|g' \
-+	-e 's|@GITWEB_SITE_FOOTER@|$(GITWEB_SITE_FOOTER)|g' \
-+	-e 's|@HIGHLIGHT_BIN@|$(HIGHLIGHT_BIN)|g'
- 
- .PHONY: FORCE
- $(MAK_DIR_GITWEB)GITWEB-BUILD-OPTIONS: FORCE
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index b09a8d052383fdf1190f1fab008ddef99290e1f0..76e1f4e244fd23dd29b935e83753efa9c6d5bb5e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -35,7 +35,7 @@ BEGIN
- 	CGI->compile() if $ENV{'MOD_PERL'};
- }
- 
--our $version = "++GIT_VERSION++";
-+our $version = "@GIT_VERSION@";
- 
- our ($my_url, $my_uri, $base_url, $path_info, $home_link);
- sub evaluate_uri {
-@@ -80,46 +80,46 @@ sub evaluate_uri {
- 
- # core git executable to use
- # this can just be "git" if your webserver has a sensible PATH
--our $GIT = "++GIT_BINDIR++/git";
-+our $GIT = "@GIT_BINDIR@/git";
- 
- # absolute fs-path which will be prepended to the project path
- #our $projectroot = "/pub/scm";
--our $projectroot = "++GITWEB_PROJECTROOT++";
-+our $projectroot = "@GITWEB_PROJECTROOT@";
- 
- # fs traversing limit for getting project list
- # the number is relative to the projectroot
--our $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
-+our $project_maxdepth = "@GITWEB_PROJECT_MAXDEPTH@";
- 
- # string of the home link on top of all pages
--our $home_link_str = "++GITWEB_HOME_LINK_STR++";
-+our $home_link_str = "@GITWEB_HOME_LINK_STR@";
- 
- # extra breadcrumbs preceding the home link
- our @extra_breadcrumbs = ();
- 
- # name of your site or organization to appear in page titles
- # replace this with something more descriptive for clearer bookmarks
--our $site_name = "++GITWEB_SITENAME++"
-+our $site_name = "@GITWEB_SITENAME@"
-                  || ($ENV{'SERVER_NAME'} || "Untitled") . " Git";
- 
- # html snippet to include in the <head> section of each page
--our $site_html_head_string = "++GITWEB_SITE_HTML_HEAD_STRING++";
-+our $site_html_head_string = "@GITWEB_SITE_HTML_HEAD_STRING@";
- # filename of html text to include at top of each page
--our $site_header = "++GITWEB_SITE_HEADER++";
-+our $site_header = "@GITWEB_SITE_HEADER@";
- # html text to include at home page
--our $home_text = "++GITWEB_HOMETEXT++";
-+our $home_text = "@GITWEB_HOMETEXT@";
- # filename of html text to include at bottom of each page
--our $site_footer = "++GITWEB_SITE_FOOTER++";
-+our $site_footer = "@GITWEB_SITE_FOOTER@";
- 
- # URI of stylesheets
--our @stylesheets = ("++GITWEB_CSS++");
-+our @stylesheets = ("@GITWEB_CSS@");
- # URI of a single stylesheet, which can be overridden in GITWEB_CONFIG.
- our $stylesheet = undef;
- # URI of GIT logo (72x27 size)
--our $logo = "++GITWEB_LOGO++";
-+our $logo = "@GITWEB_LOGO@";
- # URI of GIT favicon, assumed to be image/png type
--our $favicon = "++GITWEB_FAVICON++";
-+our $favicon = "@GITWEB_FAVICON@";
- # URI of gitweb.js (JavaScript code for gitweb)
--our $javascript = "++GITWEB_JS++";
-+our $javascript = "@GITWEB_JS@";
- 
- # URI and label (title) of GIT logo link
- #our $logo_url = "https://www.kernel.org/pub/software/scm/git/docs/";
-@@ -128,7 +128,7 @@ sub evaluate_uri {
- our $logo_label = "git homepage";
- 
- # source of projects list
--our $projects_list = "++GITWEB_LIST++";
-+our $projects_list = "@GITWEB_LIST@";
- 
- # the width (in characters) of the projects list "Description" column
- our $projects_list_description_width = 25;
-@@ -147,7 +147,7 @@ sub evaluate_uri {
- 
- # show repository only if this file exists
- # (only effective if this variable evaluates to true)
--our $export_ok = "++GITWEB_EXPORT_OK++";
-+our $export_ok = "@GITWEB_EXPORT_OK@";
- 
- # don't generate age column on the projects list page
- our $omit_age_column = 0;
-@@ -161,11 +161,11 @@ sub evaluate_uri {
- our $export_auth_hook = undef;
- 
- # only allow viewing of repositories also shown on the overview page
--our $strict_export = "++GITWEB_STRICT_EXPORT++";
-+our $strict_export = "@GITWEB_STRICT_EXPORT@";
- 
- # list of git base URLs used for URL to where fetch project from,
- # i.e. full URL is "$git_base_url/$project"
--our @git_base_url_list = grep { $_ ne '' } ("++GITWEB_BASE_URL++");
-+our @git_base_url_list = grep { $_ ne '' } ("@GITWEB_BASE_URL@");
- 
- # default blob_plain mimetype and default charset for text/plain blob
- our $default_blob_plain_mimetype = 'text/plain';
-@@ -200,7 +200,7 @@ sub evaluate_uri {
- # http://andre-simon.de/zip/download.php due to assumptions about parameters and output).
- # Useful if highlight is not installed on your webserver's PATH.
- # [Default: highlight]
--our $highlight_bin = "++HIGHLIGHT_BIN++";
-+our $highlight_bin = "@HIGHLIGHT_BIN@";
- 
- # information about snapshot formats that gitweb is capable of serving
- our %known_snapshot_formats = (
-@@ -741,9 +741,9 @@ sub read_config_file {
- 
- our ($GITWEB_CONFIG, $GITWEB_CONFIG_SYSTEM, $GITWEB_CONFIG_COMMON);
- sub evaluate_gitweb_config {
--	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
--	our $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWEB_CONFIG_SYSTEM++";
--	our $GITWEB_CONFIG_COMMON = $ENV{'GITWEB_CONFIG_COMMON'} || "++GITWEB_CONFIG_COMMON++";
-+	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "@GITWEB_CONFIG@";
-+	our $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "@GITWEB_CONFIG_SYSTEM@";
-+	our $GITWEB_CONFIG_COMMON = $ENV{'GITWEB_CONFIG_COMMON'} || "@GITWEB_CONFIG_COMMON@";
- 
- 	# Protect against duplications of file names, to not read config twice.
- 	# Only one of $GITWEB_CONFIG and $GITWEB_CONFIG_SYSTEM is used, so
-diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
-index 475e90a6df5a272d6b4d557d8d37d68e3f77dfa8..f8f0ca312543ce2d099f16354e62acbc205abe5a 100644
---- a/perl/Git/I18N.pm
-+++ b/perl/Git/I18N.pm
-@@ -20,14 +20,14 @@ BEGIN
- # this "'@@' [...] '@@'" pattern.
- use constant NO_GETTEXT_STR => '@@' . 'NO_GETTEXT' . '@@';
- use constant NO_GETTEXT => (
--	q[@@NO_GETTEXT@@] ne ''
-+	q[@NO_GETTEXT@] ne ''
- 	and
--	q[@@NO_GETTEXT@@] ne NO_GETTEXT_STR
-+	q[@NO_GETTEXT@] ne NO_GETTEXT_STR
- );
- 
- sub __bootstrap_locale_messages {
- 	our $TEXTDOMAIN = 'git';
--	our $TEXTDOMAINDIR ||= $ENV{GIT_TEXTDOMAINDIR} || '@@LOCALEDIR@@';
-+	our $TEXTDOMAINDIR ||= $ENV{GIT_TEXTDOMAINDIR} || '@LOCALEDIR@';
- 	die "NO_GETTEXT=" . NO_GETTEXT_STR if NO_GETTEXT;
- 
- 	require POSIX;
-diff --git a/perl/Git/LoadCPAN.pm b/perl/Git/LoadCPAN.pm
-index 8c7fa805f97390a47366b0d0058966ee391b9df1..6be99840f84fb2fe945f969fb23f73454c6b171b 100644
---- a/perl/Git/LoadCPAN.pm
-+++ b/perl/Git/LoadCPAN.pm
-@@ -31,11 +31,11 @@ =head1 DESCRIPTION
- # Makefile, and allows for detecting whether the module is loaded from
- # perl/Git as opposed to perl/build/Git, which is useful for one-off
- # testing without having Error.pm et al installed.
--use constant NO_PERL_CPAN_FALLBACKS_STR => '@@' . 'NO_PERL_CPAN_FALLBACKS' . '@@';
-+use constant NO_PERL_CPAN_FALLBACKS_STR => '@' . 'NO_PERL_CPAN_FALLBACKS' . '@';
- use constant NO_PERL_CPAN_FALLBACKS => (
--	q[@@NO_PERL_CPAN_FALLBACKS@@] ne ''
-+	q[@NO_PERL_CPAN_FALLBACKS@] ne ''
- 	and
--	q[@@NO_PERL_CPAN_FALLBACKS@@] ne NO_PERL_CPAN_FALLBACKS_STR
-+	q[@NO_PERL_CPAN_FALLBACKS@] ne NO_PERL_CPAN_FALLBACKS_STR
- );
- 
- sub import {
-diff --git a/perl/header_templates/fixed_prefix.template.pl b/perl/header_templates/fixed_prefix.template.pl
-index 857b4391a499394ea788a6b56773aecd5afd53c3..d571ca5cde513a98cc25e7acb52b5415b98ffe10 100644
---- a/perl/header_templates/fixed_prefix.template.pl
-+++ b/perl/header_templates/fixed_prefix.template.pl
-@@ -1 +1 @@
--use lib (split(/@@PATHSEP@@/, $ENV{GITPERLLIB} || '@@INSTLIBDIR@@'));
-+use lib (split(/@PATHSEP@/, $ENV{GITPERLLIB} || '@INSTLIBDIR@'));
-diff --git a/perl/header_templates/runtime_prefix.template.pl b/perl/header_templates/runtime_prefix.template.pl
-index 9d28b3d8636c6c6d48ea287a5fef0f7833f6c08c..e6f8e661a164519d4fdb55429746380e84ae3fcb 100644
---- a/perl/header_templates/runtime_prefix.template.pl
-+++ b/perl/header_templates/runtime_prefix.template.pl
-@@ -3,7 +3,7 @@
- # This finds our Git::* libraries relative to the script's runtime path.
- sub __git_system_path {
- 	my ($relpath) = @_;
--	my $gitexecdir_relative = '@@GITEXECDIR_REL@@';
-+	my $gitexecdir_relative = '@GITEXECDIR_REL@';
- 
- 	# GIT_EXEC_PATH is supplied by `git` or the test suite.
- 	my $exec_path;
-@@ -24,11 +24,11 @@ sub __git_system_path {
- }
- 
- BEGIN {
--	use lib split /@@PATHSEP@@/,
-+	use lib split /@PATHSEP@/,
- 	(
- 		$ENV{GITPERLLIB} ||
- 		do {
--			my $perllibdir = __git_system_path('@@PERLLIBDIR_REL@@');
-+			my $perllibdir = __git_system_path('@PERLLIBDIR_REL@');
- 			(-e $perllibdir) || die("Invalid system path ($relpath): $path");
- 			$perllibdir;
- 		}
-@@ -36,7 +36,7 @@ BEGIN
- 
- 	# Export the system locale directory to the I18N module. The locale directory
- 	# is only installed if NO_GETTEXT is set.
--	$Git::I18N::TEXTDOMAINDIR = __git_system_path('@@LOCALEDIR_REL@@');
-+	$Git::I18N::TEXTDOMAINDIR = __git_system_path('@LOCALEDIR_REL@');
- }
- 
- # END RUNTIME_PREFIX generated code.
-diff --git a/unimplemented.sh b/unimplemented.sh
-index fee21d24e8ab89208b4aa0af7007b7c033b753bc..41776b279d4263ae6a9034b30f1bd26ac9b792bd 100644
---- a/unimplemented.sh
-+++ b/unimplemented.sh
-@@ -1,4 +1,4 @@
- #!/bin/sh
- 
--echo >&2 "fatal: git was built without support for $(basename $0) (@@REASON@@)."
-+echo >&2 "fatal: git was built without support for $(basename $0) (@REASON@)."
- exit 128
-diff --git a/wrap-for-bin.sh b/wrap-for-bin.sh
-index 95851b85b6b7181130f0cd441c2bd7ac0bfb89da..7898a1c238dde20617cf96d144930dc59f67feab 100644
---- a/wrap-for-bin.sh
-+++ b/wrap-for-bin.sh
-@@ -4,33 +4,33 @@
- # to run test suite against sandbox, but with only bindir-installed
- # executables in PATH.  The Makefile copies this into various
- # files in bin-wrappers, substituting
--# @@BUILD_DIR@@ and @@PROG@@.
-+# @BUILD_DIR@ and @PROG@.
- 
--GIT_EXEC_PATH='@@BUILD_DIR@@'
-+GIT_EXEC_PATH='@BUILD_DIR@'
- if test -n "$NO_SET_GIT_TEMPLATE_DIR"
- then
- 	unset GIT_TEMPLATE_DIR
- else
--	GIT_TEMPLATE_DIR='@@BUILD_DIR@@/templates/blt'
-+	GIT_TEMPLATE_DIR='@BUILD_DIR@/templates/blt'
- 	export GIT_TEMPLATE_DIR
- fi
--GITPERLLIB='@@BUILD_DIR@@/perl/build/lib'"${GITPERLLIB:+:$GITPERLLIB}"
--GIT_TEXTDOMAINDIR='@@BUILD_DIR@@/po/build/locale'
--PATH='@@BUILD_DIR@@/bin-wrappers:'"$PATH"
-+GITPERLLIB='@BUILD_DIR@/perl/build/lib'"${GITPERLLIB:+:$GITPERLLIB}"
-+GIT_TEXTDOMAINDIR='@BUILD_DIR@/po/build/locale'
-+PATH='@BUILD_DIR@/bin-wrappers:'"$PATH"
- 
- export GIT_EXEC_PATH GITPERLLIB PATH GIT_TEXTDOMAINDIR
- 
- case "$GIT_DEBUGGER" in
- '')
--	exec "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+	exec "${GIT_EXEC_PATH}/@PROG@" "$@"
- 	;;
- 1)
- 	unset GIT_DEBUGGER
--	exec gdb --args "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+	exec gdb --args "${GIT_EXEC_PATH}/@PROG@" "$@"
- 	;;
- *)
- 	GIT_DEBUGGER_ARGS="$GIT_DEBUGGER"
- 	unset GIT_DEBUGGER
--	exec ${GIT_DEBUGGER_ARGS} "${GIT_EXEC_PATH}/@@PROG@@" "$@"
-+	exec ${GIT_DEBUGGER_ARGS} "${GIT_EXEC_PATH}/@PROG@" "$@"
- 	;;
- esac
+ #python script
+ file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
+diff --git a/generate-perl.sh b/generate-perl.sh
+new file mode 100755
+index 0000000000000000000000000000000000000000..12e116b76e5f39c14c9992e9a75090917e72e957
+--- /dev/null
++++ b/generate-perl.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++
++set -e
++
++if test $# -ne 5
++then
++	echo "USAGE: $0 <GIT_BUILD_OPTIONS> <GIT_VERSION> <PERL_HEADER> <INPUT> <OUTPUT>" >&2
++	exit 1
++fi
++
++GIT_BUILD_OPTIONS="$1"
++GIT_VERSION="$2"
++PERL_HEADER="$3"
++INPUT="$4"
++OUTPUT="$5"
++
++. "$GIT_BUILD_OPTIONS"
++
++sed -e '1{' \
++    -e "	s|#!.*perl|#!$PERL_PATH|" \
++    -e "	r $PERL_HEADER" \
++    -e '	G' \
++    -e '}' \
++    -e "s/@GIT_VERSION@/$GIT_VERSION/g" \
++    "$INPUT" >"$OUTPUT"
++chmod a+x "$OUTPUT"
 
 -- 
 2.47.0.251.gb31fb630c0.dirty
