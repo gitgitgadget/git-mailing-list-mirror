@@ -1,85 +1,102 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DBA1F7092
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 09:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A1C1F7092
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 09:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731402186; cv=none; b=MJP77t1RwiXkQ6Ss6R1bp01GH8sLCxqipyrkDw2GfsGAXvzietxqdHScI/klRrzwmBAnHetDjnQvB3Nl4Sw1Tt4RBV8jjWQzw2NbcBfZskD8PSWQza5WPyRDtF12W3sUhF3xydk+UBgMSSmH7n4Xg8wLAvshkLvJHBf+oePtwh8=
+	t=1731402299; cv=none; b=Z5WTTWJGhggoatwPnvC/24f7cE9Cnug82XX3nlBYC1h5P5LFSQndEFg8yPFEnCR2cu1Qe+nQQ7F6g82q/ZdxCSJGHy/o9JluCmzOLujY2LTS7N2wH6GDAxVi6SjpNTyVuN4APLfENyEJSDFwL5BLdNx8p0Mi3RtSe8oWkSP+KdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731402186; c=relaxed/simple;
-	bh=rjGpkydGAwKAcDgGtkg4dtTOm7Kmm+3Gm5z5EheSgis=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NodEUEVRhjt32Pp0BxWf4Zbr6TK7RnI5/IqXipjnKTYycaPvO9lXWInz4WZvzDaqP0QGDRBD6vdQiqVIYiHXyjhYUwfJiNAX7bTpgviaSqRB8f1GAkvQ0KXfXTYYscUWroxHwPN09tT2TMV7F/pPnhFmowOrbpUIB8J7WpvyVwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GeeHK1fn; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1731402299; c=relaxed/simple;
+	bh=4UOBcvAlVqfbELyKNhuqkDXvMqYokuYfsk3BwET7yqU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aSd1JMaBXlPoq+4mGXAf9+lmkUtTDXrLF59C/BAb3Uacx95uClWDHdmGGUGYX7PDKw7kfuD/tjwoYIZMJmxgfNY44bbgPVNi9j9KsflEq4BtHE6PIN5V4VO5QF7U+6aWbKuf63WkiBaYIkGUoS9KUoyCSaqJtaegxZu35kXv8ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=MYI8HIrq; arc=none smtp.client-ip=212.27.42.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GeeHK1fn"
-Received: (qmail 30670 invoked by uid 109); 12 Nov 2024 09:03:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=rjGpkydGAwKAcDgGtkg4dtTOm7Kmm+3Gm5z5EheSgis=; b=GeeHK1fnUAJmq75w0ywxh0jXuPa1tua3BGKnyhMIFqUh7J712jbTHQqDev8xsfzy3PqWAYxP2pQo1/PbE1Z0ECgIF0CVSgiqpgq3nv5NPt3yq7ag1esfOCAUhKo1y2zKxrF0/8M78bLUSbeC2Feru/IiZzZgYatQHszsyogGyWb640UodM0MEafc/OlzHN8W8p+wQexASrcqQJDVXLAw9kLOe+Gmr2kNbj2YFRZOif2th3sOTmdc9Zo8MT6QQc9NkySDeHEBCpdklUFA14hwg6x1IWFga6+QTJwio1h20adWETXjUvqnGI2GRR+BdZf08a+gtyAP8J4Qwh2Yr4fHYw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Nov 2024 09:03:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27874 invoked by uid 111); 12 Nov 2024 09:03:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Nov 2024 04:03:08 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 12 Nov 2024 04:03:03 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Subject: Re: [PATCH v2 21/27] global: drop `UNLEAK()` annotation
-Message-ID: <20241112090303.GA3687943@coredump.intra.peff.net>
-References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
- <20241111-b4-pks-leak-fixes-pt10-v2-21-6154bf91f0b0@pks.im>
- <20241112082609.GA3166560@coredump.intra.peff.net>
- <ZzMXh-Pcb4SMSno0@pks.im>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="MYI8HIrq"
+Received: from [192.168.3.191] (unknown [92.173.128.58])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 8AF6560137;
+	Tue, 12 Nov 2024 10:04:50 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1731402295;
+	bh=4UOBcvAlVqfbELyKNhuqkDXvMqYokuYfsk3BwET7yqU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MYI8HIrqTwTddCojhs8Q/nE4eKs5rUfNLvO1OxukuDoUxi/WA+1DuTljhC2ipotxT
+	 n0z8H4Z5WwnqzoNDhInShDArAoHGFPIEVAlSyidocFBxo2o9TvpcChSBWGgqqFlYCH
+	 kNQqgu0RpGLh/MN7MDouDm7DCOMEz6qczH3dht4ZN/R9+jTb8DUXhRhvt7kEXlQP1q
+	 vgaKze1ah0XeA8yPqaPm+P3rz9B/cTBCE4lFJYbCQsax3fzShjT0XbE+njJS7VLsEP
+	 nnRvGKFXfqAhf9+4vsJwUn5SNDDtt0/k+VQC5bI+AYUx8XNNd/u36mG9l+RagWaCXo
+	 DZ+++kfBa8O0g==
+Message-ID: <b0a894fc-911d-49f5-a10c-19d441dc7133@free.fr>
+Date: Tue, 12 Nov 2024 10:04:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZzMXh-Pcb4SMSno0@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] doc: git-diff: apply format changes to
+ diff-options
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+ Patrick Steinhardt <ps@pks.im>
+References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+ <129763c2aaefd92bddaa59601c5a3275b9defa36.1731343985.git.gitgitgadget@gmail.com>
+ <xmqqh68d8e9h.fsf@gitster.g>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr, en-US
+In-Reply-To: <xmqqh68d8e9h.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 12, 2024 at 09:53:28AM +0100, Patrick Steinhardt wrote:
-
-> On Tue, Nov 12, 2024 at 03:26:09AM -0500, Jeff King wrote:
-> > On Mon, Nov 11, 2024 at 11:38:50AM +0100, Patrick Steinhardt wrote:
-> > > This neatly demonstrates one of the issues with `UNLEAK()`: it is quite
-> > > easy for the annotation to become stale. A second issue is that its
-> > > whole intent is to paper over leaks. And while that has been a necessary
-> > > evil in the past, because Git was leaking left and right, it isn't
-> > > really much of an issue nowadays where our test suite has no known leaks
-> > > anymore.
-> > 
-> > I do agree that stale annotations are a weakness (they do not hurt the
-> > leak-checker if they exist, but they are an eye-sore).
-> > 
-> > I'm not sure I would agree that the intent was to paper over leaks. The
-> > point was to avoid noise from the leak-checker about memory that was
-> > intentionally held until program exit and released by returning from
-> > main(). I think the main thing that made it obsolete is that we decided
-> > it was worth it to spend the cycles freeing that memory rather than
-> > ignoring it.
-> > 
-> > But it's possible I'm just splitting hairs. :)
+Le 12/11/2024 à 01:52, Junio C Hamano a écrit :
+> "Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>  
+>> @@ -39,28 +39,28 @@ endif::git-format-patch[]
+>>  ifdef::git-log[]
+>>  -m::
 > 
-> Yeah, I know that this was also used to mark memory that intentionally
-> leaks because we're about to exit anyway. I basically consider that as
-> some form of "papering over" it, but I get your comment that this may be
-> a bit too strongly worded.
+> Shouldn't this and all others like -c/--cc be also quoted as
+> `literal` options?
+
+As stated in the commit message, only the parts of the files which
+appear in git-diff man page are converted (like was done for git-clone
+and git-init)
+
+Thinking again about it, I don't find it wise, because other man pages
+will be half-converted anyway, at least for the common parts of the
+included files, and we are going to introduce several commits for the
+same file.
+
+So, better convert all the file in on run.
+
 > 
-> Do you want me to reformulate this, or do we just go with the current
-> description?
+>> @@ -73,33 +73,33 @@ The following formats are supported:
+>>  off, none::
+> 
+> Shouldn't this and other option values like on, first-parent, etc.,
+> that are literals be marked-up specially?
 
-Nah, I think it is OK to leave it as-is. The important thing is that it
-is gone. :)
+This is to be converted, and will be with the conversion of the full file.
 
-(Thanks for all your work on this, btw. I was so happy to see the commit
-dropping all of the PASSING_SANITIZE_LEAK infrastructure).
+> 
+>> --U<n>::
+>> ---unified=<n>::
+>> -	Generate diffs with <n> lines of context instead of
+>> +`-U<n>`::
+>> +`--unified=<n>`::
+>> +	Generate diffs with _<n>_ lines of context instead of
+> 
+> Understandable.  Shouldn't <n> part be italicised?
 
--Peff
+No need: the processing of back tick quotes already treats each part
+according to its semantics and applies the corresponding format.
+
+
+
