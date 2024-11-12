@@ -1,337 +1,89 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6712038C3
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 06:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECF41A00D2
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 06:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731393713; cv=none; b=FwD9C/TLOkQ53Jw3zBbf0pyP9gpRTAZZLcwb6cblOoPPQv5J6WG8dzW9A3UTnjPbFgYo/ZlOFY21PtIul5M74vwZwl7Rq9QP6aGB2lmE/rWCEHj/rTiMhtlfOAiKlOGFvfo1wHt7RBbj8/76uRotgktudq43m+Vt3OtTKq1oIzk=
+	t=1731394197; cv=none; b=HzBiDICEUPaKcTTS8BMqQL1d9qbSl4+dmMF6y9sytiB4+urgRadKCYf25FdIaEVK3kxDDS6OzuESqQbBezJ1vwdI1P6V/EjjbW8iHI5RXE0pMxNsTBYpSlFbOG6QTuuikbhBU5vZJGMLAmukl8Cj2HyxWu/pqDSKXFKAtDYLlgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731393713; c=relaxed/simple;
-	bh=U9Z5mcaUJ488C/NVr9dg0Q9QKn65CwYXcsqycmeLMNE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FKr84cB2eprplPPue1xAV9v2ZdjSDmeUBRptbeREki0iYy+eh0DclP6XvZt+udn7dLczu8wRuWbCDF8HPoKL4OGBUbyqBC3ULhdbNnSe9LF9OtYNa5XYN5f/K7MbNuRMK/JNVQwK1GGCOTupNzyxhDI5cvLGUG9RJQj1WOACuWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UTm49LWA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aoU3MKcN; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731394197; c=relaxed/simple;
+	bh=7ujN/Oz/TLD7HXZ4KL/zE3jFIP8Y1iwohw6AlqJ4p6c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jVZJO9VKLvIzHywCz8euvr1mMCv8NT/QRYJvjuYPFkYN5WPZDWB06+DgVEAkW8SUa4GIpNjEzV2Tk1nGShXnuzeZE15ilziNhfr/G1Tasjq1WWCyRg8EyztsZHYGZYUBn/CpP7plrTcRvc5o593PGvY17beBf7rhBYc1Ws02/o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VL4UJse+; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UTm49LWA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aoU3MKcN"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 218A211401AA;
-	Tue, 12 Nov 2024 01:41:50 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 12 Nov 2024 01:41:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731393709; x=1731480109; bh=MF7TwBQcYV
-	AdGkW6o0oOBjxIfeUjfrnF60ekT64g1UU=; b=UTm49LWAT6oLVAtAOlYfrRToIx
-	pUWZNXX1bppr0flEtQ8jWrlvlCwEenSJpLSdbTVbBkmW66xYHn/VJpZmOudgSB2Y
-	+mS8ZlkKS0aqP4t+6bM66PyRScXSKCs0UHFvmGa//YlDYO/SdWOOIVkcvg9S1ZTg
-	h2dmfmix3iP3TLH/RFh+NNWRqmLpCb/TIL12VMqVDWPyqXZN97wxVAeBKCSRrAEc
-	TQoolyvi8EFwEHNG0xnNoDmI7LU5uBzheSLM+VgohEA30aOsD7TLYwN+lApN7LFc
-	J+AU1dBZdZBGua1YI7u5FTgWSgMD607w0JH1IEtsIeeSQiVdUaTl2m0AkgTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731393709; x=1731480109; bh=MF7TwBQcYVAdGkW6o0oOBjxIfeUjfrnF60e
-	kT64g1UU=; b=aoU3MKcN0iqMqZL+Xq8LB+8i6PA3bcGRz+/L1FRp69zdAymqsxN
-	ma4eYS4NcWyl2qeB5xbzigkqk8lOJOzHLaue3dVxOac3/2Z6MsMq3pen/hea7Psu
-	fRU6T0IusibSldwIWZ2YozGHEno/FYe/bbAm/zZeKQ+QW8jhtFj/hDedaM/64Cf3
-	HhwjfJctZ9NnqyLDpN+A3Rz0HzFGJwNDMu/GWwOkS+ZtGJXo4uo3NbHSVAyhALbZ
-	yOV/HHCVLw9/fe/9LoJFaousrwHhTseRVKp9QoUJ3xLXIfHNjQba34zB4dhvMHoK
-	7aMjoqBgC5SDV1YUFClB2JPD+Z5Vmsj1ZSw==
-X-ME-Sender: <xms:rfgyZzu0Y_SG2Aa0OKCq87ZJ82BIBl0_NuMxplGzVjMdZaWEW76Jnw>
-    <xme:rfgyZ0fbujqt4qoRWiAeTrlQUoJN2AfVXKvj425GxGB7gQ-hmS2w-vY-HQGLYKfri
-    oVEQFxwQUl8e-KvrQ>
-X-ME-Received: <xmr:rfgyZ2x_ZZG1IllN4N99_AXvMUbU9NnGr53NpWtH8Qgxx-8Ob-QVje40JlYOFAPsWYk1RAy3MXvvFmeMD8bJMbsMkjCSYjLDASN9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgdelkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rfgyZyO1JX1X005IEU51Kukm5AcErPqvAGBbthAyuaR3pAT2QXTRkA>
-    <xmx:rfgyZz9WU7z35lvgAN2ildX6cgfVPPTIrSmGy40E8_YuAGXjMOPTVA>
-    <xmx:rfgyZyXv8rNd20nQnSQBFAe17__Sv45zhgOoYaW_V8iW33hYRMtRXg>
-    <xmx:rfgyZ0eiBOBW7Rbxe9AgCK7wjf_HdWusyyiFd9uB6zHYP_-5O_jaUw>
-    <xmx:rfgyZ2Y02oXDMNpFnceSPh5pCxNDenAibhWqpCUSOMZe2HbVu1QhUawW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 01:41:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/8] refs/reftable: handle reloading stacks in the
- reftable backend
-In-Reply-To: <bab837e3733a982973bb96eedca15d073089693a.1730792627.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 5 Nov 2024 10:12:02 +0100")
-References: <cover.1730732881.git.ps@pks.im> <cover.1730792627.git.ps@pks.im>
-	<bab837e3733a982973bb96eedca15d073089693a.1730792627.git.ps@pks.im>
-Date: Tue, 12 Nov 2024 15:41:48 +0900
-Message-ID: <xmqqo72l54yb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VL4UJse+"
+Received: (qmail 28661 invoked by uid 109); 12 Nov 2024 06:49:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=7ujN/Oz/TLD7HXZ4KL/zE3jFIP8Y1iwohw6AlqJ4p6c=; b=VL4UJse+v+YYLYRRrRHs4hL3Nc8TOgnYnB9YmjF+alRkQ0SZdkAi1Eys7gxQtKsq2bxVWUTdp4I21pdc/oFE88PukN48iIsR6j4jUN2dcrk84X0Xsf5yWf8ldINoxt3/dvRrTtL4YMzW9FGX2w5JTI0Pkw2Gwm/LTPMKkKoTNKoVC13WXAef/ZDUf7MWDlmOXU2fE1RKwmICzZ8MkUoK+3tAKyVxnOFTTnsGdSkv9DywtEcNCuh2fmp+s4YTs1aJiMjFzK3oBs6iDQZRmbEXPtuqUIN8RMZmQtRVkzVOja3uTcMIZY3+7d87zhARYyZIPS+Jj8YAkdNdb5Hy0U2gIg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 12 Nov 2024 06:49:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26673 invoked by uid 111); 12 Nov 2024 06:49:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Nov 2024 01:49:56 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 12 Nov 2024 01:49:51 -0500
+From: Jeff King <peff@peff.net>
+To: Eric Mills <ermills@epic.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG REPORT] git fetch --prefetch with incorrect options hangs
+ with 2.47.0
+Message-ID: <20241112064951.GA619985@coredump.intra.peff.net>
+References: <SA1PR17MB6501281EF202EA694CF9DC03CA582@SA1PR17MB6501.namprd17.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SA1PR17MB6501281EF202EA694CF9DC03CA582@SA1PR17MB6501.namprd17.prod.outlook.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Nov 11, 2024 at 10:15:44PM +0000, Eric Mills wrote:
 
-> +static int backend_for(struct reftable_backend **out,
-> +		       struct reftable_ref_store *store,
-> +		       const char *refname,
-> +		       const char **rewritten_ref,
-> +		       int reload)
->  {
-> +	struct reftable_backend *be;
->  	const char *wtname;
->  	int wtname_len;
->  
-> -	if (!refname)
-> -		return &store->main_backend;
-> +	if (!refname) {
-> +		be = &store->main_backend;
-> +		goto out;
-> +	}
->  
->  	switch (parse_worktree_ref(refname, &wtname, &wtname_len, rewritten_ref)) {
->  	case REF_WORKTREE_OTHER: {
->  		static struct strbuf wtname_buf = STRBUF_INIT;
->  		struct strbuf wt_dir = STRBUF_INIT;
-> -		struct reftable_backend *be;
->  
->  		/*
->  		 * We're using a static buffer here so that we don't need to
-> @@ -162,7 +166,7 @@ static struct reftable_backend *backend_for(struct reftable_ref_store *store,
->  		}
->  
->  		strbuf_release(&wt_dir);
-> -		return be;
-> +		goto out;
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> I ran `git fetch --prefetch origin main` with git 2.47 on both my
+> Windows machine (2.47.windows.2) and my Mac (2.47.0) and it hangs.
+> 
+> When I downgrade, same command succeeds on
+> 2.46.2.Windows.1 / 2.46.2 (macOS).
+> [...]
+> On Windows, I don't get an error. It hangs indefinitely.
+> On macOS, after a few seconds I got the following:
+> 
+> git(84051,0x20171cf40) malloc: *** error for object 0x600001978390:
+> pointer being freed was not allocated
+> 
+> git(84051,0x20171cf40) malloc: *** set a breakpoint in
+> malloc_error_break to debug
 
-An interesting part of this function is not shown in the above
-context, but we look up an existing backend from a strmap, and
-allocate one if there isn't.  In either case, be points at the
-backend to use.  Now be is not local to this block, we can access it
-after jumping to "out" label.
+Thanks for the report. I see similar heap corruption problems on Linux.
+Building with ASan shows a double-free:
 
-> +out:
-> +	if (reload) {
-> +		int ret = reftable_stack_reload(be->stack);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +	*out = be;
-> +
-> +	return 0;
->  }
+  ==646934==ERROR: AddressSanitizer: attempting double-free on 0x502000002450 in thread T0:
+      #0 0x7f9ab1cf3918 in free ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:52
+      #1 0x557a1d8082c2 in refspec_clear /home/peff/compile/git/refspec.c:228
+      #2 0x557a1ce92a08 in fetch_one builtin/fetch.c:2136
+      #3 0x557a1ce9889d in cmd_fetch builtin/fetch.c:2443
+      #4 0x557a1cd2e1ca in run_builtin /home/peff/compile/git/git.c:483
+      #5 0x557a1cd2f2d8 in handle_builtin /home/peff/compile/git/git.c:749
+      #6 0x557a1cd2fb3a in run_argv /home/peff/compile/git/git.c:819
+      #7 0x557a1cd30e66 in cmd_main /home/peff/compile/git/git.c:954
+      #8 0x557a1d1370c1 in main /home/peff/compile/git/common-main.c:64
+      #9 0x7f9ab1233d67 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+      #10 0x7f9ab1233e24 in __libc_start_main_impl ../csu/libc-start.c:360
+      #11 0x557a1cd27290 in _start (/home/peff/compile/git/git+0x129d290) (BuildId: cca88fc4d05f503e4aecc54e9437a56865d5eca1)
 
-> @@ -828,17 +845,17 @@ static int reftable_be_read_raw_ref(struct ref_store *ref_store,
->  {
->  	struct reftable_ref_store *refs =
->  		reftable_be_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
-> -	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
-> +	struct reftable_backend *be;
->  	int ret;
->  
->  	if (refs->err < 0)
->  		return refs->err;
->  
-> -	ret = reftable_stack_reload(stack);
-> +	ret = backend_for(&be, refs, refname, &refname, 1);
->  	if (ret)
->  		return ret;
+Bisecting on:
 
-This one chooses to reload, so that the next one, i.e.
-"without-reload", would not read stale information?
+  make SANITIZE=address &&
+  bin-wrappers/git fetch --prefetch origin master
 
-> -	ret = read_ref_without_reload(refs, stack, refname, oid, referent, type);
-> +	ret = read_ref_without_reload(refs, be->stack, refname, oid, referent, type);
+turns up my ea4780307c (fetch: free "raw" string when shrinking refspec,
+2024-09-24). I'll see if I can figure out what's going on.
 
-
-The following bit is curious.
-
-> +	ret = backend_for(&be, refs, update->refname, NULL, 0);
-> +	if (ret)
-> +		return ret;
-> +
-
-We locate one without reloading, and ...
-
->  	/*
->  	 * Search for a preexisting stack update. If there is one then we add
->  	 * the update to it, otherwise we set up a new stack update.
->  	 */
->  	for (i = 0; !arg && i < tx_data->args_nr; i++)
-> -		if (tx_data->args[i].stack == stack)
-> +		if (tx_data->args[i].be == be)
->  			arg = &tx_data->args[i];
->  	if (!arg) {
-
-... only when we cannot reuse preexisting one, ...
-
->  		struct reftable_addition *addition;
->  
-> -		ret = reftable_stack_reload(stack);
-> +		ret = backend_for(&be, refs, update->refname, NULL, 1);
->  		if (ret)
->  			return ret;
-
-... instead of directly doing reload on the instance we already
-have, we do another _for() to locate one, this time reload set to 1.
-
-That looks like doing some redundant work?  I am confused.
-
-> @@ -1048,7 +1070,11 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  		goto done;
->  	}
->  
-> -	ret = read_ref_without_reload(refs, backend_for(refs, "HEAD", NULL)->stack, "HEAD",
-> +	ret = backend_for(&be, refs, "HEAD", NULL, 0);
-> +	if (ret)
-> +		goto done;
-> +
-> +	ret = read_ref_without_reload(refs, be->stack, "HEAD",
->  				      &head_oid, &head_referent, &head_type);
-
-This now takes into account the possibility that backend_for() might
-fail.  The original code would have segfaulted when it happened, I
-guess.
-
-> @@ -1057,10 +1083,11 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  	for (i = 0; i < transaction->nr; i++) {
->  		struct ref_update *u = transaction->updates[i];
->  		struct object_id current_oid = {0};
-> -		struct reftable_stack *stack;
->  		const char *rewritten_ref;
->  
-> -		stack = backend_for(refs, u->refname, &rewritten_ref)->stack;
-> +		ret = backend_for(&be, refs, u->refname, &rewritten_ref, 0);
-> +		if (ret)
-> +			goto done;
-
-Ditto, we would have segfaulted in the next hunk when stack got NULL
-here ...
-
-> @@ -1116,7 +1143,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  			string_list_insert(&affected_refnames, new_update->refname);
->  		}
->  
-> -		ret = read_ref_without_reload(refs, stack, rewritten_ref,
-> +		ret = read_ref_without_reload(refs, be->stack, rewritten_ref,
->  					      &current_oid, &referent, &u->type);
-
-... here.
-
-> @@ -1831,10 +1858,9 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
->  {
->  	struct reftable_ref_store *refs =
->  		reftable_be_downcast(ref_store, REF_STORE_WRITE, "copy_ref");
-> -	struct reftable_stack *stack = backend_for(refs, newrefname, &newrefname)->stack;
-> +	struct reftable_backend *be;
->  	struct write_copy_arg arg = {
->  		.refs = refs,
-> -		.stack = stack,
->  		.oldname = oldrefname,
->  		.newname = newrefname,
->  		.logmsg = logmsg,
-> @@ -1845,10 +1871,11 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
->  	if (ret < 0)
->  		goto done;
->  
-> -	ret = reftable_stack_reload(stack);
-> +	ret = backend_for(&be, refs, newrefname, &newrefname, 1);
->  	if (ret)
->  		goto done;
-
-We used to grab "stack" upfront and then called reload here; we now
-do backend_for() and let it do the reload as well, so they should be
-equivalent.
-
-> -	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
->  	struct reftable_log_record log = {0};
->  	struct reftable_iterator it = {0};
-> +	struct reftable_backend *be;
->  	int ret;
->  
->  	if (refs->err < 0)
->  		return refs->err;
->  
-> -	ret = reftable_stack_init_log_iterator(stack, &it);
-> +	ret = backend_for(&be, refs, refname, &refname, 0);
-> +	if (ret)
-> +		goto done;
-> +
-> +	ret = reftable_stack_init_log_iterator(be->stack, &it);
-
-Again, other than the fact that the new code carefully prepares for
-the case where backend_for() fails to find be, the versions of the
-code with and without the patch are equivalent.
-
-> @@ -2052,16 +2083,20 @@ static int reftable_be_for_each_reflog_ent(struct ref_store *ref_store,
->  {
->  	struct reftable_ref_store *refs =
->  		reftable_be_downcast(ref_store, REF_STORE_READ, "for_each_reflog_ent");
-> -	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
->  	struct reftable_log_record *logs = NULL;
->  	struct reftable_iterator it = {0};
-> +	struct reftable_backend *be;
->  	size_t logs_alloc = 0, logs_nr = 0, i;
->  	int ret;
->  
->  	if (refs->err < 0)
->  		return refs->err;
->  
-> -	ret = reftable_stack_init_log_iterator(stack, &it);
-> +	ret = backend_for(&be, refs, refname, &refname, 0);
-> +	if (ret)
-> +		goto done;
-> +
-> +	ret = reftable_stack_init_log_iterator(be->stack, &it);
-
-Ditto.
-
-> @@ -2101,20 +2136,20 @@ static int reftable_be_reflog_exists(struct ref_store *ref_store,
->  {
->  	struct reftable_ref_store *refs =
->  		reftable_be_downcast(ref_store, REF_STORE_READ, "reflog_exists");
-> -	struct reftable_stack *stack = backend_for(refs, refname, &refname)->stack;
->  	struct reftable_log_record log = {0};
->  	struct reftable_iterator it = {0};
-> +	struct reftable_backend *be;
->  	int ret;
->  
->  	ret = refs->err;
->  	if (ret < 0)
->  		goto done;
->  
-> -	ret = reftable_stack_reload(stack);
-> +	ret = backend_for(&be, refs, refname, &refname, 1);
->  	if (ret < 0)
->  		goto done;
->  
-> -	ret = reftable_stack_init_log_iterator(stack, &it);
-> +	ret = reftable_stack_init_log_iterator(be->stack, &it);
->  	if (ret < 0)
->  		goto done;
-
-Ditto.
-
-Overall they seem to be mostly equivalent, except that the new code
-is a bit more careful against failing backend_for().  One part of
-the code confused me (and still I am unsure), but other than that it
-was a pleasant read.
-
-Thanks.
+-Peff
