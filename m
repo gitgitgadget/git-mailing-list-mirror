@@ -1,92 +1,88 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817BC1F26E3
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 00:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD822522A
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 00:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731371348; cv=none; b=Uvp70/n3e5trpuz/iWdnk7eq+9i88m9omvaEpa0s0olGp/hc9HFjj1rwwiqCwfXq41kPMv8uVZpKGc5aUQjXWEaUaTTN0QqzEwrbtkEAETGhDaLfgC7jL0yzaRk5fy0ZrxBrHOshLAjXyltZhNl/Z38B62jwaQLP+Lmj942wLOM=
+	t=1731371910; cv=none; b=VBT+fVabHnHUOUrKLnwAScB23bvch035dkNKbPMyrWn79NmqecMbPhQKzFS2avsAsxPzZIXZUzOvDxVeDGG4k8a3Sg8gQPCH6t8vhOgyZeqmnQXoDakR2VXoXdyDNcRgg1rBge/yOj1t9fCbl1yys//d0Z02SF4dCwyWw/iBVBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731371348; c=relaxed/simple;
-	bh=1k7GNFBPPcTkumlYVrA76b/zVDD2r7HtnU1BnmUoWM8=;
+	s=arc-20240116; t=1731371910; c=relaxed/simple;
+	bh=LqSf0N5aIUiVJPqc5Uo7FqYTNXpc0MgcsUU+HwgTXG8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ECTzAhsWUWipl9DwF2Tndzu0/63Itr9COY7QZw0MVJLx5XzJuPVTIitnRmt4jeX7LTR3YYCSw1OUb4WYiD3Ipq4M6EmnD52m4LFD/tvU4muw2Z/jsmICTgLOt516Q/canFj7wHLBMB3IRDBk+mwm5zWS3tbLUzi63iyURGezQMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fgTPkCzg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nHyBxbxM; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=PmDf/wtxfoFXWELRTSy3WhnI7ZGmt0QFfRIfrz/81DToYEAjHbWLIAasm+EiAR360qIqEeraMTZg8/7TvzwQN33FHTTiP2h+WICoOnzLOyHt50FNQNyBJBAzsHIeZ8rbu99T75Fz9vqP7KONpXBpt3KuheiC8r0s+5dH30NtYjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U2S2i7kS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lPC8RlWL; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fgTPkCzg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nHyBxbxM"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9182E13806CC;
-	Mon, 11 Nov 2024 19:29:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U2S2i7kS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lPC8RlWL"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id E64BE138064E;
+	Mon, 11 Nov 2024 19:38:26 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Mon, 11 Nov 2024 19:29:05 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 11 Nov 2024 19:38:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731371345; x=1731457745; bh=WmK3m7nEyi
-	Mgtf7lJNdS2C+spg8OeJ91d8liALt0Iwg=; b=fgTPkCzgl18Xaez4+OAo8n1/jo
-	zBWuaQSyqcjxaylw0e5Ds4R9C2B1j9oyOg8dOCMmohIJ3VUTms4zE4ip9NIfIyAe
-	WE9O6YlAwc75E5eiF0KIjTw97f7b0XpPHHbLrUY7DJ2167SSQ02aML5EWnFEKIz4
-	AEn4BLIj1sXoX2cwTda+7yI7voTmE8aS9/fsV3g4zy7Sf0P/y/KBzbXcBD1DnGVi
-	/j55bvONP2mKxQUwdomgCcjj0wcz4iOznXz8t0CaTMA7JBq0SBcmFhSmkFz1gEks
-	rv5PhSJ0l9L1w5O5mB0DB2e6YRxXPWFiZeDtshzOfDeuhrx0voVvJ2F1R1aQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1731371906;
+	 x=1731458306; bh=3DnUNN/my+v+UsATrbgNM+IwWifuPmRRvrJ6C8PE+Go=; b=
+	U2S2i7kSIU3nAH9yC2bPLs0oOEuxmKCLTJj2MOT6q3JFSHfrUiZKPA/DrRdVmKu4
+	EiDfLhCKtTqg7W/mtIQpWVvNMse8vDBvIfN5tQBaCfpr9zojxVatJ49DlV7UqU2f
+	9YO9754T+ePFtWyca7fkqm/uGLCTvxgxOlbNsXnZxv79zXVroqRJAVIXWPqSlupZ
+	/CNJcldF6sTR/e7ZSJNmgji0HqOsiS8arL54vdMFrscGAnYGQeHqs6n9wIH8yCto
+	fSEvbiyPCodgOc1Vtbqm7NIrG5iDxbd2aT/Web15+he9SMB2F4wUj6EJCMQXFDuU
+	k0Se9XogakmvgwXkbwqpDg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731371345; x=1731457745; bh=WmK3m7nEyiMgtf7lJNdS2C+spg8OeJ91d8l
-	iALt0Iwg=; b=nHyBxbxMCGRHCvpy+QALIk5Y6+GnDvC0iZdq8kCZafCUlopOgDN
-	65Lk4kuNi7AwcxJAzx29M+egwa7EyCCkm2xBZGaSjmQ+rqI1VRHbCXl+29GwPeVv
-	LoaAAT42aU3qr0MHKz1R+evr5cE4IQXFyBE/+nAk/8F5YTvCwYcua4pAivDckeHT
-	JnKyRnJ0HkeVM1aiV6k0A2z4UMxi85uaHu7e7MHeyaFZCmgoT151qElhQyE47xbL
-	dK9tPMvGG0Fr1NBfRPcdJWPBg9btIthcDIMMww2jZ7Uih3Yzpr5KiBGzO+BWLoXK
-	sRp1sIOz3aV4KxOu8p3sEN3ys1f6sZpoEzw==
-X-ME-Sender: <xms:UaEyZwmdKpT8GMIc1UEJl4vnGgm-XkJ_H6NwR7Cs-8tSy0lej-xUpA>
-    <xme:UaEyZ_0OfTkfWmORkcjpAuTlzSbYER_DPHlT3rOP1wH614PqRfXrgoyEvq2JNm1Pf
-    w2lmNGkicuakcJkAw>
-X-ME-Received: <xmr:UaEyZ-oHUwScj-XBOFk2za44B8fGrnPOdpxMHPp9hAOJQs3CI10kmOQpjdMoLUAPuJatuaKwWqUgyRXhVY9iEEH_r5GbVQqxBaQb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgddvfecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731371906; x=
+	1731458306; bh=3DnUNN/my+v+UsATrbgNM+IwWifuPmRRvrJ6C8PE+Go=; b=l
+	PC8RlWLYpawL/s71YwflrpLMbFlBswikQre47x/4LoQiVdTniTqL2w1gbVElw2RK
+	Se1vjJCvzfNz+m6mtlc6Cy1uzO6cAslMs014aIhdgewEygixf6itqGzVq+a08Lpd
+	9807fpEsi1tmKcKkCZPqxq3aYMMnK0Nysd/nnOMPuXavjHFUDcBB9G589qXiwWRZ
+	nOEufYK9FvShVq8fuo8JbgML02cIHaTKbOa/hyP6YrdKmKoR+QMXUzmKjAdK2t3t
+	BxGiFTZoMEd01rFhMHthSc/b6Sdlt7IG0BFJ9n8jFSSohnlWG5aGXx0ekhL9Dh1R
+	XY89XcfEU7JCPao5vxeBg==
+X-ME-Sender: <xms:gqMyZ-9qbYudH8CjZJzhjF1oyzzygTnmQJaeeS8uZxL4LXTbLm0OQw>
+    <xme:gqMyZ-td88lXx5KicMuXHM_MbbTZtQ00440P9ZyuUEY2KRuYA8W7C-eapvg25ZJSH
+    yMYaAwtnQxxCWK02A>
+X-ME-Received: <xmr:gqMyZ0B3BPlVaG9FZHQnPFftNzl2OW1KfhBKLP_Pa_1HVYKNWSDBBmkHVg-rrOEIwT6M6zNkXVsy7VGifSB2qxU3zd1i-Zrgsb_6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgddvhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    eplhgvvhhrrghiphhhihhlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphht
-    thhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthh
-    hinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:UaEyZ8kGEu3CRO4N7VEJRNFXrB2V0W9jNcaUoSuChXIFeOzUbvjYcw>
-    <xmx:UaEyZ-09Ve5ledzIeKq_JRt5B6Ui4mNWad6Jyv99UwK8N34hkfIkRw>
-    <xmx:UaEyZzvoUC2zNsJ8t03Rlf09Wr3tATl1Frl8HOkfbYQBLumfk7VsKg>
-    <xmx:UaEyZ6V0Ga-b4BiWSsnZUNJk2Dj8rRrR2K1zCefQc_RKcsxYYiRGeA>
-    <xmx:UaEyZ3lS7C8Z3fYtj5IX6cTkDWKINDZhzc-4CvGRSDumSSfBgq8Gh6SY>
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
+    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
+    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gqMyZ2ey7b2iKQ1AxFHSyQ3u2oKUcOCRF8hHYLSNCB1sLoL5ehyRQQ>
+    <xmx:gqMyZzNEtXE_LpN9x3GXleVNdf42bbP8Txk-UnXBVKs5M4S-keMqiQ>
+    <xmx:gqMyZwl4Xt-jmYqIQ-HyyUe10YPe8s8aR6Wi6TVbgQepSZcfoxwumQ>
+    <xmx:gqMyZ1vD-uMFrMDJXWX0nYZlmcyXF59zeU-TWrC3S-jpEgBC77OrkA>
+    <xmx:gqMyZ4pCwThHFRhBWvy_qJJYRjW5Zd9Q1kIzZvdiCFwZweTv4wX3fhIT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 11 Nov 2024 19:29:05 -0500 (EST)
+ 11 Nov 2024 19:38:26 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Philippe Blain <levraiphilippeblain@gmail.com>,
-  Johannes Sixt <j6t@kdbg.org>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] range-diff: optionally include merge commits' diffs
- in the analysis
-In-Reply-To: <CABPp-BFXZ+aaTWGAUhJxh2YYZ131BNYFCyLNVbjntBmStUu0SA@mail.gmail.com>
-	(Elijah Newren's message of "Mon, 11 Nov 2024 08:51:12 -0800")
-References: <pull.1734.git.1731000007391.gitgitgadget@gmail.com>
-	<pull.1734.v2.git.1731073383564.gitgitgadget@gmail.com>
-	<xmqqv7wuk3lx.fsf@gitster.g>
-	<CABPp-BFXZ+aaTWGAUhJxh2YYZ131BNYFCyLNVbjntBmStUu0SA@mail.gmail.com>
-Date: Tue, 12 Nov 2024 09:29:03 +0900
-Message-ID: <xmqqwmh98fcg.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH] doc: git-add.txt: convert to new style convention
+In-Reply-To: <pull.1826.git.1731348891108.gitgitgadget@gmail.com>
+ (=?utf-8?Q?=22Jean-No=C3=ABl?=
+	Avila via GitGitGadget"'s message of "Mon, 11 Nov 2024 18:14:50
+	+0000")
+References: <pull.1826.git.1731348891108.gitgitgadget@gmail.com>
+Date: Tue, 12 Nov 2024 09:38:25 +0900
+Message-ID: <xmqqserx8ewu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,44 +90,48 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Elijah Newren <newren@gmail.com> writes:
+"Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> There _may_ need a tweak of the matching algorithm to allow the
->> "same" merge on both sides to match, even if they diverge a lot,
->> though.  A range-diff that pairs a merge in the previous iteration
->> with a single patch in the updated iteration may be hard to read.
+> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 >
-> Sounds like you are arguing that there is an angle/usecase from which
-> `first-parent` makes sense, namely the viewpoint that "a merge is
-> merely bringing in lots of changes into the mainline as a single unit"
-> as you put it.  What was surprising to me, though, is that it's a
-> completely different usecase than the one that was brought up in the
-> commit message for this feature, namely "so-called 'evil merges' are
-> sometimes necessary and need to be reviewed too".
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+>     doc: git-add.txt: convert to new style convention
 
-What I had in mind when I wrote the example you are responding to is
-based on what sometimes happens while I make repeated merges (and as
-you may know, I make lots of them).  In the first attempt I miss the
-fact that I need semantic adjustments and then in the second attempt
-I know what additional changes are necessary in the same merge (i.e.
-merging exactly the same iteration of the same topic).  If you run
-the first-parent range-diff between one iteration of 'seen' and
-another, the "additional changes" I would make in the second attempt
-would be the only thing that will appear in the output, showing the
-"evil merge".
+This does slightly more than converting to new style, though,
+doesn't it?  Is it so annoying to see a link that points at the same
+page you are reading right now to warrant duplicating some docs with
+conditional inclusion?
 
-There can also be updates in the topic itself when I rebuild 'seen',
-in addition to merge-fixes to adjust for semantic conflicts.  Such a
-change would also appear in the first-parent view.  If you used
-other views, like dense-combined or remerge-diff, these updates in
-the topic itself may be hidden, as these other views are
-specifically designed to highlight conflict resolutions and evil
-merges by discarding mechanically resolvable changes.  So it all
-depends on what you are looking for and what you are deliberately
-excluding from the lower level of diff generation when you prepare
-your range-diff, which is a "diff of diff".  Giving an impression
-that first-parent is the most useful may risk misleading readers in
-that sense.
+> +`add.ignoreErrors`::
+> +`add.ignore-errors` (deprecated)::
+> +	Tells `git add` to continue adding files when some files cannot be
+> +	added due to indexing errors.
+> +ifdef::git-add[]
+> +	Equivalent to the `--ignore-errors` option.
+> +endif::git-add[]
+> +ifndef::git-add[]
+> +	Equivalent to the `--ignore-errors` option of linkgit:git-add[1].
+> +endif::git-add[]
+
+>  SYNOPSIS
+>  --------
+> -[verse]
+> -'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+> -	  [--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
+> -	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+> -	  [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+> -	  [--] [<pathspec>...]
+> +[synopsis]
+> +git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+> +	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
+> +	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+> +	[--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+> +	[--] [<pathspec>...]
+
+Not having to worry about `mark-up` _rules_ in the synopsis section
+is very nice ;-)
 
