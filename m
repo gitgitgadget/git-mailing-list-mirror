@@ -1,103 +1,147 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B92E1C303A
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 06:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193EB19EED4
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 06:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731391668; cv=none; b=SLHb/YnMaIaLZ+L63y2jBv+YQgsojbN6HHZie6poia2WprL/4fqI9vBmAVPzG8IQ8kHhor5xwJImgHyzWLU44VFU6be/WLrqi5M6lTl3U75/tcqeyDO0O0KmUuwmTaV/YkcZEQRJ1BPzpDZyclcdGYdSxuB75EUltMWfV+2qlCE=
+	t=1731392955; cv=none; b=XNy3T0GVvZew+YioIjP1v7sdb4B0dwZABpitF1RpHdStt4FzJB9JGsb9GxDdZjNt2nkLtyLNAGelb6BFMRPwlO+JPcPMpnN1cAA6U0llzBLDSMnA6D0QDXs1916R+XXiH/PF7sXkQ5D/Z5KsgBHP1KD10dxpal94HPSYtyhww18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731391668; c=relaxed/simple;
-	bh=3YiF9+c7fPCKzTDj7xzU+6k65QZEYZkz8eIHt5F+fZk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eYFunwQGdDJrBnVqAc18K27onNTkcpthwnAaZ/rflRBWTBS5zsunvJL+BhC4Mwec1+ZahKyVienOliIdvxdDfL7G6ic5rYu/eq6TmHEFqnRObuY1KucFKWEFNvYsH/o9g1S1N/tv855NA+T+enCa4f3tKE+JLSdmkrNigculIWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cq/WciR/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=amc12MyB; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731392955; c=relaxed/simple;
+	bh=jfMR8IP9OFpLttAitH8dav33sjW9TBn32Ws9M9w7VFs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kKx1Rhr0AAyK4akYEywhV7GpZtwaFb95aex5ruD8C2UjD88laOdofTjCBqodeYoBmc0bhuhQ0Zspm+rV4qUm9F5gjjjwAoqh7iSXByXzNOGbzj4je3eqC2y2Rb6+cP5tR081HzOViAuXxvKPrrq2CoeNXM9QBELzh3I/PgasaPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zaMp8jTJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CwM4w90g; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cq/WciR/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="amc12MyB"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 19E1811400A4;
-	Tue, 12 Nov 2024 01:07:45 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Tue, 12 Nov 2024 01:07:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731391664; x=1731478064; bh=bp6k1ykxyT
-	ta1dW3GKIDk35uraliYILkogQCDTYjjts=; b=cq/WciR/3cY9k2+s1nB2sN+Xvc
-	AKkd6D5aA+L9i2UenbB1VYFgUwD+7lhiOliIwH7KIH8FmK3b9sEBc09pwLhvJ7rz
-	v6xOVkUhtE/tLuMAvc3OkMTkAEl8nrHvCpppLhIoqWTJ/ep/cvnATSaReR61kC6K
-	P1I5eQyrW7y8rgBQjZEhUbJ8nrOt0pTAGX/qJHMlKPaYZXJYFBqfh9YLhTJKgFQ/
-	b23c1UwqOYhfNAsVfW4OWxofPb+BTxvahgS3Qo+zKpttlHtQc0lsxdNJeKmGxhf3
-	VQYF4jP1CSMXrl8XvW3zWslN7kGkGTAwPZVwBMG0xpfVp7IHvkM4O1YkgUeA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zaMp8jTJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CwM4w90g"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 063E21140166;
+	Tue, 12 Nov 2024 01:29:11 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 12 Nov 2024 01:29:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731392951;
+	 x=1731479351; bh=6mA2Icd8GSL9TPE0QYtOp6ctBjUCUaqF6J/vJipy7yI=; b=
+	zaMp8jTJsOh/RaQONkx4W934aoLCwmS1n0zhF4Qf+vGNvubF1n/55ES3D2W4FQdX
+	vrWT6Zub5J7Oh5Wq7VgVZllAUK7xxIDM86tfixA3xRcsvW2xLGTBy2DXFZLwWbNB
+	fnME1HtjxRCPGfViCT/EogsNoD+OnmdVx7bgqIRWdvUD8oZfbAqgWQt6yoXKRV4e
+	EMrh+OwivkduN2KiCMyOMBDfgHW3+WSYfHimQbbiILOsIML/sME1Y8xS6Gi7Zx6B
+	msTvSxl/T0yIAmd6gDkdc5Wcz9P/uEB6QDFWugnjuuLj8uk3djDot2fibZTmEvF7
+	teJtMRIgl13mUfsE29x6VA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731391664; x=1731478064; bh=bp6k1ykxyTta1dW3GKIDk35uraliYILkogQ
-	CDTYjjts=; b=amc12MyBWuybJ7ysxQ/eyyUvSeCo2Wl57QfgfHVuqUNr8FjjuwF
-	zIgSaeLLML8UWSSoH3iKE6VQKT4DLTLh9RequbfqiaTtzFDzWuPhmgReSclrkaT1
-	izEQndfZxXa0p/88fWukwOEb7P9Ir+JLIUCRwWi+W0VwiaWEpgvK4jOSpCxqu+ZF
-	0ojhhjL+TxiO/bxUMyACh7p8od/TrNsYe72u4uloUgx1VdoaDbKQ4f3SlxnEq+tr
-	QlJeCeRuCqnSBlFTGpxRpqTwPMPtx43SAA5ZJRV2FoldNPMI2AU5ma/7GpiN/c8s
-	DYGEeJR9PTbvoznJrjAyrFKYgmFmq9U2j9Q==
-X-ME-Sender: <xms:sPAyZ1CbsDriB8TLKaij2xLm7ZSWjTKOh6XETsQCaYVROdAcjJr84Q>
-    <xme:sPAyZzgdcn7zHAWBUP0rksPDUQQAgyD_TMXwJQM5r_vRchVIMCGTp2oWMGF-zOXss
-    somXLpYGaQ5uQ5tTg>
-X-ME-Received: <xmr:sPAyZwkZ19MlcOp6pnOr1I5yoPNDFAzxWLVu67Hgia1xcKs_hz1awAzyyyb__XtZBuwOi4CbCWKl7QRciSpayyLYnCT1zvZ2f_0v>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgdeludcutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731392951; x=
+	1731479351; bh=6mA2Icd8GSL9TPE0QYtOp6ctBjUCUaqF6J/vJipy7yI=; b=C
+	wM4w90gg3ZItfzEX8EwnpyEyJ10109O6gh4vLMML3rs04BFF8SwfTGXlATnYkbqc
+	LMCyl147Q2VwPc8iEGjOu3kTU0jq6+i4tNp36VdXt9a0guddcD3bZhwQ/TSaqBjK
+	hIXLvGWrOzezd4u/SdI/jBexiMZ8DP7/u+niXcIjrrQY78wRIk+FkqOsyh0+jdK8
+	O/l7FPt5GkyNKMM1HE5JhkWtIVDWrmqQdYURB2fOO621pdlqDqASE64mrPsKng7o
+	LdW/bbImCIgVsdNhSM+tyhale9QZtrlLE1gBYb2KnKKYE4VNFWjewvTBkcCcn3dU
+	gQCVQNMD57ydm+0UHgtgQ==
+X-ME-Sender: <xms:t_UyZ1L-ZHosiEFQObPNIinF1TWIDkDpyQ1ppUSwzZANjaVcQhqs9Q>
+    <xme:t_UyZxIRDLEYiQnXSE-zShkWjOHnClyyxShNqRWged-ft5etsZkBi6c_TFxf-AJQs
+    YOY1K8vSdN3MJqiIg>
+X-ME-Received: <xmr:t_UyZ9vIcYly8c0VrujzqMh25c4EX-Op5e2MP9E2FL5hIJ0aEc1MzQaSEbF7NoJ7LEmn3h6PXUS2WyyxetISNiZx8OJcBcHKv8lcro43STxZOkI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgdelhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:sPAyZ_wqQ5qy-TSCgGlripDYQxzYl5AvcsD_FM9VXMHxIdOhynT_Cg>
-    <xmx:sPAyZ6R5y2ug3c5Jxv5jCA-NWsKOs5nfN3mQdBaLL0YuszhqC-yMYQ>
-    <xmx:sPAyZya_ApEKC4qH2jrVTOXO5-mbKz0kqliHiXno8Pu5pvd5h_esXA>
-    <xmx:sPAyZ7QYjdNzgW5jsnI7UDhnFPD80fV3AowRiHmx_s4salC0e_QS_A>
-    <xmx:sPAyZ4ejOYYPXd2DU81IYIXc0OsiKLmz5K_7dFE7Qh6j1Lf2ZOKfFKq7>
-Feedback-ID: if26b431b:Fastmail
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeen
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdevteff
+    vdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtvggrmhguohhnsehgohhoghhlvgdrtghomhdprh
+    gtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopegtrghlvhhi
+    nhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegvmhhrrghsshesghhoohhglhgvrdgtohhm
+X-ME-Proxy: <xmx:t_UyZ2azrhiDpGvpsBwEIA8lb10gJtZBN8c5aEwXVsh7b51JvraTBQ>
+    <xmx:t_UyZ8bK24lh0dTpV2yNhSK6OtXNJqy13ILE9eEnULbYnUV5V9TFUA>
+    <xmx:t_UyZ6DWMU5GMaHuaXSvcDADvmwTdUWIYz4XmwfN-4zzfxLVl5gGxw>
+    <xmx:t_UyZ6azKSBUAeApiw5449XZrJmnqNVjghMjVHrucEE-keP6EleiYA>
+    <xmx:t_UyZxOcNoYVxadk47gO0GSTfdcgDiR5eVh53cz8WQhXnksbnsoY8-p_>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 01:07:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/8] refs/reftable: encapsulate reftable stack
-In-Reply-To: <ac01c06c4177d1b07678972115648d125c2bdc66.1730792627.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Tue, 5 Nov 2024 10:11:59 +0100")
-References: <cover.1730732881.git.ps@pks.im> <cover.1730792627.git.ps@pks.im>
-	<ac01c06c4177d1b07678972115648d125c2bdc66.1730792627.git.ps@pks.im>
-Date: Tue, 12 Nov 2024 15:07:43 +0900
-Message-ID: <xmqqcyj16l3k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 12 Nov 2024 01:29:10 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 94773969 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 12 Nov 2024 06:28:32 +0000 (UTC)
+Date: Tue, 12 Nov 2024 07:28:59 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Calvin Wan <calvinwan@google.com>
+Cc: git@vger.kernel.org, steamdon@google.com, emrass@google.com,
+	me@ttaylorr.com, stolee@gmail.com
+Subject: Re: [RFC PATCH 1/1] maintenance: separate parallelism safe and
+ unsafe tasks
+Message-ID: <ZzL1jy3plVeld_3m@pks.im>
+References: <20241108173112.1240584-1-calvinwan@google.com>
+ <20241108173112.1240584-2-calvinwan@google.com>
+ <ZzGtD4Jz9Wj6n0zH@pks.im>
+ <CAFySSZCzxfqpMWH5ORv8fYb7f5WU3Fc2N99fW33wD9JOcYVrVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFySSZCzxfqpMWH5ORv8fYb7f5WU3Fc2N99fW33wD9JOcYVrVA@mail.gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Nov 11, 2024 at 10:06:10AM -0800, Calvin Wan wrote:
+> On Sun, Nov 10, 2024 at 11:07 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > >       [TASK_LOOSE_OBJECTS] = {
+> > >               "loose-objects",
+> > >               maintenance_task_loose_objects,
+> > >               loose_object_auto_condition,
+> > > +             SAFE,
+> > >       },
+> > >       [TASK_INCREMENTAL_REPACK] = {
+> > >               "incremental-repack",
+> > >               maintenance_task_incremental_repack,
+> > >               incremental_repack_auto_condition,
+> > > +             SAFE,
+> > > +     },
+> > > +     [TASK_UNSAFE_GC] = {
+> > > +             "unsafe-gc",
+> > > +             maintenance_task_unsafe_gc,
+> > > +             need_to_gc,
+> > > +             UNSAFE,
+> > > +             0,
+> > > +     },
+> > > +     [TASK_SAFE_GC] = {
+> > > +             "safe-gc",
+> > > +             maintenance_task_safe_gc,
+> > > +             need_to_gc,
+> > > +             SAFE,
+> > > +             0,
+> > >       },
+> >
+> > Hm. I wonder whether we really want to expose additional tasks to
+> > address the issue, which feels like we're leaking implementation details
+> > to our users. Would it maybe be preferable to instead introduce a new
+> > optional callback function for every task that handles the pre-detach
+> > logic?
+> 
+> This does sound like a good idea. However, would there be any issue
+> with running all pre-detach logic before running post-detach logic?
+> I'm thinking if pre-detach logic from a different function could
+> affect post-detach logic from another. If not, I do agree this would
+> be the best solution going forward.
 
-> +static void reftable_backend_release(struct reftable_backend *be)
-> +{
-> +	reftable_stack_destroy(be->stack);
-> +	be->stack = NULL;
-> +}
+Sure, in theory these can interact with each other. But is that any
+different when you represent this with tasks instead? The conflict would
+still exist there. It's also not any different to how things work right
+now: the "gc" task will impact the "repack" task, so configuring them
+both at the same time does not really make much sense.
 
-OK, this turned out to be the required reading for the remainder of
-the patch ;-).  Everything else was pretty much a mechanical
-replacement from reftable_stack to reftable_backend, but to get rid
-of the latter, we need to do this _release() thing where we used to
-do the _destroy on a bare reftable_stack instance.
-
-Looking good and understandable.
+Patrick
