@@ -1,162 +1,105 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58119205AD9
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 05:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A8B205AD9
+	for <git@vger.kernel.org>; Tue, 12 Nov 2024 05:56:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731390831; cv=none; b=IUjy4SoW6VmKYegHJmJBm0WN5Ncl4Gdt0owCiu07fjASS+JgQjOF7OTaN/Hlxj+n3bz9IWGCKd6jQnEz8yN/qeh/jNcku3V9hzDOr8ljNyroHUvdDJrnMNilRQjz+N9lCzOLCWHkTO7ZqWO5Oh0jVpF9tI/sEvfmVxc0QV71FhE=
+	t=1731391008; cv=none; b=Z9TUBGd0pW7bJiO79iID0yIHx2sl/m8QZFjpKjAhHJpkab0Pepii+z8BYm8VAVmPY2IGNgQuKU08fNyXVkzMnTqmHLJInQdykPVNNtmiTda4rsFJx4tLiAJxiFc0K1zSJ0F78JBRhaoPMJBOV3qlrDt4QLDoi4oZoMD636PRcj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731390831; c=relaxed/simple;
-	bh=JDUjgE7I5fR7YYqxWZIYmJbeGGxhpyb8X6ilgLRpW74=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CGjAmC7LdzuqiB2vRqCxH3gockBBn2or07zDw6zruz7y5aKZ0XGz1Lm0NIf6QSXlUpCqS9uaka1SMAFlsuz/5+m/4X3sqMvh+58hXQuP/Oqax5jhIRmVbaQm63CBMscFR2OWJ7DIMy/E8V1MYYsgtBkKQbB0p5Gtz36V7SY+Nrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gcWnldkn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f8lirgXi; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731391008; c=relaxed/simple;
+	bh=F6BxVGZDxOKuWUYMTmRBFRgHL6bkAKT/2JKkV+bA4YI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q3ImUeuHOvFdnGVZBoH35aU50xH8+SN0z1PkPvh1YS3DL/rojgGYn2THv3hm8m8H3qgaIgGn7oIbpUEcu6+xlCjPHXRPp9imzBqsigWWmo1/V19hNRrYbZ71tS5gVi3fQoZYLwBSWhwOPRVR6I64DYfIHwv9GZvvZNUbXUu6aqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VGManc9K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kuvOnrvw; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gcWnldkn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f8lirgXi"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 55A011380648;
-	Tue, 12 Nov 2024 00:53:48 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 12 Nov 2024 00:53:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VGManc9K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kuvOnrvw"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 99128114017B;
+	Tue, 12 Nov 2024 00:56:44 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 12 Nov 2024 00:56:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1731390828; x=1731477228; bh=Pl7/Pa3UAy
-	MSCig0j4ithZnVEUUAo6zuGChHHKaUlZM=; b=gcWnldkn07LOhcyYrGTOEuUTHh
-	fcf5ch836weIGW/znG23C31/YRSmsDm1I6hiH4q36Jlg4P1gDoCuk5kZQtZ2+iTx
-	DqsWMqOMA5Cg0Z3evAss6pMfaJe2xY+1NuvElmkDl7330wiywyh3ND7tLAObHU0s
-	XhNKy2q9jBiVZa+Yn4CEU1f+UmnMHUsfxXAIRZKcIeV+7TFHyr3nVrYFOXeaJvU5
-	MtmclWLtiXvF2Pe3sa8AAkBXLqsE4ZSp/04mDKAusIncX+9IWOhuBQuX0t8DnHEw
-	PYbLzAi8w4lzt8+/VA6LzaWyBVe1OaIAT0BWBpSyPZkmfJR6jzsomLbvFKcw==
+	:subject:to:to; s=fm3; t=1731391004; x=1731477404; bh=jNk6ZNpmu7
+	8tY8KmtbHvboNM0cCHJkb+XqDUtgd9G0g=; b=VGManc9KW6Wo1JNdBQQaT+CH+W
+	fSDqIa0D5JlCmmf7mgZ4atHPYdO/En/xv3SnRNaAdJ6pH9PUTkR+IBJzhG/G7Evi
+	HLp81zEB7ZU5/4CLnJVa74JITs1LjKJaMW3jSgD4N6rHAtrktt/6vPqditdvJppD
+	yYWnujZQQ7DS2+HC7lQjc9bOEswnqGPZbXLWNxFtjB8zJSEtqYMJ0iSL/es1iO+p
+	G2tF27JMfiH5iAPKqARbowYbA5b8fWORvsrcGv10Gaf/TvEZ1BMSFBexMjRSQGCG
+	g0QZtif/0/yzXtZna0NAVPflApD8aw+EfiZ0yA1A8hnUkUViS8eYZcEOjy6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731390828; x=1731477228; bh=Pl7/Pa3UAyMSCig0j4ithZnVEUUAo6zuGCh
-	HHKaUlZM=; b=f8lirgXikPOYIwZHoihOFNDhOPibaqgdi89d4NQEuYcaogi598a
-	rV9s0qfA4NFJcetayyN3t16YJTrnY/UfxII0yWZTKbzOv8XCb8uIXlirRhix2IRU
-	BdWOUqlr6Z3j89x41IlQPmK4R8oxYGva1KvNqWz1F+5alNFhUNEWRXJIiM78104y
-	As34woCKwHqD9S+DwSenq34anNp5NZLnliCAIAk2Iakt8P3/TCb6gE+gpbRMF2XE
-	EO/3k/erDNP0bsYtk5VIRNsipDW1jgZ0zvlOBK90tmJ3RYbIS7sVjXzvmyT3aqEC
-	1PrsgK3ui0AMtG0my6rewcbbXkasOhWENag==
-X-ME-Sender: <xms:a-0yZ5N9KF17nP5dOKQZUXYn3Xw-T-Ma-lNyLxZtyzQXxijT-rnICQ>
-    <xme:a-0yZ7-liZC22lKszt2dYWJiBz7gJRf0Lot7LSf8u64ohZdOtcFgUKZABk2GO_GqF
-    GtZB5wh3k5b1e_Eew>
-X-ME-Received: <xmr:a-0yZ4SE-ZrIkZ_syRsSUqJobMzsoAi1C3TaDkzgBKYAa8E8qjeHMk72ysY4vIOeaeF8npGo4sHAjjiNpagv5HN5YYGwTuxF6u-P>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgdekkecutefuodetggdotefrodftvf
+	1731391004; x=1731477404; bh=jNk6ZNpmu78tY8KmtbHvboNM0cCHJkb+XqD
+	Utgd9G0g=; b=kuvOnrvwUqWySgs6IQF5b3LLiK0nEvjfvHjeJX4q7Vm9yQxM9hv
+	XSfrA8fkqoxDv7NizCc6L8MrlVlhsBUBsbkX7JlmQR1Y0Au9efo2ZgRyfJNFIh55
+	ym3UBqOgVIi5Cqg5WAOJhtqeOrMsX0wx3UTRxboYw5nKvYD1DDOQzb5DHfRCifoP
+	x0Ikw6o2bSgUhj578MnpbzNW/a4csjQxO6kCwNYNk6KXcCHUTzOJCCTCZX4UL9RY
+	dDO19nYP7n+Aegm9hYYblkEZR2nX1iqM1cRXMcUld7qPRSP6GEeUo1Dc+Zf2psDu
+	IjkB2bBxXl78jDj7bw9inviNqogj0lxeSpw==
+X-ME-Sender: <xms:HO4yZ2Mg1GHRgADd7RXK7t3ZygWHIecm2CT-IbMTXK_r2bZGAEOZ6A>
+    <xme:HO4yZ0_YpDnr03HzA8TBcs2BZajYF5bb6lyHEeEqr6DbLyr-2ir8dgVJfVHlSmhn8
+    gn1urJWqO0g6QrXnA>
+X-ME-Received: <xmr:HO4yZ9Rru4dEPKYkwxIF0X8qqsD9DMmh9qfB9oLrbp7lr-JE_y1-X0AtzruDAjue4Uy8hemO1imOlh3pjD_23U1RHDeHCwkzAtvcM2Kk74wchf0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgdeklecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegv
-    thhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehsuh
-    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepjhhlthhosghl
-    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:a-0yZ1tw3w9NxWFT3wUs8rWySf_OhF0FdYxgCDdNEBBRrQw_Wj30Zg>
-    <xmx:bO0yZxddPDv981XnlXIMMDYwAObuOiVdflBLC_uN2TL2-uv69x2L3A>
-    <xmx:bO0yZx3pcLi1PQ2IO5gTJZ9bn8kmW5QSu6KicVfckHdv26XHT1nAfA>
-    <xmx:bO0yZ9_g3Hg1jYJlOOpTrGfXyveAFwDW5zAG2fbpk8KEdcJQcat0qA>
-    <xmx:bO0yZ5RtTKqMOl3WPn6jBLSFIFNJj4enfkFhp-fZjEMq69ZRMMDwFquF>
-Feedback-ID: if26b431b:Fastmail
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:HO4yZ2vNALJNqbtJK4lvFWxqHPklGfKNzsK7uJuYttzXFkjEcZorVw>
+    <xmx:HO4yZ-dczefGpfCK2M66zAcv2NOSnWC9rya5eDjly3LzvFh0jjYFPg>
+    <xmx:HO4yZ620wqvXUKyQWE0_xHdVVVul3AC2_i83x00y2RVaGwFZoZ4u_w>
+    <xmx:HO4yZy_tUxgihnDsDxzEZTsgS8Z-v_Rs21ndadasrDq0H3-lEM1Gag>
+    <xmx:HO4yZ95S3hAJsdmoEOCUcGB15Goqtt0u9D1sPP1SjN6M6UA336NBL-0O>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 00:53:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Edward Thomson <ethomson@edwardthomson.com>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 3/7] reftable/system: stop depending on "hash.h"
-In-Reply-To: <745c1a070ddd7180f0ee89c6a1d057a256894599.1731047193.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Fri, 8 Nov 2024 09:17:14 +0100")
-References: <cover.1729677003.git.ps@pks.im> <cover.1731047193.git.ps@pks.im>
-	<745c1a070ddd7180f0ee89c6a1d057a256894599.1731047193.git.ps@pks.im>
-Date: Tue, 12 Nov 2024 14:53:46 +0900
-Message-ID: <xmqqh68d6lqt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 12 Nov 2024 00:56:43 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7926612d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 12 Nov 2024 05:56:04 +0000 (UTC)
+Date: Tue, 12 Nov 2024 06:56:31 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v2 1/4] t/unit-tests: convert "clar-generate.awk" into a
+ shell script
+Message-ID: <ZzLuD4p_O7yU8MT1@pks.im>
+References: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im>
+ <20241111-pks-clar-build-improvements-v2-1-d4794d8d1b30@pks.im>
+ <xmqqr07h9y35.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqr07h9y35.fsf@gitster.g>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Nov 12, 2024 at 07:58:54AM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > While at it, wrap the overly lines in the CMake build instructions.
+> 
+> overly "long" lines?
 
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 3c6107c7ce5..7d86d920970 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -15,6 +15,7 @@
->  #include "../object.h"
->  #include "../path.h"
->  #include "../refs.h"
-> +#include "../reftable/reftable-basics.h"
->  #include "../reftable/reftable-stack.h"
->  #include "../reftable/reftable-record.h"
->  #include "../reftable/reftable-error.h"
-> @@ -289,7 +290,16 @@ static struct ref_store *reftable_be_init(struct repository *repo,
->  	refs->store_flags = store_flags;
->  	refs->log_all_ref_updates = repo_settings_get_log_all_ref_updates(repo);
->  
-> -	refs->write_options.hash_id = repo->hash_algo->format_id;
-> +	switch (repo->hash_algo->format_id) {
-> +	case GIT_SHA1_FORMAT_ID:
-> +		refs->write_options.hash_id = REFTABLE_HASH_SHA1;
-> +		break;
-> +	case GIT_SHA256_FORMAT_ID:
-> +		refs->write_options.hash_id = REFTABLE_HASH_SHA256;
-> +		break;
-> +	default:
-> +		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
-> +	}
->  	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
->  	refs->write_options.disable_auto_compact =
->  		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
+Oops, yes. Queued locally, will send it out when receiving more feedback
+on this series.
 
-OK.  With this step, together with the previous one, we let Git side
-to use GIT_SHA{1,256}_FORMAT_ID to specify what algorithm is in use
-in the repository, and reftable-backend.c layer is responsible for
-translating them into REFTABLE_HASH_SHA{1,256}, which is internally
-used in reftable library to convey the same thing.
-
-Which makes sense.
-
-> diff --git a/reftable/reftable-basics.h b/reftable/reftable-basics.h
-> index 6e8e636b716..e0397ed5836 100644
-> --- a/reftable/reftable-basics.h
-> +++ b/reftable/reftable-basics.h
-> @@ -11,6 +11,19 @@
->  
->  #include <stddef.h>
->  
-> +/*
-> + * Hash functions understood by the reftable library. Note that the values are
-> + * arbitrary and somewhat random such that we can easily detect cases where the
-> + * hash hasn't been properly set up.
-> + */
-> +enum reftable_hash {
-> +	REFTABLE_HASH_SHA1   = 89,
-> +	REFTABLE_HASH_SHA256 = 247,
-> +};
-
-;-).
-
-> +#define REFTABLE_HASH_SIZE_SHA1   20
-> +#define REFTABLE_HASH_SIZE_SHA256 32
-> +#define REFTABLE_HASH_SIZE_MAX    REFTABLE_HASH_SIZE_SHA256
-> +
->  /* Overrides the functions to use for memory management. */
->  void reftable_set_alloc(void *(*malloc)(size_t),
->  			void *(*realloc)(void *, size_t), void (*free)(void *));
-
-OK.
+Patrick
