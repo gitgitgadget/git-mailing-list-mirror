@@ -1,92 +1,91 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132B91853
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D86517C22E
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 08:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731484070; cv=none; b=M4JTU8Hfpm9PRbbDZKpSjGEC0gGYslucp8gdO/GAoa9hVT6wl8M2lA5Nfy9Av3T49L+BpZlehhB+/UoTkageMvJda+iVA00LM+90v4JWm42rzCIV5n0TqmrRmK1WU037cJK2+f5oMH3n3ChFPURuCZppsLdudUEEx3ItCHfTOF4=
+	t=1731485452; cv=none; b=Wqb5mFc5KuXpmOW1ik8y68/MICoAOpukv3pYvxSQrkoMp2gT6w8eTlOYPxUSNakTYp5JBP6He4aRpwBDO/WOp9KNwPZbGIwAfKaI5T9+Eb2HI1iKwynibUdljfNVPzem/9CfrTZ8fA2EgK3Gx3EyKCoDr2MdQ3ld7LcpmsCXP2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731484070; c=relaxed/simple;
-	bh=yps4isDpy5wOdd3Ii+anCovrMo/Cjih6J7gIc5+TmoA=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=CzVl4dSKkE0hVaa3mlE/07HsMPuOfZu37eT/QbRmD2BxWiGaveFDCjiHbaV8JMn926wIZTg2HlWYP2mxsx8PgvhsxbqSnFrjbjnBYzOjqPByweJWFmzx7GuQP1oe+rxsgUpoUrlRF0sJokl1+I8DAbUzMShFCvXYOs0Ls1JfLwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rGE8ENv1; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1731485452; c=relaxed/simple;
+	bh=07v8iYfYgnUxp5DEQtB/q6cMAL4984RtQjNRwbZ6ges=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pf3fZtqdwQBo/9OrbLFTBsBkZvBg2E/bxfAQYMPjA2tRwSJi5p1Pb+F6NIsrlkozk1KbhcC0SsAWOcF4WaF5lLh6hgc+Nng2c+b0mBBCaINMNMUbaLCW7W/U8uEhy0I1OrSeSYJIHW96+6XabNsMQt0XUfuYK/G7cKQhyho1rU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=HCKBoHSp; arc=none smtp.client-ip=212.27.42.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rGE8ENv1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1731484061; x=1732088861;
-	i=johannes.schindelin@gmx.de;
-	bh=yps4isDpy5wOdd3Ii+anCovrMo/Cjih6J7gIc5+TmoA=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=rGE8ENv1s2pH+5U1QgqO1FGTpiTYmFFVzrs05TS0oz0vnsryL8BhtC9WIojMfqY8
-	 V2oRxHm7hRvCvrnuVz54Iu6C5pt/IQ4Q77lzpaK0R0hTzfMSEvxjDVZYfYtDQlgDn
-	 mI3fV7pg0PlHD4zkKZshpUgmdlaL2sVXT1L34NwhhOiE6SG4ntxpmNi5vGHS9/2k2
-	 1hbT0/E1kWBXE0bZi84hUqPAO3c60sHm8RkWqj3Kta1ShCC8C5gxG2NdWr+zElKXD
-	 pL2UVdath2Z43ASf8dX6nsgY3T/Pn7+mnPm4MDO45x/K2E7bSK3sw7MZux9ccYBbm
-	 fSkteAUlh01VcVHsJg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.196]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mz9Ux-1tyP660ySR-010JYS; Wed, 13
- Nov 2024 08:47:41 +0100
-Date: Wed, 13 Nov 2024 08:47:41 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Beat Bolli <dev+git@drbeat.li>
-cc: Tobias Pietzsch via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>, 
-    Tobias Pietzsch <tobias.pietzsch@gmail.com>
-Subject: Re: The health of gitk, was Re: [PATCH] gitk: check main window
- visibility before waiting for it to show
-In-Reply-To: <ddee92a7-3d1e-f869-9cc4-72b70eee0dd5@gmx.de>
-Message-ID: <71af9e7f-84b2-437e-7167-2dd0add02f1b@gmx.de>
-References: <pull.944.git.git.1610234771966.gitgitgadget@gmail.com> <bdaab72b-37f4-658a-716a-d6a958b6f709@drbeat.li> <ddee92a7-3d1e-f869-9cc4-72b70eee0dd5@gmx.de>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="HCKBoHSp"
+Received: from [192.168.3.191] (unknown [92.173.128.58])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 19BB16013E;
+	Wed, 13 Nov 2024 09:10:43 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1731485447;
+	bh=07v8iYfYgnUxp5DEQtB/q6cMAL4984RtQjNRwbZ6ges=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=HCKBoHSpbqrLSZV2+wOcMbowTiFoL1DhWJiVwoyOA/dVdCqwk/J22Q9E3JXYtbczP
+	 pyj/g5b3us9mnZ8rIwMNQq2aFFh6C7wwzcG57uaxyTGmWWnaYUXJtvqu1IhQrPzrse
+	 XkfOrSoJOD9tuSUzzRILwajI2QocVbSIvGCP0rJFcLBxyRxTYJJ8cnO5fE3jXTqHw8
+	 DChHGraFC394hRqeDX5mD9Ikkshq39nkKpsDxTH4wHcE5987mCH+7iFJR0JACF9IAX
+	 CRu8wBnoDBefBaIphhyjs2fSoj/mQUNjFG0wO5MAKzoSBi/M2Srgdu9Ro8vO+IKz4e
+	 TWWHvWhmFnfJg==
+Message-ID: <c9653435-d884-4aa3-8ee1-cabe19a2c552@free.fr>
+Date: Wed, 13 Nov 2024 09:10:43 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LNiu+JrNdCibhq6alItMeJ34b6jcb6dcjnA54vVIU5LFgNKAHrq
- ksTXwJE14rg0SzPk1pjnAiU6qguLefbgvnMl3/jlK7yiSVFnOsUmRNptdWBTS5m8b1NO3ud
- Fwnim5kFJxn3R05BxefTUYHvQ85E+9/NJ9s+wkyCMpb1R/imWHe/mqBGHmi3zc7T6g5FR1R
- EGhs9xLw8i315OC/W7Itw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:nbOnMZ9WXhY=;w4nKcHRfwsybqItzPAdQpGZdvrc
- H8+RaJcSflYhGOET0OsuiuOnbex/idpjU+fwVpACNd4aH8HjniCiwmlOGc4ac/OIsHJfBDYkC
- sK7leqFdcJV9kfBMqxPyv57UaXoW4T3MNbKQMv3qhPvTvN48zHbWThJPpYpABwqiQ68ZL/+Bj
- L62bZz3/o9519j+OO6hK/XLkhD2JrQuda5ZELmkIb6u9605BYhiz/17OtUGqd/1quZVk2aojX
- tSwTYolZMInh6ZbQUjDMsMvuH9jwhSKoklCSne9kLqlDv5YviiySKv9mCcdX3S9vSvbxNNjFy
- NwZ9MlAsEN30ck0gyaJ1xXDOlX9FB8kgjLACmpskIgxTAJ5l15GP8kq/S9YjODoULhpceExL+
- SxSjuQXec6RejMghgZ0tQpA2TsjGbZQwe+nGn7A+h31POTfALxXLGmPusRHiSU5andITDsvgH
- jtv9qSySoki05XrIxyi7+LHfNGh8nYmaWFEwBmceEQBKT4Qvkc0VDoY6V+wlgCslPR6vGGvP1
- WFiM5byTqc7zXkf0CWqZoLcgy/8eodTt3WQ2Rh4CVLTAJaAdVtJXFWsJvOFMWIplJ5p5NNl+Y
- 8jd2oBgZMyqP0czXaNnqKiglBOHho1uQ9Lf3iKqVDtKJOTGEEF68b5BUFxPkyodj0uuhCCmbA
- RFDXW7VNwyXeNhAS3NI9VLVgiEvnKSMZ6alg2tfgUlz0D+Rih6wZ+8JOsJJ3iZXH2rNMdccAH
- AEaKmIvLFhEifT7f/Q24RdL9sUOoQlIx2WjuWWfs3UnkxA1STfZTPkHp9qQLqJ1bpsoB3PLd+
- ahscwVhp5bRVH/e4IBU0dh6Q==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] doc: git-diff: apply format changes to diff-format
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
+ <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+ <8fec37ee17481039998af65ce1abec753cf30897.1731343985.git.gitgitgadget@gmail.com>
+ <6c1c1ae2-f38a-4458-a9ad-2fad3e56fc32@kdbg.org>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <6c1c1ae2-f38a-4458-a9ad-2fad3e56fc32@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Just one quick additional note:
+Le 12/11/2024 à 19:51, Johannes Sixt a écrit :
+> Am 11.11.24 um 17:53 schrieb Jean-Noël Avila via GitGitGadget:
+>> -The raw output format from "git-diff-index", "git-diff-tree",
+>> -"git-diff-files" and "git diff --raw" are very similar.
+>> +The raw output format from `git-diff-index`, `git-diff-tree`,
+>> +`git-diff-files` and `git diff --raw` are very similar.
+> 
+> Throughout this document we see a lot of commands with dashes `git-foo`.
+> Does this have any significance, or should they be corrected to the
+> dashless form `git foo`? It could even be a "while at it"-change as you
+> are touching every instance anyway.
+> 
 
-On Wed, 13 Nov 2024, Johannes Schindelin wrote:
+OK. I didn't pay attention to these points until now.
 
-> This morning, I woke up to find a new PR in microsoft/git
-> (https://github.com/microsoft/git/issues/704) that cherry-picks the patch
-> that was offered in this here mail list thread. That patch is almost four
-> years old, i.e. just about ready to enter pre-school and to learn how to
-> read and write. Yet apart from Beat's confirmation that it fixes a real
-> bug, this here patch has been treated with silence.
+>>  
+>>  These commands all compare two sets of things; what is
+>>  compared differs:
+>>  
+>> -git-diff-index <tree-ish>::
+>> -        compares the <tree-ish> and the files on the filesystem.
+>> +`git-diff-index <tree-ish>`::
+>> +	compares the _<tree-ish>_ and the files on the filesystem.
+> 
+> Now that the backtick formats the content as in the synopsis, why is it
+> written _<tree-ish>_ and not `<tree-ish>` in the running text?
+> 
 
-Even Homebrew is waiting with bated breath for that patch to be picked up:
+With the new processing in place, this is identical in the result. But
+for the writers, I would still push so that the form _<placeholder>_ be
+used to remind them that keywords and placeholders need to be
+differentiated.
 
-- https://github.com/Homebrew/homebrew-core/pull/68865
-
-- https://github.com/carlocab/homebrew-core/blob/a236345fdfbb37465edc0b5a0ad1a51dcbd84423/Formula/git-gui.rb#L19-L26
-
-Ciao,
-Johannes
+Moreover, in case the special processing macro is not applied, the
+markup is still correct pure asciidoc, while generating a "not so bad"
+output.
