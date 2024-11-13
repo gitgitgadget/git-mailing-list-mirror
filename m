@@ -1,93 +1,101 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13521DFD82
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 13:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A724200BB7
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 13:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731504301; cv=none; b=FPb1L3C5LYrd2AmkjncD2VVVpGRhbAMOUh1OMZy7g0gkuaS3o/rx71t8KByBJbKXY9lQ9iue+r9+IzxggD0iHl2eN8jeG+wTtSCNpcm58rRuLzexaepaPsRJVjlJo90DBjP/rtKDdH8l6vfy7IVXHMduqdrMbz+zW/5NOcRMsTc=
+	t=1731504571; cv=none; b=gzEo0M/L8gVtKH5yeE9Dsm1BJmSoBNPIPQ+MZBYO/DP64HQDHzPD2sTtJFEGIYMtNhCrU3lTBPuaZ38xPql8OvbbKQo1iPC2FTA9E5PerH7kxIXgfAFYcDF/mwyYv0p+aYFUmEDfzgHxiIhTV8R3u/0BDEBXn5PF/VM/Z2QkcvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731504301; c=relaxed/simple;
-	bh=d1v39ZeCdDqtdJEbcWcluMfkDuicyp0Qfh+C0qGq7ao=;
+	s=arc-20240116; t=1731504571; c=relaxed/simple;
+	bh=IVf4cn/dBFiJP0mQUT3ImaWo80HEd7dpUfcoQFL7uqA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SNlX84xRWKkZtl3RIgeAJpkQoYDn+LLxblcXS0gcJaYx9zA/h4zK5vPt4dhVMcik/CXsVZAj3pzwXI3pRX+NgBQoQRgcrq5s6uBTIV/QXqcFxH8zW8Qs1LhZd+AYtSId9hC73TeVV6XGf6UMvsi/ONOfOd7SmLGOXRQqWaHf1w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dENVXB6U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S0N9i5JB; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=PQxOt+uG9qHIO0t3jBaiUBHW+prx7RiTMDxTtqU1AmvlUtyLcfK35uwkySjKvjbOSpoIWAj97O34Ln40PMEADrsDT5ulF84kNTA3jjxRmDIUyzYlq2TLR5a4mzrOJpHps3vidJwQRjDJx2xRp6Nl3FbYBKUEXzIgpqTzQ6XG3V4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ciXXzEID; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PFKiClce; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dENVXB6U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S0N9i5JB"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1227B13805F7;
-	Wed, 13 Nov 2024 08:24:59 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Wed, 13 Nov 2024 08:24:59 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ciXXzEID";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PFKiClce"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 38E7A11401E4;
+	Wed, 13 Nov 2024 08:29:28 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Wed, 13 Nov 2024 08:29:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731504299; x=1731590699; bh=75Qe58PDS1
-	oW+4k+5O6GGPqoqO5svQtPc9NwpFnc74I=; b=dENVXB6U9h1080ojUjqbXrwKS/
-	dcaESrI0WadXlbF2l683lS5WbeedMqNDxbBtU5KMmZOoNpQDrqSN/hmsSIu8r6Rj
-	kIR2RefQYSudH6Na8PhefBVrgbWQiq1qxlNuWQTYboxvBkhglhre8KnSw+3JLuDO
-	0WEDpwm47h19XBdxty05HTRjecafw34m8wQifIiqg3xfxZ5kRqZTtw+ayjCnzhi9
-	JxHCCyrJ/Iju1Wc4jZgUl9CE6OMdm2BnDFHhHonnqSG/uDKYugac5amzS+1zqPFR
-	JZh63fqbpz/KgnXQB/hS/zGeLxRojTnjit58Mjc5GbcWmHU5hwlaIQtGFs/w==
+	:subject:to:to; s=fm3; t=1731504568; x=1731590968; bh=hBHy27/KnA
+	Z35QHJ4/gSA7pWn+MurZk3TrYYMcRlhEM=; b=ciXXzEIDjb0KXFQ6OY78Kp40BE
+	tY8qsTDeZPQILaw0GxqDcww0J4/TtqqS2YapBe0A6EbmwNqG4k4NjMrR4rpO4CET
+	bY81Ust6iQeiz7qqILzoUaleAeGPtWFmoDCxDeSITPCBE1fm+kW7RUoZkBBJWmRE
+	d9E9DwhZXs0uhCQQFSIl/VYA/lXkwuLQXt0wqb+JUugjeP8nf6U8yNdHCtrBj7N9
+	SJimYvcI6WvY6w1bNv8sSjev0JPwKBsHhswDDSAzXh2f2FSHtX/DQ2PzVpekpZDd
+	+8hcmvRXxGS51/+wkNVmyXhUfyCFsvu7MKVY4/YzXb5aBScax+mfPzujd9ew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731504299; x=1731590699; bh=75Qe58PDS1oW+4k+5O6GGPqoqO5svQtPc9N
-	wpFnc74I=; b=S0N9i5JBcc9ziN1CGrKoiwwiiQiGDV6x3ePZFpn/FjlWbBe6XAr
-	KIV91TCCueeL7YryunQKyH/+0GwRfWiQbuO6CufaQVHymzxMfjPHOEiovKCnuSV8
-	nltUjCe3u7jy5PN3vimtcgRCUCYUUIfTNpp05wTSl4+B3W26xVdjRD8oI5F7xVPy
-	wgz7u/2yP7J69Nmv99beMWeWGgHcq8aoVWa9bTN86HDLj9uPDbI035MA1dN7mOdm
-	/2MtXsXI+L4o/159N9pHB3Xpfp6KNavPppc3Iu8s6iclCYXWtWUxoNbXnnt2Iw3+
-	asxpLuRD8Dzxjlb8qTMWAy1Pl92hnlz71Kw==
-X-ME-Sender: <xms:qqg0Z98Y9-e4qqH1FMnol5OKNUQZ4AiZf4IT0pcNG5yFrJWWvStFUA>
-    <xme:qqg0ZxsNGFxRcD9CDL5qvXFln_S79IVo8Y8UY6qS9_dyVMgs3rHZ799cDhP5wDmdO
-    fiFa01rZTIED3V0ug>
-X-ME-Received: <xmr:qqg0Z7AuSEiDdW_Qc9HbE3CtHPc-zDw5w7hpL7KO1E8b1_SI0skqWJVv8m4IpGfpGdbldkoojvITG4ugZMo1Fr06EA3mNoZa3OHpfRZgyMDUE0U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddtgdehudcutefuodetggdotefrodftvf
+	1731504568; x=1731590968; bh=hBHy27/KnAZ35QHJ4/gSA7pWn+MurZk3TrY
+	YMcRlhEM=; b=PFKiClce6jR9fKSilCEJVn9kBYc4Lb4xkfE9LjKkATGHNw85xl3
+	O4HepaEW1bkJkSB4b3wb+UW03Rfe2ZpbdrNmSh/YA40PZ3CqdddrRO2p6qdqeH5g
+	VwNwxC0x2nQdrseQdc6egwleyROIvB1q+mm0rS1l5Xqbz97p33PXM1qwo5gDshzq
+	QI41Za5ETJseUWQdk60L3JSLxrZH4Z13alQCbFicXidWjDkIujGDmlW+75hjyFci
+	nKlJnWiMrToWWe71yoZG6dYwkS79EwZFFDue84m2QXO97Yv5RqFNnrs6wb3tXVaz
+	+Bf8KY/vUZa2WPtV5qOCI7Eor83Tez6S6Zg==
+X-ME-Sender: <xms:t6k0Z7SCD1hNPyMOq8uA5p_IjXHwaFcMu63mjZJPKDpxmZH5wVnYVA>
+    <xme:t6k0Z8x67ksg0bZWz5KNsMzHemnj_xeGnOI4HJ06Y1x_X2daW1JDxCGy8fMNaPx7T
+    JoyiQWRKEdzuKqyqw>
+X-ME-Received: <xmr:t6k0Zw3pTaox7CGNbfhOqENg-lSpClF3nVlTZHSzHQTZ6fxR7-OFG15-7YzxKSuk-JQvNllCphI-gEeG5fePtYZPCjCz2SVK0hMzPU_VAFYDCf4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddtgdehvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpedvleeffeeuveeugefguddutdfgffekvdeliedtvefhhedv
-    hedvueegiedvudfhleenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhunhgrmhgvrd
-    hinhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehp
-    shesphhkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprh
-    gtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrh
-    drtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtoheprh
-    grmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:qqg0Zxdt0Y9OG1vQn8nYBSRj93KGAXLcENlN3bQxsK9F2xERrcVK0w>
-    <xmx:qqg0ZyPhpSNbKQlHkAE0jWq5NtARxTCz2_MgubdOFX4boOKeAD7ouQ>
-    <xmx:qqg0ZznqEJ2mgfJRjRISHEJsYufsAooF7vXSTohj9BTZdG8oAvVcgA>
-    <xmx:qqg0Z8uBzN-cwc_FW5ld_qrPcwzFQbL1FT4HkTKPyo1m2bCAe_FZMg>
-    <xmx:q6g0Z5oBiFJK8FCnDKiiCMeoRt9f2hlwN0ShzIsMdXt6p7wX4EvozM21>
+    enucggtffrrghtthgvrhhnpefgudfftdejgedulefgtdejffekjefgteeukeegueekueev
+    gfeiffehtdetudfhvdenucffohhmrghinhepmhhuohhnrdgsuhhilhgupdhmvghsohhnsg
+    huihhlugdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhg
+    pdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtph
+    htthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghp
+    thhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:t6k0Z7BUbeV-gaWw0_PA8hQDj-zmMyzK0HTs8W-SD5Th6PTX1kQJhg>
+    <xmx:t6k0Z0jzJtjifnLJIlxrfM5MJfmjSbZQAPuCip5czDF77m8u_1IOGg>
+    <xmx:t6k0Z_rhbj6TLxfgBIzn3WGHllvkTWXH9_XQBHAYgiKb2jvdT9jmsA>
+    <xmx:t6k0Z_hkUsU6LKQxWpsK5QKAtpRIAUfr461HFPoms5qhKPmzdj8Ffw>
+    <xmx:uKk0Z3MBQZg9KKsELxqtRqPP1BKpwUCtf_olKDprOOhR34_ENDY6YQmA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Nov 2024 08:24:57 -0500 (EST)
+ 13 Nov 2024 08:29:26 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5a8068f1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 13 Nov 2024 13:24:18 +0000 (UTC)
-Date: Wed, 13 Nov 2024 14:24:48 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 932cd54a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 13 Nov 2024 13:28:47 +0000 (UTC)
+Date: Wed, 13 Nov 2024 14:29:17 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
+To: David Aguilar <davvid@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Eli Schwartz <eschwartz@gentoo.org>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [-SPAM-] [PATCH RFC v6 00/19] Modernize the build system
-Message-ID: <ZzSooGxkL3BrHhk-@pks.im>
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+Message-ID: <ZzSprTl5Z3uIx0_d@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
- <20241112-pks-meson-v6-0-648b30996827@pks.im>
- <94fa4a3c-c9aa-473a-a129-74edfd617a16@ramsayjones.plus.com>
+ <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local>
+ <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local>
+ <Zy9ckDezMSKVA5Qi@gmail.com>
+ <ZzHeMjqUjzWpdX-Y@pks.im>
+ <ZzRvsOeLsq3dJbGw@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -96,120 +104,387 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <94fa4a3c-c9aa-473a-a129-74edfd617a16@ramsayjones.plus.com>
+In-Reply-To: <ZzRvsOeLsq3dJbGw@gmail.com>
 
-On Wed, Nov 13, 2024 at 03:30:20AM +0000, Ramsay Jones wrote:
-> On 12/11/2024 17:02, Patrick Steinhardt wrote:
-> > Hi,
+On Wed, Nov 13, 2024 at 01:21:52AM -0800, David Aguilar wrote:
+> On Mon, Nov 11, 2024 at 11:36:34AM +0100, Patrick Steinhardt wrote:
+> > On Sat, Nov 09, 2024 at 04:58:56AM -0800, David Aguilar wrote:
+> > > That said, if we mean, "Linux/Unix-savvy New Contributors," then
+> > > I can understand why Meson might be a favorite, and perhaps this
+> > > might be the crowd we are looking to target [...]
 > > 
-> > this patch series modernizes our build infrasturcture. It refactors
-> > various parts of it to make it possible to perform out-of-tree builds in
-> > theory.
+> > My goal is to not only make things easier to use for Linux users, but
+> > also for users on other platforms like Windows while also catering to
+> > the typical developer of Git and making the solution for them as tasty
+> > as possible.
 > > 
-> > The series then continues to wire up Meson as a proposed alternative as
-> > a modern replacement for our current build systems. It provides better
-> > integration into IDEs than our Makefiles, better usability than our
-> > Makefiles and CMake, better configuration and discoverability thereof
-> > than autoconf and CMake (which is of course my personal opinion).
+> > I agree that CMake is a tad easier to use and set up on Windows, mostly
+> > because it is directly integrated into MSVC. But I also think that CMake
+> > is a harder sell towards the power users because it is comparatively
+> > hard to maintain due to its somewhat arcane syntax, implicit variables
+> > and things like this.
 > > 
-> > The intent is to have Meson replace autoconf, which is mostly unused and
-> > broken. Eventually, the plan would to also replace CMake and our
-> > Makefiles in case we figure out that this replacement is indeed a net
-> > benefit for the project, but all of this would happen over the course of
-> > multiple releases.
+> > So I'm basically trying to find a good middle ground where all of the
+> > respective target audiences get benefit:
 > > 
-> > Changes in v6:
+> >   - For Unix devs I think that Meson is easier to maintain and use
+> >     compared to CMake. We also get nice features like out-of-source
+> >     builds, good integration with the test suite and easy integration
+> >     with IDEs.
 > > 
-> >   - Add documentation for how to use Meson.
+> >   - For Windows devs we have an officially supported way to build Meson
+> >     from MSVC and co. Also, subprojects allow us to have as easy story
+> >     for how to build Git without preinstalled dependencies, which is not
+> >     currently possible with CMake to the best of my knowledge.
 > > 
-> >   - Fix compilation in case libintl exists, but required tools like
-> >     msgfmt and related don't. Instead of failing, we now automatically
-> >     compile with the equivalent of NO_GETTEXT=YesPlease.
+> >   - For packagers I think that Meson provides better discoverability of
+> >     options than CMake.
 > > 
-> >   - Update last patch that fixes semantic merge conflics with in-flight
-> >     topics in "seen".
-> > 
-> >   - I've changed the series to be based on "master" at b31fb630c0 (Merge
-> >     https://github.com/j6t/git-gui, 2024-11-11) as all prereqs of this
-> >     series have since landed. This doesn't make any difference though
-> >     as there aren't any merge conflicts or additional changes caused by
-> >     this. I mostly mention this so that there is no confusion around the
-> >     changed base commit.
-> > 
+> > So Meson may not be the perfect solution for everyone of these target
+> > audiences, and better solutions may exist to cater specific needs. But
+> > it provides a net benefit for every single one of these audiences from
+> > my point of view. And when taking the benefits for all target audiences
+> > combined I think that Meson provides the bigger win compared to CMake.
 > 
-> Tested this version, without issue, on Linux and cygwin (build + test).
+> Thanks for clarifying. Not that it matters, but you've convinced me.
+> Constructive criticism follows below in the hope that it can help you
+> further harden the arguments for Meson.
 
-Thanks for verifying!
+Very happy to hear!
 
-> On cygwin, the unit test now no longer times out:
+> > > > Patrick Steinhardt wrote:
+> > > > >   - Packagers. This is another group of people that would benefit from
+> > > > >     my point of view. This is mostly because Meson has certain standards
+> > > > >     for how to approach problems, and thus the packager would know for
+> > > > >     how to handle things. They don't have to manually track build
+> > > > >     options and changes thereof, as these can be easily discovered and
+> > > > >     because Meson will error out in case invalid options are passed.
+> > > 
+> > > CMake's option() variables and its GNUInstallDirs module pretty much
+> > > handles all of the standardization that packagers are looking for on
+> > > this front, so this argument doesn't push the needle towards Meson over
+> > > CMake from my perspective.
+> > 
+> > I think that discoverability of Meson is way better. Here you can simply
+> > say `meson configure` and it provides you a nice list of all options
+> > that are available. For CMake it always used to be a big pain.
 > 
->   $ cd git/build
->   $ tail test-out
->   1030/1030 t9902-completion                               OK             114.74s
+> The pain of discovering options with CMake is true in the general case.
 > 
->   Ok:                 1030
->   Expected Fail:      0   
->   Fail:               0   
->   Unexpected Pass:    0   
->   Skipped:            0   
->   Timeout:            0   
+> A specific project can enforce conventions so that all option()s are
+> specified at the top of the main build script or a designated file
+> specifically for options. That would trivially make the options easily
+> discoverable in that there's only a single place to look, but that's
+> nowhere near the rigor that Meson enforces.
 > 
->   Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
->   $ 
-
-Great.
-
-> Having said that, I was expecting to see an 'Unexpected Pass', since
-> meson decides to not set NO_REGEX. (The 'make' build on cygwin will
-> set 'NO_REGEX = UnfortunatelyYes' in the config.mak.uname).
+> Following a sensible convention is why I didn't originally vibe with the
+> argument that option()s are insufficient, but that would merely be one
+> project's conventions and is by no means a universal practice.
 > 
-> In the meson-logs/testlog.txt file, for the t7815-grep-binary.sh test
-> stdout, we find:
+> Elsewhere in this thread it was also mentioned that unknown options are
+> blindly accepted by CMake. That's actually not true.
 > 
-> ----------------------------------- stdout -----------------------------------
-> ok 1 - setup
-> ok 2 - git grep ina a
-> ok 3 - git grep -ah ina a
-> ok 4 - git grep -I ina a
-> ok 5 - git grep -c ina a
-> ok 6 - git grep -l ina a
-> ok 7 - git grep -L bar a
-> ok 8 - git grep -q ina a
-> ok 9 - git grep -F ile a
-> ok 10 - git grep -Fi iLE a
-> ok 11 - git grep ile a
-> ok 12 - git grep .fi a # TODO known breakage vanished
-> ok 13 - grep respects binary diff attribute
-> ok 14 - grep --cached respects binary diff attribute
-> ok 15 - grep --cached respects binary diff attribute (2)
-> ok 16 - grep revision respects binary diff attribute
-> ok 17 - grep respects not-binary diff attribute
-> ok 18 - setup textconv filters
-> ok 19 - grep does not honor textconv
-> ok 20 - grep --textconv honors textconv
-> ok 21 - grep --no-textconv does not honor textconv
-> ok 22 - grep --textconv blob honors textconv
-> # 1 known breakage(s) vanished; please update test(s)
-> # passed all remaining 21 test(s)
-> 1..22
-> ==============================================================================
+> While it's not as rigorous as Meson because it doesn't error out by
+> default, CMake does issue a warning when you specify variables/options
+> that are not used by the project. IIRC this warning can be made into an
+> error by using the "cmake -Werror=dev" option, but I appreciate Meson
+> taking the stricter route as it results in better overall usability.
+
+Ah, fair enough, I remember seeing these warnings myself. As you say, I
+also prefer being as strict as possible, as otherwise it is so easy to
+miss the fact that a build option has been mistyped, removed or renamed.
+The warning helps the dev if they pay attention, but especially in
+automated systems I'd expect it to go unnoticed quite often.
+
+> > > > Taylor Blau wrote:
+> > > > I appreciate your thoughtful response to my concerns here. Please feel
+> > > > free to correct me if I am wrong, but I think the bulk of your argument
+> > > > is captured fairly well by these three points, so I want to focus my
+> > > > response here.
+> > > > 
+> > > > Responding in turn, I think my feeling is something like:
+> > > > 
+> > > >   - Long-time Git contributors are going to be the ones who will most
+> > > >     frequently use the new build system. I am definitely sympathetic to
+> > > >     getting too comfortable with our existing tools, but so far in your
+> > > >     response I have not seen a compelling reason to switch the project
+> > > >     to use Meson.
+> > > 
+> > > Likewise, I have not seen a compelling reason to not focus the
+> > > effort on CMake instead. In other words, why not enhance the current
+> > > status quo (Make + CMake) instead of trying to replace it?
+> > 
+> > As mentioned above, I mostly think that Meson makes for a more
+> > compelling overall package. That being said, if we eventually come to
+> > the conclusion that we as a community want CMake instead of Meson, then
+> > I am willing to go there.
 > 
-> Note the 'TODO known breakage vanished' on test 12.
+> I hope that's not where things land because the separation of
+> configuration vs. build steps does provide a benefit in day-to-day use
+> (specifically, faster incremental builds) due to the clean separation
+> of the configuration and build steps.
+> 
+> It seems like it would be nice if the Meson build were eventually
+> hooked up so that we can continue typing "make prefix=... install"
+> (perhaps through an opt-in "enable meson" variable) and the Makefile
+> would handle driving Meson + Ninja, but that's probably an untenable
+> feature given the complexity of the current Makefile.
+> 
+> If the Makefile were completely replaced one day then that would be
+> a nice to have, but it would probably be a bad crutch because the
+> natural tendency would be to shadow all of Meson's options behind
+> Makefile knobs. Encouraging users to just run meson directly
+> seems like a better overall situation. Bisecting is the only
+> reason why something like that might seem appealing, but
+> I probably wouldn't push for it myself and maybe there's a better
+> way to handle that when we cross that bridge.
 
-Interesting. Right now we don't parse the output of the test executions
-themselves, so we only operate on the level of whether or not the whole
-test suite passed. So it's expected that this does not get reported as
-an unexpected pass.
+In theory it is of course possible to have a thin wrapper around Meson,
+but as you say it'd likely be a bit more on the painful side to write.
+One could be pragmatic and only map the most commonly used options and
+otherwise let the autodetection of features do its thing, which could be
+good enough for bisectability.
 
-While Meson can itself generate TAP output, I don't think that it has
-support for _reading_ the TAP format.
+On the other hand I don't see that our Makefile would go away anytime
+soon. I would eventually want to remove it so that we have a single
+build system, only, but I'd think that the timeline here would rather be
+a year or two before we do so. So maybe that reduces the need for such a
+mechanism.
 
-> Setting NO_REGEX on cygwin is for 'reasons' (not necessarily good) and we
-> need a way to override it's decision here. (In general, we need to be able
-> to use *any* of the many build variables to override meson's automatic
-> setting of these build variables).
+> > > >       * New contributors do not interact with build system internals
+> > > >         nearly as much as more experienced contributors. I would imagine
+> > > >         that the vast majority of those interactions are simply running
+> > > >         "make" or "make test".
+> > > > 
+> > > >         You mention a handful of other niceties that Meson provides,
+> > > >         like language server support, but I am not sure that I agree
+> > > >         those are (a) the responsibility of the build system to provide,
+> > > >         or (b) that those needs aren't already well met by the vast
+> > > >         number of existing tools and IDE integrations that can work with
+> > > >         ctags.
+> > > 
+> > > CMake has all of these same bells and whistles, and it's already present
+> > > in git.git. LSP support just means being able to generate a
+> > > compile_commands.json file, and the current CMake setup already does
+> > > that.
+> > > 
+> > > The one thing that no one has mentioned is dependencies.
+> > > 
+> > > CMake has less dependencies. Python is arguably a liability in the build
+> > > system arena, and Meson requires it.
+> > 
+> > Eli has menitoned [muon](https://muon.build/), which is a drop-in
+> > replacement for Meson written in plain C99. I don't know whether it is
+> > currently able to compile the Git project, but if this is going to be a
+> > concern for people I can try to make sure that it does.
+> 
+> Thanks both for confirming that muon is a viable alternative.
+> 
+> Elsewhere in this thread packaging metadata for CMake was shared
+> arguing that CMake also has many dependencies. A subtle nuance there
+> is that those are all either optional dependencies (e.g. Qt for the GUI
+> parts) or they are dependencies that can be optionally supplied.
+> 
+> You can build CMake without those dependencies installed and CMake's
+> vendored versions will be statically linked instead. So, from the
+> perspective of wanting to go from 0 to 100 with just gcc/g++ installed,
+> CMake has less dependencies. This might be slightly disingenuous because
+> CMake vendors its dependencies and distros have to opt-in so that they
+> can supply their own versions, but the main takeaway is that GCC is all
+> you need and that's what I meant by, "less dependencies."
+> 
+> This is a moot point for most users, though, and it's even moreso moot
+> if muon compatibility can be maintained.
 
-I can add an option for this. Out of curiosity, what is the reason? Is
-this anything that we can autodetect?
+Fair. I don't really expect anybody to use the combination of muon/sumo
+for everyday work, mostly because the usability is not quite up to par
+with Meson/Ninja. But there are two use cases that I deem important:
+
+  - Esoteric platforms that may not have Python available. I don't know
+    whether there actually are any relevant ones, but with muon/sumo it
+    is possible to support these.
+
+  - Bootstrappability, which I think is rather critical for a project
+    like Git that is at the core of the whole software ecosystem.
+    Depending only on a C99 compiler and a shell is a huge win here.
+
+A bit of an anecdota, but CMake itself for example struggles with this
+quite heavily because it has dependencies that use CMake themselves. So
+it is nice that there is a clear path for bootstrapping with Meson and
+thus Git.
+
+> As to why I consider Python a liability ~ this is more of a concern for
+> Meson and it doesn't really matter for end users, but Python has a
+> proven track record of making breaking changes.
+> 
+> If you're building everything from scratch with new versions of
+> compilers and tools then the C++ project is the one that's going to
+> build just fine a decade from now with little to minimal effort.
+> Python doesn't have that track record.
+> 
+> Even though CMake is written in C++ (which is unacceptable for some
+> projects), this is subjectively one advantage that CMake seems to have.
+> This is a moot point, though, and perhaps Python will eventually reach
+> this same level of respect for not introducing breaking changes.
+> 
+> Furthermore, I suspect that most contributors are simply going to
+> "apt install meson" or "brew install meson" so it's not really that much
+> of an issue in practice for the majority of users/contributors.
+
+Agreed.
+
+> > I'd honestly be sad if we go down the CMake route, mostly because I
+> > think that it is an inferior build system compared to Meson. I have
+> > worked with it extensively in the context of libgit2 and always found it
+> > to be a pain due to its esoteric syntax, the use of so many implicit
+> > variables, platform CMake policies, and there being so many ways to do
+> > the same thing and, where the easiest solution is typically the wrong
+> > one to pick.
+> > 
+> > That being said, I'm trying to be as pragmatic is possible: my main goal
+> > is to have a modern build system that is easier to use. So while I think
+> > that Meson fits better into that role, the next-best thing would be
+> > CMake from my point of view.
+> > 
+> > So I'll continue to champion Meson, but if the project as a whole agrees
+> > to take up CMake as another official build system then I'll adapt and
+> > make that happen.
+> 
+> I agree with you. Meson looks to be a technically better option.
+> I kinda wonder how many folks are actually using the contrib/ CMakeLists.txt,
+> and whether this effort would be helped by retiring it sooner rather
+> than later?
+> 
+> Would it be worth adding a canary to the CMake build that forces it to
+> fail to build unless "cmake -D ENABLE_DEPRECATED_BUILD=ON" option is
+> specified?
+> 
+> It could error out with a message telling users to reach out to the
+> list alongside the hint to specify the option if they just want
+> to get a working build.
+
+I think it's still a bit too early to think about the actual deprecation
+road -- before removing things I want to connect with any stakeholders
+that use the old system and figure out whether I've got everything
+covered that they need. I know that Johannes for example uses CMake
+extensively, so I will make sure to connect with him before proposing
+its removal.
+
+I've also shifted my thinking a bit: instead of removing CMake as a
+first step I'd like to remove the autoconf code. It is known to be
+broken in many situations and there is only a very small set of users
+out there. So replacing that with Meson would be a good first target
+from my point of view.
+
+In any case I don't want to negatively surprise anybody, so I am of
+course very happy to discuss the roadmap here and will work with anybody
+who has needs that I haven't addressed yet.
+
+> On a rather low-powered machine here are some timings:
+> 
+>     $ make clean
+>     $ time make -j
+>     181.36s user 15.35s system 99% cpu 3:17.33 total
+> 
+>     $ ninja -C build clean
+>     $ time ninja -C build
+>     11.23s user 4.67s system 47% cpu 33.605 total
+> 
+> 34s vs 3m17s ~ nice! That's also surprising.
+
+Awesome!
+
+> That large of a difference is not explained by the extra
+> probes done by the Makefile; a no-op incremental build is 0.5s for
+> Make and 0.02s for Meson so the Makefile probes seem to only account
+> for at most 0.5s.
+> 
+> Is the Meson build simply building much less, and that's why
+> it's currently so much faster?
+
+We don't build documentation by default and don't have gitk wired up,
+but other than that the builds should be mostly equivalent.
+
+> Or.. is it because I have "sccache" installed and Meson automatically
+> uses it? "ninja -C build -v" confirms that it's using sccache and
+> "make V=1" does not, so maybe that's why.
+> 
+> How do we disable the sccache usage?
+> "meson configure build" doesn't seem to list anything related to
+> caching, but it is really nice seeing all of the other options in one
+> place.
+
+Yes, Meson knows to pick up sccache and ccache automatically. [1]
+mentions that you can disable this by setting the compiler explicitly
+via the CC environment variable.
+
+[1]: https://mesonbuild.com/Feature-autodetection.html#ccache
+
+> Improvement in build time seems like it could be something that sways
+> long-time contributors towards Meson. It is pretty nice that it
+> automatically picked up sccache in my $PATH and automatically gave me
+> those speedups.
+
+True.
+
+> > Thanks for your input, highly appreciated!
+> 
+> Thanks. I don't want to be the CMake champion, so here are a few
+> helpful/surprising details about the Meson build to help make it better.
+> 
+> 
+> (1) I first built w/out having "curl-config" installed. I was surprised
+> to find that "ninja -C build install" ended up installing "bin/curl" and
+> "bin/curl-config" into the prefix.
+> 
+> Is there a way to have the install step only install Git without
+> bringing along these other non-Git bits?
+
+It definitely shouldn't install curl and curl-config, I'll have a look
+at that. But other than that Meson is currently set up such that it will
+automatically fall back to the subprojects in case certain dependencies
+cannot be found. This can be disabled via `meson setup --wrap-mode
+nofallback`.
+
+> (2) There seems to be a difference in how symlinks and hardlinks are
+> handled in the install step.
+> 
+> Running "make prefix=$PWD/dist install" ends up with real files in
+> dist/bin/ (hardlinks) whereas with Meson all of the files in the bin/
+> directory are symlinks into ../libexec/.
+
+Yup, that's documented as part of the commit message that introduces
+Meson as one of the main differences.
+
+> (3) Not all of the same files seems to be getting installed.
+> 
+> I don't see bin/gitk or bin/git-cvsserver when building with Meson.
+> 
+> The share/git-core/templates/ directory is missing completely.
+> 
+> git-gui and its related files are missing. Perhaps this is
+> intentional/todo at this stage and hasn't been added yet.
+> 
+> Meson installs bin/git-http-backend (symlinked to libexec)
+> but in the original Makefile this file only exists in libexec/.
+> 
+> The contents of libexec/git-core/ seems to be missing dozens of
+> files compared to the Makefile build.
+> 
+> share/perl5/ has a bunch of extra git-{cvsserver,send-email,svn,...}
+> scripts so perhaps this is where some of those files went?
+> The Makefile places these files in the libexec/ area instead
+> of in the share/perl5/ area.
+> 
+> The Makefile does not install share/gitweb/static/js/.
+> Instead, it seems to mash everything together into a single
+> share/gitweb/static/gitweb.js file which Meson does not install.
+> Meson installs separate files in the share/gitweb/static/js/ area.
+> Was that intentional, or is that just another todo?
+
+gitk and git-gui aren't currently wired up. All the other ones I'll have
+a look at.
+
+Thanks a lot for your feedback!
 
 Patrick
