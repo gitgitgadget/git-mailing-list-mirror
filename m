@@ -1,156 +1,97 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9020B166302
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 16:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D4A2010FC
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 17:32:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731515462; cv=none; b=lls8KtIbL7rFw7/ZJQrWtOMHiWz5/c/qtdEugyYY8CMi2d8FpIOZaa8aYtXx+Gqx5YpEXL9deMnR7D613F66qygQ+n407CAwitKrQeVybskSfx1hzYej7rb29tLUg94MgtRxr73L8frJoBrI70+SLouS3HA5QcrRs2cx0H9mkNI=
+	t=1731519177; cv=none; b=smZOC0P93UQbIukUO2ItkeLz4LI4HG5iyk0HAZd2Pg3QMeZ/83FSlUbzzBte1j9HCd45XB126UGOAwJKiGlF5kxRDF9mgFtGHjlxXlYiX8lF9RYJ8VbGBk92asxr+BCZmZlcMXr/WsLyUy9aQsc52cm8QXv4/497S5DmQBuqdZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731515462; c=relaxed/simple;
-	bh=wkXC3uLqm8ReJIxhOXZpnRWNBS4NwOo7HaZdrUXSKwk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=aa1DRjslaN5yK9sXCqiqdMFIuJqG8qI2hkpNGek9/A8d5Dwg1OxJ6ea+R9k27a6StG8felBwUSq7ddCZPiF1Kq4s9KBGmA3wlpCbLVH9j/HJ1Wnnap/Sa2y020jKkrzLFWJ0XWUrbvcCq2Y+P4bE03csZZEurFbU2R//TLagZhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QebQscnl; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731519177; c=relaxed/simple;
+	bh=vEfaMbqP0CZ/10lWem4spkb36dxtxkwdM3pnA+ye7Z4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=SlovVANOjoRtNpAfFrIs3uW0GpXz1gu9jOQ3prJ4/AdHIRzLO3frqJaN2Nqd/PKW5CDI00A0tT+S1sUhjeNFhmWS0MU+ChfiWj8eKENOZCL8Wu5sbo9+HlTskvFGC5PciwyapKqVzSxWAUAJf5DOpWdIPqVCQiL46wCDE+BeEvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=mabgWH6o; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QebQscnl"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4315baa51d8so62203535e9.0
-        for <git@vger.kernel.org>; Wed, 13 Nov 2024 08:31:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="mabgWH6o"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e29218d34f8so779978276.1
+        for <git@vger.kernel.org>; Wed, 13 Nov 2024 09:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731515459; x=1732120259; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731519173; x=1732123973; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=TY0jo3abr+Aj/15OWFq1nGmwZxnw3bPfrcfjnXt7GJA=;
-        b=QebQscnlKhxswuzxZcVUEZYR+aVGpqhzSD45dwpZUeEHLEwOYfN4RFox41HZ3kkr+t
-         ho+KLjaePi1SJr1ZyeACJ9lcB3dpXk4GQb/oHFUgE3I6L9dkg9mxBtMC1SoPoJx+muGE
-         qWVe0azz8L1FBaVlN0vFEoVq74tFZQ5f9c20cdcWXg7/d3ma8txNGdqbtTRZdzbZfPW1
-         iOuO+PhEIbT21WtVwXPy/IpVaw334QPMGnj1sa8mtJqfC2iSOIxK+dEnqwZd3zfKg7C1
-         iLZAp+JmuGQkQAHFFnci1Ce7Ls0tQD2DoPPJM7QbblieRyC09C8fOqsoC6sh/rT2Cyxt
-         dCew==
+        bh=PQm3XfercZZjo0BOZXerN4/oprirrSpcswMQJAtwqOE=;
+        b=mabgWH6oxu6qsB+L/skiLgMAHHSAOvvTyHip8la8FlsFpzOFprSqSG6EVI9+WBpPks
+         9KSbXlka7FwII1Q2JjddvnwFNzQGdoQRj7ewIVdbRoupyZGvLB1oRMbItUZ3BeCBZME1
+         sslwapoLWPkHZAcElV9VenJaNSLS87J9mjBWEPsxQpj82eSgP1NrY6CHzZ1ok9HH+a2h
+         szbyupXrxWnu3Ob39pas8km9yqmkV+LpuiSzxjzvhSrhnSSlVWHWSYAR05RdM6tLkHGD
+         FbpH2A/5g/7oLvpf2vILkEcKY1SehyNN7DfgPh56x1D+dxZtJRRbvtgT4vmNkRrVuApU
+         783Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731515459; x=1732120259;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1731519173; x=1732123973;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TY0jo3abr+Aj/15OWFq1nGmwZxnw3bPfrcfjnXt7GJA=;
-        b=E/vYE417x3zG/KXkETgwQU0Q1jlu//VLR3PL8BmAjBOuLEdGGhDWgF5PRFUI/jbFRX
-         IPmWwsM84VnbjRqFVV2/NBorE+7pj3FVzI1/DNc6JQilce10MZwpvAlYJqxR/PRJjsex
-         tR/O//maHIYrYNSeaALzv9OJVHVOjbaQThFpMZGM7qaJvRzMlRFIKb83xcgP8Id6mCbX
-         l4NBGODGaTDoGgwSXhokzRKpBp11mcx15RFFrCTvNeCAkV7liYM5Ur8+mxZSwFETK9/7
-         gCD4BYjkUrl4/MPdALkB0zHRiQ43HvwbB282MwE7vHI6wZqnN3zS/DGTf1Baw9fDqzA+
-         L9dA==
-X-Forwarded-Encrypted: i=1; AJvYcCXxwsgNAVKB/jdqt10bScCWV4UeaDPeDf4EsDiqHlKRUMlwc9xiSca8goU4YbHxe7AVPbk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmWuxBq34zGCScFryKtwR0TXPxMFhy50N2/ZcNEi+k2MFfEwD2
-	tUjWY9PN0+Rc2T+5kM3FiW5I6MhxsUIBEM6smSX5yhy3byR8g0Bw
-X-Google-Smtp-Source: AGHT+IF0uJKmiWHT7N0KF/PHthdPbx0d+x8aD/3wFyX3r/IhaI9OCLEaV0bxSZ7qQn7gy65rfa9gOQ==
-X-Received: by 2002:a05:6000:79b:b0:382:d0b:1f2c with SMTP id ffacd0b85a97d-3820df88144mr2900432f8f.41.1731515458324;
-        Wed, 13 Nov 2024 08:30:58 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6a8:b801:610:d596:f87c:e591? ([2a0a:ef40:6a8:b801:610:d596:f87c:e591])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9ea7c3sm19227022f8f.80.2024.11.13.08.30.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Nov 2024 08:30:57 -0800 (PST)
-Message-ID: <cf51bd62-0573-42ba-8784-643bde347d10@gmail.com>
-Date: Wed, 13 Nov 2024 16:30:56 +0000
+        bh=PQm3XfercZZjo0BOZXerN4/oprirrSpcswMQJAtwqOE=;
+        b=M3L4b8gYsTUeXckMiQHmGsSoWChDBOUQN5bRRlaoEMUiSJicz4U1HBLOTBlIxlI8ab
+         yFPRbfR6PWrtu+WgNhVU1ynyDhnFORaCfv83SVvBs3+iFqOLIiAfu8L6Tt+1cze/9iF9
+         vQsulllXZuctyqfId6oLDOwr+WcyF/Bd9YBDCrzT9YEdy7+kPako0wPw7nEf/kZwPTBi
+         JoyXN0S+ByZtAwXSdZ7BsnVOAVh9+UGcYXEhqs4orm61hSR1jg9kNMbHURu0LcO40ENO
+         zkg0JwB+XmFFtop6gEMFC7vTPqM0DUStuQPWXv2R/LdPes9/eHGKMkhgnCrgdhsy3avv
+         zTpQ==
+X-Gm-Message-State: AOJu0YyGNyJUyS5ax9WTbrakh27oIWaRetC/QOKr5uotn8N6hqb1rb/Q
+	3R1SGlCCS1UOpN7ygt60jyIVlAuHIF8aTCf5DMwbmfqxvrrWNAoQnnFFMdQ4DD6VSowfiR9shqW
+	RiFk=
+X-Google-Smtp-Source: AGHT+IEUxpVVzQ6AvIwNc5fmTMNkG/hXQSTysKqSVo7JUF/vKOxKfqOa6iiPCErdB+7rKmDJf482qQ==
+X-Received: by 2002:a05:6902:2788:b0:e2b:e7e0:35af with SMTP id 3f1490d57ef6-e380e23d459mr230173276.26.1731519173404;
+        Wed, 13 Nov 2024 09:32:53 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e336f1ecf05sm3405098276.51.2024.11.13.09.32.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Nov 2024 09:32:52 -0800 (PST)
+Date: Wed, 13 Nov 2024 12:32:51 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/2] pack-objects: more brown-paper-bag multi-pack reuse fixes
+Message-ID: <cover.1731518931.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH RFC v6 18/19] Introduce support for the Meson build system
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
- Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>, Taylor Blau <me@ttaylorr.com>,
- David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
-References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
- <20241112-pks-meson-v6-18-648b30996827@pks.im>
-Content-Language: en-US
-In-Reply-To: <20241112-pks-meson-v6-18-648b30996827@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hi Patrick
+While starting to use multi-pack reuse in more places throughout
+GitHub, I noticed a rare but persistent segfault, which is the result
+of a broken assumption in write_reused_pack_verbatim().
 
-On 12/11/2024 17:03, Patrick Steinhardt wrote:
+The first patch demonstrates the problem, and the second patch fixes
+it.  The second patch explains the broken assumption in detail, but
+the gist is that we can't infer that an all-1s word in the reuse
+bitmap from a non-preferred pack means that we want all objects
+between the ones corresponding to the first and last bit.
 
-I had a read through to see what the meson syntax was like and it
-seems to be quite nice. I've left a couple of comments below. It's
-an impressive amount of work to get to this stage, it's a bit
-daunting that replicating everything in our current Makefile is
-even more work!
+I'm fairly disappointed that I didn't catch this obviously-broken
+implementation during the original development of this feature, or in
+the first round of bugfixes. But these patches should conclusively
+resolve at least this issue.
 
-> +#      # Set up a build directory with 'address' and 'undefined' sanitizers
-> +#      # using Clang.
-> +#      $ CC=clang meson setup -Db_sanitize=address,undefined
+Thanks in advance for your review!
 
-Unfortunately when building with this the tests fail with
+Taylor Blau (2):
+  t5332-multi-pack-reuse.sh: demonstrate duplicate packing failure
+  pack-objects: only perform verbatim reuse on the preferred pack
 
-==217115==ASan runtime does not come first in initial library list; you should either link runtime to your application or manually preload it with LD_PRELOAD.
-./test-lib.sh: line 1080: 217115 Aborted                 (core dumped) git switch -C primary
-error: last command exited with $?=134
+ builtin/pack-objects.c      | 101 +++++++++++++++---------------------
+ t/t5332-multi-pack-reuse.sh |  23 ++++++++
+ 2 files changed, 66 insertions(+), 58 deletions(-)
 
-because we don't wire up -Db_sanitize to SANITIZE_ADDRESS in
-GIT-BUILD-OPTIONS. The Makefile sets a few other build options as well
-with SANATIZE=address which we should replicate here. I was suprised
-meson wont allow -Db_sanitize=address,leak.
 
-I assume that it would be possible to set some default CFLAGS to match
-the Makefile and have something like DEVELOPER and DEVOPTS if we adopt
-this? As a contributor it's really convenient to be able to set
-DEVELOPER=1 and have a sane set of compiler flags. It's really good for
-the project as it makes it easy for everyone to compile their code with
-a standard set of warnings enabled.
-
-> +if compiler.compiles('''
-> +  #include <inttypes.h>
-> +
-> +  void func(void)
-> +  {
-> +    uintmax_t x = 0;
-> +  }
-> +''', name: 'uintmax_t')
-> +  libgit_c_args += '-DNO_UINTMAX_T'
-> +endif
-
-I think the logic is backwards here - shouldn't we be defining
-NO_UINTMAX_T if it does not compile? uintptr_t is optional so we
-should be checking for that and defining NO_UINTPTR_T if it's missing
-as well I think.
-
-> +if compiler.run('''
-> +  #include <stdio.h>
-> +
-> +  int main(int argc, const char **argv)
-> +  {
-> +    FILE *f = fopen(".", "r");
-> +    return f ? 0 : 1;
-> +  }
-> +''', name: 'fread reads directories').returncode() == 0
-> +  libgit_c_args += '-DFREAD_READS_DIRECTORIES'
-> +  libgit_sources += 'compat/fopen.c'
-> +endif
-
-This checks a property of the build host so should it be guarded with
-if not meson.is_cross_build() as below?
-
-> +# Build a separate library for "version.c" so that we do not have to rebuild
-> +# everything when the current Git commit changes. TODO: this only gets set up
-> +# at configuration time, so we do not notice version changes unless the build
-> +# instructions get regenerated. We should refactor the source file such that we
-> +# can substitute tags in the file via `vcs_tag()`.
-
-There are three version dependent strings GIT_VERSION,
-GIT_BUILT_FROM_COMMIT and GIT_USER_AGENT - can vcs_tag() handle all
-three or do we want a script that writes a header?
-
-Best Wishes
-
-Phillip
-
+base-commit: 25b0f41288718625b18495de23cc066394c09a92
+-- 
+2.46.0.421.g159f2d50e75
