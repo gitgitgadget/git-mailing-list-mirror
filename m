@@ -1,132 +1,285 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5DC1E1037
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 15:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40A7083E
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 16:30:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731512494; cv=none; b=QiowB1mT1lGigGbO3mk7IzEbyvQIpemYT3EpwxWuVAJSjM+IvHXS6e3mxOefZucMa+f3YN5F8cFmEzokML8BzER9mbxmhzEEq7Hba2A71pUZIGHlPYTWeuwpJSYELJalFuM3SiyD2qwff8MTlQjVCXOSAaLR62AHLuNjXiWyWoY=
+	t=1731515439; cv=none; b=YYqrTUUSAH+IezwYHTa2GSn/ffR+Pq9nKY6GTdSRpx8bcIxgYwHyQakvwD6JSM74Reuw4+Pio6wN1ODJFSX5xcrG6eijUdENRpi2GVaR5qOQ+ph2b61BOHID2pPYkqka/yJmhBfG7Pa5PrlpIQsV73nKtaNptTO6Saf5jLpxZm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731512494; c=relaxed/simple;
-	bh=+0cyU8mpShTvAtFprg+ORV+XzZA0zAO4tie7DWbIPCU=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Uwm1kOip7ru50Gzu2xoKpIZRwtSaE0/HRQgQscsQqrjd/0RcEw9PeYYtEl5InXMbUovIfFiVkdt7VOuFQuJ+lNpDaCq1iC4IoTZa9PleFSkikOCGNE5wAK9CTDXIwOySO5iCrRBUraNtFSxT2Fv9E3/u3khKUgz5IrzwRI0zFqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=FhRIL76n; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1731515439; c=relaxed/simple;
+	bh=AjA455QjVoAiOqhIBuyClhfyVJJAg+jRViafY6lUVl0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MlIIplAso5NUOyOnljRvfG6oJlRVxhNYB3412rcKgewy+Qw9GvlDCCJDIG5ysKfudhsYMpi4zI4im/2g8yIqqDajormCrrPw8eruew1nVIqTr5h+Wcxxzv6a5yqbNrKP3zYx9KdbQOmPXTg6/71XxKznKgSRx8nqd/6KXCah5Co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DJ4I/7gw; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="FhRIL76n"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1731512486; x=1732117286;
-	i=johannes.schindelin@gmx.de;
-	bh=aKlQaXzgd435H+Y1bYNc8cIvPznm+i2plGvt5RCcYO8=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=FhRIL76ngHKNqWe/ZqQOMO/fQ4llKYDaP9igxvHz52nRRf1rfzmhZ4ArEWYERnnv
-	 BIPDdZ/SFGETsIdhMym11eqPcLVVNyhjcb6rBiMFymZrzoW3HxNkeJI5px1esWo58
-	 iwmENjw05N4oaSyppnrMZXCiEAI+BGawiWhWDBLB25MnqqUGd9RdNxxBCSmJDk7M4
-	 xPdPIrGCVc/8CFX6PBLsjuJuC4BmNnSPA3NITHIjFpJF3+1UPy92LHnE5p3ZT9bXF
-	 ikRM4qH+4Sh4DIHhitYWk0oZkCX1mSMY5Bo74NBUHXwdYw1pN0RDEyt0fEt6rmLce
-	 sxHPLbBb/jRliMOx6A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.196]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mel3t-1tjUNk44ZR-00ZOEN; Wed, 13
- Nov 2024 16:41:26 +0100
-Date: Wed, 13 Nov 2024 16:41:25 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
-    Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] cmake: use verbatim arguments when invoking clar
- commands
-In-Reply-To: <20241111-pks-clar-build-improvements-v2-3-d4794d8d1b30@pks.im>
-Message-ID: <82d3f3aa-b11c-318f-9d47-35e0ebf3ebce@gmx.de>
-References: <20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im> <20241111-pks-clar-build-improvements-v2-3-d4794d8d1b30@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DJ4I/7gw"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43159c9f617so57443595e9.2
+        for <git@vger.kernel.org>; Wed, 13 Nov 2024 08:30:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731515435; x=1732120235; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=npfdZr5hOtZ9srciZLSPRadyk3RwBK0oQc/4XYsZS38=;
+        b=DJ4I/7gwg9EMlCh2SIFzFT9nOVhKKpVd1F1PIJKXk5Vsep89m2qJRV5T6jmZ8MmoPN
+         djsIFjgVasNrXW/WtX2aDYek5zc+7tt4t22sOGf/DkJuOPoZrh1R3/J1cNDP9k7DvojQ
+         Tsb/HRzYcLkyRzt9a+gzc8i0tNc5kWiWj88EtGBWKo/o94PiZm3IFAhq35pz1TmjOdRy
+         1WymPdP3OBWU3WeCihR28hR+spSMa9+6RaAHq0jdx3By3SsXeQiHKaZQOuBe/UgVUJyQ
+         sQCkaZt5IPybh52E2pBMmKHAjvr5lFgX5d7M6GZKY2GLaY80nbafJyJCZ9l295+LRKS/
+         XX9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731515435; x=1732120235;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=npfdZr5hOtZ9srciZLSPRadyk3RwBK0oQc/4XYsZS38=;
+        b=OCT7J1JC19lvEog+/t2WoWmfh89/u8CO8mIyz83KcMTx7/7a8FtU+AZPD/CZPppopK
+         dl74rAjwt4NIukNfDAd8DjP2lszfr7jl+A3qfKMlP602l7R3HnKsV1qaCqgcMPyKej24
+         DtOGOLEpPy88pLK5n87jvaDOG2FNrFGipkkmJg2VFHokvsgCFpEVZBtb/R1gIj/DHojf
+         R6/VVs7MkwKpyo7Z/YMlhcs5AdMi0TELNTkvF0YyhpQ9RwFC7tTPhpcAoyj2iWWDHiYC
+         +3KnEbavhF/Jd3Qv7s10kH27wyH+q7BRqhN0WyPr8Fy9REDIK2yP/+GMTz0XRu8OxgSm
+         VorQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXPfDCsLYqWmwDLAyqZprBnzW49k9h8AQM4pe6Z5lisKTD+fkgzLqTuISEzk4qqvld90DQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxE9PlFofbyqFKW3XxLn6Oei24gmzo3XebDTeOQT04m0BmbCUII
+	THL5626DWdhi6OTUkxcVam92ps354RPcT8HaZx9qSaaJ2zMh6jpKq7e11A==
+X-Google-Smtp-Source: AGHT+IF+lVCsYBrwsv2rCqYzsaV5S587XSeZ+bABmrQTC9V8QCMpzAHVKi+MG4Kfp2QI+ZEdNjmNzg==
+X-Received: by 2002:a5d:47ae:0:b0:37d:34f6:92a with SMTP id ffacd0b85a97d-381f1888ce3mr16953120f8f.51.1731515435296;
+        Wed, 13 Nov 2024 08:30:35 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6a8:b801:610:d596:f87c:e591? ([2a0a:ef40:6a8:b801:610:d596:f87c:e591])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9707c8sm18788548f8f.17.2024.11.13.08.30.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Nov 2024 08:30:34 -0800 (PST)
+Message-ID: <c0474637-3923-4e4c-a90b-e86d5f37a366@gmail.com>
+Date: Wed, 13 Nov 2024 16:30:33 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RfrPCHnPehIWNdHuAW0UCDYDSBQvNSPcwVChqyV5/xayIAC4jX4
- vRDDDjW8mYFvAZ1ekQNcY7eZ/kiu7u7UycCt1+VQOKpp7OPnZyaVW2rSW+pKGsLM8cxkIeq
- r7w0IvB1qhcbbAG/iKnM63abrSLh+rWfK95emG+1/EBYkLr9fTw8SmdyFlpP8pSYB2Tj0cr
- zYBosv0ItcVXBImFuocYA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:H+puYIcstSM=;zJR30cplasV04YtlTNDhDMEOLzk
- 9TTxRNleL1ILKcXf+ACoIFEHKCuBlxr8/8xBD25aRw84CLENFjmrfKDND5Sboh+qfjTCAx3G8
- vG7IwCrcJe6hyrlKJGqAJ4Ni1GDjOqYqpbtnZycxzA3xZZmgB1uFsdUNW+bl/3Tmru+TJeStG
- k9ahIkPHGg73t2H6/A/Ao+KHueOOSOI/lkpHXKxZSKsJF9IKl/qoJg4o9YHlRnEMbAINyJSad
- ndYkD6E/aKuxkLzdlQYaI1904QE61bbzUlCi2KQvdU44OJYo40Nd+iefdw8tmYGXUMU9cLBtc
- Gr4T/HnXgXFs3qhtfCFTQQ2a8Uu65GT9N5CTi2Df/ut4U4pxozD3khWi5Qqw8/gjtwKzcvPNA
- ISlsZEVRABTQx9/vXi51PNJty0WCnJeMnWBtODV0KBIuC4247vsWwKESzBK4BBRw8oqdheqot
- lgbV3aN+c0OCS5jlAxh4pY9OwEfjIDRL30qQmrXcl82aCHzNr8i8k81k0VYyeTiUvZPvJFWuE
- hpPiMjMkUV1bGaqp6sjYx0W1tcam8V361wozkBPMDJqn0Vwb98A6xh6VviK5VeS6OOP+cC9J6
- pCSuPHCDPRVfsPnIBczfmwBMhQPhC2Yw4Itp0xVw+P556Kqvea8GXYrPwP69rGVj6gJKkp226
- vcnNMJQ2PRwYtwBmHn3TMKralzULC0IWLXegUW5u39GdyFZlFBbpJ3pNw4FZ5YNzAFOyY6C/1
- IuGf/VjbObRG0trvGC6KomXYhV1mEymhXj90e72b245xQ8hXD2JZywQai0EKyN7rr95qDjZfz
- U3YmDfcLMhhWzt6KHQAQZAfMGspdi63xSVM7wysc1F+ahpIJyb5WNGgaV1+fnWlhXH+AWzICx
- PMPC18+LjspGXnrJINc0yqyD8jxwF9BXJ7VIOyVdcyYEYB184CFKWt/uf
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH RFC v6 08/19] Makefile: refactor GIT-VERSION-GEN to be
+ reusable
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+ Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>,
+ Ramsay Jones <ramsay@ramsayjones.plus.com>, Taylor Blau <me@ttaylorr.com>,
+ David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
+References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
+ <20241112-pks-meson-v6-8-648b30996827@pks.im>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20241112-pks-meson-v6-8-648b30996827@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Patrick,
+Hi Patrick
 
-On Mon, 11 Nov 2024, Patrick Steinhardt wrote:
+On 12/11/2024 17:02, Patrick Steinhardt wrote:
+> Our "GIT-VERSION-GEN" script always writes the "GIT-VERSION-FILE" into
+> the current directory, where the expectation is that it should exist in
+> the source directory. But other build systems that support out-of-tree
+> builds may not want to do that to keep the source directory pristine,
+> even though CMake currently doesn't care.
+> 
+> Refactor the script such that it doesn't write output to a file anymore
+> but so that it instead writes the version to stdout. This makes it
+> easier to compute the same version as our Makefile would without having
+> to write the "GIT-VERSION-FILE".
 
-> Pass the VERBATIM option to `add_custom_command()`. Like this, all
-> arguments to the commands will be escaped properly for the build tool so
-> that the invoked command receives each argument unchanged.
+This patch moves the logic that only updates GIT-VERSION-FILE if the
+version has changed from the script into the Makefile. As we really want
+the CMake and meson builds to set the string at build time which
+probably means extending GIT-VERSION-GEN to write a header file that
+defines GIT_VERSION etc. I'm not sure this is a good direction. In the
+long run I think we'd be better off with something like the patch below.
 
-I would not be surprised if this `VERBATIM` was unaware of the quirky
-escaping that the MSYS2 runtime (and therefore the Bash) requires. See the
-commit message of ad1559252945 (tests: add a helper to stress test
-argument quoting, 2019-09-18) for details.
+Best Wishes
 
-Having said that, this patch certainly does not make things _worse_, even
-if it probably does not have the intended effect on Windows. But then, it
-does not matter because most git/git source checkouts live at absolute
-paths that do not need to be quoted.
+Phillip
 
-Ciao,
-Johannes
+---- >8 ----
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH] WIP CMake: update GIT_VERSION at runtime
 
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  contrib/buildsystems/CMakeLists.txt | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/=
-CMakeLists.txt
-> index 2db80b7cc3c6aba840f18ffdc78d2cda1877d8cd..8c71f5a1d0290c9204e094fb=
-266f10c7b70af9fb 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -1009,13 +1009,15 @@ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t=
-/unit-tests/clar-decls.h"
->  		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
->  		${clar_test_SUITES}
->  	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh
-> -		${clar_test_SUITES})
-> +		${clar_test_SUITES}
-> +	VERBATIM)
->  add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
->  	COMMAND ${SH_EXE} "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suit=
-es.sh"
->  		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
->  		"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
->  	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-> -		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h")
-> +		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-> +	VERBATIM)
->
->  add_library(unit-tests-lib ${clar_test_SUITES}
->  	"${CMAKE_SOURCE_DIR}/t/unit-tests/clar/clar.c"
->
-> --
-> 2.47.0.229.g8f8d6eee53.dirty
->
->
+The CMake build defines GIT_VERSION when it is configured and does not
+update it when HEAD changes. Fix this by modifying GIT-VERSION-GEN so
+that in addition to creating GIT_VERSION-FILE, it creates a header file
+containing the version strings that is included in version.c.
+
+TODO:
+   - update CMakeLists.txt to set the version information for git.res
+     at build time.
+   - Check for changes to GIT_USER_AGENT when the version has not
+     changed.
+   - Maybe remove GIT-VERISON-FILE infavor of parsing version-def.h so
+     that there is a single source of truth for the version.
+
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+  GIT-VERSION-GEN                     | 17 +++++++++++++----
+  Makefile                            | 15 +++++++--------
+  contrib/buildsystems/CMakeLists.txt | 26 +++++++++++++++++++-------
+  version.c                           |  1 +
+  4 files changed, 40 insertions(+), 19 deletions(-)
+
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 78e8631f677..25c033fa892 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -1,6 +1,7 @@
+  #!/bin/sh
+  
+-GVF=GIT-VERSION-FILE
++GVF="$1"
++VERSION_HEADER="$2"
+  DEF_VER=v2.47.GIT
+  
+  LF='
+@@ -30,11 +31,19 @@ VN=$(expr "$VN" : v*'\(.*\)')
+  
+  if test -r $GVF
+  then
+-	VC=$(sed -e 's/^GIT_VERSION = //' <$GVF)
++	VC=$(sed -e 's/^GIT_VERSION = //' "$GVF")
+  else
+  	VC=unset
+  fi
+-test "$VN" = "$VC" || {
++test "$VN" = "$VC" && test -f "$VERSION_HEADER" || {
+  	echo >&2 "GIT_VERSION = $VN"
+-	echo "GIT_VERSION = $VN" >$GVF
++	echo "GIT_VERSION = $VN" >"$GVF"
++	USER_AGENT="${GIT_USER_AGENT:-git/$VN}"
++	HEAD="$(GIT_CEILING_DIRECTORIES=.. \
++		git rev-parse -q --verify HEAD 2>/dev/null)"
++	cat <<-EOF >"$VERSION_HEADER"
++	#define GIT_VERSION "$VN"
++	#define GIT_BUILT_FROM_COMMIT "$HEAD"
++	#define GIT_USER_AGENT "$USER_AGENT"
++	EOF
+  }
+diff --git a/Makefile b/Makefile
+index 2afad000762..7cd42e2bed7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -592,7 +592,11 @@ include shared.mak
+  #        Disable -pedantic compilation.
+  
+  GIT-VERSION-FILE: FORCE
+-	@$(SHELL_PATH) ./GIT-VERSION-GEN
++	@$(SHELL_PATH) ./GIT-VERSION-GEN GIT-VERSION-FILE version-def.h
++
++version-def.h: GIT-VERSION-FILE
++	@touch $@
++
+  -include GIT-VERSION-FILE
+  
+  # Set our default configuration.
+@@ -919,6 +923,7 @@ REFTABLE_LIB = reftable/libreftable.a
+  GENERATED_H += command-list.h
+  GENERATED_H += config-list.h
+  GENERATED_H += hook-list.h
++GENERATED_H += version-def.h
+  GENERATED_H += $(UNIT_TEST_DIR)/clar-decls.h
+  GENERATED_H += $(UNIT_TEST_DIR)/clar.suite
+  
+@@ -2505,13 +2510,7 @@ PAGER_ENV_CQ_SQ = $(subst ','\'',$(PAGER_ENV_CQ))
+  pager.sp pager.s pager.o: EXTRA_CPPFLAGS = \
+  	-DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
+  
+-version.sp version.s version.o: GIT-VERSION-FILE GIT-USER-AGENT
+-version.sp version.s version.o: EXTRA_CPPFLAGS = \
+-	'-DGIT_VERSION="$(GIT_VERSION)"' \
+-	'-DGIT_USER_AGENT=$(GIT_USER_AGENT_CQ_SQ)' \
+-	'-DGIT_BUILT_FROM_COMMIT="$(shell \
+-		GIT_CEILING_DIRECTORIES="$(CURDIR)/.." \
+-		git rev-parse -q --verify HEAD 2>/dev/null)"'
++version.sp version.s version.o: version-def.h GIT-USER-AGENT
+  
+  $(BUILT_INS): git$X
+  	$(QUIET_BUILT_IN)$(RM) $@ && \
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 2e22e87d188..e64045c4dbd 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -86,12 +86,15 @@ endif()
+  #Create GIT-VERSION-FILE using GIT-VERSION-GEN
+  if(NOT EXISTS ${CMAKE_SOURCE_DIR}/GIT-VERSION-FILE)
+  	message("Generating GIT-VERSION-FILE")
+-	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN
+-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
++	execute_process(COMMAND ${SH_EXE}
++				"${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
++				"${CMAKE_BINARY_DIR}/GIT-VERSION-FILE"
++				"${CMAKE_BINARY_DIR}/version-def.h"
++			WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+  endif()
+  
+  #Parse GIT-VERSION-FILE to get the version
+-file(STRINGS ${CMAKE_SOURCE_DIR}/GIT-VERSION-FILE git_version REGEX "GIT_VERSION = (.*)")
++file(STRINGS "${CMAKE_BINARY_DIR}/GIT-VERSION-FILE" git_version REGEX "^GIT_VERSION = (.*)")
+  string(REPLACE "GIT_VERSION = " "" git_version ${git_version})
+  string(FIND ${git_version} "GIT" location)
+  if(location EQUAL -1)
+@@ -101,6 +104,16 @@ else()
+  	string(APPEND git_version ".0") #for building from a snapshot
+  endif()
+  
++add_custom_target(version-def
++	COMMAND ${SH_EXE}
++		./GIT-VERSION-GEN
++		"${CMAKE_BINARY_DIR}/GIT-VERSION-FILE"
++		"${CMAKE_BINARY_DIR}/version-def.h"
++	WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
++	BYPRODUCTS "${CMAKE_BINARY_DIR}/GIT-VERSION-FILE"
++		-  "${CMAKE_BINARY_DIR}/version-def.h"
++	VERBATIM)
++
+  project(git
+  	VERSION ${git_version}
+  	LANGUAGES C)
+@@ -240,10 +253,7 @@ add_compile_definitions(PAGER_ENV="LESS=FRX LV=-c"
+  			GIT_HTML_PATH="share/doc/git-doc"
+  			DEFAULT_HELP_FORMAT="html"
+  			DEFAULT_GIT_TEMPLATE_DIR="share/git-core/templates"
+-			GIT_VERSION="${PROJECT_VERSION}.GIT"
+-			GIT_USER_AGENT="git/${PROJECT_VERSION}.GIT"
+-			BINDIR="bin"
+-			GIT_BUILT_FROM_COMMIT="")
++			BINDIR="bin")
+  
+  if(WIN32)
+  	set(FALLBACK_RUNTIME_PREFIX /mingw64)
+@@ -680,6 +690,8 @@ parse_makefile_for_sources(libgit_SOURCES "LIB_OBJS")
+  list(TRANSFORM libgit_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+  list(TRANSFORM compat_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+  add_library(libgit ${libgit_SOURCES} ${compat_SOURCES})
++target_include_directories(libgit PRIVATE "${CMAKE_BINARY_DIR}")
++add_dependencies(libgit version-def)
+  
+  #libxdiff
+  parse_makefile_for_sources(libxdiff_SOURCES "XDIFF_OBJS")
+diff --git a/version.c b/version.c
+index 41b718c29e1..7adc4d51ff2 100644
+--- a/version.c
++++ b/version.c
+@@ -1,5 +1,6 @@
+  #include "git-compat-util.h"
+  #include "version.h"
++#include "version-def.h"
+  #include "strbuf.h"
+  
+  const char git_version_string[] = GIT_VERSION;
+-- 
+2.47.0.354.g52c9d0440b0.dirty
+
+
+
+
+
