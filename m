@@ -1,79 +1,78 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5239921A6F0
-	for <git@vger.kernel.org>; Tue, 12 Nov 2024 23:03:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9372594
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 00:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731452622; cv=none; b=gbCBvm3BMi3z6oUl18/NXfF/KSWC0j1VtlwO/654LUkO47Jg2wkOADyvNgQqZlbDVYLq55gu7zT6+7OFpywRBSVv2bX10xXCF3juUuqZeI+R7FS0WDJ6uHm+GWXPOYqIdG3gq3qOkUtpJRAE0/ZEqOw0eNvMD1EnfMjKJ4qS5VI=
+	t=1731457574; cv=none; b=q6SU7XXwD/4oniKftgIF8IMOH0w6NKTwBSVtn/hZt9wT0to72tjBWVuEO8xUjQgjz+9ubC3jGKceGGFQoNxHYZvhsuRKq4og5WXGaXtT2gWRlDDXr3bGRIdnv53WvMTwLSKDMFpsol31b7YpIQ9QTqOUm4+CtNWQ59MkGtLcpuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731452622; c=relaxed/simple;
-	bh=IsXbN4+J/EPUVQ5lfDOzFL77X57qP27B7QPBSEzEKqc=;
+	s=arc-20240116; t=1731457574; c=relaxed/simple;
+	bh=3byW8Q6cRlOIY7w4vUiW6G7AWTN7c4opBBYq6UCgXzM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iHav4OQpuP5OSS6gap4bdpYSQUZXH0MSIMw2CkRVypoF9L2JeoEUmtw44vylcDhKGjrjsFTPuL/yYaLwjRj4RxoOYxKZouJXw+4SYqdLpXn0IWT+5+bfB6JiQq3hRFbzIt3LqU2W9sFQ4Eq2mvs+HaJ4d0jtewpXEHD9dBVMmt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hHPZ37sj; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=mB7fnT5CUiC4taudsJZXyseJ6pcTv7snk3MFwfG95PhHJ+U6ALA0OPxsSoSJPxRAYKLcwRL82HpfFUjMmWPhsZGnhrmdA1jFOu8guBAf5goeZXMocS4m58DpsEbQj8QcomTfMt9RteHlRZ6jPXYrZDhHmlu0VKL1AypVMpHY/qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VnERezcR; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hHPZ37sj"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4A76D11401B3;
-	Tue, 12 Nov 2024 18:03:39 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VnERezcR"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 53A881140186;
+	Tue, 12 Nov 2024 19:26:11 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 12 Nov 2024 18:03:39 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 12 Nov 2024 19:26:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731452619; x=
-	1731539019; bh=7tfEuJ9SqufKPl8YG5x9rLbSZJDyAy68U35QJkxGxGE=; b=h
-	HPZ37sjXdshW83/YB55utQJoEivfO/5eTut4qC4ljaYdYB4hgYCS+Lm9q+TnmLEi
-	uHCR8gm2JJTde4JaSV9TXTevIAUv1U8XXaVJsMiivY1fdGgqkEI85FYxadgg7/Kr
-	gDdqrFo+zch9Weo7u13NTdtlcyX3Cs84exa/7z/3TO/tcNCooiW9re1Eqh3YSW1S
-	/B+dONbQcSPpvMn+TIYYc1Z5vPi/xxtrg3UA550afFJneNsEIa/6g/WwRNYyJynM
-	Dz33IR9g7OxZADkPKwnQ71tcOYv1QY5fmqeJENzZrds9Z1NuwLM7l9RAc7RLGDNr
-	k+jXcmJwcHi3r8h7qHBZg==
-X-ME-Sender: <xms:yt4zZ6sXDt2fPEkUWhTi2RRagodHPa6qdLEy04zmnaXNHeEpq9uh8A>
-    <xme:yt4zZ_fR3StcpV94-_JFzUThAU0wyeRiSFu-UJb19nh40-3QecPjtBk9uJtlev-1p
-    pZrVu3VWa_wSK4jjg>
-X-ME-Received: <xmr:yt4zZ1yoKrEqXqWs_V5wKsznt_h6OfjK-ty_atT6sZ7JHLFRLFd959047qyY5DrsKHK1u1WdKuSyuPVrwgTnrJcbReAfBhkEuIvH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgddthecutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731457571; x=
+	1731543971; bh=Bnrze3Qu+4gfsGTTRnZ79aTKryfrBDLABePrQqKn0Vc=; b=V
+	nERezcR/gRzDQdrpWq/1+J/x0TdK6CiHo+jgUwwIO7O8QEQRrpCnRrxqaxrba31d
+	ZkvRCgTyGnUtM2p9QKgnuLRR35SL8J1SchcFt0ZBEVjUmWulBPvWAhsIgFBnsNDX
+	WvNl28VT0JBobpjigVyaMc9/Lwp5FWT6AF85esU0kTTzTN1DA2Zq7VMXJO6SCn7s
+	eqHZJvkynq8D6cRkkcfguSnlDdstdJSJoyPtrnxyiFgR4qSI1/A6D+ge/mI+ttJT
+	fdIwnyPfHhiSzTQ4lmStlzoSZLcNauIdLU+dTVJJXkA63WTmR+6Ouvxje9bpok7E
+	HqwDtkgEUD6Q85S9MZwBg==
+X-ME-Sender: <xms:I_IzZxV3RDhTtg8eRUl8LyWTqygC_8JhK-17_FEu66UtLg58ReecEQ>
+    <xme:I_IzZxmudb1kSt7mBZvWb1uO8YRD52ctTPShYEUaxpEhdzS9O0yK4IRbgj4Y-psbs
+    cj8z4pc8v5FykXWvw>
+X-ME-Received: <xmr:I_IzZ9bu8Yl4aLsV-ut2MRDGas1M2S_7TW1QafQlhwamUc3GAc-l8Rc89W8cZs3EP_59NJNttwXRjEOLaptSNet_NY3H1eVSs7yr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgddvvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeegge
+    fhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteejieeuleenucffohhm
+    rghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrd
-    horhhgpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:yt4zZ1PDHwQehRDcLiZYJhxN7jvaLYJpvV4509tc_mWHmO5qkowq9g>
-    <xmx:yt4zZ6-AypFxOw9fwix2sb7rnxj9VksyHzQeJb2ONt_r7cUCGjV9XA>
-    <xmx:yt4zZ9WgEOcuApcdyWS07KsJhh8M9idhRmglyhI3ca3iJUpT1TiMoA>
-    <xmx:yt4zZzdqjb_yjU9TD2G3bd1xwgzVGmsbYa4u9OzpRc_DSFVuf1iz4w>
-    <xmx:y94zZ6y9rMHIOs1fWYp160OQYqrO4AiBjemAU9rvcXfFMO8t4XjrAHbA>
+    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvg
+    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgt
+    phhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:I_IzZ0Vhwh6fEqWhLmatTT_VmKotfG3wgGgghoZAwGSQiS0k_KRfTQ>
+    <xmx:I_IzZ7ksB3oLPPzh3xnH1yf-nE7tRWYyC1K6OFo-OP9jNUqsOFx2pQ>
+    <xmx:I_IzZxfdrpAwBONcftyPLnKkmFmLn9uKQBsLhyCZ-kzGbeyILzOz-Q>
+    <xmx:I_IzZ1Fe6OrsIFwBZehsiA_hYrrU2wLMfN5UeP2t0lWUfjFxbuIGXA>
+    <xmx:I_IzZ5Xw-jv0SLehlAXJm3duU8xMQTMlUBcChzA418dnsEVASdl6wbpv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 18:03:38 -0500 (EST)
+ 12 Nov 2024 19:26:10 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,  Patrick Steinhardt
- <ps@pks.im>,
-  git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2 3/5] doc: git-diff: apply format changes to diff-format
-In-Reply-To: <6c1c1ae2-f38a-4458-a9ad-2fad3e56fc32@kdbg.org> (Johannes Sixt's
-	message of "Tue, 12 Nov 2024 19:51:37 +0100")
-References: <pull.1769.git.1722801936.gitgitgadget@gmail.com>
-	<pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
-	<8fec37ee17481039998af65ce1abec753cf30897.1731343985.git.gitgitgadget@gmail.com>
-	<6c1c1ae2-f38a-4458-a9ad-2fad3e56fc32@kdbg.org>
-Date: Wed, 13 Nov 2024 08:03:37 +0900
-Message-ID: <xmqq8qto3vhy.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  stolee@gmail.com,  phillip.wood123@gmail.com,  me@ttaylorr.com
+Subject: Re: [PATCH v2 0/3] sequencer: comment out properly in todo list
+In-Reply-To: <cover.1731406513.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Tue, 12 Nov 2024
+	11:20:10 +0100")
+References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+	<cover.1731406513.git.code@khaugsbakk.name>
+Date: Wed, 13 Nov 2024 09:26:09 +0900
+Message-ID: <xmqq34jw3roe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,31 +83,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Johannes Sixt <j6t@kdbg.org> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
-> Am 11.11.24 um 17:53 schrieb Jean-Noël Avila via GitGitGadget:
->> -The raw output format from "git-diff-index", "git-diff-tree",
->> -"git-diff-files" and "git diff --raw" are very similar.
->> +The raw output format from `git-diff-index`, `git-diff-tree`,
->> +`git-diff-files` and `git diff --raw` are very similar.
->
-> Throughout this document we see a lot of commands with dashes `git-foo`.
-> Does this have any significance, or should they be corrected to the
-> dashless form `git foo`? It could even be a "while at it"-change as you
-> are touching every instance anyway.
+> The first version just had patch 1 but this one fixes two other places.
+> The two other places where unearthered during the v1 discussion.
 
-Yup, these "git-foo" are historical wart from pre Git 1.6 days.
+OK.  I guess they could be handled in a single patch, but the three
+patches address different things to be commented properly, so having
+them as three separate patches is good.
 
->>  These commands all compare two sets of things; what is
->>  compared differs:
->>  
->> -git-diff-index <tree-ish>::
->> -        compares the <tree-ish> and the files on the filesystem.
->> +`git-diff-index <tree-ish>`::
->> +	compares the _<tree-ish>_ and the files on the filesystem.
->
-> Now that the backtick formats the content as in the synopsis, why is it
-> written _<tree-ish>_ and not `<tree-ish>` in the running text?
+> Rebased on `master` (b31fb630c0 (Merge https://github.com/j6t/git-gui,
+> 2024-11-11)).
 
-Perhaps that is because the body text does want to show the
-placeholder in _italics_ but not as a `literal` string?
+Was there any reason, other than "newer must be better" (which is
+not always true)?  I thought there isn't any in-flight topics that
+touched the sequencer machinery.
+
+> Some failures that didn’t look relevant.
+
+Judging from https://github.com/git/git/actions/runs/11774751134
+(which you rebased the topic on) passing all these CI tests,
+if your topic saw CI breakages, there is nothing else we can put the
+blame on.
+
+But let's see what happens.  I won't see CI failures on individual
+topic, but we will see what the topic, together with everybody else,
+in the context of 'seen', produces when I push today's integration
+result out.
+
+Thanks.
+
