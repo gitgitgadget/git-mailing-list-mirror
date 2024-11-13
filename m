@@ -1,219 +1,93 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61191188014
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 10:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721DA186E5F
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 11:24:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731494757; cv=none; b=CscS6I0oAANQR8Mj1xKucQ3EgMcM85SP32drv1VqK5Khf/Gu8oNCZNetlvKHM6Fe6ReUU1rme1zjJl0S0hMDZ2pn8G5K8MebxaWPAja7xmnzYeLJZpPNtJDB2Nl84v0woX/6u2xuE6bMZFVjwsdEpircSl6MmrMDtIP8bcxC0qM=
+	t=1731497051; cv=none; b=RgbNUckjkyV63K3WiahX7TwTUKeXYFvcxb2zRUx3xpyrQSPgDPDuMu4r0+HT/90O1Vb5FtEAcUIhfk3NpKzldCAOxHGRW2Wky9mTEgC1rGGDBjmK1giqKUMHSx2zdKBvBuET/UObm6TFJFdYK55wzQiSGy7WvwX2O4f1LAG3c7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731494757; c=relaxed/simple;
-	bh=71ybs4Qa3ShprK+6Co66d8WpLRihI1OwwQuk6zvawYQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=seZWFPK7++PNJ2y5GDtaxXTbW0EEBN+BF0PORj9ootjX9pj3/y5+R8M2g7Xzu9e/AMpOIQWMKrJtXb8ltlEwLhbcTV2ebNEr7DSPYji92vJomW2p26Y8grrDw7oxZOHdvIztzRfEX5GvKx5MvlqG9NyDzAUD2AsqXftj4k98zSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LtlTBoHq; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731497051; c=relaxed/simple;
+	bh=ZX/8mNOLKYkyfuSo/WW9Gf4LFLTgFRWvYILWNLQEylc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=os7GZiksNYnVBgV+8RgIn4ARyZVhypX1p//dt7LAtI/tp1CC9W3S+R3peIK0niW9TBFUMNI0kOWkaGNadxjTBnOaSnGd9TIfBlIG9xE6ukQZBGETQ56c2sopkRmLMM0CwR4dLo8Drp97iV5ahfHXliPuZyW6P4MS2BKpAoeVEW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JSiCr5mA; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtlTBoHq"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5cec9609303so8176877a12.1
-        for <git@vger.kernel.org>; Wed, 13 Nov 2024 02:45:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731494754; x=1732099554; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+Nj89IQpwPNOc8k6s8LXokTtquO/2W7d0Lvk7qtE9Fo=;
-        b=LtlTBoHq3r8guJf0QiBK/qmTDjZagl3RVq/xk3QU1JqJXJIfJxPbtGRSNGBUQuluvj
-         s1kgECqZ3F8q9DANbbnSXpnfscIq23y8ruPWtCrkTpfeyHB3iT9qv+D3v7eu1CYq1NWG
-         Edu26l3jfKP5YikwwJhv9uMEHrDFraWRDtNGW4f9dBUztub+KwOd8A5KQe4zkNIgOp4X
-         bYMV5SwBs7bRTan8LcSCM5SCYdwPJ3NO74Qfb9c1zHfI5PMjW7ZDXlRZaE1NuP5EJHvs
-         pnD+QeeQr6Uv3CVf5ds3VrdQnSwRGSI6FbAuVKwMsnjat4hA/JnJYAWziIf6/j+q/cyQ
-         BjCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731494754; x=1732099554;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+Nj89IQpwPNOc8k6s8LXokTtquO/2W7d0Lvk7qtE9Fo=;
-        b=wFyWRO0uae6KSxNU06MaiD2mpNeTW4C/ih4JoAChob9/maJFr76fK6AowaYtHf/E0D
-         170QypJQCM2ivcEmuwoxPJwNXW1UQCUUodGpKz7kEPN/e2oEStyGVrqsXX9l5YRen1Z5
-         eC6oy4VxGuxb/Bp3hoOXQvqhyWrD6YQRbcfxm25d62s58/24T0SsBtJl9+QJMRG4W2Ez
-         X/W9NIgNNJbrXWvWdMlv5yk7nEJjXUcHVLOQzl6PMwdqNQ8L3dTaygqmqz5lopw1hp3B
-         xwNjSd0WqA6YGkXSU4qeRtUyDOww5HQRTWqnB/q34aZ5ALvw5N1vgw650WBb2tjiw2pv
-         UzxQ==
-X-Gm-Message-State: AOJu0YzEC5yhBIywdyVFHOq+XX1yrEiKg/3O5l0Eja4axCZrCI4r96ox
-	VGV/EVRM6dlV8zW8pMiDPsl/uWqztzEf04zrk1gjEoC1fHMhFMoegWVWD+Ih/MLtSNlCzueaVQx
-	x1Bxj6X/ZP4YWeBvKiLzGL2fho7o=
-X-Google-Smtp-Source: AGHT+IGJ5TereKHLjmP0uCBBmWKLCGD9o22j21/PFSFOwVz2EP+1PFJGZz1l8uWBDexl72/cIxzv6+gc5yLssNWpFy8=
-X-Received: by 2002:a05:6402:4406:b0:5ce:dfdf:a2a8 with SMTP id
- 4fb4d7f45d1cf-5cf0a446960mr15758489a12.30.1731494753432; Wed, 13 Nov 2024
- 02:45:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JSiCr5mA"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9AA091140190;
+	Wed, 13 Nov 2024 06:24:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Wed, 13 Nov 2024 06:24:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731497048; x=1731583448; bh=ZX/8mNOLKYkyfuSo/WW9Gf4LFLTgFRWvYIL
+	WNLQEylc=; b=JSiCr5mAObwltD++DnSS0bWzmind/ErXkHaqdEYe5/14bUedgvp
+	KoD4UtFFCKRWYqOfXGKuAiOnEpcanSOVw9rtx2+YmOFIWKrg4u0VjXOFFO71w/Ma
+	lTMB8eIUZ53ywURk5qKF10A/8i1UHZh3/txvpuaPmukQ6UwNYvv1YJvQgeB6mjzN
+	cmlR8ge5f8wZ+dfAZMr7a3SD98dlZAROvz0tB7d5aOuAAXWLzETF2ZSQMDE4lpoM
+	bLcPG9fX4JqA+FiVZTIYEgILgikbTcQq6CJVtxluwlaGTM5I6n2o2xM634J4JdUT
+	LKaPrqDVdCs2UoO2+Jto3i9X6m8o0+vBt0A==
+X-ME-Sender: <xms:WIw0Z3hgNvppn_DTUknBLxxYyWs86AmTwsN97b1IM4Bq64_LCtEZpQ>
+    <xme:WIw0Z0D_aKojRMDKcprkTGuIfGiloBvDsQG5w-pGiftL7tmJGf-IT2fmGm19E6pH3
+    E13NIcxwKHS1u36Jg>
+X-ME-Received: <xmr:WIw0Z3GGaKr_DdplPE_rcq-UIFVfnypeyYtypd2OPYujgI5loD9nKy3x8YTivoRnbXpqo5VXUsyGHbpKjiAwmuAPdnS3u6B5pP7S>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddtgddvjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrsh
+    gthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehpshesphhkshdrihhmpdhr
+    tghpthhtohephigvfihonhesrhgvvhhirdgvmhgrihhlpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:WIw0Z0QwWqojRnhwCX5YDQflSYXGSJIUfNQiH3K0y2py7EgsLQsWtA>
+    <xmx:WIw0Z0xpt0JMwMvSvxNlOJ1aWr8v94PUjOOAxiiP89KQ97Vuvyj-gQ>
+    <xmx:WIw0Z665qKvnYEOn5j2kmtWFIFsBjMsOP6mhZBLsOWk4tpnKL90bnA>
+    <xmx:WIw0Z5z0rjA7Y0vjwyojSb02KPuklDZwLazt0s1DuGdCImC_sHymmw>
+    <xmx:WIw0Zzru8Ur9Ksm3L5mK_JrzAYNgUftq5BtAGi3Cu55ziR0-SZVqHnJM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Nov 2024 06:24:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Patrick Steinhardt <ps@pks.im>,  Yongmin <yewon@revi.email>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] ci: update to jgit 7
+In-Reply-To: <492a40f0-c8b8-01db-e4bf-10478f1f6108@gmx.de> (Johannes
+	Schindelin's message of "Wed, 13 Nov 2024 11:08:24 +0100 (CET)")
+References: <xmqqmsi3262e.fsf@gitster.g> <ZzRP7cR6S6YCWIze@pks.im>
+	<653fd6b0-0351-44ec-ba31-dbae0e2d3ca5@app.fastmail.com>
+	<ZzRXGi_c2ncEJNu4@pks.im>
+	<492a40f0-c8b8-01db-e4bf-10478f1f6108@gmx.de>
+Date: Wed, 13 Nov 2024 20:24:06 +0900
+Message-ID: <xmqqfrnv9y21.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1727881164.git.ps@pks.im> <20241112-pks-meson-v6-0-648b30996827@pks.im>
-In-Reply-To: <20241112-pks-meson-v6-0-648b30996827@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 13 Nov 2024 11:45:41 +0100
-Message-ID: <CAP8UFD1qNyWbOvUm2q2ZTcV+Ut_=ZJkURYqF7PnJxyJsvkchEw@mail.gmail.com>
-Subject: Re: [PATCH RFC v6 00/19] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>, 
-	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Nov 12, 2024 at 9:42=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->     ++#    The prefix into which Git shall be installed is defined when s=
-etting up
->     ++#    the build directory. More on that in the "Configuration" secti=
-on.
->     ++#
->     ++# Meson supports multiple backends. The default backend generates N=
-inja build
->     ++# instructions, but it also supports the generation of Microsoft Vi=
-sual
->     ++# Studio solutions as well as Xcode projects. IDEs like Eclipse and=
- Visual
->     ++# Studio Code provide plugins to import Meson files directly.
->     ++#
->     ++# Configuration
->     ++# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->     ++#
->     ++# The exact configuration of Git is determined when setting up the =
-Git
->     ++# directory.
+>> Oh, that I didn't spot. Very much looks like that would be the root
+>> cause, thanks for the pointer!
+>
+> Sure enough, it looks like this was it, as it is now working again.
+>
+> Thank you Yongmin for finding this valuable information!
 
-Is it the "Git directory" or the "build directory"?
-
-It might be helpful to repeat that this happens when `meson setup
-build/` is run (as far as I understand it). Maybe something like:
-
-"The exact configuration of Git is determined when setting up the
-build directory, so when running `meson setup <build-dir>/`."
-
->Unless told otherwise, Meson will automatically detect the
->     ++# availability of various bits and pieces. There are two different =
-kinds of
->     ++# options that can be used to further tweak the build:
->     ++#
->     ++#   - Built-in options provided by Meson.
->     ++#
->     ++#   - Options defined by the project in the "meson_options.txt" fil=
-e.
->     ++#
->     ++# Both kinds of options can be inspected by running `meson configur=
-e` in the
->     ++# build directory, which will give you a list of the current value =
-for all
->     ++# options.
->     ++#
->     ++# Options can be configured either when setting up the build direct=
-ory or can
->     ++# be changed in preexisting build directories:
->     ++#
->     ++#      # Set up a build directory with optimized settings that will=
- be
->     ++#      # installed into an alternative prefix.
->     ++#      $ meson setup --buildtype release --optimization 3 --strip -=
--prefix=3D/home/$USER
-
-It's not very clear if the above instruction should be run inside an
-existing build directory to modify its configuration, or if it creates
-a new build directory. If it creates one, it's also not clear what the
-name of that directory would be. Maybe "build", but then what if an
-existing build directory exists with that name?
-
->     ++#      # Set up a build directory with 'address' and 'undefined' sa=
-nitizers
->     ++#      # using Clang.
->     ++#      $ CC=3Dclang meson setup -Db_sanitize=3Daddress,undefined
-
-Same as above.
-
->     ++#      # Disable tests in a preexisting build directory.
->     ++#      $ meson configure -Dtests=3Dfalse
-
-As here the command is "configure" instead of "setup", I guess it
-doesn't create a build directory and should be run inside a one.
-
->     ++#      # Disable features based on Python
->     ++#      $ meson configure -Dpython=3Ddisabled
->     ++#
->     ++#      # Disable features based on Python
->     ++#      $ meson configure -Dpython=3Ddisabled
-
-It looks like there is some duplication above.
-
->     ++# Options have a type like booleans, choices, strings or features. =
-Features are
->     ++# somewhat special as they can have one of three values: enabled, d=
-isabled or
->     ++# auto. While the first two values are self-explanatory, "auto" wil=
-l enable or
->     ++# disable the feature based on the availability of prerequisites to=
- support it.
->     ++# Python-based features for example will be enabled automatically w=
-hen a Python
->     ++# interpreter could be found. The default value of such features ca=
-n be changed
->     ++# globally via `meson setup --auto-features=3D{enabled,disabled,aut=
-o}`, which
->     ++# will set the value of all features with a value of "auto" to the =
-provided one
->     ++# by default.
->     ++#
->     ++# It is also possible to store a set of configuration options in ma=
-chine files.
-
-It's not very clear what a "machine file" is. How is it different from
-a config file?
-
->     ++# This can be useful in case you regularly want to reuse the same s=
-et of options:
->     ++#
->     ++#   [binaries]
->     ++#   c =3D ['clang']
->     ++#   ar =3D ['ar']
->     ++#
->     ++#   [project options]
->     ++#   gettext =3D 'disabled'
->     ++#   default_editor =3D 'vim'
->     ++#
->     ++#   [built-in options]
->     ++#   b_lto =3D true
->     ++#   b_sanitize =3D 'address,undefined'
->     ++#
->     ++# These machine files can be passed to Meson via `meson setup --nat=
-ive-file`.
->     ++#
->     ++# Subproject wrappers
->     ++# =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->     ++#
->     ++# Subproject wrappers are a feature provided by Meson that allow th=
-e automatic
->     ++# fallback to a "wrapped" dependency in case the dependency is not =
-provided by
->     ++# the system. For example if the system is lacking curl, then Meson=
- will use
->     ++# "subprojects/curl.wrap" to set up curl as a subproject and compil=
-e and link
->     ++# the dependency into Git itself. This is especially helpful on sys=
-tems like
->     ++# Windows, where you typically don't have such dependencies install=
-ed.
->     ++#
->     ++# The use of subproject wrappers can be disabled by executing `meso=
-n setup
->     ++# --wrap-mode nofallback`.
-
-I guess this will make the build fail if the system doesn't provide curl th=
-en.
+And thanks for restarting the CI jobs for 'seen' that previously
+failed.
