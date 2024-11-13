@@ -1,58 +1,21 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36A7208A7
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 14:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF11B7E111
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 14:57:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731509371; cv=none; b=KhyCZ48c2Y6BnghWHy9r9Zr6xp1oN4p+wFn5QAN0O4InNu5MuORsyjxAxbNmnRN1mlY+EBvb2DD2YyDf6GULmK1fWp9d0PT1fYsTVwWfnb0fn9V5rwOjQ+OpMKzymBwL4N9TONHJS0I4M5vz7271QxWeGgG0PK/kj4lqxSgAcVU=
+	t=1731509858; cv=none; b=RHfAAoHkW5i96w34MoYDPsaLhG24rGk2uoNwwAuuHMW6w6Meq903zNz8PBB2lBAHzA3ofR8+ntqeTRxvq7uK26ePkHajOzD8DtsAHT/oQYDM+Oi5DSzyxQCSygePu15sO2lT3uD5OO8ouLZHxK91ZlQcJswmc1WBFKf8xXnOXhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731509371; c=relaxed/simple;
-	bh=MLzMweU4BXUkyeGlXVK8VIuR7MygYQF9VFzf5HGAcdM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=NpJ5k0rePun/tgBTWn9jGelUOuxWARPECtwfwWKEUaod8ShsQK7yT6ULpd9sZ4oESaEQnVZr5qo9HrRPcyPV3FncYiYtsAbmU90p4j56It+Ir91ws9BaCbozEh7IpQZHnbs2xb2aQO85w9hZfjmj0mVgL3umqasau/N++unEP3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XOssWuqz; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XOssWuqz"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43162cf1eaaso87080755e9.0
-        for <git@vger.kernel.org>; Wed, 13 Nov 2024 06:49:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731509365; x=1732114165; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d06f6F8XAU02D189S5LQ46M/KBWwSBLDROH5iJolYXE=;
-        b=XOssWuqzJ/LEyW/RBtw25YCNP85q9XDmeMmfe4jNPzIn76sW07YQf6HCMRBKjHAswO
-         eBt/UleNo0rP898Sx0b0/yD/oafXtFbIvtr4soCoTlMr4MfyJGEvDRLkqoF/tesu0YPP
-         Q7gLBxLqosjzh+1Kz1WxvPATsCxOBNAlw0Mk/mEe6ZLIvS6c18z469f/NMM0u0Y+/657
-         HCtQAp98FvBFCa+MLq1W/rJ2YxclYSfHAxDSft/Y6kSgHCnmCA5LT6kL5yAYBJCQ7mF+
-         EQoaRozhkjMzRkKeIW6y3WPIgUihCTOA822j7cbklL5Pxxoe8NhIIztkMxJS7iGYUgIC
-         5T9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731509365; x=1732114165;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d06f6F8XAU02D189S5LQ46M/KBWwSBLDROH5iJolYXE=;
-        b=s8+erKy+y2C/vHtzi9eMkHAFXvol/RCARgFzKZ0qs9Lb7ZxSSzy3QCQEPvDpzyuUST
-         AzM18gPB5+2b0/Fq1izZvscUpkZHufMtHq/8wKavRUzeUYs3SGSHoMN9fi2qhd9Uf4a1
-         oGQfxXQO+5phR4+XEgCmuq00lk3r0U/wYuX2NIuWg3+ZjbkdrDnyl2RtYJ8WIRnvsNuX
-         b4kbzXg6QtNNqC7W8zH5QKEnFOzcQar5phLiyY9oKiUcm39zUFgf6OT1QHjFSu8py6Jv
-         OPybkBcUSWx7meAbxI5pF4F62TZBaMiMpp9luNDCvwFcGSYmhXv/sDRbi/dCkJBbyXT8
-         IGxg==
-X-Gm-Message-State: AOJu0YxtOwaJgzCDtxiD2UWxLmU6YsZ1D3QjodxQlpdhxbCkf8Xlt6bk
-	1Xoa/knIrLqMfJYgZXfbC0WnO2bXyFTKUvhziOTjKsnQz9PjIBe7
-X-Google-Smtp-Source: AGHT+IE7T9IrQN/b39bHqImov7ICauSHQ3lrlqzim0M/ajfzoM9nowXTMCSHpcKlun6d9LseaQyUlw==
-X-Received: by 2002:a05:6000:1564:b0:37d:4376:6e1d with SMTP id ffacd0b85a97d-381f1884855mr22063988f8f.41.1731509364953;
-        Wed, 13 Nov 2024 06:49:24 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6a8:b801:610:d596:f87c:e591? ([2a0a:ef40:6a8:b801:610:d596:f87c:e591])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed7d2c0fsm19114254f8f.0.2024.11.13.06.49.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Nov 2024 06:49:24 -0800 (PST)
-Message-ID: <711b59d7-e649-4031-8924-a16fb632b4d4@gmail.com>
-Date: Wed, 13 Nov 2024 14:49:25 +0000
+	s=arc-20240116; t=1731509858; c=relaxed/simple;
+	bh=TFAAfCWwbjLjKZIdTeerniz8pM4V3AztIpHU72jcYVU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AbnRaTmxi8zXtvU0IR6U0j4XuiDP9BgVy5anNV80f9BaBC+Dcs+iHIdxu1ID1b0k5E7O/gGP5ksXzCPwzMtH8mlETXe8fFW4u+E/AS4Q+QB9YoKX9zB/QFFy3NW3vtPWA2PJQc1JexngYDXtA77cV1lr0sKj4kN96FWran///+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Message-ID: <e94b2d97-a2fe-45b0-a5b4-89c8140b5e4b@gentoo.org>
+Date: Wed, 13 Nov 2024 09:57:32 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,72 +23,141 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/3] sequencer: comment commit messages properly
-To: Junio C Hamano <gitster@pobox.com>, kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
- stolee@gmail.com, me@ttaylorr.com, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
- <cover.1731406513.git.code@khaugsbakk.name>
- <86b4b485e0b3ef023a5d559f437eae22f2fd458f.1731406513.git.code@khaugsbakk.name>
- <xmqqpln02bee.fsf@gitster.g>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+To: David Aguilar <davvid@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ Jeff King <peff@peff.net>
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
+ <ZzHeMjqUjzWpdX-Y@pks.im> <ZzRvsOeLsq3dJbGw@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqpln02bee.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <ZzRvsOeLsq3dJbGw@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------AfXMVdIpziZZxH2ErPIdxATg"
 
-On 13/11/2024 01:03, Junio C Hamano wrote:
-> kristofferhaugsbakk@fastmail.com writes:
-> 
->> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->>
-> 
-> Describe what happens when a custom comment string is used without
-> the fixed code in this space.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------AfXMVdIpziZZxH2ErPIdxATg
+Content-Type: multipart/mixed; boundary="------------6GsASb0zmyLs9vmWKmhqFSMf";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: David Aguilar <davvid@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ Jeff King <peff@peff.net>
+Message-ID: <e94b2d97-a2fe-45b0-a5b4-89c8140b5e4b@gentoo.org>
+Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
+References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
+ <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
+ <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
+ <ZzHeMjqUjzWpdX-Y@pks.im> <ZzRvsOeLsq3dJbGw@gmail.com>
+In-Reply-To: <ZzRvsOeLsq3dJbGw@gmail.com>
 
-It would also be helpful to explain how to trigger the bug [1]
+--------------6GsASb0zmyLs9vmWKmhqFSMf
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-If I remember correctly it was Taylor who first noticed this [2]. If so 
-we should credit him with a "Reported-by:" trailer.
+On 11/13/24 4:21 AM, David Aguilar wrote:
+> As to why I consider Python a liability ~ this is more of a concern for=
 
->> Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Meson and it doesn't really matter for end users, but Python has a
+> proven track record of making breaking changes.
+>=20
+> If you're building everything from scratch with new versions of
+> compilers and tools then the C++ project is the one that's going to
+> build just fine a decade from now with little to minimal effort.
+> Python doesn't have that track record.
+>=20
+> Even though CMake is written in C++ (which is unacceptable for some
+> projects), this is subjectively one advantage that CMake seems to have.=
 
-It seems odd to me to have a "Co-authored-by:" trailer without a 
-corresponding "Signed-off-by:" If someone has contributed enough to 
-deserve "Co-authored-by:" then they should be signing off the code they 
-have contributed. In this case I'd be happy with "Helped-by:" instead 
-but feel free to add my "Signed-off-by:" if you want to keep 
-"Co-authored-by:".
+> This is a moot point, though, and perhaps Python will eventually reach
+> this same level of respect for not introducing breaking changes.
+>=20
+> Furthermore, I suspect that most contributors are simply going to
+> "apt install meson" or "brew install meson" so it's not really that muc=
+h
+> of an issue in practice for the majority of users/contributors.
 
-Best Wishes
 
-Phillip
+For what it's worth, meson is aware that python breaking changes are a
+potential issue. Although the general python ecosystem is fairly lax
+about this -- on *all* points across:
 
-[1] 
-https://lore.kernel.org/git/cfa466b8-a87d-4b5d-b330-6c660897de48@gmail.com/
-[2]https://lore.kernel.org/git/ZxlEJ+44M8z03VOj@nand.local/
+- cpython itself being backwards incompatible
 
->> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->> ---
-> 
->> +test_expect_success 'conflicting fixup -C after fixup with custom comment string' '
->> +	test_config core.commentString COMMENT &&
->> +	test_when_finished "test_might_fail git rebase --abort" &&
->> +	git checkout --detach A3 &&
->> +	test_must_fail env FAKE_LINES="1 fixup 2 fixup_-C 4" git rebase -i A &&
->> +	echo resolved >A &&
->> +	git add A &&
->> +	FAKE_COMMIT_AMEND=edited git rebase --continue &&
->> +	test_commit_message HEAD <<-\EOF
->> +	A3
->> +
->> +	edited
->> +	EOF
->> +'
-> 
-> Doing so would allow readers to imagine more easily how this test
-> would catch breakages when the code is not fixed (or broken again).
-> 
-> Thanks.
+- projects making breaking changes in a micro release
 
+- projects deciding to only support the latest, or 2 most recent,
+  versions of cpython
+
+meson pedantically avoids non-standard-library dependencies both for
+bootstrappability and for points 2 & 3.
+
+Regarding point 1, meson can't do a lot other than adapt. But the latest
+version of meson will always support *all* non-EOL versions of python,
+we do prerelease testing of cpython betas, and we do not drop support
+even for EOL versions of cpython unless, having carefully evaluated the
+benefits and negatives, we decide that the advantages of relying on a
+new version outweigh the downside of preventing people on older systems
+with older cpython from upgrading meson.
+
+Currently that means we still support 7 different versions of cpython,
+including 2 versions that are EOL (and 4 versions that built with c89,
+before the migration to c11).
+
+Of course, as you say it's a bit of a moot point given that muon exists.
+But I just wanted to clarify that meson does take this concern seriously
+and we try to do everything we can to make that work -- even when some
+meson maintainers are unhappy and feel that being unable to depend on
+unpredictable third-party modules cramps their style.
+
+We know that we are core FOSS infrastructure, and are used by other core
+FOSS infrastructure projects such as init systems (both systemd and
+openrc), graphics stacks (mesa, libdrm, both xorg and wayland), desktops
+(gnome has an official directive to use meson), and a variety of
+freedesktop projects, many of which need to keep building on LTS
+versions of Debian oldoldstable (not a typo) and oftentimes on even more
+surprising platforms.
+
+And in some cases we've been a bit influential in getting cpython to
+revert breaking changes :) e.g. python 3.13 reverted the removal of the
+importlib.resources "Functional API".
+
+
+
+--=20
+Eli Schwartz
+
+--------------6GsASb0zmyLs9vmWKmhqFSMf--
+
+--------------AfXMVdIpziZZxH2ErPIdxATg
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzS+XAUDAAAAAAAKCRCEp9ErcA0vVxkb
+AQCiqxLPMfRsz+vcQXot1Ucd3sp8o5L/G/rRPNlltCv1IwD+OPoQ0kCPV/C9101MFZrWm5dFGbJf
++s8lhdaiE0l/5A0=
+=UdsS
+-----END PGP SIGNATURE-----
+
+--------------AfXMVdIpziZZxH2ErPIdxATg--
