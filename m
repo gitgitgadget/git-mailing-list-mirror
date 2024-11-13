@@ -1,290 +1,142 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294CC203705
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 17:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F94A202638
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 18:26:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731519183; cv=none; b=MjMpq0tyXqCrz+Mk1AkaQP/6vVzwf/P9uuKSjuYECsacdpNgC928yMjhCreklVUrhTbEWBl4gERslA7ORq9ijIThXS0bQB31SUotZ7WK/wgYHYcem0Fy9NUEkAbkXq8Mt0Wc3bGwwl2uN3QAk5oGFVR/aCgWgUNJm5iP/LySsns=
+	t=1731522421; cv=none; b=DlxhMS6GTpmerIaypCOE3R/sDn3uHPz6F5vioP9uBMsB6FANPFef3rix4DoEBoQJqISW5z3mxNWYuCvtxicGblPLpvQV6kRLkUpfUQ+f4E5D7u4M1YnEWi1N0Z8UvkgSDqQEJw8SYeExaDsrLfkJZP0mf5AiUlIk3xNzju97wB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731519183; c=relaxed/simple;
-	bh=bNxNwPEX4s86ml7mwK0/jxiCPI38ol+nK7vf7k/YcCI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f6cBSboOTgzHcxtZRr7wlvJujL4DiT1JykEsY2NBXFD1tjpt52VyjvMGf82nJ6nvFbEzpoTRrSR/Wu+EPeVf/cuIn6nXJe7X1b+zps2E1h2YQKkrcGHwu/UaqyxeGIMtaW24OitvRMrmaXJiZpxGn559Goz414ycDzeY4VT6zuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=WpjZ2KnZ; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1731522421; c=relaxed/simple;
+	bh=Rl7saCFnprpOCuDA1eTEPo87V5nGh06oPshS1+QKmPA=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=kWXsd3ZKew9o0f17iOi3AnX/3Jvz3Okf1v4DlmaQWkvHcPLB5Fgc03ICuOaXxjMK4WIXVcCYmhZFuVmMzecXtxwduT0U2YJwPa0adS+WiZ1vs9CpXfoRNsBgjeC2L1pAV01v6vAGNb1EHEmvqrjot/XEFx3iEYNWc7xg5YhMwxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FjVFpwWF; arc=none smtp.client-ip=209.85.128.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="WpjZ2KnZ"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e5b7cd1ef5so62933447b3.1
-        for <git@vger.kernel.org>; Wed, 13 Nov 2024 09:33:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FjVFpwWF"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6ea8a5e83a3so140931747b3.2
+        for <git@vger.kernel.org>; Wed, 13 Nov 2024 10:26:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731519180; x=1732123980; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PeSYFvx79n5JDwW9PKZjwWIEALvfpf9i3QpuGiODegA=;
-        b=WpjZ2KnZ1vKVxGgCBc4aDm14adobpi8OCXXnWpBxs7lxys3bfY1hajZwF9x10kguJS
-         2I7BD0sEsOdwdBDlvnWUuBboAfyDsI73NbUilUSvY/7FZlFV3k1Tg1KVQarcYRi6LnKi
-         nDZvfCqJKO8rc28WNOQDDgLVeWVw4ET6qrBzuPA2BkqBnCVxWKhL5oAWwfFZYktIowYv
-         xsA4MfhWldgpUBBlCGU3X+n2B/dnvqhlcjNAmt45aafQt1jxybrHNcQbpBmN4iAJZgtY
-         BYu+mkx+2akAXAVQtjQx5CRlF7yNzQzsX8UhMbnrZ3yWvW95DH9kgojut7UDSuPrYYUz
-         aEnQ==
+        d=google.com; s=20230601; t=1731522418; x=1732127218; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=iHpWEoq5zALilQWLMiREcpJNMouIE5VJJNj+oPsXNAI=;
+        b=FjVFpwWFv7LfKpyoU5elWFk14F2TFU4vIgloxPddRWrFjLgteefAI8MbpQw1DcwE4w
+         cYvQwkhecRDj0hqeY7NxypLLydiOsysckrq+GvyWHwJo0A9cKglukEeyFNfHZKa6w3Je
+         Hu5fud4XJQ5GEyeh5dcXnl0QaZAy0QIdTpIEGO+10mnjq2VKgCrdvhMvE6hg3SKp1CfO
+         7lF/mX1sVR6SMv/zTzVLDRbpiWjULSzmrKX8ej1uIrNde/bg6EIriS3L44qzVQ5zk2ZW
+         NYRVCZ6sejRzrf6T1MihH15VzpuqQC6BLxkMOKDAVkzz604SzHmudvdM61uyJv23EEOB
+         c68Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731519180; x=1732123980;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PeSYFvx79n5JDwW9PKZjwWIEALvfpf9i3QpuGiODegA=;
-        b=MWTTRC7vtE4wTTRYUkoIAgISHljn0cn4naJKVDd9QaFq0+Kuv9oEDNhbO2VAnhDoam
-         tzC7LOliXdS7c/4Dehiwbqg4g0RK+PxQCz9pHVbzeZb7VBz2k4beJCkL17GClvbra6lO
-         AS+5z6X0v+eDvEpJT+Wu8Iqh6MqxZQvsJ4a3PSGjbtxjNo8OMH8OPhmpifRClkzN8DLx
-         SZqETYljGhbXHG9w8zrvWNc8T7lsizFqFbSOMjWoybFDODDhkdNWbavwD89oF3Gphcaz
-         j1ev79+Ua47W8SxjGJ6RYvMwVY3yPvJosqSyQ0Yhg1bMyexPY/UTXUayqIeijNl2qQSs
-         gTPQ==
-X-Gm-Message-State: AOJu0YzML2IOkBc7C6BM8OsridH0i5d+cG9JC4n07QP01W7cs3+F1gsV
-	melFwhQv8nSO+cUAOHXIKe/36I4b5x04nZ4NTPW55wUwRpeqG/VI+Sls/nZ3RnyxkI5SGa2H8m5
-	fIDA=
-X-Google-Smtp-Source: AGHT+IGCCVjHQfNMIgY0HkxfjaEzUztVU+2hYk5okTalrCojcIyOcVdOxYf+lZmjskgwqNnh3cuqwg==
-X-Received: by 2002:a05:690c:67ca:b0:6e3:1063:91ca with SMTP id 00721157ae682-6eaddfbe8b4mr191582577b3.40.1731519179846;
-        Wed, 13 Nov 2024 09:32:59 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eae5db4712sm26224867b3.52.2024.11.13.09.32.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2024 09:32:59 -0800 (PST)
-Date: Wed, 13 Nov 2024 12:32:58 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH 2/2] pack-objects: only perform verbatim reuse on the
- preferred pack
-Message-ID: <2520abf24a8a194b3f7040e218f878dc88a740a0.1731518931.git.me@ttaylorr.com>
-References: <cover.1731518931.git.me@ttaylorr.com>
+        d=1e100.net; s=20230601; t=1731522418; x=1732127218;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iHpWEoq5zALilQWLMiREcpJNMouIE5VJJNj+oPsXNAI=;
+        b=VZ0guVZLM94DDGmfMDrOUHZDpbWF38Fg1/nEQg9mc8YMdAPHQUBDstJR5WohM/1FU9
+         EGGlvUXrxK0makwnouwv0zQqLG+8FNFp+ZqPy2TBogC3ABboan24A5LhWCL535Hwl2KZ
+         qI+hcUWpgWCM3Fpf55iu9/Y3Y49syQCdTuoC3Jv9x3cO49mFiEyAew9WLbDSnzyXrYvn
+         kK6CFuyp0lEcp5KFUAcrq747+aWsyAmJkl6FYVRBcOlYQPeF+daMn5GW2qf8Qpzj6lhY
+         xCbC/Kwu7M4l19XQWAS3y9W0YrX2xvf/gw4vEE1gPdLVk3Y7knxaCuMf89/vs4U5Z3aW
+         KWZw==
+X-Forwarded-Encrypted: i=1; AJvYcCW3aykTf/dZd/MzBKITpsBNk0m8xZ9t4dpxfg3XmmMuAwnhy9FhH+hY2CSyjWPpQUEXNC4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx94CWJNP6NwxkrwzaH+Rw0/dnFUVXpx1Sw+HrUq7UrglwlPJyZ
+	mRl7mW9PYV2+VvbFC4oTtLRdvH0LlqcKVb98X3GBb36DCuZYr8EkKJqi45wRTbir6nQV3uj3xQF
+	NoFJSzJQrhV1SJdekDgxBBGduXm6SRg==
+X-Google-Smtp-Source: AGHT+IGtlcIkCw/vbFdqI8it259XlBHgJf7SU8mxQkPjl93C3QcCY8v+5tioK6fcfPSeA92xeG5vWWTtINI3ECvm3jIH
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:9c2a:2b62:2715:580])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:690c:3186:b0:6e3:b93:3ae2 with
+ SMTP id 00721157ae682-6eca4600e5bmr348917b3.1.1731522418194; Wed, 13 Nov 2024
+ 10:26:58 -0800 (PST)
+Date: Wed, 13 Nov 2024 10:26:56 -0800
+In-Reply-To: <20241113073500.GA587228@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1731518931.git.me@ttaylorr.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241113182656.2135341-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Jeff King <peff@peff.net>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, steadmon@google.com, 
+	hanyang.tony@bytedance.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 
-When reusing objects from source pack(s), write_reused_pack_verbatim()
-is responsible for reusing objects whole eword_t's at a time. It works
-by taking the longest continuous run of objects from the beginning of
-each source pack that the caller wants, and reuses the entirety of that
-section from each pack.
+Jeff King <peff@peff.net> writes:
+> On Fri, Nov 01, 2024 at 01:11:47PM -0700, Jonathan Tan wrote:
+> 
+> > A subsequent commit will change the behavior of "git index-pack
+> > --promisor", which is exercised in "build pack index for an existing
+> > pack", causing the unclamped and clamped versions of the --window
+> > test to exhibit different behavior. Move the clamp test closer to the
+> > unclamped test that it references.
+> 
+> Hmm. The change in patch 4 broke another similar --window test I had in
+> a topic in flight. I can probably move it to match what you've done
+> here, but I feel like this may be papering over a bigger issue.
+> 
+> The reason these window tests are broken is that the earlier "build pack
+> index for an existing pack" is now finding and storing deltas in a new
+> pack when it does this:
+> 
+>   git index-pack --promisor=message test-3.pack &&
+> 
+> But that command is indexing a pack that is not even in the repository's
+> object store at all! Yet it triggers a call to pack-objects that repacks
+> within that object store.
 
-This is based on the assumption that we don't have any gaps within the
-region. This assumption relieves us from having to patch any
-OFS_DELTAs, since we know that there aren't any gaps between any delta
-and its base in that region.
+As far as I know, index-pack, when run as part of fetch, indexes a pack
+that's not in the repository's object store; it indexes a packfile in a
+temp directory. (So I don't think this is a strange thing to do.)
 
-To illustrate why this assumption is necessary, suppose we have some
-pack P, which has objects X, Y, and Z. If the MIDX's copy of Y was
-selected from a pack other than P, then the bit corresponding to object
-Y will appear earlier in the bitmap than the bits corresponding to X and
-Z.
+> Here's an even more extreme version. You do not need to have a
+> repository at all to run index-pack. So doing:
+> 
+>   mkdir /tmp/foo
+>   cd /tmp/foo
+>   cp /some/repo/.git/objects/pack/*.pack .
+>   for i in *.pack; do
+>     git index-pack -v --promisor=foo $i
+>   done
+> 
+> used to work, but with your patches will segfault (because the repo
+> pointer is NULL). Granted it's odd to pass --promisor when you are not
+> in a repo, but certainly we should never segfault.
 
-If pack-objects already has or will use the copy of Y from the pack it
-was selected from in the MIDX, then it is an error to reuse all objects
-between X and Z in the source pack. Doing so will cause us to reuse Y
-from a different pack than the one which represents Y in the MIDX,
-causing us to either:
+Ah, good catch.
 
- - include the object twice, assuming that the caller wants Y in the
-   pack, or
+> So I think at the very least that index-pack should not try to modify
+> the repository's object database unless we are indexing a pack that is
+> within it, which would fix both of those issues.
+> 
+> I'd guess in the real world, we'd only pass that option when indexing
+> packs that we just fetched. But as a bystander to this feature, it feels
+> quite odd to me that index-pack, which I generally consider a "read
+> only" operation except for the index it was asked to write, would be
+> creating a new pack like this. I didn't follow the topic closely enough
+> to comment more intelligently, but would it be possible for the caller
+> of index-pack to trigger the repack as an independent step?
+> 
+> -Peff
 
- - include the object once, resulting in us packing more objects than
-   necessary.
+I thought of that, but as far as I know, during a fetch, index-pack is
+the only time in which the objects in the fetched pack are uncompressed
+in memory. There have been concerns about the performance of various
+ways of solving the promisor-object-and-GC bug, so I took an approach
+that minimizes the performance hit as much as possible, by avoiding yet
+another uncompression (we need to uncompress the objects to find their
+outgoing links, so that we know what to repack).
 
-This regression comes from ca0fd69e37 (pack-objects: prepare
-`write_reused_pack_verbatim()` for multi-pack reuse, 2023-12-14), which
-incorrectly assumed that there would be no gaps in reusable regions of
-non-preferred packs.
+We definitely should prevent the segfault, but I think that's better
+done by making --promisor only work if we run index-pack from within
+a repo. I don't think we can restrict the repacking to run only if
+we're indexing a pack within the repo, because in our fetch case, we're
+indexing a new pack - not one within the repo.
 
-Instead, we can only safely perform the whole-word reuse optimization on
-the preferred pack, where we know with certainty that no gaps exist in
-that region of the bitmap. We can still reuse objects from non-preferred
-packs, but we have to inspect them individually in write_reused_pack()
-to ensure that any gaps that may exist are accounted for.
-
-This allows us to simplify the implementation of
-write_reused_pack_verbatim() back to almost its pre-multi-pack reuse
-form, since we can now assume that the beginning of the pack appears at
-the beginning of the bitmap, meaning that we don't have to account for
-any bits up to the first word boundary (like we had to special case in
-ca0fd69e37).
-
-The only significant changes from the pre-ca0fd69e37 implementation are:
-
- - that we can no longer inspect words up to the end of
-   reuse_packfile_bitmap->word_alloc, since we only want to look at
-   words whose bits all correspond to objects in the given packfile, and
-
- - that we return early when given a reuse_packfile which is not
-   preferred, making the call a noop.
-
-In the future, it might be possible to restore this optimization if we
-could guarantee that some reuse packs don't contain any gaps by
-construction (similar to the "disjoint packs" idea in very early
-versions of multi-pack reuse).
-
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/pack-objects.c      | 101 +++++++++++++++---------------------
- t/t5332-multi-pack-reuse.sh |   2 +-
- 2 files changed, 44 insertions(+), 59 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 08007142671..f413344e90c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1100,78 +1100,64 @@ static void write_reused_pack_one(struct packed_git *reuse_packfile,
- 
- static size_t write_reused_pack_verbatim(struct bitmapped_pack *reuse_packfile,
- 					 struct hashfile *out,
--					 off_t pack_start,
- 					 struct pack_window **w_curs)
- {
--	size_t pos = reuse_packfile->bitmap_pos;
-+	size_t pos = 0;
- 	size_t end;
- 
--	if (pos % BITS_IN_EWORD) {
--		size_t word_pos = (pos / BITS_IN_EWORD);
--		size_t offset = pos % BITS_IN_EWORD;
--		size_t last;
--		eword_t word = reuse_packfile_bitmap->words[word_pos];
--
--		if (offset + reuse_packfile->bitmap_nr < BITS_IN_EWORD)
--			last = offset + reuse_packfile->bitmap_nr;
--		else
--			last = BITS_IN_EWORD;
--
--		for (; offset < last; offset++) {
--			if (word >> offset == 0)
--				return word_pos;
--			if (!bitmap_get(reuse_packfile_bitmap,
--					word_pos * BITS_IN_EWORD + offset))
--				return word_pos;
--		}
--
--		pos += BITS_IN_EWORD - (pos % BITS_IN_EWORD);
--	}
--
--	/*
--	 * Now we're going to copy as many whole eword_t's as possible.
--	 * "end" is the index of the last whole eword_t we copy, but
--	 * there may be additional bits to process. Those are handled
--	 * individually by write_reused_pack().
--	 *
--	 * Begin by advancing to the first word boundary in range of the
--	 * bit positions occupied by objects in "reuse_packfile". Then
--	 * pick the last word boundary in the same range. If we have at
--	 * least one word's worth of bits to process, continue on.
--	 */
--	end = reuse_packfile->bitmap_pos + reuse_packfile->bitmap_nr;
--	if (end % BITS_IN_EWORD)
--		end -= end % BITS_IN_EWORD;
--	if (pos >= end)
-+	if (reuse_packfile->bitmap_pos) {
-+		/*
-+		 * We can't reuse whole chunks verbatim out of
-+		 * non-preferred packs since we can't guarantee that
-+		 * all duplicate objects were resolved in favor of
-+		 * that pack.
-+		 *
-+		 * Even if we have a whole eword_t worth of bits that
-+		 * could be reused, there may be objects between the
-+		 * objects corresponding to the first and last bit of
-+		 * that word which were selected from a different
-+		 * pack, causing us to send duplicate or unwanted
-+		 * objects.
-+		 *
-+		 * Handle non-preferred packs from within
-+		 * write_reused_pack(), which inspects and reuses
-+		 * individual bits.
-+		 */
- 		return reuse_packfile->bitmap_pos / BITS_IN_EWORD;
-+	}
- 
--	while (pos < end &&
--	       reuse_packfile_bitmap->words[pos / BITS_IN_EWORD] == (eword_t)~0)
--		pos += BITS_IN_EWORD;
-+	/*
-+	 * Only read through the last word whose bits all correspond
-+	 * to objects in the given packfile, since we must stop at a
-+	 * word boundary.
-+	 *
-+	 * If there is no whole word to read (i.e. the packfile
-+	 * contains fewer than BITS_IN_EWORD objects), then we'll
-+	 * inspect bits one-by-one in write_reused_pack().
-+	 */
-+	end = reuse_packfile->bitmap_nr / BITS_IN_EWORD;
-+	if (reuse_packfile_bitmap->word_alloc < end)
-+		BUG("fewer words than expected in reuse_packfile_bitmap");
- 
--	if (pos > end)
--		pos = end;
-+	while (pos < end && reuse_packfile_bitmap->words[pos] == (eword_t)~0)
-+		pos++;
- 
--	if (reuse_packfile->bitmap_pos < pos) {
--		off_t pack_start_off = pack_pos_to_offset(reuse_packfile->p, 0);
--		off_t pack_end_off = pack_pos_to_offset(reuse_packfile->p,
--							pos - reuse_packfile->bitmap_pos);
-+	if (pos) {
-+		off_t to_write;
- 
--		written += pos - reuse_packfile->bitmap_pos;
-+		written = (pos * BITS_IN_EWORD);
-+		to_write = pack_pos_to_offset(reuse_packfile->p, written)
-+			- sizeof(struct pack_header);
- 
- 		/* We're recording one chunk, not one object. */
--		record_reused_object(pack_start_off,
--				     pack_start_off - (hashfile_total(out) - pack_start));
-+		record_reused_object(sizeof(struct pack_header), 0);
- 		hashflush(out);
- 		copy_pack_data(out, reuse_packfile->p, w_curs,
--			pack_start_off, pack_end_off - pack_start_off);
-+			sizeof(struct pack_header), to_write);
- 
- 		display_progress(progress_state, written);
- 	}
--	if (pos % BITS_IN_EWORD)
--		BUG("attempted to jump past a word boundary to %"PRIuMAX,
--		    (uintmax_t)pos);
--	return pos / BITS_IN_EWORD;
-+	return pos;
- }
- 
- static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
-@@ -1183,8 +1169,7 @@ static void write_reused_pack(struct bitmapped_pack *reuse_packfile,
- 	struct pack_window *w_curs = NULL;
- 
- 	if (allow_ofs_delta)
--		i = write_reused_pack_verbatim(reuse_packfile, f, pack_start,
--					       &w_curs);
-+		i = write_reused_pack_verbatim(reuse_packfile, f, &w_curs);
- 
- 	for (; i < reuse_packfile_bitmap->word_alloc; ++i) {
- 		eword_t word = reuse_packfile_bitmap->words[i];
-diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
-index 8f403d9fdaa..06836a4206c 100755
---- a/t/t5332-multi-pack-reuse.sh
-+++ b/t/t5332-multi-pack-reuse.sh
-@@ -259,7 +259,7 @@ test_expect_success 'duplicate objects' '
- 	)
- '
- 
--test_expect_failure 'duplicate objects with verbatim reuse' '
-+test_expect_success 'duplicate objects with verbatim reuse' '
- 	git init duplicate-objects-verbatim &&
- 	(
- 		cd duplicate-objects-verbatim &&
--- 
-2.46.0.421.g159f2d50e75
+Maybe we could conceptualize "index-pack --promisor" as the pack giving
+"testimony" about objects that its objects link to, so we can update our
+own records.
