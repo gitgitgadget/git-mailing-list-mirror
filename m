@@ -1,100 +1,87 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB412158DC4
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 02:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E32161326
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 03:13:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731466703; cv=none; b=Ad3ZNVA/XMzdygVGbjKDkiHYvwDgcvA1AU1ANYR2WAspNQJMAIJaOnaenGxDS2c0SeNiXKLXliWlAb8kYOXxB16o7rS6DYVR+brgmj95PaahZK+vqnhAKN09cGacUqpAo+XYN8tWI6DAnnyEN7t/8ToQq/725EmjnOQONbrxVHs=
+	t=1731467613; cv=none; b=Xgj8Hd0HsiNnN+D7K7gRItSGoNTMZkDSmx0QeNfJ/6HIBTf31g4lquhxLKmQ+RpqmB1v1w+syyKo9KA6zbKiYCW8uo+1vP2f9Yt4yvejJsYzHF4RwfAHThwmLzE2PK9hUUX4anLoNVVFO14pqq1JK4dcPsuBS2EXY6cU6osdlzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731466703; c=relaxed/simple;
-	bh=fOOBKjkTFOKtalzbnK2baQCemovvxQnAbXbgT6ZlkoQ=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QkZYlnFsASXBoDCotXJu+Auqng/zFc/1OmbtX9ZjOs0R9QWlmwEFu00moWGhcIZVV6aWjlWg7Ru6VyC5xFCcCTs4FxM4VXgq5HoHGLPVCm9ShIj/NNhGS7+n6RhoUFNzXCj0URljKj23APZjZ/+2VpIe6NRpihLiMcZHnLph0rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FNkHsWA5; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731467613; c=relaxed/simple;
+	bh=tTE2I2Y5Qv+7hA6R2APSPBcmKUK4wDuv4sHCn/g+4NU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lf26VLy5ZiA8jHQRVLRtPsJtAJhlrVmPXDmKWHTcw/p5L+8MXFUo8tzKyKoBgzEX6CxOZk112ljtJknKBJlHTymNZbP1YYK+BhH3cN7aRYXBEdhGsspTFyztfJVFb9wm6lZReJeIydkL5whGgKB6Qr4XjY6v1e3pXWqp4ItiG1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=oSipe31N; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FNkHsWA5"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 016452540106;
-	Tue, 12 Nov 2024 21:58:18 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 12 Nov 2024 21:58:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731466698; x=
-	1731553098; bh=IimZoOVdmf4mICQ1b1McSXiTbafKWJAG6ubcXD/33JE=; b=F
-	NkHsWA5wdiI0bq7zT0LC1ayoN/rJG+S3lNRdQFMH3zJtLk8dmMjAe9cvw/443KS+
-	49UqogIX6dhCsA1azgfIHLhHU8d71uNPtg4x17SIVcMJGkhe10ZEg+98NltE3xBl
-	OMWtpSA44cv03I86eXdkyunqCxMoz4aP0zJ6QjvpmOLWrkPZmQ+CaCPMtUHO4dfF
-	y4snA4oJXgxruDHZzgpefQmh/nsjsKWyik+ZTa4aeOytYT5N96mtdTyr+VwsDH/v
-	2pp6ErWNIlGN3VYG8ktYhTXvC8oQwGFnw81c2m41ou7HZWiRZK3udK/x97V5IYZP
-	w4lpaNkjt29xhpQT9yPZw==
-X-ME-Sender: <xms:yhU0Zz_qe8GJbJE34Vv5178KET_hh4kqhc_t5Y9wyzKR9lBM2hbZog>
-    <xme:yhU0Z_tyQZK2Npq8JCbXpgW0ca8XoICvgvQT7cfv3gbrZOPx8Pqos0yN38fOq4EYf
-    cOSY0Bxll2Ey_R7aA>
-X-ME-Received: <xmr:yhU0ZxDP77NCEDq6DVkuiIG7iNohAaQzhnZkr7q1LgHtgz7IXvJDNlL1i7Vmh3uT4g4suEhEN6IMEb_DD-v1nu1a3QVuSTLTxAfu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigddvvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkf
-    gfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeegieettddvge
-    egtdffvdduteeivdduffettdduheeghefghfdvvdejudehhfehleenucffohhmrghinhep
-    vggtlhhiphhsvgdrohhrghdpphgvrhhfohhrtggvrdgtohhmpdhgihhthhhusgdrtghomh
-    dpvddtvdefudduvdeludeghedtqdhrrdhshhdpvddtvdegtdeltdefudejgeefqdhrrdhs
-    hhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:yhU0Z_f1xhh9muMyYORG-VEa91Y3NwZGgfCJe-bMNpL85t9mfi9a5g>
-    <xmx:yhU0Z4NoqnvpW1p4hWdD0kAt9VX1hiwO1vvEZPSYOvDMRKZMLoMVog>
-    <xmx:yhU0ZxnOHjWNMAJR5u45Ibpkjlsidr0o0YLkd5-5tuY_tCcsp9TNOA>
-    <xmx:yhU0ZyvI8WrfDiVdPrC-mmg_0DD09ucFCXsDX2DGqCzGe_-xjnZT4w>
-    <xmx:yhU0ZxbjmvyB4bCXAYISF_fBQgwjEfNq2pBcQGq1dblq2eZZGkq1vhN8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 21:58:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] ci: update to jgit 7
-Date: Wed, 13 Nov 2024 11:58:17 +0900
-Message-ID: <xmqqmsi3262e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="oSipe31N"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id B3lotlX16xileB3lqtIyLF; Wed, 13 Nov 2024 03:10:21 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1731467421; bh=vCNCLSqJ5zhPqR9l7qaX7vW4RX+Jd+tzXa50Og2eCUg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=oSipe31Nk51/Cgo7fsv7Tkj6CmgHbblz6Q2AFcFXkUMl24WIQ/CciCDIXvggEejGU
+	 KMzSRqqJXrUX0vIt+iTHGGAVTlKPHv/wzEcB70iS3KSAXr3LOSx7yEIUZDUO5AUa7t
+	 +2DkyrBBTJ+VA/mapzpTG6xdynqEOlpvNFzdRP9qhBrqWRgHrOekJcpNcZ0mFin9iY
+	 AH029WV5/oNX2Ty0/w5NxBdSPiJ9WXCl38oSXUTK2roz3oUGia+1IwHC7317cTH/Wn
+	 ScmZcVl0Izt4lbWoOyrLZfts1/PgUzscxdgQbhKM2Zjwgfov0gtrm6icUf/thLKRc5
+	 HiR2yXLbJAZvA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=VaJUP0p9 c=1 sm=1 tr=0 ts=6734189d
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=zL5cuzKR9Q0_LTtTa-4A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <291117c7-6b79-42cd-80c9-ee04824fc573@ramsayjones.plus.com>
+Date: Wed, 13 Nov 2024 03:10:16 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 00/19] Modernize the build system
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
+ <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+ David Aguilar <davvid@gmail.com>
+References: <cover.1727881164.git.ps@pks.im> <cover.1731335938.git.ps@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <cover.1731335938.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfPZqgzbMi/XocfehE94quM20oN2MdhvzpC5yF4wYgeojBOOA9sMR0EsjSlHbKNEwx6W1wUhN6llSrM0rhHw4i0nT++ZtuH8WM4/ZPSYpPhGUZtnD187R
+ zq+3bZrWp0IkT+ttiFiLqMRfU/j6qm2w6VUfrT7q0TN+xcqJN7VPPX4D1YYv4hWZMMMuG7Ek2gSanepEKT+eLT+xaxmf9S0NPSw=
 
-The version of jgit we use for CI has been 6.8.0 for the last few
-releases; try to update it to newer jgit 7.0.0, which is advertised
-at https://www.eclipse.org/jgit/download/ page.
 
-Note that this new URL seems to fail to download (together with the
-URL for the older 6.8.0, which is causing CI failures) right now.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ci/install-dependencies.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 11/11/2024 15:30, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this is the fourth version of my patch series that modernizes our build
+> system. It refactors various parts of it to make it possible to perform
+> out-of-tree builds in theory and then wires up Meson.
+> 
+> Changes compared to v4:
+> 
+>   - Improve our CMake build instructions tot use `SH_EXE` to execute
+>     scripts.
+> 
+>   - Create Perl build directories in our CMake build instructions.
+> 
+>   - Remove superfluous use of basename(1).
+> 
+>   - Remove timeout for unit tests in Meson.
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index e2c6ef0f66..65b34d930e 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -9,7 +9,7 @@ begin_group "Install dependencies"
- 
- P4WHENCE=https://cdist2.perforce.com/perforce/r23.2
- LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
--JGITWHENCE=https://repo.eclipse.org/content/groups/releases//org/eclipse/jgit/org.eclipse.jgit.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.202311291450-r.sh
-+JGITWHENCE=https://repo.eclipse.org/content/groups/releases//org/eclipse/jgit/org.eclipse.jgit.pgm/7.0.0.202409031743-r/org.eclipse.jgit.pgm-7.0.0.202409031743-r.sh
- 
- # Make sudo a no-op and execute the command directly when running as root.
- # While using sudo would be fine on most platforms when we are root already,
--- 
-2.47.0-383-g8012c4ff7f
+I tested this version, without issue, on Linux and cygwin (build not test)
+
+ATB,
+Ramsay Jones
+
 
