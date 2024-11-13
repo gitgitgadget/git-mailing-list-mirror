@@ -1,115 +1,94 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E9372594
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 00:26:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EACC2C9A
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 00:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731457574; cv=none; b=q6SU7XXwD/4oniKftgIF8IMOH0w6NKTwBSVtn/hZt9wT0to72tjBWVuEO8xUjQgjz+9ubC3jGKceGGFQoNxHYZvhsuRKq4og5WXGaXtT2gWRlDDXr3bGRIdnv53WvMTwLSKDMFpsol31b7YpIQ9QTqOUm4+CtNWQ59MkGtLcpuU=
+	t=1731459134; cv=none; b=TEeicP3nWicLxhetpFDE99fP6lhBCeBo1FXROxFkA2peqJStNrRGLVRy0by3cxSfQvXz5+V/s2rDjGxkXEFgkCW81BYFbmTA+4vldWQM+AQ9n0jHeZ6106DHvFZD1fYYmUvpDJvfnh/vz0e80n3+P4oJoEBQ5Xr1QNyqJ7gGvUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731457574; c=relaxed/simple;
-	bh=3byW8Q6cRlOIY7w4vUiW6G7AWTN7c4opBBYq6UCgXzM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mB7fnT5CUiC4taudsJZXyseJ6pcTv7snk3MFwfG95PhHJ+U6ALA0OPxsSoSJPxRAYKLcwRL82HpfFUjMmWPhsZGnhrmdA1jFOu8guBAf5goeZXMocS4m58DpsEbQj8QcomTfMt9RteHlRZ6jPXYrZDhHmlu0VKL1AypVMpHY/qQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VnERezcR; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731459134; c=relaxed/simple;
+	bh=bW87DANajomW1S6m8mvTVZNlVC6Xj+e6UlGy/thcbF8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=YCW3VTZCWhJNaOtPWsype1cSkW4DyO/8f0sFn7mzkDA9PRq0ZQ9K5AmPXjnMWOLqAN3kz/VvVmOItNawAu58+kyFOugg+6UJYvrWfzkhd7kCMxEi9sXLRBgabhEcHI4r9VW48SmjZj3a83f39k6yjb8cyxVmXNFM9tH5yp66b4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VeFLon2l; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VnERezcR"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 53A881140186;
-	Tue, 12 Nov 2024 19:26:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 12 Nov 2024 19:26:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731457571; x=
-	1731543971; bh=Bnrze3Qu+4gfsGTTRnZ79aTKryfrBDLABePrQqKn0Vc=; b=V
-	nERezcR/gRzDQdrpWq/1+J/x0TdK6CiHo+jgUwwIO7O8QEQRrpCnRrxqaxrba31d
-	ZkvRCgTyGnUtM2p9QKgnuLRR35SL8J1SchcFt0ZBEVjUmWulBPvWAhsIgFBnsNDX
-	WvNl28VT0JBobpjigVyaMc9/Lwp5FWT6AF85esU0kTTzTN1DA2Zq7VMXJO6SCn7s
-	eqHZJvkynq8D6cRkkcfguSnlDdstdJSJoyPtrnxyiFgR4qSI1/A6D+ge/mI+ttJT
-	fdIwnyPfHhiSzTQ4lmStlzoSZLcNauIdLU+dTVJJXkA63WTmR+6Ouvxje9bpok7E
-	HqwDtkgEUD6Q85S9MZwBg==
-X-ME-Sender: <xms:I_IzZxV3RDhTtg8eRUl8LyWTqygC_8JhK-17_FEu66UtLg58ReecEQ>
-    <xme:I_IzZxmudb1kSt7mBZvWb1uO8YRD52ctTPShYEUaxpEhdzS9O0yK4IRbgj4Y-psbs
-    cj8z4pc8v5FykXWvw>
-X-ME-Received: <xmr:I_IzZ9bu8Yl4aLsV-ut2MRDGas1M2S_7TW1QafQlhwamUc3GAc-l8Rc89W8cZs3EP_59NJNttwXRjEOLaptSNet_NY3H1eVSs7yr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgddvvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeegge
-    fhudefkeegueeigfejhfejvdejvedtheeguedukefgieelfeeuteejieeuleenucffohhm
-    rghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssg
-    grkhhkrdhnrghmvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgt
-    phhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:I_IzZ0Vhwh6fEqWhLmatTT_VmKotfG3wgGgghoZAwGSQiS0k_KRfTQ>
-    <xmx:I_IzZ7ksB3oLPPzh3xnH1yf-nE7tRWYyC1K6OFo-OP9jNUqsOFx2pQ>
-    <xmx:I_IzZxfdrpAwBONcftyPLnKkmFmLn9uKQBsLhyCZ-kzGbeyILzOz-Q>
-    <xmx:I_IzZ1Fe6OrsIFwBZehsiA_hYrrU2wLMfN5UeP2t0lWUfjFxbuIGXA>
-    <xmx:I_IzZ5Xw-jv0SLehlAXJm3duU8xMQTMlUBcChzA418dnsEVASdl6wbpv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Nov 2024 19:26:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  stolee@gmail.com,  phillip.wood123@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v2 0/3] sequencer: comment out properly in todo list
-In-Reply-To: <cover.1731406513.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Tue, 12 Nov 2024
-	11:20:10 +0100")
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
-	<cover.1731406513.git.code@khaugsbakk.name>
-Date: Wed, 13 Nov 2024 09:26:09 +0900
-Message-ID: <xmqq34jw3roe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VeFLon2l"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so79232575e9.2
+        for <git@vger.kernel.org>; Tue, 12 Nov 2024 16:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731459130; x=1732063930; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3sboP08i9Ek0LJngzDbD2pRL5nwVzB3UN3cplUWhpuU=;
+        b=VeFLon2l2UeX9m94ILtJtVg23DiPYzJc/52IRI9PGPIv2JAZM7Ggw6eMt0zOZwfUYR
+         sWk6RB/rZ2eB9gvBajtv2JWNb5i6KlsMbRecvFlu87rMzGrjSDtyMN3WHHBdWJqXWPCx
+         Ho8wUxh9O/YP09P1aaLE/7PGykDFo/cb+UwrbLeq3P5ZbR2jevnHTGkNASL8EHlR/iUL
+         NUvFLvU+fIFj2mOoHWvLxU+KruXFayJEs0kjrqy4fHG/SIK7QhP5cXn7anxukW4cep5A
+         s6o+bSE7FoekoawZn8zL51WP8sr8OU2t3ACZzPXCuhXAP6Ah/z0wKqjQwaQIrHlY8bkD
+         Fe5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731459130; x=1732063930;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3sboP08i9Ek0LJngzDbD2pRL5nwVzB3UN3cplUWhpuU=;
+        b=lng7wjLBPRWiChpwbIdCZ9O1PIHFLwHBmpel+b3Dvas9ijUJysVUUMtt0zh97QCqwm
+         mBTORpBshrpWLseA9HG3VljnHIUTYM14txTaSuTEK1u+wwBYIvZSxkiYzNe7pHrQX2Mp
+         tC44ZvnGUlTS2jFBGy5+hHywUceKAYS11m/WOjh6UUEw2KJ6WWylr3zauymH/UtcOnLh
+         QgbRQW+fp/oQygEb8ik+8fKS+O57XhWm2SahJQhhUaVbPHDVydwfFDvEiggLLllnXuCu
+         42OeKMIb5sLyk8f500RtEqFCY8D2qGYLq05DEHYjlBisjpEoRtCtuTACIGSgNty9CC+D
+         nbRQ==
+X-Gm-Message-State: AOJu0YyK5uNT9u8yA0C6Ef/Qvnh87Gwj8ajgaMX6+iSMzflYDCehDjTc
+	xgG/yBOteTgfeu7QokIPU+ff8/xosbnGbmXdZN0V6PXLqAj7X0pavMKk2A==
+X-Google-Smtp-Source: AGHT+IElR6rM3BjvwFb3w2mdMiaUrMMgqDAeN7Q62qxcKKIRtCnyRux/+S7SV9RxvSsXizis+TkaLg==
+X-Received: by 2002:a05:600c:510c:b0:431:562a:54be with SMTP id 5b1f17b1804b1-432b7503f4emr204378745e9.9.1731459129820;
+        Tue, 12 Nov 2024 16:52:09 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d54fa047sm4724365e9.17.2024.11.12.16.52.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2024 16:52:09 -0800 (PST)
+Message-Id: <pull.1827.git.1731459128.gitgitgadget@gmail.com>
+From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 13 Nov 2024 00:52:03 +0000
+Subject: [PATCH 0/5] git-mergetool: improve error code paths and messages
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Seth House <seth@eseth.com>,
+    David Aguilar <davvid@gmail.com>,
+    Johannes Sixt <j6t@kdbg.org>,
+    Philippe Blain <levraiphilippeblain@gmail.com>
 
-kristofferhaugsbakk@fastmail.com writes:
+These are a few improvements to improve existing error messages in 'git
+mergetool', and make sure that errors are not quiet, along with a small
+completion update in 1/1.
 
-> The first version just had patch 1 but this one fixes two other places.
-> The two other places where unearthered during the v1 discussion.
+Philippe Blain (5):
+  completion: complete '--tool-help' in 'git mergetool'
+  git-mergetool--lib.sh: use TOOL_MODE when erroring about unknown tool
+  git-mergetool--lib.sh: add error message in 'setup_user_tool'
+  git-mergetool--lib.sh: add error message for unknown tool variant
+  git-difftool--helper.sh: exit upon initialize_merge_tool errors
 
-OK.  I guess they could be handled in a single patch, but the three
-patches address different things to be commented properly, so having
-them as three separate patches is good.
+ contrib/completion/git-completion.bash |  2 +-
+ git-difftool--helper.sh                |  8 ++------
+ git-mergetool--lib.sh                  | 13 +++++++++----
+ t/t7610-mergetool.sh                   |  8 ++++++++
+ 4 files changed, 20 insertions(+), 11 deletions(-)
 
-> Rebased on `master` (b31fb630c0 (Merge https://github.com/j6t/git-gui,
-> 2024-11-11)).
 
-Was there any reason, other than "newer must be better" (which is
-not always true)?  I thought there isn't any in-flight topics that
-touched the sequencer machinery.
-
-> Some failures that didn’t look relevant.
-
-Judging from https://github.com/git/git/actions/runs/11774751134
-(which you rebased the topic on) passing all these CI tests,
-if your topic saw CI breakages, there is nothing else we can put the
-blame on.
-
-But let's see what happens.  I won't see CI failures on individual
-topic, but we will see what the topic, together with everybody else,
-in the context of 'seen', produces when I push today's integration
-result out.
-
-Thanks.
-
+base-commit: b31fb630c0fc6869a33ed717163e8a1210460d94
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1827%2Fphil-blain%2Fabsent-mergetool-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1827/phil-blain/absent-mergetool-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1827
+-- 
+gitgitgadget
