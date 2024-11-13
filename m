@@ -1,112 +1,109 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EA335885
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E7735885
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:36:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731483372; cv=none; b=RtODukJiPt3LxIYRQoC46Jiyg1cLaukvJPf1x1gclUvZaqF2t0KccrkohLraHCX92tstGKJk7bsayk8a3sVoSVmO4457hOKUA9uJGCA+o5t8zMFKJv5DMzoXtIGzceLRb4lWqApE6QHtp6E6uC5PP1UCOrZFdiIqC5zs9qkHZEE=
+	t=1731483383; cv=none; b=BgZmcGbK/Zl7ejFS1w+5UTr6H6rYbRU08CngnoGIH7a8JFOGYBiWBcd17Tk1Tc2+Vi6ZSNZGUa6EybuOgSptq9by3hnnEG4mQ2gMg/WHhDcPfTVEY8grvooS3kYLPDdYVR65270ex0Rx4hAuWJwLVmWkaGfd97rPvx8TpYmyEHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731483372; c=relaxed/simple;
-	bh=ap6fh0DFHa5+sSX55w4iUbVC4E2Z9LKV9z+gPMl9hrw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=EWGGa8UdSJFmvv/0dTNrKTaQ0wDK6on8D36iaWhizHZdBGceZnqtBHGUCx13FPj8hOs96YFgpGiH3vMcVByM58VMvxZhItZKL2Kj1uHLZivXgc8k1J9ahev648+q9dwwNk/TtmYib9Rpvp8MBMo6sUXOpMg40FB682ZtFKUFcKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=revi.email; spf=pass smtp.mailfrom=revi.email; dkim=pass (2048-bit key) header.d=revi.email header.i=@revi.email header.b=K7cMjj9T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TYUskZof; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=revi.email
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=revi.email
+	s=arc-20240116; t=1731483383; c=relaxed/simple;
+	bh=LnbM2dPlhowcrOkjgsBlBMCbwvZ/plk1cdbmfVAM1VU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ilhsWS9YyvcYj5jCXT6dFHDEb4f/ev0D/V8i7VLGtfUOIiONDjupPTwf6puOMwZSllq+c8PBApBE9bnhpmxPYDSj+m3tA5CoytAXQBM8X46ddaJUWzO48RtWJdf7xm8lqOLxXfQJHsM4G9I6sQdBNYOQROsnFmNFsfTo+xpIImY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tTAktqu2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mp49igny; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=revi.email header.i=@revi.email header.b="K7cMjj9T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TYUskZof"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5297C1140135;
-	Wed, 13 Nov 2024 02:36:08 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-01.internal (MEProxy); Wed, 13 Nov 2024 02:36:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=revi.email; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1731483368;
-	 x=1731569768; bh=tcF5bm/UpdGBfrx/bX7IeSOL1RJMLGTk1mUVvwJDjXY=; b=
-	K7cMjj9TLZJ9uBIHoPxnLaxAz1Aeoo7D3YwsAAD3eYXXfjzyWjZHu9FTvTj7sqVw
-	dWnOXbdKvJlt3y+TLV3X6RExczwW8zmF6C5NFDs9XNN436oQflUAzL3eewhAjHeI
-	5v7eMMp5oUAKi/837h5TsWnQ/xZ1hBAkXCEHonTZDMqPswRB1lJwiWs7yHjMnRuM
-	bLj1VrSNSasb9lGKTcc3gGSOB/2aPcjwNG1vxrMgQJQ1jOx/UhGAmn/mdIoGtoqr
-	CHovy9YVmJBkmUL8JWF5MBtbM49+h5zp2mVGgHFBDt7PpZ9d/fZK3PLTDymXSxQ0
-	TsdOuvJnGwffN5UK8Ey4SA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tTAktqu2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mp49igny"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id C00951380368;
+	Wed, 13 Nov 2024 02:36:20 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Wed, 13 Nov 2024 02:36:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731483380; x=1731569780; bh=58YgPUDbU7
+	t52ATP5gL++wZWZAF9JP3ng6uryZ0FQmg=; b=tTAktqu2s1p2ZodYc71C0/jnNX
+	yv2ABUfyvVAY2+EuUPh+I7yka+jKJH552++B8+VWvwpr08AHzo5HX5WrIMUm0M/o
+	sGPGWcWmLYTAjTJJljlbsUoznjSxCVdzBsjQ3mFs7PgYexsdMMgpvyow/cyX66Jc
+	sC3CNVwVUDaKnQk+Wi/IBNBfdYmP+q5ZCZqsTKMGgsIxWnqIo/4ExGE8/AxYRoKS
+	V5tNgeWNcc3IteU4GSKOlzytGBdUtSDfBu45oLuVQZ9tnMqolIrQHBzRco3bU4aq
+	TXTe/YgJbO/qCVbUdKIN53uiz3w2vnYBJiKNN4yeNHy4vdw2QCLZVRmHJO6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731483368; x=
-	1731569768; bh=tcF5bm/UpdGBfrx/bX7IeSOL1RJMLGTk1mUVvwJDjXY=; b=T
-	YUskZofJ8ADCip81OhzjfncA7MFNOHW4oB0maOA/o1XqCBs4mXm6DH9BTbPdlZ0W
-	uB0kTaPbJhF0mUGra5ThUThoRmjgi54ujdXwIt7TZxbOsGfSEbh0PRkj/TfmYGTx
-	1akVNq7TAGd3+JZPJvCchBzvbD/Ug0SSMFV701ZdjR+yApjERH90/lOrei7H6i+5
-	Vt0iyMc7Wv/0owR9Wqa85mDnxBONWZcTutzszkbEDQWktZB86ZKKdDjMmRfeAAns
-	Emuh8MC+4puoUfqTgbOLN6q7p7F+yp16gItQ8nPoBC5kxrf09d1jlJBiqlH9pYsd
-	3keOuFpIF9Fs3mD1DvCBQ==
-X-ME-Sender: <xms:5lY0Z6wHcReQLErRBnbEpTKiD-PdVa0vHkJt6C3KHg0OM6mpX2V51g>
-    <xme:5lY0Z2Toigrarg8hcHFLjDIg4Hcvnel6xZRt9zhVJRm5AhM7UxRa7mszhxRJqrkzv
-    d1SqBiBQv8DaJT2mVQ>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731483380; x=1731569780; bh=58YgPUDbU7t52ATP5gL++wZWZAF9JP3ng6u
+	ryZ0FQmg=; b=Mp49ignyS5bYpYYxWvTyX7NLG39Fnv8iobvxAqMGMnCch0WmAiE
+	3bQq/i/HEvQWgPDSEBJvmP1qkqF5f03wokOdTcCrFl1XVdjzt3iuT6HSBOW8J5yR
+	RmylNqgzvIZ3U2i/0/Ww4EXWd+O3gPE7CFeKxh+S/qpHAywPOFgcBsnwFusj3xAm
+	MXvIbqLQYUnL7HglPTb0Ies86cznjL9y+xcG27185CWsPRi+yabrX9gMcGMr2kso
+	PCmtTPbAEbZXPT1TMrRTk+3vpGZXoVt7vV6aX13fxkiBleG2EE95MZHvOu1Qzk3g
+	m+AhU/D/n2gAqHpjG15DM5S45UvdQhmCn3Q==
+X-ME-Sender: <xms:9FY0Z75lwKGdRaq8KFSkQCFqaoFnMSA-NjQWwdWxWjVHtbJCGizHkQ>
+    <xme:9FY0Zw4icpGv4kdCD4QnIRLrZwYvCu2XHkEdqpTo6jMUsXAKPA6ZJNPGa2p2pcbzQ
+    5TRno77tocNyYV7vQ>
+X-ME-Received: <xmr:9FY0ZydsefjdwKD9IFTwThVUUl9DF5F0pVNvMIxbbbC0sznBBaO_j0uaZ6060X968LpEoMYEb_kRc-BSe2-rvyEd5Jd_Qo4cdEBGft8NqFOL2aA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudelgddtiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenfghrlhcuvffn
-    ffculddugedmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhf
-    hrohhmpegjohhnghhmihhnuceohigvfihonhesrhgvvhhirdgvmhgrihhlqeenucggtffr
-    rghtthgvrhhnpeehueejlefgfffffeevtddvledvveeugfetudettdetffdvgeegudeutd
-    egfeejtdenucffohhmrghinhepvggtlhhiphhsvghsthgrthhushdrihhopdhrvghvihdr
-    giihiidpfihikhhiphgvughirgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpeihvgifohhnsehrvghvihdrvghmrghilhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:51Y0Z8UifzVzZPjoSvKei6Yvj_WoqgPepMGkndxh7unWnpwaPoEDUQ>
-    <xmx:51Y0Zwg43iikPVStOChxBBAYhPTT-YLAgzJEfgTxig5GBK2Rb3ybIw>
-    <xmx:51Y0Z8DPmODFl4uDeI_zr0TWrfN6Ia_NC57N1jxYM-ATW9VYh26DXw>
-    <xmx:51Y0ZxKRnXEmNkSbQ_DfRGrGWySpMMWv57SaqY2KXCiRoFw_WADUUA>
-    <xmx:6FY0Z_MURuBQL64sF79J-26yLNHz1E5YYCXZkmJyTE8X6X0v4vS_IHc1>
-Feedback-ID: ie2a949ef:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id DC707780068; Wed, 13 Nov 2024 02:36:06 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:9FY0Z8KCta02kf-MJFj9rv-vpmn84bOjTLEFEAdqsehwEc9Egdo0Cw>
+    <xmx:9FY0Z_K83gy8_0PwzFGxMlP2bpLbmJvWh1kxCOKgrjHkxR0p-WgJMA>
+    <xmx:9FY0Z1x7liQKKSwbkTnBD7Ad7EQHlvuJHZMTyaqKwgzRpJ-ZVI34jQ>
+    <xmx:9FY0Z7K_VLpahtwpsxO3v9S4EV_fsCqlsPd-X6V4nhvkqnB8JDBonw>
+    <xmx:9FY0Z8HSpz9dHbZDkCaUIqxRUx-FWFKhAko1O43wBGmhJ2fIJLjCf3LF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Nov 2024 02:36:19 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ae530eb2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 13 Nov 2024 07:35:39 +0000 (UTC)
+Date: Wed, 13 Nov 2024 08:36:08 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 0/9] add ref content check for files backend
+Message-ID: <ZzRW2zFHUNeeT7Jb@pks.im>
+References: <ZxZX5HDdq_R0C77b@ArchLinux>
+ <ZzCiCGxL4Adnd_eq@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 13 Nov 2024 16:35:44 +0900
-From: Yongmin <yewon@revi.email>
-To: "Patrick Steinhardt" <ps@pks.im>, "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <653fd6b0-0351-44ec-ba31-dbae0e2d3ca5@app.fastmail.com>
-In-Reply-To: <ZzRP7cR6S6YCWIze@pks.im>
-References: <xmqqmsi3262e.fsf@gitster.g> <ZzRP7cR6S6YCWIze@pks.im>
-Subject: Re: [PATCH] ci: update to jgit 7
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZzCiCGxL4Adnd_eq@ArchLinux>
 
-On 2024-11-13 (Wed) 16:06:21+09:00, Patrick Steinhardt <ps@pks.im> wrote:
-> Seems like all of the downloads result in a 403 now. I was digging a b=
-it
-> through the mailing list archives (jgit-dev, eclipse-mirrors) and
-> couldn't find any hint as to what is going on there.
+On Sun, Nov 10, 2024 at 08:07:36PM +0800, shejialuo wrote:
+> Hi All:
+> 
+> This new version solves the follow problems:
+> 
+> 1. Enhance the commit message suggested by Patrick.
+> 2. Rename "target_name" to "refname".
+> 3. Enhance the shell scripts to use `for in` to avoid repetition. And
+> this is the main change of this new version.
+> 
+> Thanks,
+> Jialuo
 
-It could be [this]?
+I've got two more comments, but otherwise this series looks close now.
+Thanks!
 
-[this]: https://www.eclipsestatus.io/maintenance/456545
-
---=20
-----
-revi | =EB=A0=88=EB=B9=84 (IPA: l=C9=9Bbi)
-- https://revi.xyz
-- he/him <https://revi.xyz/pronoun-is/>
-- What time is it in my timezone? <https://issuetracker.revi.xyz/u/time>
-- OpenPGP <https://revi.xyz/pgp/>
-- In this Korean name <https://en.wikipedia.org/wiki/Korean_name>, the f=
-amily name is Hong <https://en.wikipedia.org/wiki/Hong_(Korean_surname)>,
-  which makes my name HONG Yongmin.
-- I reply when my time permits. Don't feel pressured to reply ASAP;
-  take your time and respond at your schedule.
+Patrick
