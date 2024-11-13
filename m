@@ -1,122 +1,117 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD64F1CA9C
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 00:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13401C147
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 01:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731459138; cv=none; b=f9cDwJ1j7g8D01Ti1JYt2zemN1mOzAgLZQw3OfPSg1pf9hki6T2ituD0rp/EjMbQ9Ize5R875whfkYeRaTbj66dvJvrZ1My/YznHlCa0xnA+Lznk0PIMrvAbI6Z+ulPLLbMQKTZzGDZDmiID+zBj+pnupiw54mC6Wgf3BIW7Awo=
+	t=1731459791; cv=none; b=JhdD4mrbJ4GR/ucKbDrlAaEvvbwpdAkC+IXPoKsFepLFFZHjWQMV83DPVYyYUJEVoK8KA73uRxy+irAIjHcK/pUyGcw3Dtg0pR7q2c0hflEtptWu7GTQF9p2A5VCKek9Waz2ehHK7pC6t5z+Dm8A0FRKF7NyYVERyZU5nap/4fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731459138; c=relaxed/simple;
-	bh=cjrNcDybg+eotxIuIDwjKtIzIcasPSG0L/pSBxlJA9U=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mSjBXonHjJVKiIsK8ac9Ob57mlWHcM1vviaicvDi/JIr2qcs4py9T8MRAXt3jAkiYyJguIfxlcGON0j1406P9ms/mpLJIVQ/oZ42MiLkAuDjtWv07A1NP2pwrVMS0zgYnqFcTbZ3PNbIFohNcQTbmgOSqHNmH2sFlgfQuztadq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SqvDeu9z; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731459791; c=relaxed/simple;
+	bh=BCNtEyS4zdOGGqen+FnEFYMp5aKnSfUDb6xX0eSuz6k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OagPRsGAgRnVJdB+PqAI5SNIdvSMtVeXzwRHx4ZtDxVkznh1OkUe7pUYd2kd36hUiXbfu3XSVyk1uF/1Ho8793R4RBGLNfFnwhuQQu8vWPT3GanT1KvJ3k8FrcJcI344NL87WrM9r9FcBWa001h5KfnvffQ9uCzWMPVXKIPLhYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M4zmkduI; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SqvDeu9z"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4315baa51d8so55716875e9.0
-        for <git@vger.kernel.org>; Tue, 12 Nov 2024 16:52:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731459135; x=1732063935; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yFDhg1t7IvcLQqH4U2PxGRD4pEqla4b+K0WdwT4ZPyU=;
-        b=SqvDeu9zOjYbGDfd/mr8sHf50Hs7XYb1L0LMOGYKUx5LAQ8Hm5Q+0aGP2Hmx0v47kJ
-         huRkgn5M0Lo1LJDyEZ5baV015ZEFa62oFBqsaeKgNp5ZwV7Pdk9YmakEngJI08Uy6lum
-         Olen9rMdrZjcDe4yWia0XmxG8h5l66Ip3kDEKHlraWhEWG8g/qrVX6HRcih+AUFshj6B
-         XvK8tHRobjAuJATousMbJU38+FRriyUvO9S76K1vSnJt2B9eizKZA/G4GTxjlkoT8YMB
-         m06CnhBUoQsI5sxffQspMJXAND6XAGNlHYp7WhWr5ZY+0+DRddFCCq34YqUYQmBynMyR
-         RcBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731459135; x=1732063935;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yFDhg1t7IvcLQqH4U2PxGRD4pEqla4b+K0WdwT4ZPyU=;
-        b=HdGjk/BtNII1oVhQHJztt5TnnrDCh/MvZCsaj2HFrcggHZV5TZnQFic0MQCpIKxi5d
-         b8Vyq2djzsCr4k4XnWOh/IHLY7wZ//wQ3t+VbpILUVCskUUyr0Z0GjNZCVP1m/m9QGTK
-         Z/c5XMjI6Xqa3Fcy8yd2NhBk4dqtVPlJciiPuwfVr5pa+aXW9ilqTpV1NN55cSDNY2MU
-         vZAnwRbHEGwqF0wlx5VsXNd44T0rGqlEUnOsArWjfVpvCfCKejTk/QfI7n9d68ECZB74
-         2oSfFghV1G0FEu8uNLZDiUY6k9NU/6TDHu/WI3zOtXJKkoU7oq9TA+iOLQxffDO/56KF
-         osJg==
-X-Gm-Message-State: AOJu0Yyenh+3x6hbLOPWVQcPnkpx16C/HBaYTtwCTxTPBqnY7KoXcHh1
-	/JYsyed93s9aQ2BrdPblkGNCc+K0sWVobv7F1aQFaC81yExTexyrKdfk7w==
-X-Google-Smtp-Source: AGHT+IEmu22dxwbmo0JbWHJf7kfYwjE3eakiTSplU1aE6BNWxDp2uunVJ41dQIfDS9FnqX/lT9lYzw==
-X-Received: by 2002:a05:600c:1da7:b0:42c:a574:6360 with SMTP id 5b1f17b1804b1-432d4ad6625mr8498575e9.29.1731459134455;
-        Tue, 12 Nov 2024 16:52:14 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432d554183dsm4639935e9.29.2024.11.12.16.52.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2024 16:52:14 -0800 (PST)
-Message-Id: <be0b86f08901046878f1b1406f811166d56c7c6d.1731459128.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1827.git.1731459128.gitgitgadget@gmail.com>
-References: <pull.1827.git.1731459128.gitgitgadget@gmail.com>
-From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 13 Nov 2024 00:52:08 +0000
-Subject: [PATCH 5/5] git-difftool--helper.sh: exit upon initialize_merge_tool
- errors
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M4zmkduI"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 00C162540140;
+	Tue, 12 Nov 2024 20:03:07 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Tue, 12 Nov 2024 20:03:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731459787; x=1731546187; bh=oBGMpYd+d1ndyHaEwsqGuhL2xWIQys/nq+K
+	emzfzGrk=; b=M4zmkduIqwtZPP2qRrtl6RO3YS3T5KtUBqLu6+nxgA//owetS1d
+	qXsSsmiCX0LCuqXaaNF8XQMK9fGQ3TVrPO3GHGaemlo0yYemK7RiLco1Pwa7R/hh
+	0idbPwkqkfHI/RIxy8BEhkqfrzz+W5/dVBRwFoftPBnGpLOWQs5LF7qndQi0o/AF
+	nEfD35+rX/3pFizYCc1R6WgpaI11Nlc+ZjkGId/0OyGaTzywJIlofwPIExm1j2dg
+	gmGMPma6YJoI+QEY4fJ+wn62hLgCqbC5ECNoBjosRPfNlT2LVLTdZkHpw9tuGJEN
+	PTWh8jsS4ZC6VHrohDiUYiXmsq/wteH7sFg==
+X-ME-Sender: <xms:yvozZyampAsg1yWcKDzHRVPKF9x20kvMerhpzURN-hg0s_8ArBWbag>
+    <xme:yvozZ1b-XkmX5vJrlDsLhDKDE_TCkpxs7g37ulSz48xlLW4bvg4NFSHjOTOGnAQ81
+    LouUMcLQmWUivbSAA>
+X-ME-Received: <xmr:yvozZ8_mm5jfgcfjIHXAQj3cwna6RHG4WeEZGLCyH8adfWc24-xPpU2aMa0JNS1YOf2AeRxQUbJW6-XnXbIjngzy3A6QYXlFa2us>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgddvlecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrh
+    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
+    hopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:yvozZ0qsdpk-o3BwpVeBARRy2eB6arxsj-tB_GYlr7vAMzIvGBRT5Q>
+    <xmx:yvozZ9qbzTLrbbI27U3ZF103MU_Bt170Z_8bT7ZfsVWAmYzmehxd0w>
+    <xmx:yvozZyTUb5WUjbbkYeCeacPqhI7KWsvCcSYP3uhjiLqXzjYdeBtHkQ>
+    <xmx:yvozZ9o8A1WyXuJOWmAPlsrtio4yo7aBRkOxQuESLbSbJyEJgIzd-w>
+    <xmx:y_ozZxch3mQmgNm7WxffwDYEGm8awdSpEowdDWozfdE9yv-r4jxl7ayq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Nov 2024 20:03:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  stolee@gmail.com,  phillip.wood123@gmail.com,  me@ttaylorr.com,  Phillip
+ Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 3/3] sequencer: comment commit messages properly
+In-Reply-To: <86b4b485e0b3ef023a5d559f437eae22f2fd458f.1731406513.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Tue, 12 Nov 2024
+	11:20:13 +0100")
+References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+	<cover.1731406513.git.code@khaugsbakk.name>
+	<86b4b485e0b3ef023a5d559f437eae22f2fd458f.1731406513.git.code@khaugsbakk.name>
+Date: Wed, 13 Nov 2024 10:03:05 +0900
+Message-ID: <xmqqpln02bee.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Seth House <seth@eseth.com>,
-    David Aguilar <davvid@gmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Philippe Blain <levraiphilippeblain@gmail.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+kristofferhaugsbakk@fastmail.com writes:
 
-Since the introduction of 'initialize_merge_tool' in de8dafbada
-(mergetool: break setup_tool out into separate initialization function,
-2021-02-09), any errors from this function are ignored in
-git-difftool--helper.sh::launch_merge_tool, which is not the case for
-its call in git-mergetool.sh::merge_file.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
 
-Despite the in-code comment, initialize_merge_tool (via its call to
-setup_tool) does different checks than run_merge_tool, so it makes sense
-to abort early if it encounters errors. Add exit calls if
-initialize_merge_tool fails.
+Describe what happens when a custom comment string is used without
+the fixed code in this space.
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- git-difftool--helper.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+> Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
 
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index dd0c9a5b7f2..d32e47cc09e 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -61,9 +61,7 @@ launch_merge_tool () {
- 		export BASE
- 		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
- 	else
--		initialize_merge_tool "$merge_tool"
--		# ignore the error from the above --- run_merge_tool
--		# will diagnose unusable tool by itself
-+		initialize_merge_tool "$merge_tool" || exit 1
- 		run_merge_tool "$merge_tool"
- 	fi
- }
-@@ -87,9 +85,7 @@ if test -n "$GIT_DIFFTOOL_DIRDIFF"
- then
- 	LOCAL="$1"
- 	REMOTE="$2"
--	initialize_merge_tool "$merge_tool"
--	# ignore the error from the above --- run_merge_tool
--	# will diagnose unusable tool by itself
-+	initialize_merge_tool "$merge_tool" || exit 1
- 	run_merge_tool "$merge_tool" false
- 
- 	status=$?
--- 
-gitgitgadget
+> +test_expect_success 'conflicting fixup -C after fixup with custom comment string' '
+> +	test_config core.commentString COMMENT &&
+> +	test_when_finished "test_might_fail git rebase --abort" &&
+> +	git checkout --detach A3 &&
+> +	test_must_fail env FAKE_LINES="1 fixup 2 fixup_-C 4" git rebase -i A &&
+> +	echo resolved >A &&
+> +	git add A &&
+> +	FAKE_COMMIT_AMEND=edited git rebase --continue &&
+> +	test_commit_message HEAD <<-\EOF
+> +	A3
+> +
+> +	edited
+> +	EOF
+> +'
+
+Doing so would allow readers to imagine more easily how this test
+would catch breakages when the code is not fixed (or broken again).
+
+Thanks.
