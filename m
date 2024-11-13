@@ -1,107 +1,124 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97E3230996
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:06:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406A17081F
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:13:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731481597; cv=none; b=fVS6HI8kho+9EBc/XnBGj5J/atyeVzFg+F6KJjJn7nDeMx7LDCFzeu5g2RgUIMrtKRDm1vPhVJxcqsTZA0UT3j9KFlTqXyjvp/ojQRR9SLejGjfaqQr2Uv1k3pOjld+cH7WKi5orVCE3gB3UgXC18oAKjhZpda6JgxWymEfAdBU=
+	t=1731481996; cv=none; b=dUZIr5v5UdoY8dgH6tgnDXLyOJJs0VVguYIEYgD6dy4DikeaSl0vz7x3wrpXNoFR96glGSs7XPZWdxSF11shqtUYQq/IoSdPMSwSLzRFMjKRbj3VOkPp3OjyD1i9XBa6BkNee7T8L1lOy+1pf60Qg0iICcOCqiitiBWcDynORgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731481597; c=relaxed/simple;
-	bh=CodND3pYHl/k3jCIlIBN4bcDNF7j9J1WS92b872eUdc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WhPnh1mjYdRbO1WHLeLfACtnrxeKTcnKsw/meebnaPmMagIOyOn+cE23mfCXF+bVcsd8Uj5G/SfSZA+fRmKLm5Mq3k/HfW5sG0lsi8Qf0DUospJrsN/LGdfOoSdkmPA942INqPxuKvoKbHhKm2az+Abnoj8kfsonW6E5LotYZ5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XuccTIp8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UVte6z7z; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731481996; c=relaxed/simple;
+	bh=MAtuCE1XGvuYGFTQJ7B8Um/DyU4NWioiLb+jw9z3Wx4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pJmh68zI8Xym+b6PcsEi3yAr8f2PRqva3Y0yOnJvCo3Y06vzZdGDWu1ZJzMhpDjiAKOZasWMw9Y8j4X0t1gBJn3VbZlBFLrI7op5X+4aK+RfQ6FU7jQv7nA/ARa8QbTjgPWdqiYnvuRJbe0o4LJAGtesRZWGXPwqKiSot8gVnMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=luAYACOQ; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XuccTIp8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UVte6z7z"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 862C61140192;
-	Wed, 13 Nov 2024 02:06:33 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 13 Nov 2024 02:06:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731481593; x=1731567993; bh=uxUqlco9M5
-	e77gdJTnbHEosZQ+LpQJBDCe8SVLbL2rg=; b=XuccTIp8UapOsAnJzfKUTJ8yfD
-	USl+y7DwVK8QWZDE3i3fIccLZJ4P3uk5gdfO5WWTEOFnSAij+CnAgc5OMmQAtrUM
-	NWDx8aUK0F7YWm+tcQb0vHQCKKMiFzXyBfxIJmU0mvl9Pt8rh9xN+EnDtS7ZhgVZ
-	I1ONJXwHiRS+tUFr67VcXU3fN9K0aEnPutmRahnfJYV4g1mvIO4gwC6F+uVbAKqQ
-	P4x+X7eer8Apc1NTkIFmUlkMxIXSkqtcNnBaBSRXwUhDiM2s9xNk0JlpI9x9lztt
-	hUP4ztkqdQWSLpqvuAY3nQ1ekMJRCJYvyTJ4XDV6b7r7HS0IkDhU0Omul6FQ==
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="luAYACOQ"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3DA8713800DC;
+	Wed, 13 Nov 2024 02:13:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 13 Nov 2024 02:13:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731481593; x=1731567993; bh=uxUqlco9M5e77gdJTnbHEosZQ+LpQJBDCe8
-	SVLbL2rg=; b=UVte6z7zB5I49qNrW03urs4hvHiAfoNXweUdL8TUq95YvRXeLEi
-	bDcmk2/tra8evQ+vtNO7tEz8pr3HVagujOsjivm4PuAN3Gd/n4CMzuu7WqP/n90c
-	HoNLyrTFfPKM5gHo33JTH64z3DTIbBEgu329+1pXXSN9BRKwzt0xczSwha654Ymb
-	gl+fs7cavrF3a943J2C3GEWAjNvkyCZorcCr4wSgOGEXL8yLh3f2m1pb+fk+Kx8Y
-	bcl1QtXgvrj3aTPXJtk3pwXZGESx51kwKdvC/NAyivE4Ztv/m68tUcTn80lie0Gs
-	TPYUvioJD0Y2JvcPjypH+/4rOKS4SYY6Idw==
-X-ME-Sender: <xms:-U80Z2oazb1N6vRUFPU2R9CTWM10q2Cqi_biV4h4SVma3jetsNiKJQ>
-    <xme:-U80Z0qXvaN9bExDOTicIaps9yZBP8e3QmbF2n3jaVZY-oQIUXQTWxZ3XO2S-5f4A
-    JszcZGacdT18MTEVw>
-X-ME-Received: <xmr:-U80Z7M-PqnjBxUgIDFhJTMUe0oJDPgFVNByGPJPkUVpMcnS9oNWsutbTBgt-ixHjHeXPTnQZrp1T7TUzRAiMV5apyZ5MbKHdMX8admHSug4DKU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudelucetufdoteggodetrfdotffvucfrrh
-    hofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfurfetoffk
-    rfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgg
-    gtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhgu
-    thcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedtleeijefgledutedtff
-    dtffetledtudeilefggeejheduffetieelffeiteffgfenucffohhmrghinhepvggtlhhi
-    phhsvgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:-U80Z17wvEcSTjcQlMTjznba3inFMcv_wuZEjripo7SB4C_qhMwo6A>
-    <xmx:-U80Z16QUqLssUvsNXK9T74ZPIISi9BqWumkXByyeSstpqC_fPDQHA>
-    <xmx:-U80Z1iIamaC5GPmYSrlJ151fh-D996iV8Vn24XOHk12GhUHVzor4A>
-    <xmx:-U80Z_6umMW20gBZSbfQnzRqiGw6qj_N8DSFoBxLGOoyD7VgqZPC4g>
-    <xmx:-U80Z1ELsDAb9bHNVu4e7i3dryrTLFCTLB9tvkCWMmWndM73OWoqoFnr>
-Feedback-ID: i197146af:Fastmail
+	1731481993; x=1731568393; bh=xLyhBXygtCJxwgCK93mOQAowWbmNcnJc5VV
+	rrw7nGVk=; b=luAYACOQbF9pJ6SB1e1XkPy4N0Z7b8QOooal3Ba4jEM2Madq0LM
+	9ZZdT5G9L86SD2769eq/NxdXVGbHEdVbVT7LzbvAX3ka4+x02jF7trPrSHGCssEx
+	y4M0M8gqpjCORYGe3YN1a/W5/gUvpJhhiPl+jFYfmM0WugC8MizEjtYFlwFJBlVs
+	gxKyfysYPhLeRZJk6efpiCiXdFnhxA5RbOHzDhp1HFPQOBSdcHEMYJk9OV3/fyFj
+	NqQahlCBkw8/ftKvLV+lgE72WxoyOCfV3sWCBEzPgxF1BJxH9lcyICzewXmcPI+T
+	fv/8EnyZfAl9SHZnDO3mnj0scYLsc5esD1g==
+X-ME-Sender: <xms:iFE0Z9_L49Bufey2YtdUFR-Xf9djmbxEKXZ85Bk-Zj-uK2rCjkmv8Q>
+    <xme:iFE0ZxtEsjUynhKYY8IrJqhjOiSLHjgnLqpSJvuGUQpiOn-vZ__xs1V_-fM7iE7zZ
+    z8-unGnY-GhLafABw>
+X-ME-Received: <xmr:iFE0Z7CZWzAwrikywga90h54YhWOclOA3K3Syv2-TvMjCG4yEJxdze0X2MsG8YW9KnVKRUKU9qYlnQumSzUMeMo6E8UK9LGtXLx3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudelgddtudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    vghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhshhhinh
+    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhi
+    hjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
+    ohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:iFE0Zxf8N3bPHcsYghX9Z4WaWv8JlwcLDNA8ldJyKS982zXyy5eO4A>
+    <xmx:iFE0ZyPEyjU0P78zhT8TXdU9xzY4RMm3hOMQSDJXlDn7kCyGey5_cA>
+    <xmx:iFE0ZzmRt74gWLwu0QwVF-crRIr8bA0FLhPq_CcE6gvA2hOF8YGemg>
+    <xmx:iFE0Z8ucy-GN4YXpLC48SNvcewRU-q7Pc8yDL3FcJgDT6Syq5_E8dQ>
+    <xmx:iVE0ZzGlRs4WKzL06k9KwM8xSLUhSUxI5HGRc51ROjBkugKMDBb7Zq4L>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Nov 2024 02:06:32 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a15b615d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 13 Nov 2024 07:05:52 +0000 (UTC)
-Date: Wed, 13 Nov 2024 08:06:21 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] ci: update to jgit 7
-Message-ID: <ZzRP7cR6S6YCWIze@pks.im>
-References: <xmqqmsi3262e.fsf@gitster.g>
+ 13 Nov 2024 02:13:12 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
+  Taylor Blau <me@ttaylorr.com>,  David Aguilar <davvid@gmail.com>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH RFC v6 01/19] Makefile: use common template for
+ GIT-BUILD-OPTIONS
+In-Reply-To: <20241112-pks-meson-v6-1-648b30996827@pks.im> (Patrick
+	Steinhardt's message of "Tue, 12 Nov 2024 18:02:44 +0100")
+References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
+	<20241112-pks-meson-v6-1-648b30996827@pks.im>
+Date: Wed, 13 Nov 2024 16:13:11 +0900
+Message-ID: <xmqqbjyj1u9k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmsi3262e.fsf@gitster.g>
+Content-Type: text/plain
 
-On Wed, Nov 13, 2024 at 11:58:17AM +0900, Junio C Hamano wrote:
-> The version of jgit we use for CI has been 6.8.0 for the last few
-> releases; try to update it to newer jgit 7.0.0, which is advertised
-> at https://www.eclipse.org/jgit/download/ page.
-> 
-> Note that this new URL seems to fail to download (together with the
-> URL for the older 6.8.0, which is causing CI failures) right now.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Seems like all of the downloads result in a 403 now. I was digging a bit
-through the mailing list archives (jgit-dev, eclipse-mirrors) and
-couldn't find any hint as to what is going on there.
+> Note that this change requires us to move around the setup of
+> TEST_OUTPUT_DIRECTORY in "test-lib.sh" such that it comes after sourcing
+> the "GIT-BUILD-OPTIONS" file. This is the only instance I could find
+> where we rely on ordering on variables.
 
-Other downloads, like Eclipse for example, work alright. I was trying to
-piggy back on how the URL looks like there, but without any success. I
-also couldn't find any mirrors that have the fil. So either we just wait
-a bit and hope that Eclipse will fix this, or disable the download of
-JGit for now to unbreak CI.
+Doesn't this change break those who use the TEST_OUTPUT_DIRECTORY
+environment variable as a mechanism to override where the ouput is
+sent?  E.g.,
 
-Patrick
+    $ cd t && TEST_OUTPUT_DIRECTORY=/else/where sh t1000-read-tree-m-3way.sh
+
+They do not necessarily want their output directory affected by the
+value that was in TEST_OUTPUT_DIRECTORY when $(MAKE) was run the
+last time.
+
+...
+> -if test -z "$TEST_OUTPUT_DIRECTORY"
+> -then
+> -	# Similarly, override this to store the test-results subdir
+> -	# elsewhere
+> -	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+> -fi
+>  GIT_BUILD_DIR="${TEST_DIRECTORY%/t}"
+>  if test "$TEST_DIRECTORY" = "$GIT_BUILD_DIR"
+>  then
+> @@ -100,6 +94,13 @@ fi
+>  . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+>  export PERL_PATH SHELL_PATH
+>  
+> +if test -z "$TEST_OUTPUT_DIRECTORY"
+> +then
+> +	# Similarly, override this to store the test-results subdir
+> +	# elsewhere
+> +	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+> +fi
