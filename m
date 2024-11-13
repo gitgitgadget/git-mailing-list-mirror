@@ -1,170 +1,96 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42A47081C
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 03:30:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FE42C9A
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 06:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731468627; cv=none; b=iNBq2sLdnRYfuG9meSnjJIXnk3OLYIJXZHfo1U6Q+Fkvx/YqDCiesHPCe1eoW2OK+emND6oBLukgQjYcUi0ptiwn2bTIFG8B+gBdhxZBhmcRUqskjsrsox4TSVFwp5uese3y+YQC/oehpYMHap6310beUYdLwqeygX15ibIJNMo=
+	t=1731480480; cv=none; b=fA6VNr4uxJ1vVFjIQ1ZC/vKBB6wL8nzXONXeC1nhwtFCZPjaznoUyHZwXoxc5GqCnxn8vFp2sABTxlEarL/EQ4Mjb+vKv8HwgXr6FiHAz1PMhk2TPcaaxObz7T1f3Vl4chAUtKoWhgT2FW31anPm562nmNTkfaHEVjcpZQVuBrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731468627; c=relaxed/simple;
-	bh=IG6hyxmczAsak3grTi0VnAIxegMH6ZcgNI4GBEerhaA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=glZ9GejnRHXosVSVtU2JJyG0mJ2B94jaH3gmQhHjtg3X4XM6ppVvV370xhDeA30GInr2KVM3qigUdPNHHj6ZDKSr8fbxP4VbqTMgECswD59L9crZcpcbHX/TZIx3gyYc4M4DBc7Li2FplybZpx235tChZsVDf0sLRUw1N59ituE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=N8Oe2qXW; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1731480480; c=relaxed/simple;
+	bh=/uf8WFwBOl32BDWJEqxT1gTIajrKHxEkX7VuxFwcYV4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sXBLqSpDUqiNxhgoWK4qgooOvTpRJuUD3/FiA4D7GY8230tARLb3XKZ/BqFw5shxk4mxcBF5cGSZzd8Fv4cxXM2nbJa/81HTFn8Eh3Vrf9IzHKJCunz+WePTbe1tmXQ7PRz9w1+CA9275PKPWeXV6NvbCfSERDpNQORQlsMmMd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JFoisCYo; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="N8Oe2qXW"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id B45EtlZQUxileB45FtIyZx; Wed, 13 Nov 2024 03:30:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1731468622; bh=A6qT28tQPZBtabJorZJTaG8Vz/V0yIQ49mmiRIVZ/xI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=N8Oe2qXWBZSC/D81ZBicAwSItBOyB8l2s2VW6yezQtqCA0VFFJXnxJcPWAawEdCdJ
-	 K2z5E81DlV4q93jZAjzMZZ76zsocWPbuKGZzsjCxz2b8GPOGD2Xr5CKo8oo1SvTzg2
-	 1goH3zeEKnH8yTFhJ0QnfNhhSOpJw8ibbeEc4iDA9DqkPz+Wfs7I5+3lrh4YJLutnY
-	 gGdXdLWLH6DwqIhU2HFonKYILX+UFn9BDIBCK+BHqbe882o1+YEB53lz40WPxFbEpP
-	 e18IO+9oigIjI0nrXKANlYX14QLaiuaT/ZxpJkwfacIETnudZitBCOsnkDNuALajU3
-	 p+RjDWbE0moOg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=VaJUP0p9 c=1 sm=1 tr=0 ts=67341d4e
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=Cg17eAtb_1GXvYkoA9AA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <94fa4a3c-c9aa-473a-a129-74edfd617a16@ramsayjones.plus.com>
-Date: Wed, 13 Nov 2024 03:30:20 +0000
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JFoisCYo"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AD1991140138;
+	Wed, 13 Nov 2024 01:47:57 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 13 Nov 2024 01:47:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731480477; x=1731566877; bh=miaxwBSFBYfAOLQ3k4KTFbU+3y08kD3vrRe
+	g5y2QAgo=; b=JFoisCYov9JKfnn+JaQSY9oMdRMLm0Ud8VIdxNs/cpUd2QyUPaz
+	VfSW7gbJ4b6l2cbR7zZfeQzWvobVru5tGbWCGUTrdF8Uj6M1qxuGN+nm5pmV+9QO
+	teYua4rFeshWyYlatzUjt2Tz/Tad+X4CZotXQYGTuWNEsfNL5uTZ+6+k4MfaPfP8
+	wjR7DjEYpSvrfMXadSK+I+oTotT5P9fUyJyk3UQ5yXwNyVO+pnvxpeg1N9cqJQBT
+	TxPyy8Gjw6D1WRq3E+y3G7yL6dQuT/nnSoMe0yK/tigp3ZCnmnLYpC3b/O1zyKXi
+	IYEaa3gbYJBBaolisDFvatsLOF9xOZrD0Iw==
+X-ME-Sender: <xms:nEs0Z0gGoXJo5zEGMdSv3a21HVD7op0EvVOuRhJIJIZejZUV84zIjw>
+    <xme:nEs0Z9B4ivygeSmGBSLyizFH_vqf-P97zLRpZnwAlT6ICkpdxiblyRGGuvD2BDQH_
+    mozrOeytx45AZsd7A>
+X-ME-Received: <xmr:nEs0Z8GooKYbR4hnXflJmiMA-8i_sM8Ec0Je1gqVxsEStYKnfVpSeWHqkHkN_i0zO9gFG-vKYZ7lb4yLclCsj4nXoe8gQW_OeGEA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudekgddukecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    vghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhshhhinh
+    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhi
+    hjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
+    ohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:nEs0Z1Ss1H6Za-eVVscOVWnL8cks8oyeC4w3izhTpWZg86zWQYVbsA>
+    <xmx:nEs0ZxycFAW23ECUNq3wku7bf8LiH2TrVe_KeR-2hzN5pOZOgoLghQ>
+    <xmx:nEs0Zz48vmB1UWHcexhz6AmN50gc4tYlacy0_pwOC2DUh4i4nNem3A>
+    <xmx:nEs0Z-zr5NpGMLhXh35hPIpnxIJ0OTOYNN722Qek2vYRHAk1KBYLBg>
+    <xmx:nUs0Z2ptikCeYaUp77ebffzv-IJ80vYZKwtBJBcfqq4M2P8PqTw9LiTx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Nov 2024 01:47:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
+  Taylor Blau <me@ttaylorr.com>,  David Aguilar <davvid@gmail.com>,  Jeff
+ King <peff@peff.net>
+Subject: Re: [PATCH RFC v6 18/19] Introduce support for the Meson build system
+In-Reply-To: <20241112-pks-meson-v6-18-648b30996827@pks.im> (Patrick
+	Steinhardt's message of "Tue, 12 Nov 2024 18:03:01 +0100")
+References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
+	<20241112-pks-meson-v6-18-648b30996827@pks.im>
+Date: Wed, 13 Nov 2024 15:47:55 +0900
+Message-ID: <xmqqiksr1vfo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [-SPAM-] [PATCH RFC v6 00/19] Modernize the build system
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
- <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
- David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>
-References: <cover.1727881164.git.ps@pks.im>
- <20241112-pks-meson-v6-0-648b30996827@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20241112-pks-meson-v6-0-648b30996827@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfByOre/+FNYy8i43LYhsfAwb87e0FlaATAjXIIkoe+Fqr/B7+MtLVlAz38swvl51YUugNG1oCSYnr9bOhu0gh3pMrBGrQPYtSF1TvKKp/SKWAWxuXhRP
- 7PUXtmyaCO/P9iB12tT0gXnfXZ05e2Iyg2F3p7LzzwjSxjiT4Qnrc/gl7jqzznqvghQMkKz1eRfjUx6CxL3VfrERu8ik4HwEExA=
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
+> +#      # Disable features based on Python
+> +#      $ meson configure -Dpython=disabled
+> +#
+> +#      # Disable features based on Python
+> +#      $ meson configure -Dpython=disabled
 
-On 12/11/2024 17:02, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series modernizes our build infrasturcture. It refactors
-> various parts of it to make it possible to perform out-of-tree builds in
-> theory.
-> 
-> The series then continues to wire up Meson as a proposed alternative as
-> a modern replacement for our current build systems. It provides better
-> integration into IDEs than our Makefiles, better usability than our
-> Makefiles and CMake, better configuration and discoverability thereof
-> than autoconf and CMake (which is of course my personal opinion).
-> 
-> The intent is to have Meson replace autoconf, which is mostly unused and
-> broken. Eventually, the plan would to also replace CMake and our
-> Makefiles in case we figure out that this replacement is indeed a net
-> benefit for the project, but all of this would happen over the course of
-> multiple releases.
-> 
-> Changes in v6:
-> 
->   - Add documentation for how to use Meson.
-> 
->   - Fix compilation in case libintl exists, but required tools like
->     msgfmt and related don't. Instead of failing, we now automatically
->     compile with the equivalent of NO_GETTEXT=YesPlease.
-> 
->   - Update last patch that fixes semantic merge conflics with in-flight
->     topics in "seen".
-> 
->   - I've changed the series to be based on "master" at b31fb630c0 (Merge
->     https://github.com/j6t/git-gui, 2024-11-11) as all prereqs of this
->     series have since landed. This doesn't make any difference though
->     as there aren't any merge conflicts or additional changes caused by
->     this. I mostly mention this so that there is no confusion around the
->     changed base commit.
-> 
-
-Tested this version, without issue, on Linux and cygwin (build + test).
-
-On cygwin, the unit test now no longer times out:
-
-  $ cd git/build
-  $ tail test-out
-  1030/1030 t9902-completion                               OK             114.74s
-
-  Ok:                 1030
-  Expected Fail:      0   
-  Fail:               0   
-  Unexpected Pass:    0   
-  Skipped:            0   
-  Timeout:            0   
-
-  Full log written to /home/ramsay/git/build/meson-logs/testlog.txt
-  $ 
-
-Having said that, I was expecting to see an 'Unexpected Pass', since
-meson decides to not set NO_REGEX. (The 'make' build on cygwin will
-set 'NO_REGEX = UnfortunatelyYes' in the config.mak.uname).
-
-In the meson-logs/testlog.txt file, for the t7815-grep-binary.sh test
-stdout, we find:
-
------------------------------------ stdout -----------------------------------
-ok 1 - setup
-ok 2 - git grep ina a
-ok 3 - git grep -ah ina a
-ok 4 - git grep -I ina a
-ok 5 - git grep -c ina a
-ok 6 - git grep -l ina a
-ok 7 - git grep -L bar a
-ok 8 - git grep -q ina a
-ok 9 - git grep -F ile a
-ok 10 - git grep -Fi iLE a
-ok 11 - git grep ile a
-ok 12 - git grep .fi a # TODO known breakage vanished
-ok 13 - grep respects binary diff attribute
-ok 14 - grep --cached respects binary diff attribute
-ok 15 - grep --cached respects binary diff attribute (2)
-ok 16 - grep revision respects binary diff attribute
-ok 17 - grep respects not-binary diff attribute
-ok 18 - setup textconv filters
-ok 19 - grep does not honor textconv
-ok 20 - grep --textconv honors textconv
-ok 21 - grep --no-textconv does not honor textconv
-ok 22 - grep --textconv blob honors textconv
-# 1 known breakage(s) vanished; please update test(s)
-# passed all remaining 21 test(s)
-1..22
-==============================================================================
-
-Note the 'TODO known breakage vanished' on test 12.
-
-Setting NO_REGEX on cygwin is for 'reasons' (not necessarily good) and we
-need a way to override it's decision here. (In general, we need to be able
-to use *any* of the many build variables to override meson's automatic
-setting of these build variables).
-
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
-
+These are dups, right?
 
