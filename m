@@ -1,153 +1,92 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4406D17D341
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132B91853
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:47:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731483638; cv=none; b=KynlWCn/x21Ws6sUq7QLIcJADoGh8YplNwNeqXOv/uj4eJkNhFGcpEwG53JJQFxA7KjWJZheV9Iy9nvRLLtztpun9utuu6NnDj6kEh0dkq0zNAW6vkiW7/XT42YIgHNoR5D3sqJjIaDan6jkSiIvdB4nGlfrnHi7VleY9fpAIhw=
+	t=1731484070; cv=none; b=M4JTU8Hfpm9PRbbDZKpSjGEC0gGYslucp8gdO/GAoa9hVT6wl8M2lA5Nfy9Av3T49L+BpZlehhB+/UoTkageMvJda+iVA00LM+90v4JWm42rzCIV5n0TqmrRmK1WU037cJK2+f5oMH3n3ChFPURuCZppsLdudUEEx3ItCHfTOF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731483638; c=relaxed/simple;
-	bh=BbSOJXhH+sBvITDyLo4Z5W70cEhK82K8ccR0MsSkfyc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=BaX/cr1Oma8jTOYINXGfohl7h08mv0+QPAp/Yhvmwpnp+JKWEyZlcvNFJaDaJjaLjfQVeXNr1BvNfRgoOS65Tdno2L8cWznSVv31+OMI1SJ5LCMFrrMYgfVLSQpK5ZdGFJ27vwxmDpW0cxlG9/SuCk4TCIPmuFeyhMazOFZCCrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T4HN9rxQ; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731484070; c=relaxed/simple;
+	bh=yps4isDpy5wOdd3Ii+anCovrMo/Cjih6J7gIc5+TmoA=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=CzVl4dSKkE0hVaa3mlE/07HsMPuOfZu37eT/QbRmD2BxWiGaveFDCjiHbaV8JMn926wIZTg2HlWYP2mxsx8PgvhsxbqSnFrjbjnBYzOjqPByweJWFmzx7GuQP1oe+rxsgUpoUrlRF0sJokl1+I8DAbUzMShFCvXYOs0Ls1JfLwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rGE8ENv1; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T4HN9rxQ"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5cb615671acso4837270a12.1
-        for <git@vger.kernel.org>; Tue, 12 Nov 2024 23:40:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731483634; x=1732088434; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=o2pH/a4mdYsRnx6yDerqYMKnmm+r8rNxkY728bdtDnY=;
-        b=T4HN9rxQPmsFBP+RDdhWn7N8/cKtKsK+uCFkt1kW3xXxwLPgpT1GtfhlDZqmq3cIYZ
-         GB94nABdw7ebZVAzR6hgiVcM6SYCXticuPeeDxOwXqySQqSLYoaWpaoWSl3CldLqn0pP
-         TEW+kSmC7hnxuK9VhZXM3j8e0//U+kvvhqlrN2zp8OQL4huiHWjUBdgCFliTpRuO7kPb
-         6p6z4tAXKFGkCUiNqSd7HP1lFBorC79GX4kCg+ZNMFQhAqr30ssBoTF9nchzv0snobM1
-         zRUUPPrfq51ny6sX1XPtAKtVcP+NsTAYuNxkHlxCFtklUecsbC8JthKSzf+ax2Hiy6uw
-         ZjVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731483634; x=1732088434;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o2pH/a4mdYsRnx6yDerqYMKnmm+r8rNxkY728bdtDnY=;
-        b=KIE5bXC9Qx+YKlUHAi1MSU/izzllx6kaov/XeFlTRWFAX6WZI4leUU5NOJO0ILro7d
-         Hy2/xhp/Fy5JJTDwsPf+pf6ouTlENAI89w5Y6d40R48SxRbY1s2K0kG7uZVmpTxOT5Hu
-         wZaLXr6+AZSmgR7i0z7LI2PNLEg6SjA4OSqLegQ/zHljcjKPIe+JW0V2PYNOi1GOU8/c
-         pacz4hKxpVD+ljOAc39nmES6wG96pWuZ+J6MMn2/emD+COoTR+dm5UMpLF5CVtl/N6Xh
-         5sTBK1zxfoxvu5eLe3thZIpSOsN2VPja0OiqpxLfNNTyErdeN5Wedy2nphHwNWQUoG/v
-         czJw==
-X-Gm-Message-State: AOJu0YwU/m0Fzur85FycSq6ltDx/8qdDlH5Q+N6w3zo6Zw4nN0ZdlXGL
-	+IXFtu6hwyuJmh0rAHUOxBWSCJObxdWXPDsfFH/ElQTRbXd3+d4trM74m+EnWOQ7fCcR+g3VA6F
-	0100v2vglgj8r70joJfi7duAENU0v1FkL
-X-Google-Smtp-Source: AGHT+IFlZ6MfrM742qwkQG80U3UMU35C43XYvGmi6i14G3PiCsDJCwJHKykfpAyX0n8S17H+5buZQAI+1V5UXpsIa0k=
-X-Received: by 2002:a05:6402:27c7:b0:5cb:bebb:38d8 with SMTP id
- 4fb4d7f45d1cf-5cf0a3184f4mr25506604a12.14.1731483634123; Tue, 12 Nov 2024
- 23:40:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rGE8ENv1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1731484061; x=1732088861;
+	i=johannes.schindelin@gmx.de;
+	bh=yps4isDpy5wOdd3Ii+anCovrMo/Cjih6J7gIc5+TmoA=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=rGE8ENv1s2pH+5U1QgqO1FGTpiTYmFFVzrs05TS0oz0vnsryL8BhtC9WIojMfqY8
+	 V2oRxHm7hRvCvrnuVz54Iu6C5pt/IQ4Q77lzpaK0R0hTzfMSEvxjDVZYfYtDQlgDn
+	 mI3fV7pg0PlHD4zkKZshpUgmdlaL2sVXT1L34NwhhOiE6SG4ntxpmNi5vGHS9/2k2
+	 1hbT0/E1kWBXE0bZi84hUqPAO3c60sHm8RkWqj3Kta1ShCC8C5gxG2NdWr+zElKXD
+	 pL2UVdath2Z43ASf8dX6nsgY3T/Pn7+mnPm4MDO45x/K2E7bSK3sw7MZux9ccYBbm
+	 fSkteAUlh01VcVHsJg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.215.196]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mz9Ux-1tyP660ySR-010JYS; Wed, 13
+ Nov 2024 08:47:41 +0100
+Date: Wed, 13 Nov 2024 08:47:41 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Beat Bolli <dev+git@drbeat.li>
+cc: Tobias Pietzsch via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Paul Mackerras <paulus@ozlabs.org>, 
+    Tobias Pietzsch <tobias.pietzsch@gmail.com>
+Subject: Re: The health of gitk, was Re: [PATCH] gitk: check main window
+ visibility before waiting for it to show
+In-Reply-To: <ddee92a7-3d1e-f869-9cc4-72b70eee0dd5@gmx.de>
+Message-ID: <71af9e7f-84b2-437e-7167-2dd0add02f1b@gmx.de>
+References: <pull.944.git.git.1610234771966.gitgitgadget@gmail.com> <bdaab72b-37f4-658a-716a-d6a958b6f709@drbeat.li> <ddee92a7-3d1e-f869-9cc4-72b70eee0dd5@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?B?44G144GY44KS?= <ffjlabo@gmail.com>
-Date: Wed, 13 Nov 2024 16:40:22 +0900
-Message-ID: <CABpqQ_u4GG28L9KGX+HXiOv2AVAL7sckRBN4a99pCyeaQS+n_w@mail.gmail.com>
-Subject: Trailers Containing Underscore or Dot Characters
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LNiu+JrNdCibhq6alItMeJ34b6jcb6dcjnA54vVIU5LFgNKAHrq
+ ksTXwJE14rg0SzPk1pjnAiU6qguLefbgvnMl3/jlK7yiSVFnOsUmRNptdWBTS5m8b1NO3ud
+ Fwnim5kFJxn3R05BxefTUYHvQ85E+9/NJ9s+wkyCMpb1R/imWHe/mqBGHmi3zc7T6g5FR1R
+ EGhs9xLw8i315OC/W7Itw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:nbOnMZ9WXhY=;w4nKcHRfwsybqItzPAdQpGZdvrc
+ H8+RaJcSflYhGOET0OsuiuOnbex/idpjU+fwVpACNd4aH8HjniCiwmlOGc4ac/OIsHJfBDYkC
+ sK7leqFdcJV9kfBMqxPyv57UaXoW4T3MNbKQMv3qhPvTvN48zHbWThJPpYpABwqiQ68ZL/+Bj
+ L62bZz3/o9519j+OO6hK/XLkhD2JrQuda5ZELmkIb6u9605BYhiz/17OtUGqd/1quZVk2aojX
+ tSwTYolZMInh6ZbQUjDMsMvuH9jwhSKoklCSne9kLqlDv5YviiySKv9mCcdX3S9vSvbxNNjFy
+ NwZ9MlAsEN30ck0gyaJ1xXDOlX9FB8kgjLACmpskIgxTAJ5l15GP8kq/S9YjODoULhpceExL+
+ SxSjuQXec6RejMghgZ0tQpA2TsjGbZQwe+nGn7A+h31POTfALxXLGmPusRHiSU5andITDsvgH
+ jtv9qSySoki05XrIxyi7+LHfNGh8nYmaWFEwBmceEQBKT4Qvkc0VDoY6V+wlgCslPR6vGGvP1
+ WFiM5byTqc7zXkf0CWqZoLcgy/8eodTt3WQ2Rh4CVLTAJaAdVtJXFWsJvOFMWIplJ5p5NNl+Y
+ 8jd2oBgZMyqP0czXaNnqKiglBOHho1uQ9Lf3iKqVDtKJOTGEEF68b5BUFxPkyodj0uuhCCmbA
+ RFDXW7VNwyXeNhAS3NI9VLVgiEvnKSMZ6alg2tfgUlz0D+Rih6wZ+8JOsJJ3iZXH2rNMdccAH
+ AEaKmIvLFhEifT7f/Q24RdL9sUOoQlIx2WjuWWfs3UnkxA1STfZTPkHp9qQLqJ1bpsoB3PLd+
+ ahscwVhp5bRVH/e4IBU0dh6Q==
 
-Hi everyone,
-First of all, thank you for making such a tool. I am grateful to use
-this tool every day.
+Just one quick additional note:
 
-I encountered the issue with trailers containing Underscore or Dot characters.
-I don't know if this behavior is OK as a specification, or not. So I
-created the post.
+On Wed, 13 Nov 2024, Johannes Schindelin wrote:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+> This morning, I woke up to find a new PR in microsoft/git
+> (https://github.com/microsoft/git/issues/704) that cherry-picks the patch
+> that was offered in this here mail list thread. That patch is almost four
+> years old, i.e. just about ready to enter pre-school and to learn how to
+> read and write. Yet apart from Beat's confirmation that it fixes a real
+> bug, this here patch has been treated with silence.
 
-I added coommit with trailers which have "_" or "." in each key.
-```
-git commit -m "Test" --trailer "test_hoge: fuga" --trailer "test.hoge:
-fuga" --trailer "test-hoge: fuga"
-```
-What did you expect to happen? (Expected behavior)
-I expcted that they are shown like this.
-```
-# git show
-    Test
-    test_hoge: fuga
-    test.hoge: fuga
-    test-hoge: fuga
-```
+Even Homebrew is waiting with bated breath for that patch to be picked up:
 
-What happened instead? (Actual behavior)
+- https://github.com/Homebrew/homebrew-core/pull/68865
 
-Actually, some of them are unexpected value.
-```
-# git show
-commit 70afae811def2345bead6660e0f3183662c9f4df (HEAD -> master)
-Author: Your Name <you@example.com>
-Date:   Wed Nov 13 08:28:19 2024 +0300
-    Test
-    test_hoge: fuga:
-    test.hoge: fuga:
-    test-hoge: fuga
-```
+- https://github.com/carlocab/homebrew-core/blob/a236345fdfbb37465edc0b5a0ad1a51dcbd84423/Formula/git-gui.rb#L19-L26
 
-What's different between what you expected and what actually happened?
-
-The one for `--trailer "test-hoge: fuga"` is finished with nothing.
-But The others for ones which have "_" or "." are finished with ":".
-
-Anything else you want to add:
-
-I want to use such characters to add some key-value received other
-service (e.g. GitHub Actions) as is.
-Is there any chance that characters like _ and . will be allowed in
-the trailer's key?
-
-By the way, I tried the investigation for the current specification.
-I hope this is helpful in some way.
-
-[1] This behavior occured when executing `git interpret-trailers`.
-```
-# echo msg > msg
-# git interpret-trailers --trailer "test_hoge: test" --trailer
-"test.hoge: test" --trailer "test-hoge: test" --in-place msg
-```
-```
-# cat msg
-msg
-test_hoge: test:
-test.hoge: test:
-test-hoge: test
-```
-[2] There might be the cause in the process of the persing trailers.
-if they have such characters, the whole of the trailer option values
-are interpreted as one token even though they have ":" if they have
-such characters.
-
-I checked the source code at
-- parse_trailers_from_command_line_args
-https://github.com/git/git/blob/564d0252ca632e0264ed670534a51d18a689ef5d/trailer.c#L748C1-L764C4
-- -> find_separator
-https://github.com/git/git/blob/564d0252ca632e0264ed670534a51d18a689ef5d/trailer.c#L614C1-L642C1
-
-[System Info]
-git version:
-git version 2.43.0
-cpu: aarch64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.10.11-orbstack-00280-g1304bd068592 #21 SMP Sat Sep 21
-10:45:28 UTC 2024 aarch64
-compiler info: gnuc: 13.2
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): <unset>
-[Enabled Hooks]
+Ciao,
+Johannes
