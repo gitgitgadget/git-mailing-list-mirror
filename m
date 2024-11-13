@@ -1,142 +1,167 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F94A202638
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 18:26:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E9422611
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 19:01:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731522421; cv=none; b=DlxhMS6GTpmerIaypCOE3R/sDn3uHPz6F5vioP9uBMsB6FANPFef3rix4DoEBoQJqISW5z3mxNWYuCvtxicGblPLpvQV6kRLkUpfUQ+f4E5D7u4M1YnEWi1N0Z8UvkgSDqQEJw8SYeExaDsrLfkJZP0mf5AiUlIk3xNzju97wB8=
+	t=1731524473; cv=none; b=Mv374MUeDZ+gwe8kfIJSD+ajuNriRuNPNSR4fGA1+1Yypul6JdK4/vPGYjv6sKrvRnBKKwsxAyJjmalSR6QzChRU9GP8OGyU8h5ITK1LAbZU2TzmBrmhwpdfZNnlYumyvxVX6Gk028HWm0gLnNa9wTVl9JIhiKkf4aSipIYqMSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731522421; c=relaxed/simple;
-	bh=Rl7saCFnprpOCuDA1eTEPo87V5nGh06oPshS1+QKmPA=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=kWXsd3ZKew9o0f17iOi3AnX/3Jvz3Okf1v4DlmaQWkvHcPLB5Fgc03ICuOaXxjMK4WIXVcCYmhZFuVmMzecXtxwduT0U2YJwPa0adS+WiZ1vs9CpXfoRNsBgjeC2L1pAV01v6vAGNb1EHEmvqrjot/XEFx3iEYNWc7xg5YhMwxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=FjVFpwWF; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1731524473; c=relaxed/simple;
+	bh=2nphYwAyofYU/1i0KRbUIGyatXJ6ax0FQAFR9a3JxCg=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qV0InbBGSBgMXyXT7VgP7MZkF8IL7deBH10dZrJKsQYnl7oTSy25arBVqRrpjZsWQbTrM85o+0xmLBL8J6Qwf8kx2HrojBH/mKpLUrbLZg7VVDe/KFJCQiQ/CHVjlXAZbxcHb4TAa1/6S8MNcgzrzthfImS6aaCwD5/VfYI7zdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lcMusCcs; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="FjVFpwWF"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6ea8a5e83a3so140931747b3.2
-        for <git@vger.kernel.org>; Wed, 13 Nov 2024 10:26:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lcMusCcs"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-37d462c91a9so4600232f8f.2
+        for <git@vger.kernel.org>; Wed, 13 Nov 2024 11:01:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1731522418; x=1732127218; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iHpWEoq5zALilQWLMiREcpJNMouIE5VJJNj+oPsXNAI=;
-        b=FjVFpwWFv7LfKpyoU5elWFk14F2TFU4vIgloxPddRWrFjLgteefAI8MbpQw1DcwE4w
-         cYvQwkhecRDj0hqeY7NxypLLydiOsysckrq+GvyWHwJo0A9cKglukEeyFNfHZKa6w3Je
-         Hu5fud4XJQ5GEyeh5dcXnl0QaZAy0QIdTpIEGO+10mnjq2VKgCrdvhMvE6hg3SKp1CfO
-         7lF/mX1sVR6SMv/zTzVLDRbpiWjULSzmrKX8ej1uIrNde/bg6EIriS3L44qzVQ5zk2ZW
-         NYRVCZ6sejRzrf6T1MihH15VzpuqQC6BLxkMOKDAVkzz604SzHmudvdM61uyJv23EEOB
-         c68Q==
+        d=gmail.com; s=20230601; t=1731524469; x=1732129269; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BF2qKCil0c5rZUfRoN15AUKHAXAE0vedQZ2uFpNOMpc=;
+        b=lcMusCcsaeBORU3y81qcfHczM+2awhKCCQ010clSuXJXCckZfFWD9dvrGg3F6Dd3L4
+         +qZqv46+i8bOAELydLTBkr1zNaXq2pCAZhPsDT9S7H8xtkNFq0rL7NCqEeH4aVwesFfY
+         M6atc6TMtYi4gjaElSkxAswTHPYNyKDCA6jcbF6I2RW/CBkrPRFVZ6Z/X3cNiFwuZGd4
+         HfOEkFuN0r5A3rQRtqBoxfO4IxcspSi/hNyMC+MvTMC6bqwW2s136SH5fCPTLqK0VNLf
+         Tt6liUOGDzwFDad3dPp4q9tycTNsSDbQ3y6TG5c3/4QIpXTVYmquPIGBVLaE0NeJfRGY
+         DYDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731522418; x=1732127218;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iHpWEoq5zALilQWLMiREcpJNMouIE5VJJNj+oPsXNAI=;
-        b=VZ0guVZLM94DDGmfMDrOUHZDpbWF38Fg1/nEQg9mc8YMdAPHQUBDstJR5WohM/1FU9
-         EGGlvUXrxK0makwnouwv0zQqLG+8FNFp+ZqPy2TBogC3ABboan24A5LhWCL535Hwl2KZ
-         qI+hcUWpgWCM3Fpf55iu9/Y3Y49syQCdTuoC3Jv9x3cO49mFiEyAew9WLbDSnzyXrYvn
-         kK6CFuyp0lEcp5KFUAcrq747+aWsyAmJkl6FYVRBcOlYQPeF+daMn5GW2qf8Qpzj6lhY
-         xCbC/Kwu7M4l19XQWAS3y9W0YrX2xvf/gw4vEE1gPdLVk3Y7knxaCuMf89/vs4U5Z3aW
-         KWZw==
-X-Forwarded-Encrypted: i=1; AJvYcCW3aykTf/dZd/MzBKITpsBNk0m8xZ9t4dpxfg3XmmMuAwnhy9FhH+hY2CSyjWPpQUEXNC4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx94CWJNP6NwxkrwzaH+Rw0/dnFUVXpx1Sw+HrUq7UrglwlPJyZ
-	mRl7mW9PYV2+VvbFC4oTtLRdvH0LlqcKVb98X3GBb36DCuZYr8EkKJqi45wRTbir6nQV3uj3xQF
-	NoFJSzJQrhV1SJdekDgxBBGduXm6SRg==
-X-Google-Smtp-Source: AGHT+IGtlcIkCw/vbFdqI8it259XlBHgJf7SU8mxQkPjl93C3QcCY8v+5tioK6fcfPSeA92xeG5vWWTtINI3ECvm3jIH
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:9c2a:2b62:2715:580])
- (user=jonathantanmy job=sendgmr) by 2002:a05:690c:3186:b0:6e3:b93:3ae2 with
- SMTP id 00721157ae682-6eca4600e5bmr348917b3.1.1731522418194; Wed, 13 Nov 2024
- 10:26:58 -0800 (PST)
-Date: Wed, 13 Nov 2024 10:26:56 -0800
-In-Reply-To: <20241113073500.GA587228@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1731524469; x=1732129269;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BF2qKCil0c5rZUfRoN15AUKHAXAE0vedQZ2uFpNOMpc=;
+        b=oNS4wTF7EsP7yWK1b7hNmL1D2r/SKdSOPm+R4O1YGWB67lelaKITRiAT1rBuBGOYHa
+         vZvOPgojJ7xRyGCHbnNcTVKbyySfMWgwDEom3Uu4j49ozHHT+ad8WM7PfMAPG16LSHsM
+         MtqThuj+eENjL3sKNiFCdzgJ2pC5Hf1jTgC95oRIWFoVxtbozxXas3+08B7kDlB2EGbx
+         HrvCtRMRscblFefdfdg0kmHgKSSaHkjP9FpO6oBNn61T0OMmYnS53bVpinBV0MANRgQ2
+         VAFZQD9wZe5XOtZf2OU9gBjayOqIZWtc1slJx4jorgQcJFXo5fKaUx+3wAdI08NTCBvr
+         vgwQ==
+X-Gm-Message-State: AOJu0YzwXL3OHgGwSgPLUgqPdhTC+s1BQ6+zJi1fjyVoedk119ULq7TK
+	inFxoQK/JnqKY5287cYvsGtXvQ5PkAyQj7G0v7C3fO3z6uEUV620pLy2Kw==
+X-Google-Smtp-Source: AGHT+IGpMtkHscHfyGaKBG/YQDjlKq3ck2frHTBebuCFmfd9GMP/2rRSVJb7OXvZ24YF2vcl7VXSLQ==
+X-Received: by 2002:a5d:6d8e:0:b0:37d:3735:8fe7 with SMTP id ffacd0b85a97d-3820812dc63mr6603842f8f.32.1731524468572;
+        Wed, 13 Nov 2024 11:01:08 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-381ed9ea4c5sm19419859f8f.76.2024.11.13.11.01.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Nov 2024 11:01:08 -0800 (PST)
+Message-Id: <pull.1828.v2.git.git.1731524467045.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
+References: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
+From: "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 13 Nov 2024 19:01:06 +0000
+Subject: [PATCH v2] diff: update conflict handling for whitespace to issue a
+ warning
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <20241113182656.2135341-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Jeff King <peff@peff.net>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, steadmon@google.com, 
-	hanyang.tony@bytedance.com, me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,
+    Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-Jeff King <peff@peff.net> writes:
-> On Fri, Nov 01, 2024 at 01:11:47PM -0700, Jonathan Tan wrote:
-> 
-> > A subsequent commit will change the behavior of "git index-pack
-> > --promisor", which is exercised in "build pack index for an existing
-> > pack", causing the unclamped and clamped versions of the --window
-> > test to exhibit different behavior. Move the clamp test closer to the
-> > unclamped test that it references.
-> 
-> Hmm. The change in patch 4 broke another similar --window test I had in
-> a topic in flight. I can probably move it to match what you've done
-> here, but I feel like this may be papering over a bigger issue.
-> 
-> The reason these window tests are broken is that the earlier "build pack
-> index for an existing pack" is now finding and storing deltas in a new
-> pack when it does this:
-> 
->   git index-pack --promisor=message test-3.pack &&
-> 
-> But that command is indexing a pack that is not even in the repository's
-> object store at all! Yet it triggers a call to pack-objects that repacks
-> within that object store.
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 
-As far as I know, index-pack, when run as part of fetch, indexes a pack
-that's not in the repository's object store; it indexes a packfile in a
-temp directory. (So I don't think this is a strange thing to do.)
+Modify the conflict resolution between tab-in-indent and
+indent-with-non-tab to issue a warning instead of terminating
+the operation with `die()`. Update the `git diff --check` test to
+capture and verify the warning message output.
 
-> Here's an even more extreme version. You do not need to have a
-> repository at all to run index-pack. So doing:
-> 
->   mkdir /tmp/foo
->   cd /tmp/foo
->   cp /some/repo/.git/objects/pack/*.pack .
->   for i in *.pack; do
->     git index-pack -v --promisor=foo $i
->   done
-> 
-> used to work, but with your patches will segfault (because the repo
-> pointer is NULL). Granted it's odd to pass --promisor when you are not
-> in a repo, but certainly we should never segfault.
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+---
+    diff: update conflict handling for whitespace to issue a warning
+    
+    Changes from V1
+    
+     * Disable both WS_TAB_IN_INDENT and WS_INDENT_WITH_NON_TAB when both
+       are set.
 
-Ah, good catch.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1828%2FUnique-Usman%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1828/Unique-Usman/master-v2
+Pull-Request: https://github.com/git/git/pull/1828
 
-> So I think at the very least that index-pack should not try to modify
-> the repository's object database unless we are indexing a pack that is
-> within it, which would fix both of those issues.
-> 
-> I'd guess in the real world, we'd only pass that option when indexing
-> packs that we just fetched. But as a bystander to this feature, it feels
-> quite odd to me that index-pack, which I generally consider a "read
-> only" operation except for the index it was asked to write, would be
-> creating a new pack like this. I didn't follow the topic closely enough
-> to comment more intelligently, but would it be possible for the caller
-> of index-pack to trigger the repack as an independent step?
-> 
-> -Peff
+Range-diff vs v1:
 
-I thought of that, but as far as I know, during a fetch, index-pack is
-the only time in which the objects in the fetched pack are uncompressed
-in memory. There have been concerns about the performance of various
-ways of solving the promisor-object-and-GC bug, so I took an approach
-that minimizes the performance hit as much as possible, by avoiding yet
-another uncompression (we need to uncompress the objects to find their
-outgoing links, so that we know what to repack).
+ 1:  dfb80a7ff2d ! 1:  8531e80811c diff: update conflict handling for whitespace to issue a warning
+     @@ t/t4015-diff-whitespace.sh: test_expect_success 'ditto, but tabwidth=1 (must be
+       	echo "foo ();" >x &&
+      -	test_must_fail git diff --check
+      +	git diff --check 2>error &&
+     -+	test_grep "warning: cannot enforce both tab-in-indent and indent-with-non-tab, removing tab-in-indent" error
+     ++	test_grep "warning: cannot enforce both tab-in-indent and indent-with-non-tab, disabling both" error
+       '
+       
+       test_expect_success 'check tab-in-indent excluded from wildcard whitespace attribute' '
+     @@ ws.c: unsigned parse_whitespace_rule(const char *string)
+      -	if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB)
+      -		die("cannot enforce both tab-in-indent and indent-with-non-tab");
+      +	if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB) {
+     -+		warning(_("cannot enforce both tab-in-indent and indent-with-non-tab, removing tab-in-indent"));
+     ++		warning(_("cannot enforce both tab-in-indent and indent-with-non-tab, disabling both"));
+      +		rule &= ~WS_TAB_IN_INDENT;
+     ++		rule &= ~WS_INDENT_WITH_NON_TAB;
+      +	}
+       	return rule;
+       }
 
-We definitely should prevent the segfault, but I think that's better
-done by making --promisor only work if we run index-pack from within
-a repo. I don't think we can restrict the repacking to run only if
-we're indexing a pack within the repo, because in our fetch case, we're
-indexing a new pack - not one within the repo.
 
-Maybe we could conceptualize "index-pack --promisor" as the pack giving
-"testimony" about objects that its objects link to, so we can update our
-own records.
+ t/t4015-diff-whitespace.sh | 3 ++-
+ ws.c                       | 8 ++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index 851cfe4f32c..849f1854fb9 100755
+--- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -808,7 +808,8 @@ test_expect_success 'ditto, but tabwidth=1 (must be irrelevant)' '
+ test_expect_success 'check tab-in-indent and indent-with-non-tab conflict' '
+ 	git config core.whitespace "tab-in-indent,indent-with-non-tab" &&
+ 	echo "foo ();" >x &&
+-	test_must_fail git diff --check
++	git diff --check 2>error &&
++	test_grep "warning: cannot enforce both tab-in-indent and indent-with-non-tab, disabling both" error
+ '
+ 
+ test_expect_success 'check tab-in-indent excluded from wildcard whitespace attribute' '
+diff --git a/ws.c b/ws.c
+index 9456e2fdbe3..3e9ce55d095 100644
+--- a/ws.c
++++ b/ws.c
+@@ -6,6 +6,7 @@
+ #include "git-compat-util.h"
+ #include "attr.h"
+ #include "strbuf.h"
++#include "gettext.h"
+ #include "ws.h"
+ 
+ unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
+@@ -70,8 +71,11 @@ unsigned parse_whitespace_rule(const char *string)
+ 		string = ep;
+ 	}
+ 
+-	if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB)
+-		die("cannot enforce both tab-in-indent and indent-with-non-tab");
++	if (rule & WS_TAB_IN_INDENT && rule & WS_INDENT_WITH_NON_TAB) {
++		warning(_("cannot enforce both tab-in-indent and indent-with-non-tab, disabling both"));
++		rule &= ~WS_TAB_IN_INDENT;
++		rule &= ~WS_INDENT_WITH_NON_TAB;
++	}
+ 	return rule;
+ }
+ 
+
+base-commit: facbe4f633e4ad31e641f64617bc88074c659959
+-- 
+gitgitgadget
