@@ -1,53 +1,53 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027DA179958
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:36:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36761185939
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 07:36:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731483384; cv=none; b=OQyh/8Lr88Hw2cdDsr2E9JduUrNW3/8NyXA6Aeg0N6vlnSdzrhW4JSEXhz5Qa97Br47999+39MK9WVy9Z1mreXzHrYo0BGQ/fvDCbnHPIRisnBj/mh2BB69Zb7CBU286wGotQRmtPAEsCXMyeiMqikQUkvxISznwtsTzKrxsSoY=
+	t=1731483388; cv=none; b=q3+dnc8VV8MuKGN9ihz4MyjqSsF9Qo+Dfxte4hEgSGndxtiJzf5zmvah2LlDjt7QW/TYHOuzz0svDlXWKOSjyAWSc7W+CqO8x1yCQrhqeisLPmsAfyT64PIgROhacDwUdI5Qv2vVt6K3OZ/fkIj8Uc99+ADzOuBrEVf/H+kmBGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731483384; c=relaxed/simple;
-	bh=Zp/dbPz2Z/F8oYiDR0VCwypcV3UaxpOzjvsXtwVih84=;
+	s=arc-20240116; t=1731483388; c=relaxed/simple;
+	bh=7YKu4oQk1BhbJvPgBroj0wPvIUFccPe4ZTgWlTMN4G4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q9yUf9Fx7De9U5mdgIH3G7Ugoz+B0XfzAzvRRM2m4XHvdugyuQtOTBFmkK+IhC6mR7VotuCsm2e2RLHkNlAYQobtZ2qAS9r+kbpNladBQw5hmGkRT2l8x3gBqNl5n/kblR64T+y81svWqrCXCINTk+MYghm8guz4bhdKwihlU6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GJ0qd759; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MRhwFgSJ; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=bP0cjMAQFkNYK215Xwp21XuHF0sasP04SxjEG2GvQCiMd1WYM3ZH1SAyVYsEE5ImAy4U5ILygXDuOLBpLkdhVCg28cb4dlU36hgWPwXrbUETTCehfDg8gDMtqBiNUsp67mJ2VgrTArpb0/9D412Ahe9KHhixpwdhHBwQGyeDMtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SO65c1Bd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MAmsbmXQ; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GJ0qd759";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MRhwFgSJ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1D1491380271;
-	Wed, 13 Nov 2024 02:36:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SO65c1Bd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MAmsbmXQ"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5358E11401B7;
+	Wed, 13 Nov 2024 02:36:26 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 13 Nov 2024 02:36:22 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 13 Nov 2024 02:36:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731483382; x=1731569782; bh=drq41jJjhi
-	MPRuOvhjSnyLDcQ2bbgSAa3dwig35CHas=; b=GJ0qd759IoaH5J6CyZHEFKKbbN
-	LYSOSCAzADAJMUVSlpfS2N9mv0iVTSb4PEfAFtdV7Kxj5t6LnGr5zFdw55iNFllR
-	kQtebetNLavX1Ay2irmEzQpcSOr6gKy8BifpDB/Y+w/RTZ9FSBRlT0gRMv8k1CXq
-	Rufm21ssZqlmSnl06b1DzK8eGrhgMZyKY0yio5GNzhQ81hF0fr8q6mNVFhhEOPXP
-	J/oxB5KkoWE2Km73K7FbGa3cB35kqck+uO9AZv5+CJ72def6nfiDEvlBbCgjCr4G
-	EWTl/7+oywY2FiHXODiIIiLFqlnvfxECq+2C58wx2IkDPlLalK2aZ7GjnM7w==
+	:subject:to:to; s=fm3; t=1731483386; x=1731569786; bh=94CPBaTTVQ
+	4+DToSv0bDuDsbAASJSp/jlvNqxEg7OhE=; b=SO65c1BdHuLdZcvZ/PU5oRY7/n
+	myaAZWILr51AwVpnwgGMpxB2e8j6O6TDzsgSudTVY7TyyN7SzRyHmorNb4yrhhpP
+	pUoj48F/1suViu2T8FvBMLzG/zVUXZYohl1x13AdO2ZjbUy+rxUHRcIlzmS2bgJa
+	iNiaFk+nRjop8ihM4hVg0cfUssoI17EpbRVvYTJpcVtuWQwu8TvWRax6uMYaNuHh
+	j7XYZprpQUsUnep4GIeUM08sGTeVaXR/g7F57WKPd6aD9K8RB2vRgOV7radmXF1m
+	xi4SK8632q81eHyozhSsbVG7hCxmimCOXqLkpKtjevBfXRQ9cTbQ6H+zOfZw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731483382; x=1731569782; bh=drq41jJjhiMPRuOvhjSnyLDcQ2bbgSAa3dw
-	ig35CHas=; b=MRhwFgSJR9LS4Plo7PfDy8Vy/9WF0u/jnXqVjjmnztdG3DxTC8t
-	E6PL7m/QCd45yt2/Kblv4uRII/kk7VxBw5Bq4HgzAOuO2xQX1lb8oZlBcdzLQc8u
-	zUz0dXV299OM0OlHcDauZVFZJS/yIPICIecpmDmsmfFHQAoVjvv3TYs5WQ9itdfc
-	VtlNhsaDHo/+vTb+KGg5bnwZKgXRYMjMwaBfrOEEwJKuiXsoWSe28OsYHImSWy+N
-	vSlwRDhfiUkQvVET6yY517C5nADe4NBQ6eIGsEqGcYfOFaD4SmvviY1X8d7u7pYs
-	iaollcFMJCREuZLbNOKE0N7lSRYSmhV5IRg==
-X-ME-Sender: <xms:9VY0Zxm7b0DL_RY6GtgNg3C0ylWgbtaGE2lZH_b5nrrnTxE3gqKphQ>
-    <xme:9VY0Z807rUKw7OhOBy04wTxt_Y_osvUaHTp_mxeP1l5S-PE2eyONV7cuZTZlk1g2T
-    WhDD-g4kQ1SxgIIuA>
-X-ME-Received: <xmr:9VY0Z3r82OXkczpzAk1xFiDQ8sErcG-_fDGnzaCFthprYoiFartOAa9GNhRFDM7GpHkDiafJ_Bcu1Lak6M6VcCu-Qs-0NrP3oHUWnUV9NvysUyU>
+	1731483386; x=1731569786; bh=94CPBaTTVQ4+DToSv0bDuDsbAASJSp/jlvN
+	qxEg7OhE=; b=MAmsbmXQ7kai92XwF+bTukU/aaf6qVAL1w+1QnXC21d1NIXY5FO
+	fdgEJ3tA3Ye+QRstLpwBz2L6aMxUpi9tVlOSTRHw2IrdOFkHVYKzmGwAxn47KEh2
+	I4G4wOIz/NIkbxqkz4dwhX3Z6ub5crGWMzBrwozoKsWJQUb6yxgxz5O7nHVEn+9v
+	7qSS6K2qGdInsuGBk6/4oLK+a9rs9xi5mFPDwhF7IqlAT27lu6OtEwMDtvguWRJ0
+	g2TW9rJbPTTEHkPo/L8ZskDgFjsv/1ljqr0Du6jzqIA5mPrEhNIVYXkSK0sb4YNH
+	rfYPf9sMrBfxpFxjOOSZ8T1E8dBLBfyaztg==
+X-ME-Sender: <xms:-lY0Z2M6NtxcoXSbIQEYCLEs_adyA7X1VEfxIEOMDUAzgc0APsd6mQ>
+    <xme:-lY0Z0_qxXAIe_KV2To5Ubbrjux3rhJuv9_Jlq29regJwYUBfOrwTtoFtZEveQYiL
+    -0kfdYO4yFORWYU6Q>
+X-ME-Received: <xmr:-lY0Z9QV_E4IHdPE-SQewiXJHtu_G89bOSWvNfDy5wG6ea-y8wPCIYXKtsSWxsoxJG2EeDAcy05-v123qkpwYKJ1MwyyBZuudMCN-kFqflXK8eI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudelgddtiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -57,30 +57,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudelgddtiecutefuodetggdote
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhh
-    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesgh
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesgh
     hmrghilhdrtghomh
-X-ME-Proxy: <xmx:9VY0ZxmIlKEESyRSJtof7gK98Dypqe4QrXOFWxDgn0N0f1iO8iucbw>
-    <xmx:9VY0Z_0s1J95Divvqk6T7Jm2KqLxVJFxhJo8Zc6qglJeBj3Mxn_GXw>
-    <xmx:9VY0ZwsS5Q37nmDg3WnjOLcj9-Tq0vWdWw8EAAO-cw2HbgjGuQPbjQ>
-    <xmx:9VY0ZzUigFc4UqVQTit9FAkeH4Z7F0nSCLBmESC10lpH3X0hrn9wAg>
-    <xmx:9lY0Z6TiXQ76VShV2si37rQZwyoxoz4a1cCs2c6oZtL0IwG-zsvqmvOO>
+X-ME-Proxy: <xmx:-lY0Z2svRVmcqA1GQcSvykxjh3ge_zF4rZjFHwFxUc1PVTuhSe1-KA>
+    <xmx:-lY0Z-cW9-db-OK2exVnwoO5qSbNhqyjmNsaxf9PIpOpI_Zd6J2aKQ>
+    <xmx:-lY0Z63morIF4nMyDB78RmT5YJ0w4nU96KsFmKCq0HZyHKJpH-tRKA>
+    <xmx:-lY0Zy83tYp2MYOJ6xiQj2Jm9Lvvm4uGv7uHXPZE43ZQKUN5IhZQoQ>
+    <xmx:-lY0Z97cXu64msn1B5u9DvEyl2rr1cH3_WP2_2NynoViqUahr_Lz2A0n>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Nov 2024 02:36:20 -0500 (EST)
+ 13 Nov 2024 02:36:25 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c54eb3b4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 13 Nov 2024 07:35:43 +0000 (UTC)
-Date: Wed, 13 Nov 2024 08:36:12 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 943d1cf4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 13 Nov 2024 07:35:47 +0000 (UTC)
+Date: Wed, 13 Nov 2024 08:36:16 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 5/9] ref: port git-fsck(1) regular refs check for
- files backend
-Message-ID: <ZzRW7E2Z0ZYQ7i20@pks.im>
+Subject: Re: [PATCH v7 9/9] ref: add symlink ref content check for files
+ backend
+Message-ID: <ZzRW8M39-hw1E9-h@pks.im>
 References: <ZzCiCGxL4Adnd_eq@ArchLinux>
- <ZzCij4ilPLhlKXS6@ArchLinux>
+ <ZzCis8E49O10O1zr@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,59 +89,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZzCij4ilPLhlKXS6@ArchLinux>
+In-Reply-To: <ZzCis8E49O10O1zr@ArchLinux>
 
-On Sun, Nov 10, 2024 at 08:09:51PM +0800, shejialuo wrote:
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 8bfdce64bc..2d126ecbbe 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -3505,6 +3505,48 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
->  				  const char *refname,
->  				  struct dir_iterator *iter);
+On Sun, Nov 10, 2024 at 08:10:27PM +0800, shejialuo wrote:
+> @@ -3572,8 +3579,30 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
 >  
-> +static int files_fsck_refs_content(struct ref_store *ref_store,
-> +				   struct fsck_options *o,
-> +				   const char *target_name,
-> +				   struct dir_iterator *iter)
-> +{
-> +	struct strbuf ref_content = STRBUF_INIT;
-> +	struct strbuf referent = STRBUF_INIT;
-> +	struct fsck_ref_report report = { 0 };
-> +	unsigned int type = 0;
-> +	int failure_errno = 0;
-> +	struct object_id oid;
-> +	int ret = 0;
-> +
-> +	report.path = target_name;
-> +
-> +	if (S_ISLNK(iter->st.st_mode))
-> +		goto cleanup;
-> +
-> +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
+>  	report.path = target_name;
+>  
+> -	if (S_ISLNK(iter->st.st_mode))
+> +	if (S_ISLNK(iter->st.st_mode)) {
+> +		const char* relative_referent_path = NULL;
+
+Nit: the asterisk should stick with the variable name.
+
 > +		ret = fsck_report_ref(o, &report,
-> +				      FSCK_MSG_BAD_REF_CONTENT,
-> +				      "cannot read ref file '%s': %s",
-> +				      iter->path.buf, strerror(errno));
-> +		goto cleanup;
+> +				      FSCK_MSG_SYMLINK_REF,
+> +				      "use deprecated symbolic link for symref");
+> +
+> +		strbuf_add_absolute_path(&abs_gitdir, ref_store->gitdir);
+> +		strbuf_normalize_path(&abs_gitdir);
+> +		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
+> +			strbuf_addch(&abs_gitdir, '/');
+> +
+> +		strbuf_add_real_path(&ref_content, iter->path.buf);
+> +		skip_prefix(ref_content.buf, abs_gitdir.buf,
+> +			    &relative_referent_path);
+> +
+> +		if (relative_referent_path)
+> +			strbuf_addstr(&referent, relative_referent_path);
+> +		else
+> +			strbuf_addbuf(&referent, &ref_content);
+> +
+> +		ret |= files_fsck_symref_target(o, &report, &referent, 1);
+>  		goto cleanup;
 > +	}
 
-I didn't catch this in previous rounds, but it's a little dubious
-whether we should report this as an actual fsck error. I can expect
-multiple situations:
+I wonder whether this logic works as expected with per-worktree symbolic
+refs which are a symlink. On the other hand I wonder whether those work
+as expected in the first place. Probably not. *shrug*
 
-  - The file has weird permissions and thus cannot be read, failing with
-    EPERM, which doesn't match well with BAD_REF_CONTENT.
-
-  - The file does not exist anymore because we were racing with a
-    concurrent writer, failing with ENOENT. This is benign and expected
-    to happen in busy repos, so generating an error here feels wrong.
-
-  - The file cannot be read at all due to an I/O error. This may be
-    reported with BAD_REF_CONTENT, but conflating this with the case
-    where we have actually bad content may not be the best idea.
-
-So maybe we should ignore ENOENT, report bad permissions and otherwise
-return an actual error to the caller?
+In any case, it would be nice to have a test for this.
 
 Patrick
