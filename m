@@ -1,96 +1,138 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175321F9EA7
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 10:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2278F1FBC81
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 10:19:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731492512; cv=none; b=HcPqusc0NnlQADzjXf6YB68kBBHmck9hoJetpuujzLRrxwN2V3/sO+VXVFTNXixInBSlwSGH6WhZWlZlCfEPTBJ0SzUN2mc1RmFApXd8ieRCdBmVKCrSYHo43I3jddVhpDAfvs4Hwh6UojkW4t8lgZcbnNRL84sXKMJwOuy9WsU=
+	t=1731493176; cv=none; b=WBYQsldbOBaK9gNuQ27FIB3o462WUFj2LyjiX4PQieH8sy7Eg6R8JQ4gU5g8rOSedFkVbv1wwvUKqf5dAaMOotnIoWpRAspe8jFTNhRgrINGsPK4XSuwLpdqEWDt4FwSC6g55sD4Rl0lj++Ct2sXv2lwh5pcYmaxo6yNMIZXppg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731492512; c=relaxed/simple;
-	bh=N743VxwD9LG+DqXEzOpIEpYWWPQ55qOyXuwiCJxxOw8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=p3d1cUuYcQP7B1jHt+vw49+QyxeRQycnr4HM4amHscVvWHLhcMK3dcjSfNa8RupV53juN/Tbu1j3dKR/Wcq4fKwu5yrHu444LcyJ1McmOEVGr7SPwxapYw9M7SXSfMJZ15zkgFCfh++KQItA7eOycTmaXhyKlAYo6wq/WGGmqaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rQaQSDH0; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1731493176; c=relaxed/simple;
+	bh=4ZEQb6QxKuIM0/Ztd42QafS/xq0orflPI91AM9gqkAk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jCUX4w7qqIEv5t7/Cd+9q4KjQBGXS/o8p6Lftj3aGyfrVAO1GfNU3GYSjuifxoPHtCsgtxmXlQo6ypZqlX3ByEsoR697LbZF+ba0nZ203mBBDEcsFK1pa63lq+2oBJzc0Wc7x85J4PPyrzwjuSXFfinIMo17p2sJK9XS5xoDWNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TDaRuzk1; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rQaQSDH0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1731492505; x=1732097305;
-	i=johannes.schindelin@gmx.de;
-	bh=N743VxwD9LG+DqXEzOpIEpYWWPQ55qOyXuwiCJxxOw8=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=rQaQSDH0S/h43cNG7PdYfvLhIMHIKfH6OxHmao0JKKtMBrkEXK0oyKrXtEv9qz/2
-	 bZysXO6B8eeuQIE7osDhWiaUlXDvlY+zTgtYIF+M4IcmZzZ/IUJNIUT5iQPRCGCYV
-	 3wB0h8KT/Hg2FfwUg3k398sU3yhkbjNRVXudE8TXCt3LQqEF14pWIKryaCkLmxwU7
-	 W9sf95B6f+kzxOhrESIrmIPsZb84Ocrw7a9adsttT0XTGE3T6In59ABZK3wVBYmSu
-	 aEbQR+SIafnc03eHa2JpokxPTlEKYZJdy8neStJZWCVQs7yvTXtbF11oZaDrgkyEh
-	 8gnLWEbCpx9wlFAvTA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.215.196]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCsUC-1t2Kbo3oMS-00AC68; Wed, 13
- Nov 2024 11:08:24 +0100
-Date: Wed, 13 Nov 2024 11:08:24 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Yongmin <yewon@revi.email>, Junio C Hamano <gitster@pobox.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH] ci: update to jgit 7
-In-Reply-To: <ZzRXGi_c2ncEJNu4@pks.im>
-Message-ID: <492a40f0-c8b8-01db-e4bf-10478f1f6108@gmx.de>
-References: <xmqqmsi3262e.fsf@gitster.g> <ZzRP7cR6S6YCWIze@pks.im> <653fd6b0-0351-44ec-ba31-dbae0e2d3ca5@app.fastmail.com> <ZzRXGi_c2ncEJNu4@pks.im>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TDaRuzk1"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1731493168;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+pEX5ySkJxA1qfJO7xBOXCU1xuns1K8G1TdKYauOc9E=;
+	b=TDaRuzk1IJv9KCFYI2NDjbirmAFgbcprdxmSKL25jjDOSH1QDJuFaP368pKdzfmw1TU9BU
+	WNka+YaeXZRCX3CAsdWxaimM9bpOSiyX32WUGE5xUYPzM2i5wk7y6rBtCdt2nllgZ8gkDG
+	NQZgutii8u+EA8i+gx3yHPAhzY1Bmds=
+From: Toon Claes <toon@iotcl.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: Todd Zullinger <tmz@pobox.com>, Elia Pinto <gitter.spiros@gmail.com>,
+ Usman Akinyemi <usmanakinyemi202@gmail.com>, Andreas Schwab
+ <schwab@linux-m68k.org>, Christian Couder <christian.couder@gmail.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: check malloc debug LD_PRELOAD before using
+In-Reply-To: <20241111070134.GA675125@coredump.intra.peff.net>
+References: <CAPSxiM9GZLKNbyCmgpz6b7Z-MLe8TfMaatR8FPNwvsHA411dtA@mail.gmail.com>
+ <CAP8UFD1-HsYsPRQwWMo8ipf-VdqF+9=HUTTr4BhEArR=V3ucxA@mail.gmail.com>
+ <CAPSxiM9UGLVrOh6XR5fn38ginCVKMOc7yQMcm+qsaF3bi+anSw@mail.gmail.com>
+ <CAP8UFD2=imvtamewLN+VvKDK83aL7NhGAb=MjvHQ2OwaK-n5UQ@mail.gmail.com>
+ <87msi85vc9.fsf@igel.home>
+ <CAPSxiM_h2yEZcUPP33q8HHdn6kqq7SbvzNq8eEFda81ZgY6R2w@mail.gmail.com>
+ <Zy-IYwjb_RO5NW-s@teonanacatl.net>
+ <20241109190012.GA588841@coredump.intra.peff.net>
+ <xmqq7c9aihvx.fsf@gitster.g>
+ <20241111070134.GA675125@coredump.intra.peff.net>
+Date: Wed, 13 Nov 2024 11:19:13 +0100
+Message-ID: <87zfm3iggu.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jhE4sTzBOIANTBzbiXLy6VsnhsB2JMdbY6q2aXCkn692/WtBoSD
- Xd/pVa9E3jZl6i8vn5f8ZQUsA6qz09U3F2LfWUpDPfGXqz0Bj3ijSyWHVfWNORFUBc9CL02
- AT6i9avvikIUfgLjtc7+C/N14dqUiqbnRhlI0VOBN86SnsWKXkHH2S76n9FZFjfWnf2jq7U
- fPVNBgNgOr8OQsXHvQapQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:EmY2VSCir+k=;pJPJECC9Z5yekF37YBdFamkw7lT
- TLbs41hjVXXRUPl03g0Iz/ne3RAm4hgtxFaHTbl26bj9YQB7Oclsn/cn/FNVMjbRPX6H0BjW7
- mGsNKHCHWv60ZITgcVgdjRvyP31aYy7PKQADO8IwnyZ9E2fbiNBsWsJIOuOt/EYv8egDbe/iL
- xxYUgaxAF+St3OOs+WlGZwigp4tmtJImun3cWtZ5Qmhaqr2MLbQeIfj9asKyR58s7+hhgtAy7
- DO4okj11epxw3rK5+VfW0vsIDOdixj9hGEjZk4gpjkJt6kS6anKnqEodwQlW4F1+DahyB4spy
- q9BzHIGpenqIELNpvqHl0w7Oj7szKZMxqrrN/HQdlNiYweEgzlepWkfBx/9jgVZ59zUCjvjTY
- jskZOACfSMKDoS4zOpBVDBvVQteg8XQNThz7xPq+7BJ5ETwQVZ0fMlYBBBBe/co+42GVEr7Bt
- wWGylTdXo2P6GkZ6vp80mYu1zYkluBEJ+4GVYbE67JhS6iFPQyfcRC91RnyaNfV0twKYzlU1I
- 2i7DBru+ztO8gfeF5kd+wF9o4pShI5VtTQcX+FA4cmjxvw5YP77ZrU+4ndMO/p5qeE5RgVvn/
- vs07bVmhsXGM/XWrmltu2XQE64a/XVDDtvSlbGT5dvkFOUhFiRsZE+fUTjowMVQdUv1Hg/R/6
- WOr+YbSqduVkEW4x7Gb+Bihz2uw6WiAfaMSV01vRMnxwkzPnPQzVnrYSK/d9pATmbY2iX7vkg
- pjZXEQCMLx7xnEsrwm9XG6WthgO+VNazTPGzkPilia2UnJ8VtOFjHjbICG5QPOaJjKQlnJS7f
- 6yb2AD6YmRguIgKMY6DjV4988K2XkSOEVK69cMI2loudcmBUxqWq5gGEDlxNLa6B5tbaaga8Z
- eq+VJf3piWi/Wgzd+5qE29AEgOdPQKcLov/3r6OYFlGFXJm+HYLTwJtP5
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Wed, 13 Nov 2024, Patrick Steinhardt wrote:
-
-> On Wed, Nov 13, 2024 at 04:35:44PM +0900, Yongmin wrote:
-> > On 2024-11-13 (Wed) 16:06:21+09:00, Patrick Steinhardt <ps@pks.im> wro=
-te:
-> > > Seems like all of the downloads result in a 403 now. I was digging a=
- bit
-> > > through the mailing list archives (jgit-dev, eclipse-mirrors) and
-> > > couldn't find any hint as to what is going on there.
-> >
-> > It could be [this]?
-> >
-> > [this]: https://www.eclipsestatus.io/maintenance/456545
+> Subject: [PATCH] test-lib: check malloc debug LD_PRELOAD before using
 >
-> Oh, that I didn't spot. Very much looks like that would be the root
-> cause, thanks for the pointer!
+> This fixes test failures across the suite on glibc platforms that don't
+> have libc_malloc_debug.so.0.
 
-Sure enough, it looks like this was it, as it is now working again.
+As I ran into this issue not so long as well, I'm really supportive of
+adding a fix for this.
 
-Thank you Yongmin for finding this valuable information!
-Johannes
+> We added support for glibc's malloc checking routines long ago in
+> a731fa916e (Add MALLOC_CHECK_ and MALLOC_PERTURB_ libc env to the test
+> suite for detecting heap corruption, 2012-09-14). Back then we didn't
+> need to do any checks to see if the platform supported it. We were just
+> setting some environment variables which would either enable it or not.
+>
+> That changed in 131b94a10a (test-lib.sh: Use GLIBC_TUNABLES instead of
+> MALLOC_CHECK_ on glibc >= 2.34, 2022-03-04). Now that glibc split this
+> out into libc_malloc_debug.so, we have to add it to LD_PRELOAD. We only
+> do that when we detect glibc, but it's possible to have glibc but not
+> the malloc debug library. In that case LD_PRELOAD will complain to
+> stderr, and tests which check for an empty stderr will fail.
+>
+> You can work around this by setting TEST_NO_MALLOC_CHECK, which disables
+> the feature entirely. But it's not obvious to know you need to do that.
+> Instead, since this malloc checking is best-effort anyway, let's just
+> automatically disable it when the LD_PRELOAD appears not to work. We can
+> check it by running something simple that should work (and produce
+> nothing on stderr) like "git version".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/test-lib.sh | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index a278181a05..4fe757fe9a 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -593,9 +593,12 @@ then
+>  	}
+>  else
+>  	_USE_GLIBC_TUNABLES=
+> +	_USE_GLIBC_PRELOAD=
+>  	if _GLIBC_VERSION=$(getconf GNU_LIBC_VERSION 2>/dev/null) &&
+>  	   _GLIBC_VERSION=${_GLIBC_VERSION#"glibc "} &&
+> -	   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null
+> +	   expr 2.34 \<= "$_GLIBC_VERSION" >/dev/null &&
+> +	   stderr=$(LD_PRELOAD=$_USE_GLIBC_PRELOAD git version 2>&1 >/dev/null) &&
+
+Can we assume some version of git is in the $PATH here? I see $PATH and
+$GIT_EXEC_PATH are only determined at line 1440 and further.
+
+> +	   test -z "$stderr"
+>  	then
+>  		_USE_GLIBC_TUNABLES=YesPlease
+
+Shall we include a warning in a else clause to inform the user the tests
+were started with malloc check, but libc_malloc_debug.so.0 was not found
+and they should either install it or run with TEST_NO_MALLOC_CHECK?
+
+>  	fi
+> @@ -607,7 +610,7 @@ else
+>  		if test -n "$_USE_GLIBC_TUNABLES"
+>  		then
+>  			g=
+> -			LD_PRELOAD="libc_malloc_debug.so.0"
+> +			LD_PRELOAD=$_USE_GLIBC_PRELOAD
+>  			for t in \
+>  				glibc.malloc.check=1 \
+>  				glibc.malloc.perturb=165
+> -- 
+> 2.47.0.495.g1253739cc1
+
+I've tested this patch with and without having glibc-utils installed, in
+combination of having TEST_NO_MALLOC_CHECK set/unset and seems to work
+like a charm.
+
+
+--
+Toon
