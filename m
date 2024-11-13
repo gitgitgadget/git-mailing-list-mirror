@@ -1,79 +1,76 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6F42AE84
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 23:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E573B18E02E
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 23:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731538861; cv=none; b=a4mhoLZvrMLjN9xTSg7um3NH/ITlQRVvHV8dQMWnOjt0yY5aJct2+jjUCbH8139EEtL2t02OP3BPkZ8kUxVizFEvVv/7LmgWu/z+mHVeu8F9hbp3M1psUJMej+bQOdWr2DzriDWPGdZ1TtyIWkBxVSebbIfrtZxmiGc2zEwWGSY=
+	t=1731542193; cv=none; b=AkUL0k+EaMrCAbyGargM4tGT4mSKqqLSPsvUvLRKiJuo5EsVvFtbOn8ykDyFjAoYVzhaGOx11PKtHClGGmqpYcf4OQi9jz6Hu9EyZAPM+bz1dfu41Ry5FTFv0vePz3E+Ddk3B4nh2e61wAV049JCLH5YSWtu67YgqHUIy7U1A24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731538861; c=relaxed/simple;
-	bh=EMathhzpiL4ZiXynnzLHuh7NlpA9uu03bNLuW8FAElI=;
+	s=arc-20240116; t=1731542193; c=relaxed/simple;
+	bh=pqeRIt3YwmKrLltsgV8G1wXAPpsEwNGAWc+P7kI9pvw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=enhqazqRoCSfYlln5XxTHL62pe9FBXEwWMoJ8UJwisdkNCldcIXHbl5+DuCR/Ck67qHtZCBLoG0TxOLS6Tm7yBQ87k6kK2d1FlqnCkDIsO9diAS+KDouF1an5HGETkBWCUBRO4h3cBV5u1+g7J6bzdLV5oq705g+VO7yyAMYgyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jdQn5KqR; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=VBG1fQqPx4V4N9LvShGkca80YxEPV2WOypqtykZx6G4MF5lf8PxCjYZ6ttkgRlCEKVgSaS56R97avRR/2Jxjmz0L33xNKQ9j5WBK9mju0e4ZiIHJrH6oGp0DasYSwnvvrzO8G8eHBDjhaHAs88gQqszCjs5pfNqxDSSHey8QVzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NoHgEPSi; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jdQn5KqR"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D0764254023E;
-	Wed, 13 Nov 2024 18:00:58 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 13 Nov 2024 18:00:59 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NoHgEPSi"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 091C411401D4;
+	Wed, 13 Nov 2024 18:56:31 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 13 Nov 2024 18:56:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731538858; x=1731625258; bh=V+iQf5StHhFjMbMsfHwGZB0heSNR7PA8J96
-	xHL4pzXY=; b=jdQn5KqRGx1Y3R2QA/NAVNYbvagZNRjxc7nz+EhcLUJ8z7Xicuj
-	21fWVD0MUWKtS//zpoOnF9wO2n2kZzfh+nQQxniT88+yLEH57+u/uQuLmJ5gQ96M
-	7VRcpyK850CVi1iLFvHX7Ohyb0tsUqcu6y49QTaTRRddqduDLp8Inl3i2ciffSc6
-	NUbGhZXM80P9TnZmoFK+x9CcpLWurCiVYqZmxVbSp5CBf87GTdQ2Hfn0gkCf3/K8
-	fLrYTKcUPrfIu+7GXJGEaAIWgv6zY0qL94g5/Ym620VSE4MtOIFhN6yWfXlHskVA
-	brxpZ9m893hmzDjKk9ndT7ai4koWP7xpKAg==
-X-ME-Sender: <xms:qi81Z_7ur0dI8GWPn8-SyUpvmKHiyPasp9yqkRge5RcH5UpZNezSMQ>
-    <xme:qi81Z04Sv3S9XmBhat37Fc6AK2nhroaDU2e93WC4qLov331QucEE0qBWLlXGbtp_A
-    tkAZKmrs7Ee0fOLcA>
-X-ME-Received: <xmr:qi81Z2c3FdslAHZgOiN7Ogx3YSPcJBYasv_g-QoIlS6Gy4llI20GEzb3s4mftjq63Dvv7APOaOyFouLDnr8RExld9moF-H_RsJZo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugddtgecutefuodetggdotefrodftvf
+	1731542190; x=1731628590; bh=iBfB0bhcp0BVPgrl98F21bXPRoQ+3wbC90D
+	K1eDdVXM=; b=NoHgEPSidQPBV0XQD12ucm+s+gVh0yp6MI9Vpfk0lhw88CobGIr
+	h6ncpa+VmLLq+vSRS71J4X3Nyi+dwqms7BZcnVNpZKr7Oj/WXUtHX08UzPhSt2aq
+	ls0Y2KhnMMxd0PxqHcQmNCFN4vc+NYeq9o17BdNkqDxNkAwlJ5hCPl+h+Ngw4OF2
+	t2qfrqtbts/zGw3XCFR9MHXGbDRt1oPoItaZw2c/F36hpGD1W+p0AXKl5+15dvtD
+	Y6m4dHH/p0NLeIJxKkItLLK6MWGQHtFHgNFxMMieT1wJh2sVcz8gXKMnNfOEUQXu
+	UinxifVqUQbur8lgp1bxKYQDlC+1J+Pmx4g==
+X-ME-Sender: <xms:rjw1ZzuMs8nGvYAdg405ePUOVPfrJ6dI-FylTq7POvyUsFG8wzmo5Q>
+    <xme:rjw1Z0fTyel64OycBkBBW0sYVkTo1_R4s-GiN8bC0GXIEBkb1CB0WkTEiHvjknuI-
+    1k7vC_ydMRYcj9MvQ>
+X-ME-Received: <xmr:rjw1Z2wXlS0Nu6_oRr77KvMq9-5-3GZx0TNI0AsaK0iVOiWb7l3QhZAF9tN-xIWp1bfJh_V5i3bCIGWQZKTI744Of1YHbzCrk069>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugdduhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
-    htthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepshhtohhlvggv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qi81ZwKNpgGZmc2qChQ9Myr7Gb71cFlTSSJyJ_JFTtVb3DNYCX994g>
-    <xmx:qi81ZzKatUwZcbtriEPwUX5YkmqBzSiBzIbu3dzd6EL7YLlnpkMisQ>
-    <xmx:qi81Z5wv2tSHFQBA9vTYQBpo0ZYYT2aMX27n3le8cG3H2G1SPAas4Q>
-    <xmx:qi81Z_L-GUZYvHfyHorIwwsHe6HhvWD_xAvEcsPDmcGw3IfVSR4OOA>
-    <xmx:qi81ZwrMaaDiPSvaucE7aHL3Zd9R5zw50Ot6mdosAyWsO-6mDfwVf0Md>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrdduke
+    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvg
+    esthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rjw1ZyNt-d_Iz4whjruCTU9BhocNlFX7yyG5PR5EJxPLzc1J41s-hQ>
+    <xmx:rjw1Zz-uyKfzsACCGrgfMDo-LOsQKIyxHLoPPSHE08W0CaYg7A9Bgg>
+    <xmx:rjw1ZyVn-YG_C8Vm3RK3J41CuSQ-wP1U2sTqtUYvMKFTBvuvQn4ksQ>
+    <xmx:rjw1Z0e6lQhqBTscG1eemMm0_R0sOG5HqWGh4vCQAHPidwY-fHIvSA>
+    <xmx:rjw1Zzx22PNKsCpmw0ekIqRwXE_m1CyJoriBSgyCrG2SsTARRb-3SalD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Nov 2024 18:00:57 -0500 (EST)
+ 13 Nov 2024 18:56:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: phillip.wood123@gmail.com
-Cc: kristofferhaugsbakk@fastmail.com,  git@vger.kernel.org,  Kristoffer
- Haugsbakk <code@khaugsbakk.name>,  stolee@gmail.com,  me@ttaylorr.com
-Subject: Re: [PATCH v2 2/3] sequencer: comment `--reference` subject line
- properly
-In-Reply-To: <4c623fcf-01dd-4056-80c1-b3c860ab7f87@gmail.com> (phillip's
-	message of "Wed, 13 Nov 2024 14:48:59 +0000")
-References: <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
-	<cover.1731406513.git.code@khaugsbakk.name>
-	<710c5b1a3f6bf8dc112ff13f27a8b2165274488d.1731406513.git.code@khaugsbakk.name>
-	<xmqqbjyk2b70.fsf@gitster.g>
-	<4c623fcf-01dd-4056-80c1-b3c860ab7f87@gmail.com>
-Date: Thu, 14 Nov 2024 08:00:56 +0900
-Message-ID: <xmqqv7wq91sn.fsf@gitster.g>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  me@ttaylorr.com,
+  peff@peff.net
+Subject: Re: [PATCH v7 1/9] packfile: add repository to struct `packed_git`
+In-Reply-To: <CAOLa=ZTmmpqC7xDLMop=O1_gV+wj9P+dGqT18W7doo09XW3hwA@mail.gmail.com>
+	(karthik nayak's message of "Wed, 13 Nov 2024 05:04:03 -0800")
+References: <cover.1731323350.git.karthik.188@gmail.com>
+	<6c00e25c86b495c75182ee5dfc9e82ca659f5aaf.1731323350.git.karthik.188@gmail.com>
+	<87ttcbi9w1.fsf@iotcl.com>
+	<CAOLa=ZTmmpqC7xDLMop=O1_gV+wj9P+dGqT18W7doo09XW3hwA@mail.gmail.com>
+Date: Thu, 14 Nov 2024 08:56:28 +0900
+Message-ID: <xmqqh68a8z83.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,28 +80,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-phillip.wood123@gmail.com writes:
+karthik nayak <karthik.188@gmail.com> writes:
 
->> I guess this fails by leaving the "# *** SAY WHY" in the resulting
->> message, because the stripspace wants to see '%' to start commented
->> out lines to be stripped?  If we inspect with this test what the
->> temporary file we give to the editor looks like to make sure that
->> '%' is used for commenting, that would be a more direct test, but
->> without going that far, at least can we have a comment describing
->> how this is expected to fail without the fix?
->
-> For me something like
->
-> 	GIT_EDITOR="cat >actual" git -c core.commentChar=% revert \
-> 		--edit --reference HEAD &&
-> 	test_grep "^% \*\*\* SAY WHY WE ARE REVERTING THE COMMIT \*\*\*" \
-> 		  actual
->
-> Would be a more convincing test as it actually checks that the user sees
-> the line that we expect strbuf_stripspace() to remove from the final
-> message.
+> Indeed. I'll add it in locally but will avoid a re-roll just for the
+> typo.
 
-Yes, it is a more direct test.  If we did that, that would of course
-be preferrable.
+FWIW, I'd _strongly_ prefer people *not* phrase it that way.
+
+It is very much sensible to refrain sending an another reroll
+immediately only to correct a small typo.  IOW, "avoid a" -> "avoid
+an immediate" would be very much appreciated.
+
+But in the end, the final version should not waste all the work that
+went into reviewing the series.
 
 Thanks.
