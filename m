@@ -1,21 +1,21 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF11B7E111
-	for <git@vger.kernel.org>; Wed, 13 Nov 2024 14:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2566E1C695
+	for <git@vger.kernel.org>; Wed, 13 Nov 2024 14:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731509858; cv=none; b=RHfAAoHkW5i96w34MoYDPsaLhG24rGk2uoNwwAuuHMW6w6Meq903zNz8PBB2lBAHzA3ofR8+ntqeTRxvq7uK26ePkHajOzD8DtsAHT/oQYDM+Oi5DSzyxQCSygePu15sO2lT3uD5OO8ouLZHxK91ZlQcJswmc1WBFKf8xXnOXhA=
+	t=1731509880; cv=none; b=pmxuzYx2v7D2v7hykidgc0kgPApm7oYT5EjAjMTZjRXeePvOIuRAa2cTxIKIIY/ohAlQLP3Z5wsX3PNDi93k8WgVz07LNPMnICXWCv2rTWYVFL6DmU7RvFKiKRTXs2j+gKYSRGn0zM8gMfdrkBQarizTcNP/EujSt/rfTI8DnTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731509858; c=relaxed/simple;
-	bh=TFAAfCWwbjLjKZIdTeerniz8pM4V3AztIpHU72jcYVU=;
+	s=arc-20240116; t=1731509880; c=relaxed/simple;
+	bh=KRKJwMDFB32F+ktld5Ex/RVnkFLk/385Gc0BqxhsPKY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AbnRaTmxi8zXtvU0IR6U0j4XuiDP9BgVy5anNV80f9BaBC+Dcs+iHIdxu1ID1b0k5E7O/gGP5ksXzCPwzMtH8mlETXe8fFW4u+E/AS4Q+QB9YoKX9zB/QFFy3NW3vtPWA2PJQc1JexngYDXtA77cV1lr0sKj4kN96FWran///+Q=
+	 In-Reply-To:Content-Type; b=bpLrYJBH+bLhAc1yCPF4mJLi83jaL+AP4JNKwMeBX+zJZY7MXmCLt2RY5GU+zpIfltl9ID29LbOY0IHKJXeZgcNIhgc5g5uU7tlHSwis3FzL/JzJvP+6xPBqctVqjer3/4mfdsJj2phKBLH54XQmp+PpJnap0yb9IFlHjZs6i5k=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <e94b2d97-a2fe-45b0-a5b4-89c8140b5e4b@gentoo.org>
-Date: Wed, 13 Nov 2024 09:57:32 -0500
+Message-ID: <c323599d-f60f-443c-8073-0942afbcdc04@gentoo.org>
+Date: Wed, 13 Nov 2024 09:57:55 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -24,7 +24,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-To: David Aguilar <davvid@gmail.com>, Patrick Steinhardt <ps@pks.im>
+To: Patrick Steinhardt <ps@pks.im>, David Aguilar <davvid@gmail.com>
 Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
  Eric Sunshine <sunshine@sunshineco.com>,
  Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
@@ -34,6 +34,7 @@ References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
  <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
  <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
  <ZzHeMjqUjzWpdX-Y@pks.im> <ZzRvsOeLsq3dJbGw@gmail.com>
+ <ZzSprTl5Z3uIx0_d@pks.im>
 Content-Language: en-US
 From: Eli Schwartz <eschwartz@gentoo.org>
 Autocrypt: addr=eschwartz@gentoo.org; keydata=
@@ -45,119 +46,136 @@ Autocrypt: addr=eschwartz@gentoo.org; keydata=
  1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
  Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
  TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <ZzRvsOeLsq3dJbGw@gmail.com>
+In-Reply-To: <ZzSprTl5Z3uIx0_d@pks.im>
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="------------AfXMVdIpziZZxH2ErPIdxATg"
+ boundary="------------vYDpAU4HVe33WXmNKtIeakGy"
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------AfXMVdIpziZZxH2ErPIdxATg
-Content-Type: multipart/mixed; boundary="------------6GsASb0zmyLs9vmWKmhqFSMf";
+--------------vYDpAU4HVe33WXmNKtIeakGy
+Content-Type: multipart/mixed; boundary="------------caEsWlseGmn0u8vAPgDLaVee";
  protected-headers="v1"
 From: Eli Schwartz <eschwartz@gentoo.org>
-To: David Aguilar <davvid@gmail.com>, Patrick Steinhardt <ps@pks.im>
+To: Patrick Steinhardt <ps@pks.im>, David Aguilar <davvid@gmail.com>
 Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
  Eric Sunshine <sunshine@sunshineco.com>,
  Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano
  <gitster@pobox.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
  Jeff King <peff@peff.net>
-Message-ID: <e94b2d97-a2fe-45b0-a5b4-89c8140b5e4b@gentoo.org>
+Message-ID: <c323599d-f60f-443c-8073-0942afbcdc04@gentoo.org>
 Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
 References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
  <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
  <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
  <ZzHeMjqUjzWpdX-Y@pks.im> <ZzRvsOeLsq3dJbGw@gmail.com>
-In-Reply-To: <ZzRvsOeLsq3dJbGw@gmail.com>
+ <ZzSprTl5Z3uIx0_d@pks.im>
+In-Reply-To: <ZzSprTl5Z3uIx0_d@pks.im>
 
---------------6GsASb0zmyLs9vmWKmhqFSMf
+--------------caEsWlseGmn0u8vAPgDLaVee
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On 11/13/24 4:21 AM, David Aguilar wrote:
-> As to why I consider Python a liability ~ this is more of a concern for=
+On 11/13/24 8:29 AM, Patrick Steinhardt wrote:
+> Fair. I don't really expect anybody to use the combination of muon/sumo=
 
-> Meson and it doesn't really matter for end users, but Python has a
-> proven track record of making breaking changes.
+> for everyday work, mostly because the usability is not quite up to par
+> with Meson/Ninja. But there are two use cases that I deem important:
+
+
+(samu :P)
+
+
+>   - Esoteric platforms that may not have Python available. I don't know=
+
+>     whether there actually are any relevant ones, but with muon/sumo it=
+
+>     is possible to support these.
 >=20
-> If you're building everything from scratch with new versions of
-> compilers and tools then the C++ project is the one that's going to
-> build just fine a decade from now with little to minimal effort.
-> Python doesn't have that track record.
+>   - Bootstrappability, which I think is rather critical for a project
+>     like Git that is at the core of the whole software ecosystem.
+>     Depending only on a C99 compiler and a shell is a huge win here.
 >=20
-> Even though CMake is written in C++ (which is unacceptable for some
-> projects), this is subjectively one advantage that CMake seems to have.=
+> A bit of an anecdota, but CMake itself for example struggles with this
+> quite heavily because it has dependencies that use CMake themselves. So=
 
-> This is a moot point, though, and perhaps Python will eventually reach
-> this same level of respect for not introducing breaking changes.
+> it is nice that there is a clear path for bootstrapping with Meson and
+> thus Git.
+
+
+Yeah, the cmake bootstrap route tends to be an issue for Linux distros
+because we want to use system packages for those dependencies, and while
+it's possible to build a bootstrap seed `cmake` binary using their
+shellscript and use it to build a "real" cmake, that doesn't really help
+you install cmake's dependencies. There are some tricks you can do like
+for example on Gentoo, bootstrap the OS with http2 support in curl
+toggled off, so you can build without nghttp2 / no cmake, then use that
+to build cmake, then rebuild curl. It requires manual intervention but
+then you can reuse the existing cmake binary.
+
+There's generally no path for building cmake with bundled dependencies,
+as that would conflict with the desired end state of distributing cmake
+linked to system packages.
+
+
+
+>> Thanks. I don't want to be the CMake champion, so here are a few
+>> helpful/surprising details about the Meson build to help make it bette=
+r.
+>>
+>>
+>> (1) I first built w/out having "curl-config" installed. I was surprise=
+d
+>> to find that "ninja -C build install" ended up installing "bin/curl" a=
+nd
+>> "bin/curl-config" into the prefix.
+>>
+>> Is there a way to have the install step only install Git without
+>> bringing along these other non-Git bits?
 >=20
-> Furthermore, I suspect that most contributors are simply going to
-> "apt install meson" or "brew install meson" so it's not really that muc=
-h
-> of an issue in practice for the majority of users/contributors.
+> It definitely shouldn't install curl and curl-config, I'll have a look
+> at that. But other than that Meson is currently set up such that it wil=
+l
+> automatically fall back to the subprojects in case certain dependencies=
+
+> cannot be found. This can be disabled via `meson setup --wrap-mode
+> nofallback`.
 
 
-For what it's worth, meson is aware that python breaking changes are a
-potential issue. Although the general python ecosystem is fairly lax
-about this -- on *all* points across:
 
-- cpython itself being backwards incompatible
+https://github.com/mesonbuild/wrapdb/tree/master/subprojects/packagefiles=
+/curl
 
-- projects making breaking changes in a micro release
+could be updated to handle the case where meson.is_subproject() returns
+"true", by not installing tooling.
 
-- projects deciding to only support the latest, or 2 most recent,
-  versions of cpython
+Alternatively, meson install --skip-subprojects can avoid installing
+*any* files from subprojects, on the theory that subprojects exist
+solely to provide static libraries linked into the real project.
 
-meson pedantically avoids non-standard-library dependencies both for
-bootstrappability and for points 2 & 3.
-
-Regarding point 1, meson can't do a lot other than adapt. But the latest
-version of meson will always support *all* non-EOL versions of python,
-we do prerelease testing of cpython betas, and we do not drop support
-even for EOL versions of cpython unless, having carefully evaluated the
-benefits and negatives, we decide that the advantages of relying on a
-new version outweigh the downside of preventing people on older systems
-with older cpython from upgrading meson.
-
-Currently that means we still support 7 different versions of cpython,
-including 2 versions that are EOL (and 4 versions that built with c89,
-before the migration to c11).
-
-Of course, as you say it's a bit of a moot point given that muon exists.
-But I just wanted to clarify that meson does take this concern seriously
-and we try to do everything we can to make that work -- even when some
-meson maintainers are unhappy and feel that being unable to depend on
-unpredictable third-party modules cramps their style.
-
-We know that we are core FOSS infrastructure, and are used by other core
-FOSS infrastructure projects such as init systems (both systemd and
-openrc), graphics stacks (mesa, libdrm, both xorg and wayland), desktops
-(gnome has an official directive to use meson), and a variety of
-freedesktop projects, many of which need to keep building on LTS
-versions of Debian oldoldstable (not a typo) and oftentimes on even more
-surprising platforms.
-
-And in some cases we've been a bit influential in getting cpython to
-revert breaking changes :) e.g. python 3.13 reverted the removal of the
-importlib.resources "Functional API".
+(In theory, one could have a subproject where arbitrary data files from
+a subproject dependency are crucial at runtime. I think the gnome
+ecosystem does this, hence using GLib / Gtk as a subproject "needs" to
+install the subproject too -- but curl definitely doesn't have this
+issue...)
 
 
 
 --=20
 Eli Schwartz
 
---------------6GsASb0zmyLs9vmWKmhqFSMf--
+--------------caEsWlseGmn0u8vAPgDLaVee--
 
---------------AfXMVdIpziZZxH2ErPIdxATg
+--------------vYDpAU4HVe33WXmNKtIeakGy
 Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzS+XAUDAAAAAAAKCRCEp9ErcA0vVxkb
-AQCiqxLPMfRsz+vcQXot1Ucd3sp8o5L/G/rRPNlltCv1IwD+OPoQ0kCPV/C9101MFZrWm5dFGbJf
-+s8lhdaiE0l/5A0=
-=UdsS
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzS+cwUDAAAAAAAKCRCEp9ErcA0vV2b2
+AP4pkS2PlTaz+gFta2hj56XfAcBK0MdkfyJPMuv8jhWywwD/fYofsziXLDn7abhVeVgKtTcmQnGK
+xoFUcWcX9IWUuw0=
+=WPFL
 -----END PGP SIGNATURE-----
 
---------------AfXMVdIpziZZxH2ErPIdxATg--
+--------------vYDpAU4HVe33WXmNKtIeakGy--
