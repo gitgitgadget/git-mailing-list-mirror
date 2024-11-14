@@ -1,66 +1,65 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048D51CABA
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 13:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C2AB65C
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 13:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731591617; cv=none; b=JKyz8+OLyPb1gk1kAMSR0be0rQ9zs8tNV4iRPD+r6iFYVjgjfmFRZlbBlPnTOC08dQBIJx2wP9ycWMNx2ZmpHs2/vyck2TaHpL35ieg7vLlWtT7qiXFqTyMD2/g+dI1XJvOLVC+6qzKREq0E24//0PkJehI+tNVdTQrEKhtEMq8=
+	t=1731591729; cv=none; b=LCKaj9wuOxsHR1XM+XpD+6QBUtsU3n+yNs7ijFfpS647lNJFhjMTfBV4AKjOp8SWGnIaU0cAWm6Rg56Z7WL/n/oDReA54oA3IgHkSWmFj+oJk2xbNogPo9G4MmuxZ49itwqEl16FcwbvrkywMsG3gAkdo1H6KH/elLCVNAHt64E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731591617; c=relaxed/simple;
-	bh=iE1GpTPQSwu2zOO1OlMAZ/2RPBapnTpWjmvRd5fxFCM=;
+	s=arc-20240116; t=1731591729; c=relaxed/simple;
+	bh=tA44fHS8aDYPzid5Az0kykyAOWMV102ynkfS7nnRE4k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nqL5ZXNHP34xL8X4myGs2e3+88549vB9ynRLBVKc3ZhTka8o0dx+TfcJykZQ1ST/A8mKGppVa3WvGJHOmBTrQSNV+wXgy+Ck+61t398OaZOAFpDIxQ/SCzdDbyJCMdbZmnWnsfPRJLsVcSPDcxZ9DE+Xu/gSAUoHPuZIhwETUnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=b5mT5I7Q; arc=none smtp.client-ip=209.85.128.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=nkBjD+Tn9eBoypsu/MjwzXNehCu91kJd4cPFDpSzWnhVIWs1P4Sikrw000Vd3GG+cLajT1UOfudq/QWtD83E88yVGxc0QsxYxr3yP5zUzBCIdx6JgOQUTzOgam+0XhuWkDlGEfgXPwP/RNsj6tMuMhGOc1pM22CS5naWKNmrIZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=xYt7U7YM; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="b5mT5I7Q"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6e38ebcc0abso7269457b3.2
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 05:40:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="xYt7U7YM"
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e30eca40c44so676124276.2
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 05:42:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731591615; x=1732196415; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731591727; x=1732196527; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iE1GpTPQSwu2zOO1OlMAZ/2RPBapnTpWjmvRd5fxFCM=;
-        b=b5mT5I7QftgeEVZ7I5SyLE7mx0v7zc3MnBcSXjyccyNYMqhp6ljwNBeE12zRFwTWMM
-         5Yt6ssqNxk9DAcZUX8fPoP7E0zPKzwKzOGcH1rx/HRGvbC8G1lnN/xJ8EHaEwdGLdsA+
-         sUmiFIyydc3jYSv8qvx2M3O6/BiMlQS2FllI7QrB43ffgdDGjVld5wa19JlD1FenabRC
-         XeuY1H2TApHNYy5+GWZTSjteebhu1y3kR+9zjYuKRAaVhTK3qydSx9LKHxP+h/bm9g/+
-         sQ1wav8MVNfY3w+v8qfh8REGQ5MvDgDY6Rw57DnUy9dJBKd8CenxMw5vCbNKy8A/6Xfb
-         xWWg==
+        bh=vxx4PKcIeYGX3/q+WqNke/OCoaIKqwut53EuvZDcLHs=;
+        b=xYt7U7YMgmZPX5KhdkKuGocc87j6Kj2ymsbKTlO3S6vn9fVcf68NjnvU8DSxoqCLFN
+         TLYZ0CrYQ1jq2+0vL1NlSRqb1wGrk5Qz7Ot9+B59VzBa2RrMt0QTFu4vfNuLn0a8eHtp
+         TVgHYlvTdqMs+VVMgSctxxydkJUDggXUnImgl3FR+ILP1PGt7iPA1vs07OvPNq0cpyKe
+         F5WVXzQDKURne9nXN/gdkQMCTFRDIBQ7J9QWB6fiaxb4Zoi5p4rl58LVfyV/zRs+5KVv
+         k1CHXhAYJDo7p0V9j+5DYHO5XU8hAkwJfruzYnpNtzqMExET0iKEGUk76Yde86Sho1Nv
+         vI+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731591615; x=1732196415;
+        d=1e100.net; s=20230601; t=1731591727; x=1732196527;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iE1GpTPQSwu2zOO1OlMAZ/2RPBapnTpWjmvRd5fxFCM=;
-        b=urlwoC2vt5BGX49UMARf1XbLWw3cpjdGI8mWlF+SaP0L4PBOT1BtAv6oyLRa6zHDWW
-         PY/A5SHAINmHItbWRFoXaNlbE7Ig1S8OaRYg7zCR0+MDjMMd+CxGGC/zRei20FEhC/UI
-         Cwm+Xbp3Cwk5SSOqGCn3zwocz3M/AgYpXXuYLTtDVa1h+LfOQpoYJ+Mr/7IXpw8GGR5K
-         OIkBTpQvLTX36WDysE3zMW40cN9JxdDrUQCkAKb9tftmLDRRutcXJZP+CeFDO0RybERa
-         lZhgq4ZZdcSJQSZwkt+LzY13R0Okige9+16/YlGhY+53UQGstEaRE2dsfdYyr+6FAtGU
-         SddQ==
-X-Gm-Message-State: AOJu0YynMvNVShw8YZA3CHUr/iRPBq/uxt/QzCglnq2KCEB6nwsURtPe
-	8xnZ0htjxCFbOAs1X7aqxSTjdGAStz0tWuZtlgfYZbyKIUhnWh+FbEYv9lXIJUI=
-X-Google-Smtp-Source: AGHT+IGy9R9dWXzmtBGY/RI7wIeTwOt0Mwaogx/tqacWbpYmI3RYkvdmHeYEjO0WvjdkpX1qLZdUQA==
-X-Received: by 2002:a05:690c:48c8:b0:6e3:2192:e0e6 with SMTP id 00721157ae682-6eaddda2d9fmr261642617b3.14.1731591615030;
-        Thu, 14 Nov 2024 05:40:15 -0800 (PST)
+        bh=vxx4PKcIeYGX3/q+WqNke/OCoaIKqwut53EuvZDcLHs=;
+        b=MJbkZlmjoG8XWsjSdBwulgtkLuI+GF/GhRMV/mVwpuCKP3TSlwK25s99HFtJzqegjW
+         mdXLwyYCUqHfYecjJyISaCX7YAjPX0ll9Cvqg65m5Kqb2I84y5zVdqx8uEzJYOY19Uaq
+         IwytMzdUR9Kb2BtEVDnHmK4WT9riWQPyiaXUwfMK7CSTdoaoonQZdG+pqA2wAw3ElfMf
+         1m1Qsxf28VKZk+/n1W7waNIS0ab7Xm53WpqiIp35EGCc5GpXtkQUgvKJZdJvtmGWBnsW
+         mmLhvcxctnp+VHAnd9X0TxUwBWkxhiD4jFsVNwCXSIGzYUxdmPl7GKQ7aKDZBzpixJ+S
+         LFIw==
+X-Gm-Message-State: AOJu0Yw9qT0j6NuDuPK84b/dXa+hfLks9Q5BWM6aUxwxQsfNd/nnWYsN
+	LW4i10ZwOPucAL/OKKWbR3Zr4uLXhCvwe0u2s3+5N5VzF2PT5Sn4h31zz61Wc3q1iZ9Ae3Bn4pR
+	zqcI=
+X-Google-Smtp-Source: AGHT+IElI/FrxVxPKnbD/QKL9Xkpz/VD+fAcyLGmHTrkRQZC5Lrf77BkHajK/x6C4/OLBV2e/vFtZQ==
+X-Received: by 2002:a05:6902:2685:b0:e30:d289:49d2 with SMTP id 3f1490d57ef6-e337f859d1fmr20762412276.17.1731591727103;
+        Thu, 14 Nov 2024 05:42:07 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ee444132fdsm2322737b3.81.2024.11.14.05.40.14
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e38152caccdsm312552276.14.2024.11.14.05.42.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 05:40:14 -0800 (PST)
-Date: Thu, 14 Nov 2024 08:40:13 -0500
+        Thu, 14 Nov 2024 05:42:06 -0800 (PST)
+Date: Thu, 14 Nov 2024 08:42:05 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 2/2] pack-objects: only perform verbatim reuse on the
- preferred pack
-Message-ID: <ZzX9vT4GVqCyfFUE@nand.local>
+Subject: [PATCH v2 0/2] pack-objects: more brown-paper-bag multi-pack reuse
+ fixes
+Message-ID: <cover.1731591708.git.me@ttaylorr.com>
 References: <cover.1731518931.git.me@ttaylorr.com>
- <2520abf24a8a194b3f7040e218f878dc88a740a0.1731518931.git.me@ttaylorr.com>
- <20241114002504.GB1140565@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,67 +68,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241114002504.GB1140565@coredump.intra.peff.net>
+In-Reply-To: <cover.1731518931.git.me@ttaylorr.com>
 
-On Wed, Nov 13, 2024 at 07:25:04PM -0500, Jeff King wrote:
-> On Wed, Nov 13, 2024 at 12:32:58PM -0500, Taylor Blau wrote:
->
-> > Instead, we can only safely perform the whole-word reuse optimization on
-> > the preferred pack, where we know with certainty that no gaps exist in
-> > that region of the bitmap. We can still reuse objects from non-preferred
-> > packs, but we have to inspect them individually in write_reused_pack()
-> > to ensure that any gaps that may exist are accounted for.
->
-> Yep. With the disclaimer that I'm biased because I helped a little with
-> debugging, this change is obviously correct. Forgetting the bug you saw
-> in the real world, we know this function cannot work as-is because of
-> the potential for those gaps.
+This is a small re-roll of my series to fix a regression in multi-pack
+reuse based on a broken assumption in write_reused_pack_verbatim().
 
-Yep, and thanks again for your help ;-).
+The only change since last time is removing a stray debugging aid, and
+the series is otherwise identical as in v1. A range-diff is included
+below for convenience.
 
-> > This allows us to simplify the implementation of
-> > write_reused_pack_verbatim() back to almost its pre-multi-pack reuse
-> > form, since we can now assume that the beginning of the pack appears at
-> > the beginning of the bitmap, meaning that we don't have to account for
-> > any bits up to the first word boundary (like we had to special case in
-> > ca0fd69e37).
-> >
-> > The only significant changes from the pre-ca0fd69e37 implementation are:
-> > [...]
->
-> Thanks for this section. My first instinct was to go back and look at
-> the diff to the pre-midx version of the function, and this nicely
-> explains the hunks I see there.
->
-> So this patch looks good to me. I was able to follow your explanation in
-> the commit message, but that may not count for much since I'm probably
-> the only other person with deep knowledge of the verbatim-reuse code in
-> the first place. ;)
+Thanks in advance for your review!
 
-Heh.
+Taylor Blau (2):
+  t5332-multi-pack-reuse.sh: demonstrate duplicate packing failure
+  pack-objects: only perform verbatim reuse on the preferred pack
 
-> I do think the explanation in the message of the first commit would be a
-> lot simpler if it were simply combined into this patch. With them split
-> you effectively have to explain the problem twice. I don't feel that
-> strongly about changing it, though.
+ builtin/pack-objects.c      | 101 +++++++++++++++---------------------
+ t/t5332-multi-pack-reuse.sh |  22 ++++++++
+ 2 files changed, 65 insertions(+), 58 deletions(-)
 
-I always seem to go back and forth on that. I feel somewhat strongly
-that for complicated regression fixes that we should demonstrate the
-existing failure mode in a separate commit with a test_expect_failure.
-That forces the author to ensure they really understand the bug and can
-produce a minimal (or close to it) reproduction.
+Range-diff against v1:
+1:  7a69cf84ae5 ! 1:  d791b7b20c9 t5332-multi-pack-reuse.sh: demonstrate duplicate packing failure
+    @@ t/t5332-multi-pack-reuse.sh: test_expect_success 'duplicate objects' '
+     +
+     +		# ...and create a separate pack containing just that object
+     +		p="$(git pack-objects $packdir/pack <in)" &&
+    -+		git show-index <$packdir/pack-$p.idx &&
+     +
+     +		git multi-pack-index write --bitmap --preferred-pack=pack-$p.idx &&
+     +
+2:  2520abf24a8 = 2:  d73b8fe2d63 pack-objects: only perform verbatim reuse on the preferred pack
 
-It also makes it easier to demonstrate that the fix actually does what
-it says, instead of assuming that the test fails without the fix applied
-(and passes with it applied).
-
-That does force the author to potentially explain the bug twice. In my
-experience, I tend to keep the explanation in the first patch relatively
-brief, hinting at details that will appear in the subsequent patch
-instead of explaining them in full detail.
-
-So I dunno. It's a tradeoff for sure, but I think having an explicit
-point in the log that demonstrates the existing bug is valuable.
-
-Thanks,
-Taylor
+base-commit: 25b0f41288718625b18495de23cc066394c09a92
+-- 
+2.46.0.421.g159f2d50e75
