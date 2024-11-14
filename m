@@ -1,62 +1,62 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10EF2AE77
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 16:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D628818D655
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 16:55:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731603294; cv=none; b=TfhPP82CC+KJBqydq7gVL6oG9JNQRRU4wJGiI/0Lp6fDAoktlVbzTfEqm6gLC9Pwur+g9yZXqHXP/po7faSVZBYEl9OOwAAnCWnTrwX1j7hUEFOFyFwRv55Hx8BzjRUvNswmvgdEpu87d5A8KeoQqNdz3aSSYLClG2zs/q84ZRg=
+	t=1731603307; cv=none; b=ulxgInbdhhiOBM5A5BFNzVdEnPenc5ecSzMm2ACD+eKLMMeO25na64axr25ObKP4xDhRhoBVJpHzJEnVQ3tjFlGw1Ze9CJ30h4SXe11qEDIly1INwS0LL9UBXDJ7x9xU/aargnPMm9sbGbfyPWT7p+kN5GB0tJmglJ/5OZJUfDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731603294; c=relaxed/simple;
-	bh=JLq2Y3OBs0WZNcgMwgxzr29NojqSbZpGEf011cXBD7U=;
+	s=arc-20240116; t=1731603307; c=relaxed/simple;
+	bh=13D5jG/o+uPsRNzxO3dtap6QCVThXdWrc+LaXYdOjGc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fnkL0uk/o9Vs/kXZ5LIrIJrGdTyJX3+N0JgB/KxvIFA73Zup2OOI/w8SG0sn8FEuFQZdtE1FkUM3yoB2mnqZpfx5kVi0zMEmFpHzHmwqTFRfJ8tggYCv7z0YNjflWREvitnqEWLo9/rZTjLNiTMY8/0Xc4gjSNO4fouYD/u5wzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Byh/rJ+G; arc=none smtp.client-ip=209.85.216.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=JcSzDrfkkxn4SmfkwidiT5E9KksnM//pmHyaDKXV56SHKn049ksN38Ij8FL0MjvkskSXl1pTM7vAFJkwiPVDt3NG5Grvu6fkgrn+lrxAdM127OrrRN3biWyHBdSaINukjQF7pEnR0iS53WexR2CndLH/XxrpXMCZI5P3TlMjXSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UOb2SOAC; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Byh/rJ+G"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2e2fb304e7dso776824a91.1
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:54:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UOb2SOAC"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2113da91b53so6884575ad.3
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731603292; x=1732208092; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731603302; x=1732208102; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QaujNNIFynb0YO+A+DH6JkVyJyGzo0pXrn+Uc6d5Yqs=;
-        b=Byh/rJ+GRG8hmMA1319FpaxMXFcrfMPQMsjnKItV/vxVx5OW3aV6hma39uBhXrukUn
-         sucmWXUCp8ELGp0BzeSfoU9pQD7DTU4zXGdoUpByK+r0OmRVJ0evPcJmDOqBCoN0ilRq
-         WaZZkolYss5TbUSusHgZXsW3md+iiGPJRz5GWIbLJpdh6tOGrKOEt0gAEVsMtMKFI9Ub
-         TsKrV8Mncs9IvKrVc5KzXrS2wqHYbNg3XEJXZNyCaBf+1d9Js/TL3KReJqK0zpvXjBRn
-         6obFMNhTXzjRkrS+N2EhSmdggSEFmdA5ZmfD/xutvSvPLsxR5z25f8IxicYZ1F1Vc6KJ
-         RG/Q==
+        bh=NkLeIpLTWn3acvMtN0I/VIzfCtB9KqRuRIm4NEBIh38=;
+        b=UOb2SOACUIylJBUaT7sBAQqR82kylBpb8ykncw+wPGmpcwawNbfDJ6IgevNzOTzqpp
+         EzGKqcNhrUvfIEeDLONYJNEZsbsnx8r10k6ctN0OKIwav0bgEarQPekzapUx29Pg9tbp
+         lxjPfNdexDSTQm0Vg+qD9N8dTbJQgvH5yOdPnqG5ZdZt2PZGLUgHIDDUkzdgibgbNE0N
+         WUC8uAGIqTCrenmnqejQ5lNGWNZ5wsGqh6/jtTvchmtfY5VIWCENg9qg91O1WadUDD9a
+         Gyw2RB+h0yW0jw1y2wiGJhBGY5YwtGIG4tM/ay0wpNHivdIaIHLwz1ekEu6SW68u8dSl
+         S0QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731603292; x=1732208092;
+        d=1e100.net; s=20230601; t=1731603302; x=1732208102;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QaujNNIFynb0YO+A+DH6JkVyJyGzo0pXrn+Uc6d5Yqs=;
-        b=sGfITjQf4fUb/qCxAx/aI3SNz4JMpcIYHhcoD+iwSxaqUPgARcbvvR2TtMmSacpXTP
-         nGtOlQmB6DbDGzFsneu1Fhj5raOv9zkkvr4fHyxBA8lgEOgW/gZoNyCcqeHwKxkxv3sP
-         bFDzmZSE0P54YCh++xdvk1qY6XTC9QzAwohA87zjTH/W/ZzahAniX9ui71SaeqgUjujY
-         tQ5RKE/r/At0OLXQmVZHzsXhYSM1zhV0qgvH3ygDR6Qn/LBVk9Eo5VByXV5lzqrcect8
-         OyT2EHBa9PeExkDL8xLx9iZJWxWXxakgceOskoT6rD7XAnhkZeUnWeOy3kCHbnzx2yMJ
-         3tMA==
-X-Gm-Message-State: AOJu0YxNHuxxjrXCCZkZkoRZHtaI9+HZPYtj2CRAAfsxBLO0Fgw0G1L5
-	Xfwtzqir1iuuhJZZAQVtcG9LuGs+qU2tlMo/v7MEBpGEJqVHjsfyH2cURQ==
-X-Google-Smtp-Source: AGHT+IEY5TE1QYIPUmpLEJa6u4h9t9j/9ozf4ktDpIIy/C54sxJe3TEMHgtET969Bg9tei+clw+6bQ==
-X-Received: by 2002:a17:90b:1c8d:b0:2e2:cd65:de55 with SMTP id 98e67ed59e1d1-2e9b17413b9mr32407116a91.20.1731603291545;
-        Thu, 14 Nov 2024 08:54:51 -0800 (PST)
+        bh=NkLeIpLTWn3acvMtN0I/VIzfCtB9KqRuRIm4NEBIh38=;
+        b=EZfhVXtEAWIDlKR8U5Rcd1nE9qZ0URkIBOcFPTKhZOuCKOLcWYpNHWyWMheDjPnccS
+         ug0EAguOI9J+GAj81OIMalMKRnckBBOXD0nyCMw1GcqFBdJFZvWduEHUfEfZOlTTLDNP
+         4DHu81D3xx1fdc4LDJrjcSmN6T2s/Xc2SlSDSZafbEDiuO3N/bR5IBy/BankHPmmG6UC
+         qmS1sH+P6piBbzoDtsqKAyvFx1X7XJ/FGFupLGaDTEjEEJTRBF7XeY5oPouIY25af+Gl
+         q3CAXjeBYdofVgF9TQPxZDkrP/66Onwkpt2OiKMNLR40d0J6kl14x7vNClOeO9cz4k0l
+         6zdA==
+X-Gm-Message-State: AOJu0YwDuw3rA7VPmseyfKMwSL6t/SBp6vjXpeIqounJjuO58kugWe5I
+	PQJenNNWTlu2egyUfIYOYz1aHFiXbMSMewenhvIDqYbQu4i7KF6+N6zv0w==
+X-Google-Smtp-Source: AGHT+IE7zENokNuvAkJjENpCtN20xxJSnHIFEc6neiIqXLIxUHwGoxcAD4PvhHgWS4H7RgZjJXiOTQ==
+X-Received: by 2002:a17:902:cf10:b0:211:9316:da12 with SMTP id d9443c01a7336-2119316da85mr296198975ad.22.1731603301903;
+        Thu, 14 Nov 2024 08:55:01 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e9f1e24ce4sm3388934a91.0.2024.11.14.08.54.50
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211c7d2a001sm12951195ad.249.2024.11.14.08.55.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 08:54:51 -0800 (PST)
-Date: Fri, 15 Nov 2024 00:54:53 +0800
+        Thu, 14 Nov 2024 08:55:01 -0800 (PST)
+Date: Fri, 15 Nov 2024 00:55:04 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v8 8/9] ref: check whether the target of the symref is a ref
-Message-ID: <ZzYrXZWGadkGzrv4@ArchLinux>
+Subject: [PATCH v8 9/9] ref: add symlink ref content check for files backend
+Message-ID: <ZzYraA3_4STrj3Jm@ArchLinux>
 References: <ZzYqoai8X_Wdtbmt@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,110 +68,177 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ZzYqoai8X_Wdtbmt@ArchLinux>
 
-Ideally, we want to the users use "git symbolic-ref" to create symrefs
-instead of writing raw contents into the filesystem. However, "git
-symbolic-ref" is strict with the refname but not strict with the
-referent. For example, we can make the "referent" located at the
-"$(gitdir)/logs/aaa" and manually write the content into this where we
-can still successfully parse this symref by using "git rev-parse".
+Besides the textual symref, we also allow symbolic links as the symref.
+So, we should also provide the consistency check as what we have done
+for textual symref. And also we consider deprecating writing the
+symbolic links. We first need to access whether symbolic links still
+be used. So, add a new fsck message "symlinkRef(INFO)" to tell the
+user be aware of this information.
 
-  $ git init repo && cd repo && git commit --allow-empty -mx
-  $ git symbolic-ref refs/heads/test logs/aaa
-  $ echo $(git rev-parse HEAD) > .git/logs/aaa
-  $ git rev-parse test
+We have already introduced "files_fsck_symref_target". We should reuse
+this function to handle the symrefs which use legacy symbolic links. We
+should not check the trailing garbage for symbolic refs. Add a new
+parameter "symbolic_link" to disable some checks which should only be
+executed for textual symrefs.
 
-We may need to add some restrictions for "referent" parameter when using
-"git symbolic-ref" to create symrefs because ideally all the
-nonpseudo-refs should be located under the "refs" directory and we may
-tighten this in the future.
+And we need to also generate the "referent" parameter for reusing
+"files_fsck_symref_target" by the following steps:
 
-In order to tell the user we may tighten the above situation, create
-a new fsck message "symrefTargetIsNotARef" to notify the user that this
-may become an error in the future.
+1. Use "strbuf_add_real_path" to resolve the symlink and get the
+   absolute path "ref_content" which the symlink ref points to.
+2. Generate the absolute path "abs_gitdir" of "gitdir" and combine
+   "ref_content" and "abs_gitdir" to extract the relative path
+   "relative_referent_path".
+3. If "ref_content" is outside of "gitdir", we just set "referent" with
+   "ref_content". Instead, we set "referent" with
+   "relative_referent_path".
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/fsck-msgids.txt |  9 +++++++++
- fsck.h                        |  1 +
- refs/files-backend.c          | 14 ++++++++++++--
- t/t0602-reffiles-fsck.sh      | 29 +++++++++++++++++++++++++++++
- 4 files changed, 51 insertions(+), 2 deletions(-)
+ Documentation/fsck-msgids.txt |   6 ++
+ fsck.h                        |   1 +
+ refs/files-backend.c          |  38 ++++++++-
+ t/t0602-reffiles-fsck.sh      | 141 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 182 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index dcea05edfc..f82ebc58e8 100644
+index f82ebc58e8..b14bc44ca4 100644
 --- a/Documentation/fsck-msgids.txt
 +++ b/Documentation/fsck-msgids.txt
-@@ -183,6 +183,15 @@
+@@ -183,6 +183,12 @@
  	git@vger.kernel.org mailing list if you see this error, as
  	we need to know what tools created such a file.
  
-+`symrefTargetIsNotARef`::
-+	(INFO) The target of a symbolic reference points neither to
-+	a root reference nor to a reference starting with "refs/".
-+	Although we allow create a symref pointing to the referent which
-+	is outside the "ref" by using `git symbolic-ref`, we may tighten
-+	the rule in the future. Report to the git@vger.kernel.org
-+	mailing list if you see this error, as we need to know what tools
-+	created such a file.
++`symlinkRef`::
++	(INFO) A symbolic link is used as a symref. Report to the
++	git@vger.kernel.org mailing list if you see this error, as we
++	are assessing the feasibility of dropping the support to drop
++	creating symbolic links as symrefs.
 +
- `trailingRefContent`::
- 	(INFO) A loose ref has trailing content. As valid implementations
- 	of Git never created such a loose ref file, it may become an
+ `symrefTargetIsNotARef`::
+ 	(INFO) The target of a symbolic reference points neither to
+ 	a root reference nor to a reference starting with "refs/".
 diff --git a/fsck.h b/fsck.h
-index 5227dfdef2..53a47612e6 100644
+index 53a47612e6..a44c231a5f 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -87,6 +87,7 @@ enum fsck_msg_type {
+@@ -86,6 +86,7 @@ enum fsck_msg_type {
+ 	FUNC(MAILMAP_SYMLINK, INFO) \
  	FUNC(BAD_TAG_NAME, INFO) \
  	FUNC(MISSING_TAGGER_ENTRY, INFO) \
++	FUNC(SYMLINK_REF, INFO) \
  	FUNC(REF_MISSING_NEWLINE, INFO) \
-+	FUNC(SYMREF_TARGET_IS_NOT_A_REF, INFO) \
+ 	FUNC(SYMREF_TARGET_IS_NOT_A_REF, INFO) \
  	FUNC(TRAILING_REF_CONTENT, INFO) \
- 	/* ignored (elevated when requested) */ \
- 	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index c496006db1..edf73d6cce 100644
+index edf73d6cce..c715e411f3 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -3513,6 +3513,7 @@ static int files_fsck_symref_target(struct fsck_options *o,
- 				    struct fsck_ref_report *report,
- 				    struct strbuf *referent)
- {
-+	int is_referent_root;
- 	char orig_last_byte;
- 	size_t orig_len;
- 	int ret = 0;
-@@ -3521,8 +3522,17 @@ static int files_fsck_symref_target(struct fsck_options *o,
- 	orig_last_byte = referent->buf[orig_len - 1];
- 	strbuf_rtrim(referent);
+@@ -1,6 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
--	if (!is_root_ref(referent->buf) &&
--	    check_refname_format(referent->buf, 0)) {
-+	is_referent_root = is_root_ref(referent->buf);
-+	if (!is_referent_root &&
-+	    !starts_with(referent->buf, "refs/") &&
-+	    !starts_with(referent->buf, "worktrees/")) {
-+		ret = fsck_report_ref(o, report,
-+				      FSCK_MSG_SYMREF_TARGET_IS_NOT_A_REF,
-+				      "points to non-ref target '%s'", referent->buf);
+ #include "../git-compat-util.h"
++#include "../abspath.h"
+ #include "../config.h"
+ #include "../copy.h"
+ #include "../environment.h"
+@@ -3511,7 +3512,8 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
+ 
+ static int files_fsck_symref_target(struct fsck_options *o,
+ 				    struct fsck_ref_report *report,
+-				    struct strbuf *referent)
++				    struct strbuf *referent,
++				    unsigned int symbolic_link)
+ {
+ 	int is_referent_root;
+ 	char orig_last_byte;
+@@ -3520,7 +3522,8 @@ static int files_fsck_symref_target(struct fsck_options *o,
+ 
+ 	orig_len = referent->len;
+ 	orig_last_byte = referent->buf[orig_len - 1];
+-	strbuf_rtrim(referent);
++	if (!symbolic_link)
++		strbuf_rtrim(referent);
+ 
+ 	is_referent_root = is_root_ref(referent->buf);
+ 	if (!is_referent_root &&
+@@ -3539,6 +3542,9 @@ static int files_fsck_symref_target(struct fsck_options *o,
+ 		goto out;
+ 	}
+ 
++	if (symbolic_link)
++		goto out;
 +
-+	}
-+
-+	if (!is_referent_root && check_refname_format(referent->buf, 0)) {
+ 	if (referent->len == orig_len ||
+ 	    (referent->len < orig_len && orig_last_byte != '\n')) {
  		ret = fsck_report_ref(o, report,
- 				      FSCK_MSG_BAD_REFERENT_NAME,
- 				      "points to invalid refname '%s'", referent->buf);
+@@ -3562,6 +3568,7 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 				   struct dir_iterator *iter)
+ {
+ 	struct strbuf ref_content = STRBUF_INIT;
++	struct strbuf abs_gitdir = STRBUF_INIT;
+ 	struct strbuf referent = STRBUF_INIT;
+ 	struct fsck_ref_report report = { 0 };
+ 	const char *trailing = NULL;
+@@ -3572,8 +3579,30 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 
+ 	report.path = target_name;
+ 
+-	if (S_ISLNK(iter->st.st_mode))
++	if (S_ISLNK(iter->st.st_mode)) {
++		const char *relative_referent_path = NULL;
++
++		ret = fsck_report_ref(o, &report,
++				      FSCK_MSG_SYMLINK_REF,
++				      "use deprecated symbolic link for symref");
++
++		strbuf_add_absolute_path(&abs_gitdir, ref_store->repo->gitdir);
++		strbuf_normalize_path(&abs_gitdir);
++		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
++			strbuf_addch(&abs_gitdir, '/');
++
++		strbuf_add_real_path(&ref_content, iter->path.buf);
++		skip_prefix(ref_content.buf, abs_gitdir.buf,
++			    &relative_referent_path);
++
++		if (relative_referent_path)
++			strbuf_addstr(&referent, relative_referent_path);
++		else
++			strbuf_addbuf(&referent, &ref_content);
++
++		ret |= files_fsck_symref_target(o, &report, &referent, 1);
+ 		goto cleanup;
++	}
+ 
+ 	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0 ) {
+ 		/*
+@@ -3612,13 +3641,14 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 			goto cleanup;
+ 		}
+ 	} else {
+-		ret = files_fsck_symref_target(o, &report, &referent);
++		ret = files_fsck_symref_target(o, &report, &referent, 0);
+ 		goto cleanup;
+ 	}
+ 
+ cleanup:
+ 	strbuf_release(&ref_content);
+ 	strbuf_release(&referent);
++	strbuf_release(&abs_gitdir);
+ 	return ret;
+ }
+ 
 diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index ee1e5f2864..692b30727a 100755
+index 692b30727a..f8f27cfc6c 100755
 --- a/t/t0602-reffiles-fsck.sh
 +++ b/t/t0602-reffiles-fsck.sh
-@@ -366,6 +366,35 @@ test_expect_success 'textual symref content should be checked (aggregate)' '
- 	test_cmp expect sorted_err
+@@ -395,6 +395,147 @@ test_expect_success 'the target of the textual symref should be checked' '
+ 	done
  '
  
-+test_expect_success 'the target of the textual symref should be checked' '
++test_expect_success SYMLINKS 'symlink symref content should be checked' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
 +	branch_dir_prefix=.git/refs/heads &&
@@ -180,22 +247,134 @@ index ee1e5f2864..692b30727a 100755
 +	test_commit default &&
 +	mkdir -p "$branch_dir_prefix/a/b" &&
 +
-+	for good_referent in "refs/heads/branch" "HEAD" "refs/tags/tag"
-+	do
-+		printf "ref: %s\n" $good_referent >$branch_dir_prefix/branch-good &&
-+		git refs verify 2>err &&
-+		rm $branch_dir_prefix/branch-good &&
-+		test_must_be_empty err || return 1
-+	done &&
++	ln -sf ./main $branch_dir_prefix/branch-symbolic-good &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
++	EOF
++	rm $branch_dir_prefix/branch-symbolic-good &&
++	test_cmp expect err &&
 +
-+	for nonref_referent in "refs-back/heads/branch" "refs-back/tags/tag" "reflogs/refs/heads/branch"
++	ln -sf ../../logs/branch-escape $branch_dir_prefix/branch-symbolic &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
++	warning: refs/heads/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
++	EOF
++	rm $branch_dir_prefix/branch-symbolic &&
++	test_cmp expect err &&
++
++	ln -sf ./"branch   " $branch_dir_prefix/branch-symbolic-bad &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/branch-symbolic-bad: symlinkRef: use deprecated symbolic link for symref
++	error: refs/heads/branch-symbolic-bad: badReferentName: points to invalid refname '\''refs/heads/branch   '\''
++	EOF
++	rm $branch_dir_prefix/branch-symbolic-bad &&
++	test_cmp expect err &&
++
++	ln -sf ./".tag" $tag_dir_prefix/tag-symbolic-1 &&
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/tags/tag-symbolic-1: symlinkRef: use deprecated symbolic link for symref
++	error: refs/tags/tag-symbolic-1: badReferentName: points to invalid refname '\''refs/tags/.tag'\''
++	EOF
++	rm $tag_dir_prefix/tag-symbolic-1 &&
++	test_cmp expect err
++'
++
++test_expect_success SYMLINKS 'symlink symref content should be checked (worktree)' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	cd repo &&
++	test_commit default &&
++	git branch branch-1 &&
++	git branch branch-2 &&
++	git branch branch-3 &&
++	git worktree add ./worktree-1 branch-2 &&
++	git worktree add ./worktree-2 branch-3 &&
++	main_worktree_refdir_prefix=.git/refs/heads &&
++	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
++	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
++
++	(
++		cd worktree-1 &&
++		git update-ref refs/worktree/branch-4 refs/heads/branch-1
++	) &&
++	(
++		cd worktree-2 &&
++		git update-ref refs/worktree/branch-4 refs/heads/branch-1
++	) &&
++
++	ln -sf ../../../../refs/heads/good-branch $worktree1_refdir_prefix/branch-symbolic-good &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: worktrees/worktree-1/refs/worktree/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
++	EOF
++	rm $worktree1_refdir_prefix/branch-symbolic-good &&
++	test_cmp expect err &&
++
++	ln -sf ../../../../worktrees/worktree-1/good-branch $worktree2_refdir_prefix/branch-symbolic-good &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: worktrees/worktree-2/refs/worktree/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
++	EOF
++	rm $worktree2_refdir_prefix/branch-symbolic-good &&
++	test_cmp expect err &&
++
++	ln -sf ../../worktrees/worktree-2/good-branch $main_worktree_refdir_prefix/branch-symbolic-good &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
++	EOF
++	rm $main_worktree_refdir_prefix/branch-symbolic-good &&
++	test_cmp expect err &&
++
++	ln -sf ../../../../logs/branch-escape $worktree1_refdir_prefix/branch-symbolic &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: worktrees/worktree-1/refs/worktree/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
++	warning: worktrees/worktree-1/refs/worktree/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
++	EOF
++	rm $worktree1_refdir_prefix/branch-symbolic &&
++	test_cmp expect err &&
++
++	for bad_referent_name in ".tag" "branch   "
 +	do
-+		printf "ref: %s\n" $nonref_referent >$branch_dir_prefix/branch-bad-1 &&
-+		git refs verify 2>err &&
++		ln -sf ./"$bad_referent_name" $worktree1_refdir_prefix/bad-symbolic &&
++		test_must_fail git refs verify 2>err &&
 +		cat >expect <<-EOF &&
-+		warning: refs/heads/branch-bad-1: symrefTargetIsNotARef: points to non-ref target '\''$nonref_referent'\''
++		warning: worktrees/worktree-1/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++		error: worktrees/worktree-1/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''worktrees/worktree-1/refs/worktree/$bad_referent_name'\''
 +		EOF
-+		rm $branch_dir_prefix/branch-bad-1 &&
++		rm $worktree1_refdir_prefix/bad-symbolic &&
++		test_cmp expect err &&
++
++		ln -sf ../../../../refs/heads/"$bad_referent_name" $worktree1_refdir_prefix/bad-symbolic &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: worktrees/worktree-1/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++		error: worktrees/worktree-1/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''refs/heads/$bad_referent_name'\''
++		EOF
++		rm $worktree1_refdir_prefix/bad-symbolic &&
++		test_cmp expect err &&
++
++		ln -sf ./"$bad_referent_name" $worktree2_refdir_prefix/bad-symbolic &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: worktrees/worktree-2/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++		error: worktrees/worktree-2/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''worktrees/worktree-2/refs/worktree/$bad_referent_name'\''
++		EOF
++		rm $worktree2_refdir_prefix/bad-symbolic &&
++		test_cmp expect err &&
++
++		ln -sf ../../../../refs/heads/"$bad_referent_name" $worktree2_refdir_prefix/bad-symbolic &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: worktrees/worktree-2/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++		error: worktrees/worktree-2/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''refs/heads/$bad_referent_name'\''
++		EOF
++		rm $worktree2_refdir_prefix/bad-symbolic &&
 +		test_cmp expect err || return 1
 +	done
 +'
