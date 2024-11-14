@@ -1,44 +1,44 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D6217C2
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBCAB67E
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731544062; cv=none; b=M5wBcoIGKex/FPd+9s7IqewxKdu8Z85ZmFaDnGRjzhyQZ9gah/3Yev1EIJ5jfIq5ffQIzP13BvIbU6fzfUQz+nMvkgSBxeOcuAM3ZI02sibpfUdldT5WwqMzAZ9e0W7/bTwapciGvD6nBmMYow+TigsTPnTldP7raA9Kcw4PlR4=
+	t=1731545511; cv=none; b=hC8L2RQZaHozK6LgNODnNco4q0b0cW8Vsi+LFOPz72Y/S/ChdCRAlJZ7X5H4JnML0QSDnHM+mrN+OZloj87Qykc+p+npXWVxpZTrRDB5FvVXH0BSFIhZ/kI+xAjUxYiOSbRhCDQ+s2UZbuIHSUksEIeI5cq7GHvAzoloYYfaV4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731544062; c=relaxed/simple;
-	bh=TWqo+hyu9ciZWINzE+Qpl8eR3cZ1bhy805Evq6m9jME=;
+	s=arc-20240116; t=1731545511; c=relaxed/simple;
+	bh=vgstxf+DOHPTabKemse2DMyinWCAo7RZGGTuD1e6IIw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N7QfreACQMlPfGpmAFsdbUJA6ds8tl7x7/O1+Brpz3i/MOwwlPQgGR8rhSp0lENMFxTsZrFwGKo8DNerVX58mAqwTZi5UBNA0Mc5NX0Ujso0eAUmnfm6tKkBEhE8uk3kXAtV6fOAkg5u/Cs/BdsrK+lh+ZXxo/PY6anwrSzqJbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mayhew.name; spf=none smtp.mailfrom=mayhew.name; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YQvvzTLW; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:Content-Type; b=mweCKzzFNvDD4Ec9e8B5oL0OhHDM0sqUfknh7E9qHeQnGjICKVM8Y6CgaqHPQ1+iLMadoT/QfgjlTjE43GHmPsIrZVypeM/0PbNpdphc2GF8X+QaPpUtMopGQXTxnk7DrgG7Ez9WOTcGkoV5chwWukY4buMn15VYKftEolPmSpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mayhew.name; spf=none smtp.mailfrom=mayhew.name; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kH6Yr1RZ; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mayhew.name
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mayhew.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YQvvzTLW"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 30B0711401D4;
-	Wed, 13 Nov 2024 19:27:39 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kH6Yr1RZ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 831241140208;
+	Wed, 13 Nov 2024 19:51:48 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 13 Nov 2024 19:27:39 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 13 Nov 2024 19:51:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731544059; x=
-	1731630459; bh=WWzymM0l0G6aIoIznsa9UTJCPuvtSl3/huarBYIWRdI=; b=Y
-	QvvzTLWTekDFU2rYdkNvyIA1pTeb+W6oE/NB4iiK6AGrgybRb5JSG3SUpLMt+jrh
-	otLCrv+3zr68RQYdK2NsFvmE8oq5Dne6eaHgdmSXDd1D2ESkDZa+XHRGTdGQy0/T
-	kllAfgIwAOJk99r9UM6JSBzgYjMwjvESSiVJVi6C/yeFRaQNBebx7HVy75q2bcdU
-	eNpAbtzALuT7EhwfveaWEzCzlLTWqTmS0gvefzXyMa+xJ4684R8EvADE5J+wnepq
-	gnaa5FuCZoxaEYQ8TnfS7rhAOC9HxwsahvZodR17uECVIJ5OOv3S3TYnF8D3kQex
-	RshcKEoLhOfmbdhhEhZwA==
-X-ME-Sender: <xms:-kM1Z5f5lJxZe9-0hV59iQhBvsFBloVOwXOQyIbPLs1KeorW2mpMQA>
-    <xme:-kM1Z3ML1tSzesii26DiK9VXwHJl8orU0OFOCMjmvS3hkRXLXcjAGJsq-xlCN1lLs
-    i40JDlZpV-CDEPNfX0>
-X-ME-Received: <xmr:-kM1ZyiK0Cwp8CaicduoqQZLlWWyGrc1B7JhOvjd9iHUzSVRCUYq0JN9pXIka62p1j2rKM2wY8dmdMO5_PsvjALN7K7x0wn6gGU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugddvvdcutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731545508; x=
+	1731631908; bh=PPfRjR6f7FFdyq39f+Ob9eIHSVlcekccccNub3hu0Bc=; b=k
+	H6Yr1RZ0U+32nVcQFbkw//ueR1C/U8aCzs5rS4AQz/X+yxSyye8hBGCyyNhXTFUj
+	vW1RHo7CgfNB+NXdyKqTtEJJA8lA7D0k1uVo8sjs05pv0ZNwVukWi7QxUvSmIdVg
+	dkZPkr9mmu+LJYT/3DJXZhjaw1OtlyIjfO9rIIN+1lyQXFE9epW9aFHkbZsZ0Ku3
+	VLaJhIwaQPq++y8hN8FTHVk0uIJ/dvvCA4p/HU8zCJK0XHxFYVB8kVqTz/VGnCxc
+	+xTuoDMi6VobIIy0Itf1FTpsfG3dG1rKJCB323dWBH93kitahA7yDaIIFXu4nPCe
+	emsd15Jc/1v8y9fOUpHCQ==
+X-ME-Sender: <xms:pEk1Z9QX2IG_AesE0OCnOSQ5nbNpAnHZxpRLk7DDakZCK0ABQ5DDtw>
+    <xme:pEk1Z2y50IVmCNQFSglOGrg2C6R7mwE4PEmUvWdMqSE0dFjjGyuIoR-vxYPCIVAu5
+    k4-qvLfTFJ5zY5ebfg>
+X-ME-Received: <xmr:pEk1Zy1TZg-_ICZFWNv9rK247J4hMMFQ5Y8k_yj4QVpOZt25EipL2jClHV7d6jbTrY_rnZYc_6T44jwiSYdLXn6RgMu-yrYDqIE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugddvjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfesthekredttddvjeen
@@ -46,20 +46,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugddvvdcutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepgefggfdtveetudekjedvudegjefhheeihffffffgtdfh
     udfgfeekkeefgfevleffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepnhgvihhlsehmrgihhhgvfidrnhgrmhgvpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihht
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
     ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
     drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvhguhigvsehgihhthhhusgdrtghomh
-X-ME-Proxy: <xmx:-kM1Zy8vrsIzcctR66YzUpLwW6fj6LzzeU_t-f-vuzfWRbEwTQ_D-A>
-    <xmx:-kM1Z1sVJuBxxei115Ni6KsepFcuPwTfkCA_RGYhEqJ2SfjAtkZ-Zw>
-    <xmx:-kM1ZxF2McJmtCji19Gqla2ogXVuF9GHXWjfcJknuaF9JlWX58kVKw>
-    <xmx:-kM1Z8McbCdUPLBxt9PFcEss6-q7zz3oBn_8Edh2QKOhGv-wjvvhOg>
-    <xmx:-0M1Z_Jg7dSH46tbfN171voss5o9t3etVigABzhYWUc2QEz1hjAIQwgN>
+X-ME-Proxy: <xmx:pEk1Z1BEq3WDpA3qlCj3kTcN0uvyen5XKwJt5KMZ6_33SLPPI9AC-w>
+    <xmx:pEk1Z2i6T4_JX83Zlapx7S9WDL2hIcDUZF3mTtKRalOZE0TzJgi5GQ>
+    <xmx:pEk1Z5pqMi94AKMOBeGSnwzsNKZ_umxsta_wcwBjL-fGzhVQTuCvsA>
+    <xmx:pEk1ZxhR06iCY2ayZdmzO9q0bN8DENOP2TrKRjZvI9JfEZdxtApX-g>
+    <xmx:pEk1Z-fqBPgMhphkGvbmBnZ39Eq1a5hyC_sVuvvYI9E1obC1KYjnEiIz>
 Feedback-ID: ibb8947ec:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Nov 2024 19:27:38 -0500 (EST)
-Message-ID: <e039fc2b-ba2b-4845-9a2e-58edcc003d87@mayhew.name>
-Date: Wed, 13 Nov 2024 17:27:36 -0700
+ 13 Nov 2024 19:51:47 -0500 (EST)
+Message-ID: <c2f97b19-19e6-485d-91c8-24c261aedebe@mayhew.name>
+Date: Wed, 13 Nov 2024 17:51:46 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,14 +68,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/3] Strengthen fsck checks for submodule URLs
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>,
- Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Victoria Dye <vdye@github.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Victoria Dye <vdye@github.com>
 References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
  <20240110102338.GA16674@coredump.intra.peff.net>
  <d9f53fe7-6570-4aea-894c-942e12e012c4@mayhew.name>
  <xmqq5xoqahbx.fsf@gitster.g>
+ <20241114001003.GA1140565@coredump.intra.peff.net>
 From: Neil Mayhew <neil@mayhew.name>
 Content-Language: en-GB
 Autocrypt: addr=neil@mayhew.name;
@@ -121,69 +121,64 @@ Autocrypt: addr=neil@mayhew.name;
  oDniN/dB1egJrf1ea0KqP22Pm/B7dSnMoSoUmk7ISx5AXWlhYWcCoSbYmv5wFVh8At++bInW
  o6Pjg+flVfjSsppWdJR3zoXej6/SKN3cqzr/5QU74o+Up3320t0tkvZtxG9vBoFJt1QsMbmj
  2vaTrr/jeXjDU6xgUo9sfPFjic9+uC8BBo8cMwjaOCGOPg5YFAHG
-In-Reply-To: <xmqq5xoqahbx.fsf@gitster.g>
+In-Reply-To: <20241114001003.GA1140565@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 13 Nov 24 15:40, Junio C Hamano wrote:
+On 13 Nov 24 17:10, Jeff King wrote:
 
- > Neil Mayhew <neil@mayhew.name> writes:
+My previous message crossed with Jeff's, and he already addressed most 
+of what I was saying.
+
+ >  2. All of the people who are going to clone your repo, who might need
+ >     to follow special instructions.
  >
- >> ... immediately corrected by another commit. However, the bad commit is
- >> still in the history. It happened 6 years ago, so there's no
- >> possibility of us changing the history.
- >
- > I think fsck.skipList was meant to cover such a case.  The idea is
- > that the blob object name of the bad .gitmodules file can be placed
- > on the list, and the rest of the "bad commit" and the whole history
- > can still be checked for consistency, without triggering the warning
- > (or error) resulting from the offending .gitmodules file.
+ >     The only reason this hasn't been a huge pain in practice is that
+ >     almost nobody turns on transfer.fsckObjects in the first place. In
+ >     theory the people who do turn it on know enough to examine the
+ >     objects themselves and decide if it's OK. I don't know how true that
+ >     is in practice, though (and certainly it would be nice to turn this
+ >     feature on by default, but I do worry about people getting caught up
+ >     in exactly these kind of historical messes).
 
-Thank you. This explanation is very helpful. I hadn't noticed the 
-existence of this config option, and using it does indeed enable fsck to 
-pass on our repo.
+This is what happened in our situation. The person had 
+transfer.fsckObjects enabled but didn't realize that this was the cause 
+of the error. They assumed that the repo's *current* submodule 
+configuration was corrupt and was somehow causing the clone to fail even 
+though they tried explicitly turning off submodule recursion.
 
- >> Is there any possibility of "loosening the fsck.gitmodulesUrl
- >> severity", as Jeff suggested?
- >
- > Isn't the suggestion not about butchering the rest of the world but
- > by locally configuring fsck.gitmodulesUrl down from error to
- > warning?
+ > We did add the gitmoduleUrl check to help with malicious URLs. But it
+ > was always an extra layer of defense over the real fix, which was in the
+ > credential code. It's _possible_ that a newly discovered vulnerability
+ > will be protected by the existing fsck check, but I'm a little skeptical
+ > about its security value at this point (especially because hardly
+ > anybody runs it locally, and protection on the hosting sites isn't that
+ > hard to work around).
 
-Again, thank you for the helpful explanation. I hadn't fully understood 
-what was being suggested.
+I also think it's surprising to have fsck check the *content* of blobs 
+rather than just the relationships between them, and to give a blob 
+named .gitmodules special treatment. It goes against the philosophy of 
+"do one thing well". I feel that there should be a separate tool for 
+checking repos for security vulnerabilities, and it could be given 
+additional capabilities (such as checking the configuration as well as 
+the objects).
 
- > I personally think excluding a single known-offending blob
- > without doing such loosening is a much better idea in that it
- > prevents *new* offending instances from getting into the repository,
- > while allowing an existing benign and honest mistake to stay in your
- > history.  Loosening the severity of a class of check means you will
- > accept *new* offending instances, which may very well be malicious,
- > unlike the existing benign one you know about.
+ > So if it's causing people real pain in practice, I think there could be
+ > an argument for downgrading the check to a warning. I don't have a
+ > strong feeling that we _should_ do that, only that I don't personally
+ > reject it immediately as an option.
 
-I agree that skipping a single object is better than loosening.
+Perhaps there could be some additional warnings in the documentation for 
+transfer.fsckObjects to make people aware of the potential costs of 
+using it, particularly the existence of legacy issues in established 
+repos that would prevent cloning unless some of the fsck.<msg-id> values 
+are set to warn. The documentation currently just says "see 
+fsck.<msg-id>" and in my case, despite being fairly familiar with git, 
+that didn't give me enough to go on while investigating this.
 
-However, there is a bit of a catch-22 situation here. The problem in our 
-repo was reported to us by someone who was unable to clone, because they 
-have transfer.fsckObjects set globally (and initially didn't realise 
-that was where the error message was coming from). Someone in that 
-situation could in addition set fetch.fsck.gitmodulesUrl=warn globally, 
-but as you say that's too all-encompassing and it would be better to 
-skip the specific object. Unfortunately, this is difficult to do when 
-cloning, because the configuration value doesn't come automatically with 
-the repo. A local skiplist configuration value can't exist until after 
-the repo has been cloned, and adding the object name to a global 
-skiplist doesn't seem appropriate. It's possible to add the option to 
-the clone command line (with -c) but that's starting to get quite messy 
-and in any case many people wouldn't see the instruction even if we put 
-it in our README.
-
-I don't think there's a perfect solution here. It seems like the best we 
-can do is to put the object name in a .git-fsck-skiplist file at the top 
-level of the repo, and add a section at the end of the README telling 
-people to configure it for all three *fsck.skipList values if they want 
-to use git fsck explicitly, or implicitly via other configuration 
-values. We would also need to mention using -c when cloning initially. 
-This information will probably be intimidating for most people, and I 
-wish we didn't have to include it, but hopefully we can make it clear 
-that most people won't need it.
+It might also help to give some guidance on how to track down the object 
+name(s) that fsck lists, for example by using git log --raw --all 
+--find-object=<NAME>. This would help a user to make a more informed 
+decision on how to handle such a situation if it arises. In our case, 
+once we did this it was quickly obvious that the problem was a 
+historical error that had since been fixed rather than a current problem.
