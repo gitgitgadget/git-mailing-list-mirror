@@ -1,124 +1,143 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A1BE573
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49101F76A4
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731574682; cv=none; b=g9tMCsv0ogxP0JaNis6Se3TIzuMXrsOQICTh6ixKA0j4IVXzlo8tJ+GPAmiQNY6sBUU4n5xon5kVXMjkOqEBs2feygld5bgcHdNL9XsJXTrlrWwZd1CDjn3hyrBaVnJbbESxo85RRJQb9Js1z6YBSmZJ1cbnZ7ROI4q1XzgnWgw=
+	t=1731574688; cv=none; b=seUB09QbUOQbH3C+D1ZTCZS8yARDMW9fonn8SuyaRcPcB8FqE3Rs9cOt/o/0ySLf+fm6NyNpOS5+gghlcDjTy/3U0e3E2DSDF/730/EZCUvd6NTXgmy4hjnhHN5po9eWslLfSyg4UOg/i9shJlXLas7A99A2HeRrqTqn08rVzF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731574682; c=relaxed/simple;
-	bh=7NJrR4vogW0/vHM41KtELnfnPiTdaVLzZujR4oU5hh4=;
+	s=arc-20240116; t=1731574688; c=relaxed/simple;
+	bh=PPiGJAFELaBhxG7LOkjncEb6SF+IJng9w5PyiXOCQeE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=CU3SO8ZrP/elCVbWmZ5YU0PSDvfzG7W5HNWlMawElAY7Ck+bQru7DAAb6HusXXNOFEaJyEKiB6GfHtuNFcStr2bRUFCfKNDEF2MXUd/p924OVkFFWacqxYcmrPikoFg5iy5uEVNOMLou478k/QZze87fx9X8aGVxvtIQxgxPNF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMrzmkAW; arc=none smtp.client-ip=209.85.218.49
+	 To:Cc:Content-Type; b=a3wW9Qft6Mrt1OKU8+USsXg0KkWK8k7K/0Uzo4Fpr3l5vRtwQed8gC71vn4QAtiZsjbkneEQHVSnB/D0f52PnEhMWPCbmmIw7ZENp6urjJ7q4ZfVrIf/V3dsfx65dvA22YR6v3Osn3ALq5G4V1qCRaeNFzMSYbsJ63LWd4JX+Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bFk5iPBL; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMrzmkAW"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a9a6b4ca29bso47164166b.3
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:58:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFk5iPBL"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6ea15a72087so3758657b3.1
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:58:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731574679; x=1732179479; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1731574686; x=1732179486; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eZ8CBbrdC83PF6kbM0WmZZwpLC3HhIb1tEVxC2PrtjM=;
-        b=XMrzmkAW0NnacWf0nDR8sriBBDnB2ATpPw9uuYlCGSPtuulx4HKeOhv9mYSCNGOk5m
-         DikWTM1yN7TqKaunUsrRaNvrtMpbWHrBUdbwzDeNF6pXEBcnAYpeF5w4qaNfkx9e7IyI
-         USWaVK8RBBfg59XXbBqxsbzl94/nOyBgSQXoGjWDb/hdE5TNmViXpFqQgXmAzkS31T2v
-         g7uXDiHdBX0+z6Y0eiIMGmUo7PmJjIGdaj5kDZLeLWJMXF4AWNAetXm82D1/2fp0DfyE
-         0vDrSnO9tn6Mycu1o+tIAwoa6re8hkCeMq7ZWaIjZxFCKmBE0zbc+4x2R/zd6hK4Nv9G
-         NKtA==
+        bh=bzrhH3pQ3UKeHzvxnZ3DbveMjsvOcIBx0m6ElfjeRA0=;
+        b=bFk5iPBLZq1sco4C4eNAxkk+7scvs/ImHBrcESXCFt9HVJpLuDBnf6aFPPVuUFUauB
+         zhAV82OLaLN9PYssL8MFxBLWsRUF3Z5bYG3yD83Q+3XCxb1a8u+QLq+pW0zfySVNhv0L
+         7vrH/a1UsOsLT+XwKvkZhu1cB7JGaFu+dn/TBvy3Zi8UvrHU8hfVoc4Hq7fQALfCs7QJ
+         Ns06UffE82BBShA85DTRRJ/zri7cdxmEFg0ta1CBrfG/MSUuL5ViVBqvnl6YbbIStW7l
+         nM7pvLWR6hrpc6hcGYEGEUIgG5M3A8gT/y6E/d3J/Am7cFuPNeun/9B0MDIH5himcT4S
+         ScgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731574679; x=1732179479;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1731574686; x=1732179486;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eZ8CBbrdC83PF6kbM0WmZZwpLC3HhIb1tEVxC2PrtjM=;
-        b=rlFxTcukuVUuAWGXcu/zSTMD0qruqAHeOxvWxpMm00gW6s/JrlWYXldlGmvKiakvWV
-         r1KQpsmFmWUvBSJuiAXSqGhgeyP9UoOXcvYBGQWXlwux1xJOMwnsFYnxYzkgYM1vhMJU
-         H2OCfa07FmygTYq9YQt+HQYM3vvAQ3hWCzMLmhXwyMY74eTD/BRcaaiKW2BBjILEubWH
-         EpIzF8boYmcOsMX9csTYAkmUiHbT4sggjSpiT7VB1v+OmMg3IRJ60DQjmTmO9vSnMngL
-         SE9a5PY9JyWQOPESdjnovuz3A0frfM1NHSJe3xPB/fG7kiPlRvfLB7AmTEj7dpVJRES4
-         yDYw==
-X-Forwarded-Encrypted: i=1; AJvYcCUOIxCDJPGlL0iNn3lrseu3M3PmOYXlHSY/jZZvJCZYQMyM0vv65932EyjU8I4xx8N5B1g=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyt4m1OI4980chNVdEysAJa8b+uCNdnnyeLNuYv2/X9t7Dn3Ezv
-	mvlkDqP5B8GHYpbrfiWQzK2CwA+AYVuVIUNTTuQCLiqiDZ10cdkksKQhicIHvQS8WafSAJgL3t/
-	lsqxaZGvgzeUdszGzrZCRGGpEalc=
-X-Google-Smtp-Source: AGHT+IGR/QBamY00nWOslQqE/PbtnN2gZzqoEGMyOF96AO7qCsOv7QxTRY+PRxwqgHhGhwgJUI+XzOkiU8nJr56xR/Q=
-X-Received: by 2002:a17:907:9302:b0:a9a:3f9d:62f8 with SMTP id
- a640c23a62f3a-aa1f805d27bmr577682866b.19.1731574678698; Thu, 14 Nov 2024
- 00:57:58 -0800 (PST)
+        bh=bzrhH3pQ3UKeHzvxnZ3DbveMjsvOcIBx0m6ElfjeRA0=;
+        b=AkB7FWdI8h2dGXuxhJpaiDI7HvIm6Bgb9mKsE6/ALhNHodr5DA9/Vr9HwkNzxZ42PG
+         RewyoKeklm/TDbs7KbkWfnXWWnJOyGLW1gm0K5SPBSMwJgN7FNeXCCmVkNJJ2iIwMOz2
+         GPy4EZtHDRey56eKjjzv0D0wGrbtAeCVrKZMpZSIYVB62fK2Ejf12ea5bieYpbgSO1i7
+         HxFxP4qQSE4dQbn20PHx2g8ZXVP8ZQiVUKUHZbwSSA4j7bZq0bvU4E0V70HqzhXTiZSg
+         Dnd/AIu/VlJMzTjlldb4LO0ihqPH64PAKf6Y+TeMonuvcbEtE52ThXhQ5BbEVJm4hogG
+         WNjQ==
+X-Gm-Message-State: AOJu0YxXalSL7+ctrtYecBRqlCnhwShzx05VlJpt/SO78r0jcSoD81nm
+	TADymZ/Lc94sI1ie76M5IMMclLygxR61P0YVkZY8liu0nNERWW1xu93dgzGreu273gfJ94qWLRg
+	Mj9L263x5JxRZnvBz7cHlwYsIWbI=
+X-Google-Smtp-Source: AGHT+IFxwUuz5aeuHZ9eGaJnnEaZGaqtHOLAjpeHGOlY9X6VhRfy04WrvsVEWncfPsI53KNIqRtw8ZVQXRfs3ZTlKdk=
+X-Received: by 2002:a05:690c:5981:b0:6ee:367c:3993 with SMTP id
+ 00721157ae682-6ee367c3d4fmr27175067b3.11.1731574685944; Thu, 14 Nov 2024
+ 00:58:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJPGt+U1icoNJHPtiFcidtwN6ts03jH9WpaGxDGoE5RBQSCCLA@mail.gmail.com>
- <ZyybBPigKZ_MlnU6@tapette.crustytoothpaste.net>
-In-Reply-To: <ZyybBPigKZ_MlnU6@tapette.crustytoothpaste.net>
-From: Yarden Bar <ayash.jorden@gmail.com>
-Date: Thu, 14 Nov 2024 00:57:22 -0800
-Message-ID: <CAJPGt+WwMWApt5o8E1nQGZnADbfjEkVmazUmxJ83Au6QPJ8Jdg@mail.gmail.com>
-Subject: Re: gpg-ssh signing with AgentForwarding
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Yarden Bar <ayash.jorden@gmail.com>, 
-	git@vger.kernel.org
+References: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
+ <20241113-pks-push-atomic-respect-exit-code-v1-2-7965f01e7f4e@pks.im>
+In-Reply-To: <20241113-pks-push-atomic-respect-exit-code-v1-2-7965f01e7f4e@pks.im>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Thu, 14 Nov 2024 16:57:55 +0800
+Message-ID: <CANYiYbHGdJsTgdzJj1r4sPdTAcZCf3C-qA538fcXbD1jjB1BUw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] transport: don't ignore git-receive-pack(1) exit code
+ on atomic push
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jiang Xin <zhiyou.jx@alibaba-inc.com>, 
+	"Larry D'Anna" <larry@elder-gods.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi all,
-A colleague of mine was able to figure it out.
-https://github.com/maxgoedjen/secretive/issues/405#issuecomment-2475175801
-Hope it will help/serve the community
+On Wed, Nov 13, 2024 at 7:25=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> When executing git-push(1) with the "--porcelain" flag, then we will
+> print updated references in a machine-readable format that looks like
+> this:
+>
+>     To destination
+>     =3D   refs/heads/noop:refs/heads/noop [up to date]
+>     !   refs/heads/rejected:refs/heads/rejected [rejected] (atomic push f=
+ailed)
+>     !   refs/heads/noff:refs/heads/(off (non-fast-forward)
+>     Done
+>
+> The final "Done" stanza was introduced via 77555854be (git-push: make
+> git push --porcelain print "Done", 2010-02-26), where it was printed
+> "unless any errors have occurred". This behaviour was later changed via
+> 7dcbeaa0df (send-pack: fix inconsistent porcelain output, 2020-04-17)
+> such that the stanza will also be printed when there was an error with
+> atomic pushes, which was previously inconsistent with non-atomic pushes.
+> The fixup commit has introduced a new issue though. During atomic pushes
+> it is expected that git-receive-pack(1) may exit early, and that causes
+> us to receive an error on the client-side. We (seemingly) still want to
+> print the "Done" stanza, but given that we only do so when the push has
+> been successful we started to ignore the error code by the child process
+> completely when doing an atomic push.
 
-Jordan
+I introduced the commit 7dcbeaa0df (send-pack: fix inconsistent porcelain
+output, 2020-04-17), because the porcelain output for git push over local
+file protocol and HTTP protocol are different and was hard to write the
+some test cases to work for both protocols. I acknowledge the patch was
+not perfect.
 
-On Thu, Nov 7, 2024 at 2:48=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+I read the commit 77555854be (git-push: make git push --porcelain
+print "Done", 2010-02-26) and the code path of git push over two
+protocols a second time, and find something:
+
+The code snippet from 77555854be:
+
+> -    ret =3D transport->push_refs(transport, remote_refs, flags);
+> +    push_ret =3D transport->push_refs(transport, remote_refs, flags);
+>      err =3D push_had_errors(remote_refs);
+> -
+> -    ret |=3D err;
+> +    ret =3D push_ret | err;
 >
-> On 2024-11-07 at 04:16:34, Yarden Bar wrote:
-> > Hello Git community,
-> > Not sure what search terms I haven't used, but I'll try to describe the=
- use-case
-> >
-> > On my local machine I have a SSH key, and I use AgentForwarding when I
-> > go out and about to other hosts (dev machines)
-> > The usual workflow of using the forwarded socket works for pull and pus=
-h.
-> >
-> > Where it gets pitch-dark is when I try to use my ssh key to sign git co=
-mmits.
-> > Following is my git config on the remote host:
-> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > [user]
-> >     name =3D John Doe
-> >     email =3D jdoe@jdoe.com
-> > # on my local machine(gpg-ssh signing works): signingkey =3D
-> > /Users/jdoe/.ssh/id_ecdsa.pub
-> >     signingkey =3D WHAT_SHOULD_I_PUT_HERE # on my laptop its the path t=
-o
-> > the public key from Secretive, or just omit it?
->
-> I think you want something like this:
->
->   [user]
->       signingkey =3D "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzr=
-m0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl"
->
-> You should use your own key; that's just an example.  Note that you want
-> the public key (that is, what's in `id_ecdsa.pub`, not `id_ecdsa`).
->
-> Once you have the key in the config file like that, with the "key::"
-> prefix, Git will pull from the agent if necessary.  I do that for
-> signing commits using GitHub Codespaces, where it's easier to forward
-> an SSH agent to the remote system than with GnuPG.
->
-> This is documented in the `user.signingKey` entry in `git config
-> --help`, but if there's something there that's unclear or you think the
-> text could be improved, please say something, and we'll try to get it
-> fixed.
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
+
+The return code "push_ret" of push_refs() from different transport
+vtable is not consist. For HTTP protocol, "push_ret" is zero if no
+connection error or no protocol errors. So we should consider
+=E2=80=9Cpush_ret" as a protocol error rather than a reference update error=
+.
+
+If we want to print "Done" in porcelain mode when there are no
+errors. (In dry run mode, ref-update-errors should not be
+considered as errors, but the opposite should be regarded as errors).
+
+Instead of using the following code,
+
+> +    if (porcelain && !push_ret)
+> +         puts("Done");
+
+We can use like this ("pretend" is the flag for dry-run mode):
+
++    ret =3D pretend ? push_ret : (push_ret | err);
++    if (porcelain && !ret)
++         puts("Done");
+
+I will send patches follow this patch series.
+
+--
+Jiang Xin
