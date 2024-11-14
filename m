@@ -1,92 +1,91 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D3E146588
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D851EABBB
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:16:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731572168; cv=none; b=WyCAm4hBvDTAXjOrBO1LajNA8x2TLw5ZAamrfKnb0iJBIjyOIHW5fJ2M6gFqUyfrxVyOX1IZi0XhJYjNOi2f6tqeKgNaxLjKOdwPTqB3JFadSXkS1m5fkdpgNbznxrvr/5dWy7DhkCw0E8UV4PqZsqMTD8YgguEDzkZU99GpXvY=
+	t=1731572170; cv=none; b=jnSCh8rYeuiHHkcCJuNZdhlHbxTzef93UpubzLmtq9eudILbxob7gWJkgxgnhEgkR4YkHiMnD1hpi8EuOBdLJEeOk/ru46s0PRnQKI930qAX3YeSKKIo5+dZ9SUBsFSNClAwLOpIuSGuKp4uQRW8ppuJlYFzfze5iW+PW/2SOLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731572168; c=relaxed/simple;
-	bh=7biXX6uwtyI7JEUok/UodM3UeYZ6/CZEs5DJpUw8yrk=;
+	s=arc-20240116; t=1731572170; c=relaxed/simple;
+	bh=de47MwkaqsWQ6vGP4OSYTQWcN+F6s33GSvz0lGuNfpg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EmK7Qmzd0XZO7/T+EV+2n9wd7+uSdE1nQZaoP4mNjqhMseTWE7vapjWVE82a1Z+tcCEzeTZb1NnZMyGhYRAh0HUHvfRi1wFYAU1Xpc//AU2KmmdD9beJKSqvwkmz4UdwaoWsMcqjFjqOYlLSL79OtSncgJsJH2j9IPsrd3C4GTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=3A7vBWn0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fIGPlaAQ; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=eH8CO8FnZIhMUJuJVL8fBIYblAi+EE5MQKu5ZenPENgvEcpLV1eXi4V9o0KyQijm62lSxrQnBhfrh+Wh4i+MRsEy+pCfow+u0Af/lrpRyENTtFRnCOoycQafvp0/bYZMkHM4dtThZBIrU1Z+GVNxiWCH9v2KxJw9quhRCS0WESg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EQLvvW6e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VUK3R3/I; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="3A7vBWn0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fIGPlaAQ"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7A018254021B;
-	Thu, 14 Nov 2024 03:16:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EQLvvW6e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VUK3R3/I"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 997802540227;
+	Thu, 14 Nov 2024 03:16:07 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 14 Nov 2024 03:16:04 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 14 Nov 2024 03:16:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731572164; x=1731658564; bh=riuBxe37aZ
-	0lexhhoj6GF6t8VP/zAFVmea9kbLuAW1g=; b=3A7vBWn0ohTvd7tk8HODN4i63S
-	4SL7FqlldMHbJBgeGfBCNCQxLNjT/UFZqznZ5j2wuyCxI8+TGVrTb6yYD7TuTW/K
-	EK5ICY9zyryOh/lIcOI8JG7N/YXFXo+QUvRTvZZa6jAM9+tkJSS5ijxl/yBLVzt4
-	l2Mbp3siZEdKS8Q6aw4bIcBAgFtffV6FjkllwYUcvjkNlAbExsrgGltX+PPucXgA
-	wWRlUF5Z8YblfX8+IyW3VafoXfHJV49Z5Soedbm6JdKi3SyWefQHPyNAtsXjx6yi
-	z78h1a/F1LEzCYi5kPoDQaYs8eGJtqVIhxXV8I7zC9r/6RVJRQlwpy5u2jVw==
+	:subject:to:to; s=fm3; t=1731572167; x=1731658567; bh=q6G7+sWnxk
+	gRMXBa93lY2IJrXuozAZaELrKGsw6re7U=; b=EQLvvW6eb41u+/GngGRUEBUtmm
+	idR3hBuga5dxoP4e1GTwrSLJ2yR3WaUB2IMPJ8vr1cO0kaYKoSCbO31mSX0xRj+M
+	00AAfynKnSf8n/iFFYoMsR/6ah3Uz8VYpg8Y9rqeZO9KbTxEX/Fwn+ncbClc6LIr
+	9WtKLNfO5Pwubl6hxt34LOoPX9N4VibfXf0ji++KtkdDA64bW7trh2qfwK12+zT4
+	pF+13M5KWZkaTIButJyoKKfeQJ1OueEOMJCbVj8oQCrWziMlpuCSeMaRFd/AqbnX
+	NYIMlMi2wc+gDV1VuRf7E022u0jVvFNUn4jP2a82U1rJKePhhB4KR5uqgiBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731572164; x=1731658564; bh=riuBxe37aZ0lexhhoj6GF6t8VP/zAFVmea9
-	kbLuAW1g=; b=fIGPlaAQiJiKmASKW3XR2KL4nC2IEXxh/HuPVy0WEabsQ/bQBIa
-	ZP/28L6Mv6kSWUwpJFShi6jprTzXPePrCQy7oFePA+z15Q1mhwy3LBp532ye/sBP
-	ep/r+sAK8BeHpJyeXpyZYSAJnfZdfYqidQvtgEiTTNUQ27dlm7qfa/sFxHEGfPG8
-	hoIVA3bCkYBdIF9Bq0zssHYs89DqGXmJ5pNa8So9NefYaGFD4c6GWBFrPLpLJE95
-	PqlPvZGb/s69iE5Mwsukz7QUUytejspeKZXtoCYG90KdS5SktQo1FjhzwVc+6YBE
-	7j2gSz2wdZPPJDU0JNtpOSzbI2e8BG1x5cA==
-X-ME-Sender: <xms:w7E1Z5W-N2R8dIRv62VZzdBSsxZ8AT_WD3vgAYMbwUEx_8rzUGN0nw>
-    <xme:w7E1Z5kfSPDszbZwEwb768TXMee_-wdPXSytkKa9q4UaZ95DaAALtBtYUBjW6F7qL
-    aTmSs5qjCD5xwh1hw>
-X-ME-Received: <xmr:w7E1Z1ZCheEsh5KesNGGELTnhh5q69hTZLFcLWDQYpbb6KiY5rGIYCFxkYANu5bk0ejRSn1GzSvRHuLRApyg8rQjU5ssmdqTWkjBRC5J-Bgo>
+	1731572167; x=1731658567; bh=q6G7+sWnxkgRMXBa93lY2IJrXuozAZaELrK
+	Gsw6re7U=; b=VUK3R3/IoVVzPowQlc+W1aKLr0sJUB3XwVSIueYaiVKyyi4eTcs
+	AbkgvqdFd7kzy06TgWl83XFHuEidUYp8xuL5GrxVWJAAJ2L5x4V+SOmfGZt0mHZv
+	Z8ANZSS16yG6ttMnJ0X7CuhbKNcIAwelX7b4vIMf3DEmdZPHPexVdjEcmZyBOWlK
+	KbIDOuCbVHXoNwKbYRt1CyeASTTyFF+VGgAc6m1W5w32qMw5rgbF0+Z2JCmZO13w
+	eJPDhanfewe80ORKwE63MaNaQy6/Xc96fNJ6w+Mb8ooBEyat+yCmAG74IWPYr47X
+	Dq8JlIoH3Ku+JbmNSy9PMFcbLSeAn3WSTlQ==
+X-ME-Sender: <xms:xrE1ZyvwapytAbsxLo6ZOKYj8_F00-ugqp1M8Ut6XlIUloz_rxaF7Q>
+    <xme:xrE1Z3cA6abs30KCKJKaKM42QLHYWq0rqnvJNHd317_Gsdi5SXjCd4odaVOzBHKWR
+    KwZyU0NhVaDTEjEGQ>
+X-ME-Received: <xmr:xrE1Z9x0tP6upx_Kp2ekYdZx4e4ODL2lUn00RsfrlcAWNEB6NFzuzITHEekZ7yg9pWLUKVnSMr83zmCwV_Wc0HDEZB-iCd7jykrILaWCEKnD>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugdduudehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepphhhihhl
-    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehrrghmshgrhi
-    esrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepshhunhhshhhi
-    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfse
-    hpvghffhdrnhgvth
-X-ME-Proxy: <xmx:w7E1Z8Xugb-hmkFtRF0vHQpKznJayDzaP_TA53PNe1S3Gi86blcDfg>
-    <xmx:w7E1Zzlst3ZaFFcX8_Fp46YUpn4tNKyZTAzUvRmuIVNwRjPUyo3bYQ>
-    <xmx:w7E1Z5fmxgogPsk4nRIujN9nFxvqU_D09-3Ul8-KArXy_pD6m_70uw>
-    <xmx:w7E1Z9FprUFzVtWgkuuY9vrGeLs-biSaVy-ku_Fi1QRxi8fRLLPTgw>
-    <xmx:xLE1Z8hKNNJQqi8bOYVxddR2j_vq3G5EgRgZFleDxwDwOI3JpLZyyzhV>
+    eqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdugfeh
+    tefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgv
+    nhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
+    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
+    hopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhho
+    rhhrrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
+    hushdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:xrE1Z9PVhlvIKj1SjSEE1R7lo-bT29DRFFbfv8kOCg8BH7OUymsALw>
+    <xmx:xrE1Zy9hTHFoLlOnSkm8NmnXASGtfjGoqnj15lZb2JdZB8ELrLuPQA>
+    <xmx:xrE1Z1U3ELeidfU6r4BfhsqKLw-NvILZQmM5Ay0bMvYbHQ6I_o5TYA>
+    <xmx:xrE1Z7d-l66qxICnU_sVeIbkh1MCxmcWIkqkKNSpdYATTHzCxk_sZg>
+    <xmx:x7E1Z1YRmWsXw0xJoKA8DqihdxTnDvD-KbZwyEAS0CQVM5_XPhtuxr-S>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Nov 2024 03:16:01 -0500 (EST)
+ 14 Nov 2024 03:16:04 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 855c0a69 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 14 Nov 2024 08:15:19 +0000 (UTC)
-Date: Thu, 14 Nov 2024 09:15:50 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b6cefa3d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 14 Nov 2024 08:15:24 +0000 (UTC)
+Date: Thu, 14 Nov 2024 09:15:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: David Aguilar <davvid@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: David Aguilar <davvid@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Ramsay Jones <ramsay@ramsayjones.plus.com>,
 	Jeff King <peff@peff.net>
 Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-Message-ID: <ZzWxr0R05hjsksMp@pks.im>
+Message-ID: <ZzWxu-mFdVQqrqZV@pks.im>
 References: <cover.1727881164.git.ps@pks.im>
  <cover.1729771605.git.ps@pks.im>
  <Zxv4osnjmuiGzy94@nand.local>
@@ -95,6 +94,8 @@ References: <cover.1727881164.git.ps@pks.im>
  <Zy9ckDezMSKVA5Qi@gmail.com>
  <ZzHeMjqUjzWpdX-Y@pks.im>
  <ZzRvsOeLsq3dJbGw@gmail.com>
+ <ZzSprTl5Z3uIx0_d@pks.im>
+ <c323599d-f60f-443c-8073-0942afbcdc04@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -103,54 +104,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZzRvsOeLsq3dJbGw@gmail.com>
+In-Reply-To: <c323599d-f60f-443c-8073-0942afbcdc04@gentoo.org>
 
-On Wed, Nov 13, 2024 at 01:21:52AM -0800, David Aguilar wrote:
-> On Mon, Nov 11, 2024 at 11:36:34AM +0100, Patrick Steinhardt wrote:
-> > On Sat, Nov 09, 2024 at 04:58:56AM -0800, David Aguilar wrote:
-> (3) Not all of the same files seems to be getting installed.
+On Wed, Nov 13, 2024 at 09:57:55AM -0500, Eli Schwartz wrote:
+> On 11/13/24 8:29 AM, Patrick Steinhardt wrote:
+> > Fair. I don't really expect anybody to use the combination of muon/sumo
+> > for everyday work, mostly because the usability is not quite up to par
+> > with Meson/Ninja. But there are two use cases that I deem important:
 > 
-> I don't see bin/gitk or bin/git-cvsserver when building with Meson.
+> (samu :P)
 
-gitk is intentionally committed. git-cvsserver is fixed now.
+Heh. Just double checked that I got it correct in the docs, but seems
+like I did.
 
-> The share/git-core/templates/ directory is missing completely.
+> >> Thanks. I don't want to be the CMake champion, so here are a few
+> >> helpful/surprising details about the Meson build to help make it better.
+> >>
+> >>
+> >> (1) I first built w/out having "curl-config" installed. I was surprised
+> >> to find that "ninja -C build install" ended up installing "bin/curl" and
+> >> "bin/curl-config" into the prefix.
+> >>
+> >> Is there a way to have the install step only install Git without
+> >> bringing along these other non-Git bits?
+> > 
+> > It definitely shouldn't install curl and curl-config, I'll have a look
+> > at that. But other than that Meson is currently set up such that it will
+> > automatically fall back to the subprojects in case certain dependencies
+> > cannot be found. This can be disabled via `meson setup --wrap-mode
+> > nofallback`.
+> 
+> https://github.com/mesonbuild/wrapdb/tree/master/subprojects/packagefiles/curl
+> 
+> could be updated to handle the case where meson.is_subproject() returns
+> "true", by not installing tooling.
+> 
+> Alternatively, meson install --skip-subprojects can avoid installing
+> *any* files from subprojects, on the theory that subprojects exist
+> solely to provide static libraries linked into the real project.
+> 
+> (In theory, one could have a subproject where arbitrary data files from
+> a subproject dependency are crucial at runtime. I think the gnome
+> ecosystem does this, hence using GLib / Gtk as a subproject "needs" to
+> install the subproject too -- but curl definitely doesn't have this
+> issue...)
 
-Fixed.
-
-> git-gui and its related files are missing. Perhaps this is
-> intentional/todo at this stage and hasn't been added yet.
-
-Yup, this is intentionally omitted for now.
-
-> Meson installs bin/git-http-backend (symlinked to libexec)
-> but in the original Makefile this file only exists in libexec/.
-
-Huh, true. On my system (NixOS) it's also installed in 'bin/', but when
-using the Makefile it indeed only ends up in 'libexec/'. Fixed now.
-
-> The contents of libexec/git-core/ seems to be missing dozens of
-> files compared to the Makefile build.
-
-This is intentional, as I'm dropping the dashed builitins. Git does not
-need these nowadays and resolves them internally anyway.
-
-> share/perl5/ has a bunch of extra git-{cvsserver,send-email,svn,...}
-> scripts so perhaps this is where some of those files went?
-> The Makefile places these files in the libexec/ area instead
-> of in the share/perl5/ area.
-
-Fixed.
-
-> The Makefile does not install share/gitweb/static/js/.
-> Instead, it seems to mash everything together into a single
-> share/gitweb/static/gitweb.js file which Meson does not install.
-> Meson installs separate files in the share/gitweb/static/js/ area.
-> Was that intentional, or is that just another todo?
-
-No, this was unintentional, fixed now. What is missing in this context
-is wiring up jsmin and cssmin, but I'll leave that as a todo for now.
-
-Will send a new version later today with these fixes.
+Yeah. `--skip-subprojects` is one way to do this, but that of course
+requires the user to know about it. It would be nice if one could wire
+this up in "meson.build" directly, e.g. by passing a `install: false`
+flag to `dependency()`. We don't want to install any of the subprojects
+as we build all of them statically and link them into the final
+binaries.
 
 Patrick
