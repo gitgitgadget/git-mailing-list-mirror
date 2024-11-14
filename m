@@ -1,39 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67AB219EB
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCB9F9C0
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731545817; cv=none; b=af5qYteDqZ4YIWa7lHjUFgDJ/u+Mv8qU4+P7+92FVlqauMCKrVqf+gv4sVeM9ylTTNibtapMKiQEU/sa0vVujp7aUQZaOeZ8L+ZR5w6LjrLsLwRPQACeeOKruuoMIlFgB4qvPZuXduFx/2EAdPLZB7lX+r7JsNmQIA0PdUOlsUc=
+	t=1731545945; cv=none; b=Qxs0k3xaueeHCz0hnq2ra1ndsoSBt8ovlEC9Dr/mqQpmtnUfqzFPAhB4Cy+KWPCKOfduh5YFNbkAuSpMZaYvMtV3TUH8zXUOilRhIf0mJ72ywRx9AkZuBdMVdN04ubS58lAd/cGh6HhylBds12tUd5Tlvn50rHV5Oci+FAEP/BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731545817; c=relaxed/simple;
-	bh=ZGmGcqbCV8WWUH6RycL1bKDMGJMs3BSj/uRQN+0h0qE=;
+	s=arc-20240116; t=1731545945; c=relaxed/simple;
+	bh=0PqSbvcC0nAtsT4MMzt8411Xp6D+VYqzBFsGNQyQq40=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=I0TBipsI21XsDhl1vuovDGYb2UaW/FG/1J5v61LhzoLFbwxDgljX3qMr+5KF1q/IXlPgCvk0p4Z6zr2tSYEyDxwblk2CbbGqz3I5Q2IbaifcnzImP8irbZJiHNW1dIlh7JVcypqRzxeMZh9GFFVkn9EPWOg2QyI0+FRn+q/O1c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ALhiLv3w; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=VtW30/dGtANbLgEQ9jNhgngzsxHeC+Ijf+Tom9NLGOAMARdh5H/3Y6nXERbi0BLJUcipBCt2fWUv5viso+7FNCUvxqvk9kcSwW89pBaKhqoq9XdP1heG24zGCZxb4Ow4n5FsXxKySfM/ex1gd/ja6ppwNrgf47DTQM0fL3/jm4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bwTFjJzS; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ALhiLv3w"
-Received: (qmail 26242 invoked by uid 109); 14 Nov 2024 00:56:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZGmGcqbCV8WWUH6RycL1bKDMGJMs3BSj/uRQN+0h0qE=; b=ALhiLv3wIVw2JRIC8SyOiDWLGmu/XlDIZWCOYfcBmHGioF9IRJF2D/M+6k2ox7DW8FdMR60O6D8Q0pPGoDXvMUpSMvkgOO7c2veowZzdsMWKbG70WuNhpeZjiVkJy6SV0zVhanuH357+lMVrmjA4wL9/rXO4SmUxbMJy3v+c7PIPHfOrvhn0h5t5yHc7YOUusb3f0hq5zInKYz/KE7IPtQc05m7uui8ox2cJlEdOmVjeIgDQmcMrxnHL0wd6COuikFmyEYmsBBe5d/uD0RykpUiXqhUE64TLg6IYXH0dQJ3GG4kybcn2aklmdJqeZdls3zD7Hz80MarlStaqs4Vicw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bwTFjJzS"
+Received: (qmail 26265 invoked by uid 109); 14 Nov 2024 00:59:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0PqSbvcC0nAtsT4MMzt8411Xp6D+VYqzBFsGNQyQq40=; b=bwTFjJzSUNXyh+W6FH8wKF25VWH5/eRM8lC70cQUyB5gvcelNIq8eKT8sDvB6jczTRBm97NYx9FRoXJ2mOObAwwyqiaf3eJDXV4vO6xP8U0UE1K7aTzr2yeNQvXblx9kvu8o6l67p+FxwEXyCqk94WkufmmOUk0LWbXGMIraSyVrrkmrb71RlP3irCrvU9r+AwoTJT0RLAqeUIRAEj9Ez7dfpvSRbOCVVAx5Ws+Dw7Wv5Cw82hCqJPUT2ooKhs5vBB9C8nINYVV1WqVpOsOradD3CGN2znj1VhlfJhGU8T895EvmIKLnWR10pHe8r/n7pQNRzVLgE4T2nbFRkHGBSQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Nov 2024 00:56:54 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Nov 2024 00:59:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19875 invoked by uid 111); 14 Nov 2024 00:56:56 -0000
+Received: (qmail 19890 invoked by uid 111); 14 Nov 2024 00:59:04 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Nov 2024 19:56:56 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Nov 2024 19:59:04 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 13 Nov 2024 19:56:52 -0500
+Date: Wed, 13 Nov 2024 19:59:01 -0500
 From: Jeff King <peff@peff.net>
 To: Jonathan Tan <jonathantanmy@google.com>
 Cc: git@vger.kernel.org, steadmon@google.com, hanyang.tony@bytedance.com,
 	me@ttaylorr.com
 Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
-Message-ID: <20241114005652.GC1140565@coredump.intra.peff.net>
-References: <20241113073500.GA587228@coredump.intra.peff.net>
- <20241113182656.2135341-1-jonathantanmy@google.com>
+Message-ID: <20241114005901.GD1140565@coredump.intra.peff.net>
+References: <cover.1729792911.git.jonathantanmy@google.com>
+ <cover.1730491845.git.jonathantanmy@google.com>
+ <1526a59e2d4ace2761fd8935c63350f0a41985c6.1730491845.git.jonathantanmy@google.com>
+ <20241113073500.GA587228@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,113 +44,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241113182656.2135341-1-jonathantanmy@google.com>
+In-Reply-To: <20241113073500.GA587228@coredump.intra.peff.net>
 
-On Wed, Nov 13, 2024 at 10:26:56AM -0800, Jonathan Tan wrote:
+On Wed, Nov 13, 2024 at 02:35:00AM -0500, Jeff King wrote:
 
-> > The reason these window tests are broken is that the earlier "build pack
-> > index for an existing pack" is now finding and storing deltas in a new
-> > pack when it does this:
-> > 
-> >   git index-pack --promisor=message test-3.pack &&
-> > 
-> > But that command is indexing a pack that is not even in the repository's
-> > object store at all! Yet it triggers a call to pack-objects that repacks
-> > within that object store.
+> On Fri, Nov 01, 2024 at 01:11:47PM -0700, Jonathan Tan wrote:
 > 
-> As far as I know, index-pack, when run as part of fetch, indexes a pack
-> that's not in the repository's object store; it indexes a packfile in a
-> temp directory. (So I don't think this is a strange thing to do.)
-
-When fetching (or receiving a push), we use "index-pack --stdin" and do
-write the resulting pack into the repository (and the command will
-complain if there is no repository).
-
-So I think what the test is doing above (using --promisor on a random
-packfile) is questionable. It goes back to 1f52cdfacb (index-pack:
-document and test the --promisor option, 2022-03-09). I wonder if that
-test is actually valuable now that the --promisor option is actually
-triggered via fetch.
-
-If we restricted --promisor to work only with --stdin, that would deal
-with both of the issues I saw. And I suspect (but didn't dig deeply or
-test) that would be sufficient for how it is called within git. (I
-wondered briefly if bundles might index in-place, but they seem to use
---stdin also).
-
-
-Where it gets weirder to me is with quarantine directories (and maybe
-this is what you meant above). On receiving a push, we "index --stdin"
-into a temporary quarantine directory. If that kicks off a pack-objects
-run, where does that pack-objects put its new pack? Within the
-quarantined index-pack we set GIT_OBJECT_DIRECTORY to the quarantine and
-add the original repo as an alternate. So I _think_ both the pushed-up
-pack and the repacked promisor pack would go into the quarantine dir,
-and then we'd migrate both (or neither) when we commit to the push.
-
-Which is OK, but I don't know that I thought that far ahead when writing
-the quarantine stuff long ago.
-
-It's probably somewhat academic right now, as I'm not sure if you can
-even push reliably into a promisor repo (and it doesn't look like
-receive-pack knows about passing --promisor anyway). We don't quarantine
-on fetch right now, though we have discussed it in the past (and I think
-we should consider doing it).
-
-So this may become more real in the future. I wonder if there is a way
-to add a test to future-proof against changes to how the quarantine
-system works. The theoretical problem case is if we did quarantine
-fetches, but accidentally wrote the new promisor pack into the main
-repo instead of the quarantine, and then a fetch rejected the incoming
-pack (because of a hook, failed connectivity check, etc). Then we'd end
-up with the new promisor pack when we shouldn't, which I guess could
-move objects from that incoming pack that we rejected into the main
-repo, despite the quarantine?
-
-I can't think of a way to test that now, without the quarantine-on-fetch
-feature existing.
-
-> > I'd guess in the real world, we'd only pass that option when indexing
-> > packs that we just fetched. But as a bystander to this feature, it feels
-> > quite odd to me that index-pack, which I generally consider a "read
-> > only" operation except for the index it was asked to write, would be
-> > creating a new pack like this. I didn't follow the topic closely enough
-> > to comment more intelligently, but would it be possible for the caller
-> > of index-pack to trigger the repack as an independent step?
+> > A subsequent commit will change the behavior of "git index-pack
+> > --promisor", which is exercised in "build pack index for an existing
+> > pack", causing the unclamped and clamped versions of the --window
+> > test to exhibit different behavior. Move the clamp test closer to the
+> > unclamped test that it references.
 > 
-> I thought of that, but as far as I know, during a fetch, index-pack is
-> the only time in which the objects in the fetched pack are uncompressed
-> in memory. There have been concerns about the performance of various
-> ways of solving the promisor-object-and-GC bug, so I took an approach
-> that minimizes the performance hit as much as possible, by avoiding yet
-> another uncompression (we need to uncompress the objects to find their
-> outgoing links, so that we know what to repack).
+> Hmm. The change in patch 4 broke another similar --window test I had in
+> a topic in flight. I can probably move it to match what you've done
+> here, but I feel like this may be papering over a bigger issue.
+> 
+> The reason these window tests are broken is that the earlier "build pack
+> index for an existing pack" is now finding and storing deltas in a new
+> pack when it does this:
+> 
+>   git index-pack --promisor=message test-3.pack &&
 
-Hmm, yeah. I can see the appeal of doing the processing there. Kicking
-off a pack-objects can be similarly expensive in the worst case, but in
-practice it should only be dealing with a few new objects (and we want
-to cheaply find out what those objects are, if there are even any at
-all).
+BTW, an alternate fix instead of moving the test is below. But maybe not
+worth revisiting since it's already in next.
 
-> We definitely should prevent the segfault, but I think that's better
-> done by making --promisor only work if we run index-pack from within a
-> repo. I don't think we can restrict the repacking to run only if we're
-> indexing a pack within the repo, because in our fetch case, we're
-> indexing a new pack - not one within the repo.
+-- >8 --
+Subject: [PATCH] t5300: use --no-reuse-delta for --window test
 
-I think the "--stdin" thing above neatly solves this.
+In the test added for 953aa54e1a (pack-objects: clamp negative window
+size to 0, 2021-05-01), we expect that dropping the --window parameter
+will mean the resulting pack does not have any deltas. But this
+expectation would not hold if there are deltas from an on-disk pack that
+are reused.
 
-> Maybe we could conceptualize "index-pack --promisor" as the pack
-> giving "testimony" about objects that its objects link to, so we can
-> update our own records.
+This makes the test fragile with respect to the existing repository
+state. It works reliably now, but changes to earlier tests could produce
+packs that violate the assumption.
 
-Yeah, I guess the fundamental thing here is that anybody who isn't
-passing "--promisor" is not going to be affected, so that at least
-limits the opportunity for surprise.
+We can make the test more reliable by passing --no-reuse-delta, meaning
+we will only output deltas we find in the current run (using --window).
 
-The quarantine discussion above is an example of how there could be
-unexpected consequences. I _think_ it's OK based on what I wrote, but
-hopefully that explains my general feeling of surprise. I dunno. It
-still may be the least bad thing.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5300-pack-object.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 3b9dae331a..392d6a4d41 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -631,7 +631,7 @@ test_expect_success 'prefetch objects' '
+ '
+ 
+ test_expect_success 'negative window clamps to 0' '
+-	git pack-objects --progress --window=-1 neg-window <obj-list 2>stderr &&
++	git pack-objects --progress --no-reuse-delta --window=-1 neg-window <obj-list 2>stderr &&
+ 	check_deltas stderr = 0
+ '
+ 
+-- 
+2.47.0.527.gfb211c7f3b
+
