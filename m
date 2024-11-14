@@ -1,62 +1,62 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DD640849
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 16:54:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5A818C014
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 16:54:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731603278; cv=none; b=FSspuG+fj6JhiEhX88ZI1L+zpcUTdG8LEpujsYazx0b8AdcUXwUOtHL0pJZlnPviwKsOPRLzBYPQXwaWjmpEMOnG5yQCEePr1+UaTyNAcUSGE8z8fPDQgVs7HkZsDstMm2j9/2MFUIfv+BcNmbnwncikaaAGLEG8cp+BMOy7JwA=
+	t=1731603285; cv=none; b=dakS+ChnxpLvw/RZdx8mBi+tCrHgv3cKTBdEcE2xiiD7KQxZ9NvGURgstJi94yr3XGFfgfIbvUcFTCpNFXBUvI2gRAbegOPB9dyrkAlO0lGHxPLuyJSBlw/WVGXZ8bgVVrvvos8MlJnMrN9EzbermTDQ3glcaUGj7CdQ3W6nga0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731603278; c=relaxed/simple;
-	bh=6R0cwGmOtyKQjkBRiEBxHCOUVeS+LLzfbHBEKrSx+B0=;
+	s=arc-20240116; t=1731603285; c=relaxed/simple;
+	bh=KP7zLmvL4WCb0FwFHXnLksrHy46xrQU50fd8UpICRKE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a8aqVDa7ufBGBW16QylEVxMft5PgBtV9X4O3gZpqNfap4UMvmMuFl6FvE8bPFp4olU/FPl0cM54PRITBLLqYOsHl1t/Tb/cSY1lq4imqggZGntNqx42oksfCzZ4bLEuz5pKNrS4JxkL9Cj7e2UhCkgir+QG/QcFe4peWUye7JoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RGuLGiLd; arc=none smtp.client-ip=209.85.210.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vy917vLEJ/4ldtXkrMEvKomoG+17kmMx28LuozKuPeWC45q3aMecI7UvO8eWsiscHP8Vi4pxplten2kYS5WCPmjeUJNFmMPSs8jOxjBOYH7bKgOb/YvcDsQVJfIK6MFwpqskaEdLf2V2/0InPLKycV/IrtYP9lWHaU9OQeI15ME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KNqE/owp; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RGuLGiLd"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-71e5a62031aso667732b3a.1
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:54:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KNqE/owp"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-211a4682fcaso6642015ad.2
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:54:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731603275; x=1732208075; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731603282; x=1732208082; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ngmKOS4mug1ZxW0Vwx+eY85VxZEonYqgfpKPy7uyMcE=;
-        b=RGuLGiLdsd6HdZjrS9XCCuriXnttnPh3cKnhYyAC74BH7QFM2816DXYIEPeqN9KvnP
-         lc8r87q1PfhPMZeqq+PHOMwt7U8gF/znJqcQvM/8yhgQMt7Qr6bO6iYYW9lUtEyvP5eG
-         v8rg6o9ky03jmKr58z/1d5PLFxIoNygAwwWgOqE7utm2XTe0MDDSFCBW87HdM4vojQGh
-         4nDbISBKDwssHD9KQztd82d/h9dYoPLhyYVpQHjba5UbZ0c7DmM5j/867HErWusDmXZU
-         /be/2/b8krjTBxuKMEs4Map1SMdCO3C/f8mghEmPC7YAIm/DvZcRYAkLsuwHxCuc2jDA
-         Hc6w==
+        bh=HEzocaeG9RkX415G8X6vWBCudzN4Zft684u9n/co4Gc=;
+        b=KNqE/owplC5EZRzCeLJw4YB9Q6VPl2NPOk4b1s3KvJjpOUvNb41Dfi+Xu10sjCtlYs
+         IuX9oNioZ3lGS+1A4f8KGVyga51vZqa4LrZv62Yj2g5PQ9s4OpK/EzWsipx8QnPmIF8X
+         Kiw6s7visJ0Bam/roauJ5tuo2RcX/ylFMAsXN/VGN5Q1mpnU5d3CnnvmvqKjjJeAZbrl
+         qixbBMRosS6g0ay4QZ/lgd+EdDjzOqSbBOvgkXjnaQGltxSabq1RpvN0oOH+6laTCbUb
+         gqEj2dbnwlT2yVMdd0u5OVl4fnmGVEHGGknQ73INHq2hv6jFjFCghO35X0EJuQ3btyio
+         mlIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731603275; x=1732208075;
+        d=1e100.net; s=20230601; t=1731603282; x=1732208082;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ngmKOS4mug1ZxW0Vwx+eY85VxZEonYqgfpKPy7uyMcE=;
-        b=Jz0pNVPL5m1TB+P9d5Z/5DXH3aF5z6BlUiwQCu403Lbi+td2aBIAo3h6hQ+aZKtMeu
-         FZCQHdNavwpwRHAtOKY/njJA0BUshQDaQKo7ravsTdDKR85oY5XvzVDzPb1bQlM+oomK
-         ePi9xrCmBNGAzWRTWamwy/TsXhC3vIKDEjk+2qv4qfC8RSn5dW6CtfsjebWNVP/gCMg2
-         Zoh2hhvpsQpPhWAj/Hh9eDdd3qoi+QYREvS6S+bzBpKLjUZmFogD4fW8Dfb2bxDQjv40
-         tn81dZkL0oUw3M+wNQxEQ2dGdiJ8xGae69zkSdz9JRqTPsO6u+E9r3Gak4vgPct8fHvi
-         UdUg==
-X-Gm-Message-State: AOJu0YyU55K3gm+KgAhuH/WzyaFtM06paD+Vf4AXAUhGaVZRFWIiXord
-	pzeE5bqisiv6j0V326Zn5e/OAb/uFsHs1CHRy9JfFxtqKckCtuaLkMNeAQ==
-X-Google-Smtp-Source: AGHT+IHK7zUCdffkTyDDxAMB8fLdZSos5iqc9mT1xZfku1lZiZnv0033JmP2Lne6d5YwxtTsCEdUFg==
-X-Received: by 2002:a05:6a00:10d1:b0:718:ea3c:35c3 with SMTP id d2e1a72fcca58-72469d1f5b9mr3183231b3a.15.1731603274623;
-        Thu, 14 Nov 2024 08:54:34 -0800 (PST)
+        bh=HEzocaeG9RkX415G8X6vWBCudzN4Zft684u9n/co4Gc=;
+        b=XWYPK1aFA0pyPrJ8CcTwlKl0Uk1yP1Iti8541tJ/+wtJ7yu5blAEvKLOZbDKNo/wSX
+         uBytYW4e0LsF1W2Y3FOPXwnADEFEeK96nBWOOzOLUokwnrhXHHeuTPpfi3IBRLxaSTtk
+         /JPzMbOwN3WEx9uzd+xYDCn5S3sIKVbJ5xHOhMIwpJc10XesZgyydVYKHBTWcoA/XDIV
+         LGQyUpZXgdH2fipIo5Rn/hufjV/cth/lckStusyhzaGpNIDU+5WW4qaCDAHqva8a2Pr1
+         nCi1fzLXgFx/qL9SRZgODvft45936Zb0G85uMlm5pmQcsglojOmvqM6U0jEMnoofb6BF
+         N/Vg==
+X-Gm-Message-State: AOJu0YyJLeXDBgvCno11IZq5BQEqY0JlchhHr+WHOwQzVJ5gswusdPAI
+	ghIWrOMSmfIOUQFptNXdxvQQDrf1CYt6+Mnbh1P9m5lOgtl0OJgCo+Y0Sg==
+X-Google-Smtp-Source: AGHT+IEH4fZEnEBC+ft1pnnyog+1G0NMXJPojgjjBqgQ7kN4YddATs9bH0sDu6BCo0s+5dfO8jqtwA==
+X-Received: by 2002:a17:903:41c4:b0:20b:b39d:9735 with SMTP id d9443c01a7336-211835cf279mr325678255ad.54.1731603282008;
+        Thu, 14 Nov 2024 08:54:42 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7246a6e6fe8sm1522983b3a.62.2024.11.14.08.54.33
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211c7c52711sm12862825ad.103.2024.11.14.08.54.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 08:54:34 -0800 (PST)
-Date: Fri, 15 Nov 2024 00:54:36 +0800
+        Thu, 14 Nov 2024 08:54:41 -0800 (PST)
+Date: Fri, 15 Nov 2024 00:54:44 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v8 6/9] ref: add more strict checks for regular refs
-Message-ID: <ZzYrTNiAoDHf4Qz_@ArchLinux>
+Subject: [PATCH v8 7/9] ref: add basic symref content check for files backend
+Message-ID: <ZzYrVO-a5vQS9CGv@ArchLinux>
 References: <ZzYqoai8X_Wdtbmt@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,197 +68,186 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <ZzYqoai8X_Wdtbmt@ArchLinux>
 
-We have already used "parse_loose_ref_contents" function to check
-whether the ref content is valid in files backend. However, by
-using "parse_loose_ref_contents", we allow the ref's content to end with
-garbage or without a newline.
+We have code that checks regular ref contents, but we do not yet check
+the contents of symbolic refs. By using "parse_loose_ref_content" for
+symbolic refs, we will get the information of the "referent".
 
-Even though we never create such loose refs ourselves, we have accepted
-such loose refs. So, it is entirely possible that some third-party tools
-may rely on such loose refs being valid. We should not report an error
-fsck message at current. We should notify the users about such
-"curiously formatted" loose refs so that adequate care is taken before
-we decide to tighten the rules in the future.
+We do not need to check the "referent" by opening the file. This is
+because if "referent" exists in the file system, we will eventually
+check its correctness by inspecting every file in the "refs" directory.
+If the "referent" does not exist in the filesystem, this is OK as it is
+seen as the dangling symref.
 
-And it's not suitable either to report a warn fsck message to the user.
-We don't yet want the "--strict" flag that controls this bit to end up
-generating errors for such weirdly-formatted reference contents, as we
-first want to assess whether this retroactive tightening will cause
-issues for any tools out there. It may cause compatibility issues which
-may break the repository. So, we add the following two fsck infos to
-represent the situation where the ref content ends without newline or
-has trailing garbages:
+So we just need to check the "referent" string content. A regular ref
+could be accepted as a textual symref if it begins with "ref:", followed
+by zero or more whitespaces, followed by the full refname, followed only
+by whitespace characters. However, we always write a single SP after
+"ref:" and a single LF after the refname. It may seem that we should
+report a fsck error message when the "referent" does not apply above
+rules and we should not be so aggressive because third-party
+reimplementations of Git may have taken advantage of the looser syntax.
+Put it more specific, we accept the following contents:
 
-1. refMissingNewline(INFO): A loose ref that does not end with
-   newline(LF).
-2. trailingRefContent(INFO): A loose ref has trailing content.
+1. "ref: refs/heads/master   "
+2. "ref: refs/heads/master   \n  \n"
+3. "ref: refs/heads/master\n\n"
 
-It might appear that we can't provide the user with any warnings by
-using FSCK_INFO. However, in "fsck.c::fsck_vreport", we will convert
-FSCK_INFO to FSCK_WARN and we can still warn the user about these
-situations when using "git refs verify" without introducing
-compatibility issues.
+When introducing the regular ref content checks, we created two fsck
+infos "refMissingNewline" and "trailingRefContent" which exactly
+represents above situations. So we will reuse these two fsck messages to
+write checks to info the user about these situations.
+
+But we do not allow any other trailing garbage. The followings are bad
+symref contents which will be reported as fsck error by "git-fsck(1)".
+
+1. "ref: refs/heads/master garbage\n"
+2. "ref: refs/heads/master \n\n\n garbage  "
+
+And we introduce a new "badReferentName(ERROR)" fsck message to report
+above errors by using "is_root_ref" and "check_refname_format" to check
+the "referent". Since both "is_root_ref" and "check_refname_format"
+don't work with whitespaces, we use the trimmed version of "referent"
+with these functions.
+
+In order to add checks, we will do the following things:
+
+1. Record the untrimmed length "orig_len" and untrimmed last byte
+   "orig_last_byte".
+2. Use "strbuf_rtrim" to trim the whitespaces or newlines to make sure
+   "is_root_ref" and "check_refname_format" won't be failed by them.
+3. Use "orig_len" and "orig_last_byte" to check whether the "referent"
+   misses '\n' at the end or it has trailing whitespaces or newlines.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/fsck-msgids.txt | 14 +++++++++
- fsck.h                        |  2 ++
- refs.c                        |  2 +-
- refs/files-backend.c          | 26 ++++++++++++++--
- refs/refs-internal.h          |  2 +-
- t/t0602-reffiles-fsck.sh      | 57 +++++++++++++++++++++++++++++++++--
- 6 files changed, 96 insertions(+), 7 deletions(-)
+ Documentation/fsck-msgids.txt |   3 +
+ fsck.h                        |   1 +
+ refs/files-backend.c          |  40 ++++++++++++
+ t/t0602-reffiles-fsck.sh      | 111 ++++++++++++++++++++++++++++++++++
+ 4 files changed, 155 insertions(+)
 
 diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index 22c385ea22..6db0eaa84a 100644
+index 6db0eaa84a..dcea05edfc 100644
 --- a/Documentation/fsck-msgids.txt
 +++ b/Documentation/fsck-msgids.txt
-@@ -173,6 +173,20 @@
- `nullSha1`::
- 	(WARN) Tree contains entries pointing to a null sha1.
+@@ -28,6 +28,9 @@
+ `badRefName`::
+ 	(ERROR) A ref has an invalid format.
  
-+`refMissingNewline`::
-+	(INFO) A loose ref that does not end with newline(LF). As
-+	valid implementations of Git never created such a loose ref
-+	file, it may become an error in the future. Report to the
-+	git@vger.kernel.org mailing list if you see this error, as
-+	we need to know what tools created such a file.
++`badReferentName`::
++	(ERROR) The referent name of a symref is invalid.
 +
-+`trailingRefContent`::
-+	(INFO) A loose ref has trailing content. As valid implementations
-+	of Git never created such a loose ref file, it may become an
-+	error in the future. Report to the git@vger.kernel.org mailing
-+	list if you see this error, as we need to know what tools
-+	created such a file.
-+
- `treeNotSorted`::
- 	(ERROR) A tree is not properly sorted.
+ `badTagName`::
+ 	(INFO) A tag has an invalid format.
  
 diff --git a/fsck.h b/fsck.h
-index 0d99a87911..b85072df57 100644
+index b85072df57..5227dfdef2 100644
 --- a/fsck.h
 +++ b/fsck.h
-@@ -85,6 +85,8 @@ enum fsck_msg_type {
- 	FUNC(MAILMAP_SYMLINK, INFO) \
- 	FUNC(BAD_TAG_NAME, INFO) \
- 	FUNC(MISSING_TAGGER_ENTRY, INFO) \
-+	FUNC(REF_MISSING_NEWLINE, INFO) \
-+	FUNC(TRAILING_REF_CONTENT, INFO) \
- 	/* ignored (elevated when requested) */ \
- 	FUNC(EXTRA_HEADER_ENTRY, IGNORE)
- 
-diff --git a/refs.c b/refs.c
-index 395a17273c..f88b32a633 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1789,7 +1789,7 @@ static int refs_read_special_head(struct ref_store *ref_store,
- 	}
- 
- 	result = parse_loose_ref_contents(ref_store->repo->hash_algo, content.buf,
--					  oid, referent, type, failure_errno);
-+					  oid, referent, type, NULL, failure_errno);
- 
- done:
- 	strbuf_release(&full_path);
+@@ -34,6 +34,7 @@ enum fsck_msg_type {
+ 	FUNC(BAD_REF_CONTENT, ERROR) \
+ 	FUNC(BAD_REF_FILETYPE, ERROR) \
+ 	FUNC(BAD_REF_NAME, ERROR) \
++	FUNC(BAD_REFERENT_NAME, ERROR) \
+ 	FUNC(BAD_TIMEZONE, ERROR) \
+ 	FUNC(BAD_TREE, ERROR) \
+ 	FUNC(BAD_TREE_SHA1, ERROR) \
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index f81b4c8dd5..a325b102b8 100644
+index a325b102b8..c496006db1 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -569,7 +569,7 @@ static int read_ref_internal(struct ref_store *ref_store, const char *refname,
- 	buf = sb_contents.buf;
+@@ -3509,6 +3509,43 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
+ 				  const char *refname,
+ 				  struct dir_iterator *iter);
  
- 	ret = parse_loose_ref_contents(ref_store->repo->hash_algo, buf,
--				       oid, referent, type, &myerr);
-+				       oid, referent, type, NULL, &myerr);
- 
- out:
- 	if (ret && !myerr)
-@@ -606,7 +606,7 @@ static int files_read_symbolic_ref(struct ref_store *ref_store, const char *refn
- int parse_loose_ref_contents(const struct git_hash_algo *algop,
- 			     const char *buf, struct object_id *oid,
- 			     struct strbuf *referent, unsigned int *type,
--			     int *failure_errno)
-+			     const char **trailing, int *failure_errno)
- {
- 	const char *p;
- 	if (skip_prefix(buf, "ref:", &buf)) {
-@@ -628,6 +628,10 @@ int parse_loose_ref_contents(const struct git_hash_algo *algop,
- 		*failure_errno = EINVAL;
- 		return -1;
- 	}
++static int files_fsck_symref_target(struct fsck_options *o,
++				    struct fsck_ref_report *report,
++				    struct strbuf *referent)
++{
++	char orig_last_byte;
++	size_t orig_len;
++	int ret = 0;
 +
-+	if (trailing)
-+		*trailing = p;
++	orig_len = referent->len;
++	orig_last_byte = referent->buf[orig_len - 1];
++	strbuf_rtrim(referent);
 +
- 	return 0;
- }
- 
-@@ -3513,6 +3517,7 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 	struct strbuf ref_content = STRBUF_INIT;
- 	struct strbuf referent = STRBUF_INIT;
- 	struct fsck_ref_report report = { 0 };
-+	const char *trailing = NULL;
- 	unsigned int type = 0;
- 	int failure_errno = 0;
- 	struct object_id oid;
-@@ -3538,7 +3543,7 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 
- 	if (parse_loose_ref_contents(ref_store->repo->hash_algo,
- 				     ref_content.buf, &oid, &referent,
--				     &type, &failure_errno)) {
-+				     &type, &trailing, &failure_errno)) {
- 		strbuf_rtrim(&ref_content);
- 		ret = fsck_report_ref(o, &report,
- 				      FSCK_MSG_BAD_REF_CONTENT,
-@@ -3546,6 +3551,21 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
- 		goto cleanup;
- 	}
- 
-+	if (!(type & REF_ISSYMREF)) {
-+		if (!*trailing) {
-+			ret = fsck_report_ref(o, &report,
-+					      FSCK_MSG_REF_MISSING_NEWLINE,
-+					      "misses LF at the end");
-+			goto cleanup;
-+		}
-+		if (*trailing != '\n' || *(trailing + 1)) {
-+			ret = fsck_report_ref(o, &report,
-+					      FSCK_MSG_TRAILING_REF_CONTENT,
-+					      "has trailing garbage: '%s'", trailing);
-+			goto cleanup;
-+		}
++	if (!is_root_ref(referent->buf) &&
++	    check_refname_format(referent->buf, 0)) {
++		ret = fsck_report_ref(o, report,
++				      FSCK_MSG_BAD_REFERENT_NAME,
++				      "points to invalid refname '%s'", referent->buf);
++		goto out;
 +	}
 +
- cleanup:
- 	strbuf_release(&ref_content);
- 	strbuf_release(&referent);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 037d7991cd..125f1fe735 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -716,7 +716,7 @@ struct ref_store {
- int parse_loose_ref_contents(const struct git_hash_algo *algop,
- 			     const char *buf, struct object_id *oid,
- 			     struct strbuf *referent, unsigned int *type,
--			     int *failure_errno);
-+			     const char **trailing, int *failure_errno);
++	if (referent->len == orig_len ||
++	    (referent->len < orig_len && orig_last_byte != '\n')) {
++		ret = fsck_report_ref(o, report,
++				      FSCK_MSG_REF_MISSING_NEWLINE,
++				      "misses LF at the end");
++	}
++
++	if (referent->len != orig_len && referent->len != orig_len - 1) {
++		ret = fsck_report_ref(o, report,
++				      FSCK_MSG_TRAILING_REF_CONTENT,
++				      "has trailing whitespaces or newlines");
++	}
++
++out:
++	return ret;
++}
++
+ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 				   struct fsck_options *o,
+ 				   const char *target_name,
+@@ -3564,6 +3601,9 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 					      "has trailing garbage: '%s'", trailing);
+ 			goto cleanup;
+ 		}
++	} else {
++		ret = files_fsck_symref_target(o, &report, &referent);
++		goto cleanup;
+ 	}
  
- /*
-  * Fill in the generic part of refs and add it to our collection of
+ cleanup:
 diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 162370077b..33e7a390ad 100755
+index 33e7a390ad..ee1e5f2864 100755
 --- a/t/t0602-reffiles-fsck.sh
 +++ b/t/t0602-reffiles-fsck.sh
-@@ -189,7 +189,48 @@ test_expect_success 'regular ref content should be checked (individual)' '
- 		EOF
- 		rm $branch_dir_prefix/a/b/branch-bad &&
- 		test_cmp expect err || return 1
--	done
+@@ -263,6 +263,109 @@ test_expect_success 'regular ref content should be checked (aggregate)' '
+ 	test_cmp expect sorted_err
+ '
+ 
++test_expect_success 'textual symref content should be checked (individual)' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	branch_dir_prefix=.git/refs/heads &&
++	cd repo &&
++	test_commit default &&
++	mkdir -p "$branch_dir_prefix/a/b" &&
++
++	for good_referent in "refs/heads/branch" "HEAD"
++	do
++		printf "ref: %s\n" $good_referent >$branch_dir_prefix/branch-good &&
++		git refs verify 2>err &&
++		rm $branch_dir_prefix/branch-good &&
++		test_must_be_empty err || return 1
 +	done &&
 +
-+	printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
++	for bad_referent in "refs/heads/.branch" "refs/heads/~branch" "refs/heads/?branch"
++	do
++		printf "ref: %s\n" $bad_referent >$branch_dir_prefix/branch-bad &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: refs/heads/branch-bad: badReferentName: points to invalid refname '\''$bad_referent'\''
++		EOF
++		rm $branch_dir_prefix/branch-bad &&
++		test_cmp expect err || return 1
++	done &&
++
++	printf "ref: refs/heads/branch" >$branch_dir_prefix/branch-no-newline &&
 +	git refs verify 2>err &&
 +	cat >expect <<-EOF &&
 +	warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
@@ -266,75 +255,92 @@ index 162370077b..33e7a390ad 100755
 +	rm $branch_dir_prefix/branch-no-newline &&
 +	test_cmp expect err &&
 +
-+	for trailing_content in " garbage" "    more garbage"
-+	do
-+		printf "%s" "$(git rev-parse main)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+		git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+		EOF
-+		rm $branch_dir_prefix/branch-garbage &&
-+		test_cmp expect err || return 1
-+	done &&
-+
-+	printf "%s\n\n\n" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage-special &&
++	printf "ref: refs/heads/branch     " >$branch_dir_prefix/a/b/branch-trailing-1 &&
 +	git refs verify 2>err &&
 +	cat >expect <<-EOF &&
-+	warning: refs/heads/branch-garbage-special: trailingRefContent: has trailing garbage: '\''
-+
-+
-+	'\''
++	warning: refs/heads/a/b/branch-trailing-1: refMissingNewline: misses LF at the end
++	warning: refs/heads/a/b/branch-trailing-1: trailingRefContent: has trailing whitespaces or newlines
 +	EOF
-+	rm $branch_dir_prefix/branch-garbage-special &&
++	rm $branch_dir_prefix/a/b/branch-trailing-1 &&
 +	test_cmp expect err &&
 +
-+	printf "%s\n\n\n  garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage-special &&
++	printf "ref: refs/heads/branch\n\n" >$branch_dir_prefix/a/b/branch-trailing-2 &&
 +	git refs verify 2>err &&
 +	cat >expect <<-EOF &&
-+	warning: refs/heads/branch-garbage-special: trailingRefContent: has trailing garbage: '\''
-+
-+
-+	  garbage'\''
++	warning: refs/heads/a/b/branch-trailing-2: trailingRefContent: has trailing whitespaces or newlines
 +	EOF
-+	rm $branch_dir_prefix/branch-garbage-special &&
++	rm $branch_dir_prefix/a/b/branch-trailing-2 &&
++	test_cmp expect err &&
++
++	printf "ref: refs/heads/branch \n" >$branch_dir_prefix/a/b/branch-trailing-3 &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/a/b/branch-trailing-3: trailingRefContent: has trailing whitespaces or newlines
++	EOF
++	rm $branch_dir_prefix/a/b/branch-trailing-3 &&
++	test_cmp expect err &&
++
++	printf "ref: refs/heads/branch \n  " >$branch_dir_prefix/a/b/branch-complicated &&
++	git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	warning: refs/heads/a/b/branch-complicated: refMissingNewline: misses LF at the end
++	warning: refs/heads/a/b/branch-complicated: trailingRefContent: has trailing whitespaces or newlines
++	EOF
++	rm $branch_dir_prefix/a/b/branch-complicated &&
 +	test_cmp expect err
- '
- 
- test_expect_success 'regular ref content should be checked (aggregate)' '
-@@ -207,12 +248,16 @@ test_expect_success 'regular ref content should be checked (aggregate)' '
- 	printf "%s" $bad_content_1 >$tag_dir_prefix/tag-bad-1 &&
- 	printf "%s" $bad_content_2 >$tag_dir_prefix/tag-bad-2 &&
- 	printf "%s" $bad_content_3 >$branch_dir_prefix/a/b/branch-bad &&
-+	printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
-+	printf "%s garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage &&
- 
- 	test_must_fail git refs verify 2>err &&
- 	cat >expect <<-EOF &&
- 	error: refs/heads/a/b/branch-bad: badRefContent: $bad_content_3
- 	error: refs/tags/tag-bad-1: badRefContent: $bad_content_1
- 	error: refs/tags/tag-bad-2: badRefContent: $bad_content_2
-+	warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
-+	warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
++'
++
++test_expect_success 'textual symref content should be checked (aggregate)' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	branch_dir_prefix=.git/refs/heads &&
++	tag_dir_prefix=.git/refs/tags &&
++	cd repo &&
++	test_commit default &&
++	mkdir -p "$branch_dir_prefix/a/b" &&
++
++	printf "ref: refs/heads/branch\n" >$branch_dir_prefix/branch-good &&
++	printf "ref: HEAD\n" >$branch_dir_prefix/branch-head &&
++	printf "ref: refs/heads/branch" >$branch_dir_prefix/branch-no-newline-1 &&
++	printf "ref: refs/heads/branch     " >$branch_dir_prefix/a/b/branch-trailing-1 &&
++	printf "ref: refs/heads/branch\n\n" >$branch_dir_prefix/a/b/branch-trailing-2 &&
++	printf "ref: refs/heads/branch \n" >$branch_dir_prefix/a/b/branch-trailing-3 &&
++	printf "ref: refs/heads/branch \n  " >$branch_dir_prefix/a/b/branch-complicated &&
++	printf "ref: refs/heads/.branch\n" >$branch_dir_prefix/branch-bad-1 &&
++
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: refs/heads/branch-bad-1: badReferentName: points to invalid refname '\''refs/heads/.branch'\''
++	warning: refs/heads/a/b/branch-complicated: refMissingNewline: misses LF at the end
++	warning: refs/heads/a/b/branch-complicated: trailingRefContent: has trailing whitespaces or newlines
++	warning: refs/heads/a/b/branch-trailing-1: refMissingNewline: misses LF at the end
++	warning: refs/heads/a/b/branch-trailing-1: trailingRefContent: has trailing whitespaces or newlines
++	warning: refs/heads/a/b/branch-trailing-2: trailingRefContent: has trailing whitespaces or newlines
++	warning: refs/heads/a/b/branch-trailing-3: trailingRefContent: has trailing whitespaces or newlines
++	warning: refs/heads/branch-no-newline-1: refMissingNewline: misses LF at the end
++	EOF
++	sort err >sorted_err &&
++	test_cmp expect sorted_err
++'
++
+ test_expect_success 'ref content checks should work with worktrees' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+@@ -313,6 +416,14 @@ test_expect_success 'ref content checks should work with worktrees' '
+ 	warning: worktrees/worktree-1/refs/worktree/branch-no-newline: refMissingNewline: misses LF at the end
  	EOF
- 	sort err >sorted_err &&
- 	test_cmp expect sorted_err
-@@ -260,7 +305,15 @@ test_expect_success 'ref content checks should work with worktrees' '
- 		EOF
- 		rm $worktree2_refdir_prefix/bad-branch-2 &&
- 		test_cmp expect err || return 1
--	done
-+	done &&
+ 	rm $worktree1_refdir_prefix/branch-no-newline &&
++	test_cmp expect err &&
 +
-+	printf "%s" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-no-newline &&
++	printf "%s garbage" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-garbage &&
 +	git refs verify 2>err &&
 +	cat >expect <<-EOF &&
-+	warning: worktrees/worktree-1/refs/worktree/branch-no-newline: refMissingNewline: misses LF at the end
++	warning: worktrees/worktree-1/refs/worktree/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
 +	EOF
-+	rm $worktree1_refdir_prefix/branch-no-newline &&
-+	test_cmp expect err
++	rm $worktree1_refdir_prefix/branch-garbage &&
+ 	test_cmp expect err
  '
  
- test_done
 -- 
 2.47.0
 
