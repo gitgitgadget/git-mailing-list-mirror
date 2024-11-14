@@ -1,145 +1,135 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA881F9ED1
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 11:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49911F8915
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 12:09:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731583809; cv=none; b=lOwQWEpXOAhXCszul9ta7UbNZQWCvX3pDvfSQUwq/afzlyWxdlea3RmmEZGYoBDrodxUJ/DZHRycvhgY7IzXeX6rRcnAunpnzzZtBzY/A/DjNfEx7RBv9J5dH9i8tLA3S5y3XLBSBUcnuCLhSSvCxsV46RP1sKvqL7V7+WM8C6s=
+	t=1731586163; cv=none; b=g2NIfqycxIc7klcKLPnFVSqJd/ilZ0aiaAYi7mbaFzvmZteb/WW7PfoRy17Uv5VBPsQn07UZaZwjXLl+grc3BjjrZlEvxJeBMnJvkOKmf/pqa5qc+87zOuT9heSOvPOmr0X9HOj+ygBkZaioB2LTwe+wPWpm5L+00JSqmdS1lEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731583809; c=relaxed/simple;
-	bh=+npuu+N4x5tnnvQ09js1WMqO/IrDDlwZUMWEYyzu03c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c0NAJUcHHwrAUl7O9/VRhbnf/Xj9nUUqk7pHJWWsAu/FE5FYg4SbZzXVUwUfmhsvJDtk4vlKAtFoFPbrgWCLltmM/aLWdBwfv0Qvq8x/W6ljQQDrZSSJbwjB96cp0hHk8dyM/1Y2dtFfn8U8d4ZIxx5mflbMsiWq5Wh1X/nhWoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XlY9fO3o; arc=none smtp.client-ip=209.85.222.47
+	s=arc-20240116; t=1731586163; c=relaxed/simple;
+	bh=+JNvZzboeOCKH9ekqJci7wIDZv+rMvuJiUiA4ob8wB4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rDYdb8QEXj76eYdBdlnrD6Gfby0TAEMOXH7qxuiZOrHx8F8jYrLXyxvkz/zYVH+UOi5nwCHOE9Xm/L5PsAmVk/jkwEizFdTPMPnz1oyvo8e5OnpGDTZrHdVElaA73wCUz4kXHuD5sVpPnquBS6pSdXGxRmesxsQHjUBjTFKaJZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Um8yFb9M; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XlY9fO3o"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-84fd50f2117so241198241.1
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 03:30:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Um8yFb9M"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-7eb0bc007edso289203a12.3
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 04:09:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731583806; x=1732188606; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lfwKF7J7C8oFhkbZNaUDs3sk1gTW1d04siAz01Fg7Iw=;
-        b=XlY9fO3okD6mimbGVJmUxczUuEhoyTa+aF2RVv1vBtNKdYJJoqcW9Wz2ZMWGMwpKnR
-         x4cSRcmZ4zxKS3+37BIXzDrp/8daFrZOhcSAdZb4c/4BBvPi+EaJL8J6kJ4dnynSAgLw
-         XTlwzdBQXgOgIR7in5inV28WjX+gNQuIh1NNHz7lgRT9QEHmezo7OukmhvGZ9bUu6jx6
-         YfoVra0jkXHw7CUS4tKO4NeE6VYmB7jJAugv2e2hauI0SP4PS3UW6TnBT9AOmlYMgjOV
-         RNSDUxdFbjJDSPVQ1aNIuBdN5w2lN8nw3p4a+K+7jN//CqzcIy8bP+R+EkG99yaD+Ou9
-         dIbQ==
+        d=gmail.com; s=20230601; t=1731586160; x=1732190960; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=HcsjAJ/4kyHoM0e+BFzEn1ZZFmH1fcYhHrxi4xCFOE0=;
+        b=Um8yFb9MzI8FslMOpUmjYmokaawshzeh6UerKUkOvhZq/kZLzBh0vXPLnBehdisyUk
+         330RuQZDKv0Xe8LQxZwBJS9OJtuaPznv/C6JTRaB3bMHX23HHWyutZGCSAzKJGN6UldM
+         18HV8uyvXhn2utCZw0r9NLG4YR0z/3XRmtz+wMnDyAU71w0lZE5jSSd225k0M1TY9YQS
+         Gdu88u8tpMofySOQyGWpjcliFGXIBhm7dYnYHsEkFDeS0ro2YAu+FUu9oj0TmWQ89jYo
+         4Kt7I+71Alos2w6zhqClQakdV65mIth31bhaxKiW/W73Pk90/iF8b7R95t7/8W/HMxJs
+         L1Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731583806; x=1732188606;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lfwKF7J7C8oFhkbZNaUDs3sk1gTW1d04siAz01Fg7Iw=;
-        b=P+/Yq/jVA9Prw+JU1g7HSzlTtekhKjV5i+09DJM4sRK/1GR86u3MXGi1ZHiMsBLGRb
-         c4TiI5fcLf7xmCmJpSH+l+HTIeZw4dU/efMo/B3SWrMrZFi854kHsZ9c2zt8Vxyb5AWC
-         ZZ98SsPq0WLXOVdK/Zu7jM3Ok9dVIEZJfhFaKnVbkVredUEjnFLIPtmHvMs0VWjWm9xo
-         nO3fzq+uGpel7E+SowPRa2UekzQCu1NfcDJnrGAW/UnFJrPV4/NZhBGMQkffpu3gee9G
-         c1vnz44EEsfhSPOH6UCHE3Ms5H5gP7FO4TQsiba4xrf+BfRxf6ixoVojKaezZNKegfky
-         zlCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX8DZtmnEMhlXeHO26KEDbAoSBPTkdeputBvDpePXEysPx3oH7OoiEodquhDull7qtcxH0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrzyhfoNAr/p9zmhXE7yTlip0ob/xnDi0veC1sNkdfeP8mZjvm
-	JVcIyEgbEbEbh2On4TbwnfqMoEJB3oxvg41q0lys+sB+R52M5ow+P1UAnTK9EJX3pbmghUhuUdT
-	lTD5VTQ+CgD4JxLlCWcS0lrVuCaNi3yWo
-X-Google-Smtp-Source: AGHT+IHZ7mCMqOd9n/TN1MKLNsdA1DCYyuzbduCMN1EwCoUpe7ZiiSg8eenGW9ZfqGLMMe6aWmPIgeh4jIwQOq7Qj/U=
-X-Received: by 2002:a05:6102:3f03:b0:4a5:6f41:2143 with SMTP id
- ada2fe7eead31-4aae134d3a5mr24940181137.4.1731583806359; Thu, 14 Nov 2024
- 03:30:06 -0800 (PST)
+        d=1e100.net; s=20230601; t=1731586160; x=1732190960;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HcsjAJ/4kyHoM0e+BFzEn1ZZFmH1fcYhHrxi4xCFOE0=;
+        b=VE2FHL5v9ilkEvivLXQLwv2ANo9uUScsdxIz+rlhOpDgFDRcFxRlFvccSLzsMd1F8m
+         5WitcEHr2sFRkg16UKUQZHfODOvVoWJ8ohaC/BWb0e7fdHSmaVZOBRlkNxfPt5r4zi16
+         T6i1IKDOE+hxdbFJlneAk3SmGpzn2pJAmYehWpqRr7U/+d2UlxzQklq1D3WwjRYGQkBO
+         Tz9Ee27oOp31ZZjXezyA+YrJWwao49V7Rwyar4WsxnT7dWu0xxohfGELqvt9czmhQTNa
+         SIEvtbILd9UrgtEL0vCxqESJQ7avH3xJ3aKGRWCvicwIP5N0V5tiSpK0966qVppZyqDC
+         9FnA==
+X-Gm-Message-State: AOJu0Yygr9KTI3LiYdfF4ZFzJAPAi5RsNu4Fri32qwT9P8IhkeQzixDs
+	4QNT1OqUUGg+tFhWRzkCdvS7QAHzRmpWq3H7E+1l+l/plvKu50RkXn4NZQ==
+X-Google-Smtp-Source: AGHT+IFo6wZVD9WU+jjPWFUaKcphyk7y5A61VFPBb8+kw46q7D4StSgb61jATjstiLq/cvZSKvyPVQ==
+X-Received: by 2002:a05:6a20:9188:b0:1db:ff5a:23e5 with SMTP id adf61e73a8af0-1dc70338f2amr8873062637.4.1731586160115;
+        Thu, 14 Nov 2024 04:09:20 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f8b3974bb2sm956555a12.64.2024.11.14.04.09.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Nov 2024 04:09:19 -0800 (PST)
+Date: Thu, 14 Nov 2024 20:09:21 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 5/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <ZzXocdnqigGYFXQ_@ArchLinux>
+References: <ZzCiCGxL4Adnd_eq@ArchLinux>
+ <ZzCij4ilPLhlKXS6@ArchLinux>
+ <ZzRW7E2Z0ZYQ7i20@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
- <pull.1828.v2.git.git.1731524467045.gitgitgadget@gmail.com>
- <xmqq4j4a8srw.fsf@gitster.g> <29c81cbc-3678-4b70-9e0e-c500186d159f@gmail.com>
-In-Reply-To: <29c81cbc-3678-4b70-9e0e-c500186d159f@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Thu, 14 Nov 2024 06:29:55 -0500
-Message-ID: <CAPSxiM9ejv-ZHHu3UkB-ktokae9w7HiUxmByMRUVMSbG1u5Nxg@mail.gmail.com>
-Subject: Re: [PATCH v2] diff: update conflict handling for whitespace to issue
- a warning
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Usman Akinyemi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZzRW7E2Z0ZYQ7i20@pks.im>
 
-On Thu, Nov 14, 2024 at 5:06=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 14/11/2024 02:15, Junio C Hamano wrote:
-> > "Usman Akinyemi via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > [jc: As Phillip is blamed for suggesting this addition, I added him
-> > to the recipient of this message.]
->
-> Thanks
-Hi Philip and Junio,
+On Wed, Nov 13, 2024 at 08:36:12AM +0100, Patrick Steinhardt wrote:
+> On Sun, Nov 10, 2024 at 08:09:51PM +0800, shejialuo wrote:
+> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+> > index 8bfdce64bc..2d126ecbbe 100644
+> > --- a/refs/files-backend.c
+> > +++ b/refs/files-backend.c
+> > @@ -3505,6 +3505,48 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
+> >  				  const char *refname,
+> >  				  struct dir_iterator *iter);
+> >  
+> > +static int files_fsck_refs_content(struct ref_store *ref_store,
+> > +				   struct fsck_options *o,
+> > +				   const char *target_name,
+> > +				   struct dir_iterator *iter)
+> > +{
+> > +	struct strbuf ref_content = STRBUF_INIT;
+> > +	struct strbuf referent = STRBUF_INIT;
+> > +	struct fsck_ref_report report = { 0 };
+> > +	unsigned int type = 0;
+> > +	int failure_errno = 0;
+> > +	struct object_id oid;
+> > +	int ret = 0;
+> > +
+> > +	report.path = target_name;
+> > +
+> > +	if (S_ISLNK(iter->st.st_mode))
+> > +		goto cleanup;
+> > +
+> > +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
+> > +		ret = fsck_report_ref(o, &report,
+> > +				      FSCK_MSG_BAD_REF_CONTENT,
+> > +				      "cannot read ref file '%s': %s",
+> > +				      iter->path.buf, strerror(errno));
+> > +		goto cleanup;
+> > +	}
+> 
+> I didn't catch this in previous rounds, but it's a little dubious
+> whether we should report this as an actual fsck error. I can expect
+> multiple situations:
+> 
+>   - The file has weird permissions and thus cannot be read, failing with
+>     EPERM, which doesn't match well with BAD_REF_CONTENT.
+> 
+>   - The file does not exist anymore because we were racing with a
+>     concurrent writer, failing with ENOENT. This is benign and expected
+>     to happen in busy repos, so generating an error here feels wrong.
+> 
+>   - The file cannot be read at all due to an I/O error. This may be
+>     reported with BAD_REF_CONTENT, but conflating this with the case
+>     where we have actually bad content may not be the best idea.
+> 
+> So maybe we should ignore ENOENT, report bad permissions and otherwise
+> return an actual error to the caller?
+> 
 
->
-> >> From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >>
-> >> Modify the conflict resolution between tab-in-indent and
-> >> indent-with-non-tab to issue a warning instead of terminating
-> >> the operation with `die()`. Update the `git diff --check` test to
-> >> capture and verify the warning message output.
->
-> Usman - when you're writing a commit message it is important to explain
-> the reason for making the changes contained in the patch so others can
-> understand why it is a good idea. In this case the idea is to avoid
-> breaking "git diff" for everyone who clones a repository containing a
-> .gitattributes file with bad whitespace attributes [1]. As I mentioned
-> in [2] I think we only want to change the behavior when parsing
-> whitespace attributes - we still want the other callers of
-> parse_whitespace_rule() to die() so the user can fix their config or
-> commandline. We can do that by adding a boolean parameter called
-> "gentle" that determines whether we call warning() or die().
+So, I think we should just use "error_errno" method to report the actual
+error to the caller. And we also need to add some comments.
 
-I am very sorry for the confusion. I will take this into consideration
-next time and always give more explanation
-in commit messages.
+Thanks for this wonderful suggestion.
 
-I will make the necessary changes.
 
-Thank you very much.
-Usman.
-
->
-> Best Wishes
->
-> Phillip
->
-> [1]
-> https://lore.kernel.org/git/e4a70501-af2d-450a-a232-4c7952196a74@gmail.co=
-m
-> [2]
-> https://lore.kernel.org/git/3c081d3c-3f6f-45ff-b254-09f1cd6b7de5@gmail.co=
-m
->
-> >> Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
-> >> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> >> ---
-> >
-> > If the settings requires an impossible way to use whitespaces, the
-> > settings is buggy, and it generally would be better to correct the
-> > setting before moving on.
-> >
-> > I am curious to know in what situations this new behaviour can be
-> > seen as an improvement.  It may allow you to go on _without_ fixing
-> > such a broken setting, but how would it help the end user?  If the
-> > user set both of these mutually-incompatible options A and B by
-> > mistake, but what the user really wanted to check for was A, picking
-> > just one of A or B arbitrarily and disabling it would not help, and
-> > disabling both would not help, either.  But wouldn't the real source
-> > of the problem be that we are trying to demote die() to force the
-> > user to correct contradictiong setting into warning()?
-> >
-> > Thanks.
->
+> Patrick
