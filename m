@@ -1,108 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCB9F9C0
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:59:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9701CCEE7
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 01:12:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731545945; cv=none; b=Qxs0k3xaueeHCz0hnq2ra1ndsoSBt8ovlEC9Dr/mqQpmtnUfqzFPAhB4Cy+KWPCKOfduh5YFNbkAuSpMZaYvMtV3TUH8zXUOilRhIf0mJ72ywRx9AkZuBdMVdN04ubS58lAd/cGh6HhylBds12tUd5Tlvn50rHV5Oci+FAEP/BY=
+	t=1731546740; cv=none; b=oYnRlb534SiG0KT6qFqbVNoHn0496F3JuvHGHx/RMl52B5hAYwqz4J/adApNTG8MB8G8KCYbfKgIgImSpKIziWbX0Sd0MMuPEEARUOLXDYIpKQocYWUGTQIEcY7PiKsxdvnUyhMceh+ORWVeuF63ZDeI0JIHX73AbUKjrfwSd4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731545945; c=relaxed/simple;
-	bh=0PqSbvcC0nAtsT4MMzt8411Xp6D+VYqzBFsGNQyQq40=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VtW30/dGtANbLgEQ9jNhgngzsxHeC+Ijf+Tom9NLGOAMARdh5H/3Y6nXERbi0BLJUcipBCt2fWUv5viso+7FNCUvxqvk9kcSwW89pBaKhqoq9XdP1heG24zGCZxb4Ow4n5FsXxKySfM/ex1gd/ja6ppwNrgf47DTQM0fL3/jm4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bwTFjJzS; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1731546740; c=relaxed/simple;
+	bh=3wzjZpGbLCIR+pMfmc1zg54yNlm7Dd0g2525mkJbG+U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ahAT5daGmMjlc3pqYISgeKVFn1tvkr/RG6huVPXW8I6SrNfZynGy0EZiqQGBBB+dFQVH6Kx6xCK7YTatPo6pCNfxXopG0f3t2By5ax8IUnn2k/40luYiaJCssAUssf2d7KMwWEhrksZtaj65uQDH7QbA+Isd7odCC6oSEnCKn8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ik7BaMUo; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bwTFjJzS"
-Received: (qmail 26265 invoked by uid 109); 14 Nov 2024 00:59:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0PqSbvcC0nAtsT4MMzt8411Xp6D+VYqzBFsGNQyQq40=; b=bwTFjJzSUNXyh+W6FH8wKF25VWH5/eRM8lC70cQUyB5gvcelNIq8eKT8sDvB6jczTRBm97NYx9FRoXJ2mOObAwwyqiaf3eJDXV4vO6xP8U0UE1K7aTzr2yeNQvXblx9kvu8o6l67p+FxwEXyCqk94WkufmmOUk0LWbXGMIraSyVrrkmrb71RlP3irCrvU9r+AwoTJT0RLAqeUIRAEj9Ez7dfpvSRbOCVVAx5Ws+Dw7Wv5Cw82hCqJPUT2ooKhs5vBB9C8nINYVV1WqVpOsOradD3CGN2znj1VhlfJhGU8T895EvmIKLnWR10pHe8r/n7pQNRzVLgE4T2nbFRkHGBSQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 14 Nov 2024 00:59:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19890 invoked by uid 111); 14 Nov 2024 00:59:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Nov 2024 19:59:04 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 13 Nov 2024 19:59:01 -0500
-From: Jeff King <peff@peff.net>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org, steadmon@google.com, hanyang.tony@bytedance.com,
-	me@ttaylorr.com
-Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
-Message-ID: <20241114005901.GD1140565@coredump.intra.peff.net>
-References: <cover.1729792911.git.jonathantanmy@google.com>
- <cover.1730491845.git.jonathantanmy@google.com>
- <1526a59e2d4ace2761fd8935c63350f0a41985c6.1730491845.git.jonathantanmy@google.com>
- <20241113073500.GA587228@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ik7BaMUo"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2218E13801F7;
+	Wed, 13 Nov 2024 20:12:17 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 13 Nov 2024 20:12:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731546737; x=1731633137; bh=XkUvdRTq72RY/Xy4l3hWxFKZLcTWhue5N5q
+	Nkm0NdJE=; b=Ik7BaMUonx75gJLMXn66u5wcZsFZcVhn3G72UFCVUJHS9YDn2ee
+	qWqpz8EARLWH2cmFyfXriDzLIyjGbfqp6A8kwCJ/pfvNo80/JV6zXm7OiyNBpvN2
+	uVlI8WRwJ0V+FCqCKMT6TsUlF5t4+879q0kl0lDZCge9xtsDB1Vgi05XKCfeafuf
+	xADL/J93wzqMX/CcmYHCbikqqugyMlGlGeYTI2rvlyV+SkZI+q0+Hbr5giiUTmKY
+	dV49sdEA1fhvLHLU0URuj0tVz7N/m+DGFg5w/u/GOBqRMWlQMFD9nJCihoCbNkoW
+	EQChqH2MTD2s3d/093cfi56WCF6OR3xUHvQ==
+X-ME-Sender: <xms:cE41ZyuvDEgEAM4hQUPoCMj3yI41GU6oIdED_5OjlX0kF_iveOsW1g>
+    <xme:cE41Z3dTYSCC09xHKMimc9B6_f3qusdAo6uu3oMEp1sxnbGCelq2nf5EjxEM2yhX_
+    18ZnJl61HXvj791yw>
+X-ME-Received: <xmr:cE41Z9zLgVV8N5aDk1XqUMzQAVl6XOiCDhh5rBaj8VJBxtSBq8i1H44kgS-CYPE4KnjDq3-QkhdLp_EJDSzx6YNaGBEv1pKFrdER>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugdefudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cE41Z9PgHgHEQbKvuDLQxwvG7p1iLxpZUsqueeD0NTJjpKy4lmf9eA>
+    <xmx:cU41Zy8Q67DnLpptrpz2eAGqj_BTTcnH1sBvu-Fa4LYVCBgke9Vzog>
+    <xmx:cU41Z1W62rISoNG6PEJxmQspPxfLXFmsCupEPjnQLcAWEBC1Vru24A>
+    <xmx:cU41Z7dFg5nKeJTBV4rm7ox9ruKHqSISK3l9PD8DURSfdA1IO4exIg>
+    <xmx:cU41Z5npU50IFjZt2ZAYNu0VYquDFqm5goOFCGo7WBPQDo1sdqq0Ek2G>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Nov 2024 20:12:16 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH 1/2] t5332-multi-pack-reuse.sh: demonstrate duplicate
+ packing failure
+In-Reply-To: <7a69cf84ae5b92d99e5777d4600270712424c4d7.1731518931.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Wed, 13 Nov 2024 12:32:55 -0500")
+References: <cover.1731518931.git.me@ttaylorr.com>
+	<7a69cf84ae5b92d99e5777d4600270712424c4d7.1731518931.git.me@ttaylorr.com>
+Date: Thu, 14 Nov 2024 10:12:15 +0900
+Message-ID: <xmqq8qtm8vps.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241113073500.GA587228@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Wed, Nov 13, 2024 at 02:35:00AM -0500, Jeff King wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> On Fri, Nov 01, 2024 at 01:11:47PM -0700, Jonathan Tan wrote:
-> 
-> > A subsequent commit will change the behavior of "git index-pack
-> > --promisor", which is exercised in "build pack index for an existing
-> > pack", causing the unclamped and clamped versions of the --window
-> > test to exhibit different behavior. Move the clamp test closer to the
-> > unclamped test that it references.
-> 
-> Hmm. The change in patch 4 broke another similar --window test I had in
-> a topic in flight. I can probably move it to match what you've done
-> here, but I feel like this may be papering over a bigger issue.
-> 
-> The reason these window tests are broken is that the earlier "build pack
-> index for an existing pack" is now finding and storing deltas in a new
-> pack when it does this:
-> 
->   git index-pack --promisor=message test-3.pack &&
+> +test_expect_failure 'duplicate objects with verbatim reuse' '
+> +	git init duplicate-objects-verbatim &&
+> +	(
+> +		cd duplicate-objects-verbatim &&
+> +
+> +		git config pack.allowPackReuse multi &&
+> +
+> +		test_commit_bulk 64 &&
+> +
+> +		# take the first object from the main pack...
+> +		git show-index <$(ls $packdir/pack-*.idx) >obj.raw &&
+> +		sort -nk1 <obj.raw | head -n1 | cut -d" " -f2 >in &&
+> +
+> +		# ...and create a separate pack containing just that object
+> +		p="$(git pack-objects $packdir/pack <in)" &&
+> +		git show-index <$packdir/pack-$p.idx &&
 
-BTW, an alternate fix instead of moving the test is below. But maybe not
-worth revisiting since it's already in next.
+Is this done so that "git show-index" fails when the .idx file fed
+is malformed?  Or is it a leftover debugging aid, where a human
+developer was helped by eyeballing the contents of the .idx file in
+human readable form?  If the latter, do we perhaps want to "parse"
+the output the same way in this test to validate our expectation?
 
--- >8 --
-Subject: [PATCH] t5300: use --no-reuse-delta for --window test
-
-In the test added for 953aa54e1a (pack-objects: clamp negative window
-size to 0, 2021-05-01), we expect that dropping the --window parameter
-will mean the resulting pack does not have any deltas. But this
-expectation would not hold if there are deltas from an on-disk pack that
-are reused.
-
-This makes the test fragile with respect to the existing repository
-state. It works reliably now, but changes to earlier tests could produce
-packs that violate the assumption.
-
-We can make the test more reliable by passing --no-reuse-delta, meaning
-we will only output deltas we find in the current run (using --window).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5300-pack-object.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 3b9dae331a..392d6a4d41 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -631,7 +631,7 @@ test_expect_success 'prefetch objects' '
- '
- 
- test_expect_success 'negative window clamps to 0' '
--	git pack-objects --progress --window=-1 neg-window <obj-list 2>stderr &&
-+	git pack-objects --progress --no-reuse-delta --window=-1 neg-window <obj-list 2>stderr &&
- 	check_deltas stderr = 0
- '
- 
--- 
-2.47.0.527.gfb211c7f3b
-
+> +		git multi-pack-index write --bitmap --preferred-pack=pack-$p.idx &&
+> +
+> +		test_pack_objects_reused_all 192 2
+> +	)
+> +'
+> +
+>  test_done
