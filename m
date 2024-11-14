@@ -1,43 +1,43 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CFC1AD3F5
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 23:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0FB1B2196
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 23:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731625584; cv=none; b=LQ+E+ZKJtPrR9QcvpNaWyWxUut/yvfXizCiTlfbPdqCSsjbXL9iTwDrjkMaXkrVxTfZtYk/E+PgbHgpbJxCxZSMlwY9WY+RLd63MReHy/Y8IiGQwGajjSPzRttVy+GgeM1Re/NjiFBIF79yoVieIlX5m+qMV0qgWAMvwBfQpu9c=
+	t=1731625928; cv=none; b=oao5ea/hlxEhhargHchgfY+h+TIDTbMOpyFgbxQrego3rELQgJmljx4h/7xkyv/faoXg5uhFeaSidE8cdRDP0as8rx9FiVaJeP3ZhHV1m55rkPGCzbxLbNXWmd0879yKg5eQmX99gxmsx/BBTjIWm4wr9wNlh51CLAynr1aQbrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731625584; c=relaxed/simple;
-	bh=3E7PjOG95xX0G9WGjv9nW7PjUnIaKSATv1Z69fZp274=;
+	s=arc-20240116; t=1731625928; c=relaxed/simple;
+	bh=B8TeJcGCrGAoYBCKCMs4OKsxKBSZdGNWNnDNdaOHiIU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nYLnKgZHJfn2RyHtJgc7FaXVRUnQKRppQegFgnQSnuJwm/zbpt9Smi1CfXHvTVGAx9CGqUJ3SZCvE0H5up+G/kOsHSFsmn4ADAgAkJXSzW4vMRt3k1lvAyd8fKJ8JKms8velIAdtfIzVmIYlRjqYsB/LXZHHKQnQ61ZXtBHpVQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cx+LQbhW; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=BrmbtmFydbzy4rs3yjK7VdmnWTXZHBclvu6iuDHQK7P+MyaBNUxcaXcsiw0stDWQfCpjfvB38g8l/r/lxJSJ6XxrJYmmnD0g/wFH9L9S8uVsbgJJzEQdBnhtyXo24y3UbHEZi0S+uxus5LLSi7bzj2OvMvoaZLy6KD1WYJw86JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aHRGy6vF; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cx+LQbhW"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id CE7EC1380648;
-	Thu, 14 Nov 2024 18:06:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aHRGy6vF"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C0C2C11400C4;
+	Thu, 14 Nov 2024 18:12:05 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 14 Nov 2024 18:06:20 -0500
+  by phl-compute-12.internal (MEProxy); Thu, 14 Nov 2024 18:12:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731625580; x=1731711980; bh=3E7PjOG95xX0G9WGjv9nW7PjUnIaKSATv1Z
-	69fZp274=; b=Cx+LQbhWwFe17d2Z0kGggJEm+uZGOIqSmHaGT9c/5SQ4whHHDqI
-	cLWUnWqRI7Pp5I32nfTD1mPF3fvqPWiqqpj9pb8uHupSWEpTCkqTy4gipYh+c9Dp
-	fCFB5vZUjW/bRxYS3Jqo/vt/yYhEXEwWYvhnvM4GyrpIR+RTo38Ybz/vDSlVtMTa
-	hybpPHgPlBps4DcAAHUxUB5t8l66NACX34vYmwld6+OJ1dELM/3TzJppELFIIxmH
-	cuaopMGy7W9GDYhjyyXTpa94tk3zhnHTx9OG+iVsJYBFPmcZaJ/qpEkvA+xR2s85
-	FKxbdICttB/1YjhC6V/Ap17SnH6SpXiL48A==
-X-ME-Sender: <xms:a4I2Z_EeRTqg22VHks2YiF9RC6qBskphPmDSx0u4tv1b0RsY40tL-w>
-    <xme:a4I2Z8XOXLUpFThFNY2_5NuSe2tGxigF-EiaS_WLucLdfkiXdqkFIFqkbWMU7-HQH
-    OmfoltJG7K3VU-58w>
-X-ME-Received: <xmr:a4I2ZxJgRQXtAuj5NyCaWXxYtUtKaAuFr1amx9JejsWHXLgrLY_ToNOalo8goO--UmCeY_nAvtZ8MS0DqnDd3LJVBjjJhMJrIuWo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddtgecutefuodetggdotefrodftvf
+	1731625925; x=1731712325; bh=B8TeJcGCrGAoYBCKCMs4OKsxKBSZdGNWNnD
+	NdaOHiIU=; b=aHRGy6vFUg/Ajv/ScFmzm8q/E0IwaHOGMMHY0eyrTqTC5dVg8aR
+	I3bzP0T7IPt7jtSt8HOG7qY6+iy8nGIKtMWqKid6gXa/VfNdZ05wnKwRilU9HuZl
+	aANj3eKQihHrY3kMomgukVeCdTWzzJRi/nOdEC6PeEhmEXjlJXYkzxNtuzIlByfp
+	dJKnkrOE/UBYFulZdrAjcFbpcfagVZCh4543NroYYU9/KfXpSYf00GQXOsLWjGpf
+	dA60OwMkw1L1dXP5SvfNtwfRVeM/OMhwNcjzIklTRxw2JpCM90UksO1SyCvPhun+
+	+CtTBAxyv0iz7McLg5CEdRCpFP3kWjC6LOg==
+X-ME-Sender: <xms:xIM2ZxWlxHak6oePZpYmd_UW32GPdWQMLEzHEGSCQw6KfvjhCzsz4g>
+    <xme:xIM2ZxlEXetMHepiMd8NIOHLiFcLiWXFGtnQXWrJkfjgm-CsO30QQUC75rSMiAHM-
+    xlNXDOsdbRPqj1ALA>
+X-ME-Received: <xmr:xIM2Z9bMUG7L100XsYs71Qo-nbI_Ur8SmRnw57RaRVx37L90UxYOwS7QbjeadD6zXALkx9wjkkfGgm4YwhGsBM3Tw3x8faSSSF3F>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddthecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -46,39 +46,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddtgecutefuodetggdote
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
     thhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthho
-    pegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoh
-    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehr
-    rghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:a4I2Z9F_VQRecLuquqAkIitu9NQiRG58OCoRRRPfeWdtI9wMX27z4Q>
-    <xmx:a4I2Z1X2LPhO80UkHywrAOB0uBRpuAAaXWV4gyIcTYmmo_9ogZAyBg>
-    <xmx:a4I2Z4Pct12s6y6DAECZDujQyap0mTJid53jvWaRxq34_inCc0dByg>
-    <xmx:a4I2Z00nyGz9ihTAWuH4asbPSMEUqTp8bDAlJYWwdJyuxJLNwGIXHQ>
-    <xmx:bII2Z-PHQWw3Q2pIuALJ7LX3Zl4RSy_yzCoF_0nvObBnyNJOFuM5MpIq>
+    dprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvg
+    hstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhshhhinhgv
+    sehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrg
+    ihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
+    tghomhdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:xIM2Z0Xnmj5V_Mcn7H1a-mhtEl4mba_hLVDYjnjx8Z9BtepRcipA5g>
+    <xmx:xIM2Z7k6nBkRd8CqjaPfg3QBmg4fIJJQ9SOWA6YiPq1RQF80timQeA>
+    <xmx:xIM2ZxfTuVXlJULH831GF9daaSilvckciikYezyzEtjLib6pyrKcug>
+    <xmx:xIM2Z1Ecl3GaLTa9J8NFVk-vIdu4qzRr7wJfygO7-RQOqnfccSS9Gw>
+    <xmx:xYM2Z0ftWkWPCg1w1m1bhn1Xc3tAumkUss2J24GwwdWNUKSr9etEZ67n>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Nov 2024 18:06:19 -0500 (EST)
+ 14 Nov 2024 18:12:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Eli Schwartz <eschwartz@gentoo.org>,  David Aguilar <davvid@gmail.com>,
-  Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Ramsay Jones <ramsay@ramsayjones.plus.com>,  Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-In-Reply-To: <ZzWxvnn3Vu0rW7_A@pks.im> (Patrick Steinhardt's message of "Thu,
-	14 Nov 2024 09:15:58 +0100")
-References: <cover.1729771605.git.ps@pks.im> <Zxv4osnjmuiGzy94@nand.local>
-	<Zyi7PA2m2YX9MpBu@pks.im> <ZyjlvNJ4peffmGZ1@nand.local>
-	<Zy9ckDezMSKVA5Qi@gmail.com> <ZzHeMjqUjzWpdX-Y@pks.im>
-	<ZzRvsOeLsq3dJbGw@gmail.com> <ZzSprTl5Z3uIx0_d@pks.im>
-	<xmqqo72i788q.fsf@gitster.g>
-	<a2b5e007-776f-4c70-bd8b-38f1ec9808e3@gentoo.org>
-	<ZzWxvnn3Vu0rW7_A@pks.im>
-Date: Fri, 15 Nov 2024 08:06:18 +0900
-Message-ID: <xmqq34jt76vp.fsf@gitster.g>
+Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  Eli Schwartz
+ <eschwartz@gentoo.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Ramsay
+ Jones <ramsay@ramsayjones.plus.com>,  Taylor Blau <me@ttaylorr.com>,
+  David Aguilar <davvid@gmail.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC v6 08/19] Makefile: refactor GIT-VERSION-GEN to be
+ reusable
+In-Reply-To: <ZzW-h-g5CiLgCsCo@pks.im> (Patrick Steinhardt's message of "Thu,
+	14 Nov 2024 10:10:31 +0100")
+References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
+	<20241112-pks-meson-v6-8-648b30996827@pks.im>
+	<c0474637-3923-4e4c-a90b-e86d5f37a366@gmail.com>
+	<ZzW-h-g5CiLgCsCo@pks.im>
+Date: Fri, 15 Nov 2024 08:12:02 +0900
+Message-ID: <xmqqy11l5s1p.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,17 +88,14 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> If this is a requirement I can adapt though. While Meson does not
-> support hardlinks natively, we can of of course manually wire up them
-> if required.
+> Yes, I fully agree that using a version header would make more sense. I
+> had the intent to do this as a follow-up, but I'll have a look at your
+> patch and maybe do it now already.
 
-Nah, there must be bigger fish to fry in the new build system
-integration, and I have a feeling that by the time we are done, we
-may have lost the largest need for hardlinks.
+Yeah, I like the direction myself, too.
 
-I have a feeling that in _some_ future, we may not be installing
-"git-add" and friends for the built-in commands anywhere on disk,
-which is historically the primary thing we use hardlinks for to
-conserve both disk space and inodes.
-
-Thanks.
+Some folks (including me) may need to adjust build wrappers they
+have around our Makefile when we change behaviour of GIT-VERSION-GEN
+and friends, but these files are meant to be "implementation
+details" that server our build, and anybody who have been depending
+on their behaviour are responsible for adjusting to changes to them.
