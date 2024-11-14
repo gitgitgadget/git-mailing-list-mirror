@@ -1,121 +1,124 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A266E198E96
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 04:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A843148FED
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 06:41:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731559600; cv=none; b=q8iNqwv8D+NvfAclBj8FbuMJgZBvqizZw0o9leLdWSeE13uxq08zHbPyDNSsFZp8JJ54jHFRRamcxevvP027rt1iZDWn0hi+DKyjOxhNRRAXAWlXfy5By65JY82aUf+zzYOxqGLYIG3BMXhXXC0/LCr27mzJTZisPwuG5xVPmKs=
+	t=1731566474; cv=none; b=MlghF+3tp5qWjRI+6PHfVkuCZUgbfI+v+gWXerzt/RPJPTB/qF54F9zpCEX3d/EJBgJvCKSDw8HvlpC6ucTPiWkZHzicaMZuPFwW+0DvqQGcW9C42+0VozYKbGF6fQGBo7Ml/pog8579WsrNanyXDAq4B+HcAPDH0D6oP/EIlgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731559600; c=relaxed/simple;
-	bh=gTwwtdUrP+6AaTjMjuL4BlzbNKKSjiTWV85cOJEB4jM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C7JNbaMzVwGdiGcAyGGPV5io/EKlcB0hnOQlL7+2NYACECVxoIWn+mjIrA+tPdF9sjNzmlwZaQCCrvbyBK7WMr6wlUFY4zxN95HlWhUBIbJUekftr4TnVhufA8fi1bgx+a9id2BgQvN9Vg1FCUVgjSTYoHYnWr5d7iamsafRC1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Message-ID: <a2b5e007-776f-4c70-bd8b-38f1ec9808e3@gentoo.org>
-Date: Wed, 13 Nov 2024 23:46:32 -0500
+	s=arc-20240116; t=1731566474; c=relaxed/simple;
+	bh=eK4F6EPCS9LCPl1lZ9VHPT5lVQ8qWeJYEETkTCHiTb4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sDWUZ8Rvd+x9FXjRfyHG6Tm+ykQM9ger9STCkMVKTjpSqulOw8jRBhlJOQ50sY9NnYjbITaY94kdoKS+rPU6C+XvfsXoahtMSJ+BTlTbr9cwbWRvUHP9dQpudoJw/u9BlpaHlQ6b/Y0PEyCCgMzjtZP6n/8XVmZ4OBc4sWiHoJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U9VuvYEJ; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U9VuvYEJ"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1B381114019F;
+	Thu, 14 Nov 2024 01:41:11 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 14 Nov 2024 01:41:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731566471; x=1731652871; bh=eK4F6EPCS9LCPl1lZ9VHPT5lVQ8qWeJYEET
+	kTCHiTb4=; b=U9VuvYEJbqAb5sqJLic0oSgDO5qPYMslKiAnDjceAE992jHpkPc
+	ChaGuC3VKo1/sEb2Os6jFFVvDxAJJ4E002IUscimrO8+vnwjXtLEukobJuGgBPLG
+	8aipONp44GViuhZ6KMPx3c+mDsXnJuKamHsXkX4DaW5VCBJ7V9Ymz+rVE3cpMmkw
+	M2P4MfsFuoM1l+Th90NH1XSwKtqD+SM0uYc1/0ORcNe4EnJg++OVLj2cAMrYNWQh
+	BtGjz35KMIqqvPogCpD71SqIFGHbDLW0SC1k6zFWAreNWaPFfxvuqrtE/Bgwm5Cm
+	Te3PYL7HbKj4U23pox/DE22Gw7Inj5NhHcw==
+X-ME-Sender: <xms:hps1Zxm--69QiZOUd_2FHP0zv-iQsKkgurqi_LPVwNyUVYC3xYHCOw>
+    <xme:hps1Z82C_E_KTv8zn36Jk3dVLxMHTSLK0E4hWw_KKwCIiN95OJE6-0VIhH0SsakS7
+    tKuuYEHan1pA822Ig>
+X-ME-Received: <xmr:hps1Z3o3ZD4gyYDNbK9JwY0oPw46wXop4-rnqdTTi9BGgQqvGZFNP4KRICBryey3V4GBP6kx-zw1_PgfvLj0CubyDjq_BppgIT4K>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddugdeljecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
+    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjohhnrghthhgrnh
+    htrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomh
+    dprhgtphhtthhopehhrghnhigrnhhgrdhtohhnhiessgihthgvuggrnhgtvgdrtghomhdp
+    rhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:hps1Zxmn3s-ZkLxzi_p_dZ03cYPDv9AeoUvLFNXqEYnmU7-P37rgkg>
+    <xmx:hps1Z_1fPYHcE_JIa2iCaQYt3r_OdysN18YnGtBtEC41NLMzuqgqWw>
+    <xmx:hps1ZwvJgY9CEVD1D4054cuZdgBBrxRh4jR8m8YHeNix_U1zamePiw>
+    <xmx:hps1ZzUNpAfk7w3gbJWX3deMky08-xQBEnqpbZP6IUVngfWb3p6tcA>
+    <xmx:h5s1Z0lacF_ROdujGxUb6S-8ksFKtCJhT5Hzkki65a4WVPAtLut2apw_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 14 Nov 2024 01:41:10 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Jonathan Tan <jonathantanmy@google.com>,  git@vger.kernel.org,
+  steadmon@google.com,  hanyang.tony@bytedance.com,  me@ttaylorr.com
+Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
+In-Reply-To: <20241114005652.GC1140565@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 13 Nov 2024 19:56:52 -0500")
+References: <20241113073500.GA587228@coredump.intra.peff.net>
+	<20241113182656.2135341-1-jonathantanmy@google.com>
+	<20241114005652.GC1140565@coredump.intra.peff.net>
+Date: Thu, 14 Nov 2024 15:41:08 +0900
+Message-ID: <xmqqiksq71x7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: David Aguilar <davvid@gmail.com>, Taylor Blau <me@ttaylorr.com>,
- git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>, Jeff King <peff@peff.net>
-References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
- <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
- <ZzHeMjqUjzWpdX-Y@pks.im> <ZzRvsOeLsq3dJbGw@gmail.com>
- <ZzSprTl5Z3uIx0_d@pks.im> <xmqqo72i788q.fsf@gitster.g>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <xmqqo72i788q.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------tjFd4bEjf01hyAPP0I23sJKX"
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------tjFd4bEjf01hyAPP0I23sJKX
-Content-Type: multipart/mixed; boundary="------------hwArb6r4dH0K36Z3MJN03oOv";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: David Aguilar <davvid@gmail.com>, Taylor Blau <me@ttaylorr.com>,
- git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
- Phillip Wood <phillip.wood123@gmail.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>, Jeff King <peff@peff.net>
-Message-ID: <a2b5e007-776f-4c70-bd8b-38f1ec9808e3@gentoo.org>
-Subject: Re: [RFC PATCH v4 00/19] Modernize the build system
-References: <cover.1727881164.git.ps@pks.im> <cover.1729771605.git.ps@pks.im>
- <Zxv4osnjmuiGzy94@nand.local> <Zyi7PA2m2YX9MpBu@pks.im>
- <ZyjlvNJ4peffmGZ1@nand.local> <Zy9ckDezMSKVA5Qi@gmail.com>
- <ZzHeMjqUjzWpdX-Y@pks.im> <ZzRvsOeLsq3dJbGw@gmail.com>
- <ZzSprTl5Z3uIx0_d@pks.im> <xmqqo72i788q.fsf@gitster.g>
-In-Reply-To: <xmqqo72i788q.fsf@gitster.g>
+Jeff King <peff@peff.net> writes:
 
---------------hwArb6r4dH0K36Z3MJN03oOv
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+>> As far as I know, index-pack, when run as part of fetch, indexes a pack
+>> that's not in the repository's object store; it indexes a packfile in a
+>> temp directory. (So I don't think this is a strange thing to do.)
+>
+> When fetching (or receiving a push), we use "index-pack --stdin" and do
+> write the resulting pack into the repository (and the command will
+> complain if there is no repository).
+> ...
+>> We definitely should prevent the segfault, but I think that's better
+>> done by making --promisor only work if we run index-pack from within a
+>> repo. I don't think we can restrict the repacking to run only if we're
+>> indexing a pack within the repo, because in our fetch case, we're
+>> indexing a new pack - not one within the repo.
+>
+> I think the "--stdin" thing above neatly solves this.
+> ...
+> Yeah, I guess the fundamental thing here is that anybody who isn't
+> passing "--promisor" is not going to be affected, so that at least
+> limits the opportunity for surprise.
+>
+> The quarantine discussion above is an example of how there could be
+> unexpected consequences. I _think_ it's OK based on what I wrote, but
+> hopefully that explains my general feeling of surprise. I dunno. It
+> still may be the least bad thing.
 
-On 11/13/24 11:24 PM, Junio C Hamano wrote:
-> Is there a way to disable that?  These symbolic-links pretending to
-> be installed files are quite annoying---when the target file is lost,
-> the links become useless.
+Tying this extra processing to the use of "--stdin" is not exactly
+intuitive, in that a "--stdin" user is not necessarily doing a fetch
+(even though a fetch may always use "--stdin"), but I guess it is a
+good enough approximation (and the best one easily available to us)
+if we want to safeguard the use of this "--promisor" logic only to
+fetch client.
+
+As to future potential mis-interaction between quarantined fetch and
+the effect of this "repack local objects that can be reached by
+objects in a promisor pack" feature, I do not offhand think of a
+good way to future-proof it with tests.
+
+Thanks for the discussion, both of you.
 
 
-INSTALL_SYMLINKS=3D1 in the existing Makefile is of course the one true
-way... (and really, why would you expect the target file to be lost for
-any reason).
-
-That being said, it doesn't appear the patch series implements any of
-the other multiplicity of choice in what kind of filesystem object gets
-used for multiple copies of the same file. No hardlink or copy support
-has been rigged up.
-
-(Meson doesn't have a builtin function for performing hardlinks, by the
-way. I don't really think I've seen people desire to do this outside of
-one project being discussed right here right now. hardlinks are mainly
-good at fooling people who look at them into not understanding the
-association between the two, and at breaking across multiple
-filesystems. It's definitely impossible to get it right automatically,
-and asking users to make an informed choice here is just not something
-that projects other than git seem to find valuable, for whatever reason.
-So basically, it's fairly understandable that meson hasn't previously
-added hardlink support.)
-
-
---=20
-Eli Schwartz
-
---------------hwArb6r4dH0K36Z3MJN03oOv--
-
---------------tjFd4bEjf01hyAPP0I23sJKX
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCZzWAqAUDAAAAAAAKCRCEp9ErcA0vVyFc
-AQClKuf5vLj+Zi0PcJagU+Xd3/0qdzz0ZkTGt/etVp3dtwD+L7cx/gvLBxlTjDW895K9bpEXEDHG
-ZHhVc7zslFp0mgY=
-=joGB
------END PGP SIGNATURE-----
-
---------------tjFd4bEjf01hyAPP0I23sJKX--
