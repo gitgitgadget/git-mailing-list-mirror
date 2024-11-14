@@ -1,124 +1,121 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196281F9A9F
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 12:17:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD2217588
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 13:37:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731586680; cv=none; b=mU0M8eV/58+LaxZ7OE1qu4to+807JbpHo3Lt4lZ63xDp47733FyeIbXRkI1oq+Rm/Ko3GT13lsZdJ4M1PP4unue04E5Jylih9zKExUSRj4Mxs7KmVbEeQNAK8yEFmCuKXJN7ljdoJIrGbhPhfSxJXnoTau3ISu0h9qCSW45gdCM=
+	t=1731591443; cv=none; b=BrT5Ckzwv93O6UE49iM5kSKQden5Wu4A5Bi3t8vxP83n9QbrjGbv6eX+9TUseABzpf/ePQHs7mvAHrX02jCgSj/q0fnRgYT4+33LKyXeLr8QNNjWpUU1lyg4a+CIMQxUoSRn2Rjk966wke/Ap6RrOE7eNLNfz50hveyD9O/phqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731586680; c=relaxed/simple;
-	bh=cO+fc3BjEdyHCfBbNd9k3bPmvJIilQS6eE60NXoNHKk=;
+	s=arc-20240116; t=1731591443; c=relaxed/simple;
+	bh=kt0utdbDsV1MIf8MVxiM9L2wHEW2bdRuzt+TT7kgTcQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NNBUXqufeJUCKrbZJHJsBuUOsJUhJCRoF0ukbFVUsxO4aOjZVn8QfzIGiiTLXCPZielmw2av6+TGLMwXpwrMCTduSyTB0zS58TTHSQ/jvpxDVUdIQ6EJa4LBMIYPgqBdj9RzkVQdcPuOYSww0Zk7GRFDM4RMA0w8U7rsKWLLQUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZMVcI/T6; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=ecCGV9NtBVg6IyjTFOQKvYPUAumnykXWwAuTb6uvrUFiIKQRtgKDDKwZPAx9GsFeLSxJQRQgvekIbsCHRV+nnoNPdFAPxJNaaj1bFWnooKwLZXRmM1z/KQot0g6znFF7a4LGJ2GEtzpjF4NchVfLnIFfcDhGqZRjFPyY7iU8gok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=JiJVnJl9; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZMVcI/T6"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-21145812538so4089095ad.0
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 04:17:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="JiJVnJl9"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6ea7c26e195so6965817b3.0
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 05:37:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731586678; x=1732191478; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1731591438; x=1732196238; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=y6qDSykKBKPb7jOSKBINvAHDJEODXQPkVR204MMVDHc=;
-        b=ZMVcI/T64AM7RVAcnBTSRdLxFHy0Jw3KWtzQVz8L2SBf3Nw6Ls/QoPl9RYTA09mpzr
-         D/Vz5T49XR6rfV+hkw/xWlYq3Mdj3oj7wLThEJmQqXNJAtBO7AhTp4X6agIEtXtDqIPZ
-         Z1qKXR07WeiS2L7mPZii4uQnA1U3JSoW8gliXuqF5KBjahpLCjUACkzQj0YqbK6R+ZBe
-         LZk3UeAmtjiZDkAb9epzb5/jsDmqO7xS4hiihN40rxlwvFDTAqDwKzkmGGRvOMOGc0jS
-         CfT0kX/VMbJo8JE6aW+1lup0wPJ9ETNkZBFiTfDyKh2zq9Wfflvu2APqXLHjkpeh4j2p
-         L2xQ==
+        bh=WUNY5JLf9VXt+KMGgT1usz05S+LBtfkAkU5PY727XCA=;
+        b=JiJVnJl97372U2R+veYfnoO49/LEx4iuXFMGz5bCANRZrqY6NzuLTIuv13oaDuGnqB
+         tf6AyaXDP2R0ZqGRu8J+HHB9H7ngnHLkDXgJMmEpw8eKq+HeOVl43Q8xtqbQjgvAuydY
+         AgfwMI2HH66TNDybe0AWy4nxULCYupI9FKI0fdiFqtO3TEor5Pgt8yvRxzTv3Sw+3e30
+         SSZkrNUBCntbDH9224XOUkdoizBCjcZ2Fw060uK9sQmH1VrcpMetxI4JZqQtYYLfKZ4E
+         9cB9hshTLEIjbNI86OArBRAhXD9yHp9aLCPe4HjcZ9m3k2guecjFUvsecGMvNSx0v4JZ
+         kBzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731586678; x=1732191478;
+        d=1e100.net; s=20230601; t=1731591438; x=1732196238;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y6qDSykKBKPb7jOSKBINvAHDJEODXQPkVR204MMVDHc=;
-        b=bboUnl/YwOBdVhqiYkz9bq5CZBANKinHapbB2KrjhflWLYkdt+VFPwEsjRalYENgYR
-         LeGT8kOyQ80tkZMGWPDaQxOrnoSAykUw8KraC/pbkHhJYfyhfKtkjQDQ317yOT981d8M
-         jNVi3IDVqMxbyS/3dkRcs5evCGe9BUhV7Yleh+4VxB5XhDzYzTzh2oSH0/y66gTV6Emw
-         Q7C+18Cc+I4qxFWTknSS7hbhBurOV+9P00R9JbvBVqjbnFpI5rcP+Gb9s1iocHnYINrX
-         84nl/9XqE9KA9yb6IwFmKll/mVfFjarfJVfY8zvoVn+2fDotwOcTCe6K1qITExb6zq3e
-         WvkA==
-X-Gm-Message-State: AOJu0YwKt/4kttJp+sYNKOxVlUFWr8WwnTxk5TxCXWDi4xivMNxq4LOi
-	O8Rpnht9Y/yOejBPjsuucy0FIjDmsrywfDtiak6dFH40hTRPGNaf0UrzXg==
-X-Google-Smtp-Source: AGHT+IFJyAUmnDr4m7qqAHYamEmUwAlCB4Skod0Pf405XV/zcbj0V7NUfhUT41r6hR7UUnhfoKNuTA==
-X-Received: by 2002:a05:6a21:398:b0:1d7:ca7:bfce with SMTP id adf61e73a8af0-1dc22b9243fmr29737578637.42.1731586678158;
-        Thu, 14 Nov 2024 04:17:58 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7246a9a8d03sm1135491b3a.126.2024.11.14.04.17.57
+        bh=WUNY5JLf9VXt+KMGgT1usz05S+LBtfkAkU5PY727XCA=;
+        b=GofMU2v9eHV6XGsEoKKy5c7FfgddKN+YwvLcL2KxFf5ZdrBCNcwJ6qSBjydOd9K7W1
+         V5FqAf9SkP/e2nwg1T9G8LQ8GuTRq1IE+5B4uVGojakXnGJfr/Kyj/Rvzd8836ixCjnJ
+         XHDD0i5rKiuVX4TOHQ6Bb/8PNPzjy+xznbmsSOdE6c/XHHjByLIZ6hsOGsa9P0S54sjl
+         ZbjXLFvJYGmD02I4q3TJrYvW+rgMndeBMVobpem/DSfgnV28m/+ZGQhBCgSJra06wdyG
+         O38N6y6d305WpDVna4ElJq89PjmaUS8aEbVh/bhypt7alcpYGSjKHHe49M/BeO5y8f9S
+         b7MA==
+X-Gm-Message-State: AOJu0YxXVYQzbyqj018mt1YMEUOopjah8po4In5arqUe/3uwazQVTPnw
+	Q0coC5SOHDtFudTEG0KZ36j3rAmYqsibwDbXDlqrRe7GTiZ3OSCgtpcBeXL4YYI=
+X-Google-Smtp-Source: AGHT+IHRmLMKSyqllMzNeMYhGI/Z3VSYzmPlvFBxgDUwQbgNjCaa9uScecdJ/gzTrZtdJuK/yK1/ow==
+X-Received: by 2002:a81:f912:0:b0:6e2:413:f19 with SMTP id 00721157ae682-6ecb347fa3emr55481627b3.27.1731591438528;
+        Thu, 14 Nov 2024 05:37:18 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ee444951adsm2313937b3.128.2024.11.14.05.37.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 04:17:57 -0800 (PST)
-Date: Thu, 14 Nov 2024 20:18:00 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 9/9] ref: add symlink ref content check for files
- backend
-Message-ID: <ZzXqeLGF5dfSlh1s@ArchLinux>
-References: <ZzCiCGxL4Adnd_eq@ArchLinux>
- <ZzCis8E49O10O1zr@ArchLinux>
- <ZzRW8M39-hw1E9-h@pks.im>
+        Thu, 14 Nov 2024 05:37:18 -0800 (PST)
+Date: Thu, 14 Nov 2024 08:37:10 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/2] t5332-multi-pack-reuse.sh: demonstrate duplicate
+ packing failure
+Message-ID: <ZzX9BgmxTgi6Pk8z@nand.local>
+References: <cover.1731518931.git.me@ttaylorr.com>
+ <7a69cf84ae5b92d99e5777d4600270712424c4d7.1731518931.git.me@ttaylorr.com>
+ <xmqq8qtm8vps.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZzRW8M39-hw1E9-h@pks.im>
+In-Reply-To: <xmqq8qtm8vps.fsf@gitster.g>
 
-On Wed, Nov 13, 2024 at 08:36:16AM +0100, Patrick Steinhardt wrote:
-> On Sun, Nov 10, 2024 at 08:10:27PM +0800, shejialuo wrote:
-> > @@ -3572,8 +3579,30 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
-> >  
-> >  	report.path = target_name;
-> >  
-> > -	if (S_ISLNK(iter->st.st_mode))
-> > +	if (S_ISLNK(iter->st.st_mode)) {
-> > +		const char* relative_referent_path = NULL;
-> 
-> Nit: the asterisk should stick with the variable name.
-> 
-
-I will improve this in the next version.
-
-> > +		ret = fsck_report_ref(o, &report,
-> > +				      FSCK_MSG_SYMLINK_REF,
-> > +				      "use deprecated symbolic link for symref");
+On Thu, Nov 14, 2024 at 10:12:15AM +0900, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
+>
+> > +test_expect_failure 'duplicate objects with verbatim reuse' '
+> > +	git init duplicate-objects-verbatim &&
+> > +	(
+> > +		cd duplicate-objects-verbatim &&
 > > +
-> > +		strbuf_add_absolute_path(&abs_gitdir, ref_store->gitdir);
-> > +		strbuf_normalize_path(&abs_gitdir);
-> > +		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
-> > +			strbuf_addch(&abs_gitdir, '/');
+> > +		git config pack.allowPackReuse multi &&
 > > +
-> > +		strbuf_add_real_path(&ref_content, iter->path.buf);
-> > +		skip_prefix(ref_content.buf, abs_gitdir.buf,
-> > +			    &relative_referent_path);
+> > +		test_commit_bulk 64 &&
 > > +
-> > +		if (relative_referent_path)
-> > +			strbuf_addstr(&referent, relative_referent_path);
-> > +		else
-> > +			strbuf_addbuf(&referent, &ref_content);
+> > +		# take the first object from the main pack...
+> > +		git show-index <$(ls $packdir/pack-*.idx) >obj.raw &&
+> > +		sort -nk1 <obj.raw | head -n1 | cut -d" " -f2 >in &&
 > > +
-> > +		ret |= files_fsck_symref_target(o, &report, &referent, 1);
-> >  		goto cleanup;
-> > +	}
-> 
-> I wonder whether this logic works as expected with per-worktree symbolic
-> refs which are a symlink. On the other hand I wonder whether those work
-> as expected in the first place. Probably not. *shrug*
-> 
-> In any case, it would be nice to have a test for this.
-> 
+> > +		# ...and create a separate pack containing just that object
+> > +		p="$(git pack-objects $packdir/pack <in)" &&
+> > +		git show-index <$packdir/pack-$p.idx &&
+>
+> Is this done so that "git show-index" fails when the .idx file fed
+> is malformed?  Or is it a leftover debugging aid, where a human
+> developer was helped by eyeballing the contents of the .idx file in
+> human readable form?  If the latter, do we perhaps want to "parse"
+> the output the same way in this test to validate our expectation?
 
-Correct, I have ignored because I add worktree support in the later
-version. Let me add a new test to verify this.
+Oops. This is stray debugging left over that I forgot to take out before
+committing. That makes it the latter of the two you mentioned, but I
+don't think we need to validate the output of 'git show-index' in this
+instance.
 
-> Patrick
+We're just relying on pack-objects to generate a pack containing a
+single object, which feels like basic functionality not worth explicitly
+making an assertion on.
+
+There is a subtle assertion on the line below here:
+
+> > +		git multi-pack-index write --bitmap --preferred-pack=pack-$p.idx &&
+
+that the pack (a) exists, and (b) has at least one object, since both
+conditions must be met for a pack to become preferred in a MIDX bitmap.
+
+But beyond that, I don't think we need to validate the output of
+show-index here. I'll remove the stray debugging line and send a new
+round. Sorry about that, and thanks for spotting!
 
 Thanks,
-Jialuo
+Taylor
