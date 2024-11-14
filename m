@@ -1,66 +1,66 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49911F8915
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 12:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 196281F9A9F
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 12:17:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731586163; cv=none; b=g2NIfqycxIc7klcKLPnFVSqJd/ilZ0aiaAYi7mbaFzvmZteb/WW7PfoRy17Uv5VBPsQn07UZaZwjXLl+grc3BjjrZlEvxJeBMnJvkOKmf/pqa5qc+87zOuT9heSOvPOmr0X9HOj+ygBkZaioB2LTwe+wPWpm5L+00JSqmdS1lEs=
+	t=1731586680; cv=none; b=mU0M8eV/58+LaxZ7OE1qu4to+807JbpHo3Lt4lZ63xDp47733FyeIbXRkI1oq+Rm/Ko3GT13lsZdJ4M1PP4unue04E5Jylih9zKExUSRj4Mxs7KmVbEeQNAK8yEFmCuKXJN7ljdoJIrGbhPhfSxJXnoTau3ISu0h9qCSW45gdCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731586163; c=relaxed/simple;
-	bh=+JNvZzboeOCKH9ekqJci7wIDZv+rMvuJiUiA4ob8wB4=;
+	s=arc-20240116; t=1731586680; c=relaxed/simple;
+	bh=cO+fc3BjEdyHCfBbNd9k3bPmvJIilQS6eE60NXoNHKk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rDYdb8QEXj76eYdBdlnrD6Gfby0TAEMOXH7qxuiZOrHx8F8jYrLXyxvkz/zYVH+UOi5nwCHOE9Xm/L5PsAmVk/jkwEizFdTPMPnz1oyvo8e5OnpGDTZrHdVElaA73wCUz4kXHuD5sVpPnquBS6pSdXGxRmesxsQHjUBjTFKaJZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Um8yFb9M; arc=none smtp.client-ip=209.85.215.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=NNBUXqufeJUCKrbZJHJsBuUOsJUhJCRoF0ukbFVUsxO4aOjZVn8QfzIGiiTLXCPZielmw2av6+TGLMwXpwrMCTduSyTB0zS58TTHSQ/jvpxDVUdIQ6EJa4LBMIYPgqBdj9RzkVQdcPuOYSww0Zk7GRFDM4RMA0w8U7rsKWLLQUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZMVcI/T6; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Um8yFb9M"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-7eb0bc007edso289203a12.3
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 04:09:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZMVcI/T6"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-21145812538so4089095ad.0
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 04:17:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731586160; x=1732190960; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731586678; x=1732191478; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HcsjAJ/4kyHoM0e+BFzEn1ZZFmH1fcYhHrxi4xCFOE0=;
-        b=Um8yFb9MzI8FslMOpUmjYmokaawshzeh6UerKUkOvhZq/kZLzBh0vXPLnBehdisyUk
-         330RuQZDKv0Xe8LQxZwBJS9OJtuaPznv/C6JTRaB3bMHX23HHWyutZGCSAzKJGN6UldM
-         18HV8uyvXhn2utCZw0r9NLG4YR0z/3XRmtz+wMnDyAU71w0lZE5jSSd225k0M1TY9YQS
-         Gdu88u8tpMofySOQyGWpjcliFGXIBhm7dYnYHsEkFDeS0ro2YAu+FUu9oj0TmWQ89jYo
-         4Kt7I+71Alos2w6zhqClQakdV65mIth31bhaxKiW/W73Pk90/iF8b7R95t7/8W/HMxJs
-         L1Ng==
+        bh=y6qDSykKBKPb7jOSKBINvAHDJEODXQPkVR204MMVDHc=;
+        b=ZMVcI/T64AM7RVAcnBTSRdLxFHy0Jw3KWtzQVz8L2SBf3Nw6Ls/QoPl9RYTA09mpzr
+         D/Vz5T49XR6rfV+hkw/xWlYq3Mdj3oj7wLThEJmQqXNJAtBO7AhTp4X6agIEtXtDqIPZ
+         Z1qKXR07WeiS2L7mPZii4uQnA1U3JSoW8gliXuqF5KBjahpLCjUACkzQj0YqbK6R+ZBe
+         LZk3UeAmtjiZDkAb9epzb5/jsDmqO7xS4hiihN40rxlwvFDTAqDwKzkmGGRvOMOGc0jS
+         CfT0kX/VMbJo8JE6aW+1lup0wPJ9ETNkZBFiTfDyKh2zq9Wfflvu2APqXLHjkpeh4j2p
+         L2xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731586160; x=1732190960;
+        d=1e100.net; s=20230601; t=1731586678; x=1732191478;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HcsjAJ/4kyHoM0e+BFzEn1ZZFmH1fcYhHrxi4xCFOE0=;
-        b=VE2FHL5v9ilkEvivLXQLwv2ANo9uUScsdxIz+rlhOpDgFDRcFxRlFvccSLzsMd1F8m
-         5WitcEHr2sFRkg16UKUQZHfODOvVoWJ8ohaC/BWb0e7fdHSmaVZOBRlkNxfPt5r4zi16
-         T6i1IKDOE+hxdbFJlneAk3SmGpzn2pJAmYehWpqRr7U/+d2UlxzQklq1D3WwjRYGQkBO
-         Tz9Ee27oOp31ZZjXezyA+YrJWwao49V7Rwyar4WsxnT7dWu0xxohfGELqvt9czmhQTNa
-         SIEvtbILd9UrgtEL0vCxqESJQ7avH3xJ3aKGRWCvicwIP5N0V5tiSpK0966qVppZyqDC
-         9FnA==
-X-Gm-Message-State: AOJu0Yygr9KTI3LiYdfF4ZFzJAPAi5RsNu4Fri32qwT9P8IhkeQzixDs
-	4QNT1OqUUGg+tFhWRzkCdvS7QAHzRmpWq3H7E+1l+l/plvKu50RkXn4NZQ==
-X-Google-Smtp-Source: AGHT+IFo6wZVD9WU+jjPWFUaKcphyk7y5A61VFPBb8+kw46q7D4StSgb61jATjstiLq/cvZSKvyPVQ==
-X-Received: by 2002:a05:6a20:9188:b0:1db:ff5a:23e5 with SMTP id adf61e73a8af0-1dc70338f2amr8873062637.4.1731586160115;
-        Thu, 14 Nov 2024 04:09:20 -0800 (PST)
+        bh=y6qDSykKBKPb7jOSKBINvAHDJEODXQPkVR204MMVDHc=;
+        b=bboUnl/YwOBdVhqiYkz9bq5CZBANKinHapbB2KrjhflWLYkdt+VFPwEsjRalYENgYR
+         LeGT8kOyQ80tkZMGWPDaQxOrnoSAykUw8KraC/pbkHhJYfyhfKtkjQDQ317yOT981d8M
+         jNVi3IDVqMxbyS/3dkRcs5evCGe9BUhV7Yleh+4VxB5XhDzYzTzh2oSH0/y66gTV6Emw
+         Q7C+18Cc+I4qxFWTknSS7hbhBurOV+9P00R9JbvBVqjbnFpI5rcP+Gb9s1iocHnYINrX
+         84nl/9XqE9KA9yb6IwFmKll/mVfFjarfJVfY8zvoVn+2fDotwOcTCe6K1qITExb6zq3e
+         WvkA==
+X-Gm-Message-State: AOJu0YwKt/4kttJp+sYNKOxVlUFWr8WwnTxk5TxCXWDi4xivMNxq4LOi
+	O8Rpnht9Y/yOejBPjsuucy0FIjDmsrywfDtiak6dFH40hTRPGNaf0UrzXg==
+X-Google-Smtp-Source: AGHT+IFJyAUmnDr4m7qqAHYamEmUwAlCB4Skod0Pf405XV/zcbj0V7NUfhUT41r6hR7UUnhfoKNuTA==
+X-Received: by 2002:a05:6a21:398:b0:1d7:ca7:bfce with SMTP id adf61e73a8af0-1dc22b9243fmr29737578637.42.1731586678158;
+        Thu, 14 Nov 2024 04:17:58 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f8b3974bb2sm956555a12.64.2024.11.14.04.09.19
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7246a9a8d03sm1135491b3a.126.2024.11.14.04.17.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 04:09:19 -0800 (PST)
-Date: Thu, 14 Nov 2024 20:09:21 +0800
+        Thu, 14 Nov 2024 04:17:57 -0800 (PST)
+Date: Thu, 14 Nov 2024 20:18:00 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 5/9] ref: port git-fsck(1) regular refs check for
- files backend
-Message-ID: <ZzXocdnqigGYFXQ_@ArchLinux>
+Subject: Re: [PATCH v7 9/9] ref: add symlink ref content check for files
+ backend
+Message-ID: <ZzXqeLGF5dfSlh1s@ArchLinux>
 References: <ZzCiCGxL4Adnd_eq@ArchLinux>
- <ZzCij4ilPLhlKXS6@ArchLinux>
- <ZzRW7E2Z0ZYQ7i20@pks.im>
+ <ZzCis8E49O10O1zr@ArchLinux>
+ <ZzRW8M39-hw1E9-h@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,67 +69,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZzRW7E2Z0ZYQ7i20@pks.im>
+In-Reply-To: <ZzRW8M39-hw1E9-h@pks.im>
 
-On Wed, Nov 13, 2024 at 08:36:12AM +0100, Patrick Steinhardt wrote:
-> On Sun, Nov 10, 2024 at 08:09:51PM +0800, shejialuo wrote:
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index 8bfdce64bc..2d126ecbbe 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -3505,6 +3505,48 @@ typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
-> >  				  const char *refname,
-> >  				  struct dir_iterator *iter);
+On Wed, Nov 13, 2024 at 08:36:16AM +0100, Patrick Steinhardt wrote:
+> On Sun, Nov 10, 2024 at 08:10:27PM +0800, shejialuo wrote:
+> > @@ -3572,8 +3579,30 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
 > >  
-> > +static int files_fsck_refs_content(struct ref_store *ref_store,
-> > +				   struct fsck_options *o,
-> > +				   const char *target_name,
-> > +				   struct dir_iterator *iter)
-> > +{
-> > +	struct strbuf ref_content = STRBUF_INIT;
-> > +	struct strbuf referent = STRBUF_INIT;
-> > +	struct fsck_ref_report report = { 0 };
-> > +	unsigned int type = 0;
-> > +	int failure_errno = 0;
-> > +	struct object_id oid;
-> > +	int ret = 0;
-> > +
-> > +	report.path = target_name;
-> > +
-> > +	if (S_ISLNK(iter->st.st_mode))
-> > +		goto cleanup;
-> > +
-> > +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0) {
+> >  	report.path = target_name;
+> >  
+> > -	if (S_ISLNK(iter->st.st_mode))
+> > +	if (S_ISLNK(iter->st.st_mode)) {
+> > +		const char* relative_referent_path = NULL;
+> 
+> Nit: the asterisk should stick with the variable name.
+> 
+
+I will improve this in the next version.
+
 > > +		ret = fsck_report_ref(o, &report,
-> > +				      FSCK_MSG_BAD_REF_CONTENT,
-> > +				      "cannot read ref file '%s': %s",
-> > +				      iter->path.buf, strerror(errno));
-> > +		goto cleanup;
+> > +				      FSCK_MSG_SYMLINK_REF,
+> > +				      "use deprecated symbolic link for symref");
+> > +
+> > +		strbuf_add_absolute_path(&abs_gitdir, ref_store->gitdir);
+> > +		strbuf_normalize_path(&abs_gitdir);
+> > +		if (!is_dir_sep(abs_gitdir.buf[abs_gitdir.len - 1]))
+> > +			strbuf_addch(&abs_gitdir, '/');
+> > +
+> > +		strbuf_add_real_path(&ref_content, iter->path.buf);
+> > +		skip_prefix(ref_content.buf, abs_gitdir.buf,
+> > +			    &relative_referent_path);
+> > +
+> > +		if (relative_referent_path)
+> > +			strbuf_addstr(&referent, relative_referent_path);
+> > +		else
+> > +			strbuf_addbuf(&referent, &ref_content);
+> > +
+> > +		ret |= files_fsck_symref_target(o, &report, &referent, 1);
+> >  		goto cleanup;
 > > +	}
 > 
-> I didn't catch this in previous rounds, but it's a little dubious
-> whether we should report this as an actual fsck error. I can expect
-> multiple situations:
+> I wonder whether this logic works as expected with per-worktree symbolic
+> refs which are a symlink. On the other hand I wonder whether those work
+> as expected in the first place. Probably not. *shrug*
 > 
->   - The file has weird permissions and thus cannot be read, failing with
->     EPERM, which doesn't match well with BAD_REF_CONTENT.
-> 
->   - The file does not exist anymore because we were racing with a
->     concurrent writer, failing with ENOENT. This is benign and expected
->     to happen in busy repos, so generating an error here feels wrong.
-> 
->   - The file cannot be read at all due to an I/O error. This may be
->     reported with BAD_REF_CONTENT, but conflating this with the case
->     where we have actually bad content may not be the best idea.
-> 
-> So maybe we should ignore ENOENT, report bad permissions and otherwise
-> return an actual error to the caller?
+> In any case, it would be nice to have a test for this.
 > 
 
-So, I think we should just use "error_errno" method to report the actual
-error to the caller. And we also need to add some comments.
-
-Thanks for this wonderful suggestion.
-
+Correct, I have ignored because I add worktree support in the later
+version. Let me add a new test to verify this.
 
 > Patrick
+
+Thanks,
+Jialuo
