@@ -1,143 +1,131 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49101F76A4
-	for <git@vger.kernel.org>; Thu, 14 Nov 2024 08:58:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4F5E573
+	for <git@vger.kernel.org>; Thu, 14 Nov 2024 09:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731574688; cv=none; b=seUB09QbUOQbH3C+D1ZTCZS8yARDMW9fonn8SuyaRcPcB8FqE3Rs9cOt/o/0ySLf+fm6NyNpOS5+gghlcDjTy/3U0e3E2DSDF/730/EZCUvd6NTXgmy4hjnhHN5po9eWslLfSyg4UOg/i9shJlXLas7A99A2HeRrqTqn08rVzF8=
+	t=1731575448; cv=none; b=QQEkpPiipQp0LaZ8gXPTtXX2b+OAdHFWMmZsbbQOisko3uEfZDvXF3LFWWzv0v9A2SfiagKcQ3WuQqB/sOU8Zp3DWfRsHFvGcD6BXhkxxJkGixLJ9DlzUxBZhtV4jTB47USV/xUfA61S1OxXgLxZ+qyO0RHrRa1SeT/6Hook7Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731574688; c=relaxed/simple;
-	bh=PPiGJAFELaBhxG7LOkjncEb6SF+IJng9w5PyiXOCQeE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a3wW9Qft6Mrt1OKU8+USsXg0KkWK8k7K/0Uzo4Fpr3l5vRtwQed8gC71vn4QAtiZsjbkneEQHVSnB/D0f52PnEhMWPCbmmIw7ZENp6urjJ7q4ZfVrIf/V3dsfx65dvA22YR6v3Osn3ALq5G4V1qCRaeNFzMSYbsJ63LWd4JX+Hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bFk5iPBL; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731575448; c=relaxed/simple;
+	bh=HOq96fOtJOCQEkk12izwuC26q1xa/jfLinmCFb5vcJc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FMxgaRfD7EU1fSBsrB2i2MjThplCyJ0benuhvkpXUcg7zSbIPQWQ6X4yI0oSvLq6CiiBQYJGDNaKmUHRkWQIKbNFjSAxqu94Y/qUmZBE4FD9LyhV/jhov1ea7vlc3NuL4Paf0VwJQIhzKCdtWr15hSPnyQ1Yaa1DGhk0zZmU2cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F4fzEM2A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZhybLUI6; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFk5iPBL"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6ea15a72087so3758657b3.1
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 00:58:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731574686; x=1732179486; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bzrhH3pQ3UKeHzvxnZ3DbveMjsvOcIBx0m6ElfjeRA0=;
-        b=bFk5iPBLZq1sco4C4eNAxkk+7scvs/ImHBrcESXCFt9HVJpLuDBnf6aFPPVuUFUauB
-         zhAV82OLaLN9PYssL8MFxBLWsRUF3Z5bYG3yD83Q+3XCxb1a8u+QLq+pW0zfySVNhv0L
-         7vrH/a1UsOsLT+XwKvkZhu1cB7JGaFu+dn/TBvy3Zi8UvrHU8hfVoc4Hq7fQALfCs7QJ
-         Ns06UffE82BBShA85DTRRJ/zri7cdxmEFg0ta1CBrfG/MSUuL5ViVBqvnl6YbbIStW7l
-         nM7pvLWR6hrpc6hcGYEGEUIgG5M3A8gT/y6E/d3J/Am7cFuPNeun/9B0MDIH5himcT4S
-         ScgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731574686; x=1732179486;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bzrhH3pQ3UKeHzvxnZ3DbveMjsvOcIBx0m6ElfjeRA0=;
-        b=AkB7FWdI8h2dGXuxhJpaiDI7HvIm6Bgb9mKsE6/ALhNHodr5DA9/Vr9HwkNzxZ42PG
-         RewyoKeklm/TDbs7KbkWfnXWWnJOyGLW1gm0K5SPBSMwJgN7FNeXCCmVkNJJ2iIwMOz2
-         GPy4EZtHDRey56eKjjzv0D0wGrbtAeCVrKZMpZSIYVB62fK2Ejf12ea5bieYpbgSO1i7
-         HxFxP4qQSE4dQbn20PHx2g8ZXVP8ZQiVUKUHZbwSSA4j7bZq0bvU4E0V70HqzhXTiZSg
-         Dnd/AIu/VlJMzTjlldb4LO0ihqPH64PAKf6Y+TeMonuvcbEtE52ThXhQ5BbEVJm4hogG
-         WNjQ==
-X-Gm-Message-State: AOJu0YxXalSL7+ctrtYecBRqlCnhwShzx05VlJpt/SO78r0jcSoD81nm
-	TADymZ/Lc94sI1ie76M5IMMclLygxR61P0YVkZY8liu0nNERWW1xu93dgzGreu273gfJ94qWLRg
-	Mj9L263x5JxRZnvBz7cHlwYsIWbI=
-X-Google-Smtp-Source: AGHT+IFxwUuz5aeuHZ9eGaJnnEaZGaqtHOLAjpeHGOlY9X6VhRfy04WrvsVEWncfPsI53KNIqRtw8ZVQXRfs3ZTlKdk=
-X-Received: by 2002:a05:690c:5981:b0:6ee:367c:3993 with SMTP id
- 00721157ae682-6ee367c3d4fmr27175067b3.11.1731574685944; Thu, 14 Nov 2024
- 00:58:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F4fzEM2A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZhybLUI6"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 631F62540261;
+	Thu, 14 Nov 2024 04:10:45 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Thu, 14 Nov 2024 04:10:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731575445; x=1731661845; bh=jFvf13A6Y/
+	8bVfvCKE6yk2UYbbvomIsJTZWtocpc1AA=; b=F4fzEM2AfxW+81oQaBT7c1xwER
+	7oKyy6IsKyGhgwkQAf6q5YFlpvN689OanspRVhh5BwQzs+3v8C0iNF6w+xXznOcm
+	46jHB6nDE2DY/MDm9tE+f2jvY1Vu58P0J711tsRjesr4wc6imauh/poJ8ypzIL9e
+	BJUzJIIODbgT/A4xxirrVD8io12dj4JIBE9El5qHaXJbQ7v/AL+7uRzmbJzdpv8i
+	WaOFZuAzwdKYBBKweYJla+fGW20CxtyUvbtixM0Py5/NUhf8BmpTV+oK9zxB6C0m
+	Pz/tJO2xn1ZBig/AZhpTLBZaGRhdl/+6KmmmCcfiqTFzWR5G0X05JH3oVSOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731575445; x=1731661845; bh=jFvf13A6Y/8bVfvCKE6yk2UYbbvomIsJTZW
+	tocpc1AA=; b=ZhybLUI67cWwFReM2zXx2Uqx8rah7HvSQPLvTgfWnl0tDEmEdzh
+	Hzqzxhvj1v+G/dR5tNFwv9K/Dz662bQ/JCiTGig+tTwjxDallgjesOW2UD+dVkod
+	S8AjLS8e0oIjxh7U3TK9jUdNdtoc3PmZeMqIQWe24YIVr5wywRldGrm3fQRYggyN
+	7PtKWDXZQKAUEGz9QFtCD9prMFFBzRMA0EcIwS53sshNc3NfDzUwMGUe9fe3axDK
+	3cjA+RdUp9aUQc3O8Q1PRVFlr8L94ibwi5gwGreTFKWhF1k1+dj24PZbDZ9cwZa8
+	x05Q+pSArGdsvydPwtjaanMBaR2L3SyJFfA==
+X-ME-Sender: <xms:lL41Z1PQfByrXGwIQ546Fuuq_2fJ_7Zb-jC_Ba-o6Yl_J6auhaTKAg>
+    <xme:lL41Z39hyZJP0wfSWg1q4bMnIJZ5W1fr5DvsvIsfAfBgAEkvTyFqgxkmw6NvMLWW6
+    LwkjJRi1vAtghQ3HA>
+X-ME-Received: <xmr:lL41Z0T1ymclE5g8L1nNirkvuaANvY0t5BCwur3R8rXOdGJmlw4s1VWTeKn6ENawP2NFiYO0wLLaJ5zt2DNtCqwYTi8zjdlo8beqnq3mDbWM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvddvucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfurfetoffk
+    rfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculd
+    dquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhho
+    mheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecugg
+    ftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeu
+    kefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtg
+    homhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhu
+    khdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
+    nhgvtghordgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
+    htthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtoh
+    hordhorhhg
+X-ME-Proxy: <xmx:lL41ZxvyWOFW-Y6jwVxaiVsTTVi5hXdYoO534Bl9A3M_10XO777xDA>
+    <xmx:lL41Z9cbi7OlIg4fcrY0PeqYFAhudU8nGZgTG1r8He5puGpYMZWUhQ>
+    <xmx:lL41Z92gWAqAbJJZpXW8bz0nmjIoiSROMedsturRbN5WN_Hvw12oEQ>
+    <xmx:lL41Z5-dnGx2LV1ktVzbHszjFy6bRSGmxnMoT5XEhcKPMLX95vUG2A>
+    <xmx:lb41Z57PytrIXgWYjG1jTql7tA3aTMH-Xs2bT7n976jXy4mN0O8zRlWv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 14 Nov 2024 04:10:42 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e49673f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 14 Nov 2024 09:10:00 +0000 (UTC)
+Date: Thu, 14 Nov 2024 10:10:31 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH RFC v6 08/19] Makefile: refactor GIT-VERSION-GEN to be
+ reusable
+Message-ID: <ZzW-h-g5CiLgCsCo@pks.im>
+References: <20241112-pks-meson-v6-0-648b30996827@pks.im>
+ <20241112-pks-meson-v6-8-648b30996827@pks.im>
+ <c0474637-3923-4e4c-a90b-e86d5f37a366@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
- <20241113-pks-push-atomic-respect-exit-code-v1-2-7965f01e7f4e@pks.im>
-In-Reply-To: <20241113-pks-push-atomic-respect-exit-code-v1-2-7965f01e7f4e@pks.im>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Thu, 14 Nov 2024 16:57:55 +0800
-Message-ID: <CANYiYbHGdJsTgdzJj1r4sPdTAcZCf3C-qA538fcXbD1jjB1BUw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] transport: don't ignore git-receive-pack(1) exit code
- on atomic push
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jiang Xin <zhiyou.jx@alibaba-inc.com>, 
-	"Larry D'Anna" <larry@elder-gods.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c0474637-3923-4e4c-a90b-e86d5f37a366@gmail.com>
 
-On Wed, Nov 13, 2024 at 7:25=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> When executing git-push(1) with the "--porcelain" flag, then we will
-> print updated references in a machine-readable format that looks like
-> this:
->
->     To destination
->     =3D   refs/heads/noop:refs/heads/noop [up to date]
->     !   refs/heads/rejected:refs/heads/rejected [rejected] (atomic push f=
-ailed)
->     !   refs/heads/noff:refs/heads/(off (non-fast-forward)
->     Done
->
-> The final "Done" stanza was introduced via 77555854be (git-push: make
-> git push --porcelain print "Done", 2010-02-26), where it was printed
-> "unless any errors have occurred". This behaviour was later changed via
-> 7dcbeaa0df (send-pack: fix inconsistent porcelain output, 2020-04-17)
-> such that the stanza will also be printed when there was an error with
-> atomic pushes, which was previously inconsistent with non-atomic pushes.
-> The fixup commit has introduced a new issue though. During atomic pushes
-> it is expected that git-receive-pack(1) may exit early, and that causes
-> us to receive an error on the client-side. We (seemingly) still want to
-> print the "Done" stanza, but given that we only do so when the push has
-> been successful we started to ignore the error code by the child process
-> completely when doing an atomic push.
+On Wed, Nov 13, 2024 at 04:30:33PM +0000, Phillip Wood wrote:
+> Hi Patrick
+> 
+> On 12/11/2024 17:02, Patrick Steinhardt wrote:
+> > Our "GIT-VERSION-GEN" script always writes the "GIT-VERSION-FILE" into
+> > the current directory, where the expectation is that it should exist in
+> > the source directory. But other build systems that support out-of-tree
+> > builds may not want to do that to keep the source directory pristine,
+> > even though CMake currently doesn't care.
+> > 
+> > Refactor the script such that it doesn't write output to a file anymore
+> > but so that it instead writes the version to stdout. This makes it
+> > easier to compute the same version as our Makefile would without having
+> > to write the "GIT-VERSION-FILE".
+> 
+> This patch moves the logic that only updates GIT-VERSION-FILE if the
+> version has changed from the script into the Makefile. As we really want
+> the CMake and meson builds to set the string at build time which
+> probably means extending GIT-VERSION-GEN to write a header file that
+> defines GIT_VERSION etc. I'm not sure this is a good direction. In the
+> long run I think we'd be better off with something like the patch below.
 
-I introduced the commit 7dcbeaa0df (send-pack: fix inconsistent porcelain
-output, 2020-04-17), because the porcelain output for git push over local
-file protocol and HTTP protocol are different and was hard to write the
-some test cases to work for both protocols. I acknowledge the patch was
-not perfect.
+Yes, I fully agree that using a version header would make more sense. I
+had the intent to do this as a follow-up, but I'll have a look at your
+patch and maybe do it now already.
 
-I read the commit 77555854be (git-push: make git push --porcelain
-print "Done", 2010-02-26) and the code path of git push over two
-protocols a second time, and find something:
+Thanks!
 
-The code snippet from 77555854be:
-
-> -    ret =3D transport->push_refs(transport, remote_refs, flags);
-> +    push_ret =3D transport->push_refs(transport, remote_refs, flags);
->      err =3D push_had_errors(remote_refs);
-> -
-> -    ret |=3D err;
-> +    ret =3D push_ret | err;
->
-
-The return code "push_ret" of push_refs() from different transport
-vtable is not consist. For HTTP protocol, "push_ret" is zero if no
-connection error or no protocol errors. So we should consider
-=E2=80=9Cpush_ret" as a protocol error rather than a reference update error=
-.
-
-If we want to print "Done" in porcelain mode when there are no
-errors. (In dry run mode, ref-update-errors should not be
-considered as errors, but the opposite should be regarded as errors).
-
-Instead of using the following code,
-
-> +    if (porcelain && !push_ret)
-> +         puts("Done");
-
-We can use like this ("pretend" is the flag for dry-run mode):
-
-+    ret =3D pretend ? push_ret : (push_ret | err);
-+    if (porcelain && !ret)
-+         puts("Done");
-
-I will send patches follow this patch series.
-
---
-Jiang Xin
+Patrick
