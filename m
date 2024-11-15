@@ -1,55 +1,55 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D6E17C21E
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 07:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8DB185B78
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 07:21:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731655306; cv=none; b=ngudxgLMpdnXtdQggox97gCfaM98Fm5lak5rFl55LotrKYVXzFWMChb/3A4y4yD+r3fXHLIADduRXU8kzarw1WuRW8CCgZ36x2YK6Z0xfgc2myC3Db8QfzjziVuUGBP4MVXm2N9BNdDN9YPwzC9pgwo27GwKnTLC22DS1oFib3o=
+	t=1731655307; cv=none; b=n3Lk9W8k4NdICgfSTsbwoPTc7+n2OjdhoFdUtwnNfrL5G/lPS/4jydGxqvBfh2o01A0bRE5iv43B7HKPZsvlPPCrVd2/9w9Rgo3VY2dt7U51Y5kcUtciUavCzeZ6mZebX2+GBoKAhjkdqLR69RDMmPaZrhOuXlOGvQ1C9KqaaoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731655306; c=relaxed/simple;
-	bh=vaw8oGkTt/B6JnHTkJvJlinCt0nUMT5VnZx8yLFjk94=;
+	s=arc-20240116; t=1731655307; c=relaxed/simple;
+	bh=FbP63O9XBrCup2zOqG7UhOuS6gcbSdPXQnxPWH7nbvQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ec8XO86G/SW8bi20cSAAvkLOkHpGwPtyDsfIAGkoMSIyEW54+EfabeBAuwCvN5ORB4zCh8BMDQpKI8SjYhyIGaOIQ1uHOGhSuIUi3hbasQQDCdY/CyUOzrk2qApnHUMkC6ax/14+l7AefdYWsUNlhxveRC5wxsrdkfkeeMnF4I8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V9OEtcZr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XzlNbZQo; arc=none smtp.client-ip=103.168.172.144
+	 In-Reply-To:To:Cc; b=JaT7lFjxrT/YXNEvflNqLOcL7U4Oh3AoIVxZr66l1qHrC1KB+lvfv8DT9j233gc9mdAoPRTLjFZHQ2jE3mxtap873Y9zTBrBiXLF3Jft5jHOj1r+RTldt21bmGC5brwBEqTqEh+xrrgj2Y/wlpWUxhneoXjyZnS/turbglocd3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JIBDa4ze; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N0XukgXq; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V9OEtcZr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XzlNbZQo"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 500191380648;
-	Fri, 15 Nov 2024 02:21:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JIBDa4ze";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N0XukgXq"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 375DA1380604;
+	Fri, 15 Nov 2024 02:21:45 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 15 Nov 2024 02:21:41 -0500
+  by phl-compute-09.internal (MEProxy); Fri, 15 Nov 2024 02:21:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731655301;
-	 x=1731741701; bh=HyUrIcK8R3029r8MvxWn2ntl53lxfgGif0pN/pYTnnI=; b=
-	V9OEtcZrta5GtRZ4l5X60apz4Ip437Vq9Ektul9vf4aaTvXHagQdKXN1GD6kA93d
-	Oo0RvRKc1FmWxzBfeebhGmlOlalM3jNM0tiYkHHsbIv5XfU6/Ph/61npLO+3vWC6
-	1iO+sUx1pkBMEOOzw3KwaGqAUuwliAinrO/Q0AVhkywybqnxlMDR3jfgjfqmVj+R
-	Z/+nkNkN6ht6PmppP6Axb8Z3yFmzFCq1BCXG3S4hN0B7jjenM4R4iYTaMRSHMT0+
-	+WpCD4VGqUy7XrQPgswj+yVgsedCFzeZvYLrLWveauTPYsqJM2E31c2NcKpiDlzt
-	8AQwvHRiNterpEPK0acuAw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731655305;
+	 x=1731741705; bh=GAng2aNSe731QlUHMLHkPGHtMmjwlaUtmMGx3+Ui2T4=; b=
+	JIBDa4zeUFuQXRVNujaoQcSflH+D3mQpmsVK73fPaPuL043Kicomjeaa16MlexXG
+	AEZLbPA5AFSLG8ANqa1xbuF8/xNgLNvl4YYSSmadT9GCW7/F63j+fSiZoGjEmbUO
+	MkgI1RrIwavoBMWZ8kwoDDK06QxBSPshUYBCu/GA8DNq+hA0Kz02YCFHDZojmON3
+	guQ4oJqkKaVohgu7m6YXeCZhJgdGUYNW6+qiEBYZ+BkGJ69Oly1qKYtye/b/n1v+
+	mX75c5cDD+yjBw3vwJptIb62nhybmGFHGgy8m+kJ1sysd/++HBHrtzlSbF1qrZA1
+	qRK1b13mCzhRuAaAnBA79w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731655301; x=
-	1731741701; bh=HyUrIcK8R3029r8MvxWn2ntl53lxfgGif0pN/pYTnnI=; b=X
-	zlNbZQoZhXvaLPT5Gn3XunzxMBRXsYVKFdBqU5L3CeHBzmYhzYpZjV6BZoXL0pzt
-	jmsdXCZERUx/67lELtD5crW40WkdFcHl5orAQcj2v/1LlpcNLEtxyrriWsyLgPit
-	ntEti/QTEYaErS85g55mF739TfPuGk+GfUIZRq/N5PKOH7+jC9tNY8kN4FFbimAp
-	zSn43UtLIIG6UqQlxDxe01kIpsiM6pNq9JHkBjR9hJwS79oOdMhzJWmfIHx+oF/0
-	e1BWJ60OeqzXkOaYSKK4OQB5RnYBcUlljq4TK/czT49V0grcuq6Lh6QN8HOI+3nz
-	9g5/UlFamu4WpMdkAvkgg==
-X-ME-Sender: <xms:hPY2Z8zIfunQ2EFDUyP8k8whqAesSWKVfbufBXLQtbg6q0tOxWr2Zw>
-    <xme:hPY2ZwTjaJ-hx6ntD43gy5uHX-ZWdQJNIbECDK0oL_Jeem-agX5TO2qIoU5lxrWqU
-    P__FkLKpfzSE1QaZA>
-X-ME-Received: <xmr:hPY2Z-WYrtKt35TtFFcn65kfdvvGvwTH_CpxZWBtGRPjNM7SdBGkWQWibVwGDvOKcsWLggc04VuYpD2pLxPNeDynrqMTFtua8hbiXJTdcPKknc-aKA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731655305; x=
+	1731741705; bh=GAng2aNSe731QlUHMLHkPGHtMmjwlaUtmMGx3+Ui2T4=; b=N
+	0XukgXqq8CTe56pg1lA+716iDSXf5EuqKFT8Puo6W6haLwqsI0YwTOD24dkGx0GJ
+	gRoti3cAJ8c8E853GGpriniKwm1JTpWMf+74x349Ufqwr331cu97N8cGwDzpIAm0
+	5QnohFpGKu4ZVkUnblh3gHq3rdQY4w/wrctk+vc7CwEP4lCqCTYqAU+3hPIjTlrU
+	vaAcnR83/f/RyaMuHWHqJJcWnUAPGLq0quFfIjPL6XtFWtTjDIuWncZFlmSytRlD
+	Z6Dqq8VluDGV8NYxtAMqoPNs6/V3IzV1Wmz1MKz2Ximfn7/WhLf2EXaCpUv/Mwtq
+	49sYntGF8fqvV6sZFuUtA==
+X-ME-Sender: <xms:iPY2Z1S6rZXSV2SA8NQQQCv1kKIWgJjzAiNK6PQlyeP-xRhdQht05w>
+    <xme:iPY2Z-zpxbWCsgRvVuLT7DgJx31UThrUkEfMtcXlEXLu87K2xjb8s7OO1RY7WLlHS
+    xVHjOwXx8Kuc1bCMA>
+X-ME-Received: <xmr:iPY2Z635XnqWMaBiAnCRnODf5F7wKiBblNaR82DpH8gxB0LeCZH2jRn1BC--VxDLLeuCFDPtXjdp2Sm19Yc1YM_BRjh7QfXbUP63hCQLMEFXd47ysw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddutdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -58,29 +58,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddutdefucetufdoteggod
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
     jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdho
-    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsuhhnsh
-    hhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomh
-    dprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepvghstghh
-    figrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmsh
-    grhihjohhnvghsrdhplhhushdrtghomh
-X-ME-Proxy: <xmx:hfY2Z6hDtF8gbeRX1zzc9dk7FMgbgEcL7KJJau8c1xzNnZrvUgArYw>
-    <xmx:hfY2Z-CCrf80dyrZaTR3Ru1OLixl1VMtLpsnaphoKtBAjD1_57wXOQ>
-    <xmx:hfY2Z7KV3Cd7mYlZ0xOfG8OljcTrkwaUujJj6-GCc1n4RMFtWw-WUA>
-    <xmx:hfY2Z1A6H_ZG-oA2QRtB-N2pDZbzBDySQ5p4Yb-unRcFcfvdf5_3zQ>
-    <xmx:hfY2Zy6N-iN1E6IrX0y3OSPDsHolFYNqKzR-I_8aX0wksGCXzB-J0Y_0>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhh
+    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhih
+    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiies
+    ghgvnhhtohhordhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvg
+    hsrdhplhhushdrtghomh
+X-ME-Proxy: <xmx:ifY2Z9AoIeWRguM4weIDFWb0W6O9ZdlWcBHg-3lsM5rNJzp7D1__yQ>
+    <xmx:ifY2Z-gEzZWYaisDGqTd4Yjhk1Zu-aP3_7XAg88QMlA07HmUTLOwJQ>
+    <xmx:ifY2ZxojejFCH3dkXhDyQN-mGBxSb1JVxiB5dMND8hyIV8VytqZgyQ>
+    <xmx:ifY2Z5jfHyd2VnNE5O2wfnsxRIuQShSbcEoAfawHZhTDigw9a3BsNQ>
+    <xmx:ifY2Zzahnmwpx-JUQ5MRWhkXMd1VhetvmrxsCrvxWQ7I5TrqDOJPsWMI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Nov 2024 02:21:39 -0500 (EST)
+ 15 Nov 2024 02:21:43 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7de4af95 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 15 Nov 2024 07:20:55 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 536a6916 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 15 Nov 2024 07:20:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 15 Nov 2024 08:21:20 +0100
-Subject: [PATCH RFC v7 08/22] Makefile: use "generate-perl.sh" to massage
- Perl library
+Date: Fri, 15 Nov 2024 08:21:24 +0100
+Subject: [PATCH RFC v7 12/22] Makefile: refactor generators to be
+ PWD-independent
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241115-pks-meson-v7-8-47ec19b780b2@pks.im>
+Message-Id: <20241115-pks-meson-v7-12-47ec19b780b2@pks.im>
 References: <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
 In-Reply-To: <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
 To: git@vger.kernel.org
@@ -102,151 +102,226 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-Extend "generate-perl.sh" such that it knows to also massage the Perl
-library files. There are two major differences:
+We have multiple scripts that generate headers from other data. All of
+these scripts have the assumption built-in that they are executed in the
+current source directory, which makes them a bit unwieldy to use during
+out-of-tree builds.
 
-  - We do not read in the Perl header. This is handled by matching on
-    whether or not we have a Perl shebang.
-
-  - We substitute some more variables, which we read in via our
-    GIT-BUILD-OPTIONS.
-
-Adapt both our Makefile and the CMake build instructions to use this.
+Refactor them to instead take the source directory as well as the output
+file as arguments.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- GIT-BUILD-OPTIONS.in                |  2 ++
- Makefile                            | 10 ++++------
- contrib/buildsystems/CMakeLists.txt | 23 +++++++++--------------
- generate-perl.sh                    | 14 ++++++++++++--
- 4 files changed, 27 insertions(+), 22 deletions(-)
+ Makefile                            |  6 +++---
+ contrib/buildsystems/CMakeLists.txt | 19 +++++++++--------
+ generate-cmdlist.sh                 | 42 +++++++++++++++++++++++--------------
+ generate-configlist.sh              | 20 +++++++++++++-----
+ generate-hooklist.sh                | 15 ++++++++++++-
+ 5 files changed, 68 insertions(+), 34 deletions(-)
 
-diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
-index f0ca240493c94aa41a6b6241a8474e42f7cdc8b9..050432f9fc49f93d0f6ed98c1307405c52761be0 100644
---- a/GIT-BUILD-OPTIONS.in
-+++ b/GIT-BUILD-OPTIONS.in
-@@ -1,6 +1,8 @@
- SHELL_PATH=@SHELL_PATH@
- TEST_SHELL_PATH=@TEST_SHELL_PATH@
- PERL_PATH=@PERL_PATH@
-+PERL_LOCALEDIR=@PERL_LOCALEDIR@
-+NO_PERL_CPAN_FALLBACKS=@NO_PERL_CPAN_FALLBACKS@
- DIFF=@DIFF@
- PYTHON_PATH=@PYTHON_PATH@
- TAR=@TAR@
 diff --git a/Makefile b/Makefile
-index 669ee4fb8d28fd9e1aeb0a794d5ce44ba60b5c9c..8aaa5bbfe2bd11aa88b7578e17b9839b1b9b0a0b 100644
+index d921c4d8e2c362b2f6f95984fca4a11a02c9967a..d9a0025b30db24cb035f19812f0071fe0642386b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3095,13 +3095,9 @@ endif
- NO_PERL_CPAN_FALLBACKS_SQ = $(subst ','\'',$(NO_PERL_CPAN_FALLBACKS))
- endif
+@@ -2523,17 +2523,17 @@ $(BUILT_INS): git$X
+ config-list.h: generate-configlist.sh
  
--perl/build/lib/%.pm: perl/%.pm GIT-PERL-DEFINES
-+perl/build/lib/%.pm: perl/%.pm generate-perl.sh GIT-BUILD-OPTIONS GIT-VERSION-FILE GIT-PERL-DEFINES
- 	$(call mkdir_p_parent_template)
--	$(QUIET_GEN) \
--	sed -e 's|@LOCALEDIR@|$(perl_localedir_SQ)|g' \
--	    -e 's|@NO_GETTEXT@|$(NO_GETTEXT_SQ)|g' \
--	    -e 's|@NO_PERL_CPAN_FALLBACKS@|$(NO_PERL_CPAN_FALLBACKS_SQ)|g' \
--	< $< > $@
-+	$(QUIET_GEN)$(SHELL_PATH) generate-perl.sh ./GIT-BUILD-OPTIONS ./GIT-VERSION-FILE GIT-PERL-HEADER "$<" "$@"
+ config-list.h: Documentation/*config.txt Documentation/config/*.txt
+-	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh >$@
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
  
- perl/build/man/man3/Git.3pm: perl/Git.pm
- 	$(call mkdir_p_parent_template)
-@@ -3162,6 +3158,8 @@ GIT-BUILD-OPTIONS: FORCE
- 		-e "s|@SHELL_PATH@|\'$(SHELL_PATH_SQ)\'|" \
- 		-e "s|@TEST_SHELL_PATH@|\'$(TEST_SHELL_PATH_SQ)\'|" \
- 		-e "s|@PERL_PATH@|\'$(PERL_PATH_SQ)\'|" \
-+		-e "s|@PERL_LOCALEDIR@|\'$(perl_localedir_SQ)\'|" \
-+		-e "s|@NO_PERL_CPAN_FALLBACKS@|\'$(NO_PERL_CPAN_FALLBACKS_SQ)\'|" \
- 		-e "s|@DIFF@|\'$(DIFF)\'|" \
- 		-e "s|@PYTHON_PATH@|\'$(PYTHON_PATH_SQ)\'|" \
- 		-e "s|@TAR@|\'$(TAR)\'|" \
+ command-list.h: generate-cmdlist.sh command-list.txt
+ 
+ command-list.h: $(wildcard Documentation/git*.txt)
+ 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
+ 		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
+-		command-list.txt >$@
++		. $@
+ 
+ hook-list.h: generate-hooklist.sh Documentation/githooks.txt
+-	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh >$@
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh . $@
+ 
+ SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):\
+ 	$(localedir_SQ):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index e2e7d3da2028cd36a9761f78607539080361b3ec..0f9180937e76cad4ad831d34877ea276413e76c9 100644
+index 7121fdfbc2ba50b4c7afb3f2b45fdaa5b9909a60..be1ce1f37a775c366098717047cd7579cd81015d 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -853,6 +853,9 @@ endforeach()
+@@ -638,23 +638,24 @@ set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS} CACHE STRING "Programs not built" F
+ if(NOT EXISTS ${CMAKE_BINARY_DIR}/command-list.h OR NOT EXCLUSION_PROGS_CACHE STREQUAL EXCLUSION_PROGS)
+ 	list(REMOVE_ITEM EXCLUSION_PROGS empty)
+ 	message("Generating command-list.h")
+-	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-cmdlist.sh ${EXCLUSION_PROGS} command-list.txt
+-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+-			OUTPUT_FILE ${CMAKE_BINARY_DIR}/command-list.h)
++	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-cmdlist.sh"
++				${EXCLUSION_PROGS}
++				"${CMAKE_SOURCE_DIR}"
++				"${CMAKE_BINARY_DIR}/command-list.h")
+ endif()
  
- #perl scripts
- parse_makefile_for_scripts(git_perl_scripts "SCRIPT_PERL" "")
-+#perl modules
-+file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
-+list(TRANSFORM perl_modules REPLACE "${CMAKE_SOURCE_DIR}/" "")
+ if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-list.h)
+ 	message("Generating config-list.h")
+-	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-configlist.sh
+-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+-			OUTPUT_FILE ${CMAKE_BINARY_DIR}/config-list.h)
++	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-configlist.sh"
++				"${CMAKE_SOURCE_DIR}"
++				"${CMAKE_BINARY_DIR}/config-list.h")
+ endif()
  
- #create perl header
- file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
-@@ -869,9 +872,12 @@ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/GIT-VERSION-FILE"
- 		"${CMAKE_SOURCE_DIR}/GIT-VERSION-FILE.in"
- 	VERBATIM)
+ if(NOT EXISTS ${CMAKE_BINARY_DIR}/hook-list.h)
+ 	message("Generating hook-list.h")
+-	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
+-			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+-			OUTPUT_FILE ${CMAKE_BINARY_DIR}/hook-list.h)
++	execute_process(COMMAND "${SH_EXE}" ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
++				"${CMAKE_SOURCE_DIR}"
++				"${CMAKE_BINARY_DIR}/hook-list.h")
+ endif()
  
--foreach(script ${git_perl_scripts})
-+foreach(script ${git_perl_scripts} ${perl_modules})
- 	string(REPLACE ".perl" "" perl_gen_path "${script}")
+ include_directories(${CMAKE_BINARY_DIR})
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 205541e0f7f81b1df4061215ae34a2742a45475d..b923a5aab80dfa571a40a4f6fa3d860fcf8f8dd1 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -64,7 +64,7 @@ define_category_names () {
+ print_command_list () {
+ 	echo "static struct cmdname_help command_list[] = {"
  
-+	get_filename_component(perl_gen_dir "${perl_gen_path}" DIRECTORY)
-+	file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${perl_gen_dir}")
+-	echo "$1" |
++	echo "$2" |
+ 	while read cmd rest
+ 	do
+ 		synopsis=
+@@ -76,7 +76,7 @@ print_command_list () {
+ 				break
+ 				;;
+ 			esac
+-		done <"Documentation/$cmd.txt"
++		done <"$1/Documentation/$cmd.txt"
+ 
+ 		printf '\t{ "%s", N_("%s"), 0' "$cmd" "$synopsis"
+ 		printf " | CAT_%s" $rest
+@@ -93,18 +93,28 @@ do
+ 	shift
+ done
+ 
+-commands="$(command_list "$1")"
+-categories="$(category_list "$commands")"
++if test "$#" -ne 2
++then
++	die "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
++fi
 +
- 	add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/${perl_gen_path}"
- 		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-perl.sh"
- 			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
-@@ -893,19 +899,6 @@ file(STRINGS ${CMAKE_SOURCE_DIR}/git-p4.py content NEWLINE_CONSUME)
- string(REPLACE "#!/usr/bin/env python" "#!/usr/bin/python" content "${content}")
- file(WRITE ${CMAKE_BINARY_DIR}/git-p4 ${content})
- 
--#perl modules
--file(GLOB_RECURSE perl_modules "${CMAKE_SOURCE_DIR}/perl/*.pm")
--
--foreach(pm ${perl_modules})
--	string(REPLACE "${CMAKE_SOURCE_DIR}/perl/" "" file_path ${pm})
--	file(STRINGS ${pm} content NEWLINE_CONSUME)
--	string(REPLACE "@LOCALEDIR@" "${LOCALEDIR}" content "${content}")
--	string(REPLACE "@NO_PERL_CPAN_FALLBACKS@" "" content "${content}")
--	file(WRITE ${CMAKE_BINARY_DIR}/perl/build/lib/${file_path} ${content})
--#test-lib.sh requires perl/build/lib to be the build directory of perl modules
--endforeach()
--
--
- #templates
- file(GLOB templates "${CMAKE_SOURCE_DIR}/templates/*")
- list(TRANSFORM templates REPLACE "${CMAKE_SOURCE_DIR}/templates/" "")
-@@ -1147,6 +1140,8 @@ file(STRINGS ${CMAKE_SOURCE_DIR}/GIT-BUILD-OPTIONS.in git_build_options NEWLINE_
- string(REPLACE "@SHELL_PATH@" "'${SHELL_PATH}'" git_build_options "${git_build_options}")
- string(REPLACE "@TEST_SHELL_PATH@" "'${TEST_SHELL_PATH}'" git_build_options "${git_build_options}")
- string(REPLACE "@PERL_PATH@" "'${PERL_PATH}'" git_build_options "${git_build_options}")
-+string(REPLACE "@PERL_LOCALEDIR@" "'${LOCALEDIR}'" git_build_options "${git_build_options}")
-+string(REPLACE "@NO_PERL_CPAN_FALLBACKS@" "" git_build_options "${git_build_options}")
- string(REPLACE "@DIFF@" "'${DIFF}'" git_build_options "${git_build_options}")
- string(REPLACE "@PYTHON_PATH@" "'${PYTHON_PATH}'" git_build_options "${git_build_options}")
- string(REPLACE "@TAR@" "'${TAR}'" git_build_options "${git_build_options}")
-diff --git a/generate-perl.sh b/generate-perl.sh
-index f168cce734dbbe80b58b4b761b13e8a177f70642..d9eaed86218c5f74fdae06bf3170808104058fa7 100755
---- a/generate-perl.sh
-+++ b/generate-perl.sh
-@@ -18,10 +18,20 @@ OUTPUT="$5"
- . "$GIT_VERSION_FILE"
- 
- sed -e '1{' \
-+    -e "	/^#!.*perl/!b" \
-     -e "	s|#!.*perl|#!$PERL_PATH|" \
-     -e "	r $PERL_HEADER" \
-     -e '	G' \
-     -e '}' \
--    -e "s/@GIT_VERSION@/$GIT_VERSION/g" \
-+    -e "s|@GIT_VERSION@|$GIT_VERSION|g" \
-+    -e "s|@LOCALEDIR@|$PERL_LOCALEDIR|g" \
-+    -e "s|@NO_GETTEXT@|$NO_GETTEXT|g" \
-+    -e "s|@NO_PERL_CPAN_FALLBACKS@|$NO_PERL_CPAN_FALLBACKS|g" \
-     "$INPUT" >"$OUTPUT"
--chmod a+x "$OUTPUT"
++SOURCE_DIR="$1"
++OUTPUT="$2"
 +
-+case "$INPUT" in
-+*.perl)
-+	chmod a+x "$OUTPUT";;
-+*)
-+	;;
-+esac
++{
++	commands="$(command_list "$SOURCE_DIR"/command-list.txt)"
++	categories="$(category_list "$commands")"
+ 
+-echo "/* Automatically generated by generate-cmdlist.sh */
+-struct cmdname_help {
+-	const char *name;
+-	const char *help;
+-	uint32_t category;
+-};
+-"
+-define_categories "$categories"
+-echo
+-define_category_names "$categories"
+-echo
+-print_command_list "$commands"
++	echo "/* Automatically generated by generate-cmdlist.sh */
++	struct cmdname_help {
++		const char *name;
++		const char *help;
++		uint32_t category;
++	};
++	"
++	define_categories "$categories"
++	echo
++	define_category_names "$categories"
++	echo
++	print_command_list "$SOURCE_DIR" "$commands"
++} >"$OUTPUT"
+diff --git a/generate-configlist.sh b/generate-configlist.sh
+index 8692fe5cf4d5e4025265e6110254b05640615fea..512804a1ca1b63a0630ae152569b31486273eae0 100755
+--- a/generate-configlist.sh
++++ b/generate-configlist.sh
+@@ -1,13 +1,19 @@
+ #!/bin/sh
+ 
+-echo "/* Automatically generated by generate-configlist.sh */"
+-echo
++SOURCE_DIR="$1"
++OUTPUT="$2"
++
++if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
++then
++	echo "USAGE: $0 <SOURCE_DIR> <OUTPUT>" >&2
++	exit 1
++fi
+ 
+ print_config_list () {
+ 	cat <<EOF
+ static const char *config_name_list[] = {
+ EOF
+-	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
++	grep -h '^[a-zA-Z].*\..*::$' "$SOURCE_DIR"/Documentation/*config.txt "$SOURCE_DIR"/Documentation/config/*.txt |
+ 	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+ 	sort |
+ 	sed 's/^.*$/	"&",/'
+@@ -17,5 +23,9 @@ EOF
+ EOF
+ }
+ 
+-echo
+-print_config_list
++{
++	echo "/* Automatically generated by generate-configlist.sh */"
++	echo
++	echo
++	print_config_list
++} >"$OUTPUT"
+diff --git a/generate-hooklist.sh b/generate-hooklist.sh
+index 2f9f54eb545be2bd79c37a868dbeef96d2ddfb9f..0ff2a0b6fbd16772de1f88cad36af8185892bb47 100755
+--- a/generate-hooklist.sh
++++ b/generate-hooklist.sh
+@@ -2,6 +2,17 @@
+ #
+ # Usage: ./generate-hooklist.sh >hook-list.h
+ 
++SOURCE_DIR="$1"
++OUTPUT="$2"
++
++if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
++then
++	echo "USAGE: $0 <SOURCE_DIR> <OUTPUT>" >&2
++	exit 1
++fi
++
++{
++
+ cat <<EOF
+ /* Automatically generated by generate-hooklist.sh */
+ 
+@@ -11,10 +22,12 @@ EOF
+ sed -n \
+ 	-e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}' \
+ 	-e 'x' \
+-	<Documentation/githooks.txt |
++	<"$SOURCE_DIR"/Documentation/githooks.txt |
+ 	LC_ALL=C sort
+ 
+ cat <<EOF
+ 	NULL,
+ };
+ EOF
++
++} >"$OUTPUT"
 
 -- 
 2.47.0.251.gb31fb630c0.dirty
