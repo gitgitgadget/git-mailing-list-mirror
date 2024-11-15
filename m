@@ -1,94 +1,103 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A151CF7A1
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 14:35:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6DC1D47C7
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 16:34:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731681306; cv=none; b=WYPU40CtPIlSFviR8XQJy1pV1YVc79GTBX/FavLdBngVnto4WTfT3Dq7V2X6uRa1kj8r91uidRSfnUc5zQbNkS/3+Oth44z2qssWDCJUK6o1qTguVHwWRV8QyMrWoI5GPabe0VKG1muO18yabOmaHEtSoYH7qOt+mGVjH/LnlGY=
+	t=1731688470; cv=none; b=kQEtfSNUgSq1+vZumUa38KSc0TZI0YZy/BqRsd15uW1i0qSSQqQ57LRNT3P8UOZGJ4ozAsE0rzTC2eyon+htSIhLKL912o0cfh41ldsQ+feg3hPDruYz5vEdyB/NVyiq7pj4Lt7zBKduYGwWdSQIhTlb6nNW9KVKxDb10hXLo4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731681306; c=relaxed/simple;
-	bh=1+zCiKjfDC7cGLbeGinV5GxqPw3w3xQp5E7rfp1kUF4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=XEdNiM0066tjvThZ7nlWbJD5MIKa5iUAxwlfiW6LcF4M5/9FKEC4yDiQOJugty7OhaK/l4AW7A+UFIbpGuWR6+h+hSOfA1yOy7exiKHthxHU24gHsZUOik6zI5dapmLLnhmp9pzAS/OhDA6aqv7RenYXijS4w3iPO8CS/EX39ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZscF4nkX; arc=none smtp.client-ip=209.85.167.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731688470; c=relaxed/simple;
+	bh=ncZXoj3EdnW7l3IIBzBe82MkaVDiXQsF825kcJMqyes=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=L41V1A6UWYJNJLjzjO0ZxWtVWKspIImYEuzRpLCE5JMr0VohEcUV9Byve5XwXmfOsHXVqD9SM8F329fnor26HdhY2u/X8wG+ZS7IpbSCoHcX7hKmw4C0xPk5iYgV90hBErf4DIy7Kyjrts1AQqKfj8kkZNvNDicuZJmW/XkdfXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=tftgjwu9; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZscF4nkX"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3e60825aa26so1081670b6e.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2024 06:35:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731681304; x=1732286104; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=dkG3TmRJvyqQz/HjqKm+FYYZuUS6tCSklvrCg+R3Ci0=;
-        b=ZscF4nkX5SSuJ46+F69bhziQT42MBEfpGxATFMGaP8M3kgYEzQ+kJkDR7xOi4ShRyb
-         Ke3WGhHYq0s90nXUga02pGJTXXOWazkOa0/LuWeSpMBUquTYfdh0v/jSXZL9BNotGpFW
-         GSZEQI6XYLyTXLJnsU4hagHhWNKxq9c2xqEwEPortqpRjQ8IEnD49ArpJmRJ0XHjxXAA
-         yLrXtFF2dMiBbmmi9dBYsoGcbTUpg/E/1srXANwf8P2HVehog66yFSlRWugs7yYNkByj
-         iEIIudXmjxv55DzG0XiIwuEUYavncZWOfsUV0evAchSRQz6RZo9LC0dMjtjmXC5g+d0n
-         Okkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731681304; x=1732286104;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dkG3TmRJvyqQz/HjqKm+FYYZuUS6tCSklvrCg+R3Ci0=;
-        b=TDXySocCEnipdScVfLxEpgAPXX9yCr8w8aXZhVwXWstg+V9nAbbLtO0oRD9ElDEafh
-         IwLcjseXay3zQqbAaIx518X9k34YPqbt7W0+o/nW7WAivtDU9fumMLT8semtoiGTghgd
-         KXisKdoD6LWMGZQ39JdIpkjdAfJ1KhoGPupjhqvpq06dQRdiuj/Ze2YevyZLafzaQ/6l
-         fkVNHz/w2bbIVL1JPfTO5f3B4amapYNEBleFglr9GnlUmO8Ulmzh/ZMUjtzjI/1XL9C4
-         /kR1ZmP6Yza9rANfesJ3Iio1Lhwvtdjj1zG0XO4a8oXEHuIMYad/sdsH7Ljh7Qjzl7eX
-         Q+8w==
-X-Gm-Message-State: AOJu0Yz3gBWNXeOKBU66Ib69b/SvK88bhHo7F/KhjA1RXPaaVF9KQeXr
-	CL2sv5Ja7ub5ANBWnjmBzHbbUh8TZ5m5vx3SQQslJq26UeKS1wEoBsGNVr0rCvyhPiDybMkRpQk
-	+JPA/cpu3/7ND8O2uXYbAvGCtyXRlEQ3y
-X-Google-Smtp-Source: AGHT+IELkDpj7d/x9qmI+9j4TE7/HkseBR4HGRm6WaIgrlSU1joGia7tJyZzyljXYUHBPE4PG846+pSC0+bpsIW2jfs=
-X-Received: by 2002:a05:6871:618a:b0:25e:d90:fe70 with SMTP id
- 586e51a60fabf-2962e329d37mr2718084fac.43.1731681303592; Fri, 15 Nov 2024
- 06:35:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="tftgjwu9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1731688457; x=1732293257; i=l.s.r@web.de;
+	bh=UoVtXNgFAt/BcsRVRYkQR2Ax4/8fcVAuWMT5e981COY=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=tftgjwu9v6lQR29dfBoLpX9JXmJJ6hsB/brx7oMBu0ub5vYXD6598RNlvadV3s7U
+	 DZ7J/iJpAcZNNJh31BzDkyO9e20OoidlvoGjXG2uawput6HB66GJ6YFM1zjJXrLcL
+	 lGYT9oveQUMUwv8bEfx2Q492H75Iv+59sY7EQK3XDCg+CNOwxloLjCP8Q9xGHVYXz
+	 hRLz93v5WUeDkElmvvYGjrcxeQuCGNi8j0/QzzJ+mqnMh5OZIEPu/YvR9Sx0XmubD
+	 w4fvBE/5m4XXlwnnLOIabdnb7tbixoc75dkRHE12fPhAIuEJpCCShBR3W59BSAvwM
+	 wGNWHe1+r+55qAxFqA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.30.137]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MidHZ-1tezN83BlX-00prOw; Fri, 15
+ Nov 2024 17:34:17 +0100
+Message-ID: <4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
+Date: Fri, 15 Nov 2024 17:34:16 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Caleb Cushing <xenoterracide@gmail.com>
-Date: Fri, 15 Nov 2024 09:34:28 -0500
-Message-ID: <CAAHKNRGv19rhnqCkJMpE2FomNQBHvSS36aC=fh0UwO+9-6RRfA@mail.gmail.com>
-Subject: git remote set-head automatically
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
+ allocated on MacOS with git 2.47.0
+To: Attila Kerekes <ak@enrg8.com>, git@vger.kernel.org
+References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:uPjwTZnj1EkKlmIdG201W7B9daU3pnFKSpnUT6KwAVD2DQA05PU
+ 25LRV7SWfknsQVTowiA/ijJst9g7/zzBTMHMUQiJUZRyquA0XcPPbTXBqllzP1Bloa8lBPU
+ BYz4Xy0F6NI0ZH0jjgwIOOzwj8AJeyOg/lL575xsC9Gg9sLOBws5dzhuJwJuKbHxyTMDLJA
+ wIDiK/7s/vT2MZLBIbHyw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Op2rL7U1i6M=;9aemURLCEoZqTAWHhAswHBVUhWk
+ O/bzFnO8ce9aYSHD277baekAkr37TFFSBGxV/NDpKiuwjgMoeKvQAsdq2/6HugnqCtnGHQTTN
+ TuF9TIz82OW98WhFPcwpUtydxytYFqL3mntMgpHnEhbuDXYGoIaw6Z0NJRQ3lUD6s2zF5RI2g
+ w1bwnUZjPhDREMJ7fWmHmumDRkNl0GQb8sSswNxMcUVbfFFEjsHpyUK0a3q/m43n/r103rI6k
+ H8pbjDHcrkU8eKOxT8NcLrI2Dsc2DSy3tRTWmccSA1AIurwBxa6GajiuhCFVOGjySpqxAVSdp
+ cGxQoNqSZIE9nitS3QQoTXLsv1pf9cTL8KZfuMFjfgTF4V4Cq5fsUIOcg/kQkiUp48Xn5nsRd
+ E5bF4MkGCH9KKBByMHWEBa2wA4yvDQgVFKu3hnI5ZZ55ywgviIHCnfeSqIDStxzlkLeUIkaDO
+ lITRB4cbeG8tZ9nC/NI43VR5Jw5YgoCWuojSKLcFA5M/cAWoX1FPZRazZ3r7KYBlFhcbi3EdR
+ 4IgnmsVzBHBjikmuB7aW38Tk/BcuTbXTkiULtE0AzdydZ7NkCiMpALUomjm8tmTEUqLE3YiSK
+ 9AYbtwHps1fUWO5LUYYX4m88WScTJriYVNuNs0C6Hx4VLaPk4hnIgEd/tiQ03k06hJ9+SQeu2
+ FQUG/IeqVhEOPHhTXvdj0rvAAMqsXRUHT3PccBHxMVBrhPo6jkT05OW1H7OYEDJK3Tam4B2Kr
+ xZFkIUpnSwOf52jl9Wqim7lilSbLzHmYQHxU5rylQpw2AyO7pDTWPnuoqCSCqECOiaRCdxj7z
+ NQeVW5DFjZw2VQj84D/7Gp9BoYy0Dyn7oWVI2c6E0DcuwmRjQdV6XmY/m0J7wjiVily3kNJcl
+ VBuSgofkKhxA6+4Bsiqlja8joqlt6Bu3n1OS5eokowhdyv5T3UuFr/QrJ
 
-Context: recently I've been trying to develop a feature for my Gradle
-plugin that derives a semantic version from git describe.  In order to
-achieve my next level of feature I need the HEAD Branch. Now, I can
-get this branch using git remote show <remote> and parsing the output.
-I'm a firm believer that it should be possible for me to write code,
-long term even, without the internet; I did this once with my job when
-I needed to go home to my parents who were very rural and didn't have
-internet; I was able to keep working without access. I want that for
-anyone that uses this tool.
+Am 15.11.24 um 10:40 schrieb Attila Kerekes:
+> Dear Maintainers!
+>
+> See my bug report below:
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> run the command:
+>   git maintenance start
+>
+> What did you expect to happen? (Expected behavior)
+>
+> git maintenance is started
+>
+> What happened instead? (Actual behavior)
+>
+> git(26100,0x1ffd63840) malloc: *** error for object 0x1: pointer being f=
+reed was not allocated
+>
+> What's different between what you expected and what actually happened?
+>
+> git maintenance jobs did not get set up, instead i got a malloc error
 
-Problem: I don't want to have to do a network request every time I do
-a build, in fact I'd rather almost never have to do a network request.
-Gradle makes reducing the network request to less than once per build
-something ... unsupported. jgit doesn't expose support for fetching
-this information. Then I found out that you could do `git remote
-set-head <remote> <branch>` which appears to behave exactly how I'd
-want and expect. It doesn't easily solve my problem though because I
-want my solution to be generally applicable.
+This is a known error.  Commit c95547a394 (builtin/gc: fix crash when
+running `git maintenance start`, 2024-10-10) fixes it, but has not made
+it into a released version, yet.
 
-Ideal Long-Term Solution: git remote set-head happens automatically on
-lone, and even fetch if it's not set. Explicit setting would override
-any automatic setting; and it might be a good idea to automatically
-unset if the HEAD branch disappears from the remote.
+Ren=C3=A9
 
-Could this change be made? is there a reason not to?
-
-Please cc, I'm not on the list.
-
--- 
-Caleb Cushing
-
-Appointments https://calendly.com/caleb-cushing
-https://xenoterracide.com
