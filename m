@@ -1,110 +1,134 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCF73BB22
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 04:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8025D2F26
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 05:00:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731646372; cv=none; b=sjCalxfYHZ+sy5ZEAa6OW222C2bA6FcjlD8OZ5Wd837+FkGxirqLxPt+3vR81SGu8sL5vaCyYElX4vOxQY/1SNwiAXJ+j2hISsi1xkpL6bkj87eztYxHlqx5ahhceShDLUg8yutQnMH+Z4th3cG6fYR24xgY/ks0W/21FLH2lYA=
+	t=1731646848; cv=none; b=Q4K5H7SCHTGYc37kTXxLnblk+0wn/KQPuNCttXvIfJhLrNnwQrNc0qrVCbUk4Ki/DCQR+LYMolVbTIPeB22SJkSkS7HZF6V7n+qUXTNXq39s6E/pfzBynnW0X7N3+PpCtlDA7C36VUC5CdQpLSBBx8qjLArBtoowbVBbbsKKQ8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731646372; c=relaxed/simple;
-	bh=NgbbJx57P0N49qCUV317a5XS2YcGWRowK1qLiddeMUc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h8g3FQ+Nab9tFJbPIlFgy4+G0/M8RZyF34Du1HlPMmkIMWemHZ/VUNjGtzCLA93YbnFzLonRf4rrOyToOwNmcLbBL2fHiKkMc8k0eP0t0YT3K9VU+vC0Yn+3MgSnV1Ak6V7dseVnrDNUnYSWKCwjSDmaRArauqdyw0aNII42QLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mu+IU2JK; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731646848; c=relaxed/simple;
+	bh=ecQSZGtFXK1Ny7YmnclFNm41p/QanFTfPMMWknPtlHI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tDXcGpEhYAW6GrtHrWBBw80dg2MwkWV3qgL79TWXAkDtNl2zwM8Zr0g8yxOOb2hG3YQ7sIsPN275s6+pc8vmPM/oyEbVbFgfZUd5twhLr55WTleF4Wl4/iKif0nCxwl4fzJutqbsE6vXlcgqYhBHBHMEcIFG3g/ArJZlbydwwwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+HMeP0p; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mu+IU2JK"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 32CC413803AF;
-	Thu, 14 Nov 2024 23:52:49 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Thu, 14 Nov 2024 23:52:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731646369; x=1731732769; bh=oEZfSCopoGlP7VMGe2Ybnspca8z5n/5xusL
-	0JbdeavQ=; b=mu+IU2JKYWyUUGumi5x5ngv7at8GHbWEfTtfKYf96Qy154QXRXK
-	YTRRIAHJsi7x+DtZ2MzXH6mbIxUAT0j2KniobafGFHQUg50pGd+RTsanLR2LD4sw
-	l3IV69QZO8bGlhGs3u2M7V+deyp3JHCC+hg+5ywDPHn1fblyzqQIHXuB9c3rW57L
-	zrhCyvw+7AHcICuoSJZsDl21Q+ykIdW923JJ8ac6b3kgt364UOAuY506czE0qhkN
-	NRug0HptOdDojakKT8EDe1jha6ddrqpK400DnA2JtyifLgGvg8e7wj/B94XEPdQf
-	WX+/lcWhNCKOLjkBpISevVeu/BCLUd2pPOA==
-X-ME-Sender: <xms:oNM2Zxlou-oftWsESwngxdDWZ4b5ZB9wmbL3EgpNPK1YRFWtOcts3w>
-    <xme:oNM2Z83kUz6njJDDJZExxTid1i22glQ6YW5ZTd1gnFaNqH8_ht_14qFwC4csbaBAh
-    CwX47vZesmKakGWVg>
-X-ME-Received: <xmr:oNM2Z3rxpJPo20L_RKr8gGAYrq581Zkawj4SqAqmVfeg9yhp1ESVZYwbvPEMbfZ63zeEDAsUhs9IeAeutUhiHR-pHHfPm4c55MGE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgdejfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghntggvsehfvghrug
-    hinhgrnhguhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruh
-    hkpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepjhhohhgrnhhn
-    vghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
-    ohhmpdhrtghpthhtohepfhgvrhguihhnrghnugihrdgsvghntggvsehtthhkrdgvlhhtvg
-    drhhhupdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:oNM2ZxnZibtscKXUBxSpDbXKxxGtJXMSRjkCZYybYwzZLA85rc6f-w>
-    <xmx:oNM2Z_2pDcDUSiAWouOAzyw9XuZwwBZuRAcB5CvczkBvXtpULPDnnQ>
-    <xmx:oNM2ZwtLrajBfg__7rtx9MGtgJhgA0vKgSY4UPGRkqyKxz3MxUO3Kw>
-    <xmx:oNM2ZzVn9q0mMvN1IKBTJFnsleICTm9HD_0OiAfla388Cm7KuCrk4Q>
-    <xmx:odM2ZxxyG458G2nyW7JKtr1YxulVW4ZxRQLHml_eVbJyJyHi-6Asssb6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Nov 2024 23:52:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk, 	=?utf-8?Q?Ren=C3=A9?=
- Scharfe
- <l.s.r@web.de>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- 	karthik.188@gmail.com,  Taylor Blau <me@ttaylorr.com>,
-  ferdinandy.bence@ttk.elte.hu
-Subject: Re: [PATCH v12 1/8] t/t5505-remote: set default branch to main
-In-Reply-To: <20241023153736.257733-2-bence@ferdinandy.com> (Bence
-	Ferdinandy's message of "Wed, 23 Oct 2024 17:36:35 +0200")
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
-	<20241023153736.257733-1-bence@ferdinandy.com>
-	<20241023153736.257733-2-bence@ferdinandy.com>
-Date: Fri, 15 Nov 2024 13:52:46 +0900
-Message-ID: <xmqqfrnt3xpd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+HMeP0p"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-72467c35ddeso1180890b3a.0
+        for <git@vger.kernel.org>; Thu, 14 Nov 2024 21:00:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731646847; x=1732251647; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TkI6R29hIDwh4aVgMYDJdMW0vUMlqi9UE/dSPaOBKUQ=;
+        b=K+HMeP0pb3LQVCWSyteezTQK26S+z4sezA4ZwEQnqHA9xOHLd1Qg63xVutAGgrJtSD
+         QxOM8Fff9BpH1a6nTeU7cIA2Ud2DBCl1ol7oK2TX+Q6Z/UIqXpFKyf6bnwpcSSxycbRF
+         kITBEeWKhtCWOork9i6Ce9yFjJ4IrYP7rmiMemR/J+BNSYqwxjEbSA/mGIvNPojT7GIz
+         ph9W05i/u287y7HgmAb0dzzmlvaYPym4BhjOG7ykxx3ccK6C3+lwCqqG0RnXV8ViaWLK
+         zAjVAz6DICvR9eV32Q5QagKq4xwKwBBU61WPNaOfMspXCV6wzeKjuAg3ueCn682PePN/
+         mZzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731646847; x=1732251647;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TkI6R29hIDwh4aVgMYDJdMW0vUMlqi9UE/dSPaOBKUQ=;
+        b=wgxbJrzpMTL0QyvYqGkhqCYMNODUBv4RWvlCk+xwtZrEMFon418maNnXiJQHwCDDol
+         bKXr2PEDDCNKl4vdbd7eKK04gE1rfTqT+MoLDAV1lHZO8dWrK3Qh7UZ6ucSN2uggxdnB
+         geZm4dzG65o7r/Xo8r8+nQx0Hz6eRwqEniOpLHZRlceH+1drBHLJ7dusQO0co5fdYbcS
+         k8plrSIfkK4Hj4xK85gYJYH4SZVq+nH7qMjqvILs0v4IW7SjGFAYzzl3zyZARtkZtpn5
+         /77aKpwwxl5Y0oAo7s3Bnb6fLVBm8heEEUe90d1nVRieQ4h4G/Ye1Dq0TJV9NgcGfWQ2
+         EpbA==
+X-Forwarded-Encrypted: i=1; AJvYcCUVg4z4fKos2MpyeUhCDTdR8HobExFdNihzKDNyW5xyHPfAccGRE6wRdarah4HmrEFZXrk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcIDqrWgtBXsx5FPEEeeNZrPhW/8bhd+s/OcqeTGcwgeJ+Ex4t
+	hbNpgIoN90hNmE609MESbfvGDex3DWaDi2E/JjoA+36ttMSWpwPW
+X-Google-Smtp-Source: AGHT+IGh2cCnrRNhmSsKOyTlXhdsnC7baw7HLiBa/M/gcNqBQX+z7Bbyl0/ErudX0lRRzZBn6ex9QQ==
+X-Received: by 2002:a05:6a00:2294:b0:724:5815:5e50 with SMTP id d2e1a72fcca58-72466713507mr11156367b3a.4.1731646846731;
+        Thu, 14 Nov 2024 21:00:46 -0800 (PST)
+Received: from gmail.com ([172.56.122.102])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724771c0ea6sm517376b3a.123.2024.11.14.21.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Nov 2024 21:00:46 -0800 (PST)
+Date: Thu, 14 Nov 2024 21:00:43 -0800
+From: David Aguilar <davvid@gmail.com>
+To: Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Subject: Re: Shallow clone of a specific git revision?
+Message-ID: <ZzbVe79p_Zbnb6rs@gmail.com>
+References: <ZzNJGHMlxGQyFV_c@kitsune.suse.cz>
+ <87wmh7ig98.fsf@iotcl.com>
+ <ZzR_nOqQxfGNPyYV@kitsune.suse.cz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZzR_nOqQxfGNPyYV@kitsune.suse.cz>
 
-Bence Ferdinandy <bence@ferdinandy.com> writes:
+On Wed, Nov 13, 2024 at 11:29:48AM +0100, Michal Suchánek wrote:
+> On Wed, Nov 13, 2024 at 11:23:47AM +0100, Toon Claes wrote:
+> > Michal Suchánek <msuchanek@suse.de> writes:
+> > 
+> > > Hello,
+> > >
+> > > Looking through clone man page it supports shallow clones of branches
+> > > and tags only.
+> > >
+> > > Would it be possible to do shallow clone of a specific revision,
+> > > and checkout specific revision on clone?
+> > 
+> > Hi Michal,
+> > 
+> > I'm working on a patch, and I've submitted a first version [1] a little
+> > while ago to allow users to pass a reference on git-clone(1). Would this
+> > change fit your needs, or what else would you like to support?
+> 
+> > [1]: https://lore.kernel.org/git/20240927085438.1010431-1-toon@iotcl.com/
+> 
+> Hello,
+> 
+> that slightly expands the available options but it does not make it
+> possible to clone an arbitrary revision, ie. specified by a SHA
+> 
+> Thanks
+> 
+> Michal
 
-> Consider the bare repository called "mirror" in the test.  Running `git
-> remote add --mirror -f origin ../one` will not change HEAD, consequently
-> if init.defaultBranch is not the same as what HEAD in the remote
-> ("one"), HEAD in "mirror" will be pointing to a non-existent reference.
-> Hence if "mirror" is used as a remote by yet another repository,
-> ls-remote will not show HEAD. On the other hand, if init.defaultBranch
-> happens to match HEAD in "one", then ls-remote will show HEAD.
+In case it helps, here's a short recipe demonstrating how to do a
+shallow "clone" of a specific commit ID:
 
-Making sure that the hardcoded (in the Git binary) default branch
-name would not affect the outcome of the test is a good thing to do.
-I like the patch text, but ...
+    git init the-repo
+    cd ./the-repo
+    git remote add origin <url>
+    git fetch --depth=1 origin <commit-id>
+    git checkout <commit-id>
 
-> Since the CI globally exports GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main,
-> there's a drift between how the test repositories are set up in the CI
-> and during local testing. This issue does not manifest currently, as the
-> test does not do any remote HEAD manipulation where this would come up,
-> but should such things be added, a locally passing test would break the
-> CI vice-versa.
+It'd be nice to add this feature to "git clone" for convenience.
 
-... this description may not quite be accurate.  Don't some jobs of
-CI use 'main' while the rest use 'master'?
+This recipe depends on the server's configuration. You must have one of
+the following configuration variables set "true" server-side in order
+for the server to accept requests for arbitrary commit IDs:
+
+    uploadpack.allowReachableSHA1InWant
+        Allow upload-pack to accept a fetch request that asks for an
+        object that is reachable from any ref tip. However, note that
+        calculating object reachability is computationally expensive.
+        Defaults to false. Even if this is false, a client may be able
+        to steal objects via the techniques described in the "SECURITY"
+        section of the gitnamespaces(7) man page; it’s best to keep
+        private data in a separate repository.
+
+    uploadpack.allowAnySHA1InWant
+        Allow upload-pack to accept a fetch request that asks for any
+        object at all. Defaults to false.
+
+cheers,
+-- 
+David
