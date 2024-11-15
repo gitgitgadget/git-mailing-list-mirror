@@ -1,60 +1,60 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A661CF5FE
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 13:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34FA1CDA27
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 13:42:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731678160; cv=none; b=OqRwaSXRGCuFBW71jYhCr9dHko446ygoMmnJQs9Zot6dlcVb0Vl7rM+JFEqXHcc9mOS2sgzayNkFVJSgUIPtUfqIOxwn8MuuwOUmPJX196Bnh7RLIZ/PQsrZ5KVmEMi5+wpwr2obgdRU5yGYMM+x30bZaLxm3qP84TALi/DKTcE=
+	t=1731678160; cv=none; b=p6W3/k1rWOE/Gx0DxlTqeqTtiis3ZdrbvorbI9hUAp0IfCg1RMOD8zLw75AGuU2Iy2Dkz5Dr22PjaBQupRo9pYx7PDDUdftGjvziK9jTggqU3WSZH73xWGQA66RkI1QZxqN65fMx7un/112VtpJOhdoiI7dfHNlHYFj4dWssheE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1731678160; c=relaxed/simple;
-	bh=Jlv0WrHMrJqpu5Ka5ghu5iln3wMM77Agdfqo4PPAT0w=;
+	bh=qEgPHA1kEAP6LjVKf3sHnN7zJKJOuuEOS3mN6DAp0wE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DkrNNPOjwApwEjZ3ikSYU/OoM9tPGx/jI1lE9VVMMDpF8ND9NmXy5Xf/Ju8iTZyvf+w0AGT/ujdTYOYUF46BenuGRUqpkZ+JUo6VsKrTZV6DuVPjUk90KBQk7Jj/50uotTgfFSjgG4qphQadEPYrXinNx6BBF1Bdo4yUmOH6lBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFFhEEip; arc=none smtp.client-ip=209.85.167.49
+	 In-Reply-To:To:Cc; b=dmuMMoruI86g2KqebJHqE+Pi2LTFKvp9nNMnQ2ay2mJMUHxSjfuZmJheWUyUzAEaQb2NilIv2jwPqiCnc45IJNUfNL/bpTIgt8A6aTobaFbCVm1iF6KobdG5lWKV6KLJA+YyEdipruI7gGffa/9hDTHamr/n8OZT6L+qX5JsngQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AF+BSt0I; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFFhEEip"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539f2b95775so2698541e87.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2024 05:42:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AF+BSt0I"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a99f3a5a44cso238148266b.3
+        for <git@vger.kernel.org>; Fri, 15 Nov 2024 05:42:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731678156; x=1732282956; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731678157; x=1732282957; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wu6PnOFAU32uDKuJ/o/o//DayrueXF0lIgrvGi2rUr0=;
-        b=PFFhEEipo3QWJvTbVRG9o0W7k327/B7IPCVA/KbI1KAYwJi7dJ5O0NJEKKjjz+CtpB
-         i0i6lygSqESmpOIVsHkNbnlCJDHGrwuy5rhawa7bAdKLJstDZzyJcERxD3hgD2cTawoF
-         gbeveODwQSKH1lutl3ZiyfrhgCWQxjsuyLPY14Hx386uoSaiiqV8UIflPMC2RnaJSynk
-         9vkQgbbJ9xZ0hP2JfjH4HmFKOIxhx5RxmSPXkIsI6a1Dp+svfzC7C3rSI/pysma+yIQ/
-         ApQGZFruId34sSPrudScGvU4vLbIqRA8hipa+sWhwMI12HqZmeg2Nt3OYz06AKNwCMlV
-         O6yw==
+        bh=2oCDmLyC/fXaZTbw5h3pOxSBIbqrrS70C2qZB7HJQGA=;
+        b=AF+BSt0ITzPn8BxyeVJnymppATgSLXiXt99AI0XuIqJ/MwB2oz9T5JrOYW73XbmZ30
+         mpkaDstB1yNZQ7uqxgcx4rgXOmp2cEUgTYecHYLzvzaumPImI0DynIKwN427IjtMlus6
+         nw8/zSqk5hEDGIHQLPEQhkaIbiEmriFVp3E9L7+IBi0Ud7yOmgUsRSHiGYu+WUd7VW/v
+         bGC5BZeiSZ9bQSJgFhyZqA4sDATxZxGfMqWb6jNcJzGlZ2WmpPCvD1omM821uS7L5/tB
+         91+NeM/D60uXnWPKxPpe0v3cJffC6Y9cJmtLEz74Eii6ncKcWyEGbLfFroM9YidQ0lk4
+         HkJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731678156; x=1732282956;
+        d=1e100.net; s=20230601; t=1731678157; x=1732282957;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wu6PnOFAU32uDKuJ/o/o//DayrueXF0lIgrvGi2rUr0=;
-        b=rGLztNRCEddsz7Z2gdkKrzZjI0Be8OuG01woBw/oLG9DHIbT9wQNwYt5Va9/jtYgA8
-         3gxcWnln0nWfLI637WzqU1IIyvDSqAjOn5DR9+ph8Mxq1tCcDVHFiST8lP+XsqUZ07wb
-         DDxxR6aYuLQVZlTo05hNvoNjxnGXzHbM73CmskvAL2ONZOwovYWqb5z/XR3pjL/FCZs7
-         F/KYg85bxcR9Vizcu0RgOZnQ/D3lYG+E02HVFx/Pdd81XUJ2Xs0CJNtMlUNC/Tq93CnH
-         Vp1sOPkwM52KQ6NJyiU+Yt79FE/54qbp2bmKz4EYfLHF0dA1zH6BJ8ecmPxmIVBVbqvz
-         lpXQ==
-X-Gm-Message-State: AOJu0YwPpa/dK8UZH6Ixb9GEdH3JHd7CQFyjkGY940UxyGHjwSbogzef
-	BRwpMwnwIkT/9cZeN6gH8N7YmM+3+AoMwqk1zLSrzPvl0IiJBKVPj/Q5KpWd
-X-Google-Smtp-Source: AGHT+IH58sLpuz28wUIL3o7fXQrx9XI0clt6ZOki3Pbs3Djk+p6VfRIDFGv+yF8L+DcxhT/oVhClhA==
-X-Received: by 2002:a05:6512:33c3:b0:53d:a9dd:5a1e with SMTP id 2adb3069b0e04-53dab2a6519mr2012382e87.25.1731678155889;
-        Fri, 15 Nov 2024 05:42:35 -0800 (PST)
+        bh=2oCDmLyC/fXaZTbw5h3pOxSBIbqrrS70C2qZB7HJQGA=;
+        b=uW9qcuVG49K1CIQYPERVNsGNt7j5U94IfkrFjnliX3SjL7XmbjSjEKbH/S2pdhtEQj
+         j8XcCV+Lfr0lOs11T7AAwuq53ZqF8AeOZqxP2IDAdSF/LtYv0EjSRw+L8cwrkZVjM24/
+         yY3pk55lRICydD5Y2deR6ASTrc2ueJez3EANg1WFMA3CCJEVvc9IhfCaKrLQNZKIFJeu
+         Niq1/wBrM8aJjI0vRr23i7QIIY5INeAAEgXbicJKIDZxWNhzmbRcnLAkBZb+Tb+p0hlE
+         vTda6DJdNlWalanK1UfpIiu42MOJoAgHDiXiUiuW5MwViAb4OuMrwR8Y1unN3YepBYf3
+         VgVA==
+X-Gm-Message-State: AOJu0YwPmiWA6TdQraSX1Eonr699B2kc/WyiJ7gN4uMM5DOsJSXl84hf
+	jSeLP4yZAaLhbXITFWxsvN75OlCgxkb8LwfpS143DUk2qKDj006G
+X-Google-Smtp-Source: AGHT+IEUwXdxc0h8Hy94rmOdDmnpDUv8qtI8J8J6dZFpB25Z2kmj5IPqwWVGSiiQvaXHIvIGnWBCCg==
+X-Received: by 2002:a17:907:2d90:b0:a9f:4f7:9fa3 with SMTP id a640c23a62f3a-aa4833f6aadmr214171766b.1.1731678156870;
+        Fri, 15 Nov 2024 05:42:36 -0800 (PST)
 Received: from [10.82.5.93] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20df26a69sm180753966b.34.2024.11.15.05.42.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20df26a69sm180753966b.34.2024.11.15.05.42.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 05:42:35 -0800 (PST)
+        Fri, 15 Nov 2024 05:42:36 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 15 Nov 2024 14:42:16 +0100
-Subject: [PATCH 3/8] midx-write: pass down repository to
- `write_midx_file[_only]`
+Date: Fri, 15 Nov 2024 14:42:17 +0100
+Subject: [PATCH 4/8] midx: cleanup internal usage of `the_repository` and
+ `the_hash_algo`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,154 +63,212 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-3-761f8a2c7775@gmail.com>
+Message-Id: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-4-761f8a2c7775@gmail.com>
 References: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-0-761f8a2c7775@gmail.com>
 In-Reply-To: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-0-761f8a2c7775@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, me@ttaylorr.com, peff@peff.net
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5324; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=Jlv0WrHMrJqpu5Ka5ghu5iln3wMM77Agdfqo4PPAT0w=;
- b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnN0/HzkrnH1QxdXBpTVZcZpmTFr2DMw4bMVpiG
- pmtYl/DVCyJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZzdPxwAKCRA+1Z8kjkaM
- fxJ4C/960GgSADUbN/EMA6Wxo2Ow8vmbG2rtSqCbKicvRQyTe8/3MMDPs/zlYSqiDAE6meSpnjp
- /+z41dLD2NkqV+R3KIG//QfxAAr6ep7NKTB55qZZ53e4+8OO1MyhDd81pV3Nfun9IQ6q4zXcRYP
- SPnV35HR+PHaSOkBzqiRkWPdvbNKGK3+SYvdVEDlJibSWChfZsiw9lncQ6tyw48quUuA8vVAbQT
- oRp9qnmSLKv5dE4S8vyl9LI29TW6WFjGY0UwlCsk1Ngybvrvwt+UcNBQfR90qbzQWHauFX7Ymdq
- YRR3p5sDexZd/gj7BrhofGMjEMTHvEMSVSYKb5To7gNsk+cvpgm19KFndIIjuQoUbpq6arW5bUU
- iEkzLC++awBg8rdqymc2Cki7BK9eF1/ocJnalM5/xETvDijYpNIVy+5XzH6XuMCxua/P5rqgijR
- lq6QNrs6U9pwnO/Ey0svnFAZv5Jxq1m7ueTHkDcXWjSulov2WiEYbIhzOijN5/MdG8OUY=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7357; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=qEgPHA1kEAP6LjVKf3sHnN7zJKJOuuEOS3mN6DAp0wE=;
+ b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnN0/I3LBlCqnwiqyHeTxiNQr32NVGvUM8GPqB7
+ lUQYbfsFOuJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZzdPyAAKCRA+1Z8kjkaM
+ f/wwC/0eM8MZ5kSqxm7z8h8YvSrt7JXTIWU8Abws9hhjaUDhdLKvLgIBLsUKIkrp2xqTZfa3gzQ
+ NAYEvJypUX1QMQ9FHJUXIihdbr71p1a0EuQMqPwF0BKv+5ZKLpKYN97wpSU9cNw9JtYsy3Vv6/B
+ Axjj+TpG6Y1NUeaDfJG7pW6msbsRTRpudbODtJ7WEcWCTKeTEwlj4rv03uB+WDdOPtfN1I+GLbm
+ CQGdDMM4SF4AMEtymsbHjYqcS/1WILtLlZnbU59MLayraE4/Eiq9f/0kSYyhnBqwkhYdAz1U3EZ
+ 8F1AQmWbEV3JCFCkLyvoPWHHUR/3DoMyllV8IVs4ERYpANvwYIxB4ZyAzxpA8yG0Kjz40SiEh7x
+ GSB0Zk8xxxFwOz+d/Kr/nCd7tR4sx3yfRnPKaV6RXGqYAcFZcvl+xBokLJ1PrhNKP727LbxHajQ
+ dL2Uk6t8Za+7FhOboVYpMiZSO1iUdb8iYfKqJJ56pgHaz9leCzjvBIcRO55bBABWpNQak=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In the previous commit, we passed the repository field to all
-subcommands in the `builtin/` directory. We utilize this to pass the
-repository field down to the `write_midx_file[_only]` functions to
-remove the usage of `the_repository` global variables.
+In the `midx.c` file, there are multiple usages of `the_repository` and
+`the_hash_algo` within static functions of the file. Some of the usages
+can be simply swapped out with the available `repository` struct
+available. While some of them can be swapped out by passing the
+repository to the required functions.
 
-With this, we remove all usage of global variables in `midx-write.c` and
-so we can remove the `USE_THE_REPOSITORY_VARIABLE` guard from the file.
+This leaves out only some other usages of `the_repository` and
+`the_hash_algo` in the file in non-static functions, which we'll tackle
+in upcoming commits.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/multi-pack-index.c |  6 +++---
- builtin/repack.c           |  2 +-
- midx-write.c               | 22 +++++++++-------------
- midx.h                     | 10 ++++------
- 4 files changed, 17 insertions(+), 23 deletions(-)
+ midx.c | 49 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 85e40a4b6d3e47e9ec1ec27c094455e5ba75b5b0..2a938466f53aaa11096170554fe11a4ed46a25e4 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -120,7 +120,7 @@ static void read_packs_from_stdin(struct string_list *to)
+diff --git a/midx.c b/midx.c
+index 079c45a1aafb658a7b887ac216cc6ecf5f0fb6ff..6f0fb8285af14843da132ef1b0c3a8bdd06732c9 100644
+--- a/midx.c
++++ b/midx.c
+@@ -25,7 +25,7 @@ int cmp_idx_or_pack_name(const char *idx_or_pack_name,
  
- static int cmd_multi_pack_index_write(int argc, const char **argv,
- 				      const char *prefix,
--				      struct repository *repo UNUSED)
-+				      struct repository *repo)
+ const unsigned char *get_midx_checksum(struct multi_pack_index *m)
  {
- 	struct option *options;
- 	static struct option builtin_multi_pack_index_write_options[] = {
-@@ -165,7 +165,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+-	return m->data + m->data_len - the_hash_algo->rawsz;
++	return m->data + m->data_len - m->repo->hash_algo->rawsz;
+ }
  
- 		read_packs_from_stdin(&packs);
+ void get_midx_filename(struct strbuf *out, const char *object_dir)
+@@ -94,7 +94,8 @@ static int midx_read_object_offsets(const unsigned char *chunk_start,
  
--		ret = write_midx_file_only(opts.object_dir, &packs,
-+		ret = write_midx_file_only(repo, opts.object_dir, &packs,
- 					   opts.preferred_pack,
- 					   opts.refs_snapshot, opts.flags);
+ #define MIDX_MIN_SIZE (MIDX_HEADER_SIZE + the_hash_algo->rawsz)
  
-@@ -176,7 +176,7 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+-static struct multi_pack_index *load_multi_pack_index_one(const char *object_dir,
++static struct multi_pack_index *load_multi_pack_index_one(struct repository *r,
++							  const char *object_dir,
+ 							  const char *midx_name,
+ 							  int local)
+ {
+@@ -131,7 +132,7 @@ static struct multi_pack_index *load_multi_pack_index_one(const char *object_dir
+ 	m->data = midx_map;
+ 	m->data_len = midx_size;
+ 	m->local = local;
+-	m->repo = the_repository;
++	m->repo = r;
  
+ 	m->signature = get_be32(m->data);
+ 	if (m->signature != MIDX_SIGNATURE)
+@@ -144,12 +145,12 @@ static struct multi_pack_index *load_multi_pack_index_one(const char *object_dir
+ 		      m->version);
+ 
+ 	hash_version = m->data[MIDX_BYTE_HASH_VERSION];
+-	if (hash_version != oid_version(the_hash_algo)) {
++	if (hash_version != oid_version(r->hash_algo)) {
+ 		error(_("multi-pack-index hash version %u does not match version %u"),
+-		      hash_version, oid_version(the_hash_algo));
++		      hash_version, oid_version(r->hash_algo));
+ 		goto cleanup_fail;
+ 	}
+-	m->hash_len = the_hash_algo->rawsz;
++	m->hash_len = r->hash_algo->rawsz;
+ 
+ 	m->num_chunks = m->data[MIDX_BYTE_NUM_CHUNKS];
+ 
+@@ -206,8 +207,8 @@ static struct multi_pack_index *load_multi_pack_index_one(const char *object_dir
+ 			      m->pack_names[i]);
  	}
  
--	ret = write_midx_file(opts.object_dir, opts.preferred_pack,
-+	ret = write_midx_file(repo, opts.object_dir, opts.preferred_pack,
- 			      opts.refs_snapshot, opts.flags);
+-	trace2_data_intmax("midx", the_repository, "load/num_packs", m->num_packs);
+-	trace2_data_intmax("midx", the_repository, "load/num_objects", m->num_objects);
++	trace2_data_intmax("midx", r, "load/num_packs", m->num_packs);
++	trace2_data_intmax("midx", r, "load/num_objects", m->num_objects);
  
- 	free(opts.refs_snapshot);
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 96a4fa234bddfd2b63c8d9733379d9b1012a4014..9c21fc482dfb387c818c0d0a74f781848b5a0953 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1569,7 +1569,7 @@ int cmd_repack(int argc,
- 		unsigned flags = 0;
- 		if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL, 0))
- 			flags |= MIDX_WRITE_INCREMENTAL;
--		write_midx_file(repo_get_object_directory(the_repository),
-+		write_midx_file(the_repository, repo_get_object_directory(the_repository),
- 				NULL, NULL, flags);
+ 	free_chunkfile(cf);
+ 	return m;
+@@ -240,8 +241,9 @@ void get_split_midx_filename_ext(struct strbuf *buf, const char *object_dir,
+ 	strbuf_addf(buf, "/multi-pack-index-%s.%s", hash_to_hex(hash), ext);
+ }
+ 
+-static int open_multi_pack_index_chain(const char *chain_file,
+-				       int *fd, struct stat *st)
++static int open_multi_pack_index_chain(const struct git_hash_algo *hash_algo,
++				       const char *chain_file, int *fd,
++				       struct stat *st)
+ {
+ 	*fd = git_open(chain_file);
+ 	if (*fd < 0)
+@@ -250,7 +252,7 @@ static int open_multi_pack_index_chain(const char *chain_file,
+ 		close(*fd);
+ 		return 0;
+ 	}
+-	if (st->st_size < the_hash_algo->hexsz) {
++	if (st->st_size < hash_algo->hexsz) {
+ 		close(*fd);
+ 		if (!st->st_size) {
+ 			/* treat empty files the same as missing */
+@@ -292,7 +294,8 @@ static int add_midx_to_chain(struct multi_pack_index *midx,
+ 	return 1;
+ }
+ 
+-static struct multi_pack_index *load_midx_chain_fd_st(const char *object_dir,
++static struct multi_pack_index *load_midx_chain_fd_st(struct repository *r,
++						      const char *object_dir,
+ 						      int local,
+ 						      int fd, struct stat *st,
+ 						      int *incomplete_chain)
+@@ -303,7 +306,7 @@ static struct multi_pack_index *load_midx_chain_fd_st(const char *object_dir,
+ 	uint32_t i, count;
+ 	FILE *fp = xfdopen(fd, "r");
+ 
+-	count = st->st_size / (the_hash_algo->hexsz + 1);
++	count = st->st_size / (r->hash_algo->hexsz + 1);
+ 
+ 	for (i = 0; i < count; i++) {
+ 		struct multi_pack_index *m;
+@@ -312,7 +315,7 @@ static struct multi_pack_index *load_midx_chain_fd_st(const char *object_dir,
+ 		if (strbuf_getline_lf(&buf, fp) == EOF)
+ 			break;
+ 
+-		if (get_oid_hex(buf.buf, &layer)) {
++		if (get_oid_hex_algop(buf.buf, &layer, r->hash_algo)) {
+ 			warning(_("invalid multi-pack-index chain: line '%s' "
+ 				  "not a hash"),
+ 				buf.buf);
+@@ -325,7 +328,7 @@ static struct multi_pack_index *load_midx_chain_fd_st(const char *object_dir,
+ 		strbuf_reset(&buf);
+ 		get_split_midx_filename_ext(&buf, object_dir, layer.hash,
+ 					    MIDX_EXT_MIDX);
+-		m = load_multi_pack_index_one(object_dir, buf.buf, local);
++		m = load_multi_pack_index_one(r, object_dir, buf.buf, local);
+ 
+ 		if (m) {
+ 			if (add_midx_to_chain(m, midx_chain)) {
+@@ -348,7 +351,8 @@ static struct multi_pack_index *load_midx_chain_fd_st(const char *object_dir,
+ 	return midx_chain;
+ }
+ 
+-static struct multi_pack_index *load_multi_pack_index_chain(const char *object_dir,
++static struct multi_pack_index *load_multi_pack_index_chain(struct repository *r,
++							    const char *object_dir,
+ 							    int local)
+ {
+ 	struct strbuf chain_file = STRBUF_INIT;
+@@ -357,10 +361,10 @@ static struct multi_pack_index *load_multi_pack_index_chain(const char *object_d
+ 	struct multi_pack_index *m = NULL;
+ 
+ 	get_midx_chain_filename(&chain_file, object_dir);
+-	if (open_multi_pack_index_chain(chain_file.buf, &fd, &st)) {
++	if (open_multi_pack_index_chain(r->hash_algo, chain_file.buf, &fd, &st)) {
+ 		int incomplete;
+ 		/* ownership of fd is taken over by load function */
+-		m = load_midx_chain_fd_st(object_dir, local, fd, &st,
++		m = load_midx_chain_fd_st(r, object_dir, local, fd, &st,
+ 					  &incomplete);
  	}
  
-diff --git a/midx-write.c b/midx-write.c
-index a384f7ddc8a396d0cffd528132bb8fcdc6b37e24..5af29899bbe279c7c3ff4bc2c65330620ce37ee2 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "config.h"
-@@ -1504,24 +1502,22 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 	return result;
- }
+@@ -376,9 +380,10 @@ struct multi_pack_index *load_multi_pack_index(const char *object_dir,
  
--int write_midx_file(const char *object_dir,
-+int write_midx_file(struct repository *r, const char *object_dir,
- 		    const char *preferred_pack_name,
--		    const char *refs_snapshot,
--		    unsigned flags)
-+		    const char *refs_snapshot, unsigned flags)
+ 	get_midx_filename(&midx_name, object_dir);
+ 
+-	m = load_multi_pack_index_one(object_dir, midx_name.buf, local);
++	m = load_multi_pack_index_one(the_repository, object_dir,
++				      midx_name.buf, local);
+ 	if (!m)
+-		m = load_multi_pack_index_chain(object_dir, local);
++		m = load_multi_pack_index_chain(the_repository, object_dir, local);
+ 
+ 	strbuf_release(&midx_name);
+ 
+@@ -520,7 +525,7 @@ int bsearch_one_midx(const struct object_id *oid, struct multi_pack_index *m,
+ 		     uint32_t *result)
  {
--	return write_midx_internal(the_repository, object_dir, NULL, NULL,
--				   preferred_pack_name, refs_snapshot, flags);
-+	return write_midx_internal(r, object_dir, NULL, NULL,
-+				   preferred_pack_name, refs_snapshot,
-+				   flags);
+ 	int ret = bsearch_hash(oid->hash, m->chunk_oid_fanout,
+-			       m->chunk_oid_lookup, the_hash_algo->rawsz,
++			       m->chunk_oid_lookup, m->repo->hash_algo->rawsz,
+ 			       result);
+ 	if (result)
+ 		*result += m->num_objects_in_base;
+@@ -551,7 +556,7 @@ struct object_id *nth_midxed_object_oid(struct object_id *oid,
+ 	n = midx_for_object(&m, n);
+ 
+ 	oidread(oid, m->chunk_oid_lookup + st_mult(m->hash_len, n),
+-		the_repository->hash_algo);
++		m->repo->hash_algo);
+ 	return oid;
  }
  
--int write_midx_file_only(const char *object_dir,
-+int write_midx_file_only(struct repository *r, const char *object_dir,
- 			 struct string_list *packs_to_include,
- 			 const char *preferred_pack_name,
--			 const char *refs_snapshot,
--			 unsigned flags)
-+			 const char *refs_snapshot, unsigned flags)
- {
--	return write_midx_internal(the_repository, object_dir, packs_to_include,
--				   NULL, preferred_pack_name, refs_snapshot,
--				   flags);
-+	return write_midx_internal(r, object_dir, packs_to_include, NULL,
-+				   preferred_pack_name, refs_snapshot, flags);
- }
- 
- int expire_midx_packs(struct repository *r, const char *object_dir, unsigned flags)
-diff --git a/midx.h b/midx.h
-index 3b0ac4d8788b373c59fe69ca2d78e9d914702bc0..c37ad5b5242b56d21fd76bd59957a1bdb82786ec 100644
---- a/midx.h
-+++ b/midx.h
-@@ -123,15 +123,13 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
-  * Variant of write_midx_file which writes a MIDX containing only the packs
-  * specified in packs_to_include.
-  */
--int write_midx_file(const char *object_dir,
--		    const char *preferred_pack_name,
--		    const char *refs_snapshot,
-+int write_midx_file(struct repository *r, const char *object_dir,
-+		    const char *preferred_pack_name, const char *refs_snapshot,
- 		    unsigned flags);
--int write_midx_file_only(const char *object_dir,
-+int write_midx_file_only(struct repository *r, const char *object_dir,
- 			 struct string_list *packs_to_include,
- 			 const char *preferred_pack_name,
--			 const char *refs_snapshot,
--			 unsigned flags);
-+			 const char *refs_snapshot, unsigned flags);
- void clear_midx_file(struct repository *r);
- int verify_midx_file(struct repository *r, const char *object_dir, unsigned flags);
- int expire_midx_packs(struct repository *r, const char *object_dir, unsigned flags);
 
 -- 
 2.47.0
