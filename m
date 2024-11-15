@@ -1,103 +1,179 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F79917BB32
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 23:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720F07346D
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 23:14:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731711937; cv=none; b=d98r+Q8JXefdlp3zZU/ZGxtlErEjV3OOQ0UTOSzlNsLV+pTi7vICd1BmNeC4DYH9cvaBuf5zGRlLXxxYL32lZgeqmIEaq56JuZemavGaEyshsVaxmnUo+vwc2QftUyjtM5nzaJAPhqpRFuLH95WSO8zp54bxyWw0aL7Lk5FwJog=
+	t=1731712492; cv=none; b=gZdQee7DqzGLVf6hDYuxXPBwbvITDxpGtRE29VcYg1eRLZaowo9LUX8iaYQmdXJW3i7C7SzemMlAiF2+0/2xpJdGjFrC8BRYN9yb9wnv9eavdqZFpq3XRHf9dv5D57DwTYcPXsH5vhAb81kbG8C9mUjDzYOoWDnwXfXywpjsc1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731711937; c=relaxed/simple;
-	bh=3x0lnwqRtZP28VtOidOfRMuHhozNHzppe2T/DaT8ISI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ScTroZKhA49SUyoMpjj+hrVAxpkFIfUibk4wBU5m2ROTgI5UnxZXkWyimEuDZF7qNbgcuTPbyqHkJlh4EJeB7hjRtWkyGFeA549VjQ8iGZTHNMgNmk8ZziEs+Hys2PNJk3UZr2F5ZUcgNGtVzZTcQMj/Up/D3iePoNPoOsPHPxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IwTnCxF9; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1731712492; c=relaxed/simple;
+	bh=ddDnftIE+0zH6ruYqSDI4xf4ARbjANdph/obnGKHTeM=;
+	h=MIME-version:Content-type:Date:Message-id:From:Subject:Cc:To:
+	 References:In-reply-to; b=DKdsGdoyBrItGt5hwX3he1ISFFKKU1OidQMWJfs1SWONg/q532qMdyU/OLvN3xXvVK5HpJvXIY3P12BQX2HWSX9yN9JCIb8kMa/oyNNpwHAouE/RIoehTMyMWhvoeivjXAAHshFhwnQ1HhErYnKLX93TqqX1sLqnCQXECWebvXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=I18193zd; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IwTnCxF9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1731711933;
-	bh=3x0lnwqRtZP28VtOidOfRMuHhozNHzppe2T/DaT8ISI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=IwTnCxF9rGCuT1DU56icDE9XikDSSAdEhlLDe4Q4/Y7ZUV0vvsytBsASD/i7uOHwW
-	 +/zDIKcgjfg8IfOGg+jS09z6hqb6i4o1X/Z+g9jSfeo9eJzucvv1YBkdTPghY7z3ze
-	 KDajvWguQzxpDD7FHuhjUePjKS5PJeB/cJ2hc5ZehRfI+xLDel+fHyb/arM/jF7oyP
-	 Iet/248Rm9YzgatYYJswe8+Civvk0IvikmKCHZGM6uYBqO8X3TPds9wIIxS0NtZ679
-	 AhJgtkmGQeGNuT/Fox8bZ8SHB67aAUwXAkmcpHJksgTMi2oaO26p9sBjH5lgvuXDPt
-	 c6c+kfoL7BbqOzgsJh7B3KPtatKj79EtxZNaaqgfH+OzpOBj9ZXzy2U6cwt8/nBhXv
-	 p1pqBZiSn2TVQso8uVsr2w+CA2QUnWL/Fe4KZj491yHIuWxgf0pcZKp6/YhhEGgYZH
-	 /L4L90WWZwqNLvmU/qgRMv56oD6vX1KxLnlN4MJxMVE9LlHZUtH
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 40E1B200C4;
-	Fri, 15 Nov 2024 23:05:33 +0000 (UTC)
-Date: Fri, 15 Nov 2024 23:05:32 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, me@ttaylorr.com, peff@peff.net
-Subject: Re: [PATCH 2/8] midx-write: add repository field to
- `write_midx_context`
-Message-ID: <ZzfTvGvyn7pMe3nA@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	me@ttaylorr.com, peff@peff.net
-References: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-0-761f8a2c7775@gmail.com>
- <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-2-761f8a2c7775@gmail.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="I18193zd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=koaaYvE22o9DudtS0toDRy0BPyjppWUU7aw4ubgizkM=;
+ b=I18193zdnnaPsMdCG8lfCyGZt3IiAwAfhtUtnMMEZGd0lUXT80TozBOiVNX+yN+VI5twbJ4OjMyp
+   Mnuif+l9X1BUQ0sJEUw3Am0FRPkNif/rKLXvc7sO7Wbvt0W5v3/5JnUWAL8oPZ2J9esFmkTFs7+K
+   ac3v08QAqLekXZVBDd8G7qYtU5BY6r6Ua4GbwXWJrevGw6Cdf+N1WwmGxzA5VIXtx4WGtryKnuQY
+   NuGX+cjtmSjmlmoGdGN5HR7WPG/6RkPMt5qfEajK0WrZF/sjFVAtiVFq26nGqCGKW4s/siihMd8k
+   VMMVQmbxy668F9hspyB0v+41hrrwZh5G/LI7DQ==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SN000KXVLWNL970@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 15 Nov 2024 23:14:47 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VGfM8f6gqkrlTzSH"
-Content-Disposition: inline
-In-Reply-To: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-2-761f8a2c7775@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sat, 16 Nov 2024 00:13:48 +0100
+Message-id: <D5N4TN6WX65V.JJKLX5ROS8NN@ferdinandy.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: [PATCH v12 4/8] remote set-head: better output for --auto
+Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>, <ferdinandy.bence@ttk.elte.hu>
+To: "Junio C Hamano" <gitster@pobox.com>
+References: <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241023153736.257733-5-bence@ferdinandy.com> <xmqqcyix11w8.fsf@gitster.g>
+ <D5N4B2SSZAG4.1O5CERCP825X2@ferdinandy.com>
+In-reply-to: <D5N4B2SSZAG4.1O5CERCP825X2@ferdinandy.com>
+Reporting-Meta:
+ AAFLrooIivhn4mS5hdUDcR0uEaS0PncLSm00cWoHIVZ2R8oRK46qRh2QmK9Mx5pg
+ Y5brOwqXSdRo+KQx5OK+5D6ycNxWFkG9SrM3/43++cEMVW9mBfkx8CGDpRu5rfjr
+ HCXw0Eaq32CKN/pni64+unaa8hXmtpx8kovNNF6npwG562szN0si+LYDGIXVpkiS
+ qhs2ALLFGpyRYe5uV3uZdrnsU2cIV8dKjqH4q4790G3ZifSrel1hsSAUKXnDEkCV
+ XmLi8ygau3liI+cBkQ30+A9ZMOrcYRDAsnOzvbfh2/tyYSM4XTjq6tK8xLd/a0nl
+ m+oaWX71tVBZMaYBuZlZib5Mmtn13E2G4FkoupfVa2zlYliywemY5yGnddtPVNTV
+ oJRQc+KfXaWwqFqAAs1its7P5tyT4/DDGBzOL4mJk6wtvq0XUOm1P6xIBw3maAGY
+ zDZyi13GP2bzq4E5BX3TzA5VI834Ywgvk4CLKm/+uEyBFomBBNM2eWsK
 
 
---VGfM8f6gqkrlTzSH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri Nov 15, 2024 at 23:49, Bence Ferdinandy <bence@ferdinandy.com> wrote=
+:
+>
+> On Fri Nov 15, 2024 at 06:50, Junio C Hamano <gitster@pobox.com> wrote:
+>> Bence Ferdinandy <bence@ferdinandy.com> writes:
+>>
+>>> Currently, set-head --auto will print a message saying "remote/HEAD set
+>>> to branch", which implies something was changed.
+>>>
+>>> Change the output of --auto, so the output actually reflects what was
+>>> done: a) set a previously unset HEAD, b) change HEAD because remote
+>>> changed or c) no updates. As a fourth output, if HEAD is changed from
+>>> a previous value that was not a remote branch, explicitly call attentio=
+n
+>>> to this fact.
+>>
+>> OK.  That's sensible.
+>>
+>> There is a slight variant of the fourth case.  HEAD may have been a
+>> symbolic ref that pointed at an unexpected place (which you
+>> addressed), or HEAD may have been a non-symbolic ref (which the new
+>> code would mistakenly say "HEAD is now created", if I am reading the
+>> patch correctly).
+>
+> Good point, and yes, that is what happens. (Although I'm not quite sure h=
+ow
+> valid that state is where a remote's HEAD is not a branch).
+>
+>>
+>>> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+>>> index 9b50276646..0ea86d51a4 100755
+>>> --- a/t/t5505-remote.sh
+>>> +++ b/t/t5505-remote.sh
+>>> @@ -432,12 +432,51 @@ test_expect_success 'set-head --auto' '
+>>>  	)
+>>>  '
+>>> =20
+>>> +test_expect_success 'set-head --auto detects creation' '
+>>> +	(
+>>> +		cd test &&
+>>> +		git symbolic-ref -d refs/remotes/origin/HEAD &&
+>>
+>> Are we sure refs/remotes/origin/HEAD exists at this point in the
+>> test, regardless of which earlier tests were skipped or failed?  If
+>> not, perhaps
+>>
+>> 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
+>>
+>> is a better alternative.
+>
+> Ack.
+>
+>>
+>>> +		git remote set-head --auto origin >output &&
+>>> +		echo "${SQ}origin/HEAD${SQ} is now created and points to ${SQ}main${=
+SQ}" >expect &&
+>>> +		test_cmp expect output
+>>> +	)
+>>> +'
+>>
+>> Here, we could insert another one:
+>>
+>> test_expect_success 'set-head --auto to update a non symbolic ref' '
+>> 	(
+>> 		cd test &&
+>> 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
+>> 		git update-ref refs/remotes/origin/HEAD HEAD &&
+>> 		git remote set-head --auto origin >output &&
+>>
+>> I'd imagine "output" should at least say that we are setting up a
+>> symref origin/HEAD to point at some ref the --auto option figured
+>> out, and if we wanted to report its previous state, it was a non
+>> symbolic ref that pointed at some commit.  In any case,
+>>
+>> 		echo "${SQ}origin/HEAD${SQ} is now created and points to ${SQ}main${SQ=
+}" >expect &&
+>>
+>> is not what we want to see here, I suspect.
+>>
+>> Can we detect the case where we overwrite a non symref with a symref
+>> without going back to step 2/8 and doing a major surgery?
+>>
+>> 		test_cmp expect output
+>> 	)
+>> '
+>
+> I agree, adding this makes sense. And this also takes us back to the ques=
+tion
+> of what we should do in 2/8 when refs_read_symbolic_ref exits with 1. I n=
+ow
+> tested the behaviour and if origin/HEAD is gibberish, git already dies be=
+fore
+> with=20
+>
+> error: cannot lock ref 'refs/remotes/origin/HEAD': unable to resolve refe=
+rence 'refs/remotes/origin/HEAD': reference broken
+>
+> so refs_read_symbolic_ref -> 1 only happens if there's a valid non-symbol=
+ic ref
+> in origin/HEAD. So maybe if we put "Not a symbolic reference." in the ref=
+erent
+> (which should be an invalid symref), the caller could check for that and =
+then
+> should be able to distinguish this special case?
 
-On 2024-11-15 at 13:42:15, Karthik Nayak wrote:
-> The struct `write_midx_context` is used to pass context for creating
-> MIDX files. Adding the repository field here ensures that most functions
-> within `midx-write.c` have access to the field and can use that instead
-> of the global `repository` variable. This involves passing the
-> `repository` field to `write_midx_internal`. To do this, we add
-> `the_repository` usage to two non-static functions, which we'll remove
-> in upcoming commits.
->=20
-> With this, modify the static functions in `midx-write.c` to not use
-> global variables. This means, either we use existing alternatives (like
-> `repository` struct), or we pass down required fields from other
-> functions.
->=20
-> Signed-off-by: default avatarKarthik Nayak <karthik.188@gmail.com>
+On second thought, it would maybe make even more sense to get the reference
+hash and put that into referent. In that case the output could still be
 
-It looks like the sign-off here may have gotten corrupted.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+"'%s/HEAD' has changed from '%s' and now points to '%s'\n"
 
---VGfM8f6gqkrlTzSH
-Content-Type: application/pgp-signature; name="signature.asc"
+but with a non-symref after from.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZzfTuwAKCRB8DEliiIei
-gcmuAQCPQz7+EFyuexA1w7syFFgkV9tuEQ1y86ka0twX/7MlhwD+K9fzqHOlN5c3
-K0Kft89+KpAp2jUBCkXvPOqBYxhC5gI=
-=5DnF
------END PGP SIGNATURE-----
-
---VGfM8f6gqkrlTzSH--
