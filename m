@@ -1,147 +1,86 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB041E522
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 07:42:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A47618FDB1
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 09:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731656572; cv=none; b=a/GfBO5dzi7FEzGtPs5tGga79OEABwY+tLvxpyWGezY6fpI0Mqw2Lv/R+5wAaT7dDY0rm1WLNvePGexwfGVqu1NDLglt+6c3EjrrIQ4iWH7TqedsHY4PKamJCQCmuhjQi0X1SHCei+Q5X2+KKwe/HbVzq4pJOf7tttnnKDlTWMs=
+	t=1731663147; cv=none; b=B1czj7APGDD5EbbY2vDCXWwLwj2w7P22R3DYMTK/DangbwhaYVMerLxSdNb8kTJbWZ5lU4HpaabSI6X3WASKcTBFhrsrLRuDi4gSR+bBMGPhBCDgodzTptcUeC6uD0AZUMkweVyRDrQgLasEX9x+Tvhx8OnK37D9l+6FgKo1Hl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731656572; c=relaxed/simple;
-	bh=l4PkM2KetJlLwHgM2m8/ThyylEWrSaoFg0wF1u6XoIo=;
+	s=arc-20240116; t=1731663147; c=relaxed/simple;
+	bh=46RUC+SEzIQ8X8jQFfHD6YhMQvof4KyY0m/WoRjzFwA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GPKktjNu6a6P4IVIKpy/+URELVtDyYcnUdYFhvm7WTIQOBt7HfK79nTnzQqy6Scz2wIXivEd1BKs2F61Ovptf53f65stN50IvctFBk5O3SwWlMvki7Px5WGmSSgHBIx12mdUydNhDYD6KEHRtT6Roq57i982Dx+mnmnzopKEI4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=2N0SRfzY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OttIIDvq; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=IMjZiMa0qnBI1Na5H7fP+5kWRtWPZf114Jn9AN4FmVWB2KJkp8HIFJSktA+Nai+I5BRRLPzMU4nGjjXFhshtEbUoSgbScpylEZPq8+RWyHeRstytFnGpKdgkM8uAtTbb5BMj5GtuUGgjQs2zvdsKjhVX15TxyAuc+IaFeF2eIbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Fkr8LTBW; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="2N0SRfzY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OttIIDvq"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D5C9C1140118;
-	Fri, 15 Nov 2024 02:42:49 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Fri, 15 Nov 2024 02:42:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731656569; x=1731742969; bh=vXml83k9oB
-	Lx0IhZM3mtVq/w52gAHqzj/lmjffwXcDc=; b=2N0SRfzYrNlT+/px4T5R6grALh
-	inSoVBFLRZ6iYgNCWO5p6UTFeRS0KK7Z67oMwoxcbx+gEJGmHN2MaJ1gO8ujUUbF
-	6EA+yV0gvXtyv0jf/dqjhUJ/cbdfcOICPM4NPPTZ35V7h7wETzSJo5eNl55imQLD
-	jP636kD8rTY9BpuveRTDn3kij4vgsxd8ElW9duptU/JOQ2HdgHw231oVDok7ht+x
-	kNADKI6i37HRCHTrMiPON46ouaUj7G/YzGIkk5RBk1qn1/IwF+tl6W38ZFZ/dQrO
-	8OZwy2lzh8/XNLCFBhIjUHJ/B5fBWQ2vxrWG10VuyCDRSPlj4UnaOEi7G4kQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731656569; x=1731742969; bh=vXml83k9oBLx0IhZM3mtVq/w52gAHqzj/lm
-	jffwXcDc=; b=OttIIDvqGQSECSMSEnWdUzpraSFnUvS9Jxgka5R3EXjFoLMb9VU
-	NXDeLvlIOSDM9WWwjnCiR9i/LJVPFe1mTsgd8EsvJ5g57KIowRc8OGKn1hhIsZIH
-	5/jfFZfHI0DraOTV2IzBEZleYNCUNcVNbaMZEeOcDZUeH3k7K5PbdfWRRTaaEclw
-	XJNkjv955dibElM2HZJnerSKCTe4CHAuEU8v43UxAAALkkaCIRn8HbsO+ocjaJ67
-	fF+hpTy/zWORrSoxPf+7WTnZSTIf195e1yyg9WCr3CVzbp8YUPtF03J3oS8grRYr
-	Y2+GqAzN7DWUeRH90uQRA0CYWQOeoQuR8LA==
-X-ME-Sender: <xms:efs2Z3biYNj3vaq0aJWC7-UecpTTsOHFHZwm6eHVOK9fg-MzjpPuuQ>
-    <xme:efs2Z2aMdI3GdSADh0nqCKHCY9wgK_lku-dB_HrhYZiVLfxXaw02W0p8BH7DDC9y1
-    Jkz6HVVrleEJlhezQ>
-X-ME-Received: <xmr:efs2Z5_DK8rTE8O6fhKOgupieaOeFZ1-9f5_14I-0sGEHtESYHeicQm8LafhpUqxmyV9jou8BJtTZn_uhNh4mY1H2-l69qg67u8G-EwFEKQnWEek8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddutdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepfhhfjhhlrggsohesghhmrghilhdrtghomhdprhgtph
-    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:efs2Z9qQ2uNWMIKO3rwXpGxXyGmUO2qbXv5_lPUENC3iUn87J6k1UQ>
-    <xmx:efs2ZypNbzPPlqrBjDwA2qV86-uyP6hOWbEDoJ4kZHRl-QMXikvJLw>
-    <xmx:efs2ZzQzVvU8qxuyQaY6JGUoJBU9kwtq4hWQVCTt5WAnZhMk5W6TWg>
-    <xmx:efs2Z6oWQqZ1tUodAFSWoLibF80uxn4-FXN0ChlJTmK0OVFmnjN6GA>
-    <xmx:efs2Z7kQHKyH3CMGSmXnmYNgrTteuo97Xyy9IKcGM1pWUpYMv4BCA9ka>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Nov 2024 02:42:48 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b6105b6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 15 Nov 2024 07:42:05 +0000 (UTC)
-Date: Fri, 15 Nov 2024 08:42:37 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Christian Couder <christian.couder@gmail.com>,
-	=?utf-8?B?44G144GY44KS?= <ffjlabo@gmail.com>, git@vger.kernel.org
-Subject: Re: Trailers Containing Underscore or Dot Characters
-Message-ID: <Zzb7aI2C2uh_nwuc@pks.im>
-References: <CABpqQ_u4GG28L9KGX+HXiOv2AVAL7sckRBN4a99pCyeaQS+n_w@mail.gmail.com>
- <CAP8UFD0_+=5xmw6y5qiO22KMZhExLyZ=5HRjYphLD66vt0LLNg@mail.gmail.com>
- <xmqqa5e2ahqf.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Fkr8LTBW"
+Received: (qmail 14542 invoked by uid 109); 15 Nov 2024 09:32:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=46RUC+SEzIQ8X8jQFfHD6YhMQvof4KyY0m/WoRjzFwA=; b=Fkr8LTBWNi+4xRfblEklVinfFC7U1oV2WYdSy3ZjnExylJh/jGvQV7vjvCj8DexXNLKeKzcxuUFCWXC38bL4XOwITwL5qA4HDHt0I4OuuVwHVR4MgGGGw+/FNWzWrcrOmoBhYINphj7bhnliho8Sly868ddmPWF1MwX2wFRypROls2qiMbZycJgjtoRikNhVsvYK657CEtyS3mmAVXWcoVrYjqeTMUC7q71uxu8CdRuiYR2hLIuulBsp0ufl1wuRngRHIJRSSMO29Ak1fjeNMQvK1sNLM393ftMD3YrfK1BqtQhDszkrnSRH0kb11ghb6s6AZLSfwwqVYN0E7gJDug==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 Nov 2024 09:32:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6646 invoked by uid 111); 15 Nov 2024 09:32:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Nov 2024 04:32:19 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 15 Nov 2024 04:32:14 -0500
+From: Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: A bughunter <A_bughunter@proton.me>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [bug] user may be cornered into delete files #9901
+Message-ID: <20241115093214.GA1749331@coredump.intra.peff.net>
+References: <P_ttzPnNTtUgpAy8cg_ntLvwskJhz7cmv-fFgDw0K4Y2vOCx8v_AXxHtHEuBtpREOQu9pxpvK6JgLusc5Uyn2wDZ4HZvC3ttM4k-Ry6jBs8=@proton.me>
+ <ZzaJzm4kyYbcDSgm@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa5e2ahqf.fsf@gitster.g>
+In-Reply-To: <ZzaJzm4kyYbcDSgm@tapette.crustytoothpaste.net>
 
-On Thu, Nov 14, 2024 at 07:31:20AM +0900, Junio C Hamano wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
-> 
-> >> Date:   Wed Nov 13 08:28:19 2024 +0300
-> >>     Test
-> >>     test_hoge: fuga:
-> >>     test.hoge: fuga:
-> >>     test-hoge: fuga
-> >> ```
-> >>
-> >> What's different between what you expected and what actually happened?
-> >>
-> >> The one for `--trailer "test-hoge: fuga"` is finished with nothing.
-> >> But The others for ones which have "_" or "." are finished with ":".
-> >
-> > Yeah, that's because '-' is allowed in trailer keys while '_' and '.' are not.
-> 
-> Thanks for responding.
-> 
-> I did not offhand recall seeing anywhere in our documentation set
-> that defines what a valid trailer key looks like, so I went and read
-> the interpret-trailers manual page and did not find any.  For
-> example, is this a valid trailer line, even if we know '-' is
-> "allowed in trailer keys"?
-> 
-> 	-test: fuga
-> 
-> Is this a valid trailer line, when your configuration adds '-' to
-> the set of separator characters?
-> 
-> 	test- fuga
-> 
-> We do not even have an entry in the glossary for "trailer", and that
-> probably is the first thing we need to fix.
+On Thu, Nov 14, 2024 at 11:37:50PM +0000, brian m. carlson wrote:
 
-The second thing we should be fixing is that git-interpret-trailers(1)
-allows us to add invalid trailers:
+> The only thing which might potentially be a problem on the Git side is
+> that I don't know if we try to hold the connection open without sending
+> a sideband during pack generation, in which case if the client side
+> doesn't send anything at all, then the connection might be closed by the
+> server.  I'll point out that GitHub sends SSH keepalives, so typically
+> the connection should not be reset unless the connection actually
+> drops.
 
-    $ touch file
-    $ git interpret-trailers --in-place file --trailer 'Valid-trailer: bar'
-    $ git interpret-trailers --parse file
-    Valid-trailer: bar
-    $ git interpret-trailers --in-place file --trailer 'Invalid_trailer: bar'
-    $ git interpret-trailers --parse file
-    $ cat file
+Yes, we'll hold the connection open for git-over-ssh. We can't generate
+the pack until we've seen what the other side advertises, and it's
+probably too heavy-weight to start a second ssh connection. Even with
+ssh keepalives, I would not be surprised if the process terminating the
+Git-level protocol conversation on the server side had some internal
+timeouts.
 
-    Valid-trailer: bar
-    Invalid_trailer: bar:
+There are Git-level keepalives during the similar compression operation
+of a clone/fetch, as well as the delta resolution for the server side of
+a push. But there's nothing during the client-side compression.
 
-After the second invocation of git-interpret-trailers(1) it is unable to
-find any trailers anymore due to the bogus format of the second trailer
-line.
+I know we've discussed this on the list before, but I couldn't find
+anything substantive, and certainly not patches. I think it would
+_probably_ work for the client to send 0-length pktlines (actual "0004",
+not "0000" flushes) every few seconds while it's waiting. But it would
+be the first time we've done so from the client side, and the first time
+we've done it outside of sideband framing. So it's possible a server
+might not like it (in which case we'd probably need a new protocol
+extension).
 
-Patrick
+> Overall, I would not say this is a bug in Git.  Pushing over HTTPS may
+> help you get your pushes working in a more robust way, but in general,
+> I'd recommend storing the data in your repository differently.
+
+I agree with everything you said, but I wanted to add one more
+workaround: running "git gc" locally will pack all of those objects into
+a single pack. And then the subsequent push should be fast, because
+we'll already have done the delta search.
+
+-Peff
