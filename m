@@ -1,117 +1,134 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B093BB50
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 01:14:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33401291E
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 02:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731633293; cv=none; b=CiUI9M2ns2yylKJR9SqkGYgCsNqQNnF+YlvFQsI+2h4yh0YXYXrpSLXEQHrThQ50mZYfFK6phgh53X2muE5+wFbYTfDbCekvIgiTvlFU0r4a6Xcdq4spoCZ+EsU+p02lPQDWyWdyrE8NwmIC2bZ0cRPFAjaBz8PiTaoMcmPGum8=
+	t=1731636138; cv=none; b=uciy4aLxxpy8GgTsyQghAS2k/lQ21ZCE84rPwaCLriHphWnS06shBfH2+n8naoFMej9mhTjPgu7u6641V1q6XLAm906jscRXBpdxjsfvjl3LGgTMueouvL7y65vMJuspn8R3OclCQM0CpLqn8jX1fqNRA3mJpJd8BfElamXX/Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731633293; c=relaxed/simple;
-	bh=PZ0QuaKqik6kLjba/HOZ5fY2z8YPrbwXUt1/eTet9zM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=edNIjNV4GQPxYnaIHIZiyDEz4N9JcPPuBt+5wHO3uZRvkutBwgBpLl5F3Y/+yHD+rT99tAZq6O7ZBwx3f7OdXZvbIx4qgdnrDpn3L9B2UlaW0MyyTtcSNI9Wya7ZegVzk5NlZWPOg7ife0GnBvSYpkl3oCPH6QsLg/DHTtUMlA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HLAzcjj+; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731636138; c=relaxed/simple;
+	bh=540YEqTLgGPzDpiNyvSY5NXZEBGskYfgeycqh0DheyI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z31Jvr6VmE75NCUs1sjZ9WPT79I2BBUSC5CsxyFLTRVisxEf3tP/sktZjsANXjL/4cca/7tgVeR/lnLeOV9vUsFNknKji6ta+7W3OETkUAMkplRDMFtKO/RBYjMuat23CtiXszQOp50wZIY5YbsVyc/Wyi2HwWrmV5YfpyB8tkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DmuTGaWR; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HLAzcjj+"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 12EDA1140147;
-	Thu, 14 Nov 2024 20:14:50 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 14 Nov 2024 20:14:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731633290; x=1731719690; bh=NFVu/Ea9LPTAkL7rH6A3evg3AY+yqnXyAiX
-	hMg+qSbM=; b=HLAzcjj+JzsQKv186nItGHuvVh8MsKU73i41zgHVNvTvF0AMTNJ
-	TF4ZB4lMd/XqqrAx07VCm8Sy0Ox9FLY90X5eFpalHm1dzK6mV+1DtGKSqxQg4ZyB
-	0hlJaRVQX6c4ZDYbU9IcwrP7MEN99H96jP/obnr05B3wOzcVSEZ12nlKIxl4BkPP
-	4qm3UfKKHtG12JyUs8TdBh7hp7X9EhHxg27sbAluYmct0nY+OkNfKL7oeNd+moHl
-	2fm/B9q2k3oJ9vWVycTa3a/RlCmwXUtz6W1SjeORKc0y5VAkZaVNXhlAqEVkVVdp
-	cxhUERwC2kltxxQYY5dtAmbhTNbKdYCobZQ==
-X-ME-Sender: <xms:iaA2Z-k8ttRyl-fz4nTiYJQV8ow1GMFo21Fk45Ys_rGtV3rqjWvODg>
-    <xme:iaA2Z11hE8kwQiHeYnBJw1YNzXZ32pEgwhBlj4yNhXXJGpulpBJcpiTC-MNP52jqs
-    zLdk2Yo8O7saBF3Gw>
-X-ME-Received: <xmr:iaA2Z8pa1mWBXZt458p4otGQLpK3nUhDT3ADSTLM3FxW7J-MlFIrk9ruGpxOr94i-tOTKXDP4yIg2wL-8BW29B1UEm7Vg7LhIBhu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgdeftdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptedttd
-    evffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledunecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrh
-    hushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:iaA2ZymQ8RS2oF-6-d9f0vz0FEDJP_jpry6pupJuDPzltUaey8OKcw>
-    <xmx:iaA2Z837bqIE5K5NE6pC6V5KVT9eYTMBngtsPPultrfdD1xZbHsxJA>
-    <xmx:iaA2Z5sAXkdp1TkjNjQmkk0meSIidx5PfCtYDUmgMfsLEtttOnALWQ>
-    <xmx:iaA2Z4UVE0OpTfkxeRxztTmX4O9TQHWv3KJdxtT7oukKeJuQ3jTn0g>
-    <xmx:iqA2Z_Tv_Ys5YjRsnJGwE7Vj4Hnj-rH6CegRe2oQ0Yz5Im549EDKYZgZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Nov 2024 20:14:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DmuTGaWR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1731636134;
+	bh=540YEqTLgGPzDpiNyvSY5NXZEBGskYfgeycqh0DheyI=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=DmuTGaWRrNUjKOyPKOLu1cjtkNMPKcdlgh2MVctp5hVDjvqbF32sb8RLgqgWPAzhr
+	 1DobDNenZ56n3iausw0ziSGUogdexAw4e4MdMrGMsd8wSVOKPR8G44uTzf3snGVL0K
+	 UwztU37MdpOou15iBWNZmgmCm59ArKoi1jVuC3K6mIo+pAWM+v0zM8JoRKGCSefpib
+	 g7Ya9zea6injSX2IvLhiiXc5i1He4dM1IhdMmwEeLBRE1gjXh0dvuXIhE5uLsdL9t1
+	 UqUyYzGsSnqGwp/SmTWA4955ELG4gNeh+NySv3AKUMWs+ns8prlJ/FOAbA3EDYW4By
+	 zEUFr1hRvjUUC/fsNne8yD0UXbroIx3VzhX9VE+0LfnAdrrFKo/txxjsit3hpuZR0V
+	 KvWp+vgsJTgA3KBKK90fJrQp5apQiB9wJEWG5sIbUEMb9wnge7UvS4CxYtxX1SVxSe
+	 WsceXsEQEnPpwRPSsIg7NVGDghHGEIzhxy2eghVMQo3N6gJHQKd
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B510F200C4;
+	Fri, 15 Nov 2024 02:02:14 +0000 (UTC)
+Date: Fri, 15 Nov 2024 02:02:13 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 Subject: Re: [PATCH 0/1] Restore the ability to clone repositories owned by
  another user
-In-Reply-To: <20241115005404.3747302-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 15 Nov 2024 00:54:03 +0000")
+Message-ID: <ZzarpTaoooBOBohZ@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
 References: <20241115005404.3747302-1-sandals@crustytoothpaste.net>
-Date: Fri, 15 Nov 2024 10:14:48 +0900
-Message-ID: <xmqqr07d47sn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <xmqqr07d47sn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UQJUrndZy8xHiQCy"
+Content-Disposition: inline
+In-Reply-To: <xmqqr07d47sn.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> For a long time, we've told users that the only safe way to operate on
-> an untrusted repository is to clone or fetch from it.  We've even
-> mentioned this policy in a variety of places in our documentation.
->
-> However, f4aa8c8bb1 ("fetch/clone: detect dubious ownership of local
-> repositories", 2024-04-10), this changed in an attempt to make things
-> more secure.  That broke a lot of user use cases, which have been
-> reported to the list.
->
-> Because our security model hasn't changed and it's still safe to clone
-> or fetch from an untrusted repository, let's revert a portion of that
-> change to allow us to clone and fetch from repositories owned by a
-> different user.  If a malicious repository were a problem for
-> upload-pack, that would probably also be exploitable on major forges,
-> and if it were a problem on the client side, then we'd also have a
-> problem with untrusted HTTPS remotes, so we're not really adding any
-> security risk here.
+--UQJUrndZy8xHiQCy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Nice.  Better late than never.
+On 2024-11-15 at 01:14:48, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > For a long time, we've told users that the only safe way to operate on
+> > an untrusted repository is to clone or fetch from it.  We've even
+> > mentioned this policy in a variety of places in our documentation.
+> >
+> > However, f4aa8c8bb1 ("fetch/clone: detect dubious ownership of local
+> > repositories", 2024-04-10), this changed in an attempt to make things
+> > more secure.  That broke a lot of user use cases, which have been
+> > reported to the list.
+> >
+> > Because our security model hasn't changed and it's still safe to clone
+> > or fetch from an untrusted repository, let's revert a portion of that
+> > change to allow us to clone and fetch from repositories owned by a
+> > different user.  If a malicious repository were a problem for
+> > upload-pack, that would probably also be exploitable on major forges,
+> > and if it were a problem on the client side, then we'd also have a
+> > problem with untrusted HTTPS remotes, so we're not really adding any
+> > security risk here.
+>=20
+> Nice.  Better late than never.
 
-> This matter was discussed extensively in the thread starting at
-> https://lore.kernel.org/git/ZqUc8DJ1uKcHYlcy@imp.flyn.org/.
+Yeah, I had intended to get to this sooner, but I got busy with other
+things, and nobody got to it before me.  I had some time so I thought
+I'd send this out now so we can minimize the number of affected versions.
 
-> Note that I haven't signed off on this patch because it's based on one
-> from Junio and I haven't gotten his sign-off yet.  It's fine to add mine
-> once he's added his.
+I really appreciate you writing up the original patch for this; it was
+very helpful and a great start.
 
-You can forge my sign-off on the old patch ;-)
+> > Note that I haven't signed off on this patch because it's based on one
+> > from Junio and I haven't gotten his sign-off yet.  It's fine to add mine
+> > once he's added his.
+>=20
+> You can forge my sign-off on the old patch ;-)
 
-The proposed commit log of the patch makes me wonder what should
-happen when neither of the two bits is set.  Not strict, but we do
-not allow ourselves to enter a random repo owned by a stranger.  It
-turns out that "strict" has nothing to do with this lifting of
-excess ownership check, but the dwimming done by suffixing .git,
-etc. to the given pathnames, so there is nothing strange going on.
+Great.  I suspect you'll probably pick this up as-is, but I've added
+both our sign-offs in case we need a v2.  Let me know if you'd prefer me
+to send out the unmodified v2, and I can do that.
 
-Thanks.
+> The proposed commit log of the patch makes me wonder what should
+> happen when neither of the two bits is set.  Not strict, but we do
+> not allow ourselves to enter a random repo owned by a stranger.  It
+> turns out that "strict" has nothing to do with this lifting of
+> excess ownership check, but the dwimming done by suffixing .git,
+> etc. to the given pathnames, so there is nothing strange going on.
+
+Exactly.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--UQJUrndZy8xHiQCy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZzarpAAKCRB8DEliiIei
+gQ8sAQCwbpYzOFLMWpWBWMPF15kp03QqqFrlfB9WXe6YuOmhkQEAr2jlrVgL5j18
+Z+IhryvmOhApeLb1ZsO4BHbdlog5vQ4=
+=0HYT
+-----END PGP SIGNATURE-----
+
+--UQJUrndZy8xHiQCy--
