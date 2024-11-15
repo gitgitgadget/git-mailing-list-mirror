@@ -1,64 +1,95 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39F818FC91
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 11:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECFCB18C00B
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 11:17:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731669003; cv=none; b=niHGaO105RjTZymeK9DAzutAAWnv2yltBPpAJHDvCyyild/6fR7k9jVpKHsSaaR6JUAw3+tnXJtUykhv5BsDbpoS0AGX5cKz41claCRrlo4VXbhtDOkLtxs7valZWiovnTs8JUXb40Z0CRrgUyBSDsUSpFiADQq9Lo+kIYhXEH4=
+	t=1731669451; cv=none; b=clxfe4/2Fe+txf6kdRGQsrU/rZP/LmT674fXkTbjgMcY97PCfZcopXGeiAKNCGty0MYC2PaL7JnYEWE3k1Nps2vl03kVgIBgHoCevaTp2m/tCuyWEhvKYikRLRFuSK9GmourvhzbxCubMDVbnJsKjuLv157ysc/opTvT+BNc/Bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731669003; c=relaxed/simple;
-	bh=XASPCJAYmp6EiaWQNRlMwQG1EIGaUNMnCrExPPjbAI8=;
+	s=arc-20240116; t=1731669451; c=relaxed/simple;
+	bh=Eae/Uy4hDxzQhy4xrLo32ygY8wuTcqk3Vji5cg1yl+E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GEDqkiEQGvo+R+pJelB7lMutTz+hVrSSiTd/Aq5VkRtR5i/iQVlQx5dSkZfUbd3uQuoQmko7LgGYZFMYsnj1XDlQ8VUcpIWc6DphAH8owE0esY5xblVB+peMmQxS4LvsG2mKik9Mp8ymJC6htyMPhwkxrjHP67qJWe9OHX2Qk2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJDRegOR; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=UUtDTMKG6xPfrnXouZ/afuND+iCvuUsBExF1kRKTIzCRJZ06G42n/G9GrMBcHcLtPluBy0RdLrJnqc0WzDNl7NvPH2vQvj9SryK25NPQ/gY1+Xuze9qEDU+yaKezYDwUK0ZX+P88NMaxZrSXG8OW+Ckyavhw9yhiLbguMNYIJIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ae96g6Wv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ShgZoDjo; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJDRegOR"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e2dc61bc41so1323623a91.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2024 03:10:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731669000; x=1732273800; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R2LHvU+5r8cuGfagQx0b3d/HIdF0IGmrdr25X+OPGt8=;
-        b=MJDRegORZBLK84vrVJ0O59mWqh5jilpWOOHCzfGlARJ0L7KeZumjHxrXRcp/BK9tTP
-         glMs0HaZhNDFkMQ8W6S/WzarSsHA96veimYsrgeovOrfDOHwFs0XtfKx7h8c8Um2/HKY
-         zOZipsF9zBohdhb6vgPY5ygp6Q92Ge7JLuyC8+anEFXC91XGPU+nbKSyXdYYiFDkJ7lA
-         C6Girz3G7hCg0QINiMv9R05tnDAADVQO79Zv1QMHzgYsA4QKMss/9lGVhpFVpjLyPwHt
-         LverBVnd+1BhNCjNVLEWvgvitC8k3iMiFT7pzp4yBtQjXtqJQ25uyu77oosAcXy80SmO
-         b/cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731669000; x=1732273800;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R2LHvU+5r8cuGfagQx0b3d/HIdF0IGmrdr25X+OPGt8=;
-        b=YlqSh8noWSyvPt1NnPaTX9hYFcZNPcAlpR40BCPU/iGiUUI0xFUec0bTuiwRygks+g
-         OavM9AlUCGlFT9tUtk2etcmSuQff2Igy94P3C6pVO3jYJJ+84n5ZRyVvt6TzW1S6Xwa3
-         dSv7gwqTB0pH4qd8QgKgZZ1QNV/dySZ0ZdzqEfyQqGX4GCTs8SDy1Zzdxe09G4FgSpRh
-         oe2VyYxquluMPN+4U2/LTPsZ5YvGyXHTKAeRiZ7fi9FOF/0G2qohgyMQ/WB7tV7zFCMM
-         cd4xYd4wedhSWJmTgddNh0Cmw2CB8UZffLQ7CGzxYcKmU3SHupCOlH+XxQjuJVSjMEwh
-         b8jQ==
-X-Gm-Message-State: AOJu0Yxmn4+TlF2zLqLRpTQ2LePB71SwONEXa+joXpJnT2/uXDExwaMF
-	pSvSR6lIbFU8Z5StrYvapcpKk8IhHioxnIVIfPif+nugqSG2iYXgdaF3ww==
-X-Google-Smtp-Source: AGHT+IH4RGizFYmPPdJRHVsLinZfoKNCmjzwje1iCLjG4q+5EGuteDXdtGbdbAqKFNqPV+kkEMzFAg==
-X-Received: by 2002:a17:90b:1bcf:b0:2d8:da35:b4d6 with SMTP id 98e67ed59e1d1-2ea154e4f51mr2721855a91.14.1731669000410;
-        Fri, 15 Nov 2024 03:10:00 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ea06fbc909sm2594000a91.53.2024.11.15.03.09.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 03:09:59 -0800 (PST)
-Date: Fri, 15 Nov 2024 19:10:03 +0800
-From: shejialuo <shejialuo@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ae96g6Wv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ShgZoDjo"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id BAD4D1380255;
+	Fri, 15 Nov 2024 06:17:27 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 15 Nov 2024 06:17:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731669447; x=1731755847; bh=qC6t00mN8t
+	1yXOFgO7MwS78sKitkJhxzfGc+hpKMDNA=; b=Ae96g6WvvvJd3xSxWHjVfqcS77
+	J4KhQWSMXO6hnEA7aSEkl6BGNZKH5ARnC7ZWBvBQ44ZnCr8md+Rs7xCTnttNWlSs
+	i6cyO1+9KkaMPcE9o7I+5PQVlzDOqixar+x6mmqN3fF2EDZzUqjuFE/R795rozmV
+	Wr3ZTMRft56Pk+F5m7p9GEYyLHeqId/gMqedv6f+XB3lp+nf+juiqk33+muWhtNY
+	Dh1INcXuMfjAa5aXSHcwUgSjU+JwshgDPafFLzMJ/1rOpqF0Yww6GFNSnbMVSYMI
+	n56i8eG+gKD12dgtxL+d+CakGjWWZ0zY8YUGHnSLOMCZHRLtaCpqezYUkUOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731669447; x=1731755847; bh=qC6t00mN8t1yXOFgO7MwS78sKitkJhxzfGc
+	+hpKMDNA=; b=ShgZoDjorDfpHvReBbYhW4RLMxDOZiS7DxbjJiVQ+HDVDAm5QwN
+	p8arkaDi8dQWVf/S1iJ7bncGhanS1Kb819oZfeiV3ubN2fUfB58r72d4pKBiXiIm
+	Ha7p57UNzhhd3seEwUlKCWhU2eEPxD07XUTz++l5ita+fqMMHN39q/4K5X7SAC2l
+	XcX/sPdzZvop8CO3W1trxi14DdIhffXLjv3yAu7E1QV8OWod7JlZTO28JNP1vbpG
+	oEAzXsH5OMSMryqpUgAcKsw3NOCdJwI49tc2pUHt+q7vvNBhjnUzdmyb+KY4+wkn
+	EMk02EINj1WN0ZQlfpog1VhHSdV8Ze93ZtA==
+X-ME-Sender: <xms:xi03Z7Nr782SoP3YeGvKRFoVAs_8Zpwz5hSu3Jh87zqT-ZaFw_21bA>
+    <xme:xi03Z1_JrZTVEraC9EscqFTTYFQydkPPSfX_ODnLZVsa08B5_gCcvHaycmBqt2NzM
+    ltze4tNe4FCOz54qg>
+X-ME-Received: <xmr:xi03Z6Rv3m3uJgu4vUyzPUebslNsW6yOj5LYws9AmCd4s-6AgfmuMOQlSBXMuOrTeRa2o8Z37q4Zng1eTWGxb1lO0agger6xr4MG0t7TvT_LFkfo6A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdeggddvgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhhihhl
+    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstg
+    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepuggrvhhvihgusehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepvghstghhfigrrhht
+    iiesghgvnhhtohhordhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjoh
+    hnvghsrdhplhhushdrtghomh
+X-ME-Proxy: <xmx:xi03Z_tMFgitUBToW-8UPPprDZaSzGXqKcEEXH-QOIFyStt_-oG7DA>
+    <xmx:xi03ZzcNUFiuRHRE9mFZRsh-Msnt0qeTZp8W9gQq2urgVVeQkDybtA>
+    <xmx:xi03Z72mj-cN3Zp3ubOe5pvILarD4BOAYXgcYEBErL_oEoZn57R27A>
+    <xmx:xi03Z_9d0bZhgp6w4Mp0LfARW_cBf7zr24H9fVtrphKIqNxyDZu_qQ>
+    <xmx:xy03Z0VbwDmYy2gGcFI-Ddj78K4NEyRSGYXkt_tvpaNBozjLuifrDXGd>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 15 Nov 2024 06:17:24 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 414887be (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 15 Nov 2024 11:16:39 +0000 (UTC)
+Date: Fri, 15 Nov 2024 12:17:12 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 0/9] add ref content check for files backend
-Message-ID: <ZzcsC6MHi-BPyXLK@ArchLinux>
-References: <ZzCiCGxL4Adnd_eq@ArchLinux>
- <ZzYqoai8X_Wdtbmt@ArchLinux>
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH RFC v7 00/22] Modernize the build system
+Message-ID: <ZzctsGvnJvaHe23z@pks.im>
+References: <cover.1727881164.git.ps@pks.im>
+ <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,28 +98,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZzYqoai8X_Wdtbmt@ArchLinux>
+In-Reply-To: <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
 
-On Fri, Nov 15, 2024 at 12:51:49AM +0800, shejialuo wrote:
-> Hi all:
+On Fri, Nov 15, 2024 at 08:21:12AM +0100, Patrick Steinhardt wrote:
+> Hi,
 > 
-> This new version solves the following problem:
-> 
-> 1. when reading the content of the ref file, we do not use
-> "fsck_report_ref" function. It's not suitable.
-> 2. Add a new test for symlink worktree test in the last patch. After
-> writing the tets, find a bug. Fix the bug described below.
-> 
-> Because we have introduced the check for worktrees, we should not use
-> "ref_store->gitdir", instead we need to use "ref_store->repo->gitdir" to
-> get the main worktree "gitdir". After fixing this, the test is passed.
-> 
-> Thank Patrick to remind me about this. I forgot to add test thus making
-> mistakes.
-> 
-> Thanks,
-> Jialuo
+> this patch series modernizes our build infrasturcture. It refactors
+> various parts of it to make it possible to perform out-of-tree builds in
+> theory.
 
-I'd like to wait for couple of days for more reviews and comments from
-Junio and Karthik.
+I noticed that building documentation is broken in this version. I've
+corrected that up locally, so this will be fixed in the next reroll.
 
+Patrick
