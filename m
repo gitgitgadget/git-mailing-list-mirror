@@ -1,216 +1,129 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4E218859F
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 06:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E817D187848
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 07:01:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731653553; cv=none; b=qvV0qBX0qZltEAiFv0JJVCM/wgUkJPnhOECVy5sCRv9jfXFascv843c0PiCJYjujOwCEKjnT7Ljsf1o9+73uHw22KWBZNRzzWQ1ibcEpgwahcDofCmiHFMA3sC/Q7+BIkkxYzoEQRSKISEwT8X4XVR1LXYznp33y1b1QX7WCxHc=
+	t=1731654086; cv=none; b=nZPe3eAUEh7oIODYMKyMhY3+RfySAjXJrlhZWLheF0dl9yZ2ZIMSupQHmsbH5HqSQ0wzSOtCoBXIN2QJwbhKACoLZk9XfqHtdIehdJ34zGvP5/Sk/s7su1meecGiAnzEI5yFC+jT4k9pXsvnoA4cH4zNP9abTUgRH6s7HZitCww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731653553; c=relaxed/simple;
-	bh=TAc2ICT5ij3pK14wYG69ZuBqiuqv0MnzpsqRBoyhMkk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=FfFra9Z6Y+eQPpvbQeay9YB0MBBX/9DcEiCZG4m2QUMAt+vEA0A7d/rTwo6J4TsXzd5tyRGXQNdruMBmS8xLuY4WhqRhLR8DqndEc6FgfqRSje1ZQ8roF0ZGUlf03isGjjxs5C+VeI+Q/2SRsWHBUoyXkYuWtRhonKWdhDZbFsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T979MOTr; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731654086; c=relaxed/simple;
+	bh=cXv4JCFGi8lAvv8werbOe711iUzrJ3hze0pNFF7XHlo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Uodzsl4xfdVuFzpnU2Wf10tvwx/xhLDb3B3ENrmCEqXDfBFSRem5cpdz7haX160rY5UkB8lp6vDoMR6u9EuaM1Vfx0mg7xtaDClUB6/mCwqsnNm+tncolNIKhEqtz5LoinfepCjBn9NM9cmX2UVA7ls+T4O2cxsUJdkN3QTtOgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bjkxop0H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZvFmX4Fv; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T979MOTr"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-431548bd1b4so11748605e9.3
-        for <git@vger.kernel.org>; Thu, 14 Nov 2024 22:52:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731653550; x=1732258350; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jmqanwP5to4TnaGfNfM9zJca58RwBh8KwYmMSdtG16k=;
-        b=T979MOTr6NmZXYXU59G6V5meQaxnlth39asDCF4tkhSGCtvkFfte4w0CFdyIJATMmN
-         toPzvrfopkPlLHPIxwuYyPinTr4KxjUUpiqLK3MkjoODHgCeGOGca2+Bp3L0IhkEuVZn
-         KtNGQnjlLjSeP4Y1CV0KXlLX7kOs24j1tgbrU+8tvadEgp/GtPp7W1eqn9lyJ7XN/bRA
-         1EzcbtNXtQPeoA4ysYA6OUjpaxUN7yrXNBBXw8+S2fg+t5J2AEzrgWaKKrmA8401Czw8
-         oYZ//R2AFwEWyNsOus4qilKJooghZvwaLT1Q1hr59X4TJp+O6CRR+pMJvB8Dqd3sLekV
-         Rrkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731653550; x=1732258350;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jmqanwP5to4TnaGfNfM9zJca58RwBh8KwYmMSdtG16k=;
-        b=afSJ6Slagy61r4THjL/tV6aEM/2kmv+wFI05otEHD7/kIYYwODLRxCENlcrSydr0Dh
-         IDiqNbfJ1Zwql1C2nEcWpJplkSrEVhM+QhChO5nhzKrQWd0zWWFLpWv7YNgCs0k+AWpR
-         JidvfdzSuLXIyxwcM7Z8a6B4PYKPnt79x5db4ow7gQNkeylVZ3SaAW9g3EeTDxRxcH2F
-         SeJsjsyPBzRdFZ5RZWMUTsEBjlj2yK3hrY4d1XLvEfsZSoFPh07KtSGdaO6A22CgN6q1
-         9kuj0EmH2kOU7VTZ6ZG/QUvS4QK2McGRdsbuLjMzrcs+TXwtQwd8QcNI7yc9/qpwYUqO
-         fA8g==
-X-Gm-Message-State: AOJu0YzpsyZ1ybpk1Cae0tMDzPwe891Eoe1L2HQQ/rfq5SSdI7/ybDrx
-	LaXwrfuDDZYdW70MD5Bkhbrkx47M8QGeywt5VSpieURO5gPeTbn/Gd+BTw==
-X-Google-Smtp-Source: AGHT+IEryaVKAJtcVaPEUl5xKNMTuXmCss77TCVKtjciqT8Me1xZfkgMc9pbywPoldHljCGZwjguhw==
-X-Received: by 2002:a05:600c:5494:b0:426:64a2:5362 with SMTP id 5b1f17b1804b1-432df72a101mr10995805e9.8.1731653549752;
-        Thu, 14 Nov 2024 22:52:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-432da244c69sm48312395e9.2.2024.11.14.22.52.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2024 22:52:29 -0800 (PST)
-Message-Id: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
-From: "Olga Pilipenco via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 15 Nov 2024 06:52:28 +0000
-Subject: [PATCH] worktree: detect from secondary worktree if main worktree is
- bare
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bjkxop0H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZvFmX4Fv"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9E6851140146;
+	Fri, 15 Nov 2024 02:01:22 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 15 Nov 2024 02:01:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1731654082; x=1731740482; bh=1M08D0e+iD
+	KBnFFpSFFjW/07wl6l3qKl8ou1fMu0uIA=; b=Bjkxop0Hllf9soBPlQF7krGqxl
+	IT4ySgXl5xHBL8sETe/DdDJ876onWoZLisjEs1LnPxAIK7rUgRz36s7eEK2YuDWV
+	N8Y2oF4DsgBq5zjub63CuJAocMbNQgDV3bfqzUeChr+fjXyKlzAwxUJ/kcSR93CO
+	G/9CKK3AjbN8ZI0GlAIkGFOLU8chsWEAxNqbzWLceRLNBMZNPkcBfsGZlJXUFAXQ
+	LWhmW11vknDYfq0c2nrp7F1wSDkoN4BkRt0K6sKSRB9vPNGngv+iEp/FutvuSqYL
+	L2Gt0w2aB8wGgedbAy/6/lhK4vQDYvY8ikvKa7smEewl3Lro5Ngu0YThej/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731654082; x=1731740482; bh=1M08D0e+iDKBnFFpSFFjW/07wl6l3qKl8ou
+	1fMu0uIA=; b=ZvFmX4FvCRiAedc1FoFN6sYPuNhxNHtECPjYsNG3AqDfTBlAvz0
+	WJ4xrKiHRus51XEBK7qVJVyjPm3C+IKKfXIunjYppI2tnQwAX2RvOPr6t3mZZl21
+	QBBWxBpkhDBL7qo4vIrS+RrbEppku8fKrzkWHI1VvBvGo1DB8OnmU7bDx6d3tivH
+	lry9B1W5q1dFidSHO8T4YgpQUFNLPx6oUyiQfJp/cM3zo49kYtLp5ZHKFdYpiZ25
+	vMnbWsEBPOpJeDn3bbabUCepU+Tk8LDKhudT6SRWKb9mSkoTIQ+lwXs7BfNlUz3W
+	Fo3pnKaYrDHQe0i+kxRY0eiDU/3WjcnhaIw==
+X-ME-Sender: <xms:wvE2Z6rXfAl-srgVnF9LnNVonqWu9pUVcfUChpF8m65NtwvluqZ8Ew>
+    <xme:wvE2Z4qrmLj4dF1Po-IWcJPawehtlSHSykuT-eYZRRhW_CGQlr336rFKVJaobA9Vu
+    0lFosdhxxezILUlgQ>
+X-ME-Received: <xmr:wvE2Z_Ndt4nDSfEhJ7UQ7R_GvAPLenCJMOkaZVzag8f24_VEY674HJtnmszTcYEY20uqtmZebFmcyqhniM4qn1VuGQPz9viNx_bKcW63WUK1Z-smMw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgdellecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:wvE2Z56-YvwRdc_b5u3TzKod0L3oi6vQRrO7jYuaylkEpV70mOZqcQ>
+    <xmx:wvE2Z57hOCeDMYm7fBDVfJxw6VKHR28sdjVGNOtJCjf5rUqobkUBEw>
+    <xmx:wvE2Z5igelAMc-_M_BS6klwjmmZ0vU-m2CxmHOZKa1Sd1oM9G0bEiQ>
+    <xmx:wvE2Zz6CPL_4NNkgGSjiiC7si1pfuSTqvT5yi15p44-gWD0jSgoTBQ>
+    <xmx:wvE2ZzmBLQ2P0AbtzxE4wqThuwfYtwcopu4wBpEp2-iZ3_VWGEhQ9Bgg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 15 Nov 2024 02:01:21 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b5bcc46c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 15 Nov 2024 07:00:37 +0000 (UTC)
+Date: Fri, 15 Nov 2024 08:01:09 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] refs: don't invoke reference-transaction hook for reflogs
+Message-ID: <ZzbxrU2SdUDqPJiF@pks.im>
+References: <20241114-348-do-not-call-the-reference-transaction-hooks-for-reflogs-v1-1-ece7260ee3c1@gmail.com>
+ <xmqqldxl5qdf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Olga Pilipenco <olga.pilipenco@shopify.com>,
-    Olga Pilipenco <olga.pilipenco@shopify.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqldxl5qdf.fsf@gitster.g>
 
-From: Olga Pilipenco <olga.pilipenco@shopify.com>
+On Fri, Nov 15, 2024 at 08:48:12AM +0900, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+> 
+> > The reference-transaction hook is invoked whenever there is a reference
+> > update being performed. For each state of the transaction, we iterate
+> > over the updates present and pass this information to the hook.
+> >
+> > The `ref_update` structure is used to hold these updates within a
+> > `transaction`. We use the same structure for holding reflog updates too.
+> > Which means that the reference transaction hook is also obtaining
+> > information about a reflog update. This is a bug, since:
+> 
+> Yeah, the transaction hook is deciding how the values of refs should
+> (or should not) change, and its decisions should be sufficient to
+> determine what should happen to corresponding reflog updates.  If an
+> update to the 'main' branch is let through, that update should result
+> in a new reflog record for that branch.  If such an update is blocked,
+> there is no update to the branch, and a reflog record would not be
+> created for such an update that did not happen.
+> 
+> One thing that the above argument does not capture is "stash",
+> especially "stash drop".  The way the subsystem abuses reflog
+> disconnects ref updates from reflog updates, so there _is_ a use
+> case for hooks to interfere with reflog updates.
+> 
+> However, the existing ref update transaction hook does not have to
+> be the mechanism to vet "git stash" operation.  If we really needed
+> to, we could add reflog transaction hook for that later, outside the
+> scope of this fix.
 
-Setup:
-1. Have a bare repo with core.bare = true in config.worktree
-2. Create a new worktree
+Indeed, I'm also happy to declare this a bug and change the behaviour
+retroactively to skip over reflogs. I highly doubt that anybody uses
+this in a sensible way to handle reflog updates: they have no way to
+distinguish a ref update from a reflog update, so they would have to
+essentially guess what is what.
 
-Behavior:
-From the secondary worktree the main worktree appears as non-bare.
+So this patch looks good to me, thanks!
 
-Expected:
-From the secondary worktree the main worktree should appear as bare.
-
-Why current behavior is not good?
-If the main worktree is detected as not bare it doesn't allow
-checking out the branch of the main worktree. There are possibly
-other problems associated with that behavior.
-
-Why is it happening?
-While we're inside the secondary worktree we don't initialize the main
-worktree's repository with its configuration.
-
-How is it fixed?
-Load actual configs of the main worktree. Also, skip the config loading
-step if we're already inside the current worktree because in that case we
-rely on is_bare_repository() to return the correct result.
-
-Other solutions considered:
-Alternatively, instead of incorrectly always using
-`the_repository` as the main worktree's repository, we can detect
-and load the actual repository of the main worktree and then use
-that repository's `is_bare` value extracted from correct configs.
-However, this approach is a bit riskier and could also affect
-performance. Since we had the assignment `worktree->repo =
-the_repository` for a long time already, I decided it's safe to
-keep it as it is for now; it can be still fixed separately from
-this change.
-
-Real life use case:
-1. Have a bare repo
-2. Create a worktree from the bare repo
-3. In the secondary worktree enable sparse-checkout - this enables
-extensions.worktreeConfig and keeps core.bare=true setting in
-config.worktree of the bare worktree
-4. The secondary worktree or any other non-bare worktree created
-won't be able to use branch main (not even once), but it should be
-able to.
-
-Signed-off-by: Olga Pilipenco <olga.pilipenco@shopify.com>
----
-    worktree: detect from secondary worktree if main worktree is bare
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1829%2Folga-mcbfe%2Ffix-bare-repo-detection-with-worktree-config-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1829/olga-mcbfe/fix-bare-repo-detection-with-worktree-config-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1829
-
- t/t3200-branch.sh | 14 ++++++++++++++
- worktree.c        | 38 +++++++++++++++++++++++++++++---------
- 2 files changed, 43 insertions(+), 9 deletions(-)
-
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index ccfa6a720d0..819228a3344 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -411,6 +411,20 @@ test_expect_success 'bare main worktree has HEAD at branch deleted by secondary
- 	git -C secondary branch -D main
- '
- 
-+test_expect_success 'secondary worktree can switch to main if common dir is bare worktree' '
-+	test_when_finished "rm -rf bare_repo non_bare_repo secondary_worktree" &&
-+	git init -b main non_bare_repo &&
-+	test_commit -C non_bare_repo x &&
-+
-+	git clone --bare non_bare_repo bare_repo &&
-+	git -C bare_repo config extensions.worktreeConfig true &&
-+	git -C bare_repo config unset core.bare &&
-+	git -C bare_repo config --worktree core.bare true &&
-+
-+	git -C bare_repo worktree add ../secondary_worktree &&
-+	git -C secondary_worktree checkout main
-+'
-+
- test_expect_success 'git branch --list -v with --abbrev' '
- 	test_when_finished "git branch -D t" &&
- 	git branch t &&
-diff --git a/worktree.c b/worktree.c
-index 77ff484d3ec..1bce505bdd7 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -64,6 +64,28 @@ static int is_current_worktree(struct worktree *wt)
- 	return is_current;
- }
- 
-+static int is_bare_git_dir(const char *git_dir)
-+{
-+	int bare = 0;
-+	struct config_set cs = { { 0 } };
-+	char *config_file;
-+	char *worktree_config_file;
-+
-+	config_file = xstrfmt("%s/config", git_dir);
-+	worktree_config_file = xstrfmt("%s/config.worktree",  git_dir);
-+
-+	git_configset_init(&cs);
-+	git_configset_add_file(&cs, config_file);
-+	git_configset_add_file(&cs, worktree_config_file);
-+
-+	git_configset_get_bool(&cs, "core.bare", &bare);
-+
-+	git_configset_clear(&cs);
-+	free(config_file);
-+	free(worktree_config_file);
-+	return bare;
-+}
-+
- /**
-  * get the main worktree
-  */
-@@ -76,18 +98,16 @@ static struct worktree *get_main_worktree(int skip_reading_head)
- 	strbuf_strip_suffix(&worktree_path, "/.git");
- 
- 	CALLOC_ARRAY(worktree, 1);
-+	/*
-+	 * NEEDSWORK: the_repository is not always main worktree's repository
-+	*/
- 	worktree->repo = the_repository;
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
--	/*
--	 * NEEDSWORK: If this function is called from a secondary worktree and
--	 * config.worktree is present, is_bare_repository_cfg will reflect the
--	 * contents of config.worktree, not the contents of the main worktree.
--	 * This means that worktree->is_bare may be set to 0 even if the main
--	 * worktree is configured to be bare.
--	 */
--	worktree->is_bare = (is_bare_repository_cfg == 1) ||
--		is_bare_repository();
- 	worktree->is_current = is_current_worktree(worktree);
-+	worktree->is_bare = (is_bare_repository_cfg == 1) ||
-+		is_bare_repository() ||
-+		(!worktree->is_current && is_bare_git_dir(repo_get_common_dir(the_repository)));
-+
- 	if (!skip_reading_head)
- 		add_head_info(worktree);
- 	return worktree;
-
-base-commit: 25b0f41288718625b18495de23cc066394c09a92
--- 
-gitgitgadget
+Patrick
