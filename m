@@ -1,35 +1,35 @@
-Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
+Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40951824BD
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 22:18:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD1A18BC3D
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 22:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731709117; cv=none; b=af9aWD4Hsh0BrkaYsxEQgwAPXbVt3JJDhBU44BYO5SpTp24LR03uhWqca09yLoAlHzV7/nQWQl6T4j1cx2ZUNEHRyleei/cYrtgJfMtTq5hX0yy4+6GYcXduq35/4F/Ook+mWDvS+YrY/nYrMTCUVoTg6OMNTRCqWh0N9+PqbAQ=
+	t=1731711310; cv=none; b=stQz1MaTxbhQB+vWgGdaTw9fzyHQFbfsJmsXUIiAkfVwAy/zcZsEv1gBfsGYu0wbBrukPJ0a5Mcdo1U4Viip53sfYgLTlAyyWD9EN32u9nLQ9ny//Mlsp6QXNOnMs3HWBlMwPt+SKaeM0Gm9N3RKYxehnyZIoJwcjL1NmfHaRhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731709117; c=relaxed/simple;
-	bh=F96GMd6dJkLCUESh3UOvOWuFpvVw/ujIhFy4VpAOFeM=;
+	s=arc-20240116; t=1731711310; c=relaxed/simple;
+	bh=64FdWw3sU5OGR7b1ZyVCZkF/rOkU+oDn+cjA2OUpV1Q=;
 	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=greft0X8BD+puPwVgUPnNNDVsrWjNhnvpwhdknEiSEE1/EhwUleUsYEuM3N4Oe7/cCYZcV9o1n3q8663atHVyE+fBgya3dQUXdbHpM54KbGG2vKAZjwl25i4temmZFVzts6BVrGwQ/2+UdLUWqPaYYVGADM8n1tzneS4nApfSyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=dDxlTYfG; arc=none smtp.client-ip=192.29.178.127
+	 References:In-reply-to; b=gJ+sDMr/a5mCb3ThBiWmd8MW8OISagGj5diwEeEq/yu8Ne8eDSgD3jZb7CbnpnwCaMEnxjfBup/j6itxMiK9Jw6Qvr1RWot9YmgU8oo2zEHqOK2P1vwWWXKT1OEE1eMsu8LfuLP6FkCtVfq98g4sZxQXEjO3XO7uFkk2UjzYaZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=Wyz4y7CK; arc=none smtp.client-ip=192.29.178.123
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="dDxlTYfG"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="Wyz4y7CK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=etu4WuKP1vwHiWHzfkJIGIt/9/8D/Ym/cusQYqXsvK0=;
- b=dDxlTYfGJgLHida8zimfAsr/elvVhqdXikkL0pU4hbTmVlqczxiMtefKaJR/a9aWre8SBlv4AL+I
-   ea+pfSh0yXfDVeXtC4oMpxSvBgap+by2Hb24R+oAHtGv/14kTgJP4aVReJD9bGG1yVkbOGXNPYyJ
-   Hhdk5JF2dcWbGeGnsqhl48bvFBDtCjc13sI91vNDnnMN4WOzjxDYX+ssahZdyOYGFr4Xzv6QjVw1
-   IY7oS7eX4VNYmhOUb2i7fa13BayBTGdLGvczP28MPqhXgwKFnuZUIKIPUH0709SBd8QWU8syP/pZ
-   pG2LK05+MnLO2wz0szo5JB6ROT+WK6lLupxpDw==
-Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=HqDRlYKnP99VzqJYIvBppVnmqZ71gDTcvzZ5zjLLfCo=;
+ b=Wyz4y7CKFz+Fdom+icrHqoIlEueLDK/QActGAJRoPH8oP/ertqGGexmgXfN013KIfxGdbozc53Eg
+   MreSDfonIooPizjMwUPi0lJAZeM98Lw+uLqIpzNVTu3Ewk8B1ivQxxq0TjAMgTVqwz/YeYfEum4w
+   lnSc4UvoOC/igVkbMNMYRKeEWvpiHA0V+LuyE4kfPx7HvKUaXNdl/15RcL+Dc/vuT7RhNKyXyNi5
+   /SSYc0BH2rhoCm7yEy6cWlXI7KnJPODyidBo7ZLM7lpF9d1RHbQP+TAfLs/ZQtvAY1yMDQhvX55A
+   WdRAPD9q/6hgexq/YN/VUp7Tdus1kC94Qu0/1A==
+Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
  2024))
- with ESMTPS id <0SN00010IJAXKO50@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 15 Nov 2024 22:18:33 +0000 (GMT)
+ with ESMTPS id <0SN0007BLKRBE7F0@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 15 Nov 2024 22:49:59 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,10 +39,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: quoted-printable
 Content-type: text/plain; charset=UTF-8
-Date: Fri, 15 Nov 2024 23:18:10 +0100
-Message-id: <D5N3N1RMMR9Q.28GSGYYBWZSOS@ferdinandy.com>
-Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
- update_symref
+Date: Fri, 15 Nov 2024 23:49:33 +0100
+Message-id: <D5N4B2SSZAG4.1O5CERCP825X2@ferdinandy.com>
+Subject: Re: [PATCH v12 4/8] remote set-head: better output for --auto
 Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
  =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
  "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
@@ -51,130 +50,121 @@ To: "Junio C Hamano" <gitster@pobox.com>
 From: "Bence Ferdinandy" <bence@ferdinandy.com>
 References: <20241022194710.3743691-1-bence@ferdinandy.com>
  <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-3-bence@ferdinandy.com> <xmqqr07d11wt.fsf@gitster.g>
-In-reply-to: <xmqqr07d11wt.fsf@gitster.g>
+ <20241023153736.257733-5-bence@ferdinandy.com> <xmqqcyix11w8.fsf@gitster.g>
+In-reply-to: <xmqqcyix11w8.fsf@gitster.g>
 Reporting-Meta:
- AAH5dsURVtkRltt7fHCtA9v9yRgPK8NK+EwGIdE3brWl3hpDY6A4kL5ri9dUovbX
- 3xt0SWfdG2mB2IkGsF7KaUPDX+JhLMXbvVfp5zOUXcgr7fAq5BGV13dn+vywhwzJ
- zydPdqFvWKWL/qd3qFgy+y1cA/a+YjUArlqoiEu83p1zVuxhi4HHjNi8L77j6zqa
- TYSOeZoa2GUkgAWgZz4Sj5HiiYMc8jfW1oCsfvNltikkTwDVoZvn03wAvb+/dals
- yj5FLHMZDMbqsjOjl+UWm26P+owlOtr8VoJHIia4UA/R9l1V0kwY5/7OZidH4YGj
- RRgIZqmnwSJXYDIEvsYPQ53kiMubQA2q8JzLr163IkBFu/3QNNFvzlPJS1JLFzMp
- 6ju4XvAVRMU/KXYdmeWKl7pA5cykqRDwP/cT9o2WO1o1m4t4Etom74YUdn0O2ymu
- 8KVGFLTDN+16xBNfS9nkIPDcSDHX44ICqKzWt1+cnFp/1k16BlTHGbk=
+ AAG8dyYPLmahVn8WU7+eSZYP/dtztSN+C6RaVVwpAr+Mw50KqThW/WCmaZJvT6Pv
+ lM8kUWktdUq2+19iiFWZOc7C8ECZ71CDt2P7xgJXu6aGXY0IubnT6mMVtElhc9dw
+ WpJlozrwSStaJnY5dQZsOKNR1PN8DwKlPcL0nJxnPacOIL+T4CjRQ6w2OdSycf5o
+ 4Flxad+p6awmjjL3he5t/DMlhqvxW8hyaWW4C37ShlMopbxB8vN7WQpiXCSwR0n2
+ pn5IjCZxgT7ICdycH6lYsDBTHNOdGvq/bm+nLbP7K86J3KHt1GQxmhbLB1mXu9gW
+ LW7yKqjcQdg6RTrCXiEhCPdo5QVX1FTVc8MRr3Wp2GcX3jLwwTsayxRVS61qG/Y/
+ kAJ5RTooXqqF8VBclRJ+xqdRw5flXixBSugPfSdvaXHj64nSYvD9qbivZWSrDgav
+ uYu6nu+baWF3NESc1fEpupvM0UYF8FJyR8MmnDiyTPDyT6NzzWi0I59t
 
 
 On Fri Nov 15, 2024 at 06:50, Junio C Hamano <gitster@pobox.com> wrote:
 > Bence Ferdinandy <bence@ferdinandy.com> writes:
 >
->>  int refs_update_symref(struct ref_store *refs, const char *ref,
->>  		       const char *target, const char *logmsg)
->> +{
->> +	return refs_update_symref_extended(refs, ref, target, logmsg, NULL);
->> +}
+>> Currently, set-head --auto will print a message saying "remote/HEAD set
+>> to branch", which implies something was changed.
+>>
+>> Change the output of --auto, so the output actually reflects what was
+>> done: a) set a previously unset HEAD, b) change HEAD because remote
+>> changed or c) no updates. As a fourth output, if HEAD is changed from
+>> a previous value that was not a remote branch, explicitly call attention
+>> to this fact.
 >
-> OK.  As the enhanced and renamed function is also external, we do
-> not have to worry about reordering the old one to come after the new
-> one.
+> OK.  That's sensible.
+>
+> There is a slight variant of the fourth case.  HEAD may have been a
+> symbolic ref that pointed at an unexpected place (which you
+> addressed), or HEAD may have been a non-symbolic ref (which the new
+> code would mistakenly say "HEAD is now created", if I am reading the
+> patch correctly).
 
-I guess this also decides that the name "_extended" is fine :)
+Good point, and yes, that is what happens. (Although I'm not quite sure how
+valid that state is where a remote's HEAD is not a branch).
 
 >
->> +int refs_update_symref_extended(struct ref_store *refs, const char *ref=
-,
->> +		       const char *target, const char *logmsg,
->> +		       struct strbuf *referent)
->>  {
->>  	struct ref_transaction *transaction;
->>  	struct strbuf err =3D STRBUF_INIT;
->> @@ -2122,13 +2129,20 @@ int refs_update_symref(struct ref_store *refs, c=
-onst char *ref,
+>> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+>> index 9b50276646..0ea86d51a4 100755
+>> --- a/t/t5505-remote.sh
+>> +++ b/t/t5505-remote.sh
+>> @@ -432,12 +432,51 @@ test_expect_success 'set-head --auto' '
+>>  	)
+>>  '
 >> =20
->>  	transaction =3D ref_store_transaction_begin(refs, &err);
->>  	if (!transaction ||
->> -	    ref_transaction_update(transaction, ref, NULL, NULL,
->> +		ref_transaction_update(transaction, ref, NULL, NULL,
+>> +test_expect_success 'set-head --auto detects creation' '
+>> +	(
+>> +		cd test &&
+>> +		git symbolic-ref -d refs/remotes/origin/HEAD &&
 >
-> An unwanted patch noise?
+> Are we sure refs/remotes/origin/HEAD exists at this point in the
+> test, regardless of which earlier tests were skipped or failed?  If
+> not, perhaps
 >
->>  				   target, NULL, REF_NO_DEREF,
->>  				   logmsg, &err) ||
->> -	    ref_transaction_commit(transaction, &err)) {
->> +		ref_transaction_prepare(transaction, &err)) {
+> 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
 >
-> Likewise, but the noise distracts from the real change made on this
-> line, which is even worse.
+> is a better alternative.
 
-Mea culpa, I'll get this cleaned up.
+Ack.
 
 >
-> The real change here is to only call _prepare(), which also asks the
-> transaction hook if we are OK to proceed.  If we fail, we stop here
+>> +		git remote set-head --auto origin >output &&
+>> +		echo "${SQ}origin/HEAD${SQ} is now created and points to ${SQ}main${S=
+Q}" >expect &&
+>> +		test_cmp expect output
+>> +	)
+>> +'
 >
->>  		ret =3D error("%s", err.buf);
->> +		goto cleanup;
+> Here, we could insert another one:
 >
-> This is also a real change.  We could instead make the additional
-> code below into the else clause (see below).
+> test_expect_success 'set-head --auto to update a non symbolic ref' '
+> 	(
+> 		cd test &&
+> 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
+> 		git update-ref refs/remotes/origin/HEAD HEAD &&
+> 		git remote set-head --auto origin >output &&
 >
->>  	}
->> +	if (referent)
->> +		refs_read_symbolic_ref(refs, ref, referent);
+> I'd imagine "output" should at least say that we are setting up a
+> symref origin/HEAD to point at some ref the --auto option figured
+> out, and if we wanted to report its previous state, it was a non
+> symbolic ref that pointed at some commit.  In any case,
 >
-> And if we were asked to give the value of the symbolic ref, we make
-> this call.  What should this code do when reading fails (I know it
-> ignores, as written, but I am asking what it _should_ do)?
+> 		echo "${SQ}origin/HEAD${SQ} is now created and points to ${SQ}main${SQ}=
+" >expect &&
+>
+> is not what we want to see here, I suspect.
+>
+> Can we detect the case where we overwrite a non symref with a symref
+> without going back to step 2/8 and doing a major surgery?
+>
+> 		test_cmp expect output
+> 	)
+> '
 
-I think this should do _nothing_ if it fails (although should it stay this =
-way,
-I guess it should be marked with a comment that this is on purpose). My
-reasoning is that running `git fetch` will be running this part of the code=
-,
-which means that should reading the symbolic ref fail for any reason, a `fe=
-tch`
-that previously ran without error would now fail. We now pass up an empty
-string as the previous which does mask that there was an error here. What
-I think we could maybe do is pass up a special string that means there was =
-an
-error? Something that for sure cannot be a valid value for an existing
-reference? I'm not sure how much sense that makes.
+I agree, adding this makes sense. And this also takes us back to the questi=
+on
+of what we should do in 2/8 when refs_read_symbolic_ref exits with 1. I now
+tested the behaviour and if origin/HEAD is gibberish, git already dies befo=
+re
+with=20
 
->
->> +	if (ref_transaction_commit(transaction, &err))
->> +		ret =3D error("%s", err.buf);
->
-> And then we commit, or we fail to commit.
->
->> +cleanup:
->
-> We could write the whole thing as a single "do these and leave as
-> soon as we see any failure" ||-cascade,
->
-> 	if (!(transaction =3D ref_store_transaction_begin(refs, &err)) ||
->
-> 	    ref_transaction_update(transaction, ref, NULL, NULL,
-> 				   target, NULL, REF_NO_DEREF,
-> 				   logmsg, &err) ||
->
-> 	    ref_transaction_prepare(transaction, &err)) ||
->
-> 	    (referent
-> 	    ? refs_read_symbolic_ref(refs, ref, referent)
-> 	    : 0) ||
->
-> 	    ref_transaction_commit(transaction, &err)) {
-> 		if (!err.len)
-> 			... stuff default error message to err ...;
-> 		ret =3D error("%s", err.buf);
-> 	}
->
-> which may not necessarily easier to follow (and in fact it is rather
-> ugly), but at least, the resulting code does not have to special
-> case the "optionally peek into the symref" step.
+error: cannot lock ref 'refs/remotes/origin/HEAD': unable to resolve refere=
+nce 'refs/remotes/origin/HEAD': reference broken
 
-As I said above, I don't think we actually want to fail the update even if =
-the
-symbolic ref reading fails, so I think the special casing should stay. I'll
-wait here to see more clearly on what to do here.
+so refs_read_symbolic_ref -> 1 only happens if there's a valid non-symbolic=
+ ref
+in origin/HEAD. So maybe if we put "Not a symbolic reference." in the refer=
+ent
+(which should be an invalid symref), the caller could check for that and th=
+en
+should be able to distinguish this special case?
 
+Thanks,
+Bence
+
+--=20
+bence.ferdinandy.com
 
