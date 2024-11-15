@@ -1,86 +1,86 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AB9190057
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 07:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9553518A6A3
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 07:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731655314; cv=none; b=PH1On8VwwyfrBC6YOCZyCJoQbCHKkWgGpT5atr/LzYAXB47anld/pyT7LVUqXAJMv8IKDZdzyPWEu6q/hbccKHwbYEYXpLIEXPux1izlap2J9DHh3hFdaJnxXDcWV1hsK/+gaTwCHM79fh8vqjIRQ1SdF8S4XicnxaMwwRP5pOY=
+	t=1731655316; cv=none; b=ChH3E0cvQ8zHvOCK/OlT5LGS1Ns9q5hpd16hn2v59Xjfk917i82K3mFWHfUPte7eLz2fKL9G13safXU2MXYUkJZGrHoYzZOeuRLRCCCKtLJT6AYx0TazbSyUG5Vghs1xu96nMAVl48tTfCTN/07N3Xl8WFYzO8gYqOMfXCV+Tto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731655314; c=relaxed/simple;
-	bh=vOes/yivM4uccJnDS5G+1EvYbp4OBAYEbFpRl9G6P0M=;
+	s=arc-20240116; t=1731655316; c=relaxed/simple;
+	bh=weXFrS1k2W1KI0yHcrhAlxFWa4n+OBrMS5h4TdCyauk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Nf4AT1zE5Qb5Lj2BI+KFAexEe1+1AdgF52e5RfrLL2VgmT+0Q1zZdLlc8MtAtJ35i7a6DxoTpnlYuI28lxZNns2BC1cZcaYoX4Yq3EB3+mcSHyAvIEQzCUpoEL+sybXh78qweI1hzk0AKgg+jN4DD8ngmx5GUBoAFPSuYVqEQbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=4XQk0xwb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VBnTylBv; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=WTEGKLa+kflUGFrkCNkp1tPh9LtQWI11t+hDxjG97zN4Caz+HQ6yn+nVx3nsN1FARu3e2yDxUJCcDgaJHPdKIOWaTqclxS1tF+rCKQeQhtt9qHV2ZO+Dd49ZGg/cJf4drR4pT7P92PQRIqNwS2Ig9JcROql1WaJQIuv8S81XX5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tJ4/xwpA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EdQBQI9x; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="4XQk0xwb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VBnTylBv"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AC52511400BC;
-	Fri, 15 Nov 2024 02:21:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tJ4/xwpA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EdQBQI9x"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id B71C41380604;
+	Fri, 15 Nov 2024 02:21:53 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 15 Nov 2024 02:21:51 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 15 Nov 2024 02:21:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1731655311;
-	 x=1731741711; bh=72Xit7k02j0z0R6gf3nNs4NRiMOdJIYmHyQqNYaRThM=; b=
-	4XQk0xwbCJBO2CR+YkurCu7A2k83GfBUaJBiE2ivUaWTck/j/38tBeuKDuBZDpx+
-	VsDBbfVgyfnDUI57qWkrnKjZ9bPamR3qtySAhrZzhje/NhH5mzahzvXFUY5YU622
-	EnIstSw3vzYng32xYrtDfNUtJDIUziPLqNogaxj6ExNPoNZIPtk2xLeBMt2ipp/x
-	uq4vXwSxJvJWpGZrAFjCd6cfRLlTJOTiuDx7/EXkd3Xq1KajkJ1kLAyJuwuKCMeC
-	omfq4pahd21TRYqBoiNT06naPrLSMiLtsagayH33eMnofo9x0KVm8wdAmjW2E5zN
-	LHqgxZH9RTq6bPayGaWv8Q==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731655313;
+	 x=1731741713; bh=FTuK41+7EJKdu1VD5UikTuZUDEo+V2zk63dqmQCCBaU=; b=
+	tJ4/xwpA8TPkLY1yXCM1F3Eo1GPx/p3FRVqaFz8tmHzvRBKqEDCYlDEoZDXA4Bgw
+	EZ3crVb5vpOWiPFE+JQzVGZklTLK+GPF/He/0fWUsJ1LnEX/hJN+9a9J0VsbJRkx
+	JgNXWM7Pa8Macl+YFRDXH7J7+84ZZYJzEKxNpxCchW/qGaFwx3ghMyWZOh7sG8B8
+	InzxQ5Cy4uz+Bv8Q++dEW1hWx20sP1KQogsMcsMQbJNmMm+9GhN0bVjNtmoXaXw4
+	0oXbiHDiD4KpUte+7VwLmJtsmoBMHQuP6/DwSmlvTDT13efHfEEnqMVWgu/vo0TW
+	rnMlDC/xiQ/xwzKpl88Z8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731655311; x=
-	1731741711; bh=72Xit7k02j0z0R6gf3nNs4NRiMOdJIYmHyQqNYaRThM=; b=V
-	BnTylBvaQNgn8Z1Xw7s6ESWgrd7+NDiymHAuuH0VCF4COd2xkKXvhL7BnWcVQYPL
-	JDeTY6x8gBQdrdt9hg9GEvfUcmphfMF3RakwT4abd1tv2b1Gw5ia6b29lpmpyF22
-	ultymeQTCDnPY0en7p3KBAvU//rzkpac4rgentzcreX2cV4XnRzitEGaCkzeuICJ
-	Ho0kr9R4LErxLVRCahzEYcZOWjaiKWNhHQGjZEGB6hXf3ACbbK1YtX1AOuHBvQdq
-	KwaU1MJdH0teei1l9PGQeHBZUONr9gYMS/CPyqGGbDr16NGhMQLINsfn8eK6AguV
-	juWA41H3V8Y3vpeFqGmdg==
-X-ME-Sender: <xms:j_Y2Z6DUQ97crayTmMzXaQvucYuLfiLodL9mPCtKK-XXmDqhiBswtg>
-    <xme:j_Y2Z0hkX591FkilhR1RmkiCb7Vs-ixMS-7PoPxn73mkJHHcFjMDmXpGsrb5BnQB7
-    Z0nWfu6XpYd5-tdwg>
-X-ME-Received: <xmr:j_Y2Z9m6dmmH6TSeJUYrbVnQbTlEyaz9otr-pM9rynSiRAAK3LSZFe4Rr0cWJ_syxs9H2x9KN2A-vb6dAKu-GP1z2KmUj7exOl91H0rEqpLrT2tz5g>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731655313; x=
+	1731741713; bh=FTuK41+7EJKdu1VD5UikTuZUDEo+V2zk63dqmQCCBaU=; b=E
+	dQBQI9xg8xJOdE/2dagGHChhmeuNq+AO1ajA6YoYWpi0rVhAF4AYlaK3qKCtzeEH
+	NhY5OZ5Pw3K1nZZfan6GI1f0XQDefiYVJSNZ8NUey12w4WpIX7fX0B8ol7Mn93IR
+	BA4nwHfu7oPNRMFl2V4JWjIPv3CEvyae2aR7Ru3vmGk14ymjwbAGqpcZz5RDHS7V
+	DhbdVIXnhHTSTscH8eAg9tPkpvJJ1lPf5fh/QlyynKLKsOYkeqmU24Hy24da4fXF
+	XdR7gNhGM0DK4rfcrKHrb6SCitlczc0lJsm5yLitINMt0prrFjPo1Y8068WpEYgw
+	QfsN9JVPwyFeRJ7SJ3CRg==
+X-ME-Sender: <xms:kfY2Z_K1i-m2E9-Bpz0_BJwMQHKkO-16FbL4l8_MlfQG0HK5gEt36g>
+    <xme:kfY2ZzIAAtX1wq5RP4XP2bwoG2T-OPfoOzVVu4Z59Y1oAvk42s4FxnlsP7D0Cg-VE
+    PpHkSYdVrWPUb4mxg>
+X-ME-Received: <xmr:kfY2Z3tZf_88T434wnfU1LueZk7g3jR5CWita1vMWEd5_XYPFvU8L8gF16mL9GmRyJPlfyW45KUUcksbY97QH1ih7etqUHlJmyHmeex6j1nF-Lrwig>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddutdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevjeehtddugffgfeelffevkeevfeehvdekhffgvdet
-    gfejlefhudfhtdeggeehvdenucffohhmrghinhepthigthdrrghuthhonecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
-    nhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvg
-    esthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhht
-    ohhordhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
-    hushdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghp
-    thhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhope
-    gurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhn
-    vghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:j_Y2Z4zwW0aj2y5etv3EpAoy5FdlgPOHWjVJGaHNXaj1XwErlZzIdQ>
-    <xmx:j_Y2Z_T3lvR2_DdPjEOi4xtzfd8BV_Y2_JmGWJTzRV50vMb8rHG4NA>
-    <xmx:j_Y2ZzZn43Qd-_uwHMIF6fvagx_Cd83axA7JhQjwj1RuiRct0APSLQ>
-    <xmx:j_Y2Z4QH83-iLT63iD6zvMJF6U2ellfQYKYmupvuhBDdisfU8LBV6w>
-    <xmx:j_Y2Z3azmbdDm3PP7xsHhQ0KjaLyEOlP8GCieQMdSKKTBzhIRqnQoi6V>
+    hmqeenucggtffrrghtthgvrhhnpeegieffuefhjeegffejkeeugeetvdegtddvffeuudfg
+    teeugffgleetffdukeefjeenucffohhmrghinhephhhtthhprdhshhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
+    sggprhgtphhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrvh
+    hvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvges
+    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhih
+    hnvggtohdrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhr
+    gh
+X-ME-Proxy: <xmx:kfY2Z4YH5Z-qCs_CVtJRjWFXpdLNd0mcsYZW_d_keUzTnThzSDb9nQ>
+    <xmx:kfY2Z2ZcEjl-YtbGhATZ2FEtv9xCGg8E9GHVPxks1lkJSJWUSkCoQQ>
+    <xmx:kfY2Z8CXw-71_tRd3NPDMDcD609szbXoR9PbMb9Cuxk-_ttM8sDpNw>
+    <xmx:kfY2Z0auOzs0CSFdUUbOylOHGvlL0SpTMbHIg71dVmO6TWfk5L-yvg>
+    <xmx:kfY2ZzTUAFE4B-zHDqcNlWNxAC2yw7SYMuZ87pB5RDR09Hh37UhtjD2G>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Nov 2024 02:21:49 -0500 (EST)
+ 15 Nov 2024 02:21:51 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cecf4cf2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 15 Nov 2024 07:21:07 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id cb9fb554 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 15 Nov 2024 07:21:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 15 Nov 2024 08:21:32 +0100
-Subject: [PATCH RFC v7 20/22] Documentation: add comparison of build
- systems
+Date: Fri, 15 Nov 2024 08:21:34 +0100
+Subject: [PATCH RFC v7 22/22] meson: fix conflicts with in-flight topics
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241115-pks-meson-v7-20-47ec19b780b2@pks.im>
+Message-Id: <20241115-pks-meson-v7-22-47ec19b780b2@pks.im>
 References: <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
 In-Reply-To: <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
 To: git@vger.kernel.org
@@ -102,258 +102,147 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-We're contemplating whether to eventually replace our build systems with
-a build system that is easier to use. Add a comparison of build systems
-to our technical documentation as a baseline for discussion.
+As support for Meson is still in-flight we have to accommodate for
+conflicts with topics in "seen". The following conflicts are being
+addressed in this commit:
+
+  - ej/cat-file-remote-object-info adds t1017 and "fetch-object-info.c".
+
+  - cc/promisor-remote-capability adds t5710.
+
+  - ds/path-walk adds t6601 as well as "path-walk.c" and
+    "test-path-walk.c".
+
+  - ps/reftable-detach adds "reftable/system.c".
+
+  - js/libgit-rust adds "common-exit.c" and "common-init.c".
+
+  - ps/clar-build-improvement adapts the awk(1) script that generates
+    "clar.suites" to instead be a shell script.
+
+  - ds/full-name-hash adds "t/helper/test-name-hash.c".
+
+  - cw/worktree-extension deletes t2408.
+
+This is somewhat painful in the current state where Meson is not yet
+part of the main tree, but we'll have to live with that for the time
+being.
+
+I've split this commit out into a separate fixup-style commit such that
+it is possible to test this topic both with and without "seen" merged
+into it. You can simply revert this commit to test without "seen".
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/Makefile                    |   1 +
- Documentation/technical/build-systems.txt | 224 ++++++++++++++++++++++++++++++
- 2 files changed, 225 insertions(+)
+ meson.build          | 5 +++++
+ t/helper/meson.build | 2 ++
+ t/meson.build        | 9 +++++----
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index e2ce98a751f090af8a8c095e7b138ef601e9c0be..e1527c6d4429efdd2341163ef895a13ddeae8e2f 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -111,6 +111,7 @@ TECH_DOCS += MyFirstObjectWalk
- TECH_DOCS += SubmittingPatches
- TECH_DOCS += ToolsForGit
- TECH_DOCS += technical/bitmap-format
-+TECH_DOCS += technical/build-systems
- TECH_DOCS += technical/bundle-uri
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/long-running-process-protocol
-diff --git a/Documentation/technical/build-systems.txt b/Documentation/technical/build-systems.txt
-new file mode 100644
-index 0000000000000000000000000000000000000000..d9dafb407c40902756ca0bde9d9dad8ced8788dd
---- /dev/null
-+++ b/Documentation/technical/build-systems.txt
-@@ -0,0 +1,224 @@
-+= Build Systems
-+
-+The build system is the primary way for both developers and system integrators
-+to interact with the Git project. As such, being easy to use and extend for
-+those who are not directly developing Git itself is just as important as other
-+requirements we have on any potential build system.
-+
-+This document outlines the different requirements that we have for the build
-+system and then compares available build systems using these criteria.
-+
-+== Requirements
-+
-+The following subsections present a list of requirements that we have for any
-+potential build system. Sections are sorted by decreasing priority.
-+
-+=== Platform support
-+
-+The build system must have support for all of our platforms that we continually
-+test against as outlined by our platform support policy. These platforms are:
-+
-+  - Linux
-+  - Windows
-+  - macOS
-+
-+Furthermore, the build system should have support for the following platforms
-+that generally have somebody running test pipelines against regularly:
-+
-+  - AIX
-+  - FreeBSD
-+  - NetBSD
-+  - NonStop
-+  - OpenBSD
-+
-+The platforms which must be supported by the tool should be aligned with our
-+[platform support policy](platform-support.txt).
-+
-+=== Auto-detection of supported features
-+
-+The build system must support auto-detection of features which are or aren't
-+available on the current platform. Platform maintainers should not be required
-+to manually configure the complete build.
-+
-+Auto-detection of the following items is considered to be important:
-+
-+  - Check for the existence of headers.
-+  - Check for the existence of libraries.
-+  - Check for the existence of exectuables.
-+  - Check for the runtime behavior of specific functions.
-+  - Check for specific link order requirements when multiple libraries are
-+    involved.
-+
-+=== Ease of use
-+
-+The build system should be both easy to use and easy to extend. While this is
-+naturally a subjective metric it is likely not controversial to say that some
-+build systems are considerably harder to use than others.
-+
-+=== IDE support
-+
-+The build system should integrate with well-known IDEs. Well-known IDEs include:
-+
-+  - Microsoft Visual Studio
-+  - Visual Studio Code
-+  - Xcode
-+
-+There are four levels of support:
-+
-+  - Native integration into the IDE.
-+  - Integration into the IDE via a plugin.
-+  - Integration into the IDE via generating a project description with the build
-+    system.
-+  - No integration.
-+
-+Native integration is preferable, but integration via either a plugin or by
-+generating a project description via the build system are considered feasible
-+alternatives.
-+
-+Another important distinction is the level of integration. There are two
-+features that one generally wants to have:
-+
-+  - Integration of build targets.
-+  - Automatic setup of features like code completion with detected build
-+    dependencies.
-+
-+The first bullet point is the bare minimum, but is not sufficient to be
-+considered proper integration.
-+
-+=== Out-of-tree builds
-+
-+The build system should support out-of-tree builds. Out-of-tree builds allow a
-+developer to configure multiple different build directories with different
-+configuration, e.g. one "debug" build and one "release" build.
-+
-+=== Cross-platform builds
-+
-+The build system should support cross-platform builds, e.g. building for arm on
-+an x86-64 host.
-+
-+=== Language support
-+
-+The following languages and toolchains are of relevance and should be supported
-+by the build system:
-+
-+  - C: the primary compiled language used by Git, must be supported. Relevant
-+    toolchains are GCC, Clang and MSVC.
-+  - Rust: candidate as a second compiled lanugage, should be supported. Relevant
-+    toolchains is the LLVM-based rustc.
-+
-+Built-in support for the respective languages is preferred over support that
-+needs to be wired up manually to avoid unnecessary complexity. Native support
-+includes the following features:
-+
-+  - Compiling objects.
-+  - Dependency tracking.
-+  - Detection of available features.
-+  - Discovery of relevant toolchains.
-+  - Linking libraries and executables.
-+  - Templating placeholders in scripts.
-+
-+=== Test integration
-+
-+It should be possible to integrate tests into the build system such that it is
-+possible to build and test Git within the build system. Features which are nice
-+to have:
-+
-+  - Track build-time dependencies for respective tests. Unit tests have
-+    different requirements than integration tests.
-+  - Allow filtering of which tests to run.
-+  - Allow running tests such that utilities like `test_pause` or `debug` work.
-+
-+== Comparison
-+
-+The following list of build systems are considered:
-+
-+- GNU Make
-+- autoconf
-+- CMake
-+- Meson
-+
-+=== GNU Make
-+
-+- Platform support: ubitquitous on all platforms, but not well-integrated into Windows.
-+- Auto-detection: no built-in support for auto-detection of features.
-+- Ease of use: easy to use, but discovering available options is hard. Makefile
-+  rules can quickly get out of hand once reaching a certain scope.
-+- IDE support: execution of Makefile targets is supported by many IDEs
-+- Out-of-tree builds: supported in theory, not wired up in practice.
-+- Cross-platform builds: supported in theory, not wired up in practice.
-+- Language support:
-+  - C: Limited built-in support, many parts need to be wired up manually.
-+  - Rust: No built-in support, needs to be wired up manually.
-+- Test integration: partially supported, many parts need to be wired up
-+  manually.
-+
-+=== autoconf
-+
-+- Platform support: ubiquitous on all platforms, but not well-integrated into Windows.
-+- Auto-detection: supported.
-+- Ease of use: easy to use, discovering available options is comparatively
-+  easy. The autoconf syntax is prohibitively hard to extend though due to its
-+  complex set of interacting files and the hard-to-understand M4 language.
-+- IDE support: no integration into IDEs at generation time. The generated
-+  Makefiles have the same level of support as GNU Make.
-+- Out-of-tree builds: supported in theory, not wired up in practice.
-+- Cross-platform builds: supported.
-+- Language support:
-+  - C: Limited built-in support, many parts need to be wired up manually.
-+  - Rust: No built-in support, needs to be wired up manually.
-+- Test integration: partially supported, many parts need to be wired up
-+  manually.
-+
-+=== CMake
-+
-+- Platform support: not as extensive as GNU Make or autoconf, but all major
-+  platforms are supported.
-+  - AIX
-+  - Cygwin
-+  - FreeBSD
-+  - Linux
-+  - OpenBSD
-+  - Solaris
-+  - Windows
-+  - macOS
-+- Ease of use: easy to use, discovering available options is not always
-+  trivial. The scripting language used by CMake is somewhat cumbersome to use,
-+  but extending CMake build instructions is doable.
-+- IDE support: natively integrated into Microsoft Visual Studio. Can generate
-+  project descriptions for Xcode. An extension is available for Visual Studio
-+  Code. Many other IDEs have plugins for CMake.
-+- Out-of-tree builds: supported.
-+- Cross-platform builds: supported.
-+- Language support:
-+  - C: Supported for GCC, Clang, MSVC and other toolchains.
-+  - Rust: No built-in support, needs to be wired up manually.
-+- Test integration: supported, even though test dependencies are a bit
-+  cumbersome to use via "test fixtures". Interactive test runs are not
-+  supported.
-+
-+=== Meson
-+
-+- Platform: not as extensive as GNU Make or autoconf, but all major platforms
-+  and some smaller ones are supported.
-+  - AIX
-+  - Cygwin
-+  - DragonflyBSD
-+  - FreeBSD
-+  - Haiku
-+  - Linux
-+  - NetBSD
-+  - OpenBSD
-+  - Solaris
-+  - Windows
-+  - macOS
-+- Ease of use: easy to use, discovering available options is easy. The
-+  scripting language is straight-forward to use.
-+- IDE support: Supports generating build instructions for Xcode and Microsoft
-+  Visual Studio, a plugin exists for Visual Studio Code.
-+- Out-of-tree builds: supported.
-+- Cross-platform builds: supported.
-+- Language support:
-+  - C: Supported for GCC, Clang, MSVC and other toolchains.
-+  - Rust: Supported for rustc.
-+- Test integration: supported. Interactive tests are supported starting with
-+  Meson 1.5.0 via the `--interactive` flag.
+diff --git a/meson.build b/meson.build
+index 17974eafdd86d9c1b6696868f1497b71caa165a3..f5f6bd183f187540a9a0aa1e02d276d819f54d7a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -217,6 +217,8 @@ libgit_sources = [
+   'commit-graph.c',
+   'commit-reach.c',
+   'commit.c',
++  'common-exit.c',
++  'common-init.c',
+   'compat/nonblock.c',
+   'compat/obstack.c',
+   'compat/terminal.c',
+@@ -255,6 +257,7 @@ libgit_sources = [
+   'ewah/ewah_rlw.c',
+   'exec-cmd.c',
+   'fetch-negotiator.c',
++  'fetch-object-info.c',
+   'fetch-pack.c',
+   'fmt-merge-msg.c',
+   'fsck.c',
+@@ -329,6 +332,7 @@ libgit_sources = [
+   'parse-options.c',
+   'patch-delta.c',
+   'patch-ids.c',
++  'path-walk.c',
+   'path.c',
+   'pathspec.c',
+   'pkt-line.c',
+@@ -369,6 +373,7 @@ libgit_sources = [
+   'reftable/reader.c',
+   'reftable/record.c',
+   'reftable/stack.c',
++  'reftable/system.c',
+   'reftable/tree.c',
+   'reftable/writer.c',
+   'remote.c',
+diff --git a/t/helper/meson.build b/t/helper/meson.build
+index 5e83884246edc7841738de5085f3255aa1fa3fbe..1d6154ce9756db17bc9f69bc3cd71a32b93857c5 100644
+--- a/t/helper/meson.build
++++ b/t/helper/meson.build
+@@ -34,12 +34,14 @@ test_tool_sources = [
+   'test-match-trees.c',
+   'test-mergesort.c',
+   'test-mktemp.c',
++  'test-name-hash.c',
+   'test-online-cpus.c',
+   'test-pack-mtimes.c',
+   'test-parse-options.c',
+   'test-parse-pathspec-file.c',
+   'test-partial-clone.c',
+   'test-path-utils.c',
++  'test-path-walk.c',
+   'test-pcre2-config.c',
+   'test-pkt-line.c',
+   'test-proc-receive.c',
+diff --git a/t/meson.build b/t/meson.build
+index 9ec0b7fa34a033d508448dbd56ab2322a5106fd0..8f0ba136eeb0558f866d7fd3f0559d94139d4777 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -19,9 +19,8 @@ clar_sources += clar_decls_h
+ clar_sources += custom_target(
+   input: clar_decls_h,
+   output: 'clar.suite',
+-  feed: true,
+-  capture: true,
+-  command : [awk, '-f', meson.current_source_dir() + '/unit-tests/clar-generate.awk'],
++  command : [shell, meson.current_source_dir() + '/unit-tests/generate-clar-suites.sh', '@INPUT@', '@OUTPUT@'],
++  env: script_environment,
+ )
+ 
+ clar_unit_tests = executable('unit-tests',
+@@ -168,6 +167,7 @@ integration_tests = [
+   't1014-read-tree-confusing.sh',
+   't1015-read-index-unmerged.sh',
+   't1016-compatObjectFormat.sh',
++  't1017-cat-file-remote-object-info.sh',
+   't1020-subdirectory.sh',
+   't1021-rerere-in-workdir.sh',
+   't1022-read-tree-partial-clone.sh',
+@@ -297,7 +297,6 @@ integration_tests = [
+   't2405-worktree-submodule.sh',
+   't2406-worktree-repair.sh',
+   't2407-worktree-heads.sh',
+-  't2408-worktree-relative.sh',
+   't2500-untracked-overwriting.sh',
+   't2501-cwd-empty.sh',
+   't3000-ls-files-others.sh',
+@@ -719,6 +718,7 @@ integration_tests = [
+   't5703-upload-pack-ref-in-want.sh',
+   't5704-protocol-violations.sh',
+   't5705-session-id-in-capabilities.sh',
++  't5710-promisor-remote-capability.sh',
+   't5730-protocol-v2-bundle-uri-file.sh',
+   't5731-protocol-v2-bundle-uri-git.sh',
+   't5732-protocol-v2-bundle-uri-http.sh',
+@@ -821,6 +821,7 @@ integration_tests = [
+   't6500-gc.sh',
+   't6501-freshen-objects.sh',
+   't6600-test-reach.sh',
++  't6601-path-walk.sh',
+   't6700-tree-depth.sh',
+   't7001-mv.sh',
+   't7002-mv-sparse-checkout.sh',
 
 -- 
 2.47.0.251.gb31fb630c0.dirty
