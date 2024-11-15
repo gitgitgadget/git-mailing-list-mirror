@@ -1,39 +1,41 @@
-Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4A8190075
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 09:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86C5192B60
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 09:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731663662; cv=none; b=a/9wZM5ErjQEZmseFGlMx6aAPCHhrqXS1v5693NaDrn5XY/yQToiRnhXuRTdV80lmKF9uM+DYjf2+SEUitLJBWZhTCuBWcGxRVlqMADmxb/Ei9eb2zS1Rdqctil48iO7u2PYQxBD4FetQcOaPfSEKkrFk4TF0xiuiHNbwCxPbh0=
+	t=1731664368; cv=none; b=PBDhayGeNb7kOE7zrRyVGle5g3y6+eAlBKutcMjMXV3XlIXPq+1/HiPAnTSFJ8GrD/HFqIBldfYN0aK/mb2aHBd7duQfGwybfyfjyvzeDqEN9ojmHSrKLIxZo64G4mYgr1VKFAclT3WroeyFvcDnE8cpVhNsppSiR/zVmxIV2A0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731663662; c=relaxed/simple;
-	bh=wVA583L0CiqVek8S5gYlVV3MIiN8Nyca6N8aLGU/crs=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=QsN7GF8+rU+T18gdgcvjZ4/nT930dQd51XAy8TG8N4nXPdqxqUATg6KXzTw7R/cta4o+FRMncOYCA2ExBUIp/GKbWY2idpqZPmlGCJrAPUbo5PzKZLVvMkbukbFFPGOv6oDo3vaH/fM3io2dEbj4yMc818R+ixkv1GHFls5fXcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=enrg8.com; spf=pass smtp.mailfrom=enrg8.com; dkim=pass (2048-bit key) header.d=enrg8.com header.i=@enrg8.com header.b=5RMA8sGJ; arc=none smtp.client-ip=51.77.79.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=enrg8.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=enrg8.com
+	s=arc-20240116; t=1731664368; c=relaxed/simple;
+	bh=f+ZZi+0CJ/IRslHYv9wbAGx/CJEUEzFOtJjDZ5hTGZU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CaBqFB0yi/v6nxZ4TD3rM5OhRvykVWFxOaUwS0gqDaOQvYJ6WQHAorpPMDMl32gTj+bbm1wOzR+jjrSr8MVyt47UdoFsPYWFnHVZ2jOeGASjbZNA35fV2kp7YW375YJe1t0sPMtnrkJN57bCXH17FiKCjcrh8ckIDAaXOAERaFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KGKipyTa; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=enrg8.com header.i=@enrg8.com header.b="5RMA8sGJ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=enrg8.com;
-	s=protonmail2; t=1731663643; x=1731922843;
-	bh=I/4yie6/ESs+G3kXczCnlLT6Z9VdLTDJEpmVPZoqrYs=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=5RMA8sGJtglZeRcAuBaJX2hAvkxzdwwewTZ2893XJGdnGi+AWhGNVYvl2dSBj8Z69
-	 rF4+n523fI9U0lFRiwkZDSfDJ0mmhcsc+cu9e5TP+NHC/xyOO9vOX5/okophUCjZCd
-	 4NX8/hBxypcPfBfc/ihsw9L7pyhtB3IAc1VqqvGjGNyUL0QuJHoClL2AhIsC50M9nK
-	 kw2vyiznl/giu2OTlOVhk09CvvPb91fdU/aEOadI6F9l3Pm6rQ0jidcOpYbfvv6DCB
-	 f5WvZH4bySOoO5IZPI3oWdPlh4c463VG1MUUQkuH/8LXvhRCAsWmlsiBQyO2K6qWiz
-	 XNUjDQMVhngZQ==
-Date: Fri, 15 Nov 2024 09:40:38 +0000
-To: git@vger.kernel.org
-From: Attila Kerekes <ak@enrg8.com>
-Subject: malloc: *** error for object 0x1: pointer being freed was not allocated on MacOS with git 2.47.0
-Message-ID: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
-Feedback-ID: 28016050:user:proton
-X-Pm-Message-ID: b95252f3c67c4f8e119b7d0bbe83e2925ca4030a
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KGKipyTa"
+Received: (qmail 14738 invoked by uid 109); 15 Nov 2024 09:52:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=f+ZZi+0CJ/IRslHYv9wbAGx/CJEUEzFOtJjDZ5hTGZU=; b=KGKipyTaFeue1LhCftiODC9IvvlePIrejfOEHf4zvWu549SdQQTUwe357O11WElQBvtYKAB1p5DqeSWnLBYi7iSKxtTNhZeWuJgCpxK5VEEl3+LXEAHI0FVtnxTlCspXvFTYZ0l2QcylSgPCgvx2w2w67WQ29RJSTqBn7BS5hjsfNCzrJO4qOzU/cK445h4nyW7Hauul6i19D9zHshLOS4CDvk0d6mpyhbbIXy2fSss7vEH31RXr0MKBwrLsZI3tO+YhOkap/kLedlcLw3A9x8TQ4pjb83cO/5QEJiuWpOcVFfg1LFi+hHhP7KH7pzK2HCQVmkaTSJScFmOXFrhkIw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 15 Nov 2024 09:52:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6877 invoked by uid 111); 15 Nov 2024 09:52:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Nov 2024 04:52:49 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 15 Nov 2024 04:52:44 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+	steadmon@google.com, hanyang.tony@bytedance.com, me@ttaylorr.com
+Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
+Message-ID: <20241115095244.GC1749331@coredump.intra.peff.net>
+References: <20241113073500.GA587228@coredump.intra.peff.net>
+ <20241113182656.2135341-1-jonathantanmy@google.com>
+ <20241114005652.GC1140565@coredump.intra.peff.net>
+ <xmqqiksq71x7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,62 +43,50 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqiksq71x7.fsf@gitster.g>
 
-Dear Maintainers!
+On Thu, Nov 14, 2024 at 03:41:08PM +0900, Junio C Hamano wrote:
 
-See my bug report below:
+> Jeff King <peff@peff.net> writes:
+> 
+> >> As far as I know, index-pack, when run as part of fetch, indexes a pack
+> >> that's not in the repository's object store; it indexes a packfile in a
+> >> temp directory. (So I don't think this is a strange thing to do.)
+> >
+> > When fetching (or receiving a push), we use "index-pack --stdin" and do
+> > write the resulting pack into the repository (and the command will
+> > complain if there is no repository).
+> > ...
+> >> We definitely should prevent the segfault, but I think that's better
+> >> done by making --promisor only work if we run index-pack from within a
+> >> repo. I don't think we can restrict the repacking to run only if we're
+> >> indexing a pack within the repo, because in our fetch case, we're
+> >> indexing a new pack - not one within the repo.
+> >
+> > I think the "--stdin" thing above neatly solves this.
+> [...]
+> 
+> Tying this extra processing to the use of "--stdin" is not exactly
+> intuitive, in that a "--stdin" user is not necessarily doing a fetch
+> (even though a fetch may always use "--stdin"), but I guess it is a
+> good enough approximation (and the best one easily available to us)
+> if we want to safeguard the use of this "--promisor" logic only to
+> fetch client.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+I think the "--stdin" thing is a bit more general than that. Even though
+we expect to use it with --promisor only under fetch, the real rule is
+more like: only do the extra --promisor repacking when indexing a pack
+that will be made available in the repository. With --stdin, we know
+the result will be available because index-pack itself will write the
+pack into the repository. And that is true whether it is fetch, push, or
+some other script driving it.
 
-run the command:
-  git maintenance start
+When being fed a path to a pack on the command line, then "is it
+available in the repo" would involve some path comparisons to see if
+it's in the object database directory. Probably not that hard, but not
+entirely trivial (due to normalization, etc). But since we care only
+about fetch and --stdin, it seemed like an easy cheat to simply disallow
+the other case for now, erring on the conservative side.
 
-What did you expect to happen? (Expected behavior)
-
-git maintenance is started
-
-What happened instead? (Actual behavior)
-
-git(26100,0x1ffd63840) malloc: *** error for object 0x1: pointer being free=
-d was not allocated
-
-What's different between what you expected and what actually happened?
-
-git maintenance jobs did not get set up, instead i got a malloc error
-
-Anything else you want to add:
-
-MacOS 15.1 (24B83) on M3 mac.
-
-git installed with brew
-
-the Apple provided git 2.39.5 works fine when I run git maintenance start.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.47.0
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.7.1
-zlib: 1.2.12
-uname: Darwin 24.1.0 Darwin Kernel Version 24.1.0: Thu Oct 10 21:05:23 PDT =
-2024; root:xnu-11215.41.3~2/RELEASE_ARM64_T6031 arm64
-compiler info: clang: 16.0.0 (clang-1600.0.26.3)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
-
-
-Best Regards
-Attila
+-Peff
