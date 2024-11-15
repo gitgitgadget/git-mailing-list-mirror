@@ -1,102 +1,117 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B1817109B
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 17:23:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6365A1E1A35
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 19:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731691439; cv=none; b=CfZpj6ru4vWrOmIyGILvm5kQ/UNz+XnAVYUtAojQPqvKa1dAgYFg3xvPP9M4Kt8Z2upKLMEWR3ojTiH6BwuwlDP8RnCzlJBn7SjkM1tauLiv2RuzHW8TduwA1hCzbmwQJa8DLAiTNxFGKUgzk0xzBJUZoNF+G10IkOA2KAJKxHs=
+	t=1731700507; cv=none; b=F3G+MnRXawU4xiHe/czRa12itTcNtGAEeOZJaUieKjzohnNTKUArFrZ0YmKpXk3zzRuu6UmF71EAp+0kdqO1UDPjMDlcske4gKvQyy5WVkVSPjYJZ9iC0ZPM3x+1kTLag2xQqIC4Y0CISPU+EJiHN8gZCA1YABTUmXET03cKDRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731691439; c=relaxed/simple;
-	bh=atCuIi1aM6uEc7faB21mdiuqtJEDgRSbnMVrLzUq5BU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mM01rINPbQNViiAATm4CFLDM1UjA4dtXnN7LfQC4EB/yXDzdYjjTbHEctOQ4mYrSh4c1RY6D1n52JF5tu1OXyN01Wzj4PD3jI+bE7pZ/axg9q1UuPlH+va/o3W2FMibXzDjRv7GacdgDrnI0RkylOvEetWZBF2+BxNNDeXFQvSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fnq8d9Iw; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731700507; c=relaxed/simple;
+	bh=Jv2pwE3Vu2mFw/tz0BFpZ/eAgBDmif8C33oHRbYdcQA=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=Qd9RapKVLE+Ud5+GbWgIQP3ztQHPlK/62PW4gfeFEhv1KsROdxS+wGKvR62wMqMkmUSKrslZpiD/XWf/9lCrOI/H44dPjqevFKNnXjeiazBoRDZxxe2MIzd3dIH4FCo8hpo1pSdKCkjpQn+sd1k6XlP+sboF2yNS2+oIweEvmCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=hPnXDpx4; arc=none smtp.client-ip=209.85.128.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fnq8d9Iw"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0849325400DA;
-	Fri, 15 Nov 2024 12:23:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 15 Nov 2024 12:23:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731691435; x=
-	1731777835; bh=SyN3sWyZqWgsE4OLLjcz/NLqqUQ/csn54Pwhbiwslbw=; b=f
-	nq8d9IwhnbaUz6izfMw7gYGl8+feYMq7HiwxaO8blS8B8rOaC6UhKUgr3k4+MmHH
-	mBFw4sN7q1Leb13mPeryeCvdZhoE2GRtfurTHqO6orQm6ML7A0JtxYZuWIL45xtG
-	1GhJthe4jhBFtGln5rku+LtKD3BB5AlOd6aJ91WbjCalrabkpb/htM6YcU1FLSWn
-	fppOv2TS7d3gKosceC8e3vkSykHb0VdiXxEX3oOhpvFkvlUYMzjqreEv5kKdxovO
-	ww6IacLqzhV7GIf6gGaey/AkidZVQLtg59FUcGxVylBoCOUI8HUeLkovdHAxZI4E
-	7+bVNWtyzs0EaefPS7K7Q==
-X-ME-Sender: <xms:q4M3Z7li2POh_VvBXGxqmfiUxk-jDFJ_Gs5pHogOwcLiXPOIeJ8C-g>
-    <xme:q4M3Z-1aVvQiJyXkClbEhao2VmBS1PlqWweSeaU8CEsnTXvWCTYmz7hvbtsfhHiiU
-    dRZ9vsKhj3uZG_B4g>
-X-ME-Received: <xmr:q4M3Zxr9Ue5Djv4tYeoJFFDZJ9SZTEzjTVfgTyH2vuyMzVq3PqjJDChoC6v4RAeZVkCA_TpKnaaVO2SSZ623ic1zlQyyMVP_qAgf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdeggdeljecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsg
-    druggvpdhrtghpthhtoheprghksegvnhhrghekrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:q4M3ZzmMKUcf0JgwS_HQGLIsFV8V43rZZ8pbrtGqYWVxswIQebXoQA>
-    <xmx:q4M3Z52ue4-obbBIux3la0VVPb32FZ21EanStIJks-4uXXLfPoDFQw>
-    <xmx:q4M3ZysDLdZYPTx2JUJPTw7DqYUxJMteMwBrXktY3i_P0TBnD7cqyg>
-    <xmx:q4M3Z9WMREpEjcuCvM33ylsiBThrrqWfNGhzz0QYTGHnARBhoZvNCA>
-    <xmx:q4M3Z0QBCSGhDeKXlvv-RTqkocc1VHk-GAFb_FPJRW0p-6MPaIjiObJM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Nov 2024 12:23:55 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Attila Kerekes <ak@enrg8.com>,  git@vger.kernel.org
-Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
- allocated on MacOS with git 2.47.0
-In-Reply-To: <4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Fri, 15 Nov 2024 17:34:16 +0100")
-References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
-	<4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
-Date: Sat, 16 Nov 2024 02:23:53 +0900
-Message-ID: <xmqq34js1kd2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="hPnXDpx4"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6e35a643200so18276197b3.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2024 11:55:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1731700505; x=1732305305; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=dmhTfi24jNsGSYvfsfruuuZKIAll+c8RqszCpLucC6Q=;
+        b=hPnXDpx4249EMOxoIOtJfW1PmQSjBVmN8eNDfi8jRbG6AhUwoD9nft4SDd6nzqk+cF
+         DcHfrhjYDY1F8TkVKVTF5Fc/cIbrgFd9RxPov8vMmOe7Xh7Sf7j54BxPYMVAtyfXQIxI
+         kyQaRbKxO9RfHRh4nPX+NGo5b05JNcWOqYyv88RIvxM9hojd83NFR/s1BNsSpGCML7iV
+         ziujQAYNPcD0UmN4BFQkxQaaBM1rL1MQPJ6BGTO9NpJeaXuDWjdtcO/FM7sm20Byahrx
+         /F3rtWCAq+uLvJVb0L1K8f3nXQgqyayxTFv2WqLJyROSUDQimXYAI3FGQfMvszz0ewfq
+         79BQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731700505; x=1732305305;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dmhTfi24jNsGSYvfsfruuuZKIAll+c8RqszCpLucC6Q=;
+        b=O5U5ngtSU6EfqmAcPdYhWmRf6xzsG7pfjna9wR3zchfHK84XlvWmHQtNIPglsgcPoz
+         RjHqk7gdSUWtF6jsH+TJFYS6lQuFbeMfJcjeA0R9YWhEnKZ1Obvj1XHKDML34zcIFMyj
+         1k+ddmvqZwInqhkMzCOliYE6PmgSy4k+6QLnRIUBE8Tw5m8mgD4zXdx42BGYcYpd4H4P
+         rO9hn2/2WD/SFzZ4wvmPhoJ3NlzwtYpBXjnlvpI+QmGzVfRwpWlzaNypBk9hrIV2dJlY
+         zMqA4Bf7X4gslikajXPp2ZmVC3RYNLobWN3h9mTCOuURATax1KmAc0BXYBKX5YpxxZcV
+         eg0g==
+X-Forwarded-Encrypted: i=1; AJvYcCWucke0ZK0bS6xcGdYSUn7cYwhJu1kBhatRtGF7q3+30Y4+FTpESilXqTNVj6iGr/1hW5M=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yygm173NAL6kxQnqkd91apWjdxHFJyeSRBRUWaTpoX4/wKrGJFj
+	J3iWAaaTW1WbseWbwps41W6xjTSHSDW6xeulvtlV1EIBbNNlbMViEluq9wY5rwriRcdrmt3g8np
+	4GMvnhO51oN8WDbITytY5OAOpgVrq8Q==
+X-Google-Smtp-Source: AGHT+IFc+5LTKiBlbSL/IRr9Mf7GXlFTtmgUBH6MlzrA1SIhVfEQpw594o3I+xTzJq41D8F0Szx5HNmiERpIX+0m+lJJ
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:52dd:dce9:4fb8:8bf4])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:b1c3:0:b0:6de:19f:34d7 with SMTP
+ id 00721157ae682-6ee55b82b68mr1241507b3.2.1731700505511; Fri, 15 Nov 2024
+ 11:55:05 -0800 (PST)
+Date: Fri, 15 Nov 2024 11:55:03 -0800
+In-Reply-To: <20241114005652.GC1140565@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241115195503.3395744-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Jeff King <peff@peff.net>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, steadmon@google.com, 
+	hanyang.tony@bytedance.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 
-René Scharfe <l.s.r@web.de> writes:
+Jeff King <peff@peff.net> writes:
+> Where it gets weirder to me is with quarantine directories (and maybe
+> this is what you meant above). On receiving a push, we "index --stdin"
+> into a temporary quarantine directory. If that kicks off a pack-objects
+> run, where does that pack-objects put its new pack? Within the
+> quarantined index-pack we set GIT_OBJECT_DIRECTORY to the quarantine and
+> add the original repo as an alternate. So I _think_ both the pushed-up
+> pack and the repacked promisor pack would go into the quarantine dir,
+> and then we'd migrate both (or neither) when we commit to the push.
+> 
+> Which is OK, but I don't know that I thought that far ahead when writing
+> the quarantine stuff long ago.
+> 
+> It's probably somewhat academic right now, as I'm not sure if you can
+> even push reliably into a promisor repo (and it doesn't look like
+> receive-pack knows about passing --promisor anyway).
 
-> This is a known error.  Commit c95547a394 (builtin/gc: fix crash when
-> running `git maintenance start`, 2024-10-10) fixes it, but has not made
-> it into a released version, yet.
+Thanks for this description. Such a push would be an "I am pushing a
+pack with missing objects to you, and you can later get those missing
+objects from me" situation. Not completely implausible, but doesn't seem
+high-priority to me.
 
-Thanks.
+> We don't quarantine
+> on fetch right now, though we have discussed it in the past (and I think
+> we should consider doing it).
+> 
+> So this may become more real in the future. I wonder if there is a way
+> to add a test to future-proof against changes to how the quarantine
+> system works. The theoretical problem case is if we did quarantine
+> fetches, but accidentally wrote the new promisor pack into the main
+> repo instead of the quarantine, and then a fetch rejected the incoming
+> pack (because of a hook, failed connectivity check, etc). Then we'd end
+> up with the new promisor pack when we shouldn't, which I guess could
+> move objects from that incoming pack that we rejected into the main
+> repo, despite the quarantine?
+> 
+> I can't think of a way to test that now, without the quarantine-on-fetch
+> feature existing.
 
-There are bunch of topics that could go to 'maint' and be part of a
-maintenance topic, and this certainly looks like one of those topics
-that can go into 2.47.1 someday.  The usual source of candidate
-topics I use is messy and unusable for some unknown reason, but
-offhand I think these are safe and sensible to merge down to
-'maint':
+Quarantine on fetch does seem like a good idea. I also can't think of
+a way to test that now. Although, for the fetch case, my patch set is
+not the first time that an extra packfile (that is, a packfile not in
+the "packfile" section of the fetch response) could be written during
+a fetch: packfile-uris and bundle-uris already exist. So I would hope
+that the implementor of the fetch quarantine feature would be aware of
+at least one of these extra features, and design the test to check that
+absolutely no packfiles are written if the fetch is rejected. (So I
+don't think the future needs to be "proofed" so much.)
 
-    ds/line-log-asan-fix # 1 (2024-10-10) 
-    jk/fsmonitor-event-listener-race-fix # 2 (2024-10-15) 
-    ps/maintenance-start-crash-fix # 1 (2024-10-18) 
-
-Thanks.
