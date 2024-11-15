@@ -1,43 +1,43 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D579D36C
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 00:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714CC1362
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 00:31:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731629512; cv=none; b=VFp7CV84iZEyMwYMpzpDGlVo0ZK5pecyj5w1xz1jBek0LrHdnFAWetsZ/XBD2LcZAMv4BYOKoWbcmSzXEJO2Ra38Qzs+xJVqodcdevgbpCz3b1md7WwVs2GczNK+e7JOM+TJn8dVRhyODrLUFVc/9vBuqrhCeAhq1nYRYVzdh8A=
+	t=1731630693; cv=none; b=CBL7O/t4PhRIEK6i5PSMG5vUw4RllOucTyz6c515Qi/dhjr2XYzUo96X0t93QG5iIyssxwttKTXK3thqW3PAD1edD/kunEISDYGHRo/T5dTXh6yOzTMUZntVJXsHXemgGnV21pwNf8jp9CRTWIUOjjLOgbPTXeS5olWJtVHoC6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731629512; c=relaxed/simple;
-	bh=0/Vkfma8qHI8j0tPvhBzrHpCdt4JRQOpjP5spw+AAXo=;
+	s=arc-20240116; t=1731630693; c=relaxed/simple;
+	bh=LX+ulHywryMBuTWynqZDFE0UB39M9pF/pzNG5uRQ98g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VZCCCV3yZK8QSv7fvGVIjXCkUVG592hgx6+N+TZcktQrMNzVxNzR2a/kh6bFEs/OTXZ/BrmU5q/gCoOB59z1W4tI/5UguHuTd+fNN+em7P1ObVYQHhBMDp6KOpzrhjDCo5EKWBqmeuW9RqSzYGHKLfGkcJlgCPaiMVnMDx04svw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kSe/NVt2; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=sryXFpOkoB24yZUT/bAuRC0TyW3U3B2NfbRO3L0nLfwWp/ra5SS6ONrUwnrYOaf9tXgZsSo3q7PAV4jd6R1X7gbUoQGTbH1Ll40C8nSj/qhWeraSSsV5ITbNE++cItoeEHglTCQV0cSFUwn4l8RW75yeGdNEgyOe/bkchP9/Tlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cl0yYixY; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kSe/NVt2"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DD03D114013A;
-	Thu, 14 Nov 2024 19:11:48 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 14 Nov 2024 19:11:48 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cl0yYixY"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8004711400FA;
+	Thu, 14 Nov 2024 19:31:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Thu, 14 Nov 2024 19:31:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731629508; x=1731715908; bh=uHfw9FZ0v5aDVsSTu39jjeEjPN0o5WkKnUc
-	BQbgxL/U=; b=kSe/NVt2IozaE5Zaak8pWoCddFfP+mmOZ3rcWshH1Qqycv2W4cl
-	2GKHoEUrIgyhfXjGaC0gxWsZbuFwbjMQCi7XhqPcHoy5Ksz973VCMLdmZCRh0xgs
-	bgHa6AzCTOHnRxzyRmMQ64t+IUB6xV73SUgiNBou0yFvnaTYkL37DcwOubAxAnhI
-	/E57XE9T4kkWOt47ZrlHxY1zYhXxBgdalcMUATwnV3h1J5ndm8Pg+giKsGajwNhP
-	4Yo+muuec5AVrAK4LXFvGYdxu6jc+ugcF+6E+APpuEkMpwz70+GZGPIGmxsukMvk
-	OV+9o3ixNvlPOp13hW6x7WBwvn3oX0MsxUw==
-X-ME-Sender: <xms:xJE2Z75uzqm3e00s8OIDQyn9WSjMRnVQ0UGH34ZCHzf1QjocsSz3hg>
-    <xme:xJE2Zw73gefJccoyel9GYdkzMUOLaci-2nKrFjz2O4EJKPU69PXFDrDHbThAhw3J9
-    rInLPpXvKJ1X-rH6Q>
-X-ME-Received: <xmr:xJE2ZycdlTJkCb1NQMYdCMIssAtKipZ_z9aF-rsTuLb4DnpNuIU84nGThjyMJA2qBbpMeCnnQwC1sypdTuA_3rH31wk87ZfczDdp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddukecutefuodetggdotefrodftvf
+	1731630690; x=1731717090; bh=aUccdmEvEIOdBpdICcTE1beKU+MJgREzHg7
+	W3gXAEEE=; b=cl0yYixYZTFLjRQaZLu8eSrKr4KhnBuSxY/CS0RbuDLDAskC+zs
+	0D/cNYX4AoTu0UPOjOK20SaF4SeVOr+Or3tMvKz/PEBAAZHr8HyXGlSquEKczVYA
+	C8572EtRAOiiR3hqQ83fmfOzeua1/ThGgMNw7X5rZXcnXoPquFAlrm1nxQg/JRo6
+	ydZYw4x7yS/3fVDM14HDtmAqm0EzAgd653QteM18iuu/995gareNpz8WWVeMZsiy
+	wbdTKoCM1kZ8ltYu7V0o5KMRnP+E3zzOUPqobRTrMQVZOyjt77V9yQAsZ0dGDYL9
+	474XGzljNqE89qv9ypfPpgJB0iaGCSQ07tQ==
+X-ME-Sender: <xms:YpY2Z1Zv25ifD5YeyFrI-ZN0lmZWMvZHh1DwSaz3TkdJqD_cfdB1AA>
+    <xme:YpY2Z8bHs7od6UPoJv8fO3c5WnMdiTCo_QEQslLzrMoxZKF71gUOSHc0EfNoomDrn
+    Lz1wI-Sup6mtCRptQ>
+X-ME-Received: <xmr:YpY2Z39L8Nl3cZ8bKseDI2AI00XmeY5swKM3BSzG8reNPnVTx1G3VPsS1apAF0x3AR7ekSdHXBRiKUZlR8se-L1YXon3vHPdj_0T>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddvudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,33 +45,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdefgddukecutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifoh
-    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghm
-    ihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xJE2Z8LfhXjo4kf9tBjsqbMfnVPwbgwVm01fdNJLHOIQLk_kuwzZxg>
-    <xmx:xJE2Z_JVJFc_ZXX_7VsMuGealfD-nqNFTSd0ktBmnFj-uKSCuC6eYg>
-    <xmx:xJE2Z1ygrleA4F4mrTVPR68OSsaSoQJF83-8neD94adKay9Cdc9qaQ>
-    <xmx:xJE2Z7KA2kiuloEeDeMayuv7_RlN6L9_fhhCE68SJqzhyx9VDjkNMA>
-    <xmx:xJE2Z1jldDMRk_RC6AVNOZt4vqU7EwNqWdp7-0yebeemJZUMVapmPLWC>
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggugh
+    gvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:YpY2ZzqrG68YuRQaLfDseaIrzSImee_oEMDCjR0CvO_CjaeQd04kYA>
+    <xmx:YpY2ZwrIWczg9iHu5XBssmnRkB8_bG0a6rGnpIWdEXDUh1KDpw8Kkw>
+    <xmx:YpY2Z5TEEUKhbirx1Jf3ncRgkPQv2HwY-qfXJ9NBJwlq1ZGplijNiQ>
+    <xmx:YpY2Z4o8Oxsb62-Ji3oAvYVp8AQjTQsJE4ALZffu-DtEKek3djIe9Q>
+    <xmx:YpY2Z5kSIBgf8DiAz0yNexI6q0n80ElQGXzkB6aMmOomrUlIy_cATbWn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Nov 2024 19:11:48 -0500 (EST)
+ 14 Nov 2024 19:31:29 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  Usman Akinyemi via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] diff: update conflict handling for whitespace to
- issue a warning
-In-Reply-To: <29c81cbc-3678-4b70-9e0e-c500186d159f@gmail.com> (Phillip Wood's
-	message of "Thu, 14 Nov 2024 10:06:12 +0000")
-References: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
-	<pull.1828.v2.git.git.1731524467045.gitgitgadget@gmail.com>
-	<xmqq4j4a8srw.fsf@gitster.g>
-	<29c81cbc-3678-4b70-9e0e-c500186d159f@gmail.com>
-Date: Fri, 15 Nov 2024 09:11:46 +0900
-Message-ID: <xmqqbjyh5pa5.fsf@gitster.g>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] fast-import: avoid making replace refs point to themselves
+In-Reply-To: <pull.1824.git.1731610074707.gitgitgadget@gmail.com> (Elijah
+	Newren via GitGitGadget's message of "Thu, 14 Nov 2024 18:47:54
+	+0000")
+References: <pull.1824.git.1731610074707.gitgitgadget@gmail.com>
+Date: Fri, 15 Nov 2024 09:31:28 +0900
+Message-ID: <xmqqzfm149sv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,45 +76,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Usman - when you're writing a commit message it is important to
-> explain the reason for making the changes contained in the patch so
-> others can understand why it is a good idea. In this case the idea is
-> to avoid breaking "git diff" for everyone who clones a repository
-> containing a .gitattributes file with bad whitespace attributes
-> [1].
+> Most git commands that you try to run in such a repository with a
+> self-pointing replace object will result in an error:
+>
+>     $ git log
+>     fatal: replace depth too high for object fb92ebc654641b310e7d0360d0a5a49316fd7264
 
-Hmph, it would certainly be a problem, but the right solution is not
-to butcher Git, but to make it easier for the participants of such a
-project to know what is broken *and* what needs to be updated, to let
-them move forward, no?
+After reading up to this point, with "Most git commands", I was
+afraid that you were going to say "... but I found this command that
+fails to stop gracefully, and instead infinitely spin".
 
-> As I mentioned in [2] I think we only want to change the behavior
-> when parsing whitespace attributes - we still want the other callers
-> of parse_whitespace_rule() to die() so the user can fix their config
-> or commandline. We can do that by adding a boolean parameter called
-> "gentle" that determines whether we call warning() or die().
+If that is not a case, then I am happy ;-) but in that case probably
+"Most" -> "All" is warranted.
 
-I doubt that such a complexity is warranted.
+> Avoid such problems by deleting replace refs that will simply end up
+> pointing to themselves at the end of our writing.  Warn the users when
+> we do so, unless they specify --quiet.
 
-It depends on the size of diff you are showing, but if it is large,
-then giving a small warning that gets buried in the large diff is a
-conter-productive way to encourage users to correct such broken
-setting.  If it is small, then the damage may not be too bad, but
-still, we are showing what the user did not really request.
+This may need a bit of rephrasing.
 
-If we were to fix anything, it is to make sure that we die() before
-producing a single line of output.  If you have a change to a path
-whose "type" is without such a misconfigured attribute, that sorts
-lexicographically earlier than another path with a change, with a
-conflicting whitespace attribute, I suspect that with the way the
-code is structured currently, we show the diff for the first path,
-before realizing that the second path has an issue and then die.
+Even when they specify "--quiet", you'd refrain from creating a
+self-referencing replace entry, which makes sense, but it was not
+clear with only the above description.  I had to read the patch text
+to find it out.
 
-If we fix it, and then make sure that the die() message shows
-clearly what attribute setting we did not like, that would be
-sufficient to help users to locate the problem, fix it, and quickly
-move on, no?
+Is it reasonable to expect that a self referencing replace entry is
+the most common thing to happen, or loops with more than one
+elements are equally plausible to happen but the self-referencing
+one is singled out by this patch because it is trivial to notice,
+unlike other forms of equally problematic loops?
+
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index 76d5c20f141..51c8228cb7b 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -179,6 +179,7 @@ static unsigned long branch_load_count;
+>  static int failure;
+>  static FILE *pack_edges;
+>  static unsigned int show_stats = 1;
+> +static unsigned int quiet;
+>  static int global_argc;
+>  static const char **global_argv;
+>  static const char *global_prefix;
+> @@ -1602,7 +1603,19 @@ static int update_branch(struct branch *b)
+>  	struct ref_transaction *transaction;
+>  	struct object_id old_oid;
+>  	struct strbuf err = STRBUF_INIT;
+> -
+> +	static const char *replace_prefix = "refs/replace/";
+> +
+> +	if (starts_with(b->name, replace_prefix) &&
+
+Curious how the "diff" machinery decided to represent the hunk like
+this, instead of say
+
+>  	struct strbuf err = STRBUF_INIT;
+> +	static const char *replace_prefix = "refs/replace/";
+> 
+> +	if (starts_with(b->name, replace_prefix) &&
+
+Of course that has nothing to do with this patch or its review.
+
+> +	    !strcmp(b->name + strlen(replace_prefix),
+> +		    oid_to_hex(&b->oid))) {
+> +		if (!quiet)
+> +			warning("Dropping %s since it would point to "
+> +				"itself (i.e. to %s)",
+> +				b->name, oid_to_hex(&b->oid));
+> +		refs_delete_ref(get_main_ref_store(the_repository),
+> +				NULL, b->name, NULL, 0);
+> +		return 0;
+
+I am not sure if a warning is even warranted.  If you decide to
+replace an object A with the same object A, the result ought to be a
+no-op.  I wonder if it is makes more sense to
+
+ (1) do this unconditionally and silently, and
+ (2) when we prepare the replace_map, ignore self-referencing ones.
+
+instead.  If (2) makes sense entirely depends on the answer of an
+earlier question (i.e. "is there a reason why self-reference is more
+common than general loop?").
 
 Thanks.
