@@ -1,115 +1,109 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A57E1DA23
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 20:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C8912F585
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 20:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731701315; cv=none; b=Gvnwrx0weaF3uj1rdtDhe9Dg5eacpKcR2w5eG+wnEzh/C2Bu1uXS0W6BDCj4chPDMzeP+gSLyHRKtr4qAahmp5TKJMWzmAO/LrgcdkKgzf6zfeDNa8bsvF1qj4+2AsypOqR2QJfS23DWHNKu7Y3mVUKD2qN63ZqZiQ+8lbdOokQ=
+	t=1731701619; cv=none; b=VJjS+D+EHMhtAXNGaFjkjjpT5KPAZPqlokJXN0YNB2BPYOSNt408KXUt8EEHa8hsV3Zkj6YXqqpyKnCMXJ0FwKFTM6UPEetfLUwnuDDd4WpG1zL1zT59DbsYAiFrC4NWPSIAzjiphOowdoEMoOTba0mYhgQjwWp/JYfEOHIC/1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731701315; c=relaxed/simple;
-	bh=BdCh8ed1rUfj+hiNXpgc/YpQ5TzySVTw30ijkbWm3LU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Txs0Z9l9+QBiAWnNxqtIEce5jcaAakdOEqkrZFhVoNKANGQNSvnToOQpBy6VqfGD0K5J7ZehPOiMJJ/WAReqefWN6Q8rtSpsPrHqiy/ktjOr6hS7/+fVj/EbwwH++lzV21DIM9z8M7wk5o3mdaV5+kLjZbjWP0gNW/U1EE/h054=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DYzHXAEn; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1731701619; c=relaxed/simple;
+	bh=1s74u0yG8+YvHaMQ7Af4oe8RQ6cUHnN7gPNv8R0QsFU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QHz6t0/yD8S/St6slEPDPJxjRLrE1yMU9a+fOYwZMT//QsERrG2BEjh1TTaNbt/WAKlY9XynLtUzySXQN2DiVJ+yj7GyBkf5iKM5H8cTlQVk8GF40ND/RQ5i2VHJGMNuqN2N6P/R8Ap0nhJ2+YGhtrDBujNjarvaZXpqpMvmURM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gF50AlHz; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DYzHXAEn"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1731701309;
-	bh=BdCh8ed1rUfj+hiNXpgc/YpQ5TzySVTw30ijkbWm3LU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=DYzHXAEnfB96w3sDBQ7kEVG9/L1tclaeIemDEt9G2WCCmN5S46TJBGWMsfT7L2tBR
-	 SaQexDxxvLztv9c5Wnyk8rmUV8PivmrdbRXOYXiNRGkaty48A0CsOzOnEbBO7siUcb
-	 VL6SkfrsObNqrZVkQiYbkqv7E+owp0DJO3hkKTT8MI2y9Y5ZhkylzveHFoJqmYUIh5
-	 Kz+yd6GOIQKsA6sd7FEpTa6S+JuRUz2FFDLCDt+QH4FtNjdtSAMGVlYq5U72rOlgz2
-	 dVwvKXtcaUZpwuQrY3/7QWPo2VY0v6AehBo1HyM6fIYp1BlLelQLsCP8b1cQ6o2rQA
-	 PkDuetCjcE1jmWc4s3gYTcMH0Pg2OmUGiDt+w0yvRNT5DQdjjpgs6BXDlaMAnKF+4K
-	 6fHhj5JENhs9HXCwcK+Jwm1KGwH5iGLThftRYl7QPeN5GA+7z7HwZBTUyjnsWp2mIR
-	 VD6g1QeJa+tRvOLRToK9vqCtslgBsumMHFHPuhoSZMTuJcu6K5q
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1B919200CB;
-	Fri, 15 Nov 2024 20:08:29 +0000 (UTC)
-Date: Fri, 15 Nov 2024 20:08:27 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Sachin tiwari <sjtiwari007@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bug Report
-Message-ID: <ZzeqO9n_6dLBgRmX@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Sachin tiwari <sjtiwari007@gmail.com>, git@vger.kernel.org
-References: <CAGoMMr+f4oqgDqq_1h4cV39GVRd8fgzEzHgBP8fJsJ+HAgiwqQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gF50AlHz"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5cf6f5d4939so1065a12.1
+        for <git@vger.kernel.org>; Fri, 15 Nov 2024 12:13:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1731701616; x=1732306416; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1s74u0yG8+YvHaMQ7Af4oe8RQ6cUHnN7gPNv8R0QsFU=;
+        b=gF50AlHzXAnWU/iW96J9It335mrq53MT9ULDuXVKddnM+KR4l7ac8yXVOah3O5DLeK
+         d5GPX9Ou5UhOO++QK41CkVjuHU25el7P6rGZcvN0xTDJ9dZeJrc/FPatC5D6MYUxUuN5
+         W2ldMOMP1Byn/Rg2eXgoOLaZkhqBuodpf/iqcNtJefqlupFLoCD0NnLxXxavPG3grD3L
+         tgixa8X1D1BlZZMlzZLyHwsHROOIfp8XMD4ROmtauMFazwXVg4F9R6AwWIV129FErUJs
+         v5cCswv1q7JBpKCsHUqJ9tconxZBxfPNwuHynMQtdH+aqllzyZFMVLhaPsxeGkneoGjG
+         8K/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731701616; x=1732306416;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1s74u0yG8+YvHaMQ7Af4oe8RQ6cUHnN7gPNv8R0QsFU=;
+        b=VPBt9ZtJr4z95MnyNLSZiJtQI4w0nOKrnC/cx8o408s9d6Nh3Kz3Hd/2FYHmZ2rdRU
+         Og9IwVTrhl97ut4YOEEALQxI7OkDJfOTbTVwD7cxwXTB5L3iakWWl/rV5YMXoyIhJO7c
+         TDBhtZ2yycxDnZajaMUyB2RNN0/v894FZi31hROc7EmcqhxKIkpGYx2f+a03Q3TC03nL
+         Jysp6rCALezissiKGV9c8G575/nn9bIt+xCoh1chlKt8yplzJYT17iHjbLX4KkzC1FJV
+         j5ECzDqClfx7UbGvzG0WZ58i8DvbngTo9+Tyvw5T7CGowy8MCuV7CWLWe7wE0fOTGt7x
+         M4Pw==
+X-Gm-Message-State: AOJu0YwAC2KFG7fZJLSxw1+5ebslOX1Q9AYgwhJTVatjoTFarQ2SKqqK
+	25jDx+eWyteIZvxxQWA4/wvDbGCKeLAt1sVM35rwqXDaHkc2TmvunW0Hn75aJBAtgTskk/LoVxP
+	VjQliRmiDlwgDjabHTYYd/qFuJ2nNjkmeNtcL
+X-Gm-Gg: ASbGncvdR9mt9ks/v870RpnXWKEHz8FpmYLyPZbt0xRGSske2CULX9who/F0ycxPcFA
+	MB2HkUWWNjBaUZEsz6WthN5nrcLMIaONXlvQbX6xBtLiASnkY9IISMdrI7RI=
+X-Google-Smtp-Source: AGHT+IEghzLKIjfSKIi9p2qyrJUoH4B/J94viPycbNS6CvdzaLgMwd0r8+q9USBIa4fqv82M4hY18uubZ8JTA/+CuLg=
+X-Received: by 2002:a05:6402:33d9:b0:5cf:95cc:9a64 with SMTP id
+ 4fb4d7f45d1cf-5cfa2a1d312mr4670a12.7.1731701615586; Fri, 15 Nov 2024 12:13:35
+ -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RwAVQhE7WynO+T2S"
-Content-Disposition: inline
-In-Reply-To: <CAGoMMr+f4oqgDqq_1h4cV39GVRd8fgzEzHgBP8fJsJ+HAgiwqQ@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---RwAVQhE7WynO+T2S
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20241108173112.1240584-1-calvinwan@google.com>
+ <20241108173112.1240584-2-calvinwan@google.com> <ZzGtD4Jz9Wj6n0zH@pks.im>
+ <CAFySSZCzxfqpMWH5ORv8fYb7f5WU3Fc2N99fW33wD9JOcYVrVA@mail.gmail.com> <ZzL1jy3plVeld_3m@pks.im>
+In-Reply-To: <ZzL1jy3plVeld_3m@pks.im>
+From: Calvin Wan <calvinwan@google.com>
+Date: Fri, 15 Nov 2024 12:13:24 -0800
+Message-ID: <CAFySSZBioOrfk5O7oni3LRLWasFo6DsuyW7icDDVkiUxq4fNOQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] maintenance: separate parallelism safe and unsafe tasks
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, emrass@google.com, me@ttaylorr.com, stolee@gmail.com, 
+	Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-11-15 at 13:02:21, Sachin tiwari wrote:
-> Sachin tiwari <sjtiwari007@gmail.com>
->=20
-> 18:28 (3 minutes ago)
-> to git
-> Hello,
-> Title:Git Clones Repository Even After Incorrectly Inputting Personal
-> Access Token (PAT) and Leaving Password Blank
->=20
-> Description:
-> When cloning a repository using HTTPS, Git prompts for the username
-> and password. However, if a Personal Access Token (PAT) is mistakenly
-> entered when prompted for a username and the password is left empty,
-> the repository is cloned successfully without any authentication
-> failure. This behavior should not occur, as Git should ideally reject
-> the clone operation when a PAT is input as a username and no password
-> is provided.
+On Mon, Nov 11, 2024 at 10:29=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> On Mon, Nov 11, 2024 at 10:06:10AM -0800, Calvin Wan wrote:
+> > On Sun, Nov 10, 2024 at 11:07=E2=80=AFPM Patrick Steinhardt <ps@pks.im>=
+ wrote:
+> > >
+> > > Hm. I wonder whether we really want to expose additional tasks to
+> > > address the issue, which feels like we're leaking implementation deta=
+ils
+> > > to our users. Would it maybe be preferable to instead introduce a new
+> > > optional callback function for every task that handles the pre-detach
+> > > logic?
+> >
+> > This does sound like a good idea. However, would there be any issue
+> > with running all pre-detach logic before running post-detach logic?
+> > I'm thinking if pre-detach logic from a different function could
+> > affect post-detach logic from another. If not, I do agree this would
+> > be the best solution going forward.
+>
+> Sure, in theory these can interact with each other. But is that any
+> different when you represent this with tasks instead? The conflict would
+> still exist there. It's also not any different to how things work right
+> now: the "gc" task will impact the "repack" task, so configuring them
+> both at the same time does not really make much sense.
 
-This isn't a bug.  Git itself has no way of knowing whether what you put
-in a field is a username, password, token, or something else entirely.
-The decision on authentication is made by the remote system, and it can
-apply arbitrary policies on what to accept and what not to.
-
-My guess is that you're using GitHub, and GitHub allows you to do this.
-GitHub requires that you use a token, and it can be in the username or
-password field, mostly for backwards compatibility (changing it now
-would break a lot of things and isn't really possible).
-
-I would say that it's definitely strongly recommended to not put secrets
-in the username, because many tools will filter passwords from logs, but
-the username is often not filtered, so you _should not_ do this, but
-with GitHub, you can indeed do it if you really want.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---RwAVQhE7WynO+T2S
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZzeqOgAKCRB8DEliiIei
-gaogAQDEQj3JLf0ghsxGEVo19oLZT235HEPAF0nwW1CSfaX7rQEAzJsQJhEyGKfL
-HAL2Amf/qc/hZ5iQ5ssbpgsLKKmBfQQ=
-=ySnp
------END PGP SIGNATURE-----
-
---RwAVQhE7WynO+T2S--
+No you are correct that this is no different than how these tasks are
+currently run. However, I have just received some numbers that the
+repack, when gc'ing in Android, is the longest operation so even if we
+were able to run repack first in the foreground, ultimately it
+wouldn't save a significant amount of time compared to running gc
+entirely in the foreground. I think for now it makes sense to hold off
+on rerolling this series (at least in the form of auto
+backgrounding/foregrounding tasks) since the purported benefits
+currently aren't worth the churn. Thanks again for the comments on
+this series
