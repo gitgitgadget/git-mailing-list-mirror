@@ -1,179 +1,217 @@
-Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720F07346D
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 23:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D135E16631C
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 23:33:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731712492; cv=none; b=gZdQee7DqzGLVf6hDYuxXPBwbvITDxpGtRE29VcYg1eRLZaowo9LUX8iaYQmdXJW3i7C7SzemMlAiF2+0/2xpJdGjFrC8BRYN9yb9wnv9eavdqZFpq3XRHf9dv5D57DwTYcPXsH5vhAb81kbG8C9mUjDzYOoWDnwXfXywpjsc1Q=
+	t=1731713594; cv=none; b=qsxqYdFuq95MK1inOA1IcK36YYtMVSe6g3BpQHsMUf8kAwfC3zc5tTzUyeWSMy52OHtxVYsxB813P9TtxFSuE8rWR88OvICsCS30R0fIVqTI79ZbMc0nghWH71XZUWO3As9brUGV4a3Q3iQiLvRg+pROIrwFwDqKvnrdelsDpCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731712492; c=relaxed/simple;
-	bh=ddDnftIE+0zH6ruYqSDI4xf4ARbjANdph/obnGKHTeM=;
-	h=MIME-version:Content-type:Date:Message-id:From:Subject:Cc:To:
-	 References:In-reply-to; b=DKdsGdoyBrItGt5hwX3he1ISFFKKU1OidQMWJfs1SWONg/q532qMdyU/OLvN3xXvVK5HpJvXIY3P12BQX2HWSX9yN9JCIb8kMa/oyNNpwHAouE/RIoehTMyMWhvoeivjXAAHshFhwnQ1HhErYnKLX93TqqX1sLqnCQXECWebvXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=I18193zd; arc=none smtp.client-ip=192.29.178.127
+	s=arc-20240116; t=1731713594; c=relaxed/simple;
+	bh=hyYzqmlDslCI6sS+GRohuM44c3cEEEsaC+XBQ/LwymM=;
+	h=Date:From:To:Cc:Message-id:In-reply-to:References:Subject:
+	 MIME-version:Content-type; b=tPxNmOTELEnQ0cCZSpCBzMJdwCngyUHJLUcD+cIngVRzn5Ti9dCCtlae+PLIeGI4ng4PzV6hUG4TxdoI9OO/WW7Qwgazw3bQLStEtCzzy4NVlbPjR2H5kfgZQOhOGy1Nx5kKOlUwHaN/Aj4Qj2lcVchW0Qv6ZPYBc0UNj89ADZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=PjnHdRHj; arc=none smtp.client-ip=192.29.178.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="I18193zd"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="PjnHdRHj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=koaaYvE22o9DudtS0toDRy0BPyjppWUU7aw4ubgizkM=;
- b=I18193zdnnaPsMdCG8lfCyGZt3IiAwAfhtUtnMMEZGd0lUXT80TozBOiVNX+yN+VI5twbJ4OjMyp
-   Mnuif+l9X1BUQ0sJEUw3Am0FRPkNif/rKLXvc7sO7Wbvt0W5v3/5JnUWAL8oPZ2J9esFmkTFs7+K
-   ac3v08QAqLekXZVBDd8G7qYtU5BY6r6Ua4GbwXWJrevGw6Cdf+N1WwmGxzA5VIXtx4WGtryKnuQY
-   NuGX+cjtmSjmlmoGdGN5HR7WPG/6RkPMt5qfEajK0WrZF/sjFVAtiVFq26nGqCGKW4s/siihMd8k
-   VMMVQmbxy668F9hspyB0v+41hrrwZh5G/LI7DQ==
-Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=hyYzqmlDslCI6sS+GRohuM44c3cEEEsaC+XBQ/LwymM=;
+ b=PjnHdRHjymjj3s4SsPCQQw2lsMFWUJnbyYjWSXgqLt8xCziSyEhGdF0hiGupVGrqyKNbeEighrNA
+   A1yEOXHQRHc1OGcuOeMgpbaky5UR1xo9atUjIgZQpykGO9OoY9EArEp2ylN31yhNS4YJ/wPQjUnK
+   pZZfTkL99n/eD4bX4SbEY9oCxymWhrEADZ0bjS31RrcDu9lVz+CYnkj4gFTDEJDdcyF97C1EK/MG
+   A72xlXzW8+LfwhtYuaZiMLrzLhSYnoUbVK/rXTXTUhqOyBmKPcDvTP2ZnpHGfhdFoFcpybA4XpHg
+   9lq96dMi0dIE2PrypcHLt8cI8PjPum1SefL3KA==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
  2024))
- with ESMTPS id <0SN000KXVLWNL970@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 15 Nov 2024 23:14:47 +0000 (GMT)
+ with ESMTPS id <0SN0000GAMIRWK70@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 15 Nov 2024 23:28:03 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Date: Sat, 16 Nov 2024 00:27:44 +0100 (GMT+01:00)
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,	karthik.188@gmail.com,
+ Taylor Blau <me@ttaylorr.com>,	ferdinandy.bence@ttk.elte.hu
+Message-id: <54677502-a08c-4920-9b08-13517c8f027a@ferdinandy.com>
+In-reply-to: <D5N3N1RMMR9Q.28GSGYYBWZSOS@ferdinandy.com>
+References: <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241023153736.257733-3-bence@ferdinandy.com> <xmqqr07d11wt.fsf@gitster.g>
+ <D5N3N1RMMR9Q.28GSGYYBWZSOS@ferdinandy.com>
+Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
+ update_symref
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
+Content-type: text/plain; charset=UTF-8; format=flowed
 Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Sat, 16 Nov 2024 00:13:48 +0100
-Message-id: <D5N4TN6WX65V.JJKLX5ROS8NN@ferdinandy.com>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v12 4/8] remote set-head: better output for --auto
-Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
- "Taylor Blau" <me@ttaylorr.com>, <ferdinandy.bence@ttk.elte.hu>
-To: "Junio C Hamano" <gitster@pobox.com>
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
- <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-5-bence@ferdinandy.com> <xmqqcyix11w8.fsf@gitster.g>
- <D5N4B2SSZAG4.1O5CERCP825X2@ferdinandy.com>
-In-reply-to: <D5N4B2SSZAG4.1O5CERCP825X2@ferdinandy.com>
+X-Correlation-ID: <54677502-a08c-4920-9b08-13517c8f027a@ferdinandy.com>
 Reporting-Meta:
  AAFLrooIivhn4mS5hdUDcR0uEaS0PncLSm00cWoHIVZ2R8oRK46qRh2QmK9Mx5pg
- Y5brOwqXSdRo+KQx5OK+5D6ycNxWFkG9SrM3/43++cEMVW9mBfkx8CGDpRu5rfjr
- HCXw0Eaq32CKN/pni64+unaa8hXmtpx8kovNNF6npwG562szN0si+LYDGIXVpkiS
- qhs2ALLFGpyRYe5uV3uZdrnsU2cIV8dKjqH4q4790G3ZifSrel1hsSAUKXnDEkCV
- XmLi8ygau3liI+cBkQ30+A9ZMOrcYRDAsnOzvbfh2/tyYSM4XTjq6tK8xLd/a0nl
- m+oaWX71tVBZMaYBuZlZib5Mmtn13E2G4FkoupfVa2zlYliywemY5yGnddtPVNTV
- oJRQc+KfXaWwqFqAAs1its7P5tyT4/DDGBzOL4mJk6wtvq0XUOm1P6xIBw3maAGY
- zDZyi13GP2bzq4E5BX3TzA5VI834Ywgvk4CLKm/+uEyBFomBBNM2eWsK
+ Y5brOwqXSdRo+KQx5OIk6D6ycNxWFkG9SrN/1tLi7go8glsXH5rG0X3ctiht2HgG
+ 2M2G7g1aQX2zqIPr6vTXzTBlJErbLQs8g90qPqi6zGon7jR/cgkuEHx1n6BbvUI7
+ N1/CNarhbrOE/E6aMl1xqa7hHep8mU+EcFM3aa1xM/vEvpckMA27OeXT0htZJwy9
+ pKF0GvYBrUYvnXVOzvANZeqnmh3UVKhQEwqSeHim5npGugMmyLg6ZdG1H3lI3NnB
+ 9pmfvoM5zFIOQW1PCTQtmuCVMFroyXSZdsfjJjjYtVdcbbirawnHynHmIJzzneoa
+ W/t29rBeGiBs/blkjQlcJkgk8hn6jg6x5ZaXSn2Tkc8644+ut+sdLxcjGYB8ufVO
+ mN+Aau0GN8ssUmPhglD1SmFhECON68dk76ASOZgfQBRKU7ZXnnRqdxI=
 
+2024. nov. 15. 23:18:10 Bence Ferdinandy <bence@ferdinandy.com>:
 
-On Fri Nov 15, 2024 at 23:49, Bence Ferdinandy <bence@ferdinandy.com> wrote=
-:
 >
 > On Fri Nov 15, 2024 at 06:50, Junio C Hamano <gitster@pobox.com> wrote:
 >> Bence Ferdinandy <bence@ferdinandy.com> writes:
 >>
->>> Currently, set-head --auto will print a message saying "remote/HEAD set
->>> to branch", which implies something was changed.
+>>> int refs_update_symref(struct ref_store *refs, const char *ref,
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 const char *target, const char *logmsg)
+>>> +{
+>>> +=C2=A0=C2=A0 return refs_update_symref_extended(refs, ref, target, log=
+msg,=20
+>>> NULL);
+>>> +}
+>>
+>> OK.=C2=A0 As the enhanced and renamed function is also external, we do
+>> not have to worry about reordering the old one to come after the new
+>> one.
+>
+> I guess this also decides that the name "_extended" is fine :)
+>
+>>
+>>> +int refs_update_symref_extended(struct ref_store *refs, const char=20
+>>> *ref,
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 const char *target, const char *logmsg,
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 struct strbuf *referent)
+>>> {
+>>> =C2=A0=C2=A0=C2=A0 struct ref_transaction *transaction;
+>>> =C2=A0=C2=A0=C2=A0 struct strbuf err =3D STRBUF_INIT;
+>>> @@ -2122,13 +2129,20 @@ int refs_update_symref(struct ref_store=20
+>>> *refs, const char *ref,
 >>>
->>> Change the output of --auto, so the output actually reflects what was
->>> done: a) set a previously unset HEAD, b) change HEAD because remote
->>> changed or c) no updates. As a fourth output, if HEAD is changed from
->>> a previous value that was not a remote branch, explicitly call attentio=
-n
->>> to this fact.
+>>> =C2=A0=C2=A0=C2=A0 transaction =3D ref_store_transaction_begin(refs, &e=
+rr);
+>>> =C2=A0=C2=A0=C2=A0 if (!transaction ||
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_update(transactio=
+n, ref, NULL, NULL,
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_update(transactio=
+n, ref, NULL, NULL,
 >>
->> OK.  That's sensible.
+>> An unwanted patch noise?
 >>
->> There is a slight variant of the fourth case.  HEAD may have been a
->> symbolic ref that pointed at an unexpected place (which you
->> addressed), or HEAD may have been a non-symbolic ref (which the new
->> code would mistakenly say "HEAD is now created", if I am reading the
->> patch correctly).
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target, NULL, REF_NO_DEREF,
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 logmsg, &err) ||
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_commit(transactio=
+n, &err)) {
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_prepare(transacti=
+on, &err)) {
+>>
+>> Likewise, but the noise distracts from the real change made on this
+>> line, which is even worse.
 >
-> Good point, and yes, that is what happens. (Although I'm not quite sure h=
-ow
-> valid that state is where a remote's HEAD is not a branch).
->
->>
->>> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
->>> index 9b50276646..0ea86d51a4 100755
->>> --- a/t/t5505-remote.sh
->>> +++ b/t/t5505-remote.sh
->>> @@ -432,12 +432,51 @@ test_expect_success 'set-head --auto' '
->>>  	)
->>>  '
->>> =20
->>> +test_expect_success 'set-head --auto detects creation' '
->>> +	(
->>> +		cd test &&
->>> +		git symbolic-ref -d refs/remotes/origin/HEAD &&
->>
->> Are we sure refs/remotes/origin/HEAD exists at this point in the
->> test, regardless of which earlier tests were skipped or failed?  If
->> not, perhaps
->>
->> 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
->>
->> is a better alternative.
->
-> Ack.
+> Mea culpa, I'll get this cleaned up.
 >
 >>
->>> +		git remote set-head --auto origin >output &&
->>> +		echo "${SQ}origin/HEAD${SQ} is now created and points to ${SQ}main${=
-SQ}" >expect &&
->>> +		test_cmp expect output
->>> +	)
->>> +'
+>> The real change here is to only call _prepare(), which also asks the
+>> transaction hook if we are OK to proceed.=C2=A0 If we fail, we stop here
 >>
->> Here, we could insert another one:
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D error("%s", err.buf)=
+;
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto cleanup;
 >>
->> test_expect_success 'set-head --auto to update a non symbolic ref' '
->> 	(
->> 		cd test &&
->> 		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
->> 		git update-ref refs/remotes/origin/HEAD HEAD &&
->> 		git remote set-head --auto origin >output &&
+>> This is also a real change.=C2=A0 We could instead make the additional
+>> code below into the else clause (see below).
 >>
->> I'd imagine "output" should at least say that we are setting up a
->> symref origin/HEAD to point at some ref the --auto option figured
->> out, and if we wanted to report its previous state, it was a non
->> symbolic ref that pointed at some commit.  In any case,
+>>> =C2=A0=C2=A0=C2=A0 }
+>>> +=C2=A0=C2=A0 if (referent)
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 refs_read_symbolic_ref(refs, ref,=
+ referent);
 >>
->> 		echo "${SQ}origin/HEAD${SQ} is now created and points to ${SQ}main${SQ=
-}" >expect &&
->>
->> is not what we want to see here, I suspect.
->>
->> Can we detect the case where we overwrite a non symref with a symref
->> without going back to step 2/8 and doing a major surgery?
->>
->> 		test_cmp expect output
->> 	)
->> '
+>> And if we were asked to give the value of the symbolic ref, we make
+>> this call.=C2=A0 What should this code do when reading fails (I know it
+>> ignores, as written, but I am asking what it _should_ do)?
 >
-> I agree, adding this makes sense. And this also takes us back to the ques=
-tion
-> of what we should do in 2/8 when refs_read_symbolic_ref exits with 1. I n=
-ow
-> tested the behaviour and if origin/HEAD is gibberish, git already dies be=
-fore
-> with=20
->
-> error: cannot lock ref 'refs/remotes/origin/HEAD': unable to resolve refe=
-rence 'refs/remotes/origin/HEAD': reference broken
->
-> so refs_read_symbolic_ref -> 1 only happens if there's a valid non-symbol=
-ic ref
-> in origin/HEAD. So maybe if we put "Not a symbolic reference." in the ref=
-erent
-> (which should be an invalid symref), the caller could check for that and =
-then
-> should be able to distinguish this special case?
+> I think this should do _nothing_ if it fails (although should it stay=20
+> this way,
+> I guess it should be marked with a comment that this is on purpose). My
+> reasoning is that running `git fetch` will be running this part of the=20
+> code,
+> which means that should reading the symbolic ref fail for any reason, a=
+=20
+> `fetch`
+> that previously ran without error would now fail. We now pass up an=20
+> empty
+> string as the previous which does mask that there was an error here.=20
+> What
+> I think we could maybe do is pass up a special string that means there=20
+> was an
+> error? Something that for sure cannot be a valid value for an existing
+> reference? I'm not sure how much sense that makes.
 
-On second thought, it would maybe make even more sense to get the reference
-hash and put that into referent. In that case the output could still be
+Sorry, it's late. The above is slightly bollocks since fetch ignores any=20
+set_head errors later :)
+But the idea stands that if we can set the head, let's do it.
+The previous head is not important enough to die on.
 
-"'%s/HEAD' has changed from '%s' and now points to '%s'\n"
-
-but with a non-symref after from.
-
-
+As mentioned on the other patch, we could try to read a non-symref=20
+instead also, if symref fails.
+>
+>>
+>>> +=C2=A0=C2=A0 if (ref_transaction_commit(transaction, &err))
+>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D error("%s", err.buf);
+>>
+>> And then we commit, or we fail to commit.
+>>
+>>> +cleanup:
+>>
+>> We could write the whole thing as a single "do these and leave as
+>> soon as we see any failure" ||-cascade,
+>>
+>> =C2=A0=C2=A0=C2=A0 if (!(transaction =3D ref_store_transaction_begin(ref=
+s, &err)) ||
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_update(transa=
+ction, ref, NULL, NULL,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target, NULL, REF_NO_DEREF,
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 logmsg, &err) ||
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_prepare(trans=
+action, &err)) ||
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (referent
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ? refs_read_symbolic_ref(refs=
+, ref, referent)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : 0) ||
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ref_transaction_commit(transa=
+ction, &err)) {
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!err.len)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ... s=
+tuff default error message to err ...;
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D error("%s", err.buf);
+>> =C2=A0=C2=A0=C2=A0 }
+>>
+>> which may not necessarily easier to follow (and in fact it is rather
+>> ugly), but at least, the resulting code does not have to special
+>> case the "optionally peek into the symref" step.
+>
+> As I said above, I don't think we actually want to fail the update even=
+=20
+> if the
+> symbolic ref reading fails, so I think the special casing should stay.=20
+> I'll
+> wait here to see more clearly on what to do here.
