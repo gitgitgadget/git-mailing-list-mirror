@@ -1,60 +1,59 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424261CF5CB
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 13:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE1B1CDA35
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 13:42:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731678159; cv=none; b=TvST2t85qacI5rTXb2OyiTZvgsqxS0tlv2R6uIHhdhax1247wxjIjWrkpnRaOss9d+fVKcYqRq6gONCeU/SSVEud1ZEkYXcxgzA1fXOrUeMRLH64/w9iWL7XZiXFCAT3SHjrRC3eY4UHamfJ5VroU/mxo7FLrqdxFA24t0iXrRI=
+	t=1731678159; cv=none; b=EcvOkoI0IRb1zBQPoGXMGEkXV3wpb8iOmaK0ILwlTuw7Y7nMLnMXXna2mLP/5qixvScpuIEboggkw+ksM2pH69OEV0y0bbu5Ww3o/JSBsfCHi4DHsxeBPhrbOzRA8d8c8z3HSBt3zuxEo20A/ULcXlZfP0fQnBfvoYqUcncnUwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1731678159; c=relaxed/simple;
-	bh=aqnzIqfQ9Q/2Lga8N+m93w2pRkd9qRAElYeuZ6Yj6Qs=;
+	bh=YLIxfxey4wwxkvidRPWgG1irzf0Ce3A/UHX5RT7xfnI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AJqwFLHt1qZk6zUnf7OzPgGt53Ulfb1r15DFtvlNB/nKODBQoP1GWOaw5H/8ZUK7TYM+6dJFvRNpWoDPyTSTRzP7RuFT4760CP9NRzsI2JVZFdaoUuuperybk8ohog0untj+tqERB3WpsnRB+lj4NDo2ipRYr7GWpFHYSgoJt8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xmik89NA; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:To:Cc; b=eP+hMOcs09SjUy3lhn0cAxjAeDvh2z39//IjhYlHLey38hSu70f3f4HCPa4W+OkjhZw2gQxmo58SAHjyU0mECjJ9yNv1ki+7a9dH2oU5XZexnhZkba5j0hh9V4wL8DDbN2Oij5QuPDFCHkXCg6SVKd5zrMPCTCHxuwQh+joVlnE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UG5crFnz; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xmik89NA"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aa1f73966a5so349140766b.2
-        for <git@vger.kernel.org>; Fri, 15 Nov 2024 05:42:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UG5crFnz"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a9a850270e2so343849166b.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2024 05:42:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731678155; x=1732282955; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731678154; x=1732282954; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=m+htfvT+o2F1nEtNcEZjC1+AFmm0hfW6zBIW8BVMW5Y=;
-        b=Xmik89NAPmbWFpatNzESudl1Ee16VqiBKaxWv+hxtMshC0/xXvExwxE/2sRXweCLAQ
-         484oqhNYuuoyLo/BcCRtlvsmOm+363CkEbYyvwl/TDpwM+D8GwT8pwyY423d6mJTfocw
-         hFOIfKUtMKx2gzsdqZF2SHqGozUF7rP839FuEeOOkmBaMnuruC71QH/Q1ISOZviX6MvT
-         oTPBoMo33woDncRxb1kFUmZH2NO5oBvHlqL2Azs0zUWr/nmWpEtNXJfMWtWrM3mZowBk
-         XV5cIpY0X6aan+t8Y37eAp2Uc49ssg/s7tofabo7ttWrzAqI3WeJJKw4I72WdKPTXx8k
-         0HUQ==
+        bh=3wgtqvgwwfKMQs492JKaLFrpDROIvxTe5dnbQcKCwLk=;
+        b=UG5crFnz0pu0uBcuAjh7rshO4Io5EINNRavGVJCrZqjinsCKF1IAOVW2lHZiZBJdaO
+         NYprQAh7ct0xxowJTI5CLD3Zy+v7929DIvpW9+/p0ZJEv526mgmQ1lsoCLzF4MDgZ2rO
+         1tqhmsx3pVOnLbSqjgw1vFP6OZALwe44vHUC9PMmGit1Sh4ALMrQ6Oxv/+F4S9J6BT7/
+         PgeiGhbLxiMg53pT3C04Iwh1/DKDpDCR+bnTQZ5EJWqIg79SXIqcsmxG8JtFKQc08oe/
+         9r17xJEZXzw66HayIUtfubyZNhnGyWSw+73Y2SD/R7xGIofvo0VzI7iQDvlmdR2ByPki
+         9M6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731678155; x=1732282955;
+        d=1e100.net; s=20230601; t=1731678154; x=1732282954;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m+htfvT+o2F1nEtNcEZjC1+AFmm0hfW6zBIW8BVMW5Y=;
-        b=Ox0x1mISZ8Ibw024l2bz7xWZM0KcQofG05fpr8eOUXLVxz3ENmX7xhjSyMDw+zrkck
-         snlyxtjVQ4S3cNFAgdZuy3Y801IQAENHmqIUeAdqsfU65bxM9L1HHCk+pbpdlD1m7hEC
-         +YD709u594O38wtAlPY7DI1VflUOKUIt1HNYztz+hxEA7VIarVXuhqz/eu3KvGBkiMDW
-         zL47TuSbu2hxpV7YekPho0IF0el9gnyCWDxBFUcBv2ah8/yTijh8KVRD8jImOvBO7nif
-         7Am4nMPrXgG9EX+xkqyX2aytCef+CFAXKODEfuxRDvVv7u2xOyYtXceSpKVgHtsHP0wg
-         gpnA==
-X-Gm-Message-State: AOJu0YyKxGAoeq9BxMUA9YEXwyRpIW9eExMy+fmy/V9Oy2ccgIDYJYhk
-	MrePsdBb0eUYtHVs7XmpnjH4osaWnOEmpUgLt5PwneBJpO5jdDQk
-X-Google-Smtp-Source: AGHT+IFoK4aZYXWHvgHgcpbUtBoY6dY8OTIN+PsTb4En9pRIflZCneCyc9UtRqY/t9IWDYySUE6kDg==
-X-Received: by 2002:a17:907:7f8a:b0:a77:c30c:341 with SMTP id a640c23a62f3a-aa48324aa26mr213565566b.0.1731678155053;
-        Fri, 15 Nov 2024 05:42:35 -0800 (PST)
-Received: from [10.82.5.93] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20df26a69sm180753966b.34.2024.11.15.05.42.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=3wgtqvgwwfKMQs492JKaLFrpDROIvxTe5dnbQcKCwLk=;
+        b=PZvvJwsAzlMdSNSoSIdwZJRh+ntNvWb4oo8hSE63JUhzIeiwDXZBId1Ocd5lrVbnRQ
+         eppW4hSj1YwtXG0RasOWOeby0CJv5QTpuU3shbu5mZG+ZcPpBYpbb286fVyEKc8QpEjw
+         VFd9nzSiCvfHMUFQ9I1iOIId6kw3xQDlhy9FmwDtQ7RYv2hN6EHbTNaRUwi3lSM9qlsY
+         LGb/blmYnFWwUZp1Yd9Wn0St53/gj7CNpuhdEYnh7G6CgtoQO6viGiCkBv7HKnOtAEcf
+         dJBCZZ8s0A6f/n1J7Ri7G5g+PAh6nNdn+XbtOvwVrbDWHCoiICFvbIWiCJGQZA7j8cG7
+         bqMg==
+X-Gm-Message-State: AOJu0YyeNOxe7mIl44EXgUNS5cChI79SJsqXM6SEyPwLr7MbfDQf3sMP
+	1IIlcHM1G2+8r/CzhuBpdEpqVtF3UWqqfBloUVMteIKfw9+FNFGKod6pgEdR
+X-Google-Smtp-Source: AGHT+IE3eaAaffT0YGbLzAQ5vclBV58BemuKvXqkIWMuu6jNfeB1Cvi9h0UT7zPT7N54iA2UpYfcQA==
+X-Received: by 2002:a17:907:3e92:b0:a9a:5b78:d7d8 with SMTP id a640c23a62f3a-aa483421a12mr246233666b.17.1731678154137;
         Fri, 15 Nov 2024 05:42:34 -0800 (PST)
+Received: from [10.82.5.93] ([217.110.80.4])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa20df26a69sm180753966b.34.2024.11.15.05.42.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2024 05:42:33 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 15 Nov 2024 14:42:15 +0100
-Subject: [PATCH 2/8] midx-write: add repository field to
- `write_midx_context`
+Date: Fri, 15 Nov 2024 14:42:14 +0100
+Subject: [PATCH 1/8] builtin: pass repository to sub commands
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,389 +62,1426 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-2-761f8a2c7775@gmail.com>
+Message-Id: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-1-761f8a2c7775@gmail.com>
 References: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-0-761f8a2c7775@gmail.com>
 In-Reply-To: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-0-761f8a2c7775@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, me@ttaylorr.com, peff@peff.net
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14111;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=53405;
  i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=aqnzIqfQ9Q/2Lga8N+m93w2pRkd9qRAElYeuZ6Yj6Qs=;
- b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnN0/HKO+URYUHjGFcypDF89INHWa5GBxU3j2GG
- mcHZzMz3uOJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZzdPxwAKCRA+1Z8kjkaM
- f6KiDACUX5Ow7GOqTCyfbr09BZLUevA8vT3TTl490fBB8z0BopM5KE+P3T46kEJb32yIvVWkgz8
- RbwR3KWcjhlLOME/TzSJlsB31sJj+exHd/g+ih1EDj+Fi8dhOLQze6vKr9iVXpYqgXmnVaemw/4
- 21NeA7OodKwU09I4tr2qw7dbH8wn5AUR4GRzAscmL0/RF9p+XwOcPievuxHtVsSc6YRjTEgpt4X
- 96rqh0sYG7pgKT7YKtNlWc0FHguebt30UGZHFPlxDit/6Ec6Juh29Yj7DPG+k+IQb4CSwElvBmI
- qeLLIBjX1JUszSzR3rzvfQOCuYiF1Is0pEcyNGocO/zVw249h+N4PZYxvIKyA+scELEjuQz64wW
- FlI3nLkrsIuAF01pwqkm5ySD4jo19ihY8jl2vNbFIraDus9ZjBUHrI0L8nFTuge9R5ybYLQuqfC
- JKigymNeY36hxOAXWzReY9OR/1GLI4NPaYMupwkn/PLokt/lhSYS9+wdApQq6nfbJrPEs=
+ bh=YLIxfxey4wwxkvidRPWgG1irzf0Ce3A/UHX5RT7xfnI=;
+ b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnN0/HNvVFcFO3pNnpwKmL2UFM/FUK0cvVfBKp6
+ QBhVlgQjBSJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZzdPxwAKCRA+1Z8kjkaM
+ fwquDAChvkev6YH+9x633NTEfXWLDDuNcy/UDbsHy5HAAbqMdAdxx7Un8/b908AUguweZqseAmx
+ 2iTTV95cUQGIL1U2hFFpAAXchT5jo5RomJG3isA5WZ0hn2Zt0iWgqCM8EttYO1wTWPC/uS2sxZT
+ FRMNz11yGc855iwsasYibVjZxZ+Vhmojvkmh2pdE3ch8GK4djkU8ld7wzpo3TCbQB6BhjDep0kv
+ O/X5QDW6tg2ACROwau8+6oP2BinIF9Q85M0/TClkP7cgVlTKJTGwFB5oHtU+j9uQOGHTpaB1fOo
+ vK9gPzgCUpN/2wJ78bjus/gdYkUCMAGjBRJZgZrCUxuhN4eCsLDH1pa8bzhsqfzJfLyF1AFVxGt
+ mOhWjrz6Z0Lk82hy/pt48QY1x89VheA0fWSjG792oDA+b87IxI/R39z/MSdhl9bxQvCoESBC34u
+ iUVOYLoYpeX476YSug44IYDxc9fBlIo8jfK+uRw6N9OzsaYyGlXCrePd+DlbGOJm7GHNU=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The struct `write_midx_context` is used to pass context for creating
-MIDX files. Adding the repository field here ensures that most functions
-within `midx-write.c` have access to the field and can use that instead
-of the global `repository` variable. This involves passing the
-`repository` field to `write_midx_internal`. To do this, we add
-`the_repository` usage to two non-static functions, which we'll remove
-in upcoming commits.
+In 9b1cb5070f (builtin: add a repository parameter for builtin
+functions, 2024-09-13) we passed down the repository to all builtin
+commands. This allowed us to pass down the repository to lower layers
+without depending on the global `the_repository` variable.
 
-With this, modify the static functions in `midx-write.c` to not use
-global variables. This means, either we use existing alternatives (like
-`repository` struct), or we pass down required fields from other
-functions.
+To continue this work, we also pass down the repository parameter from
+the command to sub-commands. In the upcoming commit, we'll utilize this
+to remove global variable usage in `midx-write.c`.
 
-Signed-off-by: default avatarKarthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- midx-write.c | 97 ++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 52 insertions(+), 45 deletions(-)
+ builtin/bisect.c              | 32 +++++++++++++++++++-----------
+ builtin/bundle.c              | 16 +++++++++------
+ builtin/commit-graph.c        | 10 ++++++----
+ builtin/config.c              | 25 ++++++++++++++---------
+ builtin/gc.c                  | 21 ++++++++++++--------
+ builtin/hook.c                |  7 ++++---
+ builtin/multi-pack-index.c    | 16 +++++++++------
+ builtin/notes.c               | 36 +++++++++++++++++++++------------
+ builtin/reflog.c              | 17 ++++++++++------
+ builtin/refs.c                | 10 ++++++----
+ builtin/remote.c              | 34 +++++++++++++++++++++-----------
+ builtin/sparse-checkout.c     | 25 ++++++++++++++---------
+ builtin/stash.c               | 39 +++++++++++++++++++++++-------------
+ builtin/submodule--helper.c   | 46 ++++++++++++++++++++++++++++---------------
+ builtin/worktree.c            | 28 ++++++++++++++++----------
+ parse-options.h               |  4 +++-
+ t/helper/test-parse-options.c | 11 ++++++++---
+ 17 files changed, 242 insertions(+), 135 deletions(-)
 
-diff --git a/midx-write.c b/midx-write.c
-index c57726ef9475df693890d61627ce91409c1def7c..a384f7ddc8a396d0cffd528132bb8fcdc6b37e24 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -35,13 +35,13 @@ extern void clear_incremental_midx_files_ext(const char *object_dir,
- extern int cmp_idx_or_pack_name(const char *idx_or_pack_name,
- 				const char *idx_name);
- 
--static size_t write_midx_header(struct hashfile *f,
--				unsigned char num_chunks,
-+static size_t write_midx_header(const struct git_hash_algo *hash_algo,
-+				struct hashfile *f, unsigned char num_chunks,
- 				uint32_t num_packs)
- {
- 	hashwrite_be32(f, MIDX_SIGNATURE);
- 	hashwrite_u8(f, MIDX_VERSION);
--	hashwrite_u8(f, oid_version(the_hash_algo));
-+	hashwrite_u8(f, oid_version(hash_algo));
- 	hashwrite_u8(f, num_chunks);
- 	hashwrite_u8(f, 0); /* unused */
- 	hashwrite_be32(f, num_packs);
-@@ -110,6 +110,8 @@ struct write_midx_context {
- 	uint32_t num_multi_pack_indexes_before;
- 
- 	struct string_list *to_include;
-+
-+	struct repository *repo;
- };
- 
- static int should_include_pack(const struct write_midx_context *ctx,
-@@ -154,7 +156,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			return;
- 
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
--		p = add_packed_git(the_repository, full_path, full_path_len, 0);
-+		p = add_packed_git(ctx->repo, full_path, full_path_len, 0);
- 		if (!p) {
- 			warning(_("failed to add packfile '%s'"),
- 				full_path);
-@@ -480,7 +482,7 @@ static int write_midx_oid_lookup(struct hashfile *f,
- 				 void *data)
- {
- 	struct write_midx_context *ctx = data;
--	unsigned char hash_len = the_hash_algo->rawsz;
-+	unsigned char hash_len = ctx->repo->hash_algo->rawsz;
- 	struct pack_midx_entry *list = ctx->entries;
- 	uint32_t i;
- 
-@@ -605,7 +607,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
- 	uint32_t *pack_order, base_objects = 0;
- 	uint32_t i;
- 
--	trace2_region_enter("midx", "midx_pack_order", the_repository);
-+	trace2_region_enter("midx", "midx_pack_order", ctx->repo);
- 
- 	if (ctx->incremental && ctx->base_midx)
- 		base_objects = ctx->base_midx->num_objects +
-@@ -640,7 +642,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
- 	}
- 	free(data);
- 
--	trace2_region_leave("midx", "midx_pack_order", the_repository);
-+	trace2_region_leave("midx", "midx_pack_order", ctx->repo);
- 
- 	return pack_order;
- }
-@@ -651,9 +653,10 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
- 	struct strbuf buf = STRBUF_INIT;
- 	char *tmp_file;
- 
--	trace2_region_enter("midx", "write_midx_reverse_index", the_repository);
-+	trace2_region_enter("midx", "write_midx_reverse_index", ctx->repo);
- 
--	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex(midx_hash));
-+	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex_algop(midx_hash,
-+								    ctx->repo->hash_algo));
- 
- 	tmp_file = write_rev_file_order(NULL, ctx->pack_order, ctx->entries_nr,
- 					midx_hash, WRITE_REV);
-@@ -664,7 +667,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
- 	strbuf_release(&buf);
- 	free(tmp_file);
- 
--	trace2_region_leave("midx", "write_midx_reverse_index", the_repository);
-+	trace2_region_leave("midx", "write_midx_reverse_index", ctx->repo);
+diff --git a/builtin/bisect.c b/builtin/bisect.c
+index 21d17a6c1a83e51fb82b53703b95d89bd9028830..8166d4abf532fbc95aaac71198e9722684ccf7f5 100644
+--- a/builtin/bisect.c
++++ b/builtin/bisect.c
+@@ -1312,7 +1312,8 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
+ 	return res;
  }
  
- static void prepare_midx_packing_data(struct packing_data *pdata,
-@@ -672,10 +675,10 @@ static void prepare_midx_packing_data(struct packing_data *pdata,
+-static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNUSED,
++			     struct repository *repo UNUSED)
  {
- 	uint32_t i;
- 
--	trace2_region_enter("midx", "prepare_midx_packing_data", the_repository);
-+	trace2_region_enter("midx", "prepare_midx_packing_data", ctx->repo);
- 
- 	memset(pdata, 0, sizeof(struct packing_data));
--	prepare_packing_data(the_repository, pdata);
-+	prepare_packing_data(ctx->repo, pdata);
- 
- 	for (i = 0; i < ctx->entries_nr; i++) {
- 		uint32_t pos = ctx->pack_order[i];
-@@ -686,7 +689,7 @@ static void prepare_midx_packing_data(struct packing_data *pdata,
- 			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
- 	}
- 
--	trace2_region_leave("midx", "prepare_midx_packing_data", the_repository);
-+	trace2_region_leave("midx", "prepare_midx_packing_data", ctx->repo);
+ 	if (argc > 1)
+ 		return error(_("'%s' requires either no argument or a commit"),
+@@ -1320,7 +1321,8 @@ static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNU
+ 	return bisect_reset(argc ? argv[0] : NULL);
  }
  
- static int add_ref_to_pending(const char *refname, const char *referent UNUSED,
-@@ -702,7 +705,7 @@ static int add_ref_to_pending(const char *refname, const char *referent UNUSED,
- 		return 0;
- 	}
+-static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED,
++			     struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1333,7 +1335,8 @@ static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNU
+ 	return res;
+ }
  
--	if (!peel_iterated_oid(the_repository, oid, &peeled))
-+	if (!peel_iterated_oid(revs->repo, oid, &peeled))
- 		oid = &peeled;
+-static int cmd_bisect__start(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__start(int argc, const char **argv, const char *prefix UNUSED,
++			     struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1344,7 +1347,8 @@ static int cmd_bisect__start(int argc, const char **argv, const char *prefix UNU
+ 	return res;
+ }
  
- 	object = parse_object_or_die(oid, refname);
-@@ -760,7 +763,7 @@ static int read_refs_snapshot(const char *refs_snapshot,
- 			hex = &buf.buf[1];
- 		}
+-static int cmd_bisect__next(int argc, const char **argv UNUSED, const char *prefix)
++static int cmd_bisect__next(int argc, const char **argv UNUSED, const char *prefix,
++			    struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1358,12 +1362,15 @@ static int cmd_bisect__next(int argc, const char **argv UNUSED, const char *pref
+ 	return res;
+ }
  
--		if (parse_oid_hex(hex, &oid, &end) < 0)
-+		if (parse_oid_hex_algop(hex, &oid, &end, revs->repo->hash_algo) < 0)
- 			die(_("could not parse line: %s"), buf.buf);
- 		if (*end)
- 			die(_("malformed line: %s"), buf.buf);
-@@ -783,17 +786,16 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- 	struct rev_info revs;
- 	struct bitmap_commit_cb cb = {0};
+-static int cmd_bisect__log(int argc UNUSED, const char **argv UNUSED, const char *prefix UNUSED)
++static int cmd_bisect__log(int argc UNUSED, const char **argv UNUSED,
++			   const char *prefix UNUSED,
++			   struct repository *repo UNUSED)
+ {
+ 	return bisect_log();
+ }
  
--	trace2_region_enter("midx", "find_commits_for_midx_bitmap",
--			    the_repository);
-+	trace2_region_enter("midx", "find_commits_for_midx_bitmap", ctx->repo);
+-static int cmd_bisect__replay(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__replay(int argc, const char **argv, const char *prefix UNUSED,
++			      struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1376,7 +1383,8 @@ static int cmd_bisect__replay(int argc, const char **argv, const char *prefix UN
+ 	return res;
+ }
  
- 	cb.ctx = ctx;
+-static int cmd_bisect__skip(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__skip(int argc, const char **argv, const char *prefix UNUSED,
++			    struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1388,7 +1396,8 @@ static int cmd_bisect__skip(int argc, const char **argv, const char *prefix UNUS
+ 	return res;
+ }
  
--	repo_init_revisions(the_repository, &revs, NULL);
-+	repo_init_revisions(ctx->repo, &revs, NULL);
- 	if (refs_snapshot) {
- 		read_refs_snapshot(refs_snapshot, &revs);
+-static int cmd_bisect__visualize(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__visualize(int argc, const char **argv, const char *prefix UNUSED,
++				 struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1399,7 +1408,8 @@ static int cmd_bisect__visualize(int argc, const char **argv, const char *prefix
+ 	return res;
+ }
+ 
+-static int cmd_bisect__run(int argc, const char **argv, const char *prefix UNUSED)
++static int cmd_bisect__run(int argc, const char **argv, const char *prefix UNUSED,
++			   struct repository *repo UNUSED)
+ {
+ 	int res;
+ 	struct bisect_terms terms = { 0 };
+@@ -1415,7 +1425,7 @@ static int cmd_bisect__run(int argc, const char **argv, const char *prefix UNUSE
+ int cmd_bisect(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+-	       struct repository *repo UNUSED)
++	       struct repository *repo)
+ {
+ 	int res = 0;
+ 	parse_opt_subcommand_fn *fn = NULL;
+@@ -1451,7 +1461,7 @@ int cmd_bisect(int argc,
  	} else {
- 		setup_revisions(0, NULL, &revs, NULL);
--		refs_for_each_ref(get_main_ref_store(the_repository),
-+		refs_for_each_ref(get_main_ref_store(ctx->repo),
- 				  add_ref_to_pending, &revs);
+ 		argc--;
+ 		argv++;
+-		res = fn(argc, argv, prefix);
++		res = fn(argc, argv, prefix, repo);
  	}
  
-@@ -821,13 +823,12 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
- 
- 	release_revisions(&revs);
- 
--	trace2_region_leave("midx", "find_commits_for_midx_bitmap",
--			    the_repository);
-+	trace2_region_leave("midx", "find_commits_for_midx_bitmap", ctx->repo);
- 
- 	return cb.commits;
+ 	return is_bisect_success(res) ? 0 : -res;
+diff --git a/builtin/bundle.c b/builtin/bundle.c
+index 127518c2a8d3c4ec0bde62f1932e964ce9bcf66f..3f14754197c847e7a4e98b607c1a24df2b053daf 100644
+--- a/builtin/bundle.c
++++ b/builtin/bundle.c
+@@ -67,7 +67,8 @@ static int parse_options_cmd_bundle(int argc,
+ 	return argc;
  }
  
--static int write_midx_bitmap(const char *midx_name,
-+static int write_midx_bitmap(struct repository *r, const char *midx_name,
- 			     const unsigned char *midx_hash,
- 			     struct packing_data *pdata,
- 			     struct commit **commits,
-@@ -840,9 +841,9 @@ static int write_midx_bitmap(const char *midx_name,
- 	struct bitmap_writer writer;
- 	struct pack_idx_entry **index;
- 	char *bitmap_name = xstrfmt("%s-%s.bitmap", midx_name,
--					hash_to_hex(midx_hash));
-+				    hash_to_hex_algop(midx_hash, r->hash_algo));
+-static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
++static int cmd_bundle_create(int argc, const char **argv, const char *prefix,
++			     struct repository *repo UNUSED) {
+ 	struct strvec pack_opts = STRVEC_INIT;
+ 	int version = -1;
+ 	int ret;
+@@ -123,7 +124,8 @@ static int open_bundle(const char *path, struct bundle_header *header,
+ 	return read_bundle_header(path, header);
+ }
  
--	trace2_region_enter("midx", "write_midx_bitmap", the_repository);
-+	trace2_region_enter("midx", "write_midx_bitmap", r);
- 
- 	if (flags & MIDX_WRITE_BITMAP_HASH_CACHE)
- 		options |= BITMAP_OPT_HASH_CACHE;
-@@ -859,7 +860,7 @@ static int write_midx_bitmap(const char *midx_name,
- 	for (i = 0; i < pdata->nr_objects; i++)
- 		index[i] = &pdata->objects[i].idx;
- 
--	bitmap_writer_init(&writer, the_repository, pdata);
-+	bitmap_writer_init(&writer, r, pdata);
- 	bitmap_writer_show_progress(&writer, flags & MIDX_PROGRESS);
- 	bitmap_writer_build_type_index(&writer, index);
- 
-@@ -892,7 +893,7 @@ static int write_midx_bitmap(const char *midx_name,
- 	free(bitmap_name);
- 	bitmap_writer_free(&writer);
- 
--	trace2_region_leave("midx", "write_midx_bitmap", the_repository);
-+	trace2_region_leave("midx", "write_midx_bitmap", r);
- 
+-static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
++static int cmd_bundle_verify(int argc, const char **argv, const char *prefix,
++			     struct repository *repo UNUSED) {
+ 	struct bundle_header header = BUNDLE_HEADER_INIT;
+ 	int bundle_fd = -1;
+ 	int quiet = 0;
+@@ -164,7 +166,8 @@ static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
  	return ret;
  }
-@@ -944,7 +945,7 @@ static int fill_packs_from_midx(struct write_midx_context *ctx,
- 			 */
- 			if (flags & MIDX_WRITE_REV_INDEX ||
- 			    preferred_pack_name) {
--				if (prepare_midx_pack(the_repository, m,
-+				if (prepare_midx_pack(ctx->repo, m,
- 						      m->num_packs_in_base + i)) {
- 					error(_("could not load pack"));
- 					return 1;
-@@ -1049,7 +1050,7 @@ static void clear_midx_files(const char *object_dir,
- 	strbuf_release(&buf);
+ 
+-static int cmd_bundle_list_heads(int argc, const char **argv, const char *prefix) {
++static int cmd_bundle_list_heads(int argc, const char **argv, const char *prefix,
++				 struct repository *repo UNUSED) {
+ 	struct bundle_header header = BUNDLE_HEADER_INIT;
+ 	int bundle_fd = -1;
+ 	int ret;
+@@ -189,7 +192,8 @@ static int cmd_bundle_list_heads(int argc, const char **argv, const char *prefix
+ 	return ret;
  }
  
--static int write_midx_internal(const char *object_dir,
-+static int write_midx_internal(struct repository *r, const char *object_dir,
- 			       struct string_list *packs_to_include,
- 			       struct string_list *packs_to_drop,
- 			       const char *preferred_pack_name,
-@@ -1070,7 +1071,9 @@ static int write_midx_internal(const char *object_dir,
- 	const char **keep_hashes = NULL;
- 	struct chunkfile *cf;
+-static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix) {
++static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix,
++			       struct repository *repo UNUSED) {
+ 	struct bundle_header header = BUNDLE_HEADER_INIT;
+ 	int bundle_fd = -1;
+ 	int ret;
+@@ -231,7 +235,7 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
+ int cmd_bundle(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+-	       struct repository *repo UNUSED)
++	       struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
+@@ -247,5 +251,5 @@ int cmd_bundle(int argc,
  
--	trace2_region_enter("midx", "write_midx_internal", the_repository);
-+	trace2_region_enter("midx", "write_midx_internal", r);
-+
-+	ctx.repo = r;
+ 	packet_trace_identity("bundle");
  
- 	ctx.incremental = !!(flags & MIDX_WRITE_INCREMENTAL);
- 	if (ctx.incremental && (flags & MIDX_WRITE_BITMAP))
-@@ -1087,8 +1090,7 @@ static int write_midx_internal(const char *object_dir,
- 			  midx_name.buf);
+-	return !!fn(argc, argv, prefix);
++	return !!fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 7c991db6eb48ad6e935727a079abac02bb358f8a..bd70d052e706b6e34b5aaaceef158c63ea4863d5 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -62,7 +62,8 @@ static struct option *add_common_options(struct option *to)
+ 	return parse_options_concat(common_opts, to);
+ }
  
- 	if (!packs_to_include || ctx.incremental) {
--		struct multi_pack_index *m = lookup_multi_pack_index(the_repository,
--								     object_dir);
-+		struct multi_pack_index *m = lookup_multi_pack_index(r, object_dir);
- 		if (m && !midx_checksum_valid(m)) {
- 			warning(_("ignoring existing multi-pack-index; checksum mismatch"));
- 			m = NULL;
-@@ -1351,7 +1353,7 @@ static int write_midx_internal(const char *object_dir,
- 	add_chunk(cf, MIDX_CHUNKID_OIDFANOUT, MIDX_CHUNK_FANOUT_SIZE,
- 		  write_midx_oid_fanout);
- 	add_chunk(cf, MIDX_CHUNKID_OIDLOOKUP,
--		  st_mult(ctx.entries_nr, the_hash_algo->rawsz),
-+		  st_mult(ctx.entries_nr, r->hash_algo->rawsz),
- 		  write_midx_oid_lookup);
- 	add_chunk(cf, MIDX_CHUNKID_OBJECTOFFSETS,
- 		  st_mult(ctx.entries_nr, MIDX_CHUNK_OFFSET_WIDTH),
-@@ -1373,7 +1375,8 @@ static int write_midx_internal(const char *object_dir,
- 			  write_midx_bitmapped_packs);
+-static int graph_verify(int argc, const char **argv, const char *prefix)
++static int graph_verify(int argc, const char **argv, const char *prefix,
++			struct repository *repo UNUSED)
+ {
+ 	struct commit_graph *graph = NULL;
+ 	struct object_directory *odb = NULL;
+@@ -214,7 +215,8 @@ static int git_commit_graph_write_config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
+-static int graph_write(int argc, const char **argv, const char *prefix)
++static int graph_write(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	struct string_list pack_indexes = STRING_LIST_INIT_DUP;
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -333,7 +335,7 @@ static int graph_write(int argc, const char **argv, const char *prefix)
+ int cmd_commit_graph(int argc,
+ 		     const char **argv,
+ 		     const char *prefix,
+-		     struct repository *repo UNUSED)
++		     struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option builtin_commit_graph_options[] = {
+@@ -352,5 +354,5 @@ int cmd_commit_graph(int argc,
+ 			     builtin_commit_graph_usage, 0);
+ 	FREE_AND_NULL(options);
+ 
+-	return fn(argc, argv, prefix);
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/config.c b/builtin/config.c
+index cba702210815b716a5c6c93ebb69d8c485901e43..16e6e3055598f1355714dc6de458b662870214c0 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -826,7 +826,8 @@ static void display_options_init(struct config_display_options *opts)
+ 	}
+ }
+ 
+-static int cmd_config_list(int argc, const char **argv, const char *prefix)
++static int cmd_config_list(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	struct config_display_options display_opts = CONFIG_DISPLAY_OPTIONS_INIT;
+@@ -861,7 +862,8 @@ static int cmd_config_list(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int cmd_config_get(int argc, const char **argv, const char *prefix)
++static int cmd_config_get(int argc, const char **argv, const char *prefix,
++			  struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	struct config_display_options display_opts = CONFIG_DISPLAY_OPTIONS_INIT;
+@@ -915,7 +917,8 @@ static int cmd_config_get(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int cmd_config_set(int argc, const char **argv, const char *prefix)
++static int cmd_config_set(int argc, const char **argv, const char *prefix,
++			  struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	const char *value_pattern = NULL, *comment_arg = NULL;
+@@ -973,7 +976,8 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int cmd_config_unset(int argc, const char **argv, const char *prefix)
++static int cmd_config_unset(int argc, const char **argv, const char *prefix,
++			    struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	const char *value_pattern = NULL;
+@@ -1010,7 +1014,8 @@ static int cmd_config_unset(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int cmd_config_rename_section(int argc, const char **argv, const char *prefix)
++static int cmd_config_rename_section(int argc, const char **argv, const char *prefix,
++				     struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	struct option opts[] = {
+@@ -1039,7 +1044,8 @@ static int cmd_config_rename_section(int argc, const char **argv, const char *pr
+ 	return ret;
+ }
+ 
+-static int cmd_config_remove_section(int argc, const char **argv, const char *prefix)
++static int cmd_config_remove_section(int argc, const char **argv, const char *prefix,
++				     struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	struct option opts[] = {
+@@ -1099,7 +1105,8 @@ static int show_editor(struct config_location_options *opts)
+ 	return 0;
+ }
+ 
+-static int cmd_config_edit(int argc, const char **argv, const char *prefix)
++static int cmd_config_edit(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	struct config_location_options location_opts = CONFIG_LOCATION_OPTIONS_INIT;
+ 	struct option opts[] = {
+@@ -1395,7 +1402,7 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ int cmd_config(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+-	       struct repository *repo UNUSED)
++	       struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *subcommand = NULL;
+ 	struct option subcommand_opts[] = {
+@@ -1422,7 +1429,7 @@ int cmd_config(int argc,
+ 	if (subcommand) {
+ 		argc = parse_options(argc, argv, prefix, subcommand_opts, builtin_config_usage,
+ 		       PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_UNKNOWN_OPT);
+-		return subcommand(argc, argv, prefix);
++		return subcommand(argc, argv, prefix, repo);
  	}
  
--	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
-+	write_midx_header(r->hash_algo, f, get_num_chunks(cf),
-+			  ctx.nr - dropped_packs);
- 	write_chunkfile(cf, &ctx);
+ 	return cmd_config_actions(argc, argv, prefix);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 09802eb989471be242a4b2d74606b0998fdd2b11..50ccab172365d22c8f89e9f6fb822fca948878e7 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1567,7 +1567,8 @@ static int task_option_parse(const struct option *opt UNUSED,
+ 	return 0;
+ }
  
- 	finalize_hashfile(f, midx_hash, FSYNC_COMPONENT_PACK_METADATA,
-@@ -1405,7 +1408,7 @@ static int write_midx_internal(const char *object_dir,
- 		FREE_AND_NULL(ctx.entries);
- 		ctx.entries_nr = 0;
+-static int maintenance_run(int argc, const char **argv, const char *prefix)
++static int maintenance_run(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	int i;
+ 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
+@@ -1629,7 +1630,8 @@ static char const * const builtin_maintenance_register_usage[] = {
+ 	NULL
+ };
  
--		if (write_midx_bitmap(midx_name.buf, midx_hash, &pdata,
-+		if (write_midx_bitmap(r, midx_name.buf, midx_hash, &pdata,
- 				      commits, commits_nr, ctx.pack_order,
- 				      flags) < 0) {
- 			error(_("could not write multi-pack bitmap"));
-@@ -1449,12 +1452,13 @@ static int write_midx_internal(const char *object_dir,
- 		strbuf_release(&final_midx_name);
+-static int maintenance_register(int argc, const char **argv, const char *prefix)
++static int maintenance_register(int argc, const char **argv, const char *prefix,
++				struct repository *repo UNUSED)
+ {
+ 	char *config_file = NULL;
+ 	struct option options[] = {
+@@ -1693,7 +1695,8 @@ static char const * const builtin_maintenance_unregister_usage[] = {
+ 	NULL
+ };
  
- 		keep_hashes[ctx.num_multi_pack_indexes_before] =
--			xstrdup(hash_to_hex(midx_hash));
-+			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
+-static int maintenance_unregister(int argc, const char **argv, const char *prefix)
++static int maintenance_unregister(int argc, const char **argv, const char *prefix,
++				  struct repository *repo UNUSED)
+ {
+ 	int force = 0;
+ 	char *config_file = NULL;
+@@ -2923,7 +2926,8 @@ static const char *const builtin_maintenance_start_usage[] = {
+ 	NULL
+ };
  
- 		for (i = 0; i < ctx.num_multi_pack_indexes_before; i++) {
- 			uint32_t j = ctx.num_multi_pack_indexes_before - i - 1;
+-static int maintenance_start(int argc, const char **argv, const char *prefix)
++static int maintenance_start(int argc, const char **argv, const char *prefix,
++			     struct repository *repo)
+ {
+ 	struct maintenance_start_opts opts = { 0 };
+ 	struct option options[] = {
+@@ -2946,7 +2950,7 @@ static int maintenance_start(int argc, const char **argv, const char *prefix)
+ 	if (update_background_schedule(&opts, 1))
+ 		die(_("failed to set up maintenance schedule"));
  
--			keep_hashes[j] = xstrdup(hash_to_hex(get_midx_checksum(m)));
-+			keep_hashes[j] = xstrdup(hash_to_hex_algop(get_midx_checksum(m),
-+								   r->hash_algo));
- 			m = m->base_midx;
+-	if (maintenance_register(ARRAY_SIZE(register_args)-1, register_args, NULL))
++	if (maintenance_register(ARRAY_SIZE(register_args)-1, register_args, NULL, repo))
+ 		warning(_("failed to add repo to global config"));
+ 	return 0;
+ }
+@@ -2956,7 +2960,8 @@ static const char *const builtin_maintenance_stop_usage[] = {
+ 	NULL
+ };
+ 
+-static int maintenance_stop(int argc, const char **argv, const char *prefix)
++static int maintenance_stop(int argc, const char **argv, const char *prefix,
++			    struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -2976,7 +2981,7 @@ static const char * const builtin_maintenance_usage[] = {
+ int cmd_maintenance(int argc,
+ 		    const char **argv,
+ 		    const char *prefix,
+-		    struct repository *repo UNUSED)
++		    struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option builtin_maintenance_options[] = {
+@@ -2990,5 +2995,5 @@ int cmd_maintenance(int argc,
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_maintenance_options,
+ 			     builtin_maintenance_usage, 0);
+-	return fn(argc, argv, prefix);
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/hook.c b/builtin/hook.c
+index 367ef3e0b893fa16756880395151a82ed053acd8..672d2e37e845a2118aca1c4417a837138c250590 100644
+--- a/builtin/hook.c
++++ b/builtin/hook.c
+@@ -19,7 +19,8 @@ static const char * const builtin_hook_run_usage[] = {
+ 	NULL
+ };
+ 
+-static int run(int argc, const char **argv, const char *prefix)
++static int run(int argc, const char **argv, const char *prefix,
++	       struct repository *repo UNUSED)
+ {
+ 	int i;
+ 	struct run_hooks_opt opt = RUN_HOOKS_OPT_INIT;
+@@ -70,7 +71,7 @@ static int run(int argc, const char **argv, const char *prefix)
+ int cmd_hook(int argc,
+ 	     const char **argv,
+ 	     const char *prefix,
+-	     struct repository *repo UNUSED)
++	     struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option builtin_hook_options[] = {
+@@ -81,5 +82,5 @@ int cmd_hook(int argc,
+ 	argc = parse_options(argc, argv, NULL, builtin_hook_options,
+ 			     builtin_hook_usage, 0);
+ 
+-	return fn(argc, argv, prefix);
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index d159ed1314d912a390ed725659b3abe7c821b83f..85e40a4b6d3e47e9ec1ec27c094455e5ba75b5b0 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -119,7 +119,8 @@ static void read_packs_from_stdin(struct string_list *to)
+ }
+ 
+ static int cmd_multi_pack_index_write(int argc, const char **argv,
+-				      const char *prefix)
++				      const char *prefix,
++				      struct repository *repo UNUSED)
+ {
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_write_options[] = {
+@@ -183,7 +184,8 @@ static int cmd_multi_pack_index_write(int argc, const char **argv,
+ }
+ 
+ static int cmd_multi_pack_index_verify(int argc, const char **argv,
+-				       const char *prefix)
++				       const char *prefix,
++				       struct repository *repo UNUSED)
+ {
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_verify_options[] = {
+@@ -210,7 +212,8 @@ static int cmd_multi_pack_index_verify(int argc, const char **argv,
+ }
+ 
+ static int cmd_multi_pack_index_expire(int argc, const char **argv,
+-				       const char *prefix)
++				       const char *prefix,
++				       struct repository *repo UNUSED)
+ {
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_expire_options[] = {
+@@ -237,7 +240,8 @@ static int cmd_multi_pack_index_expire(int argc, const char **argv,
+ }
+ 
+ static int cmd_multi_pack_index_repack(int argc, const char **argv,
+-				       const char *prefix)
++				       const char *prefix,
++				       struct repository *repo UNUSED)
+ {
+ 	struct option *options;
+ 	static struct option builtin_multi_pack_index_repack_options[] = {
+@@ -271,7 +275,7 @@ static int cmd_multi_pack_index_repack(int argc, const char **argv,
+ int cmd_multi_pack_index(int argc,
+ 			 const char **argv,
+ 			 const char *prefix,
+-			 struct repository *repo UNUSED)
++			 struct repository *repo)
+ {
+ 	int res;
+ 	parse_opt_subcommand_fn *fn = NULL;
+@@ -297,7 +301,7 @@ int cmd_multi_pack_index(int argc,
+ 			     builtin_multi_pack_index_usage, 0);
+ 	FREE_AND_NULL(options);
+ 
+-	res = fn(argc, argv, prefix);
++	res = fn(argc, argv, prefix, repo);
+ 
+ 	free(opts.object_dir);
+ 	return res;
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 72c8a51cfacf72e1f115774487311b3d4464d204..d051abf6dff8f2bce193fd52b4beda5060af3972 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -431,7 +431,8 @@ static struct notes_tree *init_notes_check(const char *subcommand,
+ 	return t;
+ }
+ 
+-static int list(int argc, const char **argv, const char *prefix)
++static int list(int argc, const char **argv, const char *prefix,
++		struct repository *repo UNUSED)
+ {
+ 	struct notes_tree *t;
+ 	struct object_id object;
+@@ -468,9 +469,11 @@ static int list(int argc, const char **argv, const char *prefix)
+ 	return retval;
+ }
+ 
+-static int append_edit(int argc, const char **argv, const char *prefix);
++static int append_edit(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED);
+ 
+-static int add(int argc, const char **argv, const char *prefix)
++static int add(int argc, const char **argv, const char *prefix,
++	       struct repository *repo)
+ {
+ 	int force = 0, allow_empty = 0;
+ 	const char *object_ref;
+@@ -543,7 +546,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 			 * argv[0-1].
+ 			 */
+ 			argv[0] = "edit";
+-			return append_edit(argc, argv, prefix);
++			return append_edit(argc, argv, prefix, repo);
  		}
+ 		fprintf(stderr, _("Overwriting existing notes for object %s\n"),
+ 			oid_to_hex(&object));
+@@ -569,7 +572,8 @@ static int add(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
  
-@@ -1462,11 +1466,11 @@ static int write_midx_internal(const char *object_dir,
- 			fprintf(get_lock_file_fp(&lk), "%s\n", keep_hashes[i]);
- 	} else {
- 		keep_hashes[ctx.num_multi_pack_indexes_before] =
--			xstrdup(hash_to_hex(midx_hash));
-+			xstrdup(hash_to_hex_algop(midx_hash, r->hash_algo));
+-static int copy(int argc, const char **argv, const char *prefix)
++static int copy(int argc, const char **argv, const char *prefix,
++		struct repository *repo UNUSED)
+ {
+ 	int retval = 0, force = 0, from_stdin = 0;
+ 	const struct object_id *from_note, *note;
+@@ -646,7 +650,8 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	return retval;
+ }
+ 
+-static int append_edit(int argc, const char **argv, const char *prefix)
++static int append_edit(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	int allow_empty = 0;
+ 	const char *object_ref;
+@@ -749,7 +754,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int show(int argc, const char **argv, const char *prefix)
++static int show(int argc, const char **argv, const char *prefix,
++		struct repository *repo UNUSED)
+ {
+ 	const char *object_ref;
+ 	struct notes_tree *t;
+@@ -875,7 +881,8 @@ static int git_config_get_notes_strategy(const char *key,
+ 	return 0;
+ }
+ 
+-static int merge(int argc, const char **argv, const char *prefix)
++static int merge(int argc, const char **argv, const char *prefix,
++		 struct repository *repo UNUSED)
+ {
+ 	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
+ 	struct object_id result_oid;
+@@ -1016,7 +1023,8 @@ static int remove_one_note(struct notes_tree *t, const char *name, unsigned flag
+ 	return (flag & IGNORE_MISSING) ? 0 : status;
+ }
+ 
+-static int remove_cmd(int argc, const char **argv, const char *prefix)
++static int remove_cmd(int argc, const char **argv, const char *prefix,
++		      struct repository *repo UNUSED)
+ {
+ 	unsigned flag = 0;
+ 	int from_stdin = 0;
+@@ -1059,7 +1067,8 @@ static int remove_cmd(int argc, const char **argv, const char *prefix)
+ 	return retval;
+ }
+ 
+-static int prune(int argc, const char **argv, const char *prefix)
++static int prune(int argc, const char **argv, const char *prefix,
++		 struct repository *repo UNUSED)
+ {
+ 	struct notes_tree *t;
+ 	int show_only = 0, verbose = 0;
+@@ -1088,7 +1097,8 @@ static int prune(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int get_ref(int argc, const char **argv, const char *prefix)
++static int get_ref(int argc, const char **argv, const char *prefix,
++		   struct repository *repo UNUSED)
+ {
+ 	struct option options[] = { OPT_END() };
+ 	char *notes_ref;
+@@ -1109,7 +1119,7 @@ static int get_ref(int argc, const char **argv, const char *prefix)
+ int cmd_notes(int argc,
+ 	      const char **argv,
+ 	      const char *prefix,
+-	      struct repository *repo UNUSED)
++	      struct repository *repo)
+ {
+ 	const char *override_notes_ref = NULL;
+ 	parse_opt_subcommand_fn *fn = NULL;
+@@ -1148,5 +1158,5 @@ int cmd_notes(int argc,
+ 		strbuf_release(&sb);
  	}
  
- 	if (ctx.m || ctx.base_midx)
--		close_object_store(the_repository->objects);
-+		close_object_store(ctx.repo->objects);
+-	return !!fn(argc, argv, prefix);
++	return !!fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 22df6834f71098ab8378e4423967f0fb87858340..5a0c22f2f7e58733ce636619f3f19265b394bde5 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -234,7 +234,8 @@ static int expire_total_callback(const struct option *opt,
+ 	return 0;
+ }
  
- 	if (commit_lock_file(&lk) < 0)
- 		die_errno(_("could not write multi-pack-index"));
-@@ -1495,7 +1499,7 @@ static int write_midx_internal(const char *object_dir,
- 	}
- 	strbuf_release(&midx_name);
+-static int cmd_reflog_show(int argc, const char **argv, const char *prefix)
++static int cmd_reflog_show(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -253,7 +254,8 @@ static int show_reflog(const char *refname, void *cb_data UNUSED)
+ 	return 0;
+ }
  
--	trace2_region_leave("midx", "write_midx_internal", the_repository);
-+	trace2_region_leave("midx", "write_midx_internal", r);
+-static int cmd_reflog_list(int argc, const char **argv, const char *prefix)
++static int cmd_reflog_list(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -270,7 +272,8 @@ static int cmd_reflog_list(int argc, const char **argv, const char *prefix)
+ 	return refs_for_each_reflog(ref_store, show_reflog, NULL);
+ }
  
+-static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
++static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
++			     struct repository *repo UNUSED)
+ {
+ 	struct cmd_reflog_expire_cb cmd = { 0 };
+ 	timestamp_t now = time(NULL);
+@@ -394,7 +397,8 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
+ 	return status;
+ }
+ 
+-static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
++static int cmd_reflog_delete(int argc, const char **argv, const char *prefix,
++			     struct repository *repo UNUSED)
+ {
+ 	int i, status = 0;
+ 	unsigned int flags = 0;
+@@ -424,7 +428,8 @@ static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
+ 	return status;
+ }
+ 
+-static int cmd_reflog_exists(int argc, const char **argv, const char *prefix)
++static int cmd_reflog_exists(int argc, const char **argv, const char *prefix,
++			     struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -467,7 +472,7 @@ int cmd_reflog(int argc,
+ 			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0 |
+ 			     PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 	if (fn)
+-		return fn(argc - 1, argv + 1, prefix);
++		return fn(argc - 1, argv + 1, prefix, repository);
+ 	else
+ 		return cmd_log_reflog(argc, argv, prefix, repository);
+ }
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 24978a7b7b081ac6ed8ca99016f201d34c0639f8..3502980d21d055d8fc5ef36d2165aae61bc4db62 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -12,7 +12,8 @@
+ #define REFS_VERIFY_USAGE \
+ 	N_("git refs verify [--strict] [--verbose]")
+ 
+-static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
++static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
++			    struct repository *repo UNUSED)
+ {
+ 	const char * const migrate_usage[] = {
+ 		REFS_MIGRATE_USAGE,
+@@ -63,7 +64,8 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
+ 	return err;
+ }
+ 
+-static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
++static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	struct fsck_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
+ 	const char * const verify_usage[] = {
+@@ -93,7 +95,7 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
+ int cmd_refs(int argc,
+ 	     const char **argv,
+ 	     const char *prefix,
+-	     struct repository *repo UNUSED)
++	     struct repository *repo)
+ {
+ 	const char * const refs_usage[] = {
+ 		REFS_MIGRATE_USAGE,
+@@ -108,5 +110,5 @@ int cmd_refs(int argc,
+ 	};
+ 
+ 	argc = parse_options(argc, argv, prefix, opts, refs_usage, 0);
+-	return fn(argc, argv, prefix);
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 76670ddd8b44e5b118c76522613c445ad92c5364..56214775df4ce86bf5d8e4ddb8d19140f696aeef 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -155,7 +155,8 @@ static int parse_mirror_opt(const struct option *opt, const char *arg, int not)
+ 	return 0;
+ }
+ 
+-static int add(int argc, const char **argv, const char *prefix)
++static int add(int argc, const char **argv, const char *prefix,
++	       struct repository *repo UNUSED)
+ {
+ 	int fetch = 0, fetch_tags = TAGS_DEFAULT;
+ 	unsigned mirror = MIRROR_NONE;
+@@ -706,7 +707,8 @@ static void handle_push_default(const char* old_name, const char* new_name)
+ }
+ 
+ 
+-static int mv(int argc, const char **argv, const char *prefix)
++static int mv(int argc, const char **argv, const char *prefix,
++	      struct repository *repo UNUSED)
+ {
+ 	int show_progress = isatty(2);
+ 	struct option options[] = {
+@@ -881,7 +883,8 @@ static int mv(int argc, const char **argv, const char *prefix)
  	return result;
  }
-@@ -1505,8 +1509,8 @@ int write_midx_file(const char *object_dir,
- 		    const char *refs_snapshot,
- 		    unsigned flags)
+ 
+-static int rm(int argc, const char **argv, const char *prefix)
++static int rm(int argc, const char **argv, const char *prefix,
++	      struct repository *repo UNUSED)
  {
--	return write_midx_internal(object_dir, NULL, NULL, preferred_pack_name,
--				   refs_snapshot, flags);
-+	return write_midx_internal(the_repository, object_dir, NULL, NULL,
-+				   preferred_pack_name, refs_snapshot, flags);
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -1303,7 +1306,8 @@ static int show_all(void)
+ 	return result;
  }
  
- int write_midx_file_only(const char *object_dir,
-@@ -1515,8 +1519,9 @@ int write_midx_file_only(const char *object_dir,
- 			 const char *refs_snapshot,
- 			 unsigned flags)
+-static int show(int argc, const char **argv, const char *prefix)
++static int show(int argc, const char **argv, const char *prefix,
++		struct repository *repo UNUSED)
  {
--	return write_midx_internal(object_dir, packs_to_include, NULL,
--				   preferred_pack_name, refs_snapshot, flags);
-+	return write_midx_internal(the_repository, object_dir, packs_to_include,
-+				   NULL, preferred_pack_name, refs_snapshot,
-+				   flags);
+ 	int no_query = 0, result = 0, query_flag = 0;
+ 	struct option options[] = {
+@@ -1399,7 +1403,8 @@ static int show(int argc, const char **argv, const char *prefix)
+ 	return result;
  }
  
- int expire_midx_packs(struct repository *r, const char *object_dir, unsigned flags)
-@@ -1572,7 +1577,8 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 	free(count);
+-static int set_head(int argc, const char **argv, const char *prefix)
++static int set_head(int argc, const char **argv, const char *prefix,
++		    struct repository *repo UNUSED)
+ {
+ 	int i, opt_a = 0, opt_d = 0, result = 0;
+ 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT;
+@@ -1503,7 +1508,8 @@ static int prune_remote(const char *remote, int dry_run)
+ 	return result;
+ }
  
- 	if (packs_to_drop.nr)
--		result = write_midx_internal(object_dir, NULL, &packs_to_drop, NULL, NULL, flags);
-+		result = write_midx_internal(r, object_dir, NULL,
-+					     &packs_to_drop, NULL, NULL, flags);
+-static int prune(int argc, const char **argv, const char *prefix)
++static int prune(int argc, const char **argv, const char *prefix,
++		 struct repository *repo UNUSED)
+ {
+ 	int dry_run = 0, result = 0;
+ 	struct option options[] = {
+@@ -1534,7 +1540,8 @@ static int get_remote_default(const char *key, const char *value UNUSED,
+ 	return 0;
+ }
  
- 	string_list_clear(&packs_to_drop, 0);
+-static int update(int argc, const char **argv, const char *prefix)
++static int update(int argc, const char **argv, const char *prefix,
++		  struct repository *repo UNUSED)
+ {
+ 	int i, prune = -1;
+ 	struct option options[] = {
+@@ -1616,7 +1623,8 @@ static int set_remote_branches(const char *remotename, const char **branches,
+ 	return 0;
+ }
  
-@@ -1769,7 +1775,8 @@ int midx_repack(struct repository *r, const char *object_dir, size_t batch_size,
- 		goto cleanup;
+-static int set_branches(int argc, const char **argv, const char *prefix)
++static int set_branches(int argc, const char **argv, const char *prefix,
++			struct repository *repo UNUSED)
+ {
+ 	int add_mode = 0;
+ 	struct option options[] = {
+@@ -1635,7 +1643,8 @@ static int set_branches(int argc, const char **argv, const char *prefix)
+ 	return set_remote_branches(argv[0], argv + 1, add_mode);
+ }
+ 
+-static int get_url(int argc, const char **argv, const char *prefix)
++static int get_url(int argc, const char **argv, const char *prefix,
++		   struct repository *repo UNUSED)
+ {
+ 	int i, push_mode = 0, all_mode = 0;
+ 	const char *remotename = NULL;
+@@ -1674,7 +1683,8 @@ static int get_url(int argc, const char **argv, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int set_url(int argc, const char **argv, const char *prefix)
++static int set_url(int argc, const char **argv, const char *prefix,
++		   struct repository *repo UNUSED)
+ {
+ 	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
+ 	int matches = 0, negative_matches = 0;
+@@ -1765,7 +1775,7 @@ static int set_url(int argc, const char **argv, const char *prefix)
+ int cmd_remote(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+-	       struct repository *repo UNUSED)
++	       struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
+@@ -1788,7 +1798,7 @@ int cmd_remote(int argc,
+ 			     PARSE_OPT_SUBCOMMAND_OPTIONAL);
+ 
+ 	if (fn) {
+-		return !!fn(argc, argv, prefix);
++		return !!fn(argc, argv, prefix, repo);
+ 	} else {
+ 		if (argc) {
+ 			error(_("unknown subcommand: `%s'"), argv[0]);
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index 49aedc1de81a17b8b491cded7fa71b384e0e8be9..6f5fa5893b839fe21fef44ecbd837d132ebbac26 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -48,7 +48,8 @@ static char const * const builtin_sparse_checkout_list_usage[] = {
+ 	NULL
+ };
+ 
+-static int sparse_checkout_list(int argc, const char **argv, const char *prefix)
++static int sparse_checkout_list(int argc, const char **argv, const char *prefix,
++				struct repository *repo UNUSED)
+ {
+ 	static struct option builtin_sparse_checkout_list_options[] = {
+ 		OPT_END(),
+@@ -443,7 +444,8 @@ static struct sparse_checkout_init_opts {
+ 	int sparse_index;
+ } init_opts;
+ 
+-static int sparse_checkout_init(int argc, const char **argv, const char *prefix)
++static int sparse_checkout_init(int argc, const char **argv, const char *prefix,
++				struct repository *repo UNUSED)
+ {
+ 	struct pattern_list pl;
+ 	char *sparse_filename;
+@@ -770,7 +772,8 @@ static struct sparse_checkout_add_opts {
+ 	int use_stdin;
+ } add_opts;
+ 
+-static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
++static int sparse_checkout_add(int argc, const char **argv, const char *prefix,
++			       struct repository *repo UNUSED)
+ {
+ 	static struct option builtin_sparse_checkout_add_options[] = {
+ 		OPT_BOOL_F(0, "skip-checks", &add_opts.skip_checks,
+@@ -808,7 +811,8 @@ static struct sparse_checkout_set_opts {
+ 	int use_stdin;
+ } set_opts;
+ 
+-static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
++static int sparse_checkout_set(int argc, const char **argv, const char *prefix,
++			       struct repository *repo UNUSED)
+ {
+ 	int default_patterns_nr = 2;
+ 	const char *default_patterns[] = {"/*", "!/*/", NULL};
+@@ -866,7 +870,8 @@ static struct sparse_checkout_reapply_opts {
+ } reapply_opts;
+ 
+ static int sparse_checkout_reapply(int argc, const char **argv,
+-				   const char *prefix)
++				   const char *prefix,
++				   struct repository *repo UNUSED)
+ {
+ 	static struct option builtin_sparse_checkout_reapply_options[] = {
+ 		OPT_BOOL(0, "cone", &reapply_opts.cone_mode,
+@@ -901,7 +906,8 @@ static char const * const builtin_sparse_checkout_disable_usage[] = {
+ };
+ 
+ static int sparse_checkout_disable(int argc, const char **argv,
+-				   const char *prefix)
++				   const char *prefix,
++				   struct repository *repo UNUSED)
+ {
+ 	static struct option builtin_sparse_checkout_disable_options[] = {
+ 		OPT_END(),
+@@ -989,7 +995,8 @@ static int check_rules(struct pattern_list *pl, int null_terminated) {
+ 	return 0;
+ }
+ 
+-static int sparse_checkout_check_rules(int argc, const char **argv, const char *prefix)
++static int sparse_checkout_check_rules(int argc, const char **argv, const char *prefix,
++				       struct repository *repo UNUSED)
+ {
+ 	static struct option builtin_sparse_checkout_check_rules_options[] = {
+ 		OPT_BOOL('z', NULL, &check_rules_opts.null_termination,
+@@ -1037,7 +1044,7 @@ static int sparse_checkout_check_rules(int argc, const char **argv, const char *
+ int cmd_sparse_checkout(int argc,
+ 			const char **argv,
+ 			const char *prefix,
+-			struct repository *repo UNUSED)
++			struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option builtin_sparse_checkout_options[] = {
+@@ -1060,5 +1067,5 @@ int cmd_sparse_checkout(int argc,
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+ 
+-	return fn(argc, argv, prefix);
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/stash.c b/builtin/stash.c
+index 1399a1bbe2c222ed3e1c33ac2dd17bd1148f709c..c212b1c0b2c7c55de2fdd5d7d7a247ce6f530960 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -249,7 +249,8 @@ static int do_clear_stash(void)
+ 			       ref_stash, &obj, 0);
+ }
+ 
+-static int clear_stash(int argc, const char **argv, const char *prefix)
++static int clear_stash(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -652,7 +653,8 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 	return ret;
+ }
+ 
+-static int apply_stash(int argc, const char **argv, const char *prefix)
++static int apply_stash(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	int ret = -1;
+ 	int quiet = 0;
+@@ -726,7 +728,8 @@ static int get_stash_info_assert(struct stash_info *info, int argc,
+ 	return 0;
+ }
+ 
+-static int drop_stash(int argc, const char **argv, const char *prefix)
++static int drop_stash(int argc, const char **argv, const char *prefix,
++		      struct repository *repo UNUSED)
+ {
+ 	int ret = -1;
+ 	int quiet = 0;
+@@ -748,7 +751,8 @@ static int drop_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int pop_stash(int argc, const char **argv, const char *prefix)
++static int pop_stash(int argc, const char **argv, const char *prefix,
++		     struct repository *repo UNUSED)
+ {
+ 	int ret = -1;
+ 	int index = 0;
+@@ -778,7 +782,8 @@ static int pop_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int branch_stash(int argc, const char **argv, const char *prefix)
++static int branch_stash(int argc, const char **argv, const char *prefix,
++			struct repository *repo UNUSED)
+ {
+ 	int ret = -1;
+ 	const char *branch = NULL;
+@@ -816,7 +821,8 @@ static int branch_stash(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int list_stash(int argc, const char **argv, const char *prefix)
++static int list_stash(int argc, const char **argv, const char *prefix,
++		      struct repository *repo UNUSED)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	struct option options[] = {
+@@ -889,7 +895,8 @@ static void diff_include_untracked(const struct stash_info *info, struct diff_op
+ 	do_diff_cache(&info->b_commit, diff_opt);
+ }
+ 
+-static int show_stash(int argc, const char **argv, const char *prefix)
++static int show_stash(int argc, const char **argv, const char *prefix,
++		      struct repository *repo UNUSED)
+ {
+ 	int i;
+ 	int ret = -1;
+@@ -1017,7 +1024,8 @@ static int do_store_stash(const struct object_id *w_commit, const char *stash_ms
+ 	return 0;
+ }
+ 
+-static int store_stash(int argc, const char **argv, const char *prefix)
++static int store_stash(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	int quiet = 0;
+ 	const char *stash_msg = NULL;
+@@ -1491,7 +1499,8 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 	return ret;
+ }
+ 
+-static int create_stash(int argc, const char **argv, const char *prefix UNUSED)
++static int create_stash(int argc, const char **argv, const char *prefix UNUSED,
++			struct repository *repo UNUSED)
+ {
+ 	int ret;
+ 	struct strbuf stash_msg_buf = STRBUF_INIT;
+@@ -1827,12 +1836,14 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+ 	return ret;
+ }
+ 
+-static int push_stash_unassumed(int argc, const char **argv, const char *prefix)
++static int push_stash_unassumed(int argc, const char **argv, const char *prefix,
++				struct repository *repo UNUSED)
+ {
+ 	return push_stash(argc, argv, prefix, 0);
+ }
+ 
+-static int save_stash(int argc, const char **argv, const char *prefix)
++static int save_stash(int argc, const char **argv, const char *prefix,
++		      struct repository *repo UNUSED)
+ {
+ 	int keep_index = -1;
+ 	int only_staged = 0;
+@@ -1878,7 +1889,7 @@ static int save_stash(int argc, const char **argv, const char *prefix)
+ int cmd_stash(int argc,
+ 	      const char **argv,
+ 	      const char *prefix,
+-	      struct repository *repo UNUSED)
++	      struct repository *repo)
+ {
+ 	pid_t pid = getpid();
+ 	const char *index_file;
+@@ -1916,9 +1927,9 @@ int cmd_stash(int argc,
+ 		    (uintmax_t)pid);
+ 
+ 	if (fn)
+-		return !!fn(argc, argv, prefix);
++		return !!fn(argc, argv, prefix, repo);
+ 	else if (!argc)
+-		return !!push_stash_unassumed(0, NULL, prefix);
++		return !!push_stash_unassumed(0, NULL, prefix, repo);
+ 
+ 	/* Assume 'stash push' */
+ 	strvec_push(&args, "push");
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index b6b5f1ebde7c2e4780af4097a0c4d6d838948aee..19e587838132f26e2e10dc4a9f93f7b1c78cd49d 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -399,7 +399,8 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+ 	free(displaypath);
+ }
+ 
+-static int module_foreach(int argc, const char **argv, const char *prefix)
++static int module_foreach(int argc, const char **argv, const char *prefix,
++			  struct repository *repo UNUSED)
+ {
+ 	struct foreach_cb info = FOREACH_CB_INIT;
+ 	struct pathspec pathspec = { 0 };
+@@ -544,7 +545,8 @@ static void init_submodule_cb(const struct cache_entry *list_item, void *cb_data
+ 		       info->flags);
+ }
+ 
+-static int module_init(int argc, const char **argv, const char *prefix)
++static int module_init(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	struct init_cb info = INIT_CB_INIT;
+ 	struct pathspec pathspec = { 0 };
+@@ -738,7 +740,8 @@ static void status_submodule_cb(const struct cache_entry *list_item,
+ 			 info->prefix, info->super_prefix, info->flags);
+ }
+ 
+-static int module_status(int argc, const char **argv, const char *prefix)
++static int module_status(int argc, const char **argv, const char *prefix,
++			 struct repository *repo UNUSED)
+ {
+ 	struct status_cb info = STATUS_CB_INIT;
+ 	struct pathspec pathspec = { 0 };
+@@ -1163,7 +1166,8 @@ static int compute_summary_module_list(struct object_id *head_oid,
+ 	return ret;
+ }
+ 
+-static int module_summary(int argc, const char **argv, const char *prefix)
++static int module_summary(int argc, const char **argv, const char *prefix,
++			  struct repository *repo UNUSED)
+ {
+ 	struct summary_cb info = SUMMARY_CB_INIT;
+ 	int cached = 0;
+@@ -1339,7 +1343,8 @@ static void sync_submodule_cb(const struct cache_entry *list_item, void *cb_data
+ 		       info->flags);
+ }
+ 
+-static int module_sync(int argc, const char **argv, const char *prefix)
++static int module_sync(int argc, const char **argv, const char *prefix,
++		       struct repository *repo UNUSED)
+ {
+ 	struct sync_cb info = SYNC_CB_INIT;
+ 	struct pathspec pathspec = { 0 };
+@@ -1485,7 +1490,8 @@ static void deinit_submodule_cb(const struct cache_entry *list_item,
+ 	deinit_submodule(list_item->name, info->prefix, info->flags);
+ }
+ 
+-static int module_deinit(int argc, const char **argv, const char *prefix)
++static int module_deinit(int argc, const char **argv, const char *prefix,
++			 struct repository *repo UNUSED)
+ {
+ 	struct deinit_cb info = DEINIT_CB_INIT;
+ 	struct pathspec pathspec = { 0 };
+@@ -1842,7 +1848,8 @@ static int clone_submodule(const struct module_clone_data *clone_data,
+ 	return 0;
+ }
+ 
+-static int module_clone(int argc, const char **argv, const char *prefix)
++static int module_clone(int argc, const char **argv, const char *prefix,
++			struct repository *repo UNUSED)
+ {
+ 	int dissociate = 0, quiet = 0, progress = 0, require_init = 0;
+ 	struct module_clone_data clone_data = MODULE_CLONE_DATA_INIT;
+@@ -2779,7 +2786,8 @@ static int update_submodules(struct update_data *update_data)
+ 	return ret;
+ }
+ 
+-static int module_update(int argc, const char **argv, const char *prefix)
++static int module_update(int argc, const char **argv, const char *prefix,
++			 struct repository *repo UNUSED)
+ {
+ 	struct pathspec pathspec = { 0 };
+ 	struct pathspec pathspec2 = { 0 };
+@@ -2911,7 +2919,8 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int push_check(int argc, const char **argv, const char *prefix UNUSED)
++static int push_check(int argc, const char **argv, const char *prefix UNUSED,
++		      struct repository *repo UNUSED)
+ {
+ 	struct remote *remote;
+ 	const char *superproject_head;
+@@ -2991,7 +3000,8 @@ static int push_check(int argc, const char **argv, const char *prefix UNUSED)
+ 	return 0;
+ }
+ 
+-static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
++static int absorb_git_dirs(int argc, const char **argv, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	int i;
+ 	struct pathspec pathspec = { 0 };
+@@ -3024,7 +3034,8 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
+ 
+-static int module_set_url(int argc, const char **argv, const char *prefix)
++static int module_set_url(int argc, const char **argv, const char *prefix,
++			  struct repository *repo UNUSED)
+ {
+ 	int quiet = 0, ret;
+ 	const char *newurl;
+@@ -3063,7 +3074,8 @@ static int module_set_url(int argc, const char **argv, const char *prefix)
+ 	return !!ret;
+ }
+ 
+-static int module_set_branch(int argc, const char **argv, const char *prefix)
++static int module_set_branch(int argc, const char **argv, const char *prefix,
++			     struct repository *repo UNUSED)
+ {
+ 	int opt_default = 0, ret;
+ 	const char *opt_branch = NULL;
+@@ -3113,7 +3125,8 @@ static int module_set_branch(int argc, const char **argv, const char *prefix)
+ 	return !!ret;
+ }
+ 
+-static int module_create_branch(int argc, const char **argv, const char *prefix)
++static int module_create_branch(int argc, const char **argv, const char *prefix,
++				struct repository *repo UNUSED)
+ {
+ 	enum branch_track track;
+ 	int quiet = 0, force = 0, reflog = 0, dry_run = 0;
+@@ -3424,7 +3437,8 @@ static void die_on_repo_without_commits(const char *path)
+ 	strbuf_release(&sb);
+ }
+ 
+-static int module_add(int argc, const char **argv, const char *prefix)
++static int module_add(int argc, const char **argv, const char *prefix,
++		      struct repository *repo UNUSED)
+ {
+ 	int force = 0, quiet = 0, progress = 0, dissociate = 0;
+ 	struct add_data add_data = ADD_DATA_INIT;
+@@ -3557,7 +3571,7 @@ static int module_add(int argc, const char **argv, const char *prefix)
+ int cmd_submodule__helper(int argc,
+ 			  const char **argv,
+ 			  const char *prefix,
+-			  struct repository *repo UNUSED)
++			  struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	const char *const usage[] = {
+@@ -3583,5 +3597,5 @@ int cmd_submodule__helper(int argc,
+ 	};
+ 	argc = parse_options(argc, argv, prefix, options, usage, 0);
+ 
+-	return fn(argc, argv, prefix);
++	return fn(argc, argv, prefix, repo);
+ }
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index dae63dedf4cac2621f51f95a39aa456b33acd894..824dd71d643f112f384cde4de1373698c67de254 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -231,7 +231,8 @@ static void prune_worktrees(void)
+ 	strbuf_release(&reason);
+ }
+ 
+-static int prune(int ac, const char **av, const char *prefix)
++static int prune(int ac, const char **av, const char *prefix,
++		 struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+@@ -763,7 +764,8 @@ static char *dwim_branch(const char *path, char **new_branch)
+ 	return NULL;
+ }
+ 
+-static int add(int ac, const char **av, const char *prefix)
++static int add(int ac, const char **av, const char *prefix,
++	       struct repository *repo UNUSED)
+ {
+ 	struct add_opts opts;
+ 	const char *new_branch_force = NULL;
+@@ -1039,7 +1041,8 @@ static void pathsort(struct worktree **wt)
+ 	QSORT(wt, n, pathcmp);
+ }
+ 
+-static int list(int ac, const char **av, const char *prefix)
++static int list(int ac, const char **av, const char *prefix,
++		struct repository *repo UNUSED)
+ {
+ 	int porcelain = 0;
+ 	int line_terminator = '\n';
+@@ -1084,7 +1087,8 @@ static int list(int ac, const char **av, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int lock_worktree(int ac, const char **av, const char *prefix)
++static int lock_worktree(int ac, const char **av, const char *prefix,
++			 struct repository *repo UNUSED)
+ {
+ 	const char *reason = "", *old_reason;
+ 	struct option options[] = {
+@@ -1119,7 +1123,8 @@ static int lock_worktree(int ac, const char **av, const char *prefix)
+ 	return 0;
+ }
+ 
+-static int unlock_worktree(int ac, const char **av, const char *prefix)
++static int unlock_worktree(int ac, const char **av, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+@@ -1182,7 +1187,8 @@ static void validate_no_submodules(const struct worktree *wt)
+ 		die(_("working trees containing submodules cannot be moved or removed"));
+ }
+ 
+-static int move_worktree(int ac, const char **av, const char *prefix)
++static int move_worktree(int ac, const char **av, const char *prefix,
++			 struct repository *repo UNUSED)
+ {
+ 	int force = 0;
+ 	struct option options[] = {
+@@ -1312,7 +1318,8 @@ static int delete_git_work_tree(struct worktree *wt)
+ 	return ret;
+ }
+ 
+-static int remove_worktree(int ac, const char **av, const char *prefix)
++static int remove_worktree(int ac, const char **av, const char *prefix,
++			   struct repository *repo UNUSED)
+ {
+ 	int force = 0;
+ 	struct option options[] = {
+@@ -1377,7 +1384,8 @@ static void report_repair(int iserr, const char *path, const char *msg, void *cb
  	}
+ }
  
--	result = write_midx_internal(object_dir, NULL, NULL, NULL, NULL, flags);
-+	result = write_midx_internal(r, object_dir, NULL, NULL, NULL, NULL,
-+				     flags);
+-static int repair(int ac, const char **av, const char *prefix)
++static int repair(int ac, const char **av, const char *prefix,
++		  struct repository *repo UNUSED)
+ {
+ 	const char **p;
+ 	const char *self[] = { ".", NULL };
+@@ -1397,7 +1405,7 @@ static int repair(int ac, const char **av, const char *prefix)
+ int cmd_worktree(int ac,
+ 		 const char **av,
+ 		 const char *prefix,
+-		 struct repository *repo UNUSED)
++		 struct repository *repo)
+ {
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
+@@ -1422,5 +1430,5 @@ int cmd_worktree(int ac,
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
  
- cleanup:
- 	free(include_pack);
+-	return fn(ac, av, prefix);
++	return fn(ac, av, prefix, repo);
+ }
+diff --git a/parse-options.h b/parse-options.h
+index ae15342390837c21503ab812648a7d8fd21432a8..f0801d4532a175b65783689f2a68fb56da2c8e87 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -3,6 +3,8 @@
+ 
+ #include "gettext.h"
+ 
++struct repository;
++
+ /**
+  * Refer to Documentation/technical/api-parse-options.txt for the API doc.
+  */
+@@ -73,7 +75,7 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
+ 					      const char *arg, int unset);
+ 
+ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+-				    const char *prefix);
++				    const char *prefix, struct repository *repo);
+ 
+ /*
+  * `type`::
+diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
+index 5250913d99eba18a28878d3904cb7b2399670d02..e5b1fe287e3ec94f0d8a3a99adb68842d52992f6 100644
+--- a/t/helper/test-parse-options.c
++++ b/t/helper/test-parse-options.c
+@@ -1,8 +1,11 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "test-tool.h"
+ #include "parse-options.h"
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "trace2.h"
++#include "repository.h"
+ 
+ static int boolean = 0;
+ static int integer = 0;
+@@ -282,14 +285,16 @@ int cmd__parse_options_flags(int argc, const char **argv)
+ 	return parse_options_flags__cmd(argc, argv, test_flags);
+ }
+ 
+-static int subcmd_one(int argc, const char **argv, const char *prefix UNUSED)
++static int subcmd_one(int argc, const char **argv, const char *prefix UNUSED,
++		      struct repository *repo UNUSED)
+ {
+ 	printf("fn: subcmd_one\n");
+ 	print_args(argc, argv);
+ 	return 0;
+ }
+ 
+-static int subcmd_two(int argc, const char **argv, const char *prefix UNUSED)
++static int subcmd_two(int argc, const char **argv, const char *prefix UNUSED,
++		      struct repository *repo UNUSED)
+ {
+ 	printf("fn: subcmd_two\n");
+ 	print_args(argc, argv);
+@@ -319,7 +324,7 @@ static int parse_subcommand__cmd(int argc, const char **argv,
+ 
+ 	printf("opt: %d\n", opt);
+ 
+-	return fn(argc, argv, NULL);
++	return fn(argc, argv, NULL, the_repository);
+ }
+ 
+ int cmd__parse_subcommand(int argc, const char **argv)
 
 -- 
 2.47.0
