@@ -1,97 +1,87 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DEF153800
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 20:51:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C94A1F9ABA
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 22:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731703889; cv=none; b=jLqRvIpqP4l4d62SURfw48MQuhSc/u1+ZEq66KOEYzK878gPAY5TQERU4j5bdvC8tB1hu1mXE90k0JfPCs659E1/pcS2z7ahR0UBpbU1i4d2zgH7zZKZIFLgArvdDo29DC8qLJbAtRHY1tKXwd4HXlPYKiFJ9YKH6y3iEdbmBgs=
+	t=1731708071; cv=none; b=f/X/21X8IBs5TENU05ltL3EpfIAaui+1KKVogfcevqOrEUEuf9h4bul27SZRQYZ929oDdT+uu0wfw9AbiYTN01f6eeab1ZLpgzGks2/HIZMSn8J/uyfBLx1LKr5+6VC36HpRveJKpJwlwTowiPcNJTeaXtuV3lhWcJNd63KRKx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731703889; c=relaxed/simple;
-	bh=HksJ9UbU0x1cALj2X0+FZjqpCGh8LhRW8a81Do+J0U4=;
-	h=To:Cc:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=d4ST576y1NrTIoyS+nBnH/ISKXa7EEF/S9RmskOqAdv5pUJYtGN1cZ5XjSrbvh6DtSTzU6degiHujyihtYGsRXXJf6l7eH5dh2rR78FWVdFG/8qoGnTAFH3vEJkprJ1ckyBcGroAmrpnVZTdYGOy9eRlmVhiyPvb5wd3qZ/3Kno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGWWe2f3; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731708071; c=relaxed/simple;
+	bh=TPJ3ldAVy3vH7PniHzcyFt0xwSCtTN0Uo4/itM/8HFI=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:To:From; b=Coo2Zg2K3IjLRwL9WHLk9YddOfv8WZkIKqHqNzjcMSvjdhHcFS30avIsHzQ3hF4hasn3qFVbrH1RDWRL6pvLm0pDdYUZfsmzIpUZ73Tx8kxN09x5583Jc64OP3vY5UoHJ0JoO1ONz+zHTlxdqqHjgW9HhvMqNT/304Ag/Bt0GLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=AIbAYEH/; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGWWe2f3"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-46097806aaeso253641cf.2
-        for <git@vger.kernel.org>; Fri, 15 Nov 2024 12:51:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731703887; x=1732308687; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JmfGWs5DHzZyZfR/EcoXIvVlssVCTMEdVerIalst2+w=;
-        b=bGWWe2f38AUfg1K1XiNKkaJLVFubEdt6CQW5chvTtXAoHZoJEvFuIc+f5tj35kDZxC
-         6lg1tICjsmGSSFFVeOmBrkpY2c6ZmWOdXkJmMO5xwhaB03gRtn/JCUoLnc6bp+p2pJN2
-         rmXrjSUVVvUSnsWKjIEnnYDNOnVMurW7Bh9ayISpg4I1RjLjT1BQJ6vrQmaOPnk1xo4m
-         aSQZ3i1deKola/QzIlKcK/U536+CItMXPfUn5jwUKVqCjdhdMUQj2Ixsfoy6Gi5YT0mR
-         GLLIdc2jq0UO4DV+pkbdwDWH5BXmYvcR7yKiIeM5A5Ni3/Fq+xdoigFbkD9SrIw2KMkP
-         GakQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731703887; x=1732308687;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JmfGWs5DHzZyZfR/EcoXIvVlssVCTMEdVerIalst2+w=;
-        b=Uhy2NH59noJR4UeLbrXGk2j/7BArhJ/7ZLZVpFCxvYipJGVhlmn6O807pHNzgo7gj7
-         TnsFPCBpfSc4qZY+MJ6d3qMzjbPUTVZUXa2ljOFi4TQkDrQuioTdTwATyw3kEkxHJdAv
-         IbA0eyMskzqt7/0HMB+nDzQ5sU8tEsjTjGZSTiZ++Xsrax1dVQ2XxeHjYFSW5JhvNgJe
-         faBpylUS9EH1cocDMWhu6oPzNXCHhHTNzk8FlOl6RlNdPBqwEgXYCjcXZVrAmgPt6aiA
-         cpKirAIZgoXEHtiY0ugO9X1x1KKVuL+8hsUaQ9aQe/CdicTDcDY74Ydvpz+s/rqLUd6/
-         njXw==
-X-Gm-Message-State: AOJu0Ywtn9Cq5N3BSwpV3fCox34hdLjR6Fd53ZigaTqxMDOXTLqtQPhi
-	XC8AFRLJot23POQeTQOokGllTZhE0LUf0hMk5mVUGD8EbJqVmaII
-X-Google-Smtp-Source: AGHT+IFJikxu7cTGrcBEp0AnQp95lnunOfPRhrJGcOamv48iXT1mtNVP5WIfgN6tcDcs44z9uWicpw==
-X-Received: by 2002:ac8:5a4c:0:b0:460:4027:601 with SMTP id d75a77b69052e-46363de9012mr46101071cf.6.1731703886862;
-        Fri, 15 Nov 2024 12:51:26 -0800 (PST)
-Received: from ?IPv6:2606:6d00:17:6fc4:d174:d15b:fe88:8d9d? ([2606:6d00:17:6fc4:d174:d15b:fe88:8d9d])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4635ab855casm23643561cf.89.2024.11.15.12.51.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 15 Nov 2024 12:51:26 -0800 (PST)
-To: Git mailing list <git@vger.kernel.org>
-Cc: Derrick Stolee <stolee@gmail.com>, Jonathan Tan
- <jonathantanmy@google.com>, Christian Couder <christian.couder@gmail.com>,
- Jeff King <peff@peff.net>, Jeff Hostetler <jeffhost@microsoft.com>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: [BUG?] git rev-list --all --objects triggers fetches in partial clone
-Message-ID: <6b41b122-0657-00b2-d613-296354376026@gmail.com>
-Date: Fri, 15 Nov 2024 15:51:24 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="AIbAYEH/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=PzYvyNFw9DzO55sHeo8OxqX7mmo0Mpdn8v81x6HMgcA=;
+ b=AIbAYEH/WvvDPXHgvx3B2tpiRPW2KduJ55DmQuIt66MgxGair5XC+OwezuuBsP8OnWhpxUN+Wwoc
+   ThF+xIMR5U5Hf45CWduwx0bsuNZN0kgRjO3LrMHQrUYitoCBUtsxJRWI/isAWe2sw28Q8sVQ4KDA
+   BpkgWuuQV6wOjV+aiJVhLJKCYSV6ta3aIGjJr5e+IXFfaxiE1LjR00lL9I6Xuuc8GrCZXbORsw5X
+   NuUpkxH2EZBU3aYq2epXkgJksY1YzRqxEA4CMJ4ksU+2ZELf3E6aSYR2vwfEYDrrdE+h10Ey5ELT
+   fBWoNUXSOGVsXy7zLARsYLPbLC9l8tGFHurktg==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SN0001VZIHOKO40@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 15 Nov 2024 22:01:00 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Fri, 15 Nov 2024 23:00:30 +0100
+Message-id: <D5N39IJA0WDQ.2WH1MNIP77X2J@ferdinandy.com>
+Subject: log --format existence of notes?
+To: <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Reporting-Meta:
+ AAH5dsURVtkRltt7fHCtA9v9yRgPK8NK+EwGIdE3brWl3hpDY6A4kL5ri9dUovbX
+ 3xt0SWfdG2mB2IkGsF75Y0PDX+JhLMXbvVcPGltqSHOsAGA8c6DReJMQok1yzZfA
+ mZnHRgJDLGqF6r/UFfYj1ac0W6MeMLv/V9yinCzsvels2DBzS46HiVVsFDqWQ0qG
+ 8OuqkJbNF2GsvESAM4RgH6kbw5QispFUfZHWIOG44uWFljAiQIpXadLy+BCo+Es1
+ HyH+14GdvLRkvjWaGbax9REWXy16C1EGaNiiJ6doUzbf8u8C/0ntPIkZ/Fq7P+WA
+ v/bu1U21HuSyqnszScRxAqwb50gZLiww82FZ/GbfRXvm/aIS4IK/MlJftSjOiwkZ
+ vDOhH8GkEyAqA7l1aevLJIXbJx6c+59ybamFAi7k+5lh1s9hnpq4QS3RmzhfpFmV
+ wdFZK0XTF1d/63iQ6/ELAwTJQYQbVnx+D+E2JynIExtAWTDQa4Td54Ox
 
-Hi, 
+Hi,
 
-I'm not sure if this is a bug, but I think this is not working 
-as the documentation states (or, I do not understand the documentation!):
+based on the man pages it doesn't seem possible, but maybe I'm missing some=
+thing.
 
+I would like to put together a "log --format=3D" which is similar to --onel=
+ine,
+but where if there's a note for the commit it's marked with e.g. a notebook
+symbol. There's %N, but that prints the entire note, so it doesn't work wel=
+l
+with one commit per line.
 
-git clone --filter=blob:limit=250k git@github.com:git/git.git
-cd git 
-git rev-list --objects --all | \
-  git cat-file --batch-check=’%(objecttype) %(objectname) %(objectsize) %(rest)’ | \
-  sed -n ‘s/^blob //p’ | \
-  sort --numeric-sort --reverse --key=2
+E.g. something like this, where Taylor's commit does not have a note, but m=
+ine do:
 
-The doc states that the default value for the --missing of 'git rev-list' is 'error',
-which "requests that rev-list stop with an error if a missing object is encountered."
-This is not what happens as each missing object is fetched one at a time.
+eb12efd995 2024-10-08 Bence Ferdin.. remote set-head: refactor for readabil=
+ity =F0=9F=93=93
+a189f4e077 2024-09-28 Bence Ferdin.. refs: atomically record overwritten re=
+f in update_symref =F0=9F=93=93
+ae0b28db8c 2024-10-19 Bence Ferdin.. t/t5505-remote: set default branch to =
+main =F0=9F=93=93
+15030f9556 2024-10-15 Taylor Blau    The second batch
 
-If I use any other option for --missing (allow-any, allow-promisor, print) then
-no blobs are fetched. 
+Is there a way to do this now? If not, maybe a "%N?" might be a nice additi=
+on?
 
-Is this working as intended ?  CC-ing a few people who I think
-worked on the partial clone feature.
+Thanks,
+Bence
 
-Cheers,
-Philippe.
+--=20
+bence.ferdinandy.com
+
