@@ -1,182 +1,105 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F79318D625
-	for <git@vger.kernel.org>; Fri, 15 Nov 2024 10:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC83161328
+	for <git@vger.kernel.org>; Fri, 15 Nov 2024 11:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731667414; cv=none; b=Jpk+rIgggB+oQbKCd+078QlEWihnn/2N/MagOJxJAJ1gdaZueY8vgWx2iCi+4LensKBbkB6S/CfnHBVY51hBPfk4tyXR+T7HMgqcL5nXuEg8YoWkAu5jtvTy3rYI7m6Qd0YV2nBDEV+CvGuZyWrKDS69tgdJk5fbZ65qMMWNm9c=
+	t=1731668880; cv=none; b=muA5UNv/aNBDx/ezlKGENtAbW7e7ucTK/P/RIFOziEp00rN0XIuxquKZ6QojM9NP3dCQhV3CtpyNiXPL2rlfO6HxBRujSkTzig3TSVuNhsYg5dSYOXxdenM+kdI4o4+yja5PqFxywrisc+h8FD0uN3JS1uohFGrlAkNhoorQXLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731667414; c=relaxed/simple;
-	bh=ZB4KBJ0HRavF2SrPNoRfj+gI+3tMvxzw/2cLe9gDaR4=;
+	s=arc-20240116; t=1731668880; c=relaxed/simple;
+	bh=LErjTI7mGHJbsFXiyyO29RTRI60gbrLVf0YKx0CXGtg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SjRz4U9WI3TolZ71+hbsfLE0TAGRyd37t2YMmKRVWtXVtqtawrWj6Km5kRqpVaCtjZIYfXjdnAeJW7LDI26P+WRg8O34hEmJqJpIsiUa0sO6wD4daD2s0FY89YOBlTioBhLKX2YIMjxbiPuw7f4BJkigbN5gsWlf5WYSwFqKD2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=s+uh8P3j; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=MpxQf/03; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=s+uh8P3j; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=MpxQf/03; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=QS8et3Epvk6mXkCkhcFZvpHgyF8Q6ECjX7Se8xDDwo8wdKTntJ7xx0k0QciRMBIgc03VY49XOKXlTsXMvWQjfUrCUm0FPWxT6OPbhj8eJ16eZNAja2JP43WVDzWJM3SA/B4Vs9IXyKf1ceReuvpZXU+DqB3yK9/ivi4DBarYQdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AeVzb7Ym; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="s+uh8P3j";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="MpxQf/03";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="s+uh8P3j";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="MpxQf/03"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 3FC1B21295;
-	Fri, 15 Nov 2024 10:43:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1731667410; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ed6O0o4afUjbRf/4kDqM3Rl9oQ+UN4pPdKTAWkcWozc=;
-	b=s+uh8P3jfdhLkLWokmFbCVInEtX3D0D/lX1MQ3ixXksoe7h80oH6yBg53oJRabtFGTx9WT
-	m7UHsemG0BLAEPq6BX6hELgOCsOm/9VkWGIJlRYjG9BMg3+9eVDtNFo/4MfOe3OaaWReQf
-	/RMYcmqj5Xd7sfGgk9lC2ZENkhkhZXs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1731667410;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ed6O0o4afUjbRf/4kDqM3Rl9oQ+UN4pPdKTAWkcWozc=;
-	b=MpxQf/03+78hYwA/UskC4ZWMu6ZBoiv0I1x77I6fpR7HGWuqcVguzQnnGh268BByyGBR0v
-	nSNGit02wyQQlWAw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1731667410; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ed6O0o4afUjbRf/4kDqM3Rl9oQ+UN4pPdKTAWkcWozc=;
-	b=s+uh8P3jfdhLkLWokmFbCVInEtX3D0D/lX1MQ3ixXksoe7h80oH6yBg53oJRabtFGTx9WT
-	m7UHsemG0BLAEPq6BX6hELgOCsOm/9VkWGIJlRYjG9BMg3+9eVDtNFo/4MfOe3OaaWReQf
-	/RMYcmqj5Xd7sfGgk9lC2ZENkhkhZXs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1731667410;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ed6O0o4afUjbRf/4kDqM3Rl9oQ+UN4pPdKTAWkcWozc=;
-	b=MpxQf/03+78hYwA/UskC4ZWMu6ZBoiv0I1x77I6fpR7HGWuqcVguzQnnGh268BByyGBR0v
-	nSNGit02wyQQlWAw==
-Date: Fri, 15 Nov 2024 11:43:29 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: David Aguilar <davvid@gmail.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Subject: Re: Shallow clone of a specific git revision?
-Message-ID: <Zzcl0Ql0S386G4FO@kitsune.suse.cz>
-References: <ZzNJGHMlxGQyFV_c@kitsune.suse.cz>
- <87wmh7ig98.fsf@iotcl.com>
- <ZzR_nOqQxfGNPyYV@kitsune.suse.cz>
- <ZzbVe79p_Zbnb6rs@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AeVzb7Ym"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20c8b557f91so17264835ad.2
+        for <git@vger.kernel.org>; Fri, 15 Nov 2024 03:07:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731668878; x=1732273678; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yvxvGSYW+zt9LPZAtywHTYWcDIc4+YQxh+SaKsl5ZgE=;
+        b=AeVzb7YmeuqCK3nKh/yR0vP5QSYqv4jwQfLTK0OIctfvx0vbWshSmFNEOP1lUSAtxs
+         u/YWfpW7eWrASpxrjRfzPVk7YaqvSZP4TLGQETZG3gh5zIOY5SehnipNxJWoMpxolKsE
+         +3V0X+x8QFknAgSZpYK2+8qZtgnbdPEH1EkMl3+d8d8993i+VSKEcx+RIobCPsjNuods
+         7QO8qU0Kz+NazP6UK6ejyg2e1LU/PlKIwIUSYWXNkikoVbpRALf5ADrA12XyYckLAiyU
+         H2eizkaEtqnCESUqNufTXC7+rO/dYY76hY6k7bXjeAmFnv/FBNzU9iNJrg74Npv/EE8S
+         PtYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731668878; x=1732273678;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yvxvGSYW+zt9LPZAtywHTYWcDIc4+YQxh+SaKsl5ZgE=;
+        b=rDPwuuUvcjZGnypD/JxhWyhrOVVZoCy41wnb11k4HDbeeJW7DGUli5PomplvQ9jq6v
+         VEyh39T6oNzUBJQ0/OEeAnFxY5aYKNugmodCAcVIpepPOD9O1t20UMayGQ7ZvVUUpeZt
+         AhxsmGE7sFk8xpHtBoDhmF2EnrOeK2S4z9hKxkraJ5qBevydPNZyw1BZnRvqpH/TnOGU
+         CiaJguoReCahfU0TKl+bvD5X9kfyQEw5eivf7i3zugU40ggh/OtC448qsb6m3jN0QTKZ
+         KO8fCXmvARXPbspgVwFLnKvuyEMw4uSXcbfoKc+cYEf0DxSLKpLaYfsGozyvSpzCZw4b
+         vyDA==
+X-Gm-Message-State: AOJu0Yxblak7fdF504q3WemqjLx135mqOZs9x/G8g+3/Z+mMgPuYf137
+	OZamWodj+A+Fg1hGF+Xx2dUAdLcwdcxHKB6f5Ey0TtOj9Vq/0488
+X-Google-Smtp-Source: AGHT+IHSrKZU1XIfgyoLRZmRkpzLmydQ6rspET7/JeiAzhoIkygU1jTJc5vQeUrjgc15c0DxakrQIA==
+X-Received: by 2002:a17:902:e745:b0:20c:ecc9:c50b with SMTP id d9443c01a7336-211d0ebc084mr31407735ad.42.1731668878174;
+        Fri, 15 Nov 2024 03:07:58 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211d0f4708dsm9989795ad.199.2024.11.15.03.07.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 15 Nov 2024 03:07:57 -0800 (PST)
+Date: Fri, 15 Nov 2024 19:08:01 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 5/9] ref: port git-fsck(1) regular refs check for
+ files backend
+Message-ID: <Zzcrkd0aetRjUHKA@ArchLinux>
+References: <ZzYqoai8X_Wdtbmt@ArchLinux>
+ <ZzYrRExrs17rapOb@ArchLinux>
+ <Zzbz_4Xqt39JZfgU@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZzbVe79p_Zbnb6rs@gmail.com>
-X-Spam-Level: 
-X-Spamd-Result: default: False [-3.27 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUBJECT_ENDS_QUESTION(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-0.999];
-	NEURAL_HAM_SHORT(-0.17)[-0.858];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_ZERO(0.00)[0];
-	ARC_NA(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_THREE(0.00)[3];
-	FROM_EQ_ENVFROM(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-X-Spam-Score: -3.27
-X-Spam-Flag: NO
+In-Reply-To: <Zzbz_4Xqt39JZfgU@pks.im>
 
-Hello,
-
-On Thu, Nov 14, 2024 at 09:00:43PM -0800, David Aguilar wrote:
-> On Wed, Nov 13, 2024 at 11:29:48AM +0100, Michal Suchánek wrote:
-> > On Wed, Nov 13, 2024 at 11:23:47AM +0100, Toon Claes wrote:
-> > > Michal Suchánek <msuchanek@suse.de> writes:
-> > > 
-> > > > Hello,
-> > > >
-> > > > Looking through clone man page it supports shallow clones of branches
-> > > > and tags only.
-> > > >
-> > > > Would it be possible to do shallow clone of a specific revision,
-> > > > and checkout specific revision on clone?
-> > > 
-> > > Hi Michal,
-> > > 
-> > > I'm working on a patch, and I've submitted a first version [1] a little
-> > > while ago to allow users to pass a reference on git-clone(1). Would this
-> > > change fit your needs, or what else would you like to support?
-> > 
-> > > [1]: https://lore.kernel.org/git/20240927085438.1010431-1-toon@iotcl.com/
-> > 
-> > Hello,
-> > 
-> > that slightly expands the available options but it does not make it
-> > possible to clone an arbitrary revision, ie. specified by a SHA
-> > 
-> > Thanks
-> > 
-> > Michal
+On Fri, Nov 15, 2024 at 08:11:01AM +0100, Patrick Steinhardt wrote:
+> On Fri, Nov 15, 2024 at 12:54:28AM +0800, shejialuo wrote:
+> > +	if (strbuf_read_file(&ref_content, iter->path.buf, 0) < 0 ) {
 > 
-> In case it helps, here's a short recipe demonstrating how to do a
-
-Yes, that's helpful, thanks.
-
-> shallow "clone" of a specific commit ID:
+> Nit: there's a space too much here now.
 > 
->     git init the-repo
->     cd ./the-repo
->     git remote add origin <url>
->     git fetch --depth=1 origin <commit-id>
->     git checkout <commit-id>
+
+I will improve this in the next version.
+
+> > +		/*
+> > +		 * Ref file could be removed by another concurrent process. We should
+> > +		 * ignore this error and continue to the next ref.
+> > +		 */
+> > +		if (errno == ENOENT)
+> > +			goto cleanup;
+> > +
+> > +		ret = error_errno(_("cannot read ref file '%s': %s"),
+> > +				  iter->path.buf, strerror(errno));
+> > +		goto cleanup;
+> > +	}
 > 
-> It'd be nice to add this feature to "git clone" for convenience.
-
-This is how many git reatures start, after all. They are provided as a
-script on top of core git functionality.
-
-> This recipe depends on the server's configuration. You must have one of
-> the following configuration variables set "true" server-side in order
-> for the server to accept requests for arbitrary commit IDs:
+> You report `errno` twice. This should be:
 > 
->     uploadpack.allowReachableSHA1InWant
->         Allow upload-pack to accept a fetch request that asks for an
->         object that is reachable from any ref tip. However, note that
->         calculating object reachability is computationally expensive.
->         Defaults to false. Even if this is false, a client may be able
->         to steal objects via the techniques described in the "SECURITY"
->         section of the gitnamespaces(7) man page; it’s best to keep
->         private data in a separate repository.
+> 	ret = error_errno(_("cannot read ref file '%s'"), iter->path.buf);
 > 
->     uploadpack.allowAnySHA1InWant
->         Allow upload-pack to accept a fetch request that asks for any
->         object at all. Defaults to false.
+> Other than that this version looks good to me, thanks!
+> 
 
-I would be fetching from a forge most of the time which would use its own
-implementation of git server most of the time but it's good to know what
-the options are on the canonical implementation at least.
+Opps, I didn't think about it, I just copied it. I will fix this in the
+next version.
 
-Thanks
-
-Michal
+> Patrick
