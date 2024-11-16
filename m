@@ -1,110 +1,261 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61A4A1A
-	for <git@vger.kernel.org>; Sat, 16 Nov 2024 14:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DC79EAF1
+	for <git@vger.kernel.org>; Sat, 16 Nov 2024 14:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731768569; cv=none; b=L6BWb8GhT88UnGKIHtT5GDz6D9yHrb6ST40MCRQgyqOd2jWVUjbhbJMTLRWnOJQB17pVtE0qNJ3hzXPatF60h8ZLyxbwZyhFxR3j8QjsUhJfLILdQzfe1flzifys2ciJBcmjxz0tWg8BmVoqQU2mql4/ttRQR/0KR39fuNvqlOU=
+	t=1731768956; cv=none; b=VkMOkwMoiVE5k6TGGTGqtT7z2y5cmFmeEsACZOItq0OWH9BmJxyoEwwXsrg/e8Ma5/qPlCKWtYgeLbbAWe71eZXiAbSRLAVQjDK9ZUNNuSUBa2FyxDDt5yzs3uZ85I+0UGGQnBQEJAPMotyU4tWFps+3CJpnryECOn3SCiTQNRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731768569; c=relaxed/simple;
-	bh=+5RofJy8lTXjC2v6aVsdXKCr3HiCeTstt5UWLPVmfdE=;
-	h=MIME-version:Content-type:Date:Message-id:From:Subject:Cc:To:
-	 References:In-reply-to; b=ibSaO2DubEwsrOSNRIw6xD+NNQf2zqML/+R4uVWPR7+V+/1ZrbT6jn/zmO4eYqMqtwq9xaOHSoVh4NvDYEfbMpuRx8/oOuZZ0EP67J8qDtWTHbqqO28o3toPioISWLGNgZx5mcgpJW9CHvjG6mg3NaBT9LuH1NVtaPNzibjc9t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=BMBQ1w0J; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1731768956; c=relaxed/simple;
+	bh=EUxCExiIEXSwq5Wv4Pcp90aR7qzCWTZZy/R5VscDT8g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ic9aYS+TrY0PpFUm5N+cAnGKj0ccyEevEpGxGmBE4a2vxsbIhY+/UzY8SssYCVbQVZtrJ/Hn+mxjjNChaE4Bv2C3BkR+Ag4lLsjtieKzc9l5wLFpfTocwPXpGo9JfKIzA5dsms2IPElRtz6vd5lfNGorcnlfWw6sptDniaxyzAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=sGs2Nln9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DZibOQnP; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="BMBQ1w0J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=PlQFYXgBvVkjUAjmoqrVd0MuEhChSxpz9np7hxC5yWM=;
- b=BMBQ1w0JqzxK2J7I592dOxjiWs8WsvcAuAEj+wZdNnBANK79QoK0DONuWlmSUwmuz8frFKDWbzxN
-   B5gyaBNIQyl768VesL2SvPJS3TIkwJgDRxMRDbzSGAjcdGswn3sOy+hV7PcdFRDBOR/0zfS4TGhO
-   ngCGjfzcpF3do1gHiz6mfMuayp/5fMG0JRlWJXEM49J01Me+lXnehPJgQCUFca5ko8dlSsIH7Dl7
-   cK8AIjBB1gD2tv+8jigxn4KsXdREktYzw9fI8f2AoyVzEt6Ofui50O4vTz/jh317JxgTMvkzbpYD
-   KBORF/L+reIA/OX7twdpMl7AOMgEfykboXndQQ==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
- 2024))
- with ESMTPS id <0SN1005D2SXU1YB0@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sat, 16 Nov 2024 14:44:18 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="sGs2Nln9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DZibOQnP"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A588711400D7;
+	Sat, 16 Nov 2024 09:55:53 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Sat, 16 Nov 2024 09:55:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731768953;
+	 x=1731855353; bh=cAjUF5GHpjMfV3YCSXHy3IXQC29NP2pvlw8/YrXONFw=; b=
+	sGs2Nln9fwj0e9br4GPENdb3cs/jt1soXRqEWfEf4NoTQkKD1/pT8wfd1D39aLf0
+	hBVcvEDAftqhm06mCJeJZ7rENxE0A37moDpsv+bwhk5b/1eJkGuj6AfnJrsOmJzi
+	34cUt3ES/KTPG8vXKvlwMA0IWKkRTh9BIo+mj7qyiBlh3v0QuEZ4Qgi0yOC6w20w
+	hmIYiiL718ued24A5ZT+FXFffZT1SB/mK3zdFZTgowJTvOvqGTXcE2BL+/kC70kM
+	bIDRy9h3K9UtqYPkB/bGOlRUCRYXg/oLP9bSOeFylqtvcS7DNftmBBmBmqpH59Bh
+	jgbd/TVnDbPdO78gO168aQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731768953; x=
+	1731855353; bh=cAjUF5GHpjMfV3YCSXHy3IXQC29NP2pvlw8/YrXONFw=; b=D
+	ZibOQnPAQk3tNtjfWD/myY03QWQAtAd63e7n+WXmzq84q5T2P4MJ6pBMhIJx+TKu
+	aPbD5Gmypp9hhafZqeXxFGEjDcLjhIJLAep4vuKwAudEFjuLcNUEMCS8GKISVdSI
+	VlSl5b41lCJnauE21YIfRLXtYmOW3lMPJ3s665WNzWgq4QIjFSMh7rmByWYwAv+4
+	J8I76ecwd/PbXD68eGnRkjNWzlMCwjdM1NiWgPrBD+IjxPvtMr4veI+nCa7hf1+y
+	oAfA7Fl+catHnl6gI9lPN7G/jfkfq1i82UVSfj3+4RhsBPjpMhbnFCNz0zpHiTou
+	3LHdM4Skq+dXZUwcD2Ksg==
+X-ME-Sender: <xms:ebI4ZzRJNUBWkTgsxI5-1va6NTxJt20eM8UA-OTSGYSgj4g7HDdf-rw>
+    <xme:ebI4Z0z_WhLVAbKPIC2WhwUz8BHl70Q5VTYo2FkeHYMmo0lbcoMr5hLN2Can6WM6v
+    jmyvV4_s6_u_dsSUA>
+X-ME-Received: <xmr:ebI4Z41TjcsGeMhjeMjMcNLuSOqIUDv3iLmBrDtfdWv12KOBZpeDeEG0Noktq-8ocFhKClu1VIPi3MHHrQOLC2JPWx4S9UWBjjK6_RaWzLHf3KNkMLdBwlYU_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdeigdeijecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefuff
+    fkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpeelleekte
+    ffheffhfffieeuleeggfegvefhleetieefleeiuddtveettdetfeetueenucffohhmrghi
+    nhepshhtrggtkhhovhgvrhhflhhofidrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhope
+    ehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpd
+    hrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
+    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:ebI4ZzCtHDUTPVV1GXEIgb2LVrF0OjLRWyxR3CRRHVdcKhi3-dbZGA>
+    <xmx:ebI4Z8ihUuUH1KCHj0NK4FmPrd8MzuPJK7lsOdEH--T6cmjpXntdFQ>
+    <xmx:ebI4Z3ouz_YBlS13WWsx0d4IP98Z2-waoZotHYJSgEG6w0mi_kknwg>
+    <xmx:ebI4Z3j3DVHokCq-AeSaBZNBjAQ2B_2X_7fmwWolkR0Xy3RTpgYSNw>
+    <xmx:ebI4Z2aXS9M0fGvgz-Ef-GWV2fdGeY_54d71ezBW8Ws9ODyCfrdC14fD>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 16 Nov 2024 09:55:51 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	avarab@gmail.com,
+	me@ttaylorr.com,
+	gitster@pobox.com
+Subject: [PATCH v4 0/4] Documentation/git-bundle.txt: promote --all for full backup
+Date: Sat, 16 Nov 2024 15:54:50 +0100
+Message-ID: <cover.1731768344.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.47.0.317.g7d2562b9734
+In-Reply-To: <cover.1730979849.git.code@khaugsbakk.name>
+References: <cover.1730979849.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Sat, 16 Nov 2024 15:43:36 +0100
-Message-id: <D5NOLJO397LO.3RS986OX5GIZ6@ferdinandy.com>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v12 4/8] remote set-head: better output for --auto
-Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
- "Taylor Blau" <me@ttaylorr.com>, <ferdinandy.bence@ttk.elte.hu>
-To: "Junio C Hamano" <gitster@pobox.com>
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
- <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-5-bence@ferdinandy.com> <xmqqcyix11w8.fsf@gitster.g>
- <D5N4B2SSZAG4.1O5CERCP825X2@ferdinandy.com> <xmqqo72gyqy7.fsf@gitster.g>
-In-reply-to: <xmqqo72gyqy7.fsf@gitster.g>
-Reporting-Meta:
- AAGkwcJPYXdE1jjJhGZv5KOvGVg7eB4PFdZ+aI+wB4cG37Lvupufwu/at5jyznJ1
- VGiJ1vJ88PdmQQNOx12KTvuycF5CCywryOpJt334W/vzh22otdCzg8fgHy10OQxY
- ++DjQr0qgGZBckHacGfRc53eCeS5tFqsY9nWrTw7ju7iJA+0N5aR+rzH1u3CKh35
- 1cMta3XpKe2ZNwAIYMdJXIi6fT+DzBKAXTlkJNbiCQs8v99Fu82QX6y8+ojZ38Gh
- nMXK+yjtMsjrS8cNW4NbecNSy6oBwL65yIMrBPUc2TzHGGhlUWXIik4vsaXnnqf0
- XYSz0Ly862zGwS6ejJbvaChmw87nssp5mv+NP9r+HTbTNQALsMQcPh2Vk5R7P//U
- 9Lb+BiaBkDnPNnlvgELS+NKi3uC9rVoD3Lp1XE0209sLYIGqbOWahWmH2bQA/u/F
- 8ZGoxmJNH+kTTeZqKEdno7c9AuC6ls61Hj7BtKZ8SB7gcSEBySne9OA=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-On Sat Nov 16, 2024 at 01:15, Junio C Hamano <gitster@pobox.com> wrote:
-> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
->
->> Good point, and yes, that is what happens. (Although I'm not quite sure =
-how
->> valid that state is where a remote's HEAD is not a branch).
->
-> Not often when you cloned from a publishing repository, but if you
-> cloned from a repository for your own work with an worktree, the
-> HEAD at such an origin repository may have been detached, so it
-> would be sensible (I think "git clone" historically guesses over
-> eagerly to hide the detached HEAD state of the other side, though)
-> if the clone's remote-tracking HEAD reflects it, I would think.
->
->> ... So maybe if we put "Not a symbolic reference." in the referent
->> (which should be an invalid symref), the caller could check for that and=
- then
->> should be able to distinguish this special case?
->
-> Yuck.
->
-> Are we limited by the narrow interface that only passes "referent",
-> or are you in the position that allows you to extend the interface
-> to "do it right"?
+The documentation for git-bundle(1) now prominently covers `--all`, the
+option from git-rev-list(1) that can be used to package all refs.  A
+"Discussion" section has also been added to address the naive backup
+strategy of copying a Git repository manually with cp(1) or some other
+non-Git tool.
 
-How about we do the following if we can't read a symref:
+---
 
-1) remember to return a new exit code for refs_update_symref_extended (I gu=
-ess 2),
-   but continue on with updating HEAD
+The part above was for the-topic-summary.
 
-2) read the non-symref ref into "referent" (I think this should not be able=
- to
-   fail since, otherwise locking HEAD will already fail earlier)
+I was prompted by SO questions like this one:
 
-this way the caller can check the exit code, see that it's 2, so not entire=
-ly
-a success, but HEAD has been updated and can report things accordingly.
+    https://stackoverflow.com/questions/5578270/fully-backup-a-git-repo
 
-Does that sounds more reasonable?
+I then compared VonC’s answer to the man page.
 
-Thanks,
-Bence
+Cheers
+
+§ Changes in v4
+
+• Tell how to recover the backup (patch 1/4)
+• Fix confusion regarding `refs/stash` (patches 1/4 and 4/4)
+
+Kristoffer Haugsbakk (4):
+  Documentation/git-bundle.txt: mention full backup example
+  Documentation/git-bundle.txt: remove old `--all` example
+  Documentation/git-bundle.txt: mention --all in spec. refs
+  Documentation/git-bundle.txt: discuss naïve backups
+
+ Documentation/git-bundle.txt | 59 ++++++++++++++++++++++++++++++------
+ 1 file changed, 50 insertions(+), 9 deletions(-)
+
+Interdiff against v3:
+diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
+index ad9ab3247f5..504b8a8143a 100644
+--- a/Documentation/git-bundle.txt
++++ b/Documentation/git-bundle.txt
+@@ -216,21 +216,28 @@ EXAMPLES
+ We'll discuss two cases:
+ 
+ 1. Taking a full backup of a repository
+-2. Transfer the history of a repository to another machine when the two
+-   machines have no direct connection
++2. Transferring the history of a repository to another machine when the
++   two machines have no direct connection
+ 
+ First let's consider a full backup of the repository.  The following
+ command will take a full backup of the repository in the sense that all
+-refs are included in the bundle (except `refs/stash`, i.e. the stash):
++refs are included in the bundle:
+ 
+ ----------------
+-$ git bundle create <file> --all
++$ git bundle create backup.bundle --all
+ ----------------
+ 
+ But note again that this is only for the refs, i.e. you will only
+ include refs and commits reachable from those refs.  You will not
+ include other local state, such as the contents of the index, working
+-tree, per-repository configuration, hooks, etc.
++tree, the stash, per-repository configuration, hooks, etc.
++
++You can later recover that repository by using for example
++linkgit:git-clone[1]:
++
++----------------
++$ git clone backup.bundle <new directory>
++----------------
+ 
+ For the next example, assume you want to transfer the history from a
+ repository R1 on machine A to another repository R2 on machine B.
+@@ -349,8 +356,8 @@ This is why it is recommended to use Git tooling for making repository
+ backups, either with this command or with e.g. linkgit:git-clone[1].
+ But keep in mind that these tools will not help you backup state other
+ than refs and commits.  In other words they will not help you backup
+-contents of the index, working tree, per-repository configuration,
+-hooks, etc.
++contents of the index, working tree, the stash, per-repository
++configuration, hooks, etc.
+ 
+ See also linkgit:gitfaq[7], section "TRANSFERS" for a discussion of the
+ problems associated with file syncing across systems.
+Range-diff against v3:
+1:  b222c6787a7 ! 1:  5121edfee67 Documentation/git-bundle.txt: mention full backup example
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v4:
+    +    • Drop the part about `refs/stash` since that is wrong.  What we want to
+    +      communicate is that the state of the stash is not transferred since
+    +      git-clone(1) does not include the reflogs.  We can just lump that in
+    +      with the existin list of the index, working tree, … etc.
+    +
+    +      Link: https://lore.kernel.org/git/xmqqh68c3vr8.fsf@gitster.g/
+    +    • Add para. describing how to recover the backup
+    +
+    +      Link: https://lore.kernel.org/git/xmqq1pzmqy97.fsf@gitster.g/
+    +    • Correct tense: “transferring”
+         v3:
+         • Elaborate on “full backups” in Examples instead
+         • Just point to the section in the second paragraph where everything is
+    @@ Documentation/git-bundle.txt: bundle.
+     +We'll discuss two cases:
+     +
+     +1. Taking a full backup of a repository
+    -+2. Transfer the history of a repository to another machine when the two
+    -+   machines have no direct connection
+    ++2. Transferring the history of a repository to another machine when the
+    ++   two machines have no direct connection
+     +
+     +First let's consider a full backup of the repository.  The following
+     +command will take a full backup of the repository in the sense that all
+    -+refs are included in the bundle (except `refs/stash`, i.e. the stash):
+    ++refs are included in the bundle:
+     +
+     +----------------
+    -+$ git bundle create <file> --all
+    ++$ git bundle create backup.bundle --all
+     +----------------
+     +
+     +But note again that this is only for the refs, i.e. you will only
+     +include refs and commits reachable from those refs.  You will not
+     +include other local state, such as the contents of the index, working
+    -+tree, per-repository configuration, hooks, etc.
+    ++tree, the stash, per-repository configuration, hooks, etc.
+    ++
+    ++You can later recover that repository by using for example
+    ++linkgit:git-clone[1]:
+    ++
+    ++----------------
+    ++$ git clone backup.bundle <new directory>
+    ++----------------
+     +
+     +For the next example, assume you want to transfer the history from a
+     +repository R1 on machine A to another repository R2 on machine B.
+2:  f0dbe356ca6 = 2:  7e9f320fade Documentation/git-bundle.txt: remove old `--all` example
+3:  8336b0f451e = 3:  4e9907f092e Documentation/git-bundle.txt: mention --all in spec. refs
+4:  0ab05a4cf09 ! 4:  c8d5e3ee504 Documentation/git-bundle.txt: discuss naïve backups
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v4:
+    +    • Mention the stash (knock-on effect from patch 1/4)
+         v3:
+         • Use `cp -r` instead of `cp -a` since the former is more widely
+           supported (even though it is just an example)
+    @@ Documentation/git-bundle.txt: You can also see what references it offers:
+     +backups, either with this command or with e.g. linkgit:git-clone[1].
+     +But keep in mind that these tools will not help you backup state other
+     +than refs and commits.  In other words they will not help you backup
+    -+contents of the index, working tree, per-repository configuration,
+    -+hooks, etc.
+    ++contents of the index, working tree, the stash, per-repository
+    ++configuration, hooks, etc.
+     +
+     +See also linkgit:gitfaq[7], section "TRANSFERS" for a discussion of the
+     +problems associated with file syncing across systems.
+
+base-commit: 34b6ce9b30747131b6e781ff718a45328aa887d0
+-- 
+2.47.0
 
