@@ -1,98 +1,107 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D9923C9
-	for <git@vger.kernel.org>; Sat, 16 Nov 2024 03:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1005F18FC86
+	for <git@vger.kernel.org>; Sat, 16 Nov 2024 07:58:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731728180; cv=none; b=LtrdkJO4ji+zWeNzxVYGXQ/I+uVAnZV2XiEPGRypwZOr2MMsiL+7UxLhcsWqB1dJNh+h3qBEoXHtNX56WFTfGBA9bn80V0ZAtmOLVqd+JHfeXQtHpcSQKrsTWL0fBO+P+E+rFHyxFPY/dboAS9QQxundLHrZ59x643zG7xj7WVk=
+	t=1731743904; cv=none; b=bvRVFjjAk+MG/itSDV2UG8XyjURDK4MtF3m5IijLM4OEpUiXTCJiK06n1y0QD1r9EWSdBTVwS8DqTc2h1uKRvgUyMhRLZEa5MnBYSfNucm+C7/Y2McitXQUTgqFjqpAG7Yogsd/gz3/iVc/BUqpH7ZaVc61tl6GWGQxOU/3PAyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731728180; c=relaxed/simple;
-	bh=1bxG74GzAclpA+Qp9PG4rBZeEi+fp2bniqzCn5ya6Os=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qrHoil52XkNV9pnok+6X9ISXQWKNU0ioSj1mFdMk6dVBr2TU9KA/UnSh3s7Yjgt0b5ueJUuruXc40PIUWTrG7JvPCaFXQNpC14rf4Ns/JbNwNszuPOfuAay9T3GVIuXMa2/7joOzYB8erN7BIbBOH7IlAqctFncRwD6yi1Iv7fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WkfNCeGt; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1731743904; c=relaxed/simple;
+	bh=ef/xJayJU2vxAO5TDdbpt0M7Fw7Kr+Ext0OfPf6dMNs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D5gt7+Hg2Q4yeI8rEb3ckKMpYTNabp4uKat5atYIhdMHkwBPu+3hYBMONHTMxe9g6AEI5924DmsrjbP3pdFTpTPuYyjgTSgEXeY6q+R4gQNgPVy/ljnWnS55k/lKnyrvWiS23P7GKTxKReeZm/0ADaTU7qD51rK0uJXmFEesWMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i3kKxLO9; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WkfNCeGt"
-Received: (qmail 25000 invoked by uid 109); 16 Nov 2024 03:36:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1bxG74GzAclpA+Qp9PG4rBZeEi+fp2bniqzCn5ya6Os=; b=WkfNCeGtHPulFfA4fX/DnwkiKkvSJQJGsAeYBL3GY0WWYKLVYjsMdSGYzGxn9f9e3CJWGkoY3mR5800nudr3OSAuDil+8dYTxJi/fxDQRL/G3mTuJMLJdK6kW2fLp+e/aXg5p4S1/KXk8/W5gc7JfCzzp5kyUhWAzBzKNJIvj+UW/TmbHbmS2cRo2JGvJnHJRHmJL6jtpomixIJes7sZyLLVzdU83FgwANb0UN9zNHvEavsvXjuzxWCZxZ4TJaDsMnlNQmDuqw+EOm0r7lr1ok2jVTPwc2ufIOnhyTnWpUUZJulWJTIAt05ae2UgDStji6Oib6LQgB36WVE5LeuJ4A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 16 Nov 2024 03:36:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16425 invoked by uid 111); 16 Nov 2024 03:36:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Nov 2024 22:36:20 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 15 Nov 2024 22:36:16 -0500
-From: Jeff King <peff@peff.net>
-To: Caleb Cushing <xenoterracide@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git remote set-head automatically
-Message-ID: <20241116033616.GB1782794@coredump.intra.peff.net>
-References: <CAAHKNRGv19rhnqCkJMpE2FomNQBHvSS36aC=fh0UwO+9-6RRfA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i3kKxLO9"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B77802540152;
+	Sat, 16 Nov 2024 02:58:20 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Sat, 16 Nov 2024 02:58:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731743900; x=1731830300; bh=poFNNTsU2i8dgotEUGjtkyKdP4EeuJzhw63
+	MqwzDriE=; b=i3kKxLO9Gfy993Ed26u0rSYvad+55PxabqQei7+pqdupVlo7JfP
+	nlH3RqYfpuewtBgpFkRu+RKEkfiFjh8TdG3Bbt4UezQ6z2l9DTEiTaWlhGALj7Jy
+	UeNlA/JbUOTjWbmHQLW4wpJat/+7B+652ujbU/vywq3d2zPfgz2hFhScWrueEZ8w
+	FPvIlDigI90My1qT1KtM8eBVEFHUXajiITLzNX2GYsltB3GDyVEg3B6tGWM8bU+G
+	/lsh0YVTGsQ8/cMbPgWI2ZdMYC956Cbol4j64EfMwUzKbyzMuEMhKgdhyc76WtGI
+	KXe0pgLdijgY4B87yXQCHsD+vScZWoy75pA==
+X-ME-Sender: <xms:mlA4Zz1Htl_TsoZvFxfFP7T7n2EoeujxTj-aAANKwpxJOz5zrf6RLA>
+    <xme:mlA4ZyE_z16gSl31B6TcDSWN7FjmnmBA6_zm0wYZflLdxsrapw452r1FdC1t7PLpi
+    H4tR-vAr7ebRNavNg>
+X-ME-Received: <xmr:mlA4Zz7fwVieP0AhUTBo-dV1jpR3ezfa1DR24E0lpCbpi60oQZzSpLE8N7qoSG_SjBrjDfhkGd0bICrzpbMzDjnuFNjkVwdcprAv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdehgdduuddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhgtvgesfhgvrh
+    guihhnrghnugihrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrd
+    hukhdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehjohhhrghn
+    nhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdr
+    tghomhdprhgtphhtthhopehfvghrughinhgrnhguhidrsggvnhgtvgesthhtkhdrvghlth
+    gvrdhhuhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mlA4Z40tKc9teeaOW8t_M32slPDlm4PIlMdWd02Ikluns9_EeqfgFg>
+    <xmx:mlA4Z2HXtLO6gzHu5zC0L0pNQS6TYRUsCBPO4RLgTTijjyWJTGqc5A>
+    <xmx:mlA4Z5920ynIvt01F1W0RbMixIDPo2XMRXu_Z1lxyupjZtAz8dsOjw>
+    <xmx:mlA4ZzntzXoTD4asVHfqguq_SK1OsT9qSjLGVhbsW4RDNuAqVZWoFw>
+    <xmx:nFA4Z5DLyIyyqxb6ApPiMr4hwq3KJH9hJivx8sHxn7FXS623BpsCjOZZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 16 Nov 2024 02:58:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org,  phillip.wood@dunelm.org.uk,  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe
+ <l.s.r@web.de>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ 	karthik.188@gmail.com,  Taylor Blau <me@ttaylorr.com>,
+ 	ferdinandy.bence@ttk.elte.hu
+Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
+ update_symref
+In-Reply-To: <54677502-a08c-4920-9b08-13517c8f027a@ferdinandy.com> (Bence
+	Ferdinandy's message of "Sat, 16 Nov 2024 00:27:44 +0100 (GMT+01:00)")
+References: <20241022194710.3743691-1-bence@ferdinandy.com>
+	<20241023153736.257733-1-bence@ferdinandy.com>
+	<20241023153736.257733-3-bence@ferdinandy.com>
+	<xmqqr07d11wt.fsf@gitster.g>
+	<D5N3N1RMMR9Q.28GSGYYBWZSOS@ferdinandy.com>
+	<54677502-a08c-4920-9b08-13517c8f027a@ferdinandy.com>
+Date: Sat, 16 Nov 2024 16:58:17 +0900
+Message-ID: <xmqqbjyfzk2u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAAHKNRGv19rhnqCkJMpE2FomNQBHvSS36aC=fh0UwO+9-6RRfA@mail.gmail.com>
+Content-Type: text/plain
 
-On Fri, Nov 15, 2024 at 09:34:28AM -0500, Caleb Cushing wrote:
+Bence Ferdinandy <bence@ferdinandy.com> writes:
 
-> Context: recently I've been trying to develop a feature for my Gradle
-> plugin that derives a semantic version from git describe.  In order to
-> achieve my next level of feature I need the HEAD Branch. Now, I can
-> get this branch using git remote show <remote> and parsing the output.
-> I'm a firm believer that it should be possible for me to write code,
-> long term even, without the internet; I did this once with my job when
-> I needed to go home to my parents who were very rural and didn't have
-> internet; I was able to keep working without access. I want that for
-> anyone that uses this tool.
+> Sorry, it's late. The above is slightly bollocks since fetch ignores
+> any set_head errors later :)
+> But the idea stands that if we can set the head, let's do it.
+> The previous head is not important enough to die on.
 
-You should use the refs/remotes/<remote>/HEAD symref instead (or its
-alias, just "<remote>"), which is more convenient and doesn't hit the
-network. Which is exactly what...
+Yes, I didn't mean to suggest aborting the fetch.  I just wanted to
+make sure we _react_ correctly to a failing call to read a symref,
+possibly because the refs/remotes/$there/HEAD (1) does not exist, or
+(2) is not a symbolic ref but signals that the other side has its
+HEAD detached.  Treating any failure to read a symref as if the
+symref does not exist would miss the latter case.
 
-> Problem: I don't want to have to do a network request every time I do
-> a build, in fact I'd rather almost never have to do a network request.
-> Gradle makes reducing the network request to less than once per build
-> something ... unsupported. jgit doesn't expose support for fetching
-> this information. Then I found out that you could do `git remote
-> set-head <remote> <branch>` which appears to behave exactly how I'd
-> want and expect. It doesn't easily solve my problem though because I
-> want my solution to be generally applicable.
+Thanks.
 
-...set-head will set. So OK, but...
-
-> Ideal Long-Term Solution: git remote set-head happens automatically on
-> lone, and even fetch if it's not set. Explicit setting would override
-> any automatic setting; and it might be a good idea to automatically
-> unset if the HEAD branch disappears from the remote.
-
-We already do the equivalent of set-head on clone. If you do:
-
-  git clone https://github.com/git/git
-  cd git
-  git symbolic-ref refs/remotes/origin/HEAD
-
-you should see it pointing to "refs/remotes/origin/master" (and like you
-can refer to "origin/HEAD" or "origin" from git-log, etc). Are you not
-seeing that?
-
-We don't update it on fetch. That has been discussed, but there are some
-questions about when it should overwrite what's available locally. E.g.
-this thread:
-
-  https://lore.kernel.org/git/D3HBD7C1FR14.74FL1Q1S9UCB@ferdinandy.com/
-
-There have been some patches in that direction but I have not kept up
-with the current state:
-
-  https://lore.kernel.org/git/20241023153736.257733-2-bence@ferdinandy.com/
-
--Peff
