@@ -1,63 +1,62 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA60D1A3BA1
-	for <git@vger.kernel.org>; Sat, 16 Nov 2024 19:36:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A05715E97
+	for <git@vger.kernel.org>; Sat, 16 Nov 2024 21:42:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731785782; cv=none; b=Ux19+0YYKjkW8Vo+sJIdvE8b4N1PSjy21RB4421K8RxzPPsvYo0SL/CP/vGxQSgVcAor2pQ4P9sRV9SI6W8nYfAowc6N547ZQ9PMMVYu8LVj7Q9rDWS7kZ4emcsDwTr1rSIW8Ns50BrQqJT8VhgQaOYFKHGiti91x9ByOuLBSPA=
+	t=1731793381; cv=none; b=R9V1kW60I/dFT05N0v0/h/KT42Ch1ZHozoYirETDJMzHhTJMSXLsuhasK1+jFw6FTuX5eZ0GyBuDoW3NNWVRRev490x0wOErYwEgPXFJbJ8VXPAiLplMvhEBcxDR+Lv/PZFyMWII5NH/7+qLvRonh4pOoWDhGDOCPbpm6I3IW+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731785782; c=relaxed/simple;
-	bh=eQaEgQYeAqAI9z/Ci4lldUMZfuqLo3ac4TPkBRZHgAc=;
+	s=arc-20240116; t=1731793381; c=relaxed/simple;
+	bh=QzigJjIMu4LAJxPDargivWoq5ZSxlD89Ufc054Bn4EQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=BDPTilxvF+IhnF6L//qIom98Byv+h4pkIeBwZpzA0DbmiNYk0DG8GlBmY+aPI5vYAvw03ifsZcTKjp+QCWObL+T1Qh0RmCpp8O831aqvgWIH0ox4vVFCCOuiYA85hsu7niC5S0cPJnU2GXbTStWC0dcn7OLUqE4CDaEzlwdIX5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WiGb0LsG; arc=none smtp.client-ip=209.85.221.48
+	 Content-Type:To:Cc; b=X5xvp/bEG2WgEGCSm+CUQg/LgDtFcw+I4Qf/uBwGz56rErFtlS4J8sILOzvu/htAo7uJ6L7Zl3/fpZUJKxLMFPRx6M2nBYlGSfIZ+SL5BVcm0nH5RntxMpmC7rgpsf0iNIOwqTwQKvNhfRFwaX2sNU5G2IU0rjXoy874c2lAcq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+CMuLv/; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WiGb0LsG"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3822ba3cdbcso987273f8f.0
-        for <git@vger.kernel.org>; Sat, 16 Nov 2024 11:36:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+CMuLv/"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-37d4ac91d97so832936f8f.2
+        for <git@vger.kernel.org>; Sat, 16 Nov 2024 13:42:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731785778; x=1732390578; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731793376; x=1732398176; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JhumRkH1SLeEL/3fwKGELzg0e35VskpZ+nrbAYgQBGk=;
-        b=WiGb0LsG1nWUh7KdcNJ46cliRS8Gf2A+t9ET2qagd+Ts2MEoS0mJQcLl/re5TZa1Ie
-         QBfSi9aEFlKqm0xZPVEtc2+QkKGy0+BvqACCVDl+b7ZVLL+DXsMtNcgL20kKVMINDBE6
-         0T25gH0QEG0aUlsJBAhjbEg0mOpOFLcDKLzBcmG+izUqokqTwfJDBxPWvh6+EyOIeop1
-         /QCudpwC/xxXw1nunfVkbCVDBTc3WWYJtWNEWZRgAmpLqXGDiKbl7NoBBn8iv02PJYT9
-         gpXDrgf0b9OZYf7BQ+3NdTytptAOvU7CFA0N0sqKw4GHQtuAiXV+AhG8MjxNucFbGzKj
-         CNUg==
+        bh=xUhjmg17M+6eKKiqRAsLoeK8qJhCkh04jjK30ob2dQs=;
+        b=F+CMuLv/TAlI7/sENpEjJdLgyNlCv1cJWz5EYJyT1SMPE+EsXKcnn3u1z7OnHMD2mR
+         BYritgDPGhsJyMJfH8/WAvihY3W57aRCq2861YTltrr5USpJlH8cyzqC32JP+B/I8SJc
+         RA016W3YmdDIc4TK7m76Q3JqnZvqd88qnxRxkeYNqi8XivAA1AI2/ka/q1HrpMYlo5uj
+         xhYMuU8KO0yTNna33AdObw8DPhs3+pMVjrvygjWBWJhbyDKdvnDJ0L5fpuuYiXOwYGML
+         1b9dJYqoJeJMNcFP+i7eWmepf+91x6p5HIP+2QOX9ZFZveej/4QZJY6nUHuKHb+0Ml/W
+         Oetw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731785778; x=1732390578;
+        d=1e100.net; s=20230601; t=1731793376; x=1732398176;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JhumRkH1SLeEL/3fwKGELzg0e35VskpZ+nrbAYgQBGk=;
-        b=Jj6hSnW0qxMLpZK3qkoeFL8ng9bNN54AEvlHkYhUmNful48u9+Zcsr67ta4LFARJTd
-         sNcnpsmj2s4+wXuX1BWdW6TERJGOeAkI6y0IaBriGgm0Vpgc1Vw/cv52p39Xy3gtKyfF
-         L9SpByYxs8Gi1MZ9n0trbQ1dnBHdb2G17CsnKkIouONdzYxAzRPx5UQZ73+/5Swx51KG
-         jb1dsyX2Vep+qvtBE2YNZ5sNoQF/h0p3yypGcsWLUse2o5jyh4uhDez/Math48MFZexB
-         YEDwEpkegX9Lh+oUDPCK9qaAwCqQPvadfj41IOKWciMAzFMoBzEczBIRvAAcfcR+TnuL
-         ct+Q==
-X-Gm-Message-State: AOJu0YyaYK4q0iYsQSVFeq4qJsnqgcepjTaGiMB4otjb+Yrt+842H+cq
-	Dhhf1gaAdy/XP9kAGT4tsLnGwUaDfkW9V1QO6cBMZen1MzuUlnrhgjo2lw==
-X-Google-Smtp-Source: AGHT+IE/+kbzY+Silk5tIoyg3qIMc4gGpHHodw6S40OLpbGHTc6quyJkglHwrSvvsB9IB+10vZJqjw==
-X-Received: by 2002:a05:6000:796:b0:37d:4744:9d1d with SMTP id ffacd0b85a97d-38225a39168mr5814269f8f.35.1731785777871;
-        Sat, 16 Nov 2024 11:36:17 -0800 (PST)
+        bh=xUhjmg17M+6eKKiqRAsLoeK8qJhCkh04jjK30ob2dQs=;
+        b=Evo02oJsMA5VMnIMfgkUdToqRoNIfDnv1CCm5bWGxL/EUwdalsrr8Y91b6vN0pMHsE
+         YixCYFVSbqaBQsm2+lxfZ3cpzjdYEsbMAgsE608w1EDVvOVhoWcOyO5BX5bX3cHprLzL
+         /r0qNf3x5JBMXH4YQG0/dNOdL4uAQpKu/VA+g6w4a+nr43ld3JhErRlIsCAVigkBJUef
+         VG4/6cGYYbh/oVWqnuExoo2ciLjdMVGvIMsYAcjhG2bBkw7E+XNHjEwQHeHlN91071qK
+         QrZ+RpuZ3YsmXmEjVPi5cl3SsT/IeHUqOjcFA7H/FzNjAOBsop+iiI24r49d7Hjwy5iP
+         s4IQ==
+X-Gm-Message-State: AOJu0YzmXosbaAPoxlyWLSRMvw+gs6NM+7FsqOrMoyy6c2Y2uBls1ANy
+	4SuU348E5c8OfdPn/bQKjWWVgiel5TVEdPxOOY0yQodBbb8vmqdn2OJWmA==
+X-Google-Smtp-Source: AGHT+IECJ+PgoPqA3EevSmtkX4u77c/QxXcXaJRyPs8Ac9xTplektQRpyJnYY5bTBpUnwAN5OdN0aA==
+X-Received: by 2002:a05:6000:70f:b0:37d:4cf9:e08b with SMTP id ffacd0b85a97d-38225a6ac66mr7453059f8f.31.1731793376078;
+        Sat, 16 Nov 2024 13:42:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3822f6afc20sm3960962f8f.81.2024.11.16.11.36.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-382416e22c1sm339910f8f.2.2024.11.16.13.42.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Nov 2024 11:36:16 -0800 (PST)
-Message-Id: <4ec2fd9c3c68163a358937498b523292c3d38465.1731785769.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
-References: <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
-	<pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 16 Nov 2024 19:36:08 +0000
-Subject: [PATCH v3 5/5] doc: git-diff: apply format changes to config part
+        Sat, 16 Nov 2024 13:42:55 -0800 (PST)
+Message-Id: <pull.1826.v2.git.1731793374648.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1826.git.1731348891108.gitgitgadget@gmail.com>
+References: <pull.1826.git.1731348891108.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 16 Nov 2024 21:42:54 +0000
+Subject: [PATCH v2] doc: git-add.txt: convert to new style convention
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,356 +67,360 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Fcc: Sent
 To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>,
-    Patrick Steinhardt <ps@pks.im>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-By the way, we also change the sentences where git-diff would refer to
-itself, so that no link is created in the HTML output.
+While we are at it, let's refactor the corresponding configuration
+documentation to prevent auto-referencing git-add in its own manpage.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/config/diff.txt | 204 ++++++++++++++++++----------------
- 1 file changed, 111 insertions(+), 93 deletions(-)
+    doc: git-add.txt: convert to new style convention
 
-diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-index 190bda17e51..45f3fe855c5 100644
---- a/Documentation/config/diff.txt
-+++ b/Documentation/config/diff.txt
-@@ -1,18 +1,25 @@
--diff.autoRefreshIndex::
--	When using 'git diff' to compare with work tree
-+`diff.autoRefreshIndex`::
-+	When using `git diff` to compare with work tree
- 	files, do not consider stat-only changes as changed.
- 	Instead, silently run `git update-index --refresh` to
- 	update the cached stat information for paths whose
- 	contents in the work tree match the contents in the
--	index.  This option defaults to true.  Note that this
--	affects only 'git diff' Porcelain, and not lower level
--	'diff' commands such as 'git diff-files'.
-+	index.  This option defaults to `true`.  Note that this
-+	affects only `git diff` Porcelain, and not lower level
-+	`diff` commands such as `git diff-files`.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1826%2Fjnavila%2Fnew_git_add-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1826/jnavila/new_git_add-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1826
+
+Range-diff vs v1:
+
+ 1:  9caabbcb263 ! 1:  7028145ae4d doc: git-add.txt: convert to new style convention
+     @@ Metadata
+       ## Commit message ##
+          doc: git-add.txt: convert to new style convention
+      
+     +    While we are at it, let's refactor the corresponding configuration
+     +    documentation to prevent auto-referencing git-add in its own manpage.
+     +
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+       ## Documentation/config/add.txt ##
+
+
+ Documentation/config/add.txt |  19 +++---
+ Documentation/git-add.txt    | 111 ++++++++++++++++++-----------------
+ 2 files changed, 68 insertions(+), 62 deletions(-)
+
+diff --git a/Documentation/config/add.txt b/Documentation/config/add.txt
+index 4d753f006ec..7497533cbcc 100644
+--- a/Documentation/config/add.txt
++++ b/Documentation/config/add.txt
+@@ -1,7 +1,12 @@
+-add.ignoreErrors::
+-add.ignore-errors (deprecated)::
+-	Tells 'git add' to continue adding files when some files cannot be
+-	added due to indexing errors. Equivalent to the `--ignore-errors`
+-	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
+-	as it does not follow the usual naming convention for configuration
+-	variables.
++`add.ignoreErrors`::
++`add.ignore-errors` (deprecated)::
++	Tells `git add` to continue adding files when some files cannot be
++	added due to indexing errors.
++ifdef::git-add[]
++	Equivalent to the `--ignore-errors` option.
++endif::git-add[]
++ifndef::git-add[]
++	Equivalent to the `--ignore-errors` option of linkgit:git-add[1].
++endif::git-add[]
++	`add.ignore-errors` is deprecated, as it does not follow the usual
++	naming convention for configuration variables.
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index aceaa025e30..5f2c3592b8d 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -7,12 +7,12 @@ git-add - Add file contents to the index
  
--diff.dirstat::
-+`diff.dirstat`::
-+ifdef::git-diff[]
-+	A comma separated list of `--dirstat` parameters specifying the
-+	default behavior of the `--dirstat` option to `git diff` and friends.
-+endif::git-diff[]
-+ifndef::git-diff[]
- 	A comma separated list of `--dirstat` parameters specifying the
- 	default behavior of the `--dirstat` option to linkgit:git-diff[1]
--	and friends. The defaults can be overridden on the command line
--	(using `--dirstat=<param1,param2,...>`). The fallback defaults
-+	and friends.
-+endif::git-diff[]
-+	The defaults can be overridden on the command line
-+	(using `--dirstat=<param>,...`). The fallback defaults
- 	(when not changed by `diff.dirstat`) are `changes,noncumulative,3`.
- 	The following parameters are available:
+ SYNOPSIS
+ --------
+-[verse]
+-'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+-	  [--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
+-	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+-	  [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+-	  [--] [<pathspec>...]
++[synopsis]
++git add [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
++	[--edit | -e] [--[no-]all | -A | --[no-]ignore-removal | [--update | -u]] [--sparse]
++	[--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
++	[--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
++	[--] [<pathspec>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -41,7 +41,7 @@ The `git add` command will not add ignored files by default.  If any
+ ignored files were explicitly specified on the command line, `git add`
+ will fail with a list of ignored files.  Ignored files reached by
+ directory recursion or filename globbing performed by Git (quote your
+-globs before the shell) will be silently ignored.  The 'git add' command can
++globs before the shell) will be silently ignored.  The `git add` command can
+ be used to add ignored files with the `-f` (force) option.
+ 
+ Please see linkgit:git-commit[1] for alternative ways to add content to a
+@@ -50,7 +50,7 @@ commit.
+ 
+ OPTIONS
+ -------
+-<pathspec>...::
++`<pathspec>...`::
+ 	Files to add content from.  Fileglobs (e.g. `*.c`) can
+ 	be given to add all matching files.  Also a
+ 	leading directory name (e.g. `dir` to add `dir/file1`
+@@ -66,35 +66,35 @@ OPTIONS
+ For more details about the _<pathspec>_ syntax, see the 'pathspec' entry
+ in linkgit:gitglossary[7].
+ 
+--n::
+---dry-run::
++`-n`::
++`--dry-run`::
+ 	Don't actually add the file(s), just show if they exist and/or will
+ 	be ignored.
+ 
+--v::
+---verbose::
++`-v`::
++`--verbose`::
+         Be verbose.
+ 
+--f::
+---force::
++`-f`::
++`--force`::
+ 	Allow adding otherwise ignored files.
+ 
+---sparse::
++`--sparse`::
+ 	Allow updating index entries outside of the sparse-checkout cone.
+ 	Normally, `git add` refuses to update index entries whose paths do
+ 	not fit within the sparse-checkout cone, since those files might
+ 	be removed from the working tree without warning. See
+ 	linkgit:git-sparse-checkout[1] for more details.
+ 
+--i::
+---interactive::
++`-i`::
++`--interactive`::
+ 	Add modified contents in the working tree interactively to
+ 	the index. Optional path arguments may be supplied to limit
+ 	operation to a subset of the working tree. See ``Interactive
+ 	mode'' for details.
+ 
+--p::
+---patch::
++`-p`::
++`--patch`::
+ 	Interactively choose hunks of patch between the index and the
+ 	work tree and add them to the index. This gives the user a chance
+ 	to review the difference before adding modified contents to the
+@@ -104,8 +104,8 @@ This effectively runs `add --interactive`, but bypasses the
+ initial command menu and directly jumps to the `patch` subcommand.
+ See ``Interactive mode'' for details.
+ 
+--e::
+---edit::
++`-e`::
++`--edit`::
+ 	Open the diff vs. the index in an editor and let the user
+ 	edit it.  After the editor was closed, adjust the hunk headers
+ 	and apply the patch to the index.
+@@ -116,8 +116,8 @@ quicker and more flexible than using the interactive hunk selector.
+ However, it is easy to confuse oneself and create a patch that does not
+ apply to the index. See EDITING PATCHES below.
+ 
+--u::
+---update::
++`-u`::
++`--update`::
+ 	Update the index just where it already has an entry matching
+ 	_<pathspec>_.  This removes as well as modifies index entries to
+ 	match the working tree, but adds no new files.
+@@ -127,9 +127,9 @@ tracked files in the entire working tree are updated (old versions
+ of Git used to limit the update to the current directory and its
+ subdirectories).
+ 
+--A::
+---all::
+---no-ignore-removal::
++`-A`::
++`--all`::
++`--no-ignore-removal`::
+ 	Update the index not only where the working tree has a file
+ 	matching _<pathspec>_ but also where the index already has an
+ 	entry. This adds, modifies, and removes index entries to
+@@ -140,77 +140,77 @@ files in the entire working tree are updated (old versions
+ of Git used to limit the update to the current directory and its
+ subdirectories).
+ 
+---no-all::
+---ignore-removal::
++`--no-all`::
++`--ignore-removal`::
+ 	Update the index by adding new files that are unknown to the
+ 	index and files modified in the working tree, but ignore
+ 	files that have been removed from the working tree.  This
+ 	option is a no-op when no _<pathspec>_ is used.
  +
-@@ -41,7 +48,7 @@ diff.dirstat::
- 	Note that when using `cumulative`, the sum of the percentages
- 	reported may exceed 100%. The default (non-cumulative) behavior can
- 	be specified with the `noncumulative` parameter.
--<limit>;;
-+_<limit>_;;
- 	An integer parameter specifies a cut-off percent (3% by default).
- 	Directories contributing less than this percentage of the changes
- 	are not shown in the output.
-@@ -52,58 +59,58 @@ directories with less than 10% of the total amount of changed files,
- and accumulating child directory counts in the parent directories:
- `files,10,cumulative`.
+ This option is primarily to help users who are used to older
+-versions of Git, whose "git add _<pathspec>_..." was a synonym
+-for "git add --no-all _<pathspec>_...", i.e. ignored removed files.
++versions of Git, whose `git add <pathspec>...` was a synonym
++for `git add --no-all <pathspec>...`, i.e. ignored removed files.
  
--diff.statNameWidth::
--	Limit the width of the filename part in --stat output. If set, applies
--	to all commands generating --stat output except format-patch.
-+`diff.statNameWidth`::
-+	Limit the width of the filename part in `--stat` output. If set, applies
-+	to all commands generating `--stat` output except `format-patch`.
+--N::
+---intent-to-add::
++`-N`::
++`--intent-to-add`::
+ 	Record only the fact that the path will be added later. An entry
+ 	for the path is placed in the index with no content. This is
+ 	useful for, among other things, showing the unstaged content of
+ 	such files with `git diff` and committing them with `git commit
+ 	-a`.
  
--diff.statGraphWidth::
--	Limit the width of the graph part in --stat output. If set, applies
--	to all commands generating --stat output except format-patch.
-+`diff.statGraphWidth`::
-+	Limit the width of the graph part in `--stat` output. If set, applies
-+	to all commands generating `--stat` output except `format-patch`.
+---refresh::
++`--refresh`::
+ 	Don't add the file(s), but only refresh their stat()
+ 	information in the index.
  
--diff.context::
--	Generate diffs with <n> lines of context instead of the default
--	of 3. This value is overridden by the -U option.
-+`diff.context`::
-+	Generate diffs with _<n>_ lines of context instead of the default
-+	of 3. This value is overridden by the `-U` option.
+---ignore-errors::
++`--ignore-errors`::
+ 	If some files could not be added because of errors indexing
+ 	them, do not abort the operation, but continue adding the
+ 	others. The command shall still exit with non-zero status.
+ 	The configuration variable `add.ignoreErrors` can be set to
+ 	true to make this the default behaviour.
  
--diff.interHunkContext::
-+`diff.interHunkContext`::
- 	Show the context between diff hunks, up to the specified number
- 	of lines, thereby fusing the hunks that are close to each other.
- 	This value serves as the default for the `--inter-hunk-context`
- 	command line option.
+---ignore-missing::
+-	This option can only be used together with --dry-run. By using
++`--ignore-missing`::
++	This option can only be used together with `--dry-run`. By using
+ 	this option the user can check if any of the given files would
+ 	be ignored, no matter if they are already present in the work
+ 	tree or not.
  
--diff.external::
-+`diff.external`::
- 	If this config variable is set, diff generation is not
- 	performed using the internal diff machinery, but using the
--	given command.  Can be overridden with the `GIT_EXTERNAL_DIFF'
-+	given command.  Can be overridden with the `GIT_EXTERNAL_DIFF`
- 	environment variable.  The command is called with parameters
- 	as described under "git Diffs" in linkgit:git[1].  Note: if
- 	you want to use an external diff program only on a subset of
- 	your files, you might want to use linkgit:gitattributes[5] instead.
+---no-warn-embedded-repo::
++`--no-warn-embedded-repo`::
+ 	By default, `git add` will warn when adding an embedded
+ 	repository to the index without using `git submodule add` to
+ 	create an entry in `.gitmodules`. This option will suppress the
+ 	warning (e.g., if you are manually performing operations on
+ 	submodules).
  
--diff.trustExitCode::
--	If this boolean value is set to true then the
-+`diff.trustExitCode`::
-+	If this boolean value is set to `true` then the
- 	`diff.external` command is expected to return exit code
- 	0 if it considers the input files to be equal or 1 if it
--	considers them to be different, like `diff(1)`.
--	If it is set to false, which is the default, then the command
--	is expected to return exit code 0 regardless of equality.
-+	considers them to be different, like `diff`(1).
-+	If it is set to `false`, which is the default, then the command
-+	is expected to return exit code `0` regardless of equality.
- 	Any other exit code causes Git to report a fatal error.
+---renormalize::
++`--renormalize`::
+ 	Apply the "clean" process freshly to all tracked files to
+ 	forcibly add them again to the index.  This is useful after
+ 	changing `core.autocrlf` configuration or the `text` attribute
+-	in order to correct files added with wrong CRLF/LF line endings.
++	in order to correct files added with wrong _CRLF/LF_ line endings.
+ 	This option implies `-u`. Lone CR characters are untouched, thus
+-	while a CRLF cleans to LF, a CRCRLF sequence is only partially
+-	cleaned to CRLF.
++	while a _CRLF_ cleans to _LF_, a _CRCRLF_ sequence is only partially
++	cleaned to _CRLF_.
  
--diff.ignoreSubmodules::
--	Sets the default value of --ignore-submodules. Note that this
--	affects only 'git diff' Porcelain, and not lower level 'diff'
--	commands such as 'git diff-files'. 'git checkout'
--	and 'git switch' also honor
-+`diff.ignoreSubmodules`::
-+	Sets the default value of `--ignore-submodules`. Note that this
-+	affects only `git diff` Porcelain, and not lower level `diff`
-+	commands such as `git diff-files`. `git checkout`
-+	and `git switch` also honor
- 	this setting when reporting uncommitted changes. Setting it to
--	'all' disables the submodule summary normally shown by 'git commit'
--	and 'git status' when `status.submoduleSummary` is set unless it is
--	overridden by using the --ignore-submodules command-line option.
--	The 'git submodule' commands are not affected by this setting.
-+	`all` disables the submodule summary normally shown by `git commit`
-+	and `git status` when `status.submoduleSummary` is set unless it is
-+	overridden by using the `--ignore-submodules` command-line option.
-+	The `git submodule` commands are not affected by this setting.
- 	By default this is set to untracked so that any untracked
- 	submodules are ignored.
+---chmod=(+|-)x::
++`--chmod=(+|-)x`::
+ 	Override the executable bit of the added files.  The executable
+ 	bit is only changed in the index, the files on disk are left
+ 	unchanged.
  
--diff.mnemonicPrefix::
--	If set, 'git diff' uses a prefix pair that is different from the
--	standard "a/" and "b/" depending on what is being compared.  When
-+`diff.mnemonicPrefix`::
-+	If set, `git diff` uses a prefix pair that is different from the
-+	standard `a/` and `b/` depending on what is being compared.  When
- 	this configuration is in effect, reverse diff output also swaps
- 	the order of the prefixes:
- `git diff`;;
-@@ -112,111 +119,117 @@ diff.mnemonicPrefix::
- 	 compares a (c)ommit and the (w)ork tree;
- `git diff --cached`;;
- 	compares a (c)ommit and the (i)ndex;
--`git diff HEAD:file1 file2`;;
-+`git diff HEAD:<file1> <file2>`;;
- 	compares an (o)bject and a (w)ork tree entity;
--`git diff --no-index a b`;;
--	compares two non-git things (1) and (2).
-+`git diff --no-index <a> <b>`;;
-+	compares two non-git things _<a>_ and _<b>_.
+---pathspec-from-file=<file>::
++`--pathspec-from-file=<file>`::
+ 	Pathspec is passed in _<file>_ instead of commandline args. If
+ 	_<file>_ is exactly `-` then standard input is used. Pathspec
+-	elements are separated by LF or CR/LF. Pathspec elements can be
++	elements are separated by _LF_ or _CR/LF_. Pathspec elements can be
+ 	quoted as explained for the configuration variable `core.quotePath`
+ 	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
+ 	global `--literal-pathspecs`.
  
--diff.noPrefix::
--	If set, 'git diff' does not show any source or destination prefix.
-+`diff.noPrefix`::
-+	If set, `git diff` does not show any source or destination prefix.
+---pathspec-file-nul::
++`--pathspec-file-nul`::
+ 	Only meaningful with `--pathspec-from-file`. Pathspec elements are
+-	separated with NUL character and all other characters are taken
++	separated with _NUL_ character and all other characters are taken
+ 	literally (including newlines and quotes).
  
--diff.srcPrefix::
--	If set, 'git diff' uses this source prefix. Defaults to "a/".
-+`diff.srcPrefix`::
-+	If set, `git diff` uses this source prefix. Defaults to `a/`.
+-\--::
++`--`::
+ 	This option can be used to separate command-line options from
+ 	the list of files, (useful when filenames might be mistaken
+ 	for command-line options).
+@@ -219,18 +219,18 @@ for "git add --no-all _<pathspec>_...", i.e. ignored removed files.
+ EXAMPLES
+ --------
  
--diff.dstPrefix::
--	If set, 'git diff' uses this destination prefix. Defaults to "b/".
-+`diff.dstPrefix`::
-+	If set, `git diff` uses this destination prefix. Defaults to `b/`.
- 
--diff.relative::
--	If set to 'true', 'git diff' does not show changes outside of the directory
-+`diff.relative`::
-+	If set to `true`, `git diff` does not show changes outside of the directory
- 	and show pathnames relative to the current directory.
- 
--diff.orderFile::
-+`diff.orderFile`::
- 	File indicating how to order files within a diff.
--	See the '-O' option to linkgit:git-diff[1] for details.
-+ifdef::git-diff[]
-+	See the `-O` option for details.
-+endif::git-diff[]
-+ifndef::git-diff[]
-+	See the `-O` option to linkgit:git-diff[1] for details.
-+endif::git-diff[]
- 	If `diff.orderFile` is a relative pathname, it is treated as
- 	relative to the top of the working tree.
- 
--diff.renameLimit::
-+`diff.renameLimit`::
- 	The number of files to consider in the exhaustive portion of
--	copy/rename detection; equivalent to the 'git diff' option
-+	copy/rename detection; equivalent to the `git diff` option
- 	`-l`.  If not set, the default value is currently 1000.  This
- 	setting has no effect if rename detection is turned off.
- 
--diff.renames::
--	Whether and how Git detects renames.  If set to "false",
--	rename detection is disabled. If set to "true", basic rename
--	detection is enabled.  If set to "copies" or "copy", Git will
--	detect copies, as well.  Defaults to true.  Note that this
--	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
-+`diff.renames`::
-+	Whether and how Git detects renames.  If set to `false`,
-+	rename detection is disabled. If set to `true`, basic rename
-+	detection is enabled.  If set to `copies` or `copy`, Git will
-+	detect copies, as well.  Defaults to `true`.  Note that this
-+	affects only `git diff` Porcelain like linkgit:git-diff[1] and
- 	linkgit:git-log[1], and not lower level commands such as
- 	linkgit:git-diff-files[1].
- 
--diff.suppressBlankEmpty::
-+`diff.suppressBlankEmpty`::
- 	A boolean to inhibit the standard behavior of printing a space
--	before each empty output line. Defaults to false.
-+	before each empty output line. Defaults to `false`.
- 
--diff.submodule::
-+`diff.submodule`::
- 	Specify the format in which differences in submodules are
--	shown.  The "short" format just shows the names of the commits
--	at the beginning and end of the range. The "log" format lists
-+	shown.  The `short` format just shows the names of the commits
-+	at the beginning and end of the range. The `log` format lists
- 	the commits in the range like linkgit:git-submodule[1] `summary`
--	does. The "diff" format shows an inline diff of the changed
--	contents of the submodule. Defaults to "short".
-+	does. The `diff` format shows an inline diff of the changed
-+	contents of the submodule. Defaults to `short`.
- 
--diff.wordRegex::
-+`diff.wordRegex`::
- 	A POSIX Extended Regular Expression used to determine what is a "word"
- 	when performing word-by-word difference calculations.  Character
- 	sequences that match the regular expression are "words", all other
- 	characters are *ignorable* whitespace.
- 
--diff.<driver>.command::
-+`diff.<driver>.command`::
- 	The custom diff driver command.  See linkgit:gitattributes[5]
- 	for details.
- 
--diff.<driver>.trustExitCode::
--	If this boolean value is set to true then the
-+`diff.<driver>.trustExitCode`::
-+	If this boolean value is set to `true` then the
- 	`diff.<driver>.command` command is expected to return exit code
- 	0 if it considers the input files to be equal or 1 if it
--	considers them to be different, like `diff(1)`.
--	If it is set to false, which is the default, then the command
-+	considers them to be different, like `diff`(1).
-+	If it is set to `false`, which is the default, then the command
- 	is expected to return exit code 0 regardless of equality.
- 	Any other exit code causes Git to report a fatal error.
- 
--diff.<driver>.xfuncname::
-+`diff.<driver>.xfuncname`::
- 	The regular expression that the diff driver should use to
- 	recognize the hunk header.  A built-in pattern may also be used.
- 	See linkgit:gitattributes[5] for details.
- 
--diff.<driver>.binary::
--	Set this option to true to make the diff driver treat files as
-+`diff.<driver>.binary`::
-+	Set this option to `true` to make the diff driver treat files as
- 	binary.  See linkgit:gitattributes[5] for details.
- 
--diff.<driver>.textconv::
-+`diff.<driver>.textconv`::
- 	The command that the diff driver should call to generate the
- 	text-converted version of a file.  The result of the
- 	conversion is used to generate a human-readable diff.  See
- 	linkgit:gitattributes[5] for details.
- 
--diff.<driver>.wordRegex::
-+`diff.<driver>.wordRegex`::
- 	The regular expression that the diff driver should use to
- 	split words in a line.  See linkgit:gitattributes[5] for
- 	details.
- 
--diff.<driver>.cachetextconv::
--	Set this option to true to make the diff driver cache the text
-+`diff.<driver>.cachetextconv`::
-+	Set this option to `true` to make the diff driver cache the text
- 	conversion outputs.  See linkgit:gitattributes[5] for details.
- 
- include::../mergetools-diff.txt[]
- 
--diff.indentHeuristic::
-+`diff.indentHeuristic`::
- 	Set this option to `false` to disable the default heuristics
- 	that shift diff hunk boundaries to make patches easier to read.
- 
--diff.algorithm::
-+`diff.algorithm`::
- 	Choose a diff algorithm.  The variants are as follows:
+-* Adds content from all `*.txt` files under `Documentation` directory
++* Adds content from all ++*.txt++ files under `Documentation` directory
+   and its subdirectories:
  +
- --
--`default`, `myers`;;
-+`default`;;
-+`myers`;;
- 	The basic greedy diff algorithm. Currently, this is the default.
- `minimal`;;
- 	Spend extra time to make sure the smallest possible diff is
-@@ -229,7 +242,7 @@ diff.algorithm::
- --
+ ------------
+ $ git add Documentation/\*.txt
+ ------------
  +
+-Note that the asterisk `*` is quoted from the shell in this
++Note that the asterisk ++*++ is quoted from the shell in this
+ example; this lets the command include the files from
+ subdirectories of `Documentation/` directory.
  
--diff.wsErrorHighlight::
-+`diff.wsErrorHighlight`::
- 	Highlight whitespace errors in the `context`, `old` or `new`
- 	lines of the diff.  Multiple values are separated by comma,
- 	`none` resets previous values, `default` reset the list to
-@@ -238,14 +251,19 @@ diff.wsErrorHighlight::
- 	The command line option `--ws-error-highlight=<kind>`
- 	overrides this setting.
+-* Considers adding content from all git-*.sh scripts:
++* Considers adding content from all ++git-*.sh++ scripts:
+ +
+ ------------
+ $ git add git-*.sh
+@@ -265,7 +265,7 @@ The main command loop has 6 subcommands (plus help and quit).
  
--diff.colorMoved::
--	If set to either a valid `<mode>` or a true value, moved lines
--	in a diff are colored differently, for details of valid modes
--	see '--color-moved' in linkgit:git-diff[1]. If simply set to
--	true the default color mode will be used. When set to false,
--	moved lines are not colored.
--
--diff.colorMovedWS::
-+`diff.colorMoved`::
-+	If set to either a valid _<mode>_ or a `true` value, moved lines
-+	in a diff are colored differently.
-+ifdef::git-diff[]
-+	For details of valid modes see `--color-moved`.
-+endif::git-diff[]
-+ifndef::git-diff[]
-+	For details of valid modes see `--color-moved` in linkgit:git-diff[1].
-+endif::git-diff[]
-+	If simply set to `true` the default color mode will be used. When
-+	set to `false`, moved lines are not colored.
-+
-+`diff.colorMovedWS`::
- 	When moved lines are colored using e.g. the `diff.colorMoved` setting,
--	this option controls the `<mode>` how spaces are treated.
--	For details of valid modes see '--color-moved-ws' in linkgit:git-diff[1].
-+	this option controls the mode how spaces are treated.
-+	For details of valid modes see `--color-moved-ws` in linkgit:git-diff[1].
+ status::
+ 
+-   This shows the change between HEAD and index (i.e. what will be
++   This shows the change between `HEAD` and index (i.e. what will be
+    committed if you say `git commit`), and between index and
+    working tree files (i.e. what you could stage further before
+    `git commit` using `git add`) for each path.  A sample output
+@@ -277,12 +277,12 @@ status::
+      2:     +403/-35        +1/-1 add-interactive.c
+ ------------
+ +
+-It shows that foo.png has differences from HEAD (but that is
++It shows that `foo.png` has differences from `HEAD` (but that is
+ binary so line count cannot be shown) and there is no
+ difference between indexed copy and the working tree
+ version (if the working tree version were also different,
+ 'binary' would have been shown in place of 'nothing').  The
+-other file, add-interactive.c, has 403 lines added
++other file, `add-interactive.c`, has 403 lines added
+ and 35 lines deleted if you commit what is in the index, but
+ working tree file has further modifications (one addition and
+ one deletion).
+@@ -360,7 +360,7 @@ variable `interactive.singleKey` to `true`.
+ diff::
+ 
+   This lets you review what will be committed (i.e. between
+-  HEAD and index).
++  `HEAD` and index).
+ 
+ 
+ EDITING PATCHES
+@@ -399,7 +399,7 @@ There are also more complex operations that can be performed. But beware
+ that because the patch is applied only to the index and not the working
+ tree, the working tree will appear to "undo" the change in the index.
+ For example, introducing a new line into the index that is in neither
+-the HEAD nor the working tree will stage the new line for commit, but
++the `HEAD` nor the working tree will stage the new line for commit, but
+ the line will appear to be reverted in the working tree.
+ 
+ Avoid using these constructs, or do so with extreme caution.
+@@ -439,6 +439,7 @@ CONFIGURATION
+ 
+ include::includes/cmd-config-section-all.txt[]
+ 
++:git-add: 1
+ include::config/add.txt[]
+ 
+ SEE ALSO
+
+base-commit: facbe4f633e4ad31e641f64617bc88074c659959
 -- 
 gitgitgadget
