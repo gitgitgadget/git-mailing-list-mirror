@@ -1,62 +1,63 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE39218FC9D
-	for <git@vger.kernel.org>; Sat, 16 Nov 2024 19:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ABA194A52
+	for <git@vger.kernel.org>; Sat, 16 Nov 2024 19:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731785774; cv=none; b=ijwr+MGZZsO6x9fYryZmvgSru2Q5sdoDdH4OT1uth/U+TG1XayVGq2W9OkWCzBcwZivpP/TA7ia7TI47FEu8RO0TuDc3EKlv0Wzi125zTfJmvrY1j7fwH+0dWeCzJx/YdkWPpjkgOLgXIaJQ/uKs4Ate9MtiSt7IOUTXSnQS3ko=
+	t=1731785775; cv=none; b=uMeE9/hw0sYTyLdSOhQ9BvLOimr9Bm7iQMPPmcmTVxYuVBcdAUfeeyb+FQetHd6lFpImL0lqpu4liIyhjwjakG8nmSXn60nduzb2eekTkH+z74D8WKret6RvBJTb/Fn+9dNXpfC8O5XIgLArscLSKqxtvHVFg3vilPJzU7RAhcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731785774; c=relaxed/simple;
-	bh=f9/ZTqNuzfgrZMl3PB450KwG4ETU4PCeZ07C/4ad5UA=;
+	s=arc-20240116; t=1731785775; c=relaxed/simple;
+	bh=ZgYJS9FJ+kYWce1LJnJV279bbYBPaLhtmpq/JA15WUY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=DBOAwwCimxbwUEYcLmL1B+nxh2DqmFT/HlP28gmmUz+kFz1bmP38M/6r9ihFevxxVRHeJ21Mn6GoVJEiSwWZVCidn4UmqrXDeKnMnTttmqGRXs9nvSU3gnpz0MCfqc+X1tl9h/XvsUNzAEYa5SdE0+EBNhrzw1Q0s8etqMux9co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K9gc06//; arc=none smtp.client-ip=209.85.128.42
+	 Content-Type:To:Cc; b=OA9oK72sPszCMm7QgFf3YF5SmI5hipROm1dEXBRdygtNPqRkVXoJ/aNJJQuzbc8TE9mjIXcd2KtNGt2mg8jXX17ivrV0VWKHWFEi3r50FslRWFG01sTv2j2wG9+3595B6ds2pjnS0yYooq/zJUzCsDmIeKVR/GvSG17jj9zrKlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b7UEnAB3; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9gc06//"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43169902057so24223795e9.0
-        for <git@vger.kernel.org>; Sat, 16 Nov 2024 11:36:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b7UEnAB3"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4316a44d1bbso14900315e9.3
+        for <git@vger.kernel.org>; Sat, 16 Nov 2024 11:36:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1731785771; x=1732390571; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=01ooXZz2jBW4EzxAEXx1zPXUmeQ6Bjza8YgkPYXx8LE=;
-        b=K9gc06//Ug6c4hmvXw1axgqGLewz5Iw/9KJBY+tLVeKWY46WReu5gaBsbMRkMOvmpi
-         Wutn6QWTxKRU9pOA9mdqbC9ciSRkIWG9JmUGWqamMUj7dvoHX2WdYzMg8rwwkXkgZ5c4
-         0CB4zi8p6EleBbxKr98tlcfnn7YQuo7XN/X9S4Icwlp5GQexbvf+59ztGNlJJIOxYlHa
-         kGxWfHhWyUw2tRTxRWF/wzh6R4qS+kVABKzSRtnpANdwvNNHIHjWw4M6bF+a2JbSUsES
-         6jwT1USFIsnPYcoPxn87/xXVV3DUghqCP+WlBGNW5TTOk2HAgD/NdFsxMcYSqIWOS/VO
-         ysFA==
+        bh=MX8qAB/CYlQSsBQAIX2SXb4bfy3bhNcI8ah7NaOigxs=;
+        b=b7UEnAB3vjT0whFq9ZQc4ARF0CqSP5SKEsrnmWsrmPrnhl/HluKb49eTfqQN5ZV5hD
+         AejCgMRaRPWSx0Oe08BQ1Bul/5umRJ63kIDpE5y/b1NbLK+HKgzT9/BQcwoJYK0atS2F
+         JDWO3R3I11/pVOcqJOER1u8QwB9n8CYgU+gja8M0EyftTLeQ50+2V2SfUFtNiB5hnhvv
+         mRyTjvfFihDXtBeyMX+HazAHd22UL41fjpy1mN8bvmx2RjAhdIGoXLkcCCbK6vcTcMGR
+         6LJ0ZiWgE9gqfLkGM+jrJODgsRtA2RurRdW9AhYTVBeJgt+aZZdS3NLeuxh1ZXQYinCx
+         +bdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1731785771; x=1732390571;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=01ooXZz2jBW4EzxAEXx1zPXUmeQ6Bjza8YgkPYXx8LE=;
-        b=V6fz+B1X+gPghlGV3mp9Dow+FZYudVOT0X63wWhptFS1HaYjm4rJjYxIOjI/E1uSMa
-         7ySSo1umH31HtFMdN5wRz9UMGA6ZCX+xKzGqi46mR/EY7tfZpfqvRY0W4DqUV1BVTHiY
-         sUjS9tHfAYKLApJTqjWh7T8MS9UQQ9A6wZ9wpp6Z2bbrbZBMzdgYI5HIqvk/mHBqx2Df
-         tzZodK+vEOE0I90xDpsAOC/3T8+DCaA1WgnOT1GpT2W1OYheRxsXUCNfnU/e4JLSCf5p
-         cB26HGnupJUe1Hv2rqe96HInAgI8Ha7nl3z2p11G79gW4nW4N2WWxRB6un4sDrNI/Qio
-         A7bA==
-X-Gm-Message-State: AOJu0Yzh+NHnsu2Tg2BLHj9YyGcCEm+MjmZhwuGrz204CKGscuzGviFv
-	pS+QxtZerdjpMs+ZNH+efdBzV8svXRglj/RTjfbJ1P6KAFR2kHUl5GMFzg==
-X-Google-Smtp-Source: AGHT+IHQGY+z7EfNNctd8jMChRehGbIYS7qs2cqSib6BhKidSq7EvyVFOPHLGlj9RiGTkxL/iL8SRQ==
-X-Received: by 2002:a05:600c:524a:b0:431:5044:e388 with SMTP id 5b1f17b1804b1-432df791db1mr49192745e9.22.1731785770528;
-        Sat, 16 Nov 2024 11:36:10 -0800 (PST)
+        bh=MX8qAB/CYlQSsBQAIX2SXb4bfy3bhNcI8ah7NaOigxs=;
+        b=Rs0fxmt7HOLOtNacngwnKaq9+qnatq52sjPQ0ZAgt4KyRyqCb6krHkWBAfx+FJLSZr
+         50Tj21/GcThluP2RaqXFH+HLvNRN3onSrrKIVj8JhPhnEC8r078J+pCcADAppldve3me
+         gb0jMlWe6BYSDX2xVVmtQqA+soK/V6GpNLpyDchj8oO1ZaYMjsyUG+Tmr3q7HJIh1HRA
+         JiZcynLJNpHxHrn36OxmjylsSD/rnuN7sA9WWxZvimIke8Gik0jlPcQU8WPMoD2kXjNu
+         Qp1Ypnb8foijm1pEqXvozDwSzPQwWbcgFtvn1jCj20tSz1i1rnrEcmaq6KlWOyatPFj8
+         w9Qg==
+X-Gm-Message-State: AOJu0Yz+NrAyDL/Fz8B/GIhhu4DeE1iXq3EEd2Zv8i6W2V2YGBVmVKV9
+	fJKhMPjOlk6MrCkKsDEX9roh90dsWzctknr5ZfdF7xJpFVoT9JcGquY1Hw==
+X-Google-Smtp-Source: AGHT+IFwemcCG4Dsli9YCh8YKMgVxx/7J8rMz7jw1PPoKVVI5gBpTBQnt4AA0t6irW8FXB6dFRDT5w==
+X-Received: by 2002:a05:600c:3584:b0:431:5c17:d575 with SMTP id 5b1f17b1804b1-432df72c841mr60005975e9.11.1731785771280;
+        Sat, 16 Nov 2024 11:36:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3822a3ec6d4sm4363215f8f.96.2024.11.16.11.36.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821ae15d89sm8170345f8f.77.2024.11.16.11.36.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 16 Nov 2024 11:36:09 -0800 (PST)
-Message-Id: <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+        Sat, 16 Nov 2024 11:36:10 -0800 (PST)
+Message-Id: <6841bd5825be8e7b17c2f9c3a997de29ffa3a540.1731785769.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
 References: <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 16 Nov 2024 19:36:03 +0000
-Subject: [PATCH v3 0/5] doc: git diff reformatting
+	<pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
+From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 16 Nov 2024 19:36:04 +0000
+Subject: [PATCH v3 1/5] doc: git-diff: apply new documentation guidelines
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,267 +70,238 @@ Fcc: Sent
 To: git@vger.kernel.org
 Cc: Johannes Sixt <j6t@kdbg.org>,
     Patrick Steinhardt <ps@pks.im>,
-    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-This is the continuation of the editing of the manpages to reflect the new
-formatting rules.
+From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-Changes since V1:
+The documentation for git-diff has been updated to follow the new
+documentation guidelines. The following changes have been applied to
+the series of patches:
 
- * restate the formatting rules in the message of the first commit
- * fix typos
- * convert more parts to backticked
- * filter out most annoying self-referencing links
- * propose to separate with 'or' the -1 --ours options and the likes
+- switching the synopsis to a synopsis block which will automatically
+  format placeholders in italics and keywords in monospace
+- use _<placeholder>_ instead of <placeholder> in the description
+- use `backticks for keywords and more complex option
+descriptions`. The new rendering engine will apply synopsis rules to
+these spans.
+- prevent git-diff from self-referencing itself via gitlink macro when
+the generated link would point to the same page.
 
-Jean-Noël Avila (5):
-  doc: git-diff: apply new documentation guidelines
-  doc: git-diff: apply format changes to diff-options
-  doc: git-diff: apply format changes to diff-format
-  doc: git-diff: apply format changes to diff-generate-patch
-  doc: git-diff: apply format changes to config part
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+---
+ Documentation/git-diff.txt | 108 +++++++++++++++++++------------------
+ 1 file changed, 57 insertions(+), 51 deletions(-)
 
- Documentation/config/diff.txt         | 204 +++++++------
- Documentation/diff-format.txt         |  42 +--
- Documentation/diff-generate-patch.txt |  44 +--
- Documentation/diff-options.txt        | 423 +++++++++++++-------------
- Documentation/git-diff.txt            | 108 +++----
- 5 files changed, 424 insertions(+), 397 deletions(-)
-
-
-base-commit: facbe4f633e4ad31e641f64617bc88074c659959
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1769%2Fjnavila%2Fgit_diff_new-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1769/jnavila/git_diff_new-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1769
-
-Range-diff vs v2:
-
- 1:  c104bd50b64 ! 1:  6841bd5825b doc: git-diff: apply new documentation guidelines
-     @@ Metadata
-       ## Commit message ##
-          doc: git-diff: apply new documentation guidelines
-      
-     +    The documentation for git-diff has been updated to follow the new
-     +    documentation guidelines. The following changes have been applied to
-     +    the series of patches:
-     +
-     +    - switching the synopsis to a synopsis block which will automatically
-     +      format placeholders in italics and keywords in monospace
-     +    - use _<placeholder>_ instead of <placeholder> in the description
-     +    - use `backticks for keywords and more complex option
-     +    descriptions`. The new rendering engine will apply synopsis rules to
-     +    these spans.
-     +    - prevent git-diff from self-referencing itself via gitlink macro when
-     +    the generated link would point to the same page.
-     +
-          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/git-diff.txt ##
-     @@ Documentation/git-diff.txt: OPTIONS
-      --1 --base::
-      --2 --ours::
-      --3 --theirs::
-     -+`-1` `--base`::
-     -+`-2` `--ours`::
-     -+`-3` `--theirs`::
-     ++`-1`::
-     ++`--base`::
-     ++
-     ++or `-2`::
-     ++`--ours`::
-     ++
-     ++or `-3`::
-     ++`--theirs`::
-       	Compare the working tree with the "base" version (stage #1),
-       	"our branch" (stage #2) or "their branch" (stage #3).  The
-       	index contains these stages only for unmerged entries i.e.
-     @@ Documentation/git-diff.txt: OPTIONS
-       
-      -<path>...::
-      -	The <paths> parameters, when given, are used to limit
-     -+_<path>_...::
-     ++`<path>...`::
-      +	The _<path>_ parameters, when given, are used to limit
-       	the diff to the named paths (you can give directory
-       	names and get diff for all files under them).
- 2:  129763c2aae = 2:  07df397741b doc: git-diff: apply format changes to diff-options
- 3:  8fec37ee174 = 3:  698628e076b doc: git-diff: apply format changes to diff-format
- 4:  daed146639d = 4:  1154462f8be doc: git-diff: apply format changes to diff-generate-patch
- 5:  17a2f028d59 ! 5:  4ec2fd9c3c6 doc: git-diff: apply format changes to config part
-     @@ Metadata
-       ## Commit message ##
-          doc: git-diff: apply format changes to config part
-      
-     +    By the way, we also change the sentences where git-diff would refer to
-     +    itself, so that no link is created in the HTML output.
-     +
-          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
-      
-       ## Documentation/config/diff.txt ##
-     @@ Documentation/config/diff.txt
-       	Instead, silently run `git update-index --refresh` to
-       	update the cached stat information for paths whose
-       	contents in the work tree match the contents in the
-     - 	index.  This option defaults to true.  Note that this
-     +-	index.  This option defaults to true.  Note that this
-      -	affects only 'git diff' Porcelain, and not lower level
-      -	'diff' commands such as 'git diff-files'.
-     ++	index.  This option defaults to `true`.  Note that this
-      +	affects only `git diff` Porcelain, and not lower level
-     -+	`diff` commands such as '`git diff-files`.
-     ++	`diff` commands such as `git diff-files`.
-       
-      -diff.dirstat::
-      +`diff.dirstat`::
-     ++ifdef::git-diff[]
-     ++	A comma separated list of `--dirstat` parameters specifying the
-     ++	default behavior of the `--dirstat` option to `git diff` and friends.
-     ++endif::git-diff[]
-     ++ifndef::git-diff[]
-       	A comma separated list of `--dirstat` parameters specifying the
-       	default behavior of the `--dirstat` option to linkgit:git-diff[1]
-     - 	and friends. The defaults can be overridden on the command line
-     +-	and friends. The defaults can be overridden on the command line
-      -	(using `--dirstat=<param1,param2,...>`). The fallback defaults
-     ++	and friends.
-     ++endif::git-diff[]
-     ++	The defaults can be overridden on the command line
-      +	(using `--dirstat=<param>,...`). The fallback defaults
-       	(when not changed by `diff.dirstat`) are `changes,noncumulative,3`.
-       	The following parameters are available:
-     @@ Documentation/config/diff.txt: directories with less than 10% of the total amoun
-       
-      -diff.mnemonicPrefix::
-      -	If set, 'git diff' uses a prefix pair that is different from the
-     +-	standard "a/" and "b/" depending on what is being compared.  When
-      +`diff.mnemonicPrefix`::
-      +	If set, `git diff` uses a prefix pair that is different from the
-     - 	standard "a/" and "b/" depending on what is being compared.  When
-     ++	standard `a/` and `b/` depending on what is being compared.  When
-       	this configuration is in effect, reverse diff output also swaps
-       	the order of the prefixes:
-     + `git diff`;;
-      @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-       	 compares a (c)ommit and the (w)ork tree;
-       `git diff --cached`;;
-     @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-      -`git diff HEAD:file1 file2`;;
-      +`git diff HEAD:<file1> <file2>`;;
-       	compares an (o)bject and a (w)ork tree entity;
-     - `git diff --no-index a b`;;
-     - 	compares two non-git things (1) and (2).
-     +-`git diff --no-index a b`;;
-     +-	compares two non-git things (1) and (2).
-     ++`git diff --no-index <a> <b>`;;
-     ++	compares two non-git things _<a>_ and _<b>_.
-       
-      -diff.noPrefix::
-      -	If set, 'git diff' does not show any source or destination prefix.
-     @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-      -diff.srcPrefix::
-      -	If set, 'git diff' uses this source prefix. Defaults to "a/".
-      +`diff.srcPrefix`::
-     -+	If set, `git diff` uses this source prefix. Defaults to "a/".
-     ++	If set, `git diff` uses this source prefix. Defaults to `a/`.
-       
-      -diff.dstPrefix::
-      -	If set, 'git diff' uses this destination prefix. Defaults to "b/".
-      +`diff.dstPrefix`::
-     -+	If set, `git diff` uses this destination prefix. Defaults to "b/".
-     ++	If set, `git diff` uses this destination prefix. Defaults to `b/`.
-       
-      -diff.relative::
-      -	If set to 'true', 'git diff' does not show changes outside of the directory
-     @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-      +`diff.orderFile`::
-       	File indicating how to order files within a diff.
-      -	See the '-O' option to linkgit:git-diff[1] for details.
-     ++ifdef::git-diff[]
-     ++	See the `-O` option for details.
-     ++endif::git-diff[]
-     ++ifndef::git-diff[]
-      +	See the `-O` option to linkgit:git-diff[1] for details.
-     ++endif::git-diff[]
-       	If `diff.orderFile` is a relative pathname, it is treated as
-       	relative to the top of the working tree.
-       
-     @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-      -	Whether and how Git detects renames.  If set to "false",
-      -	rename detection is disabled. If set to "true", basic rename
-      -	detection is enabled.  If set to "copies" or "copy", Git will
-     +-	detect copies, as well.  Defaults to true.  Note that this
-     +-	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
-      +`diff.renames`::
-      +	Whether and how Git detects renames.  If set to `false`,
-      +	rename detection is disabled. If set to `true`, basic rename
-      +	detection is enabled.  If set to `copies` or `copy`, Git will
-     - 	detect copies, as well.  Defaults to true.  Note that this
-     --	affects only 'git diff' Porcelain like linkgit:git-diff[1] and
-     ++	detect copies, as well.  Defaults to `true`.  Note that this
-      +	affects only `git diff` Porcelain like linkgit:git-diff[1] and
-       	linkgit:git-log[1], and not lower level commands such as
-       	linkgit:git-diff-files[1].
-     @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-       	for details.
-       
-      -diff.<driver>.trustExitCode::
-     +-	If this boolean value is set to true then the
-      +`diff.<driver>.trustExitCode`::
-     - 	If this boolean value is set to true then the
-     ++	If this boolean value is set to `true` then the
-       	`diff.<driver>.command` command is expected to return exit code
-       	0 if it considers the input files to be equal or 1 if it
-      -	considers them to be different, like `diff(1)`.
-     +-	If it is set to false, which is the default, then the command
-      +	considers them to be different, like `diff`(1).
-     - 	If it is set to false, which is the default, then the command
-     ++	If it is set to `false`, which is the default, then the command
-       	is expected to return exit code 0 regardless of equality.
-       	Any other exit code causes Git to report a fatal error.
-       
-     @@ Documentation/config/diff.txt: diff.mnemonicPrefix::
-       	details.
-       
-      -diff.<driver>.cachetextconv::
-     +-	Set this option to true to make the diff driver cache the text
-      +`diff.<driver>.cachetextconv`::
-     - 	Set this option to true to make the diff driver cache the text
-     ++	Set this option to `true` to make the diff driver cache the text
-       	conversion outputs.  See linkgit:gitattributes[5] for details.
-       
-       include::../mergetools-diff.txt[]
-     @@ Documentation/config/diff.txt: diff.wsErrorHighlight::
-       
-      -diff.colorMoved::
-      -	If set to either a valid `<mode>` or a true value, moved lines
-     -+`diff.colorMoved`::
-     -+	If set to either a valid _<mode>_ or a true value, moved lines
-     - 	in a diff are colored differently, for details of valid modes
-     +-	in a diff are colored differently, for details of valid modes
-      -	see '--color-moved' in linkgit:git-diff[1]. If simply set to
-      -	true the default color mode will be used. When set to false,
-     -+	see `--color-moved` in linkgit:git-diff[1]. If simply set to
-     -+	`true` the default color mode will be used. When set to `false`,
-     - 	moved lines are not colored.
-     - 
-     +-	moved lines are not colored.
-     +-
-      -diff.colorMovedWS::
-     ++`diff.colorMoved`::
-     ++	If set to either a valid _<mode>_ or a `true` value, moved lines
-     ++	in a diff are colored differently.
-     ++ifdef::git-diff[]
-     ++	For details of valid modes see `--color-moved`.
-     ++endif::git-diff[]
-     ++ifndef::git-diff[]
-     ++	For details of valid modes see `--color-moved` in linkgit:git-diff[1].
-     ++endif::git-diff[]
-     ++	If simply set to `true` the default color mode will be used. When
-     ++	set to `false`, moved lines are not colored.
-     ++
-      +`diff.colorMovedWS`::
-       	When moved lines are colored using e.g. the `diff.colorMoved` setting,
-      -	this option controls the `<mode>` how spaces are treated.
-
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index c065f023eca..dfa031d7386 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -8,13 +8,13 @@ git-diff - Show changes between commits, commit and working tree, etc
+ 
+ SYNOPSIS
+ --------
+-[verse]
+-'git diff' [<options>] [<commit>] [--] [<path>...]
+-'git diff' [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
+-'git diff' [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
+-'git diff' [<options>] <commit>...<commit> [--] [<path>...]
+-'git diff' [<options>] <blob> <blob>
+-'git diff' [<options>] --no-index [--] <path> <path>
++[synopsis]
++git diff [<options>] [<commit>] [--] [<path>...]
++git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]
++git diff [<options>] [--merge-base] <commit> [<commit>...] <commit> [--] [<path>...]
++git diff [<options>] <commit>...<commit> [--] [<path>...]
++git diff [<options>] <blob> <blob>
++git diff [<options>] --no-index [--] <path> <path>
+ 
+ DESCRIPTION
+ -----------
+@@ -23,7 +23,7 @@ between the index and a tree, changes between two trees, changes resulting
+ from a merge, changes between two blob objects, or changes between two
+ files on disk.
+ 
+-'git diff' [<options>] [--] [<path>...]::
++`git diff [<options>] [--] [<path>...]`::
+ 
+ 	This form is to view the changes you made relative to
+ 	the index (staging area for the next commit).  In other
+@@ -31,7 +31,7 @@ files on disk.
+ 	further add to the index but you still haven't.  You can
+ 	stage these changes by using linkgit:git-add[1].
+ 
+-'git diff' [<options>] --no-index [--] <path> <path>::
++`git diff [<options>] --no-index [--] <path> <path>`::
+ 
+ 	This form is to compare the given two paths on the
+ 	filesystem.  You can omit the `--no-index` option when
+@@ -40,82 +40,82 @@ files on disk.
+ 	or when running the command outside a working tree
+ 	controlled by Git. This form implies `--exit-code`.
+ 
+-'git diff' [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]::
++`git diff [<options>] --cached [--merge-base] [<commit>] [--] [<path>...]`::
+ 
+ 	This form is to view the changes you staged for the next
+-	commit relative to the named <commit>.  Typically you
++	commit relative to the named _<commit>_.  Typically you
+ 	would want comparison with the latest commit, so if you
+-	do not give <commit>, it defaults to HEAD.
+-	If HEAD does not exist (e.g. unborn branches) and
+-	<commit> is not given, it shows all staged changes.
+-	--staged is a synonym of --cached.
++	do not give _<commit>_, it defaults to `HEAD`.
++	If `HEAD` does not exist (e.g. unborn branches) and
++	_<commit>_ is not given, it shows all staged changes.
++	`--staged` is a synonym of `--cached`.
+ +
+-If --merge-base is given, instead of using <commit>, use the merge base
+-of <commit> and HEAD.  `git diff --cached --merge-base A` is equivalent to
++If `--merge-base` is given, instead of using _<commit>_, use the merge base
++of _<commit>_ and `HEAD`.  `git diff --cached --merge-base A` is equivalent to
+ `git diff --cached $(git merge-base A HEAD)`.
+ 
+-'git diff' [<options>] [--merge-base] <commit> [--] [<path>...]::
++`git diff [<options>] [--merge-base] <commit> [--] [<path>...]`::
+ 
+ 	This form is to view the changes you have in your
+-	working tree relative to the named <commit>.  You can
+-	use HEAD to compare it with the latest commit, or a
++	working tree relative to the named _<commit>_.  You can
++	use `HEAD` to compare it with the latest commit, or a
+ 	branch name to compare with the tip of a different
+ 	branch.
+ +
+-If --merge-base is given, instead of using <commit>, use the merge base
+-of <commit> and HEAD.  `git diff --merge-base A` is equivalent to
++If `--merge-base` is given, instead of using _<commit>_, use the merge base
++of _<commit>_ and `HEAD`.  `git diff --merge-base A` is equivalent to
+ `git diff $(git merge-base A HEAD)`.
+ 
+-'git diff' [<options>] [--merge-base] <commit> <commit> [--] [<path>...]::
++`git diff [<options>] [--merge-base] <commit> <commit> [--] [<path>...]`::
+ 
+ 	This is to view the changes between two arbitrary
+-	<commit>.
++	_<commit>_.
+ +
+-If --merge-base is given, use the merge base of the two commits for the
++If `--merge-base` is given, use the merge base of the two commits for the
+ "before" side.  `git diff --merge-base A B` is equivalent to
+ `git diff $(git merge-base A B) B`.
+ 
+-'git diff' [<options>] <commit> <commit>... <commit> [--] [<path>...]::
++`git diff [<options>] <commit> <commit>...<commit> [--] [<path>...]`::
+ 
+ 	This form is to view the results of a merge commit.  The first
+-	listed <commit> must be the merge itself; the remaining two or
++	listed _<commit>_ must be the merge itself; the remaining two or
+ 	more commits should be its parents.  Convenient ways to produce
+-	the desired set of revisions are to use the suffixes `^@` and
+-	`^!`.  If A is a merge commit, then `git diff A A^@`,
++	the desired set of revisions are to use the suffixes `@` and
++	`^!`.  If `A` is a merge commit, then `git diff A A^@`,
+ 	`git diff A^!` and `git show A` all give the same combined diff.
+ 
+-'git diff' [<options>] <commit>..<commit> [--] [<path>...]::
++`git diff [<options>] <commit>..<commit> [--] [<path>...]`::
+ 
+ 	This is synonymous to the earlier form (without the `..`) for
+-	viewing the changes between two arbitrary <commit>.  If <commit> on
++	viewing the changes between two arbitrary _<commit>_.  If _<commit>_ on
+ 	one side is omitted, it will have the same effect as
+-	using HEAD instead.
++	using `HEAD` instead.
+ 
+-'git diff' [<options>] <commit>\...<commit> [--] [<path>...]::
++`git diff [<options>] <commit>...<commit> [--] [<path>...]`::
+ 
+ 	This form is to view the changes on the branch containing
+-	and up to the second <commit>, starting at a common ancestor
+-	of both <commit>.  `git diff A...B` is equivalent to
++	and up to the second _<commit>_, starting at a common ancestor
++	of both _<commit>_.  `git diff A...B` is equivalent to
+ 	`git diff $(git merge-base A B) B`.  You can omit any one
+-	of <commit>, which has the same effect as using HEAD instead.
++	of _<commit>_, which has the same effect as using `HEAD` instead.
+ 
+ Just in case you are doing something exotic, it should be
+-noted that all of the <commit> in the above description, except
++noted that all of the _<commit>_ in the above description, except
+ in the `--merge-base` case and in the last two forms that use `..`
+-notations, can be any <tree>. A tree of interest is the one pointed to
+-by the ref named `AUTO_MERGE`, which is written by the 'ort' merge
++notations, can be any _<tree>_. A tree of interest is the one pointed to
++by the ref named `AUTO_MERGE`, which is written by the `ort` merge
+ strategy upon hitting merge conflicts (see linkgit:git-merge[1]).
+ Comparing the working tree with `AUTO_MERGE` shows changes you've made
+ so far to resolve textual conflicts (see the examples below).
+ 
+-For a more complete list of ways to spell <commit>, see
++For a more complete list of ways to spell _<commit>_, see
+ "SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
+-However, "diff" is about comparing two _endpoints_, not ranges,
+-and the range notations (`<commit>..<commit>` and
+-`<commit>...<commit>`) do not mean a range as defined in the
++However, `diff` is about comparing two _endpoints_, not ranges,
++and the range notations (`<commit>..<commit>` and `<commit>...<commit>`)
++do not mean a range as defined in the
+ "SPECIFYING RANGES" section in linkgit:gitrevisions[7].
+ 
+-'git diff' [<options>] <blob> <blob>::
++`git diff [<options>] <blob> <blob>`::
+ 
+ 	This form is to view the differences between the raw
+ 	contents of two blob objects.
+@@ -125,22 +125,27 @@ OPTIONS
+ :git-diff: 1
+ include::diff-options.txt[]
+ 
+--1 --base::
+--2 --ours::
+--3 --theirs::
++`-1`::
++`--base`::
++
++or `-2`::
++`--ours`::
++
++or `-3`::
++`--theirs`::
+ 	Compare the working tree with the "base" version (stage #1),
+ 	"our branch" (stage #2) or "their branch" (stage #3).  The
+ 	index contains these stages only for unmerged entries i.e.
+ 	while resolving conflicts.  See linkgit:git-read-tree[1]
+ 	section "3-Way Merge" for detailed information.
+ 
+--0::
++`-0`::
+ 	Omit diff output for unmerged entries and just show
+ 	"Unmerged".  Can be used only when comparing the working tree
+ 	with the index.
+ 
+-<path>...::
+-	The <paths> parameters, when given, are used to limit
++`<path>...`::
++	The _<path>_ parameters, when given, are used to limit
+ 	the diff to the named paths (you can give directory
+ 	names and get diff for all files under them).
+ 
+@@ -225,11 +230,12 @@ CONFIGURATION
+ 
+ include::includes/cmd-config-section-all.txt[]
+ 
++:git-diff: 1
+ include::config/diff.txt[]
+ 
+ SEE ALSO
+ --------
+-diff(1),
++`diff`(1),
+ linkgit:git-difftool[1],
+ linkgit:git-log[1],
+ linkgit:gitdiffcore[7],
 -- 
 gitgitgadget
+
