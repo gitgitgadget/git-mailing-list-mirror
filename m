@@ -1,37 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4220718FDD2
-	for <git@vger.kernel.org>; Sat, 16 Nov 2024 03:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB528FF
+	for <git@vger.kernel.org>; Sat, 16 Nov 2024 03:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731727150; cv=none; b=SWniaBuwUJv1pH0RIn7rbNw83OqWJcsWnsWTxxn1aIeEq4XJMkTnQRuPRFi+1mMYg1sfw8xyPMYGfBhSEWdojkpa9r3Qm4HqYryFDFXxt0SLVNnZc3mHizhJDSC6WYoAVRWNRvOPPZoyKIl+hWBZ0JNQ1wuh6DVCDMtrC51l66Y=
+	t=1731727436; cv=none; b=uVvEBmtlzlqGxP2Wm1vbKYBbEyJB4n3mFJlUylhCkMqCnGbD7rgzXK6kp1Bp/bv4WkaNVYdimQ7KYZOqcGQieoKFQmTzVEbiLrOnghkHjnh4G+1i1NdoXWMC2jwvrux2TNTusj8e2LD/1r+4FDj5vYj3PJfzSHmxiEhuK4jSxLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731727150; c=relaxed/simple;
-	bh=z8TTzzEOJsjtkVQuRW58MEMdZ+WWgu9TIozqUSaHEQg=;
+	s=arc-20240116; t=1731727436; c=relaxed/simple;
+	bh=xosnw0HgbapQv+Z4vV9+MnSGDM3Srr25KVvaAeKgCJI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DtFnVoVzAK9sMSvX6grNxURPehBwiWEaeCDGnNrENpkW65zd/htLGOWm6A6/FfO1q/bzflIJiIDXYm3qyqB3JsmEqTq7WXtQFYQaoA+qTZQ3Cmjh4B1uMAFB21y3BlbwiPge4hQToGICWd8rZomXDPMUKYjs/zCEhvaBk0EOjZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Y/B+mFMj; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Us20dO0ACdC9lwURLmZ1Fm4vVy+Hd6CYYVeMtBBO5U44QjEHw+pUSwMBAigOsQxPWBRDTXInFDSQAKiz/BfrjoDAc09oJnb0ONRl+Zz5VljoPkfTu4zSkkpUgYOlHCdE5pr9u9xHFCDSc3vS0OUplwvlj5iJ8DhejEtvt2QcS+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=S9QtAgNL; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Y/B+mFMj"
-Received: (qmail 24862 invoked by uid 109); 16 Nov 2024 03:19:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=z8TTzzEOJsjtkVQuRW58MEMdZ+WWgu9TIozqUSaHEQg=; b=Y/B+mFMj6LHReFyTD6+Mw/SmBeA7hnpQPwt/6O87TLKPrmPe3TDo1N9kM+vJflttlXCuFz9QdKm5dmat+kicy/bwn7daTASFfAC49jmMEbglbgGN0mYyrrXqr+3os7PyzozqmTfYYxwSRbuLabDzEyqqbqvbSJ6sHC5iDwoVHbgIepQOLSz0ZF+v724xdOmDDwlcq3gf7FopgvNXm2eP5YkX7SUD+fbXm/B+F9U/pGIqqm13eRVhJ9el34qQBnijGY5IS7C/frRdjf87+X0Iwh6sn1/lPbZlTdHpEvmWnIz+YdKgyU6eCCHiMJw7YSrYji2snPlkcIoc6GxbMcYHeg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="S9QtAgNL"
+Received: (qmail 24896 invoked by uid 109); 16 Nov 2024 03:23:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xosnw0HgbapQv+Z4vV9+MnSGDM3Srr25KVvaAeKgCJI=; b=S9QtAgNLm3o3EYiUiozzmnprmiNwNvJlwOaVsuz30alZVbSr2v39MoBUjPj15HOUusJgcrkG1tB7KevKnvpFsEuLE1JNonGjbstpCM8jd09SidhrznSpDMletQH144k8WScvpTcbO/DP4Jc/z+4APIGqJ8Ag9kDwBFYXXpmU3rvgz/DzRN5VXdJldal/eB/NZMoSRr+FZDHkyHD+Piaye2k0S0ev2QWvURYnVomVQ+rBcWWymVBvfFWlM9//vrwvhr18BSYcW6wM4B/nKDWZrqRtJK9qT70s8HqLNP3txewucBKkdUYtQTxNRJNc4rI1z9FnOppAE1eZBl6d2/QCQw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 16 Nov 2024 03:19:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 16 Nov 2024 03:23:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16245 invoked by uid 111); 16 Nov 2024 03:19:08 -0000
+Received: (qmail 16297 invoked by uid 111); 16 Nov 2024 03:23:56 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Nov 2024 22:19:08 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 15 Nov 2024 22:23:56 -0500
 Authentication-Results: peff.net; auth=none
-Date: Fri, 15 Nov 2024 22:19:04 -0500
+Date: Fri, 15 Nov 2024 22:23:52 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2024, #06; Thu, 14)
-Message-ID: <20241116031904.GA1782074@coredump.intra.peff.net>
-References: <xmqqy11kys9z.fsf@gitster.g>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: git@vger.kernel.org, steadmon@google.com, hanyang.tony@bytedance.com,
+	me@ttaylorr.com
+Subject: Re: [PATCH v2 3/4] t5300: move --window clamp test next to unclamped
+Message-ID: <20241116032352.GA1782794@coredump.intra.peff.net>
+References: <20241114005652.GC1140565@coredump.intra.peff.net>
+ <20241115195503.3395744-1-jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,29 +42,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqy11kys9z.fsf@gitster.g>
+In-Reply-To: <20241115195503.3395744-1-jonathantanmy@google.com>
 
-On Sat, Nov 16, 2024 at 08:46:32AM +0900, Junio C Hamano wrote:
+On Fri, Nov 15, 2024 at 11:55:03AM -0800, Jonathan Tan wrote:
 
-> * jk/describe-perf (2024-11-07) 4 commits
->  - describe: stop traversing when we run out of names
->  - describe: stop digging for max_candidates+1
->  - t/perf: add tests for git-describe
->  - t6120: demonstrate weakness in disjoint-root handling
+> > So this may become more real in the future. I wonder if there is a way
+> > to add a test to future-proof against changes to how the quarantine
+> > system works. The theoretical problem case is if we did quarantine
+> > fetches, but accidentally wrote the new promisor pack into the main
+> > repo instead of the quarantine, and then a fetch rejected the incoming
+> > pack (because of a hook, failed connectivity check, etc). Then we'd end
+> > up with the new promisor pack when we shouldn't, which I guess could
+> > move objects from that incoming pack that we rejected into the main
+> > repo, despite the quarantine?
+> > 
+> > I can't think of a way to test that now, without the quarantine-on-fetch
+> > feature existing.
 > 
->  "git describe" optimization.
-> 
->  Expecting a reroll.
->  cf <20241106192650.GA912471@coredump.intra.peff.net>
->  source: <20241106192236.GC880133@coredump.intra.peff.net>
+> Quarantine on fetch does seem like a good idea. I also can't think of
+> a way to test that now. Although, for the fetch case, my patch set is
+> not the first time that an extra packfile (that is, a packfile not in
+> the "packfile" section of the fetch response) could be written during
+> a fetch: packfile-uris and bundle-uris already exist. So I would hope
+> that the implementor of the fetch quarantine feature would be aware of
+> at least one of these extra features, and design the test to check that
+> absolutely no packfiles are written if the fetch is rejected. (So I
+> don't think the future needs to be "proofed" so much.)
 
-I wasn't planning on any re-roll here. I think I may have confused you
-when I sent out the cover letter, followed up with a "oops there's a
-small fixup I need, I'll send out the patches later today" message, and
-then later sent out the patches. That "v1" that hit the list (and what
-you picked up) is the fixed version.
-
-So there is nothing to re-roll, as there haven't been any comments on
-it. Possibly "needs review" would be a better label. :)
+Good point. I think we have to just leave it until that hypothetical
+future and hope that person is careful. :)
 
 -Peff
