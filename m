@@ -1,150 +1,89 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12718BE8
-	for <git@vger.kernel.org>; Sat, 16 Nov 2024 15:37:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C928172A
+	for <git@vger.kernel.org>; Sat, 16 Nov 2024 17:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731771438; cv=none; b=uDXcbycKRpkgUxG7LFD2LiPL+6iLFYSZv/NVG5ps9M8PCawQJDR0+o4iZ/NMna/GDhmJPSGXCNobDKTPRaUDbonp4Nlr+QTFSY+Tf4bvoKuHJsZlWrdDbnnbUJW9PltJ8oHEBflnuuwe6AJtgsmi1HWkP2mAuKBrvg9hPr9ucpQ=
+	t=1731778775; cv=none; b=lAhSJ+u6Z+UZ5877lwh65SGla3OFiUT7SWIIcjMyKes5UTxal38nU2kn8KeZHthbk5cMy4dgCDF8fs9Z1EGC8f6prkm2mV8SVP4+B0DE9xjM3l5EDn71RWezuXMRZF5XdAkTsy6h0/aJMD8Mr3EB4pRbj52RqtJjASi7k+5fji8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731771438; c=relaxed/simple;
-	bh=ua+/ExFjk3+H68tYPw0oGBGyTGcahaMDxvRetI/17lM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HDBECi5Hn5AZOS0wcrXsM1sWvzvDNtG4OgTbfrBcyGE/NIk8l7Cp8Dz88F2rBS6hcp8HemCNMrJgTZjE94WUqU+7BvlmDwdoIm8sjzeDCj4Li/LoPu2o3SNt9C6ElSLIiwk164IC4OBHDFyVzFo/N+rNPq9M3gmOy+ErAuEptXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AuD6H8Va; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731778775; c=relaxed/simple;
+	bh=CkL7vd1hKtMep5wX9L1kdyCpd5HKGYOWF/+hy/1lHBc=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=X3KGmoDu9dG9MfNbb4l3BP0n29mhDHj1XvdJtYYqMZCRz1jZQakT7IeZN58fWSGgDO12vngtcimVwi97PAFHpvOn4W2dNOTFFNnc35k4toCCQ1ZpqnpD8Z2Y+z5bIs/JT0j+DQLLBevY/w409WluKCYpQe8cDH3qJk3S/8OvRic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=Z1q6iwnr; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AuD6H8Va"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-38231e9d518so717668f8f.0
-        for <git@vger.kernel.org>; Sat, 16 Nov 2024 07:37:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731771435; x=1732376235; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TtLTFZxU8lUxQ7m741d59iGFQZ8SJsHD9GjZXPV/+Lk=;
-        b=AuD6H8VaqolSIxEjuuQ61BLCZEHtOtcNTipl1/dkzdUV8crFGJy2vCC/gJcizfdzs6
-         SuMklolWWjAYeoK7p2m7V8QAr+Uh+Ozzi3sZ8Usc2us4u8FbF3Y+AR4A7ULk2NBS44oe
-         1Ed075JUepMSVlvGV/MiyI8u55l8WBRdvJ72PSFiz0pDG3UU3bFGbHI1mxOYfxIaJliz
-         XvBUVnh817RKzd7XyDAJvXjr3e5W7I0L2i3tvnxm22keqI5ynHlpwdMswZUBr4yDgIWM
-         qaY8ALx77e29+GWDfkZsV0sIFXd9niXkW96RxpHR8L4JsGViD3Eo9a3wxYA2CUbBE3Y+
-         GlFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731771435; x=1732376235;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TtLTFZxU8lUxQ7m741d59iGFQZ8SJsHD9GjZXPV/+Lk=;
-        b=vFULbRJl7ncEKnA6026f315ECITNBgCqDAcZrN3nvleIUQJK15zkw5wF+MS+HCSJr5
-         FWlSxHc5xM3WuGG4/NcUZt6hLwyZQCkL+ENhMub0RK1U71MDtXBlOFqrLscIldK9rMY+
-         xtZ01EXvUoUKlCmqaQqy7KfKc0bgX0OKeRKs8sZUBC9e3eURLg7kCOLpMmf1Fwf+pDNA
-         zR1AmT1pDCfHOBoVHwiK5rlhCoYrkwcoG/qu7ur5FNSJFkbsxiLs/VuZzECd5NIlnLof
-         GZBwr1dnfyyvBwsneajo+6zCnsc3Buhnxw1YfMhinxmCeT932UxrxQ+NhhrjaFdFTBt5
-         w8dg==
-X-Gm-Message-State: AOJu0Yw12r2ZDu3JeYrs1TMDHP0ILztS4WHjaUdXb8YzKsySiSQ7/h4A
-	4rXIJQT9F7/oSA908VFRVk21oKNuVZlosyBia7L418T47VwjCb51
-X-Google-Smtp-Source: AGHT+IG55edkKRTQEruqzvUrnCe4bvIsQnu5g0pWl+g4zKp/s8uH/FljB9b12cFN+bVXGLi3ZlNZ9Q==
-X-Received: by 2002:a05:6000:1562:b0:382:37b2:87ee with SMTP id ffacd0b85a97d-38237b28a3cmr1491062f8f.21.1731771434874;
-        Sat, 16 Nov 2024 07:37:14 -0800 (PST)
-Received: from gmail.com ([93.176.135.9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3821adbe7dfsm7427531f8f.56.2024.11.16.07.37.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 16 Nov 2024 07:37:14 -0800 (PST)
-Message-ID: <e540c259-df6f-4b65-9066-606beb462f5b@gmail.com>
-Date: Sat, 16 Nov 2024 16:37:13 +0100
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="Z1q6iwnr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1731778765; x=1732383565;
+	i=oswald.buddenhagen@gmx.de;
+	bh=CkL7vd1hKtMep5wX9L1kdyCpd5HKGYOWF/+hy/1lHBc=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Z1q6iwnr8T3Gmm/NemaOwfIztTq6pCalqdWn0GJeXdBNIVn2u3/X9Elg4Aob4Qw2
+	 SD4MlFWQfr0aKU3Gye31FCU7Izk37LCWutXUCh3hGjk5xx6b4mwapLkLyYAoga6Bs
+	 MtJWwYpY9z5Hm+6kqt7iJgWaJhSdLhbzKQiW/O+nNYeEN7DGMMwKyw+y/7BZXW1Yl
+	 afm6J3SHzZNV4n1z+a9VmCIukf7jAqNaD6PaaFzoYHPQhGE8zcQJtfWhBOjajOYHP
+	 t6p8fYChEKIqiLZY487l3ke3Hdd5BgotqGW6hjYfDyC1lOOqxnoCqVMTvZVAFDV9P
+	 n2JDgpru6H4DxlkmXw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.117]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8GMq-1tpm3B3fl2-016k99; Sat, 16
+ Nov 2024 18:39:25 +0100
+Received: by ugly.fritz.box (MasqMail 0.3.5-13-g85b6fce-plus, from userid 1000)
+	id 1tCMlZ-09i-00; Sat, 16 Nov 2024 18:39:25 +0100
+Date: Sat, 16 Nov 2024 18:39:25 +0100
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: mcepl@cepl.eu
+Cc: git@vger.kernel.org, kristofferhaugsbakk@fastmail.com,
+	martinimre25@gmail.com
+Subject: Re: Feature Request: Interactively pick fixup revision
+Message-ID: <ZzjYzTfmZLVXgJ9R@ugly>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Nov 2024, #06; Thu, 14)
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <xmqqy11kys9z.fsf@gitster.g> <ZziAy187d_VU55QM@pks.im>
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <ZziAy187d_VU55QM@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <D5J0DCN2Y2V1.3C2JLTMGY8VAM@cepl.eu>
+X-Provags-ID: V03:K1:44PQt8reFlMxQdWUWsCzuk2fLgPUyozKgUG5lu1/xFkMVoBcAEu
+ ZPtEoSHMr16KGyGeOXwz70eR0Oh96AoqMzULpiKHqYdGNYzN86PNn0q2fT+1uq5DNjD9JJS
+ BqngjyHKMQjqjt2dtvUcDSNe3gtVInfYwoFFZVTHPMccWe1k4bBVRNAA2UU4Bwu/vMoeLtp
+ 6twRsnjCCYI0JgQ/CPpAg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:cQ0lVzz7bkY=;ybNQ7hjF/T+yJtMH4ZPARy6LOd/
+ ukIRS5hu8BucqyUR9AXoi8t5naqKEpD6Vy6E1x1c2FTZpvUFEaQaBpe/n+kn46Uixl4x22bPu
+ 6w1/uvPxwGC6uyYlYez+VAR3vWGV62K84R3UB4pgmet2N7xihOm2Erqa4WN7UQRvPJATRtOSK
+ /0CD1YoL4B9FkFGpIp50TxVxyzUhqqgBcpBZ2PJYsU3P6lUlfzt6QxQbRrq7YCdyuWlt69Vhs
+ CJ01BqmKODcsTYEtDwYg+mpud/t6cImUMYsquUXepdiwdf5rVjgsuUdJc1sb7Ak8+l8Xb46SY
+ wSY30rSTHONnRb48yx82zJ29qvNdqQ16DyhyCv43cf345fuSLzi6R4qijxvr/2o2v2gJLdHcF
+ +ru+nFwn+H7JdJ/ti6IRo+lYRKRCZZXuJKhw69N5S8n8nCDjgnX7sQDPgQErawyxf3oait1Mi
+ 9ULtZVCNfD1qBDG3CYIYe49Mnb9tlrG+sZrKU/h1fkcOQGWZoKn7h6lcx4YMXtECtq/ZSaMoU
+ LpKt4bQq0TRxJYiO2eAsMwTeHpKZw0DexEC1F+PuT1sb0fKAn9uqFFhrvoiNVT9QOJYv5WppO
+ 7B6o2zVRf0pUertHSBkcHW04YUB5VtPcXIXPQDVujM/t2/JDsOlhBBmAOJ7dS4jUZpH3JcD0N
+ KpauV/hBf3kpig5cmDPGwqEGGZz0oBORKb2VMBjoEmy49pa7Zt7HqLWOsOSLqdSDRgwJu9+2+
+ 9MSWYFmLhl94LxzSF6eRYmR7NmYbVNYhlqrz0iq9uyXaU54o1w2ZXWwm3hsY0RTCufDBoD+kX
+ oUMuJE2e48FTDALXJGn5IAJXHAmlzSguFpBlKmZNIgS7VqFByZeDF/Z3CISQQI1qD4Wx8nNp7
+ HP0LEK/xT4xbSmQcDmsGezVDtiwZJ7+/JsIZDlVtFCCu8jgqjeHUdz1PM
 
-On Sat, Nov 16, 2024 at 12:24:02PM +0100, Patrick Steinhardt wrote:
+On Mon, 11 Nov 2024 03:53:47 +0100, Mat=C4=9Bj Cepl wrote:
+> On Sun Nov 10, 2024 at 8:55 AM CET, Martin Imre wrote:
+> > Just as a general question: With 2 (or even more) different
+> > implementations that solve the same problem, wouldn=E2=80=99t this be =
+a good
+> > addition for a future version of git?
+>
+> There are few problems, one which is the implementation language:
+> git-absorb is Rust and git-fixup is bash (using arrays and other
+> non-POSIX constructs).
+>
+fwiw, i just stumbled over https://github.com/torbiak/git-autofixup
+which is written in perl. no idea how good it is compared to git-absorb.
 
-> > * ps/leakfixes-part-10 (2024-11-13) 28 commits
-> >  - t: remove TEST_PASSES_SANITIZE_LEAK annotations
-> >  - test-lib: unconditionally enable leak checking
-> >  - t: remove unneeded !SANITIZE_LEAK prerequisites
-> >  - t: mark some tests as leak free
-> >  - t5601: work around leak sanitizer issue
-> >  - git-compat-util: drop now-unused `UNLEAK()` macro
-> >  - global: drop `UNLEAK()` annotation
-> >  - t/helper: fix leaking commit graph in "read-graph" subcommand
-> >  - builtin/branch: fix leaking sorting options
-> >  - builtin/init-db: fix leaking directory paths
-> >  - builtin/help: fix leaks in `check_git_cmd()`
-> >  - help: fix leaking return value from `help_unknown_cmd()`
-> >  - help: fix leaking `struct cmdnames`
-> >  - help: refactor to not use globals for reading config
-> >  - builtin/sparse-checkout: fix leaking sanitized patterns
-> >  - split-index: fix memory leak in `move_cache_to_base_index()`
-> >  - git: refactor builtin handling to use a `struct strvec`
-> >  - git: refactor alias handling to use a `struct strvec`
-> >  - strvec: introduce new `strvec_splice()` function
-> >  - line-log: fix leak when rewriting commit parents
-> >  - bisect: fix various cases where we leak commit list items
-> >  - bisect: fix leaking commit list items in `check_merge_base()`
-> >  - bisect: fix multiple leaks in `bisect_next_all()`
-> >  - bisect: fix leaking `current_bad_oid`
-> >  - bisect: fix leaking string in `handle_bad_merge_base()`
-> >  - bisect: fix leaking good/bad terms when reading multipe times
-> >  - builtin/blame: fix leaking blame entries with `--incremental`
-> >  - Merge branch 'ps/leakfixes-part-9' into ps/leakfixes-part-10
-> > 
-> >  Leakfixes.
-> > 
-> >  Will merge to 'next'?
-> >  source: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
-> 
-> Rubén's review went through all of the patches and his findings have
-> been addressed.
-
-Yes, this iteration looks good to me.
-
-Two thoughts about the merge:
-
-First, I'm concerned that we may not have sufficiently documented how
-contributors should proceed to prevent new leaks when submitting
-patches, and perhaps avoid some unnecessary noise on the list.  I
-reviewed Documentation/SubmittingPatches and didn't see any mention
-about it.  Perhaps it would be helpful to add a note about
-SANITIZE=leak.  I'm unsure if we want to be explicit about this,
-though.
-
-Second, in the (hopefully) exceptional cases where new series discover
-old leaks that cannot be fixed within the series itself, for whatever
-reason, I don't think there is documentation on the use of the
-SANITIZE_LEAK prerequisite.  Its use is not desirable and documenting
-it could be counterproductive, so perhaps it's better to leave its use
-suggested on the list when necessary.
-
-> The other comment from Peff seemed to only relate to
-> dropping the use of `UNLEAK()`, so I don't think he had a full look at
-> the patch series. So personally I don't plan to reroll this, but am not
-> sure whether this had enough review exposure.
-
-I admit that reviewing this series, and reading the previous nine,
-hasn't been easy.  It involved reading code I hadn't seen before.  So,
-while I'm glad to give it my reviewed-by trailer, I share the concern
-about whether it has had enough review exposure.
-
-Finally, I would like to reiterate that I continue to be impressed
-with the achievement of reaching "test-lib: unconditionally enable
-leak checking" within the time frame envisioned [1][2].
-
-Thanks.
-
-  [1] https://lore.kernel.org/git/Zp4gILfskdpc6RUk@tanuki/
-
-  [2] https://lore.kernel.org/git/cover.1721995576.git.ps@pks.im/
