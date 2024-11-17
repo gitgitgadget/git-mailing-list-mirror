@@ -1,164 +1,117 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC9AB661
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 02:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D53A1DA23
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 08:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731812291; cv=none; b=BIp01j7bCTB5iKi3s0XUNZO5r8h0uQVY9f/jBCcmNgtLp7Zeq7iEYAiUkfL70J9HwGDnVNt9OAv9JHH6/BgRXrNtMxEusyWYTqrVLgy+PqFD/gR3Wa6nr+AsbJKZ27C07TLdBPfIMuDaOVIoAfDa0qQBwiBsxfHk6K7ktNuHZZ0=
+	t=1731833700; cv=none; b=OqMJ+5FU53WZ25WEXaTCkCiJ0B+6aMNxSVo1fla1JV0ZolAFMgdR9q3PlKc8X7uKryhKIymW3uReFw8nYcf9t12NMq54wf5S6Mv2hhr3ApzhfVXcFvvZty1xCCIbxQTWw36JMlnY90m1/bB/ocY7IyMu1ipQxLn3lWKSDHDjvvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731812291; c=relaxed/simple;
-	bh=Pkv9APYewH4+k7x5tvnE6aq20eV2NDyuOdOXWYXaDmE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eK82iGffRTFeu6NnhiOzX3utNofiNZzaeRJuIIh3jelfPt5WCGg3GFkc+Or7JMubDflkmTqarCsx5al/Ed+KlGtbrvW5jg6QeyuNjXhAyXOTILQkcqmQUBcVAL/ebsa5D8OVEqLpAs6fwuUgagLAsYP5saRq+xd1LOBlhwAEtec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fkjrllDj; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731833700; c=relaxed/simple;
+	bh=O9dBL8l2LoO5uPbeQvnzGCq6L0PpY2eIV04F96l7WN0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WL/SUGNHw/ZK2Kdd0cGrknPxWjw7txDNKHNKT3X6j0dZtV3SXnX8zTEEedORwBmyWB5qhNjs7cPhhtZhTxpD09nFwFgVddQgpEjmupP1l1WBAN+PMvQlPKAAAFktPsvtqhjqE0n9FczaO4+ROB0BAA5Dx05cBoAYylwq95u47k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=mDutTWM7; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fkjrllDj"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5cfaa02c716so1155381a12.3
-        for <git@vger.kernel.org>; Sat, 16 Nov 2024 18:58:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731812288; x=1732417088; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gkKc7KblkTPW7rEZ5NYrd17TE+W30SXOI3NKUpB8fVc=;
-        b=fkjrllDj+K4VeAJ+bP/3lxrR6fBEg7exU+BfGL+Y752st6hoJWpYJhkMkbrMigNc0Q
-         3PReJLVf+BIsG3zlfJbdmXxewsjfIFs5CFpTpDme0KA3M4ZIHVXB94JFQcfx4WieN032
-         3dtLU1CYg9ab+zIWXh43bIgTtMPZUC3UVrDX+tVXwJr3v5GE62Hg3v6mEUAYGioQQ8Pv
-         qadg/VYbkPjpziLCl58kdmXZf4P0/YqcROt1XMTMhwfujVQ6+gVIXL8piBfVraLxrRyX
-         P78gqAZgG3oDuseLYJcuKgIO+CSiFG1lYkRwUGqVw38i2uyp9vGwkJ1Rjh1q8ul1EJlc
-         4xSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731812288; x=1732417088;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gkKc7KblkTPW7rEZ5NYrd17TE+W30SXOI3NKUpB8fVc=;
-        b=ListQ+yKz2ka1JefK23kNVhwbVAmEOJI/TlkiQF8nSKrpufAwl6x1xbjEUheRWsdRb
-         YyqVj4fvITga95ZjeHlb3EOrhxT5PwQipqvH/4Gw6hlZyJmeCjRmJ7+6/k7HEgnEXfJv
-         CqpQKjlZTCIGSF8265M8DXRj1w3KoLp6RkVqlxkzaBkeWfU9Sygf4Fez608NGhGr2vMd
-         kwn47pVzTkPH+OivPJqDXgdjSRaEO3u2pat/XYGOiS/tVPeeIVDX2p7gSDvsi/SBIRZD
-         0qPJ8Mgt1e0RpCwRlyCgag2IEXByHpO9W4WMwJdf29SlCjpjT5g/DTozLHHqRkeba6rg
-         84Hw==
-X-Gm-Message-State: AOJu0YyRmAJlNjPd09mAQvbq99CMIl4asrf6g9BaE12nzledXshwG61e
-	SBHeVxQgxA6J1RRywHuU+srNN9t3XYn4ZiIHwMktaKP3bO1AbSdJi9Jt9vpp45f4xuoz0Nt33WD
-	1vN8C+/zo0IfNSv7N2yyid21tVpk=
-X-Google-Smtp-Source: AGHT+IEsSzuxJpo9sMahZ+jrhD+u42VDZM36ZtZCoMmmT8r10vz3RQvtbrFAKMZV/fmDKCZ0KXA8V5PK0BSF4xt6GRA=
-X-Received: by 2002:a17:907:9289:b0:a9a:e0b8:5b7c with SMTP id
- a640c23a62f3a-aa4833f70b8mr764657066b.7.1731812287915; Sat, 16 Nov 2024
- 18:58:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="mDutTWM7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1731833694; x=1732092894;
+	bh=6hvmjexrT0Asmcu95DBxQJ3CWNXrnRwY+JU9L+9tEc4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=mDutTWM7vcFgWmGIGNOyrkAmPVwPZ0BCUSLhugh99A9zflwtbFAxez6VZBuyfFUjC
+	 8KfYgB4nKOoEJfqKlZfEPJSsAhCet/1Eb5K0WhFqP+uAwHWWeIYztFTq61Vegqi36T
+	 pqFKLMHhTtnio204Z8iYMo+4Qc4h0ekAFoVgYTPPCSQ70Op4N04Ahr72JMtvu3d4zw
+	 5aBCYZ/Tj4hHJxD3fHowea4dYgQldRYtArUC8yHoqSYOzXRyNnLEQVzCTZrnVKDg57
+	 hGFzzdv3iKcejJXHfp6ufNkTfh9YHvwXKDinUmBQtwSpestFUXOfkLB+zEJZfjKE+Y
+	 +UF9u8JBXvjUg==
+Date: Sun, 17 Nov 2024 08:54:51 +0000
+To: Chris Torek <chris.torek@gmail.com>
+From: A bughunter <A_bughunter@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: What is the diff between a --soft and a blank reset
+Message-ID: <82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwCEC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=@proton.me>
+In-Reply-To: <CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com>
+References: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me> <CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: 99dc3c41bf3431968df45444ec6ab5b477cb35c0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me>
-In-Reply-To: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Sat, 16 Nov 2024 18:57:56 -0800
-Message-ID: <CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com>
-Subject: Re: What is the diff between a --soft and a blank reset
-To: A bughunter <A_bughunter@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed;
+ boundary="b1=_Prg7GPwkHAiQ4pa8nSSBHy3RK7hWvprQW0ef2lbgI"
+
+--b1=_Prg7GPwkHAiQ4pa8nSSBHy3RK7hWvprQW0ef2lbgI
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 16, 2024 at 6:08=E2=80=AFPM A bughunter <A_bughunter@proton.me>=
- wrote:
-> The difference here is touching the index but what does that mean in prag=
-ma ...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Understanding "the index" is _crucial_ to using Git, yet it's not
-often explained very well.
+My reply to Chris.
 
-(Note: _emphasis_ means italics emphasis, while ALL CAPS means
-bold emphasis, below.)
+On Sunday, November 17th, 2024 at 02:57, Chris Torek <chris.torek@gmail.com=
+> wrote:
 
-I think it helps to start with a simple fact about _every_ source
-management system: such a system, by definition, _must_ have TWO
-COPIES OF EVERY FILE available at all times.  This follows from
-the fact that you can get back the version you started with -- and
-to do that, the system must retain each original, unedited version
--- and yet you must also be able to edit files, which means the
-system must retain the edited files as well.  So those are the two
-_required_ copies: original, and edited.  If the two are the same,
-it's at least theoretically possible to share them, but that's not
-important here.  The actively-being-edited files are the _working
-tree_, while the frozen-for-all-time original files are saved
-(forever) in a Git commit, in the case of Git.
+> * With `--mixed`, `git reset` adjusts `HEAD` as before --
+> it's usually wisest to not have it adjust anything for
+> this case, in my opinion -- and then goes on to copy the
+> files from the `HEAD` commit into the index.=20
 
-What's unusual about Git is that it keeps a THIRD copy of every
-file.  As noted above, if any given pair of copies match, it's at
-least theoretically possible to share them -- and Git sometimes
-does -- but that's not important here.
+I didn't give any case: What are you talking about? It look's as though you=
+ are pasting a custom manpage for git-reset based on keyword matching. Esse=
+ntially spamming the mailing list based on a keyword match. Yet another man=
+page being written by a thirdparty when having conflicting and scattered ja=
+rgon makes it to where the user cannot communicate in a meaningful way abou=
+t using the software. You vaguely show the difference (e.g. soft means job =
+#1 and mixed means job #1 & #2) however not fully answering my pinpointed q=
+uestion "Does this from --soft: "leaves all your changed files "Changes to =
+be committed", as  git status would put it.'" mean soft leaves the adds ind=
+exed but before the adds were commit and without commit whereas --mixed wou=
+ld erase the index having adds ready to commit?" conscerning what the diffe=
+rence means in pragma. We and you need to learn English or get off of maili=
+ng lists: stop spamming. I say we because you are not alone.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-What Git's index is all about is that it HOLDS THE THIRD COPY.
-The reason this is crucial to know is that running:
+wnUEARYKACcFgmc5r1gJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAIesAQDkkFYk/snBkgshpusegy9iQB9bzbgPq0ErIwvIE0YYcAD+MGd5
+Cb6hNTakaoa1GEM5/0kSLEqpuDWECaUefn8/ugU=3D
+=3DK4lg
+-----END PGP SIGNATURE-----
 
-    git commit
+--b1=_Prg7GPwkHAiQ4pa8nSSBHy3RK7hWvprQW0ef2lbgI
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
 
-tells Git to make a *new* commit FROM THIS THIRD COPY.
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
-There are tricks you can use to attempt to hide or ignore this
-third copy, but using them is, in my opinion, a bad idea, because
-eventually one of these tricks fails and you're exposed to the
-fact that there _is_ a third copy.  You might as well just get
-used to the idea.
+--b1=_Prg7GPwkHAiQ4pa8nSSBHy3RK7hWvprQW0ef2lbgI
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-Once you _are_ used to the idea, much of the rest of Git begins
-to make sense:
+wnUEABYKACcFgmc5r1gJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAADLPAP4kZ8po
+1i2Tuyww3FqX1EcQOOupsnThwmOCLs65EDiq2AD/aSJpssAee6SpQVeybdbnyu2Oj5pJQxoZVbSa
+Zceatws=
 
- * `git add` mainly copies files _into_ the index, preparing them
-   for a future commit.
+--b1=_Prg7GPwkHAiQ4pa8nSSBHy3RK7hWvprQW0ef2lbgI--
 
- * `git commit` takes whatever is in the index _right then_ and
-   uses that to make the new (permanently-frozen) copy of all
-   those files.
-
-Now, logically, `git reset` might be the one that undoes `git
-add`.  And it _does_ do that.  The problem is that it does a
-lot more as well.  It has, in fact, _three_ primary jobs:
-
- * It can move `HEAD`.  (Understanding precisly what `HEAD` means,
-   in Git, is another crucial item, but this message won't cover
-   that.)
-
- * It can copy some or all files from a commit into the index.
-
- * Last, it can _also_ copy those files from the commit, into the
-   index, and then on into the working tree.
-
-(Even more unfortunately, `git reset` has several auxiliary jobs
-as well as these three primary ones.  I won't cover these.)
-
-The three options -- `--soft`, `--mixed`, and `--hard` -- tell
-`git reset` which of these three jobs to do:
-
-  * With `--soft`, `git reset` _only_ adjusts `HEAD`.  The
-    default adjustment is to leave it unchanged, so running
-    `git reset --soft` with no additional arguments does
-    nothing at all.  That is, it does only job #1, then
-    stops.
-
- * With `--mixed`, `git reset` adjusts `HEAD` as before --
-   it's usually wisest to not have it adjust anything for
-   this case, in my opinion -- and then goes on to copy the
-   files from the `HEAD` commit into the index.  That is, it
-   does jobs #1 and #2, and then stops.
-
- * With `--hard`, `git reset` adjusts `HEAD`, copies the files
-   from the adjusted `HEAD` to the index, and then copies the
-   files from the index to the working tree.  That is, it does
-   all three of jobs #1, #2, and #3.
-
-And that's it: that's all you need to know.  Well, _almost_ all:
-there are all kinds of finicky corner cases around files that are
-in the working tree but _not_ in the index and/or commit.  There's
-also one other problem, in a new, totally-empty repository in
-which there are no commits yet.  But those edge cases need a lot
-of explanation and should be left until later.
-
-Chris
