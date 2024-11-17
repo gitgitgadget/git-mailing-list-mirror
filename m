@@ -1,106 +1,102 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E518C2ED
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 15:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144726ACB
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 16:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731857218; cv=none; b=b+qxjnNK3qnATv3k7lqNMotM0aeYjhHDXhCJNHS2fMk0SnmGL79VaPZFFgTJtGcwt8wQKJzp3BKfCCnzSvdN9sSgxm0sw1Mq/W8Gch9Z1+JcM1oGiV1WtAaiSTiWJ69JBYr3tHxQLlGhI6qbh2sdp4Sv5xtjPfg25lfFGcXmGb0=
+	t=1731859417; cv=none; b=SeaM0Difnef+CDg4qoPZsfLP2M1hQQ1L+XK7wJnp8a5JCZS451zzU7cTbuWQVlMBZMSvBYSPrIQh/HZP2l1daVunxKXkPlw4665G9QO8Ffp5CU+pn2I0nFow4iDuG9Vuukv2zhWYdkKGmauJUOtmFbmXsK4VCVGZ+msi4cZPF6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731857218; c=relaxed/simple;
-	bh=16XX0bSDM9Q5s6/cTeK+kWA5OjWhcETquZ+uHNwdXyo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LYRV3NlO1kvzWTUtIgbWJ755PA1a7F9FFiyill81n5vn+ApiULAtrergkptuM6QScG9saE4vkglDCSuC88VkFobd28o25ggpU+ig7wCItUP9At2p3xWS/oDsI4au9PEoB/jdH7PbAOuQx7CqoH3nPulr5aNgJISNUxIjr5HiIKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4XrvkC2cd2zRnlK;
-	Sun, 17 Nov 2024 16:26:41 +0100 (CET)
-Message-ID: <5ccc1943-c2a3-4896-a858-aa5fd6cdd426@kdbg.org>
-Date: Sun, 17 Nov 2024 16:26:41 +0100
+	s=arc-20240116; t=1731859417; c=relaxed/simple;
+	bh=8gtAJPiYPDPnxFPtgtgB3t/43zpwrolhLECYVJqjXjs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bbj+lfEym5/+pOWPJ1x8X0SA9u3pnAIGSL6oF5w9rp5FDHqaeHU06EAegTtT5L5fr3XaJ4JCQvLzMUW8cUPpF9abZQLeyx8gwJlhT85n47AKC377PX3YJta3IUgGjc2avv+bqFCLVEA8RanZPLV/WhhyHDyOVtkokbmJICqph/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fXAAJbgd; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fXAAJbgd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1731859413;
+	bh=8gtAJPiYPDPnxFPtgtgB3t/43zpwrolhLECYVJqjXjs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=fXAAJbgdk5ZakM+ZL1Hk5qrrYbd42SWjeXoxZQcvZPB2togStspt2kSvX2XZrUKP7
+	 hyABOy7tH9u4kfCObegE3P7jJ1QQYjdHaHSOltrgoh3kzUbh5O7ik5MckpreYBahRM
+	 P/zE4TrV+27rdI+2GokfhKoHFEk4scf6JE3qR85m5mPlcrUsrF1U12IyvYofLM4Zoj
+	 MxZYSgpgBmzI/uzcaYNMnQFOh9qqv5gA8joae6BK5H+6JzizjUBcMX4dXF0k1SW6ZX
+	 m4MyXUkmzpYoCr3uqu+XWpbv7sgen08HlTJ3YDmAYPVdWeZdX0Quhy+cnDWqWX8Ylp
+	 xXpfqPIjlGTrZLYplnLpzDADVY5rnx4iOx1K5ULj2FP1Eebf8bnlSaHyq9MCuyQ2nf
+	 0wobFh8jjWOZXqZwvGiwMpfGiRjquAZIMQUogGzp1ePYGwoYYnq8wxDcpLA8BLBgJZ
+	 x8MgoFmRx2aJBsOboSm4vW0vU/bdZ8pwI55WkiwAuisIi20r8ps
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 61C772443F;
+	Sun, 17 Nov 2024 16:03:33 +0000 (UTC)
+Date: Sun, 17 Nov 2024 16:03:31 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Sam James <sam@gentoo.org>, git@vger.kernel.org
+Subject: Re: -Wunterminated-string-initialization warning with GCC 15 in
+ object-file.c
+Message-ID: <ZzoT03rsx7MTqSFl@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Sam James <sam@gentoo.org>,
+	git@vger.kernel.org
+References: <87wmh2o9og.fsf@gentoo.org>
+ <20241117090329.GA2341486@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Gitk maintainership, was Re: The health of gitk
-Content-Language: en-US
-To: Paul Mackerras <paulus@ozlabs.org>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- Beat Bolli <dev+git@drbeat.li>, Tobias Pietzsch <tobias.pietzsch@gmail.com>
-References: <pull.944.git.git.1610234771966.gitgitgadget@gmail.com>
- <bdaab72b-37f4-658a-716a-d6a958b6f709@drbeat.li>
- <ddee92a7-3d1e-f869-9cc4-72b70eee0dd5@gmx.de>
- <ZzWkgblaoWehC0kY@thinks.paulus.ozlabs.org>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <ZzWkgblaoWehC0kY@thinks.paulus.ozlabs.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="p2xoeVGhLEUz2tHC"
+Content-Disposition: inline
+In-Reply-To: <20241117090329.GA2341486@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Am 14.11.24 um 08:19 schrieb Paul Mackerras:
-> On Wed, Nov 13, 2024 at 08:41:42AM +0100, Johannes Schindelin wrote:
->> Hi Hannes,
->>
->> I would like to offer this thread as Exhibit A in support for the case I
->> started making at [GitMerge '24](https://git-merge.com/) to convince you
->> to consider maintaining gitk in addition to Git GUI.
->>
->> Having one maintainer of Git GUI and gitk would make for a quite natural
->> fit, I would think, as both are written in Tcl/Tk, neither is used by the
->> core Git contributors because they are GUI programs, both lower the bar
->> for new Git users because they are GUI programs, and either would be
->> subject for eviction from git/git unless maintained by an active
->> volunteer.
->>
->> From what I see, Git GUI is in real good hands since you took over, I see
->> reports and patches picked up quickly and the style of your replies is
->> refreshingly constructive and friendly.
->>
->> This morning, I woke up to find a new PR in microsoft/git
->> (https://github.com/microsoft/git/issues/704) that cherry-picks the patch
->> that was offered in this here mail list thread. That patch is almost four
->> years old, i.e. just about ready to enter pre-school and to learn how to
->> read and write. Yet apart from Beat's confirmation that it fixes a real
->> bug, this here patch has been treated with silence.
->>
->> Unfortunately, the original GitGitGadget PR had to be locked down and
->> therefore Tobias would not be able to send another iteration even if he
->> wanted to (which I doubt, given the experience on this mailing list).
->>
->> Therefore I see the need not only to revive this thread, but also to look
->> for an active gitk maintainer.
->>
->> May I ask you, now in public, whether you would be potentially open to
->> maintain gitk in addition to Git GUI? If so, I would then start a proper
->> new thread to nominate you officially.
-> 
-> If Hannes is willing to take this on, I would support that fully and I
-> would also be happy to assist.  I know I was extremely slack about
-> gitk patches for a long while, but I think I have a little more free
-> time now, having retired.
-> 
-> There is another issue which will need to be sorted out, which is
-> whether to persist with a separate tree that gets merged into the git
-> repository, or just edit the copy of gitk in the git repository.
-> There have been tree-wide patches applied to the git tree which
-> affected gitk, meaning that my gitk repository is now out of sync.
-> I recently (as in several weeks ago) sent Junio Hamano an email asking
-> this question, and asking for his opinion on the best way to proceed
-> with gitk patches, but got no reply.
 
-[For some reason, Dscho's original message didn't make it to my mailbox.]
+--p2xoeVGhLEUz2tHC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I have given the idea to take maintainership of Gitk ample
-consideration, and I would accept the task. Paul, let me know how to
-proceed.
+On 2024-11-17 at 09:03:29, Jeff King wrote:
+> Here are some patches. The first one should fix the warning (but I don't
+> have gcc-15 handy to test!). Please let me know if it works for you (and
+> thank you for reporting).
 
-Regarding whether to have a separate tree or not, I would prefer a
-separate tree at this time, but only for the reason that it is known
-ground for me, and not that it has some (technical) advantage.
+Just so you know, since I believe you also use Debian unstable, you can
+install the gcc-snapshot package (which is, admittedly, rather large)
+and use `CC=3D/usr/lib/gcc-snapshot/bin/gcc`.
 
--- Hannes
+> The others are cleanups and future-proofing I found in the same area.
+> Not strictly required, but IMHO worth doing.
+>=20
+> +cc brian since I think this is a continuation of some hash-algo
+> cleanups he did earlier, plus he piped up in the other gcc-15 thread. ;)
 
+Other than the issue that Ren=C3=A9 noticed, this seems reasonable to me.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--p2xoeVGhLEUz2tHC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZzoT0wAKCRB8DEliiIei
+gXxwAQDyJNrRC2jSHbyDuyoPh/ckvftyk2ynVpnWBZnMI3aW7gD+PYrxQFXDPSqC
+QCsOWgdRqLtAVLpq+AzHUPI83JlVEQA=
+=ljxN
+-----END PGP SIGNATURE-----
+
+--p2xoeVGhLEUz2tHC--
