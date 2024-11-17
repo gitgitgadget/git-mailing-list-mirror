@@ -1,102 +1,156 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144726ACB
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 16:03:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 700FD23AD
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 16:44:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731859417; cv=none; b=SeaM0Difnef+CDg4qoPZsfLP2M1hQQ1L+XK7wJnp8a5JCZS451zzU7cTbuWQVlMBZMSvBYSPrIQh/HZP2l1daVunxKXkPlw4665G9QO8Ffp5CU+pn2I0nFow4iDuG9Vuukv2zhWYdkKGmauJUOtmFbmXsK4VCVGZ+msi4cZPF6s=
+	t=1731861874; cv=none; b=kZXJA1BsQwq1FyLRSmr+odPfxQ9FZsz1ttG10ozxEmRT3bNvNjgKXZp/Xg67YdWDh8OFJ4AP4MFGwwXI5KFKuqS92fIX1BfSkFozpZaVuPdih8rhzdT5lZxA8YDMORZhSs+uHnueyBL+962HB6Ck+hmNqDuOWbR88TYpnlC+NPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731859417; c=relaxed/simple;
-	bh=8gtAJPiYPDPnxFPtgtgB3t/43zpwrolhLECYVJqjXjs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bbj+lfEym5/+pOWPJ1x8X0SA9u3pnAIGSL6oF5w9rp5FDHqaeHU06EAegTtT5L5fr3XaJ4JCQvLzMUW8cUPpF9abZQLeyx8gwJlhT85n47AKC377PX3YJta3IUgGjc2avv+bqFCLVEA8RanZPLV/WhhyHDyOVtkokbmJICqph/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fXAAJbgd; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1731861874; c=relaxed/simple;
+	bh=Bp55XiWFgWy8d7PeJmDYbb2JTYGvTl6ta/G/RmVKvQI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=vAQ21w4oab/EnV+S9m91nrqFgNmOFA/FIorYBf4YH73v1KsIDGci+BGRvwh/490IOpqCb2NXoaLNSqN12/3q6F++7Jp5/rnmV7jCoqH3ooOUZGBYQ1NtmeEo794QEa4Tq7Uvrw9M9LVOj54orlaaTnl+AuZKOmBTcrl80IK6vNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=j529Z72u; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fXAAJbgd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1731859413;
-	bh=8gtAJPiYPDPnxFPtgtgB3t/43zpwrolhLECYVJqjXjs=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=fXAAJbgdk5ZakM+ZL1Hk5qrrYbd42SWjeXoxZQcvZPB2togStspt2kSvX2XZrUKP7
-	 hyABOy7tH9u4kfCObegE3P7jJ1QQYjdHaHSOltrgoh3kzUbh5O7ik5MckpreYBahRM
-	 P/zE4TrV+27rdI+2GokfhKoHFEk4scf6JE3qR85m5mPlcrUsrF1U12IyvYofLM4Zoj
-	 MxZYSgpgBmzI/uzcaYNMnQFOh9qqv5gA8joae6BK5H+6JzizjUBcMX4dXF0k1SW6ZX
-	 m4MyXUkmzpYoCr3uqu+XWpbv7sgen08HlTJ3YDmAYPVdWeZdX0Quhy+cnDWqWX8Ylp
-	 xXpfqPIjlGTrZLYplnLpzDADVY5rnx4iOx1K5ULj2FP1Eebf8bnlSaHyq9MCuyQ2nf
-	 0wobFh8jjWOZXqZwvGiwMpfGiRjquAZIMQUogGzp1ePYGwoYYnq8wxDcpLA8BLBgJZ
-	 x8MgoFmRx2aJBsOboSm4vW0vU/bdZ8pwI55WkiwAuisIi20r8ps
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 61C772443F;
-	Sun, 17 Nov 2024 16:03:33 +0000 (UTC)
-Date: Sun, 17 Nov 2024 16:03:31 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Sam James <sam@gentoo.org>, git@vger.kernel.org
-Subject: Re: -Wunterminated-string-initialization warning with GCC 15 in
- object-file.c
-Message-ID: <ZzoT03rsx7MTqSFl@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Sam James <sam@gentoo.org>,
-	git@vger.kernel.org
-References: <87wmh2o9og.fsf@gentoo.org>
- <20241117090329.GA2341486@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="j529Z72u"
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 62DFA428689
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 17:44:22 +0100 (CET)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9148:6a20:82aa:d298])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 99D6219F5A5;
+	Sun, 17 Nov 2024 17:44:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1731861855;
+	bh=Bp55XiWFgWy8d7PeJmDYbb2JTYGvTl6ta/G/RmVKvQI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j529Z72uuz/uNMiDs5/2U5W7yDTGrsX3r9lliKuvdQ5qosLLUC8Ma4PEbmk5561d4
+	 B7sIskuGzKg//FdnJqHNWtxLItTl8zJxoAF+Dt+cUNX5KKtTz+3jPsVwSnlrJyTBLP
+	 3LSwkSCViwdLZC7Gq3t1ZUkQ8pDJ+JVGP02p0pT12HznMTqKLLpNF1fmkyPooYgpcn
+	 N/VmrYbnJBemsihbMAFi7oFGqpBG9NBVCjTdNxyVPNHBkIgR/vgXp18kEFKjRSmMS7
+	 PHO+POOuir6F4gUxr/mhC05IZt7yxB4FxW5n+/qwCBVkPmLp0L1Xj0bSZaRWVpxlux
+	 emVsBpbrjEnMw==
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Patrick Steinhardt <ps@pks.im>,
+ =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/5] doc: git-diff: apply new documentation guidelines
+Date: Sun, 17 Nov 2024 17:44:10 +0100
+Message-ID: <2365334.irdbgypaU6@cayenne>
+In-Reply-To: <7f24a030-bae2-4712-8593-61a9d4089cfb@kdbg.org>
+References:
+ <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+ <6841bd5825be8e7b17c2f9c3a997de29ffa3a540.1731785769.git.gitgitgadget@gmail.com>
+ <7f24a030-bae2-4712-8593-61a9d4089cfb@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="p2xoeVGhLEUz2tHC"
-Content-Disposition: inline
-In-Reply-To: <20241117090329.GA2341486@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---p2xoeVGhLEUz2tHC
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-On 2024-11-17 at 09:03:29, Jeff King wrote:
-> Here are some patches. The first one should fix the warning (but I don't
-> have gcc-15 handy to test!). Please let me know if it works for you (and
-> thank you for reporting).
-
-Just so you know, since I believe you also use Debian unstable, you can
-install the gcc-snapshot package (which is, admittedly, rather large)
-and use `CC=3D/usr/lib/gcc-snapshot/bin/gcc`.
-
-> The others are cleanups and future-proofing I found in the same area.
-> Not strictly required, but IMHO worth doing.
+On Sunday, 17 November 2024 15:04:13 CET Johannes Sixt wrote:
+> Am 16.11.24 um 20:36 schrieb Jean-No=EBl Avila via GitGitGadget:
+> > --1 --base::
+> > --2 --ours::
+> > --3 --theirs::
+> > +`-1`::
+> > +`--base`::
+> > +
+> > +or `-2`::
+> > +`--ours`::
+> > +
+> > +or `-3`::
+> > +`--theirs`::
+> >  	Compare the working tree with the "base" version (stage #1),
+> >  	"our branch" (stage #2) or "their branch" (stage #3).  The
+> >  	index contains these stages only for unmerged entries i.e.
+> >  	while resolving conflicts.  See linkgit:git-read-tree[1]
+> >  	section "3-Way Merge" for detailed information.
 >=20
-> +cc brian since I think this is a continuation of some hash-algo
-> cleanups he did earlier, plus he piped up in the other gcc-15 thread. ;)
+> Having seen this new proposal (which I am not a fan of), I reconsidered
+> my take on how this could be formatted.
+>=20
+> First, I wonder why the pre-image is not
+>=20
+> -1::
+> --base::
+> -2::
+> --ours::
+> -3::
+> --theirs::
+>=20
+> like we write in other cases where multiple options are described by the
+> same paragraph (e.g.: -p -u --patch; -W --function-context; --textconv
+> --no-textconv).
+>=20
+> Next, since with such a scheme all options are treated equally, we have
+> to ask whether the description in the body text makes sufficiently clear
+> that they not all do the same thing (it does), that there are actually 3
+> distinct groups (it does), and which options mean the same thing. The
+> latter is rather meh, but it is the fault of the text and can be
+> remedied easily.
+>=20
 
-Other than the issue that Ren=C3=A9 noticed, this seems reasonable to me.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+OK, I'm not fond of my solution either, but I strongly dislike mixing synon=
+yms=20
+(which is the usual meaning of putting several options in the same=20
+description) with incompatible behavioral alternatives. But, for this one,=
+=20
+let's consider that the alternatives are just like `--[no-]bla` option=20
+descriptions, for the sake of ending this PR.
 
---p2xoeVGhLEUz2tHC
-Content-Type: application/pgp-signature; name="signature.asc"
+I would still rephrase the description to make it clear, how the alternativ=
+es=20
+are  working:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+`-1`::
+`--base`::
+`-2`::
+`--ours`::
+`-3`::
+`--theirs`::
+	Compare the working tree with
++
+=2D-
+ * the "base" version (stage #1) when using `-1` or `--base`,
+ * "our branch" (stage #2) when using `-2` or `--ours`, or
+ * "their branch" (stage #3) when using `-3` or `--theirs`.
+=2D-
++
+The index contains these stages only for unmerged entries i.e.
+while resolving conflicts.  See linkgit:git-read-tree[1]
+section "3-Way Merge" for detailed information.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZzoT0wAKCRB8DEliiIei
-gXxwAQDyJNrRC2jSHbyDuyoPh/ckvftyk2ynVpnWBZnMI3aW7gD+PYrxQFXDPSqC
-QCsOWgdRqLtAVLpq+AzHUPI83JlVEQA=
-=ljxN
------END PGP SIGNATURE-----
+> Finally, with all this considered, I think it is not so bad at all that
+> all options are lumped together in a single line (or remain on six
+> separate header lines, depending on the processor). So, I would no
+> longer mind seeing this transformed into
+>=20
+> `-1`::
+> `--base`::
+> `-2`::
+> `--ours`::
+> `-3`::
+> `--theirs`::
+>=20
+> for consistency, or
 
---p2xoeVGhLEUz2tHC--
+To be honest, this is the form I would prefer because it can be automatical=
+ly=20
+processed for translation as "do not translate". Any addition involving hum=
+an=20
+language to a segment requires translation.
+
+
+
+Thanks,
+
+JN
+
+
