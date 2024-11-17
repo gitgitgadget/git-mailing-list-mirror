@@ -1,164 +1,128 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4407A1803A
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 12:40:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A184D2AC17
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 12:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731847221; cv=none; b=ghVROri4rHZWp4RaV4vmMastksF1+1yOIAtG7YVZRZslCkCJ179dw/B8pzmlhcpKWkgb+BQe+RXsz4HKUB48wBjrsW4IrOt+e/BhEpApRLTo2qOeobM5iIQ0/Q3XaXXES87fookAKT8VFEtnQpQRvqlhBL0GV38ZNfFArwa3bfE=
+	t=1731848373; cv=none; b=elUuafoEkOAzch7xijR/7SlhZE0pao6CsdzfiQCFvAR+UOdqS/yV9Uvmmne32CwDJ8AQvK5AvnetkMGrCUe/GLShTfviG3o9BxBEqRMHHKq8vRrdz+ppVnjtpjD4aFS9p/M54suU0755CkNfJ+vLIxwhYROMMN3g7AWKbV2rt1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731847221; c=relaxed/simple;
-	bh=t/O2wNJiZeIAHEaV+HBymIMe5/f+puvqUs5t+0f+uBQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=WJPHDKyxBk0+ZSAjgGEj0AValrwUwMEjnbRabSV0L4jXaP/0wIZvh0f5SUC2ZccvwLwq61zVql/mGfxXMv2447SGULA78WDEJbOapeaLx8dRct7vSbTRp8cdk8cfzqUZyq3zcBnwdEEjOzCjhW+91zpwB4IOI9r7zcZVcw5dvHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BO30EBet; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731848373; c=relaxed/simple;
+	bh=iBqq4rrww5M+AcXAE8C2AsDeFxLySYojiND2dlJShDA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ui97YV8OyNE6BfRRzoudzSz4Z4hbTBUJG0xNdABBe9IkvEudjaInFja1lOaQwhhnHxvZ3KYIvsOv4F2TEz7nmYR89JvgV1wdrUaXhNjaThwJRlmmGBy+XJu9RjlIixs0MYBWvEQviN/80G/4V4WSpOyTBr8BZfiEtgWXs3ffEZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=mWRYAhcW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FusN4jZf; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BO30EBet"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3823eb7ba72so452956f8f.0
-        for <git@vger.kernel.org>; Sun, 17 Nov 2024 04:40:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731847218; x=1732452018; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=t/O2wNJiZeIAHEaV+HBymIMe5/f+puvqUs5t+0f+uBQ=;
-        b=BO30EBetl1xfq2IL/pAZiWhorrq2V2WYnhr7qGfPCF65l/oQfj87kHWxMfDrz8VeG1
-         W1WGK2Gk6zMRVAqtt8+ck7RBdeGZ5KqnVHB/EIpEJjdRcSM4qouaRpghzecBbP/nuvHA
-         08+pX2rDeOzff36mHpD3YKj3t7eXKZzd/50mQnDZoUrigIyFyhyy4pfqnw1NGVhoOwkz
-         caV4TuXwHSKEkfnIPiAlJ8gmXLw5XXFGO64PTH0nbJn+YQxwenQrccmIeu02kmNXrFY0
-         StFg26XNRfFNBEo4q7gBGsM89wp0xQ4wrSP6BZ/196URy0hQi8Q7KWzaq68BC7d4cSII
-         2Sbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731847218; x=1732452018;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t/O2wNJiZeIAHEaV+HBymIMe5/f+puvqUs5t+0f+uBQ=;
-        b=tmIbpdjVSZXnvIz6V2ibND6omcqofwvTfiFlGXWO2RFmlZ5DtXIEge5Nh1eX9+4BcF
-         e1PfDfuKjuU1cSf23aRB4xrLfn1dUY8Z0y4qfBfa7HDkV7mNZd4nHG1jFIsJQatLbT7+
-         TnjoqXGCHFlyIHpFoLSdenr08eFY184S4Y9Mg+a1GDLeGO+Qm48F9mLiGt6TKpTfm5u5
-         sG57xBZVq4CkSv+3Da4wODbpG1sd7LTFyZIhVTHGP2irqIqHjD7bFqYYTQI9eHo2qX0+
-         79JZzflZaDwvhN1r0/Np1y3grbnLcIkLiiPrsdxTal1xG/Ga7LrcA3uZWAIfzl7zH6jm
-         Sdcw==
-X-Gm-Message-State: AOJu0YxT5DR2WByL7dohp96XZ2kpc39PSESCpUNEdpObO3h49cf6O9We
-	Oef/Ul1MfTG46MMqQ1cmDbzbS9P2SjR9X/3PHt/xA8b2Fvntz2H2+9thKisJBlovQ8sAS3KDQO2
-	cBJKIMPpLtbMsjJgVseCrlqYu8x+yILcUTWY=
-X-Google-Smtp-Source: AGHT+IHwM5Ka0iBKm2wiYhn+6I7ws0VUsPXyPGEeHsW6kvknSqDWLpblgLC5NqObgf2OX6bi7V83DM2WUkmdJ39SRA8=
-X-Received: by 2002:a5d:59a8:0:b0:37d:4d3f:51e6 with SMTP id
- ffacd0b85a97d-38225a07151mr8413544f8f.14.1731847217407; Sun, 17 Nov 2024
- 04:40:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="mWRYAhcW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FusN4jZf"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id C61A6138012D;
+	Sun, 17 Nov 2024 07:59:29 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sun, 17 Nov 2024 07:59:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731848369;
+	 x=1731934769; bh=2HFpcveBTBoPPFsmi+1Iex1msphrmWnA4a6LAbqAE5Y=; b=
+	mWRYAhcWWy3K2nF5dN/3NxpEjVIAX25i/nxlimG0UeVzXmUX4QTFJ/T/EOXjoM05
+	Hl1b8ztWwXP+zaE65Z/+ftXalnBAyjolxXFiZYSq/jCa3T1AdjXvBrw7UGmYMs1W
+	O6uV2Kep2pmN6GeftW6GOv8gRSJeTTvG3x0rAR2aF9S8EcUj0LToTSsEZmcqTQOZ
+	QZLfSWTYETc/YlgnZtyI2irsZb5Fk2Yt3g9iNVYXh8bZPtIEI2pghB8ZwG+0XBND
+	AMyfpsV3DbNPlzSd4r4R+5hzH45cfMDE6tZqjDS/uQg+vgge3RovRKZY2WxtTgvz
+	k8oxi/HW3/DcwP+gN8tq+g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731848369; x=
+	1731934769; bh=2HFpcveBTBoPPFsmi+1Iex1msphrmWnA4a6LAbqAE5Y=; b=F
+	usN4jZfSz8sNWL7XUKGPHwnQB9shmX+1UISJNl3AoaqXMi8zuuRr9lxReOHw37mZ
+	j+XXSZHBIu8kasNKSmyDo2jevrJLvLvRfVNyZS9pTb7mn0utLHpc26CCYbrKlcjp
+	0XkyV6KWH9ln5TCyGNc1qlzG5adVfxIsUZBwI+HBDnfOhF4zQVBwNaPfhINdt868
+	3kHeeYWEh9j43lol5XEBUPewfff16h04WyU6xjBgCwjl9nM1/DiUSvsfDxcQF9Y1
+	jgol3HFkMk4G/+SgBGIVZ9q2NYLJCj+i6t/BcafVCgfhuuAwS8MSO4D0DaaHC/k1
+	a6lUFIwkkNYm0cwoH+IFQ==
+X-ME-Sender: <xms:seg5Zy6Mfpuw4t8wvm1hy7etBoa5Gb4M87wh-FHioVPb8Kf30je_yxg>
+    <xme:seg5Z74fMU0QjVWVsffXp2G84C5HhxjmAe7fydJwyUmB9NhxlsD6jghAEr9JwubRa
+    sNQRc0A6nk2k0pBDw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdekgdeghecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredttden
+    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
+    thgvrhhnpeegtdejieetgefhuedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetff
+    ejffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishdr
+    thhorhgvkhesghhmrghilhdrtghomhdprhgtphhtthhopegrpggsuhhghhhunhhtvghrse
+    hprhhothhonhdrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:seg5ZxeQ9_4cOTy5sOW21X27mtD9UaVqck_iF6a3eyDcTARtAZvpnA>
+    <xmx:seg5Z_Jv9AbILG5ZGh5JrMgL6iu65rhJXkPH53syPiHRhOLDAtG3XA>
+    <xmx:seg5Z2LaAt6y0A_0B-qegCFp0WI6GTGtAAXtkIDvByEkRRjLzFFDdg>
+    <xmx:seg5ZwykqeakdVzmjBxUwPBInArAZu6xGLt8SAugl_SBn3yGUW0sPw>
+    <xmx:seg5Z9UR9o5Ad-0GaGUfzW-inJf2tBcF0tljlmrG8HY06qEYFJOlZv2f>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 8925C780068; Sun, 17 Nov 2024 07:59:29 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Ylarod <ylarod9@gmail.com>
-Date: Sun, 17 Nov 2024 20:40:06 +0800
-Message-ID: <CAGtHOOFutv6wHgoFnkZoETJwq6FDkbbBgGqzSXT9V7ESXQswCg@mail.gmail.com>
-Subject: [BUG] Apply patches failed without any changes
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Date: Sun, 17 Nov 2024 13:59:09 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "A bughunter" <A_bughunter@proton.me>,
+ "Chris Torek" <chris.torek@gmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Message-Id: <cb5090a3-59a8-44eb-ba68-3a8fac58c45e@app.fastmail.com>
+In-Reply-To: 
+ <82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwCEC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=@proton.me>
+References: 
+ <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me>
+ <CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com>
+ <82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwCEC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=@proton.me>
+Subject: Re: What is the diff between a --soft and a blank reset
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Sun, Nov 17, 2024, at 09:54, A bughunter wrote:
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA512
+>
+> My reply to Chris.
+>
+> On Sunday, November 17th, 2024 at 02:57, Chris Torek 
+> <chris.torek@gmail.com> wrote:
+>
+>> * With `--mixed`, `git reset` adjusts `HEAD` as before --
+>> it's usually wisest to not have it adjust anything for
+>> this case, in my opinion -- and then goes on to copy the
+>> files from the `HEAD` commit into the index. 
+>
+> I didn't give any case: What are you talking about? It look's as though 
+> you are pasting a custom manpage for git-reset based on keyword 
+> matching. Essentially spamming the mailing list based on a keyword 
+> match. Yet another manpage being written by a thirdparty when having 
+> conflicting and scattered jargon makes it to where the user cannot 
+> communicate in a meaningful way about using the software. You vaguely 
+> show the difference (e.g. soft means job #1 and mixed means job #1 & 
+> #2) however not fully answering my pinpointed question "Does this from 
+> --soft: "leaves all your changed files "Changes to be committed", as  
+> git status would put it.'" mean soft leaves the adds indexed but before 
+> the adds were commit and without commit whereas --mixed would erase the 
+> index having adds ready to commit?" conscerning what the difference 
+> means in pragma. We and you need to learn English or get off of mailing 
+> lists: stop spamming. I say we because you are not alone.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Do you happen to use a translation program to write these emails? 
 
-1. Clone the repo
-
-```bash
-git clone https://github.com/Ylarod/frida-core
-```
-
-2. Generate patches from 36a8ffbb to ed039c9f
-
-ed039c9f Florida: memfd-name-jit-cache
-f5f61669 Florida: pool-frida
-7d4ada2d Florida: update python script
-bbe4ebb1 Florida: protocol_unexpected_command
-bedd2337 Florida: thread_gmain
-e251174c Florida: thread_gum_js_loop
-357374cf Florida: symbol_frida_agent_main
-da9110f5 Florida: frida_agent_so
-351d9c1e Florida: string_frida_rpc
-36a8ffbb subprojects: Prepare for release
-
-```bash
-git format-patch -N 36a8ffbb
-```
-
-There will be 9 patches:
-
-0001-Florida-string_frida_rpc.patch
-0002-Florida-frida_agent_so.patch
-0003-Florida-symbol_frida_agent_main.patch
-0004-Florida-thread_gum_js_loop.patch
-0005-Florida-thread_gmain.patch
-0006-Florida-protocol_unexpected_command.patch
-0007-Florida-update-python-script.patch
-0008-Florida-pool-frida.patch
-0009-Florida-memfd-name-jit-cache.patch
-
-3. Apply these patches to 36a8ffbb
-
-```bash
-git reset --hard 36a8ffbb
-
-git am 000*
-```
-
-The bug happens:
-
-```
-Applying: Florida: string_frida_rpc
-Applying: Florida: frida_agent_so
-Applying: Florida: symbol_frida_agent_main
-.git/rebase-apply/patch:126: trailing whitespace.
-
-error: patch failed: lib/agent/frida-agent.def:1
-error: lib/agent/frida-agent.def: patch does not apply
-error: patch failed: tests/labrats/agent.def:1
-error: tests/labrats/agent.def: patch does not apply
-Patch failed at 0003 Florida: symbol_frida_agent_main
-hint: Use 'git am --show-current-patch=diff' to see the failed patch
-hint: When you have resolved this problem, run "git am --continue".
-hint: If you prefer to skip this patch, run "git am --skip" instead.
-hint: To restore the original branch and stop patching, run "git am --abort".
-hint: Disable this message with "git config advice.mergeConflict false"
-```
-
-What did you expect to happen? (Expected behavior)
-
-Apply these patches correctly
-
-What happened instead? (Actual behavior)
-
-Apply patch failed
-
-What's different between what you expected and what actually happened?
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.47.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.10.1
-OpenSSL: OpenSSL 3.3.2 3 Sep 2024
-zlib: 1.3.1
-uname: Linux 6.11.6-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 01 Nov 2024
-03:30:41 +0000 x86_64
-compiler info: gnuc: 14.2
-libc info: glibc: 2.40
-$SHELL (typically, interactive shell): /usr/bin/zsh
-
-
-[Enabled Hooks]
+-- 
+Kristoffer Haugsbakk
