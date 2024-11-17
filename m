@@ -1,115 +1,132 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1F47462
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 01:32:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711F12C9D
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 02:07:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731807124; cv=none; b=q/A0CSnnTGJvwmYV11Rvnyuch1FwC9Vbcn3NmQ+nobEYLMPhMzFKbbFvnGpRjkk9cy8RD2CmtLdSO7PiqpUAT6Lh6qk7c7WPEkX6QW3yiWJPyMWLAxlgGiR4icOEd3b+Vq2pVDlaCDs7+3GaHQG1aeuY7+fnIfuHV4xzS9pU3mA=
+	t=1731809275; cv=none; b=R4JpiAUXEoKK4tipnry8tUJogO1pXWGevm30FArkMQFsSSlSyG32fs8kbrmu+3vCLsaiC+RSmlvjWilnMWHtujUTQSf/9LourUHerMt0rYClxeSWUwjXdh8772S4mCl86X/qvtoRCnJbspFd0FAbiuJR3EOx66h9CJNrf9/Nfl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731807124; c=relaxed/simple;
-	bh=Hzyf1CFMPpffb+csxhpqOAD+QjqqdA97Gvqyit/qX1U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NHJDlfqvyovdfnz5cBcw89Q3vyaRETYCMKO6TMUsOAHkJ8+3vET1b3ePW4n7n881BitooBnmi+97Pjsy6vViMot9+ta9skrEZSLcjvfBiVwZ1sjO1bCUpu1Wj2pG33xQyGkPPwwUFD0pRMQVOyEG8SF+wVKZzME4AlFFiDNBrBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kF79sDoh; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1731809275; c=relaxed/simple;
+	bh=pQ6qMIFU1RHsM8wm5maoi6wFRKXbGy4EAhSpvKUoXM4=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=B97yZYqtVPREYQQYG479zGnzALiTPaYObLapcB2Okd3BDYEOhxUvftRbe7+hbwsBxWMiisLi82PgjxMLrhIr9rQAY1f0ELkei8aEWXncGWhCfCWefRJDTi0U8ej5tC1R8YssA51LIxkUdvHnyzcvwI0jvo3H7ulk1/FZV0RSejE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=DAy/cj6F; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kF79sDoh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1731807115;
-	bh=Hzyf1CFMPpffb+csxhpqOAD+QjqqdA97Gvqyit/qX1U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=kF79sDohibKJi5kTPFThObb5tDEoC8njmeXs+uI8mi+sqIbnGndHk2d87A17k5a2k
-	 4UUaXxVO83zA2eXm34BuAwzIqjC917lMNqSK8MMhtwJ9PCzXIXujb2iecsPk6P8RCC
-	 OwwYtOjsaM8UkbsSqIvUg4nd6hrLZlAJLPhWcrWQeEMx6eh3sYoXJzhzxHiVbwBJVN
-	 yIda35UGP8O/KXOuSqwngov54Q5opud9tq5nswYMNTuslOedqTaLSrQrf4BFbMOJns
-	 N1RmQyK56fVNlue1llqLmvrOVkIsfcuydF4I37MGOlZjZu0MxABi3tHXBEb8hDKmdm
-	 D8UWjutUH4mpHpF3PrOVRRehfOXImepFjXhmKIrMQhdrl4BPICuT04z17WawFgDxgb
-	 D/oaBnlwKJaJTO3UkEExAo/lT8b3rxifX4k0SSVZawxsC9mB3joYqru/pwtMxRf3pp
-	 MS/sN5p9/N1N2xfumRTmk6dymw6eagr4NX7q+Gc0iejE5o8yHPc
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4244724444;
-	Sun, 17 Nov 2024 01:31:55 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sam James <sam@gentoo.org>
-Subject: [PATCH 1/2] index-pack: rename struct thread_local
-Date: Sun, 17 Nov 2024 01:31:48 +0000
-Message-ID: <20241117013149.576671-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.45.2.753.g447d99e1c3b
-In-Reply-To: <20241117013149.576671-1-sandals@crustytoothpaste.net>
-References: <87ed3apy2u.fsf@gentoo.org>
- <20241117013149.576671-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="DAy/cj6F"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=ahrxk32rt5dzvfoirpyliuwabe.protonmail; t=1731809265; x=1732068465;
+	bh=xmSPrDpbd3VEBXR8jSUgBgdMwpKtq79yR8lhcNdSqvQ=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=DAy/cj6FjCOCqaBikysYluhpbzxT3/gyhshtTzSBTBcLfI83vUFVSye+rAtrtQZpf
+	 Zy96hYoov3J4kguZtmYLAgLmLcQ81UV61yrPdmwzIed6WCpLQRNxVNmsnRpkTmnhMp
+	 mRTPQMjrH9/s7ZiP0QfZquWCASssSoDbwZttVcwqx7KndamyV7XSm6hGAk5NrKvihJ
+	 fHeEn7NWdHKERLV1BVbc4tOKNsXkecruzsBwfCKCar6NlV/bkvvECNmzGckIq8Qmth
+	 /Rpw9GJ9cFemQ0XHt7D7ySBQ55fWD/eiESkrpoOR1KZAyTUTI69sCwgLHbUmx09QrO
+	 onT+/oeAOO7/g==
+Date: Sun, 17 Nov 2024 02:07:42 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: What is the diff between a --soft and a blank reset
+Message-ID: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: b01787dc34015317ca6f63b16e42be5377dc07d6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed;
+ boundary="b1=_j4M2oaNvtj9DAUSQE5k5ymr83NlpWarPkh57sHsH9aE"
 
-"thread_local" is a keyword in C23.  To make sure that our code compiles
-on a wide variety of C versions, rename struct thread_local to "struct
-thread_local_data" to avoid a conflict.
+--b1=_j4M2oaNvtj9DAUSQE5k5ymr83NlpWarPkh57sHsH9aE
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/index-pack.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 9d23b41b3a..a6942233e5 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -94,7 +94,7 @@ static LIST_HEAD(done_head);
- static size_t base_cache_used;
- static size_t base_cache_limit;
- 
--struct thread_local {
-+struct thread_local_data {
- 	pthread_t thread;
- 	int pack_fd;
- };
-@@ -117,7 +117,7 @@ static struct object_entry *objects;
- static struct object_stat *obj_stat;
- static struct ofs_delta_entry *ofs_deltas;
- static struct ref_delta_entry *ref_deltas;
--static struct thread_local nothread_data;
-+static struct thread_local_data nothread_data;
- static int nr_objects;
- static int nr_ofs_deltas;
- static int nr_ref_deltas;
-@@ -148,7 +148,7 @@ static uint32_t input_crc32;
- static int input_fd, output_fd;
- static const char *curr_pack;
- 
--static struct thread_local *thread_data;
-+static struct thread_local_data *thread_data;
- static int nr_dispatched;
- static int threads_active;
- 
-@@ -390,7 +390,7 @@ static NORETURN void bad_object(off_t offset, const char *format, ...)
- 	    (uintmax_t)offset, buf);
- }
- 
--static inline struct thread_local *get_thread_data(void)
-+static inline struct thread_local_data *get_thread_data(void)
- {
- 	if (HAVE_THREADS) {
- 		if (threads_active)
-@@ -401,7 +401,7 @@ static inline struct thread_local *get_thread_data(void)
- 	return &nothread_data;
- }
- 
--static void set_thread_data(struct thread_local *data)
-+static void set_thread_data(struct thread_local_data *data)
- {
- 	if (threads_active)
- 		pthread_setspecific(key, data);
+What is the diff between a --soft and a blank which is --mixed reset? Does =
+this from --soft: "leaves all your changed files "Changes to be committed",=
+ as  git status would put it.'" mean soft leaves the adds indexed but befor=
+e the adds were commit and without commit whereas --mixed would erase the i=
+ndex having adds ready to commit? This is how I gather it however the manpa=
+ge hint's at being written by a thirdparty and having conflicting and scatt=
+ered jargon makes it to where the user cannot communicate in a meaningful w=
+ay about using the software. The difference here is touching the index but =
+what does that mean in pragma: what does a git repo index handle? Isn't the=
+re some better way to find answers rather than Google advertisements or IRC=
+ wrong answers.  See the snippet from the manpage below:
+
+git reset [<mode>] [<commit>]
+           This form resets the current branch head to <commit> and possibl=
+y
+           updates the index (resetting it to the tree of <commit>) and the
+           working tree depending on <mode>. Before the operation, ORIG_HEA=
+D
+           is set to the tip of the current branch. If <mode> is omitted,
+           defaults to --mixed. The <mode> must be one of the following:
+
+           --soft
+               Does not touch the index file or the working tree at all (bu=
+t
+               resets the head to <commit>, just like all modes do). This
+               leaves all your changed files "Changes to be committed", as
+               git status would put it.
+
+           --mixed
+               Resets the index but not the working tree (i.e., the changed
+               files are preserved but not marked for commit) and reports
+               what has not been updated. This is the default action.
+
+               If -N is specified, removed paths are marked as intent-to-ad=
+d
+               (see git-add(1)).
+
+
+
+from A_bughunter@proton.me
+
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmc5T+sJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAKvTAQCQIJGVcxvf7jSYvcPMUyeF15FriACM1QzPX2pyn++bxwEAxuK2
+c5qmTxALcRE4OKHk8UkP2S0gHqnos75thGKMwAI=3D
+=3DIlx7
+-----END PGP SIGNATURE-----
+
+--b1=_j4M2oaNvtj9DAUSQE5k5ymr83NlpWarPkh57sHsH9aE
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_j4M2oaNvtj9DAUSQE5k5ymr83NlpWarPkh57sHsH9aE
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnQEABYKACcFgmc5T+sJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAA8nAQDIOkbw
+T+MSuRF6AqRwiDIl0w1wmLOtczXS4vsw+wScawD3W4tOo12Xo5jV+IUJtUX5EwhU3hrex+ZFp3yF
+VzqPAA==
+
+--b1=_j4M2oaNvtj9DAUSQE5k5ymr83NlpWarPkh57sHsH9aE--
+
