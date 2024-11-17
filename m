@@ -1,65 +1,108 @@
-Received: from mariecurie.slightlybroken.com (mariecurie.slightlybroken.com [116.203.185.229])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2061CBE8C
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 14:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.185.229
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39F028EB
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 14:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731852408; cv=none; b=GfdIc/WnG79Aj7vGVNw9qCQD6RLMVnwC93eE9RjAKMILkITDqUraiinVoc/8a+jOjXV90NV83YDyk7WjdYmWYqSRLgFoJxe8hEYmreJSSZfr8CjTw5z93wWF0JbUVB/2spVCUz06gOSBEMPF/hbMZtk9R2ZgTGwdXlf4IIrGwlI=
+	t=1731854942; cv=none; b=N9GLub+xlaXAjW/evIwbGEWYDXC53OA4zRDUgX83Wxz0Y5enxsPI8HU9psP/fKGP5TIm6COja1AIQmgKNtv7tJcgy+FfAGEU/qyzqO/cQ/u5Jp395vFXqWYRQH6bEmxMrwvsyQ4oC25v0qoHD/Gl14/lWFcAPdVRz1oxWE+IaoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731852408; c=relaxed/simple;
-	bh=nTjtJgUCR+Lfrx8iAmrjdPvaybkc1b/buGhxxyVcwvQ=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sZOmyUKwc1nflgfsohSvoXuBz+VYxavDUxfi2Pi4z3Dl5qU8ely/B46o5I05pzTSAGDLME+tM63lIICQZBxINK5eP6V3GPhQYHZSiz3suwt8TbpVWptZXZXwoSWpCsI99Rp0MCfn5FwWuSsXa+CKcXRZ4V0uJ7TkrjHQDevKOTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=labrat.space; spf=pass smtp.mailfrom=labrat.space; dkim=pass (2048-bit key) header.d=labrat.space header.i=@labrat.space header.b=Pvl98TZD; arc=none smtp.client-ip=116.203.185.229
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=labrat.space
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=labrat.space
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=labrat.space header.i=@labrat.space header.b="Pvl98TZD"
-Received: from labrat.space (46-126-49-17.dynamic.hispeed.ch [46.126.49.17])
-	by mariecurie.slightlybroken.com (Postfix) with ESMTPSA id 5103C60DBE05
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 15:00:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=labrat.space;
-	s=201904; t=1731852049;
-	bh=nTjtJgUCR+Lfrx8iAmrjdPvaybkc1b/buGhxxyVcwvQ=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To:From:To:CC:Date:
-	 Subject:Content-Type:Content-Disposition:Reply-To:In-Reply-To:
-	 MIME-Version:Message-ID:References;
-	b=Pvl98TZDYhWaQwbI0DaNgIKCnyn9C0W+AZlknV3D2KHcPgctCyxIrlK6oDBxEh08e
-	 hjNz+YlGOdPN2FYCNFERosWsCS924AiVjqEGpR4k4/EevzU8ZKNnEWhzPepM0t+vYy
-	 2be/2ERL3IiEWePkEC40NPKPNCpxT5MdMDzRTsMmw8ipRxwyx+6N029rZEZBI+IzNS
-	 ngFAcokSC2FArijW2x8Zh627jIKqUGTmma1eeEgxZFSosYSxXySF6eBTwG9b4+lZX0
-	 lrsH18SY+fI8PDgKvlycDbeDqfwsSyz/+3NNjfBA4yRm+SP81ZW1uWTjhgbZrJ9Bl1
-	 BdgNFfYfX3y1g==
-Date: Sun, 17 Nov 2024 15:00:41 +0100
-From: Reto <reto@labrat.space>
-To: git@vger.kernel.org
-Subject: Re: [Question] OAuth Integration with git
-Message-ID: <rjnm7xkk764fqvjl43qtchqapmcqgfw3ia5brpsocfotwm3x2d@uexpitxb532x>
-Mail-Followup-To: git@vger.kernel.org
-References: <014301db3839$bdfa7240$39ef56c0$@nexbridge.com>
+	s=arc-20240116; t=1731854942; c=relaxed/simple;
+	bh=u8+nO49FTNoqKmGzOcF6HPgc4i3QwES94o//VoHjxaA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TOTWlJKLnVyJ7yokTd/HjPsaMCRhqQVhXMiJTcvTT+wlsz5CBHnnlE6FpQng19Lc//mrTUxhk8v76jD0cjdLHQGl0KnFw4u+O3nnvnBIv70ltrBvmu2Gzyaz4PR5eMjcFagxB+wrTYPEA/4Xhy02Mw6LGyd25Xcbi+9nBoj6hsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4XrsvH6g9Fz5v00
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 15:04:27 +0100 (CET)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4Xrsv2625RzRnmP;
+	Sun, 17 Nov 2024 15:04:13 +0100 (CET)
+Message-ID: <7f24a030-bae2-4712-8593-61a9d4089cfb@kdbg.org>
+Date: Sun, 17 Nov 2024 15:04:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <014301db3839$bdfa7240$39ef56c0$@nexbridge.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] doc: git-diff: apply new documentation guidelines
+To: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Cc: Patrick Steinhardt <ps@pks.im>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+ <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
+ <6841bd5825be8e7b17c2f9c3a997de29ffa3a540.1731785769.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <6841bd5825be8e7b17c2f9c3a997de29ffa3a540.1731785769.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sat, Nov 16, 2024 at 10:10:53AM -0500, rsbecker@nexbridge.com wrote:
-> Hi Team,
-> I was wondering whether there are any good discussions about integrating
-> OAuth with git using a custom credential helper. A process flow would be
-> very helpful.
+Am 16.11.24 um 20:36 schrieb Jean-Noël Avila via GitGitGadget:
+> --1 --base::
+> --2 --ours::
+> --3 --theirs::
+> +`-1`::
+> +`--base`::
+> +
+> +or `-2`::
+> +`--ours`::
+> +
+> +or `-3`::
+> +`--theirs`::
+>  	Compare the working tree with the "base" version (stage #1),
+>  	"our branch" (stage #2) or "their branch" (stage #3).  The
+>  	index contains these stages only for unmerged entries i.e.
+>  	while resolving conflicts.  See linkgit:git-read-tree[1]
+>  	section "3-Way Merge" for detailed information.
 
-Not sure I understand the question fully... such a thing already exists:
-* https://github.com/hickford/git-credential-oauth
-* https://github.com/git-ecosystem/git-credential-manager
+Having seen this new proposal (which I am not a fan of), I reconsidered
+my take on how this could be formatted.
 
-The "process" is the usual git credential protocol, and you can look at
-the two implementations above if you like to get an example.
+First, I wonder why the pre-image is not
 
-Is there something more specific you had in mind?
+-1::
+--base::
+-2::
+--ours::
+-3::
+--theirs::
+
+like we write in other cases where multiple options are described by the
+same paragraph (e.g.: -p -u --patch; -W --function-context; --textconv
+--no-textconv).
+
+Next, since with such a scheme all options are treated equally, we have
+to ask whether the description in the body text makes sufficiently clear
+that they not all do the same thing (it does), that there are actually 3
+distinct groups (it does), and which options mean the same thing. The
+latter is rather meh, but it is the fault of the text and can be
+remedied easily.
+
+Finally, with all this considered, I think it is not so bad at all that
+all options are lumped together in a single line (or remain on six
+separate header lines, depending on the processor). So, I would no
+longer mind seeing this transformed into
+
+`-1`::
+`--base`::
+`-2`::
+`--ours`::
+`-3`::
+`--theirs`::
+
+for consistency, or
+
+`-1`, `--base`::
+`-2`, `--ours`::
+`-3`, `--theirs`::
+
+for brevity.
+
+-- Hannes
+
