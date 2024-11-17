@@ -1,100 +1,164 @@
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5A93EA9A
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 11:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4407A1803A
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 12:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731842667; cv=none; b=hQH71Ccnr2ST6aoedKhz88F2rRgTW6hTPCRrUCZzKvoEqCOzji4zcuYHuTBOhd2Bhkep4sJennD7ImxfWP8JKkJ/bi5K0uGU/u3MaU9ApjSqplAtIAi+HsDktborr7Mmz4bIs68n+jC39VCUs50a8fQdQr4a7FouUlIsN3WbT3M=
+	t=1731847221; cv=none; b=ghVROri4rHZWp4RaV4vmMastksF1+1yOIAtG7YVZRZslCkCJ179dw/B8pzmlhcpKWkgb+BQe+RXsz4HKUB48wBjrsW4IrOt+e/BhEpApRLTo2qOeobM5iIQ0/Q3XaXXES87fookAKT8VFEtnQpQRvqlhBL0GV38ZNfFArwa3bfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731842667; c=relaxed/simple;
-	bh=bRfTmg5t4bvk9jEvwoytElrzW6Q7ZCpbAhAsaOKj/Cw=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=a+8mnZ3LtcCp4fE6p3NpuSgBvYIw1FL/VyIgGR2Srv4Vx8CB9WF+vznl8j0Om5z8yH/bziaESr+W4SuJ0vjpvgKOnJPiZyols0nMz2vLzHkvWQnPbOYZWQPry4ZyVBvfUqR+aV/nVMNQFsmxCCnNOkKYTsD3GmWsuvpywQg2Q5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=CI1COlSo; arc=none smtp.client-ip=188.165.51.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1731847221; c=relaxed/simple;
+	bh=t/O2wNJiZeIAHEaV+HBymIMe5/f+puvqUs5t+0f+uBQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=WJPHDKyxBk0+ZSAjgGEj0AValrwUwMEjnbRabSV0L4jXaP/0wIZvh0f5SUC2ZccvwLwq61zVql/mGfxXMv2447SGULA78WDEJbOapeaLx8dRct7vSbTRp8cdk8cfzqUZyq3zcBnwdEEjOzCjhW+91zpwB4IOI9r7zcZVcw5dvHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BO30EBet; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="CI1COlSo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1731842654; x=1732101854;
-	bh=bRfTmg5t4bvk9jEvwoytElrzW6Q7ZCpbAhAsaOKj/Cw=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=CI1COlSoFJE5Bo1ThxsqeqmxqBXyAIhGJAv4XlLI1WTrqQb6Y3vUnLlt3RfZKg0NI
-	 YG71sErDb38Ev/8sVA/OqJ17v4pMKGiWM1EThJYopMthwQly1zbwYzKcDog1g6LOsK
-	 Lb4ra3Tc1PEm9E5p5QCNSr+YyMmd/8aq/zQMU28g4Uw4eHAYZsgLapmgKwpTe7iyAC
-	 sbP93R2z6z9DxQIv3XzXnYHY5kkgc9WKchBEG07TUkvXwP3gNiCzuotgHWTZhcmgcs
-	 UnykRyjx56yU7+E7zmKP50Wej6bSm17nf+HmP0E0tF+DaajECnowWS8llrwLlzbnPS
-	 ZXvyA/iGkqzXQ==
-Date: Sun, 17 Nov 2024 11:24:10 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: A bughunter <A_bughunter@proton.me>
-Subject: How do you undo an add
-Message-ID: <4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlSI5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=@proton.me>
-Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: 3412a84342d3da96356f1082600a88af6223a62c
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BO30EBet"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3823eb7ba72so452956f8f.0
+        for <git@vger.kernel.org>; Sun, 17 Nov 2024 04:40:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731847218; x=1732452018; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=t/O2wNJiZeIAHEaV+HBymIMe5/f+puvqUs5t+0f+uBQ=;
+        b=BO30EBetl1xfq2IL/pAZiWhorrq2V2WYnhr7qGfPCF65l/oQfj87kHWxMfDrz8VeG1
+         W1WGK2Gk6zMRVAqtt8+ck7RBdeGZ5KqnVHB/EIpEJjdRcSM4qouaRpghzecBbP/nuvHA
+         08+pX2rDeOzff36mHpD3YKj3t7eXKZzd/50mQnDZoUrigIyFyhyy4pfqnw1NGVhoOwkz
+         caV4TuXwHSKEkfnIPiAlJ8gmXLw5XXFGO64PTH0nbJn+YQxwenQrccmIeu02kmNXrFY0
+         StFg26XNRfFNBEo4q7gBGsM89wp0xQ4wrSP6BZ/196URy0hQi8Q7KWzaq68BC7d4cSII
+         2Sbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731847218; x=1732452018;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t/O2wNJiZeIAHEaV+HBymIMe5/f+puvqUs5t+0f+uBQ=;
+        b=tmIbpdjVSZXnvIz6V2ibND6omcqofwvTfiFlGXWO2RFmlZ5DtXIEge5Nh1eX9+4BcF
+         e1PfDfuKjuU1cSf23aRB4xrLfn1dUY8Z0y4qfBfa7HDkV7mNZd4nHG1jFIsJQatLbT7+
+         TnjoqXGCHFlyIHpFoLSdenr08eFY184S4Y9Mg+a1GDLeGO+Qm48F9mLiGt6TKpTfm5u5
+         sG57xBZVq4CkSv+3Da4wODbpG1sd7LTFyZIhVTHGP2irqIqHjD7bFqYYTQI9eHo2qX0+
+         79JZzflZaDwvhN1r0/Np1y3grbnLcIkLiiPrsdxTal1xG/Ga7LrcA3uZWAIfzl7zH6jm
+         Sdcw==
+X-Gm-Message-State: AOJu0YxT5DR2WByL7dohp96XZ2kpc39PSESCpUNEdpObO3h49cf6O9We
+	Oef/Ul1MfTG46MMqQ1cmDbzbS9P2SjR9X/3PHt/xA8b2Fvntz2H2+9thKisJBlovQ8sAS3KDQO2
+	cBJKIMPpLtbMsjJgVseCrlqYu8x+yILcUTWY=
+X-Google-Smtp-Source: AGHT+IHwM5Ka0iBKm2wiYhn+6I7ws0VUsPXyPGEeHsW6kvknSqDWLpblgLC5NqObgf2OX6bi7V83DM2WUkmdJ39SRA8=
+X-Received: by 2002:a5d:59a8:0:b0:37d:4d3f:51e6 with SMTP id
+ ffacd0b85a97d-38225a07151mr8413544f8f.14.1731847217407; Sun, 17 Nov 2024
+ 04:40:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="b1=_vgBTMjYbHt87C7hZWgSkGp0mYPU62q4LW6tKgOeY"
+From: Ylarod <ylarod9@gmail.com>
+Date: Sun, 17 Nov 2024 20:40:06 +0800
+Message-ID: <CAGtHOOFutv6wHgoFnkZoETJwq6FDkbbBgGqzSXT9V7ESXQswCg@mail.gmail.com>
+Subject: [BUG] Apply patches failed without any changes
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
---b1=_vgBTMjYbHt87C7hZWgSkGp0mYPU62q4LW6tKgOeY
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Maybe if I ask a queation a different way? What is the problem?
-ADD, ADD, ADD why cant they get that: ADD. ADD tracks files for commit. It'=
-s already been commit : push failed. Failed pushes piled up. I need them un=
-tracked. How do you undo an add ( many adds) simple question. Without delet=
-ing any files, to repush 1 by 1.
+1. Clone the repo
+
+```bash
+git clone https://github.com/Ylarod/frida-core
+```
+
+2. Generate patches from 36a8ffbb to ed039c9f
+
+ed039c9f Florida: memfd-name-jit-cache
+f5f61669 Florida: pool-frida
+7d4ada2d Florida: update python script
+bbe4ebb1 Florida: protocol_unexpected_command
+bedd2337 Florida: thread_gmain
+e251174c Florida: thread_gum_js_loop
+357374cf Florida: symbol_frida_agent_main
+da9110f5 Florida: frida_agent_so
+351d9c1e Florida: string_frida_rpc
+36a8ffbb subprojects: Prepare for release
+
+```bash
+git format-patch -N 36a8ffbb
+```
+
+There will be 9 patches:
+
+0001-Florida-string_frida_rpc.patch
+0002-Florida-frida_agent_so.patch
+0003-Florida-symbol_frida_agent_main.patch
+0004-Florida-thread_gum_js_loop.patch
+0005-Florida-thread_gmain.patch
+0006-Florida-protocol_unexpected_command.patch
+0007-Florida-update-python-script.patch
+0008-Florida-pool-frida.patch
+0009-Florida-memfd-name-jit-cache.patch
+
+3. Apply these patches to 36a8ffbb
+
+```bash
+git reset --hard 36a8ffbb
+
+git am 000*
+```
+
+The bug happens:
+
+```
+Applying: Florida: string_frida_rpc
+Applying: Florida: frida_agent_so
+Applying: Florida: symbol_frida_agent_main
+.git/rebase-apply/patch:126: trailing whitespace.
+
+error: patch failed: lib/agent/frida-agent.def:1
+error: lib/agent/frida-agent.def: patch does not apply
+error: patch failed: tests/labrats/agent.def:1
+error: tests/labrats/agent.def: patch does not apply
+Patch failed at 0003 Florida: symbol_frida_agent_main
+hint: Use 'git am --show-current-patch=diff' to see the failed patch
+hint: When you have resolved this problem, run "git am --continue".
+hint: If you prefer to skip this patch, run "git am --skip" instead.
+hint: To restore the original branch and stop patching, run "git am --abort".
+hint: Disable this message with "git config advice.mergeConflict false"
+```
+
+What did you expect to happen? (Expected behavior)
+
+Apply these patches correctly
+
+What happened instead? (Actual behavior)
+
+Apply patch failed
+
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
 
-from A_bughunter@proton.me
+[System Info]
+git version:
+git version 2.47.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.10.1
+OpenSSL: OpenSSL 3.3.2 3 Sep 2024
+zlib: 1.3.1
+uname: Linux 6.11.6-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 01 Nov 2024
+03:30:41 +0000 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /usr/bin/zsh
 
-Sent with Proton Mail secure email.
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
 
-wnUEARYKACcFgmc50lcJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAAAtSAQCoWAIHvKlg90Ehervf3zZtd1Ls65ZW0yMZ8ms6LgKClwEAn8lO
-6WSjvf58MofXRnDD88ciYBQBqfbs3v//kOiIYgA=3D
-=3DO0ks
------END PGP SIGNATURE-----
-
---b1=_vgBTMjYbHt87C7hZWgSkGp0mYPU62q4LW6tKgOeY
-Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
-YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
-ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
-bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
-QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
-a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
-CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
-ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
-Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
-QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
-eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
-UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
-
---b1=_vgBTMjYbHt87C7hZWgSkGp0mYPU62q4LW6tKgOeY
-Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
-
-wnUEABYKACcFgmc50lcJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAP3GAP4w5u54
-IbkG53IR1b+RIYcT4HUp79J89kvg/JoWJYWqlgEA4MNm8utmNKocG+RqhYzetoz6gX7lJS7xA3nU
-eBbIZgA=
-
---b1=_vgBTMjYbHt87C7hZWgSkGp0mYPU62q4LW6tKgOeY--
-
+[Enabled Hooks]
