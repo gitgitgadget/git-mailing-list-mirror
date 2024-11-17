@@ -1,156 +1,135 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 700FD23AD
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 16:44:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534633BBEA
+	for <git@vger.kernel.org>; Sun, 17 Nov 2024 19:34:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731861874; cv=none; b=kZXJA1BsQwq1FyLRSmr+odPfxQ9FZsz1ttG10ozxEmRT3bNvNjgKXZp/Xg67YdWDh8OFJ4AP4MFGwwXI5KFKuqS92fIX1BfSkFozpZaVuPdih8rhzdT5lZxA8YDMORZhSs+uHnueyBL+962HB6Ck+hmNqDuOWbR88TYpnlC+NPA=
+	t=1731872086; cv=none; b=EwHxsLosDS6XtQ/cO7VFEc7+V+jUdjb4G6I310b5VxwGwOlUTskTUMbd4QozdnIiu9rW82x0jxXPDZiA5PcaIMG7z7p50jofkXsD8/0uDlJmD0VViZ4aUP7goa4tQ0K2X29jPeLQmh7N9EtnPjHbPKM2nhbGOc0gZv1j5lmSii8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731861874; c=relaxed/simple;
-	bh=Bp55XiWFgWy8d7PeJmDYbb2JTYGvTl6ta/G/RmVKvQI=;
+	s=arc-20240116; t=1731872086; c=relaxed/simple;
+	bh=MKLVcSy4jaQ/6PWDOTfPHXmNkCmciBIaPISBWvn1+bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vAQ21w4oab/EnV+S9m91nrqFgNmOFA/FIorYBf4YH73v1KsIDGci+BGRvwh/490IOpqCb2NXoaLNSqN12/3q6F++7Jp5/rnmV7jCoqH3ooOUZGBYQ1NtmeEo794QEa4Tq7Uvrw9M9LVOj54orlaaTnl+AuZKOmBTcrl80IK6vNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=j529Z72u; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	 MIME-Version:Content-Type; b=DjxWENwRuI+u20lg+xhltkiXDyFbP5Qo/AvFqi1i3r0FbUegDlkAY1V5y/5e9movB1ikjnzsmyKUuvRKFcOyuDCtTiYZglnpkbVwhDAGCh15quABhX5+EWymHmVfZ8qPIZWswkG6DQJilUj00iAZDwlsfEEp42jMoRqgEaEXusg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=NjofMFW9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YHNLfGfX; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="j529Z72u"
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 62DFA428689
-	for <git@vger.kernel.org>; Sun, 17 Nov 2024 17:44:22 +0100 (CET)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9148:6a20:82aa:d298])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 99D6219F5A5;
-	Sun, 17 Nov 2024 17:44:10 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1731861855;
-	bh=Bp55XiWFgWy8d7PeJmDYbb2JTYGvTl6ta/G/RmVKvQI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j529Z72uuz/uNMiDs5/2U5W7yDTGrsX3r9lliKuvdQ5qosLLUC8Ma4PEbmk5561d4
-	 B7sIskuGzKg//FdnJqHNWtxLItTl8zJxoAF+Dt+cUNX5KKtTz+3jPsVwSnlrJyTBLP
-	 3LSwkSCViwdLZC7Gq3t1ZUkQ8pDJ+JVGP02p0pT12HznMTqKLLpNF1fmkyPooYgpcn
-	 N/VmrYbnJBemsihbMAFi7oFGqpBG9NBVCjTdNxyVPNHBkIgR/vgXp18kEFKjRSmMS7
-	 PHO+POOuir6F4gUxr/mhC05IZt7yxB4FxW5n+/qwCBVkPmLp0L1Xj0bSZaRWVpxlux
-	 emVsBpbrjEnMw==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Patrick Steinhardt <ps@pks.im>,
- =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/5] doc: git-diff: apply new documentation guidelines
-Date: Sun, 17 Nov 2024 17:44:10 +0100
-Message-ID: <2365334.irdbgypaU6@cayenne>
-In-Reply-To: <7f24a030-bae2-4712-8593-61a9d4089cfb@kdbg.org>
-References:
- <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
- <6841bd5825be8e7b17c2f9c3a997de29ffa3a540.1731785769.git.gitgitgadget@gmail.com>
- <7f24a030-bae2-4712-8593-61a9d4089cfb@kdbg.org>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="NjofMFW9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YHNLfGfX"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 668A41380479;
+	Sun, 17 Nov 2024 14:34:43 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Sun, 17 Nov 2024 14:34:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1731872083;
+	 x=1731958483; bh=DQHeY4fQURmbdqnbEQX7UMCCffK4WfJfiTCA2WjBlPU=; b=
+	NjofMFW9ZfcyULUOpV56l85m/wTKwKNTJDGdEzvbp6xoZRmsgXp63MF2oKEGvbEI
+	GljxRKMOJcB3QtaZwtlt3J63mgF6/3Plm7Dadc9JEmf4kyeIAa/31MQjXRksvW6K
+	rTShRvNjT7IF/fYQ01BzFDpzUoBjJ3kKuojwn0KxZcNL/+RMMUpklPkuI+idl/sL
+	Q0+/OwuhIlsmvNarNEIHwLopkREg5WNc7rSRzkI0R8vSSuH2kxEn76x4wnc5tTQk
+	nth/NO6A85UHoKFqHzwRFNzYYglKVNspaFqSneAwUlSD6eflLcK+35/s55vwijbt
+	/bL66IjFAZy+H/ByJLUzQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731872083; x=
+	1731958483; bh=DQHeY4fQURmbdqnbEQX7UMCCffK4WfJfiTCA2WjBlPU=; b=Y
+	HNLfGfXi0Ny9WLANtoo+D3S5M+xYZzOCSycPpqp4XEjW7wR656H9IGpr5CrbPq+q
+	UBcLw9g5DRwYQEtI8uzO17iTlFsdDhKsjnTfGaNugMgdd8Th7M4qAqflAxklxexz
+	plUdZCf5jgrsBdud4HPEqq1iQ5FGv/Gs86As9D54DDOudhe30i45DU7WNvBLLpYK
+	4ATyFWYX2F9m7LTiJx1Kbwx2fuIPtHZn+0Bxo8SqBwIKzLyAEsoNpHo+8m0F3NWV
+	1N7s3/KAN2IyepIV6ukf3NL4vJ6eUkOKJXcjn3aeLuo1m1kAarXGlFL7L62AG736
+	TlfvkYrHOp0LBI5rpuN7Q==
+X-ME-Sender: <xms:U0U6Z_DB75gTs8EUGTH0TjZxEaeSQW59zXWA_Es10FiOHB1r5AITTlU>
+    <xme:U0U6Z1hPibfcVo7PdX3H-QJn78HlkhtB2gbzxoYy2Fd1kQP40zOoqTrHPeQDlpygI
+    hVlVYEs4YlCGBBq7w>
+X-ME-Received: <xmr:U0U6Z6kwQO-Ku2S6G7KaLaefF5R4U__y1M431Wh-2_MV2JvijluSmqBqNjjxD-UWo2KTFWP7P7Z6GzpSO9Hv_OwV8CZKDj3g3Ls54O2qJl12hOWRVegdYOIoIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdekgdduvdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepueetue
+    ehjedvueegffeuleeuleeukefguedtieelteetgeeiuefhjefhgedvveeunecuffhomhgr
+    ihhnpehgohhoghhlvggrphhishdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
+    rghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepfhhfjhhlrggsohesghhmrghilhdrtgho
+    mhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:U0U6Zxz6uzgpqbDTM4DsbvdiDLlRilTocMuXXPHHDIilTM13MlT3Yw>
+    <xmx:U0U6Z0Rq0iDQB4Jh-behnAT-o1Efabm0p8MGnitYHwUNa4NadlfGWw>
+    <xmx:U0U6Z0bzpnTQDnIlvecDvXpCc8UeDYij0Pq1zn-m_u7GX2lT-XtEiw>
+    <xmx:U0U6Z1QKzBQ8E2pyYfpLik0oi0vCqEToqfuD3PpP2q7-aB4t5BUAjA>
+    <xmx:U0U6Z5IQ6WbPMOqgKM0aCNA08Z--IxrKg0SmM9h10Te2zd20v3KBzxZv>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 17 Nov 2024 14:34:41 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	gitster@pobox.com,
+	ffjlabo@gmail.com,
+	christian.couder@gmail.com
+Subject: [PATCH] Documentation/glossary: describe "trailer"
+Date: Sun, 17 Nov 2024 20:33:49 +0100
+Message-ID: <ba35ba3ec212860a3151cfad582a384a50c55e6a.1731871683.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <xmqqa5e2ahqf.fsf@gitster.g>
+References: <xmqqa5e2ahqf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sunday, 17 November 2024 15:04:13 CET Johannes Sixt wrote:
-> Am 16.11.24 um 20:36 schrieb Jean-No=EBl Avila via GitGitGadget:
-> > --1 --base::
-> > --2 --ours::
-> > --3 --theirs::
-> > +`-1`::
-> > +`--base`::
-> > +
-> > +or `-2`::
-> > +`--ours`::
-> > +
-> > +or `-3`::
-> > +`--theirs`::
-> >  	Compare the working tree with the "base" version (stage #1),
-> >  	"our branch" (stage #2) or "their branch" (stage #3).  The
-> >  	index contains these stages only for unmerged entries i.e.
-> >  	while resolving conflicts.  See linkgit:git-read-tree[1]
-> >  	section "3-Way Merge" for detailed information.
->=20
-> Having seen this new proposal (which I am not a fan of), I reconsidered
-> my take on how this could be formatted.
->=20
-> First, I wonder why the pre-image is not
->=20
-> -1::
-> --base::
-> -2::
-> --ours::
-> -3::
-> --theirs::
->=20
-> like we write in other cases where multiple options are described by the
-> same paragraph (e.g.: -p -u --patch; -W --function-context; --textconv
-> --no-textconv).
->=20
-> Next, since with such a scheme all options are treated equally, we have
-> to ask whether the description in the body text makes sufficiently clear
-> that they not all do the same thing (it does), that there are actually 3
-> distinct groups (it does), and which options mean the same thing. The
-> latter is rather meh, but it is the fault of the text and can be
-> remedied easily.
->=20
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-OK, I'm not fond of my solution either, but I strongly dislike mixing synon=
-yms=20
-(which is the usual meaning of putting several options in the same=20
-description) with incompatible behavioral alternatives. But, for this one,=
-=20
-let's consider that the alternatives are just like `--[no-]bla` option=20
-descriptions, for the sake of ending this PR.
+Reported-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-I would still rephrase the description to make it clear, how the alternativ=
-es=20
-are  working:
+Notes (series):
+    On Wed, Nov 13, 2024, at 23:31, Junio C Hamano wrote:
+    > Christian Couder <christian.couder@gmail.com> writes:
+    > > [...]
+    > We do not even have an entry in the glossary for "trailer", and that
+    > probably is the first thing we need to fix.
+    
+    ---
+    
+    • Tags: What the Linux Kernel uses
+    • Footers: Lots of people around the Internet apparently. Like on
+      Stackoverflow. Or Chromium: https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-footers.html
 
-`-1`::
-`--base`::
-`-2`::
-`--ours`::
-`-3`::
-`--theirs`::
-	Compare the working tree with
+ Documentation/glossary-content.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 42afe048691..575c18f776e 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -696,6 +696,11 @@ the `refs/tags/` hierarchy is used to represent local tags..
+ 	that each contain very well defined concepts or small incremental yet
+ 	related changes.
+ 
++[[def_trailer]]trailer::
++	Key-value metadata.  Trailers are optionally found at the end of
++	a commit message.  Might be called "footers" or "tags" in other
++	communities.  See linkgit:git-interpret-trailers[1].
 +
-=2D-
- * the "base" version (stage #1) when using `-1` or `--base`,
- * "our branch" (stage #2) when using `-2` or `--ours`, or
- * "their branch" (stage #3) when using `-3` or `--theirs`.
-=2D-
-+
-The index contains these stages only for unmerged entries i.e.
-while resolving conflicts.  See linkgit:git-read-tree[1]
-section "3-Way Merge" for detailed information.
-
-> Finally, with all this considered, I think it is not so bad at all that
-> all options are lumped together in a single line (or remain on six
-> separate header lines, depending on the processor). So, I would no
-> longer mind seeing this transformed into
->=20
-> `-1`::
-> `--base`::
-> `-2`::
-> `--ours`::
-> `-3`::
-> `--theirs`::
->=20
-> for consistency, or
-
-To be honest, this is the form I would prefer because it can be automatical=
-ly=20
-processed for translation as "do not translate". Any addition involving hum=
-an=20
-language to a segment requires translation.
-
-
-
-Thanks,
-
-JN
-
+ [[def_tree]]tree::
+ 	Either a <<def_working_tree,working tree>>, or a <<def_tree_object,tree
+ 	object>> together with the dependent <<def_blob_object,blob>> and tree objects
+-- 
+2.47.0
 
