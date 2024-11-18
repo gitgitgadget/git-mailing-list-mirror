@@ -1,94 +1,107 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13FC1AA1FF
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 19:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D9B1E765C
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 19:52:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731958126; cv=none; b=U1qn3eD8+5DWtxOqrNsxE9E6UKs7K5u4XWYh3u1iYl182PtXVIbgHUBzBEYTzTUXxg2hQr2zyJcLIDA0l2dkSp8ITuErIgwWjbnr80wyNYxzwavSxvfd27CWsfSryTy3nEDHJdeyL0ivQr7zZH/1gBtxU9z+CpNtrIwcnXMckds=
+	t=1731959527; cv=none; b=tPO9qH8wnHkgN+L1Kh9eoZFvVyG55+8oWVqd6gJ58BRHK4RNVTB1b0fTRofvysYzt4za3rCTFQZmBtErqqyjSVjfn+ERPcampGuBzitP3Kzs1PxVk1HejADlT8wBZMtDpBeD+CnjO5839iaBwDyqSepgxuSt83KiMu7s0leb8ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731958126; c=relaxed/simple;
-	bh=2iTHvrXAAVOhfirYY8+F/RQDmop7vthVTjoyzsakKlU=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=WUPKB4ahA7xwjit0eeZ22v9xHYuSQlCP2/3CCjk8H4Fnr4RTYJppA691oh/dEqaFAvuPbZ65Q4oUnzyuoOGcz47toUZdejse2O6A8YxmNvMsCnY8jw+PnsV/ScD2se3Ri1ljGZnujwgRhvHR+oUTF1i/bkQR/hQdmTdDYCqTNZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gS7SvUuK; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731959527; c=relaxed/simple;
+	bh=tDvlc0LwFbwHrCWFiVRQ5ZyvEuImT0xC2UMqNzIf82A=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CdX6BFsahbpnhHxoFGiIROTIkh6XT2Mut10ZDkVlNSzFRep1PXyWPW48N6G6LdlgeIiHGT8n6dkx+UVIa+hm/MsTxDI6RufcrGHRqyY/t4OyzPov6VdskE/tWzRmFBXgjYIHibV5l9R4FOJj2n2rmxSFS9HcZ4PtLln6714s7CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=ZArweRuv; arc=none smtp.client-ip=51.77.79.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gS7SvUuK"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3e5f86e59f1so1902516b6e.1
-        for <git@vger.kernel.org>; Mon, 18 Nov 2024 11:28:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731958123; x=1732562923; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z5DTW0d+eGM90MNqVaMfci0Jsu6HaWlrmhVCFTDKx/k=;
-        b=gS7SvUuKDmD2vQ5OTvZ/8yySS68rx0oqJjn9Pa8AeyjdpsLeJKBiQOu79nVMn1bCou
-         c7H9+sXWyX0OD+95mBJvXzay/8IT53eg0vhZlQ9tLaAJye2qpZHJVa8PJz+CagrJxxMP
-         NE8Q+DKpZVdqX3nt53JanRLt+bsiAdhOXi7VnxpHYnknmgTB/z1A4Wxfrkxp23rA6WKW
-         Ds5ptjLqgqxOHjJqpkefkkeHsL1QkNscV+X5f/6X/opQ87vmDsr1caUBQiGXEEcEurzC
-         Vy4fOn+F8YbTYaRMHkvDwQywT31gbTHs+96tslFsNdoi5eXr6x55UiFDzamzxw2J1M5o
-         ziQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731958123; x=1732562923;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z5DTW0d+eGM90MNqVaMfci0Jsu6HaWlrmhVCFTDKx/k=;
-        b=lvtOqVDjRCOSJ74/Ab7dnntMsKDA9Pwl6/6nS2GnUOXpl1oeujvehb3KN1ppiuZZUK
-         Fxc3Wp46DC8F6gf+nPlINfQa5ppDrfBTV+3xVwTLRrCdtKXbEP8cnfOnOaxnh7yfiZN2
-         49wfmqR78WiUQwBzJ+aa4It2wo594IvVLoRFG6H4E3ekWrqtYYufAtvJl/DhVuX9SW0f
-         bJlfgbK+yg1lmOafEMC1HJQn7QzM77n+Pib345x2HoWcxSy7jC9pwHAnrSnD8KNyf/3M
-         2STGrutXdrGViA19yiBl3G8HjKQqTpBytc6XAgcJzO2DXd+YHFEGUQqnvmAkLfKeptxg
-         w50Q==
-X-Gm-Message-State: AOJu0YwPuy4g4T4Kv19mpWEJEOSkvDCIokLFutAagNMzhB4cqnR8A1VB
-	tzMzM8yN0QStwQkMGrAOxNJMhLTcH1s8f3qbFXT4sMAsm19WUCuFj+BoCA==
-X-Google-Smtp-Source: AGHT+IGE6R8aOlsQQ7mbBM0iMDIZh4QIFwXxmYwibquEK/ZDe6XT4Qa93UzQXm8Mnq6x8yw8jleOAg==
-X-Received: by 2002:a05:6808:1689:b0:3e5:db57:c479 with SMTP id 5614622812f47-3e7bc7a2307mr12025426b6e.3.1731958123184;
-        Mon, 18 Nov 2024 11:28:43 -0800 (PST)
-Received: from ?IPv6:2606:6d00:17:6fc4:882f:9015:71cf:9197? ([2606:6d00:17:6fc4:882f:9015:71cf:9197])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d40dbe15d9sm39569336d6.20.2024.11.18.11.28.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Nov 2024 11:28:42 -0800 (PST)
-Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
- allocated on MacOS with git 2.47.0
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
- <4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de> <xmqq34js1kd2.fsf@gitster.g>
- <Zzr4cgk_5MJNcHm1@pks.im> <xmqqjzd0k92c.fsf@gitster.g>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <b09b16f5-4fa1-c802-86ac-9f0b1bcc9f53@gmail.com>
-Date: Mon, 18 Nov 2024 14:28:41 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="ZArweRuv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1731959514; x=1732218714;
+	bh=tDvlc0LwFbwHrCWFiVRQ5ZyvEuImT0xC2UMqNzIf82A=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=ZArweRuvK/EXRS2hKpGyzVGsY4+idEiOd03cPW67XILcTlJ4ebQfUlnvC5wYcl2YQ
+	 X8xdEiKtq03MP3333x0cRby3p+W5OzbAMgiq8+mia3z7XvkL/w8uFYdDfaDmOaTSRj
+	 NDBtlhwcqW8OvSTZEfmYRxJ822u7vfGMCoS7jeINHCKT5DLaEAlcC39/CXpPYh8Vuj
+	 LNF4U54KVcCMOu0JSQOBg41E+FlzP+/86tSFwOsShjkrkjwsXlHUz7XuNA/g0678CW
+	 7z7r4V+Yue9L8XsndGcFzeWrYbE3+HFtzxTlLvgoHw6RnHz1HAjnPBAoyxqUz4y6T+
+	 SpvnyAcIUHWmw==
+Date: Mon, 18 Nov 2024 19:51:49 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: Re: How do you hyperlink a thread
+Message-ID: <lLSbsbSEi1ltdY3N1MKhGPVHTPeII5XsqVcYwmh_WHIjVAlNyktnNEaLgBUkh6stvHLE371tlmlhOTdoFloVic-Wq0wE0pQYLBeeVuvA_oA=@proton.me>
+In-Reply-To: <Sj2qFJa5yPRxluqhZvXlMwgfLuX9n6Um4OOS9IHNXCJU3jjE0YblQDUt0rOpEzY-fUHs5CiognunZO-ddQN-1IVVBEyxLz_2hl936VBW-JU=@proton.me>
+References: <Sj2qFJa5yPRxluqhZvXlMwgfLuX9n6Um4OOS9IHNXCJU3jjE0YblQDUt0rOpEzY-fUHs5CiognunZO-ddQN-1IVVBEyxLz_2hl936VBW-JU=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: e2f0ac79aa4d4dc71a7bf46cde59191fbec70b7d
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <xmqqjzd0k92c.fsf@gitster.g>
+Content-Type: multipart/mixed;
+ boundary="b1=_ofEdFX6W1rYtLKgZIe2BKnL9RNwpUi5ei0AXpWFNYog"
+
+--b1=_ofEdFX6W1rYtLKgZIe2BKnL9RNwpUi5ei0AXpWFNYog
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Le 2024-11-18 à 07:42, Junio C Hamano a écrit :
-> 
->>     pb/clar-build-fix
-> 
-> Not all that urgent (it is not end-user facing).
+On Monday, November 18th, 2024 at 05:04, A bughunter <A_bughunter@proton.me=
+> wrote:
 
-I'm not sure what you mean by "not end-user facing".
-I ran into this issue while running 'make -j -l 2.5', 
-as I mentioned when I sent the patch [1]. I guess you mean that
-end-users do not normally build the code themselves ?
+> How do you hyperlink a thread in this Mailing List when writing to the ML=
+ in order to reference related threads? I now have three threads going and =
+all of them are related BUGREPORT > TECHNICAL QUESTION > USE-CASE. How do y=
+ou hyperlink to a ML thread in a ML message?
 
-Cheers,
+Hello, why isn't anybody answering me? I see an active list. As you may'v s=
+een I'm new to the ML. I read up on top posting, bottom posting, and interl=
+eaved. Please wait while I configure my email for bottom posting by default=
+ and no appended signatures. There is a logic to top posting for magnus and=
+ bottom posting more passive things. I call it interspersed and not interle=
+aved because each line is a sparce sperse of the whole reply.=20
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-Philippe.
+wnUEARYKACcFgmc7mtIJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAALZ3AQDVOFNJ0RKeMqJibdLD/ziyq/3LOXu0c1SUOMBAKEHjHwEA/oGl
+OUCVMnCswiGXojmq5WH0rv6ad+DGzrzGBMwJJAs=3D
+=3DVTzt
+-----END PGP SIGNATURE-----
 
-[1] https://lore.kernel.org/git/pull.1810.git.1728323033680.gitgitgadget@gmail.com/
+--b1=_ofEdFX6W1rYtLKgZIe2BKnL9RNwpUi5ei0AXpWFNYog
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_ofEdFX6W1rYtLKgZIe2BKnL9RNwpUi5ei0AXpWFNYog
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmc7mtIJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAFRfAP9+GZ/H
+T4muc2abr1hX76/M/VPPCMKYYpBx/dZoMrsLBgD/RFnqsw6ZXworZXGz+lnExneFHd/B7HlvX6Z5
+lWUw4gM=
+
+--b1=_ofEdFX6W1rYtLKgZIe2BKnL9RNwpUi5ei0AXpWFNYog--
+
