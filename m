@@ -1,108 +1,144 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE27147C71
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 10:51:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B8A194A68
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 11:38:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731927098; cv=none; b=RwbnHhxr2lqus8FB/iSi711DWx+b/tmzK2nJyg9xhicVZ4JiM4m1GU5kac00c2rqyvFfSFfKLCoA4c9eHuqscbQwRHv5CNEwJhvmNaJqp450uDyQVXiuuy9cgEL+etB1PdKl+93xgjkKmRrJg50GSvxD06tZHpcfzmBXqsYX6gA=
+	t=1731929902; cv=none; b=L6w+x2A4cOV9Y7Bgl1tqRS09FU0IoIchXGyr7pBxK7Ysm90pujv4mV+lmE8KzROMSKn3zATOnVPFH1vsjIIfGDlQK1b/6hGR8ATNgItFTDklmgnXzJ0DQJDr/beUULq34tCmRji7NGOXK4tuMPUvK080+qzYScXFLas5IiD34bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731927098; c=relaxed/simple;
-	bh=nr/DPUZADu41bBUc/JHOkJqzlYF9jA+AuAwlx68FbDA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NWPe9jAotcGvxEPu1KGHrdeeZPpt5hnt4LUNV2nJfY5Tvuq7U9X4t83HV2XuUshSomLV6BvajcLqjYIMc3ht0D/bqAPgF7VimTH5RpO4Fu2qskXJSYcdyJlpxyPHYvk5RIQqeIMnEK3lXX7oV4tHM0t4obUdp6gSaDzByiPRWB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EMag+whW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xyz6bgiu; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731929902; c=relaxed/simple;
+	bh=PVsAPiUzY2UeQ56HzNlVAEnY+Ysnl3tY1fMKDt+xzvw=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=KxMDQh5tXKQthVWSEHi/tFKDQdtAiy4h1My+++yyR/9mefQoH+Fx3XalFiLRrP+BbTvmzTOtMpFjtokuLX6iji8z51C4U0vjRTrqHd4dKdjtrtP1xq7pafaDsyzz2vzO3p6C8h7RNPTWVRUTWFV7mhet9jI2GD+t7bzOEfd0BVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=KY9sReme; arc=none smtp.client-ip=192.29.178.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EMag+whW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xyz6bgiu"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id D18961140192;
-	Mon, 18 Nov 2024 05:51:34 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Mon, 18 Nov 2024 05:51:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731927094; x=1732013494; bh=YQFFct4h1V
-	eP83wRqzpNS6TdFHLwrjPfMVFxfqbstUI=; b=EMag+whWsLz9LUlIwqma+ioZ7b
-	RCmvF4oSgdyiyZHUfZCKsXz9b0KD5pvaqL9E5FquM0+0Xj0U1J62EqL5TvOWMgXO
-	e95/8IB+ix8uEzMpDRFYYigE4yHfN8vXEOkG4m/xDcQ2ifG2udYv+zhSbH7lrm/b
-	8Rs7ixE9BY9F/jX3Pef7tJ/hyW+qSu55RefaB58H8bRS03NA7vdZODOmylf5lETY
-	/PBUMZDPFFGtevAT8rapV4kNSuHKpyIB1vNUF5vrRIFP7ac98LTYMtQLLYlzc0O9
-	UQS8lQ8C0qM+EX5h+GvwoG0NZR6DYl6EPvlvGunA3HAV0yke9TWOxy3ysRfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731927094; x=1732013494; bh=YQFFct4h1VeP83wRqzpNS6TdFHLwrjPfMVF
-	xfqbstUI=; b=Xyz6bgiu6daUl3GWinf5QPRAMD9w4+ZX7XgmQi7KjZXphbI/sUX
-	uEmGYLOs2tmpJZp6ENYsnbRsmeB3yldNcuGeKMkeM4PqYLhAcjO5QSiF/OkN2k5d
-	+QBtzpojct6RmYmPeLbpqxWB15V/V0NBGLqXpZX5tmO+AA1UaEWD+2H1HsPL/Z3N
-	jJGw6XwJZ+lAHDQcrmcfVM3tqz7Rlc6u5+Vhhu2U8xTcncNwWbeZqkTbxA5s77Q0
-	inF8s9vnRjiZjK4w6jlItEHO0C4EccKRqt+mk2Ute66SqbGnIGNCUwLTPEbNDzJp
-	M2R55ms079tCpeYuF5rrfr6YW0A+GdLYWCQ==
-X-ME-Sender: <xms:Nhw7Z5Tp_yFWhDA9FdbHw4zEFO4ROeDqAKjXjY5mCvwap_d-Tk2aWw>
-    <xme:Nhw7ZyyIN1pJvVTg_9n4P-nUddiv1i_BPN1-3LjrKa5R3epXH5aA4oKkQS-wZcbpf
-    KA0U7ld6YAJIFcRuA>
-X-ME-Received: <xmr:Nhw7Z-3a7PVDgrEn28BGvnB3lTsyVZ_cVJfGvvd6uP-PaM4Xr7uR-c1jCHWPU87qJbHK1unc3Y5kHmtf9fMfwU4-l05lk_JTG7ozKC9BO35rBGd4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptg
-    hhrhhishdrthhorhgvkhesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhsrdhrseif
-    vggsrdguvgdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvthdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Nhw7ZxCR6R93Au-CKRohJbNmx5ysgDvLuRoT_YVIcy7LB5gIviU5Rw>
-    <xmx:Nhw7ZyjoykV303e4Q0KNHhvvsY80MfxJwi39knf7aqxMzCYOcRUFEw>
-    <xmx:Nhw7Z1plvzlyBamYwHSCQDntKNQOgqYFpGs5LQRMUyVXSx1tMi2bag>
-    <xmx:Nhw7Z9iUInmN4BNRlc3kBxsPSwzviaWlyJ5wlTWZ2AxW0-ElBcNkvw>
-    <xmx:Nhw7Z9XbSqR6KTPbY4cNA0uD65jx0-Imx2k0BVVEggiuXmlYCunqZe13>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 05:51:32 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3176a8c8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Nov 2024 10:50:42 +0000 (UTC)
-Date: Mon, 18 Nov 2024 11:51:20 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Sam James <sam@gentoo.org>, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Chris Torek <chris.torek@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/6] -Wunterminated-string-initialization warning +
- cleanups
-Message-ID: <ZzscKHq6HN0pThV_@pks.im>
-References: <87wmh2o9og.fsf@gentoo.org>
- <20241117090329.GA2341486@coredump.intra.peff.net>
- <20241118095423.GA3990835@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="KY9sReme"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=LZpSGNKFNU5s2UAQfnV4mErrYYMiJ4loi23P4vvcnlU=;
+ b=KY9sRemefqeOA/kkS/D9Hns0yYPQu3rylRP+XqxPCIn3ZjBOy6TQqldT0ZMcsLAG8SqSug3C8VJt
+   cuVJu6ALsst7AiH5EdsjHAu8RZdQvoXQpOpyWc5QM6Rgw0/f4CKTnfVkNg1IwFSpmSc2BtWf47Ua
+   WULxESDn4kBueg4pVAGCASHk3Y2HJMPHng6eaBqmsNtXjPFpXBZxftF4Mu6y0GeZoVFFKI/JsD/o
+   ldSviGMtv8B33EbWo+NNsxqY6yEwUjEHXpAgfD/iOh5jYgkR/gve5762hoGVC+B+UrShMzyV+mwL
+   GobQh7rMypz44WjTFf/y/rCEbmTMi3SzPbDtrQ==
+Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SN500M009NOXIB0@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 18 Nov 2024 11:38:12 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241118095423.GA3990835@coredump.intra.peff.net>
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Mon, 18 Nov 2024 12:37:09 +0100
+Message-id: <D5P9VVO3AN4K.3DKPEVZW6C911@ferdinandy.com>
+Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
+ update_symref
+Cc: "Bence Ferdinandy" <ferdinandy.bence@ttk.elte.hu>,
+ "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
+ <phillip.wood@dunelm.org.uk>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241022194710.3743691-1-bence@ferdinandy.com>
+ <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241023153736.257733-3-bence@ferdinandy.com> <xmqqr07d11wt.fsf@gitster.g>
+ <D5OUMKNX6UU5.23Y4V7NHKGUWX@ttk.elte.hu> <ZzrrMrhRxOuB6QKH@pks.im>
+ <D5P5FWL8I3SY.DPYSUTU8GAYJ@ferdinandy.com> <Zzr50O7AkczbqIo7@pks.im>
+In-reply-to: <Zzr50O7AkczbqIo7@pks.im>
+Reporting-Meta:
+ AAF63nW88HVX71r4DdBOt1fAlDkN+3qZ6wsuTN9ioWLhAyyTkSRWe/NNs7LrBk2K
+ DvXjc9GzWB9k8H69jLgLdcFQVhAK0V+xBfaESGdIPOyoqnIyvxhEnDkcXtZZxoEh
+ kt8x6GsFziFpevxVrH+JJpdgS0VVrEU7a+skos88v6Msu74Qrpkcv6RZHNMWU6PX
+ fDr5TodkkiLc08zqezWdeGrIApE+OHQeZtPQaePyCB+0LLMt6og5O2QNxTk0Sn4v
+ qJxHNtOXTVLOpN1S1sv5iv285g/DgmieyRWdfEInL1axHIsxIC/ZGG/wFMUjcKci
+ jVrHiCYrP0AHL3yyOy60S4q23Wt3vRPiD+z3swp8BhrebxqNQqZuoB2Bzyut0Qq9
+ /LgfF/InNn8oXTdXsA5+4q98Eo6VA5si3p3RaaOWWNRcyeupOBrlTQP4XANeJvy4
+ hBjg7itqjLD7Cc8shciIXGpkRpnSu6cTqeA6Nz6WNt6ivZA6/240RPZh
 
-On Mon, Nov 18, 2024 at 04:54:23AM -0500, Jeff King wrote:
-> > Here are some patches. The first one should fix the warning (but I don't
-> > have gcc-15 handy to test!). Please let me know if it works for you (and
-> > thank you for reporting).
-> 
-> And here's a minor re-roll from comments on the list. I was able to
-> reproduce and test myself this time; the patch indeed fixes the problem.
 
-Thanks, this version looks good to me!
+On Mon Nov 18, 2024 at 09:24, Patrick Steinhardt <ps@pks.im> wrote:
+> On Mon, Nov 18, 2024 at 09:08:13AM +0100, Bence Ferdinandy wrote:
+>> On Mon Nov 18, 2024 at 08:22, Patrick Steinhardt <ps@pks.im> wrote:
+>> > This behaviour isn't documented anywhere, so I wouldn't declare it a b=
+ug
+>> > in the reftable backend. But what is a bug is that the two backends
+>> > behave differently, and that should be fixed indeed.
+>> >
+>> > I couldn't find any callsites of `refs_read_symbolic_ref()` where we
+>> > rely on the current behaviour of either of the backends. We do have a
+>> > check whether `refs_read_symbolic_ref()` returns negative in "refs.c" =
+in
+>> > `migrate_one_ref()`, but that one should be mostly fine given that we
+>> > check for the type of the ref beforehand. "Mostly" though because it c=
+an
+>> > happen that we race with another writer that happened to convert the r=
+ef
+>> > we are about to migrate from a symbolic ref into a normal ref. Unlikel=
+y,
+>> > but it can happen in theory.
+>> >
+>> > I think it's an easy mistake to make to check for a negative return
+>> > code. So maybe we should adapt both backends to return -1 for generic
+>> > failures and -2 in case the ref is a regular ref?
+>>=20
+>> I've been wondering about this when writing other parts of the series an=
+d now
+>> is a good a time as any to ask: I've already seen this pattern of return=
+ing
+>> various negative integers as error codes, but never quite got the logic =
+behind
+>> it. Why not just return the same numbers but positive?
+>
+> It's a matter of style, I guess. Many functions use the return value as
+> both an indicator for error and as the actual returned value. Think e.g.
+> function calls like open(3p), where a negative value indicates an error
+> and everything else is an actual file descriptor. This carries over into
+> our codebase for many functions, but we're not consistent.
+>
+>> Anyhow, the proposed solution sounds good and as far as I see how things=
+ are
+>> done in the code. I guess if I want the series to land I should just fix=
+ that
+>> as well, there are already a couple of not-entirely-related fixes in the=
+re :)
+>>=20
+>> Two questions about that:
+>>=20
+>> - what would be the ideal place to document this behaviour? In refs.c wi=
+th
+>>   `refs_read_symbolic_ref` or with the `struct ref_storage_be` in
+>>   refs/refs-internal.h?
+>
+> I'd document this in "refs.h", where the user-facing function is
+> declared, and in "refs-internal.h", where the callback is defined.
+>
+>> - should I look into adding specific tests for this? Since the rest of t=
+he
+>>   series will depend on this behaviour it will be implicit tested anyway=
+, so
+>>   I don't particularly think it would be necessary, but I don't know wha=
+t the
+>>   general approach is.
+>
+> I had a look and couldn't find another way to test the behaviour because
+> we use `refs_read_symbolic_ref()` sparingly, only. So I think it's okay
+> to implicitly test this, only.
 
-Patrick
+Thanks, it was surprisingly easy to do, I'll do a touchup of the other patc=
+hes
+and will send a v13 today with the fix.
+
+Best,
+Bence
+
