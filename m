@@ -1,43 +1,43 @@
-Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A47213DBBE
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:01:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974C013DBBE
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731967288; cv=none; b=Uhpq/mvr3U3uHtReIz/La5/Bbviuwa9oFjX6ye1O1+81rfmQTbtzfJvTPcm8kpW3gO3Za0YhrdBItxx7V+ZUX1cSUK7Wv8bT9SREMAHSOng3SKUOPg18uP+sD8FNuDSnQziynmycr3KfNRr4t8H3w/0vrqtlI2O0HmQKGhpupxU=
+	t=1731967500; cv=none; b=UuUcdl9hemvL59LnJSdIaHqOXcGePXICWKvVL75cMZrbDbS48gUTf/UFItfzuKykft2xOMwud6ZRwfCbzDPOM+LKUa1g2UbvXMtseVV/8Um5I/Sv84QZ8kl+l2xrIZu94ih6EzzOaHHd2r/tzP/dcD5P3kbuDgCjVAA4ViDXVDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731967288; c=relaxed/simple;
-	bh=nCleS0HChaMdBLkP/cI4vJ5eEsaTxmsVbtRCRk0CxLs=;
+	s=arc-20240116; t=1731967500; c=relaxed/simple;
+	bh=9SksPcOOnYFsLzns6FfldAdVANx+5+OFnDstanHQjSQ=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Tze2nkMeB0bi1q3NZNCzs49rXAcOGVFc3g8ZEeOfonnSWQxSpo3I6ff7kmjUdGrEbHZZz9VBMSy+n3wYmHqxMW0rgYXV911u8w/ONNdj5NQ2W5Z4QNj0FCF1m1M3nD94tfMEP5kAUCph7+ZIpSG78vhqoZ8ZyyO6aahAIO4jRP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=i2jZn+u3; arc=none smtp.client-ip=185.70.43.25
+	 MIME-Version:Content-Type; b=Y2g84hsUfUfEhrHmJJLbxRmftHEQHjJS25bX2OfaDaAxsFuE9ZQcvUEM3vBkbegPlS1UItThkMLvRBsM7pxDtYXrXGS9zCfDGog4f2l2KU4fqz4VxfZAHj8S8ghm8x1cCA0P+j+AB4cjvRFAhSc4vtjJ6lFSe+pFLd1AFpODzL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=NS9kpaB6; arc=none smtp.client-ip=185.70.43.166
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="i2jZn+u3"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="NS9kpaB6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1731967282; x=1732226482;
-	bh=nCleS0HChaMdBLkP/cI4vJ5eEsaTxmsVbtRCRk0CxLs=;
+	s=protonmail; t=1731967491; x=1732226691;
+	bh=9SksPcOOnYFsLzns6FfldAdVANx+5+OFnDstanHQjSQ=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=i2jZn+u30/ZIrKeJ8oGMPGX2WsiUIwquyCznQZs5dqbVdB7I19ZoWrnCsmH1hlCxn
-	 VEmcIQ1Ib+kHros7jsAyjtt5lZRljMNiLuEGxFSnf5KRCALmG/IY5JQBMZXEOSqKLj
-	 i0voCyyaZ4ys1LCTS3dqyQTH6W3J1/DyGOZkUcYvOXnlQXTCmSrROIv+dlvPrtOj7l
-	 8pg/HNyWpsEda+P80bulVko1+vSuzxjVyHCDYr0JYgTXWVlq/gaGaDOMt9VHVjgPDV
-	 OH4PgUvEsOUCfd4DeLp8TEChhJ/FAYfVECe51xeIW0haSUJVwoiGioYjhjm6trGbMs
-	 xDqavZqFy26OA==
-Date: Mon, 18 Nov 2024 22:01:21 +0000
-To: Junio C Hamano <gitster@pobox.com>
+	b=NS9kpaB6EXimdiIBdcWI29iWp5csmHesAaRXGHVKR5QbB16wixmxE/cmhfqoRQTPw
+	 GIQVwqv6gXS+YQmSC5EcEiOHWoSBLAFPk1lq8b1Xttt9KJ5efrKsXJU2Uwqp9Ks2Y9
+	 v/nq6TwqmAelQI4H05j/UAJMcGIBoWKMi5XtDAYrDj5i5b4edpGtbC/OwEXn0uP6jX
+	 jfQBsU9sPsUKM9gJN6p0D/mojc3gnI+tqLeqt9CcZRVsGt74HdVl2Z+1lCJmxgC7tc
+	 mb4wIz7eLtUsNBKBUQVM4FTAKw6eEq9pn7yeZzOzNQQDEeb1jdGoLj4qaJaGlPBZQW
+	 Bw4/0R1yN2j2g==
+Date: Mon, 18 Nov 2024 22:04:48 +0000
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
 From: A bughunter <A_bughunter@proton.me>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What is the diff between a --soft and a blank reset
-Message-ID: <ejBRJUb9pBCpQnS2xiYI7INamzAQNqx8U-FbjQ2FXQiNAZZne7U-iIj8Hmhb3Dc3PK3I_nlD-vNOMLdhUOui9nZFX3zMVuSKbnObj0cP6EA=@proton.me>
-In-Reply-To: <xmqqr079xty7.fsf@gitster.g>
-References: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me> <CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com> <82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwCEC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=@proton.me> <5f401732-9b3d-4c45-88a8-a9e3d9d14fd9@gmail.com> <xmqqr079xty7.fsf@gitster.g>
+Subject: Re: [bug] user may be cornered into delete files #9901
+Message-ID: <kQjk0kPkRFcFhFJzAV12mEO_0RDHGLeoWoxbFVwNfXa_i5MJ4o37D-BHTdCnIS6a0EwTKprHrAY3tHl8OPZ_9wpXByHFk0gP8JUlpUmJuIg=@proton.me>
+In-Reply-To: <E864saUi2ZoNwlZE8pH1_m9QQ2-E48w-hUk3GxH02I3_djQS_NLKyq3vbwbf39pf-RuAQUzds2kx0-RNZepTb4iEVKs5qPiJz2eKHuLZxT4=@proton.me>
+References: <P_ttzPnNTtUgpAy8cg_ntLvwskJhz7cmv-fFgDw0K4Y2vOCx8v_AXxHtHEuBtpREOQu9pxpvK6JgLusc5Uyn2wDZ4HZvC3ttM4k-Ry6jBs8=@proton.me> <ZzaJzm4kyYbcDSgm@tapette.crustytoothpaste.net> <E864saUi2ZoNwlZE8pH1_m9QQ2-E48w-hUk3GxH02I3_djQS_NLKyq3vbwbf39pf-RuAQUzds2kx0-RNZepTb4iEVKs5qPiJz2eKHuLZxT4=@proton.me>
 Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: 93ed0be9fd33898c26c0d4971f0a12673d5ea2b0
+X-Pm-Message-ID: c1bfc4329ace328d33a7d8873ccdee5ec723c728
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,9 +45,9 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ"
+ boundary="b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo"
 
---b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ
+--b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -104,13 +104,13 @@ I5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=3D@proton=
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wnUEARYKACcFgmc7uS4JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAAKUDAQDf3cixv7dXR8M2wfPRVZBTenFZFOweS6hWNnv4RkLrQAEA1QZI
-vpNUKP7SN+J1de9kuQ4zHHjDuksnTflDPeOQpQE=3D
-=3DYn2L
+wnUEARYKACcFgmc7uf0JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAABh9AQDQxbp7CHRFU0poLOuwPdICYc07bOUMHu/EXC4SweKiPAEA6fiT
+yPK2ueIqGYTPzGYtEHLxw7wsV8ZuXS7mE6HseAA=3D
+=3D/xm/
 -----END PGP SIGNATURE-----
 
---b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ
+--b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo
 Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
@@ -128,14 +128,14 @@ QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
 eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
 UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
---b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ
+--b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo
 Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-wnUEABYKACcFgmc7uS4JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAACaEAP9EpL26
-aG8NGeAQWSkgHLSV/X7O6kKBjPffOMah893YMAEApPnVumozPtFwZH+OL5gVk4u4juV1HM2SAtPR
-CbfrZAA=
+wnUEABYKACcFgmc7uf0JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAMzRAPwJkahB
+zHdjmbLpbLXUfgXMywSHA9tkADAsZxuKanYnlAD8C0onHiMVf6n25kUhzreEJakj1IOGxt9bjQZV
+D8LYagw=
 
---b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ--
+--b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo--
 
