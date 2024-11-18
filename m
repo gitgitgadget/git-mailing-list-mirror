@@ -1,144 +1,112 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B8A194A68
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 11:38:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32AF199EAF
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 12:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731929902; cv=none; b=L6w+x2A4cOV9Y7Bgl1tqRS09FU0IoIchXGyr7pBxK7Ysm90pujv4mV+lmE8KzROMSKn3zATOnVPFH1vsjIIfGDlQK1b/6hGR8ATNgItFTDklmgnXzJ0DQJDr/beUULq34tCmRji7NGOXK4tuMPUvK080+qzYScXFLas5IiD34bA=
+	t=1731933728; cv=none; b=j/fb7tyRZ48NCDSqRX0OYx7hohblntdj1P+D0DEahf8nXbZmIXdax7our4ww3Tt/TnfBAHXmXhRi+Bs1N2GvTakuPvHdeDnwjP795EY2vC/EXRu4BUPxlNV3xWV1b/rw+avKQou3UsQG9+pHHCt4A+mqmSRGk5mbZ2HUQosdhNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731929902; c=relaxed/simple;
-	bh=PVsAPiUzY2UeQ56HzNlVAEnY+Ysnl3tY1fMKDt+xzvw=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=KxMDQh5tXKQthVWSEHi/tFKDQdtAiy4h1My+++yyR/9mefQoH+Fx3XalFiLRrP+BbTvmzTOtMpFjtokuLX6iji8z51C4U0vjRTrqHd4dKdjtrtP1xq7pafaDsyzz2vzO3p6C8h7RNPTWVRUTWFV7mhet9jI2GD+t7bzOEfd0BVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=KY9sReme; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1731933728; c=relaxed/simple;
+	bh=bzJJR/AtawbGDBv7tDvK0kGfY1A8W2XEP/THE+BLNmA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bdtb5FOjxk0FWhpQGltEoP7vf9QVqQxZuvvETsy5e4Ero9/VpXLPaXYnxFFEz38cDjgwQ5xn4F5WrByzeaSQUZC9zM+xjOtRqTMVbslequRaEdJHJ2XtyWGJvhMvouIf1cZTB03nJcPAb/DCnZqdipQwUkFAuonf/maDPtALq0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ILjUaL7J; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="KY9sReme"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=LZpSGNKFNU5s2UAQfnV4mErrYYMiJ4loi23P4vvcnlU=;
- b=KY9sRemefqeOA/kkS/D9Hns0yYPQu3rylRP+XqxPCIn3ZjBOy6TQqldT0ZMcsLAG8SqSug3C8VJt
-   cuVJu6ALsst7AiH5EdsjHAu8RZdQvoXQpOpyWc5QM6Rgw0/f4CKTnfVkNg1IwFSpmSc2BtWf47Ua
-   WULxESDn4kBueg4pVAGCASHk3Y2HJMPHng6eaBqmsNtXjPFpXBZxftF4Mu6y0GeZoVFFKI/JsD/o
-   ldSviGMtv8B33EbWo+NNsxqY6yEwUjEHXpAgfD/iOh5jYgkR/gve5762hoGVC+B+UrShMzyV+mwL
-   GobQh7rMypz44WjTFf/y/rCEbmTMi3SzPbDtrQ==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
- 2024))
- with ESMTPS id <0SN500M009NOXIB0@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Mon, 18 Nov 2024 11:38:12 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ILjUaL7J"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id ED7831380652;
+	Mon, 18 Nov 2024 07:42:04 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 18 Nov 2024 07:42:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731933724; x=1732020124; bh=kgPS5MSG1B+mqsQhQntsp+iYrV9+xViRfYI
+	Dd7sGGig=; b=ILjUaL7JANjhfVKTx60f9jYoX85bzvxS/fBbpqLO86VvHBWTL0r
+	74vyXHQ9CssmDjNvAuggRjMZnOHeLS4JL7LDQLyaFgdvAx96Zbe2OU3gpKvCHoIh
+	nimvcjXeIOuEwh7zmwP7KfO71m+lHGibCL9YTB1F+b8NM3e8X27Bl5bhrSUfGUT9
+	lMy8f1baEISaCHbPhhmfi9GTBQ2E3+0xY6VWPvCwoObSygCMFzcsw02EIpIo80Pm
+	5Ikq2GUm4Thv3ZuTJWUzHTPCah+Azqoem7kBvNxriCo8eCWBhOzcv4J966Yw6/jU
+	1/bzWHmEXfNTbThlvvhKygK7bNRRcOZ64+w==
+X-ME-Sender: <xms:HDY7Z23cviSWTet__scDC6ykWenmbUOGov9A-qM0AfBJDffEYUEcVg>
+    <xme:HDY7Z5HkvyGcjtSO7YpOK7jpvFpxxxVvYPlWSWzVA9ilA62MoDYOP3oFc04KNBLOS
+    EVfjNNegwPwzRf8Og>
+X-ME-Received: <xmr:HDY7Z-7vGjFZiqlb7TiV8KEwnwYNnjw3c1aqRLFZ5VaPF5quXIoE6df7g6IjN1aagFv0-fitzhXwZ0UA-017iPW1qBmbjjC0mFR4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgdegudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefgedtfedvheefjefhfeeiieeuteegtdevjeeh
+    ffejffeiffetleegtdffveetleenucffohhmrghinhepfhgrtghinhhgrdhpshenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HDY7Z31oU_T-9xLID-eqLQ-qfmQhPPZHF-2Xlj7LNVQEtYteeGr29A>
+    <xmx:HDY7Z5GP4-ywfUuuZwrf8IeriefR_kmYaPEJS_sMsr1zXD4HOqAO7w>
+    <xmx:HDY7Zw8Dc-hk-wvVoYCrXyWxndHjsAraYlOWyVvlpGXdl847FeLI3Q>
+    <xmx:HDY7Z-lYKZSxLF6vVVvBNMFBExkPA9K76N1zaAT5tSF_C90vZfzRTg>
+    <xmx:HDY7Z5AbjQ2tBEFCxV4QTgOVo91TMqrhnBlu9FrrxNpA5EFISL7Xpwfu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 Nov 2024 07:42:04 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
+ allocated on MacOS with git 2.47.0
+In-Reply-To: <Zzr4cgk_5MJNcHm1@pks.im> (Patrick Steinhardt's message of "Mon,
+	18 Nov 2024 09:19:04 +0100")
+References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
+	<4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
+	<xmqq34js1kd2.fsf@gitster.g> <Zzr4cgk_5MJNcHm1@pks.im>
+Date: Mon, 18 Nov 2024 21:42:03 +0900
+Message-ID: <xmqqjzd0k92c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Mon, 18 Nov 2024 12:37:09 +0100
-Message-id: <D5P9VVO3AN4K.3DKPEVZW6C911@ferdinandy.com>
-Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
- update_symref
-Cc: "Bence Ferdinandy" <ferdinandy.bence@ttk.elte.hu>,
- "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>,
- <phillip.wood@dunelm.org.uk>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
- "Taylor Blau" <me@ttaylorr.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
- <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-3-bence@ferdinandy.com> <xmqqr07d11wt.fsf@gitster.g>
- <D5OUMKNX6UU5.23Y4V7NHKGUWX@ttk.elte.hu> <ZzrrMrhRxOuB6QKH@pks.im>
- <D5P5FWL8I3SY.DPYSUTU8GAYJ@ferdinandy.com> <Zzr50O7AkczbqIo7@pks.im>
-In-reply-to: <Zzr50O7AkczbqIo7@pks.im>
-Reporting-Meta:
- AAF63nW88HVX71r4DdBOt1fAlDkN+3qZ6wsuTN9ioWLhAyyTkSRWe/NNs7LrBk2K
- DvXjc9GzWB9k8H69jLgLdcFQVhAK0V+xBfaESGdIPOyoqnIyvxhEnDkcXtZZxoEh
- kt8x6GsFziFpevxVrH+JJpdgS0VVrEU7a+skos88v6Msu74Qrpkcv6RZHNMWU6PX
- fDr5TodkkiLc08zqezWdeGrIApE+OHQeZtPQaePyCB+0LLMt6og5O2QNxTk0Sn4v
- qJxHNtOXTVLOpN1S1sv5iv285g/DgmieyRWdfEInL1axHIsxIC/ZGG/wFMUjcKci
- jVrHiCYrP0AHL3yyOy60S4q23Wt3vRPiD+z3swp8BhrebxqNQqZuoB2Bzyut0Qq9
- /LgfF/InNn8oXTdXsA5+4q98Eo6VA5si3p3RaaOWWNRcyeupOBrlTQP4XANeJvy4
- hBjg7itqjLD7Cc8shciIXGpkRpnSu6cTqeA6Nz6WNt6ivZA6/240RPZh
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Mon Nov 18, 2024 at 09:24, Patrick Steinhardt <ps@pks.im> wrote:
-> On Mon, Nov 18, 2024 at 09:08:13AM +0100, Bence Ferdinandy wrote:
->> On Mon Nov 18, 2024 at 08:22, Patrick Steinhardt <ps@pks.im> wrote:
->> > This behaviour isn't documented anywhere, so I wouldn't declare it a b=
-ug
->> > in the reftable backend. But what is a bug is that the two backends
->> > behave differently, and that should be fixed indeed.
->> >
->> > I couldn't find any callsites of `refs_read_symbolic_ref()` where we
->> > rely on the current behaviour of either of the backends. We do have a
->> > check whether `refs_read_symbolic_ref()` returns negative in "refs.c" =
-in
->> > `migrate_one_ref()`, but that one should be mostly fine given that we
->> > check for the type of the ref beforehand. "Mostly" though because it c=
-an
->> > happen that we race with another writer that happened to convert the r=
-ef
->> > we are about to migrate from a symbolic ref into a normal ref. Unlikel=
-y,
->> > but it can happen in theory.
->> >
->> > I think it's an easy mistake to make to check for a negative return
->> > code. So maybe we should adapt both backends to return -1 for generic
->> > failures and -2 in case the ref is a regular ref?
->>=20
->> I've been wondering about this when writing other parts of the series an=
-d now
->> is a good a time as any to ask: I've already seen this pattern of return=
-ing
->> various negative integers as error codes, but never quite got the logic =
-behind
->> it. Why not just return the same numbers but positive?
+>>     ds/line-log-asan-fix # 1 (2024-10-10) 
+>>     jk/fsmonitor-event-listener-race-fix # 2 (2024-10-15) 
+>>     ps/maintenance-start-crash-fix # 1 (2024-10-18) 
 >
-> It's a matter of style, I guess. Many functions use the return value as
-> both an indicator for error and as the actual returned value. Think e.g.
-> function calls like open(3p), where a negative value indicates an error
-> and everything else is an actual file descriptor. This carries over into
-> our codebase for many functions, but we're not consistent.
+> Other candidates that fix regressions:
 >
->> Anyhow, the proposed solution sounds good and as far as I see how things=
- are
->> done in the code. I guess if I want the series to land I should just fix=
- that
->> as well, there are already a couple of not-entirely-related fixes in the=
-re :)
->>=20
->> Two questions about that:
->>=20
->> - what would be the ideal place to document this behaviour? In refs.c wi=
-th
->>   `refs_read_symbolic_ref` or with the `struct ref_storage_be` in
->>   refs/refs-internal.h?
->
-> I'd document this in "refs.h", where the user-facing function is
-> declared, and in "refs-internal.h", where the callback is defined.
->
->> - should I look into adding specific tests for this? Since the rest of t=
-he
->>   series will depend on this behaviour it will be implicit tested anyway=
-, so
->>   I don't particularly think it would be necessary, but I don't know wha=
-t the
->>   general approach is.
->
-> I had a look and couldn't find another way to test the behaviour because
-> we use `refs_read_symbolic_ref()` sparingly, only. So I think it's okay
-> to implicitly test this, only.
+>     jk/fetch-prefetch-double-free-fix
+>     tb/multi-pack-reuse-dupfix
 
-Thanks, it was surprisingly easy to do, I'll do a touchup of the other patc=
-hes
-and will send a v13 today with the fix.
+Neither of these has hit 'master' yet.
 
-Best,
-Bence
+>     pb/clar-build-fix
 
+Not all that urgent (it is not end-user facing).
+
+>     ps/upgrade-clar
+>     wm/shortlog-hash
+
+Unfortuately, these were both based not on 'maint' but on 'master',
+and cannot ever be merged down to 'maint'.  The last topic may
+deserve to be cherry-picked to 'maint' when the time comes.
+
+Right now I have these lined up for 'maint'
+
+    ds/line-log-asan-fix
+    jk/fsmonitor-event-listener-race-fix
+    ps/maintenance-start-crash-fix
+    ps/cache-tree-w-broken-index-entry
+    db/submodule-fetch-with-remote-name-fix
+
+Thanks.
