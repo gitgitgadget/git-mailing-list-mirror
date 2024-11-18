@@ -1,40 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C34617C98
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 09:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967C717C98
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 09:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731923684; cv=none; b=GCog7HYalKUSknZzjT9EmqxT16VDUHVpYayF5Noz8hhSWZ7+PR6JvIcq/44zM1Zy/9/Bnb/FC0/Q3F9diYYKpcTVhaWYut941nDm+2v/ioz5bO5gIJfVVtQAU5sWjx12RJHMDftx/0LTnFug8ATUpmpQshGTNLb362NUvFPXJl4=
+	t=1731923711; cv=none; b=DRoFlUIeSGgv+++7lFrQBce64sfr0LRY8WXeJrRF1s+pvGIC591ojynDO/6K3dtIlX7awMWofv6fp3JECAo12nUBM5mSduq/Dssgk3KFdAM79vo4vdMNCOJHd5Tv6HB+5GuTHeAfQYT+lxD1ffyzJkCF6PqAU4Lq/1RpgHFvbpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731923684; c=relaxed/simple;
-	bh=MaJDj7hDyHcKPLmm2ySPdWzBZuh3zQEYuJ3EUir85uQ=;
+	s=arc-20240116; t=1731923711; c=relaxed/simple;
+	bh=2MSDKhNjMoZ6RNN2JH2Lt+3ZZr58JMmutz+Q1tlQrwc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YqKnRzsS72FKC7VTVqkQix6GNCYhPa6B4BFkTGbqq7ZrbERHLmwwPy4QFuvf2KRPxcZBjB5nLdR7dj1sXjqxLBPa0cZk1rjI1s9sWhRigLc3rCZXOKQmKllqBP7KAEMSCL1FPFxJUKpKXWWY4g6V+rxWnBzHJEk+hg9xvgp7lR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=boPJRqYq; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=kzWSlxcqqR4QgNkqfw89VdZRqkpxP0ZAYRQGAB2JLG7meOOSZUXFRuRSDH0eIHFkRhA15BBwSkqWUshCYwWFMDoH0Nt9UXVYVHbUmkmZYxRYYhw2+bLku6LLKSUEvsXIr3tf48S7YES/561BS35zvg8eIT4xA9Hg7+3mcKg9N54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aJ6nXZ6n; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="boPJRqYq"
-Received: (qmail 22396 invoked by uid 109); 18 Nov 2024 09:54:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=MaJDj7hDyHcKPLmm2ySPdWzBZuh3zQEYuJ3EUir85uQ=; b=boPJRqYqANkRGJW/ItjszJNe3uj6nTzBvANNXmiKcc/FkpnKFm752qWDOolJ6QDjwdqtOdTXZ2ghTSeWhqcKlM0/SGAkOFQgJm74aYQkifTa0Ll9Xohq6P1dvW7RGc0W8jOZ6+vKepNfNdW/xWjXa7KnnkyuPvWe//IPPqC3EnV/JrxKA/DazyWsjVQ/dbiiqmjco1OJz/NVAtYysEg0lL6Ee7cELLm7p6e+Eh8ChQitc1cOyaG9EnovFQY/1cvLViUtVEgX1UET4A2jDCpjVVPaY63TryV7zeJcPsc4Ch/XDEbH3KJbsvdMcCt0HEbSJSlquSgmzXJIC8n1gLwxzA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aJ6nXZ6n"
+Received: (qmail 22418 invoked by uid 109); 18 Nov 2024 09:55:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2MSDKhNjMoZ6RNN2JH2Lt+3ZZr58JMmutz+Q1tlQrwc=; b=aJ6nXZ6n5Lef3kZUdDpTnbte3Mur3TbltsukOzXgalz78w3az3K4Xi9BdTkfgk3lgX48D102ak/4pqOPmJaOI7lYL/NsSBWsbWM+DdgPuPyugvketzcYUexYF6RyGhOECjwm7wCdCv0njEwm+5koXzCBxAmtVLLNJZ9s2qUdXXDVB9gnvktuW2n2434Bzj1/9+XiqA8/n4Q8XbPHit9LU1MB9DbNpLp3n5PSmBdDPJilw8Le+l76vjt56yrXq6FfGHulWX235WPaaER1fHyeH6gl1qAURB/K9wAm+AV1mg2IsHs0FbZCsovGjHl4ReKqjBfhG1bh1AzUVlK+yWuInQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Nov 2024 09:54:41 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Nov 2024 09:55:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18264 invoked by uid 111); 18 Nov 2024 09:54:45 -0000
+Received: (qmail 18302 invoked by uid 111); 18 Nov 2024 09:55:12 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Nov 2024 04:54:45 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Nov 2024 04:55:12 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 18 Nov 2024 04:54:40 -0500
+Date: Mon, 18 Nov 2024 04:55:07 -0500
 From: Jeff King <peff@peff.net>
 To: Sam James <sam@gentoo.org>
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	git@vger.kernel.org
-Subject: [PATCH 1/6] object-file: prefer array-of-bytes initializer for hash
- literals
-Message-ID: <20241118095440.GA3992317@coredump.intra.peff.net>
+Subject: [PATCH 2/6] object-file: drop confusing oid initializer of
+ empty_tree struct
+Message-ID: <20241118095507.GB3992317@coredump.intra.peff.net>
 References: <20241118095423.GA3990835@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -44,107 +44,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20241118095423.GA3990835@coredump.intra.peff.net>
 
-We hard-code a few well-known hash values for empty trees and blobs in
-both sha1 and sha256 formats. We do so with string literals like this:
+We treat the empty tree specially, providing an in-memory "cached" copy,
+which allows you to diff against it even if the object doesn't exist in
+the repository. This is implemented as part of the larger cached_object
+subsystem, but we use a stand-alone empty_tree struct.
 
-  #define EMPTY_TREE_SHA256_BIN_LITERAL \
-         "\x6e\xf1\x9b\x41\x22\x5c\x53\x69\xf1\xc1" \
-         "\x04\xd4\x5d\x8d\x85\xef\xa9\xb0\x57\xb5" \
-         "\x3b\x14\xb4\xb9\xb9\x39\xdd\x74\xde\xcc" \
-         "\x53\x21"
+We initialize the oid of that struct using EMPTY_TREE_SHA1_BIN_LITERAL.
+At first glance, that seems like a bug; how could this ever work for
+sha256 repositories?
 
-and then use it to initialize the hash field of an object_id struct.
-That hash field is exactly 32 bytes long (the size we need for sha256).
-But the string literal above is actually 33 bytes long due to the NUL
-terminator. This is legal in C, and the NUL is ignored.
+The answer is that we never look at the oid field! The oid field is used
+to look up entries added by pretend_object_file() to the cached_objects
+array. But for our stand-alone entry, we look for it independently using
+the_hash_algo->empty_tree, which will point to the correct algo struct
+for the repository.
 
-  Side note on legality: in general excess initializer elements are
-  forbidden, and gcc will warn on both of these:
+This happened in 62ba93eaa9 (sha1_file: convert cached object code to
+struct object_id, 2018-05-02), which even mentions that this field is
+never used. Let's reduce confusion for anybody reading this code by
+replacing the sha1 initializer with a comment. The resulting field will
+be all-zeroes, so any violation of our assumption that the oid field is
+not used will break equally for sha1 and sha256.
 
-    char foo[3] = { 'h', 'u', 'g', 'e' };
-    char bar[3] = "VeryLongString";
-
-  I couldn't find specific language in the standard allowing
-  initialization from a string literal where _just_ the NUL is ignored,
-  but C99 section 6.7.8 (Initialization), paragraph 32 shows this exact
-  case as "example 8".
-
-However, the upcoming gcc 15 will start warning for this case (when
-compiled with -Wextra via DEVELOPER=1):
-
-      CC object-file.o
-  object-file.c:52:9: warning: initializer-string for array of ‘unsigned char’ is too long [-Wunterminated-string-initialization]
-     52 |         "\x6e\xf1\x9b\x41\x22\x5c\x53\x69\xf1\xc1" \
-        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  object-file.c:79:17: note: in expansion of macro ‘EMPTY_TREE_SHA256_BIN_LITERAL’
-
-which is understandable. Even though this is not a bug for us, since we
-do not care about the NUL terminator (and are just using the literal as
-a convenient format), it would be easy to accidentally create an array
-that was mistakenly unterminated.
-
-We can avoid this warning by switching the initializer to an actual
-array of unsigned values. That arguably demonstrates our intent more
-clearly anyway.
-
-Reported-by: Sam James <sam@gentoo.org>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- object-file.c | 38 +++++++++++++++++++++-----------------
- 1 file changed, 21 insertions(+), 17 deletions(-)
+ object-file.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index b1a3463852..8101585616 100644
+index 8101585616..19fc4afa43 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -45,23 +45,27 @@
- #define MAX_HEADER_LEN 32
+@@ -326,9 +326,7 @@ static struct cached_object {
+ static int cached_object_nr, cached_object_alloc;
  
- 
--#define EMPTY_TREE_SHA1_BIN_LITERAL \
--	 "\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60" \
--	 "\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04"
--#define EMPTY_TREE_SHA256_BIN_LITERAL \
--	"\x6e\xf1\x9b\x41\x22\x5c\x53\x69\xf1\xc1" \
--	"\x04\xd4\x5d\x8d\x85\xef\xa9\xb0\x57\xb5" \
--	"\x3b\x14\xb4\xb9\xb9\x39\xdd\x74\xde\xcc" \
--	"\x53\x21"
--
--#define EMPTY_BLOB_SHA1_BIN_LITERAL \
--	"\xe6\x9d\xe2\x9b\xb2\xd1\xd6\x43\x4b\x8b" \
--	"\x29\xae\x77\x5a\xd8\xc2\xe4\x8c\x53\x91"
--#define EMPTY_BLOB_SHA256_BIN_LITERAL \
--	"\x47\x3a\x0f\x4c\x3b\xe8\xa9\x36\x81\xa2" \
--	"\x67\xe3\xb1\xe9\xa7\xdc\xda\x11\x85\x43" \
--	"\x6f\xe1\x41\xf7\x74\x91\x20\xa3\x03\x72" \
--	"\x18\x13"
-+#define EMPTY_TREE_SHA1_BIN_LITERAL { \
-+	0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60, \
-+	0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04  \
-+}
-+#define EMPTY_TREE_SHA256_BIN_LITERAL { \
-+	0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1, \
-+	0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5, \
-+	0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc, \
-+	0x53, 0x21 \
-+}
-+
-+#define EMPTY_BLOB_SHA1_BIN_LITERAL { \
-+	0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b, \
-+	0x29, 0xae, 0x77, 0x5a, 0xd8, 0xc2, 0xe4, 0x8c, 0x53, 0x91  \
-+}
-+#define EMPTY_BLOB_SHA256_BIN_LITERAL { \
-+	0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2, \
-+	0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43, \
-+	0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72, \
-+	0x18, 0x13 \
-+}
- 
- static const struct object_id empty_tree_oid = {
- 	.hash = EMPTY_TREE_SHA1_BIN_LITERAL,
+ static struct cached_object empty_tree = {
+-	.oid = {
+-		.hash = EMPTY_TREE_SHA1_BIN_LITERAL,
+-	},
++	/* no oid needed; we'll look it up manually based on the_hash_algo */
+ 	.type = OBJ_TREE,
+ 	.buf = "",
+ };
 -- 
 2.47.0.547.g778689293a
 
