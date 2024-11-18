@@ -1,164 +1,99 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD7B823D1
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 07:22:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A115F2907
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 07:32:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731914564; cv=none; b=U5xY09JSWv8Mx0+aJ1ax98ZO44ASPJ4O+W4jbNi1tgHHeOJFEFCd8te5t63PKXrtwxYkFQrpbO+qeIcV5mminS75Smhyeb5iHhbtfV6XYDhPs24izFkffbzabImJIzQQiuc0AfQ1zXtG/Use42Y5DJmIXccTmmHLaFDum8MhDDk=
+	t=1731915163; cv=none; b=rQ7UuFvpQUdtUBk3eoMpPUY2acatrAjkXJ90NQ1960deD/uE7bqCuG4GNL0r2KRnC3fuvHGwklUtpiwntzQVO59bDiDoYV1hQU9L7SrrwZs2XCGjmAeg7wSDc5G6S+P78NfX18ul7cE+5ML/iVB3lg9tPZZfvkmvotBs68JWbeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731914564; c=relaxed/simple;
-	bh=/ZOzDoWlI6nPeNpW+kXLM0nq54lSUGVdEbn0ZeFnFSo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FN+Gnty6bQl/mH3gWvPN+Dag2uKYciAUU6UpcrAHmMC3IMg8Gt8Z8HOIT7kSHLSZmT/wJn0FDbsuFKFmCng6M1iPisFELQBzVJgoh/64VEAZv0RWo+ZO/XmjHXsLcViPpVNpLFvsHdCJ4RUPMZpuoUi0RuS2jmCCFO/1wFje5cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uE+tqmtg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KTbrJ/5F; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731915163; c=relaxed/simple;
+	bh=OwH6rdwF4jMkBb0uwyYK2P5ayoKtub5PvPubvgcf/J4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sua060J5uVVCDfY6kogFWE504AHjkEf/fHqxAV0taCrR8goXeYMl4KerQHFlf82mayYC/rEBoT7at2/I4cJesn+cHLW/EXFrrUqIpHWNadtxsl8f6clCle3CtRBbPQD9lVLIFYBXj7WzVFhuz8GkTPaltHcwbdDBhBPm6pVcLko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KBkyIUes; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uE+tqmtg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KTbrJ/5F"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3083325400E5;
-	Mon, 18 Nov 2024 02:22:41 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 18 Nov 2024 02:22:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731914561; x=1732000961; bh=0VxwqcWMnT
-	/VGu9zHmk9BhvaZWK9kIncyj7vn/SEyfk=; b=uE+tqmtgZMiRT2yPMtvYrk49nB
-	NGFXzEuqHwE/K5+EuOMnyOf0b++73UnM/US/JxcAptE1ZMysmsKlweLAe1VKuqzz
-	bI2OLlWWbZrlaJGFaHcGnmqO060zRgOiqJltjduQE+yELHAZSkNZtOLX9Aq5jFh0
-	lY3hwRBjzoNjWb4Nad5p3jB0juJwmLfTXa2icq3CaAzLi1+M4mF2TLAmOCiVOaxc
-	nagZ5YFVxPSfd2QkO9ROhn6leB/qFCf5roRiGqgHgPrIq3zXEhiG4nUoZIVj+P0o
-	rCxXXq0FBUMverLOdHV1OHPsUPJNvCW0IwuG28Lhua3658OfE0QVb7SzFyHA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731914561; x=1732000961; bh=0VxwqcWMnT/VGu9zHmk9BhvaZWK9kIncyj7
-	vn/SEyfk=; b=KTbrJ/5F0XfmXH8uyuVhUZWVpvsNmRl4HIfRtEUyneUKUQ2xkQ3
-	OmGNEVzPCGkw8eeY+0eRAr8mvUycrMDQdPMe9MnHY71IrUh3rnSoppp/x80uqbjK
-	HXGL8k2zj/vkqlrfZRppr9vs66DQ2Z9W00Z4qbudxrNyOqpYaXftxOuIni7lxsM9
-	cKNuTy0txHF6vm9yUKt9Tlt90C7e0QuETm9DME/sBK+l5qhPXWxnnLMv32eQdmrB
-	eFLQ6NoeQBqvlkwVtGZw1IJhKHkPbd/w+IFH72pyshRpPN3uEwGZK5EQv7gj308n
-	NuAq40RIFv6Vfvzf3dNndnaGdYMzssahRGQ==
-X-ME-Sender: <xms:P-s6Z1-8Yf-oyOpkE16OlX0S9SbmvMj7OyK4ZOOn1qvO96NV8OoT8A>
-    <xme:P-s6Z5uqZN2yAyE5ruRCbjfoMx6Yt_Uq69c8qNUfDMWKA6nlRpjL-CC_cbicsvNFW
-    pEIC4Mch_gEYSKoHQ>
-X-ME-Received: <xmr:P-s6ZzA-aF0dQW229z5actG4eqwxlaif4GTFdFz7CJRRKsQVys-CGU2BntcT7tNOP3rRDoG7AWWPuUTm9lW9xbjJKcvEX20aFzO0GGh9Ri5qJlwB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgddutdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopegsvghntggvsehfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehphhhilhhl
-    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghp
-    thhtohepfhgvrhguihhnrghnugihrdgsvghntggvsehtthhkrdgvlhhtvgdrhhhupdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghr
-    thhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
-    hstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:QOs6Z5cGZaYqBzg2CeBkLC6yf88yCKp11YIBBcQZEtdxELjNY156tw>
-    <xmx:QOs6Z6M8Z94dgEYmOY0jmnFbpNYzYTHUU2wV6P1RhVfEQLlBu9NmOw>
-    <xmx:QOs6Z7nfmTOKG-pSdeDe8xD0F-MdPUg0zaqkNQ1ydxnDuLzmAsU0ng>
-    <xmx:QOs6Z0sJrlYUVsvmYT8_fzkmAs-wDZ7yBMOKoE-PCdK_jDoo2y4w-A>
-    <xmx:Qes6Zxr7NMOfYnoIYQ-DE5XDX711QZCIdpTwF2c-466VNIkEWhJd2REa>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 02:22:38 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4ed669c3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Nov 2024 07:21:49 +0000 (UTC)
-Date: Mon, 18 Nov 2024 08:22:26 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Bence Ferdinandy <ferdinandy.bence@ttk.elte.hu>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org,
-	phillip.wood@dunelm.org.uk,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
- update_symref
-Message-ID: <ZzrrMrhRxOuB6QKH@pks.im>
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
- <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-3-bence@ferdinandy.com>
- <xmqqr07d11wt.fsf@gitster.g>
- <D5OUMKNX6UU5.23Y4V7NHKGUWX@ttk.elte.hu>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KBkyIUes"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5cf6f367f97so4136934a12.0
+        for <git@vger.kernel.org>; Sun, 17 Nov 2024 23:32:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731915160; x=1732519960; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=naWoNB/XHMB6jc21XTCF20GStU+4QJgKHyEnFT4Lsmc=;
+        b=KBkyIUest8ahUn2H0ikQcrBc/fIn1ITds/UYBOYEdZVdYD2uYb6KDkuKcrG2Wbc7qw
+         idFuR2WSliZi6LzKtdRVAsFtDcv89kymeRrLENwEJ7MuN1ZjKBLS8OUO8AuXtIMvPswo
+         e5rGO5cBamem1y+cS6ESn/HNKcUOCA7enKGkIKpBJILCxgISdUoah45WlPO1S4akCRcB
+         MGmd9B+x9fSXoFS9LD6540Ca2JnitSmD/mvFiOFVnun3FYo9I5LqGBL071BltVqs/Il0
+         H1MTVF6CD1doDRMx64MP9169yuP/mIRG+wbXHv2UB4e4MGarNHEM4hxGe1UhQtYtbNYb
+         YZhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731915160; x=1732519960;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=naWoNB/XHMB6jc21XTCF20GStU+4QJgKHyEnFT4Lsmc=;
+        b=TshUWaGlCQrrRrRbVw5xTy3sXTzk2MkZrbz1rY6Y7fHQRm+oLHSnqTtwmtfo+cDXa9
+         pUuqY/E1jbdJinbLpXc6rbFdLDpbzSSpTIVvolgn8bARRm1kGRRhWpWkopiDvRozCPBI
+         W7nAfmtMHX9Whyn+o/pcBOpS2HPHyKMttw6HDsToghuTzh+oO+PIG4F8xf3OHQcY0yZT
+         pLaNbyaCpBTOZrqRzmwUpOhuMwBaPNR7GZ9HxAiUn1rmxHqKieOAZ4GDWRYMGss3yC6j
+         S01+IsQUkNxotbCGQSyTjSTlGaripQzIf3uG2eF8YjQ5Q1N2s26CDJhJOtX2HNi8MFdJ
+         aALQ==
+X-Gm-Message-State: AOJu0YzE2jfFDzDwjvaWfN/ZqfGAAYB+FLGWlC2toR0SkSrliw0yxRK7
+	yaGLlmYVMqAg5spvP8vYjqxOIS2pG4nEUNTDfyOesThpZ+Ip0bzF0esC0wuPOpgRKmbMFCFGy+U
+	IPWannnDvsYipJi+ap4TSeWEiGWM=
+X-Google-Smtp-Source: AGHT+IGTNVi4AZWtVpjU/fcYK2DzNKK3R+VjikocAu1VAoO4totduA3+yfSolTz59Z0B+utHT+MEqk6dnQH8xpa8WGc=
+X-Received: by 2002:a05:6402:35d3:b0:5cf:50cb:17d3 with SMTP id
+ 4fb4d7f45d1cf-5cf8fc384bdmr8064899a12.10.1731915159789; Sun, 17 Nov 2024
+ 23:32:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D5OUMKNX6UU5.23Y4V7NHKGUWX@ttk.elte.hu>
+References: <xmqqa5e2ahqf.fsf@gitster.g> <ba35ba3ec212860a3151cfad582a384a50c55e6a.1731871683.git.code@khaugsbakk.name>
+In-Reply-To: <ba35ba3ec212860a3151cfad582a384a50c55e6a.1731871683.git.code@khaugsbakk.name>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 18 Nov 2024 08:32:27 +0100
+Message-ID: <CAP8UFD3p3ts_7kvk_Zm2efhcPUcEFnLcLFPAqzb40d46BTVzyA@mail.gmail.com>
+Subject: Re: [PATCH] Documentation/glossary: describe "trailer"
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, gitster@pobox.com, 
+	ffjlabo@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 18, 2024 at 12:39:43AM +0100, Bence Ferdinandy wrote:
-> >
-> >>  	} +	if (referent) +		refs_read_symbolic_ref(refs, ref,
-> >>  	referent);
-> 
-> 
-> So I've been working on detecting a detached remote/HEAD, and it seems that
-> "refs_read_symbolic_ref" behaves differently for the files and the reftables
-> backend. These are the exit codes in the various states:
-> 
-> 
-> 	     reftables files
-> detached	-1	 1	
-> doesn't exist   -1	-1
-> 
-> I would assume this is a bug in reftables? At least the behaviour of files is
-> more useful for this case ...
-> 
-> This now works fine with the files backend:
-> 
-> 	if (referent && refs_read_symbolic_ref(refs, ref, referent) == 1) {
-> 		struct object_id oid;
-> 		refs_read_ref(refs, ref, &oid);
-> 		strbuf_addstr(referent, oid_to_hex(&oid));
-> 		ret = -1;
-> 	}
-> 
-> And 4/8 can now also detect being detached, by checking the return value using
-> the test you suggested, but this fails for reftables. Just in case it might be
-> something about the test not being correct:
+On Sun, Nov 17, 2024 at 8:34=E2=80=AFPM <kristofferhaugsbakk@fastmail.com> =
+wrote:
+>
+>     =E2=80=A2 Tags: What the Linux Kernel uses
+>     =E2=80=A2 Footers: Lots of people around the Internet apparently. Lik=
+e on
+>       Stackoverflow. Or Chromium: https://commondatastorage.googleapis.co=
+m/chrome-infra-docs/flat/depot_tools/docs/html/git-footers.html
+>
+>  Documentation/glossary-content.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-=
+content.txt
+> index 42afe048691..575c18f776e 100644
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -696,6 +696,11 @@ the `refs/tags/` hierarchy is used to represent loca=
+l tags..
+>         that each contain very well defined concepts or small incremental=
+ yet
+>         related changes.
+>
+> +[[def_trailer]]trailer::
+> +       Key-value metadata.  Trailers are optionally found at the end of
+> +       a commit message.  Might be called "footers" or "tags" in other
+> +       communities.  See linkgit:git-interpret-trailers[1].
+> +
 
-So from what I understand you try to execute `refs_read_symbolic_ref()`
-on a non-symbolic-ref, and your expectation is:
-
-  - It returns -1 when reading the ref has failed.
-
-  - It returns 0 when reading the ref was successful and it was a
-    symref.
-
-  - It retuns 1 when reading the ref was successful, but it was a
-    regular ref.
-
-This behaviour isn't documented anywhere, so I wouldn't declare it a bug
-in the reftable backend. But what is a bug is that the two backends
-behave differently, and that should be fixed indeed.
-
-I couldn't find any callsites of `refs_read_symbolic_ref()` where we
-rely on the current behaviour of either of the backends. We do have a
-check whether `refs_read_symbolic_ref()` returns negative in "refs.c" in
-`migrate_one_ref()`, but that one should be mostly fine given that we
-check for the type of the ref beforehand. "Mostly" though because it can
-happen that we race with another writer that happened to convert the ref
-we are about to migrate from a symbolic ref into a normal ref. Unlikely,
-but it can happen in theory.
-
-I think it's an easy mistake to make to check for a negative return
-code. So maybe we should adapt both backends to return -1 for generic
-failures and -2 in case the ref is a regular ref?
-
-Patrick
+Ack, thanks!
