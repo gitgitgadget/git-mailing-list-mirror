@@ -1,141 +1,148 @@
-Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974C013DBBE
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A9B13DBBE
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731967500; cv=none; b=UuUcdl9hemvL59LnJSdIaHqOXcGePXICWKvVL75cMZrbDbS48gUTf/UFItfzuKykft2xOMwud6ZRwfCbzDPOM+LKUa1g2UbvXMtseVV/8Um5I/Sv84QZ8kl+l2xrIZu94ih6EzzOaHHd2r/tzP/dcD5P3kbuDgCjVAA4ViDXVDg=
+	t=1731967559; cv=none; b=hxV21Cb1DY4gzL1YIjMiMctXfAEiv67BI5VmG1ds2EbMh3lCsOqYcuuPwDRBG5phnXzXnQ0ki2Sq+3t0YA/2KZQ6oLNZYd49f9E44SkGD8UnmdijYdDuPvqQAgseUKegGJXso+VqtW/ICmJ8uHb8YjXnecC6zFu1O+bB/NCzWxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731967500; c=relaxed/simple;
-	bh=9SksPcOOnYFsLzns6FfldAdVANx+5+OFnDstanHQjSQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y2g84hsUfUfEhrHmJJLbxRmftHEQHjJS25bX2OfaDaAxsFuE9ZQcvUEM3vBkbegPlS1UItThkMLvRBsM7pxDtYXrXGS9zCfDGog4f2l2KU4fqz4VxfZAHj8S8ghm8x1cCA0P+j+AB4cjvRFAhSc4vtjJ6lFSe+pFLd1AFpODzL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=NS9kpaB6; arc=none smtp.client-ip=185.70.43.166
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1731967559; c=relaxed/simple;
+	bh=AzCXALt9L6pqm58LFNmEk3eS28cTy38AXrB5SUhF1xc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=IRaZjv8gpiU0n6ktVx0JR8UZq+FAv+kHeYUW6QxoRPUzHCszPbyjJOF47PBWoMgAItSKua0eCk0+KUDjBKn6ZPBlOJXKdViRxDspRRPnMZfxiISgMhuY1nsd7izoViLqDXWGVRl1L9jKetSLnIBuchjt7wCiBMLAjeMeqjpAgmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fhwaKoGG; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="NS9kpaB6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1731967491; x=1732226691;
-	bh=9SksPcOOnYFsLzns6FfldAdVANx+5+OFnDstanHQjSQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=NS9kpaB6EXimdiIBdcWI29iWp5csmHesAaRXGHVKR5QbB16wixmxE/cmhfqoRQTPw
-	 GIQVwqv6gXS+YQmSC5EcEiOHWoSBLAFPk1lq8b1Xttt9KJ5efrKsXJU2Uwqp9Ks2Y9
-	 v/nq6TwqmAelQI4H05j/UAJMcGIBoWKMi5XtDAYrDj5i5b4edpGtbC/OwEXn0uP6jX
-	 jfQBsU9sPsUKM9gJN6p0D/mojc3gnI+tqLeqt9CcZRVsGt74HdVl2Z+1lCJmxgC7tc
-	 mb4wIz7eLtUsNBKBUQVM4FTAKw6eEq9pn7yeZzOzNQQDEeb1jdGoLj4qaJaGlPBZQW
-	 Bw4/0R1yN2j2g==
-Date: Mon, 18 Nov 2024 22:04:48 +0000
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-From: A bughunter <A_bughunter@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [bug] user may be cornered into delete files #9901
-Message-ID: <kQjk0kPkRFcFhFJzAV12mEO_0RDHGLeoWoxbFVwNfXa_i5MJ4o37D-BHTdCnIS6a0EwTKprHrAY3tHl8OPZ_9wpXByHFk0gP8JUlpUmJuIg=@proton.me>
-In-Reply-To: <E864saUi2ZoNwlZE8pH1_m9QQ2-E48w-hUk3GxH02I3_djQS_NLKyq3vbwbf39pf-RuAQUzds2kx0-RNZepTb4iEVKs5qPiJz2eKHuLZxT4=@proton.me>
-References: <P_ttzPnNTtUgpAy8cg_ntLvwskJhz7cmv-fFgDw0K4Y2vOCx8v_AXxHtHEuBtpREOQu9pxpvK6JgLusc5Uyn2wDZ4HZvC3ttM4k-Ry6jBs8=@proton.me> <ZzaJzm4kyYbcDSgm@tapette.crustytoothpaste.net> <E864saUi2ZoNwlZE8pH1_m9QQ2-E48w-hUk3GxH02I3_djQS_NLKyq3vbwbf39pf-RuAQUzds2kx0-RNZepTb4iEVKs5qPiJz2eKHuLZxT4=@proton.me>
-Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: c1bfc4329ace328d33a7d8873ccdee5ec723c728
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fhwaKoGG"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38245e072e8so1237387f8f.0
+        for <git@vger.kernel.org>; Mon, 18 Nov 2024 14:05:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731967555; x=1732572355; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rOLSNQvCTtgUVEDNZUL558KD6BP78B+bsS5YX8l6vwQ=;
+        b=fhwaKoGGk9LBOIRDXVDivy0oOjq54ef+dfmjF1KLamV+h+pAqtb31izEC86yzeJTg7
+         07CD3/7siG7sgx9O9Aq/NMe0cqvSunuOQySETAFSL5xJDXOnqbYVtghv+EjmDqTAMu6d
+         L0j4WKgXhDgjSO/Vy5H1J09+daD/YQCzac/GE+f67My+ejVgQUOi8qpEkY4CM1aDsDe/
+         kdIo3uHii4XALljjlnbxCplX/Ej8nLWM7tMrON5NuKYtLhmMGgjgS9pJ4ejrHcWwcdxJ
+         s63kae27a3tmlhx4I99Q0h/IHKuMzalKkicCxn0L7zLZfX+HIQ09Fa7K1EmASwPnAs8p
+         iRCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731967555; x=1732572355;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rOLSNQvCTtgUVEDNZUL558KD6BP78B+bsS5YX8l6vwQ=;
+        b=tZUAI5HUBDQxSm4zI/CpsVGyEw9AUH7iXUxQ4nQ9fSDm47pG16IePSw/x998kdWMoc
+         SZZZMfT/3wHMTvZXhmH9x4x+hzeLSXGEcR4Pru4amj6GHClaJaxGcMVfn9X77xOs4WCe
+         hUOQRXnNSp4Y/lUBKEd5+5Vrb6u0lVym87XH6GM8sxhyAx/fq/+xBXgnwoqoVj4DzRy4
+         8PcrSQn/NsVqVnUppdGNq291ws6iSW2HPF2KKu1u/P8pz8vB8CqnVvBd9pDoUjXCHuGt
+         cg54DJMQmvb2uY/XbHimnGCRDZiBkGzFyfRZmTlyU6HsvOybWb6e977Q3SZn/a9jr8I9
+         T8Wg==
+X-Gm-Message-State: AOJu0YxNkha6pSM4hvEPVg4OOLxkyP6wPQl9aWtbPyqNgqYKH/TiUzsM
+	3vIL6jBlu01tWXxG/mjt3ib3VdQiTG4AeOtgioM1B0Is27PKmrlHPEAWVA==
+X-Google-Smtp-Source: AGHT+IFoCOcJF4Aosa9R+TIlT967pMJu+LLboHNd6vONA1kyrn6ZIASaw7PoRcSgOIKLwkDGkBxUiA==
+X-Received: by 2002:a05:6000:1868:b0:37d:43d4:88b7 with SMTP id ffacd0b85a97d-38225a21c50mr16833351f8f.3.1731967555045;
+        Mon, 18 Nov 2024 14:05:55 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3823514e2bfsm8542529f8f.64.2024.11.18.14.05.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Nov 2024 14:05:54 -0800 (PST)
+Message-Id: <pull.1769.v4.git.1731967553.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
+References: <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 18 Nov 2024 22:05:48 +0000
+Subject: [PATCH v4 0/5] doc: git diff reformatting
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Patrick Steinhardt <ps@pks.im>,
+    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
---b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+This is the continuation of the editing of the manpages to reflect the new
+formatting rules.
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+Changes since V3:
 
-BROAD OVERVIEW
+ * rework the description about -1, --base,...
 
-bugreport[A], question[B] and use-case[C]. These are all related but separa=
-te threads for the purposes as labled. Please do not cross-post or cross-qu=
-ote. Focus on productivity and solving these. You are welcomed to view and =
-participate in all of these as I contribute more.
+Jean-Noël Avila (5):
+  doc: git-diff: apply new documentation guidelines
+  doc: git-diff: apply format changes to diff-options
+  doc: git-diff: apply format changes to diff-format
+  doc: git-diff: apply format changes to diff-generate-patch
+  doc: git-diff: apply format changes to config part
 
-use-case[C] - git question (short) rephrase with use-case added.
-
-ADD, ADD, ADD why cant they get that: ADD. ADD tracks files for commit. It'=
-s already been commit : push failed. Failed pushes piled up. I need them un=
-tracked. How do you undo an add ( many adds): simple question. Without dele=
-ting any files, to repush 1 by 1.
-
-I suspect the answer is: "you can't - git provides no means to do so" - a d=
-efect, bug as we call it. The answer to this use-case question likely will =
-confirm my bugreport and I get the feeling this is why they will not answer=
- the question they do not want to accept my bugreport and have a bad spirit=
- to argue. The excuses they give for this will be that it is not typical: T=
-his can normally be solved by repushing. However it is still a defect and i=
-n my use-case there is a slow or intermittent connection and no sha-backups=
- yet because this is the initial creation of a repo.=20
-
-The above question is a use-case[C] seeking how to undo without deleting fi=
-les. There shouldn't be any need to know a use-case in order to answer a te=
-chnical question. I am open to discuss my use-case on this thread. The use-=
-case if of this repo github.com/freedom-foundation/kjbible
-
-My original bug report is that the user " may be cornered into delete files=
-" bugreport[A] Summary as of 20241117 brian does not believe it's a bug and=
- begins chattering to Peff about how to fix the bug "There are Git-level ke=
-epalives during the similar compression operation".
-
-The full question[B] which is a child of the bugreport[A] is here. Summary =
-as of 20241117 my question was mostly sidestepped and spammed whilst the th=
-read devolved into a political drama about code_of_conduct. I am not open t=
-o discuss my use-case on this thread.
+ Documentation/config/diff.txt         | 204 +++++++------
+ Documentation/diff-format.txt         |  42 +--
+ Documentation/diff-generate-patch.txt |  44 +--
+ Documentation/diff-options.txt        | 423 +++++++++++++-------------
+ Documentation/git-diff.txt            | 122 ++++----
+ 5 files changed, 433 insertions(+), 402 deletions(-)
 
 
-[A]: https://lore.kernel.org/git/20241115093214.GA1749331@coredump.intra.pe=
-ff.net/#r
+base-commit: facbe4f633e4ad31e641f64617bc88074c659959
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1769%2Fjnavila%2Fgit_diff_new-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1769/jnavila/git_diff_new-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1769
 
-[B]: https://lore.kernel.org/git/xmqqr079xty7.fsf@gitster.g/T/#t
+Range-diff vs v3:
 
-[C]: https://lore.kernel.org/all/4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlS=
-I5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=3D@proton=
-.me/#r
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
+ 1:  6841bd5825b ! 1:  fd3ee137fe4 doc: git-diff: apply new documentation guidelines
+     @@ Documentation/git-diff.txt: OPTIONS
+      --1 --base::
+      --2 --ours::
+      --3 --theirs::
+     +-	Compare the working tree with the "base" version (stage #1),
+     +-	"our branch" (stage #2) or "their branch" (stage #3).  The
+     +-	index contains these stages only for unmerged entries i.e.
+     +-	while resolving conflicts.  See linkgit:git-read-tree[1]
+     +-	section "3-Way Merge" for detailed information.
+      +`-1`::
+      +`--base`::
+     -+
+     -+or `-2`::
+     ++`-2`::
+      +`--ours`::
+     -+
+     -+or `-3`::
+     ++`-3`::
+      +`--theirs`::
+     - 	Compare the working tree with the "base" version (stage #1),
+     - 	"our branch" (stage #2) or "their branch" (stage #3).  The
+     - 	index contains these stages only for unmerged entries i.e.
+     - 	while resolving conflicts.  See linkgit:git-read-tree[1]
+     - 	section "3-Way Merge" for detailed information.
+     ++	Compare the working tree with
+     +++
+     ++--
+     ++ * the "base" version (stage #1) when using `-1` or `--base`,
+     ++ * "our branch" (stage #2) when using `-2` or `--ours`, or
+     ++ * "their branch" (stage #3) when using `-3` or `--theirs`.
+     ++--
+     +++
+     ++The index contains these stages only for unmerged entries i.e.
+     ++while resolving conflicts.  See linkgit:git-read-tree[1]
+     ++section "3-Way Merge" for detailed information.
+       
+      --0::
+      +`-0`::
+ 2:  07df397741b = 2:  a0a3986ea86 doc: git-diff: apply format changes to diff-options
+ 3:  698628e076b = 3:  aca3573cd95 doc: git-diff: apply format changes to diff-format
+ 4:  1154462f8be = 4:  0e6162d02d1 doc: git-diff: apply format changes to diff-generate-patch
+ 5:  4ec2fd9c3c6 = 5:  d350237eddb doc: git-diff: apply format changes to config part
 
-wnUEARYKACcFgmc7uf0JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAABh9AQDQxbp7CHRFU0poLOuwPdICYc07bOUMHu/EXC4SweKiPAEA6fiT
-yPK2ueIqGYTPzGYtEHLxw7wsV8ZuXS7mE6HseAA=3D
-=3D/xm/
------END PGP SIGNATURE-----
-
---b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo
-Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
-YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
-ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
-bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
-QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
-a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
-CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
-ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
-Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
-QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
-eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
-UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
-
---b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo
-Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
-
-wnUEABYKACcFgmc7uf0JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAMzRAPwJkahB
-zHdjmbLpbLXUfgXMywSHA9tkADAsZxuKanYnlAD8C0onHiMVf6n25kUhzreEJakj1IOGxt9bjQZV
-D8LYagw=
-
---b1=_GayaNvpVWq1iyS5EPgyP8spoelbVoI2EylnjSzyo--
-
+-- 
+gitgitgadget
