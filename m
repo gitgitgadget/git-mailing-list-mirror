@@ -1,43 +1,43 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E99E4A35
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 01:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D091DA21
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 01:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731892053; cv=none; b=sI/QocdqoMVcDKD7300gYd67J9FPW8a3X7ZMGc4YxjbkQFEHfwhbmd9zUri8++UlfeFhUBc7Gak3yKklHo8fQlvMjJqBuPw3vu1iACr3CoWPcChiVDszbWs15ZHYv6VeTOvBmQdLhF9ToszleZTOCL0vU263P4Xk/7Ar0XAeAlA=
+	t=1731893578; cv=none; b=GHuIcCm0z8X1j7Dhf3NyXq74boZfBjkvhAvJyi251LFeh3kKBudmEg+O1uYooXCsah+8nEptKAKpX/W8ZUSfAFK03KDDpxYrWK5riSsSw7ij0bVlS2opB+nPV80TMGz9vin3k7V+2GBIx7VqzEo66tU//TgS73MIX1lwZrQTfyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731892053; c=relaxed/simple;
-	bh=9GGRXUbmPmKcqp+YAjDFEzq/7kvkn6BzxZDFSEpcC5Q=;
+	s=arc-20240116; t=1731893578; c=relaxed/simple;
+	bh=Rh+ggu1TYUMwC2g7yu4angpWgKTEIfZZzg9BUSFdUxo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZdKjVa5kowS02QwRz4zqWIPUqN8BVk08807UdWiD82yLsUhTgh14sC3+0X9RatL7gP9tkjXu0OwXifm69wDEPhpUIPqEf0tPw73jwjRYhszpetp2WY6aSdiGr0awBFQgEjctquaOcFUFJWQE5s5W7yL8JGOnx6Qy1ydm4hvZKlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gTHIV7ss; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=mWHzXM3DAa2IQ0yIrKlhT/QQ3UdEMDz21QKS8c/potg2kcrmaXY0aRvXgwy+fJUGhP/8TIdOLFgSqHntQvcVAlaxtPtY81oNIiyz9CrdP8tueDVMYdrdsIKjEVHBlvSuWdMsGrVb8ARSwlPTqsa8Ajtml7JHTxH3C/mS9W9RxX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YoVW1STK; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gTHIV7ss"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 03A6725400EE;
-	Sun, 17 Nov 2024 20:07:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YoVW1STK"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1F5EA114011D;
+	Sun, 17 Nov 2024 20:32:55 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sun, 17 Nov 2024 20:07:30 -0500
+  by phl-compute-09.internal (MEProxy); Sun, 17 Nov 2024 20:32:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731892049; x=1731978449; bh=Z3Sckg1mXJduZoPG9Iw11XnW2YJSTtBF9x/
-	V7+eGTlE=; b=gTHIV7ssOFPXfLNILH4DejUU1B5nG4UQY1flwi+3Lm8Kzdui7TC
-	KE6QO1zLA5pvZuDNZYDZ9ukLku2NkEcC1NjaJTa47UvA3nMBduyTRQNvWUQB5Moc
-	NiKNAwaSH5GtLfXad3n/YUD+N7eCj/XZrmk67P2pKqzVe0d7wsj2wR5a4VVvhFuS
-	sFfzBvRsMBVuUrC3oyk0vgka5Ih98UeaMzdm+FUq/wuqvF6GgRhGEpRcMekb6pwD
-	1r4OCXy9ccj7lh8z647UwvCON29pSyUr2EUvSyXLU1JjsZorRbyq9AYUiXmxiQjr
-	B1Ptphsdff9N40nXQv8U9Pc/4I93Jp9x0OQ==
-X-ME-Sender: <xms:UZM6Z1JK7GGG126hKSUt8F2n50ILoRFOlFcMaFyVKRyiIk9pOD99vw>
-    <xme:UZM6ZxJt7-N9LhxTeYm7cr6Wcz8togqSgylT_Yykq-GNi-kxZmXCPlSpLFRy_xDSn
-    By54Q_GUiaJvoGFew>
-X-ME-Received: <xmr:UZM6Z9v050jEvmfcoMjAa-Zo0uTJUL9A2tahkeKFodohC72TQ6FbQnI8QSWnBZhusmnSdomPGaykGMF9pk6hyf8YTOsLzFT9bA_3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgdefvdcutefuodetggdotefrodftvf
+	1731893574; x=1731979974; bh=Rh+ggu1TYUMwC2g7yu4angpWgKTEIfZZzg9
+	BUSFdUxo=; b=YoVW1STK5iKvPQPn4BdMxobkgWvpRdRAT/3L3S/8eo/Oh8X90xN
+	WaxEHQX1+4hH/2B3INXPbn8urc/WPNScdyfBkgs//a+ONsHPIS7fwCgagkKiGayj
+	Smaj+VA63VfsVlz6XE4vrwpPthDiH7NpTDMBMd9CWhIG8rfOQ1DANkHtj4jglOOv
+	KzwvXrY+y3SAAI6GETtfUv08nCdS65aQ1PWqF/faYp5vmHW42TQDqKPLS6JvLRcD
+	VqbIE4mUkONCEx5MTjojEXPMSFsh5m37KtnHWiKWJbYa6/KRQm5f2KPm/GtnBsIj
+	AlrWc6GCpapVytB/ycTtWSgvOJOtC3gwHXw==
+X-ME-Sender: <xms:Rpk6Z8tmMm3Mvqko70eBHMnq16tqvmkiEhdUDacD0b6uIKSW_Vtj1Q>
+    <xme:Rpk6Z5dC6tsIiH-eiw5MgfauNFI6Uc_6JgqSiBTa9MfoYGCpH3bqizzb39f6nx3om
+    FUmBPxEJKz0AVQ4Ng>
+X-ME-Received: <xmr:Rpk6Z3xcJmcIbSoEasVBXJSZ5dXYudmvA32BP--dHRLqgheBW8h44oQoRih5QhgelNGXYlr3gdpGEes3KPRh9jcEAht5j0vSfFwP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgdefjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,32 +45,38 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgdefvdcutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepfhhfjhhlrggsohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:UZM6Z2Zvh1k1zTATyVB6fTqmuinAHxRrdy7ldE9QuvM3wP4wywNwzA>
-    <xmx:UZM6Z8bWCy_pI1O9AqCZw6Mn2UZHvZZQNLh4CEtzsjHE_3FdzEK1bg>
-    <xmx:UZM6Z6Dybt7GQ9f2dI3n4ETdFoSIz11RCaf7xEO3hdAyLyutGqZU6A>
-    <xmx:UZM6Z6afVkHox-i-zP1gQHxbO6v81YLCGaq0GRVMRlagSWuGaULdDw>
-    <xmx:UZM6Z7yjVtVvQkXiC-13Jga9fRq_BEp3ubxkQ5WB1nY0XblfuuwIu9_6>
+    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghlvhhinhifrghnse
+    hgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvmhhrrghsshesgh
+    hoohhglhgvrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
+    phhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehsthgvrggumh
+    honhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:Rpk6Z_M0oHGttpsJIeoUxJuY0Q74NFrT0d7NAxlm2ePhB17iF7eAVg>
+    <xmx:Rpk6Z8-hEBeLJx-pY8HX5lOeQzixeKbelwiPgJ4j96DUWimFsRULvw>
+    <xmx:Rpk6Z3V7L_H1GI83G7XpW40t2mdMVQrshOBKmfLdZ_n5CkHWjx89ow>
+    <xmx:Rpk6Z1dAnBKo9rH59eJL9G7CB_W-IiAIO0cCwzqVacy5tHCtdMa4gg>
+    <xmx:Rpk6ZwRcVR3CQq63uq5-8VS50WwkllzaIJMIHdVedp9Im3Oo4yxGwMLS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 Nov 2024 20:07:29 -0500 (EST)
+ 17 Nov 2024 20:32:54 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>,  =?utf-8?B?44G144GY44KS?=
- <ffjlabo@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: Trailers Containing Underscore or Dot Characters
-In-Reply-To: <Zzb7aI2C2uh_nwuc@pks.im> (Patrick Steinhardt's message of "Fri,
-	15 Nov 2024 08:42:37 +0100")
-References: <CABpqQ_u4GG28L9KGX+HXiOv2AVAL7sckRBN4a99pCyeaQS+n_w@mail.gmail.com>
-	<CAP8UFD0_+=5xmw6y5qiO22KMZhExLyZ=5HRjYphLD66vt0LLNg@mail.gmail.com>
-	<xmqqa5e2ahqf.fsf@gitster.g> <Zzb7aI2C2uh_nwuc@pks.im>
-Date: Mon, 18 Nov 2024 10:07:27 +0900
-Message-ID: <xmqqy11hjqnk.fsf@gitster.g>
+To: Calvin Wan <calvinwan@google.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
+  emrass@google.com,  me@ttaylorr.com,  stolee@gmail.com,  Josh Steadmon
+ <steadmon@google.com>
+Subject: Re: [RFC PATCH 1/1] maintenance: separate parallelism safe and
+ unsafe tasks
+In-Reply-To: <CAFySSZBioOrfk5O7oni3LRLWasFo6DsuyW7icDDVkiUxq4fNOQ@mail.gmail.com>
+	(Calvin Wan's message of "Fri, 15 Nov 2024 12:13:24 -0800")
+References: <20241108173112.1240584-1-calvinwan@google.com>
+	<20241108173112.1240584-2-calvinwan@google.com>
+	<ZzGtD4Jz9Wj6n0zH@pks.im>
+	<CAFySSZCzxfqpMWH5ORv8fYb7f5WU3Fc2N99fW33wD9JOcYVrVA@mail.gmail.com>
+	<ZzL1jy3plVeld_3m@pks.im>
+	<CAFySSZBioOrfk5O7oni3LRLWasFo6DsuyW7icDDVkiUxq4fNOQ@mail.gmail.com>
+Date: Mon, 18 Nov 2024 10:32:32 +0900
+Message-ID: <xmqqr079jphr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,25 +86,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Calvin Wan <calvinwan@google.com> writes:
 
-> The second thing we should be fixing is that git-interpret-trailers(1)
-> allows us to add invalid trailers:
->
->     $ touch file
->     $ git interpret-trailers --in-place file --trailer 'Valid-trailer: bar'
->     $ git interpret-trailers --parse file
->     Valid-trailer: bar
->     $ git interpret-trailers --in-place file --trailer 'Invalid_trailer: bar'
->     $ git interpret-trailers --parse file
->     $ cat file
->
->     Valid-trailer: bar
->     Invalid_trailer: bar:
->
-> After the second invocation of git-interpret-trailers(1) it is unable to
-> find any trailers anymore due to the bogus format of the second trailer
-> line.
+> .... I think for now it makes sense to hold off
+> on rerolling this series (at least in the form of auto
+> backgrounding/foregrounding tasks) since the purported benefits
+> currently aren't worth the churn. Thanks again for the comments on
+> this series
 
-A good point.
+So, we'll place this topic on hold, or even eject from the tree to
+be revisited later?
+
 Thanks.
