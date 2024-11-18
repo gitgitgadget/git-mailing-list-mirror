@@ -1,97 +1,86 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7264819E838
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 13:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E650C1E49B
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 13:08:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731935123; cv=none; b=sqGU5xOJ5J0+J1Y+R3zaSfXm5obdMhteXAY6HDqlpNcvOjd+IsNvrEuhN2u7LWEQO003mkshzBZQKaHEhiWqCD9qdVjEjzdrBENw6bEpwflueTGKTuTn8mQsvvsPrSbbZo4TvX+XzdJAvQ50jkSMWpXDFmX/hAElGEbKxnuvVKY=
+	t=1731935282; cv=none; b=L1RQZmi8m6HuD1hZLz7NM7CTK7UmbsN6t6sB3WiLM9vbSvCgZBab0y+/IMt/nBB2NUyVKqjC2/vXbnQ//1rOwEub4xPp4E0w0K1dFYa65u8lKFIoP0Q4+2Xr4ha/rH/Ml+Eh/mUocLALj200oV2ZH2tFBJ2JHRifsYlapIeYNRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731935123; c=relaxed/simple;
-	bh=6J904jKZvBg6UhNwsMxSMlkH4GqWJfHiOxmWctWiuZE=;
+	s=arc-20240116; t=1731935282; c=relaxed/simple;
+	bh=9zVD9WMX7/OORBgh0v/0BqaWKOmXYcjOYv2Yyw4OMr0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GN/UmsD432nIHmcN9cPsc2bhMz4CGhVZisc1GeoYyLNeT2nL0V5NdBjClzFxPgK2P6dOIONQ/VjFijc0rK3gkm1/Cyyop+RKL9mXigvg2xK6V3Uv6b9+C1mhHotEuslz0LAnhM8Yz8b+9EVuEFjIDilJCvFfkjvNOquo+0kHJOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=1rDASOfw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U/ThD5K6; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=FofnXuV67T7wTjnVMN4+KU8D/gZfJprad98Dv+vVAOBKHgKKJCsXrlAstDrBr7WhknMbJqAbEgPI7I9ancX/UchBlQ6wVfWb+vlo17CQI7vwjfU2q62KSFJVXFKI8wGa2k9M9lbZfMQhtWoCLlb/YMhaWcglmPfJR337tZ5CLgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wim4v/CA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cVCQytq/; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="1rDASOfw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U/ThD5K6"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5938B1140240;
-	Mon, 18 Nov 2024 08:05:20 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 18 Nov 2024 08:05:20 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wim4v/CA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cVCQytq/"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id F2F071380687;
+	Mon, 18 Nov 2024 08:07:59 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 18 Nov 2024 08:07:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731935120; x=1732021520; bh=MxfDQP10et
-	5G1YtmNQ6sLZA2z7U/CK/gpKx5o4c5jLo=; b=1rDASOfwIIPegYPIetlN5jbTDK
-	p1gmXvWmioN09ZN5U1Uz2Gy8yJb/UlH81eETvLBlPdgp46KBajwxC+zqfnQYSEzv
-	9qqkNjZZsCUDhnfp6SgtSQGfP/psg8WOGCeT3Q740kbHRREMHoR2cKwA1fXbn/os
-	A0WuR48FMRlUlSvW2cROZH1H1oRrloKn/b8eCSls017u1nQkZz/Jo/Y30IioMpYp
-	O57rk9+O/3bm/SEWXNXyS2CHLDdNp3JJPTBXjkwRjJLgoubUNgZmUattBxlc//Rh
-	5LZyPQcc9mU6mTX5zRBzCr7ve96L7LbgAEN+rL5XjSU49y1bPEtrNWM0c4hg==
+	:subject:to:to; s=fm3; t=1731935279; x=1732021679; bh=LorefhhcE1
+	N7eWNSFMHdMgU0VLe8Da1fTP/6PQIZjNU=; b=Wim4v/CAlh4fj8iC1nYo85Sbui
+	D0mrBuxZwTXSdXQHMtTRwZfS6Cp7aX8htrv52EdVhlcezzhfG0oX+MdW58REknhh
+	jAYSo4Vlu/QRuuNkuCGIPVOvYKh+UCnU730k4fvjJXFUiHTuUhqHhd+I0IZtMARh
+	Tl+bxtDapZIrNBs5Cvv+x58Gm33IXghzjEJMYqMwtIlV1idm4TNm679ibsZ5VQXj
+	2TTAL5ou/hQ80VfYhqA+5FyeRxwXsgzSRbjYwL2EapWOyWA+11PXK9LEVeU45srw
+	pz7SjmRXHrbfKhYdb5LcYvq+8/jTb1iS+qx+Dyt0563nJE2DpiOmxOo0RVbg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731935120; x=1732021520; bh=MxfDQP10et5G1YtmNQ6sLZA2z7U/CK/gpKx
-	5o4c5jLo=; b=U/ThD5K6GmmuLG+rZeb4hYKqpDaB8ecoK/eslws0Nex/yJKdFdR
-	1136RQqlZuDRTJe4yFeZfYC/6deufr0bWxtc/6vm/NGfmo1BuRFySTLcx96uGjOT
-	/qG62+3YgvsluFzH2+SuSPHLaP3gUHcOoNvkxfeWKmD9SWQPa6iVe3lZ2ZD6IDFT
-	5N482cztVHVwG7PoB3ugvVy4ic7lvuGF9530Vw9LwlH3u2n46f8CMF7r2q/rT2A3
-	OrzD6bR9h+LeOANPNauBlDFP2SL0EPB/PLw7s1peoJos2yrn0JllPDTaVCKArsy/
-	B4TPmpr36RmC/8mpx3vx4vEoanGK6JrqAiA==
-X-ME-Sender: <xms:jzs7ZwrIoNO2iQWNCGgvVCDaRtbzAfD52wED32_UhmlBQzn5Zk3-0g>
-    <xme:jzs7Z2pEXOxPNGSTZOWTa07F7PkCprpIgUJOyTK8nqEce-m9aR5DkYJbQWroCP6OE
-    a0Qb9endaPQzvDu0Q>
-X-ME-Received: <xmr:jzs7Z1O12H2n39xLpsc1GSJwhwhCwBBF5tC6Ww_P197wwg5Z5ybSbPO1Ktbf6iLvkk_cyURt12LvhrtBuiFGS7PhQ0hdeBwxpTcnW3fi2TpdKH98>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgdegiecutefuodetggdotefrodftvf
+	1731935279; x=1732021679; bh=LorefhhcE1N7eWNSFMHdMgU0VLe8Da1fTP/
+	6PQIZjNU=; b=cVCQytq/nNn8LWVhZcRO7yEyYa3UO2xqUZQFOkNUxBo4jUSLIao
+	iXr7J+DbDRvT2JBfK/ULQt8hFPuzyMmZ06mF7fSQPDjsFWQ6A0WOIgX1tMHQEtAg
+	67JjFZrn1bw/VZDVoLnyILZe/r/4LhxIGOsLm7FfKpePkJBbB4m1c0Zi/Ikv7MR2
+	ly6zFaVxHZFgTctX0Mylo8rXyKnarTpI7KYZvwNIpvHPNt9uu+7OP3R+MmsdoWPY
+	9/T51qeJ53tG/Ss+e3TS8qD5ESpvArkMS64BcBkLL3TGK7WLYW1LYtfYTXlZ84E6
+	7STJkufEPWEYqLotPHzO9D6843ilyqYAM0g==
+X-ME-Sender: <xms:Lzw7Z7VMs0GKy8dTugRHyvBHydxjOuRRd66hQafNX4ZDIMkP04Oqwg>
+    <xme:Lzw7ZzljFAWZumDFlA9JGXTFHZPRNiBzKcnPKvnvPMRO5ELobxe93KOZj_lldIbRf
+    GA3vyET3klhnHCsbQ>
+X-ME-Received: <xmr:Lzw7Z3bNv1hePktb4A7ptG7Dgqoc8Mv91uT25Uzo6pBMO1t4K0GGuSARGcBvodK7htbfz89_wxx179vy_-SMaYj7eci23nRTeOhtytmLQEk97qUD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgdegjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptghhrhhishgtohholhes
-    thhugihfrghmihhlhidrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
-    hmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgt
-    phhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtg
-    hpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepuggr
-    vhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguud
-    dvfeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:jzs7Z34yla_ewEgQWfe4uKLzsR-i3sHgy8ieog1QHzexCUSrJBTLEQ>
-    <xmx:jzs7Z_53T9psvGG1l2WgafNnkrpXCqlYjdWIRrm2JkJ0TMod_vj78g>
-    <xmx:jzs7Z3jnsrx9D5cDmkkkweCx4HFC6UeSUVxfaIaG8xhSSYZrcI013g>
-    <xmx:jzs7Z57vX_n3UIPhNZeAihgmQ6otTNIM-Q4Aub35QcJUxdvlKb2tdA>
-    <xmx:kDs7Z8wFnDzgM_fYsu_smPGtYGUAPdEO5ghnn3cf3_Tf0GEjV66TYVUR>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
+    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitd
+    eludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:Lzw7Z2Xr7R0-iE0UkFpbPPWa2DePe68-_hUeAdErWwpaF5tFaTkoDA>
+    <xmx:Lzw7Z1m8KVMSvnaMZgmufiKOS_K3xryQ20zAz8piNCR84SHh1iiuxQ>
+    <xmx:Lzw7ZzfE7ziQ4UIOuAQYDZLQg2wWzdY1TKtzgGMwREFSz5s_11ZHIQ>
+    <xmx:Lzw7Z_GGsa-weHO88HQuRb67SrlDsOCYlsbnQJLIBy8tywFz0cyI4g>
+    <xmx:Lzw7Z6ybBOFkIwHIt6K0SsfcL-gPQemM65q0UsAxZgCmjARCXxajTPF3>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 08:05:17 -0500 (EST)
+ 18 Nov 2024 08:07:59 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7649b05d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Nov 2024 13:04:27 +0000 (UTC)
-Date: Mon, 18 Nov 2024 14:05:05 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2cd2f946 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 18 Nov 2024 13:07:10 +0000 (UTC)
+Date: Mon, 18 Nov 2024 14:07:48 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [-SPAM-] [PATCH RFC v7 00/22] Modernize the build system
-Message-ID: <Zzs7gerRLH0WlM-j@pks.im>
-References: <cover.1727881164.git.ps@pks.im>
- <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
- <b9e0f631-b2a3-4c48-8745-a4b1e3f58ad0@ramsayjones.plus.com>
- <ZzsJRFQ2KaJCiOyG@pks.im>
- <xmqqfrnok8s9.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
+ allocated on MacOS with git 2.47.0
+Message-ID: <Zzs8JJO_HCLrEBM0@pks.im>
+References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
+ <4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
+ <xmqq34js1kd2.fsf@gitster.g>
+ <Zzr4cgk_5MJNcHm1@pks.im>
+ <xmqqjzd0k92c.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,47 +89,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqfrnok8s9.fsf@gitster.g>
+In-Reply-To: <xmqqjzd0k92c.fsf@gitster.g>
 
-On Mon, Nov 18, 2024 at 09:48:06PM +0900, Junio C Hamano wrote:
+On Mon, Nov 18, 2024 at 09:42:03PM +0900, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
+> >     ps/upgrade-clar
+> >     wm/shortlog-hash
 > 
-> > Now there will be exceptions where it does make sense to make something
-> > a build option, due to whatever reason. But I'm in the camp of adding
-> > them as-needed and not proactively so that we don't end up with hundreds
-> > of options.
-> 
-> Surely, your system may have openssl installed, but for
-> non-technical reasons you may not want your Git to link with it,
-> which is impossible to auto-detect, of course.
-> 
-> To be quite honest, while I am very much sympathetic to the above,
-> in practice, I am afraid that these knobs we _already_ have in our
-> Makefile are exceptions that was added due to whatever reason "as
-> needed".  Dropping any of them would mean that you are declaring
-> this: by default, all the past exceptions we made are nullified and
-> you have to resubmit for requalification if you want to keep your
-> favourite one.
-> 
-> That's not a very nice way to run the project, though.
+> Unfortuately, these were both based not on 'maint' but on 'master',
+> and cannot ever be merged down to 'maint'.  The last topic may
+> deserve to be cherry-picked to 'maint' when the time comes.
 
-There is a difference though: you are talking about actual features
-wired into Git, whereas I'm talking about other things like "Does the
-system have `uintmax_t`?".
+We got several reports about build failures with clar on esoteric
+platforms, and ps/upgrade-clar fixes those. Distro maintainers can of
+course cherry-pick those patches, but I think it would make sense to
+pull them into a maintenance release.
 
-The former is a strong must to be toggled by the user, and it is already
-wired up like this: you can choose to compile without OpenSSL and any
-other optional library with Meson. All toggles we have in this context
-in our Makefile must be supported by Meson. While auto-detection is nice
-to have, it is mandatory that the detection can be disabled.
-
-But for the second group I'm sceptical whether these really should be
-configurable by the developer. Why would you care whether you use
-`uintmax_t` provided by the system or by Git as a compat macro? I don't
-see a strong reason to let the developer override this in a build system
-that knows to auto-detect the availability of such features.
-
-Now as said, there may be cases where it indeed is useful, but in
-general I don't think it is.
+I am happy to  provide a backport for ps/upgrade-clar if you agree with
+me.
 
 Patrick
