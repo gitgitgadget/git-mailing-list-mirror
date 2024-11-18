@@ -1,100 +1,99 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D091DA21
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 01:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B01126C1C
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 05:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731893578; cv=none; b=GHuIcCm0z8X1j7Dhf3NyXq74boZfBjkvhAvJyi251LFeh3kKBudmEg+O1uYooXCsah+8nEptKAKpX/W8ZUSfAFK03KDDpxYrWK5riSsSw7ij0bVlS2opB+nPV80TMGz9vin3k7V+2GBIx7VqzEo66tU//TgS73MIX1lwZrQTfyI=
+	t=1731906279; cv=none; b=iTIXgC2emUk+jz9Mjg01eZWa0H3jl3mvHZUH+VvHElU2VfsHEdpxcIy7IC4AmidPGNDtQdecZB1MYSrtoQF3m5/mbrRfktTwHEEkwTE2fQZ1x16stjsQNbCG7WFhWM6dfEEB+WNDvePLuTPFJGamlrucpjt6+LfXnxpRvhgK+T4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731893578; c=relaxed/simple;
-	bh=Rh+ggu1TYUMwC2g7yu4angpWgKTEIfZZzg9BUSFdUxo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mWHzXM3DAa2IQ0yIrKlhT/QQ3UdEMDz21QKS8c/potg2kcrmaXY0aRvXgwy+fJUGhP/8TIdOLFgSqHntQvcVAlaxtPtY81oNIiyz9CrdP8tueDVMYdrdsIKjEVHBlvSuWdMsGrVb8ARSwlPTqsa8Ajtml7JHTxH3C/mS9W9RxX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YoVW1STK; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1731906279; c=relaxed/simple;
+	bh=n5xuxHGtdxZBpsTTdbSZj/hGiSeH3GygS0tdRs9i+3M=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=rgugyxk5X6MLaW1nrBbmKtROjaH8nN5IShaY5JbbDS6nQttMh0o0Opf0PuEqKHiCKHOL7r7PFFP274v11qlP4btf7PP6mSH100XzspMgOMOek7ZBpQFGKOt7rqqdBgl4TBt9rQ6uwYnnxEICnGSxBI2JSWM2j9VigZa7aGrhJAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=ZF+e+bEq; arc=none smtp.client-ip=185.70.43.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YoVW1STK"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1F5EA114011D;
-	Sun, 17 Nov 2024 20:32:55 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Sun, 17 Nov 2024 20:32:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731893574; x=1731979974; bh=Rh+ggu1TYUMwC2g7yu4angpWgKTEIfZZzg9
-	BUSFdUxo=; b=YoVW1STK5iKvPQPn4BdMxobkgWvpRdRAT/3L3S/8eo/Oh8X90xN
-	WaxEHQX1+4hH/2B3INXPbn8urc/WPNScdyfBkgs//a+ONsHPIS7fwCgagkKiGayj
-	Smaj+VA63VfsVlz6XE4vrwpPthDiH7NpTDMBMd9CWhIG8rfOQ1DANkHtj4jglOOv
-	KzwvXrY+y3SAAI6GETtfUv08nCdS65aQ1PWqF/faYp5vmHW42TQDqKPLS6JvLRcD
-	VqbIE4mUkONCEx5MTjojEXPMSFsh5m37KtnHWiKWJbYa6/KRQm5f2KPm/GtnBsIj
-	AlrWc6GCpapVytB/ycTtWSgvOJOtC3gwHXw==
-X-ME-Sender: <xms:Rpk6Z8tmMm3Mvqko70eBHMnq16tqvmkiEhdUDacD0b6uIKSW_Vtj1Q>
-    <xme:Rpk6Z5dC6tsIiH-eiw5MgfauNFI6Uc_6JgqSiBTa9MfoYGCpH3bqizzb39f6nx3om
-    FUmBPxEJKz0AVQ4Ng>
-X-ME-Received: <xmr:Rpk6Z3xcJmcIbSoEasVBXJSZ5dXYudmvA32BP--dHRLqgheBW8h44oQoRih5QhgelNGXYlr3gdpGEes3KPRh9jcEAht5j0vSfFwP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgdefjecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghlvhhinhifrghnse
-    hgohhoghhlvgdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvmhhrrghsshesgh
-    hoohhglhgvrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehsthgvrggumh
-    honhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:Rpk6Z_M0oHGttpsJIeoUxJuY0Q74NFrT0d7NAxlm2ePhB17iF7eAVg>
-    <xmx:Rpk6Z8-hEBeLJx-pY8HX5lOeQzixeKbelwiPgJ4j96DUWimFsRULvw>
-    <xmx:Rpk6Z3V7L_H1GI83G7XpW40t2mdMVQrshOBKmfLdZ_n5CkHWjx89ow>
-    <xmx:Rpk6Z1dAnBKo9rH59eJL9G7CB_W-IiAIO0cCwzqVacy5tHCtdMa4gg>
-    <xmx:Rpk6ZwRcVR3CQq63uq5-8VS50WwkllzaIJMIHdVedp9Im3Oo4yxGwMLS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 Nov 2024 20:32:54 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Calvin Wan <calvinwan@google.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
-  emrass@google.com,  me@ttaylorr.com,  stolee@gmail.com,  Josh Steadmon
- <steadmon@google.com>
-Subject: Re: [RFC PATCH 1/1] maintenance: separate parallelism safe and
- unsafe tasks
-In-Reply-To: <CAFySSZBioOrfk5O7oni3LRLWasFo6DsuyW7icDDVkiUxq4fNOQ@mail.gmail.com>
-	(Calvin Wan's message of "Fri, 15 Nov 2024 12:13:24 -0800")
-References: <20241108173112.1240584-1-calvinwan@google.com>
-	<20241108173112.1240584-2-calvinwan@google.com>
-	<ZzGtD4Jz9Wj6n0zH@pks.im>
-	<CAFySSZCzxfqpMWH5ORv8fYb7f5WU3Fc2N99fW33wD9JOcYVrVA@mail.gmail.com>
-	<ZzL1jy3plVeld_3m@pks.im>
-	<CAFySSZBioOrfk5O7oni3LRLWasFo6DsuyW7icDDVkiUxq4fNOQ@mail.gmail.com>
-Date: Mon, 18 Nov 2024 10:32:32 +0900
-Message-ID: <xmqqr079jphr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="ZF+e+bEq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1731906275; x=1732165475;
+	bh=n5xuxHGtdxZBpsTTdbSZj/hGiSeH3GygS0tdRs9i+3M=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=ZF+e+bEqoQyusXIdnxOeLZXAEx3fy0T1tUc9Ymy3AyqTI7RxnvaXS55OQI6V2xYTy
+	 KnrKH/o5LSsGp2eEcAzjmTrElEMaGDpxQF/eRNOiQ67d2BKYI3gqq7NaDE5tyDXx3Y
+	 GlFTNuGgXJxsPQ//jSbEBNJK6aOvxaOdNDaXgsg7Wy6fkM/VaLgo6hfCsaiZ4yd+Zu
+	 uy6s5O9vvhqoyVxaIbUYBaf1yoL/961OVqa26nxBKNssYybdyLp6hNU9BMpZh81gnS
+	 HmuqARCe6WpgmFyVD6eAKv45nk1XDtepc3EG3VfLbvCer/4vNnuLHgbzgR7NIUycOP
+	 0+hKRwK4T77lA==
+Date: Mon, 18 Nov 2024 05:04:30 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: How do you hyperlink a thread
+Message-ID: <Sj2qFJa5yPRxluqhZvXlMwgfLuX9n6Um4OOS9IHNXCJU3jjE0YblQDUt0rOpEzY-fUHs5CiognunZO-ddQN-1IVVBEyxLz_2hl936VBW-JU=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: de0076e04a583ead7662d4103a0fe82086c50a40
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed;
+ boundary="b1=_E50MP4FXijbzBH0z9TsYIiaY8QVCTvenIVsMtAhVHI"
 
-Calvin Wan <calvinwan@google.com> writes:
+--b1=_E50MP4FXijbzBH0z9TsYIiaY8QVCTvenIVsMtAhVHI
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-> .... I think for now it makes sense to hold off
-> on rerolling this series (at least in the form of auto
-> backgrounding/foregrounding tasks) since the purported benefits
-> currently aren't worth the churn. Thanks again for the comments on
-> this series
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-So, we'll place this topic on hold, or even eject from the tree to
-be revisited later?
+How do you hyperlink a thread in this Mailing List when writing to the ML i=
+n order to reference related threads? I now have three threads going and al=
+l of them are related BUGREPORT > TECHNICAL QUESTION > USE-CASE. How do you=
+ hyperlink to a ML thread in a ML message?
 
-Thanks.
+
+from A_bughunter@proton.me
+
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmc6ytwJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAL7tAP9yT4XPOMJbwdk55MCkEwlLZr19EV8g/BWckgB6Rf8QOgEAvyKH
+IMokmjRt/d2zH/L1cqGtLtkk6aF0ufbDhrVQkA4=3D
+=3DVur4
+-----END PGP SIGNATURE-----
+
+--b1=_E50MP4FXijbzBH0z9TsYIiaY8QVCTvenIVsMtAhVHI
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_E50MP4FXijbzBH0z9TsYIiaY8QVCTvenIVsMtAhVHI
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmc6ytwJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAADhyAP9CUzoP
+7RhBjWcU+LtocEyufKrSccMHLx7NzxP7meEUzQD9GvQjsaH+3RfvwiGIyUbHJidvoIviYCv7ECb6
+IyrzTQM=
+
+--b1=_E50MP4FXijbzBH0z9TsYIiaY8QVCTvenIVsMtAhVHI--
+
