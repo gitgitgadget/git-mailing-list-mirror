@@ -1,43 +1,43 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A1117C98
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 00:55:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E99E4A35
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 01:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731891311; cv=none; b=AlkyrTxD4GBOndWqsXopSSt93HTrrZ3dJtwp/I1VZJICVhQRBDPhBa25dY0bdNO15WhDHExiNE0QefNHaCTcF4dQlL3ZQtq39llQhLUR4H0/49krVc6wQ4zY3wTBb893BFXxN5dTpIsYkuRMiKkDuIgQkQJ1ags4VfqmPiHXwiM=
+	t=1731892053; cv=none; b=sI/QocdqoMVcDKD7300gYd67J9FPW8a3X7ZMGc4YxjbkQFEHfwhbmd9zUri8++UlfeFhUBc7Gak3yKklHo8fQlvMjJqBuPw3vu1iACr3CoWPcChiVDszbWs15ZHYv6VeTOvBmQdLhF9ToszleZTOCL0vU263P4Xk/7Ar0XAeAlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731891311; c=relaxed/simple;
-	bh=9qdhKNvysX2/ZYddOl4GMgzlK/Ob/8K7pMKPq6UgbYI=;
+	s=arc-20240116; t=1731892053; c=relaxed/simple;
+	bh=9GGRXUbmPmKcqp+YAjDFEzq/7kvkn6BzxZDFSEpcC5Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PzpAOQJ46Opycloo1pLWxfslSMGTsYHdCzOfhOw9Jd/oJ5ospshV02Zr2EN+eBBs+Wiw+LJycP0vtbfU2cI8u7BGSBHoOhonyC+jr79pj4pKUmhPv6jyNMHgma2KXjk2SOi852tHFDkdvyrjE05GwIFfOiZoFYgwQfrNlwyVI2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lISdAOfM; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=ZdKjVa5kowS02QwRz4zqWIPUqN8BVk08807UdWiD82yLsUhTgh14sC3+0X9RatL7gP9tkjXu0OwXifm69wDEPhpUIPqEf0tPw73jwjRYhszpetp2WY6aSdiGr0awBFQgEjctquaOcFUFJWQE5s5W7yL8JGOnx6Qy1ydm4hvZKlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gTHIV7ss; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lISdAOfM"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5AF5025400D2;
-	Sun, 17 Nov 2024 19:55:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gTHIV7ss"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 03A6725400EE;
+	Sun, 17 Nov 2024 20:07:29 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Sun, 17 Nov 2024 19:55:08 -0500
+  by phl-compute-03.internal (MEProxy); Sun, 17 Nov 2024 20:07:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731891308; x=1731977708; bh=9qdhKNvysX2/ZYddOl4GMgzlK/Ob/8K7pMK
-	Pq6UgbYI=; b=lISdAOfMCVjAJtdWVqHC5vJVBrC0mkR9OiryzW+KBSSM+BLja2w
-	9VLrW3IGg+mKmQYEYUN8ykjTOMZ8p+1oROQC3sHcBxTws+ITCLX3C1XLsX44XPkE
-	rpYkS19L+UT/Z4yBdxDPfaCazsOKASoQLR4Jw1aC+o3p3qnOjDSmEjJjyTGLVjWf
-	qBigQdC2BBzgVRaa2rs9Qem36wEDYRefNNS7k4KTCBS6arqGhxpldrq8e/aWromU
-	XiMnLH244TTYmxVc+dKxc4N3NhdAp8d1xUBXdrWer2rANumyugrdCJhafPlvKH4E
-	ceA/zUnhKErsmrr5ax71LD1Gu18Z5+/DGMw==
-X-ME-Sender: <xms:a5A6Z3xaFq7n-wTZvo2cWG9cQzrAnrXnLszKmbiDZxRsDQb3tt-7Aw>
-    <xme:a5A6Z_QKFm_CiWM6PKfxMkFBGuQkpy0JA_r1Vu5aejbqLB-xmNReED-8WruUaacTH
-    _O2-k-Rw7553Am2IQ>
-X-ME-Received: <xmr:a5A6ZxU6isKIRRoUTXdos4aNA-nBP-Fa3MvMbjWfnRVmt8IJkW1GoG63Z743YF5dP3elsC2zu5BJCoH6HBJGoyo99Wnr02c5qnjN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgddvkecutefuodetggdotefrodftvf
+	1731892049; x=1731978449; bh=Z3Sckg1mXJduZoPG9Iw11XnW2YJSTtBF9x/
+	V7+eGTlE=; b=gTHIV7ssOFPXfLNILH4DejUU1B5nG4UQY1flwi+3Lm8Kzdui7TC
+	KE6QO1zLA5pvZuDNZYDZ9ukLku2NkEcC1NjaJTa47UvA3nMBduyTRQNvWUQB5Moc
+	NiKNAwaSH5GtLfXad3n/YUD+N7eCj/XZrmk67P2pKqzVe0d7wsj2wR5a4VVvhFuS
+	sFfzBvRsMBVuUrC3oyk0vgka5Ih98UeaMzdm+FUq/wuqvF6GgRhGEpRcMekb6pwD
+	1r4OCXy9ccj7lh8z647UwvCON29pSyUr2EUvSyXLU1JjsZorRbyq9AYUiXmxiQjr
+	B1Ptphsdff9N40nXQv8U9Pc/4I93Jp9x0OQ==
+X-ME-Sender: <xms:UZM6Z1JK7GGG126hKSUt8F2n50ILoRFOlFcMaFyVKRyiIk9pOD99vw>
+    <xme:UZM6ZxJt7-N9LhxTeYm7cr6Wcz8togqSgylT_Yykq-GNi-kxZmXCPlSpLFRy_xDSn
+    By54Q_GUiaJvoGFew>
+X-ME-Received: <xmr:UZM6Z9v050jEvmfcoMjAa-Zo0uTJUL9A2tahkeKFodohC72TQ6FbQnI8QSWnBZhusmnSdomPGaykGMF9pk6hyf8YTOsLzFT9bA_3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgdefvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,33 +45,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgddvkecutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopeih
-    hegtgehlfeesphhrohhtohhnrdhmvgdprhgtphhtthhopehgihhtghhithhgrggughgvth
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bJA6ZxgFSQvlmjgORgNbCAss-2WmW9usoeJbpu70BctcgoAOlYgz6A>
-    <xmx:bJA6Z5B_DicfWLcGnrzg6Rc3ln6NS9-H-S513wN7fRQyvytPZnbkYg>
-    <xmx:bJA6Z6JMbqFE-53TzKt-ny7qHdaQKtUG0NbrXEW9dDOVPup07-k5pw>
-    <xmx:bJA6Z4C-xWga8C_VWCc97QOi6eKcecHrQRs2UgZrvGnJl4bj3Vx31Q>
-    <xmx:bJA6Z71W_4vXWPqlPcwfk-HVYz3J2ZF0bS5MRiqFPItJiHSW8wCmcplE>
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepfhhfjhhlrggsohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:UZM6Z2Zvh1k1zTATyVB6fTqmuinAHxRrdy7ldE9QuvM3wP4wywNwzA>
+    <xmx:UZM6Z8bWCy_pI1O9AqCZw6Mn2UZHvZZQNLh4CEtzsjHE_3FdzEK1bg>
+    <xmx:UZM6Z6Dybt7GQ9f2dI3n4ETdFoSIz11RCaf7xEO3hdAyLyutGqZU6A>
+    <xmx:UZM6Z6afVkHox-i-zP1gQHxbO6v81YLCGaq0GRVMRlagSWuGaULdDw>
+    <xmx:UZM6Z7yjVtVvQkXiC-13Jga9fRq_BEp3ubxkQ5WB1nY0XblfuuwIu9_6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 Nov 2024 19:55:07 -0500 (EST)
+ 17 Nov 2024 20:07:29 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Jeff King <peff@peff.net>,  Philip Yung <y5c4l3@proton.me>,  Y5 via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] diff: setup pager only before diff contents truly ready
-In-Reply-To: <ZxatqdBiB+NoMP+j@nand.local> (Taylor Blau's message of "Mon, 21
-	Oct 2024 15:38:17 -0400")
-References: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-	<20241019211938.GA589728@coredump.intra.peff.net>
-	<UZMh2lyzbLOgsf0PXfMnq6HnWVnCK3y36jY3IMKUykPi74ztNucf8bgywoeO0DdeApq31JDDGMZiEya99zAcI3l8y_zcVqiN8FpEnT1DRZU=@proton.me>
-	<20241021190045.GB1219228@coredump.intra.peff.net>
-	<ZxatqdBiB+NoMP+j@nand.local>
-Date: Mon, 18 Nov 2024 09:55:06 +0900
-Message-ID: <xmqq34jpl5sl.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Christian Couder <christian.couder@gmail.com>,  =?utf-8?B?44G144GY44KS?=
+ <ffjlabo@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: Trailers Containing Underscore or Dot Characters
+In-Reply-To: <Zzb7aI2C2uh_nwuc@pks.im> (Patrick Steinhardt's message of "Fri,
+	15 Nov 2024 08:42:37 +0100")
+References: <CABpqQ_u4GG28L9KGX+HXiOv2AVAL7sckRBN4a99pCyeaQS+n_w@mail.gmail.com>
+	<CAP8UFD0_+=5xmw6y5qiO22KMZhExLyZ=5HRjYphLD66vt0LLNg@mail.gmail.com>
+	<xmqqa5e2ahqf.fsf@gitster.g> <Zzb7aI2C2uh_nwuc@pks.im>
+Date: Mon, 18 Nov 2024 10:07:27 +0900
+Message-ID: <xmqqy11hjqnk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,17 +80,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Taylor Blau <me@ttaylorr.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> You'd need to identify all of the possible diff code paths in order to
->> add tests for them, which is the same thing you had to do to fix the
->> code paths. I was mostly just commenting that we're not likely to be
->> able to rely on existing tests to help us here.
->>
->> It might be worth adding a test that shows off your improved diff
->> behavior, though I would be OK if it was a representative command and
->> not exhaustive. I think adding to t7006 should be fine.
+> The second thing we should be fixing is that git-interpret-trailers(1)
+> allows us to add invalid trailers:
 >
-> Agreed.
+>     $ touch file
+>     $ git interpret-trailers --in-place file --trailer 'Valid-trailer: bar'
+>     $ git interpret-trailers --parse file
+>     Valid-trailer: bar
+>     $ git interpret-trailers --in-place file --trailer 'Invalid_trailer: bar'
+>     $ git interpret-trailers --parse file
+>     $ cat file
+>
+>     Valid-trailer: bar
+>     Invalid_trailer: bar:
+>
+> After the second invocation of git-interpret-trailers(1) it is unable to
+> find any trailers anymore due to the bogus format of the second trailer
+> line.
 
-It seems that this topic is waiting for a reroll?
+A good point.
+Thanks.
