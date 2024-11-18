@@ -1,77 +1,80 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC017483
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 00:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402D7C8FE
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 00:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731889957; cv=none; b=ht44SMmM8JL/acuq3JMHMQWT2oky9IKThB+5VPk2ATcwvfkuGm3Vu4fWb2ACPbB2D4F+1MZAvc0wDOdH8jGLlLMyVjQqXFdu3ww2zPG5uBuTgHD+3UAR0wQZ4Fl+fwRXVgztdSTaQwFBwIB/peUrQ547gF+S2UOMiDo9cBki3Q4=
+	t=1731890133; cv=none; b=De1IBbbIWqOdBEmCnCfzq4Oumis4axTpgWALNEBeuOyw2SYFGz2vsD3fhWZ5Fnvf62zNm+sGFrBMX+AJe1H9AGYULpPC1XEi+YGul9JKrd9kHovjKo4q65P2i10XCoOxioRB/Ksb53fqthhPGApzpwurv7ZEO63iZEXbW9HXlL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731889957; c=relaxed/simple;
-	bh=f1tA31WfXF5RedKmr6cAkZbpLV9Ou1NgqAaKSXTfEus=;
+	s=arc-20240116; t=1731890133; c=relaxed/simple;
+	bh=lh48zb2uffkODq8Az3DpHR/ro4NnMy+B4CPqyWUik2c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bu3p2l7gcZOnUnoBv8SSGu6slRc3XkIBLxFb26kBXXDfHxoG7VIS24zwhYDvufLw4U9CdOauO70SsnEfgqPAAzRSFBLBTHs7yJ0x//2DesHgKOUrbyPskdPwCn5H1zaS5wiDd4ToikdWSok5fj36f5AuvaS1JQyl2z/+FZS/IIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pc2yCjmh; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=NDC6p7kbT37qSrzDtqQf4fpQVtVJgWkAIQuFJIt8/PjEc8vO/OsNW4ZUHcpBupszsRQNAIoy8ny2dgpdjOrHfEDnvNy3WMJXgKHecHRjiKnibkviQFh9lVfhtuIg/nRG0GajeviKZxnU0clm90nzgHchpVh3dKMSar2jC8pcs+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mmdEzPMB; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pc2yCjmh"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9CE8525400CE;
-	Sun, 17 Nov 2024 19:32:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sun, 17 Nov 2024 19:32:34 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mmdEzPMB"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 53FBA1140114;
+	Sun, 17 Nov 2024 19:35:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Sun, 17 Nov 2024 19:35:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731889954; x=1731976354; bh=6MC9RUp21CkmqEDEQCoBwiYZ3UWh+rwC/Vh
-	M2RyrAoY=; b=Pc2yCjmhiyb2+AJcrj825XciSJtY6hXOLoxVjt5D1AC+meSrnBn
-	VXj4GmiZZfh2S/3tvEuUM8zAMDDe9CoXnX3izUQQv2FL8C3PUK6yXprmlL8rOtQi
-	g8VKYJ8MZrAI4mhjalbjGDSaM5JTdlXIgqRfIgXCDLl57BxR6kmqfrEUcTAYTSFa
-	IIaXmfqMw0bjCSMdOmyM2m+4uM4BH7xIBssoQyXSeGiyo4saG2t4SFd4vutwR0qh
-	IZI7W7nGjzGffZ8HHvkaRvw4ABbEl17QbDJRnzABdb4bLrVVcq1oswzI3Jj+5Nbq
-	Al9aMv1XcU2j6FtgMfqTkPA9hO+/phgp+Jg==
-X-ME-Sender: <xms:Ios6Z58ugvOSPqi4q_ZTg9jU-6_Vthuil0esAkURCtDyJ2IpJFQeHg>
-    <xme:Ios6Z9vP2sgaOfDMaWm4YqGWEpEh65TRxJc79Qun0NOHybzKHRcVpoe4yog7o4oVZ
-    AuaH_kHGWJMKaaz1w>
-X-ME-Received: <xmr:Ios6Z3CaLZvph9fquzb_eed3S3GzF245_KM50nJTMC-k6Qd8AjtkL4tPb_YiMX8tB18s0M80Z-2D4OsX6S8zqahz3xtzU2zCg0L3>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731890130; x=
+	1731976530; bh=Oza40L2XhJpigElpKLLnREjzay6tL9HIC7NbcSfG8lY=; b=m
+	mdEzPMBHccGAq4oK6m0E8I6Bekx3f/TyiYDHVccYxnDcOky5//uvpMnF6rjqvpaM
+	1VYTxOD4wqBuNl3opkR5vUsa1ItdE10+/VR457h3zgNHTF/skU+diP+qi97U+oj7
+	cTHJdZhtil2UGwE/0OSDSx2pDlcxKtfH1//K88TG/NsY7DSn69MnLh7djI7BV4jx
+	MlzhBQweFAdosshkTfq1LtEklVbwnSh101IJVsUxrsq9xb3q6L4elk1EoMDfp+r4
+	Hv84C/OoUBcdsgBPEIam4CBFyfulbIvg6JGyrwNk7Bg9iowRjG9Qyk648pQVN589
+	ndTCphUAcAF1iNSPLhT0Q==
+X-ME-Sender: <xms:0Ys6Z1K9bsnJG4Sl0nip4Um_TBeu38_tzARYDDcAIwHc3P9LJ9PKCQ>
+    <xme:0Ys6ZxJkzC14ioYyR1ULA5i8HyxbmlGxckZ7Smggp7c94cKQuGMss-fUYS5kveJJB
+    -6rhjNCc1-5hZ1Uig>
+X-ME-Received: <xmr:0Ys6Z9sf5_UxRb8gaTEWmKpU_RTzr3cKvTJq8QFSN6wy-DB71EAsjJIwI3pZdLk6aaMDLMDLsbejiuGphgfIiFJ1xEPMC3dPR3g8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgddvgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefjeeiudduteffkeelheejgeehveehieefvddu
-    ieejheektdffgffhgffggfduteenucffohhmrghinhepghhithhhuhgsrdgtohhmpdgtoh
-    guvggpohhfpggtohhnughutghtrdhmugenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprh
-    gtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhp
-    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprggpsghughhhuhhnth
-    gvrhesphhrohhtohhnrdhmvgdprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Ios6Z9fNTs9sgKCHr3EiCiSgrnOyHEzQrjiOetmVcfGKrT4cVnQjEA>
-    <xmx:Ios6Z-OS9IFED0E4o6Yu4t1U5kTQtGSa8UOJwxl_VwfbaMPRXFlFxw>
-    <xmx:Ios6Z_kYRdUqlPzLuKvcdFl2A4mfThHNYBwEroqmrXVQy9BaHfYuGg>
-    <xmx:Ios6Z4vpBElEiqioSi-_14SX9iV0kc2WYMGJuudInvXbVfXD0eMz_Q>
-    <xmx:Ios6Z12H8701McHbDF2bgVqQM_kApE895CCHLq9Gzl7TT78mj5MgNpn->
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffg
+    kefhhfetieffteehleehtdfghedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrse
+    hfrhgvvgdrfhhrpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0Ys6Z2a-zuaMTgngZDH_H9-cOonXCuyoXmfFWEv2lmcCNHmtavSMFQ>
+    <xmx:0Ys6Z8Z5Yjt9zjFibjU1bs4Kh597m1AXbkuJbh2ld4q3nMPXvtqN8Q>
+    <xmx:0Ys6Z6BZxDmqI5p5zvVsYMwAmdQosBFvJCUoRWPViydDeZp5TjAanw>
+    <xmx:0Ys6Z6Z6PdOPlI_ALuTO9hD66XlVyksyGkzv2TQrOfd7tQtXvX9PZQ>
+    <xmx:0os6ZxMbLjf4OsxSrr-GvusWKda9ul0EArQz1ABXSKmb1wzGv59ydKxJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 17 Nov 2024 19:32:33 -0500 (EST)
+ 17 Nov 2024 19:35:29 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: A bughunter <A_bughunter@proton.me>,  Chris Torek
- <chris.torek@gmail.com>,  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What is the diff between a --soft and a blank reset
-In-Reply-To: <5f401732-9b3d-4c45-88a8-a9e3d9d14fd9@gmail.com> (Phillip Wood's
-	message of "Sun, 17 Nov 2024 15:21:30 +0000")
-References: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me>
-	<CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com>
-	<82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwCEC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=@proton.me>
-	<5f401732-9b3d-4c45-88a8-a9e3d9d14fd9@gmail.com>
-Date: Mon, 18 Nov 2024 09:32:32 +0900
-Message-ID: <xmqqr079xty7.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: Johannes Sixt <j6t@kdbg.org>,  Patrick Steinhardt <ps@pks.im>,
+  =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] doc: git-diff: apply new documentation guidelines
+In-Reply-To: <2365334.irdbgypaU6@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+	"Sun, 17 Nov 2024 17:44:10 +0100")
+References: <pull.1769.v2.git.1731343985.gitgitgadget@gmail.com>
+	<6841bd5825be8e7b17c2f9c3a997de29ffa3a540.1731785769.git.gitgitgadget@gmail.com>
+	<7f24a030-bae2-4712-8593-61a9d4089cfb@kdbg.org>
+	<2365334.irdbgypaU6@cayenne>
+Date: Mon, 18 Nov 2024 09:35:28 +0900
+Message-ID: <xmqqldxhxttb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,31 +82,45 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Jean-Noël AVILA <jn.avila@free.fr> writes:
 
-> Messages on this list are expected to be constructive and respectful
-> to others. I strongly recommend that you read the code of conduct [1]
-> and urge you to remember to be constructive and give others the
-> benefit of the doubt when posting here in the future.
-> ...
+> OK, I'm not fond of my solution either, but I strongly dislike mixing synonyms 
+> (which is the usual meaning of putting several options in the same 
+> description) with incompatible behavioral alternatives. But, for this one, 
+> let's consider that the alternatives are just like `--[no-]bla` option 
+> descriptions, for the sake of ending this PR.
+
+Makes sense.  In this case, not like "--[no-]blah" whose description
+has to discuss two options with opposite meaning, we need to
+describe three choices.
+
+> I would still rephrase the description to make it clear, how the alternatives 
+> are  working:
+
+Absolutely.
+
 >
-> [1] https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
-> ...
-> Please remember that the person you are replying to is trying to help
-> and has given up their time to do so. I think that rather than copy
-> and pasting a manpage Chris has taken the time to write some bullet
-> points to try and explain the different reset modes.
-> ...
-> Telling someone that they need to learn English or get off the mailing
-> list is completely unacceptable.
+> `-1`::
+> `--base`::
+> `-2`::
+> `--ours`::
+> `-3`::
+> `--theirs`::
+> 	Compare the working tree with
+> +
+> --
+>  * the "base" version (stage #1) when using `-1` or `--base`,
+>  * "our branch" (stage #2) when using `-2` or `--ours`, or
+>  * "their branch" (stage #3) when using `-3` or `--theirs`.
+> --
+> +
+> The index contains these stages only for unmerged entries i.e.
+> while resolving conflicts.  See linkgit:git-read-tree[1]
+> section "3-Way Merge" for detailed information.
 
-Thanks, I have not much to add.
+OK.
 
-The code-of-conduct does make it acceptable to tell those who
-deviate from acceptable behavior on the list to get off the list, by
-the way.  I cannot yet say with 100% confidence if it is merely
-misunderstanding due to language barrier, or somebody is trolling
-others, deliberately, but perhaps we a few exchanges, we may know.
-
+Thanks.
