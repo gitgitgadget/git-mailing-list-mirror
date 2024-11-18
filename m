@@ -1,64 +1,63 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CA51E7C0A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EE11E767D
 	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:06:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731967562; cv=none; b=V7jn8lqjwHT84ws0vJhj/dlxXuAirMZAOuMSaSK7h3VDZE5NK3r7wFPVZX1AI5McynRKXRP574lIv0ypMqvxX5zaOADB1hSdRbG+KmOOggV43Az6be2BlwYEBLn2xLsS7dvzghAlW7Aw16/n7sjsmliWvexOhs/1IMZSPWMwynk=
+	t=1731967563; cv=none; b=bXM2Ujx9uNYepOikSROsThCV3Q5ULkvrk3R7GbsVnMUIxbz5xZmdYVwYFa4AHEP94bC3jfXSLg4mFfmru29+bA7fG7iIaJh6bIEePL+9XeB6uzpjjW9mevgiPB5P2RY9Hnxcq2SWuAbzDYhpmQ0UayRSuNMtCwYo+dPXW34Oyqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731967562; c=relaxed/simple;
-	bh=0NYo/XYeH3+n/Qry/njTb1AtkwL6TFmD58G4xKjP9Tc=;
+	s=arc-20240116; t=1731967563; c=relaxed/simple;
+	bh=qGABfrpY4x02r0t2K8tF5fKemhjCA6N0D4awE+SiuqI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=I8nISPl4QhmMCbAkCNve7TqPPUkRavxKqIOr2pOYfEv2Xd0k4kMJl0DbOrdBQ1dSVXU1RfEgHMp5K5HLO7cqzxiEsVsp11GPmDygliUixkOA44K92Vrz6EzXplgtxIw6A3eQ6Ot72absC6P0IKf2R4i/T3/rzUWL8cnl5xYC7Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sr/j/acX; arc=none smtp.client-ip=209.85.221.48
+	 Content-Type:To:Cc; b=pz/tpl3C9xjhxuQZQeiSx/e/wLawbRXLHkmUf2rSB9PfM3/0OFqXJ1ojecIXePNpdfuALXp5/rto7E5yS5c8SQUHKBg+1T2MfwEp8DHw7f9/jOot9y5r8Fil/SLU2TIF5V2ic8aViho6GbLESpfzzo4ZjBzTy9jTqR21rD4GUFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jXuYMAif; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sr/j/acX"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3824a8a5c56so693918f8f.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jXuYMAif"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3824038142aso1441351f8f.2
         for <git@vger.kernel.org>; Mon, 18 Nov 2024 14:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731967559; x=1732572359; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1731967558; x=1732572358; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LhawjVpJghbDgtfyy8U3o7VjiknI4ER7dr7TL3PtJ38=;
-        b=Sr/j/acXvo6kH+eRCr2nSUrO2Dum91YN6Ed0tANNLC45yowyG6UECR/P2jX112NrCP
-         VbY6wN+Xohw1R/ZMU0jnnXKBzMmX6H+tJ3CKXb3FWCn7l4sK2kyHBAWwMq4MG9j8qJ9x
-         GGSrYZFykUBPclU2YXkkAKYXYgPAFUT6gX1kVmqIkyfowAlKnuqxWzj16cC+GCv1HrSZ
-         TtBVZ1n8i/I8Lfiyibz70tWRhsilALeyKnpdOvWr6fRTBrHL1H0DzdHmzt9Y3RHumkpL
-         h6BlEzhK36e+xP8UPprt5crbZNAoozmKVMBS2GZ4w5LvCzTIvYWAa77s06d66fhBF5Zg
-         DAsA==
+        bh=wikHvCxFh/2p+QPUb7E3saY8JSa8IrlEfCddY97Xhs0=;
+        b=jXuYMAifwnZBr1A+vv6MqDbu+wfa5/zXWxETMtxlGNo+FBkqi7QEmk3kwh0gVVys2U
+         urKaBfMuat3XH8PvQSA3oz6rqLY4lcuWt3yS3Fo/3c+eOomproq2X0d+BKWEb3K8XjFG
+         3UiCUEbd85D/ngEt+qA8NdUopWGjchVvI9XB7rbqHIPVCe9PwSOPnz06ZEa3EdrUSVhg
+         BMe24rrHYlURFvuO+F5gN0IX2f79xP8wU/hmvGMH4/4tkRvxbh+OMfROC6H1L7CKHikl
+         CMG0mpMowccmTD1GOQKjN+1ZAjrFoiD4ctm3I2vM5XZPxu0Lk7WcJVcLIgjv3tC0y2fI
+         SZAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731967559; x=1732572359;
+        d=1e100.net; s=20230601; t=1731967558; x=1732572358;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=LhawjVpJghbDgtfyy8U3o7VjiknI4ER7dr7TL3PtJ38=;
-        b=kOcyDb5TnHSw0tbf7SdfnZsfWl9B7G7BoIs2ta1DWp5Gpdle8ODdvDOIsJV0tp0jF4
-         /aoxfyeY8nEQU/EcUtvu393ejLQ07gb+1FPK4DMLgM+OzOUpBXPCl/yyE9JXgKfC0pqH
-         Uk3NjYOLk0A+UhfGE03b+ADDO6kgSflb3fs06wYx/VIQdpoRzhLj3JBXOV4s4axgCh39
-         wiFhWyU/gfLo6XuTQhFAUesrWE05MSXqcI0xRdGSO7apTjy45q9nxUgxg/8wtnRrzq09
-         sNu6rTa4pGpohm3Xx9mFh4uA6O8wHfzngrWC5k0PAAvx7SkjIizZVkI6zt1FOL1kg7F2
-         ZRzw==
-X-Gm-Message-State: AOJu0YwZY4k/zG6wORK6L3H2bqGZopkxVtH6QcBaBB81Zf2jggjIG4rW
-	nqNCT5oRCZrk9X1mbqlbMgUghRosT/eoF/4cfjAxTR3cTIVa2wUT2rSmpw==
-X-Google-Smtp-Source: AGHT+IEMp5sjFPeJMWF4WeNkX30mG8w/oetNmj1l+4JfKXBstJMVDNKLGdNVDxasW2YB3mdpm96XMQ==
-X-Received: by 2002:a05:6000:1ac9:b0:37d:5232:a963 with SMTP id ffacd0b85a97d-382259051a9mr11542557f8f.14.1731967558752;
-        Mon, 18 Nov 2024 14:05:58 -0800 (PST)
+        bh=wikHvCxFh/2p+QPUb7E3saY8JSa8IrlEfCddY97Xhs0=;
+        b=lxVHsamhx8BeC2xVAk4QnqrPxLf/O0pehH9EhZXrTTmQehrb7QoKC1qyyTIjbi+MKE
+         L32RbrR6SPSjBOXq4C7kO1i/7G9nVa3mMp2320AUjIiu0C+VOlaVYesg1WIjoc/HSh2e
+         9aEfOmPQeSZR2lMRlMJ0AyP9kit4c7fUJWyXMnllF3ZM0/d4lPT0wO0nZnay4qaZBIv+
+         kjC5K4NrmR6v0SWe3U2rL25RwL502qFkqOcASaONndTMzzX+sAqxVETYitmZ0OBFPR0X
+         Zz0EA6IHAIDxuaNM/KAWAha3u0IprDL+TsJYPNeSvTXkswSVRbhNzjsA5YEpC4IwpqFj
+         +uYg==
+X-Gm-Message-State: AOJu0Yy4O6uJFP6we7UA3bcXzhSSs6z1y1WuQc2mJgo13go1hOMU84LI
+	8Y97UoMYJDYcsZHJz1YlElGl+ZrThvMieOeIR7a+HDlQllx9U0cpkTgYIA==
+X-Google-Smtp-Source: AGHT+IEI/ydBhMO85OCa+sSM5mBPq3dF57+WZwRIFeXXnG9BB24ZuBB2n0SeLIg1j3w2fiUwrvmK5Q==
+X-Received: by 2002:a05:6000:1565:b0:382:4a8e:b82f with SMTP id ffacd0b85a97d-3824a8ebc2amr2103171f8f.42.1731967557220;
+        Mon, 18 Nov 2024 14:05:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3823a0e8f26sm7712710f8f.31.2024.11.18.14.05.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38237fdc503sm8100526f8f.95.2024.11.18.14.05.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 14:05:58 -0800 (PST)
-Message-Id: <0e6162d02d102531dd07673845d02fe2385d61df.1731967553.git.gitgitgadget@gmail.com>
+        Mon, 18 Nov 2024 14:05:56 -0800 (PST)
+Message-Id: <a0a3986ea860c0380e24ebae392512ef1081162a.1731967553.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1769.v4.git.1731967553.gitgitgadget@gmail.com>
 References: <pull.1769.v3.git.1731785768.gitgitgadget@gmail.com>
 	<pull.1769.v4.git.1731967553.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 18 Nov 2024 22:05:52 +0000
-Subject: [PATCH v4 4/5] doc: git-diff: apply format changes to
- diff-generate-patch
+Date: Mon, 18 Nov 2024 22:05:50 +0000
+Subject: [PATCH v4 2/5] doc: git-diff: apply format changes to diff-options
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,92 +75,987 @@ Cc: Johannes Sixt <j6t@kdbg.org>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
+The format change is only applied to the sections of the file that are
+filtered in git-diff.
+
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/diff-generate-patch.txt | 44 ++++++++++++++-------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ Documentation/diff-options.txt | 423 +++++++++++++++++----------------
+ 1 file changed, 212 insertions(+), 211 deletions(-)
 
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-generate-patch.txt
-index 4b5aa5c2e04..e5c813c96f3 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -14,7 +14,7 @@ You can customize the creation of patch text via the
- `GIT_EXTERNAL_DIFF` and the `GIT_DIFF_OPTS` environment variables
- (see linkgit:git[1]), and the `diff` attribute (see linkgit:gitattributes[5]).
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index cd0b81adbb6..640eb6e7db5 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -19,16 +19,16 @@ ifdef::git-format-patch[]
+ endif::git-format-patch[]
  
--What the -p option produces is slightly different from the traditional
-+What the `-p` option produces is slightly different from the traditional
- diff format:
+ ifndef::git-format-patch[]
+--p::
+--u::
+---patch::
++`-p`::
++`-u`::
++`--patch`::
+ 	Generate patch (see <<generate_patch_text_with_p>>).
+ ifdef::git-diff[]
+ 	This is the default.
+ endif::git-diff[]
  
- 1.   It is preceded by a "git diff" header that looks like this:
-@@ -30,20 +30,21 @@ name of the source file of the rename/copy and the name of
- the file that the rename/copy produces, respectively.
+--s::
+---no-patch::
++`-s`::
++`--no-patch`::
+ 	Suppress all output from the diff machinery.  Useful for
+ 	commands like `git show` that show the patch by default to
+ 	squelch their output, or to cancel the effect of options like
+@@ -39,28 +39,28 @@ endif::git-format-patch[]
+ ifdef::git-log[]
+ -m::
+ 	Show diffs for merge commits in the default format. This is
+-	similar to '--diff-merges=on', except `-m` will
++	similar to `--diff-merges=on`, except `-m` will
+ 	produce no output unless `-p` is given as well.
  
- 2.   It is followed by one or more extended header lines:
--
--       old mode <mode>
--       new mode <mode>
--       deleted file mode <mode>
--       new file mode <mode>
--       copy from <path>
--       copy to <path>
--       rename from <path>
--       rename to <path>
--       similarity index <number>
--       dissimilarity index <number>
--       index <hash>..<hash> <mode>
+ -c::
+ 	Produce combined diff output for merge commits.
+-	Shortcut for '--diff-merges=combined -p'.
++	Shortcut for `--diff-merges=combined -p`.
+ 
+ --cc::
+ 	Produce dense combined diff output for merge commits.
+-	Shortcut for '--diff-merges=dense-combined -p'.
++	Shortcut for `--diff-merges=dense-combined -p`.
+ 
+ --dd::
+ 	Produce diff with respect to first parent for both merge and
+ 	regular commits.
+-	Shortcut for '--diff-merges=first-parent -p'.
++	Shortcut for `--diff-merges=first-parent -p`.
+ 
+ --remerge-diff::
+ 	Produce remerge-diff output for merge commits.
+-	Shortcut for '--diff-merges=remerge -p'.
++	Shortcut for `--diff-merges=remerge -p`.
+ 
+ --no-diff-merges::
+-	Synonym for '--diff-merges=off'.
++	Synonym for `--diff-merges=off`.
+ 
+ --diff-merges=<format>::
+ 	Specify diff format to be used for merge commits. Default is
+@@ -73,33 +73,33 @@ The following formats are supported:
+ off, none::
+ 	Disable output of diffs for merge commits. Useful to override
+ 	implied value.
+-+
++
+ on, m::
+ 	Make diff output for merge commits to be shown in the default
+ 	format. The default format can be changed using
+ 	`log.diffMerges` configuration variable, whose default value
+ 	is `separate`.
+-+
++
+ first-parent, 1::
+ 	Show full diff with respect to first parent. This is the same
+ 	format as `--patch` produces for non-merge commits.
+-+
++
+ separate::
+ 	Show full diff with respect to each of parents.
+ 	Separate log entry and diff is generated for each parent.
+-+
++
+ combined, c::
+ 	Show differences from each of the parents to the merge
+ 	result simultaneously instead of showing pairwise diff between
+ 	a parent and the result one at a time. Furthermore, it lists
+ 	only files which were modified from all parents.
+-+
++
+ dense-combined, cc::
+ 	Further compress output produced by `--diff-merges=combined`
+ 	by omitting uninteresting hunks whose contents in the parents
+ 	have only two variants and the merge result picks one of them
+ 	without modification.
+-+
++
+ remerge, r::
+ 	Remerge two-parent merge commits to create a temporary tree
+ 	object--potentially containing files with conflict markers
+@@ -112,33 +112,33 @@ documented).
+ --
+ 
+ --combined-all-paths::
+-	This flag causes combined diffs (used for merge commits) to
++	Cause combined diffs (used for merge commits) to
+ 	list the name of the file from all parents.  It thus only has
+ 	effect when `--diff-merges=[dense-]combined` is in use, and
+ 	is likely only useful if filename changes are detected (i.e.
+ 	when either rename or copy detection have been requested).
+ endif::git-log[]
+ 
+--U<n>::
+---unified=<n>::
+-	Generate diffs with <n> lines of context instead of
++`-U<n>`::
++`--unified=<n>`::
++	Generate diffs with _<n>_ lines of context instead of
+ 	the usual three.
+ ifndef::git-format-patch[]
+ 	Implies `--patch`.
+ endif::git-format-patch[]
+ 
+---output=<file>::
++`--output=<file>`::
+ 	Output to a specific file instead of stdout.
+ 
+---output-indicator-new=<char>::
+---output-indicator-old=<char>::
+---output-indicator-context=<char>::
++`--output-indicator-new=<char>`::
++`--output-indicator-old=<char>`::
++`--output-indicator-context=<char>`::
+ 	Specify the character used to indicate new, old or context
+-	lines in the generated patch. Normally they are '+', '-' and
++	lines in the generated patch. Normally they are `+`, `-` and
+ 	' ' respectively.
+ 
+ ifndef::git-format-patch[]
+---raw::
++`--raw`::
+ ifndef::git-log[]
+ 	Generate the diff in raw format.
+ ifdef::git-diff-core[]
+@@ -155,54 +155,55 @@ endif::git-log[]
+ endif::git-format-patch[]
+ 
+ ifndef::git-format-patch[]
+---patch-with-raw::
++`--patch-with-raw`::
+ 	Synonym for `-p --raw`.
+ endif::git-format-patch[]
+ 
+ ifdef::git-log[]
+--t::
++`-t`::
+ 	Show the tree objects in the diff output.
+ endif::git-log[]
+ 
+---indent-heuristic::
++`--indent-heuristic`::
+ 	Enable the heuristic that shifts diff hunk boundaries to make patches
+ 	easier to read. This is the default.
+ 
+---no-indent-heuristic::
++`--no-indent-heuristic`::
+ 	Disable the indent heuristic.
+ 
+---minimal::
++`--minimal`::
+ 	Spend extra time to make sure the smallest possible
+ 	diff is produced.
+ 
+---patience::
++`--patience`::
+ 	Generate a diff using the "patience diff" algorithm.
+ 
+---histogram::
++`--histogram`::
+ 	Generate a diff using the "histogram diff" algorithm.
+ 
+---anchored=<text>::
++`--anchored=<text>`::
+ 	Generate a diff using the "anchored diff" algorithm.
  +
--File modes are printed as 6-digit octal numbers including the file type
-+[synopsis]
-+old mode <mode>
-+new mode <mode>
-+deleted file mode <mode>
-+new file mode <mode>
-+copy from <path>
-+copy to <path>
-+rename from <path>
-+rename to <path>
-+similarity index <number>
-+dissimilarity index <number>
-+index <hash>..<hash> <mode>
-++
-+File modes _<mode>_ are printed as 6-digit octal numbers including the file type
- and file permission bits.
+ This option may be specified more than once.
  +
- Path names in extended headers do not include the `a/` and `b/` prefixes.
-@@ -56,7 +57,7 @@ files, while 100% dissimilarity means that no line from the old
- file made it into the new one.
+ If a line exists in both the source and destination, exists only once,
+-and starts with this text, this algorithm attempts to prevent it from
++and starts with _<text>_, this algorithm attempts to prevent it from
+ appearing as a deletion or addition in the output. It uses the "patience
+ diff" algorithm internally.
+ 
+---diff-algorithm={patience|minimal|histogram|myers}::
++`--diff-algorithm=(patience|minimal|histogram|myers)`::
+ 	Choose a diff algorithm. The variants are as follows:
  +
- The index line includes the blob object names before and after the change.
--The <mode> is included if the file mode does not change; otherwise,
-+The _<mode>_ is included if the file mode does not change; otherwise,
- separate lines indicate the old and the new mode.
+ --
+-`default`, `myers`;;
++   `default`;;
++   `myers`;;
+ 	The basic greedy diff algorithm. Currently, this is the default.
+-`minimal`;;
++   `minimal`;;
+ 	Spend extra time to make sure the smallest possible diff is
+ 	produced.
+-`patience`;;
++   `patience`;;
+ 	Use "patience diff" algorithm when generating patches.
+-`histogram`;;
++   `histogram`;;
+ 	This algorithm extends the patience algorithm to "support
+ 	low-occurrence common elements".
+ --
+@@ -211,47 +212,47 @@ For instance, if you configured the `diff.algorithm` variable to a
+ non-default value and want to use the default one, then you
+ have to use `--diff-algorithm=default` option.
  
- 3.  Pathnames with "unusual" characters are quoted as explained for
-@@ -134,17 +135,18 @@ or like this (when the `--cc` option is used):
- 
- 2.   It is followed by one or more extended header lines
-      (this example shows a merge with two parents):
--
--       index <hash>,<hash>..<hash>
--       mode <mode>,<mode>..<mode>
--       new file mode <mode>
--       deleted file mode <mode>,<mode>
-++
-+[synopsis]
-+index <hash>,<hash>..<hash>
-+mode <mode>,<mode>`..`<mode>
-+new file mode <mode>
-+deleted file mode <mode>,<mode>
+---stat[=<width>[,<name-width>[,<count>]]]::
++`--stat[=<width>[,<name-width>[,<count>]]]`::
+ 	Generate a diffstat. By default, as much space as necessary
+ 	will be used for the filename part, and the rest for the graph
+ 	part. Maximum width defaults to terminal width, or 80 columns
+ 	if not connected to a terminal, and can be overridden by
+-	`<width>`. The width of the filename part can be limited by
+-	giving another width `<name-width>` after a comma or by setting
+-	`diff.statNameWidth=<width>`. The width of the graph part can be
+-	limited by using `--stat-graph-width=<width>` or by setting
+-	`diff.statGraphWidth=<width>`. Using `--stat` or
++	_<width>_. The width of the filename part can be limited by
++	giving another width _<name-width>_ after a comma or by setting
++	`diff.statNameWidth=<name-width>`. The width of the graph part can be
++	limited by using `--stat-graph-width=<graph-width>` or by setting
++	`diff.statGraphWidth=<graph-width>`. Using `--stat` or
+ 	`--stat-graph-width` affects all commands generating a stat graph,
+ 	while setting `diff.statNameWidth` or `diff.statGraphWidth`
+ 	does not affect `git format-patch`.
+-	By giving a third parameter `<count>`, you can limit the output to
+-	the first `<count>` lines, followed by `...` if there are more.
++	By giving a third parameter _<count>_, you can limit the output to
++	the first _<count>_ lines, followed by `...` if there are more.
  +
- The `mode <mode>,<mode>..<mode>` line appears only if at least one of
- the <mode> is different from the rest. Extended headers with
- information about detected content movement (renames and
- copying detection) are designed to work with the diff of two
--<tree-ish> and are not used by combined diff format.
-+_<tree-ish>_ and are not used by combined diff format.
+ These parameters can also be set individually with `--stat-width=<width>`,
+ `--stat-name-width=<name-width>` and `--stat-count=<count>`.
  
- 3.   It is followed by a two-line from-file/to-file header:
+---compact-summary::
++`--compact-summary`::
+ 	Output a condensed summary of extended header information such
+-	as file creations or deletions ("new" or "gone", optionally "+l"
+-	if it's a symlink) and mode changes ("+x" or "-x" for adding
++	as file creations or deletions ("new" or "gone", optionally `+l`
++	if it's a symlink) and mode changes (`+x` or `-x` for adding
+ 	or removing executable bit respectively) in diffstat. The
+ 	information is put between the filename part and the graph
+ 	part. Implies `--stat`.
+ 
+---numstat::
++`--numstat`::
+ 	Similar to `--stat`, but shows number of added and
+ 	deleted lines in decimal notation and pathname without
+ 	abbreviation, to make it more machine friendly.  For
+ 	binary files, outputs two `-` instead of saying
+ 	`0 0`.
+ 
+---shortstat::
++`--shortstat`::
+ 	Output only the last line of the `--stat` format containing total
+ 	number of modified files, as well as number of added and deleted
+ 	lines.
+ 
+--X[<param1,param2,...>]::
+---dirstat[=<param1,param2,...>]::
++`-X [<param>,...]`::
++`--dirstat[=<param>,...]`::
+ 	Output the distribution of relative amount of changes for each
+ 	sub-directory. The behavior of `--dirstat` can be customized by
+ 	passing it a comma separated list of parameters.
+@@ -284,7 +285,7 @@ These parameters can also be set individually with `--stat-width=<width>`,
+ 	Note that when using `cumulative`, the sum of the percentages
+ 	reported may exceed 100%. The default (non-cumulative) behavior can
+ 	be specified with the `noncumulative` parameter.
+-<limit>;;
++_<limit>_;;
+ 	An integer parameter specifies a cut-off percent (3% by default).
+ 	Directories contributing less than this percentage of the changes
+ 	are not shown in the output.
+@@ -295,29 +296,29 @@ directories with less than 10% of the total amount of changed files,
+ and accumulating child directory counts in the parent directories:
+ `--dirstat=files,10,cumulative`.
+ 
+---cumulative::
+-	Synonym for --dirstat=cumulative
++`--cumulative`::
++	Synonym for `--dirstat=cumulative`.
+ 
+---dirstat-by-file[=<param1,param2>...]::
+-	Synonym for --dirstat=files,<param1>,<param2>...
++`--dirstat-by-file[=<param>,...]`::
++	Synonym for `--dirstat=files,<param>,...`.
+ 
+---summary::
++`--summary`::
+ 	Output a condensed summary of extended header information
+ 	such as creations, renames and mode changes.
+ 
+ ifndef::git-format-patch[]
+---patch-with-stat::
++`--patch-with-stat`::
+ 	Synonym for `-p --stat`.
+ endif::git-format-patch[]
+ 
+ ifndef::git-format-patch[]
+ 
+--z::
++`-z`::
+ ifdef::git-log[]
+-	Separate the commits with NULs instead of newlines.
++	Separate the commits with __NUL__s instead of newlines.
+ +
+ Also, when `--raw` or `--numstat` has been given, do not munge
+-pathnames and use NULs as output field terminators.
++pathnames and use __NUL__s as output field terminators.
+ endif::git-log[]
+ ifndef::git-log[]
+ 	When `--raw`, `--numstat`, `--name-only` or `--name-status` has been
+@@ -328,89 +329,89 @@ Without this option, pathnames with "unusual" characters are quoted as
+ explained for the configuration variable `core.quotePath` (see
+ linkgit:git-config[1]).
+ 
+---name-only::
++`--name-only`::
+ 	Show only the name of each changed file in the post-image tree.
+ 	The file names are often encoded in UTF-8.
+ 	For more information see the discussion about encoding in the linkgit:git-log[1]
+ 	manual page.
+ 
+---name-status::
++`--name-status`::
+ 	Show only the name(s) and status of each changed file. See the description
+ 	of the `--diff-filter` option on what the status letters mean.
+ 	Just like `--name-only` the file names are often encoded in UTF-8.
+ 
+---submodule[=<format>]::
++`--submodule[=<format>]`::
+ 	Specify how differences in submodules are shown.  When specifying
+-	`--submodule=short` the 'short' format is used.  This format just
++	`--submodule=short` the `short` format is used.  This format just
+ 	shows the names of the commits at the beginning and end of the range.
+-	When `--submodule` or `--submodule=log` is specified, the 'log'
++	When `--submodule` or `--submodule=log` is specified, the `log`
+ 	format is used.  This format lists the commits in the range like
+ 	linkgit:git-submodule[1] `summary` does.  When `--submodule=diff`
+-	is specified, the 'diff' format is used.  This format shows an
++	is specified, the `diff` format is used.  This format shows an
+ 	inline diff of the changes in the submodule contents between the
+-	commit range.  Defaults to `diff.submodule` or the 'short' format
++	commit range.  Defaults to `diff.submodule` or the `short` format
+ 	if the config option is unset.
+ 
+---color[=<when>]::
++`--color[=<when>]`::
+ 	Show colored diff.
+-	`--color` (i.e. without '=<when>') is the same as `--color=always`.
+-	'<when>' can be one of `always`, `never`, or `auto`.
++	`--color` (i.e. without `=<when>`) is the same as `--color=always`.
++	_<when>_ can be one of `always`, `never`, or `auto`.
+ ifdef::git-diff[]
+ 	It can be changed by the `color.ui` and `color.diff`
+ 	configuration settings.
+ endif::git-diff[]
+ 
+---no-color::
++`--no-color`::
+ 	Turn off colored diff.
+ ifdef::git-diff[]
+ 	This can be used to override configuration settings.
+ endif::git-diff[]
+ 	It is the same as `--color=never`.
+ 
+---color-moved[=<mode>]::
++`--color-moved[=<mode>]`::
+ 	Moved lines of code are colored differently.
+ ifdef::git-diff[]
+ 	It can be changed by the `diff.colorMoved` configuration setting.
+ endif::git-diff[]
+-	The <mode> defaults to 'no' if the option is not given
+-	and to 'zebra' if the option with no mode is given.
++	The _<mode>_ defaults to `no` if the option is not given
++	and to `zebra` if the option with no mode is given.
+ 	The mode must be one of:
+ +
+ --
+-no::
++`no`::
+ 	Moved lines are not highlighted.
+-default::
++`default`::
+ 	Is a synonym for `zebra`. This may change to a more sensible mode
+ 	in the future.
+-plain::
++`plain`::
+ 	Any line that is added in one location and was removed
+-	in another location will be colored with 'color.diff.newMoved'.
+-	Similarly 'color.diff.oldMoved' will be used for removed lines
++	in another location will be colored with `color.diff.newMoved`.
++	Similarly `color.diff.oldMoved` will be used for removed lines
+ 	that are added somewhere else in the diff. This mode picks up any
+ 	moved line, but it is not very useful in a review to determine
+ 	if a block of code was moved without permutation.
+-blocks::
++`blocks`::
+ 	Blocks of moved text of at least 20 alphanumeric characters
+ 	are detected greedily. The detected blocks are
+-	painted using either the 'color.diff.{old,new}Moved' color.
++	painted using either the `color.diff.(old|new)Moved` color.
+ 	Adjacent blocks cannot be told apart.
+-zebra::
+-	Blocks of moved text are detected as in 'blocks' mode. The blocks
+-	are painted using either the 'color.diff.{old,new}Moved' color or
+-	'color.diff.{old,new}MovedAlternative'. The change between
++`zebra`::
++	Blocks of moved text are detected as in `blocks` mode. The blocks
++	are painted using either the `color.diff.(old|new)Moved` color or
++	`color.diff.(old|new)MovedAlternative`. The change between
+ 	the two colors indicates that a new block was detected.
+-dimmed-zebra::
+-	Similar to 'zebra', but additional dimming of uninteresting parts
++`dimmed-zebra`::
++	Similar to `zebra`, but additional dimming of uninteresting parts
+ 	of moved code is performed. The bordering lines of two adjacent
+ 	blocks are considered interesting, the rest is uninteresting.
+ 	`dimmed_zebra` is a deprecated synonym.
+ --
+ 
+---no-color-moved::
++`--no-color-moved`::
+ 	Turn off move detection. This can be used to override configuration
+ 	settings. It is the same as `--color-moved=no`.
+ 
+---color-moved-ws=<modes>::
++`--color-moved-ws=<mode>,...`::
+ 	This configures how whitespace is ignored when performing the
+ 	move detection for `--color-moved`.
+ ifdef::git-diff[]
+@@ -419,63 +420,62 @@ endif::git-diff[]
+ 	These modes can be given as a comma separated list:
+ +
+ --
+-no::
++`no`::
+ 	Do not ignore whitespace when performing move detection.
+-ignore-space-at-eol::
++`ignore-space-at-eol`::
+ 	Ignore changes in whitespace at EOL.
+-ignore-space-change::
++`ignore-space-change`::
+ 	Ignore changes in amount of whitespace.  This ignores whitespace
+ 	at line end, and considers all other sequences of one or
+ 	more whitespace characters to be equivalent.
+-ignore-all-space::
++`ignore-all-space`::
+ 	Ignore whitespace when comparing lines. This ignores differences
+ 	even if one line has whitespace where the other line has none.
+-allow-indentation-change::
++`allow-indentation-change`::
+ 	Initially ignore any whitespace in the move detection, then
+ 	group the moved code blocks only into a block if the change in
+ 	whitespace is the same per line. This is incompatible with the
+ 	other modes.
+ --
+ 
+---no-color-moved-ws::
++`--no-color-moved-ws`::
+ 	Do not ignore whitespace when performing move detection. This can be
+ 	used to override configuration settings. It is the same as
+ 	`--color-moved-ws=no`.
+ 
+---word-diff[=<mode>]::
+-	Show a word diff, using the <mode> to delimit changed words.
++`--word-diff[=<mode>]`::
+ 	By default, words are delimited by whitespace; see
+-	`--word-diff-regex` below.  The <mode> defaults to 'plain', and
++	`--word-diff-regex` below.  The _<mode>_ defaults to `plain`, and
+ 	must be one of:
+ +
+ --
+-color::
++`color`::
+ 	Highlight changed words using only colors.  Implies `--color`.
+-plain::
+-	Show words as `[-removed-]` and `{+added+}`.  Makes no
++`plain`::
++	Show words as ++[-removed-]++ and ++{+added+}++.  Makes no
+ 	attempts to escape the delimiters if they appear in the input,
+ 	so the output may be ambiguous.
+-porcelain::
++`porcelain`::
+ 	Use a special line-based format intended for script
+ 	consumption.  Added/removed/unchanged runs are printed in the
+ 	usual unified diff format, starting with a `+`/`-`/` `
+ 	character at the beginning of the line and extending to the
+ 	end of the line.  Newlines in the input are represented by a
+ 	tilde `~` on a line of its own.
+-none::
++`none`::
+ 	Disable word diff again.
+ --
+ +
+ Note that despite the name of the first mode, color is used to
+ highlight the changed parts in all modes if enabled.
+ 
+---word-diff-regex=<regex>::
+-	Use <regex> to decide what a word is, instead of considering
++`--word-diff-regex=<regex>`::
++	Use _<regex>_ to decide what a word is, instead of considering
+ 	runs of non-whitespace to be a word.  Also implies
+ 	`--word-diff` unless it was already enabled.
+ +
+ Every non-overlapping match of the
+-<regex> is considered a word.  Anything between these matches is
++_<regex>_ is considered a word.  Anything between these matches is
+ considered whitespace and ignored(!) for the purposes of finding
+ differences.  You may want to append `|[^[:space:]]` to your regular
+ expression to make sure that it matches all non-whitespace characters.
+@@ -490,20 +490,20 @@ linkgit:gitattributes[5] or linkgit:git-config[1].  Giving it explicitly
+ overrides any diff driver or configuration setting.  Diff drivers
+ override configuration settings.
+ 
+---color-words[=<regex>]::
++`--color-words[=<regex>]`::
+ 	Equivalent to `--word-diff=color` plus (if a regex was
+ 	specified) `--word-diff-regex=<regex>`.
+ endif::git-format-patch[]
+ 
+---no-renames::
++`--no-renames`::
+ 	Turn off rename detection, even when the configuration
+ 	file gives the default to do so.
+ 
+---[no-]rename-empty::
++`--[no-]rename-empty`::
+ 	Whether to use empty blobs as rename source.
+ 
+ ifndef::git-format-patch[]
+---check::
++`--check`::
+ 	Warn if changes introduce conflict markers or whitespace errors.
+ 	What are considered whitespace errors is controlled by `core.whitespace`
+ 	configuration.  By default, trailing whitespaces (including
+@@ -511,9 +511,9 @@ ifndef::git-format-patch[]
+ 	that is immediately followed by a tab character inside the
+ 	initial indent of the line are considered whitespace errors.
+ 	Exits with non-zero status if problems are found. Not compatible
+-	with --exit-code.
++	with `--exit-code`.
+ 
+---ws-error-highlight=<kind>::
++`--ws-error-highlight=<kind>`::
+ 	Highlight whitespace errors in the `context`, `old` or `new`
+ 	lines of the diff.  Multiple values are separated by comma,
+ 	`none` resets previous values, `default` reset the list to
+@@ -525,30 +525,30 @@ ifndef::git-format-patch[]
+ 
+ endif::git-format-patch[]
+ 
+---full-index::
++`--full-index`::
+ 	Instead of the first handful of characters, show the full
+ 	pre- and post-image blob object names on the "index"
+ 	line when generating patch format output.
+ 
+---binary::
++`--binary`::
+ 	In addition to `--full-index`, output a binary diff that
+ 	can be applied with `git-apply`.
+ ifndef::git-format-patch[]
+ 	Implies `--patch`.
+ endif::git-format-patch[]
+ 
+---abbrev[=<n>]::
++`--abbrev[=<n>]`::
+ 	Instead of showing the full 40-byte hexadecimal object
+ 	name in diff-raw format output and diff-tree header
+-	lines, show the shortest prefix that is at least '<n>'
++	lines, show the shortest prefix that is at least _<n>_
+ 	hexdigits long that uniquely refers the object.
+ 	In diff-patch output format, `--full-index` takes higher
+ 	precedence, i.e. if `--full-index` is specified, full blob
+ 	names will be shown regardless of `--abbrev`.
+ 	Non default number of digits can be specified with `--abbrev=<n>`.
+ 
+--B[<n>][/<m>]::
+---break-rewrites[=[<n>][/<m>]]::
++`-B[<n>][/<m>]`::
++`--break-rewrites[=[<n>][/<m>]]`::
+ 	Break complete rewrite changes into pairs of delete and
+ 	create. This serves two purposes:
+ +
+@@ -556,22 +556,22 @@ It affects the way a change that amounts to a total rewrite of a file
+ not as a series of deletion and insertion mixed together with a very
+ few lines that happen to match textually as the context, but as a
+ single deletion of everything old followed by a single insertion of
+-everything new, and the number `m` controls this aspect of the -B
++everything new, and the number _<m>_ controls this aspect of the `-B`
+ option (defaults to 60%). `-B/70%` specifies that less than 30% of the
+ original should remain in the result for Git to consider it a total
+ rewrite (i.e. otherwise the resulting patch will be a series of
+ deletion and insertion mixed together with context lines).
+ +
+-When used with -M, a totally-rewritten file is also considered as the
+-source of a rename (usually -M only considers a file that disappeared
+-as the source of a rename), and the number `n` controls this aspect of
+-the -B option (defaults to 50%). `-B20%` specifies that a change with
++When used with `-M`, a totally-rewritten file is also considered as the
++source of a rename (usually `-M` only considers a file that disappeared
++as the source of a rename), and the number _<n>_ controls this aspect of
++the `-B` option (defaults to 50%). `-B20%` specifies that a change with
+ addition and deletion compared to 20% or more of the file's size are
+ eligible for being picked up as a possible source of a rename to
+ another file.
+ 
+--M[<n>]::
+---find-renames[=<n>]::
++`-M[<n>]`::
++`--find-renames[=<n>]`::
+ ifndef::git-log[]
+ 	Detect renames.
+ endif::git-log[]
+@@ -580,7 +580,7 @@ ifdef::git-log[]
+ 	For following files across renames while traversing history, see
+ 	`--follow`.
+ endif::git-log[]
+-	If `n` is specified, it is a threshold on the similarity
++	If _<n>_ is specified, it is a threshold on the similarity
+ 	index (i.e. amount of addition/deletions compared to the
+ 	file's size). For example, `-M90%` means Git should consider a
+ 	delete/add pair to be a rename if more than 90% of the file
+@@ -590,12 +590,12 @@ endif::git-log[]
+ 	the same as `-M5%`.  To limit detection to exact renames, use
+ 	`-M100%`.  The default similarity index is 50%.
+ 
+--C[<n>]::
+---find-copies[=<n>]::
++`-C[<n>]`::
++`--find-copies[=<n>]`::
+ 	Detect copies as well as renames.  See also `--find-copies-harder`.
+-	If `n` is specified, it has the same meaning as for `-M<n>`.
++	If _<n>_ is specified, it has the same meaning as for `-M<n>`.
+ 
+---find-copies-harder::
++`--find-copies-harder`::
+ 	For performance reasons, by default, `-C` option finds copies only
+ 	if the original file of the copy was modified in the same
+ 	changeset.  This flag makes the command
+@@ -604,8 +604,8 @@ endif::git-log[]
+ 	projects, so use it with caution.  Giving more than one
+ 	`-C` option has the same effect.
+ 
+--D::
+---irreversible-delete::
++`-D`::
++`--irreversible-delete`::
+ 	Omit the preimage for deletes, i.e. print only the header but not
+ 	the diff between the preimage and `/dev/null`. The resulting patch
+ 	is not meant to be applied with `patch` or `git apply`; this is
+@@ -617,7 +617,7 @@ endif::git-log[]
+ When used together with `-B`, omit also the preimage in the deletion part
+ of a delete/create pair.
+ 
+--l<num>::
++`-l<num>`::
+ 	The `-M` and `-C` options involve some preliminary steps that
+ 	can detect subsets of renames/copies cheaply, followed by an
+ 	exhaustive fallback portion that compares all remaining
+@@ -627,11 +627,11 @@ of a delete/create pair.
+ 	destinations, this exhaustive check is O(N^2).  This option
+ 	prevents the exhaustive portion of rename/copy detection from
+ 	running if the number of source/destination files involved
+-	exceeds the specified number.  Defaults to diff.renameLimit.
++	exceeds the specified number.  Defaults to `diff.renameLimit`.
+ 	Note that a value of 0 is treated as unlimited.
+ 
+ ifndef::git-format-patch[]
+---diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]::
++`--diff-filter=[(A|C|D|M|R|T|U|X|B)...[*]]`::
+ 	Select only files that are Added (`A`), Copied (`C`),
+ 	Deleted (`D`), Modified (`M`), Renamed (`R`), have their
+ 	type (i.e. regular file, symlink, submodule, ...) changed (`T`),
+@@ -649,9 +649,9 @@ Also, these upper-case letters can be downcased to exclude.  E.g.
+ Note that not all diffs can feature all types. For instance, copied and
+ renamed entries cannot appear if detection for those types is disabled.
+ 
+--S<string>::
++`-S<string>`::
+ 	Look for differences that change the number of occurrences of
+-	the specified string (i.e. addition/deletion) in a file.
++	the specified _<string>_ (i.e. addition/deletion) in a file.
+ 	Intended for the scripter's use.
+ +
+ It is useful when you're looking for an exact block of code (like a
+@@ -662,11 +662,11 @@ very first version of the block.
+ +
+ Binary files are searched as well.
+ 
+--G<regex>::
++`-G<regex>`::
+ 	Look for differences whose patch text contains added/removed
+-	lines that match <regex>.
++	lines that match _<regex>_.
+ +
+-To illustrate the difference between `-S<regex> --pickaxe-regex` and
++To illustrate the difference between `-S<regex>` `--pickaxe-regex` and
+ `-G<regex>`, consider a commit with the following diff in the same
+ file:
+ +
+@@ -686,7 +686,7 @@ filter will be ignored.
+ See the 'pickaxe' entry in linkgit:gitdiffcore[7] for more
+ information.
+ 
+---find-object=<object-id>::
++`--find-object=<object-id>`::
+ 	Look for differences that change the number of occurrences of
+ 	the specified object. Similar to `-S`, just the argument is different
+ 	in that it doesn't search for a specific string but for a specific
+@@ -695,25 +695,25 @@ information.
+ The object can be a blob or a submodule commit. It implies the `-t` option in
+ `git-log` to also find trees.
+ 
+---pickaxe-all::
++`--pickaxe-all`::
+ 	When `-S` or `-G` finds a change, show all the changes in that
+ 	changeset, not just the files that contain the change
+-	in <string>.
++	in _<string>_.
+ 
+---pickaxe-regex::
+-	Treat the <string> given to `-S` as an extended POSIX regular
++`--pickaxe-regex`::
++	Treat the _<string>_ given to `-S` as an extended POSIX regular
+ 	expression to match.
+ 
+ endif::git-format-patch[]
+ 
+--O<orderfile>::
++`-O<orderfile>`::
+ 	Control the order in which files appear in the output.
+ 	This overrides the `diff.orderFile` configuration variable
+ 	(see linkgit:git-config[1]).  To cancel `diff.orderFile`,
+ 	use `-O/dev/null`.
+ +
+ The output order is determined by the order of glob patterns in
+-<orderfile>.
++_<orderfile>_.
+ All files with pathnames that match the first pattern are output
+ first, all files with pathnames that match the second pattern (but not
+ the first) are output next, and so on.
+@@ -724,7 +724,7 @@ If multiple pathnames have the same rank (they match the same pattern
+ but no earlier patterns), their output order relative to each other is
+ the normal order.
+ +
+-<orderfile> is parsed as follows:
++_<orderfile>_ is parsed as follows:
+ +
+ --
+  - Blank lines are ignored, so they can be used as separators for
+@@ -738,106 +738,107 @@ the normal order.
+ --
+ +
+ Patterns have the same syntax and semantics as patterns used for
+-fnmatch(3) without the FNM_PATHNAME flag, except a pathname also
++`fnmatch`(3) without the `FNM_PATHNAME` flag, except a pathname also
+ matches a pattern if removing any number of the final pathname
+ components matches the pattern.  For example, the pattern "`foo*bar`"
+ matches "`fooasdfbar`" and "`foo/bar/baz/asdf`" but not "`foobarx`".
+ 
+---skip-to=<file>::
+---rotate-to=<file>::
+-	Discard the files before the named <file> from the output
++`--skip-to=<file>`::
++`--rotate-to=<file>`::
++	Discard the files before the named _<file>_ from the output
+ 	(i.e. 'skip to'), or move them to the end of the output
+ 	(i.e. 'rotate to').  These options were invented primarily for the use
+ 	of the `git difftool` command, and may not be very useful
+ 	otherwise.
+ 
+ ifndef::git-format-patch[]
+--R::
++`-R`::
+ 	Swap two inputs; that is, show differences from index or
+ 	on-disk file to tree contents.
+ endif::git-format-patch[]
+ 
+---relative[=<path>]::
+---no-relative::
++`--relative[=<path>]`::
++`--no-relative`::
+ 	When run from a subdirectory of the project, it can be
+ 	told to exclude changes outside the directory and show
+ 	pathnames relative to it with this option.  When you are
+ 	not in a subdirectory (e.g. in a bare repository), you
+ 	can name which subdirectory to make the output relative
+-	to by giving a <path> as an argument.
++	to by giving a _<path>_ as an argument.
+ 	`--no-relative` can be used to countermand both `diff.relative` config
+ 	option and previous `--relative`.
+ 
+--a::
+---text::
++`-a`::
++`--text`::
+ 	Treat all files as text.
+ 
+---ignore-cr-at-eol::
++`--ignore-cr-at-eol`::
+ 	Ignore carriage-return at the end of line when doing a comparison.
+ 
+---ignore-space-at-eol::
++`--ignore-space-at-eol`::
+ 	Ignore changes in whitespace at EOL.
+ 
+--b::
+---ignore-space-change::
++`-b`::
++`--ignore-space-change`::
+ 	Ignore changes in amount of whitespace.  This ignores whitespace
+ 	at line end, and considers all other sequences of one or
+ 	more whitespace characters to be equivalent.
+ 
+--w::
+---ignore-all-space::
++`-w`::
++`--ignore-all-space`::
+ 	Ignore whitespace when comparing lines.  This ignores
+ 	differences even if one line has whitespace where the other
+ 	line has none.
+ 
+---ignore-blank-lines::
++`--ignore-blank-lines`::
+ 	Ignore changes whose lines are all blank.
+ 
+--I<regex>::
+---ignore-matching-lines=<regex>::
+-	Ignore changes whose all lines match <regex>.  This option may
++
++`-I<regex>`::
++`--ignore-matching-lines=<regex>`::
++	Ignore changes whose all lines match _<regex>_.  This option may
+ 	be specified more than once.
+ 
+---inter-hunk-context=<lines>::
+-	Show the context between diff hunks, up to the specified number
++`--inter-hunk-context=<number>`::
++	Show the context between diff hunks, up to the specified _<number>_
+ 	of lines, thereby fusing hunks that are close to each other.
+ 	Defaults to `diff.interHunkContext` or 0 if the config option
+ 	is unset.
+ 
+--W::
+---function-context::
++`-W`::
++`--function-context`::
+ 	Show whole function as context lines for each change.
+ 	The function names are determined in the same way as
+-	`git diff` works out patch hunk headers (see 'Defining a
+-	custom hunk-header' in linkgit:gitattributes[5]).
++	`git diff` works out patch hunk headers (see "Defining a
++	custom hunk-header" in linkgit:gitattributes[5]).
+ 
+ ifndef::git-format-patch[]
+ ifndef::git-log[]
+---exit-code::
+-	Make the program exit with codes similar to diff(1).
++`--exit-code`::
++	Make the program exit with codes similar to `diff`(1).
+ 	That is, it exits with 1 if there were differences and
+ 	0 means no differences.
+ 
+---quiet::
++`--quiet`::
+ 	Disable all output of the program. Implies `--exit-code`.
+ 	Disables execution of external diff helpers whose exit code
+ 	is not trusted, i.e. their respective configuration option
+-	`diff.trustExitCode` or `diff.<driver>.trustExitCode` or
++	`diff.trustExitCode` or ++diff.++__<driver>__++.trustExitCode++ or
+ 	environment variable `GIT_EXTERNAL_DIFF_TRUST_EXIT_CODE` is
+ 	false.
+ endif::git-log[]
+ endif::git-format-patch[]
+ 
+---ext-diff::
++`--ext-diff`::
+ 	Allow an external diff helper to be executed. If you set an
+ 	external diff driver with linkgit:gitattributes[5], you need
+ 	to use this option with linkgit:git-log[1] and friends.
+ 
+---no-ext-diff::
++`--no-ext-diff`::
+ 	Disallow external diff drivers.
+ 
+---textconv::
+---no-textconv::
++`--textconv`::
++`--no-textconv`::
+ 	Allow (or disallow) external text conversion filters to be run
+ 	when comparing binary files. See linkgit:gitattributes[5] for
+ 	details. Because textconv filters are typically a one-way
+@@ -847,42 +848,42 @@ endif::git-format-patch[]
+ 	linkgit:git-log[1], but not for linkgit:git-format-patch[1] or
+ 	diff plumbing commands.
+ 
+---ignore-submodules[=<when>]::
+-	Ignore changes to submodules in the diff generation. <when> can be
+-	either "none", "untracked", "dirty" or "all", which is the default.
+-	Using "none" will consider the submodule modified when it either contains
+-	untracked or modified files or its HEAD differs from the commit recorded
++
++`--ignore-submodules[=(none|untracked|dirty|all)]`::
++	Ignore changes to submodules in the diff generation. `all` is the default.
++	Using `none` will consider the submodule modified when it either contains
++	untracked or modified files or its `HEAD` differs from the commit recorded
+ 	in the superproject and can be used to override any settings of the
+-	'ignore' option in linkgit:git-config[1] or linkgit:gitmodules[5]. When
+-	"untracked" is used submodules are not considered dirty when they only
++	`ignore` option in linkgit:git-config[1] or linkgit:gitmodules[5]. When
++	`untracked` is used submodules are not considered dirty when they only
+ 	contain untracked content (but they are still scanned for modified
+-	content). Using "dirty" ignores all changes to the work tree of submodules,
++	content). Using `dirty` ignores all changes to the work tree of submodules,
+ 	only changes to the commits stored in the superproject are shown (this was
+-	the behavior until 1.7.0). Using "all" hides all changes to submodules.
++	the behavior until 1.7.0). Using `all` hides all changes to submodules.
+ 
+---src-prefix=<prefix>::
+-	Show the given source prefix instead of "a/".
++`--src-prefix=<prefix>`::
++	Show the given source _<prefix>_ instead of "a/".
+ 
+---dst-prefix=<prefix>::
+-	Show the given destination prefix instead of "b/".
++`--dst-prefix=<prefix>`::
++	Show the given destination _<prefix>_ instead of "b/".
+ 
+---no-prefix::
++`--no-prefix`::
+ 	Do not show any source or destination prefix.
+ 
+---default-prefix::
++`--default-prefix`::
+ 	Use the default source and destination prefixes ("a/" and "b/").
+ 	This overrides configuration variables such as `diff.noprefix`,
+ 	`diff.srcPrefix`, `diff.dstPrefix`, and `diff.mnemonicPrefix`
+-	(see `git-config`(1)).
++	(see linkgit:git-config[1]).
+ 
+---line-prefix=<prefix>::
+-	Prepend an additional prefix to every line of output.
++`--line-prefix=<prefix>`::
++	Prepend an additional _<prefix>_ to every line of output.
+ 
+---ita-invisible-in-index::
+-	By default entries added by "git add -N" appear as an existing
+-	empty file in "git diff" and a new file in "git diff --cached".
+-	This option makes the entry appear as a new file in "git diff"
+-	and non-existent in "git diff --cached". This option could be
++`--ita-invisible-in-index`::
++	By default entries added by `git add -N` appear as an existing
++	empty file in `git diff` and a new file in `git diff --cached`.
++	This option makes the entry appear as a new file in `git diff`
++	and non-existent in `git diff --cached`. This option could be
+ 	reverted with `--ita-visible-in-index`. Both options are
+ 	experimental and could be removed in future.
  
 -- 
 gitgitgadget
