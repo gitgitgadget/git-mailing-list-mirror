@@ -1,197 +1,181 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C844F25760
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 09:30:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10E918E361
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 09:54:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731922260; cv=none; b=E2TOT2lSK5m2O6TJmPuVTBbHehVPLWHZqE4iBX1jBPCXfAvtNRt21dWYZbc550njIM8wqup+ThrxRXDCR2ltAe/R1K3t1X4ZV6bS+BrW1jUujB5Cc+XF6s9w5ls/vCRNnvKZCtR6eObmblGoaNxLd5CvSr0AMC5N48iLmJ47Bww=
+	t=1731923668; cv=none; b=b8gxdfYGWTPVdh2tVjiTdyo96RdC3r6hO9kxxwbM6JQZO6fMT1R1g4Vof54AYBf2gacSFvLMCNjcAduvxYOQHgd3AohueNJ6H8BmtyileLuC9wXQuCRWZohj46ZWxPjok5aP44ZKgbeeoi3a8awdFiDevPA2630jYAP2kYwW4Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731922260; c=relaxed/simple;
-	bh=+f6b/yLRI8/PypVqp1hEjPxI7nt+o/JlG8/KRbjb7LM=;
+	s=arc-20240116; t=1731923668; c=relaxed/simple;
+	bh=UGtlmvHoy8NC3ltIkN45ayxL6/cHUUpJC6Z9da2ZnzE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S8dy/EUiUl/lFvJqEtCv/5Ywef2yUGafKlSNj+PiO8KpuKTNpVp8ecJ5M6Yn9rkB80rFg4VXVbDNLE1OmURq69d9SmqPHpC5tDYh4g5q3IJlSRMhgyQYKv//Zx+NoAGrJEJQStw0kEMw9+V5QjiGeaDrZNmFXNFFg6VHg9fDWxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OoNJt8I9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=boB1bReM; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=NqLwLBu7Cs0/sL0XgnI+ECCWrJFZC9J7fgQL9nCfIu75Rqxd4mDil5y+yCd0ITlvST89xafyPnHwh6cE9Hp0qGdpZU4ynnvWiL3MPv4FXSplCfRauBSEu514fFqfdBlBLN0XddNyu9B0zKpHZtKLB+q7SQzXhr9jndFCvNK1m6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ktz9kwu9; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OoNJt8I9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="boB1bReM"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 94A282540111;
-	Mon, 18 Nov 2024 04:30:57 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 18 Nov 2024 04:30:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731922257; x=1732008657; bh=Xd2nMuQabC
-	2ahS8pOCoC+rJzMlNIaPd1b0ijQakFQlM=; b=OoNJt8I9GHxqSwspwW/RqJ3JXU
-	P0l6Z/6WFQKcIqzQ4ogMYUCtMhlWwhqPFu0TlaIo0quw0CtHqpLXDmZ+3I8lnyJ6
-	Vko/zlDGIqE9cRNkpGfkoB4Kop11eXUaD/V03QpZl4u7JXfpPvuKSyRPGqJDuGe6
-	VKFG2Lvfg4R5/sf1c2KCBMEHvIOoiGbNc47RxV/aDozNcNyxTbFhUkELVPiJDdSo
-	r7ka8xePk8p+XTZy4YWzZ6nY2h6Lnk9xQueUKJ5dVH2KF7IVnblvQas7fLsKaUDp
-	MyhS1bY1/B4AzKpd/l3sbCfqBXc13JB9TaVAoObbd/ouplUwaqlSIfPuL6iQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731922257; x=1732008657; bh=Xd2nMuQabC2ahS8pOCoC+rJzMlNIaPd1b0i
-	jQakFQlM=; b=boB1bReMyZMgRKvHqd1naxlM226dEnihrWmGeLNhJ0OTWjkyua9
-	Iv5I42tgKssjptjvz/5JsajQ59khzNMQKq7yST1EENadhZNEI6Z5zpgSUTHX8gO0
-	Zj72sTFYSB/L60/jHIZELk3m3c1W+P/CTBIM8Ng8iw1ek773h94IcqAQJkaBvN18
-	W4bMsp1VNFKx5RU3bzXVpZfuF/stbT4415w38o/UKbETBscsEEp0ypBdDuZzttr+
-	+7s3DlavwDe4ScjJ3USoNu452QsHDTKiITwDgrJCoBBkdBXZBFITPFQ4FxsOfA4S
-	tSkp5cMSMqIXNxvtuPbK7RMoxNA04BVZ8YA==
-X-ME-Sender: <xms:UAk7Z8XU5F_bTB-yNasqDsLLoW1bKHSU5sDWGVffDPC2h-XMqmuXDw>
-    <xme:UAk7ZwmyKa86ITbqJUHdVGFQ9QRL-2XcLIa0e_IB223OlGXyqTUHtIrm_30FlHh9-
-    3v9dCy6LNRsG_sc3g>
-X-ME-Received: <xmr:UAk7ZwY8YfDMi7hKv7ZSUPAnGAJXyTxluJhj7IwRwOMLO-LU9HgNPmt5zQWKUl21RBiOqxaGUcODyAK0pBzkgXHL_OByRJjnh8UWM3Czrwv1Fo68>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgddtfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepphhhihhllh
-    hiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgr
-    mhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:UAk7Z7Vev4P7wYXoXPrB8ufBLazLERg_Uj2mwbxNthBS1l6B1urNwQ>
-    <xmx:UAk7Z2m1sYgZenbg1ofFw7N18AQx740Rc9vNlilgkCC8vU5pZX2Hig>
-    <xmx:UAk7ZwcwWagN7ez5dW0yl2YlFPWJiv2eg2WPog34dJ_dOM46yjK3Cg>
-    <xmx:UAk7Z4FOMZp84DKnykZA34y6iL_zPfc6OU3MWuBkDTanSEEfy6rTmw>
-    <xmx:UQk7Z_dzhDy7pG9GZpW0BhzzwJ2_CX5x2FLQ4n-X26-zFjzuvmLAG5bT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 04:30:55 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7bcdedad (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Nov 2024 09:30:07 +0000 (UTC)
-Date: Mon, 18 Nov 2024 10:30:44 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-	David Aguilar <davvid@gmail.com>, Jeff King <peff@peff.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [-SPAM-] [PATCH RFC v7 00/22] Modernize the build system
-Message-ID: <ZzsJRFQ2KaJCiOyG@pks.im>
-References: <cover.1727881164.git.ps@pks.im>
- <20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
- <b9e0f631-b2a3-4c48-8745-a4b1e3f58ad0@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ktz9kwu9"
+Received: (qmail 22378 invoked by uid 109); 18 Nov 2024 09:54:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=UGtlmvHoy8NC3ltIkN45ayxL6/cHUUpJC6Z9da2ZnzE=; b=Ktz9kwu9ddmowwQjMC8w7821b7L+/+mS3qsnZKjaVB2RPcPSM5ZBr7BEwxqLIz0WtGboYt+YzxgSbxDDotzsjT9x1zLDgWXb2wS/hEDO+EYknI0Odwz4oqr9T2FF3pv4s1a3zAAh53gxjsi5Lzh7TlPU79pCWOE9f1+c9XamTV9qWKqRz38aYcH50dFHtBvq0F7Uxh0FmF90b+Mpa5JBF9raX0l5e/vOzi3l4TqMehmgX7vQ78EYJCxrUJxyjuVNcFVSgx9xAYJecV3vZK2Mz9o9AvsWGEKkLNTe395xSovRi1fHU0wrxV84i/nW7JScLH2Cx2/fueTsNBSySbdDqA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 18 Nov 2024 09:54:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18248 invoked by uid 111); 18 Nov 2024 09:54:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Nov 2024 04:54:29 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 18 Nov 2024 04:54:23 -0500
+From: Jeff King <peff@peff.net>
+To: Sam James <sam@gentoo.org>
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Patrick Steinhardt <ps@pks.im>, Chris Torek <chris.torek@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+Subject: [PATCH 0/6] -Wunterminated-string-initialization warning + cleanups
+Message-ID: <20241118095423.GA3990835@coredump.intra.peff.net>
+References: <87wmh2o9og.fsf@gentoo.org>
+ <20241117090329.GA2341486@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b9e0f631-b2a3-4c48-8745-a4b1e3f58ad0@ramsayjones.plus.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241117090329.GA2341486@coredump.intra.peff.net>
 
-On Sat, Nov 16, 2024 at 01:23:19AM +0000, Ramsay Jones wrote:
-> On 15/11/2024 07:21, Patrick Steinhardt wrote:
-> [snip]
-> > Changes in v7:
-> > 
-> >   - Fix overriding TEST_OUTPUT_DIRECTORY via the environment.
-> > 
-> >   - Rework generation of version information. GIT-VERSION-GEN now knows
-> >     to replace @PLACEHOLDERS@ in other files, and this gets used across
-> >     Makefiles, CMake and Meson now. This makes us properly rebuild when
-> >     the version info changes and fixes the version numbers in "git.rc".
-> > 
-> >   - The CMake build instructions are now doing a proper out-of-tree
-> >     build.
-> > 
-> >   - We now generate and install gitweb.js, which gets built via a new
-> >     "generate-gitweb-js.sh".
-> > 
-> >   - Some improvements to the Meson documentation.
-> > 
-> >   - Wire up DEVELOPER=1 style warnings via `--warnlevel 2` and above.
-> > 
-> >   - Wire up sanitizers properly.
-> > 
-> >   - Provide a new "regex" option to disable the platform-provided
-> >     version of regcomp() et al.
-> 
-> Hmm, OK, but what about all the other 'configurations'?
+> Here are some patches. The first one should fix the warning (but I don't
+> have gcc-15 handy to test!). Please let me know if it works for you (and
+> thank you for reporting).
 
-I don't think it makes sense to introduce a separate option for every
-single bit of the build process that can be changed. One of the biggest
-differences compared to our Makefile is that Meson should be able to
-automatically figure out the build environment and set up the build
-accordingly, without any user interaction. So in the best case, whenever
-we learn that a system does not work out of the box we'd not introduce
-an option for this, but instead adapt the autoconfiguration logic to
-detect that.
+And here's a minor re-roll from comments on the list. I was able to
+reproduce and test myself this time; the patch indeed fixes the problem.
 
-Now there will be exceptions where it does make sense to make something
-a build option, due to whatever reason. But I'm in the camp of adding
-them as-needed and not proactively so that we don't end up with hundreds
-of options.
+Changes from v1:
 
-> >   - Stop installing git-http-backend into bindir.
-> > 
-> >   - Install Perl scripts into libexecdir.
-> > 
-> >   - Install git-cvsserver into bindir and libexecdir.
-> > 
-> >   - Install template directory into datadir.
-> > 
-> > As before, the tip of this patch series catches up with what is
-> > happening in "seen". If you want to test it without topics in "seen" you
-> > have to revert it.
-> > 
-> 
-> Just a quick note to say that I tested this on Linux and Cygwin (just build)
-> and noticed a few things:
-> 
->   - 'make clean' does not delete the 'version-def.h' file.
+  - add more standards explanation to the first commit (thanks for
+    pointers from Chris Torek off-list)
 
-This works now with the latest option.
+  - fixes small whitespace issues in patches 1 and 6
 
->   - the RUNTIME_PREFIX set in the GIT-BUILD-OPTIONS file on the master
->     branch is not the same as on this 'meson-v7' branch (patches 1-21
->     based on current master branch):
-> 
-[snip]
-> 
-> Note that master has RUNTIME_PREFIX='false' rather than being un-set.
-> (Indeed, the Makefile on the master branch normalizes the value of
-> RUNTIME_PREFIX to 'true' or 'false').
+  - new patch (5) to add "const" as appropriate
 
-Ah, good catch, corrected.
+  [1/6]: object-file: prefer array-of-bytes initializer for hash literals
+  [2/6]: object-file: drop confusing oid initializer of empty_tree struct
+  [3/6]: object-file: move empty_tree struct into find_cached_object()
+  [4/6]: object-file: drop oid field from find_cached_object() return value
+  [5/6]: object-file: treat cached_object values as const
+  [6/6]: object-file: inline empty tree and blob literals
 
->     - The format of the GIT-BUILD-OPTIONS file generated by the Makefile
->       and meson are formatted differently, so you have to massage the
->       top-level file to be able to diff them:
-> 
-[snip]
-> 
-> Note that the Makefile build on Linux does not, by default, build with
-> libpcre, even if the library is installed on the system (as it is for me).
+ object-file.c | 81 ++++++++++++++++++++++++---------------------------
+ 1 file changed, 38 insertions(+), 43 deletions(-)
 
-I think building with libpcre by default does make sense though. I guess
-that we don't with our Makefile because it's not doing autodetection of
-available features in the first place, so it was safer to not compile
-with the library by default.
-
-> Also, note the values of BROKEN_PATH_FIX.
-
-I've wired up the SANE_TOOL_PATH option properly now.
-
-Thanks for your feedback!
-
-Patrick
+1:  da69342eba ! 1:  ec76b9eebb object-file: prefer array-of-bytes initializer for hash literals
+    @@ Commit message
+         and then use it to initialize the hash field of an object_id struct.
+         That hash field is exactly 32 bytes long (the size we need for sha256).
+         But the string literal above is actually 33 bytes long due to the NUL
+    -    terminator. It's legal in C to initialize from a longer string literal;
+    -    the extra bytes are just ignored.
+    +    terminator. This is legal in C, and the NUL is ignored.
+     
+    -    However, the upcoming gcc 15 will start warning about this:
+    +      Side note on legality: in general excess initializer elements are
+    +      forbidden, and gcc will warn on both of these:
+    +
+    +        char foo[3] = { 'h', 'u', 'g', 'e' };
+    +        char bar[3] = "VeryLongString";
+    +
+    +      I couldn't find specific language in the standard allowing
+    +      initialization from a string literal where _just_ the NUL is ignored,
+    +      but C99 section 6.7.8 (Initialization), paragraph 32 shows this exact
+    +      case as "example 8".
+    +
+    +    However, the upcoming gcc 15 will start warning for this case (when
+    +    compiled with -Wextra via DEVELOPER=1):
+     
+               CC object-file.o
+           object-file.c:52:9: warning: initializer-string for array of ‘unsigned char’ is too long [-Wunterminated-string-initialization]
+    @@ object-file.c
+     -	"\x6f\xe1\x41\xf7\x74\x91\x20\xa3\x03\x72" \
+     -	"\x18\x13"
+     +#define EMPTY_TREE_SHA1_BIN_LITERAL { \
+    -+	 0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60,  \
+    -+	 0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04  \
+    ++	0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60, \
+    ++	0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04  \
+     +}
+     +#define EMPTY_TREE_SHA256_BIN_LITERAL { \
+    -+	0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1,  \
+    -+	0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5,  \
+    -+	0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc,  \
+    ++	0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1, \
+    ++	0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5, \
+    ++	0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc, \
+     +	0x53, 0x21 \
+     +}
+     +
+     +#define EMPTY_BLOB_SHA1_BIN_LITERAL { \
+    -+	0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b,  \
+    ++	0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b, \
+     +	0x29, 0xae, 0x77, 0x5a, 0xd8, 0xc2, 0xe4, 0x8c, 0x53, 0x91  \
+     +}
+     +#define EMPTY_BLOB_SHA256_BIN_LITERAL { \
+    -+	0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2,  \
+    -+	0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43,  \
+    -+	0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72,  \
+    ++	0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2, \
+    ++	0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43, \
+    ++	0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72, \
+     +	0x18, 0x13 \
+     +}
+      
+2:  b8416b33d2 = 2:  0beaf2d65e object-file: drop confusing oid initializer of empty_tree struct
+3:  8f5a9f5e30 = 3:  d0c28cb1c9 object-file: move empty_tree struct into find_cached_object()
+4:  e2d0c9b56d = 4:  551e5938d5 object-file: drop oid field from find_cached_object() return value
+-:  ---------- > 5:  d5641358a2 object-file: treat cached_object values as const
+5:  7ebc8d2d2c ! 6:  82c43bfc78 object-file: inline empty tree and blob literals
+    @@ object-file.c
+      
+     -
+     -#define EMPTY_TREE_SHA1_BIN_LITERAL { \
+    --	 0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60,  \
+    --	 0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04  \
+    +-	0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60, \
+    +-	0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04  \
+     -}
+     -#define EMPTY_TREE_SHA256_BIN_LITERAL { \
+    --	0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1,  \
+    --	0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5,  \
+    --	0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc,  \
+    +-	0x6e, 0xf1, 0x9b, 0x41, 0x22, 0x5c, 0x53, 0x69, 0xf1, 0xc1, \
+    +-	0x04, 0xd4, 0x5d, 0x8d, 0x85, 0xef, 0xa9, 0xb0, 0x57, 0xb5, \
+    +-	0x3b, 0x14, 0xb4, 0xb9, 0xb9, 0x39, 0xdd, 0x74, 0xde, 0xcc, \
+     -	0x53, 0x21 \
+     -}
+     -
+     -#define EMPTY_BLOB_SHA1_BIN_LITERAL { \
+    --	0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b,  \
+    +-	0xe6, 0x9d, 0xe2, 0x9b, 0xb2, 0xd1, 0xd6, 0x43, 0x4b, 0x8b, \
+     -	0x29, 0xae, 0x77, 0x5a, 0xd8, 0xc2, 0xe4, 0x8c, 0x53, 0x91  \
+     -}
+     -#define EMPTY_BLOB_SHA256_BIN_LITERAL { \
+    --	0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2,  \
+    --	0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43,  \
+    --	0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72,  \
+    +-	0x47, 0x3a, 0x0f, 0x4c, 0x3b, 0xe8, 0xa9, 0x36, 0x81, 0xa2, \
+    +-	0x67, 0xe3, 0xb1, 0xe9, 0xa7, 0xdc, 0xda, 0x11, 0x85, 0x43, \
+    +-	0x6f, 0xe1, 0x41, 0xf7, 0x74, 0x91, 0x20, 0xa3, 0x03, 0x72, \
+     -	0x18, 0x13 \
+     -}
+     -
+      static const struct object_id empty_tree_oid = {
+     -	.hash = EMPTY_TREE_SHA1_BIN_LITERAL,
+    -+	.hash ={
+    ++	.hash = {
+     +		0x4b, 0x82, 0x5d, 0xc6, 0x42, 0xcb, 0x6e, 0xb9, 0xa0, 0x60,
+     +		0xe5, 0x4b, 0xf8, 0xd6, 0x92, 0x88, 0xfb, 0xee, 0x49, 0x04
+     +	},
