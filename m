@@ -1,43 +1,43 @@
-Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECFE1E5735
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 21:40:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A47213DBBE
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731966058; cv=none; b=IIsyKo8xDf0Uy0U60wSBzn1/hVK/NZ4xM87Kb+a3RLLQkG2LCyGn0LpNVtlLwOcVo5ZcRQ5H+Zk0KnlQpG6o1lYNoxkbapllZlTpAlq8l+sV8u2rwks5yBNDJm+C5HbS3ZJXADcK8ju1wvtp/5A8zC/k0lFQeof4ctXxhjBz4as=
+	t=1731967288; cv=none; b=Uhpq/mvr3U3uHtReIz/La5/Bbviuwa9oFjX6ye1O1+81rfmQTbtzfJvTPcm8kpW3gO3Za0YhrdBItxx7V+ZUX1cSUK7Wv8bT9SREMAHSOng3SKUOPg18uP+sD8FNuDSnQziynmycr3KfNRr4t8H3w/0vrqtlI2O0HmQKGhpupxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731966058; c=relaxed/simple;
-	bh=TYh3EtHdaFGbrjaa7OTZwYGf2CwRu+HQ637xz1iLOtU=;
+	s=arc-20240116; t=1731967288; c=relaxed/simple;
+	bh=nCleS0HChaMdBLkP/cI4vJ5eEsaTxmsVbtRCRk0CxLs=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gZ8kYjSI/eVtd1T/amAtsbvMwq4ou63fQvm9oj/suTO9iDaIaM8OpIudhf4eg3zYj3QLLnJzo8hp5rJixjmmG52mlmwzPTa4jMBdGitM4CY0EalR4UOQf7C703DU7s1UuzG2yDvySLnM1ZVzLbzo/vgSMrkk+rsoUbn7zShwjpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=Q+GuKmJh; arc=none smtp.client-ip=185.70.43.167
+	 MIME-Version:Content-Type; b=Tze2nkMeB0bi1q3NZNCzs49rXAcOGVFc3g8ZEeOfonnSWQxSpo3I6ff7kmjUdGrEbHZZz9VBMSy+n3wYmHqxMW0rgYXV911u8w/ONNdj5NQ2W5Z4QNj0FCF1m1M3nD94tfMEP5kAUCph7+ZIpSG78vhqoZ8ZyyO6aahAIO4jRP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=i2jZn+u3; arc=none smtp.client-ip=185.70.43.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="Q+GuKmJh"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="i2jZn+u3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1731966054; x=1732225254;
-	bh=TYh3EtHdaFGbrjaa7OTZwYGf2CwRu+HQ637xz1iLOtU=;
+	s=protonmail; t=1731967282; x=1732226482;
+	bh=nCleS0HChaMdBLkP/cI4vJ5eEsaTxmsVbtRCRk0CxLs=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=Q+GuKmJh8zkbOaJz+CLXbSFNclGIz4s28VIvoyjQec/Qxuc7XEUr9IIZiW1NPPUnW
-	 ZsIutBAAbuj8a9SFVRKkU6pCZJsiYgPEtbeuMw8lJ2F5sHY3Z+4kvRhTHaIxCqeKbz
-	 Wjx1lzfRr0EJhynVnrYd/7WC+cdDBrcbV/4fjbUHqWJTeYDmV8MYVjaR7aJTqj+UbU
-	 21qr0dCRoeTbogdgGTjoCPtZeVl9Sj+hsyIvEThRrhAdqxkYFeExkxbhanfhV7QqLp
-	 31D/k/Tij5++v+8D2xAk+QzkusxruGsERAybuWoUilWVxU/MjxpB9et4sl32yPpvAG
-	 W67SAeed+VchQ==
-Date: Mon, 18 Nov 2024 21:40:51 +0000
-To: Yongmin <yewon@revi.email>
+	b=i2jZn+u30/ZIrKeJ8oGMPGX2WsiUIwquyCznQZs5dqbVdB7I19ZoWrnCsmH1hlCxn
+	 VEmcIQ1Ib+kHros7jsAyjtt5lZRljMNiLuEGxFSnf5KRCALmG/IY5JQBMZXEOSqKLj
+	 i0voCyyaZ4ys1LCTS3dqyQTH6W3J1/DyGOZkUcYvOXnlQXTCmSrROIv+dlvPrtOj7l
+	 8pg/HNyWpsEda+P80bulVko1+vSuzxjVyHCDYr0JYgTXWVlq/gaGaDOMt9VHVjgPDV
+	 OH4PgUvEsOUCfd4DeLp8TEChhJ/FAYfVECe51xeIW0haSUJVwoiGioYjhjm6trGbMs
+	 xDqavZqFy26OA==
+Date: Mon, 18 Nov 2024 22:01:21 +0000
+To: Junio C Hamano <gitster@pobox.com>
 From: A bughunter <A_bughunter@proton.me>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: How do you hyperlink a thread
-Message-ID: <iT3xHcHCZEHBfwKqIhzG1M2P2NawmBzhUtu_JS0PAE-yvlAXG5wLQquajeHJ6m2icOHeHdZybX3ppdp-P6oFgrtiA4T0tzONpvC6AJUiEso=@proton.me>
-In-Reply-To: <055a53b5-2107-4547-8a64-e269705de80a@app.fastmail.com>
-References: <Sj2qFJa5yPRxluqhZvXlMwgfLuX9n6Um4OOS9IHNXCJU3jjE0YblQDUt0rOpEzY-fUHs5CiognunZO-ddQN-1IVVBEyxLz_2hl936VBW-JU=@proton.me> <lLSbsbSEi1ltdY3N1MKhGPVHTPeII5XsqVcYwmh_WHIjVAlNyktnNEaLgBUkh6stvHLE371tlmlhOTdoFloVic-Wq0wE0pQYLBeeVuvA_oA=@proton.me> <055a53b5-2107-4547-8a64-e269705de80a@app.fastmail.com>
+Subject: Re: What is the diff between a --soft and a blank reset
+Message-ID: <ejBRJUb9pBCpQnS2xiYI7INamzAQNqx8U-FbjQ2FXQiNAZZne7U-iIj8Hmhb3Dc3PK3I_nlD-vNOMLdhUOui9nZFX3zMVuSKbnObj0cP6EA=@proton.me>
+In-Reply-To: <xmqqr079xty7.fsf@gitster.g>
+References: <myxdTw4K7jcrlKX-HC0edNKB3mgkjGJPAejkxWTcab03uT9uROZlO28zjhmnogOvGCJkag5q_Zvbok0VUyVjlkw5Goz3Gwe3l636lCYnGic=@proton.me> <CAPx1GvfT1iNnpJ0Jv0vhdHrwD-pDOK81MnUW2-Fk_zcJkW9PUQ@mail.gmail.com> <82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwCEC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=@proton.me> <5f401732-9b3d-4c45-88a8-a9e3d9d14fd9@gmail.com> <xmqqr079xty7.fsf@gitster.g>
 Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: 2078228b9d088bab1b40d0abb004e9398b9e8046
+X-Pm-Message-ID: 93ed0be9fd33898c26c0d4971f0a12673d5ea2b0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,133 +45,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="b1=_2nvSwmGKUILKUwZg2EKjbB9MkNqQgK82uTQJpfWs"
+ boundary="b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ"
 
---b1=_2nvSwmGKUILKUwZg2EKjbB9MkNqQgK82uTQJpfWs
+--b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
+BROAD OVERVIEW
+
+bugreport[A], question[B] and use-case[C]. These are all related but separa=
+te threads for the purposes as labled. Please do not cross-post or cross-qu=
+ote. Focus on productivity and solving these. You are welcomed to view and =
+participate in all of these as I contribute more.
+
+use-case[C] - git question (short) rephrase with use-case added.
+
+ADD, ADD, ADD why cant they get that: ADD. ADD tracks files for commit. It'=
+s already been commit : push failed. Failed pushes piled up. I need them un=
+tracked. How do you undo an add ( many adds): simple question. Without dele=
+ting any files, to repush 1 by 1.
+
+I suspect the answer is: "you can't - git provides no means to do so" - a d=
+efect, bug as we call it. The answer to this use-case question likely will =
+confirm my bugreport and I get the feeling this is why they will not answer=
+ the question they do not want to accept my bugreport and have a bad spirit=
+ to argue. The excuses they give for this will be that it is not typical: T=
+his can normally be solved by repushing. However it is still a defect and i=
+n my use-case there is a slow or intermittent connection and no sha-backups=
+ yet because this is the initial creation of a repo.=20
+
+The above question is a use-case[C] seeking how to undo without deleting fi=
+les. There shouldn't be any need to know a use-case in order to answer a te=
+chnical question. I am open to discuss my use-case on this thread. The use-=
+case if of this repo github.com/freedom-foundation/kjbible
+
+My original bug report is that the user " may be cornered into delete files=
+" bugreport[A] Summary as of 20241117 brian does not believe it's a bug and=
+ begins chattering to Peff about how to fix the bug "There are Git-level ke=
+epalives during the similar compression operation".
+
+The full question[B] which is a child of the bugreport[A] is here. Summary =
+as of 20241117 my question was mostly sidestepped and spammed whilst the th=
+read devolved into a political drama about code_of_conduct. I am not open t=
+o discuss my use-case on this thread.
 
 
+[A]: https://lore.kernel.org/git/20241115093214.GA1749331@coredump.intra.pe=
+ff.net/#r
 
+[B]: https://lore.kernel.org/git/xmqqr079xty7.fsf@gitster.g/T/#t
 
-from A_bughunter@proton.me
-
-Sent with Proton Mail secure email.
-
-On Monday, November 18th, 2024 at 20:04, Yongmin <yewon@revi.email> wrote:
-
-> On 2024-11-19 (Tue) 04:51:49+09:00, A bughunter A_bughunter@proton.me wro=
-te:
->=20
-> > Hello, why isn't anybody answering me? I see an active list.
->=20
->=20
-> Because, when you display aggressive attitude[1][2] for those who try to =
-help you on their (mostly) free time, you do not want to involve yourself w=
-ith them.
->=20
-> Anyway, check out https://lore.kernel.org/git/ . (You see an example belo=
-w.)
->=20
-> [1]: https://lore.kernel.org/all/82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwC=
-EC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=3D@prot=
-on.me/
-> [2]: https://lore.kernel.org/all/xDO5bMcFOIbJ5FhdpoxteVDBBjf5xXcVxQ5HboXd=
-p-l_JojbIZ5gKERafNA0DdIFubVEupPQ3NqyoovEgsFJannL8A-9WqpzJIq-5sC0chI=3D@prot=
-on.me/
->=20
-> --
-> ----
-> revi | =EB=A0=88=EB=B9=84 (IPA: l=C9=9Bbi)
-> - https://revi.xyz
-> - he/him https://revi.xyz/pronoun-is/
->=20
-> - What time is it in my timezone? https://issuetracker.revi.xyz/u/time
->=20
-> - OpenPGP https://revi.xyz/pgp/
->=20
-> - In this Korean name https://en.wikipedia.org/wiki/Korean_name, the fami=
-ly name is Hong https://en.wikipedia.org/wiki/Hong_(Korean_surname),
->=20
-> which makes my name HONG Yongmin.
-> - I reply when my time permits. Don't feel pressured to reply ASAP;
-> take your time and respond at your schedule.
-
-Angyh yeoung hasaeo Yongmin! My reply is interspersed. Did you catch any ep=
-isodes of Black Mirror TV series?
-
-On Monday, November 18th, 2024 at 20:04, Yongmin <yewon@revi.email> wrote:
-
-> On 2024-11-19 (Tue) 04:51:49+09:00, A bughunter A_bughunter@proton.me wro=
-te:
->=20
-> > Hello, why isn't anybody answering me? I see an active list.
-=20
-No, there is nothing too agressive there. You are making a drama and distra=
-cting from productivity.
-> Because, when you display aggressive attitude[1][2] for those who try to =
-help you on their (mostly) free time, you do not want to involve yourself w=
-ith them.
->=20
-> Anyway, check out https://lore.kernel.org/git/ . (You see an example belo=
-w.)
->=20
-> [1]: https://lore.kernel.org/all/82f3cj_ASv_HNkdAe-1doxp6Vii0saBTB2wYbcwC=
-EC3vDJpiwXvN6a6Agw7qNhKsGpBD8EbDC2u4VipTDJNr19nYcVV4BqV4GgNG9ysr5y4=3D@prot=
-on.me/
-> [2]: https://lore.kernel.org/all/xDO5bMcFOIbJ5FhdpoxteVDBBjf5xXcVxQ5HboXd=
-p-l_JojbIZ5gKERafNA0DdIFubVEupPQ3NqyoovEgsFJannL8A-9WqpzJIq-5sC0chI=3D@prot=
-on.me/
-Oh so you simply do a manual footnote.
-
-> --
-> ----
-> revi | =EB=A0=88=EB=B9=84 (IPA: l=C9=9Bbi)
-> - https://revi.xyz
-> - he/him https://revi.xyz/pronoun-is/
->=20
-> - What time is it in my timezone? https://issuetracker.revi.xyz/u/time
->=20
-> - OpenPGP https://revi.xyz/pgp/
->=20
-> - In this Korean name https://en.wikipedia.org/wiki/Korean_name, the fami=
-ly name is Hong https://en.wikipedia.org/wiki/Hong_(Korean_surname),
->=20
-> which makes my name HONG Yongmin.
-> - I reply when my time permits. Don't feel pressured to reply ASAP;
-> take your time and respond at your schedule.
-
-...do a manual footnote. I was seeking something that would link the thread=
- aggregated and maybe a simpler link without all of that mess. Something li=
-ke: lore.kernel.org/git/thread/[bug]%20report or maybe like a link to an At=
-om feed by thread.=20
- This is the bugreport[1] though if I link it I will have to keep getting a=
- new link to display latter replies. This is the question[2] and use-case[3=
-]. These are all related but separate threads for the purposes as labled.=
-=20
-
-[1]: https://lore.kernel.org/git/20241115093214.GA1749331@coredump.intra.pe=
-ff.net/T/#t
-[2]: https://lore.kernel.org/all/xDO5bMcFOIbJ5FhdpoxteVDBBjf5xXcVxQ5HboXdp-=
-l_JojbIZ5gKERafNA0DdIFubVEupPQ3NqyoovEgsFJannL8A-9WqpzJIq-5sC0chI=3D@proton=
-.me/#r
-[3]: https://lore.kernel.org/all/4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlS=
+[C]: https://lore.kernel.org/all/4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlS=
 I5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=3D@proton=
 .me/#r
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wnUEARYKACcFgmc7tF8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAANJ/APwK16kmwlIg/VPARKUudBpiU7wIcjs4B+Sb3sqKcDi+zQEAg5g2
-mhZQ4xiJY8ThKilNoE61mh/EvZGDvMaPs7WkhQA=3D
-=3DBQH2
+wnUEARYKACcFgmc7uS4JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAKUDAQDf3cixv7dXR8M2wfPRVZBTenFZFOweS6hWNnv4RkLrQAEA1QZI
+vpNUKP7SN+J1de9kuQ4zHHjDuksnTflDPeOQpQE=3D
+=3DYn2L
 -----END PGP SIGNATURE-----
 
---b1=_2nvSwmGKUILKUwZg2EKjbB9MkNqQgK82uTQJpfWs
+--b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ
 Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
@@ -189,14 +128,14 @@ QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
 eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
 UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
---b1=_2nvSwmGKUILKUwZg2EKjbB9MkNqQgK82uTQJpfWs
+--b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ
 Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-wnUEABYKACcFgmc7tF8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAIlyAQDuvSJW
-2+spidlufY8R0qFwYrNXg1KwusNYDpbpvIjXjgD/RtZlTIz455/pz6ofB2sy+G678iF5tmogMSJk
-Nky37QM=
+wnUEABYKACcFgmc7uS4JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAACaEAP9EpL26
+aG8NGeAQWSkgHLSV/X7O6kKBjPffOMah893YMAEApPnVumozPtFwZH+OL5gVk4u4juV1HM2SAtPR
+CbfrZAA=
 
---b1=_2nvSwmGKUILKUwZg2EKjbB9MkNqQgK82uTQJpfWs--
+--b1=_hABnvhPbQUvv0oDpJ70DUk3JAMdxiWlygYzzmZCgQ--
 
