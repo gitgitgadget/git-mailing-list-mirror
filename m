@@ -1,99 +1,113 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A84A1E570E
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:11:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFBC1E767D
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 22:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731967918; cv=none; b=Li0JPk9ShYFN6bBYobrqnhPEncSAhnBqSmMQWPk6zwndHCFLEBSlznQypZX+FjI67Y/WeDnsJ5KGP+WpJ76kFO1JyJcKMnDsSYHRchI4PQ8uXHBnJZfvIGCX2mzzP6KayMMcz4TX8v5gLNxft+wrmBBg+6tlrNR/A4iXM7lp38E=
+	t=1731967920; cv=none; b=VRJDr9w4F8EmoWQt/S+JBT/RRP2l6pOtsTNO6h2CqWHoK2Q+8ykqVn41XYCid3ntne08TlxhVUad15qC22wKqpLfG2EJXuyJJRUeV08FrLQCUbe/Lfyt6tnSet3CaGOixNx6z+Pap+u64lqG+a/cSWgOcex0BHgE3u00+nCde2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731967918; c=relaxed/simple;
-	bh=W9NBijvoEyFn74nKHg93xZW7I7PVJtjxWTfoIhs5ZUM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i/abPmxBNvri6gBuiauGrjirQnCl9VUZnQuvHr8fqhYnaHI7K1rgQwcgjQeYw0X0FhR+k8v+Fl8jsPeA2ks7B/By0JkoPhLaOnrYmCxaksPiadSsRUriZTzfN6l/AjzGu5GLxQ7GthCsyNcoWH9J8qjIjZhqiYLTwxJLvK/r3jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Ti5EA1Sf; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1731967920; c=relaxed/simple;
+	bh=IInsz4NZXg02/aMGrSx1ZbfXIPU7iP/06Xk4InXRRn0=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=lLwR2LgjDCXBGicPwmyHO/MKzn9mXNyylg96SCP41DH3b7v6GEEXx3CYQWz+o/Z7qqnAMhY4aKHRhEOHYaevfzxTh8nXM2aEPriG8iiQkg4LpVEmAGboyDn8d/3mhsw12o7HdFJ4RznmzwfqdOWHUXooqxXuxA9HdhZP/ox/awI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=revi.email; spf=pass smtp.mailfrom=revi.email; dkim=pass (2048-bit key) header.d=revi.email header.i=@revi.email header.b=E6hsplpR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jE21nuLv; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=revi.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=revi.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ti5EA1Sf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1731967908;
-	bh=W9NBijvoEyFn74nKHg93xZW7I7PVJtjxWTfoIhs5ZUM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Ti5EA1SfnMv3cL2RN+ELPnQkFZr3J/GB0v7a4e/Wm0bdfT/AeKeJwjjih0/mUXsce
-	 /rwuc0fhlE7HtjQX6R2dNGLJRpn8L4JmCpn67r8u4yv4qA56aQKrEW1MANGSEoTa7a
-	 H3ul8mDvVhDHHa78UFn/4qdGpdJpY/9Op9mnTWoP3DOoyNLL17tFMxfRgTVeNQ0iVA
-	 5LBGPheNzGeYqC9XDcFUHZtzCPyVk5C3pdvHMhU3atCh250HKizV+9kvRt5vLhpjOu
-	 0WigQVV45Etw697ZDtiVIfRblO1QmK/Z2xlgnBB7nyTohuOlkLYws151ir6JU9MnBu
-	 1lbTmgyDVE+q3+QKHs4aBSAPzSpQuj7wJyff7oqTAhYnCqXGQRh4Wi/F95woapVRBB
-	 p3jr4/2WYOujmzMj3fMNimLB44ffEHVaApvGzo9C9TB7aGx9VxmcdweMlPoh6cru8X
-	 Z2NLsFsPutFQmqrz7avsurQXbIKua6veuivRET9dlzQbH7G0QwU
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:d026:90f3:853d:a63c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 29D9E200C4;
-	Mon, 18 Nov 2024 22:11:48 +0000 (UTC)
-Date: Mon, 18 Nov 2024 22:11:46 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sam James <sam@gentoo.org>
-Subject: Re: [PATCH 0/2] C23 compatibility
-Message-ID: <Zzu7oiJ8PTWgmJUc@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Sam James <sam@gentoo.org>
-References: <87ed3apy2u.fsf@gentoo.org>
- <20241117013149.576671-1-sandals@crustytoothpaste.net>
- <Zzrwf2B36RgbhxEa@pks.im>
+	dkim=pass (2048-bit key) header.d=revi.email header.i=@revi.email header.b="E6hsplpR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jE21nuLv"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BE601254018A;
+	Mon, 18 Nov 2024 17:11:55 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-01.internal (MEProxy); Mon, 18 Nov 2024 17:11:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=revi.email; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1731967915;
+	 x=1732054315; bh=GQyCqFwUMsv27SFquPSObNDCrgGIHy/DmE9cVQhxJQg=; b=
+	E6hsplpRQGMAeOP47adn0ncq8ElC1N563++znvCLDr2dtgkwsSxKVteh4DSvcPXZ
+	9kjwBfKE4E2zZqXx84HPqtgzU8omuxNAbUqdLj83TC4JtLbLU+2KvmtFiMKZwpg7
+	W4ShkZSIvCYb3CSxKEbOzRVNPqKv4+BsDLBK+eEayiMQQMfe318GMJFnT+NT5OwM
+	HGqVCzJJd677lp2OfTwWBiZR/EIKPnvGWTjyuwiPaXrd2fRd5s1xp5H3aCnAV6dB
+	mX5qn9h0NRFK6Fj75TdcN6lVZMSq2DotORA8NPxwBXFJHLoX9lAgNCfQ4CuAq2jp
+	snRawOc8YkUY3Eswnz1HKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1731967915; x=1732054315; bh=G
+	QyCqFwUMsv27SFquPSObNDCrgGIHy/DmE9cVQhxJQg=; b=jE21nuLvGlVI1ViEc
+	lGJze5hhtuVRVg5k04b+RYjgM7E4T01hT1CLrOMBuBkSXoBSuDr67aTCRP34RJpI
+	w9CzFR+Vg+ZbHQ10kqtx5pYZoJwdI5ya9Gj6ObObbZ5R0VOGpcd4HiO0LfbbO/5j
+	pzFbkiUz8t72yKBsYDWEKhHxiNgFIb9I8r46VQDo74AB6VMM5svBmTXTQDQsvax4
+	ib5fhwSxdLjGHWnR7lXnyEblX1/vOf95G//0RagammbWiy1mv03LTrU5I0cgiHqa
+	N5cQean5I0RQ24E/NwT+BzPbt+mZexTvwlvLOskyZwc/zu+3eprYJ5pJZss/uY+o
+	GR0gQ==
+X-ME-Sender: <xms:qrs7Z1TIQuW6p-Z6lzCcLwot4n_IaDVFJBoOE-7BIqu9wYTuSHAA2A>
+    <xme:qrs7Z-zf0GrUaPgo2xeO1wMS-39jvWsY6TvxxJlYv3T9halRF4nHL8dh4PiNGAK93
+    z_uTL6bWQMJF0kDEs0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgdduheeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnegfrhhlucfv
+    nfffucdludejmdenucfjughrpefoggffhffvkfgjfhfutgfgsehtqhertdertdejnecuhf
+    hrohhmpegjohhnghhmihhnuceohigvfihonhesrhgvvhhirdgvmhgrihhlqeenucggtffr
+    rghtthgvrhhnpedttdfgfeehveduhfeuvefglefhheevledvhffhvdefffdvuddvgfegke
+    ehleelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhrvghvihdrgiihiidpfihi
+    khhiphgvughirgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpeihvgifohhnsehrvghvihdrvghmrghilhdpnhgspghrtghpthhtohep
+    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprggpsghughhhuhhnthgvrhesph
+    hrohhtohhnrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:qrs7Z623DTF0gqCO9cLIIOJAyg6MGCs34vBIRe2LhyBG2OSSqOavPg>
+    <xmx:qrs7Z9AOPNQzEJ8wXt9TGmRt6pIccqxr0UgK1Kekebq_7frtNr1wDQ>
+    <xmx:qrs7Z-jy5JarTibKomfnLWsrYOv2zB_c3of_ldlMGfM2HRKh75WWuw>
+    <xmx:qrs7Zxp5fpAwzF-NHykrucor0R8i03CRSQYs7DRmo_8rUpbbsGyoTA>
+    <xmx:q7s7ZyYkWBg_26cMUqNRiq4yrbPD0vcxtqrXdpLmXpKJhdw9EJCZ2tBR>
+Feedback-ID: ie2a949ef:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 98BE5780069; Mon, 18 Nov 2024 17:11:54 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="SvnnxdsLZyPVS7Gf"
-Content-Disposition: inline
-In-Reply-To: <Zzrwf2B36RgbhxEa@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---SvnnxdsLZyPVS7Gf
+Date: Tue, 19 Nov 2024 07:11:31 +0900
+From: Yongmin <yewon@revi.email>
+To: "A bughunter" <A_bughunter@proton.me>,
+ "git.vger.kernel" <git@vger.kernel.org>
+Message-Id: <c115509c-5bc3-4e86-acff-eeacef63b202@app.fastmail.com>
+In-Reply-To: 
+ <iT3xHcHCZEHBfwKqIhzG1M2P2NawmBzhUtu_JS0PAE-yvlAXG5wLQquajeHJ6m2icOHeHdZybX3ppdp-P6oFgrtiA4T0tzONpvC6AJUiEso=@proton.me>
+References: 
+ <Sj2qFJa5yPRxluqhZvXlMwgfLuX9n6Um4OOS9IHNXCJU3jjE0YblQDUt0rOpEzY-fUHs5CiognunZO-ddQN-1IVVBEyxLz_2hl936VBW-JU=@proton.me>
+ <lLSbsbSEi1ltdY3N1MKhGPVHTPeII5XsqVcYwmh_WHIjVAlNyktnNEaLgBUkh6stvHLE371tlmlhOTdoFloVic-Wq0wE0pQYLBeeVuvA_oA=@proton.me>
+ <055a53b5-2107-4547-8a64-e269705de80a@app.fastmail.com>
+ <iT3xHcHCZEHBfwKqIhzG1M2P2NawmBzhUtu_JS0PAE-yvlAXG5wLQquajeHJ6m2icOHeHdZybX3ppdp-P6oFgrtiA4T0tzONpvC6AJUiEso=@proton.me>
+Subject: Re: How do you hyperlink a thread
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-11-18 at 07:45:03, Patrick Steinhardt wrote:
-> Both of the patches look obviously good to me. I was a bit surprised
-> that this is required in the first place as I thought we were passing
-> `-std=3Dgnu99` to our compilers, but that is not the case with our current
-> Makefile. So I must have been misremembering.
+/T/#t is thread-view, you can use 'permalink' in From: line to get a per=
+malink for individual message. See also https://lore.kernel.org/git/_/te=
+xt/help/ (message threading section).
 
-We can't do that because FreeBSD's system headers require C11 and won't
-work with `-std=3Dgnu99`, in addition to the general unportability of that
-construct as mentioned by Peff.  There's a comment to that effect in
-`config.mak.dev`.
+I just happen to prefer footnote; some others might just link the permal=
+ink, blah blah blah.
 
-I'm pleased you found the patches acceptable, though.
 --=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---SvnnxdsLZyPVS7Gf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZzu7oQAKCRB8DEliiIei
-gWLGAP4/3oQYSI2xJctI4fpDktbAXR1IVVPPGX+9o2FzyD1GNwEA2PWxiorrNST3
-1v+kj1ze9DeEuPwPedaItA076WsMSwE=
-=1wFV
------END PGP SIGNATURE-----
-
---SvnnxdsLZyPVS7Gf--
+----
+revi | =EB=A0=88=EB=B9=84 (IPA: l=C9=9Bbi)
+- https://revi.xyz
+- he/him <https://revi.xyz/pronoun-is/>
+- What time is it in my timezone? <https://issuetracker.revi.xyz/u/time>
+- OpenPGP <https://revi.xyz/pgp/>
+- In this Korean name <https://en.wikipedia.org/wiki/Korean_name>, the f=
+amily name is Hong <https://en.wikipedia.org/wiki/Hong_(Korean_surname)>,
+  which makes my name HONG Yongmin.
+- I reply when my time permits. Don't feel pressured to reply ASAP;
+  take your time and respond at your schedule.
