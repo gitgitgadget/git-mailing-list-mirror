@@ -1,556 +1,1125 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from aib29agh122.zrh1.oracleemaildelivery.com (aib29agh122.zrh1.oracleemaildelivery.com [192.29.178.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A09D1C07EE
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 15:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162921AA1FA
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 15:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731944062; cv=none; b=ACC2xagsb5qfyGpE6VW7h2Jfr26bMe2YSNJNNXKnr4bPNaDYPRpCzH+ec1Ok+OKj4bBzJ7TmrGctwRLU1DS+NYEavGMi6MYtvCMXWAOS4LKX4HIgqSOJZR/1zAlvpVaccTs/8aNTTTwQL2vesx7y8doJpbILWllQHLLFsv9/t2I=
+	t=1731944068; cv=none; b=HI2cTJzc6CvXfqx75FPaTgNhqgSDj8Qc9YwQor15peCAWpbcdnSlci0yq5tWDMHwccQkF6Tbi+ou6mDy0DXttx8UVlAbS0xareogexvrlYEorM+pcoLQ71LYOjo0PRe2ZX1sPNbMsDUjwqTyPKMfeq614ImfLzugc0KRzRBnAF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731944062; c=relaxed/simple;
-	bh=eu3WG6u6M+17btjeZu9/w+FpQqIgll4Tl2SZNbUMjJE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JF5kL/c11YRvXBRyYMv3gGA+Zsur1NDfiMuKtUiQ5tjMafzV+kn8osR6uByZHi9GQFujQjk62xHJjrKBFoSUBvfqfTefy14rANXjjnut5yTuF1wo+rOtoYTeXNeV3s20l693G7xlJWy7jv7ZHcKAfNRf/vRG2PCGaHWc7X+huBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SMAuHfeB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RB11zRtB; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731944068; c=relaxed/simple;
+	bh=M70cp+U6ZnKbUd0C1f9RuIf2bNJo5EEkGxj8aeEswNU=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=jFRd+AJ9EFTaGtaibtNmUqGfABBwzeM0NNEZpxdBpYfS59ZlxzZEPjAPGJgp1Yxw94tdkHr4uyZHqpX9gF9z+JjXwrYYDf9h9tLKyizydlb1zXxVc5l33p9Z9j6K4BXnxNhVb7JKD+Q9dijkQo/APk252spqM70KV6TO/FiLWcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=o3cQZQN1; arc=none smtp.client-ip=192.29.178.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SMAuHfeB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RB11zRtB"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8043413805D0;
-	Mon, 18 Nov 2024 10:34:19 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 18 Nov 2024 10:34:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731944059; x=1732030459; bh=Fb+r1ZGTT9
-	An23xD91iurwxlU7+WaRITYVfg9k1XSlo=; b=SMAuHfeBDyFGoXK+Y9jeYxlObA
-	KbGzJPbCacCGIrhM8e3MDRabxgd6Z+7QVjR/VfWWQfms8AG1cfCdv7HQ6DY/zFTW
-	+5N04SMngoXpvCppuYXSmk4zOWdxmqzXOISbSaKWhxQlmkzpPJLZ9TP5unLEE7na
-	/PKovqkMxZU3qf5o+hGghGA25t6UiVNDfTBTtE+QCafID1ut6yCYvuxFjM+MXJCw
-	CelcsYBDqNOJZPee78IQxkX7Yufbr0pDDxhshzrgLcXfbJi9bWs7KRnecw4yg0PO
-	eqN5LqFxoqfmV2uN2/mnAlj92NzuSU+ILv9Y3E6Fbn2CxTNGwq8NlmS4j5bA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731944059; x=1732030459; bh=Fb+r1ZGTT9An23xD91iurwxlU7+WaRITYVf
-	g9k1XSlo=; b=RB11zRtBg9fcQzBOkNsHKIiKuXl6O7LtMOtxakaJwDPT7gtJvAG
-	ytQuqs8T4Zc6STmt4Yh7INe8KoQNKiCV1CtGpk8su9I/shvvFgfeBj5PfjJMZGEt
-	/fFlzSdZWDMBzd4A8Q7I8URFFMUfUARWbTQyK/IiKCG40r86QWOMNEteypXxP3Sr
-	87JBiIronf3epHYLFKE+XD4Zxq7Ugzu8htJXlovzsDKiybW52vE/00dEqYKxYMq3
-	a7TxaLJ69O64FpgyF3PxGdpTJwVa2a0vfMA2SfPgPzw8cM+eFdW3H8Q0Wv1g80A8
-	Csh+H1ev5xJT1sOv0cTVjYprRf6I6X96y1w==
-X-ME-Sender: <xms:e147Z-A0SUTDGI1dlVlTFxSk8y_TxcLd8KTbEfsORM7L7pfHgpKSYA>
-    <xme:e147Z4jfIh99Uli3BFuHUtf0qdtMRdMxztD1MpA5EzPIfJAxWN9_6ud_ffW-TjQvv
-    5yHdBJkY4kW4AOeiQ>
-X-ME-Received: <xmr:e147Zxm1bY_WJ7QQd3RW6hYIasbAvXNVw7E7gaRtCncXeCSHoOFwF5uUHB0iebkFUlaO-7QHw604RA0YGX7qRy06pX3RGTuOf_P9GiInWntfQJPX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedtgdejiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpefhveehhfdtvdeuueegueeuudffueeigeeujeelhedvgfeh
-    udfhfeevjeetjeeufeenucffohhmrghinheplhhishhtrdgrshenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggp
-    rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegvthhhohhmshhonh
-    esvggufigrrhguthhhohhmshhonhdrtghomh
-X-ME-Proxy: <xmx:e147Z8z9WYi8LAp8fxhvcnll967u6oPn-wM8wFlAgY1sVqSVPlH8bg>
-    <xmx:e147ZzQcqgSivDzs6s_3ZOWcsNUZ7O1-yQ-dXr-D9Jadmg-bRrNiiw>
-    <xmx:e147Z3ZWm2rIKSf5CgUD5VrLSngLHMAvjajdq36N_tFBLfrgQoYMag>
-    <xmx:e147Z8RlN28bUPW2uJ-6kToJ3Yq9ReBWDYm6lMCqT98x4x5qr6QWmg>
-    <xmx:e147ZyGS7YnvfuAtq34eynv99UIhQ_8yBYzzg-cG3f-ogsZNuTEIyrp4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 10:34:17 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c6a40eb3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Nov 2024 15:33:30 +0000 (UTC)
-Date: Mon, 18 Nov 2024 16:34:08 +0100
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="o3cQZQN1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=01wTOySSpu4MLPqkuIBZxHXVPHRQ9y0+iz0hZL6Yqvw=;
+ b=o3cQZQN1o9+48ub6iDNX7Hy3XZY5+bk24hbPpSp+hIbHB0hSomkzCI5Lssh0oG9jMF1ReheWSliP
+   XTE38mPC56O2DOuQknTBn3iCT2K5M2oK1w69nGphmdo3Zsf4PkS5Xn09ZbmZ4HefF8xjuG5dfkZN
+   yOfBQ3yjzMlD7S+raZDstvaukktvYXFP7rdaRxhXvjFFhSFy8VFiKRVorgcyKSLFkBTTpg5AxyGO
+   ANpYYkKKgvDd9mbr1nyrfnCz8Wt2w33zn/TuPqUy9Le8+PgLUlUu8TpzdhjirHphaVMv5FH3Rtaw
+   Tpo/+2q0RHxRoJbgkXgv/iDe0dooHA2B757zwQ==
+Received: by omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SN500K69KLCOGC0@omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 18 Nov 2024 15:34:24 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
 To: git@vger.kernel.org
-Cc: Edward Thomson <ethomson@edwardthomson.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	karthik nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 7/7] reftable/system: provide thin wrapper for lockfile
- subsystem
-Message-ID: <e1ac1cc2e677fddb03cb3bc37952b7be55652287.1731943954.git.ps@pks.im>
-References: <cover.1729677003.git.ps@pks.im>
- <cover.1731943954.git.ps@pks.im>
+Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
+	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v13 8/9] fetch: set remote/HEAD if it does not exist
+Date: Mon, 18 Nov 2024 16:09:27 +0100
+Message-id: <20241118151755.756265-9-bence@ferdinandy.com>
+In-reply-to: <20241118151755.756265-1-bence@ferdinandy.com>
+References: <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241118151755.756265-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1731943954.git.ps@pks.im>
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAG4Oex3YRGiNXWfKTm/PSO3GSKpZyuOLR0uSheYu1h3XN7shxKTsD8ll2cqGSAH
+ br72+svqw7Qt9tiMBELgW1TIBoeicNDuxqL9PcZlS9m09M4SoBlqY4V2gB+OWYP0
+ i6DNPnmFarROQaZYcNoyYzVq37uiBls8P0xH+6+TqjYvsXOy55WOYlizjYiXKbcu
+ IDd07+N2O3XAOsXS7MNPO4W1KRzE7kFRPO9MhwRbWMVW2mzcs5+rqAEO96NIzlV3
+ f3tAAbyuJXlvQFdANQzdN9YAA1weskpC9+UMX+cr08BTc84dYf+Il29zQZ15Empv
+ b013EuiCuwudM12OpYdJITJBbBznKnqkPRYnfVH9P3mfM2QCZCauMNG1Q8H7U2k2
+ PkEIt5TeTDBixAqnVh5gnpfkUY93lIAzyL8jRwesab+lsG+CY8JYs/8uzJ/wcy/d
+ un7T/affTMdNlheH1yfDEyx2kREkwY3trkUPgrIODYpHCxEF5NTIDCzK
 
-We use the lockfile subsystem to write lockfiles for "tables.list". As
-with the tempfile subsystem, the lockfile subsystem also hooks into our
-infrastructure to prune stale locks via atexit(3p) or signal handlers.
+If the user has remote/HEAD set already and it looks like it has changed
+on the server, then print a message, otherwise set it if we can.
+Silently pass if the user already has the same remote/HEAD set as
+reported by the server or if we encounter any errors along the way.
 
-Furthermore, the lockfile subsystem also handles locking timeouts, which
-do add quite a bit of logic. Having to reimplement that in the context
-of Git wouldn't make a whole lot of sense, and it is quite likely that
-downstream users of the reftable library may have a better idea for how
-exactly to implement timeouts.
-
-So again, provide a thin wrapper for the lockfile subsystem instead such
-that the compatibility shim is fully self-contained.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 ---
- reftable/stack.c                    | 63 ++++++++++-------------
- reftable/system.c                   | 77 +++++++++++++++++++++++++++++
- reftable/system.h                   | 45 ++++++++++++++++-
- t/unit-tests/lib-reftable.c         |  1 +
- t/unit-tests/t-reftable-block.c     |  1 +
- t/unit-tests/t-reftable-pq.c        |  1 +
- t/unit-tests/t-reftable-readwrite.c |  1 +
- t/unit-tests/t-reftable-stack.c     |  2 +
- 8 files changed, 154 insertions(+), 37 deletions(-)
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 223d7c622d9..10d45e89d00 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -657,7 +657,7 @@ static int format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
+Notes:
+    v3: - does not rely on remote set-head anymore so it only authenticates
+        once
+        - uses the new REF_CREATE_ONLY to atomically check if the ref exists
+          and only write it if it doesn't
+        - in all other cases the maximum it does is print a warning
+    
+    v4: - instead of the discarded REF_CREATE_ONLY, it uses the existing,
+          but updated transaction api to request a silent create only
+        - it now uses the atomic before_target to determine reporting
+        - refactored for legibility
+    
+    v5: - instead of printing a not too useful message, it now fails
+          silently, this in line with the objective to only set up
+          remote/HEAD automatically if the right thing is trivial, for
+          everything else there is remote set-head
+        - fixed all failing tests
+        - added two new tests, one for checking if remote/HEAD is set to the
+          correct one, and one to test that we do not override remote/HEAD
+          if it has changed on the server from what we have locally
+    
+    v6: - fixed style issues and unintended extra empty line
+        - updated function call with bool to int from previous patch's
+          change
+        - removed calls to error(...) inherited from builtin/remote.c so we
+          actually fail silently
+        - set the test for remote set-head --auto to the correct value here,
+          which was previously erronously set in the remote set-head patch
+    
+    v7: - no change
+    
+    v8: - changed logmsg in call to refs_update_symref from "remote
+          set-head" to "fetch"
+    
+    v9: - follow through with refs_update_symref_extended
+        - fix test errors uncovered by the new patch
+    
+    v10: no change
+    
+    v11: fixed some memory leaks
+    
+    v12: no change
+    
+    v13: - fix printed information if the local HEAD is detached
+         - remove accidental formatting noise in a test
+
+ builtin/fetch.c                  | 99 ++++++++++++++++++++++++++++++++
+ t/t4207-log-decoration-colors.sh |  3 +-
+ t/t5505-remote.sh                | 21 +++++--
+ t/t5510-fetch.sh                 | 24 ++++++++
+ t/t5512-ls-remote.sh             |  2 +
+ t/t5514-fetch-multiple.sh        | 17 +++++-
+ t/t5516-fetch-push.sh            |  3 +-
+ t/t5527-fetch-odd-refs.sh        |  3 +-
+ t/t7900-maintenance.sh           |  3 +-
+ t/t9210-scalar.sh                |  5 +-
+ t/t9211-scalar-clone.sh          |  6 +-
+ t/t9902-completion.sh            | 65 +++++++++++++++++++++
+ 12 files changed, 234 insertions(+), 17 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 18eff4e5fa..3d70cd1add 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1578,6 +1578,97 @@ static int backfill_tags(struct display_state *display_state,
+ 	return retcode;
  }
  
- struct reftable_addition {
--	struct lock_file tables_list_lock;
-+	struct reftable_flock tables_list_lock;
- 	struct reftable_stack *stack;
- 
- 	char **new_tables;
-@@ -676,10 +676,8 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
- 
- 	add->stack = st;
- 
--	err = hold_lock_file_for_update_timeout(&add->tables_list_lock,
--						st->list_file,
--						LOCK_NO_DEREF,
--						st->opts.lock_timeout_ms);
-+	err = flock_acquire(&add->tables_list_lock, st->list_file,
-+			    st->opts.lock_timeout_ms);
- 	if (err < 0) {
- 		if (errno == EEXIST) {
- 			err = REFTABLE_LOCK_ERROR;
-@@ -689,7 +687,7 @@ static int reftable_stack_init_addition(struct reftable_addition *add,
- 		goto done;
- 	}
- 	if (st->opts.default_permissions) {
--		if (chmod(get_lock_file_path(&add->tables_list_lock),
-+		if (chmod(add->tables_list_lock.path,
- 			  st->opts.default_permissions) < 0) {
- 			err = REFTABLE_IO_ERROR;
- 			goto done;
-@@ -733,7 +731,7 @@ static void reftable_addition_close(struct reftable_addition *add)
- 	add->new_tables_len = 0;
- 	add->new_tables_cap = 0;
- 
--	rollback_lock_file(&add->tables_list_lock);
-+	flock_release(&add->tables_list_lock);
- 	reftable_buf_release(&nm);
- }
- 
-@@ -749,7 +747,6 @@ void reftable_addition_destroy(struct reftable_addition *add)
- int reftable_addition_commit(struct reftable_addition *add)
- {
- 	struct reftable_buf table_list = REFTABLE_BUF_INIT;
--	int lock_file_fd = get_lock_file_fd(&add->tables_list_lock);
- 	int err = 0;
- 	size_t i;
- 
-@@ -767,20 +764,20 @@ int reftable_addition_commit(struct reftable_addition *add)
- 			goto done;
- 	}
- 
--	err = write_in_full(lock_file_fd, table_list.buf, table_list.len);
-+	err = write_in_full(add->tables_list_lock.fd, table_list.buf, table_list.len);
- 	reftable_buf_release(&table_list);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
- 	}
- 
--	err = stack_fsync(&add->stack->opts, lock_file_fd);
-+	err = stack_fsync(&add->stack->opts, add->tables_list_lock.fd);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
- 	}
- 
--	err = commit_lock_file(&add->tables_list_lock);
-+	err = flock_commit(&add->tables_list_lock);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
-@@ -1160,8 +1157,8 @@ static int stack_compact_range(struct reftable_stack *st,
- 	struct reftable_buf new_table_name = REFTABLE_BUF_INIT;
- 	struct reftable_buf new_table_path = REFTABLE_BUF_INIT;
- 	struct reftable_buf table_name = REFTABLE_BUF_INIT;
--	struct lock_file tables_list_lock = LOCK_INIT;
--	struct lock_file *table_locks = NULL;
-+	struct reftable_flock tables_list_lock = REFTABLE_FLOCK_INIT;
-+	struct reftable_flock *table_locks = NULL;
- 	struct reftable_tmpfile new_table = REFTABLE_TMPFILE_INIT;
- 	int is_empty_table = 0, err = 0;
- 	size_t first_to_replace, last_to_replace;
-@@ -1179,10 +1176,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * Hold the lock so that we can read "tables.list" and lock all tables
- 	 * which are part of the user-specified range.
- 	 */
--	err = hold_lock_file_for_update_timeout(&tables_list_lock,
--						st->list_file,
--						LOCK_NO_DEREF,
--						st->opts.lock_timeout_ms);
-+	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
- 	if (err < 0) {
- 		if (errno == EEXIST)
- 			err = REFTABLE_LOCK_ERROR;
-@@ -1205,19 +1199,20 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * older process is still busy compacting tables which are preexisting
- 	 * from the point of view of the newer process.
- 	 */
--	REFTABLE_CALLOC_ARRAY(table_locks, last - first + 1);
-+	REFTABLE_ALLOC_ARRAY(table_locks, last - first + 1);
- 	if (!table_locks) {
- 		err = REFTABLE_OUT_OF_MEMORY_ERROR;
- 		goto done;
- 	}
-+	for (i = 0; i < last - first + 1; i++)
-+		table_locks[i] = REFTABLE_FLOCK_INIT;
- 
- 	for (i = last + 1; i > first; i--) {
- 		err = stack_filename(&table_name, st, reader_name(st->readers[i - 1]));
- 		if (err < 0)
- 			goto done;
- 
--		err = hold_lock_file_for_update(&table_locks[nlocks],
--						table_name.buf, LOCK_NO_DEREF);
-+		err = flock_acquire(&table_locks[nlocks], table_name.buf, 0);
- 		if (err < 0) {
- 			/*
- 			 * When the table is locked already we may do a
-@@ -1253,7 +1248,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 		 * run into file descriptor exhaustion when we compress a lot
- 		 * of tables.
- 		 */
--		err = close_lock_file_gently(&table_locks[nlocks++]);
-+		err = flock_close(&table_locks[nlocks++]);
- 		if (err < 0) {
- 			err = REFTABLE_IO_ERROR;
- 			goto done;
-@@ -1265,7 +1260,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * "tables.list" lock while compacting the locked tables. This allows
- 	 * concurrent updates to the stack to proceed.
- 	 */
--	err = rollback_lock_file(&tables_list_lock);
-+	err = flock_release(&tables_list_lock);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
-@@ -1288,10 +1283,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * "tables.list". We'll then replace the compacted range of tables with
- 	 * the new table.
- 	 */
--	err = hold_lock_file_for_update_timeout(&tables_list_lock,
--						st->list_file,
--						LOCK_NO_DEREF,
--						st->opts.lock_timeout_ms);
-+	err = flock_acquire(&tables_list_lock, st->list_file, st->opts.lock_timeout_ms);
- 	if (err < 0) {
- 		if (errno == EEXIST)
- 			err = REFTABLE_LOCK_ERROR;
-@@ -1301,7 +1293,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 	}
- 
- 	if (st->opts.default_permissions) {
--		if (chmod(get_lock_file_path(&tables_list_lock),
-+		if (chmod(tables_list_lock.path,
- 			  st->opts.default_permissions) < 0) {
- 			err = REFTABLE_IO_ERROR;
- 			goto done;
-@@ -1456,7 +1448,7 @@ static int stack_compact_range(struct reftable_stack *st,
- 			goto done;
- 	}
- 
--	err = write_in_full(get_lock_file_fd(&tables_list_lock),
-+	err = write_in_full(tables_list_lock.fd,
- 			    tables_list_buf.buf, tables_list_buf.len);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
-@@ -1464,14 +1456,14 @@ static int stack_compact_range(struct reftable_stack *st,
- 		goto done;
- 	}
- 
--	err = stack_fsync(&st->opts, get_lock_file_fd(&tables_list_lock));
-+	err = stack_fsync(&st->opts, tables_list_lock.fd);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		unlink(new_table_path.buf);
- 		goto done;
- 	}
- 
--	err = commit_lock_file(&tables_list_lock);
-+	err = flock_commit(&tables_list_lock);
- 	if (err < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		unlink(new_table_path.buf);
-@@ -1492,12 +1484,11 @@ static int stack_compact_range(struct reftable_stack *st,
- 	 * readers, so it is expected that unlinking tables may fail.
- 	 */
- 	for (i = 0; i < nlocks; i++) {
--		struct lock_file *table_lock = &table_locks[i];
--		const char *lock_path = get_lock_file_path(table_lock);
-+		struct reftable_flock *table_lock = &table_locks[i];
- 
- 		reftable_buf_reset(&table_name);
--		err = reftable_buf_add(&table_name, lock_path,
--				       strlen(lock_path) - strlen(".lock"));
-+		err = reftable_buf_add(&table_name, table_lock->path,
-+				       strlen(table_lock->path) - strlen(".lock"));
- 		if (err)
- 			continue;
- 
-@@ -1505,9 +1496,9 @@ static int stack_compact_range(struct reftable_stack *st,
- 	}
- 
- done:
--	rollback_lock_file(&tables_list_lock);
-+	flock_release(&tables_list_lock);
- 	for (i = 0; table_locks && i < nlocks; i++)
--		rollback_lock_file(&table_locks[i]);
-+		flock_release(&table_locks[i]);
- 	reftable_free(table_locks);
- 
- 	tmpfile_delete(&new_table);
-diff --git a/reftable/system.c b/reftable/system.c
-index 01f96f03d84..adf8e4d30b8 100644
---- a/reftable/system.c
-+++ b/reftable/system.c
-@@ -1,6 +1,7 @@
- #include "system.h"
- #include "basics.h"
- #include "reftable-error.h"
-+#include "../lockfile.h"
- #include "../tempfile.h"
- 
- int tmpfile_from_pattern(struct reftable_tmpfile *out, const char *pattern)
-@@ -47,3 +48,79 @@ int tmpfile_rename(struct reftable_tmpfile *t, const char *path)
- 		return REFTABLE_IO_ERROR;
- 	return 0;
- }
++static void report_set_head(const char *remote, const char *head_name,
++			struct strbuf *buf_prev, int updateres) {
++	struct strbuf buf_prefix = STRBUF_INIT;
++	const char *prev_head = NULL;
 +
-+int flock_acquire(struct reftable_flock *l, const char *target_path,
-+		  long timeout_ms)
++	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
++	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
++
++	if (prev_head && strcmp(prev_head, head_name)) {
++		printf("'HEAD' at '%s' has changed from '%s' to '%s'\n",
++			remote, prev_head, head_name);
++		printf("Run 'git remote set-head %s %s' to follow the change.\n",
++			remote, head_name);
++	}
++	else if (!!updateres && buf_prev->len) {
++		printf("detached 'HEAD' at '%s' has changed from '%s' to '%s'\n",
++			remote, buf_prev->buf, head_name);
++		printf("Run 'git remote set-head %s %s' to follow the change.\n",
++			remote, head_name);
++	}
++	strbuf_release(&buf_prefix);
++}
++
++static const char *strip_refshead(const char *name){
++	skip_prefix(name, "refs/heads/", &name);
++	return name;
++}
++
++static int set_head(const struct ref *remote_refs)
 +{
-+	struct lock_file *lockfile;
-+	int err;
++	int result = 0, updateres;
++	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
++		b_local_head = STRBUF_INIT;
++	const char *remote = gtransport->remote->name;
++	char *head_name = NULL;
++	struct ref *ref, *matches;
++	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
++	struct refspec_item refspec = {
++		.force = 0,
++		.pattern = 1,
++		.src = (char *) "refs/heads/*",
++		.dst = (char *) "refs/heads/*",
++	};
++	struct string_list heads = STRING_LIST_INIT_DUP;
++	struct ref_store *refs = get_main_ref_store(the_repository);
 +
-+	lockfile = reftable_malloc(sizeof(*lockfile));
-+	if (!lockfile)
-+		return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
-+	err = hold_lock_file_for_update_timeout(lockfile, target_path, LOCK_NO_DEREF,
-+						timeout_ms);
-+	if (err < 0) {
-+		reftable_free(lockfile);
-+		if (errno == EEXIST)
-+			return REFTABLE_LOCK_ERROR;
-+		return -1;
++	get_fetch_map(remote_refs, &refspec, &fetch_map_tail, 0);
++	matches = guess_remote_head(find_ref_by_name(remote_refs, "HEAD"),
++				    fetch_map, 1);
++	for (ref = matches; ref; ref = ref->next) {
++		string_list_append(&heads, strip_refshead(ref->name));
 +	}
 +
-+	l->fd = get_lock_file_fd(lockfile);
-+	l->path = get_lock_file_path(lockfile);
-+	l->priv = lockfile;
 +
-+	return 0;
++	if (!heads.nr)
++		result = 1;
++	else if (heads.nr > 1)
++		result = 1;
++	else
++		head_name = xstrdup(heads.items[0].string);
++
++	if (!head_name)
++		goto cleanup;
++	strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
++	strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
++		/* make sure it's valid */
++	if (!refs_ref_exists(refs, b_remote_head.buf)) {
++		result = 1;
++		goto cleanup;
++	}
++	updateres = refs_update_symref_extended(refs, b_head.buf, b_remote_head.buf,
++					"fetch", &b_local_head, 1);
++	if (updateres == -1) {
++		result = 1;
++		goto cleanup;
++	}
++	report_set_head(remote, head_name, &b_local_head, updateres);
++
++
++
++cleanup:
++	free(head_name);
++	free_refs(fetch_map);
++	free_refs(matches);
++	string_list_clear(&heads, 0);
++	strbuf_release(&b_head);
++	strbuf_release(&b_local_head);
++	strbuf_release(&b_remote_head);
++	return result;
 +}
 +
-+int flock_close(struct reftable_flock *l)
-+{
-+	struct lock_file *lockfile = l->priv;
-+	int ret;
-+
-+	if (!lockfile)
-+		return REFTABLE_API_ERROR;
-+
-+	ret = close_lock_file_gently(lockfile);
-+	l->fd = -1;
-+	if (ret < 0)
-+		return REFTABLE_IO_ERROR;
-+
-+	return 0;
-+}
-+
-+int flock_release(struct reftable_flock *l)
-+{
-+	struct lock_file *lockfile = l->priv;
-+	int ret;
-+
-+	if (!lockfile)
-+		return 0;
-+
-+	ret = rollback_lock_file(lockfile);
-+	reftable_free(lockfile);
-+	*l = REFTABLE_FLOCK_INIT;
-+	if (ret < 0)
-+		return REFTABLE_IO_ERROR;
-+
-+	return 0;
-+}
-+
-+int flock_commit(struct reftable_flock *l)
-+{
-+	struct lock_file *lockfile = l->priv;
-+	int ret;
-+
-+	if (!lockfile)
-+		return REFTABLE_API_ERROR;
-+
-+	ret = commit_lock_file(lockfile);
-+	reftable_free(lockfile);
-+	*l = REFTABLE_FLOCK_INIT;
-+	if (ret < 0)
-+		return REFTABLE_IO_ERROR;
-+
-+	return 0;
-+}
-diff --git a/reftable/system.h b/reftable/system.h
-index 858189fd55d..7d5f803eeb1 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -12,7 +12,6 @@ license that can be found in the LICENSE file or at
- /* This header glues the reftable library to the rest of Git */
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *rs,
+ 		    const struct fetch_config *config)
+@@ -1647,6 +1738,8 @@ static int do_fetch(struct transport *transport,
+ 				    "refs/tags/");
+ 	}
  
- #include "git-compat-util.h"
--#include "lockfile.h"
- 
- /*
-  * An implementation-specific temporary file. By making this specific to the
-@@ -55,4 +54,48 @@ int tmpfile_delete(struct reftable_tmpfile *t);
-  */
- int tmpfile_rename(struct reftable_tmpfile *t, const char *path);
- 
-+/*
-+ * An implementation-specific file lock. Same as with `reftable_tmpfile`,
-+ * making this specific to the implementation makes it possible to tie this
-+ * into signal or atexit handlers such that we know to clean up stale locks on
-+ * abnormal exits.
-+ */
-+struct reftable_flock {
-+	const char *path;
-+	int fd;
-+	void *priv;
-+};
-+#define REFTABLE_FLOCK_INIT ((struct reftable_flock){ .fd = -1, })
++	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
 +
-+/*
-+ * Acquire the lock for the given target path by exclusively creating a file
-+ * with ".lock" appended to it. If that lock exists, we wait up to `timeout_ms`
-+ * to acquire the lock. If `timeout_ms` is 0 we don't wait, if it is negative
-+ * we block indefinitely.
-+ *
-+ * Retrun 0 on success, a reftable error code on error.
-+ */
-+int flock_acquire(struct reftable_flock *l, const char *target_path,
-+		  long timeout_ms);
+ 	if (must_list_refs) {
+ 		trace2_region_enter("fetch", "remote_refs", the_repository);
+ 		remote_refs = transport_get_remote_refs(transport,
+@@ -1791,6 +1884,12 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
++	if (set_head(remote_refs))
++		;
++		/*
++		 * Way too many cases where this can go wrong
++		 * so let's just fail silently for now.
++		 */
+ 
+ cleanup:
+ 	if (retcode) {
+diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
+index 73ea9e5155..d55d22cb2f 100755
+--- a/t/t4207-log-decoration-colors.sh
++++ b/t/t4207-log-decoration-colors.sh
+@@ -59,7 +59,8 @@ ${c_reset}${c_tag}tag: ${c_reset}${c_tag}v1.0${c_reset}${c_commit}, \
+ ${c_reset}${c_tag}tag: ${c_reset}${c_tag}B${c_reset}${c_commit})${c_reset} B
+ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
+ ${c_tag}tag: ${c_reset}${c_tag}A1${c_reset}${c_commit}, \
+-${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit})${c_reset} A1
++${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit}, \
++${c_reset}${c_remoteBranch}other/HEAD${c_reset}${c_commit})${c_reset} A1
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
+ ${c_stash}refs/stash${c_reset}${c_commit})${c_reset} On main: Changes to A.t
+ 	${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}\
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 807df00ba7..660310239c 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -74,7 +74,7 @@ test_expect_success 'add another remote' '
+ 		cd test &&
+ 		git remote add -f second ../two &&
+ 		tokens_match "origin second" "$(git remote)" &&
+-		check_tracking_branch second main side another &&
++		check_tracking_branch second main side another HEAD &&
+ 		git for-each-ref "--format=%(refname)" refs/remotes |
+ 		sed -e "/^refs\/remotes\/origin\//d" \
+ 		    -e "/^refs\/remotes\/second\//d" >actual &&
+@@ -488,7 +488,7 @@ test_expect_success 'set-head --auto has no problem w/multiple HEADs' '
+ 		cd test &&
+ 		git fetch two "refs/heads/*:refs/remotes/two/*" &&
+ 		git remote set-head --auto two >output 2>&1 &&
+-		echo "${SQ}two/HEAD${SQ} is now created and points to ${SQ}main${SQ}" >expect &&
++		echo "${SQ}two/HEAD${SQ} is unchanged and points to ${SQ}main${SQ}" >expect &&
+ 		test_cmp expect output
+ 	)
+ '
+@@ -776,8 +776,10 @@ test_expect_success 'reject --no-no-tags' '
+ '
+ 
+ cat >one/expect <<\EOF
++  apis/HEAD -> apis/main
+   apis/main
+   apis/side
++  drosophila/HEAD -> drosophila/main
+   drosophila/another
+   drosophila/main
+   drosophila/side
+@@ -795,11 +797,14 @@ test_expect_success 'update' '
+ '
+ 
+ cat >one/expect <<\EOF
++  drosophila/HEAD -> drosophila/main
+   drosophila/another
+   drosophila/main
+   drosophila/side
++  manduca/HEAD -> manduca/main
+   manduca/main
+   manduca/side
++  megaloprepus/HEAD -> megaloprepus/main
+   megaloprepus/main
+   megaloprepus/side
+ EOF
+@@ -807,7 +812,7 @@ EOF
+ test_expect_success 'update with arguments' '
+ 	(
+ 		cd one &&
+-		for b in $(git branch -r)
++		for b in $(git branch -r | grep -v HEAD)
+ 		do
+ 		git branch -r -d $b || exit 1
+ 		done &&
+@@ -839,10 +844,13 @@ test_expect_success 'update --prune' '
+ '
+ 
+ cat >one/expect <<-\EOF
++  apis/HEAD -> apis/main
+   apis/main
+   apis/side
++  manduca/HEAD -> manduca/main
+   manduca/main
+   manduca/side
++  megaloprepus/HEAD -> megaloprepus/main
+   megaloprepus/main
+   megaloprepus/side
+ EOF
+@@ -850,7 +858,7 @@ EOF
+ test_expect_success 'update default' '
+ 	(
+ 		cd one &&
+-		for b in $(git branch -r)
++		for b in $(git branch -r | grep -v HEAD)
+ 		do
+ 		git branch -r -d $b || exit 1
+ 		done &&
+@@ -862,6 +870,7 @@ test_expect_success 'update default' '
+ '
+ 
+ cat >one/expect <<\EOF
++  drosophila/HEAD -> drosophila/main
+   drosophila/another
+   drosophila/main
+   drosophila/side
+@@ -870,7 +879,7 @@ EOF
+ test_expect_success 'update default (overridden, with funny whitespace)' '
+ 	(
+ 		cd one &&
+-		for b in $(git branch -r)
++		for b in $(git branch -r | grep -v HEAD)
+ 		do
+ 		git branch -r -d $b || exit 1
+ 		done &&
+@@ -884,7 +893,7 @@ test_expect_success 'update default (overridden, with funny whitespace)' '
+ test_expect_success 'update (with remotes.default defined)' '
+ 	(
+ 		cd one &&
+-		for b in $(git branch -r)
++		for b in $(git branch -r | grep -v HEAD)
+ 		do
+ 		git branch -r -d $b || exit 1
+ 		done &&
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 0890b9f61c..87698341f5 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -75,6 +75,30 @@ test_expect_success "fetch test for-merge" '
+ 	cut -f -2 .git/FETCH_HEAD >actual &&
+ 	test_cmp expected actual'
+ 
++test_expect_success "fetch test remote HEAD" '
++	cd "$D" &&
++	cd two &&
++	git fetch &&
++	git rev-parse --verify refs/remotes/origin/HEAD &&
++	git rev-parse --verify refs/remotes/origin/main &&
++	head=$(git rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git rev-parse refs/remotes/origin/main) &&
++	test "z$head" = "z$branch"'
 +
-+/*
-+ * Close the lockfile's file descriptor without removing the lock itself. This
-+ * is a no-op in case the lockfile has already been closed beforehand. Returns
-+ * 0 on success, a reftable error code on error.
-+ */
-+int flock_close(struct reftable_flock *l);
++test_expect_success "fetch test remote HEAD change" '
++	cd "$D" &&
++	cd two &&
++	git switch -c other &&
++	git push -u origin other &&
++	git rev-parse --verify refs/remotes/origin/HEAD &&
++	git rev-parse --verify refs/remotes/origin/main &&
++	git rev-parse --verify refs/remotes/origin/other &&
++	git remote set-head origin other &&
++	git fetch &&
++	head=$(git rev-parse refs/remotes/origin/HEAD) &&
++	branch=$(git rev-parse refs/remotes/origin/other) &&
++	test "z$head" = "z$branch"'
 +
-+/*
-+ * Release the lock by unlinking the lockfile. This is a no-op in case the
-+ * lockfile has already been released or committed beforehand. Returns 0 on
-+ * success, a reftable error code on error.
-+ */
-+int flock_release(struct reftable_flock *l);
-+
-+/*
-+ * Commit the lock by renaming the lockfile into place. Returns 0 on success, a
-+ * reftable error code on error.
-+ */
-+int flock_commit(struct reftable_flock *l);
-+
- #endif
-diff --git a/t/unit-tests/lib-reftable.c b/t/unit-tests/lib-reftable.c
-index c1631f45275..d795dfb7c99 100644
---- a/t/unit-tests/lib-reftable.c
-+++ b/t/unit-tests/lib-reftable.c
-@@ -2,6 +2,7 @@
- #include "test-lib.h"
- #include "reftable/constants.h"
- #include "reftable/writer.h"
-+#include "strbuf.h"
+ test_expect_success 'fetch --prune on its own works as expected' '
+ 	cd "$D" &&
+ 	git clone . prune &&
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 64b3491e4e..1b3865e154 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -293,6 +293,8 @@ test_expect_success 'ls-remote with filtered symref (refname)' '
+ 	cat >expect <<-EOF &&
+ 	ref: refs/heads/main	HEAD
+ 	$rev	HEAD
++	ref: refs/remotes/origin/main	refs/remotes/origin/HEAD
++	$rev	refs/remotes/origin/HEAD
+ 	EOF
+ 	git ls-remote --symref . HEAD >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
+index 579872c258..e3482b27b2 100755
+--- a/t/t5514-fetch-multiple.sh
++++ b/t/t5514-fetch-multiple.sh
+@@ -45,14 +45,17 @@ test_expect_success setup '
+ '
  
- void t_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id)
- {
-diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
-index 13e10807dae..22040aeefa5 100644
---- a/t/unit-tests/t-reftable-block.c
-+++ b/t/unit-tests/t-reftable-block.c
-@@ -11,6 +11,7 @@ license that can be found in the LICENSE file or at
- #include "reftable/blocksource.h"
- #include "reftable/constants.h"
- #include "reftable/reftable-error.h"
-+#include "strbuf.h"
+ cat > test/expect << EOF
++  one/HEAD -> one/main
+   one/main
+   one/side
+   origin/HEAD -> origin/main
+   origin/main
+   origin/side
++  three/HEAD -> three/main
+   three/another
+   three/main
+   three/side
++  two/HEAD -> two/main
+   two/another
+   two/main
+   two/side
+@@ -97,6 +100,7 @@ cat > expect << EOF
+   origin/HEAD -> origin/main
+   origin/main
+   origin/side
++  three/HEAD -> three/main
+   three/another
+   three/main
+   three/side
+@@ -112,8 +116,10 @@ test_expect_success 'git fetch --multiple (but only one remote)' '
+ '
  
- static void t_ref_block_read_write(void)
- {
-diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
-index 272da05bea6..f3f8a0cdf38 100644
---- a/t/unit-tests/t-reftable-pq.c
-+++ b/t/unit-tests/t-reftable-pq.c
-@@ -9,6 +9,7 @@ license that can be found in the LICENSE file or at
- #include "test-lib.h"
- #include "reftable/constants.h"
- #include "reftable/pq.h"
-+#include "strbuf.h"
+ cat > expect << EOF
++  one/HEAD -> one/main
+   one/main
+   one/side
++  two/HEAD -> two/main
+   two/another
+   two/main
+   two/side
+@@ -141,7 +147,7 @@ test_expect_success 'git fetch --multiple (bad remote names)' '
  
- static void merged_iter_pqueue_check(const struct merged_iter_pqueue *pq)
- {
-diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index 57896922eb1..91c881aedfa 100644
---- a/t/unit-tests/t-reftable-readwrite.c
-+++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -13,6 +13,7 @@ license that can be found in the LICENSE file or at
- #include "reftable/reader.h"
- #include "reftable/reftable-error.h"
- #include "reftable/reftable-writer.h"
-+#include "strbuf.h"
+ test_expect_success 'git fetch --all (skipFetchAll)' '
+ 	(cd test4 &&
+-	 for b in $(git branch -r)
++	 for b in $(git branch -r | grep -v HEAD)
+ 	 do
+ 		git branch -r -d $b || exit 1
+ 	 done &&
+@@ -153,11 +159,14 @@ test_expect_success 'git fetch --all (skipFetchAll)' '
+ '
  
- static const int update_index = 5;
+ cat > expect << EOF
++  one/HEAD -> one/main
+   one/main
+   one/side
++  three/HEAD -> three/main
+   three/another
+   three/main
+   three/side
++  two/HEAD -> two/main
+   two/another
+   two/main
+   two/side
+@@ -165,7 +174,7 @@ EOF
  
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index 13fd8d8f941..b2f6c1c37e9 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/t-reftable-stack.c
-@@ -13,6 +13,8 @@ license that can be found in the LICENSE file or at
- #include "reftable/reader.h"
- #include "reftable/reftable-error.h"
- #include "reftable/stack.h"
-+#include "strbuf.h"
-+#include "tempfile.h"
- #include <dirent.h>
+ test_expect_success 'git fetch --multiple (ignoring skipFetchAll)' '
+ 	(cd test4 &&
+-	 for b in $(git branch -r)
++	 for b in $(git branch -r | grep -v HEAD)
+ 	 do
+ 		git branch -r -d $b || exit 1
+ 	 done &&
+@@ -221,14 +230,17 @@ test_expect_success 'git fetch --multiple --jobs=0 picks a default' '
  
- static void clear_dir(const char *dirname)
+ create_fetch_all_expect () {
+ 	cat >expect <<-\EOF
++	  one/HEAD -> one/main
+ 	  one/main
+ 	  one/side
+ 	  origin/HEAD -> origin/main
+ 	  origin/main
+ 	  origin/side
++	  three/HEAD -> three/main
+ 	  three/another
+ 	  three/main
+ 	  three/side
++	  two/HEAD -> two/main
+ 	  two/another
+ 	  two/main
+ 	  two/side
+@@ -265,6 +277,7 @@ test_expect_success 'git fetch (fetch all remotes with fetch.all = true)' '
+ 
+ create_fetch_one_expect () {
+ 	cat >expect <<-\EOF
++	  one/HEAD -> one/main
+ 	  one/main
+ 	  one/side
+ 	  origin/HEAD -> origin/main
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 331778bd42..5a051aa0c7 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1395,7 +1395,8 @@ test_expect_success 'fetch follows tags by default' '
+ 		git tag -m "annotated" tag &&
+ 		git for-each-ref >tmp1 &&
+ 		sed -n "p; s|refs/heads/main$|refs/remotes/origin/main|p" tmp1 |
+-		sort -k 3 >../expect
++		sed -n "p; s|refs/heads/main$|refs/remotes/origin/HEAD|p"  |
++		sort -k 4 >../expect
+ 	) &&
+ 	test_when_finished "rm -rf dst" &&
+ 	git init dst &&
+diff --git a/t/t5527-fetch-odd-refs.sh b/t/t5527-fetch-odd-refs.sh
+index 98ece27c6a..d3996af6ee 100755
+--- a/t/t5527-fetch-odd-refs.sh
++++ b/t/t5527-fetch-odd-refs.sh
+@@ -52,7 +52,8 @@ test_expect_success LONG_REF 'fetch handles extremely long refname' '
+ 	long
+ 	main
+ 	EOF
+-	git for-each-ref --format="%(subject)" refs/remotes/long >actual &&
++	git for-each-ref --format="%(subject)" refs/remotes/long \
++		--exclude=refs/remotes/long/HEAD >actual &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index c224c8450c..edb85b7145 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -329,7 +329,8 @@ test_expect_success 'incremental-repack task' '
+ 
+ 	# Delete refs that have not been repacked in these packs.
+ 	git for-each-ref --format="delete %(refname)" \
+-		refs/prefetch refs/tags refs/remotes >refs &&
++		refs/prefetch refs/tags refs/remotes \
++		--exclude=refs/remotes/*/HEAD >refs &&
+ 	git update-ref --stdin <refs &&
+ 
+ 	# Replace the object directory with this pack layout.
+diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+index a30b2c9f70..2237844550 100755
+--- a/t/t9210-scalar.sh
++++ b/t/t9210-scalar.sh
+@@ -151,7 +151,8 @@ test_expect_success 'scalar clone' '
+ 			"$(pwd)" &&
+ 
+ 		git for-each-ref --format="%(refname)" refs/remotes/origin/ >actual &&
+-		echo "refs/remotes/origin/parallel" >expect &&
++		echo "refs/remotes/origin/HEAD" >>expect &&
++		echo "refs/remotes/origin/parallel" >>expect &&
+ 		test_cmp expect actual &&
+ 
+ 		test_path_is_missing 1/2 &&
+@@ -220,7 +221,7 @@ test_expect_success 'scalar reconfigure --all with includeIf.onbranch' '
+ 	done
+ '
+ 
+- test_expect_success 'scalar reconfigure --all with detached HEADs' '
++test_expect_success 'scalar reconfigure --all with detached HEADs' '
+ 	repos="two three four" &&
+ 	for num in $repos
+ 	do
+diff --git a/t/t9211-scalar-clone.sh b/t/t9211-scalar-clone.sh
+index c16ea67c1d..d9cb6b9a3e 100755
+--- a/t/t9211-scalar-clone.sh
++++ b/t/t9211-scalar-clone.sh
+@@ -32,7 +32,7 @@ test_expect_success 'set up repository to clone' '
+ 	)
+ '
+ 
+-cleanup_clone () {
++cleanup_clone() {
+ 	rm -rf "$1"
+ }
+ 
+@@ -128,7 +128,7 @@ test_expect_success '--single-branch clones HEAD only' '
+ 	(
+ 		cd $enlistment/src &&
+ 		git for-each-ref refs/remotes/origin >out &&
+-		test_line_count = 1 out &&
++		test_line_count = 2 out &&
+ 		grep "refs/remotes/origin/base" out
+ 	) &&
+ 
+@@ -142,7 +142,7 @@ test_expect_success '--no-single-branch clones all branches' '
+ 	(
+ 		cd $enlistment/src &&
+ 		git for-each-ref refs/remotes/origin >out &&
+-		test_line_count = 2 out &&
++		test_line_count = 3 out &&
+ 		grep "refs/remotes/origin/base" out &&
+ 		grep "refs/remotes/origin/parallel" out
+ 	) &&
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index cc6aa9f0cd..b663c4609e 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -658,6 +658,7 @@ test_expect_success '__git_refs - simple' '
+ 	HEAD
+ 	main
+ 	matching-branch
++	other/HEAD
+ 	other/branch-in-other
+ 	other/main-in-other
+ 	matching-tag
+@@ -673,6 +674,7 @@ test_expect_success '__git_refs - full refs' '
+ 	cat >expected <<-EOF &&
+ 	refs/heads/main
+ 	refs/heads/matching-branch
++	refs/remotes/other/HEAD
+ 	refs/remotes/other/branch-in-other
+ 	refs/remotes/other/main-in-other
+ 	refs/tags/matching-tag
+@@ -729,6 +731,7 @@ test_expect_success '__git_refs - remote on local file system - full refs' '
+ test_expect_success '__git_refs - configured remote' '
+ 	cat >expected <<-EOF &&
+ 	HEAD
++	HEAD
+ 	branch-in-other
+ 	main-in-other
+ 	EOF
+@@ -756,6 +759,7 @@ test_expect_success '__git_refs - configured remote - full refs' '
+ test_expect_success '__git_refs - configured remote - repo given on the command line' '
+ 	cat >expected <<-EOF &&
+ 	HEAD
++	HEAD
+ 	branch-in-other
+ 	main-in-other
+ 	EOF
+@@ -787,6 +791,7 @@ test_expect_success '__git_refs - configured remote - full refs - repo given on
+ test_expect_success '__git_refs - configured remote - remote name matches a directory' '
+ 	cat >expected <<-EOF &&
+ 	HEAD
++	HEAD
+ 	branch-in-other
+ 	main-in-other
+ 	EOF
+@@ -875,12 +880,14 @@ test_expect_success '__git_refs - unique remote branches for git checkout DWIMer
+ 	HEAD
+ 	main
+ 	matching-branch
++	other/HEAD
+ 	other/ambiguous
+ 	other/branch-in-other
+ 	other/main-in-other
+ 	remote/ambiguous
+ 	remote/branch-in-remote
+ 	matching-tag
++	HEAD
+ 	branch-in-other
+ 	branch-in-remote
+ 	main-in-other
+@@ -904,6 +911,7 @@ test_expect_success '__git_refs - after --opt=' '
+ 	HEAD
+ 	main
+ 	matching-branch
++	other/HEAD
+ 	other/branch-in-other
+ 	other/main-in-other
+ 	matching-tag
+@@ -919,6 +927,7 @@ test_expect_success '__git_refs - after --opt= - full refs' '
+ 	cat >expected <<-EOF &&
+ 	refs/heads/main
+ 	refs/heads/matching-branch
++	refs/remotes/other/HEAD
+ 	refs/remotes/other/branch-in-other
+ 	refs/remotes/other/main-in-other
+ 	refs/tags/matching-tag
+@@ -935,6 +944,7 @@ test_expect_success '__git refs - excluding refs' '
+ 	^HEAD
+ 	^main
+ 	^matching-branch
++	^other/HEAD
+ 	^other/branch-in-other
+ 	^other/main-in-other
+ 	^matching-tag
+@@ -950,6 +960,7 @@ test_expect_success '__git refs - excluding full refs' '
+ 	cat >expected <<-EOF &&
+ 	^refs/heads/main
+ 	^refs/heads/matching-branch
++	^refs/remotes/other/HEAD
+ 	^refs/remotes/other/branch-in-other
+ 	^refs/remotes/other/main-in-other
+ 	^refs/tags/matching-tag
+@@ -975,6 +986,7 @@ test_expect_success '__git_refs - do not filter refs unless told so' '
+ 	main
+ 	matching-branch
+ 	matching/branch
++	other/HEAD
+ 	other/branch-in-other
+ 	other/main-in-other
+ 	other/matching/branch-in-other
+@@ -1095,6 +1107,7 @@ test_expect_success '__git_complete_refs - simple' '
+ 	HEAD Z
+ 	main Z
+ 	matching-branch Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	matching-tag Z
+@@ -1123,6 +1136,7 @@ test_expect_success '__git_complete_refs - matching' '
+ test_expect_success '__git_complete_refs - remote' '
+ 	sed -e "s/Z$//" >expected <<-EOF &&
+ 	HEAD Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main-in-other Z
+ 	EOF
+@@ -1139,9 +1153,11 @@ test_expect_success '__git_complete_refs - track' '
+ 	HEAD Z
+ 	main Z
+ 	matching-branch Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	matching-tag Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main-in-other Z
+ 	EOF
+@@ -1184,6 +1200,7 @@ test_expect_success '__git_complete_refs - suffix' '
+ 	HEAD.
+ 	main.
+ 	matching-branch.
++	other/HEAD.
+ 	other/branch-in-other.
+ 	other/main-in-other.
+ 	matching-tag.
+@@ -1199,6 +1216,7 @@ test_expect_success '__git_complete_refs - suffix' '
+ test_expect_success '__git_complete_fetch_refspecs - simple' '
+ 	sed -e "s/Z$//" >expected <<-EOF &&
+ 	HEAD:HEAD Z
++	HEAD:HEAD Z
+ 	branch-in-other:branch-in-other Z
+ 	main-in-other:main-in-other Z
+ 	EOF
+@@ -1225,6 +1243,7 @@ test_expect_success '__git_complete_fetch_refspecs - matching' '
+ test_expect_success '__git_complete_fetch_refspecs - prefix' '
+ 	sed -e "s/Z$//" >expected <<-EOF &&
+ 	+HEAD:HEAD Z
++	+HEAD:HEAD Z
+ 	+branch-in-other:branch-in-other Z
+ 	+main-in-other:main-in-other Z
+ 	EOF
+@@ -1289,6 +1308,7 @@ test_expect_success '__git_complete_worktree_paths with -C' '
+ 
+ test_expect_success 'git switch - with no options, complete local branches and unique remote branch names for DWIM logic' '
+ 	test_completion "git switch " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -1435,11 +1455,13 @@ test_expect_success 'git-bisect - existing view subcommand is recognized and ena
+ test_expect_success 'git checkout - completes refs and unique remote branches for DWIM' '
+ 	test_completion "git checkout " <<-\EOF
+ 	HEAD Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1461,6 +1483,7 @@ test_expect_success 'git switch - with GIT_COMPLETION_CHECKOUT_NO_GUESS=1, compl
+ 
+ test_expect_success 'git switch - --guess overrides GIT_COMPLETION_CHECKOUT_NO_GUESS=1, complete local branches and unique remote names for DWIM logic' '
+ 	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git switch --guess " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -1470,6 +1493,7 @@ test_expect_success 'git switch - --guess overrides GIT_COMPLETION_CHECKOUT_NO_G
+ 
+ test_expect_success 'git switch - a later --guess overrides previous --no-guess, complete local and remote unique branches for DWIM' '
+ 	test_completion "git switch --no-guess --guess " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -1490,6 +1514,7 @@ test_expect_success 'git checkout - with GIT_COMPLETION_NO_GUESS=1 only complete
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1498,11 +1523,13 @@ test_expect_success 'git checkout - with GIT_COMPLETION_NO_GUESS=1 only complete
+ test_expect_success 'git checkout - --guess overrides GIT_COMPLETION_NO_GUESS=1, complete refs and unique remote branches for DWIM' '
+ 	GIT_COMPLETION_CHECKOUT_NO_GUESS=1 test_completion "git checkout --guess " <<-\EOF
+ 	HEAD Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1514,6 +1541,7 @@ test_expect_success 'git checkout - with --no-guess, only completes refs' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1522,11 +1550,13 @@ test_expect_success 'git checkout - with --no-guess, only completes refs' '
+ test_expect_success 'git checkout - a later --guess overrides previous --no-guess, complete refs and unique remote branches for DWIM' '
+ 	test_completion "git checkout --no-guess --guess " <<-\EOF
+ 	HEAD Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1538,6 +1568,7 @@ test_expect_success 'git checkout - a later --no-guess overrides previous --gues
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1550,6 +1581,7 @@ test_expect_success 'git checkout - with checkout.guess = false, only completes
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1559,11 +1591,13 @@ test_expect_success 'git checkout - with checkout.guess = true, completes refs a
+ 	test_config checkout.guess true &&
+ 	test_completion "git checkout " <<-\EOF
+ 	HEAD Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1573,11 +1607,13 @@ test_expect_success 'git checkout - a later --guess overrides previous checkout.
+ 	test_config checkout.guess false &&
+ 	test_completion "git checkout --guess " <<-\EOF
+ 	HEAD Z
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1590,6 +1626,7 @@ test_expect_success 'git checkout - a later --no-guess overrides previous checko
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1601,6 +1638,7 @@ test_expect_success 'git switch - with --detach, complete all references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1612,6 +1650,7 @@ test_expect_success 'git checkout - with --detach, complete only references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1783,6 +1822,7 @@ test_expect_success 'git switch - with -d, complete all references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1794,6 +1834,7 @@ test_expect_success 'git checkout - with -d, complete only references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1801,10 +1842,12 @@ test_expect_success 'git checkout - with -d, complete only references' '
+ 
+ test_expect_success 'git switch - with --track, complete only remote branches' '
+ 	test_completion "git switch --track " <<-\EOF &&
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+ 	test_completion "git switch -t " <<-\EOF
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1812,10 +1855,12 @@ test_expect_success 'git switch - with --track, complete only remote branches' '
+ 
+ test_expect_success 'git checkout - with --track, complete only remote branches' '
+ 	test_completion "git checkout --track " <<-\EOF &&
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+ 	test_completion "git checkout -t " <<-\EOF
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1834,6 +1879,7 @@ test_expect_success 'git checkout - with --no-track, complete only local referen
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1845,6 +1891,7 @@ test_expect_success 'git switch - with -c, complete all references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1856,6 +1903,7 @@ test_expect_success 'git switch - with -C, complete all references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1867,6 +1915,7 @@ test_expect_success 'git switch - with -c and --track, complete all references'
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1878,6 +1927,7 @@ test_expect_success 'git switch - with -C and --track, complete all references'
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1889,6 +1939,7 @@ test_expect_success 'git switch - with -c and --no-track, complete all reference
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1900,6 +1951,7 @@ test_expect_success 'git switch - with -C and --no-track, complete all reference
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1911,6 +1963,7 @@ test_expect_success 'git checkout - with -b, complete all references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1922,6 +1975,7 @@ test_expect_success 'git checkout - with -B, complete all references' '
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1933,6 +1987,7 @@ test_expect_success 'git checkout - with -b and --track, complete all references
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1944,6 +1999,7 @@ test_expect_success 'git checkout - with -B and --track, complete all references
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1955,6 +2011,7 @@ test_expect_success 'git checkout - with -b and --no-track, complete all referen
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1966,6 +2023,7 @@ test_expect_success 'git checkout - with -B and --no-track, complete all referen
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
+@@ -1973,6 +2031,7 @@ test_expect_success 'git checkout - with -B and --no-track, complete all referen
+ 
+ test_expect_success 'git switch - for -c, complete local branches and unique remote branches' '
+ 	test_completion "git switch -c " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -1982,6 +2041,7 @@ test_expect_success 'git switch - for -c, complete local branches and unique rem
+ 
+ test_expect_success 'git switch - for -C, complete local branches and unique remote branches' '
+ 	test_completion "git switch -C " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -2019,6 +2079,7 @@ test_expect_success 'git switch - for -C with --no-track, complete local branche
+ 
+ test_expect_success 'git checkout - for -b, complete local branches and unique remote branches' '
+ 	test_completion "git checkout -b " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -2028,6 +2089,7 @@ test_expect_success 'git checkout - for -b, complete local branches and unique r
+ 
+ test_expect_success 'git checkout - for -B, complete local branches and unique remote branches' '
+ 	test_completion "git checkout -B " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -2065,6 +2127,7 @@ test_expect_success 'git checkout - for -B with --no-track, complete local branc
+ 
+ test_expect_success 'git switch - with --orphan completes local branch names and unique remote branch names' '
+ 	test_completion "git switch --orphan " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -2080,6 +2143,7 @@ test_expect_success 'git switch - --orphan with branch already provided complete
+ 
+ test_expect_success 'git checkout - with --orphan completes local branch names and unique remote branch names' '
+ 	test_completion "git checkout --orphan " <<-\EOF
++	HEAD Z
+ 	branch-in-other Z
+ 	main Z
+ 	main-in-other Z
+@@ -2093,6 +2157,7 @@ test_expect_success 'git checkout - --orphan with branch already provided comple
+ 	main Z
+ 	matching-branch Z
+ 	matching-tag Z
++	other/HEAD Z
+ 	other/branch-in-other Z
+ 	other/main-in-other Z
+ 	EOF
 -- 
-2.47.0.274.g962d0b743d.dirty
+2.47.0.296.gda1ecfef29.dirty
 
