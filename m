@@ -1,159 +1,221 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48461DFED
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 08:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270C941C71
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 08:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731918314; cv=none; b=cVyj9CTa9nsWwXSz06c4Im0B+pphvVfBVHS9fnMi7li3MVRNUBBU8uhmZqS3e37fhgRwjmOkj50K5DsDEMLCif3RZJb8jsdXgOW7Gm+Xb+fT2dzk0v8Zf5+Jq9Zj3JodfeADI2BbdGHtjy+q03c82XS6caSrecUoqbTksQ/tCJA=
+	t=1731918901; cv=none; b=uMJ+ZQ4feFPtS8tfmvadtacwsmr5x3ZlXXfe8dCNW041xdFdT6QheLdAwAFtWwZ73Dhwe47aTqsvFK7in1n3WW1EUHZ4oar6NLW2WfwcRkT7vIUuL9HMK/4XmMo1G1n6dtP1Ko9lGbynTcBBQW8o8NZrJ/AoWb0MN/05jN2Dqc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731918314; c=relaxed/simple;
-	bh=wb333WmBhTxTDQDowFGoEGWaKIj5Aw6TRWt2OCYdlME=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GqN60JWRFk0HIi1th5/B0Sfd+pivojEM7eFZK8DoJgtmWMS5HZoX+tftTEQgrrNtXkKk3UYZRQYXVQBUw7ZV1P+oyAoJd+eOTV9Wa1sj6/yKUy9tRmwb1zflSOplCFSe8t6FmV6szRh8EsQljPPibCa0pn7obzb5ZMfNSGiO4xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZYZcm8Jr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=deGI78G8; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1731918901; c=relaxed/simple;
+	bh=xy9ObnxPDAgmGHigS8FoFfvaqr4mdBzrKWLmChlLfLg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ROq2I39E36mluuVAt9wjcugThLJ0nH6f8rFD2JcKCVp6Gy8NeGoidyBkMSFEFn61X3fE4V6L9YJiozbjnb9jyIBr5DFmPhJYdCk6Sst5FfEPXXTY7p7raqvrrGmAk5NkjjofWp6TY/78YD+CiwP1zjCDLrWFmz1Geasbo8q08EA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e95DWzCv; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZYZcm8Jr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="deGI78G8"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9EAC2114008F;
-	Mon, 18 Nov 2024 03:25:10 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 18 Nov 2024 03:25:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731918310; x=1732004710; bh=TtcbOCNz7X
-	kEqWRzYKll8mvca5dcrVdH7Tu0x9sxvnQ=; b=ZYZcm8Jr1Oj0Xh1NpQhj2YFgas
-	h0uKHmSe8yXSmIdVtfJTrYGrfdmEzWjK6V9Pp3IbFvHlJIE+HhGtH2U9pwUfmf9r
-	8Wm2wvqnuNGZ/R8xD17PHf4TGqJk9vpQZCuPlMrgDtvGrFbdmshQ5czgLFnytQOQ
-	smN3pISp+bDR9Bgbp3BkGe6BPYFKyNY121+zei8gHOwiyBi9U8l4uvQMfO42tqvS
-	iJAtSxMa/f2tTrH2B6F9ppiBXzCW/X+jv5dtT2sXHdmdVlw0z6VsbseTD2PrTC3K
-	qvWtCOZF2Yzoxvgff2SL93hHUVP/hZC5+xF8oHB7WjiHCss6lcD9sl1x3bNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731918310; x=1732004710; bh=TtcbOCNz7XkEqWRzYKll8mvca5dcrVdH7Tu
-	0x9sxvnQ=; b=deGI78G8RZWHmyNeNIcnaPhTfYPIN9198NXRyajkDV8BBVWZmf5
-	OeNKAEraqMQI+plBC3GCSj8/YEZ3AcRMWs1JOzwhmwMCS/8w7tV4m4urI6+BocZb
-	9VGtiXhB1CJ86tHJRJqkzSer0rL2zobyEkfl13Cmyu/thdcoc19Z2EX78JLVXzhV
-	m2/OjsAaFIMiyGWlCE8YxEc9tQxkIeRdOSwHHIXZAPWMV54e+0lo5L8hAvn+DXMr
-	Mxkf/2APzHqMa6iuerWpHYDoZIa3X2pElp8EWj/gRaTd/yMDQHU5/u6JWOY268qE
-	uihJXTQl+zZbUbJxg3fKVq54dIsLKEvAnVw==
-X-ME-Sender: <xms:5fk6Z6Nepf7My_iCngWevmOGnU1dKubOxeYNTJ-XLobkiUHyRfyvCg>
-    <xme:5fk6Z4_Zqd_0k_Ue1xJsjSkFOzJT5SJDzOjmQCmWjHu_biuOcXBvt0Y9EAEuBdtdi
-    B_3QpW7a7BYElGRgQ>
-X-ME-Received: <xmr:5fk6ZxR0_F1_7OimgUn1dUjQM5wcCJ2lCWdMZoMFJx2KqWbDbCX7Y3Q097Kp5ZC3vsk4SwwXP4wBo-NIRjrXpnUGERDa0CCKtpXp3tD2YpMvRxc_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrvdelgdduudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepfh
-    gvrhguihhnrghnugihrdgsvghntggvsehtthhkrdgvlhhtvgdrhhhupdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepmh
-    gvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegsvghntggvsehfvghrughinhgrnhguhidrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguseguuhhnvghlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:5fk6Z6vQGnROhqyxKcYPqdWkyqkyjcjRleaZJnaPOLumkR158VtsXA>
-    <xmx:5fk6Zyc_zGpZTPu5dimpIrrD4EnLa87hK-eMEQhMS5y5rm4jT0jurQ>
-    <xmx:5fk6Z-2JjoQb60vQbxSoEivo4IGFwGBUcCx94kusKQDRXkRv0ODTDw>
-    <xmx:5fk6Z285tZ9BLivTj_tjxR6WZuYsawlQGgco_TWqmlj5tNbWzd9Mwg>
-    <xmx:5vk6Zy5yAXvCh_nqr9xaGz4saI42FodMbbamY_hLSDf2BNTvElzUXxOZ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 03:25:08 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6ba2165a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 18 Nov 2024 08:24:19 +0000 (UTC)
-Date: Mon, 18 Nov 2024 09:24:56 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: Bence Ferdinandy <ferdinandy.bence@ttk.elte.hu>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	phillip.wood@dunelm.org.uk,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v12 2/8] refs: atomically record overwritten ref in
- update_symref
-Message-ID: <Zzr50O7AkczbqIo7@pks.im>
-References: <20241022194710.3743691-1-bence@ferdinandy.com>
- <20241023153736.257733-1-bence@ferdinandy.com>
- <20241023153736.257733-3-bence@ferdinandy.com>
- <xmqqr07d11wt.fsf@gitster.g>
- <D5OUMKNX6UU5.23Y4V7NHKGUWX@ttk.elte.hu>
- <ZzrrMrhRxOuB6QKH@pks.im>
- <D5P5FWL8I3SY.DPYSUTU8GAYJ@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e95DWzCv"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6ee79e82361so9364977b3.1
+        for <git@vger.kernel.org>; Mon, 18 Nov 2024 00:34:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1731918899; x=1732523699; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5zmvggY/C7OVD0JBW9ltF9wgEN8lUe60k83QeNvx5/Y=;
+        b=e95DWzCvZs33RPRZ/EuMqGjCAw58i8XlXbMlOSdhyNVgdWsSp2YEODxlofokzBc5Tf
+         eDBgf2ImgwYGYEUjNoB8gNwPuGWwCL7JZYKVQT1Bm4aS6D+wUfWyXGamhMApE38SbdVf
+         oKvYXAGXslIGZCvfkMEjmUp0+JjoHdHojXz4HnQ1KyMJzaIWJMVdt2O/C0lUzZ9KQMgr
+         IbYVWTStXDEDKWV1fTe+EfUqgK2A26XEVxPCEyQxfokQPnWbQBzo9bWpDlyyyLazBhae
+         IB1ydQVfXPU+C1is88VRLkOIUaqWEG49SOEjYpD19p4h1XhqDA1w8xrIIXgOnXxYoqyU
+         MvoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1731918899; x=1732523699;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5zmvggY/C7OVD0JBW9ltF9wgEN8lUe60k83QeNvx5/Y=;
+        b=lwUAz39xTC8nWSOHvu0NuVjdZNPENz5QYP94/+37u1wVqeio0/WVML5gD9TLsu5HtT
+         wDWkiFP3pa2dz3GTI0KOUgmBntYI5EdKPe2WE4zjHQy7XJOWt4yVWrv0g0mxN4+lsHJQ
+         pl+bqoQjtixbLOdbH1W7zrj9lLIKJhe+Dcx0/iE800InJ6DP1gvLgd4hGj9/ml3Sjzqu
+         tmN69nqUte7S8rCjo9qOLnj3jqAv/PJrCY+SIPkvz71kROtMh+zdkGHp6kdyhSqZYaW/
+         x5chumlyclZz56cYJ28X5Nq2P5hzkRAuUXgMpGbe93nBPvKkeZCAcLE58omQE32+CTrm
+         eBnQ==
+X-Gm-Message-State: AOJu0Yye94a7XN/RcdHzv5YjOgR4m9bTO6cukBS5pX1XpPKLg1hrFJuP
+	X3eByFryKA5Rc+il9j/My1cu67UaPW6XXsGGmUfWVyjnlkwOiGm4M1O+eB1Nh7Tk11ZGq4L67eE
+	s4JdDsq4Q/oNPVsJm6d6iNgRr4TJWHwABhFfBMA==
+X-Google-Smtp-Source: AGHT+IGdaMLHGc/cDyRAXNo+npEyZQGejzz0NnXks+yCz6vvbS/F8l5ziU0vN65uMbXxibal6qsgPWlg3GCR9FBj6n8=
+X-Received: by 2002:a05:690c:4b93:b0:6ee:676b:4c65 with SMTP id
+ 00721157ae682-6ee676b5033mr77327977b3.19.1731918898931; Mon, 18 Nov 2024
+ 00:34:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D5P5FWL8I3SY.DPYSUTU8GAYJ@ferdinandy.com>
+References: <20241031094554.68916-1-kuforiji98@gmail.com> <20241102102801.26432-1-kuforiji98@gmail.com>
+In-Reply-To: <20241102102801.26432-1-kuforiji98@gmail.com>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Mon, 18 Nov 2024 09:34:45 +0100
+Message-ID: <CAGedMtdQ6qcDAPf2oiFgqUrsOD3xk-7LFN=TsG7gqGw0QotQKw@mail.gmail.com>
+Subject: Re: [PATCH v2] t9101: Refactor test_expect_success format
+To: git@vger.kernel.org
+Cc: ps@pks.im, phillip.wood@dunelm.org.uk, kristofferhaugsbakk@fastmail.com, 
+	me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 18, 2024 at 09:08:13AM +0100, Bence Ferdinandy wrote:
-> On Mon Nov 18, 2024 at 08:22, Patrick Steinhardt <ps@pks.im> wrote:
-> > This behaviour isn't documented anywhere, so I wouldn't declare it a bug
-> > in the reftable backend. But what is a bug is that the two backends
-> > behave differently, and that should be fixed indeed.
-> >
-> > I couldn't find any callsites of `refs_read_symbolic_ref()` where we
-> > rely on the current behaviour of either of the backends. We do have a
-> > check whether `refs_read_symbolic_ref()` returns negative in "refs.c" in
-> > `migrate_one_ref()`, but that one should be mostly fine given that we
-> > check for the type of the ref beforehand. "Mostly" though because it can
-> > happen that we race with another writer that happened to convert the ref
-> > we are about to migrate from a symbolic ref into a normal ref. Unlikely,
-> > but it can happen in theory.
-> >
-> > I think it's an easy mistake to make to check for a negative return
-> > code. So maybe we should adapt both backends to return -1 for generic
-> > failures and -2 in case the ref is a regular ref?
-> 
-> I've been wondering about this when writing other parts of the series and now
-> is a good a time as any to ask: I've already seen this pattern of returning
-> various negative integers as error codes, but never quite got the logic behind
-> it. Why not just return the same numbers but positive?
+On Sat, 2 Nov 2024 at 11:28, Seyi Kuforiji <kuforiji98@gmail.com> wrote:
+>
+> The current script uses an outdated formatting style for
+> test_expect_success blocks, where each argument is separated by a
+> backslash and newline. This style can lead to readability issues and
+> makes it harder to maintain the script.The modern style consolidates the
+> multi-line command arguments into a single quoted block, which improves
+> readability, maintainability, and aligns the code with current coding
+> standards.
+>
+> Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+> ---
+>  t/t9101-git-svn-props.sh | 48 ++++++++++++++++++++++------------------
+>  1 file changed, 26 insertions(+), 22 deletions(-)
+>
+> diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+> index b2ee626b9a..792f7896e4 100755
+> --- a/t/t9101-git-svn-props.sh
+> +++ b/t/t9101-git-svn-props.sh
+> @@ -73,12 +73,13 @@ test_expect_success 'initialize git svn' 'git svn init "$svnrepo"'
+>  test_expect_success 'fetch revisions from svn' 'git svn fetch'
+>
+>  name='test svn:keywords ignoring'
+> -test_expect_success "$name" \
+> -       'git checkout -b mybranch remotes/git-svn &&
+> +test_expect_success "$name" '
+> +       git checkout -b mybranch remotes/git-svn &&
+>         echo Hi again >>kw.c &&
+>         git commit -a -m "test keywords ignoring" &&
+>         git svn set-tree remotes/git-svn..mybranch &&
+> -       git pull . remotes/git-svn'
+> +       git pull . remotes/git-svn
+> +'
+>
+>  expect='/* $Id$ */'
+>  got="$(sed -ne 2p kw.c)"
+> @@ -94,10 +95,11 @@ test_expect_success "propset CR on crlf files" '
+>          )
+>  '
+>
+> -test_expect_success 'fetch and pull latest from svn and checkout a new wc' \
+> -       'git svn fetch &&
+> -        git pull . remotes/git-svn &&
+> -        svn_cmd co "$svnrepo" new_wc'
+> +test_expect_success 'fetch and pull latest from svn and checkout a new wc' '
+> +       git svn fetch &&
+> +       git pull . remotes/git-svn &&
+> +       svn_cmd co "$svnrepo" new_wc
+> +'
+>
+>  for i in crlf ne_crlf lf ne_lf cr ne_cr empty_cr empty_lf empty empty_crlf
+>  do
+> @@ -110,15 +112,17 @@ cd test_wc
+>         printf '$Id$\rHello\rWorld' >ne_cr
+>         a_cr=$(printf '$Id$\r\nHello\r\nWorld\r\n' | git hash-object --stdin)
+>         a_ne_cr=$(printf '$Id$\r\nHello\r\nWorld' | git hash-object --stdin)
+> -       test_expect_success 'Set CRLF on cr files' \
+> -       'svn_cmd propset svn:eol-style CRLF cr &&
+> -        svn_cmd propset svn:eol-style CRLF ne_cr &&
+> -        svn_cmd propset svn:keywords Id cr &&
+> -        svn_cmd propset svn:keywords Id ne_cr &&
+> -        svn_cmd commit -m "propset CRLF on cr files"'
+> +       test_expect_success 'Set CRLF on cr files' '
+> +               svn_cmd propset svn:eol-style CRLF cr &&
+> +               svn_cmd propset svn:eol-style CRLF ne_cr &&
+> +               svn_cmd propset svn:keywords Id cr &&
+> +               svn_cmd propset svn:keywords Id ne_cr &&
+> +               svn_cmd commit -m "propset CRLF on cr files"
+> +       '
+>  cd ..
+> -test_expect_success 'fetch and pull latest from svn' \
+> -       'git svn fetch && git pull . remotes/git-svn'
+> +test_expect_success 'fetch and pull latest from svn' '
+> +       git svn fetch && git pull . remotes/git-svn
+> +'
+>
+>  b_cr="$(git hash-object cr)"
+>  b_ne_cr="$(git hash-object ne_cr)"
+> @@ -141,7 +145,7 @@ cat >show-ignore.expect <<\EOF
+>  /deeply/nested/directory/no-such-file*
+>  EOF
+>
+> -test_expect_success 'test show-ignore' "
+> +test_expect_success 'test show-ignore' '
+>         (
+>                 cd test_wc &&
+>                 mkdir -p deeply/nested/directory &&
+> @@ -155,7 +159,7 @@ no-such-file*
+>         ) &&
+>         git svn show-ignore >show-ignore.got &&
+>         cmp show-ignore.expect show-ignore.got
+> -"
+> +'
+>
+>  cat >create-ignore.expect <<\EOF
+>  /no-such-file*
+> @@ -170,7 +174,7 @@ cat >create-ignore-index.expect <<EOF
+>  100644 $expectoid 0    deeply/nested/directory/.gitignore
+>  EOF
+>
+> -test_expect_success 'test create-ignore' "
+> +test_expect_success 'test create-ignore' '
+>         git svn fetch && git pull . remotes/git-svn &&
+>         git svn create-ignore &&
+>         cmp ./.gitignore create-ignore.expect &&
+> @@ -179,7 +183,7 @@ test_expect_success 'test create-ignore' "
+>         cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
+>         git ls-files -s >ls_files_result &&
+>         grep gitignore ls_files_result | cmp - create-ignore-index.expect
+> -       "
+> +'
+>
+>  cat >prop.expect <<\EOF
+>
+> @@ -207,7 +211,7 @@ test_expect_success 'test propget' '
+>         test_propget svn:ignore nested/ ../prop.expect &&
+>         test_propget svn:ignore ./nested ../prop.expect &&
+>         test_propget svn:ignore .././deeply/nested ../prop.expect
+> -       '
+> +'
+>
+>  cat >prop.expect <<\EOF
+>  Properties on '.':
+> @@ -225,12 +229,12 @@ Properties on 'nested/directory/.keep':
+>    svn:entry:uuid
+>  EOF
+>
+> -test_expect_success 'test proplist' "
+> +test_expect_success 'test proplist' '
+>         git svn proplist . >actual &&
+>         cmp prop.expect actual &&
+>
+>         git svn proplist nested/directory/.keep >actual &&
+>         cmp prop2.expect actual
+> -       "
+> +'
+>
+>  test_done
+> --
+> 2.47.0.86.g15030f9556
+>
 
-It's a matter of style, I guess. Many functions use the return value as
-both an indicator for error and as the actual returned value. Think e.g.
-function calls like open(3p), where a negative value indicates an error
-and everything else is an actual file descriptor. This carries over into
-our codebase for many functions, but we're not consistent.
+Hi Taylor,
 
-> Anyhow, the proposed solution sounds good and as far as I see how things are
-> done in the code. I guess if I want the series to land I should just fix that
-> as well, there are already a couple of not-entirely-related fixes in there :)
-> 
-> Two questions about that:
-> 
-> - what would be the ideal place to document this behaviour? In refs.c with
->   `refs_read_symbolic_ref` or with the `struct ref_storage_be` in
->   refs/refs-internal.h?
+I trust you're well.
 
-I'd document this in "refs.h", where the user-facing function is
-declared, and in "refs-internal.h", where the callback is defined.
+I didn't get any status update on the patch I updated the commit
+message, found here:
+https://public-inbox.org/git/20241102102801.26432-1-kuforiji98@gmail.com/
 
-> - should I look into adding specific tests for this? Since the rest of the
->   series will depend on this behaviour it will be implicit tested anyway, so
->   I don't particularly think it would be necessary, but I don't know what the
->   general approach is.
+Is it good to go?
 
-I had a look and couldn't find another way to test the behaviour because
-we use `refs_read_symbolic_ref()` sparingly, only. So I think it's okay
-to implicitly test this, only.
-
-Patrick
+Thanks
+Seyi
