@@ -1,116 +1,115 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255B6147C71
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 23:21:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A757B2E3EB
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 23:39:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731972065; cv=none; b=KcVmfw5MplWWnKCW0QDDc6l5RSv1C3oZys2g2A/1RjASVDZYE3lDDCB8EMWucYJSRZS1TNoKR2hMBPB0GTUUCaAD6oTJ1ZYxm3zZWREK0SxfMT0GaGA3Ozgi8NIknrXjzF26K5ws+ovg5vGoFy32isvG/4Alrg1DMl/0uLvzO/8=
+	t=1731973158; cv=none; b=oK7oEMc0hEQAw754MeI/cf5YJ8FtCJFwssdGrtXTUVsNUinLbepUqkhTZ5jMWRwY2LwixkZcuPwkeqOXRiLvgY1Adq0VbyKlgHRUsIf86RnaDbY80XY0dKEWA+69wUQqcReg309f13QpwYp5qF1OqqDHjB3rvb3f+bOzKmzahUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731972065; c=relaxed/simple;
-	bh=5doZ9YH+u3ZMn8kbQhwfvqTQcQwQ9Yq4RSUllW4/5QQ=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NOOAPeI8ZbFD4F+m6wfy1rP9qbbjkCwNZTd2bpyGlrKU+Gszvfon36TS+hULuq9/+rfoqkCdO7UJl4w6U83U2PTko4l8b5eOFOGyoSuCz0O3+LIdicelk31uMKw+PoaY2WUtYKzVftKvIQs4NAWx64EJuYj1wYYzp6JuiRwnb0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4AINKk2C154210
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 18 Nov 2024 23:20:46 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'A bughunter'" <A_bughunter@proton.me>, <git@vger.kernel.org>
-References: <4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlSI5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=@proton.me> <MBCJkxhVnx5AhlKkq15aTn5FYI6cG-wdqqwQ84mVH9zjf-YehSrRWPgd-UwdTMrYhS2Sgofbyn2bS7iMlANyyYf_Z6b6_e3FH0hRm5VYciU=@proton.me>
-In-Reply-To: <MBCJkxhVnx5AhlKkq15aTn5FYI6cG-wdqqwQ84mVH9zjf-YehSrRWPgd-UwdTMrYhS2Sgofbyn2bS7iMlANyyYf_Z6b6_e3FH0hRm5VYciU=@proton.me>
-Subject: RE: How do you undo an add
-Date: Mon, 18 Nov 2024 18:20:41 -0500
-Organization: Nexbridge Inc.
-Message-ID: <022f01db3a10$7fe28140$7fa783c0$@nexbridge.com>
+	s=arc-20240116; t=1731973158; c=relaxed/simple;
+	bh=EbGx1vBfQkqaUWR5g+ikKyxKDkNXKNM77M3g8nSNe2A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KCx1Vyfz2fb8tiUyWg+6iNqBmQUOW4viScqwsNbnZSDcpVhTsdWXZ+wKfOxER5D24r3cpLMMBw24LVoFpVgG8xLkCwKMX5SI6Ncxe20/vnF4HuNS1b+olKhAo55vSlaT1KBYu98w9zr9wlS4fWdPWOHYIcgLFGV3XmDFn7fUlMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A2Dt150z; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A2Dt150z"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 892AA25401C8;
+	Mon, 18 Nov 2024 18:39:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Mon, 18 Nov 2024 18:39:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1731973155; x=1732059555; bh=Vm2p8oAzzaehCPwxED+XNfidnQnILYJmjDX
+	H7+v1NAQ=; b=A2Dt150z6Gp0g9z1c3A81mhC4uK+2hf/9ZplBp6Hyzyb7k0u9Es
+	P0EX4ejrmU2IM+zztzEIzeHXFMmlBdrY6Oz2jLy4TBIOaCQBUNX+tkPYZaV+mj0n
+	cuOs3B5w40LONC9MU4Pmj2x6399woHFO1fEkTpUqP8/WYKtwseKS9qHhKSHWlWjO
+	gXjfTu7b2A/lOlkO1NO+Lkdwxqt6Dc5Ziu/LQrO7Yojc5iyu6fUeo7CBq18YcljJ
+	x4LKZD+7simW+pVDD516ttp8AMPIlZhgH2fq0YbB6nlrs8NIkYAaimm44K7kDx1+
+	heK7oKAaFQgQeLkvPr6S2Gy5KCv9B2+CQIQ==
+X-ME-Sender: <xms:ItA7Z0p4v95oWqHR9C5a-2Hp9APOt0T5bt0WbVOSEN-KMwPs9AsaKw>
+    <xme:ItA7Z6rPxjW1wsWweDukn8twb_q3oNDniijDQkw70QSiGExsWUbQF4asxYyUaadk2
+    8Tu-5cGdw2pX2gDjw>
+X-ME-Received: <xmr:ItA7Z5N_UVisuxYQpjiJ871Io2oq7W2ZpC8yvYLkxeS1Fjg2AUVqlekhJO4kZtEv1COhTJz0GhgqtvJA0tpr5F8KPKX_8NhKfHq0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdduvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    gvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsuhhnshhhihhn
+    vgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
+    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
+    ohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:ItA7Z77PuC3HX1sps4OcEgoqQ73SRynAM2FvNFL-3S88qnYuZsxf2g>
+    <xmx:ItA7Zz7swAW2FFPwfcBKdual5GfN2ov4rZkTxFTnMqgDDtBAagw3Zw>
+    <xmx:ItA7Z7jmctUQ7bEl3PA0xyiUTlxsabIFTwpVkwritSBi1zuyVPogzg>
+    <xmx:ItA7Z94dc9GyfFqd5E3H1HkMim6ucebShEKfd7-WeWzFdkaTD1SsJw>
+    <xmx:I9A7Z3gX8OHhohyR1SdxvVtInd36yFhXt7U0XJZ2OxfP4SSNLEPpX4bO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 Nov 2024 18:39:13 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  git@vger.kernel.org,  Eli
+ Schwartz <eschwartz@gentoo.org>,  Eric Sunshine <sunshine@sunshineco.com>,
+  Phillip Wood <phillip.wood123@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  David Aguilar <davvid@gmail.com>,  Jeff King <peff@peff.net>,  Christian
+ Couder <chriscool@tuxfamily.org>
+Subject: Re: [-SPAM-] [PATCH RFC v7 00/22] Modernize the build system
+In-Reply-To: <Zzs7gerRLH0WlM-j@pks.im> (Patrick Steinhardt's message of "Mon,
+	18 Nov 2024 14:05:05 +0100")
+References: <cover.1727881164.git.ps@pks.im>
+	<20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
+	<b9e0f631-b2a3-4c48-8745-a4b1e3f58ad0@ramsayjones.plus.com>
+	<ZzsJRFQ2KaJCiOyG@pks.im> <xmqqfrnok8s9.fsf@gitster.g>
+	<Zzs7gerRLH0WlM-j@pks.im>
+Date: Tue, 19 Nov 2024 08:39:12 +0900
+Message-ID: <xmqq7c90jen3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQIujZMfl62xzE/fsxvvZCpEhSyanwNPSAY4sfyKt8A=
+Content-Type: text/plain
 
-On November 18, 2024 5:10 PM, A bughunter wrote:
->BROAD OVERVIEW
->
->bugreport[A], question[B] and use-case[C]. These are all related but =
-separate
->threads for the purposes as labled. Please do not cross-post or =
-cross-quote. Focus
->on productivity and solving these. You are welcomed to view and =
-participate in all of
->these as I contribute more.
->
->use-case[C] - git question (short) rephrase with use-case added.
->
->ADD, ADD, ADD why cant they get that: ADD. ADD tracks files for commit. =
-It's
->already been commit : push failed. Failed pushes piled up. I need them =
-untracked.
->How do you undo an add ( many adds): simple question. Without deleting =
-any files,
->to repush 1 by 1.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Once you have pushed an added file, your only option is filter-branch to =
-prune out the
-invalid content.
-
-Prior to push, before commit, you can use reset HEAD.
-
-Following a commit, you can use reset --HARD to move the branch head =
-back to a
-Commit where the add did not happen.
-
-If I did not understand your situation, I apologize.
-
->I suspect the answer is: "you can't - git provides no means to do so" - =
-a defect, bug
->as we call it. The answer to this use-case question likely will confirm =
-my bugreport
->and I get the feeling this is why they will not answer the question =
-they do not want
->to accept my bugreport and have a bad spirit to argue. The excuses they =
-give for this
->will be that it is not typical: This can normally be solved by =
-repushing. However it is
->still a defect and in my use-case there is a slow or intermittent =
-connection and no
->sha-backups yet because this is the initial creation of a repo.
+> But for the second group I'm sceptical whether these really should be
+> configurable by the developer. Why would you care whether you use
+> `uintmax_t` provided by the system or by Git as a compat macro? I don't
+> see a strong reason to let the developer override this in a build system
+> that knows to auto-detect the availability of such features.
 >
->The above question is a use-case[C] seeking how to undo without =
-deleting files.
->There shouldn't be any need to know a use-case in order to answer a =
-technical
->question. I am open to discuss my use-case on this thread. The use-case =
-if of this
->repo github.com/freedom-foundation/kjbible
->
->My original bug report is that the user " may be cornered into delete =
-files"
->bugreport[A] Summary as of 20241117 brian does not believe it's a bug =
-and begins
->chattering to Peff about how to fix the bug "There are Git-level =
-keepalives during the
->similar compression operation".
->
->The full question[B] which is a child of the bugreport[A] is here. =
-Summary as of
->20241117 my question was mostly sidestepped and spammed whilst the =
-thread
->devolved into a political drama about code_of_conduct. I am not open to =
-discuss
->my use-case on this thread.
+> Now as said, there may be cases where it indeed is useful, but in
+> general I don't think it is.
+
+I think we are on the same page, then.  When you said "detect", my
+primarily thought was "uintmax_t and the presense of OpenSSL are
+both auto-detectable, but the latter is a choice---forcing folks to
+fight again to support the choice is unnice", while auto-detection
+of the former in my mind was a given (perhaps think of "make +
+autoconf" in an ideal world as a baseline for comparison).
+
+There may be cases where it may be handy to pretend that types and
+library functions your system offers do _not_ exist, for various
+purposes like test-building or performance tuning, but these
+purposes are of lessor importance than exclusion by policy, I would
+say.
+
 
 
