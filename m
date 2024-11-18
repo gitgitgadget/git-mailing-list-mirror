@@ -1,181 +1,171 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1951C1E505
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 19:02:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2211E5700
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 19:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731956538; cv=none; b=YSp/nYf6y2JpIurE5ZbF/D/rrWe1UJ/vXU4VR7tOIDbvY/QxgZjwtzNJHYPGcgwdRsxCPPENbTiS6ztV0f02/Ojxb27Tl1RNiGHWSg7c3obehAvQOHAosYNahcn36O3cu8XGIe/dGEV4axd6FMmEFL4xNCPflejEmE8hLE0sVE4=
+	t=1731957743; cv=none; b=XGRQ6/2pYIUSVd3NEOg2FYiOUQ1eRwR5uVshtvMtbat6vQdExoG1uzlihAPNBW38tst20u4dzQxRDu6caSmaF2sPpDFXww6fwBF5rIdby/4ov23f7pknWz83ADabO0FQmMY/TMaNO9siU1KPdGJbyWJR438pRkGuf65BavfkAPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731956538; c=relaxed/simple;
-	bh=n8POLU/OQREXFeEAjyabbn/U/Vi1PRuvPKrxi9XdQ/U=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=QaPDr2S9Rn1EJb3jGJcsGF9h/+R8xrJON2LiSeLOjwZ0CK7Hyfp/bq2GZt+kPTKgHtdd2v2sCN5F1ZhzLTp16jsdWaUHj30/JbzWPLNijzCflUUQ7QNH05qzfqF9MAwX1DOpUf5GfNHktc01taFkv4mHGyaSHnqytqdeb/lBlDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VDqxOGdH; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1731957743; c=relaxed/simple;
+	bh=IGuEYvtCuLU4MAmVO5xriyAVuyUau/L+Ze5wbuBLL+8=;
+	h=Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=t3emDhMlKqo22j5NBit3dp8/o4CXhfpl5pxtzI89+Ld6ec40L8dAdwVAIlIFMrutxjWJFZ/Vex+M3K9Aq/WsRiXIOcxAtYyt1TY0Bqe2wXuxsHu/rFpwW9Kj18DdGIbHZCtALT5E5eZ46OMmPdgjHyjDfiJP3e67xscTUYPcB/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HoJ4kL1B; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VDqxOGdH"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e330f65bcd9so5583586276.1
-        for <git@vger.kernel.org>; Mon, 18 Nov 2024 11:02:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HoJ4kL1B"
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6d403b1d050so1030606d6.1
+        for <git@vger.kernel.org>; Mon, 18 Nov 2024 11:22:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1731956536; x=1732561336; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gafxA9/MpVL42swZt2Kv+eAvKHDvCHJx8Mt/VfALvUs=;
-        b=VDqxOGdHFDK1o4nDWXvoJjkCRNh5ZjY0DhZkWXvcCgxrZgdY8vrGMPuP7rT0nsZsIU
-         JJjRnXEYtLBHhq7O9eDl31KJRYvRXnHCU15EiaBYj/TblEoqWzvSTX2iPe324yJUAQuv
-         oPq++idEKjWLJMv4kgcWrMFkMgRWsqgVXGFF7kqp0lhWdyBD0bkeUALr6idUzai280dm
-         eeudtD71K0xE8+uWWkUeCYFEiE37kYKKWo9fVvtiYYfmQdJePgMu7yrSNJajgjbHX4lD
-         hY1kP5V2StGuCUNk4/OHoheRUPuF1B8HWEra6Fm5AFX7kKmgY23W9OtH4UfkEvh1M3FA
-         Gsvg==
+        d=gmail.com; s=20230601; t=1731957740; x=1732562540; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f5cmujUrs0kHwbY1j6DgmIhxmWmWzv0+53hXqHfFGK4=;
+        b=HoJ4kL1BTO/9++XYOJGBCYf3TEH8fenBNgPHuBEtEo8WDjzSpAQOCsMwH82Z035efD
+         yhISKFOfFBCCOixuWGO0aJx/w/9R8hIp4wZwh/TODrk+sor6o6v0lo5eQ6Q6f6RnlIdW
+         wTbzIbjtOloDEgM22pqAHiHCaSC3gcdDs6+MxmNAFHIMri1DyN3UZALmCPwcOJVaL0K4
+         j9JI4jEi353Gjldj3Pez3hPpRI7lm37QDyUhrad4sKiVxGZ863MIthXruXXB+dn9qoox
+         o9CMvMC1ZuR98j3hYSVydogLsfpdmyLIc5uLqsJ9Sivs8NdgCyBy6PIUTNI0NY58h2pG
+         Ktxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731956536; x=1732561336;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gafxA9/MpVL42swZt2Kv+eAvKHDvCHJx8Mt/VfALvUs=;
-        b=QGn35b+kQ2v2TxmrzxZ5XxvV2JLC5TRyuCg5VaTiN2cCv9q+eoMffRka9sEN0m2VFh
-         K4uohj/vBZ1kuZlKv/KtUdnU5LCGc/z6mR87Bw4o95ItPyBrrr7/tmOgNLudVtjVm0JM
-         oryOsxdtB25Ye+7r/NhkCTf7ka13Bm1CDf3k7L9JwK6OBGCCoW4gXMUDksSDAPEOyUKd
-         M6FPGXQW2d1Zs6dFygJxBGvkdb3qGZSVko6yYNO0olqDm2b/DFXm0T2/cODM7JehPwG5
-         eZ9HvYCZLLFARPTkBMwjYwDmB0KcCndMtr6nP1FPgNVVCV1vo3Y6uqK4b2eH8Qqfe2TL
-         oq9Q==
-X-Gm-Message-State: AOJu0YwO7Y/ULcSV8X0O7+FAxfM58LXsUXJsXbqKqmLZMiQfbDruOcC6
-	Aad0euverUk/sZw4udG7IdT1FEAN4XHiJYM7jBa6/xJDqjdn22KiH5t8JnkKX5mCS2wA/fXdo2R
-	uZK/7nm1v66aoittiejkDeTlTTUhw43J6JnpRvRQ6O0HoAMMaS5UZqenyud5HW6YXYk/Q+mal4h
-	8/0oKPczUPXRl4MZ6Q160o40ihWxBfEepDgPMmL1rjWeS5h58sz8qmwr9t5PS8kVZmRg==
-X-Google-Smtp-Source: AGHT+IHbHjfaq1CvSDe+Y3Chc5Btn8JzwxMACrwRRH6psLr1bMyJj2L7Oxl4vGiVFvduB7mz3MdCPHqcV1dvZGhaODqc
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:f16a:183d:4e6a:6d27])
- (user=jonathantanmy job=sendgmr) by 2002:a25:7404:0:b0:e38:6c94:5916 with
- SMTP id 3f1490d57ef6-e38b786846bmr13110276.4.1731956535822; Mon, 18 Nov 2024
- 11:02:15 -0800 (PST)
-Date: Mon, 18 Nov 2024 11:02:06 -0800
-In-Reply-To: <20241116032352.GA1782794@coredump.intra.peff.net>
+        d=1e100.net; s=20230601; t=1731957740; x=1732562540;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=f5cmujUrs0kHwbY1j6DgmIhxmWmWzv0+53hXqHfFGK4=;
+        b=joVAjmC837zYm5QylB6278KMGeaczptMXI9macVDAMSoAALhwrfaV6/MsCJRf9doQf
+         8pr5eu/bsCseLLFTI1t5MMziiSdfe3Z6zaubN/EwXKPqNnl8iy20c8/u2fUSdldZ923B
+         EteTAmnnkejR+yqve05DKmsOT2ZkXuzWpnLc+7tH6e6a54/REtM860ZwfeNiwYeU7lZD
+         Hhm8VnAVJsA6tckZblTshQZyEu011rjeJP5R8u6IQsB1OPaofJtsP4xhQ89FjUL1aDmm
+         K4S+Hy59C6RzgsQN0u4S5VWLLNDerIuORVPrpBwwZ3jiKrZu7qE+oQ7w827sJsz7mJiN
+         JfSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWpWN2FIAhnKtwIkJDFmK7hHAAWA4TFgZLf4OwMwZcBfrXa6TSYfbuDQClcI7yHE2QqZcA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxV3l4BHHzEeRIX6Mp2p78krn0HCe1rBaM79Bzou1FbJDHqnI1C
+	WU2mhVfozzdwqG/cR/Aj4SrYOxJ5g26e8NK1v9KBP4uWKCodNu198cQEzA==
+X-Google-Smtp-Source: AGHT+IHN05p+ftRy9UHQuhoqQ7OQxq3kwP7KFEfjDZXQmS+5LCzK43T5VZCePPd4ezIyJDB4g/4rJQ==
+X-Received: by 2002:a05:6214:b62:b0:6d4:22d4:f5b6 with SMTP id 6a1803df08f44-6d422d4f83cmr73757546d6.10.1731957740417;
+        Mon, 18 Nov 2024 11:22:20 -0800 (PST)
+Received: from ?IPv6:2606:6d00:17:6fc4:882f:9015:71cf:9197? ([2606:6d00:17:6fc4:882f:9015:71cf:9197])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d40dd1fcdesm39296296d6.77.2024.11.18.11.22.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Nov 2024 11:22:20 -0800 (PST)
+Subject: Re: Possible bug in Git submodule update --inti
+To: =?UTF-8?Q?Bech_Christensen=2c_S=c3=b8ren?= <Soeren.Bech@bitzerdk.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+References: <DB9PR10MB709879A45AABEC017F3E89DF8A272@DB9PR10MB7098.EURPRD10.PROD.OUTLOOK.COM>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <8db6eba3-a151-3819-159b-921a6c3f3242@gmail.com>
+Date: Mon, 18 Nov 2024 14:22:18 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20241116032352.GA1782794@coredump.intra.peff.net>
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <20241118190210.772105-1-jonathantanmy@google.com>
-Subject: [PATCH] index-pack: teach --promisor to require --stdin
-From: Jonathan Tan <jonathantanmy@google.com>
-To: git@vger.kernel.org
-Cc: Jonathan Tan <jonathantanmy@google.com>, peff@peff.net, stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+In-Reply-To: <DB9PR10MB709879A45AABEC017F3E89DF8A272@DB9PR10MB7098.EURPRD10.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 
-Currently,
+Hi Søren,
 
- - Running "index-pack --promisor" outside a repo segfaults.
- - It may be confusing to a user that running "index-pack --promisor"
-   within a repo may make changes to the repo's object DB, especially
-   since the packs indexed by the index-pack invocation may not even be
-   related to the repo.
+Le 2024-11-18 à 03:14, Bech Christensen, Søren a écrit :
+> 
+> Hi
+> 
+> I am trying to replace a submodule of a repository with a rewritten version.
+> Somebody added a huge json file without enabling lfs, so I cannot move the submodule to GitHub without the rewrite.
+> 
+> The path of the submodule is: ./Submodules/Lodam.Standard, which I have no intensions of changing.
+> 
+> The url of the original submodule is: https://lodamrd.visualstudio.com/Features.Net/_git/Lodam.Standard
+> The url of the rewritten submodule is: https://lodamrd.visualstudio.com/Features.Net/_git/Uniware.Standard
+> 
+> 
+> I planned to do a:
+> git submodule deinit -f <path-to-submodule>
 
-As discussed in [1], teaching --promisor to require --stdin and forbid a
-packfile name solves both these problems. This combination of arguments
-requires a repo (since we are writing the resulting .pack and .idx to
-it) and it is clear that the files are related to the repo.
+Here you deinit the submodule, such that the "submodule Submodules/Lodam.Standard" section is 
+removed from the config file of the superproject: this submodule is not considered
+active anymore.
 
-Currently, Git uses "index-pack --promisor" only when fetching into
-a repo, so it could be argued that we should teach "index-pack" a new
-argument (say, "--fetching-mode") instead of tying --promisor to a
-generic argument like "--stdin". However, this --promisor feature could
-conceivably be used whenever we have a packfile that is known to come
-from the promisor remote (whether obtained through Git's fetch protocol
-or through other means) so it seems reasonable to use --stdin here -
-one could envision a user-made script obtaining a packfile and then
-running "index-pack --promisor --stdin", for example. In fact, it might
-be possible to relax the restriction further (say, by also allowing
---promisor when indexing a packfile that is in the object DB), but
-relaxing the restriction is backwards-compatible so we can revisit that
-later.
+> git submodule set-url -- <path-to-submodule> <new-url>
 
-One thing to watch out for is the possibility of a future Git feature
-that indexes a pack in the context of a repo, but does not necessarily
-write the resulting pack to it (and does not necessarily desire to
-make any changes to the object DB). One such feature would be fetch
-quarantine, which might need the repo context in order to detect
-hash collisions, but would also need to ensure that the object DB
-is undisturbed in case the fetch fails for whatever reason, even if
-the reason occurs only after the indexing is complete. It may not be
-obvious to the implementer of such a feature that "index-pack" could
-sometimes write packs other than the indexed pack to the object DB,
-but there are already other ways that "fetch" could write to the object
-DB (in particular, packfile URIs and bundle URIs), so hopefully the
-implementation of this future feature would already include a test that
-the object DB be undisturbed.
+Here you use 'set-url' to change the submodule URL. The man page states [1]:
+"Sets the URL of the specified submodule to <newurl>. Then, it will automatically 
+synchronize the submodule’s new remote URL configuration."
 
-This change requires the change to t5300 by 1f52cdfacb (index-pack:
-document and test the --promisor option, 2022-03-09) to be undone.
-(--promisor is already tested indirectly, so we don't need the explicit
-test here any more.)
+In your case, this modifies the 'url' config in the 
+"submodule Submodules/Lodam.Standard" section of your .gitmodules. 
+However it does not do anything else, since the submodule 
+was deinitialized above. This is mentioned in the doc for 
+'git submodule sync' [2]: 
+"It will only affect those submodules which already have a URL entry 
+in .git/config (that is the case when they are initialized or freshly added)."
 
-[1] https://lore.kernel.org/git/20241114005652.GC1140565@coredump.intra.peff.net/
+> git submodule update --init <path-to-submodule>
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This is on jt/repack-local-promisor.
+This re-initializes your submodule, which copies the new URL from .gitmodules
+to the 'url' config in the "submodule Submodules/Lodam.Standard"
+section of your '.git/config', as mentioned
+in the doc for 'git submodule init' [3]. Note that this is _not_ 
+the exact command that you ran according to the trace output below, which is:
 
-Looking into it further, I think that we also need to require no
-packfile name to be given (so that we are writing the file to the
-repository). Therefore, I've added that requirement both in the code and
-in the documentation.
+> D:\temp\Mjolnir [develop ≡ +0 ~1 -0 !]>  git submodule update --init --remote ./submodules/Lodam.Standard
 
-I've tried to summarize our conversation in the commit message - if you
-notice anything missing or incorrect, feel free to let me know.
----
- Documentation/git-index-pack.txt | 2 ++
- builtin/index-pack.c             | 4 ++++
- t/t5300-pack-object.sh           | 4 +---
- 3 files changed, 7 insertions(+), 3 deletions(-)
+Notably the '--remote' flag changes what happens next:
+- without --remote, Git tries to checkout the submodule commit recorded in the superproject
+- with --remote, Git tries to checkout the commit at the tip of the remote HEAD of the submodule [4]
 
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 4be09e58e7..ac96935d73 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -144,6 +144,8 @@ Also, if there are objects in the given pack that references non-promisor
- objects (in the repo), repacks those non-promisor objects into a promisor
- pack. This avoids a situation in which a repo has non-promisor objects that are
- accessible through promisor objects.
-++
-+Requires --stdin, and requires <pack-file> to not be specified.
- 
- NOTES
- -----
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 08b340552f..c46b6e4061 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1970,6 +1970,10 @@ int cmd_index_pack(int argc,
- 		usage(index_pack_usage);
- 	if (fix_thin_pack && !from_stdin)
- 		die(_("the option '%s' requires '%s'"), "--fix-thin", "--stdin");
-+	if (promisor_msg && !from_stdin)
-+		die(_("the option '%s' requires '%s'"), "--promisor", "--stdin");
-+	if (promisor_msg && pack_name)
-+		die(_("--promisor cannot be used with a pack name"));
- 	if (from_stdin && !startup_info->have_repository)
- 		die(_("--stdin requires a git repository"));
- 	if (from_stdin && hash_algo)
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index aff164ddf8..c53f355e48 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -332,10 +332,8 @@ test_expect_success 'build pack index for an existing pack' '
- 	git index-pack -o tmp.idx test-3.pack &&
- 	cmp tmp.idx test-1-${packname_1}.idx &&
- 
--	git index-pack --promisor=message test-3.pack &&
-+	git index-pack test-3.pack &&
- 	cmp test-3.idx test-1-${packname_1}.idx &&
--	echo message >expect &&
--	test_cmp expect test-3.promisor &&
- 
- 	cat test-2-${packname_2}.pack >test-3.pack &&
- 	git index-pack -o tmp.idx test-2-${packname_2}.pack &&
--- 
-2.47.0.338.g60cca15819-goog
+I'll discuss what happens with '--remote' since this is what you appear to be using.
 
+After writing the url to '.git/config' as noted above, Git checks if
+it needs to clone the submodule. In your case it does find a Git repository for the 
+submodule at .git/modules/Lodam.Standard, so it goes on to the next step.
+Next it fetches the submodule remote to get the latest submodule commits
+(since --remote was passed). We can see in the trace output that 'git fetch'
+is invoked. This will thus fetch the default remote in the submodule 
+(usually called "origin"). The URL used for this fetch is the value of
+'remote.origin.url', which _still_ points to https://lodamrd.visualstudio.com/Features.Net/_git/Lodam.Standard
+because none of the previous commands have updated it.
+
+> But actually the sources for the submodule is fetched from the original (same commit SHAs  as before), whereas if I do:
+> 
+> git submodule deinit -f <path-to-submodule>
+> git submodule set-url -- <path-to-submodule> <new-url>
+> git clone <new-url> <path-to-submodule>
+> 
+> I get the submodule from the new url with the rewritten commit SHA’s.
+
+If you manually do a 'git clone' you indeed to get the new objects from
+the new URL, but the Git repository is not put into .git/modules/Submodules/Lodam.Standard
+as is the case with 'git submodule'. Plus, you still have the old repository at 
+.git/modules/Submodules/Lodam.Standard, so it is not a good solution in my opinion.
+
+I think what you'd want to do is simply:
+
+git submodule set-url -- <path-to-submodule> <new-url> 
+git submodule update --init --remote
+
+This will fetch the new URL and checkout the tip commit of its HEAD branch.
+You will still have all the objects from the old URL locally though. If you want
+to avoid that, you should completely remove the Git repository of the submodule:
+
+git submodule set-url -- <path-to-submodule> <new-url> 
+git submodule deinit -f <path-to-submodule>
+rm -rf $(git rev-parse --git-dir)/modules/Submodules/Lodam.Standard
+git submodule update --init --remote
+
+Hope this helps,
+Philippe.
+
+
+[1] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-set-url--ltpathgtltnewurlgt
+[2] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-sync--recursive--ltpathgt82308203
+[3] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt-init--ltpathgt82308203
+[4] https://git-scm.com/docs/git-submodule#Documentation/git-submodule.txt---remote
