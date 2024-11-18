@@ -1,35 +1,35 @@
 Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC41A0B00
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 15:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E901B6CF1
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 15:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731944033; cv=none; b=ogzS6GJZxrcIekFIZLl+bYW3WliW0gi+pVLdfnhY3k0yZp2MhCGpfdmmEbP0RC1l315H2sD2lZN/s+FvfiEaTWIRSDdfccip5XZQ/tdX1wHePK7sp9X3+1fc9BSHt3ZS+JorakyiJkQni6ecoDJ2m0M4FvfIIuFH5VuxXs1CO8k=
+	t=1731944035; cv=none; b=Hc5ySA8M3w7oeE2bY9VrCBtFdkuXAYKDhcP4DtdCukX+Yo9TyEYmaq9jJsSJP9rnkadhlp4yz0PERoClcTvekToGdce+VGcQMUbZ5To8m39JcGjqRkDS13/S1Jd7jWVw5v1KaG+YPcyDh+3wbYPQ5FjThMQrhYLqBiS0nA6bgMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731944033; c=relaxed/simple;
-	bh=ipmhKXBp3jD9Wy9+SsbeZEJ/N0ufwSSJ35MDNwxRdRY=;
+	s=arc-20240116; t=1731944035; c=relaxed/simple;
+	bh=ndEtPEXCcHgVHzPnMsMp/YCudanAcKqzaS1geH7XZGA=;
 	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=SRTsJk9nzvl28PaLURBruXO8zUfIEFLR2I334AK8uqv6wWshWfmyf94bbsLb+FMgA6FKf/PUA38gvLvHR6EJPhsg8RI7rrN8MmK9EqoWvZl5V8roLLSF0PQNJ+EJ43OWqjJvvGIA4adCUrsjGKJr47O+WFZQoFJii3k1NNVI2Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=llSqhJRG; arc=none smtp.client-ip=192.29.178.124
+	 MIME-version; b=unGwVgPrxXKk1L92gOvBKq1weKR3mkgLkToseTmgjvn+3VilPcxAMoBWR7oXaC6ttugEa5MqVPxYt7qAFvTloqtMNaUhj7wic8FRuHy4rnxa6+XVFIROpCqJqN0IjtgDCeX3jchI8VubBKkOCunKVWVfhLAo7f8DZfHwk48OZto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=OGurj+NH; arc=none smtp.client-ip=192.29.178.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="llSqhJRG"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="OGurj+NH"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=aEgZivTNeYyss/tXH9MLRLuGAvBoQ+7YOrdIurX3tdg=;
- b=llSqhJRGCPvEdL0+dSkI9G5Kep2sOMepU1UOYempvHk0HLEEifP1/efsrgX8x4JzfXtUQszhyioa
-   kPoIii3ss8c45ReY99jCNcW/QU+x4oqD1hHZuOA+MJJg03LBZ4Y1j0Zp/lQ5eWKzrZghFOsOF9TW
-   Nsl0jgM6JV8CGJREYh1D1NLfCeXHKaf4gY4AQ8bCNMaSetA6WwxrTPF8ugppthIUu0fKtWYh1DeR
-   Sz4F5MXEgJcHjiUpsNTYmagFRtVkPU3GtMUBiNhwDXl+cJr6KeUibWaIqMKlOlKYVZQKX/xcDATL
-   3G8GCyHS5McInyINJuVZuMqxGz5SqFE9gD9lVw==
+ bh=BQ94gtHn8fkDdLCvcQilV0+2IZN9w0HAcYudTP5NCvA=;
+ b=OGurj+NHaohMzcQD40aDcE0UZAHPLtXoLyJSGaK86t0kJGj8X1LVLEjahXE9NBja0s03w5XAbEXJ
+   NmikfSzBLMZzQxSeVaoUo9B9QVe6hil1onoZxZs9KkLNWgYPv2rlD4DWyhjx1lM0yb38UAOzqlI9
+   gIWttvWI03jxMdNsxN4+VXTQWdmoQgFk77Hae6FfoHrVnGUmoGCzRoY56mLevuSVq9UZKyb3z1Mp
+   rELf/FGh05E9oiX63J7+ConWvECaLarPWT4sTijCzp7irabUosGAeVBP/m70oEtHsgImT+Cji3wq
+   ctyeglrzvKEfGIqY53qyO8T+z6ePJ5G0+EpLiA==
 Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
  2024))
- with ESMTPS id <0SN500N9ZKKD6H50@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Mon, 18 Nov 2024 15:33:49 +0000 (GMT)
+ with ESMTPS id <0SN500NA6KKE6H50@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 18 Nov 2024 15:33:50 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 From: Bence Ferdinandy <bence@ferdinandy.com>
 To: git@vger.kernel.org
@@ -38,10 +38,9 @@ Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
 	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
 	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH v13 3/9] refs: atomically record overwritten ref in
- update_symref
-Date: Mon, 18 Nov 2024 16:09:22 +0100
-Message-id: <20241118151755.756265-4-bence@ferdinandy.com>
+Subject: [PATCH v13 2/9] refs: standardize output of refs_read_symbolic_ref
+Date: Mon, 18 Nov 2024 16:09:21 +0100
+Message-id: <20241118151755.756265-3-bence@ferdinandy.com>
 In-reply-to: <20241118151755.756265-1-bence@ferdinandy.com>
 References: <20241023153736.257733-1-bence@ferdinandy.com>
  <20241118151755.756265-1-bence@ferdinandy.com>
@@ -53,125 +52,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: 8bit
 Reporting-Meta:
- AAFvTuQ4QnxnNFVnn7+iC2xfXYfLionyixwsJlGteyHBnL0/Z3kkHEL/JVBOjy1C
- YIE7yhfq6ogUbW6gQDklAhqB5i6nsjAkPr9rD13w+tPVxbknrqy8GbvRf+jcMW86
- J5KtVR9gwyn8IdKa7DUoxC1bhw+2ePjSI/CkIKZFu7gPPy4mEj4dpHU/VAUafMAM
- 0NVZDukL4PN36RXjVljkgCvOPe3z4w52LGQIrSLdEgBnZj821tlouqSUpDDfgBGb
- ilk5DVpLQkSwVHiw1lesw46lgkSa2mnK/wSWDAER/zc12McPnkZfJgwyaGLUOzvr
- Qm7Tz012czAdbGMXg/SpNleN9xEgu0ht2DyJEzE4r3gFipMKHyOFRLTFeIWgH0+C
- vBgAJxDvLcSJ6FzgzjfnBcvqhRBA9RHDdCnn6A4TitIeZMDkJKLzJSwhPV8SBlZl
- ATpdFGvywewWuHynupGmjrGlUYZIN0f8+F+tSmhIBwIgTaIcb0jM23ir
+ AAG4Oex3YRGiNXWfKTm/PSO3GSKpZyuOLR0uSheYu1h3XN7shxKTsD8ll2cqGSAH
+ br72+svqw7Qt9tiMBELBW1TIBoeicNDuxqIgIKLQkIYzoxLKYjkUZYZlYIj167Kx
+ 3uEtUg1MTu5nUrjDnHrM67mpJPq2vxxdDIhMW1N3PGw2VjuUrTxo8yKMdmQ+cfMM
+ WxFP722e8WaTvh2ltsiI+Bh2jLkasQBhBXQV5iXiYgVvqKyDrrYXpq0Ws0JUwfbc
+ 6FUCr0aKTZzbQQpRGNq2ZS6Y2BiStX9tCJXFjeSU1cs/pxyLI8HEy5QOv0f2/9m+
+ yAPlfD9+CGELFYg4lnBzwe6FJEvuhyUDGuvmyVxsVT13LqfOrHRw9C/nmu740ihc
+ P4MGXrlxqg/6gdXngqg3LQ3auOrPvSbc1k3eW1JKxHAEaQL9T/OzBncCxm9Gki2g
+ meIQe7V/3ytWzUMbfLpkWncdjsdguPYYk5Mj/+U6rn1BWFA437nptxXd
 
-When updating a symref with update_symref it's currently not possible to
-know for sure what was the previous value that was overwritten. Extend
-refs_update_symref under a new function name, to record the value after
-the ref has been locked if the caller of refs_update_symref_extended
-requests it via a new variable in the function call. Keep the original
-refs_update_symref function with the same signature, but now as
-a wrapper around refs_update_symref_extended.
+When the symbolic reference we want to read with refs_read_symbolic_ref
+is actually not a symbolic reference, the files and the reftable
+backends return different values (1 and -1 respectively). Standardize
+the returned values so that 0 is success, -1 is a generic error and -2
+is that the reference was actually non-symbolic.
 
 Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 ---
 
 Notes:
-    v4: new patch
-    
-    v5: - added before_target to reftables backend
-        - added an extra safety check for transaction's existence in refs.c
-    
-    v6: - no change
-    
-    v7: - remove the whole before_target concept from the backends and
-          handle checking it in refs.c instead (thanks Karthik)
-        - rename the before_target to referent which is how the same concept
-          is called in the backends
-        - change commit prefix to be more in line with project standards
-    
-    v8: no change
-    
-    v9: - instead of adding parameters to refs_update_symref, rename what
-          was in v8 as refs_update_symref_extended and make refs_update_symref
-          a wrapper for that. This significantly reduces the number of files
-          that need to be touched, and avoids adding a lot of dummy NULL-s
-          in unrelated places.
-    
-    v10: no change
-    
-    v11: no change
-    
-    v12: no change
-    
-    v13: if referent is a non-symbolic ref, record the hash in referent and
-        signal this with a return value of -1
+    v13: new patch
 
- refs.c | 24 ++++++++++++++++++++++--
- refs.h |  4 ++++
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ refs.h                  | 6 ++++++
+ refs/files-backend.c    | 7 +++----
+ refs/refs-internal.h    | 6 ++++++
+ refs/reftable-backend.c | 4 +++-
+ 4 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 5f729ed412..c4500a7582 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2115,6 +2115,13 @@ int peel_iterated_oid(struct repository *r, const struct object_id *base, struct
- 
- int refs_update_symref(struct ref_store *refs, const char *ref,
- 		       const char *target, const char *logmsg)
-+{
-+	return refs_update_symref_extended(refs, ref, target, logmsg, NULL);
-+}
-+
-+int refs_update_symref_extended(struct ref_store *refs, const char *ref,
-+		       const char *target, const char *logmsg,
-+		       struct strbuf *referent)
- {
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
-@@ -2125,10 +2132,24 @@ int refs_update_symref(struct ref_store *refs, const char *ref,
- 	    ref_transaction_update(transaction, ref, NULL, NULL,
- 				   target, NULL, REF_NO_DEREF,
- 				   logmsg, &err) ||
--	    ref_transaction_commit(transaction, &err)) {
-+	    ref_transaction_prepare(transaction, &err)) {
- 		ret = error("%s", err.buf);
-+		goto cleanup;
-+	}
-+	if (referent && refs_read_symbolic_ref(refs, ref, referent) == -2) {
-+		struct object_id oid;
-+		if (!refs_read_ref(refs, ref, &oid)) {
-+			strbuf_addstr(referent, oid_to_hex(&oid));
-+			ret = -1;
-+		} else {
-+			ret = 1;
-+		}
- 	}
- 
-+	if (ref_transaction_commit(transaction, &err))
-+		ret = error("%s", err.buf);
-+
-+cleanup:
- 	strbuf_release(&err);
- 	if (transaction)
- 		ref_transaction_free(transaction);
-@@ -2948,4 +2969,3 @@ int ref_update_expects_existing_old_ref(struct ref_update *update)
- 	return (update->flags & REF_HAVE_OLD) &&
- 		(!is_null_oid(&update->old_oid) || update->old_target);
- }
--
 diff --git a/refs.h b/refs.h
-index f8b714ca1d..92622e807d 100644
+index 108dfc93b3..f8b714ca1d 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -579,6 +579,10 @@ int refs_copy_existing_ref(struct ref_store *refs, const char *oldref,
- int refs_update_symref(struct ref_store *refs, const char *refname,
- 		       const char *target, const char *logmsg);
+@@ -83,6 +83,12 @@ int refs_read_ref_full(struct ref_store *refs, const char *refname,
  
-+int refs_update_symref_extended(struct ref_store *refs, const char *refname,
-+		       const char *target, const char *logmsg,
-+		       struct strbuf *referent);
+ int refs_read_ref(struct ref_store *refs, const char *refname, struct object_id *oid);
+ 
++/*
++ * Return 0 if the symbolic reference could be read without error.
++ * Return -1 for generic errors.
++ * Return -2 if the reference was actually non-symbolic.
++ */
 +
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
- 	UPDATE_REFS_DIE_ON_ERR,
+ int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refname,
+ 			   struct strbuf *referent);
+ 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 0824c0b8a9..81e650ec48 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -596,10 +596,9 @@ static int files_read_symbolic_ref(struct ref_store *ref_store, const char *refn
+ 	unsigned int type;
+ 
+ 	ret = read_ref_internal(ref_store, refname, &oid, referent, &type, &failure_errno, 1);
+-	if (ret)
+-		return ret;
+-
+-	return !(type & REF_ISSYMREF);
++	if (!ret && !(type & REF_ISSYMREF))
++		return -2;
++	return ret;
+ }
+ 
+ int parse_loose_ref_contents(const struct git_hash_algo *algop,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 2313c830d8..f0ef354bce 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -673,6 +673,12 @@ struct ref_storage_be {
+ 
+ 	ref_iterator_begin_fn *iterator_begin;
+ 	read_raw_ref_fn *read_raw_ref;
++
++	/*
++	 * Return 0 if the symbolic reference could be read without error.
++	 * Return -1 for generic errors.
++	 * Return -2 if the reference was actually non-symbolic.
++	 */
+ 	read_symbolic_ref_fn *read_symbolic_ref;
+ 
+ 	reflog_iterator_begin_fn *reflog_iterator_begin;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 38eb14d591..60cb83f23a 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -830,7 +830,9 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
+ 		return ret;
+ 
+ 	ret = reftable_stack_read_ref(stack, refname, &ref);
+-	if (ret == 0 && ref.value_type == REFTABLE_REF_SYMREF)
++	if (!ret && (ref.value_type != REFTABLE_REF_SYMREF))
++		ret = -2;
++	else if (!ret && (ref.value_type == REFTABLE_REF_SYMREF))
+ 		strbuf_addstr(referent, ref.value.symref);
+ 	else
+ 		ret = -1;
 -- 
 2.47.0.296.gda1ecfef29.dirty
 
