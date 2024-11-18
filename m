@@ -1,43 +1,43 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A757B2E3EB
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 23:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3A713DBBE
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 23:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731973158; cv=none; b=oK7oEMc0hEQAw754MeI/cf5YJ8FtCJFwssdGrtXTUVsNUinLbepUqkhTZ5jMWRwY2LwixkZcuPwkeqOXRiLvgY1Adq0VbyKlgHRUsIf86RnaDbY80XY0dKEWA+69wUQqcReg309f13QpwYp5qF1OqqDHjB3rvb3f+bOzKmzahUY=
+	t=1731973894; cv=none; b=rFI8jplLWN8MGnf19GzDDlJ3TUiIKVsXAJSk9v+XjDf5o3/99lk5hDDNrFQbO/S3QIUwKZAsjiappuqBwgqQONA+SaStjW2bnnasLorQOhd3cqFUt258nPrkAWbZDSVeWHYj3ZShPLi0Ygvgg6WqzI86Qutb+peADzFfbgsHPDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731973158; c=relaxed/simple;
-	bh=EbGx1vBfQkqaUWR5g+ikKyxKDkNXKNM77M3g8nSNe2A=;
+	s=arc-20240116; t=1731973894; c=relaxed/simple;
+	bh=Cy6MeTvqWtaFsnioya/ynQ0tlM6NybBJhYg3w42f+Kk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KCx1Vyfz2fb8tiUyWg+6iNqBmQUOW4viScqwsNbnZSDcpVhTsdWXZ+wKfOxER5D24r3cpLMMBw24LVoFpVgG8xLkCwKMX5SI6Ncxe20/vnF4HuNS1b+olKhAo55vSlaT1KBYu98w9zr9wlS4fWdPWOHYIcgLFGV3XmDFn7fUlMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A2Dt150z; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=kZj+CY4Ak+L+ZfMHrSmImQUqm095dWHfm3+CY5YHh4wHpB+6X/5whSZhYqYQf2HFBGcs4fMnfkqgq1zXPxCVsJTBLNySA7DQ6X/0+TqjOneaAbG3N81Cu9jycD3kA5p7XuF4LjvSdfL5MieDXhlFi8MB8rOM/rAS7aIqn+NAETk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=akfW1Cam; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A2Dt150z"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 892AA25401C8;
-	Mon, 18 Nov 2024 18:39:15 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="akfW1Cam"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0BCF3114013C;
+	Mon, 18 Nov 2024 18:51:31 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Mon, 18 Nov 2024 18:39:15 -0500
+  by phl-compute-02.internal (MEProxy); Mon, 18 Nov 2024 18:51:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731973155; x=1732059555; bh=Vm2p8oAzzaehCPwxED+XNfidnQnILYJmjDX
-	H7+v1NAQ=; b=A2Dt150z6Gp0g9z1c3A81mhC4uK+2hf/9ZplBp6Hyzyb7k0u9Es
-	P0EX4ejrmU2IM+zztzEIzeHXFMmlBdrY6Oz2jLy4TBIOaCQBUNX+tkPYZaV+mj0n
-	cuOs3B5w40LONC9MU4Pmj2x6399woHFO1fEkTpUqP8/WYKtwseKS9qHhKSHWlWjO
-	gXjfTu7b2A/lOlkO1NO+Lkdwxqt6Dc5Ziu/LQrO7Yojc5iyu6fUeo7CBq18YcljJ
-	x4LKZD+7simW+pVDD516ttp8AMPIlZhgH2fq0YbB6nlrs8NIkYAaimm44K7kDx1+
-	heK7oKAaFQgQeLkvPr6S2Gy5KCv9B2+CQIQ==
-X-ME-Sender: <xms:ItA7Z0p4v95oWqHR9C5a-2Hp9APOt0T5bt0WbVOSEN-KMwPs9AsaKw>
-    <xme:ItA7Z6rPxjW1wsWweDukn8twb_q3oNDniijDQkw70QSiGExsWUbQF4asxYyUaadk2
-    8Tu-5cGdw2pX2gDjw>
-X-ME-Received: <xmr:ItA7Z5N_UVisuxYQpjiJ871Io2oq7W2ZpC8yvYLkxeS1Fjg2AUVqlekhJO4kZtEv1COhTJz0GhgqtvJA0tpr5F8KPKX_8NhKfHq0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdduvdcutefuodetggdotefrodftvf
+	1731973890; x=1732060290; bh=13IzTRCH+/GOgp1JbnEC5nQovn2BJMKFa8O
+	emM6qXP4=; b=akfW1Cam0ky3WsrpR+ETowZ4Vn2eTtliSJRtKUROjGffQJb43sI
+	4rm5iWMbuhQsc1zCn/GyJSPczyDpKIbnFiXRX/qozhyJMU7dl9mDKMYADFJuFSHX
+	QfD15x2U91TY5b6M4OHqOitknqTnMMBu0IL/pa+Y4LrXV3dU9xsnNnGRm732RkGB
+	p5Z20rJjl2B/KpY0LSdZRpqb6CYA8YZ//PmzPQ55JPRF5kAE2j9VEGiJ3rvtjoDA
+	JY8qvonMcAenSWRUlaom9oziz0SZ0CNHPeUWX5zgAimZUU1LdfUqgL0fvFIKZHAI
+	qkyZX8ycxLjQ7X6aIaFH6BtPtSQC8zl94ew==
+X-ME-Sender: <xms:AtM7Z0OVIIg5g5sIQ0TjRhe_oj-gO5k6kMK2Iwl-GeJU_11mmpUf2w>
+    <xme:AtM7Z6_bszdgwTx3EIkGXOKtegsAWTuNwVcZK1Mg4yg2UB7M5KJTlsgRaM5fMK22C
+    stsm2Q6IWrc-3N8iQ>
+X-ME-Received: <xmr:AtM7Z7QbqI3maJNGYdPG3Aj_NWc_nqvjO0FqL32Ag4mW-j6-7LnYwAf2jqIXIUhOwX39cd2ru_3bCuc16SgXuLdpk8xbRnboVrTE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdduhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,39 +45,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdduvdcutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    gvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehsuhhnshhhihhn
-    vgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
-    guuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgt
-    ohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:ItA7Z77PuC3HX1sps4OcEgoqQ73SRynAM2FvNFL-3S88qnYuZsxf2g>
-    <xmx:ItA7Zz7swAW2FFPwfcBKdual5GfN2ov4rZkTxFTnMqgDDtBAagw3Zw>
-    <xmx:ItA7Z7jmctUQ7bEl3PA0xyiUTlxsabIFTwpVkwritSBi1zuyVPogzg>
-    <xmx:ItA7Z94dc9GyfFqd5E3H1HkMim6ucebShEKfd7-WeWzFdkaTD1SsJw>
-    <xmx:I9A7Z3gX8OHhohyR1SdxvVtInd36yFhXt7U0XJZ2OxfP4SSNLEPpX4bO>
+    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AtM7Z8vvSkBBN9N8Aa8B15jWk9L0htUoHDd_WRF-AMzIHAXTKipYTA>
+    <xmx:AtM7Z8c_wAi261Q6VMb37ML3JBnS6wN8KKnW49e9QtyJ5TQOadXv6g>
+    <xmx:AtM7Zw2OglHD_wg3taB6P0A7Aw7pyt_fneRsDhAByqCkX4wdyDSicQ>
+    <xmx:AtM7Zw-7z6x8Hfr5aZ7XOgBHqexbVGE4cOjgpXhddPVcsW4rTXbD-Q>
+    <xmx:AtM7Z07IlxjAPVrSwOaVWdUlFHqG3zpumA3RcnoAjxkF00faz_E9mrWO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 18:39:13 -0500 (EST)
+ 18 Nov 2024 18:51:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  git@vger.kernel.org,  Eli
- Schwartz <eschwartz@gentoo.org>,  Eric Sunshine <sunshine@sunshineco.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
-  David Aguilar <davvid@gmail.com>,  Jeff King <peff@peff.net>,  Christian
- Couder <chriscool@tuxfamily.org>
-Subject: Re: [-SPAM-] [PATCH RFC v7 00/22] Modernize the build system
-In-Reply-To: <Zzs7gerRLH0WlM-j@pks.im> (Patrick Steinhardt's message of "Mon,
-	18 Nov 2024 14:05:05 +0100")
-References: <cover.1727881164.git.ps@pks.im>
-	<20241115-pks-meson-v7-0-47ec19b780b2@pks.im>
-	<b9e0f631-b2a3-4c48-8745-a4b1e3f58ad0@ramsayjones.plus.com>
-	<ZzsJRFQ2KaJCiOyG@pks.im> <xmqqfrnok8s9.fsf@gitster.g>
-	<Zzs7gerRLH0WlM-j@pks.im>
-Date: Tue, 19 Nov 2024 08:39:12 +0900
-Message-ID: <xmqq7c90jen3.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
+ allocated on MacOS with git 2.47.0
+In-Reply-To: <Zzs8JJO_HCLrEBM0@pks.im> (Patrick Steinhardt's message of "Mon,
+	18 Nov 2024 14:07:48 +0100")
+References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
+	<4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
+	<xmqq34js1kd2.fsf@gitster.g> <Zzr4cgk_5MJNcHm1@pks.im>
+	<xmqqjzd0k92c.fsf@gitster.g> <Zzs8JJO_HCLrEBM0@pks.im>
+Date: Tue, 19 Nov 2024 08:51:29 +0900
+Message-ID: <xmqqy11ghzi6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,27 +80,35 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> But for the second group I'm sceptical whether these really should be
-> configurable by the developer. Why would you care whether you use
-> `uintmax_t` provided by the system or by Git as a compat macro? I don't
-> see a strong reason to let the developer override this in a build system
-> that knows to auto-detect the availability of such features.
+> On Mon, Nov 18, 2024 at 09:42:03PM +0900, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> >     ps/upgrade-clar
+>> >     wm/shortlog-hash
+>> 
+>> Unfortuately, these were both based not on 'maint' but on 'master',
+>> and cannot ever be merged down to 'maint'.  The last topic may
+>> deserve to be cherry-picked to 'maint' when the time comes.
 >
-> Now as said, there may be cases where it indeed is useful, but in
-> general I don't think it is.
+> We got several reports about build failures with clar on esoteric
+> platforms, and ps/upgrade-clar fixes those. Distro maintainers can of
+> course cherry-pick those patches, but I think it would make sense to
+> pull them into a maintenance release.
+>
+> I am happy to  provide a backport for ps/upgrade-clar if you agree with
+> me.
 
-I think we are on the same page, then.  When you said "detect", my
-primarily thought was "uintmax_t and the presense of OpenSSL are
-both auto-detectable, but the latter is a choice---forcing folks to
-fight again to support the choice is unnice", while auto-detection
-of the former in my mind was a given (perhaps think of "make +
-autoconf" in an ideal world as a baseline for comparison).
+I am primarily following the wish left by the interim maintainer.
+If a fix was based on 'master', it was deemed not critical to be
+downmerged to 'maint'.  Other fixes may have been forked from
+'maint'.  Cherry-picking is a declaration that the initial choice
+was a grave mistake, and I'd rather avoid that for a small thing
+that are not critical to the end-users and only affects developers.
 
-There may be cases where it may be handy to pretend that types and
-library functions your system offers do _not_ exist, for various
-purposes like test-building or performance tuning, but these
-purposes are of lessor importance than exclusion by policy, I would
-say.
+In addition, for those building themselves, I'd prefer to nudge them
+to be on the latest release, and not backporting developer features
+at fringe like testing is probably a sensible way to do so.
 
+Cherry-picking I can handle myself if it is necessaary.  Accepting a
+new patch from you would cost me more time than that ;-).
 
-
+Thanks.
