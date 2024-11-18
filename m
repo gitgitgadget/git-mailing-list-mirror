@@ -1,128 +1,181 @@
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64D71B6CEE
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 18:49:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1951C1E505
+	for <git@vger.kernel.org>; Mon, 18 Nov 2024 19:02:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731955764; cv=none; b=UiLIDGRBWA6b/mqAgTE8IMr+IynyG+SLHGq000xcDIBlq4kopxuecxQnOWMh8U2aG+Z4XYfoRV0MzcUxTl0K2T4LUzH9U3Is4g/5WKGu1Mc6HQ7vUMV8YLsdpOM72PZ7WOK2nYynga13dfe7OnIa4Lnb0viO7jG6UmFXfidAwLg=
+	t=1731956538; cv=none; b=YSp/nYf6y2JpIurE5ZbF/D/rrWe1UJ/vXU4VR7tOIDbvY/QxgZjwtzNJHYPGcgwdRsxCPPENbTiS6ztV0f02/Ojxb27Tl1RNiGHWSg7c3obehAvQOHAosYNahcn36O3cu8XGIe/dGEV4axd6FMmEFL4xNCPflejEmE8hLE0sVE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731955764; c=relaxed/simple;
-	bh=uAefBDH5EDHr0ek0o2r9QXHeAq1oNTdETlxIQh1t1IA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PSYVa5JHX+CWdBT4LTfHmj90cIc7Tbsw4KOAqbDjI48/12dx0tkZR9X/PpuQ2eo+EqnBCR3DHgB1XgdmJE8NH0uU1W2EaTgtXq7uFWzzj8uE237NvMW+S0xIDo2EFMpZ1oZvoGJatZUh3vQowBngusSbYEIT0e6S78Cs0/5dcWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SChA5OvW; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731956538; c=relaxed/simple;
+	bh=n8POLU/OQREXFeEAjyabbn/U/Vi1PRuvPKrxi9XdQ/U=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=QaPDr2S9Rn1EJb3jGJcsGF9h/+R8xrJON2LiSeLOjwZ0CK7Hyfp/bq2GZt+kPTKgHtdd2v2sCN5F1ZhzLTp16jsdWaUHj30/JbzWPLNijzCflUUQ7QNH05qzfqF9MAwX1DOpUf5GfNHktc01taFkv4mHGyaSHnqytqdeb/lBlDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=VDqxOGdH; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SChA5OvW"
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3e7b704b7e1so2283656b6e.0
-        for <git@vger.kernel.org>; Mon, 18 Nov 2024 10:49:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VDqxOGdH"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e330f65bcd9so5583586276.1
+        for <git@vger.kernel.org>; Mon, 18 Nov 2024 11:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731955762; x=1732560562; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WgRM3++9XsjK5loKB6reLZ4Tg71I4u2P2RqrTIJ6e38=;
-        b=SChA5OvWEqpmS0gAGUCJxX4+JjxENocUldWBB65E0U2oWvKGGByr7Bm8XjbNwD9XSD
-         /6dg0ES4srMqa4pYPuUuDScE5wZsSI33FEtwZ/RwAvV4afylgRN6ABE0vNTk55NruSsy
-         Axbl9p9TnMvAuOWs5oZekd8ohQmUBGdVPs/ifqhJUXth5tmiPFEGs/S/2lpaKeHDhNJ5
-         Y4Pen6mAn08usiWja7TLWTFCiDI9URNn2uYbh+zu3Fdzl8ws5BcdyaOChNpHvwOvO1Dt
-         SGbDVGmgdZDPhddwMow1qmbOrRBHm8aVsbHVAgKSZm6t0vXtOeBU+rC94Z2e6AFFc9SZ
-         XTLg==
+        d=google.com; s=20230601; t=1731956536; x=1732561336; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gafxA9/MpVL42swZt2Kv+eAvKHDvCHJx8Mt/VfALvUs=;
+        b=VDqxOGdHFDK1o4nDWXvoJjkCRNh5ZjY0DhZkWXvcCgxrZgdY8vrGMPuP7rT0nsZsIU
+         JJjRnXEYtLBHhq7O9eDl31KJRYvRXnHCU15EiaBYj/TblEoqWzvSTX2iPe324yJUAQuv
+         oPq++idEKjWLJMv4kgcWrMFkMgRWsqgVXGFF7kqp0lhWdyBD0bkeUALr6idUzai280dm
+         eeudtD71K0xE8+uWWkUeCYFEiE37kYKKWo9fVvtiYYfmQdJePgMu7yrSNJajgjbHX4lD
+         hY1kP5V2StGuCUNk4/OHoheRUPuF1B8HWEra6Fm5AFX7kKmgY23W9OtH4UfkEvh1M3FA
+         Gsvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731955762; x=1732560562;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WgRM3++9XsjK5loKB6reLZ4Tg71I4u2P2RqrTIJ6e38=;
-        b=jvmHf5S0EXHJnIVEltUg9H1iHsEdKrO+vFHRU429KwVfASCrqe1kzlJo7TvSy07Jly
-         cBlvjsVzx8zeTXa3Tu/myvFTcyEIJskS50uchwHRmvZsJAMP7snNT439EXN1GPxEpdre
-         9pRmzbri7dGrzJR6OIEUkgKkEUtHoLor3OVa0ykHEBuJdhylHwmxsYLrLU04SM1Or0i8
-         QRNCFHt3SoWiJtddxX6/0kEqWSQeoTwzD0pSe9Q6aWSYs96hbwh+T5xIk0SwdlT/ldQE
-         2tFvHbXlUSFAu0zVbhvZ6SoQVP0mk2ey5OmZYlep5sRosLSuC1Ckt91lgSpvMmZTDUhP
-         UX7w==
-X-Gm-Message-State: AOJu0YwOodAD23roH3FNZFKYpWlNkI6g1Seh3FlEUlr1TEIOoh6kUCMx
-	tUWLeB5TByfmlWRHQOi04pCMmfip2QxwXrARC9Kumh7PIcT9Qtt2
-X-Google-Smtp-Source: AGHT+IHUyHBbid9/3hhGvz3iOke4HOB3LgY+IY2j0+YzXw7ai7GHW9wtZv7Ih5luSZOyfxX8t+YOFg==
-X-Received: by 2002:a05:6808:229f:b0:3e6:5ef:31ff with SMTP id 5614622812f47-3e7e1046b87mr254350b6e.13.1731955761887;
-        Mon, 18 Nov 2024 10:49:21 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3e7bcd92e51sm3122117b6e.45.2024.11.18.10.49.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2024 10:49:21 -0800 (PST)
-Date: Mon, 18 Nov 2024 12:47:32 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] cmake: use SH_EXE to execute clar scripts
-Message-ID: <j5dohg2u5vguiffj3dkqimach725ca2yhyzu4cookd6gvjoav2@qizyg7mazhyz>
-References: <20241115-pks-clar-build-improvements-v3-0-29672bf65ec6@pks.im>
- <20241115-pks-clar-build-improvements-v3-2-29672bf65ec6@pks.im>
+        d=1e100.net; s=20230601; t=1731956536; x=1732561336;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gafxA9/MpVL42swZt2Kv+eAvKHDvCHJx8Mt/VfALvUs=;
+        b=QGn35b+kQ2v2TxmrzxZ5XxvV2JLC5TRyuCg5VaTiN2cCv9q+eoMffRka9sEN0m2VFh
+         K4uohj/vBZ1kuZlKv/KtUdnU5LCGc/z6mR87Bw4o95ItPyBrrr7/tmOgNLudVtjVm0JM
+         oryOsxdtB25Ye+7r/NhkCTf7ka13Bm1CDf3k7L9JwK6OBGCCoW4gXMUDksSDAPEOyUKd
+         M6FPGXQW2d1Zs6dFygJxBGvkdb3qGZSVko6yYNO0olqDm2b/DFXm0T2/cODM7JehPwG5
+         eZ9HvYCZLLFARPTkBMwjYwDmB0KcCndMtr6nP1FPgNVVCV1vo3Y6uqK4b2eH8Qqfe2TL
+         oq9Q==
+X-Gm-Message-State: AOJu0YwO7Y/ULcSV8X0O7+FAxfM58LXsUXJsXbqKqmLZMiQfbDruOcC6
+	Aad0euverUk/sZw4udG7IdT1FEAN4XHiJYM7jBa6/xJDqjdn22KiH5t8JnkKX5mCS2wA/fXdo2R
+	uZK/7nm1v66aoittiejkDeTlTTUhw43J6JnpRvRQ6O0HoAMMaS5UZqenyud5HW6YXYk/Q+mal4h
+	8/0oKPczUPXRl4MZ6Q160o40ihWxBfEepDgPMmL1rjWeS5h58sz8qmwr9t5PS8kVZmRg==
+X-Google-Smtp-Source: AGHT+IHbHjfaq1CvSDe+Y3Chc5Btn8JzwxMACrwRRH6psLr1bMyJj2L7Oxl4vGiVFvduB7mz3MdCPHqcV1dvZGhaODqc
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:f16a:183d:4e6a:6d27])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:7404:0:b0:e38:6c94:5916 with
+ SMTP id 3f1490d57ef6-e38b786846bmr13110276.4.1731956535822; Mon, 18 Nov 2024
+ 11:02:15 -0800 (PST)
+Date: Mon, 18 Nov 2024 11:02:06 -0800
+In-Reply-To: <20241116032352.GA1782794@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241115-pks-clar-build-improvements-v3-2-29672bf65ec6@pks.im>
+Mime-Version: 1.0
+References: <20241116032352.GA1782794@coredump.intra.peff.net>
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241118190210.772105-1-jonathantanmy@google.com>
+Subject: [PATCH] index-pack: teach --promisor to require --stdin
+From: Jonathan Tan <jonathantanmy@google.com>
+To: git@vger.kernel.org
+Cc: Jonathan Tan <jonathantanmy@google.com>, peff@peff.net, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 24/11/15 08:32AM, Patrick Steinhardt wrote:
-> In 30bf9f0aaa (cmake: set up proper dependencies for generated clar
-> headers, 2024-10-21), we have deduplicated the logic to generate our
-> clar headers by reusing the same scripts that our Makefile does. Despite
-> the deduplication, this refactoring also made us rebuild the headers in
-> case the source files change, which didn't happen previously.
-> 
-> The commit also introduced an issue though: we execute the scripts
-> directly, so when the host does not have "/bin/sh" available they will
-> fail. This is for example the case on Windows when importing the CMake
-> project into Microsoft Visual Studio.
-> 
-> Address the issue by invoking the scripts with `SH_EXE`, which contains
-> the discovered path of the shell interpreter.
-> 
-> While at it, wrap the overly long lines in the CMake build instructions.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  contrib/buildsystems/CMakeLists.txt | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-> index da99dc3087a218d30e0fd1044567d7148d0d80a9..2db80b7cc3c6aba840f18ffdc78d2cda1877d8cd 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -1005,10 +1005,13 @@ parse_makefile_for_scripts(clar_test_SUITES "CLAR_TEST_SUITES" "")
->  list(TRANSFORM clar_test_SUITES PREPEND "${CMAKE_SOURCE_DIR}/t/unit-tests/")
->  list(TRANSFORM clar_test_SUITES APPEND ".c")
->  add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-> -	COMMAND ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh "${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h" ${clar_test_SUITES}
-> -	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh ${clar_test_SUITES})
-> +	COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh
+Currently,
 
-In the previous patch we used `${SHELL_PATH}` to execute the
-"generate-clar-suites.sh". Here we use `${SH_EXE}` to execute
-"generate-clar-decls.sh". From my understanding this is done to help
-discover the shell on different platforms. Naive question, would this
-also be useful in the former patch?
+ - Running "index-pack --promisor" outside a repo segfaults.
+ - It may be confusing to a user that running "index-pack --promisor"
+   within a repo may make changes to the repo's object DB, especially
+   since the packs indexed by the index-pack invocation may not even be
+   related to the repo.
 
--Justin
+As discussed in [1], teaching --promisor to require --stdin and forbid a
+packfile name solves both these problems. This combination of arguments
+requires a repo (since we are writing the resulting .pack and .idx to
+it) and it is clear that the files are related to the repo.
 
-> +		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
-> +		${clar_test_SUITES}
-> +	DEPENDS ${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-decls.sh
-> +		${clar_test_SUITES})
->  add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
-> -	COMMAND "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-> +	COMMAND ${SH_EXE} "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
->  		"${CMAKE_BINARY_DIR}/t/unit-tests/clar-decls.h"
->  		"${CMAKE_BINARY_DIR}/t/unit-tests/clar.suite"
->  	DEPENDS "${CMAKE_SOURCE_DIR}/t/unit-tests/generate-clar-suites.sh"
-> 
-> -- 
-> 2.47.0.251.gb31fb630c0.dirty
-> 
-> 
+Currently, Git uses "index-pack --promisor" only when fetching into
+a repo, so it could be argued that we should teach "index-pack" a new
+argument (say, "--fetching-mode") instead of tying --promisor to a
+generic argument like "--stdin". However, this --promisor feature could
+conceivably be used whenever we have a packfile that is known to come
+from the promisor remote (whether obtained through Git's fetch protocol
+or through other means) so it seems reasonable to use --stdin here -
+one could envision a user-made script obtaining a packfile and then
+running "index-pack --promisor --stdin", for example. In fact, it might
+be possible to relax the restriction further (say, by also allowing
+--promisor when indexing a packfile that is in the object DB), but
+relaxing the restriction is backwards-compatible so we can revisit that
+later.
+
+One thing to watch out for is the possibility of a future Git feature
+that indexes a pack in the context of a repo, but does not necessarily
+write the resulting pack to it (and does not necessarily desire to
+make any changes to the object DB). One such feature would be fetch
+quarantine, which might need the repo context in order to detect
+hash collisions, but would also need to ensure that the object DB
+is undisturbed in case the fetch fails for whatever reason, even if
+the reason occurs only after the indexing is complete. It may not be
+obvious to the implementer of such a feature that "index-pack" could
+sometimes write packs other than the indexed pack to the object DB,
+but there are already other ways that "fetch" could write to the object
+DB (in particular, packfile URIs and bundle URIs), so hopefully the
+implementation of this future feature would already include a test that
+the object DB be undisturbed.
+
+This change requires the change to t5300 by 1f52cdfacb (index-pack:
+document and test the --promisor option, 2022-03-09) to be undone.
+(--promisor is already tested indirectly, so we don't need the explicit
+test here any more.)
+
+[1] https://lore.kernel.org/git/20241114005652.GC1140565@coredump.intra.peff.net/
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+This is on jt/repack-local-promisor.
+
+Looking into it further, I think that we also need to require no
+packfile name to be given (so that we are writing the file to the
+repository). Therefore, I've added that requirement both in the code and
+in the documentation.
+
+I've tried to summarize our conversation in the commit message - if you
+notice anything missing or incorrect, feel free to let me know.
+---
+ Documentation/git-index-pack.txt | 2 ++
+ builtin/index-pack.c             | 4 ++++
+ t/t5300-pack-object.sh           | 4 +---
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 4be09e58e7..ac96935d73 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -144,6 +144,8 @@ Also, if there are objects in the given pack that references non-promisor
+ objects (in the repo), repacks those non-promisor objects into a promisor
+ pack. This avoids a situation in which a repo has non-promisor objects that are
+ accessible through promisor objects.
+++
++Requires --stdin, and requires <pack-file> to not be specified.
+ 
+ NOTES
+ -----
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 08b340552f..c46b6e4061 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1970,6 +1970,10 @@ int cmd_index_pack(int argc,
+ 		usage(index_pack_usage);
+ 	if (fix_thin_pack && !from_stdin)
+ 		die(_("the option '%s' requires '%s'"), "--fix-thin", "--stdin");
++	if (promisor_msg && !from_stdin)
++		die(_("the option '%s' requires '%s'"), "--promisor", "--stdin");
++	if (promisor_msg && pack_name)
++		die(_("--promisor cannot be used with a pack name"));
+ 	if (from_stdin && !startup_info->have_repository)
+ 		die(_("--stdin requires a git repository"));
+ 	if (from_stdin && hash_algo)
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index aff164ddf8..c53f355e48 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -332,10 +332,8 @@ test_expect_success 'build pack index for an existing pack' '
+ 	git index-pack -o tmp.idx test-3.pack &&
+ 	cmp tmp.idx test-1-${packname_1}.idx &&
+ 
+-	git index-pack --promisor=message test-3.pack &&
++	git index-pack test-3.pack &&
+ 	cmp test-3.idx test-1-${packname_1}.idx &&
+-	echo message >expect &&
+-	test_cmp expect test-3.promisor &&
+ 
+ 	cat test-2-${packname_2}.pack >test-3.pack &&
+ 	git index-pack -o tmp.idx test-2-${packname_2}.pack &&
+-- 
+2.47.0.338.g60cca15819-goog
+
