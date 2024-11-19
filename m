@@ -1,86 +1,86 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DBC1CCB2F
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 11:51:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9621CCB41
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 11:51:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732017073; cv=none; b=ZfMfkwcRiveuC7SUBiWN3Isin9qDZCp8Hg0f40o+WXHvGd+dadIqAJM1VzuzEt5G2wp593CSF1LY6lh0+9y/7E1wDXMbLigpgpWBQGMrj6nHI6ctHBcg7k6kF+ifTJ6qHkyPnCwfjTCSx0paO9mFHnZLuBKYvWBeHUR2sd8Q5Ek=
+	t=1732017074; cv=none; b=NW5mlqTf7Nh3UJVs2GysRV8S1y6+t+q5p9p4dDEIpQprzkJUCcPQ4FiqoASB2YFY/wqmAMrCuQAcqhF6EZ0rmQ9SeChKW+a1faDh/lJheL7IE9GGZEobBKW7F8oXninyjm0x1ocHbDDb4aQH6MCKPZfE16OXuPik4nTlvMObJVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732017073; c=relaxed/simple;
-	bh=GGwytFWxo+ZG3Med7l5O9+oBbqTB71/zQz+3jiY3rw4=;
+	s=arc-20240116; t=1732017074; c=relaxed/simple;
+	bh=prKrZ7eSjyjUuafOosSnGdwF6g5bxkTxe8tJKqRK4rc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kt3zfmBpCiPArUw3/LdbmuvbouqusWBfMjfuiAxGSlS7lzqQ3JX/KBgm44tWoRbSzWxO0tF6lvla64Jj/4fbW/ldoZ4bn1INmWNpk9MH9lacy0t7NsCveOLymqeSQ4Z8l6aEYST+JtiiJon1x9Wz8xaNPeno/bsdAQP5RDnu8Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YRixxwuP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OOydjYvQ; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=eWQncqHEO+0AgSWzUdm00nI3BgAwg5KF6ua2vms+qJLdfv+G/MBuicBNXFrfRW2m0CrfsfEusuYZe/9zQYft6IliZ/W/YnDv0vN7vJ1A2IJl050TDZoRJwoGpk9EO5lHjqaoyZRmL7ZIM6cCYAQ2JGwvxgGokSOgu/bAuWXs4oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qps3TOLB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dSrWX/Jw; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YRixxwuP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OOydjYvQ"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id F08FF13805F8;
-	Tue, 19 Nov 2024 06:51:10 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 19 Nov 2024 06:51:10 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qps3TOLB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dSrWX/Jw"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C13E01140173;
+	Tue, 19 Nov 2024 06:51:11 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Tue, 19 Nov 2024 06:51:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1732017070;
-	 x=1732103470; bh=3/2A7v9q9GR8xaa3lITnY2W/TVKvDkX+67dgsrG7kHo=; b=
-	YRixxwuPdwPhiTNWb0rWKsSQ4MViI+1hTdvarVy+TPxttWLGTPOwkuF8wYBaLUui
-	RfiAxTcA1PEK912s1mZ2MUVWSySE1yJI8Ei1mhCAuII9RxnaxrDKM4Ae6s1fcelE
-	XFsSaUQ3f88oLEmcDa/ZT5oXFqq0y0p2VI9ToeFFSO3yAa17y8ELI1WdrQtyeCnB
-	4PWBc0kQqsOGHBJ3Bd+6G9FyWAKgeVdXJ4BvkFGMz1qQNWeYGiU+6fRP0Km+tEeV
-	x6Gm184oZilqt1OJGHgaZ0wsGQhVTrhhl3BJRDmDnmpF9Z5r9WBvqOwCXaYOcXNP
-	+TjjMRp3YloTlOYj7SG9Bg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1732017071;
+	 x=1732103471; bh=r0pchwXZwDsBCPpQjWI9FMJVqL9QR4nnroNCr17sgTI=; b=
+	qps3TOLBQ1tF56DbhDXQAC3ixcmIAGFggYkynjq2t7ymrCr5UmBwQmmXavgPKTFN
+	rGtZ7YyUvwKzIL3AljgS92RQS3lc8roh0CqphxPN3eL36R9WeUBTOGugQ/H/3jiF
+	AGyFyaowRSVtKRPQv5WjS1rEcU6Z96eJAeAB+JinKFIEGeIwbAkuvnHB/eLqLp1J
+	tPvfHxwP2IaeXOH4DApjxn7wcpg289GIHPDNk+aL8IYTDVOkVT/g7XGcsK34oWuX
+	dFAChAI/Sx2zgRbfjW+XUUAUd8vyLmaiXCg/3zStAt/8muqS2IcyOxeMCpTRhyh+
+	vttl0vNwZCTFE0WUuBzj7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1732017070; x=
-	1732103470; bh=3/2A7v9q9GR8xaa3lITnY2W/TVKvDkX+67dgsrG7kHo=; b=O
-	OydjYvQRYbt0o7ErKEq5TYBqbrXKXSBFr0bdNnNaLSshYUYOZsb0Cg9n5i2Lvnw1
-	dsVFXtCtdBA9AAVXtkkGAE2weGyY7cmQX4Uq1S1cN3CRpuBDR0mP5f1YrEmjnZvm
-	d8JG++xwVC0miE9k/ErTS5Is5Cp3dvE1OYFnsX4wAv6vUBr3yf0ywEWigbhTYcdd
-	TXUZ4O1pTAup8eYrVyutHnnqhxd2d8e394Sc8wRNv2QVdBi5z98xSiHMv2CqoQE/
-	Fx5NzkErihve6dTip7ClI2cnGch83l4oXDXMNGVWDm3R3EnNvpp1zxSSLy8l0kGb
-	Rqta5pJthqsRi/79gYj5A==
-X-ME-Sender: <xms:rns8Z8zG-fcCM2AuS6bVZ-9McA3fNQBvVlGVoiDTWFwR66RDlbUVVA>
-    <xme:rns8ZwQJ-3ElczYeZW68OHWo_8NEDDnkdbow3cHM1HT-AbBG52U76utVmRov23vdC
-    -vBMiGeh6p6tkEOGw>
-X-ME-Received: <xmr:rns8Z-XGDNEkWO1-mG_sTvE_o3Au0o_uX7zbHDByjCAZGuZKqErRf5CvpvwFm4nKDpCOdKNorm-jwJlO6FHf6LUxm92metqtJ4FUDwClvGvhxOw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedvgdefudcutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1732017071; x=
+	1732103471; bh=r0pchwXZwDsBCPpQjWI9FMJVqL9QR4nnroNCr17sgTI=; b=d
+	SrWX/Jw2dFHKOI8t3q8Feiew6Akg0jdjaG1fQpI1w0UOQc8PlZd47Bn/sQcf3g4i
+	C0lOj5uA4Jh3TrIP8f04uTpEXBCtGT05+FfFeS3+iumB8VTKXRGu0+UiSm85bIBM
+	LMHogNBmKUOvUE67kgYmaLwzhgc/PIS5iwu2XPADnuv4Ob8zxM5rOw4zH/V9Pte1
+	kUJ4AzrlnUmWDu7XHw7sJuRpDAH0BO7t0TDwoD1h+v47U+0HhOeVjWRAj+WXvzue
+	jWX0n8t8Y2O/Zk3SLkfu+bC0QqcbIAROwOPYCUJa6auTzccVUaXvpbUa8n6ba09D
+	Xudbk2sp00SfZmJcFXVpg==
+X-ME-Sender: <xms:r3s8Z3ENJZx0H4UaF9cMUGDaJdQJSszEOgzFyjPInrnv3t3OxK4N2Q>
+    <xme:r3s8Z0Vb_G83Z-bNxjzdL6PYLRhLo3of8JnkhFdZ28lImgUc7Ya07XsXo9JmD-P5O
+    aBbzSXY6Bd9KQv0hQ>
+X-ME-Received: <xmr:r3s8Z5Iyb1mbB3NbDo_X5Ux4tZdeWbsVLWnx063Hjjzc8oh3MWG9ehJ_Ph1EJe4WCKqTdO6AFoQDpd4CdWVd2LbVIORTaLUcwQGQ8Mv1oaLES-E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedvgdefvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
-    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdr
-    phhluhhsrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhi
-    drohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgt
-    phhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:rns8Z6jZIbOt5YR6kfGakDzVX_v2WNWYVLOM9brtRkcM4DoMxUR7UA>
-    <xmx:rns8Z-BgGkL1X2DkKiQ1NH6pKbZyUOEldZD4xnIVC_abjF6sqKLUYQ>
-    <xmx:rns8Z7Ibq-e_gvQ0QZJFnFVbN6JdjBb1k3sIN52RCwz9O48yRfuV_w>
-    <xmx:rns8Z1BIcrUDP8QshPBnMuOBtnZWUtmTTZoG0A5DpGo3ZkXu14QIoQ>
-    <xmx:rns8Zy7rWnMVeJDslL6oNfR2mB8qDnOcNm2KXagTtm2FELLwqIQL87NF>
+    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhr
+    ghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvshgthhifrghrthii
+    sehgvghnthhoohdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinh
+    gvtghordgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhp
+    lhhushdrtghomhdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:r3s8Z1EgQ3tRW1GOwe8ffLuXOSV_6bqQodKBtOmHiUHt1qJ547T3uw>
+    <xmx:r3s8Z9VMjQ-5rCVdSaFoNqEeKtMeQqw4CGuBxLsC52AdM9yeAMdUTQ>
+    <xmx:r3s8ZwOxc53WGFfG5r-orFhO9kkVrL3XB98ffZ2FYsCBU5Cnkv-t7w>
+    <xmx:r3s8Z82hrDZ-y8qC3E3vSt4d-PzI9S09-TCm9xhjxFCkdggSgSgL7A>
+    <xmx:r3s8Z2O-ZE6utsE4x30wpLJpMQiQ6-o4UxGi7Eaj7hETnaY-43xAOKa5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
  19 Nov 2024 06:51:09 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cccf87cd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 19 Nov 2024 11:50:19 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9ec9a886 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 19 Nov 2024 11:50:20 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 19 Nov 2024 12:50:54 +0100
-Subject: [PATCH v8 17/23] Documentation: teach "cmd-list.perl" about
- out-of-tree builds
+Date: Tue, 19 Nov 2024 12:50:55 +0100
+Subject: [PATCH v8 18/23] Documentation: extract script to generate a list
+ of mergetools
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241119-pks-meson-v8-17-809bf7f042f3@pks.im>
+Message-Id: <20241119-pks-meson-v8-18-809bf7f042f3@pks.im>
 References: <20241119-pks-meson-v8-0-809bf7f042f3@pks.im>
 In-Reply-To: <20241119-pks-meson-v8-0-809bf7f042f3@pks.im>
 To: git@vger.kernel.org
@@ -102,97 +102,88 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-The "cmd-list.perl" script generates a list of commands that can be
-included into our manpages. The script doesn't know about out-of-tree
-builds and instead writes resulting files into the source directory.
+We include the list of available mergetools into our manpages. Extract
+the script that performs this logic such that we can reuse it in other
+build systems.
 
-Adapt it such that we can read data from the source directory and write
-data into the build directory.
+While at it, refactor the Makefile targets such that we don't create
+"mergetools-list.made" anymore. It shouldn't be necessary, as we can
+instead have other targets depend on "mergetools-{diff,merge}.txt"
+directly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/Makefile      |  2 +-
- Documentation/cmd-list.perl | 23 ++++++++++++-----------
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ Documentation/Makefile                   | 22 ++++++++--------------
+ Documentation/generate-mergetool-list.sh | 17 +++++++++++++++++
+ 2 files changed, 25 insertions(+), 14 deletions(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d26d9b155dc511494da4124ee22630d02f5d528c..ca59581df65ca478910321fc937f98b23d597bd2 100644
+index ca59581df65ca478910321fc937f98b23d597bd2..7e3a6e1b32fbbb0a0308bbda125c0abbcdb121fc 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -312,7 +312,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
- $(cmds_txt): cmd-list.made
+@@ -282,11 +282,13 @@ ifneq ($(filter-out lint-docs clean,$(MAKECMDGOALS)),)
+ -include ../GIT-VERSION-FILE
+ endif
  
- cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
--	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
-+	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl .. . $(cmds_txt) && \
++mergetools_txt = mergetools-diff.txt mergetools-merge.txt
++
+ #
+ # Determine "include::" file references in asciidoc files.
+ #
+ docdep_prereqs = \
+-	mergetools-list.made $(mergetools_txt) \
++	$(mergetools_txt) \
+ 	cmd-list.made $(cmds_txt)
+ 
+ doc.dep : $(docdep_prereqs) $(DOC_DEP_TXT) build-docdep.perl
+@@ -315,19 +317,11 @@ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+ 	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl .. . $(cmds_txt) && \
  	date >$@
  
- mergetools_txt = mergetools-diff.txt mergetools-merge.txt
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 755a110bc48d7e2b596651ca13664c01192d966c..e260a989774071b66d2b56c56c5045b84a508c5c 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -3,12 +3,13 @@
- use File::Compare qw(compare);
+-mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+-
+-$(mergetools_txt): mergetools-list.made
+-
+-mergetools-list.made: ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
+-	$(QUIET_GEN) \
+-	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && TOOL_MODE=diff && \
+-		. ../git-mergetool--lib.sh && \
+-		show_tool_names can_diff' | sed -e "s/\([a-z0-9]*\)/\`\1\`;;/" >mergetools-diff.txt && \
+-	$(SHELL_PATH) -c 'MERGE_TOOLS_DIR=../mergetools && TOOL_MODE=merge && \
+-		. ../git-mergetool--lib.sh && \
+-		show_tool_names can_merge' | sed -e "s/\([a-z0-9]*\)/\`\1\`;;/" >mergetools-merge.txt && \
+-	date >$@
++mergetools-%.txt: generate-mergetool-list.sh ../git-mergetool--lib.sh $(wildcard ../mergetools/*)
++mergetools-diff.txt:
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-mergetool-list.sh .. diff $@
++mergetools-merge.txt:
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-mergetool-list.sh .. merge $@
  
- sub format_one {
--	my ($out, $nameattr) = @_;
-+	my ($source_dir, $out, $nameattr) = @_;
- 	my ($name, $attr) = @$nameattr;
-+	my ($path) = "$source_dir/Documentation/$name.txt";
- 	my ($state, $description);
- 	my $mansection;
- 	$state = 0;
--	open I, '<', "$name.txt" or die "No such file $name.txt";
-+	open I, '<', "$path" or die "No such file $path.txt";
- 	while (<I>) {
- 		if (/^(?:git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
- 			$mansection = $1;
-@@ -29,7 +30,7 @@ sub format_one {
- 	}
- 	close I;
- 	if (!defined $description) {
--		die "No description found in $name.txt";
-+		die "No description found in $path.txt";
- 	}
- 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
- 		print $out "linkgit:$name\[$mansection\]::\n\t";
-@@ -43,9 +44,9 @@ sub format_one {
- 	}
- }
+ TRACK_ASCIIDOCFLAGS = $(subst ','\'',$(ASCIIDOC_COMMON):$(ASCIIDOC_HTML):$(ASCIIDOC_DOCBOOK))
  
--my ($input, @categories) = @ARGV;
-+my ($source_dir, $build_dir, @categories) = @ARGV;
- 
--open IN, "<$input";
-+open IN, "<$source_dir/command-list.txt";
- while (<IN>) {
- 	last if /^### command list/;
- }
-@@ -63,17 +64,17 @@ sub format_one {
- 
- for my $out (@categories) {
- 	my ($cat) = $out =~ /^cmds-(.*)\.txt$/;
--	open O, '>', "$out+" or die "Cannot open output file $out+";
-+	my ($path) = "$build_dir/$out";
-+	open O, '>', "$path+" or die "Cannot open output file $out+";
- 	for (@{$cmds{$cat}}) {
--		format_one(\*O, $_);
-+		format_one($source_dir, \*O, $_);
- 	}
- 	close O;
- 
--	if (-f "$out" && compare("$out", "$out+") == 0) {
--		unlink "$out+";
-+	if (-f "$path" && compare("$path", "$path+") == 0) {
-+		unlink "$path+";
- 	}
- 	else {
--		print STDERR "$out\n";
--		rename "$out+", "$out";
-+		rename "$path+", "$path";
- 	}
- }
+diff --git a/Documentation/generate-mergetool-list.sh b/Documentation/generate-mergetool-list.sh
+new file mode 100755
+index 0000000000000000000000000000000000000000..696196fbcb86084abffc1d29355705a37b1532b3
+--- /dev/null
++++ b/Documentation/generate-mergetool-list.sh
+@@ -0,0 +1,17 @@
++#!/bin/sh
++
++if test "$#" -ne 3
++then
++	echo "USAGE: $0 <SOURCE_DIR> <MODE> <OUTPUT>" >&2
++	exit 1
++fi
++
++SOURCE_DIR="$1"
++TOOL_MODE="$2"
++OUTPUT="$3"
++MERGE_TOOLS_DIR="$SOURCE_DIR/mergetools"
++
++(
++	. "$SOURCE_DIR"/git-mergetool--lib.sh &&
++	show_tool_names can_$TOOL_MODE
++) | sed -e "s/\([a-z0-9]*\)/\`\1\`;;/" >"$OUTPUT"
 
 -- 
 2.47.0.274.g962d0b743d.dirty
