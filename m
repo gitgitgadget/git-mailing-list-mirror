@@ -1,102 +1,139 @@
-Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D567D1C173C
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 10:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC05845945
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 10:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732010411; cv=none; b=lv03o3nhjLa+z6xuhowi6nx9Smew04OaQxAZZNIEP69d8vKoY19W118alSQB4p95EQGCY3g4YJ+xEGoSrB9REkiHe2N4zfW6wk8OxnPzcyZm/PDfr5eEFZ794OrdzsmO7gJ/dU/5/uWrUJjJIG/eP6FWmlVi/CVmSKhQP8CcmgA=
+	t=1732010686; cv=none; b=Ud2PpWlkZCvpFpQduZDY+7PiJJMhk3tLOqyQt0rBG68QA5TLJZlTyzsUg4YxdMaAHB0OXq4NlBXx/EqJh8mXge1WGVTDobyx4h17N6QBKuj2Xoe0I1JuI0ltUHYdJVh90orw7BkL6b8PXqBIvRtAU9skcrbpq77RS4Enl4TwnQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732010411; c=relaxed/simple;
-	bh=BFAMOqQbndw8vaVLHQUt8jITXoEUYfdZNXob4LWXJkY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LKJm9DFf7JMuaDTD7hNw6JeeOYHKhznDo0L9Lqgep/Aoecxe+BW+N1r+EyHMipqyIdLBvj4shq62JYInFThW8vKjltynu6/Nk90OPdBVOpMhigTVeUf9oxdXXjzu8gCP/nTsKX7u53h+SG7L8SxuOn4Kc0rbflVyvacO8HpPsek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ozlabs.org; spf=pass smtp.mailfrom=gandalf.ozlabs.org; dkim=pass (2048-bit key) header.d=ozlabs.org header.i=@ozlabs.org header.b=AAZE+/Lg; arc=none smtp.client-ip=150.107.74.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ozlabs.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gandalf.ozlabs.org
+	s=arc-20240116; t=1732010686; c=relaxed/simple;
+	bh=S8YEEUjli7gSP5yL6EG14CidTtvKOuCECBXt4pxY1Xk=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=MWFnByMZELSYcabJt5/zVRm1jF8mCWPScz+31fbpIlV7+Hf74R90QFAKlKoBdKwAqEYzl4Z2jdsbixpGsbHOE/ysW+6tc6u6caZvBNSmN9QOba5p0rLP0tcF7LQG7lGzVftmRC27Io9YftfPUU2ymgIKRqdXaZi1RlbY4qjCu2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=fsMedUDU; arc=none smtp.client-ip=192.29.178.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ozlabs.org header.i=@ozlabs.org header.b="AAZE+/Lg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ozlabs.org;
-	s=201707; t=1732010401;
-	bh=091goaxQSzoooK+Yfteuoii371U3C7mGyiosJx1hcW8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AAZE+/Lg/HxzztMsvz4T1O0Of2p8Tw0XFB0UiZCpIK/d69eZLyFUz0Dz0uvE0RzsE
-	 t3iNJdkBd1086ENOL3bObPLWiQ1IAmdNkGQym1HlT8Ly0rslxyjfywurz/ltqQUdXu
-	 eoELtWOCf+OaHtosoxQgJawN8TD5XhYZkgmAj9pgpGs02gErupOwsmIdgDhNv7DJZ4
-	 8jodJ3JYGYyVjLg/aKTOH5Ilpsd/Acb/flw5G9W8jz+t3KAJd9DJniF+ChWSSN8E6f
-	 UJnPWBOuYL7nsz7fW3aN53m0ttjoBmPO64f4DgjH3YfYiPF57alHt9xxU4IYJAC/V5
-	 9bnRtRD8QD4Yw==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1003)
-	id 4Xt0NK5P74z4xqN; Tue, 19 Nov 2024 21:00:01 +1100 (AEDT)
-Date: Tue, 19 Nov 2024 20:59:59 +1100
-From: Paul Mackerras <paulus@ozlabs.org>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Beat Bolli <dev+git@drbeat.li>,
-	Tobias Pietzsch <tobias.pietzsch@gmail.com>
-Subject: Re: Gitk maintainership, was Re: The health of gitk
-Message-ID: <Zzxhn64xeQv6ItXm@thinks.paulus.ozlabs.org>
-References: <pull.944.git.git.1610234771966.gitgitgadget@gmail.com>
- <bdaab72b-37f4-658a-716a-d6a958b6f709@drbeat.li>
- <ddee92a7-3d1e-f869-9cc4-72b70eee0dd5@gmx.de>
- <ZzWkgblaoWehC0kY@thinks.paulus.ozlabs.org>
- <5ccc1943-c2a3-4896-a858-aa5fd6cdd426@kdbg.org>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="fsMedUDU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=+5eG4aQ36eho2K9NmDNUT+yuibqS7yYpaW7uc65GgNY=;
+ b=fsMedUDUun0YLjh1gCaJvahuiJ42jBuXl6UfUyhbkyAsffsv3nwqIyuBdI99JvBP+GDnLNgGMaYd
+   xfBoOK1U8QgQGfhwLKzmzbymxoel792bmB3BDy/eXp/VlvLNm5YBWBXoeJ/DIxCWntdCPQXQ0J+t
+   z11bZVLE/A1yvlKKspz1/jF+erdXjEDqJJ8ge0qKMXNPE7XhHzNTZQa2Yg+pXXRc3rlf/amoCcMQ
+   Kj13kbnCJdq9a/D2Kw9rKC5Kgpbwzw77uQuv+SMYfB2Bwolc205ntwTlmSYsQ1CNnM+Pb/X/uHwI
+   p1IvlqrsK+74qs+SiAujIGouBHW/EEeZwajeKQ==
+Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SN600CS8ZZU67A0@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Tue, 19 Nov 2024 10:04:42 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5ccc1943-c2a3-4896-a858-aa5fd6cdd426@kdbg.org>
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Tue, 19 Nov 2024 11:04:21 +0100
+Message-id: <D5Q2JDB367NI.2N8AQFKUC2533@ferdinandy.com>
+Subject: Re: [PATCH v13 2/9] refs: standardize output of refs_read_symbolic_ref
+Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>, "Patrick Steinhardt" <ps@pks.im>
+To: "Junio C Hamano" <gitster@pobox.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241118151755.756265-1-bence@ferdinandy.com>
+ <20241118151755.756265-3-bence@ferdinandy.com> <xmqq34jnerlm.fsf@gitster.g>
+In-reply-to: <xmqq34jnerlm.fsf@gitster.g>
+Reporting-Meta:
+ AAFxfWV/iJ+JjdyZ1bd7q+7AaNrqXyCOts7+CeKRtDckYqY8pIS2Zs+vSyERepBn
+ 7erBk8MphuFG/O4bHSaQprbUhULVE2IoO5Fm965Xu4/6Jf2I859P4gxXmmUEPe3Q
+ UzOlrYZwplEZSULMpHXAi6GyqNfNguVD6ITgL1m7e4HMXmUYw8j/a5XfUrt9aZfi
+ QuNkBtuAyHOYB2tEKasWNwVTV1pQuaUdHA2fHz7eRarg5b1F9Ei2UIDqutZEUGEa
+ 9n/WnvWcEbBzq3//GEtobZGZuRPMNQFWw/w26zFb6YKvGsMVHtyBLkvOHjj8M438
+ ZOHSyE90N1T3B7YObUgVAfmBPTYNG1kd3/tGGwyNR9yM5k6uDV/GVZoFrO9+Jkif
+ 8aCVGBOH4o7WUbjSCjz2ea8gfuwIr/1OJHE0gF1WbffUakgf9M8VexD1RNv80YW/
+ Ud1k8QTqN2d48nggscjQTgTX/KfT2SiWKRYGIEd2ympGfp2A1TBpTKiV
 
-On Sun, Nov 17, 2024 at 04:26:41PM +0100, Johannes Sixt wrote:
 
-> I have given the idea to take maintainership of Gitk ample
-> consideration, and I would accept the task. Paul, let me know how to
-> proceed.
+On Tue Nov 19, 2024 at 06:10, Junio C Hamano <gitster@pobox.com> wrote:
+> Bence Ferdinandy <bence@ferdinandy.com> writes:
+>
+>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+>> index 38eb14d591..60cb83f23a 100644
+>> --- a/refs/reftable-backend.c
+>> +++ b/refs/reftable-backend.c
+>> @@ -830,7 +830,9 @@ static int reftable_be_read_symbolic_ref(struct ref_=
+store *ref_store,
+>>  		return ret;
+>> =20
+>>  	ret =3D reftable_stack_read_ref(stack, refname, &ref);
+>> -	if (ret =3D=3D 0 && ref.value_type =3D=3D REFTABLE_REF_SYMREF)
+>> +	if (!ret && (ref.value_type !=3D REFTABLE_REF_SYMREF))
+>> +		ret =3D -2;
+>> +	else if (!ret && (ref.value_type =3D=3D REFTABLE_REF_SYMREF))
+>>  		strbuf_addstr(referent, ref.value.symref);
+>>  	else
+>>  		ret =3D -1;
+>
+> The ref.value_type can be either equal to REFTABLE_REF_SYMREF or not
+> equal to it, and there is no other choice.
 
-That's great!  Thanks for taking that on.
+Ah, ok, I didn't realize this.
 
-> Regarding whether to have a separate tree or not, I would prefer a
-> separate tree at this time, but only for the reason that it is known
-> ground for me, and not that it has some (technical) advantage.
+>
+> Wouldn't it be easier to reason about if the above code were written
+> more like this:
+>
+>         if (ret)
+> 		ret =3D -1;
+> 	else if (ref.value_type =3D=3D REFTABLE_REF_SYMREF)
+> 		strbuf_addstr(...);
+> 	else
+> 		ret =3D -2;
+>
+> I found it curious when I read it again while attempting to resolve
+> conflicts with 5413d69f (refs/reftable: refactor reading symbolic
+> refs to use reftable backend, 2024-11-05).  The resolution has to
+> update this part of code to use the new implementation that asks
+> reftable_backend_read_ref() and becomes a lot simpler, so the way it
+> is written in your topic does not make much difference in the longer
+> term when both topics graduate.
 
-I think you want to clone my tree at git://git.ozlabs.org/~paulus/gitk
-and work out what to do about the commits that it lacks.  Then it's a
-matter of the usual maintainership process (e.g., apply patches,
-publish your tree somewhere, and ask Junio to pull from it).
+I'll update the patch with the above,=20
 
-In the current upstream git tree, I see two commits that were applied
-to a clone of my tree, then pulled into the git tree:
+>
+> IOW, if we were rebuilding your topic on top of Patrick's topoic
+> that includes 5413d69f, this part would read like so, I think.
+>
+> diff --git c/refs/reftable-backend.c w/refs/reftable-backend.c
+> index 6298991da7..b6bc3039a5 100644
+> --- c/refs/reftable-backend.c
+> +++ w/refs/reftable-backend.c
+> @@ -920,8 +920,10 @@ static int reftable_be_read_symbolic_ref(struct ref_=
+store *ref_store,
+>  		return ret;
+> =20
+>  	ret =3D reftable_backend_read_ref(be, refname, &oid, referent, &type);
+> -	if (type !=3D REF_ISSYMREF)
+> +	if (ret)
+>  		ret =3D -1;
+> +	else if (type !=3D REF_ISSYMREF)
+> +		ret =3D -2;
+>  	return ret;
+>  }
+> =20
 
-bb5cb23daf751790950ff9f761f8884e21c88d00
-7dd272eca153058da2e8d5b9960bbbf0b4f0cbaa
+but I'll save this as well, I would not be completely surprised if Patrick'=
+s
+topic makes it in sooner :)
 
-I assume you can pull them into your clone of my tree using suitable
-git commands (I guess you would create a branch with 7dd272eca153 as
-its head and do git pull --ff from that).
-
-There are three commits that touch the gitk-git directory in the git
-tree directly:
-
-65175d9ea26bebeb9d69977d0e75efc0e88dbced
-d05b08cd52cfda627f1d865bdfe6040a2c9521b5
-728b9ac0c3b93aaa4ea80280c591deb198051785
-
-I assume you want to make the same changes in your gitk tree, so as to
-avoid conflicts in future.  I expect git would merge commits in the
-gitk tree making the same changes as are already in the git repo
-without fuss.
-
-There is also b117cee32259acf923c3ada52b4dd89f2ea6a454 which touches
-gitk-git in the 'seen' branch of the git tree.  I don't know what you
-would need to do about that, if anything.
-
-I hope that helps.
-
-Regards,
-Paul.
-
+Thanks,
+Bence
