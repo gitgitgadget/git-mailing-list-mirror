@@ -1,104 +1,114 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4027.protonmail.ch (mail-4027.protonmail.ch [185.70.40.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227BC1D0F5C
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 20:17:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004861D2794
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 20:49:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732047428; cv=none; b=Izck3arQYGkAOh1lttur72/1spYdhyVGQU7BmFeAz9VEmS8Ov44Q3ZgERsrNJZoWmdMPXKq+FACaPd0+pKi+sh2u6bCJ3iOl4tuhxI+9uxYFzdApoEchT9wEWdNkTrOhhgZw0PVjiBNo/PB6aBhQpQBvmDYLm4ffn0K9VgiAMxM=
+	t=1732049382; cv=none; b=CkgQvS3Ou53wt+8GeIJgKen3GPCp+dnllB2YI5BPm3PaHHfgLDYrogyGJxABUgMnw+2pvnkFh4uSBUeo3RlUtRLgQjIfezKrKIDN2FwhGH7qRURHy5HTlsAKvcvEeO7Jzh8WXMXuNYD3aVu5rx/dsOQSKCT1IIlqJJPYHKLOY6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732047428; c=relaxed/simple;
-	bh=xKbJOi5glpk7bPFZ1IY/Gt8IX5g6QtnF2K1OZNQsROk=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=Z249p92RqZdj86CS+0b9OSUMbbCdYFrUBYw1DeKkTkrfX/h/va8yzZ2JV6ZMwFbPghMeKTu1CpfINMT6cHNn069tIUBznO7T8kn0N5xkG2lHIMirZtt3bLWErvJTFvGIKU494rlAbHRlnjcBHrInU5gaXxLhNa861zhWKA1bXJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=GzRgxdqx; arc=none smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
+	s=arc-20240116; t=1732049382; c=relaxed/simple;
+	bh=tNOEt0IIcSROTTCwDRzvOo7xzKEFYNKCdsGAopzFoOc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=j75h6s8schELUaZL7deEgFosFVS+AEkxv1pPhQIQEmpD+2hmrwjvHOche+eWR0gNmDAuRJcdqk1tH+HhEP/5hYwAxka+23GQnAO8r9v00UxMiVPOO0GAn+QxS0y9/vuPpBgaSDtsE6JZpy1f4xHjrxGAKYhRwLYBAYkixzuPxhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=WuwxDc5l; arc=none smtp.client-ip=185.70.40.27
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="GzRgxdqx"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3e60825aa26so1969126b6e.1
-        for <git@vger.kernel.org>; Tue, 19 Nov 2024 12:17:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopify.com; s=google; t=1732047425; x=1732652225; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xKbJOi5glpk7bPFZ1IY/Gt8IX5g6QtnF2K1OZNQsROk=;
-        b=GzRgxdqxwVHSvIYU7gGiYqOdKuLpIjqpVKEIjvdMcehfqjv4zG8K4R5RfsO+Cw9HVg
-         02NZLplsub8+ci2bkTTcmE/9PwlwEFpu2OHb4T7FtplVpBmeGqYbBLFv3mqow4E9U2eI
-         JpLEO5gcCbzFyjPlxD58xI52LZP2qtEhnwJSs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732047425; x=1732652225;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xKbJOi5glpk7bPFZ1IY/Gt8IX5g6QtnF2K1OZNQsROk=;
-        b=nES/zymysIWDvx+jc0KyPirgnw46mSjPxbTvfrnqJrBJxJB/Z+qi0/++YP4NjzKiHu
-         94NF1R0DaLVMTTPf2q9L67HCxOBlqCge6TBDwv7KBJvoFT7e02taoHNyZ5B/Vo3VwxKv
-         u1cqwxWPnXXgZj8jVInmFejGwr1VcxNeT9FuWH1S+33uYcRmdi+yA+R5cgREKAZXGoHS
-         suUbbt2/m92OUDYBTzk0k8Z8lr5Nh6a+KF0KAB9MntkWmyvyEUt52/lqyLoxwFrVKcL1
-         y9DBLaGJ6eXi72ZbH897bblzhUpX4nqdiINxCvlhLSILVHU1s+7aC06HYo6MYIiuquJW
-         o+2g==
-X-Gm-Message-State: AOJu0YyIkb6ExJ74fKmdGl9S5+YRFcbVI4ihF7FCR9Io+uUilBgXMXa1
-	2Pr2nfofESP3hoApV4W3Fnsxh4PEm3QVFydAu7uJ1pJnXFdpA2rQGqxLNIHN+Rn7V9wKOpOJOP5
-	LIOUwfNe3uCGWBHMdFwyelhKlG/bU3hftVTQF2GyPtVuxfv2lnG0NWTD9cg2oNuOO6PdqDLp5Rc
-	TRddMKrrz/VLxul/bBlsCFdoyiX5Tq+7yVSKaeqz6+BQ==
-X-Google-Smtp-Source: AGHT+IHM1l+LgPwHMODIzuhop0nodSNtgvHA6ZiuSKW3T1mgJCJoFdYe5X1ZPGvR8zbutObzzBv9iQ==
-X-Received: by 2002:a05:6808:2023:b0:3e6:3860:596b with SMTP id 5614622812f47-3e7eb6b83d8mr136176b6e.8.1732047425213;
-        Tue, 19 Nov 2024 12:17:05 -0800 (PST)
-Received: from smtpclient.apple ([45.78.96.237])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d43812abdasm67106d6.75.2024.11.19.12.17.04
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2024 12:17:04 -0800 (PST)
-From: Burke Libbey <burke.libbey@shopify.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="WuwxDc5l"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1732049372; x=1732308572;
+	bh=xI8LdG9pe8O7NMdOYVXmUUak96D5T6Q1UkPrfyGYX70=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=WuwxDc5luILX8SFaNyaDoE8HtGNxwLgcL9t5LuPntNhqHiCuYzX2hvvHu60mlxBIt
+	 MQzP9g0laeHSoo5i0p/DokSGswpJrAVefptPlf+cZGVt0aq6Dnam3eswflZCuezGd1
+	 nFISYr3VVAQVo9d8wG1NAg3+0nkTx4O1elcZ3fi2f2qa9VSEL28TL1TWQwnH5NeTd3
+	 57Xc/wlKVHtNwseuuW9iPD9xZcjwDzF4R3aOaDgBX9v7NB68Oa5Ctu01RqsQTPKl+1
+	 U1vK2kznlHDaNQBovdbeUOrL2LDIu6OfmUYwjpblM/HeAmyP8WVZpiGE3lb/gzuiDR
+	 HmlJTnx6VwYsg==
+Date: Tue, 19 Nov 2024 20:49:29 +0000
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+From: A bughunter <A_bughunter@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: How do you undo an add
+Message-ID: <gEGJ85bqla-NTL4ZJ1yt-zAAIaIYhp0s7hy3EJNmb5rF08NptfrexXMHZO6p4vZ7i6atRVsB09dlJ2z4hEXtOhH8MlqVpSg_8GlBDn6GiGM=@proton.me>
+In-Reply-To: <89DnJJL6nbYjQW9N8CtejlqbnzPDiH7iKd-3zKFY8oQezk1rRYbjH5WkKdrVPYPQQsKPhMpd3IcBet7ZBD4U3HSSoXk6rVXIMWPaG4hAj1g=@proton.me>
+References: <4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlSI5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=@proton.me> <MBCJkxhVnx5AhlKkq15aTn5FYI6cG-wdqqwQ84mVH9zjf-YehSrRWPgd-UwdTMrYhS2Sgofbyn2bS7iMlANyyYf_Z6b6_e3FH0hRm5VYciU=@proton.me> <022f01db3a10$7fe28140$7fa783c0$@nexbridge.com> <271da43e-22d8-4f67-952e-72d2af8f6b1b@app.fastmail.com> <89DnJJL6nbYjQW9N8CtejlqbnzPDiH7iKd-3zKFY8oQezk1rRYbjH5WkKdrVPYPQQsKPhMpd3IcBet7ZBD4U3HSSoXk6rVXIMWPaG4hAj1g=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: cd6902e19817279759729e7d575a95f5dc9ee79e
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3818.100.11.1.3\))
-Subject: git-blame extremely slow in partial clones due to serial object
- fetching
-Message-Id: <B010051F-B182-4DB8-9469-AA2F53781968@shopify.com>
-Date: Tue, 19 Nov 2024 15:16:53 -0500
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3818.100.11.1.3)
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="b1=_4DZdeqq409lkT5Ro67s580dvBpPIRpeTfCXazm8A"
 
-When running git-blame in a partial clone (--filter=3Dblob:none), it =
-fetches
-missing blob objects one at a time. This can result in thousands of =
-serial fetch
-operations, making blame extremely slow, regardless of network latency.
+--b1=_4DZdeqq409lkT5Ro67s580dvBpPIRpeTfCXazm8A
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-For example, in one large repository, blaming a single large file =
-required=20
-fetching about 6500 objects. Each fetch requiring a round-trip means =
-this=20
-operation would have taken something on the order of an hour to =
-complete.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-The core issue appears to be in fill_origin_blob(), which is called
-individually for each blob needed during the blame process. While the =
-blame
-algorithm does need blob contents to make detailed line-matching =
-decisions,
-it seems like we don't necessarily need the contents just to determine =
-which=20
-blobs we'llexamine.
+After looking into filter-branch here is what I found out. from the docs:
 
-It seems like this could be optimized by batch-fetching the needed =
-objects
-upfront, rather than fetching them one at a time. This would convert =
-O(n)
-round-trips into a small number of batch fetches.
+WARNING
+git filter-branch has a plethora of pitfalls that can produce non-obvious m=
+anglings of the intended history rewrite (and can leave you with little tim=
+e to investigate such problems since it has such abysmal performance). Thes=
+e safety and performance issues cannot be backward compatibly fixed and as =
+such, its use is not recommended. Please use an alternative history filteri=
+ng tool such as git filter-repo. If you still need to use git filter-branch=
+, please carefully read SAFETY (and PERFORMANCE) to learn about the land mi=
+nes of filter-branch, and then vigilantly avoid as many of the hazards list=
+ed there as reasonably possible. ( https://git-scm.com/docs/git-filter-bran=
+ch )
 
-Reproduction:
-1. Create a partial clone with --filter=3Dblob:none
-2. Run git blame on a file with significant history
-3. Observe serial fetching of objects in the trace output
+So here a git beginner, myself is cornered into navigating a "minefield". I=
+lluminated language that git is full of undocumented known bugs. I see now =
+what this facade of rejecting bugreports is about: it  seem's about the bug=
+report recievers do dance around the jargon term "bug" in favor of various =
+possibly more accurate 'illuminations' however as I have put in plain engli=
+sh a bug is a defect.=20
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-Let me know if you need any additional information to investigate this =
-issue.
+wnUEARYKACcFgmc8+dYJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAAxwAP9ISjq2ja8Oc+BzmVTd39zFQ7G/fIuqRPvPhEoK9w5uIAD+Jtia
+wSnZYAEkEIPi7wAFU1wBhsgp6eU0Z5OMZhQM0Aw=3D
+=3D2LbM
+-----END PGP SIGNATURE-----
 
-=E2=80=94burke=
+--b1=_4DZdeqq409lkT5Ro67s580dvBpPIRpeTfCXazm8A
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_4DZdeqq409lkT5Ro67s580dvBpPIRpeTfCXazm8A
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmc8+dYJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAHNbAP9c1PCs
+KP5869QlfDlW1cIxwVh8VgGJ31tna46+p6lxqQEAhkRM20VCSHCPdG/R5TZBZusHYmsfasmzx5Ht
+336kQQM=
+
+--b1=_4DZdeqq409lkT5Ro67s580dvBpPIRpeTfCXazm8A--
+
