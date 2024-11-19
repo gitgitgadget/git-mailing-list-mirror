@@ -1,44 +1,44 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2695139E
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:33:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23764139E
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:36:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731976425; cv=none; b=mkFAyZ0y4rGV+g8/Kon8ZWXwAXLfvuBrcm8Dxxg49ooo5qGrnOheUDpuIeKhS8QUdynOByHQi9S1OffQtI7T8/6LvdkJODs5ef+dlS1nxvQ/hE1zcBJzAAstAw0aXG7zQI7baJ3T7W3r6I1BQrOW+7cGeYaGXL9qbGrfc04Hvq4=
+	t=1731976599; cv=none; b=W0RUfPNy4NPeHAMbrj2eYo6Je2l3zY5Z2MIuaTvkg3v2C4ylRGDgJiqAmEsV7wZjZr1A4s3BnLq8PuAKb1T87fmajhB7Xy81vhrRefG6mwruytyojE3f9fyRX4CzBAdRy3pauddTGcDJXF+O0TER2mXnD8SLsx01BNCUyDVBfsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731976425; c=relaxed/simple;
-	bh=pDMV0exPG+Ks5RenSE9N4GGs1Lwxvg+qb2xxr/7OTnI=;
+	s=arc-20240116; t=1731976599; c=relaxed/simple;
+	bh=lT9qkd+TWs6wVY/3CpKxPzeL4e8vaDK4QnByRUF/R5E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fk8udRUzX0ZvbmwB7qFvifxFrU+2FdCBfom0Mjxy43PG5y6trdE1XpE8tmQWQFn6XlwrrIeCJa3MDEEA5MlnG9i1VKc70pTLfyMSRIEzdJx6gGpCWGAPYFS42IAtE9TZV/hWLGtWruoes2vnxjqUur0kw75ZXviaU8vMXFkfaOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YuUsLeQY; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=rdtbxr9Kf6L6v2G8cuqzxw/rprJ7021XBMfaQXU4S3q12+1HLDrbKgI8IPjb0YenL/LLtO0tXbKy1jeLIK0+CGVTVg+VZ9D6SPFCcbJw2b2j+ZA+wfcuadrX4TmW2wugJ0CDw0TtpeXkSp9DAY5LGQy8uiqjA/a/tNwO5Ynaiv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fp6JhEWX; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YuUsLeQY"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9181C2540158;
-	Mon, 18 Nov 2024 19:33:42 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 18 Nov 2024 19:33:42 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fp6JhEWX"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4023B1140165;
+	Mon, 18 Nov 2024 19:36:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 18 Nov 2024 19:36:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731976422; x=
-	1732062822; bh=ap2h3I5pJr+ttfV43PAnInwxBPq86KexIRlcKlaapM0=; b=Y
-	uUsLeQY4NJTr+CtZYXn4pSzvM0oQXOZAhWpvIaHWC7Gq/DYGLWEb6TDZ0NungclY
-	MJxhpmi6zJ+vqeefcq0u8duka7/1a5ZqX39F0G3+pKw9fnPReA+e9pyL7yKzxZMA
-	SHZvbbeznHFwAfwiZRTboYBFPShEX9s2VxPP7di7kIyDrCZkIv7tPIkBQ/D2XDHX
-	ekIcTXLIJK438blanjAC7RYqzqD+JV2sOg+MZI778EC+9ZWtNQJM9ad8nbTLCUur
-	G18fAmSgFDhDS+A5U+I+yAdHWDz1fx99co4wBC79qkrhhmomCMjrAVB8/o1+N4ov
-	LA4Yz7+m68TJUPCgKLHJQ==
-X-ME-Sender: <xms:5tw7Z1VW1nVt1ZM5IbZ3MgOFnLlrsSJotQPzwn_PXTfzUfyc7IKgrg>
-    <xme:5tw7Z1k8JVJ7L7r-pi6rZ6FkgpJ3zjS74JZDQAK3UfuiZZ8G5Q7a0B1ey0kExwH66
-    _AsVxKiMKFUi7iT5A>
-X-ME-Received: <xmr:5tw7ZxYAfzUalo9hWpxx9ZVUGxbiCOo4jEcvi20ErAIrghjDIrRj7bjgY5oNhAfVNM7d0jvC4_iliIDbNrpt-HG-4Zh-qiIgJnUS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvfecutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731976596; x=
+	1732062996; bh=7acbKo2BE7IJlF31F6xT6PDEK0eQTW1pwKOujmTyGvs=; b=F
+	p6JhEWXHiPzfeXoY6/doM6VMsqRvPyvTkryXxNLHpk19iZb3OUUVvQQd5Nm52bg0
+	S0q4Ox8qM97ku9Dj/2GNV6JJql+MR9DPs2sHiY2nshnMr76iXbdlTJuQCjHpAXpd
+	cQnl9LN6E27dZeBpIpO92v8qMYJIaH68ImrC6pIfUuKx5OkW8FF5XdXNiy/6WHVP
+	y9Ut1VbD91+qmsKv5CVjwHPsaZqHzDhz4L7btJvez83ecIxn2lvc5mYk2zjnKQWq
+	TtewYS4hr3ZUhSRrcdbnKm6ucO25hv2uSbm6Rrr6QO487QDD523qStFFoLW5Wmdv
+	ZVszy9EFxqoaXEYMst9IQ==
+X-ME-Sender: <xms:k907Z3Wv9L01MQ5sUp1uHzR7i0GYqXuQr-LMamJgmtEz76at-c-85w>
+    <xme:k907Z_nuozTVuQz28BvK5UezcwFnqqjuMbwaGixn3WLrLRU3jkQkQ-3m9mZtS69hU
+    r6XipicjCTa9PbWAw>
+X-ME-Received: <xmr:k907ZzbObOVhWpOI3YQlhi-ZL-8ao_yMHQ-zqloq7D1Y7LbYBPGeTFQQAoI0DJ74AcWcmXuJ3RjUc9ZEnfaqNKm9NjZnKQF_B2Mc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
@@ -46,32 +46,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvfecutefuodetggdote
     drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
     iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiphhhih
-    hlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5tw7Z4U5Uk4V2LyKZlB0ldmZ0k02phdQT6i_2TSPQ-1MzdATmbdUgQ>
-    <xmx:5tw7Z_m_j9G_v5M19fIUTwF-f-oyW8a_y_RKlPeHahM5x973KDUbhA>
-    <xmx:5tw7Z1cPIcnAaeqVZl0gyU8l3_SsbwBfd-1w2cxnyP9_fGr45QTVgQ>
-    <xmx:5tw7Z5FDrV89pz5jjV0H78miFYFD7p5pRk8YUyeDDEe6DWCW87VHfA>
-    <xmx:5tw7Z4BTMxqqj6w_XZ4b8UG0XTQDm55qlHah_FIVKrE5thC_u1s9KvSL>
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinh
+    ihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvth
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:k907ZyW9Q6Oc63uaGVI0rgHLmMRBhlZYWKU-T42Y3-DG_syShhvHyw>
+    <xmx:k907ZxmLJhD_daZacTQ8_KerrdRb0jxdWJMFjU7UzQBvSsomBSb0ug>
+    <xmx:k907Z_dLVOs7ObVs29ChyEbyH4xf0temeh5T5HtzzXAue_6TsQCVSw>
+    <xmx:k907Z7HTdZvtIMmmnXOCsHW068G_nt2y5XplUoQ503lNMedAbuTkcw>
+    <xmx:lN07Z0u1VLsTTXKOe8rjytreXd5uRs64G-n-VL2JcCcDefRWOqvkIOss>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 19:33:41 -0500 (EST)
+ 18 Nov 2024 19:36:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Philippe Blain <levraiphilippeblain@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
- allocated on MacOS with git 2.47.0
-In-Reply-To: <b09b16f5-4fa1-c802-86ac-9f0b1bcc9f53@gmail.com> (Philippe
-	Blain's message of "Mon, 18 Nov 2024 14:28:41 -0500")
-References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
-	<4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
-	<xmqq34js1kd2.fsf@gitster.g> <Zzr4cgk_5MJNcHm1@pks.im>
-	<xmqqjzd0k92c.fsf@gitster.g>
-	<b09b16f5-4fa1-c802-86ac-9f0b1bcc9f53@gmail.com>
-Date: Tue, 19 Nov 2024 09:33:40 +0900
-Message-ID: <xmqqh684hxjv.fsf@gitster.g>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Usman Akinyemi via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2] diff: update conflict handling for whitespace to
+ issue a warning
+In-Reply-To: <CAPSxiM-H378tKrnLqiTYaWbGb9fPitRzqVpBf+7+Tu03Th3UPg@mail.gmail.com>
+	(Usman Akinyemi's message of "Mon, 18 Nov 2024 21:03:52 +0000")
+References: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
+	<pull.1828.v2.git.git.1731524467045.gitgitgadget@gmail.com>
+	<xmqq4j4a8srw.fsf@gitster.g>
+	<29c81cbc-3678-4b70-9e0e-c500186d159f@gmail.com>
+	<xmqqbjyh5pa5.fsf@gitster.g>
+	<CAPSxiM-H378tKrnLqiTYaWbGb9fPitRzqVpBf+7+Tu03Th3UPg@mail.gmail.com>
+Date: Tue, 19 Nov 2024 09:36:34 +0900
+Message-ID: <xmqqcyishxf1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,23 +85,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Hi Junio,
+> On Fri, Nov 15, 2024 at 12:11 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> ...
+>> If we were to fix anything, it is to make sure that we die() before
+>> producing a single line of output.  If you have a change to a path
+>> whose "type" is without such a misconfigured attribute, that sorts
+>> lexicographically earlier than another path with a change, with a
+>> conflicting whitespace attribute, I suspect that with the way the
+>> code is structured currently, we show the diff for the first path,
+>> before realizing that the second path has an issue and then die.
+>>
+>> If we fix it, and then make sure that the die() message shows
+>> clearly what attribute setting we did not like, that would be
+>> sufficient to help users to locate the problem, fix it, and quickly
+>> move on, no?
 >
-> Le 2024-11-18 à 07:42, Junio C Hamano a écrit :
->> 
->>>     pb/clar-build-fix
->> 
->> Not all that urgent (it is not end-user facing).
->
-> I'm not sure what you mean by "not end-user facing".
-> I ran into this issue while running 'make -j -l 2.5', 
+> Thanks for the review. From what I understand from your comment,
+> we should leave it the way it was which was die right ?
 
-Anything that needs to run "make" is by definition end-user facing
-in my book ;-)
-
-As I said in my reply to Patrick, I am primarily following the
-decision made by the interim maintainer when the fix was queued.
+Correct.  I do not think replacing die() with warning() without
+doing anything else makes sense.  Making sure that we detect the
+breakage before going half-way while producing a patch that touches
+many paths may improve the end-user experience, though.
 
 Thanks.
