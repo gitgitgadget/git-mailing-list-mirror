@@ -1,85 +1,87 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A791CBEA8
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 11:51:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E571CBA1F
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 11:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732017067; cv=none; b=rsK7x8HRKHkgh/+ajjshTf/PZVkYv6tRzu4x4V3gWLqXC+lcq5aQhnCKmiSS3inHgUlMK+GTozT1UyEdq+ZWU4IrQpAbHotwT1Yj/kzgOVRgnfE18N1O+qStSEfvqoWHiSlCRIptzYI0MJpIMJEAxKKQmRtgH7cifqKIyrToPro=
+	t=1732017068; cv=none; b=X9HTthy0WuZxo869yrQzH9Y0dPWO6/bDz7dwKDuzrUb4P332zjPvOQbi6h0XqYdDFF6g0f2/nYmPkFYaA4ECP9BiK4pkflRW6Js7fHLi/8GPRLiy/z+oeIKbkk3Xy05N/69UueaInGADQCRfIV7lQA6g3Hoo1mj2/s9D/q8HZwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732017067; c=relaxed/simple;
-	bh=mGAREgK+qDxm8A665lVFvH6SaO54SZHfHd3Xg6zdcBk=;
+	s=arc-20240116; t=1732017068; c=relaxed/simple;
+	bh=yqlfq/h6bsAWpDXH3+hX4m+m6Q2bx9lysCOdaYoFHhc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rr5FVT3z7/OVCohHxbtP1Pds6jGd1L8iGAyJyVuNm8E0h9TKqbTqz0CGXql4JoLGaeZCoCJ0CZuAXJFb0X98gkGRtEPOBpZ/qiXAxLuAZ3QUkjj/Jyuz75OYwJvmnb8xHLahfkeW2nPl32SteNKuCZR+GYLJc7C0Kaw1nWOsMj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=4a76gMcB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iw3SDBe9; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=dI62MZsMWWlSjCRlSpgItdD+BBek0W1Z2SME790aG8BL0MDnzJA6xKffWk9jCNPoa/YooE5ksNVCfn+24gUFc4RTXOPRconhekMSeV1yMUQnXYofOkhUCcvVkI3Avh9YS38TWnHRG2z/ROjqqoZV2DtMqYA5reYP2Y8j0/x48v0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TPQubvZ5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoUqyqJf; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="4a76gMcB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iw3SDBe9"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 69B6E1140172;
-	Tue, 19 Nov 2024 06:51:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TPQubvZ5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoUqyqJf"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 10A9913805D1;
+	Tue, 19 Nov 2024 06:51:03 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 19 Nov 2024 06:51:04 -0500
+  by phl-compute-04.internal (MEProxy); Tue, 19 Nov 2024 06:51:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1732017064;
-	 x=1732103464; bh=e/UFRJANl8VJskwPCld43zNGgNP7JAby3UJiFbvuFN4=; b=
-	4a76gMcBuDtY+5jRg4w7t03NeILngRwYTLXS+spcpvzonnSjfyiP0HrgLRnlB2pD
-	XUmeCDFhVBI5SLeN9/Iw1VjbQCWAyJCFBPt9hxM1JTiNSfLX/a+tf38vOI0yoxei
-	7T5djBbYnxh3bpBN7ybP35edw294j/lUdGaBDIbpeldo5A0u+cDTe/ZBgbGlfZbS
-	C9mvRVEn296cat6hVAns51y2CXQlMA2P7s8C4JSCVK0ZF2OYHmVEZ8KXxhBeA2wt
-	kzaUrFa6tkI4p40l/yyL09Et08IwNVrC2OqJRqKKpoNACye8aKwKwWfG/QhUwjo8
-	Fa3tor5iNKSWdGN1Xh9teQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1732017063;
+	 x=1732103463; bh=uN0l/Si9yrZwS1RI8Oc3YBbT+HUghLJwq6pF0XoUSfM=; b=
+	TPQubvZ5issc+oJFju2VxW8nn/pi9K9neh5yw0dSJl4W/DByoXaP+o4ovnntQdKc
+	Wb3q1Ir01xu00iLyiJosw1jxi/1qy62eaBz3Fb7VnQTIJs8VOsfVHuQJ+Hq9od8v
+	e8/1cUGkYR/Nm2DE4dVwOz4GmuttiQQq5xCEmJQcd3kaUDj23hmgeinvHrOg8L1v
+	Z1XpnwbM3TEyOMSuMnPlLOawxmeQRDZcZKwnQOBwVKsXPfXivR12ryjXr9U5T1Ro
+	UuGBLrmrco7E2IgE0DUx1wQrHL8g9jlxNfNse+PkLVxmU4uvvVAq8qsfz5uPEOfN
+	f8mIGKYFXRQu66T2EwXNlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1732017064; x=
-	1732103464; bh=e/UFRJANl8VJskwPCld43zNGgNP7JAby3UJiFbvuFN4=; b=i
-	w3SDBe9Qn6P/kmfk4f0Uu+8BjxFPMqN312nxbmH5sA7HXi0k7aelGltXXr35iCCG
-	1XN0+3sKkbBiparZLTD+iRsJ/LApy0G8WnYwk7CHLU8HM1rWZPpXPVUOBU8FZjaq
-	zom6MA6R+fPHYLMg8MsBMzo8o3e88BAfuPICDqv+CQUtEg64gKfRsEa+p9DGBpPo
-	AeeOQ573bH8qZ/CyALMmEWDwKDxV9QAqTisttZG2ipUp3FwcnezEcG20I3mmyi/m
-	s0lEoV18/zMVexwX8r4p2gY1F9yUqqLl0w1TbR0jMfJLGlQRMeMRBJAGATuffusv
-	bpcYLe2smkBfGaw78hYSw==
-X-ME-Sender: <xms:qHs8Z9uWOr4d3-AY_Gav8vhjFuZwVjQ4D9Z-5zOmmLV_zLBQkKkmSA>
-    <xme:qHs8Z2cZVeawT8rzBBkE8P5t0q0CDaGNM7So3TwgmXQ-nwFeKVq3XAm9JbpiVDE1Q
-    InUS1BXIOFeAlAePg>
-X-ME-Received: <xmr:qHs8ZwyzYjt-VZ53p1kqvNRCvpN0SM0bbZ2dFu_NwuSZwB-z-g3AD1AIkui8NHh-viE7UH6ucd0z37tU93TcvovLpXafQOmvxr_jur6kqj3w_pQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedvgdefudcutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1732017063; x=
+	1732103463; bh=uN0l/Si9yrZwS1RI8Oc3YBbT+HUghLJwq6pF0XoUSfM=; b=H
+	oUqyqJfdjGu6YOOaFrd02nIopg4vXNlSd3erImxp+T5izFGt3jLRrwUnR/n9Ifku
+	LSmPcZRD8a0WCKgOctiiTmUhI2FpiLJd0nFnCM6zcNs7lNxoI2fc9XuXkKorxfOZ
+	pjgo2zeZMx/jKxhdF3KHGymkfScqwuC1G+sR+fBy6988mHXy8xLMfsJmaAQcVg3Q
+	7vpmujFJwjitSiJNYKQMWtdA0spB5pyZR2NRVXMeLHnShG5uN8pcBqDTP7FL1w/e
+	Y5fKbcX+Fb8QAoqhs2bbeaPf9blAEMc8CztTne2etjh15nqjR+1tUYqtUewukQ8T
+	9aBPbYwJVCNVf5rnjiHTA==
+X-ME-Sender: <xms:pns8Z-V_H09H0FbhUfOB68DHYPeMYdIgLyDDqPs9t750MTnUouGQyQ>
+    <xme:pns8Z6lOY8LEcogM3jHpYQxVaJSHZnRosUe3PWIOPWfVyfWLRd-BJY3opUyS8B500
+    A5jzy4oHg3o8sOufw>
+X-ME-Received: <xmr:pns8ZyasIAamWCaDX4n0U4upCxKZfI6om3Tghye1V2hiosN0XpmHM7Hlh2uUgLvY6Bz84Il4qJs2CbOJi55WI9FP8gpawqU6XYZJE2nSU_QwKEU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedvgdefvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
-    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrph
-    hluhhsrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhg
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    gthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepuggrvhhv
-    ihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:qHs8Z0Nw1rGdEC7UZKc9Tk6lHn8uKdGMZn2NYtHtVcmyVc7aQchjbw>
-    <xmx:qHs8Z9_CMTXDPwqfBaO8TDjF61zTXVZeOqXQJItWUBH9mcydF9mn3g>
-    <xmx:qHs8Z0XvvuNFRgmTHGW0E6P1HZpwIarL4rgc4d2zL27PctpPw0VtHg>
-    <xmx:qHs8Z-dvfV_DYlSDPCgYBz1CKvoG2b1lNIIJgx1hJp4biEeNpm5SaA>
-    <xmx:qHs8Z-3KmmIeql6szGztCoK_iOvPUoRhMWSxdN74JvAYUlPnkAKWtbK5>
+    eqnecuggftrfgrthhtvghrnhepfeefleeivdethefgudehueffheeiheehjedvheekleeg
+    ffdtffevieeludeiteeknecuffhomhgrihhnpegtohhnfhdrihhnpdhrsgdrihhnnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthht
+    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
+    gurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
+    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtoh
+    hordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrhhish
+    gtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehmvgesthhtrgihlhho
+    rhhrrdgtohhm
+X-ME-Proxy: <xmx:pns8Z1XcfuJ6_yjF9x68m2n0cXn5a2TyvS2ifUgF97ZV09Bc20241w>
+    <xmx:pns8Z4nyl3qjlimB3oBMDFlYnVnxecmq4Wg9nOoIg1iMlCilv_tFcQ>
+    <xmx:pns8Z6f2y5tKPNFjae8JjuiEN8cjlOhX5m2eQpCKjfXKQ-mx3jMQjQ>
+    <xmx:pns8Z6GgAzzsYNTls6EkxO32ceSRi3k8uv5jvZZV_rhETUCWQRYrCA>
+    <xmx:p3s8Zxc59CajKO3WQA3gPdIl7aWCPYI9sxIkVLmLm1RRfBxfcdrQkAIG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Nov 2024 06:51:02 -0500 (EST)
+ 19 Nov 2024 06:51:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d5731049 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8a9daa33 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Tue, 19 Nov 2024 11:50:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 19 Nov 2024 12:50:44 +0100
-Subject: [PATCH v8 07/23] Makefile: consistently use PERL_PATH
+Date: Tue, 19 Nov 2024 12:50:43 +0100
+Subject: [PATCH v8 06/23] Makefile: generate doc versions via
+ GIT-VERSION-GEN
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +90,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241119-pks-meson-v8-7-809bf7f042f3@pks.im>
+Message-Id: <20241119-pks-meson-v8-6-809bf7f042f3@pks.im>
 References: <20241119-pks-meson-v8-0-809bf7f042f3@pks.im>
 In-Reply-To: <20241119-pks-meson-v8-0-809bf7f042f3@pks.im>
 To: git@vger.kernel.org
@@ -101,80 +103,128 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-When injecting the Perl path into our scripts we sometimes use '@PERL@'
-while we othertimes use '@PERL_PATH@'. Refactor the code use the latter
-consistently, which makes it easier to reuse the same logic for multiple
-scripts.
+The documentation we generate embeds information for the exact Git
+version used as well as the date of the commit. This information is
+injected by injecting attributes into the build process via command line
+argument.
+
+Refactor the logic so that we write the information into "asciidoc.conf"
+and "asciidoctor-extensions.rb" via `GIT-VERSION-GEN` for AsciiDoc and
+AsciiDoctor, respectively.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                            | 2 +-
- contrib/buildsystems/CMakeLists.txt | 2 +-
- git-instaweb.sh                     | 4 ++--
- git-request-pull.sh                 | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ Documentation/.gitignore                               |  2 ++
+ Documentation/Makefile                                 | 18 ++++++++++++------
+ Documentation/{asciidoc.conf => asciidoc.conf.in}      |  3 +++
+ ...ctor-extensions.rb => asciidoctor-extensions.rb.in} |  8 ++------
+ 4 files changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 13dc29695361af8ded3c5146ff0578e198b4d0ab..94b1ccc7b714743a149df5200a5a8d60b605c1ab 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2554,7 +2554,7 @@ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's/@USE_GETTEXT_SCHEME@/$(USE_GETTEXT_SCHEME)/g' \
-     -e $(BROKEN_PATH_FIX) \
-     -e 's|@GITWEBDIR@|$(gitwebdir_SQ)|g' \
--    -e 's|@PERL@|$(PERL_PATH_SQ)|g' \
-+    -e 's|@PERL_PATH@|$(PERL_PATH_SQ)|g' \
-     -e 's|@PAGER_ENV@|$(PAGER_ENV_SQ)|g' \
-     $@.sh >$@+
- endef
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index b893b0143a72ad284887d1d4ca72f1beb0a39ad7..f8892c49c6d317040b3b6447b88133b2bfff3fcf 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -846,7 +846,7 @@ foreach(script ${git_shell_scripts})
- 	string(REPLACE "@NO_CURL@" "" content "${content}")
- 	string(REPLACE "@USE_GETTEXT_SCHEME@" "" content "${content}")
- 	string(REPLACE "# @BROKEN_PATH_FIX@" "" content "${content}")
--	string(REPLACE "@PERL@" "${PERL_PATH}" content "${content}")
-+	string(REPLACE "@PERL_PATH@" "${PERL_PATH}" content "${content}")
- 	string(REPLACE "@PAGER_ENV@" "LESS=FRX LV=-c" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/${script} ${content})
- endforeach()
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index c8efb1205a8e2a66a6aced840980978897e122bc..5ad50160bb035885d8c180bee3ebb0a8e9622abc 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2006 Eric Wong
- #
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index a48448de32f98b1a054b36e886ea920bccebc494..649df89474d357ccc91109b5c35fe2d0910f968a 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -15,3 +15,5 @@ tmp-doc-diff/
+ GIT-ASCIIDOCFLAGS
+ /.build/
+ /GIT-EXCLUDED-PROGRAMS
++/asciidoc.conf
++/asciidoctor-extensions.rb
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 0f55baa252fffbcd506f0c6f410b26b37f2e9b11..aac489d3b01e9ca08f24a7f604d4b8dae50860d6 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,6 +1,8 @@
+ # Import tree-wide shared Makefile behavior and libraries
+ include ../shared.mak
  
--PERL='@PERL@'
-+PERL='@PERL_PATH@'
- OPTIONS_KEEPDASHDASH=
- OPTIONS_STUCKLONG=
- OPTIONS_SPEC="\
-@@ -716,7 +716,7 @@ EOF
++.PHONY: FORCE
++
+ # Guard against environment variables
+ MAN1_TXT =
+ MAN5_TXT =
+@@ -148,16 +150,12 @@ man5dir = $(mandir)/man5
+ man7dir = $(mandir)/man7
+ # DESTDIR =
  
- gitweb_conf() {
- 	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
--#!@PERL@
-+#!@PERL_PATH@
- our \$projectroot = "$(dirname "$fqgitdir")";
- our \$git_temp = "$fqgitdir/gitweb/tmp";
- our \$projects_list = \$projectroot;
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index 10c88639e28c02650ffea3d4671afa9a9f0bb182..775ba8ea11aa0fce90ae9bfaea8eac5b8bc584a4 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -112,7 +112,7 @@ find_matching_ref='
- 	}
- '
+-GIT_DATE := $(shell git show --quiet --pretty='%as')
+-
+ ASCIIDOC = asciidoc
+ ASCIIDOC_EXTRA =
+ ASCIIDOC_HTML = xhtml11
+ ASCIIDOC_DOCBOOK = docbook
+ ASCIIDOC_CONF = -f asciidoc.conf
+-ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF) \
+-		-amanmanual='Git Manual' -amansource='Git $(GIT_VERSION)' \
+-		-arevdate='$(GIT_DATE)'
++ASCIIDOC_COMMON = $(ASCIIDOC) $(ASCIIDOC_EXTRA) $(ASCIIDOC_CONF)
+ ASCIIDOC_DEPS = asciidoc.conf GIT-ASCIIDOCFLAGS
+ TXT_TO_HTML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_HTML)
+ TXT_TO_XML = $(ASCIIDOC_COMMON) -b $(ASCIIDOC_DOCBOOK)
+@@ -210,6 +208,14 @@ ASCIIDOC_DEPS = asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
+ DBLATEX_COMMON =
+ XMLTO_EXTRA += --skip-validation
+ XMLTO_EXTRA += -x manpage.xsl
++
++asciidoctor-extensions.rb: asciidoctor-extensions.rb.in FORCE
++	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@+
++	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
++else
++asciidoc.conf: asciidoc.conf.in FORCE
++	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@+
++	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+ endif
  
--set fnord $(git ls-remote "$url" | @PERL@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
-+set fnord $(git ls-remote "$url" | @PERL_PATH@ -e "$find_matching_ref" "${remote:-HEAD}" "$headrev")
- remote_sha1=$2
- ref=$3
+ ASCIIDOC_DEPS += docinfo.html
+@@ -364,7 +370,7 @@ manpage-cmd = $(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
+ %.xml : %.txt $(ASCIIDOC_DEPS)
+ 	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@ $<
  
+-user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
++user-manual.xml: user-manual.txt user-manual.conf $(ASCIIDOC_DEPS)
+ 	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d book -o $@ $<
+ 
+ technical/api-index.txt: technical/api-index-skel.txt \
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf.in
+similarity index 97%
+rename from Documentation/asciidoc.conf
+rename to Documentation/asciidoc.conf.in
+index f6da6d1fbd2b208b072c1158dfcfb29c6c01f93a..dbe36a52eabfabef59e31d3be6518549e4f90206 100644
+--- a/Documentation/asciidoc.conf
++++ b/Documentation/asciidoc.conf.in
+@@ -21,6 +21,9 @@ tilde=&#126;
+ apostrophe=&#39;
+ backtick=&#96;
+ litdd=&#45;&#45;
++manmanual='Git Manual'
++mansource='Git @GIT_VERSION@'
++revdate='@GIT_DATE@'
+ 
+ ifdef::backend-docbook[]
+ [linkgit-inlinemacro]
+diff --git a/Documentation/asciidoctor-extensions.rb b/Documentation/asciidoctor-extensions.rb.in
+similarity index 92%
+rename from Documentation/asciidoctor-extensions.rb
+rename to Documentation/asciidoctor-extensions.rb.in
+index cb24480b63d2ecc5c4ef267f4c501da53fc5b5be..c4c200dace85cf0a89dbc0f54ef25e4d1b6fec4d 100644
+--- a/Documentation/asciidoctor-extensions.rb
++++ b/Documentation/asciidoctor-extensions.rb.in
+@@ -29,13 +29,9 @@ module Git
+     class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
+       def process document, output
+         if document.basebackend? 'docbook'
+-          mansource = document.attributes['mansource']
+-          manversion = document.attributes['manversion']
+-          manmanual = document.attributes['manmanual']
+           new_tags = "" \
+-            "<refmiscinfo class=\"source\">#{mansource}</refmiscinfo>\n" \
+-            "<refmiscinfo class=\"version\">#{manversion}</refmiscinfo>\n" \
+-            "<refmiscinfo class=\"manual\">#{manmanual}</refmiscinfo>\n"
++            "<refmiscinfo class=\"source\">@GIT_VERSION@</refmiscinfo>\n" \
++            "<refmiscinfo class=\"manual\">Git Manual</refmiscinfo>\n"
+           output = output.sub(/<\/refmeta>/, new_tags + "</refmeta>")
+         end
+         output
 
 -- 
 2.47.0.274.g962d0b743d.dirty
