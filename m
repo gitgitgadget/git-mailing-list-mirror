@@ -1,124 +1,248 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F1D1D31BE
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 22:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B7F1C1F0B
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 23:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732055409; cv=none; b=azMcQmCx3HpVVIRPrd6Pq9e/iJdDfgTZ/S+KppM80Kqt6bCxDqrUlJAgPD8tGh0oV83JJXMnJv8HT10MeV97XYk2ZoHq/BQYSec8voDQH1RALHnXct2t222hU36pQWveYEsPZWMDhyze04p4XJLthtswGlo9n34rHGXLzTe1a2M=
+	t=1732057709; cv=none; b=g/b9/1ofphJwiexqcP8/C9zBjnZOCmzVDvIUfOSKy6l+IiRZ39H/yNEN43tp3s+VzvXN1iRBeAtts/7uoAPRzJXTYzfWCTOrwHJ2BHWuyo6FgSU2qIGAd0ACsnz7mr4IwKQZ4rAX8UKwA+9Mui+fOaOaPquMAUhvsLPiukD3QTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732055409; c=relaxed/simple;
-	bh=/AoNA3eX8e5S0tTh+RcyCzR8V9BSGV3yPusDPzSsay0=;
+	s=arc-20240116; t=1732057709; c=relaxed/simple;
+	bh=nXI1J2SWlK+dY2SD9JHfKPrIcDhEFOu+YQvc1JtsYGI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ajQED34aE+OboSNbCvyIZXeVr1DBhgNNwWFEcyqJdKgBLozKyG89FGO2BeScu0BMJLTdpYj4gbjSYbWBjPjLME0yghXC14xtFKHiVViFwyfFaQgfQSFOn6cDSsG6stdqzPMIDA2SZzzT2x5QH/zkW6K8xVTzIyUgqOUxekda59g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YS+W+Jds; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=UpF9V9EA0X28Do6A85DjtBEHjoKap0Wgy+sAYvmf48X/bnxoLQuQ/NIgw/rr2jaA/4CTDRG62TKSBTHQf2l+NJqXD50dZa4jQGfocRQuti7ckdW7yvgzKcNkfONBUs8HG7CsVzmnvdlXu/C9WYokjeZ6R53zMJaMwIOijecbvRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lzGF3fvp; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YS+W+Jds"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1732055405;
-	bh=/AoNA3eX8e5S0tTh+RcyCzR8V9BSGV3yPusDPzSsay0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=YS+W+JdsMEZ2gVd8UIQTvY0a8cQ6osWORu/M3xwDOBwxAh6rrJqWxRwGPBQqt309L
-	 gyn5OOJ+9Tb+TpAMpi83EBxr5k4fBLjzVYdzURo8wkZ2ncDv2TYVVFUNW/KiV/VSBd
-	 SyuEyvNVb0lTnsFL1gzSVZ6wZCMERYxW6pYlZXFMPLoXmeFYNykRytpU0/iHYl4XJN
-	 oLFvoI7ROLeHatgQC+c9RpVTAesuaOTKBfQe4bdxbs9A3k93MfchB3yNtYmjoX2MO5
-	 2iPBaXppA86AgxwDgu3TVPW+/0Ym5Pc7g2ouvh8TjwMer3yRES8DHzCeLYUv4QYE32
-	 dwaKK10bcX0mASyQ+pJ3NxGAO+OKS9d0cOncLoM3PVlj8JXP6ESWP9JugczjUE4trO
-	 wNuUTFsU+AXNcXh6lCBAq7UDogCw8y/pIZqoLq4ebUR1QYT15wgwWpLJJpnZj4l77h
-	 8OsDPFLgwWGpoU0pN0rZ3JXY5RnkyLZmErTcnV/KW421eU48loZ
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:d026:90f3:853d:a63c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 170F0200C4;
-	Tue, 19 Nov 2024 22:30:05 +0000 (UTC)
-Date: Tue, 19 Nov 2024 22:30:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Haritha D <Harithamma.D@ibm.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Inquiry on Onboarding a z/OS Machine to Git Community CI/CD
- Pipeline
-Message-ID: <Zz0Ra7PfJNhOcn7X@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Haritha D <Harithamma.D@ibm.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <898B3E90-1703-419D-A5FA-8BE9557744E5@ibm.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lzGF3fvp"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6ee8e894deeso26499107b3.0
+        for <git@vger.kernel.org>; Tue, 19 Nov 2024 15:08:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732057706; x=1732662506; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uo9ZoOglYF1fSw48XzTlvIIiCnfJahwSlkIpc5JIK+U=;
+        b=lzGF3fvpU3G7ltV7yWSsf5EFn6Zmr3CRZjhHT7KSiUEsfG1KoUkF6SkZ9t9E8cZUsR
+         lUNy4gecKWOthcXr+A5T8NCvEQtzy7mFLCr9wkPvz2DvyNW1bUxdMv3rZC5bh8px/ArP
+         giNXYE4aNrf0Fxr08an9zj4vwH3m3mysygBreoO53Xbs/IbP/OFK0Ezq41JyXh0fXLdC
+         H5YZFR5obUG9xXsmUEHZqG766A+gh6F99B8+S+kub3NwF4PRKQmJmlr3WQt0YXTl2At0
+         rXJRL2FaqQVuu+vIYEAePkczWTlrW7zwj4EUzEkF6ZcpZRR86jD05Fqzkv8YGDDD5Z7b
+         c1Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732057706; x=1732662506;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uo9ZoOglYF1fSw48XzTlvIIiCnfJahwSlkIpc5JIK+U=;
+        b=UskeKK1VQ1ox2Zb7a0nHh0Xbf08Ym9NEMRhw3+AbzFiGeKmxP2ftLducTZU81FZNwM
+         wF/vBxA63ZS2BHr2vryejeW97HLco3Qg/W6CSdrgWEsqPssLSJk4t8bXPcKetuMC1vpR
+         fg3JlTlrgCv1jKoW1Xav6opuTTr49FSfvVpCVEyVZLzxlelQLmN6rPoP/AbQZFbTuwcF
+         ocXIqU6ASxUl4Zsb2RTav1QZd6+yzxXU4HeVrvkrNEoIT51lzYkdYzPWqdzCNUlQozum
+         aO7erDXqvYwFQHR50p7OTONzEDWOD3NJaUv/YmExZ+TUC0F5LDxJlIyANWdYQtluVJLO
+         AuFg==
+X-Gm-Message-State: AOJu0Yy9BM6uIZCU4v+bUGxOaMK8Zyi7Ba6WlG/GhmdT1/wAfsXpXlbE
+	G4vSp9M4hdtUpM7Og9fESpWml0KX9NQfKQh24Qvm5mZ6a+e5rpKlJwnWmIodV1klKOw0unAc6XY
+	7
+X-Google-Smtp-Source: AGHT+IEZcXkz3IXLoEJbwVX5EjAhls13dFrmoIIAgw2hiXypDu/vVlnCT2W+QJ6Jjv6MjTuCnaUhng==
+X-Received: by 2002:a05:690c:a94:b0:6e5:a8ce:dd0a with SMTP id 00721157ae682-6eebd2b0d40mr9810667b3.35.1732057706595;
+        Tue, 19 Nov 2024 15:08:26 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ee7137f306sm19548387b3.123.2024.11.19.15.08.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Nov 2024 15:08:26 -0800 (PST)
+Date: Tue, 19 Nov 2024 18:08:24 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 00/11] pack-bitmap: convert offset to ref deltas where
+ possible
+Message-ID: <Zz0aaPdHiFyoRkKg@nand.local>
+References: <cover.1728505840.git.me@ttaylorr.com>
+ <20241011083838.GI18010@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Q8EULT9g74iWvCAl"
-Content-Disposition: inline
-In-Reply-To: <898B3E90-1703-419D-A5FA-8BE9557744E5@ibm.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---Q8EULT9g74iWvCAl
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241011083838.GI18010@coredump.intra.peff.net>
 
-On 2024-11-19 at 11:34:36, Haritha D wrote:
-> Hi Team,
->=20
-> As we are working on enabling Git on the z/OS platform, and we believe in=
-tegrating a z/OS machine into the Git community's CI/CD pipeline could be v=
-aluable for testing and validation.
->=20
-> Could you please provide guidance on how to proceed with onboarding a z/O=
-S system as part of the community's CI/CD pipeline? We would appreciate any=
- information on the technical requirements and necessary steps for this int=
-egration.
+On Fri, Oct 11, 2024 at 04:38:38AM -0400, Jeff King wrote:
+> On Wed, Oct 09, 2024 at 04:30:52PM -0400, Taylor Blau wrote:
+>
+> > The first optimization (cross-pack deltas) should help clones and
+> > fetches, but the second optimization (thin deltas) will only help
+> > fetches, since the 'haves' bitmap will necessarily be empty for
+> > clones.
+> >
+> > Of course, REF_DELTAs have a less compact representation than
+> > OFS_DELTAs, so the resulting packs will trade off some CPU time for a
+> > slightly larger pack. But we're only talking about a handful of extra
+> > bytes, and network bandwidth is pretty cheap, so I think the
+> > optimization is worthwhile here too.
+>
+> It would be nice to see some numbers, even simulated ones from t/perf.
+> Of course we'd like to show off any reduced server CPU for generating a
+> fetch response. But I'd also like to see if the extra steps to find the
+> cross-pack bases have any measurable negative effect (so the ideal there
+> would be a big midx repo that doesn't have a lot of those bases, as it
+> would not be helped much by the optimization and would be hurt by the
+> time spent trying to apply it).
 
-My recommendation is to set up a GitHub App that will be able to work
-with the GitHub checks API and webhooks to kick off a job and report
-back on the status of your CI system.  Once that's set up, someone with
-access to the git organization can add it to run CI jobs.
+I put together some loose numbers for this, and there is a definite
+measurable slowdown imposed by this series.
 
-It might seem like a good idea to use a self-hosted GitHub Actions
-runner on your platform, but (a) I don't think the runner runs on z/OS
-and (b) GitHub recommends against using self-hosted runners on public
-repositories for security reasons[0].  For that reason, I don't think
-we're going to enable that as an option, since it would be a
-vulnerability on our end (plus it would probably end poorly for you as
-well, which we'd want to avoid).
+The setup is getting a fresh copy of the kernel, and then repacking it
+with:
 
-One other alternatives is that if you can get things running in a
-virtual machine well enough, that could be set up to run in emulation in
-GitHub Actions.  I've done this on my own personal repositories to set
-up Debian on arm64 as well as FreeBSD and NetBSD on amd64.
+    $ git repack -da --cruft --write-midx --write-bitmap-index \
+        --max-pack-size 1G --max-cruft-size 1G
 
-Other folks may have other suggestions, so I'd definitely suggest seeing
-what they have to say.
+, which on my machine produces the following pack structure:
 
-In any event, before we set up CI, we'd probably want the tests to be
-passing. Is that the case now, or is more work required for that to
-happen?
+    $ for idx in .git/objects/pack/*.idx
+      do
+        echo $(basename $idx) \
+          $(git show-index <$idx | wc -l)
+      done | sort -rnk2
+    pack-8dc61c00e623765c54cbd332f31795bad7edf142.idx 3385859
+    pack-d84e88715cde55d4d1b09afb23254617a123e668.idx 2064396
+    pack-cd408bebd5c02719df7621941d92415f4dbb313c.idx 1805431
+    pack-b11c6ac57f5ecf338314ee59134b0d724d257494.idx 1036443
+    pack-a42cc1b409940d7e38a4673bca1150d320392bf0.idx 819701
+    pack-93d255a1000f438a77528907c480c06b277e225d.idx 755019
+    pack-600621b90dc29c761ee168cc4237b2ff2956b0e8.idx 609754
 
-[0] https://docs.github.com/en/actions/hosting-your-own-runners/managing-se=
-lf-hosted-runners/about-self-hosted-runners#self-hosted-runner-security
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Generating a full clone[^1] with multi-pack reuse enabled (based on the tip
+of tb/multi-pack-reuse-dupfix) gives me the following timings:
 
---Q8EULT9g74iWvCAl
-Content-Type: application/pgp-signature; name="signature.asc"
+    13.94s user 0.27s system 99% cpu 14.207 total
+    13.93s user 0.30s system 99% cpu 14.223 total
+    13.90s user 0.33s system 99% cpu 14.229 total
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+After applying the series, I get:
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZz0RawAKCRB8DEliiIei
-gaSCAP9Sf/F5PjMsB9RBBY1IDpIxxAw63Il+QWoCsfK/oamptgD+IiKS+SO6OGNN
-V9s94xFSN2nULDPiAIZ/TmiYZzSnbA0=
-=xKbP
------END PGP SIGNATURE-----
+    14.94s user 0.33s system 99% cpu 15.279 total
+    14.92s user 0.32s system 99% cpu 15.244 total
+    14.87s user 0.40s system 99% cpu 15.280 total
 
---Q8EULT9g74iWvCAl--
+Or around a ~5% slowdown. I think what's really killing us is all of the
+back and forth in pack-bitmap.c::find_base_bitmap_pos(), where we have
+to:
+
+ - Find the pack-relative position of the base object given its offset.
+ - Convert that pack-relative position into a lexical position (still
+   relative to the source pack).
+ - Convert that lexical position into an object ID.
+ - Call bsearch_midx() to see if we have a copy of that object, and
+   record its MIDX-relative lexical position.
+ - Convert the MIDX-relative lexical position into its pseudo-pack
+   position.
+
+I think that the first four of those steps are unavoidable. But I think
+we can do better on the last step if we compute a forward index from
+MIDX lexical position to pseudo-pack position.
+
+A cheap way to run that experiment is to just add a temporary field into
+the MIDX to store that mapping, compute it at runtime, and then deduct
+the time it took to compute that mapping (presumably you'd do it during
+MIDX creation, and store it in a chunk, etc.).
+
+Here's some code to do that:
+
+--- 8< ---
+diff --git a/midx.c b/midx.c
+index ca98bfd7c64..2bd892f899c 100644
+--- a/midx.c
++++ b/midx.c
+@@ -988,3 +988,18 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
+
+ 	return verify_midx_error;
+ }
++
++void midx_populate_forward_index(struct multi_pack_index *m)
++{
++	uint32_t i;
++
++	ALLOC_ARRAY(m->forward_idx, m->num_objects);
++
++	trace2_region_enter("midx", "populate_forward_index", the_repository);
++
++	for (i = 0; i < m->num_objects; i++)
++		if (midx_to_pack_pos(m, i, m->forward_idx + i) < 0)
++			BUG("oops");
++
++	trace2_region_leave("midx", "populate_forward_index", the_repository);
++}
+diff --git a/midx.h b/midx.h
+index 42d4f8d149e..1ef755fe45b 100644
+--- a/midx.h
++++ b/midx.h
+@@ -65,6 +65,8 @@ struct multi_pack_index {
+ 	const unsigned char *chunk_revindex;
+ 	size_t chunk_revindex_len;
+
++	uint32_t *forward_idx;
++
+ 	struct multi_pack_index *base_midx;
+ 	uint32_t num_objects_in_base;
+ 	uint32_t num_packs_in_base;
+@@ -74,6 +76,8 @@ struct multi_pack_index {
+ 	char object_dir[FLEX_ARRAY];
+ };
+
++void midx_populate_forward_index(struct multi_pack_index *m);
++
+ #define MIDX_PROGRESS     (1 << 0)
+ #define MIDX_WRITE_REV_INDEX (1 << 1)
+ #define MIDX_WRITE_BITMAP (1 << 2)
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index e8094453ca3..1eb72347c02 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -2092,9 +2092,13 @@ static int find_base_bitmap_pos(struct bitmap_index *bitmap_git,
+ 		if (!bsearch_midx(&base_oid, bitmap_git->midx,
+ 				  &base_midx_pos))
+ 			return -1;
++#if 0
+ 		if (midx_to_pack_pos(bitmap_git->midx, base_midx_pos,
+ 				     base_bitmap_pos) < 0)
+ 			return -1;
++#else
++		*base_bitmap_pos = bitmap_git->midx->forward_idx[base_midx_pos];
++#endif
+ 	} else {
+ 		/*
+ 		 * We assume delta dependencies always point backwards.
+@@ -2316,6 +2320,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	assert(result);
+
+ 	load_reverse_index(r, bitmap_git);
++	midx_populate_forward_index(bitmap_git->midx);
+
+ 	if (!bitmap_is_midx(bitmap_git) || !bitmap_git->midx->chunk_bitmapped_packs)
+ 		multi_pack_reuse = 0;
+--- >8 ---
+
+Then when running the same command, we get results that are quite
+encouraging. The runtime jumps to 24.213 seconds, which is ~9.73 seconds
+slower than the average of the baseline measurements. But it takes
+~10.418 seconds on my machine to compute the forward index. So it's
+really around 688ms *faster* than the baseline, despite doing a little
+more work.
+
+The fact that we can improve on the baseline rather than just meet it
+suggests that implementing this forward index may have some benefit
+outside of just this series.
+
+Thanks,
+Taylor
+
+[^1]: The setup here is:
+
+    $ git for-each-ref --format='%(objectname)' refs/heads refs/tags >in
+    $ git pack-objects --stdout --delta-base-offset --use-bitmap-index --revs <in >/dev/null
