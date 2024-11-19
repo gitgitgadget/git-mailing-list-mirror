@@ -1,98 +1,135 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1249C13DBBE
-	for <git@vger.kernel.org>; Mon, 18 Nov 2024 23:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0776DDAB
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:16:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731974194; cv=none; b=CTPfcqAGE3xZ59GBrFmYuIWnowob0zFNpTPAb3yNtadnGInzsggLoiUq4bftvz2biVAsfx1ODT+v+O3hMc/JpUgE50YrPjB1BWuFO+5Q29iVZ8gwh8Wy8X/oiWh57oWbpcHiC0ldZenMdV7bb2j3oMB8zRFsGVMUPN48y6g4+vA=
+	t=1731975417; cv=none; b=QobWhXQ0QkLBrczpyY2QXlg3KhLx7RSgXZ6eJTKp8O57ni5D3Fq85wCEyn2gQ4IUxYeSCeoGR81Y+NxLWjRE2DiDz9riuJGxsDGsrhl9xtz6WPGFnUxLEI/E2p5BXWQEVrlO1aPpr4qiU2xCy6fSfSny8e3ZbU4LNkCXdodDw1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731974194; c=relaxed/simple;
-	bh=gxqT3u7RYleXTahyb1RtD64AfJouwPtIrZ39OioAnBU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=Juv+aFFPHGCARPjisv6LbJiLD3lh/BEhM0MsGPXinvNg9J+ADSigp6kFrxHTz5UkOAKwzqZtAxCRkRBttg4dmwNhW0+H0DwOYCjFKcbrmEEo/zyGRmjQvZwLkwNAVIL1Ygux4/sj5hZcL3/67xwxJjC+7u3JMkAkX8UQ7mGogNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0SlnOSr; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1731975417; c=relaxed/simple;
+	bh=5+Kvvk5fZV/8tXQNt1XXsGBqAfuZDuq8xt3Nzaj1vDw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SCBRoR7SPlltQXCf8sgtDpHQ+K9H/pNJGgv/LEnH+VjOWK3PIuR9pogurH2fPc4FuqtSJFMA+uoJDkFUVwBoGx7gBwCIHtfpo3FdgZBucO+F2M4mUH6Dr8LQEA9+daovLG8NT0lUL6MrBOexVLsYpRgI43s0oLLlvgkA+JGP/CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gPbs0h40; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0SlnOSr"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7240d93fffdso2992976b3a.2
-        for <git@vger.kernel.org>; Mon, 18 Nov 2024 15:56:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731974192; x=1732578992; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:to:subject:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tz4RHzHTNHhLJZXDG4RrvnTLD58i1jODHqU8uv4pnLw=;
-        b=V0SlnOSrJzmutBeBl+U7BtV0VhAArH/yTAYkpXnGcq6FFSfjZ6qQ3i7l704r0JCxva
-         APjps9sCMbz3oKFkU2KdoMcqzNu5A0ge+AtGqTDs1hTYcq6qKRVe8Q9+GYmwXzr6RKyj
-         4zWhEuKXf36Z2mcW36/htdWsY8ervrJPYkBnsqvs7nAX3r4Rvje6e8zyjnR8d1dIajky
-         zJ2RoJda/kBD8peEUIij6bOlz3O2iHVTgSMGOtetkb1dnbXhnZ/19cbV4VngWAZxso3F
-         PDHpmu+XJ2pkEi21c+fD22CXJZFOlGpYR8YW0CtBYm+xFCIRQ/jxa/2Ws25DQk8zfUml
-         HXUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731974192; x=1732578992;
-        h=content-transfer-encoding:content-language:to:subject:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Tz4RHzHTNHhLJZXDG4RrvnTLD58i1jODHqU8uv4pnLw=;
-        b=oPULDels6T7+4EMrhoA+2aiSnx4HslGA+6wIb93TA+viLDRPONoCXOdKdW0jqVbabo
-         oeFbOkaGNw1RDgWcjXpwRHoSrnetG/pTfQs3Y4kmHtiHtmyyCEd8q/OnKvCzvYgcPx3G
-         rjQt0vPth/FnaDeufI7y09PEd9qf0fSkmk9+3TCATdXb6zcfi0EaxLVUkhpNi8jASp4h
-         jWS2V0D26vccFFp2HvROTN8fp1HXCkx3K97R2hWFhRZfmzecr3kHkBKA8xfLw0E6eVoE
-         UXzvcntwydWqXDfmz2Z6oMxbo0dYUjm93BxJqAMIkRQWsv4KJrn+7URty9AUyX65CUjW
-         eZQQ==
-X-Gm-Message-State: AOJu0YyfgunvzwHbQFobCkM5E5xltHSARyLGhGVFVJPLuVJz+Kc3kY2h
-	/YYx6Ogl3nQbw737683vicuiOfRo6J1o/VjFULR2Q7AYF4KZg36/6q1H3g==
-X-Google-Smtp-Source: AGHT+IFpM/VZKbj+Xx4G+n0IDf88vL3cy+Nj0U62+N2iRfCcaz6gG+oJyrTsxoliQUvceCLu3pOKpQ==
-X-Received: by 2002:a05:6a00:1391:b0:71e:6a57:7290 with SMTP id d2e1a72fcca58-724769ff46amr18574539b3a.0.1731974191994;
-        Mon, 18 Nov 2024 15:56:31 -0800 (PST)
-Received: from ?IPV6:2601:647:5580:5760:bc4:dba3:8637:2ce1? ([2601:647:5580:5760:bc4:dba3:8637:2ce1])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72477202671sm6776086b3a.190.2024.11.18.15.56.31
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Nov 2024 15:56:31 -0800 (PST)
-Message-ID: <24458598-ebbe-41fc-8517-457fa65ed481@gmail.com>
-Date: Mon, 18 Nov 2024 15:56:30 -0800
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gPbs0h40"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7F6D12540162;
+	Mon, 18 Nov 2024 19:16:53 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 18 Nov 2024 19:16:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731975413; x=
+	1732061813; bh=QZ0qeWaNH1xg0UF7rp2rsn/c3Fx5IcitE2BnEotHgAc=; b=g
+	Pbs0h40RreqlxSfYoTcgvHgPoD3JaU0LjbAIL2XiN//XDpL+PuaiAW6bF8DanWZM
+	JWyvlNuG7sTNx+4/ustohT7EGaKx06vpZZXW6J68i2L1yYDF0RqJYCHgrMPLdQ4w
+	xdQhQONQRbDb5yodgeaFADY0Qq/3txXQmox7Rri5pDWCtEKXbWO9TxTr9M+c4ou8
+	SG53psfw1lantop5immG/CaJ3ZfvJ7Dx84fLzc6Y8NGDr5b7LVE5LPcnxDu5m2xR
+	L9Jua2iGci88BeB749incZ86cY1OpelfTqnoN09MpOLqhZBg+X9ND3niqxH4wp1H
+	pZGCM6hRvdxXvYnDUwtYQ==
+X-ME-Sender: <xms:9Ng7Z_LoCxIj-BVOgCJWwzLW-pz7IhYi8xSC_-H0YwWPdDRC_fZgmA>
+    <xme:9Ng7ZzK3aUW3KwWkghyJ6jyVoWWJgahbRdb1nySu2KKXW4h2kW4JTkoVZkUUaWT7W
+    YZx-Y7IOr_i512iXQ>
+X-ME-Received: <xmr:9Ng7Z3tEEr6aL92_3LK21PidEBUM9VjkRZX3VcgDWuNoN67Ya3pAXSqZm0L7xlspMRYObBTGK3C4l-aqLuHcASqrwlLBp3dqw-Ax>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgf
+    dtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedtgfehtdenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopegvrhhitgdrphgvihhjihgrnhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhvihhn
+    figrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhi
+    esghhoohhglhgvrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghm
+    ihhlhidrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepjhhlthho
+    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:9Ng7Z4YWlWf8wNY8xdENf8r5mbYeDy9KT27GqEw0TI97BoU8qMJldA>
+    <xmx:9Ng7Z2a_gkC2HXh4S91nsW2dPwqO14UpQSpSv3WlZ-VTMQsESKX2yg>
+    <xmx:9Ng7Z8C-j1ZsbsJw2bCzXnVZGOzXjRLxi3W7quAJpsjKNa8PsgKUaA>
+    <xmx:9Ng7Z0ZJMsw8hX886YTxRv5kYs_ON4MrwqLAFzANSmKUuGC27AP3Vw>
+    <xmx:9dg7Z8nk1AhxSliK8GubQsw2l9Ge7ZGMVmMxJ026e3oyVSLk9B6dtgCh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 18 Nov 2024 19:16:52 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Peijian Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
+  chriscool@tuxfamily.org,  karthik.188@gmail.com,  toon@iotcl.com,
+  jltobler@gmail.com
+Subject: Re: [PATCH v6 0/6] cat-file: add remote-object-info to batch-command
+In-Reply-To: <CAN2LT1Cmsw3RB1kbRBvoeLs8WaQeZWqrG96EQfMkMe_jdKaO4g@mail.gmail.com>
+	(Peijian Ju's message of "Mon, 18 Nov 2024 11:28:23 -0500")
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+	<20241108162441.50736-1-eric.peijian@gmail.com>
+	<xmqq4j4egza6.fsf@gitster.g>
+	<CAN2LT1Cmsw3RB1kbRBvoeLs8WaQeZWqrG96EQfMkMe_jdKaO4g@mail.gmail.com>
+Date: Tue, 19 Nov 2024 09:16:50 +0900
+Message-ID: <xmqqplmshybx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-From: Illia Bobyr <illia.bobyr@gmail.com>
-Subject: Long names for `git log -S` and `git log -G`
-To: git@vger.kernel.org
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hello,
+Peijian Ju <eric.peijian@gmail.com> writes:
 
-I would like to add long names for the `-S` and `-G` options for `git log`.
-It seems that most options have long versions, though there are some 
-exceptions.
+> While the “fetch and locally inspect” approach is an option, it would
+> undermines the purpose of the feature, as highlighted by Christian’s
+> partial clone and sparse checkout example. This feature is
+> specifically designed to provide information without requiring the
+> objects to be fetched, making such an alternative counterproductive.
 
-I was wondering if there could be any objections.
-And also, what would be a good name for each.
+Thanks, then wouldn't it make more sense to say, because support for
+new protocol capabilities on the server side would have to happen at
+a lot fewer places than the clients, we only work when the necessary
+protocol extension support is available, without any "fetch and
+locally inspect" fallback?
 
-Both are provided by the diff-pickaxe functionality.
-`-S` is already affected by `--pickaxe-regex` and both `-G` and `-S` are 
-affected by `--pickaxe-all`.
+The above is after reading your "cons" here of the fallback.
 
-Also,`diffcore` docs says:
+> Cons:
+> - Implementing a quarantine mechanism seems like a separate feature.
+> This patch series already introduces a number of changes, and
+> including the quarantine mechanism might make it too extensive.
 
- > "-G<regular-expression>" (mnemonic: grep)
+Not an excuse to introduce incomplete changes that are not
+sufficient to be useful, though.
 
-I was thinking of `--pickaxe` for `-S` and `--grep` for `-G`.
-And it would probably make sense to discuss this before I try submitting 
-a patch.
+> - Based on Mr. Patrick Steinhardt’s comment at [1], since
+> remote-object-info operates only on protocol v2, adding a quarantine
+> mechanism may lead to differing client-side behavior depending on the
+> protocol, which could complicate the feature’s consistency.
 
-`--pickaxe-grep` for `-G` seems like a reasonable alternative name for `-G`.
-Not sure what would be a reasonably short alternative for `-S`.
-`--pickaxe-occurance-change` seems too long, and might not be as clear.
-`--pickaxe-occurance-count-change` is just way too long.
+Not doing quarantine would give even _more_ different client-side
+behaviour, though.  When talking with a server with v2, you'll not
+see a cruft object left locally, but with older servers, you'll see
+crufts left behind.  After a failed remote-object-info call, you can
+do an object-info to figure out what you needed to learn about the
+object, but only after the failed remote-object-info was against an
+older server.
 
-Thank you,
-Illia Bobyr
+So, I do not see it as a reason against putting temporary objects
+into quarantine.
 
+Not that I consider it important to give the same client-side
+behaviour when talking with older and newer servers, though.  It is
+natural for a new feature to be available only with versions of Git
+that supports the feature, after all.
+
+And if we throw that away as a goal, it starts to make more sense
+not to add "fetch and locally inspect" anywhere.
