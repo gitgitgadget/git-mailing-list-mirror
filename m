@@ -1,76 +1,99 @@
-Received: from mail-01.sigsum.org (mail-01.sigsum.org [91.223.231.12])
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271511C1F24
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 10:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.223.231.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1BC1C1F11
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 10:11:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732010792; cv=none; b=BIajej6JiHz7mJxmwEa6LvgIMLADGFllVJq97oss58UX5b1GaaHAEpuAgAknLSXXU+ffwAptXJDiuANBntL2PrIy/jdLvdXlLNZngQu8aqinNzBwxH09egfaKzEvio1ANBDZhVOqHYMgfHSPtM86jdAZXxt6yftAosIiCtcb8hM=
+	t=1732011084; cv=none; b=cJ1UxxSdoO5RHu5fI87SeTSdPdD6jBcshIi+bO6ovZLn2ZFq7OQtE735w+3FDT+2sx2mT6H7LAQL2Qb/yE2p0MKtatxD5aSNdeuajROXe8vIcWCEcnchWoGh6xKe1L2DwSmZmGfR8RO7H4EUP7BhSjp08Tito7f8Ypq1btKcLoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732010792; c=relaxed/simple;
-	bh=jkJhAbD2F+3qlPjL0Wi1vhTgFkdY9+FPXgvWymlZi8Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SJEe8V5Zkrn+bZ4yIEvGbCiOnPVDluLOu+8NciXLUh/sojfevyOqQzk0yKDZkJVXzXa+mUk2G/GaGAt0E5sP1UEakPsxAqQ/4EbQfG6ctF0TZQ5rU7lZZLgsJ2B+I/l4yoSVbPcN+2D3xnqdYEqJwVakTBNsAEjuyeOMpkIJ3J4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=glasklarteknik.se; spf=pass smtp.mailfrom=glasklarteknik.se; dkim=pass (2048-bit key) header.d=glasklarteknik.se header.i=@glasklarteknik.se header.b=QU2wqutI; arc=none smtp.client-ip=91.223.231.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=glasklarteknik.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glasklarteknik.se
+	s=arc-20240116; t=1732011084; c=relaxed/simple;
+	bh=IqTsuFk3KydyFhc8zDTIjpRYYP1dC4KwhpUyx5TFrr8=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=g530vKiyJsSZz1pppYXP+TdvVqeblL1AMFh6vNQ6GI9Rw24p2dvMJ9l3ghxnBOE1bo9epu8gGQrkwRC+E3ITKZL2OvWysrQLa4NLW5C677e6BxAXyy+oA03CXyJzRP49q4e+2Axq7ChaSBV7AQE/crWnuxd8Xz4JCrKFurQ56Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=pziumPCL; arc=none smtp.client-ip=192.29.178.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=glasklarteknik.se header.i=@glasklarteknik.se header.b="QU2wqutI"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2334CC083E;
-	Tue, 19 Nov 2024 11:06:25 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=glasklarteknik.se;
-	s=dkim; t=1732010786;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=lgKoRu98LYJ9fDaPmzxvmRZ27bfUCevuEdMxUUIU7uo=;
-	b=QU2wqutI7Y63b2Bu+J8kGL+w9rsux9ghJgW6FaOWWLvSj7zO6r2WlieBQRrH1ny6jcVpy8
-	6cK6+yT+EvrULEGtx5MDstsLpJxC85gEyUbO1Gnf+0aKWszLb9KAWZudhODbQho2QH5r9X
-	f7fEieI49auNWpeY8PDUh6wtsuVw4LVyD7FAdhC07CEsOCZVpFgmA6rZca8Yl70paZEa8W
-	LneQLhmuQU5pghnddd8fbRk3MV6vauBzUp9l092YJFzYTrvs9rPIoBPC9VUPZpnXkRlTk1
-	Z7cyXsxnsoo4EWK3Hg7KV6SuDhrwVCkZfeZCio0e5e3oheOnIb+1mYqqhbFeEw==
-From: =?utf-8?Q?Niels_M=C3=B6ller?= <nisse@glasklarteknik.se>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: Unexpected effect of log.showSignature on tformat:%H.
-In-Reply-To: <xmqqmshvd0nn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	19 Nov 2024 18:37:48 +0900")
-References: <87cyirtweq.fsf@localhost> <xmqqmshvd0nn.fsf@gitster.g>
-Date: Tue, 19 Nov 2024 11:06:21 +0100
-Message-ID: <878qtftu5e.fsf@localhost>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="pziumPCL"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=U5E1aIA7GiBHusap++m1yaIDIBS7kIl3N5EuT5/IVPE=;
+ b=pziumPCLgU4wpJZBE9d44/3Vkq+UAW/duf7yMr5BkwWmy2vrvqVELsK3K2uxkAPAFf4js+z3xNTP
+   Wsqa77PQp/g9jGHUxgzFy+VsaNozbDxyfoSOI4TsfWJF6fqMOTDl8atvSnE4ARKz9CROHNgQGW8c
+   WQ5VBKah+IUXyYmSEo9YtXB4OckeDSg8Lu3VfcAMDBoz5O1Er9dKCs+GADbBD3LPLDCT5G+pI4h6
+   MwBjAsi+sNUzLVHaYfTLufyiVUXf1XGDiwzkVuw9jd6lYp2QP+UjXBxzFi4aVO5EYAw8sIdEo2Ct
+   0HIlwbS8d3/O3e09k90N2HjqS0ChSzfnxNnSNg==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SN7005CU0AWJ630@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Tue, 19 Nov 2024 10:11:20 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Last-TLS-Session-Version: TLSv1.3
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Tue, 19 Nov 2024 11:10:11 +0100
+Message-id: <D5Q2NU9LJIVC.23QKQ2GWHUVFQ@ferdinandy.com>
+Subject: Re: [PATCH v13 2/9] refs: standardize output of refs_read_symbolic_ref
+Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>
+To: "Patrick Steinhardt" <ps@pks.im>, "Junio C Hamano" <gitster@pobox.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241023153736.257733-1-bence@ferdinandy.com>
+ <20241118151755.756265-1-bence@ferdinandy.com>
+ <20241118151755.756265-3-bence@ferdinandy.com> <xmqq4j44ggq0.fsf@gitster.g>
+ <ZzwzrI6wJjY2dpp0@pks.im> <xmqqr077d88i.fsf@gitster.g>
+ <Zzw9iqf5bcj5_lV8@pks.im>
+In-reply-to: <Zzw9iqf5bcj5_lV8@pks.im>
+Reporting-Meta:
+ AAFxfWV/iJ+JjdyZ1bd7q+7AaNrqXyCOts7+CeKRtDckYqY8pIS2Zs+vSyERepBn
+ 7erBk8MphuFG/O4bHSbcqLbUhULVE2IoO5H0xGpv1NElM0D1xz2lbbcVA9hkk8Wz
+ m7cVJPz2ykllLHzstZKU4qysoH0kasjwKSKixrvFl0pDto0N1ffRLElD/5k3mx03
+ j+360ptRvJq289JjEXa40Dka+JOAjo+b/Q9RGWkD5xgIHqX3/uaF1avKSYFXCt3U
+ q+m4sn/kobBi1cYaAWWl72GvLMjLRS97tF0r/Uul8fDZ+W3l4f28QCqStumG2hvr
+ 7uUZV8UbDxW94gFUx7MC5tzxs5TeVBt47PmR9jKvxTq61EDTNBlh6RNZVT59K27r
+ zDWwktWNXg6pCYKY9dF3AyZTn1v9/JVYS6+dC8VBNb23wDu4w8QnmErrFstHsCqf
+ B0bAV18bmfd4xRwH/bAD5/mN3RtqapYb8NqkDtrm1HA8ZtTDGf51BheK
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> It is a bit unexpected, but knowing how the command options evolved,
-> it is not all that surprising X-<.  If you are using --format, you
-> are expected to use the %G placeholder and friends when you are
-> interested in signatures.
+On Tue Nov 19, 2024 at 08:26, Patrick Steinhardt <ps@pks.im> wrote:
+> On Tue, Nov 19, 2024 at 03:54:05PM +0900, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > The reason why I've been proposing to return negative is because we ha=
+ve
+>> > the idiom of checking `err < 0` in many places, so a function that
+>> > returns a positive value in the case where it didn't return the expect=
+ed
+>> > result can easily lead to bugs.
+>>=20
+>> I agree with the general reasoning.  I am saying this may or may not
+>> be an error, and if it turns out that it is not an error but is just
+>> one of the generally expected outcome, treating it as an error and
+>> having "if (status < 0)" to lump the case together with other error
+>> cases may not be nice to the callers.
+>
+> The question to me is whether the function returns something sensible in
+> all non-error cases that a caller can use properly without having to
+> explicitly check for the value. And I'd say that this is not the case
+> with `refs_read_symbolic_ref()`, which wouldn't end up setting the value
+> of `referent`.
+>
+> So regardless of whether we define this as error or non-error, the
+> caller would have to exlicitly handle the case where it's not a symref
+> in order to make sense of it because the result is not well-defined.
 
-The thing is, I'm generally interested in signatures when using git
-interactively (that's why I enabled log.showSignature globally). But
-then I have a scripted usecase that has a tag name, and needs to query
-the corresponding commit hash, and in that context, I don't care about
-signatures at all. The docs for git show say that %H expands to the
-commit hash, which is exactly what I want. I didn't know about the %G
-formats, but after a quick look at the docs, I don't think they solves
-that problem.
+I agree with Patrick re the -1, -2 return values. The non-error behavior sh=
+ould
+be when referent is set, anything else is something the caller would need t=
+o
+consider if they want to do something with it or not.
 
-I can work around this problem by using "export
-GIT_CONFIG_GLOBAL=3D/dev/null" in the script, which I guess might be
-generally good practice when using git in scripts? But I still think it
-would be useful if there were an easy and reliable way to get from tag
-to commit hash, regardless of the user's config settings.
-
-Regards,
-/Niels M=C3=B6ller
