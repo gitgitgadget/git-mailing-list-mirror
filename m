@@ -1,178 +1,115 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40135.protonmail.ch (mail-40135.protonmail.ch [185.70.40.135])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3209B1D14F3
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 20:56:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9698F19C54E
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 20:58:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.135
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732049816; cv=none; b=AzetUVXAdU2OY7XBiS049csslKUKc93z2xc8OPA4ri1OqwE3Iq7f8q2uOY9vN+bB069P2ZzsxahCz+yoPf9mNLEkRamdg0e22L6ltmWcY9YQPu4UY8M/D5LriF/RoXB8l+u4R9ezfYWVESRSm++eFEGjj7hgkwDapz23Y/SX8dA=
+	t=1732049939; cv=none; b=W5Nyp/UHBn90ZfglQM1lO2UfveqYbbcqCrEBlJ805BY8hXZmtn6bGBrX+wOJNwuFTMotzhj4dg0zruc5tETCx+6lVvSluGZXmL82jgbFW8x3qO7sosu9xVTtH6W5lJ/Cyf+5lsMwMAnjzsRtdA5N8UijUSx2aXe3QBUSH0SkRjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732049816; c=relaxed/simple;
-	bh=Y8MDP9qSu1PlMVQPjcHWKqgAz6ikbYU4y5ygtOn4Kn4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FW3ZDDNpwzTI2kbyERIKCaKypyvBFaEcjpm6qFSJrbb9Lna3FM24d2bEw14Ek2XzgkwIfbpczvx59TEW9G2LYj4+h/e6elKlN/uAevHFzTiD/tYGkC7IbBZr3pNlRACSvmvLZXHeZgm78YLP9tTguj2fqJYCmwa6IbhuUfdlgP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=KrcbpTH7; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1732049939; c=relaxed/simple;
+	bh=sGrrPGzUr1GQ+egcKLHCGNIKvehtsfkuSByX8vm0z9o=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GQE/KyUSPm11Dcp/VxVkEERjnV5is+WMTYPdpKju+qC7dq2VDQV4S+ny7o30p0B+JxTdg41aZolsy7/cia7MIXYLjbE58Kt8Ya9g/Kxzl769CEDEa6FlxrHnHa+6uuSl63nnAKizg+0a5+ypAY60DKPsAgG+QbSvoTH6r2gfvAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=I3Gihm47; arc=none smtp.client-ip=185.70.40.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KrcbpTH7"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e38b425ce60so202113276.1
-        for <git@vger.kernel.org>; Tue, 19 Nov 2024 12:56:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732049813; x=1732654613; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jkv5/qN/RZhHVtC+aWQbozmpYJRndHFpHN+g9Ln6kSQ=;
-        b=KrcbpTH7KTjdAkaad8vx5QjAEJwBBpm0x/h/u2T+l2Stp6ZpVitKg4MxuXT2+W7UbT
-         ZVAn7PfM/OO7xO3pWzBHcykyrECcZGiiyBjt2Q7XumJ3ZznSToq/DmRl18T/SDDHT8NF
-         SwxeOxHaruA/0oiP/RIZARTUazghukZ4glR4RL9iHOBZdssTJkfU62s2GfI1GEZCAl/t
-         r4LqcrKoH8wctmnF7fpBbtju0ysVxbDpp0OxlJK7oW44d+m8QaPqtJfFYyuatolISGBO
-         2LDFLn6z6PpQti+zhxRygOU+oy6yJ+j5IVd0hGbp9zgvQKK3jg2BVO3SfTlXPSF4HWHE
-         Lxvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732049813; x=1732654613;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jkv5/qN/RZhHVtC+aWQbozmpYJRndHFpHN+g9Ln6kSQ=;
-        b=d703GToZ9Uz/UmhU9rz/SPf0RGQ+hdhJkyPliJ9TdAuSotyMlr82f173/1nA3o1W31
-         zowQSDC2J3gEuwDnbxwrOXhGXH1dQdXEyx1h4MSRoUYYwJcEfK/7pAOeb6JqGqA35Znf
-         lI2/PtlLWhhjiimYOKomoBKw3UvfCqJz/eABGq9zgQfFl7HwsLqkxSbQ4BRGMdTbma32
-         buZCaQyp5Tt2v5BYaaTJ88hv6hAy7sygT6p0D1N5kbkKsp3NEp0UaxKSU/z79GaqcNLX
-         86IP1NqkoeSokN82JTZM/oDDyfREdoDHuuF188SM8lBhRnB5MdwncdI1bEji3w8RQ+54
-         ThAA==
-X-Forwarded-Encrypted: i=1; AJvYcCUcDirr+9DZViubf4JyyiYwqv3Edn39RIHlrMjgAbTlIkIvVIRHjwsXwsWL9jVbmwL0BDQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWcrHh1SBp6bKV8DtlO0Lb6BqIuVphH9nmhMKXLiAo2gV3Domk
-	6NfgyN3XLHT63rDzN/A7s2iYL5LuPrwjFVwu1UMp+DQqeAjXG6qAvIX37C9q6hI=
-X-Google-Smtp-Source: AGHT+IFM3pRys1y52w5/vIemT7CUyoRHdXHAXc20eA1JClKAUFoxFr39TMrS9y/i/83BlrdkRidn+A==
-X-Received: by 2002:a05:6902:1b02:b0:e38:b2ea:a9c5 with SMTP id 3f1490d57ef6-e38ca105522mr477630276.13.1732049812932;
-        Tue, 19 Nov 2024 12:56:52 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e387e73caddsm2753509276.13.2024.11.19.12.56.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 12:56:52 -0800 (PST)
-Date: Tue, 19 Nov 2024 15:56:45 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] fixup! midx: implement writing incremental MIDX bitmaps
-Message-ID: <Zzz7jdI7Y+QEbwRw@nand.local>
-References: <cover.1723755667.git.me@ttaylorr.com>
- <cover.1723760847.git.me@ttaylorr.com>
- <afefb4555750661ffd2c573a33d92f8fcb9f435a.1723760847.git.me@ttaylorr.com>
- <xmqqseuozg53.fsf_-_@gitster.g>
- <20240828183356.GA4043247@coredump.intra.peff.net>
- <ZtDEhNRfXth63SJs@nand.local>
- <20240829192713.GA423429@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="I3Gihm47"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1732049935; x=1732309135;
+	bh=sGrrPGzUr1GQ+egcKLHCGNIKvehtsfkuSByX8vm0z9o=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=I3Gihm47ju5EPYZ86La0oOvT3UuoPneWbKTfbWzf34CIS2UFBUWLIx5nJ4q6G+0fE
+	 l8ob3m4b16VBrtzzEth6kUE2MyjMCNGBgqCjO0/itPgc1MAU02roiKy4Zk/z0buvRx
+	 V7lk8JD3aZre33Aa8J8rY+7xSTthu/hhN4Y63B+MY4p01AuCe3Ye/s6C7G7ABfY2W0
+	 OGYV51nutUUb90wQLC/7ixF8ZO3lA9NiIVIQF88vceVotwtEqk02VT4qUSirOD4+ys
+	 keL8rLzbotCAysJmg7Itd8nkRPByuVzk4zizZR/SRp4Y8qcD18dk/IioqMSJulKaDn
+	 Iv3dUv7TScXGQ==
+Date: Tue, 19 Nov 2024 20:58:51 +0000
+To: rsbecker@nexbridge.com
+From: A bughunter <A_bughunter@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: RE: How do you undo an add
+Message-ID: <6arLzsCWhxM8QTlPRbNStMLfz5ZqVJTTUSX1E1NXLiy_n_d0v0wFMiUK5brfkqTV3chUOp9OLYyBpIbe4tYQ6qvrLKDzfg5el0EWnqDIYDM=@proton.me>
+In-Reply-To: <022f01db3a10$7fe28140$7fa783c0$@nexbridge.com>
+References: <4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlSI5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=@proton.me> <MBCJkxhVnx5AhlKkq15aTn5FYI6cG-wdqqwQ84mVH9zjf-YehSrRWPgd-UwdTMrYhS2Sgofbyn2bS7iMlANyyYf_Z6b6_e3FH0hRm5VYciU=@proton.me> <022f01db3a10$7fe28140$7fa783c0$@nexbridge.com>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: f2252d663489e70e4d892899fef7570d3475e2c4
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="b1=_Ae2jmwJKh1ryKzapMujESzZqH7IjYnHmfj0Xw3FA"
+
+--b1=_Ae2jmwJKh1ryKzapMujESzZqH7IjYnHmfj0Xw3FA
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240829192713.GA423429@coredump.intra.peff.net>
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 29, 2024 at 03:27:13PM -0400, Jeff King wrote:
-> On Thu, Aug 29, 2024 at 02:57:08PM -0400, Taylor Blau wrote:
->
-> > On Wed, Aug 28, 2024 at 02:33:56PM -0400, Jeff King wrote:
-> > > Is that right, though? It looks like the caller might pass in a
-> > > tempfile name like .../pack/multi-pack-index.d/tmp_midx_XXXXXX,
-> > > if we're in incremental mode. But we'll write directly to
-> > > "multi-pack-index-$hash.bitmap" in the same directory. I'm not sure to
-> > > what degree it matters, since that's the name we want in the long run.
-> > > But would we possibly overwrite an active-in-use file rather than doing
-> > > the atomic rename-into-place if we happened to generate the same midx?
-> > >
-> > > It feels like we should still respect the name the caller is using for
-> > > tempfiles, and then rename it into the correct spot at the end.
-> >
-> > In either case, we're going to write to a temporary file initialized by
-> > the pack-bitmap machinery and then rename() it into place at the end of
-> > bitmap_writer_finish().
->
-> OK, that addresses my worry, if we're always writing to a tempfile (and
-> I verified with some recent stracing that this is the case). So renaming
-> that into tmp_midx_XXXXXX.bitmap would just be a pointless extra layer
-> of renames.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Yeah, I think we are OK here.
+On Tuesday, November 19th, 2024 at 02:13, Kristoffer Haugsbakk <kristofferh=
+augsbakk@fastmail.com> wrote:
+> On Tue, Nov 19, 2024, at 00:20, rsbecker@nexbridge.com wrote:
+> > On November 18, 2024 5:10 PM, A bughunter wrote:=20
+> > > ADD, ADD, ADD why cant they get that: ADD. ADD tracks files for commi=
+t. It's
+> > > already been commit : push failed. Failed pushes piled up. I need the=
+m untracked.
+> > > How do you undo an add ( many adds): simple question. Without deletin=
+g any files,
+> > > to repush 1 by 1.
+> >=20
+> > Once you have pushed an added file, your only option is filter-branch
+> > to prune out the
+> > invalid content.
+>=20
+> git-filter-branch? Why not `git reset --hard` with `push --force-with-lea=
+se --force-if-includes`? Maybe I=E2=80=99m missing something.
+Yes you are missing something "Without deleting any files," a bunch of irre=
+livent and wrong answers is SPAM because literacy is necessity for particip=
+ating in any ML.=20
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-> I do wonder if it's possible for us to generate a new different revindex
-> and bitmap pair for the same midx hash, and for a reader to see a
-> mismatched set for a moment. But that's an atomicity problem, and an
-> extra layer of renames is not going to solve that.
+wnUEARYKACcFgmc8/AgJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAGtoAQCghq6jVJrxOy2d3LX80E5gfvBKRSdl/x5UERVdELIq0gD+IjmQ
+dwe5xB0oFdnlMivj1EFpVEzFYMW2GO1oCkukKgE=3D
+=3D2nFM
+-----END PGP SIGNATURE-----
 
-What you're describing is basically the bug that we fixed in 95e8383bac
-(midx.c: make changing the preferred pack safe, 2022-01-25). That commit
-sought to ensure that there was no way to have a different reverse index
-(IOW, pseudo-pack order) for a given MIDX hash.
+--b1=_Ae2jmwJKh1ryKzapMujESzZqH7IjYnHmfj0Xw3FA
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
 
-It's possible that there is some case that we're not yet covering, but I
-can't think of it. The things that we care about are (a) the set of
-objects, (b) the set of packs those objects came from, and (c) the
-preferred pack. We don't store (c) directly, but we can infer it from
-the reverse index, which we do write within the RIDX chunk as you note
-below.
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
-> > On the caller side, in the non-incremental mode, we'll pass
-> > $GIT_DIR/objects/pack/multi-pack-index-$hash.bitmap as the location,
-> > write its contents into a temporary file, and then rename() it there.
-> >
-> > But in the incremental mode this series introduces, I think it would be
-> > a bug to pass a tmp_midx_XXXXXX file path there, since nobody would move
-> > it from tmp_midx_XXXXX-$HASH.bitmap into its final location.
-> >
-> > So I think what's written here with the fixup! patch is right (and
-> > should be squashed into 13/13 in the next round), but let me know if I'm
-> > missing something.
->
-> What confused me is that write_midx_reverse_index() _does_ still take
-> midx_name, and respects it. But I think that is a bug!
->
-> We do not usually even call that function, since modern midx's have a
-> RIDX chunk inside them instead of a separate file. But if you do this:
->
->   # generate an extra pack
->   git commit --allow-empty -m foo
->   git repack -d
->
->   # make an incremental midx with a .rev file; usually this ends up
->   # as a RIDX chunk, so we have to force it.
->   GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --incremental --bitmap
->
-> then you'll end up with a tmp_midx_XXXXXX-*.rev file leftover in
-> multi-pack-index.d (since, as you note, nobody is moving those into
-> place).
->
-> So probably write_midx_reverse_index() needs the same treatment to
-> derive its own filenames for the incremental case, and to drop the
-> midx_name parameter.
->
-> Or I wonder if we could simply drop the code to write a separate .rev
-> file entirely? I don't think there's a reason anybody would want it.
+--b1=_Ae2jmwJKh1ryKzapMujESzZqH7IjYnHmfj0Xw3FA
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-I would kind of like to get rid of it, but we use it in a couple of
-places in the test suite:
+wnUEABYKACcFgmc8/AgJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAG/FAQDBAgjj
+a/7Io8Dd6ZL9YdNeIaN/t8IGzzQl1EasuskWmwEAgrvbdz0KxHinrCpHM6p/CifTeboqUntwI2pb
+vk0hTQ0=
 
-    $ git grep GIT_TEST_MIDX_WRITE_REV=
-    t/t5327-multi-pack-bitmaps-rev.sh:GIT_TEST_MIDX_WRITE_REV=1
-    t/t5334-incremental-multi-pack-index.sh:        GIT_TEST_MIDX_WRITE_REV=1 git multi-pack-index write --bitmap &&
+--b1=_Ae2jmwJKh1ryKzapMujESzZqH7IjYnHmfj0Xw3FA--
 
-And both of those tests are testing the old behavior, which we need an
-out-of-MIDX .rev file in order to do. Alternatively, we could store a
-test fixture in the repository that contains these files so we don't
-have to build them from scratch.
-
-But after the xz incident earlier this year, I am *very* wary of adding
-binary test fixtures into the tree, since they seem like an easy vector
-for attack.
-
-So I'm content to fix the bug here and keep the old code around for a
-while longer. The fix is indeed as simple as you described, which is
-nice ;-).
-
-Thanks,
-Taylor
