@@ -1,71 +1,84 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1EB1863F
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 03:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885BA1876
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 05:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731988375; cv=none; b=gdcbSsMCir1sZgVGG93R7v/iiLuOQNHD5hnEnQrY+Z7H3M/Z6clfV7OSvN/IIWKDOioywGZWWTyPNhbceNhr79RsByjSarOenkAAnBzrbqHVhXbVNJ3vUv8IgnoRnNsIObTBj/AU3qM5KGlrJv+j1mAS5cSbqGdVrt74TtqKW9s=
+	t=1731993036; cv=none; b=hzEQl3fWr4r+ao74ibfR3zlzu2i82j76nHQYAkMRR5TNEuTu3//ervx4yRjl/cive9jqjLbA1QrBrUAaKDh8hde3I+6s9fDh5ie84Fj8B8eU7J3AwJ8km/bsKWgd1QlgNT2F/u0hwkvX1hpbqQrK4s/qucPweG4SEe65GGHlx+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731988375; c=relaxed/simple;
-	bh=8hOHGbsW1ZweE8bG61QEFq367NA749e8oJ/7QWhkOBQ=;
+	s=arc-20240116; t=1731993036; c=relaxed/simple;
+	bh=amLeQXzPY5kGiSOdfPMB6H4nmSaePV5TbokXQL9C9rA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r/X4TUCzZbkFWQ9+l6WY0gGr55iwo1lXcu0AZscuyrL3GdA7H3ZTTMuiQZU/r14/YUuqFqO8Ep6Fx7yh2Ki6UH6aW0fqF/N3C7qv22AVfgr17i6SKhdCHyt4wQXm2qC0U4gUHmshNVdtC+Hh5bzkJ0xU8K7PISOF1lrqQrDFiMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SDu6+51M; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=hfGbol0Qz+iIQk5gUTtBpRT0ZFTGe8lGKr5Edk7LfiLBZVJRoSgDlyx8Bqj57bnAXBrzYBA+1xMUWRIxjGyQ7V0DwfP+xWVZa6onNqsGX2M7i0gGOfEF26DkNdJseSFJ/e0N8keE0EDbpIycJ4231YrooPDIHKEhFAVxABM7mGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RBNCaSuj; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SDu6+51M"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 357FD2540190;
-	Mon, 18 Nov 2024 22:52:52 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 18 Nov 2024 22:52:52 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RBNCaSuj"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 69DD311401E6;
+	Tue, 19 Nov 2024 00:10:32 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 19 Nov 2024 00:10:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731988372; x=1732074772; bh=ggPRBZIS3Tspfg1BgQU6n1z2ZW2FUGt3VSF
-	GKCb0824=; b=SDu6+51MAb/NK5yxFeNFGxxDe31KajqttcXA3hsW3cgGHGBDfaK
-	0Pnl6AFQVP0LOe3bw3iGy4z4xxlBBasLkG72k0UCtKSNauhs2mW1Tbj/OXltWazx
-	pXbCzvusKMMER36VnvYe5Ue4ni0CS2gf+27eRjrTowMBZJpMwf8FemdAjPLNgS7e
-	2Q7KbrX6oDfW7OhOW8kmUwEtHVQOJfOhCKJutJW31tIVK1jx3tlBm/FfOeMM3Wi+
-	HRyJNIvn3ZfaIduBvX3J/esX1LyvRI4+29Gab/Mo+E9ipB0JB+Eg6bXTQ3cQodbq
-	Ys9tIoHfWbuwHzjR/i+2IQUtyNXzDM0uYGA==
-X-ME-Sender: <xms:kws8Z-JiiB2X5Q_4AwbUex8RllW8d_OusuR3HT1nPcWky-YzvsQYRg>
-    <xme:kws8Z2JCN4i3sXHSdQ9h7DPxfBO2uTSislXIGNAImtYzqrh9ZmoySXyEvu9DPudhs
-    H12kAvu55N8hFk5rQ>
-X-ME-Received: <xmr:kws8Z-un48pVVULJhNWQj_k3B24JNsEI5_mjy9-LdanwcAMm0dmFUoQp9_gZ7pDtIKgnvEifGCshEtdBUBBx9TS1b2Jpgh26tQ2F>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdeigecutefuodetggdotefrodftvf
+	1731993032; x=1732079432; bh=3I2JCJ4P2/OvOIosmYaeuGI2UGxZADQCGYD
+	0RPraNJ8=; b=RBNCaSujCfjRWm3/NuJ1SIzH7fQZEva+f11IgOEd+1s/h2Pbebg
+	ZVskcox8p5g4DA1TSY7G4Wnpg69JGk8YAtTXnV03lBm/Kkq4XuSZI2u9XAoxwcOz
+	DqK9suJTzHqpnsA/s6dRLDK3zXQHHbQ4Iq3qa0zs22/uE1gsTOZsSm6YhUO2Lfvg
+	cIlo5ysEVo1t+0oJ8ZSg0yzRLyzYe7+7wHBhwaH2jm6hHXsBqwIsXRs1JfKJ11zl
+	kAHoM4huTN6B773sxG5QoAgxTlEGUHN2YGC7uzdg9PLRTGudm4GZuv0zZwiM3zLB
+	xVemnR4ZsBinkZNHgEAmv9VRp7KpjwuhmLg==
+X-ME-Sender: <xms:xx08Zxw125lagpiiKcUxV_mnDBf3lNrjyNLYVJwuxWoIPNnWlWRT7A>
+    <xme:xx08ZxTh0vlkR2cm3-xIFNT6Z_7MygvH-vj5vIdV-lnpGWSkp-Ai_ukfx9MMt5U9M
+    DODi1TNiVxV3zgGCw>
+X-ME-Received: <xmr:xx08Z7Ul0qIk-6NpkB9DTagOwna_Nl0VdibF1Wolg3l2gG-g2n2LoHuU_2WoZy3Z-oTBMA4ukFXz83CpgeD9vi5CZLzSzDKMzwUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdektdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
     hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeevteev
-    veeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepihhllhhirgdrsghosgihrhesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:kws8ZzYNU8exL315Yu-Snh6EIMWZGnFLi4zhqOqTLEOMheLvKQd27A>
-    <xmx:kws8Z1boRroPSgcmeD79sY6qryIErNJuOkDH4t2dFmI4JtwroGuGEg>
-    <xmx:kws8Z_DMHEnwUBml6ewVl-JRKeC8VoL8QNn27V9XtFAzfHFJQrnDHA>
-    <xmx:kws8Z7ZzQIGK3zD8AUYcsRgXtLxsmGhTIOP1W20b-JEQiQrha0d2Aw>
-    <xmx:lAs8Z5HgV-SWfsV_iHEkuCrVo4VEYOpnptEVh7BOODRUDhdxW-pljgKx>
+    gtohhmqeenucggtffrrghtthgvrhhnpeekieeiheekleekfeeijeeiudefiefhtedvtdfh
+    tdehgeeghefgfeeileejtdeggeenucffohhmrghinheprhgvfhhtrggslhgvqdgsrggtkh
+    gvnhgurdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopegsvghntggvsehfvghrughinhgrnhguhidr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthht
+    oheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
+    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
+    rghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
+    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:xx08ZzgYGh_lzjAEpwtfXuXe1XMMmhM1AYCvP0Jm-mZU5CwPp49VrA>
+    <xmx:xx08ZzBkws-U-7_WKqpG_TX1tUsodfIcDgVDlebV-89pmg1-ejPpVA>
+    <xmx:xx08Z8Jk7piVayCzdTOm1t78VqHQbs862EeNJrjWaEq6SGJ0OwtI_w>
+    <xmx:xx08ZyDEfN2YlZq3hoEIT__oRqS7fuu1YdoqzbCCnEOD9-jQX5GwvQ>
+    <xmx:yB08Z_u2RTAwNEALJUd2UKdGH9iVmk60x-0GG4U6ftLunXhmf1DhzNnQ>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 22:52:51 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 19 Nov 2024 00:10:31 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Illia Bobyr <illia.bobyr@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Long names for `git log -S` and `git log -G`
-In-Reply-To: <24458598-ebbe-41fc-8517-457fa65ed481@gmail.com> (Illia Bobyr's
-	message of "Mon, 18 Nov 2024 15:56:30 -0800")
-References: <24458598-ebbe-41fc-8517-457fa65ed481@gmail.com>
-Date: Tue, 19 Nov 2024 12:52:50 +0900
-Message-ID: <xmqqo72bev71.fsf@gitster.g>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org,
+    phillip.wood@dunelm.org.uk,
+    =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    karthik.188@gmail.com,
+    Taylor Blau <me@ttaylorr.com>,
+    Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v13 2/9] refs: standardize output of refs_read_symbolic_ref
+In-Reply-To: <20241118151755.756265-3-bence@ferdinandy.com> (Bence
+	Ferdinandy's message of "Mon, 18 Nov 2024 16:09:21 +0100")
+References: <20241023153736.257733-1-bence@ferdinandy.com>
+	<20241118151755.756265-1-bence@ferdinandy.com>
+	<20241118151755.756265-3-bence@ferdinandy.com>
+Date: Tue, 19 Nov 2024 14:10:29 +0900
+Message-ID: <xmqq34jnerlm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,47 +88,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Illia Bobyr <illia.bobyr@gmail.com> writes:
+Bence Ferdinandy <bence@ferdinandy.com> writes:
 
-> Also,`diffcore` docs says:
->
->> "-G<regular-expression>" (mnemonic: grep)
->
-> I was thinking of `--pickaxe` for `-S` and `--grep` for `-G`.
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 38eb14d591..60cb83f23a 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -830,7 +830,9 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
+>  		return ret;
+>  
+>  	ret = reftable_stack_read_ref(stack, refname, &ref);
+> -	if (ret == 0 && ref.value_type == REFTABLE_REF_SYMREF)
+> +	if (!ret && (ref.value_type != REFTABLE_REF_SYMREF))
+> +		ret = -2;
+> +	else if (!ret && (ref.value_type == REFTABLE_REF_SYMREF))
+>  		strbuf_addstr(referent, ref.value.symref);
+>  	else
+>  		ret = -1;
 
-In the context of "git diff", calling "-G" "--grep" would be OK, but
-in the context of "git log", there is "--grep" already, so that
-won't fly.
+The ref.value_type can be either equal to REFTABLE_REF_SYMREF or not
+equal to it, and there is no other choice.
 
-> `--pickaxe-grep` for `-G` seems like a reasonable alternative name for `-G`.
+Wouldn't it be easier to reason about if the above code were written
+more like this:
 
-That is probably OK (even though "-G" is not exactly what the
-pickaxe machinery wants to do; "--grep-in-patch" might be closer to
-the intent).
+        if (ret)
+		ret = -1;
+	else if (ref.value_type == REFTABLE_REF_SYMREF)
+		strbuf_addstr(...);
+	else
+		ret = -2;
 
-> Not sure what would be a reasonably short alternative for `-S`.
-> `--pickaxe-occurance-change` seems too long, and might not be as clear.
-> `--pickaxe-occurance-count-change` is just way too long.
+I found it curious when I read it again while attempting to resolve
+conflicts with 5413d69f (refs/reftable: refactor reading symbolic
+refs to use reftable backend, 2024-11-05).  The resolution has to
+update this part of code to use the new implementation that asks
+reftable_backend_read_ref() and becomes a lot simpler, so the way it
+is written in your topic does not make much difference in the longer
+term when both topics graduate.
 
-Giving a tool a meaningful name is an excellent idea.  If the
-meaningful name guides users to the right way to use the tool,
-it would be ideal.  Which means that to name it right, you'd need to
-know what it exactly is for.
+IOW, if we were rebuilding your topic on top of Patrick's topoic
+that includes 5413d69f, this part would read like so, I think.
 
-The -S feature was written to become one of the building blocks of
-Linus's "clearly superior algorithm", described in [1].  Linus talks
-about "where did this _line_ come from?", but the algorithm is more
-generally about a block of code.  The expected use case is for -S to
-be fed sufficiently unique block of text so that we can efficiently
-detect the transition of occurence count from 1 (because wee start
-from sufficiently unique block of code) down to 0 (which is the
-boundary in history where the block of code was first introduced in
-its current form).  It detects any occurence count change, but its
-primary focus is to find a transition from 1 to 0 (when going
-backwards in history).  Its spirit is more about "finding where it
-appeared in its current shape".
-
-
-[Footnote]
-
-*1* https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org/
+diff --git c/refs/reftable-backend.c w/refs/reftable-backend.c
+index 6298991da7..b6bc3039a5 100644
+--- c/refs/reftable-backend.c
++++ w/refs/reftable-backend.c
+@@ -920,8 +920,10 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
+ 		return ret;
+ 
+ 	ret = reftable_backend_read_ref(be, refname, &oid, referent, &type);
+-	if (type != REF_ISSYMREF)
++	if (ret)
+ 		ret = -1;
++	else if (type != REF_ISSYMREF)
++		ret = -2;
+ 	return ret;
+ }
+ 
