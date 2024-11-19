@@ -1,74 +1,77 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03650610B
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2695139E
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731976327; cv=none; b=VfGN+bmgv4hBPE2loCFelkHtEbiH5owLLimpQChmhOuYENr3EZjAbsL/3eoi3BztgHJRpGBJrjAptazInD9kb3AIjVrC2yUXqOvE55gwa/1EfZ09wU5LARIM32Eirada6qwFo75gLKf/rg0hyAaBxFcdM38TTz4Y6ro5sjPGYss=
+	t=1731976425; cv=none; b=mkFAyZ0y4rGV+g8/Kon8ZWXwAXLfvuBrcm8Dxxg49ooo5qGrnOheUDpuIeKhS8QUdynOByHQi9S1OffQtI7T8/6LvdkJODs5ef+dlS1nxvQ/hE1zcBJzAAstAw0aXG7zQI7baJ3T7W3r6I1BQrOW+7cGeYaGXL9qbGrfc04Hvq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731976327; c=relaxed/simple;
-	bh=0Iy4n0c6ACkTpi91l2JdQuRBlWxPHqXWA0pRAqrp2tM=;
+	s=arc-20240116; t=1731976425; c=relaxed/simple;
+	bh=pDMV0exPG+Ks5RenSE9N4GGs1Lwxvg+qb2xxr/7OTnI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R4AlfJeajlAfKshgqsuoSkW4tRQZxmhSDQZkku6VFGxnD6CV6s57E4uxiQ2JP7siUs3EkISW06LHK7I6Xx+/qYwzoyh0UxGrrXm4rtrZpLwDvHR7swy1O0pPkQ5/uezJ1RA1ZqrqSUAvk7Q1HZFt+JMvcHY0/GXutnam3MdI1Y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h2yECVC6; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=Fk8udRUzX0ZvbmwB7qFvifxFrU+2FdCBfom0Mjxy43PG5y6trdE1XpE8tmQWQFn6XlwrrIeCJa3MDEEA5MlnG9i1VKc70pTLfyMSRIEzdJx6gGpCWGAPYFS42IAtE9TZV/hWLGtWruoes2vnxjqUur0kw75ZXviaU8vMXFkfaOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YuUsLeQY; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h2yECVC6"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1CA2E254015A;
-	Mon, 18 Nov 2024 19:32:04 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 18 Nov 2024 19:32:04 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YuUsLeQY"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9181C2540158;
+	Mon, 18 Nov 2024 19:33:42 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Mon, 18 Nov 2024 19:33:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731976323; x=
-	1732062723; bh=yz4x1eim2Rvmt/Xipg+GDS3dYDS92z+dROyDzRwRX/s=; b=h
-	2yECVC6OidiEjv7Ew9HirQraXBvrpb0x4E3Lwq6C/cEaAd6VAWxWSjw7M0qx0scm
-	dh2UMHc9Wf6UJfTfZfBq/SW4jcPPjAy8qPgHmkksD1xImB3fN/yPoJY4cOjkBZrk
-	pG3bIh8b6gpcr/JoNa4LL2sAm3hiaeVrNFLdSIAISnfUolFL+jkj7gegAwDLZ+kM
-	wIvgyr8cxuK83gBH4Mu5965MevEOMPNsJLFikCXvbwqymgvEikHEVnI3bMs2vF9f
-	yjF0/bZnubrjJ+LmQCRmlsW1j47shYJgbM0RzaFmk6qwNEjokyfJzuF1QctjixPl
-	KVZ2uy7DVKD573MtD77kA==
-X-ME-Sender: <xms:g9w7Z6M8I9Ka69f5-j3nxAmC33-DUyLqjKy5PNqjdcCBqFsFQzs-9w>
-    <xme:g9w7Z49ftakirxV2NHjwSVYV4MCi91akIlELvSCA5OgiTemhd9KT4oCakwytdxEOS
-    crSmuRCXQhjPQUqmA>
-X-ME-Received: <xmr:g9w7ZxSCSEcczXK6Llo3hELkBbt8HKKQff8F-yDG3NVwzJEnaEj0n4oG1ohiRGgifmMxs15bm75VwhlX-HNl9YvbahPFPQUO-_IF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvvdcutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731976422; x=
+	1732062822; bh=ap2h3I5pJr+ttfV43PAnInwxBPq86KexIRlcKlaapM0=; b=Y
+	uUsLeQY4NJTr+CtZYXn4pSzvM0oQXOZAhWpvIaHWC7Gq/DYGLWEb6TDZ0NungclY
+	MJxhpmi6zJ+vqeefcq0u8duka7/1a5ZqX39F0G3+pKw9fnPReA+e9pyL7yKzxZMA
+	SHZvbbeznHFwAfwiZRTboYBFPShEX9s2VxPP7di7kIyDrCZkIv7tPIkBQ/D2XDHX
+	ekIcTXLIJK438blanjAC7RYqzqD+JV2sOg+MZI778EC+9ZWtNQJM9ad8nbTLCUur
+	G18fAmSgFDhDS+A5U+I+yAdHWDz1fx99co4wBC79qkrhhmomCMjrAVB8/o1+N4ov
+	LA4Yz7+m68TJUPCgKLHJQ==
+X-ME-Sender: <xms:5tw7Z1VW1nVt1ZM5IbZ3MgOFnLlrsSJotQPzwn_PXTfzUfyc7IKgrg>
+    <xme:5tw7Z1k8JVJ7L7r-pi6rZ6FkgpJ3zjS74JZDQAK3UfuiZZ8G5Q7a0B1ey0kExwH66
+    _AsVxKiMKFUi7iT5A>
+X-ME-Received: <xmr:5tw7ZxYAfzUalo9hWpxx9ZVUGxbiCOo4jEcvi20ErAIrghjDIrRj7bjgY5oNhAfVNM7d0jvC4_iliIDbNrpt-HG-4Zh-qiIgJnUS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeen
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffg
-    kefhhfetieffteehleehtdfghedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
+    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
     thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiphhhih
-    hlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehsohgvrhgvnhdr
-    sggvtghhsegsihhtiigvrhgukhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:g9w7Z6vGEAZVwlzVe2R-Jb1GqwHYu8EUXG6ksrsd_5AAAROfKHLToA>
-    <xmx:g9w7Zyf9iVMsNVf7aJLoMMBuArp3rszqHrRX9DRroVIjsKB865pshg>
-    <xmx:g9w7Z-1vDD7m6yjtThHNtoertOIPf25naO8EWlvOB1DBFxgr505PrQ>
-    <xmx:g9w7Z28n9L6gAZVEFpSvtO5kc3KrO3I7_OOAp6LVtrPuPozspIWG3A>
-    <xmx:g9w7Zx6V8zo_t4QjR9FKu34Uxg8nOnR6YrW8s-zlnDWmykwIyWt-dzmD>
+    hlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:5tw7Z4U5Uk4V2LyKZlB0ldmZ0k02phdQT6i_2TSPQ-1MzdATmbdUgQ>
+    <xmx:5tw7Z_m_j9G_v5M19fIUTwF-f-oyW8a_y_RKlPeHahM5x973KDUbhA>
+    <xmx:5tw7Z1cPIcnAaeqVZl0gyU8l3_SsbwBfd-1w2cxnyP9_fGr45QTVgQ>
+    <xmx:5tw7Z5FDrV89pz5jjV0H78miFYFD7p5pRk8YUyeDDEe6DWCW87VHfA>
+    <xmx:5tw7Z4BTMxqqj6w_XZ4b8UG0XTQDm55qlHah_FIVKrE5thC_u1s9KvSL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 19:32:03 -0500 (EST)
+ 18 Nov 2024 19:33:41 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Philippe Blain <levraiphilippeblain@gmail.com>
-Cc: =?utf-8?Q?Bech_Christensen=2C_S=C3=B8ren?= <Soeren.Bech@bitzerdk.com>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Possible bug in Git submodule update --inti
-In-Reply-To: <8db6eba3-a151-3819-159b-921a6c3f3242@gmail.com> (Philippe
-	Blain's message of "Mon, 18 Nov 2024 14:22:18 -0500")
-References: <DB9PR10MB709879A45AABEC017F3E89DF8A272@DB9PR10MB7098.EURPRD10.PROD.OUTLOOK.COM>
-	<8db6eba3-a151-3819-159b-921a6c3f3242@gmail.com>
-Date: Tue, 19 Nov 2024 09:32:02 +0900
-Message-ID: <xmqqldxghxml.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: malloc: *** error for object 0x1: pointer being freed was not
+ allocated on MacOS with git 2.47.0
+In-Reply-To: <b09b16f5-4fa1-c802-86ac-9f0b1bcc9f53@gmail.com> (Philippe
+	Blain's message of "Mon, 18 Nov 2024 14:28:41 -0500")
+References: <5FFE9429-7496-429F-BEC5-9D00C8409AC3@enrg8.com>
+	<4ca84916-c5f5-4d52-8f6a-08b729bb66b8@web.de>
+	<xmqq34js1kd2.fsf@gitster.g> <Zzr4cgk_5MJNcHm1@pks.im>
+	<xmqqjzd0k92c.fsf@gitster.g>
+	<b09b16f5-4fa1-c802-86ac-9f0b1bcc9f53@gmail.com>
+Date: Tue, 19 Nov 2024 09:33:40 +0900
+Message-ID: <xmqqh684hxjv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,25 +84,21 @@ Content-Transfer-Encoding: 8bit
 
 Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-> Hi Søren,
-> ...
-> in the doc for 'git submodule init' [3]. Note that this is _not_ 
-> the exact command that you ran according to the trace output below, which is:
-> ...
-> I think what you'd want to do is simply:
+> Hi Junio,
 >
-> git submodule set-url -- <path-to-submodule> <new-url> 
-> git submodule update --init --remote
+> Le 2024-11-18 à 07:42, Junio C Hamano a écrit :
+>> 
+>>>     pb/clar-build-fix
+>> 
+>> Not all that urgent (it is not end-user facing).
 >
-> This will fetch the new URL and checkout the tip commit of its HEAD branch.
-> You will still have all the objects from the old URL locally though. If you want
-> to avoid that, you should completely remove the Git repository of the submodule:
->
-> git submodule set-url -- <path-to-submodule> <new-url> 
-> git submodule deinit -f <path-to-submodule>
-> rm -rf $(git rev-parse --git-dir)/modules/Submodules/Lodam.Standard
-> git submodule update --init --remote
+> I'm not sure what you mean by "not end-user facing".
+> I ran into this issue while running 'make -j -l 2.5', 
 
-Thanks for a pleasant exchange, RFH with sufficient information
-necessary to help, with a detailed diagnosis and an alternative
-offered.
+Anything that needs to run "make" is by definition end-user facing
+in my book ;-)
+
+As I said in my reply to Patrick, I am primarily following the
+decision made by the interim maintainer when the fix was queued.
+
+Thanks.
