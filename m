@@ -1,54 +1,54 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BB3182D0
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 06:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1848F29CA
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 06:48:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731998661; cv=none; b=fZ4tIrur3Xd1zIDTHjXvz2IPOK1GTdARasDc0yMMUnBqdgKpHppWSq1IbrVvaUoTUVJV8gApjoeZeEp+lHeZ5BRiiDKk8KrOTSXIlsJGfGueW89dkV3etYgxSLjAyYHo1hg37b4jok+Apl9Q4hXk1knL2TcnJT55Gi9dDgxrGhQ=
+	t=1731998898; cv=none; b=dozUZNk5viOPdPqwu1/LdYTBCXCRWEKE376is3/NP7K1NFlgeXZ/BEcOuYdvOMADgo7rrTa1ROYVR7KGNyZcKNZdMQXm7B9osN6gi6Ai+ppc2lQ6nfzNE6rknkEERsTzr3TbMEyHDv/nVpODlkOss8mdRfzpNuh5N24YBtgqqXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731998661; c=relaxed/simple;
-	bh=3d6PYvq+8rmjj5dKMTmzoHZwIhTmSP/Ar8CmY5hjW+g=;
+	s=arc-20240116; t=1731998898; c=relaxed/simple;
+	bh=8dUygCE2OQV1AyXi8VjQm+1HL38VYY0p8kWyx+haosA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pQPvJkwwklnizt1f3ZvYBiLzERm6DMqBG+y+fUKbLjXHzZbANv9Ju2O2Y2fStn90tDRki30ey4gL8fB5psJmITNQxfij0E7uYOmh1//T1+TLMBQJn3oMA8/bh0K9SKexfovyDQrQAn8YgPPnm+OOUJSjsb1nv4+CApMoKEypyzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ywivGfu6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mmiuiMrL; arc=none smtp.client-ip=103.168.172.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=L+UQebgulbVNxs+UBzxs4aMPbuq14qF6L4HjzUtfTZ0PRxbam1PDawyHJWObzr6bCYeThuVE1JcVa5z+6qSZ3dv87nwzL8Nr8+9fVawJIBfE3cNwOaBjE3Db5RXnJJcbdkTzHrIFv2BpvLaWopX46kH2w7p8Cvr/6QIMIrBYmB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QJTIg+Mf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ezvnPMfe; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ywivGfu6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mmiuiMrL"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B7107114026B;
-	Tue, 19 Nov 2024 01:44:17 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Tue, 19 Nov 2024 01:44:17 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QJTIg+Mf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ezvnPMfe"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1F281138014C;
+	Tue, 19 Nov 2024 01:48:15 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Tue, 19 Nov 2024 01:48:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1731998657; x=1732085057; bh=JL7AcG3wkP
-	szlAulrngUAVc9FxHAzXNH2Q5f+0a3KW8=; b=ywivGfu6zcKU6EKbX2TB4wgw+V
-	byIS9WRzCbEOvzoBayQef07Mxr+VqoqPISec+MmwyB3as/q99G8xZ3IScZ0XiIpJ
-	PfafMkX+W4VS4A2aFHJfG7vu88w3wL2zQZNhxFMZ9VOc8YtWk3kEz1yPcDPDth8l
-	D342xeBVM7HeVOsEeT+SmziBAw8Y7JgLv+7BV5SsZYZM4Vfo+UgAkA7TxSUPcSnn
-	vvhI36f9rNXi5Zrn4GRlA3ihattXfYb2PI59aBqG3JpuDG/GaPuRtVJlpgZyyZKY
-	uBZFwG3FhDSmwfttx7v7CclRtlzSgwvkkqrpnYq6KgpCh6yVpIOnAYR7LpiQ==
+	:subject:to:to; s=fm3; t=1731998895; x=1732085295; bh=KKuuPVy+8H
+	CxGbFeM+blCpPgzwILv5gE7c7c1bf4acw=; b=QJTIg+MftrO9ZYL5V28EVD1GpS
+	B1+VoR4yhjiIUhE3IG3mB4hpdV8VnBfQdpg8oMampivjyaTSmF7IODssYsqVQx1e
+	W82dmSVdpFVSRsrFjoscu5PR1atpUq3KrjleCX0kw6fgoyNiy66QPsYLRmm3NCoG
+	N41J6jq8TWVxY/0cOymsokLnbI+wqVchO1EXCT5Sg71Hnb9HqxZ9WXAGwiNQ8PQC
+	5qJTLzjzd5PxI0Yk6QsGGKFJtuzU3ernJo5VueIeyA6Up3eXPz9PxR48HtIlAI+w
+	3JZGMP8PRRQRrYDjefrf0V5Q5t4Linhj6nC7zdwREkoVHzic2O7SP6DRnieQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1731998657; x=1732085057; bh=JL7AcG3wkPszlAulrngUAVc9FxHAzXNH2Q5
-	f+0a3KW8=; b=mmiuiMrLMbP/lLSGSVoGvmLdGp3lcsMMFW0zJ+7btZ4v7NPJdvZ
-	stbhoy+P5I18c01eJiMVsNaPWcGfIzQ91uYzzIoa2YEPGiPG+pGhMsY7njstDXzX
-	kd56zvikcM2RYkXNLFz3aKuXj03EEr3ld5Bl7WAocm40TYq3Ib9qKdUQAzDUP0sK
-	MnP9ncumWuMtO+hWXfWOQIyU70VoZLIhJHthbzbvY7rpZbgpN6XhvXozzkZh8qul
-	VBKozfWRjZJ5vZtV1WqqEYI60NnIuRTCbcJ+L9rpu3GXMlSFfXgDL8NiruXUL7Mb
-	wLB+00R0I6nQ/A/QXzu/mGxFvu8W/PH2kCA==
-X-ME-Sender: <xms:wTM8Z4dtE_auEsjyPyTQIkz6G8Gg62UWlAlud0AI8YBiJ5QqDPi6Mg>
-    <xme:wTM8Z6MIF41GgN5uJrSYmMHB6Y-kWZXZirUNGVla3WsjlG1I4af78WPLoFFeFrjac
-    hZOGVZszF4fSyR70Q>
-X-ME-Received: <xmr:wTM8Z5h3NQwPsBak3zVsErp_dsKNUBMCneaBTfFAHk9Rm4eJ3G9r_t8umpmbJ0FLO2D6Fyjlg4EcXuFb-cpbwGh5OF6kFuktbiXL_9ivPSvQy8Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdelkecutefuodetggdotefrodftvf
+	1731998895; x=1732085295; bh=KKuuPVy+8HCxGbFeM+blCpPgzwILv5gE7c7
+	c1bf4acw=; b=ezvnPMfeNLptBW0SG0cipSheDB6ltkGmf17VlsyuV7Nbbaxktin
+	Gr1H01XoeNDGyowzmL0hYZ9cBcdj+LnzDYN7/wtni13xXfT10CjdbXzoqrinoSOI
+	3jCm3E28jICEfKTmQSAzi6dmw0ONCsUA7Qh8h4FV8dylS/cx7Xbo+vI3ottDyiIB
+	mCKtuhoimH2BIGFbZ/ECEDYUaWHZeo7tZbSnvzCEV5hxMJW+owzKk/tpysnUhmiF
+	77TqBcc+rj2dy47lW2JQfVAdxAS/Sj5IZJPfKiOXwiHVzlGjrlB2ytqD5naxtIR9
+	yCFZ98lpruB5wq/BNVgy9n6mlgGDwteb5Og==
+X-ME-Sender: <xms:rjQ8Z0iJPaTZo4jn6RkKg4Nt2fGwWm27xoSlmRxzJlEdlKkzEKFXKw>
+    <xme:rjQ8Z9A_4H2rpLp-ul3Mjl-FJuCXNPBRIgjBmmVWRHf6-baDK2wXaLvgawSrxqKd2
+    aKQThf9j2lN5t5D0g>
+X-ME-Received: <xmr:rjQ8Z8Fj8DxZTyTx-X54_NWiRX2q5LlH-EtU7KXnvEvI4kcRFJyege_DBw5x3OrAZ0Eap7PzFwbbKpvBn-S-2FWbpBwPMIYWHttu7BtduEV_We4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdellecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
@@ -56,39 +56,38 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugdelkecutefuodetggdote
     enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhl
-    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopegsvghntggvse
-    hfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhi
-    nhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
-    thhopehlrdhsrdhrseifvggsrdguvg
-X-ME-Proxy: <xmx:wTM8Z9_nOZEOxAs84MucTqhMuPU7pItHYE1ibSAayyAsoXboXd-cMA>
-    <xmx:wTM8Z0vY0Tvq1Wd51hpV_7dd_y5x3HZmt2sdPMPBqgEhbobCBQOsog>
-    <xmx:wTM8Z0EWt_BlgHcym-mv6w_YprOcLpN-eubQFnjshKCGYD-FQXO-vA>
-    <xmx:wTM8ZzNxfFAUoZsE3UJgT-sFvFPTLvZO9_WROp_HLG5Nc7mcLEYVoA>
-    <xmx:wTM8ZyB2Ee35esy02xRRO8r0Q3hOFuPGX4GULXuM2RNvwKuWKAdk_v_M>
+    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvgesthhtrg
+    ihlhhorhhrrdgtohhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthht
+    ohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepkhgrrhhthh
+    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugesughunhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:rjQ8Z1RLyYR00NMHZt9HAW1pTi3xI1uYgrP0RVo8zLiSV5cWYo4SMA>
+    <xmx:rjQ8ZxxPFukGYMkRJ_YSNwrkakQX0vmzNK6-bCVAuEKxGrsP8PRiUA>
+    <xmx:rjQ8Zz5zSQBh54ck2IQTSqQDEdpMV9bWOFfVkPOvrmjuuOogL0pn9A>
+    <xmx:rjQ8Z-xWlZCxN21P_sM8B7-yX5fdgzR5ZIWMPOuiL9nEn1S_N38xjg>
+    <xmx:rzQ8Zxfp1whKRGR9iGJjpYCD704V-caCQIpgmnRkMa-O9N_BjNIYWQKj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Nov 2024 01:44:15 -0500 (EST)
+ 19 Nov 2024 01:48:13 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9e80bfcf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 19 Nov 2024 06:43:25 +0000 (UTC)
-Date: Tue, 19 Nov 2024 07:44:04 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e5e3df04 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 19 Nov 2024 06:47:22 +0000 (UTC)
+Date: Tue, 19 Nov 2024 07:48:02 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org,
-	phillip.wood@dunelm.org.uk,
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
 	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>
+	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com,
+	Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH v13 2/9] refs: standardize output of
  refs_read_symbolic_ref
-Message-ID: <ZzwzrI6wJjY2dpp0@pks.im>
+Message-ID: <Zzw0ooX0HFwSit7v@pks.im>
 References: <20241023153736.257733-1-bence@ferdinandy.com>
  <20241118151755.756265-1-bence@ferdinandy.com>
  <20241118151755.756265-3-bence@ferdinandy.com>
- <xmqq4j44ggq0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,112 +96,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq4j44ggq0.fsf@gitster.g>
+In-Reply-To: <20241118151755.756265-3-bence@ferdinandy.com>
 
-On Tue, Nov 19, 2024 at 10:22:31AM +0900, Junio C Hamano wrote:
-> Bence Ferdinandy <bence@ferdinandy.com> writes:
-> 
-> > Subject: Re: [PATCH v13 2/9] refs: standardize output of refs_read_symbolic_ref
-> 
-> "output" -> "return values", or something.
-> 
-> > When the symbolic reference we want to read with refs_read_symbolic_ref
-> > is actually not a symbolic reference, the files and the reftable
-> > backends return different values (1 and -1 respectively). Standardize
-> > the returned values so that 0 is success, -1 is a generic error and -2
-> > is that the reference was actually non-symbolic.
-> 
-> Are all the existing callers OK with this switch from 1 to -2?
-> 
-> IOW, if a caller using the ref-files backend start behaving
-> differently with this change upon seeing a return value of -2 (where
-> it previously was expecting to see 1), that would not be nice.
-> 
-> Because "reftable was already broken" is not a good excuse to
-> introduce a separate regression to ref-files users, we'd want to be
-> careful if we want to do this kind of "while at it" change.
+On Mon, Nov 18, 2024 at 04:09:21PM +0100, Bence Ferdinandy wrote:
+> diff --git a/refs.h b/refs.h
+> index 108dfc93b3..f8b714ca1d 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -83,6 +83,12 @@ int refs_read_ref_full(struct ref_store *refs, const char *refname,
+>  
+>  int refs_read_ref(struct ref_store *refs, const char *refname, struct object_id *oid);
+>  
+> +/*
+> + * Return 0 if the symbolic reference could be read without error.
+> + * Return -1 for generic errors.
+> + * Return -2 if the reference was actually non-symbolic.
+> + */
+> +
 
-There are only three callers:
+Extraneous empty newline.
 
-  - "remote.c:ignore_symref_update()" only cares whether the return
-    value is 0 or not.
+Also, how about the following:
 
-  - "builtin/remote.c:mv()" is the same.
+    /*
+     * Read the symbolic ref named "refname" and write its immediate
+     * referent into the provided buffer. This does not resolve the
+     * symbolic ref recursively in case the target is a symbolic ref, as
+     * well.
+     *
+     * Returns 0 on success, -2 if the "refname" is not a symbolic ref,
+     * -1 otherwise.
+     */
 
-  - "refs.c:migrate_one_ref()" assumes the behaviour of the reftable
-    backend and only checks for negative error codes.
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 2313c830d8..f0ef354bce 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -673,6 +673,12 @@ struct ref_storage_be {
+>  
+>  	ref_iterator_begin_fn *iterator_begin;
+>  	read_raw_ref_fn *read_raw_ref;
+> +
+> +	/*
+> +	 * Return 0 if the symbolic reference could be read without error.
+> +	 * Return -1 for generic errors.
+> +	 * Return -2 if the reference was actually non-symbolic.
+> +	 */
+>  	read_symbolic_ref_fn *read_symbolic_ref;
 
-So you could argue that it's the "files" backend that is broken, not the
-"reftable" backend. Doesn't matter ultimately though, the real problem
-is that this wasn't ever documented anywhere.
+As proposed in the other thread, this could instead be:
 
-I agree that this should be part of the commit message.
-
-> > +/*
-> > + * Return 0 if the symbolic reference could be read without error.
-> > + * Return -1 for generic errors.
-> > + * Return -2 if the reference was actually non-symbolic.
-> > + */
-> 
-> As this is an implementation of ref_stroage_be.read_symbolic_ref,
-> the above comment must stay in sync with the comment over there (and
-> a comment before the corresponding function in the other backend).
-> 
-> I personally would not add the above comment for that reason, but as
-> long as we are consistent, I am OK either way.  So if we add this,
-> we should do the same to the reftable side as well.
-
-Another solution could be to have the comment in "refs.h" for the
-caller-facing function, while the backend pointer simply says "Please
-refer to the documentation of `refs_read_symbolic_ref()`."
-
-> By the way, it is arguable that it is an error when a caller asks
-> "here is a ref, please read it as a symbolic ref" and the ref turns
-> out to be not a symbolic ref.  I'd say that it is a valid view that
-> the caller asked the question to find out if the ref was a symbolic
-> before making the call, and "that ref is not symbolic" is one of the
-> valid and expected results.  So if you wanted to change the value
-> from 1 to -2 only because "you called read_symbolic_ref() without
-> checking if it is a symbolic to begin with, which is your fault and
-> you deserve to get an error", I am not sure if I agree with that
-> view and reasoning.
-
-The reason why I've been proposing to return negative is because we have
-the idiom of checking `err < 0` in many places, so a function that
-returns a positive value in the case where it didn't return the expected
-result can easily lead to bugs.
-
-> In any case, this "not a symbolic ref" may want to have a symbolic
-> constant.  With NOT_A_SYMREF being a non-error, you could structure
-> the caller like so:
-
-That'd be a good idea.
-
-> 	status = read_symref()
-> 	if (status < 0)
-> 		... we got an error so we stop here ...
-> 		... we do not behave differently on error type ...
-> 
-> 	switch (status) {
-> 	case 0:
-> 		... everything is peachy ...
-> 		break ;;
-> 	case NOT_A_SYMREF:
-> 		... we want to handle non-symref here ...
-> 		break ;;
-> 	default:
-> 		BUG("unhandled case");
-> 	}
-> 
-> Also, even if we decide that we want to treat this as an error,
-> lumping everything else as "generic error" might make it awkward to
-> evolve the API, I suspect.
-
-I guess most callers don't care about the exact error code, they only
-care about whether or not they have been able to read the symref. I
-think this idiom would easily be extensible in the future if all callers
-know to check for `err < 0` by default, because introducing a new error
-code would continue to work for them. And if they want to handle that
-new error code they can adapt as you propose above with the switch.
+    /*
+     * Please refer to `refs_read_symbolic_ref()` for the expected
+     * behaviour.
+     /
 
 Patrick
