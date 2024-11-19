@@ -1,147 +1,118 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541711C727F
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 12:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B761CC14A
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 14:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732018371; cv=none; b=YjkDMFhsAe3TOX41zPFDBZ8XtQA1zD+R5u1MVqSAbbkrol3Yrh9+fmRKeR/R5CNXCqlp+I8cfYXnAMMGp56N0/1fYmsn2OfBiOByeA7JTNb7gZBA8nXmHYztus6Q2BZWnywLy/a4lMSls+p7KytXXiQtGAoPuYG61qY6/QkAUb0=
+	t=1732026240; cv=none; b=IZi0wZE3Amn2O0yoi0ausccQHjdvXiYsewQmXfVBAriajCmyFdX/imb2tnCfgcap1z6SA2KWaIqhTaoBE+6obEtn7aQTAjq6Ij7oUoPNFu5XrOX2ODuKK1ZdbN2AIm4BIWhsx7xYNBzm2Tk3oKSxpzPcVHUhnkw7csJmzVzlLtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732018371; c=relaxed/simple;
-	bh=ZBsTtVemOkMg9EKHWpMf8PxIUXRQ2/9NPC9UwG88Odc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iAVXXF6y86041oI1x0n6WhpFX4Jqy+fIvJxYQwyAHsXKqi7VeQmQb18B8EXpUqG53DTbjL4xbjFOCGHryDoDc3rjjIugu89ILcwF3S6k2JKlW24Hr2cj25w6I+0pjZMA1RKw4GCsFxrv5Hb4ku6BxtjerlEbRioTfwmkhuMBKEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hTw09Mdk; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1732026240; c=relaxed/simple;
+	bh=1kCY6V0mG8b4gNMWjH/z0CB8Im95HlX6o2efWtErfIY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EE+kLgRgP9GnBLRU9gz4E32SFwZByZzV14hUuG05KKcNUXv96oMD60Jt4KYBQQDQrPEXwVlmRyVpZQ3tLKDxDakO1osj5guM56SknsXlk/wcqWH90b129R7Vfy3hCE/W8pBeUQ879QpbKnnNnFE6lb9u7uayWCLa2mIUBRBOvu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/xe0YHv; arc=none smtp.client-ip=209.85.222.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hTw09Mdk"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-20c6f492d2dso31793735ad.0
-        for <git@vger.kernel.org>; Tue, 19 Nov 2024 04:12:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/xe0YHv"
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-85700f9cdd6so1170479241.1
+        for <git@vger.kernel.org>; Tue, 19 Nov 2024 06:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732018369; x=1732623169; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7jRZW49Cmn+raCp5yROSNhvhXDiG/1NfsJ7MUrjE0DU=;
-        b=hTw09Mdkw5iwAEOFOANwUnfqk/3/BOLRmBqgQ6PHWkewUoW9BLTPZ/P6ZcCIGuVOZ5
-         /d0JGttIByGJXFJtli+I32QpcABkAZZZhOgSpv6nD+aJ6lo+87EhJ9vHZGzTkOM9Sjax
-         g1FpxIbS3mhT6KEU5Ofb+SNcbLQhRcN4TBYZ+27q5HS+p72DM6A4WrkE92g5gNIavy2X
-         wniOLu7qrOOcp6yvAD0+YqvKFkVqsks7W/i5gM0LuHtxDTciz0Tlby9Ptv12dr8xKrUU
-         i718xZHSvyPrE4EjOcXACQrpDegVOiYac0Hq1DQA3uC1eCyDx5fZfbCdSg9aRqAPfpT4
-         rOIw==
+        d=gmail.com; s=20230601; t=1732026238; x=1732631038; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pRKFMfgXo9RsyTZd2uqGr3WEsVHosnFaO4fn57HNqBs=;
+        b=C/xe0YHv8xklMVf5TJ2/dDQoXoaRH4Rr6Ac7atvuWk4D4Z7mjh1k4L6AwfmLP86vPj
+         CE+ddvI5l0LhZxFBKarVCFnQwT7/ETmPSlYum7hlKQzegYarFUf0w7V8qCGUZvRuTwFA
+         HGwLqUoDg2Gz3U8T/mE41E5nU0TtBw58WpkVCSsoKx7ObSJEMNEKmRhXua6+6+ivpsOu
+         +eLinoNcZ6vn1RhKLemRO8GPMgLlbjo2dt/XqRxcbYeE8FnL+IcknwKolelH066St5Il
+         VoIbY4eK0Bb3Gg9lUtgmWFKpTPiW/ghcapm45H9+dlKkvOpSIaa4eyxOVsKwF6T/vZ2y
+         8XwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732018369; x=1732623169;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7jRZW49Cmn+raCp5yROSNhvhXDiG/1NfsJ7MUrjE0DU=;
-        b=UHpzoHwSe7kxAw5/xY7zncJc8y0hDb1tzJwjv+7gg7+uEGhdvA/cwzTaYdnHIBNGe+
-         THm0G9jBnYGHGe1E8onUxh4EDMMrQ8M+mDci6qo92JE/JnVBDhYp35+IVD6NXgSZnVkz
-         30RN9XtDRCXAVcx0Ss2A2TuFLcndxnadN8uojt751EkF5ql2Bwm7o2KKFQdyt5vcA6e5
-         WGQFDStmX2klRrcn+i7wO2geSkoYmDovMbi8wFuGrOT8ObRzXUVlcyy1LLUBah3/IH9Y
-         aRt8/JhMW96woRd3N0fswOjZrCb2tujKmLyTmqhVG+81wwdR4dkmPZ//iVTamUfiwnx/
-         qQXw==
-X-Gm-Message-State: AOJu0YwNKCI1AB1KbYU68KbU1syqspldTLu4BN6KA0X/336OjbD2JmvS
-	4hOFsjEFNBbSLEnLKaD4U1yRc5wfJV6IqZ5amtt7wjnzWVMF0yBJ
-X-Google-Smtp-Source: AGHT+IHbvGNbfvyhSqlVZI3bYJMslxtCGjWv/Fk/ugcjTBTjR2+xTng+748m3GrGzqx/uqH68YVItA==
-X-Received: by 2002:a17:902:ec8c:b0:212:548d:a5de with SMTP id d9443c01a7336-212548da8f4mr26126435ad.34.1732018369330;
-        Tue, 19 Nov 2024 04:12:49 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-212009e1c90sm49975575ad.136.2024.11.19.04.12.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2024 04:12:48 -0800 (PST)
-Date: Tue, 19 Nov 2024 20:12:56 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, me@ttaylorr.com, peff@peff.net
-Subject: Re: [PATCH 6/8] midx: pass down `hash_algo` to
- `get_midx_filename[_ext]`
-Message-ID: <ZzyAyMs0_A77DtGS@ArchLinux>
-References: <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-0-761f8a2c7775@gmail.com>
- <20241115-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v1-6-761f8a2c7775@gmail.com>
- <ZzibPPpDw518npNp@ArchLinux>
- <CAOLa=ZTU08VGeATHDwnREiYT=PMevrTvG3BzffLCc8DBcHy-tQ@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1732026238; x=1732631038;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pRKFMfgXo9RsyTZd2uqGr3WEsVHosnFaO4fn57HNqBs=;
+        b=jmGgi80LNde2pqFJROUxqBs2tZFlRksvkHAUFh5SyAMtGXHJCZ7WoQhafgK/ypadER
+         hbQ42GCrJxTOxbBDqGm7pjAgi+qIejyloHZPtLpv0XMwTOrlkUyHqMlPmhgX+2ctqJDx
+         QcaVcmHlrdNmeYc68qe/L6ixUHz2kqoz5MDZinflfOD/8AuHS0bpSHcgapP/u6NzTtGq
+         CZBhwQ+eL/Bd6Jen+zXD/n5RXx/Fli4dk5KDr3Aksj5T4anM3x+2EXqDDbtAKR99JuhG
+         k1h690CunMtTnizskzTIgQHWO/NAPfQsJD8swL17//RfdVdN2fmcdJoIanu/XxHrsesR
+         Aftw==
+X-Forwarded-Encrypted: i=1; AJvYcCUEu6RYNyXJpWaD2xYSPnJEyxfo/AHziIYOBWBOjRLWtKVRP1byog8T9dFiTdiVPZzZOgU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjzIABMwx8KqoMFm6kvidSmdWnakH+Oc5zvXcKSJEWk6x0NumU
+	m6ovQW41FVIea9neNGu4MhmHHuOYhjsaxr+SrNOAMeKZy9geWVfIEu/z9o7k6xV0cFHYSGtOzjZ
+	MR6mg6FAJdWBwDqKPB8ydPqxYT5o=
+X-Google-Smtp-Source: AGHT+IFrf+cGIUhSKxX0o5a9TA4yo/aqNMsEmglpSwJV7GmB6WArYLXRAh9IMRvws+RVsBhyismp4CZdWm8r+4ZQPg0=
+X-Received: by 2002:a05:6122:208c:b0:4f5:22cc:71b9 with SMTP id
+ 71dfb90a1353d-51477f0eedamr15891965e0c.5.1732026237840; Tue, 19 Nov 2024
+ 06:23:57 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 19 Nov 2024 14:23:56 +0000
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <cover.1731943954.git.ps@pks.im>
+References: <cover.1729677003.git.ps@pks.im> <cover.1731943954.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTU08VGeATHDwnREiYT=PMevrTvG3BzffLCc8DBcHy-tQ@mail.gmail.com>
+Date: Tue, 19 Nov 2024 14:23:56 +0000
+Message-ID: <CAOLa=ZSbj966S+kXtyr-1iJ3eqnDvDt=vN1kfPsSAFaAENmOJw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] reftable: stop using Git subsystems
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Edward Thomson <ethomson@edwardthomson.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000a62107062744c822"
 
-On Mon, Nov 18, 2024 at 10:25:09AM -0600, karthik nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > On Fri, Nov 15, 2024 at 02:42:19PM +0100, Karthik Nayak wrote:
-> >
-> > [snip]
-> >
-> >> diff --git a/midx.h b/midx.h
-> >> index 78efa28d35371795fa33c68660278182debb60ab..7620820d4d0272926af9e4eeb68bfb73404c7ec2 100644
-> >> --- a/midx.h
-> >> +++ b/midx.h
-> >> @@ -7,6 +7,7 @@ struct object_id;
-> >>  struct pack_entry;
-> >>  struct repository;
-> >>  struct bitmapped_pack;
-> >> +struct git_hash_algo;
-> >>
-> >>  #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
-> >>  #define MIDX_VERSION 1
-> >> @@ -89,8 +90,10 @@ struct multi_pack_index {
-> >>  #define MIDX_EXT_MIDX "midx"
-> >>
-> >>  const unsigned char *get_midx_checksum(struct multi_pack_index *m);
-> >> -void get_midx_filename(struct strbuf *out, const char *object_dir);
-> >> -void get_midx_filename_ext(struct strbuf *out, const char *object_dir,
-> >> +void get_midx_filename(const struct git_hash_algo *hash_algo,
-> >> +		       struct strbuf *out, const char *object_dir);
-> >> +void get_midx_filename_ext(const struct git_hash_algo *hash_algo,
-> >> +			   struct strbuf *out, const char *object_dir,
-> >>  			   const unsigned char *hash, const char *ext);
-> >
-> > I don't think it's a good idea to put "hash_algo" in the first argument,
-> > we should put it at the last to align with the code style where we use
-> > "git_hash_algo".
-> >
-> 
-> Could you elaborate on why you think it is not a good idea?
-> 
-> I've mostly done this to stay consistent, because I see `struct
-> repository *repo` being passed as the first variable in our code base.
-> 
-> Roughly:
-> 
->     $ grep -Iir "struct repository \*r" --include=\*.h | wc -l
->     524
-> 
->     $ grep -Iir "(struct repository \*r" --include=\*.h | wc -l
->     327
-> 
-> Since `hash_algo` is similar, I thought it would be nicer to be
-> consistent.
-> 
+--000000000000a62107062744c822
+Content-Type: text/plain; charset="UTF-8"
 
-I will elaborate on this. The reason why I think this is not a good idea
-comes from two aspects:
+Patrick Steinhardt <ps@pks.im> writes:
 
-    1. I have thought that we will always put "struct git_hash_algo"
-       to the end of the function definition. However, when I carefully
-       inspect the code today, we could put it everywhere. So, I wrongly
-       made above statement.
-    2. Another aspect is that I think "struct git_hash_algo" is not the
-       most important parameter for these functions. When the caller
-       sees this function name "get_midx_filename_ext" without any
-       knowledge, passing the "hash_algo" firstly is a little wired.
+[snip]
 
-However, as 1 shows, we may not care about which position we put this
-parameter into. So, I agree with you that we could just align with the
-"struct repository *".
+> Range-diff against v2:
+> 1:  2b7d4e28529 = 1:  2b7d4e28529 reftable/system: move "dir.h" to its only user
+> 2:  38cfe85bf5b = 2:  38cfe85bf5b reftable: explicitly handle hash format IDs
+> 3:  745c1a070dd = 3:  745c1a070dd reftable/system: stop depending on "hash.h"
+> 4:  7782652b975 = 4:  7782652b975 reftable/stack: stop using `fsync_component()` directly
+> 5:  b15daefbc83 ! 5:  430be1045d6 reftable/system: provide thin wrapper for tempfile subsystem
+>     @@ reftable/system.h: license that can be found in the LICENSE file or at
+>      +
+>      +/*
+>      + * Rename the temporary file to the provided path. The temporary file must be
+>     -+ * active. Return 0 on success, a reftable error code on error.
+>     ++ * active. Return 0 on success, a reftable error code on error. Deactivates the
+>     ++ * temporary file.
+>      + */
+>      +int tmpfile_rename(struct reftable_tmpfile *t, const char *path);
+>
+> 6:  83949837a29 = 6:  b9ffdc605b9 reftable/stack: drop only use of `get_locked_file_path()`
+> 7:  80fe5bc5e10 = 7:  e1ac1cc2e67 reftable/system: provide thin wrapper for lockfile subsystem
 
-Thanks.
+Post my previous review, this range diff looks good. Thanks
+- Karthik
 
-> >>  void get_midx_chain_dirname(struct strbuf *buf, const char *object_dir);
-> >>  void get_midx_chain_filename(struct strbuf *buf, const char *object_dir);
+--000000000000a62107062744c822
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 6d7013ec69b557c5_0.1
 
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jOG4zc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNThFQy85aGdWRy9peWt2SS9jTU9RSGVnYW8xT2xBSgoxK0t2akRRTHd6
+VXhtaU5HRFN3WXlPcmw2Y3g2bUxlS0x6TzJaU0tSVW1TWG9FUXVqSTU2VnpXUTMrUjB3bXZWCk9L
+RmM5SC9oREF6WlZMRkRPUVhLMEF3Uk14alVPRHFEd3lEYkhjdjlNckFYRVJkbExUSXp0M25GSmV4
+dSt5RnQKeVJHWVFJdC9KL2VoQWM3amhiL09GallCUDRPT0lqS3NxeDh0VllVVXcyZmVYSEdQZVFX
+SnptaGdHdlFwSTUvaQpPRXdvZ2hRWFppMXdUYzZOVWF0aEJUdWN2dk5wdy9RWXJhcWhBRG9oaHJm
+TnFSWmtHTTFZbW0xakpuVUZjcTBGCkszWEcyYXM5SzRxRWsrRHAzYjZzckpYdEhreGtPR0RGS29J
+VnkxS0E0UndWb3NqM3JtL243SFd5dCtSc3lsY3UKcTdmNEhvbTV0WmluQU9vMTFFRm55Q2lxZ1lU
+RnU5Y2o4dkNqZTloUjE5SmcyNy9kdU16ZVZjd2JDdUZqR2xwNAplM0ovUVBVVk1BVHBhcWErVzZR
+N2V1ZHFQTml3RENSNkQvVnNCZUlKalJEMW1ucVhlNHFXUlZITXM5UXRJQnZZCjZ0aGE3Q3Bnd3dr
+bHRTQlVTRkQ1eGVOVHFZR3ZHdHBxeWpCT0lkTT0KPTRTQlUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a62107062744c822--
