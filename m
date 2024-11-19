@@ -1,81 +1,74 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0776DDAB
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03650610B
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 00:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731975417; cv=none; b=QobWhXQ0QkLBrczpyY2QXlg3KhLx7RSgXZ6eJTKp8O57ni5D3Fq85wCEyn2gQ4IUxYeSCeoGR81Y+NxLWjRE2DiDz9riuJGxsDGsrhl9xtz6WPGFnUxLEI/E2p5BXWQEVrlO1aPpr4qiU2xCy6fSfSny8e3ZbU4LNkCXdodDw1g=
+	t=1731976327; cv=none; b=VfGN+bmgv4hBPE2loCFelkHtEbiH5owLLimpQChmhOuYENr3EZjAbsL/3eoi3BztgHJRpGBJrjAptazInD9kb3AIjVrC2yUXqOvE55gwa/1EfZ09wU5LARIM32Eirada6qwFo75gLKf/rg0hyAaBxFcdM38TTz4Y6ro5sjPGYss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731975417; c=relaxed/simple;
-	bh=5+Kvvk5fZV/8tXQNt1XXsGBqAfuZDuq8xt3Nzaj1vDw=;
+	s=arc-20240116; t=1731976327; c=relaxed/simple;
+	bh=0Iy4n0c6ACkTpi91l2JdQuRBlWxPHqXWA0pRAqrp2tM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SCBRoR7SPlltQXCf8sgtDpHQ+K9H/pNJGgv/LEnH+VjOWK3PIuR9pogurH2fPc4FuqtSJFMA+uoJDkFUVwBoGx7gBwCIHtfpo3FdgZBucO+F2M4mUH6Dr8LQEA9+daovLG8NT0lUL6MrBOexVLsYpRgI43s0oLLlvgkA+JGP/CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gPbs0h40; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=R4AlfJeajlAfKshgqsuoSkW4tRQZxmhSDQZkku6VFGxnD6CV6s57E4uxiQ2JP7siUs3EkISW06LHK7I6Xx+/qYwzoyh0UxGrrXm4rtrZpLwDvHR7swy1O0pPkQ5/uezJ1RA1ZqrqSUAvk7Q1HZFt+JMvcHY0/GXutnam3MdI1Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h2yECVC6; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gPbs0h40"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7F6D12540162;
-	Mon, 18 Nov 2024 19:16:53 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h2yECVC6"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1CA2E254015A;
+	Mon, 18 Nov 2024 19:32:04 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 18 Nov 2024 19:16:53 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 18 Nov 2024 19:32:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731975413; x=
-	1732061813; bh=QZ0qeWaNH1xg0UF7rp2rsn/c3Fx5IcitE2BnEotHgAc=; b=g
-	Pbs0h40RreqlxSfYoTcgvHgPoD3JaU0LjbAIL2XiN//XDpL+PuaiAW6bF8DanWZM
-	JWyvlNuG7sTNx+4/ustohT7EGaKx06vpZZXW6J68i2L1yYDF0RqJYCHgrMPLdQ4w
-	xdQhQONQRbDb5yodgeaFADY0Qq/3txXQmox7Rri5pDWCtEKXbWO9TxTr9M+c4ou8
-	SG53psfw1lantop5immG/CaJ3ZfvJ7Dx84fLzc6Y8NGDr5b7LVE5LPcnxDu5m2xR
-	L9Jua2iGci88BeB749incZ86cY1OpelfTqnoN09MpOLqhZBg+X9ND3niqxH4wp1H
-	pZGCM6hRvdxXvYnDUwtYQ==
-X-ME-Sender: <xms:9Ng7Z_LoCxIj-BVOgCJWwzLW-pz7IhYi8xSC_-H0YwWPdDRC_fZgmA>
-    <xme:9Ng7ZzK3aUW3KwWkghyJ6jyVoWWJgahbRdb1nySu2KKXW4h2kW4JTkoVZkUUaWT7W
-    YZx-Y7IOr_i512iXQ>
-X-ME-Received: <xmr:9Ng7Z3tEEr6aL92_3LK21PidEBUM9VjkRZX3VcgDWuNoN67Ya3pAXSqZm0L7xlspMRYObBTGK3C4l-aqLuHcASqrwlLBp3dqw-Ax>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvtdcutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1731976323; x=
+	1732062723; bh=yz4x1eim2Rvmt/Xipg+GDS3dYDS92z+dROyDzRwRX/s=; b=h
+	2yECVC6OidiEjv7Ew9HirQraXBvrpb0x4E3Lwq6C/cEaAd6VAWxWSjw7M0qx0scm
+	dh2UMHc9Wf6UJfTfZfBq/SW4jcPPjAy8qPgHmkksD1xImB3fN/yPoJY4cOjkBZrk
+	pG3bIh8b6gpcr/JoNa4LL2sAm3hiaeVrNFLdSIAISnfUolFL+jkj7gegAwDLZ+kM
+	wIvgyr8cxuK83gBH4Mu5965MevEOMPNsJLFikCXvbwqymgvEikHEVnI3bMs2vF9f
+	yjF0/bZnubrjJ+LmQCRmlsW1j47shYJgbM0RzaFmk6qwNEjokyfJzuF1QctjixPl
+	KVZ2uy7DVKD573MtD77kA==
+X-ME-Sender: <xms:g9w7Z6M8I9Ka69f5-j3nxAmC33-DUyLqjKy5PNqjdcCBqFsFQzs-9w>
+    <xme:g9w7Z49ftakirxV2NHjwSVYV4MCi91akIlELvSCA5OgiTemhd9KT4oCakwytdxEOS
+    crSmuRCXQhjPQUqmA>
+X-ME-Received: <xmr:g9w7ZxSCSEcczXK6Llo3hELkBbt8HKKQff8F-yDG3NVwzJEnaEj0n4oG1ohiRGgifmMxs15bm75VwhlX-HNl9YvbahPFPQUO-_IF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfedugddvvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgf
-    dtuedvjeffgfehueefueeghfdtjefhgfekhffhteeiffetheelhedtgfehtdenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopegvrhhitgdrphgvihhjihgrnhesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhvihhn
-    figrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhi
-    esghhoohhglhgvrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghm
-    ihhlhidrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepjhhlthho
-    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:9Ng7Z4YWlWf8wNY8xdENf8r5mbYeDy9KT27GqEw0TI97BoU8qMJldA>
-    <xmx:9Ng7Z2a_gkC2HXh4S91nsW2dPwqO14UpQSpSv3WlZ-VTMQsESKX2yg>
-    <xmx:9Ng7Z8C-j1ZsbsJw2bCzXnVZGOzXjRLxi3W7quAJpsjKNa8PsgKUaA>
-    <xmx:9Ng7Z0ZJMsw8hX886YTxRv5kYs_ON4MrwqLAFzANSmKUuGC27AP3Vw>
-    <xmx:9dg7Z8nk1AhxSliK8GubQsw2l9Ge7ZGMVmMxJ026e3oyVSLk9B6dtgCh>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffg
+    kefhhfetieffteehleehtdfghedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiphhhih
+    hlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehsohgvrhgvnhdr
+    sggvtghhsegsihhtiigvrhgukhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:g9w7Z6vGEAZVwlzVe2R-Jb1GqwHYu8EUXG6ksrsd_5AAAROfKHLToA>
+    <xmx:g9w7Zyf9iVMsNVf7aJLoMMBuArp3rszqHrRX9DRroVIjsKB865pshg>
+    <xmx:g9w7Z-1vDD7m6yjtThHNtoertOIPf25naO8EWlvOB1DBFxgr505PrQ>
+    <xmx:g9w7Z28n9L6gAZVEFpSvtO5kc3KrO3I7_OOAp6LVtrPuPozspIWG3A>
+    <xmx:g9w7Zx6V8zo_t4QjR9FKu34Uxg8nOnR6YrW8s-zlnDWmykwIyWt-dzmD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 18 Nov 2024 19:16:52 -0500 (EST)
+ 18 Nov 2024 19:32:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Peijian Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
-  chriscool@tuxfamily.org,  karthik.188@gmail.com,  toon@iotcl.com,
-  jltobler@gmail.com
-Subject: Re: [PATCH v6 0/6] cat-file: add remote-object-info to batch-command
-In-Reply-To: <CAN2LT1Cmsw3RB1kbRBvoeLs8WaQeZWqrG96EQfMkMe_jdKaO4g@mail.gmail.com>
-	(Peijian Ju's message of "Mon, 18 Nov 2024 11:28:23 -0500")
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
-	<20241108162441.50736-1-eric.peijian@gmail.com>
-	<xmqq4j4egza6.fsf@gitster.g>
-	<CAN2LT1Cmsw3RB1kbRBvoeLs8WaQeZWqrG96EQfMkMe_jdKaO4g@mail.gmail.com>
-Date: Tue, 19 Nov 2024 09:16:50 +0900
-Message-ID: <xmqqplmshybx.fsf@gitster.g>
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: =?utf-8?Q?Bech_Christensen=2C_S=C3=B8ren?= <Soeren.Bech@bitzerdk.com>,
+  "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Possible bug in Git submodule update --inti
+In-Reply-To: <8db6eba3-a151-3819-159b-921a6c3f3242@gmail.com> (Philippe
+	Blain's message of "Mon, 18 Nov 2024 14:22:18 -0500")
+References: <DB9PR10MB709879A45AABEC017F3E89DF8A272@DB9PR10MB7098.EURPRD10.PROD.OUTLOOK.COM>
+	<8db6eba3-a151-3819-159b-921a6c3f3242@gmail.com>
+Date: Tue, 19 Nov 2024 09:32:02 +0900
+Message-ID: <xmqqldxghxml.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,50 +79,27 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Peijian Ju <eric.peijian@gmail.com> writes:
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-> While the “fetch and locally inspect” approach is an option, it would
-> undermines the purpose of the feature, as highlighted by Christian’s
-> partial clone and sparse checkout example. This feature is
-> specifically designed to provide information without requiring the
-> objects to be fetched, making such an alternative counterproductive.
+> Hi Søren,
+> ...
+> in the doc for 'git submodule init' [3]. Note that this is _not_ 
+> the exact command that you ran according to the trace output below, which is:
+> ...
+> I think what you'd want to do is simply:
+>
+> git submodule set-url -- <path-to-submodule> <new-url> 
+> git submodule update --init --remote
+>
+> This will fetch the new URL and checkout the tip commit of its HEAD branch.
+> You will still have all the objects from the old URL locally though. If you want
+> to avoid that, you should completely remove the Git repository of the submodule:
+>
+> git submodule set-url -- <path-to-submodule> <new-url> 
+> git submodule deinit -f <path-to-submodule>
+> rm -rf $(git rev-parse --git-dir)/modules/Submodules/Lodam.Standard
+> git submodule update --init --remote
 
-Thanks, then wouldn't it make more sense to say, because support for
-new protocol capabilities on the server side would have to happen at
-a lot fewer places than the clients, we only work when the necessary
-protocol extension support is available, without any "fetch and
-locally inspect" fallback?
-
-The above is after reading your "cons" here of the fallback.
-
-> Cons:
-> - Implementing a quarantine mechanism seems like a separate feature.
-> This patch series already introduces a number of changes, and
-> including the quarantine mechanism might make it too extensive.
-
-Not an excuse to introduce incomplete changes that are not
-sufficient to be useful, though.
-
-> - Based on Mr. Patrick Steinhardt’s comment at [1], since
-> remote-object-info operates only on protocol v2, adding a quarantine
-> mechanism may lead to differing client-side behavior depending on the
-> protocol, which could complicate the feature’s consistency.
-
-Not doing quarantine would give even _more_ different client-side
-behaviour, though.  When talking with a server with v2, you'll not
-see a cruft object left locally, but with older servers, you'll see
-crufts left behind.  After a failed remote-object-info call, you can
-do an object-info to figure out what you needed to learn about the
-object, but only after the failed remote-object-info was against an
-older server.
-
-So, I do not see it as a reason against putting temporary objects
-into quarantine.
-
-Not that I consider it important to give the same client-side
-behaviour when talking with older and newer servers, though.  It is
-natural for a new feature to be available only with versions of Git
-that supports the feature, after all.
-
-And if we throw that away as a goal, it starts to make more sense
-not to add "fetch and locally inspect" anywhere.
+Thanks for a pleasant exchange, RFH with sufficient information
+necessary to help, with a detailed diagnosis and an alternative
+offered.
