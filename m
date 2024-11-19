@@ -1,41 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC2240BE0
-	for <git@vger.kernel.org>; Tue, 19 Nov 2024 18:50:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E840E40BE0
+	for <git@vger.kernel.org>; Tue, 19 Nov 2024 18:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732042250; cv=none; b=hB6tdUn11ApH3KpjsWKFjuQi9Bg1iwDuj6kwqBbBpugoqKC29NjYx42rMsC7JCi5lgyuWFCqFlBrR5BMHNAc0xdXVfaz8jT9xKxSJql6eoZXbOvQXK9gTlDf037VVuOwTfQyqZcoDTszXQ6fnfWSfjapaG739BMtpj1AjOuTpcI=
+	t=1732042429; cv=none; b=rIEDivmBP6PrKGEvy7XQpAgWKxgrqnYNwKeYSfZCBaNekdJokdhtI8ja/sXNauIsFFkouKY1T2gleetqSibdreTRs3ZfbHsZ4GbETpWknTKbWIxxBZyK9QEWVxR8pQR6X4Wl8qZ5fAfVBAwTSCCmoiy71NzBF+spygwRoEEPob4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732042250; c=relaxed/simple;
-	bh=5JUK7Ry0FzXPhcrR1EPf0oeyTUeHrtcg6cI5mVzkYwM=;
+	s=arc-20240116; t=1732042429; c=relaxed/simple;
+	bh=L1CDIA2T2AaWAtfsBWzV946jMCPOWy9PJg6kxu8EIN4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nnCrwRE4xssj49OGi0BBzFeLgbiGhWlE1nacqzWkBki7DZGmuvHib+a/BwzCGVmZ4Kw6s2EOYsGo5kfX6eq0LXldnO8ixaJpO1l04STJhp2DPHMyjWATZB+5OVXQ0AOLUxPa9Zo5DwdcfKAKZCRJvzUw8+KOuZ4qm+ryX/vVXu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L5Bb+RLq; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=EGAzQBxZHGSeKsxHT5g/W5ZrnqZ137dQkYnNORbY/O/U2xFte07BaWVnaSJfuUmIYMyW1ndE/lnmk7YLLClSRa+gHXIdaqFy+zE/kqe4qzAyVH8djZbq6kE7HoRAT+3kmIOSrO0o1eF5KlNukcGcpDW4X8JB+rDNU/GzyIQyIZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HPnMP2xU; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L5Bb+RLq"
-Received: (qmail 7590 invoked by uid 109); 19 Nov 2024 18:44:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5JUK7Ry0FzXPhcrR1EPf0oeyTUeHrtcg6cI5mVzkYwM=; b=L5Bb+RLq8prFWfSAbXi+b9KPY7uJcyvtyxaO/JbsUIieU0juot3I+qHL3BtCl5nuASTp7z6g3ecFtkqABKkXlXWvzao01i++114uPhxzVFX7LpRhl948vLDTg6SVkijLsNmTLeT1Y4NBEjtAvOv8GTAWRt9RDavoUfn+9g5x00ucMLO9wel0YaNQQ6LTJaZZQrdcqV6sQVJs8Ic7CIRtaBM2eI2iPnTI9rIBtLFBHp7Z4c2xxRe/Y37boRhvylSJ2uF80imuiRQoV2cw2zypqrJZ7jjzIvNa8mlcv5s4AUNfJCaVKaX9TdpbMs12H3oMfiUhPV3yEf3Znh7G9t9nDA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HPnMP2xU"
+Received: (qmail 7633 invoked by uid 109); 19 Nov 2024 18:53:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=L1CDIA2T2AaWAtfsBWzV946jMCPOWy9PJg6kxu8EIN4=; b=HPnMP2xUGhbZaAWwqQ6dF5WWzpTuSEZd/v7JPWhH/knEuosPoYmRryKDk7MUQSnG36PCr06NyatCEmOkrdwf8P9D+KKpQlo+z/3l5F0v7JO4s/nAKU8TnzlEKqHOAEyKUdQVryNRVoE4T7MvnqWX6IYsiSJ5oa5iuKpUFz6Sy/qC/5i42+C1DL7DPw5ACuGivmRmakLO8NMI0irxSIFkcXlJioULHAFNgGl+IFlnC/iU8LnQm4PFzNtoCtXXEokSdIWH0azwYbzmFztI7O6VdDvskHIoFVLIcHzoiyBRn1FsaOGIALdrU85xHduTSg1s0QVI+Hqqu7bc1X+W5QdIXA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Nov 2024 18:44:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 19 Nov 2024 18:53:46 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2559 invoked by uid 111); 19 Nov 2024 18:44:06 -0000
+Received: (qmail 2642 invoked by uid 111); 19 Nov 2024 18:53:47 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Nov 2024 13:44:06 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 19 Nov 2024 13:53:47 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 19 Nov 2024 13:44:04 -0500
+Date: Tue, 19 Nov 2024 13:53:45 -0500
 From: Jeff King <peff@peff.net>
-To: Caleb Cushing <xenoterracide@gmail.com>
-Cc: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Subject: Re: git remote set-head automatically
-Message-ID: <20241119184404.GA15723@coredump.intra.peff.net>
-References: <CAAHKNRGv19rhnqCkJMpE2FomNQBHvSS36aC=fh0UwO+9-6RRfA@mail.gmail.com>
- <20241116033616.GB1782794@coredump.intra.peff.net>
- <D5NOZMMISX44.2PTTMY57J5EM6@ferdinandy.com>
- <CAAHKNRF8JDUTH-QzPG1b4-wafzU+MXaMNinfBRu3JfCssfwGUw@mail.gmail.com>
- <CAAHKNRF4AnvceiTDLdpNS94yRnoZYMSD0Wkg7V+4YBwSej7NSA@mail.gmail.com>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH] index-pack: teach --promisor to require --stdin
+Message-ID: <20241119185345.GB15723@coredump.intra.peff.net>
+References: <20241116032352.GA1782794@coredump.intra.peff.net>
+ <20241118190210.772105-1-jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,39 +41,80 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAAHKNRF4AnvceiTDLdpNS94yRnoZYMSD0Wkg7V+4YBwSej7NSA@mail.gmail.com>
+In-Reply-To: <20241118190210.772105-1-jonathantanmy@google.com>
 
-On Tue, Nov 19, 2024 at 12:06:21PM -0500, Caleb Cushing wrote:
+On Mon, Nov 18, 2024 at 11:02:06AM -0800, Jonathan Tan wrote:
 
-> A little more progress on what I'm going to have to do, github action,
-> without set-head the ref/HEAD isn't present
-> 
-> - uses: actions/checkout@v4
->   with:
->     ref: ${{ github.event.workflow_run.head_branch}}
->     filter: "blob:none"
->     fetch-depth: 0
-> - run: git remote set-head origin --auto # fixes otherwise the cat
-> will not find a file
+> Currently, Git uses "index-pack --promisor" only when fetching into
+> a repo, so it could be argued that we should teach "index-pack" a new
+> argument (say, "--fetching-mode") instead of tying --promisor to a
+> generic argument like "--stdin". However, this --promisor feature could
+> conceivably be used whenever we have a packfile that is known to come
+> from the promisor remote (whether obtained through Git's fetch protocol
+> or through other means) so it seems reasonable to use --stdin here -
+> one could envision a user-made script obtaining a packfile and then
+> running "index-pack --promisor --stdin", for example. In fact, it might
+> be possible to relax the restriction further (say, by also allowing
+> --promisor when indexing a packfile that is in the object DB), but
+> relaxing the restriction is backwards-compatible so we can revisit that
+> later.
 
-We do create the HEAD symref in clone by default, but IIRC
-actions/checkout does a more limited clone with --depth and
---single-branch.
+Yeah, I agree with this summary.
 
-The separate set-head should work, but it is a shame that it will have
-to hit the server for a second request.
+> This change requires the change to t5300 by 1f52cdfacb (index-pack:
+> document and test the --promisor option, 2022-03-09) to be undone.
+> (--promisor is already tested indirectly, so we don't need the explicit
+> test here any more.)
 
-You might look for options in actions/checkout to change the way it
-invokes Git. Though I suspect there might not be a way to trigger
-git-clone to do a single-branch clone _and_ create the HEAD symref. So
-you may be stuck with the two calls.
+OK, I think this is reasonable.
 
-> - run: cat .git/refs/remotes/origin/HEAD
+> Looking into it further, I think that we also need to require no
+> packfile name to be given (so that we are writing the file to the
+> repository). Therefore, I've added that requirement both in the code and
+> in the documentation.
 
-Don't access the file directly; it will break if the ref storage format
-changes. Use "git symbolic-ref refs/remotes/origin/HEAD" instead.
+Hmm. I didn't realize that you could specify a pack name _and_ --stdin,
+but I guess it makes sense if you wanted to write the result to a
+non-standard location (though curiously --stdin requires a repo, which
+feels overly restrictive if you give a pack name).
 
-(Not sure if this was just illustrative or what you are planning to do
-in a real CI job).
+But I think that makes the --stdin check redundant. I.e., here:
+
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 08b340552f..c46b6e4061 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1970,6 +1970,10 @@ int cmd_index_pack(int argc,
+>  		usage(index_pack_usage);
+>  	if (fix_thin_pack && !from_stdin)
+>  		die(_("the option '%s' requires '%s'"), "--fix-thin", "--stdin");
+> +	if (promisor_msg && !from_stdin)
+> +		die(_("the option '%s' requires '%s'"), "--promisor", "--stdin");
+> +	if (promisor_msg && pack_name)
+> +		die(_("--promisor cannot be used with a pack name"));
+
+...just the second one would be sufficient, because the context just
+above this has:
+
+	if (!pack_name && !from_stdin)
+		usage(index_pack_usage);
+
+So if there isn't a pack name then from_stdin must be set anyway.
+
+What you've written won't behave incorrectly, but I wonder if this means
+we can explain the rule in a more simple way:
+
+  - the --promisor option requires that we be indexing a pack in the
+    object database
+
+  - when not given a pack name on the command line, we know this is true
+    (because we generate the name ourselves internally)
+
+  - when given a pack name on the command line, we _could_ check that it
+    is inside the object directory, but we don't currently do so and
+    just bail. That could be changed in the future.
+
+And then there is no mention of --stdin at all (though of course it is
+an implication of the second point, since we have to get input somehow).
 
 -Peff
