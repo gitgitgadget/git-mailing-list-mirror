@@ -1,40 +1,74 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5805155C87
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 08:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1979B175D5A
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 08:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732091888; cv=none; b=Bss0dTC9p9TY71F1IOS3MS/iaPtoOrUGABxewioYM7+qRHu/vPASZRmN6JGc1Dawi+PJYyUVRNr4BFHK72+CXlFMDIjZL0h/QdJl7Z7nHPIRhQ2nr0ghu/3EcYx9FpLc+vSEOWS7yM7LPRgdk/tZre2m2KyZ+fvXC+/MlAq3bOI=
+	t=1732092577; cv=none; b=oLTaePWxuA3T0ouPPtHc6HlVtZV28mFl/CfEgwehJC/5FEvqe0R1esTWISnLfmNsvezjQwbnZZrQ9nMrwbS3OwSD/oxi+EzEOl3lob46m6I13MGDjHYqxdMW+btKlUuNTdp3hgUZ3UgttYltDxDzohoeGT7bDtDq3TKicW+zcEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732091888; c=relaxed/simple;
-	bh=Fi22kLE5RhaNSBrzi7yz/IWIHGYqD5TRujV5rk47hVw=;
+	s=arc-20240116; t=1732092577; c=relaxed/simple;
+	bh=bzN8AKQTB3rYTkSwLIPa/Ad4Y+3rsomv0rYDtBHFhhM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PiBLT5GeLpeQoDmGc82SEZvhM3+nf+iVVAMWVpCteYRiwP7nVFNt8qvtbcJRXHsEDi1UYCIFJ/2VVNKegaOwznJz99pZoIswl1OvUZQiFiE3jSr+M8DdcNquLYJQlI8K8ooSIMEQ5GAtQF6bfan/Ousf6sWU0dXWW79KAWlVngE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=goEIF1Qh; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=g+LZwq4QHlXj8RZzTGnw2rRcF3YsKnuc5cIY7NRTED0524FJz2zyfTyCBp0pgQ64lCCu/J8hweTHls6OK7I1qXPbPRs+h1CMq0LVu/T30srQg/cxu9d+RJ4JU0SA2WLmqB6Ljjr5rOIjCdqi4XvtPp87BHnSHtwM9MpgDxzEUdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ptwVzW76; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="goEIF1Qh"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1732091878;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dpWfsE2HDAxLLt66nxrvT/QOXRvC3VcIKVxixmAYQSU=;
-	b=goEIF1QhOeq5vmFWvr2zLl8FIwBnd0OvY+P1CwCU0o6RXJIBn4W0FTUQ/vTomjHqywiiUI
-	OPHMHwS+d/XFXcBxsG5g4ZZvoApW5Z6lXjtQ+8Sl/fsWnSqGENVGhbtZasJFl3GIv8sVY0
-	hE7VcHL/5vbPnp/ufN4rWObKuow2S74=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Subject: Re: [PATCH v2 09/27] strvec: introduce new `strvec_splice()` function
-In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-9-6154bf91f0b0@pks.im>
-References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
- <20241111-b4-pks-leak-fixes-pt10-v2-9-6154bf91f0b0@pks.im>
-Date: Wed, 20 Nov 2024 09:37:40 +0100
-Message-ID: <877c8yti5n.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ptwVzW76"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D364D254021F;
+	Wed, 20 Nov 2024 03:49:33 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 20 Nov 2024 03:49:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732092573; x=1732178973; bh=tld8CnNWa2FTiKfQNGnEe1wj1IR6Fa5HnSk
+	cPFtJ/gk=; b=ptwVzW762qTqATEC1ZBOcO3kRzqGyl7eC2qVkUQ41UmqrfOGO/4
+	sAGPnSzxsZmiQvE6YpWdK667mzCaTzUIyo6DD4eRnpNso9FbyK4OoLRUtibG1oFT
+	vhcC+Ag98rNJgJwTytWgM5ox7Rn0IHjWYLPpvcknlzZTDSs1Csfxcf7xnCAEcMxy
+	aKfKOuZ5MywJIjHkHDLFuclOT3IE6bmEC4ntjmVkmeKqqWU3Idqdc69cE6XmGuTJ
+	SPXHWPhGLyju8taxUIyaUCPj/vZ5rrGfRDguUgQI2rb6WD7Ys8waJs2XgWLthCbb
+	BsNnbIlH2jd/p1pWeROZ6hTIoGmn43QLlKA==
+X-ME-Sender: <xms:naI9Z4cCoeJE8PEQLLABxQgZstofYGi1u7t-G959keD3C-mIP_l7ag>
+    <xme:naI9Z6N5PdX6lIKVJJYqUPXswGrKBQ371nf47zIar4A95k0w5HVnPGeewAJc3NlvV
+    z6q1BaHzpwn8UN_lg>
+X-ME-Received: <xmr:naI9Z5iUGXryeJC-22KU0kxgH2flKhTDasHuA1gLU7UpK9ZNFo54BY0xo4ofzWVc27hpqzJIPT657X_1rppybqxy-UXv6NGS9jRS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeefgdduvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihloh
+    hrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:naI9Z99AaAlgJOiv6Q7LQrfaZGe83IMmDDA0HBDpl7yMgl6vxvmMzg>
+    <xmx:naI9Z0u9gxcWa3gPAw8xNfoB2-3yvI-Q2FCRWpxI-b5J5nhpF0xXXA>
+    <xmx:naI9Z0GXM2uzRPJdj7Pai3-IzPzqdxcaVf47Kb-49qeiha9LNvAcbQ>
+    <xmx:naI9ZzNeZT9hRWL4NNpDBfefdN8h4g5r5cYB8mqVv-lZtraVmblkBw>
+    <xmx:naI9Z-ULCXSkGBscbEaEvWfIK6nyNDfy0vEYDV4yH4vdXzFswtGyJSGz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 Nov 2024 03:49:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v3 00/13] midx: incremental multi-pack indexes, part two
+In-Reply-To: <cover.1732054032.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Tue, 19 Nov 2024 17:07:16 -0500")
+References: <cover.1723755667.git.me@ttaylorr.com>
+	<cover.1732054032.git.me@ttaylorr.com>
+Date: Wed, 20 Nov 2024 17:49:31 +0900
+Message-ID: <xmqqttc2i92c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,93 +76,35 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Patrick Steinhardt <ps@pks.im> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> Introduce a new `strvec_splice()` function that can replace a range of
-> strings in the vector with another array of strings. This function will
-> be used in subsequent commits.
+> == Changes since last time
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  strvec.c              | 19 +++++++++++++++
->  strvec.h              |  9 +++++++
->  t/unit-tests/strvec.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 93 insertions(+)
+> This round fixes a small issue when writing legacy ".rev" files outside
+> of the MIDX in '--incremental' mode.
 >
-> diff --git a/strvec.c b/strvec.c
-> index f712070f5745d5f998d0846ac4009441dddfa500..81075c50cca4fe44608775541d876294a79d9e4e 100644
-> --- a/strvec.c
-> +++ b/strvec.c
-> @@ -56,6 +56,25 @@ void strvec_pushv(struct strvec *array, const char **items)
->  		strvec_push(array, *items);
->  }
->  
-> +void strvec_splice(struct strvec *array, size_t pos, size_t len,
-> +		   const char **replacement, size_t replacement_len)
-> +{
-> +	if (pos + len > array->alloc)
-> +		BUG("range outside of array boundary");
+> The rest of the series is unchanged, and re-submitted to solicit review
+> now that I have more time to focus on this series.
+>
+> == Original cover letter
+>
+> This series is based on 'master', with an additional merge between
+> tb/incremental-midx-part-1[1] and my newer series to fix a handful of
+> bugs related to pseudo-merge bitmaps[2].
 
-Why aren't you checking against array->nr? I was trying a test case for
-this, and this seems to be unexpected behavior:
+Both of these prerequisite topics were from August, so we do not
+have to worry about reconstructing the base anymore ;-)  As I do not
+have any trace of this topic in my tree anymore (except that I know
+an earlier round that ended with "fixup! midex: implement writing"
+existed in the past), we could queue this on 'maint' afresh, I
+guess?
 
-	void test_strvec__splice_insert_after_nr(void)
-	{
-		struct strvec vec = STRVEC_INIT;
-		const char *replacement[] = { "1" };
+When merged to 'seen', pack-bitmap.c has conflicts with other topics
+in flight and what is annoying is the lines involved in the
+conflicts are rather on the overly long side.
 
-		strvec_pushl(&vec, "foo", "bar", "baz", "buzz", "fuzz", NULL);
-		strvec_pop(&vec);
-		check_strvec(&vec, "foo", "bar", "baz", "buzz", NULL);
-		strvec_pop(&vec);
-		check_strvec(&vec, "foo", "bar", "baz", NULL);
-		strvec_pop(&vec);
-		strvec_splice(&vec, 4, 1, replacement, ARRAY_SIZE(replacement));
-		check_strvec(&vec, "foo", "bar", "baz", NULL, "1", NULL);
-		strvec_clear(&vec);
-	}
+I think I resolved them correctly, but we may want to correct these
+overly long lines if a new iteration is needed in the future.
 
-> +	if (replacement_len > len)
-> +		ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
-> +			   array->alloc);
-> +	for (size_t i = 0; i < len; i++)
-> +		free((char *)array->v[pos + i]);
-> +	if (replacement_len != len) {
-> +		memmove(array->v + pos + replacement_len, array->v + pos + len,
-> +			(array->nr - pos - len + 1) * sizeof(char *));
-> +		array->nr += (replacement_len - len);
-> +	}
-> +	for (size_t i = 0; i < replacement_len; i++)
-> +		array->v[pos + i] = xstrdup(replacement[i]);
-> +}
-> +
->  const char *strvec_replace(struct strvec *array, size_t idx, const char *replacement)
->  {
->  	char *to_free;
-> diff --git a/strvec.h b/strvec.h
-> index 4b73c1f092e9b016ce3299035477713c6267cdae..4e61cc9336938a95318974903f9b35dcdc4da1cd 100644
-> --- a/strvec.h
-> +++ b/strvec.h
-> @@ -67,6 +67,15 @@ void strvec_pushl(struct strvec *, ...);
->  /* Push a null-terminated array of strings onto the end of the array. */
->  void strvec_pushv(struct strvec *, const char **);
->  
-> +/*
-
-Tiniest nit: I see the majority of the function comments in this file
-start with a double asterisk, should we do the same here?
-
-> + * Replace `len` values starting at `pos` with the provided replacement
-> + * strings. If `len` is zero this is effectively an insert at the given `pos`.
-> + * If `replacement_len` is zero this is effectively a delete of `len` items
-> + * starting at `pos`.
-> + */
-> +void strvec_splice(struct strvec *array, size_t pos, size_t len,
-
-In this file we seem to commonly use `idx` instead of `pos`.
-
-
--- 
-Toon
+Thanks.
