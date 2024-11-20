@@ -1,100 +1,123 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4174E16EBEE
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 22:53:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813DA1C7B82
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 22:55:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732143182; cv=none; b=nUnKinyXWU36Ut9pgSe8PccUKw9NzMRu4DroQaeiT0rlQv8o0WoRNfwCD53tk5+M5k83qHzd/N5AkULSEgmgdV5onk+epXeAAY0ivptt1eeNdlYeNQOhl7xHULPCEyz15aEO11QnJnPRD2ubfn8ZB7xzR957hOyaGJJmO7ov1W8=
+	t=1732143331; cv=none; b=NeFsuAx5E8nyzE8QcO0SRSLJSKj037+S1mHNYwd946ogpC0M63DS3rGZvauNDsIK6KT48RSV+O4heVug3NStQ7bdGfnDgfdWU7ixc5Paisjo4sr5JDm1HtAXC6xYBTyn5MY9tZ1YfiMoklNvtRoESLHHSPoX/5X0szj+Uj08Auc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732143182; c=relaxed/simple;
-	bh=I9Q+Zfl8bVkTyx0OCdWiRtnj1nU1WZ3QJfPscd+kWa4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cmvPAXH3t2El6aSYBajfcZFWWt3MSqi2MA/OKGH0114//ZuqLRAmSpoC9lZy/SHbdXHbamqfCS1nLWyWrKHDyFGS6eSFFkQFJVeL7euj07Me3V91Lu3aFNsFWn+cM2SOlFj9sq1X1eT8qSwkQ61kPDhZhL1JpHkJy7TBveJkFPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=VOC/GUBY; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1732143331; c=relaxed/simple;
+	bh=OiNNcN+fup3JprVP6K6wVOIE2xqC6YgNinOfsda5J6k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VM8jH7i+q5t4EiI7NREH6YsJxeIDL5GpI+Z8fdgmEhVEuvtVMB+qaL6zFay/Uf0aQZ6ZBosFwSN7PcT7/lRnekE+LlT3RTrZkY0wV93sJw3qIRegWBPFAfdZ2AUm+9AuMIxJYnuJwik7nRRYIKC9lB1h6/EFPWZdNpVjkqEsXRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hWkRdeFh; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="VOC/GUBY"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e0875f1e9edso221483276.1
-        for <git@vger.kernel.org>; Wed, 20 Nov 2024 14:53:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732143180; x=1732747980; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v/a/sAJDUQW9M9yq0pJnAaqx5b2kKniQxBhVfJ0vt0U=;
-        b=VOC/GUBY5SU7BOHcaEswFtRwE8X/hwUV94MeA2bXJ5qblT8O0VCf4scYAhldXXdPwX
-         AEWUQsF7JBtY+MdbRz9PchPztzCOzu/0PB4bdBnhdjqY7CXfDzeKQm0Hdgu4Yilafuv3
-         4OIWYm7R6Qhv+PW+dRUCv+77DskoX5GaA4jsS52ejjrFoEgnyVqnWzc6pip2caoDn1LD
-         BdNkgbG4TUHh0Ck92PUDWgB+kwEPt0OezYLrjaOGzGYQo4tSXx/m7Ze1mK3ctRUWKbdt
-         lkjhvK8MMwKWlaGkoWL2SccOzrJ0RgBxs51xN8NPv70OiKztWe24zNsp4cTimXXBxzmY
-         s/qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732143180; x=1732747980;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v/a/sAJDUQW9M9yq0pJnAaqx5b2kKniQxBhVfJ0vt0U=;
-        b=ZyYIZtUM+os21KbMhelVCgEZGrcD9zzkFcmHXxWFsMACDEqQGwZqD8xxopppaD8zOs
-         cNucYxK3jW16f49LayTUtOkNJsnmXEQaJ6d+kk6/Oz507LDXsqV4tmVRoW6fbx2EcArx
-         IXL9jXw5KJKUsSIjqD8PoSi90cdDtRt5KqQ4bFd0/yYmM1wULFj3PxXjDsGinrO63Pt9
-         S0Wi7PkMWqUV9Qtvd0XYIvtxdZmH93s89sb6U2xmn4aD1CVRXYxJFRfUfCpj15t6Zwco
-         B3xiDy7rQaGt9mvSAGD32kwvbtFm9faQIZxankV7rQi+gMJ89sx87wGTBxZYhT1MYCrp
-         mYpw==
-X-Gm-Message-State: AOJu0YykkTwmN/wHy5uT0GZjQmrMls/PbRGHiCrT1d7G/OaTgIG+Y9O3
-	oQNwu0gYuKpQlFrFbjZ+DT9WL2tGaDhygKa3wNmiYEdKXofDNTeo2Yoik1c59vPNxd1LQXIDhR6
-	Y
-X-Gm-Gg: ASbGnctBjn5Py/MDfK6xNCqwsOeCJPNfiIprGz27BY5GnQL2UbsZLG8PjBaBMtYwHmE
-	pObncPS2HCctdBLm8amIAGdSIDyyq1tTkZ7L6ylz2e91ecO2CkV2qRkmHqepkL9ULSkAwve9IJN
-	7BS+zeaBhoFQWQv2ETglJsNLwzyBnXtzQ7vAOBemqTQPAcOQp7At50PYCaQX2C9H5YXWnjUVd6/
-	+c6/iCirt4RVArV9OGfymIouQA/F6c322CdOFROTjrrmQ+QMxQvyp8fPow7Zqm+Yqkn2S4ftZUy
-	S01S/Elgfu5oofravhSZDA==
-X-Google-Smtp-Source: AGHT+IFiMGdQwoqsA46fAWcLb98G4T2aY24MNbAqK1BJCJK0HoIzODKjevjaeC9Xodr1zR4S45Jywg==
-X-Received: by 2002:a05:6902:dca:b0:e38:a031:bbd5 with SMTP id 3f1490d57ef6-e38cb5a9686mr4099188276.31.1732143180250;
-        Wed, 20 Nov 2024 14:53:00 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e387e73bc22sm3420984276.15.2024.11.20.14.52.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 14:52:59 -0800 (PST)
-Date: Wed, 20 Nov 2024 17:52:58 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Subject: Re: [PATCH v7 7/9] config: make `delta_base_cache_limit` a
- non-global variable
-Message-ID: <Zz5oSqu8IlWbZHvr@nand.local>
-References: <cover.1731323350.git.karthik.188@gmail.com>
- <1bdc34f4d8161a3b70f21124cb857908e4fac53c.1731323350.git.karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hWkRdeFh"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9565D254015F;
+	Wed, 20 Nov 2024 17:55:26 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 20 Nov 2024 17:55:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732143326; x=1732229726; bh=iDiDpxV53CS4dF9qUUjsqw4vHCQ4Elr4yeJ
+	E6Y85kT4=; b=hWkRdeFh+oxsTFa0pNlIpafXXJCO4Ba0Dy+C49j8F2mSg+BjMSd
+	kDZjbIC1p3sqC/53raHW9d32eRUDGtjzzd/R4/f5jxxy2cWJbZCQAdEbBAcScV3g
+	yX6bTT4WxsbL+VSZoXzUJdMAjDahoTpzFDVzj3mj6eu2vB0P6rp9gspdb8Q2eAEC
+	oIlvlebxwXstcuvvRu2ugdCgrEwRjBgoGOudF0P6b12wKMGooa/CUmXObb5pS+Bm
+	6El/IzVUbZIWG0oeBs0dhsnuE4y0Q95nA3W6kJFPLRwW5OQx5QmAKwiq3T/Mp6sc
+	tPP32w8ykVndShbmPnoEpGHKOcC9nIZaiRQ==
+X-ME-Sender: <xms:3mg-Z69vAmoc4epRyBnwAgOdgRXA3aQLadz3nc6R_7ekTDSaabNc6g>
+    <xme:3mg-Z6vjqlIo7KCMUclYTXpWz66pEqWd4uY5ji313E-_ZpM1193jh2-w3KLhZJNlz
+    kc1BG-Vttle93bH8g>
+X-ME-Received: <xmr:3mg-ZwDqUt4F5ut5SOMxV8P9rFwqNozEUzTjP7J86lCbPn2lKaQ2U-ASNpHGvaJUvuOG55Wv0D4Iu5tJRxLkdFOR8JgnoXDnMa7Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeehgddtfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
+    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhnrghthhgrnhhtrg
+    hnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopegsuhhrkhgvrdhlihgssggvhies
+    shhhohhpihhfhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3mg-ZycObSSTRSW4F9c_bq9zJzmQsHIxbHY3jKP5J-yiqhMs55Nzow>
+    <xmx:3mg-Z_PUXZdLlRjv77hZeg8qFOQfAn65rE9Zq-IiwwH7qayQdfrPRQ>
+    <xmx:3mg-Z8mZMEsq-S_AOT37lYKpGxYtUF-GZU8xQSiySPvpEGAQdolMgw>
+    <xmx:3mg-ZxuixTNc7YKurkgtP04GdwL3JMaW1f93i35M9pClgT6QnYDuQQ>
+    <xmx:3mg-Z0o5AfSkiPsZk7i2zNGxZZGw9m9K9og4Xe4Y9zArXTS9j92k0iEX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 Nov 2024 17:55:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Burke Libbey <burke.libbey@shopify.com>,  git@vger.kernel.org
+Subject: Re: git-blame extremely slow in partial clones due to serial object
+ fetching
+In-Reply-To: <20241120185228.3204236-1-jonathantanmy@google.com> (Jonathan
+	Tan's message of "Wed, 20 Nov 2024 10:52:28 -0800")
+References: <20241120185228.3204236-1-jonathantanmy@google.com>
+Date: Thu, 21 Nov 2024 07:55:24 +0900
+Message-ID: <xmqqikshikgz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1bdc34f4d8161a3b70f21124cb857908e4fac53c.1731323350.git.karthik.188@gmail.com>
+Content-Type: text/plain
 
-On Mon, Nov 11, 2024 at 12:14:07PM +0100, Karthik Nayak wrote:
-> @@ -1697,6 +1701,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
->  	struct unpack_entry_stack_ent *delta_stack = small_delta_stack;
->  	int delta_stack_nr = 0, delta_stack_alloc = UNPACK_ENTRY_STACK_PREALLOC;
->  	int base_from_cache = 0;
-> +	unsigned long delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
-> +
-> +	repo_config_get_ulong(r, "core.deltabasecachelimit", &delta_base_cache_limit);
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+> Technically, we do need the contents, ...
+> There are other ways:
 >
->  	write_pack_access_log(p, obj_offset);
->
+>  - If we can teach the client to collect object IDs for prefetching,
+>    perhaps it would be just as easy to teach the server. We could
+>    instead make filter-by-path an acceptable argument to pass to "fetch
+>    --filter", then teach the lazy fetch to use that argument. This also
+>    opens the door to future performance improvements - since the server
+>    has all the objects, it can give us precisely the objects that we
+>    need, and not just give us a quantity of objects based on a heuristic
+>    (so the client does not need to say "give me 10, and if I need more,
+>    I'll ask you again", but can say "give me all I need to complete
+>    the blame). This, however, relies on server implementers to implement
+>    and turn on such a feature.
 
-Hmm. This repo_config_get_ulong() call will look for the configset entry
-in a hashmap which is faster than parsing the configuration file from
-scratch every time, but still expensive for my taste in a function as
-hot as unpack_entry().
+This is an interesting half-way point, but I have a suspicion that
+in order for the server side to give you all you need, the server
+side has to do something close to computing the full blame.  Start
+from a child commit plus the entire file as input, find blocks of
+text in that entire file that are different in its parent (these are
+the lines that are "blamed" to the child commit), pass control to
+the same algorithm but using the parent commit plus the remainder of
+the file (excluding the lines of text that have already "blamed") as
+the input, rinse and repeat, until the "remainder of the file"
+shrinks to empty.  When everything is "blamed", you know you can
+stop.
 
-Should this also go in the_repository->settings instead? That way we
-have a single field access instead of a hashmap lookup (with multiple
-layers of function calls between us and the actual lookup).
+So, a server that can give you something better than a heuristic
+would have spent enough cycles to know the final result of "blame"
+by the time it knows where it should/can stop, wouldn't it?
 
-Thanks,
-Taylor
+>  - We could also teach the server to "blame" a file for us and then
+>    teach the client to stitch together the server's result with the
+>    local findings, but this is more complicated.
+
+Your local lazy repository, if you have anything you have to "stitch
+together", would have your locally modified contents, and for you to
+be able to make such modifications, it would also have at least the
+blobs from HEAD, which you based your modifications on.  So you
+should be able to locally run "git blame @{u}.." to find lines that
+your locally modified contents are to be blamed, ask the other side
+to give you a blame for @{u}, and overlay the former on top of the
+latter.  
