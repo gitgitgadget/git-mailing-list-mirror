@@ -1,114 +1,107 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2752D4C9F
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 05:16:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1238155A59
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 05:20:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732079769; cv=none; b=WyCyPNlqw/towff/2SHo7nHUAHdu+mA9U/Pkhxspl/KBRuLUuujKls4ua2pIjjWWMWXZcpmdIffK9jZP5LDSb+7xS9hbimkYiQCU733o6EVLAR20WcsXUwDbmHxYdcZTk3juWGlwSkIkoBd9aIoeL8XxHt02S3F+ev/3/9se2k4=
+	t=1732080020; cv=none; b=Y5ZcRtZuDe961Kixxn8uVcj7iE+8YW4Dl1ianVGj+0G8vBzQJwmgxlHi3Un7qaa68XMGjgz/hIs5nTOw/WsmHKqt5RXw9Zx5Av2vk6mPWOEJPaJxnME1lAme/dgJ5CHOSwXh06Wb5hy9QbGqAhSuL2EQN/WUgWwTxq40QNo29Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732079769; c=relaxed/simple;
-	bh=cdgVc8cNDSEavsovT2yG+q6NV8zaGCC+a2/3KP8d2fk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WteJPJmyx0W9F6LJI2bE3cEyC8Vmlg/YSgnUldRiF/DqCa6J3LQf8qJ3Lwk05O19tww6Hddb+t3B+zKHcj1v2lrEkgInaIQ4Hb5kT2F0f4hr7KnootZ+SwIYoKcwM/mqm3nvT7mgyrtvrNrOoD5e3zxMb3LsGjVUJS/ECpWiOQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mh+bAR0g; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1732080020; c=relaxed/simple;
+	bh=ZmWaFIfQccgjpSNree8m8R9ndXOPyWHul7uY4vTdXlE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Ab1Us4olTxv29GuIwAEQHGJlRNR0cRypJOXSPGHAeTzj4Bix9+xK1ljR7Zj38w351qPi4KEXNpplXyb0Csthb9u1yb4tLy+znsyyzwTCyWQqzKwLRzvQ1Q7diQxGoBSUE9Acqgr7FWxtl57tiR16hSznxV0mrrsnYP5Y2pjFlE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=RihyGTHb; arc=none smtp.client-ip=185.70.40.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mh+bAR0g"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 56A8511401D6;
-	Wed, 20 Nov 2024 00:16:01 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 20 Nov 2024 00:16:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1732079761; x=1732166161; bh=9yLtELVzSZCgTgF38KoSDj43rtB99Ml3Jc/
-	AGVJXBFU=; b=Mh+bAR0gJ6rxXDKhTj8XASnN6Zrmv4lRKs4kGzEP7lVFeJOlTb/
-	cqIq1UvOJ9NHFPmE1ZXFe+9YPwFu1BKbdG5Z/igtsnMiHca9XEqI5rSkm8EM1il3
-	acsc7NIDQoURSvQeNh4h1cqvHZJ3/TB7+3ckIYgle+TbG59u9lG218/6AA6nSOmh
-	wL2G5iEUD9a2acybTYCH7vB+neHr5IPM/cUlWinkzWlWR8KbtewRlZm8dc2jVws5
-	8QQCPb11Y2Ye7KErRK/dykchDUEbDmYQ4cNS89hidh2ttP8hN0C2+P4dA1nUIxFy
-	+aD676RyaPPxStGaqM1CLxscnQOi40doYkw==
-X-ME-Sender: <xms:kHA9Z7SrhCQJYgSNjxMlcborF0T5tdqlO4sqezR3-HJjKnSVs1nhoQ>
-    <xme:kHA9Z8zvpmgd06-ECqp8hIOq0SMd4Fx50xIZ3W9ZUwBdCCxP1_n81NcXarONXBHjk
-    jFYqIACTI6gU0sPRQ>
-X-ME-Received: <xmr:kHA9Zw269Xl3MXMtjp3qxOtYj1j3Y_W9bFMtCdpFFqqPWl-cQQauqWzkAwN_szAy554jbAzguzQQ4N-xAWq_qgsDGqCLCXsTwYRF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeefgdejlecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpefh
-    vfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrg
-    hmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhn
-    pefgvedvfeejheettdfgffefhfdtgfehtedtkeehjeeikeeggfetjefgkeeifeekffenuc
-    ffohhmrghinhepghhithhhuhgsrdgtohhmpdhgihhthhhusgdrihhonecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosg
-    hogidrtghomhdpnhgspghrtghpthhtohepuddupdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdp
-    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
-    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtoh
-    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegurghvvhhiugesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:kHA9Z7BRp8HrxwVZZEDin8tcV_8OnA-WkwSKN-2yj14mVwPx13FIrg>
-    <xmx:kHA9Z0isJfLi9N8OR329LbuioFcc2uLuAXUwF86m5E4b20s8UscbGA>
-    <xmx:kHA9Z_qmGbZBv2LzXOprgxZH7uxtflsNbJkxs2_CxDVWgW6J3dcdIg>
-    <xmx:kHA9Z_hFBsJoxvefgZaQNypu2KzGTAgHd5-u28V7VKPx2cG-bMMUTA>
-    <xmx:kXA9Zzpsrxdu7Blfc4pOrZwR6IKZVMArc0UZuviC985bN7taq9FN2CNN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Nov 2024 00:15:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
-  Taylor Blau <me@ttaylorr.com>,  David Aguilar <davvid@gmail.com>,  Jeff
- King <peff@peff.net>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v8 00/23] Modernize the build system
-In-Reply-To: <20241119-pks-meson-v8-0-809bf7f042f3@pks.im> (Patrick
-	Steinhardt's message of "Tue, 19 Nov 2024 12:50:37 +0100")
-References: <cover.1727881164.git.ps@pks.im>
-	<20241119-pks-meson-v8-0-809bf7f042f3@pks.im>
-Date: Wed, 20 Nov 2024 14:15:58 +0900
-Message-ID: <xmqq7c8y7aep.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="RihyGTHb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1732080016; x=1732339216;
+	bh=eamoleH/irSMkDFBJTeIBGRrKi0AEwWq0ilUtPHWYsE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=RihyGTHbcv2MS0CMVuijS2J8kuw32/UsELMjUcT7CzNtXxPX0rS54PMWhxoOO3sTM
+	 EWDNON8TI+WK9qg7Ng+4437E10Ffp8SqOcBV+oz23ngDUC61eoq3UMaXneBQJM30/t
+	 LdYr9D2ILyus1Sw7z1sZc+Z/wV/8B/EZc38a665R6IuzgbZOBCWq56d9gBcVQgAukz
+	 P3mb5s5fVxr0tMK/4NHRQ95+0kZ0GCdxv6lCrt1A3bKbfsOaX0H6GeGaPWH36qcGWu
+	 XfpjQ5m92mm7sOH9umwEoSWecItaf0zEnBh1Hw3Sc8WQC0kTQHndgD/QDMREnK2JkW
+	 AEWZ64ekbEOfQ==
+Date: Wed, 20 Nov 2024 05:20:12 +0000
+To: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+From: Caleb White <cdwhite3@pm.me>
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 3/8] worktree: refactor infer_backlink return
+Message-ID: <D5QR4BHKBZH9.231NGDY7RCV0L@pm.me>
+In-Reply-To: <977c1e75-1fef-4827-91ae-cc1a6ce7508e@gmail.com>
+References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me> <20241031-wt_relative_options-v4-3-07a3dc0f02a3@pm.me> <977c1e75-1fef-4827-91ae-cc1a6ce7508e@gmail.com>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 0b57af0df6bc41f6199799485f2f6b55ad0e8d03
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-This broke the documentation build with the log ending with
-something like ...
+On Tue Nov 19, 2024 at 9:08 AM CST, Phillip Wood wrote:
+> Hi Caleb
+>
+> Thanks for splitting this out into a separate patch
+>
+> On 01/11/2024 04:38, Caleb White wrote:
+>> -static int infer_backlink(const char *gitfile, struct strbuf *inferred)
+>> +static ssize_t infer_backlink(const char *gitfile, struct strbuf *infer=
+red)
+>>   {
+>>   =09struct strbuf actual =3D STRBUF_INIT;
+>>   =09const char *id;
+>>
+>> +=09strbuf_reset(inferred);
+>
+> I think the code was clearer when we reset the buf just before using it.
+> That way it is easy to see that we add the path to an empty buffer.
 
-    GEN asciidoctor-extensions.rb
-    GEN docinfo.html
-    GEN howto-index.txt
-    * new asciidoc flags
-    ASCIIDOC git-tools.html
-    ...
-    ASCIIDOC howto/keep-canonical-history-correct.html
-    ASCIIDOC howto/maintain-git.html
-gmake[1]: *** No rule to make target 'asciidoc.conf', needed by 'technical/api-error-handling.html'.  Stop.
-gmake[1]: *** Waiting for unfinished jobs....
-    ASCIIDOC howto/coordinate-embargoed-releases.html
-asciidoctor: FAILED: 'asciidoctor-extensions' could not be loaded
-  Use --trace to show backtrace
-gmake[1]: *** [Makefile:428: howto/new-command.html] Error 1
+I moved it up to the top of the function to make it more clear that the
+buffer is reset before being used. But I can move it back.
 
-I think all my builds these days (including the ones that push out
-to https://github.com/git/htmldocs.git that in turn results in pages
-at https://git.github.io/htmldocs/ getting updated) use asciidoctor
-with "USE_ASCIIDOCTOR=YesPlease", if it makes a difference.
+>>   =09if (strbuf_read_file(&actual, gitfile, 0) < 0)
+>>   =09=09goto error;
+>>   =09if (!starts_with(actual.buf, "gitdir:"))
+>> @@ -741,18 +744,16 @@ static int infer_backlink(const char *gitfile, str=
+uct strbuf *inferred)
+>>   =09id++; /* advance past '/' to point at <id> */
+>>   =09if (!*id)
+>>   =09=09goto error;
+>> -=09strbuf_reset(inferred);
+>>   =09strbuf_git_common_path(inferred, the_repository, "worktrees/%s", id=
+);
+>>   =09if (!is_directory(inferred->buf))
+>>   =09=09goto error;
+>>
+>>   =09strbuf_release(&actual);
+>> -=09return 1;
+>> -
+>> +=09return inferred->len;
+>>   error:
+>>   =09strbuf_release(&actual);
+>>   =09strbuf_reset(inferred); /* clear invalid path */
+>> -=09return 0;
+>> +=09return -1;
+>
+> Why don't we need to update the callers of this function to account for
+> the new return value?
 
-Thanks.
+Originally this function was called inside an `if` statement, however,
+another topic extracted the call to a separate line and so this return
+was no longer used. I decided to keep the return anyway in case it was
+useful in the future.
 
 
+Best,
+
+Caleb
 
