@@ -1,55 +1,55 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3D81B6555
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:40:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D601A7AFD
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732110003; cv=none; b=PwYGzOIBSoXdgw/unXMbo48SHpsfU4U4bDC6gru0pmclzwav4rVMYAzYLg4+fgbjytPr1jzfACWQHwXvJRt0CQlCLY8TdvrGiMFLjVCNQWOax9zbnjyZhmd/8yun1qfLDN6KalJBpBQe+i2UxefXI3Tqzv8tGWRnwSDYw4edtzY=
+	t=1732110004; cv=none; b=O1DbsCot3OT+VTmCRwBzi0Ve9SmjYYDvNy8MgWDPDb6PNzXKL08vkKFuERLxDQ24criNN92KcPEBevvufVdIR9jQ0qlengMMNrYFeMHSDRwao5vxS2COmCW2FI0UjOfcqhQbk4mfvVjzoweqPdEH4eVNIKzkIDuu3cosZ096OLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732110003; c=relaxed/simple;
-	bh=F5vtOVre06cSU/Q6+wcUvGy+w4sNO5Vq8u6LSGE6OCg=;
+	s=arc-20240116; t=1732110004; c=relaxed/simple;
+	bh=sbXkNOKQpbbecsDr5C9PLV6H4ciO0eQRzGH6OuGWcbU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PZCDKJ7Un/b8cG148bBQ+lY/DFeZ6/yI6/93Kn758qTIFG+uLTd1f3kxqV87C1rN0+elUCZFDHw7NtNFZz35YWouGtyIsg4BBeg0Wq5ZEOYJwdnywU8my08ZYr9ki801JhT4IyTxps6f39z+Zg9Xo/GsdYAnGw6YrBw156NQ5zI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WSmtKTcg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QypsWSuI; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=T5705D57XgmDeaYr3xHIawAYvRlni2euoMMV18Sus403duXm4xNpjYZoCBZxG8W5TyLIbq6AeOJhri2w72ZzZTuUEjtLl+XAvFsvH8zLn18O29Z6r81/zHux0wJ8FvFseTRHfpWmZfFhgH+tsnw7cWjJq7VVYN0vYRx5O5qDFPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hb5/kvLX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g8lu3yD1; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WSmtKTcg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QypsWSuI"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A5F3811401CE;
-	Wed, 20 Nov 2024 08:40:00 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hb5/kvLX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g8lu3yD1"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DFCF911401D2;
+	Wed, 20 Nov 2024 08:40:01 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Wed, 20 Nov 2024 08:40:00 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 20 Nov 2024 08:40:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732110000;
-	 x=1732196400; bh=ceEvW/XlUYVGnjJQcZ4O9GzRgePII+TUgfvMWmyUCZI=; b=
-	WSmtKTcg7viDG7Ps0PQpF4eys5C34p2qeIYQ+h52Qqv3Wqu+90vo+B7wbsfiws+j
-	WrEw6N0M9eK4qAaVG80+yDl0Xp6kx+AAdnOfsIIYfuyDvyQX8S8eHegcSzmWcYcf
-	5VDVEs5FVM7KsttPYp4yYjYDowx5Yg5tl5+tUMVyraXG2TdQJnxo/fYQTZoLsk9K
-	bjxnDmcxUk7ImETeuzMdwzu28rrsEZJ53TQ6rsCXzAh+gvobQdBLnN3yUGKMTw0h
-	LZDkaK1srehmWUlRvB3fY8YMxufd6yAukAnzyb3CHXFRRgjHACTYJZTOPMDPcjWz
-	8ONLOgNB+PrdSUJ7E5JXjw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732110001;
+	 x=1732196401; bh=ZnyHn/uuEWFye+tXCYvshtxfLvUOwiPBZmsRbngxiG4=; b=
+	Hb5/kvLX8NEeEtWN4hlYO1Snlmi8IyD+AKzYIvW25M0F4GQRmcDopn1lNr81D+m0
+	KtWTQjEChVA0KLgF700E7YVvHBZEKZG43I3gw11/5CKjuowYmBxeTUH3FVAfJSay
+	DnVWWwjSxEVaZ0TBcaIWqpNrdWzqyGIVacL0liaqQwgOWEQIY/gMtHuC9Fs25/NE
+	2srHhfwTPjcGhUVb1JcFpFpyodQdLInI3LnzZXUbqXZ4dW4bCskWuejIFcvHsUtU
+	RM6PYvsPquCzUz8brcAVVRKjZ9ibRDXBfTMCNAHuDwXzGnbMqv9crQmzdnciXQBb
+	Oo7uVuHiV/2+nepK5u8IMQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732110000; x=
-	1732196400; bh=ceEvW/XlUYVGnjJQcZ4O9GzRgePII+TUgfvMWmyUCZI=; b=Q
-	ypsWSuIeAvI53N/Lwzh5dyxEUrZ5fwBkKiqc8/kljrPOWUpWmZ8Z06zIDBzB6K+g
-	d/qfo2I6LFNOd6j5PKj5LVynzWnBAm31j8wyUj/POm+WVFn09l7n9U+bEK+KL2Kq
-	LcYQ1LOsNLNgpDpJyeflMyMcg5fvHQzJn1V206pOEgzJi5TLh7ZsUR8Tjk6SaYYK
-	hHUk1ibuierDNITSk/9P3EDk1YGpr1f8EKo7m6xVEWoMddU+5gBaYs66KYZ2HN4j
-	4p9byMvu694f8jq1UKFh3JexuHTXjDRIKSyeYE3H4LbV2YR6To4HHKP4SFzLxazs
-	sQcdRK8bBLSoYUASJZh2w==
-X-ME-Sender: <xms:sOY9Z0Ilol34wY8Aw9X4xDehJYzS9cuPStywOuXG4brpaQwFRkaW4g>
-    <xme:sOY9Z0JFUWhYaE2ABVroRtrYZxNZcDSf6jSujUdoEe9ymiH0Ezw-ZUnooatuZWx-7
-    dfCfwePdpzR-_UJoQ>
-X-ME-Received: <xmr:sOY9Z0shDHsfLkc-0Hn0pT29EuuQWrSwx69feKXeZiwUaql8rezMUwp8BssLPj0RNnwtwm1X7Bzlq49JHBrVv8PhZVbLvZECzQozuj6sxozUsA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732110001; x=
+	1732196401; bh=ZnyHn/uuEWFye+tXCYvshtxfLvUOwiPBZmsRbngxiG4=; b=g
+	8lu3yD1hI+utbmBqG+hz/CIZN6KKS+kGOd4BSpPAOx3Hoj1X4VQKSA5P5F8dMrfQ
+	GFXMwy/Yss2900RClCaGI5/9aOPfGR6PD8vthdu52HUy96UGdJTDq4T+T1xeIWGI
+	GVR1GZGsb7DYl/Wz4uU5zTM6MxDNLijvvBMn6cEPidp3TRl+4lvEX2LHCZzKXGC5
+	+OrHnUVESfzbOmrgtxdMOLuhuH9ycObz1j+6RIgS0b3OUfanvm7S2N11z5qkqkyr
+	mMT1w2KOqn0tCc4CBsfIbXKL1akA7SHHANpIL3WrX6IjMqludhIrtTDMH33lO8Sm
+	DzjlctSQISTE2T7vnsFyw==
+X-ME-Sender: <xms:seY9Z5cTPrIK1HX-CHXvWQAxyZgdqcLKdQH6K1ZfUJrtFx2Je5-Pmw>
+    <xme:seY9Z3MdMvMi8Ph-nVF8LNLmfbWKbJ9F5cCCl-m-jVQvSnaDuKWNXSduHNdR71AgQ
+    cuCambO73cRgrFhMw>
+X-ME-Received: <xmr:seY9Zyg0MGpeYM4JrDohCgSA9hZrGLpGJ9s185qs425yx2nTktzH0fATLGPliMhEloVuoO1XQS1i5SSTD4eehhrq1rPnHqe7La4-XdoM5xs8kQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehrjhhushhtohesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:sOY9Zxb7GkoXphWy685qoHX1CJRp0eewc1-28Braq5q2oYAImLywCg>
-    <xmx:sOY9Z7ZwnpNgbLptc3v_NuKiiT55dQ9M1S9ApNKW5WyVPaKx-pKxTA>
-    <xmx:sOY9Z9AdaHBh73T6Z1bcRNdQ2TngI4J96d6yi7sQKmlpdODF9itOcA>
-    <xmx:sOY9ZxYje7XcjpKbWy0tZYiCvbRJARtsGCnhoeN4HRC7kS4aT8BOxA>
-    <xmx:sOY9Z6W-yfCRJMM_8D6qF1q-Bjxr9FuPeexwX7lMZQzpesCdFIi1d2MA>
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhjuhhsthhosehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:seY9Zy-RJY-oXgMJwetltdYCowKhiYkA4YDAqWcKhOHda5BXjrsBOg>
+    <xmx:seY9Z1vPBonvjQMUhxHmP6jZXr93Ku8wMkr7yRDhsKj0ppyIH7i7Aw>
+    <xmx:seY9ZxGo_Ai1IOHaNV_gfh9kesKIsZKSAhOrcttg1myXQfWHnCMljQ>
+    <xmx:seY9Z8Nm3PKc0dfp3bjI3GsggSv9PGN05EeJ41a6SUbwRRx_2DeEJw>
+    <xmx:seY9Z_LqXH6MQjoGRQtQmz-y595dqhuNRTzk5czF72BSOwlB0ghJF8Qj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Nov 2024 08:39:59 -0500 (EST)
+ 20 Nov 2024 08:40:00 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1f223a9f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 20 Nov 2024 13:39:06 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id a066794e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 20 Nov 2024 13:39:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 20 Nov 2024 14:39:42 +0100
-Subject: [PATCH v3 13/27] builtin/sparse-checkout: fix leaking sanitized
- patterns
+Date: Wed, 20 Nov 2024 14:39:43 +0100
+Subject: [PATCH v3 14/27] help: refactor to not use globals for reading
+ config
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-13-d67f08f45c74@pks.im>
+Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-14-d67f08f45c74@pks.im>
 References: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 In-Reply-To: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 To: git@vger.kernel.org
@@ -92,178 +92,142 @@ Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
  Jeff King <peff@peff.net>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-Both `git sparse-checkout add` and `git sparse-checkout set` accept a
-list of additional directories or patterns. These get massaged via calls
-to `sanitize_paths()`, which may end up modifying the passed-in array by
-updating its pointers to be prefixed paths. This allocates memory that
-we never free.
-
-Refactor the code to instead use a `struct strvec`, which makes it way
-easier for us to track the lifetime correctly. The couple of extra
-memory allocations likely do not matter as we only ever populate it with
-command line arguments.
+We're reading the "help.autocorrect" and "alias.*" configuration into
+global variables, which makes it hard to manage their lifetime
+correctly. Refactor the code to use a struct instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/sparse-checkout.c | 61 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 39 insertions(+), 22 deletions(-)
+ help.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 49aedc1de81a17b8b491cded7fa71b384e0e8be9..698d93a9ec5ed6d51d4a1db212f776b2db06cfc3 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -669,7 +669,7 @@ static void add_patterns_literal(int argc, const char **argv,
- 	add_patterns_from_input(pl, argc, argv, use_stdin ? stdin : NULL);
+diff --git a/help.c b/help.c
+index 4ad4ebdd2cfddb3191bb4f6d593a55d3c5d3ed14..8794f81db9bbf457b7cabca59222299922f3cc7f 100644
+--- a/help.c
++++ b/help.c
+@@ -546,8 +546,10 @@ int is_in_cmdlist(struct cmdnames *c, const char *s)
+ 	return 0;
  }
  
--static int modify_pattern_list(int argc, const char **argv, int use_stdin,
-+static int modify_pattern_list(struct strvec *args, int use_stdin,
- 			       enum modify_type m)
+-static int autocorrect;
+-static struct cmdnames aliases;
++struct help_unknown_cmd_config {
++	int autocorrect;
++	struct cmdnames aliases;
++};
+ 
+ #define AUTOCORRECT_PROMPT (-3)
+ #define AUTOCORRECT_NEVER (-2)
+@@ -555,28 +557,29 @@ static struct cmdnames aliases;
+ 
+ static int git_unknown_cmd_config(const char *var, const char *value,
+ 				  const struct config_context *ctx,
+-				  void *cb UNUSED)
++				  void *cb)
  {
- 	int result;
-@@ -679,13 +679,13 @@ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
- 	switch (m) {
- 	case ADD:
- 		if (core_sparse_checkout_cone)
--			add_patterns_cone_mode(argc, argv, pl, use_stdin);
-+			add_patterns_cone_mode(args->nr, args->v, pl, use_stdin);
- 		else
--			add_patterns_literal(argc, argv, pl, use_stdin);
-+			add_patterns_literal(args->nr, args->v, pl, use_stdin);
- 		break;
++	struct help_unknown_cmd_config *cfg = cb;
+ 	const char *p;
  
- 	case REPLACE:
--		add_patterns_from_input(pl, argc, argv,
-+		add_patterns_from_input(pl, args->nr, args->v,
- 					use_stdin ? stdin : NULL);
- 		break;
- 	}
-@@ -706,12 +706,12 @@ static int modify_pattern_list(int argc, const char **argv, int use_stdin,
- 	return result;
- }
- 
--static void sanitize_paths(int argc, const char **argv,
-+static void sanitize_paths(struct strvec *args,
- 			   const char *prefix, int skip_checks)
- {
- 	int i;
- 
--	if (!argc)
-+	if (!args->nr)
- 		return;
- 
- 	if (prefix && *prefix && core_sparse_checkout_cone) {
-@@ -721,8 +721,11 @@ static void sanitize_paths(int argc, const char **argv,
- 		 */
- 		int prefix_len = strlen(prefix);
- 
--		for (i = 0; i < argc; i++)
--			argv[i] = prefix_path(prefix, prefix_len, argv[i]);
-+		for (i = 0; i < args->nr; i++) {
-+			char *prefixed_path = prefix_path(prefix, prefix_len, args->v[i]);
-+			strvec_replace(args, i, prefixed_path);
-+			free(prefixed_path);
-+		}
- 	}
- 
- 	if (skip_checks)
-@@ -732,20 +735,20 @@ static void sanitize_paths(int argc, const char **argv,
- 		die(_("please run from the toplevel directory in non-cone mode"));
- 
- 	if (core_sparse_checkout_cone) {
--		for (i = 0; i < argc; i++) {
--			if (argv[i][0] == '/')
-+		for (i = 0; i < args->nr; i++) {
-+			if (args->v[i][0] == '/')
- 				die(_("specify directories rather than patterns (no leading slash)"));
--			if (argv[i][0] == '!')
-+			if (args->v[i][0] == '!')
- 				die(_("specify directories rather than patterns.  If your directory starts with a '!', pass --skip-checks"));
--			if (strpbrk(argv[i], "*?[]"))
-+			if (strpbrk(args->v[i], "*?[]"))
- 				die(_("specify directories rather than patterns.  If your directory really has any of '*?[]\\' in it, pass --skip-checks"));
+ 	if (!strcmp(var, "help.autocorrect")) {
+ 		if (!value)
+ 			return config_error_nonbool(var);
+ 		if (!strcmp(value, "never")) {
+-			autocorrect = AUTOCORRECT_NEVER;
++			cfg->autocorrect = AUTOCORRECT_NEVER;
+ 		} else if (!strcmp(value, "immediate")) {
+-			autocorrect = AUTOCORRECT_IMMEDIATELY;
++			cfg->autocorrect = AUTOCORRECT_IMMEDIATELY;
+ 		} else if (!strcmp(value, "prompt")) {
+-			autocorrect = AUTOCORRECT_PROMPT;
++			cfg->autocorrect = AUTOCORRECT_PROMPT;
+ 		} else {
+ 			int v = git_config_int(var, value, ctx->kvi);
+-			autocorrect = (v < 0)
++			cfg->autocorrect = (v < 0)
+ 				? AUTOCORRECT_IMMEDIATELY : v;
  		}
  	}
+ 	/* Also use aliases for command lookup */
+ 	if (skip_prefix(var, "alias.", &p))
+-		add_cmdname(&aliases, p, strlen(p));
++		add_cmdname(&cfg->aliases, p, strlen(p));
  
--	for (i = 0; i < argc; i++) {
-+	for (i = 0; i < args->nr; i++) {
- 		struct cache_entry *ce;
- 		struct index_state *index = the_repository->index;
--		int pos = index_name_pos(index, argv[i], strlen(argv[i]));
-+		int pos = index_name_pos(index, args->v[i], strlen(args->v[i]));
- 
- 		if (pos < 0)
- 			continue;
-@@ -754,9 +757,9 @@ static void sanitize_paths(int argc, const char **argv,
- 			continue;
- 
- 		if (core_sparse_checkout_cone)
--			die(_("'%s' is not a directory; to treat it as a directory anyway, rerun with --skip-checks"), argv[i]);
-+			die(_("'%s' is not a directory; to treat it as a directory anyway, rerun with --skip-checks"), args->v[i]);
- 		else
--			warning(_("pass a leading slash before paths such as '%s' if you want a single file (see NON-CONE PROBLEMS in the git-sparse-checkout manual)."), argv[i]);
-+			warning(_("pass a leading slash before paths such as '%s' if you want a single file (see NON-CONE PROBLEMS in the git-sparse-checkout manual)."), args->v[i]);
- 	}
+ 	return 0;
  }
+@@ -611,30 +614,28 @@ static const char bad_interpreter_advice[] =
  
-@@ -780,6 +783,8 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- 			 N_("read patterns from standard in")),
- 		OPT_END(),
- 	};
-+	struct strvec patterns = STRVEC_INIT;
-+	int ret;
+ const char *help_unknown_cmd(const char *cmd)
+ {
++	struct help_unknown_cmd_config cfg = { 0 };
+ 	int i, n, best_similarity = 0;
+-	struct cmdnames main_cmds, other_cmds;
++	struct cmdnames main_cmds = { 0 };
++	struct cmdnames other_cmds = { 0 };
+ 	struct cmdname_help *common_cmds;
  
- 	setup_work_tree();
- 	if (!core_apply_sparse_checkout)
-@@ -791,9 +796,14 @@ static int sparse_checkout_add(int argc, const char **argv, const char *prefix)
- 			     builtin_sparse_checkout_add_options,
- 			     builtin_sparse_checkout_add_usage, 0);
+-	memset(&main_cmds, 0, sizeof(main_cmds));
+-	memset(&other_cmds, 0, sizeof(other_cmds));
+-	memset(&aliases, 0, sizeof(aliases));
+-
+-	read_early_config(the_repository, git_unknown_cmd_config, NULL);
++	read_early_config(the_repository, git_unknown_cmd_config, &cfg);
  
--	sanitize_paths(argc, argv, prefix, add_opts.skip_checks);
-+	for (int i = 0; i < argc; i++)
-+		strvec_push(&patterns, argv[i]);
-+	sanitize_paths(&patterns, prefix, add_opts.skip_checks);
- 
--	return modify_pattern_list(argc, argv, add_opts.use_stdin, ADD);
-+	ret = modify_pattern_list(&patterns, add_opts.use_stdin, ADD);
-+
-+	strvec_clear(&patterns);
-+	return ret;
- }
- 
- static char const * const builtin_sparse_checkout_set_usage[] = {
-@@ -826,6 +836,8 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 			   PARSE_OPT_NONEG),
- 		OPT_END(),
- 	};
-+	struct strvec patterns = STRVEC_INIT;
-+	int ret;
- 
- 	setup_work_tree();
- 	repo_read_index(the_repository);
-@@ -846,13 +858,18 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
- 	 * top-level directory (much as 'init' would do).
+ 	/*
+ 	 * Disable autocorrection prompt in a non-interactive session
  	 */
- 	if (!core_sparse_checkout_cone && !set_opts.use_stdin && argc == 0) {
--		argv = default_patterns;
--		argc = default_patterns_nr;
-+		for (int i = 0; i < default_patterns_nr; i++)
-+			strvec_push(&patterns, default_patterns[i]);
- 	} else {
--		sanitize_paths(argc, argv, prefix, set_opts.skip_checks);
-+		for (int i = 0; i < argc; i++)
-+			strvec_push(&patterns, argv[i]);
-+		sanitize_paths(&patterns, prefix, set_opts.skip_checks);
+-	if ((autocorrect == AUTOCORRECT_PROMPT) && (!isatty(0) || !isatty(2)))
+-		autocorrect = AUTOCORRECT_NEVER;
++	if ((cfg.autocorrect == AUTOCORRECT_PROMPT) && (!isatty(0) || !isatty(2)))
++		cfg.autocorrect = AUTOCORRECT_NEVER;
+ 
+-	if (autocorrect == AUTOCORRECT_NEVER) {
++	if (cfg.autocorrect == AUTOCORRECT_NEVER) {
+ 		fprintf_ln(stderr, _("git: '%s' is not a git command. See 'git --help'."), cmd);
+ 		exit(1);
  	}
  
--	return modify_pattern_list(argc, argv, set_opts.use_stdin, REPLACE);
-+	ret = modify_pattern_list(&patterns, set_opts.use_stdin, REPLACE);
-+
-+	strvec_clear(&patterns);
-+	return ret;
- }
+ 	load_command_list("git-", &main_cmds, &other_cmds);
  
- static char const * const builtin_sparse_checkout_reapply_usage[] = {
+-	add_cmd_list(&main_cmds, &aliases);
++	add_cmd_list(&main_cmds, &cfg.aliases);
+ 	add_cmd_list(&main_cmds, &other_cmds);
+ 	QSORT(main_cmds.names, main_cmds.cnt, cmdname_compare);
+ 	uniq(&main_cmds);
+@@ -693,7 +694,7 @@ const char *help_unknown_cmd(const char *cmd)
+ 		     n++)
+ 			; /* still counting */
+ 	}
+-	if (autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
++	if (cfg.autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
+ 		const char *assumed = main_cmds.names[0]->name;
+ 		main_cmds.names[0] = NULL;
+ 		cmdnames_release(&main_cmds);
+@@ -701,12 +702,12 @@ const char *help_unknown_cmd(const char *cmd)
+ 			   _("WARNING: You called a Git command named '%s', "
+ 			     "which does not exist."),
+ 			   cmd);
+-		if (autocorrect == AUTOCORRECT_IMMEDIATELY)
++		if (cfg.autocorrect == AUTOCORRECT_IMMEDIATELY)
+ 			fprintf_ln(stderr,
+ 				   _("Continuing under the assumption that "
+ 				     "you meant '%s'."),
+ 				   assumed);
+-		else if (autocorrect == AUTOCORRECT_PROMPT) {
++		else if (cfg.autocorrect == AUTOCORRECT_PROMPT) {
+ 			char *answer;
+ 			struct strbuf msg = STRBUF_INIT;
+ 			strbuf_addf(&msg, _("Run '%s' instead [y/N]? "), assumed);
+@@ -719,8 +720,8 @@ const char *help_unknown_cmd(const char *cmd)
+ 			fprintf_ln(stderr,
+ 				   _("Continuing in %0.1f seconds, "
+ 				     "assuming that you meant '%s'."),
+-				   (float)autocorrect/10.0, assumed);
+-			sleep_millisec(autocorrect * 100);
++				   (float)cfg.autocorrect/10.0, assumed);
++			sleep_millisec(cfg.autocorrect * 100);
+ 		}
+ 		return assumed;
+ 	}
 
 -- 
 2.47.0.274.g962d0b743d.dirty
