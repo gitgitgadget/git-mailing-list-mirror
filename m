@@ -1,161 +1,112 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4302187844
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 10:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC21E158D6A
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 10:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732099144; cv=none; b=WhrcEB5kodSKL7yQyhB8isvlltvg+4U0gIFrtno6HVHdnEMUQvcQZbqoGGw6bXKimcO5FidVphC8YamVJfCxvsgRpDhMKw9pv63Ks7NSK6dp9tmCv8kmujq6KF8R1EGmVIJH5bCFYikthATnWTVvin7vTuXJoAJPknK1w4NVb38=
+	t=1732099151; cv=none; b=ssrxNW1emv6jN5pTb2KqZ3KBGM5RrpiiGBktWFeMMfWJBGWlQj9QLXmGtThatHk2+DQeyx2OUI7rW6F07gpEjEfWbl+YCbYKppbkhqAEdyjt5cQEpOW/hDpoUMNx+k88cCMLQPrX19RBgiwMH7lpfxK6u8aotWDaI90lQCLPNTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732099144; c=relaxed/simple;
-	bh=m77GI+G57+BCtXEwCzO/6apqFmoJIl9uaIFM0M9exGs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U4q4Gasw9soF30OqJHJCQ6eLVt+Kl0hMRSAxAhhLz4J+oAAIvMH+ngn2/sR6kEtNI5eVorO+I0cd2ZNZYVBCbquRgyGFPsUKz2F7Rk7tfnuHgaTkR5ux2EErBPn/1K5ZS+G3lYr0wRjcRwdzN3mFjbirPYQ9C8ICVCrYC9HwKRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=kFhXL/pC; arc=none smtp.client-ip=95.215.58.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1732099151; c=relaxed/simple;
+	bh=wsGZzHKZSCGuXw0qIm4hEIiPqr4t6KzPFi+9xvX/xm8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=nvicnKNwzNeucCgirtV8lKrg9PQ9s00ra+YLD+mL8ZZ/mwxRNN5ZRvJMtR4e28jpFAuKbrRV4lGLxKr9obr2FXnXFIg2OCp0t+J0WcLnTD3AgOHcJUakEmTA76XP7997kH2ZkV79L5pgWJHTTXb+LbIeOcZOitkis0ZLvLgM6n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eB5ZUe7U; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="kFhXL/pC"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1732099138;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YOas/1h6eo7qtCGRL6eo4F9JxJO7POhH5VtYV2q2zMM=;
-	b=kFhXL/pC0NfLzA09pAAjwHv2cjqMEIGvIXsEqb9E220ciVSNSq4uGD7bbHeZ05JzeEWowq
-	ftT2xRUH8pMSTeda+lyB2pfppyoBrBwe+AuYWU33SVDEeY6tjOdSjt76f6Av8oCgT0eypL
-	USPXAvoAZSBtg5gGc/pQdiwZ7Za/4rs=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Subject: Re: [PATCH v2 11/27] git: refactor builtin handling to use a
- `struct strvec`
-In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-11-6154bf91f0b0@pks.im>
-References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
- <20241111-b4-pks-leak-fixes-pt10-v2-11-6154bf91f0b0@pks.im>
-Date: Wed, 20 Nov 2024 11:38:47 +0100
-Message-ID: <8734jmtcjs.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eB5ZUe7U"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-514543a08d0so1777003e0c.0
+        for <git@vger.kernel.org>; Wed, 20 Nov 2024 02:39:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732099148; x=1732703948; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=d9WHZC/HnnvFJGwh8mLsGvFJVfXa6x/baTnxHXCZZIQ=;
+        b=eB5ZUe7UGKL52U3xYbCteAXoQ3EUzOu+5rLXiYZpJPnWHhaXLxOpJxLhJQTf5lnpGz
+         1ncNiZr7AECruVSeVYwHbbXP9zoP0XmIoWuLiVDiST8a9AuCB4H14901We+5biUwpfFd
+         3wXpBgxGU+V/fScjuTZiPIVKeXMYDZ38vBAq2ISWVpbxwmKknBaBwK5N6C61Rgj+L+/q
+         9gLu3pKuLTSBrmeZ8UO+EIgBa+MrpOq+4br2mY6DUhJbLfOGyoy2IJ/AG5ce+tJ25xmF
+         1uyUsucB9TlWCl0d+SPwZB+KyMQ/zU8jlGIh9OHRvCig+A6QBM3UmKIyqGby9OC+32qM
+         UgfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732099148; x=1732703948;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d9WHZC/HnnvFJGwh8mLsGvFJVfXa6x/baTnxHXCZZIQ=;
+        b=AiEjr1VM/EArMO2EzxYULLMgHhsHa0FCV+X+UoDAitYU3ELWYRJW+KsEHfGG28sFtM
+         4MT5eEgM58mjg9Q3wZQOARaoKuaS10ObjitnkE4hsgVOpklKWW2Ds/+ln0JIK5TLd/yH
+         CSmdu8mRCq2pWQGPN1zm6kFxthY0+cYyfHTKzcgncsv5q2pPpwbnjdenaWp3tPBclKVe
+         bYP/Et3/lnO+EY6eC7W8NoYqXHfdemhXZL/nSHraMJ3WdzNafA9ffFmwcgkUoLHjDkAj
+         WI0tF6Jv+w0gFbEIQPHsvQ0ccH9w1IVg2S0W9ywsposS4tgwRW4FrrXPIg3MNehvBKbd
+         Sy6A==
+X-Forwarded-Encrypted: i=1; AJvYcCXt+xPzEFsMPrktM+Ld3VnCeflNONTnaFHnCEmvovlg4LBqA+m6SHsvafmjc/nNHlV+Cv4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgJlpVu5LeM7wfX4G20wAtkqb3ylo4kPggS0e6pz/tAG21m375
+	1c/MnB7wJTJR5wEIXj7FLP9RxGApihmRtIzqxe/zr9USZeA2rX4hd1CYyDFJq9f/P4qpN4eNr78
+	2pDQjMWMmX2WGA5NWHdGtipmCWxxXSTbe
+X-Google-Smtp-Source: AGHT+IE92aQ55av/+PDOg2/L9usdZ9rseihI3T0cjVeA4L7acOCaulk4nYx7ZIiWa68rCdE5z60WCXswuWze0xAqRig=
+X-Received: by 2002:a05:6122:893:b0:50a:c70b:9453 with SMTP id
+ 71dfb90a1353d-514cfba2ce3mr2535956e0c.10.1732099148473; Wed, 20 Nov 2024
+ 02:39:08 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 20 Nov 2024 05:39:06 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqo72ai929.fsf@gitster.g>
+References: <xmqqo72ai929.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Date: Wed, 20 Nov 2024 05:39:06 -0500
+Message-ID: <CAOLa=ZQ8uGRq0c-XWV=GxqyyqqHp0V_w1ZMJFduh6SF4pn-EzQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2024, #07; Wed, 20)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000760532062755c2a3"
 
-Patrick Steinhardt <ps@pks.im> writes:
+--000000000000760532062755c2a3
+Content-Type: text/plain; charset="UTF-8"
 
-> Similar as with the preceding commit, `handle_builtin()` does not
-> properly track lifetimes of the `argv` array and its strings. As it may
-> end up modifying the array this can lead to memory leaks in case it
-> contains allocated strings.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> * kn/the-repository (2024-11-12) 9 commits
+>  - midx: add repository to `multi_pack_index` struct
+>  - config: make `packed_git_(limit|window_size)` non-global variables
+>  - config: make `delta_base_cache_limit` a non-global variable
+>  - packfile: pass down repository to `for_each_packed_object`
+>  - packfile: pass down repository to `has_object[_kept]_pack`
+>  - packfile: pass down repository to `odb_pack_name`
+>  - packfile: pass `repository` to static function in the file
+>  - packfile: use `repository` from `packed_git` directly
+>  - packfile: add repository to struct `packed_git`
 >
-> Refactor the function to use a `struct strvec` instead.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  git.c                  | 66 ++++++++++++++++++++++++--------------------------
->  t/t0211-trace2-perf.sh |  2 +-
->  2 files changed, 32 insertions(+), 36 deletions(-)
->
-> diff --git a/git.c b/git.c
-> index 88356afe5fb568ccc147f055e3ab253c53a1befa..159dd45b08204c4a89d1dc4ab6990978e2454eb6 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -696,63 +696,57 @@ void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
->  }
->  
->  #ifdef STRIP_EXTENSION
-> -static void strip_extension(const char **argv)
-> +static void strip_extension(struct strvec *args)
->  {
->  	size_t len;
->  
-> -	if (strip_suffix(argv[0], STRIP_EXTENSION, &len))
-> -		argv[0] = xmemdupz(argv[0], len);
-> +	if (strip_suffix(args->v[0], STRIP_EXTENSION, &len)) {
-> +		char *stripped = xmemdupz(args->v[0], len);
-> +		strvec_replace(args, 0, stripped);
-> +		free(stripped);
-> +	}
->  }
->  #else
->  #define strip_extension(cmd)
->  #endif
->  
-> -static void handle_builtin(int argc, const char **argv)
-> +static void handle_builtin(struct strvec *args)
->  {
-> -	struct strvec args = STRVEC_INIT;
-> -	const char **argv_copy = NULL;
->  	const char *cmd;
->  	struct cmd_struct *builtin;
->  
-> -	strip_extension(argv);
-> -	cmd = argv[0];
-> +	strip_extension(args);
-> +	cmd = args->v[0];
->  
->  	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
-> -	if (argc > 1 && !strcmp(argv[1], "--help")) {
-> -		int i;
-> -
-> -		argv[1] = argv[0];
-> -		argv[0] = cmd = "help";
-> -
-> -		for (i = 0; i < argc; i++) {
-> -			strvec_push(&args, argv[i]);
-> -			if (!i)
-> -				strvec_push(&args, "--exclude-guides");
-> -		}
-> +	if (args->nr > 1 && !strcmp(args->v[1], "--help")) {
-> +		const char *exclude_guides_arg[] = { "--exclude-guides" };
-> +
-> +		strvec_replace(args, 1, args->v[0]);
-> +		strvec_replace(args, 0, "help");
-> +		cmd = "help";
-> +		strvec_splice(args, 2, 0, exclude_guides_arg,
-> +			      ARRAY_SIZE(exclude_guides_arg));
-> +	}
->  
-> -		argc++;
-> +	builtin = get_builtin(cmd);
-> +	if (builtin) {
-> +		const char **argv_copy = NULL;
-> +		int ret;
->  
->  		/*
->  		 * `run_builtin()` will modify the argv array, so we need to
->  		 * create a shallow copy such that we can free all of its
->  		 * strings.
->  		 */
-> -		CALLOC_ARRAY(argv_copy, argc + 1);
-> -		COPY_ARRAY(argv_copy, args.v, argc);
-> +		if (args->nr)
-> +			DUP_ARRAY(argv_copy, args->v, args->nr + 1);
->  
-> -		argv = argv_copy;
-> -	}
-> -
-> -	builtin = get_builtin(cmd);
-> -	if (builtin) {
-> -		int ret = run_builtin(builtin, argc, argv, the_repository);
-> -		strvec_clear(&args);
-> +		ret = run_builtin(builtin, args->nr, argv_copy, the_repository);
-> +		strvec_clear(args);
->  		free(argv_copy);
->  		exit(ret);
->  	}
-> -
-> -	strvec_clear(&args);
-> -	free(argv_copy);
->  }
+>  Various implicit uses of 'the_repoository' in the packfile code
+>  have been eliminated.
+>  source: <cover.1731323350.git.karthik.188@gmail.com>
 
-Just want to give you a little shout out how you've reorganized the code
-and it now makes a lot more sense how `argv_copy` is used by putting
-it inside the `if (builtin)` code block.
+Anything I can do here? I think Toon and Jeff already reviewed the
+previous version. Happy to reroll if needed!
 
--- 
-Toon
+Thanks
+
+--000000000000760532062755c2a3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4a78c8a2940d653b_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jOXZFY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md3VzQy93S21iZnVsSWRIOGtZbU1oNUhIMnFXZGlibApEQzRDZG81dEhP
+cjJlVU1uSDdBaWtiaHhtMHJtYnk5VTl0VS93WXI1RzZUT0lXNFI5ZklnT3dTZDdDUHl3bldNCmRE
+UFZxY0tZWk84WTZlekJSMEtGRnNEdDhLT3kxTVhTb3dhdEhUMXZGY3Q1L05sdVNNcGhMb1NDejBL
+VXU2dFcKZ2o1ZUUybjZwWWFmekhDVzNsNTRWc0J2OHBjTTdBMTY2RzQrOWlLbVRSYjROa1NRMWE2
+QzNpd0ErMU9NZm9yMQovc1I0TmVyM25WWnh0VndObWorSnVXRktwdGxUaXptKzZib2R6cTFzclJi
+cnhYUXgrRHdVQnBsSGJZSm9HdC9xCk1tNmRyejUreEF5ckVha0V3SEFNM2NodmN0ZFJneU5rM1cv
+MC9pZXRnMU9KdlRHOTNrMVBPZ3JBVjVTa210NWEKVFRDY1RTK2xYTkdEL3MzZnloZVVUcUNUdGEv
+RFQrUHZNcG1SeXlXT05tT2R0L2ZWUTdiRDU0TjdjOEM2N2RIYgp4VkJKYlhXS3FlL2NuRVRIbWVQ
+VXZMWkJKdXQydVpGcW9iY1FiT0t6VDRvdEVneDJScVYrWnd2ZEFIbDEwWEhVCjZqUklrdW5wR0lj
+T0N1TkxsRXJFY0dQbXFjYk44blBGcTZUYkJ5cz0KPVVrMWoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000760532062755c2a3--
