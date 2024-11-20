@@ -1,62 +1,62 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8601AA7B1
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 11:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493AE1AA7BA
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 11:51:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732103478; cv=none; b=OtMnN1osO6mg6PvTZ4s4i7KRsqdHc/X4mcaKIyf74ZNFm9IIszhGCrNwGX5PxHbVLYWwB1+biPOTtuSZ6BTIfZJ+U2B1Lj1ekDyhr7Tva+5GNrQIFm4JnmJfeP8O2XJopso4tlF6qKxymI9khtMuvrdLQXBVlF0uEMpzInjHIfU=
+	t=1732103487; cv=none; b=km+Toazta/ipWORfKQRpOof5prIYmliWfhR1jsgCPihm1gtEKnePRZkCqBogdW+U9W8kwMHBPnq1w0cT3St97n9rRtd6tzklQ15koE84n/msFqlhwxBF9GXwdHpnZ56lbjmeiVa/I9jMM2j/C3myZhhQMeJiYwf5W4X2RzN2mUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732103478; c=relaxed/simple;
-	bh=5V0XiAbP8HWSYG2I6t6wyCWdiAvyF9V1n8no7T7g7Rw=;
+	s=arc-20240116; t=1732103487; c=relaxed/simple;
+	bh=UMmNFe+UimwvkhTx+Oxb3XjhyVe27DK+GxSHcDqvSRw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dUdIcEgVa95NMAsojBHYA4CWiOB4ScUm129U36dvqLsBO3UbXwHwaL4yGVNvfCK5SxyGN15r76EKemkKUEmbucY7vwNA3zn0wKtc0hpdqLI7IAdbXtC0t4HLIKlS4INQ65ArE9SWJ/lAv1JZXuqeaLNBsho4I+SyU1LAkJRTDAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QMLIowbd; arc=none smtp.client-ip=209.85.210.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=HUKsomUwSTRPw/6vZD5p2BgeUnD9v51XdKQr8DRbA9Jky+f3er+KlD1KKj1qnVpo2XoC4CvHybokytI4rUggmMz2JMRsPtm0Yt4dZCCvSEr6hxW8Ehc30QiQ+/qA+QnOnQ3MZNzINSfYDAhVM0zzDpNRMuL/r9Nxcg95/dQX0FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bUqiZ6+g; arc=none smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QMLIowbd"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-724455f40a0so1534348b3a.0
-        for <git@vger.kernel.org>; Wed, 20 Nov 2024 03:51:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bUqiZ6+g"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-29666708da7so2262188fac.0
+        for <git@vger.kernel.org>; Wed, 20 Nov 2024 03:51:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732103476; x=1732708276; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732103484; x=1732708284; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zJ75sjuyqz5k++4m10zIcF0Gbi0g1hHVhXO/JjRwBWE=;
-        b=QMLIowbdJQ6AOybTrfNLr92sH3JHKook3CpXtjZzQZDl3Wwk7LXlNTUEFzN2fVnbfa
-         w9tJBajA/O15a5Fu3l2nyCbZOqtNR7QYrrVRBGInAo4sbP0FZBO80NESoYsrS12yxhUC
-         Uyhg2r7fzS2CtOgyk0iRtpRTVhkk7jMUL8jeyWaIw9cxuBxy8sJG5RIaxGaQB8i+RKvZ
-         VtEPJKZHbjKloDM0cDQ2M+SMhZp/ybqrJjPFUsjCO05GOpp/uhiMy0MRtctJRJX7i958
-         ZC8650CKjhS3lu9QaER/l3ac+sNJgUdBELg/AaKHuEyVMN2wqjwCD7EagzsCphhVC/Fv
-         qtRg==
+        bh=oCrwS1CZXCGmjcEuTdAojT1OFTke1dmbq+oiF708lmM=;
+        b=bUqiZ6+gNXkJh3HzXNHZHg1BU5Kh8ENtIRH6rI7Yxn3Z7t9ARCLIVWNb03E7FaM4oQ
+         LucoXuVJffxKB1jjtVu1prwYQbe7FqOdpmLiSvljLVD33Lsk3EcvuEW0FLI72329RMev
+         pxwStALDom9HbTxtC0461MCoQ5sisgdrypmFwYnhCJMaHhsnDokRNuT2Vc402LE5BpTs
+         dklIKux3I6pROAHDiQub0IWrRWIb3TaDIQbihGGyo+Iqcg8LlXBSfi9dGoKj/23Oe/NV
+         +1dueiyppfLmMMJg71tEFryUNWzQTufwYWuTTLToikoFu30eYG/8qaHluP4bex2nXM9k
+         BeBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732103476; x=1732708276;
+        d=1e100.net; s=20230601; t=1732103484; x=1732708284;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zJ75sjuyqz5k++4m10zIcF0Gbi0g1hHVhXO/JjRwBWE=;
-        b=ARRN5diEKaBESfl0x0NOh6aL75dCVfRgKgDVUMTrpj519lYMmEiYwGCR/izpxZjNwv
-         EnmfSKZv8I3QsPXDbh0DLfelavXGCxCt9+eHvdgZGoQvEM3uw9O6YMGXtrei5h7aDQO7
-         beHU24sA/F3+kuHTeFsAnKitV9RmLg0vs0bn+Sm4jp2yRCh+lA8ceRN5rCFColGwqkYG
-         U//bkQDTZm1Hj9IfyvJjqVTXbYXQYtp8QjgSQjehdyjVLZgDjE0FulpMFl44GOtc78Ce
-         LdZvn7fbdWKv9T3aOvV+ORQ790F+9feTwQXNgHEmtB3Ovq6P/awT2ocxJPzGW7cFpG5V
-         LxEA==
-X-Gm-Message-State: AOJu0YyqX3Q607cTwt2YBN97sKbFnUlSpAJ4ncHNiroZ451EpTEF4XOn
-	TWWJNL5qbJAzGVYWdarsBHfeCDabs6kDXAFfbm61PM2/kTZOQzOYuHJcXg==
-X-Google-Smtp-Source: AGHT+IGVB2BDk9XLCCxpmo/EEXUKN5Y//luOBrhJ7DDbpu670NGL4rMc4vDLfXPpqGgez0d6ktG6OQ==
-X-Received: by 2002:a05:6a00:c94:b0:71e:4196:ddb2 with SMTP id d2e1a72fcca58-724becf6a48mr3158500b3a.9.1732103475801;
-        Wed, 20 Nov 2024 03:51:15 -0800 (PST)
+        bh=oCrwS1CZXCGmjcEuTdAojT1OFTke1dmbq+oiF708lmM=;
+        b=joeA1D08d1APcQpDpULWL5FW6yuZj5T3BA5Lc/giNou4zGevis0A7TjWTHIN1pWBPb
+         9b6N4d3ooNwukoQ9yL+/0r8epCkqx3iPId+wbK5VvXsrhRjBhM+ZZmyc97jraS3+qyjG
+         7MxCoqWkJjsVJrby3vfS7okZOYUO/s+/GYxD4n8+Wl0iAYgkxNHPqDJmcFZtqVG0oFM5
+         7tKnxpQe++puzUW2boOGY8GKqNdivC8kMFlFlaOtUJGelMONHSy8ErXzQK9g2hui26xP
+         8wKDOi/CMGLYUKkozQrzph7s6KOTVAMjmA8qGqKwuY+xmOmdI1xgH0pxAwGJB+t/SjhR
+         mULQ==
+X-Gm-Message-State: AOJu0YyEf6m1JQJA8DsZkXTHDDiBYF6eif6yGjOy1XoYFdcbWAx7zqzh
+	WWbyWvvZFsuvpwpcu0DlXnYE5Eqp3PgjTVCSFkk3UOQn5u809EG3vCWhuQ==
+X-Google-Smtp-Source: AGHT+IFSzSg7VdbeDagfEPij9OfG+BL+B631kecTIMiMDS9cEeoQYBCzApeiHe5Fk6zbnnEs6PksAg==
+X-Received: by 2002:a05:6870:b153:b0:277:db7f:cfb2 with SMTP id 586e51a60fabf-296d9b95fb6mr2441225fac.14.1732103483762;
+        Wed, 20 Nov 2024 03:51:23 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724befe9b4dsm1413792b3a.191.2024.11.20.03.51.14
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7f8c1c31b93sm9297889a12.22.2024.11.20.03.51.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 03:51:15 -0800 (PST)
-Date: Wed, 20 Nov 2024 19:51:24 +0800
+        Wed, 20 Nov 2024 03:51:23 -0800 (PST)
+Date: Wed, 20 Nov 2024 19:51:32 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v9 3/9] ref: initialize ref name outside of check functions
-Message-ID: <Zz3NPE52NcfKYE0Q@ArchLinux>
+Subject: [PATCH v9 4/9] ref: support multiple worktrees check for refs
+Message-ID: <Zz3NRHF472oFdiH8@ArchLinux>
 References: <Zz3MON9_9DGD6nsy@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,93 +68,314 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Zz3MON9_9DGD6nsy@ArchLinux>
 
-We passes "refs_check_dir" to the "files_fsck_refs_name" function which
-allows it to create the checked ref name later. However, when we
-introduce a new check function, we have to allocate redundant memory and
-re-calculate the ref name. It's bad for us to allocate redundant memory
-and duplicate logic. Instead, we should allocate and calculate it only
-once and pass the ref name to the check functions.
+We have already set up the infrastructure to check the consistency for
+refs, but we do not support multiple worktrees. However, "git-fsck(1)"
+will check the refs of worktrees. As we decide to get feature parity
+with "git-fsck(1)", we need to set up support for multiple worktrees.
 
-In order not to do repeat calculation, rename "refs_check_dir" to
-"refname". And in "files_fsck_refs_dir", create a new strbuf "refname",
-thus whenever we handle a new ref, calculate the name and call the check
-functions one by one.
+Because each worktree has its own specific refs, instead of just showing
+the users "refs/worktree/foo", we need to display the full name such as
+"worktrees/<id>/refs/worktree/foo". So we should know the id of the
+worktree to get the full name. Add a new parameter "struct worktree *"
+for "refs-internal.h::fsck_fn". Then change the related functions to
+follow this new interface.
+
+The "packed-refs" only exists in the main worktree, so we should only
+check "packed-refs" in the main worktree. Use "is_main_worktree" method
+to skip checking "packed-refs" in "packed_fsck" function.
+
+Then, enhance the "files-backend.c::files_fsck_refs_dir" function to add
+"worktree/<id>/" prefix when we are not in the main worktree.
+
+Last, add a new test to check the refname when there are multiple
+worktrees to exercise the code.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- refs/files-backend.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ builtin/refs.c           | 10 ++++++--
+ refs.c                   |  5 ++--
+ refs.h                   |  3 ++-
+ refs/debug.c             |  5 ++--
+ refs/files-backend.c     | 17 ++++++++++----
+ refs/packed-backend.c    |  8 ++++++-
+ refs/refs-internal.h     |  3 ++-
+ refs/reftable-backend.c  |  3 ++-
+ t/t0602-reffiles-fsck.sh | 51 ++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 90 insertions(+), 15 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index b055edc061..8edb700568 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3501,12 +3501,12 @@ static int files_ref_store_remove_on_disk(struct ref_store *ref_store,
-  */
- typedef int (*files_fsck_refs_fn)(struct ref_store *ref_store,
- 				  struct fsck_options *o,
--				  const char *refs_check_dir,
-+				  const char *refname,
- 				  struct dir_iterator *iter);
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 24978a7b7b..394b4101c6 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -5,6 +5,7 @@
+ #include "parse-options.h"
+ #include "refs.h"
+ #include "strbuf.h"
++#include "worktree.h"
  
- static int files_fsck_refs_name(struct ref_store *ref_store UNUSED,
- 				struct fsck_options *o,
--				const char *refs_check_dir,
-+				const char *refname,
- 				struct dir_iterator *iter)
+ #define REFS_MIGRATE_USAGE \
+ 	N_("git refs migrate --ref-format=<format> [--dry-run]")
+@@ -66,6 +67,7 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix)
+ static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
  {
- 	struct strbuf sb = STRBUF_INIT;
-@@ -3522,11 +3522,10 @@ static int files_fsck_refs_name(struct ref_store *ref_store UNUSED,
- 	/*
- 	 * This works right now because we never check the root refs.
- 	 */
--	strbuf_addf(&sb, "%s/%s", refs_check_dir, iter->relative_path);
--	if (check_refname_format(sb.buf, 0)) {
-+	if (check_refname_format(refname, 0)) {
- 		struct fsck_ref_report report = { 0 };
+ 	struct fsck_options fsck_refs_options = FSCK_REFS_OPTIONS_DEFAULT;
++	struct worktree **worktrees;
+ 	const char * const verify_usage[] = {
+ 		REFS_VERIFY_USAGE,
+ 		NULL,
+@@ -75,7 +77,7 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "strict", &fsck_refs_options.strict, N_("enable strict checking")),
+ 		OPT_END(),
+ 	};
+-	int ret;
++	int ret = 0;
  
--		report.path = sb.buf;
-+		report.path = refname;
- 		ret = fsck_report_ref(o, &report,
- 				      FSCK_MSG_BAD_REF_NAME,
- 				      "invalid refname format");
-@@ -3542,6 +3541,7 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
- 			       const char *refs_check_dir,
- 			       files_fsck_refs_fn *fsck_refs_fn)
- {
-+	struct strbuf refname = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct dir_iterator *iter;
- 	int iter_status;
-@@ -3560,11 +3560,15 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
- 			continue;
- 		} else if (S_ISREG(iter->st.st_mode) ||
- 			   S_ISLNK(iter->st.st_mode)) {
-+			strbuf_reset(&refname);
-+			strbuf_addf(&refname, "%s/%s", refs_check_dir,
-+				    iter->relative_path);
-+
- 			if (o->verbose)
--				fprintf_ln(stderr, "Checking %s/%s",
--					   refs_check_dir, iter->relative_path);
-+				fprintf_ln(stderr, "Checking %s", refname.buf);
-+
- 			for (size_t i = 0; fsck_refs_fn[i]; i++) {
--				if (fsck_refs_fn[i](ref_store, o, refs_check_dir, iter))
-+				if (fsck_refs_fn[i](ref_store, o, refname.buf, iter))
- 					ret = -1;
- 			}
- 		} else {
-@@ -3581,6 +3585,7 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+ 	argc = parse_options(argc, argv, prefix, options, verify_usage, 0);
+ 	if (argc)
+@@ -84,9 +86,13 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix)
+ 	git_config(git_fsck_config, &fsck_refs_options);
+ 	prepare_repo_settings(the_repository);
  
- out:
- 	strbuf_release(&sb);
-+	strbuf_release(&refname);
+-	ret = refs_fsck(get_main_ref_store(the_repository), &fsck_refs_options);
++	worktrees = get_worktrees();
++	for (size_t i = 0; worktrees[i]; i++)
++		ret |= refs_fsck(get_worktree_ref_store(worktrees[i]),
++				 &fsck_refs_options, worktrees[i]);
+ 
+ 	fsck_options_clear(&fsck_refs_options);
++	free_worktrees(worktrees);
  	return ret;
  }
  
+diff --git a/refs.c b/refs.c
+index 5f729ed412..395a17273c 100644
+--- a/refs.c
++++ b/refs.c
+@@ -318,9 +318,10 @@ int check_refname_format(const char *refname, int flags)
+ 	return check_or_sanitize_refname(refname, flags, NULL);
+ }
+ 
+-int refs_fsck(struct ref_store *refs, struct fsck_options *o)
++int refs_fsck(struct ref_store *refs, struct fsck_options *o,
++	      struct worktree *wt)
+ {
+-	return refs->be->fsck(refs, o);
++	return refs->be->fsck(refs, o, wt);
+ }
+ 
+ void sanitize_refname_component(const char *refname, struct strbuf *out)
+diff --git a/refs.h b/refs.h
+index 108dfc93b3..341d43239c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -549,7 +549,8 @@ int check_refname_format(const char *refname, int flags);
+  * reflogs are consistent, and non-zero otherwise. The errors will be
+  * written to stderr.
+  */
+-int refs_fsck(struct ref_store *refs, struct fsck_options *o);
++int refs_fsck(struct ref_store *refs, struct fsck_options *o,
++	      struct worktree *wt);
+ 
+ /*
+  * Apply the rules from check_refname_format, but mutate the result until it
+diff --git a/refs/debug.c b/refs/debug.c
+index 45e2e784a0..72e80ddd6d 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -420,10 +420,11 @@ static int debug_reflog_expire(struct ref_store *ref_store, const char *refname,
+ }
+ 
+ static int debug_fsck(struct ref_store *ref_store,
+-		      struct fsck_options *o)
++		      struct fsck_options *o,
++		      struct worktree *wt)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+-	int res = drefs->refs->be->fsck(drefs->refs, o);
++	int res = drefs->refs->be->fsck(drefs->refs, o, wt);
+ 	trace_printf_key(&trace_refs, "fsck: %d\n", res);
+ 	return res;
+ }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 8edb700568..8bfdce64bc 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -23,6 +23,7 @@
+ #include "../dir.h"
+ #include "../chdir-notify.h"
+ #include "../setup.h"
++#include "../worktree.h"
+ #include "../wrapper.h"
+ #include "../write-or-die.h"
+ #include "../revision.h"
+@@ -3539,6 +3540,7 @@ static int files_fsck_refs_name(struct ref_store *ref_store UNUSED,
+ static int files_fsck_refs_dir(struct ref_store *ref_store,
+ 			       struct fsck_options *o,
+ 			       const char *refs_check_dir,
++			       struct worktree *wt,
+ 			       files_fsck_refs_fn *fsck_refs_fn)
+ {
+ 	struct strbuf refname = STRBUF_INIT;
+@@ -3561,6 +3563,9 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+ 		} else if (S_ISREG(iter->st.st_mode) ||
+ 			   S_ISLNK(iter->st.st_mode)) {
+ 			strbuf_reset(&refname);
++
++			if (!is_main_worktree(wt))
++				strbuf_addf(&refname, "worktrees/%s/", wt->id);
+ 			strbuf_addf(&refname, "%s/%s", refs_check_dir,
+ 				    iter->relative_path);
+ 
+@@ -3590,7 +3595,8 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+ }
+ 
+ static int files_fsck_refs(struct ref_store *ref_store,
+-			   struct fsck_options *o)
++			   struct fsck_options *o,
++			   struct worktree *wt)
+ {
+ 	files_fsck_refs_fn fsck_refs_fn[]= {
+ 		files_fsck_refs_name,
+@@ -3599,17 +3605,18 @@ static int files_fsck_refs(struct ref_store *ref_store,
+ 
+ 	if (o->verbose)
+ 		fprintf_ln(stderr, _("Checking references consistency"));
+-	return files_fsck_refs_dir(ref_store, o,  "refs", fsck_refs_fn);
++	return files_fsck_refs_dir(ref_store, o, "refs", wt, fsck_refs_fn);
+ }
+ 
+ static int files_fsck(struct ref_store *ref_store,
+-		      struct fsck_options *o)
++		      struct fsck_options *o,
++		      struct worktree *wt)
+ {
+ 	struct files_ref_store *refs =
+ 		files_downcast(ref_store, REF_STORE_READ, "fsck");
+ 
+-	return files_fsck_refs(ref_store, o) |
+-	       refs->packed_ref_store->be->fsck(refs->packed_ref_store, o);
++	return files_fsck_refs(ref_store, o, wt) |
++	       refs->packed_ref_store->be->fsck(refs->packed_ref_store, o, wt);
+ }
+ 
+ struct ref_storage_be refs_be_files = {
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 07c57fd541..46dcaec654 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -13,6 +13,7 @@
+ #include "../lockfile.h"
+ #include "../chdir-notify.h"
+ #include "../statinfo.h"
++#include "../worktree.h"
+ #include "../wrapper.h"
+ #include "../write-or-die.h"
+ #include "../trace2.h"
+@@ -1754,8 +1755,13 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
+ }
+ 
+ static int packed_fsck(struct ref_store *ref_store UNUSED,
+-		       struct fsck_options *o UNUSED)
++		       struct fsck_options *o UNUSED,
++		       struct worktree *wt)
+ {
++
++	if (!is_main_worktree(wt))
++		return 0;
++
+ 	return 0;
+ }
+ 
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 2313c830d8..037d7991cd 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -653,7 +653,8 @@ typedef int read_symbolic_ref_fn(struct ref_store *ref_store, const char *refnam
+ 				 struct strbuf *referent);
+ 
+ typedef int fsck_fn(struct ref_store *ref_store,
+-		    struct fsck_options *o);
++		    struct fsck_options *o,
++		    struct worktree *wt);
+ 
+ struct ref_storage_be {
+ 	const char *name;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index f5f957e6de..b6a63c1015 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -2443,7 +2443,8 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
+ }
+ 
+ static int reftable_be_fsck(struct ref_store *ref_store UNUSED,
+-			    struct fsck_options *o UNUSED)
++			    struct fsck_options *o UNUSED,
++			    struct worktree *wt UNUSED)
+ {
+ 	return 0;
+ }
+diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+index 2a172c913d..1e17393a3d 100755
+--- a/t/t0602-reffiles-fsck.sh
++++ b/t/t0602-reffiles-fsck.sh
+@@ -107,4 +107,55 @@ test_expect_success 'ref name check should be adapted into fsck messages' '
+ 	test_must_be_empty err
+ '
+ 
++test_expect_success 'ref name check should work for multiple worktrees' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++
++	cd repo &&
++	test_commit initial &&
++	git checkout -b branch-1 &&
++	test_commit second &&
++	git checkout -b branch-2 &&
++	test_commit third &&
++	git checkout -b branch-3 &&
++	git worktree add ./worktree-1 branch-1 &&
++	git worktree add ./worktree-2 branch-2 &&
++	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
++	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
++
++	(
++		cd worktree-1 &&
++		git update-ref refs/worktree/branch-4 refs/heads/branch-3
++	) &&
++	(
++		cd worktree-2 &&
++		git update-ref refs/worktree/branch-4 refs/heads/branch-3
++	) &&
++
++	cp $worktree1_refdir_prefix/branch-4 $worktree1_refdir_prefix/'\'' branch-5'\'' &&
++	cp $worktree2_refdir_prefix/branch-4 $worktree2_refdir_prefix/'\''~branch-6'\'' &&
++
++	test_must_fail git refs verify 2>err &&
++	cat >expect <<-EOF &&
++	error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
++	error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
++	EOF
++	sort err >sorted_err &&
++	test_cmp expect sorted_err &&
++
++	for worktree in "worktree-1" "worktree-2"
++	do
++		(
++			cd $worktree &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
++			error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
++			EOF
++			sort err >sorted_err &&
++			test_cmp expect sorted_err || return 1
++		)
++	done
++'
++
+ test_done
 -- 
 2.47.0
 
