@@ -1,64 +1,63 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695BC1A704B
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 12:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE1416DEB5
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:13:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732107516; cv=none; b=up3RHyp/hJrgaeKJ3pWDFwE5thwJKxBN3i7iuk4tuMb8yWaHaXnFJtCcancFwpTFweB6VVJVT89KQYAcs05i91y83bDSAZmvJ5qCJyvU96arnUcFUyjuQVSAyKvOzb/sQpqsU5XsT9n0ymHmSeLc54We1HplFEYsJMwNwzSZOoI=
+	t=1732108411; cv=none; b=HVj9T6gzW79wLvdp08L12np70gLvkua8E48FIXzWJ8K0+a+5/WgSh5KXXnje8JBkk6XOsYsH4CbCelG7TGUIFw1GF7nz5tH1s7SKmn/hXxShyHVAeOpFhraF25Z7ZCqBpT5F3y7aLpYMtKtYBh5wdqx1Tv9p6Q+JAFIs8a7RymE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732107516; c=relaxed/simple;
-	bh=UN1Ptbyi8MWpxV8CVp0+48V07eK8OD3JMhTM3cCP14A=;
+	s=arc-20240116; t=1732108411; c=relaxed/simple;
+	bh=2z9fHUR3bhQj4k+H1BUkW3KtqycpyYAn1YPuEyWyTaM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZmLAyfGOwPKnjoZRqyEcOHTrO+PyWw+oP8taZxcOrmO9480G5o6kQR15pXoUV+NvlHlRZT8WKWFIFzFPEPSWAj9nFf0F+gKRUaQfaIK/T/bZWP3zxRIrmr7webncczh2oTUtl8gp//roSaZYvsfQSVhUqXRIGApYhi6a/LD7D78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UAHQZtGO; arc=none smtp.client-ip=209.85.214.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=tJy+JLRdH07J87A94WUevQe6HgtZ6GDOKG3UzC9AhxtMHjtLTJMCGXTlyviv9iog/7QO7aUSAK3f8+FdUkAeB7TufmpjcIAY4xh9/1Vx9/xs3aVle5iT0ZAzTLIaFS61ZQlqVw73ukPTu2KFt6hwANySzN1QEcsRz89cPNzZz4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NnZnycQ9; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UAHQZtGO"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-212348d391cso30536785ad.2
-        for <git@vger.kernel.org>; Wed, 20 Nov 2024 04:58:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NnZnycQ9"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7f8b37edeb7so5052625a12.0
+        for <git@vger.kernel.org>; Wed, 20 Nov 2024 05:13:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732107515; x=1732712315; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732108409; x=1732713209; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5aG0yHURdM2mompgHXso+6B4wAaWU18yHA6AjBwbwU8=;
-        b=UAHQZtGOh++uCtrZ/b0KuFOR4trp09cu00Dqpg4fQxDBjO/JkOgr8wjtPn9fVwdOLH
-         qSgBUsa7Rvj52lDM4yFtZLpNbktT1R2v99ahL7V7e6u0YT2lBZveLQPGrJn4S+qyXosU
-         K8Ctg9PHE//dZYI+H/Xf+wpq7lIVXHVaXDwjVzLenjDnma9uVwMnSxv4/cy4123+ejo5
-         0UfXte/JjZZyKXO5sCenm8JtuJiZHOOzfRgbQ/9DxtjXDFsZk6iyGASxaSKEkQzJ3ze9
-         Aw0cn1XfkA/G0eLz2Ym/CxGnhUxAwfwKpDJgPNutQY0lUA6NBwA3498jNstvM2lN6HzA
-         VR8A==
+        bh=H9j9QyBOFIhIayDWKDPQ42e8piaDjQHb7LR7N9jOr8k=;
+        b=NnZnycQ9XJrz/qlO/zS8mHOKhYlWvgTeQVbjCToteKyMTFnQabrnH1WVNnRXlonc1Z
+         ej+WQ2MYykiUqiMXBBMWIN0tKyNXW750sX72ehuO0UMdhjxkbRqXAxJU1ju3qyy6/04x
+         OjdwPaGyEogKV4NV+yl7QsmsXI+7k5K28RrzWMnqo7pmsa7JSXuMi2xuHcdl8nYQVZPY
+         P4j9v9G3Q8ngm77h8JeOV2usDK4Y/5qfiIkUZpmlEXJLUHzDYCysDZjz9irRbYyUZdZ4
+         4NLDKIMEynyRwmu8cG0QHFHq+j4+m6XVAtkJxGkVDF3+zcR2ZrVpO2lmuNCedASfzTet
+         SEHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732107515; x=1732712315;
+        d=1e100.net; s=20230601; t=1732108409; x=1732713209;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5aG0yHURdM2mompgHXso+6B4wAaWU18yHA6AjBwbwU8=;
-        b=LcYEZTjqtf2FXgw23JKn2vCNg6shNBAxW8wLrdDag1+UMsgcXGrbivB1Q4Wj9mKHqa
-         udV7tYQjLqnHpg+WC7QV3P/XDlxyyBq2NJLwY9UcWnDCI4u5FbpJV828ks0tPWnKv+qf
-         lDgAu3YVxjlqnH0Tx8NYGHx+hHQ+E6D3R9JXkx3LFP6qCPGJO5lB9wXZdju88LolC9UE
-         kGbH/ZbH7CaWF+gD5gcFd3bVDUv4BtDBWm1oba3Uxj/6lX/Pr4N1CRtgkRNbotAQGPB1
-         J3bUSzdv9MCDJ82S10Ru41ZDDo1zgYMYoxg7OannEVhAD+dUz43ic//0Y0CTpfS95aQy
-         SIrA==
-X-Gm-Message-State: AOJu0YwQrg8D5lzMNz1sSm+GJJFudXJHyk8dngpRwRD4/Ik+cbii14+e
-	d9T2+IHQUCHTaSteuoeh8WBZibJKFC89/SUaWC3FJDHIj3MwOfYy
-X-Google-Smtp-Source: AGHT+IGO/OWUqx/jp+AHNA7ojOPWRlvt2C4MLhhBObmtnE5ymF8CqTAjuC1GGpCXxlXntMb7+tpbJg==
-X-Received: by 2002:a17:902:d2ca:b0:212:29d7:e435 with SMTP id d9443c01a7336-2126b013a2amr31003655ad.39.1732107514667;
-        Wed, 20 Nov 2024 04:58:34 -0800 (PST)
+        bh=H9j9QyBOFIhIayDWKDPQ42e8piaDjQHb7LR7N9jOr8k=;
+        b=rrRCpxMB0NM6X1evsbdLXzTWArb8y4z+W+fdGAP4vzZcw5L5QixUwUgjH8f8eP/lEA
+         cTzYZPhbwNNDrxobP5mkjFYLEM94keKXWGkkI4Jp37HSrcPne3Vo+MTQFp4ZUCh+65XS
+         epNmDnr3I+cuc9qXtNOby5uaQ3MKumDkPVPqy5BqYIgINo0TTPtHg7RBtdBJJnyz0a/h
+         Go5V3S+939q7BrN35SECKoYTphgHfU99I5HaaviGLWflO9xKUWw2QSp29us0kicRgy9g
+         ytwBN83bkrW0M+VeZP0UUAateYD3Y9TlHrJ5rTIOgd4JxTgDSxhNH65CkS8D4hTYqFJE
+         13DA==
+X-Gm-Message-State: AOJu0YxQz9iBZ8wze/p3MnUnq7cMYerGJNjK8mvwTNO9Ist7veWjZLL2
+	pgjiJjkg7bBrTLnRWwJyyM3yJqcR68iEV0yBR2dnOTjPFf9pLvlYN1aiqQ==
+X-Google-Smtp-Source: AGHT+IEkSsgDBzi5bwEjnAsHeULoquO1rPI7zP2M+QcScLnNIuLSumHGXaX8zXo+k1IJnKLEx0HyxA==
+X-Received: by 2002:a05:6a21:99aa:b0:1d9:d04:586d with SMTP id adf61e73a8af0-1ddb0625117mr3888788637.38.1732108408957;
+        Wed, 20 Nov 2024 05:13:28 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-211e9d0c389sm77857625ad.161.2024.11.20.04.58.33
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724befac984sm1552465b3a.158.2024.11.20.05.13.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 04:58:34 -0800 (PST)
-Date: Wed, 20 Nov 2024 20:58:41 +0800
+        Wed, 20 Nov 2024 05:13:28 -0800 (PST)
+Date: Wed, 20 Nov 2024 21:13:38 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2 03/10] midx-write: use `revs->repo` inside
- `read_refs_snapshot`
-Message-ID: <Zz3dAZGAG3BupQqE@ArchLinux>
+Subject: Re: [PATCH v2 10/10] midx: inline the `MIDX_MIN_SIZE` definition
+Message-ID: <Zz3gguyjTKJ8RY-z@ArchLinux>
 References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
- <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-3-e2f607174efc@gmail.com>
+ <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-10-e2f607174efc@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,19 +66,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-3-e2f607174efc@gmail.com>
+In-Reply-To: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-10-e2f607174efc@gmail.com>
 
-On Tue, Nov 19, 2024 at 04:36:42PM +0100, Karthik Nayak wrote:
-> The `read_refs_snapshot` uses the `parse_oid_hex` function which
-> internally uses global variables. Let's instead use
+On Tue, Nov 19, 2024 at 04:36:49PM +0100, Karthik Nayak wrote:
+> The `MIDX_MIN_SIZE` definition is used to check the midx_size in
+> `local_multi_pack_index_one`. This definitions relies on the
 
-Nit: s/variables/variable
+Nit: s/definitions/definition
 
-> `parse_oid_hex_algop` and provide the hash algo via `revs->repo`.
+> `the_hash_algo` global variable. Inline this and remove the global
+> variable usage.
 > 
-> Also, while here, fix a missing newline after the functions definition.
+> With this, remove `USE_THE_REPOSITORY_VARIABLE` usage from `midx.c`.
 > 
-
-Nit: s/functions/function
-
 > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
