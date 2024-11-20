@@ -1,80 +1,80 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700B11BC9EC
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95C21BC07B
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732110007; cv=none; b=Ed4ig+jtkKKLXN2rxjB0XJeJpVujW74HeUkVNokekE6ZFHp0yjyWwxSyekjdwvNtgIvv1KSPdDndK9eeM0pr4AIUtvjMi3tFGsvzGl4ks5yX5ai/GoyQrVPorf32Ja9Iy3yLMFrrClM+gvg5x+k3HptvHRRyakU39qkDQJoFK3E=
+	t=1732110009; cv=none; b=HZAQ1e98BfPYnODv1JGYEv6xiAPqB3nvjVJt03N0LRl91yjokGC04o6sFQ/smdyOpAFWYJ0LorgpeMrTRNLNujDyXxczzW6NwWiHeBCK3lmjhIegtfGQrO2QNOQ1AL0CvWJAhkcVTlz4s/lLa74V735wcOKrJuy9lFlxKEHloeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732110007; c=relaxed/simple;
-	bh=EIeqOEsBmvZ3pD11zi2aOCH6zgUuk4uvWWtVxCF/r8w=;
+	s=arc-20240116; t=1732110009; c=relaxed/simple;
+	bh=DvjT9BOnucw9+Bif1CxDuITJcU2pRElLdXV8XxAVzmE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=bWWJfEl/tR344OnLWeb3bYlb6pL50Be7skdaqo3Usfs7yCezTS/6qcqOBoKiH300mCvH9EuB2UxbCLV9HbxJ98LjFstmtnc0V9kxreeUmVfxtG2h9SP4ALS7ck0VFQ+r0pPg0/4M6Mmm+CPFTjDWHwZU6KKoyJhZpix1iWnpp2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tr442RYZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LtqvzKqc; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=kzrkc51AA5x45rsBWqacYoUe8B30wXBwvvF693xXHRXtr6BTjiRoWhd1jMCO82p8VSanlfVGrTbzy3gIyDsGMm0BPO9dNPoPU9hZhln1aR+CJFK1pK448imuMMqbVh0Ah7wU+GlHZUj1CwHH09CUvGv7pUGcKruXF8gVkTrX1AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l8ijrzTx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lM6c0HcC; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tr442RYZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LtqvzKqc"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D099911401D2;
-	Wed, 20 Nov 2024 08:40:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l8ijrzTx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lM6c0HcC"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 139B413806CF;
+	Wed, 20 Nov 2024 08:40:07 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 20 Nov 2024 08:40:05 -0500
+  by phl-compute-01.internal (MEProxy); Wed, 20 Nov 2024 08:40:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732110005;
-	 x=1732196405; bh=+eusgBIKljmlrHTWue4YklOLBIOJXhFPCw/DYnrInKw=; b=
-	Tr442RYZdTCW/+rTYD6eKFYST1e7ViNKwiTuhZIv/0bwQ/OacWwJESR4tIhG0y/i
-	+WWRVYdjn7CVja55GGDhCzi8/8ubec67WI7hgMrjVZLudjmyMPayAOnGIJ5EMdCk
-	0B11e90vjMnnBD/blfFx9/3m/+skPQ54cAJhyVQXG7H3hNXEDJUWWHY2wFMVkbos
-	4RFz9rdQuS8heO6VW39RRwrzlSfWXd3tU8lDnQv6UclwXXqhnBz9gXS+qd/5aXle
-	pV4/9CxDSV9BrwRBX7HZxo+0/BLwDfI7KUCN6XGFFzWkXfCu9PUDqc3iNgd/apd0
-	4ldYb/w90l2eo/HSjQsDog==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732110007;
+	 x=1732196407; bh=zR8Q1K480B9bSapBFTm/NQ4Xa+W4tgSKAH9FeZl1wzQ=; b=
+	l8ijrzTxLZBl7u+owLU/rcMr6VnBpyULyokLMR7rLXzmBZQGkprS4DY7pbMmVpiE
+	tvDeihweZM0W7i1LP8nWMFuwdxVGaCxSJWRCuWxgr5Frn/VPPiLuNyN1LgDMXYOw
+	4CnyFkdYqGNJPdyihf9M0xI1uKzq8f0AILgbIrh2drSvvK9E9KHUwb8Hve0+wZhv
+	Oj7hrY/aWphnLuTAO4IaIG26uKQgu+j0oQNJGYovvn83GXwMl/HjbWZJamShF4LS
+	D6GmwoQROP9+fha9jI2UEKy8+3H1bRu89Fqyf2JCtacStGFBCwVJhuQcoVJqORyq
+	dmpHlby3g0wbQ2O9+yc+Ng==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732110005; x=
-	1732196405; bh=+eusgBIKljmlrHTWue4YklOLBIOJXhFPCw/DYnrInKw=; b=L
-	tqvzKqcx4945Kx1lvZHKhGiOM9kZWhcv5r8dtnh4MdPGvBlhrbTJLx3An9fBNDsI
-	KUT0eUJRslC9Uab+k2q09jkGPQwiEiiG0NGs70YsVChf3hGfUzpcxZttOM4r06C6
-	igFw8Bal8+UU0Pn5ZkkjGOVIIuTvZvzlOorQbCOcM64BU0YQ8RIy7Hg/Zrawd2xX
-	VckPucewgyyDXvAD+sJdomjS2zdRzyCjhxxdkaxXE+Y8N2tlTIHMxPD6dOTqnDdq
-	rVLKpLhfJkqyc1Yq/XwN/4bqHp7/PminkJ/Sfzdh7pumXUQAbluJ7ONo1pyl1B74
-	sqiljFFO/lbo5SlnmM/0g==
-X-ME-Sender: <xms:teY9ZzgrFbxLghEXZ2pyJVxBYnQ69QtPoek3kkGVDMcLtJJFQe7FoQ>
-    <xme:teY9ZwDTbckwbe28uQAPTgMZEwQnTi46Y8FTMc3a6APQDKn9HjOBbc4WqZpYZVJWF
-    7qDPlkhk3m_P_3IiQ>
-X-ME-Received: <xmr:teY9ZzEvteoweIVLp_iNxQYexP7Pkv-sQxb-J-53R2NWRs1WwCrc5sSeXenht_gRj_Hfhd58QKrj3hI6VZ94UFP8uoAN8WXKE7qMVC0kv1q2yQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732110007; x=
+	1732196407; bh=zR8Q1K480B9bSapBFTm/NQ4Xa+W4tgSKAH9FeZl1wzQ=; b=l
+	M6c0HcCCw2jLY91JL8LFDWx71haCbiYyez/cmMsfklEo24wJO8dJeqyq2HnU7kme
+	KN/ZoMWWjemDYqZ6soH10U/jUd58PKU2dn+zS2nFQJ0LZLDUCWhiEI/s/I0OZxH1
+	0zgPdg1BAHWGD8Hurx3ID4u3I48PW5EhX6k5HO+dLaCj9XQ2mQZiZH8QGltvWveK
+	wONy8908zxmaogu+b1ma6SBzEP0oBD0PPJ3y/AxCxBk2DB72ndyIsq2OhhYvNxOp
+	WfHeVZIIGVanvbbkKIZIZpoN225+wTpqIrPD79OVbP7+dd5L03fcN1s2kRlTqDMl
+	8nn5cehdWHJYXxq4yQcGw==
+X-ME-Sender: <xms:tuY9ZzNmSj-7PmdiC3H3wiytcIAUQ4kxfytW1VSx_y2QEkGCUsQKcA>
+    <xme:tuY9Z99xeYNOEHMxN-xHt5YNbnHTvsFqzORyBt0UJcO7TMu18GiSydGyeM5OFHxJR
+    Qz0Syhxk-Gd-499bQ>
+X-ME-Received: <xmr:tuY9ZyQu-GkqRcHjopFE6cLVU5ibOnH9LQNJS4JgLBjNxwvK_ADTksQ3ccLT-WLj0lNgRGDRAw2HHILRhUFXVmItPxZHyS5yy0yGvhQn45iXmA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
-    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    eprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:teY9ZwSKmvuLIKRMIm9fiw6sPRXKft-WvALAYVHtOibqU8p_2S0pzA>
-    <xmx:teY9ZwwgwOibF1bLNMC6WngsEkuwdFf6uOWCQ1KcSBYnm0PIeBxFRA>
-    <xmx:teY9Z24JjyoSKKzfMr-iPGikvYA3eSTfKE_bRIh2lROy38cHwlYqYA>
-    <xmx:teY9Z1xpZSmVgnoWA3ofl6DKpGri0rh2jgIDL7ddWwDZuA2ZI0ptoQ>
-    <xmx:teY9Z6tHwAXPqk3hJw_obg3kh5enaF1j2X6JPDWjKGJO6hFb6RnhMhjh>
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprhhjuhhsthhosehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:tuY9Z3tpMx5v27cKge519U7xkzcXFVgiZvUsksYK18Gx7WMQvFq9aQ>
+    <xmx:tuY9Z7cvUDCUSoLy1JOeSvF0cbz5u3E5_5NqLKqfBn4EtnFVV2EhpQ>
+    <xmx:tuY9Zz1XncyVkVMDIwdoGmpev3mDNDUixN6ozisyBuB83zWV64VV8Q>
+    <xmx:tuY9Z3-EOEAC1XAXT8TeNNmWe287Alzcz2H6Q1Oq0pest7sYwiGrTw>
+    <xmx:t-Y9Zy6E4L1J67eH6hpIkCInw2MnKjZBIzx5qi7GRDpnYp0exvCemteo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Nov 2024 08:40:04 -0500 (EST)
+ 20 Nov 2024 08:40:05 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e17ac63b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 20 Nov 2024 13:39:10 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d65f20e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 20 Nov 2024 13:39:11 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 20 Nov 2024 14:39:46 +0100
-Subject: [PATCH v3 17/27] builtin/help: fix leaks in `check_git_cmd()`
+Date: Wed, 20 Nov 2024 14:39:47 +0100
+Subject: [PATCH v3 18/27] builtin/init-db: fix leaking directory paths
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-17-d67f08f45c74@pks.im>
+Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-18-d67f08f45c74@pks.im>
 References: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 In-Reply-To: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 To: git@vger.kernel.org
@@ -91,86 +91,96 @@ Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
  Jeff King <peff@peff.net>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-The `check_git_cmd()` function is declared to return a string constant.
-And while it sometimes does return a constant, it may also return an
-allocated string in two cases:
-
-  - When handling aliases. This case is already marked with `UNLEAK()`
-    to work around the leak.
-
-  - When handling unknown commands in case "help.autocorrect" is
-    enabled. This one is not marked with `UNLEAK()`.
-
-The function only has a single caller, so let's fix its return type to
-be non-constant, consistently return an allocated string and free it at
-its callsite to plug the leak.
+We've got a couple of leaking directory paths in git-init(1), all of
+which are marked with `UNLEAK()`. Fixing them is trivial, so let's do
+that instead so that we can get rid of `UNLEAK()` entirely.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/help.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ builtin/init-db.c | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 4a5a0790704b402e6f989118a0f90b52eb49dae1..6a72d991a84d9f14ecb8a711a012ed544450ca1c 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -551,12 +551,12 @@ static void show_html_page(const char *page)
- 	open_html(page_path.buf);
- }
- 
--static const char *check_git_cmd(const char* cmd)
-+static char *check_git_cmd(const char *cmd)
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 7e00d57d654e6820c7ad2418cafc3a9aca815816..096f96b9c4a2035b8d1edd0ac90de0dd73d7d508 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -75,10 +75,12 @@ int cmd_init_db(int argc,
+ 		const char *prefix,
+ 		struct repository *repo UNUSED)
  {
- 	char *alias;
+-	const char *git_dir;
++	char *git_dir;
+ 	const char *real_git_dir = NULL;
+-	const char *work_tree;
++	char *real_git_dir_to_free = NULL;
++	char *work_tree = NULL;
+ 	const char *template_dir = NULL;
++	char *template_dir_to_free = NULL;
+ 	unsigned int flags = 0;
+ 	const char *object_format = NULL;
+ 	const char *ref_format = NULL;
+@@ -106,6 +108,7 @@ int cmd_init_db(int argc,
+ 			   N_("specify the reference format to use")),
+ 		OPT_END()
+ 	};
++	int ret;
  
- 	if (is_git_command(cmd))
--		return cmd;
-+		return xstrdup(cmd);
+ 	argc = parse_options(argc, argv, prefix, init_db_options, init_db_usage, 0);
  
- 	alias = alias_lookup(cmd);
- 	if (alias) {
-@@ -589,14 +589,13 @@ static const char *check_git_cmd(const char* cmd)
- 			die(_("bad alias.%s string: %s"), cmd,
- 			    split_cmdline_strerror(count));
- 		free(argv);
--		UNLEAK(alias);
- 		return alias;
+@@ -113,12 +116,10 @@ int cmd_init_db(int argc,
+ 		die(_("options '%s' and '%s' cannot be used together"), "--separate-git-dir", "--bare");
+ 
+ 	if (real_git_dir && !is_absolute_path(real_git_dir))
+-		real_git_dir = real_pathdup(real_git_dir, 1);
++		real_git_dir = real_git_dir_to_free = real_pathdup(real_git_dir, 1);
+ 
+-	if (template_dir && *template_dir && !is_absolute_path(template_dir)) {
+-		template_dir = absolute_pathdup(template_dir);
+-		UNLEAK(template_dir);
+-	}
++	if (template_dir && *template_dir && !is_absolute_path(template_dir))
++		template_dir = template_dir_to_free = absolute_pathdup(template_dir);
+ 
+ 	if (argc == 1) {
+ 		int mkdir_tried = 0;
+@@ -192,7 +193,7 @@ int cmd_init_db(int argc,
+ 	 * Set up the default .git directory contents
+ 	 */
+ 	if (!git_dir)
+-		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
++		git_dir = xstrdup(DEFAULT_GIT_DIR_ENVIRONMENT);
+ 
+ 	/*
+ 	 * When --separate-git-dir is used inside a linked worktree, take
+@@ -213,6 +214,7 @@ int cmd_init_db(int argc,
+ 			if (chdir(mainwt.buf) < 0)
+ 				die_errno(_("cannot chdir to %s"), mainwt.buf);
+ 			strbuf_release(&mainwt);
++			free(git_dir);
+ 			git_dir = strbuf_detach(&sb, NULL);
+ 		}
+ 		strbuf_release(&sb);
+@@ -245,12 +247,14 @@ int cmd_init_db(int argc,
+ 			set_git_work_tree(work_tree);
  	}
  
- 	if (exclude_guides)
- 		return help_unknown_cmd(cmd);
- 
--	return cmd;
-+	return xstrdup(cmd);
- }
- 
- static void no_help_format(const char *opt_mode, enum help_format fmt)
-@@ -642,6 +641,7 @@ int cmd_help(int argc,
- {
- 	int nongit;
- 	enum help_format parsed_help_format;
-+	char *command = NULL;
- 	const char *page;
- 
- 	argc = parse_options(argc, argv, prefix, builtin_help_options,
-@@ -713,9 +713,9 @@ int cmd_help(int argc,
- 	if (help_format == HELP_FORMAT_NONE)
- 		help_format = parse_help_format(DEFAULT_HELP_FORMAT);
- 
--	argv[0] = check_git_cmd(argv[0]);
-+	command = check_git_cmd(argv[0]);
- 
--	page = cmd_to_page(argv[0]);
-+	page = cmd_to_page(command);
- 	switch (help_format) {
- 	case HELP_FORMAT_NONE:
- 	case HELP_FORMAT_MAN:
-@@ -729,5 +729,6 @@ int cmd_help(int argc,
- 		break;
- 	}
- 
-+	free(command);
- 	return 0;
+-	UNLEAK(real_git_dir);
+-	UNLEAK(git_dir);
+-	UNLEAK(work_tree);
+-
+ 	flags |= INIT_DB_EXIST_OK;
+-	return init_db(git_dir, real_git_dir, template_dir, hash_algo,
+-		       ref_storage_format, initial_branch,
+-		       init_shared_repository, flags);
++	ret = init_db(git_dir, real_git_dir, template_dir, hash_algo,
++		      ref_storage_format, initial_branch,
++		      init_shared_repository, flags);
++
++	free(template_dir_to_free);
++	free(real_git_dir_to_free);
++	free(work_tree);
++	free(git_dir);
++	return ret;
  }
 
 -- 
