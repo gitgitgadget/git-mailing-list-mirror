@@ -1,55 +1,55 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB401B14FA
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:39:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCE71B4F31
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:39:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732109999; cv=none; b=kcmmj5FvLwgeR+zL+brRBD0o/RsWfAhXxtPeE6iYG4/i48yXXw3mxgfMvQ7nfKGzlu7+DDHd2tzsCLygDNLJul4hXx9rqU6RwHEUT7V3mtg8v3VRRoWvnS8H/go22CK6/ejn8e0dKzzYAicwWaevgEJBGG1E3+buF8AxyeC5ShQ=
+	t=1732110000; cv=none; b=Yn972Pk/3G+Q67x+TdeorxH65L7isq4RN3ATm48e9/i4N91yLvwP8PFzfcTufzR0eIipE+h3PJYeDuh8ij1M4J8BTrifY7M8CL/CMkSEoVGnCsNqLojeJsR96ZRthxFG5ybJVTyw34ibzlIHQ/6VaFd8rbHVTe9SAcyFiS+GcyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732109999; c=relaxed/simple;
-	bh=uDsfIyzOqhRaI1hHN3EyB73JolkuLsTmZOfl6azHWok=;
+	s=arc-20240116; t=1732110000; c=relaxed/simple;
+	bh=Fudpz5Qn4J+rWmcI6YDmCrElS+pzhTPInRWbtQSA76U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VAxd28NiKusHfHZ2ElEPQ1QHTWTFllQCFr77+aB9VMclIMSBnJx4Va/RHcoGB0OqhUjmAtkGHNQSh+lvwFbpUetSgsgKkWiyHIi2LUjhZ4PAIRqqav78/lM46G9WvJmlpnCFA23w+XtIGxqMPYCbY8zbORveG2hOUU6xpTyoN1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UKwxdzk9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DFcMPiS0; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=bWwWnLpbmrW9M+dYGQGPMGd0K18DD7eYl+flJWygblbFRoTH0vWPmv8LJC8R/CCDXqHgTi+p37ZmL7eOFFQHtSGnlKGaj/jGb4XqFyMuywIg5n2sanlPBFuiAmXN8n0glEbc/XQHawWL35Gr+thXBnFEMPTCAKN/CMQPS106T/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jSPKAXBR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KE/t4tfX; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UKwxdzk9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DFcMPiS0"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F3C1411401D6;
-	Wed, 20 Nov 2024 08:39:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jSPKAXBR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KE/t4tfX"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2FB0A1380368;
+	Wed, 20 Nov 2024 08:39:58 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Wed, 20 Nov 2024 08:39:56 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 20 Nov 2024 08:39:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732109996;
-	 x=1732196396; bh=ypWLjsRXdjoDZ+6Iwy4R6AkAX7BogZLubrzLsLdORAo=; b=
-	UKwxdzk9uPlTpv4lkvep+yLqoyBMZJkl/D40LNcsHlw7Ox730RtfC6egui/uoAK0
-	ZleSyJhi5oKXArElgbuh+mc4bUbPTqsMzNnigx/oUYQ0YuVzk3V5qLP/dzp5qjT4
-	JZWZbof2QvgXJaWCBb7GsFdsmkSjq21FrrZGAYvExZyIsu6UBDJrg6TY4Be3Sw3s
-	imOndieyDAyiW2n5ZLr8JFoY1nchbE9diltxcY2qUKBVITT9W8HeR7qN4XojWk42
-	r9RCpoBDwIKtVg0+6kcn0WOIRnINrHOglCnDaHqpgGo0nVAuNO/1D+ikVlvnFrL5
-	jge0JtYvsHvQzcDCP6T4og==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732109998;
+	 x=1732196398; bh=AYpl/qE4JAi26+pjMbG/Hkl3RW3anKoO5tHkJoZT8vU=; b=
+	jSPKAXBRbonhj0oK5D/f0Puscu7uanGQOs5hdmmgVgmih0XFvu/br3c2GPJ2pklh
+	tu1KysQJl0p7TvAs6AMVZu7Yg0XxHRDqYIsaItDfCYxbapTBsSKFl/oVfaV82IRO
+	qAPEk9IPgbkCicsFLQHC/n9EAuoikyoxPZIbNY3W1vc/nSqask7XKlV1+qWGqpC8
+	pQl2t4g27VOhrZCv1s6eeAvnrTZfaYXSYn1me7ofKZ5ZIih1g1W0BOTbSVwH030q
+	GxaszP/QU8w+8/HokARdw8uGvrj+6Y9Tnmow7ZE6NCQ0azMuKUy15Tw2slVHj287
+	UFKAEBOAtNTKUt09NbYWBg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732109996; x=
-	1732196396; bh=ypWLjsRXdjoDZ+6Iwy4R6AkAX7BogZLubrzLsLdORAo=; b=D
-	FcMPiS0DR81hACiMyYY53XhjLrm/0mSgOcF65AmRPms2zj7N7XiWGj916U9uexZV
-	z2ZmaT2UX+pJXYYfks1DdCvg1GeiA3OARCTTAL9yG47bA9pUPNuLGMhn386DzyCF
-	f6R68w1A2BE6ZSxbT+IAjwOwSWm5fA4FKxq6r6ulRdjN8Dn7xHodmtTXHQitdX+m
-	Xqq/SyeQDGogrUs6S2bGnEMefq5QpnKYZ3qga8mr4ZQ53Tx93bX4tjjdi5BEvZDA
-	+WKpMuXJUIT4HnJPsUKD14OWYXktYlCmeL6eDzlZ71oQ+nEkjAm/xfh5V2/+4YBt
-	7x/jTOwRSjpbKGyEamdwA==
-X-ME-Sender: <xms:rOY9Z3Y6XnNQjy5h1PcTnfsKh3UZjpNU3ty5qO2Hmwb0iXwHKkGprg>
-    <xme:rOY9Z2YEY0hqiAHE0nJ6TyLmPmml0snQwN3ee_q2q5ptn0CbgkJufv2_6KhSBBMjr
-    kYU9Tnl1a-zzcONRA>
-X-ME-Received: <xmr:rOY9Z5_bhEHaTPDNLW7_ziTEqNyXiBlNNWgWHlIHm3lYFtd8lMCvb5glTIRx61KAWcJQvgdrcjg5TNcpMVYxNarmTji8xhmmVp5wdSG8bDwInQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732109998; x=
+	1732196398; bh=AYpl/qE4JAi26+pjMbG/Hkl3RW3anKoO5tHkJoZT8vU=; b=K
+	E/t4tfXHecX5/vz8Q/M579XzUM2acXglVEP5ikYvDHojDMGzZTGt/PDUgcTQsu2e
+	+agb7C55wyvW6I6qSaQNnhBHahtoIORMx++dQIOA2KubwGsh53NtupB3xWt/R6mh
+	0Ei8zr+M5wMsDECCGUljt+fi6vF7eouLXkolSaZGTaScSU0xrML/q3yigscgFMWe
+	b1PpVrM1rFiWG3yABetquRh1O+3wyEGXKRYsSSy9DjM9kDCJuwlffmd7E6g2ZG7B
+	/YUv8J/m04inATLMVOB9Dmx4/Y2WijBQvw02ayi86wfobnAU3f6zCC5Zmw7ed316
+	oF+eyG43BbTcVOr0iY1uw==
+X-ME-Sender: <xms:ruY9Zye7Y128TeLLaiSto_eYxwcEOWWbL7wCrGhlsVrHeHEs4uHi6w>
+    <xme:ruY9Z8PVhf-HFkrZu_DVuXhRPu1uwYg25DvemgB9NqkCV00HXKYPzbYyHFoLrNphY
+    3Pzt1Grg1LxPliYPQ>
+X-ME-Received: <xmr:ruY9ZziOLSveOloet6zHoXBQrVoGmv8wRroESPA9lFH-Qhkq4Cjw-49Rw3fFbiJmjXKk5gh0tk4Uw7lR7XYgU5OE6WGSes1GcifRYaM4QQcKPw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,23 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepthhoohhnsehiohht
-    tghlrdgtohhmpdhrtghpthhtoheprhhjuhhsthhosehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:rOY9Z9rIWeAJD0yMSjf3bZovN7Nigrl5wXRjdj6FS_SIqnpFWwQo7g>
-    <xmx:rOY9Zyol6qEtEDn134kVYvfzAU7oK0RwTvPOpMPkyvijTtYFyIOO8A>
-    <xmx:rOY9ZzQrtH2mqzdgFBRpOIZ97Wr_DrivU9yPsAriz44kx9Q4kb1SRg>
-    <xmx:rOY9Z6quFMN3ldBwmXJ34CQkNf0geZDdkU_Hq3frSd5yCVSY1Xmcfg>
-    <xmx:rOY9Z7moqSec986Ws--rWeMuhztyLuRaNGYnCBVzylwdclQedAbsQeu_>
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    htohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehrjhhushhtohesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ruY9Z_9Jr0AW4Vyubi1Li4XX6dPj8pQIuX8-k1Oc78WxTyGJuoNrcw>
+    <xmx:ruY9Z-tfdZzRQayTF9202Py86qM94xuzevfuhxeDF52CrxLIqiIDqw>
+    <xmx:ruY9Z2GVscm1RB7Ft1e4QxmmwrYBs5RSS_RVkiT_mkC4pT5uNf1g5A>
+    <xmx:ruY9Z9NR27Jk0P_411B4f7owKvlw3jSs96KYuTfCvxMkDELl6oYx1w>
+    <xmx:ruY9ZwIoiHvhMWmiklzVFvFuDiO0tFPJkSaaAU4JoEO6z8BP898lvoKp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Nov 2024 08:39:55 -0500 (EST)
+ 20 Nov 2024 08:39:57 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 93cff5e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 20 Nov 2024 13:39:03 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id e6978139 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 20 Nov 2024 13:39:04 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 20 Nov 2024 14:39:39 +0100
-Subject: [PATCH v3 10/27] git: refactor alias handling to use a `struct
+Date: Wed, 20 Nov 2024 14:39:40 +0100
+Subject: [PATCH v3 11/27] git: refactor builtin handling to use a `struct
  strvec`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-10-d67f08f45c74@pks.im>
+Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-11-d67f08f45c74@pks.im>
 References: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 In-Reply-To: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 To: git@vger.kernel.org
@@ -92,208 +92,148 @@ Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
  Jeff King <peff@peff.net>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-In `handle_alias()` we use both `argcp` and `argv` as in-out parameters.
-Callers mostly pass through the static array from `main()`, but once we
-handle an alias we replace it with an allocated array that may contain
-some allocated strings. Callers do not handle this scenario at all and
-thus leak memory.
+Similar as with the preceding commit, `handle_builtin()` does not
+properly track lifetimes of the `argv` array and its strings. As it may
+end up modifying the array this can lead to memory leaks in case it
+contains allocated strings.
 
-We could in theory handle the lifetime of `argv` in a hacky fashion by
-letting callers free it in case they see that an alias was handled. But
-while that would likely work, we still wouldn't be able to easily handle
-the lifetime of strings referenced by `argv`.
-
-Refactor the code to instead use a `struct strvec`, which effectively
-removes the need for us to manually track lifetimes.
+Refactor the function to use a `struct strvec` instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- git.c            | 58 +++++++++++++++++++++++++++++++-------------------------
- t/t0014-alias.sh |  1 +
- 2 files changed, 33 insertions(+), 26 deletions(-)
+ git.c                  | 66 ++++++++++++++++++++++++--------------------------
+ t/t0211-trace2-perf.sh |  2 +-
+ 2 files changed, 32 insertions(+), 36 deletions(-)
 
 diff --git a/git.c b/git.c
-index c2c1b8e22c2d91824ad6d631ea9374424ab53435..88356afe5fb568ccc147f055e3ab253c53a1befa 100644
+index 88356afe5fb568ccc147f055e3ab253c53a1befa..159dd45b08204c4a89d1dc4ab6990978e2454eb6 100644
 --- a/git.c
 +++ b/git.c
-@@ -362,7 +362,7 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 	return (*argv) - orig_argv;
+@@ -696,63 +696,57 @@ void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
  }
  
--static int handle_alias(int *argcp, const char ***argv)
-+static int handle_alias(struct strvec *args)
+ #ifdef STRIP_EXTENSION
+-static void strip_extension(const char **argv)
++static void strip_extension(struct strvec *args)
  {
- 	int envchanged = 0, ret = 0, saved_errno = errno;
- 	int count, option_count;
-@@ -370,10 +370,10 @@ static int handle_alias(int *argcp, const char ***argv)
- 	const char *alias_command;
- 	char *alias_string;
+ 	size_t len;
  
--	alias_command = (*argv)[0];
-+	alias_command = args->v[0];
- 	alias_string = alias_lookup(alias_command);
- 	if (alias_string) {
--		if (*argcp > 1 && !strcmp((*argv)[1], "-h"))
-+		if (args->nr > 1 && !strcmp(args->v[1], "-h"))
- 			fprintf_ln(stderr, _("'%s' is aliased to '%s'"),
- 				   alias_command, alias_string);
- 		if (alias_string[0] == '!') {
-@@ -390,7 +390,7 @@ static int handle_alias(int *argcp, const char ***argv)
- 			child.wait_after_clean = 1;
- 			child.trace2_child_class = "shell_alias";
- 			strvec_push(&child.args, alias_string + 1);
--			strvec_pushv(&child.args, (*argv) + 1);
-+			strvec_pushv(&child.args, args->v + 1);
+-	if (strip_suffix(argv[0], STRIP_EXTENSION, &len))
+-		argv[0] = xmemdupz(argv[0], len);
++	if (strip_suffix(args->v[0], STRIP_EXTENSION, &len)) {
++		char *stripped = xmemdupz(args->v[0], len);
++		strvec_replace(args, 0, stripped);
++		free(stripped);
++	}
+ }
+ #else
+ #define strip_extension(cmd)
+ #endif
  
- 			trace2_cmd_alias(alias_command, child.args.v);
- 			trace2_cmd_name("_run_shell_alias_");
-@@ -423,15 +423,13 @@ static int handle_alias(int *argcp, const char ***argv)
- 		trace_argv_printf(new_argv,
- 				  "trace: alias expansion: %s =>",
- 				  alias_command);
+-static void handle_builtin(int argc, const char **argv)
++static void handle_builtin(struct strvec *args)
+ {
+-	struct strvec args = STRVEC_INIT;
+-	const char **argv_copy = NULL;
+ 	const char *cmd;
+ 	struct cmd_struct *builtin;
+ 
+-	strip_extension(argv);
+-	cmd = argv[0];
++	strip_extension(args);
++	cmd = args->v[0];
+ 
+ 	/* Turn "git cmd --help" into "git help --exclude-guides cmd" */
+-	if (argc > 1 && !strcmp(argv[1], "--help")) {
+-		int i;
 -
--		REALLOC_ARRAY(new_argv, count + *argcp);
--		/* insert after command name */
--		COPY_ARRAY(new_argv + count, *argv + 1, *argcp);
+-		argv[1] = argv[0];
+-		argv[0] = cmd = "help";
 -
- 		trace2_cmd_alias(alias_command, new_argv);
- 
--		*argv = new_argv;
--		*argcp += count - 1;
-+		/* Replace the alias with the new arguments. */
-+		strvec_splice(args, 0, 1, new_argv, count);
+-		for (i = 0; i < argc; i++) {
+-			strvec_push(&args, argv[i]);
+-			if (!i)
+-				strvec_push(&args, "--exclude-guides");
+-		}
++	if (args->nr > 1 && !strcmp(args->v[1], "--help")) {
++		const char *exclude_guides_arg[] = { "--exclude-guides" };
 +
-+		free(alias_string);
-+		free(new_argv);
++		strvec_replace(args, 1, args->v[0]);
++		strvec_replace(args, 0, "help");
++		cmd = "help";
++		strvec_splice(args, 2, 0, exclude_guides_arg,
++			      ARRAY_SIZE(exclude_guides_arg));
++	}
  
- 		ret = 1;
+-		argc++;
++	builtin = get_builtin(cmd);
++	if (builtin) {
++		const char **argv_copy = NULL;
++		int ret;
+ 
+ 		/*
+ 		 * `run_builtin()` will modify the argv array, so we need to
+ 		 * create a shallow copy such that we can free all of its
+ 		 * strings.
+ 		 */
+-		CALLOC_ARRAY(argv_copy, argc + 1);
+-		COPY_ARRAY(argv_copy, args.v, argc);
++		if (args->nr)
++			DUP_ARRAY(argv_copy, args->v, args->nr + 1);
+ 
+-		argv = argv_copy;
+-	}
+-
+-	builtin = get_builtin(cmd);
+-	if (builtin) {
+-		int ret = run_builtin(builtin, argc, argv, the_repository);
+-		strvec_clear(&args);
++		ret = run_builtin(builtin, args->nr, argv_copy, the_repository);
++		strvec_clear(args);
+ 		free(argv_copy);
+ 		exit(ret);
  	}
-@@ -800,10 +798,10 @@ static void execv_dashed_external(const char **argv)
- 		exit(128);
+-
+-	strvec_clear(&args);
+-	free(argv_copy);
  }
  
--static int run_argv(int *argcp, const char ***argv)
-+static int run_argv(struct strvec *args)
- {
- 	int done_alias = 0;
--	struct string_list cmd_list = STRING_LIST_INIT_NODUP;
-+	struct string_list cmd_list = STRING_LIST_INIT_DUP;
- 	struct string_list_item *seen;
- 
- 	while (1) {
-@@ -817,8 +815,8 @@ static int run_argv(int *argcp, const char ***argv)
+ static void execv_dashed_external(const char **argv)
+@@ -815,7 +809,7 @@ static int run_argv(struct strvec *args)
  		 * process.
  		 */
  		if (!done_alias)
--			handle_builtin(*argcp, *argv);
--		else if (get_builtin(**argv)) {
-+			handle_builtin(args->nr, args->v);
-+		else if (get_builtin(args->v[0])) {
+-			handle_builtin(args->nr, args->v);
++			handle_builtin(args);
+ 		else if (get_builtin(args->v[0])) {
  			struct child_process cmd = CHILD_PROCESS_INIT;
  			int i;
- 
-@@ -834,8 +832,8 @@ static int run_argv(int *argcp, const char ***argv)
- 			commit_pager_choice();
- 
- 			strvec_push(&cmd.args, "git");
--			for (i = 0; i < *argcp; i++)
--				strvec_push(&cmd.args, (*argv)[i]);
-+			for (i = 0; i < args->nr; i++)
-+				strvec_push(&cmd.args, args->v[i]);
- 
- 			trace_argv_printf(cmd.args.v, "trace: exec:");
- 
-@@ -850,13 +848,13 @@ static int run_argv(int *argcp, const char ***argv)
- 			i = run_command(&cmd);
- 			if (i >= 0 || errno != ENOENT)
- 				exit(i);
--			die("could not execute builtin %s", **argv);
-+			die("could not execute builtin %s", args->v[0]);
- 		}
- 
- 		/* .. then try the external ones */
--		execv_dashed_external(*argv);
-+		execv_dashed_external(args->v);
- 
--		seen = unsorted_string_list_lookup(&cmd_list, *argv[0]);
-+		seen = unsorted_string_list_lookup(&cmd_list, args->v[0]);
- 		if (seen) {
- 			int i;
- 			struct strbuf sb = STRBUF_INIT;
-@@ -873,14 +871,14 @@ static int run_argv(int *argcp, const char ***argv)
- 			      " not terminate:%s"), cmd_list.items[0].string, sb.buf);
- 		}
- 
--		string_list_append(&cmd_list, *argv[0]);
-+		string_list_append(&cmd_list, args->v[0]);
- 
- 		/*
- 		 * It could be an alias -- this works around the insanity
- 		 * of overriding "git log" with "git show" by having
- 		 * alias.log = show
- 		 */
--		if (!handle_alias(argcp, argv))
-+		if (!handle_alias(args))
- 			break;
- 		done_alias = 1;
- 	}
-@@ -892,6 +890,7 @@ static int run_argv(int *argcp, const char ***argv)
- 
- int cmd_main(int argc, const char **argv)
- {
-+	struct strvec args = STRVEC_INIT;
- 	const char *cmd;
- 	int done_help = 0;
- 
-@@ -951,25 +950,32 @@ int cmd_main(int argc, const char **argv)
+@@ -916,8 +910,10 @@ int cmd_main(int argc, const char **argv)
+ 	 * that one cannot handle it.
  	 */
- 	setup_path();
- 
-+	for (size_t i = 0; i < argc; i++)
-+		strvec_push(&args, argv[i]);
-+
- 	while (1) {
--		int was_alias = run_argv(&argc, &argv);
-+		int was_alias = run_argv(&args);
- 		if (errno != ENOENT)
- 			break;
- 		if (was_alias) {
- 			fprintf(stderr, _("expansion of alias '%s' failed; "
- 					  "'%s' is not a git command\n"),
--				cmd, argv[0]);
-+				cmd, args.v[0]);
-+			strvec_clear(&args);
- 			exit(1);
- 		}
- 		if (!done_help) {
--			cmd = argv[0] = help_unknown_cmd(cmd);
-+			strvec_replace(&args, 0, help_unknown_cmd(cmd));
-+			cmd = args.v[0];
- 			done_help = 1;
--		} else
-+		} else {
- 			break;
-+		}
+ 	if (skip_prefix(cmd, "git-", &cmd)) {
+-		argv[0] = cmd;
+-		handle_builtin(argc, argv);
++		strvec_push(&args, cmd);
++		strvec_pushv(&args, argv + 1);
++		handle_builtin(&args);
++		strvec_clear(&args);
+ 		die(_("cannot handle %s as a builtin"), cmd);
  	}
  
- 	fprintf(stderr, _("failed to run command '%s': %s\n"),
- 		cmd, strerror(errno));
-+	strvec_clear(&args);
+diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
+index dddc130560ba6150fc5f5eac36c65ff76a2d31a1..91260ce97e5bdb39550a9e1e4abbc4d5fea48a21 100755
+--- a/t/t0211-trace2-perf.sh
++++ b/t/t0211-trace2-perf.sh
+@@ -2,7 +2,7 @@
  
- 	return 1;
- }
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 854d59ec58c25ab2cfb58113bf5ea8d670829fe0..2a6f39ad9c81958d5152139995feab57c4371363 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -2,6 +2,7 @@
+ test_description='test trace2 facility (perf target)'
  
- test_description='git command aliasing'
- 
+-TEST_PASSES_SANITIZE_LEAK=false
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- test_expect_success 'nested aliases - internal execution' '
+ # Turn off any inherited trace2 settings for this test.
 
 -- 
 2.47.0.274.g962d0b743d.dirty
