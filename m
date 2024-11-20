@@ -1,130 +1,134 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8FB156872
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 08:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5805155C87
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 08:38:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732091761; cv=none; b=JT7+PvBYK8lG6bKNjCYYvreGT+ZBsA/XphQvuZc0/l8iuBWCu8lQV4nRU1bjin0vJLLtta8CPVyLRLPGgnyZ/k0Gdw+VXzr83/2jYtMAqaAGzoxC2naplGlA1g0IaH+shvO5COPS1zo9hrD5ju6fJ0PcMbxbASR27A5k/MHbGZM=
+	t=1732091888; cv=none; b=Bss0dTC9p9TY71F1IOS3MS/iaPtoOrUGABxewioYM7+qRHu/vPASZRmN6JGc1Dawi+PJYyUVRNr4BFHK72+CXlFMDIjZL0h/QdJl7Z7nHPIRhQ2nr0ghu/3EcYx9FpLc+vSEOWS7yM7LPRgdk/tZre2m2KyZ+fvXC+/MlAq3bOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732091761; c=relaxed/simple;
-	bh=Wg9+reXhQCcb5BFUEhkYhCoS0s0CbeVXOABKHO4eA0E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l/g1A/gIv9k8fuMWgXnnTxkwBjJhFhiINoWVkfsJZFUz4j2mkUys+iFMQ3U4e5Wiy+/yIbMH1wo5yA4YAWdI22nAQbbygKPX7YUJNFoFoBvTK6LkMD4LXMsQrcCmo9HQfWMnRQDiZgkGzOSrKFPPwA4PqRd0IuVzfVhKUzvnuJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mEkWTRTj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i1hQFXRW; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1732091888; c=relaxed/simple;
+	bh=Fi22kLE5RhaNSBrzi7yz/IWIHGYqD5TRujV5rk47hVw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PiBLT5GeLpeQoDmGc82SEZvhM3+nf+iVVAMWVpCteYRiwP7nVFNt8qvtbcJRXHsEDi1UYCIFJ/2VVNKegaOwznJz99pZoIswl1OvUZQiFiE3jSr+M8DdcNquLYJQlI8K8ooSIMEQ5GAtQF6bfan/Ousf6sWU0dXWW79KAWlVngE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=goEIF1Qh; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mEkWTRTj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i1hQFXRW"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 533C01380713;
-	Wed, 20 Nov 2024 03:35:57 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 20 Nov 2024 03:35:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732091757; x=1732178157; bh=wkhkV0DW3u
-	oAYEEuqy5ADZ4ye1VBDeklDOQx/XNdHvs=; b=mEkWTRTjShwHTWd5cH6VfiZUNV
-	U8avCgjfA5Mv2rDVEEHl8TEfKTcIjeV0ikyIavxJCtOD9Tr2QatGFD9C9Hh44cFP
-	mP8QPxipvzPEWiuiTlUj4j4BQjeMxoC9hIk4JvJ+gcecuuW5mes7AqcmjJJsnxZW
-	5aw5vsB9CJ99Q2FfsxWh6QKv4xcBV8/QIU0rIVml+hvVZ/gZE7XAXFbMWbhNrtxn
-	X0rF4LAlEbwQUv4CBxXDg+xc8CH5TLXcgMsMBi4FImqcyVS9m9iVQgld+ZBtwjs3
-	3091jfvoD4YBJ1DswL0Kuq0NTmomsQtISOuAgG0bsG4UuFExfzrJ3v05p4Bg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732091757; x=1732178157; bh=wkhkV0DW3uoAYEEuqy5ADZ4ye1VBDeklDOQ
-	x/XNdHvs=; b=i1hQFXRWJ3oJb1g/463zkFnqqzme9wbUHkMaiRlqiQ0I93gHXdk
-	k/cEuLJQrO4z9kFWKD0vzCzKgsa+qCKd1cftIZEuU3RXv4oNzERhxkNG59JV0Zjs
-	mTYxiz+P6xVblQpwxRpTBu1htxSnYa7G12vmsf4QzMa16Ed6vqYw69ALgqMVPmG0
-	fb8LOWV9VrM/AMLfxXKp8zqDYNJu7Dv1V0w5MnSpw4UT06IhjJsbho7ly3JcrtVG
-	nvoDQE8SfB09144Yq5mTOxPWQkMZ96wCO95qbQGtvxAsIUtbOzmIwYNDge1gMxmD
-	/EPpYuKMA+SiXDowYNSmJTVDnmsKKrmGGkg==
-X-ME-Sender: <xms:a589Z1aJL6vOWbM4228J6xK3zRWWkbxbOKldup58l-23lNmBQ4RFnw>
-    <xme:a589Z8bZ3g9CsDl_sqrQ484FDIf-59XGc54Ig3WewM6EouDv6TAqW0mpGCagjlbKp
-    Q9O-LtprcCJNnRQPQ>
-X-ME-Received: <xmr:a589Z3_1cmeoIrW5C1T0khF-5BZLnY6k755Y936dccCkQLLdNgUkW8JQgQNv7oZDbdegetcm4SaOPIcmjIk8xuMog66FDx_H1B4Udx-6ysrg2A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeefgdduudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrd
-    horhhgpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
-    ihhnvggtohdrtghomhdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtth
-    hopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdif
-    ohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvth
-X-ME-Proxy: <xmx:bJ89ZzoNegxUKTmAgBbAX2HJeWQBW8k6muF07WsILkHLAOfNo6m2IA>
-    <xmx:bJ89ZwqClbES5qZeHqCZzBTaMAIe98hV51hCAJMr-lPer8edRp0b9Q>
-    <xmx:bJ89Z5T2m_3Q3ApW8u-ijjIq12E3ISZA659zStkpozhpUqHUIKL4CA>
-    <xmx:bJ89Z4qG_jXjaGJFEP_cpEu8PzWebtwINFVNjFtU7qAzhX6dHIm2YA>
-    <xmx:bZ89Z1TWLBbYvNJiXcftShmXu5oXzV10-tX8sdns7czdTrX-WaevwgRL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Nov 2024 03:35:54 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e7044a15 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 20 Nov 2024 08:35:01 +0000 (UTC)
-Date: Wed, 20 Nov 2024 09:35:43 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Eli Schwartz <eschwartz@gentoo.org>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Taylor Blau <me@ttaylorr.com>, David Aguilar <davvid@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-Subject: Re: [PATCH v8 02/23] Makefile: consistently use @PLACEHOLDER@ to
- substitute
-Message-ID: <Zz2fXw3Nc5WM8MNX@pks.im>
-References: <20241119-pks-meson-v8-0-809bf7f042f3@pks.im>
- <20241119-pks-meson-v8-2-809bf7f042f3@pks.im>
- <7b826bba-11cf-4f45-8292-937522dbaf29@kdbg.org>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="goEIF1Qh"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1732091878;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dpWfsE2HDAxLLt66nxrvT/QOXRvC3VcIKVxixmAYQSU=;
+	b=goEIF1QhOeq5vmFWvr2zLl8FIwBnd0OvY+P1CwCU0o6RXJIBn4W0FTUQ/vTomjHqywiiUI
+	OPHMHwS+d/XFXcBxsG5g4ZZvoApW5Z6lXjtQ+8Sl/fsWnSqGENVGhbtZasJFl3GIv8sVY0
+	hE7VcHL/5vbPnp/ufN4rWObKuow2S74=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Subject: Re: [PATCH v2 09/27] strvec: introduce new `strvec_splice()` function
+In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-9-6154bf91f0b0@pks.im>
+References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
+ <20241111-b4-pks-leak-fixes-pt10-v2-9-6154bf91f0b0@pks.im>
+Date: Wed, 20 Nov 2024 09:37:40 +0100
+Message-ID: <877c8yti5n.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7b826bba-11cf-4f45-8292-937522dbaf29@kdbg.org>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Nov 19, 2024 at 08:23:20PM +0100, Johannes Sixt wrote:
-> Am 19.11.24 um 12:50 schrieb Patrick Steinhardt:
-> > diff --git a/gitk-git/po/vi.po b/gitk-git/po/vi.po
-> > index 59674986604891d9901e87c163e61dd39db14184..184430dcdeea7cbb76895840f84a889b6abc20bf 100644
-> > --- a/gitk-git/po/vi.po
-> > +++ b/gitk-git/po/vi.po
-> > @@ -5,7 +5,7 @@
-> >  #
-> >  msgid ""
-> >  msgstr ""
-> > -"Project-Id-Version: gitk @@GIT_VERSION@@\n"
-> > +"Project-Id-Version: gitk @GIT_VERSION@\n"
-> >  "Report-Msgid-Bugs-To: \n"
-> >  "POT-Creation-Date: 2015-05-17 14:32+1000\n"
-> >  "PO-Revision-Date: 2015-09-15 07:33+0700\n"
-> 
-> Is it essential that this change of the gitk-git subtree is included in
-> this series? I think it does not hurt that it is omitted. I can pick up
-> the change and apply to Gitk independently.
+Patrick Steinhardt <ps@pks.im> writes:
 
-No, it's not, I'll drop this change. It's kind of curious why we have
-this placeholder in this file in the first place. None of the other
-translations do, and I couldn't find anything where we replace this
-string.
+> Introduce a new `strvec_splice()` function that can replace a range of
+> strings in the vector with another array of strings. This function will
+> be used in subsequent commits.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  strvec.c              | 19 +++++++++++++++
+>  strvec.h              |  9 +++++++
+>  t/unit-tests/strvec.c | 65 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 93 insertions(+)
+>
+> diff --git a/strvec.c b/strvec.c
+> index f712070f5745d5f998d0846ac4009441dddfa500..81075c50cca4fe44608775541d876294a79d9e4e 100644
+> --- a/strvec.c
+> +++ b/strvec.c
+> @@ -56,6 +56,25 @@ void strvec_pushv(struct strvec *array, const char **items)
+>  		strvec_push(array, *items);
+>  }
+>  
+> +void strvec_splice(struct strvec *array, size_t pos, size_t len,
+> +		   const char **replacement, size_t replacement_len)
+> +{
+> +	if (pos + len > array->alloc)
+> +		BUG("range outside of array boundary");
 
-Patrick
+Why aren't you checking against array->nr? I was trying a test case for
+this, and this seems to be unexpected behavior:
+
+	void test_strvec__splice_insert_after_nr(void)
+	{
+		struct strvec vec = STRVEC_INIT;
+		const char *replacement[] = { "1" };
+
+		strvec_pushl(&vec, "foo", "bar", "baz", "buzz", "fuzz", NULL);
+		strvec_pop(&vec);
+		check_strvec(&vec, "foo", "bar", "baz", "buzz", NULL);
+		strvec_pop(&vec);
+		check_strvec(&vec, "foo", "bar", "baz", NULL);
+		strvec_pop(&vec);
+		strvec_splice(&vec, 4, 1, replacement, ARRAY_SIZE(replacement));
+		check_strvec(&vec, "foo", "bar", "baz", NULL, "1", NULL);
+		strvec_clear(&vec);
+	}
+
+> +	if (replacement_len > len)
+> +		ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
+> +			   array->alloc);
+> +	for (size_t i = 0; i < len; i++)
+> +		free((char *)array->v[pos + i]);
+> +	if (replacement_len != len) {
+> +		memmove(array->v + pos + replacement_len, array->v + pos + len,
+> +			(array->nr - pos - len + 1) * sizeof(char *));
+> +		array->nr += (replacement_len - len);
+> +	}
+> +	for (size_t i = 0; i < replacement_len; i++)
+> +		array->v[pos + i] = xstrdup(replacement[i]);
+> +}
+> +
+>  const char *strvec_replace(struct strvec *array, size_t idx, const char *replacement)
+>  {
+>  	char *to_free;
+> diff --git a/strvec.h b/strvec.h
+> index 4b73c1f092e9b016ce3299035477713c6267cdae..4e61cc9336938a95318974903f9b35dcdc4da1cd 100644
+> --- a/strvec.h
+> +++ b/strvec.h
+> @@ -67,6 +67,15 @@ void strvec_pushl(struct strvec *, ...);
+>  /* Push a null-terminated array of strings onto the end of the array. */
+>  void strvec_pushv(struct strvec *, const char **);
+>  
+> +/*
+
+Tiniest nit: I see the majority of the function comments in this file
+start with a double asterisk, should we do the same here?
+
+> + * Replace `len` values starting at `pos` with the provided replacement
+> + * strings. If `len` is zero this is effectively an insert at the given `pos`.
+> + * If `replacement_len` is zero this is effectively a delete of `len` items
+> + * starting at `pos`.
+> + */
+> +void strvec_splice(struct strvec *array, size_t pos, size_t len,
+
+In this file we seem to commonly use `idx` instead of `pos`.
+
+
+-- 
+Toon
