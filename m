@@ -1,81 +1,95 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE9A157E88
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 10:25:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062C3156669
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 10:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732098342; cv=none; b=Kkj5uNeTx7uRZ/v0iy8dJt5oQE8Uhj1gopI937q23KIu4dgSC0r8TpC3cu+HYRrGo59FZH6WdDqbCwqzPLG3P1TVXOQs7WTeoA1WMoTgP12QfuTDtt/5ZgDsi5ir8c2x3yfradRgGSc/1Oko8xlHy8eEKe4ppM3GEpDUCl6SNrM=
+	t=1732098778; cv=none; b=SazFyDRcS1Isrwt17p9sqqa9GIAP0TVC10J1rDDwNk5Eis9rLE8XZKSQu7KprzsE4X0DnPia8hnnQ6ETkKlmFaCvRv3gwNHr08be0HmSSA0nYmPLCDWtQVnuYJGk2gLb4E/mQbB+QXX7Z/K7OGI+8hn/6nBTWDX/Tw5WrETyGMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732098342; c=relaxed/simple;
-	bh=OvHwvSHt8mkfFij1XliCGYqZMWHwceFwPU3QlneU73s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZktFx3Ke13mVQ2cpfQR/cs2PbCzZZFUVdKhx8AFR0EO/eZlHa5ZyVhZ9fF1jTrd831af5nMngNghJj0Q44lFDu/JBb0DBLrf/pLXH5Y8ShYZxpYQcJqZRyzeRwkpbR6H2IqZLDLzkn4f1OcRvqJsnSvfOEW3IybM3GRqDcIC8g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lmj4sksY; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732098778; c=relaxed/simple;
+	bh=tUm6YD1yhFmS+x5xTWpcb54V34G7varxcX4K4oVWjIE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hGyV/ITWfodbyW/Gfk/2gTlT/FAPPMZyrEADXqsG+Udyb115l7brKSbuX+Ny+XX/MwbY6NQhDOwl/LojFZQ9+dzRfpsR/7ScZ9wON87HMguwqznQhC6rbfC7uGRO786OD/h5QRi8fRksdlg3+RLVwG6iV6PKKjg5zGTrtRuZVfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=PvdPYgHC; arc=none smtp.client-ip=91.218.175.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lmj4sksY"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5cfc035649bso5018159a12.2
-        for <git@vger.kernel.org>; Wed, 20 Nov 2024 02:25:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732098339; x=1732703139; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OvHwvSHt8mkfFij1XliCGYqZMWHwceFwPU3QlneU73s=;
-        b=Lmj4sksYMNz0XfgecovG7lbT8693M5ZVSNARKtiEYOH7B3YZ790y/3Pd54RgOM4po9
-         FrQD+E8WIHd3YIoL2US4wf9p49DipEAVqr0K3wwaW4kzrJ9/hKYzKvJTXFZYldyITz1o
-         WsolgIKedzbWrSveJWXseO0/ouFHGmeJNVmB+m5Q2aKESTY8LJq5aBN7HIiXmZLjwKqJ
-         zSkoW4RU2AEW6iAHfavyOAJM6WMq3hkWAeNWgpipUkwzeR9yEvUjJnWLKoeQ85BDmNWj
-         jJDwN1GlAQ8ZovHoJt5BXHcpQnCSfMVA/edQ55grkrf9GVb4MKfPAzY1pxzUZ+7Nf52H
-         e7+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732098339; x=1732703139;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OvHwvSHt8mkfFij1XliCGYqZMWHwceFwPU3QlneU73s=;
-        b=pyc+bDRL1VBw1q+oPcWHtveSMY96IMm8dOaflRN2yblwhRjU91LLn+1nM1Hxqqx2+I
-         ABClg9Z+e4HdJ66Ncr1qfueOhdypU3XstZc1xry8Xb+QH0DEh+1E8tqutA+Yveld26d3
-         L5E7he4ywzndV+MpD56lzLdNiRllVHsihA9DpUVr1yJ3+kQt+joHA2MH5gukkFRRUtVs
-         42jmQYihsrkfJA7mJKfF55f9jUS0SieeVy9cR9+zbklNDFYyyVTUl9XtpDx1JOExwKdQ
-         +UsqtEPIRhGYLZO6NuCjoJm4gT8WlUOpoS0c7UkHAA+FHEoHwznxenxeWmaJlEE8gMFa
-         lSOg==
-X-Forwarded-Encrypted: i=1; AJvYcCVpMLy5jQ0KPhHpAN+K3lcwQjnZ3ySfE1C7Cnjb6MNkoAPaWtBVkbhsb9XEgW6xxVynTEA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzt+n9IFcNGbftVFak03CG89KdhViXRfBfivl7aTgkV7cwgVuEJ
-	CmnbmyePen3RgYeDnfd4KZqANFpn+h77P/EY7Q2o3QT8NcU5USn8wRYnY0z7V3aSOsp2w3ABWTO
-	HWR9OqQEgF7lpnFB/eT2qzCWGIKc=
-X-Google-Smtp-Source: AGHT+IFm1hNTUKfYm23hWQUOQUvkhHPNjkqHjbyhCsYXhFeMKCKewMYz0IkfTYswTnbb43AARAzG1nNWedhBPVik44g=
-X-Received: by 2002:a17:906:da85:b0:aa3:1ee3:2ac8 with SMTP id
- a640c23a62f3a-aa4dd56e59amr211663066b.25.1732098338734; Wed, 20 Nov 2024
- 02:25:38 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="PvdPYgHC"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1732098771;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=856pGL7UCjwxE+0oK/S8CzxMV91ezEOe6PWXTlQKPxI=;
+	b=PvdPYgHC+YmHYFFXwit6IxWclJ9N9IxIaYr07XM/XFcg+IFLoksm1VH0YkDztQ4kX21jXF
+	lZGc/KXMsGv3Rr92mCLaSWNWXcMjd4HWJsmCZhHDaRrbmewdntj8fHFg+z+pywgtCZBv3K
+	QD74y3yn+ASCnmgbav8ZbwG5WPY1Sk4=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Subject: Re: [PATCH v2 07/27] bisect: fix various cases where we leak commit
+ list items
+In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-7-6154bf91f0b0@pks.im>
+References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
+ <20241111-b4-pks-leak-fixes-pt10-v2-7-6154bf91f0b0@pks.im>
+Date: Wed, 20 Nov 2024 11:32:31 +0100
+Message-ID: <875xoitcu8.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
- <CAOLa=ZTGtGJDnMmuv++FS9Rv4KiRQewOepo_qOY=6h1xtNmNZA@mail.gmail.com>
- <ZzH-OaXmFcZkGE43@pks.im> <xmqqzfluidwo.fsf@gitster.g> <Zz2UtKNnREAJgtaI@pks.im>
-In-Reply-To: <Zz2UtKNnREAJgtaI@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 20 Nov 2024 11:25:26 +0100
-Message-ID: <CAP8UFD1vLm5G=+K=b17_JGCvkm01BmaLE7EcdWhGO6bPWyJ9hA@mail.gmail.com>
-Subject: Re: [PATCH 00/10] refs: optimize ref format migrations
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, karthik nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Wed, Nov 20, 2024 at 9:00=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Sure, let's do it that way. Will send the updated patch series in a
-> second, thanks!
+> There are various cases where we leak commit list items because we
+> evict items from the list, but don't free them. Plug those.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  bisect.c                    | 35 +++++++++++++++++++++++++++--------
+>  t/t6030-bisect-porcelain.sh |  1 +
+>  2 files changed, 28 insertions(+), 8 deletions(-)
+>
+> diff --git a/bisect.c b/bisect.c
+> index 12efcff2e3c1836ab6e63d36e4d42269fbcaeaab..0e804086cbf6a02d42bda98b62fb86daf099b82d 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -440,11 +440,19 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
+>  			free_commit_list(list->next);
+>  			best = list;
+>  			best->next = NULL;
+> +		} else {
+> +			for (p = list; p != best; p = next) {
+> +				next = p->next;
+> +				free(p);
+> +			}
 
-I took a look at the v2 and found a number of small nits. Not sure
-it's worth a reroll though, as otherwise I found it great!
+This makes the code do:
 
-Thanks.
+    if (!something) {
+        // ...
+    } else {
+        // ...
+    }
+
+I find it odd reading code like that. Would you mind swapping them
+around? Or is there a reason we type it like this, because I see this
+also being done like this around line 393?
+
+More on the functional side of this code, I'd like to understand better
+what's happening here.
+It's clear to me when `best` is NULL we want to free the whole
+commit_list. And when `best` is set with FIND_BISECTION_ALL flag set, we
+want to free the commit_list up to `best`. But when the
+FIND_BISECTION_ALL flag is not set, we want to do the opposite, free
+from `best->next` till the end? But what has this to do with
+FIND_BISECTION_ALL? 
+
+--
+Toon
