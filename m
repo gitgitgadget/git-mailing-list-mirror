@@ -1,58 +1,113 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62712158D6A
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 10:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336E017278D
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 10:42:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732099231; cv=none; b=A1mQTXk/7lWtAI7pCNFk88Xz1jrCbM2o/KjtwjS8iO+x28+T9Mgu9eyf3tCg0o2kIZY6C8hMW+tu9E9zQrRpVKdhXYyGdca8fX026Nmsy3hNDISOTGxBLO+5wDCykM5igqlSCkxTAJ4tsJBeII41/ScvJSRAcDovaObS3nyJSqI=
+	t=1732099373; cv=none; b=dcju29E50IkCzOQtU+DkvR2Sxg0Q7SMr6WPJSdFELTqE1AF0rZD1HJun2BWN//ix+rUTEepXIoRldMKLNqefiB/kRTPjPZHZvcTqWZ4M6qtPSK/UQsrJFe1mOOUvrMtELIFdUq+EptUU6iLor73Vqz7IGnfkJXGOIsyRcQBW7Qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732099231; c=relaxed/simple;
-	bh=SlFTpxMIbROAPuD6M1pkrrRwNeJx1v73gNgalk4kdL8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AX8hHBSUN0bTwRwl1xosu4A69Dz9LOBsEcmT+Py8Bz9WsfKa0QKm+pqzsWs6TAhDoE6+xK+UkHdV7YJSZSAEA/BNg+IfMAiCT7KAl2GDi7GXThpJdBqk3Of5RG8/xCPHLy88ogq3ycJ3LhgLSCa1V41S69cghRYOVbnP1gYgnW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TCD0gZkC; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1732099373; c=relaxed/simple;
+	bh=HdeoW1LqCj9W1W6NGXPF2drR3nSB2+Ye0yV88lsT+WY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ZE059iRb3eo/dPdsi/jvH0mW1LUVXlxDfS/6tCqALbxVn9WJrWwV1QiOH6wAE9buD08vD28GwB2k+21i7LHpTxtezhpA811fniqr6dXTHfLGb+koaMjWsfXU4XNlmbljNMqJyp28O4YgKUtJNgJmJRmXPI4LWbUwHrPJOsVumNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=YFmp6zJE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vdJafkjW; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TCD0gZkC"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1732099226;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=SlFTpxMIbROAPuD6M1pkrrRwNeJx1v73gNgalk4kdL8=;
-	b=TCD0gZkCsDgYLAwbeXBLzxAIHdhpQGEmNxY2Dml8GqXiBGw3Ttaiip7o/kFiHHMSV6eZK4
-	xh9DWS6qKco9I3tsScuqdXdm+OIT+VBTg3hhEF7PM+HIG5+l3RLMqEU6tfCqONCZWwPt0J
-	b0bJ9rrxUlGAxYfq+qvA+ko8OPmoD5c=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Subject: Re: [PATCH v2 27/27] t: remove TEST_PASSES_SANITIZE_LEAK annotations
-In-Reply-To: <20241111-b4-pks-leak-fixes-pt10-v2-27-6154bf91f0b0@pks.im>
-References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
- <20241111-b4-pks-leak-fixes-pt10-v2-27-6154bf91f0b0@pks.im>
-Date: Wed, 20 Nov 2024 11:40:15 +0100
-Message-ID: <87y11erxww.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="YFmp6zJE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vdJafkjW"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2DA4B114014A;
+	Wed, 20 Nov 2024 05:42:50 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 20 Nov 2024 05:42:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732099370;
+	 x=1732185770; bh=HdeoW1LqCj9W1W6NGXPF2drR3nSB2+Ye0yV88lsT+WY=; b=
+	YFmp6zJEe7qTjtAPDWCyyjMk1S1klqPC4GKd93czKpCgllakuZmdXXK98YzW0HiN
+	YsaeDGocE+zBXu++IcBJuLHJRpPJbVr3fTGQhMmEThdVs5jDvxgop/u/ACbdm5km
+	CaOMfNZlZOm68lEYrlQG20MYoW5dm+GUbOq1/qFYx6CNfSFag9iSRh4TG+V3Z2Qr
+	csbqMK3fBqhP2XsMbZ+xYxA8Nvx0aGqZLkyq3bB0em7KAm14DoHuOz4A0XgTiI0W
+	lfRZYRgf/VoZFx9SIZxkfCU6C0Lm/m1RngfOaIehafS/QQ9dbuzAcVdmuTaHslUr
+	9Z2UGXTEvDDkbP2tOQghkA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732099370; x=
+	1732185770; bh=HdeoW1LqCj9W1W6NGXPF2drR3nSB2+Ye0yV88lsT+WY=; b=v
+	dJafkjWmp9saocxZmU0oucFDuZykX/GObrBHx+MM8NJ/kDJnLXwIzO4LrXYaSOgi
+	RpMGy88qn+8Bo/HE6nxm8AVLtQZJ55n9z+eUVwZ603XglcOR3rxAGfYjdQK563Cn
+	g65QJb1xKWn/vT6Ssirp7BlKQWbc5B33XSmzzDHzHOZwGmN/Jesuq2gITHltz0UG
+	EEAM9JA9tOI58k5Lokk8+Twbe2o6c34aiv5jmQHS05G1NUm3P2T2DW3ny2V+XaMI
+	urCWLh33nKeDPLJqKgANKgN/yW7OiOFERioFsprWhOFAasnoI7sA+3RMjzbuJuNy
+	VTdVDKg0KF6Yd1yx+hW/g==
+X-ME-Sender: <xms:Kb09Z9LR3pKjCyxx4lxls6qXN-WssCHQIeh1DjnnViyHuSuxsI_DKQI>
+    <xme:Kb09Z5Ie8Iqu1KSOBALcT0U6KnqfawxuwVl6rCgcK5kRmWHEYmmycDFVwYJNo2x0Q
+    2AmXVkoVpKf6R_02w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggddulecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeen
+    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
+    thgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigfefke
+    dugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhi
+    khdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Kb09Z1uIrKV7MJ98tOM4d72iTCQVTlkZwMy3AcF0bNP8u9WD6JjI9g>
+    <xmx:Kb09Z-Y8v2-nUmiA85Key396R1oS6CBcs_BOwA9l63FQdJmm9IoACw>
+    <xmx:Kb09Z0ZWbzmWxZk2CXZAaZZvPcHTa8-TNfBg5o5TV0wFtS3WIhf-Cw>
+    <xmx:Kb09ZyA8WTn_Hao54vsAN3mIKxFDb0kF_xvEGWXWCxiVC1-hAZ3_6Q>
+    <xmx:Kr09Z8EFIUfjaZ4PdqfUgM-ZoRbw9MWzls9SB6XJNTOUe-eSyCUOoQUH>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id CAE6E780069; Wed, 20 Nov 2024 05:42:49 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Date: Wed, 20 Nov 2024 11:42:29 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
+Cc: "Karthik Nayak" <karthik.188@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <afed1ddc-90fd-446a-9da0-b8e8f3fbb903@app.fastmail.com>
+In-Reply-To: <20241120-pks-refs-optimize-migrations-v2-6-a233374b7452@pks.im>
+References: <20241120-pks-refs-optimize-migrations-v2-0-a233374b7452@pks.im>
+ <20241120-pks-refs-optimize-migrations-v2-6-a233374b7452@pks.im>
+Subject: Re: [PATCH v2 06/10] refs: skip collision checks in initial transactions
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi
 
-> Now that the default value for TEST_PASSES_SANITIZE_LEAK is `true` there
-> is no longer a need to have that variable declared in all of our tests.
-> Drop it.
+On Wed, Nov 20, 2024, at 08:51, Patrick Steinhardt wrote:
+> While we generally cannot avoid the first check, the second check is
+> superfluous in cases where the transaction is an initial one in an
+> otherwise empty ref store. The check results in multiple ref reads as
+> well as the creation of a ref iterator for every ref we're checking,
+> which adds up quite fast when performing the check for many refs.
+>
+> Introduce a new flag that allows us to skip this check and wire it up =
+in
+> such that the backends pass it when running an initial transaction. Th=
+is
 
-Amazing to see this finally fall into place. Thanks for all the hard
-work. I've sent you some comments on some of the patches, and the other
-look good to me.
+Missing word? =E2=80=9Cwire it up in such that=E2=80=9D.
 
---
-Toon
+Maybe: =E2=80=9Cwire it up so that=E2=80=9D.
+
+> leads to significant speedups when migrating ref storage backends. From
+> "files" to "reftable":
+
