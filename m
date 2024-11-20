@@ -1,55 +1,55 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E519419D060
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98851A08C5
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732109992; cv=none; b=CzZCD1x2l74g8ghRZPIePfw/amvEs1IeaZL1kH2W+dqQRnXP4+TnKf6lPdAQsEMqWKmx2a8l6owA7b5b+nQ/1l7KN8F+07WwbsYBYW8Da8I7NSqTwITjnFuwdzlIHppQSjse2CAOAYn1TSMQyreHwm6hEtKXZhc07xGNbXNYyw4=
+	t=1732109993; cv=none; b=EhDKzgkAGUK5HM0kUO6xxCI5juySvoWCi+kHnUyyVDM050l208Du+FQCBZwORws3JPCdm2IW4m1qubX7fzmVcHcu1/FQSaY3ZDuNF8APuKBBNvFkFog9HkCTp/7Q66BMfgNfqiI1Ri5eoDCKMYEYW94TKzCBDg3MCdqMaE67rMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732109992; c=relaxed/simple;
-	bh=ijzJ/0pOufCEK+9JGYdulblWmmJlmDeBFQSBX7elUDs=;
+	s=arc-20240116; t=1732109993; c=relaxed/simple;
+	bh=1YzmaHrT+mahvHcmEjQbulnMH0hKJc2J7RLUWVFLZSM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d/dklOqUxKvkAa3iccda7qaHMep36CXC0Ezpf8EXPxYpACONJvZoWkRV5KG94ObuMeTZGz2dGMhoV95cumnlj3wmGi5glIbQCpRzazCwoN019+W0SJHXDdmnvCZgM5EBqDU7TQ0UyPxH9D9QPXjzPpDlaHW0bQccIeY0s5rVOHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P3cMLmQC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4XCIgHBb; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=r770j2UnUP+zlAbwXigv78x+ulNdBZ8TlJ/Zu1VGvo/P+Pcr9N8qS8k+XE5pdWrKYREEJgtjNS9SDzdgg+m5ba34KCQNUohAfdJ2+vzR4TrOSHJE7FsF23kp7vFyzLzqSvhHZLDTkFgzJiKbhbEiJAhUswUqNjVZkkCObw7gqmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D7ppDkBg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kpXO4j9U; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P3cMLmQC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4XCIgHBb"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D7ppDkBg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kpXO4j9U"
 Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AED6811401D0;
-	Wed, 20 Nov 2024 08:39:49 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id E2F5713806DB;
+	Wed, 20 Nov 2024 08:39:50 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 20 Nov 2024 08:39:49 -0500
+  by phl-compute-10.internal (MEProxy); Wed, 20 Nov 2024 08:39:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732109989;
-	 x=1732196389; bh=2hc4BW9h8WuiEuy06//YD0KUbz8sKDMmAiOn6+1D4wc=; b=
-	P3cMLmQCj8ZrgwepUcxF/xi5MIMkVOKHOxEdIWGIXUExtht20SC0dhO5DHhkRPup
-	QO3f8ORZzzRndF4lZvmYNruvFurb+QBfJq3Jtj+ocWNJNJcK3z48qTc84UvT7RJZ
-	86qpyqxFdGCXo2aeAxqECFr3I0uctczHhusZpvLF4E4sClMIt09wmSVsrxjxCnM0
-	biexluWkag7HJuDJTDOeEILyaxMQVzQZ1o0DH6Mu32z4qvg7rLKl7mxOku1L7DHR
-	hKDGGNSfDOef3dCCSLp3YsHue0C2uMmuVwo+O5mIyS0BbwpiW/CWcAzLRbxLArBk
-	o25JQDeKWrdcNllMzBAYMg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732109990;
+	 x=1732196390; bh=w+HTTkoiT4wj6/BZHwxAdbO/rF8kiNDTlTCqi3lg/zk=; b=
+	D7ppDkBgY5sd99dTwKKGu1u0OxEiKBtlbKD2navW50XBo8WMpHD8IB2ncvWoNQTS
+	vrEBogHU9yiXxQWpd2JxaqR+Jm76EabisUwGQoplO0ecXAV8+CrOKwLUnJnvgjOq
+	bX/9NRPbxZM+vuVeu5/QOK8a9nzk6ScjkABV4l1lSquk3LLzsfGd2SwTLtdy9pvZ
+	FiOC2uaFAVa7NlsILItJkXQYOaTKyfygKgGrz4fMVd/21ZJKjC5f4oDe9dJk4rkB
+	FJ4CFgdv+/l01/0KnkItJ5UAf6UZhrSgaDn2FnAT69bUiNMV6aPUwde/UJ3GStBg
+	qwvwrEKpY9Rcykww0ntN8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732109989; x=
-	1732196389; bh=2hc4BW9h8WuiEuy06//YD0KUbz8sKDMmAiOn6+1D4wc=; b=4
-	XCIgHBbMzStD8lvQxQ6SPHCKi4SkFJKN0rRUwGub4MDYvzchHkq3M1K+DzfR0Hir
-	6yTZOZdzLwXlVIixVLg23w14ctCye15yVkH4cmAvrCwPWAink5G11SoKetiZWjEQ
-	j+m5ay7ydpokk6STs7YauNmt+zN90/IEtp2MUZyeym2MBV8OTS5Ofoeoy5Z1D0ku
-	nIwh2vcytbuPicFJyZ9fyYoFdUzMYDvZyab+p2TUBAwded5ONtKVQq9IbJtjJCoQ
-	wUcOYurqOqH97wTuQ9oPAGbnjeSZKJ1kSnGJDqDy7JIhxqwinEhuS+LNnMU85mgJ
-	GNNYL3800fl+OdegEF3pg==
-X-ME-Sender: <xms:peY9Z5GfMQqLrtfVe7YpcufXl_FQc0-9oQapzm31VO3ua74tFTkQUw>
-    <xme:peY9Z-VSHwyiOfg9I7DTu01wUMzwk7l-7J3JAJTlA4UZfut4Dqjk24-xkAELzmLro
-    V4a6PvvL9EHt4proA>
-X-ME-Received: <xmr:peY9Z7JhTEbVeXW1sqJ6wEOQDGG8qH_eK-v9xKB8FZEfQLOXSm68NChgbFpg6J_sj62sV7IIm30-_g7I3giKQqkSkZGa0NqReqg_4RngNU20Aw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732109990; x=
+	1732196390; bh=w+HTTkoiT4wj6/BZHwxAdbO/rF8kiNDTlTCqi3lg/zk=; b=k
+	pXO4j9Us0tod8BE2uzM+Fx9+OUV2vAI2jdemopzopsbzdXzf/+1YXrp7RKxZdNQZ
+	LpYvkh75E2eTRFDoimUZXuQazhFRSPqTHUXb8eayQvzan0CyEd4kngf6oeU1M9hC
+	wasOsXwHEPmiLzFktEb17p1W3gexEU7JDnqrSJyNjaxVje2N1EAEeXFStaNpeTDk
+	cOaR4ecviYCVX0UatZ/zSPVcoejKc5g8WbR9UcXMY8RHY/5mbHJEDWmVb6DogHb4
+	fa0A98g3U5B5tM5fYd7/tFzY6O/dZ4s5/E2gmf4hcWl8aiBFXb5zfynSFXvZAe4y
+	x63rlnOKPkksOSF8jpygw==
+X-ME-Sender: <xms:puY9Z5euLI1SJRocrHpJOBU7NJAFlys5FTTxWRUhLMmfdobdsj8abw>
+    <xme:puY9Z3McDG4ytOm5vjJJ4ZGEWdPmgzOvlUTVsZOjzVIzB8cirYUUwRSLggy-cy2ZO
+    xDnMJ4G3d2Lar6QCw>
+X-ME-Received: <xmr:puY9ZyjHG6jof5ZdaKA10zusx4Rkdz5TiRldkVnD7hOMyJejKMlp1hiU5zStYJcp7aRlPRQRdb_lyWe2kWoG32ShUHLfLkooS9zCbUfDVWnP3Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,24 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehgecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:peY9Z_HwRj-7QinPDrKo7queDxqpblZ9uE8h47oUcmnBBzmvNhPDBA>
-    <xmx:peY9Z_XgHAZzc59zhIG7uKpxAlPIjnqfIxpVn_IGp7XBFdUoRE86UA>
-    <xmx:peY9Z6OCKuXPPne2_ry1AYmcJS2di44HnEQyBQth-JlrWBixp4cmFg>
-    <xmx:peY9Z-2iWf9ZiTrqYj9EKPecJlSZTifFej_q9GpsQRxACGmdQ9qNng>
-    <xmx:peY9Z1zC8aqCGYUEX4p372F_lpUYix3q63oyLPKk7A_9YomB0B1kIir0>
+    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehrjhhushhtohesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:puY9Zy8ohRZ_erbkDDknwS2jH5LfkCYydgoFw9STIbXZFFwfvz3BkA>
+    <xmx:puY9Z1saZEIgMp-y-2Plcqij9xK8pX7xtjBv__m14rHN5oP9OBgcIQ>
+    <xmx:puY9ZxGXF-sJ4xi4tnptH5HRIL4Dl-SDJ4_Y7aO5-TYbTt01Kj9VvA>
+    <xmx:puY9Z8MpDr-NWJdHwxAvnzC6n_xqlQ8t7IUnJ5c2cxBtKnBl2znEYQ>
+    <xmx:puY9Z_IN5OcGUcnWAWp3Dj2xkePwgXeWTSUdVKVWBGtxNPB7kfgtnI7v>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 20 Nov 2024 08:39:48 -0500 (EST)
+ 20 Nov 2024 08:39:49 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ec24f5c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 20 Nov 2024 13:38:55 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5263c3a8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 20 Nov 2024 13:38:57 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 20 Nov 2024 14:39:31 +0100
-Subject: [PATCH v3 02/27] bisect: fix leaking good/bad terms when reading
- multipe times
+Date: Wed, 20 Nov 2024 14:39:33 +0100
+Subject: [PATCH v3 04/27] bisect: fix leaking `current_bad_oid`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-2-d67f08f45c74@pks.im>
+Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-4-d67f08f45c74@pks.im>
 References: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 In-Reply-To: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
 To: git@vger.kernel.org
@@ -92,100 +91,32 @@ Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
  Jeff King <peff@peff.net>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-Even though `read_bisect_terms()` is declared as assigning string
-constants, it in fact assigns allocated strings to the `read_bad` and
-`read_good` out parameters. The only callers of this function assign the
-result to global variables and thus don't have to free them in order to
-be leak-free. But that changes when executing the function multiple
-times because we'd then overwrite the previous value and thus make it
-unreachable.
+When reading bisect refs we read the reference mapping to the "bad" term
+into the global `current_bad_oid` variable. This is an allocated string,
+but because it is global we never have to free it. This changes though
+when `register_ref()` is being called multiple times, at which point
+we'll overwrite the previous pointer and thus make it unreachable.
 
-Fix the function signature and free the previous values. This leak is
-exposed by t0630, but plugging it does not make the whole test suite
-pass.
+Fix this issue by freeing the previous value. This leak is exposed by
+t6030, but plugging it does not make the whole test suite pass.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c   | 14 +++++++++-----
- bisect.h   |  2 +-
- revision.c |  4 ++--
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ bisect.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/bisect.c b/bisect.c
-index 4713226fad4e16ebbda4ba2e8d13c6eaf7d4bfb2..9c52241050c14ecbf3f7950a0c5e7b962fcaa541 100644
+index e9e603877eba059c878ff92bc11dd84553d0649e..6dbc22f84fce11743f0e79eb4f8100c7ec07238f 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -28,8 +28,8 @@ static struct oid_array skipped_revs;
+@@ -456,6 +456,7 @@ static int register_ref(const char *refname, const char *referent UNUSED, const
+ 	strbuf_addstr(&good_prefix, "-");
  
- static struct object_id *current_bad_oid;
- 
--static const char *term_bad;
--static const char *term_good;
-+static char *term_bad;
-+static char *term_good;
- 
- /* Remember to update object flag allocation in object.h */
- #define COUNTED		(1u<<16)
-@@ -985,7 +985,7 @@ static void show_commit(struct commit *commit)
-  * We read them and store them to adapt the messages accordingly.
-  * Default is bad/good.
-  */
--void read_bisect_terms(const char **read_bad, const char **read_good)
-+void read_bisect_terms(char **read_bad, char **read_good)
- {
- 	struct strbuf str = STRBUF_INIT;
- 	const char *filename = git_path_bisect_terms();
-@@ -993,16 +993,20 @@ void read_bisect_terms(const char **read_bad, const char **read_good)
- 
- 	if (!fp) {
- 		if (errno == ENOENT) {
--			*read_bad = "bad";
--			*read_good = "good";
-+			free(*read_bad);
-+			*read_bad = xstrdup("bad");
-+			free(*read_good);
-+			*read_good = xstrdup("good");
- 			return;
- 		} else {
- 			die_errno(_("could not read file '%s'"), filename);
- 		}
- 	} else {
- 		strbuf_getline_lf(&str, fp);
-+		free(*read_bad);
- 		*read_bad = strbuf_detach(&str, NULL);
- 		strbuf_getline_lf(&str, fp);
-+		free(*read_good);
- 		*read_good = strbuf_detach(&str, NULL);
- 	}
- 	strbuf_release(&str);
-diff --git a/bisect.h b/bisect.h
-index ee3fd65f3bdb89611d7575239ee79e8c50bcd703..944439bfac729cf092d6c5962c9edff2321002e4 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -75,7 +75,7 @@ enum bisect_error bisect_next_all(struct repository *r, const char *prefix);
- 
- int estimate_bisect_steps(int all);
- 
--void read_bisect_terms(const char **bad, const char **good);
-+void read_bisect_terms(char **bad, char **good);
- 
- int bisect_clean_state(void);
- 
-diff --git a/revision.c b/revision.c
-index 8df75b82249b36e7e3ee9a4a151f085c189acc45..347dabf7f9a1a87765150ec998deae9b6709b5f6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -51,8 +51,8 @@
- 
- volatile show_early_output_fn_t show_early_output;
- 
--static const char *term_bad;
--static const char *term_good;
-+static char *term_bad;
-+static char *term_good;
- 
- implement_shared_commit_slab(revision_sources, char *);
- 
+ 	if (!strcmp(refname, term_bad)) {
++		free(current_bad_oid);
+ 		current_bad_oid = xmalloc(sizeof(*current_bad_oid));
+ 		oidcpy(current_bad_oid, oid);
+ 	} else if (starts_with(refname, good_prefix.buf)) {
 
 -- 
 2.47.0.274.g962d0b743d.dirty
