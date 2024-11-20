@@ -1,131 +1,103 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC339AD58
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 02:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585C9E545
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 03:22:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732070418; cv=none; b=dV6jKDdmWdj66gEUnzQ1NdW7zyQfiCqGjtVdyvJrNvu1Z9YHiVJx8UqN7WncD3Z9J7a58y+RsWCXiG6HasMy00lgMrsi3gyQOQySSucqv1DJ0VK0i+NZ/Cc6qd7tlar+NuBfcHkfz4lYq7Z4z1WH6ApU5+LCXAFB7BnghVVHCN4=
+	t=1732072968; cv=none; b=QJncJUw37Croa2NxVgkDV5jxBRh16+2d7xRPMU1+guvxTvhV9nkrAplaIvap4exZobUqQUIAhIUbGkWQLC7GmiGiZS6qs2dwJvToo3Tm6OtU9cD/gsjBDwdfzf+XA3z68z3QLcWAOdlWF0NZG6YWHb2z+PyB/UeCzFmNdUQArts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732070418; c=relaxed/simple;
-	bh=52rrdErZSe0dgspyURG33O+L6sgnRF93GSSxPCbpa10=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JV09aCypWXb9FYZVvop+hq6dDaMPGpNLIGiDF2u4xYo0anZFUbatixhGxWfKMVmawtby4gwamDRky/dtqEP8CBay4lcqmbcmTtnkQ+2qmSeyigyYg8GFk3tjnzyeMrVzWDvs1aZl4MLY93aJ9Tla+BPzWQa8VBNffkcm75P84Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NLvRrX1i; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1732072968; c=relaxed/simple;
+	bh=FEiO0IXHZhWQrSehLRuLaUhbsAeQ7wPL1xhj7Ieqjn8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EtpClRxQIUnkuPExvMEWz9GxC3LQUawMOo74bxdW1Td5LLoVv8jvOC/eIHnFV2GTuW5Dzb8pBVugNDSEDpCnWgd31kgYrO07OBdGVOUlpHFcV+dMgGqliKsv9R8+3fYoZUVaKiqdZTBx5Zr1DISdf93+Hpkgg1fHih/K8YAGrxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OmXLyheI; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NLvRrX1i"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 622472540559;
-	Tue, 19 Nov 2024 21:28:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 19 Nov 2024 21:28:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1732069700; x=1732156100; bh=grgqtdPbQNYiX1rsQvstNAEH/mQMtVy1zel
-	5tTvTYEc=; b=NLvRrX1iyfKFX1Wl+h/y7LreijgTsl1QydU6pkCfxoIDjwR+qE6
-	e/jTCXSH1OyBS/CMHoklpacCVrHuVVnRzoy0zh/5zX7Q0MZFc/m4CiCN4oEOMVtj
-	BqB+IWoKy9g4uvRRvzKS+7K9IugFjElthB6rKGrEkJxUQdDWBkQdCHoC6t28ILX0
-	tq0ecsfO+uR23X76zxFQmeNXQWTmQ4wh0iRiTl1eAgohbAl8wCta1R6PC82xjV63
-	G6EzeeHBNdV7sZ+qQiIgKUP2X419TS/ArsVDs75Xc3e/zXABQCdRgc2P/F6ICUrJ
-	h+zvfNuQ5BrwaRjo7cObiI9qVyQDMrqQ1ig==
-X-ME-Sender: <xms:Q0k9Z4RwCRLOPF-fz8lEAY0p-wNL2ExG6v9QRVW9r46_Irwo7Y8ZwQ>
-    <xme:Q0k9Z1ycwaJPAeT6BpelwCXAREaC1EKz9OBUzObdFEsP322JDx2Zzyr_VLfQZZyBs
-    qkFYZOEQ1iF4krSbA>
-X-ME-Received: <xmr:Q0k9Z12TGiPlp-Krq-EtPewQK83-dFrvWn5LoRXcOJJ-w5lWDFc2p1i_0RcSvddrsSYegcwkbGVjnLWcDxfpB7zmnC6CnYXolyLq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeefgdeggecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeevteev
-    veeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlih
-    hprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehlrdhsrdhrseif
-    vggsrdguvgdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
-    igrdguvgdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehpshesphhksh
-    drihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Q0k9Z8C4VZfact6z8KogK61fN90MpDvnyOeTSOlrgDEaU-FeCMAjww>
-    <xmx:Q0k9Zxjuv4CjGsCr5x6-gFVr3tHetRHRqOfzIQ2Ys-vDQCchaU7VaQ>
-    <xmx:Q0k9Z4qMqBDclaUycYJo8xEZ6YubcpLSeEi_C6dD91uwVCCVEr_OIQ>
-    <xmx:Q0k9Z0hk3TMv8dTs9_V3CTvcIkTyKmU383Rj-oJIyu7h8WVq-0bCPQ>
-    <xmx:REk9Z4OJSuwQUkNT-XDp5OVYPsl4DesEVPOgYW_Tta5FNSgEj1yjP_uX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Nov 2024 21:28:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Bence Ferdinandy" <bence@ferdinandy.com>
-Cc: <git@vger.kernel.org>,  <phillip.wood@dunelm.org.uk>,  =?utf-8?Q?Ren?=
- =?utf-8?Q?=C3=A9?= Scharfe
- <l.s.r@web.de>,  "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-  <karthik.188@gmail.com>,  "Taylor Blau" <me@ttaylorr.com>,  "Patrick
- Steinhardt" <ps@pks.im>
-Subject: Re: [PATCH v13 8/9] fetch: set remote/HEAD if it does not exist
-In-Reply-To: <xmqqed36btxm.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	20 Nov 2024 10:00:37 +0900")
-References: <20241023153736.257733-1-bence@ferdinandy.com>
-	<20241118151755.756265-1-bence@ferdinandy.com>
-	<20241118151755.756265-9-bence@ferdinandy.com>
-	<xmqq5xojgbfl.fsf@gitster.g>
-	<D5Q4AYZ9WSPP.3KOENYK0R7XB5@ferdinandy.com>
-	<xmqqed36btxm.fsf@gitster.g>
-Date: Wed, 20 Nov 2024 11:28:17 +0900
-Message-ID: <xmqqttc28wqm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmXLyheI"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3a752be9f4bso14689505ab.2
+        for <git@vger.kernel.org>; Tue, 19 Nov 2024 19:22:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732072966; x=1732677766; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CYoWtm/bGolvqyRxro6WWFGOUtfqOl6o4qLO1tNJs0I=;
+        b=OmXLyheI0u6PIJ7vETqHmkO25DFFLOpybL3Pg+p3IKiz10SRJ1hU/ooxlPY6trFfZ1
+         yiGIlNCp3W+VNIFQUQMZfl7JBFeMzp5Soe3iHTgPzTOi8GtcRDAa6Y7LHj6qRnrRslQh
+         5uzARcjhJ2fqMYmdAosSAP0HeZXaCVNIAq3TviMyi+oMkWU7CDU4GmiZYH6Yui+TfWmt
+         DhVEex69UxGS8zHpyUxzhXV/v+J5kzrX3WHX3xYZqu6IiCH/4D+a40LoM+2+nGMgyqa+
+         qQLiOt1dEUlJFK0lDjmXa9zzR/u1oQMPHp+dFTmK3Ju4e5OaVFak9tTI9hHytKWsIvKp
+         W/jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732072966; x=1732677766;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CYoWtm/bGolvqyRxro6WWFGOUtfqOl6o4qLO1tNJs0I=;
+        b=U4lpj+e32BrA9omZISvcdnjEElVuRkDiUB9+FvHkyUdj0a6ka0Ee6nA92tGx5wcIQU
+         VCMylW/hyZv6ph/lrffU3A/iStYGHZKM0NBVVliicuxpdPXifcdSU2FXK1YUdCzjx6f9
+         KqOSmMIP6/LWyq3tBeIsbo2HhCPsmJxaqerqaBZiHzCLokxNcjdCCLfUHQ76A9gTM1v/
+         pE/HlKnvQElovUukqci6Y+tEaW7azb2JB3eTl8qJxHm/mE7VS1l/wTmHGUL9TXg4lpfF
+         XGVYPcuihctcrXcEXZfM1Qivzu5j9SkxvIJMbFMqmzYvr1Jn30QpuIi0p0k0IUBcjfIF
+         ucTg==
+X-Gm-Message-State: AOJu0YxbP8rGj4LQWmpafahgFseDETBLHRzowEhVXLbA7k9ciO9iiU8J
+	6B2DHMgk4SfBDWsvjfOQ6GKfTcvoBlxp5zZzHKM57hIfBzLBreRkk/QhGPXtcL1dM4CZvEZhGID
+	JBJbsZV09ByDVF1rEPTV6+jzYYzqWvMxX
+X-Google-Smtp-Source: AGHT+IEiuvWPWLPOWvsoqG7JpY9X+HStROPtJaPqYRSjmozirUP8NKfhN0qMzehgObFORNwgEfI4S3epbvRnYsH2aJo=
+X-Received: by 2002:a05:6e02:1caa:b0:3a7:6d14:cc29 with SMTP id
+ e9e14a558f8ab-3a78640c166mr18911145ab.1.1732072966435; Tue, 19 Nov 2024
+ 19:22:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
+In-Reply-To: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 19 Nov 2024 19:22:35 -0800
+Message-ID: <CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
+Subject: Re: rev-list --ancestry-path with arg - bug or undocumented requirement
+To: Kai Koponen <kaikoponen@google.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
+On Tue, Nov 19, 2024 at 1:53=E2=80=AFPM Kai Koponen <kaikoponen@google.com>=
+ wrote:
 >
->> Your suggestion seems to be the original tri-state configuration that came up
->> in one of the original discussions. It was recently requested again for fetch
->> to just do this automatically
->> (https://lore.kernel.org/git/CAAHKNRGv19rhnqCkJMpE2FomNQBHvSS36aC=fh0UwO+9-6RRfA@mail.gmail.com),
->> so at least some people would like to have this fully automated.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> Create a toy repo with commits in the following structure:
+> A - B - C
+>      \
+>       D
 >
-> And that is *not* the only option, and I am trying to help others
-> by preventing unconditional warning messages from annoying them.
+> Run `git rev-list --ancestry-path=3DD A..C`.
+>
+> What did you expect to happen? (Expected behavior)
+> Commits A and B should be listed.
+>
+> What happened instead? (Actual behavior)
+> No commits listed.
+>
+> What's different between what you expected and what actually happened?
+> --ancestry-path with a commit arg seems to return 0 results unless the
+> specified commit is itself part of the range. The rev-list documentation
+> does not mention that this is a requirement.
 
-By the way, because I've left it out from my messages, some folks
-who are reading from sideways might not realize this, so let's make
-it a bit more explicit.  One thing to note is that the assumption
-that HEAD at the remote rarely changes _only_ holds for forges and
-the like, a typically bare repository used for publishing without a
-working tree.
+Yeah, the commit message that introduced --ancestry-path=3DCOMMIT did
+document this in its commit message (see
+257418c59040c13bfa839e01922e21833cda6a52257418c59040 (revision: allow
+--ancestry-path to take an argument, 2022-08-19)), and I think my
+original documentation patch was a little clearer on this point, but
+when Jonathan suggested an alternative for the documentation
+(https://lore.kernel.org/git/20220818222416.3567602-1-jonathantanmy@google.=
+com/),
+I didn't think about someone attempting a commit outside the
+ancestry-path as the argument.  My bad.
 
-If you have a clone from a repository with a working tree (this
-happens when you have two places to work, either on two machines or
-two separate repositories on a same machine) to allow you to work
-here during the day and work there after work, the HEAD at the clone
-source may change to the branch you happen to be working on when
-left there.  In such a setting, it is reasonable to make the
-repositories aware of each other (i.e. the after-work repository may
-have refs/remotes/at-work/* remote-tracking branches while the
-at-work repository keeps refs/remotes/after-work/* remote-tracking
-branches, to keep track of each other), and "git fetch" that warns
-every time it notices the remote end has HEAD pointing at a
-different branch would be annoying, as they would likely be working
-on different "project" when they leave after work.
-
-Users who fall outside of a typical "we have a central repository
-and the only interaction with the repository is we clone and
-fetch/pull from it and nothing else" hosting site setting, are why
-I'll encourage folks to tread carefully when they are tempted to
-make anything unconditional.
-
-Thanks.
+Based on the references above, would you like to suggest a
+documentation patch to ensure this requirement is documented?
