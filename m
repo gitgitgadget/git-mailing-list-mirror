@@ -1,83 +1,182 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE1416DEB5
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:13:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AED17F7
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 13:39:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732108411; cv=none; b=HVj9T6gzW79wLvdp08L12np70gLvkua8E48FIXzWJ8K0+a+5/WgSh5KXXnje8JBkk6XOsYsH4CbCelG7TGUIFw1GF7nz5tH1s7SKmn/hXxShyHVAeOpFhraF25Z7ZCqBpT5F3y7aLpYMtKtYBh5wdqx1Tv9p6Q+JAFIs8a7RymE=
+	t=1732109991; cv=none; b=EG6cNrP6pQy0frA6im4bnMjc8IUQE6YC49cHx/s1hEP/PqyG2kxNdf9v+gkiu2Rl41fUfhTlngDRH3GJUSiYA+4HLL9WFmh/dTSiaWsTWs5LiJvRY90I1oWGl7m+dnFRwLJDkCuPut60QIOQcAUAPBH7+krPNiqGmSAi3RQ8wSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732108411; c=relaxed/simple;
-	bh=2z9fHUR3bhQj4k+H1BUkW3KtqycpyYAn1YPuEyWyTaM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJy+JLRdH07J87A94WUevQe6HgtZ6GDOKG3UzC9AhxtMHjtLTJMCGXTlyviv9iog/7QO7aUSAK3f8+FdUkAeB7TufmpjcIAY4xh9/1Vx9/xs3aVle5iT0ZAzTLIaFS61ZQlqVw73ukPTu2KFt6hwANySzN1QEcsRz89cPNzZz4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NnZnycQ9; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732109991; c=relaxed/simple;
+	bh=nRu4MQL8qbE6xcL4XvtXwDfHMPsLmET8gK5nOMjKgIg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=RRSlEfjfEQn74zu1cH58e5cSelJ+P5Scw64dde4jnMczHJtBws9nW2NoDIrFrQSc2arMSW6QxXGo9mgMnQyXEF14kFBa6AHIfxKmwwlzOqGjDU1qVt5IyD4TetlpPLPwwvBq8yD7Q4SxA/khiqwq7LsRbpU5q4yg919GK7YiphY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wzlHP7l6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R9Na+uZb; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NnZnycQ9"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7f8b37edeb7so5052625a12.0
-        for <git@vger.kernel.org>; Wed, 20 Nov 2024 05:13:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732108409; x=1732713209; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=H9j9QyBOFIhIayDWKDPQ42e8piaDjQHb7LR7N9jOr8k=;
-        b=NnZnycQ9XJrz/qlO/zS8mHOKhYlWvgTeQVbjCToteKyMTFnQabrnH1WVNnRXlonc1Z
-         ej+WQ2MYykiUqiMXBBMWIN0tKyNXW750sX72ehuO0UMdhjxkbRqXAxJU1ju3qyy6/04x
-         OjdwPaGyEogKV4NV+yl7QsmsXI+7k5K28RrzWMnqo7pmsa7JSXuMi2xuHcdl8nYQVZPY
-         P4j9v9G3Q8ngm77h8JeOV2usDK4Y/5qfiIkUZpmlEXJLUHzDYCysDZjz9irRbYyUZdZ4
-         4NLDKIMEynyRwmu8cG0QHFHq+j4+m6XVAtkJxGkVDF3+zcR2ZrVpO2lmuNCedASfzTet
-         SEHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732108409; x=1732713209;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H9j9QyBOFIhIayDWKDPQ42e8piaDjQHb7LR7N9jOr8k=;
-        b=rrRCpxMB0NM6X1evsbdLXzTWArb8y4z+W+fdGAP4vzZcw5L5QixUwUgjH8f8eP/lEA
-         cTzYZPhbwNNDrxobP5mkjFYLEM94keKXWGkkI4Jp37HSrcPne3Vo+MTQFp4ZUCh+65XS
-         epNmDnr3I+cuc9qXtNOby5uaQ3MKumDkPVPqy5BqYIgINo0TTPtHg7RBtdBJJnyz0a/h
-         Go5V3S+939q7BrN35SECKoYTphgHfU99I5HaaviGLWflO9xKUWw2QSp29us0kicRgy9g
-         ytwBN83bkrW0M+VeZP0UUAateYD3Y9TlHrJ5rTIOgd4JxTgDSxhNH65CkS8D4hTYqFJE
-         13DA==
-X-Gm-Message-State: AOJu0YxQz9iBZ8wze/p3MnUnq7cMYerGJNjK8mvwTNO9Ist7veWjZLL2
-	pgjiJjkg7bBrTLnRWwJyyM3yJqcR68iEV0yBR2dnOTjPFf9pLvlYN1aiqQ==
-X-Google-Smtp-Source: AGHT+IEkSsgDBzi5bwEjnAsHeULoquO1rPI7zP2M+QcScLnNIuLSumHGXaX8zXo+k1IJnKLEx0HyxA==
-X-Received: by 2002:a05:6a21:99aa:b0:1d9:d04:586d with SMTP id adf61e73a8af0-1ddb0625117mr3888788637.38.1732108408957;
-        Wed, 20 Nov 2024 05:13:28 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724befac984sm1552465b3a.158.2024.11.20.05.13.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2024 05:13:28 -0800 (PST)
-Date: Wed, 20 Nov 2024 21:13:38 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Subject: Re: [PATCH v2 10/10] midx: inline the `MIDX_MIN_SIZE` definition
-Message-ID: <Zz3gguyjTKJ8RY-z@ArchLinux>
-References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
- <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-10-e2f607174efc@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wzlHP7l6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R9Na+uZb"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 104A613803AF;
+	Wed, 20 Nov 2024 08:39:49 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 20 Nov 2024 08:39:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732109989;
+	 x=1732196389; bh=5V+ROl0X931gprocLhFyR5sK8ZvuGIMMqKPGAR+YYqc=; b=
+	wzlHP7l6qqeQnJfM5vTsW+fNg0C5D2Nbph8X3DJ4Tu869QiACAR3j+Uo60gMNwsy
+	ZnS/Zv/fHt45EIXSigplCAd/2c+eV1lXk9n9I2pq55JsBKg7cQq4v9zIYu7HSP02
+	K5c7Zl7xiXA6KGNl2ye77V1I4u9pArnvSBhGEbnnW/94ihqFVlJbwLKxXKX7njC0
+	9SWZ7zBL+gFwxFCDKzkyLrmS0LGDQbto4JwlPphLeoreQ76fe8Z/CzAlO5U4513y
+	t34gA5zHic2TUdFNtSt6oyX2L1Lc1BMmbR+Zlj7QXA8DO564S7t9p2PgXRAN7+hh
+	jDS+muDYc6eweADZDnCY9A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732109989; x=
+	1732196389; bh=5V+ROl0X931gprocLhFyR5sK8ZvuGIMMqKPGAR+YYqc=; b=R
+	9Na+uZbgk+g4bMgL6lPdM8ZoVXH1J/2iwb28KdYZ6VXjHux14NWg42pt12Bwu+Dw
+	GfsAzXs+30YYUyR3afGrfmV2iJzJGW5MZnPocj8RNPvCPlIC29zidMGggzarb74G
+	lKUcOxNtm8jCw1hsUrWHI8uryIbKIi1sKRetVbS58X2EGSersZnO0Ymun25lD4We
+	bP8yaGkkiYPO4AOyzVB457kNf7SYAqRUKJ8N539wp21LBVYHDymXnvM/elzoYpxe
+	T4c481r/p3FWH3aL5CQhuL2xkfHDyunNjdrMJaGIpmfVy9USfyAdQpQd0Ou8oToc
+	J6zfZEsuhZ5IgrcWWokBA==
+X-ME-Sender: <xms:pOY9Z5XSAmCJWQ9fRHBPRSLXcJrSPqcWCN-iHF8R22_DsDW1G6Hjiw>
+    <xme:pOY9Z5mjtwkeNB1gGwN-Ze6espzGk5tTA0vaNT71EYeB8xZTxwnKzY6rlDnK6TdK2
+    te_EfnsMLKUo5Z3Cw>
+X-ME-Received: <xmr:pOY9Z1Z2mJZSrzpsfWzpr3Vps41K6PbSLsXwFP-kQcWZC2fpblSIe5t4xL-J7zrB4nLhEyllMVWCTNuYuUE6FDL0IkCNJF-tHQDVb7_nsQsJcw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeggdehhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
+    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hrjhhushhtohesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:pOY9Z8USZwkke1eUdPn4qNmWpYnC9bBqmiSxFXGPH6x_s1b1bV485A>
+    <xmx:pOY9ZznAn_stDwmEKpx6eiuHYRTuZz0DABY-pKRH0zpbL10ZdhMlSw>
+    <xmx:pOY9Z5eqKs3b1bBZxLoXolyHN_AWoFgy1lT7TR-fWufIdvnFDhnUxw>
+    <xmx:pOY9Z9HdP1gYyC3rtFjR5ThezpbrKGchvFtvLpqVLIhFTQpijExwMA>
+    <xmx:peY9Z8D1Jj6ICaXk5GgV3Coe9BeteuxCsMKLgmLBJMrm4Qf_tWgKRV1Q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 20 Nov 2024 08:39:47 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 89a6826a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 20 Nov 2024 13:38:54 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Wed, 20 Nov 2024 14:39:30 +0100
+Subject: [PATCH v3 01/27] builtin/blame: fix leaking blame entries with
+ `--incremental`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-10-e2f607174efc@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241120-b4-pks-leak-fixes-pt10-v3-1-d67f08f45c74@pks.im>
+References: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
+In-Reply-To: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
+To: git@vger.kernel.org
+Cc: =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, 
+ Jeff King <peff@peff.net>, Toon Claes <toon@iotcl.com>
+X-Mailer: b4 0.14.2
 
-On Tue, Nov 19, 2024 at 04:36:49PM +0100, Karthik Nayak wrote:
-> The `MIDX_MIN_SIZE` definition is used to check the midx_size in
-> `local_multi_pack_index_one`. This definitions relies on the
+When passing `--incremental` to git-blame(1) we exit early by jumping to
+the `cleanup` label. But some of the cleanups we perform are handled
+between the `goto` and its label, and thus we leak the data.
 
-Nit: s/definitions/definition
+Move the cleanups after the `cleanup` label. While at it, move the logic
+to free the scoreboard's `final_buf` into `cleanup_scoreboard()` and
+drop its `const` declaration.
 
-> `the_hash_algo` global variable. Inline this and remove the global
-> variable usage.
-> 
-> With this, remove `USE_THE_REPOSITORY_VARIABLE` usage from `midx.c`.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ blame.c               |  1 +
+ blame.h               |  2 +-
+ builtin/blame.c       | 12 ++++++------
+ t/t8005-blame-i18n.sh |  2 ++
+ 4 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/blame.c b/blame.c
+index 90633380cd583b689693e6cfe65c26a79448b00d..bf69768a7de6d2b989b85339a06af0a4763db4ad 100644
+--- a/blame.c
++++ b/blame.c
+@@ -2931,6 +2931,7 @@ void setup_blame_bloom_data(struct blame_scoreboard *sb)
+ void cleanup_scoreboard(struct blame_scoreboard *sb)
+ {
+ 	free(sb->lineno);
++	free(sb->final_buf);
+ 	clear_prio_queue(&sb->commits);
+ 	oidset_clear(&sb->ignore_list);
+ 
+diff --git a/blame.h b/blame.h
+index 5b4e47d44c613e31fc4788c12ee9d8dc2a49d571..3b34be0e5c6932666bf5f738eb645da25adc0997 100644
+--- a/blame.h
++++ b/blame.h
+@@ -116,7 +116,7 @@ struct blame_scoreboard {
+ 	 * Used by many functions to obtain contents of the nth line,
+ 	 * indexed with scoreboard.lineno[blame_entry.lno].
+ 	 */
+-	const char *final_buf;
++	char *final_buf;
+ 	unsigned long final_buf_size;
+ 
+ 	/* linked list of blames */
+diff --git a/builtin/blame.c b/builtin/blame.c
+index e407a22da3bacf6bd26a6738e0ab0292ffadc216..6a7bb3b07248fbdfeb5ac3a05fed20fff4989a48 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1216,12 +1216,6 @@ int cmd_blame(int argc,
+ 		output_option &= ~(OUTPUT_COLOR_LINE | OUTPUT_SHOW_AGE_WITH_COLOR);
+ 
+ 	output(&sb, output_option);
+-	free((void *)sb.final_buf);
+-	for (ent = sb.ent; ent; ) {
+-		struct blame_entry *e = ent->next;
+-		free(ent);
+-		ent = e;
+-	}
+ 
+ 	if (show_stats) {
+ 		printf("num read blob: %d\n", sb.num_read_blob);
+@@ -1230,6 +1224,12 @@ int cmd_blame(int argc,
+ 	}
+ 
+ cleanup:
++	for (ent = sb.ent; ent; ) {
++		struct blame_entry *e = ent->next;
++		free(ent);
++		ent = e;
++	}
++
+ 	free(path);
+ 	cleanup_scoreboard(&sb);
+ 	release_revisions(&revs);
+diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
+index 7a1f581c240c71106c709a830d3897d84fd8b32d..fa765aff99aa7fbfc4737cc91aab2a6a1bce30bb 100755
+--- a/t/t8005-blame-i18n.sh
++++ b/t/t8005-blame-i18n.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='git blame encoding conversion'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ if ! test_have_prereq ICONV
+
+-- 
+2.47.0.274.g962d0b743d.dirty
+
