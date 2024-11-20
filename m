@@ -1,81 +1,77 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DACFDA920
-	for <git@vger.kernel.org>; Wed, 20 Nov 2024 01:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C07A920
+	for <git@vger.kernel.org>; Wed, 20 Nov 2024 01:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732065786; cv=none; b=DRxZ0ZG13E9/0iasqlObOanpq8i+xZr6B9d6hgK0k1+vPJdZpoRXiFHssi13YIQAAg/TQCemcT38rLCZ/2tJZXzc1IOFct1wEBefUMy5GKFOJEc/NoRKKNwIzrGtC+fF2uHw5zWIkqytd7x3kWEAoaw+F+K8Or4u/wR/UCLjDo8=
+	t=1732065855; cv=none; b=GV2wgaX0qxJe0XbgaukYcCfR5vVC4ruOcWoCcq1YBLv56cUiGYJu29jr45vyc4/Sh0SIrFqxVPCmcTwogNEJ67xsKTb/JsluQLk1geKXNZNIXle36RO4qkXvgWCv/EDIIHAKTG+Aj5OgnfULP4EiH98soerFUtsb84AyA7Pwv9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732065786; c=relaxed/simple;
-	bh=8QpcHDgGw5Z2PMyvuoHI9gixNdQ21LcL5H9Mp0PP9d0=;
+	s=arc-20240116; t=1732065855; c=relaxed/simple;
+	bh=mmMhV/NoY8LUmltmCH/wphqQ4udjybGtq3QkYPu8PB8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kYxGACU+j9p/DukkSmGkPbd4uV6jgV08mjn6CgM+KISXK6/FfoseitVVoX9yzFko6eO5RCFDKuwFtIBX3Qg042kNLhd/aSgr7ccU4CURR6zr8ydfXorWr0DpmJ8ekX8VBJssMM81WW1DYuiiACPkn6sJEjmWWrKMa9IVc7bbM04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l0IQ5GyL; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=n8AIRwbGbgHihxh0W0JdWnlggVHtuVQd6217laK8LycPcvm0a8S2VONVD4BDx7KZlcyqc23ycMRRlOm7NOCOwvZx9QdEXqJJUlX86unmV26y2oFuC+GxQ8nEgXW6Dc9h5B13fGJGzsTnXmvuozqZ9WOWgPcVdmf5fq7LMKIpl8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MwlQhsXy; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l0IQ5GyL"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id D45E4114015A;
-	Tue, 19 Nov 2024 20:23:03 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 19 Nov 2024 20:23:04 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MwlQhsXy"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 128A011401CD;
+	Tue, 19 Nov 2024 20:24:13 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 19 Nov 2024 20:24:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1732065783; x=1732152183; bh=Qcnv5acv4t14APlfjACG15RUSCxoJG622+V
-	orPKTpQE=; b=l0IQ5GyLxADO19RMX8Jl5zaAcT/hIJxBdfxDJOe4jv3wUD/s6Nm
-	sJmmT+aQlMpF/uFXu8BEshilETN0+AscOmsjZuqy82+z9jRe1BDJxtbNgm8UQQDT
-	IjBxt92j0X6HX1tWNTTlzwPI6ERa26o/z8uayHHosKKLJsbjQRvO0WQLSIITaksH
-	w81EgMepYxF6dtXythdeTZ6p7QS29gGHuRogCYRXQCsH07IQjBJvY96UQRXZDLgh
-	i1G0O8pfg7npaKskeQ7qu90wL89JECa62dLEKLVqR/FMYOFn1Z1JQ3w7rQn2AUYI
-	QEk18R+0dNBFRF0G4N3sB2qeuRDEAHVPFRg==
-X-ME-Sender: <xms:9zk9Z38UTTIoHoyKSyBylf6nysThgpWZ23kzxKsn84dRE-1mEtdfdA>
-    <xme:9zk9ZzvwRfpDDkja7zAhOmrXm7xc5dnFuP1wgF5m9Ca2DZApJDJN3luhbiP1MzS3M
-    HOm2TmJTd6o3hbFmQ>
-X-ME-Received: <xmr:9zk9Z1CjYP0N6DIvf6jPaMy_0Bufo8fdXaNkQWaRyKAzUzhtpbnvuF09fNVJZhiHOByHO8JziFSzL2tXVMo9g1WcFmIWjzeHfkbL>
+	1732065852; x=1732152252; bh=+44q4wIYBWYTg2JLAosJw6YCOlzpvc7VNlY
+	M6lzWYaE=; b=MwlQhsXy6hYeyl+09th6BORJbWH9IwFAy8yTefyOtj66L55L9Jc
+	9U0+ezGnvZ2PuzqKIaMv47D6CmNslf5SlumCsKK1NqPzejbeYuSzygbvBU7D8cmw
+	ewst7zFBlSuujQOnppJHtogqQd6J0h0cCkVjv/tZ2FWMMEbutUcWMsxs2Ibakp00
+	7UG4S19mqTQrB65YJXNq1+OMg+YZ+3TGpUS/Z6BR6A+68gdISQltUz5mmxkoe+EH
+	KY14DKE7M9ip3wRw6cS82nm2x9ZZx24SG/Tu7MDQpqx58gjP0hCnIWYx9jaA4y9x
+	4BXDPwfSgix3O8JE2uqNqD/SrMt5r731idA==
+X-ME-Sender: <xms:PDo9ZyLGzWEci_SK6TDHE8DboZeWGVO2EEXD4pz4cOIEzefReM8wXA>
+    <xme:PDo9Z6IE7u9ZyYR3csPQCG2UnH-zBHpsmhNusBJNqBvuDub0EVJf8EgP54Ebd3X_O
+    mWNey0J_KI7AwqiHQ>
+X-ME-Received: <xmr:PDo9ZyvdObkNDd7yevHrnVhF6RqOhJrDjcRDJBGqqEiWMJRfLBedcRGT_TdGL-pE81GpXm7STmI_pix9zPsSpctIXDfOMzhYJTy7>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeefgdefvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
     hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
-    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifoh
-    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghm
-    ihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:9zk9ZzfVgufR02rahZhpF5kpdqcds7TsoYVELJFkzssVJiyEFYtA6A>
-    <xmx:9zk9Z8P2O5sLt57wdxmwLnPghsKD62gR6Cxf3jxIeYjQN4J9_KkkCg>
-    <xmx:9zk9Z1nf5Q4ZxshWEVvVsB7bXOCDm4dqyHtM0ijQt-nA-dtfbNpv3w>
-    <xmx:9zk9Z2ugM2VkFjYZ_qbS6QYRm2-zVDeVbUK_OX5ohhHZwvoyv8gBPw>
-    <xmx:9zk9Z4CXtPTZHA64nFODT-NAYuSJEAV7Jr-FMC0S2f-ozM9Mt9FOmwSB>
+    gtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeevteev
+    veeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
+    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    phhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PDo9Z3Y530xG6Gqo0DkUPjjKv4jlnzo78GbUqzYg1DH5piC7ZrmV7g>
+    <xmx:PDo9Z5Y_t9GwJU2Aq6CieIgmX9-WjDaBlb1P3JJe8EE_RW5VUOpNVg>
+    <xmx:PDo9ZzBzVSFDwxEcYNnGjZZ8OirEZkNYcgCw21HsCXVTLF3_ESWkvg>
+    <xmx:PDo9Z_a8vDlcnKCQNfX6_4Q55vB01UDr821nwThgfGrlqBuzYCurVg>
+    <xmx:PDo9Z-P3oKMHSI61sHf08XHJriBoYn15S_UU2cPlOAwU6At70tDgegu7>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 19 Nov 2024 20:23:03 -0500 (EST)
+ 19 Nov 2024 20:24:12 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  Usman Akinyemi via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] diff: update conflict handling for whitespace to
- issue a warning
-In-Reply-To: <dc092d9e-d95c-4635-b4f9-85cf1802e571@gmail.com> (Phillip Wood's
-	message of "Tue, 19 Nov 2024 16:49:05 +0000")
-References: <pull.1828.git.git.1731347396097.gitgitgadget@gmail.com>
-	<pull.1828.v2.git.git.1731524467045.gitgitgadget@gmail.com>
-	<xmqq4j4a8srw.fsf@gitster.g>
-	<29c81cbc-3678-4b70-9e0e-c500186d159f@gmail.com>
-	<xmqqbjyh5pa5.fsf@gitster.g>
-	<dc092d9e-d95c-4635-b4f9-85cf1802e571@gmail.com>
-Date: Wed, 20 Nov 2024 10:23:02 +0900
-Message-ID: <xmqqmshuaebt.fsf@gitster.g>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Johannes
+ Schindelin <Johannes.Schindelin@gmx.de>,  Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v3 0/4] Build improvements for clar
+In-Reply-To: <7jdpmcwlxtyzqrqmcftcdmrw3tqopawtuuzqf3uaff2gklaxba@covcdisniubk>
+	(Justin Tobler's message of "Tue, 19 Nov 2024 10:51:03 -0600")
+References: <20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im>
+	<20241115-pks-clar-build-improvements-v3-0-29672bf65ec6@pks.im>
+	<7jdpmcwlxtyzqrqmcftcdmrw3tqopawtuuzqf3uaff2gklaxba@covcdisniubk>
+Date: Wed, 20 Nov 2024 10:24:11 +0900
+Message-ID: <xmqqiksiae9w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,28 +81,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> Arguably yes, but that's not the approach we take when the attributes
-> file is too large, a line in the file is is too long or the file
-> contains a negative filename pattern. For those cases we print a
-> warning and continue. The recently merged e36f009e69b (merge: replace
-> atoi() with strtol_i() for marker size validation, 2024-10-24)
-> followed suit and warns rather than dies for an invalid marker
-> size. It would be nice to be consistent in the way we treat invalid
-> attributes.
+> On 24/11/15 08:32AM, Patrick Steinhardt wrote:
+>> Hi,
+>> 
+>> Dscho has reported in [1] that the CMake build instructions for clar do
+>> not work well on Windows/MSVC because we execute the shell scripts
+>> directly instead of using the discovered `SH_EXE`. This small patch
+>> series fixes the issue.
+>> 
+>> Changes in v2:
+>> 
+>>     - Wrap overly long lines in the CMake build instructions.
+>>     - Add the VERBATIM option.
+>> 
+>> Changes in v3:
+>> 
+>>     - Fix missing word.
+>> 
+>> Link to v1: https://lore.kernel.org/r/20241108-pks-clar-build-improvements-v1-0-25c1fe65ce37@pks.im
+>> Link to v2: https://lore.kernel.org/r/20241111-pks-clar-build-improvements-v2-0-d4794d8d1b30@pks.im
+>> 
+>> Thanks!
+>> 
+>> Patrick
+>
+> I've reviewed this series and overall this version looks good to me.
+> Embedding the awk script in the shell script and changing how the
+> scripts get executed to address platform related build issues seems
+> sensable to me.
 
-Arguably yes, but being careful when adding a new check and changing
-established behaviour, risking to break existing users, are different.
-
-> Consistently dying and telling the user how to fix the
-> problem would be a reasonable approach on the client side but I wonder
-> if it could cause problems for forges running "git diff" and "git
-> merge-tree" on a server though.
-
-That's an interesting aspect.  I wonder what happens when somebody
-pushes a project with a .gitattributes with such a conflicting
-setting to GitHub or GitLab.
-
-Would that bring the world to its end ;-)?
+Thanks, both.  Let's merge it down to 'next'.
 
