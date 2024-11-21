@@ -1,70 +1,67 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866BA43AA1
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 20:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9F31CD1EE
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 20:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732220234; cv=none; b=t17c2hgTPhMfX8DFVclql6cavrzNtnD77pw+8le6frHIy2LyHyVmvV+P90V10B+sHOaYWDtMKqBok9xugOpn4ZXMzN9iydweg2fj1Gsbd6Iq4TKlf7QltAzuQxzm3LjIaHU1D/IsXH5cbZjG6g+RGSnKWQ6tMXHsjNJGswJqBYQ=
+	t=1732220969; cv=none; b=YFt9k797s4KTEDTRAaEvK7ggirdN8+O4BNxUEkDyBmPmZrD/IOllUAWrdJp1snDjkfB4Q1LYyUl0BJZjz1zTL8CU2L+OfKSxz8wKkCe7Q9WjMvOiukqW5m/gNwTjGTs/j3u+DiF5WDD4wxl4Ay0Q5PrTYa2flhyYGjaFSv6Obj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732220234; c=relaxed/simple;
-	bh=d98ssLq3lM7iEgvorW5R8HotiT+C6A+pwN0q91H1nRo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lQPJReCTZ3sjQsXTqzNeUYxkV3B72lrlPA6UnA89pnVrypcPwuXT8FDEvNSnboOvtGsfhfSz7xQ8AMW1wRaDoFRBsv/5aBa7DYuz79RNhmuU37quy/3Vm2w8ZNPBAnn9eqElu93zgQlfM1LbCDN7bxPGenqhmXucHy+Oc2Wmzbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=YJPagptF; arc=none smtp.client-ip=209.85.128.177
+	s=arc-20240116; t=1732220969; c=relaxed/simple;
+	bh=aCQC+zcdgrPqDTIx7IQGUX/IphV3zmuEqNwR5gEJUgo=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JZqXGLPCLYM7FCcCnANoFbGWBbcOFhG1FhUYzfHgapR+R6oh/XW0I33MOwklOy9Y/ZRDldp+VsOBOxgUOTMiccM985cDG+QmAD04Dg+jc+AsDbgKytNLXo6HX9U7YSal+w+p9vemaRTZST0g+HA7OEGAp2uh1+ktHqnvhz8IQJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=SnxX9jg7; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="YJPagptF"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6ee6a2ae6ecso13128787b3.3
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 12:17:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="SnxX9jg7"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6eeb741c26eso14657497b3.0
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 12:29:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732220231; x=1732825031; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=d98ssLq3lM7iEgvorW5R8HotiT+C6A+pwN0q91H1nRo=;
-        b=YJPagptFx1MiFQ2AEesICXIIkkvA250ikS2PjnK6CDY7IANKUdlIDbDV3IR4o5jsu+
-         wx2D07cS/qHZUgHLX1zjonRgQa7+gsyPit7NT9Vyls39K0eF6aiscTKG18OSbyO4Ajki
-         zBT+wMOPzM5I3IgHxDt33WXqV5p/6O3lZttsM06PSl5BW3bmoqpwNLRLvF2D8Azd9Rnf
-         BcPkX0SB+d5DbA5roU5RX4MnhFXrktRmGrGH9ztAMq4TvaDwXDBCiLRgwsdyn4TIYHZg
-         fDDr1UPbk83ji9+dAXl6TQjdrHymMBKZ0r8LiMKjQxM08+LUfjv+mF/AW9Lx4phHdBuj
-         fesQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732220966; x=1732825766; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=91YQYNqDCCw0Vf6dhkAR7qS/fOK/HJd+8YdWLuIKFAs=;
+        b=SnxX9jg71QEpQ22du7XFhzjOCRghOgDYcepYRIvjEVzRu9lpvSR7hGqoYpKXoDslYd
+         Sq7EeXMOmpaEeWhS2LgyLQ864BClgrFiIeKEndLB40c5CWvQ9ciCjqysisziR/icSU8q
+         AGsdlNf/5LN1nnhCjwQ1xklWxwK76tq4/zQoDCP6WMxSpNusii+KhLGiN76WLrrFoGxF
+         M2t9l1XxbOlCKuBDhornx2DLtBTYiKS1p+plEGoFAbpR5QjmBgk0ir6qDeQj3WjKpcRv
+         ZFV7MGswxtoT+rr+PknE2rZM505Mu3yMXQscvv6TgPXTH6xKy4VBzUjbfMhj4f4bOaFz
+         9c4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732220231; x=1732825031;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d98ssLq3lM7iEgvorW5R8HotiT+C6A+pwN0q91H1nRo=;
-        b=ULoHJFB2b9A+5kuf8iwol+k1Rofbiw1KdIQ6pjrGJL7RNgCl4ia4UNp7VIUEG4XPO0
-         ofbEfkCtm7R8FErXe8hKXGFtS9LcrDhEUppLoznEMJEKL6PC5euSlREeKfm+MbEjz5gZ
-         SCLelWRjRtl6S/Mmwv9Ta6WpjotZIkV/3MrkPGpHWRcJzuVNkvYg8k3qrYZlpKywTXve
-         X34SsBIRmtOyGA09pEb/cRWarUnZki73pmrSHYUWxZY6+mJLayVp2KjV4EBQ54r6liLN
-         abf33LkGeK23fpjmgwH8vw/GKiA7/Bt9VrgsG3R9vCVsG7zTofOlyQx5zjqCVEv+Pqoe
-         tlaA==
-X-Gm-Message-State: AOJu0YwXooyIWQIpE950LD+IDT88HHEjwEiFVmQq+Y8FbkmGHG+oNsUh
-	GOz+euqejRvQIDJKub/0WQMahvc/KMlXvgbbroJ30TQabsSAElB0KF30Ky6QwNQ=
-X-Gm-Gg: ASbGncuGejz3MhImdYZ3x/+WLZ/f3S0AJqlxHJ6/UaaxEVAnk7M+c8aSmWvnQ2iZNfC
-	nQrrm0bDryxdP2ebAl7MTbNDLCNzoJWHaOJo/isnqLASAeTMTDQ1lRtg4ByOfbhWq24eiIgubKX
-	wvw/W0YIYGCoc3BTKRS5CHUtcR6yAGtHBISs0jhaW6jSJCVl3+gSocpyEPgfrfLt1j8HOcxM5SP
-	v2esOz0Ikx4UpKCkCVHEy5oi5/AjFNUmyg6JCDC9P+sUIufjMAky4naZRM+u3MU35K1SvIxJsfV
-	M4DYLjkqhqz4PZikmBAl1A==
-X-Google-Smtp-Source: AGHT+IGlmImdTvKsCeixfXC8ZE2C/vyFQK4QaOoddI7r6o9eCtsDNP5Ro0Z1c/5CCuZlMVzFH+rs7g==
-X-Received: by 2002:a05:690c:7206:b0:6e5:bf26:578 with SMTP id 00721157ae682-6eee08c667emr6593897b3.17.1732220231472;
-        Thu, 21 Nov 2024 12:17:11 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732220966; x=1732825766;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=91YQYNqDCCw0Vf6dhkAR7qS/fOK/HJd+8YdWLuIKFAs=;
+        b=c03LSAXL94aIpOWBDTv5ZiYwxl1knpEj73dqIsIb+7WE0YrC93ZEHIBo9X1xtYxWNo
+         wMK6sufzHXlGPTaCRAhnpbllOE2T/tSqt/Gct1/6HZNrrI6DoC8P7r53BPs8BQisFwRr
+         gHu8CXyGRY80sNUm6t1FgaIV9YWsrJzTrk9BAndGR8w15ByUitiIKeiog0FiH3Th5wYr
+         xEahlBhuJzVpOisjuzvsDWqCMnKUpm93mD9YnSk84GG+ZRxWzMnObhAzmJJQ7kaQOhUc
+         H/38x2yvdvXDaXApVmpSBLqcRy9iM2ToAqNOV4JeiNASWZff8rkeE4vWCiJihfdT0vuH
+         QbPg==
+X-Gm-Message-State: AOJu0YxK4KmCnXA0RUlP90mguVua8jfPI55dGLY8aNU/Xo56CGEnFxVG
+	vteD6TXK/ncIt+YIYXBXlu6i59AnprmQjmw/lbVrXPyE9tj3v0O/GxyMu5LwKagGfMH/dBLX8Pd
+	x
+X-Gm-Gg: ASbGncvgFqDNeSPfZvBsx8FN+sIZqWEVfekZnXOOY07v6Tc230qQ3mIiu7H1dabf7UV
+	9fe/HuDYTCrLOKQ4Vw+ImNbDpVQuiLDM9+V/W+RlxbEAZUElKU/yOwGTnp0YQz3yLjGJAYfTVYu
+	pC6oxSpRCEgWeGDjvSi7zls8Sft14jWZdvWT976zrgmTjXn1QWav4mpATqrvRBtceRENKW4N0kf
+	SjWEmqi1ubRfMc22KxA+YxnnPUBZ1yFQTeSJCTUM6kL0xTUjsJnaGHiY+Re67ntFa1vhzqEM/aG
+	z2swmW5d1XR2Lo07PuOdlw==
+X-Google-Smtp-Source: AGHT+IGlYj4xtkp2AniIO9MRJOu5bSvKLXfGuiGiZ/XkBVOPXYyzmJWHLE8xet0QYLrl4UTGK/qWgA==
+X-Received: by 2002:a05:690c:450e:b0:6e2:50a:f436 with SMTP id 00721157ae682-6eee0a4e216mr7686587b3.36.1732220965816;
+        Thu, 21 Nov 2024 12:29:25 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eedfe16d45sm1096527b3.3.2024.11.21.12.17.10
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eee009b85esm1107677b3.115.2024.11.21.12.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 12:17:10 -0800 (PST)
-Date: Thu, 21 Nov 2024 15:17:09 -0500
+        Thu, 21 Nov 2024 12:29:25 -0800 (PST)
+Date: Thu, 21 Nov 2024 15:29:24 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 4/7] git-repack: update usage to match docs
-Message-ID: <Zz+VRZnWjsDI9bLt@nand.local>
-References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
- <65784f85bce943e6a6bf29d7a57bb106aff8226b.1730775908.git.gitgitgadget@gmail.com>
+Subject: [PATCH] t/perf: use 'test_file_size' in more places
+Message-ID: <50c1368630684f235548d2e9a68d4de3745b5fe6.1732220875.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,20 +70,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <65784f85bce943e6a6bf29d7a57bb106aff8226b.1730775908.git.gitgitgadget@gmail.com>
 
-On Tue, Nov 05, 2024 at 03:05:04AM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <stolee@gmail.com>
->
-> This also adds the '--full-name-hash' option introduced in the previous
-> change and adds newlines to the synopsis.
+The perf test suite prefers to use test_file_size over 'wc -c' when
+inside of a test_size block. One advantage is that accidentally writign
+"wc -c file" (instead of "wc -c <file") does not inadvertently break the
+tests (since the former will include the filename in the output of wc).
 
-I think "the previous change" is not quite accurate here, even if
-you move the implementation to pass through '--full-name-hash' via
-repack into the second patch.
+Both of the two uses of test_size use "wc -c", but let's convert those
+to the more conventional test_file_size helper instead.
 
-It would be nice to have the option added in 'repack' in the same commit
-as adjusts the documentation instead of splitting them apart.
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+I noticed while reviewing Stolee's --full-name-hash series that he added
+new test_size tests that use the test_file_size helper instead of "wc
+-c". I thought it would be good to clean up the existing uses of "wc -c"
+in the perf suite as a result, which is what this patch does.
 
-Thanks,
-Taylor
+ t/perf/p5311-pack-bitmaps-fetch.sh | 2 +-
+ t/perf/p5332-multi-pack-reuse.sh   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/perf/p5311-pack-bitmaps-fetch.sh b/t/perf/p5311-pack-bitmaps-fetch.sh
+index 426fab87e32..047efb995d6 100755
+--- a/t/perf/p5311-pack-bitmaps-fetch.sh
++++ b/t/perf/p5311-pack-bitmaps-fetch.sh
+@@ -39,7 +39,7 @@ test_fetch_bitmaps () {
+ 		'
+
+ 		test_size "size   $title" '
+-			wc -c <tmp.pack
++			test_file_size tmp.pack
+ 		'
+
+ 		test_perf "client $title (lookup=$1)" '
+diff --git a/t/perf/p5332-multi-pack-reuse.sh b/t/perf/p5332-multi-pack-reuse.sh
+index 5c6c575d62c..d1c89a8b7db 100755
+--- a/t/perf/p5332-multi-pack-reuse.sh
++++ b/t/perf/p5332-multi-pack-reuse.sh
+@@ -73,7 +73,7 @@ do
+ 		"
+
+ 		test_size "clone size for $nr_packs-pack scenario ($reuse-pack reuse)" '
+-			wc -c <result
++			test_file_size result
+ 		'
+ 	done
+ done
+
+base-commit: 4083a6f05206077a50af7658bedc17a94c54607d
+--
+2.47.0.237.gc601277f4c4
