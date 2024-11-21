@@ -1,132 +1,137 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2121D47A3
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADF514B959
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732201608; cv=none; b=SYqLtUPJKOHRPZ9c146Ymd+0xR4RPpHCinAJHSYwMeYWpu1FnPOaq4un4MytG8jBoAXPJNsqXDMuzhs2XXPUHnXUjqORZB5WTaxGFn74IwU9/OphN5Ee7GuiFCd3lzNVtL9kRaKXMeLJ7o1iAjrsUvjeC3wBPXHZXtIcpu8zoDE=
+	t=1732203020; cv=none; b=DoerPM5oQ/v6gYrCHI8Qmkm5LFj+Evfui2oW35Rhv8nbySivvSJ/1Cd19FNUwthFQgSidPUf/rFLzUcjklmS6B4Uxo/bgpopqenWU73ODDZVA/KvB6xynTAShxjH7reCXEGqfPWsLPn7mH+qFkhmhpWyuDpw1s8ql1Rgtg2agNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732201608; c=relaxed/simple;
-	bh=v8FXkjBw/LeprhyStj1ZhFd1cI6VnLVgqQWslUYZ/wc=;
+	s=arc-20240116; t=1732203020; c=relaxed/simple;
+	bh=nBzZGwqdpkiEIDIOJSOZCTqJsK//+MSsnWRbdcZeFXo=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s7R3u21OeWaq18kPsBDc8WvaydVjMJKTpJuRxKA/uopqiGfBT4uCWM8ClqM/Z5+DcYzfvDOXwT9jvI64u6mNtsLMHRnTBMJP0gSl3Z/NkLLDNj8SrixsnNfDBGlbjtwfIPVMhGpZ3S/GaRw+kmH+io2U1zbxNUowybov0JLfNeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xa5VXvvi; arc=none smtp.client-ip=209.85.160.174
+	 To:Cc:Content-Type; b=V8mJfzOpHXRO+MoxwuEkbPircLbexZUZG753HCncC7JFnjEB3xBd4p3bbd/dGWBHY0olRvmJY9fvhoV43uf1CP4A1GR5YPAtVYrmYb60vBMHZKseONXyBUCs6RXFrmHCwDx12hmW6DanHy7OR/Bf5fVYPi/aPffV5M4cyGJmQdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6B/aQnm; arc=none smtp.client-ip=209.85.210.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xa5VXvvi"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-460c0f9c13eso8086011cf.0
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 07:06:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6B/aQnm"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-718186b5c4eso393944a34.2
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 07:30:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732201605; x=1732806405; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732203018; x=1732807818; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=su+gactrCp1rFTeV7NbGONJMIYjFl1aGr01op0q1yF0=;
-        b=Xa5VXvviWPAkH/gPtbFvHzZl7s698wDIjgMYjQWplMiMdYHBKX04kD1J2LqWhRzOFQ
-         gipReeB2ybMmLzjVAzk0ncOYC3hmt6JH2132tNI3WoTq4cibxuHsI5WHMyCn2nw/Oavg
-         A68SKjk95KcqSUzWNFERi2CGHuzfZsomWY5iWIhLrF4rYpj1nGWAR01iK7IJx1LgM4vM
-         rwxGc4ShL24JSfGxENmRbnCflOF4GZmoOAQVEOo7uLH05Gl7Wr2jvFtjGNgn/kDNcAsu
-         Tci8wfJSqRy3yuCB0smdA+7qgbmR27Q614Q+aIOzlQvjJCJ9NxSY5SQjO0JBOzjRuxT2
-         wvGA==
+        bh=XCZgy3rOj8bgMFtxRhtwbQ/yYVuttGEUsesL4npsS2o=;
+        b=b6B/aQnmdobO+TNeU0B2NsTqKxtoQohNBuFU6Sb+b67Zz+vtRed8s2g4gbIGB9vouh
+         0zDUGRO6g/s3JC3jvwjRTWfpqggJLdRWeEddZ1/mzsqIfbBBCNmJrcuHW6WOBsSY/pCT
+         1l47nUT1CU4SAoCI6vJeqbbYCl8cmy695ubrv1Zkn91Zae2cLk0gKQx8ojQ/O4jz4xyK
+         IgrMOq57QPC3hNRw12tbb3DqlZEIHnH/Z2itZtGkYAKthSmepwgaH+KxXK4PZdS47q5B
+         QC8PsMfAog6gtfUaHE+48TTsDRUv8geeAzS1EabBvz9bIHsb8r7zaeU8q/ltMupCKuvo
+         Yr/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732201605; x=1732806405;
+        d=1e100.net; s=20230601; t=1732203018; x=1732807818;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=su+gactrCp1rFTeV7NbGONJMIYjFl1aGr01op0q1yF0=;
-        b=CDeBo4wAITXip/fl4pTfDQGZkPbuR+nf9lMwwzi9tvK53Gm4RUSWz4JJYbiy9P1eMp
-         CC5cJe8fkqSz3VE70NwH5Jvyo1XydTegSeyak9EnRdqTWj5WWz09b/yZempLt7+h1gtp
-         aqdvCpj3eVrrYP6UD4uEQuGp92Lt4ZLsnIJ42luppKl8NCQHw3+KIUgMc2cmnep7dbez
-         Wx4gg7UhhZk9rEPprOV4QA4VZyW8gR7/aDM1oEUgaCjnlEkh3R6JJv3QWmzlyVzuiZ3W
-         6fOYQwyVR8CgqwgjEv59FXqGpRm3E6qArvEffWTSQT6aMqoLNuNkZSTvi+kmpLD5wQKB
-         1i4A==
-X-Gm-Message-State: AOJu0YxnC6MBHnv6VL7/hII6Ebxe6RmfTTz6CENnssW/IALAkmhQRYl1
-	j+m9qIwvY4ovXD3x/IpB+6Me22WZQxmZy702bSuVvll6jO9iwYIgzr7//6oNuoAla4IoVxZi5WO
-	l3xRoypIJynDyWUGyAHz8EqseNvm8gAIz
-X-Gm-Gg: ASbGncsSELI7g1RnrezYp/NQpYK7JtH6tShUyc/FAcMDWn8mgkkCPV2EJ2+vPk5pm2H
-	vJdeOcwBHJzN4JI/P1ahs3W/F8aTpgC3KtBxdqWK1o9aYUhIEjyAzkkdj9LNKvxmSXQ==
-X-Google-Smtp-Source: AGHT+IGS5G6e5GtpEqT+1HDwif5RqucsG8X8qLwC06dzCiApCXonJTF+1WwnJb7CeECa5znavqAGXYNMilcaAf3ZwbQ=
-X-Received: by 2002:a05:622a:18a6:b0:463:1257:86f with SMTP id
- d75a77b69052e-4652f4a193amr53246191cf.28.1732201605621; Thu, 21 Nov 2024
- 07:06:45 -0800 (PST)
+        bh=XCZgy3rOj8bgMFtxRhtwbQ/yYVuttGEUsesL4npsS2o=;
+        b=F3yDDLwMb0M5H6gSc9apeBN1QvizebpP3hyA+OHqt+dKlWGbzvaNzO8rvnrfcHfg2t
+         6KRE6HlZs6ykx8auNo3TJAgqd9JoFwDvDb6kiKv/Xk+EMfGgAshFzOPcUqQlPK/Zfs/i
+         28k/6O0Kvxv6D/iH5aikNFfqjCsTxDM714w0QIC67fs6lnAFj5DNQi7uDijgzlf2dQvU
+         mK/CvVnl/gshxCSxt3GXOn6I07Sni06k3OrE5UUZ9mBltAE0jLCFVZOTKhSXT8Ozd9r7
+         wQ70CYFKXJ2+bxLVl9pXS7gbX8/7ZUwoCmSfB5K1L2OdljmqVfikfYHSrpZ3rJ/2lMdi
+         w/wA==
+X-Forwarded-Encrypted: i=1; AJvYcCXUvGK+Q0xvztnpQHnIsC0sHRAX5nCC1rOrUutGK49dptojSqz5Pxz6Ew5j/eSNaKLTnFQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfD5FaPURrECkv6aAQfepU1a1Cc1jICFCWKBuVFZWuZRJ+fryE
+	8DlniBgZsPHJrn1EQtCPWkMd0RIXe304PjJsty0lht9f5Ukpo56OrV3kXKx1cin2XoglDBGFwcT
+	dU2Na7fT2d+9uNEv+L5T5rjZPiRXG1FdR
+X-Gm-Gg: ASbGncszjRa5V32IhBgJeE/n1GXg77hIPZYj0a400x/fio+GbvoEIz4mlbvpGZObHwS
+	mSdmTi6l88VF0YTxNpZnpskRFNt4LrFQcLSf923IPBg4vhQ5Py3AwN4AbWs/QOcq02w==
+X-Google-Smtp-Source: AGHT+IFujhPAccItuCbXgdxTtY8ojPLiSBiyHrY/xYH9YSzRuILPDRYs3rpS9DE0phJ2osz9NDykG6UnrQX6nmBWLEI=
+X-Received: by 2002:a05:6808:1910:b0:3e6:37f7:5a3a with SMTP id
+ 5614622812f47-3e7eb7d1a06mr7065850b6e.41.1732203017916; Thu, 21 Nov 2024
+ 07:30:17 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 21 Nov 2024 10:06:44 -0500
+ HTTPREST; Thu, 21 Nov 2024 07:30:17 -0800
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Zz472iMq3nZMoRMf@nand.local>
+In-Reply-To: <Zz48r6ZZcol6TQaF@nand.local>
 References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
- <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-2-e2f607174efc@gmail.com>
- <Zz472iMq3nZMoRMf@nand.local>
+ <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-3-e2f607174efc@gmail.com>
+ <Zz3dAZGAG3BupQqE@ArchLinux> <PA4PR07MB74069403837F36FD07D075EB9E212@PA4PR07MB7406.eurprd07.prod.outlook.com>
+ <Zz48r6ZZcol6TQaF@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 21 Nov 2024 10:06:44 -0500
-Message-ID: <CAOLa=ZQhjPRnfUhsZOir-a=djC523waw8qn3E8rk0ou7pdH8Hw@mail.gmail.com>
-Subject: Re: [PATCH v2 02/10] midx-write: pass down repository to static functions
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000006245d206276d9de2"
+Date: Thu, 21 Nov 2024 07:30:17 -0800
+Message-ID: <CAOLa=ZSjwUjV71H2tNwF1J-qxP3ikrVbmKOGAAWv27KcgeTo+Q@mail.gmail.com>
+Subject: Re: [PATCH v2 03/10] midx-write: use `revs->repo` inside `read_refs_snapshot`
+To: Taylor Blau <me@ttaylorr.com>, Richard Kerry <richard.kerry@eviden.com>
+Cc: shejialuo <shejialuo@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>, "ps@pks.im" <ps@pks.im>
+Content-Type: multipart/mixed; boundary="00000000000090679706276df1b7"
 
---0000000000006245d206276d9de2
+--00000000000090679706276df1b7
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> On Tue, Nov 19, 2024 at 04:36:41PM +0100, Karthik Nayak wrote:
->> ---
->>  midx-write.c | 57 +++++++++++++++++++++++++++++++----------------------=
-----
->>  1 file changed, 31 insertions(+), 26 deletions(-)
+> On Wed, Nov 20, 2024 at 02:26:23PM +0000, Richard Kerry wrote:
+>>
+>> >> The `read_refs_snapshot` uses the `parse_oid_hex` function which
+>> >> internally uses global variables. Let's instead use
+>> >
+>> >Nit: s/variables/variable
+>>
+>> No, that's fine.
+>> It's plural, so ends with 's'.
+>> Unless it should be "uses a global variable"
 >
-> This patch all seems reasonable to me. When reviewing it in this way, it
-> is a little unclear to see which functions need just a repository, just
-> a hash_algo, or the whole write_midx_context structure.
+> The global variable in question here is just "the_hash_algo", so I think
+> shejialuo's suggestion to use "variable" is correct, but it would need
+> to be "uses a global variable" instead of "uses global variable"
+> (without the article).
 >
-> I think I might have erred on the side of just passing the
-> write_midx_context structure throughout the midx-write.c internals. That
-> exposes more of the implementation details than is strictly necessary,
-> but it does so to the benefit of making the code (and this patch) easier
-> to follow.
+> But I think we're being unnecessarily vague here, and could instead say:
 >
-> I don't feel strongly about it, and I trust that you modified the right
-> functions to pass the right data. I just wanted to mention it in case
-> you hadn't considered an alternative way to structure this patch.
+>     The function `read_refs_snapshot()` uses `parse_oid_hex()`, which
+>     relies on the global `the_hash_algo` variable. Let's instead use
+>     [...]
+>
+>> >> Also, while here, fix a missing newline after the functions definition.
+>> >>
+>> >
+>> >Nit: s/functions/function
+>>
+>> Maybe.
+>> But it could be "the function's definition" as it could be seen as possessive.
+>
+> It should be "function's definition", as the possessive is the correct
+> form.
 >
 
-I remember doing something like that and it seemed a lot more noisy than
-the current iteration.
-
-Regarding `write_midx_context`, I wonder if all these functions need to
-receive it. Passing only what=E2=80=99s necessary might make the functions'
-requirements clearer, instead of bundling everything into a large
-struct.
-
-But then again, if you feel otherwise, I'm happy to change it, I don't
-feel so strongly about it :)
+Will fix all of this and re-do the commit message, thanks all.
 
 > Thanks,
 > Taylor
 
---0000000000006245d206276d9de2
+--00000000000090679706276df1b7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 37d0db0568425158_0.1
+X-Attachment-Id: 44fef0a73f0238c1_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jL1RJSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNWVsQy85YUQxSGJwemp1R3diL3laS0d3Q1h3OGdzNgpUQS9iYkNoc0Rx
-dnA5aWF5MkViQ0xydk1HSWFrblBuTkxmWTB4S0pUdVVlRkhtU1VmNStENjVWbmdQNDl2SkpZCnEv
-S29CUDdxR1lzWEVtNHNwM0VZcG9aazBkQ2ppM0UrMDJ5b2hNWlBjejYxQWRlOHFuVko0d3hNOUFy
-bExNNXQKV1E3N2xTT2gwNllscDZRMjBYTTJ1Y2pEUk1JeG1rZ1BoeHI5ZGw1NFBBbDhnS0lFR3ox
-ckdYdCtLd29ERG1SSAo5RXRHNmRQZ1dicnREdnZvUis3ODg4b0VCS2p5bDR1d1dsN2hUeUFzdXdQ
-NVdxMjJsWU9IVXZLYU5uT0c5SzVYCkpzWFh4M1NpcmR6RmFCTnZHVzM5d3dFZ1VLcWw4RjYyamsw
-bnEzU2hEamVOTUdya0x4dXFLWTFTZStJWjBTWWQKRnZkY0VkTTJaQmk4bTgyYXYyVDM3TmVtdkhU
-RGpLNTRXUGVaeHRhUEM2VVpyU3V3S0ZONld1SXY0N3VsdXdxTApQZDFxUEtpRlpyUlYwYVJWUG9v
-MkRhY3d3d2xudXRYb0hudWpOQ0RjelVYbnBLSXZmallCTkxvRzFQam9xOWpzCmtUZXJoZjB0d2hu
-NlQ2WllBNWorcmtEckNJR0ZiazhiZlBsazJaOD0KPVZmQ0EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jL1VnY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK2VEQy8wZnVGNzdXWllBdTRKbnNUNi9HS0NPUTJYcgpEWTlJMzVZQWla
+b3J0bDJXY1hJN054QXJxdzR1ZDNBSDBDWFlPNWthaEN1TEJKcjRwaS90QkN0a0djcjQrYkV2CmJH
+cWszSjF0cTdwTVFaaXRuQ3JIVEF3SGdQcDM5ZXZqNkptajRwRDZ0eVFiSkovWGtsaHl6dDJZdXFR
+Nkp3TG4KcEwvbTgzb0gzTHJ3enlOUStrY0xhc0pOVklXRmpvb3d3MDVoTHNJamFwZ1JmWFhEK01s
+WVpCTGgzMXkwbStZdwpUb2RTQVdNa3E3NWFPLzFmSUFSaTcySFg5dHFEdmZLOVRHdmtKOVh4bW4w
+enRYL3pSRGsrYi9aSEVxNWhJTEZhCmNiQTRLamIwcGFLT21qNHUrbGJyVzdqaFM2U3hLWngxendi
+QlMvNkxhR1pzTXFvSHB2ekZWS1RSNWVjQU1yd20KS3krWDFnNC9qR1QycVRWOFpXOVBsMmtFUnJU
+a1NaM21RZlU5Rm9HaUE3MjFZN2ZhTmRzM1A1cWZ4cklRWmxwagoyVkhqVkcxMWY4eHdEaVAydEpB
+clRHU3JPeDB1UzZkL1NrWGoxNTZnVjJtemcxakJyTTkyL3ZBOTk4Ui9Oc214CnNoc0VLUVRGeHlZ
+cUVFTFhtOCtXOHV4MlFCanZMRlJTNUdvaEtYST0KPWpsNXAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006245d206276d9de2--
+--00000000000090679706276df1b7--
