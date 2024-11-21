@@ -1,66 +1,72 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0015A1885B0
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 22:50:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7428A1D4323
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 22:57:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732229447; cv=none; b=lFgdP12L6x+p0ANkRryZg4Eqcu3gBy5qRJERwHCdO7QdnoBk9nvSlEDLp0+pUIMN4SvJdvqrx0Nyh+fAn6uDEzP6lNriXgPz73d5zBdxRgWzMp+fzDWqBvRkOkcCkxckFsMVVb9lyTTSdKIFuHUAPptMgKCdiRwhI7ymk2JUuuU=
+	t=1732229850; cv=none; b=o+qRvJc5J1R0MuzpF1PKCDvnLMaC2CAzdYwrk21z84SnNMlWexPMt8DEatBAo4ttEzbu7sht6RVLRbtSeDnyeCBSNbQMiWTOze+rvqmhyoUkQJhepsGuReE0EWXufJfHciZI55SOfBRj+dc+7Xz9Ny1BGewQf1Gio7N0TKR5QMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732229447; c=relaxed/simple;
-	bh=khaB235JyMXZawCmyAOoHOfmNoGRMKzAkBFG3FTgKf0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=rUcaf3CW6w3IdoV/A2+VqfOgKMCfOc47TBb2Dkz6zqoD/rU4kuMwKUEDC/aGsIdpHaJm57tXH9MVGsqrBAkFR1nEJOi92YnM++oO+l4wsFrK3Yntp93ljw60QALggPOx+qUO5UtQfEDKrYZC0v/tRYkVldufpEDqVQvuyiMKoXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=UhkbDgWP; arc=none smtp.client-ip=209.85.219.180
+	s=arc-20240116; t=1732229850; c=relaxed/simple;
+	bh=ezHEBf6PWUVAdvJuQiiKk3fr+umwBYpvYj2cFqM9ToU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FTiLALHHsf5r/QxP1cyqCytossTTk05Tsi7CfnQK2ups6odHAkwG1Au1Zqb5UxVYKv++cK+zv8QVnLKur3JxV0MTCNvzpKBzkfQfnpYBmnGuAK2RtdZHtqpge+h8RIVsR600kPEfb68dbeGaqeySNm8KEcn2WcxYPZWxaDpSHpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=L1a8wXvg; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UhkbDgWP"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e38866c8b2dso1317402276.2
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 14:50:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="L1a8wXvg"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6ee7b886b5fso14878797b3.3
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 14:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732229444; x=1732834244; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OPoGRfTYtnUgTOjYL39XQruN4kXs2rU1Vhwjtm8GvQw=;
-        b=UhkbDgWP5kYblwudufzrX3izqzH6sUe3K9zvx8/8GwxBTeWqUFLnbfWDMPMENSOBLC
-         nyL1TY1IEnWrY/6sVTKe4Xn75h4/e2ej0Wa6lgOBK3Q4G/A5dZzeaWocLWPIQoRaSAIm
-         RPUXeN9dS7JBhEyOD8TsnOq4yQboAqKt4WNZo5nUsww6PvwU4t4/b2mfuaW1g3xLNlPh
-         3l8dWAqfYMyDA3zvXCCzmntetxHN8KKX79XtfLkn/1lKA72Ko3ZDTFfKxUCM0zN3I53F
-         ZZncd8l5v3q4CTlL4nh/G7W8Dx8bdFKJd3VBMmOT/LxIDTv6/Hu0nPz6wtCWYbVPWH9U
-         VGyQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732229847; x=1732834647; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AIOeuHiAK5sFq11OlrvHsW1dQyfXWOFZjtDFFmxQsho=;
+        b=L1a8wXvg2rScnivgn4i/AoUeuQg8b9l+66WbBKU8O4D0jUbI2gvqeURgbBaJJ6yDiB
+         NIv61WeGE/Zr1WGC4IwyRHqBHjCGl5gE4Jv7NddfXPUFq13Qn0NqYkzp2SVGvbWKXkLL
+         20HDN9PN8hM5vMq3zl+fYdV+SrJ8p2ABmgwkcdvCvhAzgol6Qf2380bvHzBG+1jA1r2P
+         tyWbNnbklsggEo4iVL7lqQlyuPAzJ5vNByJEi+iiGK+0VYiHuniTgFxA9gfj/9aBGTrk
+         ub6s+wjl9410WT2jKcAs/WbYcJ0n+Hl6gk2+npXINZm0tfPS7JhNSmBqWfM6NMd16KD9
+         JsRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732229444; x=1732834244;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OPoGRfTYtnUgTOjYL39XQruN4kXs2rU1Vhwjtm8GvQw=;
-        b=oL1bQg4Z08srD5dIhl94T3wplqw6/2Q7zXt3btr/u4cnyPl02zTBnLxKm+UnbwZw58
-         9bASH15M9YfWjTrKaIVdktBkoBFE/8KKuWIAG0FF2R4xrNhVGp7w7W63wj6y1RSu4nLl
-         AZDPIRAFONDhrwXu38fau8zRJUGcupCnWwCLO2vyQ7uSX7/vzwKLBroTb2bAN5ENr8Fl
-         JTZNwsR6DHJR8YlFmyn+BspshkqqwP5v7eDjIShas+wTs0T5uz5X9wTa+jzhyqxAoJ4K
-         wC7bKYAzXcgSfmpcaNvDqATtZhaDQrZFT2Kuji+gQ87ZgYbA9uO8hMW8TA3G5vlLSaA+
-         OXrg==
-X-Gm-Message-State: AOJu0Yw4bx4RHxZEsY8woZCS4am/MB53XAm6jp4jzIrad7uXvb+uvZJx
-	JpxIv4VpmIxl0E7FUNEZl3efflHYmUiqy76egVahnh6hJT5Z5BIwH2twJRSMlWpNbOS8CAQV7sF
-	e
-X-Gm-Gg: ASbGncvy3wC1pFSwJHexerH2vOqEc2iFuRF9UcufbYNfxHRFzqdwmOaeBMUZXhIRAFo
-	1m5KOIQOy2k5F+tYEAzgnXn+tvIroeNILqgipg+6EpkpvSO+9xEMij54E64G3tHrnmg8K1Q7RjG
-	qUWl22A2QutjLrLgRHqBs/lUMLJMcCRmgaIKdeSmXE0meb8HoMkLaodd4W03ZshnqdEEwI8S0YH
-	kZaEMsV5v4Nc60kKvgHn4Fw0XyVJFzTEUitdZbocUgJtbb7loDuy7A4tgv2WG6A10YW7r2O0pKp
-	aGw6S6UI4sxVUai/okX58A==
-X-Google-Smtp-Source: AGHT+IEMlDQolnLNBvp1hTovAqfC+7nUq9+Ifr5jPoeQF/A6rn5BGuX9H9Jgy0f+j5O9bRwMPvSy3Q==
-X-Received: by 2002:a05:6902:c0c:b0:e38:b047:9f57 with SMTP id 3f1490d57ef6-e38f8bff54emr688416276.37.1732229444566;
-        Thu, 21 Nov 2024 14:50:44 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732229847; x=1732834647;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AIOeuHiAK5sFq11OlrvHsW1dQyfXWOFZjtDFFmxQsho=;
+        b=qD/evVLmhgxqImtG199KWrGtw4G5pP8lYqkJQED+QU0+Hn2hztcPXvu75sZACK6w43
+         VAxRtRZQ75ky0TCJLEFuguu+9Pyp6toszKbggCRRSnkIyLFa+DWn/JAHqU7ePBC0/C/c
+         c1qDRh2yrVDgyQDUkBoNploBI/dhC/DtPdX1+DlZJ+X1Pp0jS87TUWo+JBmhqK+hOcaT
+         LHkg2yM8f1Lp8xb4OYU5xIpSyf0P418QG/eNG5tQRe34rjMzTW4rhMT1UKM9RwYEn4bo
+         Sa6Tr3L1kdtsPilDxalCFM+tFLP02ZltJn1GM0kODhIisztgLCLuPfzhZjiQYdBDnEST
+         ZCsg==
+X-Gm-Message-State: AOJu0YylRvkaDySLAnCbXG7p7jLsf2iDWjNLceMxfDQ58oRAtJs+VNO4
+	Gv5+nDrc/5NOu6l7g/LfRmFYj8RvT+Yn4/IG4EXaJSlAS42U9qZ+bjRVx5O/X1Q=
+X-Gm-Gg: ASbGncurFZ06GcHG/lIcnG42ulGbeI3CiO5nTHYZaKXN57cNxektrszUtjI1kbNlzOm
+	bRCzdb/yt3aElY95hP+slfPXwwVIEMuHGNECHO9l6bZUJ6I9t8QGE3jcuDSUPSijmaeTHma5dQ0
+	pnzSozFzHGZ2kxO/Cp22mjCITFWEQLXroobDL+RJEQb+ACHCxaLlHHHamXv2I5Uxi5ldkJFOmwQ
+	KNHlcNfjON+DHYu4TviGiwS2C9D5LQxi9WHIAzJaJR11BA+w5L80N9/BaxWTVEYGT1cUMC0PYA3
+	igrTzGwYeoUSJ6BXv3joDQ==
+X-Google-Smtp-Source: AGHT+IG87eIuenA9iMofAP8cnkj+Hmz2MLl4FvOJJayM49Q4D3RRUxtnspNyTCW1PnLpOx1W096SzQ==
+X-Received: by 2002:a05:690c:768f:b0:6ee:8363:96de with SMTP id 00721157ae682-6eee0a26d30mr11062647b3.26.1732229847404;
+        Thu, 21 Nov 2024 14:57:27 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e38f634d077sm205921276.54.2024.11.21.14.50.44
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eee008cd94sm1769127b3.95.2024.11.21.14.57.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 14:50:44 -0800 (PST)
-Date: Thu, 21 Nov 2024 17:50:43 -0500
+        Thu, 21 Nov 2024 14:57:26 -0800 (PST)
+Date: Thu, 21 Nov 2024 17:57:25 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] pack-bitmap.c: typofix in `find_boundary_objects()`
-Message-ID: <cf49115db4e8dcd406a17c946659c2eef3ec6045.1732229420.git.me@ttaylorr.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
+	jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 0/6] PATH WALK I: The path-walk API
+Message-ID: <Zz+61fat+vGgb+xL@nand.local>
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+ <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,51 +75,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
 
-In the boundary-based bitmap traversal, we use the given 'rev_info'
-structure to first do a commit-only walk in order to determine the
-boundary between interesting and uninteresting objects.
+On Sat, Nov 09, 2024 at 07:41:06PM +0000, Derrick Stolee via GitGitGadget wrote:
+> Derrick Stolee (6):
+>   path-walk: introduce an object walk by path
+>   test-lib-functions: add test_cmp_sorted
+>   t6601: add helper for testing path-walk API
+>   path-walk: allow consumer to specify object types
+>   path-walk: visit tags and cached objects
+>   path-walk: mark trees and blobs as UNINTERESTING
 
-That walk only looks at commit objects, regardless of the state of
-revs->blob_objects, revs->tree_objects, and so on. In order to do this,
-we store the state of these variables in temporary fields before
-setting them back to zero, performing the traversal, and then setting
-them back.
+My apologies for taking so long to review this. Having rad through the
+patches in detail, a couple of thoughts:
 
-But there is a typo here that dates back to b0afdce5da (pack-bitmap.c:
-use commit boundary during bitmap traversal, 2023-05-08), where we
-incorrectly store the value of the "tags" field as "revs->blob_objects".
+  - First, I like the structure that you decided on for this series. It
+    nicely demonstrates a minimal caller for this new API instead of
+    implementing a bunch of untested code. I think that's a great way to
+    lay out things up until this point.
 
-This could lead to problems later on if, say, the caller wants tag
-objects but *not* blob objects. In the pre-image behavior, we'd set
-revs->tag_objects back to the old value of revs->blob_objects, thus
-emitting fewer objects than expected back to the caller.
+  - Second, I read through the existing API and only had minor comments.
+    I read through the implementation in detail and found it to match my
+    expectation of how each step should function.
 
-Fix that by correctly assigning the value of 'revs->tag_objects' to the
-'tmp_tags' field.
+So my take-away from spending a few hours with this series is that
+everything seems on track so far, and I think this is in a good spot to
+build on for more path-walk features.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-Noticed while I was looking for an example of this pattern somewhere in
-the codebase and was surprised when I found this typo ;-).
+That all said, I am still not totally sold on the idea that we need a
+separate path-based traversal given the significant benefits of the
+full-name hash approach that I reviewed earlier today.
 
- pack-bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+To be clear, I am totally willing to believe that there are some
+benefits to doing the path-walk approach on top, but I think we should
+consider those benefits relative to the large amount of highly
+non-trivial code that we're adding in order to power it.
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 4fa9dfc771..683f467051 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1270,7 +1270,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+So I'm not strongly opposed or in favor of the approach pursued starting
+in this series, I just think that it's worth spending time as a group
+(beyond just you and I) considering the benefits and costs associated
+with it.
 
- 	tmp_blobs = revs->blob_objects;
- 	tmp_trees = revs->tree_objects;
--	tmp_tags = revs->blob_objects;
-+	tmp_tags = revs->tag_objects;
- 	revs->blob_objects = 0;
- 	revs->tree_objects = 0;
- 	revs->tag_objects = 0;
+As for the patches themselves, I think that cooking them for a long time
+in 'next' makes most sense. We will want to land this patch series if
+and only if we decide that the traversal powered by this API is the
+right approach. IOW, I don't think it makes sense to have the path-walk
+stuff in the tree if it has no callers outside of the test helper
+provided by this series.
 
-base-commit: 4083a6f05206077a50af7658bedc17a94c54607d
---
-2.47.0.237.gc601277f4c4
+OK. I think that's a good stopping point for me on the list today, and I
+look forward to your responses :-).
+
+Thanks,
+Taylor
