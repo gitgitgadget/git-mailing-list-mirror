@@ -1,128 +1,138 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91771B0F0C
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 13:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979641B0F0C
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 13:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732194628; cv=none; b=DBaebc4L/4X5KIPzpIzCyN5h89acTK4YZhnILHvWK2R2L2IjRwSLRPA/pTS0l4UVLyqQU3mG4zvYpPJOpMzSmX6pe0Vfg4UAZVw/AtHxBmdHPe09cRbEkyoQIw81kJJ4fdPezWSLpFRf7HIu1wdptNSDcVe1paRg6xG8k4F8prc=
+	t=1732194728; cv=none; b=TuUgWCIAr2lCRSOad1Y5RX80UmLi/hXxazSDnXJ9GAiornBZAokYH6aq8uu1LZXkVfYBfPoMhlOBaNYZl1zmaY1h+cqRcwYGLK8jB6abs2yFbEYK+liYmIF5nxyAy8bM/HUK4iDgu9VU80dOCKrSP2WA36g6ypj2oE3VWssZmh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732194628; c=relaxed/simple;
-	bh=yWYyO5CiHFHM8Wxm4hqsKxPBwuRQ+dDiIYuVFjXSx14=;
+	s=arc-20240116; t=1732194728; c=relaxed/simple;
+	bh=sFnwE8bGC4bHquSfDK5NsgLr2+dvtKCO7fL7Cx+tR64=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a5rs+Un0DCjp0NDEWoUuI3S/YrH5n145+6zRRjLDcyhmfApFqB9C5GgSmfGwUHIbnFmzFUt6MK8gRCvfIfuxkt+vf84Qa7R72XfLQ62VMgxW4r4fRZNd2Cc+F85wkjQV3+d20TxoFkHVzpdlx6jKxt2o1yuZEuK3AAG5ecSzhnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gHAx17vI; arc=none smtp.client-ip=209.85.167.174
+	 To:Cc:Content-Type; b=TrDv1hqBhRmp3ifnL4E4/FdtxxTplmKH5P9H5YEz4FXbxVVpRJlWRBfCYFIjn65orf6RYIcoeCrppeCTyjLWfvz7spmraWpEmZ8+fsEEei3SMnwDU7l3bwYX5FLLJ7rihlt7PTdQaq3G7he6HzdldxriWNRhltvq2i9jGeyGxHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqI+W7mt; arc=none smtp.client-ip=209.85.167.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gHAx17vI"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3e6089a1d39so481078b6e.0
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 05:10:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqI+W7mt"
+Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3e5f835c024so520565b6e.2
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 05:12:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732194625; x=1732799425; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732194725; x=1732799525; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CUMFp/smlg/e9/plb0MB0xVtUsnoQScj2IYyh21oNOo=;
-        b=gHAx17vIOJtDtC9dYZX8I9NQl6ZYrhhq8Eb6xbtrvbjTzV8dK4zTs27YQvkturO1/D
-         o6qoJ1BkxUU1DLQkE466anzvqU8E8A2rBVVEq4b7rP8rfmrJW3CKmieIfYaqzl+fdXxP
-         /A9ZVzyi7YzW68WB3iC0h6+BAs3SptABWomQICU3NFmH4xr2u/4oGiowS3LUNekwp5N2
-         4rsa2iqmu/xR6nc2+FNM/3kgdH8yP3ASGmum6IyhcAYTn4obGjVePxIuhVehk+Yy+OSI
-         PdPwzne5n+1ldvqGo1jlWgapUmqznZTzJ56wnydFh5oe/qzlexcvb0S0nmMaGI+pu4ow
-         Bv0w==
+        bh=5fIN9sVPws1v5cIb8/vhUg/aUeTlOBsfvq3at9uUCf0=;
+        b=dqI+W7mt2HwlQXaABZyCOcblYSxcq5eooBk4rOr/cNsi4WEV/+esTZnjfPJbjLvk3d
+         vGsU5iG3/wIvNQhAwCdfetz6o/jLLzc5nE+CfSoODKhA+sS+oZ+7aspp4B9yiUO5jPuA
+         pZWWduZ8PTCKqtQLo72yhgS3yoKGGsTO8lo/txmShsWM970dfM6e6Ta2Hwpz5fNlHpaD
+         muK7UjZ/Dw9peiHiPTaSrwyWVk0eAzHRV8OO1geC6bRhi5ukAhHccnT4YyfO1fAnrV/V
+         UEK3SEARHMnhILcSPiUkfSHtLaqT2Cup43UnV2KXbUHv1p+0qf6ZuoXorvpsZyaW1RZl
+         nAGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732194625; x=1732799425;
+        d=1e100.net; s=20230601; t=1732194725; x=1732799525;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CUMFp/smlg/e9/plb0MB0xVtUsnoQScj2IYyh21oNOo=;
-        b=eNc/l2RZxFxRWs7WKeBQPgDcLBbcWV/s81RlEi800v/7EoC7Vsz9t2zi+DiNSB1pNQ
-         hym1+XJUr1T7GA9EF8ULlWRR9OEejomjJHAaPBCnT1vQ5dbXiP62dg8gRAxu9AldzHgj
-         tU281qv5swYPZTP1oGhxX54NsgRr/6a3RB4PQywNgi4FLc+ZOHEdycodp0cvbkDzj5aR
-         sLqCGyF2ZYlI7gWwOXMevX7iga8MBbIq4ASHBeDkH64pQlZnTVdGGLaVrXNrGh1es8o7
-         m1kjbMVr23q9p4bwdVesALmQ4BhccQHz9Rh7pJ8myH9jC0hAI75epDgwlRcZHWahyXjB
-         hPbw==
-X-Gm-Message-State: AOJu0YzcoPcBvF34OoMuOJoLoAWoFMhcyPBkW86av2Cq8eu6VXsruSFA
-	W8/Ti3SoM82s0jGe35pzPsns6CtJK4u2XH7GCdUNN2MmS//m7Jzov+ok4ad8dzShM7YvIr3TAEO
-	Ss2VdGus2GMjBhxah0nNCz65t32w=
-X-Gm-Gg: ASbGncu/+b+OYxdMUNLjfx3zSNEVWX1rS42YuHwu3kCjkd4WvvkqLXe1vfVmgvLSA7y
-	Y9ofTFgN4J1I0Os+dLinZ7xnP2aBksJpaXDY3gE+HIMZ15xemYBdWGEoc9lGJboPkrQ==
-X-Google-Smtp-Source: AGHT+IGSxDSzm3zZiYdnmPByFnE6GqnCimrvpRYpoCdqrO3bHJTlhZtGtquvVBaPGm1Ta6euRwdxDq7p99hIvnaD5NU=
-X-Received: by 2002:a05:6808:1496:b0:3e7:aab4:db62 with SMTP id
- 5614622812f47-3e7eb7c62a3mr7773082b6e.36.1732194625467; Thu, 21 Nov 2024
- 05:10:25 -0800 (PST)
+        bh=5fIN9sVPws1v5cIb8/vhUg/aUeTlOBsfvq3at9uUCf0=;
+        b=kMm8PgI9+x7xRy/ij6StjhK4Sjp5YL+0Biy7pBDkMYwSf6DzKOHocm9zmOBfmRiSym
+         K90aqZpqtf0dJMx/XNSUTpSh4SJB+PZIAfn6EfXrtlBA1JkMtQUXf6fzAZyhaqclqxeO
+         kPYYMhf6XPoObsQ2TlLltLykHPzt4QFpI0qS3L+eZ/70dYqmmZQF/iyUiUxAykmqyS/f
+         YvLrP0uMMqVPE+fnszZojVds5i/Md5sLUk2j60McJHDSglhbKGoz8CrIY262rgK2EBMP
+         9YtEyEKpiuA2vAHAtHAqk1lNlegjZRv+RWqQvBqcO3k5zbp5YZG8XCTPBW7pkgtaFgb/
+         h3nA==
+X-Gm-Message-State: AOJu0YxWFNpI76nInrBx0qC6Qmj0sWD6XXsA+5BiqPrnY8TgJsUVWCw3
+	kK83bW/b7Z9m2iUMcTJIXAnNhYau+ajnXhI9Z8QS2eViezNtQ2/uxKdLSsRRaQsywYvGLeh6dL+
+	XCHP0dtwFIncS7J0M6X2RNUStmhY=
+X-Gm-Gg: ASbGncthx67D22bBbu+RsaPvUT9FEMYMT/o1FVMrQyTjp4O6eDI03EKwtKl2QmhbEFw
+	dkS6BM+P25bWYcYcM7nmXjTUGDxRs4/XSpRA1XiLVk01VxW3LAwn+w9W3u0Y83ZqSFg==
+X-Google-Smtp-Source: AGHT+IFZX9+8iWI2hvTuKKM+uiVa+kfjE4Gm+NrikXVo+mBYCpexjrSKhXnlTEROKNmV9WaM58VB1MXdgKgGFbHPv5E=
+X-Received: by 2002:a05:6808:1593:b0:3e6:4f5b:afd1 with SMTP id
+ 5614622812f47-3e7eb68d12emr7459987b6e.6.1732194725627; Thu, 21 Nov 2024
+ 05:12:05 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 21 Nov 2024 07:10:24 -0600
+ HTTPREST; Thu, 21 Nov 2024 07:12:04 -0600
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Zz5oSqu8IlWbZHvr@nand.local>
-References: <cover.1731323350.git.karthik.188@gmail.com> <1bdc34f4d8161a3b70f21124cb857908e4fac53c.1731323350.git.karthik.188@gmail.com>
- <Zz5oSqu8IlWbZHvr@nand.local>
+In-Reply-To: <Zz5o35FZPFyM5KyL@nand.local>
+References: <cover.1729504640.git.karthik.188@gmail.com> <cover.1731323350.git.karthik.188@gmail.com>
+ <Zz5o35FZPFyM5KyL@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 21 Nov 2024 07:10:24 -0600
-Message-ID: <CAOLa=ZRRD1XSeUfQfZD-nmhm2gnf=5f_AcnfDaYovvGnvbv3Tg@mail.gmail.com>
-Subject: Re: [PATCH v7 7/9] config: make `delta_base_cache_limit` a non-global variable
+Date: Thu, 21 Nov 2024 07:12:04 -0600
+Message-ID: <CAOLa=ZRVpq7=tRiCrJD-do+PKS-ek3m58bpUm9S7t1oKepiLNQ@mail.gmail.com>
+Subject: Re: [PATCH v7 0/9] packfile: avoid using the 'the_repository' global variable
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="00000000000055e48e06276bfdd8"
+Content-Type: multipart/mixed; boundary="0000000000004e2a3806276c0314"
 
---00000000000055e48e06276bfdd8
+--0000000000004e2a3806276c0314
 Content-Type: text/plain; charset="UTF-8"
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> On Mon, Nov 11, 2024 at 12:14:07PM +0100, Karthik Nayak wrote:
->> @@ -1697,6 +1701,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
->>  	struct unpack_entry_stack_ent *delta_stack = small_delta_stack;
->>  	int delta_stack_nr = 0, delta_stack_alloc = UNPACK_ENTRY_STACK_PREALLOC;
->>  	int base_from_cache = 0;
->> +	unsigned long delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
->> +
->> +	repo_config_get_ulong(r, "core.deltabasecachelimit", &delta_base_cache_limit);
->>
->>  	write_pack_access_log(p, obj_offset);
->>
+> On Mon, Nov 11, 2024 at 12:14:00PM +0100, Karthik Nayak wrote:
+>> Karthik Nayak (9):
+>>   packfile: add repository to struct `packed_git`
+>>   packfile: use `repository` from `packed_git` directly
+>>   packfile: pass `repository` to static function in the file
+>>   packfile: pass down repository to `odb_pack_name`
+>>   packfile: pass down repository to `has_object[_kept]_pack`
+>>   packfile: pass down repository to `for_each_packed_object`
+>>   config: make `delta_base_cache_limit` a non-global variable
+>>   config: make `packed_git_(limit|window_size)` non-global variables
+>>   midx: add repository to `multi_pack_index` struct
 >
-> Hmm. This repo_config_get_ulong() call will look for the configset entry
-> in a hashmap which is faster than parsing the configuration file from
-> scratch every time, but still expensive for my taste in a function as
-> hot as unpack_entry().
->
-
-Thanks for pointing out, I do have not much idea about the object
-database code, so any input here is appreciated.
-
-> Should this also go in the_repository->settings instead? That way we
-> have a single field access instead of a hashmap lookup (with multiple
-> layers of function calls between us and the actual lookup).
+> I reviewed this round, and think that it is looking very close. There
+> are a couple of typofixes that I and others have noticed, which are
+> minor (but I think in aggregate should merit a reroll).
 >
 
-I think that is the best way, though we'll have to still add the config
-to the gc config struct. Since there is no repository available there,
-but I think it still gets us one step closer towards cleaner config.
+Thanks for the review, indeed, I will be re-rolling with the fixes
+discussed.
+
+> I did have a concern about the conversion of delta_base_cache_limit to
+> be a non-global variable, since I think we're determining that value
+> from within unpack_entry() in a more expensive manner than is possible.
+>
+> So I think that merits some investigation, and will likely result in
+> some changes that we should consider before merging.
+>
+
+Yup, I'll move it to the repository settings struct and this should help
+alleviate the perf issue.
+
+> Karthik: if you do end up rerolling this, please feel free to include
+> the patch I sent in [1] on top, which should make the maintainer's life
+> a bit easier than adding another topic dependent upon this one ;-).
+>
+
+That makes sense, I'll add it in.
 
 > Thanks,
 > Taylor
+>
+> [1]: https://lore.kernel.org/git/884ca9770d1fb1e84962b1f700b1ce4adce6321c.1732142889.git.me@ttaylorr.com/
 
---00000000000055e48e06276bfdd8
+--0000000000004e2a3806276c0314
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 74be0c1bcc2d0760_0.1
+X-Attachment-Id: 75ddecc832720783_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jL01UOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOVJBQy80dHBHbjc1cEd6SENKMzBBR1FXUmIyaXZYbQpmdnN1NFJtV1ZT
-cnJzUHNnMkpOa2NPRWRjYzE3WnUyYllHSW5wM3BIRzlCKzBrN084cDR2bTdHeTFrWGw0bEJzCnNG
-TXFFb2I2YnUwanZKYmphTzBYZWtTOERGbEtMTGRlNUE3dWpBL2NDdWxseGFDT3lXUU1hcGJRY2xu
-ZzF6NTkKWURDVU8rdDM1YS9TL2JLLytDd0cyZ2dWUnpIaUV6TVk4Y3RNRkI0dytrZmtuaHRQMko5
-QWxXQ2paS2V2TldwVworM2JHU2xRdFl4RmZrZVlWQXpjNXdwSDA3MlplWDJzaU5yd0NGaXAyT0Q2
-cVhxei9INlA5QXk5ZWxUa3NUYnJ4CmpzWVpXVU0wY1Q4T3BMMEJRcXpPWk5sRmRacXc0S1hvSG1M
-Y1luQTJaQU04OU9WQjhRelVmakZ4SVJaWGpjeXoKMnJ5K1VjVjBtMG1EUmtHYnhJQnZJOWFycEQ2
-MDArTlJ6bXd3N29QcElGWU1xbnhGK1p4VVdBVTBWbm0vV0dneQpQTktsRXpjN1lIdlFLcGpoQms4
-TVdvM0JBZlY3UDU2ZTY1UUM4dzN3OTlqWjVRaExVL1lwUGxVRkloQmVBV01kCmcvcW9idm9SemFa
-L1hPbWtZVWNkTWJFOWtUTWVDb2g4K2JPRVpYTT0KPXJsZFMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jL01hTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL0JTQy80Nk9DZDhmdCtZeXlYSHdQbWc4M3o2NENOeQpGb2JVNkJ6a2g4
+YStFRVhmSFJHVGpXM1hTK0MxZXVnTVZwSXlCYXVaUXVjb0szYVNiTXR5Mmt6ZHA1WTloc25RCm5v
+OXEwbitSME04YXVuS0REU2tJU2szamlrUjh3QUlWdk1GcTFpbkRMUmgza1BQYWpWSmJKTjdGQm5L
+NzZYYkoKMk1PMlRFaUIxUHZKdzQ1S1U0L2tjZWxUVlZIcEJVKzFkY296WVo1ZDZqZk5STG1rTkNR
+dkxhYVZ2Z3hpTVMzNAp6eGVNZ2xqTmJnVDFjRkwxeW9ocjNRdGhJSFJvbU9maXlBR055a1RJRUta
+a05yZm1GTUFYWTJJUmVIZDR1S1ZjCndnNk55Z0t0VEFCWE5NN3B1d2lsbVhHV044dG1LOXMzNlV4
+WHFUU2ZTMnZsOUMySHdKanBSdkJobFpMbUFYYkgKZ1lueEVMNmxLZTJwczRGMUd5bm0rc3JYblFx
+K2M3Z0UrQXE4WTQ0emdvOGFTY2xORU5Bd2s1MEZjZk1BbWNtSwpwek53VmVXNllXREhhb0lOdmIw
+dEJtemIyZlhJdTlzTXRFUkdTZ2x1Z0MvQzc0c2dHeThUaExCZHNHNzZVZDRKCmZsNG1UUGlIbkNQ
+QWZBYk44d2diNFJ5b3d6ZnhNc3FIbmpDa1pSOD0KPUNrbTcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000055e48e06276bfdd8--
+--0000000000004e2a3806276c0314--
