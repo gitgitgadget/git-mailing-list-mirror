@@ -1,120 +1,147 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089681BD9EC
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 21:51:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E341CBE81
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 22:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732225874; cv=none; b=KH8ff1nl1x0SBrN9IyU5JAJvWgfmGE1FtD8tRW6PNgD49m/SggI+sMf2SUTwE7aNsp3M0UOdAQVQn0SNQ8oc6Pf8Dj6CTn1m2mQXIgBzRjUCfju+n4rroEgsgPVd7EHb7QP3aXwTvy2PNBAbV7EDVMYRsnVrblQgxzvGN8cl8L8=
+	t=1732228746; cv=none; b=qXZPDspmEtJXQYuZCGUjl8mp+BtPJOSADnC67BF51NxM6C6OlmXkgMFxJ1Lv+wdF/lBTSAg7MwiauO7Iy5oU7+Qjq6mzFRiBE0uLdZYHrEG0/rQQk3uabWKc1cBo6WzHdhu3CirCUQw3jN9Bxvq2fJ1P8hu26/WBZGKLK5+RhHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732225874; c=relaxed/simple;
-	bh=w233NNy4p5L1XvJln9fH2cm6swO0U/L+Zer0YbF0B/g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=By4ITQcJJ+6lEJX/QX8vUFxI8HNE1HFIeCGCmgoa5MzBEy8Gmh7r0m5fmT4FqRNtC6faPNSnp6YVt1VUjZLvr6ibm2mVHiJi9e6lQfaN3eV7ax1BGM+eZxCzdXoNBfHYoUrjg5oesM0ml9RXn2eehKzfgjBr3C8ICeVF/oYxYQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tp0h27m0; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732228746; c=relaxed/simple;
+	bh=MbWlhik8pMp47Ey//Tb7P6UBXrf6MiSvlnmVrNDFpxk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fypJJcPYD4z+Q8LY/XXNJNYyN7UEw2xuOx86wAydBck1BdXUhPp7sCqoevIMBO9LHPskNkZp6GDTa9wXoSti6GMavpjQR/DFoXM7y6pKFOjEvg+jG52ad0OMeFlHiYke9r+j3DWZ9YKKGxmIZKAzy1zewQc3z+IsTZvWrWZ9ZtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ItDDo5Jx; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tp0h27m0"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3824038142aso973432f8f.2
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 13:51:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ItDDo5Jx"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6eeb2680092so15303677b3.1
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 14:39:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732225871; x=1732830671; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6XMIAqPzhM5bxCaLmyAE1T8ZqP4pQykquYi+/1CvKGA=;
-        b=Tp0h27m0DoTrgl52BqLyTtVXKqMUPVOyaSgQwD7Ot8RXZzPyYaUiiOCNSubi+j0S6Y
-         +JN5NmXBpTaB1BD4g2z6hczcq9Ny6T+x1UwdbAmPmQc8WCwPBujq/kh4S1HPlHW/sMea
-         NASyZvdhu7YPY/9LFmCgbL0M84kPGVNkwhlzzT9ajDO3lnxg5MNigCmi/1/n7Cwb29FY
-         PShqQvFrl26/P5jq4od0rPWYkeFqF7B4kUwZlw162JFKmmJ3T3QkJMlLFMhxcvTe4Rky
-         VNrYhBZIqJANu7dwp7IPo0qpmkyZbwg6wupSj9zxXN4FMVNKvbaGNvle3/UCY3RfvNd7
-         sJ3w==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732228743; x=1732833543; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OS084Fr27lqc1lWU84hgIup5al7qRJTL3L43dCHHhbI=;
+        b=ItDDo5Jxu6/YTmtXdm3ABzq3Ch/ADdU2rittvu+mobmhxAYc+3tLF0E0+igq6hpTg2
+         XLURP/CQKvRIoTD/L3E6SIdG+d7mxU+0YD0rCebesOb+GQ1jfgXxe4+pZev3jfxs1V31
+         ayU8jQVzggvIDbaFDJp0VjGUwJrLcfL3zAHFsbIl+tEB2NhrI+FHzmgoJwc03CNPhBfJ
+         cRxIFRwiaAn/o+pA4iMRfHxkwVDkGZ9Mb/SrSxrs6fg0RaoQSkJ9wQwwuo04GJ+rG644
+         +gOF3JDhgr45dv2dFNB7fzfxZBcuQqQyhtLwHWXb7xOZ/li7tG5j0KWrPiDcRdmw7V5b
+         Pa8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732225871; x=1732830671;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6XMIAqPzhM5bxCaLmyAE1T8ZqP4pQykquYi+/1CvKGA=;
-        b=knNu8T0PdVZVkZnkwwBH4QfcrWIOfZluCfdBEK18Z+Vbw9KmpabWogGyMMEValhULf
-         zmxJe7qBTUt81cj6w8PEK9jrJ7b5OnW57mFrsy6WhyhpG+pT9h4McF5CH37qKPTHJCas
-         DrLCa3sFefbp4mNyCUSzqMvuqInw5YtjNTq2+QHoc6oEOPCZJAyktoOQpBm5HN3uBkda
-         KBRBnDgkVNkgSSQIg+VSlK3XlVI0Tv4wfRerkomqgAFIkMuQN/4T8u36wVqs8eCDUvFM
-         fxlrj22p95OZNHV0/Q3sQ3uysLgz5QF72Kk4xmqY8NVylKRMyOqRyG1hEydI3NG1c9Ur
-         8zCQ==
-X-Gm-Message-State: AOJu0Yz1z/kRZ0MXfK4ee1CtyhNnNK7LuUfj5CEx65yYs/pfyusLs0Yy
-	PN48C5OhQJ5nzBbxa5VcheorVRLvZW9svO9MdWY3ShBneCQdHvou7z+h7WKXw/AQXf4Q++KWhS/
-	/l7EkMTTe4ObikdRgDHwvCKUxHXI=
-X-Gm-Gg: ASbGnctEhK7MNy1T5FQWFoDCF2bPS7Z1b7H0IWjAomBz6iJfsl+iY+xZxvRq6W7xomb
-	60tRItVPNbnSKU7CSz6WOeHv3E/O0R4oq
-X-Google-Smtp-Source: AGHT+IG8EQAd5mUP4F2TgCiD8wzyWOw7fUzklBztpko4Z/P7x21ibMmUcYXdTYP2S9iA6LHJcGWylQbbPOiIi0iEf04=
-X-Received: by 2002:a5d:5f4b:0:b0:382:4a1b:16de with SMTP id
- ffacd0b85a97d-38260b6b627mr484167f8f.21.1732225870957; Thu, 21 Nov 2024
- 13:51:10 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732228743; x=1732833543;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OS084Fr27lqc1lWU84hgIup5al7qRJTL3L43dCHHhbI=;
+        b=bh9dUKylS4ZRsbEaDqBOsNUCH54q+e9xWWiMhBCzFb/pN3WrtM6i6K9vvj1cesiQxM
+         LIX6Not2LKk3Hk3l65ZwRldxumAoDJP3d3PXQZC0Jipu4kRWUA7UDdORocdEPGjhDZrw
+         qX+3gqG5ERpDzP1xJMbqXZ5zJv1UnddPvD0RxJee4VsJ1SA+Uz6rIrwmLihRxm9Ytce+
+         NCXAn8oKzskqmBG6wIhC+OhJQbBVkw1DSiF0tXmrLShdLbWuPLF7syXlE/kj00xc5fpV
+         P+iAdrbnt2hAZbBVDFRk/NPlnxPsBSgOsAd+ridbYpJF0Wz7YL2cZOGrpDTWxxlVKkKu
+         PPBA==
+X-Gm-Message-State: AOJu0YyvCgftm3+1bNo/wHNHURhm6SG40xwbHd1i6nRx4QdPlpZlVjNn
+	tfhnkpY+aQkby62UP5D5SU4XA2NHzEngSu7zkHJLCPoNz41H3S2FqJkJsnnCSYM=
+X-Gm-Gg: ASbGnctxogLKB1oQE25igk0NVG76Drq7X2fJyPEFHPsYrsGlYiXVh9xU7TPHIpeOOgn
+	i5RrNpjQXfRRb+UbBT1Vmeg0K3F2VKfkxSRhgEU4hNV1iZnXTUguVI7sKrK78BDu6RkgT/DHRqc
+	n3VCxfhUVvD8ngltWElUgRk7Dl1mE7ikYfxkJAblTQdXdRAU54hQyFM/GYhspjNA08gxH/1Dn80
+	bmlDIzwHTmyGqbwsftHerO+DA1pyUfL8+/XANmMqOoNobhAWOhAsk977DxCDUX/D9E19An4kqev
+	ttBgpKMGd44A7HPCei96mw==
+X-Google-Smtp-Source: AGHT+IHT/i7DVaG/FoBR9eGlhPWY0wz3imML5zYcVWTPrVgeZov8SYNVCpbxRMvMvw/f2rSiz9MrkQ==
+X-Received: by 2002:a05:690c:6d03:b0:6ee:b5ea:5fd4 with SMTP id 00721157ae682-6eee07b4783mr14661127b3.0.1732228743233;
+        Thu, 21 Nov 2024 14:39:03 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eee0095edfsm1675657b3.112.2024.11.21.14.39.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Nov 2024 14:39:02 -0800 (PST)
+Date: Thu, 21 Nov 2024 17:39:01 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+	christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
+	jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 3/6] t6601: add helper for testing path-walk API
+Message-ID: <Zz+2hWlYCo6jlvj2@nand.local>
+References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
+ <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
+ <a3c754d93cc3ecfcb4d2764930873af0b611eda9.1731181273.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241120101741.8225-1-dev.mbstr@gmail.com>
-In-Reply-To: <20241120101741.8225-1-dev.mbstr@gmail.com>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Thu, 21 Nov 2024 22:50:59 +0100
-Message-ID: <CAN0heSoryo-DO6WXKqqASJ5nDLqb3PNNiZv1TP=Pq11wsiSM6A@mail.gmail.com>
-Subject: Re: [PATCH] git: fix paginate handling for commands with DELAY_PAGER_CONFIG
-To: Matthew Bystrin <dev.mbstr@gmail.com>
-Cc: git@vger.kernel.org, Lessley Dennington <lessleydennington@gmail.com>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, idriss fekir <mcsm224@gmail.com>, 
-	Joey Salazar <jgsal@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <a3c754d93cc3ecfcb4d2764930873af0b611eda9.1731181273.git.gitgitgadget@gmail.com>
 
-Hi Matthew,
-
-On Wed, 20 Nov 2024 at 11:41, Matthew Bystrin <dev.mbstr@gmail.com> wrote:
+On Sat, Nov 09, 2024 at 07:41:09PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
 >
-> Calling commands using editor in terminal with `--paginate` option will
-> break things. For example `git --paginate config --edit`. Add extra
-> check to ignore paginate flag in case command have DELAY_PAGER_CONFIG
-> set.
+> Add some tests based on the current behavior, doing interesting checks
+> for different sets of branches, ranges, and the --boundary option. This
+> sets a baseline for the behavior and we can extend it as new options are
+> introduced.
 >
-> Relates: cd878a206e8c (t7006: add tests for how git config paginates)
-> Signed-off-by: Matthew Bystrin <dev.mbstr@gmail.com>
+> Store and output a 'batch_nr' value so we can demonstrate that the paths are
+> grouped together in a batch and not following some other ordering. This
+> allows us to test the depth-first behavior of the path-walk API. However, we
+> purposefully do not test the order of the objects in the batch, so the
+> output is compared to the expected output through a sort.
+>
+> It is important to mention that the behavior of the API will change soon as
+> we start to handle UNINTERESTING objects differently, but these tests will
+> demonstrate the change in behavior.
+>
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
 > ---
 
-> Some time ago I've sent RFC patch [1], which was not quite ready, and I didn't
-> receive any feedback. Now I'm sending a more complete version of it. Fixing
-> mentioned behaviour of `note` command can be done in separate patch series.
+Nice. I like the approach of implementing the API in a single commit,
+and then demonstrating a trivial "caller" by way of a custom test
+helper. I think that the artifact of having a test helper here is useful
+on its own, but it also serves as a good example of how to use the API,
+and provides something to actually test the implementation with.
 
-Thanks for reposting, and welcome to the list.
+I'm going to steal this pattern the next time I need to work on
+something that necessitates a complex new API ;-).
 
-> +       if (use_pager == 1 && (p->option & DELAY_PAGER_CONFIG))
-> +               use_pager = 0;
->         if (run_setup && startup_info->have_repository)
+> +static int emit_block(const char *path, struct oid_array *oids,
+> +		      enum object_type type, void *data)
+> +{
+> +	struct path_walk_test_data *tdata = data;
+> +	const char *typestr;
+> +
+> +	switch (type) {
+> +	case OBJ_TREE:
+> +		typestr = "TREE";
+> +		tdata->tree_nr += oids->nr;
+> +		break;
+> +
+> +	case OBJ_BLOB:
+> +		typestr = "BLOB";
+> +		tdata->blob_nr += oids->nr;
+> +		break;
+> +	default:
+> +		BUG("we do not understand this type");
+> +	}
 
-This flag goes back to c409824cc2a ("git.c: let builtins opt for
-handling `pager.foo` themselves", 2017-08-02). The original observation
-was that setting `pager.tag` to true was more or less foolish -- it
-would help `git tag --list`, sure, but would also break `git tag -a`
-quite badly along the way since the latter wants to open an editor.
+I think you could write this as:
 
-That's why c409824cc2a allowed builtins to basically say "delay pager
-config handling -- I'll respect it for some options/modes, but not for
-others". Now this proposed patch wants to extend that handling beyond
-"delay pager *config*" to even go "for some options/modes, I'm going to
-completely ignore `--paginate`." ("Delay pager *option*"?)
+    if (type == OBJ_TREE)
+        tdata->tree_nr += oids->nr;
+    else if (type == OBJ_BLOB)
+        tdata->blob_nr += oids->nr;
+    else
+        BUG("we do not understand this type");
 
-Actually, no, it's not so much ignoring as *forcing*. Since you force it
-to 0, doesn't that mean that `--paginate` ends up basically being
-`--no-pager`? So `git --paginate branch` is now `git --no-pager branch`?
-That doesn't seem right. An optionless `git branch` would have
-paginated, so adding `--paginate` shouldn't change anything.
+    typestr = type_name(type);
 
-But even if we force it to -1 instead (for "maybe"), I'm not sure I
-understand why such an undoing of user intention is wanted. If I run
-`git --paginate tag -a ...`, maybe that's just self-inflicted harm, but
-are we certain that for all the `git foo --bar` which won't respect
-`pager.foo`, that it's also completely crazy to provide `--paginate`?
+Which DRYs things up a bit and uses the type_name() helper. That will
+give you strings like "tree" and "blob" instead of "TREE" and "BLOB",
+but I'm not sure if the casing is important.
 
-Martin
+Thanks,
+Taylor
