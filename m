@@ -1,66 +1,66 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4DA83CDA
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 20:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACA11DDA2E
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 20:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732221849; cv=none; b=Tevd8wqbeq3ss03uPwukaGQWpxGDnXp/GfdTiA/srCbgYQOpyZMIsCSxvZMd+taQmHHbkOkpCkClmVx03/ar9B8N8tt7IOhKADlL3XBDML3zi+avjXOXppwxAdW5oMxrHq/U02k9s80qZB3c5adK7ro34IwjV6QAef3SEbRkYds=
+	t=1732221851; cv=none; b=gE8+Gcr0HagP1TP8rym3/k3zA62Gvvh2awONdrRbjRcq4d6Ss/Ytoq/j9WXA9DwYkrSFnR+mctQuMKkyCCOqgv6zeKb6B+W4dp8xpHi5oxpaYLesm9cmTI/AiwK37buTrsKqMNRqaQ77SZ8d6znvi6AvmOFBxZaExwb/gYBihxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732221849; c=relaxed/simple;
-	bh=56ziYKkAAf8UgtK3mBXWeSvxtT80Och/mLI8a3zjiSI=;
+	s=arc-20240116; t=1732221851; c=relaxed/simple;
+	bh=bVgG0O0yE14ZUIjX5CaOKfeKmzwrVzoSlBzuM0w/jBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=erccqX0cAfBi6wuJcHQchqLvCPwmYWsyKm4sZAQ3cHxwBMf395a/qANocEqPB2RRzdlv3Z0C3JspSL2TXdmfVoFfnOct/SRLY/QazCOfNPm5vxJYaBF7Lj70wZ/73V3diPBYKuqWR9N97jnn7MucVDGd0kNorKe1sz2Ahguap5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sf4qf3s9; arc=none smtp.client-ip=209.85.160.45
+	 MIME-Version; b=U+zu1cLA1LYY35mRxnCKGs2gaBnFRWgDANosPvL/D2qY+gA4aowNm56w1QJmFK1H+SvJGNleC20eFGsDoWStrINyIUuEFdDSy0I3MDQMSpmcIR26KQ3ihHYVTuzBIHnk7vNtIcS3fQGdTrLPCA5NAIQWkByoYewr9WCBBePtp24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NwdKUM9t; arc=none smtp.client-ip=209.85.160.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sf4qf3s9"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2967af48248so828260fac.2
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 12:44:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NwdKUM9t"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-29645a83b1bso880834fac.1
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 12:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732221847; x=1732826647; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732221849; x=1732826649; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5rjI5PNefyH9wwX9OS3o+hM06SN2urMIWBkrzg9TLQY=;
-        b=Sf4qf3s9b+/RRefx5PLz5A5flhTkbc7TJPcDUHR22AkPs0FAMtGsK1iaBkq8B/D5OI
-         JB9W3Mcf/SpNgEggtiHeWpoq432+RvEwSNdWwcqSA8wiwVUEdxOXgl2ns3pNeWYY4cVm
-         b/UY09dKpwhEA8gbhq2XiJ4PHbxFTDgDGuswrDtlglRWEuUiv4sUsRLfC5ZAV2aNwvTL
-         VhBMwUTiK7+yn/WzgLtqQDMic8lwuCvPwSFqRlh9Qfz0l/lD73W+S1JEXPpPoenQYXD8
-         VRGt0bqJ6e5Sok9AmpW6zq6LderdNSv9iUwLkhaX0cY84hsTysDionBJOYIpdwF/eRYQ
-         DZQw==
+        bh=hZTRd/YRxheGKQ3Um9aqxW/l7wDYAHTttQgGllc/+08=;
+        b=NwdKUM9toEcgZ/1fZvIHFLy0NYJoUtscdN8Gx0d/KRem3Gw6eJfEyGz6PH5tk9hQpV
+         cREBQAsZWr6vkUq4772Xkg+msAyer0zNUTI1P7QXon1jk439AwK1G3Zb6+2NcL5RuXNM
+         67z4Sy1JFLXXKkjThcy9MG3p+9j8M3h/W07krGmhcM+IaV0hEe9UsEmFzAxcVdlAJUH/
+         fG4h/KW7B5sn1xyMFiryiv2WX3cmng19qxkNOgfT/OyeVQ6WPEd1BNKfIRboLBZgjmqT
+         oE1p3b6ApHe9MQV3MzLxwiQY85CpD+Lcwc+B4VafOiDOndxIzxAjk+GuA7GVAFPeM/Vr
+         zY+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732221847; x=1732826647;
+        d=1e100.net; s=20230601; t=1732221849; x=1732826649;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5rjI5PNefyH9wwX9OS3o+hM06SN2urMIWBkrzg9TLQY=;
-        b=PEILPpNQesCDnlaiwzTj6wi89fVNmvUTBAZlPFxkeCrqxrczNoV3g53bd7fbw4tvOp
-         JAdjF6JmHeZ488Bvut1GkKdq86FaC+O+XZq9YwYtkbXl3QUbxT4hoR+CYixNcJ6trhOh
-         PISVkOKuQMcqnAL1SrwrD4wFuC/TnED0uD5/Xmdi4i0X/SAinYLmLabd8KkXOEldB9Gk
-         TFP4Xnj6LwI438xGHYzEmFUVPWs0fIPx2UDczQw9p4xOKXOMqvPk/aUf+93JqZOyd4cQ
-         aO3DTYJwZqitQAFYSCxH7j6Hsy5r9XF2e6Vg17rVJZE2tQs5Nmb3u2+tMPFTo9GoncSX
-         n7EA==
-X-Gm-Message-State: AOJu0YyXI8+vS8VSOds9IP0DnsuK5Jo8z27AqLI3FsvldIVMYCVZ5RbJ
-	Iux7jaNowgSYgCdjOYK5K4JKxB6PdJjNrXYK+ofAU0Rieeq172+qlxKweg==
-X-Gm-Gg: ASbGncslvQbZa6wKecpN/IfZ0j7ZIGsgL/+/mdECnuA351MXlIDaCVyxB7Cci+zx7Jm
-	wmlLivXuUyVZ3zJVpNzj8CZvWfqY1qSaMfYmeoKvJmKsjwyiGRBv9ra09jls5lqqTfHB8B5CrkM
-	XQXZ+yL0h8jQIT1pBxi09WiMoFPBKllIOBj4xXa06yPUkk54OnDM/VDaeZIwPWlVMvIf7yxBv7F
-	5woz4b71Gj2NtlP5DHwHyrfz42cxGcXAakaeNdXyuEYylVQULrP1V7kCQ==
-X-Google-Smtp-Source: AGHT+IHCNhdwnjogsxMfr4pJNWXihXV62DltrGRjSJg44yoDm/tbflezTSM2m779olgaDMI3hInRQA==
-X-Received: by 2002:a05:6870:ac10:b0:288:4823:fe1b with SMTP id 586e51a60fabf-29720b9abdcmr255723fac.17.1732221846976;
-        Thu, 21 Nov 2024 12:44:06 -0800 (PST)
+        bh=hZTRd/YRxheGKQ3Um9aqxW/l7wDYAHTttQgGllc/+08=;
+        b=Y/BkQmSg/GOXsI7bsfGos45l+IC482lIx+NDVN+iX5e+YIBluyaKSQD1ZSKmmhM71K
+         NyR1Sc1R8TRegDgzsjblTAh/2VaHbrK1Y9Bnc6QyblTbOAw5TXlygZ5hoGaJ3324KkVb
+         LrZXAd5fxZzrOX3fjI912jsGPxGIENEREzkxr0GOXYCN9qY7HksnodcaEjI/t/Tag9Ff
+         +am2ddRkuCLAAHLk/JR2AFRaiA79HCJUN8hcUJwiQnyTAk/x/Eszivhm9NhyCWg7UOI6
+         wMbD0D3HHyQ6zPqJiEXQ8zNKzYI4G75BNq7GFJBM7xh+ln8xTbH2tTx6ApjiDSRqYI36
+         ikjQ==
+X-Gm-Message-State: AOJu0YxwaC1RJY2BkWXS12xjroZ8IuGy6noWgfWbrSCwpkBkduS9YdGQ
+	WTfN94e1leYXsMwnFbv7flhVh6upphrmkPw6DvVx5oKe7v56vUeqlUyO8g==
+X-Gm-Gg: ASbGnctw+2iFTBhDrhp2G4GttGA2xPvgjnpKuIW7TsEh983bYg2Afd8nCezPGbHZpaZ
+	Y++sMg0N6W1w8Y0J5Vg0pjEpJR2dwiGa+NWrzi9sSARN07AhiwhXw5P4+Z1c42RKk0DPAgprZFF
+	T+6dtFuiaHSS54q800Ucr17ENOd91VN5T4u517bDrnsFV6CztzSGYHzWokuZr1IzkPme/AgWlub
+	zDBSsur006NBwVe+hs9Kpl9bE6uWMJp13Hn152dRGV79iFNmtZruI1EcQ==
+X-Google-Smtp-Source: AGHT+IHxa3J7UeSZ3IMe51hfaM3jLfoRSIojo2OGTh7sGqLffp5qrKy+k8cDRvK81KtwAYh5Td+xMA==
+X-Received: by 2002:a05:6871:3a09:b0:27b:583b:bfc2 with SMTP id 586e51a60fabf-297206b0e3bmr411420fac.0.1732221848929;
+        Thu, 21 Nov 2024 12:44:08 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2971d669843sm126481fac.28.2024.11.21.12.44.06
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2971d669843sm126481fac.28.2024.11.21.12.44.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 12:44:06 -0800 (PST)
+        Thu, 21 Nov 2024 12:44:08 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 3/5] fetch-pack: introduce `fetch_pack_options`
-Date: Thu, 21 Nov 2024 14:41:17 -0600
-Message-ID: <20241121204119.1440773-4-jltobler@gmail.com>
+Subject: [PATCH 4/5] fetch-pack: expose `fetch_pack_config_cb()`
+Date: Thu, 21 Nov 2024 14:41:18 -0600
+Message-ID: <20241121204119.1440773-5-jltobler@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241121204119.1440773-1-jltobler@gmail.com>
 References: <20241121204119.1440773-1-jltobler@gmail.com>
@@ -72,101 +72,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When `fetch_pack_config()` is invoked, fetch-pack configuration is
-parsed from the config. As part of this operation, fsck message severity
-configuration is assigned to the `fsck_msg_types` global variable. This
-is optionally used to configure the downstream git-index-pack(1) when
-the `--strict` option is specified.
+During fetch-pack operations, git-index-pack(1) may be spawned and
+perform fsck checks. The message severity of these checks is
+configurable and propagated via appending it to the `--fsck-objects`
+option.
 
-In a subsequent commit, the same fetch-pack fsck message configuration
-needs to be reused. To facilitate this, introduce `fetch_pack_options`
-which gets written to during the `fetch_pack_config_cb()` instead of
-directly modifying the `fsck_msg_types` global.
+With `fetch_pack_config_cb()`, fsck configuration gets populated to a
+`fetch_pack_options`. Expose `fetch_pack_config_cb()`, to facilitate
+formatted fsck message configuration generation. In a subsequent commit,
+this is used to wire message configuration to `unbundle()` during bundle
+fetches.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- fetch-pack.c | 16 +++++++++-------
- fetch-pack.h |  8 ++++++++
- 2 files changed, 17 insertions(+), 7 deletions(-)
+ fetch-pack.c | 4 ++--
+ fetch-pack.h | 4 ++++
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/fetch-pack.c b/fetch-pack.c
-index fe1fb3c1b7..73309f8043 100644
+index 73309f8043..10b66795bc 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -48,8 +48,8 @@ static int server_supports_filtering;
- static int advertise_sid;
- static struct shallow_lock shallow_lock;
- static const char *alternate_shallow_file;
-+static struct fetch_pack_options fetch_pack_options = FETCH_PACK_OPTIONS_INIT;
- static struct fsck_options fsck_options = FSCK_OPTIONS_MISSING_GITMODULES;
--static struct strbuf fsck_msg_types = STRBUF_INIT;
- static struct string_list uri_protocols = STRING_LIST_INIT_DUP;
- 
- /* Remember to update object flag allocation in object.h */
-@@ -1017,7 +1017,7 @@ static int get_pack(struct fetch_pack_args *args,
- 			strvec_push(&cmd.args, "--fsck-objects");
- 		else
- 			strvec_pushf(&cmd.args, "--strict%s",
--				     fsck_msg_types.buf);
-+				     fetch_pack_options.fsck_msg_types.buf);
- 	}
- 
- 	if (index_pack_args) {
-@@ -1860,6 +1860,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- static int fetch_pack_config_cb(const char *var, const char *value,
- 				const struct config_context *ctx, void *cb)
- {
-+	struct fetch_pack_options *opts = cb;
- 	const char *msg_id;
- 
- 	if (strcmp(var, "fetch.fsck.skiplist") == 0) {
-@@ -1867,8 +1868,8 @@ static int fetch_pack_config_cb(const char *var, const char *value,
- 
- 		if (git_config_pathname(&path, var, value))
- 			return 1;
--		strbuf_addf(&fsck_msg_types, "%cskiplist=%s",
--			fsck_msg_types.len ? ',' : '=', path);
-+		strbuf_addf(&opts->fsck_msg_types, "%cskiplist=%s",
-+			    opts->fsck_msg_types.len ? ',' : '=', path);
- 		free(path);
- 		return 0;
- 	}
-@@ -1877,8 +1878,9 @@ static int fetch_pack_config_cb(const char *var, const char *value,
- 		if (!value)
- 			return config_error_nonbool(var);
- 		if (is_valid_msg_type(msg_id, value))
--			strbuf_addf(&fsck_msg_types, "%c%s=%s",
--				fsck_msg_types.len ? ',' : '=', msg_id, value);
-+			strbuf_addf(&opts->fsck_msg_types, "%c%s=%s",
-+				    opts->fsck_msg_types.len ? ',' : '=',
-+				    msg_id, value);
- 		else
- 			warning("Skipping unknown msg id '%s'", msg_id);
- 		return 0;
-@@ -1904,7 +1906,7 @@ static void fetch_pack_config(void)
- 		}
- 	}
- 
--	git_config(fetch_pack_config_cb, NULL);
-+	git_config(fetch_pack_config_cb, &fetch_pack_options);
+@@ -1857,8 +1857,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	return ref;
  }
  
- static void fetch_pack_setup(void)
+-static int fetch_pack_config_cb(const char *var, const char *value,
+-				const struct config_context *ctx, void *cb)
++int fetch_pack_config_cb(const char *var, const char *value,
++			 const struct config_context *ctx, void *cb)
+ {
+ 	struct fetch_pack_options *opts = cb;
+ 	const char *msg_id;
 diff --git a/fetch-pack.h b/fetch-pack.h
-index b5c579cdae..8243b754ce 100644
+index 8243b754ce..f35a75a3c5 100644
 --- a/fetch-pack.h
 +++ b/fetch-pack.h
-@@ -106,4 +106,12 @@ int report_unmatched_refs(struct ref **sought, int nr_sought);
-  */
- int fetch_pack_fsck_objects(void);
+@@ -1,6 +1,7 @@
+ #ifndef FETCH_PACK_H
+ #define FETCH_PACK_H
  
-+struct fetch_pack_options {
-+	struct strbuf fsck_msg_types;
-+};
-+
-+#define FETCH_PACK_OPTIONS_INIT { \
-+	.fsck_msg_types = STRBUF_INIT, \
-+}
++#include "config.h"
+ #include "string-list.h"
+ #include "protocol.h"
+ #include "list-objects-filter-options.h"
+@@ -114,4 +115,7 @@ struct fetch_pack_options {
+ 	.fsck_msg_types = STRBUF_INIT, \
+ }
+ 
++int fetch_pack_config_cb(const char *var, const char *value,
++			 const struct config_context *ctx, void *cb);
 +
  #endif
 -- 
