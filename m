@@ -1,138 +1,144 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979641B0F0C
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 13:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292CA2AE96
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 14:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732194728; cv=none; b=TuUgWCIAr2lCRSOad1Y5RX80UmLi/hXxazSDnXJ9GAiornBZAokYH6aq8uu1LZXkVfYBfPoMhlOBaNYZl1zmaY1h+cqRcwYGLK8jB6abs2yFbEYK+liYmIF5nxyAy8bM/HUK4iDgu9VU80dOCKrSP2WA36g6ypj2oE3VWssZmh4=
+	t=1732199342; cv=none; b=RUFqC/woao9vThzpiWUA+skYj1Q7xF5PPM2M0TVp6XvJ+qRjOaEo8XiRr6wskTblh1VyJJTbqUyLM6qKNztkITelS6R3+6a7ig9phGYEUprq3m838joHGN2Ty5a8ODR6a0CXAoqfkq+IiM7CExfnejN7W0DzO7/A2iGVwCgui0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732194728; c=relaxed/simple;
-	bh=sFnwE8bGC4bHquSfDK5NsgLr2+dvtKCO7fL7Cx+tR64=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TrDv1hqBhRmp3ifnL4E4/FdtxxTplmKH5P9H5YEz4FXbxVVpRJlWRBfCYFIjn65orf6RYIcoeCrppeCTyjLWfvz7spmraWpEmZ8+fsEEei3SMnwDU7l3bwYX5FLLJ7rihlt7PTdQaq3G7he6HzdldxriWNRhltvq2i9jGeyGxHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqI+W7mt; arc=none smtp.client-ip=209.85.167.169
+	s=arc-20240116; t=1732199342; c=relaxed/simple;
+	bh=Pfa458UovAnNqDZsyDiIU0R9RsvpTtCW/1+TvluMn6E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sW3wRuXell4DjcGcrQ4ONGfzMi8n5qBYA+8UGRrD85FK/zg65moOK3mUAbE4f5fl0GtH/B+TmRwuHpJ7/2GZsDr5V2lM+ON09kZX96FU+0tIn8JMpMHwaXdB4vh4IXe+UcSOpkTr52c4lwcju7D6rBeFUuY1sLdpCJ1x9qrUpkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eORarAJw; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqI+W7mt"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3e5f835c024so520565b6e.2
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 05:12:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eORarAJw"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38245e072e8so937462f8f.0
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 06:29:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732194725; x=1732799525; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5fIN9sVPws1v5cIb8/vhUg/aUeTlOBsfvq3at9uUCf0=;
-        b=dqI+W7mt2HwlQXaABZyCOcblYSxcq5eooBk4rOr/cNsi4WEV/+esTZnjfPJbjLvk3d
-         vGsU5iG3/wIvNQhAwCdfetz6o/jLLzc5nE+CfSoODKhA+sS+oZ+7aspp4B9yiUO5jPuA
-         pZWWduZ8PTCKqtQLo72yhgS3yoKGGsTO8lo/txmShsWM970dfM6e6Ta2Hwpz5fNlHpaD
-         muK7UjZ/Dw9peiHiPTaSrwyWVk0eAzHRV8OO1geC6bRhi5ukAhHccnT4YyfO1fAnrV/V
-         UEK3SEARHMnhILcSPiUkfSHtLaqT2Cup43UnV2KXbUHv1p+0qf6ZuoXorvpsZyaW1RZl
-         nAGQ==
+        d=gmail.com; s=20230601; t=1732199339; x=1732804139; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=BVrA4gNUQaTGZd3MyhFdInvO/n5n8tUJq9zb8LcFRWQ=;
+        b=eORarAJwe1dqsuXfzYb2C5ft//U3gQDt3LLauABIa3/2D6mDs54B1U96evu7WvOI+m
+         fSZZWpQy6xhULF13UG/+QC2QhV1RskqxdUNxW9YWi2rRfcpuuEJAWjYGxZlpzyQldRtO
+         lswCkcX5S7A1CHoCMu4vnGkfFv7TBs25JbDzB0TYXUwsI+XMDy/gTfX4L/FPc6ufxsQ9
+         BK6Kf8Ww9H56yyfTndU76eBO/FTREmtDpRuVt0ycjv/5xB1UQX1Xb35cSGCV413CpXWg
+         xmQYisEB1YtDFUjfMZeiNBb6BzILS4Um4XDJZDnfnZZq78S/Fs7AOFTb1OxiXDnuAoG0
+         NZpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732194725; x=1732799525;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5fIN9sVPws1v5cIb8/vhUg/aUeTlOBsfvq3at9uUCf0=;
-        b=kMm8PgI9+x7xRy/ij6StjhK4Sjp5YL+0Biy7pBDkMYwSf6DzKOHocm9zmOBfmRiSym
-         K90aqZpqtf0dJMx/XNSUTpSh4SJB+PZIAfn6EfXrtlBA1JkMtQUXf6fzAZyhaqclqxeO
-         kPYYMhf6XPoObsQ2TlLltLykHPzt4QFpI0qS3L+eZ/70dYqmmZQF/iyUiUxAykmqyS/f
-         YvLrP0uMMqVPE+fnszZojVds5i/Md5sLUk2j60McJHDSglhbKGoz8CrIY262rgK2EBMP
-         9YtEyEKpiuA2vAHAtHAqk1lNlegjZRv+RWqQvBqcO3k5zbp5YZG8XCTPBW7pkgtaFgb/
-         h3nA==
-X-Gm-Message-State: AOJu0YxWFNpI76nInrBx0qC6Qmj0sWD6XXsA+5BiqPrnY8TgJsUVWCw3
-	kK83bW/b7Z9m2iUMcTJIXAnNhYau+ajnXhI9Z8QS2eViezNtQ2/uxKdLSsRRaQsywYvGLeh6dL+
-	XCHP0dtwFIncS7J0M6X2RNUStmhY=
-X-Gm-Gg: ASbGncthx67D22bBbu+RsaPvUT9FEMYMT/o1FVMrQyTjp4O6eDI03EKwtKl2QmhbEFw
-	dkS6BM+P25bWYcYcM7nmXjTUGDxRs4/XSpRA1XiLVk01VxW3LAwn+w9W3u0Y83ZqSFg==
-X-Google-Smtp-Source: AGHT+IFZX9+8iWI2hvTuKKM+uiVa+kfjE4Gm+NrikXVo+mBYCpexjrSKhXnlTEROKNmV9WaM58VB1MXdgKgGFbHPv5E=
-X-Received: by 2002:a05:6808:1593:b0:3e6:4f5b:afd1 with SMTP id
- 5614622812f47-3e7eb68d12emr7459987b6e.6.1732194725627; Thu, 21 Nov 2024
- 05:12:05 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 21 Nov 2024 07:12:04 -0600
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Zz5o35FZPFyM5KyL@nand.local>
-References: <cover.1729504640.git.karthik.188@gmail.com> <cover.1731323350.git.karthik.188@gmail.com>
- <Zz5o35FZPFyM5KyL@nand.local>
+        d=1e100.net; s=20230601; t=1732199339; x=1732804139;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BVrA4gNUQaTGZd3MyhFdInvO/n5n8tUJq9zb8LcFRWQ=;
+        b=FGwdrqcLvk5NyTcXlvMjG8xqxkT19+IpD+MamXQMziQpu0dWZgjUFdTTvf/bzKjwRF
+         Km0z/v6XdFLRmy/5xHKWW4ZYmPJzgYW/ee0iEJLwFJPSu9ZS7Ob9h5sK6HREwt/qG/il
+         U8SDJkcP1jn/1J5T9UUqQ23ZbZeWh7U709DghmrmyJaFmU3RoLUETJxwixWG2+9vT8hc
+         vfI2wVLHOLHNNZlIiHrFUte4BvjtUxxKxbHWFzjn5a6jwHUu/686eq63tDNpG+zQAfWS
+         O7jBmuD+PDx0gbFlxpKaDSG7nJ3h4eSxfFVPEdBlD99xrOXlfVYQvFUozjx/6ZU8VIaJ
+         MiOA==
+X-Forwarded-Encrypted: i=1; AJvYcCV0zYfx9wu4EVxPuAln0xoFd0njrP70JFvd3UXJ14zWawowuCeuFwon/lzp9EoR/JXLf70=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMwVzsPhPOMOlMGYB2J1mq7XhK4+zvb+4FjT0djt16mBVIBmNo
+	v/dltml1E73ElXCklu+L9l0mAD/EhS8zCp8PeqSLrNCaFmtZrzZXSgta4w==
+X-Gm-Gg: ASbGnct1mcuCv94CuEK4SC3N0QOI9TLXAH7qohixtODoyO4RQhcdHD+rrAKVHzN7BRL
+	jIj8xu7k+Fw79Rjiab8cno0yOqvDEz7txiILvCH9E6QM032Mva3V6uvtOmLe4xSFFkYD5vqvGOW
+	qdp+5lfL5mDmOOuavRnFI704O6FIYI6QkRCaEcLvhHqmbjeHXib3jo3NxH//HmqjoHNFn+ux/qB
+	R1ahWmPxnFWwLgFHejgXZ0Jm6z6JNG3jVnQGn5BDMpw16CNG5y1Pgp8PcdEf1Ka/60dbIosO0fY
+	Ch2+1/1cnUZ6ZckUGwMz2JFnlw==
+X-Google-Smtp-Source: AGHT+IGnalw4pB7Hanz6iIKppK5nInl+A7Gg/HP5Bot0bpcVtO0XrQ/Se6UPKnfVd8PuIL0dBU/d5A==
+X-Received: by 2002:a05:6000:1fad:b0:382:4b9a:f51f with SMTP id ffacd0b85a97d-38254b18b6dmr6743750f8f.47.1732199339169;
+        Thu, 21 Nov 2024 06:28:59 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6a8:b801:610:d596:f87c:e591? ([2a0a:ef40:6a8:b801:610:d596:f87c:e591])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433b45bdbabsm57394855e9.18.2024.11.21.06.28.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Nov 2024 06:28:58 -0800 (PST)
+Message-ID: <15918318-8071-4c20-9e83-9b93a5410683@gmail.com>
+Date: Thu, 21 Nov 2024 14:28:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 21 Nov 2024 07:12:04 -0600
-Message-ID: <CAOLa=ZRVpq7=tRiCrJD-do+PKS-ek3m58bpUm9S7t1oKepiLNQ@mail.gmail.com>
-Subject: Re: [PATCH v7 0/9] packfile: avoid using the 'the_repository' global variable
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, peff@peff.net, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000004e2a3806276c0314"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Git problem in windows server
+To: Luis Heredia <luis.heredia@tool.es>, git@vger.kernel.org
+References: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---0000000000004e2a3806276c0314
-Content-Type: text/plain; charset="UTF-8"
+Hi Luis
 
-Taylor Blau <me@ttaylorr.com> writes:
+On 21/11/2024 10:24, Luis Heredia wrote:
+> Good day,
+> 
+> I have a problem that i can not solve after a lot of checks.
+> 
+> In my windows server 2019 i created a bare repository (c:/gitServer/ 
+> git.git). In that server i create a new directory and I can clone it 
+> without any problem. The repository is good.
+> 
+> When I go to my local machine, i can start communication with ssh to the 
+> server (cmd ssh ssh://user@serverIp:port). I can navigate to the path of 
+> the repository (cd \gitServer\git ) and change anything (copy c: 
+> \temp\temp.txt). With this i can be sure that the rights in the server 
+> are correct.
+> 
+> The problem is when i try to clone in my windows 10 local machine (cmd 
+> git clone - v ssh://user@serverIp:port/gitServer/git.git c:/temp) i 
+> always receive the error "fatal: ´´/gitServer/git.git''  does not appear 
+> to be a git repository".
 
-> On Mon, Nov 11, 2024 at 12:14:00PM +0100, Karthik Nayak wrote:
->> Karthik Nayak (9):
->>   packfile: add repository to struct `packed_git`
->>   packfile: use `repository` from `packed_git` directly
->>   packfile: pass `repository` to static function in the file
->>   packfile: pass down repository to `odb_pack_name`
->>   packfile: pass down repository to `has_object[_kept]_pack`
->>   packfile: pass down repository to `for_each_packed_object`
->>   config: make `delta_base_cache_limit` a non-global variable
->>   config: make `packed_git_(limit|window_size)` non-global variables
->>   midx: add repository to `multi_pack_index` struct
->
-> I reviewed this round, and think that it is looking very close. There
-> are a couple of typofixes that I and others have noticed, which are
-> minor (but I think in aggregate should merit a reroll).
->
+I'm not a Windows expert but I think the problem is that git expects the 
+server to run the command passed to it with a posix compatible shell but 
+the default shell on windows is cmd.exe which uses different quoting 
+rules that cause the command line to be mangled. The solution is either 
+to set the shell used by ssh to bash.exe (see [1] for how to do this) or 
+to use the --upload-pack argument to git clone to execute the command 
+with bash by running
 
-Thanks for the review, indeed, I will be re-rolling with the fixes
-discussed.
+     git clone --upload-pack '"c:\Program Files\Git\bin\bash.exe" -c 
+"git upload-pack \"$@\"" git-upload-pack' 
+ssh://my.server/c:/gitServer/git.git
 
-> I did have a concern about the conversion of delta_base_cache_limit to
-> be a non-global variable, since I think we're determining that value
-> from within unpack_entry() in a more expensive manner than is possible.
->
-> So I think that merits some investigation, and will likely result in
-> some changes that we should consider before merging.
->
+(Note I'm assuming that you're typing this in bash, if you're using 
+cmd.exe you'll need to alter the quoting)
 
-Yup, I'll move it to the repository settings struct and this should help
-alleviate the perf issue.
+If you clone using --upload-pack you'll need to set 
+remote.origin.uploadpack and remote.origin.receivepack to run the 
+appropriate commands when you push and pull
 
-> Karthik: if you do end up rerolling this, please feel free to include
-> the patch I sent in [1] on top, which should make the maintainer's life
-> a bit easier than adding another topic dependent upon this one ;-).
->
+     git config remote.origin.uploadpack '"c:\Program 
+Files\Git\bin\bash.exe" -c "git upload-pack \"$@\"'
+     git config remote.origin.receivepack '"c:\Program 
+Files\Git\bin\bash.exe" -c "git receive-pack \"$@\"'
 
-That makes sense, I'll add it in.
+Best Wishes
 
-> Thanks,
-> Taylor
->
-> [1]: https://lore.kernel.org/git/884ca9770d1fb1e84962b1f700b1ce4adce6321c.1732142889.git.me@ttaylorr.com/
+Phillip
 
---0000000000004e2a3806276c0314
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 75ddecc832720783_0.1
+[1] 
+https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh-server-configuration#configuring-the-default-shell-for-openssh-in-windows
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jL01hTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL0JTQy80Nk9DZDhmdCtZeXlYSHdQbWc4M3o2NENOeQpGb2JVNkJ6a2g4
-YStFRVhmSFJHVGpXM1hTK0MxZXVnTVZwSXlCYXVaUXVjb0szYVNiTXR5Mmt6ZHA1WTloc25RCm5v
-OXEwbitSME04YXVuS0REU2tJU2szamlrUjh3QUlWdk1GcTFpbkRMUmgza1BQYWpWSmJKTjdGQm5L
-NzZYYkoKMk1PMlRFaUIxUHZKdzQ1S1U0L2tjZWxUVlZIcEJVKzFkY296WVo1ZDZqZk5STG1rTkNR
-dkxhYVZ2Z3hpTVMzNAp6eGVNZ2xqTmJnVDFjRkwxeW9ocjNRdGhJSFJvbU9maXlBR055a1RJRUta
-a05yZm1GTUFYWTJJUmVIZDR1S1ZjCndnNk55Z0t0VEFCWE5NN3B1d2lsbVhHV044dG1LOXMzNlV4
-WHFUU2ZTMnZsOUMySHdKanBSdkJobFpMbUFYYkgKZ1lueEVMNmxLZTJwczRGMUd5bm0rc3JYblFx
-K2M3Z0UrQXE4WTQ0emdvOGFTY2xORU5Bd2s1MEZjZk1BbWNtSwpwek53VmVXNllXREhhb0lOdmIw
-dEJtemIyZlhJdTlzTXRFUkdTZ2x1Z0MvQzc0c2dHeThUaExCZHNHNzZVZDRKCmZsNG1UUGlIbkNQ
-QWZBYk44d2diNFJ5b3d6ZnhNc3FIbmpDa1pSOD0KPUNrbTcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004e2a3806276c0314--
+
+
+> In server and local machine the version of git is 2.47.0.windows.2
+> 
+> Can anyone help me ?
+> 
+> Thanks
+> 
+> Luis
+> 
+> 
+
