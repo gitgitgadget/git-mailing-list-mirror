@@ -1,105 +1,97 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback17.i.mail.ru (fallback17.i.mail.ru [79.137.243.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A06C55C29
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA591ABEB0
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 19:05:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732203721; cv=none; b=PT9gAoO47icvDSsvCVJ0CZ/OsZLMpLTHI/p3cGzsOMBpUF1K91IjIJnuLKok+JqeppcAeRIV5qzrztZ9c56pav5EY+YVdPwt56waxaKqFvmeZpc8YFyr/cSalzVVN+Fhr/ahZYFAM3NjJG8sAP7V/DMLQ3w7t2AJe5myXBUW15U=
+	t=1732215946; cv=none; b=vDdog0L/DQdJltRa3zJBDk1Hf3Ng5X/9aibo0e1OdBJk9dpjO0UgWl88WpXE/2a55X+wOxPB8+2xjyH2YQon6mUfysBtYYPXtJ37yKLJG2fVRDCApcMmqtxLLL8/Q71lrjFTrZG9g8nNcjPv5Nz/kSR0orIvW4pIKSfdfRw9C+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732203721; c=relaxed/simple;
-	bh=CX2mrqqdm9yqc2WaNBhqCtt8R2loD5ZpPUNqXXmh4m0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mSankv/m5MAmXbwnVxI5R23yZ2MoOEleCGZIHvXX4V0ctlIJybGizHCXlEnaykC7MhG7D9ACMmsLTbzOFeQIezg4LF2g3kWEcMqDl2+qPr/eRw8Q3uMI6qI7WI4US5LdXLd7mjghflfJMSSookmzK3crUFu0sEZey/8DWAbzYPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=INMBM/Gc; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732215946; c=relaxed/simple;
+	bh=HYWxaFLKkJz+ckmNB6KYYKuzVlEr+AqqWioYStV7MQI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vb3/bVpNiXTGmMwKL8IUpTNOXDZGOksyTgOYuVoQpt8HGoaSTdkV+AwHdOgPQ02MEYi25pKRgtgDFplw+plmNGXfBK0oTGpkAL90pKk4hhWDLdoVDjRGZDf/pX3KODPggRxnFJuEoa/9zXtrVPA7FzksDLxizoryAvrMnmPGjiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=e8nKKLi6; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=yF1TiGjW; arc=none smtp.client-ip=79.137.243.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="INMBM/Gc"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-5eede9695ffso576448eaf.1
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 07:41:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732203718; x=1732808518; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CX2mrqqdm9yqc2WaNBhqCtt8R2loD5ZpPUNqXXmh4m0=;
-        b=INMBM/GcijhDBbu03IvpIzokGbozTP4fq1GjkcaBZaD5nAHsqFmQbWG/N1l+CKPb6V
-         7/6Ee9wGL8TjGCKvAFSbzNTAblm5vdWiKzX1k5MCJhrGQgsDjRnZM5gmtwcRJlH+v/RA
-         78thij1V6OWuEWVtHTvILuV5VlMAtr4ttVFtfI4S/tzNabMY9g/SM14O1g8x9Gcfcp1K
-         jueO9nuaIy7E4n8isJVi/hAWx2m0afl8QTl8q5Y0QPq+BTPRjPucPiTwugPVq50jVrb4
-         9/hIG13zkMJZe7ivAR1YZleQJKrHobKEhj/XioqjQEkPt2FD2TIBcYzCeCljId7UuBYZ
-         Sjaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732203718; x=1732808518;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CX2mrqqdm9yqc2WaNBhqCtt8R2loD5ZpPUNqXXmh4m0=;
-        b=Ya2GULoRgFiiu9gfTXU5PKq0yGiF1Nv8+vBwiFC8KJfHxEJ1Ci/Qk0o1Qz0G60mjo+
-         d/IL5jOvToS/UIgoLUhV5B21Da3Vda0eCGzGye4urJMHHyJthtTIlHvNSPu7GpfkB2+z
-         oeKcRtPrPwM6/ptmcczVJLLuxn9Lvk0Mo4yWKYrif9LluVMsR8Gw1zHYCyNOTvQ8Cq3l
-         5lThX/0sZHE1F6ZF5Nx79Vv/k6HQwa7ZE7mlLI5BxKz+ooivPVwJoyOQ32RgUAAM51Cs
-         zkkXMyHICzYF9AniXGUSwrqFAAE/w9hyNEaSLnvR9Zxhw0TSjNApCibDAGHHkUOOWj5n
-         jBNg==
-X-Gm-Message-State: AOJu0YylvvtTQ6X3YInEyBFBwIrDBm7PoWdANHvbC4/pU4ctIDfGZpHc
-	k6Hx8OVPN+YYXKAb33XCg7YWED5qMeZP+MEr1Qf57QqBVpJWQvOGCRSwssudfq/rypWrqs43Vde
-	vYD9M69ZGZaE36w9dJqPdig29v7k=
-X-Gm-Gg: ASbGncuFTUx0ZyWSsDHoC6fdJ1PSAi1yqwJRRGpwHr5fE4u1jqU26FPRADBXwQrik5K
-	hhlwtJl8DiwXgpczn6mp24NpeP7D9A19OQ6rJNA7JMfNdYh53dz23OV1+IGt8LKbJWg==
-X-Google-Smtp-Source: AGHT+IGoAVJmVKt5afcIR2uXe4RxkdPxWRCMgfzy6PaMzS5+NSt6nWYd3BMBhq4C7sX0CeJXLPQ4/yGxkdXHqb1U2/0=
-X-Received: by 2002:a05:6358:5291:b0:1ca:665e:943b with SMTP id
- e5c5f4694b2df-1ca665e965emr468670155d.4.1732203718484; Thu, 21 Nov 2024
- 07:41:58 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 21 Nov 2024 10:41:57 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Zz3gguyjTKJ8RY-z@ArchLinux>
-References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
- <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-10-e2f607174efc@gmail.com>
- <Zz3gguyjTKJ8RY-z@ArchLinux>
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="e8nKKLi6";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="yF1TiGjW"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=oKLPLYiOmdjn4Dde04w8//w8zhp//om7QSlck0Lw+K8=;
+	t=1732215940;x=1732305940; 
+	b=e8nKKLi6XFLSi1MqYlb7v9nxGv6zEUnCI+VJtdPQMa1NbLtIpSVDiv/REBSklHIDuINYUZg4Xg2lN67+9ws/NQZEMpXv32i+OMBG7uFFtUx8fAT4yNR4zVeE1gM2IF8BkHKhByOBu6Af39rQaO1Mm2Gn3FHuBPiVgux0seQ/vCI=;
+Received: from [10.113.61.153] (port=56932 helo=send277.i.mail.ru)
+	by fallback17.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1tECUd-00CX2j-Nr
+	for git@vger.kernel.org; Thu, 21 Nov 2024 22:05:31 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:
+	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=oKLPLYiOmdjn4Dde04w8//w8zhp//om7QSlck0Lw+K8=; t=1732215931; x=1732305931; 
+	b=yF1TiGjWCm1gq63WX8YbpSAnD229Q6TBNWadqzm0O4okibvo0SY6EleCZBz5CQxagJhT1/mwarf
+	NKZWiGdH3wSAuY62rvGNOYLHW9I/y0R8gcsr4D9cSQeFKsEDYJRXV23vibib9+yD/teTlplwEd7Od
+	qyB1kHt9G+MoOYSjnHM=;
+Received: by exim-smtp-77649746c4-4wmzr with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1tECUV-00000000HwE-2Fi1; Thu, 21 Nov 2024 22:05:23 +0300
+Date: Thu, 21 Nov 2024 22:05:22 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: Luis Heredia <luis.heredia@tool.es>
+Cc: git@vger.kernel.org
+Subject: Re: Git problem in windows server
+Message-ID: <20241121190522.6s63bsvhxm3w5f5b@carbon>
+Mail-Followup-To: Luis Heredia <luis.heredia@tool.es>, git@vger.kernel.org
+References: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 21 Nov 2024 10:41:57 -0500
-Message-ID: <CAOLa=ZQ-u6H5P5Jpk8W-SU=u5-XPxYe7_XX84w5R2obmLnE5iA@mail.gmail.com>
-Subject: Re: [PATCH v2 10/10] midx: inline the `MIDX_MIN_SIZE` definition
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000052b90d06276e1b04"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD96786BF697653C0A3722A362934A6E2D9538D8D4029F99785182A05F5380850404C228DA9ACA6FE27EF6CE1B2036D200F3DE06ABAFEAF67052C264D4C60DBBAC2B455B75AB3303440128E90E6EA85A331
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE71BDE6A359BD5B800EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006376A27C8034CCD05E58638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D87E9F57D95C3F09B2E31576F6DA319A51CA9E7C675D4468F6CC7F00164DA146DAFE8445B8C89999728AA50765F79006375FFD5C25497261569FA2833FD35BB23D2EF20D2F80756B5F868A13BD56FB6657A471835C12D1D977725E5C173C3A84C362968DCAA3E4B45B117882F4460429728AD0CFFFB425014E868A13BD56FB6657D81D268191BDAD3DC09775C1D3CA48CF3AFBBA56C05A32E5BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B637D475550F2A941776E601842F6C81A1F004C906525384303E02D724532EE2C3F43C7A68FF6260569E8FC8737B5C2249EC8D19AE6D49635B68655334FD4449CB9ECD01F8117BC8BEAAAE862A0553A39223F8577A6DFFEA7C3B6C7E47A292E8D043847C11F186F3C59DAA53EE0834AAEE
+X-C1DE0DAB: 0D63561A33F958A5ACC31725FBDFBEF35002B1117B3ED696172BC25D7EEB715CF09842853758E9E5823CB91A9FED034534781492E4B8EEAD17AEC49845D0B908
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D34DFB7A809FB5370878444C84E0A6677C2B539174622653B718E24E3A62F6EE4784A01E522A4AD4FA41D7E09C32AA3244C54C7C0A48F9DE38877DD89D51EBB77425FE51D23F552DCC2EA455F16B58544A2E30DDF7C44BCB90D3871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojB5M2t/ETq/1egHAk9iNoCQ==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138F2E9C61B36592E08D85FDC519B8364601F9FD93DE3FDEF6250BAB90ECA0B9D0D2F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B44E72EF7427BD9C080D0A779F075BA1D367B7D1FDBB3DEE88049FFFDB7839CE9E5E96FB227CD3D6DA2949176145F2B7651C3BE937FA6B0CFBBB282C9B680464DF
+X-7FA49CB5: 0D63561A33F958A580584474F416A717CE7CA4B2329DACA502CC9E05B9B5A4168941B15DA834481FA18204E546F3947CE3786DD2C77EBDAAF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F790063738CA231DD84B2BC5389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3045DD857D6FE754135872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojB5M2t/ETq/2NcCorrChUyg==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
---00000000000052b90d06276e1b04
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Nov 21, 2024 at 11:24:42AM +0100, Luis Heredia wrote:
 
-shejialuo <shejialuo@gmail.com> writes:
+[...]
+> The problem is when i try to clone in my windows 10 local machine (cmd git
+> clone - v ssh://user@serverIp:port/gitServer/git.git c:/temp) i always
+> receive the error "fatal: ´´/gitServer/git.git''  does not appear to be a
+> git repository".
 
-> On Tue, Nov 19, 2024 at 04:36:49PM +0100, Karthik Nayak wrote:
->> The `MIDX_MIN_SIZE` definition is used to check the midx_size in
->> `local_multi_pack_index_one`. This definitions relies on the
->
-> Nit: s/definitions/definition
->
+Does it work if you call
 
-Thanks, will fix!
+  git clone ssh://user@serverIp:port/c/gitServer/git.git
 
---00000000000052b90d06276e1b04
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 260b8baa719af88d_0.1
+or may be
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1jL1ZNUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMm9EREFDWVN4bGdGUzFPeS9YSTBBWk5WZFVLclBJNgpZc1hSZU1saW5l
-MCtqQ2R1ckxrVDViSU1DclpWaEhTamE4OHdWb21mSSt5KzAwWWtoU3R2RC85ckxaTEFTQXorCm5y
-eWJhdXV0MnVndkZGdW83ZnY4c20vMklleUh4bDlEUXFtYi9CUEo3NDh6TGhneUlUb0VzTWdUK1E1
-TjBObkcKcnVKdGUvMlI4N0trOGVnZWp1SjdhMVlacVhaVVpnYmI3VVg5WDdLd0FuY3ZmWXdmVUpT
-RlZncjJpNFp3NlhoZApuSHBLQlBkZkUycEUwVzl1UkNyeklLRVdqdEVvaUp6RDdJYXpJd0I0bTA4
-Y1hqd3d5eHEzZm5PSU9IaDhPVVpDCi9IQlV3M3RibTFXVFZoSXlXM04yc1FPRVdEVytjRFgwblZX
-RW5sZEZVa2JaY3ZyR0FZWENndWpwSDZNR1FQZ0kKeWpQTHNTQi9EQ29uVXVNMWNwMnZCY3orbnNo
-S1Z2NUp4SkcvTEJsQzE4TTJ3aGNDSGxhWU5aTFczcTZTbjBiUgpvQXdWQUNRQXM1em81NS9RQURa
-TXBFMXBneXB2RHg4TXByWUZPQlp4a3ViOTNmMnp4T1lxV0RnZWhlT1BXSUlQCjJNbjE1d1dkOGJG
-U29MN1dxYWVGbjNpbGh2WkNxb0lIZ2Y3dlFPWT0KPTJqVjQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000052b90d06276e1b04--
+  git clone ssh://user@serverIp:port/c:/gitServer/git.git
+
+?
+
+Basically the problem appears to be in that the Git process spawned remotely
+in the SSH session set up by your local Git process, is given the path
+component of the repository URL, which is "/gitServer/git.git" in your case.
+Obviously, this path is not correct on Windows filesystems.
