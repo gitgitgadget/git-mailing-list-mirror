@@ -1,144 +1,126 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292CA2AE96
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 14:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF741D0143
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 14:57:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732199342; cv=none; b=RUFqC/woao9vThzpiWUA+skYj1Q7xF5PPM2M0TVp6XvJ+qRjOaEo8XiRr6wskTblh1VyJJTbqUyLM6qKNztkITelS6R3+6a7ig9phGYEUprq3m838joHGN2Ty5a8ODR6a0CXAoqfkq+IiM7CExfnejN7W0DzO7/A2iGVwCgui0A=
+	t=1732201055; cv=none; b=CnxM+7+AlsdSeFHv6QVEehqCjXGglskJQ5/d1NBH/tWJIv73+JWC0nGXmUtnbzMUoFI4+Sy3RZSIxKDPjO4tcxhH3luXaakQl4KpohxT3xY6tohb8VqgM4NcTkrDXdjgUjHhm8l8r8imEluORRFkjTzWvRDyhITw9y3/9r11Kc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732199342; c=relaxed/simple;
-	bh=Pfa458UovAnNqDZsyDiIU0R9RsvpTtCW/1+TvluMn6E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=sW3wRuXell4DjcGcrQ4ONGfzMi8n5qBYA+8UGRrD85FK/zg65moOK3mUAbE4f5fl0GtH/B+TmRwuHpJ7/2GZsDr5V2lM+ON09kZX96FU+0tIn8JMpMHwaXdB4vh4IXe+UcSOpkTr52c4lwcju7D6rBeFUuY1sLdpCJ1x9qrUpkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eORarAJw; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1732201055; c=relaxed/simple;
+	bh=1oNfUpGPspMMksAgiT5A1tIOpuAnvlYWVhvc10e3qgo=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aNuglAnR1jiwQ9H2RlyMCXOqCQipmucfv5GoY5mYPHJWHOLILssL+1wz/3UJlPakBc+tO+J8EtaWckNCKvL3q8TNlh6gX3uxceksQI/xzIRo29a5QJ2n1Zp4xwmHmot33vzrKWkwod7Q2lUZjL14giou5QyvMsCYFGeiBee0vSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PoCfMVno; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eORarAJw"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38245e072e8so937462f8f.0
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 06:29:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PoCfMVno"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5edfe8c17c4so530009eaf.2
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 06:57:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732199339; x=1732804139; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=BVrA4gNUQaTGZd3MyhFdInvO/n5n8tUJq9zb8LcFRWQ=;
-        b=eORarAJwe1dqsuXfzYb2C5ft//U3gQDt3LLauABIa3/2D6mDs54B1U96evu7WvOI+m
-         fSZZWpQy6xhULF13UG/+QC2QhV1RskqxdUNxW9YWi2rRfcpuuEJAWjYGxZlpzyQldRtO
-         lswCkcX5S7A1CHoCMu4vnGkfFv7TBs25JbDzB0TYXUwsI+XMDy/gTfX4L/FPc6ufxsQ9
-         BK6Kf8Ww9H56yyfTndU76eBO/FTREmtDpRuVt0ycjv/5xB1UQX1Xb35cSGCV413CpXWg
-         xmQYisEB1YtDFUjfMZeiNBb6BzILS4Um4XDJZDnfnZZq78S/Fs7AOFTb1OxiXDnuAoG0
-         NZpw==
+        d=gmail.com; s=20230601; t=1732201053; x=1732805853; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1oNfUpGPspMMksAgiT5A1tIOpuAnvlYWVhvc10e3qgo=;
+        b=PoCfMVnoGakKXTGljbEQuIAzKot6PHU/LW5AD4MR67UoiY1Bjzuf3+r2n1J6xNamR4
+         56OM21j0zkjX2ZqhsSqv6AHJhTUIdWBcRyuC6nTuIkuYF1P/84+k8Wu5MraD7F1hpjdC
+         RZ92p1DFObO8fEz8If9BlHLy8X56foZScJVGCy+zSscDbcg5bjYxvFJ1fXGbcGVoi0dP
+         4T7AgDYTU9FFidLsIjUgfltSBgGt4FSifeHYJT7ki/3K/WQo/TSHig2b59W9ucPh9TR9
+         OXPPVxiOEygAb5Quk3Cn9x1dryAQ4kB0Y9QSALrrGD+rI6HL2i1m1Rqut7tfblXdFCPc
+         ou1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732199339; x=1732804139;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BVrA4gNUQaTGZd3MyhFdInvO/n5n8tUJq9zb8LcFRWQ=;
-        b=FGwdrqcLvk5NyTcXlvMjG8xqxkT19+IpD+MamXQMziQpu0dWZgjUFdTTvf/bzKjwRF
-         Km0z/v6XdFLRmy/5xHKWW4ZYmPJzgYW/ee0iEJLwFJPSu9ZS7Ob9h5sK6HREwt/qG/il
-         U8SDJkcP1jn/1J5T9UUqQ23ZbZeWh7U709DghmrmyJaFmU3RoLUETJxwixWG2+9vT8hc
-         vfI2wVLHOLHNNZlIiHrFUte4BvjtUxxKxbHWFzjn5a6jwHUu/686eq63tDNpG+zQAfWS
-         O7jBmuD+PDx0gbFlxpKaDSG7nJ3h4eSxfFVPEdBlD99xrOXlfVYQvFUozjx/6ZU8VIaJ
-         MiOA==
-X-Forwarded-Encrypted: i=1; AJvYcCV0zYfx9wu4EVxPuAln0xoFd0njrP70JFvd3UXJ14zWawowuCeuFwon/lzp9EoR/JXLf70=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMwVzsPhPOMOlMGYB2J1mq7XhK4+zvb+4FjT0djt16mBVIBmNo
-	v/dltml1E73ElXCklu+L9l0mAD/EhS8zCp8PeqSLrNCaFmtZrzZXSgta4w==
-X-Gm-Gg: ASbGnct1mcuCv94CuEK4SC3N0QOI9TLXAH7qohixtODoyO4RQhcdHD+rrAKVHzN7BRL
-	jIj8xu7k+Fw79Rjiab8cno0yOqvDEz7txiILvCH9E6QM032Mva3V6uvtOmLe4xSFFkYD5vqvGOW
-	qdp+5lfL5mDmOOuavRnFI704O6FIYI6QkRCaEcLvhHqmbjeHXib3jo3NxH//HmqjoHNFn+ux/qB
-	R1ahWmPxnFWwLgFHejgXZ0Jm6z6JNG3jVnQGn5BDMpw16CNG5y1Pgp8PcdEf1Ka/60dbIosO0fY
-	Ch2+1/1cnUZ6ZckUGwMz2JFnlw==
-X-Google-Smtp-Source: AGHT+IGnalw4pB7Hanz6iIKppK5nInl+A7Gg/HP5Bot0bpcVtO0XrQ/Se6UPKnfVd8PuIL0dBU/d5A==
-X-Received: by 2002:a05:6000:1fad:b0:382:4b9a:f51f with SMTP id ffacd0b85a97d-38254b18b6dmr6743750f8f.47.1732199339169;
-        Thu, 21 Nov 2024 06:28:59 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6a8:b801:610:d596:f87c:e591? ([2a0a:ef40:6a8:b801:610:d596:f87c:e591])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433b45bdbabsm57394855e9.18.2024.11.21.06.28.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Nov 2024 06:28:58 -0800 (PST)
-Message-ID: <15918318-8071-4c20-9e83-9b93a5410683@gmail.com>
-Date: Thu, 21 Nov 2024 14:28:56 +0000
+        d=1e100.net; s=20230601; t=1732201053; x=1732805853;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1oNfUpGPspMMksAgiT5A1tIOpuAnvlYWVhvc10e3qgo=;
+        b=Af8kGk3b/NrOTdWocHHjfzPaHinpI059vkve/aS5+7f3Vy5dBHBao2dCddAb8Ke9vD
+         8kP0Z/N8eZ/SEfoRA0+mUtdIBzByOlevCKwA1jEQBWRT7C210uRwvoWkexyCo205IoMj
+         h5FOM3WpN4QvqwuC47tduV+ztAaNe0Rl856HDYQFqm/7g0VSwoQBJPZr08SeMDP4mi0S
+         qcEHy2Oyv45/uhjyoLUo4ekEgHeSfOFhz4aN+0tyrthm203iPaIcny9ef96bBHYedg/E
+         UePlYqqMPPbLdQawvtxp5AB0afsK7y5NBHga5lBBvwATziO9kcQ+q7P+2E24KzDb9Etd
+         W0Zw==
+X-Gm-Message-State: AOJu0YyjLjm5inE4UUhaaAm79nrx7p/Oe7xxzJv/STNqPf4gfanlpC1n
+	Kl68uANRF3Zk1KZy/HwZK9wt7tdauejmwZWx/glYnJzUlv1jDqzv7fjbkLqRSkhYnULtRR1ZDMX
+	qOnjJLMv913tBcL97T4KNDu3ijAPFjwfY
+X-Gm-Gg: ASbGncuL1YteU+Gskd6dN0PhdEDln1GLAsz5yOGvmm764Pc8hhmBI2zd2t/wQurGpi1
+	9b14Lod7SPQBApoytInEGH6tklEqrLjhwJWsohSX4zpWfoEuYDOf4DBzQ0TYJm8C/AA==
+X-Google-Smtp-Source: AGHT+IHMDi/s0y34lHQbRokXa1yZGyqSfC/YXzpZUlhktDIXZBvw6186BoQfaRY3RTQeRbudqbRVVnEwGA9rt5XABNk=
+X-Received: by 2002:a05:6358:714b:b0:1c2:fe94:abda with SMTP id
+ e5c5f4694b2df-1ca6648313emr413804555d.5.1732201053251; Thu, 21 Nov 2024
+ 06:57:33 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 21 Nov 2024 08:57:32 -0600
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <CAP8UFD0RpTXCdeYPA44yiS1E-LsmSHVrGxNKaUFkvUqq+zNTZw@mail.gmail.com>
+References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
+ <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-2-e2f607174efc@gmail.com>
+ <CAP8UFD0RpTXCdeYPA44yiS1E-LsmSHVrGxNKaUFkvUqq+zNTZw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Git problem in windows server
-To: Luis Heredia <luis.heredia@tool.es>, git@vger.kernel.org
-References: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Thu, 21 Nov 2024 08:57:32 -0600
+Message-ID: <CAOLa=ZRRohwY85wbhJcb0zJhWx5MKfPJqSXDdSkPR5br1CBeCQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/10] midx-write: pass down repository to static functions
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000762e6b06276d7c92"
 
-Hi Luis
+--000000000000762e6b06276d7c92
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21/11/2024 10:24, Luis Heredia wrote:
-> Good day,
-> 
-> I have a problem that i can not solve after a lot of checks.
-> 
-> In my windows server 2019 i created a bare repository (c:/gitServer/ 
-> git.git). In that server i create a new directory and I can clone it 
-> without any problem. The repository is good.
-> 
-> When I go to my local machine, i can start communication with ssh to the 
-> server (cmd ssh ssh://user@serverIp:port). I can navigate to the path of 
-> the repository (cd \gitServer\git ) and change anything (copy c: 
-> \temp\temp.txt). With this i can be sure that the rights in the server 
-> are correct.
-> 
-> The problem is when i try to clone in my windows 10 local machine (cmd 
-> git clone - v ssh://user@serverIp:port/gitServer/git.git c:/temp) i 
-> always receive the error "fatal: ´´/gitServer/git.git''  does not appear 
-> to be a git repository".
+Christian Couder <christian.couder@gmail.com> writes:
 
-I'm not a Windows expert but I think the problem is that git expects the 
-server to run the command passed to it with a posix compatible shell but 
-the default shell on windows is cmd.exe which uses different quoting 
-rules that cause the command line to be mangled. The solution is either 
-to set the shell used by ssh to bash.exe (see [1] for how to do this) or 
-to use the --upload-pack argument to git clone to execute the command 
-with bash by running
+> On Tue, Nov 19, 2024 at 5:36=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>>
+>> In 'midx-write.c' there are a lot of static functions which use global
+>> variables `the_repository` or `the_hash_algo`. In a follow up commit,
+>> the repository variable will be added to `write_midx_context`, which
+>> some of the functions can use. But for functions which do not have
+>> access to this struct, pass down the required information from
+>> non-static functions `write_midx_file` and `write_midx_file_only`.
+>>
+>> This ensures that the usage of global variables is limited to these
+>> non-static functions, which will be cleaned up in a follow up commits.
+>
+> s/commits/commit/
+>
 
-     git clone --upload-pack '"c:\Program Files\Git\bin\bash.exe" -c 
-"git upload-pack \"$@\"" git-upload-pack' 
-ssh://my.server/c:/gitServer/git.git
+Will fix.
 
-(Note I'm assuming that you're typing this in bash, if you're using 
-cmd.exe you'll need to alter the quoting)
+> There are a few places in the patch where hash_to_hex() is replaced
+> with hash_to_hex_algop(). However hash_to_hex() is not quite a static
+> function and is not defined in 'midx-write.c'. So you might want to
+> mention this additional change in the commit message.
+>
 
-If you clone using --upload-pack you'll need to set 
-remote.origin.uploadpack and remote.origin.receivepack to run the 
-appropriate commands when you push and pull
+While I think it is obvious, that might not be the case, so I'll add in
+a line to explain why we swap those functions.
 
-     git config remote.origin.uploadpack '"c:\Program 
-Files\Git\bin\bash.exe" -c "git upload-pack \"$@\"'
-     git config remote.origin.receivepack '"c:\Program 
-Files\Git\bin\bash.exe" -c "git receive-pack \"$@\"'
+> Thanks.
 
-Best Wishes
+--000000000000762e6b06276d7c92
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 1c9e7feac1e368c8_0.1
 
-Phillip
-
-[1] 
-https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh-server-configuration#configuring-the-default-shell-for-openssh-in-windows
-
-
-
-> In server and local machine the version of git is 2.47.0.windows.2
-> 
-> Can anyone help me ?
-> 
-> Thanks
-> 
-> Luis
-> 
-> 
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jL1Nsa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWU4Qy9zRjlTVUdWbnhaTkc5RjlMYThMY0RGaUVrMApJaE90eFlHOEpa
+SEF0enNkcmhld2x4YkZrQzZIK2Y5cWxEVmY1b1d5L2Vremc5SnBWUFNPa2ZhMlZXa1R3OGVIClFj
+dzhQRS9GYWFBOFh5NEVORkI3RlJFaXJjNXZxcE1LenNPL3dmb29jUmpxRjUvVGo1alk4V3lDOXM2
+dWpSdjYKeDEwWkpzNVRRQ2dYOTEwOURLbkRLYXhhMlZSZkFBVml1aDhDd2xiRTE2ZTJYUzFXNjdO
+WWZzUExTM29wMkZEZAp6VEtxTEN5eUtqOWRCaGsvNUNkQ1Z0TTFhdUdVQ256MmYyVzA4VGdDVWJp
+M3Q5eW5TSzBwb2c4bFVrT045UG5vCitvS3NSNVA5dTNPZVQvL1Y1dGRpbFgvcS92cUNPbERYemhq
+NkhDK1NodUxCdERyMkMyMFlrQUZrdHpiOHUraC8KQktzMFcyaXhqS29RUEluN00yMFRqYTA4Y0ow
+d0Vxc3RlNk54ejE0L3BuV0oyajNqcGVaalJtcU1zUUpQcHkwZwpXRllKTy9FczdybndUcDE3amQ0
+bENMOWZyZUcydGhzTGdXS3ozRjZNVUFoSUZ2dGRFTU1EcTRCVFFaQkIxeUJMClBNK3kyS0Zha1oy
+VGJBNUNWa1Y0Ly84TGdKU1FjR1V1Qytxbzl0Zz0KPUdSUWgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000762e6b06276d7c92--
