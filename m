@@ -1,97 +1,67 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1410316C6A1
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 10:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBDA14BF87
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 10:32:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732184689; cv=none; b=roD6Q7FQyIytWd7a8dtHx4C3GjdiCbZvcpG2sx5deys7bcSeNtSYYQwEEFKVfennOQTn34JLs+JCwsySd0126vozRQ66lOzUEc3E4wsQb/YAoAInTCA7y53uUFxjpznGkqtzbz9+Lp6T23OkRxyNtObAgpnnH8mhAPLADFOAHRc=
+	t=1732185146; cv=none; b=Nx+NLIDiiZ32PTYmsmVzm3CUpPeQWHCQFIO3O8QT45m9a5SY//t7WmxMcVuEHb8DPzWqRMW/APP/9/n5dvFnR6/8l+z1MkvxLOUw1GSo21qsz9dZkLA8KTcVIiuFxfhFCBZE27xl8PRmK1a7w5b4D3/vRHVqPktPf4G3aVSij2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732184689; c=relaxed/simple;
-	bh=ymU9e67dxkG8dXCBT3WpOkLNlERt2QrLJe4VhOWaGLY=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=gpcLoX0CCdpsUlv9LAP5fw8no+xVEgdjAP7rpcaibojFPJn/uulgFR9nvT/XLJu9teyrCMG/JAbxpSt1PRZHswy9HhWxqRhBnfcv7+5VOYMWtddbe66Z9McHA/UdL5ycGTfFuLq43X7ke2rxPzNCE/jC9T4ffQGww0L3EYq9FpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tool.es; spf=pass smtp.mailfrom=tool.es; dkim=pass (2048-bit key) header.d=tool.es header.i=@tool.es header.b=azKqVJ8M; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tool.es
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tool.es
+	s=arc-20240116; t=1732185146; c=relaxed/simple;
+	bh=VGG7NI/+L8KuTF+jDY152nnmsRY+C3h68Shqqy6wmtY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Nz/pAEvbzuUCEYSNQ1pgE9I0BO9ZA9dr0u8X39zs/eBTMiQvhXZs/ks/lH2aO4SGHombdXufV+65a8gllNiO4tgBIz9SWmI83WzLzbzHLxps0QRYlXkb0woIK6Jy+RneGBw2eZj1ge2btAfmLKPVjK+uZI958R0DhNH0Dvd47qY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MKYKM9LN; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tool.es header.i=@tool.es header.b="azKqVJ8M"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4316cce103dso8226915e9.3
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 02:24:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tool.es; s=google; t=1732184684; x=1732789484; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fwN6HuKOaTdqUmkdShKrTgnv/ZiwBObdj6e4VauXkZM=;
-        b=azKqVJ8M34h8bRoSdbNA71j1KUdhf07x4Edq0BqIuQ0q6nt8nAGqY3xC8LwarN5NAH
-         OMan4N/9RsIJChn08YXNrDCimp+VUZK9SYocsb4dVPTpHpT17rVbdmJdRFGEDc6ChBZX
-         QpGXTuWE06RKNKqyX4QXSj5ylSuS4caRTdeKvdXCBaa8i1feSMr4pOZvMBNJp30iyL3l
-         OQHI4F1JGvt+AG9GFBycYP82dcbtcPT53icNbM/pAeUWqugZm2bke9oJgTbJy1UoP5on
-         19lCgMm7LYtgAkINb1VxZRBQLJMFUi6pJqdZt2F8+GoKgW1VKuG7z6e09eHXevMe6UeS
-         pzng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732184684; x=1732789484;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fwN6HuKOaTdqUmkdShKrTgnv/ZiwBObdj6e4VauXkZM=;
-        b=TVbs2fDiZcSE+X8HPnxS6xXETidYh3CveRicyBH2sffZ3KA6HZGvIKbijVnCHqeN5I
-         GXt2sUW9q8YG/f/PwkyIryi4mwyxbqTsqONnjzc5SRLKskIeyyeei6eBgeMDCyQ1YYZj
-         4Vi5Vt4OesWV+VV8ITgR7Sy+oMgbZh36TSBjjG9sats9k9Fiet6alvXgdblG3i0ilhfg
-         avp4SYXackfefkhg618GtdWqGV8gFZjwtABK50gEnfc6osKF8mSWf72VoX5BhgnQOJv4
-         qFxw9iZDUzg4jjQV/wb1vfZoV+kELkATFeoP6gWDNRyZWYKYEFmvhZumCOVBD099R3BW
-         Eozw==
-X-Gm-Message-State: AOJu0Yzvn9U4BtrSVc0KY4LFiQC8/oa5zIry2D/XXZmo8QFsUnrYEeGJ
-	0ThdC2go0HGuWubmGgQgEdtXgsaNU9rO9Glan7F5bJ1ZHAq35bEdxgbfWWuWPjOMlYmOY6OCUCC
-	F
-X-Google-Smtp-Source: AGHT+IEszMwB4MNigQCFGZIvW89ze+oVsqlMZdfBdJa9s5A7mEDleczmmBVPFWR0dpi2QY2FjKOnHQ==
-X-Received: by 2002:a05:600c:5250:b0:431:562a:54be with SMTP id 5b1f17b1804b1-433489a04c1mr63728455e9.9.1732184683900;
-        Thu, 21 Nov 2024 02:24:43 -0800 (PST)
-Received: from ?IPV6:2a0c:5a82:e50d:b500:b971:2222:c488:daf4? ([2a0c:5a82:e50d:b500:b971:2222:c488:daf4])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433b45bdb13sm49438815e9.15.2024.11.21.02.24.42
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Nov 2024 02:24:43 -0800 (PST)
-Message-ID: <e020539e-b66b-4d4d-80da-9f51d4b66683@tool.es>
-Date: Thu, 21 Nov 2024 11:24:42 +0100
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MKYKM9LN"
+Received: (qmail 30695 invoked by uid 109); 21 Nov 2024 10:32:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=VGG7NI/+L8KuTF+jDY152nnmsRY+C3h68Shqqy6wmtY=; b=MKYKM9LNY/DMB+S7u7w2eikf/eJCxZNufAMKQgpQYmiAp4kWPlMdoTZgR01h1/HPU1OnBPdk9XlBjVTehlp8rcz9FsqQ6LcQKUpzeG16IG28unq+whP9r8A0sLt518B2VcTulhBkL2oRRZZABuEmzrqCJKiO8TIxkQ+WiF4nkJlpuIf+No1JFmm2+GpGMw+OCPvTKyJ/UW4X0F5kPexaMrHo3dRr99mlYKX8yxsBXUpevqc1lFnDJS0jtBuZ4PaLRPZxHhXIr1O9zznzURx4bs4y7vx+BAy3QIWjE2yhOXIltz4IeR7v9wOKx4tiWRj1lDSyC+Jpc1PuOqUMzFY+GA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 21 Nov 2024 10:32:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23142 invoked by uid 111); 21 Nov 2024 10:32:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Nov 2024 05:32:28 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 21 Nov 2024 05:32:22 -0500
+From: Jeff King <peff@peff.net>
+To: Toon Claes <toon@iotcl.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
+Subject: Re: Doxygen-styled comments [was: Re: [PATCH v2 09/27] strvec:
+ introduce new `strvec_splice()` function]
+Message-ID: <20241121103222.GA1133719@coredump.intra.peff.net>
+References: <20241111-b4-pks-leak-fixes-pt10-v2-0-6154bf91f0b0@pks.im>
+ <20241111-b4-pks-leak-fixes-pt10-v2-9-6154bf91f0b0@pks.im>
+ <877c8yti5n.fsf@iotcl.com>
+ <Zz3Y35YI9ysFabUJ@pks.im>
+ <xmqqcyipijma.fsf@gitster.g>
+ <20241121081146.GA581647@coredump.intra.peff.net>
+ <87plmosx58.fsf@gitlab.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: es-ES, en-GB
-To: git@vger.kernel.org
-From: Luis Heredia <luis.heredia@tool.es>
-Subject: Git problem in windows server
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87plmosx58.fsf@gitlab.com>
 
-Good day,
+On Thu, Nov 21, 2024 at 11:23:47AM +0100, Toon Claes wrote:
 
-I have a problem that i can not solve after a lot of checks.
+> > To me the point of an official declaration is just to
+> > tell people not to do so. :)
+> 
+> What do you mean? Do you want to formalize in the contribution docs we
+> will not accept patches only changing the formatting of code comments?
 
-In my windows server 2019 i created a bare repository 
-(c:/gitServer/git.git). In that server i create a new directory and I 
-can clone it without any problem. The repository is good.
+I just meant that by clarifying our position we would not have people
+sending patches adding or removing, or arguing about whether they should
+exist during review.
 
-When I go to my local machine, i can start communication with ssh to the 
-server (cmd ssh ssh://user@serverIp:port). I can navigate to the path of 
-the repository (cd \gitServer\git ) and change anything (copy 
-c:\temp\temp.txt). With this i can be sure that the rights in the server 
-are correct.
-
-The problem is when i try to clone in my windows 10 local machine (cmd 
-git clone - v ssh://user@serverIp:port/gitServer/git.git c:/temp) i 
-always receive the error "fatal: ´´/gitServer/git.git''  does not appear 
-to be a git repository".
-
-In server and local machine the version of git is 2.47.0.windows.2
-
-Can anyone help me ?
-
-Thanks
-
-Luis
-
+-Peff
