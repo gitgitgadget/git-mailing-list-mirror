@@ -1,143 +1,223 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424EA1AAE06
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 23:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D074519F410
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 23:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732231950; cv=none; b=jMtYzB2tqSvrkoMADKntPFczTvj4WIBdNb1GbyTXn/PDVVMNKyXXILTRV3Mz2rupIzrPLPtLYVxgPQZDp+gZc7zOIkAQuQgyd0GdWeHnGtVOq2M3wTeWXAw2awkGCGdLjFBSfOTb93nndwgejRcYRY+tn7qnSSZYWLSuUtBftjw=
+	t=1732233019; cv=none; b=Q5Mmy7+jt8f5gLxpe9HiWFKpCPSS0K8biC/+ilQR769/Sy0TNB/BvkdCTB0lcRoozcsdYLmbj2aWOhvjRkuHDU0nsZKxigopNxKZcdQS0GwXv0tIH1weI5k/+za5ouOZlUWkA4JSulMQdZ5RZXvFUgjF56fX+J/IfZHRhpTrzUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732231950; c=relaxed/simple;
-	bh=yORrjPu+I28u+pBZl5BH+Tn//qFY4xIHhDbtCbdHtOU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mDApCBt/wWcSGKBvixPtdox4c4IfUckQwr25jfyfX/BJ59vzRng0y81bk9XCYRB//HyQ4BAC79iBS9myqXlaQrq9CD6j+YblgmrBbNP/MQoR0LRwu5RT2tkJ5ApYwA59YaDS+tBWC9KUynEbeIkPA13Yyz29G/t9kD//7DG+TB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iAEVgFeG; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1732233019; c=relaxed/simple;
+	bh=pmglHKNcPi6ZX+UyEjo+4Afwm5vZqnWdlqMx2qsnHn4=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=eIkslKYb6o9dyLmd/X7btKmCSuyoqJwr/xrQbNqrrKXuqaoi9GGyWqCqvS2P3Djvu7+zJqGiElieXrmCzNFWsTfcaJV37tdecZqp5nBZAPBxMOyANi5B1nxhBUaguwqtmKUvulC/rlWHEZhPe9MLSavmQWWpbEY7RgTOBMiIhvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vM2J7yvH; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iAEVgFeG"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id EDDC0114018C;
-	Thu, 21 Nov 2024 18:32:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 21 Nov 2024 18:32:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732231944; x=1732318344; bh=KLhFZP0GfpakI4zBRYLZiQM+FqYIzMdcGV9
-	SUvj6URU=; b=iAEVgFeGaUuOIt6+ju9nES73kEpeejxLPopp5p3bXAYMjlPPE58
-	FsNwDECAqWFb2kHrXKzcmUm9dNXuVdO6I9/zkv7TwC//4hBHgbr3NAvNcandDggQ
-	5ULkKHej3Q25dw4QLGNh2UzcKKRs7hsVz1XEFePGwN0GleVj3YpuA2Q/Mj6kVC4M
-	kmfBDUy1AkmJfVICiSN6R1E1c4IR4mruQv6XuOx6h7RNVuVdgteJmtwRLTPEvDsM
-	4Se93pICYeYQZT+G61g/h3527C1HUjqRz8glDbkzWGsSUBfMwFZ3M3SRiMzTcZb1
-	LHLpF/rahUy/uuIpT8/j+NBAmMkrCB+JBgQ==
-X-ME-Sender: <xms:CMM_ZzKH4g9HpN-k-aeyE6uePs8reXetvihmBTYWkKCoYO_R2yYaMQ>
-    <xme:CMM_Z3KY-I43-FsrCu_TMWfUgclN9EypIumdi369-iKQqGMjP3gWyIw75x1ITlK3H
-    mX8okw86j_c6bJErw>
-X-ME-Received: <xmr:CMM_Z7usR5WrdgHeX4J39yYX_Vlz5vwyfUrC1ozQ0gpn-pyN1wG2T9g-dTJrVbptbY3plgemPo3iBf87qV-_s7p-6AINx5IiS3K0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdduudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpefgteejgeduveeuteeiudfhhfeguddtjefhjedv
-    ffelteelhfdtveejueehudffueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhi
-    thhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhgu
-    vghlihhnsehgmhigrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
-    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:CMM_Z8b5-59K2_Aq5vDRlo0sHeuuvzmLoz9JyxXhWbnBQKm0PEHS1A>
-    <xmx:CMM_Z6YBfbNa-rAUvwc1KuJEwnWFl3BB7MFoZjDoqpf8zRTxUJGEBg>
-    <xmx:CMM_ZwB0o7UWOd5_r4FDjklyRYiefunBm5X-2G5AibunZJ0Nf2YVFw>
-    <xmx:CMM_Z4b1bZNOyEXJit43F0RqYiy4JV3g0iCgOEFZBIMHuxVC8O0Yow>
-    <xmx:CMM_Z3RJXxyfbj4_LSVvEZDCqCAeZEIpPc5ZEYOoeH7Hmig-fgOyPjpE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Nov 2024 18:32:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  johncai86@gmail.com,  newren@gmail.com,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 1/7] pack-objects: add --full-name-hash option
-In-Reply-To: <Zz+nk4w+y63vCupK@nand.local> (Taylor Blau's message of "Thu, 21
-	Nov 2024 16:35:19 -0500")
-References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
-	<812257e197cfe30bd0d3c68ea6ec0d062631185f.1730775907.git.gitgitgadget@gmail.com>
-	<Zz+TKS2O/ij6GZ1f@nand.local> <Zz+nk4w+y63vCupK@nand.local>
-Date: Fri, 22 Nov 2024 08:32:22 +0900
-Message-ID: <xmqqmshsduyh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vM2J7yvH"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e30b8fd4ca1so2304182276.3
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:50:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1732233017; x=1732837817; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=1q+1CgwsTgNQRqaAujJQ7u1oW7GD8ovkJPHYuqc0OfE=;
+        b=vM2J7yvHxl+vU4ym7knc5nbeNHqp6NKzWFy7jzax+pMG3WQMt23jrihcY9enulLZer
+         qs5LNXVhxAcCMA73crPojfjwevUaYYFfGZjCA4SzpTVwiVJfVDIPh4Wm0UUeJ1aMpCBt
+         BYzJ8r6yJoc1a/HZdIOYhdrh+j8hSrpnPAw1Fv+FQUXM7lQKk2UDe2xo+RbYqMYkRsrX
+         lo1NehdVoDOQhwCbkC54ctfDe08ZohD1rqSlLU74PMF/lfBk1a7C+H8rOHQhMInyGYZJ
+         7sWydTEzMwYj1+lm9i887VVrKZeWYCt7aOJOZHB5DaWcWkLs52l4uE80fQ0qCwBpqyM2
+         gLAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732233017; x=1732837817;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1q+1CgwsTgNQRqaAujJQ7u1oW7GD8ovkJPHYuqc0OfE=;
+        b=A1AWkQLk+WGSocvJSiXbqDlCTAMAl+28L80n/4fv4WRVjt7gxlOvidvSMajZf7AWkn
+         TcsIfQOuhZvyirgGZhxO9pAHn6ILOJiY7i6KyrvmhInJtjcGTfwKFpsZG4wb+AvHkv8J
+         nnq/nBVcVhoBGCDKLX9EpRMW28QpMqmutl4zr9W/yFTVK5DagYfK6gO1aJ+sn9izYoQC
+         aJ+tmlbzBnpQoNK7JgEkHOpl529HOK0hmXxSuKspDp91Iz+NhyN0oJ7qwv/Q9qE0hb3b
+         amkUIzcBHpWjvMQivt7m/G+HVrH1cdFMiFK8ptnzsWxnBPPEsL4G8MvWB73i3i5BV1Gi
+         XJ/w==
+X-Forwarded-Encrypted: i=1; AJvYcCUkkljNSSpVa5sGNJMQYSTKdka05TH9JJnyl7b92EQ4L46QQSktWhLigLDihFh5wjOQvKw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YybcdpF559RYY2l19ioWTSI+lwh6sDfQIyjfzQGJzi96XYNCu8N
+	FMiiMItezBNG9u/j7KL5H6GmFg/oVcjStikhbxpqsr2IkTI4+WdUbGed9cNlguxh+B7mrD7Sb5/
+	W9Mxe2CgSPEnvQKK6nWC/8j1Pdzld6g==
+X-Google-Smtp-Source: AGHT+IFJafCHkyE8FHnKeRxHfHWOe7SEa1h1nhK3ZpZVcInewekQJPOgWE96FvyCrr27+38WmNuQQ7i0N+4hNvaRDEPN
+X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:d214:e3cc:8644:78ef])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:adc7:0:b0:e38:b443:99f9 with
+ SMTP id 3f1490d57ef6-e38f8c001b3mr294276.9.1732233016362; Thu, 21 Nov 2024
+ 15:50:16 -0800 (PST)
+Date: Thu, 21 Nov 2024 15:50:14 -0800
+In-Reply-To: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.371.ga323438b13-goog
+Message-ID: <20241121235014.2554033-1-jonathantanmy@google.com>
+Subject: Re: [PATCH 0/7] pack-objects: Create an alternative name hash
+ algorithm (recreated)
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, gitster@pobox.com, 
+	johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, me@ttaylorr.com, 
+	johncai86@gmail.com, newren@gmail.com, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Taylor Blau <me@ttaylorr.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> This series introduces a new name-hash algorithm, but does not replace the
+> existing one. There are cases, such as packing a single snapshot of a
+> repository, where the existing algorithm outperforms the new one.
 
-> On Thu, Nov 21, 2024 at 03:08:09PM -0500, Taylor Blau wrote:
->> The remaining parts of this change look good to me.
->
-> Oops, one thing I forgot (which reading Peff's message in [1] reminded
-> me of) is that I think we need to disable full-name hashing when we're
-> reusing existing packfiles as is the case with try_partial_reuse().
->
-> There we're always looking at classic name hash values, so mixing the
-> two would be a mistake. I think that amounts to:
->
-> --- 8< ---
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 762949e4c8..7e370bcfc9 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -4070,6 +4070,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
->  	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
->  		return -1;
->
-> +	use_full_name_hash = 0;
+I came up with a hash function that both uses information from a lot
+more of the path (not the full name, though) and preserves the sortable
+property (diff at the end of this email). It also contains fixes to the
+existing algorithm: not wasting the most significant bits of the hash
+if files in the repo mostly end in a lowercase alphabetic character, and
+the cast from a possibly-signed-possibly-unsigned char to a uint32_t.
 
-Hmph, is this early enough, or has some other code path already
-computed the name hashes for the paths for the files to be packed?
+The results look quite good. In summary, the pack sizes are comparable
+to Stolee's results in the case of fluentui, and better than Stolee's
+results in the case of git.
 
-    ... Goes and looks ...
+Here's one run on the fluentui repo (git clone https://
+github.com/microsoft/fluentui; cd fluentui; git checkout
+a637a06df05360ce5ff21420803f64608226a875^ following the instructions
+in [1]:
 
-This is called from get_object_list() which
+(before my change)
 
- - is not called under --stdin-packs,
- - is not called in cruft mode,
- - is not called when reading object list from --stdin
+Test                                               this tree         
+---------------------------------------------------------------------
+5313.2: thin pack                                  0.03(0.01+0.01)   
+5313.3: thin pack size                                        1.1K   
+5313.4: thin pack with --full-name-hash            0.03(0.00+0.02)   
+5313.5: thin pack size with --full-name-hash                  3.0K   
+5313.6: big pack                                   1.60(2.87+0.32)   
+5313.7: big pack size                                        57.9M   
+5313.8: big pack with --full-name-hash             1.41(1.94+0.37)   
+5313.9: big pack size with --full-name-hash                  57.8M   
+5313.10: shallow fetch pack                        1.69(2.70+0.22)   
+5313.11: shallow pack size                                   33.0M   
+5313.12: shallow pack with --full-name-hash        1.49(1.84+0.34)   
+5313.13: shallow pack size with --full-name-hash             33.6M   
+5313.14: repack                                    75.10(537.66+5.47)
+5313.15: repack size                                        454.2M   
+5313.16: repack with --full-name-hash              18.10(92.50+5.14) 
+5313.17: repack size with --full-name-hash                  174.8M                                
 
-so we are looking at the bog-standard "objects to be packed are
-given in the form of rev-list command line options from our command
-line".  And in the function, we walk the history near the end, which
-makes show_object calls that adds object-entry with the name-hash.
-So the call to get_object_list_from_bitmap() happens way before the
-first use of the name-hash function, so this is probably safe.
+(after my change)
 
-And obviously get_object_list_from_bitmap() is the only place we
-select objects to be packed from an existing pack and a bitmap file,
-so even if we gain new callers in the future, it is very likely that
-the new callers would benefit from this change.
+Test                                               this tree         
+---------------------------------------------------------------------
+5313.2: thin pack                                  0.03(0.01+0.02)   
+5313.3: thin pack size                                        1.1K   
+5313.4: thin pack with --full-name-hash            0.03(0.01+0.02)   
+5313.5: thin pack size with --full-name-hash                  1.1K   
+5313.6: big pack                                   1.62(2.94+0.28)   
+5313.7: big pack size                                        57.9M   
+5313.8: big pack with --full-name-hash             1.35(2.07+0.37)   
+5313.9: big pack size with --full-name-hash                  57.6M   
+5313.10: shallow fetch pack                        1.63(2.52+0.29)   
+5313.11: shallow pack size                                   33.0M   
+5313.12: shallow pack with --full-name-hash        1.50(2.10+0.23)   
+5313.13: shallow pack size with --full-name-hash             33.1M   
+5313.14: repack                                    74.86(531.39+5.49)
+5313.15: repack size                                        454.7M   
+5313.16: repack with --full-name-hash              19.71(111.39+5.12)
+5313.17: repack size with --full-name-hash                  165.6M  
 
-OK.  Nicely done.
+The tests were run by:
 
->  	if (pack_options_allow_reuse())
->  		reuse_partial_packfile_from_bitmap(bitmap_git,
->  						   &reuse_packfiles,
-> --- >8 ---
->
-> Thanks,
-> Taylor
->
-> [1]: https://lore.kernel.org/git/20241104172533.GA2985568@coredump.intra.peff.net/
+  GENERATE_COMPILATION_DATABASE=yes make CC=clang && (cd t/perf && env GIT_PERF_LARGE_REPO=~/tmp/fluentui ./run -- p5313*.sh)
+
+The similarity in sizes looked suspicious, so I replaced the contents
+of the hash function with "return 0;" and indeed the sizes significantly
+increased, so hopefully there is nothing wrong with my setup.
+
+The git repo was called out in [1] as demonstrating "some of the issues
+with this approach", but here are the results, run by:
+
+  GENERATE_COMPILATION_DATABASE=yes make CC=clang && (cd t/perf && ./run -- p5313*.sh)
+
+Test                                               this tree        
+--------------------------------------------------------------------
+5313.2: thin pack                                  0.03(0.00+0.02)  
+5313.3: thin pack size                                        2.9K  
+5313.4: thin pack with --full-name-hash            0.03(0.00+0.02)   
+5313.5: thin pack size with --full-name-hash                  2.9K                                                                                                                                                  
+5313.6: big pack                                   1.69(2.80+0.28)                                                                                                                                                  
+5313.7: big pack size                                        18.7M  
+5313.8: big pack with --full-name-hash             1.68(2.82+0.31)  
+5313.9: big pack size with --full-name-hash                  18.8M  
+5313.10: shallow fetch pack                        0.96(1.47+0.16)  
+5313.11: shallow pack size                                   12.1M  
+5313.12: shallow pack with --full-name-hash        1.01(1.51+0.14)  
+5313.13: shallow pack size with --full-name-hash             12.1M  
+5313.14: repack                                    17.05(69.99+4.33)
+5313.15: repack size                                        116.5M  
+5313.16: repack with --full-name-hash              15.74(67.03+4.18)
+5313.17: repack size with --full-name-hash                  116.1M  
+
+[1] https://lore.kernel.org/git/c14ef6879e451401381ebbdb8f30d33c8f56c25b.1730775908.git.gitgitgadget@gmail.com/
+
+> | Repo     | Standard Repack | With --full-name-hash |
+> |----------|-----------------|-----------------------|
+> | fluentui |         438 MB  |               168 MB  |
+> | Repo B   |       6,255 MB  |               829 MB  |
+> | Repo C   |      37,737 MB  |             7,125 MB  |
+> | Repo D   |     130,049 MB  |             6,190 MB  |
+> | Repo E   |     100,957 MB  |            22,979 MB  |
+> | Repo F   |       8,308 MB  |               746 MB  |
+> | Repo G   |       4,329 MB  |             3,643 MB  |
+
+If the results are similar for some of the above repos (I do not have
+access to them), maybe it's worth considering using my hash function (or
+a variation of it).
+
+I'll also take a look at the rest of the patch set.
+
+---
+diff --git a/pack-objects.h b/pack-objects.h
+index 88360aa3e8..c4f35eafa0 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -209,23 +209,24 @@ static inline uint32_t pack_name_hash(const char *name)
+ 
+ static inline uint32_t pack_full_name_hash(const char *name)
+ {
+-       const uint32_t bigp = 1234572167U;
+-       uint32_t c, hash = bigp;
++       uint32_t hash = 0, base = 0;
++       uint8_t c;
+ 
+        if (!name)
+                return 0;
+ 
+-       /*
+-        * Do the simplest thing that will resemble pseudo-randomness: add
+-        * random multiples of a large prime number with a binary shift.
+-        * The goal is not to be cryptographic, but to be generally
+-        * uniformly distributed.
+-        */
+-       while ((c = *name++) != 0) {
+-               hash += c * bigp;
+-               hash = (hash >> 5) | (hash << 27);
++       while ((c = (uint8_t) *name++) != 0) {
++               if (isspace(c))
++                       continue;
++               if (c == '/') {
++                       base = (base >> 6) ^ hash;
++                       hash = 0;
++               } else {
++                       uint8_t nybble_swapped = (c >> 4) + ((c & 15) << 4);
++                       hash = (hash >> 2) + (nybble_swapped << 24);
++               }
+        }
+-       return hash;
++       return (base >> 6) ^ hash;
+ }
