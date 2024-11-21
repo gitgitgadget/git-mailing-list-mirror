@@ -1,192 +1,115 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865E36F06B
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 20:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B66351C9DDC
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 20:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732221745; cv=none; b=bNXJvYQ41ALskI4t4ZX6IcCqWEZCeQpoL28wbUZJzcd0QiZ10ZCbpvVMVJWdncd6YQK6xdX1vD2g7sYt7FmQjOpyXT/DecFtTEj4M2L6o0RZqwVFkJB2xXMpslkQVujY9+Da3m4+CYMDIBvkb651l9Lnueccoue5jR7eYMKVhGQ=
+	t=1732221831; cv=none; b=CoOGYHLBDEu7/BljeqeGZlZHnudDOZXi9KCxv0s0cuLDZxFEMeMZifYNbdmofeqCQr4BvqBeyv0FfjLae4ZXQbIeYsz5Hd5ZRlvur6HGJYH+vvEofxkbcwGa8zGJelWS+T7NhJm3wuWJOBJrLSL6jAVW64ujEssaPQgFXe1Ucps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732221745; c=relaxed/simple;
-	bh=4t6UKHtyYhLQQMAHBJDpVY+aHRy5E22I+rVBC5QoDnE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h4XxOXuV/ke6DGxXbdmT5t1ugAV8GnzdRNev4wir8aAd7TT5sTCIiNH0K2Qs1tNL1V/QmBqvbO1289KaD374EKcruAZqmW8g1gLsg5a98qJrI5tfJ1ZwVZyV1zwKGHls+4DKKCQo6gVxJHvcxwEePRCwlyThHKzd/UKMBh0tr8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZSg3Tf/g; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1732221831; c=relaxed/simple;
+	bh=vy7egpIhAQqoT4jIujRV0GCfyzathQjw8snkXub0pko=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iiDhR1U5ALqngVkr3NtLt09/PZq1fOcjV57EWDOefSLlzYpB/e9rAm8yEcY58zRzTzcEYPMCC9IS4bfgk/UNtr4EBeXNuXidBvXSgxBC0YMq/Ut024aEZclFnut9Mr0HoPPenV+w9crG9foYC0+pzo11+8zCp+TGARqBJ5LjHHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G+6ruaZe; arc=none smtp.client-ip=209.85.160.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZSg3Tf/g"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ea0b25695dso11707777b3.2
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 12:42:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G+6ruaZe"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-2965e65ce89so963686fac.3
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 12:43:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1732221742; x=1732826542; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=t7ilEZLkA89X2nUuAdLc7YdsYLcbdXIcnS+K8FlQAYo=;
-        b=ZSg3Tf/gBxpuQS934HHshr+aMEMig2ihTQoclNhAwXv4+xMxbQjCuu19qkOxWtjpIV
-         tJNtJGhDug4jud5EUKiActN+GmZ75vlqWg0pUSfpzI+vC2Tz3euObmZxzki2BBz3veJ6
-         9YU0YlgtLbkfSr/f01L8/ryRe8HyCnaJsWBzqUUWinVyXyBUTnYsEBPX5UrCD/h3OfBJ
-         xNG5iHwrQVc6rrZxCuXY80mLsNrYZmgLsnCyitXED5HKM2wJsvX19xxlm4Huh9RUQr8q
-         wum3LbFNFy945HOkRy7kcOGig0uFouZfqfP2rl/5mgmSleaWWZXT7M8m30VRcQWla+YN
-         OjMA==
+        d=gmail.com; s=20230601; t=1732221828; x=1732826628; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jN3sBOzlKd39Vgucdi9eleor6mcVQf1KInecyJ6eBSs=;
+        b=G+6ruaZeK9aNpe43cHNzE/yqUs7wRtsMwBoIRVPpJIw1hRjGDS2jB8TIM4DNJlM/m8
+         aTuJQ7dolZ0t88/b8/ZxosIYpD4A+8IyZ5y2p2MnLIxWKUk20Da8dQ2aM/EfGar16jue
+         STHK/gRpv06D1V/N27Y4b3Lg8zmYo63K1XhAuut5dy7OAFVK5hyrX+q3RA3HQxU+4T2L
+         8bhTIyHGaCysMsrzt/eXTb2YqOtF1fdD6+i2IcC3JIQAt26T9RpO5f5xQQGymZJYB2Xn
+         2IwztsMF8NChmN0sKYkvijm/ZXG1tNX6R97PocecWz1ZrUq68n8sbSkhVWmRmyuL5YhF
+         EQwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732221742; x=1732826542;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=t7ilEZLkA89X2nUuAdLc7YdsYLcbdXIcnS+K8FlQAYo=;
-        b=fZ0+5UveI4J5M3RVnTND4ERrh62q5LEcAGbf68YsKOi+EpQBVPeWlmv+r6S1lUC8oN
-         upHmncp/oJsS2dAsjC2wjGonubD1ILxF3yBWsidLwDAUbqCCe8sculckhe3LxFc2WO/n
-         NzWRoifYDwl5uz8Va9kaAi5ZQ1n0ee46t+rEl7txdusF8FdxRVU7Ez8/LgwmjLk7trOt
-         nYuwN7A0lQ1sR4Bftjo3JFQ4i/+yc0AuBUJmHQ4b4pibrjmZme9HVE7gxC16pcj5XQUW
-         EsJmKCRgjlX87YatooJz3b/clUdd2FHdQdSOFtQglOOu0q5IJJEZA/oUPiwjgpOPXNcO
-         eB1Q==
-X-Gm-Message-State: AOJu0YzKCMjjX64XZ0Ox+UuRIhu4HDL2cioCb4sdtRshIpaOg9Utgt5T
-	zz9LFAxSxNJFJBJvdTjjWuNdYtJb5/gIM2h394V+tG5xYA1orI8MlQXeGsqo6KU=
-X-Gm-Gg: ASbGnct2ISS8BVpzxj/EGI1RNS0RC3v4MnEHcEl5gyaz4JIILmA8mIyDEKT/qR3PI96
-	BHNraSR7vH5xaZDFrf55AEwGpBgXqIc0Q4DDM4xk9tYh1MOL+3oG/wvxO0srqkFcp+uHrfH1+SH
-	5qPt2NjjkOce6C2qCierPBN56RDYEn7kKJBkjtpm7EqHmkJhlohFbCs5ytYwxyuAhQbU9fTBJLi
-	iB3IF7qj0jM3wkuO2/F912ve6cGj7x5W2eeU1KAGLJGWMhjBvk1KoJbNAqKAeiYRvUCA68GQdgz
-	t/VzcPsxDfuAZ7HtEn0lvw==
-X-Google-Smtp-Source: AGHT+IG08JPgivyQSNpcjCJf/nWO2MRqGO6MysEv4+UFxcTXjP6XzMMP448y15YpIghESJAMmm9b/w==
-X-Received: by 2002:a05:690c:6e0e:b0:6ee:8451:d902 with SMTP id 00721157ae682-6eee087b7aamr7259697b3.4.1732221742363;
-        Thu, 21 Nov 2024 12:42:22 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eee008007csm1145767b3.88.2024.11.21.12.42.21
+        d=1e100.net; s=20230601; t=1732221828; x=1732826628;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jN3sBOzlKd39Vgucdi9eleor6mcVQf1KInecyJ6eBSs=;
+        b=IyP5AIY3RIycKy23++dwvivUnOoSPK9Zwcei6h9UTwLokc0B9bDaVmPORbC+hozg25
+         zR3lU4uueLuWeHarBOmVdnyjuW5j2QcRqHn9BkqE8QUMX/foOQnxQXVds9+MeeUD/8NR
+         H9O+BjS9amgNl27uqOcw0smiRJd5PYfSrB+ckrxxJ909H0XocerkepgQe0GNBrrd0CZT
+         01kBUDycxEADH+hxD3DwQm2W7n1Mv05bCMy3rdrHYmBj0ynlgwCD7PonSY6eP/l9mD1J
+         ZEPolqqBtQSc83TH8ZUJqO0h3m/UQD2DCdoohW2cB0AIwyDQIqPMwotW3oJ9eOQPDHaz
+         9bIw==
+X-Gm-Message-State: AOJu0Yz/xxrqakbB46yiGObtYgYTAz67f29oS+SyVUzfCdeXQtxR62jO
+	slvalY+bTQh9FW0t3YoD1yMyJLkdVuQ15C1RR9iQOlmbN1F/loa3aBfKgA==
+X-Gm-Gg: ASbGnctHwLeVtLthWhljzCcaJYrbR3M2Pk3CvoHvqkY6ln0GcQl3n97agw1AQvHgDZO
+	iJl6R0NS6m1A2ytmFOrEOX42Jj+xTo+OSArdI9PsTFQmNWb1DYA7FPjJtk7sKQUsv50W9TsAj2V
+	D2U/hRyGfTSdzUc/q7RxEg3q6kgg7S8Z5fce0J5ZjEScJZlblWoPIex6/G1tRivrZw1+ZtsBk5T
+	c/WUg0bTp0+XEL2gZGsH86imB4XvLbQ3FLTceuQ6GJ34VFR6iHv/ewrmQ==
+X-Google-Smtp-Source: AGHT+IG3bVuCtmK3FfNiD4Vjv069eE7fpo9Yvk9zB7ynJsqGjDJTuWa3H2V5pBuMC8eqSbBlTRqGsA==
+X-Received: by 2002:a05:6871:4390:b0:296:5928:7a42 with SMTP id 586e51a60fabf-29720c41795mr356076fac.22.1732221828354;
+        Thu, 21 Nov 2024 12:43:48 -0800 (PST)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2971d669843sm126481fac.28.2024.11.21.12.43.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Nov 2024 12:42:21 -0800 (PST)
-Date: Thu, 21 Nov 2024 15:42:20 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 7/7] test-tool: add helper for name-hash values
-Message-ID: <Zz+bLOi6DZoD5CfI@nand.local>
-References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
- <ab341dd0e58f77b3c7c6f5765d9e34cb02bef56f.1730775908.git.gitgitgadget@gmail.com>
+        Thu, 21 Nov 2024 12:43:47 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH 0/5] propagate fsck message severity for bundle fetch
+Date: Thu, 21 Nov 2024 14:41:14 -0600
+Message-ID: <20241121204119.1440773-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ab341dd0e58f77b3c7c6f5765d9e34cb02bef56f.1730775908.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 05, 2024 at 03:05:07AM +0000, Derrick Stolee via GitGitGadget wrote:
-> Test                                              this tree
-> -----------------------------------------------------------------
-> 5314.1: paths at head                                        4.5K
-> 5314.2: number of distinct name-hashes                       4.1K
-> 5314.3: number of distinct full-name-hashes                  4.5K
-> 5314.4: maximum multiplicity of name-hashes                    13
-> 5314.5: maximum multiplicity of fullname-hashes                 1
->
-> Here, the maximum collision multiplicity is 13, but around 10% of paths
-> have a collision with another path.
+Greetings,
 
-Neat.
+With 63d903ff52 (unbundle: extend object verification for fetches,
+2024-06-19), fsck checks are now performed on fetched bundles depending
+on `transfer.fsckObjects` and `fetch.fsckObjects` configuration. This
+works, but provides no means to override the default fsck message
+severity as is done for other git-fetch(1) operations. This series aims
+to propagate fsck message severity configuration to the underlying
+git-index-pack(1) process executed on the bundle in a similar manner as
+done with git-fetch-pack(1).
 
-> diff --git a/t/helper/test-name-hash.c b/t/helper/test-name-hash.c
-> new file mode 100644
-> index 00000000000..e4ecd159b76
-> --- /dev/null
-> +++ b/t/helper/test-name-hash.c
-> @@ -0,0 +1,24 @@
-> +/*
-> + * test-name-hash.c: Read a list of paths over stdin and report on their
-> + * name-hash and full name-hash.
-> + */
-> +
-> +#include "test-tool.h"
-> +#include "git-compat-util.h"
-> +#include "pack-objects.h"
-> +#include "strbuf.h"
-> +
-> +int cmd__name_hash(int argc UNUSED, const char **argv UNUSED)
-> +{
-> +	struct strbuf line = STRBUF_INIT;
-> +
-> +	while (!strbuf_getline(&line, stdin)) {
-> +		uint32_t name_hash = pack_name_hash(line.buf);
-> +		uint32_t full_hash = pack_full_name_hash(line.buf);
-> +
-> +		printf("%10"PRIu32"\t%10"PRIu32"\t%s\n", name_hash, full_hash, line.buf);
+  - Patches 1 and 2 adapt the bundle subsystem to support additional
+    options when performing `unbundle()`.
 
-I'm definitely nitpicking, but having a tab to separate these two 32-bit
-values feels odd when we know already that they will be at most
-10-characters wide.
+  - Patches 3 and 4 adapt the fetch-pack subsystem to expose a means to
+    generate the message configuration arguments.
 
-I probably would have written:
+  - Patch 5 wires the newly generated fsck configuration options to the
+    bundle options used when fetching from a bundle.
 
-    printf("%10"PRIu32" %10"PRIu32"\t%s\n", name_hash, full_hash, line.buf);
+Thanks
+-Justin
 
-instead, but this is obviously not a big deal either way ;-).
+Justin Tobler (5):
+  bundle: add bundle verification options type
+  bundle: support fsck message configuration
+  fetch-pack: introduce `fetch_pack_options`
+  fetch-pack: expose `fetch_pack_config_cb()`
+  transport: propagate fsck configuration during bundle fetch
 
-> diff --git a/t/perf/p5314-name-hash.sh b/t/perf/p5314-name-hash.sh
-> new file mode 100755
-> index 00000000000..9fe26612fac
-> --- /dev/null
-> +++ b/t/perf/p5314-name-hash.sh
-> @@ -0,0 +1,41 @@
-> +#!/bin/sh
-> +
-> +test_description='Tests pack performance using bitmaps'
-> +. ./perf-lib.sh
-> +
-> +GIT_TEST_PASSING_SANITIZE_LEAK=0
-> +export GIT_TEST_PASSING_SANITIZE_LEAK
+ builtin/bundle.c        |  2 +-
+ bundle-uri.c            | 13 ++++++++-----
+ bundle.c                | 17 +++++++++++------
+ bundle.h                | 15 ++++++++++-----
+ fetch-pack.c            | 20 +++++++++++---------
+ fetch-pack.h            | 12 ++++++++++++
+ t/t5607-clone-bundle.sh |  7 +++++++
+ transport.c             | 11 +++++++++--
+ 8 files changed, 69 insertions(+), 28 deletions(-)
 
-Does this conflict with Patrick's series to remove these leak checking
-annotations? I think it might, which is not unexpected given this series
-was written before that one (and it's my fault for not reviewing it
-earlier).
 
-> +test_perf_large_repo
-> +
-> +test_size 'paths at head' '
-> +	git ls-tree -r --name-only HEAD >path-list &&
-> +	wc -l <path-list
-> +'
-> +
-> +test_size 'number of distinct name-hashes' '
-> +	cat path-list | test-tool name-hash >name-hashes &&
-> +	cat name-hashes | awk "{ print \$1; }" | sort -n | uniq -c >name-hash-count &&
+base-commit: 4083a6f05206077a50af7658bedc17a94c54607d
+-- 
+2.47.0
 
-In these two (and a handful of others lower down in this same script)
-the "cat ... |" is unnecessary. I think this one should be written as:
-
-    test-tool name-hash <path-list >name-hashes &&
-    awk "{ print \$1; }" <name-hashes | sort | uniq -c >name-hash-count &&
-
-(sort -n is unnecessary, since we just care about getting the list in
-sorted order so that "uniq -c" can count the number of unique values).
-
-> +	wc -l <name-hash-count
-> +'
-> +
-> +test_size 'number of distinct full-name-hashes' '
-> +	cat name-hashes | awk "{ print \$2; }" | sort -n | uniq -c >full-name-hash-count &&
-> +	wc -l <full-name-hash-count
-> +'
-> +
-> +test_size 'maximum multiplicity of name-hashes' '
-> +	cat name-hash-count | \
-> +		sort -nr | \
-> +		head -n 1 | \
-> +		awk "{ print \$1; }"
-> +'
-> +
-> +test_size 'maximum multiplicity of fullname-hashes' '
-> +	cat full-name-hash-count | \
-> +		sort -nr | \
-> +		head -n 1 | \
-> +		awk "{ print \$1; }"
-
-Nitpicking again, but you could extract the "sort | head | awk" pipeline
-into a function.
-
-Thanks,
-Taylor
