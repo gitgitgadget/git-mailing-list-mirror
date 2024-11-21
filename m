@@ -1,132 +1,128 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DE428687
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB62F41A8F
+	for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:35:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732203132; cv=none; b=kFAkVyMH+uRS+YBjinbjdp2INTPlUvLj99Y4Gnoy4thXMY+RowJWjDVQQLFHEyRGEnPLY6XeEFHZMjdc98gNxHu8Aw/mn8u3xJBjiYVtZI8WBgKNwAi/xG/Sg6xqcRuVG1RBfDW0a+W7xlApS3RCn3QXQAnhWliAyj+Q6xTUvSY=
+	t=1732203326; cv=none; b=L/ipnIUvA1LSTiZK+4dOz6Qt5p6Eu9RgCxXtmm3Fi7MQihmZJoDh9yvuLlZ3HmGQyxT+FXDCKWT+XX4wC5LP0B+ePJ8um/jX2vA4FFH4qKqVOPUyuA5HJ6NSX8bwGlMSSmHsBUrqYHCjNgCeAdqyeRrAcdnOznkAvnqmsKb0nGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732203132; c=relaxed/simple;
-	bh=CaOcEWhdN91bqCMztryrXD7k07NTiX+/kPZnYUBT4mY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=l4IEx3VsKJXZ9ZhEhaRRjfyh6r07AGPyyAohUVNY1rBXLRr+v1jS7zRZdbUJCmqYUA8Se645j2Y1XhBDGcgYD8GRNTXd8XpOrO283e2Bqa1BXjgsqHJKe405qeI/2HjFLN/Y+JbddJ6y9jIsFud/XFCzjiA1QXY3xB7btebQJic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=GsnAgqu/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2Q6tLrtQ; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732203326; c=relaxed/simple;
+	bh=F+X2mPylfJ18FNFvVc2cwdr2notObc46NYZ5K+2mXt4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gOMzGZjNydd2KoUktit5hE0lr2Y3PBdJp1YGsAK9JWKRgSy+TWyFxkqB8ic7twe2alOB8EDGdtlm/fTRNH75ZpnsfdgHbUPlkYmR+jYO07fxjDdIxjUEnq4KJeU2KSuGKqnRWqDnWY/6AuuREaiCVPA4YoygWTit924aAdcWZqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RYLei6Ie; arc=none smtp.client-ip=209.85.161.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="GsnAgqu/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2Q6tLrtQ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AF3A4254009F;
-	Thu, 21 Nov 2024 10:32:08 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Thu, 21 Nov 2024 10:32:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732203128;
-	 x=1732289528; bh=BrKDdjSm64sDWNan39SZeyNXiqcBfdeBhjQwFxi5PzI=; b=
-	GsnAgqu/0CD1y1x7RqR17fnOGLD7p/Lb0g8RPAtxi9az0Zx9F9S96Pg4USYsXMfQ
-	Sn9AqfFN3HE3mr8XfU4Uq/T2uUE1mn/JKNGlJ7iIiIHQHxlZayIbpdpg14KGxRVI
-	v1C4Mh9T5+opvcI3/rd6A/DsD2SQTY6yO6ebcXKgQa4cr/H4PXYAkl0xtQTDEtku
-	ENJscKQ+x36iCTBF1ZM4KzMWUekA/zcs2qYqaX8ja2HDnQDb6lPvd2ZOR3uD/dJu
-	tE1E23rUNwoWPxZ0B6LE/byO9IhMm4ABABcPA8aTs7PsrkL1FZjCp3pcfHsjk28t
-	HnR8l8+BzNlCm5IIQ20/Cw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732203128; x=
-	1732289528; bh=BrKDdjSm64sDWNan39SZeyNXiqcBfdeBhjQwFxi5PzI=; b=2
-	Q6tLrtQbwf+pj5RZ2geAwBBKmeAcznbk+7sOvwX62lX8mEusB4+KyVmJWygI198I
-	RhIarrpsLq4ouHx6zAHzzBb+g6XgBjCd3O1fmZa9ovsABmFfKqGmledVfMb2G5vB
-	+3YmuJ73XRz9/y8fmPu2KxIJ/HK56NBYabjsKSd4bsfuDqRATFowVOemF3wv26Zr
-	o7wgjFwZRZJhSaRc05ZN5enD7U1nuMWMHUR1LdymOxf0QD+BA6b+vIgIKWvnC1PO
-	lJxwYEO3s/rr8kDxBQNvc0MHtW8yVX/xEsR+PeVn1Rnag4RerNzMA9UmmG0N5Taa
-	zzBH36TuKT42f6pIOmlfA==
-X-ME-Sender: <xms:eFI_ZyGhOQN7SmB0keu5pxwFWD9w-Aq_CL_0p8DfE_qYS01BkNXeqjA>
-    <xme:eFI_ZzVdr5Yhl9riZlk3XUhjL7PSFQ0-xb7D35eh2DwZJqSbqJdGmDeGmyRf-Lla7
-    v9VyzDHEDNjcNo4IA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeeigdejiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggfffhvf
-    evkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
-    rghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
-    hmrghilhdrtghomheqnecuggftrfgrthhtvghrnhephedugfevgfefgfffvdfhffdvveev
-    geehhedutedvgfeuffejveejudegveefvdefnecuffhomhgrihhnpehkvghrnhgvlhdroh
-    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:eFI_Z8KlpJBPuoFNTwb3PeePhsAf8mYO9QSfRZSYi1epddiancp7kA>
-    <xmx:eFI_Z8FLwtJxLXomfdzfKgRQNKRcjFoLk8iudSDTzW7xOzF9x4OwIQ>
-    <xmx:eFI_Z4Vr-bxuMLDbta2u7VO9FYo0I3srJoNXiRX28OLj2D3hESP_Ow>
-    <xmx:eFI_Z_PhToKdLqmgvtUaYEE8WeNd1Y_tq0uTZL2UvWF7D4I9axhG_g>
-    <xmx:eFI_ZzeuVMXPQaJuYdcbxknugyEb5sMN3UdGU-2FTmm8ZC_VQMbAY2Dj>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4FF4E780069; Thu, 21 Nov 2024 10:32:08 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RYLei6Ie"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5ee58c5c2e3so491946eaf.2
+        for <git@vger.kernel.org>; Thu, 21 Nov 2024 07:35:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732203324; x=1732808124; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F+X2mPylfJ18FNFvVc2cwdr2notObc46NYZ5K+2mXt4=;
+        b=RYLei6Iep83YUDN38cptj19tJovLBbLvppJlLCq0EwOISxHJSxbGe2cvcoCJuPQ9xQ
+         x7w/HP2p9su++3WILgNjYsF1/0D0/gPuTgL4y8rJ+5sw6m0V7nCLl4lHoIsJRhJtlALi
+         F/i4mexFsmsj29XWaozelbkn+UCh7rtkG1FD4RgpJ5zuvik6vsKPx6S2STp08/h0496D
+         CfMmUt/A61flH8VP1pAzFgOfWG5zv2TSY02HdH3WbLbA36bgJaLAbbU96uUnX1M53xQ6
+         Pg4ckhc/dp6mKrEfoogBmqO2yisxsC4ZzbvEsMHh/gdMkOtAN/Qla2+Yfr0hEkIb8Mul
+         ppcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732203324; x=1732808124;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F+X2mPylfJ18FNFvVc2cwdr2notObc46NYZ5K+2mXt4=;
+        b=VrRmgxO5n1ZVbeiy8Jy20mUy3tIfKMP3cSfJd7hDRGqmxK4vjT6N3NdaiYLFVGHEol
+         CzZ7SunvBXhCtjHQK69o9S1egH/r6cF64NlHruFiTmp7Eah2hWWVip0Kjl9DPF+4OwzT
+         HWeWJLTG33Pao04euKGmaPAgaIHvqxzdLTyj5jxoJoUH8xImTbpmq4g9kIgmdPbuSGZv
+         8zMJ0XEKcqiLsub2RLgsM1mSIwjVgdiR0DocizuqfwR8DD7FQdPe9G/fUcZcB8cCRTE3
+         dU7Nw0w3NEd3LbohnpEiAwJMeG5frDf4UyOoiKCjdZA7VH2oLu1UydOAP9UZmQK7Otre
+         5nXw==
+X-Gm-Message-State: AOJu0Yx0IhR6FoH3GnSNXLdyaZHnm3KKMFJx2WZlUrztXT71c+yiLxUQ
+	3+OrfuzfJuBGcG8tK7zgBY+emBK0h1+rdxWzukiAQijAIgukmEfTuwi9hktRNFpIkG7dpvMZ6U5
+	OOc/kuUGuGcd82z5OcV/hJXBK1zK7FSNW
+X-Gm-Gg: ASbGncuFeHz5jFVc5C6qlp1sgUi03durXcSM2YNPPnD4Dg5iuyfP5fDaY9Q0uCP/leO
+	hmyTm/YtTK8+OIUQQjAxuDiMfYUqky/MIB/s9uRcC4FjqRXAEZhD80Ts3LJfAYc0z+Q==
+X-Google-Smtp-Source: AGHT+IHmhTHuECer2xp1nuLfxl0BIh2Bff5FSaZqQTZafL5yPZn3sUMtp9XSG1NFOzpcGeyzE0yxXRQbgDl0stJ+yrE=
+X-Received: by 2002:a05:6358:928d:b0:1c3:8366:7e92 with SMTP id
+ e5c5f4694b2df-1ca66471a00mr450190555d.3.1732203323774; Thu, 21 Nov 2024
+ 07:35:23 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 21 Nov 2024 07:35:23 -0800
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <CAP8UFD3ZuTtd2SckoyvXmkMG3eeGqH3eHSHtda-4o5yGdj6cBg@mail.gmail.com>
+References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
+ <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-8-e2f607174efc@gmail.com>
+ <CAP8UFD3ZuTtd2SckoyvXmkMG3eeGqH3eHSHtda-4o5yGdj6cBg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 21 Nov 2024 16:31:48 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Message-Id: <10282b43-4b1c-4e8d-a2cd-2aa725622e90@app.fastmail.com>
-In-Reply-To: <xmqq5xogg2to.fsf@gitster.g>
-References: <xmqqo72ai929.fsf@gitster.g>
- <a340dfc9-bc3a-40d2-a8ec-fc47c00d1305@app.fastmail.com>
- <xmqq5xogg2to.fsf@gitster.g>
-Subject: Re: What's cooking in git.git (Nov 2024, #07; Wed, 20)
-Content-Type: text/plain; charset=utf-8
+Date: Thu, 21 Nov 2024 07:35:22 -0800
+Message-ID: <CAOLa=ZQPtxeuqf3VaZKai8=15shpynOA5yn1pWjnQ89wnc2U7w@mail.gmail.com>
+Subject: Re: [PATCH v2 08/10] midx: pass down `hash_algo` to `get_midx_filename[_ext]`
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000cbbf8706276e0363"
+
+--000000000000cbbf8706276e0363
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 21, 2024, at 13:59, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Tue, Nov 19, 2024 at 4:39=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>>
+>> The function `get_midx_filename_ext` uses `hash_to_hex` which internally
+>> uses the global variable `the_repository`. To remove this dependency,
+>> pass down the `hash_algo` to both `get_midx_filename` and
+>> `get_midx_filename_ext`.
 >
->> What should be done about what one might call a
->> trailer topic version for simple topics that might get included in `n=
-ext` soon
->> after being proposed?
+> Technically passing down the `hash_algo` to both functions is not
+> enough to remove the dependency, as replacing `hash_to_hex()` with
+> `hash_to_hex_algop*()` is also needed. It's a bit unclear if
+> `hash_to_hex()` calls are replaced with other calls in this patch or
+> not though.
 >
-> Sorry, but I do not understand what you are asking here.  Can you
-> elaborate?
 
-The patch got an Ack from Christian.[1] The patch submitter is supposed =
-to add
-trailers like `Acked-by` in subsequent versions according to SubmittingP=
-atches.
-But this one went straight from proposal to `next` as far as I could see=
-. And
-you=E2=80=99re not supposed to create updates for topics which are in `n=
-ext` already. Or
-at least that=E2=80=99s my impression.
+I see what you mean, this patch itself swaps `hash_to_hex()` with
+`hash_to_hex_algop()`, but only in `get_midx_filename[_ext]`.
 
-So the question is what to do about such topic updates for adding traile=
-rs when
-the topic goes into `next` (apparently) straight away? I just let it sit=
- there
-for the week in case someone had any counter-proposals for the glossary =
-entry.
-So I didn=E2=80=99t post a v2 with the added trailer before the next Wha=
-t=E2=80=99s Cooking.
+> So you might want to add something like: "Replacing `hash_to_hex` with
+> functions that take an `hash_algo` as argument will be done in a
+> followup commit."
 
-It=E2=80=99s not important whether the patch/commit might be missing one=
- proposed
-trailer. I=E2=80=99m just wondering what to do in cases like this on fut=
-ure topics.
+While we also do something similar in the next patch, I'll amend this
+commit message to be less vague and clarify the intention. Thanks.
 
-=F0=9F=94=97 1: https://lore.kernel.org/git/CAP8UFD3p3ts_7kvk_Zm2efhcPUc=
-EFnLcLFPAqzb40d46BTVzyA@mail.gmail.com/
+>
+>> This adds `the_repository` variable usage to
+>> `midx-write.c`, which will be resolved in a future commit.
 
---=20
-Kristoffer Haugsbakk
+I think this is stale too and will remove it ;)
 
+--000000000000cbbf8706276e0363
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 26521dc726b7a4cb_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1jL1V6a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1melFqREFDU1RBa0J6RWRKVnFReitiM3BzaHludUtXTAp5czJnSkRMbXRt
+eTRvUUdJamcxeHVkaVhaQjRKM0xYUjNFVlNRenBOOUdEWFBSUWs3Q3V5UXJ0V2h2d0IyRUhrCmor
+VDlydE82OGtaM1psODAxK0NWQWpnM0o0U2prbnkvaWFMa0dTYzVFcHNEMlYyRUMxT2M4RGpWYTZz
+YjBiRmIKeGJ2OXd3dVVTcmsyMkt0OENpVXVZQlNFTzlpdmwwL2hLdW5zL3ZmQnRaWk8rK1MxaUhq
+eEJlZVY0TUJGbE90cAo5Mk9ET3kzV3N1NmZMQ2Q1U1RoUVZlMllxTzJDU1d0eDRlNXI2cm5DOGpQ
+bW5kcW01eVpYQTNQNHV5Z2lQd0xmCkZ1VmNsQ1JvZ0hKTjhCek1NMEViVHc1NkYvdmpJQ3Y3MjNU
+ek1OTVhJMmhYQ2ppSktJV1h2VVArU1RoZEVBNlMKTWtyNHh3SE9TOWtxc0pwNFI4RGVmKzlOZHJ4
+Y2hiN3dVZDdXYmJFZElyeC9VakhjYnd1SVVNRkFLNWZPUUxVOQpwMmUxYlBCTnZNS3IxUEdFZDds
+TmJsT1J0MVcwdFR3N1pFTE5pUTR3eEVpWmUyQXhuL1hJNXovM1NoRzByQk4rClF0N3A0WlJIQjds
+VWhpaDM4Q21IOVh2Wm9qWXJVUUJVRWdPaExYdz0KPW5NSy8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000cbbf8706276e0363--
