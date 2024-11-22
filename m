@@ -1,223 +1,130 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D074519F410
-	for <git@vger.kernel.org>; Thu, 21 Nov 2024 23:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E69A469D
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 00:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732233019; cv=none; b=Q5Mmy7+jt8f5gLxpe9HiWFKpCPSS0K8biC/+ilQR769/Sy0TNB/BvkdCTB0lcRoozcsdYLmbj2aWOhvjRkuHDU0nsZKxigopNxKZcdQS0GwXv0tIH1weI5k/+za5ouOZlUWkA4JSulMQdZ5RZXvFUgjF56fX+J/IfZHRhpTrzUc=
+	t=1732235952; cv=none; b=PhWBIA15VoYC+UUXTc4ZtBqVpZ66+FnBB/FH9LK+q5maUflt13Cbog15rOYQj932p040XTbwhtN8wUZZy4P50K4Has6ZS7ZesrGCr8IMX2j16IOWWC2m/NgESNVIejK102iejK9Sr9NSlUY4Xg+xfITMsCC3m/NVIkZTssZDbyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732233019; c=relaxed/simple;
-	bh=pmglHKNcPi6ZX+UyEjo+4Afwm5vZqnWdlqMx2qsnHn4=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=eIkslKYb6o9dyLmd/X7btKmCSuyoqJwr/xrQbNqrrKXuqaoi9GGyWqCqvS2P3Djvu7+zJqGiElieXrmCzNFWsTfcaJV37tdecZqp5nBZAPBxMOyANi5B1nxhBUaguwqtmKUvulC/rlWHEZhPe9MLSavmQWWpbEY7RgTOBMiIhvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vM2J7yvH; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1732235952; c=relaxed/simple;
+	bh=RcSvIjryfz0GtdveFJ/FGmHHT2Pd7ixEyx2n/MD9K5A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OnPpKcvyzBzzq8190LEFRrw0LHGf+jkXzA2Btxq8eO2Nv2E8gzd9o4GAQPI+s9U4A0VgSTfGIIGx9tB7iinoMD14IIPeMVstIcRGiuDxzOIPBP8Ck+yL+vXLcnX3zblkgnAJdMjvni4PdtpCDmoqyjDhmwaDdsEg9UxbugHJKtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TIl9nBuv; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vM2J7yvH"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e30b8fd4ca1so2304182276.3
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 15:50:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1732233017; x=1732837817; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1q+1CgwsTgNQRqaAujJQ7u1oW7GD8ovkJPHYuqc0OfE=;
-        b=vM2J7yvHxl+vU4ym7knc5nbeNHqp6NKzWFy7jzax+pMG3WQMt23jrihcY9enulLZer
-         qs5LNXVhxAcCMA73crPojfjwevUaYYFfGZjCA4SzpTVwiVJfVDIPh4Wm0UUeJ1aMpCBt
-         BYzJ8r6yJoc1a/HZdIOYhdrh+j8hSrpnPAw1Fv+FQUXM7lQKk2UDe2xo+RbYqMYkRsrX
-         lo1NehdVoDOQhwCbkC54ctfDe08ZohD1rqSlLU74PMF/lfBk1a7C+H8rOHQhMInyGYZJ
-         7sWydTEzMwYj1+lm9i887VVrKZeWYCt7aOJOZHB5DaWcWkLs52l4uE80fQ0qCwBpqyM2
-         gLAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732233017; x=1732837817;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1q+1CgwsTgNQRqaAujJQ7u1oW7GD8ovkJPHYuqc0OfE=;
-        b=A1AWkQLk+WGSocvJSiXbqDlCTAMAl+28L80n/4fv4WRVjt7gxlOvidvSMajZf7AWkn
-         TcsIfQOuhZvyirgGZhxO9pAHn6ILOJiY7i6KyrvmhInJtjcGTfwKFpsZG4wb+AvHkv8J
-         nnq/nBVcVhoBGCDKLX9EpRMW28QpMqmutl4zr9W/yFTVK5DagYfK6gO1aJ+sn9izYoQC
-         aJ+tmlbzBnpQoNK7JgEkHOpl529HOK0hmXxSuKspDp91Iz+NhyN0oJ7qwv/Q9qE0hb3b
-         amkUIzcBHpWjvMQivt7m/G+HVrH1cdFMiFK8ptnzsWxnBPPEsL4G8MvWB73i3i5BV1Gi
-         XJ/w==
-X-Forwarded-Encrypted: i=1; AJvYcCUkkljNSSpVa5sGNJMQYSTKdka05TH9JJnyl7b92EQ4L46QQSktWhLigLDihFh5wjOQvKw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YybcdpF559RYY2l19ioWTSI+lwh6sDfQIyjfzQGJzi96XYNCu8N
-	FMiiMItezBNG9u/j7KL5H6GmFg/oVcjStikhbxpqsr2IkTI4+WdUbGed9cNlguxh+B7mrD7Sb5/
-	W9Mxe2CgSPEnvQKK6nWC/8j1Pdzld6g==
-X-Google-Smtp-Source: AGHT+IFJafCHkyE8FHnKeRxHfHWOe7SEa1h1nhK3ZpZVcInewekQJPOgWE96FvyCrr27+38WmNuQQ7i0N+4hNvaRDEPN
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:d214:e3cc:8644:78ef])
- (user=jonathantanmy job=sendgmr) by 2002:a25:adc7:0:b0:e38:b443:99f9 with
- SMTP id 3f1490d57ef6-e38f8c001b3mr294276.9.1732233016362; Thu, 21 Nov 2024
- 15:50:16 -0800 (PST)
-Date: Thu, 21 Nov 2024 15:50:14 -0800
-In-Reply-To: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TIl9nBuv"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id A53821380267;
+	Thu, 21 Nov 2024 19:39:09 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 21 Nov 2024 19:39:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732235949; x=1732322349; bh=Ef3GGAkt17NUePrp1qtq1TeNTW7uEXe2NJR
+	/wjQnq1I=; b=TIl9nBuvDJsa872AX7fmw1vw/kPVD5DGFawVAHLBedwNmPL2l5s
+	v2U01j5DLyqTHqL2Wn9i7llh+w882Ykcy8HypJBNS9bYISxxguThMOwkcuCwoUjq
+	ENgrHQLAEIzISaEWAsYdFPRQtL0muUHkXR4d0c+9U4PDG2gtLA0nUDnlqp69Mr3J
+	rt4hjULRPa7J9XOtoroz/kxdei6FHI+zOMrWRUPbkw0g/g/eftj6x/2iBXNys8rH
+	VcvHs5yXVV8FLMNM3+1gEDB+zVGYZzNcwnUFmApz1Dgs9VePM7NCtU2X+94rkUlh
+	bn604ifunAdEO3RsBa4ghQzA0dOlr2mKvfw==
+X-ME-Sender: <xms:rdI_Z_q0a0Z_xWrwJ8iWxULFJJAdNNItOOsEdJ1a2yJ7UEL0cPXDaA>
+    <xme:rdI_Z5rG4qqj9_1uRrwMDbRs4pwJh2x_mAOU4WTMWMBVcXt1g44Fdk9Ue0wHQqxwT
+    ssLBOHVtePoHleZ7g>
+X-ME-Received: <xmr:rdI_Z8NDVRooMtc55uDRqIyQYOf-PMzDfBhizMDTHtwqkPzx4_AQDEvOpeh2wohJiycQdh5ryLWI3lel_X_QZmRXIqO0dXFlTxHv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgddvgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
+    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rdI_Zy541qcDLBcJp_TmlCgvCMSqZ4DIIR23C-OzCgjomw3AcQz6uw>
+    <xmx:rdI_Z-5D9hBl4YjK2JPTh1Zxv6dKwZLyto1o_fmaDToxgNjZQuJG3g>
+    <xmx:rdI_Z6hcMf4nw1KEpDrwcmW6V7SLoC3b8YTzknTH5H1tG4gSfldDZQ>
+    <xmx:rdI_Zw71wCEUrRe9z1gN5TpYa_Qz83-Kt8ju46a-_ySTNfy6FfnVGA>
+    <xmx:rdI_Z53XCqRL4UwMUovumMcyGQVUD-U2zozOH_k6Px72l_4mt_xwcXTT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Nov 2024 19:39:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] pack-bitmap.c: typofix in `find_boundary_objects()`
+In-Reply-To: <cf49115db4e8dcd406a17c946659c2eef3ec6045.1732229420.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Thu, 21 Nov 2024 17:50:43 -0500")
+References: <cf49115db4e8dcd406a17c946659c2eef3ec6045.1732229420.git.me@ttaylorr.com>
+Date: Fri, 22 Nov 2024 09:39:07 +0900
+Message-ID: <xmqqiksgdrv8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.371.ga323438b13-goog
-Message-ID: <20241121235014.2554033-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 0/7] pack-objects: Create an alternative name hash
- algorithm (recreated)
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, gitster@pobox.com, 
-	johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, me@ttaylorr.com, 
-	johncai86@gmail.com, newren@gmail.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> This series introduces a new name-hash algorithm, but does not replace the
-> existing one. There are cases, such as packing a single snapshot of a
-> repository, where the existing algorithm outperforms the new one.
+Taylor Blau <me@ttaylorr.com> writes:
 
-I came up with a hash function that both uses information from a lot
-more of the path (not the full name, though) and preserves the sortable
-property (diff at the end of this email). It also contains fixes to the
-existing algorithm: not wasting the most significant bits of the hash
-if files in the repo mostly end in a lowercase alphabetic character, and
-the cast from a possibly-signed-possibly-unsigned char to a uint32_t.
+> Fix that by correctly assigning the value of 'revs->tag_objects' to the
+> 'tmp_tags' field.
 
-The results look quite good. In summary, the pack sizes are comparable
-to Stolee's results in the case of fluentui, and better than Stolee's
-results in the case of git.
+Makes sense.  This breakage would make no difference in practice
+right now, as {type}_objects members of the rev_info structure have
+always been all flipped on together since their inception at
+3c90f03d (Prepare git-rev-list for tracking tag objects too,
+2005-06-29), so the original value of the tag_objects member is
+always the same as that of the blob_objects member.
 
-Here's one run on the fluentui repo (git clone https://
-github.com/microsoft/fluentui; cd fluentui; git checkout
-a637a06df05360ce5ff21420803f64608226a875^ following the instructions
-in [1]:
+A possible alternative "fix" for this typo could be to unify these
+{type}_objects members into a single .non_commit_objects member in
+the rev_info structure; given that we (as far as I remember) never
+utilized the "feature" that, say, we can ask only for trees but not
+blobs for the past ~20 years, nobody knows if the apparent "support"
+for that feature is subtly broken in multiple ways (and one of them
+you just fixed with this patch) and the "feature" may not be worth
+keeping.
 
-(before my change)
+But neverhteless, this is a correct thing to do unless we decide to
+rip out the support for individual types.  Will queue.
 
-Test                                               this tree         
----------------------------------------------------------------------
-5313.2: thin pack                                  0.03(0.01+0.01)   
-5313.3: thin pack size                                        1.1K   
-5313.4: thin pack with --full-name-hash            0.03(0.00+0.02)   
-5313.5: thin pack size with --full-name-hash                  3.0K   
-5313.6: big pack                                   1.60(2.87+0.32)   
-5313.7: big pack size                                        57.9M   
-5313.8: big pack with --full-name-hash             1.41(1.94+0.37)   
-5313.9: big pack size with --full-name-hash                  57.8M   
-5313.10: shallow fetch pack                        1.69(2.70+0.22)   
-5313.11: shallow pack size                                   33.0M   
-5313.12: shallow pack with --full-name-hash        1.49(1.84+0.34)   
-5313.13: shallow pack size with --full-name-hash             33.6M   
-5313.14: repack                                    75.10(537.66+5.47)
-5313.15: repack size                                        454.2M   
-5313.16: repack with --full-name-hash              18.10(92.50+5.14) 
-5313.17: repack size with --full-name-hash                  174.8M                                
+Thanks.
 
-(after my change)
 
-Test                                               this tree         
----------------------------------------------------------------------
-5313.2: thin pack                                  0.03(0.01+0.02)   
-5313.3: thin pack size                                        1.1K   
-5313.4: thin pack with --full-name-hash            0.03(0.01+0.02)   
-5313.5: thin pack size with --full-name-hash                  1.1K   
-5313.6: big pack                                   1.62(2.94+0.28)   
-5313.7: big pack size                                        57.9M   
-5313.8: big pack with --full-name-hash             1.35(2.07+0.37)   
-5313.9: big pack size with --full-name-hash                  57.6M   
-5313.10: shallow fetch pack                        1.63(2.52+0.29)   
-5313.11: shallow pack size                                   33.0M   
-5313.12: shallow pack with --full-name-hash        1.50(2.10+0.23)   
-5313.13: shallow pack size with --full-name-hash             33.1M   
-5313.14: repack                                    74.86(531.39+5.49)
-5313.15: repack size                                        454.7M   
-5313.16: repack with --full-name-hash              19.71(111.39+5.12)
-5313.17: repack size with --full-name-hash                  165.6M  
 
-The tests were run by:
-
-  GENERATE_COMPILATION_DATABASE=yes make CC=clang && (cd t/perf && env GIT_PERF_LARGE_REPO=~/tmp/fluentui ./run -- p5313*.sh)
-
-The similarity in sizes looked suspicious, so I replaced the contents
-of the hash function with "return 0;" and indeed the sizes significantly
-increased, so hopefully there is nothing wrong with my setup.
-
-The git repo was called out in [1] as demonstrating "some of the issues
-with this approach", but here are the results, run by:
-
-  GENERATE_COMPILATION_DATABASE=yes make CC=clang && (cd t/perf && ./run -- p5313*.sh)
-
-Test                                               this tree        
---------------------------------------------------------------------
-5313.2: thin pack                                  0.03(0.00+0.02)  
-5313.3: thin pack size                                        2.9K  
-5313.4: thin pack with --full-name-hash            0.03(0.00+0.02)   
-5313.5: thin pack size with --full-name-hash                  2.9K                                                                                                                                                  
-5313.6: big pack                                   1.69(2.80+0.28)                                                                                                                                                  
-5313.7: big pack size                                        18.7M  
-5313.8: big pack with --full-name-hash             1.68(2.82+0.31)  
-5313.9: big pack size with --full-name-hash                  18.8M  
-5313.10: shallow fetch pack                        0.96(1.47+0.16)  
-5313.11: shallow pack size                                   12.1M  
-5313.12: shallow pack with --full-name-hash        1.01(1.51+0.14)  
-5313.13: shallow pack size with --full-name-hash             12.1M  
-5313.14: repack                                    17.05(69.99+4.33)
-5313.15: repack size                                        116.5M  
-5313.16: repack with --full-name-hash              15.74(67.03+4.18)
-5313.17: repack size with --full-name-hash                  116.1M  
-
-[1] https://lore.kernel.org/git/c14ef6879e451401381ebbdb8f30d33c8f56c25b.1730775908.git.gitgitgadget@gmail.com/
-
-> | Repo     | Standard Repack | With --full-name-hash |
-> |----------|-----------------|-----------------------|
-> | fluentui |         438 MB  |               168 MB  |
-> | Repo B   |       6,255 MB  |               829 MB  |
-> | Repo C   |      37,737 MB  |             7,125 MB  |
-> | Repo D   |     130,049 MB  |             6,190 MB  |
-> | Repo E   |     100,957 MB  |            22,979 MB  |
-> | Repo F   |       8,308 MB  |               746 MB  |
-> | Repo G   |       4,329 MB  |             3,643 MB  |
-
-If the results are similar for some of the above repos (I do not have
-access to them), maybe it's worth considering using my hash function (or
-a variation of it).
-
-I'll also take a look at the rest of the patch set.
-
----
-diff --git a/pack-objects.h b/pack-objects.h
-index 88360aa3e8..c4f35eafa0 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -209,23 +209,24 @@ static inline uint32_t pack_name_hash(const char *name)
- 
- static inline uint32_t pack_full_name_hash(const char *name)
- {
--       const uint32_t bigp = 1234572167U;
--       uint32_t c, hash = bigp;
-+       uint32_t hash = 0, base = 0;
-+       uint8_t c;
- 
-        if (!name)
-                return 0;
- 
--       /*
--        * Do the simplest thing that will resemble pseudo-randomness: add
--        * random multiples of a large prime number with a binary shift.
--        * The goal is not to be cryptographic, but to be generally
--        * uniformly distributed.
--        */
--       while ((c = *name++) != 0) {
--               hash += c * bigp;
--               hash = (hash >> 5) | (hash << 27);
-+       while ((c = (uint8_t) *name++) != 0) {
-+               if (isspace(c))
-+                       continue;
-+               if (c == '/') {
-+                       base = (base >> 6) ^ hash;
-+                       hash = 0;
-+               } else {
-+                       uint8_t nybble_swapped = (c >> 4) + ((c & 15) << 4);
-+                       hash = (hash >> 2) + (nybble_swapped << 24);
-+               }
-        }
--       return hash;
-+       return (base >> 6) ^ hash;
- }
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+> Noticed while I was looking for an example of this pattern somewhere in
+> the codebase and was surprised when I found this typo ;-).
+>
+>  pack-bitmap.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 4fa9dfc771..683f467051 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -1270,7 +1270,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+>
+>  	tmp_blobs = revs->blob_objects;
+>  	tmp_trees = revs->tree_objects;
+> -	tmp_tags = revs->blob_objects;
+> +	tmp_tags = revs->tag_objects;
+>  	revs->blob_objects = 0;
+>  	revs->tree_objects = 0;
+>  	revs->tag_objects = 0;
+>
+> base-commit: 4083a6f05206077a50af7658bedc17a94c54607d
+> --
+> 2.47.0.237.gc601277f4c4
