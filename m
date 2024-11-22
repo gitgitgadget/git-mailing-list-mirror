@@ -1,161 +1,127 @@
-Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF28C16DC28
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 12:24:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7479A524F
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 12:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732278242; cv=none; b=INCQK7Dhgx2o9DxJBTDbOt0SYL4dRZkr6VKz6HNs41fUDnvJaw/7n6K2CoIwNoOd4VcH4OVueYR1vL/UCUzlgXhrII9gHQijJ6E2egBuYQBVDLik09QeIIAQcdO/dUSMPnyd6m9PDcMBkn68Uek8SbbZb5CY2z6gpUuNCqkgn7s=
+	t=1732278761; cv=none; b=hcD+Fqrw38xp/hfldt/pfjrCVFPa3Ehyiw8CxkoTeat9lYZ+i2PS7NDVqs2iIlFAIrHYlR8HFr5UiyfjMIhqA7HByW7dhen7kdsXEbUnYSJNAFOck5Qi3BNKjoq+tRHW5g7V8xPgtAnrbHu58Nx+15nXpwJ60awHaQ5yN7bAOQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732278242; c=relaxed/simple;
-	bh=Gr+vkfrVCVRmdU+mLtSK2Nx6OTFDZoT290rBbzzZg2w=;
-	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
-	 References:In-reply-to; b=oGCjV2cd+SyOfYyGTGAgdTt9XfV+W/Ve+NxC3FooDHIsGViQEZVfHTQevmdFXzdnw1lUswtT1u+R86xHntpXIi4JXnzA3lHP/4JNCaUYSoUyusIv1pMJ+KU7UJPQjIBVETzR50jZOKOLit+6ObXWFRgB65z43Ke8gDPKl/xEoYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=KnusSl8v; arc=none smtp.client-ip=192.29.178.123
+	s=arc-20240116; t=1732278761; c=relaxed/simple;
+	bh=PuebsAVLrHvg+Vw5pYhATqcDI6lutIb3ycySk5pbDD8=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=NbH48UDwh5q7jVc8dvKE9ZQhaVCDF9mi+6NFPf/2HHtp/7Iu8N+8Td4LvLABHTaNh9/RVld8hJZinRHDn6eoL6tW7Fd679MPhA9Blcfz1tBYAvQfVIF+sxe/+OsCNRV3qfjRQUkR6i20Z89DvUem95rLhwTOryFTemdV5s6eIgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=ieRCXP1O; arc=none smtp.client-ip=192.29.178.127
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="KnusSl8v"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="ieRCXP1O"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=8+sw0VTNDaeh5tBlum7J/H4rB12J+iTNARJU7UpeCXk=;
- b=KnusSl8vXdufGMoAlSHp6+ELR7inxKUPPAUqdxFm4hYxws3FHvmF10rHMl6nNOEUaojJ7pVzKyS1
-   eLY+6PpViF7c2IPOB3lVpesBbM6LvoJFPS4oB+u7B6nrVP/VsD6a1mV/iGS70pYu+XIiAfJNwfeU
-   fZ90Zo7SSsV/uR9VwlcBPRFFxIhHdqa/h6Z6QOss1FAWmaUdfZeHVs93Qem2iRV9+WDpwPw5S+7D
-   twL4YJy69xhjTGlWy3CyzebKGaMUeeeucgIbY0D0VJFEvy2vrC8yAsj0tXUWwHk7/oR7LJikyh/F
-   aSQh/Vd+Q/k1Z3cghX3QFrYB5mhUzCBr63Afhg==
-Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=RKy1IRNtMiCt+0IUxnEzmDqPBmrunFkA1rXVtPYGSVY=;
+ b=ieRCXP1OmMEV4PrA88V+G45GjFw/Gk/8jrvU0jQWv1kVSKrWlwYuq9lItf84xJPKO6DGfingIhHm
+   qasKwFzJiMXrhmTI0vNDriTysAZ7jTnnDBG9+Kdyv/eitCqLnXJMOEUaUyIhPRM7zTgq8uJXvpIi
+   bSd1wpB+mqpD0SZCa7m1PeKDgFr/015D/dqdjtUomtlBFrw0L9yV/UdKtH/ByP/bYdIQcsoP63ed
+   6gtczf4WQqOzeZcQiugL+XPXsc/I9Vdebth2fiIQATngNfYDFt6O5lVRHkGJgw9Uy+E4F4QW9Ara
+   jiUSFJ4oaOQdkBpjLe6Np4BYvslmURphay8mpQ==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
  2024))
- with ESMTPS id <0SNC00ITDQFYOC60@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 22 Nov 2024 12:23:58 +0000 (GMT)
+ with ESMTPS id <0SNC00NJNQUDBTC0@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 22 Nov 2024 12:32:37 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,	karthik.188@gmail.com,
+	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
+	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v15 01/10] t/t5505-remote: set default branch to main
+Date: Fri, 22 Nov 2024 13:28:42 +0100
+Message-id: <20241122123138.66960-2-bence@ferdinandy.com>
+In-reply-to: <20241122123138.66960-1-bence@ferdinandy.com>
+References: <20241121225757.3877852-1-bence@ferdinandy.com>
+ <20241122123138.66960-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Fri, 22 Nov 2024 13:23:30 +0100
-Message-id: <D5SPDJZAM5K1.24R4JYB0WNTSF@ferdinandy.com>
-To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v14 03/10] refs: standardize output of
- refs_read_symbolic_ref
-Cc: <phillip.wood@dunelm.org.uk>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Junio C Hamano" <gitster@pobox.com>, "Taylor Blau" <me@ttaylorr.com>,
- "Patrick Steinhardt" <ps@pks.im>
-References: <20241118151755.756265-1-bence@ferdinandy.com>
- <20241121225757.3877852-1-bence@ferdinandy.com>
- <20241121225757.3877852-4-bence@ferdinandy.com>
- <CAOLa=ZS5yNpZEUqBAUpP-pSbJXk4+=XM6S6e9RY_eSVJEBhqkA@mail.gmail.com>
- <D5SNGOK1IKRS.1TY1DL9PJ7MPF@ferdinandy.com>
- <CAOLa=ZS28xvpEBNO9AMamF00Yf8eHFGKyU5uHjBD7vOVF3_oEA@mail.gmail.com>
-In-reply-to:
- <CAOLa=ZS28xvpEBNO9AMamF00Yf8eHFGKyU5uHjBD7vOVF3_oEA@mail.gmail.com>
+Content-transfer-encoding: 8bit
 Reporting-Meta:
- AAGN7aBan77MbfXOZPfdOp38TJZ+yLtwIVHmtjoIulUFo1vBC91WQx5I9iiB+PAd
- +OJ1GES+9OUEPUbnbVtyGQvFN/tQ1McXv6bpq9PdOO6RIoE+8U7hhjMw7X6gP45A
- ug+qkGywrRp38ymHVY4QJElDWRZAdqmCoTU7SMgiI/pMGS3NTf7wbfiYR8IErorj
- UHmmQEXF/qIQVBN2Qjeae6THcPK5ULIJpXLviAXfOKzyKyujWxgf0zngCNgPJUdT
- HY++qdJ+FW0wsSv4DFNezLrAPwV08c+LJXEVVDjRYfhIv9yT8mNdRO36IedoL+VA
- TtzM6GtSn7zJXmouXouYpvk/vn0dHeL60PvgwdN3hl95vT13pPXmCCbDOeUUyL8H
- e0tJoBOX0YCDnEa+NnV86fATznzgjBNmrqpa2+wNBkowFMirjCTw/iPGSuRYNHk+
- FwAKaVLVrydM270xQtmgw2XwPyXzuU0FY8v3/qE+/sgSknQZOZW767xq
+ AAG/BPE2Gx8pkLvG8hopB4zX7FvKjrqK44Vl5GFUxSCbTi05zQ93/fmccNGAJtv9
+ Ul6VMUbN6v80/W7C6h4mX+CTQkZJwKy9KOV1jU7nkPrvFn1RHmRBZnjJmPE29NkG
+ CyC+gJtQxGOSNgzJeBUHk/KfDSvDFhMHT96sK5RL2V1qe1gJlKB9qTJ1EAuKsndr
+ JGIOReAxZszqb7kh3R50zR20F7oEmWMzxFrQpEbrPLT6dsAEnQHFZaHr7ruDcGwF
+ 50jS7TEzD46mtJUMPSN9zJr4J/ojRfuCB6lp9CkMGotj2SD+pAyxniB43R5NM9lg
+ FnvfNmdowIOyVP5Z/A2TBl1nxe9Z7EGUzRDiu0gOHi4/3NZqahDkx5fJhtI+7224
+ hD9X8xz1vJrpmeckDQYXgF0g1HjT/TlumnMCCPMJTKHgzb4GDMNRrZFXvAyDy6zf
+ Ho3hhHyD1zyVOdQQo3I2df1KVBBd4g19hDhGVicy4MBYPGjaYu8U/yU=
 
+Consider the bare repository called "mirror" in the test. Running `git
+remote add --mirror -f origin ../one` will not change HEAD, consequently
+if init.defaultBranch is not the same as what HEAD in the remote
+("one"), HEAD in "mirror" will be pointing to a non-existent reference.
+Hence if "mirror" is used as a remote by yet another repository,
+ls-remote will not show HEAD. On the other hand, if init.defaultBranch
+happens to match HEAD in "one", then ls-remote will show HEAD.
 
-On Fri Nov 22, 2024 at 12:30, karthik nayak <karthik.188@gmail.com> wrote:
-> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
->
->> On Fri Nov 22, 2024 at 11:37, karthik nayak <karthik.188@gmail.com> wrot=
-e:
->>> Bence Ferdinandy <bence@ferdinandy.com> writes:
->>>
->>> [snip]
->>>
->>>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->>>> index 38eb14d591..1809e3426a 100644
->>>> --- a/refs/reftable-backend.c
->>>> +++ b/refs/reftable-backend.c
->>>> @@ -830,10 +830,12 @@ static int reftable_be_read_symbolic_ref(struct =
-ref_store *ref_store,
->>>>  		return ret;
->>>>
->>>>  	ret =3D reftable_stack_read_ref(stack, refname, &ref);
->>>> -	if (ret =3D=3D 0 && ref.value_type =3D=3D REFTABLE_REF_SYMREF)
->>>> +        if (ret)
->>>> +                ret =3D -1;
->>>> +        else if (ref.value_type =3D=3D REFTABLE_REF_SYMREF)
->>>>  		strbuf_addstr(referent, ref.value.symref);
->>>> -	else
->>>> -		ret =3D -1;
->>>> +        else
->>>> +                ret =3D NOT_A_SYMREF;
->>>>
->>>
->>> I was building my series on top of this, and noticed whitespace issues
->>> here. A simple way to check your series is to run:
->>>
->>>   $ git log --check --pretty=3Dformat:"---% h% s"
->>
->> I ran this on v15 and it didn't produce any output.
->
-> Did you already post v15? I only see v14
+Since the "ci/run-build-and-tests.sh" script globally exports
+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main for some (but not all) jobs,
+there may be a drift in some tests between how the test repositories are
+set up in the CI and during local testing, if the test itself uses
+"master" as default instead of "main". In particular, this happens in
+t5505-remote.sh. This issue does not manifest currently, as the test
+does not do any remote HEAD manipulation where this would come up, but
+should such things be added, a locally passing test would break the CI
+and vice-versa.
 
-Not yet, but I'll be sending it in a pinch.
+Set GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main in t5505-remote to be
+consistent with the CI.
 
->
->> I read what --check is in
->> the manpages, although the format is a bit cryptic for me. What does tha=
-t do
->> exactly?
->>
->
-> It ensures that commits don't have conflict markers and that there are
-> no trailing whitespaces and spaces followed by tabs by default.
->
-> Also this is included in the CI checks (see ci/check-whitespace.sh), so
-> if you use either GitLab or GitHub you should see these shown as errors
-> on the CI. You'll have to raise a MR/PR to trigger the CI I believe.
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
 
-I've been running the CI by pushing to a fork since Taylor first caught an
-error I didn't see locally and it never flagged. Now that you mention it, I=
-'ll
-also add log --check to my CI-s.
+Notes:
+    v9: - new patch
+        - a bandaid for the CI issue noticed by Taylor (cf:
+          https://lore.kernel.org/git/Zw8IKyPkG0Hr6%2F5t@nand.local/), but
+          see
+          https://lore.kernel.org/git/D4ZAELFWJMKN.S88LJ6YK31LZ@ferdinandy.com/ for the root cause in detail
+    
+    v10: no change
+    
+    v11: no change
+    
+    v12: added forgotten sign-off
+    
+    v13: commit message udpated to be more precise
+    
+    v14: made explicit in the commit message that the default branch is only
+         set for some CI jobs
+    
+    v15: no change
 
->
-> On a sidenote, do you think we should modify the manpage? I found it
-> comprehensible, but would be nice to clarify anything cryptic.
+ t/t5505-remote.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-No, --check was quite clear, the `--pretty=3Dformat:"---% h% s"` part was w=
-hat
-was cryptic.
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 532035933f..9b50276646 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -2,6 +2,9 @@
+ 
+ test_description='git remote porcelain-ish'
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+-- 
+2.47.0.298.g52a96ec17b
 
->
->> Anyhow if there was no output for v15 I should be fine, right?
->>
->
-> At the least you should see `git log`'s output, but if there are issues
-> they should be shown inline. So when you say 'no output' do you mean you
-> see absolutely no output?
-
-Absolutely no output:
-	https://asciinema.org/a/lsqp4e1bNst6cFWw9M2jX1IqC
-
-But I figured out why: the whitespace and the tabs were not mixed on the li=
-ne,
-just across lines. As I read it, that is not an error to have tabs on one l=
-ine
-and spaces on the next.
-
-Anyhow that should be now cleared up, thanks. Gotta say, I was expecting to
-learn about internals doing this, but I also ended up picking up a couple o=
-f
-usage things as well, like --range-diff for format patch and such.
-
-Thanks,
-Bence
