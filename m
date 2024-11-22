@@ -1,68 +1,68 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1924414D452
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 19:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F571DFE31
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 19:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732305030; cv=none; b=pJaH9BAYZ/GdOJgXp1MJr70lAjjI15aC8Z8r2M8d0GdPR849f5bAq1pFn0BKUFBuU+ppmkSuhLcQInckOoJaoNhJKm+1s0fNpAlyoJZGsWDWWwN6tEfhd4vaPTZ2htRl1ooJHVti0wFeKappL9UO9CrkisZLKH+uEJN6AIZ6veg=
+	t=1732305031; cv=none; b=KQbqwFMVQb4MurZZke3CXEHJZmIL9VbJz9ckjE8z8L8aVghwLeIU+hX8Jr5Bc87rh/ZNaJ22nMCe80byB1DQSFLW7zfysv08bDzGyUeATQQvXJwgnVkjpRITy8UnMUDquj1UWaiHVTuuXM9wiIyA3XpPqcOU42G4JCrI00uMLY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732305030; c=relaxed/simple;
-	bh=n1G7BircBUoK42sbe7P8yVNmu2+ti0UN8DPuRet7fW0=;
+	s=arc-20240116; t=1732305031; c=relaxed/simple;
+	bh=siOq5z8GqqGxaWRdsju/c/Z5/XLOPgCbQ+1Ae19Meks=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=oLpdhVYn030dYzTEYYCP8E27ucw9gabrAl4/6bFSqIlKScB5Ru3XAzm+5Y6hHgJG+7b7cpxQPYxrjGigpvwQyCWt1V9kiGGf6KDm7UsZR6LV8aH1fng4jDfhupyhYMzIPpr8JRBthxQUE1HYLfNgjF2vMOnOQbaWgYb6omaRiPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=esno/t6j; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version:To:Cc; b=BpabR5Nvg6EEZmnk9lk6kxVNu95EICyecrnYbLGP4NdXK8vUSpeRKn8BtqwS82lwb9EM7vp8jmgPPH6r8XeVm9tLYE4D48jEWzoAengVVLGTrkc+qTQt4mejIylgEtJjtD/lEfoidmywR52xuarr5qNv1yaVHBjqtu+/OggXjvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RlY2W4HO; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esno/t6j"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4314f38d274so28706055e9.1
-        for <git@vger.kernel.org>; Fri, 22 Nov 2024 11:50:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RlY2W4HO"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43168d9c6c9so22257095e9.3
+        for <git@vger.kernel.org>; Fri, 22 Nov 2024 11:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732305027; x=1732909827; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732305028; x=1732909828; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HY5kvNHgWqSM17OD+FB5pLV910wid+teJHraOEqrut0=;
-        b=esno/t6jXeh9dFusRjbZTbwp6OdpIB0NDDggD/XPsMu7BXtLZIq77EBVKPZFpt6ciC
-         vtFHPhaxgNswHtzh+L71Ue87z3tXax7NRBVTk8P8y4sg7suojpmnfn8DWgSQRKf6aqMt
-         yKxO3eOpduCJxfDdfpvjSBfEmrIbGRJWrJBShOXRXQaqswhHuQ6p3/iIWf4KpTndU5ke
-         T7LPiEQMBn1NluAPPPutESzKuRSOd9zccnbDvFj+a6Ot1jviAfMp3LwasVDegHoTEMP9
-         F1DYFIfh68LqAbWcsldr2nwUVEkjAd7jb0LRDRMg/+M/2pq0tpSZaDviLlpYCpfLQbpB
-         RA5g==
+        bh=SdKu/IJhnOg7qsEROIV+hwt1Jj1eUorL5hBHwgZIZZY=;
+        b=RlY2W4HOneIonkqx5/71hcRpfU7TShdkOe2TsO2GMgY9SFZTubhHcl1DK9P3B5Yn3t
+         I6YdsF/gHLL7Qatxh+BIIKmNKrsUuQn+ZEsddCNses8fGIahxQdYjSKvUUfslpZ3fJi1
+         bJg/9X6ePtrCYVa9Q2TQy16fsbJNC9S4OTS6iF8+T9Otl7Pt0usSy+sDvDXQiFijkneM
+         RRu3rqgwYeEAajQxwy1Cai+4V6lE0Z4anbE4mvzig1H23xJskn/36vJ48kneXkNY5wDW
+         xp0inTcoxguxDiC4YYSP2PyONVdesgk7hYaN5kiiWAYAxIyez6q4rvDj448LjuA5ZkpG
+         SJNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732305027; x=1732909827;
+        d=1e100.net; s=20230601; t=1732305028; x=1732909828;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HY5kvNHgWqSM17OD+FB5pLV910wid+teJHraOEqrut0=;
-        b=xG2XfHKm0yjh1OIieWO/Z3c2XYo2gT060cR6deQdJ/aWH5fEmtx04hyuu282ER6Ogr
-         QqCyQ14kdfEPP07Bb0jSuR6vqkc9CVU/KNEgb+xOvndhUgJzXoH/ruqfEdmL6eusgdO3
-         T1u85VMfsd4yVj0ewMBVwBa+DMDYo5Jrf2sKw0W2gslOGQ6gTde7rJhIHqptDEOT32tS
-         eAyTBoDPqqJ6nXhudqcw2yh9XLjWojSSVyM/+c3VsxoGxODIEcfWtKDJJT9+Qn3sc15c
-         bixj8sQd+NRFS0dvh3jiQhuCKRxVTA1Gzb11JxbNXowAzRZP3xSGTFTcpWDquh3OD0Yh
-         8Llg==
-X-Gm-Message-State: AOJu0YwKSTkEKwOgwiP14dmx2qJyO+lDV4/HNyneviQeL0FHOgpPojEZ
-	yUhEq5xqCxSpultPGd3FoD3u9jbR437NcGHBQ5nrv3PQH0e84Ne5fEmP2Q==
-X-Gm-Gg: ASbGncuuGDWFJREPbVUuovWN0vXiSuaYyUgc5+Yi5fFVYO3O2sw3SDn9IchvUKP5D79
-	VYD5jBV2gF2UG03c+8lfbbhWiu11f3YbSCVo2qkkCX//xUq4wVsjK9GeyUKxrxewpTzNXK+9BZW
-	SvU9K5RLX19HjgzwvDrsYvHpv2aVNYAlF9O9xiudRS+B0gu+8rZNWAmuIqMpVPhS8zG1Waz9dnn
-	V/frCrhOwNddZ+5Ce8VM6cpShn+tGJVctChAJCix4OsFABl2Aw=
-X-Google-Smtp-Source: AGHT+IHfVUP9nUu8V17gqdUAiYx1qNhI+GvyVVbyTAm0IVnmgNPgJ7l5MEuSlgPUI4OVh9LoR2jkfA==
-X-Received: by 2002:a5d:47cd:0:b0:382:4be3:b2bf with SMTP id ffacd0b85a97d-38260bc6bdamr4495724f8f.45.1732305027014;
-        Fri, 22 Nov 2024 11:50:27 -0800 (PST)
+        bh=SdKu/IJhnOg7qsEROIV+hwt1Jj1eUorL5hBHwgZIZZY=;
+        b=wreei//5KhVAFAjS0RRFdMeJ+Pm/iLAkhZT4edwS9rFHc5/Uaccj8oCr95JiYza3FY
+         uN6k0ITiKZBnpad8qxopjibfO0VpAsCUppDxnYsl498feumNP5deOPQeM+gOuXp9fSZh
+         XlYHewHAK8Xw599RQXbILWASmZdxCP8Ltb35z/QZvfurXpd61vGGi/v/n93Moy+UF02l
+         78H50sb9ROuB1cYrGLyHoC7b4QTaL+tImVk+EuMyGL5v8iTs/glKuyvxMxmQZN22wKKB
+         dOWhKMepo4LTB1A/55Wrzh2yTowUz9jAThxX0s/wMLjNEvG93USbXEFe756IK/q/ddyg
+         bsVQ==
+X-Gm-Message-State: AOJu0Yyh/YJy1f1HKs5SIwAkpAE1OUdCxViFFOCMlY3+WBRSFjj0s44X
+	kXJ8nJR7lx0VxE0Vq4F+F+2GMnHZQMpqUT0sJLizGdQ52Tj/bHIyL2moGA==
+X-Gm-Gg: ASbGncuuBQL5KrrnV9sAdduE980XMi+L6g4B+5GXZwZ4lJwwwz40Y3708ON1ez2tQY8
+	VfIqIZNUOR6SGSoYxTo0HGbB29tAYiTdyALrSITzKk1Vgg8jfD/hI+IkzUHDlW8v0l30fQVj756
+	vpHT1zdUBJTjnNFTgomOsaEyygUvcKJ+1wroUCie18nGsKb9Kxo8a95JRFHRnzzXrn+k2wdqFOL
+	LYgYTtCHjgqDW2FP9kQmtQkCzsGxPG5BXkeFe/hjqk96v302sM=
+X-Google-Smtp-Source: AGHT+IF1wyvHynu0+PdzIq+RFXkUCt0d9Fh0eCIYH/GuvLny0zMeDx31fTm2gpvtkyU/pAYaVhllBQ==
+X-Received: by 2002:a05:600c:3b19:b0:431:3933:1d30 with SMTP id 5b1f17b1804b1-433ce41101cmr35055615e9.5.1732305028175;
+        Fri, 22 Nov 2024 11:50:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fbc3b4asm3287524f8f.84.2024.11.22.11.50.25
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-433cde16a95sm37732165e9.18.2024.11.22.11.50.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2024 11:50:25 -0800 (PST)
-Message-Id: <6f7f553b283078ba3c81190686b150a87d901240.1732305022.git.gitgitgadget@gmail.com>
+        Fri, 22 Nov 2024 11:50:27 -0800 (PST)
+Message-Id: <1d9e95c6cb14df3d3225210bde3c4877cb4cc540.1732305022.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1827.v2.git.1732305022.gitgitgadget@gmail.com>
 References: <pull.1827.git.1731459128.gitgitgadget@gmail.com>
 	<pull.1827.v2.git.1732305022.gitgitgadget@gmail.com>
 From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 22 Nov 2024 19:50:19 +0000
-Subject: [PATCH v2 2/5] git-mergetool--lib.sh: use TOOL_MODE when erroring
- about unknown tool
+Date: Fri, 22 Nov 2024 19:50:20 +0000
+Subject: [PATCH v2 3/5] git-mergetool--lib.sh: add error message if
+ 'setup_user_tool' fails
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,30 +81,80 @@ Cc: Seth House <seth@eseth.com>,
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-In git-mergetool--lib.sh::get_merge_tool_path, we check if the chosen
-tool is valid via valid_tool and exit with an error message if not. This
-error message mentions "Unknown merge tool", even if the command the
-user tried was 'git difftool --tool=unknown'. Use the global 'TOOL_MODE'
-variable for a more correct error message.
+In git-mergetool--lib.sh::setup_tool, we check if the given tool is a
+known builtin tool, a known variant, or a user-defined tool by calling
+setup_user_tool, and we return with the exit code from setup_user_tool
+if it was called. setup_user_tool checks if {diff,merge}tool.$tool.cmd
+is set and quietly returns with an error if not.
+
+This leads to the following invocation quietly failing:
+
+	git mergetool --tool=unknown
+
+which is not very user-friendly. Adjust setup_tool to output an error
+message before returning if setup_user_tool returned with an error.
+
+Note that we do not check the result of the second call to
+setup_user_tool in setup_tool, as this call is only meant to allow users
+to redefine 'cmd' for a builtin tool; it is not an error if they have
+not done so.
+
+Note that this behaviour of quietly failing is a regression dating back
+to de8dafbada (mergetool: break setup_tool out into separate
+initialization function, 2021-02-09), as before this commit an unknown
+mergetool would be diagnosed in get_merge_tool_path when called from
+run_merge_tool.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- git-mergetool--lib.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ git-mergetool--lib.sh | 9 +++++++--
+ t/t7610-mergetool.sh  | 8 ++++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 1ff26170ffc..269a60ea44c 100644
+index 269a60ea44c..d7e410d9481 100644
 --- a/git-mergetool--lib.sh
 +++ b/git-mergetool--lib.sh
-@@ -474,7 +474,7 @@ get_merge_tool_path () {
- 	merge_tool="$1"
- 	if ! valid_tool "$merge_tool"
- 	then
--		echo >&2 "Unknown merge tool $merge_tool"
-+		echo >&2 "Unknown $TOOL_MODE tool $merge_tool"
- 		exit 1
+@@ -159,7 +159,7 @@ check_unchanged () {
+ }
+ 
+ valid_tool () {
+-	setup_tool "$1" && return 0
++	setup_tool "$1" 2>/dev/null && return 0
+ 	cmd=$(get_merge_tool_cmd "$1")
+ 	test -n "$cmd"
+ }
+@@ -250,7 +250,12 @@ setup_tool () {
+ 		. "$MERGE_TOOLS_DIR/${tool%[0-9]}"
+ 	else
+ 		setup_user_tool
+-		return $?
++		rc=$?
++		if test $rc -ne 0
++		then
++			echo >&2 "error: ${TOOL_MODE}tool.$tool.cmd not set for tool '$tool'"
++		fi
++		return $rc
  	fi
- 	if diff_mode
+ 
+ 	# Now let the user override the default command for the tool.  If
+diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
+index 22b3a85b3e9..c077aba7ced 100755
+--- a/t/t7610-mergetool.sh
++++ b/t/t7610-mergetool.sh
+@@ -898,4 +898,12 @@ test_expect_success 'mergetool with guiDefault' '
+ 	git commit -m "branch1 resolved with mergetool"
+ '
+ 
++test_expect_success 'mergetool with non-existent tool' '
++	test_when_finished "git reset --hard" &&
++	git checkout -b test$test_count branch1 &&
++	test_must_fail git merge main &&
++	yes "" | test_must_fail git mergetool --tool=absent >out 2>&1 &&
++	test_grep "mergetool.absent.cmd not set for tool" out
++'
++
+ test_done
 -- 
 gitgitgadget
 
