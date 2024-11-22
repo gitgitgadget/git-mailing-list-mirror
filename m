@@ -1,98 +1,118 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D55613B797
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 16:45:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE2A155392
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 17:21:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732293943; cv=none; b=qkvmPi5tHLiD8KXnE2lGr+Ys0HUtHU+yW3Rf4LjTBvMB7g9hRINte8bBK3R+vtdt4rcofetyqo/RC75htVdgxGju+ottmdk0X9ijcBBFfvMIulfG9uteIW/ECcrHRafZBIflvKi63/FdJBBLhiMAyXOUJ9EDxRwNwkM+rE93G0U=
+	t=1732296087; cv=none; b=Q6T6n9k/pqjphXrNbj62Q8LmMbYRrfy/JuByZlP92Q4OiCNFpTy2uASgEhvAIfxZMqEUiBnIVFMSYfkh4Oz/OVm3xFvQI2TuH9rOj8uOWm2Eg1pOJp3DtJO3D6/w57XrX/UXAmwZEyTlyASb+VIRVJUauVqrEORV1eVtrmgQaHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732293943; c=relaxed/simple;
-	bh=wD5UCUtyu8kg0eJqfmol/ui8+kbtuAjkvBUtpiN3zw8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LxsLMkmROdvvWPNp3zzjeHT4BumPclqAlpe99T6loRIyg7p5KteBcJ/Fiihqt/8ojxzC9VU7DLuOhadPh40yiViu79mLE20Tf5mpJHfKs67L1rK6BmZd7Q2nbil1tVTKss9D5VE3A0UELPYVt58Mgjd0Ctw7zYQEEKbSOnJa77g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MfDfIdyt; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732296087; c=relaxed/simple;
+	bh=uJCb/6hYV5ulIG4u8s1PuvNGdUAnEhUs0N0bKmsT/9o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NEo95CCd5EZwEi2IefmSP4HWqA/jnufQWgpxBosUm8L0y/cQ8qqHXl6H84Yvs8tBUOtbVU0x9AaGA4kzKP2ebBdsTTt6qepD2sWmwB/lp2OnaoymyFGR2fI65JUm2E8ODfP2GXwkYz/+urLRbY647mqZNeSTi0c3NK1tLVA5Rn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OnHS+Qic; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MfDfIdyt"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-7fbce800ee5so880242a12.2
-        for <git@vger.kernel.org>; Fri, 22 Nov 2024 08:45:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732293941; x=1732898741; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4vgJ29usoUrCdr+BO8460gT+fCzkp+mNVyxv1R0T+e4=;
-        b=MfDfIdyto98efKMXO7cDW38VilXrVLUGmmxEO31JUzUBT1lRGcJ798PlGUL49qVVGZ
-         13YsQTBFynUj6gZUZm4Iww5an64oHKNlcd0/FiRtbdrjgSC5AB9EwwxjbrwiVM9XBtdf
-         zVFSRGohIjo3seLprfzGSpGmW/eC2IHvYUWCGm+PEdBXz5xbJGvZGv81ELDETaJm1bMO
-         KAP96T680clPqkqnY4vNGJFoR8fjjlRizdlAShQx/IQfXeQf143UU+awXRST+jqJd9tb
-         izJTGC/KNZBhHNnWSztxXkJfo3A/uYc/V1wCgX9zKfhseO6AD49kaaP07auLobTi4oHY
-         WUiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732293941; x=1732898741;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4vgJ29usoUrCdr+BO8460gT+fCzkp+mNVyxv1R0T+e4=;
-        b=iZrtpO+RX6vHfnSqiCLeQKs7fvqK8vG0ZuG6eH5aV1K88oiKG6dkIGCd+9+sE9UTo8
-         ZxD/isXqGkREFsFtiDQpCza1Hyqo23IxUAOSiIM6NQiWfqxgUvbDRyfnYp7BX4IGSyFY
-         SWHF3fpzWAL3TpxzhGObcLcvUsBLdn3pVz3R/uvsDR8Prr9py79Orac5sT3AXhqRVFZJ
-         duYZ79CpD8mJjCBLoJA6C+heAiZfBwYCXh/tz3UPcAsvqXH98w4Q+BfBJRGlH026ltGs
-         HEvHBcJQ1PlzKJcEfs8ywZVX36FOMyfrx+yfaUcKOpfqq0YsL+JUIgnMWwatZ+2QIHkS
-         VORQ==
-X-Gm-Message-State: AOJu0YwbmcRwypRFL2SuHe9WH2m9ppWWdUqF7YYGYH88vxEaB2Amj4sR
-	fUEyYggXNrshRpcuLUgH9FXcKdRYYXPKEKgcrhDPkxcN2P9GDNoCikL7hg==
-X-Gm-Gg: ASbGncvPuYSV72NrX7Nn4qHseMi6MBHQnf9GxgunuUoskvktZ5V07MedjG1oUSXss47
-	6twTLK7hKJcB5S7g7MvlZhPWKa2eTBTiyY8sq4paL9QOcC2c6mBz3Qb9QsllW5pGBt3JcQv9xTO
-	hdGfuoX/ywK7v8uTTAM5ezCHb4XKc/dR3hoWF+Bx6IFQFLxpWZqfShqYp9WL3k040k2CelBGRQP
-	gRJg3P1Uz6ebm5DEm8iswQIRkcquh1Z2b16lqt/erKq8Q==
-X-Google-Smtp-Source: AGHT+IHnjKKRNmjgNrHZ0lL7MLKS4POJ8n03jP8Xr+DcbH1bvqvibnbfu/fK1LfbDyAj+0Vc9J6Yuw==
-X-Received: by 2002:a17:90b:1b0c:b0:2ea:8d1e:a878 with SMTP id 98e67ed59e1d1-2eb0e888646mr3442062a91.34.1732293940555;
-        Fri, 22 Nov 2024 08:45:40 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2eb0cfe44basm1799391a91.2.2024.11.22.08.45.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2024 08:45:39 -0800 (PST)
-Date: Sat, 23 Nov 2024 00:45:51 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] fetch-pack: expose `fetch_pack_config_cb()`
-Message-ID: <Z0C1PxdltxDm8pyA@ArchLinux>
-References: <20241121204119.1440773-1-jltobler@gmail.com>
- <20241121204119.1440773-5-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OnHS+Qic"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E9D1A2540122;
+	Fri, 22 Nov 2024 12:21:23 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Fri, 22 Nov 2024 12:21:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732296083; x=
+	1732382483; bh=HbfFXzmTjay2YytxMp3Z11nFhKBvTvfNQk+Axjidl7M=; b=O
+	nHS+Qic/uTe1BSKOyPbUSnlf35SUeYpjvtoDrjMLRrif2O2V/00jx8NPWuU7yBm4
+	s3DIkcJ3VhKnyWFZBvOgxj3aqq8aqa5X3m9YkYRUVHttdBCpY8p5crYt8xisZywc
+	NR8MBmf9FaISrzFxDoFHcwGAVJ6jwH1Fm+iuwEboNbG/6IL8jr55be432ix2E104
+	U+0R4wqK0JToyNKtpZDTRxveVNX6gAlN2RV3Og8vfJjdRiSfu8b1HB0Fb4diqrJp
+	rQQEMX6JJU/lFkuKZ0LBwJ2+SzittqAgGdPpNJTLunP7D4bH48KDsh9k1bCFm941
+	0Hefrz9DwLbixYpt94HmA==
+X-ME-Sender: <xms:k71AZ5__ervUwc1kTbMpK4GLD9MkekxyvVBySnrxk_sXnoKjfOWKmQ>
+    <xme:k71AZ9vMkSXMMTLgWbEGLF9401zsQicv_qhldCp-qXXMdJsP3gZ41EjvuzStkPsbV
+    lqeN4V60BWwKp5zHQ>
+X-ME-Received: <xmr:k71AZ3BTZbgr00ExCMTyrOs0GY52xWmGI2xuov4v4l9bxC0ouHjUa5lu9dUdGc1Dado296jlrsxMmUDgI_CIdCJlAVUwPbgJ5Q5_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeelgdejgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffg
+    kefhhfetieffteehleehtdfghedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghrthhinhdrrg
+    hgrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopeguvghvrdhmsghsthhrsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehlvghsshhlvgihuggvnhhnihhnghhtohhnsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvg
+    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehmtghsmhdvvdegsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepjhhgshgrlhesphhrohhtohhnmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:k71AZ9eSPtzg_EnkWmp8Q91tMSogdpSKBhci8KlweOsmKuAAMkOwXg>
+    <xmx:k71AZ-NzCQv3iHgmpn_680unUoo0hVdU9WkACAO3UiXyQGaQeYw7cw>
+    <xmx:k71AZ_nlTmHat2g_KibqNWhxOlng7-MDc9vD6fzAXd7xSiyf8Rea8g>
+    <xmx:k71AZ4syX7PcaH5GynPNX8RdLre6fro2-bXMNNBhar1DP5OSoehc0w>
+    <xmx:k71AZ_HEkBO5Su-_IoRsvmp83oszDawA71vht1bLonRUX9gE1frc9PH2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 22 Nov 2024 12:21:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc: Matthew Bystrin <dev.mbstr@gmail.com>,  git@vger.kernel.org,  Lessley
+ Dennington <lessleydennington@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?=
+ =?utf-8?B?w7A=?= Bjarmason
+ <avarab@gmail.com>,  Elijah Newren <newren@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  idriss fekir <mcsm224@gmail.com>,  Joey
+ Salazar <jgsal@protonmail.com>
+Subject: Re: [PATCH] git: fix paginate handling for commands with
+ DELAY_PAGER_CONFIG
+In-Reply-To: <CAN0heSoryo-DO6WXKqqASJ5nDLqb3PNNiZv1TP=Pq11wsiSM6A@mail.gmail.com>
+	("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 21 Nov 2024 22:50:59
+ +0100")
+References: <20241120101741.8225-1-dev.mbstr@gmail.com>
+	<CAN0heSoryo-DO6WXKqqASJ5nDLqb3PNNiZv1TP=Pq11wsiSM6A@mail.gmail.com>
+Date: Sat, 23 Nov 2024 02:21:21 +0900
+Message-ID: <xmqqmshrrxpq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241121204119.1440773-5-jltobler@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Nov 21, 2024 at 02:41:18PM -0600, Justin Tobler wrote:
-> During fetch-pack operations, git-index-pack(1) may be spawned and
-> perform fsck checks. The message severity of these checks is
-> configurable and propagated via appending it to the `--fsck-objects`
-> option.
-> 
-> With `fetch_pack_config_cb()`, fsck configuration gets populated to a
-> `fetch_pack_options`. Expose `fetch_pack_config_cb()`, to facilitate
-> formatted fsck message configuration generation. In a subsequent commit,
-> this is used to wire message configuration to `unbundle()` during bundle
-> fetches.
-> 
+Martin Ågren <martin.agren@gmail.com> writes:
 
-In my perspective, we may not separate [PATCH 4/5] and [PATCH 5/5].
-Should the reason why we want to expose `fetch_pack_config_cb` is that
-we need to propagate the fsck severity to `unbundle`? Without the
-information of the last patch, we cannot know any detail thing. So, they
-are highly relevant.
+> Hi Matthew,
+> ...
+> Actually, no, it's not so much ignoring as *forcing*. Since you force it
+> to 0, doesn't that mean that `--paginate` ends up basically being
+> `--no-pager`? So `git --paginate branch` is now `git --no-pager branch`?
+> That doesn't seem right. An optionless `git branch` would have
+> paginated, so adding `--paginate` shouldn't change anything.
+>
+> But even if we force it to -1 instead (for "maybe"), I'm not sure I
+> understand why such an undoing of user intention is wanted. If I run
+> `git --paginate tag -a ...`, maybe that's just self-inflicted harm, but
+> are we certain that for all the `git foo --bar` which won't respect
+> `pager.foo`, that it's also completely crazy to provide `--paginate`?
 
-However, from the comment of the Junio, there are a lot of things need
-to be changed. So, just a comment.
+The whole thing started with
 
-Thanks,
-Jialuo
+    Calling commands using editor in terminal with `--paginate`
+    option will break things. For example `git --paginate config
+    --edit`.
+
+which many of us may respond with "it hurts? do not do it then", so
+I agree with you that a fallout would be worse than the problem the
+change is trying to "fix".
+
+
