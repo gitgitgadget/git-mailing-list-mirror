@@ -1,70 +1,75 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B82723098F
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 04:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6081E5FDA7
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 04:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732250093; cv=none; b=OMilWvtOENd2dmFoMnIamXQAEcNO5bQjGIn6gqC+p/uKBHWZUCBd8hN8YnH5HOnGmywe4mQYfS1tTs5/nJwr7uLtF6P+97GYVf5SrhCN7qfIbygm5MgG+pRoIUTGbBF4O1FkF4lYEQ8jOo0CBqtF+XyRrkZ8HSazS8YaSh9vkas=
+	t=1732250682; cv=none; b=eK3/4/ReaXuNmgQ+99++uiVbGl+Y9yt105xW6xalpOZHBz2C5Pins0b/5htVi0k/7mnC0kiM0Pi9TTMutuDH+ThH/8hz+HCVXogp1VnAMrE3Y0VgEpZ7tu6yb3I5AQgNYxMaz0oJw+MBbD0kAv0QJcby5R9EHIOY+aBPjmNPuVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732250093; c=relaxed/simple;
-	bh=TKCRJmQBYo8BhbAl3opklU4KLEatf9xb6LbyX+n6rDI=;
+	s=arc-20240116; t=1732250682; c=relaxed/simple;
+	bh=rTlgxvnzaD4i5c3lTh+5+npXp/TiT66Bcj7BY0XAaq8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XZWdEdFZ/o90yg28g8VQNvlear3dfsNHaHDoJYS+snffH7w48R4Gwh/NY9/MyUh65sPZBXNLQ8f2l6RJrM07lC83odHP0hKrxmOEWvESWCmo90cfVgnOCOXHihZHxBZAucXsHQ+ASod0e9fo6Io3JtcFP3lMaSJ1Z8OyftZSiQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gng2C8KE; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=C2xehZTRnAPz/7MWRA3eUYIiI8S0RMqeDLqKj/oy+NO9jaIAHpXVxWeNP8pOrrlYmzX4OmGEH2bdS9w1DCf1Wezfp3VzPqCRasA1+GnRoqh2Q6I6A6kf9jHEhysc24zYIPwhwXacanH0T9OlvG1+Dmi8qHWq8zcnyw2ul8XKRAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hQZUyfsJ; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gng2C8KE"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A17011400E3;
-	Thu, 21 Nov 2024 23:34:50 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 21 Nov 2024 23:34:50 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hQZUyfsJ"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4BAEE138024F;
+	Thu, 21 Nov 2024 23:44:39 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 21 Nov 2024 23:44:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732250090; x=1732336490; bh=TKCRJmQBYo8BhbAl3opklU4KLEatf9xb6Lb
-	yX+n6rDI=; b=gng2C8KEIlN7rZpV7Le6PnS5BUv/wqyHtP58Vl6xXr4BZIsAzEu
-	st2rSZd/k7p7h6a4z+UPmP82A0ThZ6QmR+vLX1xD2gkQeC+c+rNXEiiK/5DXvA1T
-	ZQ4JluotH7FHNI5d0qNm+qE7IGjXdI7qCBzkqHMc91UVPRteSVY1tGNP84YrZOCc
-	cIuaeDxrlOFlnN9BZRp4BGqpuV8/wj8UL3684CcnMu3ZS/My2CXFiJd0NuqkGyhV
-	G+Q9EaON2JN50pNnLitL/7W+QHagmNl/6Ubs17z5Vkz13YFftDISsDhIYxMkX20t
-	4JIxgQk8A0LkIXY3DG6Q+sGLr2BWupV2b7w==
-X-ME-Sender: <xms:6glAZ8E1yGgs7i31r4ZM9QePbD7BuCCtRb99eA5T1EgnYxOhJezeTA>
-    <xme:6glAZ1VlbLFIXmQ4qAzFEG0ed9xfqeUCceDuF3gnQ053ch4VCOw8_OzdhKfQbgdz4
-    EkQcKOFRpE3Xqet7Q>
-X-ME-Received: <xmr:6glAZ2Lb7QUOk5yPwEYixFlNW6Ib2NSrSKIsqcSoOFYI4np7vCeHyru_uaUfVMxEDK7SL38jQofIRZj0Ctig5xcDZunHsX6G2Ik2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdejvdcutefuodetggdotefrodftvf
+	1732250679; x=1732337079; bh=h/vIOkWJ6ZSl6zg8Rqm+tpTcP9qK6kzxU2O
+	R5h6z2to=; b=hQZUyfsJNO+xaEXH75EY35GozAUd1Rxp/35BWepA9OVS/g0zU5d
+	VLfmbr8oI0Q9hDLlgJiryIi18DTQiWAOiRhRV0CwnX0EBpQQY3JJcgoJTCsvi479
+	zu7topQHBo1mOS4J0CIjZThqhlboy47FzaNpCTONDEYQtPEvYRw+Qxm/VB6dExKg
+	pBLWpyGV7OCpeGWchULK7oPPzQYv194B4z1seF9GmPc4xbM2E8l9pVG2Q0inTzeM
+	MlSDFgtDtWvKsZiDL/X24npfQ9LHUPkqB6TODp5dlfjzAYCFmU7teuQ7iHf17mEH
+	OmuoPCSqx67Trc0TPqeBdtQ983wjtQEXdGQ==
+X-ME-Sender: <xms:NwxAZ_qVDNtz4y1WYB5-LV4Q2YdcLNBxvO2ofgkhCtBvJfT0BI1AtA>
+    <xme:NwxAZ5qTiOl-RU_nA89mr3sXQaVFX728x8K4GDBeAg8oGQUtKQIwTRrm51VYhOwsQ
+    IHCnmCPYOo3cFYVBQ>
+X-ME-Received: <xmr:NwxAZ8OMG7nQmTW2vr8czydWNmPtfJH5MvE7keTh3_lYd_5z3-rd9Dv1s6PsaPltZ4-8QTm6AJtWZ-bkGqJ5-caEgTIF9TNpYIU_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdejfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:6glAZ-Hgm7h-DZzcrQY4LrEuKQVa2BjMWHEayxsu00O-CT2OEMNXSA>
-    <xmx:6glAZyWqGFC2Z3ykorOLpZH2JdvUthi2Wtt4zTV5PgLSmd4jzS1MXQ>
-    <xmx:6glAZxNMYLQJOJveLpkHwHWYCepKaJ4i3eT6lk00hQTRGTaWnd7zdg>
-    <xmx:6glAZ50He18oCPdrkxh2GG-DFY_majcRaQCNC0UyP3YG6nqyUxt9ng>
-    <xmx:6glAZxQBEcGD-srBmueNuuH4rwiBRMuvVWhUGI5PeWSbq091VGsHcTRm>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorh
+    hrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfihrvghnsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:NwxAZy6N2bM4buiapKaWbF7iHX-hw6Lr0M-LiiS0er1RrBPtOYSRMA>
+    <xmx:NwxAZ-40JE8IGuFwElmbn3--EsLilu-WlKcDpdwQmQHes7wE2XzLOw>
+    <xmx:NwxAZ6j5Ruo8xckLIJFHA3yDyjHBRQwUSs-_P6qcYCxcl4mNes8U5w>
+    <xmx:NwxAZw7OAs7r8JxIn44lcEr1KRRR_QHaydkQS7QILHpCXfSmfCChMw>
+    <xmx:NwxAZwTXABthRsWd39QX1on3oXRHadnsvbc7CtcUhFR18GD4_Q_Tvs4S>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Nov 2024 23:34:49 -0500 (EST)
+ 21 Nov 2024 23:44:38 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2024, #07; Wed, 20)
-In-Reply-To: <Zz4Q+2X3wXhLO6FE@nand.local> (Taylor Blau's message of "Wed, 20
-	Nov 2024 11:40:27 -0500")
-References: <xmqqo72ai929.fsf@gitster.g> <Zz4Q+2X3wXhLO6FE@nand.local>
-Date: Fri, 22 Nov 2024 13:34:48 +0900
-Message-ID: <xmqqr073antj.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v2 2/2] pack-objects: only perform verbatim reuse on the
+ preferred pack
+In-Reply-To: <d73b8fe2d63c8ad08ad0c4ffeffb5ee2509b2d50.1731591708.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Thu, 14 Nov 2024 08:42:12 -0500")
+References: <cover.1731518931.git.me@ttaylorr.com>
+	<cover.1731591708.git.me@ttaylorr.com>
+	<d73b8fe2d63c8ad08ad0c4ffeffb5ee2509b2d50.1731591708.git.me@ttaylorr.com>
+Date: Fri, 22 Nov 2024 13:44:37 +0900
+Message-ID: <xmqqjzcvand6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,18 +81,21 @@ Content-Type: text/plain
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> One topic I did not see is [1], which appeared not to be picked up in
-> this or the last cycle. That topic has been reviewed and should be in
-> good shape. I think the thread died down after agreeing on some
-> potentially interesting future improvements we could make, but I don't
-> think there were any outstanding issues with the current patches.
+> This regression comes from ca0fd69e37 (pack-objects: prepare
+> `write_reused_pack_verbatim()` for multi-pack reuse, 2023-12-14), which
+> incorrectly assumed that there would be no gaps in reusable regions of
+> non-preferred packs.
 
-I didn't get the impression that there was a general concensus that
-it was a good implementation, but perhaps I am misremembering things.
+I was reviewing the past release notes from this year, and saw this
+snippet in the 2.44 release notes:
 
-These two patches touch only the test helpers, but I am wondering if
-it becomes easier to implement on top of your later changes that
-allows the production side to also access the unsafe variant of the
-algorithm?
+ * Streaming spans of packfile data used to be done only from a
+   single, primary, pack in a repository with multiple packfiles.  It
+   has been extended to allow reuse from other packfiles, too.
+
+Essentially this two-patch series the change completely so we only
+reuse pack data from the primary pack?
 
 Thanks.
+
+
