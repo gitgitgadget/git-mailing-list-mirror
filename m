@@ -1,64 +1,64 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A764E82485
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 15:55:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E9926AF6
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 15:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732290937; cv=none; b=QX7PLWW+uZxcMTtsnRx2GJ/wvvjOcMtWEV5wOuYoThnQfEcqYGG/qyr8iv3xTYvEHEz/PnQyCWZtSddC8XM3oOCXWaAIy2/v1wlKmRwZNuGa7/gjqOERsiAthIPQCaNZAUXGSgG4hBxawbrgz9I7j//2JyDuUX60bk3jgR89el0=
+	t=1732290948; cv=none; b=FfdGiEeZI9FJ+LR5q4/u5Ta7NeK6A0Nf1FEu7aMUgO2XV4vIBMYJFQ1DhODQVajjGeuDyh5azyRBkXJK3bYJ2x/Bxfy2Hf2lXnYsAAbE3e2f9OLz3ns+rurAbtQU1/+6l9nc9mmoqX0n6OAakl/LwD0isFF6PkDLJW1R9aKk4dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732290937; c=relaxed/simple;
-	bh=d8BVc64Lfeu57Mem/4lMFm0SMLuGZRkmGVsrzXloDLM=;
+	s=arc-20240116; t=1732290948; c=relaxed/simple;
+	bh=foMMDeUL6Qwv2EsncbAA1NP+E7DPKB+BLn89G6nRQRc=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=HPbmCltR+0gNqWhhVFgZCEnDqHFBfwcPAkVqKooV3U+ygsmOuGeOtemqJAP0BilfA5t6k4zwkt+nDO08WoS0Tz3PxfEjPOPy7QHacwAfYgbKWCLHqi/dvtFukVDWJiKqZiKL5hRVSlEjNpxqWx5z+3j1pRQU4A8eSMmkuyRvsQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kVghAyxh; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:Content-Type; b=cyX67NwXxeWdWp6aAgijxTU9V+6RKb+o7vFAdl/HTgtKyU0J/qz8Pnud5syIr1QV4iuJwy2zrCO6epxKjgawptdwUSKEZ4vQK8ySZEQhdFcSqZa85smW10GpnzhjZrEC0MkdCygvqB6rJ2RVYboXcqjhAphZxivkyHjN12unJGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i8zJtlW0; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kVghAyxh"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-382456c6597so1640609f8f.2
-        for <git@vger.kernel.org>; Fri, 22 Nov 2024 07:55:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i8zJtlW0"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-382456c6597so1640739f8f.2
+        for <git@vger.kernel.org>; Fri, 22 Nov 2024 07:55:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732290933; x=1732895733; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732290945; x=1732895745; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=BqdMqRvnvROq2X33bFHOfEzkZRXJvqsXGxvZ21hzYrA=;
-        b=kVghAyxhfkTT8JOzFHPL1wTNMDc0/yaEvar6Ec84LQYO62kMFevllUFy7Gtlzmbjc3
-         AsLZ1x1fSByUGaM4HJQcitqlf1zFUly6y/eAfSBmzKmXJlWtDXBQTScnUUMxSCCkaj3t
-         xIdqlglTp/Q1w7Fann8O5hOdLXkst1+5ZJ0QEC7p7mFBGJQncZ02xBwZxSQOBTyYoGAu
-         XuPeKF1KJFsvHjWb+wjJMbRDGRxPMD4L20OQgAyZqK1lxrXki5WB6pk4OK46+0FbwmjR
-         JIMWD42X6SbgXbykNMA1E4jLxxKOxod5al3DfR0PUDMUuqq6qhiEvuM7AneZbYaa8IcB
-         DU+g==
+        bh=JHJVg2gSPVEVPcPtxCoa0XHAJmKuDfLeVqkHzNYTC4M=;
+        b=i8zJtlW03qA3hq4lCvbcBlMIssTaUWu+RHueswX0JBfDCr/4K+7tAUsCvD6zeY49wZ
+         IKjTJorsGfdcV6BXuaZgcrkIYlJhGgEzBc4vqkl2ZDzX/Wv5/URHPFn9d2jqJ75VyTGO
+         vLZdasZtpGsEfsACuwe0zbx8G+k/hobY0m0uhTIol5zELB6wE+6lTmefQyrf4YjuT+We
+         OXm66iN6ALnC9C+cb0EWWUlIyicpyj8D3uMOFAMEfE7Q6w44p34DgyqrGYOvem6mb6NS
+         xPBfihZSqBPsUgReDroPMDpc+wfGQiIIHkKTql7YTyd0OnLQ5R86PbiuSqV/70ClDn10
+         vniA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732290933; x=1732895733;
+        d=1e100.net; s=20230601; t=1732290945; x=1732895745;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BqdMqRvnvROq2X33bFHOfEzkZRXJvqsXGxvZ21hzYrA=;
-        b=eQGPb5mTTg5RIwuNqWGneWc2M11udr/cr7ym/SNlLHHGBA9HXSjFLRZM5AACF+G28X
-         15uTKaWflY69Eir6P5Wgqck62O9cvKaKAy7pqYQ9pcn4hOEJ9IEJ05to4ld82YlAPvi3
-         J8VzRi5dt4soJjKluMwZvl3yBNNbmmVRJv/63FqV0u2jANU4BlFNxoRHvI8ZqcQwZbvu
-         HtEcDX3ROak7/lye9qheYlbqIW3ojA404Jbjz6lksyygfjTGytUUjWc3yi1mAZYJ5W/B
-         R+TLqpyXtbPgDd/hGPZ2oqRFFFS5QY67JT066jqEKdMmRikX8WbNsbGai73GwixQEcTD
-         kWow==
-X-Forwarded-Encrypted: i=1; AJvYcCXWQchojUOg+jvgO8zuNghM8CwfxlJ3oRumsVk9vZwf5trz0J51HDo2FSXmY+C0trAPZX4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBVn9tayY9dUvnOZAHc66E32oe4CUshtxgGWpVUVMa0dF0beBB
-	20XUDRonQB7NA5CSzSUrxEsQ4UvRxp1WwCooCv3/whamyDzjg9KX
-X-Gm-Gg: ASbGncvJ/q5CRPRWiPOXyi/g4kSCrr3CVoCUzFTW865GWpAj9/UsT61szN7MV6oUeBR
-	fzcjPe5HO/dx/qqrV6FEH+K7pwWzdP/Vjo5KOKeXxXYwxkrP/acFnaKwF2upKCWHpuXPPBQx9nl
-	5R66i8Dnhy8Wtz+XK3C3oQabpMOoJxyC1VG3jU4DfOagtmLgG+yYRV2zk9v8XYUL6oTXlSR8bEF
-	5134jneLJyuwUcr3Rm0p/V2VvTnv39kcweiCkJ4ZK9J1ZDNNBgA3iHk/ANLSJXQx7m+AAMsVCS+
-	uZ2ReCl9n83ToVhxjoru48xeMg==
-X-Google-Smtp-Source: AGHT+IH4SclnP35PGHb+nfWmSYn0tiF9amaHH24L+GXwoN03YneQaoPiNXscnWXLl562J7st9+qtUw==
-X-Received: by 2002:a05:6000:1541:b0:382:22c6:7bcb with SMTP id ffacd0b85a97d-38260b455f0mr2742616f8f.3.1732290932833;
-        Fri, 22 Nov 2024 07:55:32 -0800 (PST)
+        bh=JHJVg2gSPVEVPcPtxCoa0XHAJmKuDfLeVqkHzNYTC4M=;
+        b=EqNQ+ShZKCZ/8fKTsrO7tNMl5FOPKlFfFD80SqlTJpegM/VkB37QBLwLAx2lzG/Ehp
+         0Gp1GdnxzB9jIAd1L9qfsKysx0Bsrjbb2NjM4lulKaNi4kYt2UVs2wjTeNjF7xhvmdlj
+         RPH7kuJBGs95TU6PVpu+D0e1QBWFy3GrQ9ZULKlJAUgYqqmrfmPmQgPkOMhUhbhlidGh
+         VMp8JbwTEASx6LXy8VGVlX2RgWjlzQ6vvA/Ch6Jp5FiJdQ3RgaMGrtewNOZWmPjsJVaO
+         lT3ZErcDIIqFtqoe6j7BS0OCMlDAcudYG6VnxtwIfdAnteMjSWlNDzmOIbtDwUnA+ZlE
+         ILUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWujZZScZwWjwIOXJx46a2VEitGZYe7Vj6IhKCcjnF3pAnLkqlVrsV1xIjA32J7Uj7e3V0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8SC3CNdr6fyx5AoSXDfUdJbfEy1HiBhQGgVYjWE+88J3s6sgC
+	yEWHmUVqH9R6YWBd8Oy31aNhZ8Sz6S7ULoxEe038Xz5EVPxPHb/ViXn5cA==
+X-Gm-Gg: ASbGncvgs6olO7t8maR8OGc9yWKH+ygG3xfbE3qroifl/d9oycT3U85+YoZhN/b2mcC
+	xyjLp8jF7BsXRxH6y7iS5lczY2qfsQZ9WTbcCw6PEF5wnSLghws2VSFVRGUQHOYKwvkfIEA0K7g
+	5aEjnoFNccFD44tEJrKHaHVtXezoyn9tbrXmAGXvV8qf6uWR6tbjKsdIKvGJ7tGuMpF0R7Qphd8
+	r6FmZsQfPSh4+i9vglkEfzfPiPhTtCr9eiVmzLusNQUl2L6/dgEWx5lv1pAYgUHkzVx1g8Wentw
+	bZwG/3PiyL2b++UNzIfb8BFFUQ==
+X-Google-Smtp-Source: AGHT+IHMHP/tx/RVnW5N33woqpy0yRL4TQwLQpXt4wRdapHa3jkI3ntaG+cQG9pflmSSBljE+0VXQw==
+X-Received: by 2002:a05:6000:1acd:b0:382:31db:d61 with SMTP id ffacd0b85a97d-38260bcb9dbmr3362523f8f.38.1732290944698;
+        Fri, 22 Nov 2024 07:55:44 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:6a8:b801:610:d596:f87c:e591? ([2a0a:ef40:6a8:b801:610:d596:f87c:e591])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825faf9dd2sm2716198f8f.26.2024.11.22.07.55.32
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fbedfccsm2707652f8f.101.2024.11.22.07.55.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 07:55:32 -0800 (PST)
-Message-ID: <75b4023a-4005-49ff-a06d-e50fcd1c2b50@gmail.com>
-Date: Fri, 22 Nov 2024 15:55:31 +0000
+        Fri, 22 Nov 2024 07:55:44 -0800 (PST)
+Message-ID: <135739ad-6722-449b-9f9b-31c0bbc9f9cb@gmail.com>
+Date: Fri, 22 Nov 2024 15:55:43 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,101 +67,163 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v4 6/8] worktree: add relative cli/config options to
- `move` command
+Subject: Re: [PATCH v4 7/8] worktree: add relative cli/config options to
+ `repair` command
 Reply-To: phillip.wood@dunelm.org.uk
 To: Caleb White <cdwhite3@pm.me>, git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
  Eric Sunshine <sunshine@sunshineco.com>
 References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
- <20241031-wt_relative_options-v4-6-07a3dc0f02a3@pm.me>
+ <20241031-wt_relative_options-v4-7-07a3dc0f02a3@pm.me>
 Content-Language: en-US
-In-Reply-To: <20241031-wt_relative_options-v4-6-07a3dc0f02a3@pm.me>
+In-Reply-To: <20241031-wt_relative_options-v4-7-07a3dc0f02a3@pm.me>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Caleb
 
-This looks good, I've left a couple of comments on the tests - they 
-could be cleaned up like the last patch. The implementation looks good.
-
 On 01/11/2024 04:38, Caleb White wrote:
-> This teaches the `worktree move` command to respect the
+> This teaches the `worktree repair` command to respect the
 > `--[no-]relative-paths` CLI option and `worktree.useRelativePaths`
-> config setting. If an existing worktree is moved with `--relative-paths`
-> the new path will be relative (and visa-versa).
-> 
+> config setting. If an existing worktree with an absolute path is repaired
+> with `--relative-paths`, the links will be replaced with relative paths,
+> even if the original path was correct. This allows a user to covert
+> existing worktrees between absolute/relative as desired.
+
+This looks pretty good the strbuf changes rather mask the real meat of 
+the patch though.
+
 > Signed-off-by: Caleb White <cdwhite3@pm.me>
-> ---
->   builtin/worktree.c       |  4 +++-
->   t/t2403-worktree-move.sh | 22 ++++++++++++++++++++++
->   worktree.c               | 23 ++++++++++-------------
->   worktree.h               |  3 ++-
->   4 files changed, 37 insertions(+), 15 deletions(-)
-> 
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index e3b4a71ee0bc13d5e817cf7dcc398e9e2bd975de..302151506981718658db1cd338cd9064688f5c14 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -1190,6 +1190,8 @@ static int move_worktree(int ac, const char **av, const char *prefix)
->   		OPT__FORCE(&force,
->   			 N_("force move even if worktree is dirty or locked"),
->   			 PARSE_OPT_NOCOMPLETE),
-> +		OPT_BOOL(0, "relative-paths", &use_relative_paths,
-> +			 N_("use relative paths for worktrees")),
-
-By the time this function is called we've already initialized 
-use_relative_paths from the config setting - good
-
-> [...]
-> +test_expect_success 'move worktree with absolute path to relative path' '
-> +	git config worktree.useRelativePaths false &&
-> +	git worktree add ./absolute &&
-> +	git worktree move --relative-paths absolute relative &&
-> +	cat relative/.git >actual &&
-> +	echo "gitdir: ../.git/worktrees/absolute" >expect &&
-> +	test_cmp expect actual &&
-> +	git config worktree.useRelativePaths true &&
-> +	git worktree move relative relative2 &&
-> +	cat relative2/.git >actual &&
-> +	echo "gitdir: ../.git/worktrees/absolute" >expect &&
-> +	test_cmp expect actual
-> +'
-
-As with the last patch we should use test_config and stop copying files 
-just to compare them. It's probably worth checking the gitdir file as 
-well as .git here as well.
-
-> +test_expect_success 'move worktree with relative path to absolute path' '
-> +	git config worktree.useRelativePaths true &&
-> +	git worktree move --no-relative-paths relative2 absolute &&
-> +	cat absolute/.git >actual &&
-> +	echo "gitdir: $(pwd)/.git/worktrees/absolute" >expect &&
-> +	test_cmp expect actual
+> diff --git a/t/t2406-worktree-repair.sh b/t/t2406-worktree-repair.sh
+> index 7686e60f6ad186519b275f11a5e14064c905b207..84451e903b2ef3c645c0311faf055c846588baf6 100755
+> --- a/t/t2406-worktree-repair.sh
+> +++ b/t/t2406-worktree-repair.sh
+> @@ -216,4 +216,30 @@ test_expect_success 'repair copied main and linked worktrees' '
+>   	test_cmp dup/linked.expect dup/linked/.git
+>   '
+>   
+> +test_expect_success 'repair absolute worktree to use relative paths' '
+> +	test_when_finished "rm -rf main side sidemoved" &&
+> +	test_create_repo main &&
+> +	test_commit -C main init &&
+> +	git -C main worktree add --detach ../side &&
+> +	echo "../../../../sidemoved/.git" >expect-gitdir &&
+> +	echo "gitdir: ../main/.git/worktrees/side" >expect-gitfile &&
+> +	mv side sidemoved &&
+> +	git -C main worktree repair --relative-paths ../sidemoved &&
+> +	test_cmp expect-gitdir main/.git/worktrees/side/gitdir &&
+> +	test_cmp expect-gitfile sidemoved/.git
 > +'
 > +
+> +test_expect_success 'repair relative worktree to use absolute paths' '
+> +	test_when_finished "rm -rf main side sidemoved" &&
+> +	test_create_repo main &&
+> +	test_commit -C main init &&
+> +	git -C main worktree add --relative-paths --detach ../side &&
+> +	echo "$(pwd)/sidemoved/.git" >expect-gitdir &&
+> +	echo "gitdir: $(pwd)/main/.git/worktrees/side" >expect-gitfile &&
+> +	mv side sidemoved &&
+> +	git -C main worktree repair ../sidemoved &&
+> +	test_cmp expect-gitdir main/.git/worktrees/side/gitdir &&
+> +	test_cmp expect-gitfile sidemoved/.git
+> +'
+
+These tests looks sensibile, we should probably check that "git worktree 
+repair" repects worktree.userelativepaths. I wonder if we have any 
+coverage of repair_worktrees() as I think in these tests the problem is 
+fixed by repair_worktree_at_path() before we call repair_worktrees().
+
 >   test_done
+> diff --git a/worktree.c b/worktree.c
+> index 6b640cd9549ecb060236f7eddf1390caa181f1a0..2cb994ac462debf966ac51b5a4f33c30cfebd4ef 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -574,12 +574,14 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
+>    * pointing at <repo>/worktrees/<id>.
+>    */
+>   static void repair_gitfile(struct worktree *wt,
+> -			   worktree_repair_fn fn, void *cb_data)
+> +			   worktree_repair_fn fn,
+> +			   void *cb_data,
+
+Style wise leaving "fn" and "cb_data" on the same line would be fine. 
+That applies to all the functions.
+
+> +			   int use_relative_paths)
+>   {
+
 > [...]
-> -	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
-> +	strbuf_realpath(&gitdir, git_common_path("worktrees/%s/gitdir", wt->id), 1);
+>   	if (dotgit_contents) {
+> @@ -612,18 +615,20 @@ static void repair_gitfile(struct worktree *wt,
+>   		repair = _(".git file broken");
+>   	else if (fspathcmp(backlink.buf, repo.buf))
+>   		repair = _(".git file incorrect");
+> +	else if (use_relative_paths == is_absolute_path(dotgit_contents))
+> +		repair = _(".git file absolute/relative path mismatch");
 
-We used to append "/gitdir" below but now we do it all in one - nice.
+Comparing ints as booleans makes me nervous in case we have a non-zero 
+value that isn't 1 but is_absolute_path() returns 0 or 1 and we know 
+use_relative_paths is 0 or 1.
 
->   	strbuf_realpath(&path, path_, 1);
-> +	strbuf_addf(&dotgit, "%s/.git", path.buf);
->   	if (fspathcmp(wt->path, path.buf)) {
-
-get_linked_worktree guarentees that wt->path is absolute so this looks good.
-
-> -		strbuf_addf(&file, "%s/gitdir", repo.buf);
-> -		write_file(file.buf, "%s/.git", relative_path(path.buf, repo.buf, &tmp));
-> -		strbuf_reset(&file);
-> -		strbuf_addf(&file, "%s/.git", path.buf);
-> -		write_file(file.buf, "gitdir: %s", relative_path(repo.buf, path.buf, &tmp));
+>   	if (repair) {
+>   		fn(0, wt->path, repair, cb_data);
+> -		write_file(dotgit.buf, "gitdir: %s", relative_path(repo.buf, wt->path, &tmp));
 > +		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
 
-This is a nice simplification
+We used to update only the ".git", now we'll update both. In the case 
+where we're changing to/from absolute/relative paths that's good because 
+we'll update the "gitdir" file as well. In the other cases it looks like 
+we've we've found this worktree via the "gitdir" file so it should be 
+safe to write the same value back to that file.
+
+> [...]
+>   void repair_worktree_at_path(const char *path,
+> -			     worktree_repair_fn fn, void *cb_data)
+> +			     worktree_repair_fn fn,
+> +			     void *cb_data,
+> +			     int use_relative_paths)
+>   {
+>   	struct strbuf dotgit = STRBUF_INIT;
+> -	struct strbuf realdotgit = STRBUF_INIT;
+>   	struct strbuf backlink = STRBUF_INIT;
+>   	struct strbuf inferred_backlink = STRBUF_INIT;
+>   	struct strbuf gitdir = STRBUF_INIT;
+>   	struct strbuf olddotgit = STRBUF_INIT;
+> -	struct strbuf realolddotgit = STRBUF_INIT;
+> -	struct strbuf tmp = STRBUF_INIT;
+>
+>   	char *dotgit_contents = NULL;
+>   	const char *repair = NULL;
+>   	int err;
+> @@ -779,25 +783,25 @@ void repair_worktree_at_path(const char *path,
+>   		goto done;
+>   
+>   	strbuf_addf(&dotgit, "%s/.git", path);
+> -	if (!strbuf_realpath(&realdotgit, dotgit.buf, 0)) {
+> +	if (!strbuf_realpath(&dotgit, dotgit.buf, 0)) {
+
+This works because strbuf_realpath() copies dotgit.buf before it resets 
+dotgit but that does not seem to be documented and looking at the output of
+
+     git grep strbuf_realpath | grep \\.buf
+
+I don't see any other callers relying on this outside of your earlier 
+changes to this file. Given that I wonder if we should leave it as is 
+which would also simplify this patch as the interesting changes are 
+swamped by the strbuf tweaking.
+
+> [...]   
+>   	if (repair) {
+>   		fn(0, gitdir.buf, repair, cb_data);
+> -		write_file(gitdir.buf, "%s", relative_path(realdotgit.buf, backlink.buf, &tmp));
+> +		write_worktree_linking_files(dotgit, gitdir, use_relative_paths);
+
+We used to just update "gitdir" but we now update ".git" as well. As 
+above that's good when we're repairing a relative/absolute mismatch. In 
+the other cases dotgit always contains the path to the ".git" file in 
+the worktree so that should be fine.
 
 Best Wishes
 
 Phillip
+
