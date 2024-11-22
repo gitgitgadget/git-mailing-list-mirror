@@ -1,108 +1,161 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48AB61DE2CB
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 12:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF28C16DC28
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 12:24:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732277390; cv=none; b=iN3yfm0Dnd9Jp8FecSLKrHX4q+5qMOAKFWiq872elzWcjTuo/fQuam9A+liF+O0P27NOZtb7G+DW1I4/s4Cp4EH85gUuu988PxkJEgV3LTkuNpRduRkBIHEvsZDMQhdII7nJbj8GbRPJXMmHBQ0qVaT680+87vsJ6suMRyVDwOI=
+	t=1732278242; cv=none; b=INCQK7Dhgx2o9DxJBTDbOt0SYL4dRZkr6VKz6HNs41fUDnvJaw/7n6K2CoIwNoOd4VcH4OVueYR1vL/UCUzlgXhrII9gHQijJ6E2egBuYQBVDLik09QeIIAQcdO/dUSMPnyd6m9PDcMBkn68Uek8SbbZb5CY2z6gpUuNCqkgn7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732277390; c=relaxed/simple;
-	bh=spAveTxox5OFodZbjlHd4gWD68VaR/sdOboV1WlqYmY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o7hnhp/DML94U5pX3xBsb6Ja4Ib8ZO4eaVrspUWYWsKcueC36vabWShHx2vWjk87S95kVWPyFKqghjQ21m/HFLG+M9EuFM+gk3hgGXwCUCa54++OGpjc3NWqLl/sHDBwXqvYtIIt3ICiZGGXS2t5V3v92c1FJPNdIm+6rnXjYrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P3Pc57B2; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732278242; c=relaxed/simple;
+	bh=Gr+vkfrVCVRmdU+mLtSK2Nx6OTFDZoT290rBbzzZg2w=;
+	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
+	 References:In-reply-to; b=oGCjV2cd+SyOfYyGTGAgdTt9XfV+W/Ve+NxC3FooDHIsGViQEZVfHTQevmdFXzdnw1lUswtT1u+R86xHntpXIi4JXnzA3lHP/4JNCaUYSoUyusIv1pMJ+KU7UJPQjIBVETzR50jZOKOLit+6ObXWFRgB65z43Ke8gDPKl/xEoYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=KnusSl8v; arc=none smtp.client-ip=192.29.178.123
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P3Pc57B2"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e333af0f528so1866304276.3
-        for <git@vger.kernel.org>; Fri, 22 Nov 2024 04:09:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732277387; x=1732882187; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1ORUABEpIUpsJQO6/ls7BduQScX9r/C4nRJqZKw4aoM=;
-        b=P3Pc57B2j9G6A/Zd/mPHHO+fXKnkhU3C/IDgz3qChUdf6zPx0RMD2WDivV+ho5fHy3
-         f//gR8u4rReePCOWRg8nEX1FeGZ6Ejfm1K7N/X4WTIuXWB/9HFZW5fvXSDO+AvwSZszE
-         ujOkUM/oKLj3bC/WCaGxuQvHMTfwyw/yt8ObITkJAcW1EJJ+eEqLj3dlyeu5ViaWTnh3
-         K5497toGfY1PgG9enHjIsJfY1jSf2CVfeuu+w5pXJNnproumW8Ri8Er6ZHSV3B305B8n
-         UVrVrIWBqOXZeJBiYEwDiFJDFL8UoVxKF+bL2Y1M/aBnyThf90Q1hM8Ha7RFumoWHdYp
-         LQsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732277387; x=1732882187;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1ORUABEpIUpsJQO6/ls7BduQScX9r/C4nRJqZKw4aoM=;
-        b=iDUfgltKJR048cfXMi1WV9jg8NX+BKCQJV5QiYDgjnroxQfodu7wAEb/b46gV65AjP
-         MAax9K83vZf8rIAiyuYurd0Vz7vYuqvp0CnfOl9imySE2p2b6ekYyYDVTNptFc2Ia9EI
-         GKCcw1eb2a1bGcntGArpJQWoyEpiMTz2IF2Ibe9zISS+89KNURWtLRaCmnRWmTArnGom
-         i3GPFC41tU9MXrV0yV056myizfmBsckysZgMwuKt25vVGfsNU45f8v3SKQE/Fb+rycCu
-         bqNLp4GgRIvndyyXvdZomJiNpGzqWSApK5fbhMG2wpcHXqYU9pkPH2W0wRbTAjOPB8IK
-         h3ww==
-X-Gm-Message-State: AOJu0YzVrXug0fhowamY5Cnup/x1sBElDcKQlqct0gE1I7p8dtZHAc6j
-	pBmRw7CNjIC+EA0O7iTE611vSNWV/wcZpuqKxqd9pdnZ1IamHbiJ
-X-Gm-Gg: ASbGncsZYD4N9DOwo3Vi0ginF/Fm7KfckByPt05zu+ETYklCoIk8WgqSOYz7NtXRBtJ
-	mLi3H+6Xqg3EYA3OfBGdkRLcI9Uq3qzrTn0cMTGd9wB1pkD6KCmNT3s2aLQXehLwo8TNzf6pSKP
-	YnqGDjzRyIn6Uule6YFJjKihia5W2NwbIegSpVDZb1vRLVkf9oA+CdfOX4RNai/5sUEGD7rrNdT
-	EwwRdp9b9gVUlRGiFD2Yd1Y7iBa+4WZ683OkgXZp95MJ3ahpQ9cJ41px9M8VhslLZB33xaQKoWA
-	SL4NXgPiJMVNttK3q4ZxYuk3EazUeQkJjDFwhQ==
-X-Google-Smtp-Source: AGHT+IGPbwotE6pSD2Yx/4PZi3SMKpGkIDmwGXrz32J4FY4C+K0SRBNC8/zHDebYAipyuzexb5TgGA==
-X-Received: by 2002:a05:6902:18c2:b0:e38:8fdf:ffdc with SMTP id 3f1490d57ef6-e38f8b34560mr2464716276.22.1732277386745;
-        Fri, 22 Nov 2024 04:09:46 -0800 (PST)
-Received: from ?IPV6:2600:1700:60ba:9810:79a7:3ea7:43e7:e05a? ([2600:1700:60ba:9810:79a7:3ea7:43e7:e05a])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e38f5e5b218sm562526276.0.2024.11.22.04.09.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2024 04:09:46 -0800 (PST)
-Message-ID: <4c314b69-46b4-402e-a590-78e4f4e0200e@gmail.com>
-Date: Fri, 22 Nov 2024 07:09:45 -0500
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="KnusSl8v"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=8+sw0VTNDaeh5tBlum7J/H4rB12J+iTNARJU7UpeCXk=;
+ b=KnusSl8vXdufGMoAlSHp6+ELR7inxKUPPAUqdxFm4hYxws3FHvmF10rHMl6nNOEUaojJ7pVzKyS1
+   eLY+6PpViF7c2IPOB3lVpesBbM6LvoJFPS4oB+u7B6nrVP/VsD6a1mV/iGS70pYu+XIiAfJNwfeU
+   fZ90Zo7SSsV/uR9VwlcBPRFFxIhHdqa/h6Z6QOss1FAWmaUdfZeHVs93Qem2iRV9+WDpwPw5S+7D
+   twL4YJy69xhjTGlWy3CyzebKGaMUeeeucgIbY0D0VJFEvy2vrC8yAsj0tXUWwHk7/oR7LJikyh/F
+   aSQh/Vd+Q/k1Z3cghX3QFrYB5mhUzCBr63Afhg==
+Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SNC00ITDQFYOC60@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 22 Nov 2024 12:23:58 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] pack-objects: add GIT_TEST_FULL_NAME_HASH
-To: Taylor Blau <me@ttaylorr.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
- peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com
-References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
- <259734e0bcea952c2c09b0fb3a017e139922b975.1730775908.git.gitgitgadget@gmail.com>
- <Zz+U8IyHqBNRIn6m@nand.local>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Zz+U8IyHqBNRIn6m@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Fri, 22 Nov 2024 13:23:30 +0100
+Message-id: <D5SPDJZAM5K1.24R4JYB0WNTSF@ferdinandy.com>
+To: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: [PATCH v14 03/10] refs: standardize output of
+ refs_read_symbolic_ref
+Cc: <phillip.wood@dunelm.org.uk>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Junio C Hamano" <gitster@pobox.com>, "Taylor Blau" <me@ttaylorr.com>,
+ "Patrick Steinhardt" <ps@pks.im>
+References: <20241118151755.756265-1-bence@ferdinandy.com>
+ <20241121225757.3877852-1-bence@ferdinandy.com>
+ <20241121225757.3877852-4-bence@ferdinandy.com>
+ <CAOLa=ZS5yNpZEUqBAUpP-pSbJXk4+=XM6S6e9RY_eSVJEBhqkA@mail.gmail.com>
+ <D5SNGOK1IKRS.1TY1DL9PJ7MPF@ferdinandy.com>
+ <CAOLa=ZS28xvpEBNO9AMamF00Yf8eHFGKyU5uHjBD7vOVF3_oEA@mail.gmail.com>
+In-reply-to:
+ <CAOLa=ZS28xvpEBNO9AMamF00Yf8eHFGKyU5uHjBD7vOVF3_oEA@mail.gmail.com>
+Reporting-Meta:
+ AAGN7aBan77MbfXOZPfdOp38TJZ+yLtwIVHmtjoIulUFo1vBC91WQx5I9iiB+PAd
+ +OJ1GES+9OUEPUbnbVtyGQvFN/tQ1McXv6bpq9PdOO6RIoE+8U7hhjMw7X6gP45A
+ ug+qkGywrRp38ymHVY4QJElDWRZAdqmCoTU7SMgiI/pMGS3NTf7wbfiYR8IErorj
+ UHmmQEXF/qIQVBN2Qjeae6THcPK5ULIJpXLviAXfOKzyKyujWxgf0zngCNgPJUdT
+ HY++qdJ+FW0wsSv4DFNezLrAPwV08c+LJXEVVDjRYfhIv9yT8mNdRO36IedoL+VA
+ TtzM6GtSn7zJXmouXouYpvk/vn0dHeL60PvgwdN3hl95vT13pPXmCCbDOeUUyL8H
+ e0tJoBOX0YCDnEa+NnV86fATznzgjBNmrqpa2+wNBkowFMirjCTw/iPGSuRYNHk+
+ FwAKaVLVrydM270xQtmgw2XwPyXzuU0FY8v3/qE+/sgSknQZOZW767xq
 
-On 11/21/24 3:15 PM, Taylor Blau wrote:
-> On Tue, Nov 05, 2024 at 03:05:03AM +0000, Derrick Stolee via GitGitGadget wrote:
->> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
->> index 2e28d02b20f..75b40f07bbd 100755
->> --- a/ci/run-build-and-tests.sh
->> +++ b/ci/run-build-and-tests.sh
->> @@ -30,6 +30,7 @@ linux-TEST-vars)
->>   	export GIT_TEST_NO_WRITE_REV_INDEX=1
->>   	export GIT_TEST_CHECKOUT_WORKERS=2
->>   	export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1
->> +	export GIT_TEST_FULL_NAME_HASH=1
->>   	;;
->>   linux-clang)
->>   	export GIT_TEST_DEFAULT_HASH=sha1
-> 
-> Hmm. I appreciate what this new GIT_TEST_ variable is trying to do, but
-> I am somewhat saddened to see this list in linux-TEST-vars growing
-> rather than shrinking.
-You make good points that this does not need to be here.
 
-It's enough that someone could manually check the test suite
-with this test variable to make sure that enough of the other
-options are tested with this feature.
+On Fri Nov 22, 2024 at 12:30, karthik nayak <karthik.188@gmail.com> wrote:
+> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
+>
+>> On Fri Nov 22, 2024 at 11:37, karthik nayak <karthik.188@gmail.com> wrot=
+e:
+>>> Bence Ferdinandy <bence@ferdinandy.com> writes:
+>>>
+>>> [snip]
+>>>
+>>>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+>>>> index 38eb14d591..1809e3426a 100644
+>>>> --- a/refs/reftable-backend.c
+>>>> +++ b/refs/reftable-backend.c
+>>>> @@ -830,10 +830,12 @@ static int reftable_be_read_symbolic_ref(struct =
+ref_store *ref_store,
+>>>>  		return ret;
+>>>>
+>>>>  	ret =3D reftable_stack_read_ref(stack, refname, &ref);
+>>>> -	if (ret =3D=3D 0 && ref.value_type =3D=3D REFTABLE_REF_SYMREF)
+>>>> +        if (ret)
+>>>> +                ret =3D -1;
+>>>> +        else if (ref.value_type =3D=3D REFTABLE_REF_SYMREF)
+>>>>  		strbuf_addstr(referent, ref.value.symref);
+>>>> -	else
+>>>> -		ret =3D -1;
+>>>> +        else
+>>>> +                ret =3D NOT_A_SYMREF;
+>>>>
+>>>
+>>> I was building my series on top of this, and noticed whitespace issues
+>>> here. A simple way to check your series is to run:
+>>>
+>>>   $ git log --check --pretty=3Dformat:"---% h% s"
+>>
+>> I ran this on v15 and it didn't produce any output.
+>
+> Did you already post v15? I only see v14
+
+Not yet, but I'll be sending it in a pinch.
+
+>
+>> I read what --check is in
+>> the manpages, although the format is a bit cryptic for me. What does tha=
+t do
+>> exactly?
+>>
+>
+> It ensures that commits don't have conflict markers and that there are
+> no trailing whitespaces and spaces followed by tabs by default.
+>
+> Also this is included in the CI checks (see ci/check-whitespace.sh), so
+> if you use either GitLab or GitHub you should see these shown as errors
+> on the CI. You'll have to raise a MR/PR to trigger the CI I believe.
+
+I've been running the CI by pushing to a fork since Taylor first caught an
+error I didn't see locally and it never flagged. Now that you mention it, I=
+'ll
+also add log --check to my CI-s.
+
+>
+> On a sidenote, do you think we should modify the manpage? I found it
+> comprehensible, but would be nice to clarify anything cryptic.
+
+No, --check was quite clear, the `--pretty=3Dformat:"---% h% s"` part was w=
+hat
+was cryptic.
+
+>
+>> Anyhow if there was no output for v15 I should be fine, right?
+>>
+>
+> At the least you should see `git log`'s output, but if there are issues
+> they should be shown inline. So when you say 'no output' do you mean you
+> see absolutely no output?
+
+Absolutely no output:
+	https://asciinema.org/a/lsqp4e1bNst6cFWw9M2jX1IqC
+
+But I figured out why: the whitespace and the tabs were not mixed on the li=
+ne,
+just across lines. As I read it, that is not an error to have tabs on one l=
+ine
+and spaces on the next.
+
+Anyhow that should be now cleared up, thanks. Gotta say, I was expecting to
+learn about internals doing this, but I also ended up picking up a couple o=
+f
+usage things as well, like --range-diff for format patch and such.
 
 Thanks,
--Stolee
-
+Bence
