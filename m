@@ -1,166 +1,110 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A7E1CB305
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 11:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D8A223098E
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 11:46:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732275049; cv=none; b=lYmnXHcnD9je8k1EIxUBET6KUG/EDjySAuPMuIZ78Es3VJzgE4epQtxqgDCk77dwMW4xsuiJoeRioGP7kMXny2BxLH+3SJGJoLCcVmHF7SSRp3bmMCim8zKCE56L6dPkllFcV7Sacu2YdnYfTPzr4puOlqnIkZQRnZ9qEXitbjw=
+	t=1732275969; cv=none; b=tcE8U7FI3krzv3sQadwKgiyGQ7lkw8diJNVs/zD1LnFur+F1QQz7Q+bgHLQ0OmIUbXyVey+pUs0PjslglfLAZMYUE9baKgAbJHANWzialxywA0RVoIsxQK/0uC0Z7RnsdP7PNQefOVGjTVBxmnbTteqc2qqkO6zbMeY5EwcYix8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732275049; c=relaxed/simple;
-	bh=/ovh4dCsCwkHtdMtwhfhV3oMhku+Jt1EOpm+/oziDeI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K+V+fGGjPw8Fbz0yyH/SsySAFsGt8TZwHG3EbfZyMYP4CFE7C9vmsAPMu4UyhqYJkZb12rLTRkoP91g67ffeBe7GmhtokgwNuQmw2/ievb4UUAc1L4i855FcNNUFLCK8tIZFUX+u02NWKJ/uUbFqbxV8dB/yZpBCtirFbnPxAkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GHJoybdq; arc=none smtp.client-ip=209.85.222.46
+	s=arc-20240116; t=1732275969; c=relaxed/simple;
+	bh=DtuEYKrDzoHGCffBavMmsH6k36t9kPI/S9ut09RGyF0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KX1wnE18V2bnf9xrXPktnkvFtthUVfzMBwyRzIhfpU5FXwC1G31uL66BNhMJDQZVrHFf+g/Zb81Mhvtpuo2FzoaM9JlrQVIcGqM77CfcQv466bFstJNJmWMnzS2b3TOsGLMAqqbbLcYNayeQdVVUNj8JLSwMiqRIRNOeJixz/Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dr+kvj9Q; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHJoybdq"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-856ec390e30so729998241.0
-        for <git@vger.kernel.org>; Fri, 22 Nov 2024 03:30:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dr+kvj9Q"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6eed41d2b12so14048647b3.1
+        for <git@vger.kernel.org>; Fri, 22 Nov 2024 03:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732275046; x=1732879846; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zw+aL3+aDbEE8QLWGlFE9XEoN8lP9e4KsY1b4TQab1Q=;
-        b=GHJoybdq46qas0GEBA+Du2bjwPGu9C05EAE7FUyYnIghJl7tDrfdiA8PwtezMamXL+
-         48Itl0jqS3hhqDXCv/pp7+sKi33SwI9zF0K3AHjf9GTk335V3F0yl1WXKxuYVJFaSBPN
-         PW8F9eRR1J5NGFNN35mdDzIVfNVdSXvire6fzuuJ7sGQVOTnC6CdM0MDxsId86v2mbh1
-         qgJJ8tjfxtIJP/lNvrfIXfAEmp8aBzavrVizm5HtVyg9HNrqmlGrf5YRfR/QbvduwAmu
-         qlW1j6ZJy7al+XxUOj58Ijyc9/ZjF06wAzMbAt8Yq4eoZsm+h8JJT/I00ECVTBO8hZ9O
-         MkQg==
+        d=gmail.com; s=20230601; t=1732275966; x=1732880766; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qMRvU7/qr6i0oqcp5W1PEg2B05xM2WqABvxz7GrBvvM=;
+        b=dr+kvj9Q8oFMu3nJ2ilMQFsOYSX3nGBXL2a96UEwQpc8mSGgJpZhN8kKGwMqFD1C8r
+         m6hS9UHnuf4XLDFsQq1JdqLrhN5YDdstXMarOkZIKu5rZzgFU1Sd2wOuff/rpuzTKM36
+         y+CBKO3ofBFuMYfeee94MLHKYC9rh+VzmM9hqNCq7cZo13sbBzCO1x5j6gTTFRSvUOYp
+         vhzfO2U9K6pjo/zTi86l8vbFbRBRjfMGBoikm8d7Hw6QFuRrkS2Vl70UO7K4t4rk6puK
+         CMRYCTZdkTVyWR3tgd+rAvqpfmtyLAd9JR5YbTr4/T+289Fvkzajwh5evLMytcFfKJTy
+         WVSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732275046; x=1732879846;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zw+aL3+aDbEE8QLWGlFE9XEoN8lP9e4KsY1b4TQab1Q=;
-        b=I+1K+YGaEeR5qjQu85w7UNHZLTLckwejiXhxMD6xH0I+GMrJ3ut4Vnb2p+I2G1f7n9
-         xv3s3uetSpFNw837cQY8w1t+pxBPvVigvEuoyCikmOW/tjHj53q24bg+xEIQk2yO/2m1
-         sMMpiqDHz6csPydy467s4fPEr4KeXXiVUXTuMzkbI3DHJVnVhboN6+qaF/Ynz1YwumcU
-         Lul4vnwLvEBRTLI+T/Ri2N0/r7NTn4UeZf29KtGkgAm4IF2urkH5QNy3FtyiBTu/ggRg
-         BDLNDt0HjoWSEMa6gXLxkWMhVmoWy+xY5ZaC0DXdsCzBeczxG3Nq2+cUBulsWLHOzfnr
-         +nag==
-X-Forwarded-Encrypted: i=1; AJvYcCV3USF295RUNN7i/YziTu1jDOfuD9/AmAOkt7kh66xy7uIQLIjtIBf3aiV2KCYVjb/bROU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLal/d05dYt7vEJBAzNErIxG6AKmib5SmTRSxAkCxi5IOOj/XJ
-	z+/l9vp90m09G7cVqI7wVakIeHlss3tIaqWDBr6anMMa/7yF4xSgq0+iZleLVcF6mkDZA8gyttW
-	TltnKaZMF09f1EnpuSgpPPYZWjDc=
-X-Gm-Gg: ASbGnctGTyAMI30dCA1UAuHMMnB0oWUqY8GNQuf2HhyyzNhsP9MavLwwu9D+QtLalX0
-	elTce6muT7O/8AK2753Xc1H5nkRaGHQ==
-X-Google-Smtp-Source: AGHT+IFrWfAUy5YYxQvj0jrifqEaenWMGPgjW1LAt8WEQ9zI6A6oaf8rViUur9/ioMiTklsuI2WduVUDLlSfeNSdgPU=
-X-Received: by 2002:a05:6102:32c9:b0:4ad:4e83:92be with SMTP id
- ada2fe7eead31-4addcbf254fmr2495239137.13.1732275046538; Fri, 22 Nov 2024
- 03:30:46 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 22 Nov 2024 05:30:45 -0600
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <D5SNGOK1IKRS.1TY1DL9PJ7MPF@ferdinandy.com>
-References: <20241118151755.756265-1-bence@ferdinandy.com> <20241121225757.3877852-1-bence@ferdinandy.com>
- <20241121225757.3877852-4-bence@ferdinandy.com> <CAOLa=ZS5yNpZEUqBAUpP-pSbJXk4+=XM6S6e9RY_eSVJEBhqkA@mail.gmail.com>
- <D5SNGOK1IKRS.1TY1DL9PJ7MPF@ferdinandy.com>
+        d=1e100.net; s=20230601; t=1732275966; x=1732880766;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qMRvU7/qr6i0oqcp5W1PEg2B05xM2WqABvxz7GrBvvM=;
+        b=nflGQrOEqPQSPOH9Ks7s76uKbSDoIhpflsAU5PHHS+IlJV/4LyD32erqCurPfKFHEi
+         DbUVkoJPKZSmky/6ZAb/z1Z3y3J+p5Bt/1h/dlrcvUVnwErsONsxgK9o50C+QnyuiUmA
+         DFEYWDq/bPR2OckTFdakuvVrqg7dBvjp32/gDWAFDdXFZB/SgTWHuAhV2lzQaxwRycKT
+         a3UQByEBPk9ooSGzHHg/zxQmIQFt7isWrcSPwoDDiucYpUulXlYgJ2sMDnQnxPK/m8WX
+         kuHGuS7CRXC7H1mu1zCTWWFUFM9mjXwuSqJ6IpGlCnqwZgBsab077aGaP4jat+DSg0og
+         wunw==
+X-Gm-Message-State: AOJu0Yyi1Lh9XdCMX37UEkGiyC9CZElsqAOkc/Bp3OWx9c1LhhDVV/xB
+	ZYq1UkStfVJbdprAONaTltn05LXUheK9k7ksz6nj0XTlqdrBH7q9
+X-Gm-Gg: ASbGnctqbIGd/6aXXGfj9DRYWDwgIiKB5ooCgARzN2PDzXzDW9a74fonLnVwG/k86Qi
+	nP+7MBYYG7uTIGDpBaCnVyllvC0GIIkKfVZ5OS8HvXjWLPDz1SDy8LxOaK2RdW+26unzPfF04aZ
+	6pO1sYxDHEknKKa/ZxicBYNxPRpRohXdZTDLLvmi/VybVeJqhfyeCWWT8GDv/tNEgrH0xQ53Lct
+	S1xenPdEDq4a/0uKO1bDVx1wbYbKVi9ZdOzlZjjEKSJd2b+T+5l2pVdXiw/ajRdhKnVsdzgFRwK
+	inJFh/GIaAFHkTCdugJvz+lkB9PqK0D54/Sz0w==
+X-Google-Smtp-Source: AGHT+IFSQw3HlUeUIXZaQmDXMt0n+vxHR0SOlx2AFih3t1n/t8XpyU2PbJoxzEusOQ95FGVC5//daw==
+X-Received: by 2002:a05:690c:600b:b0:6e2:fcb5:52fa with SMTP id 00721157ae682-6eee08e73f1mr24975687b3.9.1732275966542;
+        Fri, 22 Nov 2024 03:46:06 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:79a7:3ea7:43e7:e05a? ([2600:1700:60ba:9810:79a7:3ea7:43e7:e05a])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6eee8862869sm1143297b3.9.2024.11.22.03.46.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Nov 2024 03:46:05 -0800 (PST)
+Message-ID: <ec17fdd8-310e-42b6-bdf6-2620a84c2eb3@gmail.com>
+Date: Fri, 22 Nov 2024 06:46:04 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 22 Nov 2024 05:30:45 -0600
-Message-ID: <CAOLa=ZS28xvpEBNO9AMamF00Yf8eHFGKyU5uHjBD7vOVF3_oEA@mail.gmail.com>
-Subject: Re: [PATCH v14 03/10] refs: standardize output of refs_read_symbolic_ref
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>, 
-	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000cd8f4706277eb66b"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] pack-objects: add --full-name-hash option
+To: Taylor Blau <me@ttaylorr.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+ peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com
+References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
+ <812257e197cfe30bd0d3c68ea6ec0d062631185f.1730775907.git.gitgitgadget@gmail.com>
+ <Zz+TKS2O/ij6GZ1f@nand.local> <Zz+nk4w+y63vCupK@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <Zz+nk4w+y63vCupK@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000cd8f4706277eb66b
-Content-Type: text/plain; charset="UTF-8"
+On 11/21/24 4:35 PM, Taylor Blau wrote:
+> On Thu, Nov 21, 2024 at 03:08:09PM -0500, Taylor Blau wrote:
+>> The remaining parts of this change look good to me.
+> 
+> Oops, one thing I forgot (which reading Peff's message in [1] reminded
+> me of) is that I think we need to disable full-name hashing when we're
+> reusing existing packfiles as is the case with try_partial_reuse().
+> 
+> There we're always looking at classic name hash values, so mixing the
+> two would be a mistake. I think that amounts to:
+> 
+> --- 8< ---
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 762949e4c8..7e370bcfc9 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -4070,6 +4070,8 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
+>   	if (!(bitmap_git = prepare_bitmap_walk(revs, 0)))
+>   		return -1;
+> 
+> +	use_full_name_hash = 0;
+> +
+Thanks. I have applied this code change with a comment detailing
+the context around the bitmap file storing only the default name-hash
+(for now) but that it can change in the future.
 
-"Bence Ferdinandy" <bence@ferdinandy.com> writes:
+Thanks,
+-Stolee
 
-> On Fri Nov 22, 2024 at 11:37, karthik nayak <karthik.188@gmail.com> wrote:
->> Bence Ferdinandy <bence@ferdinandy.com> writes:
->>
->> [snip]
->>
->>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->>> index 38eb14d591..1809e3426a 100644
->>> --- a/refs/reftable-backend.c
->>> +++ b/refs/reftable-backend.c
->>> @@ -830,10 +830,12 @@ static int reftable_be_read_symbolic_ref(struct ref_store *ref_store,
->>>  		return ret;
->>>
->>>  	ret = reftable_stack_read_ref(stack, refname, &ref);
->>> -	if (ret == 0 && ref.value_type == REFTABLE_REF_SYMREF)
->>> +        if (ret)
->>> +                ret = -1;
->>> +        else if (ref.value_type == REFTABLE_REF_SYMREF)
->>>  		strbuf_addstr(referent, ref.value.symref);
->>> -	else
->>> -		ret = -1;
->>> +        else
->>> +                ret = NOT_A_SYMREF;
->>>
->>
->> I was building my series on top of this, and noticed whitespace issues
->> here. A simple way to check your series is to run:
->>
->>   $ git log --check --pretty=format:"---% h% s"
->
-> I ran this on v15 and it didn't produce any output.
-
-Did you already post v15? I only see v14
-
-> I read what --check is in
-> the manpages, although the format is a bit cryptic for me. What does that do
-> exactly?
->
-
-It ensures that commits don't have conflict markers and that there are
-no trailing whitespaces and spaces followed by tabs by default.
-
-Also this is included in the CI checks (see ci/check-whitespace.sh), so
-if you use either GitLab or GitHub you should see these shown as errors
-on the CI. You'll have to raise a MR/PR to trigger the CI I believe.
-
-On a sidenote, do you think we should modify the manpage? I found it
-comprehensible, but would be nice to clarify anything cryptic.
-
-> Anyhow if there was no output for v15 I should be fine, right?
->
-
-At the least you should see `git log`'s output, but if there are issues
-they should be shown inline. So when you say 'no output' do you mean you
-see absolutely no output?
-
->>
->>>  	reftable_ref_record_release(&ref);
->>>  	return ret;
->>> --
->>> 2.47.0.298.g52a96ec17b
->
->
->
->
-> --
-> bence.ferdinandy.com
-
---000000000000cd8f4706277eb66b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 11c721e16c921918_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kQWEyRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK0ZRQy8wU29qK2cxM0k4cW5aYnR1bEdEQjRVYndPQwpYRGZ4QklISjc2
-MkRMZ29xWllpY0xzOVVHckdMWEdRM2FkZXJIR0dEK0pSd0JzNHFqT0g1QXFKdnc5RjdyODRQClB5
-b1U2STJwUitVYTgxSkxSTDZDdkVSVzA2cVh5NzU2QkdlZGhpWXFmY3h4c3NxbEtQR0RkSVQ1TW5L
-WFZJMWwKZTFad0JNR1l2R3ZQZjY5WExBK0hOMURaZVlsNEpaS3ArNTBRdTVsRURsU3pISjU0eGZy
-WWhXTVIzWlJCd00ycgozd2QrS1NGZ3NvSVJoODVrbVI4QjdRMXo3Ly9DK1hLK1FGUFEwRlB3RHlx
-Tlp6eDN6eFZITFJ6YXM1Y1NabGJrCkFpSGFZYTNueUZVaEwzU0p2RlpoOUs0UEhISjhxMTk4QU1p
-di96RmdXQitNdGJldWl5b21YTW9hVVlVc2ZYTTIKM2VhYzVTdDFOeUwxZk1CSVBESUF2eGY5UXlO
-Z3ZrQWhqVGxxNjNINnlpZG0zUDRUdUxoNGthOFNmL3RJdWhEWgpUTzVuUDExbTRpOHo5VVd5WThm
-TW51YVMvYWY0anQxb2ZjcHl2Z0VaNUVNbzVBY0xoM0xZdldQeTZvVFhkNm42CitiZklSRW9lVGZz
-SXZiUDNDL2YwdGtqNk5ZOU5IbmRHdnpFRzJBUT0KPXl0M04KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000cd8f4706277eb66b--
