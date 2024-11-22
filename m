@@ -1,43 +1,43 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF5222087
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 01:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4360C230999
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 01:57:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732239971; cv=none; b=C55F13QxGYzitNyZxHOHVfGNSjIPrMhLMAGLF+G/+SdV5NP7/iWjDzL9L/Isj73wVo1Ggw6cVs16ZK7I4JQdZBJTJrcbQK3DkpIK1sVPaY+BlH3Jj8P8eCrlvyerDu/qV5T09BM6iSEJMZIYXW4BTcPLaB5oq2iKzGTrL54uTgI=
+	t=1732240670; cv=none; b=Zbrwyn1sIEUorEmlUF0quKUgLrFM3d7Aznl/Xn1ABmTHBK8nWw8Vqod9WcDGTcHUE/jPzt2myazHzQ18VT3zFztZlMseqYvujbHkt023FhkhnhDp4kcrLoUZ931tZgb+BkyplAqm8dXpO2tppE4b5nWq+OjOFQADnKPMRfPHb+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732239971; c=relaxed/simple;
-	bh=NdJY7r0WUJt0pbkvTBNH1zI+TG+F/AqvvqoCvOg3gwU=;
+	s=arc-20240116; t=1732240670; c=relaxed/simple;
+	bh=Tt2ZafJYLVIDOTrzEop59gN6rw3QQkPQMVox+XUbOO0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b0YczaweYnbIF4WxXNvb7fSIfcqBDJMWJhH8WmpZbIWzOx5ra7mFHF5sdHP2jEBkrPfhluJk1HqssKCpDKbESvoS9T/UtA3abqevJOy2qzgJ9Ru3//PW7ZTOT9PHh2G5N1YShmO9PJTPj0mWeYPNrHeA8+Dq9CMaIfShbKI7Fes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4Cjh83fS; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=QCtL3K5tbeIK6c9SETStrsgZqWN0y4Jgobb/kLxM1Cssi4dG6Z2TdiOb2pW1zA4ulRMdUvXksttDWLSHhBUS3q5dsL/SOgoBA4jgHEIpqbPDlD6L1RpAzrDDjexGeIQblreKIN/I/W9818kWw7vhHRLAVYkHyBZVQiLPtDC1ZHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rERqNn/P; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4Cjh83fS"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A4CB7114013D;
-	Thu, 21 Nov 2024 20:46:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 21 Nov 2024 20:46:08 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rERqNn/P"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 342561140105;
+	Thu, 21 Nov 2024 20:57:47 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 21 Nov 2024 20:57:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732239968; x=1732326368; bh=ShFl67tBHFIpo0RTUKEOSgnnfZsXFChetXB
-	1orKiryg=; b=4Cjh83fSZzlViL1oYvoNBTW2vHGzI7mMCAJ24UAWF8THKyhMdkK
-	tpA/BMRZd1fTsDlRSpAV6m0QDz6SXw9Rs0vYTFjld300AwkeT3e2JX3PT5ShR0+Z
-	Vkc71Ca8M8iJf10JqqC8MF5K6pZH3DoUMobQVK0i6KSUipve0LjBtmNUIar07YYZ
-	OmozHpRA2HlV/g9ktcDYKDntkbICR0Xz1Z9ijAT2CXC7zXpX1GGt670YCcJxKyHw
-	tEr09+XBBksawGj4SufycvwkmyMb1MHZSdxSoPsR6lMruzKGOg16a15xsiHT3LzK
-	jbu7IwW8s3lDkpuNIOReejBOFfGPZIP3hFg==
-X-ME-Sender: <xms:YOI_Z2_ZW2mN3owH6R1P9DVPond12rp1m2dT6gR8uvn67XSUIi0Qrw>
-    <xme:YOI_Z2tqv115aZG_NloDkvlQoomDQ96gk9o3Ub2eLR_jMQTLLAYDC_MJ_U_7UtGKM
-    8ofoHwcnCej3udFew>
-X-ME-Received: <xmr:YOI_Z8DJIMDcHAPDRU4jszVpE4EPWt47F7wW1MA53Tl4MChFPJC4x7uWecfGIgTu2JRZQ0azjW7hYDm6PShVLdfvKrs7T4nU-YnU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdefjecutefuodetggdotefrodftvf
+	1732240667; x=1732327067; bh=m9/fk3wdW455Pgf1e/+tc2uw6sF20m7HSc6
+	t40w09gM=; b=rERqNn/PAhQb81z55Ey1L4hbO2fSvUtlWQW8lux4ToRboC+OgeO
+	7nMetVt3iPCGjCAX47Zl7ksvnruvzXMhUUED6UipxFOpZaQtCk4SrFd3N1wrkAyB
+	ifNLlnS5wGoff1I1rQ+IsaOhBjNVS8JwJmR23uw0FH00VqC6D5bB0Wj7B+t7ofnX
+	NKkyujN4nKbM5Kka6Yh+sks7Wjkq+Oh0N5yIQNgt8Ahs3zma3llfwoImr3kum6am
+	a966Xh2NBKter29bOFpMI11jobBWZC/JsvPzq95mZoUTEXtQ+Dwd1HlkL9Wr6A8y
+	5wuyonOcGwYce3+BSvfIW5rwdUyKY9gnO5Q==
+X-ME-Sender: <xms:G-U_Z41V0bApaz7lea4WglwR2lXw8LX1fHwnbPRxecYMeXu91vm48A>
+    <xme:G-U_ZzE38MeuvHij9AFBbDEtV_1a2LPojrBZF1pxGXgCOVtd95u_upL8mI-09fD7p
+    bNpyalV_aSBteSCvw>
+X-ME-Received: <xmr:G-U_Zw7eaUlqVUd6QstYQTcEeQTLVZkSL-Ux5DvGhcc8jIxFUgDijPtA7ZWk4zLN3MtU755fQ3r7So7kTl9s3gVX1UPx1BiZc9N0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdegtdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -48,24 +48,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdefjecutefuodetggdote
     thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesgh
     hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
     pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:YOI_Z-fSGwWseDpfcyA22g4qSkp2WiB1l1MOFvtlzO81Kspal9_Wbg>
-    <xmx:YOI_Z7MajCdYE7linBJD4Vhrk20whbX3IgA6-RuR8pEC25SLKOLu7A>
-    <xmx:YOI_Z4nMjg40C0pJf6FvqVtGFzGL2uc9a7Tqvx_IqQ5nv9U-TPZ0Rw>
-    <xmx:YOI_Z9u9eU2lK-2pby1Y09g_Myk0oRLWFzR-eGfnXQmK8UFonPZ4vg>
-    <xmx:YOI_Z0ra5h1bOFA_E1ltaCp9i08Xdd047MDLQUlD42c59zOVknabowKA>
+X-ME-Proxy: <xmx:G-U_Zx2MX31SDtALrifICBJzBbpeGqA01AFZEEfye4glvvaTxec4vQ>
+    <xmx:G-U_Z7F6kMb4EXmuCBb68Bmt4VzfAfkZelaVMwYonDpo3sCBbu_oYg>
+    <xmx:G-U_Z6_f0XOEdwpGPFPeDrmwcBraHRcBVnvnDqr3S5BhdiRcdip-BQ>
+    <xmx:G-U_ZwkJRUmTToWsw5WY7J2WJjtePoo779XJG-Ii7isZYbfFTZ0JMg>
+    <xmx:G-U_ZzDs7jLwH8RxkU6iW7Ssdd2L-0MCamvCjk5p7xhqaxnFpT790Mmx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 21 Nov 2024 20:46:08 -0500 (EST)
+ 21 Nov 2024 20:57:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/5] fetch-pack: introduce `fetch_pack_options`
-In-Reply-To: <20241121204119.1440773-4-jltobler@gmail.com> (Justin Tobler's
-	message of "Thu, 21 Nov 2024 14:41:17 -0600")
+Subject: Re: [PATCH 4/5] fetch-pack: expose `fetch_pack_config_cb()`
+In-Reply-To: <20241121204119.1440773-5-jltobler@gmail.com> (Justin Tobler's
+	message of "Thu, 21 Nov 2024 14:41:18 -0600")
 References: <20241121204119.1440773-1-jltobler@gmail.com>
-	<20241121204119.1440773-4-jltobler@gmail.com>
-Date: Fri, 22 Nov 2024 10:46:07 +0900
-Message-ID: <xmqqjzcwca74.fsf@gitster.g>
+	<20241121204119.1440773-5-jltobler@gmail.com>
+Date: Fri, 22 Nov 2024 10:57:45 +0900
+Message-ID: <xmqqa5dsc9nq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,60 +77,49 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> When `fetch_pack_config()` is invoked, fetch-pack configuration is
-> parsed from the config. As part of this operation, fsck message severity
-> configuration is assigned to the `fsck_msg_types` global variable. This
-> is optionally used to configure the downstream git-index-pack(1) when
-> the `--strict` option is specified.
->
-> In a subsequent commit, the same fetch-pack fsck message configuration
-> needs to be reused. To facilitate this, introduce `fetch_pack_options`
-> which gets written to during the `fetch_pack_config_cb()` instead of
-> directly modifying the `fsck_msg_types` global.
+> With `fetch_pack_config_cb()`, fsck configuration gets populated to a
+> `fetch_pack_options`. Expose `fetch_pack_config_cb()`, to facilitate
+> formatted fsck message configuration generation. In a subsequent commit,
+> this is used to wire message configuration to `unbundle()` during bundle
+> fetches.
 
-It is unclear how it facilitates to replace one global with another
-global that has the data that was previously global as one of its
-members.  With the above I was somehow expecting that the option
-struct instance is allocated on the stack of a function common to
-both callers of the configuration reader (i.e. fetch_pack_config())
-as well as the configuration user (i.e. get_pack()).  If we were to
-allow the latter to keep accessing the global (which is perfectly
-fine), wouldn't it be sufficient for the purpose of this series
-(which I am imagining wants to call fetch_pack_config() from the
-sideways and grab what came from the configuration) to just pass the
-fsck_msg_types strbuf through the call chain of the reaading side?
+This is generally going in the right direction, but this particular
+iteration is highly disappointing for two reasons.
 
-That is,
+ - The callback calls git_default_config() at end.  Other callers
+   may not want it happen.  Think of the reason why a new caller may
+   want to use this callback (see the next item).
 
- - fetch_pack_config()'s current callers pass the address of
-   fsck_msg_types to a new parameter.
+ - fetch_pack_config_cb() was perfectly good name back when it was
+   hidden inside fetch-pack.c, as a private internal implementation
+   detail, EVEN THOUGH it did not give its callers everything that
+   tries to configure the behaviour of fetch-pack.  It ONLY is about
+   how fsck behaviour is affected.  It must be renamed so that any
+   new caller can realize that it is configuring fsck checking
+   machinery and not general fetch-pack features.
 
- - fetch_pack_config() passes that new parameter when calling
-   git_config();
+So, I would suggest making at least two changes.
 
- - fetch_pack_config_cb() uses the cb parameter and stuff its
-   findings there;
+ - rename it to a more sensible name that includes "fsck" somewhere
+   (as it is about "fetch.fsck.*" configuration variables, "fetch"
+   should also stay in the name).  Let's tentatively call it foo().
 
- - a third-party caller calls fetch_pack_config() with its own
-   fsck_msg_types instance (presumably in this series, it would be
-   the opts.fsck_msg_types member introduced earlier in the bundle
-   code).
+ - stop calling git_default_config() from foo().  Instead, return
+   some special value foo() does not currently return, let's say -1
+   to signal that the key was something foo() was not interested in,
+   and write a thin replacement helper
 
-or something like that?
+    static int fetch_pack_config_cb(...)
+    {
+	int st = foo(...);
+	if (st < 0)
+	    return git_default_config(var, value, ctx, cb);
+	return st;
+    }
 
-So, the reason for existence of the shell around the fsck_msg_types
-needs to be explained.  It is perfectly fine to say "we'll add THIS
-THING in a later step", if that were the case, but a reviewer tends
-to start reading from the front, so the presentation order matters.
+   and call that from fetch_pack_config().
 
-Leaving many questions unsolved tangling may be a good way to keep
-readers engaged when writing a mystery novel, but not a patch
-series.  Having to keep too many things in head, especially when
-many of them are not explained well (hence raises "why should I keep
-these in my head?" question), is another distraction and discourages
-the reviewers from reading further on.
-
-Assuming that the shell structure is necessary around it, the code
-changes in this patch looks sensible to me.
+No, "foo()" has neither "fetch" or "fsck" in it; I am not suggesting
+to use that as the final name ;-).
 
 Thanks.
