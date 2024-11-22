@@ -1,127 +1,124 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1C816131A
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 19:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5777717B428
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 20:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732305034; cv=none; b=ZgxFz3Yt8hn9onmBGg/QwzDDLfGIIrRNFEvJw/aDR4vPxXPp0z/Dfl1CmqVXtvU/xFg2S8Amdl4g+ZdxYpBKM0VoQyYL/i4wX93HMqs36tzDQRhTnX1n5MzhFJJryQSj5Y4aJIs4JIeWrd8yqE3edaQWy6J9d1p7NYhysmVik+M=
+	t=1732307844; cv=none; b=ATdHOgqdJkRCnEXYqTeZxmt0dO6pe1fwgzl6m+DujAUDCz2cFX9j7BAV+qdKV6qqjr5GZLjaDgr/gZCMxzi4/eSDbw6JyEGo3KECOyhlDH9yq39Hs0K+GczphukmGuCf9PustfVK3PWMPPvsnnqv2a1kgvu+YbRJHkolelTzYD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732305034; c=relaxed/simple;
-	bh=cjrNcDybg+eotxIuIDwjKtIzIcasPSG0L/pSBxlJA9U=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MEh0jxRMT8r2m5GAHrdG6LifjovRIN9c3n0vFuYDxdZ1KOSvyAIdafubReRORJKeZPiubYZCjfyM1uCYlNEl6X14FITzMRUELyXRi2XT+G2/Vpqyk45evVXzsNMimv1j5n8F/c76k8qHWiQvL9YV8Jzk7PYX+XfIW3V/2Uw2M6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V80OeyAz; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732307844; c=relaxed/simple;
+	bh=NbFNoo7Y5TWbcBoGlM/73xdXrFRzExIsN/7uyyQVkQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nUmtPkhtDWBI1zRE7x0wNaDmbdnAuxY4mLHJCAUbRt0ry4DIvD/jq+Bxa2alHfW/EfUahF0zTQRctls23JzsfjznX6T0SEwfrlkc9ZLdb9niJZ21A/MwmW64u7Q31wU2IgL6DS/vl0Esml4SJJpJzA262huuLHvQUpsR+XEmYZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=LKNqTs+S; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V80OeyAz"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-432d9b8558aso20878425e9.0
-        for <git@vger.kernel.org>; Fri, 22 Nov 2024 11:50:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732305031; x=1732909831; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yFDhg1t7IvcLQqH4U2PxGRD4pEqla4b+K0WdwT4ZPyU=;
-        b=V80OeyAzVjPG2nUotAG2TjZ/PGVqHTlFkLHg9ySw3UgUraDO33libzc5HpJc2F5d8N
-         W1nwkvlvhSC5202IodphuYd4Z5qxAr61UpbCFKr+l50p3DQxz424qU1pzsKtnUZagOHG
-         Ai0CNOJvcak4yvWw1eGJpm5GzY6XQmxiWtQC+BTSFXChxJ0oNjdw2ZA7/yjHH2zm4UgW
-         CH6NNRc5WhI8FKBdSEU7zMHLiIztTQmpLiX710C2hd08yoDxiVw9UUDAPo0TmMkjJSJ/
-         /LHs+BgtxT2VFfWTrCB0bee1Y2nr/f3G1QqFa7F2NTdupUfWz+iWx0we1no+ifDcnAOt
-         y24w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732305031; x=1732909831;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yFDhg1t7IvcLQqH4U2PxGRD4pEqla4b+K0WdwT4ZPyU=;
-        b=Ljww+VsQ3CctfVDRRF0AJafPuEClaYdIsiqogbg8R4LNGlVs8UJkC9VD/rRSjX6rMq
-         YgoKazJcjDZkaHOEqoolZHarUg8drFjvsO6W4VXny8+zn0l4oig5PQs5SX+ZjV5D9Wzw
-         DjlyLcAWaqAMW5VdUPUmq1u87eoPI9qMsp+TUhv8hsfcEnYuV8fZnilUkFw6QrUdy+Va
-         ZVViwIBrq0mXGQXg7LtLW7EZ0LsUTtStxkX8mn3JylYKogS+im2OoHvcFKOG5pOAAQel
-         HwDO/7VbujLN6Md6Bwbp9k5PDooXOSrjzrE2riJKZmsYcASFBjJujRRMREpICWAa9hyk
-         mHVg==
-X-Gm-Message-State: AOJu0Yw0hJlZKmZftJkg4GBUZKWUEmVkj9T8t1jpGvWftTHU+cwOa6U0
-	zTa2wqiDwTMG2wKwCG91zATPvJ3DfMv5XLFuqbSyEe+JroHkhJl4i0llzA==
-X-Gm-Gg: ASbGncs6aRVvlDNaTqfwEDjvTwNMep7hzUt+tHlF2hWhh/Ym+XHYFGuzvN0q/QiOlYb
-	XzP/ztMt0EUUwckTfiM4LkpKyNr11li1Nlfy4MFcWx2ErxbORM3akddq1EzSG9vUB5q9hjncxMz
-	wxIuVEQzBDRKNOCdCzS9r++tYXjdrlbSGNr8lKiCB+KCFxdifHOvJ91EhAQCe8za9ZaiQvTjIp+
-	eALg9x2ksrYHykJUCBUmUBS1mKtgvVuEagIj08S3R2pED3TTRA=
-X-Google-Smtp-Source: AGHT+IGfH8xO3BNv0Ka8lIK7ldci2FY3BM6JQyk9JWbNc025WEZNRWnKCz7M0/+TXZUF4vKsMpWLhA==
-X-Received: by 2002:a5d:6d8d:0:b0:382:395d:bf93 with SMTP id ffacd0b85a97d-38260113288mr4010719f8f.6.1732305030973;
-        Fri, 22 Nov 2024 11:50:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3825fb05e3esm3316386f8f.42.2024.11.22.11.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2024 11:50:29 -0800 (PST)
-Message-Id: <c16e9229ebb46916a59dc9c9fdc7b973480153d4.1732305022.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1827.v2.git.1732305022.gitgitgadget@gmail.com>
-References: <pull.1827.git.1731459128.gitgitgadget@gmail.com>
-	<pull.1827.v2.git.1732305022.gitgitgadget@gmail.com>
-From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 22 Nov 2024 19:50:22 +0000
-Subject: [PATCH v2 5/5] git-difftool--helper.sh: exit upon
- initialize_merge_tool errors
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="LKNqTs+S"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1732307839;
+	bh=NbFNoo7Y5TWbcBoGlM/73xdXrFRzExIsN/7uyyQVkQg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=LKNqTs+SVUQrf0u8fc29PcqB69L3X6Kib/s2hIZNZEs9hST+bgzqQoj/+hLOluGCy
+	 4i55tUEEWVK1kNHHQgkITivi4qfmo5qg2ZyVXaaWFzyJTQjkf4X2ZDqGtcjoYpqoI+
+	 uu3upK+RCTW4N9kglLp2D/RdKjxDoEzgiCfh8HSRSZdlvgOMNIJtwBMoXL8mcDthDy
+	 uSy4Gq7Az8swGjGgxyu0335nsDWHJTgeFUf1kv6JVvzrlv9EVzYPn6QMqMJBeiyxAT
+	 PySqzjwS+opzIeSfOh7k04CxolJvvmZKrgh+YT0SDHcjPLRNp06mmhY4nyM0/TzKBg
+	 0QlaTkDNwn7lhaCgPMJk9EzkLUf3gXTdsRH0DSh0Khc0NzSbkyhm8sGWAsfgTecK8v
+	 MEYE1mvKGpY/gUk2uodRshAt9uxop1eECpqEzT31FuxiVu+K0W1smRR04jSBeSn6t6
+	 OZi2bm1iQb0syHoUglpe219VRLg9+L8pgVlGQmo/xuDLlQGU1Qr
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C58E520994;
+	Fri, 22 Nov 2024 20:37:19 +0000 (UTC)
+Date: Fri, 22 Nov 2024 20:37:18 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/6] hash.h: introduce `unsafe_hash_algo()`
+Message-ID: <Z0DrfjZ_ktEwwE1w@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+References: <cover.1732130001.git.me@ttaylorr.com>
+ <17f92dba34bee235177c8100daab49068fe37254.1732130001.git.me@ttaylorr.com>
+ <20241121093731.GD602681@coredump.intra.peff.net>
+ <Zz_SwuEw-KYM9xJl@tapette.crustytoothpaste.net>
+ <20241122082523.GB1179306@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Seth House <seth@eseth.com>,
-    David Aguilar <davvid@gmail.com>,
-    Johannes Sixt <j6t@kdbg.org>,
-    Philippe Blain <levraiphilippeblain@gmail.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Hmt22vupeh7oQotK"
+Content-Disposition: inline
+In-Reply-To: <20241122082523.GB1179306@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Since the introduction of 'initialize_merge_tool' in de8dafbada
-(mergetool: break setup_tool out into separate initialization function,
-2021-02-09), any errors from this function are ignored in
-git-difftool--helper.sh::launch_merge_tool, which is not the case for
-its call in git-mergetool.sh::merge_file.
+--Hmt22vupeh7oQotK
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Despite the in-code comment, initialize_merge_tool (via its call to
-setup_tool) does different checks than run_merge_tool, so it makes sense
-to abort early if it encounters errors. Add exit calls if
-initialize_merge_tool fails.
+On 2024-11-22 at 08:25:23, Jeff King wrote:
+> OK, here's a quick and dirty conversion that applies on top of Taylor's
+> patches 1 and 2 (and then patches 3 and on would need to adjust to the
+> new world order).
+>=20
+> There are quite a lot of spots that needed to be adjusted, but the most
+> part it was just s/->\([a-z]\)_fn/->fn.\1/.  (I'll leave adjusting the
+> unsafe_ variants as an exercise for the reader).
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- git-difftool--helper.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+Yeah, I saw that there were about 50 callers of the hash functions,
+which on one hand isn't too many to change, but on the other hand also
+surprised me.  I don't remember there being that many callers when I did
+the SHA-256 work, but it could be that I'm remembering poorly.
 
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index dd0c9a5b7f2..d32e47cc09e 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -61,9 +61,7 @@ launch_merge_tool () {
- 		export BASE
- 		eval $GIT_DIFFTOOL_EXTCMD '"$LOCAL"' '"$REMOTE"'
- 	else
--		initialize_merge_tool "$merge_tool"
--		# ignore the error from the above --- run_merge_tool
--		# will diagnose unusable tool by itself
-+		initialize_merge_tool "$merge_tool" || exit 1
- 		run_merge_tool "$merge_tool"
- 	fi
- }
-@@ -87,9 +85,7 @@ if test -n "$GIT_DIFFTOOL_DIRDIFF"
- then
- 	LOCAL="$1"
- 	REMOTE="$2"
--	initialize_merge_tool "$merge_tool"
--	# ignore the error from the above --- run_merge_tool
--	# will diagnose unusable tool by itself
-+	initialize_merge_tool "$merge_tool" || exit 1
- 	run_merge_tool "$merge_tool" false
- 
- 	status=$?
--- 
-gitgitgadget
+> The naming convention was just what I made up, but one nice effect is
+> that it replaces "_fn" with "fn.", so the line lengths remain the same.
+> :) It does mean there's a function called "final", which is a keyword in
+> C++. I don't know if that matters to us or not (I feel like we were
+> trying to avoid those, but it appears as a function elsewhere, too).
+
+It doesn't.  I think we had one contributor trying to make the code
+compile as C++ at one point, but it definitely doesn't now.  A quick
+`git grep` show that we have lots of variables named `new` as well.  (In
+addition, the implicit cast of `void *`, such as from `malloc`, to a
+pointer of any type is not allowed without a cast in C++, so that would
+need to be handled, too.)
+
+> So I dunno. It is a one-time pain, but I think the result harmonizes the
+> type system with the concept better.
+
+Yeah, I agree.  It definitely looks like it could mostly be done with a
+Perl or Ruby script, even if slightly inconvenient.  And if there is a
+conflict, it should be easy to fix up.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--Hmt22vupeh7oQotK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ0DrfQAKCRB8DEliiIei
+gY6uAQCrr/vb3VY4i+RccCxa60s0+8FXdr4J3BiAplwM7YyrSQD/XHHAUhl6dkie
+5qYKVM0KG3Wjdj6CcQdQ7sElQEG1dQU=
+=RCAC
+-----END PGP SIGNATURE-----
+
+--Hmt22vupeh7oQotK--
