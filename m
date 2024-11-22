@@ -1,88 +1,122 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C344206B
-	for <git@vger.kernel.org>; Fri, 22 Nov 2024 01:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84BF18EB1
+	for <git@vger.kernel.org>; Fri, 22 Nov 2024 01:30:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732238643; cv=none; b=pwWn6sxjm08Q4ABgWWMKWcqEUe8/LYYqRArxY6AEXSYB/fdenizMJ/2P864iyZ5296A0Pk1vd7p4wJvLqsMsfPdBDnhM18XAZlGddXoAL5pQV2BChkX4td0EhZDqgXhNIsB/ojvwW1/Wx/Tg2f9uyPdBu11f1y28HYAXOyKTGN4=
+	t=1732239042; cv=none; b=Uw66Gfdrtc64OrZCTllD+UF0f0QeoXzdBQNq/YT8TdP8NFft8ON/OGnbUn/6GamMVwdsEFF69t1JW6ZhVO9z6HXFlAWzLroxsPRU5zdag2pItEUCxWQruaKnZMrsviOvPt3kvTuezoTYVnrhvYcuul+FzE4Zlcp4MHpKbn2OzeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732238643; c=relaxed/simple;
-	bh=Ld7lZZ1IU3xx+ZPeMrhgZRh3fDNQCUWTQkcQ2yQTNPc=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=ACqe62HoeRL4dGjQiGHCbGQtrnpHyb6qlQlEJN9nmHbrqhg4R/tQcznQbfZ5XorBDBZQ+ZKmbAV2rT6k9DcdAgkUIzpqGLaTcgWuvy8UNSrHphDKKS0qjuvY21Ejo4vT5Y61BnkvBAQgNc38R5xTn1/Qm9wke6x2UEvIvGWpCtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=r2rewcSZ; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1732239042; c=relaxed/simple;
+	bh=W+Df5bWhuRQZ3dEFX50greVJO7jPdtAqloeHeArsaxI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=a1m+tj69JkFFtXTKdLq5VaCZSgGra7bbMFmQkD7R0dltlUCqku7i/sQ0DoPlq5RF8dg5T272eRSwDLCnR3l0Abkm6dJ1qmUeiEy2PJwvRmQ5ZFiMoVeES1cBv72Ep2pD04I6h848rhau5pMgf99kcnFTTVeHN25gNKm6whWOJmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1nKGH8OQ; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="r2rewcSZ"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-e38fdac3895so41912276.0
-        for <git@vger.kernel.org>; Thu, 21 Nov 2024 17:24:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1732238641; x=1732843441; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DMUUBis0ILwGOV4ND33Ot+wARlHNAX9XUXjrUQbGOWc=;
-        b=r2rewcSZU36bV3T6idkTLA8zWrs+bKljAkKIwG421mrRc0R+UJvS/g12MDes7Cr5Y1
-         lOBcvEoVzq1SYVtgSv5gNFXAN7aopdFfQpPdsdVIL+kyDMbXx659kx2ARNbvfnH23v86
-         /tsePK8lyrYryYErBKiGJeCEnxuECEQGmY14R9YSo4XBVguUpfyIolH7e0ThHNIN8/w6
-         Wccpxlqe+nhukQnOpqfsVN/ZnWk9YIVS2NK9UfOeti0ibHpTqtvcG29ijLBzlei9Xeol
-         659EGmniwcOxVZ/CMIGQti6N3bHOSbLzjT/D5UsejF+8vhnhtBLA4JpGMkSPLN8endfW
-         PmFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732238641; x=1732843441;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DMUUBis0ILwGOV4ND33Ot+wARlHNAX9XUXjrUQbGOWc=;
-        b=OTtzjRIG3yyMAoYRDBygUGQHiT/aXauiCcApQqIAH2wXyKKbZ2BnRGxRG158GijFE9
-         MeN7w8CPeyK+ccaoJV7RHfbIgdK+F0+BixPTRwR6PSBy8uVwkOwHe//r9U841Eo7nICQ
-         mfOxrKjUGNzQ+36l3F+0xHpfIS4RfcDFO7cpLT+qlpTXkMiKU7SG51+MU+bJNS2SGXez
-         G8+XtLA/9W8dVoOW2/K7v5wC9+GCdO5fZctWaTS/FDeKkU6k4ApST14mTkZHP43IYTAN
-         CXumAk6lyPsoWiRGdNOQgb9KB1UYN+YNZOYKeazoZ6+jRMYMu4l0sWlZBjB1ZCA5ldNl
-         Tzww==
-X-Forwarded-Encrypted: i=1; AJvYcCWJN81hDfxViCvD43yvbPbPT4qkxTHItVCboB1CCDbWdCxkSrH6xWHk0X7b+nFIkZ1u7sM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkPzUChNl/x5rJibPibsSVq6fNhlzmRByQmkObaivLXgrCovNn
-	7jYwy69woyCpXoMupKP6Ojie8MxSKTAlgLYDwPh+DJydyXrcOwhWwlfs+nAT5uGQW7Kqrtdz6bm
-	BLmH+vrPMVGTtjYsaGLbB7BQes+XNYQ==
-X-Google-Smtp-Source: AGHT+IEsUkGKUfq0Tv21nNf5u4O2Wt/xIm87k31rFTgHk6eV4S0Ba/aDj8w7u4Bvv3ORnWW7u4CXkw9ASuIwzFDcxCoR
-X-Received: from jonathantanmy0.svl.corp.google.com ([2620:15c:2d3:204:d214:e3cc:8644:78ef])
- (user=jonathantanmy job=sendgmr) by 2002:a25:2d25:0:b0:e28:ec75:75ed with
- SMTP id 3f1490d57ef6-e38f8892f14mr1359276.0.1732238640924; Thu, 21 Nov 2024
- 17:24:00 -0800 (PST)
-Date: Thu, 21 Nov 2024 17:23:58 -0800
-In-Reply-To: <ab341dd0e58f77b3c7c6f5765d9e34cb02bef56f.1730775908.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1nKGH8OQ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C69B81140138;
+	Thu, 21 Nov 2024 20:30:38 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Thu, 21 Nov 2024 20:30:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732239038; x=1732325438; bh=KLtHGusNii683enLHoS9xwauLwDzhP0RPg4
+	oCYbqnWw=; b=1nKGH8OQaYyj6oNv44TDKrezeP1hWlflHeOdcfbASQMEztLORLa
+	o2rfQ9we5rZvd2hufwi+mM1Mj5CGQNXzLsFdgYDb0HLs5ZPll+vsBpGAz+h0MYux
+	j6h4/gdOR+tHkLx53JYOOitKXP9LRchs7DSYgy+xZrwxKnJxIqp0A25mMCSc4+ZQ
+	1LS3jHr/TZ/xGSzY4yhyaKnE5IAWMvMLo0+d0arRgPVVkfzfNDnCQqi38NdQu9Cg
+	6l2hkHgjGE3rQg1ImwuCZZBF3q3wPy0pt12yVU49MJsORD7lI9TapMSrVTqvlejK
+	wwtMrgE/M1GnW9bgoN28MWhD86g4S4ihQ9A==
+X-ME-Sender: <xms:vt4_Z6FuVirdNkHWOGLe5KjRa6CkVs36dNTnGeYXKKoCBr-RnU-UVg>
+    <xme:vt4_Z7Xck5Cxc60Zg12GYtiuWplJmB4NkfHTlxTD6VhHq9LpwjCwORNdwy5luNolL
+    ve48BrFbQAD_w51mA>
+X-ME-Received: <xmr:vt4_Z0Lve8vWM_6lEUulPlVNO4h3pYe3xqzF04uBkJWzYEo1Q-N_yDS19tFKYGqiEbYfMgwj7jr6LW7fDXTLgzUCUUgrfhmSy_Lb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrfeejgdefgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:vt4_Z0GXdQ60Jmgm9TS1wo8i_PKQ1iobcQ7ZSf-Bz42_REhFnP60YA>
+    <xmx:vt4_ZwWRJdiQutBRS5dAq19E1PJ8v9ANVG0ZJeA15fYV_tE5ISP4lQ>
+    <xmx:vt4_Z3PZy08iW6vdXUSEjAp3eHo-OkfQ644gH-e0-zTwzIK7jxTTkg>
+    <xmx:vt4_Z315ysHhq2Pfe-njitVKrLlxcjYV-0YP78JffFQJCD0yq0AU6w>
+    <xmx:vt4_Z3TanKVnIYQTt7DEBG_9AiPWkiD0Uxx4rAEbHqlFqh8hHY653kgd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Nov 2024 20:30:38 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/5] bundle: support fsck message configuration
+In-Reply-To: <20241121204119.1440773-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Thu, 21 Nov 2024 14:41:16 -0600")
+References: <20241121204119.1440773-1-jltobler@gmail.com>
+	<20241121204119.1440773-3-jltobler@gmail.com>
+Date: Fri, 22 Nov 2024 10:30:37 +0900
+Message-ID: <xmqqttc0cawy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.371.ga323438b13-goog
-Message-ID: <20241122012359.2764951-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 7/7] test-tool: add helper for name-hash values
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, gitster@pobox.com, 
-	johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, me@ttaylorr.com, 
-	johncai86@gmail.com, newren@gmail.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> From: Derrick Stolee <stolee@gmail.com>
-> 
-> Add a new test-tool helper, name-hash, to output the value of the
-> name-hash algorithms for the input list of strings, one per line.
+Justin Tobler <jltobler@gmail.com> writes:
 
-I've looked at all 7 patches.
+> The git-index-pack(1) spawned during `unbundle()` can be optionally
+> configured with `--fsck-objects` to perform fsck checks on the bundle.
+> This does not propagate fsck message severity configuration though.
+>
+> Extend `verify_bundle_opts` to store this information and update
+> `unbundle()` to configure the `--fsck-objects` option appropriately.
+>
+> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+> ---
+>  bundle.c | 3 ++-
+>  bundle.h | 1 +
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/bundle.c b/bundle.c
+> index db17f50ee0..97b70e2e51 100644
+> --- a/bundle.c
+> +++ b/bundle.c
+> @@ -646,7 +646,8 @@ int unbundle(struct repository *r, struct bundle_header *header, int bundle_fd,
+>  		strvec_push(&ip.args, "--promisor=from-bundle");
+>  
+>  	if (opts.flags & VERIFY_BUNDLE_FSCK)
+> -		strvec_push(&ip.args, "--fsck-objects");
+> +		strvec_pushf(&ip.args, "--fsck-objects%s",
+> +			     opts.fsck_msg_types ? opts.fsck_msg_types : "");
 
-I didn't really understand the concern with shallow in patch 6 (in
-particular, the documentation of "git pack-objects --shallow" seems
-to imply that it's for use by a server to a shallow client, but at
-the point that the server would need such a feature, it probably would
-already have bitmaps packed with the new hash algorithm). I didn't look
-at it further, though, since I had an algorithm that seemed to also do
-OK in the shallow test. So we might be able to drop patch 6.
+OK, having %s immediately after --option-name means that anybody who
+is adding anything to fsck_msg_types is responsible for starting it
+with an "=" equals sign, but that is in line with how existing code
+does, e.g. receive-pack drives unpack-objcts/index-pack with the
+"--strict%s" option with a potential value for fsck_msg_types).
 
-Other than that, and other than all my comments and Taylor's comments,
-this series looks good.
- 
+> diff --git a/bundle.h b/bundle.h
+> index bddf44c267..2a7b556f83 100644
+> --- a/bundle.h
+> +++ b/bundle.h
+> @@ -41,6 +41,7 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
+>  
+>  struct verify_bundle_opts {
+>  	enum verify_bundle_flags flags;
+> +	const char *fsck_msg_types;
+>  };
+>  
+>  /**
