@@ -1,111 +1,123 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D44715575D
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 21:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC6C13D246
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 22:41:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732485515; cv=none; b=lDkdxcaDq6VR/X4NZyq2s7t0jO+JVJvl0gZmCPW8z/N56t9yPjKv8KEc5lNtxXc19yohR6kWtuqIK08DZ+sGxf03Crl2dtX+JibfCKE5Lm9oeQ0mf9AQ5+KSiaMqoWuJ3CRxyzCsGa4pFjcCOBnFZ7nLn5p02mFoq4sCs/SgraY=
+	t=1732488096; cv=none; b=glbzRXg0X9oSWX3+VQLnyoXpR/D9GXrSqptgDggHGWncCgNvrRB7500a0r8fuoMucf8gJ7WmTPgAT+mayHEYmtezoiXdFTNRPQq7dR80Dm5RlNd9DsAbvzD7NfE8stGdHrL/lEpRMyH1nJGBw1pcdGAh5Au9q6QPO0p+CfTDC8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732485515; c=relaxed/simple;
-	bh=cQFfJCJ3bq97FhIsNYCV0K5twQ/ys8OfZn6r+3H1EZo=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=YfusGNQeM7MueyEvhzH8mT5fs2XEuNYOEIUW+tBS4AsFNiMHvtreICBRj8sgxu0xYdFpcU0/KUN5u7jeBHzOcBfFPT0nKdyNJwWNrUWK8ypXVnVRrL5J2r7inJxgw7Os7tVXjRozlac8yyE7rrqhKBaVf03gULUQrIvXvc3DHt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ez2ofORu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jr2cuxZR; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732488096; c=relaxed/simple;
+	bh=o94QjvNPhdhWO3Drdc4XVV8ofVFdKF81KOQS3Z3LXCE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=d49tW2svPtw3OwXYlzYqAR3DCYgA1kpvn4xcTjNmVohazfHFHawXEGLAV+srrqjMrvcNOd1eyuFBbZUC6I/4piKGrqRbiZkpzj4S3fQvVYGmClL29Y60jGffnXRLkc+8HMJTHwsrVCckGVa264MrUFIVwQH+OYG15X/sEP/ZMjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UMaZAuTV; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ez2ofORu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jr2cuxZR"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C345254010D;
-	Sun, 24 Nov 2024 16:58:32 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sun, 24 Nov 2024 16:58:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732485512;
-	 x=1732571912; bh=MBgCgUtvX7f+bkXZLGQaMBnsp/CbjZdSRyruEu+W4gI=; b=
-	ez2ofORu0webC+7912xPvufnJZcaBPz+VHw1c1Yh6RnLlXg8vRUEDKvMFTUicVqi
-	JamWzM6FvF1nRGMhi7UP8qSGBNVbZebqmQtMqA8fSogbl/m67XhDm0RQRY3S5a9S
-	g0cbkb5K6xTkec+pPgaLXL3KlBmLvPP9vNxCwgDs+ARNcSELd4oudjU91XSY+zsa
-	aOOxre5cJBdVzyMW1oRJ2lRur32gE1As0gGCIZklNeJRwSpF3UEYZwLjRWLmbWPh
-	hHPk32t2abL83a7RRnHXi9YIAiPwYArHY6fzJX1elrvlD2NLL3JCqf8v8L35cDHX
-	E27YuSXKq2WYVrFlOTbevg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1732485512; x=1732571912; bh=M
-	BgCgUtvX7f+bkXZLGQaMBnsp/CbjZdSRyruEu+W4gI=; b=jr2cuxZRFETX6hNFN
-	pTZRguwheTCthCzm8mdBhJANmaL5KhM7Zi031sJdIGgk9Lnicn0Xh+Ebmw8jPziV
-	nFn0e4FKYSKixdkB1XcmcU4xyl1kL2hv6H/0Tc7461GfHvilSIIwrNnnk6IE2KZR
-	oCSM7Dd9YKNWBRCFR8MPu9prApZXU4EmkqEQTYphDWdTeL1WPiW9rjWRriPWlSnI
-	K0rtHvo6MRF7XjxAGjb6veeQXEuK5z6ltJtU8Mafas8+9+3Nc3hL7hvKwPjw2/T7
-	+vWDqFTQeS6AevcVaeVZc/0jIf6n8m/Iqegg4LTgv+sYVzU1xY2HFUJKeRPPqMxz
-	9oOWQ==
-X-ME-Sender: <xms:h6FDZ8QN0ZXAyvJm1GL3X1p-WfKfeavoaY0oTdjsV0hIul_gWB9aa1A>
-    <xme:h6FDZ5wQB437A9gosS4VX6aRLoOCQK46nbilCsBfy4fZjEFCnWqP-dmzOIVghMo1Y
-    qtf0XzjHdJaPc_gDg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeefgdduheegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvffkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpeffieeftefgheekgeeitedujefgveehvdevieelfeeiiedttedtgfduhfejie
-    fggfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegsvghntggvsehfvghrughinhgrnhguhidrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:h6FDZ52SHvSms6jp1cck_3CAuD2cdK7aDi4naKoEyonXAkjwD0KfzA>
-    <xmx:h6FDZwDnXPxtZ_PpKrFtX4435LM8PBr6xHU6iLI8fvPJHEe53udCnw>
-    <xmx:h6FDZ1gfXBtITIUyc31GqKNsKJDa83dbOGwkm-lreIt9W8h0vGjdiw>
-    <xmx:h6FDZ8oEaSB4t5hO85_tH2ke7-PHMTLVv6MwEOUfK9lhmy82F9GTGw>
-    <xmx:iKFDZ4u_2qqHqWhwzolq-QdPaAc9vUYoiT-5aE5sn_0jjTWrqPVskO4i>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B6EC4780068; Sun, 24 Nov 2024 16:58:31 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UMaZAuTV"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-8418ecda199so21788239f.2
+        for <git@vger.kernel.org>; Sun, 24 Nov 2024 14:41:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732488093; x=1733092893; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n1MdqrFUcDGWq8cv9Rzr6uesJ4VsTQB4I+Fu75ctfAc=;
+        b=UMaZAuTVBpRYD20yPsqsEfzl9NzNW1hBB/VQddlXYhTO7eGnCS2jJR4n/UP8h7aI7v
+         1NVcbkE7Wgztyo8myl+zSWDKhNlkzw7Azv3GjdQ4tyCRy5WWKxQSFU3P/xA7DsID9wYc
+         X6LILkeynaTGTHaYEmZshBBXpeE2BUTo4y48IKftK/Vq9SMM/0tdcPbLt90QfhIyDsev
+         BHgte28p9X3ZeY5BOz19HNvbl4F4dOKu+cNkceFefYcEWIUzyqKhCIkO9PEQHojv9XL6
+         cR39ABbyDJ91eJ723priMQu6PIwFwzSFWNja6CeZ0K6Re9Es1X8gq8LJiYGUMt/AEyqk
+         YYCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732488093; x=1733092893;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n1MdqrFUcDGWq8cv9Rzr6uesJ4VsTQB4I+Fu75ctfAc=;
+        b=lIwKeM389NtLRtTDB9fOgWLqmjYW7bgJ7n8Tk+nNT5kDhi6VaaEMwnRLr2nkIIozFM
+         jYl94TNovvwUga9H5+TvyLr02xsUSBM+XIc2m9un6dGVJxtewFscFlEMHNE+LvExH4J2
+         siUZxyYV5cSodfYgzkm0Px9r/O29oUoz/x7p+AeTn8ff8JWk7gro151B1QWPrgZ38K1z
+         VZ+lAFZ6K2Utzfh6qN65vq5mFlwxkeIS1As5uwcy0m1OigJlzey12wec+nxI9Ou7fBu9
+         IA4bjGYiUAYkTHuPmkFh+cOW18bsOIO43FtAC1A4eIZRGZdsKukH+o5BAm37lFXEDAbg
+         ArUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUVaawjllYheJ7Jb0CxdkmjFrBvKaNb33oXi/uiUJXjm4UYrfhgBx2hjDLbmHB41p+HfxY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwbLy7Pyc+aHrvLxNPqD5LTUBK7PumWKtgYcc8QLWddqWLhPF4+
+	cJMZxd2VA6e68XQHQXgmdzLwQemgPUjzLsBE4iYWTqNY/ePik49hP1e1GamA/l1bYmQYwHjdUNJ
+	6aoO5v/WhpGo5+dZo1NYSt4/Ha5w=
+X-Gm-Gg: ASbGncvuaAip9jgRvW8Fn3cA26B+aZA1MJpKYyiMi9G4tEfHQwRSngLSnDa8oubEM/k
+	3nhhZ9igDZfuYEH6tN+LYS1HxqkEeQexh
+X-Google-Smtp-Source: AGHT+IFXjO+EPeKUBSOFJNaVwOKg9XkggkQN3orr08fT2PbRVnPy7HFChC8PP+H8cWQXCBvUYFZo+BqaOlFDJUqYH70=
+X-Received: by 2002:a05:6602:6c0a:b0:837:7d54:acf1 with SMTP id
+ ca18e2360f4ac-83ecdc5165fmr1022386639f.2.1732488093432; Sun, 24 Nov 2024
+ 14:41:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 24 Nov 2024 22:58:11 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Bence Ferdinandy" <bence@ferdinandy.com>,
- "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <89b1b39c-a6d2-4f63-9cc5-722772bddd8a@app.fastmail.com>
-In-Reply-To: <D5UQHS9IV5N1.3IO1848Q1730B@ferdinandy.com>
-References: <xmqqbjy5bc6m.fsf@gitster.g>
- <D5UQHS9IV5N1.3IO1848Q1730B@ferdinandy.com>
-Subject: Re: Extending whitespace checks
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <CAFmt1jx9OHDnNRdcgB+sPNH90=eZYFRVEbO7PcETiN0ojMQi4Q@mail.gmail.com>
+ <Z0Oavzr03tTMiKfl@tapette.crustytoothpaste.net>
+In-Reply-To: <Z0Oavzr03tTMiKfl@tapette.crustytoothpaste.net>
+From: Jacob Pfundstein <jjpfst@gmail.com>
+Date: Sun, 24 Nov 2024 23:41:17 +0100
+Message-ID: <CAFmt1jxxnnhSysC0cLEptifY=cKLZ4rgBJ4gpp1O7=WkuMzeaA@mail.gmail.com>
+Subject: Re: Bug with SSH keys loaded into ssh-add
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Jacob Pfundstein <jjpfst@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Nov 24, 2024, at 22:41, Bence Ferdinandy wrote:
-> This might be a tangent, but since enhancing whitespace checking was m=
-entioned,
-> I'd thought I note here:  `git log --check` running in the CI did not =
-catch the
-> white space errors in this patch (see the last hunk):
->
-> https://lore.kernel.org/git/20241121225757.3877852-4-bence@ferdinandy.=
-com/
->
-> although it would have been certainly nice. I'm not sure if --check co=
-uld
-> already catch this actually, or if it would be easy/possible to have s=
-omething
-> general enough that does catch it.
+Hi Brian,
 
-It looks like you indented some lines with spaces instead of tabs. It
-doesn=E2=80=99t look like a =E2=80=9Cwhitespace error=E2=80=9D in the `-=
--check` sense as I
-understand it.
+the issue was indeed solved by using the OpenSSH version that comes
+bundled with Windows instead of the one that ships with Git. Thanks a
+lot!
+
+Best Regards,
+
+Jacob P.
+
+Am So., 24. Nov. 2024 um 22:29 Uhr schrieb brian m. carlson
+<sandals@crustytoothpaste.net>:
+>
+> On 2024-11-24 at 16:23:21, Jacob Pfundstein wrote:
+> > Hello everyone,
+>
+> Hi,
+>
+> > I've recently encountered a bug/issue while using Git for Windows. You
+> > can load a passphrase-secured SSH key into the ssh agent using
+> > ssh-add. As long as the key is loaded into the ssh agent, you don't
+> > have to enter the passphrase when using the key. However, when I do
+> > git pull or something similar, Git still prompts me for the
+> > passphrase.
+>
+> This isn't Git prompting you for the passphrase.  Git passes the
+> terminal through to OpenSSH, which is prompting you for the passphrase.
+> There's really nothing that Git can do, since it doesn't know what
+> OpenSSH will do.
+>
+> I can make a guess about what might be going wrong here so you can try
+> to see if that fixes things, and if not, you could try contacting the
+> Git for Windows issue tracker at [0].  Please be sure to search first,
+> including the closed issues, as the question may already have been asked
+> and answered.
+>
+> My guess as to what's going on is that you're using two different
+> versions of OpenSSH, since there are two with Git for Windows.  One is
+> shipped with Git for Windows, and one is the one shipped with Windows. I
+> think MSYS2 may implement sockets in an unusual way, which means that if
+> the agent is from one version and the `ssh` binary is from another
+> version, that they may not be able to communicate properly.  In such a
+> case, OpenSSH would prompt you again since it can't contact the agent.
+> You could try using both from the same version (I think there's an
+> install option for that) or try using Git Bash to see if that fixes the
+> problem (even if that isn't a good solution for you, it's useful to know
+> from a debugging point of view).
+>
+> As I said, this is just a guess and I don't use Windows, so you'll have
+> to try what I mentioned above or open an issue.
+>
+> [0] https://github.com/git-for-windows/git/issues
+> --
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
