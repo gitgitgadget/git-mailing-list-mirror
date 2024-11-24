@@ -1,120 +1,106 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17DF4A0A
-	for <git@vger.kernel.org>; Sat, 23 Nov 2024 08:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8D529A9
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 02:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732350250; cv=none; b=JV/+iScpQvA0gqKRfntwGn6W/kH1mtRGQEArEYDXRHuQGkRirytu/HX2Kv1rSrRwnavNo2OUB9SDXk+qMLE31W/rEZ6TzHcZwW7Plt0w67wFTplUb5yU5viVZ81udn4b1T2qI32dwITUs0lE5eqQfUWULXc8lFl6wErlxJ4Fx2g=
+	t=1732415067; cv=none; b=FeMUzpZw30xdrB6iRn+zz8dP1KwPI6jbb30N7FDJ/bDI5gjx2tCBme/z2QEFEp15DmhjjEYTVCDn1nd7U4mfUQXMO26HWhSX7zBPUjVpI42o54dDdOrvhRxMddVFRJFusdLNl4Cug+6U0/2wJDLWipwEqhJwo7WP4FzGKZk5IdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732350250; c=relaxed/simple;
-	bh=B5Qci0lNLNJKIHxqCnYyBT9bKtpc8YNZ6SFJ+ZHqgp0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X2+RTYHwlGqoINz8vgNS2GScIpwtebN11x8+kKVz3bJhsWuAqS3T/mC59L/4dJkKZhBdQWX9mPpdpETU31Zvd4cXda5afIEGcZ9LAgImgzRMosjrW5OvAiqLaoPOgg9r3Xg2lyn4P7lnVBIrUsKLqV2uESQENZNMWCtDdUkQlxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R9LzBn1b; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732415067; c=relaxed/simple;
+	bh=EM0wqxOwu0HVHmv94f5WzitO5/20X1xI//g5E4Tmat4=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=rEdu2tlhmgSIjtCi9D1abrq3FiK2bnEwwtJu2NlYYyi6BIK/RdC8zWDJLyaqrMlHeh4q2HaCGpGFvQXIjmKSbfVCp0qAU+YIQHZnkCSXNxRhQMJT9/ohXTc6HHSs4vMMvQsckcktDRMlLOa9u7+wqpCGiMDOjf7FMntxe2Nftto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=JcTtJxor; arc=none smtp.client-ip=185.70.43.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R9LzBn1b"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-720d5ada03cso2712361b3a.1
-        for <git@vger.kernel.org>; Sat, 23 Nov 2024 00:24:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732350248; x=1732955048; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ct7YxxRZPxjuQmzikpNnJjtBWxOBsWFO1gcHeIvi528=;
-        b=R9LzBn1bah/yPFi64tZd02D/EfUXHy/Foik62tAtAH9PzNULm6Yo6eeNe8V3oXNzaA
-         SyoxXuhQ6rUideZ+HCgfwSkwE2hm6wI/AzirEDy+Q1p63xAO3I+uRBqElP9z36q1SE+w
-         7nWPD7omViLO0kywOYKfAFTzSyPGRseTsIJN7JN4lDEvbOSunPD53yYPbCADBH0WL34X
-         acvog8inqRGOF7eH3t1ah/Mbsj03JZ3RqBZNs2kc0A3bjPXIQX8bt8xgr3zbCml7IPAE
-         92XiyRF1TqAxy2HQtYXEJaTjAoXEM4yifAKm2ceRdd1GLD4+5Q5ZYILSVgKmzxNgWOeP
-         VVyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732350248; x=1732955048;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ct7YxxRZPxjuQmzikpNnJjtBWxOBsWFO1gcHeIvi528=;
-        b=Q2oQTgYvRjI3mwAYW8BfZhh3UhfvPbEaNTbr0IL4xSKGMFz51mV9alGlEr4vYZz7L/
-         NklfEmdCrjvcvwg2HG9jRxIFy5IBKBCOCjZPINnbejY+CM7bRGUtr5b4ornkmQthxTNV
-         R4L//S6ZRWgUf8lPP+EFBLyq4omFXKyUnwZPJwnPyUX8NJWN1N3nPGcMNTrVKbHTbHDC
-         HA1cDIiuM0PYmcM1SrP7MYTTxIGwTecBOnrri+/IJ3oiX67cX0gzt3pWn0HiH+LtZaLO
-         al1RbOvu7k2Gx7OtCMdU6FpvC++uAcSMlFgI4AJajaO6Fks1SXmTgL0dtCsBlIgEUoge
-         ZwMQ==
-X-Gm-Message-State: AOJu0YxLIbb2gWZR6LOdDfDJMX/rOVFxiiuafMQPLuCrWd7J1rhgMdBn
-	wsQYE1X+mmMwEbN0Bjd+1gquS88uax2o7JY4TaXnyGJUq3rYgxcKJXSRxg==
-X-Gm-Gg: ASbGnctLYGl4ubXS1RXi8MkQ9TEUwkUoTu4ghWkISFB9OCovhJ4X3hRPQToCNzkiXmR
-	JS8iBdCxb458t5JRLkBYCxPobxS8TJs//GpbLQjqEEzIviLHsvCtBSlWM7VWLLu0U/8Q9W0NM7Y
-	4JQ7EFHDroNJjXZEx2eBtmxMX3isn7XasvwonrCg4pgXoCD5lG3+l6zrTwBpaghajX3cKCCHc7+
-	t1qgiV9Qv23YNZK6/ePHF07F1o9II/3xa//XzaE3ZJu1Q==
-X-Google-Smtp-Source: AGHT+IGe7ZB5rGw5+f85ii+Iw6DCCM6atQloIT5I2H+chRwkdZY4X8q/jhHJz33/r+K7UlVUFRgx6g==
-X-Received: by 2002:a05:6a00:9297:b0:71e:82b4:6e6e with SMTP id d2e1a72fcca58-724df3c27d8mr7111573b3a.4.1732350248151;
-        Sat, 23 Nov 2024 00:24:08 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724de454be0sm2841601b3a.12.2024.11.23.00.24.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Nov 2024 00:24:07 -0800 (PST)
-Date: Sat, 23 Nov 2024 16:24:20 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
-	=?iso-8859-1?Q?Jean-No=EBl?= Avila <avila.jn@gmail.com>,
-	Linus Arver <linusarver@gmail.com>, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v4 1/3] refs: keep track of unresolved reference value in
- iterators
-Message-ID: <Z0GRNGQEeoOQHKz3@ArchLinux>
-References: <pull.1712.v3.git.git.1723059768.gitgitgadget@gmail.com>
- <pull.1712.v4.git.git.1723217871.gitgitgadget@gmail.com>
- <c4f5f5b7dd8dad4f17201611faee14dd1b882bff.1723217871.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="JcTtJxor"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1732415062; x=1732674262;
+	bh=rxfc55l5VFfpljtnIINCvEIqznGfy4ORfGHJ8wT99Jc=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=JcTtJxorY7LJZCts0NSy3IKWssrl3MduZkDL4C8bLUuS6vZt6lHedpLLzV+ojUvgb
+	 TohaEdqL/Zu3rr28552XKXgQeXGNOJrayb8EoITWA/BQ6nZ5Mgrv9LlDihHHToDRPj
+	 w0nEnI4ZPuX4GE9Z9oGKfWwMaj+WHvAewjUnIYEe+5XtTerzOSw7Lm6Q3LuuJC55WN
+	 weoIvxZTfQp64WYGi8GdjQwNfSJ3/Im3An9wovTJQAU1xktIRRWpGow6cLm/B6piEj
+	 THGYpHsudRjdE/TvSQp6wYkayeRQLHQkRQuaDxzGOfJ9P6xD4So9gqgWMq2PWju4TH
+	 8ztGV/SUBOW2g==
+Date: Sun, 24 Nov 2024 02:24:19 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: [question] When an identical file is added
+Message-ID: <lSW86a4L1xWHfSTWIq732o26YCBCIN_B0rd6B1bCP8VIAY8d1V9pD1WEcCyW7Wyw2T14VVYka5XMTwJGFZEKcovBYIgOBUO5lbPWQ44cIfM=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: 27fc54f0b50bfa39672e4bd10a4541aa68404ca1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c4f5f5b7dd8dad4f17201611faee14dd1b882bff.1723217871.git.gitgitgadget@gmail.com>
+Content-Type: multipart/mixed;
+ boundary="b1=_1MinLqvfJ0vlLPaX7ACdFAbrErNXCIYfHLDwX2GGQ"
 
-On Fri, Aug 09, 2024 at 03:37:49PM +0000, John Cai via GitGitGadget wrote:
+--b1=_1MinLqvfJ0vlLPaX7ACdFAbrErNXCIYfHLDwX2GGQ
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-[snip]
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-> @@ -66,6 +69,7 @@ static void free_ref_entry(struct ref_entry *entry)
->  		 */
->  		clear_ref_dir(&entry->u.subdir);
->  	}
-> +	free(entry->u.value.referent);
->  	free(entry);
->  }
->  
+[question] When an identical file is added
 
-Today, I am learning the source code of the "ref-cache.[ch]". I feel
-rather confused here. And I think this usage is wrong.
+While objects are immutable, if I do mixed mode reset switching to an old-c=
+ommit under HEAD then 'add' the same files again
+Q. Will it keep two copies as objects?=20
+A. No because when an identical file is added the object file is identical.=
+  These become tree entries pointing to the same object.=20
+Q. May this overwrite the same object file because it is the same file? or =
+because it is immutable will it reuse the old object file?
+A. When an identical file is added the old object shall be _ANSWER_HERE_
 
-"free_ref_entry" will do the following things:
 
-1. If "entry" is a directory, it will call "clear_ref_dir" which will
-call "free_ref_entry" for every loose ref.
-2. If "entry" is a loose ref, it will call `free(entry->u.value.referent)`
-and `free(entry)`.
 
-The problem is if "entry" is a directory, we will also execute the
-following statement:
+from A_bughunter@proton.me
 
-    free(entry->u.value.referent);
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-This does not make sense. We should never access the "entry->u.value" if
-"entry" is a directory. So, I think the correct usage should be:
+wnUEARYKACcFgmdCjlAJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAADfCAP0fuC5Rc0gHALam7YkQHjZg54dGrnEUa6tZJZpSzNuiBgEA5c0a
+G+ZwfchdHP0gMPwHx4+TBL6LhW7ogj7u2IubQA4=3D
+=3DxVzR
+-----END PGP SIGNATURE-----
 
-    if (entry->flag & REF_DIR) {
-        ...
-        clear_ref_dir(...);
-    } else {
-        free(entry->u.value.referent);
-    }
+--b1=_1MinLqvfJ0vlLPaX7ACdFAbrErNXCIYfHLDwX2GGQ
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
 
-Thanks,
-Jialuo
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_1MinLqvfJ0vlLPaX7ACdFAbrErNXCIYfHLDwX2GGQ
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmdCjlAJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAALFQAPwKt4bn
+spoS9Spwz7W7fVGIwS7FwXVbay75QegP6BNuEwEAsOPAQsoUsS/KMeOXCnWDoom+XBe4eC41A4gx
+IndNCAg=
+
+--b1=_1MinLqvfJ0vlLPaX7ACdFAbrErNXCIYfHLDwX2GGQ--
+
