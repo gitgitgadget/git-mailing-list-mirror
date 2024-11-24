@@ -1,144 +1,85 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8B73FBB3
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 09:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938EFEADC
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 11:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732441441; cv=none; b=fy0X8GmBSKGznp1zXgjooi5IEOqsgKPIsHnEk+I4X+t6pWTmdAD+FeKlMVLmZWc/5cTpQwLJUxWAOAZe0EPvWF+8JR5Ie8BGWYw9Tj/cGL/ubwKQ0N0LSISLZ4C1u4xiMD/ZynL9S+ByTOKQKvAM5GJlnmqhuPZcX5fpLbslyrg=
+	t=1732446672; cv=none; b=NPU1BXE0n1z2UTp0iwIA02XM/oy9Ouk/FbfA4dra17t3ciq6izNhbHGRHFLPFF/xxY1sOQUzGYqCs83qb6oly1oBBvMO/m7z2aTDj7++I/v9np82ZwDYZsbScQcEzYnQvRsD9VNnZ3EBqVe4Qgo5A7Ai1D8fjpjWVeYgecSo4Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732441441; c=relaxed/simple;
-	bh=9qNRfNIEIBnprIECRA0ZkQhuG3Q4Go9CssS5MBdFqOg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JSGTOxbgwoChM2Q1UrOQHk1SyarEeCcWVR4YJUyfNmtWW4pu6IdD1sRw/4vIU7JLF59mDTBhjrlpIRpCiOvqwm+3gJRAVGH4gESbcCy9mw1kKqZT6gw7U+ulnO63IEYnsyJfNrCp/Rf/Yk2N/m3wr0vPOoAmqKdeQH7DJPIHkpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ABeXeLDl; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1732446672; c=relaxed/simple;
+	bh=KYrxmCBO8kf2kaiUZt4gvZRIxBybmICzYBk+EKsf8EE=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=ZjRAjJUmDyuRXE8Z68xJhCC6YzqlXI4T9jER5L+ZQXakgluLowKRN5bVihc96WeX3Asb8Tli2YUI3Hnm2Gj1wU06ht46BxfiYDpCSBgvMX45vfNZN6Zq/JJIy+R2QCkK65fy9a3zhf71ZOvcku7skDmQlW0qt58o3Thc8YHRfPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ggbvkJzF; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ABeXeLDl"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 30DA813801F7;
-	Sun, 24 Nov 2024 04:43:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 24 Nov 2024 04:43:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732441437; x=
-	1732527837; bh=LBRCLMa9yoAxbsVSwDrn83E2en6olHoHr+upvRBHTOs=; b=A
-	BeXeLDlG2d0xtUNOiS6rKbGEYKniaMCzdVkdi/GpWaaAfncIISXepWM7Gz3gRRgA
-	/j/WIHNGnvZSG34aJ7cUd1+OcHcrPmJIHXZD5xbumIQC6wQlZsJ+aEIOZi7GxouE
-	z9Wpi9sEe4eV6Z2gJ4SKJJs7YlemBuO6xTo7ljlfE1oes1TiUvYgEi+uv+34SuBW
-	KOoO+iiW15K+utlcXdKLyie+3YY0l0KQ+E8ggthFHDu4ub9ImnX3Vuopjz4WdSA9
-	jDqWRiP3OcmcFzr5r0g7bNOQ5Z9qYmw82WXl98lIkjxHwY7AumiwNN+QGR7OoKOf
-	ybji1WsMCVdNwdi7WHOLw==
-X-ME-Sender: <xms:XfVCZ-Sy9X5ZmZ32CfuLGvNbR40qWeGnDNNhFsaQmzx7pz1xm4iV0g>
-    <xme:XfVCZzwffLeVXHMbtxRgZzQuaef-7ca63akxbAuzxiIYojjVY5BOq2NVMZ41gmVZl
-    laigqjCDrDVXsL2yA>
-X-ME-Received: <xmr:XfVCZ72MmW6rqrhip5z1twIjw-5vnHlrAcX2BPFmUOCUX5E6Q_ATRbY5AyTKGw1Lu4HHmN4qbu3jGG2LlXvu0-FZJKHqQSR-9n0tbYc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeefgddtjecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkf
-    gfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeelvdeftdeftd
-    ekfeeuveelgfelteeiueffffekhffgkeevheekhffgteejhfffgeenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XfVCZ6Am8vSJfGLvWMnQOpgU39poSXp65lRzdzahkoaVGFVZVT2Ryw>
-    <xmx:XfVCZ3j2kXEJyhKrPsdYaqDsVf6f_sX94YMN2sgraVPQf97ChCjtiQ>
-    <xmx:XfVCZ2pdHEYWcnODJUffQthxgKUnqByxQexjYZ--pQfGUOsx_WX55w>
-    <xmx:XfVCZ6iTVtIoA7u2r2RHn4DcZPKDLbEeYcoxKSF1jvue1l0g-ssCdA>
-    <xmx:XfVCZ6taCDAgP1mbXbtr7kH-YHu-JYP6MUQgHBSFOb87npnEy_pUXZFK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 Nov 2024 04:43:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] doc: option value may be separate for valid reasons
-Date: Sun, 24 Nov 2024 18:43:55 +0900
-Message-ID: <xmqqjzct9db8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ggbvkJzF"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-7f8b37edeb7so3084014a12.0
+        for <git@vger.kernel.org>; Sun, 24 Nov 2024 03:11:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732446670; x=1733051470; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KYrxmCBO8kf2kaiUZt4gvZRIxBybmICzYBk+EKsf8EE=;
+        b=ggbvkJzFNevd3Zt7Xr8irobSkVGte82/yAoI+w3APJ7FeyodKLQFM5TATbCsDOSVDi
+         dZcF5BRPPOgVc2pXy08836wdGImt15odOteKm7xzf9JVAI9akOaZeYv/DenPNxOsLWpQ
+         1oIJB2XOKEOWyXXCfPjJfLU0UFmSP1JYeYmuSYewQOjyc4XNP/abEMZFoB37quy11Ywy
+         7CEqe7krOdmrj7D0hpUlUxiSximk+dsX1G94umEGqtdKNNdmGavcBwQdrQjunrtWihn5
+         xQxq2o57WOKJqPMJX+/v+Px4hbkFXkz4AhGhwEAWK0TqRA8suxSijHU7zQ1uqL7dK1tL
+         FZrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732446670; x=1733051470;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KYrxmCBO8kf2kaiUZt4gvZRIxBybmICzYBk+EKsf8EE=;
+        b=rAAclfJA28ECAk+9xOUeSMZuJwofNVO9MhFTHYqYXAtXTELzWxT4jaYPL5/KLNubk/
+         vddT8Z7gWCYgBNJj6KuQE8LYEDMsNG9sYxeo7HzQcRxyZY72CbaW4GFQaZ7Ob/dJSR/h
+         vYmrW6aCsGZ/LaH954MnCMZU9z/mPADcmgQtFW2A0oQ55r8eq2eCqvX0CAKm+gv3a7Bi
+         bsVGzE6uaI+IP1yF8a0ZvjNt1SlwgOEgAX5xnQluyRuaiJhKgEK/lLyZZruKUeGWlhuK
+         Lwgzfz4x29gwdEtbgeUHCEn/OSKMCVysxk1MsJLj02oxwPfWABmM5Ptv/ugDmLHC+MrF
+         7C7A==
+X-Gm-Message-State: AOJu0YwCmOI1jujBmi4nMRSKO+OrzVAvbAAjL1s5IPqy4/ODZsMJqaMA
+	6F6oyFcD+tCYz9o3TL+141f/Nw9ZEEX3nSuTkKiBc7XaM/9jUja9NWuohRPuXO95gg==
+X-Gm-Gg: ASbGncti2mPW+GD+ZFnxfSadRVftkBw+Jbxsu20PBjL4mBYkADYceQUMAoMN+ugtcz2
+	aBUhiT+XE+zN9plI99CdwMnLLKm5cyX2X5L4Rf7RGCywSyPh/62agYjnaRXxhu3udNUb3gbCJFa
+	CJfNz0+oeFlES8WHfbDkEnHvg0bUvVUf5cWioqiA48Nx6MhfjM5brGU2PfdOSUvkU8svYJQk7Hv
+	wko7jG/SbsPtwgdY3Pcv1SkyC2ldI27X06vzX5/6Cia6egEZumEzaw=
+X-Google-Smtp-Source: AGHT+IEHghVBfXfqK8EctAIdaEBGM9CX2dONui1XIhaMIqLpENbgjzPT7YSR5AlcaD4YJXZzCKyJ9w==
+X-Received: by 2002:a05:6a21:99a0:b0:1db:def8:45fc with SMTP id adf61e73a8af0-1e09e5ac944mr13815173637.39.1732446670537;
+        Sun, 24 Nov 2024 03:11:10 -0800 (PST)
+Received: from smtpclient.apple ([128.1.201.253])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-724ea9f4f8csm3598800b3a.124.2024.11.24.03.11.09
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Nov 2024 03:11:10 -0800 (PST)
+From: Homyee King <homyeeking@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51\))
+Subject: git clean --exclude broken?
+Message-Id: <1A13EB2A-6075-4CA9-855E-B72ACDA67C0C@gmail.com>
+Date: Sun, 24 Nov 2024 19:10:57 +0800
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3776.700.51)
 
-Even though `git help cli` recommends users to prefer using
-"--option=value" over "--option value", there can be reasons why
-giving them separately is a good idea.  One reason is that shells do
-not perform tilde expansion for `--option=~/path/name` but they
-expand `--options ~/path/name` just fine.
+13 years ago, Todd Rinaldo found that =E2=80=94exclude option is not =
+works with any options, for example, `git clean -Xd -e=3Dfoo` to clean =
+the files/folders respect the .gitignore rule except the foo, but in =
+real world, git only respect the git ignore standard rule and not work =
+with -e option.
 
-This is not a problem for many options whose option parsing is
-properly written using OPT_FILENAME(), because the value given to
-OPT_FILENAME() is tilde-expanded internally by us, but some commands
-take a pathname as a mere string, which needs this trick to have the
-shell help us.
+Today, 13 years later, the problem still exist, so I wonder is this a =
+bug or should we clarify the =E2=80=9Ccorrect=E2=80=9D usage of exclude =
+in documentation, because it=E2=80=99s really confusing.
 
-I think the reason we originally decided to recommend the stuck form
-was because an option that takes an optional value requires you to
-use it in the stuck form, and it is one less thing for users to
-worry about if they get into the habit to always use the stuck form.
-But we should be discouraging ourselves from adding an option with
-an optional value in the first place, and we might want to weaken
-the current recommendation.
+The discussion can be viewed by this link: =
+https://git.vger.kernel.narkive.com/ulppacPK/clean-exclude-broken
 
-In any case, let's describe this one case where it is necessary to
-use the separate form, with an example.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/gitcli.txt         | 10 ++++++++++
- Documentation/gitcredentials.txt |  5 +++++
- 2 files changed, 15 insertions(+)
-
-diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-index 7c709324ba..e484be9a36 100644
---- c/Documentation/gitcli.txt
-+++ w/Documentation/gitcli.txt
-@@ -88,10 +88,20 @@ scripting Git:
-    other words, write `git foo -oArg` instead of `git foo -o Arg` for short
-    options, and `git foo --long-opt=Arg` instead of `git foo --long-opt Arg`
-    for long options.  An option that takes optional option-argument must be
-    written in the 'stuck' form.
- 
-+ * Despite the above suggestion, when Arg is a path relative to the
-+   home directory of a user, e.g. ~/directory/file or ~u/d/f, you
-+   may want to use the separate form, e.g. `git credential-store
-+   --file ~/sec/rit`, not `git credential-store --file=~/sec/rit`.
-+   The shell will expand `~/` in the former to your home directory,
-+   but most shells keep the tilde in the latter.  Some of our
-+   commands know how to tilde-expand the option value internally,
-+   but not all.  The `--file` option of `credential-store` is an
-+   example that it needs shell's help to tilde-expand its value.
-+
-  * When you give a revision parameter to a command, make sure the parameter is
-    not ambiguous with a name of a file in the work tree.  E.g. do not write
-    `git log -1 HEAD` but write `git log -1 HEAD --`; the former will not work
-    if you happen to have a file called `HEAD` in the work tree.
- 
-diff --git c/Documentation/gitcredentials.txt w/Documentation/gitcredentials.txt
-index 71dd19731a..f6ce923f25 100644
---- c/Documentation/gitcredentials.txt
-+++ w/Documentation/gitcredentials.txt
-@@ -240,10 +240,15 @@ Here are some example specifications:
- # the arguments are parsed by the shell, so use shell
- # quoting if necessary
- [credential]
- 	helper = "foo --bar='whitespace arg'"
- 
-+# store helper (discouraged) with custom location for the db file;
-+# tilde expansion often requires the filename as a separate argument.
-+[credential]
-+	helper = "store --file ~/.git-secret.txt"
-+
- # you can also use an absolute path, which will not use the git wrapper
- [credential]
- 	helper = "/path/to/my/helper --with-arguments"
- 
- # or you can specify your own shell snippet
+Looking forward to your reaply!=
