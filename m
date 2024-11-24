@@ -1,123 +1,115 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40141.protonmail.ch (mail-40141.protonmail.ch [185.70.40.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC6C13D246
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 22:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455DC18AFC
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 23:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732488096; cv=none; b=glbzRXg0X9oSWX3+VQLnyoXpR/D9GXrSqptgDggHGWncCgNvrRB7500a0r8fuoMucf8gJ7WmTPgAT+mayHEYmtezoiXdFTNRPQq7dR80Dm5RlNd9DsAbvzD7NfE8stGdHrL/lEpRMyH1nJGBw1pcdGAh5Au9q6QPO0p+CfTDC8E=
+	t=1732490238; cv=none; b=SdbrXQzWvujU5hO2Yt6KUh3X7F/WCVHJGGtB2laJHZIwYxiowgjkWU/9PfgUM/G6U2kiPyaWaKumYzXCm7b58AzXBD8YOFHrieU7wF/41c+d4dNGmqf9+lHMcrF3doZS41Bb1SdnzT3UT3bCIRzm3YZJe/sk1vW91/tWeshwngY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732488096; c=relaxed/simple;
-	bh=o94QjvNPhdhWO3Drdc4XVV8ofVFdKF81KOQS3Z3LXCE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=d49tW2svPtw3OwXYlzYqAR3DCYgA1kpvn4xcTjNmVohazfHFHawXEGLAV+srrqjMrvcNOd1eyuFBbZUC6I/4piKGrqRbiZkpzj4S3fQvVYGmClL29Y60jGffnXRLkc+8HMJTHwsrVCckGVa264MrUFIVwQH+OYG15X/sEP/ZMjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UMaZAuTV; arc=none smtp.client-ip=209.85.166.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732490238; c=relaxed/simple;
+	bh=uC9xXcfSOMTF/PZaJkimH54GhQUGK8sit80kgRa9lgg=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=tvb6tJEEaEBha4MsJyxV7eEnx/L/FHMv/DZ35Xm0yCdwCGVtMoFPxBHiw0nQKyQ0cNSgthC5a3vDCdvOaHGixLrR3hWowTRW82s/VZ/ME/7FhFLMFVmKt7Z2FTyv082wG89eZu7hfUcT2qF+rJJUZEqnKLKKfutZfpzkFay9RMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=A0/9Wnxf; arc=none smtp.client-ip=185.70.40.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UMaZAuTV"
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-8418ecda199so21788239f.2
-        for <git@vger.kernel.org>; Sun, 24 Nov 2024 14:41:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732488093; x=1733092893; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n1MdqrFUcDGWq8cv9Rzr6uesJ4VsTQB4I+Fu75ctfAc=;
-        b=UMaZAuTVBpRYD20yPsqsEfzl9NzNW1hBB/VQddlXYhTO7eGnCS2jJR4n/UP8h7aI7v
-         1NVcbkE7Wgztyo8myl+zSWDKhNlkzw7Azv3GjdQ4tyCRy5WWKxQSFU3P/xA7DsID9wYc
-         X6LILkeynaTGTHaYEmZshBBXpeE2BUTo4y48IKftK/Vq9SMM/0tdcPbLt90QfhIyDsev
-         BHgte28p9X3ZeY5BOz19HNvbl4F4dOKu+cNkceFefYcEWIUzyqKhCIkO9PEQHojv9XL6
-         cR39ABbyDJ91eJ723priMQu6PIwFwzSFWNja6CeZ0K6Re9Es1X8gq8LJiYGUMt/AEyqk
-         YYCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732488093; x=1733092893;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n1MdqrFUcDGWq8cv9Rzr6uesJ4VsTQB4I+Fu75ctfAc=;
-        b=lIwKeM389NtLRtTDB9fOgWLqmjYW7bgJ7n8Tk+nNT5kDhi6VaaEMwnRLr2nkIIozFM
-         jYl94TNovvwUga9H5+TvyLr02xsUSBM+XIc2m9un6dGVJxtewFscFlEMHNE+LvExH4J2
-         siUZxyYV5cSodfYgzkm0Px9r/O29oUoz/x7p+AeTn8ff8JWk7gro151B1QWPrgZ38K1z
-         VZ+lAFZ6K2Utzfh6qN65vq5mFlwxkeIS1As5uwcy0m1OigJlzey12wec+nxI9Ou7fBu9
-         IA4bjGYiUAYkTHuPmkFh+cOW18bsOIO43FtAC1A4eIZRGZdsKukH+o5BAm37lFXEDAbg
-         ArUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUVaawjllYheJ7Jb0CxdkmjFrBvKaNb33oXi/uiUJXjm4UYrfhgBx2hjDLbmHB41p+HfxY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbLy7Pyc+aHrvLxNPqD5LTUBK7PumWKtgYcc8QLWddqWLhPF4+
-	cJMZxd2VA6e68XQHQXgmdzLwQemgPUjzLsBE4iYWTqNY/ePik49hP1e1GamA/l1bYmQYwHjdUNJ
-	6aoO5v/WhpGo5+dZo1NYSt4/Ha5w=
-X-Gm-Gg: ASbGncvuaAip9jgRvW8Fn3cA26B+aZA1MJpKYyiMi9G4tEfHQwRSngLSnDa8oubEM/k
-	3nhhZ9igDZfuYEH6tN+LYS1HxqkEeQexh
-X-Google-Smtp-Source: AGHT+IFXjO+EPeKUBSOFJNaVwOKg9XkggkQN3orr08fT2PbRVnPy7HFChC8PP+H8cWQXCBvUYFZo+BqaOlFDJUqYH70=
-X-Received: by 2002:a05:6602:6c0a:b0:837:7d54:acf1 with SMTP id
- ca18e2360f4ac-83ecdc5165fmr1022386639f.2.1732488093432; Sun, 24 Nov 2024
- 14:41:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="A0/9Wnxf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1732490233; x=1732749433;
+	bh=/d/AWKsFto4Pjmat07x6GnBn6yzIsaYjge4rFTDxsQ4=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=A0/9Wnxf4Jff9jsi+B0S4q+zCm4JwtlwzkB9qDcARhDeSNuiRoJMBa/zFpBe+WuBT
+	 1gtWoqYUHeCOTV6dX399NKpQ1dVLGB8BYfgv1jjmn/9hvooqP0G9coIMs4gePji1kh
+	 IyNd3z/OfwGLqJmwMPmyjNozTpDGKAhPdvmQe24aoUTK0Ga3/7DTE64to/rQZxpjHB
+	 5g8KzLmSVXaQKta8RcoQnS0fVWU9z2DhZqfsYmRLXcXt3dOLmgl6dyMXIIV2G+gv9i
+	 IEMq4XpxuUmpg9alhwSFAfTeN7YNgQwJBOTSiv68o+wBXmaMJWkELxOw3sSzNhdO7J
+	 OzDNLMjveHPwg==
+Date: Sun, 24 Nov 2024 23:17:10 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: As a beginner this is an opportunity to try out the features of git
+Message-ID: <sAhnJQBohaiSCYOBJawXhcreJYwbUzpPA0b-eSfgdDMOpQ-k13o_BCbuwx5jzRRldfXsF07e1U3RUBbQwbGBgUEbS5JOeLKlK3PduXkqqgw=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: c5e874b558760a6bf90a7bbd165a28d4f705f08c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFmt1jx9OHDnNRdcgB+sPNH90=eZYFRVEbO7PcETiN0ojMQi4Q@mail.gmail.com>
- <Z0Oavzr03tTMiKfl@tapette.crustytoothpaste.net>
-In-Reply-To: <Z0Oavzr03tTMiKfl@tapette.crustytoothpaste.net>
-From: Jacob Pfundstein <jjpfst@gmail.com>
-Date: Sun, 24 Nov 2024 23:41:17 +0100
-Message-ID: <CAFmt1jxxnnhSysC0cLEptifY=cKLZ4rgBJ4gpp1O7=WkuMzeaA@mail.gmail.com>
-Subject: Re: Bug with SSH keys loaded into ssh-add
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Jacob Pfundstein <jjpfst@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed;
+ boundary="b1=_MN12BlVEEudMH0k26ljmite23nLzF73X8iwWWqDVo"
 
-Hi Brian,
+--b1=_MN12BlVEEudMH0k26ljmite23nLzF73X8iwWWqDVo
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-the issue was indeed solved by using the OpenSSH version that comes
-bundled with Windows instead of the one that ships with Git. Thanks a
-lot!
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Best Regards,
 
-Jacob P.
 
-Am So., 24. Nov. 2024 um 22:29 Uhr schrieb brian m. carlson
-<sandals@crustytoothpaste.net>:
->
-> On 2024-11-24 at 16:23:21, Jacob Pfundstein wrote:
-> > Hello everyone,
->
-> Hi,
->
-> > I've recently encountered a bug/issue while using Git for Windows. You
-> > can load a passphrase-secured SSH key into the ssh agent using
-> > ssh-add. As long as the key is loaded into the ssh agent, you don't
-> > have to enter the passphrase when using the key. However, when I do
-> > git pull or something similar, Git still prompts me for the
-> > passphrase.
->
-> This isn't Git prompting you for the passphrase.  Git passes the
-> terminal through to OpenSSH, which is prompting you for the passphrase.
-> There's really nothing that Git can do, since it doesn't know what
-> OpenSSH will do.
->
-> I can make a guess about what might be going wrong here so you can try
-> to see if that fixes things, and if not, you could try contacting the
-> Git for Windows issue tracker at [0].  Please be sure to search first,
-> including the closed issues, as the question may already have been asked
-> and answered.
->
-> My guess as to what's going on is that you're using two different
-> versions of OpenSSH, since there are two with Git for Windows.  One is
-> shipped with Git for Windows, and one is the one shipped with Windows. I
-> think MSYS2 may implement sockets in an unusual way, which means that if
-> the agent is from one version and the `ssh` binary is from another
-> version, that they may not be able to communicate properly.  In such a
-> case, OpenSSH would prompt you again since it can't contact the agent.
-> You could try using both from the same version (I think there's an
-> install option for that) or try using Git Bash to see if that fixes the
-> problem (even if that isn't a good solution for you, it's useful to know
-> from a debugging point of view).
->
-> As I said, this is just a guess and I don't use Windows, so you'll have
-> to try what I mentioned above or open an issue.
->
-> [0] https://github.com/git-for-windows/git/issues
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
+
+As a beginner this is an opportunity to try out the features of git
+
+How to investigate git history when something funny is found?=20
+ I have a repository vernam-expert-telegram[B]  In this repository I copied=
+ a gist[A] to the README[Ba]. Later on I notice a missing comma and to my s=
+uprise the gist[A] contains the comma. The question arises if I did indeed =
+copy & paste the gist into the README why would the README be missing a com=
+ma. As a beginner this is an opportunity to try out the supposed advantages=
+ of using git. To try out the versioning & history features to see if it is=
+ indeed any useful. Using the features of git to track down whrn a comma wa=
+s removed. How to investigate git history when something funny is found? Wh=
+en was the comma removed?
+
+[A]: https://gist.github.com/freedom-foundation/60a757f3ba6af02a7cb1b113759=
+7c232
+[B]: https://github.com/freedom-foundation/vernam-expert-telegram
+[Ba]: https://github.com/freedom-foundation/vernam-expert-telegram/blob/mai=
+n/README.md
+
+from A_bughunter@proton.me
+
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmdDs/QJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAEL3AQCjUWBKIWmRIVeCvBsCHL8KqEb//fLj4hUsH0m2nYsGawEA+aLK
+Mw2ucWGC74E5oHgsjUqbsAihvwkkXcvwd3KktgE=3D
+=3DTEYy
+-----END PGP SIGNATURE-----
+
+--b1=_MN12BlVEEudMH0k26ljmite23nLzF73X8iwWWqDVo
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_MN12BlVEEudMH0k26ljmite23nLzF73X8iwWWqDVo
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmdDs/QJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAADR6AP9CHSPl
+iwgBN0HgNN6NszM35tVGBNtUrBS93KNQy8tYHQEAzODk2uzmLTxlQUv5RV0db2WCIeYMA77jmML9
+mA8/IQY=
+
+--b1=_MN12BlVEEudMH0k26ljmite23nLzF73X8iwWWqDVo--
+
