@@ -1,119 +1,111 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFDD1791ED
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 23:54:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5106B18CC1C
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 23:58:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732492488; cv=none; b=RX9FgnNZ5BeEs1KsH3HgEsFZryCzK+J/9vM+0KLHG8tjsQ4lS/a5yJ/60ED5e9xpO/wtjZY8nnZERETzjVeAguVctyz7TjQKmxKLy6PA5lr+7K45ofFh+Qk6vWGLgff9k9LKuRzwfUO++aFBDYkYkpQ+ELGzXjhTH935Q8gNHyw=
+	t=1732492683; cv=none; b=N48d/dbsem2Js7GpRlZcWoZpZetEXovBYpFEzjVfz3bZUB0Ef++UhkwrrPhdNYsxuElR5Qqgi8Cowm9DWSe9Gy170GUV/0jGJsbtIMargbtXwUJ2uY2QlODn5h6LZNoepndo46PsSqSkZZdqdOs/52KvMpAGaNElDFqbGbWP8bE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732492488; c=relaxed/simple;
-	bh=KGW/vw1zXdxOGKPT/ImFmrwZHnkxtZl3auPAbBnTuRo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oYY4AEYg+GuqB5UVeVYPjdbFU7OYsgXVYRDr7rNGxLjtHGWVP6+7g1MHuWtNlM7/IMcIYbeV203vW/p37oCs1sbjJydiOLPKYBk2fQlBo4GeOy6n6rvj/sndg6RocJsQkSmpGhs3yahuXbMZJWr5f1Xq4NeHwNqRAp3T4srKTgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6d41ae05df2so8046646d6.3
-        for <git@vger.kernel.org>; Sun, 24 Nov 2024 15:54:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732492485; x=1733097285;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=71TIZRL0FLZhS+2naeNI0cwQWKVdt1APB8zYHsJkd6A=;
-        b=OJMG2Fp7Xo/40qCYRGtXEA4q9Zwdqi+QqoTq1j+nGEJXYvuaCty3fgdpAB/ATFegO6
-         ECJ4nEYlEOmrDCisb9G78K2c90MqQLKR3Phy1pjRUHJxXwwtUA7XnQQb1yHB43FKoZm3
-         uibwWdz7gtJPaTWeOKQpqeJ/vSP6VYhtcT3m6vGsxNCqc2EaulesVvdwcf0Z97pIWE53
-         trPlFY4wCiD+TPglgcGE1CCA7MPijgu7T/DL715HlCU0Y+ZNiW4xbxpJ3tP0Bi9XqMG0
-         EZpqYXQamFu3OaW5X1YlGQ4/jbNg3cJxziI+2nDjk5ladcvCYS69tgNNAn9DiitBnVOA
-         PU0Q==
-X-Gm-Message-State: AOJu0YzWnNStpBZeouFS6c6Vd5/oEDmqor/1RTI3D8e8OJkGBwhjYlwH
-	gxNaTkQ6I6MJ7NS/JZ50FHn7tdEnAoh1aYSZR/isiEO8DGQVCDTacsvEdn30rui6mGN1j/cHN/H
-	+3uXiKvd32VnAR4TIDEhP7HcrrZI=
-X-Gm-Gg: ASbGncs4njb0rKb/oZiNrM3N0G7i9I+r8VN4JKF61mR6aaFcV+6OkwFZIJgXKm6u6YW
-	PSEc8NkCnunCTXBOBrzRpUxN/X5riWQ==
-X-Google-Smtp-Source: AGHT+IHdRDEcBaVV1SIURtWBIxUT1YDWPjDW++Gld8R5Tc5gPKffdLGyufZ4eWcZc7xcnNYwGU+Mny7LC9xsTkVFVOQ=
-X-Received: by 2002:a05:6214:528d:b0:6d4:36c9:ccca with SMTP id
- 6a1803df08f44-6d450e7b324mr68347886d6.5.1732492485535; Sun, 24 Nov 2024
- 15:54:45 -0800 (PST)
+	s=arc-20240116; t=1732492683; c=relaxed/simple;
+	bh=hdK9HvMPVHzbSEKx5fyFMHZdf0aRlEiu2PyKWJzmqSU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KUpFKI6ZH02VDC6dGGmJCE1JW5yNsr2dA4S4pNFjYga9wzYSSkWWYfe9CvJKgeFnvTUD3rdVmbpYPvrr3iqj0gOLVc48cHf/WhwLimuDjmGKP36UT1n4JoA3Wv6vj3pNM/fi6cLQ8tLfFe+QU8lTp3sMMPuCkQNnmfca5EwyJLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HuUXJqFB; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HuUXJqFB"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 13ECC114011C;
+	Sun, 24 Nov 2024 18:58:00 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Sun, 24 Nov 2024 18:58:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732492679; x=1732579079; bh=/Z/CmqKkZTM/fgFZbPnxM/oGxXvigVU0lq8
+	PJZRn2To=; b=HuUXJqFBF4ou32j7Vo8Xq5Mr+4movff4UyQA7k9c/C1DRLG8pmN
+	YH7yCqvzujVX884GzvuGLGVLIDxw8EQkjwzrbAy6nqxA3aGIQM7COnvHnNR09bIL
+	3i+fWlO/3QaJjSAQ5AP2gskF5PmfHIqiAM7WLXoyPwFeuk1SINrQ32cdYyySRfKS
+	phRS2hJhaGX3H2mueLjOyAsT+pnDZ/fxBzdCD8LR3Uukcz6ULi4Rp3t9YR2RYSB6
+	dpP4JxGpEHFbNTRCC0U10uLyc2RmPZ9I5U3p9lAkVcA5uWsWBzDRvCynMEAbcYgX
+	kZ+LWlofwmbZPgIAeNkJzB6eCJ2d4fVOcBg==
+X-ME-Sender: <xms:h71DZxQjbyBDn6Bm1lE6zc9svQSAJkS5xdeycmjkIcSQdZJ8uO3igQ>
+    <xme:h71DZ6wDPJ9M1Aju1jJgbhzuHk16NxAUukEpZM_rpVe6FaX1r0MnU1p4YB7sY-8gQ
+    YCT25tsewmuq5N-NA>
+X-ME-Received: <xmr:h71DZ21wyjlprJWX-BPeiOMaR_VNpqWodY0dR6SHMGReq_73nFPTwZlFhiLvSHiEy2VIuAerKYwQoasIG30iSE_X5cjHa340XXpEFKU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdduiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgv
+    rdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehj
+    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehpvg
+    hffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhhohhhntggrihekieesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:h71DZ5A4k-u_Bq-zn6JYIVu7hWH-ZiGJdTSEFiaxb5vN6htnxFWWXw>
+    <xmx:h71DZ6g5hNOPJLnlZ4E7V_kjR2I_eq-vUwFjND_-f8yv3jcTKvIwfg>
+    <xmx:h71DZ9oY4DK-1IVqqE-A1FHjsOp54WJRWK0pEOweCDO2Pym6r2ZjKQ>
+    <xmx:h71DZ1gCVGelc2tnioB-Sgh9czuWxhQVIlOdI8pZXc7aAS9ADlnKsA>
+    <xmx:h71DZxoWduyrFL40kaMMvIVjBtksnZBeLjbTZFCN4KuVmWz75OPevczI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 24 Nov 2024 18:57:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>,  Derrick Stolee via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  johannes.schindelin@gmx.de,  peff@peff.net,  ps@pks.im,  me@ttaylorr.com,
+  johncai86@gmail.com,  newren@gmail.com
+Subject: Re: [PATCH 0/7] pack-objects: Create an alternative name hash
+ algorithm (recreated)
+In-Reply-To: <cd3df4d5-efa0-45cb-ab94-6c5c9f0ac695@gmail.com> (Derrick
+	Stolee's message of "Fri, 22 Nov 2024 10:27:19 -0500")
+References: <20241121235014.2554033-1-jonathantanmy@google.com>
+	<xmqqiksgas54.fsf@gitster.g>
+	<cd3df4d5-efa0-45cb-ab94-6c5c9f0ac695@gmail.com>
+Date: Mon, 25 Nov 2024 08:57:57 +0900
+Message-ID: <xmqqed309oca.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqjzct9db8.fsf@gitster.g>
-In-Reply-To: <xmqqjzct9db8.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 24 Nov 2024 18:54:34 -0500
-Message-ID: <CAPig+cT_uB-mBwRh_A-HvpO8QCjv_Rw3-6s4gV=BCwYmSGcctg@mail.gmail.com>
-Subject: Re: [PATCH] doc: option value may be separate for valid reasons
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sun, Nov 24, 2024 at 4:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Even though `git help cli` recommends users to prefer using
-> "--option=3Dvalue" over "--option value", there can be reasons why
-> giving them separately is a good idea.  One reason is that shells do
-> not perform tilde expansion for `--option=3D~/path/name` but they
-> expand `--options ~/path/name` just fine.
->
-> This is not a problem for many options whose option parsing is
-> properly written using OPT_FILENAME(), because the value given to
-> OPT_FILENAME() is tilde-expanded internally by us, but some commands
-> take a pathname as a mere string, which needs this trick to have the
-> shell help us.
->
-> I think the reason we originally decided to recommend the stuck form
-> was because an option that takes an optional value requires you to
-> use it in the stuck form, and it is one less thing for users to
-> worry about if they get into the habit to always use the stuck form.
-> But we should be discouraging ourselves from adding an option with
-> an optional value in the first place, and we might want to weaken
-> the current recommendation.
->
-> In any case, let's describe this one case where it is necessary to
-> use the separate form, with an example.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-> @@ -88,10 +88,20 @@ scripting Git:
-> + * Despite the above suggestion, when Arg is a path relative to the
-> +   home directory of a user, e.g. ~/directory/file or ~u/d/f, you
-> +   may want to use the separate form, e.g. `git credential-store
-> +   --file ~/sec/rit`, not `git credential-store --file=3D~/sec/rit`.
-> +   The shell will expand `~/` in the former to your home directory,
-> +   but most shells keep the tilde in the latter.  Some of our
-> +   commands know how to tilde-expand the option value internally,
-> +   but not all.  The `--file` option of `credential-store` is an
-> +   example that it needs shell's help to tilde-expand its value.
+Derrick Stolee <stolee@gmail.com> writes:
 
-I'm not sure the final sentence adds any value considering that
-credential-store was already mentioned in the example earlier in the
-paragraph, though I suppose it doesn't hurt to keep the sentence.
-
-> diff --git c/Documentation/gitcredentials.txt w/Documentation/gitcredenti=
-als.txt
-> @@ -240,10 +240,15 @@ Here are some example specifications:
->  # the arguments are parsed by the shell, so use shell
->  # quoting if necessary
->  [credential]
->         helper =3D "foo --bar=3D'whitespace arg'"
+>>   (1) it hashes each path component separetely and rotates the whole
+>>       thing only at a directory boundary.  I'd imagine that this
+>>       would make a big difference for languages that force overly
+>>       long filenames at each level.
 >
-> +# store helper (discouraged) with custom location for the db file;
-> +# tilde expansion often requires the filename as a separate argument.
-> +[credential]
-> +       helper =3D "store --file ~/.git-secret.txt"
+> I was confused by the "rotates the whole thing only at a directory
+> boundary" statement.
 
-In the context of the commit message, I understand why you added the
-comment above this example, but as a mere user without having that
-context, I think the part starting "tilde expansion..." would confuse
-me more than help. Perhaps being a bit more explicit might help:
+Yeah, I guess it was confusing.  What I meant was that the entire
+result is shifted down with new material from left to right, but
+unlike the original, the outer thing (i.e. what is given to the
+caller as the result) is shifted only at the directory boundary, so
+we are not as aggressive to lose early bits by shifting them down to
+the right, as we are not shifting as fast as before.
 
-    # use `--file ~/path` rather than `--file=3D~/path` to allow the
-    # shell to expand tilde to the home directory
+> I think one way to say what you mean is
+>
+>   Each path component is hashed similarly to the standard name-hash,
+>   and parent path component hashes are contributed via XOR after a
+>   down-shift of 6 bits per level.
+
+Yes.
