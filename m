@@ -1,123 +1,119 @@
-Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B52500BD
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 23:47:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFDD1791ED
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 23:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732492079; cv=none; b=JOFrFdrty6JqUfUkGIjG22sC60Y7xULYYpTLogF/njuCBrWU0cB4PuiH07xPQ2raDcxH3QCtjUcydL8ahcxXwHfu8Qx7IkFpCHL8D/7nnDKbXeEtPgA/H7czhs2oly39rflAG21osDlLdkoc1UEMTpCteA3VKIqdtVivp+4Kutc=
+	t=1732492488; cv=none; b=RX9FgnNZ5BeEs1KsH3HgEsFZryCzK+J/9vM+0KLHG8tjsQ4lS/a5yJ/60ED5e9xpO/wtjZY8nnZERETzjVeAguVctyz7TjQKmxKLy6PA5lr+7K45ofFh+Qk6vWGLgff9k9LKuRzwfUO++aFBDYkYkpQ+ELGzXjhTH935Q8gNHyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732492079; c=relaxed/simple;
-	bh=mHiy70wKc1GCjBfMtn4kUYf5W4RTl8O/ussDyskU2ps=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=tlCzD1ncjQtwXi/QYyOprUwoqKeZPvE6AFNMMdIB868V2GXNIZIr8GgedNQW7QOl+lfCEFRSQ6Nmry001F/FzZCaQmqggNWC8gKaRgGMGupHqqtohgt3SdDj3kuasbR6v7jQQykZuCaig3ZrX6z0SDOHSG1P4So4RCl+CiF8ams=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=M79giFiE; arc=none smtp.client-ip=185.70.43.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="M79giFiE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1732492069; x=1732751269;
-	bh=mHiy70wKc1GCjBfMtn4kUYf5W4RTl8O/ussDyskU2ps=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=M79giFiEhgbCAao+utxfwT7msRpcH3MZEM3k+1uOMrEg03teoQ8PvpbnEtxNFiazE
-	 DEfcGWZgVFmGVJNCSJojDrTiqTbbLOZuZ0Oi7RDrAv5OtY2ItDO2QWlzfveNcmfYvg
-	 CvVLiL49pgfZu1VUM5EeWtfiqZxbyu8zqtT66TG8xTNseoASoYfz3FngueogtdwxWZ
-	 qccT4RXhFgsOJ5k1QbMiLE7kSjLFz8qSkKCNgC4b7x11XeKUykf0WO4zzhf3synN6p
-	 4tCm+zPT+PFsbChazaVdTE1xbeXggD5+B+Acx7lIJLd/71Hd/atdLCHtygajy0beOE
-	 ZdHaTkt8b64fg==
-Date: Sun, 24 Nov 2024 23:47:43 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: A bughunter <A_bughunter@proton.me>
-Subject: [bug] user may be cornered into delete files #9901
-Message-ID: <S5PSH8NN2iTlSlWbEi3lixncKj_ShJU5Cpvselj_d-WnTJvq8YCT65k1VR7dB8m0FRTj0nyQ-eXx6W8LlSeN0OnzoK8KxCkCP3OK46LRN8w=@proton.me>
-Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: 64c2075e546bb599f17970b6b755861e9d413194
+	s=arc-20240116; t=1732492488; c=relaxed/simple;
+	bh=KGW/vw1zXdxOGKPT/ImFmrwZHnkxtZl3auPAbBnTuRo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oYY4AEYg+GuqB5UVeVYPjdbFU7OYsgXVYRDr7rNGxLjtHGWVP6+7g1MHuWtNlM7/IMcIYbeV203vW/p37oCs1sbjJydiOLPKYBk2fQlBo4GeOy6n6rvj/sndg6RocJsQkSmpGhs3yahuXbMZJWr5f1Xq4NeHwNqRAp3T4srKTgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6d41ae05df2so8046646d6.3
+        for <git@vger.kernel.org>; Sun, 24 Nov 2024 15:54:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732492485; x=1733097285;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=71TIZRL0FLZhS+2naeNI0cwQWKVdt1APB8zYHsJkd6A=;
+        b=OJMG2Fp7Xo/40qCYRGtXEA4q9Zwdqi+QqoTq1j+nGEJXYvuaCty3fgdpAB/ATFegO6
+         ECJ4nEYlEOmrDCisb9G78K2c90MqQLKR3Phy1pjRUHJxXwwtUA7XnQQb1yHB43FKoZm3
+         uibwWdz7gtJPaTWeOKQpqeJ/vSP6VYhtcT3m6vGsxNCqc2EaulesVvdwcf0Z97pIWE53
+         trPlFY4wCiD+TPglgcGE1CCA7MPijgu7T/DL715HlCU0Y+ZNiW4xbxpJ3tP0Bi9XqMG0
+         EZpqYXQamFu3OaW5X1YlGQ4/jbNg3cJxziI+2nDjk5ladcvCYS69tgNNAn9DiitBnVOA
+         PU0Q==
+X-Gm-Message-State: AOJu0YzWnNStpBZeouFS6c6Vd5/oEDmqor/1RTI3D8e8OJkGBwhjYlwH
+	gxNaTkQ6I6MJ7NS/JZ50FHn7tdEnAoh1aYSZR/isiEO8DGQVCDTacsvEdn30rui6mGN1j/cHN/H
+	+3uXiKvd32VnAR4TIDEhP7HcrrZI=
+X-Gm-Gg: ASbGncs4njb0rKb/oZiNrM3N0G7i9I+r8VN4JKF61mR6aaFcV+6OkwFZIJgXKm6u6YW
+	PSEc8NkCnunCTXBOBrzRpUxN/X5riWQ==
+X-Google-Smtp-Source: AGHT+IHdRDEcBaVV1SIURtWBIxUT1YDWPjDW++Gld8R5Tc5gPKffdLGyufZ4eWcZc7xcnNYwGU+Mny7LC9xsTkVFVOQ=
+X-Received: by 2002:a05:6214:528d:b0:6d4:36c9:ccca with SMTP id
+ 6a1803df08f44-6d450e7b324mr68347886d6.5.1732492485535; Sun, 24 Nov 2024
+ 15:54:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="b1=_CERFqSiZ26LuHlO7GdkXh7FIi6jbD66cArcl5dO5ODY"
-
---b1=_CERFqSiZ26LuHlO7GdkXh7FIi6jbD66cArcl5dO5ODY
-Content-Type: text/plain; charset=utf-8
+References: <xmqqjzct9db8.fsf@gitster.g>
+In-Reply-To: <xmqqjzct9db8.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 24 Nov 2024 18:54:34 -0500
+Message-ID: <CAPig+cT_uB-mBwRh_A-HvpO8QCjv_Rw3-6s4gV=BCwYmSGcctg@mail.gmail.com>
+Subject: Re: [PATCH] doc: option value may be separate for valid reasons
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+On Sun, Nov 24, 2024 at 4:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Even though `git help cli` recommends users to prefer using
+> "--option=3Dvalue" over "--option value", there can be reasons why
+> giving them separately is a good idea.  One reason is that shells do
+> not perform tilde expansion for `--option=3D~/path/name` but they
+> expand `--options ~/path/name` just fine.
+>
+> This is not a problem for many options whose option parsing is
+> properly written using OPT_FILENAME(), because the value given to
+> OPT_FILENAME() is tilde-expanded internally by us, but some commands
+> take a pathname as a mere string, which needs this trick to have the
+> shell help us.
+>
+> I think the reason we originally decided to recommend the stuck form
+> was because an option that takes an optional value requires you to
+> use it in the stuck form, and it is one less thing for users to
+> worry about if they get into the habit to always use the stuck form.
+> But we should be discouraging ourselves from adding an option with
+> an optional value in the first place, and we might want to weaken
+> the current recommendation.
+>
+> In any case, let's describe this one case where it is necessary to
+> use the separate form, with an example.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
+> @@ -88,10 +88,20 @@ scripting Git:
+> + * Despite the above suggestion, when Arg is a path relative to the
+> +   home directory of a user, e.g. ~/directory/file or ~u/d/f, you
+> +   may want to use the separate form, e.g. `git credential-store
+> +   --file ~/sec/rit`, not `git credential-store --file=3D~/sec/rit`.
+> +   The shell will expand `~/` in the former to your home directory,
+> +   but most shells keep the tilde in the latter.  Some of our
+> +   commands know how to tilde-expand the option value internally,
+> +   but not all.  The `--file` option of `credential-store` is an
+> +   example that it needs shell's help to tilde-expand its value.
 
+I'm not sure the final sentence adds any value considering that
+credential-store was already mentioned in the example earlier in the
+paragraph, though I suppose it doesn't hurt to keep the sentence.
 
+> diff --git c/Documentation/gitcredentials.txt w/Documentation/gitcredenti=
+als.txt
+> @@ -240,10 +240,15 @@ Here are some example specifications:
+>  # the arguments are parsed by the shell, so use shell
+>  # quoting if necessary
+>  [credential]
+>         helper =3D "foo --bar=3D'whitespace arg'"
+>
+> +# store helper (discouraged) with custom location for the db file;
+> +# tilde expansion often requires the filename as a separate argument.
+> +[credential]
+> +       helper =3D "store --file ~/.git-secret.txt"
 
-NEEDS TESTING [bug] user may be cornered into delete files #9901
+In the context of the commit message, I understand why you added the
+comment above this example, but as a mere user without having that
+context, I think the part starting "tilde expansion..." would confuse
+me more than help. Perhaps being a bit more explicit might help:
 
-Look wheather you call it a "landmine" or "bug" this is a defect in the sof=
-tware application git.
-
-The defect is: user may be cornered into having to delete files.
-
-Steps to reproduce: if for any reason the push fails during the intial crea=
-tion and upload of files to a git repository then the user is left with thr=
-ee options reset modes soft, mixed, and hard. Because GitHub hangs up durin=
-g the compression of many files being pushed these files must be pushed 1 b=
-y 1. If the user wants to repush the files the user must be able to undo th=
-e tracked files and repush them 1 by 1. Hard is immediatly excluded because=
- it deletes files. Mixed likely deletes files also because it wipes the ind=
-ex of the CWD after the files have been 'add'. While soft may not delete th=
-e files it would not wipe the index, the index is needed to be wiped to all=
-ow for the files to be re add, commit, and pushed.=20
-
-I am working from an android so it is hard to setup computer lab tests. Som=
-ebody should be able to setup experimental git repos to reproduce and CONFI=
-RM the bug. You will be looking to CONFIRM that neither modes soft or mixed=
- will allow the user to undo tracked files for repush.=20
-
-What I did was copy the files out to be safe and a soft reset and I workaro=
-und the problem but the user should not need to copy anf make backups of fi=
-les because this is the intended afvantage anf purpose of git. Because I di=
-d a workaround the bugreport still need's to be tested and CONFIRMED.=20
-
-from A_bughunter@proton.me
-
-Sent with Proton Mail secure email.
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wnUEARYKACcFgmdDuxwJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAAFO6AP918fCRKPBij1LgVOttJepAslX9VqSfrhjT3VnygJAfpgEA34dE
-IWoJx9beK7zLk6NlDc+0iU7DEXcaSxK86atsXAQ=3D
-=3Du2Tz
------END PGP SIGNATURE-----
-
---b1=_CERFqSiZ26LuHlO7GdkXh7FIi6jbD66cArcl5dO5ODY
-Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
-YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
-ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
-bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
-QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
-a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
-CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
-ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
-Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
-QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
-eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
-UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
-
---b1=_CERFqSiZ26LuHlO7GdkXh7FIi6jbD66cArcl5dO5ODY
-Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
-
-wnUEABYKACcFgmdDuxwJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAKB4AQD2r002
-yN60pskJld6zKctVvteKqFt6Gkq5gAvcacEFrQD9FW8wJLuWLkSm+xydZqouG/7R+JBc35xkTW6A
-8iFoWgA=
-
---b1=_CERFqSiZ26LuHlO7GdkXh7FIi6jbD66cArcl5dO5ODY--
-
+    # use `--file ~/path` rather than `--file=3D~/path` to allow the
+    # shell to expand tilde to the home directory
