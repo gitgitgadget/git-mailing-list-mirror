@@ -1,85 +1,85 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557922500BA
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 20:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDBD16BE3A
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 20:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732481814; cv=none; b=DkWzgbtGgWTZtpLzb9z/M9y9NlbTcOwO0HeFE9+6BsKrsrhUjvY6SSBHICqak0l3CrHb3r+J8lmkjLwP/yjfC++jjK5H6odpz27VYt3NvH8fQI5fC1XWzMG8se1/gzTmYy3dTxDpHglftSp9Ugcck/eJcfqDqe/lPPb8PjVwTIY=
+	t=1732481818; cv=none; b=ak/tyx239e9yiRt7zKamS36TAwoHke/hc6P0YEnA0iuc89V0uYyxOTCCzeF6Nes+4RAoXZOGL8n/ggcaVPcJ+qclS9J9Gt1SoXIsg57EE0RKTM5u9mAlB+o5M84ncKJi3ZeDFchnxZAjOs/xn7s+wNCExwDz/HeuE0JFzyTwgdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732481814; c=relaxed/simple;
-	bh=sPV16vSDS9r37vIPsLiCW39BXY/j3BepnHG3BctzMw0=;
+	s=arc-20240116; t=1732481818; c=relaxed/simple;
+	bh=pCf8nP7hzD6UA83EUVXueak6LMeronraoI8s9bjxigA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hnjh1DGg5SGxaZNmWTi/gHwaW+1A5LyGjxxeRHxATC1TierWjh/vK0ZMQKq71aCtk13pXruC7KzXEMhNkEc2TIOBjnKs6PgdPOq1l5zPEoVy88BkCJsZ0E461CyzmfMxkm+0PdPnFEGiEwIlzkh7iPCxkI5b91BZ8frlAwjzccg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kSEIaTsE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ds51VBYI; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=UOM6YroilgxqhRIXg0vZp5OwKokHMKOJzr3ngh94C1K8OikrOh5rC1zXJTVxD3Jnqo++RD7v3KRq2a97BDSznElvkT25+xECgiP1/s7oyBNsBroRlmww2AlAKjyHsAHh0ZMVbxm3J7xHD/UezYutToTUafmu2p2MAJnuxBWjV4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=j1pOkkzH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ndb55TJj; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kSEIaTsE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ds51VBYI"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D18A2540161;
-	Sun, 24 Nov 2024 15:56:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="j1pOkkzH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ndb55TJj"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id E211C11400E6;
+	Sun, 24 Nov 2024 15:56:54 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Sun, 24 Nov 2024 15:56:51 -0500
+  by phl-compute-04.internal (MEProxy); Sun, 24 Nov 2024 15:56:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732481811;
-	 x=1732568211; bh=1ZSXeLVIIG0cmqg4VGR0yGgPzz37hbK3lK98B+UkRxE=; b=
-	kSEIaTsEmKXTM3rldqj4g5tCsf/UO7RICb7CR8o0mU58+4MLiC4rQhBb2PFuH0X2
-	CJrNiAmOc4XtdEPYli2hnhDaNF/l77q3tdV2iDR2QyqVhy+GvQGyo2Mv7ea1meIj
-	iumq7V6H9wz4LSJ6wyh7CVoNakovQdt8UmHmwBQIfZmpYHwoRwV3UsfLSb939g21
-	QOgnOAHlRdAyqq1pXV7bas2jd73rRGygT4Bx67bU7wfwkxTv4LVqdFBPg/2vugxb
-	JvT9vsgr/JMWmcgJnaYhNrWqWjbW/FzLKAosQ4Hkm8yDIoaWm/B2XT4R698zE3cY
-	UAPzxRX1D2+3md2qAtZPzA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732481814;
+	 x=1732568214; bh=88LTYSW86+cyDcUUifqBnDpllE5tLPyTVwdB56P3frU=; b=
+	j1pOkkzHMbRweCoFbEnPWQFP8G6dZc2l0iqZSQgr3CNIC90k+lQ53y/OF6hpYYak
+	6Zj/cRpKBSEFzUAWe04VqGnWpDn7Qe29pQ/+AlNEzVVsCPxuWo1A6LlSkmKa5c2o
+	wUGvtbOWk+6dWHB5U9aVEfIAKefbnMo1FqywY5+1dxeZgPeLblodgoUS++JsPEML
+	b6dcW8HAyTHduu9JQchq12iNV7q729cy6Lg9iTLHiblxGn2313/wjsrIO0OxNt+2
+	7GkPU/EgZ2V8OeE3ktBOwI0iXWPZxGBlZ+/f7NI7+qmL/O7DXNncdKfnWNdG1U5E
+	ris8lEQ/ai2LIgNUU+5MVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732481811; x=
-	1732568211; bh=1ZSXeLVIIG0cmqg4VGR0yGgPzz37hbK3lK98B+UkRxE=; b=D
-	s51VBYILC4NP1M2YKacIWn56OFiPrCwBr9k0XbZpiQ9CqGqm9hUA3RitlRYqPRCy
-	q/M8+LvwHtE9oohAvf+Rq4oOSU2fYAt6FV3zQkThy22d/YLGsvjVqqoJPUfAT7+D
-	ar7RymBkHzH/zwBy0rcq+0I4TyB/x5GRdK6mG09v4G/5IgjJbby02gfbATMfQAcT
-	lb09ZNacbVDafKUlOzu4H2S35AcNBt1ITCK9McNsnPJ6wKTiKCFDS821GXh1CDTj
-	T4ARu+pt0fCnqS5p40bPnHw9J/T7P8yT8sdP9fMqjGtaNG1cnMczbLl0HlrMwsvu
-	fvbpqHMurnl9SWt5rjYtQ==
-X-ME-Sender: <xms:E5NDZyhqARTnryXlU56igf4iSWj96BvGxDSMphMGHifw3Q_Eq3iqCmE>
-    <xme:E5NDZzA_0J7Q3o_vm4MiU3eBdr4EE7jlNxnlXPrZj02bkRUKX10OHrbQv41jqgH8s
-    NJHp0cUjgU1MS_JEA>
-X-ME-Received: <xmr:E5NDZ6FfEI8hmh3uNh_389cITNyjkKcCkGjdHucJjROStLTBNNOgiiMu_8A8pgLhtBUJmJ8_GAfJZn-NJaTrFDkgzoc0FgvLJMKac0Jd3bglRS1GvGVO2uunJw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeefgddugedvucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732481814; x=
+	1732568214; bh=88LTYSW86+cyDcUUifqBnDpllE5tLPyTVwdB56P3frU=; b=n
+	db55TJjgzrw9G8VrCQkbUPhBI/nAPubw9g6n/wLo6spKISYQn7/xgVuby9l6KQyQ
+	UdSeQd5vHfvQ9h7ix6OZE9XcD/c49njeD1vJ+nlxcc++mO+etKps1v9JcrOO8r9o
+	tu3Me1jHrJ+4KLkN4MY0MzpunWzr38T8stmEMWlgfXFirSYUSdQ35EaO2AtwTARN
+	R8dp+m+WTuTH1Wfy6bruNJJWoubWJjeLsGSmyzqi39cp0NN1zbBXGGWzsNGA/R13
+	o5vJlZdfkOXrImaJALqBgMNJE46wKbifVwYKt5QpeGTSusIxgW3yREEbcOhXJagq
+	Rj0Rs21WUreNwebiGYgMw==
+X-ME-Sender: <xms:FpNDZ0S8flahnq1ahwewx1BAMaDTPRpRWM-WtzJb3-jCekD2pmrjx7k>
+    <xme:FpNDZxxdwX9uJfpYfyiBXgYRd9MjUJvBpL8TDWXTnG5c2iZ20nuZDa9OO9VP9EpuZ
+    EGX94nM5xgL3SzUcA>
+X-ME-Received: <xmr:FpNDZx0lLDSWxGTrT8852QOUGKpq9WFn9x7IOLZlh1OOdtsktEB4vc_raQlEiq7w_V0sfhp-ctizydNitppeuFGafqe0frF5XKvpRjEm4RiG9dzMfDYFqkkEsQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeefgddugeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
     ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
     uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepudelgf
     euieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffgnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
     rghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
     hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohgu
     vgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehsthholhgvvgesghhmrg
     hilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
     rdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:E5NDZ7TJMqvwVZtAPWLcpIQN-8MSFgDc_Sm4TENGLMNa-3Jjt5qz0A>
-    <xmx:E5NDZ_xdC8zF2bDKiGRq1bNuiwD7gv9npCuaNvxQNlD6BO3YBt_Atw>
-    <xmx:E5NDZ54IfsRVLt0JkzMV7qEJdclidiU8z_ow7FtAMROL7YrWf_QzzQ>
-    <xmx:E5NDZ8wwrU1GcCjyHJgRrHN9HNl3thTJ5kA5og640ctnxQkvBrCAtg>
-    <xmx:E5NDZ6pMkoFw7aov1cfk_IrrVU7eid_OEsEzNd7CksnFEqOku6jFvUWG>
+X-ME-Proxy: <xmx:FpNDZ4BHw4FpzRVjkX8m4Ht_-UlWpIfAH0U3bPdnNcTwlFGT3o7oJQ>
+    <xmx:FpNDZ9g1ptgLs4U1vPsPIxVEF7Qf05Q8W-B6qEN3V8YHBAebyzZIiw>
+    <xmx:FpNDZ0qZKwe_tiRwOsOCA8oy6WvwyubiXlcH-l8JUc3ImCwtLm7xmQ>
+    <xmx:FpNDZwhSHih_SPewKCOOcQkOYq8srpeZUOpBB1SrnKz8mCpMSihB0A>
+    <xmx:FpNDZ7YgEB48f0NF6U-ozCKoJD9j3hrGdXU7MUt8LTF9rWVRYZ8EwyCk>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 24 Nov 2024 15:56:49 -0500 (EST)
+ 24 Nov 2024 15:56:53 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	stolee@gmail.com,
 	phillip.wood123@gmail.com,
 	me@ttaylorr.com
-Subject: [PATCH v3 1/3] sequencer: comment checked-out branch properly
-Date: Sun, 24 Nov 2024 21:56:10 +0100
-Message-ID: <a46767263f6e0f032ed7eb2af2e5f1620f14dfbf.1732481200.git.code@khaugsbakk.name>
+Subject: [PATCH v3 2/3] sequencer: comment `--reference` subject line properly
+Date: Sun, 24 Nov 2024 21:56:11 +0100
+Message-ID: <7a452142666e5ffd2f69f79532781284b5bba8fa.1732481200.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1732481200.git.code@khaugsbakk.name>
 References: <cover.1731406513.git.code@khaugsbakk.name> <cover.1732481200.git.code@khaugsbakk.name>
@@ -94,13 +94,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-`git rebase --update-ref` does not insert commands for dependent/sub-
-branches which are checked out.[1]  Instead it leaves a comment about
-that fact.  The comment char is hardcoded (#).  In turn the comment
-line gets interpreted as an invalid command when `core.commentChar`/
-`core.commentString` is in use.
+`git revert --reference <commit>` leaves behind a comment in the
+first line:[1]
 
-† 1: See 900b50c242 (rebase: add --update-refs option, 2022-07-19)
+    # *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+
+Meaning that the commit will just consist of the next line if the user
+exits the editor directly:
+
+    This reverts commit <--format=reference commit>
+
+But the comment char here is hardcoded (#).  Which means that the
+comment line will inadvertently be included in the commit message if
+`core.commentChar`/`core.commentString` is in use.
+
+† 1: See 43966ab3156 (revert: optionally refer to commit in the
+    "reference" format, 2022-05-26)
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
@@ -108,63 +117,78 @@ Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 Notes (series):
     v3:
     • Review feedback: check more in the test by inspecting the
-      sequence editor
+      proposed commit message.
     
-      Link: https://lore.kernel.org/git/5ed77fab-678d-4a06-bbd0-ea25462a7562@gmail.com/
-    • Message: consistency with the other two messages:
-      • Mention both commentChar and commentString
-      • Commit footnote style: See <commit>
+      Link: https://lore.kernel.org/git/4c623fcf-01dd-4056-80c1-b3c860ab7f87@gmail.com/
+    • Message:
+      • Rewrite message now that we are testing something different
+      • consistency with the other two messages (see previous)
     v2:
-    • Message: “hardcoded” (more common according to `git grep`)
+    • `strbuf_commented_addf` adds a newline, unlike the previous function.
+       We need to remove a newline from the final `strbuf_addstr` with `This
+       reverts commits` and add a newline to each of the other
+       branches (`else if` and `else`).
 
- sequencer.c       |  5 +++--
- t/t3400-rebase.sh | 19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ sequencer.c                   |  9 +++++----
+ t/t3501-revert-cherry-pick.sh | 14 ++++++++++++++
+ 2 files changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 353d804999b..1b6fd86f70b 100644
+index 1b6fd86f70b..d26299cdea2 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -6382,8 +6382,9 @@ static int add_decorations_to_list(const struct commit *commit,
- 		/* If the branch is checked out, then leave a comment instead. */
- 		if ((path = branch_checked_out(decoration->name))) {
- 			item->command = TODO_COMMENT;
--			strbuf_addf(ctx->buf, "# Ref %s checked out at '%s'\n",
--				    decoration->name, path);
-+			strbuf_commented_addf(ctx->buf, comment_line_str,
-+					      "Ref %s checked out at '%s'\n",
-+					      decoration->name, path);
+@@ -2341,8 +2341,8 @@ static int do_pick_commit(struct repository *r,
+ 		next = parent;
+ 		next_label = msg.parent_label;
+ 		if (opts->commit_use_reference) {
+-			strbuf_addstr(&ctx->message,
+-				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
++			strbuf_commented_addf(&ctx->message, comment_line_str,
++				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
+ 		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
+ 			   /*
+ 			    * We don't touch pre-existing repeated reverts, because
+@@ -2352,12 +2352,13 @@ static int do_pick_commit(struct repository *r,
+ 			   !starts_with(orig_subject, "Revert \"")) {
+ 			strbuf_addstr(&ctx->message, "Reapply \"");
+ 			strbuf_addstr(&ctx->message, orig_subject);
++			strbuf_addstr(&ctx->message, "\n");
  		} else {
- 			struct string_list_item *sti;
- 			item->command = TODO_UPDATE_REF;
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 09f230eefb2..711bd230695 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -456,4 +456,23 @@ test_expect_success 'rebase when inside worktree subdirectory' '
- 	)
+ 			strbuf_addstr(&ctx->message, "Revert \"");
+ 			strbuf_addstr(&ctx->message, msg.subject);
+-			strbuf_addstr(&ctx->message, "\"");
++			strbuf_addstr(&ctx->message, "\"\n");
+ 		}
+-		strbuf_addstr(&ctx->message, "\n\nThis reverts commit ");
++		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
+ 		refer_to_commit(opts, &ctx->message, commit);
+ 
+ 		if (commit->parents && commit->parents->next) {
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 411027fb58c..43476236131 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -228,6 +228,20 @@ test_expect_success 'identification of reverted commit (--reference)' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'git rebase --update-ref with core.commentChar and branch on worktree' '
-+	test_when_finished git branch -D base topic2 &&
-+	test_when_finished git checkout main &&
-+	test_when_finished git branch -D wt-topic &&
-+	test_when_finished git worktree remove wt-topic &&
-+	git checkout main &&
-+	git checkout -b base &&
-+	git checkout -b topic2 &&
-+	test_commit msg2 &&
-+	git worktree add wt-topic &&
-+	git checkout base &&
-+	test_commit msg3 &&
-+	git checkout topic2 &&
-+	GIT_SEQUENCE_EDITOR="cat >actual" git -c core.commentChar=% \
-+		 rebase -i --update-refs base &&
-+	grep "% Ref refs/heads/wt-topic checked out at" actual &&
-+	grep "% Ref refs/heads/topic2 checked out at" actual
++test_expect_success 'git revert --reference with core.commentChar' '
++	test_when_finished "git reset --hard to-ident" &&
++	git checkout --detach to-ident &&
++	GIT_EDITOR="cat | head -4 >actual" git -c core.commentChar=% revert \
++		--edit --reference HEAD &&
++	cat <<-EOF >expect &&
++	% *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
++
++	This reverts commit $(git show -s --pretty=reference HEAD^).
++
++	EOF
++	test_cmp expect actual
 +'
 +
- test_done
+ test_expect_success 'identification of reverted commit (revert.reference)' '
+ 	git checkout --detach to-ident &&
+ 	git -c revert.reference=true revert --no-edit HEAD &&
 -- 
 2.47.0
 
