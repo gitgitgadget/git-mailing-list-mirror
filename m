@@ -1,122 +1,136 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767961CD2C
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 21:29:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF58F36C
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 21:41:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732483781; cv=none; b=GeH1VrH+vnsU0DrNGsiLLCecZFuB7Y2OxP1/Cn2/2Jx0zBJqhjMg6FYNnO1WKNeb9RCM4gNgRL62zBfilD0lOsBLmxq9nmtLCTUqHmVbjt3L682ZtzUsSZXg7Gwj1AXlebf5+sIOZpZwb8bszFN7gdcDP0xk+ehzguCntfhBe88=
+	t=1732484516; cv=none; b=g3wjQG+aeotutidxgX5b9UOZr+2GmMI38nb7sElHXOcx68dvG8Wer27n6bKpU4rMd4hGTvBThUwT+3dgPTV1i/YIfJ3/P6r6+x7mIMirn0WzrPeZJgih+1TSaLdz+zDTXG4b4Rs9VHQkni2H2u1yH/aBrA3UrED5svevMM+n/GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732483781; c=relaxed/simple;
-	bh=YuxCJkatDeMZsw3nYECtwlAQktm8pyh3GPQUjh/7LeM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=byfl8G2vDKZJZ3KFgoMasZVqsCfP81fLg2Cj1hwfF9xboR02yXra05itWSig9JZbKCDUM+9H1d9WK+QF7OY00EWcfsNrysk6Kd6Wb+f+a/asE2HvvV9UnwqnhGjCVNQvbkBaaTrRAesBa+n0N0uT0OoImP+fpTe844QJN+fRPGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hqZGyMs/; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1732484516; c=relaxed/simple;
+	bh=qiZa6S1LaWyqJnfBMFvjpSZy4SllLnnA+7CgLREwTQg=;
+	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:
+	 References:In-reply-to; b=p3cJCSn6xaQsB1fwqKOPMgIWNMWFtG9DYN9aTPkfr2w7ZREEMSUAQzALwNVmvthDvtCJtVkeXC9Z8suZVRdKlt01VyCPgA6No7gSjDLE46rqpiQ/1lsF1QPkoWmblvouQV4vZ4mni680+JWJkHa8Yh4C73/Tr8FkzOqaCykHB4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=SyMyknFj; arc=none smtp.client-ip=192.29.178.126
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hqZGyMs/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1732483776;
-	bh=YuxCJkatDeMZsw3nYECtwlAQktm8pyh3GPQUjh/7LeM=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hqZGyMs/Ma62Jqh7U0n7xjeZ0iFmjtoxH4mxJVvoVqDKq4+L4GzRgfnIYI4ZLh18b
-	 FZNkWnj47u+4vGG/c/m/EGlCPA1i4hCE9FMSXSH1UeXMGAdI3qnBZ4FwbwRIwEZM91
-	 FQCt6CRdiXYuSnF9akNbSNAlMYbJiM0xna0ukUDeA/B4lQy4W1VUtuszBa+ob/pZVf
-	 pVczbq3qvGIbo6irffEX+ycD4UB/EUMnsHofYDevntcHNtKhpJnXB1T2cEvNl5obvh
-	 0tk2idwsWlwUPQA7sfNyly/fvuvO+986/6j50ongFCgT9hSvvuNaLExNGO3JZSc2wm
-	 X0HjjDH5imQZB7axqkZLOSl9Ewrb/VZw5cVlV0QoSg8yycINhsKKmJyK9TlkCIiajz
-	 GHYDzaOmVrXz0NW28xPjlNWuA3P7BTjDmXfmuKjfOG6BhyQBlFpAz4z9xCGJJY9g8m
-	 RPYe3+gAegkgcQtYGEDIPN/acG9g3BgiKMH3a/hp3RiiKUjDkH1
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E2E1F20994;
-	Sun, 24 Nov 2024 21:29:36 +0000 (UTC)
-Date: Sun, 24 Nov 2024 21:29:35 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jacob Pfundstein <jjpfst@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bug with SSH keys loaded into ssh-add
-Message-ID: <Z0Oavzr03tTMiKfl@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jacob Pfundstein <jjpfst@gmail.com>, git@vger.kernel.org
-References: <CAFmt1jx9OHDnNRdcgB+sPNH90=eZYFRVEbO7PcETiN0ojMQi4Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="SyMyknFj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=it0/hNgVP9H24t3FOc7BGnUGzFdochPC/bVlS1+jNbg=;
+ b=SyMyknFjrpl07GVNghBglfluQ1ha0EadZp/NqFFL0p5fczg4wsmcLHAcdw15Idxtyu0baXWaw4zW
+   kRdqCnnbnFHVOpZGsgYwAMk2C5vZI4GPTzGzIvOvr7Ra5i9NcXbjhvvUe3enHZVech0qSfrIXE97
+   p6byCDe0Kz6yVtVas7vDmrX/+rBPwn/99aVJmIIw/4ykZrraDo/OKbs7ijMA9sN2ljITgFNYw7Ns
+   hGwnpNk8CNKHlU/T+UkP+z/oIZJgi2x+VrHhZ/hXTaBUsFP9SSXfjcsXB9HZ2AIUg+IMq2L2j+/Z
+   7GjIG9LJKPkrmmgu3P/o0KERQtpJJH7bEc4pvA==
+Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241024 64bit (built Oct 24
+ 2024))
+ with ESMTPS id <0SNH00NX35LLH730@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 24 Nov 2024 21:41:45 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="g88oz46H3FtoXsuo"
-Content-Disposition: inline
-In-Reply-To: <CAFmt1jx9OHDnNRdcgB+sPNH90=eZYFRVEbO7PcETiN0ojMQi4Q@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sun, 24 Nov 2024 22:41:23 +0100
+Message-id: <D5UQHS9IV5N1.3IO1848Q1730B@ferdinandy.com>
+To: "Junio C Hamano" <gitster@pobox.com>, <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: Extending whitespace checks
+References: <xmqqbjy5bc6m.fsf@gitster.g>
+In-reply-to: <xmqqbjy5bc6m.fsf@gitster.g>
+Reporting-Meta:
+ AAEEhntTl+h45xwt23rOlO12H2i3RZN42Rohz08kWA97mbSPtZjVl9Y53p1lUyw9
+ 5iGpm4AFn+vyKQNWnN5Orrwzgx8pKS8IqMLBJvVMK55U0+07vx2lhvoL1MCRt5Rr
+ 0C+zCu6cuR2yDiEy+LmXEse5tElEjRRfS7AoDeV49DpEaq8LSo2GQhk5Q/BawvoN
+ Ndee/yZ5vm2Ifp798UosiQPozpN8jW6pPiJN/bUT+Z2FT7h5GrqQkRzjcfYDuKzC
+ codt+O2Qss7nfuu63BVp8RUxcXZehTr41MC0Lv6FpM0XnHf03PMYLSwGWBIY9gdC
+ dI7ERrGMLAyqlN2miyCt4yn5RL3AXc1lLn1drnlLprNyuSb3OvD7GA5mhLzq8UUt
+ W0WcqoBnxCP8oul6zQRfrBp3dy/YvYPEzTBT7Vxh6XdbXkHN9eADMQTw5kCncsC6
+ lgfcVF9AxpPs43pTpzjv/g9bJEo3TaNEsImqeHQR12A4qRhzi6ylGAOw
 
 
---g88oz46H3FtoXsuo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun Nov 24, 2024 at 03:25, Junio C Hamano <gitster@pobox.com> wrote:
+> We have, via the attributes subsystem, a way to choose from a set of
+> predefined whitespace rules so that "git diff" can notice that you
+> are adding trailing whitespaces to your newly written lines, or you
+> are indenting a newly introduced line in a Python script with a HT.
+> This can be used, for example, in pre-commit hook to reject an
+> attempt to introduce whitespace-damaging changes to the codebase.
+>
+> Which is great.
+>
+> I am wondering what we can do to add a different kind of checks to
+> help file types with fixed format by extending the same mechanism,
+> or the checks I have in mind are too different from the whitespace
+> checks and shoehorning it into the existing mechanism does not make
+> sense.  The particular check I have an immediate need for is for a
+> filetype with lines, each has exactly 4 fields separated with HT in
+> between, so the check would ask "does each line have exactly 3 HT on
+> it?"  It would be extended to verify CSV files with fixed number of
+> fields (but the validator needs to be aware of the quoting rules for
+> comma in a value in fields).
+>
+> I guess the best I could do (outside Git) is
+>
+>  - write such a validator that can take one line of input and say
+>    "this line comforms to the rule".
+>
+>  - add, via .gitattribute, my own attribute to allow me to mark
+>    the files that these rules apply.  Git does not do anything
+>    special for this attribute (remember, I said "outside Git").
+>
+>  - in pre-commit hook, run "git diff ':(attr:myattr)'" to grab
+>    changes in these files with special formats, and have the
+>    line-by-line validator (above) check the new lines.
+>
+> to make sure bad lines would not slip into the history, but it would
+> be really nice if I can trigger the check as part of "git diff --check",
+> which means it would be more ideal if we can do this "inside" Git.
+>
+> Perhaps we could introduce a mechansim that allows me to do the
+> following:
+>
+>  - An attribute, like whitespace=3D..., specifies what line-validation
+>    function to use to vet each new line introduced to a file with
+>    the attribute.
+>
+>  - A line-validation function can be dynamically loaded/linked
+>    (here, we'd need ".gitattribute specifies the logical meaning,
+>    while .git/config and friends maps the 'logical meaning' to a
+>    specific implementation suitable for the platform" separation,
+>    similar to what we use for smudge/clean filters).  Perhaps this
+>    would be a good testbed for use of dll, written even in a foreign
+>    language like Rust?
+>
+>  - In the diff machinery, where a '+' line is checked for whitespace
+>    anomalies in the existing code, add code to call the dynamically
+>    loaded line-validation function when applicable.
+>
+>  - Profit?
+>
+> Hmm?
 
-On 2024-11-24 at 16:23:21, Jacob Pfundstein wrote:
-> Hello everyone,
+This might be a tangent, but since enhancing whitespace checking was mentio=
+ned,
+I'd thought I note here:  `git log --check` running in the CI did not catch=
+ the
+white space errors in this patch (see the last hunk):
 
-Hi,
+https://lore.kernel.org/git/20241121225757.3877852-4-bence@ferdinandy.com/
 
-> I've recently encountered a bug/issue while using Git for Windows. You
-> can load a passphrase-secured SSH key into the ssh agent using
-> ssh-add. As long as the key is loaded into the ssh agent, you don't
-> have to enter the passphrase when using the key. However, when I do
-> git pull or something similar, Git still prompts me for the
-> passphrase.
+although it would have been certainly nice. I'm not sure if --check could
+already catch this actually, or if it would be easy/possible to have someth=
+ing
+general enough that does catch it.
 
-This isn't Git prompting you for the passphrase.  Git passes the
-terminal through to OpenSSH, which is prompting you for the passphrase.
-There's really nothing that Git can do, since it doesn't know what
-OpenSSH will do.
 
-I can make a guess about what might be going wrong here so you can try
-to see if that fixes things, and if not, you could try contacting the
-Git for Windows issue tracker at [0].  Please be sure to search first,
-including the closed issues, as the question may already have been asked
-and answered.
-
-My guess as to what's going on is that you're using two different
-versions of OpenSSH, since there are two with Git for Windows.  One is
-shipped with Git for Windows, and one is the one shipped with Windows. I
-think MSYS2 may implement sockets in an unusual way, which means that if
-the agent is from one version and the `ssh` binary is from another
-version, that they may not be able to communicate properly.  In such a
-case, OpenSSH would prompt you again since it can't contact the agent.
-You could try using both from the same version (I think there's an
-install option for that) or try using Git Bash to see if that fixes the
-problem (even if that isn't a good solution for you, it's useful to know
-=66rom a debugging point of view).
-
-As I said, this is just a guess and I don't use Windows, so you'll have
-to try what I mentioned above or open an issue.
-
-[0] https://github.com/git-for-windows/git/issues
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---g88oz46H3FtoXsuo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ0OavgAKCRB8DEliiIei
-gX65AP0TjBbNKvLsfICIC0Bb/mKIXiPgqEd55/gnVHUUPabWgAEA36HaNf3DUFxz
-uR0OF1tzmZoIFH10iVQSvwODzR1uuQ0=
-=crf2
------END PGP SIGNATURE-----
-
---g88oz46H3FtoXsuo--
+Best,
+Bence
