@@ -1,141 +1,124 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A485C2500C2
-	for <git@vger.kernel.org>; Sun, 24 Nov 2024 19:27:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE202500A0
+	for <git@vger.kernel.org>; Sun, 24 Nov 2024 19:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732476457; cv=none; b=reBSsGjIaE1LIkJEfbTVn2SxW4nuwl+QGDNU+pmtn6XXza03gvW7fXXStAYXPjA26hFUZm0s7CEv9zDWING3lhwlhIBn3TZN3zSTEWmXqbxW/s5kzhIDeLTad3MUy+Koi5XmXakymIt72KETZlweTysBGWXBH2IK/Gx4D6EtxOc=
+	t=1732478310; cv=none; b=gQX1F+MikzBI8P8m22WE2rlhZIj7kqlLZGXSjN/XhM2U81+KOfukIm8uaQfYlPd0vml3XOP0Ve+wNsKpoqxasGKmg7UDMODJzq/JlWSMTbC3x7gj0t5wiyp7p48Atrre6v5dxHarL9W0v3B8LJhaGNdGw9qW1gwiWvLOyYkUvgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732476457; c=relaxed/simple;
-	bh=GGUrhlD5PLWDJluD/onX16ixMCkT3p/k3RT88TPEICY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=VoyG1FVhcgHJ/mKZFGvVSg6qrnh3kJ8WChznyDti5VbMUUhDghF2dQHkKJd4qtN+Wu6yigyqn0xFV8uf6LDNMZkNyc6OD+yWSWSG74jrsyGFOT5a9NLjjoUq0q6Mb7/kj2qPKm74jTFwB5xXn03ghGQLseN07QyI1b224vsOnEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxkauQPc; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732478310; c=relaxed/simple;
+	bh=4L9Wgr4l3AINqSihMfm3DSawfBUs+EtUrjn/BU3dInQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=fh4r00iJgczgvu3Tds2RF/7JylhekZjr1bcE6BpkO8GHgzFk1ns+ZSnK2IYGRwZW9CoxXsk7uBTRI/sQgN3yKD4EM8V9u4/eiCgT+CT2bva5OxWtfKR7Rq7/g0RC5emLSvl5uLVjpXSzZq2m0MADsu8W3usLtGLq/BMi1pj9hl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=E1UkfSUG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FtNom7VP; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxkauQPc"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-431ac30d379so34588805e9.1
-        for <git@vger.kernel.org>; Sun, 24 Nov 2024 11:27:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732476454; x=1733081254; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hTmjcHwInbdLmIcVgfXNZZwGwETGScJqV0zQNdQFVBs=;
-        b=KxkauQPcDsUO98klzKk9l8CIwIM2qmrbADaIw1LVWMTflBdk5KnBF2vxhzA/iYrEVe
-         D9N9hvLWZCVjwHtOUVgwihI2tfsAZJd3Vw1llkXElw0R/S99Y0EDUOeHH8JN2NGSnzL/
-         2BOqW9AX+o1iSVwajer9EgKwlgTvysq/bUynd7s6+cLmNC+vUujCOCJAWueFteilTKIp
-         otdNdcIJxLREgBYOEYwQwzx/z+pEFJZFCeci6Zsp3J7Jsyba3MlbnZi3eGgm2Bz6NRvI
-         jkAsVFyYg/VT0kRZIoE65669RFiWKQ0rARNgkqIYUxAmRktJPYpbzlOIICLGe1TiTMag
-         bjhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732476454; x=1733081254;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hTmjcHwInbdLmIcVgfXNZZwGwETGScJqV0zQNdQFVBs=;
-        b=d/MDkjk35bmNUxTAkyyhb25tPymSzcRNQdJWGhiDNVlFlxjGxLGcncO+cCVEUFPh9S
-         i3DfSz5Q86idsyI0R73u8S3LUpCtxkQn05Yf+HC81NA3K2inGqY3DtuayRyLeMcAmgyU
-         98/FiMADarn9W6RIiHh5DG94qjTzhTP8cVv1AowAon921W7QQJN8FY7MT4VJB1CRRdVD
-         zjklFJTFv0G+XEwJgi+XLULE92V53Qsi14M4WSZUNSDH1fzFwhDomzf1noUrMGXjJnlP
-         fYz/RTGMhO1rzUzSBnOp1Rbc9HPAQ8SdJNuBkgk8k7KIwHyIvMSd24J7TRTUZLml7E7h
-         eP3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWXobVBXp9Nyg/4ERbky0Xb6QqRzcdmtZbw5bXnASpEhsOMJUHCpDLMP2aGKexBFmSY2cI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy15rM5BeYO6d97yEtmmB+xH4FLmSv+axY8wrxSl5mF/zz9h0Wg
-	R0W/zp+74KbKGaXxwlXQyoxfgWlsM5r/A0BG+Pef0fltQ9aJzSUy
-X-Gm-Gg: ASbGncvBubYy8XTBsnvtX6LRsBMsmQMyjBirtiWEPgjjc22iIVJm850V0wY93Z85p6L
-	fTixXOIdR+vgxh+0uwZJ6jmCSEuXeiFBTAeri082mdFR5KsV8g8LP1nzz1wguKaoRPVHNV9JvhO
-	3erJcdeut3rI3p91aGxpDFaNw+VFAggC3SFSsnNtR6Nl8NRqGcXgjuDfD5PpQ4YBfV4+cuHdgO8
-	OkzEBqfz+C2BsKrk3pzU9HHW6YcaYAtypU13ItZ3vFoq/Yrax99wifN7fQeoLJqoWBk8jf0lQEn
-	L8sQZsXo3RmfA2FKl8KS4xuwVZCY
-X-Google-Smtp-Source: AGHT+IEpKKfSWwVs7UuGvK0R2isLhRnsUNltlmbVFzRGxAlTRygMUV6OBhe7k3qo3YuQj9SqXW/NbQ==
-X-Received: by 2002:a05:6000:1a8c:b0:382:49f3:4f8e with SMTP id ffacd0b85a97d-38260b5a6ccmr8420859f8f.18.1732476453755;
-        Sun, 24 Nov 2024 11:27:33 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b? ([2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4349e80e51esm20904995e9.33.2024.11.24.11.27.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Nov 2024 11:27:33 -0800 (PST)
-Message-ID: <60325a17-82e3-4a4c-a6fd-d3b597f1c2bc@gmail.com>
-Date: Sun, 24 Nov 2024 19:27:32 +0000
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="E1UkfSUG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FtNom7VP"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 80CD32540072;
+	Sun, 24 Nov 2024 14:58:26 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Sun, 24 Nov 2024 14:58:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732478306;
+	 x=1732564706; bh=nfxFGStgamVEwGtaW3TboPwXSwW1V9rQwq1GuRrgEc4=; b=
+	E1UkfSUGykmiCq0I58OOIBb0KASCGHbWs/oogKtb0BxuCRTJfm0AoSS49o9Z5037
+	8PqSLIQyNOPzPcqaS0pLP5X1M75F8KYSiOJoeCK77a7FUvGmi18srxjkfIEMgdJN
+	j4n5pcuKE4HPr3GzqWFWpQmxJYAawE/kClCSfaf0vtzJvGmng4ZLvchywmkAXKAF
+	8xrAuCtr8xpdKy6PEoVlp+Z1vckOc5smF5pfvwOs0+micynCc3n3FIbSo5Ri8vjX
+	3gYgPTiFkhym8zjAr9EMlwt7uIG59CgH0if1O28b3w9nldSfgUfp62DG0ehg2Kpd
+	JHq0oAmZvl19i5a9KM+nNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732478306; x=
+	1732564706; bh=nfxFGStgamVEwGtaW3TboPwXSwW1V9rQwq1GuRrgEc4=; b=F
+	tNom7VPA2iWqFkGRykV2ZPKGowl3A+fqXNl+GmyGsEAwap1YvYgCBlyrm0IHKZ0n
+	C8IRZvjXPtqdGyuyozT2NlcbkJVH0ySu020rbsWRiFf8OpYs7w7SSm4vE6GkHZWo
+	RYnZqaQBqwr9nljBzpBS+ob0fSvttWZzJmVLcbqWMLnwwVOJ6SlmnPe2XyaEwv/2
+	cAanoGHzkgQX1weWN4mzzuPXlx4laMsfNkqkANx6vdDW0EjfyrRQwehM2JyNOz23
+	EHqf9+pLNCB7mn5bgXhtB/WkCM4pFI3yDU4bFVKxZ3LGtBs4cfqXJb0XSImGm3ef
+	9bwTebkkRfGWhhSdSD2lA==
+X-ME-Sender: <xms:YoVDZ_3-wZtIpRbiD8czQBOmb8tRgwE4lJrfgajHluFG1h8olmFRMt0>
+    <xme:YoVDZ-H74lsD9Gv6FrDtasnD6SViePGodhpesIPLa8b6BTq3-_EpAWmn8dRT9fEkJ
+    JoZF35dUCKH1mqtrg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeefgddufedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
+    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhl
+    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehs
+    thholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:YoVDZ_68vVadAXxSvKrw819POmG8cFqpmxXAz8qdBRJt4Cu4y9TWag>
+    <xmx:YoVDZ00YoSkOsm520S9JLyh-7Y3_jIrABSlkSm7p7V9IfrngcHCbnA>
+    <xmx:YoVDZyFLrN40T1YCsY91bv67Sk3Wk2Nx2PDSrBbEaZk975KOFkm4NQ>
+    <xmx:YoVDZ18_LvynG7me8HYZZiCpRa9-eCLgw8MlpPQOE9Y_HpCs_-e0Xw>
+    <xmx:YoVDZ_OnA_5BlPERLv2nnkDAn928juAa4jzGL6Mj2CLzda4QkDbWlImY>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E08B3780068; Sun, 24 Nov 2024 14:58:25 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 7/8] worktree: add relative cli/config options to
- `repair` command
-To: Caleb White <cdwhite3@pm.me>, phillip.wood@dunelm.org.uk,
- git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
- <20241031-wt_relative_options-v4-7-07a3dc0f02a3@pm.me>
- <135739ad-6722-449b-9f9b-31c0bbc9f9cb@gmail.com>
- <D5TBGJS8FWBE.3QYEZWZUS0C71@pm.me>
-Content-Language: en-US
-In-Reply-To: <D5TBGJS8FWBE.3QYEZWZUS0C71@pm.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Sun, 24 Nov 2024 20:58:05 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ "Junio C Hamano" <gitster@pobox.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, "Derrick Stolee" <stolee@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>
+Message-Id: <abd3987a-79a8-4e7b-9737-4413a56e288c@app.fastmail.com>
+In-Reply-To: <711b59d7-e649-4031-8924-a16fb632b4d4@gmail.com>
+References: 
+ <5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name>
+ <cover.1731406513.git.code@khaugsbakk.name>
+ <86b4b485e0b3ef023a5d559f437eae22f2fd458f.1731406513.git.code@khaugsbakk.name>
+ <xmqqpln02bee.fsf@gitster.g> <711b59d7-e649-4031-8924-a16fb632b4d4@gmail.com>
+Subject: Re: [PATCH v2 3/3] sequencer: comment commit messages properly
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Caleb
-
-On 23/11/2024 05:41, Caleb White wrote:
-> On Fri Nov 22, 2024 at 9:55 AM CST, Phillip Wood wrote:
->> On 01/11/2024 04:38, Caleb White wrote:
->> We used to update only the ".git", now we'll update both. In the case
->> where we're changing to/from absolute/relative paths that's good because
->> we'll update the "gitdir" file as well. In the other cases it looks like
->> we've we've found this worktree via the "gitdir" file so it should be
->> safe to write the same value back to that file.
-> 
-> Yes, there is an edge case that a file is written with the same (correct)
-> contents, but I think this is acceptable given that it would be more
-> complicated to check if the contents are the same before writing (which
-> would involve reading the file).
-
-That's fine - it might be worth explaining it in the commit message 
-though (the same goes for the other patches where we start writing both 
-files instead of one).
-
->>>    	strbuf_addf(&dotgit, "%s/.git", path);
->>> -	if (!strbuf_realpath(&realdotgit, dotgit.buf, 0)) {
->>> +	if (!strbuf_realpath(&dotgit, dotgit.buf, 0)) {
+On Wed, Nov 13, 2024, at 15:49, phillip.wood123@gmail.com wrote:
+> On 13/11/2024 01:03, Junio C Hamano wrote:
+>> kristofferhaugsbakk@fastmail.com writes:
 >>
->> This works because strbuf_realpath() copies dotgit.buf before it resets
->> dotgit but that does not seem to be documented and looking at the output of
+>>> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>>
 >>
->>       git grep strbuf_realpath | grep \\.buf
->>
->> I don't see any other callers relying on this outside of your earlier
->> changes to this file. Given that I wonder if we should leave it as is
->> which would also simplify this patch as the interesting changes are
->> swamped by the strbuf tweaking.
-> 
-> I'd like to keep this if that's okay.
+>> Describe what happens when a custom comment string is used without
+>> the fixed code in this space.
+>
+> It would also be helpful to explain how to trigger the bug [1]
+>
+> If I remember correctly it was Taylor who first noticed this [2]. If so
+> we should credit him with a "Reported-by:" trailer.
+>
+>>> Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> It seems odd to me to have a "Co-authored-by:" trailer without a
+> corresponding "Signed-off-by:" If someone has contributed enough to
+> deserve "Co-authored-by:" then they should be signing off the code they
+> have contributed. In this case I'd be happy with "Helped-by:" instead
+> but feel free to add my "Signed-off-by:" if you want to keep
+> "Co-authored-by:".
 
-Let's leave it as is and see what Junio thinks - my worry is that if 
-strbuf_realpath() gets refactored in the future it could break this code.
-
-> All of the strbuf tweaking was
-> so that way there is a consistency the variable names across the
-> implementations---all the calls to `write_worktree_linking_files()` use
-> `dotgit` and `gitdir` as the strubuf names so it should be easier to
-> follow now.
-
-Yes the end state is nice, I just found it a bit confusing getting there.
-
-Best Wishes
-
-Phillip
-
-> Best,
-> 
-> Caleb
-> 
-
+I=E2=80=99ll fix that in the next version.  Thanks.
