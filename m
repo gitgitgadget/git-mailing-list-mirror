@@ -1,87 +1,89 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF791C3023
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 20:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CC11C3F00
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 20:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732565625; cv=none; b=dNwavQQouZOvoMrqVL9WlRPvkZwCEF9tFYPaHIZ/PQLxL5Xntizfp90bUENNjP0WSYxvdmuOGoy+8JOGeg4La7MOLAXcStm2uTp6YGP9fILh+sHO5eSKh8BLa2kF/Z6TDr9JSFggt//PfWI2OwV4yc1Srz7uCeUNRBbbSoa7x0w=
+	t=1732565629; cv=none; b=afpnMptXKXp5c9KfG3OXuKU9liNHdOFNCM+ixmX4XshTR5kqBIsEEbddTevWoQ7Z7Vc71uF/TG2JwzkPKYXBvvFXYdytGgP4NcT3mxPuwYpqal9g0BrNTWM23N1qo1v1KIBJuJoBb3/AMzOyDim9S5J9qyT1quk0bjbYiSHDp94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732565625; c=relaxed/simple;
-	bh=R+eqDlqC1cT3ODlE/b91bNwuHTIgK9VZSw5OF42gy6M=;
+	s=arc-20240116; t=1732565629; c=relaxed/simple;
+	bh=Ayucz9bpC5JkMHI20YXd54jwXTnu+Zjp1OXNfNp1y2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QTgh9vn1YgHpj4us9C/SkvyVrbRkY4k3onliccBvJwDkz/TzemS5sAn7/idG35irHt5f70uxWj6asirVVcW+no0njUgS111aTPwvR519kJm+VkM0MVWhEc1i7/yE6vldj8DmQIkynQKm03N0omOi2tIL2v+vfdiAcKi6jF9mZeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=lIauOYPn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yc9rRekz; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=K3qSvHEu027D5tQY1imW9C73NJdonICRAbcDWxPMggxLEGnMqm9oaXkP6MyZe/52vloRRkSrXSyzbGVwAbH+7hf773XXuGSgWHVvw3R18kFQbBjX8zdtuE8JUapwgHaARjIhDUyTWSgdqtdgmnUH0fGy901pYXZOAe3/FYaCyHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kr29un/9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QCLVGGSI; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="lIauOYPn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yc9rRekz"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 23A0A11401B6;
-	Mon, 25 Nov 2024 15:13:42 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 25 Nov 2024 15:13:42 -0500
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kr29un/9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QCLVGGSI"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 151AD11400D4;
+	Mon, 25 Nov 2024 15:13:46 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 25 Nov 2024 15:13:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732565622;
-	 x=1732652022; bh=u1RnMH2o0V0CjLAP3CpWYO2oFXg7Nug0dPGCDomC6IA=; b=
-	lIauOYPnbxdOHuNMTZbkggp6uJonfaXDU6VQiB5BZPPo4rlN46lsgk1G6Q54Wlld
-	gjVZp12MzTJL8KqcrzH2O3P5h9joJ0MFrdGAHRy/hzcwewl/FdwvZvUlZBHm0fCy
-	xeejhxM/iqJCv2VIOsA8nSfakOr0fHOipwwmi4LyNOzEY5hE+31y8krs5Ty9aZbj
-	JvYa+yle1T2UUyGEBF9VnBzV2o4wEYwBI1lcJAcxq3XC+6yobd36lXp4OOng1ecA
-	bxiSbvn7CLdR9b6Hui1gRJPJWR8ugPLa4rExMg7Rte4BYSa1N11JaZcoPnwPyU+J
-	iAmIoDlG7C+M/2PJHu25fA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732565626;
+	 x=1732652026; bh=KiGvlpjRrnl/rIhlB6tBP6qvuknIfKPDzj+NjZFBKNY=; b=
+	kr29un/9eki7Dgtidc58/yKZJs7EclWsO5+pBJMDtH7O/PNZYa/V0cePdk2aHxwb
+	I7niMvYnkzKkgreZFTWS4HYvaW5RFy2ivY0CAO1RR8zQ0sxSK5f9c+WNKEUCfYBE
+	BQlJ4gRAo0Uyok7SSfywB88GqyiPn2sg1EuBiMJwhAZPyXv590TC3Y4MRaPKmrG/
+	i153ZnfzZcde85zKD3U6byEDrGsYJQmFedEGSeYKU3lZz8KfbJ1PSKY8g0jiHcdG
+	HRVhY581h28pdq5N157vZX/Fn6CY+J8UvVDOAgJKtdkpUygjYOVSLNemCflSRHpT
+	qztnPOB6DyOy4nUDevLwJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732565622; x=
-	1732652022; bh=u1RnMH2o0V0CjLAP3CpWYO2oFXg7Nug0dPGCDomC6IA=; b=Y
-	c9rRekzbFx8ZA45WCFAmGYyB20E1zE2wXvoS8L4diKHfk24sfiV2lMThFlA1qqmJ
-	vP2+IEePsyCxJ3yxL2lVISAwF34huEbc22vwsbYgtOe0/DLvAs8yF2H5NWeYQzI7
-	7cYge4zpmTjA93JqHSREvBcnTwkD5U015L+p/ZmKviiM6MnQb96wrhCx2k5ZfgVW
-	QeK1w43sK+1k6e9gC3YyIqvxDHAUBqHA2STjvXasUBN7hjMxu5A9cZKLzWy8rlPY
-	OJ6Aus7lCknpbu44JCVl1ulqRAmEu+XFeg5PIQmNOn+0nosmuum+MH0UCgpu97j1
-	OxwZDOEPQTwS0xLtv99sg==
-X-ME-Sender: <xms:ddpEZ5YAmgrgqXbgX5BpASJAL9cs2hExeUJHRRggfqGpj6Qc3nhzlNg>
-    <xme:ddpEZwYgV8a5XdLUi-KZ4GHo5-BHjkzi2qOd-wMucBL7hseouPZ8qQBisIVgmxg4z
-    TTGagwgl12hukvfbA>
-X-ME-Received: <xmr:ddpEZ79exmr766ipBHpsWTuWW7sgSazNnL1izwUiduncIDtA-ipxMR82x177jwvhYC9aAqhPnYR3k0FLoeSg0-X7E9cKyJoBITpyixhbZu_CnITcMOoFm9f0mA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732565626; x=
+	1732652026; bh=KiGvlpjRrnl/rIhlB6tBP6qvuknIfKPDzj+NjZFBKNY=; b=Q
+	CLVGGSIqXm1FnP1ridraaxQoRiEOOpCoYEp0fuYEKmr/H2qJ+rP4gFepZ9szSeuM
+	U0TTlCNnqTIvEr5A11x+dlrtqykKQ7uavt01rGsvigIiZKkJi5FXD+HHJJiUXRqT
+	2fVT1ddL/3wWuuIJtJb1+no9TmssJpg33U+0ICG2iQ91hH3AEpj5jGOemdVYghz2
+	mmI3/iWdloNtNG/YKPpMGCFUFDPvIqCqUStm+1qdRDoNhBBR60806Ic/jtRZQ60O
+	HWv/XPa+zrJ9lMgcM0w91ji1sUGZGb1+5RW/2YaSf3SolRgMmKnV+rYJfokc+ncY
+	gn3ptTe8ZyrYV4cuiE7uA==
+X-ME-Sender: <xms:edpEZz8t2tndD3Hd_DJlPg1ZQF5YpoyBJO9WFTO7O-Q9isq_U6cB_8U>
+    <xme:edpEZ_v5lWZAUXIprvISlzc2zXMcPWH2v3bb0Uavt9Er4Idvxto4bDxe_HikR-rlo
+    6PKvummvMSTLXxDlQ>
+X-ME-Received: <xmr:edpEZxBKN4ED9OCXcE2iuPZQHYPQJcb5bp3tS_YgXGap0su3vzmyGfWZndVW1QLzmOwvllRyePY7sLH1t_UmpVIDvzIkj1zejo07n05WsxQG6dYuH9b3_87Wlw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddufedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepudelgf
-    euieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffgnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegtohguvges
-    khhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
-    hopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:dtpEZ3pdje5BJxr-KO5jPHEFHYxUsZ7tRy2rXwL9JvQfXd7YzQneUA>
-    <xmx:dtpEZ0ot6MjlCYFxMsnPLVCkcUFQG7N6iLWu6Uyh7oRLRKTV6inqTA>
-    <xmx:dtpEZ9RgqpA_C-vLWAenYF_1YzHKsqoAv6Yj1ScXmiYBy2YMFoZ0Qw>
-    <xmx:dtpEZ8pDlzktKqO58zwZ4Kq-5S7GMXaTlqkrnTAkR47n5IlxZPY7aw>
-    <xmx:dtpEZ1e3gBSd491xS6ogIfuckTziNqqNhUKM5GCMhLtpfGKkA_Ha74hO>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdej
+    necuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhenucggtffrrghtthgvrhhnpedulefgueeiueetkeelieefgedufeehteekhfej
+    ffekvdeuhedtvefhkeeikefhgfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtth
+    hopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    thholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
+    mhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
+X-ME-Proxy: <xmx:edpEZ_dUuBzPZmliv6MB_v_tY3_bydutu4sCq7AQ7I99x0pzI8ZjUA>
+    <xmx:edpEZ4PbyZhQoGssiVtNPkN32Ei6IvQ-SClbUhQXHD0exwURjwOBEA>
+    <xmx:edpEZxnF1OBn8-aJXIYYfeVLp2vVX30DNdJZvA-3ghfp9G4Mty72YA>
+    <xmx:edpEZyvzVbfp48pxKg3-FHHkxjjLg57bGcvcMjQ7QuSyPedMdHo3xA>
+    <xmx:etpEZ_f4LZCJBJjEH3j1MTJuBuEiCQsEAb7ykU8VVHcfJHkq8WMHiJoK>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 15:13:39 -0500 (EST)
+ 25 Nov 2024 15:13:43 -0500 (EST)
 From: kristofferhaugsbakk@fastmail.com
 To: gitster@pobox.com
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	git@vger.kernel.org,
 	stolee@gmail.com,
 	phillip.wood123@gmail.com,
-	me@ttaylorr.com
-Subject: [PATCH v4 2/3] sequencer: comment `--reference` subject line properly
-Date: Mon, 25 Nov 2024 21:13:12 +0100
-Message-ID: <4d10ad4ab5591ac727a26def00db29fc332c9c95.1732565412.git.code@khaugsbakk.name>
+	me@ttaylorr.com,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v4 3/3] sequencer: comment commit messages properly
+Date: Mon, 25 Nov 2024 21:13:13 +0100
+Message-ID: <42b9fbd12d6710248dfc9810c00d63078a0b8428.1732565412.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1732565412.git.code@khaugsbakk.name>
 References: <cover.1732481200.git.code@khaugsbakk.name> <cover.1732565412.git.code@khaugsbakk.name>
@@ -96,106 +98,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-`git revert --reference <commit>` leaves behind a comment in the
-first line:[1]
+The rebase todo editor has commands like `fixup -c` which affects
+the commit messages of the rebased commits.[1]  For example:
 
-    # *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+    pick hash1 <msg>
+    fixup hash2 <msg>
+    fixup -c hash3 <msg>
 
-Meaning that the commit will just consist of the next line if the user
-exits the editor directly:
+This says that hash2 and hash3 should be squashed into hash1 and
+that hash3’s commit message should be used for the resulting commit.
+So the user is presented with an editor where the two first commit
+messages are commented out and the third is not.  However this does
+not work if `core.commentChar`/`core.commentString` is in use since
+the comment char is hardcoded (#) in this `sequencer.c` function.
+As a result the first commit message will not be commented out.
 
-    This reverts commit <--format=reference commit>
+† 1: See 9e3cebd97cb (rebase -i: add fixup [-C | -c] command,
+    2021-01-29)
 
-But the comment char here is hardcoded (#).  Which means that the
-comment line will inadvertently be included in the commit message if
-`core.commentChar`/`core.commentString` is in use.
-
-† 1: See 43966ab3156 (revert: optionally refer to commit in the
-    "reference" format, 2022-05-26)
-
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Reported-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
     v4:
-    • Don’t need to cat(1)
-      • Also use `-n4` in case `-4` is not widely supported
+    • Fix commit message (`)
     
-      Link: https://lore.kernel.org/git/7739a6e2-8758-4d0f-b1d6-f0879a89590f@gmail.com/
+      Link: https://lore.kernel.org/git/5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name/T/#me80519debcd013aa8c8a5e5003c58cff7281fac9
     v3:
-    • Review feedback: check more in the test by inspecting the
-      proposed commit message.
+    • Message: Explain to the best of my knowledge what is going on here in
+      the message body
     
-      Link: https://lore.kernel.org/git/4c623fcf-01dd-4056-80c1-b3c860ab7f87@gmail.com/
-    • Message:
-      • Rewrite message now that we are testing something different
-      • consistency with the other two messages (see previous)
+      Link: https://lore.kernel.org/git/711b59d7-e649-4031-8924-a16fb632b4d4@gmail.com/
+    • Fixed wrong/subpar use of trailers
+    
+      Link: https://lore.kernel.org/git/711b59d7-e649-4031-8924-a16fb632b4d4@gmail.com/
     v2:
-    • `strbuf_commented_addf` adds a newline, unlike the previous function.
-       We need to remove a newline from the final `strbuf_addstr` with `This
-       reverts commits` and add a newline to each of the other
-       branches (`else if` and `else`).
+    • Phillip contributed the test and the `strbuf_setlen` changes
 
- sequencer.c                   |  9 +++++----
- t/t3501-revert-cherry-pick.sh | 14 ++++++++++++++
- 2 files changed, 19 insertions(+), 4 deletions(-)
+Notes (meta-trailers):
+    Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+        Link: https://lore.kernel.org/git/cfa466b8-a87d-4b5d-b330-6c660897de48@gmail.com/#t
+
+ sequencer.c                     | 12 ++++++++----
+ t/t3437-rebase-fixup-options.sh | 15 +++++++++++++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 1b6fd86f70b..d26299cdea2 100644
+index d26299cdea2..42a6f257cbb 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2341,8 +2341,8 @@ static int do_pick_commit(struct repository *r,
- 		next = parent;
- 		next_label = msg.parent_label;
- 		if (opts->commit_use_reference) {
--			strbuf_addstr(&ctx->message,
--				"# *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
-+			strbuf_commented_addf(&ctx->message, comment_line_str,
-+				"*** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***");
- 		} else if (skip_prefix(msg.subject, "Revert \"", &orig_subject) &&
- 			   /*
- 			    * We don't touch pre-existing repeated reverts, because
-@@ -2352,12 +2352,13 @@ static int do_pick_commit(struct repository *r,
- 			   !starts_with(orig_subject, "Revert \"")) {
- 			strbuf_addstr(&ctx->message, "Reapply \"");
- 			strbuf_addstr(&ctx->message, orig_subject);
-+			strbuf_addstr(&ctx->message, "\n");
- 		} else {
- 			strbuf_addstr(&ctx->message, "Revert \"");
- 			strbuf_addstr(&ctx->message, msg.subject);
--			strbuf_addstr(&ctx->message, "\"");
-+			strbuf_addstr(&ctx->message, "\"\n");
- 		}
--		strbuf_addstr(&ctx->message, "\n\nThis reverts commit ");
-+		strbuf_addstr(&ctx->message, "\nThis reverts commit ");
- 		refer_to_commit(opts, &ctx->message, commit);
+@@ -1941,10 +1941,10 @@ static int seen_squash(struct replay_ctx *ctx)
  
- 		if (commit->parents && commit->parents->next) {
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 411027fb58c..b84fdfe8a32 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -228,6 +228,20 @@ test_expect_success 'identification of reverted commit (--reference)' '
- 	test_cmp expect actual
+ static void update_comment_bufs(struct strbuf *buf1, struct strbuf *buf2, int n)
+ {
+-	strbuf_setlen(buf1, 2);
++	strbuf_setlen(buf1, strlen(comment_line_str) + 1);
+ 	strbuf_addf(buf1, _(nth_commit_msg_fmt), n);
+ 	strbuf_addch(buf1, '\n');
+-	strbuf_setlen(buf2, 2);
++	strbuf_setlen(buf2, strlen(comment_line_str) + 1);
+ 	strbuf_addf(buf2, _(skip_nth_commit_msg_fmt), n);
+ 	strbuf_addch(buf2, '\n');
+ }
+@@ -1963,8 +1963,12 @@ static void update_squash_message_for_fixup(struct strbuf *msg)
+ 	size_t orig_msg_len;
+ 	int i = 1;
+ 
+-	strbuf_addf(&buf1, "# %s\n", _(first_commit_msg_str));
+-	strbuf_addf(&buf2, "# %s\n", _(skip_first_commit_msg_str));
++	strbuf_add_commented_lines(&buf1, _(first_commit_msg_str),
++				   strlen(_(first_commit_msg_str)),
++				   comment_line_str);
++	strbuf_add_commented_lines(&buf2, _(skip_first_commit_msg_str),
++				   strlen(_(skip_first_commit_msg_str)),
++				   comment_line_str);
+ 	s = start = orig_msg = strbuf_detach(msg, &orig_msg_len);
+ 	while (s) {
+ 		const char *next;
+diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
+index 7929e2e2e3a..a4b90e881e3 100755
+--- a/t/t3437-rebase-fixup-options.sh
++++ b/t/t3437-rebase-fixup-options.sh
+@@ -127,6 +127,21 @@ test_expect_success 'fixup -C with conflicts gives correct message' '
+ 	test_cmp expected-author actual-author
  '
  
-+test_expect_success 'git revert --reference with core.commentChar' '
-+	test_when_finished "git reset --hard to-ident" &&
-+	git checkout --detach to-ident &&
-+	GIT_EDITOR="head -n4 >actual" git -c core.commentChar=% revert \
-+		--edit --reference HEAD &&
-+	cat <<-EOF >expect &&
-+	% *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
++test_expect_success 'conflicting fixup -C after fixup with custom comment string' '
++	test_config core.commentString COMMENT &&
++	test_when_finished "test_might_fail git rebase --abort" &&
++	git checkout --detach A3 &&
++	test_must_fail env FAKE_LINES="1 fixup 2 fixup_-C 4" git rebase -i A &&
++	echo resolved >A &&
++	git add A &&
++	FAKE_COMMIT_AMEND=edited git rebase --continue &&
++	test_commit_message HEAD <<-\EOF
++	A3
 +
-+	This reverts commit $(git show -s --pretty=reference HEAD^).
-+
++	edited
 +	EOF
-+	test_cmp expect actual
 +'
 +
- test_expect_success 'identification of reverted commit (revert.reference)' '
- 	git checkout --detach to-ident &&
- 	git -c revert.reference=true revert --no-edit HEAD &&
+ test_expect_success 'skipping fixup -C after fixup gives correct message' '
+ 	test_when_finished "test_might_fail git rebase --abort" &&
+ 	git checkout --detach A3 &&
 -- 
 2.47.0
 
