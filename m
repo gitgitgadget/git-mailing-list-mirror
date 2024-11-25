@@ -1,39 +1,43 @@
-Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch [185.70.40.137])
+Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D34D268
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 16:58:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.137
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D561E48A
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 17:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732553919; cv=none; b=UdLuNvOpg9+c0NxPtJ03QsMBR7WqZ+K7Y3DsDeDozsX8bLMSZwy6CAbvA3F/8PzQOkHPEjBhJBzXKvUcQM2ALXrQlpxNxlyeLOKSdWNIKc6ql3Sj/syLM/RJ/TYHc+zbZ5KI/+axEXMKMH1zQDLCXs/UeKZGx1HVRMz4y+3iB+A=
+	t=1732554448; cv=none; b=W1aPeRO7uUgebaEtSszkCZJ+3WtKFV657HdaHWmtT0bZ8lLM6zGT/TVAnDCtUg8hobS+GtJmUQRfKzoNrFUuc2pc4jhe2VL8A71SNdeO7ZdfGXLpcpWuPg7CEHKI9PGQhK4H0KRivoWhd4VvK6O1VsPl3S9HjP/wQsi4vNlKLSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732553919; c=relaxed/simple;
-	bh=9D9IJWqTHh+2yqXSVdMHRQPS1NUh2tLYhFf6XuIrXCk=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=ZQSHXq2A4drDby7XeWLPKYvWw9AW8l5891dJyH6MseBIOhlZW+zIsly7TCqHf9ZsaNCnKO/zuCbQ1Pvc1gC9Wu44rHNMCwE1aaq9SPma+cwvaddjm/NkiLmrbWJsmF7b7vhnJ06w6AcMY1DbsOR0b427JMAVvopQ3vTRiNgKFSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=WLv0oN3Y; arc=none smtp.client-ip=185.70.40.137
+	s=arc-20240116; t=1732554448; c=relaxed/simple;
+	bh=HpYv3HkJXDF88MVFWOIVDOwsaXyZyArBe+Xc0fS9UiQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=i86I74/TfPbkrGXVsHkp2Et8tcW3bXm3wAUwMKCInNmrpuWevKjsskN/f7oQvsTKm4A+iyoRj7WGF5hmNLFXQHVZj26gQEI5no85nk6ChpdDA5alvtN0jP3/+PSHKwWZV200rFQlpfXyGC4+5vt5KiV5n0/B616+dD76qMElTkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=cbJteShe; arc=none smtp.client-ip=185.70.43.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="WLv0oN3Y"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="cbJteShe"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=ono76ml7rbghhnunl5nm5zwr64.protonmail; t=1732553909; x=1732813109;
-	bh=9D9IJWqTHh+2yqXSVdMHRQPS1NUh2tLYhFf6XuIrXCk=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=WLv0oN3Yi/cfx1cUC8N9VxWeUt2+R7TwRm/an7QLQaI+hjTU7D/7ZBdE7kzBNywF+
-	 i5ZgdehSe8I2jVKCCLZua0Czw9BVFd8c/8JxFOBmABgUwjVZRTxaQBodHBEu9neLFi
-	 NDs0k4WiFSA0Ke3X7wO0tCb+J8UkZezAafXafTgfZ/pdIefiqhNi3KmLItwzJVHmP6
-	 f8fS5IPawM3bEnmNM51XRD5X1hVEY3yJu8boakc3ipv0T+Qjgy2CMMyoWVV8UBeU/P
-	 3U4udYIPQ0hg+KAwPHEpwNQzTBmmdTSIAHCU0oFOsmZVp0tMyC5wM5J1TNXnYyUOAD
-	 rKmZBPqVFIniA==
-Date: Mon, 25 Nov 2024 16:58:25 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
+	s=protonmail; t=1732554438; x=1732813638;
+	bh=HpYv3HkJXDF88MVFWOIVDOwsaXyZyArBe+Xc0fS9UiQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=cbJteSheDDWc4xIKdNvx5h04wjB3csV5P7mePNzF0mZ/+VG7AbiyLliPur+f6M2xa
+	 seLvQO37089ve+4MWb56mv879oBNlLRmPP44rbbFlZJsGGeao8gXioPl7zTy7PfplA
+	 WN9XSoYM4ZgcwR09w6bsK9ou6317kUICh7U+m6hFLDgAlCV+V3jyKdTbNtHD6/Rvbz
+	 xmo5ttAtwuie70zlysh4Cjkvnc6jnN9aGKjHD/hCes1EllrGx2dHO84IEFwT2VbWIM
+	 YEHpJlbqBzI1wuATRVtP01YjWW7DVbNOqB0wfgzILMOfhJh5dL9KSfoJTan5lmhK4A
+	 tQReTYFpn3S9w==
+Date: Mon, 25 Nov 2024 17:07:16 +0000
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 From: A bughunter <A_bughunter@proton.me>
-Subject: [question] How does git status compare logs?
-Message-ID: <_eigZQXbNAqu-NrM8-CcbHJEmiHblsPSmmkHrMsUGqX5SwBmQgDXIo58ctopjK_ogO-mfzh8KiiGsdAGqQq2wf4AMZ7tHYWgCdpMCMoKxR0=@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git for Windows 2.47.1
+Message-ID: <se27x28T4xaSsSUxxGXWDjHliPEIctxMINzJzIKIxFwcUGCyAc2a3koOWnPN5RGAmuJB54cdbPReu80JNrMJDIQUGNQJjR0n6iiAgwSAPXE=@proton.me>
+In-Reply-To: <e713d3c1-c1cf-abe5-ca24-d63a5e78d6a9@gmx.de>
+References: <20241125150158.3347-1-johannes.schindelin@gmx.de> <e713d3c1-c1cf-abe5-ca24-d63a5e78d6a9@gmx.de>
 Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: 8c16d49b1fa0a8cca2be8d440f68e2a6773a1216
+X-Pm-Message-ID: 1728e4ee1eea4aa1d80c02ea9be6b8c03ec07068
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,9 +45,9 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4"
+ boundary="b1=_DVaXlwkqzS8HRXOy2d456nwbw7uavxIUs6mNUo4Rw"
 
---b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4
+--b1=_DVaXlwkqzS8HRXOy2d456nwbw7uavxIUs6mNUo4Rw
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -53,24 +57,33 @@ Hash: SHA512
 
 
 
-When using git log to find the commit-id -
-Q. How does git status compare logs? My git is configured for SSH but I do =
-not see any ssh call to the remote.
-A. git status uses _ANSWER_HERE_ to compare with remote.
+
+My reply is interleaved.
 
 from A_bughunter@proton.me
 
 Sent with Proton Mail secure email.
+
+On Monday, November 25th, 2024 at 09:37, Johannes Schindelin <Johannes.Schi=
+ndelin@gmx.de> wrote:
+
+> Another Git for Windows announcement that was rejected as spam by the Git
+> mailing list.
+
+Why was this rejected as spam? It looks like a simple release notice.
+
+> > Ciao,
+> > Johannes
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wnUEARYKACcFgmdErK8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAAGyYAP9nGhlvRScg5QC6ZA2jrbSlbrIY9BKjjR3gj4HCeMuqmgEA7y7r
-1WmgGQ4vg5+6ecdMPxraFW9MdMsHnI5fTPCJ7AU=3D
-=3Do51m
+wnUEARYKACcFgmdErsEJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAEmJAQCrwJTn7NRZ4u0DgyTH6ta37e1IVDYJTNSjXWfpRb88RQEAr0Ef
+ob//X4eweKCH9UPvS7qYBxfRHovj00pn6BtRQQg=3D
+=3DgX71
 -----END PGP SIGNATURE-----
 
---b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4
+--b1=_DVaXlwkqzS8HRXOy2d456nwbw7uavxIUs6mNUo4Rw
 Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
@@ -88,14 +101,14 @@ QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
 eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
 UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
---b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4
+--b1=_DVaXlwkqzS8HRXOy2d456nwbw7uavxIUs6mNUo4Rw
 Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-wnUEABYKACcFgmdErK8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAL/YAP41v0sw
-wNdL1YqYicG9j/HlSwv6zAuBwUSJZMFgkS4F7gEA9LpmvOLVuzCrCg8vwxZSb3yc/2GH2QZYbFIv
-6FB67AA=
+wnUEABYKACcFgmdErsEJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAANcxAQD+/RY8
+pZL1hRJbT0pI6VLVP/BCDuaZTRSLPar/CXge5QD/VqnsiC+B3MyXCAMtDK/UrDJ3/wyD2yPnDCcV
+QHZXJgg=
 
---b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4--
+--b1=_DVaXlwkqzS8HRXOy2d456nwbw7uavxIUs6mNUo4Rw--
 
