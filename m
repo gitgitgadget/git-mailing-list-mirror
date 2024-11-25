@@ -1,55 +1,55 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B87B197A7E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA091198A32
 	for <git@vger.kernel.org>; Mon, 25 Nov 2024 09:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732528648; cv=none; b=s0nfmZ0qsg4uHLFgqIW7cqSeqr+ivndXj8fCc6c2E98ONNT30MG5FfH6N8rFucU3xNNXfvaITXQECE+OJAlc6ypD53yAcouD2W7afs+qIuxxyUoaCo3XMtkvio9Lm9JTI4+xrxnlVVxA8aHqiR+tS4z84HNrtowcZljiHU6gUuw=
+	t=1732528648; cv=none; b=Ep2YkykcNSypmscMMRXve3UNnqLkgcWUEW0jhuTp/VqPcWVwQi5Cxl3nrxk0/uzJuANhE/KF4+gDC1RMg0Cwsr+dciRNUqWRW+Yk+X+gYfCylZ6y5eCfw7SkWRdtAkmfyO6qvj7+dJNt8IuDO/YCU9es7eiwOSjBL6tKzfv6sYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732528648; c=relaxed/simple;
-	bh=ZQJM1VygZgXRoXDqzniweJAjc0cJyg4lUo6+9KOZ4fw=;
+	bh=tx5ZAK7gXuohtB4FkxD15HBYsCBeOZY3vjhB8JC0R+Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=o5Yd+gNdCAXZz4dWj5U2dy99sFB6ajpkG8o4KSDM5iPzRt1ozbhb59Bk632WkmFCgZ0pMhgUxHdAU0YCNjp2rgiRBO/8X6D24ocDTniHCI6LgMKvMZFkFS6MBrnHCtR522ENdfFvRZxs0rrAxnH9lV1kjAYpGS3FQEjKJV+Vhf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fFNDoOAm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jZPxz10z; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=lLuhTIKXiQi9cmhJNnIRu0wnpag3ou1/GSXc22HKF8/rAhTGKYRdMX4Sv7apRPqmAgbnzw2v2RyTt+KTPyT1uYQTGDl/1VPtS2VwrkaOL5OoS3Slx82qPc8zYIl1JKJxySjDA8zd3NOEGnN/Ti9X5l9cOv+Pt0I4N6VZJ0M+YC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SQCWpY8G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JdcjYF49; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fFNDoOAm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jZPxz10z"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SQCWpY8G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JdcjYF49"
 Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7264C114015C;
+	by mailfout.stl.internal (Postfix) with ESMTP id BB00B1140165;
 	Mon, 25 Nov 2024 04:57:25 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 25 Nov 2024 04:57:25 -0500
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 25 Nov 2024 04:57:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1732528645;
-	 x=1732615045; bh=xR+Tn02Oaxr695TQyQE5n5qOwwjyOAbQ1KI+5CLEtIQ=; b=
-	fFNDoOAmJGZT3Zvio7xkh+oAreKwwE9OT4FYTsHnMVIW2Giy7467bSWSb8eKrHOX
-	Y9eo+bMb02fPd5q7vsIxoqZIwYRkxEV9gukk4ZOLPXQ74IkEYnpYk4zbVL0f422p
-	5S8FwugpgwdeflqbXW57/9r+6zNgqabjzx+VHmqt4sU3VezSvhSyzNhhAjQ9u0Tx
-	iKBD3xS14TYoBo3PCpgRdlpzXjWGW3oC2eP7tODITdbPb9UkyWRSB7LZGgKdnOTy
-	GKmRJriO/kD8IzimQofr0JyPFju49k7ca2kxAupu4t6IYPc7kHktuDtb7xP82sj7
-	LSqhTAZR9n+CeOBX/HdIjA==
+	 x=1732615045; bh=jRAr/STAt9/ekMMxn2k48xSmPR2dlEz/fYVqmmXiYUM=; b=
+	SQCWpY8GWnVadCqsLYmBn7CV/cY/a2hrISN2XTXGoe8cB8w5KbqRskEFqPyi3enL
+	1SeeFW9F0wCN6ICd34RweisAaRUfV5jQX2Rcg7PCzRCwmmF7dJbw9iIMPjeXMSHW
+	8HsS4XYg1B+JA2cQDwsF/zj8QW/eGZcHtLj1ZuplknVh1wVXtILrQeyrwJRvbVlI
+	EfoShFdZqJ0uxyB+W1feoAgCQfqnjiryL4i1tUfhdvPdG8xk5gGjKBxaDBM9FwQs
+	MVOURtm/EszEtSpmCB97Q6ADzz4KswlFV8ducgYDDb7L+1rPjiP3jAwgUHmUyKup
+	h2ERykFNhYaFy+XA6AWakA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732528645; x=
-	1732615045; bh=xR+Tn02Oaxr695TQyQE5n5qOwwjyOAbQ1KI+5CLEtIQ=; b=j
-	ZPxz10zDCEPnC2hEFFnPVvRMq28Vy23+Hqzi7kI7y6S3xatR1CJCaZWbgxZ2DJ9c
-	sCAOpFJsBTjCkyKdCuuYw0Nfdok6ReocjZM2ZG/C0AdIiSJLzdONhd9Nr/HCqxMR
-	cfI5TcF7vbSBb53MgjUdaQurThzKlLxp/faL8k20MaeOnGU+4xptOKS6/Y3c9+r+
-	PBNMkZkB4LyVNmqynXAJVGhRdwZBBJ8ATAd+N6v0WLl8O3jXj58Q5SIje2drIrTT
-	E40t5a2NKw1h+o+iTelIK6XgHd4yF0DynikYtgJlEsggxQiOtVw7kvfhiTSF4ZQ+
-	sDEq4je0b/bh1XIlBitxw==
-X-ME-Sender: <xms:BUpEZ5eH2ZY1R9-P1N-sNAQCkfwdV_dx5D541fP33M4gSPRikHY3FQ>
-    <xme:BUpEZ3OBmuPDPTY_tDXr6lH6Jmrvp8usfDpplJ-xjmNRTG4CqZfDtEtiht3ofwOHu
-    Hv1vjjHH5heqCCchA>
-X-ME-Received: <xmr:BUpEZyjIesD9F8YcJAeIYJtbu65_dDto8KcW7hlryN4ynN7ToY8Y_9uspTePTl2iCNVjPVgWpBns_CnYUrOGzJQB1LVIBtVcUAXlx4keG08HUQ>
+	1732615045; bh=jRAr/STAt9/ekMMxn2k48xSmPR2dlEz/fYVqmmXiYUM=; b=J
+	dcjYF495qQGxqBIo1SubSejgVHd0afzJ4nl8F2CbaP6++3FeJpxJFJXexZ+Exe86
+	0P6/gQcWkvERFMovbsAmOaKEJtBGtXFjVY8QXU3akaWTs6MCmH0MnN2c5Mn7SY+k
+	rgPnhATWokRtj5xZ1QiIciqtJfqcnngofLFtkTcQeb0iHFz7OYWmEk5NILELPzFc
+	6ZhCA9h5Y9nAh3hsWE25AzGxVnmieARaEh7dUsNDT8VShQ6CcjJ6qmotVonW10Zl
+	04TiyUJzznV2emDjtZAUV5YbGgmbGbBnNgcKHB+kxWhSH4mKXq11NO0nn3g/bw9b
+	AHeC+Xx7+cT8xc7Y1vz8Q==
+X-ME-Sender: <xms:BUpEZyZ2Tm5GeGLTfK6Yh6OpsfFOIbF2VEvT2QPStO8N8QU1lIMUPw>
+    <xme:BUpEZ1aOjJy-uQtDHhTcKXcft9B3J5IQ241zyeyh5V9_quIGu9n885uGPSeRmUcls
+    b6ow531EremGalrsw>
+X-ME-Received: <xmr:BUpEZ882YrKVKBG2xcIAP0cCWmiEP9TL1cJseTQUpvXRtxvJKoh9I6sZYIuzx8TOpWGFohu-v3bZevo6lU-FKcFDjmng6aBCGlQrqmz_umDzgw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,29 +58,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddtkecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
-    nhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthho
-    pegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorh
-    hrrdgtohhm
-X-ME-Proxy: <xmx:BUpEZy-V3r0yQ5VXgck0fVcU6i4tfEqRO8xOwz93UIYXduMsfz2s2w>
-    <xmx:BUpEZ1uDZVfJ1N0nCkYbbgsaRZcM8Qhq-mN4ivQ7eNpVHU693oQP-Q>
-    <xmx:BUpEZxFMB-1VKsiO_tkG4muZ9P8VOtj6xF3juaxDOdK7SdjcxeVZIw>
-    <xmx:BUpEZ8M6vMp8Redh7Pv4-sWrZVQWd-hwUI09yqgz7EXLXchXtd_aRw>
-    <xmx:BUpEZxGFvFMSkT1P7ouaffp3PiGEN8kZLUzYpW9CHnC1wsGJi-91fVtj>
+    shhmthhpohhuthdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjheitheskhgu
+    sghgrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtoheprhgr
+    mhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehsuh
+    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvght
+X-ME-Proxy: <xmx:BUpEZ0q8xn6D6NLC29Az_rvP1zd8rBFIwW85rq-yFgXDtZG1ssQT4g>
+    <xmx:BUpEZ9prRIQmlZT0fbMvAH2mYf4yug01xQeNqHLB-19JDkmrT56tRQ>
+    <xmx:BUpEZyRk5sPEgGF-DgQ1TGFlTVzh-EJh1wmoiCmeKAt3sRTyKlhWlQ>
+    <xmx:BUpEZ9qM3mKndKEfadWhyCpe_lHC9nyiqwF1kmmWGrZQ93GYN96C7g>
+    <xmx:BUpEZ-THLalLkG0V3phje5lE77eS6FQGMJIbs3ajo62tfKqxsM9Jalya>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  25 Nov 2024 04:57:23 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c5554f77 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 09:56:17 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d81a6cbb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 09:56:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 25 Nov 2024 10:57:01 +0100
-Subject: [PATCH v9 13/23] Makefile: refactor generators to be
- PWD-independent
+Date: Mon, 25 Nov 2024 10:57:02 +0100
+Subject: [PATCH v9 14/23] Makefile: allow "bin-wrappers/" directory to
+ exist
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241125-pks-meson-v9-13-1c6cf242a5f1@pks.im>
+Message-Id: <20241125-pks-meson-v9-14-1c6cf242a5f1@pks.im>
 References: <20241125-pks-meson-v9-0-1c6cf242a5f1@pks.im>
 In-Reply-To: <20241125-pks-meson-v9-0-1c6cf242a5f1@pks.im>
 To: git@vger.kernel.org
@@ -102,226 +102,123 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Johannes Sixt <j6t@kdbg.org>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-We have multiple scripts that generate headers from other data. All of
-these scripts have the assumption built-in that they are executed in the
-current source directory, which makes them a bit unwieldy to use during
-out-of-tree builds.
+The "bin-wrappers/" directory gets created by our build system and is
+populated with one script for each of our binaries. There isn't anything
+inherently wrong with the current layout, but it is somewhat hard to
+adapt for out-of-tree build systems.
 
-Refactor them to instead take the source directory as well as the output
-file as arguments.
+Adapt the layout such that our "bin-wrappers/" directory always exists
+and contains our "wrap-for-bin.sh" script to make things a little bit
+easier for subsequent steps.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                            |  6 +++---
- contrib/buildsystems/CMakeLists.txt | 19 +++++++++--------
- generate-cmdlist.sh                 | 42 +++++++++++++++++++++++--------------
- generate-configlist.sh              | 20 +++++++++++++-----
- generate-hooklist.sh                | 15 ++++++++++++-
- 5 files changed, 68 insertions(+), 34 deletions(-)
+ .gitignore                                      | 1 -
+ Documentation/CodingGuidelines                  | 2 +-
+ Makefile                                        | 6 +++---
+ bin-wrappers/.gitignore                         | 9 +++++++++
+ wrap-for-bin.sh => bin-wrappers/wrap-for-bin.sh | 0
+ contrib/buildsystems/CMakeLists.txt             | 6 +++---
+ 6 files changed, 16 insertions(+), 8 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index d3be460040c6120d862a25dff1abd325b93b37fd..e82aa19df03fc865eaa0468f12b734cec0c48a2c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -12,7 +12,6 @@
+ /GIT-TEST-SUITES
+ /GIT-USER-AGENT
+ /GIT-VERSION-FILE
+-/bin-wrappers/
+ /git
+ /git-add
+ /git-am
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 87904791cbcea6e57d0fb3c7d4e27f2b0d80b95f..1df9d0c42f1ee7b16ecd7abc22d2653dbf9bae2e 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -583,7 +583,7 @@ For C programs:
+    Run `GIT_DEBUGGER=1 ./bin-wrappers/git foo` to simply use gdb as is, or
+    run `GIT_DEBUGGER="<debugger> <debugger-args>" ./bin-wrappers/git foo` to
+    use your own debugger and arguments. Example: `GIT_DEBUGGER="ddd --gdb"
+-   ./bin-wrappers/git log` (See `wrap-for-bin.sh`.)
++   ./bin-wrappers/git log` (See `bin-wrappers/wrap-for-bin.sh`.)
+ 
+  - The primary data structure that a subsystem 'S' deals with is called
+    `struct S`. Functions that operate on `struct S` are named
 diff --git a/Makefile b/Makefile
-index c898720861b6aad04610b43b33244234dafaee4d..61639d17dc364acf30ffd2d317015d8db440acc1 100644
+index 61639d17dc364acf30ffd2d317015d8db440acc1..14ee6817cf9d9d03312a9cbd93b8ee218241d3d4 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2523,17 +2523,17 @@ $(BUILT_INS): git$X
- config-list.h: generate-configlist.sh
+@@ -3206,8 +3206,7 @@ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(
  
- config-list.h: Documentation/*config.txt Documentation/config/*.txt
--	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh >$@
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
  
- command-list.h: generate-cmdlist.sh command-list.txt
- 
- command-list.h: $(wildcard Documentation/git*.txt)
- 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
- 		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
--		command-list.txt >$@
-+		. $@
- 
- hook-list.h: generate-hooklist.sh Documentation/githooks.txt
--	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh >$@
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh . $@
- 
- SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):\
- 	$(localedir_SQ):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
+-bin-wrappers/%: wrap-for-bin.sh
+-	$(call mkdir_p_parent_template)
++$(test_bindir_programs): bin-wrappers/%: bin-wrappers/wrap-for-bin.sh
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+ 	     -e 's|@BUILD_DIR@|$(shell pwd)|' \
+ 	     -e 's|@PROG@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+@@ -3704,7 +3703,8 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) $(SP_OBJ)
+ 	$(RM) $(HCC)
+ 	$(RM) version-def.h
+-	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
++	$(RM) -r $(dep_dirs) $(compdb_dir) compile_commands.json
++	$(RM) $(test_bindir_programs)
+ 	$(RM) -r po/build/
+ 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r .dist-tmp-dir .doc-tmp-dir
+diff --git a/bin-wrappers/.gitignore b/bin-wrappers/.gitignore
+new file mode 100644
+index 0000000000000000000000000000000000000000..1c6c90458b758641d0311e812563b32dd4656b48
+--- /dev/null
++++ b/bin-wrappers/.gitignore
+@@ -0,0 +1,9 @@
++/git
++/git-cvsserver
++/git-receive-pack
++/git-shell
++/git-upload-archive
++/git-upload-pack
++/scalar
++/test-fake-ssh
++/test-tool
+diff --git a/wrap-for-bin.sh b/bin-wrappers/wrap-for-bin.sh
+old mode 100644
+new mode 100755
+similarity index 100%
+rename from wrap-for-bin.sh
+rename to bin-wrappers/wrap-for-bin.sh
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index defdd958bb64906489482b77752b1a137282824f..de2c24e66b5b94e18368aba576fc11418e2aa049 100644
+index de2c24e66b5b94e18368aba576fc11418e2aa049..259dc838b73dcda6ab98776fab61788d90754e03 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -638,23 +638,24 @@ set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS} CACHE STRING "Programs not built" F
- if(NOT EXISTS ${CMAKE_BINARY_DIR}/command-list.h OR NOT EXCLUSION_PROGS_CACHE STREQUAL EXCLUSION_PROGS)
- 	list(REMOVE_ITEM EXCLUSION_PROGS empty)
- 	message("Generating command-list.h")
--	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-cmdlist.sh ${EXCLUSION_PROGS} command-list.txt
--			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_BINARY_DIR}/command-list.h)
-+	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-cmdlist.sh"
-+				${EXCLUSION_PROGS}
-+				"${CMAKE_SOURCE_DIR}"
-+				"${CMAKE_BINARY_DIR}/command-list.h")
- endif()
+@@ -1088,20 +1088,20 @@ set(wrapper_test_scripts
  
- if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-list.h)
- 	message("Generating config-list.h")
--	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-configlist.sh
--			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_BINARY_DIR}/config-list.h)
-+	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-configlist.sh"
-+				"${CMAKE_SOURCE_DIR}"
-+				"${CMAKE_BINARY_DIR}/config-list.h")
- endif()
  
- if(NOT EXISTS ${CMAKE_BINARY_DIR}/hook-list.h)
- 	message("Generating hook-list.h")
--	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
--			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_BINARY_DIR}/hook-list.h)
-+	execute_process(COMMAND "${SH_EXE}" ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
-+				"${CMAKE_SOURCE_DIR}"
-+				"${CMAKE_BINARY_DIR}/hook-list.h")
- endif()
+ foreach(script ${wrapper_scripts})
+-	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ 	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
+ 	string(REPLACE "@PROG@" "${script}${EXE_EXTENSION}" content "${content}")
+ 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
+ endforeach()
  
- include_directories(${CMAKE_BINARY_DIR})
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 205541e0f7f81b1df4061215ae34a2742a45475d..b923a5aab80dfa571a40a4f6fa3d860fcf8f8dd1 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -64,7 +64,7 @@ define_category_names () {
- print_command_list () {
- 	echo "static struct cmdname_help command_list[] = {"
+ foreach(script ${wrapper_test_scripts})
+-	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++	file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ 	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
+ 	string(REPLACE "@PROG@" "t/helper/${script}${EXE_EXTENSION}" content "${content}")
+ 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
+ endforeach()
  
--	echo "$1" |
-+	echo "$2" |
- 	while read cmd rest
- 	do
- 		synopsis=
-@@ -76,7 +76,7 @@ print_command_list () {
- 				break
- 				;;
- 			esac
--		done <"Documentation/$cmd.txt"
-+		done <"$1/Documentation/$cmd.txt"
- 
- 		printf '\t{ "%s", N_("%s"), 0' "$cmd" "$synopsis"
- 		printf " | CAT_%s" $rest
-@@ -93,18 +93,28 @@ do
- 	shift
- done
- 
--commands="$(command_list "$1")"
--categories="$(category_list "$commands")"
-+if test "$#" -ne 2
-+then
-+	die "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+fi
-+
-+SOURCE_DIR="$1"
-+OUTPUT="$2"
-+
-+{
-+	commands="$(command_list "$SOURCE_DIR"/command-list.txt)"
-+	categories="$(category_list "$commands")"
- 
--echo "/* Automatically generated by generate-cmdlist.sh */
--struct cmdname_help {
--	const char *name;
--	const char *help;
--	uint32_t category;
--};
--"
--define_categories "$categories"
--echo
--define_category_names "$categories"
--echo
--print_command_list "$commands"
-+	echo "/* Automatically generated by generate-cmdlist.sh */
-+	struct cmdname_help {
-+		const char *name;
-+		const char *help;
-+		uint32_t category;
-+	};
-+	"
-+	define_categories "$categories"
-+	echo
-+	define_category_names "$categories"
-+	echo
-+	print_command_list "$SOURCE_DIR" "$commands"
-+} >"$OUTPUT"
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index 8692fe5cf4d5e4025265e6110254b05640615fea..579422619cc777ff597523a4db81b99912aac3aa 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -1,13 +1,19 @@
- #!/bin/sh
- 
--echo "/* Automatically generated by generate-configlist.sh */"
--echo
-+SOURCE_DIR="$1"
-+OUTPUT="$2"
-+
-+if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-+then
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	exit 1
-+fi
- 
- print_config_list () {
- 	cat <<EOF
- static const char *config_name_list[] = {
- EOF
--	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
-+	grep -h '^[a-zA-Z].*\..*::$' "$SOURCE_DIR"/Documentation/*config.txt "$SOURCE_DIR"/Documentation/config/*.txt |
- 	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
- 	sort |
- 	sed 's/^.*$/	"&",/'
-@@ -17,5 +23,9 @@ EOF
- EOF
- }
- 
--echo
--print_config_list
-+{
-+	echo "/* Automatically generated by generate-configlist.sh */"
-+	echo
-+	echo
-+	print_config_list
-+} >"$OUTPUT"
-diff --git a/generate-hooklist.sh b/generate-hooklist.sh
-index 2f9f54eb545be2bd79c37a868dbeef96d2ddfb9f..e22068c2fa4139983d685fd3bcd78e3e2a52beb0 100755
---- a/generate-hooklist.sh
-+++ b/generate-hooklist.sh
-@@ -2,6 +2,17 @@
- #
- # Usage: ./generate-hooklist.sh >hook-list.h
- 
-+SOURCE_DIR="$1"
-+OUTPUT="$2"
-+
-+if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-+then
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	exit 1
-+fi
-+
-+{
-+
- cat <<EOF
- /* Automatically generated by generate-hooklist.sh */
- 
-@@ -11,10 +22,12 @@ EOF
- sed -n \
- 	-e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}' \
- 	-e 'x' \
--	<Documentation/githooks.txt |
-+	<"$SOURCE_DIR"/Documentation/githooks.txt |
- 	LC_ALL=C sort
- 
- cat <<EOF
- 	NULL,
- };
- EOF
-+
-+} >"$OUTPUT"
+-file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
++file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
+ string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
+ string(REPLACE "@PROG@" "git-cvsserver" content "${content}")
+ file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/git-cvsserver ${content})
 
 -- 
 2.47.0.274.g962d0b743d.dirty
