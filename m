@@ -1,97 +1,101 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch [185.70.40.137])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF40C1ADFFE
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 16:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D34D268
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 16:58:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732552548; cv=none; b=rgUaE2XQT7vC35aEGBDfaMj3TPXKB5tACSF7HZDTDfl2SXRZICrTfXmd1FDC5M7hXfVPY/JQKK0L8qfUtwG3ZLDYhtgLAiyXIVTCTfDauIhC8zQzuTrtus+Xmurah7nr3VcfSd3fi+xNyqhxGoJ3poNW5RPdi/cqN9PHLInsVUM=
+	t=1732553919; cv=none; b=UdLuNvOpg9+c0NxPtJ03QsMBR7WqZ+K7Y3DsDeDozsX8bLMSZwy6CAbvA3F/8PzQOkHPEjBhJBzXKvUcQM2ALXrQlpxNxlyeLOKSdWNIKc6ql3Sj/syLM/RJ/TYHc+zbZ5KI/+axEXMKMH1zQDLCXs/UeKZGx1HVRMz4y+3iB+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732552548; c=relaxed/simple;
-	bh=ht69AMVkRca2CCsC2Vb4lpilp68L7+v4a1s3LcxB03w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ekXdTWsuC71MEJ0x34qan+tbEwd4vhQdI1B+pt5RkcZCvXfsBBFRloYC8YHFQ2AuHADx6biGaSVytuAkONeuW8waStk7O56VDoBhqq5TxCYlXz8FbWLvF+tW9qj/MHK+jowDCNS3Phz9JhKILD6tCUYgrLLaCrZGMh062v7pCKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=S4vzV7NJ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1732553919; c=relaxed/simple;
+	bh=9D9IJWqTHh+2yqXSVdMHRQPS1NUh2tLYhFf6XuIrXCk=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=ZQSHXq2A4drDby7XeWLPKYvWw9AW8l5891dJyH6MseBIOhlZW+zIsly7TCqHf9ZsaNCnKO/zuCbQ1Pvc1gC9Wu44rHNMCwE1aaq9SPma+cwvaddjm/NkiLmrbWJsmF7b7vhnJ06w6AcMY1DbsOR0b427JMAVvopQ3vTRiNgKFSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=WLv0oN3Y; arc=none smtp.client-ip=185.70.40.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="S4vzV7NJ"
-Received: (qmail 13395 invoked by uid 109); 25 Nov 2024 16:35:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ht69AMVkRca2CCsC2Vb4lpilp68L7+v4a1s3LcxB03w=; b=S4vzV7NJi7FGmbmtCdSapGfickU5WLLA/EozXGm1rUqL3iw2bPPAt6Iqeijdd+sBVxrn2Q5POuPrqNYzzEx8rmh6pDvCVRChH/M+Ec3UbLd/VA1AJsm2sGD/92Fa4Pn5YK9D3tmaxndWycnlxHIejJs2/lU8XiCO7Pt6o2flKoXm83pXM2HVzPIeuToCMhkwfllvnCPll4X/UG3N7sHH4gHDRJ7pHfz7EBLiqiG5HT8G80rLzNVx8idB7SU0cjyKEP1BwQAIHcwzUAL5bikQMB0tJWQZXeBVLxUwIjjUzTqsc3FLAA5lK1ume5UfEjuVzZGZZZ1rGbQLoI6U9RNDkg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 25 Nov 2024 16:35:44 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12447 invoked by uid 111); 25 Nov 2024 16:35:44 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 25 Nov 2024 11:35:44 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 25 Nov 2024 11:35:43 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] bisect: address Coverity warning about potential double
- free
-Message-ID: <20241125163543.GA13033@coredump.intra.peff.net>
-References: <20241125-pks-leak-fixes-address-double-free-v1-1-d33fd8ebf55b@pks.im>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="WLv0oN3Y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=ono76ml7rbghhnunl5nm5zwr64.protonmail; t=1732553909; x=1732813109;
+	bh=9D9IJWqTHh+2yqXSVdMHRQPS1NUh2tLYhFf6XuIrXCk=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=WLv0oN3Yi/cfx1cUC8N9VxWeUt2+R7TwRm/an7QLQaI+hjTU7D/7ZBdE7kzBNywF+
+	 i5ZgdehSe8I2jVKCCLZua0Czw9BVFd8c/8JxFOBmABgUwjVZRTxaQBodHBEu9neLFi
+	 NDs0k4WiFSA0Ke3X7wO0tCb+J8UkZezAafXafTgfZ/pdIefiqhNi3KmLItwzJVHmP6
+	 f8fS5IPawM3bEnmNM51XRD5X1hVEY3yJu8boakc3ipv0T+Qjgy2CMMyoWVV8UBeU/P
+	 3U4udYIPQ0hg+KAwPHEpwNQzTBmmdTSIAHCU0oFOsmZVp0tMyC5wM5J1TNXnYyUOAD
+	 rKmZBPqVFIniA==
+Date: Mon, 25 Nov 2024 16:58:25 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: [question] How does git status compare logs?
+Message-ID: <_eigZQXbNAqu-NrM8-CcbHJEmiHblsPSmmkHrMsUGqX5SwBmQgDXIo58ctopjK_ogO-mfzh8KiiGsdAGqQq2wf4AMZ7tHYWgCdpMCMoKxR0=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: 8c16d49b1fa0a8cca2be8d440f68e2a6773a1216
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4"
+
+--b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241125-pks-leak-fixes-address-double-free-v1-1-d33fd8ebf55b@pks.im>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 25, 2024 at 04:56:25PM +0100, Patrick Steinhardt wrote:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-> Coverity has started to warn about a potential double-free in
-> `find_bisection()`. This warning is triggered because we may modify the
-> list head of the passed-in `commit_list` in case it is an UNINTERESTING
-> commit, but still call `free_commit_list()` on the original variable
-> that points to the now-freed head in case where `do_find_bisection()`
-> returns a `NULL` pointer.
-> 
-> As far as I can see, this double free cannot happen in practice, as
-> `do_find_bisection()` only returns a `NULL` pointer when it was passed a
-> `NULL` input. So in order to trigger the double free we would have to
-> call `find_bisection()` with a commit list that only consists of
-> UNINTERESTING commits, but I have not been able to construct a case
-> where that happens.
-> 
-> Drop the `else` branch entirely as it seems to be a no-op anyway.
-> Another option might be to instead call `free_commit_list()` on `list`,
-> which is the modified version of `commit_list` and thus wouldn't cause a
-> double free. But as mentioned, I couldn't come up with any case where a
-> passed-in non-NULL list becomes empty, so this shouldn't be necessary.
-> And if it ever does become necessary we'd notice anyway via the leak
-> sanitizer.
 
-Nicely explained.
 
-> Interestingly enough we did not have a single test exercising this
-> branch: all tests pass just fine even when replacing it with a call to
-> `BUG()`. Add a test that exercises it.
 
-Seems reasonable. That test will end up passing an empty list into
-find_bisection(), because everything is UNINTERESTING, and the revision
-machinery's limit_list() removes the UNINTERESTING elements from the
-revs->commits list.
+When using git log to find the commit-id -
+Q. How does git status compare logs? My git is configured for SSH but I do =
+not see any ssh call to the remote.
+A. git status uses _ANSWER_HERE_ to compare with remote.
 
-I wondered if a topology more like this:
+from A_bughunter@proton.me
 
-      one
-      /
-  base--two
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-could produce something interesting from "rev-list --bisect ^one two".
-But no, we still end up removing all of the uninteresting commits before
-we hit find_bisection(). And anyway, "two" is obviously going to be the
-output, so we know "best" won't be NULL and it won't hit your new code.
+wnUEARYKACcFgmdErK8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAGyYAP9nGhlvRScg5QC6ZA2jrbSlbrIY9BKjjR3gj4HCeMuqmgEA7y7r
+1WmgGQ4vg5+6ecdMPxraFW9MdMsHnI5fTPCJ7AU=3D
+=3Do51m
+-----END PGP SIGNATURE-----
 
-So I agree there doesn't seem to be a way to trigger the new code that
-isn't just a noop.
+--b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
 
-Thanks for fixing this!
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
--Peff
+--b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmdErK8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAL/YAP41v0sw
+wNdL1YqYicG9j/HlSwv6zAuBwUSJZMFgkS4F7gEA9LpmvOLVuzCrCg8vwxZSb3yc/2GH2QZYbFIv
+6FB67AA=
+
+--b1=_JpwytBbTwsrAyKWOt9RJLwZoU8oVEYui7sO680e4--
+
