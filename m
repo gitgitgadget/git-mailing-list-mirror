@@ -1,81 +1,81 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BA6188CCA
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 07:38:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4550F18A6C1
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 07:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732520330; cv=none; b=FDO3Dfputzx5VOcD65mYxilNiWST//wLd9v5uSIGoli2klBJnkcW8YzqWo09bC7Rvj7dljioSKngPig9gHqrG9sQYoQclQWYcMZdCWt8eYy9PU64rNXzL6MOuPPvGEPUOsxpQQFWn1j1sRdbTEVh5jP09iNIc+dTJCKO51enfE0=
+	t=1732520331; cv=none; b=tB34np1ftRT0xKq3t/FL9P1B9q/yTLkp1LRyjS9iyY5B73XTwJz4qrbmauLzqydi72W1k63+bJxyuqKDHRN4vWtaQKYzVygxYdlgYck1+DKEYq1pYOantLkSS2Tw8qQVD7Udm3TBt0nmnjzAnejkfar3C3uYtUitaoehlMk9bHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732520330; c=relaxed/simple;
-	bh=M6aJcj4kFvfAsTo0npLzgkF8AJ5eOitwn3rM2JHssdk=;
+	s=arc-20240116; t=1732520331; c=relaxed/simple;
+	bh=98VJGSXFesCywwiZLYL7xEMrsR8kF0GOkWH7oksUGIk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=u43C1NBFOuS8NWbtY6ZJKSV+ZstYJf4TZJjcpGxBZSmdmfDp9NZT3wdySUvXPFxDqQMEphojNXi/Wp3rsMWQ96nAEQBMg04ibXmHiSFKe6ZZNFJsZVSdGlJrtNuMDWBAP1Fac3J0O7P5u0eUTxR3k36yJj7oP3J+FJcJiy5av/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V+48pYiq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jBQS/v8E; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=alm29nmnaAcZ/VhF9yWNL0UXV64UAz35PcG8fB8DzCyJKtxS3V21tHF9wE3kcq2ZxZVAvzRjTWxKs/WhIOdsJ/3ulAnCxMEngUkfoXA5+KfHf2/F7cf8DD8OYmBwymaZ9k/LRepol93rUHX3qZdD0GpUF9FyHxNMnwrSqT6uI5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CgN5kRc/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ht393JSP; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V+48pYiq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jBQS/v8E"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 041332540175;
-	Mon, 25 Nov 2024 02:38:47 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CgN5kRc/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ht393JSP"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 726BC1140166;
+	Mon, 25 Nov 2024 02:38:49 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 25 Nov 2024 02:38:48 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 02:38:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732520327;
-	 x=1732606727; bh=WiGssL56dwrzpnEExMIP/xfZluIHa7DItOGEEB9CE24=; b=
-	V+48pYiq5nruBhtwH1TK8AEKsmukONyvs4gESsqX44sPWbi41eMTRBXSVRyFn4kB
-	QLbMe02ySHOX2SeZsJ9gxVVZ9c7bJ40/sowclhgPDiOBYCVkNgsw6Nq4GYaTSHNP
-	SmU/DcNaW8o6XpsEYjwDgw0zSIV+DueNjgQ/OowqpjZ+fqdOGGKeTAYPKTZQlEuV
-	ZDaFMLUhVmfoL8jw1qjLaMtC/j7AtAhpabx8/Od4yACgegSJc1ZbirMrgFyCwhzz
-	xO4NbVgQxJukKmm9Xc6ZYnYwNvtMfB/EdT3fbB6d8SY8YcK+jOAe4Clc1Ol/iHCR
-	KDh3cviqQjHsWTN/I/JB3w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732520329;
+	 x=1732606729; bh=DY2czddyHJeCOFmz4pgFQLiMfzW0D9GHX2fXky+hNjw=; b=
+	CgN5kRc/TQxA1nM602IGpZ69SHRaVV5BiRR79DR9u195Y59AyIO5d7Sejva+aiY9
+	nKrdB2etmQvDV0kDVM2zpU9B54dlCeISVKejV0GtOWiCxUuF1xWRHI35Hsisw220
+	m1zt2YCrjkziLXiePH1N06a8Hxo6n4PPu5POc/QV4YoGMbkjTtE3I/3a53deA+Qy
+	6nzBDvjlc0RNjmEAdkrv9Xr0ss/x/FYUEuf75A4/GFyxXgx/BdPy+MWM0N1wvVSC
+	EKn7jS2Fa0rBisAZvgrQYPjY08jgBgQkm5qT2Dx3DCDVS8DBvqoT+Wt9VEFLaEZz
+	2JFqJ4rvB5Pb4sKvCJHMTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732520327; x=
-	1732606727; bh=WiGssL56dwrzpnEExMIP/xfZluIHa7DItOGEEB9CE24=; b=j
-	BQS/v8Ec7rgj+hm+uqsSCXHIJhRk0TRwblVn/njp4rDfi5LBfi2q//fRYCrAP+Xa
-	u1UsLgZpM7qFS72ul+i/7ZKnq9VX2leg0+u7FTb62GcQIFUXFr2xioCc0suJNq/F
-	F6+jz+S3bnaw0W6l3shCkaPR8l6arLC7fYQbS/eJEc3E6DBJ0YZ1V0RaRBg5qq2c
-	sO/osjP5zV6k4rO12UW66whT4gRx/qdYIg2wpBJapBwZT5FLVVQMGlvkOabdeVWq
-	i0cD/DlGEjkdQvAUiT9zzd50o7iZIpQNQzJM8kjrIa2DryGPM1/LOK0gizyANyi+
-	lE1xkfw19Jto8dbzyCCNA==
-X-ME-Sender: <xms:hylEZ8jV7I5TMelhe2kgA3hsA0rZSTbGuRsh6SH_vMu2S7jDM86nLg>
-    <xme:hylEZ1DSPm-vewZaUQuQChxSe69w78jMNvYfsEfanOiYQ4Zwvp9XZ_A6h0N_I-uL8
-    U3Xceqfex_WOKb-Og>
-X-ME-Received: <xmr:hylEZ0HE0wforXuyntwwIHiMBmCR_U_RfiwNLS5ELn-20JYTt_BavfwTmxxRr2OPsidhIQLTk_6eMBPhafo_sNW_6KJ2rjlnHQM7ku8SrjgF_A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggddutdelucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732520329; x=
+	1732606729; bh=DY2czddyHJeCOFmz4pgFQLiMfzW0D9GHX2fXky+hNjw=; b=H
+	t393JSP1p8Hmy99FuMsR0342KTJRZnNl+r5nCFqPTnAHv3frrBV/CBlJoBUuSTIv
+	1syXLSfNLjxHKrnjRLGMISUpgywTQ3bDKH5nWPnZ/p+9/45ep6TK0vbph4jd2sY6
+	GFDqf78MHbsQ17EkX5Kkq3pUFrv8xb2A7Yg/g+eyAkdXvPEZtCNp6WzjTaUiWBH+
+	rrgGCUivL6XzE1dsbx/a9TQ8OuKnYmw56oRIV2uoEDsyu3JQkiZmez0I1O2iZla8
+	u63ZlKuykamuCMjUbZ7GFGqr2777nsdOW2mxQWFkVFQioGbHSThIxSgkKrT8rdNv
+	ddyp1Zj9ZFZi7ReKCUjyg==
+X-ME-Sender: <xms:iSlEZ2NtFmkuit0uIcf2cGOdgp4uJV-COdCKg30yz7_XKEb_NJNv_g>
+    <xme:iSlEZ0-hDd6g86m7qCO7qNz52GG6X1k5eCGUyL5hNVQhGuNPiy09DtmSj3fVozSGz
+    xw6A_f5QMFlPCejzQ>
+X-ME-Received: <xmr:iSlEZ9QA7_h0ShHna9Y2qA6LkvOPwQR1jWp9a6jFcdEnm0cTecZ8hEUwFvdQjpRgQ0rZZ_6yRs58uIPgyd4CXj3IPzo7ysdxN2kppbbx-u1GMQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggddutdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hylEZ9RhTCbZomq5CK16m2mXHZCr6-XF15TOP-8eqo76ZQIfbO6CJw>
-    <xmx:hylEZ5zjHTJGGDtiYF0xizmn7fD2vkXd7KmiusL3VJuyaS6X7DGbzA>
-    <xmx:hylEZ76t7s3lhgL5-KHyyPFMq3sm2t23IND96Rr5kEPpCJ-2dgQ6uw>
-    <xmx:hylEZ2w_foDEUCJ__z6402yBEpuR0jmmnzeKsR2Lm2RY_GX266rdBA>
-    <xmx:hylEZx_Ny83jdP_2s6jk4f4dErUPPXxac6iV3t0LFEJdjNXkplKXqIDi>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:iSlEZ2s-1ZhBCx5Vr_xOLlDpcmtMpJiDQ3YW46n7XfJ-aO0RJ8kuaQ>
+    <xmx:iSlEZ-d5xzmwRR97F3j0Q5qfmTetQkmhPZfjGuQIx_PYLexk7FbYSw>
+    <xmx:iSlEZ60NTwXcZOtYqFtLa_9oizsJK8wRtbiL-vg-cqgpCpZ9so7QOQ>
+    <xmx:iSlEZy_SC10kKAuALrNARHiaKt9ae4I4cVKBGctWRCpDeBKyYsNfEw>
+    <xmx:iSlEZ-6bWBs2IOeynRcRtFafF6z2twddcN9zfSuUWXhrlJXX1XWVXf2W>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 02:38:46 -0500 (EST)
+ 25 Nov 2024 02:38:48 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6c9b69f6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id f8ef9e8c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Mon, 25 Nov 2024 07:37:42 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 25 Nov 2024 08:38:28 +0100
-Subject: [PATCH v3 6/9] refs/reftable: refactor reflog expiry to use
- reftable backend
+Date: Mon, 25 Nov 2024 08:38:29 +0100
+Subject: [PATCH v3 7/9] reftable/stack: add mechanism to notify callers on
+ reload
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241125-pks-reftable-backend-reuse-iter-v3-6-1d7b658e3e9e@pks.im>
+Message-Id: <20241125-pks-reftable-backend-reuse-iter-v3-7-1d7b658e3e9e@pks.im>
 References: <20241125-pks-reftable-backend-reuse-iter-v3-0-1d7b658e3e9e@pks.im>
 In-Reply-To: <20241125-pks-reftable-backend-reuse-iter-v3-0-1d7b658e3e9e@pks.im>
 To: git@vger.kernel.org
@@ -92,74 +92,64 @@ Cc: karthik nayak <karthik.188@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Refactor the callback function that expires reflog entries in the
-reftable backend to use `reftable_backend_read_ref()` instead of
-accessing the reftable stack directly. This ensures that the function
-will benefit from the new caching layer that we're about to introduce.
+Reftable stacks are reloaded in two cases:
+
+  - When calling `reftable_stack_reload()`, if the stat-cache tells us
+    that the stack has been modified.
+
+  - When committing a reftable addition.
+
+While callers can figure out the second case, they do not have a
+mechanism to figure out whether `reftable_stack_reload()` led to an
+actual reload of the on-disk data. All they can do is thus to assume
+that data is always being reloaded in that case.
+
+Improve the situation by introducing a new `on_reload()` callback to the
+reftable options. If provided, the function will be invoked every time
+the stack has indeed been reloaded. This allows callers to invalidate
+data that depends on the current stack data.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ reftable/reftable-writer.h | 9 +++++++++
+ reftable/stack.c           | 4 ++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 498bc9f932673e6089bd3b27e1bb7ed8d0e36a4c..ff49c27a6a0f4cb1e5b3bfaa3d34d3302c1bdb2e 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -2444,14 +2444,15 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "reflog_expire");
- 	struct reftable_log_record *logs = NULL;
- 	struct reftable_log_record *rewritten = NULL;
--	struct reftable_ref_record ref_record = {0};
- 	struct reftable_iterator it = {0};
- 	struct reftable_addition *add = NULL;
- 	struct reflog_expiry_arg arg = {0};
- 	struct reftable_backend *be;
- 	struct object_id oid = {0};
-+	struct strbuf referent = STRBUF_INIT;
- 	uint8_t *last_hash = NULL;
- 	size_t logs_nr = 0, logs_alloc = 0, i;
-+	unsigned int type = 0;
- 	int ret;
+diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
+index c85ef5a5bd14595d75f99457fef4407040e197c5..5f9afa620bb00de66c311765fb0ae8c6f56401ae 100644
+--- a/reftable/reftable-writer.h
++++ b/reftable/reftable-writer.h
+@@ -68,6 +68,15 @@ struct reftable_write_options {
+ 	 * fsync(3P) when unset.
+ 	 */
+ 	int (*fsync)(int fd);
++
++	/*
++	 * Callback function to execute whenever the stack is being reloaded.
++	 * This can be used e.g. to discard cached information that relies on
++	 * the old stack's data. The payload data will be passed as argument to
++	 * the callback.
++	 */
++	void (*on_reload)(void *payload);
++	void *on_reload_payload;
+ };
  
- 	if (refs->err < 0)
-@@ -2473,12 +2474,9 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 	if (ret < 0)
- 		goto done;
+ /* reftable_block_stats holds statistics for a single block type */
+diff --git a/reftable/stack.c b/reftable/stack.c
+index d97b64a40d4ad05cfd9e6f33e8ba1e713281ef6d..5384ca9de0d1f064aebcb09308a74cc397b37463 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -548,6 +548,10 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+ 		close(fd);
+ 	free_names(names);
+ 	free_names(names_after);
++
++	if (st->opts.on_reload)
++		st->opts.on_reload(st->opts.on_reload_payload);
++
+ 	return err;
+ }
  
--	ret = reftable_stack_read_ref(be->stack, refname, &ref_record);
-+	ret = reftable_backend_read_ref(be, refname, &oid, &referent, &type);
- 	if (ret < 0)
- 		goto done;
--	if (reftable_ref_record_val1(&ref_record))
--		oidread(&oid, reftable_ref_record_val1(&ref_record),
--			ref_store->repo->hash_algo);
- 	prepare_fn(refname, &oid, policy_cb_data);
- 
- 	while (1) {
-@@ -2545,8 +2543,7 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 		}
- 	}
- 
--	if (flags & EXPIRE_REFLOGS_UPDATE_REF && last_hash &&
--	    reftable_ref_record_val1(&ref_record))
-+	if (flags & EXPIRE_REFLOGS_UPDATE_REF && last_hash && !is_null_oid(&oid))
- 		oidread(&arg.update_oid, last_hash, ref_store->repo->hash_algo);
- 
- 	arg.refs = refs;
-@@ -2571,11 +2568,11 @@ static int reftable_be_reflog_expire(struct ref_store *ref_store,
- 		cleanup_fn(policy_cb_data);
- 	assert(ret != REFTABLE_API_ERROR);
- 
--	reftable_ref_record_release(&ref_record);
- 	reftable_iterator_destroy(&it);
- 	reftable_addition_destroy(add);
- 	for (i = 0; i < logs_nr; i++)
- 		reftable_log_record_release(&logs[i]);
-+	strbuf_release(&referent);
- 	free(logs);
- 	free(rewritten);
- 	return ret;
 
 -- 
 2.47.0.274.g962d0b743d.dirty
