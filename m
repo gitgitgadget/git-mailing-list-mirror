@@ -1,109 +1,225 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572331B3945
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 19:45:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC97D1B3950
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 20:13:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732563945; cv=none; b=HmtPh7E7XI2Bwwub47nIabx7g+TRQizTfgeLg4xoKdyzT/d/W2GAFUtsye8EcNTSs+/uo2ETwl1OhUtvpCDlmITvSDGHkooQjDVZmf32DCRhCt+bZTIkws+WO4dzjeTg19R3aSddN5IYtQuTJ39uXwIsUZ2rmc4DWVIk7Cf8lQI=
+	t=1732565616; cv=none; b=mWhFF/0oXvcH7nvREP++5HdR43987ZK06sNuHVMedPLGtf5uJIUnuzkAvWebqA0F4zjjvCLcXB4D1hNxZ1iONTIuMaa/WlYJVW/aSsI3r/0ZlO8bWipNhINlyTAc+OHDDE3Bw+37K2/YMhXHYvPJoXB1pWlKhYtCiE8ap9aNrOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732563945; c=relaxed/simple;
-	bh=x39CQm23C/r6HqnnainJpqPHl5eaefsk/O+YeCetdoI=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=DZlpkCi6zCgu93wx8rNy6LiaB/sUYuAm2bwzOD6UObZPGt6I0wg3ea6nkvUW7uuMmgxvbU5PUJtdWZ/AoTayNImB1NHqz3I3Z7LHTfuLdBnyQkDPV1Zv2+WDXfC2/P1zDuQWMRRAxfA/uUxNjkJYf6zwd+kDeQzxAxpCXFKYjDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fda2DBpx; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1732565616; c=relaxed/simple;
+	bh=HAvkXyTJo1gTP6vfM0LoXs5il27uhoiP2TGoSnLxG+g=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mk7ZxakJzkKx20Q189TqiY0Lj5iC2F/NC3/RcFc/h4pfxMWDzGTHTmVvgwEWvUl4ZMNd9FBBimMqQzL4ehZLjgcM9oXisEv4cLmyehl02T6x1UZIPslpBAhCleCFVfnavP3mIq5cjQZ5UT1w5Rh9sLYK6f8UbPM+LNG5/NMPv7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cMcg2IpI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bkdNYheQ; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fda2DBpx"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-2ea5e1bbcb4so5057954a91.0
-        for <git@vger.kernel.org>; Mon, 25 Nov 2024 11:45:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1732563943; x=1733168743; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/3DnU0P3KrSAJHgB5sKDwx+6aDiFSLcPfZok6mL1ork=;
-        b=fda2DBpxLfxu16QeZUAmuail+9W7MvTuCtGzqhqsW7Ke/lvFQihssWndSpYBodKZpJ
-         9QRBTBYZwsE47radpo9R59xvUD+OWs0OQhDIYSO7rfV0GNB2HLRspD/dO+BAiqO5o5mA
-         +qqZb6smq2SAamFC+1xIR44ILw4v39g8i6U06MM+zjpCEuFVGX0a1FsF58THSQdzTszM
-         LIKFe8eqWvLebt1YNX0NFrU4yiXF/Fj8AEVWM/UHyzL/8rhPdOhdMKq6TR0pKsI/Br9s
-         xJy8oMr7N0/VuXBgDvlE2VGQ6y2LLLi8mJdY1tRwy+tDWH/lilM8ErDjkWusWD24m/+R
-         AIkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732563943; x=1733168743;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/3DnU0P3KrSAJHgB5sKDwx+6aDiFSLcPfZok6mL1ork=;
-        b=sOjRW+WzoGAlcaNHQshUM+3cyOoqNAE7MFxTbBp+k5YZ1LkNTJv6IBrZDFTzxUx3bF
-         5jhY14t5CnasIQEzY/3rH81D9yumKxONlHbubjzDmzrPtPp0rLEF+7QMVQ8BrFi6/UM5
-         UOxK0geT5c6WdGs99G/VbERXJwWQC/kUxdr+1eBHNhiPEFTlmONGTe3A/Mw8rrkig8LV
-         g+PRh5uwqLDbi0F9NH/6XTc1uIU/e1jnAqDFwVwhqvbq+LM++GvkNokPkVH9H7wbb2cw
-         XdAo0gakyrCMwDlnNSTG4bfHxnSZQ+aUoihyrr0sQxtGnuI4iTCqWnvV6xXLHwUSS48f
-         OtYw==
-X-Forwarded-Encrypted: i=1; AJvYcCX5zxG87vXKmnV4fXPx0pvYuZ5IIQjVC4S5Wz54NzliW5uN3sSKtOCyt+zkQSz14t3D0l8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7yA8Be5r2wdl055px3ZMwJsMJGIMjgKikhCj+dYm1eWhO82YQ
-	qG7wJqvkXQQOtRMvRA1m3bO5wbPG3bcAPHD+K+omIwNILcUsMO7OnzbciZ1PIfHlF3HuKYbEiTE
-	Q/d4R+pRLvMesdq9ucfTXuGbFObmUTw==
-X-Google-Smtp-Source: AGHT+IGiCwLG/lwvMUusf+8T/BA7QQFfuxphyHQjpFlmeI4z2cs+ELCkTOzmt/weYvdrKZ6OMM2C+D3aFc7ocfqSXabr
-X-Received: from pjbqc17.prod.google.com ([2002:a17:90b:2891:b0:2eb:12c1:bf8f])
- (user=jonathantanmy job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:1c03:b0:2ea:bea2:dffd with SMTP id 98e67ed59e1d1-2eb0e528e71mr15247851a91.21.1732563943600;
- Mon, 25 Nov 2024 11:45:43 -0800 (PST)
-Date: Mon, 25 Nov 2024 11:45:41 -0800
-In-Reply-To: <xmqqjzcs87u0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cMcg2IpI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bkdNYheQ"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id D959913805EA;
+	Mon, 25 Nov 2024 15:13:32 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 15:13:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732565612;
+	 x=1732652012; bh=6ofVTeg/PUqxmRjkcUgiO8h7ntFUYMBPI5SDy+l4nmU=; b=
+	cMcg2IpI7K276K8T9tRmOo+/0X/SPgKC5AKob+TAAw+QhBEqgNBV3ADEBV/QunWI
+	+P2XGEDRFeZzthTNLlQ1OAK7ay+D2Dx4JQ3VnrdKmxcBw+IkZwPpQRyAunLXUEbh
+	CzKYeF45xXMGbS+7kdbY4WwPSa2qv0NU6C4weRijB8qrrHw/o4Fh4stnZUBdPmDL
+	9PgUPfRh+KyD+NbnS7C02WCL65mhrhc/jlFU2xho3+0JgHIfWv4wg7XJPQj4ENVS
+	tV03gysbifTiriz2ZC1dZf84Kbf9V2KkD+VS2DRJvUgAdrQB69cvMXCWhOJDEkLg
+	pvAf1nOADjVV//m4EC7mVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732565612; x=
+	1732652012; bh=6ofVTeg/PUqxmRjkcUgiO8h7ntFUYMBPI5SDy+l4nmU=; b=b
+	kdNYheQGpkv1j180lJoHhn9dE0yANdDbd1H6qO+3xILcfL26U9vyW7GPRgpIlZhe
+	WTq1VPdrB0okngWXddx0Tx682qY/8xu0QJbh/R+j4H9QTremmA3uDiPN4WkEuVEz
+	bQ/MT/udXN9Lr14jXR0xG3n6B2m10nEHnlo5Kd6ARWdtvc+jcEN1KmTze95/EWWF
+	X+tWFIam7JLeZy4yN77mN6JoLVDR3WAEkb3U+Kj/VSzTMfEqXB3GcgfAws73veyh
+	SGzvsw0P7h+1+Z+N75o7o3dyC6tCNtwaU6UHcXeA21x3pk657Pkjt4KRXkcFpRxW
+	1jzFiWt5By2SUq4udy3hg==
+X-ME-Sender: <xms:bNpEZ7QuugqXWtuE-0HI-jLAY13F1ZR5ggyVWZWXO9iCxM9Eq5Jpob8>
+    <xme:bNpEZ8y2IUWLBY7cTLJdJoB383GJiotMjKnBHPFymCAoCQ9VN7jsad5chjRQG8gQ6
+    0WQt_Zal4RBadrTww>
+X-ME-Received: <xmr:bNpEZw11Bh1ZvC_JxK-MPji4Acm9yIBupKBEYwPArWQVGxoCuEC13KxiK-Lc7P8vZgYCWivNebPMggygpHivzFIpzQs0-dW3vdw6p1JH76sxBbeq6H_9a6WZcw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddufedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    ffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepudelgf
+    euieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffgnecuffhomhgr
+    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegtohguvges
+    khhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtth
+    hopehmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:bNpEZ7DwyJtq7jrFd99lDmf--WOAZhWy_lx7XpVM53Ogw3mIEvmrXw>
+    <xmx:bNpEZ0hfUJtlXeyzoMfMfUNA2y6iEJn0forOmaWIbF2fV0frWd7Oqw>
+    <xmx:bNpEZ_rdGR6DujjtfRIGXpr2ewtt5rRs4gQu7RiTHQZak4c7uo3sCw>
+    <xmx:bNpEZ_iwh-8FF-J9UPsYueMZOsBPfC2XaNbD98UxvDRA5627Klg4Qw>
+    <xmx:bNpEZ_WooIIoeHzBsBtEBteBWdwPgl4sPTRkA7oioIhi-IOKlAjB2DO3>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Nov 2024 15:13:30 -0500 (EST)
+From: kristofferhaugsbakk@fastmail.com
+To: gitster@pobox.com
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	git@vger.kernel.org,
+	stolee@gmail.com,
+	phillip.wood123@gmail.com,
+	me@ttaylorr.com
+Subject: [PATCH v4 0/3] sequencer: comment out properly in todo list
+Date: Mon, 25 Nov 2024 21:13:10 +0100
+Message-ID: <cover.1732565412.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <cover.1732481200.git.code@khaugsbakk.name>
+References: <cover.1732481200.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <20241125194541.809707-1-jonathantanmy@google.com>
-Subject: Re: [PATCH 3/7] pack-objects: add GIT_TEST_FULL_NAME_HASH
-From: Jonathan Tan <jonathantanmy@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jonathan Tan <jonathantanmy@google.com>, 
-	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, johannes.schindelin@gmx.de, 
-	peff@peff.net, ps@pks.im, me@ttaylorr.com, johncai86@gmail.com, 
-	newren@gmail.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >> It is sad that it is a (probably unfixable) flaw in the "promisor
-> >> object" concept that the "promisor object"-ness of blobA depends on
-> >> the lazy-fetch status of treeA.  This is not merely a test failure,
-> >> but it would cause blobA pruned if such a lazy fetch happens in the
-> >> wild and then "git gc" triggers, no?  
-> >
-> > Right now, it won't be pruned since we never prune promisor objects
-> > (we just concatenate all of them into one file).
-> 
-> Sorry, but I am lost.  In the scenario discussed, you have two
-> commits A and B with their trees and blobs.  You initially only have
-> commit A because the partial clone is done with "tree:0".  Then you
-> fetch commit B (A's child), tree B in non-delta form, and blob B
-> contained within tree B.  Due to the tweak in the name hash
-> function, we do not know of tree A (we used to learn about it
-> because tree B was sent as a delta against it with the old name
-> hash).  
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Yes, that's correct.
+Fix three places where the comment char/string is hardcoded (#) in the
+todo list.
 
-> If blob B was sent as a delta against blob A, lazy fetch
-> would later materialize blob A even if you do not still have tree A,
-> no?
+§ Changes in v4
 
-Just to be clear, this is not happening right now (blob B is sent whole,
-not as a delta). But let's suppose that blob B was sent as a delta, then
-yes, the lazy fetch would materialize blob A...
+• Use `test_grep`
+• Fix commit message (`)
+• Don’t need to cat(1)
+  • Also use `-n4` in case `-4` is not widely supported
 
-> I thought the story was that we would not know who refers to blobA
-> when treeA hasn't been lazily fetched, hence we cannot tell if blobA
-> is a "promisor object" to begin with, no?
+§ CC
 
-...ah, in this case, blob A vouches for itself. Whenever we lazy fetch,
-all objects that are fetched go into promisor packs (packfiles with an
-associated .promisor file), so we know that they are promisor objects.
+• Stolee for the first patch
+• Reviewers on the previous rounds
+
+Kristoffer Haugsbakk (3):
+  sequencer: comment checked-out branch properly
+  sequencer: comment `--reference` subject line properly
+  sequencer: comment commit messages properly
+
+ sequencer.c                     | 26 ++++++++++++++++----------
+ t/t3400-rebase.sh               | 19 +++++++++++++++++++
+ t/t3437-rebase-fixup-options.sh | 15 +++++++++++++++
+ t/t3501-revert-cherry-pick.sh   | 14 ++++++++++++++
+ 4 files changed, 64 insertions(+), 10 deletions(-)
+
+Interdiff against v3:
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 711bd230695..7c47af6dcd9 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -471,8 +471,8 @@ test_expect_success 'git rebase --update-ref with core.commentChar and branch on
+ 	git checkout topic2 &&
+ 	GIT_SEQUENCE_EDITOR="cat >actual" git -c core.commentChar=% \
+ 		 rebase -i --update-refs base &&
+-	grep "% Ref refs/heads/wt-topic checked out at" actual &&
+-	grep "% Ref refs/heads/topic2 checked out at" actual
++	test_grep "% Ref refs/heads/wt-topic checked out at" actual &&
++	test_grep "% Ref refs/heads/topic2 checked out at" actual
+ '
+ 
+ test_done
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 43476236131..b84fdfe8a32 100755
+--- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -231,7 +231,7 @@ test_expect_success 'identification of reverted commit (--reference)' '
+ test_expect_success 'git revert --reference with core.commentChar' '
+ 	test_when_finished "git reset --hard to-ident" &&
+ 	git checkout --detach to-ident &&
+-	GIT_EDITOR="cat | head -4 >actual" git -c core.commentChar=% revert \
++	GIT_EDITOR="head -n4 >actual" git -c core.commentChar=% revert \
+ 		--edit --reference HEAD &&
+ 	cat <<-EOF >expect &&
+ 	% *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+Range-diff against v3:
+1:  a46767263f6 ! 1:  a8813b5f14c sequencer: comment checked-out branch properly
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v4
+    +    • Use `test_grep`
+    +
+    +      Link: https://lore.kernel.org/git/5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name/T/#me80519debcd013aa8c8a5e5003c58cff7281fac9
+         v3:
+         • Review feedback: check more in the test by inspecting the
+           sequence editor
+    @@ t/t3400-rebase.sh: test_expect_success 'rebase when inside worktree subdirectory
+     +	git checkout topic2 &&
+     +	GIT_SEQUENCE_EDITOR="cat >actual" git -c core.commentChar=% \
+     +		 rebase -i --update-refs base &&
+    -+	grep "% Ref refs/heads/wt-topic checked out at" actual &&
+    -+	grep "% Ref refs/heads/topic2 checked out at" actual
+    ++	test_grep "% Ref refs/heads/wt-topic checked out at" actual &&
+    ++	test_grep "% Ref refs/heads/topic2 checked out at" actual
+     +'
+     +
+      test_done
+2:  7a452142666 ! 2:  4d10ad4ab55 sequencer: comment `--reference` subject line properly
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v4:
+    +    • Don’t need to cat(1)
+    +      • Also use `-n4` in case `-4` is not widely supported
+    +
+    +      Link: https://lore.kernel.org/git/7739a6e2-8758-4d0f-b1d6-f0879a89590f@gmail.com/
+         v3:
+         • Review feedback: check more in the test by inspecting the
+           proposed commit message.
+    @@ t/t3501-revert-cherry-pick.sh: test_expect_success 'identification of reverted c
+     +test_expect_success 'git revert --reference with core.commentChar' '
+     +	test_when_finished "git reset --hard to-ident" &&
+     +	git checkout --detach to-ident &&
+    -+	GIT_EDITOR="cat | head -4 >actual" git -c core.commentChar=% revert \
+    ++	GIT_EDITOR="head -n4 >actual" git -c core.commentChar=% revert \
+     +		--edit --reference HEAD &&
+     +	cat <<-EOF >expect &&
+     +	% *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+3:  4c342bc0422 ! 3:  42b9fbd12d6 sequencer: comment commit messages properly
+    @@ Commit message
+             fixup hash2 <msg>
+             fixup -c hash3 <msg>
+     
+    -    This says that hash2` and hash3 should be squashed into hash1 and
+    +    This says that hash2 and hash3 should be squashed into hash1 and
+         that hash3’s commit message should be used for the resulting commit.
+         So the user is presented with an editor where the two first commit
+         messages are commented out and the third is not.  However this does
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v4:
+    +    • Fix commit message (`)
+    +
+    +      Link: https://lore.kernel.org/git/5267b9a9c8cc5cc66979117dc4c1e4d7329e2a03.1729704370.git.code@khaugsbakk.name/T/#me80519debcd013aa8c8a5e5003c58cff7281fac9
+         v3:
+         • Message: Explain to the best of my knowledge what is going on here in
+           the message body
+
+base-commit: b31fb630c0fc6869a33ed717163e8a1210460d94
+-- 
+2.47.0
+
