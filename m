@@ -1,188 +1,111 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D20319149E
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 09:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7190D16F27F
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 09:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732528320; cv=none; b=dKgdEQ6s1zACZhNGWs5xYA4UWYP/mcA5bSwTuISjlbrGQYsm0MBcXtX4VzqyQZs/EFO75VEXv42eQv4EsSEECVcfNiFCTWQaU9mA2GQzm9Sxq2o+fl9bAaImsO+bp2U/a8VZHtBPMU5ROtn94xg+0FsUwhyvam/pM90IRx/QpuY=
+	t=1732528346; cv=none; b=ku2f4NJVyPybvnDkRRUl6HSNfmVtz4qGh6zozQ/1QWNkxIe+AiQo3UIiYFupjcxdugu/LobWk7Dyb5wIOQN6k/h5G20clSvH3F9NaGbv18DUvTonNgOGOUtgzXEnzWBCtlOWicWlcyPaa0mg7UX7aQhS0LRSDljIQLn1E6VW/7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732528320; c=relaxed/simple;
-	bh=Doh5oH5zhgK0SaQdzMzFfDSRaOOm3JWsvPQjM5FED2Y=;
+	s=arc-20240116; t=1732528346; c=relaxed/simple;
+	bh=c5atHlQbH1Y4omdMXrx7BOUXgreEhw50iri8YCWusJ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R9NhVh1AHdyR83z9dVrYKuecEkGsU+PQZl5G3lzuNLKNgTOG3HMKn2yrr3pKz9QRE9Sx9fMZiXjNU5t8bB0rtryjRlymGIthcZACHgXfu0dDeNj446v6p0lCQicH78OyC+L7mZMPU5/e3hQl2UGmifUH/pJ6JjrwI/Dv5f0EL84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J+gXNJ2d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LtDqrCOo; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=dsFi4qb92DjimEH5uROZjDcdr6V7xOwj2+XN+qYa8XXtRkFckx3dxtYUciCcuhQxgb1iZ5ZdU4IY2Ok6KfcoGD3pJq4LTaH0IwAVAZyCmj3frMHfNXYLr+rIE4VejlGFV8HkI0Zxbb9gRzd1uFkiit399fm58bPD5lGkCV+FdV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EQj/fzuG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bCiujRdL; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J+gXNJ2d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LtDqrCOo"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 72B9F254015B;
-	Mon, 25 Nov 2024 04:51:57 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EQj/fzuG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bCiujRdL"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 648FE1140103;
+	Mon, 25 Nov 2024 04:52:23 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 25 Nov 2024 04:51:57 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 25 Nov 2024 04:52:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732528317; x=1732614717; bh=KEvUJL+Ybp
-	rIl+fCCTK78/h8LFN00sH9e0HJnyyt68E=; b=J+gXNJ2dLQ9ZnUA210cFfjV27j
-	ymhGwQhrAoGY/5U3vAEjt98woO9DNOfRj7TnbJVslIP08BDCS99lZ7D3ruA5PGIe
-	EUyPwN+TgFkvx2AkU5Bqcv9cNn9B3Ubphf/bOjHjXYaSgnXoUw1InjNkY9i23RT6
-	kLnf4I5siKNPScVG2DSPummF8YxNTvib8du1BP36Nt8p/MLqTGRm6TXWgyCOjMqK
-	ZyvDZgl5XuDdtOYy2SmssgHmtMCZev8O6sO18/yhsGzrgFJJ74F/vlifimf+afQT
-	TiWodouRnaps1000EgJZQkX6OYSS/q3MUcF/5L0/GTIYXnvA/HyXKfwsHLlw==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732528343;
+	 x=1732614743; bh=ciawOMBRK/mg/Kxw3alxk0mpNLqtuj2HpLz3z128HN0=; b=
+	EQj/fzuG4BJ9ax/oP62rmuPWBZPACghk+LxzD8qNMevuXcWNQYASYl/Ws0woIdZn
+	CsNdPmrQPW5hKv7GxgbXtdcgBlK7oQNdy5FfRkosR70shhOffqAXnZTNPHPLFvN4
+	NBQbNd8qtsOcFH/0a6j9DsRkFWUPWCXnv8OWhROdTgJSEip5mbYgibMJ5ZVreF8e
+	A+2TQZg7WJyJxnJJ+O9oze4jpkePwFeIYKcpU3MZFeiOt9lt9b4BxQi24GdVGXl6
+	ZvHwdZW/8UHIsztYi3jslGMBHpPWA+0/qgxhMwmGdnL/LMYQQ6+WQ4pNSkgHCdcS
+	f2L32xB9Oytnr6pkIc2cng==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732528317; x=1732614717; bh=KEvUJL+YbprIl+fCCTK78/h8LFN00sH9e0H
-	Jnyyt68E=; b=LtDqrCOo9qDkR488p/feyL4cuQeIZ4sfqeqEGahPJRnZyhFdN/o
-	RBh0WBLpNQP4obXuMM/OKFLIHB9pr37aKWJZ8mb9xBi5YbyFOHoqohwgL+OYrldW
-	Umeu0CEYodBqBdwz4dGNt9qJMJFSQwICUWtRBCm0dVzM5njor+eleAGrHU2t7AUg
-	ByMtUxrAw5wnNQjosltoDJvMwA508AFch8O0O/1PeRj3MVfNQKt7xSnDi9mSe2wu
-	XYcDX+ReVDyOElitBNR4xRK5J8++EDm0I/S67/KLDXlzVFqHtplyzIU/oM6LDt7P
-	q01J7Z0cqVG9h+h9JgQCEulcS36eASo0Ibw==
-X-ME-Sender: <xms:vUhEZ8y5PPnOuWs3_blT7Gme-EWYMrS89r_MkuR_dP0kNe21v8oSBA>
-    <xme:vUhEZwSAziXZC-Gs9oNln879S49kCe3NdOxomFowCvBa9Cil-NfUzXpzR49Zv2cb1
-    Iu4yf5cWiBN7VtGEA>
-X-ME-Received: <xmr:vUhEZ-VxABM8__ZUst2CRbDxsc1eNMER3Sv3f5zOQz55Us6fQodCkhNX5Ih0mU56l3Ey1dkLaoOne85BfnFzAJhS6VQu3x4-XkngbS-UdrbnpQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddtjecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732528343; x=
+	1732614743; bh=ciawOMBRK/mg/Kxw3alxk0mpNLqtuj2HpLz3z128HN0=; b=b
+	CiujRdLfhwN3JMnRyDZbyHAn+MEv4/y4WzAcA+prGrssZqOAtbQ3RFMl0Yv5MCMj
+	1ffrrQ7S90zkbzWxR8Dvs7ngay39MxiI1+lajh5gzBUM1u/8/W4GvUWgbanJAexe
+	f9/B5YM3Fd6jCIrbx9X2UYNNrxMThvsxXJtm8BAyFr/m+jK2pc7Oe20gxUuH2v1d
+	lt+bk4N3tBc9j2lm76s2pAWPJM49TBxlb+wNPG2hftAB0ewWEmPlTYwnkukFtB/b
+	xPYNhJKmVKsdBLoAfsBlVqwJoo1fHR6a07i4pgjfEZrk1kuNapSlxq+E/lsVElkE
+	PFAhRe7I7Q1aaPdJuZluQ==
+X-ME-Sender: <xms:10hEZ56MZP1K_BNnSjdMH9gmcq1mDu-w-_L1uA-QS0pN-sUH3kaWbA>
+    <xme:10hEZ27vwyeoi7_DALJaZuTYhoiRgCZvsrLntA_fM3-UAzjMbaTd6jlbXL3UCQt5M
+    63XhngArSfK9R6jBA>
+X-ME-Received: <xmr:10hEZwceUgyxIFGUhhMnY8PqpJUjoMUgnL1byEyJ0DC2hnX4SkGT4oNG9VTu2Z5JTTlc0fqXrhTXlKWNy1uRF0IHG7oThUMYWGRvFYuPHMyvoQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
-    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitd
-    eludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishgt
-    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghp
-    thhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhlth
-    hosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghrihgtrdhpvghijhhirghn
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilh
-    drtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtgho
-    mh
-X-ME-Proxy: <xmx:vUhEZ6iog1cRbCABycZMj4hepcCOYQO_9GkW7iQiNgZjCf79s79uww>
-    <xmx:vUhEZ-CDufPosAlB7QU1AmIzI4lqOF0D8kiHp7zrhkbE5lLereFbUg>
-    <xmx:vUhEZ7IC38Uy1-h64U1U_Z2qW_mqHmjGpxIc1OCr0yOLmSEBYoldGw>
-    <xmx:vUhEZ1CjFeef46vcD0Sed3y3R3B3Tgcb7rHUfiRaQaMoRPX_DzgnlA>
-    <xmx:vUhEZ62dc4f_543Ty6KBRJamKMfdPteOpYS0qOzvPhBm-zflG9KFL_oi>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeen
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdevteff
+    vdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:10hEZyJ_SAvZiOoNGkjb2ua4oDbfAUOe7R-P6P0VjptU83bFqCAfnw>
+    <xmx:10hEZ9Jxsts8Q9Zqi4soUX8vT83FbfZQAQMxDbuyPxvPnCp2IjA8Tw>
+    <xmx:10hEZ7y-u2cTu5ahDmsfHIo3zZ-9LGfWj3NZpVjRIHmj6lvMhomWMA>
+    <xmx:10hEZ5KvOigE5XjsApDbeDhmX7iXdbDbfg4uwfFqUbTaufB1QXiqLQ>
+    <xmx:10hEZ6HepwVVFRYj9gwAJoN2iHQdHLOaHMVCxOa5WbP7QhCM6CAJTPFd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 04:51:55 -0500 (EST)
+ 25 Nov 2024 04:52:22 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 12f9b810 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 09:50:54 +0000 (UTC)
-Date: Mon, 25 Nov 2024 10:51:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 552eb988 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 09:51:20 +0000 (UTC)
+Date: Mon, 25 Nov 2024 10:52:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com,
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com,
-	jltobler@gmail.com
-Subject: Re: [PATCH v7 6/6] cat-file: add remote-object-info to batch-command
-Message-ID: <Z0RIrw2PszaY2Way@pks.im>
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241125053616.25170-1-eric.peijian@gmail.com>
- <20241125053616.25170-7-eric.peijian@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/9] refs/reftable: reuse iterators when reading refs
+Message-ID: <Z0RIyXF2C-YFGCQA@pks.im>
+References: <cover.1730732881.git.ps@pks.im>
+ <20241125-pks-reftable-backend-reuse-iter-v3-0-1d7b658e3e9e@pks.im>
+ <CAP8UFD2woZV1O-B9vxEdM-1_R-oTDgt-k1RKt1wJJsofZHb9rQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241125053616.25170-7-eric.peijian@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD2woZV1O-B9vxEdM-1_R-oTDgt-k1RKt1wJJsofZHb9rQ@mail.gmail.com>
 
-On Mon, Nov 25, 2024 at 12:36:16AM -0500, Eric Ju wrote:
-> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-> index d5890ae368..6a2f9fd752 100644
-> --- a/Documentation/git-cat-file.txt
-> +++ b/Documentation/git-cat-file.txt
-> @@ -314,7 +323,10 @@ newline. The available atoms are:
->  	line) are output in place of the `%(rest)` atom.
->  
->  If no format is specified, the default format is `%(objectname)
-> -%(objecttype) %(objectsize)`.
-> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands which use
-> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not supported yet.
-> +WARNING: When "%(objecttype)" is supported, the default format WILL be unified, so
-> +DO NOT RELY on the current the default format to stay the same!!!
+On Mon, Nov 25, 2024 at 10:47:57AM +0100, Christian Couder wrote:
+> Hi,
+> 
+> On Mon, Nov 25, 2024 at 8:38 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > Hi,
+> >
+> > this is the second version of my patch series that refactors the
+> 
+> Do you mean that despite the "v3" mark, it's only the second version
+> because "v2" was just rebasing "v1" on top of a better base?
 
-Is this stale or do we still not support `%(objecttype)`? I thought we
-wanted to support that, as well, so that we don't have to change the
-default format.
-
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 5db55fabc4..ad17be69b0 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -576,6 +582,59 @@ static void batch_one_object(const char *obj_name,
->  	object_context_release(&ctx);
->  }
->  
-> +static int get_remote_info(struct batch_options *opt, int argc, const char **argv)
-> +{
-> +	int retval = 0;
-> +	struct remote *remote = NULL;
-> +	struct object_id oid;
-> +	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
-> +	static struct transport *gtransport;
-> +
-> +	/*
-> +	 * Change the format to "%(objectname) %(objectsize)" when
-> +	 * remote-object-info command is used. Once we start supporting objecttype
-> +	 * the default format should change to DEFAULT_FORMAT
-> +	*/
-> +	if (!opt->format)
-> +		opt->format = "%(objectname) %(objectsize)";
-
-Seems like it isn't stale. Hum.
-
-> +	remote = remote_get(argv[0]);
-> +	if (!remote)
-> +		die(_("must supply valid remote when using remote-object-info"));
-> +
-> +	oid_array_clear(&object_info_oids);
-> +	for (size_t i = 1; i < argc; i++) {
-> +		if (get_oid_hex(argv[i], &oid))
-> +			die(_("Not a valid object name %s"), argv[i]);
-> +		oid_array_append(&object_info_oids, &oid);
-> +	}
-
-Should we return an error when the user didn't pass any object IDs?
-
-> @@ -667,6 +726,45 @@ static void parse_cmd_info(struct batch_options *opt,
->  	batch_one_object(line, output, opt, data);
->  }
->  
-> +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> +					 const char *line, struct strbuf *output,
-> +					 struct expand_data *data)
-> +{
-> +	int count;
-> +	const char **argv;
-> +
-> +	char *line_to_split = xstrdup_or_null(line);
-> +	count = split_cmdline(line_to_split, &argv);
-> +	if (get_remote_info(opt, count, argv))
-> +		goto cleanup;
-> +
-> +	opt->use_remote_info = 1;
-> +	data->skip_object_info = 1;
-> +	for (size_t i = 0; i < object_info_oids.nr; i++) {
-> +
-
-Nit: empty newline at the start of a block.
-
-> diff --git a/t/lib-cat-file.sh b/t/lib-cat-file.sh
-> new file mode 100644
-> index 0000000000..9fb20be308
-> --- /dev/null
-> +++ b/t/lib-cat-file.sh
-
-I think it would make sense to split the introduction of
-"lib-cat-file.sh" into a separate commit.
+Nah, I simply forgot to update this introduction :)
 
 Patrick
