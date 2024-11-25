@@ -1,56 +1,56 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ADC2500D4
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 06:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945042AE8B
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 06:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732516050; cv=none; b=YRCAhtBw7k36XIsLcfWOhArCTz/+d3pDWc6M3OrRBxmZaSTcyYPhWB4Hgf9rjXLkDOU2p5odhJ7B3+fIAc9gIBhs+trZflLd9E7rD8tY4jzJ3RBNMG9kighoTHqnxxsaAkU1U0xDWS9r3jfq1FoUxu6C9utaehCr48GTvnuISsI=
+	t=1732516050; cv=none; b=csSwfMSW/0NvfpMKAjs2XeRGKw0B8JqwTYe+ypafRJ7tBVNVe8fytffQ4kGTL4Z8Fj4vAvVHgrGGpkM5gTodI8j5m9ep/W5eoO8WK7huVUZ7V39xql3AyExcgLc6IsSZhBBPh+5jYiLjMiV0nV3Sb4rUkMaGrIxU2JG0b3lucU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732516050; c=relaxed/simple;
-	bh=5IrTzvvgC/FJjBKB1bxuo6DyVUBuES960+ks9xUbunc=;
+	bh=Pepx3LH8U9ZVq0n6YoeUvhNy5SredBeyUUxP4yWPI+Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oXgWc3OnnzsxykhPYyl/b8BrjpV+I1kIkd0QuEdsEWg4zqIe9x46odQuDI06p225djdfr+UQwN5VgAyh24DovSUHVAUfkl2S8xli0L0M4xaEUBokQ4gYdq5Z+RXWIYwfLezlH8yyC6HfxzGWwSOt8lahQUn0GLN5Jb6ILgKQqdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cHpqb4Nj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QWSuW2oj; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=nSg9bZhz5BK6O3KMCLbu7F2uGt+V8LEjxZdgis6KzvQt/iC5VHXg1grLVwmaYbF8b149eaP6/TOiBdh1zx6/YB0TzvdejxY3Bddi4WcbjrwH5WWjLWEyRv/T+Pkk+rD2tZ3MW97HLCz8Lv9zH4AF/NjtuZb/a9akM9k7YFJsK4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qAVPyztW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KTYtL0as; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cHpqb4Nj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWSuW2oj"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D76A22540178;
-	Mon, 25 Nov 2024 01:27:26 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 01:27:27 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qAVPyztW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KTYtL0as"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 94E54254017D;
+	Mon, 25 Nov 2024 01:27:27 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Mon, 25 Nov 2024 01:27:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732516046;
-	 x=1732602446; bh=sC0PlDPT3yw90k9diUkpa27DdO8ZevW0ykLir+drpGU=; b=
-	cHpqb4Njzp1eK/QtOC47sE9mQY+Dqp2T4zRgVme+rUg5FnMkoSPN6NshJ4K/s0Nj
-	kKSoqK6zIXYTwl1CLIjuPCFndImXaGGpgkzW89TY8A+PiU4JZMZM3rT7S3nOP3lY
-	avyFKDzSU5iMspBSZV3NW85IexZiuZgP1fDqlUc0HOnASB1hSOFiLlaa7RSW3AKT
-	u7x0II4vN9ZdGeSFqvu9hyl5J20cFpmPTadAg8FPd24Ac8kjFW3nhmick7Yezu4H
-	lWccTD/QwmYo5u7rX9Xq9Ooy7jgtX/V5izm1LA/HG/IkgEXQaPrKQWmDtYkl6zyE
-	fxq2JQquT11UvFYOZ2xxKQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732516047;
+	 x=1732602447; bh=dAnXvoJakfVI3IWQKT2gVz337cthZNPJ7oeEViv46+c=; b=
+	qAVPyztW8ndE61B2rk9lR3/YSYkRq/7Wn4ev8IZU3mSguMd2VwygpZHtMixFi5zy
+	w3byPL/z8rywHNfCYX1JO9lirczOzBw7RFqEIvsI1fJ/iwwhEfZXD2KHWpFHnlBC
+	JcA7hklf/+bESgzu7XppbZiYdMrckAyewiY0robKemwMr4T3S8ekN+59QJwBwMXl
+	+mVf0CmRiWkB/rJbsepo+iR4youcnJpTvJ7X31GR6BMf7JBTf/VL1dKVtAgY5oSu
+	ngRqKaAvAnUnRfzAALn0zxmmX+qn0IMdCuZnXm8bU1Z33pmDVgSWff6epdi1rF8i
+	bioWdqJyCccYgW1itK9Wxw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732516046; x=
-	1732602446; bh=sC0PlDPT3yw90k9diUkpa27DdO8ZevW0ykLir+drpGU=; b=Q
-	WSuW2ojw9BiiEH13qOBLjM3d8LB6qJ2iYifmjIOzdsLlOuZ4UH06m8iGzcvnc1yl
-	zX1Z0Pda3XA/kGQBMt6NhTNZxqIRukV1tCAU7CeIONhmv04M9IHiT0gILJkGrIXF
-	/gsRnuYnsOz3m/vhmzDdGkQjwkG8p+29quv8tCILAoX7U1I2qYrXbICREYy7iwyp
-	2U6O+Iuux+zuttLhIj1Xqu8+HwG6xLwcPNs4ZsnsSW9DU/Cm58KPlOm5ey75PR6j
-	F09tMrFJowRP5dDhehyzy1knq68+ME4rGSmj3r0tmcPmVBQerDSJbO5QYfQvgeu3
-	LZCnIH35cMRj7KG8yYf+g==
-X-ME-Sender: <xms:zhhEZ1IJ4Xd3_sO4yoMnFey2Ow5fRzq0rTA33HWibU0g-ForFB19MQ>
-    <xme:zhhEZxLAvjRi3_5NdBJNaGxajTTFpQ5Al0KodR7U7jL27qyZ8G1eOI-5nkRqxA2pC
-    dUj4l_3-He2Siq5xw>
-X-ME-Received: <xmr:zhhEZ9tLwHkaNQEsL2DeTjQU6tQDlqZm8JX6a7RwZAQheyMmNZgHUcC22rkiIhnU46msEbkfy9DrfiZxebobXEQGcrIHU4Bvkk_IcmCy-ucpJQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdelgecutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732516047; x=
+	1732602447; bh=dAnXvoJakfVI3IWQKT2gVz337cthZNPJ7oeEViv46+c=; b=K
+	TYtL0aseeR6eqPmUfz9pwZBPoSd0oaDK6x+JR08NfmQ5N89R3AWsIAH45TKktRIW
+	zsN3of2yh8BUFO/bJjhl0wHUClXxanbUMxO3Di9S6mat5AYwe4PnzZuRlyATQs4b
+	0bulVPKKI5sreLhSUZJLWrfhS+/ABiN3Ny5ZHpIfypFKbQAQZzN5VVWqtefTQ/tq
+	Z0OrwD2gq/ci1AdTLPXVPkJ5CxWRNom9EvIiu+dLejo2taI1T7L6KtGZ0PiOGZk2
+	uSqeJCGs5gXSBKzft/Vr6pKMP0NjLArE+UVqP6GJX6PnLfOedNkbnvZcPOi9WVUK
+	NRbb3ew/eV+W26hhpKImw==
+X-ME-Sender: <xms:zhhEZ_B8OCoQCbPuNDkUJWx_Zls9Qdu10fCF7TIssrWY1c81l6rerg>
+    <xme:zhhEZ1jugk-zfknvH2N7-iVxv8bSYez2ESEb8Shgx-A0zY_aCIDe6cQB3IKADcaY3
+    ZTjUr4pmS4g57-4Vg>
+X-ME-Received: <xmr:zhhEZ6njYn3n_QSJvaiC3j0c8Rbfeffpgz2NtefIJ9udpb2sEKy0fbWpY3qyqkLLGG37XdWjDff-3theOiuxshTONwdh88AD9H1KTNCuGjfW7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdelfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
@@ -58,25 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdelgecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhs
-    tghoohhlsehtuhigfhgrmhhilhihrdhorhhg
-X-ME-Proxy: <xmx:zhhEZ2Z6zreSZwt3TxhQ4SyDUbpDsTYRVwqV1Y6BGdeXxmKVm4etmQ>
-    <xmx:zhhEZ8aFLUvpCMpkMF_zABkiHTQUprJUQ6Z826Kj-Bl1Mi0Ev0QVhw>
-    <xmx:zhhEZ6B1AHBd9umev6XmOkKG975oGoIsNHPwqNSpFXE9Z5sxnt-5Cw>
-    <xmx:zhhEZ6Zm_btyUxN3xHlnGzIYOnU9hkJkISRYqfriFKUdqbB-STKBww>
-    <xmx:zhhEZ7y-3wGPq-iUgn1-daC7PUOgLV7ZQtMKBWhyX-RqQwh9HVFhk8G_>
+    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
+    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:zxhEZxwxVO6OI5IHPf-mmoajUgja84jogz3RyUNchskd1nudCmd1wQ>
+    <xmx:zxhEZ0TVC-joIBczVNSIQg8EHubkSKInoTGg9wxRy1d3cnm2PbbMMQ>
+    <xmx:zxhEZ0aCO4IUO3XIwQaUaHS9Sj9QQeeUGSID7DeWdRsYAiLlX8AylA>
+    <xmx:zxhEZ1TthikoY-7q0MpCZD76L9gDWCfL9CSLV6x9VXyQsdPA0BwZxQ>
+    <xmx:zxhEZ5KXu927joXbyQLxFobj6KNvfpg2idlZbZH4p2k3vW-nD-Q51EjR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  25 Nov 2024 01:27:25 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2008c32d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 06:26:22 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8c0ab0f3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 06:26:23 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 25 Nov 2024 07:27:06 +0100
-Subject: [PATCH v3 01/10] refs: allow passing flags when setting up a
+Date: Mon, 25 Nov 2024 07:27:07 +0100
+Subject: [PATCH v3 02/10] refs/files: move logic to commit initial
  transaction
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241125-pks-refs-optimize-migrations-v3-1-17bc85e33ad7@pks.im>
+Message-Id: <20241125-pks-refs-optimize-migrations-v3-2-17bc85e33ad7@pks.im>
 References: <20241125-pks-refs-optimize-migrations-v3-0-17bc85e33ad7@pks.im>
 In-Reply-To: <20241125-pks-refs-optimize-migrations-v3-0-17bc85e33ad7@pks.im>
 To: git@vger.kernel.org
@@ -96,356 +96,235 @@ Cc: karthik nayak <karthik.188@gmail.com>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-Allow passing flags when creating a new transaction. These flagas are
-stored in the `struct ref_transaction` and can be used by the respective
-backends to alter their behaviour depending on the flag's value. This
-functionality will be used in a subsequent patch.
-
-Adapt callers accordingly.
+Move the logic to commit initial transactions such that we can start to
+call it in `files_transaction_finish()` in a subsequent commit without
+requiring a separate function declaration.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- branch.c               |  2 +-
- builtin/clone.c        |  2 +-
- builtin/fast-import.c  |  4 ++--
- builtin/fetch.c        |  4 ++--
- builtin/receive-pack.c |  4 ++--
- builtin/replace.c      |  2 +-
- builtin/tag.c          |  2 +-
- builtin/update-ref.c   |  4 ++--
- refs.c                 | 12 +++++++-----
- refs.h                 |  3 ++-
- refs/files-backend.c   | 11 +++++++----
- refs/refs-internal.h   |  1 +
- sequencer.c            |  6 +++---
- walker.c               |  2 +-
- 14 files changed, 33 insertions(+), 26 deletions(-)
+ refs/files-backend.c | 202 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 101 insertions(+), 101 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 44977ad0aadbd40c878a0475ef2df2a20798936b..ebaa870c018747358255d3f150d136f0df447d5d 100644
---- a/branch.c
-+++ b/branch.c
-@@ -627,7 +627,7 @@ void create_branch(struct repository *r,
- 	else
- 		msg = xstrfmt("branch: Created from %s", start_name);
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction ||
- 		ref_transaction_update(transaction, ref.buf,
- 					&oid, forcing ? NULL : null_oid(),
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 59fcb317a68a77eee3ca96a60720c556e044c369..d963cc6eb5181e1af5bb29c07c3ee2fa24ad04ca 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -574,7 +574,7 @@ static void write_remote_refs(const struct ref *local_refs)
- 	struct strbuf err = STRBUF_INIT;
- 
- 	t = ref_store_transaction_begin(get_main_ref_store(the_repository),
--					&err);
-+					0, &err);
- 	if (!t)
- 		die("%s", err.buf);
- 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 76d5c20f141f42da988dddae0e549144d1379031..db82c37a06f05d25e0a8c34cbec055e6f9717191 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1634,7 +1634,7 @@ static int update_branch(struct branch *b)
- 		}
- 	}
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, b->name, &b->oid, &old_oid,
- 				   NULL, NULL, 0, msg, &err) ||
-@@ -1669,7 +1669,7 @@ static void dump_tags(void)
- 	struct ref_transaction *transaction;
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction) {
- 		failure |= error("%s", err.buf);
- 		goto cleanup;
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d9027e4dc9245a32a87c47d89f9a29fcfd42534c..68d291c7dd0a4fe805e3b006cc68b185481fba6b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -669,7 +669,7 @@ static int s_update_ref(const char *action,
- 	 */
- 	if (!transaction) {
- 		transaction = our_transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--									    &err);
-+									    0, &err);
- 		if (!transaction) {
- 			ret = STORE_REF_ERROR_OTHER;
- 			goto out;
-@@ -1671,7 +1671,7 @@ static int do_fetch(struct transport *transport,
- 
- 	if (atomic_fetch) {
- 		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--							  &err);
-+							  0, &err);
- 		if (!transaction) {
- 			retcode = -1;
- 			goto cleanup;
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index ab5b20e39c5038cdf6e6f05f4d66278a9c1ac156..9d2c07f68dafb6fce87cb59abc1cbf27db9aae09 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1849,7 +1849,7 @@ static void execute_commands_non_atomic(struct command *commands,
- 			continue;
- 
- 		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--							  &err);
-+							  0, &err);
- 		if (!transaction) {
- 			rp_error("%s", err.buf);
- 			strbuf_reset(&err);
-@@ -1878,7 +1878,7 @@ static void execute_commands_atomic(struct command *commands,
- 	const char *reported_error = "atomic push failure";
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction) {
- 		rp_error("%s", err.buf);
- 		strbuf_reset(&err);
-diff --git a/builtin/replace.c b/builtin/replace.c
-index a44f4e7ea9ff55dbd1f102aca5e5f5a046391328..a4eaadff91f1be107a8e0e25a701d2006ff8cac2 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -201,7 +201,7 @@ static int replace_object_oid(const char *object_ref,
- 	}
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref.buf, repl, &prev,
- 				   NULL, NULL, 0, NULL, &err) ||
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 93d10d59157d2ee1b41f90640bd162917f1eb162..3fa0ab111344dda477763a74d26076b6fb71a5ab 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -681,7 +681,7 @@ int cmd_tag(int argc,
- 	}
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref.buf, &object, &prev,
- 				   NULL, NULL,
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 8a98615dc8613a1be3b17c6d688ab9c0208ed003..670e7812d60ea88a20cd1c5cd113643095cb3be1 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -612,7 +612,7 @@ static void update_refs_stdin(void)
- 	int i, j;
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction)
- 		die("%s", err.buf);
- 
-@@ -680,7 +680,7 @@ static void update_refs_stdin(void)
- 			 */
- 			state = cmd->state;
- 			transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--								  &err);
-+								  0, &err);
- 			if (!transaction)
- 				die("%s", err.buf);
- 
-diff --git a/refs.c b/refs.c
-index 5f729ed4124f7fe8fa9df7fd1f1ce951abefc585..9effeb01eb45728514eab0ca92404ea8cf2158d9 100644
---- a/refs.c
-+++ b/refs.c
-@@ -918,7 +918,7 @@ int refs_delete_ref(struct ref_store *refs, const char *msg,
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
- 
--	transaction = ref_store_transaction_begin(refs, &err);
-+	transaction = ref_store_transaction_begin(refs, 0, &err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_oid,
- 				   NULL, flags, msg, &err) ||
-@@ -1116,6 +1116,7 @@ int read_ref_at(struct ref_store *refs, const char *refname,
- }
- 
- struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-+						    unsigned int flags,
- 						    struct strbuf *err)
- {
- 	struct ref_transaction *tr;
-@@ -1123,6 +1124,7 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
- 
- 	CALLOC_ARRAY(tr, 1);
- 	tr->ref_store = refs;
-+	tr->flags = flags;
- 	return tr;
- }
- 
-@@ -1309,7 +1311,7 @@ int refs_update_ref(struct ref_store *refs, const char *msg,
- 	struct strbuf err = STRBUF_INIT;
- 	int ret = 0;
- 
--	t = ref_store_transaction_begin(refs, &err);
-+	t = ref_store_transaction_begin(refs, 0, &err);
- 	if (!t ||
- 	    ref_transaction_update(t, refname, new_oid, old_oid, NULL, NULL,
- 				   flags, msg, &err) ||
-@@ -2120,7 +2122,7 @@ int refs_update_symref(struct ref_store *refs, const char *ref,
- 	struct strbuf err = STRBUF_INIT;
- 	int ret = 0;
- 
--	transaction = ref_store_transaction_begin(refs, &err);
-+	transaction = ref_store_transaction_begin(refs, 0, &err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref, NULL, NULL,
- 				   target, NULL, REF_NO_DEREF,
-@@ -2527,7 +2529,7 @@ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
- 	 * individual updates can't fail, so we can pack all of the
- 	 * updates into a single transaction.
- 	 */
--	transaction = ref_store_transaction_begin(refs, &err);
-+	transaction = ref_store_transaction_begin(refs, 0, &err);
- 	if (!transaction) {
- 		ret = error("%s", err.buf);
- 		goto out;
-@@ -2833,7 +2835,7 @@ int repo_migrate_ref_storage_format(struct repository *repo,
- 	if (ret < 0)
- 		goto done;
- 
--	transaction = ref_store_transaction_begin(new_refs, errbuf);
-+	transaction = ref_store_transaction_begin(new_refs, 0, errbuf);
- 	if (!transaction)
- 		goto done;
- 
-diff --git a/refs.h b/refs.h
-index 108dfc93b3428db491916ad8a55daea649d83ffd..9821f3e80d900b31c3dede489c2f415d968233d7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -234,7 +234,7 @@ char *repo_default_branch_name(struct repository *r, int quiet);
-  *         struct strbuf err = STRBUF_INIT;
-  *         int ret = 0;
-  *
-- *         transaction = ref_store_transaction_begin(refs, &err);
-+ *         transaction = ref_store_transaction_begin(refs, 0, &err);
-  *         if (!transaction ||
-  *             ref_transaction_update(...) ||
-  *             ref_transaction_create(...) ||
-@@ -584,6 +584,7 @@ enum action_on_err {
-  * be freed by calling ref_transaction_free().
-  */
- struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-+						    unsigned int flags,
- 						    struct strbuf *err);
- 
- /*
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0824c0b8a946909791da36ddb4171db4ad98913b..df61057c9f24972b72644407cc95057891338d96 100644
+index df61057c9f24972b72644407cc95057891338d96..f37c805a34167b3749fbe724788180975abdae90 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1252,7 +1252,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
- 	if (check_refname_format(r->name, 0))
- 		return;
+@@ -2975,6 +2975,107 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
+ 	return 0;
+ }
  
--	transaction = ref_store_transaction_begin(&refs->base, &err);
-+	transaction = ref_store_transaction_begin(&refs->base, 0, &err);
- 	if (!transaction)
- 		goto cleanup;
- 	ref_transaction_add_update(
-@@ -1396,7 +1396,8 @@ static int files_pack_refs(struct ref_store *ref_store,
- 	if (!should_pack_refs(refs, opts))
- 		return 0;
- 
--	transaction = ref_store_transaction_begin(refs->packed_ref_store, &err);
-+	transaction = ref_store_transaction_begin(refs->packed_ref_store,
-+						  0, &err);
- 	if (!transaction)
- 		return -1;
- 
-@@ -2867,7 +2868,8 @@ static int files_transaction_prepare(struct ref_store *ref_store,
- 			 */
- 			if (!packed_transaction) {
- 				packed_transaction = ref_store_transaction_begin(
--						refs->packed_ref_store, err);
-+						refs->packed_ref_store,
-+						transaction->flags, err);
- 				if (!packed_transaction) {
- 					ret = TRANSACTION_GENERIC_ERROR;
- 					goto cleanup;
-@@ -3174,7 +3176,8 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
- 				 &affected_refnames))
- 		BUG("initial ref transaction called with existing refs");
- 
--	packed_transaction = ref_store_transaction_begin(refs->packed_ref_store, err);
++static int ref_present(const char *refname, const char *referent UNUSED,
++		       const struct object_id *oid UNUSED,
++		       int flags UNUSED,
++		       void *cb_data)
++{
++	struct string_list *affected_refnames = cb_data;
++
++	return string_list_has_string(affected_refnames, refname);
++}
++
++static int files_initial_transaction_commit(struct ref_store *ref_store,
++					    struct ref_transaction *transaction,
++					    struct strbuf *err)
++{
++	struct files_ref_store *refs =
++		files_downcast(ref_store, REF_STORE_WRITE,
++			       "initial_ref_transaction_commit");
++	size_t i;
++	int ret = 0;
++	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
++	struct ref_transaction *packed_transaction = NULL;
++
++	assert(err);
++
++	if (transaction->state != REF_TRANSACTION_OPEN)
++		BUG("commit called for transaction that is not open");
++
++	/* Fail if a refname appears more than once in the transaction: */
++	for (i = 0; i < transaction->nr; i++)
++		string_list_append(&affected_refnames,
++				   transaction->updates[i]->refname);
++	string_list_sort(&affected_refnames);
++	if (ref_update_reject_duplicates(&affected_refnames, err)) {
++		ret = TRANSACTION_GENERIC_ERROR;
++		goto cleanup;
++	}
++
++	/*
++	 * It's really undefined to call this function in an active
++	 * repository or when there are existing references: we are
++	 * only locking and changing packed-refs, so (1) any
++	 * simultaneous processes might try to change a reference at
++	 * the same time we do, and (2) any existing loose versions of
++	 * the references that we are setting would have precedence
++	 * over our values. But some remote helpers create the remote
++	 * "HEAD" and "master" branches before calling this function,
++	 * so here we really only check that none of the references
++	 * that we are creating already exists.
++	 */
++	if (refs_for_each_rawref(&refs->base, ref_present,
++				 &affected_refnames))
++		BUG("initial ref transaction called with existing refs");
++
 +	packed_transaction = ref_store_transaction_begin(refs->packed_ref_store,
 +							 transaction->flags, err);
- 	if (!packed_transaction) {
- 		ret = TRANSACTION_GENERIC_ERROR;
- 		goto cleanup;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 2313c830d8facaa17b0b4b073df0de958023062a..dbc6360c5a1d410c192e7eee1bffb1d423e1f9ee 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -193,6 +193,7 @@ struct ref_transaction {
- 	size_t nr;
- 	enum ref_transaction_state state;
- 	void *backend_data;
-+	unsigned int flags;
- };
++	if (!packed_transaction) {
++		ret = TRANSACTION_GENERIC_ERROR;
++		goto cleanup;
++	}
++
++	for (i = 0; i < transaction->nr; i++) {
++		struct ref_update *update = transaction->updates[i];
++
++		if ((update->flags & REF_HAVE_OLD) &&
++		    !is_null_oid(&update->old_oid))
++			BUG("initial ref transaction with old_sha1 set");
++		if (refs_verify_refname_available(&refs->base, update->refname,
++						  &affected_refnames, NULL,
++						  err)) {
++			ret = TRANSACTION_NAME_CONFLICT;
++			goto cleanup;
++		}
++
++		/*
++		 * Add a reference creation for this reference to the
++		 * packed-refs transaction:
++		 */
++		ref_transaction_add_update(packed_transaction, update->refname,
++					   update->flags & ~REF_HAVE_OLD,
++					   &update->new_oid, &update->old_oid,
++					   NULL, NULL, NULL);
++	}
++
++	if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
++		ret = TRANSACTION_GENERIC_ERROR;
++		goto cleanup;
++	}
++
++	if (initial_ref_transaction_commit(packed_transaction, err)) {
++		ret = TRANSACTION_GENERIC_ERROR;
++	}
++
++	packed_refs_unlock(refs->packed_ref_store);
++cleanup:
++	if (packed_transaction)
++		ref_transaction_free(packed_transaction);
++	transaction->state = REF_TRANSACTION_CLOSED;
++	string_list_clear(&affected_refnames, 0);
++	return ret;
++}
++
+ static int files_transaction_finish(struct ref_store *ref_store,
+ 				    struct ref_transaction *transaction,
+ 				    struct strbuf *err)
+@@ -3123,107 +3224,6 @@ static int files_transaction_abort(struct ref_store *ref_store,
+ 	return 0;
+ }
  
- /*
-diff --git a/sequencer.c b/sequencer.c
-index 353d804999b88d5fd5dcf1254d80781f20e62f2e..287f4e5e8766327da6f31e87ce0c20f63b302b77 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -662,7 +662,7 @@ static int fast_forward_to(struct repository *r,
- 	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  &err);
-+						  0, &err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, "HEAD",
- 				   to, unborn && !is_rebase_i(opts) ?
-@@ -1297,7 +1297,7 @@ int update_head_with_reflog(const struct commit *old_head,
- 	}
- 
- 	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  err);
-+						  0, err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, "HEAD", new_head,
- 				   old_head ? &old_head->object.oid : null_oid(),
-@@ -3890,7 +3890,7 @@ static int do_label(struct repository *r, const char *name, int len)
- 	strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
- 	strbuf_addf(&msg, "rebase (label) '%.*s'", len, name);
- 
--	transaction = ref_store_transaction_begin(refs, &err);
-+	transaction = ref_store_transaction_begin(refs, 0, &err);
- 	if (!transaction) {
- 		error("%s", err.buf);
- 		ret = -1;
-diff --git a/walker.c b/walker.c
-index 5ea7e5b392b2bd49f249a9acc8d7ce8779357e1b..7cc9dbea46d64d6bd3336025d640f284a6202157 100644
---- a/walker.c
-+++ b/walker.c
-@@ -290,7 +290,7 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 
- 	if (write_ref) {
- 		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--							  &err);
-+							  0, &err);
- 		if (!transaction) {
- 			error("%s", err.buf);
- 			goto done;
+-static int ref_present(const char *refname, const char *referent UNUSED,
+-		       const struct object_id *oid UNUSED,
+-		       int flags UNUSED,
+-		       void *cb_data)
+-{
+-	struct string_list *affected_refnames = cb_data;
+-
+-	return string_list_has_string(affected_refnames, refname);
+-}
+-
+-static int files_initial_transaction_commit(struct ref_store *ref_store,
+-					    struct ref_transaction *transaction,
+-					    struct strbuf *err)
+-{
+-	struct files_ref_store *refs =
+-		files_downcast(ref_store, REF_STORE_WRITE,
+-			       "initial_ref_transaction_commit");
+-	size_t i;
+-	int ret = 0;
+-	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+-	struct ref_transaction *packed_transaction = NULL;
+-
+-	assert(err);
+-
+-	if (transaction->state != REF_TRANSACTION_OPEN)
+-		BUG("commit called for transaction that is not open");
+-
+-	/* Fail if a refname appears more than once in the transaction: */
+-	for (i = 0; i < transaction->nr; i++)
+-		string_list_append(&affected_refnames,
+-				   transaction->updates[i]->refname);
+-	string_list_sort(&affected_refnames);
+-	if (ref_update_reject_duplicates(&affected_refnames, err)) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-		goto cleanup;
+-	}
+-
+-	/*
+-	 * It's really undefined to call this function in an active
+-	 * repository or when there are existing references: we are
+-	 * only locking and changing packed-refs, so (1) any
+-	 * simultaneous processes might try to change a reference at
+-	 * the same time we do, and (2) any existing loose versions of
+-	 * the references that we are setting would have precedence
+-	 * over our values. But some remote helpers create the remote
+-	 * "HEAD" and "master" branches before calling this function,
+-	 * so here we really only check that none of the references
+-	 * that we are creating already exists.
+-	 */
+-	if (refs_for_each_rawref(&refs->base, ref_present,
+-				 &affected_refnames))
+-		BUG("initial ref transaction called with existing refs");
+-
+-	packed_transaction = ref_store_transaction_begin(refs->packed_ref_store,
+-							 transaction->flags, err);
+-	if (!packed_transaction) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-		goto cleanup;
+-	}
+-
+-	for (i = 0; i < transaction->nr; i++) {
+-		struct ref_update *update = transaction->updates[i];
+-
+-		if ((update->flags & REF_HAVE_OLD) &&
+-		    !is_null_oid(&update->old_oid))
+-			BUG("initial ref transaction with old_sha1 set");
+-		if (refs_verify_refname_available(&refs->base, update->refname,
+-						  &affected_refnames, NULL,
+-						  err)) {
+-			ret = TRANSACTION_NAME_CONFLICT;
+-			goto cleanup;
+-		}
+-
+-		/*
+-		 * Add a reference creation for this reference to the
+-		 * packed-refs transaction:
+-		 */
+-		ref_transaction_add_update(packed_transaction, update->refname,
+-					   update->flags & ~REF_HAVE_OLD,
+-					   &update->new_oid, &update->old_oid,
+-					   NULL, NULL, NULL);
+-	}
+-
+-	if (packed_refs_lock(refs->packed_ref_store, 0, err)) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-		goto cleanup;
+-	}
+-
+-	if (initial_ref_transaction_commit(packed_transaction, err)) {
+-		ret = TRANSACTION_GENERIC_ERROR;
+-	}
+-
+-	packed_refs_unlock(refs->packed_ref_store);
+-cleanup:
+-	if (packed_transaction)
+-		ref_transaction_free(packed_transaction);
+-	transaction->state = REF_TRANSACTION_CLOSED;
+-	string_list_clear(&affected_refnames, 0);
+-	return ret;
+-}
+-
+ struct expire_reflog_cb {
+ 	reflog_expiry_should_prune_fn *should_prune_fn;
+ 	void *policy_cb;
 
 -- 
 2.47.0.274.g962d0b743d.dirty
