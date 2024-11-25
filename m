@@ -1,80 +1,82 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E9F156962
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 07:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051EB12EBEA
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 07:38:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732520326; cv=none; b=gChDl8pxyxUkIGgiLy0e932aGYIUbUbObj4UgNPIK59zXwH8K/si/kZY7AR/g9d0lwumMzAKNd3EqVASil0743/fkJWKvmjlSHNzuPUm0wQOcBwUVcWlfG14GDRWLUzU1k9Ljl6Q4zdYHsCXXYBhnulYIUmtEgzAY9QjRIkAxa4=
+	t=1732520327; cv=none; b=RKgnQCwQOo90p091+9CBkd9SFODt4rGjgB8pFEqP4K1JWL6G4p+dJz/5pQhGYXPmSMp+eFSqSVaGiuMvhVBxUTG1QpHquRqkMk/e5Zznn92Q4lKSUR3fXW6QU4IilRo0LgfhI6LsZOTvJtO0hm/+0F0E2/krB0Etsd2uLtvf6yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732520326; c=relaxed/simple;
-	bh=2Rm9xcvrSTgwGXx8aCNJwTScZvlM08EuxhXBA5XDbkM=;
+	s=arc-20240116; t=1732520327; c=relaxed/simple;
+	bh=rx8Zo1xiQZb7rRA9FLLTpIPA2wLrlSUPMetrQV/Ikls=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gx+9oYCXysVA/SaDdMUcYWFMXg3qNN6rGzHJP+/v9wtxGyKOPdBSQ2aRjE76HuOczHyMk198EIMEP61jES/gxbe9oEvs2WGbabcCvO+hgvBrjYnOX23f8ONEhTE16cEIQ9n3UWUqQFyPEU+EYuFnhYDmI6u/n/uk5wOnkoz5+Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NRg4EXd6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4aaB+exU; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=RYDcUw/Ej+ZCKlO1gf+qXSo8fAIEzOlRCS48GmQnDDdOjyS29Pds8kI3bvEvBRatGz2YpgHja5oMh5rCEtEDATHGYXtsXx3xICzVcYYh0VChOZCzdk2kw31msoKQAyYb10+T4R2xVNLxGhXditRRZUkJvMdfzcEXb68G9SJNMpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ne5IbyUQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A/t+E1fp; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NRg4EXd6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4aaB+exU"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ne5IbyUQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A/t+E1fp"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B21FE254014F;
-	Mon, 25 Nov 2024 02:38:43 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 18F671140155;
+	Mon, 25 Nov 2024 02:38:45 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 02:38:43 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 02:38:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732520323;
-	 x=1732606723; bh=ivSZWOWOqQv1UUtMjhF6dBS6AMIjSLXOF5mg/ipOg2k=; b=
-	NRg4EXd6iv8BBEJvZM5FiOoim7OEQV0SoqRgkEV3JBnR17OHrbZNrVrCCfGDy0F+
-	AbHxiyXIq2yvl9syiyyJq04pKVIFI0ML4Z3GVA5L2+0i8VyK4kN0r+6UwbvWlv8S
-	wFAMdZ8yLI44MjuucdpdBuQaQst298tNZmMVgeFC7a5PUKQuu1j3C27HL7XO9lgx
-	LHJO84vTzcemkEeJ7/eFdpxNHpdp4U6mUxmZHUPeg8GodUm8/qMGsUtVWPDaftsZ
-	UsFJT4d++PdNwMz0N8QJ/ZFz+H7uISZA1O7xOCK71ND1/XgRQ0b1Gbg8Tdd+eCwy
-	BWb3X2POYtpYBL8w8AFtZw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732520324;
+	 x=1732606724; bh=OLA5H9133sZlQstEH4+LOJYQjs8G6WHWYCl8wFlpn3Q=; b=
+	Ne5IbyUQXjf+xJb7z6FltOUT4dxwWPVzm80g8j60pOHbBOFBVDmVJ4WybaOVg6Ww
+	ViZEA3ylwAEvjECzg9XNttUQappng1hS7ucm3eRtWsag7aS3bF/Z7t+8mPyb9FiA
+	ed0iMlL5stO/84qWuOJKEGA+3H0KdjeDYXLlAut/nlr63RrAVADvajpLTvmicKzl
+	VfuXOqAtmMwaOyF2riIYCoF7uJs20u+F8aWOpwJvUfjqRygjY6PpTlG1r6boBuuf
+	aTFzS1pI/q0YIQhUKR0jmJAgM3kL15WDHj9HWEfBxbnRmEkiEO6onO3d7R9Cfbsk
+	w4fPZRWRuda+JEbO38bkSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732520323; x=
-	1732606723; bh=ivSZWOWOqQv1UUtMjhF6dBS6AMIjSLXOF5mg/ipOg2k=; b=4
-	aaB+exU02hJC9v/xFEY5vP9E9Iiv09UHSB7WJ/jZO78VxXnJh9TbmuLIrU5Piyky
-	dhpMVeZlB7e0V/MNsEfEXPObrnpFSwmUDetZP0oj6bJtmowcgi0L0YHFF/US9RFg
-	U/eyEJqE3gz6UuXzy60BJ6WqD5rlNQcgD/nywFbD2dqXFpas4RAT68HfJtM2Ie36
-	DVElNT0CF/aYHrKXucyEwRHJS0csK2+eswyKEEfrvQeT8YJlZ7OBF+wJkxBdTt5Z
-	J81wBHNTCbGwmzE1X7/YObRZ4UN4NcgypHRpGbH8UYjQCAgywsy0uwCNcNhkkIfp
-	SNhLP55BpwhExX0pn+KAA==
-X-ME-Sender: <xms:gylEZzHMiFiZ32lom_tWmkb6t2oKDOhtnD5jSI7hx39sGE2sfioyVw>
-    <xme:gylEZwUT1ZyDek2b5qwOL6hkXBQSa11ll87DPbBPao69bhr5-jcmYBq3QDsLIFUtr
-    6uydUWtFXoN-c2h9A>
-X-ME-Received: <xmr:gylEZ1LvywthYjHLhkDPIAJBR3pL92jTnOyxGrz589iaAiQ_sqmSjSfKy7GQAX07Hv-STqvQ7PIwAhJq-6_nRZE5lhLbfXaXASKQPH92yJkUoQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732520324; x=
+	1732606724; bh=OLA5H9133sZlQstEH4+LOJYQjs8G6WHWYCl8wFlpn3Q=; b=A
+	/t+E1fpqUDuOLlXcPsmWN3aOFYjGNbQu0QScMFgJu6HgBfIWwjDTExK1IoEopDQa
+	/rFwUc5D8NWiCd0G3sVA30pECzm1KMbs+gtItRgi/PKHqjXP8vE4ISKrmTPmRG/p
+	vcJvuAcz8Jtk8KcEwyApZDY0aJve72rWL0b1Re9V+m7Dfyb90LbiwpsWMquDi8wZ
+	oLS0/vPrbpduD34uVMZFdsTiHnVaqV924NrNWD36Z+4naWE0XlrBWFBPSDOmk0NN
+	X0zhrZ6KB7e6lL3WbkgCN+BNJrRzb04Njr28qfiVyjBqKYym7wDNQfUpKXFvHNWp
+	jrRvO/fXHGmW02S8b9rAg==
+X-ME-Sender: <xms:hClEZz9WxQ-gX6Eb0TzJrZx0c2iL5vYc-y7M95HIWRVxIFI4kIXidw>
+    <xme:hClEZ_tujG7MpHJrGTqXLxqsGpFO2VfwZ-96ADhGpXCOo3jGxhw__iadm1w_XYodS
+    eTG9yHschJWXeIKDQ>
+X-ME-Received: <xmr:hClEZxAbRS7maSdYs0h7Ug0sl5e6WTpJECR3lSfttkqkqmp-vbnxQlB0MUM2sg_my_uo-QVvxRWILP49FmI7_ysaWvOL4tPFCt1QBvXiG-iINA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggddutdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:gylEZxH-Uz-WwvGlKiUXz1_letWk-Atmn60mfLW92XCPh9nF1xDZpg>
-    <xmx:gylEZ5U39p62GAOtiTm59NStva_SkX4hZXBLVsKIKlcTdD8B5W5kCA>
-    <xmx:gylEZ8MkCNk5rbjsHzLIXoAW_P55bL_QSXoyjGfatd_URuOwxnJiCQ>
-    <xmx:gylEZ41q4Cl-WW7uAZ_2KdR2OzliO46jCyDyusZQ28wevrQQ01jagQ>
-    <xmx:gylEZ8Q_uVtR3PBQ3f2qP6bWk-uUB2u2MzWW07RJXVXuUaUd62w15Wp6>
+    hmqeenucggtffrrghtthgvrhhnpefhfeeiveffudfhjedvveffhfdukefhvdekveevgeeu
+    ieetteevgeelgffhvedtgfenucffohhmrghinhepuhhpuggrthgvrdhtiienucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hm
+X-ME-Proxy: <xmx:hClEZ_dRYOENV1u9cAdJ5cSUw7lRweHLo2oiuO24NNxzCqk3Fxq3yQ>
+    <xmx:hClEZ4OUnn1geK3_TER4a5y1ZSLDIWA6-eUHwgwVC_ExG9sb5Wp4Bw>
+    <xmx:hClEZxmKnfmLi2X0x9qvRQ97XEIaxliBLLXslfa9soIJoRJXoHydcA>
+    <xmx:hClEZyvUz0F64hku8oD8gmswAj67nj7O6KbenSbL2k_PSe-Lu1dzTQ>
+    <xmx:hClEZ9q5WWgApFSYQnp1PMekS210fK2WsJIZ_VDftpmZ4vEksA7YfFqg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 02:38:42 -0500 (EST)
+ 25 Nov 2024 02:38:43 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cc2b93ca (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 07:37:39 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 632cbfa8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 07:37:40 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 25 Nov 2024 08:38:25 +0100
-Subject: [PATCH v3 3/9] reftable/stack: add accessor for the hash ID
+Date: Mon, 25 Nov 2024 08:38:26 +0100
+Subject: [PATCH v3 4/9] refs/reftable: read references via `struct
+ reftable_backend`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241125-pks-reftable-backend-reuse-iter-v3-3-1d7b658e3e9e@pks.im>
+Message-Id: <20241125-pks-reftable-backend-reuse-iter-v3-4-1d7b658e3e9e@pks.im>
 References: <20241125-pks-reftable-backend-reuse-iter-v3-0-1d7b658e3e9e@pks.im>
 In-Reply-To: <20241125-pks-reftable-backend-reuse-iter-v3-0-1d7b658e3e9e@pks.im>
 To: git@vger.kernel.org
@@ -91,40 +93,232 @@ Cc: karthik nayak <karthik.188@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Add an accessor function that allows callers to access the hash ID of a
-reftable stack. This function will be used in a subsequent commit.
+Refactor `read_ref_without_reload()` to accept a `struct reftable_stack`
+as input instead of accepting a `struct reftable_stack`. This allows us
+to implement an additional caching layer when reading refs where we can
+reuse reftable iterators.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/reftable-stack.h | 3 +++
- reftable/stack.c          | 5 +++++
- 2 files changed, 8 insertions(+)
+ refs/reftable-backend.c | 110 ++++++++++++++++++++++++++----------------------
+ 1 file changed, 59 insertions(+), 51 deletions(-)
 
-diff --git a/reftable/reftable-stack.h b/reftable/reftable-stack.h
-index 54787f2ef530406a7970db058c3a0cf456897978..ae14270ea74108cd4c314ec38e7d5c9a4e731481 100644
---- a/reftable/reftable-stack.h
-+++ b/reftable/reftable-stack.h
-@@ -149,4 +149,7 @@ struct reftable_compaction_stats {
- struct reftable_compaction_stats *
- reftable_stack_compaction_stats(struct reftable_stack *st);
- 
-+/* Return the hash of the stack. */
-+enum reftable_hash reftable_stack_hash_id(struct reftable_stack *st);
-+
- #endif
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 1fffd75630266c0d3d1e4a2d037b5cf90455529d..d97b64a40d4ad05cfd9e6f33e8ba1e713281ef6d 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -1791,3 +1791,8 @@ int reftable_stack_clean(struct reftable_stack *st)
- 	reftable_addition_destroy(add);
- 	return err;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 64fe8fd02d8ec932f7980cdb7d7d5223c3c83b73..5933c561f5c422d12b616514ed76b75c52a13477 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -51,6 +51,50 @@ static void reftable_backend_release(struct reftable_backend *be)
+ 	be->stack = NULL;
  }
-+
-+enum reftable_hash reftable_stack_hash_id(struct reftable_stack *st)
+ 
++static int reftable_backend_read_ref(struct reftable_backend *be,
++				     const char *refname,
++				     struct object_id *oid,
++				     struct strbuf *referent,
++				     unsigned int *type)
 +{
-+	return reftable_merged_table_hash_id(st->merged);
++	struct reftable_ref_record ref = {0};
++	int ret;
++
++	ret = reftable_stack_read_ref(be->stack, refname, &ref);
++	if (ret)
++		goto done;
++
++	if (ref.value_type == REFTABLE_REF_SYMREF) {
++		strbuf_reset(referent);
++		strbuf_addstr(referent, ref.value.symref);
++		*type |= REF_ISSYMREF;
++	} else if (reftable_ref_record_val1(&ref)) {
++		unsigned int hash_id;
++
++		switch (reftable_stack_hash_id(be->stack)) {
++		case REFTABLE_HASH_SHA1:
++			hash_id = GIT_HASH_SHA1;
++			break;
++		case REFTABLE_HASH_SHA256:
++			hash_id = GIT_HASH_SHA256;
++			break;
++		default:
++			BUG("unhandled hash ID %d", reftable_stack_hash_id(be->stack));
++		}
++
++		oidread(oid, reftable_ref_record_val1(&ref),
++			&hash_algos[hash_id]);
++	} else {
++		/* We got a tombstone, which should not happen. */
++		BUG("unhandled reference value type %d", ref.value_type);
++	}
++
++done:
++	assert(ret != REFTABLE_API_ERROR);
++	reftable_ref_record_release(&ref);
++	return ret;
 +}
++
+ struct reftable_ref_store {
+ 	struct ref_store base;
+ 
+@@ -243,38 +287,6 @@ static void fill_reftable_log_record(struct reftable_log_record *log, const stru
+ 	log->value.update.tz_offset = sign * atoi(tz_begin);
+ }
+ 
+-static int read_ref_without_reload(struct reftable_ref_store *refs,
+-				   struct reftable_stack *stack,
+-				   const char *refname,
+-				   struct object_id *oid,
+-				   struct strbuf *referent,
+-				   unsigned int *type)
+-{
+-	struct reftable_ref_record ref = {0};
+-	int ret;
+-
+-	ret = reftable_stack_read_ref(stack, refname, &ref);
+-	if (ret)
+-		goto done;
+-
+-	if (ref.value_type == REFTABLE_REF_SYMREF) {
+-		strbuf_reset(referent);
+-		strbuf_addstr(referent, ref.value.symref);
+-		*type |= REF_ISSYMREF;
+-	} else if (reftable_ref_record_val1(&ref)) {
+-		oidread(oid, reftable_ref_record_val1(&ref),
+-			refs->base.repo->hash_algo);
+-	} else {
+-		/* We got a tombstone, which should not happen. */
+-		BUG("unhandled reference value type %d", ref.value_type);
+-	}
+-
+-done:
+-	assert(ret != REFTABLE_API_ERROR);
+-	reftable_ref_record_release(&ref);
+-	return ret;
+-}
+-
+ static int reftable_be_config(const char *var, const char *value,
+ 			      const struct config_context *ctx,
+ 			      void *_opts)
+@@ -855,7 +867,7 @@ static int reftable_be_read_raw_ref(struct ref_store *ref_store,
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = read_ref_without_reload(refs, be->stack, refname, oid, referent, type);
++	ret = reftable_backend_read_ref(be, refname, oid, referent, type);
+ 	if (ret < 0)
+ 		return ret;
+ 	if (ret > 0) {
+@@ -1091,8 +1103,8 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 	if (ret)
+ 		goto done;
+ 
+-	ret = read_ref_without_reload(refs, be->stack, "HEAD",
+-				      &head_oid, &head_referent, &head_type);
++	ret = reftable_backend_read_ref(be, "HEAD", &head_oid,
++					&head_referent, &head_type);
+ 	if (ret < 0)
+ 		goto done;
+ 	ret = 0;
+@@ -1167,8 +1179,8 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 			string_list_insert(&affected_refnames, new_update->refname);
+ 		}
+ 
+-		ret = read_ref_without_reload(refs, be->stack, rewritten_ref,
+-					      &current_oid, &referent, &u->type);
++		ret = reftable_backend_read_ref(be, rewritten_ref,
++						&current_oid, &referent, &u->type);
+ 		if (ret < 0)
+ 			goto done;
+ 		if (ret > 0 && !ref_update_expects_existing_old_ref(u)) {
+@@ -1626,7 +1638,7 @@ struct write_create_symref_arg {
+ 
+ struct write_copy_arg {
+ 	struct reftable_ref_store *refs;
+-	struct reftable_stack *stack;
++	struct reftable_backend *be;
+ 	const char *oldname;
+ 	const char *newname;
+ 	const char *logmsg;
+@@ -1651,7 +1663,7 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+ 	if (split_ident_line(&committer_ident, committer_info, strlen(committer_info)))
+ 		BUG("failed splitting committer info");
+ 
+-	if (reftable_stack_read_ref(arg->stack, arg->oldname, &old_ref)) {
++	if (reftable_stack_read_ref(arg->be->stack, arg->oldname, &old_ref)) {
+ 		ret = error(_("refname %s not found"), arg->oldname);
+ 		goto done;
+ 	}
+@@ -1690,7 +1702,7 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+ 	 * the old branch and the creation of the new branch, and we cannot do
+ 	 * two changes to a reflog in a single update.
+ 	 */
+-	deletion_ts = creation_ts = reftable_stack_next_update_index(arg->stack);
++	deletion_ts = creation_ts = reftable_stack_next_update_index(arg->be->stack);
+ 	if (arg->delete_old)
+ 		creation_ts++;
+ 	reftable_writer_set_limits(writer, deletion_ts, creation_ts);
+@@ -1733,8 +1745,8 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+ 		memcpy(logs[logs_nr].value.update.old_hash, old_ref.value.val1, GIT_MAX_RAWSZ);
+ 		logs_nr++;
+ 
+-		ret = read_ref_without_reload(arg->refs, arg->stack, "HEAD", &head_oid,
+-					      &head_referent, &head_type);
++		ret = reftable_backend_read_ref(arg->be, "HEAD", &head_oid,
++						&head_referent, &head_type);
+ 		if (ret < 0)
+ 			goto done;
+ 		append_head_reflog = (head_type & REF_ISSYMREF) && !strcmp(head_referent.buf, arg->oldname);
+@@ -1777,7 +1789,7 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+ 	 * copy over all log entries from the old reflog. Last but not least,
+ 	 * when renaming we also have to delete all the old reflog entries.
+ 	 */
+-	ret = reftable_stack_init_log_iterator(arg->stack, &it);
++	ret = reftable_stack_init_log_iterator(arg->be->stack, &it);
+ 	if (ret < 0)
+ 		goto done;
+ 
+@@ -1850,7 +1862,6 @@ static int reftable_be_rename_ref(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "rename_ref");
+-	struct reftable_backend *be;
+ 	struct write_copy_arg arg = {
+ 		.refs = refs,
+ 		.oldname = oldrefname,
+@@ -1864,11 +1875,10 @@ static int reftable_be_rename_ref(struct ref_store *ref_store,
+ 	if (ret < 0)
+ 		goto done;
+ 
+-	ret = backend_for(&be, refs, newrefname, &newrefname, 1);
++	ret = backend_for(&arg.be, refs, newrefname, &newrefname, 1);
+ 	if (ret)
+ 		goto done;
+-	arg.stack = be->stack;
+-	ret = reftable_stack_add(be->stack, &write_copy_table, &arg);
++	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg);
+ 
+ done:
+ 	assert(ret != REFTABLE_API_ERROR);
+@@ -1882,7 +1892,6 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
+ {
+ 	struct reftable_ref_store *refs =
+ 		reftable_be_downcast(ref_store, REF_STORE_WRITE, "copy_ref");
+-	struct reftable_backend *be;
+ 	struct write_copy_arg arg = {
+ 		.refs = refs,
+ 		.oldname = oldrefname,
+@@ -1895,11 +1904,10 @@ static int reftable_be_copy_ref(struct ref_store *ref_store,
+ 	if (ret < 0)
+ 		goto done;
+ 
+-	ret = backend_for(&be, refs, newrefname, &newrefname, 1);
++	ret = backend_for(&arg.be, refs, newrefname, &newrefname, 1);
+ 	if (ret)
+ 		goto done;
+-	arg.stack = be->stack;
+-	ret = reftable_stack_add(be->stack, &write_copy_table, &arg);
++	ret = reftable_stack_add(arg.be->stack, &write_copy_table, &arg);
+ 
+ done:
+ 	assert(ret != REFTABLE_API_ERROR);
 
 -- 
 2.47.0.274.g962d0b743d.dirty
