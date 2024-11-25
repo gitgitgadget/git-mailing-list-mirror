@@ -1,136 +1,168 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD59D14E2E8
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 15:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5694D28689
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 15:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732549028; cv=none; b=TEA2uMe+8RrtjvBOLE3xTSAK1UWTkWZ7RU9Wxjk3xv6wWYa+ZhihRhGwjkxdN5kGiAtolOicIVdNcbNCbiFfKRUfIUH0pDZe7qBFOVfGU+t0Ku684OXiF4gXQysqqIsED8OByO3yTtFkXtaoF+kUwNbWP4XjzRX9l+uuI3kkgKU=
+	t=1732550211; cv=none; b=rApZbrOZJdW8EJQ/8ISN2e9mBPzJSlvhO9nFCRePxjWmOZS2s8QKwAhlkQN+i6rEMNHsezWQuzOJKIXHKpu3/bF7k0rRzbGiAtHR0BqxuACI7PCFq9SaWQga4+qp5PZpcK5eN3gF5ZDdkExKfkV06/KV/xn+YTrOwQ3ggwSDhuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732549028; c=relaxed/simple;
-	bh=TEHe5PjLC/uUXJdHE046axW207V3CSOmKzT8DlWt7o4=;
-	h=Date:From:To:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=h19HUmmX2KhNA7pGDpKuxLyB5vHv+OjqiKXcUTx1GKCWC38FmmvVplbmBicd7tcV6g1WIAl7nX8QN8sa+uEmPiQ4mOUr+ZKu43WZVIXuA9fUxsNnjq6S1ZTRlOk0PlVpb39Fd/xni12S1CIcqXPMKs089SzWElqbUTm8uzSU5TQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ihGS5wwV; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1732550211; c=relaxed/simple;
+	bh=N3WDuqBFPtvrX3cNb4UmdBkc8+dkHpUMrsf84bZkQdk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=jC3uoB2axY0B789RRN5pwIIpubaeN5btPxeiM7lnI+fCXJt+FCPWQz6cgbiOXJwlFIrKiuX4zIHdrgQfaKf5NlG5SLZ0WJPX6rOHEEWBe0p9H1WKsmas2taHcjgeMLrmLyUZc9+q/Ktsssyx00ADx5uKgFQ1t5BwK+oJpaetaE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fcyHtamZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dt/IecCR; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ihGS5wwV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1732549023; x=1733153823;
-	i=johannes.schindelin@gmx.de;
-	bh=cRAAInSnOnh9mFcnFRn7T95sW0k0nNyzNg9IqmIXHIU=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=ihGS5wwVOoyDdJo6sA0udKxJLsL04Bq6pM8TvZbGbt2/X5K5dAI9MsmgCh/BntUL
-	 MyimL4EflkiiZvGDxl2+KD7slR3lg+uXuU8KlH0LZRn0XbIqm9MrmG3B3IF1mZixj
-	 8GZrKH3DyeZcjsu2/N5lINWCpIvuHFVDu+rAx9v/F2BqTy59fJm9H/Zy60VEpFOgq
-	 h2/O8U6ffrlt59hTCrZAZGtufKH6+4iUXqpvfrL86AQ+NsIWqujvT1L22EmYY+Xif
-	 hs4qx+QZuR4iIyuTas2+7dgNlU6/ChnEghB5bUucyCxapvVcTvIdBYB/pCqInyski
-	 sQmnT0iRgOCQLWsiMg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.214.125]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N49hB-1tgEgQ0yjB-010v9K; Mon, 25
- Nov 2024 16:37:03 +0100
-Date: Mon, 25 Nov 2024 16:37:02 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
-    git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.47.1
-In-Reply-To: <20241125150158.3347-1-johannes.schindelin@gmx.de>
-Message-ID: <e713d3c1-c1cf-abe5-ca24-d63a5e78d6a9@gmx.de>
-References: <20241125150158.3347-1-johannes.schindelin@gmx.de>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fcyHtamZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dt/IecCR"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 270C913806E4;
+	Mon, 25 Nov 2024 10:56:46 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 25 Nov 2024 10:56:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1732550206; x=1732636606; bh=YkMZjzEdm9
+	2LzBMs484WH6GUz3hbSA2BLA8CZCveDAI=; b=fcyHtamZ+wiiWDGLnbys0opP0D
+	C+MFG9YVlMicDUyQlwa4tiMLKuElMtOlXrFgGlAuyQmJrmQATnA1q0QIWYh7ApA7
+	XS2mTMHpiW5mRw7Xcov4X5GkeUPNE3WNQbXr0T33rpCeVwoRBXctAopqrB8v9Xq/
+	fQf57S2Oc7gbRBsG04Qga05JSa3oZ3fD188ELhOjp9NL6OF1v++aDOiEGWtnDF09
+	Udc4ntdTqcP6UIuVfcZOF01lseznzjrVwFAispLWt04kM2yzYR/53SXk13wphhkb
+	ec71gkG3OCmQHrBpW9yejhK2e3b+/ToVzImaUdPxH5zSIxzPjCWgZdvBUbYg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1732550206; x=1732636606; bh=YkMZjzEdm92LzBMs484WH6GUz3hb
+	SA2BLA8CZCveDAI=; b=dt/IecCRGSL+oFmehEaEHu3NghLt9uANgO5imi9ZRBl+
+	CVXkrzGV35g68C5HocMErohQs3G122Dvg/OZh4gRALzWT7ZlO6Frs1XN9H9OQQNy
+	FMuhU6u9CppsnzVHCpFSj87TSUwMcP8wL0Rqcr64a5eDpPFBr6YYJr1zb49QVX8B
+	ZGGNHgCfwlMdVg6ssxThD9ZK2Ey5sw6ZXJcTia3ns8+tYrY+4vt3fbzJbRAK/2GD
+	kgUlw/TV4PMI5smDyFb0sXRTH4UqE3TUwpeZnDd4xJn+X8tZPPmDUd2eoQkR1XQ3
+	mCkpdpuAJBJ/C0hkDSIIHdmEajYWeGGwmbLzgAcVxw==
+X-ME-Sender: <xms:PZ5EZ_8dx_eT2y9jbBptLyunrT1MQRqgU5Re0_IHm5VtHP5i5uSNmQ>
+    <xme:PZ5EZ7v7xHU3KLF734i1FPVYMI4yVaDycN8DPAzkKtSFzwl9Jav34GLeOvfddfnG2
+    ieDQcHRGLDUwLxMiA>
+X-ME-Received: <xmr:PZ5EZ9CIzVCv1Q5yduU-u1UOGcoEUHg_kM4xS-jcsGzM8-ApQr4HKrfNKxIWWtgyNFas6ZeK89efueGQvcCCSETv49gDOffJVOXcka4az_W6bA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgdekudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
+    fgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
+    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeigfeitdffffdvvd
+    euheehjeehheeludduhfehkeekgeeggfeuffehveegteejfeenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    gtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:PZ5EZ7eMEdX8_Jhu2Lth6-zMfG_iuvDOYI0KV2ZeBb_djLtzEulrsg>
+    <xmx:PZ5EZ0MY3SO8uq-ZKOe8zgcnPBinrPXpfVy4FMkCZNpQZXkRV3DDPA>
+    <xmx:PZ5EZ9kimuHYFcZ41w4O48TSWbfA-b9vrPZwz1YcDDx_qQPVRpx1kQ>
+    <xmx:PZ5EZ-tdmUoEQ5wSafgRoLPZ9VoVl52I0QDuGw9-63XBFNm_vI0rww>
+    <xmx:Pp5EZ9bKC834cL1a_ia3abbCHZ9StdaF-o7ueWzHVebujqyxxKlrKW6Z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 25 Nov 2024 10:56:45 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id aedadd3d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 15:55:41 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Mon, 25 Nov 2024 16:56:25 +0100
+Subject: [PATCH] bisect: address Coverity warning about potential double
+ free
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:L6TvLa9G/gOygNlv4ggDejZipRETAiaUNEPH5IGhHC5MI2Bcz0Z
- uYTV8HH6IPo10kYOfIK00srLe0T4SJl5b2+xvMvzzhqLxniq9ZlC1q9CGtZVb/WqasLhQOV
- eLNxRdxacbkWA8dQHnOIMrXquew1yPO099zHKAy9WAE8YuWfx5h3KOjzbLyjaChk1J3q+L0
- jJzGOe3Db2hYj1eSWSRpg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:j6DtXtWMcu4=;hiWA490e+PYdCKUeaAdc5sE4m3N
- MfQwcOl2rUZpAgBrCh1wo+8fnkYLRpOCo+9gnrSXf0R3xbbb6ll67Xa4vqkCzd3kBiVEO3f1/
- vRfOqG7E8xECjyD4WfGC2wztlPELQTP6AAK2s4ByWIBDiy4ub4xrc/zzVkv59w1ZoBNFLlLRQ
- cQGeOSZoyMzep6DGCKiPkUoLSKp6NeYjMLpmFrTzDlyUKHXePmLK4EdROy2gOToESSrOOP9Mg
- xJdil+Hdk70oXQDqFsuu5GQpn3o7BroDxmxULiijNQNAfPjHFfOjE2DXZMpOPDkuUMccgYAqU
- Mwx0KwZmOL9ExkVBZiIo8nYqzoEyiSY3RQBqNfw05ThCagpoGRoDj72vqq4n30NyBy0PBz2n9
- 59Fu7h8L9m/wAN/cNsZdqZkUJoC1FY6V7wHTrYBkT2y0O7jZb15Y+Bc9rjA0ZaEjnPD/sd1KD
- WlUqz+v+Es7AyREScNNkRku0N3HbY3pwHcjwUu/TYX2Rv9UGstW379KX/OfbJ60qgKWhd+QAV
- PpljZT64IvTpWAd+WftNMo9vllIMNji+JQkHZ2hcR1St306rXJgrHmglPWCgFm/4tuC0u9kg7
- A2qbPrZ6OJ3ecZe+U+lP1nyRX5ROUxl9K+aaPpAkkTnLMNaGIOVE/jyk55KQN3h+UFvXfFIRK
- 7RFlcmD5F7RExPyhwZQ5Z39bKgBNTnNSZFyhm1s+Hw1/a7ckXo1ydVwldb0gZdYsv6Ea24KPn
- J33MSFaCqxTia2QXOIW1zNaj44XdtYvg2RyFPLi4/5b0O56Y54Z7lbP+034Kx/UuXWlZxmHHp
- GT9Ip7SGVF4d9cPhIT3sqIZOJ0at9vX9S0g1LzhUnRXn78OVLJsX0FWF/Me3kejx2ajUK1ybm
- J3dj9dZj9yPqWjfWdnQTWenPD85OOX81ZwJWAN9mFZmG9Li5up3mzW8cY
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241125-pks-leak-fixes-address-double-free-v1-1-d33fd8ebf55b@pks.im>
+X-B4-Tracking: v=1; b=H4sIACieRGcC/x3MQQqDQAxG4atI1gZmpkqhVyldxM4/bVBUEhRBv
+ HuHLj94vJMcpnB6NCcZdnVd5orYNvT+yvwBa66mFFIXY+p5HZ0nyMhFDzhLzgZ3zss2TOBiAON
+ egF46uYVAdbQa/nH9PF/X9QNI7yOpdAAAAA==
+X-Change-ID: 20241125-pks-leak-fixes-address-double-free-e7fee5a4a300
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>
+X-Mailer: b4 0.14.2
 
-Another Git for Windows announcement that was rejected as spam by the Git
-mailing list.
+Coverity has started to warn about a potential double-free in
+`find_bisection()`. This warning is triggered because we may modify the
+list head of the passed-in `commit_list` in case it is an UNINTERESTING
+commit, but still call `free_commit_list()` on the original variable
+that points to the now-freed head in case where `do_find_bisection()`
+returns a `NULL` pointer.
 
-On Mon, 25 Nov 2024, Johannes Schindelin wrote:
+As far as I can see, this double free cannot happen in practice, as
+`do_find_bisection()` only returns a `NULL` pointer when it was passed a
+`NULL` input. So in order to trigger the double free we would have to
+call `find_bisection()` with a commit list that only consists of
+UNINTERESTING commits, but I have not been able to construct a case
+where that happens.
 
-> Dear Git users,
->
-> I hereby announce that Git for Windows 2.47.1 is available from:
->
->     https://gitforwindows.org/
->
-> Changes since Git for Windows v2.47.0(2) (October 22nd 2024)
->
-> This release comes with the first early native support of Windows/ARM64
-> , ready for testing. Please report any issues!
->
-> New Features
->
->   * Comes with Git v2.47.1.
->   * Comes with cURL v8.11.0.
->   * Comes with Git LFS v3.6.0.
->
-> Bug Fixes
->
->   * Due to a bug introduced in the v2.47 cycle, the installer showed an
->     empty "experimental options" page, which was fixed.
->   * A potential crash in Git Bash on Insider versions of Windows/ARM64
->     was fixed.
->   * On Windows/ARM64, running the 64-bit version of Git for Windows
->     could infrequently cause deadlocked threads (see e.g. this report
->     or this one), which was addressed.
->
-> Git-2.47.1-64-bit.exe | 25527923debc06515b3016f2d6bca0820656e8281a23be2f=
-43bfb658bd5dda70
-> Git-2.47.1-32-bit.exe | 121744b5d804f839d7f6e66e594ccafbe345418f0d02a696=
-f6cec866f6eb1e62
-> PortableGit-2.47.1-64-bit.7z.exe | 4f3f21f4effcb659566883ee1ed3ae403e5b3=
-d7a0699cee455f6cd765e1ac39c
-> PortableGit-2.47.1-32-bit.7z.exe | 7d022cdf6a79b0206db4274231f51bee27100=
-1d8c88fe2e25d5ff81cc0535b80
-> MinGit-2.47.1-64-bit.zip | 50b04b55425b5c465d076cdb184f63a0cd0f86f6ec8bb=
-4d5860114a713d2c29a
-> MinGit-2.47.1-32-bit.zip | 3c0fa6e3096c2304f8c6af9cb6bb35623b2e615771cf7=
-be45f9632af83bd9864
-> MinGit-2.47.1-busybox-64-bit.zip | 7b26cc61866c5c0ec050797f57837bf064eac=
-d3aaa87ae316e96c6936235cf29
-> MinGit-2.47.1-busybox-32-bit.zip | c5ee149a781c4672537926f967614e9e33233=
-b8fd08811ce967b5f535ce77620
-> Git-2.47.1-64-bit.tar.bz2 | 45d2bdc96712b0ab785c307461429cf5bd7442271088=
-05edaaec7517432db54c
-> Git-2.47.1-32-bit.tar.bz2 | 99a91af7a6a7a8791ebede7c0fd5339084853ec1a3c4=
-f9dffdb91145ce934c1e
-> Git-2.47.1-arm64.tar.bz2 | bc7fbbdfbc54d4a245fc0c18f88c2a20f82ec60345879=
-f2fdc2e7f48d100bd61
-> Git-2.47.1-arm64.exe | 63950d69998ca184b0ade0389a0e0b50e62f4a1ea8da97524=
-49193c9dcda569f
-> MinGit-2.47.1-arm64.zip | fc5747e187a70147404a94da104dc9f6005a3d45a78a56=
-dbfa132075ad4a45e4
-> PortableGit-2.47.1-arm64.7z.exe | d366f44ef2b65e11f7b5a1430ae43aceb5f7c6=
-40150f325fa4b767f6da472845
->
-> Ciao,
-> Johannes
->
+Drop the `else` branch entirely as it seems to be a no-op anyway.
+Another option might be to instead call `free_commit_list()` on `list`,
+which is the modified version of `commit_list` and thus wouldn't cause a
+double free. But as mentioned, I couldn't come up with any case where a
+passed-in non-NULL list becomes empty, so this shouldn't be necessary.
+And if it ever does become necessary we'd notice anyway via the leak
+sanitizer.
+
+Interestingly enough we did not have a single test exercising this
+branch: all tests pass just fine even when replacing it with a call to
+`BUG()`. Add a test that exercises it.
+
+Reported-by: Jeff King <peff@peff.net>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
+
+this addresses the issue reported by Peff in [1]. The patch is based on
+top of 6ea2d9d271 (Sync with Git 2.47.1, 2024-11-25) with
+ps/leakfixes-part-10 at fc1ddf42af (t: remove TEST_PASSES_SANITIZE_LEAK
+annotations, 2024-11-20) merged into it.
+
+Thanks!
+
+Patrick
+
+[1]: <20241125131722.GA1613472@coredump.intra.peff.net>
+---
+ bisect.c                   | 2 --
+ t/t6002-rev-list-bisect.sh | 5 +++++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/bisect.c b/bisect.c
+index f6fa5c235ffb351011ed5e81771fbcdad9ca0917..d71c4e4b44b40706b8182bc8821bf711b5794376 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -442,8 +442,6 @@ void find_bisection(struct commit_list **commit_list, int *reaches,
+ 			best->next = NULL;
+ 		}
+ 		*reaches = weight(best);
+-	} else {
+-		free_commit_list(*commit_list);
+ 	}
+ 	*commit_list = best;
+ 
+diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+index b95a0212adff71632d0b91cf96432b276c86a44c..daa009c9a1b4b67d510df74f1d5d5cc2b1a904cd 100755
+--- a/t/t6002-rev-list-bisect.sh
++++ b/t/t6002-rev-list-bisect.sh
+@@ -308,4 +308,9 @@ test_expect_success '--bisect-all --first-parent' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success '--bisect without any revisions' '
++	git rev-list --bisect HEAD..HEAD >out &&
++	test_must_be_empty out
++'
++
+ test_done
+
+---
+base-commit: c5c2f8884377a610fe2752658af3b06f790502b5
+change-id: 20241125-pks-leak-fixes-address-double-free-e7fee5a4a300
+
