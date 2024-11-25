@@ -1,53 +1,53 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7A4191F7E
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 09:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D20319149E
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 09:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732528317; cv=none; b=PZ6lTmOcN39PSkvkE8lrNoaVUa9wM5Eko2PYPImSNd+IWb2zQpikka0unpuJ6xklIu2m7mKY6Vt6eKRmvUhQMhUuD6PA5MZM/PTgQ/cO3Gw0MevIxjqZYDmbUnrrazU0uk4hEt+9ABP6eaUpHsbOevIp2G5HMojHCOB2JKRylMM=
+	t=1732528320; cv=none; b=dKgdEQ6s1zACZhNGWs5xYA4UWYP/mcA5bSwTuISjlbrGQYsm0MBcXtX4VzqyQZs/EFO75VEXv42eQv4EsSEECVcfNiFCTWQaU9mA2GQzm9Sxq2o+fl9bAaImsO+bp2U/a8VZHtBPMU5ROtn94xg+0FsUwhyvam/pM90IRx/QpuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732528317; c=relaxed/simple;
-	bh=2wPPJfHjvIw9ygg7xUKIh5vWY9AggTwDpiQhq44Aqbc=;
+	s=arc-20240116; t=1732528320; c=relaxed/simple;
+	bh=Doh5oH5zhgK0SaQdzMzFfDSRaOOm3JWsvPQjM5FED2Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RfzoLq8dhpmQQBV2GB6X92PqsT8wY6Yol5sdpFA2ocMk+dWqZ33Uez2bjgVQGiUY03IGIZB7trB0QGCQmsTw6CNFJv/mdxgbSyq3JBZ/0VZnshPNkqpZMpUsGAh8u6QOU/Mag69OBOLaQY3e3DMGO7IECSZqeMQ5rgsXEvR0Ve4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wpTyM6kV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LRn5T3r7; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=R9NhVh1AHdyR83z9dVrYKuecEkGsU+PQZl5G3lzuNLKNgTOG3HMKn2yrr3pKz9QRE9Sx9fMZiXjNU5t8bB0rtryjRlymGIthcZACHgXfu0dDeNj446v6p0lCQicH78OyC+L7mZMPU5/e3hQl2UGmifUH/pJ6JjrwI/Dv5f0EL84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J+gXNJ2d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LtDqrCOo; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wpTyM6kV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LRn5T3r7"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 38530254014C;
-	Mon, 25 Nov 2024 04:51:54 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J+gXNJ2d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LtDqrCOo"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 72B9F254015B;
+	Mon, 25 Nov 2024 04:51:57 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 04:51:54 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 25 Nov 2024 04:51:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732528314; x=1732614714; bh=YkMcEZgJk2
-	ziiHvropEY2OEwXqAQ6CAVtHU9SBPg+tw=; b=wpTyM6kVqZaNRriTCXwhNsSVV0
-	weUWHLUs39wmN+9eosYbMVdPlP/JqlWrdpZovMVnap4GwcPIqkMF3P3OuEd8EwbB
-	G1h89Etyjk7bP7bpg+7AzU3Di3y4j/OGafte1Rc+ObDgbVnIXjXW833I7fsyWigU
-	C6Cb5fvmxhXo9VKwdIIisbXPBuDl46U2Q8PrxVozC0u8/3DsUFGA52cbxvBye6dX
-	spSp0YQhSEbbqZo9xm+puQLdFikIflPRemn9RLG3pVMehMeO9RHVraU6Dl6rGRYJ
-	m2ISuKTW94xGMxy50TlNy1X+PefqP2uXG5yULz0enSH7/f4opPA2EiQASNEQ==
+	:subject:to:to; s=fm1; t=1732528317; x=1732614717; bh=KEvUJL+Ybp
+	rIl+fCCTK78/h8LFN00sH9e0HJnyyt68E=; b=J+gXNJ2dLQ9ZnUA210cFfjV27j
+	ymhGwQhrAoGY/5U3vAEjt98woO9DNOfRj7TnbJVslIP08BDCS99lZ7D3ruA5PGIe
+	EUyPwN+TgFkvx2AkU5Bqcv9cNn9B3Ubphf/bOjHjXYaSgnXoUw1InjNkY9i23RT6
+	kLnf4I5siKNPScVG2DSPummF8YxNTvib8du1BP36Nt8p/MLqTGRm6TXWgyCOjMqK
+	ZyvDZgl5XuDdtOYy2SmssgHmtMCZev8O6sO18/yhsGzrgFJJ74F/vlifimf+afQT
+	TiWodouRnaps1000EgJZQkX6OYSS/q3MUcF/5L0/GTIYXnvA/HyXKfwsHLlw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732528314; x=1732614714; bh=YkMcEZgJk2ziiHvropEY2OEwXqAQ6CAVtHU
-	9SBPg+tw=; b=LRn5T3r7xMautUIXXKBYxDC6m8635IbH2grbckNRBAzBgxM9SBy
-	s/GLawSFjT+qrfOiv7exsjoVL4ZI5LoyHWx0MXYrMvkKALo0Q20uEg12g8w3cFPW
-	AcJUU7LvvCGlR//OAFtrXQPmSIFXaF+goy6O3t4nJD3TRGmV7rMX+poszPbTonjY
-	TvWPRaCDgXYmjwPV9xtqT8cGh1Dr+q1I7e69jcHjTyGkxoJzgMuT+9Bz0H6MbXlD
-	KIAh+LTcm8U65/g+Y34D2tfGnlYXK+W4r4BP5s4/CsSmhK+plK/CpAL0MpTl58IK
-	Obo2MF40G9tLlvSmU0bOEdFb4fUfSRQvnyw==
-X-ME-Sender: <xms:uUhEZygzBzztxTC6neiH9MlbOIypq0jk6mbYwW7tnZ3aLGtp0FfK7Q>
-    <xme:uUhEZzDU3CfykZcB78zxhai5_LHYbCTMgPH5YgZfvwOc6rd7illMAgCT6dOT1c6SA
-    0vhiK5mU6O4qvJMkQ>
-X-ME-Received: <xmr:uUhEZ6HQSZM8u2miB24--ATrmNmztEbxKWNtb7l4BGISGZ46AY4-_W8HEDYTFh71-j0A9JbJWJwxEk3UbL8UyJrXOs2RxYrSSNQ7auWHU0xpJA>
+	1732528317; x=1732614717; bh=KEvUJL+YbprIl+fCCTK78/h8LFN00sH9e0H
+	Jnyyt68E=; b=LtDqrCOo9qDkR488p/feyL4cuQeIZ4sfqeqEGahPJRnZyhFdN/o
+	RBh0WBLpNQP4obXuMM/OKFLIHB9pr37aKWJZ8mb9xBi5YbyFOHoqohwgL+OYrldW
+	Umeu0CEYodBqBdwz4dGNt9qJMJFSQwICUWtRBCm0dVzM5njor+eleAGrHU2t7AUg
+	ByMtUxrAw5wnNQjosltoDJvMwA508AFch8O0O/1PeRj3MVfNQKt7xSnDi9mSe2wu
+	XYcDX+ReVDyOElitBNR4xRK5J8++EDm0I/S67/KLDXlzVFqHtplyzIU/oM6LDt7P
+	q01J7Z0cqVG9h+h9JgQCEulcS36eASo0Ibw==
+X-ME-Sender: <xms:vUhEZ8y5PPnOuWs3_blT7Gme-EWYMrS89r_MkuR_dP0kNe21v8oSBA>
+    <xme:vUhEZwSAziXZC-Gs9oNln879S49kCe3NdOxomFowCvBa9Cil-NfUzXpzR49Zv2cb1
+    Iu4yf5cWiBN7VtGEA>
+X-ME-Received: <xmr:vUhEZ-VxABM8__ZUst2CRbDxsc1eNMER3Sv3f5zOQz55Us6fQodCkhNX5Ih0mU56l3Ey1dkLaoOne85BfnFzAJhS6VQu3x4-XkngbS-UdrbnpQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddtjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
@@ -55,36 +55,36 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddtjecutefuodetggdote
     rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitd
     eludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfu
     ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghrihgtrdhp
-    vghijhhirghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhi
-    lhihrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehjlhhtohgslhgv
-    rhesghhmrghilhdrtghomhdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvg
+    hrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishgt
+    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghp
+    thhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepjhhlth
+    hosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghrihgtrdhpvghijhhirghn
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilh
     drtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtgho
     mh
-X-ME-Proxy: <xmx:uUhEZ7TmLT9LqVT8g0gYnCMKLpyz_SByguHdwYwJnbg8bHZeN_zVuw>
-    <xmx:uUhEZ_y2BCaMc84KCekOygx9nVlvIeTdQRK57KdtxHVUDKBY_YTcLg>
-    <xmx:uUhEZ57tniVfAYgXjbryuM9Uo1HFUu2zAZVh6yrIn1fyBHsQKqIT8g>
-    <xmx:uUhEZ8yxbFI8ujsXFdTY4Fdcs0gTyIEkLakB-7HdVp0caK1lbGMVNw>
-    <xmx:ukhEZ2kjAhqKmM_aQnzokoQ-buWQ6ovWJrGUlhKULemF1dhl2S85gsx5>
+X-ME-Proxy: <xmx:vUhEZ6iog1cRbCABycZMj4hepcCOYQO_9GkW7iQiNgZjCf79s79uww>
+    <xmx:vUhEZ-CDufPosAlB7QU1AmIzI4lqOF0D8kiHp7zrhkbE5lLereFbUg>
+    <xmx:vUhEZ7IC38Uy1-h64U1U_Z2qW_mqHmjGpxIc1OCr0yOLmSEBYoldGw>
+    <xmx:vUhEZ1CjFeef46vcD0Sed3y3R3B3Tgcb7rHUfiRaQaMoRPX_DzgnlA>
+    <xmx:vUhEZ62dc4f_543Ty6KBRJamKMfdPteOpYS0qOzvPhBm-zflG9KFL_oi>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 04:51:52 -0500 (EST)
+ 25 Nov 2024 04:51:55 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2fad2be2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 09:50:51 +0000 (UTC)
-Date: Mon, 25 Nov 2024 10:51:40 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 12f9b810 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 09:50:54 +0000 (UTC)
+Date: Mon, 25 Nov 2024 10:51:43 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Eric Ju <eric.peijian@gmail.com>
 Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com,
 	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com,
 	jltobler@gmail.com
-Subject: Re: [PATCH v7 5/6] transport: add client support for object-info
-Message-ID: <Z0RIrKwUnaWWm_gJ@pks.im>
+Subject: Re: [PATCH v7 6/6] cat-file: add remote-object-info to batch-command
+Message-ID: <Z0RIrw2PszaY2Way@pks.im>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
  <20241125053616.25170-1-eric.peijian@gmail.com>
- <20241125053616.25170-6-eric.peijian@gmail.com>
+ <20241125053616.25170-7-eric.peijian@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,177 +93,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241125053616.25170-6-eric.peijian@gmail.com>
+In-Reply-To: <20241125053616.25170-7-eric.peijian@gmail.com>
 
-On Mon, Nov 25, 2024 at 12:36:15AM -0500, Eric Ju wrote:
-> diff --git a/fetch-object-info.c b/fetch-object-info.c
-> new file mode 100644
-> index 0000000000..2aa9f2b70d
-> --- /dev/null
-> +++ b/fetch-object-info.c
-> @@ -0,0 +1,92 @@
-> +#include "git-compat-util.h"
-> +#include "gettext.h"
-> +#include "hex.h"
-> +#include "pkt-line.h"
-> +#include "connect.h"
-> +#include "oid-array.h"
-> +#include "object-store-ll.h"
-> +#include "fetch-object-info.h"
-> +#include "string-list.h"
-> +
-> +/**
-> + * send_object_info_request sends git-cat-file object-info command and its
-> + * arguments into the request buffer.
-> + */
-> +static void send_object_info_request(const int fd_out, struct object_info_args *args)
-> +{
-> +	struct strbuf req_buf = STRBUF_INIT;
-> +
-> +	write_command_and_capabilities(&req_buf, "object-info", args->server_options);
-> +
-> +	if (unsorted_string_list_has_string(args->object_info_options, "size"))
-> +		packet_buf_write(&req_buf, "size");
-
-Do we have a document somewhere that spells out the wire format that
-client- and server-side talk with each other? If so it would be nice to
-point it out in the commit message so that I know where to look, and
-otherwise we should document it. Without such a doc it's hard to figure
-out whether this is correct.
-
-> +	if (args->oids) {
-> +		for (size_t i = 0; i < args->oids->nr; i++)
-> +			packet_buf_write(&req_buf, "oid %s", oid_to_hex(&args->oids->oid[i]));
-> +	}
-
-Nit: needless curly braces.
-
-> +	packet_buf_flush(&req_buf);
-> +	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> +		die_errno(_("unable to write request to remote"));
-
-So we write the whole request into `req_buf` first before sending it to
-the remote. Isn't that quite inefficient memory wise? In other words,
-couldn't we instead stream the request line by line or at least in
-batches to the file descriptor?
-
-> +	strbuf_release(&req_buf);
-> +}
-> +
-> +/**
-
-Nit: s|/**|/*|
-
-> + * fetch_object_info sends git-cat-file object-info command into the request buf
-> + * and read the results from packets.
-> + */
-> +int fetch_object_info(const enum protocol_version version, struct object_info_args *args,
-> +		      struct packet_reader *reader, struct object_info *object_info_data,
-> +		      const int stateless_rpc, const int fd_out)
-> +{
-> +	int size_index = -1;
-> +
-> +	switch (version) {
-> +	case protocol_v2:
-> +		if (!server_supports_v2("object-info"))
-> +			die(_("object-info capability is not enabled on the server"));
-> +		send_object_info_request(fd_out, args);
-> +		break;
-> +	case protocol_v1:
-> +	case protocol_v0:
-> +		die(_("wrong protocol version. expected v2"));
-> +	case protocol_unknown_version:
-> +		BUG("unknown protocol version");
-> +	}
-> +
-> +	for (size_t i = 0; i < args->object_info_options->nr; i++) {
-> +		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
-> +			check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
-> +			return -1;
-> +		}
-> +		if (unsorted_string_list_has_string(args->object_info_options, reader->line)) {
-
-Hum. Does this result in quadratic runtime behaviour?
-
-> +			if (!strcmp(reader->line, "size")) {
-> +				size_index = i;
-> +				for (size_t j = 0; j < args->oids->nr; j++)
-> +					object_info_data[j].sizep = xcalloc(1, sizeof(long));
-
-This might be a bit more future proof in case the `sizep` type were ever
-to change:
-
-	object_info_data[j].sizep = xcalloc(1, sizeof(*object_info_data[j].sizep));
-
-It also allows you to skip double-checking whether you picked the
-correct type. In fact, the type is actually an `unsigned long`, which
-is confusing but ultimately does not make much of a difference because
-it should have the same size.
-
-> +			}
-> +			continue;
-> +		}
-> +		return -1;
-> +	}
-> +
-> +	for (size_t i = 0; packet_reader_read(reader) == PACKET_READ_NORMAL && i < args->oids->nr; i++){
-> +		struct string_list object_info_values = STRING_LIST_INIT_DUP;
-> +
-> +		string_list_split(&object_info_values, reader->line, ' ', -1);
-> +		if (0 <= size_index) {
-> +			if (!strcmp(object_info_values.items[1 + size_index].string, ""))
-> +				die("object-info: not our ref %s",
-> +					object_info_values.items[0].string);
-> +
-> +			*object_info_data[i].sizep = strtoul(object_info_values.items[1 + size_index].string, NULL, 10);
-
-We're completely missing error handling for strtoul(3p) here. That
-function is also discouraged nowadays because error handling is hard to
-do correct. We have `strtoul_ui()` and friends, but don't have a variant
-yet that know to return an `unsigned long`. We might backfill that
-omission and then use it instead.
-
-> diff --git a/transport-helper.c b/transport-helper.c
-> index bc27653cde..bf0a1877c7 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -728,6 +728,13 @@ static int fetch_refs(struct transport *transport,
->  		free_refs(dummy);
->  	}
+On Mon, Nov 25, 2024 at 12:36:16AM -0500, Eric Ju wrote:
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index d5890ae368..6a2f9fd752 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -314,7 +323,10 @@ newline. The available atoms are:
+>  	line) are output in place of the `%(rest)` atom.
 >  
-> +	/* fail the command explicitly to avoid further commands input. */
-> +	if (transport->smart_options->object_info)
-> +		die(_("remote-object-info requires protocol v2"));
+>  If no format is specified, the default format is `%(objectname)
+> -%(objecttype) %(objectsize)`.
+> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands which use
+> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not supported yet.
+> +WARNING: When "%(objecttype)" is supported, the default format WILL be unified, so
+> +DO NOT RELY on the current the default format to stay the same!!!
 
-The code path that checks for for protocol v2 with "--negotiate-only"
-knows to warn and return an error. Should we do the same here?
+Is this stale or do we still not support `%(objecttype)`? I thought we
+wanted to support that, as well, so that we don't have to change the
+default format.
 
-> diff --git a/transport.c b/transport.c
-> index 47fda6a773..746ec19ddc 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -9,6 +9,7 @@
->  #include "hook.h"
->  #include "pkt-line.h"
->  #include "fetch-pack.h"
-> +#include "fetch-object-info.h"
->  #include "remote.h"
->  #include "connect.h"
->  #include "send-pack.h"
-> @@ -444,8 +445,33 @@ static int fetch_refs_via_pack(struct transport *transport,
->  	args.server_options = transport->server_options;
->  	args.negotiation_tips = data->options.negotiation_tips;
->  	args.reject_shallow_remote = transport->smart_options->reject_shallow;
-> +	args.object_info = transport->smart_options->object_info;
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 5db55fabc4..ad17be69b0 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -576,6 +582,59 @@ static void batch_one_object(const char *obj_name,
+>  	object_context_release(&ctx);
+>  }
+>  
+> +static int get_remote_info(struct batch_options *opt, int argc, const char **argv)
+> +{
+> +	int retval = 0;
+> +	struct remote *remote = NULL;
+> +	struct object_id oid;
+> +	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
+> +	static struct transport *gtransport;
 > +
-> +	if (transport->smart_options
-> +		&& transport->smart_options->object_info
-> +		&& transport->smart_options->object_info_oids->nr > 0) {
+> +	/*
+> +	 * Change the format to "%(objectname) %(objectsize)" when
+> +	 * remote-object-info command is used. Once we start supporting objecttype
+> +	 * the default format should change to DEFAULT_FORMAT
+> +	*/
+> +	if (!opt->format)
+> +		opt->format = "%(objectname) %(objectsize)";
 
-Formatting is wrong here:
+Seems like it isn't stale. Hum.
 
-	if (transport->smart_options &&
-	    transport->smart_options->object_info &&
-	    transport->smart_options->object_info_oids->nr > 0) {
+> +	remote = remote_get(argv[0]);
+> +	if (!remote)
+> +		die(_("must supply valid remote when using remote-object-info"));
+> +
+> +	oid_array_clear(&object_info_oids);
+> +	for (size_t i = 1; i < argc; i++) {
+> +		if (get_oid_hex(argv[i], &oid))
+> +			die(_("Not a valid object name %s"), argv[i]);
+> +		oid_array_append(&object_info_oids, &oid);
+> +	}
+
+Should we return an error when the user didn't pass any object IDs?
+
+> @@ -667,6 +726,45 @@ static void parse_cmd_info(struct batch_options *opt,
+>  	batch_one_object(line, output, opt, data);
+>  }
+>  
+> +static void parse_cmd_remote_object_info(struct batch_options *opt,
+> +					 const char *line, struct strbuf *output,
+> +					 struct expand_data *data)
+> +{
+> +	int count;
+> +	const char **argv;
+> +
+> +	char *line_to_split = xstrdup_or_null(line);
+> +	count = split_cmdline(line_to_split, &argv);
+> +	if (get_remote_info(opt, count, argv))
+> +		goto cleanup;
+> +
+> +	opt->use_remote_info = 1;
+> +	data->skip_object_info = 1;
+> +	for (size_t i = 0; i < object_info_oids.nr; i++) {
+> +
+
+Nit: empty newline at the start of a block.
+
+> diff --git a/t/lib-cat-file.sh b/t/lib-cat-file.sh
+> new file mode 100644
+> index 0000000000..9fb20be308
+> --- /dev/null
+> +++ b/t/lib-cat-file.sh
+
+I think it would make sense to split the introduction of
+"lib-cat-file.sh" into a separate commit.
 
 Patrick
