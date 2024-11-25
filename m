@@ -1,225 +1,149 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22B819645D
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 10:52:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D691925A6
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 10:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732531972; cv=none; b=phnHSxhAO1eyiZKbmQOvuqzblFrk/VuoSVOjk5SkS5+xGdy7pE//IpCP8aNfk1/DxtEFIeKFAMqz1WVxnFPibaphdcBvjBSqmA0W3k6RQpaCVNW2lxx+5aQomM/sk9W+1JHRNfHTgWjnU69TOyALpPVvNreJNr/f3ZWbIrCK/Os=
+	t=1732532157; cv=none; b=k/PJwMUS+oK/4HplelM7Z6Dg+rmiB1MgNoAzzREKJGn4xidbiyEG5tFvN9tIF5qXuSNeCMyeLPf4agLUeWWemB1QT4TeJNSs0EWXFMJPAiRtNV6xEq0kDXecpWxz2EO2ttv4qAKpeggyPJSXbQEyZZNELnnJqL4qmDbIeN6Mo4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732531972; c=relaxed/simple;
-	bh=U0d4ssCXYbLVE7F9UUKxccMVYMQKcgeKXo0M5TbUta4=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=krhu1PegfAaTINMt6R3uUN/FgXXo7C31F7XnKzFDiYV+11TRx0LHH6NtEo6kn86XQy2HBFSo7TfJ42RuxCqHzqioUoPvaVd5IQMxuElKt8ojJN3wBnndE1o191coWO88M2J3d2J1mx0GOdzRypQ0oa5kyw0H3HoD7CfBL7ZNUxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bnpJ6p+I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEIM4G4+; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732532157; c=relaxed/simple;
+	bh=vFHKuh0OCVAnbipc6XIPYGk1D2IeqHyervtJmXxqNYQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LWfiAOwqMM0mG56QZGIlK2T8u14NrtAO6EKh/j8wQH9uFygOewSTGwq++CvGWXOUW5fEzDtgKlW0LXASosFfUa7GHyyWRB3x/hR+SohlBsX1A3WBI3UAVIf+PNoohswZnUKm0QceYllhBW4J0+WlwsbJE86HpAegNOJVEQh69CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f8SVkRgf; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bnpJ6p+I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEIM4G4+"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D8A1B254008E;
-	Mon, 25 Nov 2024 05:52:48 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 25 Nov 2024 05:52:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732531968;
-	 x=1732618368; bh=pZfA/+CQYqMxCvPmhsXlG6FcrKuvWhtkX/VA3QDlTYs=; b=
-	bnpJ6p+I8Xd5iSOq77zSNs+b5OXXEMJcAKKWulRZvwlextU2amw5mIDQxy5nqokP
-	ez4CnVrojepUVZKXSaTG5szikl7zUGvMfwaNumu+QkCfwOqYadKI5BmACUDzTh2P
-	14fQLdKlrn4hbJAEG29j4o/dZwz8vHEA6bGzylOYMLZ2GXYZ5Oq85HIS87PCaE6t
-	uWTbOUxeQi4fYpM0cl8N7W7jwoU6zb9iRwxvF1G4BiUhw2PHbCx+uqbhv3DcmeWa
-	EAYo9k42kECVw6WC4XSyduvofvCwj6ojf8Hkb5sp0BqcRnzprLbQQe1ionkcfzCb
-	6VcMMKaQuaVBv2QDf2hyMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732531968; x=
-	1732618368; bh=pZfA/+CQYqMxCvPmhsXlG6FcrKuvWhtkX/VA3QDlTYs=; b=L
-	EIM4G4+PT9KkPMqYsKHJa4Ya3DFIc4Qf3HYn6NG6WDyV8YZgBg3ipxuHK4zq6AO9
-	Gy6ozp1axxJ4/0jOcRQ4JmMLoTRw5Oy2QASn31I/gs07ku+jIch3qyJzOG0ROkcQ
-	7qEoPUYTaym6kA8Mcw45wTvWWQjTcaoP+6x7/4/YLSoSFd5zusO/BUhKsaX3Kyyy
-	1x6TJwrM9ZkMyzUB5skfi4bj6Rm0HzejDMMLTTZlUrTLyPktcw/5YCWg2429UBex
-	ocNoRRRX70r4sNydm32oxTGtnKJoTdRdZmkLFT8QmU2giiVWsHq4woObvuxG8qqf
-	gLXb9s+rL3WCN6RLwa4TQ==
-X-ME-Sender: <xms:AFdEZ11eY-aUlweK4KewwqG-wJ0IsrXzdVbQlPpcnitb3f6iIG_ipvU>
-    <xme:AFdEZ8HXyErrMGoqcDrte2lgek8zdlX8B3vqAqJ61gdzyqv-sdmYEXjcDpYrQE_Mb
-    gdrdSMTCp9AxV6OfA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddvtdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigfefke
-    dugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
-    hrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhi
-    phdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgr
-    mhgvpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:AFdEZ16bp4RexRTma9fR4-wuRhbIdPLm_xjW73q0eBJtVKZMw3WgYA>
-    <xmx:AFdEZy0HfxTUo6FMxPD-2MY4v5JtVnM56_Tr_yYCKMAZwmtWHzN-Cw>
-    <xmx:AFdEZ4FASLoHea0vtXGqiJ-RoqLl2_YRdyIgTLifi1YjtgJkbw0Ypg>
-    <xmx:AFdEZz_5iRCcicl8bVdSN_H2QKhva49zFHwTOJIdKhLMy23JpFOB8Q>
-    <xmx:AFdEZ0iM4_bq1owsl7AlOpjVjnCMcMlPzaDCfzq57HdZ2rHNS7DvO9Kv>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 307C0780068; Mon, 25 Nov 2024 05:52:48 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f8SVkRgf"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53dd2fdcebcso3542441e87.0
+        for <git@vger.kernel.org>; Mon, 25 Nov 2024 02:55:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732532154; x=1733136954; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kyxsfNt+xcBEi9cA8FkAb9Cl75yclDK3ZGa5xxQsk6o=;
+        b=f8SVkRgfiwx/pZ0jJIovcuoIqnJwydAHcDBNa5dm+nb04DqiE8Q1zTMcWYCnA7bjFc
+         Rm4ZUTmnAaEy6x6avjYB7FdQFekExjkuiMiNwBtbgIqMwsfca6GwRXeNJcVpOAnin4xW
+         NeIgl0WEQBAP0RXgmft0O53w7h3OrKZf6+E/tvOWH8DvEgS/GTpTN2IVqm+L5cePgIWT
+         4Ib9UOgDoEn0ZrLZdCmzmqGEY1AHdtUZI2zC3TGI7WfHzQk6IrNgacCxPsYGPD8Ba+0K
+         4LdFBwJaG18uJmmYGxSTC+vbcUYeBJRlPZ4RxezODgezQ8YS6UMF13fSOz/oGJa/d5af
+         2vfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732532154; x=1733136954;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kyxsfNt+xcBEi9cA8FkAb9Cl75yclDK3ZGa5xxQsk6o=;
+        b=EaM0FCLvxOBUwyumfey86BLsksmgH2rmfjFFJQ9tkcdJ0fSfpYpEOZnYAN4aYyPXJo
+         ZPeoZCsI72RgHFE10iiv1x+Q6FALQp31gRO/yKKs+HkZnI+8UfMzNuB4tpZOniNM7BZu
+         y5U2KbVfQ9zqW0N7yPhaycwLCOx7StO+qaCyVXVfF5k9+2+Wc7Q4L4OdgSzbDU5S6ggv
+         0+CO13o0Z5UNpMhx6VzC8/3eQENaGZW5C5UJuxVm8Ajt0g3kQ83gUbJvttPmw7LGLgnO
+         S3/w5yocfyCR8e/1mQz6X31YGBW1TstvWJPBB906E0JqM7Bzby5XXbA63a3geTLFoeg4
+         t2RA==
+X-Forwarded-Encrypted: i=1; AJvYcCWarve0KRha0gEMeO+eqQrRfiwyXsOj4q/IdY0COMlA1XxqmAK1WMrEIQfV37y6gOcFISU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YysVQjNYYXqPHa0ipSSQWoBc52heHFbS8WN6IxXu0Cy8aLmRFLM
+	1YTE8fykrI8yZ5+eeUkZh6QQGVB2SUAz2W4zXUcS2vmb09QaA8MCzYsqSw65kEeiHuhClG2zbFN
+	UuMwpA4Jl07bVXrHiD/1k/0omKb3DrQ2O
+X-Gm-Gg: ASbGncteRa5X1Pek+c5BkT/Rz0AgbBm93Sg9czuD65dDrgKsyYA094c+AAF27xdKnlk
+	g7yNIGAlQy12UwPnUsIlGUKdMHUvF2g==
+X-Google-Smtp-Source: AGHT+IHdGVEFra0vgzQr5JcrPEqETzrUCVAc1QBzhRLkO4PRioTRrDd51nu/Ct99hzjlMKUPzCI0FGnLRzweyl+TIpQ=
+X-Received: by 2002:a05:6512:6cd:b0:53d:dda4:c145 with SMTP id
+ 2adb3069b0e04-53ddda4c154mr2724232e87.8.1732532153746; Mon, 25 Nov 2024
+ 02:55:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 25 Nov 2024 11:52:26 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Derrick Stolee" <stolee@gmail.com>, "Taylor Blau" <me@ttaylorr.com>
-Message-Id: <3bd7cd08-61b6-4b57-a293-1c94eb3529d7@app.fastmail.com>
-In-Reply-To: <7739a6e2-8758-4d0f-b1d6-f0879a89590f@gmail.com>
-References: <cover.1731406513.git.code@khaugsbakk.name>
- <cover.1732481200.git.code@khaugsbakk.name>
- <7739a6e2-8758-4d0f-b1d6-f0879a89590f@gmail.com>
-Subject: Re: [PATCH v3 0/3] sequencer: comment out properly in todo list
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20241120101741.8225-1-dev.mbstr@gmail.com> <CAN0heSoryo-DO6WXKqqASJ5nDLqb3PNNiZv1TP=Pq11wsiSM6A@mail.gmail.com>
+ <xmqqmshrrxpq.fsf@gitster.g> <D5SWT5JKU6S9.2LH8H7ECRZXXM@gmail.com>
+In-Reply-To: <D5SWT5JKU6S9.2LH8H7ECRZXXM@gmail.com>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Mon, 25 Nov 2024 11:55:42 +0100
+Message-ID: <CAN0heSqb+dzGAVnN6=_AkKa-qh4GYo7ku90No=uXBg2+wobL1Q@mail.gmail.com>
+Subject: Re: [PATCH] git: fix paginate handling for commands with DELAY_PAGER_CONFIG
+To: Matthew Bystrin <dev.mbstr@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Lessley Dennington <lessleydennington@gmail.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>, 
+	idriss fekir <mcsm224@gmail.com>, Joey Salazar <jgsal@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Nov 25, 2024, at 11:07, phillip.wood123@gmail.com wrote:
-> Hi Kristoffer
+On Fri, 22 Nov 2024 at 19:13, Matthew Bystrin <dev.mbstr@gmail.com> wrote:
 >
-> Thanks for re-rolling, I've left some comments on the range-diff
-
-Hi Phillip, thanks for the review!
-
-I should be able to fix these and reroll today.
-
-> [...]
-> Stray "`"
+> > The whole thing started with
+> >
+> >     Calling commands using editor in terminal with `--paginate`
+> >     option will break things. For example `git --paginate config
+> >     --edit`.
+> >
+> > which many of us may respond with "it hurts? do not do it then", so
+> > I agree with you that a fallout would be worse than the problem the
+> > change is trying to "fix".
 >
->>      +    that hash3=E2=80=99s commit message should be used for the =
-resulting commit.
->>      +    So the user is presented with an editor where the two first=
- commit
->>      +    messages are commented out and the third is not.
+> I see the point and totally agree with it.
 >
-> I'd perhaps say
+> The root of the 'problem' is related with editor, not with commands. So maybe it
+> is a good way to deal with it in editor code? I've quickly come up with
+> something like this:
 >
->     If there are conflicts when applying commit hash3 then the user is
->     presented ...
+> diff --git a/editor.c b/editor.c
+> index 6b9ce81d5f..04a1f71694 100644
+> --- a/editor.c
+> +++ b/editor.c
+> @@ -13,6 +13,7 @@
+>  #include "strvec.h"
+>  #include "run-command.h"
+>  #include "sigchain.h"
+> +#include "pager.h"
 >
-> as we only show all the messages to the user when there are conflicts.
-
-I use `fixup -c` for the third/last commit here.  So I am prompted to
-edit the commit message. I tested this on this series:
-
-    git checkout --detach kh/sequencer-comment-char
-    git rebase -i fd3785337beb285ed7fd67ce6fc3d3bed2097b40
-
-Which gave me [this] editor without these changes (with
-`core.commentChar` set to `%`).
-
+>  #ifndef DEFAULT_EDITOR
+>  #define DEFAULT_EDITOR "vi"
+> @@ -60,6 +61,9 @@ const char *git_sequence_editor(void)
+>  static int launch_specified_editor(const char *editor, const char *path,
+>                                    struct strbuf *buffer, const char *const *env)
+>  {
+> +       if (pager_in_use())
+> +               wait_for_pager();
+> +
+>         if (!editor)
+>                 return error("Terminal is dumb, but EDITOR unset");
 >
->> However this does
->>      +    not work if `core.commentChar`/`core.commentString` is in u=
-se since
->>      +    the comment char is hardcoded (#) in this `sequencer.c` fun=
-ction.
->>      +    As a result the first commit message will not be commented =
-out.
->>      +
->>      +    =E2=80=A0 1: See 9e3cebd97cb (rebase -i: add fixup [-C | -c=
-] command,
->>      +        2021-01-29)
->>      +
->>      +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->>           Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->>      +    Reported-by: Taylor Blau <me@ttaylorr.com>
->>           Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Thanks for updating the trailers, they look good to me
->
-> Best Wishes
->
-> Phillip
+> Brief testing shows what it works, but more complex approach may be needed. What
+> do you think about that? Should I continue work on that despite the fact it does
+> not really hurts? If yes, is it better to create new patch or send as an update
+> of the current?
 
-=E2=80=A0 this:
+So the high-level idea here is "if we're going to open an editor, let's
+first shut down any pager".
 
-    % This is a combination of 3 commits.
-    % This is the 1st commit message:
+This helper is relatively recent, from e8bd8883fe (pager: introduce
+wait_for_pager, 2024-07-25) and fc87b2f7c1 (add-patch: render hunks
+through the pager, 2024-07-25). The context there seems to be that a
+long-running git process wants to open the pager, maybe even more than
+once. So we need a way to shut down the pager we just opened -- it's
+done its thing.
 
-    sequencer: comment checked-out branch properly
+What gives me a bit of pause here is that we're now approaching this
+from a quite different direction: a git process wants to shut down the
+pager not because it just opened it and the pager has done its thing,
+but because we want to open an editor and think that any pager might
+interfere.
 
-    `git rebase --update-ref` does not insert commands for dependent/sub-
-    branches which are checked out.[1]  Instead it leaves a comment about
-    that fact.  The comment char is hardcoded (#).  In turn the comment
-    line gets interpreted as an invalid command when `core.commentChar`/
-    `core.commentString` is in use.
+If `git add -p` is a long-running process that wants to repeatedly
+launch a pager, what could the opposite look like? A long-running
+process that wants to repeatedly launch an editor? While paging?
 
-    =E2=80=A0 1: See 900b50c242 (rebase: add --update-refs option, 2022-=
-07-19)
+Maybe `git rebase -i` could be one such example. TBH, running its output
+through a pager might not look super-pretty today due to it producing
+temporary output that it then erases, but at least it works. The editor
+might be graphical (or a script?) that won't actually suffer from the
+pager running. Killing the pager might be unwanted. So I don't know.
 
-    Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+What is the original problem here? Is some kind of tooling issuing a
+`git -p tag -a` where it's not possible to teach it to drop the `-p`?
 
-    % The commit message #2 will be skipped:
-
-    % sequencer: comment `--reference` subject line properly
-    %
-    % `git revert --reference <commit>` leaves behind a comment in the
-    % first line:[1]
-    %
-    %     # *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
-    %
-    % Meaning that the commit will just consist of the next line if the =
-user
-    % exits the editor directly:
-    %
-    %     This reverts commit <--format=3Dreference commit>
-    %
-    % But the comment char here is hardcoded (#).  Which means that the
-    % comment line will inadvertently be included in the commit message =
-if
-    % `core.commentChar`/`core.commentString` is in use.
-    %
-    % =E2=80=A0 1: See 43966ab3156 (revert: optionally refer to commit i=
-n the
-    %     "reference" format, 2022-05-26)
-    %
-    % Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-
-    % This is the commit message #3:
-
-    sequencer: comment commit messages properly
-
-    The rebase todo editor has commands like `fixup -c` which affects
-    the commit messages of the rebased commits.[1]  For example:
-
-        pick hash1 <msg>
-        fixup hash2 <msg>
-        fixup -c hash3 <msg>
-
-    This says that hash2` and hash3 should be squashed into hash1 and
-    that hash3=E2=80=99s commit message should be used for the resulting=
- commit.
-    So the user is presented with an editor where the two first commit
-    messages are commented out and the third is not.  However this does
-    not work if `core.commentChar`/`core.commentString` is in use since
-    the comment char is hardcoded (#) in this `sequencer.c` function.
-    As a result the first commit message will not be commented out.
-
-    =E2=80=A0 1: See 9e3cebd97cb (rebase -i: add fixup [-C | -c] command,
-        2021-01-29)
-
-    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-    Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-    Reported-by: Taylor Blau <me@ttaylorr.com>
-    Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-
-    % Please enter the commit message for your changes. Lines starting
+Martin
