@@ -1,145 +1,139 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f182.google.com (mail-oi1-f182.google.com [209.85.167.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAF51B6D1E
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 20:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8618E188724
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 22:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732566082; cv=none; b=q+D6NVORFVXYP3P3G94wE6Xv+zJeGBtGbvjM98Ch6aATvUZT5WjPDuiK5GZHYOYClohSVN35RQ5SM3fvGicEEL7smu50NhwMl88G40WDaB8qwQRivc3vOPVNOTY73cxm20OQQZa8n+o084hwQySo4xbtFGGq01ywFRzxzsML7kA=
+	t=1732572314; cv=none; b=bVQ581pJyC/W+gg3RWN3zPCxhk8pxAmaF1DacpEQg5jaiy3kOGmWuUteRwvG3xIlFeENaDC9oDtxyWg2pmf0wTs+lNRnAWR5GvkJLpaa/0YHuDTjcXTpot2iGMD6vr0Uvf1heaujEoDN2it/jsjflxhlem4NXwoI84P9zerWa+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732566082; c=relaxed/simple;
-	bh=OFIPVHnicFsF9HBU+RerzCJ6PuPFmu4BEfZKq//s0XA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=g4jARht/wQdBLeYXmWDDn4//2EpkVF116Q0ie6FYv+d6qQVBIuk63W4t7uXxCvFTLmn9Zd813k+VaSLI+WB9icxIfqWXy34RrxZkXT9RcdEd3HdinU3vMccNEtO8rCvp3/8jT2NtqU1pVZVzlHnUkQDnBkZMa8fhffY6d0+iIBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EgwkdAz6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YNO9aH9x; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732572314; c=relaxed/simple;
+	bh=0wc2EB5NdK3kBp8Er7l/kXLvqHLH6ikYzEe5cbmEHrM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KC4cZ7oLX+K62xnnA3VwsYidiAEYviogRLtvix+KMPq0pZ+5DzJBx7w8ww0KM7l7x6sS9sKUiDCvmkrsgMtbCc4gcR2l3azoczyAOG+J2ROOpt0siQy1Ah5YSY1/phMBLbOJlY6if+SvOS9u6AYh+3UPSDHncpQpzh8EH1o1kwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HNlmxReg; arc=none smtp.client-ip=209.85.167.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EgwkdAz6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YNO9aH9x"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 83CE91380137;
-	Mon, 25 Nov 2024 15:21:19 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Mon, 25 Nov 2024 15:21:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732566079;
-	 x=1732652479; bh=wl2vR/QAxvqzz1iSRERQ9IXIuMUIG/ontUESBR9F0Sc=; b=
-	EgwkdAz6b77WumLpfUipUl0G12mkJwblDOPN4uSjsHKkHabFFWbS6eWUN+lZA1WY
-	gqZqLH0rngrXMe9btc1pze6UBASiD3DKiO+Q5tfN14Fawgm269QwUuW83bAInMQF
-	USETP2w74USGCQxPC7WFFUQaZ/znRp7sTjajgmJZWcz8JCHYbubU6nTDTeA9+acN
-	Z0Zr7OoxJpUKYvjdfRYDKadTHew/T2bYT6u4tS5elftNWuGqh8kDIUV9j8WBCnYY
-	3dsfk5AS3kpT/9JzIZUp5pfWz9wphfX0v18bWUqx/4C+sNnxujH2iDjqTpoJ1qWM
-	2A2SPx5DYG5qrUUx9zJ9mA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732566079; x=
-	1732652479; bh=wl2vR/QAxvqzz1iSRERQ9IXIuMUIG/ontUESBR9F0Sc=; b=Y
-	NO9aH9xlmLzCuFg1+BfBxaBm5qERfU8i1wfZRH879o056a4MVZ1jbucIWzwE+d3c
-	w/qAjxkFGEynBT+KEGyQ2+o7sZT5k/Iw9YApZ/QSrG1/lHnMZK1O5sWuNmTXYu2c
-	b8W5YNq3YDwJWFgQ5xw17384JOzE09M/NXp1yK6fP6LjI3T9SjBbMa6cKN3hUUp7
-	3SEDPw5DU9TkPs++BtjEwMyeopzrvr5t+qSeHmgBsfGnOKGI8e9gHWt7bRudPTle
-	CdV6rMv7tkFyIX5+xO3DzgZNLsioHdE9Z8meYHuUPq6IkTgGeQJL+DYSTdF6T/d0
-	ebL5pcJqDiMbfc3QlN2kg==
-X-ME-Sender: <xms:P9xEZ0Gi7050goK3BI34MBXh61Jb-K-6DvFm_KA7LbAD6jW_yT_wHkY>
-    <xme:P9xEZ9WXsCEKmILQe9fnqr1b2IMLyqrvVJHgQ9QVu6Cu5q9LPHudzmFgMhOBhKrF9
-    buNJJKQWynfezuP4Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgddufeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
-    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrlhhgohhn
-    vghllhesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshh
-    hinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:P9xEZ-JbVqZswpPQnWJKOXwyGGx5ZP8muc60hxnU5CcTgtYUWQkI9Q>
-    <xmx:P9xEZ2GXjV7lJu2lrHnpgGpG2qqp1hMYy1JJoYR2OZ9pSrpZ-CsfpA>
-    <xmx:P9xEZ6Ve-l-meCpk82SDhcSmWrczBrqy1RidGaNUIeEGUTThFgcoPQ>
-    <xmx:P9xEZ5MmpaWYHFcAmlvlHS26ONOXhjCG5neUs4du-apU8fFhI92SMg>
-    <xmx:P9xEZ3i7ssUz1Lvk-el7MSs4iLpnwndV_xYkAbgObMaPtgFRjInoxTzw>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3CD3C780068; Mon, 25 Nov 2024 15:21:19 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNlmxReg"
+Received: by mail-oi1-f182.google.com with SMTP id 5614622812f47-3e5f6e44727so2835836b6e.0
+        for <git@vger.kernel.org>; Mon, 25 Nov 2024 14:05:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732572311; x=1733177111; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EzcFtZFnj8ybJPnf/yZ1DYahKA63EurbYxoHrwtm/24=;
+        b=HNlmxRegornyalTXwyeZ5OhennXV8xPWxkv5ShMoek4RRuJn114fQkuWolIAg2eer7
+         Ou0jje8WrVgkXR0RRxgtXWSqsNQD4VL4U2LJXuu9CN7UXQtVdofbPpVvTXQSsHMhVw42
+         grch7mHLCRqLm39BLqmbG34L0FFtWdzF+TgW/677sJvZTFeBX5QVRVm5UKsIhbClLcV0
+         k4N4K/P7mgQ1tUXTp2gseW56n3+v2z7VETkUemP5Y4Jx0UR4mQNV69u3a6kcwfKbRfit
+         J0HNLX7mjkx7qlhVRg+TVTk/WWHo61SnErR0G5jvsSXeI/AePwZR8Zn2wvQKErTpwFKR
+         oGpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732572311; x=1733177111;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EzcFtZFnj8ybJPnf/yZ1DYahKA63EurbYxoHrwtm/24=;
+        b=U5FEf+DSxGTHJPVY0Ti4GZ21WR5FqzKchh20GZU9pVgsLA+V3Q1YJex0OJ39vDU2TL
+         s9FRBypcB0ywxzkJof0TF57ePHlforqYNuQqjCOq6leGK3WzI7iYjA1RmUB/WetXZLxT
+         qfzC7/nPwgcoVpDjOUwgzytIYBKvHaCuQKI4VJX+lSPh4opqB+JuFYLstWg+Kh/uXudA
+         8eoIiCq0GnNWRlPnWC5+1GPQYVXwzDjTPzRpMrhCWmnqhSBc7lDXK4qXi0RLhDbUDBAy
+         Sp6SUmjzF5EHttESljz8Owy1y0kVbl59deycWPmsRK3I5ecCGYWe8ucSpnZ3EkmIchkB
+         NSqQ==
+X-Gm-Message-State: AOJu0YxTwOvfat+k8PXlyvS/B4Mkpp5R8blUDcMdWV5GER2UQd4XU28d
+	CYQ2JVOUuv1nJH5LuudZIOUU+sAzn2bKd8fO/NlK5s7OrEPkskZ+t4zDoIusOH+pVOc/RYjnZ95
+	OVcF+D/dz5vRyI0OvqaWA6YnKymw=
+X-Gm-Gg: ASbGncs5+bRtsBXfu3hSTtDevlk6cWY286YjZZZp2QKQKpMIMSBi/SrFoz3komkM/mE
+	lVdrKPdqYQ9dMNRC8pCFInT4qkGwD
+X-Google-Smtp-Source: AGHT+IHGF1R47vqQu+4aek5gGy87AdoI2a/Et2Xbo1Q0lE4twNONg0LeXDDxNxYmzfjw/UQRW0dWDtXumkfNm08UaTo=
+X-Received: by 2002:a05:6808:2e99:b0:3e6:61ef:fbf with SMTP id
+ 5614622812f47-3e9157ab597mr13680691b6e.9.1732572311554; Mon, 25 Nov 2024
+ 14:05:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 25 Nov 2024 21:20:57 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Eric Sunshine" <sunshine@sunshineco.com>
-Cc: "Andrew Kreimer" <algonell@gmail.com>, git@vger.kernel.org
-Message-Id: <9ab524df-bfe0-4c9a-a5e0-d07b955dbfe6@app.fastmail.com>
-In-Reply-To: <7944f06f-33d9-4988-85ab-c1cf563615f3@app.fastmail.com>
-References: <20240923110343.12388-1-algonell@gmail.com>
- <CAPig+cSZmKCwy_sFKPR-w+DjXeTJJec1BAM6wDXMyEMWhoAY6g@mail.gmail.com>
- <85ed3ec6-fa4e-4ab8-872f-6bd500b2bb66@app.fastmail.com>
- <CAPig+cSErj4ZB9bHB8mZfzNkiaN_EpjT6b4b=cfsf_+KMqytiA@mail.gmail.com>
- <7944f06f-33d9-4988-85ab-c1cf563615f3@app.fastmail.com>
-Subject: Re: [PATCH v2 1/2] Documentation/config: fix typos
-Content-Type: text/plain; charset=utf-8
+References: <xmqqbjy5bc6m.fsf@gitster.g>
+In-Reply-To: <xmqqbjy5bc6m.fsf@gitster.g>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Mon, 25 Nov 2024 14:04:59 -0800
+Message-ID: <CA+P7+xoGSHzibDC0-+r-xTNkuWtuUaEqn2wgrty45fomhGDT5A@mail.gmail.com>
+Subject: Re: Extending whitespace checks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 23, 2024, at 21:13, Kristoffer Haugsbakk wrote:
-> On Mon, Sep 23, 2024, at 21:05, Eric Sunshine wrote:
->> [...]
->>
->> An interdiff is just a plain diff. If you have branch (or tag) "v1"
->> which is the original version of a patch series, and "v2" which is the
->> reroll of the series, then interdiff is simply:
->>
->>     git diff v1 v2
->>
->> Thus, it shows the difference between the final state of the code at
->> v1 and the state at v2. Interdiffs are easy to read because they are
->> just diffs. However, because they are only showing differences in file
->> content, they don't show changes to commit messages or new or removed
->> or reordered patches in a series.
->>
->> A range-diff is a diff-of-diffs. It is very, very roughly similar to =
-this:
->>
->>     git format-patch -o v1-patches <common-base>..v1
->>     git format-patch -o v2-patches <common-base>..v2
->>     some-diff-dir-command v1-patches v2-patches
->>
->> It shows the diff of the patches themselves, including changes to
->> commit messages and changes to changes, as well as inserted and
->> removed and reordered patches.
->>
->> Range-diffs tend to be a good deal more difficult to read (at least at
->> first) but help show the evolution of the _patch series_ itself
->> between versions, whereas interdiffs show only the evolution of the
->> _code_ between versions. As a reviewer, if you're primarily interested
->> in how the code evolved, then interdiffs are much more easily
->> digested, but most reviewers are also interested in the holistic
->> aspects of a patch series for which range-diffs are more helpful. I
->> periodically include both range-diff and interdiffs in my rerolls.
+On Sat, Nov 23, 2024 at 6:25=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Thanks for that.  I love when a good range-diff falls out of a
-> reroll=E2=80=94and I love the tool=E2=80=94but of course that can=E2=80=
-=99t be expected out of
-> every reroll.
+> We have, via the attributes subsystem, a way to choose from a set of
+> predefined whitespace rules so that "git diff" can notice that you
+> are adding trailing whitespaces to your newly written lines, or you
+> are indenting a newly introduced line in a Python script with a HT.
+> This can be used, for example, in pre-commit hook to reject an
+> attempt to introduce whitespace-damaging changes to the codebase.
+>
+> Which is great.
+>
+> I am wondering what we can do to add a different kind of checks to
+> help file types with fixed format by extending the same mechanism,
+> or the checks I have in mind are too different from the whitespace
+> checks and shoehorning it into the existing mechanism does not make
+> sense.  The particular check I have an immediate need for is for a
+> filetype with lines, each has exactly 4 fields separated with HT in
+> between, so the check would ask "does each line have exactly 3 HT on
+> it?"  It would be extended to verify CSV files with fixed number of
+> fields (but the validator needs to be aware of the quoting rules for
+> comma in a value in fields).
+>
+> I guess the best I could do (outside Git) is
+>
+>  - write such a validator that can take one line of input and say
+>    "this line comforms to the rule".
+>
+>  - add, via .gitattribute, my own attribute to allow me to mark
+>    the files that these rules apply.  Git does not do anything
+>    special for this attribute (remember, I said "outside Git").
+>
+>  - in pre-commit hook, run "git diff ':(attr:myattr)'" to grab
+>    changes in these files with special formats, and have the
+>    line-by-line validator (above) check the new lines.
+>
+> to make sure bad lines would not slip into the history, but it would
+> be really nice if I can trigger the check as part of "git diff --check",
+> which means it would be more ideal if we can do this "inside" Git.
+>
+> Perhaps we could introduce a mechansim that allows me to do the
+> following:
+>
+>  - An attribute, like whitespace=3D..., specifies what line-validation
+>    function to use to vet each new line introduced to a file with
+>    the attribute.
+>
+>  - A line-validation function can be dynamically loaded/linked
+>    (here, we'd need ".gitattribute specifies the logical meaning,
+>    while .git/config and friends maps the 'logical meaning' to a
+>    specific implementation suitable for the platform" separation,
+>    similar to what we use for smudge/clean filters).  Perhaps this
+>    would be a good testbed for use of dll, written even in a foreign
+>    language like Rust?
+>
+>  - In the diff machinery, where a '+' line is checked for whitespace
+>    anomalies in the existing code, add code to call the dynamically
+>    loaded line-validation function when applicable.
+>
+>  - Profit?
+>
 
-I guess I shouldn=E2=80=99t be surprised.  But interdiff turned out to b=
-e really
-useful.  Minor rerolls are really easy to read.  Such a pleasure to get
-a quick sanity check before sending out a new round.
+I like the idea of an extensible check mechanism with an API. I can
+think of a couple of other places where such a check could be useful
+to ensure formatting. I do think this is slightly more general than
+whitespace checking.. The concept seems reasonable to me tho.
 
-And then I also get to use range-diff at the same time=E2=80=94the cherr=
-y on top.
-
---=20
-Kristoffer Haugsbakk
+> Hmm?
+>
