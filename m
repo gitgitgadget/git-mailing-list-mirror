@@ -1,167 +1,210 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983C327468
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 14:08:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6D01B0F29
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 14:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732543726; cv=none; b=J5Ps6SQEt6LcVwVypwrboYoZkQMeTAT7u6VuJjhDHxXyZD4sMirkCEJpETIWPqnMeO1GLjVdVu9iRyfn1suokGBlDtKq4KR1k8pHmsxbgLXq8rzBOcyJ2dqdpjOgL24QURme9Jq/VJxCnOr0cB9rab9RwGmw8tYb8KDSJh8ALkI=
+	t=1732545391; cv=none; b=rLOJ5Te/KeY0Gux6aKFLNHnp0h2iAqFtfKdovTk8gd4DyoKwB3r0LwjudRnleWeGO6rK0iILFkdHwMrlSHpS+tYJsk1Q79PiVeh/334Bin29vLlndH9OWVVz1M8kFS0VoX0dSl7IC8aXncTN7sHxrS/8Q+gL/RyKwsjIIEBBbvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732543726; c=relaxed/simple;
-	bh=skDhoTi2iWfx56oAfpjhkdrWz89sRbBKTZtPqgkUd6o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iSXjUJtIvuVm0htGsKCHlrkgDzC8bPTWs2zGREwtdWxWgaSZYoyr4oNqGTZNzKDvLV10SyxTxcsxYWZQITIqB1ZK1+VECY9dhSJCxqiAaJuMO931sK5UWT4rfgPvUhwPHfAaOC723p1S+denQoHzgjWGra/Q1jEmkE9sv0XjlRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=X/p6IUCB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PYESlSLX; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1732545391; c=relaxed/simple;
+	bh=xXrRqBjkTsTRnRegygN25eTTU+ZgtegPlkPBU3KIUe8=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=a2fT1V96SCDic4rNl+wJRai2+oCCL/lBsju8lcayFLvQ5bJwGGxn0oD3KMruPIUFysv2wGITZEJqCMKyXsNUggu47wYJI1Yo8T7kNXFzTo13rWdBHxtzuvtML8W/z9W2MczEc6iiLpwzmDa7jdzcVoGd6gR+0dNWZpBLQO07ju0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZ85lNpe; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="X/p6IUCB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PYESlSLX"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 973D113806B7;
-	Mon, 25 Nov 2024 09:08:42 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 25 Nov 2024 09:08:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732543722; x=1732630122; bh=fmmShUxnLz
-	o1h4ZrRs+AtIRunQJalWNFZFCOr6MXSmA=; b=X/p6IUCBuH7i7OLThXXg17/x+p
-	ln5uQIxiNERWDtRF0bIkEekuUONGmvJ/91CGQyuOmNsDc6kVJpJbyLs8m1mrmE9B
-	bhyuggpgM4TBVnoqyldbKwSrfCW1dUJgW8IdnzHuIIt8ef1uUbbZZzHU1XdfQoeE
-	B3+mPFYBhdCdErwBQodAetZglcGwBjPGbWWCb48Bq5UtOklIJZRUgfdwae/BlBrC
-	H2i1jP78CgkDlD7WMZlzT09S/83/Sygjo0RRzfXQQ64VOJzry4r/Kw5MA6nDkgoY
-	kZQP6cXZhmhw3wfrG6WShVCH6kBS7ewPOqCOHGFZN+yeKmJ4VGw2RnLNl2WQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732543722; x=1732630122; bh=fmmShUxnLzo1h4ZrRs+AtIRunQJalWNFZFC
-	Or6MXSmA=; b=PYESlSLXRTaLZs0E0ei2iQGOIovUXLJRf10zWUEFKJCQ5Gcc3Yd
-	zEyF0zLMRtpzISedsavLRBPXN9zYzgbcGSk5jgc5jv4nWJJT2JAIICEZ4AL5P2er
-	vXBoAjBGGOZuZsJCsV+Z2VxGOKy4tQq33ZAyR9Dijgeqs1ne4zNd/eQxnFJeUTLs
-	Ih+hhaKpJlk/kyevIK61TmDPyFgMyhxTjwcKc99QIH5BFW8lz/Q7CsxwSNybZnIY
-	mByNH9NYH3LqgT80IDsqE/MVX3P2+Bq9e6H9E32qwAeTN6z8obzc0nYDW+qMC82+
-	E7VRnXyI6q0dl6SiW/v7rVEvfPiAX+R0zMw==
-X-ME-Sender: <xms:6YREZxE2wXeRVvuxyQDkl9qI92vuyzVg1GJA4LU_gGXkPZ-yzNMIkQ>
-    <xme:6YREZ2VneXGzMRBCJV3uiNiXdlvsTCV8VnmV4eUT37SY_IbBqDx0lcGQJ6mDLK5ik
-    _IXMYGAjF644AZRZQ>
-X-ME-Received: <xmr:6YREZzIcEkIY4LK7j89QEDg4p2B624aJKy60QSOaEcAIvaGJFG9V6pCAuqnMWcFHpAabb7fNy-nqq_szhwbJaZj2z8UY5qxV6FDIIyytiJSixw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeehgdeitdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtoheprhhjuhhsthhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomh
-X-ME-Proxy: <xmx:6YREZ3FZBgYrl133Hm2jvEJTXyBFzaG7xpi8n38Kn00EeeJDg9qphw>
-    <xmx:6YREZ3Vff_MRRQ0ghDcgGkZl-bDEKR4nqL43uuPSGeuDI9BvEozrpQ>
-    <xmx:6YREZyNfwRPkq1Qq7ggDLvu7Gj2dufhkmy9m1bA9p7J8sdNhCgq5zw>
-    <xmx:6YREZ22FsKWmKevdAxw3-ZItgRlvNL2UxiErT4Lmaop5mD_zIhQEzA>
-    <xmx:6oREZ9x0Uk-omLmKux0HMd-yo-0STnaaDIx6hGPSqpyALlxAfxfSnmJL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 09:08:40 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id beef4037 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 14:07:36 +0000 (UTC)
-Date: Mon, 25 Nov 2024 15:08:25 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v3 07/27] bisect: fix various cases where we leak commit
- list items
-Message-ID: <Z0SE2TO74B3eMpqQ@pks.im>
-References: <20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im>
- <20241120-b4-pks-leak-fixes-pt10-v3-7-d67f08f45c74@pks.im>
- <20241125112746.GA1069812@coredump.intra.peff.net>
- <Z0RvxAkmfZhgo_LJ@pks.im>
- <20241125131722.GA1613472@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZ85lNpe"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3823eaad37aso3439542f8f.0
+        for <git@vger.kernel.org>; Mon, 25 Nov 2024 06:36:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732545387; x=1733150187; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WT5W7/4CtPjyPwKf8llVja7xM/zkeZMFOMW7DA3OWms=;
+        b=gZ85lNpefQIw3xePBD09HtnnM19mgVsazyXFZzZjDGZ3rvdCVbNx+3mclW3utxtJnl
+         pjfStNDMuq7pVM5T2uCUOsP8JHuvmeH5OulQjX07LB5zc0bB9U2Pi2CegZJuM21anY+U
+         cBMxesZdY0hTEQW0v99MJ4AuA+U5w3R3zg5dY2RFTZHpake3S52ZUKydPQ7boBcOI304
+         gZdobrUVowJ80Jb/UnWqlncUyjjaHmRzvqlBcfvwAHufvdNdRUoVCleIo3KZ7ru9FQVx
+         DIzwXSQ5pNmU844TOGKro3CfxqqFnZ7RWeX0gy4APrSAAE09+wOP4YLILZL6E3Ed7j4H
+         c4MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732545387; x=1733150187;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WT5W7/4CtPjyPwKf8llVja7xM/zkeZMFOMW7DA3OWms=;
+        b=AvSMhFkj5skAmORppbXSJWN4fe9wQVSwFYhJUJRet22RbHgyeKVmvjKBT20lwPm4Oz
+         +iapk1vUjRyjC2QnABdixDKPEcST/6sWtL1aWfntRnfWNxQbMx/b7qPrVZxOP9XB+Jdp
+         NLs3XV2w9Xt1iibr7HPL1L6R3N08G7eA+IIQ8CJOd+OdcsZ3VxvJXm84MB+US1Y49xZB
+         j7OTYVvLq9Ki5c07brdnPWLorjpIwIGrwUTEEVYLx1Nbpe3guK5IObwcEneqyHuuxn6T
+         +ESxUf3q6VEUHw8yrLA1hhyAHFqf8QWZA/mnJvrmLGHixOxdprmrx1MspUajmggPcjhr
+         jXnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV0vVx8bvJGKy6u6sgzz0NZLzUW8lumMd88Jbhnh1qfmaQzDaHlf8hw73pPWpLOnV89vIM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPLRIOj2gcwaCGnUh4KwzVKJhuBeyeiAWzua3vX39RV9wWdjeo
+	h1BNXRQGKtDvgHyyrzu+WtP1X+CXNvZGj6MfKHww1dmAv3b2FylXbsj4HA==
+X-Gm-Gg: ASbGnct6H6TpBblM/GNCIntSSxg2PZ8qWh/ZwAMCBFI/tIWhyySwcPwieY8xDTxl4O+
+	09+vp2hfmW+HoTp0/j7m6OJrhNB/nG+b9WFwc0nmpUAKkaxQpciiModDts+ckf6cO2y+/pL1c9p
+	UpVEMQ51WgAEnE6pqxna9LQVjIx6LWo7T+GfxFxhfbG19f4c3d9J2hey3DcGPkjjobZw2jc0m+g
+	mdb/dNsrVSVaKjW3IaFpDJW+bQwyN9odTboMk9fTT80oJAAQn3KGIKFaZeA4mJDTqd1aTyvlJop
+	NXvr9CCnuUlOUQR74xzyLAVG/uX5
+X-Google-Smtp-Source: AGHT+IHAtDwGqVqx4SKX9L0hQ1XgBUqa2sio/WPtia0ZeP7Xo+34YJMZ4v8VnFRkVhHOwg3gFMKchA==
+X-Received: by 2002:a5d:59a4:0:b0:382:48ba:631 with SMTP id ffacd0b85a97d-38259d2b917mr14910964f8f.22.1732545387104;
+        Mon, 25 Nov 2024 06:36:27 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b? ([2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4349d60de86sm59352655e9.35.2024.11.25.06.36.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Nov 2024 06:36:26 -0800 (PST)
+Message-ID: <62966a75-45fb-48ca-9ed2-6ff683de09c4@gmail.com>
+Date: Mon, 25 Nov 2024 14:36:25 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241125131722.GA1613472@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/3] sequencer: comment out properly in todo list
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>
+References: <cover.1731406513.git.code@khaugsbakk.name>
+ <cover.1732481200.git.code@khaugsbakk.name>
+ <7739a6e2-8758-4d0f-b1d6-f0879a89590f@gmail.com>
+ <3bd7cd08-61b6-4b57-a293-1c94eb3529d7@app.fastmail.com>
+Content-Language: en-US
+In-Reply-To: <3bd7cd08-61b6-4b57-a293-1c94eb3529d7@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 25, 2024 at 08:17:22AM -0500, Jeff King wrote:
-> On Mon, Nov 25, 2024 at 01:38:28PM +0100, Patrick Steinhardt wrote:
-> 
-> > > But we never updated commit_list. What if the first entry in the list is
-> > > UNINTERESTING? We'll have freed it, but *commit_list will still point to
-> > > it, and your free_commit_list() will be a double-free.
-> > > 
-> > > And for that matter, I am confused about what should be in commit_list
-> > > after the reverse anyway. Even if we didn't free that first entry, it
-> > > will now be the final entry in the reversed list. So wouldn't
-> > > *commit_list always be pointing to a single node?
-> > > 
-> > > Should the code be freeing "list" and not "*commit_list"? Should the
-> > > reversal be assigning "*commit_list = last" (in which case do we still
-> > > need "list" at all)?
-> > 
-> > Mh. By now I wonder whether this code can be hit in the first place. Is
-> > there ever a case where `do_find_bisection()` returns `NULL`? Replacing
-> > the whole branch with `BUG()` doesn't make even a single test case fail.
-> 
-> Hrm, I thought you were fixing a case that was triggered by the
-> leak-checker here. But I guess there were several hunks in the patch, so
-> maybe you added this one based on inspection of the code and it was
-> never important.
+Hi Kristoffer
 
-I remember that it took me quite a while until I was able to root cause
-all the leaks in this subsystem, so some of the changes are of "while at
-it" spirit.
+On 25/11/2024 10:52, Kristoffer Haugsbakk wrote:
+> On Mon, Nov 25, 2024, at 11:07, phillip.wood123@gmail.com wrote:
+> 
+> Hi Phillip, thanks for the review!
 
-> Just skimming over do_find_bisection(), it will always return something
-> unless it is fed a NULL list in the first place. So a NULL "best"
-> implies a NULL "list". Which implies there is nothing to free, because
-> every item from commit_list was either UNINTERESTING and freed earlier,
-> or made it into "list".
-> 
-> So could the "else" added by your patch just go away entirely?
+You're welcome, thanks for fixing this
 
-Seems like it, yeah.
+>>>       +    that hash3’s commit message should be used for the resulting commit.
+>>>       +    So the user is presented with an editor where the two first commit
+>>>       +    messages are commented out and the third is not.
+>>
+>> I'd perhaps say
+>>
+>>      If there are conflicts when applying commit hash3 then the user is
+>>      presented ...
+>>
+>> as we only show all the messages to the user when there are conflicts.
+> 
+> I use `fixup -c` for the third/last commit here.  So I am prompted to
+> edit the commit message. I tested this on this series:
+> 
+>      git checkout --detach kh/sequencer-comment-char
+>      git rebase -i fd3785337beb285ed7fd67ce6fc3d3bed2097b40
+> 
+> Which gave me [this] editor without these changes (with
+> `core.commentChar` set to `%`).
 
-> That would also explain why you couldn't trigger this in practice; one
-> imagines that the bisect code may avoid getting this far in the first
-> place with an empty list. But you can do:
-> 
->   git rev-list --bisect  ;# no revisions!
-> 
-> to get there. I wondered if:
-> 
->   git rev-list --bisect ^HEAD
-> 
-> might give us the double-free, but that ends up with an empty
-> commit-list in the first place.
-> 
-> > Anyway. I'm not familiar enough with the code in question to tell, and
-> > it's clear that `*commit_list = best;` will leak `*commit_list` if it is
-> > not free'd beforehand. So I think freeing `list` is the right thing to
-> > do. Do you want to send a follow-up patch or shall I do this?
-> 
-> I'm not that familiar with it either. But it does look like the intent
-> was that commit_list would get cannibalized into "list" (freeing
-> anything that didn't make it), and then we'd work with "list" from
-> there. And when we _do_ have anything in the list, then we either return
-> it (if FIND_BISECTION_ALL is set) or free the non-best entries. But all
-> of that is handled in the "if (best)" block.
-> 
-> So I think the code was non-leaky before your patch, and you'd just want
-> to revert that hunk.
-> 
-> I'd be just as happy for you to send it. :)
+Oh, I see the same thing, I was sure we only showed the final message 
+unless there were conflicts. I wonder if I've misremembered or the 
+behavior has changed in any case that's outside the scope of this series.
 
-Okay, I'll drop that hunk.
+Thanks
 
-Patrick
+Phillip
+
+>>
+>>> However this does
+>>>       +    not work if `core.commentChar`/`core.commentString` is in use since
+>>>       +    the comment char is hardcoded (#) in this `sequencer.c` function.
+>>>       +    As a result the first commit message will not be commented out.
+>>>       +
+>>>       +    † 1: See 9e3cebd97cb (rebase -i: add fixup [-C | -c] command,
+>>>       +        2021-01-29)
+>>>       +
+>>>       +    Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>            Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>       +    Reported-by: Taylor Blau <me@ttaylorr.com>
+>>>            Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>>
+>> Thanks for updating the trailers, they look good to me
+>>
+>> Best Wishes
+>>
+>> Phillip
+> 
+> † this:
+> 
+>      % This is a combination of 3 commits.
+>      % This is the 1st commit message:
+> 
+>      sequencer: comment checked-out branch properly
+> 
+>      `git rebase --update-ref` does not insert commands for dependent/sub-
+>      branches which are checked out.[1]  Instead it leaves a comment about
+>      that fact.  The comment char is hardcoded (#).  In turn the comment
+>      line gets interpreted as an invalid command when `core.commentChar`/
+>      `core.commentString` is in use.
+> 
+>      † 1: See 900b50c242 (rebase: add --update-refs option, 2022-07-19)
+> 
+>      Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+>      % The commit message #2 will be skipped:
+> 
+>      % sequencer: comment `--reference` subject line properly
+>      %
+>      % `git revert --reference <commit>` leaves behind a comment in the
+>      % first line:[1]
+>      %
+>      %     # *** SAY WHY WE ARE REVERTING ON THE TITLE LINE ***
+>      %
+>      % Meaning that the commit will just consist of the next line if the user
+>      % exits the editor directly:
+>      %
+>      %     This reverts commit <--format=reference commit>
+>      %
+>      % But the comment char here is hardcoded (#).  Which means that the
+>      % comment line will inadvertently be included in the commit message if
+>      % `core.commentChar`/`core.commentString` is in use.
+>      %
+>      % † 1: See 43966ab3156 (revert: optionally refer to commit in the
+>      %     "reference" format, 2022-05-26)
+>      %
+>      % Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+>      % This is the commit message #3:
+> 
+>      sequencer: comment commit messages properly
+> 
+>      The rebase todo editor has commands like `fixup -c` which affects
+>      the commit messages of the rebased commits.[1]  For example:
+> 
+>          pick hash1 <msg>
+>          fixup hash2 <msg>
+>          fixup -c hash3 <msg>
+> 
+>      This says that hash2` and hash3 should be squashed into hash1 and
+>      that hash3’s commit message should be used for the resulting commit.
+>      So the user is presented with an editor where the two first commit
+>      messages are commented out and the third is not.  However this does
+>      not work if `core.commentChar`/`core.commentString` is in use since
+>      the comment char is hardcoded (#) in this `sequencer.c` function.
+>      As a result the first commit message will not be commented out.
+> 
+>      † 1: See 9e3cebd97cb (rebase -i: add fixup [-C | -c] command,
+>          2021-01-29)
+> 
+>      Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>      Co-authored-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>      Reported-by: Taylor Blau <me@ttaylorr.com>
+>      Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> 
+>      % Please enter the commit message for your changes. Lines starting
+
