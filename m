@@ -1,84 +1,82 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E891426C
-	for <git@vger.kernel.org>; Mon, 25 Nov 2024 06:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96EA3A268
+	for <git@vger.kernel.org>; Mon, 25 Nov 2024 06:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732516051; cv=none; b=HV5bgtwSJ4HLxt5gjVsaRqEq03NyfuaOw6ADdLuiL4cLj5wq5EaM6WF2IJkHZmMhFeol0QqbrBaUnLrQYqvlewsyUDmC2jdG2Gwnn+yLhuSWBOcXPCP4a7w4MxYvXAzo5Is3BeBTXUAwc+IAd84OKZKNuz6qiyuJd0kImAOhGPg=
+	t=1732516051; cv=none; b=d4cR/pCnkibvrINbc7mzCjz7Bgdhd4Pq4ejNOwc9Ch6eU9hWU5u2sZPHn4stxq8CkOyVF06B5NgQM3NZUMOePzUrP4yjjnFnq9wm5izL7rX4PRmLQDSXya0qXYxDnF55CL5s2nNJqrjnijDbgS6aKlr8FexX+xDj6h3oLIgHvQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732516051; c=relaxed/simple;
-	bh=UVoZLP028VRFwVNJwEuD1w5yPGoEInEkyWu3NHuG6dg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=CN3OjY5Hbmf8z2B8LSM11CZ7t95wMxzwhSNmXh4GKJruFl84MOqg/3eE3GBOHeSzKkvfk5+ZKMl+k0lICpEGiCRZjNDeqC0ZzkNAA4Bg2KhmmyioMWiTNp5Ob/tlZ6vub2FEyk/zga8sAmkYBAVEllE3y1ZpjKGlm1ehCCZd/io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n5b11tyH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dqDfcYd8; arc=none smtp.client-ip=202.12.124.144
+	bh=+Uwc3xjLWJvRePpSjVTFQL5k03DdN+oHOd19nvQebaI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=SjYis/UIDvnFPU9fmBUjPgtdxI++8lbjMS0RYRpfTHE6WmpD9EKTz645IzOq3OvxXS8r05s/odXfnVN9N9zKuut/Rppz1WsBq5zvjlC7EmeV0Bqh4yLqkNCFWN3ZCmVHga9WFVhlbE4MgVjM6YFblNa0noumK048/vYQ5lS+6cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NEcMWrco; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2cL/x7G; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n5b11tyH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dqDfcYd8"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 17E911140169;
-	Mon, 25 Nov 2024 01:27:25 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NEcMWrco";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2cL/x7G"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id B65DB1140126;
+	Mon, 25 Nov 2024 01:27:28 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 25 Nov 2024 01:27:25 -0500
+  by phl-compute-08.internal (MEProxy); Mon, 25 Nov 2024 01:27:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732516044;
-	 x=1732602444; bh=DgpFzu4jQ/4U4jrgM1YCP4nkYcey1qxiPWmEtSc31vQ=; b=
-	n5b11tyH0GQ1n+hjI1gzNMM+dYDIIvQ1U4huQ5HtdSqaHmT9XI08IUYl12Mj2VJ5
-	QlhkTMoog0f26bmk/h2FI+5wyM8Bgal6cn1s64tcFNtcWduo76b2LumcEfYv/jCP
-	I0fo8c1CxhRB2gamLFP4K5oqKtziPa+/6sDfhYSn7AB/uFkWwdtXUOzqFYVJPOBS
-	vPm+GwgNPZPX3yrUUXruY5heoVwcfQPnT2e/mEw6DUWqoUPI7FA02iyVnSlegc/7
-	8FSKdoCik/9+4T/Z/SerutJTJ7xnXyScTXXjMCiaQE3MVolv2C5bqh9seleZ4ciI
-	H4eUbGA6Rs0R+AfL/+cUsA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732516048;
+	 x=1732602448; bh=mUHpaGqWxOABI7aboTea5JRKBbCXIxBofeVwe0KNTQk=; b=
+	NEcMWrcoMlnzAu01g3q9ANu3TmpxGhOuYBDgOClFJuxrd9ioD8TvY8XJuoNf+mxN
+	5opyd72hERqUo92JZbQvmHmRssSJqAKmTmIktTKl9CoaBeCUwH40rn5inle7FRwA
+	K2FHmdf2v98b9qFj3BBn1DfYv6Qpg94OyoW6LIo1fT7XxC5UlYqdZIYmD4mRKcMu
+	bEHbpaX+BuPbrV3LsOsuTmUwNBTehut2gEi6hdMwbuDrOSLi5rOmEmziq78a0fRz
+	TpSnCP5moawCulOBKPTD7ocHHpZcGiM2FPYu5nbydmLc3yVcTvLZ83g1HjJHGNEQ
+	OzekX822fgzMVVIpjLJQAA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732516044; x=
-	1732602444; bh=DgpFzu4jQ/4U4jrgM1YCP4nkYcey1qxiPWmEtSc31vQ=; b=d
-	qDfcYd8JJ3vBvdawbHxxT4ulg5rW8k3Q56F6ZagwmU1ChKoMYbddbAwcedw3C89b
-	Lv1vGuwP4Yi2eWorN0UDJ0EJcbx3lIeehOAwkCg8Kjo4OYtpBg4Z48Hz3yZhPJ04
-	ySHNwrBMBdaeC0xLH+DNjNtpiEZJg+T00bAE006uDK8/C8PgBYJ/0UkPttKqVk4V
-	pVGVTyh8k8UQkvmiIVoH4+0QIzA38cZDtCThSikhVG8EQ8LU4cqArtRCPLd3vvoZ
-	1greYP/w5XB7r0sWoXzqYer0U/xrH3Cg2LouxQM2ywxaaBocAAj8l+PbBcP9lG2D
-	hlhGQEeWRTIDGFEHOrFGA==
-X-ME-Sender: <xms:zBhEZ3ftq5IuuqTR6zrVOakOGyO5eL0e-33HjfY8Z1-TgpBLg1DDUg>
-    <xme:zBhEZ9MhN04YXRaRTM_isi57QzhfeyXhhoEw_BHQAX6BWwQunhi23KYLKCOsRDZYl
-    5CdkAEsOA9yOA0XCw>
-X-ME-Received: <xmr:zBhEZwhRwfUSoFcCqei19tsx56oMQFZiQm-CQgM8-P6U90fPkPNdLH8feWgZU48zweV1J2SzC4gNUwY5MZ44OjqpDp_nNgGfCjlY4XzgDOUwMA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdelgecutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732516048; x=
+	1732602448; bh=mUHpaGqWxOABI7aboTea5JRKBbCXIxBofeVwe0KNTQk=; b=Q
+	2cL/x7GuH298JjLyapyJmiRCkZKHj4Dd6N79YJpDIEkZtFV+6i585jUA0tFadfIT
+	UQ+NIIo/GIDtpH2rmOylVaxv/CNz7ii5HBj3MN5NtA3mO9qzlTLbmAZAVE2UljMd
+	Co0DVUgI/n9xYCsV9vAWM/syJxhNHrhGbiSrk5EgL1B2KwPUnlQBCaj0jwyhMqdS
+	wBMILKgLTLanyEFD1VB5UXUA313e1oprFq/1jJUFD2GMDPmew9aH1sHowEGUJYOW
+	SwyypsYhNy6FSLbCn/6Nss9vBKWOI3t9gd8T8FInxO6A3yK+UM9CBPPG3tA8EyPs
+	idh/RZO0ergT/f03dKCsw==
+X-ME-Sender: <xms:0BhEZ6yO75eYvqFDivfeIVzLDrO8X_HrSh5YB7VPGbi8aCvzsUr-Bw>
+    <xme:0BhEZ2RjtOEYbxoFFrWhQhd33S-WgZfbzLy9rnjOedhsBXdYzNNCHDbUow9b8CmYW
+    LFWk6eu5RhdFHBP4Q>
+X-ME-Received: <xmr:0BhEZ8WBqnrIJbIxnvyP9B1PshY6VWhNjhvbCxM7aHAvy-s9eS60Gb5XA26pNfc9J93TNPybzwBjQBvGwp-OziCMvcttpxuzPYT9FSGpgFlbkQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeggdelfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhufffkfggtgfgjghfvfevofesthekredtredtjeen
+    hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepudduveejffffgeejgeehieetuefftddvheelgeeffeev
-    tdegteelhfekveettdehnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhes
-    thhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshht
-    mhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homh
-X-ME-Proxy: <xmx:zBhEZ48cYDoilFoS-79SfJffjt2xq-3INlP4pc0Bj4n53SmF3KmxFg>
-    <xmx:zBhEZztnrMbj_edyjLOJqGN1Hohvimw9oPwY73x1V8IE1cwxz8Yv3g>
-    <xmx:zBhEZ3GScVEwvxDhfTX7LUa89-_63HIEL4ZKQ24LCXPcMQwY73XeDQ>
-    <xmx:zBhEZ6Nxtic-FLrAvyu7J1od4c3eZPl_VYnQBb_JiT4L3kFt4hUCHw>
-    <xmx:zBhEZ5UYecQv1Wh3rXfMQp5IsoXKhXVEX9Cmlo9BNNtbB9_T-kLPKGGa>
+    eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
+    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
+    htoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:0BhEZwirrycktb_fkpArHw_BOjTX9ZL1J0DOFBZP_16GE7iALAPqWg>
+    <xmx:0BhEZ8DGGJHLzHyJ2Wr3EfN4G4DN2HbN5dAdfzAQNm9lDLmC9YoJyQ>
+    <xmx:0BhEZxK8A0T0QdqNX3dhnU1BDj_znYJ2S3R1xWMDzFTc1GSsiC9WRA>
+    <xmx:0BhEZzDRxL8Y9VmOxd7SoHPZ96HJGiMu8jHbIsGNrQjO10-neUjdHg>
+    <xmx:0BhEZ76t7XaZAmhFGTYifA-lWugyICGgtcEis-TNRK2A8fKIpSfqr-KO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 01:27:23 -0500 (EST)
+ 25 Nov 2024 01:27:27 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b691f221 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 25 Nov 2024 06:26:21 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8677a789 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 25 Nov 2024 06:26:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 00/10] refs: optimize ref format migrations
-Date: Mon, 25 Nov 2024 07:27:05 +0100
-Message-Id: <20241125-pks-refs-optimize-migrations-v3-0-17bc85e33ad7@pks.im>
+Date: Mon, 25 Nov 2024 07:27:08 +0100
+Subject: [PATCH v3 03/10] refs: introduce "initial" transaction flag
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,14 +84,10 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIALkYRGcC/43Nyw6CMBAF0F8hXTumLyxx5X8YFwUGmBgeaUmjE
- v7dgYVxp8s7uffMIiIGwijO2SICJoo0DhzMIRNV54cWgWrOQkttlZIFTPcIAZsI4zRTTy+Entr
- gZ95FONWyQkTry9IJJiZu0mPnrzfOHcV5DM/9W1Lb9U84KZDgmtq4xhcSTX7h+pF6salJf0la/
- pA0S14bY5wtnc31R1rX9Q1xIYPCDwEAAA==
-X-Change-ID: 20241108-pks-refs-optimize-migrations-6d0ceee4abb7
-In-Reply-To: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
-References: <20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241125-pks-refs-optimize-migrations-v3-3-17bc85e33ad7@pks.im>
+References: <20241125-pks-refs-optimize-migrations-v3-0-17bc85e33ad7@pks.im>
+In-Reply-To: <20241125-pks-refs-optimize-migrations-v3-0-17bc85e33ad7@pks.im>
 To: git@vger.kernel.org
 Cc: karthik nayak <karthik.188@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>, 
@@ -101,306 +95,316 @@ Cc: karthik nayak <karthik.188@gmail.com>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-Hi,
+There are two different ways to commit a transaction:
 
-I have recently learned that ref format migrations can take a
-significant amount of time in the order of minutes when migrating
-millions of refs. This is probably not entirely surprising: the initial
-focus for the logic to migrate ref backends was mostly focussed on
-getting the basic feature working, and I didn't yet invest any time into
-optimizing the code path at all. But I was still mildly surprised that
-the migration of a couple million refs was taking minutes to finish.
+  - `ref_transaction_commit()` can be used to commit a regular
+    transaction and is what almost every caller wants.
 
-This patch series thus optimizes how we migrate ref formats. This is
-mostly done by expanding upon the "initial transaction" semantics that
-we already use for git-clone(1). These semantics allow us to assume that
-the ref backend is completely empty and that there are no concurrent
-writers, and thus we are free to perform certain optimizations that
-wouldn't have otherwise been possible. On the one hand this allows us to
-drop needless collision checks. On the other hand, it also allows us to
-write regular refs directly into the "packed-refs" file when migrating
-from the "reftable" backend to the "files" backend.
+  - `initial_ref_transaction_commit()` can be used when it is known that
+    the ref store that the transaction is committed for is empty and
+    when there are no concurrent processes. This is used when cloning a
+    new repository.
 
-This leads to some significant speedups. Migrating 1 million refs from
-"files" to "reftable":
+Implementing this via two separate functions has a couple of downsides.
+First, every reference backend needs to implement a separate callback
+even in the case where they don't special-case the initial transaction.
+Second, backends are basically forced to reimplement the whole logic for
+how to commit the transaction like the "files" backend does, even though
+backends may wish to only tweak certain behaviour of a "normal" commit.
+Third, it is awkward that callers must never prepare the transaction as
+this is somewhat different than how a transaction typically works.
 
-    Benchmark 1: migrate files:reftable (refcount = 1000000, revision = origin/master)
-      Time (mean ± σ):      4.580 s ±  0.062 s    [User: 1.818 s, System: 2.746 s]
-      Range (min … max):    4.534 s …  4.743 s    10 runs
+Refactor the code such that we instead mark initial transactions via a
+separate flag when starting the transaction. This addresses all of the
+mentioned painpoints, where the most important part is that it will
+allow backends to have way more leeway in how exactly they want to
+handle the initial transaction.
 
-    Benchmark 2: migrate files:reftable (refcount = 1000000, revision = pks-refs-optimize-migrations)
-      Time (mean ± σ):     767.7 ms ±   9.5 ms    [User: 629.2 ms, System: 126.1 ms]
-      Range (min … max):   755.8 ms … 786.9 ms    10 runs
-
-    Summary
-      migrate files:reftable (refcount = 1000000, revision = pks-refs-optimize-migrations) ran
-        5.97 ± 0.11 times faster than migrate files:reftable (refcount = 1000000, revision = origin/master)
-
-And migrating from "reftable" to "files:
-
-    Benchmark 1: migrate reftable:files (refcount = 1000000, revision = origin/master)
-      Time (mean ± σ):     35.409 s ±  0.302 s    [User: 5.061 s, System: 29.244 s]
-      Range (min … max):   35.055 s … 35.898 s    10 runs
-
-    Benchmark 2: migrate reftable:files (refcount = 1000000, revision = pks-refs-optimize-migrations)
-      Time (mean ± σ):     855.9 ms ±  61.5 ms    [User: 646.7 ms, System: 187.1 ms]
-      Range (min … max):   830.0 ms … 1030.3 ms    10 runs
-
-    Summary
-      migrate reftable:files (refcount = 1000000, revision = pks-refs-optimize-migrations) ran
-       41.37 ± 2.99 times faster than migrate reftable:files (refcount = 1000000, revision = origin/master)
-
-Changes in v2:
-
-  - Mention in the first commit message that the introduced flag will be
-    used in a subsequent patch.
-  - Link to v1: https://lore.kernel.org/r/20241108-pks-refs-optimize-migrations-v1-0-7fd37fa80e35@pks.im
-
-Changes in v3:
-
-  - Mention that we store the ref transaction flag for access by the
-    backend in the first commit message.
-  - Fix a missing word in another commit message.
-  - Use `unsigned int` to pass `initial_transaction` flag.
-  - Rename the scratch buffers and provide a comment for why they exist.
-  - Link to v2: https://lore.kernel.org/r/20241120-pks-refs-optimize-migrations-v2-0-a233374b7452@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      refs: allow passing flags when setting up a transaction
-      refs/files: move logic to commit initial transaction
-      refs: introduce "initial" transaction flag
-      refs/files: support symbolic and root refs in initial transaction
-      refs: use "initial" transaction semantics to migrate refs
-      refs: skip collision checks in initial transactions
-      refs: don't normalize log messages with `REF_SKIP_CREATE_REFLOG`
-      reftable/writer: optimize allocations by using a scratch buffer
-      reftable/block: rename `block_writer::buf` variable
-      reftable/block: optimize allocations by using scratch buffer
+ builtin/clone.c         |  4 ++--
+ refs.c                  | 10 +---------
+ refs.h                  | 37 ++++++++++++++++++-------------------
+ refs/debug.c            | 13 -------------
+ refs/files-backend.c    | 16 ++++++++--------
+ refs/packed-backend.c   |  8 --------
+ refs/refs-internal.h    |  1 -
+ refs/reftable-backend.c |  8 --------
+ 8 files changed, 29 insertions(+), 68 deletions(-)
 
- branch.c                  |   2 +-
- builtin/clone.c           |   4 +-
- builtin/fast-import.c     |   4 +-
- builtin/fetch.c           |   4 +-
- builtin/receive-pack.c    |   4 +-
- builtin/replace.c         |   2 +-
- builtin/tag.c             |   2 +-
- builtin/update-ref.c      |   4 +-
- refs.c                    |  70 ++++++-------
- refs.h                    |  45 +++++----
- refs/debug.c              |  13 ---
- refs/files-backend.c      | 244 +++++++++++++++++++++++++---------------------
- refs/packed-backend.c     |   8 --
- refs/refs-internal.h      |   2 +-
- refs/reftable-backend.c   |  14 +--
- reftable/block.c          |  33 +++----
- reftable/block.h          |  10 +-
- reftable/writer.c         |  23 +++--
- reftable/writer.h         |   2 +
- sequencer.c               |   6 +-
- t/helper/test-ref-store.c |   2 +-
- t/t1460-refs-migrate.sh   |   2 +-
- walker.c                  |   2 +-
- 23 files changed, 249 insertions(+), 253 deletions(-)
+diff --git a/builtin/clone.c b/builtin/clone.c
+index d963cc6eb5181e1af5bb29c07c3ee2fa24ad04ca..8427ccec17e77b23ee1a7f526b80a52d79a71873 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -574,7 +574,7 @@ static void write_remote_refs(const struct ref *local_refs)
+ 	struct strbuf err = STRBUF_INIT;
+ 
+ 	t = ref_store_transaction_begin(get_main_ref_store(the_repository),
+-					0, &err);
++					REF_TRANSACTION_FLAG_INITIAL, &err);
+ 	if (!t)
+ 		die("%s", err.buf);
+ 
+@@ -586,7 +586,7 @@ static void write_remote_refs(const struct ref *local_refs)
+ 			die("%s", err.buf);
+ 	}
+ 
+-	if (initial_ref_transaction_commit(t, &err))
++	if (ref_transaction_commit(t, &err))
+ 		die("%s", err.buf);
+ 
+ 	strbuf_release(&err);
+diff --git a/refs.c b/refs.c
+index 9effeb01eb45728514eab0ca92404ea8cf2158d9..8b9dfc6173fd144fe9a172cb81cf33057ae31368 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2315,7 +2315,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	}
+ 
+ 	ret = refs->be->transaction_finish(refs, transaction, err);
+-	if (!ret)
++	if (!ret && !(transaction->flags & REF_TRANSACTION_FLAG_INITIAL))
+ 		run_transaction_hook(transaction, "committed");
+ 	return ret;
+ }
+@@ -2486,14 +2486,6 @@ int refs_reflog_expire(struct ref_store *refs,
+ 				       cleanup_fn, policy_cb_data);
+ }
+ 
+-int initial_ref_transaction_commit(struct ref_transaction *transaction,
+-				   struct strbuf *err)
+-{
+-	struct ref_store *refs = transaction->ref_store;
+-
+-	return refs->be->initial_transaction_commit(refs, transaction, err);
+-}
+-
+ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
+ 					    ref_transaction_for_each_queued_update_fn cb,
+ 					    void *cb_data)
+diff --git a/refs.h b/refs.h
+index 9821f3e80d900b31c3dede489c2f415d968233d7..024a370554e013d66febee635e4c0415ba061fe6 100644
+--- a/refs.h
++++ b/refs.h
+@@ -214,11 +214,9 @@ char *repo_default_branch_name(struct repository *r, int quiet);
+  *
+  *   Or
+  *
+- *   - Call `initial_ref_transaction_commit()` if the ref database is
+- *     known to be empty and have no other writers (e.g. during
+- *     clone). This is likely to be much faster than
+- *     `ref_transaction_commit()`. `ref_transaction_prepare()` should
+- *     *not* be called before `initial_ref_transaction_commit()`.
++ *   - Call `ref_transaction_begin()` with REF_TRANSACTION_FLAG_INITIAL if the
++ *     ref database is known to be empty and have no other writers (e.g. during
++ *     clone). This is likely to be much faster than without the flag.
+  *
+  * - Then finally, call `ref_transaction_free()` to free the
+  *   `ref_transaction` data structure.
+@@ -579,6 +577,21 @@ enum action_on_err {
+ 	UPDATE_REFS_QUIET_ON_ERR
+ };
+ 
++enum ref_transaction_flag {
++	/*
++	 * The ref transaction is part of the initial creation of the ref store
++	 * and can thus assume that the ref store is completely empty. This
++	 * allows the backend to perform the transaction more efficiently by
++	 * skipping certain checks.
++	 *
++	 * It is a bug to set this flag when there might be other processes
++	 * accessing the repository or if there are existing references that
++	 * might conflict with the ones being created. All old_oid values must
++	 * either be absent or null_oid.
++	 */
++	REF_TRANSACTION_FLAG_INITIAL = (1 << 0),
++};
++
+ /*
+  * Begin a reference transaction.  The reference transaction must
+  * be freed by calling ref_transaction_free().
+@@ -798,20 +811,6 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ int ref_transaction_abort(struct ref_transaction *transaction,
+ 			  struct strbuf *err);
+ 
+-/*
+- * Like ref_transaction_commit(), but optimized for creating
+- * references when originally initializing a repository (e.g., by "git
+- * clone"). It writes the new references directly to packed-refs
+- * without locking the individual references.
+- *
+- * It is a bug to call this function when there might be other
+- * processes accessing the repository or if there are existing
+- * references that might conflict with the ones being created. All
+- * old_oid values must either be absent or null_oid.
+- */
+-int initial_ref_transaction_commit(struct ref_transaction *transaction,
+-				   struct strbuf *err);
+-
+ /*
+  * Execute the given callback function for each of the reference updates which
+  * have been queued in the given transaction. `old_oid` and `new_oid` may be
+diff --git a/refs/debug.c b/refs/debug.c
+index 45e2e784a0f8c49f492eaa9d371aa44f8c7916c3..cbac62c8a4f924580e80f106f87639daf77cef5c 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -118,18 +118,6 @@ static int debug_transaction_abort(struct ref_store *refs,
+ 	return res;
+ }
+ 
+-static int debug_initial_transaction_commit(struct ref_store *refs,
+-					    struct ref_transaction *transaction,
+-					    struct strbuf *err)
+-{
+-	struct debug_ref_store *drefs = (struct debug_ref_store *)refs;
+-	int res;
+-	transaction->ref_store = drefs->refs;
+-	res = drefs->refs->be->initial_transaction_commit(drefs->refs,
+-							  transaction, err);
+-	return res;
+-}
+-
+ static int debug_pack_refs(struct ref_store *ref_store, struct pack_refs_opts *opts)
+ {
+ 	struct debug_ref_store *drefs = (struct debug_ref_store *)ref_store;
+@@ -443,7 +431,6 @@ struct ref_storage_be refs_be_debug = {
+ 	.transaction_prepare = debug_transaction_prepare,
+ 	.transaction_finish = debug_transaction_finish,
+ 	.transaction_abort = debug_transaction_abort,
+-	.initial_transaction_commit = debug_initial_transaction_commit,
+ 
+ 	.pack_refs = debug_pack_refs,
+ 	.rename_ref = debug_rename_ref,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index f37c805a34167b3749fbe724788180975abdae90..3ed18475a72aa4798d15b2912c37b4caabd47aac 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2781,6 +2781,8 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 
+ 	assert(err);
+ 
++	if (transaction->flags & REF_TRANSACTION_FLAG_INITIAL)
++		goto cleanup;
+ 	if (!transaction->nr)
+ 		goto cleanup;
+ 
+@@ -2985,13 +2987,10 @@ static int ref_present(const char *refname, const char *referent UNUSED,
+ 	return string_list_has_string(affected_refnames, refname);
+ }
+ 
+-static int files_initial_transaction_commit(struct ref_store *ref_store,
++static int files_transaction_finish_initial(struct files_ref_store *refs,
+ 					    struct ref_transaction *transaction,
+ 					    struct strbuf *err)
+ {
+-	struct files_ref_store *refs =
+-		files_downcast(ref_store, REF_STORE_WRITE,
+-			       "initial_ref_transaction_commit");
+ 	size_t i;
+ 	int ret = 0;
+ 	struct string_list affected_refnames = STRING_LIST_INIT_NODUP;
+@@ -2999,8 +2998,8 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 
+ 	assert(err);
+ 
+-	if (transaction->state != REF_TRANSACTION_OPEN)
+-		BUG("commit called for transaction that is not open");
++	if (transaction->state != REF_TRANSACTION_PREPARED)
++		BUG("commit called for transaction that is not prepared");
+ 
+ 	/* Fail if a refname appears more than once in the transaction: */
+ 	for (i = 0; i < transaction->nr; i++)
+@@ -3063,7 +3062,7 @@ static int files_initial_transaction_commit(struct ref_store *ref_store,
+ 		goto cleanup;
+ 	}
+ 
+-	if (initial_ref_transaction_commit(packed_transaction, err)) {
++	if (ref_transaction_commit(packed_transaction, err)) {
+ 		ret = TRANSACTION_GENERIC_ERROR;
+ 	}
+ 
+@@ -3091,6 +3090,8 @@ static int files_transaction_finish(struct ref_store *ref_store,
+ 
+ 	assert(err);
+ 
++	if (transaction->flags & REF_TRANSACTION_FLAG_INITIAL)
++		return files_transaction_finish_initial(refs, transaction, err);
+ 	if (!transaction->nr) {
+ 		transaction->state = REF_TRANSACTION_CLOSED;
+ 		return 0;
+@@ -3617,7 +3618,6 @@ struct ref_storage_be refs_be_files = {
+ 	.transaction_prepare = files_transaction_prepare,
+ 	.transaction_finish = files_transaction_finish,
+ 	.transaction_abort = files_transaction_abort,
+-	.initial_transaction_commit = files_initial_transaction_commit,
+ 
+ 	.pack_refs = files_pack_refs,
+ 	.rename_ref = files_rename_ref,
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 07c57fd541a5039d5fcb93d9bf78e1916f67b219..794471de60c78494f1f2b0e9de013422e3e7625d 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1730,13 +1730,6 @@ static int packed_transaction_finish(struct ref_store *ref_store,
+ 	return ret;
+ }
+ 
+-static int packed_initial_transaction_commit(struct ref_store *ref_store UNUSED,
+-					    struct ref_transaction *transaction,
+-					    struct strbuf *err)
+-{
+-	return ref_transaction_commit(transaction, err);
+-}
+-
+ static int packed_pack_refs(struct ref_store *ref_store UNUSED,
+ 			    struct pack_refs_opts *pack_opts UNUSED)
+ {
+@@ -1769,7 +1762,6 @@ struct ref_storage_be refs_be_packed = {
+ 	.transaction_prepare = packed_transaction_prepare,
+ 	.transaction_finish = packed_transaction_finish,
+ 	.transaction_abort = packed_transaction_abort,
+-	.initial_transaction_commit = packed_initial_transaction_commit,
+ 
+ 	.pack_refs = packed_pack_refs,
+ 	.rename_ref = NULL,
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index dbc6360c5a1d410c192e7eee1bffb1d423e1f9ee..33335d54c9162755c70174093017439c0018f36d 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -666,7 +666,6 @@ struct ref_storage_be {
+ 	ref_transaction_prepare_fn *transaction_prepare;
+ 	ref_transaction_finish_fn *transaction_finish;
+ 	ref_transaction_abort_fn *transaction_abort;
+-	ref_transaction_commit_fn *initial_transaction_commit;
+ 
+ 	pack_refs_fn *pack_refs;
+ 	rename_ref_fn *rename_ref;
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 38eb14d591ec0c7c221b6b0f7483e547748e7f1c..8e914afc817f198bed3199630b430e179cabc740 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1490,13 +1490,6 @@ static int reftable_be_transaction_finish(struct ref_store *ref_store UNUSED,
+ 	return ret;
+ }
+ 
+-static int reftable_be_initial_transaction_commit(struct ref_store *ref_store UNUSED,
+-						  struct ref_transaction *transaction,
+-						  struct strbuf *err)
+-{
+-	return ref_transaction_commit(transaction, err);
+-}
+-
+ static int reftable_be_pack_refs(struct ref_store *ref_store,
+ 				 struct pack_refs_opts *opts)
+ {
+@@ -2490,7 +2483,6 @@ struct ref_storage_be refs_be_reftable = {
+ 	.transaction_prepare = reftable_be_transaction_prepare,
+ 	.transaction_finish = reftable_be_transaction_finish,
+ 	.transaction_abort = reftable_be_transaction_abort,
+-	.initial_transaction_commit = reftable_be_initial_transaction_commit,
+ 
+ 	.pack_refs = reftable_be_pack_refs,
+ 	.rename_ref = reftable_be_rename_ref,
 
-Range-diff versus v2:
-
- 1:  74d23ad64d !  1:  64ebf2d3c6 refs: allow passing flags when setting up a transaction
-    @@ Metadata
-      ## Commit message ##
-         refs: allow passing flags when setting up a transaction
-     
-    -    Allow passing flags when setting up a transaction such that the
-    -    behaviour of the transaction itself can be altered. This functionality
-    -    will be used in a subsequent patch.
-    +    Allow passing flags when creating a new transaction. These flagas are
-    +    stored in the `struct ref_transaction` and can be used by the respective
-    +    backends to alter their behaviour depending on the flag's value. This
-    +    functionality will be used in a subsequent patch.
-     
-         Adapt callers accordingly.
-     
- 2:  b7d50b9270 =  2:  616a5d66de refs/files: move logic to commit initial transaction
- 3:  2a0fff3748 =  3:  8d4b867641 refs: introduce "initial" transaction flag
- 4:  3904f337f6 =  4:  70961f6295 refs/files: support symbolic and root refs in initial transaction
- 5:  131161d467 =  5:  ccae50e766 refs: use "initial" transaction semantics to migrate refs
- 6:  a443916bbd !  6:  ec5de7e1a2 refs: skip collision checks in initial transactions
-    @@ Commit message
-         well as the creation of a ref iterator for every ref we're checking,
-         which adds up quite fast when performing the check for many refs.
-     
-    -    Introduce a new flag that allows us to skip this check and wire it up in
-    -    such that the backends pass it when running an initial transaction. This
-    +    Introduce a new flag that allows us to skip this check and wire it up so
-    +    that the backends pass it when running an initial transaction. This
-         leads to significant speedups when migrating ref storage backends. From
-         "files" to "reftable":
-     
-    @@ refs.c: int refs_verify_refname_available(struct ref_store *refs,
-      				  const char *refname,
-      				  const struct string_list *extras,
-      				  const struct string_list *skip,
-    -+				  int initial_transaction,
-    ++				  unsigned int initial_transaction,
-      				  struct strbuf *err)
-      {
-      	const char *slash;
-    @@ refs.h: int refs_read_symbolic_ref(struct ref_store *ref_store, const char *refn
-      				  const char *refname,
-      				  const struct string_list *extras,
-      				  const struct string_list *skip,
-    -+				  int initial_transaction,
-    ++				  unsigned int initial_transaction,
-      				  struct strbuf *err);
-      
-      int refs_ref_exists(struct ref_store *refs, const char *refname);
- 7:  4bd95e5661 =  7:  f60f692ea0 refs: don't normalize log messages with `REF_SKIP_CREATE_REFLOG`
- 8:  de1573c1f7 !  8:  e8881d67db reftable/writer: optimize allocations by using a scratch buffer
-    @@ reftable/writer.c: int reftable_writer_new(struct reftable_writer **out,
-      
-      	reftable_buf_init(&wp->block_writer_data.last_key);
-      	reftable_buf_init(&wp->last_key);
-    -+	reftable_buf_init(&wp->buf);
-    ++	reftable_buf_init(&wp->scratch);
-      	REFTABLE_CALLOC_ARRAY(wp->block, opts.block_size);
-      	if (!wp->block) {
-      		reftable_free(wp);
-    @@ reftable/writer.c: static void writer_release(struct reftable_writer *w)
-      		w->block_writer = NULL;
-      		writer_clear_index(w);
-      		reftable_buf_release(&w->last_key);
-    -+		reftable_buf_release(&w->buf);
-    ++		reftable_buf_release(&w->scratch);
-      	}
-      }
-      
-    @@ reftable/writer.c: static int writer_index_hash(struct reftable_writer *w, struc
-      	int err;
-      
-     -	err = reftable_record_key(rec, &key);
-    -+	err = reftable_record_key(rec, &w->buf);
-    ++	err = reftable_record_key(rec, &w->scratch);
-      	if (err < 0)
-      		goto done;
-      
-     -	if (reftable_buf_cmp(&w->last_key, &key) >= 0) {
-    -+	if (reftable_buf_cmp(&w->last_key, &w->buf) >= 0) {
-    ++	if (reftable_buf_cmp(&w->last_key, &w->scratch) >= 0) {
-      		err = REFTABLE_API_ERROR;
-      		goto done;
-      	}
-      
-      	reftable_buf_reset(&w->last_key);
-     -	err = reftable_buf_add(&w->last_key, key.buf, key.len);
-    -+	err = reftable_buf_add(&w->last_key, w->buf.buf, w->buf.len);
-    ++	err = reftable_buf_add(&w->last_key, w->scratch.buf, w->scratch.len);
-      	if (err < 0)
-      		goto done;
-      
-    @@ reftable/writer.c: int reftable_writer_add_ref(struct reftable_writer *w,
-      
-      	if (!w->opts.skip_index_objects && reftable_ref_record_val1(ref)) {
-     -		err = reftable_buf_add(&buf, (char *)reftable_ref_record_val1(ref),
-    -+		reftable_buf_reset(&w->buf);
-    -+		err = reftable_buf_add(&w->buf, (char *)reftable_ref_record_val1(ref),
-    ++		reftable_buf_reset(&w->scratch);
-    ++		err = reftable_buf_add(&w->scratch, (char *)reftable_ref_record_val1(ref),
-      				       hash_size(w->opts.hash_id));
-      		if (err < 0)
-      			goto out;
-      
-     -		err = writer_index_hash(w, &buf);
-    -+		err = writer_index_hash(w, &w->buf);
-    ++		err = writer_index_hash(w, &w->scratch);
-      		if (err < 0)
-      			goto out;
-      	}
-    @@ reftable/writer.c: int reftable_writer_add_ref(struct reftable_writer *w,
-      	if (!w->opts.skip_index_objects && reftable_ref_record_val2(ref)) {
-     -		reftable_buf_reset(&buf);
-     -		err = reftable_buf_add(&buf, reftable_ref_record_val2(ref),
-    -+		reftable_buf_reset(&w->buf);
-    -+		err = reftable_buf_add(&w->buf, reftable_ref_record_val2(ref),
-    ++		reftable_buf_reset(&w->scratch);
-    ++		err = reftable_buf_add(&w->scratch, reftable_ref_record_val2(ref),
-      				       hash_size(w->opts.hash_id));
-      		if (err < 0)
-      			goto out;
-      
-     -		err = writer_index_hash(w, &buf);
-    -+		err = writer_index_hash(w, &w->buf);
-    ++		err = writer_index_hash(w, &w->scratch);
-      		if (err < 0)
-      			goto out;
-      	}
-    @@ reftable/writer.h: struct reftable_writer {
-      	void *write_arg;
-      	int pending_padding;
-      	struct reftable_buf last_key;
-    -+	struct reftable_buf buf;
-    ++	/* Scratch buffer used to avoid allocations. */
-    ++	struct reftable_buf scratch;
-      
-      	/* offset of next block to write. */
-      	uint64_t next;
- 9:  903fb084d5 =  9:  1127729311 reftable/block: rename `block_writer::buf` variable
-10:  27692b8a00 ! 10:  7b8ddad673 reftable/block: optimize allocations by using scratch buffer
-    @@ reftable/block.c: int block_writer_add(struct block_writer *w, struct reftable_r
-      	int err;
-      
-     -	err = reftable_record_key(rec, &key);
-    -+	err = reftable_record_key(rec, &w->buf);
-    ++	err = reftable_record_key(rec, &w->scratch);
-      	if (err < 0)
-      		goto done;
-      
-     -	if (!key.len) {
-    -+	if (!w->buf.len) {
-    ++	if (!w->scratch.len) {
-      		err = REFTABLE_API_ERROR;
-      		goto done;
-      	}
-      
-     -	n = reftable_encode_key(&is_restart, out, last, key,
-    -+	n = reftable_encode_key(&is_restart, out, last, w->buf,
-    ++	n = reftable_encode_key(&is_restart, out, last, w->scratch,
-      				reftable_record_val_type(rec));
-      	if (n < 0) {
-      		err = -1;
-    @@ reftable/block.c: int block_writer_add(struct block_writer *w, struct reftable_r
-      
-      	err = block_writer_register_restart(w, start.len - out.len, is_restart,
-     -					    &key);
-    -+					    &w->buf);
-    ++					    &w->scratch);
-      done:
-     -	reftable_buf_release(&key);
-      	return err;
-    @@ reftable/block.c: void block_writer_release(struct block_writer *bw)
-      	REFTABLE_FREE_AND_NULL(bw->zstream);
-      	REFTABLE_FREE_AND_NULL(bw->restarts);
-      	REFTABLE_FREE_AND_NULL(bw->compressed);
-    -+	reftable_buf_release(&bw->buf);
-    ++	reftable_buf_release(&bw->scratch);
-      	reftable_buf_release(&bw->last_key);
-      	/* the block is not owned. */
-      }
-    @@ reftable/block.h: struct block_writer {
-      	uint32_t restart_cap;
-      
-      	struct reftable_buf last_key;
-    -+	struct reftable_buf buf;
-    ++	/* Scratch buffer used to avoid allocations. */
-    ++	struct reftable_buf scratch;
-      	int entries;
-      };
-      
-
----
-base-commit: facbe4f633e4ad31e641f64617bc88074c659959
-change-id: 20241108-pks-refs-optimize-migrations-6d0ceee4abb7
+-- 
+2.47.0.274.g962d0b743d.dirty
 
