@@ -1,43 +1,43 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338BF190674
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 08:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111F213CF82
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 08:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732608991; cv=none; b=k7RmMggzcXefpR0wi1FBIgwJDBvKHGDz1lorB0/UAHeufMj6wx6MRHmSQ22vTuWdVqdp6YKBs0x7qG1wbif0azi8O5oIuyLSZHWSbbsYtMue/gGC/Fn84sz5anvVjUro6AIYPkYAtMRxYjvqd/QGag2RsMf/Dmem4N/IE4e7Bmg=
+	t=1732609352; cv=none; b=OPICW2jV78rvmSCesxiE5zgGTkA7ahWesx2ZUzjS4G0caBtMBI3i6WzQ1DMC4CPNJ+sZPx6M0qGscLNzbyprOiZQB1I7lZOlZJRqAhsxHWLu2gw5bkBkbcJXl4QSoNEzOT3A6ZW8TxL+HpyBQAsFb9CCx41Ev6GpUrH5sYiiy10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732608991; c=relaxed/simple;
-	bh=yOZNynp7UOokDD63J+POa+zmx9ffjBNo1Sg+dVJVc38=;
+	s=arc-20240116; t=1732609352; c=relaxed/simple;
+	bh=ne/d3jgbnN7rB2WoHtXc70SukN+oAZnJdPIwVMgp+Lw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KCr5BkZdtu8GEdxLOGZvAqkjuYGGl94xR66/XnxLQBnYXhp/jysh7yN/1orzO958kOmmsVGp3HXeyRgLvLIi8g0Ge64d5HsQoxVv/YS71j6c+FeA5g8w/KbCp8vlfzn77LanHgc+H/DJOjusRLjMjRdk3MRaPr/6uwoqlib2YlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=57tQmeh9; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=bHF0c4xZsragyYVY08phuAZ4DdHJ/0roMOE8Nd76eCABf3tlZYQeFL/OwxMiOpOM+//LVT57Sh+Ugjl5ZNRasSV2kvBQAme3mYcxH01cNDDNkEj1Y6I7xxzlRt2Hqts6iYxrXKqA/qeLUMZvnCW2OT8cizPVuQPeudJr4T9651E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KUeVcvMf; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="57tQmeh9"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2693813806F0;
-	Tue, 26 Nov 2024 03:16:28 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 26 Nov 2024 03:16:28 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KUeVcvMf"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id F0BA4138074C;
+	Tue, 26 Nov 2024 03:22:28 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 26 Nov 2024 03:22:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732608988; x=1732695388; bh=mEg9l0xuAle7M1fHKxA3NuYMC8VK8YGeeta
-	DXS8HPn8=; b=57tQmeh9TXrQskMSJDGkx60ozJPadp6Ic3El97GoQMIXeAGwMNu
-	Liz2pW86Xm4KLCjeQ1NijxdWVZRv9TJ2orN+Vo1wOf0M+oZPpvrfaBJLEhaYwSEa
-	o5czC+OcRXIhLJJtvfZAQl8YSRds7Ws3CKu2dqIv+FrNwktgyBaKxnp2XoFwfAWJ
-	l3YFpCGEwbukCFcPff5A8+0YLcFq7s1sN1RaZQ/r3Py+u0cKYpWzixotbFXCsimN
-	5qCLYFHLafSkzq2aXK2wdlEhMePn6wR7B8L7EzlXNVtSIlmwJlo+NXMQkdxB2n/9
-	U+8YbWyhjW+XUH/MF55ksgGfXodz/Yuo/wQ==
-X-ME-Sender: <xms:24NFZytyvRZtv2_rlx9MFLIfBsa1Wb-NOh5IEKnQU_qjYd-l2d1sIA>
-    <xme:24NFZ3da1rQHqFYoVj5m8wnlKz7BDYJzQa3gTQFMn6VxNf6PUrfzMo11USg4gK6mf
-    SMZ3p1HmMRjCwavRQ>
-X-ME-Received: <xmr:24NFZ9zGnyNYcps6ETdD-V2yuw14ypfHe4iiay_obKdTSiiPShI5uocmkUcdYN6CkMqFf6ncuAedCbFZPlPJO5wP32_rIZTSylWXgTY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdduudegucetufdoteggodetrfdotf
+	1732609348; x=1732695748; bh=BhCtAlSKdxdFoWKcn9kLLB1H7k1ffrdAMG1
+	rTU+RKRY=; b=KUeVcvMfOmYR/WBkfTef9l7yJx5prgsKQugChtBLMfAZjFWld5q
+	itguV3p0suvrMOCUT6tQLaz/Cfo0qW/GzCK7hU2uGAqhaO05N9o0HVQZpppDur4q
+	QB6suGP1zHnL7Saay6+4MwMk6oe4Y9Sa8wTowGrTG9aZH2tR6pz+rl7jQfpZ1JxD
+	FCnuyAAXYW7T2yuU2dIULoonhZkh6UXqmDvwe1XqoWU0u8hd+W0l4Gehr9J7BFk2
+	S6yU+q7CiZVI/QnfkkBmvuX85MYclVrmcnDJLnPnPXmd4ALOufUIOZue4tsYZvKC
+	rGMJExxrRCK9i2zDFK03U8Ph/u1sift+upg==
+X-ME-Sender: <xms:RIVFZwxf5Alhs-71gE0g1YyTjm0BCAH91aIgrkgSFo9psTarjDzmJA>
+    <xme:RIVFZ0Rcp7LIH0ujvOcZWoBYbklg0KyrqXo-1sm_z-3QnW88dMSo3tcT4Dpf_NRjO
+    xe6R2f5_JFuMhxKSg>
+X-ME-Received: <xmr:RIVFZyW5N2w_UoXUykWQMjTrYXYKM5BNPHzxIOa3teFOmbEy9ml8ozU9OOdqTmW42CA0gumCju_-MddcrrLyLYFmsIkCJ5Et_w_DoPw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdduudeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -45,39 +45,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdduudegucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepudegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggv
-    lhhinhesghhmgidruggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
-    htthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihr
-    vghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
-    hrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:24NFZ9O_ZBfzxiEhzHnYxXqXJxoDaQBDoYctPl2jmjXHwIHFgrlFVA>
-    <xmx:24NFZy8DBYdZEe3gff74UVKqocbaALOdrbWOkZjB0jWaJp_LUB1ikg>
-    <xmx:24NFZ1UxOTDCg-3OYaM3PHPcJDGmcHTPHXGjEecx-5cMy9uMcn2iXg>
-    <xmx:24NFZ7fwpY08xGbsZtmT49LMcYQ7EkQengd7J8Xm4j9Ws-Jbgtu8aQ>
-    <xmx:3INFZ2X5kNDZk7jvW2HCofOsTQDvmmLb7rns8ifJo1VxI624FEsobJE9>
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    tghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:RIVFZ-h-EC1GN15FuTeEcj9lB148qfUg7u7rDD0hv-6oGatMPjIu3w>
+    <xmx:RIVFZyA9LmzsuPDZ98h7vfjGyoAuk8HI_a_xOQlwSSvGPX8UfWHmMA>
+    <xmx:RIVFZ_JiATVvoMIFvPc6XgEPrVqPD0DjZe6F9AJ33PKeETTL5dZDkg>
+    <xmx:RIVFZ5AeMlbFwCgFHB5N4CCNjk_I8gPZKvE3NNDykXP0sTVqwA4mIA>
+    <xmx:RIVFZ1_vMm0KAw6Dq8Ghwu7A03mvQUXubOYawZIvWp4VAOprrE6TMzsB>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Nov 2024 03:16:27 -0500 (EST)
+ 26 Nov 2024 03:22:27 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Taylor Blau <me@ttaylorr.com>,  Derrick Stolee via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,
-  johannes.schindelin@gmx.de,  peff@peff.net,  johncai86@gmail.com,
-  newren@gmail.com,  christian.couder@gmail.com,
-  kristofferhaugsbakk@fastmail.com,  jonathantanmy@google.com,  karthik
- nayak <karthik.188@gmail.com>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/6] PATH WALK I: The path-walk API
-In-Reply-To: <Z0V8D4r5YbxjNvPs@pks.im> (Patrick Steinhardt's message of "Tue,
-	26 Nov 2024 08:43:11 +0100")
-References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
-	<pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
-	<Zz+61fat+vGgb+xL@nand.local> <Z0Q7oGF6Q5U-f4VX@pks.im>
-	<xmqqa5dmzboa.fsf@gitster.g> <Z0V8D4r5YbxjNvPs@pks.im>
-Date: Tue, 26 Nov 2024 17:16:26 +0900
-Message-ID: <xmqqr06yxvdx.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/2] refs: adapt `initial_transaction` flag to be unsigned
+In-Reply-To: <20241125-pks-refs-migration-optimization-followup-v1-1-0e1b4a2af384@pks.im>
+	(Patrick Steinhardt's message of "Mon, 25 Nov 2024 08:34:42 +0100")
+References: <20241125-pks-refs-migration-optimization-followup-v1-0-0e1b4a2af384@pks.im>
+	<20241125-pks-refs-migration-optimization-followup-v1-1-0e1b4a2af384@pks.im>
+Date: Tue, 26 Nov 2024 17:22:26 +0900
+Message-ID: <xmqqjzcqxv3x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,25 +78,13 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> > then I'd be all for having the path-walk API, even if it doesn't help us
->> > with repo size reductions as we initially thought.
->> 
->> Is the implied statement that we didn't quite see sufficient rationale
->> to convince ourselves that a new path-walk machinery is needed?
->
-> No, it's rather that I didn't find the time yet to have a deeper look at
-> the patch series to figure out for myself whether the path-walk API is
-> needed for them. So I was trying to prompt Derrick with the above to
-> find out whether he thinks that it is needed for both of these features
-> and if so why the existing APIs are insufficient.
->
-> I'm already sold on the idea of git-survey(1) and git-backfill(1), so if
-> there are two use cases where the API makes sense I'm happy to have the
-> additional complexity even if it's not needed anymore for the repo size
-> reduction.
+> The `initial_transaction` flag is tracked as a signed integer, but we
+> typically pass around flags via unsigned integers. Adapt the type
+> accordingly.
 
-Ah, I misspoke and failed to add "in order to implement these new
-features" after "is needed".  I like the idea of "backfill" thing,
-too (as code paths to deal with promisor remotes irritates me ;-).
+It would not matter while the information in the variable is 1 bit
+and the check is "is the whole variable 0?", which is what the
+current code does on this parameter.  But when we'd start using the
+parameter as a flag word to stuff more bits, this starts to matter.
 
-Thanks.
+Good future-proofing.  Thanks.
