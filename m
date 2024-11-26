@@ -1,69 +1,69 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B941CDFB9
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 10:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9497A1CBE8C
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 10:57:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732618675; cv=none; b=VuMc4BCMZsvTzAym3mx/LHXO3z4J9Q7iP0vM5pa1K1cxUpwbhtb5y80fGFvHihyw3A26kQ6gHZ6cptxu1m2dxJ7rKHmuZYm6UVS27YN/ejl5rA9wuN0CyeTZVsOrPWCF+lz/ws+BzsDqSMfqGxQI7Ztis/QgAShTVX3f1MBk/nM=
+	t=1732618675; cv=none; b=s5MWt/cWhaebI9zaS8QGZkG+Mw/UwjAxJMxeMxfmjNlQIcbXvtyXOfS32gNv0nzZW194djNSl9T91fRttN1DIuTcHN0e3v91O4A90DN2xvvBTLX917tjCB6d27sbpdQ3b7HcQYOvUle8VSFfiKNuvyF1rjBixyNRk06WUPJQHLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732618675; c=relaxed/simple;
-	bh=Q5ZCf3i29UlcKtMSIX5KKLeI+RwchVvRpVhkmT6PCbU=;
+	bh=qLIg5T8KR9Eao9z+C7HEPwKG1Rqei+w1QltFOf7LIWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=go7k9riuDnXoC8ux/OXSrzLebcVHfGuCm6cH6X23HEPvnmFSnW0iNwZLYax5stZbV+KWFt+n77oHJW3bjHQn+MFRAFTw8BeZ007CN7AzxmQh83zIhF2MOFvhTcZZk8jZJzx+e8DdZY2v1hZKChjnRYwXBB9hI5/9vEghi7GDKSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IcTiFQyA; arc=none smtp.client-ip=209.85.167.48
+	 MIME-Version; b=FIauRwOmxOUMwjLlmW3cbyuGRSRzh6pPyxDRylUC890UL6Gc85otSHp4sSx449WBsQgpTxIk78TB9AaWPAIZQzK2qlh84ZL+T6dPFZPC/+WwRbgDPoDBFkctKhLL18fYYGO5zi22y3ug2Ix0Sc4kOo2nXVjdc4NPQv0oHYamY2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V3ETVd1H; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IcTiFQyA"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53de579f775so2590755e87.2
-        for <git@vger.kernel.org>; Tue, 26 Nov 2024 02:57:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V3ETVd1H"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-aa539d2b4b2so454666266b.1
+        for <git@vger.kernel.org>; Tue, 26 Nov 2024 02:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732618670; x=1733223470; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732618672; x=1733223472; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Wzup+86EipK3VVp+x10aUkYChfXLTvXWCryK5ZILg24=;
-        b=IcTiFQyAajOmPsCBoyLKltpJl71/xouYff/tCgo73TaY0p1Hjqehuq6J/ACUwWKF33
-         KLdB47giOAHWCN9eDJB4ZxSJLnT5tCDwqlg40V71u4qwagFcbFFxjV8TFIILTSEShylY
-         4ZYRRXDMe8IdOh91myjhVx3uVyt63InZhj4tic+I8Zc9QjikKHmOEuZ+b9pDYsTQu0To
-         7Ae425ezWc0ZofnN0wzde3FCu2bb7ChLTca6H4nGTX6eteQyEnuwHmtkA5Ft0fLukVUP
-         WHJK4ZUrqgOHJLXGy2fTXkp6A4E8NTuKUnbMwVZgIJ6Xw8p2H+V1YF/kBsJyzFEZCf4J
-         +ujw==
+        bh=yZgeCV4fvUha10RF5GPqBqyg5G/3NuGBxv4tTXXxp4o=;
+        b=V3ETVd1HyZ2t1RgOaxEt2gfI+ofemfI4mRwnIDm1lpEI+OyjcmHPJZN3J1f/LCNw/b
+         EJZWGOUMhHfDJEWTj31qSmYNn/7+rdGWMaLYDVEJtC6RLoyeo1udGX1J4byVpCuuJfaL
+         kYx4X75zCr9mDV/kk1NVmGkkQKXzAhU2bTfOiLIIoAsxTSNrOwcn4VKmz9Q14tiKCSDW
+         f9kMAMXR4R5iURfpftI42VAaFL7rf2lagnxnu5aH/ZFGGF8bg4knczEYpwjWVk733I89
+         78mERyH+Nn1B2SVE4hXbugvIqcksqFLV3KdyAxF8dwbsKEyr7ODNnad3VSGopy//0EPv
+         o7Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732618670; x=1733223470;
+        d=1e100.net; s=20230601; t=1732618672; x=1733223472;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Wzup+86EipK3VVp+x10aUkYChfXLTvXWCryK5ZILg24=;
-        b=KVV18lsdVVrSu2szQ8s/7+24IOUv/80N25A4ChoipAY1uTQHCiUj+5Qmi//85tfXyk
-         V2Zq8CJ348qQwAm1oaSK8vYHTeG2VFxxPFPAEx6KHylFrb4F3W2xCIQfQo4jz7gw04Yv
-         Cxjo318A5cPGkSXM3WntALZ/fWKtzRBsqVFzUkx9Rg91aw1TwdhffwqS5mNPH0OYXAIk
-         uVwA3/GJtIgW7xstlgH68F7DdYyLWLIMJbRGiDmPBqfxfqO5v46CPSeFDm3ZnXBU8HJ3
-         k6yvkwNAjd2wFZxcLKO6c+WQC8H2hTnu1r4tR1dpmwRzqU0pcTx0hpRsKx1dVhdw6Tjr
-         LHgA==
-X-Gm-Message-State: AOJu0Yy4jFe5C1WflkuI14kEYHXohJXY8wgxsm05P2+pEaKFXpQ+Hrqa
-	DTwVdJFM3lXCG4/aXN7SVBRU/Laub/LmOwpfkXkGTp5FZclHfAsQ5h0ojqS0
-X-Gm-Gg: ASbGncvoaFN9uPKl7Jg9MXvVfx/7lMnZdS9lhsC8hmsehbe3GfOdv9SNqzDIE3nLBGP
-	MRj3kP8s4aEYZb1Ze2LnPK5HDWewESygDHlaSoyNopOQ2gpDAXSD2ajxYP6Iy7jzm0chKtwYPyG
-	GCjHzfhnPuCcyztI22MCsJYyMJaZlQJtkugShfJiwXqEHlzzjnF7g7gn6MqjN88W0msP684jQt2
-	53v1U9UUANpCb2lc4koaW9ajIv2KipRU8M/Z6heuRdN+OFRMfdnvAqQa0XJ01Y=
-X-Google-Smtp-Source: AGHT+IEZZoQ4h5Uvklvks2DrlJyHl2a43ZWA8R5NPI2UHSEIsT4mANPEvCme0zOsV64w5rUePJUmsQ==
-X-Received: by 2002:a05:6512:b8c:b0:53d:e615:7a2 with SMTP id 2adb3069b0e04-53de61509c3mr4603989e87.53.1732618670262;
-        Tue, 26 Nov 2024 02:57:50 -0800 (PST)
+        bh=yZgeCV4fvUha10RF5GPqBqyg5G/3NuGBxv4tTXXxp4o=;
+        b=v7daW3ejcdtNnd2PvUD0Hnmxzv//L8WAZFnBj3/elw40UdX1FI1sxh7HRLyOTfFfcq
+         7oylb0qQiDKvgLQ6K/Qekne2uIDGavVAFIqf73AJBbnotAOH9aZ2w/BtNK9PlK4QCVBl
+         ZWAg1Ku4p9l1/PzomrUpAVG5aJBlFWzcktF/qUfGFk/OsazuFjivHU5ZOV9Nm51pHVRh
+         7KsoajIMa/dJllxC2xRrcZcGeJtIbXpmkAvNfnSly2+Tw1kXA1lB69Za4MvOWOFspWiU
+         vIxWfX0z7O0zJrpZ1qdX+lYkGsn1z0/conKov6AUmXWaPIRr05DhqB8r1q8B4/8+yNrO
+         4Ybw==
+X-Gm-Message-State: AOJu0YxdqBp81NYlcVzbgQrHvnEWMXVXaMjFn0d/5eEmIGuqa1TbElm3
+	L/4hY/OsYLeYCsMoeiAQi1z6ACd3TxgUEF2BfukwS3soKafcslcO
+X-Gm-Gg: ASbGncsOjVph+0bwMCdoRjAhWn84W5h6fWcFr629lGS2BMnLMemesO55rpDt6YET4OM
+	afc0Am+wQTc4pj9NclVkm1yKlKNksxstjAT3vSqMt6S3mvop+DPIg7x6ZA6qkWjU7NZUooZAtXB
+	wOicoMa3ZWa8Nix1OWQgu8E5ZNy8viePAfDfRFIM7bEYucmpiU11hpR54nKMwg6uktKKH0xl1Rx
+	xToo3cuwngW4t5Y5h0R/M3tT2xABRVsQKZNFi7O6bM6wlBtxrm9CcfAvjiEl3E=
+X-Google-Smtp-Source: AGHT+IG12MiHjh424HYLwnjj3op4Pmiv5HU7szbCQCKjweNFSVq1h59+aqtcIekwgvbYt9fZnkFo5A==
+X-Received: by 2002:a17:907:3e92:b0:a9a:7b3d:705 with SMTP id a640c23a62f3a-aa5649cefe8mr253666266b.30.1732618671711;
+        Tue, 26 Nov 2024 02:57:51 -0800 (PST)
 Received: from localhost.localdomain ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b5b8c77sm587461366b.187.2024.11.26.02.57.49
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa50b5b8c77sm587461366b.187.2024.11.26.02.57.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 02:57:49 -0800 (PST)
+        Tue, 26 Nov 2024 02:57:51 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	me@ttaylorr.com,
 	peff@peff.net,
 	gitster@pobox.com
-Subject: [PATCH v9 07/10] config: make `delta_base_cache_limit` a non-global variable
-Date: Tue, 26 Nov 2024 11:57:38 +0100
-Message-ID: <a66494384d46c9090b2f480ae461903ffd867258.1732618495.git.karthik.188@gmail.com>
+Subject: [PATCH v9 09/10] midx: add repository to `multi_pack_index` struct
+Date: Tue, 26 Nov 2024 11:57:40 +0100
+Message-ID: <c7fba8cf6a23529e9866c9dba1011eaed7afe28a.1732618495.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <cover.1732618495.git.karthik.188@gmail.com>
 References: <cover.1732618495.git.karthik.188@gmail.com>
@@ -75,299 +75,339 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `delta_base_cache_limit` variable is a global config variable used
-by multiple subsystems. Let's make this non-global, by adding this
-variable independently to the subsystems where it is used.
+The `multi_pack_index` struct represents the MIDX for a repository.
+Here, we add a pointer to the repository in this struct, allowing direct
+use of the repository variable without relying on the global
+`the_repository` struct.
 
-First, add the setting to the `repo_settings` struct, this provides
-access to the config in places where the repository is available. Use
-this in `packfile.c`.
+With this addition, we can determine the repository associated with a
+`bitmap_index` struct. A `bitmap_index` points to either a `packed_git`
+or a `multi_pack_index`, both of which have direct repository
+references. To support this, we introduce a static helper function,
+`bitmap_repo`, in `pack-bitmap.c`, which retrieves a repository given a
+`bitmap_index`.
 
-In `index-pack.c` we add it to the `pack_idx_option` struct and its
-constructor. While the repository struct is available here, it may not
-be set  because `git index-pack` can be used without a repository.
+With this, we clear up all usages of `the_repository` within
+`pack-bitmap.c` and also remove the `USE_THE_REPOSITORY_VARIABLE`
+definition. Bringing us another step closer to remove all global
+variable usage.
 
-In `gc.c` add it to the `gc_config` struct and also the constructor
-function. The gc functions currently do not have direct access to a
-repository struct.
-
-These changes are made to remove the usage of `delta_base_cache_limit`
-as a global variable in `packfile.c`. This brings us one step closer to
-removing the `USE_THE_REPOSITORY_VARIABLE` definition in `packfile.c`
-which we complete in the next patch.
+Although this change also opens up the potential to clean up `midx.c`,
+doing so would require additional refactoring to pass the repository
+struct to functions where the MIDX struct is created: a task better
+suited for future patches.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/gc.c         | 12 +++++++++++-
- builtin/index-pack.c | 10 +++++++---
- config.c             |  5 -----
- environment.c        |  1 -
- environment.h        |  1 -
- pack-objects.h       |  3 ++-
- pack-write.c         |  1 +
- pack.h               |  2 ++
- packfile.c           | 10 ++++++++--
- repo-settings.c      |  5 +++++
- repo-settings.h      |  3 +++
- 11 files changed, 39 insertions(+), 14 deletions(-)
+ midx.c        |  1 +
+ midx.h        |  3 ++
+ pack-bitmap.c | 90 +++++++++++++++++++++++++++++++--------------------
+ 3 files changed, 59 insertions(+), 35 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index d52735354c..efb6162fb0 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -138,6 +138,11 @@ struct gc_config {
- 	char *repack_filter_to;
- 	unsigned long big_pack_threshold;
- 	unsigned long max_delta_cache_size;
-+	/*
-+	 * Remove this member from gc_config once repo_settings is passed
-+	 * through the callchain.
-+	 */
-+	size_t delta_base_cache_limit;
+diff --git a/midx.c b/midx.c
+index 8edb75f51d..079c45a1aa 100644
+--- a/midx.c
++++ b/midx.c
+@@ -131,6 +131,7 @@ static struct multi_pack_index *load_multi_pack_index_one(const char *object_dir
+ 	m->data = midx_map;
+ 	m->data_len = midx_size;
+ 	m->local = local;
++	m->repo = the_repository;
+ 
+ 	m->signature = get_be32(m->data);
+ 	if (m->signature != MIDX_SIGNATURE)
+diff --git a/midx.h b/midx.h
+index 42d4f8d149..3b0ac4d878 100644
+--- a/midx.h
++++ b/midx.h
+@@ -71,6 +71,9 @@ struct multi_pack_index {
+ 
+ 	const char **pack_names;
+ 	struct packed_git **packs;
++
++	struct repository *repo;
++
+ 	char object_dir[FLEX_ARRAY];
  };
  
- #define GC_CONFIG_INIT { \
-@@ -153,6 +158,7 @@ struct gc_config {
- 	.prune_expire = xstrdup("2.weeks.ago"), \
- 	.prune_worktrees_expire = xstrdup("3.months.ago"), \
- 	.max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE, \
-+	.delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT, \
- }
- 
- static void gc_config_release(struct gc_config *cfg)
-@@ -168,6 +174,7 @@ static void gc_config(struct gc_config *cfg)
- {
- 	const char *value;
- 	char *owned = NULL;
-+	unsigned long ulongval;
- 
- 	if (!git_config_get_value("gc.packrefs", &value)) {
- 		if (value && !strcmp(value, "notbare"))
-@@ -206,6 +213,9 @@ static void gc_config(struct gc_config *cfg)
- 	git_config_get_ulong("gc.bigpackthreshold", &cfg->big_pack_threshold);
- 	git_config_get_ulong("pack.deltacachesize", &cfg->max_delta_cache_size);
- 
-+	if (!git_config_get_ulong("core.deltabasecachelimit", &ulongval))
-+		cfg->delta_base_cache_limit = ulongval;
-+
- 	if (!git_config_get_string("gc.repackfilter", &owned)) {
- 		free(cfg->repack_filter);
- 		cfg->repack_filter = owned;
-@@ -416,7 +426,7 @@ static uint64_t estimate_repack_memory(struct gc_config *cfg,
- 	 * read_sha1_file() (either at delta calculation phase, or
- 	 * writing phase) also fills up the delta base cache
- 	 */
--	heap += delta_base_cache_limit;
-+	heap += cfg->delta_base_cache_limit;
- 	/* and of course pack-objects has its own delta cache */
- 	heap += cfg->max_delta_cache_size;
- 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index eaefb41761..23bfa45403 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1238,7 +1238,7 @@ static void parse_pack_objects(unsigned char *hash)
-  *   recursively checking if the resulting object is used as a base
-  *   for some more deltas.
-  */
--static void resolve_deltas(void)
-+static void resolve_deltas(struct pack_idx_option *opts)
- {
- 	int i;
- 
-@@ -1254,7 +1254,7 @@ static void resolve_deltas(void)
- 					  nr_ref_deltas + nr_ofs_deltas);
- 
- 	nr_dispatched = 0;
--	base_cache_limit = delta_base_cache_limit * nr_threads;
-+	base_cache_limit = opts->delta_base_cache_limit * nr_threads;
- 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
- 		init_thread();
- 		work_lock();
-@@ -1604,6 +1604,10 @@ static int git_index_pack_config(const char *k, const char *v,
- 		else
- 			opts->flags &= ~WRITE_REV;
- 	}
-+	if (!strcmp(k, "core.deltabasecachelimit")) {
-+		opts->delta_base_cache_limit = git_config_ulong(k, v, ctx->kvi);
-+		return 0;
-+	}
- 	return git_default_config(k, v, ctx, cb);
- }
- 
-@@ -1930,7 +1934,7 @@ int cmd_index_pack(int argc,
- 	parse_pack_objects(pack_hash);
- 	if (report_end_of_input)
- 		write_in_full(2, "\0", 1);
--	resolve_deltas();
-+	resolve_deltas(&opts);
- 	conclude_pack(fix_thin_pack, curr_pack, pack_hash);
- 	free(ofs_deltas);
- 	free(ref_deltas);
-diff --git a/config.c b/config.c
-index a11bb85da3..728ef98e42 100644
---- a/config.c
-+++ b/config.c
-@@ -1515,11 +1515,6 @@ static int git_default_core_config(const char *var, const char *value,
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "core.deltabasecachelimit")) {
--		delta_base_cache_limit = git_config_ulong(var, value, ctx->kvi);
--		return 0;
--	}
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index d34ba9909a..0cb1b56c9d 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
 -
- 	if (!strcmp(var, "core.autocrlf")) {
- 		if (value && !strcasecmp(value, "input")) {
- 			auto_crlf = AUTO_CRLF_INPUT;
-diff --git a/environment.c b/environment.c
-index a2ce998081..8e5022c282 100644
---- a/environment.c
-+++ b/environment.c
-@@ -51,7 +51,6 @@ enum fsync_method fsync_method = FSYNC_METHOD_DEFAULT;
- enum fsync_component fsync_components = FSYNC_COMPONENTS_DEFAULT;
- size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
- size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
--size_t delta_base_cache_limit = 96 * 1024 * 1024;
- unsigned long big_file_threshold = 512 * 1024 * 1024;
- char *editor_program;
- char *askpass_program;
-diff --git a/environment.h b/environment.h
-index 923e12661e..2f43340f0b 100644
---- a/environment.h
-+++ b/environment.h
-@@ -165,7 +165,6 @@ extern int zlib_compression_level;
- extern int pack_compression_level;
- extern size_t packed_git_window_size;
- extern size_t packed_git_limit;
--extern size_t delta_base_cache_limit;
- extern unsigned long big_file_threshold;
- extern unsigned long pack_size_limit_cfg;
- extern int max_allowed_tree_depth;
-diff --git a/pack-objects.h b/pack-objects.h
-index b9898a4e64..3f6f504203 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -7,7 +7,8 @@
- 
- struct repository;
- 
--#define DEFAULT_DELTA_CACHE_SIZE (256 * 1024 * 1024)
-+#define DEFAULT_DELTA_CACHE_SIZE       (256 * 1024 * 1024)
-+#define DEFAULT_DELTA_BASE_CACHE_LIMIT (96 * 1024 * 1024)
- 
- #define OE_DFS_STATE_BITS	2
- #define OE_DEPTH_BITS		12
-diff --git a/pack-write.c b/pack-write.c
-index 8c7dfddc5a..98a8c0e785 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -21,6 +21,7 @@ void reset_pack_idx_option(struct pack_idx_option *opts)
- 	memset(opts, 0, sizeof(*opts));
- 	opts->version = 2;
- 	opts->off32_limit = 0x7fffffff;
-+	opts->delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT;
+ #include "git-compat-util.h"
+ #include "commit.h"
+ #include "gettext.h"
+@@ -177,12 +175,21 @@ static uint32_t bitmap_num_objects(struct bitmap_index *index)
+ 	return index->pack->num_objects;
  }
  
- static int sha1_compare(const void *_a, const void *_b)
-diff --git a/pack.h b/pack.h
-index 02bbdfb19c..a8da040629 100644
---- a/pack.h
-+++ b/pack.h
-@@ -58,6 +58,8 @@ struct pack_idx_option {
- 	 */
- 	int anomaly_alloc, anomaly_nr;
- 	uint32_t *anomaly;
++static struct repository *bitmap_repo(struct bitmap_index *bitmap_git)
++{
++	if (bitmap_is_midx(bitmap_git))
++		return bitmap_git->midx->repo;
++	return bitmap_git->pack->repo;
++}
 +
-+	size_t delta_base_cache_limit;
- };
- 
- void reset_pack_idx_option(struct pack_idx_option *);
-diff --git a/packfile.c b/packfile.c
-index 5e8019b1fe..64248ca664 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1496,7 +1496,9 @@ void clear_delta_base_cache(void)
- }
- 
- static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
--	void *base, unsigned long base_size, enum object_type type)
-+				 void *base, unsigned long base_size,
-+				 unsigned long delta_base_cache_limit,
-+				 enum object_type type)
+ static int load_bitmap_header(struct bitmap_index *index)
  {
- 	struct delta_base_cache_entry *ent;
- 	struct list_head *lru, *tmp;
-@@ -1698,6 +1700,8 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 	int delta_stack_nr = 0, delta_stack_alloc = UNPACK_ENTRY_STACK_PREALLOC;
- 	int base_from_cache = 0;
- 
-+	prepare_repo_settings(p->repo);
+ 	struct bitmap_disk_header *header = (void *)index->map;
+-	size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + the_hash_algo->rawsz;
++	const struct git_hash_algo *hash_algo = bitmap_repo(index)->hash_algo;
 +
- 	write_pack_access_log(p, obj_offset);
++	size_t header_size = sizeof(*header) - GIT_MAX_RAWSZ + hash_algo->rawsz;
  
- 	/* PHASE 1: drill down to the innermost base object */
-@@ -1878,7 +1882,9 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
- 		 * before we are done using it.
- 		 */
- 		if (!external_base)
--			add_delta_base_cache(p, base_obj_offset, base, base_size, type);
-+			add_delta_base_cache(p, base_obj_offset, base, base_size,
-+					     p->repo->settings.delta_base_cache_limit,
-+					     type);
+-	if (index->map_size < header_size + the_hash_algo->rawsz)
++	if (index->map_size < header_size + hash_algo->rawsz)
+ 		return error(_("corrupted bitmap index (too small)"));
  
- 		free(delta_data);
- 		free(external_base);
-diff --git a/repo-settings.c b/repo-settings.c
-index 4699b4b365..acc27eb8fe 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -3,6 +3,7 @@
- #include "repo-settings.h"
- #include "repository.h"
- #include "midx.h"
-+#include "pack-objects.h"
+ 	if (memcmp(header->magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE)) != 0)
+@@ -196,7 +203,7 @@ static int load_bitmap_header(struct bitmap_index *index)
+ 	{
+ 		uint32_t flags = ntohs(header->options);
+ 		size_t cache_size = st_mult(bitmap_num_objects(index), sizeof(uint32_t));
+-		unsigned char *index_end = index->map + index->map_size - the_hash_algo->rawsz;
++		unsigned char *index_end = index->map + index->map_size - hash_algo->rawsz;
  
- static void repo_cfg_bool(struct repository *r, const char *key, int *dest,
- 			  int def)
-@@ -26,6 +27,7 @@ void prepare_repo_settings(struct repository *r)
- 	const char *strval;
- 	int manyfiles;
- 	int read_changed_paths;
-+	unsigned long ulongval;
+ 		if ((flags & BITMAP_OPT_FULL_DAG) == 0)
+ 			BUG("unsupported options for bitmap index file "
+@@ -409,7 +416,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 	if (bitmap_git->pack || bitmap_git->midx) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		get_midx_filename(&buf, midx->object_dir);
+-		trace2_data_string("bitmap", the_repository,
++		trace2_data_string("bitmap", bitmap_repo(bitmap_git),
+ 				   "ignoring extra midx bitmap file", buf.buf);
+ 		close(fd);
+ 		strbuf_release(&buf);
+@@ -427,7 +434,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 		goto cleanup;
  
- 	if (!r->gitdir)
- 		BUG("Cannot add settings for uninitialized repository");
-@@ -123,6 +125,9 @@ void prepare_repo_settings(struct repository *r)
- 	 * removed.
+ 	if (!hasheq(get_midx_checksum(bitmap_git->midx), bitmap_git->checksum,
+-		    the_repository->hash_algo)) {
++		    bitmap_repo(bitmap_git)->hash_algo)) {
+ 		error(_("checksum doesn't match in MIDX and bitmap"));
+ 		goto cleanup;
+ 	}
+@@ -438,7 +445,9 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+ 	}
+ 
+ 	for (i = 0; i < bitmap_git->midx->num_packs; i++) {
+-		if (prepare_midx_pack(the_repository, bitmap_git->midx, i)) {
++		if (prepare_midx_pack(bitmap_repo(bitmap_git),
++				      bitmap_git->midx,
++				      i)) {
+ 			warning(_("could not open pack %s"),
+ 				bitmap_git->midx->pack_names[i]);
+ 			goto cleanup;
+@@ -492,8 +501,9 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 	}
+ 
+ 	if (bitmap_git->pack || bitmap_git->midx) {
+-		trace2_data_string("bitmap", the_repository,
+-				   "ignoring extra bitmap file", packfile->pack_name);
++		trace2_data_string("bitmap", bitmap_repo(bitmap_git),
++				   "ignoring extra bitmap file",
++				   packfile->pack_name);
+ 		close(fd);
+ 		return -1;
+ 	}
+@@ -518,8 +528,8 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 		return -1;
+ 	}
+ 
+-	trace2_data_string("bitmap", the_repository, "opened bitmap file",
+-			   packfile->pack_name);
++	trace2_data_string("bitmap", bitmap_repo(bitmap_git),
++			   "opened bitmap file", packfile->pack_name);
+ 	return 0;
+ }
+ 
+@@ -649,7 +659,7 @@ struct bitmap_index *prepare_bitmap_git(struct repository *r)
+ 
+ struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
+ {
+-	struct repository *r = the_repository;
++	struct repository *r = midx->repo;
+ 	struct bitmap_index *bitmap_git = xcalloc(1, sizeof(*bitmap_git));
+ 
+ 	if (!open_midx_bitmap_1(bitmap_git, midx) && !load_bitmap(r, bitmap_git))
+@@ -1213,6 +1223,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ {
+ 	struct bitmap_boundary_cb cb;
+ 	struct object_list *root;
++	struct repository *repo;
+ 	unsigned int i;
+ 	unsigned int tmp_blobs, tmp_trees, tmp_tags;
+ 	int any_missing = 0;
+@@ -1222,6 +1233,8 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 	cb.base = bitmap_new();
+ 	object_array_init(&cb.boundary);
+ 
++	repo = bitmap_repo(bitmap_git);
++
+ 	revs->ignore_missing_links = 1;
+ 
+ 	if (bitmap_git->pseudo_merges.nr) {
+@@ -1280,19 +1293,19 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 	 * revision walk to (a) OR in any bitmaps that are UNINTERESTING
+ 	 * between the tips and boundary, and (b) record the boundary.
  	 */
- 	r->settings.command_requires_full_index = 1;
-+
-+	if (!repo_config_get_ulong(r, "core.deltabasecachelimit", &ulongval))
-+		r->settings.delta_base_cache_limit = ulongval;
+-	trace2_region_enter("pack-bitmap", "boundary-prepare", the_repository);
++	trace2_region_enter("pack-bitmap", "boundary-prepare", repo);
+ 	if (prepare_revision_walk(revs))
+ 		die("revision walk setup failed");
+-	trace2_region_leave("pack-bitmap", "boundary-prepare", the_repository);
++	trace2_region_leave("pack-bitmap", "boundary-prepare", repo);
+ 
+-	trace2_region_enter("pack-bitmap", "boundary-traverse", the_repository);
++	trace2_region_enter("pack-bitmap", "boundary-traverse", repo);
+ 	revs->boundary = 1;
+ 	traverse_commit_list_filtered(revs,
+ 				      show_boundary_commit,
+ 				      show_boundary_object,
+ 				      &cb, NULL);
+ 	revs->boundary = 0;
+-	trace2_region_leave("pack-bitmap", "boundary-traverse", the_repository);
++	trace2_region_leave("pack-bitmap", "boundary-traverse", repo);
+ 
+ 	revs->blob_objects = tmp_blobs;
+ 	revs->tree_objects = tmp_trees;
+@@ -1304,7 +1317,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 	/*
+ 	 * Then add the boundary commit(s) as fill-in traversal tips.
+ 	 */
+-	trace2_region_enter("pack-bitmap", "boundary-fill-in", the_repository);
++	trace2_region_enter("pack-bitmap", "boundary-fill-in", repo);
+ 	for (i = 0; i < cb.boundary.nr; i++) {
+ 		struct object *obj = cb.boundary.objects[i].item;
+ 		if (bitmap_walk_contains(bitmap_git, cb.base, &obj->oid))
+@@ -1314,7 +1327,7 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 	}
+ 	if (revs->pending.nr)
+ 		cb.base = fill_in_bitmap(bitmap_git, revs, cb.base, NULL);
+-	trace2_region_leave("pack-bitmap", "boundary-fill-in", the_repository);
++	trace2_region_leave("pack-bitmap", "boundary-fill-in", repo);
+ 
+ cleanup:
+ 	object_array_clear(&cb.boundary);
+@@ -1718,7 +1731,8 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
+ 			ofs = pack_pos_to_offset(pack, pos);
+ 		}
+ 
+-		if (packed_object_info(the_repository, pack, ofs, &oi) < 0) {
++		if (packed_object_info(bitmap_repo(bitmap_git), pack, ofs,
++				       &oi) < 0) {
+ 			struct object_id oid;
+ 			nth_bitmap_object_oid(bitmap_git, &oid,
+ 					      pack_pos_to_index(pack, pos));
+@@ -1727,7 +1741,8 @@ static unsigned long get_size_by_pos(struct bitmap_index *bitmap_git,
+ 	} else {
+ 		struct eindex *eindex = &bitmap_git->ext_index;
+ 		struct object *obj = eindex->objects[pos - bitmap_num_objects(bitmap_git)];
+-		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
++		if (oid_object_info_extended(bitmap_repo(bitmap_git), &obj->oid,
++					     &oi, 0) < 0)
+ 			die(_("unable to get size of %s"), oid_to_hex(&obj->oid));
+ 	}
+ 
+@@ -1889,7 +1904,8 @@ static void filter_packed_objects_from_bitmap(struct bitmap_index *bitmap_git,
+ 		bitmap_unset(result, i);
+ 
+ 	for (i = 0; i < eindex->count; ++i) {
+-		if (has_object_pack(the_repository, &eindex->objects[i]->oid))
++		if (has_object_pack(bitmap_repo(bitmap_git),
++				    &eindex->objects[i]->oid))
+ 			bitmap_unset(result, objects_nr + i);
+ 	}
  }
+@@ -1907,6 +1923,7 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 	struct bitmap *haves_bitmap = NULL;
  
- enum log_refs_config repo_settings_get_log_all_ref_updates(struct repository *repo)
-diff --git a/repo-settings.h b/repo-settings.h
-index 51d6156a11..10a6f7ed64 100644
---- a/repo-settings.h
-+++ b/repo-settings.h
-@@ -57,12 +57,15 @@ struct repo_settings {
+ 	struct bitmap_index *bitmap_git;
++	struct repository *repo;
  
- 	int core_multi_pack_index;
- 	int warn_ambiguous_refs; /* lazily loaded via accessor */
+ 	/*
+ 	 * We can't do pathspec limiting with bitmaps, because we don't know
+@@ -1980,18 +1997,20 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 	if (!use_boundary_traversal)
+ 		object_array_clear(&revs->pending);
+ 
++	repo = bitmap_repo(bitmap_git);
 +
-+	size_t delta_base_cache_limit;
- };
- #define REPO_SETTINGS_INIT { \
- 	.index_version = -1, \
- 	.core_untracked_cache = UNTRACKED_CACHE_KEEP, \
- 	.fetch_negotiation_algorithm = FETCH_NEGOTIATION_CONSECUTIVE, \
- 	.warn_ambiguous_refs = -1, \
-+	.delta_base_cache_limit = DEFAULT_DELTA_BASE_CACHE_LIMIT, \
- }
+ 	if (haves) {
+ 		if (use_boundary_traversal) {
+-			trace2_region_enter("pack-bitmap", "haves/boundary", the_repository);
++			trace2_region_enter("pack-bitmap", "haves/boundary", repo);
+ 			haves_bitmap = find_boundary_objects(bitmap_git, revs, haves);
+-			trace2_region_leave("pack-bitmap", "haves/boundary", the_repository);
++			trace2_region_leave("pack-bitmap", "haves/boundary", repo);
+ 		} else {
+-			trace2_region_enter("pack-bitmap", "haves/classic", the_repository);
++			trace2_region_enter("pack-bitmap", "haves/classic", repo);
+ 			revs->ignore_missing_links = 1;
+ 			haves_bitmap = find_objects(bitmap_git, revs, haves, NULL);
+ 			reset_revision_walk();
+ 			revs->ignore_missing_links = 0;
+-			trace2_region_leave("pack-bitmap", "haves/classic", the_repository);
++			trace2_region_leave("pack-bitmap", "haves/classic", repo);
+ 		}
  
- void prepare_repo_settings(struct repository *r);
+ 		if (!haves_bitmap)
+@@ -2025,17 +2044,17 @@ struct bitmap_index *prepare_bitmap_walk(struct rev_info *revs,
+ 	object_list_free(&wants);
+ 	object_list_free(&haves);
+ 
+-	trace2_data_intmax("bitmap", the_repository, "pseudo_merges_satisfied",
++	trace2_data_intmax("bitmap", repo, "pseudo_merges_satisfied",
+ 			   pseudo_merges_satisfied_nr);
+-	trace2_data_intmax("bitmap", the_repository, "pseudo_merges_cascades",
++	trace2_data_intmax("bitmap", repo, "pseudo_merges_cascades",
+ 			   pseudo_merges_cascades_nr);
+-	trace2_data_intmax("bitmap", the_repository, "bitmap/hits",
++	trace2_data_intmax("bitmap", repo, "bitmap/hits",
+ 			   existing_bitmaps_hits_nr);
+-	trace2_data_intmax("bitmap", the_repository, "bitmap/misses",
++	trace2_data_intmax("bitmap", repo, "bitmap/misses",
+ 			   existing_bitmaps_misses_nr);
+-	trace2_data_intmax("bitmap", the_repository, "bitmap/roots_with_bitmap",
++	trace2_data_intmax("bitmap", repo, "bitmap/roots_with_bitmap",
+ 			   roots_with_bitmaps_nr);
+-	trace2_data_intmax("bitmap", the_repository, "bitmap/roots_without_bitmap",
++	trace2_data_intmax("bitmap", repo, "bitmap/roots_without_bitmap",
+ 			   roots_without_bitmaps_nr);
+ 
+ 	return bitmap_git;
+@@ -2256,7 +2275,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 					struct bitmap **reuse_out,
+ 					int multi_pack_reuse)
+ {
+-	struct repository *r = the_repository;
++	struct repository *r = bitmap_repo(bitmap_git);
+ 	struct bitmapped_pack *packs = NULL;
+ 	struct bitmap *result = bitmap_git->result;
+ 	struct bitmap *reuse;
+@@ -2792,7 +2811,7 @@ int rebuild_bitmap(const uint32_t *reposition,
+ uint32_t *create_bitmap_mapping(struct bitmap_index *bitmap_git,
+ 				struct packing_data *mapping)
+ {
+-	struct repository *r = the_repository;
++	struct repository *r = bitmap_repo(bitmap_git);
+ 	uint32_t i, num_objects;
+ 	uint32_t *reposition;
+ 
+@@ -2948,7 +2967,8 @@ static off_t get_disk_usage_for_extended(struct bitmap_index *bitmap_git)
+ 				st_add(bitmap_num_objects(bitmap_git), i)))
+ 			continue;
+ 
+-		if (oid_object_info_extended(the_repository, &obj->oid, &oi, 0) < 0)
++		if (oid_object_info_extended(bitmap_repo(bitmap_git), &obj->oid,
++					     &oi, 0) < 0)
+ 			die(_("unable to get disk usage of '%s'"),
+ 			    oid_to_hex(&obj->oid));
+ 
 -- 
 2.47.0
 
