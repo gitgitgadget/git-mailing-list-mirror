@@ -1,121 +1,164 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C94BE46
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 14:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865F71CEAB2
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 14:57:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732632044; cv=none; b=kyCEyj7lWhzfLbUSJVHRprzdPyTcbOPw3pNrgvgOm/OFrMWApHnDSdQcQHJD+P4PP7/CB/IRQEWErMb2hun0Q6a/uO8y7Y/KUnVQj8Y17KesWcGTsqkGoYFnDAmmFn0h15A4zbvUtX5Kuif0XeI7oLTyw4V1v9C0IuPEpIR9oCI=
+	t=1732633077; cv=none; b=UnqH1I+rRXm3WlHuWJ7AIwgi9V0RXg4NsZHi8gdf/XscGZzSZn7z7P88XoI3N69Oe7REkIqbUXSsCFFnYNHoAyLutUfWd2zAsUbh8NBTHO7pcTOK+5w9tILvRo5PhgJ0Jf0yP9V9u2V8tz4r/Fg/HboUgk9H1RCgFkJ0H3gG/NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732632044; c=relaxed/simple;
-	bh=needdXTXd2sR6e1LEuZF0dpMUmpAH5uJoUyt6+XcMw8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=JL6qqzEsLhbsFEZG63bd2H2SoCXgttq2hT9E+QQlW8f+bO43BG3YvaziYiHkeGc355YEV33+RZq2agfJugqqy+AczBARZJzCYbteIwcvk10RJ4k9AAAaxiuxdwxGhOF5BFjQHIPGTkcdragO9Y6y5DTO78M8R/XejtpYV+fm7Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUKfLKFY; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732633077; c=relaxed/simple;
+	bh=fTcPmDwoWGN01QCHcaOr3ePuFJJJgpcx2aZ9h/D2z0w=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=TC2q76Md3AMdzJiOgRFb74O5VIsfUFmr/H6Sbls6uP6SD9uXJMkemnXOs1txHT6wypjjCfhC8oWupEFNWbhZNE29eMEJmr+GBPUTI9imrD4qztHAvBRjOom6mCG+b2FqrY75jY+TuiCPqT2BK07PUEbVFdGE5RT32eb0wBrnI/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=GjeKhHZB; arc=none smtp.client-ip=192.29.178.125
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUKfLKFY"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2142214abd2so31805215ad.0
-        for <git@vger.kernel.org>; Tue, 26 Nov 2024 06:40:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732632042; x=1733236842; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1HUhvCOzc2bVNLxp4bJf/b5kK6xEbliudFFi7KVRt6o=;
-        b=HUKfLKFYNP97rZbzdHc2Dc5uPI5fhQGV+qnekNiSobQ8/P5LorqxbMNjr+9tGvP/Ka
-         0itWxSrIevYi6L2UmJqA2JDdsEYXoU+iwhzbPzDtOPz+Mou6hcgSwnl+a8Cq3Cl9hbHj
-         9g+nh5aC2GSP1yFv7/rkallwUGFkVL/1UAmh4BDKTHdGudxnWkzz0VVe7izZmmjZPTHq
-         b66ThBTUINwWgvHw6sBYSjtD9CPWAaZ31Jcdmtkh9Z+dS1CJz67jTxscnTn/dRsRc6w6
-         Fx9y9a3kGzEq0PUpfmo0Njp3iB+8NECxbjHP/UnTBYj39/h3/CTz4v8oY7iKVlFIkURg
-         yCYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732632042; x=1733236842;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1HUhvCOzc2bVNLxp4bJf/b5kK6xEbliudFFi7KVRt6o=;
-        b=FlcYdcZCvZsB8oX5nkVDCNpqZgS6zl2SzlAhQdx2QyXsoUXBcjcJVv322YNJjXLHy7
-         GFIYeaedblYMqoDx/drwah86yEl4h4n7LKXigLB30kDjaaEYsuBRdi5arsE5StsMbtO9
-         sdou9+ZZqag71WoSkah6qH+Gg4t48THedwo3X6rh0PZS/64eDQ8t+GQFQTzCCBt0HGyE
-         1pXK3M/UX1aT0+6iDARzciszh287m1pHNLu1BGi7cYdrx6DP2PqNR+LVmCc5wg7lGhhr
-         ngJhA8TP4xbb6jo1Vd0sJUWrHs0NHb4TJFlZ20dVC7iEgLlqnpqMZmnUsfia1k+V6FHX
-         lyxg==
-X-Gm-Message-State: AOJu0YxDNXtIQl7065NqUFa3NfJ0dga4kFS+LXCN6EnxRqieYtOegPPV
-	InBClRXEWgYwjsmUE0ceeSpjPHZMGBK3DQTo/KJ7qUyVWTVl8Hg+YhKoNtAB
-X-Gm-Gg: ASbGncvqScLprUMqtGoBqPMmUktQMXPu5LBo74E3+iOfZzkOtKwVpukNgIOkOU0ys9u
-	0PUSki+N8WsXcg5FoxdKlhFeJ6BzAqwN6Uxg0Ma6wx9C1Eexu62aPWctODC368CWjLLgBXaHq+B
-	k6CkSXcoa/Ttu9P5AX/P1twOOg6cv23NBLyBDP8gt7/jRu+6kkEWNRcTHYJsHZLPUKLahYDGowE
-	4iMFfnDRhOkv1o2eHbqPFmYC2zWOOKpmgvnXISs7SB40A==
-X-Google-Smtp-Source: AGHT+IHKNiUc0TnR3TLouOu2Sh/cHyM3m3gnzjQK6jDUyXr5tUCF/EzgjULatU2NSQXVJBLGeSACFQ==
-X-Received: by 2002:a17:902:ec88:b0:212:8ab0:4f55 with SMTP id d9443c01a7336-2129f780debmr230249955ad.56.1732632041575;
-        Tue, 26 Nov 2024 06:40:41 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2129db8c864sm85552175ad.37.2024.11.26.06.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 06:40:41 -0800 (PST)
-Date: Tue, 26 Nov 2024 22:40:57 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	John Cai <johncai86@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] ref-cache: fix invalid free operation in `free_ref_entry`
-Message-ID: <Z0Xd-cYPNNrxwuAB@ArchLinux>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="GjeKhHZB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=FdSN6ohOhCixEn3NmNE7LhNgtLctCw7nMr32O/4mb3A=;
+ b=GjeKhHZBTgXL5DXIeMozyl6zRLBiTafE6cSVQOnZxm8cgh5yII/xGatVYBBs17n6PlbbvLkFQWnc
+   hGaeAPCEnRlLZHcA9R6sNzB8XhG+75oWq3af8oInB5fAB6grS3fE8T/oXDiAJGKa0OmrhjXw62Zv
+   8bxEzfJmnLngza3fIjv+MYCQe55QoumGwib+oURnMk26GVizOBl7CabNyVNJ6dp7TcfpYW4gSlyv
+   4CKYUlkRxTJYJnf6ciE5HIg052wPKUlf2Z8WE7XMERE5bRA9pSrAoGiXvMGPu60KyoLtKHugpW70
+   exHzYG+b4l5pTAdjceNjKc5GdzL65uzCrkoocQ==
+Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SNK00OM2C8ANM60@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Tue, 26 Nov 2024 14:57:46 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Tue, 26 Nov 2024 15:57:27 +0100
+Message-id: <D5W75LQ6Z44H.3LKJ0OX40QKVQ@ferdinandy.com>
+Subject: Re: [PATCH v14 03/10] refs: standardize output of
+ refs_read_symbolic_ref
+Cc: "karthik nayak" <karthik.188@gmail.com>, <git@vger.kernel.org>,
+ <phillip.wood@dunelm.org.uk>, =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Taylor Blau" <me@ttaylorr.com>, "Patrick Steinhardt" <ps@pks.im>
+To: "Junio C Hamano" <gitster@pobox.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20241118151755.756265-1-bence@ferdinandy.com>
+ <20241121225757.3877852-1-bence@ferdinandy.com>
+ <20241121225757.3877852-4-bence@ferdinandy.com>
+ <CAOLa=ZS5yNpZEUqBAUpP-pSbJXk4+=XM6S6e9RY_eSVJEBhqkA@mail.gmail.com>
+ <D5SNGOK1IKRS.1TY1DL9PJ7MPF@ferdinandy.com>
+ <CAOLa=ZS28xvpEBNO9AMamF00Yf8eHFGKyU5uHjBD7vOVF3_oEA@mail.gmail.com>
+ <D5SPDJZAM5K1.24R4JYB0WNTSF@ferdinandy.com> <xmqqwmgs6mxk.fsf@gitster.g>
+In-reply-to: <xmqqwmgs6mxk.fsf@gitster.g>
+Reporting-Meta:
+ AAHrCFbdGFNgWmFYLR8CVguzGdlo4TSC0OsRNL1hOB6ViNoYXbxLk4GKu4skm73T
+ 2Oi8itx924I0TpXGFDwbDXlcuY9pbD+Mq0ancM6h4ibcIU1qcrSd7udLCLOlPFvN
+ k2GwBU/ZKXh0mAyEY6qaBnKSlFODCfYHVvKID0KOrbKTQ2psgGZDvEVSkEOBOcTw
+ Rph+dIuUcAINt0wfP5ll44mHu23cqOzU15kqHnhUPxLOGJvAY+g8xQBiUmGmvbg1
+ t6guCA0wo+2Kk31C+hQZzBnL8KZgrKWvc92Dsnb0cPJntZ3UNJjPJUlHWqxw6UNX
+ ONvJGJKRvUZy3y03BmyFdnH7+owgXJUH+Yz35lRtnSp0sr4S0ayTfKBK81zfZ0m0
+ 8bqmCHC82suXU16YVY0TlHGw05sKtQoerLVUtuEPoGhoLZ9La03Np/0OhEGpQc50
+ 8EXrkmdI1BikSB8v9U6c4GKraDXluiu9TO45mZyvnziuCN66NYTOzt0=
 
-In cfd971520e (refs: keep track of unresolved reference value in
-iterators, 2024-08-09), we added a new field "referent" into the "struct
-ref" structure. In order to free the "referent", we unconditionally
-freed the "referent" by simply adding a "free" statement.
+sorry about the other thread, I saw "extend whitespace checks" and I though=
+t
+based on what Kartik wrote that `log --check` should have caught it, which =
+is
+why I thought it might be appropriate there.
 
-However, this is a bad usage. Because when ref entry is either directory
-or loose ref, we will always execute the following statement:
+On Mon Nov 25, 2024 at 03:56, Junio C Hamano <gitster@pobox.com> wrote:
+> "Bence Ferdinandy" <bence@ferdinandy.com> writes:
+>
+>>> At the least you should see `git log`'s output, but if there are issues
+>>> they should be shown inline. So when you say 'no output' do you mean yo=
+u
+>>> see absolutely no output?
+>>
+>> Absolutely no output:
+>> 	https://asciinema.org/a/lsqp4e1bNst6cFWw9M2jX1IqC
+>>
+>> But I figured out why: the whitespace and the tabs were not mixed on the=
+ line,
+>> just across lines. As I read it, that is not an error to have tabs on on=
+e line
+>> and spaces on the next.
+>
+> Our .gitattribute starts like so:
+>
+>     * whitespace=3D!indent,trail,space
+>     *.[ch] whitespace=3Dindent,trail,space diff=3Dcpp
+>
+> so, unless otherwise specified, we frown upon trailing whitespace
+> and space before tab and indenting with non tab is permitted, but C
+> source and header files have further care about "indent" (short for
+> "indent-with-non-tab".
+>
+> So mixed or not, if you indented with spaces and not tabs, that
+> would be noticed.
 
-  free(entry->u.value.referent);
+So `git log --check --pretty=3Dformat:"---% h% s"` was _not_ supposed to ca=
+tch
+this?
 
-This does not make sense. We should never access the "entry->u.value"
-field when "entry" is a directory. However, the change obviously doesn't
-break the tests. Let's analysis why.
+I ran the CI with this patch again:
+https://github.com/ferdinandyb/git/actions/runs/12031250376
 
-The anonymous union in the "ref_entry" has two members: one is "struct
-ref_value", another is "struct ref_dir". On a 64-bit machine, the size
-of "struct ref_dir" is 32 bytes, which is smaller than the 48-byte size
-of "struct ref_value". And the offset of "referent" field in "struct
-ref_value" is 40 bytes. So, whenever we create a new "ref_entry" for a
-directory, we will leave the offset from 40 bytes to 48 bytes untouched,
-which means the value for this memory is zero (NULL). It's OK to free a
-NULL pointer, but this is merely a coincidence of memory layout.
+and it's all green, so wherever this _should_ have been caught: it didn't w=
+ork.
 
-To fix this issue, we now ensure that "free(entry->u.value.referent)" is
-only called when "entry->flag" indicates that it represents a loose
-reference and not a directory to avoid the invalid memory operation.
 
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- refs/ref-cache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 35bae7e05d..02f09e4df8 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -68,8 +68,9 @@ static void free_ref_entry(struct ref_entry *entry)
- 		 * trigger the reading of loose refs.
- 		 */
- 		clear_ref_dir(&entry->u.subdir);
-+	} else {
-+		free(entry->u.value.referent);
- 	}
--	free(entry->u.value.referent);
- 	free(entry);
- }
- 
--- 
-2.47.0
+>
+>> Anyhow that should be now cleared up, thanks. Gotta say, I was expecting=
+ to
+>> learn about internals doing this, but I also ended up picking up a coupl=
+e of
+>> usage things as well, like --range-diff for format patch and such.
+>
+> I usually have "--whitespace=3Dfix" so if you did "git log" on the
+> commits I made out of your patches, it is not surprising if your
+> "log --check" was silent.
+>
+> I re-applied your v14 with "git am -s --whitespace=3Dnowarn" and here
+> is what I saw.
+>
+> commit 75a6a3e6597d5f3959eb269122e8c5f4e4baac0e
+> Author: Bence Ferdinandy <bence@ferdinandy.com>
+> Date:   Thu Nov 21 23:55:03 2024 +0100
+>
+>     refs: standardize output of refs_read_symbolic_ref
+>    =20
+>     When the symbolic reference we want to read with refs_read_symbolic_r=
+ef
+>     is actually not a symbolic reference, the files and the reftable
+>     backends return different values (1 and -1 respectively). Standardize
+>     the returned values so that 0 is success, -1 is a generic error and -=
+2
+>     is that the reference was actually non-symbolic.
+>    =20
+>     Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+>     Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>
+> refs/reftable-backend.c:833: indent with spaces.
+> +        if (ret)
+> refs/reftable-backend.c:834: indent with spaces.
+> +                ret =3D -1;
+> refs/reftable-backend.c:835: indent with spaces.
+> +        else if (ref.value_type =3D=3D REFTABLE_REF_SYMREF)
+> refs/reftable-backend.c:837: indent with spaces.
+> +        else
+> refs/reftable-backend.c:838: indent with spaces.
+> +                ret =3D NOT_A_SYMREF;
+
+So this did find it. Maybe something is misconfigured in the CI?
+
+Best,
+Bence
 
