@@ -1,128 +1,129 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FDBE13BAD7
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 07:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BCC1CEE9A
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 07:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732607012; cv=none; b=JrYo54O8KgKy5yLmfJQmbeStoI534TvaMaJAvOuUEom/ZcwBl5LhhB9SpRFsXKsQyp7koZOJWC/Ig2ilCXKukynrGQY6AYASgnDgpqc4wDdaFQcS1m3je5L3GYfCO2IvFHv0B8PgDwlBA7j8j6JWmtyIMMip1G9b89Lla30PeF4=
+	t=1732607937; cv=none; b=Lg0z4SAaaGyraiQnxQKciOnRYaKGhNH/qlKvZSO5q4Ao5Yewnjxkg6wxRNk7/4kxUQYJLootS80sCDUte3FVbP5XcjUOvQYQafF9utNrZfD4snLgKT4B/eqHH6VF8a5ulLLpxOhCMwr7EkffdSTzyeZjuFfkDEA8BB3lxALhrsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732607012; c=relaxed/simple;
-	bh=GepvrGUdOnxp9bv9TTX/LKYHu/9aayXjOlzoA7WrMis=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uHyiC2/QNpcDRlo57CthJo35KLyEq770qt4oPPcgzk4OzkGP7lhIJQr5fZMkie1Fbni3ftswfuaUkPLaL4aeVSkxtAMgGJeS5byOUhHNSRcMwrBzo+UudpP6+4hUD0PC/J/i20SVbElG0sZXBYrLje/May4bcW8UqJFQzKDvqH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LwGSn60T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ucGLkkZc; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1732607937; c=relaxed/simple;
+	bh=NX9wipaxjxeLKdEZ5adgTBYXyQrqfi7zsnLTHdoVAVo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oHh7a7+mReGaNPIQAxpzAL+bcijwa5KBQtxWCcd9gAXQe8bJdd+lpxuGNosO6FipNIBgRZAqhVT/ar55SqsXcEQNC+yBud0nC9ht150b3Tiz5Q+mSISj94lzNxpLlaFSckoRQX6WfG2PfaFVn6iBDtdCk6GiBC4AQenkpfQrrLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FN8o1IyP; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LwGSn60T";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ucGLkkZc"
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FN8o1IyP"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E54A311401A2;
-	Tue, 26 Nov 2024 02:43:28 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 26 Nov 2024 02:43:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732607008; x=1732693408; bh=KjHJttSwFJ
-	bgDjdtDUQAI3cUIq0pjjSI2sY1UUcqo3s=; b=LwGSn60TVXaWjsjVC1HPpKE1OC
-	QL0qvGNuGrXNvFqdIpsyuofQoxRimMfe7bJ37DRPzZmOL0nq2T3yiYmmmsFw9m/h
-	WXwCYgcuBzlWPrusWoam+v+x+3ER80WZLrkHhCKQqloVdQiRvXdOZKeg8A5LaCFD
-	96WuJOyI3l9vYVxJ96GR9lSA4xgTdI5aRFhk8pTxO481E9YuuCC5kbNYs4sKVtj3
-	qXYfeOCUkpiOuaLDEw2azzcUjnGXoeo3oVRUPiY2pNrnKYpZw5Qq2JOvbvrFdC7P
-	t7BcHeivRSn4A303MOldCia3Y/3JKO0uUFg7BtRTPgWLy/RKzwsGbH0CQvLA==
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C6A01140171;
+	Tue, 26 Nov 2024 02:58:54 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 26 Nov 2024 02:58:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732607008; x=1732693408; bh=KjHJttSwFJbgDjdtDUQAI3cUIq0pjjSI2sY
-	1UUcqo3s=; b=ucGLkkZckL/t05IIvHbo+1U5GlagvWLfcwaDMFGeLO5dfDJygmY
-	T5yjyZuWsPMCnpmly2+ynYPFwjeNXAcPXAgkWr6Zx9gFYCPbE0iQ25gvY1lo/8Ws
-	n5Clc1cuoA36XGrAwJgCadITd09TwtZRhIL00x1cSxpddNJl+EuyPphMJsV121/n
-	4zC3T/VUp2PbXI72VOqdYUpG2VCCisf/k/EAvDQcF/JL3/6tYbxuy6dYQdATq/v3
-	qE2anlM5S1KrgGRao4AoO9bZR2+MC+rcdlGRuysjvZCHEY/ESJQUJ/8RFF2GQ3Ps
-	e/AjHcarm7PVSS/qj5srDZWrvzMrl71PFnQ==
-X-ME-Sender: <xms:IHxFZ_D2uaRbuzCKfuOqYu3zQzfVRw-4bEfUNeZom7eKL1n99PumpA>
-    <xme:IHxFZ1jgP0SZe-9RaM2sOraF0BxF3kRwqat6Dl3GonfrdNcocvrRfrq2JppXDgBQb
-    Cmcx7CCGJHrwH_8gg>
-X-ME-Received: <xmr:IHxFZ6ntQYsbqUxKU5DV1h4n8ozetDM-tgOT5VZeefwQsP8M_Tpf2XWcOUIoTjWCsJyn4oynQspOwKQgLDtgV4sIWjh1NV1yyb0dUJRDFw3zpN5l>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigddutdekucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732607934; x=
+	1732694334; bh=NX9wipaxjxeLKdEZ5adgTBYXyQrqfi7zsnLTHdoVAVo=; b=F
+	N8o1IyP9oW263TOmsSfUZPmbRwkAjXCTKvKCREPFHXqekYxMcgnTJJh6GoAVK6Bj
+	AzbfgQpxtIIBLJ7wo86NcQwoXPpJLudBWAMgggAPBVLth+LAkU6MLIdS77ZusM2U
+	XzSNAyqk45LB7JJGcNJnvYjV4tBqeYZXGfFMA7eNpblJoKPshUVoRc0j6vMiU8Bq
+	b+xkLchfrvJmCFfcn/nl3R+qmzBcCN1GhUmOc1YOOjoquAvkxxRvRtoAlGUwnV8n
+	YA3VKRAIprFAgJIRObW0SMWJeWvXmrDXzwopjzvRMiZNzbUKIpcbf2lIPD1n0TCS
+	4T2HZcgkNK+uzLmEmBP+w==
+X-ME-Sender: <xms:vn9FZ7zW-yM9ZGabPqKaElhelki36RqZi8cUy9HdkIoq7OzhFMzurQ>
+    <xme:vn9FZzRybdpzWmcXSjOp2-ve1NBM0FO09LNUmAJWSVc45Gh02Q0E_vbDRlMC8YI_M
+    WV5uEMFp6tcY5sf-A>
+X-ME-Received: <xmr:vn9FZ1WwhKyOsfUdVapDhSKrUSEW0IFPFsOMqMvYJl6p8BeU2mP3PXmDWy3FJ4lbRDftkZ4rwEGpxh-qyQN4TJX7udn4kWprkt4byZ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdduudduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepudefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgvsehtthgr
-    hihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    jhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
-    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesph
-    gvfhhfrdhnvght
-X-ME-Proxy: <xmx:IHxFZxxzR3HKUW5SJ3YdjX8ZXsnOfUIDvHgHku2OO38XVBs3m92V5w>
-    <xmx:IHxFZ0Tv6g7d66rdPjX-lBxC-3GnCWkNpjmkxBoXNuc8RDKlhdy2zQ>
-    <xmx:IHxFZ0aUlXiSo-fJcMEKnbM5tRec6R4NjnMUV6kuPfPtVYwJqSA-bQ>
-    <xmx:IHxFZ1SXDJJkWE3DWGgfzRR7rKn0Vhp80JHKJsEBPsae6j9-JViI9A>
-    <xmx:IHxFZ2A3c2LXAIL0V5UQ7Vxaf60b77mAEcbW0PmjL8ufT9kK1xrVxWst>
-Feedback-ID: i197146af:Fastmail
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
+    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvsh
+    drshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehlvghvrhgrihhphhhi
+    lhhiphhpvggslhgrihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhope
+    hnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:vn9FZ1jeKjQ8fET142BTHCge1Iuo2arPOmp3oFxtFCshzHxPUTQ9yA>
+    <xmx:vn9FZ9B_Zz8dCG-csJKQbOb2XG3N3STStd-7Ljg8M7SxposwJFVIuw>
+    <xmx:vn9FZ-LnjLCK4thLc2KrlIaIG9m-DB_gK1m0ojU0lzXnqgcvdHtEmg>
+    <xmx:vn9FZ8BYSfft9c9kjAh3D7IpTQSt5PVvHN7VqaIaPlRaJej9yolJQg>
+    <xmx:vn9FZ3Dxp4L47siB5K-XZuDUDMa6qISUD7yb-Sb8GHEA1P3GmejvVGqX>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Nov 2024 02:43:26 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5335b005 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 26 Nov 2024 07:42:21 +0000 (UTC)
-Date: Tue, 26 Nov 2024 08:43:11 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>,
-	Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
-	johncai86@gmail.com, newren@gmail.com, christian.couder@gmail.com,
-	kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com,
-	karthik nayak <karthik.188@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/6] PATH WALK I: The path-walk API
-Message-ID: <Z0V8D4r5YbxjNvPs@pks.im>
-References: <pull.1818.git.1730356023.gitgitgadget@gmail.com>
- <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
- <Zz+61fat+vGgb+xL@nand.local>
- <Z0Q7oGF6Q5U-f4VX@pks.im>
- <xmqqa5dmzboa.fsf@gitster.g>
+ 26 Nov 2024 02:58:53 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>,  Johannes Schindelin via
+ GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Johannes
+ Sixt <j6t@kdbg.org>,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] range-diff: optionally include merge commits' diffs
+ in the analysis
+In-Reply-To: <eb502feb-1563-b1b5-5345-784673c89c79@gmx.de> (Johannes
+	Schindelin's message of "Mon, 11 Nov 2024 21:07:02 +0100 (CET)")
+References: <pull.1734.git.1731000007391.gitgitgadget@gmail.com>
+	<pull.1734.v2.git.1731073383564.gitgitgadget@gmail.com>
+	<444e4a94-0005-bed6-1092-20770c226109@gmail.com>
+	<eb502feb-1563-b1b5-5345-784673c89c79@gmx.de>
+Date: Tue, 26 Nov 2024 16:58:52 +0900
+Message-ID: <xmqq34jezarn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa5dmzboa.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Nov 26, 2024 at 04:39:17PM +0900, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > The question of course is whether these tools require the path-walk API,
-> > or whether they could be built on top of existing functionality. But if
-> > there are good reasons why the existing functionality is insufficient
-> > then I'd be all for having the path-walk API, even if it doesn't help us
-> > with repo size reductions as we initially thought.
-> 
-> Is the implied statement that we didn't quite see sufficient rationale
-> to convince ourselves that a new path-walk machinery is needed?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-No, it's rather that I didn't find the time yet to have a deeper look at
-the patch series to figure out for myself whether the path-walk API is
-needed for them. So I was trying to prompt Derrick with the above to
-find out whether he thinks that it is needed for both of these features
-and if so why the existing APIs are insufficient.
+> Hi Philippe,
+>
+> On Sun, 10 Nov 2024, Philippe Blain wrote:
+>
+>> Le 2024-11-08 à 08:43, Johannes Schindelin via GitGitGadget a écrit :
+>> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> >
+>> > The `git log` command already offers support for including diffs for
+>> > merges, via the `--diff-merges=<format>` option.
+>> >
+>> > Let's add corresponding support for `git range-diff`, too. This makes it
+>> > more convenient to spot differences between iterations of non-linear
+>> > contributions, where so-called "evil merges" are sometimes necessary and
+>> > need to be reviewed, too.
+>>
+>> Maybe "between commit ranges that include merge commits" would be more
+>> workflow-agnostic ?
+>
+> Good idea, this is much clearer than what I wrote, too.
 
-I'm already sold on the idea of git-survey(1) and git-backfill(1), so if
-there are two use cases where the API makes sense I'm happy to have the
-additional complexity even if it's not needed anymore for the repo size
-reduction.
+Sounds good.
 
-Patrick
+>> > diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+>> > index 1b33ab66a7b..901de5d133d 100644
+>> > --- a/builtin/range-diff.c
+>> > +++ b/builtin/range-diff.c
+>>
+>> The changes look good to me. Maybe it would be nice to add a corresponding
+>> 'range-diff.diffMerges' config option to allow users to configure the
+>> behaviour more permanently ?
+>
+> Seeing as there are no existing `rangeDiff.*` options, I am loathe to
+> introduce the first one lest I am asked why I don't balloon this patch
+> series into introducing config settings for the other options, too.
+
+Yeah, I think it can be left for a follow-on exercise, done even by
+other people who are interested.
+
+Thanks.
