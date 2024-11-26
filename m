@@ -1,43 +1,43 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3F72260C
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 04:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790D5B67A
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 05:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732595633; cv=none; b=a/Mo832eUmWTbQfu1kiMf3oJSSzTPHK6Y63g6pAJ2j70hzKDC5sjpyoBjP3x6p1yqwjRswrIAx4X6OJrbQKNceVi0DeCrrlXazV+kgwUM6fYnvvYLwl4MbVpkDcoV/tLoCbgRElNx/zqhZlw7LiRUE4OoXjg8rmqWLBBy2PiiPk=
+	t=1732597527; cv=none; b=g2j8QxPTQR+SErQsOFG5XSkApf34iefexJkWHUbSN3piG6ripYPC7+c/k8f5V8YkpfXNIVfx3017u9Q/+9T+LeHs8r1ixdSTqSoBen3Qd5mPe6HIPS/S0ulfqqdLhrQDDdBXM/900lz8GtDBC8BQtW6hD1nkj2GEV/cgQhOTSg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732595633; c=relaxed/simple;
-	bh=lv25iVABS7kgiBJoMRiHxfIpemCOKG6uIS0kQdgfwLw=;
+	s=arc-20240116; t=1732597527; c=relaxed/simple;
+	bh=Lio8KfsMF/U01nCaW0FiyjrZhlF1D7t2tcHemTpDBUI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UJyIh1P8nKSACSXW+kM3MScJo6duARNLp3OgSlIGEFFuAwWMrJKfpTI3GxBOdW+OMtdaUUr1iiaemuNUnjaPz7IWuGS3c4fKxRcyyWLoJnx+O2pjpkomsfhFy0Ggf98NNYhHTB3goaykC3BlEhozo0+6AApAAVjnXUlB8kGURZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lFbJcfgQ; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=e1o+NZtJcI45VRPba0SERe5pm6TQqcnmWrDeQWiUrYTOU1MMTc0FgNUGvKou7sh44WAJxZrI+DC3nDneIzD1Exjwcnu8y3GIEaGICmiBnzLBcuxVM6NFksEw+nRXDXTPs7G8cfpD4VSFXUv7ABw58DRXOOuQTITNawGdcU1F+6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bW0cb6rZ; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lFbJcfgQ"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 211AB11401B8;
-	Mon, 25 Nov 2024 23:33:50 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bW0cb6rZ"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8493A11401A7;
+	Tue, 26 Nov 2024 00:05:24 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Mon, 25 Nov 2024 23:33:50 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 26 Nov 2024 00:05:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732595630; x=1732682030; bh=ygtCYGndNAQwFQGXNftUIEWGbxnMDbKKjHH
-	J9RwaHtE=; b=lFbJcfgQH0z4PFn/2PgJH/CB6/Md0vtRJp4fEo/WhG0hKgRRHiV
-	EHuwFHBTnV3qckBeYRxKVjkKEVq5QulisWda4iRYla9vREW6jhJhRGduWurkFNLz
-	xDz9DcWQLfLjNpusHBsI0y3YLQ4+KRmEi5pWdWEIGSOUejca8RGeTDecgOXlEjBM
-	Gui5monJvEGclIMwijZUHykJiLUwhnBia/Op+Na9KyZ8lunOuv6eyYXzboiXwE+q
-	TcKk6zIiMuj93GUeclsYsQ5DqEl+oyGUsHhJ0ec52iSw7z8qTHJPf25/HIY/E9H8
-	PPiINCzCFwCVtXybBxSfx0zxTR/nqg8dcow==
-X-ME-Sender: <xms:rU9FZ_cUJtwgs3LQrceUQP3MzgYTJrZNF51NALvgJhUPIQ29rxLITQ>
-    <xme:rU9FZ1PztsBKMNknLeq0Yy5HC8ePXwCBg_w759lSkyCjOhgCCI9sC8NNXvyYwbBAf
-    q7qJPMVbA2vMC8ccQ>
-X-ME-Received: <xmr:rU9FZ4iEZq5tYKWtFrWGVuMRKCzBLGxSZlRlsmYO4ASijuShzseE_bswTRS8rBexyAT59kWU-9Y8UXtk81WIPpIKTieTOXjo0_xVHeo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdejtdcutefuodetggdotefrodftvf
+	1732597524; x=1732683924; bh=Lio8KfsMF/U01nCaW0FiyjrZhlF1D7t2tcH
+	emTpDBUI=; b=bW0cb6rZKcIcn44tblQ0Tqq+G0MTnI+od8HCDpDmrl7dVtXeln6
+	gfzFiWIzx2qVRXUqCLo195yy6bBPEcL5xW34dHyBQlli4OTpwgHVyoHrOcmnTbyO
+	P5lLIBi8ABwUv/10h37BSJOOg6IBYPxm8W5FrCxcQznFfMWiA39JY/VzK9EocYHk
+	07PJnyudyLEXrXtW49m9u+6sVMmQICFgUJk+gvpCexbiZvsQ6/peMuPS8TbiGd3B
+	viCqJHJOY+Tu0jrvQeSTz0UFT+CKpjvjs4npB0vfP0M01xY3FWSIKnNpJIQ3gwIX
+	NZ1iqUaw/zSMl1iNDwHSDoGp8lcnkIudJMw==
+X-ME-Sender: <xms:FFdFZ1h1768kKX3S5fgyyPd2LTRDnoSCXPZj53LzcZ8aMk0KtKzGug>
+    <xme:FFdFZ6AieNG0T-yw4tKhHl4U7G3RplZzA8p7InfTq0O1pTObyYrWPpVYRwjFDrdiG
+    BM7r1qpIyXAiAnYAw>
+X-ME-Received: <xmr:FFdFZ1HWIsKm4idt19YNT7jIZXEeJbCAF3Hys9qaqCBce_PwZEuS0We9RFahT3j9bjdv_Y_wjsZWEXFEhT5hbkZYQZbqmtW8ssWEh3Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdejjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,33 +45,38 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdejtdcutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggugh
-    gvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepshgvthhhsegvshgvthhhrdgtohhmpdhrtghpthhtohepug
-    grvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhg
-    pdhrtghpthhtoheplhgvvhhrrghiphhhihhlihhpphgvsghlrghinhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rU9FZw8K_L6pmkoRRGr-Be8mLzbe5P6j1YC9wR0YK-1Ode-l_O45-Q>
-    <xmx:rU9FZ7uGcUbHnnZQ9lhxBX5vbirbQidodfayibThyH-sxTQVyl07tw>
-    <xmx:rU9FZ_H7rNwAkwE8wXHv4AB1ZEhFWkr1_hdSuNG2wGAmUyMUkG9IPw>
-    <xmx:rU9FZyNdyxLNxwlMEY349LbuV7ERp_IFwtKte7Meem9TQ0hgdQVmlQ>
-    <xmx:rk9FZ0_4X7BoWPegkvBadAw7IkGE62km7ya7iF93-bgUlwMyi_uyyinF>
+    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegsvghnnhhordhmrghrthhinhdrvghvvghrshesghhmrghilhdrtghomhdprhgtph
+    htthhopehrrghvihesphhrvghvrghsrdgukhdprhgtphhtthhopegsvghnnhhosegsmhgv
+    vhgvrhhsrdguvgdprhgtphhtthhopehjphhoihhmsghovgeskhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepmhgrshgrhhhirhhohieskhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FFdFZ6Ry8QrqOScljsmNLoJWfHU67m5UsyhYarNtrNYmYqUoGoc6hw>
+    <xmx:FFdFZyzsQLlxbkxiZP3tX5RFuxE5v4ImGT61jlukUcBfr3fpbB0gDw>
+    <xmx:FFdFZw6zSpZ0_QrXi-Bpmt4Tnv_j2pCfORoBbqO17idaIcA7T9-K4w>
+    <xmx:FFdFZ3xiMsJOgiJSUtpoowFxI1J4JnDaEzo24QR2IL4HRmOrSIBatA>
+    <xmx:FFdFZxn150Q-4_zLMxLfdGdFOIJBab7I3jOkKlM9Thr7wMiDv-V_M0ij>
 Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 25 Nov 2024 23:33:49 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Nov 2024 00:05:23 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Seth House <seth@eseth.com>,  David Aguilar
- <davvid@gmail.com>,  Johannes Sixt <j6t@kdbg.org>,  Philippe Blain
- <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 0/5] git-mergetool: improve error code paths and
- messages
-In-Reply-To: <pull.1827.v2.git.1732305022.gitgitgadget@gmail.com> (Philippe
-	Blain via GitGitGadget's message of "Fri, 22 Nov 2024 19:50:17 +0000")
-References: <pull.1827.git.1731459128.gitgitgadget@gmail.com>
-	<pull.1827.v2.git.1732305022.gitgitgadget@gmail.com>
-Date: Tue, 26 Nov 2024 13:33:48 +0900
-Message-ID: <xmqqr06y1umr.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Benno Evers <benno.martin.evers@gmail.com>,
+  Rasmus Villemoes <ravi@prevas.dk>,  Benno Evers <benno@bmevers.de>,  Josh
+ Poimboeuf <jpoimboe@kernel.org>,  Masahiro Yamada <masahiroy@kernel.org>
+Subject: Re: [PATCH 0/4] perf improvements for git-describe with few tags
+In-Reply-To: <20241106192236.GC880133@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 6 Nov 2024 14:22:36 -0500")
+References: <309549cafdcfe50c4fceac3263220cc3d8b109b2.1730337435.git.jpoimboe@kernel.org>
+	<87bjz0k17c.fsf@prevas.dk>
+	<20241031114210.GA593548@coredump.intra.peff.net>
+	<20241031122456.GB593548@coredump.intra.peff.net>
+	<20241031144351.GA1720940@coredump.intra.peff.net>
+	<CAEQVFRFWT02QTL7PTf84p6AAferijHx8L_Tu6ON1H7U=iEdb3A@mail.gmail.com>
+	<20241106192236.GC880133@coredump.intra.peff.net>
+Date: Tue, 26 Nov 2024 14:05:22 +0900
+Message-ID: <xmqqldx61t65.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,17 +86,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Changes in v2: As suggested by Junio:
+> So here's the series I came up with, which starts by adjusting the tests
+> to be resilient to the later changes, but also to show the existing
+> failure mode.
 >
->  * 3/5: moved the error message to setup_tool itself, and adjusted the
->    commit message
->  * 3/5: made the test more robust
->  * 4/5: adjusted the error message
+> And then the rest of the patches add the performance improvements we've
+> been discussing in the thread.
 
-I think the above changes all looked good.
+So, this did not get any comments, but I had a time to read it over,
+and did not find anything suspicious in there.
 
-Let me mark the topic for 'next'.
+Let me mark it for 'next', this time for real, in the What's cooking
+draft I have.
 
 Thanks.
