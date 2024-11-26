@@ -1,161 +1,129 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A85F4C8E
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 06:18:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C5653
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 06:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732601916; cv=none; b=eJy4LnAbVz3L+JfQe9K1GnFcbsILo+uRTiFAFXgZQDfWk47lIM3Pi5sPNFPJyQkmzLuUXDMiyooPjNgYtwcbxewP+foNc+U76jz7ZG57pd9sn3wkBxTZxjJnrOc58YM4Qq0f5zLESRo43HMwUW8nqPK2uoSW0B8Lr6x7IiAyMUI=
+	t=1732603282; cv=none; b=fzu54pg8ykahK8V8gkG24nuqcV9JMigrQCjrI6orAU8Oxxe5+MOVFJm8doV/NcGS35eF07Oihx7Am9khz4oNa5CjyqV0rnAFUmUNmZZqnkMp4jm9yMesfbsOONJHJpEf9gMKxt+W7sd5wOUPdYGMkmbbZgLmQbF0InshbcOuaiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732601916; c=relaxed/simple;
-	bh=wNdGtqNaCMHz9p4zPUoNd1k80aqCWUnw5tnozTChOs8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mVrxWkBEe+Vwk3T0DX6tGa4TdZVBSN8zScX+IO7rr+la4CjJ2yz5LoXwydHPZA3mnPdED7MzfAHTHnF4G8Y/CqLXXugbiVWCHUpnOsjwrK8D+C/pu7tBx1JWtUDJ7IVIvAjgSnGC0y7pYNqcDF302jLZDuBDy3cntm9+rBfLs3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HTKfE+H0; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1732603282; c=relaxed/simple;
+	bh=GC5Cnlt8KSHEVb+5PTuaBSUGI32+dR0LMKFS8xrnASU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xg6sFYMp9mKHy8sL7Ms89/HH9vcEPKeO2qBw/WxTUnJblaXIA8t2TtX0O4h9jM7tjhmaDZPeCNT7Wop0VhfnvpnMvRmZF1cc3ahUV+SxNa2wkCdEannrtSSo0SNp+j1ID1dRvQl7e70I5Sm6Rd0JMuGlpdclTeDfnBHG9Um8i1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=opAH8WJb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ethEm8pV; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HTKfE+H0"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 063C013803AF;
-	Tue, 26 Nov 2024 01:18:33 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 26 Nov 2024 01:18:33 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="opAH8WJb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ethEm8pV"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 19544114012F;
+	Tue, 26 Nov 2024 01:41:17 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 26 Nov 2024 01:41:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1732603277; x=1732689677; bh=MDxXZhOK+o
+	t5wAEtdHx4s+v+vN2EHmI+ETV8NoxQado=; b=opAH8WJbx26uz6+UC9RKee2lbW
+	qfUDSnsF0+617lkDhcfs/Ek6Jsvuz19dlCYvI67QSUGinV95T21RKK9eJ+9CNhxU
+	+c9AGPGcqh8GvPWue264tM/Ire0YDDmzCRSLuvrZS0co7f5Oft5SFiCsCYmpYlER
+	J+f7Alw0jVgFvrkOBuma069hdSdGLnxfV7Pr9Z+Yf35CdCR09wkKuHOzaRQZdlbL
+	f7owaN6ErG5pTmC3hjgMWutGMyIASZsbK466rNjyfyggRIqaGACGGSwCsulc3HBm
+	Uod2l6xU3meJhc/ggcJfsHcfJT9tvvftGNLetTY6yKYXYhHCa0XzrzX8HaRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732601913; x=1732688313; bh=tnKO8s1uP63B7O2jsCPtokD7Xjb5wIngkQ2
-	o6lUcq3E=; b=HTKfE+H0spt4NqI4l5+wWriKHgCa3tFljyKfpW8NPxmtCNg/ubc
-	FYD0mQAgzPEAYf8W8uhKaPb3ZeS3X9M5B7QuuA2hipYgkBLQAK4LWehjQi+7AR/9
-	YxzqGIqMeNVxsUMdJDaVeETynJC8YOe6Ruga4ATVjlwQanEWD4Vy3/7TFpDCdps1
-	JJVmAFwGx2ZzLtDEosoxjv5oGZQbix6tYbbAkKx+Bc58Ub/V196p6KAgV3PDKNgE
-	Fyfb+4ZF2wwS5gGL1cQpDykAT1gqjftzHXqTDOerEpcR5AuKGxRvGdhIst2gDQ+4
-	kNvoFw5LgXDSkqwYTbp4oMFdMeDGZAEhHTg==
-X-ME-Sender: <xms:OGhFZ051Abmf-zLTtX21PGXC2HUPYRnHHd1HIyoUrfyjQoUwwgOyMw>
-    <xme:OGhFZ14i4SQjHDEXZ-m0454DJ4LMg9kB-QDk319r7zYVl4_CxMB9AXC86Zn5Z7V9k
-    2y5b5HDVju1LkXL9w>
-X-ME-Received: <xmr:OGhFZzduxCKhGsiS2beTAccG2wyIGbpmLQAxO-UMDqo68BELYGhF_PnXLayBRHZNes1XYlBRmbGJBGxrjVqAIBsMyNsFnCI2xv7LEzc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdeludcutefuodetggdotefrodftvf
+	1732603277; x=1732689677; bh=MDxXZhOK+ot5wAEtdHx4s+v+vN2EHmI+ETV
+	8NoxQado=; b=ethEm8pV3/JEKqXD1FSJco+C+hdfNtS/wK4EwIoW9PaeLJDINh7
+	9bfxwU3IfvIzgeyUJpHUwOJOlAGia2ERwtBPXE1uTkL5UEnvb+LVcqtdsbniRRlQ
+	IGqhNFb6un5Ct8SaSCWlvWRbara0/DZNwAox6BxGgoXzSIaRWOkBwC05wgOOquCJ
+	96Zd1YMvlQuR9SOhB5JFbjK8856VgoHVN+ZflTGpUoA/3c1AcMPHX/B8wPl5jaNU
+	WcEfbUPVuAFP4+z0CGV7V21rkw4q7F/qP7rrHWORp6xVlKm5nsnTuniMUi1STe0u
+	rus4E2OWfLWTqtzRwRTXRdsxhArVf7PTDWQ==
+X-ME-Sender: <xms:jG1FZx2oCO4_l75atsHSwSyP2KXtqRA_FKI03lefvqB0sNiEXvISDw>
+    <xme:jG1FZ4G-a4mwbv1QxiC-F1DF4sVM1mE1aIswJX4levddtv7R6UrJL1SlvDj-Eusnw
+    Kxbk_JTehBi763fHQ>
+X-ME-Received: <xmr:jG1FZx5bVMQ28kSNA0CmX1wH5MJ3j2enZoulNr3T_ZZnzAioQBIa17av8vnePeSAeLczJEw0EjQsyNVs1xKum6H1En1YVBx8YnYI4l4hbR3FRNTz>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeeigdelhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtugifhhhithgvfeesph
-    hmrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehs
-    uhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:OGhFZ5LDP9pj67J1aeEne4vZ5kkvjJQ5a2jsPFUwU8rJZ34Fuy2wTA>
-    <xmx:OGhFZ4I1t1lV363BAPoH_h9zvLYaY48vOf7vQaEaV4yJi0JGXPosCg>
-    <xmx:OGhFZ6ww011HszOAzQrgbUq60LJCueayb-_V6XzQzy-7CKq7_vFIuw>
-    <xmx:OGhFZ8LS0ymrf-fpfPEieBEdsvAVyEy0rqDOc1Fz4yRfEFJ7gfDtiA>
-    <xmx:OGhFZw_KDg-8O5xXVTQaJNrmaHSn9hM8zup1hdJeNy60-16ABtqY0f6o>
-Feedback-ID: if26b431b:Fastmail
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:jG1FZ-0rU6qdtVSiUizp5zyxF1eB_V_-RC59X98L42k7ihwDCQJc5w>
+    <xmx:jG1FZ0FmoH-joTEdzqWo-xZCd9DzjWODTBYV9S9AQeQZuYTcs-0IbQ>
+    <xmx:jG1FZ_-L_JWEyMCbemv6KGzCeEi8vs7rNeEZfC6L6h44cIQivVfOIw>
+    <xmx:jG1FZxlHAGYtibJT1-bNXORHikFSzNcMl5vBmlfKGocCCjMbFI-axQ>
+    <xmx:jW1FZ4DSBLNB0BPxvhNvIqIF7g_HiHAakWj4q2r1OPO2y5zmA1lMQaek>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Nov 2024 01:18:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 0/8] Allow relative worktree linking to be configured
- by the user
-In-Reply-To: <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me> (Caleb
-	White's message of "Tue, 26 Nov 2024 01:51:31 +0000")
-References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me>
-	<20241125-wt_relative_options-v5-0-356d122ff3db@pm.me>
-Date: Tue, 26 Nov 2024 15:18:30 +0900
-Message-ID: <xmqqv7wazfex.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 26 Nov 2024 01:41:16 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 86ec6b69 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 26 Nov 2024 06:40:11 +0000 (UTC)
+Date: Tue, 26 Nov 2024 07:41:00 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 4/9] refs/reftable: read references via `struct
+ reftable_backend`
+Message-ID: <Z0VtfJpOsMCEBuA_@pks.im>
+References: <20241125-pks-reftable-backend-reuse-iter-v3-0-1d7b658e3e9e@pks.im>
+ <20241125-pks-reftable-backend-reuse-iter-v3-4-1d7b658e3e9e@pks.im>
+ <xmqq34je4y6m.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq34je4y6m.fsf@gitster.g>
 
-Caleb White <cdwhite3@pm.me> writes:
+On Tue, Nov 26, 2024 at 09:48:49AM +0900, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Refactor `read_ref_without_reload()` to accept a `struct reftable_stack`
+> > as input instead of accepting a `struct reftable_stack`.
+> 
+> Hmph...  am I supposed to be puzzled that the patch replaces A with
+> A?
 
-> Changes in v5:
-> - Added docs to `--relative-paths` option.
+Oops, no. The first one should of course be `struct reftable_backend`.
 
-You already had doc on this, but the default was not described at
-all.
+> All callers of read_ref_without_reload() now call
+> reftable_backend_read_ref().  
+> 
+> The former took <reftable_ref_store, reftable_stack> while the
+> latter take <reftable_backend>.  They both take <refname, oid,
+> referent, type>, of course, because the former is replaced by the
+> latter.
+> 
+> OK, so we introduce a new function, and instead of passing ref-store
+> and stack, the new function only takes reftable-backend (which has a
+> stack contained in it).
 
- --[no-]relative-paths::
-+       Link worktrees using relative paths or absolute paths (default).
+Yes.
 
-> - Added test coverage for `repair_worktrees()` and relative paths.
-> - Move `strbuf_reset` call in `infer_backlink()`.
+> The old function used ref-store only to find out the hash algorithm
+> via its base repository.  Since the hash algorithm can be found from
+> the stack that is in the backend, the new function does not take a
+> ref-store.  FWIW, the old function did not have to take one either,
+> but since we are getting rid of the old function altogether, that is
+> fine ;-)
 
-This was more like "revert the change in v4 that moved it
-unnecessarily", no?
+You know, let me maybe split out this change into a separate commit.
+With your comments it's rather obvious that this commit does too many
+things at once.
 
-> - Cleaned up tests.
-
-Yup, there truely a lot of test changes between v4 and v5.  Many
-tests now use existing test helpers, which is good.
-
-
-> - Slight stylistic changes.
-
-I saw many changes like these (the diff is between v4 and v5)
-
- static void repair_gitfile(struct worktree *wt,
--                          worktree_repair_fn fn,
--                          void *cb_data,
-+                          worktree_repair_fn fn, void *cb_data,
-                           int use_relative_paths)
-
-which looked good (the original had fn and cb_data defined on the
-same line).
-
-> - Tweaked commit messages.
-
-Updates to the proposed log message for `repair` step [7/8] did not
-really "clarify", other than helping readers to see how messy things
-are.  It said:
-
-    +    To simplify things, both linking files are written when one of the files
-    +    needs to be repaired. In some cases, this fixes the other file before it
-    +    is checked, in other cases this results in a correct file being written
-    +    with the same contents.
-
-which may describe what the code happens to do correctly, but does
-not quite help building the confidence in what it does is correct.
-
-Suppose that the directory X has a repository, and the repository
-thinks that the directory W is its worktree.  But the worktree at
-the directory W thinks that its repository is not X but Y, and there
-indeed is a repository at the directory Y.  That repository thinks W
-belongs to it.
-
-If we examine X first, would we end up updating W to point at X
-(because X thinks W is its worktree)?
-
-Or do we make W to point at Y (because Y thinks W is its, and W
-thinks it is Y's)"?
-
-Either way, I think the comment is trying to say that, if we decide
-to make X and W belong to each other, we'd overwrite links from X to
-W and also W to X, even though the link from X was already pointing
-at W and the minimum fix we needed to make was to update the link
-from W to point at X.  Overwriting a link from X to W with a new
-link from X to W is a no-op, so it does not seem to help greatly,
-since `repair` is not at all performance critical.  The correctness
-is a lot more important.
-
-
-> - Updated base to 090d24e9af.
-
-This made it harder than necessary to compare the two iterations, by
-the way.
-
-
-Thanks.
+Patrick
