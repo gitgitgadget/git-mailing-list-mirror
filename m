@@ -1,83 +1,79 @@
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9813A268
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 09:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974C6D299
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 09:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732614613; cv=none; b=iXsargstcHglRxLYeyGm8YT+OgpKsIul3Br1KDuMZYzL/1T298Dk1d2lWR4uetvulDS64Nc1s5UfswU83Pz64tEsFI9EsFRrVSypmMuSqPA8/7Rqv5AFZb3i1WLzYAXMdSYYFHjycJ++Eob5vMRpQ/0ZB4jC1G0fgE6qT/b4MVc=
+	t=1732614975; cv=none; b=KzfHWdOwzw32MhtMA3BFFU8kNQKNmcXZh+tXvGwCO8kfcY8vFpCnCtMy/J6SJ9tfNeaZKUGWNzoZ9g7kSCeRP/jWpQIn7sjL35yRCfgZ32DsUoTmv4ViztekQClBPH1YSvCA/U6oiiDw0tUgLmZoRgckMM1wYBo+mxPQwR/yASc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732614613; c=relaxed/simple;
-	bh=KHMymydprm42a3jVRFSSw6MpAza6V04Jo4s+PbPMp60=;
+	s=arc-20240116; t=1732614975; c=relaxed/simple;
+	bh=MhWgSwTjhjxbxle5kNPyGLnTBcOPI1zstDJO5VnOzJE=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OJcKAev070g0iZVwSC/c3JGQhXLHRdO2CBOjw0kafNpyeLm00yqnlAUhNxqJ5V6rqFcuPezStxJpIKFWPzdY4VWltLAvNf+iVG84ZUKxxjA+Jed8eryVjikOQDv0y0F3OP3IjtsvW/397VjyCei05eS1aQLT3VTuBoOM2n2/5XA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NaVmksh2; arc=none smtp.client-ip=209.85.222.51
+	 To:Cc:Content-Type; b=qK+CW4qg2fBuhk7wQAk6mvEhtRx4HIFB6NgC84jkSgMoqc+PBhoMGRLPOYxI31VthsXQAn8BFka/l8lmNoxcw1a8i5Z3ZbRPPIBVC+/b0Uj0KycG+uhl5ga9l29JIkrCSgmLAEBGCaODZBYWvXEXJThq5VdDall0/GNv10Yz8OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jnhb6UEN; arc=none smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NaVmksh2"
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-85b07b8a1c3so651293241.1
-        for <git@vger.kernel.org>; Tue, 26 Nov 2024 01:50:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jnhb6UEN"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4af400e2ac6so35018137.0
+        for <git@vger.kernel.org>; Tue, 26 Nov 2024 01:56:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732614611; x=1733219411; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732614971; x=1733219771; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KHMymydprm42a3jVRFSSw6MpAza6V04Jo4s+PbPMp60=;
-        b=NaVmksh2F47W3upVaULMVs3g39N+kT8ZN/PqUOLggu23mCqQwqxy1jYizthP6AfvvX
-         AATwaCZFTjCWSTAAxe82iMurjAen5X5jrMoAZXYkh/E1AsKo8vSuYZNA23jMM3qSu+m/
-         OKmJg611ClXDm3uVgpfPvcjB2Q4ES0C0i70uTzrmJ097+XiOqk8GrU3Iqe97zaIVQLjB
-         MZAEVlKtQGgUbdW5PaloP+idVK1KkmSQ0/Fm4G2YrnQIJSEHoBwYAXdbjPPxs0/qU4TC
-         fvMJkqS/iz7wOiqRKV632DzdO0W/AkeSd8EZtg4dLyiLRk0T0hob0rOlYEoGttOQcNk/
-         4+Lw==
+        bh=MhWgSwTjhjxbxle5kNPyGLnTBcOPI1zstDJO5VnOzJE=;
+        b=Jnhb6UENqa3xCleqA7UcG/Q/CXd11Pm+82POhPG25odymJY03HkQkjnQoZqL0qUo+R
+         x/1+2sSRWajpPRCr1GBRUeJsONJ5FY0oZ5vlsIunvSYe7FyXs4Ft5Ujaxifk29uNBSPG
+         52UZPXd+5WOIu/mQIZVvEwLMvh2owVhhAhiXosy9vKF+bp3c/yQW2Lju1Y3KR6+Cd/dt
+         gPIK9SYET+phcc+e4Dv5F1GX2v5DF2NsKwxgAWU4ND1KM7JPOjE1p4ZxwJpQQk6K3Qxx
+         l7M9G6HlM54Q3A4vS/0KmwkdOyCs6kjEyFvpfzmyXIVWhJ8AW6SWTJvlZWrrX/aOG+Kk
+         B5kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732614611; x=1733219411;
+        d=1e100.net; s=20230601; t=1732614971; x=1733219771;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KHMymydprm42a3jVRFSSw6MpAza6V04Jo4s+PbPMp60=;
-        b=dPK+oH2QxBWZ/eEG07Jca9SMuAQ2CZNv3xe+b264cV6XZ4Qff1mA+xJcKBg/nSZ6OF
-         xU5hkZhtFUmCf8fM0tjxhRfBDqNV6arTVpTF0iy7nf8+pUU+tVx1QhVM3+/FUOMHCmLF
-         GJja315/v9gXEBLiEo+ZY39797H4MO0Iyqen5Uk+2EXWPQ8qDtqZvwwerCDJ9Kh9IEig
-         9TaCfFn7mHnDNUktFSlrGlCfu5g6rFQRwuEef6a1GvqLW9s9sEMGGu9mBOuzSVhkjP/W
-         5TGtkDXB9LCJnZZtrVi0ZoVJE908VUb2HwJ6Ty/smg8WMS9iffv64PFaamfHifu5rxM/
-         INpw==
-X-Gm-Message-State: AOJu0YwFifIFGxtC/ywm/PnCqd1Mp9A7IRlYC1QighPfzWArcddTdwXp
-	ekcNxGLHjklvoY5x0399h7BwfvLWs3PUL5ZXmb3v/V6PE2x9NHCttIKLlLqsPnIUqi1LM/TLMW/
-	xRh/3g2zm9VjNPTk80jtqT3yF7QU=
-X-Gm-Gg: ASbGncuPY+u16ssT/1iGmdcWChfH0HhMCEq/RXSI5/rzpf//qbUdu0l+c6kRD5BPyy8
-	+JL+cqs6mVjKqn+uq4UNMdzj6SkYx8g==
-X-Google-Smtp-Source: AGHT+IHouoLrBE0NyWSpkJ5SGomJMMkMlDmdflDT7fojpLdBP3fpMW4llVcv91YGUNdGNznrWQPb2AP08Opjz6+8Aqk=
-X-Received: by 2002:a05:6102:50a4:b0:4ad:5dcd:2c44 with SMTP id
- ada2fe7eead31-4addcc31533mr16467473137.16.1732614611076; Tue, 26 Nov 2024
- 01:50:11 -0800 (PST)
+        bh=MhWgSwTjhjxbxle5kNPyGLnTBcOPI1zstDJO5VnOzJE=;
+        b=FX2LVXmsUMOKYhzAZv+P5coEfO2U4W5LW3Xl6e8wZxjQ4+uvPyyTzEFbh9gJ/cCbvp
+         QPgLDSgAn01KgOmD8TEUWXz6y1soODknFRGQ/WU3wQ9cYQGpEgxeT07eMxWH0D64ImKB
+         E2WQ36kTWfgcBH5J85leI3lSuAeaoIcB650WJpKhaSsE046ZUqgsP3xuMQH1S9nNLEKD
+         mynQrhPTieoNOOQ5BpVxUICbZGrDwKCWU0gJQNzBfUi6BoQhF9WuebHtI6adlWbwu8nC
+         lLsPjbWQb/rNDauvdmlg1eQeYjQK8SaRMFdanr0taOHeR8DFkyULslganB78pK+9S5av
+         ymIg==
+X-Gm-Message-State: AOJu0Yz7rGl6lPurGgg90J0iclYSXr5xtMagKlNcA/SE/wmGq+ZOPs8n
+	o92HM3Hle57uJxy2zISRj3pxiQfgNiqY7h8TE+L6v9Rr60BPXuaXRm1FiW+SgrkzogdB5kXNKoa
+	2OKDIVy+BEH4KeeqwwsfleNbpVrA=
+X-Gm-Gg: ASbGncux2h1pdQ861r+CXh6qDZAQlLJVRuQxeR4PV/xSBL5hdU4gtdxxvA2kyb84cFv
+	WbZj4y3uttiJsSkBdsGxanjth2SFwzA==
+X-Google-Smtp-Source: AGHT+IE+Qfc6bBFbDgOEcWpY4BDSYxw4MsDfYERFHHYc1TmsUBTp7/hLm4S+e+JGmndkZ0xrAw7WPbI+McZeT448apI=
+X-Received: by 2002:a05:6102:390b:b0:4a5:b0d3:cbc4 with SMTP id
+ ada2fe7eead31-4addcba3a5amr14420462137.8.1732614971339; Tue, 26 Nov 2024
+ 01:56:11 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 26 Nov 2024 04:50:10 -0500
+ HTTPREST; Tue, 26 Nov 2024 04:56:10 -0500
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD0=OycMAaDi_92-Go2Mt4q-s7cfmBaZD_kWBnZsvYpiPA@mail.gmail.com>
+In-Reply-To: <Z0WNKV5prRE2Hupw@pks.im>
 References: <20241125-374-add-repository-to-subsubcommands-v1-1-637a5e22ba48@gmail.com>
- <CAP8UFD0=OycMAaDi_92-Go2Mt4q-s7cfmBaZD_kWBnZsvYpiPA@mail.gmail.com>
+ <Z0WNKV5prRE2Hupw@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 26 Nov 2024 04:50:10 -0500
-Message-ID: <CAOLa=ZSF6PC0dXGE8JUeeZqQgxgGAMnKJNGNeEMTwhCwN-OXYQ@mail.gmail.com>
+Date: Tue, 26 Nov 2024 04:56:10 -0500
+Message-ID: <CAOLa=ZTUv41jfPcevaY+Afxu2e03_C9bDF+uXzNha-24LH+Lmw@mail.gmail.com>
 Subject: Re: [PATCH] builtin: pass repository to sub commands
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: multipart/mixed; boundary="0000000000006d1dc80627cdc693"
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, shejialuo@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000e656510627cddb01"
 
---0000000000006d1dc80627cdc693
+--000000000000e656510627cddb01
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Mon, Nov 25, 2024 at 3:56=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
-com> wrote:
->>
+> On Mon, Nov 25, 2024 at 03:55:30PM +0100, Karthik Nayak wrote:
 >> In 9b1cb5070f (builtin: add a repository parameter for builtin
 >> functions, 2024-09-13) the repository was passed down to all builtin
 >> commands. This allowed the repository to be passed down to lower layers
@@ -87,32 +83,42 @@ com> wrote:
 >> the command to sub-commands. This will help pass down the repository to
 >> other subsystems and cleanup usage of global variables like
 >> 'the_repository' and 'the_hash_algo'.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 >
-> Yeah, this is definitely needed to cleanup usage of global variables,
-> and looks well done to me. Ack.
+> One alternative could be to instead pass a caller-provided structure to
+> the subcommands. Right now that isn't really needed because we tend to
+> make use of not only `the_repository` as a global variable, but also
+> because we track all kinds of other variables globally.
+>
+> So if the code were refactored to instead accept an arbitrary `void *`
+> pointer, callers could provide a custom structure and pass that along to
+> its subcommands. In many cases we may end up just passing the repo
+> directly, but I'm sure there are others where this direction would buy
+> us additional flexibility and allow us to get rid of even more global
+> state.
 >
 
-Thanks for the review.
+That's a really good idea. I do see the merit of doing that, I'm not
+sure if such a need would actually arise. But then, the fallback would
+still be `repository *` so I think it should work indeed. Will modify and
+send. Thanks.
 
---0000000000006d1dc80627cdc693
+--000000000000e656510627cddb01
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 3f165a388115b9e2_0.1
+X-Attachment-Id: 8789b9b11e6cac90_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kRm1jOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOG1lQy80a0kwN1M3OVoxekI5ZjU4ajRkMFVibFVlTQpYQkFMbVNRdDlk
-NXhtVFZZTkE2aXY1RGJBOHlvVC9XbE90NHo1RHJLcldmWkFKbGdOeFcycXpRa1lxckQwaG5FClZP
-azh2WXBKR1R1d2htV3FEWGFmNXBUaWFPc0Q5NEY5cTNIako5NEF0d08xNDNoOXp3S1J0UWRmbXhT
-Mlk1dnYKZHJ6NGh3R2ZTQVNDS2xGTlk5bEozQmVmeER4YjFWNlY4aWlFSm8rUitHRUVoVUlCZXdG
-akxpcnpkYkFiejVKUQpaM2VJV1VCWFV3RDZkalhCNVRPZmw4YVhxdGlsdGVEbUo1bkl2QStQcUtw
-WmIrSHVKa25GWmhRV3hlY0o2SkxIClZYeXhHQmtDbkM4ZXVyVUVlSFM2QnNGRUlBcEE2RUl6NS9v
-cFRUdmRrc0M1eVo4amFHeTNQSWRBWU8zOUxHcGoKWC9WekpzTkVEbE0wbWJqYmNoWWNuVWxLa0RE
-MzVGdjZiV3hNREtXNUNIeDJBUGtLRU9VWkdUT1VNa0c1MElIaAozUHVJRWtodFl0V2hhcGFKakl6
-bFZMZzZqNW8wSXcyQWd3YStXTGM0TjhPNFlMUHFPNGpoc0FSYXZzMmVyRnl4CkhsTU9GN0ozc0Q2
-bVcyNWN3ZytIOVhzTEg5dWxjNVpLbmMrbWZNUT0KPW5hNHUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kRm16a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNUNPQy85ZG5lZ0p5blFobGNGTTBRQkplMWRKMWN6SgpqVGRwc1g1anRK
+WTROekt6dWpQNlNCdUtvMHJKRjM5UjExNHBYSTJnZVFyalNxYVNvS3hQd3g2dGhZSjJGUnFiClFk
+VDViSWtKZnF4SVFjMTVJa1d2T080akxCOFRmWnpLeDhOMFFxeWt4cGxSemlQZnlNV2RFUGZSV0VB
+V3pYd3UKTUQ0OHNrcXFHbkplZ2lnTlVybmlCMWVhaURMNFh0WHh4YmV2T1pPa1NkSVFkVnJ5US96
+cEhXZmJ1cUgwMVJ3UQp6OWpJVFJGWVRVTUs5bDQ5aUJmM0ZoQ2MySENEYkZmRFplN2xucU9CYXp5
+R296K0NkcXQ0T2tXeENkYlozTFU0Cmk2Q21PSU9Qa08wVUFBUVAzSEw4d0l0UFRhNEFFS0tENXlJ
+SEcwL2JFMndVVmtrcGc3OFFKRVRxT3MxSCtHaWoKa0YwRDYyOXZZY25oQWVQM0Q5c25HN1VYdjdm
+TWwvU3kyNDNPVGsvTGxobDBNNm9STEllUnZ0QjFLaUduWExBYQo2NVh2QzBmTzlDWVAvYjF5TWs4
+akI5QUtxVFdnSHNscVppaHVod1piUnhqcFZuRGdHdDZWU3F1ZjFLbkhKbkYyCmliYzZDNm1zQm9q
+MHhTMS9ZUUJxc21LeXNrRUlwbm5ORWZMdHRCZz0KPUoyQ1YKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006d1dc80627cdc693--
+--000000000000e656510627cddb01--
