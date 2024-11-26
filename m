@@ -1,68 +1,65 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D66F1C4616
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 11:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C94BE46
+	for <git@vger.kernel.org>; Tue, 26 Nov 2024 14:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732622240; cv=none; b=b5/5mj0mnb2Yq+sxt5uWj6uYRjbBH3TJrtw9SNlCfff+esF2xYb9SSsqriptevcHPmgBbjPgIMX0P0oO0ctLYvUNCbz2WG2tA2Gm8a8OwS+vgOjfZhYpyJWzcsJj4fTQFSy6CitBhnUdoNwIlmqzRpYVs4+mleLb9i712HhsUjs=
+	t=1732632044; cv=none; b=kyCEyj7lWhzfLbUSJVHRprzdPyTcbOPw3pNrgvgOm/OFrMWApHnDSdQcQHJD+P4PP7/CB/IRQEWErMb2hun0Q6a/uO8y7Y/KUnVQj8Y17KesWcGTsqkGoYFnDAmmFn0h15A4zbvUtX5Kuif0XeI7oLTyw4V1v9C0IuPEpIR9oCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732622240; c=relaxed/simple;
-	bh=/Td40Fh1XIlD3OjxqG1kRlkXR70PLerw9RfEoxE4NYI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dIiZzQU6Nk5xaUXRPH4G9zMjQL8QpGhK4pSNmzdKFvol8VQ3G75iGyuKmJRIX4BNg6az6cZGKdEPRPvXHiYekT/R6E5dOZdziQpB5R6mEx53fpivr5zGKxB12RxEgEuRfttoydBjbiUm+TYtXZj0d/RlCh/W478Cci+ixj04AOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WJ8HNs9K; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1732632044; c=relaxed/simple;
+	bh=needdXTXd2sR6e1LEuZF0dpMUmpAH5uJoUyt6+XcMw8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JL6qqzEsLhbsFEZG63bd2H2SoCXgttq2hT9E+QQlW8f+bO43BG3YvaziYiHkeGc355YEV33+RZq2agfJugqqy+AczBARZJzCYbteIwcvk10RJ4k9AAAaxiuxdwxGhOF5BFjQHIPGTkcdragO9Y6y5DTO78M8R/XejtpYV+fm7Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUKfLKFY; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJ8HNs9K"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21288d3b387so41662845ad.1
-        for <git@vger.kernel.org>; Tue, 26 Nov 2024 03:57:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUKfLKFY"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2142214abd2so31805215ad.0
+        for <git@vger.kernel.org>; Tue, 26 Nov 2024 06:40:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732622238; x=1733227038; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=a2f09gm+izzQhN9Rq0MuYV3n9JBYUHTQ3ps6/u5gH7s=;
-        b=WJ8HNs9KE7K4GWubQFqHzVlSR8U5rhCBUKuE6k44ZfvIdBcmAsxBO2PWfOkn42z+GQ
-         ryHjIRSfJdILboKzMkJfs+o28z7uHnuN9NYsjTPMJlD+nbb8Q4MOnW/DnaBRUQkolNhu
-         lbUN10UP5lXaQc0OGUH+1c/ZIMb1eebKseZNY3AL43sKEG/APAHWWlRlbD0I0RShOT89
-         9gZWucT19b5RZdCosjD4JlOqEGGM1qeklN4eyUwT5yLs/PALjPYYgtwFHvH9Fu1SV91G
-         ieFmU1mU1nRp/DhrE8vh/L4EMVop3ZYwY1hy8XL1nRY8nAdq6XmhWEBIOW4/SEQNyVkA
-         Dvsg==
+        d=gmail.com; s=20230601; t=1732632042; x=1733236842; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1HUhvCOzc2bVNLxp4bJf/b5kK6xEbliudFFi7KVRt6o=;
+        b=HUKfLKFYNP97rZbzdHc2Dc5uPI5fhQGV+qnekNiSobQ8/P5LorqxbMNjr+9tGvP/Ka
+         0itWxSrIevYi6L2UmJqA2JDdsEYXoU+iwhzbPzDtOPz+Mou6hcgSwnl+a8Cq3Cl9hbHj
+         9g+nh5aC2GSP1yFv7/rkallwUGFkVL/1UAmh4BDKTHdGudxnWkzz0VVe7izZmmjZPTHq
+         b66ThBTUINwWgvHw6sBYSjtD9CPWAaZ31Jcdmtkh9Z+dS1CJz67jTxscnTn/dRsRc6w6
+         Fx9y9a3kGzEq0PUpfmo0Njp3iB+8NECxbjHP/UnTBYj39/h3/CTz4v8oY7iKVlFIkURg
+         yCYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732622238; x=1733227038;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=a2f09gm+izzQhN9Rq0MuYV3n9JBYUHTQ3ps6/u5gH7s=;
-        b=YYvFsD6VfQccfea33qjzbjoIFXyLlgysBhwCks9g/Ty+0GoqaFIWOFxacI8mNGBbGj
-         HlBIFncCofaiy0exnCm/AqLClmix5OcwRJw4G1IU0ncwvrHvz+mmVNkbcQww8Y69pe6n
-         wQPTlE3xwz/rfO11FV9NPqoTW2D+VGsZalzhhqul/ezrJU5mnO4ItKT3GJZfKEDXJ9iW
-         GS7o3loyBYWZkSh20rq7XwyvYoWcl6cmyoyHdMI5KzdXBwgvjTaR8ELIPGaBH4VVlKXb
-         eaGreS8DA/5n5Ic/NYf4ktwSnVsBaBNxFw7DL3I8/mFwZhTr3QLnBQc8SII5eu7yKuRm
-         qbYQ==
-X-Gm-Message-State: AOJu0YwcvlRrM+NslmNS/MAMlfZQr9LpOWOqBvbuBTmstCm+io1Pg1I6
-	7rZiDVCTa4y13mik7zqDZr7lzyYRu0tEjLaUZr+gxBtls12qWlYMKz/vjB77
-X-Gm-Gg: ASbGncuIQ5OlD9lpquSIdHXdZXK3DRmenA01fZxiv3yqEMO2vfoIHKORNXYvwlWxBjV
-	SSTevmAb5juXWCnD6kRPb/HmUAOImrG2eoMAXesk2VbFzl2miIdUmwN6fOG+t9BDOY/q/bSBZ7Y
-	TLayUKnNJ8Zu+w5XFRntQQFRvvrkZOqlhFBLVvJuTWUflH2f15IrClzURL5Uizc08rQ90+iopCf
-	0B/rxn5MvB8SNkShdZb9gPi2foUsgdhJXBCdEjMKzBZsw==
-X-Google-Smtp-Source: AGHT+IGutaLPabUeCL5a7l688W815mt7Z8M02sjbgaouVDPmQ+0f902W276l66uRvS3NIexH59b9Bg==
-X-Received: by 2002:a17:902:f54a:b0:20c:da98:d752 with SMTP id d9443c01a7336-2129f5d853dmr222244665ad.16.1732622238438;
-        Tue, 26 Nov 2024 03:57:18 -0800 (PST)
+        d=1e100.net; s=20230601; t=1732632042; x=1733236842;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1HUhvCOzc2bVNLxp4bJf/b5kK6xEbliudFFi7KVRt6o=;
+        b=FlcYdcZCvZsB8oX5nkVDCNpqZgS6zl2SzlAhQdx2QyXsoUXBcjcJVv322YNJjXLHy7
+         GFIYeaedblYMqoDx/drwah86yEl4h4n7LKXigLB30kDjaaEYsuBRdi5arsE5StsMbtO9
+         sdou9+ZZqag71WoSkah6qH+Gg4t48THedwo3X6rh0PZS/64eDQ8t+GQFQTzCCBt0HGyE
+         1pXK3M/UX1aT0+6iDARzciszh287m1pHNLu1BGi7cYdrx6DP2PqNR+LVmCc5wg7lGhhr
+         ngJhA8TP4xbb6jo1Vd0sJUWrHs0NHb4TJFlZ20dVC7iEgLlqnpqMZmnUsfia1k+V6FHX
+         lyxg==
+X-Gm-Message-State: AOJu0YxDNXtIQl7065NqUFa3NfJ0dga4kFS+LXCN6EnxRqieYtOegPPV
+	InBClRXEWgYwjsmUE0ceeSpjPHZMGBK3DQTo/KJ7qUyVWTVl8Hg+YhKoNtAB
+X-Gm-Gg: ASbGncvqScLprUMqtGoBqPMmUktQMXPu5LBo74E3+iOfZzkOtKwVpukNgIOkOU0ys9u
+	0PUSki+N8WsXcg5FoxdKlhFeJ6BzAqwN6Uxg0Ma6wx9C1Eexu62aPWctODC368CWjLLgBXaHq+B
+	k6CkSXcoa/Ttu9P5AX/P1twOOg6cv23NBLyBDP8gt7/jRu+6kkEWNRcTHYJsHZLPUKLahYDGowE
+	4iMFfnDRhOkv1o2eHbqPFmYC2zWOOKpmgvnXISs7SB40A==
+X-Google-Smtp-Source: AGHT+IHKNiUc0TnR3TLouOu2Sh/cHyM3m3gnzjQK6jDUyXr5tUCF/EzgjULatU2NSQXVJBLGeSACFQ==
+X-Received: by 2002:a17:902:ec88:b0:212:8ab0:4f55 with SMTP id d9443c01a7336-2129f780debmr230249955ad.56.1732632041575;
+        Tue, 26 Nov 2024 06:40:41 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2129dba5d4bsm82834995ad.80.2024.11.26.03.57.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2129db8c864sm85552175ad.37.2024.11.26.06.40.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 03:57:17 -0800 (PST)
-Date: Tue, 26 Nov 2024 19:57:34 +0800
+        Tue, 26 Nov 2024 06:40:41 -0800 (PST)
+Date: Tue, 26 Nov 2024 22:40:57 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] builtin: allow passing custom data to sub-commands
-Message-ID: <Z0W3rgHQhmUxjgfp@ArchLinux>
-References: <20241125-374-add-repository-to-subsubcommands-v1-1-637a5e22ba48@gmail.com>
- <20241126-374-add-repository-to-subsubcommands-v2-1-417e0dc66c75@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
+	John Cai <johncai86@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] ref-cache: fix invalid free operation in `free_ref_entry`
+Message-ID: <Z0Xd-cYPNNrxwuAB@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,24 +68,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241126-374-add-repository-to-subsubcommands-v2-1-417e0dc66c75@gmail.com>
 
-On Tue, Nov 26, 2024 at 12:19:22PM +0100, Karthik Nayak wrote:
-> In 9b1cb5070f (builtin: add a repository parameter for builtin
-> functions, 2024-09-13) the repository was passed down to all builtin
-> commands. This allowed the repository to be passed down to lower layers
-> without depending on the global `the_repository` variable.
-> 
-> To remove usage of global variables like `the_repository` in
-> sub-commands, it makes sense to pass down the repository value from the
-> commands to the sub-commands. But let's make it more generic and modify
-> `parse_opt_subcommand_fn` to instead take a `void *` value. This way we
-> can provide custom structures to each sub-command.
-> 
+In cfd971520e (refs: keep track of unresolved reference value in
+iterators, 2024-08-09), we added a new field "referent" into the "struct
+ref" structure. In order to free the "referent", we unconditionally
+freed the "referent" by simply adding a "free" statement.
 
-From my perspective, I think using either "struct repository *" or "void
-*" is OK. However, I am a little concerned about using "void *" at
-current. It gives me a feeling that we over-optimize here.
+However, this is a bad usage. Because when ref entry is either directory
+or loose ref, we will always execute the following statement:
 
-Thanks,
-Jialuo
+  free(entry->u.value.referent);
+
+This does not make sense. We should never access the "entry->u.value"
+field when "entry" is a directory. However, the change obviously doesn't
+break the tests. Let's analysis why.
+
+The anonymous union in the "ref_entry" has two members: one is "struct
+ref_value", another is "struct ref_dir". On a 64-bit machine, the size
+of "struct ref_dir" is 32 bytes, which is smaller than the 48-byte size
+of "struct ref_value". And the offset of "referent" field in "struct
+ref_value" is 40 bytes. So, whenever we create a new "ref_entry" for a
+directory, we will leave the offset from 40 bytes to 48 bytes untouched,
+which means the value for this memory is zero (NULL). It's OK to free a
+NULL pointer, but this is merely a coincidence of memory layout.
+
+To fix this issue, we now ensure that "free(entry->u.value.referent)" is
+only called when "entry->flag" indicates that it represents a loose
+reference and not a directory to avoid the invalid memory operation.
+
+Signed-off-by: shejialuo <shejialuo@gmail.com>
+---
+ refs/ref-cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 35bae7e05d..02f09e4df8 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -68,8 +68,9 @@ static void free_ref_entry(struct ref_entry *entry)
+ 		 * trigger the reading of loose refs.
+ 		 */
+ 		clear_ref_dir(&entry->u.subdir);
++	} else {
++		free(entry->u.value.referent);
+ 	}
+-	free(entry->u.value.referent);
+ 	free(entry);
+ }
+ 
+-- 
+2.47.0
+
