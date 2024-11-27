@@ -1,100 +1,81 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1A21FECC8
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 14:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87821FCF63
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 14:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732717077; cv=none; b=ss/ICXHOMoeNmfXOGmzSZAdS3hr0juM8V0sxPD6nqHvZo7sRowvH55AgCoFwQ4h1fOTJ0R8tJTCBWCLXORdrQoqWnkREC4URLNoXhuOVA3fxmHBKBclNySoqaENEmoIIvQybSSL2n9oUvI9W+uDJ/LuPIC4KO96XUzoKfWkC+B8=
+	t=1732717506; cv=none; b=KAD2QW0pDYhz59o1F40EcdsTh+c8dBtE9twwB1MWNHA2DGcanvmQ7Q4Vb/7h/GzLli1WKwyjyTdZXiBZ3QKY2FXJDzrSRr/E2WQPagLzD0GDHj22IzRiHc0VqoNCnR6PtSQ/s9jslTlnXOJGbFxfFVENqpV78u4rf9KKdrFOBlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732717077; c=relaxed/simple;
-	bh=Lv875v8v9yfon7vLpA7csVYfQgXAJWZb8L9W3y/KeKM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Dga1O/bpOSfe/hZHnd70uRZK3bH466fB3uAK4w30eMUevxJLRlVZXbxmf+nf7bvX/0c4L1Np2DFbibeLFHR73DfCFHcfIoJbrXf9zDgAPmj1ORV5ucsapM3iYP+DnmE+zmfh5dOe4l7Pptq5Gfmhbsc/91w/suTaxkXmz6udVeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PaT64TWy; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732717506; c=relaxed/simple;
+	bh=FRPYczkv8SQU++McJLenQNFWD0LSdkfO6v3FCT0h74w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rKxTZpHf5D70PGGAMX9curiSplCd2E/fM2DIvStiazXq0M2I0Crr0+IbO+Z/z5r4NdSi/4I+dSdJ5UiSOCYBb0N3neB/LFL0I/ov+f28MpDTLtnS2Zmj+iqpB1t8lX31A8AihtxC4teosarI1bQN7tcBdksWun2jYLiIjZKRp9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=H3wn1g5T; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PaT64TWy"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53de92be287so3751537e87.1
-        for <git@vger.kernel.org>; Wed, 27 Nov 2024 06:17:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732717074; x=1733321874; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Lv875v8v9yfon7vLpA7csVYfQgXAJWZb8L9W3y/KeKM=;
-        b=PaT64TWyNwpkjXpadMixvluGkJIirA/wcVasX1gosqxP2cficZ4J/vVTA+AOTFaokD
-         n4Rc6Qx9kfLEdrc1wWXswnLVPRrHQxYdwpjQ5Y7DvjanKg7ikTl5YMdL/P8xpUxsV/Ha
-         aMm2odpPp4Y0kEvokv5cTxfubodvyHqIwgzT8Um6ltVqimkS/hUhsK0xnqrOY82ZAhE9
-         sDRQKgwxMpzl9KhdpDj33M8PMVNyMCHmeNwMswUIQ+0ud8TE2TkdK0USxVnyCPzetQm3
-         WQqAGNhDN00ReeEWO/zEws6apH2q9DlUJlp2vPJZyuwgTrvaHkO9jQc2r4UTz8YR9kez
-         Zxmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732717074; x=1733321874;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lv875v8v9yfon7vLpA7csVYfQgXAJWZb8L9W3y/KeKM=;
-        b=FgpjKR8sG5irjswkPS26g62NGRIvOKPn/g5HyZWSkFeCJMmK58XyozPL5jH5TdjYT5
-         Faf/zOiFvMumavxtZqT4EekVDokMSPBDUyeGxYwhs1M16r/77Z5sJU3Hr68VDmX+GWlQ
-         ucuwa60mboRZf4/7DSs/2/MjrFj/G0djzv1wVrNP4JeHvw5SXp0tt/RoV2pmXDV6Cd+x
-         R1heQpyqN2YTNRnS23pfrIcUocDDCuJQW0fGVsAhbmD83FnPbTsaJYiyf7kmUcviS+8+
-         ae3XPXI0N/FDkC3D/6e/PLvaWJdhgqEL+WEKFSi+txfFWHpUt03eaQvUceFppDPy3iL0
-         XCcQ==
-X-Gm-Message-State: AOJu0YwMY6qlQBcmL7IJCrb2aUqWIFsncuiRKnrbwF+1Ko+J8QnbtpwJ
-	vxOCE8xhGPbM4gqOyyIreB5mwPlnzArCPCFVJ4vrYruMoLggDaPpbnlDAawPj+6iGUxi8ygFmcK
-	4N62xkvigbc+5j1b6b1BfAzv8QF8ELjBVEVM=
-X-Gm-Gg: ASbGncvijZiUKA2Msnkj5MxBukkVCbGCpm6BAfA9GuXZ3IwFZhfoZYokIv+6K2FZnj1
-	x33jk0YctijxyCTw/mVSaYhrhuhsF/g==
-X-Google-Smtp-Source: AGHT+IGKIKqr7CF2uDS96bgA+JT/fisMYsHuTBf+s2HgnwRwXvcBv/kSNkRRahsmv4TUHCzLSRy7HjLJCYtbv7ECH8g=
-X-Received: by 2002:a05:6512:3d19:b0:53d:ed8d:9a0b with SMTP id
- 2adb3069b0e04-53df00a974emr2680138e87.10.1732717073891; Wed, 27 Nov 2024
- 06:17:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="H3wn1g5T"
+Received: (qmail 5094 invoked by uid 109); 27 Nov 2024 14:25:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FRPYczkv8SQU++McJLenQNFWD0LSdkfO6v3FCT0h74w=; b=H3wn1g5ToXbd50XKGIf63hlM235rkC+yvpagK0IRNI6QpjdW6D5hHjpZg1Mi1PMFdxESV1FeGkbBTMZ3t6ShpCoEFQaW35HG2VAsWNbzQjx2ATeEPTeohtK6/jVFh5pQH4XxogbWCwpURRbe7B1CiCuplU05fSWzp8Qr24e0wyg7s/OmCmZDUGtxCNvEX4xwftl9Q9d4No93S3l3a9Wque1nLl0EJUFKk92P9izBZ0Y1zZr3lhYhMBagOmHATuTbGPOVhM1HOW2Ole//EhyJ0qpEZepKRTXy0SmnHOE1lbyzRiHq5QLTwbNGBrWqncWzPkn+mIKItQvx5ysz+0b/zA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Nov 2024 14:25:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 748 invoked by uid 111); 27 Nov 2024 14:24:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Nov 2024 09:24:59 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 27 Nov 2024 09:24:58 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] fast-import: disallow "." and ".." path components
+Message-ID: <20241127142458.GA1712@coredump.intra.peff.net>
+References: <pull.1831.git.1732557520428.gitgitgadget@gmail.com>
+ <pull.1831.v2.git.1732561248717.gitgitgadget@gmail.com>
+ <Z0Vxb4OVJYeAdgds@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Henrik Ahlm <henrik.ahlm@gmail.com>
-Date: Wed, 27 Nov 2024 15:17:42 +0100
-Message-ID: <CABJpytygYtdAT7z1V44h12sLzzo5Ozf3Vc-=fE7XBQnP1G6HSg@mail.gmail.com>
-Subject: Bug: git config order affects outcome for recurseSubmodules settings
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z0Vxb4OVJYeAdgds@pks.im>
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Setting configs in this order will result in fetch on-demand and push
-check not being respected:
-git config --global fetch.recurseSubmodules on-demand
-git config --global push.recurseSubmodules check
-git config --global submodule.recurse true
+On Tue, Nov 26, 2024 at 07:57:57AM +0100, Patrick Steinhardt wrote:
 
-It can be seen if you have a repo with at least one submodule. Just
-call pull on a repo with no updated submodule(s) commits, and it will
-still fetch from the submodule(s). Similar approach to push with
-check.
+> On Mon, Nov 25, 2024 at 07:00:48PM +0000, Elijah Newren via GitGitGadget wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> > 
+> > If a user specified e.g.
+> >    M 100644 :1 ../some-file
+> > then fast-import previously would happily create a git history where
+> > there is a tree in the top-level directory named "..", and with a file
+> > inside that directory named "some-file".  The top-level ".." directory
+> > causes problems.  While git checkout will die with errors and fsck will
+> > report hasDotdot problems, the user is going to have problems trying to
+> > remove the problematic file.  Simply avoid creating this bad history in
+> > the first place.
+> 
+> Makes sense.
+> 
+> More generally this made me wonder whether we should maybe extract some
+> bits out of "fsck.c" so that we don't have to duplicate the checks done
+> there in git-fast-import(1). This would for example include checks for
+> ".git" and its HFS/NTFS variants as well as tree entry length checks for
+> names longer than 4096 characters.
 
+I had the same thought, but I think the right code to be using is
+verify_path(). That's what ultimately is used to let names into the
+index from trees, from update-index, or from other tools like git-apply.
 
-What did you expect to happen? (Expected behavior)
-I expected the explicit fetch/push settings to be respected, instead
-of having them receive the default value from submodule.recurse.
+So I'd consider that authoritative, and fsck is mostly trying to follow
+those rules while looking at only a single tree at a time. But
+fast-import should have the whole path as a string, just like the index
+code does).
 
-If submodule.recurse is set before the fetch/push settings, it works
-as expected.
-
-
-What happened instead? (Actual behavior)
-The default values were used instead of the configured setting for fetch/push.
-
-
-Anything else you want to add:
-The order of these settings shouldn't matter, and if
-push/fetch.recurseSubmodules have received a setting, it should not
-pick up a "stale" default value.
-
-This has been tested on Ubuntu 24.04 using:
-Git version 2.43.0
-Git build from source from the next branch
-
-
-Thank you
-Henrik
+-Peff
