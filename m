@@ -1,53 +1,53 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F38513CFA5
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 05:45:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ECE13B588
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 05:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732686309; cv=none; b=YW+77vXyGxOhioPG5GqtFnlY02BNqu22uAOHw4sBx7hJj8XDjIK+iBGIzCOI6KAU2d9U4w3WeFM+Y9AyXLe8PupNa/IpjF3XSifI70MJAphrzAP3kpibo1kBni/9MP4Zek6jCkM5gyNqO1CKQIVAu9FiGaVJfxvjO12HWtOFiJo=
+	t=1732686630; cv=none; b=dmSFq7X/pOlAxCpfUSzuyJ+dSNI4YJTGwQFHdkDaoK2Yskr2+WaxMqedCLn2bsXTj8AlgF5hFlgRVVDrFY95ObCempwkDQoH7vSTXjBOvCRWGAOZ6nik+NExXMfKPI7q4XQyQwhuXll7PFbyVMpevhqB7qxWzz4VkDFDACAIQeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732686309; c=relaxed/simple;
-	bh=SqNBS0wbAEfTq6nP+N5z+9vH2e9UVTfPYrPWRp4rL3o=;
+	s=arc-20240116; t=1732686630; c=relaxed/simple;
+	bh=L3qBb+FD6aDIOcFo3AYlUkgpnGfZ6zzKCn5v5YF7Ki4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bPKNDOIJcU2lfSY15axowaglNnvHV0HIJ5744zJ3KtzaHfqm1CKvwZO3s2bS5bqd34HKnHQ4aCusK1oK+tlcc79dz5ypaLrelBwWMiQ6ORTCZl6vWjxsnCvxO7z2KpcZUhkzRkUHjOzn0wp+QJ5FIrCU/j8erZCg4nScLdwxkho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FdzlxZAG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=swCezPht; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=cjCtv+x/UuXrWoEUj/Y1ewITkY456q9ORvOsLb56ejhMCuQZR4cd0/MQeUbrjNLmeRQ2Dp7ghtUvfVh6aHvTN6ZmA/UkcPM/B9cNyzKmCRphmBhxthr4YDWCN5ZN81qKM1CCVCu+fffBzYwwWn3NwsVFYXuZ3QYD7NtNIW+8eP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FtsT8Jwz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tE5rlRJu; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FdzlxZAG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="swCezPht"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id F09F613802C1;
-	Wed, 27 Nov 2024 00:45:03 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 27 Nov 2024 00:45:03 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FtsT8Jwz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tE5rlRJu"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C3B831140191;
+	Wed, 27 Nov 2024 00:50:26 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Wed, 27 Nov 2024 00:50:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732686303; x=1732772703; bh=9QYnhpUlDP
-	5HKLU/mefrSeGO8SIUgdTkZ0AWN82wWMo=; b=FdzlxZAGMKwZXSTCu1AvkhqZN7
-	EFv+JfGpT6O8CiytsuXpkxTp9MkxmRvaSgiiDvbYOTxuCLHolM4bUr0jRbG8CLxA
-	MvGchaHYNHm4pFzfiRIRIVY3aHbCJ43gzSvIoIkJ9NufYwVyClZQqFxTuVzgDy8I
-	Zmtmoz4/xQw/WV9dueV5t0k5ipJdEjbK7VOmDjIxuSdAe+1jM+UNvxu/xi9mx8sT
-	S55UQVppTj5zsbXqiCDpOJ9IFvcEbwzpwRKr/Gb5jtVLfL1rDnB3O514R79ZDSim
-	qJk98lz7MY6RD3BWtPBN11LkYKIVQQli2hvNWgf28aj8zSuv2xrK+U3GWM0g==
+	:subject:to:to; s=fm1; t=1732686626; x=1732773026; bh=VF/Sbm9Rbx
+	z93fhGdCbIOQGuU2JDTy6bkMAiUfNs7kc=; b=FtsT8JwzmckPrLqrdzwxATTZFK
+	PknPToYDEwYovnTYWQh7FUG9VMj7ANpYBVG2BwOeJIBn4IL3bVxjUHCd6pVcwslI
+	0p1E3LRc25Wl7veAGO9gl8E0TDkTGrCGgpN5W182FufRpX/FZIE+6GYq/0DPL/HN
+	iyPi0NA2a8OvbLh8vtx31RWRLIzzsssPBpXTDSeeZH1kzPhCDq2qjfWpqvK2HnUj
+	uB9YBb7JGaFv1CNbaimvK7zcCFffsc+yw4gkog5nJJ+dLu3HfGfUXVYN8Z2fhpCg
+	n22Ns83zFQyItPPrUg34tFSjFL2yV/Y60/FRAMK4I9XaIHm7rKsDV6xXg1qg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732686303; x=1732772703; bh=9QYnhpUlDP5HKLU/mefrSeGO8SIUgdTkZ0A
-	WN82wWMo=; b=swCezPhtHebn8/3ip65NTiP34gSVnNZQ0/c1g3l21S7mWFfgZBU
-	EUNEOEQx5YzoK3Bg94V/zOLz6/gxzYeCV1KEtKAMTH+/yiJpqWfGN7Q5vXK/d3ax
-	H1zTaJApkbIhanP2kyyF65bbFlHJPs2VNeOQPptlwvNnGgVnRBtmAgs1D2hA8iAo
-	jSHBI+U4aTVyHt1gi/6AN9o+rJe9dTStCOm41rKTIhUQMMSZfk64SmlOQRj+z4WU
-	bBQIdZTHd7XKe0hM0RJEhV3ZgvbX0LDOns4a6tF35jlHV6F0NinjPCpK6k8qiZ2Z
-	ItpAp/t6YsVW5ZZVKYV+vWGB2GXay3N84WQ==
-X-ME-Sender: <xms:37FGZx06oTPjncv7M0Ix8hdLYL-gFgmW4A1ir0-Yb2uD8V0QpKRxHg>
-    <xme:37FGZ4HojdY4fJdNCXy7AgiR9wouztq1NQIYhIq2glm7Oj1v6dnRfYJLMPxPuxER_
-    ANxPrg4R1LDDIijFQ>
-X-ME-Received: <xmr:37FGZx49nAUWqYcEVbdpQ53-Use-_ujVREPfNFpZo4NNvRYxVAu0Ny9qOIPCoRCd7MwnW_Ric33UrSAcYXQlDoPfps--rtB43yoAeNtmXRTuL28>
+	1732686626; x=1732773026; bh=VF/Sbm9Rbxz93fhGdCbIOQGuU2JDTy6bkMA
+	iUfNs7kc=; b=tE5rlRJuB9a8XPKSW7EoFdr8V8vYYEn1Ljk8zoCjxvGwDog26RR
+	MhBbwF97PLGEPUN/ytfN+zAkuNGTFtyizyVW6eDvawr0juRt25ptukX6rlUu6LxX
+	MpC8Dtl9dl6YuN6y2R+vTkoPIF85em0CdHJIisBW8q5sY7jfmf+i6y5uZFMkPjFB
+	98bpOmMXrXZy0JwgOSKYwm5SW/7ll/XS6y5cuTBKiS6VnnAXpm08jtFoldeqU4zF
+	45KsfUxo+/7gsZSvOfsUNvhJqwKr5by1PnMCZK4SpgTPrGN9Ds6F0K2wczxszwra
+	bX3gKFMiKdPxAh17M57ELBWe73o1N+JfQbw==
+X-ME-Sender: <xms:IrNGZ3LMMbb2uM7r10ZEPgVUKruTjsM5-u0iGn2-dY50j3gpDYdi8A>
+    <xme:IrNGZ7KU8O0YSV7-ajo8ImCa5PtMuDIqwOGZs6oJasGMkrxmrrbrHCGL46xc5Pji5
+    _MFTrcNwY6vkQByvg>
+X-ME-Received: <xmr:IrNGZ_uTf9ze7moE-CBHCBaqWR1xpXbxsCaJ_DggjZ0i3yRRCZctcMBPrdZOVUHI30Nn_WoF2V1fYYi76m9fmQMMY_J4TS-1__T9IEL8P-Qtgig>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeekgdekiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -55,29 +55,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeekgdekiecutefuodetggdote
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
     enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:37FGZ-1l-mK3wcXVc0Q39vqUQ_xHWh6qxt1kbwkENjVZ3vIAB28srg>
-    <xmx:37FGZ0EY8NTOVOzqNvJmnj3XflQZe4tu-KjvcdjgeOgCLo6WgCuTvg>
-    <xmx:37FGZ_9V15rxMjQGuOgS250RMwShrOpOQe8INQAXfdFSPr_Y2QA8uA>
-    <xmx:37FGZxlJpEBPok4WguutaNuKDBnzaRmxXQ9uh-fJOfm31IGBi6UVkQ>
-    <xmx:37FGZ5SMMy-yUU8LPajCNaxhO09CsZejcCkZdBocXBwLAGX-rijmeUGf>
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:IrNGZwbwjNsZOJm0bCfJQFf3i92U1k9R-kPG3EHjDtJEORdrnS1J6Q>
+    <xmx:IrNGZ-Zac9CLImlBOw_IMNnG3upsxvp6owPZqIWPPnEL-qg3cBYJUQ>
+    <xmx:IrNGZ0D0tiWKL7eO5iRUfkYWxroSh17_uU-CO5rmvPzWk5v5DZBIHQ>
+    <xmx:IrNGZ8YQ9YuedWXfvXRgISc97K8c-D5GQq4YIbihrqvdCCacIiBl_w>
+    <xmx:IrNGZ1xC5lPYyItaIURT2QvWtusVz0ZTWaRfyyr1fwtURuw7z5Ko8nxo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Nov 2024 00:45:03 -0500 (EST)
+ 27 Nov 2024 00:50:25 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 215b2267 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 27 Nov 2024 05:43:56 +0000 (UTC)
-Date: Wed, 27 Nov 2024 06:44:47 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 75490c8c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 27 Nov 2024 05:49:19 +0000 (UTC)
+Date: Wed, 27 Nov 2024 06:50:11 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] bundle: support fsck message configuration
-Message-ID: <Z0axyWrT8n8reQWl@pks.im>
-References: <20241121204119.1440773-1-jltobler@gmail.com>
- <20241127005707.319881-1-jltobler@gmail.com>
- <20241127005707.319881-3-jltobler@gmail.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	John Cai <johncai86@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] ref-cache: fix invalid free operation in `free_ref_entry`
+Message-ID: <Z0azEzigqr6DlitP@pks.im>
+References: <Z0Xd-cYPNNrxwuAB@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,45 +87,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241127005707.319881-3-jltobler@gmail.com>
+In-Reply-To: <Z0Xd-cYPNNrxwuAB@ArchLinux>
 
-On Tue, Nov 26, 2024 at 06:57:05PM -0600, Justin Tobler wrote:
-> diff --git a/bundle.c b/bundle.c
-> index 485033ea3f..4e53ddfca2 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -631,12 +631,12 @@ int unbundle(struct repository *r, struct bundle_header *header,
->  	     struct unbundle_opts *opts)
->  {
->  	struct child_process ip = CHILD_PROCESS_INIT;
-> -	enum verify_bundle_flags flags = 0;
-> +	struct unbundle_opts opts_fallback = { 0 };
->  
-> -	if (opts)
-> -		flags = opts->flags;
-> +	if (!opts)
-> +		opts = &opts_fallback;
+On Tue, Nov 26, 2024 at 10:40:57PM +0800, shejialuo wrote:
+> In cfd971520e (refs: keep track of unresolved reference value in
+> iterators, 2024-08-09), we added a new field "referent" into the "struct
+> ref" structure. In order to free the "referent", we unconditionally
+> freed the "referent" by simply adding a "free" statement.
+> 
+> However, this is a bad usage. Because when ref entry is either directory
+> or loose ref, we will always execute the following statement:
+> 
+>   free(entry->u.value.referent);
+> 
+> This does not make sense. We should never access the "entry->u.value"
+> field when "entry" is a directory. However, the change obviously doesn't
+> break the tests. Let's analysis why.
+> 
+> The anonymous union in the "ref_entry" has two members: one is "struct
+> ref_value", another is "struct ref_dir". On a 64-bit machine, the size
+> of "struct ref_dir" is 32 bytes, which is smaller than the 48-byte size
+> of "struct ref_value". And the offset of "referent" field in "struct
+> ref_value" is 40 bytes. So, whenever we create a new "ref_entry" for a
+> directory, we will leave the offset from 40 bytes to 48 bytes untouched,
+> which means the value for this memory is zero (NULL). It's OK to free a
+> NULL pointer, but this is merely a coincidence of memory layout.
 
-Tiny nit: you could've introduced the fallback in the first commit
-already. Like this you first introduce the code pattern and then change
-it immediately in the subsequent commit.
+Makes sense.
 
-Not worth a reroll though.
+> To fix this issue, we now ensure that "free(entry->u.value.referent)" is
+> only called when "entry->flag" indicates that it represents a loose
+> reference and not a directory to avoid the invalid memory operation.
+> 
+> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> ---
+>  refs/ref-cache.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+> index 35bae7e05d..02f09e4df8 100644
+> --- a/refs/ref-cache.c
+> +++ b/refs/ref-cache.c
+> @@ -68,8 +68,9 @@ static void free_ref_entry(struct ref_entry *entry)
+>  		 * trigger the reading of loose refs.
+>  		 */
+>  		clear_ref_dir(&entry->u.subdir);
+> +	} else {
+> +		free(entry->u.value.referent);
+>  	}
+> -	free(entry->u.value.referent);
+>  	free(entry);
+>  }
 
-> diff --git a/bundle.h b/bundle.h
-> index 6a09cc7bfb..df17326b09 100644
-> --- a/bundle.h
-> +++ b/bundle.h
-> @@ -41,6 +41,13 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
->  
->  struct unbundle_opts {
->  	enum verify_bundle_flags flags;
-> +	/**
+And the fix looks obviously good to me.
 
-Nit: s|/**/|/*|
-
-Again, not worth a reroll from my point of view, also with the recent
-discussion at <877c8yti5n.fsf@iotcl.com> in mind where we basically went
-"We don't care about them".
+Thanks for catching this!
 
 Patrick
