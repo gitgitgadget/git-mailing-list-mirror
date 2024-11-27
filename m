@@ -1,124 +1,103 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD8C28E8
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 01:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CD38C07
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 01:39:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732671004; cv=none; b=rmcH3kB5hIaCeUAi9h6+WtEGCMVAI7oQbiF9bQI2ntr93QG/LhJ8+XjLL0pi4i986CWE6v265sPJTZ94f2FZKaIXoY9q6i97Fnwwuc9GQuQWbN+0TqOujWcYmON7KD3ji3ZevHteiN9I+HLChLkExhUGtregT3JV3KT9fusnaH4=
+	t=1732671558; cv=none; b=j0H/Wq61y28Q6algBwjeIG+dWGwbz6QPBgjRprM5f+sovc8vYkfV0mAQGhtIFpYaqsjoHh8V4e4zEcoZ2gSjCc2CfrmZcO5TfDnYTGn1R63rFcYO6MGOVmCAzMTq0iVaa72zeZY9byonfZSH53898k46XCRdvqTe271xfsecCbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732671004; c=relaxed/simple;
-	bh=k0Zc7/EgmB3+JI/4nFlFj8kdbRzKWvQ4bGVL05Yz78w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MtK6jJK1jBcea4DtmiwSAmf8yyVI622u9fALC7LqMkJOY0euZHLb5ZjhESe/YlSSF4NgCGlFOZEqXZSXBUwUagQ6dlmtgh68vhU4iI3zRmKQFi/dZHM3C7oGQi8Q3Tbx927X9U+U2uhWVvxjwaUOfim7/T4wwICFqaJ9eQhNrsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=T3pxkIb7; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1732671558; c=relaxed/simple;
+	bh=C7cjIab4OcgwkYrH9rvOSA9fTc0txvxcs2AkB797uGs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HvjfGZzk3/KQgYevtonvwpwTHAaffz+cPQnUwW8+DJ+QVcY1Kk2icH+SYNQRPLzCmH5/z+EWXasWZRj9F7Ri6Y7c6W4Yin71QIsh9sxnDcIefikBuH1L1ecmA8CjUyzcmuMLNAeSwT8sc3ZSLk+CqklGUYaClb8v8sU6Si+hMi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yClEMSUM; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="T3pxkIb7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1732670992;
-	bh=k0Zc7/EgmB3+JI/4nFlFj8kdbRzKWvQ4bGVL05Yz78w=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=T3pxkIb7WINwPTXSKTHrbAXLdG4BWNN/i51FhGsCzpX5aJJ/ZCLQ636M66l4/q2KS
-	 X5UOE8x1OCj+cQGTrLMCZrTd7CqQnUtHf8aITMtaWb7GU8VToSjLpyUjLYDrUnMTBb
-	 TJXI0qTdpNUKA/FeM0nS1TW+fKJDiBeSBaJ9v7pKDkF1k5PsUMk4VyS96HnZ1r1T4u
-	 yAm1JCzRhsh9Bti2EzrMcKWnVv4lz+X+OWwYLD5cbpvo9D/n1cBPmad7GCC3jmtm7l
-	 l8n5dco5uMbXYvr+rJkT2L0m0mpLqOqqxHAF7e7uv5TjZDY/wwc1ly1QTXmK8O1pjH
-	 8vX0LPNk6CMLW06VUvffGQM3AnRqMV89scU80SBSmw1urvsw3iRioPxHjF4YiLIl25
-	 ixBEEegb9a/g+hlW69rXRNw4yOUMQhTCsbNDaVn4CjyfwZgrVSCHGlF7Zxqp1vnfsB
-	 DBnUjcdP7a6be2Y0fCRldJH97Ui7g2sE+/u2f0/JLICq6coDyz5
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::39])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5D22420994;
-	Wed, 27 Nov 2024 01:29:52 +0000 (UTC)
-Date: Wed, 27 Nov 2024 01:29:49 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "Peter B." <pb@das-werkstatt.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yClEMSUM"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2917C11400CF;
+	Tue, 26 Nov 2024 20:39:15 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 26 Nov 2024 20:39:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732671555; x=1732757955; bh=csI+jL0Sx0Rj9YuyMEGUv6Wvu8OZ+Oz5Utv
+	eq0kSFMA=; b=yClEMSUM9b67qoee1CvWHHeggdOMuUfIWes8XsMYp1ncuRuh8Jy
+	DnsCkAyd4F6YLrrAdM5L3to6RFQwUNmi9vkvunxnzDRUn+jS+pe161G2PSa+ixh2
+	vMB29QpX8ktLdv0O3nQbIOwSsjbXT9gcN6AQWWwPnOE+JUYgVbQYx7BFb9nh2xUg
+	+NiK0T78lUpGmP6MBkfWLg9Bka3Z16o26LBFQf6NE+LUGWpHLQgTimU1+ajJzJxK
+	ekAsi7nZl5ZAIvmV68mkXbRX5fo7VQBKcT7uDIuLqeOxOV749RaIquO17pcB42sc
+	6TAS6ZC/pVVfI4BjUpNuZ4YVRiZr4rE92CQ==
+X-ME-Sender: <xms:Q3hGZ3hep7oF3vU_CeD8iwoXA8mQZPOufCtt98zgbT43ESAAhMaNsQ>
+    <xme:Q3hGZ0AluUapFt7rTdbzeWvklWRsMGlGZfOWOk1d1P3gQAF-BekdV9Zd0jAPz3TVe
+    rQid7lM3eBjvbXiug>
+X-ME-Received: <xmr:Q3hGZ3G0rELeGdZNWDnBm8POP9m5fuFHwN-B_e9bpPwaJ7C0kT-heuEBy4Gj0AD1ukzIZj5F4z9s6WrfYjJSEAacFDvGnMzXnM_kIJo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeekgdefjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Q3hGZ0TGtSjOc86bFeUT78iTTWOrdItv8Hlz0z30C8eqtuHy2hTazQ>
+    <xmx:Q3hGZ0xHeqC2K1gGYIviQhhTBrfm2Gfdr_2RsFG77ga-AUDDKn2Q_g>
+    <xmx:Q3hGZ64_FVPoDXfNH5TasCY8AgremD-SxZd2yFT7B-Eihnzf2E7OJg>
+    <xmx:Q3hGZ5wCSIKB-r8D4oLS6EjpWc2bMAa1SR_mLzMqWFeertzOszLDqA>
+    <xmx:Q3hGZw-tGBQLah2kHL-L1PjbQS0f9EJOiwJ-c9KTyZa5sLzmkJJOLfaS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Nov 2024 20:39:14 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: git support for "xattrs" (extended filesystem attributes)?
-Message-ID: <Z0Z2DVuR2PiN-oxy@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Peter B." <pb@das-werkstatt.com>, git@vger.kernel.org
-References: <5b4c09a9-64bb-e672-e604-120563fc1ad6@das-werkstatt.com>
+Subject: Re: [PATCH v2 4/4] transport: propagate fsck configuration during
+ bundle fetch
+In-Reply-To: <20241127005707.319881-5-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 26 Nov 2024 18:57:07 -0600")
+References: <20241121204119.1440773-1-jltobler@gmail.com>
+	<20241127005707.319881-1-jltobler@gmail.com>
+	<20241127005707.319881-5-jltobler@gmail.com>
+Date: Wed, 27 Nov 2024 10:39:13 +0900
+Message-ID: <xmqqzfllv4ji.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="T5IGA+WLaSrdDGSm"
-Content-Disposition: inline
-In-Reply-To: <5b4c09a9-64bb-e672-e604-120563fc1ad6@das-werkstatt.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Justin Tobler <jltobler@gmail.com> writes:
 
---T5IGA+WLaSrdDGSm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +static int fetch_fsck_config_cb(const char *var, const char *value,
+> +				const struct config_context *ctx UNUSED, void *cb)
+> +{
+> +	struct strbuf *msg_types = cb;
+> +	int ret;
+> +
+> +	ret = fetch_pack_fsck_config(var, value, msg_types);
+> +	if (ret < 0)
+> +		return 0;
+> +
+> +	return ret;
+> +}
 
-On 2024-11-26 at 19:40:32, Peter B. wrote:
-> Hi everyone :)
->=20
-> I'm evaluating and testing extended attributes (xattrs) for professional
-> archival collection use.
-> I couldn't find any proper documentation/information on how (well) git
-> supports including xattrs in version control.
->=20
-> I assume behavior may be similar to any other property-change of
-> files/folders?
-> Would it be possible to have bit-proof preservation of all xattrs? (even
-> larger ones).
+Looks good.  Both callers of fetch_pack_fsck_config() must deal with
+the unusual -1 return from it that signals "I didn't find what I
+care", and the original caller does so by calling the default callback
+while this one just says "everything is well".
 
-As others have mentioned, Git doesn't store this.  There are a couple
-ways that one could store this information, depending on what you want
-to store.
+I wasn't carefully looking for typoes and style violations, but the
+logic flow in all these four patches looked perfect in this round.
 
-One way is to store the metadata in the `.gitattributes` file if you're
-storing one or two well-known xattrs and the values are well stored as
-text in the file.  You can then use `git ls-attr` and a `post-checkout`
-hook[0] to set those attributes appropriately.
-
-Another way is to store the data as part of an mtree(1) file in the
-repository.  mtree is a file format that comes from the BSDs that can
-contain a wide variety of data, including file type, uid and gid, text
-user and group, permissions, size, mtime, cryptographic hashes, and a
-wide variety of other data.  mtree utilities can usually generate a
-manifest based on the state of the file system, validate that files
-match a manifest, and usually update existing files such that they match
-a manifest.  There's a Go-based version[1] which does support storing
-xattrs.  Again, you can use a `post-checkout` hook here.
-
-Since mtree is a key-value format, you can also extend the value with
-other data.  I use a similar format in my dotfiles to specify install
-location, for instance, so I recommend this as a good way to store this
-data.
-
-[0] Git LFS uses post-checkout hooks to adjust the read-only bit for
-files which are lockable but not locked, so this is generally a robust
-method.
-[1] https://github.com/vbatts/go-mtree
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---T5IGA+WLaSrdDGSm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ0Z2DAAKCRB8DEliiIei
-gZ1KAP9cJbQo/ep6W8GEkmtNLoHvucO3Uvk/AkX3HKHHqwyfHwEA7bCwiVrjBAdB
-CjL4MwBwdHzqtxLCVR8QSenS94fUWAY=
-=ZnUK
------END PGP SIGNATURE-----
-
---T5IGA+WLaSrdDGSm--
+Thanks for a pleasant read.  Will queue.
