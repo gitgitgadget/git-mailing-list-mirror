@@ -1,64 +1,64 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404B201030
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 16:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB3F2010E9
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 16:28:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732724933; cv=none; b=Co5YDuRCX1LWE7mHbjgwCj0evaYn9RcofbdSHUQUNgKACGJGFNAVtwayTUVi5FMiuKXtOuT4URnZDm6Mj91oofof+sD0vLnp2EQzXlr50CNoFfq76eGzyx1mi6vShirlv/G9cd+Qbx4KC+4I7zLGkSaBc6iRXaeG/JGDlarC5Gc=
+	t=1732724934; cv=none; b=WDDeA6ZVAX3+Sgc4IVP683MtVPqamskJFaRSW+guv0G6pjPRbTgo0PT3oJdktlsMPMI5RWm3PeRjLaVaHpMYZBDZDLpAc9ypr8SNAzAscJioOg+Xl0ichtIhR2a32myikCewbusfhgh/xmDafYtiNkP8DFHpIgSkuQnhrFJcSxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732724933; c=relaxed/simple;
-	bh=ViU8JkW4ZR49GovRN3zlEVxut2zJE8Xl9HpWofIxyqY=;
+	s=arc-20240116; t=1732724934; c=relaxed/simple;
+	bh=h3d1YN0mg+7WTli0tfJG7yX2+KjePRbpgfBA0Y8W0J4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fiUrhite2VJQholm9q1DfwLZ2e7nqs6eo2SptxrMN49fu+lieHwYqEM7UfVdM4+v0BUESwOzFdNNQg35OuuSNy0TE5B4sWldxNE6gKiobR6YWS/9+ZBFt9YkcsU3YZ0wsdUpnpldQLZ8eZ40Iue/NK4UBpoDTdPCZiK+o6bUwNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RzBSmd65; arc=none smtp.client-ip=209.85.208.172
+	 In-Reply-To:To:Cc; b=kbUqrhlCRqgkPoKc3n3JaEYBUzgBhIGmP+mn4KpG3amcnZzddwU0PCqBfUKFWoWU3/MDZkkbfTxBqQE3B3GWF7XPrYYwN1vW84JhsUK3F4BxwfnKKbObQZQ/JiWwkN2Rhotf9D9a6cUMdJst/ij6Y+iPPpxEZ2e+uMoe6ajqWtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V3QrJ0Z4; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RzBSmd65"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2ffc3f2b3a9so55222391fa.1
-        for <git@vger.kernel.org>; Wed, 27 Nov 2024 08:28:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V3QrJ0Z4"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53de79c2be4so3632896e87.2
+        for <git@vger.kernel.org>; Wed, 27 Nov 2024 08:28:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732724929; x=1733329729; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732724930; x=1733329730; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=X7dDmM8xmKZjLvLDLK2A8x/QAigchVTAKjdpcKXYtEY=;
-        b=RzBSmd65wzlOW3JsHqfkgmwirJyoNsKgJu048DgyApsIJzKNDXHQADZoxd59p6nK4S
-         t22a/ipNMQ26VmP9qnVrYwziRQhiIW08wg7djvozDPTp/dfmCpP66Hx/uwT0eC/JcWu5
-         HuU9pQ0sQSZQ+vidt4Zk1rhW7WcGaNibsx/Ri7QeaoZdK+HNyw3yWGWD8+uSqbMlnyCe
-         4jw22f9BsYwn82MOhHHcyR7I5yFbwoxXDJJ9BPqroGuvdNLzzfwKLlp0E3Hq5Cqwt21K
-         69uVKuxxA4Ro8qJ0VJyX6vUgiXBLOWI0GRbf8Ax0VJMi1Gx0NFqHTLZeCwb+GDFa/uBa
-         FKvA==
+        bh=qiaMpUjWKqbyruY9egEhMlrHVuLe+9iR5WEHcxqbbsk=;
+        b=V3QrJ0Z4oadYxcoiDmsJRKs/WBwQFER4AkS901+1U1XABux1wPCUm2l9lpDtCFr4ie
+         Zt9GPHl17ygkbt8uu+ZlEwgXffzqrxBfkXKR/ZheugUAe9fLYCuAUprFwSIAOVoXS05A
+         GUCLnLHq+qhbSKr2BLsG/sg2/g47rh8TB/fE162si7zRMTVzdJ5AXqrGErucrWuXvA9+
+         dMgAlvQZnpBGHyW7iz2XOsSkH05OJCt16m6Cv1rOJUAkiTu7sTFyCDcSIb+16y1JUscS
+         lD59I9rFDItMy5ZWofSBswpbPIIZKozEMat4SiKLJsTLhcwIJu2x/WmONXyS7+IOxkYX
+         K0Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732724929; x=1733329729;
+        d=1e100.net; s=20230601; t=1732724930; x=1733329730;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X7dDmM8xmKZjLvLDLK2A8x/QAigchVTAKjdpcKXYtEY=;
-        b=BaaDI4/yWJ8+ZqB63gVdyFE2L+iHz6RJlzSQCHFRC0jKCjrOGvncujEdzuZrRBc7EP
-         jjSIICVgJILZAOjLNpIRpheKkF5GCp4e8SXppeFlEsNj3ddy1DhtoUsoXqDmrczawFHg
-         OXpLUQFLW7B73oOBotCzGcJjrTx3sclakWKXG7UolMS0JVZkF2/lqPlPc9F8wtCIxCuJ
-         WKtMKGhGHvzwS8OaABXKtQ3EJaTeFQxpWO2WoL6E8w9S8yijUJmyeYSN+pzP8TYJV3gI
-         KPd0ReIwpPSvVxyjAQRWS6/s315/X2jZDt2LsHTOsKcSWcctB6LBhBif8IoKk+k49E3J
-         w0sQ==
-X-Gm-Message-State: AOJu0Yw3SLFX8PMNq8AGaK2qrwzTmShusntZpGQ4qHZ0jB2Y9XvKP4PC
-	ORHIgwWIKi3F2qrxRMSw/e8qpMZU4YVCu1lVJ2spJjlpc7VJ3ylL
-X-Gm-Gg: ASbGncsILEi84kKRqSSuJL6rAMfEIi2RZ/0pu7z0mhwPJaKyjVrawIgASgDXw9sponP
-	OQEIY6QAZ6pSiCVmMUYmNHdTpl9o93m5JkRFz62rrumApu8GLGLb4jABTSNwKBoTJj3j2067HFl
-	7AwjOMuyt6stqrkdws6rdU+qQbxgVCZXZljtrvue74SMXoCFFZz1IiPH/VMlmC9echayOPxcG9u
-	bGYrqQo3m5wPs9MS9AMEbkirEl7G+zz0CIpXBzh5joWXuk+3aYdcZC0zI0R1g==
-X-Google-Smtp-Source: AGHT+IEkdDsP3zvMZXLqQNxuWYhBxRx7ho88koznROpooWr0vl2mXHbxNMILBIY98z9RgXyEw57Z+A==
-X-Received: by 2002:a2e:ab0a:0:b0:2fb:5c84:929b with SMTP id 38308e7fff4ca-2ffd60d2b4dmr31526571fa.36.1732724929197;
-        Wed, 27 Nov 2024 08:28:49 -0800 (PST)
+        bh=qiaMpUjWKqbyruY9egEhMlrHVuLe+9iR5WEHcxqbbsk=;
+        b=j36gDkpST9nT0Tr+cC18Ai9jcEr93pQVSxHbhw+3U0O/qLU+YidXGsF8bjRTW2N6oi
+         KYnMDTCSmVD8tDC37/aD2ha/l+ThMODdBO6KAUa3rBYTO0oSkWCisLbdgaalbYRqz/+O
+         YJCx1he+QG1OLzGYJR2rJt49VPCFUC1G5nGuQ+mh3a9bPO6pvZ5PKvDFX13M3qNDpAST
+         okf4eI6PkQ4hWtZGXSHtEbNvpCJ9yjOdqYcrzf0Mkzed9e6tejgsLKVOYoit5vMUtSsN
+         GygjAR8VXg16QkObAjY8wG/p6resWXPRrwDtW+d4+3gOde1On5hXTqDVnygf5L3qLknn
+         1XuQ==
+X-Gm-Message-State: AOJu0YxRekvA7gOfoGjF8sQZl3su8rnY2fdojnwBx7dg7nmj/bfaUQjF
+	fPOV3GslJb9UrZZyQA+tSwsFg9Ub39zrZAAWhuW9MzSFAKqXOH1t
+X-Gm-Gg: ASbGnctc/vw/TcSM21qFlirT3mcFskLKa5uP5IO/KY1Q2HSm+T7cC0HRo8CNUtuCAW+
+	VA3tthoRHJ0OsVc4f0nSj0aPxiBvBNXheiobi0AnbKya8kjUqn5oUl32tfB7H9bmIkGEf6p5X+8
+	jLmJDMnZLuD3EcuZI6xzmAOkFIhgmeLJ1IQpZg3ubUQQyTn4KkDM49dMv+c5JF5s4Pon2KmqZt6
+	4QnZmVb66gPrErkhxykTDuGQSYgmwVfnNtsun5hK2/qf+b0H8eRledlYweVgA==
+X-Google-Smtp-Source: AGHT+IGRKP+2UTIdmxD0dnYlyCrtIpnQh7qAUY8IrINLyXoWKNg/99ezZmbs98+G8SO1QIATdmweIg==
+X-Received: by 2002:a05:6512:b9c:b0:53d:ed62:e653 with SMTP id 2adb3069b0e04-53df00d102bmr2103987e87.15.1732724930175;
+        Wed, 27 Nov 2024 08:28:50 -0800 (PST)
 Received: from [192.168.178.20] ([2a02:2455:825d:6a00:5640:4a6:5555:68ae])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa54e15c169sm420042366b.67.2024.11.27.08.28.48
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa54e15c169sm420042366b.67.2024.11.27.08.28.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2024 08:28:48 -0800 (PST)
+        Wed, 27 Nov 2024 08:28:49 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 27 Nov 2024 17:28:27 +0100
-Subject: [PATCH v3 2/8] midx-write: use `revs->repo` inside
- `read_refs_snapshot`
+Date: Wed, 27 Nov 2024 17:28:28 +0100
+Subject: [PATCH v3 3/8] write-midx: add repository field to
+ `write_midx_context`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-2-c5a99f85009b@gmail.com>
+Message-Id: <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-3-c5a99f85009b@gmail.com>
 References: <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-0-c5a99f85009b@gmail.com>
 In-Reply-To: <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-0-c5a99f85009b@gmail.com>
 To: git@vger.kernel.org
@@ -75,52 +75,180 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, me@ttaylorr.com,
  shejialuo@gmail.com, gitster@pobox.com, 
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1235; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=ViU8JkW4ZR49GovRN3zlEVxut2zJE8Xl9HpWofIxyqY=;
- b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnR0i8kLXnJBXFv/8HlEEGyiS/sPDyghwQAHiri
- epdfTEIFaCJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ0dIvAAKCRA+1Z8kjkaM
- fwr9DACb6vSoyugrNWE93ZYASNRkLN7C+tG4+ouH6v6vvWwEc5AaRskS9qcBw0kbtowDdO7zvsJ
- +JXcRPPqhk56XCUj1/LR9ljEEW0KH4+Cbc2mn0tc/eBYi6SARiFDPqOU5inrRpm0iXAxV9VsvxG
- AVrspDY/P+bsRmzZVPC6ySfc8caAUDDMBEM6fddSYOHCmHEc2lsp0tH2l7qPIFPuhmisaob01t7
- RtiofDDZIxVxzFayDW6Rfcg4KO1EArAnSm/OptyPY//T+ikcAbkp5bAKD9hnz2t/NWXQdN1eaVX
- r+ngtUHOP2nkLyFvffDP3zLRVxcgZl3PhHmHhfj5bIe6H5+uTv63mv7gQiz2s9xCpVQFu8I4D6v
- QlrPcqFO0XLYrgGJw6omWGxZ8uBenFDyOdhoZulsyYI2cVYX6yrVjw9c0wf7k+RM4Q/lcof6GRT
- OaeQIXMqHt2yPEQboSf511/cLKaCdZJPjnE0reEqgyDWMDAoww6zFDSEmGmmF/s1stC9A=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6085; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=h3d1YN0mg+7WTli0tfJG7yX2+KjePRbpgfBA0Y8W0J4=;
+ b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnR0i84GdtnzXEsdIRkUoVfVGEJd2uKz2noRYlZ
+ 03KltVqRFaJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ0dIvAAKCRA+1Z8kjkaM
+ f7/+C/9cAOVFrh5mKDZA60065pevICIwJXTAXsqtp4uV0UVC1T5S3arZObygdKGm1/hGQ4atDoL
+ J+dNOR+SrTXKqSz/8kOy5m2y06CT89oEXzlYTtvfIDL4hKoLKDIYqWKf50/BHUlUWqDrBoFCPfi
+ p8XEVB6NaHYeSXNoWhrVN3v2HkGGeGOkU9Kj8SrtMgwJMWBJ8nscZ7/W0OB7ojwXT3HDPLQk3lZ
+ Cqt1Van7g/uUyaRF+j8FXxzonLm0nVVgO4Oy2U7x+XmFzUL3yF0oI3gURJecPN2VTiPIW0S8K8r
+ TWC+u+gOxFsfS7WIr7iQfEUj5YBP4picZh6UWCPqRXTc5ac9tYcNS5goau/hygg6o/4Ua+8IYAH
+ 1dnimUJg9JC967oawfgKKXl3CXfTTNf+QAdiXbgYI3cUfEbWGhhX+o/s1GALTH3RrI0I4u75iR8
+ xeFNXNmLE+T72QXrZa0I1oKD1WjsJJH5kvsTQnNgBvg9ZFEYw0w5KxlO2ROxI92dElyj8=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The function `read_refs_snapshot()` uses `parse_oid_hex()`, which relies
-on the global `the_hash_algo` variable. Let's instead use
-`parse_oid_hex_algop()` and provide the hash algo via `revs->repo`.
-
-Also, while here, fix a missing newline after the function's definition.
+The struct `write_midx_context` is used to pass context for creating
+MIDX files. Add the repository field here to ensure that most functions
+within `midx-write.c` have access to the field and can use that instead
+of the global `the_repository` variable.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- midx-write.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ midx-write.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
 diff --git a/midx-write.c b/midx-write.c
-index 22b5233f51ec6c6d99b8f9613818f1581dca5982..564438f616f59cd24edda956e4af0e0acf167138 100644
+index 564438f616f59cd24edda956e4af0e0acf167138..1c355cdf8db4e9fed61a4aabf61a237ad26181ce 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -760,7 +760,7 @@ static int read_refs_snapshot(const char *refs_snapshot,
- 			hex = &buf.buf[1];
- 		}
+@@ -110,6 +110,8 @@ struct write_midx_context {
+ 	uint32_t num_multi_pack_indexes_before;
  
--		if (parse_oid_hex(hex, &oid, &end) < 0)
-+		if (parse_oid_hex_algop(hex, &oid, &end, revs->repo->hash_algo) < 0)
- 			die(_("could not parse line: %s"), buf.buf);
- 		if (*end)
- 			die(_("malformed line: %s"), buf.buf);
-@@ -776,6 +776,7 @@ static int read_refs_snapshot(const char *refs_snapshot,
- 	strbuf_release(&buf);
- 	return 0;
- }
+ 	struct string_list *to_include;
 +
- static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr_p,
- 						    const char *refs_snapshot,
- 						    struct write_midx_context *ctx)
++	struct repository *repo;
+ };
+ 
+ static int should_include_pack(const struct write_midx_context *ctx,
+@@ -154,7 +156,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
+ 			return;
+ 
+ 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
+-		p = add_packed_git(the_repository, full_path, full_path_len, 0);
++		p = add_packed_git(ctx->repo, full_path, full_path_len, 0);
+ 		if (!p) {
+ 			warning(_("failed to add packfile '%s'"),
+ 				full_path);
+@@ -480,7 +482,7 @@ static int write_midx_oid_lookup(struct hashfile *f,
+ 				 void *data)
+ {
+ 	struct write_midx_context *ctx = data;
+-	unsigned char hash_len = the_hash_algo->rawsz;
++	unsigned char hash_len = ctx->repo->hash_algo->rawsz;
+ 	struct pack_midx_entry *list = ctx->entries;
+ 	uint32_t i;
+ 
+@@ -605,7 +607,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
+ 	uint32_t *pack_order, base_objects = 0;
+ 	uint32_t i;
+ 
+-	trace2_region_enter("midx", "midx_pack_order", the_repository);
++	trace2_region_enter("midx", "midx_pack_order", ctx->repo);
+ 
+ 	if (ctx->incremental && ctx->base_midx)
+ 		base_objects = ctx->base_midx->num_objects +
+@@ -640,7 +642,7 @@ static uint32_t *midx_pack_order(struct write_midx_context *ctx)
+ 	}
+ 	free(data);
+ 
+-	trace2_region_leave("midx", "midx_pack_order", the_repository);
++	trace2_region_leave("midx", "midx_pack_order", ctx->repo);
+ 
+ 	return pack_order;
+ }
+@@ -651,9 +653,10 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
+ 	struct strbuf buf = STRBUF_INIT;
+ 	char *tmp_file;
+ 
+-	trace2_region_enter("midx", "write_midx_reverse_index", the_repository);
++	trace2_region_enter("midx", "write_midx_reverse_index", ctx->repo);
+ 
+-	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex(midx_hash));
++	strbuf_addf(&buf, "%s-%s.rev", midx_name, hash_to_hex_algop(midx_hash,
++								    ctx->repo->hash_algo));
+ 
+ 	tmp_file = write_rev_file_order(NULL, ctx->pack_order, ctx->entries_nr,
+ 					midx_hash, WRITE_REV);
+@@ -664,7 +667,7 @@ static void write_midx_reverse_index(char *midx_name, unsigned char *midx_hash,
+ 	strbuf_release(&buf);
+ 	free(tmp_file);
+ 
+-	trace2_region_leave("midx", "write_midx_reverse_index", the_repository);
++	trace2_region_leave("midx", "write_midx_reverse_index", ctx->repo);
+ }
+ 
+ static void prepare_midx_packing_data(struct packing_data *pdata,
+@@ -672,10 +675,10 @@ static void prepare_midx_packing_data(struct packing_data *pdata,
+ {
+ 	uint32_t i;
+ 
+-	trace2_region_enter("midx", "prepare_midx_packing_data", the_repository);
++	trace2_region_enter("midx", "prepare_midx_packing_data", ctx->repo);
+ 
+ 	memset(pdata, 0, sizeof(struct packing_data));
+-	prepare_packing_data(the_repository, pdata);
++	prepare_packing_data(ctx->repo, pdata);
+ 
+ 	for (i = 0; i < ctx->entries_nr; i++) {
+ 		uint32_t pos = ctx->pack_order[i];
+@@ -686,7 +689,7 @@ static void prepare_midx_packing_data(struct packing_data *pdata,
+ 			       ctx->info[ctx->pack_perm[from->pack_int_id]].p);
+ 	}
+ 
+-	trace2_region_leave("midx", "prepare_midx_packing_data", the_repository);
++	trace2_region_leave("midx", "prepare_midx_packing_data", ctx->repo);
+ }
+ 
+ static int add_ref_to_pending(const char *refname, const char *referent UNUSED,
+@@ -784,17 +787,16 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
+ 	struct rev_info revs;
+ 	struct bitmap_commit_cb cb = {0};
+ 
+-	trace2_region_enter("midx", "find_commits_for_midx_bitmap",
+-			    the_repository);
++	trace2_region_enter("midx", "find_commits_for_midx_bitmap", ctx->repo);
+ 
+ 	cb.ctx = ctx;
+ 
+-	repo_init_revisions(the_repository, &revs, NULL);
++	repo_init_revisions(ctx->repo, &revs, NULL);
+ 	if (refs_snapshot) {
+ 		read_refs_snapshot(refs_snapshot, &revs);
+ 	} else {
+ 		setup_revisions(0, NULL, &revs, NULL);
+-		refs_for_each_ref(get_main_ref_store(the_repository),
++		refs_for_each_ref(get_main_ref_store(ctx->repo),
+ 				  add_ref_to_pending, &revs);
+ 	}
+ 
+@@ -822,8 +824,7 @@ static struct commit **find_commits_for_midx_bitmap(uint32_t *indexed_commits_nr
+ 
+ 	release_revisions(&revs);
+ 
+-	trace2_region_leave("midx", "find_commits_for_midx_bitmap",
+-			    the_repository);
++	trace2_region_leave("midx", "find_commits_for_midx_bitmap", ctx->repo);
+ 
+ 	return cb.commits;
+ }
+@@ -945,7 +946,7 @@ static int fill_packs_from_midx(struct write_midx_context *ctx,
+ 			 */
+ 			if (flags & MIDX_WRITE_REV_INDEX ||
+ 			    preferred_pack_name) {
+-				if (prepare_midx_pack(the_repository, m,
++				if (prepare_midx_pack(ctx->repo, m,
+ 						      m->num_packs_in_base + i)) {
+ 					error(_("could not load pack"));
+ 					return 1;
+@@ -1073,6 +1074,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 
+ 	trace2_region_enter("midx", "write_midx_internal", r);
+ 
++	ctx.repo = r;
+ 
+ 	ctx.incremental = !!(flags & MIDX_WRITE_INCREMENTAL);
+ 	if (ctx.incremental && (flags & MIDX_WRITE_BITMAP))
+@@ -1469,7 +1471,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
+ 	}
+ 
+ 	if (ctx.m || ctx.base_midx)
+-		close_object_store(the_repository->objects);
++		close_object_store(ctx.repo->objects);
+ 
+ 	if (commit_lock_file(&lk) < 0)
+ 		die_errno(_("could not write multi-pack-index"));
 
 -- 
 2.47.1
