@@ -1,53 +1,53 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 408A33FB9C
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 05:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F38513CFA5
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 05:45:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732686309; cv=none; b=ZtKMu/2sqAqPhv2ZAHK3/aadDR8rNco9/P7NC8XYzGcilHJMup8xsdif+55aY3MZztIbrZWvEgSJWmmG7KFH4q8q5tPHu0xFW2RLYa+bYiKb9fw9+yQONqjhyaXNP8o3S/d2HG74qE3VVo/o3Y0LSzQ2R/ioRLlOpmQ1OQbW8+0=
+	t=1732686309; cv=none; b=YW+77vXyGxOhioPG5GqtFnlY02BNqu22uAOHw4sBx7hJj8XDjIK+iBGIzCOI6KAU2d9U4w3WeFM+Y9AyXLe8PupNa/IpjF3XSifI70MJAphrzAP3kpibo1kBni/9MP4Zek6jCkM5gyNqO1CKQIVAu9FiGaVJfxvjO12HWtOFiJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732686309; c=relaxed/simple;
-	bh=nTenV+u1JCEts5ixZ618uc/xkW8e5BBIawFlnCWMZzo=;
+	bh=SqNBS0wbAEfTq6nP+N5z+9vH2e9UVTfPYrPWRp4rL3o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lEwSQ97vvFZheVlMza385IKSsG1vEVC5K+l3k880BdheTTYr6M2jY2wn3O8ldeNkAZO8jL3MvH+5u9uL1Xu0l6lS4WxQC6Obb9Ze0xeUwQga/IIRChKDTi3//hGi98rFLkWT3PwhUHtVTkdoQexpD/6DtRbiagibgjfPMQSkQ5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pGlQHmYH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x4BIFy4g; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPKNDOIJcU2lfSY15axowaglNnvHV0HIJ5744zJ3KtzaHfqm1CKvwZO3s2bS5bqd34HKnHQ4aCusK1oK+tlcc79dz5ypaLrelBwWMiQ6ORTCZl6vWjxsnCvxO7z2KpcZUhkzRkUHjOzn0wp+QJ5FIrCU/j8erZCg4nScLdwxkho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FdzlxZAG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=swCezPht; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pGlQHmYH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x4BIFy4g"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4458E11401D0;
-	Wed, 27 Nov 2024 00:45:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FdzlxZAG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="swCezPht"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id F09F613802C1;
+	Wed, 27 Nov 2024 00:45:03 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 27 Nov 2024 00:45:05 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 27 Nov 2024 00:45:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1732686305; x=1732772705; bh=7T0HuJs1X7
-	GWikaruRrJtkxbQ8NllgpOB9uK4B34mmY=; b=pGlQHmYHF2nGI2STgRaLGu4qOY
-	JxYYf0XjRhDoqik1LMBPR3yLYxTmqI3hu8wlqg7k59QF8Xj3bswsFMNuErDYCj2f
-	eUBxQNXVeKffGvj/DG24rGqk8VYOXh75TWEutt4/nEjsbwz6bAv8N5bfjGAq4IPc
-	w8e7PTFlGn9oq6V2n7IJaVjMfVplFh+25Q05YHZpD3M2iHyGyq7iJkGcZYowBd1t
-	nnFEvwVOn9zfjvCWrUO+cPduMPwhZK+ZcRRW+XUp3K8ep8tCVm9urOOOGKKINXfq
-	udS8GiBi4gtR/elmMqFCIlbYjgD9URmDNJcvsmp5+Nrac2iu1xDMOO1fBpRQ==
+	:subject:to:to; s=fm1; t=1732686303; x=1732772703; bh=9QYnhpUlDP
+	5HKLU/mefrSeGO8SIUgdTkZ0AWN82wWMo=; b=FdzlxZAGMKwZXSTCu1AvkhqZN7
+	EFv+JfGpT6O8CiytsuXpkxTp9MkxmRvaSgiiDvbYOTxuCLHolM4bUr0jRbG8CLxA
+	MvGchaHYNHm4pFzfiRIRIVY3aHbCJ43gzSvIoIkJ9NufYwVyClZQqFxTuVzgDy8I
+	Zmtmoz4/xQw/WV9dueV5t0k5ipJdEjbK7VOmDjIxuSdAe+1jM+UNvxu/xi9mx8sT
+	S55UQVppTj5zsbXqiCDpOJ9IFvcEbwzpwRKr/Gb5jtVLfL1rDnB3O514R79ZDSim
+	qJk98lz7MY6RD3BWtPBN11LkYKIVQQli2hvNWgf28aj8zSuv2xrK+U3GWM0g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732686305; x=1732772705; bh=7T0HuJs1X7GWikaruRrJtkxbQ8NllgpOB9u
-	K4B34mmY=; b=x4BIFy4gRtPCLR7gxrIRytFUhzO3EyQBwYGi6p+1imlDxtvrpJN
-	VBSJXgJTPXClKkhXXiRUmIOxL5gSIIDzcLIhEVNQz4eHpaa7tcGDJz8qIHr9k2GO
-	tbNLjOI1HCn6C+I09pxkJdxkNo3j9tpQ9KELaUcBVK57mKYOs0M3Ivq5ZFqM9AxS
-	CUuF7Y4AWzDI7zPDEGdEAJ+3ONtg6sun+gemEJON3gPodUukvNNRoZLW/dO57G9A
-	bpCwaE6o+pcOTZts6xeUXI3wXGmfAMLhiQe+vqT1pTzENrQqKoyCh0dMA2iPzFqm
-	jqZro85rFhasz5N+R8n7d8/s4lXLoYG/+LA==
-X-ME-Sender: <xms:4LFGZ0rJb_XNPW5LB1E6ADyX2GW287IOnE0WjyKePUJlN-942cX-Mg>
-    <xme:4LFGZ6pMn_MRvsM-cT2ixXTqzwTcJS3va4P3PmmDi1-0ERkvnwpi4N-yd_CUjGs2o
-    3tUM1VTTs3Xa_s8qQ>
-X-ME-Received: <xmr:4LFGZ5O4zOmyorpXDAtBJuJz0O39PjncW9n7ThJKkPZqyPkDcUuTya3OyRXQwKi91U98k1L6clK1sFWini6QhLUVekYk4WwOE9ywxRxILEwoh8Y>
+	1732686303; x=1732772703; bh=9QYnhpUlDP5HKLU/mefrSeGO8SIUgdTkZ0A
+	WN82wWMo=; b=swCezPhtHebn8/3ip65NTiP34gSVnNZQ0/c1g3l21S7mWFfgZBU
+	EUNEOEQx5YzoK3Bg94V/zOLz6/gxzYeCV1KEtKAMTH+/yiJpqWfGN7Q5vXK/d3ax
+	H1zTaJApkbIhanP2kyyF65bbFlHJPs2VNeOQPptlwvNnGgVnRBtmAgs1D2hA8iAo
+	jSHBI+U4aTVyHt1gi/6AN9o+rJe9dTStCOm41rKTIhUQMMSZfk64SmlOQRj+z4WU
+	bBQIdZTHd7XKe0hM0RJEhV3ZgvbX0LDOns4a6tF35jlHV6F0NinjPCpK6k8qiZ2Z
+	ItpAp/t6YsVW5ZZVKYV+vWGB2GXay3N84WQ==
+X-ME-Sender: <xms:37FGZx06oTPjncv7M0Ix8hdLYL-gFgmW4A1ir0-Yb2uD8V0QpKRxHg>
+    <xme:37FGZ4HojdY4fJdNCXy7AgiR9wouztq1NQIYhIq2glm7Oj1v6dnRfYJLMPxPuxER_
+    ANxPrg4R1LDDIijFQ>
+X-ME-Received: <xmr:37FGZx49nAUWqYcEVbdpQ53-Use-_ujVREPfNFpZo4NNvRYxVAu0Ny9qOIPCoRCd7MwnW_Ric33UrSAcYXQlDoPfps--rtB43yoAeNtmXRTuL28>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeekgdekiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeekgdekiecutefuodetggdote
     enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:4LFGZ74UZmCv_rR9Jly6ukXL-vvCYc0jtP63QTDYzQBnovoVX7bYCQ>
-    <xmx:4LFGZz5NheHxrIWGlAPwFRzyNcL3oV5HHl-0NdCBc7qGmueMU3RiUA>
-    <xmx:4LFGZ7gzNkMtc9GY-_MUocNV51I8WOWe4TnUv7BuCo42CkdBzL-6DA>
-    <xmx:4LFGZ97myAC-fYZ2MFPn3uFacUxtdg0QWnMlv7AVSz7RqKAmucod7w>
-    <xmx:4bFGZzGE6UVz242QnDZJEgMEkzD-lTN8e_lsOhW4jCVPAGwLHSQ8inZ0>
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:37FGZ-1l-mK3wcXVc0Q39vqUQ_xHWh6qxt1kbwkENjVZ3vIAB28srg>
+    <xmx:37FGZ0EY8NTOVOzqNvJmnj3XflQZe4tu-KjvcdjgeOgCLo6WgCuTvg>
+    <xmx:37FGZ_9V15rxMjQGuOgS250RMwShrOpOQe8INQAXfdFSPr_Y2QA8uA>
+    <xmx:37FGZxlJpEBPok4WguutaNuKDBnzaRmxXQ9uh-fJOfm31IGBi6UVkQ>
+    <xmx:37FGZ5SMMy-yUU8LPajCNaxhO09CsZejcCkZdBocXBwLAGX-rijmeUGf>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Nov 2024 00:45:04 -0500 (EST)
+ 27 Nov 2024 00:45:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e1ce56cf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 27 Nov 2024 05:43:59 +0000 (UTC)
-Date: Wed, 27 Nov 2024 06:44:51 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 215b2267 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 27 Nov 2024 05:43:56 +0000 (UTC)
+Date: Wed, 27 Nov 2024 06:44:47 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] fetch-pack: split out fsck config parsing
-Message-ID: <Z0ax0_SDtinH6zCY@pks.im>
+Subject: Re: [PATCH v2 2/4] bundle: support fsck message configuration
+Message-ID: <Z0axyWrT8n8reQWl@pks.im>
 References: <20241121204119.1440773-1-jltobler@gmail.com>
  <20241127005707.319881-1-jltobler@gmail.com>
- <20241127005707.319881-4-jltobler@gmail.com>
+ <20241127005707.319881-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,74 +86,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241127005707.319881-4-jltobler@gmail.com>
+In-Reply-To: <20241127005707.319881-3-jltobler@gmail.com>
 
-On Tue, Nov 26, 2024 at 06:57:06PM -0600, Justin Tobler wrote:
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index fe1fb3c1b7..e7d4f6e6e2 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -1877,14 +1877,24 @@ static int fetch_pack_config_cb(const char *var, const char *value,
->  		if (!value)
->  			return config_error_nonbool(var);
->  		if (is_valid_msg_type(msg_id, value))
-> -			strbuf_addf(&fsck_msg_types, "%c%s=%s",
-> -				fsck_msg_types.len ? ',' : '=', msg_id, value);
-> +			strbuf_addf(msg_types, "%c%s=%s",
-> +				msg_types->len ? ',' : '=', msg_id, value);
->  		else
->  			warning("Skipping unknown msg id '%s'", msg_id);
->  		return 0;
->  	}
+On Tue, Nov 26, 2024 at 06:57:05PM -0600, Justin Tobler wrote:
+> diff --git a/bundle.c b/bundle.c
+> index 485033ea3f..4e53ddfca2 100644
+> --- a/bundle.c
+> +++ b/bundle.c
+> @@ -631,12 +631,12 @@ int unbundle(struct repository *r, struct bundle_header *header,
+>  	     struct unbundle_opts *opts)
+>  {
+>  	struct child_process ip = CHILD_PROCESS_INIT;
+> -	enum verify_bundle_flags flags = 0;
+> +	struct unbundle_opts opts_fallback = { 0 };
 >  
-> -	return git_default_config(var, value, ctx, cb);
-> +	return -1;
-> +}
-> +
-> +static int fetch_pack_config_cb(const char *var, const char *value,
-> +				const struct config_context *ctx, void *cb)
-> +{
-> +	int ret = fetch_pack_fsck_config(var, value, &fsck_msg_types);
-> +	if (ret < 0)
-> +		return git_default_config(var, value, ctx, cb);
-> +
-> +	return ret;
->  }
+> -	if (opts)
+> -		flags = opts->flags;
+> +	if (!opts)
+> +		opts = &opts_fallback;
+
+Tiny nit: you could've introduced the fallback in the first commit
+already. Like this you first introduce the code pattern and then change
+it immediately in the subsequent commit.
+
+Not worth a reroll though.
+
+> diff --git a/bundle.h b/bundle.h
+> index 6a09cc7bfb..df17326b09 100644
+> --- a/bundle.h
+> +++ b/bundle.h
+> @@ -41,6 +41,13 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
 >  
->  static void fetch_pack_config(void)
+>  struct unbundle_opts {
+>  	enum verify_bundle_flags flags;
+> +	/**
 
-Okay, this now reads a lot nicer. But I'm sceptical whether we should
-return -1 for the case where the value wasn't handled because we now
-cannot discern the case where the function returns an error from the
-case where it simply didn't handle the value.
+Nit: s|/**/|/*|
 
-In fact, we cannot even use positive values right now as far as I can
-see:
-
-  - We return 0 on success.
-
-  - We return 1 in case `git_config_pathname()` indicates an error.
-
-  - We return -1 when there is no value with "fetch.fsck.".
-
-I'd propose to have a look at whether the positive return value from the
-second case is actually used anywhere. If not, we can refactor this case
-so that we always return negative on errors. And then we could further
-adapt the function to return positive in case it didn't handle the
-value.
-
-> diff --git a/fetch-pack.h b/fetch-pack.h
-> index b5c579cdae..c667b6fbf3 100644
-> --- a/fetch-pack.h
-> +++ b/fetch-pack.h
-> @@ -106,4 +106,7 @@ int report_unmatched_refs(struct ref **sought, int nr_sought);
->   */
->  int fetch_pack_fsck_objects(void);
->  
-> +int fetch_pack_fsck_config(const char *var, const char *value,
-> +			   struct strbuf *msg_types);
-
-We should also add some docs here, at the least to document the error
-codes.
+Again, not worth a reroll from my point of view, also with the recent
+discussion at <877c8yti5n.fsf@iotcl.com> in mind where we basically went
+"We don't care about them".
 
 Patrick
