@@ -1,101 +1,124 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964001DFDE
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 01:23:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD8C28E8
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 01:29:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732670594; cv=none; b=hWSdV0X/Pm4wmDrRVx0i5KvM4nVaXK7Hf58Rl3JmqmVdPCGDaS6MbrcYUVAK6tmZ4mXABPwE7ZVkXYzIaEp4RVgkPjX8OJ3H1wizkojPq48tneJi4Qj4EfY7sksfUgD7dfc9bY2PPGU8ZUE4iwaGLF7qTvmDDR0smo5G/VumIjM=
+	t=1732671004; cv=none; b=rmcH3kB5hIaCeUAi9h6+WtEGCMVAI7oQbiF9bQI2ntr93QG/LhJ8+XjLL0pi4i986CWE6v265sPJTZ94f2FZKaIXoY9q6i97Fnwwuc9GQuQWbN+0TqOujWcYmON7KD3ji3ZevHteiN9I+HLChLkExhUGtregT3JV3KT9fusnaH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732670594; c=relaxed/simple;
-	bh=yu49bfP8Iy1C6Nkzv3ViNLBsLugx2MuRLsUEsJch3x0=;
+	s=arc-20240116; t=1732671004; c=relaxed/simple;
+	bh=k0Zc7/EgmB3+JI/4nFlFj8kdbRzKWvQ4bGVL05Yz78w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A3y0Hr5NCnmwvhTFv0DpQI46PwlCMIsRurya3M/fPtfb4SfbOKyChBclVerdZquySBMkdqYz3KGH4ntqZW1TopMYHcv1Aik1GOgtp0ytdn9dO+cFsL+VT1AQNZDtwxQwTGz5DQyu1ZTFQIVXoMKIJhqN65y3RoA1d+Jd0JpdQhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mwFym+Jp; arc=none smtp.client-ip=209.85.161.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=MtK6jJK1jBcea4DtmiwSAmf8yyVI622u9fALC7LqMkJOY0euZHLb5ZjhESe/YlSSF4NgCGlFOZEqXZSXBUwUagQ6dlmtgh68vhU4iI3zRmKQFi/dZHM3C7oGQi8Q3Tbx927X9U+U2uhWVvxjwaUOfim7/T4wwICFqaJ9eQhNrsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=T3pxkIb7; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mwFym+Jp"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5f205c4625dso487513eaf.3
-        for <git@vger.kernel.org>; Tue, 26 Nov 2024 17:23:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732670591; x=1733275391; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OxzrlPPnmbWdDGNRE85cRYcUMXwC2bOILRWQLQZ2mgU=;
-        b=mwFym+JpE8aXHZUuHXIcA9FIc1yykNTccg6OeGT+fZSSY1VbBhRPYIUYM+d2hk5En6
-         9QtliFMnIQphsAmoEX7/EfbM9LC1yv5Z6lwh2MQU9JJzpdmxFxY2YSnwsiYdyVbGdjKr
-         7Q/gGcMRCifEumcwbddJo30RrXjkOHuIwrle1N2AIZhzdf8uL4WJF2jN1BVhY4Yiit5h
-         ZuUfuoOFc7mOIADxMjU0kBbFCnR0/NZc8vebZiWlqpYJZ2MWBawCLuuQaOZ4PbugnVoK
-         IlE5/t10zyQ0ptKrwcPgebV9X4w86UUoIlOG/MDM2hm+AnaaiCGS3rTs6J7YKBV91BbC
-         3mYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732670591; x=1733275391;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OxzrlPPnmbWdDGNRE85cRYcUMXwC2bOILRWQLQZ2mgU=;
-        b=d8Acx3ZxYXNtk0mKRfXstdUk9vDHH/12yDcOOW+LwI8k80yZiXb0KrzQQupIo9AhGJ
-         42GaCF4+ymkgpHymAcDq8iVFIr0SLlJxK6eC6r3fsGyLIL57D11mkNTgzsFF5rffR7fa
-         qSj8VVYcedAJGo8ODbzIIXJE09VhMlmxvk4kgcvLdINYB2PpbFil1JC1BnVfzu2OEnnm
-         i5hSc3IAArhwZuxJEVVCRf/soGohxzzTfqizBXhDfmJgi9NRg+aCbVWE36gIcZVDoFdG
-         71rGnSPQwj0+SYeESgPsAY0BpJ73eBn3j+MMbSwuWxjBcYFPeMkiHXZcBjH1YkYNS6Zi
-         c3Rw==
-X-Gm-Message-State: AOJu0Yxn/3XjMJW1Ih/3laOky1adYEjbXcTjHqMbfNSaK9BvwHoOAc3t
-	4QthLjoNguwoRPb49rmH4syQ3Lz29cnffxgx51ZBdKTvFmA9FjFv3ajTVQ==
-X-Gm-Gg: ASbGncsASzt1md13LdVMD3XwsS3Nh6fWVCneD4txfRpIomXuw5xdYitYt+U9ZmbsuFG
-	1TeycLnnW1UkYo82kEcR3Q6hjePXZrF8rUhqVKzKtiBt84cj0+oro3Salznin0y5o+ONRKo5n1R
-	Tlz9nMzR09MuMqFeQbdilWvSKWoGCrcW7o50qvE/VWfzf2aoFei8FT2KTmSJsRIT9D5WJQZXW3k
-	kc5YzMxtohxX48XqXfZ2U5RB4sfqNACQIYJ218Axug=
-X-Google-Smtp-Source: AGHT+IFHzJINqmBp8LbbopTGiRkAmct+lpXXxl3Pp5QCWcroa9Id6835DMyT7+b6f9ahnALWcxLN8w==
-X-Received: by 2002:a05:6871:691:b0:297:250f:4199 with SMTP id 586e51a60fabf-29dc418cdfemr1102009fac.23.1732670591673;
-        Tue, 26 Nov 2024 17:23:11 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71c0381d184sm3323904a34.55.2024.11.26.17.23.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2024 17:23:10 -0800 (PST)
-Date: Tue, 26 Nov 2024 19:21:12 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: shejialuo <shejialuo@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="T3pxkIb7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1732670992;
+	bh=k0Zc7/EgmB3+JI/4nFlFj8kdbRzKWvQ4bGVL05Yz78w=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=T3pxkIb7WINwPTXSKTHrbAXLdG4BWNN/i51FhGsCzpX5aJJ/ZCLQ636M66l4/q2KS
+	 X5UOE8x1OCj+cQGTrLMCZrTd7CqQnUtHf8aITMtaWb7GU8VToSjLpyUjLYDrUnMTBb
+	 TJXI0qTdpNUKA/FeM0nS1TW+fKJDiBeSBaJ9v7pKDkF1k5PsUMk4VyS96HnZ1r1T4u
+	 yAm1JCzRhsh9Bti2EzrMcKWnVv4lz+X+OWwYLD5cbpvo9D/n1cBPmad7GCC3jmtm7l
+	 l8n5dco5uMbXYvr+rJkT2L0m0mpLqOqqxHAF7e7uv5TjZDY/wwc1ly1QTXmK8O1pjH
+	 8vX0LPNk6CMLW06VUvffGQM3AnRqMV89scU80SBSmw1urvsw3iRioPxHjF4YiLIl25
+	 ixBEEegb9a/g+hlW69rXRNw4yOUMQhTCsbNDaVn4CjyfwZgrVSCHGlF7Zxqp1vnfsB
+	 DBnUjcdP7a6be2Y0fCRldJH97Ui7g2sE+/u2f0/JLICq6coDyz5
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::39])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5D22420994;
+	Wed, 27 Nov 2024 01:29:52 +0000 (UTC)
+Date: Wed, 27 Nov 2024 01:29:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: "Peter B." <pb@das-werkstatt.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] fetch-pack: expose `fetch_pack_config_cb()`
-Message-ID: <4f43efzkdocq4lohy2nkdebhdmlxt7adaui5h3pc4cvqb4gczu@mei2h3twif3z>
-References: <20241121204119.1440773-1-jltobler@gmail.com>
- <20241121204119.1440773-5-jltobler@gmail.com>
- <Z0C1PxdltxDm8pyA@ArchLinux>
+Subject: Re: git support for "xattrs" (extended filesystem attributes)?
+Message-ID: <Z0Z2DVuR2PiN-oxy@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Peter B." <pb@das-werkstatt.com>, git@vger.kernel.org
+References: <5b4c09a9-64bb-e672-e604-120563fc1ad6@das-werkstatt.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T5IGA+WLaSrdDGSm"
 Content-Disposition: inline
-In-Reply-To: <Z0C1PxdltxDm8pyA@ArchLinux>
+In-Reply-To: <5b4c09a9-64bb-e672-e604-120563fc1ad6@das-werkstatt.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 24/11/23 12:45AM, shejialuo wrote:
-> On Thu, Nov 21, 2024 at 02:41:18PM -0600, Justin Tobler wrote:
-> > During fetch-pack operations, git-index-pack(1) may be spawned and
-> > perform fsck checks. The message severity of these checks is
-> > configurable and propagated via appending it to the `--fsck-objects`
-> > option.
-> > 
-> > With `fetch_pack_config_cb()`, fsck configuration gets populated to a
-> > `fetch_pack_options`. Expose `fetch_pack_config_cb()`, to facilitate
-> > formatted fsck message configuration generation. In a subsequent commit,
-> > this is used to wire message configuration to `unbundle()` during bundle
-> > fetches.
-> > 
-> 
-> In my perspective, we may not separate [PATCH 4/5] and [PATCH 5/5].
-> Should the reason why we want to expose `fetch_pack_config_cb` is that
-> we need to propagate the fsck severity to `unbundle`? Without the
-> information of the last patch, we cannot know any detail thing. So, they
-> are highly relevant.
 
-Thanks for the feedback. Due to other suggested changes, I've opted to
-condense the third and fourth patch into one in the next version which I
-think helps somewhat. I've also tried to update the commit messages to
-provide additional context. Hopefully this helps :)
+--T5IGA+WLaSrdDGSm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Justin
+On 2024-11-26 at 19:40:32, Peter B. wrote:
+> Hi everyone :)
+>=20
+> I'm evaluating and testing extended attributes (xattrs) for professional
+> archival collection use.
+> I couldn't find any proper documentation/information on how (well) git
+> supports including xattrs in version control.
+>=20
+> I assume behavior may be similar to any other property-change of
+> files/folders?
+> Would it be possible to have bit-proof preservation of all xattrs? (even
+> larger ones).
+
+As others have mentioned, Git doesn't store this.  There are a couple
+ways that one could store this information, depending on what you want
+to store.
+
+One way is to store the metadata in the `.gitattributes` file if you're
+storing one or two well-known xattrs and the values are well stored as
+text in the file.  You can then use `git ls-attr` and a `post-checkout`
+hook[0] to set those attributes appropriately.
+
+Another way is to store the data as part of an mtree(1) file in the
+repository.  mtree is a file format that comes from the BSDs that can
+contain a wide variety of data, including file type, uid and gid, text
+user and group, permissions, size, mtime, cryptographic hashes, and a
+wide variety of other data.  mtree utilities can usually generate a
+manifest based on the state of the file system, validate that files
+match a manifest, and usually update existing files such that they match
+a manifest.  There's a Go-based version[1] which does support storing
+xattrs.  Again, you can use a `post-checkout` hook here.
+
+Since mtree is a key-value format, you can also extend the value with
+other data.  I use a similar format in my dotfiles to specify install
+location, for instance, so I recommend this as a good way to store this
+data.
+
+[0] Git LFS uses post-checkout hooks to adjust the read-only bit for
+files which are lockable but not locked, so this is generally a robust
+method.
+[1] https://github.com/vbatts/go-mtree
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--T5IGA+WLaSrdDGSm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ0Z2DAAKCRB8DEliiIei
+gZ1KAP9cJbQo/ep6W8GEkmtNLoHvucO3Uvk/AkX3HKHHqwyfHwEA7bCwiVrjBAdB
+CjL4MwBwdHzqtxLCVR8QSenS94fUWAY=
+=ZnUK
+-----END PGP SIGNATURE-----
+
+--T5IGA+WLaSrdDGSm--
