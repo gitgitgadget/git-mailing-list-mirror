@@ -1,37 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0142D1FF600
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 14:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E899224EA
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 15:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732717635; cv=none; b=EoR2WJFuUBiFi6NjNpYU30uLeVy6g2s/i74qbmMFQx1kvTSxlO4yetQSfKIXlOfOyAiK9G3j2D0MrURmdBfwRr9ZHTh5Iz1lmQSJzbJBAfV/Il0FdSIFc/gVtXq0ENyUWVzU3WGX9nI+PI6sBOnQd8aH5Zp3jKjXfo7ldIkbomE=
+	t=1732719874; cv=none; b=Kvp3nxTJ0cp6QETBeCT24M8XBzA3ddb50Z5ufuRIMqOaqK/3C81TAaZWOlQqNMadJJaRQQe962Rp0qjyXrOXlPltB6hzL7QYQgu33/KBH2LwDkxx/LTyAnd2wLJkZOknm2OFQ0QS9PnlC0yPIRR7BC11xfG5y95yhhSTNPjm2/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732717635; c=relaxed/simple;
-	bh=VDOqhLrdgraR875Tr6QUjAEZgEyNilpEBjUFV9ul7o0=;
+	s=arc-20240116; t=1732719874; c=relaxed/simple;
+	bh=1aHWyiPaauSJy+3/emmdTXfQurbh9R25vFO3pYwbxlw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qqrojcqNjuKPH+lTIZ4GLX41z3oMlNJ/oyW3RG2U9mPtRHHZpRedcZqIHwbRNOeTzPtTzzEBkY7zt85+OstuF5C8lL+UELdlmHT6gvxkiJAatkIzUPgv0m/03ZfN2qMZdOOFizTK8+vH+MC1tUKWNcYx06Yvcyt9AjmjM3t9PoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JnljIQ4k; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=fofEnFG2Dey6bWVuAOOVTYC3m9L+rAB272oa+x+Lq/r2GAW8zrXi94cnNvEd1/Y0QZFJwQp/Sz93RNRkCc99HQD6J9/RDux5pjKnuETJMxcbseoAmrsHhixlY/DSmeqQzfD2lThwsio3hyt4zD/UMjGXVJ5xwlYlnw1QpMcfWUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Z/G+dSuU; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JnljIQ4k"
-Received: (qmail 5112 invoked by uid 109); 27 Nov 2024 14:27:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=VDOqhLrdgraR875Tr6QUjAEZgEyNilpEBjUFV9ul7o0=; b=JnljIQ4k2m4eaFdEP8g94NSnsiICfeGA/WzHXwl2hul9VIpet5ks2tMcDuVaKCSzNfCmQtF5UnFubhSWVwtHjzNK38ys9QxepaTi4FSnucBBrE411ugkZYkIgXyoCiOahtIM/iQ1ZRaoazbCpLlsDdqC/oMj1E0mcqr7VdPI0kz8hZHQvP7Yt5dQpTT4LJX5D/KItsGoGHUwmTYFdzwa1nUAU5otpq26JwXQyK//DcemyYceSgxNroiTXI4m4/m/qoEvIS7PG3HG2Pk01jD4x+I0yaUb7to/RdW1kv1opWeIq7NLRwhLK4rPeJTCaSEKebFkBCl0ZrLuyxOezWK1vg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Z/G+dSuU"
+Received: (qmail 6525 invoked by uid 109); 27 Nov 2024 15:04:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1aHWyiPaauSJy+3/emmdTXfQurbh9R25vFO3pYwbxlw=; b=Z/G+dSuU9ruLJZnwr3J0syBy8wGMatHvw7MxkyI1kuYPSkfD3orIaxWsVkNknPhaF5wCu7wClZOSaIbRYFroJC5TfMKfPrlb7XtxpJsO2FSimwEFsTjIS1oVhbM62xA2sg6lGKyWzRXt7J+XJV1kF4psHDExic4L32xxjjnY785FnoTkbgsYnLEdx3p3aZ+F3yT+Z5NKkNjMEQg2niim3QV2xqxsjCTPWxdWU5mmfGkiRvPkL9zD1wvqtguEjuXWFtqJJvTnFYsQipvTLmgJ9sqacUyzAYnBVLp2t96XzBCIBhJy1qfVe4ZF1jK2HO8SDGTk6QUGmhSDeJ4zuZ5CQQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Nov 2024 14:27:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 27 Nov 2024 15:04:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 785 invoked by uid 111); 27 Nov 2024 14:27:11 -0000
+Received: (qmail 1255 invoked by uid 111); 27 Nov 2024 15:04:29 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Nov 2024 09:27:11 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Nov 2024 10:04:29 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 27 Nov 2024 09:27:11 -0500
+Date: Wed, 27 Nov 2024 10:04:29 -0500
 From: Jeff King <peff@peff.net>
-To: git@jowil.de
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: git tag -a HEAD leads to ambiguous branch name
-Message-ID: <20241127142711.GB1712@coredump.intra.peff.net>
-References: <47cdf937-6192-4c83-a0e5-700e98f36c1e@jowil.de>
+Subject: Re: Extending whitespace checks
+Message-ID: <20241127150429.GD2554@coredump.intra.peff.net>
+References: <xmqqbjy5bc6m.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,25 +40,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <47cdf937-6192-4c83-a0e5-700e98f36c1e@jowil.de>
+In-Reply-To: <xmqqbjy5bc6m.fsf@gitster.g>
 
-On Wed, Nov 27, 2024 at 01:14:23AM +0100, git@jowil.de wrote:
+On Sun, Nov 24, 2024 at 11:25:21AM +0900, Junio C Hamano wrote:
 
-> today I encountered a warning using  git version 2.39.0.windows.2:
-> /warning: refname 'HEAD' is ambiguous./
-> It turned out, having written
-> /git tag -a HEAD -m "Some message."/
-> was the culprit.
-> As
-> /git branch HEAD/
-> yields the following error
-> /fatal: 'HEAD' is not a valid branch name/
-> I wanted to aks, whether a similar check should  be applied to tag names.
+> I am wondering what we can do to add a different kind of checks to
+> help file types with fixed format by extending the same mechanism,
+> or the checks I have in mind are too different from the whitespace
+> checks and shoehorning it into the existing mechanism does not make
+> sense.  The particular check I have an immediate need for is for a
+> filetype with lines, each has exactly 4 fields separated with HT in
+> between, so the check would ask "does each line have exactly 3 HT on
+> it?"  It would be extended to verify CSV files with fixed number of
+> fields (but the validator needs to be aware of the quoting rules for
+> comma in a value in fields).
 
-Yes, I think that's reasonable. We won't ever completely forbid "HEAD"
-as a branch or tag name for historical reasons. But when porcelain like
-git-branch or git-tag sees it, it is almost certainly a typo or
-forgotten argument.
+Coming from a devil's advocate position: what makes these CSV format
+checks any different than syntax checks we get from a compiler? Or for
+that matter, the result of running "make test"?
+
+I.e., why implement a complex system for single-line verification
+plugins when you'd be left with the much larger problem of evaluating
+whole-tree states. And once you have solutions for that (like using
+branches to separate unverified work and then merging it once it has
+passed checks), then simple things like line syntax are easy to call
+there.
+
+Now you could argue that the existing whitespace checks are similarly
+redundant. Rather than having "apply" complain about whitespace errors,
+you could just check them as part of "make test".
+
+The reasons I can think of for doing something like this are:
+
+  - catching problems earlier is almost always less work for the user
+
+  - for things that _are_ line-oriented, looking at individual diff
+    lines lets you focus on problems being added, without worrying about
+    existing violations in the final state. OTOH, that's not foolproof;
+    if you modify a line with an existing whitespace problem without
+    fixing it, "diff --check" will still complain.
+
+So I'm not necessarily against it. But it seems like a very deep rabbit
+hole to start adding in shared-library line validators, because I think
+it ends in "now compile this before I agree to apply the patch". And I
+think Git's model has mostly been the opposite: make it cheap and
+private to branch and make changes (including applying patches) so that
+you can inspect the state before deciding whether and how to publish.
 
 -Peff
