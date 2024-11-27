@@ -1,66 +1,66 @@
-Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62478193432
-	for <git@vger.kernel.org>; Wed, 27 Nov 2024 23:35:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A1F1991C8
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 23:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732750554; cv=none; b=lRlxQmHM7kFWS8vq7tx92g8vL+z9YBbiiSeb7D+cIbt2Kl51F4v3h6140gDp4BNfh38bzrubV7DKKmCZgl4Ogpl3NC5J5AK5jNCrih+RjwLlGCNRGMJvwK+DXCrR3hPfbBmid3bnKP7i3QRocJdoUXp7HY8+26tR0l5lEhM5+u0=
+	t=1732750557; cv=none; b=Y5M/sPOWJGIVP3rXLpvJSruVbZ5P4E9Ja5rUdn0zWJR3LhK790ahLPx5lZM1xu3IwFLTld9wifhsaatAd6rzUB4/10SY1MQD9ONq+Nb2AOnh+ZFxS2Gt60NeEpadtsJ6LAs9FxMdW4C/P0xEZU8k7TiclvgSS+vXzn60LcTIn3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732750554; c=relaxed/simple;
-	bh=wtw4IqE1Bvc2CzKKYsqjndJA50WqpmlP+DG+nS8iZ1o=;
+	s=arc-20240116; t=1732750557; c=relaxed/simple;
+	bh=xWJzmReKNiOq3EBZ3LddoIvJdjNQx8spXBSE4Qh1vcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=US7EJwk3kPGjgtVI/wPtNYLoXQbeweXvMxiYhFymypcnZ4IYQvg4reiDmzQM4EfaPkAoHQXUkDR4o0BTNjxCiMQ2BfXT8yawTNL7WQNKALMwF+rAHGPhkyVC65s0ccptQ8TQ6bWl2TjzmYcdpPQ3RwYxHcKDS+o2yD53WSo9syo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D+KG+yyZ; arc=none smtp.client-ip=209.85.161.54
+	 MIME-Version; b=Wm4NuBFszK+gJNZSh57nHUE/dmFZYJGTFgtDiTYOpX3q7SmhZTiOQWsdYkHHySdBgmv2lIsfeLh7e4I8wwYBboqrjGxPpsyzxSj++tjUKePUBt+P1+qyUxhyoSEfRZP/PQXe65Z4ZJTuIFbc9JQy41HxmBzM0w39St2aYpKWXwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NREPhJ22; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D+KG+yyZ"
-Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-5f1f5075cf2so155054eaf.0
-        for <git@vger.kernel.org>; Wed, 27 Nov 2024 15:35:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NREPhJ22"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-288fa5ce8f0so142796fac.3
+        for <git@vger.kernel.org>; Wed, 27 Nov 2024 15:35:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732750551; x=1733355351; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1732750554; x=1733355354; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hhauHutODHFANCW4hs0xz+fYr1BuPMFJVuyibdfT4/A=;
-        b=D+KG+yyZhBDSYRyuxHFfqVeD/FdYPTi1XaaYoW4D8xS40lzvrNGPw+qzqzfgGxo2cG
-         yJdJdpMCcgqFG7x7fGpcXWlC3NmIXVdPEaihScnGngJ5cUpkHlB3gzwrdlhw1nLzj7Bz
-         9aI8l+39fK39AAd31wxYtfcobCRHMfMEtj7AkgO1zd/JgwoRnH9rLKga4cg7nRIxBf1w
-         8LUsBClLkrbzIWmXKTbtkJ0UypP6MQpvwpGA4dNnsk6dG4NsZrY304WErD/gyWIFgBeP
-         ePGhQS6+yEgU8Ek1uBs6/LeL+/w0TzTv9mLwcl5EvFm7T7wVr6+RQDeHXBJqK/fhgBy3
-         Wu3A==
+        bh=N0uAu+Y40SIGHl9Nv1g/lFR+LKAEcjOrqQRF49iJSnY=;
+        b=NREPhJ22xsbKEhqknZ9F3z3ysObqzVZNundcxiiwMTlgQyF7BSbHLG5giVShghqgC7
+         6PtP06gYlreNp7kQYvqBLQPOYDsjUTY3KlJnPKV44IaBf3RmzCbcWaOuzOqJxb44bbby
+         ta4h3gqqDzZHzVk1Pw3mWWoPRUOyO1BQnHBQRArtxtOnKwon7KtbzE65Ri9c00MvKGkM
+         ZzawyeKzNMgcYBhVv/sShTCvxL6b5qlJXNuelkIswrM4HYnKqeft70PFjcS6FyDIBIfV
+         DRJL8OD25O5DIim4WeMY7hrtyJQX63dnEVkN4g/1+23WEgIY/VtRfPaTEHbysDO68lHh
+         XQ8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732750551; x=1733355351;
+        d=1e100.net; s=20230601; t=1732750554; x=1733355354;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hhauHutODHFANCW4hs0xz+fYr1BuPMFJVuyibdfT4/A=;
-        b=Ux2Oux82s1AWlVi9rc0X5kLAaOvzedwA19rL2k42JopS+fTV1yQJ6FeWeKzXYmNJbz
-         73GF7KSeT/ILi5x1Xm33mdG5Nk2C7SWLlVFnqaGIDwrXpXm500CoPenPe81EEE4n38so
-         Jz5U2OWQWw1fkT8quW9DCeRd1dYpIWCszVzSByKUlz5kjjm+c+lIqeqkS9godDjFkufr
-         uEl46LLmiElakf+exUgBDmgEMA8DVP73YcuyyWAp2+KfXiVlqgaeDw/0qzcoWV7LipWN
-         Z3eRISEoKpH3A8qoKVrpbRmwHG4NdW8GGnA+8s9xmpPK5+8tUIlgJTSAAWbzdr77M3vc
-         0VEw==
-X-Gm-Message-State: AOJu0Yzm7IIwSPrvr6D/OyORXBnELte8Xs688QPxMDBJh2MB3g6bfXn9
-	1+FnOPXlSuKFDNIX2syVj+65vS9+zrTaFNs6yM0Y+F/rVKnefbm3SrNQEQ==
-X-Gm-Gg: ASbGncsreaa/EntGrodA9DP+bf/c5PPKVgHR+5WGYIUlNCpqWYNtxle0Hnpt1lNdGoR
-	Ksz8sgGX4+oFyVxJCBQrXxboVCPoXr8dmu3WQrPzioaLZLCFmsA2S9q2cb+UQSLlahmmVJESTS8
-	yIZAhRV2JDyKh84KO6fDXyunSZzzvLIRTvDTW6SNjY0hIarTqld3Yv21iuj32QZxPYbSOln/JDE
-	/z2Dw8x/mPcQmoWgKT9IXLF9WQIGAb1gGxqTNCgVwYj2YnYSKv/h6CWVw==
-X-Google-Smtp-Source: AGHT+IEx72VZbH0Qiucj5oYTgMcTwYCcA5zSwPN/VUK3R88Sg10FpOJG12hcTWxM/t6rCY68L5HYpg==
-X-Received: by 2002:a05:6830:4114:b0:71d:5f65:ce2f with SMTP id 46e09a7af769-71d65cfa6a7mr4109560a34.22.1732750551207;
-        Wed, 27 Nov 2024 15:35:51 -0800 (PST)
+        bh=N0uAu+Y40SIGHl9Nv1g/lFR+LKAEcjOrqQRF49iJSnY=;
+        b=mWJSInWtVOZLpTk+nXTOzRwGM3hfcnKVzYCSY5rA7gKOXe/HSL4MxyYHV+O6VSg1iO
+         VMbGPQGMqDFxv5kzlXn4p2VhbaCGrujRvIFYO5Bwd97W3Zwp3N8VId711FiCYtnfwGiE
+         b/c3o4YceYUvEq4I0pjsmetMatu2piDdrRz6zvhv7e8zAHQLqmOaSpAQg5WXWuLIT+Kr
+         ERDEjBIXfnkeXdvN1GXVbdDksGBd9APi+63dwAWPTTtL0OxTOu91Rm36cYT4h/pvSYVd
+         Z4DECxnq3rm/0EgzWcJGUxKhcnEEqnodoRVEgyQu7c97e9AI9QwI70XBa2JcSB2f77Zg
+         NE/w==
+X-Gm-Message-State: AOJu0Yw0mPxP8ZQXOd6jUOrcbP/q4Ov+80A+ZueyMHK8MRY4hFm13R06
+	CkGHZYYqcm0/co6HW94QvVOpRo/3Oa4shQZa+ske0HCyJREFTMj6QP5wvg==
+X-Gm-Gg: ASbGncsY1Tsc/EJX9QypTHlWT39bpqKHsHWC/dGARzWzAZv2DmsvQgrlS+McAvxonZf
+	4nxhbZT7pZVHCJtLHWVFij+6ldHVIdpu6hPZzXPuYRXmcOpMQEtIfZcdSord2JJrzihHnm3nn9O
+	6Qxlq/tdF0z26u6RFVTOAnjFTuNyOjhrA8XHc68mCfojiHzc6dyymiiY1JJmqM7a+jOJwVIVfax
+	41XV/zZDmGxSA8qwhE74Hm2ooSX2ItmZDxPJWMRYZDdduiqBULmtVQUtw==
+X-Google-Smtp-Source: AGHT+IGrEF9wolC6Fe/OWWCZXOB97mSrb9iqbO8AehPqHv8so1/qNFh3mNdDNQxAfqxcf9lT5vTVTg==
+X-Received: by 2002:a05:6871:c519:b0:29d:c870:74 with SMTP id 586e51a60fabf-29dc870066fmr3182199fac.27.1732750554438;
+        Wed, 27 Nov 2024 15:35:54 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-29de8f31cefsm109260fac.2.2024.11.27.15.35.50
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-29de8f31cefsm109260fac.2.2024.11.27.15.35.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2024 15:35:50 -0800 (PST)
+        Wed, 27 Nov 2024 15:35:53 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 1/4] bundle: add bundle verification options type
-Date: Wed, 27 Nov 2024 17:33:09 -0600
-Message-ID: <20241127233312.27710-2-jltobler@gmail.com>
+Subject: [PATCH v3 2/4] bundle: support fsck message configuration
+Date: Wed, 27 Nov 2024 17:33:10 -0600
+Message-ID: <20241127233312.27710-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241127233312.27710-1-jltobler@gmail.com>
 References: <20241127005707.319881-1-jltobler@gmail.com>
@@ -73,141 +73,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When `unbundle()` is invoked, fsck verification may be configured by
-passing the `VERIFY_BUNDLE_FSCK` flag. This mechanism allows fsck checks
-on the bundle to be enabled or disabled entirely. To facilitate more
-fine-grained fsck configuration, additional context must be provided to
-`unbundle()`.
+If the `VERIFY_BUNDLE_FLAG` is set during `unbundle()`, the
+git-index-pack(1) spawned is configured with the `--fsck-options` flag
+to perform fsck verification. With this flag enabled, there is not a way
+to configure fsck message severity though.
 
-Introduce the `unbundle_opts` type, which wraps the existing
-`verify_bundle_flags`, to facilitate future extension of `unbundle()`
-configuration. Also update `unbundle()` and its call sites to accept
-this new options type instead of the flags directly. The end behavior is
-functionally the same, but allows for the set of configurable options to
-be extended. This is leveraged in a subsequent commit to enable fsck
-message severity configuration.
+Extend the `unbundle_opts` type to store fsck message severity
+configuration and update `unbundle()` to conditionally append it to the
+`--fsck-objects` flag if provided. This enables `unbundle()` call sites
+to support optionally setting the severity for specific fsck messages.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- builtin/bundle.c |  2 +-
- bundle-uri.c     |  7 +++++--
- bundle.c         |  6 +++++-
- bundle.h         | 10 +++++++---
- transport.c      |  6 ++++--
- 5 files changed, 22 insertions(+), 9 deletions(-)
+ bundle.c | 13 +++++++------
+ bundle.h |  7 +++++++
+ 2 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 127518c2a8..15ac75ab51 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -218,7 +218,7 @@ static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix)
- 		strvec_pushl(&extra_index_pack_args, "-v", "--progress-title",
- 			     _("Unbundling objects"), NULL);
- 	ret = !!unbundle(the_repository, &header, bundle_fd,
--			 &extra_index_pack_args, 0) ||
-+			 &extra_index_pack_args, NULL) ||
- 		list_bundle_refs(&header, argc, argv);
- 	bundle_header_release(&header);
- 
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 0df66e2872..cdf9e4f9e1 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -367,6 +367,10 @@ static int unbundle_from_file(struct repository *r, const char *file)
- 	struct string_list_item *refname;
- 	struct strbuf bundle_ref = STRBUF_INIT;
- 	size_t bundle_prefix_len;
-+	struct unbundle_opts opts = {
-+		.flags = VERIFY_BUNDLE_QUIET |
-+			 (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0),
-+	};
- 
- 	bundle_fd = read_bundle_header(file, &header);
- 	if (bundle_fd < 0) {
-@@ -379,8 +383,7 @@ static int unbundle_from_file(struct repository *r, const char *file)
- 	 * a reachable ref pointing to the new tips, which will reach
- 	 * the prerequisite commits.
- 	 */
--	result = unbundle(r, &header, bundle_fd, NULL,
--			  VERIFY_BUNDLE_QUIET | (fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0));
-+	result = unbundle(r, &header, bundle_fd, NULL, &opts);
- 	if (result) {
- 		result = 1;
- 		goto cleanup;
 diff --git a/bundle.c b/bundle.c
-index 4773b51eb1..485033ea3f 100644
+index 485033ea3f..4e53ddfca2 100644
 --- a/bundle.c
 +++ b/bundle.c
-@@ -628,9 +628,13 @@ int create_bundle(struct repository *r, const char *path,
- 
- int unbundle(struct repository *r, struct bundle_header *header,
- 	     int bundle_fd, struct strvec *extra_index_pack_args,
--	     enum verify_bundle_flags flags)
-+	     struct unbundle_opts *opts)
+@@ -631,12 +631,12 @@ int unbundle(struct repository *r, struct bundle_header *header,
+ 	     struct unbundle_opts *opts)
  {
  	struct child_process ip = CHILD_PROCESS_INIT;
-+	enum verify_bundle_flags flags = 0;
-+
-+	if (opts)
-+		flags = opts->flags;
+-	enum verify_bundle_flags flags = 0;
++	struct unbundle_opts opts_fallback = { 0 };
  
- 	if (verify_bundle(r, header, flags))
+-	if (opts)
+-		flags = opts->flags;
++	if (!opts)
++		opts = &opts_fallback;
+ 
+-	if (verify_bundle(r, header, flags))
++	if (verify_bundle(r, header, opts->flags))
  		return -1;
+ 
+ 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
+@@ -645,8 +645,9 @@ int unbundle(struct repository *r, struct bundle_header *header,
+ 	if (header->filter.choice)
+ 		strvec_push(&ip.args, "--promisor=from-bundle");
+ 
+-	if (flags & VERIFY_BUNDLE_FSCK)
+-		strvec_push(&ip.args, "--fsck-objects");
++	if (opts->flags & VERIFY_BUNDLE_FSCK)
++		strvec_pushf(&ip.args, "--fsck-objects%s",
++			     opts->fsck_msg_types ? opts->fsck_msg_types : "");
+ 
+ 	if (extra_index_pack_args)
+ 		strvec_pushv(&ip.args, extra_index_pack_args->v);
 diff --git a/bundle.h b/bundle.h
-index 5ccc9a061a..6a09cc7bfb 100644
+index 6a09cc7bfb..a80aa8ad9b 100644
 --- a/bundle.h
 +++ b/bundle.h
-@@ -39,6 +39,10 @@ enum verify_bundle_flags {
- int verify_bundle(struct repository *r, struct bundle_header *header,
- 		  enum verify_bundle_flags flags);
+@@ -41,6 +41,13 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
  
-+struct unbundle_opts {
-+	enum verify_bundle_flags flags;
-+};
-+
+ struct unbundle_opts {
+ 	enum verify_bundle_flags flags;
++	/*
++	 * fsck_msg_types may optionally contain fsck message severity
++	 * configuration. If present, this configuration gets directly appended
++	 * to a '--fsck-objects' option and therefore must be prefixed with '='.
++	 * (E.g. "=missingEmail=ignore,gitmodulesUrl=ignore")
++	 */
++	const char *fsck_msg_types;
+ };
+ 
  /**
-  * Unbundle after reading the header with read_bundle_header().
-  *
-@@ -49,12 +53,12 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
-  * (e.g. "-v" for verbose/progress), NULL otherwise. The provided
-  * "extra_index_pack_args" (if any) will be strvec_clear()'d for you.
-  *
-- * Before unbundling, this method will call verify_bundle() with the
-- * given 'flags'.
-+ * Before unbundling, this method will call verify_bundle() with 'flags'
-+ * provided in 'opts'.
-  */
- int unbundle(struct repository *r, struct bundle_header *header,
- 	     int bundle_fd, struct strvec *extra_index_pack_args,
--	     enum verify_bundle_flags flags);
-+	     struct unbundle_opts *opts);
- int list_bundle_refs(struct bundle_header *header,
- 		int argc, const char **argv);
- 
-diff --git a/transport.c b/transport.c
-index 47fda6a773..8536b14181 100644
---- a/transport.c
-+++ b/transport.c
-@@ -176,6 +176,9 @@ static int fetch_refs_from_bundle(struct transport *transport,
- 				  int nr_heads UNUSED,
- 				  struct ref **to_fetch UNUSED)
- {
-+	struct unbundle_opts opts = {
-+		.flags = fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0,
-+	};
- 	struct bundle_transport_data *data = transport->data;
- 	struct strvec extra_index_pack_args = STRVEC_INIT;
- 	int ret;
-@@ -186,8 +189,7 @@ static int fetch_refs_from_bundle(struct transport *transport,
- 	if (!data->get_refs_from_bundle_called)
- 		get_refs_from_bundle_inner(transport);
- 	ret = unbundle(the_repository, &data->header, data->fd,
--		       &extra_index_pack_args,
--		       fetch_pack_fsck_objects() ? VERIFY_BUNDLE_FSCK : 0);
-+		       &extra_index_pack_args, &opts);
- 	transport->hash_algo = data->header.hash_algo;
- 
- 	strvec_clear(&extra_index_pack_args);
 -- 
 2.47.0
 
