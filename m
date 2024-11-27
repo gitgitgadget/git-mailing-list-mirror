@@ -1,63 +1,92 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67251B6D0E
-	for <git@vger.kernel.org>; Tue, 26 Nov 2024 22:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90DF4315D
+	for <git@vger.kernel.org>; Wed, 27 Nov 2024 00:00:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732660895; cv=none; b=sf9528EGY96XheqmQDsF1f84/o8Lds3mjTLt5TTe/qpl193BAuaULWyhs0anXQ/bnCLcces1L/Jk2MVFaDyjBjYBr3ukQKv3HmXO2Izj65Vk6/1t86On20ZNdECtMpjzxaFuMj9eSJfLplLe2zjazefOT0AtvWeub+5eaHJf6Mg=
+	t=1732665638; cv=none; b=hBhdE2eIYkzk4rSv+rINSLPj7grYNDxpn/Ay7DkAejOuSakHSnMdETPN8RdxKTAFbWi2PJ1tWVEiEklSinYCugrD5raBNdlXrc2t1GwhbQ/yVQfruEhFCB6LG32TYRifuIkmS9RJI89vu3++WWYgf+OF3IWBnjD27bK79LJkJxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732660895; c=relaxed/simple;
-	bh=jR9ilHWq5BRKeJMcNPJVuzSOMl+Ui+C72o2cNtEx7DA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W9ySpreqSZIpT92lIV3vPEHNOD8raaN7pJnawPP7X9mAa1eS+jWd+prXExHCJ42eZN+SciOPluarptuX/Zz6nk2AuMRDDOyBXGTlSVCQ0Kf3zSOkPb3s+AwQrmCEHWZHvkLI6WCyaNcjCAWXTI3tnFSMs0IfNmyvTZHYcjTaus8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KxRXAOjZ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1732665638; c=relaxed/simple;
+	bh=b6kSoOlPAE1biV9f/FUUmOOPy29jbyleVtu5wvITo34=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pZ+kUNkXT+NLJGaUI3tOXHz3e70JBv7kjMwOrg0ParL1sHHnY8JQHWJlQ33FC7zWo9JEaXibjxgpfkzva7BdJXT9NJR2nz1WsPT4qI3WlchREWD9awHD9BZRjGc9qFCu/De683wiHrgHi9e5WeHRkCrB9IgC2HgVqtCHPOfLFMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4Sf08CoN; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KxRXAOjZ"
-Received: (qmail 28203 invoked by uid 109); 26 Nov 2024 22:41:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jR9ilHWq5BRKeJMcNPJVuzSOMl+Ui+C72o2cNtEx7DA=; b=KxRXAOjZr/YtLH8usX+LIKtCO0RsHerOuauHI3ASeC2m3UrFzRTJ+hXzT3uB7kDwFTWB7id6C5zcxdsoobyGzlT5XoyM5BRl/BNKVKIeAwT0XaNbtrlp+nenyjPLXMSicwyse6d77IqaSZL+jsa8ulLGErq2KulpVlV3XvZhkLaeLZVrDE/oIg8fU23Rgmvi3KpZXa3gxnEN/scJq1FbydsP/xYReQS+vixNUc5XnSX5VCTkIHJHtRxMpI6dsFCUsP1NTDIMfgJ/l4TnwNfkjvrZr0T9XCV/TmZZ8hoGIbqhauR6HL8Dh531liLaHjdJUHGg2wy6deG58W3ucuohEw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 26 Nov 2024 22:41:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26573 invoked by uid 111); 26 Nov 2024 22:41:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 26 Nov 2024 17:41:24 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 26 Nov 2024 17:41:24 -0500
-From: Jeff King <peff@peff.net>
-To: "Peter B." <pb@das-werkstatt.com>
-Cc: git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4Sf08CoN"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D30C21140241;
+	Tue, 26 Nov 2024 19:00:34 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 26 Nov 2024 19:00:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732665634; x=1732752034; bh=zZBAp4HCnaCRuQSda9q++FgIgjrdLuGHe1p
+	Rk/L/a+s=; b=4Sf08CoNgQ8rMItlf9GYjX/hxDMOJpQWgUWxl41+EXkhVc8Jd5Q
+	4o+Tjuy1XvYfM58zOo6TCCGfLAIzgW/X1uUi7fmNY/tJB9+bdlA4QHccCHUcA+pa
+	L3XaRUGdcgn2oKGn1kPc6lzMiGU8LnTkpDH7y/tmL5Q2BFxpEo+FXZjAUIM//AWx
+	yGDalVdqcml1BXghhIGLe8nGPFW21D9Aec6riodmp9JCapSaAQg3JD27jUp6boYa
+	ZSzL3M/jEEU35zx/4kEKLtUMH5msLSf5WH41WVbxL5KRgufU1CpI4f5jxz5knX9z
+	CFqhMjx7w8K6jLdpQks+PTziEJUHOEMZDsA==
+X-ME-Sender: <xms:ImFGZ8HvH3r8pnrY3ha4zMTHXc4d-sNXB9l-huohnE5dh_BbdKJFHQ>
+    <xme:ImFGZ1WX4lzfiqDxNVUdY99P201gUZMv16JMhCO7HdL6kxyC-vB1hZLydgYrSgdOR
+    Gcq6I14U4fxvnIsig>
+X-ME-Received: <xmr:ImFGZ2IlLVCkKO5-dWrrFA0iNUuJUVsCJ5-sKyoyE187QX_wa8gUsuvKsep4v-PEMbx_td-5pnVYP1O-CSJQ3mABSwNlieAiS1XQEB4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrgeekgddujecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpedvvddvjeehueffheeludduiefgudduteefteek
+    ffelteeileekgfeuudelheeuheenucffohhmrghinhepsghrrghntghhrggslhgvrdgtoh
+    hmpdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtth
+    hopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhn
+    vghtpdhrtghpthhtohepphgssegurghsqdifvghrkhhsthgrthhtrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ImFGZ-FiCmphZMafwPS1meG02Ae5ugRjvePk4FNOL6pHlMegfpX_rQ>
+    <xmx:ImFGZyUE8vxWLqHp6HbQ9Fd2nPi9QVacCcT6157iEuQIeJ6hJXsqAQ>
+    <xmx:ImFGZxOex4tn2U0J2hzupL1u71LOa6TtOa5Cd6vOUZ33VyMg9yRA5Q>
+    <xmx:ImFGZ53xJIL_wpo8Ka8gYKgOWlopWgaO2ofhqHhnJXnn8U2K-RkiWw>
+    <xmx:ImFGZww3dnzadntWrRtD-2wzX-qOekAGOfcgdgrfcvdRP3ljca6MbcnR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 26 Nov 2024 19:00:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "Peter B." <pb@das-werkstatt.com>,  git@vger.kernel.org
 Subject: Re: git support for "xattrs" (extended filesystem attributes)?
-Message-ID: <20241126224124.GB77402@coredump.intra.peff.net>
+In-Reply-To: <20241126224124.GB77402@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 26 Nov 2024 17:41:24 -0500")
 References: <5b4c09a9-64bb-e672-e604-120563fc1ad6@das-werkstatt.com>
+	<20241126224124.GB77402@coredump.intra.peff.net>
+Date: Wed, 27 Nov 2024 09:00:32 +0900
+Message-ID: <xmqq4j3twnof.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5b4c09a9-64bb-e672-e604-120563fc1ad6@das-werkstatt.com>
+Content-Type: text/plain
 
-On Tue, Nov 26, 2024 at 08:40:32PM +0100, Peter B. wrote:
+Jeff King <peff@peff.net> writes:
 
-> I'm evaluating and testing extended attributes (xattrs) for professional
-> archival collection use.
-> I couldn't find any proper documentation/information on how (well) git
-> supports including xattrs in version control.
+> There are some third party tools to save the information in a separate
+> file within the history and restore it on checkout.
 
-As Junio noted, Git does not store most metadata at all (and most other
-version control systems are the same).
+Ah, you're right of course.  We are extensible that way.
 
-There are some third party tools to save the information in a separate
-file within the history and restore it on checkout. I haven't used them
-myself and some of them are quite old, so YMMV:
-
-  - https://etckeeper.branchable.com/
-
-  - https://github.com/przemoc/metastore
-
--Peff
+> I haven't used them
+> myself and some of them are quite old, so YMMV:
+>
+>   - https://etckeeper.branchable.com/
+>
+>   - https://github.com/przemoc/metastore
