@@ -1,141 +1,153 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164841BAEDC
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 15:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A096F06A
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 15:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732806450; cv=none; b=QG88IVpwiqJybDiexX2vdU9Zb54qAF+ioDaNZB9VspHKvqjPwEcRtbUuJrNmX5ZCh6/gkyFnp7IcTwby6Jtx/qWB+KjeEhr1VcBaIjKPiitvmkUQWMHxZgglWNB+OXMCJ3nFmHZ1BJBJAtqO0QV96QC6E2Ic5rMYR8Bf1C50+7k=
+	t=1732807879; cv=none; b=gVyjIcmWEs+3xky/qoSKFTEQWesFITl+8e+0YJojj33D6TQh0leAr/FIsLXDoFLe5JQ6vQ1ICkWjzMkTy0tUmInFZJdHP/Mf8RZ8kHR4f+y5QT/AR6/1lZhI6cXoUYzeBC1OVKv/rI73Ox4h9oUofpqzmaw0qBVrBw+MlvuBV4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732806450; c=relaxed/simple;
-	bh=s82ziGDH8fcCsQol2KXEY87mhy49VBtj9dyodxI4utE=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lsJRa47yHGfV63XxGISyzVIGebc6f7bUOIW0Q3cab0ariKJrzIM4q5UQxvmUI2JfTVCEuUK4UrGEoQesf748gITTG0y/xC9XvcokfcNjt2xERQGBJzUxPdvP8MQnvsg0RuwlqsNdmwQi4QcD2OL2OiRBOEnLVj6iK0lKcaagZsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OO0s1dkS; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1732807879; c=relaxed/simple;
+	bh=vU+J95YsY1mxyZcihpOhJOf/KWdiyhOSMa/ubbIBqko=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MffuWKwcJsHQAlVyf+BVZSRriTyRSaF170Phy0wR0h4l+2iP5gT5PSSPnTtCdYWkYqBd9TqsMVHLQv83TusOCA9+qkN5PhXVs/b8jx+IG6gBwI0qrhEleUcdSLiKctNhJed07CmQvVofKAg9qB22l8rvqp/GLhgABh1AlH7Exug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZaseW36; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OO0s1dkS"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-434a83c6b01so8104935e9.0
-        for <git@vger.kernel.org>; Thu, 28 Nov 2024 07:07:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZaseW36"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-aa545dc7105so126094966b.3
+        for <git@vger.kernel.org>; Thu, 28 Nov 2024 07:31:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732806447; x=1733411247; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TJlNK22EMWe4sbm/D06GfoUINBa6ImiQtR6AmxQ7Oow=;
-        b=OO0s1dkSqC7BDCaDnO16WrUUyeCEiuwJemagRBkLAo54/mVwgizMwr+30AQvqJNjYT
-         tXZ8+7SvMvCXSkDftNOdjGli58rIphrTdT+e33q27PQW1cdLpxvWTLFznIPK9QFu9v3M
-         V0/aDt1AvwPmuYPhbnU13wRFi8dZXspNjP99IWo2Pxmyv3EJIaPTcOy87koqCT1hT0d+
-         y8e1S1xJjw9G0qHLSh8EB3yXbb7rdLR53i1ke/3xekBOoK5oZO60+m8szogaGlINs8uD
-         RtmjpAGr+pX0Nrlb1jHqLx9i1rFWN9m9Fu8ZYT8mdCKiVPyXtoxvDTz7EOM91vPjtR5P
-         vlCw==
+        d=gmail.com; s=20230601; t=1732807876; x=1733412676; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZFjoCLxFttBQYsu1koC6+gLPt3a+WtUqHPZMnovjD3Y=;
+        b=dZaseW36Nbh1GZCLRJh4odZKr966efRDLF+uYxPpJ/M6OtQib1BuH/o9/Av7ul3Aab
+         /kmB7vaIeDbMPrlSkGCqUcPFczldPld+Z/ee26qy4JM5Yjzc7CpggF5MrjSpEBlDeyyG
+         ndP9ILllPdotAdc3GLuwBJkHsRDRA0+rFC9tJHw43AUZew37bUwxNTAUGfrzgk0Cjspd
+         pW48Tubzrf/RPN8C/Vovl/6gNHVfZTY6VInn04OyFtD2grzrqLiztRTzqAX7Oqxbha/r
+         1yzpOHPHgTjMA0ElMm/hZUaopscAfTgL00u8HWepTsPbeYQC09kBR2O0qdrVDAPW/zNT
+         4J9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732806447; x=1733411247;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TJlNK22EMWe4sbm/D06GfoUINBa6ImiQtR6AmxQ7Oow=;
-        b=ThvXPRy5eRuNQFAtkR5AjtJJVLwiDwxweo5BjgWrzL5Ys1nxwkJ+6b5ZvtBs9MIDnI
-         HHGCvebeS/IieKJgE28DhN8y8lp2+FLh3nCBkXag/lJ/KC0/4BIv2mZnv2n8h4QzPRJ/
-         tkTGP3C9jETWeKUlK78t7QWtEgfvdMuz/yPdJA+nvQzr7vveJ03BgGmsE+/WYAQsu59r
-         rAlO61iAFfiuaIBkRCFnVCKnoizazqsTfc7gSKVCJ2Z/FDOsKS+5c5ktzoE6x9BwSnlB
-         ob3ClT66g7SfMx8Fp6aNZyPw9U2W2Vr6o/51N9cwvbWrXQrWBEa+reXLcvymMcUzKyzU
-         KGvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUd8KkphJHlF17WUZ2TBk6lCv5R8VupTwRI95zKzOxYR19Ldw3eCxvJJpu1GdDIeb5Mmeg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwLzywGbBFlt3bKaQN8YON/CPlfcseZzrs1v3C8HwgMHUIKnI+8
-	OWfja9gECN3lZIk0tJghWQO5A4+gy8eFxdOtmIzacKPPNfVHQhM5
-X-Gm-Gg: ASbGncvY9ERThYMcZ0nAL8SuD6E1W6VL/9OCW3rDS9uh3qx5UuPD+7SA2yfwaufIG+I
-	lCjYgn/PAI3/Y6KUbfSvXcErsBWJretJzMQt3QMtuKxKPdT2pRZuPiuiTE5ZX0kkXqf36BjVcFY
-	Tgi81M/8FKo/174t/KORxkNBnH6P/nCIR4dIoUMxWPPtwZUUmJHSp3e/loXzq3OJt/mSjBmakvB
-	iRdxZainrWKBvGMsCxLiFpKA+8KBrYDx8XiZjywB1YhXcZppSfqu27DGenNWGxx7t9HkULCtIEo
-	1uYEypNidiDBu5/7/c+7TwpUjcOv
-X-Google-Smtp-Source: AGHT+IE9RV0lJQRIaA/N5BlX0ytZxWN2QmxaITcosy+ZgRKwoletce8tf/Va1d9VGQZ8olt8VJJneQ==
-X-Received: by 2002:a05:600c:1d19:b0:434:9d36:1f0c with SMTP id 5b1f17b1804b1-434a9db8467mr56588515e9.1.1732806433714;
-        Thu, 28 Nov 2024 07:07:13 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b? ([2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa7d21bcsm57003385e9.30.2024.11.28.07.07.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Nov 2024 07:07:13 -0800 (PST)
-Message-ID: <8a4ff61f-0545-4edf-9e90-1e16e4d55911@gmail.com>
-Date: Thu, 28 Nov 2024 15:07:12 +0000
+        d=1e100.net; s=20230601; t=1732807876; x=1733412676;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZFjoCLxFttBQYsu1koC6+gLPt3a+WtUqHPZMnovjD3Y=;
+        b=kOYCrZR7SiHTDLKMmE7zKdN3+ERf4TTp/ZlRW1NAdkp2VFPE+RBlIt1tRfJD+9eSEW
+         FqP57I5OnuQvOkBYw+SRXV1QFoZ7pT1V9IbiABpB5+6X6s/bj8+2tloL5vxr5hYco0D3
+         gLtOW/VTPA87vbfQhckatzEnqOwsioNTi7BWGwxtuoo5OFtxiMU/6+m+BpCAwJRf132K
+         H2vLiaN0c5p/+QTI2HKL6UFTWQCaHnJbxPGVbq58H6fzvUon53Lmc0HDMfG4pg7gme9h
+         83p0Baa6/KT9b3V6/CFjShVn8MV+I8WyI5r9ZvzwMk1ASM9y7VphEtfmpXow3ze1xS84
+         J1Jw==
+X-Gm-Message-State: AOJu0YxJkfORluNvUW9ZJKcsgiorAi+FHB9GDZiUTUt9edK+tRQPgfed
+	jI4Ui2t6RgV55xTB+ZucCOyncrVCubLBo2xk3J2ZLWWOGav3jlhsbvpLVSJ2LfgiXfOS60/Z0S2
+	xz7ATjg7VdIAypzTrXrZ1A7rQbCraHXJ8
+X-Gm-Gg: ASbGncuuAGabRBcOl1Epa3HS64gqCun9P3BR4UZd+oHeACwrMJaxlA3NS7f2XRUg7bh
+	IvVU4fALc/ElENXo0xHMRSV1Z612EhpTLkQ==
+X-Google-Smtp-Source: AGHT+IHOdTOGRF2FgF8/Nz8t2snRv80/pMSMbIM/7pFwRzmkxLNqFYKF9VgW8uru/E5WmuMwuUaJz2zd+b5WdnIRYDQ=
+X-Received: by 2002:a17:906:1daa:b0:aa5:4d96:ec7 with SMTP id
+ a640c23a62f3a-aa581033592mr512453366b.44.1732807875866; Thu, 28 Nov 2024
+ 07:31:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: git rebase exec make -C in worktree confuses repo root dir
-To: Eric Sunshine <sunshine@sunshineco.com>, David Moberg <kaddkaka@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>, Taylor Blau <me@ttaylorr.com>,
- phillip.wood@dunelm.org.uk, david.moberg@mediatek.com,
- Git Mailing List <git@vger.kernel.org>
-References: <1730787532-3757-mlmmj-5e7be4fc@vger.kernel.org>
- <CAL2+Mivva3AFR4of0-2d48YDDMbHiNVsUmCzhezHfe+h9faEvQ@mail.gmail.com>
- <CAPig+cTVfNW4AFJKyGbRcy0_YJEJGcNYNx57USyp4zz1g9fSeQ@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAPig+cTVfNW4AFJKyGbRcy0_YJEJGcNYNx57USyp4zz1g9fSeQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240731134014.2299361-1-christian.couder@gmail.com>
+ <20240910163000.1985723-1-christian.couder@gmail.com> <20240910163000.1985723-4-christian.couder@gmail.com>
+ <xmqqserboqot.fsf@gitster.g>
+In-Reply-To: <xmqqserboqot.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 28 Nov 2024 16:31:03 +0100
+Message-ID: <CAP8UFD2pAtX6UPD6FATuepwVk+0wGkmU5rt=nWpWHejeCe_6rg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] Add 'promisor-remote' capability to protocol v2
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 28/11/2024 07:36, Eric Sunshine wrote:
-> On Wed, Nov 27, 2024 at 11:04 PM David Moberg <kaddkaka@gmail.com> wrote:
->>> To: Elijah Newren <newren@gmail.com>
->>>> My commit merely pointed out that long before that commit came along,
->>>> if GIT_DIR is set but GIT_WORK_TREE is not, then the working tree is
->>>> assumed to be ".".  As such, a command like the above where
->>>> `--show-toplevel` is run with just GIT_DIR set (to anything) will
->>>> merely expand "." and show you that path.
->>>>
->>>> If you are going to be having subprocesses that depend upon the git
->>>> directory and the git working tree, I think there are two options:
->>>>    * Set GIT_WORK_TREE in addition to GIT_DIR (as my patch does in certain cases)
->>>>    * Stop setting GIT_DIR if you're not going to set GIT_WORK_TREE
->>>>
->>>> The second point is a bit harder since setup.c automatically sets
->>>> GIT_DIR for you in various cases, so if you want to go that route it
->>>> really means you'd have to actively unset GIT_DIR in those cases.
->>>> But, you'd have to be careful since you only want to unset it when
->>>> setup_discovered_git_dir() sets it for you, not when the user who
->>>> invoked your command had manually set GIT_DIR.  So, there is a little
->>>> bit of a pickle here...
->>>
->>> So, what is the way forward? Is the option of setting GIT_WORK_TREE more robust?
->>
->> Hi, sorry for posting this on the side but I only have Gmail on android which doesn't allow text only emails (I think).
->>
->> Is there any work ongoing on this item? I think I lost the conversation and/or fell out of it.
-> 
-> The conversation ended at [1]. As far as I know, nobody is working on it.
-> 
-> I think Phillip did a good job in [1] of summarizing the two paths
-> toward a possible fix. Unfortunately, both paths will probably require
-> a good deal of spelunking through the code and the history to
-> understand why the logic is the way it is, and (importantly) how to
-> craft a solution which won't break existing legitimate use-cases.
+On Thu, Nov 28, 2024 at 6:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> I was looking at test breakages caused by this topic (in 'seen',
+> t5710 fails leak checking).
+>
+> Then I noticed something strange.  Next to the "$(TRASH_DIRECTORY)",
+> running this script leaves a few garbage files under the "t/"
+> directory.
+>
+> I think the culprit is this helper function.
+>
+> > +initialize_server () {
+> > +     # Repack everything first
+> > +     git -C server -c repack.writebitmaps=3Dfalse repack -a -d &&
+> > +
+> > +     # Remove promisor file in case they exist, useful when reinitiali=
+zing
+> > +     rm -rf server/objects/pack/*.promisor &&
+> > +
+> > +     # Repack without the largest object and create a promisor pack on=
+ server
+> > +     git -C server -c repack.writebitmaps=3Dfalse repack -a -d \
+> > +         --filter=3Dblob:limit=3D5k --filter-to=3D"$(pwd)" &&
+>
+> This --filter-to=3D"$(pwd)" expands to $(TRASH_DIRECTORY), which is
+> "..../t/trash-directory.t5710-promisor-remote-capability".  I think
+> that is the cause for two extra trash files that are _OUTSIDE_ the
+> trash directory, which is an absolute no-no for tests to be safely
+> runnable.  Next to the trash directory, this ends up creating three
+> files
+>
+> trash directory.t5710-...-980d3ff591aae1651cdd52f7dfad4fb6319ee3c2.idx
+> trash directory.t5710-...-980d3ff591aae1651cdd52f7dfad4fb6319ee3c2.pack
+> trash directory.t5710-...-980d3ff591aae1651cdd52f7dfad4fb6319ee3c2.rev
 
-I think the solution of always setting GIT_WORK_TREE and GIT_DIR is 
-probably the most practical. Even if we find a way to not set GIT_DIR 
-when git is run from a linked worktree I think we will still run into 
-problems when core.worktree is set as that also appears to result in 
-GIT_DIR being set without GIT_WORK_TREE.
+Yeah, right. It should be --filter-to=3D"$(pwd)/pack"
 
-> So, it's not necessarily a small task, and whoever digs into it (if
-> anyone volunteers) will likely need to devote a good deal of time and
-> effort to it. (My Git time is severely limited these days, so that
-> person is unlikely to be me.)
+> > +     promisor_file=3D$(ls server/objects/pack/*.pack | sed "s/\.pack/.=
+promisor/") &&
+> > +     touch "$promisor_file" &&
+>
+> Style: don't "touch" a single file to create it.  Instead >redirect_into_=
+it.
 
-In principle I'm interested in fixing this but in practice I'm unlikely 
-to have time to work on it until the end of Outreachy in March. If 
-someone else wants to take a look at it in the meantime I'll definitely 
-try and make time to answer questions and review patches
+I have fixed this in the current version.
 
-Best Wishes
+> The first failure in leak check seems to be
+>
+> not ok 5 - fetch with promisor.advertise set to 'false'
+> #
+> #               git -C server config promisor.advertise false &&
+> #
+> #               # Clone from server to create a client
+> #               GIT_NO_LAZY_FETCH=3D0 git clone -c remote.server2.promiso=
+r=3Dtrue \
+> #                       -c remote.server2.fetch=3D"+refs/heads/*:refs/rem=
+otes/server2/*" \
+> #                       -c remote.server2.url=3D"file://$(pwd)/server2" \
+> #                       -c promisor.acceptfromserver=3DAll \
+> #                       --no-local --filter=3D"blob:limit=3D5k" server cl=
+ient &&
+> #               test_when_finished "rm -rf client" &&
+> #
+> #               # Check that the largest object is not missing on the ser=
+ver
+> #               check_missing_objects server 0 "" &&
+> #
+> #               # Reinitialize server so that the largest object is missi=
+ng again
+> #               initialize_server
+>
+> but I didn't dig further.  Can you take a look?  I'll eject the
+> topic from 'seen' in the meantime to unblock the CI.
 
-Phillip
+No problem with ejecting the topic from 'seen'. I hope to send a new
+version with a design doc hopefully next week.
 
-> [1]: https://lore.kernel.org/git/743043bf-60b7-4ed7-8cf2-4f3f972968a6@gmail.com/
-
+Thanks.
