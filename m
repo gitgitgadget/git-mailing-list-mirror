@@ -1,135 +1,165 @@
-Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C707E17BA5
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 18:53:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CA3AD4B
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 19:30:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732819988; cv=none; b=EhluXgTsUBgENboP91Gkzl2lRQLxlyZ28N5CoBDjfJAC1pptbMclTazgH3XAhYbMERe7v7hvZfsZB1yJlVNrpmjvyXzsPnEESvVLG90T0+FpIwC3i4GYuBkQMdo8BNHtPun0cP2GO1vc55nu07x0ugBcJ4ISTzepyBNfOnerAUw=
+	t=1732822260; cv=none; b=e8l2Q1WKMn9EAslMtrPDRj6RtBF2CefIEJiqSim1VQZDad/k3aof6yP/SJGJjzbQyI6vBAAxl9WhJVfxJkq2DbiWielGiA8vqwTfKCRY2NKFZjlFmJAr1rdFLFnNN965lilEy6V2rvYa+s6kAtvR+Pzm+XqRb6SjiO3q97XN2T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732819988; c=relaxed/simple;
-	bh=qZJ0r8WEK+a89NUnbDwISOP+NRaKtVZItUhrd1gAQnQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ABY4tq9kGMiHh9G+5+AX1IBf4w4PpYbf12v/DYxqW5kk+gEW4tSgQAcQIglHaFtJZLnIE6g0dLjttQPAmdofABwA2DApJcRpWhaP17GofXBiJgeVRvD+IQylWtN1qEgAsICAO5BgiDWDRqCuW8IzfCxoBIhtYT5GJUK3HmeYpTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-ssl@aegee.org header.b=beiXcPr8; arc=none smtp.client-ip=144.76.142.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
+	s=arc-20240116; t=1732822260; c=relaxed/simple;
+	bh=+k252ohxG1qFlqUhNpeXP6WfnCq/h9X3GA88iSPO8lM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:Subject:Content-Type; b=ux0izst66h3qu9dB2nNkiek2AK9l8c+qvV+I4avVbgG+ENABpc0/HhV9oOAGDNY8A+cyON63qwiGR7m0bop81Wf8UYl3Ntd2omoFz1kq13MAFkxGcvqVCxtHZwKfX4Zwht3TGqo4RXnMUb/+1Vfu53AhgTy5RqOhthRXZKd3BMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kcRT0wpK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mLcE6hZv; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-ssl@aegee.org header.b="beiXcPr8"
-Authentication-Results: mail.aegee.org/4ASIqt9b1729488; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-	t=1732819975; i=dkim+MSA-ssl@aegee.org;
-	bh=qZJ0r8WEK+a89NUnbDwISOP+NRaKtVZItUhrd1gAQnQ=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=beiXcPr8/3zEJOLD1WYEPYjc2dyP3JG2x3HE2v4V3t1QV++ye/ZkAHMj0yEedp5oL
-	 KyoxnF4TfPlhrDxjaA5+riem4nXqk3NPnMYb3ARRnIf7rTLt9vIzEdtyrFUAW1iLCF
-	 k0Drcyb7fFRSUh7P1D5QwP2TziXCP2II7yMf9VWck9QaHiDqemw6JjctfHU2qMW4Uy
-	 BFhvbpluPWAIkF0Po3lMA+KWREvZPIJwOxFcOXhVgia8O7ariCTAjmGa/m7C+OzkNT
-	 YQClxKpXBKKnMg+d6GOWbYJso5T7qrR3riIduTtoTR4MVKqIdMoUm8JHK03UXx4aOR
-	 QORLh6pAshE0vFBabrliE/suTB+Tdz+84YCCxcZBpWe7pVBIUAVp0F73nN4o8Y+eul
-	 MYiBP0s4sTfhoGjRh2IGrjuacxtap6rwBLErsUOX2iD6RJyGafOL6n1SodHmB/ZKKp
-	 7yOg8Wkl0FS3rK6N1O4So67ya3IzsJ5oU9p4edAck9oqvM6jOZFrufqlgIdcwyF1Gn
-	 cW1Qp19SSjYuTXxFiIxWoHzgJ8lG3hGY79YF1u0ZqYoSY6ADDu1LC5m8RtNaCvur1Y
-	 +KXnVtcCDTe36Yv25nFagyd5SwOb4nBhsx3ghmDorkc2eHfALnjyIaB3do7ITvQldY
-	 85FKtyVpEh2kRM9xyV4SXkK8=
-Authentication-Results: mail.aegee.org/4ASIqt9b1729488; dkim=none
-Received: from [192.168.0.100] (ip-046-223-162-065.um13.pools.vodafone-ip.de [46.223.162.65])
-	(authenticated bits=0)
-	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 4ASIqt9b1729488
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 28 Nov 2024 18:52:55 GMT
-Message-ID: <580342884c7b59f74f29ce1b824ffcb096113ee7.camel@aegee.org>
-Subject: Re: Building git with =?UTF-8?Q?=2Fbin=2Fsh=E2=87=94dash?= produces
- suboptimal GIT-CFLAGS file
-From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
- =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
-	 <dilyan.palauzov@aegee.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Date: Thu, 28 Nov 2024 19:52:55 +0100
-In-Reply-To: <Z0inflH-gQbZwNCX@tapette.crustytoothpaste.net>
-References: <b4ef94b2a0294c338d115fee68e0c31e44dad3b9.camel@aegee.org>
-	 <Z0inflH-gQbZwNCX@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.55.1 
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kcRT0wpK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mLcE6hZv"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E76A91380A87;
+	Thu, 28 Nov 2024 14:30:56 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Thu, 28 Nov 2024 14:30:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1732822256; x=1732908656; bh=lK
+	GgzIfhiT1GNidqVpV7KK0+LVaKVdPa6X3zGuBubpM=; b=kcRT0wpKGTjmTuSmxC
+	ErjwHa+EjWXYXTq/g6WEK4BxvV4H02gjSJXCJrfu2sCRFHkQW4xXPkUIlZMEOmxm
+	NBDMKhRrAClAidRXe8KpLMs51ufjs9UuBoJFbKbRAcfBoDfpgBb0FgenHiJIwW3/
+	/ov1plDpaar8DrfBjWifT95XqlGUdqsX8nVjDnY6lsPjSRKFUBfGHwYOuo/jtjGU
+	qAh2zMAJfJnWkpZJGcwb1v8uY8cDyp6i+Rd/dkH+MmhSwrkEfehDbL6IOnKWVjf4
+	zy5Q3+1MojRMBjPTrI2Dwq1ikRp9vgGOVCZB4E01Hed4UAwUdJ8C9ZZHL4ojIKtV
+	Q4Ng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1732822256; x=1732908656; bh=lKGgzIfhiT1GNidqVpV7KK0+LVaK
+	VdPa6X3zGuBubpM=; b=mLcE6hZvejXTxgGzW5jecb52FoLNEFqbfshM2IQ3nu0n
+	HQEjCGXlDhQ5f1da5HJDGux9xDYeNBlT/gjqg3/AN4g3pnqgwXJ7s8XWKda0VHNm
+	MheKvMylgDKoDhDUL3hE+5cjGapK/0qjnjTWzCnkT3t5826mRDx6V/D/TrYhj7i+
+	po5ECKWGrd8Hk0dRjbyQ77ehtf7Ec/nfnNu/Uk5NAHpCNAZs6nvSWDIrgfiZKSKA
+	XVwEiauEzN9/ruWpT55ZIOJFD5JgxB7Q3PlsuA/iVbPUG0C9Voe+afYCF/oUhlsK
+	KUeLmULTW4qrMswaT53RzOOuH28TpHruvsiYTYDQKg==
+X-ME-Sender: <xms:8MRIZ7F8R-mpO_I43XY8zJ5TUg1f1onJ36PGz0Z_6EYHqHQHpEOCc3I>
+    <xme:8MRIZ4U5mUb9a4HlnBrCdjIaXGNeI4qzWKNt_-0ZsRkFpWpllQdKilZeZHSiXCod4
+    vtwXcHNDbmxtVCfsw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdduvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvvefkufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgr
+    uhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmh
+    grihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeffjedujedtgeehfffffffffeejffel
+    teegkedtgfelgedtvdetgeehveekvdehkeenucffohhmrghinhepshhtrggtkhhovhgvrh
+    hflhhofidrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
+    homhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    jheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrgh
+X-ME-Proxy: <xmx:8MRIZ9JT5wwMZoNZxWP9CnXg9encQWyMG_JipwE5jmRx6HUvU1W7uQ>
+    <xmx:8MRIZ5HISPog7AjWwLqO3Z49ytlbcnJkVekFVouIcRVPv6RSA4cF5Q>
+    <xmx:8MRIZxVwH9XP1Co6QsVcTDMAYobm0nwRxz0mvY6e2VDoc2Ook1i5nQ>
+    <xmx:8MRIZ0MzWAdFQFMkxgf18aBGnkiZSoj41ETlKFDI8K1Wxr0ptgvzQQ>
+    <xmx:8MRIZwf1P59go4UrCI-6nHz1P7crKtyFW_vslHOkoWtfO_09ARlhE1T3>
+Feedback-ID: i83a1424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A3E2B780068; Thu, 28 Nov 2024 14:30:56 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Thu, 28 Nov 2024 20:30:17 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org
+Cc: "Johannes Sixt" <j6t@kdbg.org>
+Message-Id: <702d88e9-c62d-482c-a457-6d6642e8488e@app.fastmail.com>
+Subject: gitrevisions: be more chatty about shell metacharacter gotchas?
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+See this question from today (+CC):
 
-echo U\"\\\"U > out
+https://stackoverflow.com/q/79232719/1725151
 
-puts in out=20
+The problem turned out to be:
 
-U"\"U
+> You are using the Windows command line CMD. This beast treats ^
+> specially (it > is some sort of escape character). You have to type it
+> twice for every occurrence where you need one of them: [...]
 
-under bash, and=20
+Now gitrevisions(7) already has this:
 
-U""U
+    Note
+    This document shows the "raw" syntax as seen by git. The shell and
+    other UIs might require additional quoting to protect special charac=
+ters
+    and to avoid word splitting.
 
-with dash.  Every time I report to=C2=A0dash@vger.kernel.org that something=
- is broken, e.g. because it behaves differently in dash from bash, the answ=
-er is that both behaviours are allowed by POSIX, echo is not portable and s=
-hould not be used.  git=E2=80=99s Makefile does  echo "$$FLAGS" >GIT-CFLAGS=
- so I am not going to report this to dash.
+All bases covered.
 
-Greetings
-  =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
+But, and I don=E2=80=99t know why I didn=E2=80=99t realize this sooner t=
+han I did, but
+this part:
 
------Original Message-----
-From: brian m. carlson <sandals@crustytoothpaste.net>
-To: =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=
-=BE=D0=B2 <dilyan.palauzov@aegee.org>
-Cc: git@vger.kernel.org
-Subject: Re: Building git with /bin/sh=E2=87=94dash produces suboptimal GIT=
--CFLAGS file
-Date: 28/11/24 18:25:18
+    :/<text>, e.g. :/fix nasty bug
+    [...]
+    Depending on the given text, the shell=E2=80=99s word splitting rule=
+s might require
+    additional quoting.
 
-On 2024-11-28 at 13:53:21, =D0=94=D0=B8=D0=BB=D1=8F=D0=BD =D0=9F=D0=B0=D0=
-=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2 wrote:
-> Hello,
->=20
-> when /bin/sh is bash, target GIT-CFLAGS: FORCE in Makefile puts in the fi=
-le GIT-CFLAGS the content
->=20
-> gcc:=C2=A0 -g -O2=C2=A0 -I. -DHAVE_SYSINFO -DGIT_HOST_CPU=3D"\"x86_64\"" =
--DUSE_LIBPCRE2 -DHAVE_ALLOCA_H -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEN=
-D -DSUPPORTS_SIMPLE_IPC -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_IN=
-IT_SAFE_HASH_DEFAULT=3D0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C=3D"\"git-compat-uti=
-l.h\"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=3D"\"git-compat-util.h\"" -DSHA2=
-56_BLK=C2=A0 -DHAVE_PATHS_H -DHAVE_STRINGS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GE=
-TTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_SYNC_FILE_RANGE -DHAVE_GETDELIM '-
-> DPROCFS_EXECUTABLE_PATH=3D"/proc/self/exe"' -DFREAD_READS_DIRECTORIES -DS=
-HELL_PATH=3D'"/bin/sh"':
->=20
-> when /bin/sh is dash (b3e38ad), the same file GIT-CFLAGS contains
->=20
-> gcc:=C2=A0 -g -O2=C2=A0 -I. -DHAVE_SYSINFO -DGIT_HOST_CPU=3D""x86_64"" -D=
-USE_LIBPCRE2 -DHAVE_ALLOCA_H -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEND =
--DSUPPORTS_SIMPLE_IPC -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES -DSHA1DC_INIT=
-_SAFE_HASH_DEFAULT=3D0 -DSHA1DC_CUSTOM_INCLUDE_SHA1_C=3D""git-compat-util.h=
-"" -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C=3D""git-compat-util.h"" -DSHA256_BLK=
-=C2=A0 -DHAVE_PATHS_H -DHAVE_STRINGS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME =
--DHAVE_CLOCK_MONOTONIC -DHAVE_SYNC_FILE_RANGE -DHAVE_GETDELIM '-
-> DPROCFS_EXECUTABLE_PATH=3D"/proc/self/exe"' -DFREAD_READS_DIRECTORIES -DS=
-HELL_PATH=3D'"/bin/sh"':
->=20
-> Note the differences in the -DGIT_HOST_CPU, -DSHA1DC_CUSTOM_INCLUDE_SHA1_=
-C values.=C2=A0 Because of the differences, in Makefile:3150=C2=A0=C2=A0 if=
- test x"$$FLAGS" !=3D x"`cat GIT-CFLAGS 2>/dev/null`" ; then=C2=A0 always s=
-ucceeds, prints =E2=80=9C* new build flags=E2=80=9D and every run of make s=
-tarts rebuilding daemon.o.=C2=A0 So the empty build is not empty.
+I don=E2=80=99t recall reading this part (only glazing over it).  I did =
+eventually
+guess that I needed to
 
-I don't see this on Debian unstable's 0.5.12-9, so I'd say that this is
-likely a dash bug upstream, probably a regression, and I'd suggest you
-report it to them.=C2=A0 I don't see any reason that the Makefile should be
-doing anything incorrect here after some inspection.
+    :/'fix nasty bug'
 
-I've noted, looking at the upstream Git repository, that (unlike zsh)
-there's no testsuite, so perhaps this is the kind of thing that could
-well end up in a future testsuite.
+because that part needs to be =E2=80=9Cone word=E2=80=9D.  Or something.=
+  It can=E2=80=99t be split.
 
+I think I=E2=80=99m a low-intermediate shell user.  I get by.  In a wider
+perspective, git(1) (i.e. in a terminal context, mostly) is used by peop=
+le
+from a wide range of skill levels.  Many seem to (based on the question I
+stumble over) mostly be using a terminal because they need to use git(1)=
+ and
+that=E2=80=99s about it.
+
+So would it make sense to be a bit more chatty about these metacharacter
+gotchas on this page?  Maybe add a =E2=80=9CNote=E2=80=9D on e.g. `^` th=
+at these here (?)
+popular shells use `^` as a metacharacter?
+
+That would for sure be redundant.  But IMO good documentation finds a
+balance between redundancy and other concerns.  Like in the form
+of reminders and localized hints.
+
+Also back to this paragraph:
+
+    Depending on the given text, the shell=E2=80=99s word splitting rule=
+s might require
+    additional quoting.
+
+Part of why my eyes might have glazed over (I think) is that this is very
+technical phrasing.  Yes, technical phrasing in a technical manual.  To =
+be
+expected.  But the topic is the revision syntax; all of us Git users of
+varying levels might be primed for less terse but more evident paragraphs
+like
+
+    Keep in mind that you probably should quote the search string.  A se=
+arch
+    string like `:/fix nasty bug` could be interpreted as just `:/fix`
+    depending on how your shell splits words.  Try to stick to
+    `:/'fix nasty bug'` or `:/"fix nasty bug"` (whichever is better in y=
+our
+    shell) for that reason.
+
+Because this leads with what the gotcha and remedy is about.
+
+Thoughts?
