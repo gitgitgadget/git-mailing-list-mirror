@@ -1,96 +1,74 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179791DDEA
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 01:27:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42521C6B4
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 01:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732757281; cv=none; b=kh8y8rjbsjUZi1bbgdeg2oV8YcmfYMGGY2oKux1PyjseIbUj9bq6xAz+Pb8buIc/pX//+X64zH+CpMdMYfVMrbWyekGZknbGBRSMZpbgj+spkLtostg+tIoGJNEqKOAcAvjCMF0C4JPuiPPvCe4Rt46ZuIXsxozR8tRDMEutK68=
+	t=1732758920; cv=none; b=iwOl22Ue8GtfH8PiZUva64wUicUP/yQ56NA+R85I5RDo382GqZVzR2woYJeMr3ty7xLQlZRQvYJJu22sHONWtEFI7oLKk8faLMdsLwQ921RpH8klgS+E0m4Z0pqV8DoCesTbCeTt0us9LqgtzwQvSzJa91A/5VsYqLpNL+ii+Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732757281; c=relaxed/simple;
-	bh=OC8ViqEtxWnHPCRsea2m5gd5txLgZ4w3lzHHCCdyOXA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gssTiwILXAbvXocShftWk33DFk+2WrUY7phnnsGifr1k73vz0tZHGpAJ5oFmlcKB+REoUkeqpRSvu5ZC1onV/YlvStj7OSDu3d6LHWUoFsTz8hHEunJLNxS2HhDPYaife2p3VyBEQuzTeUu9I60xSnR4Vha5lfjhWEqLjgNxOcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=u2dtAIgp; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="u2dtAIgp"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 00CE825401BA;
-	Wed, 27 Nov 2024 20:27:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 27 Nov 2024 20:27:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732757277; x=1732843677; bh=Aha7TvzdvCvgwGCv0nEktWX0MUCwZNV8Qyc
-	kKKplcUM=; b=u2dtAIgpy8NfssahIIlmy4bbNFCPMhpCRRbCvbxs6axkIQseCaI
-	kKGXsNPtKvQ4SUSbX+JWZW8uzeWZp+J1gI0HHy03ttKqJsnjvaOwhOqlXVOqlkIm
-	m64//Y5FAAsbrVtdZLyVvF9UF5f3QV071HMp2D21kf5V0mQ0u6NPkE61Heafz9ef
-	R06yRrUqOvVrWeXsuOqtDPGeeAidBiDts96HUto2G0ooXVCYDmsMF2E8HkWjfPor
-	645Pes66OF+pJ9TSI83mD08v7juWea5gyOG6LneyTlmBh9dMte1qtjFIrLHWarvE
-	odYhJ2clQvpia61YQL3bmfbKPcRXHaTJesw==
-X-ME-Sender: <xms:HMdHZ4-pwEv_AspT1x_xqPxlLVFDcMb8OpJFtCwAsZZUEhG0wbMV9Q>
-    <xme:HMdHZwvIKPPGdFASoZxpkgfv6dF4T356vCPc1x1zYKRXsosqSCPnxpxqgW5cUmEb3
-    LF1MTRCmLzHvjWhNw>
-X-ME-Received: <xmr:HMdHZ-BmmxeOOAhIKJmUBYr5l7KrV2O0-MVCZ3vlzZtI4QIcwHysOZa946HxGTHPRSzn-7TrSLEYyBInLm9cZGgpGEd-OndbWgHZjs8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedtgdefgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeevteev
-    veeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HMdHZ4d5-wY3ZS7WRrRRRrviit8TNDWKXHVrAY72tylS5w_JOPtJ_w>
-    <xmx:HMdHZ9PM-T5f4p6ZsOFaIo7dk7JtNmV4Ee2MwQOz9jAlC1lRZp6GyA>
-    <xmx:HMdHZylkzIvLS3ZoU282ugK5RQdp5jzlCwOiSLABMxVq5jonipj2AA>
-    <xmx:HMdHZ_sMbX5M7ANgykGsIaQcbtOQ1rv8ffa8BDCGCtfF3wi1_AmWKA>
-    <xmx:HcdHZ5CQd92TFj5-6KfwZvrBQCRl4_FfVG1X0aYRaolVMWw3Tsi9hJY_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Nov 2024 20:27:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  me@ttaylorr.com,  shejialuo@gmail.com,  Christian
- Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 0/8] Change midx.c and midx-write.c to not use global
- variables
-In-Reply-To: <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-0-c5a99f85009b@gmail.com>
-	(Karthik Nayak's message of "Wed, 27 Nov 2024 17:28:25 +0100")
-References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
-	<20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-0-c5a99f85009b@gmail.com>
-Date: Thu, 28 Nov 2024 10:27:54 +0900
-Message-ID: <xmqq5xo8qh9h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1732758920; c=relaxed/simple;
+	bh=onduime52/mkGI2QOa/SSFO4noTEheRABof4euqU5aU=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OaGYqbJ3zahip8uDrD9MXfjB1c+tp0LKeUni8OIMG0rodEMVMF6BtplDQTQNUrNof7VCLlBCKlZyWnrRrsnbIbD1yQamxW6cryXZdqGnESS77TC6eNqGYRh91VqGw8d3r73QRZzdpHBMO2McovplUPdsw+pRzA/tA3cTfoMtX5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4AS1t6r42033673
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 28 Nov 2024 01:55:07 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <junio@pobox.com>, <git@vger.kernel.org>
+References: <xmqq5xob6coo.fsf@gitster.g>
+In-Reply-To: <xmqq5xob6coo.fsf@gitster.g>
+Subject: RE: [ANNOUNCE] Git v2.47.1
+Date: Wed, 27 Nov 2024 20:55:01 -0500
+Organization: Nexbridge Inc.
+Message-ID: <027201db4138$8ce7b110$a6b71330$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQLP/SIomF0GoU6jlXXvh6jX9USCyrDidmzA
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On November 25, 2024 1:38 AM, Junio C Hamano wrote:
+>The latest maintenance release Git v2.47.1 is now available at the usual
+places.  This
+>flushes some fixes accumulated on the 'master'
+>front since Git 2.47.0 but the primary purpose is to synchronising "gitk"
+subtree
+>with that of Johannes Sixt, who volunteered to be the new upstream
+maintainer of
+>it.  Huge thanks to Paul Mackerras who started the useful tool and have
+maintained
+>it so far, and to Johannes Sixt to volunteering to move it forward.
+>
+>The tarballs are found at:
+>
+>    https://www.kernel.org/pub/software/scm/git/
+>
+>The following public repositories all have a copy of the 'v2.47.1'
+>tag and the 'maint' branch that the tag points at:
+>
+>  url = https://git.kernel.org/pub/scm/git/git
+>  url = https://kernel.googlesource.com/pub/scm/git/git
+>  url = git://repo.or.cz/alt-git.git
+>  url = https://github.com/gitster/git
 
-> Changes in v3:
-> - Split out the first commit into a separate series [1].
-> - Improved some of the commit messages to be more descriptive.
-> - Merged the 8th and 9th commits together, since they were similar.
-> - v2: https://lore.kernel.org/r/20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com
+Packaging is done for NonStop built with OpenSSL 3.2 and lower. Working on
+git
+dependencies for OpenSSL 3.3 and 3.4.
 
-Merging either v2 or v3 to 'master', together with their
-prerequisite topics/patches, seems to result in identical trees,
-which is fine if reviews on previous rounds did not find any bugs.
-
-Will queue.  Thanks.
+--Randall
 
