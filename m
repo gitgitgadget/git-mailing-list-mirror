@@ -1,99 +1,377 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE99288DB
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 09:51:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E3B11940A2
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 11:20:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732787518; cv=none; b=mzHmvUXrFeeCP2cSKyr/J3Ox6IPpFBZS6y2cZPji2uA2VoHTonUSwwVb/HzqJpEu7FIG8oyBF1aX3do+aZUc7luhWKRScZ1CnQRzvqntAaCXhV581NhkOV/BLDuyPhooLjtEvpVacHy4xRwpAV0UCVdOsMZaYzkw1VQKA/ivrrQ=
+	t=1732792821; cv=none; b=M0cEVe7JnNi1IC7DMry9Wi98cBNCT/67nrx0tyUBDVwUurajiiEJ1CKdzGUnCn+rSdBrz+uI1XjRAx6SmPMr6r1QSq7S1TwIbiyIb4+ziWnNNkPt/nnp3pGlrjWSf1gHQxEnCOHbvrfdKerATPmUtzFjwJcksJlCfOv9eaC5BFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732787518; c=relaxed/simple;
-	bh=4SQXUKrD3fG2R+oMB5eYf/DbAniVxdLnbUBKfHB7gRE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=K6OmZbipTeMBGkJIc9HYiLVPeKpiJO7VgEb2aEvA9k3YRiIHgA9DlT0EuTYhlsz7ZHhEYcWGrRmLV9zDgmEuydOnRGtWflU7xVC0rUnW/1PoXOGSeolf+LTbmEqBDhfK2AmQvFRJk5YDhzb2p0VEdEWwENYLacx8pHBBLKIMR+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6d41ae05df2so1342106d6.3
-        for <git@vger.kernel.org>; Thu, 28 Nov 2024 01:51:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732787515; x=1733392315;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rcI3H8MW3sV/RQs4QWpTrKTOiKQWOLUYvkwdDHCdS+k=;
-        b=d/1O4f6zaOAzhQSOKjts/UjBsa1dSJpx9yiazx2/4rZ7b55S8uSPPbfdQO9KO+PGf4
-         hsn0pJTeR+5GUjbEVxcHtO4Tu038mHsckijgPoDlMLfzjjn73q4cwcFPlJUdsAYDwaNZ
-         CdOhCjC0u+ddqYpVU/NBy3DJjuRaWMZ404GMSFk4w/FRyFiQkAPBqNRhP70j5WdmCw+6
-         nJRKuKazjK1PBq3wLGXuEu5gJt0LRYoFQlqsyk74aty6YzVUAzT+jdXXuHQURNOXB9ca
-         TW0qPTH/1S/g+l+tusc5OBsNB7Hjgysm46ilzx64GNQKoKXDqCanH3HrPMkTl77SjC/1
-         6Fdw==
-X-Gm-Message-State: AOJu0Yx2JUEQVLIpohsqsDTwLzqo7OaHtwm7TgHCc0m7Goz5yTGygaaS
-	g8CILbFbZaGNYQJ/KrOXPDtmWQ/bmKrHl9dYg5mdU3EQ/AR5/ZAC6gO8VrJev2og9ou3m1bhtmt
-	y3bkij/+3FYaq1hUfx4gOtfHJV/c=
-X-Gm-Gg: ASbGncvt/pF443dApp9taG2MoAaIYwWT1NWh1iADxNQ8ksc4QDT2a31+Mj6K3QQVhp3
-	dYRTTseFt4dhzqAYAmqIcBqpqrwCIzw==
-X-Google-Smtp-Source: AGHT+IFiZOqH0H8DfAKU2O4ptOv+z4d1RXedW609o5a4cXImbzJ3mvwRNZyXE+edjDkGXizhxoW6v368kTKJuKeWyGg=
-X-Received: by 2002:a05:6214:2a47:b0:6cb:e981:d7d0 with SMTP id
- 6a1803df08f44-6d864d92b52mr33169176d6.7.1732787515634; Thu, 28 Nov 2024
- 01:51:55 -0800 (PST)
+	s=arc-20240116; t=1732792821; c=relaxed/simple;
+	bh=s+McE4i8bHo/9GKUJ8nHrd5YHR1OBPrQaPmAPTrXAyQ=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=ESpVqurcsD+2MqmhtgiZv6bSrdwM+C/iuBXZzKotNmOw1ALDqkskBgKNd9+1u2TIN0raxFKxIewU0G9XCDcwvUBfr98+o+4PAuAVr2HjcLoCDK541O+9mwjxvuR9+W8ruqzVb7YzSEn6BRmFMfbMkfQvSVlsrlgVMZ98TATMzlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=lF7VTAym; arc=none smtp.client-ip=192.29.178.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="lF7VTAym"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=+VkalKWf3eB+YyWY3Ln3L2c1AynB9RSJhveVQdP0pQg=;
+ b=lF7VTAymUjgpuDJWHWMqA3A8cC5OMfQZ12+PmCHT3I9fn1lQTqIOZrSSseIEyYEcamNulInvWlHQ
+   +kcJ604F75EACaVSlK4wrtreA8VU8YAekJwUm33lUvD+u9T1xUCAcT8jKilRV+2sHrMMBYU353bf
+   EVE0EGLSCGz0jcAON3RibuArjQatqtoeN4HXzxxDcTkp0SBCkpYipgsrieEjQjShgnP+SbFim5sj
+   68begfEVDgpekNrtPwQ2MmguV5/DjtkU5XJb5zEhtaJvu4gbSplg8X8ZDf3VE9u2HxQFiF9ti5Bz
+   3WHRO4M7+s9oNg6iceT/whqiMAZy4xwKVBm66Q==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SNN00A29RHN8910@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Thu, 28 Nov 2024 11:20:11 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,	karthik.188@gmail.com,
+	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v2] fetch: add configuration for set_head behaviour
+Date: Thu, 28 Nov 2024 12:19:13 +0100
+Message-id: <20241128111946.366584-1-bence@ferdinandy.com>
+In-reply-to: <xmqqa5dku6w6.fsf@gitster.g>
+References: <xmqqa5dku6w6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.1831.git.1732557520428.gitgitgadget@gmail.com>
- <pull.1831.v2.git.1732561248717.gitgitgadget@gmail.com> <79f6027b-123c-40a6-975b-1c6053b9391c@app.fastmail.com>
- <xmqq1pywvmhq.fsf_-_@gitster.g> <xmqqa5dkqjmr.fsf_-_@gitster.g>
- <CAPig+cSXGreymhni_J8TZ56rp+VZB_Z7ekaRtwFdxE3a2QWS5w@mail.gmail.com> <xmqq34jbogg3.fsf@gitster.g>
-In-Reply-To: <xmqq34jbogg3.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 28 Nov 2024 04:51:44 -0500
-Message-ID: <CAPig+cS3KdUKms7UkJQkkMD5WQnD6Khauq4RwttetzrJ34VCdg@mail.gmail.com>
-Subject: Re: [PATCH v2] CodingGuidelines: a handful of error message guidelines
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAE5Nk9bpv1fyRrqb6sBNb7Fm936QAq7tHXwSfTzJOwcfW/YXE0ZclAbq82f9ADD
+ 0sHQ2oduzNxmvKCmNwVjZaw7IorbSVbMGR3l/S808fDbM0+ACv68RCWKiQqlPkgX
+ 7VFUIlwFEymipW9ra/Kw5oiw+JwC+NiRwpb9/W3N1zb+gGCOzDz9oUQ6I3xvDo3U
+ rA4fxalYMDVJJ4wSdZMtcs9S3jImO3tOavFLYaQbxT9jPEtkBm/QwHvRvxa3zPgs
+ LXmq/AI3kFm8R4gcrOPr0pRdt3+blcLce7Wg7sNibfUI7YmLaDVKDTh86I2qBa0u
+ UKLjuVdVuloKTABWN1IY2cU0+hwExIKFqFyGs/wl9frSnt34e8VewdLbqsLabjLh
+ uyBkHoFOO9HN4GflAu21uhvlrZH+G0e6bkruTmjyLraY1FzZfXXnVxeer15HIXbr
+ 4Z2bUjhxuQxQza1UaIf8weOfNZJqrn9AaKRc79kZsdBtXc8RBGIUeXFy
 
-On Thu, Nov 28, 2024 at 4:28=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> >> +   Porcelain command should be marked for `_("translation")`.
-> >
-> > Here you capitalize "Porcelain" but below, "plumbing" is all lowercase.
->
-> ;-) I think that is how we spell them in our documentation when we
-> contrast them against each other.
+In the current implementation, if refs/remotes/$remote/HEAD does not
+exist, running fetch will create it, but if it does exist it will not do
+anything, which is a somewhat safe and minimal approach. Unfortunately,
+for users who wish to NOT have refs/remotes/$remote/HEAD set for any
+reason (e.g. so that `git rev-parse origin` doesn't accidentally point
+them somewhere they do not want to), there is no way to remove this
+behaviour. On the other side of the spectrum, users may want fetch to
+automatically update HEAD or at least give them a warning if something
+changed on the remote.
 
-I must not have been paying close enough attention.
+Introduce a new setting, remote.$remote.followRemoteHEAD with four
+options:
 
-> >> + - BUG("message") are for communicating the specific error to
-> >> +   developers, and not to be translated.
-> >
-> > Okay, although could be slightly more explicit:
-> >
-> >     - BUG("message") is for communicating a specific failure to
-> >       developers, not end-users, thus should not be translated.
->
-> The way I read your rewrite is that the "communitation" mentioned is
-> between the program and the user who saw the message.  I wanted to
-> say that the message is seen first by an end-user, and then is
-> communicated to developers.  And not translating is one way to make
-> sure the message is not mangled, and stays grep-able, during the
-> game of telephone.
->
-> Would this work better?
->
->   - In order to help the user who saw BUG("message") to accurately
->     communicate it to developers, do not mark them for translation.
+    - "never": do not ever do anything, not even create
+    - "create": the current behaviour, now the default behaviour
+    - "warn": print a message if remote and local HEAD is different
+    - "always": silently update HEAD on every change
 
-Let's not spend too much time fine-tuning this. I found your original
-clearer than this rewrite. It was just the "and not to be" bit that
-made my reading hiccup. Taking your original but substituting in
-"thus" may help:
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
 
-    - BUG("message") are for communicating the specific error to
-      developers, thus should not be translated.
+Notes:
+    This patch is built off v15 of the set-head/fetch updates series:
+    https://lore.kernel.org/git/D5WEJJBMSO1K.2TPXDI1K08SHT@ferdinandy.com/T/#m13a0c3e8919872188ef07fd9fd984c78e8aa35ba
+    
+    v2:
+        - magic numbers converted to enum
+        - since the enum is descriptive (well, along with the documentation)
+          I felt there is no need for the comment explaining the values
+
+ Documentation/config/remote.txt |  11 ++++
+ builtin/fetch.c                 |  46 ++++++++++++--
+ remote.c                        |   9 +++
+ remote.h                        |   9 +++
+ t/t5510-fetch.sh                | 102 ++++++++++++++++++++++++++++++++
+ 5 files changed, 171 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config/remote.txt b/Documentation/config/remote.txt
+index 6d8b7d6c63..024f92befc 100644
+--- a/Documentation/config/remote.txt
++++ b/Documentation/config/remote.txt
+@@ -101,6 +101,17 @@ remote.<name>.serverOption::
+ 	The default set of server options used when fetching from this remote.
+ 	These server options can be overridden by the `--server-option=` command
+ 	line arguments.
++
++remote.<name>.followRemoteHEAD::
++	How linkgit:git-fetch[1] should handle updates to `remotes/<name>/HEAD`.
++	The default value is "create", which will create `remotes/<name>/HEAD`
++	if it exists on the remote, but not locally, but will not touch an
++	already existing local reference.  Setting to "warn" will print
++	a message if the remote has a different value, than the local one and
++	in case there is no local reference, it behaves like "create". Setting
++	to "always" will silently update it to the value on the remote.
++	Finally, setting it to "never" will never change or create the local
++	reference.
+ +
+ This is a multi-valued variable, and an empty value can be used in a higher
+ priority configuration file (e.g. `.git/config` in a repository) to clear
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 2f416cf867..d74b20b49c 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1579,10 +1579,35 @@ static const char *strip_refshead(const char *name){
+ 	return name;
+ }
+ 
+-static int set_head(const struct ref *remote_refs)
++static void report_set_head(const char *remote, const char *head_name,
++			struct strbuf *buf_prev, int updateres) {
++	struct strbuf buf_prefix = STRBUF_INIT;
++	const char *prev_head = NULL;
++
++	strbuf_addf(&buf_prefix, "refs/remotes/%s/", remote);
++	skip_prefix(buf_prev->buf, buf_prefix.buf, &prev_head);
++
++	if (prev_head && strcmp(prev_head, head_name)) {
++		printf("'HEAD' at '%s' is '%s', but we have '%s' locally.\n",
++			remote, head_name, prev_head);
++		printf("Run 'git remote set-head %s %s' to follow the change.\n",
++			remote, head_name);
++	}
++	else if (updateres && buf_prev->len) {
++		printf("'HEAD' at '%s' is '%s', "
++			"but we have a detached HEAD pointing to '%s' locally.\n",
++			remote, head_name, buf_prev->buf);
++		printf("Run 'git remote set-head %s %s' to follow the change.\n",
++			remote, head_name);
++	}
++	strbuf_release(&buf_prefix);
++}
++
++static int set_head(const struct ref *remote_refs, int follow_remote_head)
+ {
+-	int result = 0, is_bare;
+-	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT;
++	int result = 0, create_only, is_bare, was_detached;
++	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
++		      b_local_head = STRBUF_INIT;
+ 	const char *remote = gtransport->remote->name;
+ 	char *head_name = NULL;
+ 	struct ref *ref, *matches;
+@@ -1603,6 +1628,8 @@ static int set_head(const struct ref *remote_refs)
+ 		string_list_append(&heads, strip_refshead(ref->name));
+ 	}
+ 
++	if (follow_remote_head == FOLLOW_REMOTE_NEVER)
++		goto cleanup;
+ 
+ 	if (!heads.nr)
+ 		result = 1;
+@@ -1614,6 +1641,7 @@ static int set_head(const struct ref *remote_refs)
+ 	if (!head_name)
+ 		goto cleanup;
+ 	is_bare = is_bare_repository();
++	create_only = follow_remote_head == 2 ? 0 : !is_bare;
+ 	if (is_bare) {
+ 		strbuf_addstr(&b_head, "HEAD");
+ 		strbuf_addf(&b_remote_head, "refs/heads/%s", head_name);
+@@ -1626,9 +1654,14 @@ static int set_head(const struct ref *remote_refs)
+ 		result = 1;
+ 		goto cleanup;
+ 	}
+-	if (refs_update_symref_extended(refs, b_head.buf, b_remote_head.buf,
+-					"fetch", NULL, !is_bare))
++	was_detached = refs_update_symref_extended(refs, b_head.buf, b_remote_head.buf,
++					"fetch", &b_local_head, create_only);
++	if (was_detached == -1) {
+ 		result = 1;
++		goto cleanup;
++	}
++	if (follow_remote_head == FOLLOW_REMOTE_WARN && verbosity >= 0)
++		report_set_head(remote, head_name, &b_local_head, was_detached);
+ 
+ cleanup:
+ 	free(head_name);
+@@ -1636,6 +1669,7 @@ static int set_head(const struct ref *remote_refs)
+ 	free_refs(matches);
+ 	string_list_clear(&heads, 0);
+ 	strbuf_release(&b_head);
++	strbuf_release(&b_local_head);
+ 	strbuf_release(&b_remote_head);
+ 	return result;
+ }
+@@ -1855,7 +1889,7 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
+-	if (set_head(remote_refs))
++	if (set_head(remote_refs, transport->remote->follow_remote_head))
+ 		;
+ 		/*
+ 		 * Way too many cases where this can go wrong
+diff --git a/remote.c b/remote.c
+index 10104d11e3..0b18840d43 100644
+--- a/remote.c
++++ b/remote.c
+@@ -514,6 +514,15 @@ static int handle_config(const char *key, const char *value,
+ 	} else if (!strcmp(subkey, "serveroption")) {
+ 		return parse_transport_option(key, value,
+ 					      &remote->server_options);
++	} else if (!strcmp(subkey, "followremotehead")) {
++		if (!strcmp(value, "never"))
++			remote->follow_remote_head = FOLLOW_REMOTE_NEVER;
++		else if (!strcmp(value, "create"))
++			remote->follow_remote_head = FOLLOW_REMOTE_CREATE;
++		else if (!strcmp(value, "warn"))
++			remote->follow_remote_head = FOLLOW_REMOTE_WARN;
++		else if (!strcmp(value, "always"))
++			remote->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
+ 	}
+ 	return 0;
+ }
+diff --git a/remote.h b/remote.h
+index a7e5c4e07c..184b35653d 100644
+--- a/remote.h
++++ b/remote.h
+@@ -59,6 +59,13 @@ struct remote_state {
+ void remote_state_clear(struct remote_state *remote_state);
+ struct remote_state *remote_state_new(void);
+ 
++	enum follow_remote_head_settings {
++		FOLLOW_REMOTE_NEVER = -1,
++		FOLLOW_REMOTE_CREATE = 0,
++		FOLLOW_REMOTE_WARN = 1,
++		FOLLOW_REMOTE_ALWAYS = 2,
++	};
++
+ struct remote {
+ 	struct hashmap_entry ent;
+ 
+@@ -107,6 +114,8 @@ struct remote {
+ 	char *http_proxy_authmethod;
+ 
+ 	struct string_list server_options;
++
++	enum follow_remote_head_settings follow_remote_head;
+ };
+ 
+ /**
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 87698341f5..2467027d34 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -99,6 +99,108 @@ test_expect_success "fetch test remote HEAD change" '
+ 	branch=$(git rev-parse refs/remotes/origin/other) &&
+ 	test "z$head" = "z$branch"'
+ 
++test_expect_success "fetch test followRemoteHEAD never" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
++		git config set remote.origin.followRemoteHEAD "never" &&
++		git fetch &&
++		test_must_fail git rev-parse --verify refs/remotes/origin/HEAD
++	)
++'
++
++test_expect_success "fetch test followRemoteHEAD warn no change" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git rev-parse --verify refs/remotes/origin/other &&
++		git remote set-head origin other &&
++		git rev-parse --verify refs/remotes/origin/HEAD &&
++		git rev-parse --verify refs/remotes/origin/main &&
++		git config set remote.origin.followRemoteHEAD "warn" &&
++		git fetch >output &&
++		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
++			"but we have ${SQ}other${SQ} locally." >expect &&
++		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change." >>expect &&
++		test_cmp expect output &&
++		head=$(git rev-parse refs/remotes/origin/HEAD) &&
++		branch=$(git rev-parse refs/remotes/origin/other) &&
++		test "z$head" = "z$branch"
++	)
++'
++
++test_expect_success "fetch test followRemoteHEAD warn create" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
++		git config set remote.origin.followRemoteHEAD "warn" &&
++		git rev-parse --verify refs/remotes/origin/main &&
++		output=$(git fetch) &&
++		test "z" = "z$output" &&
++		head=$(git rev-parse refs/remotes/origin/HEAD) &&
++		branch=$(git rev-parse refs/remotes/origin/main) &&
++		test "z$head" = "z$branch"
++	)
++'
++
++test_expect_success "fetch test followRemoteHEAD warn detached" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git update-ref --no-deref -d refs/remotes/origin/HEAD &&
++		git update-ref refs/remotes/origin/HEAD HEAD &&
++		HEAD=$(git log --pretty="%H") &&
++		git config set remote.origin.followRemoteHEAD "warn" &&
++		git fetch >output &&
++		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
++			"but we have a detached HEAD pointing to" \
++			"${SQ}${HEAD}${SQ} locally." >expect &&
++		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change." >>expect &&
++		test_cmp expect output
++	)
++'
++
++test_expect_success "fetch test followRemoteHEAD warn quiet" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git rev-parse --verify refs/remotes/origin/other &&
++		git remote set-head origin other &&
++		git rev-parse --verify refs/remotes/origin/HEAD &&
++		git rev-parse --verify refs/remotes/origin/main &&
++		git config set remote.origin.followRemoteHEAD "warn" &&
++		output=$(git fetch --quiet) &&
++		test "z" = "z$output" &&
++		head=$(git rev-parse refs/remotes/origin/HEAD) &&
++		branch=$(git rev-parse refs/remotes/origin/other) &&
++		test "z$head" = "z$branch"
++	)
++'
++
++test_expect_success "fetch test followRemoteHEAD always" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git rev-parse --verify refs/remotes/origin/other &&
++		git remote set-head origin other &&
++		git rev-parse --verify refs/remotes/origin/HEAD &&
++		git rev-parse --verify refs/remotes/origin/main &&
++		git config set remote.origin.followRemoteHEAD "always" &&
++		git fetch &&
++		head=$(git rev-parse refs/remotes/origin/HEAD) &&
++		branch=$(git rev-parse refs/remotes/origin/main) &&
++		test "z$head" = "z$branch"
++	)
++'
++
+ test_expect_success 'fetch --prune on its own works as expected' '
+ 	cd "$D" &&
+ 	git clone . prune &&
+-- 
+2.47.1.295.g12e80f91dc.dirty
+
