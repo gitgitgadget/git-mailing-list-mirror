@@ -1,98 +1,95 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA9B2837A
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 17:27:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D832B1C173C
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 17:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732814828; cv=none; b=TC8n9KlaMh0x0/4NtmaJ1AuJymupmHB//8o1d9s5TT/d+/NpGvTDM2wyy6/tt/MuuKQhfin8AtlUfXVa+2qm71OSlsF/UiYgSDbUSAAY95tgQMzvOl4qFBZ/Mmq8dZdRt8pnmI3NqPNRhurRPTOI4nChIODpSO4Gqtn1kkDbsw0=
+	t=1732816737; cv=none; b=k80v45AqZl3u4CLxpPKcLSFl+axn+uKel70PFHRd1pSzNpEqFxQXRd4wG2iPUL/g6eSrgeHrt4bnvCMVheB4jl6Uy2HPK1l6ug65NUioovTqa6kMrX8L65eaA48y7NzZqQnF0rysdUGZUj8WefhHgeFHgcCF30IdxV0G/NVmLF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732814828; c=relaxed/simple;
-	bh=JuYOhQxMDmf3jq48vikfh5Guvv3t3GQJ1KNVbQT0HXU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gTSf7fhN9PVnufjcaDzKgk3tXwqUMrXyQpdX7wAeCkXYiXUPLik5wolAvd8osspqugB0fXMvUY126uEGRqFtUPsf36+CO5GuG6f2+vTs0ldaiIgeZsS/YUglTcDwjLsKgUBfx64dbU34Poz8G3GbBftEyh9zizhvBv7IZo2eG7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FcGSYGur; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1732816737; c=relaxed/simple;
+	bh=fVphaGLUgajlQijhNYRQt+eNT9BbNR6OtoPOyuSCBvY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=h7vkCjBsCN19rnYa+J5HLrdcJSd8vEaa86CYBiOScNnR8tGt75DQ6cHQOs/DmJq9BoTMWi7okVDrWu1DIYUiw9qjUkc8Vq6g8jq8YTRRBO3RRXmN7hFy2iaHLyzavkLeBVhEdFB1uUa/WjpOgw1tLCNAVRaiVG984lZlrm6lzbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=CRcpmSty; arc=none smtp.client-ip=185.70.43.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FcGSYGur"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1732814825;
-	bh=JuYOhQxMDmf3jq48vikfh5Guvv3t3GQJ1KNVbQT0HXU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=FcGSYGurilbFtSsT2wT9MsUph0HdbZqnuw6sgs5MDo91Homf3RHv2D8AV8LMJ1STh
-	 78Oja+Fnnx0MzUahX72edIv89qRKQ7vMw3YkSqZtiW1nZ36Bgt9QKmNUl8MonV1ATL
-	 rmekj1OS0oS54VS+PuB5mk93xfbN7t4ljZ7iCtHLeNpa/1g4S0y0F6bvodhiTcPV1E
-	 m+MxgeD991jzErJ7QpRVipJhB2KJoZtVOoQpYxmReEPQi1lxJVNw/kzURcWc7/MPDg
-	 Xn5Pb1lK3F7I4RxzMkAiTufVMCFL+WyWxEeh46TAkRmnT1dEyeGONGlLGnphIGQNiR
-	 w5KJ8euW8wXsSK0PhVNNj0zxenqRkKz0NqhxXSF+K2OD7SNmpNfdNQjaCJ4nuX6Two
-	 DVX4BrAzqRcKjHcMTXjfRhLfZa9y+9esgLxmS6g3e8CSbCFLuzd+eJD0qawT1lfjlc
-	 3vyPqsJWQ1WQtUsmjmRrhdia5gylGdwehFRTwOCUPi+UNiv13RT
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::39])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3141020994;
-	Thu, 28 Nov 2024 17:27:05 +0000 (UTC)
-Date: Thu, 28 Nov 2024 17:27:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/1] Restore the ability to clone repositories owned by
- another user
-Message-ID: <Z0in54Kk-5eBN_Uh@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-References: <20241115005404.3747302-1-sandals@crustytoothpaste.net>
- <xmqqed2yzc5z.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="CRcpmSty"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1732816733; x=1733075933;
+	bh=I5cWcihqXOjFiNK2x69sPq1ous/EPI9NEguhiS09xdg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=CRcpmSty8l1LB9x6ai3jdbrzsqQhjxm6DdB2FWXtLgq4WhKAwuVwJKKsqcZk1x18x
+	 zDzqWSnrSb1t07hsJiGDFwAOA0RKB13PSTNpnFZmXkl1gAFFZmBeCc/GEDBaqb5zeM
+	 SZXxI/FMr6KvE/Q87fi28yg7w+cR3JY+qD18oEA6qrCxSc8lkoh/5fB1F6tcNZJHJv
+	 1UV8u/L91OjEAwz/WPMBhHGeboCwMcJ8nkWvnXmDkqM9NS41K3AUQoPm+/u0pnH+DH
+	 EkHayG9eqtX8MD0h6WnHuW7zPj/4WB6oGN9wyWKpchgRrmKkwnzWB3l5slB5xmpHBh
+	 TuUzYN4FTC0XA==
+Date: Thu, 28 Nov 2024 17:58:49 +0000
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+From: Caleb White <cdwhite3@pm.me>
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 0/8] Allow relative worktree linking to be configured by the user
+Message-ID: <D5Y09IBPIL5V.2LHPVW07V4ZDR@pm.me>
+In-Reply-To: <054b70c2-accd-4d85-a576-66910d35a26d@gmail.com>
+References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me> <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me> <054b70c2-accd-4d85-a576-66910d35a26d@gmail.com>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: df9240c15c58cbe35dbc29eadc9c6cca134e5244
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="szk1cOPywfwnrZDS"
-Content-Disposition: inline
-In-Reply-To: <xmqqed2yzc5z.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---szk1cOPywfwnrZDS
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-11-26 at 07:28:40, Junio C Hamano wrote:
-> The breakage this fixes was originally meant as an extra "security"
-> thing that turned out to have a larger blast radius than originally
-> intended.  I was hoping that many many folks thank us for reversing
-> the course, but unfortunately we didn't hear much about this topic.
->=20
-> Unless there are strong objections, I'll mark the topic for 'next'
-> soonish.
+On Thu Nov 28, 2024 at 8:44 AM CST, Phillip Wood wrote:
+> On 26/11/2024 01:51, Caleb White wrote:
+>> Changes in v5:
+>> - Added docs to `--relative-paths` option.
+>> - Added test coverage for `repair_worktrees()` and relative paths.
+>> - Move `strbuf_reset` call in `infer_backlink()`.
+>> - Cleaned up tests.
+>> - Slight stylistic changes.
+>> - Tweaked commit messages.
+>> - Updated base to 090d24e9af.
+>
+> Thanks for re-rolling, these changes sound good. Below is the
+> range-diff of what is in seen today compared to last week. I've left
+> it untrimmed so other people can check what's changed and I've added a
+> couple of comments. The only thing I'm worried about is the deletion
+> of a check for setting extensions.relativeWorktrees in patch 5 the
+> rest of the changes look good, thank you for the extra test checks and
+> log messages.
+>
+>      @@ t/t2400-worktree-add.sh: test_expect_success '"add" with initiali=
+zed submodule,
+>       +=09git init repo &&
+>       +=09git -C repo commit --allow-empty -m base &&
+>       +=09git -C repo worktree add --relative-paths ./foo &&
+>      -+=09git -C repo config get core.repositoryformatversion >actual &&
+>      -+=09echo 1 >expected &&
+>      -+=09test_cmp expected actual &&
+>      -+=09git -C repo config get extensions.relativeworktrees >actual &&
+>      -+=09echo true >expected &&
+>      -+=09test_cmp expected actual
+>      ++=09test_cmp_config -C repo 1 core.repositoryformatversion
+>       +'
+>
+> We have lost the check for extensions.relativeworktrees
+> here. Although we don't set worktree.useRelativePaths anymore we
+> should still set the extension as we pase --relative-paths to "git
+> worktree add"
 
-I think that will be fine, thanks.  I expect that a bunch of people who
-experienced problems won't notice until this is in a released version,
-so we'll probably hear from them after the fact.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Good catch! This was removed unintentionally. I'll add this back in, but
+will hold off on re-rolling until we're ready for the final re-roll (or
+there's other changes requested).
 
---szk1cOPywfwnrZDS
-Content-Type: application/pgp-signature; name="signature.asc"
+Best,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+Caleb
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ0in5wAKCRB8DEliiIei
-gSh8APwLrhGz7r7UPekxfJnWRWogEsdxpusvAjF+YQpJsDTzywD9Hpk9jjP7b+6T
-GsFDv/PgfC8EZktz//OXfukgQ5swNwE=
-=3uhA
------END PGP SIGNATURE-----
-
---szk1cOPywfwnrZDS--
