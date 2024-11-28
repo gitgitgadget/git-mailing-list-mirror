@@ -1,86 +1,86 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBD11C1F2E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75D11C1F3C
 	for <git@vger.kernel.org>; Thu, 28 Nov 2024 16:12:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732810362; cv=none; b=EKxLeGL21f7aemQrjcXeyn3NF4BX2AHkrIDZjtDYNWWHB3dfhFyNAiwyoN66vtV8kdsY61Vn4Jp7TXUPUvyTRmL6UN8/p2wgN2s8ngo6et8RGCqNWlyh2/XQNaZLmgpt4CVxurakT/OYFNgkzMZtS4vqL9CYZPveanSu+uzwXMo=
+	t=1732810362; cv=none; b=TLgW5VwuqxD4zKPQpC8GapAl9mSdhbc8VZfcl/1RrspCETLCtzO8HyYx/CKx3qDO4Mle07FLuYyN6od9WQqt0yQzSXp6mtuMFSM8YxtsPWQBr6HCAU5AZ7EfeSt0XZ8O38QJpc6WyE0lEdVxCKjodlqADEjbo18vHpMtwUxsdIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732810362; c=relaxed/simple;
-	bh=MIVG3HJT3of2QOHuPdhXBE7bDlM0Qop/caKnhlpFDRo=;
+	bh=y2tSY0K9cGLAhGYUbRsZMzypk79O0z7OrOjS/jXLCDE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=McxKypkWRgT8/OTOowEQAn5QORiJXxj5/4aqZoyOt+8ZW1XbnLgb7DGMEHKgoaZdsvwU1y2+o3+PSNw1Y0nkYfjswj+mTi3dJit7b5NNXTnYZ4cRUQmmYkPsoUrlXpHFhbKV9Kcv13XV9Ko2s7Gc2UJz9YXMTn7M7Vp+63dsjLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ChPd1QdQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fUjJ7KxP; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=Lq1mAyYS+6xEgJnOofQerhWxtR8f+QndOFaeLnMKs9iCM/lp871phcRXkxNFz/TCOMD/ZwbhMp5obXYtnQP3+e9NLGb5o/arvbPKaX6kUA5hKtq4WdZXLfSASLvUbh10XBS7EbF6srkuHxXuHpHYjBpEwmttUWQ0qzeo4d3bGYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zRTcwvS9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H67qoja0; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ChPd1QdQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fUjJ7KxP"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id EDAEE13802ED;
-	Thu, 28 Nov 2024 11:12:39 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 28 Nov 2024 11:12:39 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zRTcwvS9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H67qoja0"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0BA8E138039B;
+	Thu, 28 Nov 2024 11:12:40 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Thu, 28 Nov 2024 11:12:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732810359;
-	 x=1732896759; bh=52RI63OH3gFPnbmsGThI+MY3+EcemQD2g1AEwgMxAiU=; b=
-	ChPd1QdQ14woB/qc+rD4wql/Y48RkPyt/mEAfth5cOicUvRWsoYR2aO5pUgnPrV7
-	IS98Zfj9mhwTdZoC50BTh7olaTLyDBclHkvjMd/fKzI5QWCKGGTNV/k81xKM21ur
-	0MwzrffoTs5SRh/YwlY8NRZCA0r3prZFJdZrpBE6yEsIPv6LUEe0ma7tQC/DjMQe
-	aqpd81zSCrc5aH1zYJ5C1SmBDAQtgyXJd+KBf0KuDx1hT3dfiD6uzkoJ3xxf+J01
-	VQFq4ArWuQ/XxMjGjmvdBYCY4kyxdeSj2CA1R8AdGeezB1OqAszDH79ohpCCFfoL
-	sdewxdn70a/VzLAyPnJKeA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732810360;
+	 x=1732896760; bh=5K0p4aDWtQsqoQWL+l6ChV73Jp24jOlt6cWLXh2fuJg=; b=
+	zRTcwvS99SEFoCskH1eSNuq4dWHaU3v5Pec72pxxcVutW5RKjnLKaBRts5651RHu
+	HlD/d0lPCJ++vs41YB9SVks7KLUtKAfKwcM8iT/0f/4B4N1yIW6NFUSWG91mpYxu
+	rC7jo4WrFXGVl+gUNvvw56aH+S59rNu7UA9RafA2VaukmuygKxM5u5ZbE5/j11G/
+	/+mwcEyl4wHvZaj66sPe1qipGngG2D8cGJzySQT+L4zyX0Ma8D0mzRfK7tzAUajI
+	XN0OtEglWgOjOJLirb3IQ61ubJ0WLdS1q7M3deuPmsZutgWQ6Wcn1z77vFGr7DVd
+	rVdP11dyoasErTtIXmkDiw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732810359; x=
-	1732896759; bh=52RI63OH3gFPnbmsGThI+MY3+EcemQD2g1AEwgMxAiU=; b=f
-	UjJ7KxP6kA7IfHZGvT1HzekXB8KBszoGLaQP8uGdZy6X7W9tBBXRJgP3vohIZ2YJ
-	guTjF8wbS8L5im1lFtMywSJFU8seZ4lJeh5m7LHi9JORrlleZItYvHwqQ00im0hS
-	xlLRvdqhWoLv+IP0pvEK9WKUlOnPCh38YjRliL4UrwPTKSmdFTHZSWSzd6bp1xN/
-	kRB0n8mgh1kFR4Sht14juFnhwxHgbfCSAEOoOjMN17H/wXDwPfaTuL+VJYMCBI3E
-	KpNq55fXkwxkdry7JxqjLCtM05figTomlJaUCAoV2V3CIdL2F4INtxs8bbzMXDFa
-	odki+wgFt5yEJJLZvcggg==
-X-ME-Sender: <xms:d5ZIZ3JsvLM08Mv9XR8PkRb1ciTbBGwVW_MWT4NYycSHhfPE5mWqrg>
-    <xme:d5ZIZ7K0tu1sBXVtUGj_DfwlPUng52XhfH4-lOay535SJPBlp2QDUenAsy8B8jNIm
-    UXs7Vua_xOlNT6Ylg>
-X-ME-Received: <xmr:d5ZIZ_szm0Rxkdt5aTkXWLr7eCLmTPA-3fsFUYuvVL0M6h3c6UC1qwrW9Sn_K9FzWdRawJWkGwYTlJaT6-VgD1bjDH-GTHQiGi-iwk1M8HkzJA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdekgecutefuodetggdotefrodftvf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732810360; x=
+	1732896760; bh=5K0p4aDWtQsqoQWL+l6ChV73Jp24jOlt6cWLXh2fuJg=; b=H
+	67qoja0t1CP1448GZztHZNIMAeAMusgveg4VjUL1yhQJOVcaNnGJ+yTSglC/7Csi
+	x5zJEAh72jk9pnLCtGbH/H5MQi7oswyn/L4S/wP1z9SZfuqHH8Rr2v2XI46QEKDa
+	nfGrlsVMuOD+VLozQzIYJOQjwSLfUSj2X7FKQhceI9IT0+0NTGZjhX2cXCcLJYSA
+	qxSxBWUQ9sUt9ekMfJ9tKksCOIlxJWckuY3MdpITT10PEk53e1k4uTTO02002nkB
+	Jlpca+vc0QXle9jzPgTT8946QV2fL985bpCoypl7aKtwcvqydq0yA1oYHOVtzMdX
+	+46L29r4JpVWaaI9awy3A==
+X-ME-Sender: <xms:d5ZIZ1GUn937aR7mYAv1Dpjn4IbrmgV2F8GuzTwaHouOGLc8zwocUw>
+    <xme:d5ZIZ6UI1fzxilZ6saAH8z78yguRD_jqcS2-gJDRvfi2doS0ULsn15L9AG0ckABzN
+    zBq72YDLbPVhFagRg>
+X-ME-Received: <xmr:d5ZIZ3JE9RErdABgHlz3cIHRUa3C7X3K7BV0if3yEm-t1YM_5_ZXDYnCofUDtvbfmxHmgtjXuQZIy3WYwcqgkIq9ax6lpJE37I22cHRR4pHp2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdekfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
-    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
+    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrph
-    hluhhsrdgtohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhih
-    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdroh
-    hrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhh
-    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:d5ZIZwYQEIERAyGlmLQWcwOKJbjUJ98F9kZ4uVsVF_xRzr11QC4OGQ>
-    <xmx:d5ZIZ-b6B5g1zRtUVpOVoPE0nPtCkW2mRrs9zDbPT6wzO10f3W-U_g>
-    <xmx:d5ZIZ0AUvychLCCTkFnS9fmSqv-CyCHggBDnKxhxl4nCXlYRhFsWeg>
-    <xmx:d5ZIZ8awKjaz2yLe8PG_UH_F1ssg1G11NAE2fu777Xnr_QzAZDSXHQ>
-    <xmx:d5ZIZwC3QgEH4yN8rOs21k7pk3VOuQr2HceW088aKgsE-BMSfp4N1vy6>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpd
+    hrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprd
+    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhes
+    thhugihfrghmihhlhidrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hm
+X-ME-Proxy: <xmx:d5ZIZ7H85zrljt45xQbIiNxZklsw6Hlo0alM6osRs19XIeyU0gh1oQ>
+    <xmx:d5ZIZ7VhPS-_Ka0V8vRK5nOOxOmsfS5Uf9TJKfpFNdwedOyZxsfdNA>
+    <xmx:d5ZIZ2PUrcxBUQfMGky6Tg7gffVP6dpjxtjNYIJmgnfTHxOt06v_xw>
+    <xmx:d5ZIZ63xtWofYTPaeA7f7iAhNegqtJo-4da-q2JJKb0kuBByMfzqwA>
+    <xmx:eJZIZ-PFPe8G3VxIe-A4H2haTS9AIUKZrE418D9062Yp1WkiH19uMmV_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
  28 Nov 2024 11:12:37 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5d83d77d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Nov 2024 16:11:25 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 346575dd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Nov 2024 16:11:24 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 28 Nov 2024 17:12:18 +0100
-Subject: [PATCH v10 17/23] Documentation: teach "cmd-list.perl" about
- out-of-tree builds
+Date: Thu, 28 Nov 2024 17:12:17 +0100
+Subject: [PATCH v10 16/23] Documentation: allow sourcing generated includes
+ from separate dir
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241128-pks-meson-v10-17-79a3fb0cb3a6@pks.im>
+Message-Id: <20241128-pks-meson-v10-16-79a3fb0cb3a6@pks.im>
 References: <20241128-pks-meson-v10-0-79a3fb0cb3a6@pks.im>
 In-Reply-To: <20241128-pks-meson-v10-0-79a3fb0cb3a6@pks.im>
 To: git@vger.kernel.org
@@ -102,97 +102,206 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Johannes Sixt <j6t@kdbg.org>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-The "cmd-list.perl" script generates a list of commands that can be
-included into our manpages. The script doesn't know about out-of-tree
-builds and instead writes resulting files into the source directory.
+Our documentation uses "include::" directives to include parts that are
+either reused across multiple documents or parts that we generate at
+build time. Unfortunately, top-level includes are only ever resolved
+relative to the base directory, which is typically the directory of the
+including document. Most importantly, it is not possible to have either
+asciidoc or asciidoctor search multiple directories.
 
-Adapt it such that we can read data from the source directory and write
-data into the build directory.
+It follows that both kinds of includes must live in the same directory.
+This is of course a bummer for out-of-tree builds, because here the
+dynamically-built includes live in the build directory whereas the
+static includes live in the source directory.
+
+Introduce a `build_dir` attribute and prepend it to all of our includes
+for dynamically-built files. This attribute gets set to the build
+directory and thus converts the include path to an absolute path, which
+asciidoc and asciidoctor know how to resolve.
+
+Note that this change also requires us to update "build-docdep.perl",
+which tries to figure out included files such our Makefile can set up
+proper build-time dependencies. This script simply scans through the
+source files for any lines that match "^include::" and treats the
+remainder of the line as included file path. But given that those may
+now contain the "{build_dir}" variable we have to teach the script to
+replace that attribute with the actual build directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/Makefile      |  2 +-
- Documentation/cmd-list.perl | 23 ++++++++++++-----------
- 2 files changed, 13 insertions(+), 12 deletions(-)
+ Documentation/Makefile          |  3 ++-
+ Documentation/build-docdep.perl |  2 ++
+ Documentation/config/diff.txt   |  2 +-
+ Documentation/config/merge.txt  |  2 +-
+ Documentation/git.txt           | 24 ++++++++++++------------
+ 5 files changed, 18 insertions(+), 15 deletions(-)
 
 diff --git a/Documentation/Makefile b/Documentation/Makefile
-index c3d5ea1d46a57744bcacdc63b6c97911607e9fec..6c3f9b5ed13ab0b0ceae05128ec4086a7f61ca34 100644
+index 495c61c85ed18bc9c4643f9e5478e5146bb5f196..c3d5ea1d46a57744bcacdc63b6c97911607e9fec 100644
 --- a/Documentation/Makefile
 +++ b/Documentation/Makefile
-@@ -312,7 +312,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
- $(cmds_txt): cmd-list.made
+@@ -224,6 +224,7 @@ SHELL_PATH ?= $(SHELL)
+ # Shell quote;
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
  
- cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
--	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
-+	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl .. . $(cmds_txt) && \
- 	date >$@
++ASCIIDOC_EXTRA += -abuild_dir='$(shell pwd)'
+ ifdef DEFAULT_PAGER
+ DEFAULT_PAGER_SQ = $(subst ','\'',$(DEFAULT_PAGER))
+ ASCIIDOC_EXTRA += -a 'git-default-pager=$(DEFAULT_PAGER_SQ)'
+@@ -289,7 +290,7 @@ docdep_prereqs = \
+ 	cmd-list.made $(cmds_txt)
  
- mergetools_txt = mergetools-diff.txt mergetools-merge.txt
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 755a110bc48d7e2b596651ca13664c01192d966c..e260a989774071b66d2b56c56c5045b84a508c5c 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -3,12 +3,13 @@
- use File::Compare qw(compare);
+ doc.dep : $(docdep_prereqs) $(DOC_DEP_TXT) build-docdep.perl
+-	$(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl >$@ $(QUIET_STDERR)
++	$(QUIET_GEN)$(PERL_PATH) ./build-docdep.perl "$(shell pwd)" >$@ $(QUIET_STDERR)
  
- sub format_one {
--	my ($out, $nameattr) = @_;
-+	my ($source_dir, $out, $nameattr) = @_;
- 	my ($name, $attr) = @$nameattr;
-+	my ($path) = "$source_dir/Documentation/$name.txt";
- 	my ($state, $description);
- 	my $mansection;
- 	$state = 0;
--	open I, '<', "$name.txt" or die "No such file $name.txt";
-+	open I, '<', "$path" or die "No such file $path.txt";
- 	while (<I>) {
- 		if (/^(?:git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
- 			$mansection = $1;
-@@ -29,7 +30,7 @@ sub format_one {
+ ifneq ($(MAKECMDGOALS),clean)
+ -include doc.dep
+diff --git a/Documentation/build-docdep.perl b/Documentation/build-docdep.perl
+index 1b3ac8fdd95fa1d57afbdffb1a9743f36ed22fdd..315efaa2fa2f2efc89b2c8073cc97cd2cc83611c 100755
+--- a/Documentation/build-docdep.perl
++++ b/Documentation/build-docdep.perl
+@@ -1,5 +1,6 @@
+ #!/usr/bin/perl
+ 
++my ($build_dir) = @ARGV;
+ my %include = ();
+ my %included = ();
+ 
+@@ -10,6 +11,7 @@
+ 	    chomp;
+ 	    s/^include::\s*//;
+ 	    s/\[\]//;
++	    s/{build_dir}/${build_dir}/;
+ 	    $include{$text}{$_} = 1;
+ 	    $included{$_} = 1;
  	}
- 	close I;
- 	if (!defined $description) {
--		die "No description found in $name.txt";
-+		die "No description found in $path.txt";
- 	}
- 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
- 		print $out "linkgit:$name\[$mansection\]::\n\t";
-@@ -43,9 +44,9 @@ sub format_one {
- 	}
- }
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index 190bda17e51c57a00b25bf98afa038b8a89e4ea5..9575af91fa53d3f67925d31e77b81222e737fc3a 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -206,7 +206,7 @@ diff.<driver>.cachetextconv::
+ 	Set this option to true to make the diff driver cache the text
+ 	conversion outputs.  See linkgit:gitattributes[5] for details.
  
--my ($input, @categories) = @ARGV;
-+my ($source_dir, $build_dir, @categories) = @ARGV;
+-include::../mergetools-diff.txt[]
++include::{build_dir}/mergetools-diff.txt[]
  
--open IN, "<$input";
-+open IN, "<$source_dir/command-list.txt";
- while (<IN>) {
- 	last if /^### command list/;
- }
-@@ -63,17 +64,17 @@ sub format_one {
+ diff.indentHeuristic::
+ 	Set this option to `false` to disable the default heuristics
+diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
+index 8851b6cedef980c106b9e86541862b517aa1f2ad..82554d65a0aa0826fdb53c5d834389d38f308e3e 100644
+--- a/Documentation/config/merge.txt
++++ b/Documentation/config/merge.txt
+@@ -101,7 +101,7 @@ merge.guitool::
+ 	Any other value is treated as a custom merge tool and requires that a
+ 	corresponding mergetool.<guitool>.cmd variable is defined.
  
- for my $out (@categories) {
- 	my ($cat) = $out =~ /^cmds-(.*)\.txt$/;
--	open O, '>', "$out+" or die "Cannot open output file $out+";
-+	my ($path) = "$build_dir/$out";
-+	open O, '>', "$path+" or die "Cannot open output file $out+";
- 	for (@{$cmds{$cat}}) {
--		format_one(\*O, $_);
-+		format_one($source_dir, \*O, $_);
- 	}
- 	close O;
+-include::../mergetools-merge.txt[]
++include::{build_dir}/mergetools-merge.txt[]
  
--	if (-f "$out" && compare("$out", "$out+") == 0) {
--		unlink "$out+";
-+	if (-f "$path" && compare("$path", "$path+") == 0) {
-+		unlink "$path+";
- 	}
- 	else {
--		print STDERR "$out\n";
--		rename "$out+", "$out";
-+		rename "$path+", "$path";
- 	}
- }
+ merge.verbosity::
+ 	Controls the amount of output shown by the recursive merge
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d15a8697625d6b6c598a2bc774bf243675ab68ea..44f0797ccffb1a7359bee9c20182953293b70d6d 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -245,17 +245,17 @@ ancillary user utilities.
+ Main porcelain commands
+ ~~~~~~~~~~~~~~~~~~~~~~~
+ 
+-include::cmds-mainporcelain.txt[]
++include::{build_dir}/cmds-mainporcelain.txt[]
+ 
+ Ancillary Commands
+ ~~~~~~~~~~~~~~~~~~
+ Manipulators:
+ 
+-include::cmds-ancillarymanipulators.txt[]
++include::{build_dir}/cmds-ancillarymanipulators.txt[]
+ 
+ Interrogators:
+ 
+-include::cmds-ancillaryinterrogators.txt[]
++include::{build_dir}/cmds-ancillaryinterrogators.txt[]
+ 
+ 
+ Interacting with Others
+@@ -264,7 +264,7 @@ Interacting with Others
+ These commands are to interact with foreign SCM and with other
+ people via patch over e-mail.
+ 
+-include::cmds-foreignscminterface.txt[]
++include::{build_dir}/cmds-foreignscminterface.txt[]
+ 
+ Reset, restore and revert
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+@@ -313,13 +313,13 @@ repositories.
+ Manipulation commands
+ ~~~~~~~~~~~~~~~~~~~~~
+ 
+-include::cmds-plumbingmanipulators.txt[]
++include::{build_dir}/cmds-plumbingmanipulators.txt[]
+ 
+ 
+ Interrogation commands
+ ~~~~~~~~~~~~~~~~~~~~~~
+ 
+-include::cmds-plumbinginterrogators.txt[]
++include::{build_dir}/cmds-plumbinginterrogators.txt[]
+ 
+ In general, the interrogate commands do not touch the files in
+ the working tree.
+@@ -328,12 +328,12 @@ the working tree.
+ Syncing repositories
+ ~~~~~~~~~~~~~~~~~~~~
+ 
+-include::cmds-synchingrepositories.txt[]
++include::{build_dir}/cmds-synchingrepositories.txt[]
+ 
+ The following are helper commands used by the above; end users
+ typically do not use them directly.
+ 
+-include::cmds-synchelpers.txt[]
++include::{build_dir}/cmds-synchelpers.txt[]
+ 
+ 
+ Internal helper commands
+@@ -342,14 +342,14 @@ Internal helper commands
+ These are internal helper commands used by other commands; end
+ users typically do not use them directly.
+ 
+-include::cmds-purehelpers.txt[]
++include::{build_dir}/cmds-purehelpers.txt[]
+ 
+ Guides
+ ------
+ 
+ The following documentation pages are guides about Git concepts.
+ 
+-include::cmds-guide.txt[]
++include::{build_dir}/cmds-guide.txt[]
+ 
+ Repository, command and file interfaces
+ ---------------------------------------
+@@ -358,7 +358,7 @@ This documentation discusses repository and command interfaces which
+ users are expected to interact with directly. See `--user-formats` in
+ linkgit:git-help[1] for more details on the criteria.
+ 
+-include::cmds-userinterfaces.txt[]
++include::{build_dir}/cmds-userinterfaces.txt[]
+ 
+ File formats, protocols and other developer interfaces
+ ------------------------------------------------------
+@@ -367,7 +367,7 @@ This documentation discusses file formats, over-the-wire protocols and
+ other git developer interfaces. See `--developer-interfaces` in
+ linkgit:git-help[1].
+ 
+-include::cmds-developerinterfaces.txt[]
++include::{build_dir}/cmds-developerinterfaces.txt[]
+ 
+ Configuration Mechanism
+ -----------------------
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
