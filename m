@@ -1,79 +1,77 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF524A35
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 00:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205BBBE4F
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 00:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732753357; cv=none; b=LDTPaWeb9yJikwQHc1n5kJOevohuj3As22LvUWuy/3SzbRTeFGefl26upQ6FG6wWchqAZXxkV31oLmOQU1oxJkO+Hzasm3PSC7vu4uhr7ZaqIpqIXzwu9DO7JkyE/2ukjba9OXsdL4LfhE8Ske/oCKByqt68ev7K4JWwNd8ryDM=
+	t=1732754210; cv=none; b=MtkXQfxSw1LdfzEYklin+k0GSbErp0SOXBZqac95SWYnCpTJVn8NeOQplPLvId8fIiC6ewZmaLFXbXTIMsyFk1MEHu7Nk86z//0Nblwsl5d0+gyrriC5KHr/nicRF/OUw4Tc4S/ijzTwNj5P+E2H+EOxypOofm6eZphSc6vzd/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732753357; c=relaxed/simple;
-	bh=xTp2bf9K8OaiU1g3a5Zx+/VS4cLBVYfZ63Zi6lfufIw=;
+	s=arc-20240116; t=1732754210; c=relaxed/simple;
+	bh=BHQNsCaTekW9SPU7bEatReyijOKDFZ7GfB2pzFKmghA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mLfhizbth25Gkt6C7G97FZsRXzNlvrX2il64rxHXoQG7AhQbQYgxpBMvrgpgIKpFcu8UMp9XqF9sx5l6+wUVj3/CPCCDiV3sHfpVFotcBr22jksTmwemeelHAtM+/8QEnfOyvKjob1cycBW9eXWWzMFyS1Gqw6Gpri0ow/Ajhaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XN0TSuy3; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=J4LFvliQ2ZjG6S6SlImCpZpIXT1nRUELeeLRt3iXhcOvE7MnxYToTMWpAVnPMArRZBSkLb5iTwABaEwvyByBOslqKj/Rmnqc72d94B70GB8GOCM26G1YPdW2vaRyNtGnPG/M1rvSBgVrz+AajVc/ZJoiRk8lwx8ef7Jk6Xec+zg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iJVxpQZd; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XN0TSuy3"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 846972540157;
-	Wed, 27 Nov 2024 19:22:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Wed, 27 Nov 2024 19:22:34 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iJVxpQZd"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 43B2625400CC;
+	Wed, 27 Nov 2024 19:36:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 27 Nov 2024 19:36:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732753354; x=1732839754; bh=kNPX3GBmyiRh43HgaQCro8f+M+c1w2KAG8A
-	SFYzp/PE=; b=XN0TSuy37EL2BBHOKbQK6O3kzCo5e+IzvR2B/4eruECDzBgM+Ro
-	dqB1lcJZ8MJn6uJE2Yz++jwLTxzooedvsxnDGw7gE+/5xx07QR78BoxaAXgTfXlP
-	3lyfgj2JHBP5QcLCeQhsPapbZGt3SYFlwmVMQz96RVru7mAzvXejeW/2LdaXi+9r
-	HfaM16z330bV8KQETv2124uDsbBzqbB5Vn4cVSWs/0uTApjp/g29Lz8PwJBx1es5
-	0Wl17UqErR9MDi92Lhx8kwIzoLoTp6202H6qOJ6PeREKdUCxFvrMcmPbX4N/Wrhy
-	c1QfdgFxQhxGPYr40RTjI7iOrkQm3m/HcFg==
-X-ME-Sender: <xms:ybdHZyBvbl3qB1ubjR4E4XqjVqLZZPid7O6eRooaFCJYAK4iwJZoZg>
-    <xme:ybdHZ8gsUnk0DqLIpY3cUOsgrKOkLZyHqQraHnOctoTT8pzrW7JdC34sCuwSOHEyp
-    HipO2ip_npB23Bi3A>
-X-ME-Received: <xmr:ybdHZ1kZ-SsMlAp7nrewvzY_njiNG_or52nBseRQZVLD6SkJlFKR8T8AXHBqjw8t39K5rXzuJhKuUx-HmDtTFmitknRyMp7wxP5DrY8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedtgddvudcutefuodetggdotefrodftvf
+	1732754207; x=1732840607; bh=wLfPVgbUqpIHt911z9vVg+zbwb/kxKk4oHg
+	rDF/+u2A=; b=iJVxpQZdVpkCCeAHtYG3q28pPG+Bxg+ERAe/DEz4e/bWj2lCjrK
+	7mwW8XnuDianGM/SXSV+taNBuEJ3FEOO6Dm12PTHbKEybaugMFIsORiXtymw7MwD
+	+A+w/iRQGh2pCe67rFrYdlea1F+xv6PMgTf1q61I7mvUIbt+LXh+hN/ccRNvZ1mS
+	0ICV5BzXWxYM4c2UQkD8PeW2vmzbdSlYOYUS6888pKMf3TNWcRCm043GukMdzYkj
+	FSWFkauFSwqCboFpJxlSiifQhcWEZTmUXRfpQ7Pj7ub7YETYicuV2ALuweqcUpWk
+	eEwmr5ePfjoZQPq5NvB8ubz2qqrf/eoVdwg==
+X-ME-Sender: <xms:HrtHZxco54aAMDqyTEI0yXWVx1g2Rh_OzBKahYIk381Ds5x494be4Q>
+    <xme:HrtHZ_PXmk0njzGxQvAk6RCqUXA-6dyLJo5kYqib6NZvx4hi7i1kPUPbn2nlAhbkh
+    cwtH4VsRLUBU9bWRw>
+X-ME-Received: <xmr:HrtHZ6icVu69_ZFfDofLYW2LDyUbuVXLxDGGNoeR3DJBDsiAVa41k5-ekzgm8BW95BqD3m4BSED2qYH80nyRweaSyNi93NJUcraR05Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedtgddvgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
     hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeevleelhffgudfgtefgueetgedvffevgfevtefg
-    teehgeekhfefueeviefghfegueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgih
-    hthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpd
-    hmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
-    thhopehpshesphhkshdrihhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ybdHZwwtxVZt-8jtNW9YodwOQAPXJphZPZRIyTRZdyL5DIARBkyQXA>
-    <xmx:ybdHZ3S6wEPaoGupJJNFAKMC0ypE_tFoPDty-KZaGtl3WfiYADh8yg>
-    <xmx:ybdHZ7Y3avwTkvSsykGIh7-jP3jO5Bq7DBTMRkJzjgPBEnYD0viTWQ>
-    <xmx:ybdHZwTOrImZUfI-Ov-AuFPqo4bHeVT-mvMvGjG3L0Vecgq4lnvzsA>
-    <xmx:yrdHZyEKdTCMyun-1yxaqrAg4hLwkn0U6t3C7FmNCUBZcLaa3P2LXChK>
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghk
+    khesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnsh
+    hhihhnvggtohdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HrtHZ68PY6vFWA47tjBdHfcdv79dL9PeFoiEGjek_Q8VHdopwdMcpA>
+    <xmx:HrtHZ9ur3GwhmDe4I-gAzyZUYDtZIGvfJsj02LGf-s4ugCSAKy1DdQ>
+    <xmx:HrtHZ5GKJnVDLkjuiZUBexI585ksI6WefmDo5LA_nimXr7g2nUMqcw>
+    <xmx:HrtHZ0PXMHDATd52GktEuQKiqGy6Heb_5ep-OCuC_2DTjSVbLzfRTA>
+    <xmx:H7tHZ7Whk_pKl-QsiEa41cNd2XZmPyRell_mH7h3LU0rffJc1nGplzv4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Nov 2024 19:22:33 -0500 (EST)
+ 27 Nov 2024 19:36:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Patrick
- Steinhardt <ps@pks.im>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Jeff King <peff@peff.net>,  Elijah
- Newren <newren@gmail.com>
-Subject: Re: [PATCH] fast-import: disallow more path components
-In-Reply-To: <pull.1832.git.1732740464398.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Wed, 27 Nov 2024 20:47:44
-	+0000")
-References: <pull.1832.git.1732740464398.gitgitgadget@gmail.com>
-Date: Thu, 28 Nov 2024 09:22:32 +0900
-Message-ID: <xmqqldx4qkaf.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+    "Eric Sunshine" <sunshine@sunshineco.com>,
+    "Elijah Newren" <newren@gmail.com>
+Subject: [PATCH v2] CodingGuidelines: a handful of error message guidelines
+In-Reply-To: <xmqq1pywvmhq.fsf_-_@gitster.g> (Junio C. Hamano's message of
+	"Wed, 27 Nov 2024 22:23:45 +0900")
+References: <pull.1831.git.1732557520428.gitgitgadget@gmail.com>
+	<pull.1831.v2.git.1732561248717.gitgitgadget@gmail.com>
+	<79f6027b-123c-40a6-975b-1c6053b9391c@app.fastmail.com>
+	<xmqq1pywvmhq.fsf_-_@gitster.g>
+Date: Thu, 28 Nov 2024 09:36:44 +0900
+Message-ID: <xmqqa5dkqjmr.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,39 +81,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Taking input from comments by Eric (thanks) on the previous round,
+this iteration adds a bit more about Porcelain/Plumbing and BUG().
 
-> From: Elijah Newren <newren@gmail.com>
->
-> Instead of just disallowing '.' and '..', make use of verify_path() to
-> ensure that fast-import will disallow anything we wouldn't allow into
-> the index, such as anything under .git/, .gitmodules as a symlink, or
-> a dos drive prefix on Windows.
->
-> Since a few fast-export and fast-import tests that tried to stress-test
-> the correct handling of quoting relied on filenames that fail
-> is_valid_win32_path(), such as spaces or periods at the end of filenames
-> or backslashes within the filename, turn off core.protectNTFS for those
-> tests to ensure they keep passing.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     Disallow verify_path() failures from fast-import
->     
->     Since en/fast-import-path-sanitize has already made it to next, this
->     commit is based on that. (See
->     https://lore.kernel.org/git/pull.1831.v2.git.1732561248717.gitgitgadget@gmail.com/
->     for discussion of that series.)
->     
->     Changes relative to that commit: this fixes up the error message as
->     suggested by Kristoffer, and makes the checks more encompassing as
->     suggested by Patrick and Peff -- in particular, using verify_path() as
->     suggested by Peff.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1832%2Fnewren%2Fdisallow-verify-path-fast-import-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1832/newren/disallow-verify-path-fast-import-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1832
+  diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+  index 71e4742fd5..2b8f99f333 100644
+  --- a/Documentation/CodingGuidelines
+  +++ b/Documentation/CodingGuidelines
+  @@ -703,8 +703,15 @@ Error Messages
+    - Enclose the subject of an error inside a pair of single quotes,
+      e.g. `die(_("unable to open '%s'"), path)`.
+   
+  - - Unless there is a compelling reason not to, error messages should
+  -   be marked for `_("translation")`.
+  + - Unless there is a compelling reason not to, error messages from the
+  +   Porcelain command should be marked for `_("translation")`.
+  +
+  + - Error messages from the plumbing commands are sometimes meant for
+  +   machine consumption and should not be marked for `_("translation")`
+  +   to keep them 'grep'-able.
+  +
+  + - BUG("message") are for communicating the specific error to
+  +   developers, and not to be translated.
+   
+   
+   Externally Visible Names
 
-Thanks, all.  Looking good to me.
+--- >8 ---
+It is more efficient to have something in the coding guidelines
+document to point at, when we want to review and comment on a new
+message in the codebase to make sure it "fits" in the set of
+existing messages.
 
-Will queue.
+Let's write down established best practice we are aware of.
+
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/CodingGuidelines | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 3263245b03..2b8f99f333 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -689,16 +689,29 @@ Program Output
+ 
+ Error Messages
+ 
+- - Do not end error messages with a full stop.
++ - Do not end a single-sentence error message with a full stop.
+ 
+  - Do not capitalize the first word, only because it is the first word
+-   in the message ("unable to open %s", not "Unable to open %s").  But
++   in the message ("unable to open '%s'", not "Unable to open '%s'").  But
+    "SHA-3 not supported" is fine, because the reason the first word is
+    capitalized is not because it is at the beginning of the sentence,
+    but because the word would be spelled in capital letters even when
+    it appeared in the middle of the sentence.
+ 
+- - Say what the error is first ("cannot open %s", not "%s: cannot open")
++ - Say what the error is first ("cannot open '%s'", not "%s: cannot open").
++
++ - Enclose the subject of an error inside a pair of single quotes,
++   e.g. `die(_("unable to open '%s'"), path)`.
++
++ - Unless there is a compelling reason not to, error messages from the
++   Porcelain command should be marked for `_("translation")`.
++
++ - Error messages from the plumbing commands are sometimes meant for
++   machine consumption and should not be marked for `_("translation")`
++   to keep them 'grep'-able.
++
++ - BUG("message") are for communicating the specific error to
++   developers, and not to be translated.
+ 
+ 
+ Externally Visible Names
+
+-- 
+2.47.1-499-g8536fed62d
+
+
