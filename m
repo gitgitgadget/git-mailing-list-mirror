@@ -1,35 +1,35 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AB815250F
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 23:09:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD4915250F
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 23:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732835379; cv=none; b=WLmnmEjS7bSE7hK0YWyP91B7VJes5Lg969vtYX/1CP7SE+g2lyI+SBU/iUnY0a0xV8jQhRQpgct5HNjSfYO7Q9FRNGnjO1MllynNy6uwKoLgTqB8dr6hM2HrymzYWeQ/Zztj80SWyRVmOR0rDEN7b+BF2dzm5KNjDzAI2EuxYUM=
+	t=1732835474; cv=none; b=EG+D03n+duTdpO6S8FkED1jTMJ9WHZgHWKDeKCblUxDeNQQ3txIPOhAzaRsPmAp338UweBuSO/WA9x9IlGGAXR6mEBGun38C3aSxO6lExkhC36P6fIrPf+PsS1/EtFZLiueJqBHY/fwmNus/eGLDxSLUegtzqB2ddfWGSloEZI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732835379; c=relaxed/simple;
+	s=arc-20240116; t=1732835474; c=relaxed/simple;
 	bh=LFqrYlA2qkxG8HQ5CiOcyiZJqbBB2B9d7RTUmaTpCJU=;
 	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=EOt1ty+RMSVfT2HGfP2yg6Xv60eYXv2yVKqK28/x4aSi8kUgeMrjOdYoczaqJqiTXpvqG4krNwlLGrRmWvPkMzl+8rEXCv47DnWAod3oCGkFVjzVJDkaTuXi36tv+RY5XG/ukTWyeQA/0vzcFiFVZ66PdZOsH3DuytgkL+KxEwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=gh0/rr8P; arc=none smtp.client-ip=192.29.178.125
+	 MIME-version; b=Brykte/tU+q54cOcDPhXlJ5ptN13j6g5+Knb1ZWa2wdFoyJ6IGJBP2HsgPe4sdLOU07vvq0+1lvL6P92t9Gv2tqUUufBH5kLuLacjRvKrZBmU34lQe34urDwOTpBZd+ZrdlEWGQwxFEfRoVQO8jpQn9DBPon7OgA/6O3VSMlloQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=eK0Nt560; arc=none smtp.client-ip=192.29.178.127
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="gh0/rr8P"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="eK0Nt560"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
  bh=tkzZY2I+WGMOmEBBOQDEs0MVRqB+kmleDTkRpBnfCrs=;
- b=gh0/rr8PDVZY78JvnyatgPpOtgRoHXyk+b719kF0GQFoNO6ef7JPzakVuxgtwChKADJ5h0MDqkON
-   3pE0OKnix3IYnwRhR6Q3ySGVnQn4cw2oSuaurxdT4QOkeuHmsR327Gi5elIKvAfXm2rZPhHLgC6g
-   SCipdTC+eEm7dkSDvKOJRw0tNxxDuMk54CmvLun/y09J1xT+CS3pyH7wuYfMDt1emYN6uNmZ9pz3
-   h+KWP01dUn1A7yFKnQ8MEvuqxlxjKvR31E9IDaTQH9pAloy/Xom3jNdYWJUatzWXnOmLfL+a5V5B
-   H6J0UyRCkSST/88mA+ifHTnCRlNLvAgHWU/UVQ==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ b=eK0Nt560ZnTlXhwzlj8c8YAb0fZvWnuMYZh5ydNgueE2ss6cuuPNKx3EKwWqUrSTeCLTUEQ+ztwU
+   xKivtyIinK0ZBWPtiXoRGlQN33T2dpGtUEoHiq32BtbuDaa/fjinCl1LDty1zTnedAowd8XWG2+3
+   4OEl6+qU04nRFwAisjo3MFebwHkA8JIMD4bIGzcJSqCTF4oJ/C97+ypo8W3vxHnOhUEO79Iq0bb2
+   HYfRzOQaOPQhx1aTDypCYHuCUJX/a4zO07nARt3WKo04lUdyqwsUlvisLKcQKsxKbkFBuPlkogmK
+   /fMLamG/ujKRhKkqBp2/x9H3PfFfQPgimtTuAA==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
  2024))
- with ESMTPS id <0SNO008GXOBQHOB0@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Thu, 28 Nov 2024 23:09:26 +0000 (GMT)
+ with ESMTPS id <0SNO006L5OECJL90@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Thu, 28 Nov 2024 23:11:01 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 From: Bence Ferdinandy <bence@ferdinandy.com>
 To: git@vger.kernel.org
@@ -38,8 +38,8 @@ Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>
 Subject: [PATCH v3] fetch: add configuration for set_head behaviour
-Date: Fri, 29 Nov 2024 00:06:46 +0100
-Message-id: <20241128230806.2058962-1-bence@ferdinandy.com>
+Date: Fri, 29 Nov 2024 00:09:38 +0100
+Message-id: <20241128230944.2114228-1-bence@ferdinandy.com>
 In-reply-to: <20241128111946.366584-1-bence@ferdinandy.com>
 References: <20241128111946.366584-1-bence@ferdinandy.com>
 Precedence: bulk
@@ -50,14 +50,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: 8bit
 Reporting-Meta:
- AAFARzI1/WA1JNLbsXuxUy8Nl6edx5r3x8USsWGFz6Sqfe9n1vQt9+0dGCvLhk3G
- 0WqixbqERM2PoI/YUuADfn21yod17riy8djDj3E4cqtlFDtB6tSmnTefNM7jhfo7
- z+VarYscHGCQdjleG16rQHYJ404jiS/d/j060xEiF4vAmpF2HNzhGPlQhxbR1bOw
- xKK3EXmb8e88JRd4tlvzUGjsjPqPnca7sxkUjwsiQTa+Pc+ZKMaGvGsfnh7AHfW2
- OWiqo8ENKwDi/46+bZVqnanNFiDZ3rVQ/1Kzm49ndKwfb1fJjaqT0deWOzETudqu
- 0hhVNmYNcEl40r57E344DpPtwW1LdRiFeZtm4HHwsmL0Mh22zXdWhyZS18h+C9bd
- dkCjYxJ2Vv+hz7Xd/WVIH4S/H3DJnDmrsb2cShGL8RgfzoHr1aIuuMOY4biYGQFn
- xoU2Hd6HtzNowzGYUg/2XJky3oGKd57364L9azAfgbA4jlFpcMgn3i0=
+ AAHcmVCg85R3epVAxCZF6Tlt8qtilVnu7H9QzGBXIOgBjEAyWAumqbVOoXwZzxsW
+ XZcM9eKA/kcmpOR3r+WFiHZpGlpeO6m2NHElXpfWNrpMS/WawJXSVRAIUAj70EXU
+ AHtdlDxFeyhfsHyUfr95auEZq/+rMOseDmXOmqCa0b8x+wPm+acRcdi67PsU3ttu
+ 2J0Cyzv3aUV57YImxrEv+/67YjWapNwVL9pFl1hU9mY16lQwLPWdc/ItjfiMe3qt
+ c1tqUqExrEvIeObVZo9tsTBawHV8vuVv8bWBjN/piXYHTucyBUyUoRTpB5x8xhiI
+ icn54M86kbpo+gwUT6x9KUCy6KfbjPn1U5kIoBD+Szpt9P8jeafr2BiLPDmvEl76
+ c7nVLxRv0EaDpYP9YlMhzciIEkATW0LYt3tdYJnsrR0SFHDNc0reERlPZGP14oDG
+ BoCBKzpoercC2t9Y8EVnikR9iPXAzBOr4NU99WHGRG/ueho5mRGz3vKa
 
 In the current implementation, if refs/remotes/$remote/HEAD does not
 exist, running fetch will create it, but if it does exist it will not do
