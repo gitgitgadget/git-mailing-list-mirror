@@ -1,55 +1,55 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEF31C1AD4
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 16:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBD11C1F2E
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 16:12:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732810362; cv=none; b=ubLa3MgxzD7uPq56x0nHL+3QxQ7wi4Wspfzk7gioYT12cIpTzyonQK3CTToBBo9btGZrGH5UvGmAFKXBVEh8mlqtVX6EAvQ0iQo3xleZEPPuqbIcgXTWubWb8DrXFiZT8liB2CqUnYXlI+7RFiB1/XtPDR25oWjD2MuANqWKEsY=
+	t=1732810362; cv=none; b=EKxLeGL21f7aemQrjcXeyn3NF4BX2AHkrIDZjtDYNWWHB3dfhFyNAiwyoN66vtV8kdsY61Vn4Jp7TXUPUvyTRmL6UN8/p2wgN2s8ngo6et8RGCqNWlyh2/XQNaZLmgpt4CVxurakT/OYFNgkzMZtS4vqL9CYZPveanSu+uzwXMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1732810362; c=relaxed/simple;
-	bh=0HACsMqVbsJtuRF3/TEAiHdReCzBh2nx2DeYMZEmRRI=;
+	bh=MIVG3HJT3of2QOHuPdhXBE7bDlM0Qop/caKnhlpFDRo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nVqThgwtOPCOe2StUl59QP0Q3Hp6GzqpVaMOcNx60LoJ2g2SRFrNA1amykYQgsoJPiESvCNHWZUNpjWBtr7fM/iApvOS5KSrRl0OoKavFtCbidjhBuuXjvvoLwCNZHnXDRDSrDObHBVG9gSsmTmIdPknqk1zDj4bHcjj+0wi208=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s7mqBWVV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yb8EMroh; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=McxKypkWRgT8/OTOowEQAn5QORiJXxj5/4aqZoyOt+8ZW1XbnLgb7DGMEHKgoaZdsvwU1y2+o3+PSNw1Y0nkYfjswj+mTi3dJit7b5NNXTnYZ4cRUQmmYkPsoUrlXpHFhbKV9Kcv13XV9Ko2s7Gc2UJz9YXMTn7M7Vp+63dsjLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ChPd1QdQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fUjJ7KxP; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s7mqBWVV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yb8EMroh"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ChPd1QdQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fUjJ7KxP"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CBBD91140126;
-	Thu, 28 Nov 2024 11:12:37 -0500 (EST)
+	by mailfout.phl.internal (Postfix) with ESMTP id EDAEE13802ED;
+	Thu, 28 Nov 2024 11:12:39 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 28 Nov 2024 11:12:37 -0500
+  by phl-compute-11.internal (MEProxy); Thu, 28 Nov 2024 11:12:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732810357;
-	 x=1732896757; bh=1AHKpDMd13qzh+/RO1Tleho1oK17dbdX5NUgq0oaEHQ=; b=
-	s7mqBWVVIiNfLvvbhnBm9GdIDh26Q/J86zGZc55zEeEUJhzCwiJg/ppssfcH9wbC
-	oxG3ZCOeOCh8JyAeolz0BqifBxny07n6iw3ggfSMvE6GCQCjcbUpWWJ71OVbyFIg
-	chgau1hlklMcgXBBvL6TOIYz4qAkm1wZfHym9ojJQbbS6wV4es6uNl064cjpbe9k
-	qf0M5obH+XgaSLHDvY1bM3shVbtABxz7duq89wQ+Yx7y3tP5OjSrMIEPoWSg5E35
-	PuK4A9di1x2e7Lg+IdfRICTBzjhb2uDdUYWoZAB5R17C0KHZpJkYPaSjepH+vb9f
-	pE6A7p0b9vQwXSTM+J8S4Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732810359;
+	 x=1732896759; bh=52RI63OH3gFPnbmsGThI+MY3+EcemQD2g1AEwgMxAiU=; b=
+	ChPd1QdQ14woB/qc+rD4wql/Y48RkPyt/mEAfth5cOicUvRWsoYR2aO5pUgnPrV7
+	IS98Zfj9mhwTdZoC50BTh7olaTLyDBclHkvjMd/fKzI5QWCKGGTNV/k81xKM21ur
+	0MwzrffoTs5SRh/YwlY8NRZCA0r3prZFJdZrpBE6yEsIPv6LUEe0ma7tQC/DjMQe
+	aqpd81zSCrc5aH1zYJ5C1SmBDAQtgyXJd+KBf0KuDx1hT3dfiD6uzkoJ3xxf+J01
+	VQFq4ArWuQ/XxMjGjmvdBYCY4kyxdeSj2CA1R8AdGeezB1OqAszDH79ohpCCFfoL
+	sdewxdn70a/VzLAyPnJKeA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732810357; x=
-	1732896757; bh=1AHKpDMd13qzh+/RO1Tleho1oK17dbdX5NUgq0oaEHQ=; b=y
-	b8EMroh8iozgfuea2YxftJg6ylcFEGt/V0UW5Cz/v6Ogf8JQezAljA9iCf27W57O
-	t8O6pGYX2OrEh9KNGUGLGaAcCPzkMIsVaAC0hLNgkPRGxIdcN1ILS1k0zBjYj0bW
-	EUcKS2cXf9CTbqgpKjgmBWY7DmyD7Iy0PClMqr0CpIm0CgvjfqWNQXZE7IVr27QS
-	H+JjIfkq4LwbF8s1QnCgqbH09crM7ceFrjRAA1yvYEtgdb0jq2hsOcSuEq77nZQp
-	6LjKnOzAEsKqqVd01z2I1Uxri+5GC2h1flUPNEhsQT4JwjPla3Kc2gNii7JNhbvQ
-	nvURh018OSsF6rjFNqZgA==
-X-ME-Sender: <xms:dZZIZ3eEi9vBkWc9dEIblyIwrAFaCyGIYT2mDDcm6fMdKcMLRbEaLg>
-    <xme:dZZIZ9NsFGvt612Q0kAvA9i0TZ_kKSuC8qYFy1OrvtaKJoptwkGLh0iea942R4Xo5
-    VKIaiKSqZavR3w2UQ>
-X-ME-Received: <xmr:dZZIZwhAXDUJ5u-oMHhqhwwB1AuRiHvasmvoxFxYH07Z5T39vlfJiVmsKpo9d45SVOW7LhPOzmiwHivd-j-_7WitXRw6UGav4rAFsJtomN-hIQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732810359; x=
+	1732896759; bh=52RI63OH3gFPnbmsGThI+MY3+EcemQD2g1AEwgMxAiU=; b=f
+	UjJ7KxP6kA7IfHZGvT1HzekXB8KBszoGLaQP8uGdZy6X7W9tBBXRJgP3vohIZ2YJ
+	guTjF8wbS8L5im1lFtMywSJFU8seZ4lJeh5m7LHi9JORrlleZItYvHwqQ00im0hS
+	xlLRvdqhWoLv+IP0pvEK9WKUlOnPCh38YjRliL4UrwPTKSmdFTHZSWSzd6bp1xN/
+	kRB0n8mgh1kFR4Sht14juFnhwxHgbfCSAEOoOjMN17H/wXDwPfaTuL+VJYMCBI3E
+	KpNq55fXkwxkdry7JxqjLCtM05figTomlJaUCAoV2V3CIdL2F4INtxs8bbzMXDFa
+	odki+wgFt5yEJJLZvcggg==
+X-ME-Sender: <xms:d5ZIZ3JsvLM08Mv9XR8PkRb1ciTbBGwVW_MWT4NYycSHhfPE5mWqrg>
+    <xme:d5ZIZ7K0tu1sBXVtUGj_DfwlPUng52XhfH4-lOay535SJPBlp2QDUenAsy8B8jNIm
+    UXs7Vua_xOlNT6Ylg>
+X-ME-Received: <xmr:d5ZIZ_szm0Rxkdt5aTkXWLr7eCLmTPA-3fsFUYuvVL0M6h3c6UC1qwrW9Sn_K9FzWdRawJWkGwYTlJaT6-VgD1bjDH-GTHQiGi-iwk1M8HkzJA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdekgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,29 +58,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdekgecutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-    dprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepuggrvhhv
-    ihgusehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrg
-    hmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghm
-    shgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:dZZIZ4_fEdblg-fqV2k4qyJOTtE6NiTk0r3g81UjxKFyRz0DlQTFzw>
-    <xmx:dZZIZztujoo9XYqO8HYGekvdogrvSHqEUrsEa9vfF-xjBe7Nq1nw9Q>
-    <xmx:dZZIZ3GN-D6vEeXt7hvfC_6Nli9zRpUOBRp3EqzTNEwyUGfeSTbXmQ>
-    <xmx:dZZIZ6NQsfNWdJZII767yX-X15XSy5NyYZQa-qJ7Z5MlFWQwnENtjA>
-    <xmx:dZZIZ3HeAKQPvCBhX3P0i1MaGVnyYoumek3R4GwpVclhSblhId52wCKr>
+    shhmthhpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrph
+    hluhhsrdgtohhmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhih
+    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdroh
+    hrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhh
+    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:d5ZIZwYQEIERAyGlmLQWcwOKJbjUJ98F9kZ4uVsVF_xRzr11QC4OGQ>
+    <xmx:d5ZIZ-b6B5g1zRtUVpOVoPE0nPtCkW2mRrs9zDbPT6wzO10f3W-U_g>
+    <xmx:d5ZIZ0AUvychLCCTkFnS9fmSqv-CyCHggBDnKxhxl4nCXlYRhFsWeg>
+    <xmx:d5ZIZ8awKjaz2yLe8PG_UH_F1ssg1G11NAE2fu777Xnr_QzAZDSXHQ>
+    <xmx:d5ZIZwC3QgEH4yN8rOs21k7pk3VOuQr2HceW088aKgsE-BMSfp4N1vy6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Nov 2024 11:12:35 -0500 (EST)
+ 28 Nov 2024 11:12:37 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d6c91ac0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 28 Nov 2024 16:11:21 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5d83d77d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Nov 2024 16:11:25 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 28 Nov 2024 17:12:14 +0100
-Subject: [PATCH v10 13/23] Makefile: refactor generators to be
- PWD-independent
+Date: Thu, 28 Nov 2024 17:12:18 +0100
+Subject: [PATCH v10 17/23] Documentation: teach "cmd-list.perl" about
+ out-of-tree builds
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241128-pks-meson-v10-13-79a3fb0cb3a6@pks.im>
+Message-Id: <20241128-pks-meson-v10-17-79a3fb0cb3a6@pks.im>
 References: <20241128-pks-meson-v10-0-79a3fb0cb3a6@pks.im>
 In-Reply-To: <20241128-pks-meson-v10-0-79a3fb0cb3a6@pks.im>
 To: git@vger.kernel.org
@@ -102,226 +102,97 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Johannes Sixt <j6t@kdbg.org>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-We have multiple scripts that generate headers from other data. All of
-these scripts have the assumption built-in that they are executed in the
-current source directory, which makes them a bit unwieldy to use during
-out-of-tree builds.
+The "cmd-list.perl" script generates a list of commands that can be
+included into our manpages. The script doesn't know about out-of-tree
+builds and instead writes resulting files into the source directory.
 
-Refactor them to instead take the source directory as well as the output
-file as arguments.
+Adapt it such that we can read data from the source directory and write
+data into the build directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Makefile                            |  6 +++---
- contrib/buildsystems/CMakeLists.txt | 19 +++++++++--------
- generate-cmdlist.sh                 | 42 +++++++++++++++++++++++--------------
- generate-configlist.sh              | 20 +++++++++++++-----
- generate-hooklist.sh                | 15 ++++++++++++-
- 5 files changed, 68 insertions(+), 34 deletions(-)
+ Documentation/Makefile      |  2 +-
+ Documentation/cmd-list.perl | 23 ++++++++++++-----------
+ 2 files changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index c898720861b6aad04610b43b33244234dafaee4d..61639d17dc364acf30ffd2d317015d8db440acc1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2523,17 +2523,17 @@ $(BUILT_INS): git$X
- config-list.h: generate-configlist.sh
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index c3d5ea1d46a57744bcacdc63b6c97911607e9fec..6c3f9b5ed13ab0b0ceae05128ec4086a7f61ca34 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -312,7 +312,7 @@ cmds_txt = cmds-ancillaryinterrogators.txt \
+ $(cmds_txt): cmd-list.made
  
- config-list.h: Documentation/*config.txt Documentation/config/*.txt
--	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh >$@
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh . $@
+ cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+-	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(cmds_txt) $(QUIET_STDERR) && \
++	$(QUIET_GEN)$(PERL_PATH) ./cmd-list.perl .. . $(cmds_txt) && \
+ 	date >$@
  
- command-list.h: generate-cmdlist.sh command-list.txt
+ mergetools_txt = mergetools-diff.txt mergetools-merge.txt
+diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
+index 755a110bc48d7e2b596651ca13664c01192d966c..e260a989774071b66d2b56c56c5045b84a508c5c 100755
+--- a/Documentation/cmd-list.perl
++++ b/Documentation/cmd-list.perl
+@@ -3,12 +3,13 @@
+ use File::Compare qw(compare);
  
- command-list.h: $(wildcard Documentation/git*.txt)
- 	$(QUIET_GEN)$(SHELL_PATH) ./generate-cmdlist.sh \
- 		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
--		command-list.txt >$@
-+		. $@
- 
- hook-list.h: generate-hooklist.sh Documentation/githooks.txt
--	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh >$@
-+	$(QUIET_GEN)$(SHELL_PATH) ./generate-hooklist.sh . $@
- 
- SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):\
- 	$(localedir_SQ):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index defdd958bb64906489482b77752b1a137282824f..de2c24e66b5b94e18368aba576fc11418e2aa049 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -638,23 +638,24 @@ set(EXCLUSION_PROGS_CACHE ${EXCLUSION_PROGS} CACHE STRING "Programs not built" F
- if(NOT EXISTS ${CMAKE_BINARY_DIR}/command-list.h OR NOT EXCLUSION_PROGS_CACHE STREQUAL EXCLUSION_PROGS)
- 	list(REMOVE_ITEM EXCLUSION_PROGS empty)
- 	message("Generating command-list.h")
--	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-cmdlist.sh ${EXCLUSION_PROGS} command-list.txt
--			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_BINARY_DIR}/command-list.h)
-+	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-cmdlist.sh"
-+				${EXCLUSION_PROGS}
-+				"${CMAKE_SOURCE_DIR}"
-+				"${CMAKE_BINARY_DIR}/command-list.h")
- endif()
- 
- if(NOT EXISTS ${CMAKE_BINARY_DIR}/config-list.h)
- 	message("Generating config-list.h")
--	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-configlist.sh
--			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_BINARY_DIR}/config-list.h)
-+	execute_process(COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-configlist.sh"
-+				"${CMAKE_SOURCE_DIR}"
-+				"${CMAKE_BINARY_DIR}/config-list.h")
- endif()
- 
- if(NOT EXISTS ${CMAKE_BINARY_DIR}/hook-list.h)
- 	message("Generating hook-list.h")
--	execute_process(COMMAND ${SH_EXE} ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
--			WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
--			OUTPUT_FILE ${CMAKE_BINARY_DIR}/hook-list.h)
-+	execute_process(COMMAND "${SH_EXE}" ${CMAKE_SOURCE_DIR}/generate-hooklist.sh
-+				"${CMAKE_SOURCE_DIR}"
-+				"${CMAKE_BINARY_DIR}/hook-list.h")
- endif()
- 
- include_directories(${CMAKE_BINARY_DIR})
-diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-index 205541e0f7f81b1df4061215ae34a2742a45475d..b923a5aab80dfa571a40a4f6fa3d860fcf8f8dd1 100755
---- a/generate-cmdlist.sh
-+++ b/generate-cmdlist.sh
-@@ -64,7 +64,7 @@ define_category_names () {
- print_command_list () {
- 	echo "static struct cmdname_help command_list[] = {"
- 
--	echo "$1" |
-+	echo "$2" |
- 	while read cmd rest
- 	do
- 		synopsis=
-@@ -76,7 +76,7 @@ print_command_list () {
- 				break
- 				;;
- 			esac
--		done <"Documentation/$cmd.txt"
-+		done <"$1/Documentation/$cmd.txt"
- 
- 		printf '\t{ "%s", N_("%s"), 0' "$cmd" "$synopsis"
- 		printf " | CAT_%s" $rest
-@@ -93,18 +93,28 @@ do
- 	shift
- done
- 
--commands="$(command_list "$1")"
--categories="$(category_list "$commands")"
-+if test "$#" -ne 2
-+then
-+	die "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+fi
-+
-+SOURCE_DIR="$1"
-+OUTPUT="$2"
-+
-+{
-+	commands="$(command_list "$SOURCE_DIR"/command-list.txt)"
-+	categories="$(category_list "$commands")"
- 
--echo "/* Automatically generated by generate-cmdlist.sh */
--struct cmdname_help {
--	const char *name;
--	const char *help;
--	uint32_t category;
--};
--"
--define_categories "$categories"
--echo
--define_category_names "$categories"
--echo
--print_command_list "$commands"
-+	echo "/* Automatically generated by generate-cmdlist.sh */
-+	struct cmdname_help {
-+		const char *name;
-+		const char *help;
-+		uint32_t category;
-+	};
-+	"
-+	define_categories "$categories"
-+	echo
-+	define_category_names "$categories"
-+	echo
-+	print_command_list "$SOURCE_DIR" "$commands"
-+} >"$OUTPUT"
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index 8692fe5cf4d5e4025265e6110254b05640615fea..579422619cc777ff597523a4db81b99912aac3aa 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -1,13 +1,19 @@
- #!/bin/sh
- 
--echo "/* Automatically generated by generate-configlist.sh */"
--echo
-+SOURCE_DIR="$1"
-+OUTPUT="$2"
-+
-+if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-+then
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	exit 1
-+fi
- 
- print_config_list () {
- 	cat <<EOF
- static const char *config_name_list[] = {
- EOF
--	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
-+	grep -h '^[a-zA-Z].*\..*::$' "$SOURCE_DIR"/Documentation/*config.txt "$SOURCE_DIR"/Documentation/config/*.txt |
- 	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
- 	sort |
- 	sed 's/^.*$/	"&",/'
-@@ -17,5 +23,9 @@ EOF
- EOF
+ sub format_one {
+-	my ($out, $nameattr) = @_;
++	my ($source_dir, $out, $nameattr) = @_;
+ 	my ($name, $attr) = @$nameattr;
++	my ($path) = "$source_dir/Documentation/$name.txt";
+ 	my ($state, $description);
+ 	my $mansection;
+ 	$state = 0;
+-	open I, '<', "$name.txt" or die "No such file $name.txt";
++	open I, '<', "$path" or die "No such file $path.txt";
+ 	while (<I>) {
+ 		if (/^(?:git|scalar)[a-z0-9-]*\(([0-9])\)$/) {
+ 			$mansection = $1;
+@@ -29,7 +30,7 @@ sub format_one {
+ 	}
+ 	close I;
+ 	if (!defined $description) {
+-		die "No description found in $name.txt";
++		die "No description found in $path.txt";
+ 	}
+ 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
+ 		print $out "linkgit:$name\[$mansection\]::\n\t";
+@@ -43,9 +44,9 @@ sub format_one {
+ 	}
  }
  
--echo
--print_config_list
-+{
-+	echo "/* Automatically generated by generate-configlist.sh */"
-+	echo
-+	echo
-+	print_config_list
-+} >"$OUTPUT"
-diff --git a/generate-hooklist.sh b/generate-hooklist.sh
-index 2f9f54eb545be2bd79c37a868dbeef96d2ddfb9f..e22068c2fa4139983d685fd3bcd78e3e2a52beb0 100755
---- a/generate-hooklist.sh
-+++ b/generate-hooklist.sh
-@@ -2,6 +2,17 @@
- #
- # Usage: ./generate-hooklist.sh >hook-list.h
+-my ($input, @categories) = @ARGV;
++my ($source_dir, $build_dir, @categories) = @ARGV;
  
-+SOURCE_DIR="$1"
-+OUTPUT="$2"
-+
-+if test -z "$SOURCE_DIR" || ! test -d "$SOURCE_DIR" || test -z "$OUTPUT"
-+then
-+	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
-+	exit 1
-+fi
-+
-+{
-+
- cat <<EOF
- /* Automatically generated by generate-hooklist.sh */
+-open IN, "<$input";
++open IN, "<$source_dir/command-list.txt";
+ while (<IN>) {
+ 	last if /^### command list/;
+ }
+@@ -63,17 +64,17 @@ sub format_one {
  
-@@ -11,10 +22,12 @@ EOF
- sed -n \
- 	-e '/^~~~~*$/ {x; s/^.*$/	"&",/; p;}' \
- 	-e 'x' \
--	<Documentation/githooks.txt |
-+	<"$SOURCE_DIR"/Documentation/githooks.txt |
- 	LC_ALL=C sort
+ for my $out (@categories) {
+ 	my ($cat) = $out =~ /^cmds-(.*)\.txt$/;
+-	open O, '>', "$out+" or die "Cannot open output file $out+";
++	my ($path) = "$build_dir/$out";
++	open O, '>', "$path+" or die "Cannot open output file $out+";
+ 	for (@{$cmds{$cat}}) {
+-		format_one(\*O, $_);
++		format_one($source_dir, \*O, $_);
+ 	}
+ 	close O;
  
- cat <<EOF
- 	NULL,
- };
- EOF
-+
-+} >"$OUTPUT"
+-	if (-f "$out" && compare("$out", "$out+") == 0) {
+-		unlink "$out+";
++	if (-f "$path" && compare("$path", "$path+") == 0) {
++		unlink "$path+";
+ 	}
+ 	else {
+-		print STDERR "$out\n";
+-		rename "$out+", "$out";
++		rename "$path+", "$path";
+ 	}
+ }
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
