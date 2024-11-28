@@ -1,107 +1,119 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0F146A71
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 19:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0701C2DA1
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 20:58:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732823108; cv=none; b=JWBe6YxR34V5S+P66vlZxpUSvuuVBaXDYEnwhRsmgB+dIIxZsW04s9v0SzTJ5Pbi4rSI+Xbvftq+sNcj9lVbTxMmqnnH9AN+v41qwmpv61AdH0mA+4B0EsjYOtYLGWV2wEm9mZa0BRZfOUSUJ7vVdxPIjyMo7/WXry/XOdzra9k=
+	t=1732827524; cv=none; b=XPN4SLFntzUYfzeSSIjk8B7BYyHe4PAJiQ/cxxJG44Xj/aZkPs86O6b/VZW9LgiL0jL24FBU8PUgN1wsY3w9/0m1Hkl6SkmP1uW8ReYr48nYheu7bXLSkYaLJKsO7i2qBAO9XO3gMI+D16DE8rubBMI7/Q4pyOi0T1n9N7FDdAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732823108; c=relaxed/simple;
-	bh=s3gxn7npOPubf8/4dwDHI0bG3+kbAsYTJ+xW5b2gGhg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d7R8D4UmBkNJV3Y39gr2FIqXG+e+hmhfpWxDvkNS7nd+5eW2jamqtKvBoKAN10lsnGuBX3SipE5+Mt9oKUfg2iWTCVOV91s/SJk7SxLHOQZuyU1y+PKOBLpxzeHNq22WmXd/ZLodxQElbF5INHupUif9R4cEsxL9Rwhewk6FEPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Dz8xFPiC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kNAWJg3G; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732827524; c=relaxed/simple;
+	bh=+ZkpWV7FMde3yzoycX8q+NWwqwzSIbRUlpysvZm11KM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gKwZ3c+CX/mWzAKKxX06b/LQ3iKyABlzPICw9p8n2HPcKXuWDgjAFB/23RnoIW1kriCCGiW0hOlP0fNBp46ND6EaooVHre7Eb2Cdo/TzjSPtvcJ9+aRapez9UOqJz/apXOaxi2e1vTHQkMEbloZuP92WoW8F8nWyUqWOXEw2XVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hXLD6M2w; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Dz8xFPiC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kNAWJg3G"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id B8CBE1380971;
-	Thu, 28 Nov 2024 14:45:04 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 28 Nov 2024 14:45:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm1; t=1732823104; x=1732909504; bh=BD/d/1WQU2uQT9C7vHJBU
-	2DD4eE1HSprudcRL94j3ts=; b=Dz8xFPiCdrdsO+nbUkVIdEb8sawSCKiEP/2nD
-	MlLMGaG2qnXGzmhyJJRMHGKGf9wCSEsKw1WYn3Xu3zWfjZQb4irx7rAD/vCvtjEH
-	/ltazZiwkdcsiIwNLifZFDHK8Prb3bP3MiviP2fxv2MGg4HvH9uTuFoajKzYUscp
-	2ORVDzachk6KblE4Eez1vA0upUjEXlH5vEBIi6SRtl+fAEyuCYvlLYPN1Ykt2HuG
-	ERjjhzTS2b3a/RRfNpVDNUHyXVBlx0xcGOzH11FqhMPGDcSB8W+aUNLfTwribFnS
-	k0HM/E0T6mSfssAysy5CxCoLwJGrgY1ZBQSYmaYNhxa/qXsqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1732823104; x=1732909504; bh=BD/d/1WQU2uQT9C7vHJBU2DD4eE1HSprudc
-	RL94j3ts=; b=kNAWJg3G8oy2IL+KfEuKhQgiT81qLut1vAmBiQNe4gLAIAIxksQ
-	Mt/Tct5KqXAuJUBzC7p5MP5Ry6gigDJGhpJHPIJgxsFCV+8aJufVylK+71Bfl3g+
-	OmdFjD2a3tGugZWYeWzuex4riQw3a78aYDmrOtCt1ukJBG9i+7cjzOczZjWLG6ol
-	TbT0Qqy3HGAmPXGDsKfpLHrO85KPSSqjnPdp2dhKUJLZxx50gjZe3N4aeGE+n7pS
-	PRH06x+nCJuqRZSD5I8dZtqIrjSISxqG9yG5g73huDKB5WScrzQJaekJ9jVsWCsg
-	K/5U5ntHRFjK8xsnM8DhsxsjQwMzh5WyiYQ==
-X-ME-Sender: <xms:QMhIZwZYezQ0m51O7aMwVo-zNbIstE8FmLVumKMCuVcWYPLNN1X-VZQ>
-    <xme:QMhIZ7b6F8vTCj6bmD_k8Nu70priyk7PKuKdbTvcf0JJ-VXn-uL-sJK6BtPWMzJM0
-    RpHQN9d15Jow_XeTw>
-X-ME-Received: <xmr:QMhIZ6-bne-6FNQR1D3C1XYGTK3Q7QDvwEAjnbsvEPnmq5Kp9JnLiws_tTUqx9QhD2jQ-xuWKuGYFXOkitv8OIYnvjinX7QOl3cMvuUJp_VnNHmIJK-o1Wh8cg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdduvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    ffkffoggfgsedtkeertdertddtnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhs
-    sggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrghtthgvrhhnpedvheelvdejhe
-    ejjeehveettdejkefhhfffveettdffgfekuddvvdetfeejhfdutdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrg
-    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhho
-    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:QMhIZ6rvMSxATjtWcsm3zbcD-wYkI0N_-ZXYLQltrSz3P32m1jPShg>
-    <xmx:QMhIZ7qLkUegPF8GpE4KGplsRtmrs5l3KKG346qU0WyeESsUGt11kw>
-    <xmx:QMhIZ4Q24NgaQLTpkLpAQ4Ud4ocU0LTMV-z-OeAZBCPT0BfZtmHJnw>
-    <xmx:QMhIZ7pfv_SwhauTBw7OALhVdM7BmV02Qw_S1rqUaBY-uS98KLIing>
-    <xmx:QMhIZy2WOBT7ggWwaNRxhXZE70KghyVONf7iQM3Fi5qBqko1cgCLa_Ru>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 28 Nov 2024 14:45:03 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] Documentation/git-bundle.txt: fix word join typo
-Date: Thu, 28 Nov 2024 20:44:51 +0100
-Message-ID: <164b94bab9214f6030909df8f1e7c476b7f79e55.1732822997.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.47.0
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hXLD6M2w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1732827521;
+	bh=+ZkpWV7FMde3yzoycX8q+NWwqwzSIbRUlpysvZm11KM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=hXLD6M2wTPo4EN6x82Zqe+dcAe5pQr8dC1Xrt1g/diRZk7EOXo3G7pDIOxB1QiqrG
+	 tiessDAHbeejBZSYB1M40l5Je+C94SdB6CRJbVKfzhljmVgwIl3mzRbDwV/X5GH0eV
+	 I9tXNF/gP/8ZXDhe3HoQKGChqklNPW3YqDIZgmFwW5GyXx4/fnTklQ8PyGhV59vUOH
+	 GitGKxXfjfgBzr6wnsdAScRjmtso7zki4b6mHXPstm2+J4brLIYQ9xT8l7opJIbOW4
+	 lN5K1x5Kue1+D8J4uRl1qQHOLJc0u5Yqzx+atL770PrCZ1MtBDOZBqI5fqZxp04oUO
+	 fj1Fvykjr//PYMupmeM+Hfy49RIcQz56jU70Eq/2xu+mG+piyqHFkkLx+r6CTMSSmO
+	 2ZWTKUKpxYbPiClHfd2B2yFDMyr2IHRnVwV9zJI8Ey90h9ItNtM/OHt7JdaR6o4VvC
+	 9HUGK1uquJjXtOJXrsFqXt/OGFzQ2SGdtrxg5T1cxujVU/QVLMl
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2600:1700:f991:38c0::39])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0895620994;
+	Thu, 28 Nov 2024 20:58:40 +0000 (UTC)
+Date: Thu, 28 Nov 2024 20:58:38 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Homyee King <homyeeking@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git clean --exclude broken?
+Message-ID: <Z0jZfltm0O3y9QoW@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Homyee King <homyeeking@gmail.com>, git@vger.kernel.org
+References: <1A13EB2A-6075-4CA9-855E-B72ACDA67C0C@gmail.com>
+ <Z0Nsq3lQZKJZxd-y@tapette.crustytoothpaste.net>
+ <CABAKogYaajvedff2ihsC5g+156L-Oe2N_XR3c+uyyfoovVQ5gg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="35Z75DxicIPxtMZ3"
+Content-Disposition: inline
+In-Reply-To: <CABAKogYaajvedff2ihsC5g+156L-Oe2N_XR3c+uyyfoovVQ5gg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-bundle.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--35Z75DxicIPxtMZ3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 504b8a8143a..03cd36fe8d2 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -32,7 +32,7 @@ Git commands that fetch or otherwise "read" via protocols such as
- possible linkgit:git-clone[1] a new repository from a bundle, to use
- linkgit:git-fetch[1] to fetch from one, and to list the references
- contained within it with linkgit:git-ls-remote[1]. There's no
--corresponding "write" support, i.e.a 'git push' into a bundle is not
-+corresponding "write" support, i.e. a 'git push' into a bundle is not
- supported.
- 
- BUNDLE FORMAT
+On 2024-11-26 at 06:13:44, Homyee King wrote:
+> Thanks for replying.
+> It's a typo mistake, the correct command is `git clean -Xdn -e foo` but t=
+he
+> problem still exists which is `--exclude` option not work with `-X`, is
+> that design so or a bug? For example:
+>=20
+> simple-project/ =E2=94=82 =E2=94=9C=E2=94=80=E2=94=80 foo/ =E2=94=82
+> |---- bar/ =E2=94=9C=E2=94=80=E2=94=80 .gitignore # contains foo/ bar/ =
+=E2=94=82 =E2=94=94=E2=94=80=E2=94=80 test.ts # untracked
+> file
+>=20
+> I only want to clear all gitignored files/folder but *`foo/` *and keep the
+> untrakced files/folders, so here's the command
+> $ git clean -Xdn -e foo
+> $  ls
+> $  Would remove foo/ bar/
 
-base-commit: cc01bad4a9f566cf4453c7edd6b433851b0835e2
--- 
-2.47.0
+I don't think there's a command for what you want to do here.  You
+basically want to clear only ignored files, but exclude one pattern from
+the ignore rules.  `-e` doesn't do that: it _adds_ to the ignore rules,
+not subtracts from them.
 
+So this is what I'd expect to see here with your file structure:
+
+----
+% git clean -Xdn -e test.ts
+Would remove bar/
+Would remove foo/
+Would remove test.ts
+----
+
+since by using `-e`, we've added the additional files to be ignored, and
+with `-X`, we've said to remove the files.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--35Z75DxicIPxtMZ3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ0jZfgAKCRB8DEliiIei
+gU58AP45DH0UbqH9WRVQ1u8kpkwngqiM1Btn2ypFuBkFltpgMwEAxZ5WQfHUTv5g
+1WribiAe9Gms6IvkRSM6Q3L6TKPnQwY=
+=AD+i
+-----END PGP SIGNATURE-----
+
+--35Z75DxicIPxtMZ3--
