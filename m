@@ -1,113 +1,172 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666DA1BBBE5
-	for <git@vger.kernel.org>; Thu, 28 Nov 2024 15:34:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDFC146000
+	for <git@vger.kernel.org>; Thu, 28 Nov 2024 16:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732808085; cv=none; b=JEU8TONBne7Etdy9OdxxH/NhORI6CzAO86vegAZq+RHCXPeAiYoFk8T9QCavpbfybXYjRa0MmD5af6ogD52YYGhzdc8cu1purvCv6Vdq8Im/fvy0mqT/G1eeUyjLZkZO4V1ZKyC3oXpflO/37ks64z0XO5vTSJO0L3kqbkD/jzo=
+	t=1732810310; cv=none; b=lvxfOdW1Pw6vbWZSSTu1melBUlz6jrOwsq5A0w9mkLyC2/51zLkeawgy9vP5Xrh8SsDy5TuzOwiyaSk9/niSEB7vSSO34AtClxwQ3mxtrvjz/0ZW2koQ4ERsZCVHsyKl0yeZXXk5PFCTxyp5KtN4ZK476xkWqNxrg2kh5zS+TGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732808085; c=relaxed/simple;
-	bh=yHBuniG6mOjmIFEJ/gsMxfcwSqMaC3FLB+lmqfDCXxQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=q1UAe/dDVeydPknxfWWTraXWSEt6k5Hm81YGNr8prollkW6UvdsTSuBw479NxM7VPrdWLp4ljzlC32dXfctl4lNXOy8i0pv3zr1q3azxydsl8DR0wS0lK4mx8wiOR2YKj71SfIG0WW64AONbTKL7kVrSkKXxh/kM4SUy8WbJDiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkUo/FU7; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1732810310; c=relaxed/simple;
+	bh=a3aGWD9rku5rBDwYCQcAPOPMDVDj5I2NtaJ6e9OtYF4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EBLZb7//TwIX378DfaZQjgVDvxdSnFWJOjv+XU6zx2yk5fI3xPZ6c5iftjEV3voKfqrUfpCYc2dSrrFkJ8UDkLutZD41wjMFoIPD4Rh8WtDercp/eSm1+iBH3Pz8DCm8bBigPeapMc8HH8vVNQH0asDx2BVdEUyG371k7gr0Z08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lvzuWtsr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LEACoWmJ; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkUo/FU7"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-434a1fe2b43so8468355e9.2
-        for <git@vger.kernel.org>; Thu, 28 Nov 2024 07:34:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732808082; x=1733412882; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZBhVWu6nWpGg+m7+N+tYXyzE2LUwrda6XkH4XAB4iuI=;
-        b=VkUo/FU7feud1RDeyJ8xluXlK2JPKeZvqN/6QzmZfcNn/wyj6772PreakVGTX3ZDZc
-         I6f3tAplTDGkE8xPYTfck8NW5yUdXf70jJVGVAmxxKA1xXmvDRnK+slxHYeWFCX7uqcy
-         hFyYEPDIH+qeDkd5N8oiS9jidkcxIHLHkNeyOPvuj5XAx2YMaJVfPE5g1s5WmpKbs8SK
-         AD4OtaEth44CfzpnMs27nagUPAcre8M79ed1Zz7ZBTTsI1eOC5pAFCPOz6lhwYxc9q37
-         XaKa5ycrT/fcE467AiLgQo5tSK/5CjLG0SMXEGQFJhVYGw91ciNOBWzERHUO+TOuCZ5Q
-         Vuww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732808082; x=1733412882;
-        h=content-transfer-encoding:in-reply-to:cc:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZBhVWu6nWpGg+m7+N+tYXyzE2LUwrda6XkH4XAB4iuI=;
-        b=D0kUbbnuVDPbBbtKFNUNzBNWzu5DDBqRzF2VpAI7grcWdMKOYN1Kh+nSad7ePC0vD4
-         yaxDcntIzgas1GhI8y7c7t4h/rW80HcbmAHe8Fz74e9Qv2nm3Bl3dSN6uDs+SyPI9n8d
-         bzRZYSsM94MP4uCmGZNmDMfXafKBtDRqaT5LKIg/mNkffxQZz/nLhuSAzR6grPPPNoqx
-         BYvBf+2F32sDQmXap0SPNuxjM5FaB+C5IzKjWw4GEWjIByYeTv3AAh2yjl4kFntmGEf2
-         A3qpsh0Y3Fy8A6zowtW/O5iuL+yDF9SaoRNczvR4oFAD+9BZk8T6ZTmaiyP1VLB0Q6lz
-         55tg==
-X-Forwarded-Encrypted: i=1; AJvYcCX6OB0yJZPxkY44RPTGHw16P2HAxP8vA8UKflmVdmhjd2HtTJzOqpYa9HhKbdXFCFFj2BM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywxe7jsVjoNZFVE3tTlrCnAHqREnF4td61XGR5WbIeRoOm7F3n2
-	coEjwLc6xnQ7XCGuCMoosE7k/Mx0hiPHWZuYljuD2+dKlD5qgvCb
-X-Gm-Gg: ASbGncuFPQDBHLOqfpPt73lI/nCqAhC5M8KVMmzrzcFmrVvewShTraKRjZwIyy1pVaK
-	8UlncB6Rs+/OcDUUNmnUsTDQjIiJcvd1uNI1bvYEA8e6mQGzwR6zQzjO+/52EeZUts17pg56b6b
-	7pKDYf35IDeFpHSIH3fnrary1WnHPMtwIJ1p9zFcoPrF4xty3T2QB8dj7l0eaO2wyIO0nbX5cu3
-	Q+QPM6SUSIocjvT6YiiAdpFTyCfC8QKT+jwCvCOcZVenmBDj+zuA37/iNYVBIylS1lwUjBFa70z
-	4WHJ2FBP+cOgtOfBAWStO1FAn1ye
-X-Google-Smtp-Source: AGHT+IH2DXoy5Y4UI94pISL1qo90W1Df6wAKhjjDh6Olp6MWlv8saLdY2bpz15jQRZSB9kzVWzeOCA==
-X-Received: by 2002:a05:600c:4447:b0:42c:b9c8:2bb0 with SMTP id 5b1f17b1804b1-434a9dbaed6mr74131175e9.4.1732808081361;
-        Thu, 28 Nov 2024 07:34:41 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b? ([2a0a:ef40:6f7:6401:d76b:efc0:c762:b74b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434aa7e4df1sm56520335e9.39.2024.11.28.07.34.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Nov 2024 07:34:41 -0800 (PST)
-Message-ID: <fbda37b9-41e7-4b18-a831-dfb5a9a9c54f@gmail.com>
-Date: Thu, 28 Nov 2024 15:34:40 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lvzuWtsr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LEACoWmJ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9C4E71140137;
+	Thu, 28 Nov 2024 11:11:44 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 28 Nov 2024 11:11:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1732810304; x=1732896704; bh=2Ay3wrHwOF
+	+Qz2Ik2aAZI/0VqPRhqxw8pxXcwU1nh58=; b=lvzuWtsrah1elEw/POkV7niUxs
+	c7d36QR4TT9JAW9t+zPSz0GS7xTMLVuQedrQSHLdGZxzwGzFEW/T4zD1UUeI2niu
+	rM17cTP8juCsUqq2XRR/uOrc+Rtppn06iHi2BibhHxFEBe0kRAD30Ib7nLuj8up9
+	6Kusc3+rXxmV/mMoJftLJiZtwFQubnF7SOP314oGfvKYgn4279xkJMA+4/NU42CW
+	RrQU9NJQ02J84pswAWr2jknSpwCCdJeiTYtas/OSuOSG1yilaQJMM+qsLaR+iGbm
+	Vtk+0Z/yEHagHMC83ClPzi6SWbVn0Go3pVbDPxsqrCLoTYsWX8K9a9c7Ke5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1732810304; x=1732896704; bh=2Ay3wrHwOF+Qz2Ik2aAZI/0VqPRhqxw8pxX
+	cwU1nh58=; b=LEACoWmJuhhfc35ySmDtoe7VXn0xIFfexpErFyMDWx7swPHwAxZ
+	GueCcJANTrf4UcigYVUlM3uMFSHhb0WOtaPMPrKWP1vbdN3lZUmj7eubF6M36xyu
+	h2tX7ziA3GFZoNhHwBghiTwGzsYgG0J+WbJ4PnxCzomMotASa5GbMrvo/3rzaHi4
+	JrlqdBVq0dBVRXg3UJ/MXzRLAEhozJ8IhdRzLKhsIFlL0OM0XheE+q9DXXTk8/lQ
+	Wi25Gr+FZ90AxgGdfaGPZLKKXNx29eBE3UVAO4buoPs/p9FBGbdaE6Ju3BnUhWaV
+	wLD50Efac6y09jKoO6tZc65z8tQVY2Nb9MA==
+X-ME-Sender: <xms:QJZIZwlH3YRGuKlvg3rhdu1nRepiR58uQUeTlPT_ZyspRNc_GPnjJw>
+    <xme:QJZIZ_1wS_K4kyWswTlExzU6-scmO9ZtxcDfUrWOEpPZpnQuGQtqRQhqVHnTWkEMT
+    1-6_vt8LolaH6GXvQ>
+X-ME-Received: <xmr:QJZIZ-rBPnjPwdRX5HkwriB-5iChzvtg8yj7cf-e4MQe6J-pDJZGGor2ZxwhuTClQE54GQ0vEcXQT_XDVI8ut7tVZIkqJT5KLjiZ67lWoiLcew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrhedugdekfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
+    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjeelhfelffdvte
+    efiedtkeeuteffgeetgefhieeihfehveejvdfgleehtdehveejnecuffhomhgrihhnpeht
+    ohhgvghthhgvrhdrphhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QJZIZ8k4jInC191DO6d_TBiTd0Jxp1JXUtRjBc7Wh_5aEvUpiN1eDA>
+    <xmx:QJZIZ-2HSG9pmcPFFZhUCfPWGq9sDWGGPZ-AD5a2pLrMAjP9vQp_dg>
+    <xmx:QJZIZztqY-FJWanRlb2UbX5V3m9tcvLDGp6nKNaFgQNyqMXRj18N-g>
+    <xmx:QJZIZ6XOxtP1omWl-IJatO5Q9bV1Uj1o0LlwSfSjsuu10Rea0TawQg>
+    <xmx:QJZIZ8DF0flHYYidXkwdJy3SS5NXcg8BZPvDbIWw5C3qryvok-P4KC4i>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Nov 2024 11:11:43 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id adcecbae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 28 Nov 2024 16:10:32 +0000 (UTC)
+Date: Thu, 28 Nov 2024 17:11:28 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2024, #10; Thu, 28)
+Message-ID: <Z0iWMKttvtpK6f6m@pks.im>
+References: <xmqq8qt3q5t1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Nov 2024, #10; Thu, 28)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq8qt3q5t1.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-Cc: Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <xmqq8qt3q5t1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-Hi Junio
-
-On 28/11/2024 05:35, Junio C Hamano wrote:
-> * cw/worktree-extension (2024-11-26) 8 commits
->   - worktree: refactor `repair_worktree_after_gitdir_move()`
->   - worktree: add relative cli/config options to `repair` command
->   - worktree: add relative cli/config options to `move` command
->   - worktree: add relative cli/config options to `add` command
->   - worktree: add `write_worktree_linking_files()` function
->   - worktree: refactor infer_backlink return
->   - worktree: add `relativeWorktrees` extension
->   - setup: correctly reinitialize repository version
+> * ps/reftable-iterator-reuse (2024-11-26) 11 commits
+>  - refs/reftable: reuse iterators when reading refs
+>  - reftable/merged: drain priority queue on reseek
+>  - reftable/stack: add mechanism to notify callers on reload
+>  - refs/reftable: refactor reflog expiry to use reftable backend
+>  - refs/reftable: refactor reading symbolic refs to use reftable backend
+>  - refs/reftable: read references via `struct reftable_backend`
+>  - refs/reftable: figure out hash via `reftable_stack`
+>  - reftable/stack: add accessor for the hash ID
+>  - refs/reftable: handle reloading stacks in the reftable backend
+>  - refs/reftable: encapsulate reftable stack
+>  - Merge branch 'ps/reftable-detach' into ps/reftable-iterator-reuse
+>  (this branch uses ps/reftable-detach.)
 > 
->   Introduce a new repository extension to prevent older Git versions
->   from mis-interpreting worktrees created with relative paths.
+>  Optimize reading random references out of the reftable backend by
+>  allowing reuse of iterator objects.
 > 
->   Will merge to 'next'?
->   source: <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me>
+>  Will merge to 'next'?
+>  source: <20241126-pks-reftable-backend-reuse-iter-v4-0-b17fd27df126@pks.im>
 
-I've had a look at the range-diff for the latest version and had a query 
-about the removal of a check from one of the tests[1]. Perhaps we should 
-wait to hear from Caleb about that, but if you're keen to get these 
-merged down in time for the next release we could just fix up the test 
-later if it turns out to be necessary - I think the code changes are all 
-fine.
+I think this series should be ready, but...
 
-Best Wishes
+> * ps/reftable-detach (2024-11-19) 8 commits
+>  - reftable/system: provide thin wrapper for lockfile subsystem
+>  - reftable/stack: drop only use of `get_locked_file_path()`
+>  - reftable/system: provide thin wrapper for tempfile subsystem
+>  - reftable/stack: stop using `fsync_component()` directly
+>  - reftable/system: stop depending on "hash.h"
+>  - reftable: explicitly handle hash format IDs
+>  - reftable/system: move "dir.h" to its only user
+>  - Merge branch 'ps/reftable-strbuf' into ps/reftable-detach
+>  (this branch is used by ps/reftable-iterator-reuse.)
+> 
+>  Isolates the reftable subsystem from the rest of Git's codebase by
+>  using fewer pieces of Git's infrastructure.
+> 
+>  Needs review.
+>  source: <cover.1731943954.git.ps@pks.im>
 
-Phillip
+... it depends on this series here. From my point of view it is ready,
+as well, and has gotten a favorable review by Karthik. So I wouldn't
+mind if we merged both series to `next` together.
 
-[1] 
-https://lore.kernel.org/git/054b70c2-accd-4d85-a576-66910d35a26d@gmail.com
+> * ps/build (2024-11-26) 24 commits
+>  - meson: fix conflicts with in-flight topics
+>  - Introduce support for the Meson build system
+>  - Documentation: add comparison of build systems
+>  - t: allow overriding build dir
+>  - t: better support for out-of-tree builds
+>  - Documentation: extract script to generate a list of mergetools
+>  - Documentation: teach "cmd-list.perl" about out-of-tree builds
+>  - Documentation: allow sourcing generated includes from separate dir
+>  - Makefile: simplify building of templates
+>  - Makefile: allow "bin-wrappers/" directory to exist
+>  - Makefile: refactor generators to be PWD-independent
+>  - Makefile: extract script to generate gitweb.js
+>  - Makefile: extract script to generate gitweb.cgi
+>  - Makefile: extract script to massage Shell scripts
+>  - Makefile: use "generate-perl.sh" to massage Perl library
+>  - Makefile: extract script to massage Perl scripts
+>  - Makefile: consistently use PERL_PATH
+>  - Makefile: generate doc versions via GIT-VERSION-GEN
+>  - Makefile: generate "git.rc" via GIT-VERSION-GEN
+>  - Makefile: propagate Git version via generated header
+>  - Makefile: refactor GIT-VERSION-GEN to be reusable
+>  - Makefile: consistently use @PLACEHOLDER@ to substitute
+>  - Makefile: use common template for GIT-BUILD-OPTIONS
+>  - Merge branch 'ps/clar-build-improvement' into ps/build
+> 
+>  Build procedure update plus introduction of Mason based builds
+> 
+>  Will merge to 'next'?
+>  source: <20241125-pks-meson-v9-0-1c6cf242a5f1@pks.im>
 
+I've got two small fixes pending, but other than I think the series is
+in a good enough shape for a first iteration. There's of coure a couple
+of follow-up steps that I plan to do, like wiring up CI, but I think
+it's fine to do these in a separate series.
+
+I'll send this version out in a bit. If you decide to merge, please
+note that the tip of the branch is only for compatibility with "seen"
+and should not be merged to "next".
+
+Patrick
