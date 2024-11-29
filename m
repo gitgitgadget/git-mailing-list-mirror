@@ -1,157 +1,112 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AA2155726
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 11:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034DF33C5
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 11:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732878323; cv=none; b=WuRzLpafUZbMadpVP6JmVdyVDQNpqKt/ZG0Vs2MidYpbF+aEVDyAuGhSvkeEYMaUg7dPjNmBtoSt9cfQpKbtmb7zF1l4EDzP7G7BQRWT5ZluvNqRov/XrPHQZJyJ48iZqiL+Tvm4OkHHfn1hiLony8EWianZLJeHS1VXN0TEbUQ=
+	t=1732880821; cv=none; b=dibsceeRxCH7CGHIoS58PVuqPFxKVzyJ4JKrnBgkrN7+XZKB8CG9kreNmq7B9VfwfN/ez0SCkTJFJ2y8DCGkHLRy7a0o4PWN0SgJcCjbIqHXGwrdbZqoB82naHWjMYlL05xowrApkU5K5GXVdHJS7S4b6AYTVhEZxQ0dTXvsA4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732878323; c=relaxed/simple;
-	bh=ZA6Yu/BAX6DLSY/2chbjunUPZ0cdyusckEvtrCk3qs0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jPSDdPwQy6TMuS18uIZ1WpwXkB4kt0zKXbwG2DI///Ayvo/wA8o6zvgUChLGb/85a8qfuqEX/aL055n7eRqPcw59t9FJAc24k9SMuFuVb9aG6h4wbVO/JfIJ7v6ZeUkXwC/YBC1wGoouyD3zfH6aTJrkL53EtezGu/GgesdAUkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f+bk+Bxb; arc=none smtp.client-ip=209.85.215.176
+	s=arc-20240116; t=1732880821; c=relaxed/simple;
+	bh=FsGsgnn5skJqIBj5WJlgiQbXG06WzKajUTDJGxSv7do=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VWKEhbnNpfeQIAcmwmSm/pdKSS7axvKLe7nHr6T2REIDVwYdkDu6BUTLC9dORxzEGoIg9fzTzoH40VeuC3BfaC4UCjZbI7fanZr7k1O/G4arnOTs6f1PIun4GOCWBz9oXrGIee1eetm0DS3ASwd35edxnp9VfHrtiUUhkl+1wv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OFrjBzku; arc=none smtp.client-ip=209.85.219.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f+bk+Bxb"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-7fbc29b3145so2034835a12.0
-        for <git@vger.kernel.org>; Fri, 29 Nov 2024 03:05:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OFrjBzku"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e387fdd1ec4so1276223276.0
+        for <git@vger.kernel.org>; Fri, 29 Nov 2024 03:46:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732878320; x=1733483120; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QAJaGQ8pAFs9/TfnTqCprsarIWsj3nF4kgPH7ZcSW18=;
-        b=f+bk+BxbcGDzFTp36Uphmlo3Yp3Hz+TZB5rRrDJKwB6Z1TzVu8/7pqPRDczgML5IQT
-         7Iqypp+G69gFiMG/GQzHKzi/Uh5JgzPCl/dcg/jQFCePrWFUwtZAYwE2o/i/wIGtV4bF
-         uLnb5GGavXLHXhpdXbnRwrCVFegREyHV7HhonnRIISErnY5VcOi/zHoGvLmwp6FtavGA
-         FZQ+RgMmNe9140bTDlWvUnfYG8sW1A0CPdtv/0Ccoxhk6OXVWLzjd7JLZk+9x1YDdeGa
-         zhYnnpsjLmLN1y4seEzUwlLSI8qXpzueVBQ8dlMYKhoXUc4aUMsBJ4SFtkRhqTCDVOb/
-         Eg2A==
+        d=gmail.com; s=20230601; t=1732880819; x=1733485619; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZGo7WO83pX2bRmlg6eQZCvsEkq6mVHwjhfaSlBScK+Q=;
+        b=OFrjBzkujSaickwGkD05pPsLkYhtuNEfLfyDTh6HhLKlyDHmdUzXmkKkTIuGKDrXNg
+         JSVO2KuAtmFA4nlgiIs5zNYJDf9nbmg7CH43iyO8NzjHDk2AKiTSNvkyei4Oovf+bWxt
+         eu+9Q0JrIhIpsZRXmtD4wgydGlMPEHw7Jmcry6Kb9sl4o3mbzYRgMeMVJTc5Xw56kPOb
+         dgqQPHMiZkXqMw6ZJSZhqcEj+3yEDmTx4C8q9Mm6OpFcb3aGIhywaJrdjK+kZhH92Zth
+         6oM32DImUH4Bs+9LNE2B75/nu0CJsa14MZ0L9l71p7kWNpoUMWBAqXQLLs8+atMOcZ9c
+         yUfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732878320; x=1733483120;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QAJaGQ8pAFs9/TfnTqCprsarIWsj3nF4kgPH7ZcSW18=;
-        b=Jy1np9oM7f4pk3B5o6Zlj4tbyS+rxQtxtuEjPa2S7QRA6h4qNYRvQH0SIvgn/GaZO/
-         RghF6EP/FgHAjUcOeopK1zdQQDPjWI5MLwAHaa0MSOVBI2tCIvgABxAwIgJtVSrSQKO3
-         kuUIr8r/imHcgszkURsP+9G8RZtMH5C3IbNZC3xRIwEyVwax6tBwJ0BGPH6dVQDolCsj
-         cX5YrDLL+G/QVm4UK7oRfHu/341tOGIYHhNoZlI40clWDzNpG4yeKmdmhk3JewuhIesH
-         0Y/PpxECvNO34XRoMiKlprGhZkNDCzKk/56ALg+0caSfj7dwuMrPY5wXLhnEdmwESuev
-         bgtw==
-X-Gm-Message-State: AOJu0YxfoqjXQ/bXNVdb49jDwj/zKjKCDLC+w6elDdrXlwEC22x/6Z3W
-	GtCTWShnfF+2EGXemR2NvhsZR6sLpiPoGXtHj8e7GBjiRzCXLHfltv11KA==
-X-Gm-Gg: ASbGnctsDc9dxfJwa1YtdEaKbj8IQ1J1iVUgBA1qUBsnliEEoBKEp5rwL4QygsMwFDJ
-	6BYq9pOsTm6hGNg5tmcup+gBYrALvO80aHl4FyhhrCw+ygasoX/hjyIePVnw2VUDJ3j+pwgmCgA
-	YQV+Xpr9ZtU0Z7Ibh6v1SIHAGN0PE83hebnoohFfL0Zo5X1RFcIqL/DkfQVq2UJfzdE3GoZ1U27
-	ZQtqtMWOCdnTovU4SUeE09zgzi5Ml1q3Y5zLsfkdUdIEg==
-X-Google-Smtp-Source: AGHT+IF0yqr9Kl/LrKHak0RlMgoE+skm6ubRTrcFfjt7SBqXoWT3KrwzWNWt1Y6RzveMh5DkZbEbbA==
-X-Received: by 2002:a05:6a20:4327:b0:1d9:761:8ad8 with SMTP id adf61e73a8af0-1e0ec8a13damr11795581637.21.1732878319936;
-        Fri, 29 Nov 2024 03:05:19 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fc9c304fe2sm2856452a12.33.2024.11.29.03.05.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Nov 2024 03:05:19 -0800 (PST)
-Date: Fri, 29 Nov 2024 19:05:38 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Ensure unique worktree ids across repositories
-Message-ID: <Z0mgAt9ssu_32tTQ@ArchLinux>
-References: <20241128-wt_unique_ids-v1-0-30345d010e43@pm.me>
+        d=1e100.net; s=20230601; t=1732880819; x=1733485619;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZGo7WO83pX2bRmlg6eQZCvsEkq6mVHwjhfaSlBScK+Q=;
+        b=l2u9IW41uanjeBzaLOD45sb9gAkMgxG51FaSjcR+95RrXXW8Fm20tU0O1vaYQKjZP4
+         7pl3Iiwb0dhNILSfkWJCkQE5DDbSlS1VKneBs9QDT3tGbwL4vZlBaguKadOVfDAnmkjW
+         IoFLEdmM5gp3xWYRNDuNa2ucmCI0lC+OBGyJaoTMR9h9atC+W2eNO660Uwx07h3V5v8M
+         zqtbtUxPfflkkYjm1zumwMU0NS+UMf6nCcAzYChh0TRMovLsUzWmWfpKX5pj+j+QdUIo
+         tRC0argt4aq5c2ux2KYkIpQ0khlYDGmt3V4io2e+NDpTYVqB785ex12eTP+Vhkd36GWE
+         RuBg==
+X-Gm-Message-State: AOJu0YwnaS7cXu6fKTkAlRkWzPymDl1oZVBXl50js4bi8bM5QKMuU781
+	HnA8TAGpX2Tq0Eg3bg0kRHgJFeFAkZOhiNjY8NOfhCyrcdCbfynP7NgYIvF/JqsWEOFWrJIDhRE
+	er3zYCr1QaOKrXhXGF+6y3VMhmH28B1MU8lHkcw==
+X-Gm-Gg: ASbGncvFGC01coftOzIEXuFG9QL165i22hH9thrkjhhsOuXIH07u9ZBJPlHk8NN9sCo
+	OE25d7vbJz97zuowcdO5VBCLRRedsCcwjZVjcLC2u4TdJ6vfo01ZQsQboVuD7ZjyVjw==
+X-Google-Smtp-Source: AGHT+IFUVXk5wtjtbAIc/q5eNisVbjgSwB1X+RA7TotAldmOtVDkhO8ClwLNJ9yjJWVnZ/3o28/7HbOCcGZo6Q+I85A=
+X-Received: by 2002:a05:6902:2ec5:b0:e38:bf0:dab0 with SMTP id
+ 3f1490d57ef6-e395b8d1875mr8155588276.24.1732880818811; Fri, 29 Nov 2024
+ 03:46:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241128-wt_unique_ids-v1-0-30345d010e43@pm.me>
+From: Tamas Dina <dinatamaspal.throwaway1@gmail.com>
+Date: Fri, 29 Nov 2024 12:46:48 +0100
+Message-ID: <CAMZfs4Vfi4OfuO3=7yT=ge7MHXf1iPhZjeJSzgnr=9oQFiRKjg@mail.gmail.com>
+Subject: [bug] incorrect pathspec handling in git stash error message
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Nov 29, 2024 at 02:44:24AM +0000, Caleb White wrote:
-> The `es/worktree-repair-copied` topic added support for repairing a
-> worktree from a copy scenario. I noted[1,2] that the topic added the
-> ability for a repository to "take over" a worktree from another
-> repository if the worktree_id matched a worktree inside the current
-> repository which can happen if two repositories use the same worktree name.
-> 
+=====
+===== What did you do before the bug happened? (Steps to reproduce your issue)
+=====
+Here is how to reproduce the issue from scratch:
+1. mkdir testrepo
+2. cd testrepo
+3. git init
+4. touch testfile
+5. git stash push testfile
 
-I somehow understand why we need to append a hash or a random number
-into the current "id" field of the "struct worktree *". But I don't see
-a _strong_ reason.
+=====
+===== What did you expect to happen? (Expected behavior)
+=====
+Because 'testfile' is untracked, I expected an error message similar to this:
+    testrepo $ git checkout testfile
+    error: pathspec 'testfile' did not match any file(s) known to git
 
-I think we need to figure out the following things:
+=====
+===== What happened instead? (Actual behavior)
+=====
+This is what happens instead:
+    testrepo $ git stash push testfile
+    error: pathspec ':(prefix:0)testfile' did not match any file(s) known to git
+    Did you forget to 'git add'?
 
-    1. In what situation, there is a possibility that the user will
-    repair the worktree from another repository.
-    2. Why we need to hash to make sure the worktree is unique? From the
-    expression, my intuitive way is that we need to distinguish whether
-    the repository is the same.
+=====
+===== What's different between what you expected and what actually happened?
+=====
+Looks like the magic prefix is handled incorrectly in git stash error messages.
 
-> This series teaches Git to create worktrees with a unique suffix so
-> that the worktree_id is unique across all repositories even if they have
-> the same name. For example creating a worktree `develop` would look like:
-> 
->     foo/
->     ├── .git/worktrees/develop-5445874156/
->     └── develop/
->     bar/
->     ├── .git/worktrees/develop-1549518426/
->     └── develop/
-> 
-> The actual worktree directory name is still `develop`, but the
-> worktree_id is unique and prevents the "take over" scenario. The suffix
-> is given by the `git_rand()` function, but I'm open to suggestions if
-> there's a better random or hashing function to use.
-> 
-
-The actual worktree directory name is unchanged. But we have changed the
-"worktree->id" and the git filesystem. Now, we will encounter much
-trouble. The main reason is that we make the worktree name and worktree
-id inconsistent. There are many tools which assume that worktree id is
-the worktree name. In other words, there is no difference between the
-worktree id and worktree name at current.
-
-Let me give you an example.
-
-The user could use "git update-ref" to update a ref from another ref.
-So, a situation is that the user want to update(create) the
-main-worktree ref from linked-worktree ref.
-
-    ```sh
-    git init repo && cd repo
-    git commit --allow-empty -m initial
-    git branch branch-1
-    git worktree add ./worktree-1 branch-1
-    (cd worktree-1 && git update-ref refs/worktree/branch-2 HEAD)
-    ```
-By the above operations, we will create a worktree-specified ref under
-the ".git/worktrees/<worktree_id>/refs/worktree".
-
-What if we want to this in the main worktree:
-
-    ```sh
-    git update-ref refs/heads/branch-3 \
-        worktrees/worktree-1/refs/worktree/branch-2
-    ```
-
-So, with this patch, we make worktree-id not the same as worktree name.
-If we do this. "git update-ref" cannot find the
-".git/worktrees/worktree-1/refs/worktree/branch-2". This is because the
-filesystem is changed to ".git/worktrees/worktree-1-<hash>/...".
-
-If we use hash / random number to distinguish. We also need to change
-the ref-related code to ignore the "-<hash>". It's impossible to let the
-user type the extra hash / random number. However, this requires a lot
-of effort.
-
-So, I think we need a _strong_ reason to indicate that we must append
-some chars into worktree id to do this.
-
-Thanks,
-Jialuo
+=========================
+=========================
+[System Info]
+git version:
+git version 2.47.1
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.6.0
+zlib: 1.2.12
+uname: Darwin 23.6.0 Darwin Kernel Version 23.6.0: Thu Sep 12 23:34:49 PDT 2024
+compiler info: clang: 16.0.0 (clang-1600.0.26.4)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
+=========================
+=========================
