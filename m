@@ -1,129 +1,123 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA58114D430
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 19:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCB615AF6
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 19:45:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732908973; cv=none; b=uGSz3lGfaoqjw8xGvS5OdY3K1iw9ka1chofF4dvYnxE2pS75JdtKuWFY4OnjSMN6o0+ywFhUINokmHOk+ny3dHm3ZIVhzbzXUdPtPVI8DWburR8ImdQWHoiSVOJtf/DgBsBvVhOKh06lSthh4wVVgHI9Gn6vVXte0GGSKdYUw28=
+	t=1732909545; cv=none; b=EuG74EBfP1VmCY4+2Jk2FBXbaUOCNlMWAKIdEYNjmQBjLBOdlqhidT7jhwLnOKRuXMGAEo8gTAGny6aqn1nnqp71wQRxigAbVxVRRHEVPDL70+Yij0c/d/w6n9/eKdBZK5nVNY2oVi/lwsdVfsS75OCcy3tbd9ZbT23HfxGc+eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732908973; c=relaxed/simple;
-	bh=jcnbWUrB4AM/5vAGRQN3kZrNsC9J3liRbeVnmGuedDs=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KDwnJAgsodw+FSYH7phzS/3AeAXjt54STGyMtwAQjatJDpaGsz9eZ09ZWvPKAadg8tNy5MjmMB1LHgzg9bl3/6mb7Aqp4cmh929fjrURfkGz3MZWY2i6i/NWSdIgiX4metkuVx3FizlibjHFUaSsKozKyT613L5YCT/X5EhefNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=wYt3UEfq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=iKJG7+Y5; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=wYt3UEfq; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=iKJG7+Y5; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1732909545; c=relaxed/simple;
+	bh=0BsqGllPNvF/bfjUQfHzGOrMYFicY1NSa3VpYiYrF8g=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=s7iirLglnMScW8Hep5TNt9YbIAIGD6JV/z9oxJ8jVEXvEtuoOdeBmWP+lCpTvNPv9yFkpgh8vYaPz2dn5oGguc+i6p5xhO2VgNcS0SVERFINId0EqtzDWfDJW2Sbe1nnudKrSC2Nu8h1eToJVOimRwS1AMJXgBfhhp3C+krVwng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DHEENaif; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e10GharD; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="wYt3UEfq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="iKJG7+Y5";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="wYt3UEfq";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="iKJG7+Y5"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 8ACDD2118F
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 19:36:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732908968; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aKsykHn7D+w5RXOqFXfwesaa3Yzc7zFVuJOoz4ONSkU=;
-	b=wYt3UEfq6OPGV/58mEPzp2376BQTCMW88Gtcou/K2DBICwuZsBUAUnekOOjmYJtKuHCmrK
-	oZD+QEXuB3YFIuLCYeIsu8KF+TFIkt3eFzoaInyFeGJQ/NJan6s+paCdH/09PWq6eqGdkZ
-	nDDR0hF+oujbjJ76t3s68VvyCCko3RY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732908968;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aKsykHn7D+w5RXOqFXfwesaa3Yzc7zFVuJOoz4ONSkU=;
-	b=iKJG7+Y5dck6puG9Bq6Ed+JtqmcJWYvubpno1y0EG9YUrk7G92mlDifk2gKvvMLyFPGnJ5
-	KvgL5A+KFW3pp1CQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1732908968; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aKsykHn7D+w5RXOqFXfwesaa3Yzc7zFVuJOoz4ONSkU=;
-	b=wYt3UEfq6OPGV/58mEPzp2376BQTCMW88Gtcou/K2DBICwuZsBUAUnekOOjmYJtKuHCmrK
-	oZD+QEXuB3YFIuLCYeIsu8KF+TFIkt3eFzoaInyFeGJQ/NJan6s+paCdH/09PWq6eqGdkZ
-	nDDR0hF+oujbjJ76t3s68VvyCCko3RY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1732908968;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=aKsykHn7D+w5RXOqFXfwesaa3Yzc7zFVuJOoz4ONSkU=;
-	b=iKJG7+Y5dck6puG9Bq6Ed+JtqmcJWYvubpno1y0EG9YUrk7G92mlDifk2gKvvMLyFPGnJ5
-	KvgL5A+KFW3pp1CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4FAC5137CF
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 19:36:08 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id Rq1KDagXSmc6EAAAD6G6ig
-	(envelope-from <krisman@suse.de>)
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 19:36:08 +0000
-From: Gabriel Krisman Bertazi <krisman@suse.de>
-To: git@vger.kernel.org
-Subject: [BUG] Inconsistent output of git-show
-Date: Fri, 29 Nov 2024 14:36:07 -0500
-Message-ID: <87jzclal3s.fsf@mailhost.krisman.be>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DHEENaif";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e10GharD"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E66B113805D8;
+	Fri, 29 Nov 2024 14:45:42 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Fri, 29 Nov 2024 14:45:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732909542;
+	 x=1732995942; bh=R+xSnT8vAjeLZj8D+wxp9j9daWznAY65TRxIwy0Umes=; b=
+	DHEENaifJ3Z5P7gtGoF3Otk5tQBlfONrwOmRFClUIf8BSYgd6MX669hz6k/LlLNs
+	ESl5p0GlOwQWAQ4tBA1xaYW0wxzdCzUPkE7+U7NZUh40TXDyGNDvK/U/a+ILDyZv
+	1GfRBUdxWVBH1krGfo2gFK0l80WLk2STQ91PnqWUnMUIQKPqblT3K2kJ5FWxiL4W
+	SfIzTMWG74/m2MG1r1ovAdBF4ATdB+T3FK54houoMF2t/2RH5nQhmP8je0k042rE
+	2pKHpgxEhc7j8jqoPzuKiq5QHBbkbGQlsQd+wVjWyHbawBTISPqnO7ITn4aD65do
+	YcnPSmP2RuL4IiTc/mDYQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732909542; x=
+	1732995942; bh=R+xSnT8vAjeLZj8D+wxp9j9daWznAY65TRxIwy0Umes=; b=e
+	10GharDeSnWj+XXTVFNJJ+LNmAm+67F6adoS75hYtScGpNQC3roj6rrM7qAtYMfi
+	H1ETulWLJk1j5nvJe0JnclYTGYTxeX/LicEalLmo1FjwjX50LU3oHsmqc6og9Ba7
+	9F141pMsA7gN9Az3E34en2tbT3AOL602tMitJx7WVNbA/W539fcxSbk9mAfJhYj9
+	ePlITQ1XQEvJSdp100WjgiAiz4OVI6ZJZQpxPnMy8yKNQKqnHMC0ZfKUkag8HHOo
+	JXXjHCU+UoR9l0eJLQoy6cIkIZl5MUOaYdlEzT1GUB4M3l6ljyk6Wybkb1dum+nD
+	eR5CU9GR7Nx9+9NAfUI5w==
+X-ME-Sender: <xms:5hlKZ5SVJfDpP3QQAzrqWpNzpYbrtFAq130QLa1EjW_wrn9AnFas1T8>
+    <xme:5hlKZyzEyYiXnYsfRqYtX_APuyOn0eVdVApEqE9sM29jcf7Ogr2N5EAMz_-UP8OIy
+    aWXPs_mGTMJl_4szg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheefgdduvdejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
+    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeelfeejudejfffgleduheegheeu
+    feeffedtgfeffeevudeuleffgeektdelueekieenucffohhmrghinhepghhithhhuhgsrd
+    gtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrggthhgv
+    rdhskhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhg
+X-ME-Proxy: <xmx:5hlKZ-1mGHzKKxTnS5BhRpkdhj1oY5jfaFc5cJPzXyVzQJ73dcbmiQ>
+    <xmx:5hlKZxAtPHD3TzsEobsmEFzgTqTNJdKh5QstS81UY9esf2DSXDfgmw>
+    <xmx:5hlKZyhUH4Eyh75dauJ-ptCppGX0jHlYLtRvRdKnzwKIauN4oiNKfA>
+    <xmx:5hlKZ1phueVamFdrHQ_GPFgJrPs333iqLW8Ef0JITaV46dnhjD2uxQ>
+    <xmx:5hlKZ2bKZWYRSjZj8KjpRu4yV4i6tvHISaSFNFC3MUgELnvOtagQkAg9>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id AB752780068; Fri, 29 Nov 2024 14:45:42 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Score: -4.30
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_ONE(0.00)[1];
-	ARC_NA(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	PREVIOUSLY_DELIVERED(0.00)[git@vger.kernel.org];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	MIME_TRACE(0.00)[0:+]
-X-Spam-Flag: NO
-X-Spam-Level: 
+Date: Fri, 29 Nov 2024 20:44:40 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Peter Kassak" <cache.sk@gmail.com>
+Cc: git@vger.kernel.org
+Message-Id: <1c026a82-d24b-48f0-8206-47c2eeed1442@app.fastmail.com>
+In-Reply-To: 
+ <CADYnh+EUNUaTDB9uLSgZkvWGHrpqrrO4XMrjmHzdH-6WXqZLqQ@mail.gmail.com>
+References: 
+ <CADYnh+Fudpy9kfg8npUMutMjzYNDy-XxJCCJ_9O4kLoB807_3Q@mail.gmail.com>
+ <bc028fc5-c0e3-4d31-9790-86bdd3911cc5@app.fastmail.com>
+ <447bb623-28be-4667-b571-935ff7d163d0@app.fastmail.com>
+ <CADYnh+EUNUaTDB9uLSgZkvWGHrpqrrO4XMrjmHzdH-6WXqZLqQ@mail.gmail.com>
+Subject: Re: Extremely long subtree split duration
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi again
 
-1.  git show --oneline --no-patch
-7af08b57bcb9 (HEAD, origin/master, linus/master) Merge tag 'trace-v6.13-2' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace
+On Sat, Nov 9, 2024, at 22:10, Peter Kassak wrote:
+> Hello,
+>
+> I didn't compile my own version from sources, I wrote that it was
+> probably after 'zf/subtree-split-fix', because it was related to
+> subtree split.
+>
+> And I managed to find out by trying that the change happened after
+> version 2.43.0 and was included in version 2.44.0-rc0, so i assumed
+> that.
+>
+> Go on and try same split with 2.43.0.
+>
+> Peter "Cache" Kassak.
 
-2.  git show --oneline --no-patch | cat
-7af08b57bcb9 Merge tag 'trace-v6.13-2' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace
+Back when I read this I thought I checked these.  So I didn=E2=80=99t do
+anything more.
 
-(--oneline doesn't matter here. Just making the output concise)
+I just came back to this since I found this project idea about
+rewriting this contrib/ script in C (make it a builtin):
 
-The branch information in parenthesis vanished just because of the shell
-redirection.  That makes quickly writing shell one-liners very annoying.
-Sure, I can go figure a proper git invocation to get me that
-information. But we're all hardwired to use basic shell commands, and
-sometimes all I need is a quick grep and not learn a program-specific
-way of filtering.
+https://github.com/gitgitgadget/git/issues/1410
 
-So, could we make the output consistent regardless of redirection,
-i.e. What You See Is What You Pipe?  Whoever requires a specific format
-for a script should be the ones using --format.
+I=E2=80=99ll link this thread on that issue.
 
-I've got v2.47.0 and I admit to not have tested later versions.
-
-Thanks,
-
--- 
-Gabriel Krisman Bertazi
+--=20
+Kristoffer Haugsbakk
