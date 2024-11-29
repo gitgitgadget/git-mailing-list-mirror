@@ -1,43 +1,43 @@
-Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
+Received: from mail-10630.protonmail.ch (mail-10630.protonmail.ch [79.135.106.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF53C44C77
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 20:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFDD54279
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 22:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732912787; cv=none; b=uhMPhWv/v6CjboLQ66t9O73src/VARTOPaqEDNt5FSEgV1oTvqRCUa9+QP1pf7DSIJ2LJPqiKebDqESJZVoKzDtAF5nQtHchQ7VIElG6Gb62rKTKkc9B4YhCyhVPfNem7+Mbzsoe26HHhHCdQKJ7GlsTHJ2AybKjXg1W5T4PSOc=
+	t=1732918954; cv=none; b=nd9GNBcIw4vcw44zdh2GTsQVwoaOq1YlpU6cgQ+Yj37nWbFYpsQLNyOEBgF/vw7mn7In9A0IKklVDXHSNwvZ6QpJeBPYCccZARir9Yj6s8dwgADL5upzvD30DhvI9V/U7+4hkALnKX9rC+MaESfOTQ6qg391doHD6EwfWyhk8ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732912787; c=relaxed/simple;
-	bh=loQYMlgQrz1zuVO41i6BgW1xgL588+ltyTnI/rf/q/8=;
+	s=arc-20240116; t=1732918954; c=relaxed/simple;
+	bh=LAiuftf0JdjNwIrxOB2HxyQJO9qZ2YURveFau3cx47M=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BJRdJwd3hZgdbHXJ2WIXGw2/+K0X9OcWyQGRCp4eXskZzvtovrKype9Kq2CtAx5dhLD9HX0H4ozMxsZuLG1FVDCM6DorZtYxXg389DwretgbwSRoolCvuwaCyTPl132u3lDP14kCGcYupudNLisX9qjKQ9TgkqekkRavwpN/5GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=A08jgM0W; arc=none smtp.client-ip=79.135.106.31
+	 MIME-Version:Content-Type; b=A0PPz1wvJVUj4QmRsXlG2ceXyBeU+0MSTBC6w5xUZi2xWZ8zug9SdbbB1pB3cFPPnpSODAnS6Jod6UgFLPFIHjS6kFOZ3yFxPvk+juBt2djtmr/qozBSrJ3jyIJjxunOMEpHEujkyTdfzkRjvc1xrWB5QkV7IoIKHzsn/nzi30w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=jzv+6lfY; arc=none smtp.client-ip=79.135.106.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="A08jgM0W"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="jzv+6lfY"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1732912782; x=1733171982;
-	bh=hBPYJ7s8j8pbrJ0mgJWnujwyJB7udOneiMc9owjY0Co=;
+	s=protonmail3; t=1732918943; x=1733178143;
+	bh=r8vjS3huxWrv7S+9E3ENipXwlq8AWs1dQlXAsFoop6E=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=A08jgM0WIFu0et6uDkjb39gyELHHzrSWt1JY2dNf4iLMXxEYy5lzhUVw+Cc/yHISG
-	 g/fL6GvcyTAvoQw4+nue8XlAgrdbhxdmPhQjYXVIwo3uY3j7riuAkGU7RuLwKtVBFa
-	 +cfdE8HvvH7PbsP+TTCKufkTXc8PV0LAJqJdTj5mgj63DnQje9rnD9XFUQejOQbCya
-	 E91q1pNJx7TPf3+E/2dnxXUCZBqEPdnXG6buRtTyoXvqjy+W+EhECTBGZN0w+1rwve
-	 E1L4uaT0e5sbAAU0oQKtv0/Zgh5hbPwUelaxEYjOKv90+ozmeyXYpsM0DJkHQs3UCz
-	 DTUI6+usoLdKA==
-Date: Fri, 29 Nov 2024 20:39:36 +0000
-To: shejialuo <shejialuo@gmail.com>
+	b=jzv+6lfY2ft/uNnWpnaotpl7ueFxbV4zSiQZdUu1bmtjncz+8BTf7Tp1kBBg8bSP3
+	 f0CEtrnIZ3ifOTgO3pIZ5fwGVnCVezY0xtkd3c/njpzSAhwa1Q+xMl0854TXduBrv0
+	 mmMKp/QkBcNh8tv1w/inJK79SX3xhfcegnySMCWzMufZ78KALSqYIYliN36QOZ1+c1
+	 45NU5m8ZT0EXo0nMNUB6GGCHqLYJHeumfqGOZS2Sh5vIvv4vvIyZg2E0iaL8miVHIz
+	 XOTS/tImNkCOoAMVK6SQx3CE+vJWCvtgXwL0j98Oqc7Yx50kU7yFbgWF6lw3pUUUup
+	 qYD0V4cqJfDXQ==
+Date: Fri, 29 Nov 2024 22:22:19 +0000
+To: git@vger.kernel.org
 From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/2] Ensure unique worktree ids across repositories
-Message-ID: <D5YYB5XQF1QG.1T6WKWPNUVXX2@pm.me>
-In-Reply-To: <Z0n6uuNdQZCLqAz2@ArchLinux>
-References: <20241128-wt_unique_ids-v1-0-30345d010e43@pm.me> <Z0mgAt9ssu_32tTQ@ArchLinux> <D5YSBQXU7FYD.25KOIM1N3US88@pm.me> <Z0n6uuNdQZCLqAz2@ArchLinux>
+Cc: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>, Caleb White <cdwhite3@pm.me>
+Subject: [PATCH v6 0/8] Allow relative worktree linking to be configured by the user
+Message-ID: <20241129-wt_relative_options-v6-0-44e4e0bec8c3@pm.me>
+In-Reply-To: <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me>
+References: <20241031-wt_relative_options-v4-0-07a3dc0f02a3@pm.me> <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me>
 Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: d3d49cbf636fa906e982fa1b1d463f5f4dfc7c10
+X-Pm-Message-ID: 0567198d53d574f69edb5213225b4ec0be2d3517
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,175 +47,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri Nov 29, 2024 at 11:32 AM CST, shejialuo wrote:
-> On Fri, Nov 29, 2024 at 03:58:16PM +0000, Caleb White wrote:
->> On Fri Nov 29, 2024 at 5:05 AM CST, shejialuo wrote:
->> > I somehow understand why we need to append a hash or a random number
->> > into the current "id" field of the "struct worktree *". But I don't se=
-e
->> > a _strong_ reason.
->> >
->> > I think we need to figure out the following things:
->> >
->> >     1. In what situation, there is a possibility that the user will
->> >     repair the worktree from another repository.
->>
->> This can happen if a user accidentally mistypes a directory name when
->> executing `git worktree repair`. Or if a user copies a worktree from one
->> repository and the executes `git worktree repair` in a different reposit=
-ory.
->>
->> The point is to prevent this from happening before it becomes a problem.
->
-> If we could prevent this, this is great. But the current implementation
-> will cause much burden for the refs-related code. In other words, my
-> concern is that if we use this way, we may put a lot of efforts to
-> change the ref-related codes to adapt into this new design. So, we
-> should think carefully whether we should put so many efforts to solve
-> this corner case by this way.
+This series introduces the `--[no-]relative-paths` CLI option for
+`git worktree {add, move, repair}` commands, as well as the
+`worktree.useRelativePaths` configuration setting. When enabled,
+these options allow worktrees to be linked using relative paths,
+enhancing portability across environments where absolute paths
+may differ (e.g., containerized setups, shared network drives).
+Git still creates absolute paths by default, but these options allow
+users to opt-in to relative paths if desired.
 
-I'm not sure that any of the ref related code would need to change,
-all the tests are passing and the ref code uses the worktree id
-for anything worktree related.
+Using the `--relative-paths` option with `worktree {move, repair}`
+will convert absolute paths to relative ones, while `--no-relative-paths`
+does the reverse. For cases where users want consistency in path handling,
+the config option `worktree.useRelativePaths` provides a persistent setting=
+.
 
-> I somehow know the background, because we have allowed both the absolute
-> and relative paths for worktree, we need to handle this problem.
+A new extension, `relativeWorktrees`, is added to indicate that at least
+one worktree in the repository has been linked with relative paths. This
+extension is automatically set when a worktree is created or repaired
+using the `--relative-paths` option, or when the
+`worktree.useRelativePaths` config is set to `true`.
 
-This edge case exists when using absolute paths, so this is not
-a consequence of now allowing relative paths.
+The `relativeWorktrees` extension ensures older Git versions do not
+attempt to automatically prune worktrees with relative paths, as they
+would not not recognize the paths as being valid.
 
->> >     2. Why we need to hash to make sure the worktree is unique? From t=
-he
->> >     expression, my intuitive way is that we need to distinguish whethe=
-r
->> >     the repository is the same.
->>=20
->> How do you propose to distinguish whether the repository is the same?
->
-> I am sorry that I cannot tell you the answer. I haven't dived into the
-> worktree. I just gave my thoughts above.
+Signed-off-by: Caleb White <cdwhite3@pm.me>
+---
+The base for this patch series is 090d24e9af.
 
-That's fine, I'm just not really sure about how such a thing would be
-done. To me, the unique id is the easiest and most intuitive. The
-repository generally has no knowledge of other repositories on the
-system (as far as I am aware).
+Link to original patch series:
+https://lore.kernel.org/git/20241007-wt_relative_paths-v3-0-622cf18c45eb@pm=
+.me
 
->> Do you have any sources for these tools? Because I'm not aware of any.
->> Any tool that needs the actual worktree id should be extracting the id
->> from the `.git` file and not using the worktree directory name.
->
-> I am sorry that my words may confuse you here. These tools are just the
-> git builtins. Such as "git update-ref" and "git symbolic-ref".
+---
+Changes in v6:
+- Re-add test for extensions.relativeworktrees config setting
+- Link to v5: https://lore.kernel.org/r/20241125-wt_relative_options-v5-0-3=
+56d122ff3db@pm.me
+Changes in v5:
+- Added docs to `--relative-paths` option.
+- Added test coverage for `repair_worktrees()` and relative paths.
+- Move `strbuf_reset` call in `infer_backlink()`.
+- Cleaned up tests.
+- Slight stylistic changes.
+- Tweaked commit messages.
+- Updated base to 090d24e9af.
+- Link to v4: https://lore.kernel.org/r/20241031-wt_relative_options-v4-0-0=
+7a3dc0f02a3@pm.me
+Changes in v4:
+- Fixed failing test in ci
+- Link to v3: https://lore.kernel.org/r/20241031-wt_relative_options-v3-0-3=
+e44ccdf64e6@pm.me
+Changes in v3:
+- Split patches into smaller edits.
+- Moved tests into the patches with the relevant code changes.
+- Removed global `use_relative_paths` and instead pass parameter to functio=
+ns.
+- Changed `infer_backlink` return type from `int` to `ssize_t`.
+- Updated `worktree.useRelativePaths` and `--relative-paths` descriptions.
+- Reordered patches
+- Link to v2: https://lore.kernel.org/r/20241028-wt_relative_options-v2-0-3=
+3a5021bd7bb@pm.me
+Changes in v2:
+- Fixed a bug where repositories with valid extensions would be downgraded
+  to v0 during reinitialization, causing future operations to fail.
+- Split patch [1/2] into three separate patches.
+- Updated cover letter and commit messages.
+- Updated documentation wording.
+- Link to v1: https://lore.kernel.org/r/20241025-wt_relative_options-v1-0-c=
+3005df76bf9@pm.me
 
-Ah, I understand now---I thought you were talking about external tools.
-All internal git builtins use the worktree id, the actual directory name
-of the worktree is inconsequential. So nothing should need to change.
+---
+Caleb White (8):
+      setup: correctly reinitialize repository version
+      worktree: add `relativeWorktrees` extension
+      worktree: refactor infer_backlink return
+      worktree: add `write_worktree_linking_files()` function
+      worktree: add relative cli/config options to `add` command
+      worktree: add relative cli/config options to `move` command
+      worktree: add relative cli/config options to `repair` command
+      worktree: refactor `repair_worktree_after_gitdir_move()`
 
->> > In other words, there is no difference between the worktree id and
->> > worktree name at current.
->>
->> This is NOT true, there are several scenarios where they can currently d=
-iffer:
->>
->> 1. git currently will append a number to the worktree name if it already
->>    exists in the repository. This means that you can create a `develop`
->>    worktree and wind up with an id of `develop2`.
->> 2. git does not currently rename the id during a `worktree move`. This
->>    means that I can create a worktree with a name of `develop` and then
->>    execute `git worktree move develop master` and the id will still be
->>    `develop` while the directory is now `master`.
->> 3. a user can manually move/rename the directory and then repair the
->>    worktree and wind up in the same situation as 2).
->>
->
-> Thanks for this information. I am not familiar with the worktree. I just
-> have learned the worktree when doing something related to the refs. So,
-> it is true that worktree id and worktree name are not the same.
->
-> But that's wired. For any situation above, it won't cause any trouble
-> when the user is in the worktree. Because the user could just use
-> "refs/worktree/foo" to indicate the worktree specified ref without
-> knowing the worktree id.
->
-> So if a user moves the path from "worktree_1" to "worktree_2" and wants
-> to do the following operation in the main worktree:
->
->     ```sh
->     git update-ref refs/heads/master \
->         worktrees/worktree_2/refs/worktree/foo
->     ```
-> It will encounter error, because the worktree id is still the
-> "worktree_1".
->
-> But when the user create the worktree using the following command:
->
->     ```sh
->     git worktree add ./worktree_1 branch-1
->     ```
->
-> The name `worktree_1`(path) will be the worktree id. So, when moving the
-> path "worktree_1" to "worktree_2". The user won't know the detail about
-> the worktree id. The user (like me) will just think that "worktree_2"
-> will be the new worktree id.
->
-> That does not make sense. It's impossible for the user know the mapping
-> between the worktree name and worktree id.
+ Documentation/config/extensions.txt |   6 ++
+ Documentation/config/worktree.txt   |  10 +++
+ Documentation/git-worktree.txt      |   8 ++
+ builtin/worktree.c                  |  29 ++++---
+ repository.c                        |   1 +
+ repository.h                        |   1 +
+ setup.c                             |  39 ++++++---
+ setup.h                             |   1 +
+ t/t0001-init.sh                     |  22 ++++-
+ t/t2400-worktree-add.sh             |  46 +++++++++++
+ t/t2401-worktree-prune.sh           |   3 +-
+ t/t2402-worktree-list.sh            |  22 +++++
+ t/t2403-worktree-move.sh            |  25 ++++++
+ t/t2406-worktree-repair.sh          |  39 +++++++++
+ t/t2408-worktree-relative.sh        |  39 ---------
+ t/t5504-fetch-receive-strict.sh     |   6 +-
+ worktree.c                          | 157 ++++++++++++++++++++------------=
+----
+ worktree.h                          |  22 ++++-
+ 18 files changed, 334 insertions(+), 142 deletions(-)
+---
+base-commit: 090d24e9af6e9f59c3f7bee97c42bb1ae3c7f559
+change-id: 20241025-wt_relative_options-afa41987bc32
 
-It's not impossible, the user can always look in the `.git` file.
-However, I have added the id to the `worktree list` output to more easily
-associate the id with the worktree.
+Best regards,
+--=20
+Caleb White <cdwhite3@pm.me>
 
->> One thing we can do is to add the worktree id to the `git worktree list`
->> output so that users can see the id and the name together. This would
->> make it easier for users/tools obtain the id if they need it without
->> having to parse the `.git` file.
->>
-> This is a good idea, if we need to use this way. And we may also need to
-> add documentation.
-
-I have implemented this and added documentation.
-
-> As you can see from above, the main problem is that we allow some ref
-> interactions between the main-worktree and linked-worktrees.
->
-> The reason why I use this example is that I am afraid that the user will
-> create a new symbolic ref in the main worktree which points to the
-> linked-worktree ref.
->
-> When the user create a worktree, it is natural to think that there is no
-> difference between the worktree id and the worktree name. And will use
-> "worktrees/<worktree_id>/refs/worktree/foo" to access the ref in the
-> worktree.
->
-> And It's OK to add hash / random number to the worktree id if worktree
-> is totally independent. However, at now, we allow some interactions
-> between the main-worktree and linked worktrees (even the linked
-> worktree and another linked worktree).
->
-> When doing above, the user must know the worktree id. But at now
-> worktree name is not the same as worktree id.
->
-> So, I don't know...
-
-Interactions between the main and linked (and linked with other linked)
-worktrees is not a limiting factor here.
-
->> As stated above, git already appends a number to the worktree name if it
->> collides with an existing directory. Always appending a unique suffix
->> should actually make things simpler / more consistent in the long run
->> because the worktree id will always be different from the name instead
->> of occasionally being different.
->
-> In general, I agree with your way now after knowing the truth that
-> worktree name is not the same as the worktree id. However, it seems that
-> the situation is a little complicated.
-
-I see where you're coming from, but I do not believe that the situation
-is any more complicated than it already is. All internal git code uses
-the worktree id which is already not guaranteed to be the same as the
-worktree directory name, so nothing is changing on that front.
-
-Best,
-
-Caleb
 
