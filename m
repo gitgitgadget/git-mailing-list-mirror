@@ -1,109 +1,59 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011F533C5
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 03:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE10158531
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 07:38:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732851084; cv=none; b=hCzpFk4daLEZ8DsBikhN79+XQQ254mjJPdYwZsB3OjYm96rm0+/eV+GGgaNGAZlt0mGCE5omog3S76j1PfP0btvglzUw39aMBNT7ifjx6LwmEI9qCRlmtcHmrB+ceIOH14eZQya9VOMHWQdVkp4OBfspq2IBt+kI3as+XNqJgt0=
+	t=1732865929; cv=none; b=pBDZEMgKwMq+6qSYrPD4U5emOFJkPJmP2A3o58MlC5UdUwJMaV1Hidq6i+hx1Vq+Y5HPV1A3lxffHSCYm+n4DUp2X4aj5nksbA5zLzZawtscb23v8/DMzSuuH77T8pdBmZDJbowGumEBz36KHVOYLC9By+hMrMVFb7acoCMk3SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732851084; c=relaxed/simple;
-	bh=dzcPk7dbKpeL46mW5t9+V2lxoynyqD06DAeiEbwcN1o=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u12RI6RXmg7GAl/9+noQiLbrO8UTiAgz7bz0gzyrYc+EF0PizhdB6P52RfOVSkwhlBvUNZXpvsBaAjrbrT2fcm2ZJ/7vQ1Nd53TnEiPwazdSX0fjWO89xVPnBS421cY2SQOSs8NgsUJXlP8JvPTlVWDWwiIPmuz8dQcSNmebldc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=fQ9go/RG; arc=none smtp.client-ip=185.70.40.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="fQ9go/RG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1732851073; x=1733110273;
-	bh=Wsnhvk8OYnaMV4ebnm03mmUapTDzK1IfbxCyPgRz0HM=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=fQ9go/RGsc/D78Dfk9REQWuMNpRblJOW3RIIBVHjm2ZmoUqvAWIzWndfLB+KpOFph
-	 jAhOAjRschXlgdhJo40UM6wzr+qDqynyv3f5Dha6wUs/MJXnZSqqiQXNi8uIR1lAxF
-	 u3GapddFsT3Atms7Ee4KZVda/OfUYBcOgbG2Iq1U9X1EeCWLlLTwRdrK6OvTyKYbQn
-	 X3ULeaBrm8U7YySHghhDe0aRUFnnaPEciByInZHk/iTOGG0ayv+Wm7PRYhnOeG0e29
-	 w2/F2pLRKMG7ymkdayCYqCJE+gyo9wnHa8FXRrOS5JSIzTWA6b1lQf8hlHT9nCvvrE
-	 DDqK+GLFitE9A==
-Date: Fri, 29 Nov 2024 03:31:09 +0000
-To: Junio C Hamano <gitster@pobox.com>
-From: Caleb White <cdwhite3@pm.me>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Ensure unique worktree ids across repositories
-Message-ID: <D5YCFP1AV64F.36B116IUDDEE2@pm.me>
-In-Reply-To: <xmqqr06un33g.fsf@gitster.g>
-References: <20241128-wt_unique_ids-v1-0-30345d010e43@pm.me> <xmqqr06un33g.fsf@gitster.g>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 0b37a41c29e1ef06b3137f62390120eb6ce24366
+	s=arc-20240116; t=1732865929; c=relaxed/simple;
+	bh=bUexqB8zi0xwiePaxi+hwzlRqXZIBMktG4HkIS22mo8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=cHGicqzG3ksu0R02EYQdCju9mex16JDgA+dejU2PpXoVSkE1bkpN0zr4x+quW+uCPOTlfjq21+1vKiLCqbJ6poQY301g0nBv6yH38MEDa1JsHNH9ThJYNA6MdONQgP8BzDwkSxoxTZBvreVjV2mdicRL/WG3t9AC/8M5GNW8rmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4Y04mY1jTrzRpKZ;
+	Fri, 29 Nov 2024 08:38:36 +0100 (CET)
+Message-ID: <d88a5f98-55e3-45dc-8f59-b7089096ba1f@kdbg.org>
+Date: Fri, 29 Nov 2024 08:38:35 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: Understanding the diff output in gitk when comparing a commit
+ with working tree
+To: "tobias.boesch@miele.com" <tobias.boesch@miele.com>
+References: <AS2PR08MB82888F1C5AE63BD383E53FE6E1282@AS2PR08MB8288.eurprd08.prod.outlook.com>
+ <AS2PR08MB82880324292BB445428393B7E1292@AS2PR08MB8288.eurprd08.prod.outlook.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: Git Mailing List <git@vger.kernel.org>
+In-Reply-To: <AS2PR08MB82880324292BB445428393B7E1292@AS2PR08MB8288.eurprd08.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu Nov 28, 2024 at 9:14 PM CST, Junio C Hamano wrote:
-> Caleb White <cdwhite3@pm.me> writes:
->
->> The `es/worktree-repair-copied` topic added support for repairing a
->> worktree from a copy scenario. I noted[1,2] that the topic added the
->> ability for a repository to "take over" a worktree from another
->> repository if the worktree_id matched a worktree inside the current
->> repository which can happen if two repositories use the same worktree na=
-me.
->
-> Problem worth solving.  Another would be to fail if the worktree ID
-> proposed to be used is already in use, but the ID is supposed to be
-> almost invisible (unless the user is doing some adiministrative work
-> on the repository), generating a unique ID is a good approach.
+Am 28.11.24 um 09:27 schrieb tobias.boesch@miele.com:
+> I found that when comparing a commit with those changes made in the
+> working tree, I don’t understand the following observations I made
+> in the diff output for _some_ files:
+> 
+> - the diff output is not colored in red and green for additions and
+> removals, but in red and bold black (still preceded with “++”, “+-“,
+> “--“ and so on)
 
-There's already a `while` loop that tries incrementing the proposed id
-(e.g., `develop1` if `develop` is taken). However, this is on
-a per-repository basis, so there's no way to know what's already in use
-in another repository. The problem arises when trying to run `worktree
-repair` on a worktree that has a matching id (like `develop`) from
-another repository. The goal here is that the same worktree name can be
-created in different repositories and the id will be (effectively)
-unique.
+I will assume that there is no merge conflict. Then you see a combined
+diff where the "first parent" is the index and the "second parent" is
+the commit that you selected.
 
->> This series teaches Git to create worktrees with a unique suffix so
->> that the worktree_id is unique across all repositories even if they have
->> the same name. For example creating a worktree `develop` would look like=
-:
->>
->>     foo/
->>     =E2=94=9C=E2=94=80=E2=94=80 .git/worktrees/develop-5445874156/
->>     =E2=94=94=E2=94=80=E2=94=80 develop/
->>     bar/
->>     =E2=94=9C=E2=94=80=E2=94=80 .git/worktrees/develop-1549518426/
->>     =E2=94=94=E2=94=80=E2=94=80 develop/
->>
->> The actual worktree directory name is still `develop`, but the
->> worktree_id is unique and prevents the "take over" scenario. The suffix
->> is given by the `git_rand()` function, but I'm open to suggestions if
->> there's a better random or hashing function to use.
->
-> I do not think it matters much what hash/rand algorithm is chosen.
-> What is important is what you do when the suffix suggested by that
-> chosen algorithm collides with an existing worktree ID.  IOW, there
-> is no way a "random" can guarantee uniqueness.  Attempt to create and
-> if you find a collision, retry from the generation of another suffix,
-> or something like that, is necessary.
->
-> And as long as that "make sure it is unique" part is done right, it
-> does not even have to be random.  Just generating a sequence number
-> and using the first one that is available would work as well.
+Without having looked at the code and its history, I guess that this is
+an accident that nobody has bothered to fix, because it is not a very
+useful way to show differences between the worktree and a selected commit.
 
-The `while` loop mentioned earlier still exists, so in the (unlikely)
-event that the suffix collides with an existing worktree_id, it will
-increment the suffix and try again.
-
-Best,
-
-Caleb
+-- Hannes
 
