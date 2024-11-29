@@ -1,211 +1,221 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from mail-10631.protonmail.ch (mail-10631.protonmail.ch [79.135.106.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0970B14D428
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 20:29:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF53C44C77
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 20:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.31
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732912144; cv=none; b=tq2tbXPGKzXxmvRb5n5mhXIcUreHpeeo0OKMCE1c46kEsgnhOpVV+8KGNQhXzImCoi6l7gTveTxKXkzAfuq2Y8hjjiXRW+BSMM68BzUqfXSXY3f3KzkhEWqfgztV+yxQryljh/58DIGnsFkW9Vs37lp9PAT7q0hCPNSFAR8UsgM=
+	t=1732912787; cv=none; b=uhMPhWv/v6CjboLQ66t9O73src/VARTOPaqEDNt5FSEgV1oTvqRCUa9+QP1pf7DSIJ2LJPqiKebDqESJZVoKzDtAF5nQtHchQ7VIElG6Gb62rKTKkc9B4YhCyhVPfNem7+Mbzsoe26HHhHCdQKJ7GlsTHJ2AybKjXg1W5T4PSOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732912144; c=relaxed/simple;
-	bh=7CKydbuLquZZAmOVYwYCpQ9/TKebTva0z5JCCjrlZrc=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=I+EJ4eKQKnVttXvKETHSvPPlft9nW9rXO0ZtJbu0S1Mpvbw2mdXDxP2g1muOTCbUuPlgTxeh9y7FpKSAIU2+FPHcszKEZJjOwESCAsNK5I8JWJBhRRvwF+0WyD4Z9e3jDBbecCOXWwFvObgisCzD6UbYnLxiOwbQT7lKSFaA9hA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Jh1RGs0C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AzZsTnFr; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732912787; c=relaxed/simple;
+	bh=loQYMlgQrz1zuVO41i6BgW1xgL588+ltyTnI/rf/q/8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BJRdJwd3hZgdbHXJ2WIXGw2/+K0X9OcWyQGRCp4eXskZzvtovrKype9Kq2CtAx5dhLD9HX0H4ozMxsZuLG1FVDCM6DorZtYxXg389DwretgbwSRoolCvuwaCyTPl132u3lDP14kCGcYupudNLisX9qjKQ9TgkqekkRavwpN/5GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=A08jgM0W; arc=none smtp.client-ip=79.135.106.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Jh1RGs0C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AzZsTnFr"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 06EB6138015F;
-	Fri, 29 Nov 2024 15:29:01 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Fri, 29 Nov 2024 15:29:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732912141;
-	 x=1732998541; bh=QzmJ7B5EL5+1X0li6BrSJp3Rsc7THtwxHLWoYQJNmDU=; b=
-	Jh1RGs0CE5pe+19jOPV+6q3gHz6uiFJPohUTE23MJNGLu3cTnnftpkUwcEjjCxgn
-	ZMVWaCzYDTXHoOaY5s672wR+5SVGg0PSQ4lrRGKTXPdHfiCQ3cAYiOgao4MBLyKJ
-	EC1jEo7GRpuwmHzI/uiS71SZHiIDcit228aDjVNvf5lUUK/HniR1bOuzX3SRNyh6
-	lDmpas+d5HfJ9nuI7iNTQXYWHiBA2edV9tSQ2+8ylCQ4RU00VObdHOs3drifr3/T
-	UM5htqncN9k3ZooJjXo9afRSaEV45QK9SXO8leUh/n1J5E64k9cixb3HsRz98JMY
-	onbE9abGAgq/4IBhxlShEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1732912141; x=1732998541; bh=Q
-	zmJ7B5EL5+1X0li6BrSJp3Rsc7THtwxHLWoYQJNmDU=; b=AzZsTnFri8VSL8kHC
-	cZgIGNnB6x2iOMPWaU/xMCqdUrW+XWLh4Z+yvMict0glLlys/QFOdhdJEl+gk8Uk
-	T+svaCh/nIsEnDJZZZEUxlz6RvqQ4obBSWCF6wWL/vZFDXxF1ctJWZaebAFjOf6K
-	X9e5V+AMVMrIQr35A6+nQKCuPd//bVzsTISMo6vWwpyBt4D8maJdouii9F9zhQo5
-	0amL47X/5UT8WhrlOvb5bpC2kIygjaDp5PDJoC8T/YeFWx0F8A6NBBq6wesmY1Pa
-	ZByzzQIYwPaYY+uLRoeu67fOMz8nBkle1w6RZGC3NO8l9BBV7lUrRHhj19GY3owf
-	FHMNg==
-X-ME-Sender: <xms:DCRKZ3nDGev008RsrdScNRxxf-y7AfVDnqn-og274Rh-Kgff-ei8KlU>
-    <xme:DCRKZ60MGanY4W5Od1doX_cEkHWZjI1AXxUzhQflHpfOHQGIzjDVOvxmv7NR7Xvie
-    nEdqrXFw2XHj7babw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheefgddufeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvffkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpeffieeftefgheekgeeitedujefgveehvdevieelfeeiiedttedtgfduhfejie
-    fggfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrhhishhmrghnsehsuhhsvgdruggvpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:DCRKZ9or6i1AV9n_I2kP-nve96CizfjBdmBpy0ctoec8CpqLPBwawA>
-    <xmx:DCRKZ_nz9a13J91-tmJ04Qdvnmrllb-YncMKl_n3a7u9_gkrjpsiig>
-    <xmx:DCRKZ11buh6k7ELoujykMngQfN213W2gK7JovHpxVGokeVXyxZobAw>
-    <xmx:DCRKZ-sQEeQIjtMSw7RK8mZVrAc-LHrkUedcT5-ItSkCU0HN-PxacA>
-    <xmx:DCRKZ28lkDQabnmy_RcaIhA67kRtHgI094gQrnG4GcNNB-FlBPULozaI>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 6BDCC780068; Fri, 29 Nov 2024 15:29:00 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="A08jgM0W"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1732912782; x=1733171982;
+	bh=hBPYJ7s8j8pbrJ0mgJWnujwyJB7udOneiMc9owjY0Co=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=A08jgM0WIFu0et6uDkjb39gyELHHzrSWt1JY2dNf4iLMXxEYy5lzhUVw+Cc/yHISG
+	 g/fL6GvcyTAvoQw4+nue8XlAgrdbhxdmPhQjYXVIwo3uY3j7riuAkGU7RuLwKtVBFa
+	 +cfdE8HvvH7PbsP+TTCKufkTXc8PV0LAJqJdTj5mgj63DnQje9rnD9XFUQejOQbCya
+	 E91q1pNJx7TPf3+E/2dnxXUCZBqEPdnXG6buRtTyoXvqjy+W+EhECTBGZN0w+1rwve
+	 E1L4uaT0e5sbAAU0oQKtv0/Zgh5hbPwUelaxEYjOKv90+ozmeyXYpsM0DJkHQs3UCz
+	 DTUI6+usoLdKA==
+Date: Fri, 29 Nov 2024 20:39:36 +0000
+To: shejialuo <shejialuo@gmail.com>
+From: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 0/2] Ensure unique worktree ids across repositories
+Message-ID: <D5YYB5XQF1QG.1T6WKWPNUVXX2@pm.me>
+In-Reply-To: <Z0n6uuNdQZCLqAz2@ArchLinux>
+References: <20241128-wt_unique_ids-v1-0-30345d010e43@pm.me> <Z0mgAt9ssu_32tTQ@ArchLinux> <D5YSBQXU7FYD.25KOIM1N3US88@pm.me> <Z0n6uuNdQZCLqAz2@ArchLinux>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: d3d49cbf636fa906e982fa1b1d463f5f4dfc7c10
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 29 Nov 2024 21:26:33 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Gabriel Krisman Bertazi" <krisman@suse.de>, git@vger.kernel.org
-Message-Id: <2ffaeffe-1f05-4100-8ee8-3c87437297bd@app.fastmail.com>
-In-Reply-To: <87jzclal3s.fsf@mailhost.krisman.be>
-References: <87jzclal3s.fsf@mailhost.krisman.be>
-Subject: Re: [BUG] Inconsistent output of git-show
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi
-
-On Fri, Nov 29, 2024, at 20:36, Gabriel Krisman Bertazi wrote:
-> Hi,
+On Fri Nov 29, 2024 at 11:32 AM CST, shejialuo wrote:
+> On Fri, Nov 29, 2024 at 03:58:16PM +0000, Caleb White wrote:
+>> On Fri Nov 29, 2024 at 5:05 AM CST, shejialuo wrote:
+>> > I somehow understand why we need to append a hash or a random number
+>> > into the current "id" field of the "struct worktree *". But I don't se=
+e
+>> > a _strong_ reason.
+>> >
+>> > I think we need to figure out the following things:
+>> >
+>> >     1. In what situation, there is a possibility that the user will
+>> >     repair the worktree from another repository.
+>>
+>> This can happen if a user accidentally mistypes a directory name when
+>> executing `git worktree repair`. Or if a user copies a worktree from one
+>> repository and the executes `git worktree repair` in a different reposit=
+ory.
+>>
+>> The point is to prevent this from happening before it becomes a problem.
 >
-> 1.  git show --oneline --no-patch
-> 7af08b57bcb9 (HEAD, origin/master, linus/master) Merge tag 'trace-v6.1=
-3-2' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace
->
-> 2.  git show --oneline --no-patch | cat 7af08b57bcb9 Merge tag 'trace-=
-v6.13-2' of  git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-t=
-race
->
-> (--oneline doesn't matter here. Just making the output concise)
->
-> The branch information in parenthesis vanished just because of the she=
-ll
-> redirection.  That makes quickly writing shell one-liners very annoyin=
-g.
+> If we could prevent this, this is great. But the current implementation
+> will cause much burden for the refs-related code. In other words, my
+> concern is that if we use this way, we may put a lot of efforts to
+> change the ref-related codes to adapt into this new design. So, we
+> should think carefully whether we should put so many efforts to solve
+> this corner case by this way.
 
-The narrow fix (of course your point is more general):
+I'm not sure that any of the ref related code would need to change,
+all the tests are passing and the ref code uses the worktree id
+for anything worktree related.
 
-    git show --no-patch --oneline --decorate=3Dshort | cat
+> I somehow know the background, because we have allowed both the absolute
+> and relative paths for worktree, we need to handle this problem.
 
-Or set that with `log.decorate` (the default is `auto`, hence this
-isatty behavior).
+This edge case exists when using absolute paths, so this is not
+a consequence of now allowing relative paths.
 
-> Sure, I can go figure a proper git invocation to get me that
-> information. But we're all hardwired to use basic shell commands, and
-> sometimes all I need is a quick grep and not learn a program-specific
-> way of filtering.
-
-As a list lurker I get the impression that the proper way is to use
-plumbing commands for scripting.[1]  That=E2=80=99s the philosophy at le=
-ast.
-In practice I=E2=80=99m not that good at that:
-
-=E2=80=A2 git-log: replace with git-rev-list
-=E2=80=A2 git-diff: replace with git-diff-tree
-=E2=80=A2 git-merge: replace with git-merge-tree
-=E2=80=A2 git-commit: replace with git-commit-tree
-
-But I=E2=80=99m far from good enough with all the various tools in the s=
-uite.
-So a git-show here and there will be used.  By me at least.
-
-I also get the impression that this philosophy hasn=E2=80=99t necessaril=
-y worked
-out in practice, at least not culturally.
-
-The resources on the Web are also not great for this purpose.  Because
-when I search for Git Plumbing I don=E2=80=99t find scripting resources;=
- I find
-a bunch of articles about How To Implement Git With Plumbing.  As if the
-tools were meant to make Git In A Weekend.  That and a handful of
-StackOverflow answers that say =E2=80=9Cwell these bunch of commands mar=
-ked
-=E2=80=9Cplumbing=E2=80=9D exist.=E2=80=9D
-
-Turning to the documentation I haven=E2=80=99t (in my casual experience)=
- seen
-much connection being made between the porcelain and the plumbing.
-There are some hints in git-rev-list like
-
-    rev-list is an essential Git command, since it provides the ability =
-to
-    build and traverse commit ancestry graphs. For this reason, it has a=
- lot
-    of different options that enable it to be used by commands as differ=
-ent
-    as git bisect and git repack.
-
-It seems natural to start a script with porcelain commands.  Then rewrite
-it in terms of plumbing commands as it matures from a one-off script to
-something you just want to call and not fiddle/evolve any further.  But =
-in
-ten years I haven=E2=80=99t naturally stumbled upon such a guide (I=E2=80=
-=99ve only been
-somewhat actively looking lately).
-
-Just my two cents.
-
-> So, could we make the output consistent regardless of redirection,
-> i.e. What You See Is What You Pipe?  Whoever requires a specific format
-> for a script should be the ones using --format.
->
-> I've got v2.47.0 and I admit to not have tested later versions.
->
-> Thanks,
->
-> --
-> Gabriel Krisman Bertazi
-
-=E2=80=A0 1: See (from a quick search):
-
-    https://lore.kernel.org/git/xmqqy16ematj.fsf@gitster.g/
-
-    > The other question is why advice is being shown in the first place=
-. In
-    > theory, all one should ever use in scripted usecases are plumbing =
-tools.
-    > And as plumbing tools are explicitly not designed for users, they =
-should
-    > never show advice in the first place. I guess chances are high tho=
-ugh
-    > that the scripts in question used porcelain. That is also understa=
-ndable
-    > though: our plumbing tools are often not as powerful as the porcel=
-ain
-    > ones, which has been lamented on the mailing list several times.
-
-    From: https://lore.kernel.org/git/ZsbYYo3pLUAmBU0e@tanuki/
-
-    > The usual answer is "these tools should be using the low-level
-    > plumbing commands like diff-files, diff-index, and diff-tree", so I
-    > am not worried about it too much myself, and the above is purely t=
+>> >     2. Why we need to hash to make sure the worktree is unique? From t=
 he
-    > devil's advocate comment.
+>> >     expression, my intuitive way is that we need to distinguish whethe=
+r
+>> >     the repository is the same.
+>>=20
+>> How do you propose to distinguish whether the repository is the same?
+>
+> I am sorry that I cannot tell you the answer. I haven't dived into the
+> worktree. I just gave my thoughts above.
 
-    From: https://lore.kernel.org/git/xmqqedcszhty.fsf@gitster.g/
+That's fine, I'm just not really sure about how such a thing would be
+done. To me, the unique id is the easiest and most intuitive. The
+repository generally has no knowledge of other repositories on the
+system (as far as I am aware).
 
---=20
-Kristoffer Haugsbakk
+>> Do you have any sources for these tools? Because I'm not aware of any.
+>> Any tool that needs the actual worktree id should be extracting the id
+>> from the `.git` file and not using the worktree directory name.
+>
+> I am sorry that my words may confuse you here. These tools are just the
+> git builtins. Such as "git update-ref" and "git symbolic-ref".
+
+Ah, I understand now---I thought you were talking about external tools.
+All internal git builtins use the worktree id, the actual directory name
+of the worktree is inconsequential. So nothing should need to change.
+
+>> > In other words, there is no difference between the worktree id and
+>> > worktree name at current.
+>>
+>> This is NOT true, there are several scenarios where they can currently d=
+iffer:
+>>
+>> 1. git currently will append a number to the worktree name if it already
+>>    exists in the repository. This means that you can create a `develop`
+>>    worktree and wind up with an id of `develop2`.
+>> 2. git does not currently rename the id during a `worktree move`. This
+>>    means that I can create a worktree with a name of `develop` and then
+>>    execute `git worktree move develop master` and the id will still be
+>>    `develop` while the directory is now `master`.
+>> 3. a user can manually move/rename the directory and then repair the
+>>    worktree and wind up in the same situation as 2).
+>>
+>
+> Thanks for this information. I am not familiar with the worktree. I just
+> have learned the worktree when doing something related to the refs. So,
+> it is true that worktree id and worktree name are not the same.
+>
+> But that's wired. For any situation above, it won't cause any trouble
+> when the user is in the worktree. Because the user could just use
+> "refs/worktree/foo" to indicate the worktree specified ref without
+> knowing the worktree id.
+>
+> So if a user moves the path from "worktree_1" to "worktree_2" and wants
+> to do the following operation in the main worktree:
+>
+>     ```sh
+>     git update-ref refs/heads/master \
+>         worktrees/worktree_2/refs/worktree/foo
+>     ```
+> It will encounter error, because the worktree id is still the
+> "worktree_1".
+>
+> But when the user create the worktree using the following command:
+>
+>     ```sh
+>     git worktree add ./worktree_1 branch-1
+>     ```
+>
+> The name `worktree_1`(path) will be the worktree id. So, when moving the
+> path "worktree_1" to "worktree_2". The user won't know the detail about
+> the worktree id. The user (like me) will just think that "worktree_2"
+> will be the new worktree id.
+>
+> That does not make sense. It's impossible for the user know the mapping
+> between the worktree name and worktree id.
+
+It's not impossible, the user can always look in the `.git` file.
+However, I have added the id to the `worktree list` output to more easily
+associate the id with the worktree.
+
+>> One thing we can do is to add the worktree id to the `git worktree list`
+>> output so that users can see the id and the name together. This would
+>> make it easier for users/tools obtain the id if they need it without
+>> having to parse the `.git` file.
+>>
+> This is a good idea, if we need to use this way. And we may also need to
+> add documentation.
+
+I have implemented this and added documentation.
+
+> As you can see from above, the main problem is that we allow some ref
+> interactions between the main-worktree and linked-worktrees.
+>
+> The reason why I use this example is that I am afraid that the user will
+> create a new symbolic ref in the main worktree which points to the
+> linked-worktree ref.
+>
+> When the user create a worktree, it is natural to think that there is no
+> difference between the worktree id and the worktree name. And will use
+> "worktrees/<worktree_id>/refs/worktree/foo" to access the ref in the
+> worktree.
+>
+> And It's OK to add hash / random number to the worktree id if worktree
+> is totally independent. However, at now, we allow some interactions
+> between the main-worktree and linked worktrees (even the linked
+> worktree and another linked worktree).
+>
+> When doing above, the user must know the worktree id. But at now
+> worktree name is not the same as worktree id.
+>
+> So, I don't know...
+
+Interactions between the main and linked (and linked with other linked)
+worktrees is not a limiting factor here.
+
+>> As stated above, git already appends a number to the worktree name if it
+>> collides with an existing directory. Always appending a unique suffix
+>> should actually make things simpler / more consistent in the long run
+>> because the worktree id will always be different from the name instead
+>> of occasionally being different.
+>
+> In general, I agree with your way now after knowing the truth that
+> worktree name is not the same as the worktree id. However, it seems that
+> the situation is a little complicated.
+
+I see where you're coming from, but I do not believe that the situation
+is any more complicated than it already is. All internal git code uses
+the worktree id which is already not guaranteed to be the same as the
+worktree directory name, so nothing is changing on that front.
+
+Best,
+
+Caleb
+
