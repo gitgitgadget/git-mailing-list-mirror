@@ -1,55 +1,55 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B2E19DF41
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 13:13:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5005C19E836
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 13:13:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732886033; cv=none; b=fbI/QHFI1bSCJIoDeEUl/EqRTw6mt2kl8SWikhWOcwANqg+gU4vWsbB133KuUujgU54Fa2ijZJVRwFlI0ao/prYpl0ijk6VIjqJmhZGF/dbofYkrUCeOn/tkmXK5ydLGRddUySfrDtSKYnMFm8/YprlJzcfQuC7eUn3AAqHx4Ns=
+	t=1732886034; cv=none; b=aQf6iUOVRZWYFcV5yrca/IjenhXE9f3t5+ZX6/Y8SFfPMJtyqmFt982V25G9h9YYP8CM8zCCuGbG/Nx+wFZw3QxSp4K6Db5wg6z8Y11PjHPiIgqPm0uFOqSVESq1KcEKyAm5d7Z/yV46O/kOmwbJZcAQGTYkQ14v2cjucoDNqvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732886033; c=relaxed/simple;
-	bh=IIkeczCXYr/lOGQLsZeVBoF7wEE7NvHb0j/btragAjo=;
+	s=arc-20240116; t=1732886034; c=relaxed/simple;
+	bh=QFrusp397+dOKKcr4SKzF+LoFWbtbFJiGTftPiq2ZZE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=AxCL84sgDVbbdkiB57HNc7Ds7L1NkB4xYthF7h0HTGoSRbqhp9KQUyE85lG2qSJA7+t3La0c5DPH2LZtWHvL5rPCApJF1DmYZXS0WLEvLMGtw2rVbl0okvOTJqKph3XjVjZV/FWNiJ6mkMegzZGhOVFYy4A1l9BgCE1o5ylTnH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GYEzD256; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJKYt6I6; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=DYcShOzg4MYGU0c0kgxB5WJ8Y5VW7Do6L/Vd1OnyXphFkg4djd0l9/xtEbroQKgUvZL+PTI+nrY3v+6xNAoPbvQPovZFdCDt4lo/rkrqzkT+PnUHgYkat9SlihOx5mL1LSZbnKEzjBXbdGy5Jdsu4l6cJsikiFYSZmwuePvEujI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=x0FJapwk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pFpoKwms; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GYEzD256";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJKYt6I6"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 562751140158
-	for <git@vger.kernel.org>; Fri, 29 Nov 2024 08:13:50 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 29 Nov 2024 08:13:50 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="x0FJapwk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pFpoKwms"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4B6A02540103
+	for <git@vger.kernel.org>; Fri, 29 Nov 2024 08:13:51 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 29 Nov 2024 08:13:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1732886030;
-	 x=1732972430; bh=njjDJHGoZKcYB/65h6M/qcT+eRDlraZ53ERG6VvnqDw=; b=
-	GYEzD256EzVBhJT8hkeQYXs5je+jgFizPIbivQq2QF4fiydm1F8Pu8k+ZZEomaXD
-	Iy/ZDYAwxHZl9WOJq2anUzvlU3+vRfgAj0oa7BTpjquoc6MYInHmoDn5lunPmANs
-	klqakepoA4G1SalmYu4blAqR5dZD7f44G6HOQomWBUXx8yeAgnAC3X9Kh8kr6fef
-	FHLBdPTaqGjDCHSCNUCfhhYLOZ9TEGKdhi1ru4idFJSl3HhrTUU9WzhVAnDWbbol
-	DblU3tpHv6sHiS/XlnRwXNNlLn35rzXlmMMyki2zMTlXO/k4aYdiilbUaqvtCUES
-	Xwg6QeX9OfthVWOljkHPXQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1732886031;
+	 x=1732972431; bh=h80l7HwccbjgUZiQGYrPx7hNd2Zha/Q0iHlJ/tqYFt8=; b=
+	x0FJapwkS43Fbg1AWHx/ZzgJTym2ZZj1kR1NGp0fv04TY2MnUSkLYewfUMrnbBz3
+	9HBFG0Um2LfrsARTpPm7rvfp9kail0cOkbfeZF5DLqWf2uv7QkSQ+M4ICNa7oOdE
+	R23pBIqzFLYQTv4PwGnC1wIrLcbvstSGnIdoq/2QKcLBU/D51c6o6+UMQHIOTegP
+	dX8cLyHZPVG15U6EUI6zT1wfFi7zGUwPN/EiK1ja3B48z/nEwiv3Dqk2+gfEILr4
+	Pvyk0lpiO9fyLLriT6CH+kzBrGWxs0s60yTJqaRQwitf412Wu7QxINE5gatQcMSk
+	ukx22Y3o0D0yigFDh5fn7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732886030; x=
-	1732972430; bh=njjDJHGoZKcYB/65h6M/qcT+eRDlraZ53ERG6VvnqDw=; b=n
-	JKYt6I6dG/p0DXj9tzHQ1RxdFgACfrQFj2DLX5ty+BwIyX+X0W3FcWAcgekdPNFS
-	VEVX05PjwEgmgU7GzmMzY7P8nDSmhNQEf2vKfRHPldvaKnqckrNtmDzmkPqgN8nu
-	l9vipA1AIzNBAY2mrwWTV6MprSduHXMS+ZEyU3EVyVsK405Q35cGU6E4KmfDNJy/
-	gsvDyg2ROjADZmSDjS/CvKn0M+4IUHHZiLCHyzGBC/8JwXeWbFhyyPjAKRwg8H7p
-	/exCP6adFaVUaWfglwGsXQEhQQ41IGHkvwTVgywftctJyWxo0WGWfxzKK43BoKT9
-	xF/XzipFPEnmJORII0dow==
-X-ME-Sender: <xms:Dr5JZ-kzzg5VGTNe6z-4BhV9gtl3TgFie35cwA5tGUE0_PpqeRUlxw>
-    <xme:Dr5JZ12MMcGX4lbkiEBDmjqwGF3hhJxcIxbjj1CTwnyvaX9kewbpyC8wLkSwaXkPT
-    dfYUTs-eMa6CZHliA>
-X-ME-Received: <xmr:Dr5JZ8qpUMnYdrGtbFJV5XgYv7c5f8HDbXPM_ifJX-X5Fg2n9L1ygV-lmT4JX2chRafXKi7iEMBvh7AZA59eZ71O0lACowwUDPUQwI3YBlIkq2M2gw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1732886031; x=
+	1732972431; bh=h80l7HwccbjgUZiQGYrPx7hNd2Zha/Q0iHlJ/tqYFt8=; b=p
+	FpoKwmsyouMS4nSERgw/2Ur/s1nElSXIDKwm+OIWHzPVcCznf19sjtMwGH3UZzHE
+	YwCeKqCYgIaAh0yxKQzNjS/2dq35YOEqz44nXWCo4fZK8SYGmicEAp0CGwhLp5Zb
+	hdJEvh6LRoJ2/UapzTxl0mPXx6Fm9RiRmZPCEJTh869Owd05oIwdcm2wq1saN4ok
+	82T+uDz+pVgAlmRL/yWB007KPSO/rrAcXPfDePCs3R+3F0XDBhOxB18+AUrL8oUe
+	Q8JKcBVUTkarSZnYox7fNS1A9mVQxYWZDUbCx+Lqdu4LH6FMA7N4powJqIG7bAwY
+	sn6eamPQZ6+MxeEXthSqw==
+X-ME-Sender: <xms:Dr5JZ2nQk-_w-hq5j9joTlruwmZQ9gaoM8ccqbOMbVS4-P8Xd_NclA>
+    <xme:Dr5JZ90u8EWpcyAClZaxcYerOa2iex4cexzZmbTsGTHD3v1n7omEU2W4POad_G9lj
+    fvBnwtvYHcyOP09zQ>
+X-ME-Received: <xmr:Dr5JZ0raemLdGpC94rj-dEC8tglLWmXG9cMCQniwRdwK-qMwcE4SHw5V5RbH-6QK2jLrDFeHr7jMuaNJGK4QQRQOzSQw4VAFqnoK8g2BqZT1_mPkEA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheefgdegkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
@@ -59,22 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheefgdegkecutefuodetggdote
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Dr5JZykz_yZdDEgHefNtyodcfbH0JQHPoFbJ7wKaIQbzICiLg3tmJg>
-    <xmx:Dr5JZ81ir9ZoYja0Rz2ZaoHB0d5s7ROGiE_2-Eqtcl_9-FnuaTnkLg>
-    <xmx:Dr5JZ5vbU1dgPnxUSeNhMgwQmNruuk8WhYdQI-U_-T-gFezbmx2cJA>
-    <xmx:Dr5JZ4VUg9XDv2xRosJr4ATfPF2ljcnW2uw5naqcumAmZenQUzIFxA>
-    <xmx:Dr5JZ58a8H7bHD2BWN7H8d34i6qMDoAw8CTWBcJrsJT4g8S0mU3pbH_f>
+X-ME-Proxy: <xmx:Dr5JZ6nZiPtE99cbzouYn7K_LpxF9W0KhRThbgfIqJ4JrCvjknAIjw>
+    <xmx:Dr5JZ01H4n6rLZuOw2Vbvt2vAz3fLExmCSDafb3GI5alkUHg_WYtMA>
+    <xmx:Dr5JZxsmSlQNLV8hye_8qHnr7y1HZIc6z4QaxDdv5XUoEbfVHVU87A>
+    <xmx:Dr5JZwUNUH-AT_pknLeyrvexoaA2vhm-7CXUx0516fSyZpbkZdkqKQ>
+    <xmx:D75JZx8RmPMYZrbYl_229VtVFlrfL6PY7a4_lr_OvSWzFljqIksG-O0X>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 29 Nov 2024 08:13:49 -0500 (EST)
+ <git@vger.kernel.org>; Fri, 29 Nov 2024 08:13:50 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2f343cd2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d537a2c2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 29 Nov 2024 13:12:39 +0000 (UTC)
+	Fri, 29 Nov 2024 13:12:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 29 Nov 2024 14:13:28 +0100
-Subject: [PATCH 07/10] diff.h: fix index used to loop through unsigned
- integer
+Date: Fri, 29 Nov 2024 14:13:30 +0100
+Subject: [PATCH 09/10] daemon: fix loops that have mismatching integer
+ types
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,266 +83,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241129-pks-sign-compare-v1-7-fc406b984bc9@pks.im>
+Message-Id: <20241129-pks-sign-compare-v1-9-fc406b984bc9@pks.im>
 References: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
 In-Reply-To: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The `struct diff_flags` structure is essentially an array of flags, all
-of which have the same type. We can thus use `sizeof()` to iterate
-through all of the flags, which we do in `diff_flags_or()`. But while
-the statement returns an unsigned integer, we used a signed integer to
-iterate through the flags, which generates a warning.
-
-Fix this by using `size_t` for the index instead.
+We have several loops in "daemon.c" that use a signed integer to loop
+through a `size_t`. Adapt them to instead use a `size_t` as counter
+value.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/am.c                     | 1 -
- builtin/blame.c                  | 1 -
- builtin/diff-tree.c              | 1 -
- builtin/merge-ours.c             | 1 -
- builtin/pack-refs.c              | 1 -
- builtin/patch-id.c               | 1 -
- builtin/range-diff.c             | 1 -
- builtin/reflog.c                 | 1 -
- builtin/reset.c                  | 1 -
- builtin/revert.c                 | 1 -
- builtin/shortlog.c               | 1 -
- diff-merges.c                    | 2 --
- diff.h                           | 3 +--
- diffcore-order.c                 | 2 --
- diffcore-rotate.c                | 2 --
- list-objects-filter.c            | 1 -
- patch-ids.c                      | 2 --
- reachable.c                      | 1 -
- reflog-walk.c                    | 1 -
- t/helper/test-revision-walking.c | 1 -
- 20 files changed, 1 insertion(+), 25 deletions(-)
+ daemon.c | 21 ++++++++-------------
+ 1 file changed, 8 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index f3b6546b3049a90fe32801087151e992623e7f17..1338b606febdde6700c573b45f89aa70785f54e8 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -5,7 +5,6 @@
-  */
+diff --git a/daemon.c b/daemon.c
+index 68789ceb222eeb389d58998fd00388f289868fc3..bf313bc21a0b82a12064c534af78c9ad51be78e6 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -503,8 +503,7 @@ static struct daemon_service daemon_service[] = {
  
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "abspath.h"
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 6c6b0c7ef1a4d992064c7664bbf1229ef0286b97..9f8568bf01b69f717e3c7296e4dbd938f53f515d 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -6,7 +6,6 @@
-  */
- 
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "config.h"
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index a4df2d0c130392f74b4da38dc5d0cd493d88f0e4..40804e7b48e319f6618cd22ac3695ce510b5f51a 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "config.h"
-diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-index 3672c6353f3219c48a2f10f9011cdd48d702265f..3ecd9172f18466823ad867ca28958c12a3266b85 100644
---- a/builtin/merge-ours.c
-+++ b/builtin/merge-ours.c
-@@ -9,7 +9,6 @@
-  */
- 
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
- #include "builtin.h"
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index 71175a713a07a1e89050a869c92bd472bea15f87..4fdd68880e0c6d30ca77df1e5f0f2e3f5117097e 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "config.h"
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 87fa586c4d552ba61cd2ac2cf079d68241eb3275..027e0c0b1133f517a3ddf3f73e4ddb266f97760d 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "config.h"
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index aa88a46d9ee3fcc61817834c770b3de352d78e7a..433c305fc5fc3a5f9ba3515430311338f3bf13c3 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "gettext.h"
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index d2bda133adf6b1e7e23d9347db51cb496eaecacc..62ea0525470c51b06c6fa5e0861dad3b7ec49230 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "config.h"
-diff --git a/builtin/reset.c b/builtin/reset.c
-index f34d22190f489fb522fb70584ae2d777a895afbf..73b4537a9a567d1a7661fed89ed362d0f0c81c0d 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -9,7 +9,6 @@
-  */
- 
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "advice.h"
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 4b57c2c38378e02342e678cb8936b80637b98c5e..aca6c293cdfb2f1ca119f6336b56e36eb3f9dfbf 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
- #include "builtin.h"
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 1c46f13a16346c9a3ba41a92e0aec0428179b939..30075b67be8dac2db7aba793a818f357c7c11cc1 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
- #include "config.h"
-diff --git a/diff-merges.c b/diff-merges.c
-index 0adfe7f5c06b586500361f47ed0d05124c8c9f70..45507588a2797b8d3618e3a19a2854d12051157b 100644
---- a/diff-merges.c
-+++ b/diff-merges.c
-@@ -1,5 +1,3 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "git-compat-util.h"
- #include "diff-merges.h"
- 
-diff --git a/diff.h b/diff.h
-index 5c8de795353f0a7201e1a5aa7b6c241dd2bb17ad..6e6007c17b01ada6eab3cb54e94b34b781335348 100644
---- a/diff.h
-+++ b/diff.h
-@@ -205,9 +205,8 @@ static inline void diff_flags_or(struct diff_flags *a,
+ static void enable_service(const char *name, int ena)
  {
- 	char *tmp_a = (char *)a;
- 	const char *tmp_b = (const char *)b;
+-	int i;
+-	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
++	for (size_t i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		if (!strcmp(daemon_service[i].name, name)) {
+ 			daemon_service[i].enabled = ena;
+ 			return;
+@@ -515,8 +514,7 @@ static void enable_service(const char *name, int ena)
+ 
+ static void make_service_overridable(const char *name, int ena)
+ {
+-	int i;
+-	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
++	for (size_t i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		if (!strcmp(daemon_service[i].name, name)) {
+ 			daemon_service[i].overridable = ena;
+ 			return;
+@@ -737,7 +735,7 @@ static void set_keep_alive(int sockfd)
+ static int execute(void)
+ {
+ 	char *line = packet_buffer;
+-	int pktlen, len, i;
++	int pktlen, len;
+ 	char *addr = getenv("REMOTE_ADDR"), *port = getenv("REMOTE_PORT");
+ 	struct hostinfo hi = HOSTINFO_INIT;
+ 	struct strvec env = STRVEC_INIT;
+@@ -758,7 +756,7 @@ static int execute(void)
+ 	if (len != pktlen)
+ 		parse_extra_args(&hi, &env, line + len + 1, pktlen - len - 1);
+ 
+-	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
++	for (size_t i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		struct daemon_service *s = &(daemon_service[i]);
+ 		const char *arg;
+ 
+@@ -1108,8 +1106,8 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+ 	if (!listen_addr->nr)
+ 		setup_named_sock(NULL, listen_port, socklist);
+ 	else {
+-		int i, socknum;
+-		for (i = 0; i < listen_addr->nr; i++) {
++		int socknum;
++		for (size_t i = 0; i < listen_addr->nr; i++) {
+ 			socknum = setup_named_sock(listen_addr->items[i].string,
+ 						   listen_port, socklist);
+ 
+@@ -1123,11 +1121,10 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+ static int service_loop(struct socketlist *socklist)
+ {
+ 	struct pollfd *pfd;
 -	int i;
  
--	for (i = 0; i < sizeof(struct diff_flags); i++)
-+	for (size_t i = 0; i < sizeof(struct diff_flags); i++)
- 		tmp_a[i] |= tmp_b[i];
- }
+ 	CALLOC_ARRAY(pfd, socklist->nr);
  
-diff --git a/diffcore-order.c b/diffcore-order.c
-index ec59d3d9bcc85753352f5faba7982da1c4455b95..f91ef2247145a6157196fb6ebb063bc98d2c3e87 100644
---- a/diffcore-order.c
-+++ b/diffcore-order.c
-@@ -2,8 +2,6 @@
-  * Copyright (C) 2005 Junio C Hamano
-  */
+-	for (i = 0; i < socklist->nr; i++) {
++	for (size_t i = 0; i < socklist->nr; i++) {
+ 		pfd[i].fd = socklist->list[i];
+ 		pfd[i].events = POLLIN;
+ 	}
+@@ -1135,8 +1132,6 @@ static int service_loop(struct socketlist *socklist)
+ 	signal(SIGCHLD, child_handler);
  
--#define DISABLE_SIGN_COMPARE_WARNINGS
+ 	for (;;) {
+-		int i;
 -
- #include "git-compat-util.h"
- #include "gettext.h"
- #include "diff.h"
-diff --git a/diffcore-rotate.c b/diffcore-rotate.c
-index 941a022d5e6e79592967166f1ffc7fcd62086010..67b591261adcc66ef8ab51df9677851564597d17 100644
---- a/diffcore-rotate.c
-+++ b/diffcore-rotate.c
-@@ -3,8 +3,6 @@
-  * Based on diffcore-order.c, which is Copyright (C) 2005, Junio C Hamano
-  */
+ 		check_dead_children();
  
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "git-compat-util.h"
- #include "gettext.h"
- #include "diff.h"
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index 4afa3029dca926baff81fba4a553b31dfed551a1..dc598a081bb25283a1f0d287baf3805da2955106 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
+ 		if (poll(pfd, socklist->nr, -1) < 0) {
+@@ -1148,7 +1143,7 @@ static int service_loop(struct socketlist *socklist)
+ 			continue;
+ 		}
  
- #include "git-compat-util.h"
- #include "dir.h"
-diff --git a/patch-ids.c b/patch-ids.c
-index 8b891980732fd33f89bb8b1ef1bf9ad6717120ec..a5683b462c6e7692ceff3218213b9747a9b6cc02 100644
---- a/patch-ids.c
-+++ b/patch-ids.c
-@@ -1,5 +1,3 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "git-compat-util.h"
- #include "diff.h"
- #include "commit.h"
-diff --git a/reachable.c b/reachable.c
-index 34079e1ae9b20313c86c7962f518aa266b7153ea..3e9b3dd0a46cb410b8f032784115c78084c5dbd9 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
- #include "gettext.h"
-diff --git a/reflog-walk.c b/reflog-walk.c
-index b53628ed5372235d840ce481d22a90cf10ad5c8a..c7070b13b004b7c207a3f99740999f582c15c1b0 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
- #include "commit.h"
-diff --git a/t/helper/test-revision-walking.c b/t/helper/test-revision-walking.c
-index 3b931a34a2a2198287fb7f0175ac11e6f2ba0059..071f5bd1e21974ba2104a76305a5156ee2c2961f 100644
---- a/t/helper/test-revision-walking.c
-+++ b/t/helper/test-revision-walking.c
-@@ -9,7 +9,6 @@
-  */
- 
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "test-tool.h"
- #include "commit.h"
+-		for (i = 0; i < socklist->nr; i++) {
++		for (size_t i = 0; i < socklist->nr; i++) {
+ 			if (pfd[i].revents & POLLIN) {
+ 				union {
+ 					struct sockaddr sa;
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
