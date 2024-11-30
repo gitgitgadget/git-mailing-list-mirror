@@ -1,97 +1,108 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD492F3B
-	for <git@vger.kernel.org>; Sat, 30 Nov 2024 05:39:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE1829A0
+	for <git@vger.kernel.org>; Sat, 30 Nov 2024 07:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732945188; cv=none; b=pH2u5ktDUBC6UtGDsXX/oOgrpmpTkLlDjnJXPfhC4XZ5NiLJjR3Ljd0se5MJzcUfUQU86jSzL3Lyi0FynXAOdVwU7D6c6xsz9LCQrb31rIc2/HrvGwkn2Nh4RcPoLMc8I6hPzLpl6rLHAAsurWEVpRdaBlW3629XjHWpTFowfg8=
+	t=1732952967; cv=none; b=XHLCP1bc7kBr6Mha5IVWsyvABwPJ05Z9m/dLwhuHJRL02OLvU8Y4MsRG2ZrxS+p8myhb1eKg5MhvjaOKCAMX6eWTkRca83Z7y7QZkzydMN2wVbDLIszrCQnYD/ZrhxLDk7KssNafDZujEOKiBqNnK4hMgKJMjJAUkuYFqt/3CSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732945188; c=relaxed/simple;
-	bh=kGb9/9XYGJ0u/zf2n25Vh2Ox46QyaHpJ89ZxGAstgYU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=sqNViG25FaIURXvta5TJhFvSK1UV8B+YdI7mDHtC42/69YDBBe10B/MgWY872xLKr7BsaTQ5C9V2nVmTDMCEjicvsVghqTitj+DetIQnKQ2PMY5nzHoBlaeuAFo/lowDIMacuQIX/fUCkDfE6qpQzjdrvhtUGluGPaBVmviEKN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VBWG9EZK; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1732952967; c=relaxed/simple;
+	bh=EOE6qjeVkrSNlGs0WnsD9xa+quhXhVWuYe7QG1H2oq0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=I7TqzBt0QlaU9m2z3d0hwrA+8/pJQHsgFbaGFWt+diejVPtPbsmseZirSPdn6z/1y7JGzvM43hOh2XNBRnVI1Pcl5kDI3nGzMO1NlOn6MPFJ9/DnWaiq2UxPd4UB7pdRF/UIo3hFNHLolchT9Izks90J4XecQ7asHmiNLJDwjoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kA2sQ3OB; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VBWG9EZK"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa1e6ecd353so148597166b.1
-        for <git@vger.kernel.org>; Fri, 29 Nov 2024 21:39:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kA2sQ3OB"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aa55171d73cso648080466b.0
+        for <git@vger.kernel.org>; Fri, 29 Nov 2024 23:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732945183; x=1733549983; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1732952964; x=1733557764; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=466KXFZz5YeooEX4Mt6UXm2DC08SP1K046QcVz4TCN8=;
-        b=VBWG9EZK8I0z6QWoBnV1ol97NeGjIWQkJpbRpYhakuVouHWT7Qh9DKe4pZheBIlAxM
-         7kcFgKLLgbIypsUTeSDlMcFYNljob2V+RF4vwLfByKay2e8e2khO2yZ4Mlb94UjBv5rV
-         /Wl4Cx1hsdu4NLPfdeMbODGHnaVUZ5xPnwvBmbTdf/isfugTHv8XqJLpMy0HfJALpnc+
-         8XCdc5mSTS6Pp+tnyxTUnAX0ekIiIoB0Rv/yeCm7qr/jJ94ISX2O1w0JjV5baKSC5kRM
-         S7Krheqi5/QEfnipLY/+BNsm8uLD0RwIkvr3qE8susKto7dRMcHcKNPqjevbh6duZq9/
-         MdVQ==
+        bh=4N3MXZrmQYB7Yo+DISVll5j/HVF+yht7bXKI1UKzfek=;
+        b=kA2sQ3OBOtMAHwPgXr327s/FoIxDrc4FP9ctqTl13+AabSbzmT1PD1ogcAIDvOIHrM
+         jhNavoLuFe85NCLnPgNcMbcVcIGsQ2q5NwA+Wq96lhHI9VKW37IRnXaUGzE2+PcBGDSp
+         yzfpxVIn/93VyTDgN4jHFxDedhSOWG0vlOxQg1ibsP+waeJPIv9f3KuU4gfw/uvcgSLN
+         Yr4Fgx6FtPhSWwAgGZW/MPDUm23Rphaj555v4+GiIiQp7advfeU77Xbkw/jcbxbWlxEB
+         RUzMvXMj1SuFXbV/asxQ0W4AG27qWSNTKN0NLL4szpfZL9CCanzeBlnbjhABHOybhUcQ
+         bBMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732945183; x=1733549983;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=1e100.net; s=20230601; t=1732952964; x=1733557764;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=466KXFZz5YeooEX4Mt6UXm2DC08SP1K046QcVz4TCN8=;
-        b=G1H0l8Yb1HtKXxGaj21mUVFagHo9u84t3Ro8JvTlj7vT9JI4KQg9+AthoGGNeRm+rn
-         CEuAPINma8Tl46XoanmhNuq/P8sblfGc8fGLMpR8LDgbp21ypxYrnFlRPnhH2ccM1zPf
-         K0ttZTKY80F75TF7OyXTSdrxJ8BeXRbuXw+jjE/TvoTpjgOErSs/dq8eCG0P/wpiMdD8
-         bn39VQk9H/rpepDMHQIaf49ZBXGk8YWbQwMuSBpwsvMTCbYD6AumE0vNfs4ytbvXDGCW
-         M/9PnP6/lyLl5EqBgXklrGaM0Nl1KfnnNiM5l8zRhLVnH598AlJ0LK26ShbX3mQS3oFy
-         NM0w==
-X-Gm-Message-State: AOJu0YxebEPoGhTQeifftICrPrugzyOZXDmK9QUKxVwggMU60tv3L24d
-	UwJdQXPBdPE5ge7qirUZFru5Oi5TLrwsAgQI/CKXPa53o1pvQ+VsDfdOPCZ+aM7Ae387rELnItS
-	sVpwlvfmTdK7EHcH87GbdHS++dJwjJLPG
-X-Gm-Gg: ASbGncuaqqQ+LrtIABWH0OQBocRj5bYEu8d5LGe9iyqC5Xg8xfSPoxtp5p8nn99SD+y
-	2gC5lc3LRIQsrxg0hY3cJaf970vewNKhakQ==
-X-Google-Smtp-Source: AGHT+IGNM/0TDXo8N1+5XFR4is7il9hkuD/VlH51Ztu7gqlN7RuS59PaXzMqrmdgfY595uLgI3uGI6+wsGF4sag6mXQ=
-X-Received: by 2002:a05:6402:2807:b0:5cf:cf74:8527 with SMTP id
- 4fb4d7f45d1cf-5d080c64750mr20307943a12.28.1732945183220; Fri, 29 Nov 2024
- 21:39:43 -0800 (PST)
+        bh=4N3MXZrmQYB7Yo+DISVll5j/HVF+yht7bXKI1UKzfek=;
+        b=JFgggneTnXqJ91YUsH1gCftcffjw6YrV9lhzgMc90tLo+XZem+1Zh5kvJyLTXy0sz3
+         +ewDzn4rzz/7nv8ZyPDkXTTWNbWvfowvaZrvBNex1776BkB6ofVez/GSIn9jRFv9JXI4
+         S9SgJnVnEGJbeNU+xIWZsIPaNo/F+XSHGIsPtKtG1jK0l4pL2Lr1TQkefNvh/HmdGQip
+         o3rqImCZz7DiTO2Nu6fi8TIygslg2ModpnNaZAjQOxF+0iYQTztzfjtQmExQXxeVfk7d
+         pYyAQSewBA7wh40dRjcP4Qb5MaG6WzZVXX6eL3ERaM1kjXgNV2SahqLMSiBe0Il7sTfL
+         P2og==
+X-Gm-Message-State: AOJu0Ywx8Jyj09sN3m9wDNul6/PURtyFuSucgIhoqfedCUiXcV+klx4w
+	oact0vEddD7ntATuZDMXRxoUlBkUv1M76foChYpQouypMT1LW6msd6b8/c0Djojb8huaFGgmlgL
+	a58NzkRSYLtYGv7Pbm/yurLqPt6aBK572
+X-Gm-Gg: ASbGncvI3+bcMp+xpwdYTob6EFKO63VJzuJHCl7qMQpVHE6nOXfYj8PcjbK5D07501F
+	fpOF+QLBJD6LS30p6vXtpTf7K9X/Stcl1kN9g3bIRA/f3LjbPX3UlrBY9SaAbKdU=
+X-Google-Smtp-Source: AGHT+IGZmehISLDFE5Ggd1Z1Tg8R9rw8I0UnXpSshT+ig9refcAaWarfQZ45DdiC7MOs1vOLtE8+pQC4bkyyBHSPFGo=
+X-Received: by 2002:a17:907:1c8c:b0:a9a:e0b8:5bac with SMTP id
+ a640c23a62f3a-aa594708919mr791561966b.23.1732952964059; Fri, 29 Nov 2024
+ 23:49:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 30 Nov 2024 06:39:31 +0100
-Message-ID: <CAP8UFD1R3Cp00KF2nAX6C5q=dtYLdaJKomXWM4DjM5DwjLi53w@mail.gmail.com>
-Subject: Draft of Git Rev News edition 117
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, 
-	Bruno Brito <bruno@git-tower.com>, fox <fox.gbr@townlong-yak.com>
+From: =?UTF-8?Q?Nicol=C3=A1s_Ojeda_B=C3=A4r?= <n.oje.bar@gmail.com>
+Date: Sat, 30 Nov 2024 08:48:59 +0100
+Message-ID: <CAPunWhBQcAifapqxyq7nY+S5WWhZQhBKgeYLL56U1ewRCa7QDA@mail.gmail.com>
+Subject: [BUG] Changing remote URL of "deinited" submodule not taken into account
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Hi everyone,
+Recently I came across an issue involving Git submodules which seems
+like a bug to me.
 
-A draft of a new Git Rev News edition is available here:
+In short (precise reproduction instructions below), if one updates the
+remote URL of a submodule while it is "deinited", the next time one
+calls "git update" the old URL will be used instead of the new one.
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-117.md
+Here is how to reproduce the issue synthetically (in a fresh directory):
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+  git init
+  git submodule add https://github.com/git/git-reference sub # random repo
+  git commit -m "add submodule"
+  git submodule deinit sub
+  git submodule init
 
-  https://github.com/git/git.github.io/issues/737
+At this point, the remote URL of the submodule has been copied to
+.git/config. We change it:
 
-You can also reply to this email.
+  git config submodule.sub.url "new-url"
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+Now we checkout the submodule. I am expecting to use "new-url" as
+remote URL in the checkout.
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+  git submodule update sub
 
-Jakub, Markus, Kaartic and I plan to publish this edition late on
-Sunday December 1st, 2024.
+However, the old URL is used:
 
-Thanks,
-Christian.
+  git -C sub config remote.origin.url # => old URL instead of "new-url"
+
+The problem seems to be that the clone at .git/modules/sub does not
+have its remote URL updated when being "inited" after a remote URL
+change while it was "deinited".
+
+Currently I am working around this issue in scripts by doing:
+
+  if [ -f .git/modules/$sm_name/config ]
+  then
+    git config -f .git/modules/$sm_name/config remote.origin.url $(git
+config submodule.$sm_name.url)
+  fi
+
+Any insight would be appreciated. Thanks!
+
+Cheers,
+Nicolas
