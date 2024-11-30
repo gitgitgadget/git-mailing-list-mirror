@@ -1,80 +1,97 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9578029A0
-	for <git@vger.kernel.org>; Sat, 30 Nov 2024 04:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD492F3B
+	for <git@vger.kernel.org>; Sat, 30 Nov 2024 05:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732942747; cv=none; b=TfeoLMB/5eqITFCMe52suXIKN9eUlU1qBQBr6q2FZGZP6tTe1dtH6OYxW8Jddsqm9oBNGShk1Wi+mbuebG4qPslEPGDc9bcH2KQ8oy+A9jR6bPtQtqdb30R7rEjNF3JFOPl+SUQ+J1+vV3D7Mydwrzs802zGD3gD3/cvFRVwLso=
+	t=1732945188; cv=none; b=pH2u5ktDUBC6UtGDsXX/oOgrpmpTkLlDjnJXPfhC4XZ5NiLJjR3Ljd0se5MJzcUfUQU86jSzL3Lyi0FynXAOdVwU7D6c6xsz9LCQrb31rIc2/HrvGwkn2Nh4RcPoLMc8I6hPzLpl6rLHAAsurWEVpRdaBlW3629XjHWpTFowfg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732942747; c=relaxed/simple;
-	bh=5HhOcrmGrF/iemIT1P0eHOGZ9AWJnwb5fzyk9ovGNY4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=SRgXnzJ9bYNI6irZJ7X432wIofUk6AmV+KHjbLvXIMYrox5RxDUlWSrHZFMWUAJZKjZkTYQt9H8YV1TkbWuKXZEAf9sjqVu4q9IlQdSgyTZscSLp+z97+X3EYbQd7/t5PdiRPX4WaK57IN52oSrMVikOOe/pybGmfu1gHB33puc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C5YD9LNE; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1732945188; c=relaxed/simple;
+	bh=kGb9/9XYGJ0u/zf2n25Vh2Ox46QyaHpJ89ZxGAstgYU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=sqNViG25FaIURXvta5TJhFvSK1UV8B+YdI7mDHtC42/69YDBBe10B/MgWY872xLKr7BsaTQ5C9V2nVmTDMCEjicvsVghqTitj+DetIQnKQ2PMY5nzHoBlaeuAFo/lowDIMacuQIX/fUCkDfE6qpQzjdrvhtUGluGPaBVmviEKN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VBWG9EZK; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C5YD9LNE"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2ffc3f2b3a9so36344651fa.1
-        for <git@vger.kernel.org>; Fri, 29 Nov 2024 20:59:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VBWG9EZK"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa1e6ecd353so148597166b.1
+        for <git@vger.kernel.org>; Fri, 29 Nov 2024 21:39:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732942743; x=1733547543; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1732945183; x=1733549983; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=5HhOcrmGrF/iemIT1P0eHOGZ9AWJnwb5fzyk9ovGNY4=;
-        b=C5YD9LNEAOy3/mi8sbR9J4rbxKHpihqerwHbvOXjjrsGffJtd3A1u4rLNQJGnpGVku
-         8maR6M/vzVTj3XClpQEV5vIy6hBO71qbRdXG9o0fPjS3EvkDmW5nfRTMUBskUnfHQu/G
-         IHbDq/92LC6atEHzPLx5CFDEYbRos4mWofa0Vgq+kJnQxrmSBctVNRIJFBRGgEi4LcSJ
-         4V2Wy9pawqpzYFBxhQFeF+R4wYbEvpZibxcj1I/fudeBLKI3ptMqJWNLz2U7SrEUTuEs
-         bDnr0fmmFb/vynl3Gt7udplWYbIM/7CyioYUKb0X2S8dkDDn9xWonHSsl9VhcGgHET+K
-         IOMQ==
+        bh=466KXFZz5YeooEX4Mt6UXm2DC08SP1K046QcVz4TCN8=;
+        b=VBWG9EZK8I0z6QWoBnV1ol97NeGjIWQkJpbRpYhakuVouHWT7Qh9DKe4pZheBIlAxM
+         7kcFgKLLgbIypsUTeSDlMcFYNljob2V+RF4vwLfByKay2e8e2khO2yZ4Mlb94UjBv5rV
+         /Wl4Cx1hsdu4NLPfdeMbODGHnaVUZ5xPnwvBmbTdf/isfugTHv8XqJLpMy0HfJALpnc+
+         8XCdc5mSTS6Pp+tnyxTUnAX0ekIiIoB0Rv/yeCm7qr/jJ94ISX2O1w0JjV5baKSC5kRM
+         S7Krheqi5/QEfnipLY/+BNsm8uLD0RwIkvr3qE8susKto7dRMcHcKNPqjevbh6duZq9/
+         MdVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1732942743; x=1733547543;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=1e100.net; s=20230601; t=1732945183; x=1733549983;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5HhOcrmGrF/iemIT1P0eHOGZ9AWJnwb5fzyk9ovGNY4=;
-        b=QmgSO8v9Nq8ExgEbhq6YEqOLbRQtsj7LIzKlvJNCg2MGlhhddZVBwH8c1MpOhZsZKR
-         manPVShdsFBN7YYcSfFCZ55yMjvEztJbuGE3kONAUPfO4ndFvRd/JT8AIx2vEIgh7tQS
-         aBIbSQLOwRDtZN1rBl3vw+wNk7KhgZ8BvWX0p9pH4PV5mNqfBub3Dhf8bUM0LvLdemuC
-         Lx0nZr9lddEQQh44VEXk1Z0DQxAnu5GibeM96SRqJSQL5LKB3hqODUdCbZ4EFnKwzOhb
-         PdFIXCB6NF7v4xLvC1cflACJ7APEAMkVv/VDJHzBOGu9WFccfJ4jZxfsWtBt25s60Z2a
-         vqkg==
-X-Gm-Message-State: AOJu0Yzx4qwmLDrH9ibaZNU/jXGg0uSXXKn6Kv7E+kyVBYAgq39rVFDk
-	x4XDQiBscQM8bi0SshiiVXpwGjJvcx9tNeJ+Nryf9kRiszKuLjp2km7Q/fydEWiNN++tbo4tntH
-	7tgXB0AnZuuWKB3Q4z3vAgmoKJjTt2/jg
-X-Gm-Gg: ASbGncvZxM97K6G0YW/YZXchSjD97sV1h/f3q/QEzwber0lwZN5ISYlHYNA4FGxQ316
-	sMy5dkjOemcvNb99Jg8lyKuJgUbRH2Fc=
-X-Google-Smtp-Source: AGHT+IEoXvN/ogrR8uzaTzntnN42iWqYi/t+Tu1Aj94+1MftBMcpMCx5VlNH7XlBJLqc13fB9CQdPO5lVBjtCtjqCWI=
-X-Received: by 2002:a2e:9b53:0:b0:2ff:d7cf:bfbe with SMTP id
- 38308e7fff4ca-2ffd7cfc09fmr84632991fa.5.1732942742645; Fri, 29 Nov 2024
- 20:59:02 -0800 (PST)
+        bh=466KXFZz5YeooEX4Mt6UXm2DC08SP1K046QcVz4TCN8=;
+        b=G1H0l8Yb1HtKXxGaj21mUVFagHo9u84t3Ro8JvTlj7vT9JI4KQg9+AthoGGNeRm+rn
+         CEuAPINma8Tl46XoanmhNuq/P8sblfGc8fGLMpR8LDgbp21ypxYrnFlRPnhH2ccM1zPf
+         K0ttZTKY80F75TF7OyXTSdrxJ8BeXRbuXw+jjE/TvoTpjgOErSs/dq8eCG0P/wpiMdD8
+         bn39VQk9H/rpepDMHQIaf49ZBXGk8YWbQwMuSBpwsvMTCbYD6AumE0vNfs4ytbvXDGCW
+         M/9PnP6/lyLl5EqBgXklrGaM0Nl1KfnnNiM5l8zRhLVnH598AlJ0LK26ShbX3mQS3oFy
+         NM0w==
+X-Gm-Message-State: AOJu0YxebEPoGhTQeifftICrPrugzyOZXDmK9QUKxVwggMU60tv3L24d
+	UwJdQXPBdPE5ge7qirUZFru5Oi5TLrwsAgQI/CKXPa53o1pvQ+VsDfdOPCZ+aM7Ae387rELnItS
+	sVpwlvfmTdK7EHcH87GbdHS++dJwjJLPG
+X-Gm-Gg: ASbGncuaqqQ+LrtIABWH0OQBocRj5bYEu8d5LGe9iyqC5Xg8xfSPoxtp5p8nn99SD+y
+	2gC5lc3LRIQsrxg0hY3cJaf970vewNKhakQ==
+X-Google-Smtp-Source: AGHT+IGNM/0TDXo8N1+5XFR4is7il9hkuD/VlH51Ztu7gqlN7RuS59PaXzMqrmdgfY595uLgI3uGI6+wsGF4sag6mXQ=
+X-Received: by 2002:a05:6402:2807:b0:5cf:cf74:8527 with SMTP id
+ 4fb4d7f45d1cf-5d080c64750mr20307943a12.28.1732945183220; Fri, 29 Nov 2024
+ 21:39:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Dmitriy Panteleyev <dpantel@gmail.com>
-Date: Fri, 29 Nov 2024 21:58:51 -0700
-Message-ID: <CAJ-DG_DpNVmn1e=8hBX4YbEhzgX4xxn7AVBQnhKJOvHX4hx7kA@mail.gmail.com>
-Subject: [BUG] commit fails with 'bus error' when working directory is on an
- NFS share
-To: git@vger.kernel.org
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sat, 30 Nov 2024 06:39:31 +0100
+Message-ID: <CAP8UFD1R3Cp00KF2nAX6C5q=dtYLdaJKomXWM4DjM5DwjLi53w@mail.gmail.com>
+Subject: Draft of Git Rev News edition 117
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, 
+	Bruno Brito <bruno@git-tower.com>, fox <fox.gbr@townlong-yak.com>
 Content-Type: text/plain; charset="UTF-8"
 
-I've recently upgraded my (Linux Mint) distribution version, which
-came with git v2.43.0 and I noticed that I can no longer `commit` on
-any working directory which resides on an NFS share mount.
+Hi everyone,
 
-Git reports "Bus error (core dumped)" and dmesg shows multiple "NFS:
-server error: fileid changed. fsid 0:68: expected fileid
-0xf8e3d8e80230ddb5, got 0xeeb48230d99ed0d4" messages.
+A draft of a new Git Rev News edition is available here:
 
-This does not happen if I move the working directory off the NFS share.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-117.md
 
-I attempted to upgrade git to v2.47.1, with the same result.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-I then downgraded git to v2.34.1 (the version for the previous
-distribution release) and the error has resolved.
+  https://github.com/git/git.github.io/issues/737
 
-This seems like a bug to me.
+You can also reply to this email.
+
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
+
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition late on
+Sunday December 1st, 2024.
+
+Thanks,
+Christian.
