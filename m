@@ -1,196 +1,85 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from mail-40131.protonmail.ch (mail-40131.protonmail.ch [185.70.40.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D30242AA4
-	for <git@vger.kernel.org>; Sat, 30 Nov 2024 13:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ACC19AA5F
+	for <git@vger.kernel.org>; Sat, 30 Nov 2024 16:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1732973284; cv=none; b=iygwGB6fB2NVcv9mDqcVtnZjbkMqNj+IvjnxWSZSyqsYUspa6zEF+76OxrfaYSU4DW+gApJNqsEvI1dsnebkkw0My92h+pcVhj/V4kSmPXRcKOHmUuz3i7qYIg4OHM3dKa9XWjglnGn8NsWmm5B0ikXqMAh4pEKro/44tUrUy7U=
+	t=1732982916; cv=none; b=DhnbotFCQBAj+GYPLNLU99e6DM63vGnSNjUq3yr5n11BPyRi9nwJ8LO7RpWnO4X1c97GVLd6g18N2wjn2+xNeCekSisJdgUcKLI0hUbbOTKycZD50HqoayGRNMlRbvONdsdolD5HHz3I4Gvr4uei81X39/+SEL8FJuaj6G71wsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1732973284; c=relaxed/simple;
-	bh=nQzUJpfyMBnIWt1HrF8uOgbickdGWum7N4qQpjc0VOQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XtFaK/aJ3IH+qmUHDRoVX4PtsGYLPIm6Rocw6ZvNVc2kgNGu5svtwKnnAvGrtfLdz6tuGRLmxDncQ5ZMlGAbwmAbLKj99QFFk4pEgQaxUzAdbQS0OIG5gvA87f965l7Fgi3Ej7Oct3HCyxphWDNgzNwJTsxHsfLfYuDX4E/DhRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IIfeKsWv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VbhtMWOl; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1732982916; c=relaxed/simple;
+	bh=CkMJPGuV4f+5j4BNbwxCBs3R7ef0DZ5Z/7tH2MExKvw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=b0iFcKOvQVsYkjs1gtoGDFSrk/VCjvDnC0s7biM14X/+TRqmwnBsdau3uFpHlX9sMSWOekanL4egTVYhUzbyauaXhRnvFBbxEMg08qz2KVmqdpPlEm0wrseeLUvyV3387jq2fz6itV3aEHk1XcwHq19AKHjI/NXPneIUpk5Dwkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=mvOAg6o4; arc=none smtp.client-ip=185.70.40.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IIfeKsWv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VbhtMWOl"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4D3742540112;
-	Sat, 30 Nov 2024 08:28:00 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Sat, 30 Nov 2024 08:28:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm1; t=1732973280; x=1733059680; bh=10
-	beaGrMLTDsW371CAziXq/vZEas+3L/L6Jo8m5O/so=; b=IIfeKsWvtYk9HlMIDL
-	Yw7bJJtuWdP1Sk6GxAcuQJCBu2lqDoLqgkCpPPCM9/G0tqKkna4TIPHBviFecfXq
-	JpnOtEhQrrzBU8tRM/mbPYU2B/4LUz1xFfz46e/XpfbbxZOoZW6fcGuNDVvQ+h9s
-	rjnWrH3/MtUrqKphEvfUO+7ZPgIuWatdU8knXzwOB3SnZAtb5QWCfVyQYGF4vN6V
-	uLX59JGo5qV2154Uwtc/kPapMbx8SSzUAu85q9w1pepBG0zuAcRRZHwTbXQE1jSD
-	10FYdo+5EXG2zSKPRNwKfzRX36hvhbBa9kRFXJGTOtFLYMojZC/Fl0m/y8cGWhqw
-	6itw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1732973280; x=1733059680; bh=10beaGrMLTDsW371CAziXq/vZEas
-	+3L/L6Jo8m5O/so=; b=VbhtMWOlPvfwPmUmRuTJuuOH2r1tNn9x5Wf50dNsQ8gD
-	Y3dmRzUjCtddIY4eEKvYHR748ChRlH7hspde5XtS7jlm3+lLUYx/2/mUy6DNTRw6
-	7Luwa70e6Yb2mMELnsMWW18FTN4vcruZX6jvteajtehXe2k1nlYqYxBMavNxS8U6
-	a45DRtdWEXowzn0Q3vxs05PwI0zjxACiP0k+G66ouksH9XqOoLDnisQ0ecs5ovJJ
-	81kZJO1OqEzwI3/aWU8m1wHccfQ9YaBaWuVqQc56xWIbjaqKwFjsOVeh+qAOw18x
-	KGtxzMjxa8oE4cpiodvQPGGDkmZI/HPdzXtHeJcd6A==
-X-ME-Sender: <xms:3xJLZ3QDvmLzQbFksiACsQvdVz-Nd-DPko0fkVYQXH3-XY-QUf3SMEs>
-    <xme:3xJLZ4zM59DFf3nXuBzBOuewZJ2v2A7sMlWzaWJji3tBF_xxRrGjejwx5Z6eHBmM3
-    pToHNkeLT9TP0m_zg>
-X-ME-Received: <xmr:3xJLZ8036CS6cdDP9_-vnTGkJnuHxXgr-_PjGK7BjuZvpXmUAlWMA759ZIgWk5js63PRMZ9MEBdWxS5KoGMp7JSLp3V1qlBmRIsaIlzRoA7KUIyyYn4wxe9LAA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheehgdehtdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufffkffogggtgfesthekredtredtjeenucfh
-    rhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtoh
-    hmnecuggftrfgrthhtvghrnhepheelhefhieeuheejveeftdfgiedtueevhfdugedvheek
-    vedvuedtueeffeeigeevnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgv
-    rhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepge
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprh
-    gtphhtthhopegurghnihgvlhhssehumhgrnhhovhhskhhishdrshgvpdhrtghpthhtohep
-    phgtlhhouhgushesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:3xJLZ3Bc4dSTnAVyjRcY1eP6lNgB9AoHwIppgG1SgI571ETSgBVbOg>
-    <xmx:3xJLZwjAhLDFdON9eqEg0UXanIcqwLBfCyXIi12Qhrbs2z8BnpEkCw>
-    <xmx:3xJLZ7qPU-UYCPSwdwpesGf8EXYmBEGioIMuTEA64ia8jOOWQ9df2g>
-    <xmx:3xJLZ7jfyvXFrFo4RzRl7VOa2r43mBX6vdg_yjFhi3TIeIXDSQLS1w>
-    <xmx:4BJLZ4eto6Lg4pZOw0ZDCPzX2iv4tb_obuljpegOtMrqM5ZikxVUCTGk>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 30 Nov 2024 08:27:58 -0500 (EST)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Daniels Umanovskis <daniels@umanovskis.se>,
-	Duy Nguyen <pclouds@gmail.com>
-Subject: [PATCH] Revert "doc: move git-cherry to plumbing"
-Date: Sat, 30 Nov 2024 14:27:41 +0100
-Message-ID: <e5b20f9ceb437a82c422136cb81b05a0521cab07.1732973210.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.47.0
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="mvOAg6o4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1732982911; x=1733242111;
+	bh=CkMJPGuV4f+5j4BNbwxCBs3R7ef0DZ5Z/7tH2MExKvw=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=mvOAg6o4Ey+WW0NhZu5GouWuM/GMm7+eMPwToxoeKF7LFnVn4RBEQUjH36eTRzr0u
+	 iHYHeDn68PWrJzv+qVMvJjfbrTP3USZymB6IB06SoHRaC91uuTc6MJXSzXj6rb1WGF
+	 fKgk9gvbQPp9m27EbCua8z2gUPxmRqeROMuNPC1pSmRX2brtHNBZHEjNeg8jWKpB/h
+	 jJcD/5ievYA3Gp4DcJCkWfIytS5XGvs6asGNAxhJfA7NMg38mQAgStF7Pxcp6/N/i0
+	 HNzZpMx9wiZX2/7mBuuG9hvcwb06DoROUgiqMRCGzeAiOjVPaUmU0P2YbQwANN/u+W
+	 QWSkkCxQ0jF5w==
+Date: Sat, 30 Nov 2024 16:08:26 +0000
+To: rsbecker@nexbridge.com, git@vger.kernel.org
+From: Caleb White <cdwhite3@pm.me>
+Cc: 'shejialuo' <shejialuo@gmail.com>, 'Junio C Hamano' <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] Ensure unique worktree ids across repositories
+Message-ID: <D5ZN60S3JMS8.UXLUSM5IOFCX@pm.me>
+In-Reply-To: <00c901db42c0$38f95520$aaebff60$@nexbridge.com>
+References: <20241129-wt_unique_ids-v2-0-ff444e9e625a@pm.me> <00c401db42b1$99c4d5a0$cd4e80e0$@nexbridge.com> <D5Z1L479JERN.80KZ7NA9BWNJ@pm.me> <00c501db42b4$ea97e050$bfc7a0f0$@nexbridge.com> <D5Z1X36NVZ28.1FPA05CU9GFRL@pm.me> <00c801db42b8$a03539a0$e09face0$@nexbridge.com> <D5Z2R71VW1JF.1FZE1Z0V8H6Q7@pm.me> <00c901db42c0$38f95520$aaebff60$@nexbridge.com>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 8f83a79af82769083f801a25383a2ffb75eca16f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Fri Nov 29, 2024 at 6:38 PM CST, rsbecker wrote:
+> On November 29, 2024 7:09 PM, Caleb White wrote:
+>>If the `develop` directory is deleted, cleanup detection is handled by th=
+e `git
+>>worktree prune` command, which will remove worktrees under `.git/worktree=
+s/*`
+>>that are no longer valid. This happens automatically after the expiry tim=
+e or it can be
+>>executed manually. Of course, executing `git worktree remove develop` wil=
+l also
+>>remove the worktree and its associated worktree id.
+>
+> This last bit is an assumption, and not necessarily valid. Scripts that u=
+se worktrees
+> may maintain lists or their own pointers. It is important to be able to e=
+mulate
+> cleanup functions - something I discovered early in the worktree function=
+s
+> when released. I need to make sure that cleanup will continue to have eno=
+ugh
+> information - prior to git worktree cleanup - to function correctly. This=
+ will
+> need coordination with people who have such scripts in my community. It
+> probably will not impact you, but I would have appreciated more than one
+> release notice on this capability.
 
-This reverts commit 61018fe9e005a54e18184481927519d64035220a.
+I'm not sure I understand the specific use-case you're talking about.
+Could you provide an example?
 
-git-cherry(1) is a high level command for checking what commits have and
-have not been applied to some other branch.  Or at least as high level
-as the git(1) suite offers.  In other words:
+However, I suppose I can add a config / env variable to be able to
+disable this new functionality.
 
-• it is a useful interrogator for a particular workflow; and
-• there are no higher level commands on offer.
+Best,
 
-By contrast its use for scripting is somewhat narrow since it only
-prints the patch application status and the hashes of the downstream
-branch (not also the upstream branch equivalents).  git-patch-id(1)
-gives a fuller picture by printing each hash and its corresponding
-patch id.
-
-Now this command is not nearly as convenient for the purpose of deleting
-a *merged* branch as:
-
-    git branch -d <branch>
-
-Since that command will refuse to delete the branch if the commits are
-not in the configured upstream ref.  But again it is the most convenient
-command for the patch workflow.
-
-This command might only be considered plumbing by way of the plumbing
-contract that says that plumbing commands have stable output.  But
-hopefully listing this command as Porcelain does not give the impression
-that the output is not stable.  Output stability was in any case not the
-motivation for moving this command to plumbing.
-
-Users who need this interrogator should not have to look down in the
-plumbing section in order to find it.
-
-This also reverts its removal from Bash completion which Duy Nguyen
-reported as a regression.[1]  The correct change for that plumbing move
-would apparently have been to remove the `complete` category.
-
-[1]: https://lore.kernel.org/git/CACsJy8AVGbS_NTZsUj_hD9D+t4YV1_S4KTD25Kda85syvoowyg@mail.gmail.com/
-
-Reported-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    The `---` comment on the patch:
-    
-    > Up to discussion whether cherry should be considered plumbing.
-    > I lean towards considering it a rarely-used porcelain command, but
-    > a case could be made either way so let's see what the list thinks.
-    
-    I don’t know why rarely-used is relevant.  This change now lists
-    git-cherry(1) down in the (Porcelain) Interrogators section, along with
-    commands such as:
-    
-    • git-bugreport(1)
-    • git-count-objects(1)
-    • git-diagnose(1)
-    • git-whatchanged(1)
-    
-    Not everyday tools.  And that’s okay.
-
- command-list.txt                       |  2 +-
- contrib/completion/git-completion.bash | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/command-list.txt b/command-list.txt
-index e0bb87b3b5c..d73c8f59e63 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -72,7 +72,7 @@ git-check-mailmap                       purehelpers
- git-check-ref-format                    purehelpers
- git-checkout                            mainporcelain
- git-checkout-index                      plumbingmanipulators
--git-cherry                              plumbinginterrogators          complete
-+git-cherry                              ancillaryinterrogators          complete
- git-cherry-pick                         mainporcelain
- git-citool                              mainporcelain
- git-clean                               mainporcelain
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3d4dff3185c..5026ef595cd 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1746,6 +1746,17 @@ _git_checkout ()
- 
- __git_sequencer_inprogress_options="--continue --quit --abort --skip"
- 
-+_git_cherry ()
-+{
-+	case "$cur" in
-+	--*)
-+		__gitcomp_builtin cherry
-+		return
-+	esac
-+
-+	__git_complete_refs
-+}
-+
- __git_cherry_pick_inprogress_options=$__git_sequencer_inprogress_options
- 
- _git_cherry_pick ()
-
-base-commit: cc01bad4a9f566cf4453c7edd6b433851b0835e2
--- 
-2.47.0
+Caleb
 
