@@ -1,43 +1,39 @@
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch [185.70.40.138])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B65F9E8
-	for <git@vger.kernel.org>; Sun,  1 Dec 2024 02:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BE323A6
+	for <git@vger.kernel.org>; Sun,  1 Dec 2024 03:00:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.138
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733021524; cv=none; b=bm+s1S0SFinTMlfSU1OPJduD2vqargS+Bjmvmq7PS576D8esIR4/z5ZVl4PEg+AlKt/Pq9iO5SKWBh29z4QTRJEftM+X53kjuQSP3l3JijBZgtUpGjNhXJXuh8H2a5B9phSKeb4yv4kYN9BlNF98tuoAIyTlG38Fhv+2bIvPgxw=
+	t=1733022031; cv=none; b=Avel4bDGyq6ZDwUMYa4x/u4yoQT9rB2eq0B8yhCDJ7ccuVP3A+v90PY2TG1azwoSn+2OAm+gCTkfLeKIPZe3hHISdl/y6YuObZiUWSH6UFD8DGCrZxkK8/59XKMqILfIVaUd+bbGjwSnskQX6T5GVhgIjuy4Zki+HXEmXZBu9lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733021524; c=relaxed/simple;
-	bh=cAH9o8B4oh0R/WSx+kQpKkVhRgyAQdLLzR8k842R+7E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RIlEvJCpHyRvHMlvv1Xai7HnsPMoDQfj7mLxw7jWw8ZmDY9nDw9SfWV6jJ71Fr+2/T5SHcmFdyRGE9zfSOOjsk55Q3gZIObg1m+RdBMcL8iHB4idASrTirmXjv1iXxLHYO7u26hO/SL4p55Hu9UK+p7xnvT26ZAQgP9MwXVm8wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=bSEuYWlH; arc=none smtp.client-ip=185.70.43.19
+	s=arc-20240116; t=1733022031; c=relaxed/simple;
+	bh=vhEJrV9Kasye2s/b11OFtvSNc76q1La1Rs+LrG3EIok=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=bUO6XUL3daRcNywen8jZW9TjNBgCkWWWFGa5dP2yHpvqO63dIK+Qtu53P+vL8qoc0NNfTMullHbRk7LSz09l0WgAahwHZTU4sZL7qPBB7hzPBjzqwdN+OR2sQnNL62F5nIKVhf6rVipN1StSUKX9iQ0M5gkIB8hWWdWUpp+RlRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=SuwZNx5W; arc=none smtp.client-ip=185.70.40.138
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="bSEuYWlH"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="SuwZNx5W"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=wi6k6ajtwnhw7iu6vnrgb3plfu.protonmail; t=1733021512; x=1733280712;
-	bh=cAH9o8B4oh0R/WSx+kQpKkVhRgyAQdLLzR8k842R+7E=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=bSEuYWlHMcatgsipJ4OKlzOi/rzCQP/IypaYCLambQu5RahLbeoM9ndsiw5aR0HDH
-	 bUQgmQdMg3kh6rFvPeji2imN9EeKVgUD7piQsD+cgnU3smSzH7M5YP0jTFb006Ulto
-	 EZC0QOYq2Dq2uKBQgl6S/rg9kXO4g5n9EYmtYu0WU90PbaBTKsjR1mR+O8L3XujOUT
-	 47z08Sr/o+W61gZJnkepFwl6PJ7yerEqlh2dSXfYDYhjWXJJHgcL5Lr2mLjM1BvKV4
-	 4SK1K2cr10mV4TRX0zhmctaJey04Ii1gUrRsEDFnMf0zZy6A+8bz84ibPn39qVUKfi
-	 h1XZZpxCUxT6Q==
-Date: Sun, 01 Dec 2024 02:51:49 +0000
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+	s=protonmail; t=1733022022; x=1733281222;
+	bh=vhEJrV9Kasye2s/b11OFtvSNc76q1La1Rs+LrG3EIok=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=SuwZNx5WHsiUhuFBDb9ag9eoTaTKG8hxjT3nMsDbEBbU6C1ka05vZRgjYu3i4AEkq
+	 tUV7g6rPyj4qM41NknBdF45OQDjHfjPlVmYtYsvAgz+GeYu2NivCYYYwGnT+c7nIFV
+	 chB2LlcmxtpocgDowJcM8gikQoQJZiR91uGLkHhB3qqCU/i3X2Ui8++TDR8n7kqA5v
+	 OJCIslVKxInHoqglejwWy1VYHrBnDBvUmSEGJBb2mujImpSDWRxH/07cbb9kTZ11nf
+	 EoUmsIXrKeKYIitD4B+eicbuQdL8vgLu2+ovdScJhVTCKjIBxeSTRUzq5B08dHJ8rQ
+	 9t/Kv7bjHepBw==
+Date: Sun, 01 Dec 2024 03:00:18 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
 From: A bughunter <A_bughunter@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Extending whitespace checks
-Message-ID: <cEDEN8jk6KzFgDQ32ejB3TGL8nHkAwS84330i3oroO-rwjWmor_NGAwnAjOt_25zEbYgsNBoE9QMLXAsLW_R_IQVUM14kDzleSStPpilyK8=@proton.me>
-In-Reply-To: <89b1b39c-a6d2-4f63-9cc5-722772bddd8a@app.fastmail.com>
-References: <xmqqbjy5bc6m.fsf@gitster.g> <D5UQHS9IV5N1.3IO1848Q1730B@ferdinandy.com> <89b1b39c-a6d2-4f63-9cc5-722772bddd8a@app.fastmail.com>
+Subject: disarm the "landmines"
+Message-ID: <7UwLla5WLJwqkusnmBWvXe8-heqVui93dYpo5BTXeSAdMk2nhkJphr0vkJd2NwGJxnGaCDHB6-x2rInUHWg5Q6yeH66k5ZZ3gaH08igVzOI=@proton.me>
 Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: d6e4d55d13df24a46ac77529409de4bd8d9ce65e
+X-Pm-Message-ID: cdd31464c114c486b4cb378c44f9ccf8a42820fd
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,29 +41,33 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="b1=_qZCEAeLXVu0CPW4AkzgO6tB4ou6NawriKC5nf46FBw"
+ boundary="b1=_ZMkqksfIYdChKLTxKKvg0oaIqRLRxh6WOUuWRocY"
 
---b1=_qZCEAeLXVu0CPW4AkzgO6tB4ou6NawriKC5nf46FBw
+--b1=_ZMkqksfIYdChKLTxKKvg0oaIqRLRxh6WOUuWRocY
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA512
 
- " This might be a tangent, but since enhancing whitespace checking was men=
-tioned, "shoehorning": If it ain't broke don't fix it. Prudence indeed. Esp=
-ecially if you are messing with something having what you called " landmine=
-s".=20
+Y'all need to get your priorities straight. Maybe you should disarm the "la=
+ndmines" before you go on about adding features thence introducing more def=
+ects.=20
+
+
+from A_bughunter@proton.me
+
+Sent with Proton Mail secure email.
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wnUEARYKACcFgmdLz0MJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAAIROAP46l2AgKrh/FKvSwUHxC6XdqMYODOi7zTMYy7Annv72nQEAn6sQ
-rtlEGS/xcb1BMKaMUWS5zYxrdi3hrwFsbasCQwU=3D
-=3DFwc6
+wnUEARYKACcFgmdL0T8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAEIfAP9q2Hgl1AdoxN2fr0/aoF6q3HCdu9KUKQwTX6bYn45zIAEAp2oA
+wYMiaW0MnKoJjI3UgjUknN3ftMKi2wgrVM/riw4=3D
+=3DHbOz
 -----END PGP SIGNATURE-----
 
---b1=_qZCEAeLXVu0CPW4AkzgO6tB4ou6NawriKC5nf46FBw
+--b1=_ZMkqksfIYdChKLTxKKvg0oaIqRLRxh6WOUuWRocY
 Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
@@ -85,14 +85,14 @@ QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
 eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
 UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
---b1=_qZCEAeLXVu0CPW4AkzgO6tB4ou6NawriKC5nf46FBw
+--b1=_ZMkqksfIYdChKLTxKKvg0oaIqRLRxh6WOUuWRocY
 Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-wnUEABYKACcFgmdLz0MJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAABlrAP0Wy0Sv
-A5jC82qoEVVAaxil37b8bY1mJQLNYSK4gZxEUwEAwU7rJUzy3kX7mqLlAeftEzK/O2W6JuIC5tkU
-W0CEYwE=
+wnUEABYKACcFgmdL0T8JkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAJZfAP0W7Ofh
+rSDA7YENVmmhZNpCLBVOHs2oPpvkBrfnKYoZJwEAk8bbJmHy0ts9jLO+hDpP0dY7odjVBfXaBeYt
+EriBOwM=
 
---b1=_qZCEAeLXVu0CPW4AkzgO6tB4ou6NawriKC5nf46FBw--
+--b1=_ZMkqksfIYdChKLTxKKvg0oaIqRLRxh6WOUuWRocY--
 
