@@ -1,102 +1,90 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B782B9BC
-	for <git@vger.kernel.org>; Sun,  1 Dec 2024 17:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4614C376F1
+	for <git@vger.kernel.org>; Sun,  1 Dec 2024 21:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733073479; cv=none; b=MDlx1wAkogzjQr2H8pt3kauQ9nHjcJLE4825GYSGKPrHIeK/CvKof4Z6jjPBk9rAMsB/6qSyuR7qalGsKqBAnTBupK2aaRIlDyLldXWpvrAZjiDqyvTqUZAmr4cqj2eSn/gP2JR2IaFic+bNcFnXUedGzXH8RhD/RlrFKqt0jfY=
+	t=1733088871; cv=none; b=VBLihGCpBOJMEfmx7GmB8hl6tb+duXB3xapVRTlrmJukTREMb/Gx7bEB9UZMOl8mZ4Kpb4DTLixP9xDyJL+EN+ABUBR2hm4sEgpXAf3diTEGDAKH4x2KWqwcYcu/17P9rDmFA1u/ErpTor5sAA2kq0r6uN1pqqP1pJQK/Zg/gsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733073479; c=relaxed/simple;
-	bh=L1lFI+6UQ/fSUeycL/Yh/qbyhq1iH+p01i+G1XPfdRI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aGIF7/45ZeFZR60R3NRdmHo0IoB3ubTG7qf6xGlLjsiyVXeLythhN0uui8jtII+o9fG5eBk2fcjVzSvM50y/l2Tj40Z3JR9f+1F2iWkdKZPpAOZAcSANSEiZtq6IKnteCOyYEgSQAz0B+Q2xSmEfusA86tGjXH6XVMU9dSqQjo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kNnFKf4n; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1733088871; c=relaxed/simple;
+	bh=CyzpPX4va7+22EKXq9AFi/XiWNZtfWtYpZnKLaLPjaU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=FGusjsrVn71yEV65xg046VDpJ++oKEpyiaAFZN5wdrwAe23IImgTTyA++NFyhfxfg9vQrmGY6xyNlZd9eLu/cig4bPw2Tam74W86RT4KeFf3DxMlNCV1utG+OZISXjbF7c9BnsRD27G+wlSEdrz5oTrbM6bkkWyKGWcdQZKhszI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ExlEt3ju; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kNnFKf4n"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ffe28c12bdso29504041fa.1
-        for <git@vger.kernel.org>; Sun, 01 Dec 2024 09:17:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ExlEt3ju"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5d0bf77af4dso2521144a12.3
+        for <git@vger.kernel.org>; Sun, 01 Dec 2024 13:34:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733073476; x=1733678276; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733088867; x=1733693667; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L1lFI+6UQ/fSUeycL/Yh/qbyhq1iH+p01i+G1XPfdRI=;
-        b=kNnFKf4n5ir2KM4DY/uPzxgk9xprx08pV99lACbmgo0ck26ec4sN6Y/61SyaKL+q3M
-         30qgknEAafD96MxkJ6bqjl4FIVoLHW5fcKe7bYzavZxe+DQtOLLgrclhARMxpGkRLoH5
-         ZJzTGoF9ZvwPHnoWMYlhVZ+psehIz4SA5Z9hrzhorYW5UXQ4cFX568wT4KlT9ABLqmiT
-         3XcFBpNW15IBNbSxH9wj/8vSPsAXGAnSsHy6EJbPNvZUv7NsmAns2e6bbGXhoPeJ1b8p
-         aIzKcXedXxwH3w+Dlm8FyBorkB412paWG16GPM9h8P3cmR9aa6peoVQhMtzb09fHiCL8
-         qa4A==
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TWF0OKyg6Xy19/FPXeXgxVdYtXuOX6gxrrpI/PNkw/0=;
+        b=ExlEt3ju+1si+bPWifOY9neUyH6d8PsJrDhIeGwJnPKLfNpc5QXXhIikaqKWbyAue2
+         kSQxFpu0881fcWrFZ9Kd4HAopxIm5zVlBFyMkHB1YfWbm5IZaRkDQHXljGffzeH3OyiF
+         12p5okIkSWingUpJqPXxDiJygUCew1/anURey8iad9FHxEfDZ0MaSi9W6pJ0yTYI/uS2
+         3kjgGAaPkgLgB+IGaeqDPCkSnYRGmkYGDP9qVxmU5ULAkkwNqtgRBjghl7KznMmCS8xo
+         bEgr+6OptimKPy526ziYiTd0IC3QkUkBJ5aIMsHXBy8RFl5B35lI/5q1uCsT51B0PGTP
+         6OQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733073476; x=1733678276;
+        d=1e100.net; s=20230601; t=1733088867; x=1733693667;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L1lFI+6UQ/fSUeycL/Yh/qbyhq1iH+p01i+G1XPfdRI=;
-        b=kKIc1udyLJ/Gn/vEUyzAPSoMiD3FXkH8Os9NqNtHud32wrf6oqKH9HLtzr6gKPtucD
-         BE4rRkADtDzdQTs32kYy7ENuMriV1xAchmfx1u/KlXEshB/zoNXOLc3cBTd9Nt9Jd5/h
-         4MMV5hZaVdwMVR0eu7z69yGWVbd16WYG7AfWboqBoPFv1EmHvW6GBrRTPGDJYZU485nu
-         PJJEdPJNmGF/sd5sfYGHmVml92cRkn8DEL0YAbVGWnHRcuPBdTpYCzdmHRWvSXUBR7cU
-         LenRv3eFxgTuLfX3AEWjNQhTDIgvppM8mgDShKuBCIbp5YeaYD2KFeRox/p5CrR+mMEf
-         r3eg==
-X-Gm-Message-State: AOJu0YyDHfrePAFMG+OLa7G4tPEsWIb1UFRW8jsVv+43cEbNZ2AOXSey
-	3mW7lbwXMyKpmINkue2XaVvIMUxb7VOd86KL4BnwLDxpe3SRftj/FTI3yinMdu1fYSo1t8W9VJ6
-	1+/4Lnvv+Jr0+4QtB9uPTrGoBZ/eYGUEN
-X-Gm-Gg: ASbGncs3lh8LeUrRpojGc8m6sjrLLQUv4i3UMK7plkMG9++NoA1aMuiQ4uaHhElm+eY
-	SWRr4JjU7TCLAWL76YTJIKU5ECoaQHXM=
-X-Google-Smtp-Source: AGHT+IHmc7rMT9EaQ6rXuGby5rsDvbvHlAuLcoK/Ol1dIzfP8e7J4iIDG+npxJJ3XURGb4lv0giqucoqmNyheVkQliI=
-X-Received: by 2002:a2e:bea6:0:b0:2fb:59dc:735a with SMTP id
- 38308e7fff4ca-2ffd60fafb5mr96735271fa.41.1733073475890; Sun, 01 Dec 2024
- 09:17:55 -0800 (PST)
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TWF0OKyg6Xy19/FPXeXgxVdYtXuOX6gxrrpI/PNkw/0=;
+        b=ORMiJj85SYupVpDH8PmLvBMpAXi1XQEjTjFfMoTfnFBR7oEWk3mmF4l+/KTQ+lfh04
+         1HWWGME56naLzlZO0fkz0VFb5O2Z13ZYVizXimo7nfVFByTCzkg9uRnp2NnNUvFO5/Ak
+         cak4b37gV+VUFxji7vxrmc8VoGD9+pR7a4Oa2qUDy67XWMTXaTg1XDXLcurxQtCOfuFG
+         F45AX+bTLB1LDqDV8Ei8LAl8Caz9rx+93R39b5zF3HV0nW3eh/+YW6PTY1HzfxytQlCD
+         jgOR9kMWn1CG6eTXH1eSfa+WZXgjezg5iPajwp1mqoQ2BwXysqEQ/Le2lzB1ETHIABiG
+         GyVQ==
+X-Gm-Message-State: AOJu0YyhA29ieSno/r3V0I8GO4S8efpfxrNQPlClTufimUNU8wYaody1
+	Bc0Z9XSjj1N9DUTRVSGFNsIQx/4N0kv9NRJ//92sKa8HPKJ22GZW9negjpycq248PTunRa32P6T
+	ET6/AwTlQfdjGWtUISqc5NFMsA+KHb2vz
+X-Gm-Gg: ASbGnct5wTsruXQWI/LVFUEJqTC7B7tdd7p/KJB+VA821tw8+zVcDJ6/Nl3WJO5BHCo
+	YsyLTHOMLE6uFTDUh2cgKg4TSYiqZDSXz3Q==
+X-Google-Smtp-Source: AGHT+IHhSHJi/UyifH9gOrBBbmjfPq/LYYSxZuSStDGvfja8+TJHH2+4NB8W4dIKI6xsPCGR7uTr4Q/HwVRsBJRvkJg=
+X-Received: by 2002:a17:906:30ce:b0:aa5:1551:99f2 with SMTP id
+ a640c23a62f3a-aa581072b9amr1862564666b.49.1733088867301; Sun, 01 Dec 2024
+ 13:34:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJ-DG_DpNVmn1e=8hBX4YbEhzgX4xxn7AVBQnhKJOvHX4hx7kA@mail.gmail.com>
- <20241130163801.GA110697@coredump.intra.peff.net>
-In-Reply-To: <20241130163801.GA110697@coredump.intra.peff.net>
-From: Dmitriy Panteleyev <dpantel@gmail.com>
-Date: Sun, 1 Dec 2024 10:17:44 -0700
-Message-ID: <CAJ-DG_CNPGgfafyTcKWYeNXHD4gsspWakzQoRhfggMqZjenkyg@mail.gmail.com>
-Subject: Re: [BUG] commit fails with 'bus error' when working directory is on
- an NFS share
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sun, 1 Dec 2024 22:34:15 +0100
+Message-ID: <CAP8UFD31OWebD5PXnCDVU-Sya8pY07bA2nsoskF50NUPhTcWZA@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 117
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, 
+	Bruno Brito <bruno@git-tower.com>, fox <fox.gbr@townlong-yak.com>, 
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>, Toon Claes <toon@iotcl.com>, lwn@lwn.net
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Nov 30, 2024 at 9:44=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Nov 29, 2024 at 09:58:51PM -0700, Dmitriy Panteleyev wrote:
->
-> > I've recently upgraded my (Linux Mint) distribution version, which
-> > came with git v2.43.0 and I noticed that I can no longer `commit` on
-> > any working directory which resides on an NFS share mount.
-> >
-> > Git reports "Bus error (core dumped)" and dmesg shows multiple "NFS:
-> > server error: fileid changed. fsid 0:68: expected fileid
-> > 0xf8e3d8e80230ddb5, got 0xeeb48230d99ed0d4" messages.
-> >
-> > This does not happen if I move the working directory off the NFS share.
->
-> I can't reproduce any problems here on a test NFS mount. But since the
-> old version works here:
->
-> > I attempted to upgrade git to v2.47.1, with the same result.
-> >
-> > I then downgraded git to v2.34.1 (the version for the previous
-> > distribution release) and the error has resolved.
->
-> Can you try bisecting between v2.34.1 and v2.43.0 to see which commit
-> introduces the problem for you?
->
-> -Peff
+Hi everyone,
 
-Bisecting: 0 revisions left to test after this (roughly 0 steps)
-[04fb96219abc0cbe46ba084997dc9066de3ac889] parse_object(): drop extra
-"has" check before checking object type
+The 117th edition of Git Rev News is now published:
+
+  https://git.github.io/rev_news/2024/11/30/edition-117/
+
+Thanks a lot to Ghanshyam Thakkar, Johannes Schindelin,
+=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec, Bruno Brito and Toon Claes who helped
+this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/741
