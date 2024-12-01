@@ -1,99 +1,139 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B517117C68
-	for <git@vger.kernel.org>; Sun,  1 Dec 2024 04:24:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BE24430
+	for <git@vger.kernel.org>; Sun,  1 Dec 2024 04:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733027096; cv=none; b=b+MzFGjZqJbNSymICWKyOrevlciBbmj7io2PI6W28gNOG/O75yuxBsd22O5OCx2FoYdmk655PRySMO9pNFY0izhhL5b6G/nBs+2cAVVvRGWbkaqE1Ob7XgmFFUqjyN6dqmrt3zEKWn81DlVTVfx1qZLjYccFTu3+03WFxRRsoeo=
+	t=1733027897; cv=none; b=RsnVCgseXcT48go9kbPVxgp9gOuNEwk3bl56whNQVQcCPVc2Je1Xs1l53LJd1PbYnQ3YCREpWPr7hyFdc0ECWC0FKLTFZy3PlVB6mDTlcWF42saAS0X3XPFNlQNtZ4iVkVcSHTBIUrVU0H9a9RD44Sm+gZcisewSnQYGXIv0fp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733027096; c=relaxed/simple;
-	bh=Xh8QnDs1ws8uUhQTZ7ZY7HkVYPP757JKwLFaSOhS9T0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rwE2LoNWKAbvXMn3fracQTdtzTN6Uh3+G6gJlv8CwpNh1YM7cnXdV2TkMmleCBqwG48aKUoxAZ707sCdhEki6NkluMX9iSQivemge3ktyOmmVQjOyZBF/SAuZrCW75J2uTO4nP1O4m6AJLz+L8z34lEBW7R9twuLl4UaLuj21p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TIvORTdA; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1733027897; c=relaxed/simple;
+	bh=pAiI+uhz9akgEPMV08bK58hGVaQHk6ZRZsBN+1wIj/c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fD/ymTcti0PsjSYYiuYWbHtnkctpp06f4zL4ubCC17JaqHRG0Zqyw+8K6XR/sZXYuSb2m5mVLp1a/SFhw1Gz9hfho6FZULP2pB6yUInoFWDSANwSGe36rmvLGRjkGYdgmJUTamydzgz2r8tOI9T2X+Sznd5XBKeLSgtjbBdh2p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=z93pvOqn; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TIvORTdA"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e3983fe3aadso1847091276.2
-        for <git@vger.kernel.org>; Sat, 30 Nov 2024 20:24:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1733027093; x=1733631893; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k7ciJivhATEN2tfZS2ekgJqV+tDlyS/pfCB1fSPpiro=;
-        b=TIvORTdA4NYZm8jAr5EWJu2DaWqGMm2Xhrfu5Nj59VJRNdNFNidyQFD+RCoM2oO4ZA
-         a6KAAayJm75y1PfWEQyJUmInZD19g/J0UUYTh5RiNxFeIy0JXiQziM/7wEbOCQfcvkuQ
-         kI01HH6EvwogplDOwqVnsr1tbCM3TaHnusUFtnBpvx+NhFaHG0+RV+1VCdkYZ7Zll4cv
-         Jc17IarubE1xvalssq7UmjEwtFvJfjijfyNA6I322IcQGnayULXLxrcqVvNFHjlr7qxW
-         KVUDQxyI1zioCVWGrBDhlkhMK6DcwWTZ1LtCQ+xUf3BpY2bVuSW+8Nn6zsVfmPG1m+vu
-         1gNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733027093; x=1733631893;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k7ciJivhATEN2tfZS2ekgJqV+tDlyS/pfCB1fSPpiro=;
-        b=VRmnYSsvA9Rei+8ALj6Jk6LMyrFmpp6Qp1BKWRCc2T0Qe4g209yJXOoQOqA283qYii
-         dwOwckVw0KCZHWlsBeJii6tjdYoop5RCCJ80twG9rL7zvNofUGQHTEVWk7K78k6P45Ww
-         GnPAOD7xYwDQNrAd0cmspkeSt+vVh1XNWJZtO+6nknoE8a4AvBXhNbZO82EGEf4PqDUZ
-         Rs9W/mUUqZKvoNU6/LmIo0nLKYC9UmsNmv8jZZ7JXWT8wHfnt0yR5J1uKxhYHWYl5aQO
-         sItwiIH6Y3+0+fehEBQiBvnpZ0iRyznOXLlGiu22kEIw5XDEhDFU3dpKcs6e2c9AoJNV
-         38OQ==
-X-Gm-Message-State: AOJu0Yw6WlxysUNFulGu1RIX2PyfngU2t9fWIeUaZYvLOO5oNjuB5Dmp
-	DpAgO76gFqoiqGP7sIPsRgpALCBJS76MrNFaJQdhxIob3D7VB6EHZbFf2IiNr8WIsgMtoFfltbj
-	l
-X-Gm-Gg: ASbGnct6IL3xS9DLJlhZ2O+YvcXMKXa9YpbVidrWMsa8WV/7l40fF4YQ/ob99DoS6oP
-	z+2QGw9Ywy28XylHtX1w4Tw/kWgBvF+2DVgq23Fh1Z+T9A1xYfCqgwy7NrTsdXxH/64Zu3xo8N+
-	6ceee3s5EcwYEz5p6qJfCjPR8uIoNSxEW+YVMWf3kjxb1+HeJbhJA6PzzjSPGgBtHyMIWel16C1
-	8rJPKwnHnDAavkD5byQt3V2L3qiz5xhJ7Hym/FYR19gL3q8jSvQzwfN3YBleXy+fM8oDMWr5PGw
-	fvjMGzQ4l/s+Z90gf0s3wQ==
-X-Google-Smtp-Source: AGHT+IHNuFvwZibCMivmzoRtRl4ZN81OAm6xeKLDsmnU2TFbqm79oReiYckWToh28/Hqzr/VxpyApA==
-X-Received: by 2002:a05:6902:1184:b0:e39:7050:f5d9 with SMTP id 3f1490d57ef6-e397050fae3mr12688508276.42.1733027093119;
-        Sat, 30 Nov 2024 20:24:53 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e39768fb0b6sm1765004276.31.2024.11.30.20.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Nov 2024 20:24:52 -0800 (PST)
-Date: Sat, 30 Nov 2024 23:24:47 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/repack.c: prune unreachable objects with
- `--expire-to`
-Message-ID: <Z0vlD7/vOhot0qwc@nand.local>
-References: <48438876fb42a889110e100a6c42ca84e93aac49.1733011259.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="z93pvOqn"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9C59B1140108;
+	Sat, 30 Nov 2024 23:38:12 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Sat, 30 Nov 2024 23:38:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733027892; x=1733114292; bh=hhJP99EPq5qM5zWSUFlWHIkn0iDM/vWXHsH
+	FStFZnQE=; b=z93pvOqnGaMWmRHMUCZUe7VCBwuphZqGl7l1Nm73k+xcFJ48SZh
+	Mc379LCHJyUN2QKw32DkRURuC3zm+wjUvACded+nu+Xvn2omhEXfcGcuDUgEQ3+Y
+	9cK0zvTItLlOmrYnjUamm5ZrEMHoQynof08PffLGYnvWqU0p1K/jI7TeZKlbkcfs
+	t9KTH7dSEBQOWtwrUh70UcQSXnXn4mca0It6qOEQJ9hlfsSv9uLEoxqGtAzdK3vR
+	ZZWWyxl239+gbUISYZJ3e/C/n0EOBe+4ADMwxSo1QAiVFxHQMqPO6MYKF+W5IGgD
+	Zi7R4j3jtkhCSznM4MpGdNKvvDm+C1TPQ4A==
+X-ME-Sender: <xms:NOhLZ4KpuHRk7Xb8Nau8AgZWTkxXo-hFzIYZFRVitI_pMPZVXvH78g>
+    <xme:NOhLZ4IUueKTA5PBmQUFtc5Ha9iMCNKhkwgEHDJU7gO_EwASoqgLWkGlTnl6FY_vO
+    J-PwzZ4tdD3sjeOuw>
+X-ME-Received: <xmr:NOhLZ4vfcmzc0_ulKwSrcRyu8pSik8MwAFHyXf1pOlDLjfLOUac2CY2T4i4Q1b4rjG4wgI3J44Qf7--Ei2Z8mRmEZedAj5VMQfnTjGQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheeigdejfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtugifhhhithgvfeesph
+    hmrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:NOhLZ1Z8x0S6jCz69N2_epTHrWuIdflpsXAZogDFYVd_PmU3tEhfzg>
+    <xmx:NOhLZ_b4MPJ1eXYdltAe1pDlhEEJPVsqV-pGVO5TJzcMfyVvJ24uJA>
+    <xmx:NOhLZxChNXZoFuVfozyx7NjM2qjaJ567emV8a9uuq7rRzs6cyw--IQ>
+    <xmx:NOhLZ1aF51D8e-L3meOPygPzUSy0wcow4YNSsKid4UoCtPmIcfsZRA>
+    <xmx:NOhLZ7EY66jrwXmz0iwIQ6N6Cj23tR69_x9kjhBVJ49T2_AmvDwtkTP5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 30 Nov 2024 23:38:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Caleb White <cdwhite3@pm.me>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Ensure unique worktree ids across repositories
+In-Reply-To: <D5YCFP1AV64F.36B116IUDDEE2@pm.me> (Caleb White's message of
+	"Fri, 29 Nov 2024 03:31:09 +0000")
+References: <20241128-wt_unique_ids-v1-0-30345d010e43@pm.me>
+	<xmqqr06un33g.fsf@gitster.g> <D5YCFP1AV64F.36B116IUDDEE2@pm.me>
+Date: Sun, 01 Dec 2024 13:38:10 +0900
+Message-ID: <xmqq34j8m30t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <48438876fb42a889110e100a6c42ca84e93aac49.1733011259.git.me@ttaylorr.com>
+Content-Type: text/plain
 
-On Sat, Nov 30, 2024 at 07:01:03PM -0500, Taylor Blau wrote:
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index d6bb37e84ae..57cab72dcf5 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -1553,6 +1553,21 @@ int cmd_repack(int argc,
->  							&existing);
->  		if (show_progress)
->  			opts |= PRUNE_PACKED_VERBOSE;
-> +
-> +		if (expire_to && *expire_to) {
-> +			char *alt = dirname(xstrdup(expire_to));
-> +			size_t len = strlen(alt);
-> +
-> +			if (strip_suffix(alt, "pack", &len) &&
-> +			    is_dir_sep(alt[len - 1])) {
+Caleb White <cdwhite3@pm.me> writes:
 
-Argh. This clearly needs a bounds check to ensure that 'len >= 1'.
+> On Thu Nov 28, 2024 at 9:14 PM CST, Junio C Hamano wrote:
+>> Caleb White <cdwhite3@pm.me> writes:
+>>
+>>> The `es/worktree-repair-copied` topic added support for repairing a
+>>> worktree from a copy scenario. I noted[1,2] that the topic added the
+>>> ability for a repository to "take over" a worktree from another
+>>> repository if the worktree_id matched a worktree inside the current
+>>> repository which can happen if two repositories use the same worktree name.
+>>
+>> Problem worth solving.  Another would be to fail if the worktree ID
+>> proposed to be used is already in use, but the ID is supposed to be
+>> almost invisible (unless the user is doing some adiministrative work
+>> on the repository), generating a unique ID is a good approach.
+>
+> There's already a `while` loop that tries incrementing the proposed id
+> (e.g., `develop1` if `develop` is taken). However, this is on
+> a per-repository basis, so there's no way to know what's already in use
+> in another repository.
 
-I suspect that passing "--expire-to=pack/xyz" would segfault.
+Usually repositories on a single host are not aware of each other,
+so I am not sure if it is a sensible goal to begin with, to try to
+ensure a worktree ID is unique "across repositories".
 
-Thanks,
-Taylor
+> The problem arises when trying to run `worktree
+> repair` on a worktree that has a matching id (like `develop`) from
+> another repository. The goal here is that the same worktree name can be
+> created in different repositories and the id will be (effectively)
+> unique.
+
+OK, but wouldn't that change the problem we need to solve greatly?
+
+The problem is very much simplified, in fact.  When we are adding to
+.git/worktrees/ of a single repository, we need a unique worktree ID
+given to the new worktree.  And the ID like `develop` taken from
+another repository may or may not be already in use here.
+
+In a repository, a directory ../foo/develop may already be
+registered as its worktree, and the user may try to add yet another
+directory ../bar/develop as a new worktree.  The first one has been
+using 'develop' as its ID, and the "worktree add" command to create
+the new one needs to tweak the basename 'develop' to make it unique
+within this single repository.  Shouldn't `repair` that tries to
+bring in an orphaned worktree that used to be given a worktree ID by
+a potentially different repository (or it could be initially created
+in this repository and then forgotten, and in the meantime there
+could have been many iterations of `develop` worktrees created for
+the repository and while it was missing, its ID plus serial number
+may have already taken) follow the same pattern?  Whatever worktree
+ID that the other repository gave it is invalid in the context of
+this repository, anyway.
+
+So I am not sure why we need to complicate the system by adding
+random number, which does not help in ensuring uniqueness (it may
+make it less likely to collide, but that is different from
+guaranteeing uniqueness), while misleading readers that somehow
+these numbers after the worktree IDs are serving some purpose.
+
+Am I missing something?
+
+Thanks.
