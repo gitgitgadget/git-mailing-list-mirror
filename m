@@ -1,99 +1,78 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBB1134A8
-	for <git@vger.kernel.org>; Sun,  1 Dec 2024 22:25:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBF5134A8
+	for <git@vger.kernel.org>; Sun,  1 Dec 2024 22:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733091950; cv=none; b=NhU8ft5lusKAPZIqakQIThHuTO1xWZA1NjDh/T/dK8q4/MZDd9ODPhKbHK3kD0B+GBqwvQlCUQldl3DWhqegLdEeoyIAEKnEFTSQNd8hSZ/77zLKhuOAl86bo3IJ4jKvdqaAMxy1vPHpLn2ib/nFu0VNJSsnu6YT60RAKCXLeZE=
+	t=1733092156; cv=none; b=E7kTQeJuCjrhkvRcxzhoWroAUGjYq+o/tyA4ql21lKHxX8SzpnXQx1NSABO0BalUwdo2xRFa++3tIhq/OaoTU1RYcINXCEZKv/w0lFck21XgBPGYkwY4G3/Vt4yn6FCuA1hv2Q4TbAZGO1bsxjEe46y+cBRckbd3Mp7/Wkujqos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733091950; c=relaxed/simple;
-	bh=f7tJNtvDMAeRrhJHNcOnDbNjmDzc1uT01g9Pk9yuE8k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ARTKYsj5KkzROpY/FDjGOfjhu+39N64ScVKwN4oWxFtblMSes8jlr3WI3pozNAucmSnv384sIys5PKeG0Dop76fPv2OhAfsAbBMmbMZrHikEHh0tzMun+Lk2HjuV47dfXIAYz1dpruHbpjZhEp3PVkY4n3JADXKMamCDuavdMcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=cepl.eu; spf=fail smtp.mailfrom=cepl.eu; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=cepl.eu
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 266421F383;
-	Sun,  1 Dec 2024 22:25:43 +0000 (UTC)
-Authentication-Results: smtp-out2.suse.de;
-	none
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 12EDC138A5;
-	Sun,  1 Dec 2024 22:25:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id EgVvA2fiTGfkEQAAD6G6ig
-	(envelope-from <mcepl@cepl.eu>); Sun, 01 Dec 2024 22:25:43 +0000
-From: =?UTF-8?q?Mat=C4=9Bj=20Cepl?= <mcepl@cepl.eu>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Mat=C4=9Bj=20Cepl?= <mcepl@cepl.eu>
-Subject: [PATCH] Documentation/git-update-index.txt: add an example of use
-Date: Sun,  1 Dec 2024 23:25:23 +0100
-Message-ID: <20241201222531.1478338-1-mcepl@cepl.eu>
-X-Mailer: git-send-email 2.47.1
+	s=arc-20240116; t=1733092156; c=relaxed/simple;
+	bh=B88FVap8GD4V14IryCTDjTVdvUhsbaU1V7RmcFGO66g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oEwRF5kQaQVZqdtIfHNQ+wEiDJ6XB9itoHh7RHKPVnJYfFswVh6NGOGkMtJKQlX4XXbGJl1to2aDZ//cRw/8o3PNuQz7UZ4v2ryw/R9Ws+0MjSefkddEt2GdkcBQnaAzFDS3RwO58l4EjmC9t0lJlY3h7HkmqUbWs1cuvPvZLLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CpnXDNEO; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CpnXDNEO"
+Received: (qmail 4291 invoked by uid 109); 1 Dec 2024 22:29:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=B88FVap8GD4V14IryCTDjTVdvUhsbaU1V7RmcFGO66g=; b=CpnXDNEOpo6hCURKpg9TPavuP8wuINHCgAqoDmWJc2++slTJjAZyrHgKxb09hvD9CdOr35TW9unwoOkCR/sE4bLxNCNzeAHyVEUFZkoWFRGQIaFLtuQJwW2c/fnTiiUYWGZzXvDQwgvzFcUZ5GQnqTK8y68VZcpw6FfCDQmIdB+Z6ZmmDxRP+GxMQf/engcdOJCRbhMGA9hjscn/13FAnqhS5EBUVqxHT2bQ0xUvvh/ooBZsv9cygnLsbEKyXcH0C3SmdDZ1uK0Mcs8e5pUZwvwLeOhKqeuIB3NBCHV8sh7GS70JWTy1yHPBBO58reVWzMYlRC45mAUPr/yeIwNiFw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 01 Dec 2024 22:29:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14618 invoked by uid 111); 1 Dec 2024 22:29:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 01 Dec 2024 17:29:13 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sun, 1 Dec 2024 17:29:13 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/10] Start compiling with `-Wsign-compare`
+Message-ID: <20241201222913.GH145938@coredump.intra.peff.net>
+References: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-0.999];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.988];
-	MIME_GOOD(-0.10)[text/plain];
-	RCPT_COUNT_TWO(0.00)[2];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo];
-	RCVD_COUNT_TWO(0.00)[2];
-	RCVD_TLS_ALL(0.00)[]
-X-Spam-Score: -2.80
-X-Spam-Flag: NO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
 
-I met this command in the wild and I spent a lot of time to
-understand what it is good for.
----
- Documentation/git-update-index.txt | 9 +++++++++
- 1 file changed, 9 insertions(+)
+On Fri, Nov 29, 2024 at 02:13:21PM +0100, Patrick Steinhardt wrote:
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 7128aed540..da11cbc418 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -399,6 +399,15 @@ M foo.c
- <8> you can tell about the change after the fact.
- <9> now it checks with lstat(2) and finds it has been changed.
- 
-+To speed up other Git commands that rely on the index, such as git status
-+or git commit, user can refresh the index and avoid having to re-check
-+the status of every file in the working directory. This command
-+doesn't modify any committed data in your repository.
-++
-+----------------
-+$ git update-index -q --refresh || true
-+----------------
-+
- 
- SKIP-WORKTREE BIT
- -----------------
--- 
-2.47.1
+> when compiling with DEVELOPER=YesPlease, we explicitly disable the
+> "-Wsign-compare" warning. This is mostly because our code base is full
+> of cases where we don't bother at all whether something should be signed
+> or unsigned, and enabling the warning would thus cause tons of warnings
+> to pop up.
+> 
+> Unfortunately, disabling this warning also masks real issues. There have
+> been multiple CVEs in the Git project that would have been flagged by
+> this warning (e.g. CVE-2022-39260, CVE-2022-41903 and several fixes in
+> the vicinity of these CVEs). Furthermore, the final audit report by
+> X41 D-Sec, who are the ones who have discovered some of the CVEs, hinted
+> that it might be a good idea to become more strict in this context.
 
+Yeah, this is something I've wanted to do for a long time. Your subject
+line got me all excited that it was done, so I was a little disappointed
+to see that it's the start of a long transition. :)
+
+Still, I think it is good to start, and the way you've laid it out seems
+pretty reasonable to me.
+
+Regarding those CVEs, I suspect that -Wconversion is at least as
+interesting there, as it catches direct assignments that may truncate
+(I think those two were a little more complex, but a common issue is
+then using the truncated computation to allocate a too-small buffer).
+
+But we have to start somewhere, and this may be a more tractable place.
+The patches themselves looked mostly good to me, though the one with the
+casts raised my eyebrows a bit (I left further comments there).
+
+Thanks for getting the ball rolling on this.
+
+-Peff
