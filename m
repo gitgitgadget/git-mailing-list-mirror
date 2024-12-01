@@ -1,85 +1,139 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D791863E
-	for <git@vger.kernel.org>; Sun,  1 Dec 2024 22:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B714B4CB5B
+	for <git@vger.kernel.org>; Sun,  1 Dec 2024 22:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733090996; cv=none; b=VP5WH0QwvUcTfCxI0kjX5/LAnVZiBwfK4+lPNw4jwDzQ9eRw37vTSMSRxW21RS++tSqO5WBPkzSZmZbpTIg2sB5Mgw6hL/bFWlD8xlysYL6ZrnxwCP1ZNQKlIastFsg2Sjgia0/wUtkiyqZ6TYzeKVTX5w6IH+zVOitNkQs0X40=
+	t=1733091890; cv=none; b=VEfJFEJDJ+IEzI4mJqMtKZQ7kDolCpHElsh+fCxPZF4WjrZxd+92lczumBTlrNxE5XU2NWmch9Qu94BXoaXCYgdn5SBlV5zUsl5FG9tZFUGOzyoKZ0fOK/GUQtmlNmspDNHbren00mHIS+ezCGoHwNf/RiHWSgYw/fh444nkfsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733090996; c=relaxed/simple;
-	bh=Vpq9MFVX2lzZZS8QQx1LNycB3Y9nUKZmg7WWYrH5Yag=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pkuYv4X/QDahKkybzA1sYlPSTy9da8XKlGpCdhIjtf56LlW9twC02yeV8gXqHjQkHab7pOuhSFS6hETKuDlpDsZtAUvhL7ye35b2CL/M2gqU4pQl+Cffm5MSoIl5sO/u2VJIRe0lFP+PY80gCLm5sB8nzteD3J161sGDez5tyN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VSkNOEAQ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1733091890; c=relaxed/simple;
+	bh=5Qt+bORMpuzEqZ7izJG7LfhQuKvUwr8UrlzisQHZMqU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZqYJyinMeA4gCDxWLctYecd8kYvIfppcaDNfe3EfkFyWRcgZNCiDzBHLBrAE0N1sliCFDYtIawCxLumIDH9PxR9jZAUpDrkp3mYHNZZifuvMNJ6b9WSXlF/2QPtZVvVvUPbkszxd4oHuiBGuonhrLRTzqa01+2gXjYChHMM/McU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YYysu0Zi; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VSkNOEAQ"
-Received: (qmail 3939 invoked by uid 109); 1 Dec 2024 22:09:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Vpq9MFVX2lzZZS8QQx1LNycB3Y9nUKZmg7WWYrH5Yag=; b=VSkNOEAQkEIMpvcJDJNciT8h3nQ4RJVbXLQWwdDzsdhoGCo6nFth8VHgcTA3v25IC4GIZi3V/ftOJOTX6wpe9c28yzJpUPZCY1jF9YyNKXfC5LZ+f1Uw0MskIUJAMCa4zB0TKoJgH4MBUDblRhl90h0GDZWW7DQtGPpZvI4cq/4qeD526uJQ0XuopqHaBdvYElZSwnBsVp5YFRLiA7BRhKpTm1m5qYHWXW6h9K/k+4OCFkKuCiOIvbfpKHmbrZw/E8mcAlMm/K66oe5lcsnC6NhZ9WO1OYfegrC5RxTu+065aWUgTDQEYZUqfG0U8y359ORpkX/WsmvK+pjCv+hIRA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 01 Dec 2024 22:09:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14463 invoked by uid 111); 1 Dec 2024 22:09:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 01 Dec 2024 17:09:52 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sun, 1 Dec 2024 17:09:52 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 10/10] daemon: fix type of `max_connections`
-Message-ID: <20241201220952.GG145938@coredump.intra.peff.net>
-References: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
- <20241129-pks-sign-compare-v1-10-fc406b984bc9@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YYysu0Zi"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-53dde5262fdso3905600e87.2
+        for <git@vger.kernel.org>; Sun, 01 Dec 2024 14:24:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733091887; x=1733696687; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kiRKirPNhv/KUQvlBFg05YAJVg3tqc3mWuZ6Y3p0q2o=;
+        b=YYysu0ZiDkzGK2LMIjxGQssaqnUXjLtfUfN3SjNbzfQifue9z4fiWALY7PlRxreFeG
+         5qFCmfaMwOI0BIVmi0p7jGaNAuc6DSCpkeDrmrZ7TAQI9EmtqVjUerfjJ/AgMbSTfM84
+         aVOHOI3ANIt3+P0lFt1uL9FodnPbB/jcS/+igftAV2plp5AJo69ys4k6q3HYMxAW+Ny1
+         ADtnYck/0vqAapdIs7avm4U7bNCOsporCyuP1nyq/mYm8Us7rQtTtIDDhForZbSRt40Q
+         6fSaIz7mJUqGNKnLLH3oK7yc2bhuAXtQbHBhDQwyYmyffPCVtaQ9A4KBCmt0W73Gtnmv
+         yF1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733091887; x=1733696687;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kiRKirPNhv/KUQvlBFg05YAJVg3tqc3mWuZ6Y3p0q2o=;
+        b=iwgX6yGldSJ+kE3gH1eDwjUL5vskhzWkXi2GQA4ACyC/BDFaPTsjYj5/sTHLsJsWxN
+         /n4O4wsUTz3Rf0XnjwolaiKK42fgYCKY7sOxMid2VRJMXdIikpQfb/y/gOrmqhFLf1SH
+         25XSCEamfaaGaAIqevfXFLYNpbhwxGYrpmtt79qjgfQ1bxpcmcydXAsvt/pCO5mbNNkp
+         sPsmac6M5OVo3XQrfj7g+yQUGbjXTAzOCC2TRHyPovXWOw5whku3U776HEo7dg7kCUtK
+         Si478X9luR0QeBsAr/ccJGsOCWmOmTNoYLLnZYuj+20jP1HwAAWY9hvN/c7ehm3RHr6w
+         /z8w==
+X-Gm-Message-State: AOJu0YxuAPBHO1+d8EAijloBlmGGy6a8NuyyixFQ5yPvRwF56HzHO8KC
+	t5ar7fWaicz+X0nOFtESrwB84dX9iisUQTE4CmqFB+g6RltYilyUK0vOtKPAssWmfHnYQp+xDQ4
+	e12C3xLdiCnqVz3rEmqFntcKEKhBTagRI
+X-Gm-Gg: ASbGncu3hQdY2yL73K+4UeIrYBq9L28UuNdYLiytbVnkMMQ1Olaa8YLHWwWzx5cpAPi
+	GFhQr5MMz5P4Lwpw3mJWWpOQn78iD8Xo=
+X-Google-Smtp-Source: AGHT+IH76JCREMwSDsVWsrJFxDopZ7BKUz8jf619x72Guca4SYHuVIrnu/v/cQWeJvxGuXIiEA7X/YjhmcBkHoHtTjg=
+X-Received: by 2002:a2e:be9b:0:b0:2ff:c83b:4dac with SMTP id
+ 38308e7fff4ca-2ffd60e173cmr97791011fa.29.1733091886475; Sun, 01 Dec 2024
+ 14:24:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241129-pks-sign-compare-v1-10-fc406b984bc9@pks.im>
+References: <CAJ-DG_DpNVmn1e=8hBX4YbEhzgX4xxn7AVBQnhKJOvHX4hx7kA@mail.gmail.com>
+ <20241130163801.GA110697@coredump.intra.peff.net> <CAJ-DG_CNPGgfafyTcKWYeNXHD4gsspWakzQoRhfggMqZjenkyg@mail.gmail.com>
+ <20241201213636.GB145938@coredump.intra.peff.net>
+In-Reply-To: <20241201213636.GB145938@coredump.intra.peff.net>
+From: Dmitriy Panteleyev <dpantel@gmail.com>
+Date: Sun, 1 Dec 2024 15:24:35 -0700
+Message-ID: <CAJ-DG_A3RY0ngY-pc6riho=OyzX2VjeaR2LRGb5=ru3CNruECA@mail.gmail.com>
+Subject: Re: [BUG] commit fails with 'bus error' when working directory is on
+ an NFS share
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 29, 2024 at 02:13:31PM +0100, Patrick Steinhardt wrote:
+On Sun, Dec 1, 2024 at 2:36=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Sun, Dec 01, 2024 at 10:17:44AM -0700, Dmitriy Panteleyev wrote:
+>
+> > > > I attempted to upgrade git to v2.47.1, with the same result.
+> > > >
+> > > > I then downgraded git to v2.34.1 (the version for the previous
+> > > > distribution release) and the error has resolved.
+> > >
+> > > Can you try bisecting between v2.34.1 and v2.43.0 to see which commit
+> > > introduces the problem for you?
+> > >
+> > > -Peff
+> >
+> > Bisecting: 0 revisions left to test after this (roughly 0 steps)
+> > [04fb96219abc0cbe46ba084997dc9066de3ac889] parse_object(): drop extra
+> > "has" check before checking object type
+>
+> That seems like an unlikely commit to introduce the problem you're
+> seeing. And how did we end up with 0 revisions left to check, but no
+> final outcome? Did you need to do one more test and "git bisect
+> good/bad" on this commit?
+>
 
-> The `max_connections` type tracks how many children git-daemon(1) would
-> spawn at the same time. This value can be controlled via a command line
-> switch: if given a positive value we'll set that up as the limit. But
-> when given either zero or a negative value we don't enforce any limit at
-> all.
-> 
-> But even when being passed a negative value we won't actually store it,
-> but normalize it to 0. Still, the variable used to store the config is
-> using a signed integer, which causes warnings when comparing the number
-> of accepted connections (`max_connections`) with the number of current
-> connections being handled (`live_children`).
-> 
-> Adapt the type of `max_connections` such that the types of both
-> variables match.
+You are right, Jeff, I needed to run one more bisect. But it does point to
+the commit I linked above. The bisect result is:
 
-Makes sense.
+04fb96219abc0cbe46ba084997dc9066de3ac889 is the first bad commit
+commit 04fb96219abc0cbe46ba084997dc9066de3ac889
+Author: Jeff King <peff@peff.net>
+Date:   Thu Nov 17 17:37:58 2022 -0500
 
-> @@ -1315,10 +1313,11 @@ int cmd_main(int argc, const char **argv)
->  			continue;
->  		}
->  		if (skip_prefix(arg, "--max-connections=", &v)) {
-> -			if (strtol_i(v, 10, &max_connections))
-> +			int parsed_value;
-> +			if (strtol_i(v, 10, &parsed_value))
->  				die(_("invalid max-connections '%s', expecting an integer"), v);
-> -			if (max_connections < 0)
-> -				max_connections = 0;  /* unlimited */
-> +			/* A negative value indicates unlimited children. */
-> +			max_connections = parsed_value < 0 ? 0 : parsed_value;
->  			continue;
->  		}
+    parse_object(): drop extra "has" check before checking object type
 
-If this were a common pattern, we might want some kind of helper that
-parses and clamps the negative values. But I suspect it's not common
-enough to merit that, and it's not too many extra lines of code to parse
-and assign separately. So this looks good.
+    When parsing an object of unknown type, we check to see if it's a blob,
+    so we can use our streaming code path. This uses oid_object_info() to
+    check the type, but before doing so we call repo_has_object_file(). Thi=
+s
+    latter is pointless, as oid_object_info() will already fail if the
+    object is missing. Checking it ahead of time just complicates the code
+    and is a waste of resources (albeit small).
 
--Peff
+    Let's drop the redundant check.
+
+    Signed-off-by: Jeff King <peff@peff.net>
+    Signed-off-by: Taylor Blau <me@ttaylorr.com>
+
+ object.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+> Or alternatively, can you share what you're doing to test the bisection?
+> That might help us reproduce. I kind of wonder if the results might not
+> be deterministic, to end up at an apparently unrelated commit like that.
+>
+> -Peff
+
+I am not at all familiar with the standard process for this, but the way I =
+ran
+the test is:
+
+(0. cloned test project into /nfs/proj/ and made a change)
+1. cloned git repo (from github) into /tmp/git/
+2. ran bisect in /tmp/git/, starting with v2.34.1 (good) and v2.43.1 (bad)
+3. ran `make all` in /tmp/git/
+4. in /nfs/proj/ ran `/tmp/git/bin-wrappers/git commit -m 'test'`
+5. repeated 2-4
