@@ -1,105 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB4F1D86F1
-	for <git@vger.kernel.org>; Sun,  1 Dec 2024 22:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D82720E3
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 00:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733093052; cv=none; b=WjxQrbm6SyNNUcUxqIjQgt9pRE7RkURUGeZoWASlWLyRNeuQsfxrqMWxRKzkuoSa9InAfYfADYnfQTbeGUMXzcL49VSZpvoOjKc4YYmcPJNIPr4yTQlRoc3FmbrEYu1YNjV1dvGAHH+CSnyWqM9ikqJEV5c/9t80v3awXKjI7XQ=
+	t=1733099952; cv=none; b=HoAEkPiRs+Am0yTHi43xfi3wmrMQ5DgseMZQHdBfHZN5kHUDnshwUgh3iF15/V+e3eqZ7KlJdljTptxy/hB01q38mZB6d2FF+5BxKpHIiHR6N9WGHviKdJPfZNymg1Pn74loSBgSNzsqaSxGz+U5j6CpX0eE+FV6gpG7oZLQiEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733093052; c=relaxed/simple;
-	bh=wEQgS0CMVfMRk2NSR9Z3uzWdFun+DBT8Y7xjR0mAx1w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c0/TjhX/QZcWm0GbL6Rn53ZoAuRTgrB2wlZhGu2PW11CwP7F2mRe4C/uS8pWWHtQh2LgM+v8/IWRw/N0E7wFerQANplzc6g0w3hdn0i3KCqKwZssJyEgtiTFcbriBzazDHfIDcHQn+eEl1gVaoQrsRq7pt3AEeuorVgn0uY4iws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PomERZz6; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1733099952; c=relaxed/simple;
+	bh=rBwWgieZI4CM7Rb0ZjDLlsuB8gV08kBivq8HiEJl+8U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XeCyKfjKBHPPtA68e8khcoejlCkjo0ohEg8qELQxd65KWekuLH45Y2aWQB5+0kkZInpd6oHmQD6PRD0KmGDgkcKJzMCL2Lnqr+P6VIdQq2EniLXF5stAx8DfnfTpseQqvs5v/TR4Ecx1W6qrQG0iNJ5D4LMjkj6xohGt00TDfPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wx/qVp+y; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PomERZz6"
-Received: (qmail 4512 invoked by uid 109); 1 Dec 2024 22:44:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=wEQgS0CMVfMRk2NSR9Z3uzWdFun+DBT8Y7xjR0mAx1w=; b=PomERZz6aZ4PBQildPibJ5JN6mUbnDoU/7V7uKxHB/3RMX99R606ns6j01CC5rlYRpgwtrve/HOs4NGTjFbCHsd8rTPW65aiPFg8MvfRLQE9ZzH1vTY92ZiGQpJTnY+g+cNNq1B5odMmoTx6gmc7ZBrJ4SRohTny/evtNajNhNxZ1CVPw9PxhQLy21kbyNFGtDit8qdHCyN1Hc/gcsLUDrgiDwj/is6nM6JjwojG4dKrPmaMav6c/ELjZ6vH8FsI15McnlNq4CvRXvhOvWjTPhI+WoohxaJFYkmrSaFErZ8r3P/xET7L7kJYU5hGJRO+LwJ5NQI9FMIWz65NrlijFw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 01 Dec 2024 22:44:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14808 invoked by uid 111); 1 Dec 2024 22:44:09 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 01 Dec 2024 17:44:09 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sun, 1 Dec 2024 17:44:08 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@jowil.de, git@vger.kernel.org
-Subject: Re: git tag -a HEAD leads to ambiguous branch name
-Message-ID: <20241201224408.GJ145938@coredump.intra.peff.net>
-References: <47cdf937-6192-4c83-a0e5-700e98f36c1e@jowil.de>
- <20241127142711.GB1712@coredump.intra.peff.net>
- <xmqqh67ss1a5.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wx/qVp+y"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id A30AB114015B;
+	Sun,  1 Dec 2024 19:39:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sun, 01 Dec 2024 19:39:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733099948; x=1733186348; bh=S6ppPPCYyf38qgI/k/4iOlClry76N4C6A55
+	SPFbaosk=; b=wx/qVp+y679daJLDp2ddGSKuSLHti1n5ChazwRL89URb0qzG4XL
+	unDOHFytqArhMxwR1vh5q8qNismEqX7z1rClNGMw3jW7Kv3617jecTQct0MwFJ7z
+	E7jiSzI1psZ/InkfixD2tqurKtWvo+gcB6psUrUu6nmLxS5iHqX9ytHsbuJ/sDOm
+	olTL9wXPfUlOgsMf2MmY/NwSxWEGQT4acLIFYHnLdj4TM6SWLBdHKw7WIRvbyJae
+	LC2aXXtHrgteNRvLwcjFRt08f3vI0Kx9fYARX6iBi8YbXUC5v8VWAY2IkppD7yna
+	kSaF5weuZbdph6fBr+vLQVkPNEN9IL6S0xQ==
+X-ME-Sender: <xms:rAFNZ8NB0xYWSoH5CktXvd8KuDBfqABkoa0Z1E1Mhl0BQnLh3Go4gQ>
+    <xme:rAFNZy9OwobYSccr95i49jeVjWzE1UOCrEVHSfWnU08WDS_7sxpIL1ubK54L_qLnt
+    vM5XLfHwmdLXQ98sQ>
+X-ME-Received: <xmr:rAFNZzTcrb_pxogXvghVkvcEoKxY6aoAJv1vPcEu8_7JzNcv_BDgV3AlXrEYzGyEzEqXhyocpsOjZOs0QOKscGHdhN1fDFr-xOzYaE8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgddvgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegtugifhhhithgvfeesphhmrdhmvgdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rAFNZ0vmsC28fkgDbq_bzMlFWW-c6q36JkgTCOh_8Btfi7SBw3eUVg>
+    <xmx:rAFNZ0c0ofa064ylA_Jcldpn-qeZVCre8UFk4Q9FKmu42OvWdiBcSA>
+    <xmx:rAFNZ42o9RucV1gp0gcg1sUxzZLcDoxBy-JDvT4h43IPi9WN_B4TJA>
+    <xmx:rAFNZ48Dobf1I0ZVC2C7VUb0apY3h76asWUCvy920INprofWc-iNyA>
+    <xmx:rAFNZz7Vk1YYgB-NEakp73awSKRxRK7a_obHlpwBKGuByFW9EL-HZaTG>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 1 Dec 2024 19:39:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Caleb White <cdwhite3@pm.me>
+Subject: Re: What's cooking in git.git (Nov 2024, #10; Thu, 28)
+In-Reply-To: <fbda37b9-41e7-4b18-a831-dfb5a9a9c54f@gmail.com> (Phillip Wood's
+	message of "Thu, 28 Nov 2024 15:34:40 +0000")
+References: <xmqq8qt3q5t1.fsf@gitster.g>
+	<fbda37b9-41e7-4b18-a831-dfb5a9a9c54f@gmail.com>
+Date: Mon, 02 Dec 2024 09:39:06 +0900
+Message-ID: <xmqqy10ylxzp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh67ss1a5.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Nov 28, 2024 at 08:30:10AM +0900, Junio C Hamano wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> diff --git c/builtin/tag.c w/builtin/tag.c
-> index 93d10d5915..c91aba5e26 100644
-> --- c/builtin/tag.c
-> +++ w/builtin/tag.c
-> @@ -449,7 +449,7 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
->  
->  static int strbuf_check_tag_ref(struct strbuf *sb, const char *name)
->  {
-> -	if (name[0] == '-')
-> +	if (name[0] == '-' || !strcmp(name, "HEAD"))
->  		return -1;
->  
->  	strbuf_reset(sb);
-> 
-> but this (together with what "git branch" uses) is unsatisfactory
-> for at least two reasons.
-> 
->  - This helper function and object-name.c:strbuf_check_branch_ref()
->    should not be named with "strbuf_" prefix. 
+> Hi Junio
+>
+> On 28/11/2024 05:35, Junio C Hamano wrote:
+>> * cw/worktree-extension (2024-11-26) 8 commits
+>>   - worktree: refactor `repair_worktree_after_gitdir_move()`
+>>   - worktree: add relative cli/config options to `repair` command
+>>   - worktree: add relative cli/config options to `move` command
+>>   - worktree: add relative cli/config options to `add` command
+>>   - worktree: add `write_worktree_linking_files()` function
+>>   - worktree: refactor infer_backlink return
+>>   - worktree: add `relativeWorktrees` extension
+>>   - setup: correctly reinitialize repository version
+>>   Introduce a new repository extension to prevent older Git versions
+>>   from mis-interpreting worktrees created with relative paths.
+>>   Will merge to 'next'?
+>>   source: <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me>
+>
+> I've had a look at the range-diff for the latest version and had a
+> query about the removal of a check from one of the tests[1]. Perhaps
+> we should wait to hear from Caleb about that, but if you're keen to
+> get these merged down in time for the next release we could just fix
+> up the test later if it turns out to be necessary - I think the code
+> changes are all fine.
 
-Agreed here.
+Thanks for reviewing (and thanks Caleb for working on) this topic.
+I see the latest iteration v6 has added back the extension checking,
+so we probably are good to go.
 
->  - The right place to do these checks is check_refname_format(), but
->    it would retroactively forbid porcelains from using HEAD as the
->    name of a branch or a tag (which is technically allowed, but it
->    is dubious anybody wants to do so because it is so cumbersome to
->    use).
 
-But I don't know about this. I thought when we outlawed "git branch
-HEAD" that it was quite intentional _not_ to forbid these names at the
-lowest level in order to retain backwards compatibility. They are just
-about preventing common UI mistakes.
-
-I'm OK with revisiting that decision, but:
-
-  1. I think it's orthogonal to adding a similar UI-level check for
-     git-tag.
-
-  2. We'd probably need some deprecation period or breaking-changes
-     moment to do the switch.
-
-> There is a dubious test in t5604 that expects you can create such a
-> tag.  t5604.22 wants to create one:
-> 
-> test_expect_success 'clone with reference from a tagged repository' '
-> 	(
-> 		cd A && git tag -a -m tagged HEAD
-> 	) &&
-> 	git clone --reference=A A I
-> '
-> 
-> and t5604.24 wants to use it.
-
-Weird. Comes from 09116a1c31 (refs: loosen over-strict "format" check,
-2011-11-16). I don't see any reason it could not just be "foo".
-
--Peff
