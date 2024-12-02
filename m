@@ -1,70 +1,72 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968D633CA
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 02:48:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908FD18E29
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 03:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733107696; cv=none; b=az27PuHn/2V9FK3YdoQw2pef4tmMOsB3oBIFzAT++XiRtQO9pkGcU2cLq40eUCMRcV1Syx/ojQhufe0j+orqxM19WPxJO6acHF/z1qRS7VbHPmCi+/kcX1ERjr3VYFH3WdbYFUBiNI2J4S4ixfjdTqimtei369X7bNfid+KyPks=
+	t=1733108490; cv=none; b=DZuypqg4FZZb5khL0QSfEP6K7y9RbGvUWeWw3TyTSdo/ffyCpYKUsp0+akCydrWMJtAW2KHC757ECkgYzIPdYsJ5nu6iyJ8Sw1wB0ZnjfiI7PQ0GI7L9+mY8xFzC1QmMfYA6UiW1d6wCAV2WvS3X7UbXTZLE4RLiR5JpEZloa9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733107696; c=relaxed/simple;
-	bh=anlBgO3avre3LxRpD+zZRaCpqS4lnb3Xq0vmH4VN5p4=;
+	s=arc-20240116; t=1733108490; c=relaxed/simple;
+	bh=/o8AouhtbPD/p8XT3u4hozpBPEj1sVhQRqtim0XXD1U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PaTe9kgQxoU3BE6Z0UqRyjoGUodhII5Eo7Z4EGFdXqTr+IZZIF3xXvCBLKwSdpBYYkpymLBI5bYEh7gANjrLlNFGxjD5mb0pltk7bYuqzc+KPMu9AoZdajElrCrvuPxWRrTwTDz/65NDzkg/A4Mxh3Due0g8w7GYNvY1Hk+sZnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=z5uWY6GD; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=Mw3YZVlhrNJOmsiggMtGpTk0Cxv9mJ5z8GPB5U/dcWUvGsG136kqFr8gAGOMXyoK4yeynok032IXqaPfndCwFO2H4kVNHTWB/hQdQhfA4B9xnnGyj6JVXbDMfD1vsO3Xx/v8axQcNr1HnKwVY3N9T+svykVS7O4YRx4TApjB7m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3TLH03s+; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="z5uWY6GD"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id A24861140107;
-	Sun,  1 Dec 2024 21:48:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3TLH03s+"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 862032540115;
+	Sun,  1 Dec 2024 22:01:27 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sun, 01 Dec 2024 21:48:12 -0500
+  by phl-compute-11.internal (MEProxy); Sun, 01 Dec 2024 22:01:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733107692; x=1733194092; bh=/ijyI5TCaPlpoq0ImrTYGOerW9PmSkdcYqw
-	o591+kDs=; b=z5uWY6GDzdW1o632tmwwwgJkey4OUQVrQMVEC9b+WXINgZc4Osv
-	x8yDkqyomsvP+kyDjmI03TZKgDV0APmzS9e2MkJqLVlC8UBI9fNKYxUnc5YZ8wWF
-	8FmGOJegk9W0rwxaTvSghffp0bGZHPYjBMDL9/vn/ouMVC3H+YVB5VlFOFX4AMTP
-	8YrqEbhLi9CQ5qNP5c2lEXPwmRAoiRJLMiBZi+70n8FQeAbezKrGqSQW5vBcU8fM
-	LZxtWxVn7ypJQjgyVc0ZbzNcwoP4NXs3bs1SYULZreYHgTDiCb4OG7xpETlSjppA
-	cFUND6Qw/F15bUMdoKWrZkoL4Z5d16lj86Q==
-X-ME-Sender: <xms:7B9NZ5HtzsEa5rypfUqBNloCkSl1NpRpDznf2FyqWb6oqBbuNFFX_w>
-    <xme:7B9NZ-WILXaMDBqJHPh69sSeTw5qEvlEa90IgcI4Nf9wFW2QTBMEnM9SRVrPfjook
-    xYLI4N9n42MBIDTdA>
-X-ME-Received: <xmr:7B9NZ7Jf3fpoglNqd7ZGtP0HcpL09138vflAI7DwhbyLbOw7-wkNq7QgGx2djoxGYyZwsPJAuswu_IlQ0bA6wigmYk9OOTqZjczpX-o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdehtdcutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733108487; x=
+	1733194887; bh=RH5eI/dVKqNRJV/leYSLZ+hZmJuRSMjbBHkluPEODFI=; b=3
+	TLH03s+013roBwztXldNaH4Vw7RXAFX8rrEOXH3Ja00SRoaMD2bxgF4dRQo+DIyX
+	zu/3/Y4nBd8wS81EymIc8QGqQ76HTNbj27MEIbqFsX6og1NnZm7sNdEJhJgHh72V
+	Kh7mQMWahMsxGSnuCzmcD1il24ggTsE4HMLabKCbwM10/esp9hXD3W6d+ggqJkbn
+	ovqr1itzRC7gHBRs4EnJWHlm4bUSL1aEZE245Xf9Ys6hLA983XhUzoht+bqj+CLs
+	czAzEtdh7fsB7feWLE7zaPlCPCheHwesr5Pz/gjJ96qjEraw3CEWjl+peO9bCgog
+	fUW74FMbFW0Ajj9oco6fw==
+X-ME-Sender: <xms:BiNNZ6IV7osPqsLCqjwbuBWVTLgqAVNw4kp-EZBwv2oy3B6kzJCAhA>
+    <xme:BiNNZyLeHDFd7VdFYVHEJcIOg1g0-RrWW2qU56DfII8FnU985RHDGQ1WBb-it_g6k
+    zHlj1t7BaTmC1hnSQ>
+X-ME-Received: <xmr:BiNNZ6t4lROADyLR3efKzq8KO1KBywlKNyjL1C5PL3rOuVoqdhZUv1LlFY0sGXBWAcHRHNJ9JUkUd7UgKPpfWq9WgqICRkax2DHRd7E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdehvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtugifhhhithgvfeesph
-    hmrdhmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
+    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgtvghplhestggvph
+    hlrdgvuhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
     thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7B9NZ_EWN41hVac92Jty4vbahldIWkSUgtx8WSgLysUiOBl6q6vsgg>
-    <xmx:7B9NZ_UOgf-_ELvC156GEAYFjtwaZ5vKBt4u4j-BP8S2ShVDq-qd-Q>
-    <xmx:7B9NZ6MYJn4n9suD1UHJnwXEFy5btpwuZWQp2fExXJM5rvYxg07s7w>
-    <xmx:7B9NZ-2APHNP2odesKWjLzsqhE3Cd7wKOUfr2GPzOtqLwbnaZfYW-w>
-    <xmx:7B9NZ6TPbZ6gzEKlIHRC6ProWOh4mDFXW1Du1fUvB486g1Nq9PgcxUVD>
+X-ME-Proxy: <xmx:BiNNZ_ZulW0T5vCJk7LK2EQYOt_5l1Bv_u0X92M2R0bKFx0dTxJ7xA>
+    <xmx:BiNNZxYHXcW-xZ8Iyr99kl2_szhVNVQqjcJ7q5Y2qB1a3RsZqCzJDw>
+    <xmx:BiNNZ7BkKLrNOl9WDsXyUWT_R3FVWcIi9ib-xjFYyqRkG3zXrqq-cw>
+    <xmx:BiNNZ3aQhnKjhi1UMNNKWuzuzDIOg_keXKcYImQ6VXfuJEbT06UgMw>
+    <xmx:ByNNZ1Gw1tgtOu0WX_i7DV5nheOuFsWjkjLZ1vAEElLB2upIIC4KXo7Y>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Dec 2024 21:48:11 -0500 (EST)
+ 1 Dec 2024 22:01:26 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Caleb White <cdwhite3@pm.me>
+To: =?utf-8?Q?Mat=C4=9Bj?= Cepl <mcepl@cepl.eu>
 Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2024, #10; Thu, 28)
-In-Reply-To: <D5Y4Z7I3PJW2.C2AE3WAKRLLH@pm.me> (Caleb White's message of "Thu,
-	28 Nov 2024 21:40:28 +0000")
-References: <D5Y4Z7I3PJW2.C2AE3WAKRLLH@pm.me>
-Date: Mon, 02 Dec 2024 11:48:10 +0900
-Message-ID: <xmqq8qsykdg5.fsf@gitster.g>
+Subject: Re: [PATCH] Documentation/git-update-index.txt: add an example of use
+In-Reply-To: <20241201222531.1478338-1-mcepl@cepl.eu> (=?utf-8?Q?=22Mat?=
+ =?utf-8?Q?=C4=9Bj?= Cepl"'s message
+	of "Sun, 1 Dec 2024 23:25:23 +0100")
+References: <20241201222531.1478338-1-mcepl@cepl.eu>
+Date: Mon, 02 Dec 2024 12:01:25 +0900
+Message-ID: <xmqq1pyqkcu2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,29 +74,60 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Caleb White <cdwhite3@pm.me> writes:
+Matěj Cepl <mcepl@cepl.eu> writes:
 
-> On Wed Nov 27, 2024 at 11:35 PM CST, Junio C Hamano wrote:
->> * cw/worktree-extension (2024-11-26) 8 commits
->>  - worktree: refactor `repair_worktree_after_gitdir_move()`
->>  - worktree: add relative cli/config options to `repair` command
->>  - worktree: add relative cli/config options to `move` command
->>  - worktree: add relative cli/config options to `add` command
->>  - worktree: add `write_worktree_linking_files()` function
->>  - worktree: refactor infer_backlink return
->>  - worktree: add `relativeWorktrees` extension
->>  - setup: correctly reinitialize repository version
->>
->>  Introduce a new repository extension to prevent older Git versions
->>  from mis-interpreting worktrees created with relative paths.
->>
->>  Will merge to 'next'?
->>  source: <20241125-wt_relative_options-v5-0-356d122ff3db@pm.me>
+> I met this command in the wild and I spent a lot of time to
+> understand what it is good for.
+> ---
+
+Missing sign-off.
+
+>  Documentation/git-update-index.txt | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 >
-> There is one test that I've updated (added a check that was accidentally
-> removed). I can send that as a reroll if you'd like, otherwise I think
-> this is ready to go.
+> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+> index 7128aed540..da11cbc418 100644
+> --- a/Documentation/git-update-index.txt
+> +++ b/Documentation/git-update-index.txt
+> @@ -399,6 +399,15 @@ M foo.c
+>  <8> you can tell about the change after the fact.
+>  <9> now it checks with lstat(2) and finds it has been changed.
+>  
+> +To speed up other Git commands that rely on the index, such as git status
+> +or git commit, user can refresh the index and avoid having to re-check
+> +the status of every file in the working directory. This command
+> +doesn't modify any committed data in your repository.
+> ++
+> +----------------
+> +$ git update-index -q --refresh || true
+> +----------------
+> +
 
-Yup, v6 looks good.  Will queue.  Thanks.
+Two comments.
+
+ * The example before the new one is for a rather esoteric corner
+   case of running Git on an inefficient filesystem.  Perhaps this
+   new one more commonly happens, in which case, it probably sits
+   better earlier in the list of examples.
+
+ * Because most (if not all) Porcelain commands like "git commit" or
+   "git status" automatically refreshes the index, it is of dubious
+   value to manually refresh, like your example does, before running
+   them.  You pay the price either way, and the only difference may
+   be the time (and brain cycle) you spend to manually issue the
+   "update-index --refresh" command.
+
+The benefit of refreshing the index manually beforehand mostly comes
+when you are running two or more plumbing commands that do not
+refresh the index by themselves.  We used to implement an equivlent
+of today's "git status" using "git diff-files" and "git diff-cache"
+(yes, we literally ran these two commands in a row to show their
+results in the output, one for "changes to be committed" and the
+other for "changes left in the working tree"), and before running
+these two, the scripted implementation of "git status" ran "git
+update-index --refresh".
+
+Thanks.
