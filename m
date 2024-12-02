@@ -1,67 +1,68 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416B21FDE2E
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 13:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAAF1FF7DD
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 13:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733144460; cv=none; b=Js3JSXNhclmKxcUda2WQ1oQklkJ3xIsH8IcmOsonq6ROGBVOL7afZev96vRhTA1yFJBOEiU9xLhbKxOfHAjTctop8NPcHWaprcmVUClGPu6erJfzeEr0NXsfnvzey5p5FbXcSiapZCN/MmJs+8mfE9exAphhCajwQA4kCKcCX6Q=
+	t=1733145495; cv=none; b=siibg4ps2TtcqHgcDIBnrYRHfvgfM1UptxOOHecvfDbF6yooBsFjrk3gu+OU+Jbn6FsxUpttQ8GVH72KlMRSG5DO7Y1DI5z7cdr76c2ORKpTM3rRHW/IAttyI/gBEMxdF1oTbF/AwQCfeOzquRWaD4xE2fCcFRUEk9OedI2aSsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733144460; c=relaxed/simple;
-	bh=VEj9+bwRy1FkflOEeu3PWbtW0zZgsGWjW9FQiKhWKZk=;
+	s=arc-20240116; t=1733145495; c=relaxed/simple;
+	bh=JNljNFBl5vvh1U6gt1QoTaDheTJuS8pXAsxXvckWkvs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dgo127db9dTljgXHUraJM0qkWZINCZgKVNw71seBbMpdGqn+iadOs9kaqUUGTlznmuC3Aexr7AzBCMWNz3lCCpADkGz7bw+Mpd58dNoIocIKcrEyI7asZIRkPBCTPRkt9cFYTUAfkY0qF9c4ko4IgDdnVOoenpDiXaan11LJWZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cHL4pHix; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=aeAzGQGi7ThcF+GDINTKo+ZUyKpJD6ndpoj7Az0KzsMWXkdLCi49CjgzucpPO+foLPABl3bDjMDcLuD7XI3dAHblkOOU4z3hiccvsxkvo7iPQc+YSASJS8EWcqh6QiYHQW/mwsMgsYQF0s5Z7jPEo2hYssA/E9US/XI1mTFJSjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nmdfvq6B; arc=none smtp.client-ip=209.85.215.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cHL4pHix"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-21200c749bfso35508575ad.1
-        for <git@vger.kernel.org>; Mon, 02 Dec 2024 05:00:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nmdfvq6B"
+Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7fc99fc2b16so2380647a12.3
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 05:18:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733144458; x=1733749258; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733145493; x=1733750293; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=l1Z7Ez+7SxxPcOZ7V4WfVlJkkor/6SdIP2nzgTcYx8o=;
-        b=cHL4pHixDUTZpsJb1OYARUPkGAGeJCJMH7R4DER9DLsQQpGYx5a+QAG5jBkxM/AB+K
-         slkgtXjeks864fobLt4/yZ1v8oyta0ZyTxDXypxcuxE2qPDiSOkKIfIsiJMBehucrErF
-         y3at13DJopOaXAe7oNR9lChjdzK2sTJOl4rALTqF9Y1YYG3LEn/9Bh27RCq7j/OA+iNs
-         ce6WPxe15lOkQ2FAn1MrBK5gOpirc5rWFYQAlWLPRrwyCNBmfc5O7eehbIglYRDG5K55
-         qewKWcs+uktx8YLch5Clp3ajwDlU54WIaD7SZLBn/z4mEz2Ng5z39/CQzhvZZZErdTU1
-         3eZg==
+        bh=Zlai1rM4xkKBkkVv/HoeUySKEOivm+B4tKGlKhmADSw=;
+        b=Nmdfvq6B5imIzclhOIzjUnSQifxalYf/1l3iXR8gjcJikp11urKpkfUVP8+FWIPIWp
+         BLOGBRZKdDzgbD+uV7JyLok+F1Hy1jJEGBYwTqdSAfnkp0eti3MB17ZCnqppe349inhV
+         QRTEysh2claUff+jcfmK9g60lMS+14vuA5oVQBYp9qhJ8UUK+NxPYZTkO/W9zJkQpfAy
+         bzzGyqaJqvoIxgBeeFvQLJaNflSbiXFNoZtsUv+DFq7K6GG81jOOZ7sDr+O64kjI1F6V
+         QufrlbQ/SlpQicfRhX6mFcE3S9Vfk53ch1lOG7YSkDZmJymmsByXwHUo2RcCdVnEZoCT
+         c3jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733144458; x=1733749258;
+        d=1e100.net; s=20230601; t=1733145493; x=1733750293;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l1Z7Ez+7SxxPcOZ7V4WfVlJkkor/6SdIP2nzgTcYx8o=;
-        b=gZAWOJC/n5mLBzux3sGQ2HSVKMk5VLR2BwvxOJHbVsgT8pcv4gnqs2PztcSarCAO2c
-         OchIA9/pJqb8vOEaJExQkki+DmjkXXsFr6LGUKB7H8pi7aEievI916IvmZp3MxWWpSut
-         ClEz3kmpgNb4XQZEh+kDP6kjR+prU09cZnOcYKMe87xB+1Gtvbi8ZV4Wcdhf/EJXY/Qn
-         0aoCJqB48N98J/CY62akssaDHdutlOxeN2tv4KOC4V4GuVx2LmTxJcjNBG/s6t54xBLQ
-         2Uelt22/2+dvCt5RBOIOeIB/BFvDaHh5AOZBs6TNqtUvXdrPSf8mShDQujL/C+Pd6iCX
-         Vltw==
-X-Gm-Message-State: AOJu0YxuWa9J/jIvV9uwWyuqC7dNWXpp1WAMl+6yQZbRJgXEcgVhsujY
-	0/X5Dce2Xeu5cMrwW9sO4j4mRXVQxDCaN1CWsWsoqHrykvWDR2TE
-X-Gm-Gg: ASbGncv7C9kbKJ9Zy5Fvb/q0L/KnPARtSM0TVbLmtCUNGjWn9axnWNqFDPPen5i1E1h
-	FQklU7D3PrtvHb+svP90EhdYD9ubiDtpPkeMNh4NQkj6z3PuAOU4PZKDxMcpWVajpVuR+uKyBix
-	hyo629drjs1Q5mzePzJCMfR1Ked6acoggbpzBjDGSL1RYpQiSatYM7LQ/5soTK5YUEKp7BeNebi
-	+jpdXiJN3t1WB+H7VPee7/xHFy9aU4lW6IMK11328RLgQ==
-X-Google-Smtp-Source: AGHT+IHACcwoy9k5ZYzOwcFtlLiTl2O2v2mkknBChZxeTYjHE3aos2lAdSDhQD/cs/NiZzZ2cR2SNA==
-X-Received: by 2002:a17:902:d489:b0:215:827e:3a6 with SMTP id d9443c01a7336-215827e05b5mr81809105ad.40.1733144458400;
-        Mon, 02 Dec 2024 05:00:58 -0800 (PST)
+        bh=Zlai1rM4xkKBkkVv/HoeUySKEOivm+B4tKGlKhmADSw=;
+        b=wVVAvrx6UeHZqEsj2mu3wIEIESlcvBJeVavn7YYF3AeTAvXzqhysMGIHAavM1lmCjJ
+         jzu0QV5i9mOeH287QWcbe7c3C3ckUIXAOb5mRznQb0kgwehhTAnDGOe2ojJU4oXn99OF
+         HfcOGFngB3uGV3+LGNKU7QAMHTRVJWBQfRwsSKrse6MUnSaWyW7eXAkPimSlf5COHKug
+         F093u40pdVk0rDTqdp/dagWhJp+qsGK1IeOq9XCasBfCeMz00eZ2Sxadw58VyoBwuHDp
+         iVO6nO9W5O71wGEj92tZcYU0Qwn220vLRn1cAM/qKmfEntFhU1Q58LLDlTzM3m5L2LpI
+         7ENQ==
+X-Gm-Message-State: AOJu0YyPGsq+CpY4y+JdO8NpjVnRUasQtWbzs/oorngEOnNef3fBPWHM
+	zGGRTbklLDlq7dDBikixaHLZYqFjJEGKO5SfI4KUlmqBCGapKKbtSkvhSw==
+X-Gm-Gg: ASbGncusZENErVbuIoz9nZEpyfWo7KnKudBllX0FtomJoAxxyEqzLib1zsqlgQB7PKf
+	MYtbxj7tLGr7UJFr+uEtJs9+J5ddA1ny8hUygaOuFiCzCtTehaC2IDwZ/rIU6JW1ObU/58h50fV
+	eFtUaAp30w7dNkDIR0tUGwhzE923nJo3wD/1BPTD8/aQTFy6S/aEShIoJkT0rKv6sdT05/A1isa
+	GXlqgCZkgo8HkvF0WT1LV9c2bXlHJOhrbt4+iLTc1hMnQ==
+X-Google-Smtp-Source: AGHT+IFL2QEJZLx3YUmaJ7EOz1soEQce7/ynyrlRxsyvOdGkWKc2dhzXUmQbB0XGEK0SYdJVkL3OdA==
+X-Received: by 2002:a17:90b:2887:b0:2ee:9d49:3aef with SMTP id 98e67ed59e1d1-2ee9d493c47mr9184771a91.23.1733145492707;
+        Mon, 02 Dec 2024 05:18:12 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2153a70bbd1sm62593985ad.231.2024.12.02.05.00.57
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ee45ec551asm7003796a91.16.2024.12.02.05.18.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 05:00:57 -0800 (PST)
-Date: Mon, 2 Dec 2024 21:01:21 +0800
+        Mon, 02 Dec 2024 05:18:12 -0800 (PST)
+Date: Mon, 2 Dec 2024 21:18:35 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, git@jowil.de, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] tag: "git tag" refuses to use HEAD as a tagname
-Message-ID: <Z02voaSNYRciv38z@ArchLinux>
-References: <20241202070714.3028549-1-gitster@pobox.com>
- <20241202070714.3028549-5-gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 12/14] builtin/patch-id: fix type of
+ `get_one_patchid()`
+Message-ID: <Z02zq7Wc1A2ot-Oe@ArchLinux>
+References: <20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im>
+ <20241202-pks-sign-compare-v2-12-e7f0ad92a749@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,30 +71,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241202070714.3028549-5-gitster@pobox.com>
+In-Reply-To: <20241202-pks-sign-compare-v2-12-e7f0ad92a749@pks.im>
 
-On Mon, Dec 02, 2024 at 04:07:14PM +0900, Junio C Hamano wrote:
+On Mon, Dec 02, 2024 at 01:04:44PM +0100, Patrick Steinhardt wrote:
+> In `get_one_patchid()` we assign either the result of `strlen()` or
+> `remove_space()` to `len`. But while the former correctly returns a
+> `size_t`, the latter returns an `int` to indicate the length of the
 
-[snip]
+It is a little misleading about the statement "the latte returns an
+`int` to indicate the length of the string".
 
-> diff --git a/refs.c b/refs.c
-> index a24bfe3845..01ef2a3093 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -735,7 +735,7 @@ int check_branch_ref(struct strbuf *sb, const char *name)
+Should "without spaces" be appended into the last? However, don't worth
+a reroll.
+
+> string even though it cannot ever return a negative value. This causes a
+> warning with "-Wsign-conversion".
+> 
+> In fact, even `get_one_patchid()` itself is also using an integer as
+> return value even though it always returns the length of the patch, and
+> this bubbles up to other callers.
+> 
+> Adapt the function and its helpers to use `size_t` for string lengths
+> consistently.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/patch-id.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+> index 56585757477911c96bbb9ef2cf3710691b8e744e..f540d8daa736b027649c8c64ffe5100cf4044037 100644
+> --- a/builtin/patch-id.c
+> +++ b/builtin/patch-id.c
+> @@ -1,5 +1,4 @@
+>  #define USE_THE_REPOSITORY_VARIABLE
+> -#define DISABLE_SIGN_COMPARE_WARNINGS
 >  
->  int check_tag_ref(struct strbuf *sb, const char *name)
+>  #include "builtin.h"
+>  #include "config.h"
+> @@ -10,13 +9,13 @@
+>  #include "parse-options.h"
+>  #include "setup.h"
+>  
+> -static void flush_current_id(int patchlen, struct object_id *id, struct object_id *result)
+> +static void flush_current_id(size_t patchlen, struct object_id *id, struct object_id *result)
 >  {
-> -	if (name[0] == '-')
-> +	if (name[0] == '-' || !strcmp(name, "HEAD"))
-
-I am wondering whether we should also update "check_refname_format"
-function to report "refs/heads/HEAD" and "refs/tags/HEAD" is bad ref
-name.
-
->  		return -1;
+>  	if (patchlen)
+>  		printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
+>  }
 >  
->  	strbuf_reset(sb);
+> -static int remove_space(char *line)
+> +static size_t remove_space(char *line)
+
+So, eventually, we have decided to change the return type from "int" to
+"size_t". This avoids casting "int" to "size_t", which is good. And it
+would be more natural, because "remove_space" never returns negative
+result.
+
+>  {
+>  	char *src = line;
+>  	char *dst = line;
 
 Thanks,
 Jialuo
