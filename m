@@ -1,105 +1,98 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF8128399
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 04:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C05F1F8AFE
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 06:56:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733114306; cv=none; b=BswxhjvtLdK3aPzUYtWQMWKxDGzV3ii7WkGktUy+vDd1pVsP8SPD6fV7OlqvX8zD19CC7v5FVvyABwbGuWJwELS4zmt2dBt/IjLDKAj2xjYAi3XzK01MAjLJVW/7hOmsCAdJFbhG8jdxureZ/XBjz4WMQAqulxYhtwQps6PXzks=
+	t=1733122612; cv=none; b=HPnJ1uHV4XHi2DnxqW940g/hmwc3CeWBUuKVK2Ll1f/GCe5VZV+PyHL2RUlp8xQDnXFXNByU82Qg7jvWqVPDWjzcRofMMRienB7VGAcROg3+n/SUh55S+zE0X1B86ByW+E+ZEkRjA/iujNtJKnzGIriDEPZLyZdjKmiOJEYtSoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733114306; c=relaxed/simple;
-	bh=aHNM885AMmC0TRUqgwvQn5VoRO37C0o0C6ulcnB/rWw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R4KS5/U8r3HK5Ihp8smIc1L6XZ5wUr1X6478CgReYb21s3DC3C9cTB+tfoRS46cxE3oetSTNM0DFZMirvTUAOlSDqloUbxN4ptXFgVy7KWIM9G0a8o210TsjLe4YlUmTo0YBPN760H4uHbyz5Ay6RMEHXFfiCBVSFQrEKjmMREc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XramD6i8; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733122612; c=relaxed/simple;
+	bh=GZQupDKVIQYi259/Mvobh1vmlRvirHlA78s/AkvwKtA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=iO9K/8k68OkgPWkoJYm+pBVFyiRA9seHFskjQrr2tz+pewWicyZBnaWGfVzWCFhkottqPUaBCbPOg+RmiqI6ty5cXglpa7uLVJtbY4k4otau9KiKXEfr07j/Sbf5jUgh3ZsoTOJNedYGQWym6h73dPezibMMPn+HxK9HLfjR7tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=thegates.biz; spf=pass smtp.mailfrom=thegates.biz; dkim=pass (2048-bit key) header.d=thegates.biz header.i=@thegates.biz header.b=IaoQwaqn; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=thegates.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thegates.biz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XramD6i8"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0DFFF11401B1;
-	Sun,  1 Dec 2024 23:38:23 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 01 Dec 2024 23:38:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733114302; x=1733200702; bh=76aYFaU41FRYB8sy3Q0k+1u8uHq5TMXhR3f
-	GbYnuNtE=; b=XramD6i8UuQXUqFbV4uhOdXlJe1+USKGAZfwOcM/kbRwbE9rXYK
-	5q+gCQxx6XErqaZQCFCuvvpIfCCmg3e7M4aqX0IlRSHMTTj4ft0iQAAAG/rw4BdW
-	LQEEcfg9kCXU8/9cyzZmOZ5KqHRr9vLDBvWYuSq96iaFfaG5U39hR0ESanHmKl++
-	y1yk0vYZOhhSUAR3Pu0cnGKXFqEnQ5auemDht4bxcyBBByjOcqXVXaUciqIkX6NP
-	/u+Bua3jURiSNz32nrVMs6wHv2QI15oGUvG6/px689ydJxUbD0MJIa8bXf+NK4bo
-	S3tTq2T5BOhMR0YtpqqSp+zhgvN5zjH8ALA==
-X-ME-Sender: <xms:vjlNZ6rB_Zuc82d7VwQlFB_TDZPO6-B9aH-QfPZbDrwNYt09dmshbA>
-    <xme:vjlNZ4pNuKMFUHZJH7luNfQcLXRzIVdmU4ZLWCEaRkDTfLSnhXUciP7CkBpeXjFXG
-    ysPUkLsGvui1TN0Kg>
-X-ME-Received: <xmr:vjlNZ_NXu2kt0WhscTWvdCxJuvF8pbwkCrl0JUJGlOa8yYflzn2rSNWXD59nJCrfcE3Pt3dIHkz5aEpRraQddUDiURhbTQz9eHoq8Sw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdejvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehjohifih
-    hlrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:vjlNZ54wsGiBzo2l_8MW5f9BQinxJv31BNCzdX7Deu_oA_J5W8va8g>
-    <xmx:vjlNZ55rnvAw4yzyqYY9d5auEvD2AbJx5aUvqefqeValcQ4bqggJVQ>
-    <xmx:vjlNZ5hisoKJsDeHkfQwtLfmOKywwoanarZzDCcQS-kyVA6ddHEHmg>
-    <xmx:vjlNZz4cRhF5_ZVGMavZ8IyPPQRVmHkznO_9mguu-o9okAl82BS0NQ>
-    <xmx:vjlNZ820e7EUSlqZQgAgqPovZoblB6u6obS-9z6E4slOgRrqT00VQFA2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Dec 2024 23:38:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@jowil.de,  git@vger.kernel.org
-Subject: Re: git tag -a HEAD leads to ambiguous branch name
-In-Reply-To: <20241201224408.GJ145938@coredump.intra.peff.net> (Jeff King's
-	message of "Sun, 1 Dec 2024 17:44:08 -0500")
-References: <47cdf937-6192-4c83-a0e5-700e98f36c1e@jowil.de>
-	<20241127142711.GB1712@coredump.intra.peff.net>
-	<xmqqh67ss1a5.fsf@gitster.g>
-	<20241201224408.GJ145938@coredump.intra.peff.net>
-Date: Mon, 02 Dec 2024 13:38:20 +0900
-Message-ID: <xmqqwmgiits3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=thegates.biz header.i=@thegates.biz header.b="IaoQwaqn"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3ea60f074c3so2079406b6e.1
+        for <git@vger.kernel.org>; Sun, 01 Dec 2024 22:56:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=thegates.biz; s=google; t=1733122609; x=1733727409; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lprkt1Pekl+3Z53t3ksJWnIh17mdY6AlNd8IXfNTvxY=;
+        b=IaoQwaqnZPY6e8GZMWIncKKlz18DI3tPEp7e7vajeBD9A4BySeh1litJEt+u8knTg/
+         xxIUDVpBgFjVPvsn6uRlQsslyYs7wbQNOQj9Wn1QZnMV5A7jsyM3ACcHc+WIVn42vvwP
+         /2hTsqealEiJcqa+yUrkrjEFmxnOOA55gqT9F2KBWnQo0JCz5qc2jj3W7m/v98CaJdXn
+         aJ2CX2AFwqjIjH5LCxwbPQXpbQz7XSM5EZQnpf7TS0O2CWl5ofE+CtHw9ZGfakEWgsbR
+         bF5iFgzYhZ//5+1q+rc+7bMjNnhFnn7ba1ovkFfcLm2C5yO3aw+o2UXzD3vFCkr4J/sg
+         W7+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733122609; x=1733727409;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lprkt1Pekl+3Z53t3ksJWnIh17mdY6AlNd8IXfNTvxY=;
+        b=xSwFmY25772REJEr5aiN6kcf2DH6aDuHZflt3rj80ggeX/OEUdVqNMiGgZOTdIs865
+         KIV9z5puMYOoksf98whKVqfXSMBIg5Jf42pvpas66vvSfoBDndGzuzRE5ZWGt8gSYNXY
+         MIG1yvktQd9hqavt+dJp/hLmHZ6/ck5I90xFY3mOg/jTgu13DX4wNe56XtzmoMKATZET
+         8PEZlfYfPFG+u/LthjoHGyz4ZjqQx7qB/P/eXKs2S2ZMRa5kPvZ5NHKimU6J8BXMzmQu
+         8DRrPm+jbyFrGVgTfIgolqEUVU7qB/4OrRrG2WxKYjYyZjNh9wjdPRHLyenvOwVRJr4M
+         TCNw==
+X-Gm-Message-State: AOJu0YzPPtOXJuYZEpzMlYaBBCJbY9YjAobZwnqkq1sGDkm8x/UMfguG
+	bTHrpgBTw36YYE74c/EwU6/ZHmfNAK0dMG6EqUuEnwXmenT0Kz2CiaZsTusSZL3u3hY6ZNVPV+U
+	lO+bsHiQYfhdy8MefjsYHTIh41j6EMKII2UGk5it2g17s4JznLqg=
+X-Gm-Gg: ASbGncuQavxY9exZLgKpXMh6+UE0nfPjgI0s6VlyF9ro0TUONsctyyoHLPwda7lQZDP
+	v3xThn+14NznVQcGPtkECgLUduqtj6mhkOs5XilgS3/uq0d4ZAXB9tRZKi+rtgJ48
+X-Google-Smtp-Source: AGHT+IE7veBDGJZPTUUtRP4pYISxb1f0vOJr03hbZVYqfQ5ZyJRIN5JXzdbVpp4CBrapzOpOJZ3AAQQT7Gq/Yze+XhE=
+X-Received: by 2002:a05:6808:198e:b0:3ea:6149:d6ef with SMTP id
+ 5614622812f47-3ea6db62534mr17666053b6e.1.1733122609469; Sun, 01 Dec 2024
+ 22:56:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Surajit Koly <surajitk@thegates.biz>
+Date: Mon, 2 Dec 2024 12:26:37 +0530
+Message-ID: <CANzu-cdunr+NF+uZf_2Gqd26NCU_e+gQizHcmk3FSN_FG6Yquw@mail.gmail.com>
+Subject: Issue on git revert. Git is not reverting code completely
+To: git@vger.kernel.org, sg@thegates.biz
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+Hi,
+I am getting an issue while reverting a commit. After reverting, I can
+see that the changes that I made are not reverted completely. I am
+sharing the details below
 
-> But I don't know about this. I thought when we outlawed "git branch
-> HEAD" that it was quite intentional _not_ to forbid these names at the
-> lowest level in order to retain backwards compatibility. They are just
-> about preventing common UI mistakes.
+GIT version: git version 2.42.0.windows.2
 
-Yeah, I think this is a sensible way to think about it.
+Original git commit on 29th July 2024
+----------------
+commit added79cb5aaa60ffced49ee4d3f6c9b3131abde
+Author: Surajit Koley <surajitk@thegates.biz>
+Date:   Mon Jul 29 15:00:24 2024 +0530
 
->> There is a dubious test in t5604 that expects you can create such a
->> tag.  t5604.22 wants to create one:
->> 
->> test_expect_success 'clone with reference from a tagged repository' '
->> 	(
->> 		cd A && git tag -a -m tagged HEAD
->> 	) &&
->> 	git clone --reference=A A I
->> '
->> 
->> and t5604.24 wants to use it.
->
-> Weird. Comes from 09116a1c31 (refs: loosen over-strict "format" check,
-> 2011-11-16). I don't see any reason it could not just be "foo".
+    Implement Parameterize sql at user models
 
-Hmph, yeah, reverting the code change of 09116a1c31 and then using
-'foo' instead of 'HEAD' fails the test exactly the same way.
+    Implement parameterized sql at
+    models/user.js
+    models/userV2.js
+
+Commit link: https://gitlab.com/gatesapac/forum/-/commit/added79cb5aaa60ffced49ee4d3f6c9b3131abde
+Git revert commit on 13th Nov 2024
+--------------
+commit 582797adad70d3bfe6c6d74aeed2f795013ca41f
+Author: Surajit Koley <surajitk@thegates.biz>
+Date:   Wed Nov 13 14:29:11 2024 +0530
+
+    Revert "Implement Parameterize sql at user models"
+
+    This reverts commit added79cb5aaa60ffced49ee4d3f6c9b3131abde.
+
+Commit link: https://gitlab.com/gatesapac/forum/-/commit/582797adad70d3bfe6c6d74aeed2f795013ca41f
+
+I am sharing screenshots of commit
+added79cb5aaa60ffced49ee4d3f6c9b3131abde and revert commit
+582797adad70d3bfe6c6d74aeed2f795013ca41f
