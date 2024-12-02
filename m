@@ -1,55 +1,55 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42FE2040B4
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 12:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B85204F6E
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 12:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733141105; cv=none; b=HHOHdzF1qJePbb/xZymhwA5pnygCnempZ9qG1YLMfOrAcxOMlNeck+KOlmXVD9nQIDdntbPWjLpzJ1fj/96A/6NoezzBAdaUpa8I61D1XZCfZF+tzPJnXUVl7DKR398grMnWp7RlAm/ukBkb2YwqIE/2leF0ebgHjPDzy8cvmNQ=
+	t=1733141105; cv=none; b=WJJD8igzcZB+yhRlWh3gv5/qFXx7NdIDGULbACoX6UZca+c/xic32N9vIEnM4mAAbO1T9tWVMQNwRnhnTY36Mv05f3DfeybfmZlw6zdogxiLW26a13A/GMg3s0nlbXA9df03feUseWm3p028yJGVa/+0gA/TiOueqyvejANPx8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733141105; c=relaxed/simple;
-	bh=D6Hhpn7vxHV7XfFB4j51n7BZsMwQz9dQhOFEKLgOFAM=;
+	bh=uzG4D6f0cRD73qE2kSPWnhPEUclXnvOONMhtgDEFfCg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=M69XFKxVTBH4sQdUL5cWKCLfCCYrK9uxqZ7fyRq3Y1OPwnG6yIjIOKIPT2TQeD1Eayl1bQPUL/wtjMOla8CgknDLJclmBqjzwi9k2TRpYiMaz0VJd0oPtySBNESt5VsIfa4zrO3KDdjokifmU4BtxqOnTfvDn+BLRBevd73ujRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vV4J8Yn+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mibR9mMY; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=n5nn7j0sr9wGDVR+cr3mDz3pGHd13/HTrDV/jlJ1JgTgd+yywCSzn2afTntX+6A2S5lvIHmDzMdciFSQ6RGn137bdVl2PeChJ633yTg2ES4Di3VGJ84tcP9LcwJKVHIFU47M/G/Q3tZeufrQwLx1+nPma+Q3jO/xb57dLvM9Pg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RD6fZB2Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xfrFqP2m; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vV4J8Yn+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mibR9mMY"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id BBA64114018F;
-	Mon,  2 Dec 2024 07:05:01 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 02 Dec 2024 07:05:01 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RD6fZB2Y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xfrFqP2m"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id AAC6D1140191;
+	Mon,  2 Dec 2024 07:05:02 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 02 Dec 2024 07:05:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733141101;
-	 x=1733227501; bh=lHuP+MI7HPf2IiuivPg3fmZ1QpVXDTwAnm9MlbxjQls=; b=
-	vV4J8Yn+6dmCFGXh8kTK4M1VdOAR6PlAuwBb9/55WmRKgRsv/gmnCi/7KzxfC0mu
-	OVbwyZC92lNbMGOOFKl5ZurcqSUZ345wiiAclQyge9GeKX/DX76grHvkxLA8RSp9
-	vBYDg6rseM4Qx9WW9TV7Kp0xlkZCDyCvJtJ5GsoxgJWScSrk8K8AgvA/y+Utj9kf
-	HOBz0+TepsPMyyFukNcInryRClLt+YRHAtR+C6Z4PYgKC5Bwqsu/SUBy+BAxxCpe
-	JNXRcC5BdTESZ1r6XWMzWSc+tYWAYZhvlsCZoAi9FEU5O77YVGhVqhYPrJIdBFoZ
-	dvh/mvyzAvxlCjQOdxd1Mw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733141102;
+	 x=1733227502; bh=Fz3/RqVx4WQHgOlLd9G/Uj9F5oXMMZuDotUJtdP+2Wk=; b=
+	RD6fZB2YS9ZEu4X7ml2TMccBCqQUdzLbR8oaqa9yaXMfXz+x6Q+lsxOUwqw0sSIY
+	wkTTP6FOhj+LgEvPOWQ9ynxKVmokuGEi1ExwtGETzrB+2W2eW8i5v8o3NChuHU0V
+	/VElXJzIK/v5Zt9ENEr/+bPTS1NPHbnKnkSgOswR/BB59YSa9T6ueQS0jpPLdlUp
+	gLqJ2aZ2tGbT+U7MNR+vTMTtPBsmZyb6wnNFIvcLTwnP6ywWqEntZFGC2Tk+4HM6
+	lEMCz45Qbn2NKS9tQwukKLMk2f4SB8zGtYOI1csFCtN1udqt9nudciyG16xxpPId
+	FQTm2yECS0ABE2NnRMchrA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733141101; x=
-	1733227501; bh=lHuP+MI7HPf2IiuivPg3fmZ1QpVXDTwAnm9MlbxjQls=; b=m
-	ibR9mMYccEOPLcWpj7fBjv68lsapKmkuLDsQAal4tcDovclmlhEebgHm49MI0wEZ
-	GZUTfTVF2b+hTo2047aLckf4wV6HkzNyyRGra5PMl58Ai316TjCSA3d0oaew43NA
-	sZxYo6Y0SjoqRXMRaAyTllWdrG/4trKjXQtde/M2Z27WYVjKH2lnZx8fJM98YiJk
-	cMGBGF1R2ZK4C6C2nDzjnB9EHcGnNhJaOjw8YTPjOBnm9MznHZoFegmb8s1xKTRr
-	QKiWuitdMIDYcCMz/tlsIQkQ1vHIdDtstR/tp2hpusfE3QA/nng96zI18x8/bpKo
-	rW0v/JNd/NLK05lB3U/gQ==
-X-ME-Sender: <xms:baJNZxOvR_ueGgy83eTHmS8bmAUr52gve0ebgoQsU_b9L81Hi4Vg7g>
-    <xme:baJNZz-5SowVxD7zGbX4bbmRi31MKB9vv-RLHEvd7KOTKY1Xvbuf9Gc2hvr2ZV2Zn
-    AdHUogZb0na8-eCeA>
-X-ME-Received: <xmr:baJNZwTSsz3aRLVf3JV-uE-XoFE-2SnjVF50RfUSwsHO_sSuJzdEtnLotsXm9iHdxZC573hFUyhQKEqEqI5SvF1RnR2Uj5MP7ofuKUKGve9rss1VEQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733141102; x=
+	1733227502; bh=Fz3/RqVx4WQHgOlLd9G/Uj9F5oXMMZuDotUJtdP+2Wk=; b=x
+	frFqP2mRaesr6hiMw4N9Sd3sMSTzMOSDQA4I4WOEI80BP2u302xCRQoi8jysI9zF
+	Lgwn6d7B1msUo+3wxBkjEbnFnn2kZ6Q9JRhjuSfoqiYQdWaKoDUx+YYf/oZxsZQO
+	Kd59TJMdk8bgUxhsIkEXqBdwJrh2g0G1eEDBqA7spygfFUmIsiWfOFKnWko0chMZ
+	Dn3/lBgEjSC1PmBA2SkVbf4+UtXjq3wAFQFJGfCGveVkHDUsyX5emcbRUo+SlGHw
+	h+2YsXFOura2dGCnov/VIovueWoOgiXnUMrYPpjDUSz91knqNlVLeDrmXBNXsmRp
+	hqqxBfKX+voRlQixwkq4Q==
+X-ME-Sender: <xms:a6JNZxYfV9MmTUVI5NormdE99O_5nuWmhbatPZNdIiX5QE9MCqbxwQ>
+    <xme:a6JNZ4YcREbvhkINWcu4tnxdixkod8VoRrDDR3TuxrLuu4fd0vNx6TOh5XvsIX367
+    00orqgIVQiQSZwYaw>
+X-ME-Received: <xmr:a6JNZz_hiJPLAoSxpIkM6NuC8RBnLrqPZ3ZGKJ96vU0aYtx3BjvO4yRfu7YejlOMGuzsF_DYxaPAQ0_embCgZ_0vdZTRKtzzrPCrp29lHM-8uq8cnQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheelgdefgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
@@ -60,21 +60,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheelgdefgecutefuodetggdote
     gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrg
     hilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:baJNZ9tv0yzUEQM2XUPVr7C7Dj2GZa-7xw5524eG5_IMt-pH0gtO3w>
-    <xmx:baJNZ5cmrVDbxMWFSgvnio-_rm4N75I4H2DZqPu3xOFq3U6QnFYk9w>
-    <xmx:baJNZ520f_AnrZsXszYE0KE8uIGkGdMIOaCZF-uL1WferV_6EdLbWA>
-    <xmx:baJNZ1-G_jsVZ5E4PyxghQv2psYxyMfMbdx0SrmEXasLymvNHQPE6g>
-    <xmx:baJNZ94w_dSxfaBqxpYSmsK6AI25dJc_SdgQDB4DyJu5w3xjK5QMMMuI>
+X-ME-Proxy: <xmx:a6JNZ_rtnVh4n_NGb4211R5dMq2ar4V_S6AxcGG5RPdGrOXFkCvcbg>
+    <xmx:a6JNZ8qzyAnJdwt08E_G0XnOQ5927GYe7TVHvehtVUmybDGk9Mp2fw>
+    <xmx:a6JNZ1SlGufTog9zS-33DTWFczvBJVKnCJCnwf2ollezSyIby2iSSg>
+    <xmx:a6JNZ0pu7woWvO54MuYNPfZat7Nic51iJaHmgPy-YMePemw_aU2f4g>
+    <xmx:bqJNZ3Xh6k02o5ZViMM75Txr4OcuCfgG-oplB_j3dgws9BC6BFV6Fupu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 07:05:00 -0500 (EST)
+ 2 Dec 2024 07:04:58 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3208a703 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Dec 2024 12:03:41 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 22529b6e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Dec 2024 12:03:40 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Dec 2024 13:04:35 +0100
-Subject: [PATCH v2 03/14] compat/win32: fix -Wsign-compare warning in
- "wWinMain()"
+Date: Mon, 02 Dec 2024 13:04:33 +0100
+Subject: [PATCH v2 01/14] git-compat-util: introduce macros to disable
+ "-Wsign-compare" warnings
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,72 +83,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241202-pks-sign-compare-v2-3-e7f0ad92a749@pks.im>
+Message-Id: <20241202-pks-sign-compare-v2-1-e7f0ad92a749@pks.im>
 References: <20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im>
 In-Reply-To: <20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im>
 To: git@vger.kernel.org
 Cc: shejialuo <shejialuo@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-GCC generates a warning in "headless.c" because we compare `slash` with
-`size`, where the former is an `int` and the latter is a `size_t`. Fix
-the warning by storing `slash` as a `size_t`, as well.
+When compiling with DEVELOPER=YesPlease, we explicitly disable the
+"-Wsign-compare" warning. This is mostly because our code base is full
+of cases where we don't bother at all whether something should be signed
+or unsigned, and enabling the warning would thus cause tons of warnings
+to pop up.
 
-This commit is being singled out because the file does not include the
-"git-compat-util.h" header, and consequently, we cannot easily mark it
-with the `DISABLE_SIGN_COMPARE_WARNING` macro.
+Unfortunately, disabling this warning also masks real issues. There have
+been multiple CVEs in the Git project that would have been flagged by
+this warning (e.g. CVE-2022-39260, CVE-2022-41903 and several fixes in
+the vicinity of these CVEs). Furthermore, the final audit report by
+X41 D-Sec, who are the ones who have discovered some of the CVEs, hinted
+that it might be a good idea to become more strict in this context.
+
+Now simply enabling the warning globally does not fly due to the stated
+reason above that we simply have too many sites where we use the wrong
+integer types. Instead, introduce a new set of macros that allow us to
+mark a file as being free of warnings with "-Wsign-compare". The
+mechanism is similar to what we do with `USE_THE_REPOSITORY_VARIABLE`:
+every file that is not marked with `DISABLE_SIGN_COMPARE_WARNINGS` will
+be compiled with those warnings enabled.
+
+These new markings will be wired up in the subsequent commits.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- compat/win32/headless.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ git-compat-util.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/compat/win32/headless.c b/compat/win32/headless.c
-index 11392a0b9a6dac5522bc5042064f492bd73cc871..a6eb116ddc7b586fea80f46ac36d50a4b3ddb656 100644
---- a/compat/win32/headless.c
-+++ b/compat/win32/headless.c
-@@ -53,7 +53,8 @@ int WINAPI wWinMain(_In_ HINSTANCE instance,
- 	wchar_t git_command_line[32768];
- 	size_t size = sizeof(git_command_line) / sizeof(wchar_t);
- 	const wchar_t *needs_quotes = L"";
--	int slash = 0, i;
-+	size_t slash = 0;
-+	int len;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e4a306dd5639b58a4ec4d2a6269fb649348fb4e7..31a059820f3b1536a3c1a887390b70098a6fbd09 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -44,6 +44,16 @@ struct strbuf;
+  #define GIT_GNUC_PREREQ(maj, min) 0
+ #endif
  
- 	STARTUPINFO startup_info = {
- 		.cb = sizeof(STARTUPINFO),
-@@ -66,7 +67,7 @@ int WINAPI wWinMain(_In_ HINSTANCE instance,
- 	DWORD exit_code;
++#if defined(__GNUC__) || defined(__clang__)
++#  define PRAGMA(pragma)           _Pragma(#pragma)
++#  define DISABLE_WARNING(warning) PRAGMA(GCC diagnostic ignored #warning)
++#else
++#  define DISABLE_WARNING(warning)
++#endif
++
++#ifdef DISABLE_SIGN_COMPARE_WARNINGS
++DISABLE_WARNING(-Wsign-compare)
++#endif
  
- 	/* First, determine the full path of argv[0] */
--	for (i = 0; _wpgmptr[i]; i++)
-+	for (size_t i = 0; _wpgmptr[i]; i++)
- 		if (_wpgmptr[i] == L' ')
- 			needs_quotes = L"\"";
- 		else if (_wpgmptr[i] == L'\\')
-@@ -79,16 +80,16 @@ int WINAPI wWinMain(_In_ HINSTANCE instance,
- 	extend_path(_wpgmptr, slash);
- 
- 	/* Then, add the full path of `git.exe` as argv[0] */
--	i = swprintf_s(git_command_line, size, L"%ls%.*ls\\git.exe%ls",
--		       needs_quotes, slash, _wpgmptr, needs_quotes);
--	if (i < 0)
-+	len = swprintf_s(git_command_line, size, L"%ls%.*ls\\git.exe%ls",
-+			 needs_quotes, (int) slash, _wpgmptr, needs_quotes);
-+	if (len < 0)
- 		return 127; /* Too long path */
- 
- 	if (*command_line) {
- 		/* Now, append the command-line arguments */
--		i = swprintf_s(git_command_line + i, size - i,
--			       L" %ls", command_line);
--		if (i < 0)
-+		len = swprintf_s(git_command_line + len, size - len,
-+				 L" %ls", command_line);
-+		if (len < 0)
- 			return 127;
- 	}
- 
+ #ifndef FLEX_ARRAY
+ /*
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
