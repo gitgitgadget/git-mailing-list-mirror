@@ -1,169 +1,121 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2B21F9415
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 07:54:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C4F1FC0E5
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 10:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733126071; cv=none; b=NjNL5JhReiJnn1W9nEtrh1c74oCodv1wRvcfWEvSs3cY3tRZQt4gb9Stz8R2ptbizVxPPEFovxwQ9JMByWok4hA61TJYL9TQn+M3GC5EbNvXXdbJ3aQlaMMoDEJVnvyAa7PujXwRwFc+/RNJfmThIkLMOx8LtPxbctiILdjum6A=
+	t=1733136883; cv=none; b=gEDr0HpVJ0unB5gGcOTz0HCD0EKA8KG0ObmFByRzD4MMpHmw3Gpbxv19otpnfyGvQVZaVpOGv/3VjRDh84HcyrLXjHlA3KQdceyLk+PzVsB4iheyLNE4DCm8fHJgV/UBACf89I01v279vpro/Z3KYNFS0WUD3+uuQiesylTwWms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733126071; c=relaxed/simple;
-	bh=mFOtulo729SVLXZNz+kHZLsyHKAk1MnasmbiJGXgk5E=;
+	s=arc-20240116; t=1733136883; c=relaxed/simple;
+	bh=mVhK20aX164m3UEPsCi8zjWtkRtQXG8OHSPYbG218hY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lVsYfDoJT2vVx406i2QL4jghI+fDj2Olvf4XOGgYfGxlo4zcpeVQeQs77uqKSNCyzQQCcI7Plw/aYSei/+D2U/KZnGA6SNvNP51idkkOwDj2Is5cIVNS9MDce/IVrR01PRFFT3GmTR1SxO0C3Rskpbb14IJOJ8DczEDeLHH6/tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bwzrwZok; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dpDjL1C9; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=jpfaCHUXzOMMLIoSS2jIifEhOoCp6yn34CLsvOsbFXlVdhDKcl/TP3FZgUrdA7vAGTs/1op4d7dHPO1tMEw9/Z2gSuFtRaAQ5yDXQrrDir63tll/AGPtXGrSaHn4QKYO41csp8N40Xf1u+zhwoZEL4R9Mh8kNrU83cWxVQihcGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SxuwZ9NY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q51Iuzt9; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bwzrwZok";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dpDjL1C9"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 87A331380693;
-	Mon,  2 Dec 2024 02:54:27 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 02 Dec 2024 02:54:27 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SxuwZ9NY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q51Iuzt9"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 314AE11401B4;
+	Mon,  2 Dec 2024 05:54:40 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 02 Dec 2024 05:54:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733126067;
-	 x=1733212467; bh=ChxMdsuBo3hdC+JISiWnjqbnlsrqLIp+NFokrZCtQeY=; b=
-	bwzrwZokWCG+rFiLwus5bZndABGjYsQPsbflMBLUIYJw76POX9Blh25/kzaQHa3Z
-	qDVJrlQLNmNxcmwj9RkEtWEvuZTi8rku7BJOqhE2pJRY2NKspFE+0ZyAGGsMjdqe
-	RTdFeyOcebLlCLD06jLPNRpXdTUQTSe1H2kSe3rkU8l+ndRNHxRUtFN8Bfbdoa07
-	gHJoglp51TWQFUq/prTJLXu4l6ylBenOTLSqWCJ0tRf5d328AikJEecahjMqBT2/
-	5XIGQv2SKErmVWGMcBF7Fzlp8JdrhlFZFobx7uH6ylw0Ff98jl+oNW5JwB4y7nKp
-	tjaNu7qyo5TSUJOBg0dOOQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1733136880; x=1733223280; bh=VuyB7AXE4H
+	un8atDJGsqs6NmcNx/jFN86kDhD6hHpGw=; b=SxuwZ9NY1119SDeWtKCOHEe9XR
+	1vSRDwBIcMQfO1w8WZE3fVcuLBZzBYc5V4QgBcg/VxBBrgVCqFDZbtwM8KqafZjb
+	+jQ39MxmE+Kp7GNonRr3EgR9x7+0rMvSOL0FTUBKrCy0B2clM93U1s1VHfw0X0so
+	wWEXW0rEQ+xA86h+COvN0Qo1bCqSzRd7lJM4zziwAMTOWkEQv/4MBtIOSEAh6HUC
+	vkezJrSYb033IUrl0LuQKPlVV5+wZwP7x92/gW3tRSR165u/ZHEHSwlL59eosMMD
+	33RTyA7Joe3fFckTR7KtW2juODRiUS98ej2O8l7if+rijkqhi3q5Y8w14j3A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733126067; x=
-	1733212467; bh=ChxMdsuBo3hdC+JISiWnjqbnlsrqLIp+NFokrZCtQeY=; b=d
-	pDjL1C9SIpwihk2tm9fS1CkYbu6HqaHODygjovSFsVVpyiG9JgUFx3Mb5woVZ5ua
-	5pUWf6x56+n99EBp7+jRahQJxAxeMDSO3gGt6q/FtHmhg+Yoay702mwrFVxqxlNO
-	zJ7otYo7Yf1SXq4hlxsb81O1oarZpQLTrTBeh12fmFiGLuf2MKdb6EgnofBd0dki
-	vjwTnuSZRZv9LPLg83iLNc5MnWsmvh6s8eUd3eu44HEkEvyCPfnCnoQA5VKHOrFo
-	bQ7XutD9keMgT5Xs37WZRNLNERriHU47AYoljSJSQ5zy/8A3UFVa2KxUKv93mlgN
-	0l2xjAJ6BU8+Y+N/B0Djg==
-X-ME-Sender: <xms:s2dNZ5Y5XNjBoTVJNo19xajFNQ_mDRy5fUljEtFzcxBuoRMwofIrDA>
-    <xme:s2dNZwZlP22Fhjouy1K9UxcfDtJqN0dpWL_8JiRKyiJlpuJzYul5vfedezVO8XCws
-    ZgUIturcXizTEyqLg>
-X-ME-Received: <xmr:s2dNZ7-_qcV2-yfgHxh-1t-eOw9ujXHdkgnMu3ypuTF-5mAG-XikNkt8uYLDu2-OSRQi5FFXKFp4b_83Cs_MMshMiakkWhxchhycgUhbXGitOj9pbw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdduudduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitd
-    etleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
-    ht
-X-ME-Proxy: <xmx:s2dNZ3qqg1Z4sEi42RDs0kXrErf0x4ITxUPQJelyOTCstHvPntdB4g>
-    <xmx:s2dNZ0r29FE0QPkBPWJLOOmrfubmfqw0Od2LAeaDnVhMqZeQatcCsA>
-    <xmx:s2dNZ9T1sbO8jfxYsqHtPAgG0uQUWbwjzVOfzbTrFAGqOgZA9C0ilw>
-    <xmx:s2dNZ8q0r08WYPlbB4VkWNVLbx7wkL0cS60Cx0N-UFm4QRiOHWdaqw>
-    <xmx:s2dNZ73CCAFa9V6ooYz1QG6lL1CDnGZQq8umEjWso7q8q0TtjJbZp0aV>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733136880; x=1733223280; bh=VuyB7AXE4Hun8atDJGsqs6NmcNx/jFN86kD
+	hD6hHpGw=; b=q51Iuzt9D6HG/Fw+YqU2HCb2ZhqRmp3oFss98IsmxBgfwCJGSXi
+	dcYE60fq7XO9bRnbfGVi5D9Czam5vDly9VMIvQeyPuRFMAkwwHsMHR0rBSIpOUad
+	ouBN1m5i23JHfhn8xgdthCSg9YLGXvjKg2CIhMFlmNPKj5NL1El+BVnI1vW1t/uC
+	7NY78Xh70xtnwJSzsHxJcNdVyIunhlS80XN4nfkQp69Tb1WxSQvlToyzi8KCz8kP
+	SOFEpH6IBZCZe3eqOdpACiPtXoIFd8C76eHHH4NSLuNR/HHei8P6rbEDug6ZBOfl
+	Q5bVerNZctX5j5A3XEznaCseAY0u81nDPlA==
+X-ME-Sender: <xms:75FNZxY3RZUGAKzG0krRYBouBSmfF2C2vTyAb9klH6brW9ONjopKig>
+    <xme:75FNZ4ZUNOJ7Q76w3-hteBhrG6XFCCWw0AoL0bSxxAdAlDyR_aKtYbP63o3Vrn3j2
+    IjhsMjEs6hfYqaNsQ>
+X-ME-Received: <xmr:75FNZz-5IGvE2Dcl7E13V7KPDQfZbIC8IMRGnJXJ1NGDK_19I9eDWD2TYIUKcqEqgrUkmyj2N6Rf6tcAoZ-Zj2_M-Zcbp5K8XQ5-3wDFZj_vOkB4uQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheelgddvudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
+    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitd
+    eludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
+    sehjohifihhlrdguvg
+X-ME-Proxy: <xmx:75FNZ_rlVLBxKoISOgR30C1BIA8nbATX3rlC1uW_ijz8VOLcre2L1A>
+    <xmx:75FNZ8pLgGU6_Qhtoj0yN-CiQ3Q_eOXLL6SLfDHU2tBUkX4gpkTdUg>
+    <xmx:75FNZ1Rd1gYPwPrwvuh6AkWPo6ULhMcobnctViVeH7y8otYAA-WlZg>
+    <xmx:75FNZ0rGLNX1su0Gu89pG623zNQst0kTnijuSkxCRpv0TtLKTZ6Q7Q>
+    <xmx:8JFNZ1kUkT2-jAYeLlFUCL09xx21MfjSdDcP4uLQhsH4HgWed7gke8Tm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 02:54:26 -0500 (EST)
+ 2 Dec 2024 05:54:38 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 58aa2dfb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Dec 2024 07:53:11 +0000 (UTC)
-Date: Mon, 2 Dec 2024 08:54:13 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a29715b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Dec 2024 10:53:20 +0000 (UTC)
+Date: Mon, 2 Dec 2024 11:54:21 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/10] global: fix unsigned integer promotions in ternary
- statements
-Message-ID: <Z01npcGDwV4TBCeS@pks.im>
-References: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
- <20241129-pks-sign-compare-v1-6-fc406b984bc9@pks.im>
- <20241201215911.GD145938@coredump.intra.peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, git@jowil.de, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/4] tag: "git tag" refuses to use HEAD as a tagname
+Message-ID: <Z02R2Puck52VetcF@pks.im>
+References: <20241202070714.3028549-1-gitster@pobox.com>
+ <20241202070714.3028549-5-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241201215911.GD145938@coredump.intra.peff.net>
+In-Reply-To: <20241202070714.3028549-5-gitster@pobox.com>
 
-On Sun, Dec 01, 2024 at 04:59:11PM -0500, Jeff King wrote:
-> On Fri, Nov 29, 2024 at 02:13:27PM +0100, Patrick Steinhardt wrote:
-> 
-> > diff --git a/builtin/blame.c b/builtin/blame.c
-> > index f0d209791e44025b1965cd447cf4fc1e2ca5f009..6c6b0c7ef1a4d992064c7664bbf1229ef0286b97 100644
-> > --- a/builtin/blame.c
-> > +++ b/builtin/blame.c
-> > @@ -470,7 +470,8 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
-> >  
-> >  	for (cnt = 0; cnt < ent->num_lines; cnt++) {
-> >  		char ch;
-> > -		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? the_hash_algo->hexsz : abbrev;
-> > +		int length = (opt & OUTPUT_LONG_OBJECT_NAME) ?
-> > +			cast_size_t_to_int(the_hash_algo->hexsz) : abbrev;
-> 
-> Hmm. I'm surprised that -Wsign-compare would trigger here. We are not
-> comparing, but assigning. I'd have thought the actual error is the
-> truncation from the size_t the_hash_algo->hexsz down to "length".
-> 
-> But the actual error from gcc is:
-> 
->   builtin/blame.c:472:87: error: operand of ‘?:’ changes signedness from ‘int’ to ‘size_t’ {aka ‘long unsigned int’} due to unsignedness of other operand [-Werror=sign-compare]
->     472 |                 int length = (opt & OUTPUT_LONG_OBJECT_NAME) ? the_hash_algo->hexsz : abbrev;
->         |                                                                                       ^~~~~~
-> 
-> So that makes sense that "abbrev" is promoted to unsigned to match the
-> other side, though I still think it's a little weird this comes via
-> -Wsign-compare.
+On Mon, Dec 02, 2024 at 04:07:14PM +0900, Junio C Hamano wrote:
+> diff --git a/refs.c b/refs.c
+> index a24bfe3845..01ef2a3093 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -735,7 +735,7 @@ int check_branch_ref(struct strbuf *sb, const char *name)
+>  
+>  int check_tag_ref(struct strbuf *sb, const char *name)
+>  {
+> -	if (name[0] == '-')
+> +	if (name[0] == '-' || !strcmp(name, "HEAD"))
+>  		return -1;
+>  
+>  	strbuf_reset(sb);
 
-Agreed, I was caught by surprise, as well. Doubly so because Clang does
-not throw these into the same bag.
+I was thinking a bit about whether we can spin this a bit wider and
+disallow creation of any refname that looks like a root ref. But I don't
+think that would make sense, as root refs are defined as all-uppercase
+refs living in the root, and disallowing tags that look like this would
+go way too far.
 
-> Another solution would be to change "abbrev" into a size_t. But then
-> we'd still have truncation assigning to "length", unless we also make
-> that a size_t. But wouldn't that be the more natural type? We pass it to
-> memset() later.
-> 
-> We also subtract from it (without checking that it doesn't become
-> negative!), and use it with a printf("%.*s").
+So I then wondered what a reasonable alternative would be, and the only
+rule I could come up with was to disallow root refs with "HEAD" in it.
+But even that doesn't feel reasonable to me.
 
-This is fine in practice because `abbrev` will never be smaller than
-`MINIMUM_ABBREV` here, which is 4. So given that we only subtract at
-most 3 from the value the end result would be a positive integer.
+All to say: singling out "HEAD" feels like a sensible step, and I don't
+think we should handle root refs more generally here.
 
-But you're right, this feels fragile overall.
-
-> The latter does want an
-> int because of the lousy historical interface. IMHO we are probably
-> better off using fwrite() or strbuf_add() instead of "%.*s" specifiers.
-> In this case, I think it's just:
-> 
->   fwrite(hex, 1, length, stdout);
-> 
-> (that assumes "length" is clamped to the hex size; I think it is here
-> but I also would not be opposed to a helper function that checks it
-> against the string length).
-> 
-> 
-> So I don't think what you've written above is _wrong_. But I think that
-> ultimately the right type here probably is size_t, and I worry that
-> sprinkling casts around makes it harder to see that. It converts what
-> would be a compile-time complaint (the truncation and sign conversion)
-> into a run-time one (that in this case I suspect can't be triggered, but
-> as a general rule may be something that _can_ be a problem but which our
-> tests are unlikely to actually poke at). I dunno.
-> 
-> I didn't dig carefully into the other ones, but I suspect they may be
-> similar. E.g.:
-
-Will adapt. For the first iteration I was admittedly a bit lazy for some
-of the cases because I first wanted to check whether this will get
-acceptance in the first place. I'll explode these out into separate
-commits.
+The other patches look good to me, as well. Thanks!
 
 Patrick
