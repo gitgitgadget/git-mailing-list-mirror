@@ -1,82 +1,149 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC5F1DE3B7
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 17:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40284800
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 19:45:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733161010; cv=none; b=uEiS0dhE5L8thQLYR7XkfjFcgXVjSuPHTn2G5kvkfIMAmDXFO48JIhYmHjOwya4u9hV+lRjXCKmxR4M7MDYn4Hg3nRQOnhuc/ugfZ8CAjqqXBmSzu8BQFnjv6rWsZLepL3FhpbgvdkL+QWqK5K5XomKYuVCrNT+fETOA9rnBPFs=
+	t=1733168734; cv=none; b=miXGXEBUQy/hn+w+QeKFYtXvp4+gFOErrf+fCoa3SjXwfz0RO2Pqfvqn4h2umOkGhtU4S7etpXPsghFZ+7BEFYS4bMTFpOGl8+Rx5zjQeHBLo1ugGidfcsbqC1qsmo3b8uBEAoUzm69dUK8w12qZHoC06smpLK3n+FHPxcTm0/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733161010; c=relaxed/simple;
-	bh=xWrXKAjaE6h4i4IDMA3OA9+MUvEIQxDIanVreIn4gEg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YSnnLiIHipf9xeOAps6wNoUhVXiYnInwiHIu/5rtrcvmcLBeuPDbAZYjz84/aTwwpPJpaZUgNsxuIeI5bDzO04Xq5O6NOwHA8Vwr9fGo+GQEJ1cI4+b8LfhfZwGW4i3/7EyoyQXD+y6fs+Th67TW2d31456BniTm+AtPJK3iax4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=instadeep.com; spf=pass smtp.mailfrom=instadeep.com; dkim=pass (2048-bit key) header.d=instadeep.com header.i=@instadeep.com header.b=ZzSSo9LK; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=instadeep.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=instadeep.com
+	s=arc-20240116; t=1733168734; c=relaxed/simple;
+	bh=3Z5gwff6E8WyVp54N7AAhwKNnUH+iYLZ1VzPjplQ93A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J4GpDdvxfa4cHDatFMINebZcuegFdtcNfbg87C2goYW8Wh+/tNJ1pVtmDwAVj2aJK82H5IYqb/ZsEumbLy58gJPXmkxy8KrwMx4h09dsiAmMZ0MKe/1a5ptHkcGCFkLQ15p4yV8DxNo1vK8d6oAKUBwJa1XxEKMYSrvdxmUZdfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MlaykZJL; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=instadeep.com header.i=@instadeep.com header.b="ZzSSo9LK"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-434aa222d96so57578405e9.0
-        for <git@vger.kernel.org>; Mon, 02 Dec 2024 09:36:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MlaykZJL"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5cfc18d5259so35730a12.1
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 11:45:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=instadeep.com; s=google; t=1733161005; x=1733765805; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xWrXKAjaE6h4i4IDMA3OA9+MUvEIQxDIanVreIn4gEg=;
-        b=ZzSSo9LKUPxBvFcyWPIKvnwYftBWnybdl7ABALHqkqdY68Cknf/vFJG2hD2L8o6Wlb
-         g+3PT2M2QuK70rdMYZfeEL8jbtqCgWb3BvrCoxhB1pjPnsDXduafBWue5El8WCJQk3B9
-         87NvbsLVDsXTfNLi77PF+zR7aSeMDqfLqgJX43BTcEJEZ5aOW49v6sjVmUnXlc+FQLI2
-         a0bpa05QI7M/Tq9AGAec0uKsMuTS4Z7g5LtZp5hOE2a15TZqKuFzY3ml07ah0BAv7ggr
-         HNeHvOfgpWtalYx8oVBN9gwvtym/iV+wZppcsj096V6so8oFkDx/apFnPJnV8T3Jb1Tm
-         qoOg==
+        d=google.com; s=20230601; t=1733168730; x=1733773530; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ffwbeWdx7GrEsHe3o+ifFIcIeO4A01e5jtopfEHQ3rM=;
+        b=MlaykZJL9XbNLOxuCHaqZbH44jNRZAVZtYc6OkKB3RwuLlAWAeBcOEY67EIc0+Lzvg
+         M2oQgDF9J8eAoo35cO+fOmUQx/Pg29kRUZvcbkUJrD24CbHuytCrgA7ec21FcppdWI5R
+         KVGhnuPQCBW/MBEVuJb8yg4LLhWwxdgV+iowFzr0+VHs0Lv2FAw0jI7Kh5T9loZTBjgV
+         UNMmyGd2dAaVM1iPPviX+FUWO4hqlpoEr1S9k5NtlJCe5asXkAdEFXKVY1sU9CqfmOOR
+         4VgPalFM19nSbLC6DVTfsl8dfdLI6q/8m1nHy/+bk7lQA2UMWJNGPTMmvPnYTeUXo11T
+         DX6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733161005; x=1733765805;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xWrXKAjaE6h4i4IDMA3OA9+MUvEIQxDIanVreIn4gEg=;
-        b=k3qMdqOCYl2l7QfM3TSOb6QZRj3qr7+A6Dhgs776KE9wnaiW/cfbAlIpvbzpr8TNlM
-         2h8P+q1hWbBhe083ZfALvl3W1krMiJShAqf245eWpMJtsqL2iOJVR+hKWOjrrhdJzNAX
-         T7UqBY8ips2lU94TESeY2Ar3dup656N0M/G/dMfsWTqKn5D1o+zc3wIDwckyS0oNDhby
-         7g0BrznyZQMeh5q5wo7bdPPHkdw06eObdGCuurFJ1LaOz+hI7mSk36TYUPjxOAOGY7y2
-         AeC7PH3HMY3y8SzQuV+N71COg9cSWYPg9UKOilocURWa92wqeBGvGKC3svKRodNu+61u
-         N+Nw==
-X-Gm-Message-State: AOJu0YwRBxhilWvLsJK/nBT3wxNoIkAYD2WNye53w11FeOG9IXjP/mcv
-	9xBn/ItEeeW/EfhJSQXuKYV68GjKAjWYW6KmzGK5edd0WsiPB+0Ft8d4AcViNsildUoY8OijM2M
-	7+MkkKQbtc4KBozNBWX1fOp7U1YusK6yVd80RDlh5kkdMNebBIlk=
-X-Gm-Gg: ASbGncus2HANtg8yOiTugNWYe40yFYSGcIBqYR2stRwfjGOErWbeEcQF5JyZGFATtIA
-	+KNt/Tk0/DsqGZUzaKfgjOR5ornE45A==
-X-Google-Smtp-Source: AGHT+IF4i1sQbMlbeMmdFd1m4L8ncWRC+kuMnQXvq2xNa04RfKhfqGJOGHLxbCwzlOMZCpQEbbxJjUksJxy0jz1tuOQ=
-X-Received: by 2002:a05:600c:190d:b0:434:a26c:8291 with SMTP id
- 5b1f17b1804b1-434a9de9444mr247767545e9.24.1733161005381; Mon, 02 Dec 2024
- 09:36:45 -0800 (PST)
+        d=1e100.net; s=20230601; t=1733168730; x=1733773530;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ffwbeWdx7GrEsHe3o+ifFIcIeO4A01e5jtopfEHQ3rM=;
+        b=VVAZeLludmNb8FcMJNo64enn6dw2cTQh/N1FNMYbQYdwlO5ObpT/oYYz9nZk5l0ypK
+         XmpeNMk9OWAE41G0GlClaQSbtx1h/DUKyMz8FyFEn4hY5RpAzBYjWlxRcqJcPAwU6F6x
+         NuWiQ4EYdqKj7QGS5bfMHu60QLTJnwxEjWyMHeRiTYw9qHujDy+NAh2zSBjSbyD/YEWM
+         I5pRiWM5nUGxvyi8ALz89J9+dKyMHxLCjz+yCDtpkucRrnl+hRqjnI0hawN4SZCqv+Gl
+         KofUEW0J+dEtKRQ05hFlGHpjYlO8nDwazEAuubssnP8yLVLqBc+bT1qRDJlWihIxNO9h
+         HPcg==
+X-Gm-Message-State: AOJu0YzMJKwykCQ7TcgIby5u4JJdtPE0ltuLy/xYrjJrdOiIPA8XPaMa
+	fqHxO867sLpX57jQV26A7c4uaTdPXhMFefsMcKo17IVmQ+otm7iBq6cvO2clxbzWXF9vrDoHcaj
+	TvMGTkd4J9PPOVCZA2q/Tv7FfDKEfRrh4y8ET
+X-Gm-Gg: ASbGncukuvyDodv3ZSO96mOgRg+VQmAzjCF8/kxf20iHr6XXpH9UfxdCfDoudUn4+R2
+	YepTp8wwuzDcADtZ/g8rDs5xYWW5YuL0hHTANRj7yqLgEhS0dVDIzZZWVfSbe
+X-Google-Smtp-Source: AGHT+IFpG1oI2UfmDpljdtTEFVcT+thaUTbncJV9F3p/rQ3ary+u4DUgCODFi1bnxWEBnHHeA7WHIOkYwSZGmSMa5IM=
+X-Received: by 2002:a05:6402:35c2:b0:5d0:a982:91a7 with SMTP id
+ 4fb4d7f45d1cf-5d0a982a46bmr241922a12.6.1733168730348; Mon, 02 Dec 2024
+ 11:45:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?R=C3=A9mi_Debette?= <r.debette@instadeep.com>
-Date: Mon, 2 Dec 2024 18:36:34 +0100
-Message-ID: <CAGinwDzTDexiXpwR0BGTTgX_9BcQ9N2RSea2UBTnyurCM0QRfg@mail.gmail.com>
-Subject: Support of NETRC environment variable
-To: git@vger.kernel.org
+References: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
+ <CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
+In-Reply-To: <CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
+From: Kai Koponen <kaikoponen@google.com>
+Date: Mon, 2 Dec 2024 14:45:17 -0500
+Message-ID: <CADYQcGpyTL18N2t8t-HwafB8VEVbBt452fsE0yMBvRvZd1mbVw@mail.gmail.com>
+Subject: Re: rev-list --ancestry-path with arg - bug or undocumented requirement
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+From 447a2367f8d3318e69adccc1b011b0d04792e438 Mon Sep 17 00:00:00 2001
+From: Kai Koponen <kaikoponen@google.com>
+Date: Mon, 2 Dec 2024 19:32:25 +0000
+Subject: [PATCH] doc: mention rev-list --ancestry-path restrictions
 
-This email follows discussions on this issue in the uv project:
-https://github.com/astral-sh/uv/issues/9576
+Signed-off-by: Kai Koponen <kaikopone@google.com>
+---
+ Documentation/rev-list-options.txt | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-The uv project supports setting an environment variable called NETRC
-that allows setting a path to a .netrc file if this one is not in the
-expected home path ~/.netrc
-Their documentation describes it here:
-https://docs.astral.sh/uv/configuration/environment/#netrc
+diff --git a/Documentation/rev-list-options.txt
+b/Documentation/rev-list-options.txt
+index 00ccf68744..1c678294af 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -412,12 +412,13 @@ Default mode::
 
-git supports authenticating through the .netrc home file, but it seems
-it does not recognize this NETRC environment variable.
-Would there be an alternative way to set an alternate path?
+ --ancestry-path[=3D<commit>]::
+  When given a range of commits to display (e.g. 'commit1..commit2'
+- or 'commit2 {caret}commit1'), only display commits in that range
+- that are ancestors of <commit>, descendants of <commit>, or
+- <commit> itself.  If no commit is specified, use 'commit1' (the
+- excluded part of the range) as <commit>.  Can be passed multiple
+- times; if so, a commit is included if it is any of the commits
+- given or if it is an ancestor or descendant of one of them.
++ or 'commit2 {caret}commit1'), and a commit <commit> in that range,
++ only display commits in that range that are ancestors of <commit>,
++ descendants of <commit>, or <commit> itself. If no commit is
++ specified, use 'commit1' (the excluded part of the range) as
++ <commit>.  Can be passed multiple times; if so, a commit is
++ included if it is any of the commits given or if it is an ancestor
++ or descendant of one of them.
 
-Thank you
-R=C3=A9mi DEBETTE
+ A more detailed explanation follows.
+
+--=20
+2.47.0.338.g60cca15819-goog
+
+On Tue, Nov 19, 2024 at 10:22=E2=80=AFPM Elijah Newren <newren@gmail.com> w=
+rote:
+>
+> On Tue, Nov 19, 2024 at 1:53=E2=80=AFPM Kai Koponen <kaikoponen@google.co=
+m> wrote:
+> >
+> > What did you do before the bug happened? (Steps to reproduce your issue=
+)
+> > Create a toy repo with commits in the following structure:
+> > A - B - C
+> >      \
+> >       D
+> >
+> > Run `git rev-list --ancestry-path=3DD A..C`.
+> >
+> > What did you expect to happen? (Expected behavior)
+> > Commits A and B should be listed.
+> >
+> > What happened instead? (Actual behavior)
+> > No commits listed.
+> >
+> > What's different between what you expected and what actually happened?
+> > --ancestry-path with a commit arg seems to return 0 results unless the
+> > specified commit is itself part of the range. The rev-list documentatio=
+n
+> > does not mention that this is a requirement.
+>
+> Yeah, the commit message that introduced --ancestry-path=3DCOMMIT did
+> document this in its commit message (see
+> 257418c59040c13bfa839e01922e21833cda6a52257418c59040 (revision: allow
+> --ancestry-path to take an argument, 2022-08-19)), and I think my
+> original documentation patch was a little clearer on this point, but
+> when Jonathan suggested an alternative for the documentation
+> (https://lore.kernel.org/git/20220818222416.3567602-1-jonathantanmy@googl=
+e.com/),
+> I didn't think about someone attempting a commit outside the
+> ancestry-path as the argument.  My bad.
+>
+> Based on the references above, would you like to suggest a
+> documentation patch to ensure this requirement is documented?
