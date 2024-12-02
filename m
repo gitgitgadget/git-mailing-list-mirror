@@ -1,79 +1,79 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882C920DD54
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 12:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0EA20DD5D
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 12:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733141112; cv=none; b=dxRLRp4pLsFSPBW698h0SplGU8bASyGXZgw0rl5viJUhA0Ih7jsJnbDO9m6wnuTFwsCXXMJ3+Kov7Yhq6hK/1DqY4rNwsITgn4AcszjEqmEc8dyxuwcbJUUNr9AkFSwZXMmN403Vkc3RpfRo4i3cMFqaIdNhnmIO9+gKgUmzIv4=
+	t=1733141112; cv=none; b=uw2WALPdcj3Mb3vwfrysmivbU+fJk5IhuO/ndGMl8S+s6IBHMO4WQG9mkVvWMj/B7+FUt7W+Gbu8KYz3k8WQTuEmHiyqaMJpqh24LEX/goqhFQZjVPLQDPyO4VY9hEnp9IqG3BNkBh/hYiQfaMiQ0UsreMGNBvQGj/HZZ2/TWZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733141112; c=relaxed/simple;
-	bh=JkYboJKZHZM+ac9wiyc90QKzF5VInOMnSQN9tRtdM3s=;
+	bh=N/kGI35uw2wReGQtRhDTg/oIyFx9rb9hd63XvAwvqEo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JkNssUFJWcAYP+pLNKQeVD6CK8PGA1J+cWoDwJyXPnXMlekKF6AyWy1KBMnEfQko9yDmSQJhDuUhlr5GtYZVWoJxZ+Oh0g3F5C5PaNEuxKCoke8sWUlhvS0WtOcexYXdzWHPNmIC5ovRm6P2i70dWFgxWr1jbizou+D2QqgduCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MNtR12Du; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1Hr/wV0t; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=M4aWndI2/GYbR5bM7GFwSfcJU7Rd+9USdF4sDv82Jdbu78oZKTf7cT2iGC8FGRD7XYZiVe2fhCvBhbbZ6VU6Qy4sZrQWkiMW0KJfemQ/6XmZjTPjWAHrEc4DJvf3XEnDm30+RAFdzdvtah5/Dm5Qm4XPBvMWy7xbhF+OIiZItIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JCdNng8S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2frFsYvz; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MNtR12Du";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1Hr/wV0t"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9F9A5114017F;
-	Mon,  2 Dec 2024 07:05:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JCdNng8S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2frFsYvz"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 52F08114017D;
+	Mon,  2 Dec 2024 07:05:10 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 02 Dec 2024 07:05:09 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 02 Dec 2024 07:05:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733141109;
-	 x=1733227509; bh=6lo4x03kqPtlSZAbT88AtH6OR/rU64pzA4QOdeYe26A=; b=
-	MNtR12DuyY0Wj8QK0gpJBcm1OcthdXzG3R46iRpw6Luzbd2dePb4cVk5q0dG1hw0
-	vnBesqKM8yJio0Bpl7stYtxsHzUIkPDtQ6I94IaFQQtI2cAZh01MI65btRZ+vx9Y
-	R2BFMWePQ1F+UxkJg3XIWF7mraNaTILeapm2SqFD73fk+8bfdl7S3WTRr0KhIA2S
-	e+ftd2D2SHiN6HLy1HR6RGDigS1lzoCDVWfHGXEAUcy4Xt1fe/DcFbL9FADyEzI5
-	tGBrAkzmfXM6nl9eARApMYBVEJS9Lq+pFHgTFReqPCTiAkw2Nprpy2HpNwMzYnSH
-	jeZ8KoAlFIXUQDhTQuThEA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733141110;
+	 x=1733227510; bh=Ossup2nZ6UWY2WKN4PsWIuN24Ki+kOfYdJwR1luyMmo=; b=
+	JCdNng8SF4aygP7BrTKUqDkL6P5BzoORH4jkGdtPhssJa7iw4fU0oGqXpCT7RQ+B
+	eOlMuxXMg2Mdt/gvo9yXfgXyBYfkBnZ+uLpw3Sk6l1NKiL4mzBYYAHOfMnN5M9w0
+	dgX9LqLsPqYz07gmsMuCSV6lfAmnS7TzLVPXoo6f1uVLHfzKmroUZXNGCmWTYJN9
+	KGEm/Rr2lpsI0Kd2MMMbq0K5zZLP/8AHQuQfJAxPSdpA7wFflhed0yYQcmQovo2K
+	DDMAytWm4IT7JFvW+9LfU7gnsoSLkPpjF6R3g9f2VezbHQFb0q8VgNJlatv9nn9m
+	S0ssQBeiy6kaNUu/Nv7ntQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733141109; x=
-	1733227509; bh=6lo4x03kqPtlSZAbT88AtH6OR/rU64pzA4QOdeYe26A=; b=1
-	Hr/wV0to0uxxlRzBQLqpI3TzEC5nMriNLwa8VnLeh1CNCIurFThApNNNpJrDjRAO
-	pCQ9qW1bRIuekOg34ChMMEXyR5FdEgIYjpoCPMOGH1LzkpYDN6+cqsGI2/LOkE2h
-	1kwBj5+EhV3z4S3EJlmTK5wNxPHvMT1dOP9EHOIvAW1m5c65Mf8Lt99lnvXLbuz4
-	jnhgsdczFyJR2fD4viTJRCwmOkImU+/JwoI0pV30E/72EMMnYgZxtGqc1r2gZZTg
-	egSwSerTLn4x9r2VFruxf5qwXfas9PvD/O9QWt20mNADSVMFO2qicJrP2UZQqgSY
-	0zw3gO+1diVBEESgpc6pw==
-X-ME-Sender: <xms:daJNZwU5xwNtYDWNiMNcb_jlfg4qZ-a7guGHqSlcXsN4VtWHZOslUQ>
-    <xme:daJNZ0nhn8cxGssidHiH__92YPwUmRDvwMeJwwIoVBGFdqJfSlPUiPbDbRqgCXZFt
-    UbSfhoSlEaCh-eo1g>
-X-ME-Received: <xmr:daJNZ0baJpgeSC4UtsxjlT82kgqHqzKnb495zmSe3DFnWxaXqJeCx6-Q49BUcPBXsJVt5ivGNoOP2HFwB0xG7UUBmAAcv1noO0wb2BP6VkGfSF9Sxg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733141110; x=
+	1733227510; bh=Ossup2nZ6UWY2WKN4PsWIuN24Ki+kOfYdJwR1luyMmo=; b=2
+	frFsYvz6a4SR6cInOQ8clTjtD4p9c07XO8kTHhoONoIhRyiof4uxw3cOA2Ujn+9I
+	PgheTcLB/NDHN0kj4qi4eweA1yRP7NlYSvsASdROt+RVmdGwbiTK2Q80CQ8IqFvn
+	pZwZC2MZaFl63iAOkCyKLqNgOq8WKsoBLq3n5tuA2/FDxxotxdEwWIi5+DC5IK8B
+	gaA458RnKxe3rrtLATWmWdUwHsdDOyoJcWTPqbrHzvTFOtnB2v5ifltKzLoPO1UV
+	p/MkJjckDOApm5MisufBJZI1sHjN+/z1231eG2QUILhwYfl4rZGioGcrV7bGihBs
+	vo6EkT4WNG3K9MtJdn9pA==
+X-ME-Sender: <xms:cqJNZzMr7DJSj8TOP5aCMb_OxFDBAbayvCFrVMBmLmd7mUCOrxq4UA>
+    <xme:cqJNZ99SWDL4voA8NCM1FobruiFRSSUauPghjoTxhJxj1Ina41I8sXQg90NtADxUX
+    IYScKVC0pKTYmTyUQ>
+X-ME-Received: <xmr:cqJNZyT7A4nVdveZHLwoVnDDzOdiVFIq5ySbX2T0qt8PuvFakDeFhDXpSZXqpmQ80dQ3wZYxQImvqfxDtvZUss7MRfS3ffLS_YkDmoPKRoVOZ-00tQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheelgdefgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
     fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
     hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
     ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    ufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:daJNZ_U_EeIDNoQup7AUxGGhwf7ybDB5NE7Bi2QVkSuKPhDC_m2nEg>
-    <xmx:daJNZ6kd7miJzZ55wLscVXMSSaHLO6gSjDWPkRweZyP7kZ4gfHaZCg>
-    <xmx:daJNZ0cTuwIAys-mtoxhJvuj1l-6qmIguJ7miAlhlmT4JGGjbdrvdA>
-    <xmx:daJNZ8GQCgc1ISfFLBS3i50y7FQWsZtkU2-VPGEb2qEdLFX6prPv2Q>
-    <xmx:daJNZ8j6AVNgsCdYk5NHhvXtAoh1xEp7yibGPlDk59mTqx0Wzm0QPzmY>
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+    dprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:cqJNZ3uyZ-yImTSN_mgmNNrGd-qi0zd0FIdhsfyTnU0LJHp267te1g>
+    <xmx:cqJNZ7dEKUKK9vMT8hzE3SsUuoyj7m-AS7LR-CDSQZxONeaXzX5_cQ>
+    <xmx:cqJNZz1I6cow3WZScCd6lRcBvq0c6jWsr9nSiTjUkJQExFTm1nzBZA>
+    <xmx:cqJNZ38hFO0fRcjSdWvTjbGiTubro_MXdltPM5HhVS0tusKumteKjA>
+    <xmx:dqJNZ36YaUX2u_R0KWc5V2F91xCbE32bkkSxMQk1yrxYpd14KOWfo3bW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 07:05:08 -0500 (EST)
+ 2 Dec 2024 07:05:05 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ab8e6710 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 2 Dec 2024 12:03:49 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1ef26f82 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 2 Dec 2024 12:03:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Dec 2024 13:04:46 +0100
-Subject: [PATCH v2 14/14] t/helper: don't depend on implicit wraparound
+Date: Mon, 02 Dec 2024 13:04:42 +0100
+Subject: [PATCH v2 10/14] gpg-interface: address -Wsign-comparison warnings
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,71 +82,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241202-pks-sign-compare-v2-14-e7f0ad92a749@pks.im>
+Message-Id: <20241202-pks-sign-compare-v2-10-e7f0ad92a749@pks.im>
 References: <20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im>
 In-Reply-To: <20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im>
 To: git@vger.kernel.org
 Cc: shejialuo <shejialuo@gmail.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-In our test helpers we have two cases where we assign -1 to an `unsigned
-long`. The intent is to essentially mean "unbounded output", which is
-achieved via implicit wraparound of the value.
+There are a couple of -Wsign-comparison warnings in "gpg-interface.c".
+Most of them are trivial and simply using signed integers to loop
+towards an upper unsigned bound.
 
-This pattern causes warnings with -Wsign-compare though. Adapt it and
-instead use `ULONG_MAX` explicitly.
+But in `parse_signed_buffer()` we have one case where the different
+signedness of the two values of a ternary expression results in a
+warning. Given that:
+
+  - `size` will always be bigger than `len` due to the loop condition.
+
+  - `eol` will always be after `buf + len` because it is found via
+    memchr(3p) starting from `buf + len`.
+
+We know that both values will always be natural integers.
+
+Squelch the warning by casting the left-hand side to `size_t`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/helper/test-csprng.c    | 5 +----
- t/helper/test-genrandom.c | 4 +---
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ gpg-interface.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/t/helper/test-csprng.c b/t/helper/test-csprng.c
-index ea9b9b656307d32bdc1f2e15a91793b1dda9c463..a4a0aca61773b0b30de618955e5a5b61bba2d0cc 100644
---- a/t/helper/test-csprng.c
-+++ b/t/helper/test-csprng.c
-@@ -1,9 +1,6 @@
+diff --git a/gpg-interface.c b/gpg-interface.c
+index a67d80475bf9d8452de0c3ae9bb08ceeb4c11c4b..0896458de5a9889bf5951d9703c37a67e20d3e1a 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -1,5 +1,4 @@
+ #define USE_THE_REPOSITORY_VARIABLE
 -#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "test-tool.h"
- #include "git-compat-util.h"
  
--
- int cmd__csprng(int argc, const char **argv)
+ #include "git-compat-util.h"
+ #include "commit.h"
+@@ -128,9 +127,7 @@ static struct gpg_format *use_format = &gpg_format[0];
+ 
+ static struct gpg_format *get_format_by_name(const char *str)
  {
- 	unsigned long count;
-@@ -14,7 +11,7 @@ int cmd__csprng(int argc, const char **argv)
- 		return 2;
- 	}
- 
--	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : -1L;
-+	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : ULONG_MAX;
- 
- 	while (count) {
- 		unsigned long chunk = count < sizeof(buf) ? count : sizeof(buf);
-diff --git a/t/helper/test-genrandom.c b/t/helper/test-genrandom.c
-index 5b51e6648d8e698b09f400efcf67a0708c226e9d..51b67f2f87469471a40288e369d9c784eb2ccba0 100644
---- a/t/helper/test-genrandom.c
-+++ b/t/helper/test-genrandom.c
-@@ -4,8 +4,6 @@
-  * Copyright (C) 2007 by Nicolas Pitre, licensed under the GPL version 2.
-  */
- 
--#define DISABLE_SIGN_COMPARE_WARNINGS
+-	int i;
 -
- #include "test-tool.h"
- #include "git-compat-util.h"
+-	for (i = 0; i < ARRAY_SIZE(gpg_format); i++)
++	for (size_t i = 0; i < ARRAY_SIZE(gpg_format); i++)
+ 		if (!strcmp(gpg_format[i].name, str))
+ 			return gpg_format + i;
+ 	return NULL;
+@@ -138,9 +135,9 @@ static struct gpg_format *get_format_by_name(const char *str)
  
-@@ -24,7 +22,7 @@ int cmd__genrandom(int argc, const char **argv)
- 		next = next * 11 + *c;
- 	} while (*c++);
+ static struct gpg_format *get_format_by_sig(const char *sig)
+ {
+-	int i, j;
++	int j;
  
--	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : -1L;
-+	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : ULONG_MAX;
+-	for (i = 0; i < ARRAY_SIZE(gpg_format); i++)
++	for (size_t i = 0; i < ARRAY_SIZE(gpg_format); i++)
+ 		for (j = 0; gpg_format[i].sigs[j]; j++)
+ 			if (starts_with(sig, gpg_format[i].sigs[j]))
+ 				return gpg_format + i;
+@@ -228,7 +225,7 @@ static void parse_gpg_output(struct signature_check *sigc)
+ {
+ 	const char *buf = sigc->gpg_status;
+ 	const char *line, *next;
+-	int i, j;
++	int j;
+ 	int seen_exclusive_status = 0;
  
- 	while (count--) {
- 		next = next * 1103515245 + 12345;
+ 	/* Iterate over all lines */
+@@ -243,7 +240,7 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 			continue;
+ 
+ 		/* Iterate over all search strings */
+-		for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
++		for (size_t i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+ 			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
+ 				/*
+ 				 * GOODSIG, BADSIG etc. can occur only once for
+@@ -700,7 +697,7 @@ size_t parse_signed_buffer(const char *buf, size_t size)
+ 			match = len;
+ 
+ 		eol = memchr(buf + len, '\n', size - len);
+-		len += eol ? eol - (buf + len) + 1 : size - len;
++		len += eol ? (size_t) (eol - (buf + len) + 1) : size - len;
+ 	}
+ 	return match;
+ }
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
