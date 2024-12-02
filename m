@@ -1,71 +1,74 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DB08494
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 01:26:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F36171C9
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 01:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733102787; cv=none; b=THz9uw8S7m4pQhbL8sOT3bxVJqrNhmpDQ9FswViSS/jCyCP8lsa1MnO8zoDzz0z0vf5gpoaP1m/Cws3yovY1fO+m91RVB3yGJKqg7LATxRM/dFYlhFspyrFVRH5F4AZpV1nxzPOJ+TNqAGgq3wnbvtmYHX9PclkGBKERJIFRa6g=
+	t=1733104149; cv=none; b=E8XpKv2w4AEBUb7cNMnGA1bE6BuhHZ5SSdGeKtjvkhrBZSge5c4vUD92JkpmPkkeVNEfjAHFlr8fS9IXWtXyVRJM/oXP7s5IH7O6eMVXs+WM+BAOo1nNbme0VThVMg5TPl1b0ajk8k4g5FXRoFfum9xMnsVLhP5QFtZ1Mjm0CqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733102787; c=relaxed/simple;
-	bh=aGw5mBaE90wa0mISTM3p+w8Z5VbmGP8+QqfnbJ6HvO4=;
+	s=arc-20240116; t=1733104149; c=relaxed/simple;
+	bh=czzu4orItV4nF9In+l1g7TzDsNIei84zFaZAjOVZYnc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OOD3n5g1OdZX1Lwfgmg+YEdKDuf64wTKtGChLw5+YaqJgUfjoQ1lDfWzZ7XuCBYcejK6W1UuOktNg8rKOCNyCr2vilp38a6xjyhiCISe8J46gCxR0kX/RwAW8HUSz8Kfqh3O9XTeGcD6FXivcfAesrzAX/os+sL1KGKOZt1qREk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yfmfOMcF; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=no4RszGaFCP5HyW2q5LgBYU75r93W/djM1DHXIPnvHhFWhRnIKfFhnwC+qtLtqVn71X9QcJGT9e59Xj5pKPGcTPIF0iTkca0kO935y6oUK5UuJsmu3k9trRQyRgfy54/EjElNOZFHDI77rj70Wv/Vdrv1GIzeCYIAN3nbDtDOJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ql96GEzh; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yfmfOMcF"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 42A4D114013C;
-	Sun,  1 Dec 2024 20:26:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ql96GEzh"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E87092540103;
+	Sun,  1 Dec 2024 20:49:05 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Sun, 01 Dec 2024 20:26:24 -0500
+  by phl-compute-02.internal (MEProxy); Sun, 01 Dec 2024 20:49:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733102784; x=1733189184; bh=96EyPKuJZH6XFmvsk3bPu52i0RHyysCDmQG
-	kaklP7kw=; b=yfmfOMcFt9hE5GHFUNNGBhidzz1Jq8EpV8xqcKc4uSS2MyuzUBt
-	migIma9ZS/H3HDg15Pl8q+Vw2ucaMkIPC5KsCs47XjHspG4KAlKDgn0fs/Tz6CEX
-	yR3MLmgXuIWo58tUoM875U48DiVBxaZ3hk6qv/4tMM75w5xMHWRd4Oz0qGj0xzsL
-	ezX77txpPoA7nJmyqJKiXsvmsx+tQHp/vTu+LfXM24wq5zV2JZU082dyjwb/OVIk
-	uSlqpHvrBwxtTOWyFE/qlnX6alkiiDf3vVUeSzBZ0mESgPJPC5PFxNyvnIV79Xch
-	/wHRzBgu1a3Yb0gc24PSF9lEgHDG+R176cQ==
-X-ME-Sender: <xms:vwxNZzTh--esQJTaIxscdkhJG7ffgBdy74xKiSELZlx_AdCjSX8RkQ>
-    <xme:vwxNZ0y3eQ60vyrGLpZ3ZF2aJ5XwvVHM2s__MRl3Q_umJWht4vnUanV1SDB_dAPCe
-    lMTXfrQALAbxDDS7g>
-X-ME-Received: <xmr:vwxNZ42r8V1nLSTffbOfsgh6LALCauRR3YQg51gb0NMsb7346lzXCJK5lqfse5KJjBm2qnbbg828TFEbNe8OxA5rd66pIpvCwviI8Ro>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdefgecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733104145; x=
+	1733190545; bh=oZIJMdk+4uhC0s3e9elPy/Kzk7vQtMfzOmRrIqTAj5Y=; b=Q
+	l96GEzhwfAk/xLmIyQ+Yv0wAShAUWwn/kdEaFpWA2AHVWa7CYB+dDFjblpRDkMoF
+	fTz1cFL7C4wbT4ay2UEAp4ZbHXdEqUZiUIOZgOLh8C101VP+O6Ry7R3Aqk1o3Xff
+	y7L0GMSagWYRnCVzHtHwFejsycHo/e6SRMfBMHXP2EGqxqg9/R8ulj4Abzv1Ze32
+	EW1EgUPOPgxCYcGb1VeUQUKS2jKXjwsODdRO/zi1RGUl3k8ItZ1YMVQV6xBDoftf
+	Os/uLKjShtLmivM89/Iaj/5DmVclWVzRULuQZRDXUCbNeWTmGA/BYcGDoTUYv/BK
+	IVMX3pMupMHO8OmA1/qxw==
+X-ME-Sender: <xms:ERJNZwxJjS-1yssURNfiFSyF1MnOncAwELPcF1wizOiGdG0zo6qN2g>
+    <xme:ERJNZ0T-zjW1BRgSO7rIGVgPKlec4f3KTuuFKTgLKk0BoKzQBhSWVc61Mle6z4isu
+    vziRCu4OYUI5NWF0Q>
+X-ME-Received: <xmr:ERJNZyWzozdPedMtMas1mtwf5UL2L5ZIsh8Gm7Poq9NryFr9NOcEO51p_moDDxeSn91D6rFlNaDwu9idWWdRc0HlQWzRGGi4WaHKzbU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdeflecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrh
-    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:vwxNZzAl5tAQvoUZyRrAK6HnvOuGTD6UBTbqXbGfIrSFhAbcYfGNGA>
-    <xmx:vwxNZ8i56tvgRVrDeRcl4mWfgd6lQCo0BkhhtLq5Fz-TPNUHLbnlxA>
-    <xmx:vwxNZ3pmIbvV-L5h6VbqzguZePDVTbWjK0VQyaCdOuEHSwL5JcwCzg>
-    <xmx:vwxNZ3jPX2bXQDhGrau5IDIo5rKj73qXq8xGENMIpR6Zk3FwL6-9sg>
-    <xmx:wAxNZ0fVfo2X4d-8xforwWw4eyQrTq7dRjhRAzd_X3340hbp4pmhiB8N>
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhephfetvdejheduheegleehfeeivedtgeelfedv
+    ffdtvedtudffieekieeijedvlefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehrjhhushhtohesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ERJNZ-jwpUSmETdP9WUkFvQ0DQ3-swKddH4qfeT4Fwj67fmXPJ7b2A>
+    <xmx:ERJNZyDHO9OKQHIch7sahcNwlY-hFw4MMzjLZbr54VanqNsEO-mAmw>
+    <xmx:ERJNZ_IkwXfGK5uMWobY7FDqHgZkFPv0U61jAg4fxsa84NofIaVx5Q>
+    <xmx:ERJNZ5C4I-L0QL_wq5NIDNJPO_Th2BfWtdI4vUUtSwk055Fb1P62MA>
+    <xmx:ERJNZ1_J_ccIRBCshS0B0yZSHoYovGC0WJRMPg2HEVNG5AWueN2EgSnm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Dec 2024 20:26:23 -0500 (EST)
+ 1 Dec 2024 20:49:05 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org,  "Johannes Sixt" <j6t@kdbg.org>
-Subject: Re: gitrevisions: be more chatty about shell metacharacter gotchas?
-In-Reply-To: <702d88e9-c62d-482c-a457-6d6642e8488e@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Thu, 28 Nov 2024 20:30:17 +0100")
-References: <702d88e9-c62d-482c-a457-6d6642e8488e@app.fastmail.com>
-Date: Mon, 02 Dec 2024 10:26:22 +0900
-Message-ID: <xmqqttbmkh8h.fsf@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] strvec: `strvec_splice()` to a statically initialized
+ vector
+In-Reply-To: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Fri, 29 Nov 2024 18:23:45 +0100")
+References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
+Date: Mon, 02 Dec 2024 10:49:03 +0900
+Message-ID: <xmqqiks2kg6o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,66 +76,116 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Rubén Justo <rjusto@gmail.com> writes:
 
-> Part of why my eyes might have glazed over (I think) is that this is very
-> technical phrasing.  Yes, technical phrasing in a technical manual.  To be
-> expected.  But the topic is the revision syntax; all of us Git users of
-> varying levels might be primed for less terse but more evident paragraphs
-> like
+> Let's avoid an invalid pointer error in case a client of
+> `strvec_splice()` ends up with something similar to:
 >
->     Keep in mind that you probably should quote the search string.  A search
->     string like `:/fix nasty bug` could be interpreted as just `:/fix`
->     depending on how your shell splits words.  Try to stick to
->     `:/'fix nasty bug'` or `:/"fix nasty bug"` (whichever is better in your
->     shell) for that reason.
+>        struct strvec arr = STRVEC_INIT;
+>        const char *rep[] = { "foo" };
 >
-> Because this leads with what the gotcha and remedy is about.
+>        strvec_splice(&arr, 0, 0, rep, ARRAY_SIZE(rep));
 
-I am very much sympathetic to the cause to help people avoid making
-mistakes, and reminding of the basic rules of command line syntax
-"as needed" may be a good idea.
+Well spotted, but the explanation can be a bit more helpful to
+casual readers.  If there were a few paragraphs like below
 
-Any arguments and options you give from the command line are subject
-to the same shell quoting rules, and we at least need one single
-place to say exactly that to help beginners.
+    An empty strvec does not represent the array part of the
+    structure with a NULL pointer, but with a singleton empty array,
+    to help read-only applications.  This is similar to how an empty
+    strbuf uses a singleton empty string.
 
-On top of that, there are probably arguments and options that more
-often contain shell metacharacters (like '*' and ' ') than other
-arguments and options, and it may be helpful to beginners to remind
-the need for quoting.  But "as needed" is relative to the level of
-reader, and if we overdo it, it would make it less readable for
-other readers.
+    This approach requires us to be careful when adding elements to
+    an empty instance.  The strvec_splice() API function we recently
+    introduced however forgot to special case an empty strvec, and
+    ended up applying realloc() to the singleton.
+    
+before your proposed commit log message, I wouldn't have needed to
+go read the implementation of STRVEC_INIT to understand what the fix
+is about.  From the fix by itself, it is a bit hard to see why
+empty_strvec needs to be special cased, until you re-read the
+implementation of STRVEC_INIT.
 
-There already is a note about '*'; we can add another note about
-whitespace next to it, perhaps here.
+Thanks.
 
- Documentation/gitcli.txt | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-index 7c709324ba..0a67005fc6 100644
---- c/Documentation/gitcli.txt
-+++ w/Documentation/gitcli.txt
-@@ -57,6 +57,16 @@ When writing a script that is expected to handle random user-input, it is
- a good practice to make it explicit which arguments are which by placing
- disambiguating `--` at appropriate places.
- 
-+ * Arguments, options, and option values given on the shell command
-+   line follow the usual shell syntax rules.  You'd need to quote
-+   your string with whitespace in it appropriately if you do not
-+   want it to be split by the shell, for example.
-++
-+--------------------------------
-+$ git commit -m "my message with whitespace"
-+$ git show "HEAD^{/^my message with whitespace}"
-+--------------------------------
-+
-  * Many commands allow wildcards in paths, but you need to protect
-    them from getting globbed by the shell.  These two mean different
-    things:
-
-
-
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
+> ---
+>
+> I've had some time to review the new iteration of the series where
+> `strvec_splice()` was introduced and perhaps we want to consider cases
+> where we end up using `strvec_splice()` with a statically initialized
+> `struct strvec`, i.e:
+>
+>        struct strvec value = STRVEC_INIT;
+>        int s = 0, e = 0;
+>
+>        ... nothing added to `value` and "s == e == 0" ...
+>
+>        const char *rep[] = { "foo" };
+>        strvec_splice(&arr, s, e, rep, ARRAY_SIZE(rep));
+>
+>        ... realloc(): invalid pointer
+>
+> Sorry for getting back to this so late.  This slipped through in my
+> review.
+>
+> I know the series is already in `next`.  To avoid adding noise to the
+> series I'm not responding to the conversation, but here is a link to
+> it:
+>
+>   https://lore.kernel.org/git/20241120-b4-pks-leak-fixes-pt10-v3-0-d67f08f45c74@pks.im/
+>
+>  strvec.c              | 10 ++++++----
+>  t/unit-tests/strvec.c | 10 ++++++++++
+>  2 files changed, 16 insertions(+), 4 deletions(-)
+>
+> diff --git a/strvec.c b/strvec.c
+> index d1cf4e2496..64750e35e3 100644
+> --- a/strvec.c
+> +++ b/strvec.c
+> @@ -61,16 +61,18 @@ void strvec_splice(struct strvec *array, size_t idx, size_t len,
+>  {
+>  	if (idx + len > array->nr)
+>  		BUG("range outside of array boundary");
+> -	if (replacement_len > len)
+> +	if (replacement_len > len) {
+> +		if (array->v == empty_strvec)
+> +			array->v = NULL;
+>  		ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
+>  			   array->alloc);
+> +	}
+>  	for (size_t i = 0; i < len; i++)
+>  		free((char *)array->v[idx + i]);
+> -	if (replacement_len != len) {
+> +	if ((replacement_len != len) && array->nr)
+>  		memmove(array->v + idx + replacement_len, array->v + idx + len,
+>  			(array->nr - idx - len + 1) * sizeof(char *));
+> -		array->nr += (replacement_len - len);
+> -	}
+> +	array->nr += (replacement_len - len);
+>  	for (size_t i = 0; i < replacement_len; i++)
+>  		array->v[idx + i] = xstrdup(replacement[i]);
+>  }
+> diff --git a/t/unit-tests/strvec.c b/t/unit-tests/strvec.c
+> index 855b602337..e66b7bbfae 100644
+> --- a/t/unit-tests/strvec.c
+> +++ b/t/unit-tests/strvec.c
+> @@ -88,6 +88,16 @@ void test_strvec__pushv(void)
+>  	strvec_clear(&vec);
+>  }
+>  
+> +void test_strvec__splice_just_initialized_strvec(void)
+> +{
+> +	struct strvec vec = STRVEC_INIT;
+> +	const char *replacement[] = { "foo" };
+> +
+> +	strvec_splice(&vec, 0, 0, replacement, ARRAY_SIZE(replacement));
+> +	check_strvec(&vec, "foo", NULL);
+> +	strvec_clear(&vec);
+> +}
+> +
+>  void test_strvec__splice_with_same_size_replacement(void)
+>  {
+>  	struct strvec vec = STRVEC_INIT;
