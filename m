@@ -1,76 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772BAA94A
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 21:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ACD1632E6
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 21:10:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733173397; cv=none; b=Y3m5/wqq+vzeDI1vH1hb+KEuFW+UHFpiBxJyy9AnoJHaMod9F9oPYAXxlh6BtFHLk0wLLriU9uO34rlN6zFZ0GQwYdje3hG0iNvvFZFOWOaKHqd6fhyhqT3v/pkziHLGkKrTDBccPZuy78CNJOXoy6SHBrM6q0Zh+Ff0wOPRzUU=
+	t=1733173823; cv=none; b=bNowubiqh4jGCocmkkiB091b0eAVtUaadCuzrY4Ql3Ksjdaah6qKXXN3TYQsBteucgz4X9/ydUWN6UYjoybwVeESkDVDYN27lLvLyYZ28z5uz1rmtKW/ceOM7/RKApk3vtowaRt8j9qwFE5xXefTkBmCh2PiYgSf4CDvtv61Kng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733173397; c=relaxed/simple;
-	bh=MUX8O3bdZCc9IHyWTKtYHD7lqTLgLmvGxrLQPkPzLcQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fO6zcZ58dddhUUIbflYUD6eLjxVLOmvM25+DS3/CO9mLn24epo3a0hFSimIN/qbZeB5LdPaphqoXGJoqv282+YK7Z/+wgi179qSiBYSQGbmLwA4NJ9dnvo7B16J3dlbhZ2rsr8Hdo0s7Z69vU4tJOPfbnhuP+sh/gvhj7ZTV/iU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SjwiVdxe; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1733173823; c=relaxed/simple;
+	bh=M2/wNnKIEpUGKyXwcRtRHPjwC8eZjriqcwAaLlTZFcg=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=QHQ8tTA0Z4hnx9h11r5ETp5INsMyVKWeYh6vvpQTDzLcIyFlcx8jYs1JKEljYJY4nLA+UNOLuh2KnJiLUQSDwdQsy97X1FsKsp8oqECVsLRuMYXCdD8rgW92GyFUeMsCiKZnOxoIS1ObhKNt4EFb6Ewlm3l5CzwEKClf3LXwnC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Yrs3zsl7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iYFkK5W/; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SjwiVdxe"
-Received: (qmail 16752 invoked by uid 109); 2 Dec 2024 21:03:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=MUX8O3bdZCc9IHyWTKtYHD7lqTLgLmvGxrLQPkPzLcQ=; b=SjwiVdxeDmVZBiIJLO54zKHVHYobTs1qgb0YCZZDhtG7luGNPPQ+IZxxkh2ylhqOj42UgBX5vZ5H1PWtjXNK4pZLcLwzI30XjcBFgtZm20ZEDd87uNbcqAEwO6yuZMwG0pOZgq/YqAphC7x/hhSynGNj18h93NPGbHFEYpB/w2ZVpy8gelJNgvXjEOqqbiLg8Ry9rYeS3kLsReeGQeRkbM3w7DsNSTdYG4BDkzuuxhV3MzYBkoHg4RS/iXAfRvx8Khrxt7XJRyRyq08myhI+xkG5NGk/YzGpaeNZqvbioFGiHfrzZUdMg6GZaTrgiCO8tEKs4urXiWqKeR1zGP3u9Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 02 Dec 2024 21:03:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26402 invoked by uid 111); 2 Dec 2024 21:03:13 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 02 Dec 2024 16:03:13 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 2 Dec 2024 16:03:13 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, git@jowil.de
-Subject: Re: [PATCH 4/4] tag: "git tag" refuses to use HEAD as a tagname
-Message-ID: <20241202210313.GF776185@coredump.intra.peff.net>
-References: <20241202070714.3028549-1-gitster@pobox.com>
- <20241202070714.3028549-5-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Yrs3zsl7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iYFkK5W/"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A886114021C;
+	Mon,  2 Dec 2024 16:10:20 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Dec 2024 16:10:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733173820;
+	 x=1733260220; bh=cNGjsjvoKrb72S2FtbiNzOMDaziK+dfH4Jx+Lk0kiDo=; b=
+	Yrs3zsl7TIsLAsiR1Wmsg0hGxU57rBcgV4j2VCWXrPBRo4W6drK+3HL2L3M6EVRy
+	WXJZRF0ABIp2NWIVtavv6Idwq3jrngL11W8eIBh78z7NUWA/qILcnhukoIElXhSR
+	tz5P1Zb6Va9TGdRI7HGIBfQqItS/CL9bslNVbiitNobcYYbegaArKqyRZK1tYz8E
+	UU8nSV7WkkmjLjE3dvJD9KPayVzbB70Sreja1NkhV7bzY/2+uE+SKxzbiJaIaA9c
+	40rZg5v1q3OFnQIEjvHyIJZqpqxhyKhB+6Hnx2jlk/62TJtkR5w/TkVTiVD5UcNS
+	/HdtnZk1rQD8zn/TSWXwAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733173820; x=
+	1733260220; bh=cNGjsjvoKrb72S2FtbiNzOMDaziK+dfH4Jx+Lk0kiDo=; b=i
+	YFkK5W/rUJDJU0wR4cIUti49pPEPqZUf5iJhTgyR9FPoQKPwswC0faFDN7nLhDpF
+	2Qiy92gSTWEFrlcoGruTeiIkzcRD2Rl9vEDI+EJ9YlM3QkbmRZKkLacMqB5xe3ka
+	6Fmf+o5+XJvTxCA5XuQdiQs//B8+q2eqL/n3W7YEo6nzvMtlwV2sxkzMatQ4yNas
+	pAf4gUqvaqhGEUrLvSR9JJuaf6ZMXpte8Sk5RVbNW4npLBxTyGcuRrfVETxZ1zYJ
+	1o37iO+aTYuunvYatW765S9ZatOr7Aw9H05ILYoTTNHK4dB3+J8Q3z6ghJuaDvHX
+	qQp0mJAXOhQqHDAyQuctA==
+X-ME-Sender: <xms:OyJOZ0MIwqLLz_2KQyl2Ix96WSMCPvrAspP2kglbGJeIX_szn5zEFUk>
+    <xme:OyJOZ6_Sw5_DB9NQv_w8-bPB2ZKP7RdFQivA1L4veO58QzE_KOcRFs84fL-xvMKsf
+    SixaL2vFqjudHIlSw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheelgddugeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
+    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedulefhveefueehueevteelueeh
+    keeljeefhefgkeejvdefvefgtdejffevffelfeenucffohhmrghinhepghhithdrihhtne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhs
+    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtph
+    htthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehjohifihhl
+    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:OyJOZ7RGXuiA40Ng7Ovp9cXXHPNHFlQEEi1k-7KBmCKxEQSOZmLcbA>
+    <xmx:OyJOZ8s-fS4W-JhveibktjsacpuD_d3Gs54cgZZE6RqV5aTga9-RtQ>
+    <xmx:OyJOZ8fiJXs-gQU3VlRTb5dUORHFR7azve8S3sw1IayQtbtlp3PY4A>
+    <xmx:OyJOZw31OpssIOsHx5PpLOuXnZZi8ftDcIU9TRsuvaYaZVjyUh4alg>
+    <xmx:PCJOZ04PVgRP6Nw_3oqBXKHkIcB7XYpDNBWAymTu8FzXRZfa_MXYAyFE>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 8C216780068; Mon,  2 Dec 2024 16:10:19 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Mon, 02 Dec 2024 22:09:57 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Jeff King" <peff@peff.net>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org, git@jowil.de
+Message-Id: <be4dccb2-70f1-4687-a052-caeb86e4e1c7@app.fastmail.com>
+In-Reply-To: <20241202210006.GE776185@coredump.intra.peff.net>
+References: <20241202070714.3028549-1-gitster@pobox.com>
+ <20241202070714.3028549-4-gitster@pobox.com>
+ <477f0dbd-60ed-4f73-b945-cdbdaf9f510a@app.fastmail.com>
+ <20241202210006.GE776185@coredump.intra.peff.net>
+Subject: Re: [PATCH 3/4] t5604: do not expect that HEAD is a valid tagname
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241202070714.3028549-5-gitster@pobox.com>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 02, 2024 at 04:07:14PM +0900, Junio C Hamano wrote:
+On Mon, Dec 2, 2024, at 22:00, Jeff King wrote:
+> On Mon, Dec 02, 2024 at 01:19:56PM +0100, Kristoffer Haugsbakk wrote:
+>
+>> On Mon, Dec 2, 2024, at 08:07, Junio C Hamano wrote:
+>> > 09116a1c (refs: loosen over-strict "format" check, 2011-11-16)
+>>
+>> Nit/confusion: the abbreviated hash is only eight hexes long.  I=E2=80=
+=99m used to it
+>> being 11 for this project?
+>
+> It's not a fixed size. Long ago, the rule was "enough to be unique, but
+> at least 7 (or whatever you set core.abbrev to)". These days that "7" =
+is
+> scaled based on the number of objects in the repo. See e6c587c733
+> (abbrev: auto size the default abbreviation, 2016-09-30).
 
-> Even though the plumbing level allows you to create refs/tags/HEAD
-> and refs/heads/HEAD, doing so makes it confusing within the context
-> of the UI Git Porcelain commands provides.  Just like we prevent a
-> branch from getting called "HEAD" at the Porcelain layer (i.e. "git
-> branch" command), teach "git tag" to refuse to create a tag "HEAD".
+Yes.  11 was based on the output I get as well as what seemed normal in =
+the
+recent git log.
 
-This looks good and mostly as expected. I do think Rubén's suggestion to
-add an explicit deletion test might be worth having to future-proof
-things.
+>
+> So I'd expect 10 digits in a fresh clone of git.git. It's possible Jun=
+io
+> has set core.abbrev to something fixed, though.
+>
+>> Does the age of the commit matter?
+>
+> Nope, it shouldn't.
 
-> @@ -91,6 +91,12 @@ test_expect_success 'creating a tag using default HEAD should succeed' '
->  	test_must_fail git reflog exists refs/tags/mytag
->  '
->  
-> +test_expect_success 'HEAD is forbidden as a tagname' '
-> +	test_when_finished "git tag -d HEAD || :" &&
-> +	test_must_fail git tag HEAD &&
-> +	test_must_fail git tag -a -m "useless" HEAD
-> +'
+Makes sense.  Thanks.
 
-The test_when_finished surprised me a little, just because we would not
-expect anything to have been created. I don't think we usually bother
-with cleaning up failure modes, as it is a losing battle (if the test
-did not succeed you are only guessing at what mess may have been left
-behind). But I don't think it's hurting anything, beyond a few wasted
-cycles to run what should be a noop.
-
--Peff
+--=20
+Kristoffer Haugsbakk
