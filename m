@@ -1,67 +1,67 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FAE1DFDB2
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 23:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7F1DFDBB
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 23:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733181693; cv=none; b=eBzWI7ot7O7cle/sXafhE6APbyfNHl5wwNJl+8T+FqEjj0lr3r5iWpcARHjfao4g3Tfbg27m515fc5HBYFbp9HZ5QDi+/6aaDf5Ff6Rx9OqnzkIUsJsr3nB6DhQx0iWDAeRu76F8V/KD2aTsfoiGXnnfKmLjSJIkpmboFZV703o=
+	t=1733181694; cv=none; b=VNZI7tfAnZKw6mEdBve3mG+904lZRdTOzT0c8yd8NT50ELvZgbxXd+qGj44NqwshoIdydi0qRpSrEyg1/FMc8PvNrRkWOK/8hTl3z2A/OdWsNAHkuIDEuZW4zsKtwSrVOWgfNKSYm49j+tnJh4FeSBuHNuydDgeNXnQnshG+6KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733181693; c=relaxed/simple;
-	bh=WUZBLQVPmf3ofepPvBHhCwbqE0hh+s7x7dyLqJwFALc=;
+	s=arc-20240116; t=1733181694; c=relaxed/simple;
+	bh=/bD6qCwBs7FMfZFdgS/bUKV61sJk3M+6KsZ3ijnHrYw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=lbbhNbbauatY9Rr1+NKOYSOb/q4hv0p/B6lbgtIKqya5vkse+fM2eAyYetK9QOdMt7knBwnwxucBbTLraec6GClPcrge+3MHQhFvO1HoI319hrcfMKx05MHQGOxO5uMXeApM9NYBAIw9/3HoT8AC+EqeKA525ugnKbrihAJSBe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AoWqugh9; arc=none smtp.client-ip=209.85.218.54
+	 MIME-Version:To:Cc; b=qTcQAayEBPdhzcx7kwSmmi19o4IcAijh/M8GFjAR9CCjCkWrgsp8XJ7yQFI7Zte5QU1IKRsu40r3KJmWthwAcg59xCcBtbhR3LUAkK4ZSoM350MZD4+aR3BaYVSy4JpZeHf9hP2gRS+pCty+i5p5e8zSEQyHzCTSvoNULrkuJZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LWsuT2kS; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AoWqugh9"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-aa52bb7beceso559321266b.3
-        for <git@vger.kernel.org>; Mon, 02 Dec 2024 15:21:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LWsuT2kS"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a0ec0a94fso639266666b.1
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 15:21:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733181689; x=1733786489; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733181690; x=1733786490; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ag9gIogQI6Zcv/bTsQKHzdfzAXUxOWfbQGzCnxIpCpo=;
-        b=AoWqugh9Uyieg3hrga8sp3zqQ2XnrICmCiqGsWNBOZJk/CFWKLtXh4/9Zxo6RHfyHJ
-         dMjbgu1e/euOggffEkw6CzfXiGa77LZmc8gEppjPA3wcQt2XWhz/B+KqHInTnbNJvDXv
-         UloZzu2VdJ4wZapJjaJt2Zb3QDOWR3medErST5JWGpCLo6v5czyjGvCN7mjj0MuKQ7wE
-         AdfBCbWmkeRk+NJ21klv2FEoWP17hxpNTiaYsd/svBvs0uChCpEQlrBQJC7OR4gPogXs
-         konFFKjfrz9n8KI2twrYanN8LpayQ4ofoUwfhCU7AcNAqLloeZs5PtG/STvIMaa7IQh5
-         Je4g==
+        bh=BnbYefj8n+7rAkXVOoyWudmPM1pS4P6SwY3WyjHlJqo=;
+        b=LWsuT2kSJ5ZkkGVV9bX/4bP5M5wqzUDE95N9TsYHkD0Ed4dbqxJDfk4NRU3V4GFsGY
+         ZydNs+dvqQgMTzIuVMsJ1ondBL28u517a7sNipwtrlodT2Ku/ksHLz5+tnX45sYHYHKO
+         wwUq9KjVJuU+4eZsZpjZ+01e0fOgmyhdD9WvqTIZ88Eg4Y0Z07++DE2S1wXlWoJoz5PR
+         fepgMmy84MHp4TvqYuoxY/A8yAgN3Tap9Tzso4P3tHR2Ygd36CAm4xPK4pKX06nnK3oD
+         MicZ1C8VqwQkxi8eYEAiF3mE7uX76sZD8GeYaZaeS9YXmyDvWLstHo4Gdztx/6DBORLT
+         4Miw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733181689; x=1733786489;
+        d=1e100.net; s=20230601; t=1733181690; x=1733786490;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ag9gIogQI6Zcv/bTsQKHzdfzAXUxOWfbQGzCnxIpCpo=;
-        b=IWISFWxL9z4xekP1xF5nhfpYNZjmj6mv6HjgMolqoceuWdr/AiqZFChvUetGhG3m9i
-         rYvH8uaKVQQKEGhsK2rYkx2Pz2ByjQe34dHTF4n3d6dX5iMd/i2F6ymRtvIPueOKASmm
-         J2nuCH6H8f6IRcWJtihoKg1pLZNh8MaT4N8Yy1Xbp7aP8GvQj89D29rFzw/GsAJfunSA
-         oNO8xMrVOZWFFOTXZmdMbbB3GoAp1DRmZgHtMQDiMbJF6bubI+z6WqMsT7pK0FO6vrup
-         MATHDXEugWxof4/+oMLhlgmM1BQrFJVicNJ/EUq7iVQkNLk8+AW9i18R7ysUkyGIfDzw
-         J1Nw==
-X-Gm-Message-State: AOJu0Yyd5xa3edTK8gFwcQMAElYhbnWOLUGvs1CT+kfMT5UzzSev529g
-	PSwuzxefDJv7Cs4X2J3MCu8+owHYmrQ1np3HCXGb2UbKm17mApAqbYNUUQ==
-X-Gm-Gg: ASbGncssrTdIFzgVNcgRYIw/yawGAPu0JDXTAqsfNVLOxLEHKwQ9M766gzg8QorGsf9
-	5gy9PA7ujgdjjHBRo7tCdomjELUR1+08JVKGyrt/KDi6LWFY5pgP6hHOvznUIEe5f4sLIfmcdic
-	M7fT8aRpelfZmpdvtNkQRI+KGztDBekK/YwmvlMgmNllCV3o1K+3fJcUcKFj8lDCw4M1biGHnjY
-	jIcxSaCE+/OUkB2x/4qIPKHCXVEIy10mtrcn/ORn4uCvgpnong=
-X-Google-Smtp-Source: AGHT+IGYaNV6LcIncb5JVEqxp98AEmbaEBnUzBcJ2xzwW6mm8q9PQMejfVSy88yJV8D01DdQ8Ys8eA==
-X-Received: by 2002:a17:906:3191:b0:aa5:3591:4208 with SMTP id a640c23a62f3a-aa5f7cccb05mr6835066b.12.1733181688793;
-        Mon, 02 Dec 2024 15:21:28 -0800 (PST)
+        bh=BnbYefj8n+7rAkXVOoyWudmPM1pS4P6SwY3WyjHlJqo=;
+        b=k+GuMsi8wcfS32efNngO6hGXdKRTyr0INeR3j7UFVLE9lyAq3OgDLRHYeKC9ab9BNo
+         Ye1TVWr3YeMQeK+PS/uZGPd+kKAAsRzJVmWzKYmrVt3TCdXAey5Hf29+mbG9b3ycuDAx
+         eigVGDhUrvCqjvXUaFAtTOozbMv/dOXZZYUzhjutlOkZn9YkUrkcHAHLOZNODRzHFOrm
+         tD0rivnoZG0eXa5r7XcpqPPcZ71L1CG5hRGBY4FxVgn9ypVKT4PcwuMza7M2kf2nK3BW
+         tjc7+gguWjedbE/iztFYJlrgvZWHngHboaDRzKSG+Aj2dyLVgmdll98QXBVKzLv4Jc5o
+         Sq0Q==
+X-Gm-Message-State: AOJu0YwKsE3hmQGabfmu8qyOUBcbejJesXpzIfSirmddIuSXb51fUz8L
+	dOkHXRrE0qnmiVai1clSErM3jhqaPTrYzFJ05M8yBR5lm+C9WE42a3vebw==
+X-Gm-Gg: ASbGncuuq5kyHTsPJzuoe8/Z3pdt6I9qwInPgzo4CDXG+35gviCiCGZIzI4r2WdefRp
+	xYCTgRzvXnQDCyxVw2Ie+yBSIN/FgIJf9crdgg0/Vl9zDuAgu91S78hf2+MRxPsDDU3+FFSLT8h
+	2aHw3DGyDqzW8dhTgZX2bShAdDsXtNHNA6i8Kv1nYHyNu8RiAJRK4F2uKK9fl/w6Z7UUxCnvR1R
+	IyryPun3eu+Jiy4cuTddWYje/s9bX1oUgW/7weYqgHjF2LS/xY=
+X-Google-Smtp-Source: AGHT+IHKXB/ypchxZAI3ml1xlmsPoZjo9txf5V6r3skYRuSm/40cOjL1R8rMuietbQSWouL1DYzegg==
+X-Received: by 2002:a17:906:310b:b0:aa1:e5a3:b26f with SMTP id a640c23a62f3a-aa5f7d03216mr5589866b.6.1733181689509;
+        Mon, 02 Dec 2024 15:21:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5996c0eb2sm560003066b.28.2024.12.02.15.21.28
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5999734e4sm552054566b.203.2024.12.02.15.21.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2024 15:21:28 -0800 (PST)
-Message-Id: <6a95708bf972cb22c8abf1da389350fc9f53c4ca.1733181682.git.gitgitgadget@gmail.com>
+        Mon, 02 Dec 2024 15:21:29 -0800 (PST)
+Message-Id: <3b5697467c997b5d2080fb02debd911d716e8383.1733181682.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
 References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
 	<pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Dec 2024 23:21:18 +0000
-Subject: [PATCH v2 4/8] pack-objects: add GIT_TEST_NAME_HASH_VERSION
+Date: Mon, 02 Dec 2024 23:21:19 +0000
+Subject: [PATCH v2 5/8] p5313: add size comparison test
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,273 +85,208 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Add a new environment variable to opt-in to differen values of the
---name-hash-version=<n> option in 'git pack-objects'. This allows for
-extra testing of the feature without repeating all of the test
-scenarios. Unlike many GIT_TEST_* variables, we are choosing to not add
-this to the linux-TEST-vars CI build as that test run is already
-overloaded. The behavior exposed by this test variable is of low risk
-and should be sufficient to allow manual testing when an issue arises.
+As custom options are added to 'git pack-objects' and 'git repack' to
+adjust how compression is done, use this new performance test script to
+demonstrate their effectiveness in performance and size.
 
-But this option isn't free. There are a few tests that change behavior
-with the variable enabled.
+The recently-added --name-hash-version option allows for testing
+different name hash functions. Version 2 intends to preserve some of the
+locality of version 1 while more often breaking collisions due to long
+filenames.
 
-First, there are a few tests that are very sensitive to certain delta
-bases being picked. These are both involving the generation of thin
-bundles and then counting their objects via 'git index-pack --fix-thin'
-which pulls the delta base into the new packfile. For these tests,
-disable the option as a decent long-term option.
+Distinguishing objects by more of the path is critical when there are
+many name hash collisions and several versions of the same path in the
+full history, giving a significant boost to the full repack case. The
+locality of the hash function is critical to compressing something like
+a shallow clone or a thin pack representing a push of a single commit.
 
-Second, there are two tests in t5616-partial-clone.sh that I believe are
-actually broken scenarios. While the client is set up to clone the
-'promisor-server' repo via a treeless partial clone filter (tree:0),
-that filter does not translate to the 'server' repo. Thus, fetching from
-these repos causes the server to think that the client has all reachable
-trees and blobs from the commits advertised as 'haves'. This leads the
-server to providing a thin pack assuming those objects as delta bases.
-Changing the name-hash algorithm presents new delta bases and thus
-breaks the expectations of these tests. An alternative could be to set
-up 'server' as a promisor server with the correct filter enabled. This
-may also point out more issues with partial clone being set up as a
-remote-based filtering mechanism and not a repository-wide setting. For
-now, do the minimal change to make the test work by disabling the test
-variable.
+This can be seen by running pt5313 on the open source fluentui
+repository [1]. Most commits will have this kind of output for the thin
+and big pack cases, though certain commits (such as [2]) will have
+problematic thin pack size for other reasons.
 
-Third, there are some tests that compare the exact output of a 'git
-pack-objects' process when using bitmaps. The warning that ignores the
---name-hash-version=2 and forces version 1 causes these tests to fail.
-Disable the environment variable to get around this issue.
+[1] https://github.com/microsoft/fluentui
+[2] a637a06df05360ce5ff21420803f64608226a875
+
+Checked out at the parent of [2], I see the following statistics:
+
+Test                                         HEAD
+---------------------------------------------------------------
+5313.2: thin pack with version 1             0.37(0.44+0.02)
+5313.3: thin pack size with version 1                   1.2M
+5313.4: big pack with version 1              2.04(7.77+0.23)
+5313.5: big pack size with version 1                   20.4M
+5313.6: shallow fetch pack with version 1    1.41(2.94+0.11)
+5313.7: shallow pack size with version 1               34.4M
+5313.8: repack with version 1                95.70(676.41+2.87)
+5313.9: repack size with version 1                    439.3M
+5313.10: thin pack with version 2            0.12(0.12+0.06)
+5313.11: thin pack size with version 2                 22.0K
+5313.12: big pack with version 2             2.80(5.43+0.34)
+5313.13: big pack size with version 2                  25.9M
+5313.14: shallow fetch pack with version 2   1.77(2.80+0.19)
+5313.15: shallow pack size with version 2              33.7M
+5313.16: repack with version 2               33.68(139.52+2.58)
+5313.17: repack size with version 2                   160.5M
+
+To make comparisons easier, I will reformat this output into a different
+table style:
+
+| Test         | V1 Time | V2 Time | V1 Size | V2 Size |
+|--------------|---------|---------|---------|---------|
+| Thin Pack    |  0.37 s |  0.12 s |   1.2 M |  22.0 K |
+| Big Pack     |  2.04 s |  2.80 s |  20.4 M |  25.9 M |
+| Shallow Pack |  1.41 s |  1.77 s |  34.4 M |  33.7 M |
+| Repack       | 95.70 s | 33.68 s | 439.3 M | 160.5 M |
+
+The v2 hash function successfully differentiates the CHANGELOG.md files
+from each other, which leads to significant improvements in the thin
+pack (simulating a push of this commit) and the full repack. There is
+some bloat in the "big pack" scenario and essentially the same results
+for the shallow pack.
+
+In the case of the Git repository, these numbers show some of the issues
+with this approach:
+
+| Test         | V1 Time | V2 Time | V1 Size | V2 Size |
+|--------------|---------|---------|---------|---------|
+| Thin Pack    |  0.02 s |  0.02 s |   1.1 K |   1.1 K |
+| Big Pack     |  1.69 s |  1.95 s |  13.5 M |  14.5 M |
+| Shallow Pack |  1.26 s |  1.29 s |  12.0 M |  12.2 M |
+| Repack       | 29.51 s | 29.01 s | 237.7 M | 238.2 M |
+
+Here, the attempts to remove conflicts in the v2 function seem to cause
+slight bloat to these sizes. This shows that the Git repository benefits
+a lot from cross-path delta pairs.
+
+The results are similar with the nodejs/node repo:
+
+| Test         | V1 Time | V2 Time | V1 Size | V2 Size |
+|--------------|---------|---------|---------|---------|
+| Thin Pack    |  0.02 s |  0.02 s |   1.6 K |   1.6 K |
+| Big Pack     |  4.61 s |  3.26 s |  56.0 M |  52.8 M |
+| Shallow Pack |  7.82 s |  7.51 s | 104.6 M | 107.0 M |
+| Repack       | 88.90 s | 73.75 s | 740.1 M | 764.5 M |
+
+Here, the v2 name-hash causes some size bloat more often than it reduces
+the size, but it also universally improves performance time, which is an
+interesting reversal. This must mean that it is helping to short-circuit
+some delta computations even if it is not finding the most efficient
+ones. The performance improvement cannot be explained only due to the
+I/O cost of writing the resulting packfile.
+
+The Linux kernel repository was the initial target of the default name
+hash value, and its naming conventions are practically build to take the
+most advantage of the default name hash values:
+
+| Test         | V1 Time  | V2 Time  | V1 Size | V2 Size |
+|--------------|----------|----------|---------|---------|
+| Thin Pack    |   0.17 s |   0.07 s |   4.6 K |   4.6 K |
+| Big Pack     |  17.88 s |  12.35 s | 201.1 M | 159.1 M |
+| Shallow Pack |  11.05 s |  22.94 s | 269.2 M | 273.8 M |
+| Repack       | 727.39 s | 566.95 s |   2.5 G |   2.5 G |
+
+Here, the thin and big packs gain some performance boosts in time, with
+a modest gain in the size of the big pack. The shallow pack, however, is
+more expensive to compute, likely because similarly-named files across
+different directories are farther apart in the name hash ordering in v2.
+The repack also gains benefits in computation time but no meaningful
+change to the full size.
+
+Finally, an internal Javascript repo of moderate size shows significant
+gains when repacking with --name-hash-version=2 due to it having many name
+hash collisions. However, it's worth noting that only the full repack
+case has significant differences from the v1 name hash:
+
+| Test      | V1 Time   | V2 Time  | V1 Size | V2 Size |
+|-----------|-----------|----------|---------|---------|
+| Thin Pack |    8.28 s |   7.28 s |  16.8 K |  16.8 K |
+| Big Pack  |   12.81 s |  11.66 s |  29.1 M |  29.1 M |
+| Shallow   |    4.86 s |   4.06 s |  42.5 M |  44.1 M |
+| Repack    | 3126.50 s | 496.33 s |   6.2 G | 855.6 M |
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/pack-objects.c          |  5 ++++-
- t/README                        |  4 ++++
- t/t5300-pack-object.sh          |  7 +++++--
- t/t5310-pack-bitmaps.sh         |  5 ++++-
- t/t5333-pseudo-merge-bitmaps.sh |  4 ++++
- t/t5510-fetch.sh                |  7 ++++++-
- t/t5616-partial-clone.sh        | 26 ++++++++++++++++++++++++--
- t/t6020-bundle-misc.sh          |  6 +++++-
- t/t7406-submodule-update.sh     |  4 +++-
- t/t7700-repack.sh               | 10 ++++++++--
- 10 files changed, 67 insertions(+), 11 deletions(-)
+ t/perf/p5313-pack-objects.sh | 70 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
+ create mode 100755 t/perf/p5313-pack-objects.sh
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index e36a93a0082..e2f6431d614 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -266,7 +266,7 @@ struct configured_exclusion {
- static struct oidmap configured_exclusions;
- 
- static struct oidset excluded_by_config;
--static int name_hash_version = 1;
-+static int name_hash_version = -1;
- 
- static void validate_name_hash_version(void)
- {
-@@ -4609,6 +4609,9 @@ int cmd_pack_objects(int argc,
- 	if (pack_to_stdout || !rev_list_all)
- 		write_bitmap_index = 0;
- 
-+	if (name_hash_version < 0)
-+		name_hash_version = (int)git_env_ulong("GIT_TEST_NAME_HASH_VERSION", 1);
+diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
+new file mode 100755
+index 00000000000..be5229a0ecd
+--- /dev/null
++++ b/t/perf/p5313-pack-objects.sh
+@@ -0,0 +1,70 @@
++#!/bin/sh
 +
- 	validate_name_hash_version();
- 	if (write_bitmap_index && name_hash_version != 1) {
- 		warning(_("currently, --write-bitmap-index requires --name-hash-version=1"));
-diff --git a/t/README b/t/README
-index 8c0319b58e5..e63d2360852 100644
---- a/t/README
-+++ b/t/README
-@@ -492,6 +492,10 @@ a test and then fails then the whole test run will abort. This can help to make
- sure the expected tests are executed and not silently skipped when their
- dependency breaks or is simply not present in a new environment.
- 
-+GIT_TEST_NAME_HASH_VERSION=<int>, when set, causes 'git pack-objects' to
-+assume '--name-hash-version=<n>'.
++test_description='Tests pack performance using bitmaps'
++. ./perf-lib.sh
 +
++GIT_TEST_PASSING_SANITIZE_LEAK=0
++export GIT_TEST_PASSING_SANITIZE_LEAK
 +
- Naming Tests
- ------------
- 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 4270eabe8b7..97fe9e561c6 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -675,15 +675,18 @@ do
- done
- 
- test_expect_success 'valid and invalid --name-hash-versions' '
-+	sane_unset GIT_TEST_NAME_HASH_VERSION &&
++test_perf_large_repo
 +
- 	# Valid values are hard to verify other than "do not fail".
- 	# Performance tests will be more valuable to validate these versions.
--	for value in 1 2
-+	# Negative values are converted to version 1.
-+	for value in -1 1 2
- 	do
- 		git pack-objects base --all --name-hash-version=$value || return 1
- 	done &&
- 
- 	# Invalid values have clear post-conditions.
--	for value in -1 0 3
-+	for value in 0 3
- 	do
- 		test_must_fail git pack-objects base --all --name-hash-version=$value 2>err &&
- 		test_grep "invalid --name-hash-version option" err || return 1
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index 7044c7d7c6d..c30522b57fd 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -420,7 +420,10 @@ test_bitmap_cases () {
- 			cat >expect <<-\EOF &&
- 			error: missing value for '\''pack.preferbitmaptips'\''
- 			EOF
--			git repack -adb 2>actual &&
++test_expect_success 'create rev input' '
++	cat >in-thin <<-EOF &&
++	$(git rev-parse HEAD)
++	^$(git rev-parse HEAD~1)
++	EOF
 +
-+			# Disable name hash version adjustment due to stderr comparison.
-+			GIT_TEST_NAME_HASH_VERSION=1 \
-+				git repack -adb 2>actual &&
- 			test_cmp expect actual
- 		)
- 	'
-diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-index eca4a1eb8c6..b1553cbaf7f 100755
---- a/t/t5333-pseudo-merge-bitmaps.sh
-+++ b/t/t5333-pseudo-merge-bitmaps.sh
-@@ -209,6 +209,10 @@ test_expect_success 'bitmapPseudoMerge.stableThreshold creates stable groups' '
- '
- 
- test_expect_success 'out of order thresholds are rejected' '
-+	# Disable this option to avoid stderr message
-+	GIT_TEST_NAME_HASH_VERSION=1 &&
-+	export GIT_TEST_NAME_HASH_VERSION &&
++	cat >in-big <<-EOF &&
++	$(git rev-parse HEAD)
++	^$(git rev-parse HEAD~1000)
++	EOF
 +
- 	test_must_fail git \
- 		-c bitmapPseudoMerge.test.pattern="refs/*" \
- 		-c bitmapPseudoMerge.test.threshold=1.month.ago \
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 0890b9f61c5..1699c3a3bb8 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -1062,7 +1062,12 @@ test_expect_success 'all boundary commits are excluded' '
- 	test_tick &&
- 	git merge otherside &&
- 	ad=$(git log --no-walk --format=%ad HEAD) &&
--	git bundle create twoside-boundary.bdl main --since="$ad" &&
++	cat >in-shallow <<-EOF
++	$(git rev-parse HEAD)
++	--shallow $(git rev-parse HEAD)
++	EOF
++'
 +
-+	# If the a different name hash function is used here, then no delta
-+	# pair is found and the bundle does not expand to three objects
-+	# when fixing the thin object.
-+	GIT_TEST_NAME_HASH_VERSION=1 \
-+		git bundle create twoside-boundary.bdl main --since="$ad" &&
- 	test_bundle_object_count --thin twoside-boundary.bdl 3
- '
- 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index c53e93be2f7..9371d2606c6 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -516,7 +516,18 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas' '
- 	# Exercise to make sure it works. Git will not fetch anything from the
- 	# promisor remote other than for the big tree (because it needs to
- 	# resolve the delta).
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
-+	#
-+	# TODO: the --full-name-hash option is disabled here, since this test
-+	# is fundamentally broken! When GIT_TEST_NAME_HASH_VERSION=2, the server
-+	# recognizes delta bases in a different way and then sends a _blob_ to
-+	# the client with a delta base that the client does not have! This is
-+	# because the client is cloned from "promisor-server" with tree:0 but
-+	# is now fetching from "server" without any filter. This is violating the
-+	# promise to the server that all reachable objects exist and could be
-+	# used as delta bases!
-+	GIT_TRACE_PACKET="$(pwd)/trace" \
-+		GIT_TEST_NAME_HASH_VERSION=1 \
-+		git -C client \
- 		fetch "file://$(pwd)/server" main &&
- 
- 	# Verify the assumption that the client needed to fetch the delta base
-@@ -535,7 +546,18 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas, protocol v2' '
- 	# Exercise to make sure it works. Git will not fetch anything from the
- 	# promisor remote other than for the big blob (because it needs to
- 	# resolve the delta).
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
-+	#
-+	# TODO: the --full-name-hash option is disabled here, since this test
-+	# is fundamentally broken! When GIT_TEST_NAME_HASH_VERSION=2, the server
-+	# recognizes delta bases in a different way and then sends a _blob_ to
-+	# the client with a delta base that the client does not have! This is
-+	# because the client is cloned from "promisor-server" with tree:0 but
-+	# is now fetching from "server" without any filter. This is violating the
-+	# promise to the server that all reachable objects exist and could be
-+	# used as delta bases!
-+	GIT_TRACE_PACKET="$(pwd)/trace" \
-+		GIT_TEST_NAME_HASH_VERSION=1 \
-+		git -C client \
- 		fetch "file://$(pwd)/server" main &&
- 
- 	# Verify that protocol version 2 was used.
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 34b5cd62c20..a1f18ae71f1 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -247,7 +247,11 @@ test_expect_success 'create bundle with --since option' '
- 	EOF
- 	test_cmp expect actual &&
- 
--	git bundle create since.bdl \
-+	# If a different name hash function is used, then one fewer
-+	# delta base is found and this counts a different number
-+	# of objects after performing --fix-thin.
-+	GIT_TEST_NAME_HASH_VERSION=1 \
-+		git bundle create since.bdl \
- 		--since "Thu Apr 7 15:27:00 2005 -0700" \
- 		--all &&
- 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 0f0c86f9cb2..ebd9941075a 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1094,7 +1094,9 @@ test_expect_success 'submodule update --quiet passes quietness to fetch with a s
- 	) &&
- 	git clone super4 super5 &&
- 	(cd super5 &&
--	 git submodule update --quiet --init --depth=1 submodule3 >out 2>err &&
-+	 # This test var can mess with the stderr output checked in this test.
-+	 GIT_TEST_NAME_HASH_VERSION=1 \
-+		git submodule update --quiet --init --depth=1 submodule3 >out 2>err &&
- 	 test_must_be_empty out &&
- 	 test_must_be_empty err
- 	) &&
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index b9a5759e01d..16861f80c9c 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -309,7 +309,10 @@ test_expect_success 'no bitmaps created if .keep files present' '
- 	keep=${pack%.pack}.keep &&
- 	test_when_finished "rm -f \"\$keep\"" &&
- 	>"$keep" &&
--	git -C bare.git repack -ad 2>stderr &&
++for version in 1 2
++do
++	export version
 +
-+	# Disable --name-hash-version test due to stderr comparison.
-+	GIT_TEST_NAME_HASH_VERSION=1 \
-+		git -C bare.git repack -ad 2>stderr &&
- 	test_must_be_empty stderr &&
- 	find bare.git/objects/pack/ -type f -name "*.bitmap" >actual &&
- 	test_must_be_empty actual
-@@ -320,7 +323,10 @@ test_expect_success 'auto-bitmaps do not complain if unavailable' '
- 	blob=$(test-tool genrandom big $((1024*1024)) |
- 	       git -C bare.git hash-object -w --stdin) &&
- 	git -C bare.git update-ref refs/tags/big $blob &&
--	git -C bare.git repack -ad 2>stderr &&
++	test_perf "thin pack with version $version" '
++		git pack-objects --thin --stdout --revs --sparse \
++			--name-hash-version=$version <in-thin >out
++	'
 +
-+	# Disable --name-hash-version test due to stderr comparison.
-+	GIT_TEST_NAME_HASH_VERSION=1 \
-+		git -C bare.git repack -ad 2>stderr &&
- 	test_must_be_empty stderr &&
- 	find bare.git/objects/pack -type f -name "*.bitmap" >actual &&
- 	test_must_be_empty actual
++	test_size "thin pack size with version $version" '
++		test_file_size out
++	'
++
++	test_perf "big pack with version $version" '
++		git pack-objects --stdout --revs --sparse \
++			--name-hash-version=$version <in-big >out
++	'
++
++	test_size "big pack size with version $version" '
++		test_file_size out
++	'
++
++	test_perf "shallow fetch pack with version $version" '
++		git pack-objects --stdout --revs --sparse --shallow \
++			--name-hash-version=$version <in-shallow >out
++	'
++
++	test_size "shallow pack size with version $version" '
++		test_file_size out
++	'
++
++	test_perf "repack with version $version" '
++		git repack -adf --name-hash-version=$version
++	'
++
++	test_size "repack size with version $version" '
++		gitdir=$(git rev-parse --git-dir) &&
++		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
++		test_file_size "$pack"
++	'
++done
++
++test_done
 -- 
 gitgitgadget
 
