@@ -1,110 +1,198 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD4A1DA103
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 22:01:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276A01DF244
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 23:21:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733176879; cv=none; b=fJ3xpdaobn87gK5gxjSW0WmtCzqVuRKFKt11f8Pf01i650vyGEK+Jy+uKUldBtKi3seWOCUuZRkhLeOYgxS4tLl6lqJG+ksGy9S0+VZbxZBlu9OshjSi2XoVOPtOQZjKIcfqK/MRuzJ+wraPiQE2DQsEC3n73Qq0ys/rBKxH31w=
+	t=1733181689; cv=none; b=oCKQR1webjuQnFC8A0dqILHD1WTfmOV7lQ43jPWIJ1+59ZKpd1n/bJTK/XpDilo/FrooQWpKggWzXTtVlt/DopeMXxENfrXOkzzvb5lcAZ13rs2IrFdc7Vwmezt9GZ0qq1uE364qVizdVO4iRTjXR5FP7F+ZdIjdbXSZaj2E8Q8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733176879; c=relaxed/simple;
-	bh=J0uZX0pOpENwipHdN80lT+tDVrU4hPBSX1MJxq82Fq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qCQW9TqvCawAl/EF8IbcSQpr8OG/yOH/8Eg454v3+omf0RChz3qhrWNNwD7ZdjgPJ7MMqLGOmCKoKgySGHLf5B9WVyyg73QSUK3pJBhSCePl7a6xJUH0H2tKgHO1HKZ0fQ9EMGV/LJiPzvBwKEpd+JCb9kQQP3zg9OKw/aerOkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EcOPV/TF; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1733181689; c=relaxed/simple;
+	bh=FV4ZnohdKFbmnXQ9Zz2KEsxyErdSl0QgzALLPOV0+Us=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=BMldRwh3egEn1t5isZX+S+PAroNhgkR5tq58741JVNsj17sVxwfJl3indNGh0DxXP0JCZwLqtDmP+nNIS+sGVvV1ys127RG0njupetK1FvmXzHqmfdli7HAnCoSyLDMvPKrl26o5EBuIceptV/tvlp8oXo1VWYAb6+zOSdYsoMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bmjb1igg; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EcOPV/TF"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-434a14d6bf4so43358895e9.1
-        for <git@vger.kernel.org>; Mon, 02 Dec 2024 14:01:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bmjb1igg"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-aa5ec8d6f64so42753966b.2
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 15:21:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733176876; x=1733781676; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=33aYrf2oO6zP721looDxAtPCLmJCH3MYhvWLx9HaoLk=;
-        b=EcOPV/TFFSSZVo3iqrJvYf6X1SgDS3V1kj8P3WJIXQ5C9mR2sVDTj/QFbEG5y14yIK
-         TGiwT4Rl1wV4PdIElwvD3mZNsWZH1vXf11vc+8qy99ngPmdLhmRcLSpcqLxR3EFWg8jj
-         ydRvxqs3KSmn34mQ+gU77ceZ6QvN7U11tCeftA+Ktj03g0bJCEhsYZAFKfdO/fuY3zW9
-         RUhdo+9IIZranD/uQu/WA+hEvmWw8SJIvsaGiE8K+ugCLrmN7dUhdFkuGfvQJnmYUrcF
-         xQUVb3n76T2f9kLWnec56ocG3BRpSPHDQLMO8yoAbvnQXeDNx0huyYZE2UREKob2rJV9
-         UcJg==
+        d=gmail.com; s=20230601; t=1733181686; x=1733786486; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2uI/il6XRAhXWBkQjv5DkiNIe+xTnqh7xa8edagHJTY=;
+        b=Bmjb1iggBBkcTjPrOewy+QxLt2dcwFCNSPr+ty7Pa0QaNkz8O6zOhADwcuWdUOrWIT
+         LFAJAgctIS00muKMGstYP3Km2TI4opiaRYHSMWzGYz6Bg0/pb53coyOoP1yIg8btucBz
+         Kzu2tOC7bmNH3fiEpEBGjUdbazrlKc1Dq/C0j+BlKAviZWblFvLhUjjwpWwBIz/rUGUH
+         kvh+sQUETzau0spwfsznPi1YLdFBnzMHvCjQZan79+Q1ALmfjgyu1I1IpgScP+K3eI5G
+         Wqh4YjUy5OrCxz4ffJs+qGeSMMEvgVyJ4Df/ksbxp/T8w/3b7Ds9JBXZ+Gkg08VBuZJP
+         5ROg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733176876; x=1733781676;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=33aYrf2oO6zP721looDxAtPCLmJCH3MYhvWLx9HaoLk=;
-        b=a99bIjHPsSNE2hS2lPNVhC34DXPdJzV2XSjuAS8eeBVTe31OAaJnyW3K2iaUdqQ7BD
-         IPVU96JuiU8IkE/j/zMKJLIMU3F444wt4FoxgTwlIBMM84IGz+lphTtToMZUJjmjU0Z9
-         66PPTQJBmePzdifjI2EBu0qkxLBtogRqh82MN2q7/J2Ws+Gj2yQjVOFvjvdqF4q9YhL5
-         vx+hCihuf3eV99Q6Z1j2TaRZz6oeVxhkSn5dtmMCyvkia3TRctoNuFZ1/qL15gBwkKAm
-         O6c4DvfZWMm350loKiRNqzCPRio504A2wF90VN8Em7lKIcUP5aRfyvwOAHNoqUvfgHR7
-         YTWQ==
-X-Gm-Message-State: AOJu0Yx4qw6p5TYc5e4FGGuHZMO9lkq2mkP4+HDFVRZ71BKLzYnL7NAX
-	tu2XFbieWSExhhDAncV6Ao8vmcQbCohS1JU0KTu6jGQxqi4SSidT3R2u4w==
-X-Gm-Gg: ASbGncvNO9CDvMgg1TDACB/79QTrLOUJ5imfcTCBUNrQHsXh5kNu3kJzGV1Kux+dYWN
-	ynLtk2YJ5SmBPXZyMnPd5G7AMvvaztj9BeZ0haCBcrkOfcmmQutZPkMyX3fEaRma688GkPThhCT
-	rgkRqV1fJWGFA+TQkuOhNctxyZ/Pe+TZHzvmZzFxTgzhtQCbG7XnCRyaYRZsRV51PVt4wPAOVya
-	Bhr6zgctsBnbZfBQdpYIK76h+DQ0LoAW+X1W47/3fgmJ05mSk68y08+auUFnd8ZzzorGNMLF+Jy
-	4hudi/5F65k=
-X-Google-Smtp-Source: AGHT+IE2zXEAZ2OTgKDLK2yEbVediMFnW2XlszmIyzvjwf3OlxcptD7MfhhcwVEZrPZDgYcnvpb9Ew==
-X-Received: by 2002:a05:600c:4f08:b0:434:a781:f5e2 with SMTP id 5b1f17b1804b1-434d09b5092mr629195e9.8.1733176875991;
-        Mon, 02 Dec 2024 14:01:15 -0800 (PST)
-Received: from gmail.com (119.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.119])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434b0dc63f7sm165173845e9.23.2024.12.02.14.01.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Dec 2024 14:01:15 -0800 (PST)
-Message-ID: <b0bd6c5d-83eb-4545-9b38-ab4e69d3882c@gmail.com>
-Date: Mon, 2 Dec 2024 23:01:14 +0100
+        d=1e100.net; s=20230601; t=1733181686; x=1733786486;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2uI/il6XRAhXWBkQjv5DkiNIe+xTnqh7xa8edagHJTY=;
+        b=QmwA8cXCJFSLLtKon2S4h48jrg4BU37elGuogu/VxLYNoYgkCa7aqVOfZaw7531qkD
+         hY46EPFlyiZnQw8WYkfGhVJ9nZxiVHgRvwEQvryFVEVJbd/v2+FW6dMA/mI7NtDWAG0M
+         tXXZ2phgB+tHFb7QyuWodhFnUOsu2at7a2gPmf9I58iMa+ZyBbDxOXigz1dW2rrdOmC9
+         nUYUcjJZ/zMIoekDPsWqpjRJJP6tAzaihp0F5VvPJtPEj0N7DhZEIWXFiPWnRfp6tdLb
+         SBVqzlYByqa71ICqvpJ+RCO7OHQSf8B/jv6PCYkfC+nZpMSReISZPywaitBERkIYa0Tu
+         75sQ==
+X-Gm-Message-State: AOJu0YyxvCUdpvLomUaM+px4Jvkoq9zJOtmPRhyFShZCRMhf9ooFBkwB
+	PyMAVsnMpaWn48X1SzAmlxaoraqxIsly+PdHuuDdk+yf3NUKwmHKMx87bQ==
+X-Gm-Gg: ASbGncsBe7gsC6Pmck/2DU8tLT03mH4QsYSa6Vf5lzI/w6DDR6Ako8wTyr1u/PhC5kr
+	zvv7iKEsws2Nfm/EC/8awY4Q3F0c7cS1IaACQzDSC2Szgm4V98l/vs2FKSxSbGbnLKPFzqf80vY
+	ZdnZyPnXXVnbrafTWi1KtHEg4+rkiNzPy6BNxEuB6YsFru2vhTdYryeNQu7nM9ar3oIcNA59uD3
+	SjKRd/dIRi3a6R4TgsGx036/Ke8XvKCSPV2YNMAbm01Rl+G6vE=
+X-Google-Smtp-Source: AGHT+IEkxrilmblGCNVQEUKOVxJE5wG/EoyKq5SVoXSgjg9Saxfzpe5BDS9Oy7WOSn4Jac3EoLAxrQ==
+X-Received: by 2002:a05:6402:4301:b0:5d0:cfad:f76 with SMTP id 4fb4d7f45d1cf-5d10cb5c1c1mr111119a12.16.1733181685738;
+        Mon, 02 Dec 2024 15:21:25 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d097e8dcefsm5688714a12.55.2024.12.02.15.21.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 15:21:25 -0800 (PST)
+Message-Id: <454b070d5bb0f64e11cab993b126ef5d37a3615b.1733181682.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
+	<pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+From: "Jonathan Tan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 02 Dec 2024 23:21:15 +0000
+Subject: [PATCH v2 1/8] pack-objects: create new name-hash function version
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] strvec: `strvec_splice()` to a statically initialized
- vector
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
-References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
- <xmqqiks2kg6o.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <xmqqiks2kg6o.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    johannes.schindelin@gmx.de,
+    peff@peff.net,
+    ps@pks.im,
+    me@ttaylorr.com,
+    johncai86@gmail.com,
+    newren@gmail.com,
+    jonathantanmy@google.com,
+    Derrick Stolee <stolee@gmail.com>,
+    Jonathan Tan <jonathantanmy@google.com>
 
-On Mon, Dec 02, 2024 at 10:49:03AM +0900, Junio C Hamano wrote:
+From: Jonathan Tan <jonathantanmy@google.com>
 
-> > Let's avoid an invalid pointer error in case a client of
-> > `strvec_splice()` ends up with something similar to:
-> >
-> >        struct strvec arr = STRVEC_INIT;
-> >        const char *rep[] = { "foo" };
-> >
-> >        strvec_splice(&arr, 0, 0, rep, ARRAY_SIZE(rep));
-> 
-> Well spotted, but the explanation can be a bit more helpful to
-> casual readers.  If there were a few paragraphs like below
-> 
->     An empty strvec does not represent the array part of the
->     structure with a NULL pointer, but with a singleton empty array,
->     to help read-only applications.  This is similar to how an empty
->     strbuf uses a singleton empty string.
-> 
->     This approach requires us to be careful when adding elements to
->     an empty instance.  The strvec_splice() API function we recently
->     introduced however forgot to special case an empty strvec, and
->     ended up applying realloc() to the singleton.
->     
-> before your proposed commit log message, I wouldn't have needed to
-> go read the implementation of STRVEC_INIT to understand what the fix
-> is about.  From the fix by itself, it is a bit hard to see why
-> empty_strvec needs to be special cased, until you re-read the
-> implementation of STRVEC_INIT.
+As we will explore in later changes, the default name-hash function used
+in 'git pack-objects' has a tendency to cause collisions and cause poor
+delta selection. This change creates an alternative that avoids some
+collisions while preserving some amount of hash locality.
 
-The explanation can certainly be improved.  I'll send a v2
-iteration soon.  Thanks.
+The pack_name_hash() method has not been materially changed since it was
+introduced in ce0bd64 (pack-objects: improve path grouping
+heuristics., 2006-06-05). The intention here is to group objects by path
+name, but also attempt to group similar file types together by making
+the most-significant digits of the hash be focused on the final
+characters.
+
+Here's the crux of the implementation:
+
+	/*
+	 * This effectively just creates a sortable number from the
+	 * last sixteen non-whitespace characters. Last characters
+	 * count "most", so things that end in ".c" sort together.
+	 */
+	while ((c = *name++) != 0) {
+		if (isspace(c))
+			continue;
+		hash = (hash >> 2) + (c << 24);
+	}
+
+As the comment mentions, this only cares about the last sixteen
+non-whitespace characters. This cause some filenames to collide more than
+others. This collision is somewhat by design in order to promote hash
+locality for files that have similar types (.c, .h, .json) or could be the
+same file across a directory rename (a/foo.txt to b/foo.txt). This leads to
+decent cross-path deltas in cases like shallow clones or packing a
+repository with very few historical versions of files that share common data
+with other similarly-named files.
+
+However, when the name-hash instead leads to a large number of name-hash
+collisions for otherwise unrelated files, this can lead to confusing the
+delta calculation to prefer cross-path deltas over previous versions of the
+same file.
+
+The new pack_name_hash_v2() function attempts to fix this issue by
+taking more of the directory path into account through its hash
+function. Its naming implies that we will later wire up details for
+choosing a name-hash function by version.
+
+The first change is to be more careful about paths using non-ASCII
+characters. With these characters in mind, reverse the bits in the byte
+as the least-significant bits have the highest entropy and we want to
+maximize their influence. This is done with some bit manipulation that
+swaps the two halves, then the quarters within those halves, and then
+the bits within those quarters.
+
+The second change is to perform hash composition operations at every
+level of the path. This is done by storing a 'base' hash value that
+contains the hash of the parent directory. When reaching a directory
+boundary, we XOR the current level's name-hash value with a downshift of
+the previous level's hash. This perturbation intends to create low-bit
+distinctions for paths with the same final 16 bytes but distinct parent
+directory structures.
+
+The collision rate and effectiveness of this hash function will be
+explored in later changes as the function is integrated with 'git
+pack-objects' and 'git repack'.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ pack-objects.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/pack-objects.h b/pack-objects.h
+index b9898a4e64b..15be8368d21 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -207,6 +207,34 @@ static inline uint32_t pack_name_hash(const char *name)
+ 	return hash;
+ }
+ 
++static inline uint32_t pack_name_hash_v2(const char *name)
++{
++	uint32_t hash = 0, base = 0, c;
++
++	if (!name)
++		return 0;
++
++	while ((c = *name++)) {
++		if (isspace(c))
++			continue;
++		if (c == '/') {
++			base = (base >> 6) ^ hash;
++			hash = 0;
++		} else {
++			/*
++			 * 'c' is only a single byte. Reverse it and move
++			 * it to the top of the hash, moving the rest to
++			 * less-significant bits.
++			 */
++			c = (c & 0xF0) >> 4 | (c & 0x0F) << 4;
++			c = (c & 0xCC) >> 2 | (c & 0x33) << 2;
++			c = (c & 0xAA) >> 1 | (c & 0x55) << 1;
++			hash = (hash >> 2) + (c << 24);
++		}
++	}
++	return (base >> 6) ^ hash;
++}
++
+ static inline enum object_type oe_type(const struct object_entry *e)
+ {
+ 	return e->type_valid ? e->type_ : OBJ_BAD;
+-- 
+gitgitgadget
+
