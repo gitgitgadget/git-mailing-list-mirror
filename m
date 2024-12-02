@@ -1,72 +1,73 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908FD18E29
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 03:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF8128399
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 04:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733108490; cv=none; b=DZuypqg4FZZb5khL0QSfEP6K7y9RbGvUWeWw3TyTSdo/ffyCpYKUsp0+akCydrWMJtAW2KHC757ECkgYzIPdYsJ5nu6iyJ8Sw1wB0ZnjfiI7PQ0GI7L9+mY8xFzC1QmMfYA6UiW1d6wCAV2WvS3X7UbXTZLE4RLiR5JpEZloa9o=
+	t=1733114306; cv=none; b=BswxhjvtLdK3aPzUYtWQMWKxDGzV3ii7WkGktUy+vDd1pVsP8SPD6fV7OlqvX8zD19CC7v5FVvyABwbGuWJwELS4zmt2dBt/IjLDKAj2xjYAi3XzK01MAjLJVW/7hOmsCAdJFbhG8jdxureZ/XBjz4WMQAqulxYhtwQps6PXzks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733108490; c=relaxed/simple;
-	bh=/o8AouhtbPD/p8XT3u4hozpBPEj1sVhQRqtim0XXD1U=;
+	s=arc-20240116; t=1733114306; c=relaxed/simple;
+	bh=aHNM885AMmC0TRUqgwvQn5VoRO37C0o0C6ulcnB/rWw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Mw3YZVlhrNJOmsiggMtGpTk0Cxv9mJ5z8GPB5U/dcWUvGsG136kqFr8gAGOMXyoK4yeynok032IXqaPfndCwFO2H4kVNHTWB/hQdQhfA4B9xnnGyj6JVXbDMfD1vsO3Xx/v8axQcNr1HnKwVY3N9T+svykVS7O4YRx4TApjB7m0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3TLH03s+; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=R4KS5/U8r3HK5Ihp8smIc1L6XZ5wUr1X6478CgReYb21s3DC3C9cTB+tfoRS46cxE3oetSTNM0DFZMirvTUAOlSDqloUbxN4ptXFgVy7KWIM9G0a8o210TsjLe4YlUmTo0YBPN760H4uHbyz5Ay6RMEHXFfiCBVSFQrEKjmMREc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XramD6i8; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3TLH03s+"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 862032540115;
-	Sun,  1 Dec 2024 22:01:27 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Sun, 01 Dec 2024 22:01:27 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XramD6i8"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0DFFF11401B1;
+	Sun,  1 Dec 2024 23:38:23 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Sun, 01 Dec 2024 23:38:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733108487; x=
-	1733194887; bh=RH5eI/dVKqNRJV/leYSLZ+hZmJuRSMjbBHkluPEODFI=; b=3
-	TLH03s+013roBwztXldNaH4Vw7RXAFX8rrEOXH3Ja00SRoaMD2bxgF4dRQo+DIyX
-	zu/3/Y4nBd8wS81EymIc8QGqQ76HTNbj27MEIbqFsX6og1NnZm7sNdEJhJgHh72V
-	Kh7mQMWahMsxGSnuCzmcD1il24ggTsE4HMLabKCbwM10/esp9hXD3W6d+ggqJkbn
-	ovqr1itzRC7gHBRs4EnJWHlm4bUSL1aEZE245Xf9Ys6hLA983XhUzoht+bqj+CLs
-	czAzEtdh7fsB7feWLE7zaPlCPCheHwesr5Pz/gjJ96qjEraw3CEWjl+peO9bCgog
-	fUW74FMbFW0Ajj9oco6fw==
-X-ME-Sender: <xms:BiNNZ6IV7osPqsLCqjwbuBWVTLgqAVNw4kp-EZBwv2oy3B6kzJCAhA>
-    <xme:BiNNZyLeHDFd7VdFYVHEJcIOg1g0-RrWW2qU56DfII8FnU985RHDGQ1WBb-it_g6k
-    zHlj1t7BaTmC1hnSQ>
-X-ME-Received: <xmr:BiNNZ6t4lROADyLR3efKzq8KO1KBywlKNyjL1C5PL3rOuVoqdhZUv1LlFY0sGXBWAcHRHNJ9JUkUd7UgKPpfWq9WgqICRkax2DHRd7E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdehvdcutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733114302; x=1733200702; bh=76aYFaU41FRYB8sy3Q0k+1u8uHq5TMXhR3f
+	GbYnuNtE=; b=XramD6i8UuQXUqFbV4uhOdXlJe1+USKGAZfwOcM/kbRwbE9rXYK
+	5q+gCQxx6XErqaZQCFCuvvpIfCCmg3e7M4aqX0IlRSHMTTj4ft0iQAAAG/rw4BdW
+	LQEEcfg9kCXU8/9cyzZmOZ5KqHRr9vLDBvWYuSq96iaFfaG5U39hR0ESanHmKl++
+	y1yk0vYZOhhSUAR3Pu0cnGKXFqEnQ5auemDht4bxcyBBByjOcqXVXaUciqIkX6NP
+	/u+Bua3jURiSNz32nrVMs6wHv2QI15oGUvG6/px689ydJxUbD0MJIa8bXf+NK4bo
+	S3tTq2T5BOhMR0YtpqqSp+zhgvN5zjH8ALA==
+X-ME-Sender: <xms:vjlNZ6rB_Zuc82d7VwQlFB_TDZPO6-B9aH-QfPZbDrwNYt09dmshbA>
+    <xme:vjlNZ4pNuKMFUHZJH7luNfQcLXRzIVdmU4ZLWCEaRkDTfLSnhXUciP7CkBpeXjFXG
+    ysPUkLsGvui1TN0Kg>
+X-ME-Received: <xmr:vjlNZ_NXu2kt0WhscTWvdCxJuvF8pbwkCrl0JUJGlOa8yYflzn2rSNWXD59nJCrfcE3Pt3dIHkz5aEpRraQddUDiURhbTQz9eHoq8Sw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrheekgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgtvghplhestggvph
-    hlrdgvuhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
+    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehjohifih
+    hlrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
     thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:BiNNZ_ZulW0T5vCJk7LK2EQYOt_5l1Bv_u0X92M2R0bKFx0dTxJ7xA>
-    <xmx:BiNNZxYHXcW-xZ8Iyr99kl2_szhVNVQqjcJ7q5Y2qB1a3RsZqCzJDw>
-    <xmx:BiNNZ7BkKLrNOl9WDsXyUWT_R3FVWcIi9ib-xjFYyqRkG3zXrqq-cw>
-    <xmx:BiNNZ3aQhnKjhi1UMNNKWuzuzDIOg_keXKcYImQ6VXfuJEbT06UgMw>
-    <xmx:ByNNZ1Gw1tgtOu0WX_i7DV5nheOuFsWjkjLZ1vAEElLB2upIIC4KXo7Y>
+X-ME-Proxy: <xmx:vjlNZ54wsGiBzo2l_8MW5f9BQinxJv31BNCzdX7Deu_oA_J5W8va8g>
+    <xmx:vjlNZ55rnvAw4yzyqYY9d5auEvD2AbJx5aUvqefqeValcQ4bqggJVQ>
+    <xmx:vjlNZ5hisoKJsDeHkfQwtLfmOKywwoanarZzDCcQS-kyVA6ddHEHmg>
+    <xmx:vjlNZz4cRhF5_ZVGMavZ8IyPPQRVmHkznO_9mguu-o9okAl82BS0NQ>
+    <xmx:vjlNZ820e7EUSlqZQgAgqPovZoblB6u6obS-9z6E4slOgRrqT00VQFA2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Dec 2024 22:01:26 -0500 (EST)
+ 1 Dec 2024 23:38:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Mat=C4=9Bj?= Cepl <mcepl@cepl.eu>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Documentation/git-update-index.txt: add an example of use
-In-Reply-To: <20241201222531.1478338-1-mcepl@cepl.eu> (=?utf-8?Q?=22Mat?=
- =?utf-8?Q?=C4=9Bj?= Cepl"'s message
-	of "Sun, 1 Dec 2024 23:25:23 +0100")
-References: <20241201222531.1478338-1-mcepl@cepl.eu>
-Date: Mon, 02 Dec 2024 12:01:25 +0900
-Message-ID: <xmqq1pyqkcu2.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@jowil.de,  git@vger.kernel.org
+Subject: Re: git tag -a HEAD leads to ambiguous branch name
+In-Reply-To: <20241201224408.GJ145938@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 1 Dec 2024 17:44:08 -0500")
+References: <47cdf937-6192-4c83-a0e5-700e98f36c1e@jowil.de>
+	<20241127142711.GB1712@coredump.intra.peff.net>
+	<xmqqh67ss1a5.fsf@gitster.g>
+	<20241201224408.GJ145938@coredump.intra.peff.net>
+Date: Mon, 02 Dec 2024 13:38:20 +0900
+Message-ID: <xmqqwmgiits3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,60 +75,31 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Matěj Cepl <mcepl@cepl.eu> writes:
+Jeff King <peff@peff.net> writes:
 
-> I met this command in the wild and I spent a lot of time to
-> understand what it is good for.
-> ---
+> But I don't know about this. I thought when we outlawed "git branch
+> HEAD" that it was quite intentional _not_ to forbid these names at the
+> lowest level in order to retain backwards compatibility. They are just
+> about preventing common UI mistakes.
 
-Missing sign-off.
+Yeah, I think this is a sensible way to think about it.
 
->  Documentation/git-update-index.txt | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>> There is a dubious test in t5604 that expects you can create such a
+>> tag.  t5604.22 wants to create one:
+>> 
+>> test_expect_success 'clone with reference from a tagged repository' '
+>> 	(
+>> 		cd A && git tag -a -m tagged HEAD
+>> 	) &&
+>> 	git clone --reference=A A I
+>> '
+>> 
+>> and t5604.24 wants to use it.
 >
-> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> index 7128aed540..da11cbc418 100644
-> --- a/Documentation/git-update-index.txt
-> +++ b/Documentation/git-update-index.txt
-> @@ -399,6 +399,15 @@ M foo.c
->  <8> you can tell about the change after the fact.
->  <9> now it checks with lstat(2) and finds it has been changed.
->  
-> +To speed up other Git commands that rely on the index, such as git status
-> +or git commit, user can refresh the index and avoid having to re-check
-> +the status of every file in the working directory. This command
-> +doesn't modify any committed data in your repository.
-> ++
-> +----------------
-> +$ git update-index -q --refresh || true
-> +----------------
-> +
+> Weird. Comes from 09116a1c31 (refs: loosen over-strict "format" check,
+> 2011-11-16). I don't see any reason it could not just be "foo".
 
-Two comments.
-
- * The example before the new one is for a rather esoteric corner
-   case of running Git on an inefficient filesystem.  Perhaps this
-   new one more commonly happens, in which case, it probably sits
-   better earlier in the list of examples.
-
- * Because most (if not all) Porcelain commands like "git commit" or
-   "git status" automatically refreshes the index, it is of dubious
-   value to manually refresh, like your example does, before running
-   them.  You pay the price either way, and the only difference may
-   be the time (and brain cycle) you spend to manually issue the
-   "update-index --refresh" command.
-
-The benefit of refreshing the index manually beforehand mostly comes
-when you are running two or more plumbing commands that do not
-refresh the index by themselves.  We used to implement an equivlent
-of today's "git status" using "git diff-files" and "git diff-cache"
-(yes, we literally ran these two commands in a row to show their
-results in the output, one for "changes to be committed" and the
-other for "changes left in the working tree"), and before running
-these two, the scripted implementation of "git status" ran "git
-update-index --refresh".
-
-Thanks.
+Hmph, yeah, reverting the code change of 09116a1c31 and then using
+'foo' instead of 'HEAD' fails the test exactly the same way.
