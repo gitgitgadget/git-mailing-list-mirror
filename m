@@ -1,55 +1,55 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40A91DEFC0
-	for <git@vger.kernel.org>; Mon,  2 Dec 2024 20:18:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67AEF1DEFEC
+	for <git@vger.kernel.org>; Mon,  2 Dec 2024 20:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733170730; cv=none; b=Fn2gum/AEYtSntA0QhacMOUKx3qAjyqLYDW1QHjPtzrX8mkvT/TNe4irq3GJc1hx5oiW2Wd0Z0Mt36WcRDiQ4FlGkPikoOVJJqijguF1zTlusW/HfZYHvYo65CMwxo+R5cXgNPgZX8g8GGbadjCpa+4nia2xXYSlUtJ1ktnA1o0=
+	t=1733170731; cv=none; b=BctA06ndzxvyVPxaa8nCVCLNuY8CJ9kQzs5f5Uqwv0DfIrxpbN9XKojvXlm8ca7Ht7WaE00LgFpBDLqhQuonRxA5qV/SJMCIR6Za+2l704e5cQwKoFEFiPFqKA9cEUkmqesxSfevBF+uW3xr+WQ+zaDXAB4f7mFSLHO1C1taA7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733170730; c=relaxed/simple;
-	bh=5GLpRW1pJnghx+3+As4hETJ4Zg+ZbAxKjnJcu+50mF4=;
+	s=arc-20240116; t=1733170731; c=relaxed/simple;
+	bh=9lY1Uru6csBWMa7BmPw7olZn2suCdbZXbtEYPAbH/nw=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=E0WQ2thk5qMMeiadDoMSs6ZxDkByLrf8mra/XoB+OJwsouWbKMG5FbPmLwQU4C2o1mFfGkAMpcZDoJpTPXChF6NvJKJY80fGG0kDUMF0C2FpdWQF887dgirWkYMcaeQbD/0mgeQAGvJNVGQvz+Rvf4G08iyQ2xcc1ElxMpwNBJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K7NXD7uo; arc=none smtp.client-ip=209.85.210.201
+	 To:Cc:Content-Type; b=Qq4jSoupEqu22Va8IM7oldXqFqNC6j0sioTrJRv5g8X9nxwlaEvkHMDDJogDpt0JpCxqxlnIWRz0Ofo6spX8ma2Of+3QypFTVKWBZoqhI1plJoJVincXXrOLuUQzSowdVT8AyQ8B8jUGMvgFkqmnIDrep9JxdiUvDEJvEkH9ggE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wh0TBrvR; arc=none smtp.client-ip=209.85.216.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K7NXD7uo"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-724f6189a4aso5479803b3a.3
-        for <git@vger.kernel.org>; Mon, 02 Dec 2024 12:18:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wh0TBrvR"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2eeeb5b7022so742301a91.0
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 12:18:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733170728; x=1733775528; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1733170729; x=1733775529; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iv2Pi4eVb7KbicHQ0WDVKbT+pc93lbW2+tfBsrUYFn4=;
-        b=K7NXD7uok6hNMpmnpSd59s1oLMZ5AG10dZAtzguZJyq77vohoBQUKCF8oNhRJpPuJ+
-         ASWKjQ8Hm42fHMsRwt/UeUQeTLa0e7Kbl72Ni+A6/p8VCJjlxehj6FJ1P4WX2gWbGCtH
-         sro8/5BSJOnDOLXR1V8azH7M6/0mCYiBOs/ukobSz9uvx7Br/nOidbAiylYYOa5nWre0
-         RihHzLRmpV4MvAJQDaXnewnLzWTC9BodERszdVOUz+2U6chLWqOnpcMQrxIdZqEz1lAI
-         /oB8Pnp+uQzd8VqUSqp4Lisq9wytJp1qaT01K9EhSxo6psIMG74CtILMotvEbxJEEiO0
-         WVlg==
+        bh=+yva30+shWkPJiuBPSI5WLlCeO3wOkqmni5AUcx+I+s=;
+        b=wh0TBrvRqkKJM42hjzJEKujjTW4EuMt7L180NSk+uEhPbGSK6Gvi0Hz/XQo9A9ROvz
+         Gna3muiyPEZAcIT3Plj1A5cV8l+Zfddn/G9XcKkUsmBXKLWLSNiKVjU2dpMHr7TZrEQj
+         y72j8A6lFaZeNn1ythMY12TzAEe/yWDJYzK+SYVY56X6Y6oKtOuqLep8H4rQxjSQ2ztv
+         NKYiJyr3fWHGtofo0pVEfZRWSL647NKy+p02jo81Hx71xmCtkKtd2IZWoZ5SWynZH2J2
+         +R2eH3DW5aQx0fQuO9IUUcYVYHGBjWWUedDj6Un/6bhI2AGdnJTDNoZJn6OcoSLxNLVo
+         HDEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733170728; x=1733775528;
+        d=1e100.net; s=20230601; t=1733170729; x=1733775529;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iv2Pi4eVb7KbicHQ0WDVKbT+pc93lbW2+tfBsrUYFn4=;
-        b=cqjmJq95+UvD62Ud5ti013fsVUq9DzqeLaFZXTC0fj9X51GZ+mmjgtGBe83qoh0u7V
-         17+P/6gBIM1uFhZP7Nkup8cRmOzblBl3UbOpT9JnjVRrT2bQ2uRE42Nn+gDgXfzpNRxf
-         53edzJoNGovB2jfpw4Alqx6fv6dFyVkI2uZ2tMahEJKuH2IBoeFnq1iQsrXw4tUfju8y
-         Hc+6I5CI+CuGfvivaQJrtVlIDMMnNJvoxgWgg5yUvCeRtIJDMfRjmJ0iE7nIoDXF+O0y
-         45OFS1pfzHYPglsm6vytfgB3DDJ+3mcfzQBON2K9WFQaN5wxo96W+DxZfheYRqATdpNg
-         u81w==
-X-Gm-Message-State: AOJu0YydcKNlygu55eiHMZ84mk7D0ry50GxK25RdwZHc90Lb0pc7Ze8V
-	vGC4XBFVBAHF6qxsnwuuO+k/LYRrCd+VOiBQGfcIOoQK1v+1PqZfRoOFgZEE4Wg6bi7IHlv5lBL
-	LxwUk27xw9MxGVCsUnTUwXTXRmY3LwvA/bLH/X4hkggOlDemWieyLPAgiNCF78w6rhm0YKBkX6K
-	orUqgwdXreNQMyUQeKL+YPbxdFx47kvfrzWoaMjN8mgV2UEkPnX2s1uYUKY765vp92kw==
-X-Google-Smtp-Source: AGHT+IE+sDOJIKGKnBpxP+tve4WKGW8VKX+YUVmyvxC7YHFAx/vnDdG4hLB/P08QUH9Y4YItpYgjstlw6nHVpC+d3EtI
-X-Received: from plb11.prod.google.com ([2002:a17:903:440b:b0:215:9d29:1aa8])
+        bh=+yva30+shWkPJiuBPSI5WLlCeO3wOkqmni5AUcx+I+s=;
+        b=FHNNKFBWFI8RfdPWHJ903NPaBweqwMoYrtNrwyWXLTencdPgMHNjR0eA+PBPqvKoic
+         Hf/9pagSTAKVSkhkBrAoOjtpbybuJ/SlfsdXj2w/zAGEXKXAlhKDcFAilux7ByuyR/tc
+         C8++y7Txdj81z8onZsfs/L4YVVXnqc8pTiitf3modFmwLNINJ8h4/8z5/Ht2oHCTJq8z
+         IG5ohc/SXjO27jKvFkrbg3N+pZP0qRc0dQCdq1/ojvXUJxViDGg7FzeR+PG9ngzswh9p
+         py2GuXasEUmupl2dOOj6eECnv30/Q6GzWCPhrcgWiUtlzEnjBlcNNbTYqoJxXUqr1/G9
+         o3Yg==
+X-Gm-Message-State: AOJu0YyvUne2yja++TsI2nSFcWB6fGuG+CJmESmMTXQyqrLJZm8YSqnZ
+	LL4BXQW0dCVPXh2TUHgXQV2fiaG2FzSG8WKbBaDCkgsKROHgHONRRAjbkZpY7nkjGefEuVvIHJW
+	bfK4F0Olj7gGmdiLpUi3OBGeZj9+u9N45wF7pLdDskbiNXYbpiPGs8XysJHRqvYvJciBZMI/80B
+	TWK97sHERElnF0Ro7nqt92soQUJAfC5UIHT6RfMm/H49r+4QIscipTflvCsHwCQRZX5w==
+X-Google-Smtp-Source: AGHT+IFHigklfKGIvj9+jfUk+0aEnRPUJw8G7nvLgvBNaLTdjuj21Sln/mKH7DU7uOeH8lJ64WMhGPG0U6hyPAndxwq7
+X-Received: from pjuw3.prod.google.com ([2002:a17:90a:d603:b0:2ea:5835:dbbf])
  (user=jonathantanmy job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:fc47:b0:215:5204:3913 with SMTP id d9443c01a7336-21552044c13mr200768585ad.52.1733170727743;
- Mon, 02 Dec 2024 12:18:47 -0800 (PST)
-Date: Mon,  2 Dec 2024 12:18:39 -0800
+ 2002:a17:90b:1e0b:b0:2ee:af31:a7bd with SMTP id 98e67ed59e1d1-2eeaf31aa50mr9538974a91.5.1733170729568;
+ Mon, 02 Dec 2024 12:18:49 -0800 (PST)
+Date: Mon,  2 Dec 2024 12:18:40 -0800
 In-Reply-To: <cover.1733170252.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,63 +59,58 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1733170252.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <300f53b8e39fa1dd55f65924d20f8abd22cbbfc9.1733170252.git.jonathantanmy@google.com>
-Subject: [PATCH 2/3] index-pack: no blobs during outgoing link check
+Message-ID: <2f2f0db78bf85c14ef132e1924ab5021298aace3.1733170252.git.jonathantanmy@google.com>
+Subject: [PATCH 3/3] index-pack: commit tree during outgoing link check
 From: Jonathan Tan <jonathantanmy@google.com>
 To: git@vger.kernel.org
 Cc: Jonathan Tan <jonathantanmy@google.com>, hanyang.tony@bytedance.com
 Content-Type: text/plain; charset="UTF-8"
 
-As a follow-up to the parent of this commit, it was found that not
-checking for the existence of blobs linked from trees sped up the fetch
-from 24m47.815s to 2m2.127s. Teach Git to do that.
+Commit c08589efdc (index-pack: repack local links into promisor packs,
+2024-11-01) seems to contain an oversight in that the tree of a commit
+is not checked. The fix slows down a fetch from a certain repo at
+$DAYJOB from 2m2.127s to 2m45.052s, but in order to make the fetch
+correct, it seems worth it.
 
-The benefit of doing this is as above (fetch speedup), but the drawback
-is that if the packfile to be indexed references a local blob directly
-(that is, not through a local tree), that local blob is in danger of
-being garbage collected. Such a situation may arise if we push local
-commits, including one with a change to a blob in the root tree,
-and then the server incorporates them into its main branch through a
-"rebase" or "squash" merge strategy, and then we fetch the new main
-branch from the server.
+In order to test this, we could create server and client repos as
+follows...
 
-This situation has not been observed yet - we have only noticed missing
-commits, not missing trees or blobs. (In fact, if it were believed that
-only missing commits are problematic, one could argue that we should
-also exclude trees during the outgoing link check; but it is safer to
-include them.)
+ C   S
+  \ /
+   O
 
-Due to the rarity of the situation (it has not been observed to happen
-in real life), and because the "penalty" in such a situation is merely
-to refetch the missing blob when it's needed, the tradeoff seems
-worth it.
+(O and C are commits both on the client and server. S is a commit
+only on the server. C and S have the same tree but different commit
+messages.)
 
-(Blobs may also be linked from tag objects, but it is impossible to know
-the type of an object linked from a tag object without looking it up in
-the object database, so the code for that is untouched.)
+...and then, from the client, fetch S from the server.
+
+In theory, the client declares "have C" and the server can use this
+information to exclude S's tree (since it knows that the client has C's
+tree, which is the same as S's tree). However, it is also possible for
+the server to compute that it needs to send S and not O, and proceed
+from there; therefore the objects of C are not considered at all when
+determining what to send in the packfile. In order to prevent a test of
+client functionality from having such a dependence on server behavior, I
+have not included such a test.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ builtin/index-pack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 8e7d14c17e..58d24540dc 100644
+index 58d24540dc..338aeeadc8 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -830,8 +830,10 @@ static void do_record_outgoing_links(struct object *obj)
- 			 * verified, so do not print any here.
- 			 */
- 			return;
--		while (tree_entry_gently(&desc, &entry))
--			record_outgoing_link(&entry.oid);
-+		while (tree_entry_gently(&desc, &entry)) {
-+			if (S_ISDIR(entry.mode))
-+				record_outgoing_link(&entry.oid);
-+		}
- 	} else if (obj->type == OBJ_COMMIT) {
+@@ -838,6 +838,7 @@ static void do_record_outgoing_links(struct object *obj)
  		struct commit *commit = (struct commit *) obj;
  		struct commit_list *parents = commit->parents;
+ 
++		record_outgoing_link(get_commit_tree_oid(commit));
+ 		for (; parents; parents = parents->next)
+ 			record_outgoing_link(&parents->item->object.oid);
+ 	} else if (obj->type == OBJ_TAG) {
 -- 
 2.47.0.338.g60cca15819-goog
 
