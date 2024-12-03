@@ -1,141 +1,117 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D860718A6A3
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 22:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6E63FB0E
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 22:16:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733263212; cv=none; b=Xl7xOjsgo/EDNLW3tMMEChwtCjVk56NghPHXPRxQRZOxgRfo6aEQfheB1gj4GV2WWVOnkG/tUSNTB099VkX+JoI8V0c1ra1U4H1pZ7ydGkiV3Cby1NbGU3sjeeCmuLDICP+9cpI/r/i5MgastFXlBipK1f+d7oeGeLo6RRBZMzE=
+	t=1733264191; cv=none; b=FGTTQ8eqvJ29OHd1ck0uA80yj+rGB4ibJQx3YJ8nHzxedZSQ13UR/kOvuBuoeJBSfuyaU1g1xC68CUwq9adr2PTpTLwKr2LOmCBTY78qD4gTdKRr2KCdKQ3DNcaoaCxllYE6yc9IL4SCiP7UdRw2pdsTXsVSWf3BROhgKlf7myM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733263212; c=relaxed/simple;
-	bh=XliBWzp994y5BVWHeqiHVSu7T0AOUvo+moy4aA/pjMI=;
-	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=IYdwlTIyPCjl1nAJTOJiY2PiKlgKZwxNb4wt8xJ1QLED1XC/8fJFG3YuXdCK5Cs+w0XkGdEm+xTveFQ/8ISeFNrV83e9LO73SFyjAf3Dj9svfTwD9iUHyghzqEHGEn888YTIXzxR3kpmPBtK7zLr3XrQIu/0AvPchrTNvxYPmrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=TRK3q7et; arc=none smtp.client-ip=192.29.178.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1733264191; c=relaxed/simple;
+	bh=K+Yxt6AYGl5bkb6ZcauyuLgwXKdmj7CHGmK+ru8R7uA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=emnaILPDoPB74O7UtjDbGbxSh+L+RVlaDkHASBDX+qzptQbALBb/f7EqsKq4MUhyEfORRyZkVyz5PeO4MQ4S6M4f2UhE/rdLrUklNDojFpbxi73lWxAW9dxAuQqF24OACHdi23D6ISCZje2BSjBjj7m4s4YrV3OmswElzrpvwR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJd7Z5JZ; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="TRK3q7et"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=Jz4Uv1r1bcshYGpi7FekFxCDG6uq3CW9FdFEh4m2yqg=;
- b=TRK3q7etGFZZcxYJvquftlOxeHgFO5ZrGUM9TwrOhjwlK007xPs45wi+WawLXtOij+0aqi5cmE/J
-   OzQk5SOA2c13CauTC4Hu8idmtU0nw0eYy+nxqqNsrn3Mgo85DLzlrSmQ6406wDazUBclFFvrE6UF
-   I8eW9IyBF9HodRFU1I4Uf0OiY8LrDEmBvp2tx839hBnfLNV2SD7YOkwXSdd+Gouk819LeBSqD5r0
-   uvQK4Zk/Tj1O7JwdVDazW9/RmTqk3gZd5X2lz0VUfSiJsqJoqCUq+EZwixnyEldT2xHbbUBGubBm
-   SZNmc0JLk4xJjTT44IjGgI1l7fmQMJLkplsowg==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
- 2024))
- with ESMTPS id <0SNX00C4UUG79AF0@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Tue, 03 Dec 2024 22:00:07 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,	karthik.188@gmail.com,
-	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [RFC PATCH v1 2/2] remote set-head: set followRemoteHEAD to "warn" if
- "always"
-Date: Tue,  3 Dec 2024 22:56:48 +0100
-Message-id: <20241203215713.135068-3-bence@ferdinandy.com>
-In-reply-to: <20241203215713.135068-1-bence@ferdinandy.com>
-References: <xmqqiks7oprx.fsf@gitster.g>
- <20241203215713.135068-1-bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJd7Z5JZ"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 83D9525400BD;
+	Tue,  3 Dec 2024 17:16:26 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Tue, 03 Dec 2024 17:16:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733264186; x=1733350586; bh=MaraINSUuT/i4AoBV3lqaaKXLhUzYnQNu7z
+	D4V0GgyE=; b=MJd7Z5JZnFmD0888aLxD7M2hEfsYTchWGc4XXPxnPVK5c2MKEXM
+	8VXjOgnpSugi3tOSIhIeAOPtiierEZIVbSqaoFjdKSikolbU3+ltDXJrzbhNXQr/
+	jjDOy5pqKOT2eTabWlA36uPWwNNHn55xx2YqDm2CBpyfkQ9qu034Y5MduEsfnL+d
+	oEnmzRc+7/RrIq40bn6bOlGz0V15MDzYOiDUF0s7VyOaTv4gklpGwh5KLiQdSgHm
+	1/aZUnTH2uDk3hvtCqWZaN9N/zIBqnf/cXr1VFQIpNra6pQbgXREQCO/sbn6Yd9B
+	QZZl49uYu+LtePuk1VfzazjsWICPrCutjCw==
+X-ME-Sender: <xms:OYNPZ7khKIOszE2Ch_mzFjlb8LL4SWHZIfths1uqKLSkJ6LPyX-EsA>
+    <xme:OYNPZ-2t5LL119tKMZn42s62wGdGsXvI8mEuMnMXunPY50TJg6Ty5XFDkECnf9Xhf
+    9bwJsFYxqrulRpx8Q>
+X-ME-Received: <xmr:OYNPZxpUfXOxQeuaneOEDmEI7c04GFnTSYAlXqvY_MQp9sv7tt3CD8yO5y72NfF4z-kppDyBTyYgaIomXGsVHrrGabh1DHlVNmcJrrU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieefgdduvdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgrnh
+    ihrghnghdrthhonhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OYNPZzmXxx6Uq10nnmamaW6p6byO0P11sD-_cPg_xg-ZriFQpp14Lw>
+    <xmx:OYNPZ51dqH9eCgpLjWwBiwY3AyRQ_dDhG45DYpaG9yrER0vEDeWnCA>
+    <xmx:OYNPZyuGbZII-XH_alORhSDoC6JwsHoi1Vxc8AgJvJ45ZEukzSA4aA>
+    <xmx:OYNPZ9VTbitCmhdV6-27QKhNDYI3AufYHtzmGnvCjvrDOPU7mY6FjA>
+    <xmx:OoNPZx-zIZUBTxphJ2vLIWE8pn3my6X57VuqD7qJG9jSfABzvigIsBqx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Dec 2024 17:16:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jonathan Tan <jonathantanmy@google.com>,  git@vger.kernel.org,
+  hanyang.tony@bytedance.com
+Subject: Re: [PATCH 2/3] index-pack: no blobs during outgoing link check
+In-Reply-To: <Z06ejDgTnC6gWXgx@pks.im> (Patrick Steinhardt's message of "Tue,
+	3 Dec 2024 07:00:44 +0100")
+References: <cover.1733170252.git.jonathantanmy@google.com>
+	<300f53b8e39fa1dd55f65924d20f8abd22cbbfc9.1733170252.git.jonathantanmy@google.com>
+	<Z06ejDgTnC6gWXgx@pks.im>
+Date: Wed, 04 Dec 2024 07:16:24 +0900
+Message-ID: <xmqq1pyocszr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAFqDQYZm1jFPCZW4D1Fmo9zRzjP+gpQNTqhKjfCq3HsU0+faZzMQLQkVEsEkPva
- 9litAjVwA0PDvpxXpASiDFf+FhVB+PGHqitjxVEjeu3zMgoLql/zwehLlh/zbL4+
- ReC0AjfXHTHy6ruwssALnjHwb+i7zM6Qr9dWmaD0Jmsk0uOQhjT2VYL5uJbHGP4/
- UH2pyI5b4JjfxS0LFX0o9L+d8GBo2Y0R7uxF5aTFJtXdnq2O8lBPUu5XsDYDrBu+
- OkABtbPaMgo6fPXbwj7lg+4H7ABcKt6cmW1jqWtkVOTOXdmVj3fzAuqDvdLoM0x3
- LKjy9rRhYEgXXJ4jfijQf5f12fhi2Ypr3VqWXOch2CFJDhzpXUXdKZ/hoeF0IvDq
- r/2IHQCjTus1RhGF7LzLnPrF9TJVHDjXfhAYDYw4usPTh6a7It4/QOlpZeh6PE6S
- x4MrNgPVvEO1xAGPqF0TgRy0VsS0r7BbB+DC2doOzvjKIgdtaYqiIYA=
+MIME-Version: 1.0
+Content-Type: text/plain
 
-When running "remote set-head" manually it is unlikely, that the user
-would actually like to have "fetch" always update the remote/HEAD. On
-the contrary, it is more likely, that the user would expect remote/HEAD
-to stay the way they manually set it, and just forgot about having
-"followRemoteHEAD" set to "always".
+Patrick Steinhardt <ps@pks.im> writes:
 
-When "followRemoteHEAD" is set to "always" make running "remote
-set-head" change the config to "warn".
+>> The benefit of doing this is as above (fetch speedup), but the drawback
+>> is that if the packfile to be indexed references a local blob directly
+>> (that is, not through a local tree), that local blob is in danger of
+>> being garbage collected. Such a situation may arise if we push local
+>> commits, including one with a change to a blob in the root tree,
+>> and then the server incorporates them into its main branch through a
+>> "rebase" or "squash" merge strategy, and then we fetch the new main
+>> branch from the server.
+>
+> Okay, so we know that we are basically doing the wrong thing with the
+> optimization, but by skipping blobs we can get a significant speedup and
+> the failure mode is that we will re-fetch the object in a later step.
+> And because we think the situation is rare it shouldn't be a huge issue
+> in practice.
 
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
- builtin/remote.c  | 12 +++++++++++-
- t/t5505-remote.sh | 11 +++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+That is how I read it, but the description may want to make the pros
+and cons more explicit.  One of the reasons why the users choose to
+use lazy clone is to avoid grabbing large blobs until they need
+them, so I am not sure how they feel about having to discard and
+then fetch again after creating a potentially large blob.  As long
+as it does not happen repeatedly for the same blob, it probably is
+OK.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 4a8b2ef678..9a30c17724 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1433,6 +1433,7 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 		b_local_head = STRBUF_INIT;
- 	char *head_name = NULL;
- 	struct ref_store *refs = get_main_ref_store(the_repository);
-+	struct remote *remote;
- 
- 	struct option options[] = {
- 		OPT_BOOL('a', "auto", &opt_a,
-@@ -1443,8 +1444,10 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 	};
- 	argc = parse_options(argc, argv, prefix, options,
- 			     builtin_remote_sethead_usage, 0);
--	if (argc)
-+	if (argc) {
- 		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", argv[0]);
-+		remote = remote_get(argv[0]);
-+	}
- 
- 	if (!opt_a && !opt_d && argc == 2) {
- 		head_name = xstrdup(argv[1]);
-@@ -1483,6 +1486,13 @@ static int set_head(int argc, const char **argv, const char *prefix)
- 	}
- 	if (opt_a)
- 		report_set_head_auto(argv[0], head_name, &b_local_head, was_detached);
-+	if (remote->follow_remote_head == FOLLOW_REMOTE_ALWAYS) {
-+		struct strbuf config_name = STRBUF_INIT;
-+		strbuf_addf(&config_name,
-+			"remote.%s.followremotehead", remote->name);
-+		git_config_set(config_name.buf, "warn");
-+		strbuf_release(&config_name);
-+	}
- 
- cleanup:
- 	free(head_name);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 2600add82a..76ffdb2ec9 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -505,6 +505,17 @@ test_expect_success 'set-head --auto has no problem w/multiple HEADs' '
- 	)
- '
- 
-+test_expect_success 'set-head changes followRemoteHEAD always to warn' '
-+	(
-+		cd test &&
-+		git config set remote.origin.followRemoteHEAD "always" &&
-+		git remote set-head --auto origin &&
-+		git config get remote.origin.followRemoteHEAD >output &&
-+		echo "warn" >expect &&
-+		test_cmp expect output
-+	)
-+'
-+
- cat >test/expect <<\EOF
- refs/remotes/origin/side2
- EOF
--- 
-2.47.1.297.g6455f89743
+> Without the context of the commit message this code snippet likely would
+> not make any sense to a reader. The "correct" logic would be to record
+> all objects, regardless of whether they are an object ID or not. But we
+> explicitly choose not to as a tradeoff between performance and
+> correctness.
+>
+> All to say that we should have a comment here that explains what is
+> going on.
+
+Thanks for reviewing and commenting.
 
