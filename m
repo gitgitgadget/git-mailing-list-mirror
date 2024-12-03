@@ -1,123 +1,208 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5470B364AE
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 02:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC727364AE
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 02:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733193962; cv=none; b=kKmX34X8ond5O4J79HGIqOK2/khXpQt1hX6+4Xf0Tr8k3ErUEu+Pfn7Nup3jkpxMBjWYCAgsqzm7Sy3EUE1gueO7Ha5OUgLPucD9Wp28nkkk0Hgb+X6J2ewwob56kq8jErUZAE/OiMezfUPZvSqquES1qP/t8BZp4vcXWcBTp0w=
+	t=1733194100; cv=none; b=c2iWdvRsnLWyZu/T/wwr0U0VzJfyMoX5kfFuySGnPapHZd9IR25/T3mYJ6EsLMV+JMchTdZ+5rmhJlD2VPTe5uld6l6PA5N7p4+UkjaK92uPutcwWZ83odiIY5Yvi7xsXctRqaVmbQZze27/1aYeWtNJHqfWuL3N6Jo52Wov8pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733193962; c=relaxed/simple;
-	bh=NoeR8Mgws7z3DHaT5lHcvbF+Wl0MpQV5mKEAxWoYx6Q=;
+	s=arc-20240116; t=1733194100; c=relaxed/simple;
+	bh=LUWbpVcxTRfu3/oDC9zCBYKWzkBuqnaYVzqCFsTqOsE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pRYqFZOHdn3nI1jukdMJmsMjasy8LlkbkaTyoCD/TQ6UAEJ+cWDe7oHggEfs4wYz+ZA3zf7DuXjlUlDakfB/582Uo7Y2BYPl1ahWgqXNE74/NNj5imAxCHfx7k5DrvC4pAiwSXZ6LiBfTy+DYDBAgi6LhsuO84ahdGDJLDnim98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m0ALUFlG; arc=none smtp.client-ip=209.85.167.54
+	 To:Cc:Content-Type; b=TQStevy5Bshy69f2hbOtHucIIEc1ZlX5vFwJMeRJJ6seJyDaldspfcdUaoTEL1KZ5wiOyg/u7W/IBnisCN/0ZjBnGRJJ8JmGXM/syEKhY0kpjzeHAFy7numKVWoLlfwJVpmDBAhbhUcLJ6QQTnBFRP4Y9XseXRYQWZOdR05Oukk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+lEgpKU; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m0ALUFlG"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53de8ecafeeso5513909e87.1
-        for <git@vger.kernel.org>; Mon, 02 Dec 2024 18:46:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+lEgpKU"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2ffd6af012eso60978501fa.2
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 18:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733193958; x=1733798758; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733194097; x=1733798897; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+iZUGyZn4W0T5GmFJLU70gI0hc/XNsuXK6jzNNvAEHY=;
-        b=m0ALUFlG4LJMyGnj+OmFJgHxmAHFyMsworBjbX2nwiib5w5a/j18zWG+bfsgonhwCM
-         DqPO0XR+ht0xnSFQPuNFKkwl1ktow60OqTaRS48L9ICv/KA4m7MWidUTAxf4NBYaho2x
-         SDLulJRcJLxWpAnB1+P/IWsm4q8/BJMQ+/x7V8k/W4rocvO4rzJo17CYvDBa//suTxEq
-         J/Y+fcUo4vC25D4rGPabY99uhmpYZRUBjGJ3w1GwbnG/1+Fvt3A9yme2+eI8yOYGNoct
-         DUaLa592FotOteAHa0nwwd0YbIO5XEHWcP/BX2xAl+QQyNVPih/WTepoMp8c3IzQ/GHA
-         NcQQ==
+        bh=Wng2o3x+umPs+BcR1A5HRnUoVGpIPcOn2oDW2frF+PA=;
+        b=F+lEgpKUb9QpGb0i7aaRXB+7oCP+GpElG9bpN+PFPQqYDClcOuuDHQwg0nbQif9f2m
+         KvPmxCMnjbO5MJrT2DNe5GyoafRwBm+py7fwJPGzeqoeOxf0GbJaa0+aMkpyCkll2t9q
+         HE+MnU7WW4GyIFbPcTcvTOczGwKrbT+ZaH8szrvIResoKlDuEm7iMNZ7zuxEvzNlRZ9y
+         Z2bY9dnF5GEAfuDeJu5MHX3kVmZlptg7pK+VkQz4fE/tQ0pJsDBf2PQ8oFRqCE+7HFhZ
+         sAA61g6Nq3L5+8QMrhxNLWcIv9EKVS2ya/CZ5p6tMvuuqCS/8gWvKzi3w5oJYAHlaBM7
+         F6GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733193958; x=1733798758;
+        d=1e100.net; s=20230601; t=1733194097; x=1733798897;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+iZUGyZn4W0T5GmFJLU70gI0hc/XNsuXK6jzNNvAEHY=;
-        b=xPQELFr1uK7osZskcZBrc+4ny6ZkXVaJIuDiqovB7pCGWE+UrnmzeYutOmVZZbNeFw
-         0d51fSB5EJL57BmYv3UjGDXOBsF8KF94/dX6f/8H40SmcmYvOzsPovpFpcvX0qa6R/VC
-         uOliE+psbDAAhfRtsJX7JMYrYTCVKCsCzVJlvvkjX7v4YNX4VaZEjEg0vSLoqdjXuLDa
-         Yj6Q9DNKbCIcSNDAAhVHN48dogCjPwf0DqpOxmLteOtL3bYtzWLrcLrFZX3ExFDy9071
-         Ohx4Zchsyz+/l4/6FdLqeYPDZN3Sicphb3FzXyWM/b5Z0yXqn59jjmwiJ7N7uYn4znvU
-         dqVA==
-X-Forwarded-Encrypted: i=1; AJvYcCX5V7q0yNk8gU5z5IQedP7TYerd/QPAqnC7hUDuyqTSUBp+4aj4rGl/7PxsN+XB92P44CA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHd+chllOdtg45jsKGw6r2vAZMhzkDqDZ+H56tsu2XS3w7djJm
-	4if3SJH2fFAT4PKWI6IbpbGr1jun9TLYT/11lSxgdNYVLnLcXQ3YYGLLL+3leHgs2ApSfR5gCH6
-	4DS6fejB52DOHmBW50QKsIwpJRDku/m4/
-X-Gm-Gg: ASbGnctBUCBDO/tvGYtusfcf+NidkhIzYoLXmQW2U7e4O6Oe1xwkgWFIn878Srgk7rZ
-	MRZMjuVHcxpqNENVmIiPDpXNUemkV8pep
-X-Google-Smtp-Source: AGHT+IFnirLPxWd5i1d7B1PPE9Gsbu7HNfRlHE/8gf8e1aabiUD26IJyAz+1o8RhEM5jtnrC6iPM8R2SYyW6DAIMLDg=
-X-Received: by 2002:a05:6512:1154:b0:53d:cf93:8072 with SMTP id
- 2adb3069b0e04-53e12a2e4ffmr454984e87.38.1733193957940; Mon, 02 Dec 2024
- 18:45:57 -0800 (PST)
+        bh=Wng2o3x+umPs+BcR1A5HRnUoVGpIPcOn2oDW2frF+PA=;
+        b=fuXvDodEKVx8c3zhE8RzhtQ3hoLBXiFnpMBlqzGjfNYjkex/zHj0avje0Uf9gxzNsD
+         ks7XjelBxaCbEL/O5oJfsgYStlyw/HbmTcoO48Dy9lprMU8hA4+X5pFGurdgzLs505NN
+         s9wwKlj9T6eOLpKtVbjcmJ5HnNihAHdPHM4wugNerbEgakwj8/o13IRykZE3rXOvS0Au
+         WoTXGLnBOGUW88N/kxEPMq5Dk5XGXUmamjptHqNNgEK77BC9vkZMFo9eh8vQFkBlFa6+
+         40fAzttIE2ozC1o0M7r+o5I9CojKbwKbLpf1fFjCJ+DL1lf13kDiCNRBE0ZQ5xTq7WOO
+         Zi9A==
+X-Gm-Message-State: AOJu0YzRht6fqFYW4ctQk9QSXB8M3J5zsv8eD8KXaXPv8yRl8icVWIsI
+	vuzjg9vZxC8HOh474mK2uuHYs1VDCpCMDU1rybrFF/Kj27QbWRlv2snYMr78Vd5lSR3tFwUEj4O
+	C8Cbcvt+gkhp1cvQJkelbZrv6Blc=
+X-Gm-Gg: ASbGncssIGwD80P3Uh1nCjekrA3mYHnv85dnbvhtU5qWedvsiKvFbHFOtjy0hfNZN3E
+	9i5KJpVNGSdO3rbMWLsN1NerUMpYX7Cw=
+X-Google-Smtp-Source: AGHT+IH5Q7s1R9AM1HUnaPOefPpAUKxRscI8B2XeuElIqbuODxkF+yj0Nh0tvnp01V5pLksRETlRhoQq+DSDBPymWi8=
+X-Received: by 2002:a05:651c:210d:b0:2fb:58d1:d9a3 with SMTP id
+ 38308e7fff4ca-30009c52ef0mr4388951fa.18.1733194096674; Mon, 02 Dec 2024
+ 18:48:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFePT4zytyuLB0TgyJ+mbrNvz=Xt1x+gJv4e-2j07YK7Cg1bzw@mail.gmail.com>
- <CAPx1Gve_dCRux9_cF7NTspomS4K=Hp_y74d94S-Hm0amuovUqQ@mail.gmail.com> <xmqqser5h9c6.fsf@gitster.g>
-In-Reply-To: <xmqqser5h9c6.fsf@gitster.g>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Mon, 2 Dec 2024 18:45:46 -0800
-Message-ID: <CAPx1GveJYiMAVLmv1A9-K0Ok54cio5aAqFnULZJ3--GGBnu69Q@mail.gmail.com>
-Subject: Re: How to revert to a specific commit?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: tao lv <thebookofunknowable@gmail.com>, git@vger.kernel.org
+References: <CAJ-DG_DpNVmn1e=8hBX4YbEhzgX4xxn7AVBQnhKJOvHX4hx7kA@mail.gmail.com>
+ <20241130163801.GA110697@coredump.intra.peff.net> <CAJ-DG_CNPGgfafyTcKWYeNXHD4gsspWakzQoRhfggMqZjenkyg@mail.gmail.com>
+ <20241201213636.GB145938@coredump.intra.peff.net> <CAJ-DG_A3RY0ngY-pc6riho=OyzX2VjeaR2LRGb5=ru3CNruECA@mail.gmail.com>
+ <20241202203451.GA776185@coredump.intra.peff.net>
+In-Reply-To: <20241202203451.GA776185@coredump.intra.peff.net>
+From: Dmitriy Panteleyev <dpantel@gmail.com>
+Date: Mon, 2 Dec 2024 19:48:05 -0700
+Message-ID: <CAJ-DG_BLtwg51UoBN4m64ejYUcS99zu54oPYGnC5p+55tNtzpQ@mail.gmail.com>
+Subject: Re: [BUG] commit fails with 'bus error' when working directory is on
+ an NFS share
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 2, 2024 at 4:57=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> While [Torek's sequence of commands] would _work_ in the  sense
-> that you can revert the effect of what the discarded commits
-> did, I would not recommend any of the above since it does not
-> leave any record of what you discarded.
+On Mon, Dec 2, 2024 at 1:41=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Sun, Dec 01, 2024 at 03:24:35PM -0700, Dmitriy Panteleyev wrote:
+>
+> > You are right, Jeff, I needed to run one more bisect. But it does point=
+ to
+> > the commit I linked above. The bisect result is:
+>
+> Thanks for checking. I'm still puzzled how this commit:
+>
+> > 04fb96219abc0cbe46ba084997dc9066de3ac889 is the first bad commit
+> > commit 04fb96219abc0cbe46ba084997dc9066de3ac889
+> > Author: Jeff King <peff@peff.net>
+> > Date:   Thu Nov 17 17:37:58 2022 -0500
+> >
+> >     parse_object(): drop extra "has" check before checking object type
+> >
+> >     When parsing an object of unknown type, we check to see if it's a b=
+lob,
+> >     so we can use our streaming code path. This uses oid_object_info() =
+to
+> >     check the type, but before doing so we call repo_has_object_file().=
+ This
+> >     latter is pointless, as oid_object_info() will already fail if the
+> >     object is missing. Checking it ahead of time just complicates the c=
+ode
+> >     and is a waste of resources (albeit small).
+> >
+> >     Let's drop the redundant check.
+>
+> could be the culprit, though. The diff is just
+>
+> diff --git a/object.c b/object.c
+> index 8a74eb85e9..16eb944e98 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -287,8 +287,7 @@ struct object *parse_object_with_flags(struct reposit=
+ory *r,
+>         }
+>
+>         if ((obj && obj->type =3D=3D OBJ_BLOB && repo_has_object_file(r, =
+oid)) ||
+> -           (!obj && repo_has_object_file(r, oid) &&
+> -            oid_object_info(r, oid, NULL) =3D=3D OBJ_BLOB)) {
+> +           (!obj && oid_object_info(r, oid, NULL) =3D=3D OBJ_BLOB)) {
+>                 if (!skip_hash && stream_object_signature(r, repl) < 0) {
+>                         error(_("hash mismatch %s"), oid_to_hex(oid));
+>                         return NULL;
+>
+> So it is actually doing _less_, though what it is removing is going to
+> just be a pack .idx lookup (or maybe a stat() call if the object is
+> loose).
+>
+> > I am not at all familiar with the standard process for this, but the wa=
+y I ran
+> > the test is:
+> >
+> > (0. cloned test project into /nfs/proj/ and made a change)
+> > 1. cloned git repo (from github) into /tmp/git/
+> > 2. ran bisect in /tmp/git/, starting with v2.34.1 (good) and v2.43.1 (b=
+ad)
+> > 3. ran `make all` in /tmp/git/
+> > 4. in /nfs/proj/ ran `/tmp/git/bin-wrappers/git commit -m 'test'`
+> > 5. repeated 2-4
+>
+> That sounds reasonable. I'm still not sure what's going on. It's always
+> possible that commit introduced a problem, but I just don't see it. So I
+> still have a suspicion (especially given that your symptom is a bus
+> error) that the problem might not be deterministic.
+>
+> I wonder if building git with:
+>
+>   make SANITIZE=3Daddress,undefined
+>
+> and running the same test might yield anything useful.
+>
+> -Peff
 
-[alternate method with `git merge -s ours --no-ff` snipped, but note
-that it will do this:]
+Not sure if this is useful, but this is what I got:
 
->  - Record the discarded history (i.e. master@{1}) as the side branch
->    of the resulting history.
+AddressSanitizer:DEADLYSIGNAL
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=3D=3D155141=3D=3DERROR: AddressSanitizer: BUS on unknown address (pc
+0x78811e863aed bp 0x7ffe9d5ac800 sp 0x7ffe9d5ac770 T0)
+=3D=3D155141=3D=3DThe signal is caused by a READ memory access.
+=3D=3D155141=3D=3DHint: this fault was caused by a dereference of a high va=
+lue
+address (see register values below).  Disassemble the provided pc to
+learn which register was used.
+    #0 0x78811e863aed in inflate
+(/lib/x86_64-linux-gnu/libz.so.1+0xfaed) (BuildId:
+bbefe2bbdc367b0c3cfbfcf80c579930496fb963)
+    #1 0x563e32ec7e5f in git_inflate /tmp/git_tests/git/zlib.c:118
+    #2 0x563e32bde431 in unpack_loose_header
+/tmp/git_tests/git/object-file.c:1271
+    #3 0x563e32be429c in loose_object_info /tmp/git_tests/git/object-file.c=
+:1474
+    #4 0x563e32be5348 in do_oid_object_info_extended
+/tmp/git_tests/git/object-file.c:1582
+    #5 0x563e32be5dac in oid_object_info_extended
+/tmp/git_tests/git/object-file.c:1640
+    #6 0x563e32be5dac in oid_object_info /tmp/git_tests/git/object-file.c:1=
+656
+    #7 0x563e32bf8b57 in parse_object_with_flags /tmp/git_tests/git/object.=
+c:290
+    #8 0x563e32cfbd19 in write_ref_to_lockfile refs/files-backend.c:1772
+    #9 0x563e32d0196e in lock_ref_for_update refs/files-backend.c:2582
+    #10 0x563e32d0196e in files_transaction_prepare refs/files-backend.c:27=
+55
+    #11 0x563e32ce6800 in ref_transaction_prepare /tmp/git_tests/git/refs.c=
+:2266
+    #12 0x563e32ce6a5a in ref_transaction_commit /tmp/git_tests/git/refs.c:=
+2315
+    #13 0x563e32d8c44e in update_head_with_reflog
+/tmp/git_tests/git/sequencer.c:1197
+    #14 0x563e326b2f51 in cmd_commit builtin/commit.c:1834
+    #15 0x563e3263002a in run_builtin /tmp/git_tests/git/git.c:466
+    #16 0x563e3263002a in handle_builtin /tmp/git_tests/git/git.c:721
+    #17 0x563e32633ff8 in run_argv /tmp/git_tests/git/git.c:788
+    #18 0x563e32633ff8 in cmd_main /tmp/git_tests/git/git.c:926
+    #19 0x563e3262c6a4 in main /tmp/git_tests/git/common-main.c:57
+    #20 0x78811d42a1c9 in __libc_start_call_main
+../sysdeps/nptl/libc_start_call_main.h:58
+    #21 0x78811d42a28a in __libc_start_main_impl ../csu/libc-start.c:360
+    #22 0x563e3262f6d4 in _start (/tmp/git_tests/git/git+0xa726d4)
+(BuildId: 197ee6cc3c63db9e10cfed4585ab78b52790454a)
 
-This is a good point and illustrates the key issue I left out.. I was
-describing (and kind of deliberately hammering on, for teaching
-purposes) the fact that every commit node in the commit graph
-records the _full state of all files_ as of that particular commit.
-Hence if the only thing you care about is "state of files", that's
-also the only part of a commit that matters.
-
-But commits do one other thing, in addition to the usual housekeeping
-work of remembering who made them and when and a log message.
-That specific other thing is: each commit remembers a list[1] of
-_previous commits_, and stringing this commit up after its
-predecessor(s) is what produces "history".
-
-That is, Git does not _store_ history (specifically, history of files).
-Instead, it stores the _information needed to discover history
-any time you wish to discover it_. The list-of-previous commits
-is how this works. Using a merge allows you to store a list of
-_two or more_ previous commits. The _first_ entry in this list,
-which is often the only entry, is what we think of as "the immediate
-previous commit", and following this list-of-first-entries gives you
-the history of what happened to each file.
-
-Second (and additional) list entries, if present, help you figure
-out _how_ you got this particular version of every file in this
-particular commit, in the usual merge cases. In unusual cases
-(such as Junio's method here) it can help you figure out what
-you deliberately left behind, and the fact that the new commit is
-a merge commit -- a commit with two or more parents, instead
-of just one -- is a clue that something out of the ordinary
-occurred.
-
-[1] I say "list" instead of "set" here because order matters:
-the first entry is special. "Set" would also imply de-duplication.
-While the list entries don't normally contain any duplicates,
-there's nothing in the machinery to prevent them. What (if
-anything) such duplicates might mean -- well, that's up to you.
-
-Chris
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: BUS
+(/lib/x86_64-linux-gnu/libz.so.1+0xfaed) (BuildId:
+bbefe2bbdc367b0c3cfbfcf80c579930496fb963) in inflate
+=3D=3D155141=3D=3DABORTING
