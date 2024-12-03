@@ -1,44 +1,44 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF157204F78
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43BBA1D7E21
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:18:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733260023; cv=none; b=QPMHhDl2QNtg/FbhrqIlu4WgNwv4Y32L+NB5o+b1e1MHSkI/5odGAV6lwvs9aCR5UWgdmWOYLLUWP6UJ4SKHaN/X++JaMK5JHwotVIPi186A7BI8XrFMmQG9XvPy/qxwUH6PqiX0l1SLAwaxyVVX6Xs/ZWOuP0t/K2y4xeWv+1c=
+	t=1733260714; cv=none; b=fJu9u73Xl3w4K86RyG94rkew4zH/DOta0bUxBCYWwNTwUfZfJe+e9n9yoCz6nQYFZDHJj74v6bNufpUHM7Fea3UPlJFdxYFIMKdakKgJZ4LLKMN/xhkWBDokhm0m+3d0eNkkhjYr8dhHrLxbMLk97TaFS4lcHMS7vI5Yn3w2DZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733260023; c=relaxed/simple;
-	bh=g5QEsqpc00Z7J9UfzNUaeX/naI97YTEXMjXhZVO6hq8=;
+	s=arc-20240116; t=1733260714; c=relaxed/simple;
+	bh=4YhgeoYFN7Bgx3RTdUrFJ9u/1HgcbN5z1u5Q2dGAsrE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CrSfm4VJWD9yuy65m8xmhNxykOFad0fmzJ9ge4ob+/iQx176Jpu3tRod88aiRWVkJeKXz9od2qYqMiRyZsZ+WR6viQvZ2kjc0q6Hxu5ggjSLYdeOnb7Fw1vHrU0ZbdbA8+MPl7LWpHGcSjEZYUy3SgNavPNHMkMU2p8+h+/Qd3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aReUZrra; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=GvidO7MQZTQW4ZF+YUt3rORwPYfv2gnSRgvRZA/6Q+5Um1IEPmJJAcRMpg/y7Q1auyorCcZQETgvmE9V6c292e7x9fZSS3sQRKhRN7TUvDFs5tk36IDR/LOG/VplIO0z5uBNwMXBywE9U5dP/c6SMEee6bZYyw6Jz4iTqiQTJ+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cEUsWaA8; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aReUZrra"
-Received: (qmail 30458 invoked by uid 109); 3 Dec 2024 21:06:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=g5QEsqpc00Z7J9UfzNUaeX/naI97YTEXMjXhZVO6hq8=; b=aReUZrra0M3+xIb+0ehzcdbmtMmhmQnULRfGh+d7nW5ooDdYBAUJYSid4hGkBDT8wTwUZmOocok80VWlWUVUi+AsMUBaWp1Q0uaI37rx9nms1p3Gc7silmMHKtmM4rgYqlPPUvKMnnYXltEssq/UTFvvkMzw1SqhH8EfeF12/MhSMeHCkR05k/Wi67FCRH6f9vmshKlKsCOp6B1wVcidP6GNlDhJtGSvpxHfBUhYPF6zJpG4vPd+PvKSrtOEDh6iGqmjHnfIZueFKnhvjLPMbSzNraGfpPjBJ8uKwKWwNlOXpx3bmlGWE0ShbDQqT74OJai3l+4OfuJ1tNPQW35M0Q==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cEUsWaA8"
+Received: (qmail 30609 invoked by uid 109); 3 Dec 2024 21:18:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4YhgeoYFN7Bgx3RTdUrFJ9u/1HgcbN5z1u5Q2dGAsrE=; b=cEUsWaA8tfN/TUd8dcPyES6FuheOKgPuocpnGrVbnS0My9kI6FRmnuAZR4OF6aGwVQD2OUf2CiTe2Pe4ByIkGOJ6WHZO0dQMNbeS8F4haToT6H7hhqIV+vFt15AgBDFHzU+y4M7TwbNINU7JbRqi6xKfjrLWh0K6IomOn+IRKe0krU24N/TlahxSKyJeKwzI+H1jcI43ByAXjKGQVF+q1eGXPHKEWX2Rmc9Ji8o4qPwO/HvadV12isf2HqEf8JLELKkO4ZZngzbv6jcIVTcg+kim9wnqs6QgUSYiTMcSXp2vTPsBqEBv5a8mfVTTaUy/YbpjEzB2fkkm2A5wqxF/VA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Dec 2024 21:06:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Dec 2024 21:18:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10197 invoked by uid 111); 3 Dec 2024 21:06:52 -0000
+Received: (qmail 10318 invoked by uid 111); 3 Dec 2024 21:18:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Dec 2024 16:06:52 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Dec 2024 16:18:30 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 3 Dec 2024 16:06:52 -0500
+Date: Tue, 3 Dec 2024 16:18:30 -0500
 From: Jeff King <peff@peff.net>
-To: Elijah Newren <newren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH 2/1] t9300: test verification of renamed paths
-Message-ID: <20241203210652.GA1413195@coredump.intra.peff.net>
-References: <pull.1832.git.1732740464398.gitgitgadget@gmail.com>
- <pull.1832.v2.git.1732928970059.gitgitgadget@gmail.com>
- <20241201214014.GC145938@coredump.intra.peff.net>
- <CABPp-BGP8zrSzxcacTzLY-EuYAQW5EwyDGNAMh196udGN18fmg@mail.gmail.com>
+To: Dmitriy Panteleyev <dpantel@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] commit fails with 'bus error' when working directory is on
+ an NFS share
+Message-ID: <20241203211830.GA1423791@coredump.intra.peff.net>
+References: <CAJ-DG_DpNVmn1e=8hBX4YbEhzgX4xxn7AVBQnhKJOvHX4hx7kA@mail.gmail.com>
+ <20241130163801.GA110697@coredump.intra.peff.net>
+ <CAJ-DG_CNPGgfafyTcKWYeNXHD4gsspWakzQoRhfggMqZjenkyg@mail.gmail.com>
+ <20241201213636.GB145938@coredump.intra.peff.net>
+ <CAJ-DG_A3RY0ngY-pc6riho=OyzX2VjeaR2LRGb5=ru3CNruECA@mail.gmail.com>
+ <20241202203451.GA776185@coredump.intra.peff.net>
+ <CAJ-DG_BLtwg51UoBN4m64ejYUcS99zu54oPYGnC5p+55tNtzpQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,67 +47,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BGP8zrSzxcacTzLY-EuYAQW5EwyDGNAMh196udGN18fmg@mail.gmail.com>
+In-Reply-To: <CAJ-DG_BLtwg51UoBN4m64ejYUcS99zu54oPYGnC5p+55tNtzpQ@mail.gmail.com>
 
-On Tue, Dec 03, 2024 at 12:01:51AM -0800, Elijah Newren wrote:
+On Mon, Dec 02, 2024 at 07:48:05PM -0700, Dmitriy Panteleyev wrote:
 
-> > On Sat, Nov 30, 2024 at 01:09:29AM +0000, Elijah Newren via GitGitGadget wrote:
+> > I wonder if building git with:
 > >
-> > >     Changes since v1:
-> > >
-> > >      * Moved the check to a higher level, as suggested by Peff.
+> >   make SANITIZE=address,undefined
 > >
-> > Thanks, the code change looks good. Is it worth tweaking one of the
-> > tests to do "R innocent-path .git/evil"? Otherwise I don't think there's
-> > any coverage of the file_change_cr() call at all.
+> > and running the same test might yield anything useful.
 > 
-> I would say yes, but since this patch too has made it to next and is
-> marked for master, I'm kinda tempted to just leave it as-is...
+> Not sure if this is useful, but this is what I got:
 
-Is is tempting. :) I wrote this up, though, which can just go on top (of
-en/fast-import-verify-path).
+Thanks. If you bisect with that command, does it end up on the same
+commit?
+
+> AddressSanitizer:DEADLYSIGNAL
+> =================================================================
+> ==155141==ERROR: AddressSanitizer: BUS on unknown address (pc
+> 0x78811e863aed bp 0x7ffe9d5ac800 sp 0x7ffe9d5ac770 T0)
+> ==155141==The signal is caused by a READ memory access.
+> ==155141==Hint: this fault was caused by a dereference of a high value
+> address (see register values below).  Disassemble the provided pc to
+> learn which register was used.
+>     #0 0x78811e863aed in inflate
+> (/lib/x86_64-linux-gnu/libz.so.1+0xfaed) (BuildId:
+> bbefe2bbdc367b0c3cfbfcf80c579930496fb963)
+>     #1 0x563e32ec7e5f in git_inflate /tmp/git_tests/git/zlib.c:118
+>     #2 0x563e32bde431 in unpack_loose_header
+> /tmp/git_tests/git/object-file.c:1271
+>     #3 0x563e32be429c in loose_object_info /tmp/git_tests/git/object-file.c:1474
+
+Hmm. So we are inflating a loose object. It's mmap()-ed, so presumably
+that is why you get the bus error (the underlying nfs system for
+whatever reason is not able to provide the bytes).
+
+I'm still super puzzled about why this would start happening, or how it
+could be related to that commit. The rest of the stack here:
+
+>     #4 0x563e32be5348 in do_oid_object_info_extended
+> /tmp/git_tests/git/object-file.c:1582
+>     #5 0x563e32be5dac in oid_object_info_extended
+> /tmp/git_tests/git/object-file.c:1640
+>     #6 0x563e32be5dac in oid_object_info /tmp/git_tests/git/object-file.c:1656
+>     #7 0x563e32bf8b57 in parse_object_with_flags /tmp/git_tests/git/object.c:290
+
+shows that we are coming from parse_object_with_flags(). Is it possible
+that calling stat() somehow primes the nfs system to be better able to
+serve the mmap'd data? That seems kind of weird.
+
+Maybe one other thing to try. Build with:
+
+  make NO_MMAP=1
+
+(optionally with SANITIZE also). That should replace the mmap calls with
+a compat wrapper that just reads into an internal buffer. I suspect that
+will make your problem go away, though I'm not sure it gets us any
+closer to understanding what's going wrong.
+
+What's the nfs server in your setup? Is it another Linux machine, or is
+it some other implementation? Do you know which nfs version?
 
 -Peff
-
--- >8 --
-Subject: [PATCH] t9300: test verification of renamed paths
-
-Commit da91a90c2f (fast-import: disallow more path components,
-2024-11-30) added two separate verify_path() calls (one for
-added/modified files, and one for renames/copies). But our tests only
-exercise the first one. Let's protect ourselves against regressions by
-tweaking one of the tests to rename into the bad path. There are
-adjacent tests that will stay as additions, so now both calls are
-covered.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t9300-fast-import.sh | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index e2b1db6bc2..fd01a2353c 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -553,9 +553,16 @@ test_expect_success 'B: fail on invalid file path of .' '
- 	commit refs/heads/badpath
- 	committer Name <email> $GIT_COMMITTER_DATE
- 	data <<COMMIT
--	Commit Message
-+	Good path
-+	COMMIT
-+	M 100644 :1 ok-path
-+
-+	commit refs/heads/badpath
-+	committer Name <email> $GIT_COMMITTER_DATE
-+	data <<COMMIT
-+	Bad path
- 	COMMIT
--	M 100644 :1 ./invalid-path
-+	R ok-path ./invalid-path
- 	INPUT_END
- 
- 	test_when_finished "git update-ref -d refs/heads/badpath" &&
--- 
-2.47.1.707.g92f6f18526
-
