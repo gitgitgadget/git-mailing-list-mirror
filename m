@@ -1,112 +1,145 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E921FAC5B
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 17:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E33C1F4731
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 17:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733247787; cv=none; b=i5Cb5XmpvuClX+JMGGoFjph1vSHxPtIZcsroKHuMFNzG+uG10Sx15NFN2znSLcd3EkUxNdW1XZwaZ3ZVlT7gNbqW6ar663s9qQrhquPbFVRdJMIPMlaFTLeFDayrEAhyVA9LxormEnZGzs82pTbvBo3RlObvPJ9MEF98gMAFqfk=
+	t=1733248767; cv=none; b=dZPVm5PjCT2iCIum7v3RDtfyXiZQeia65VYXdufPDKPaWW47vHJCddwrU0UgE2HR5cmA1z7fFlgGQ46hYHxVPA5SHGEMoxAHlG7W33kKN1omixr14WHwuNXLXEzd6WQZXEFTYuKRF5How8kiAU2H2GGhfeH0ddqwnAm+jjm7jmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733247787; c=relaxed/simple;
-	bh=Qk3595ZWeT1JsXMuRz9rcR8u7tTUIcP9v3i39jeLHHw=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=HlHAwZtEfz66+YSPUostoB92GJJypGiZXHMxQCwPFCMlLlvVuWNthUHpXsh3PnVWnX7KtlzXV3Tsp2shDGSBQiH6yii8fafSsr8Pl60cu+flgKGU8VsJWJlyIhq9kcBcjSn8gnYyuYhnsne4QaAOTSY0gCNWBuzhINt0x6aewKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=US4PjHEh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5vtrtbq; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1733248767; c=relaxed/simple;
+	bh=CLszC0A2O/YIgjIRHUBnXLspXNvhj/VT6IhDG8P+0Ic=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eLlhTbNbbvT/FSxiktLoRsrt3mnCse77I8jzYIu4bDnVCHD3yGM2miAi8FqbTkaA2ot2LQ9QYMkPxsUDcZpxYd5XHhasmXGuZlX+vEk8pu+16O2S2wERGeyaEStYtZH3TqUlCSzcknoVlnOTeAgwczieqmUvUHUPRJ0vWjaTuBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=l5jRXqWq; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="US4PjHEh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5vtrtbq"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8D83313806AE;
-	Tue,  3 Dec 2024 12:43:04 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Dec 2024 12:43:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733247784;
-	 x=1733334184; bh=u0xVzZAYPBhjJA53igJG3AHsKEP5nQUd8M8vhy6UMsE=; b=
-	US4PjHEhkRpgSRT6FE5hgd1PlBU5Du7wJ8U1UfgVuCEObWdrUGxLO+i/OuZ0e1NC
-	aU4vEhh1V4t94ChApLziMoIs98wHQ/P9ScggMkuFRL1R8AJIjx2k2kNSVs3th4/l
-	JzvEFVv/mpmiIP2jMESE4zGorXuSs44SgcC4Q7XcXyq2W9O3/Pw8Si9LiNT09466
-	M6uVwHBm7GNQXq4ng1tWlRI+tkp6Fl0Gth28WQBk7bEtcTjNsvBxhonk05LRUCro
-	lU7CUPun3Py1eomaM6VoegB/FqA35bDa/Hg/fUbsmui2oIZuDvLTAELMQpXh+JyG
-	G2CDjWL1oA32LpYyiKXGkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733247784; x=
-	1733334184; bh=u0xVzZAYPBhjJA53igJG3AHsKEP5nQUd8M8vhy6UMsE=; b=W
-	5vtrtbqfZjK+Rh6qlZsrplr+SnAfs/5zyPJgVYyhhaaCkw6qssyQs9qEzo+wSS9E
-	sNHBYzJuggtFHj711ScVLbjc08a9Y+BmSbEIKQ3Viz3NqmuALfMiYu5aiwA3CPy2
-	eIGOXMDa3ukirDa/HEajpSOYaAAyxhCaC7MqwOKKKEnKjWFws0igkvDq6weLVt53
-	VyZ1QjNbq0AYOZ7Az5xeq4ORGCE49H+Xdtcd3ga6tgz5ufRI1bAyQOZsBiAKOfMS
-	x4Ma6B4uhFIE3xlal82zymvDbkc1WJGB+ZnZU7N/Xhtu/4ngD/hVAjKCLIZ/3LAN
-	b6MmnYgSezsA6zkwJzZCA==
-X-ME-Sender: <xms:KENPZ-WnktJXtOu8FwGPZixpWBCfZVMHaum4DLGozvPPksC6r1UP7w4>
-    <xme:KENPZ6lWWxAHdgFrR3EwNZaUBNu1hyIiUgTsY_-tfcxZmVQM4zDAVH_CjXGOcoZ-G
-    oM-fLAGfik_wH6bPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieefgdejhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigfefke
-    dugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhiuhdruggv
-    nhhtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhgsehmrgigrdhgrghuthhivg
-    hrrdhnrghmvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:KENPZyYU7G-QmkOBD7QCLQoNqbyCHVRPlph0TuWk3ShcINav0k69VQ>
-    <xmx:KENPZ1Ukio1z1rQgOt0zZqtT5dDse1Vh5qo5p0BLE9tGQU-g3a-qJQ>
-    <xmx:KENPZ4maFdE7rH7WfeVRLw6i0aIU1wenRO1YpZWI0U-6ggoXwj0ZJA>
-    <xmx:KENPZ6d-PDRDbUC0HqICkc9h8evRFOhOki7qLOmRMzdj1tsYJ_wikA>
-    <xmx:KENPZ9wPXIiu6bvJWDv8E-ijFYd6i7S8s6GqQJz8lWksEDgpF5GRidKz>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 50DDA780068; Tue,  3 Dec 2024 12:43:04 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l5jRXqWq"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5d0c939ab78so603a12.0
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 09:59:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1733248764; x=1733853564; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OuQeX6ImXuNV49rAnw++nbjt+0glTvZEFiKCu46xZKY=;
+        b=l5jRXqWqj3UvMtblIXoTJLpb/ZlSYxIYB6JHHr4812+TuYavkvsTtIG8oqYOBZSL7j
+         F5LaBtr2UOA/iELBbDps18ERoP+eGB0XMpAtaDg6pJT0tLRM5XjRf61y75FrwptlQlqf
+         3A21PDmRFxBPrZ50VK/ZQ1Nems2m2gOsQfCYOS+mmrvTYYzzeVX3RBIn6Q32h9AXV5jx
+         rV9BP3cdEOmoRKJL+3+egVN38jiiGbw5AU3FjdgODivOUtrc2FsSk4roWofHuox0W+HQ
+         LY96dVcqi9ZzLF5Lq1DIlg7AgichJqKlk0j4QJzY0akDTBGkyfgX9ymryzwWvXDJlBJ6
+         d1zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733248764; x=1733853564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OuQeX6ImXuNV49rAnw++nbjt+0glTvZEFiKCu46xZKY=;
+        b=GtfpHr0mIVEoj0XkxIuOsONBVjCTs0t26KSgA0XAqsfAP++8B78Y+1Wrv/XltiwX3C
+         NR0g+mzmucUvNs5FbGcBOaul+/Q7A02x6IDmZlNEjjv2Nqx0s2bcVrklNfvh3R/UevuV
+         nnWY9vM+5NMx5tD4ntdo4LfWA8HKZhlY/Wewatg5Ci1/ZwPYfdh8KFF32HKqAUaY1xaI
+         m8oRVFP03d8/wJ+qh/vlrSKdV5Vo8hMG+xg7bovIxvQihS70ktfjspB39XtMsHWdw7AT
+         SIYvFjIRLhHH1QdgAv2KMPnBEpjmk2BMbjF0aS1uszUxCBnXCU0kqJCpfFeKes56ndJE
+         lOrg==
+X-Gm-Message-State: AOJu0YyEdLb4OSYKOeRM0Q2EW7OuizXqr7SCCVRLY2JJei0Te4t0HD/S
+	9zsqZ7eKqgB5OoH5+NHCI9y0bt+NtA32DJT6EAMrexJwMbLd7L5FSXN5YJRZ/6g0BoWy+NIjOXB
+	3zzctIJQZZsH0KNprM4k8bmK1M87JrPYLLmWB
+X-Gm-Gg: ASbGncsZiV9/J7Wp6RmND3kQYhEoKs39a2JujYBoW7URRTuRPkT99ddoOMCB/hN6mmx
+	NtppiKP83ZN77HV7Kw8ZRbc+6HZC/w3yCSnx4Hp7P6x/TGeEtX3Qi+NFAbspz
+X-Google-Smtp-Source: AGHT+IGYjigFfovSkDfSrY66PxYz6SfoSMfk4Nj+N2wvA9URUjWQX4yDb1Fw04ItbKS9TOhdHnWMggKUOrct/6ezKcE=
+X-Received: by 2002:aa7:d5c6:0:b0:5d0:dfe4:488a with SMTP id
+ 4fb4d7f45d1cf-5d1069fb980mr90333a12.2.1733248763551; Tue, 03 Dec 2024
+ 09:59:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 03 Dec 2024 18:42:43 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Max Gautier" <mg@max.gautier.name>
-Cc: git@vger.kernel.org, "Denton Liu" <liu.denton@gmail.com>
-Message-Id: <95b88ece-8188-46aa-b263-61bb371e4293@app.fastmail.com>
-In-Reply-To: <Z08o-O5eiu_ZsYrp@framework>
-References: <Z08N4AlQKiNi-IOI@framework>
- <75269425-49ee-4a16-beef-614da392d528@app.fastmail.com>
- <Z08o-O5eiu_ZsYrp@framework>
-Subject: Re: Detecting squash-merged branches (and question about git-diff-tree)
-Content-Type: text/plain; charset=utf-8
+References: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
+ <CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
+ <CADYQcGpyTL18N2t8t-HwafB8VEVbBt452fsE0yMBvRvZd1mbVw@mail.gmail.com>
+ <xmqqfrn5h8zj.fsf@gitster.g> <CADYQcGrD5KtM1sZQbccAtDaLmUXD8Gxv_nUWmapjfZm=TMq=Jw@mail.gmail.com>
+ <3bf4e4bc-c807-4bbb-8920-afba077413b4@app.fastmail.com>
+In-Reply-To: <3bf4e4bc-c807-4bbb-8920-afba077413b4@app.fastmail.com>
+From: Kai Koponen <kaikoponen@google.com>
+Date: Tue, 3 Dec 2024 12:59:11 -0500
+Message-ID: <CADYQcGrME0wDrhDu6HQsX2Vo7A3bPPr3Ooio3bBFcBg6XaHuYQ@mail.gmail.com>
+Subject: Re: [PATCH] doc: mention rev-list --ancestry-path restrictions
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 3, 2024, at 16:51, Max Gautier wrote:
->> My program tries to be like a for-each-ref for merged etc. refs.
->> More focused on reporting first since that can then be used for
->> deletion or whatever else.
+Apologies, I made a mistake while copying the patch in manually from
+format-patch; my git install doesn't have send-email available, I'll
+fix that.
+
+On Tue, Dec 3, 2024 at 12:39=E2=80=AFPM Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
 >
-> Hum, I'm wondering why it didn't find this earlier, I did search thoug=
-h.
-> It apparently use git commit-tree to create a temporary commit, and git
-> cherry on that to check if it's in the target branch.
-> I wonder if this wouldn't cause problems in case of conflicts though,
-> during the git commit-tree process ?
-
-Maybe, I haven=E2=80=99t tried.  But using something that creates a comm=
-it in
-the DB seems a bit unnecessary/excessive in any case.
-
-Your diff approach seems more direct.
-
---=20
-Kristoffer Haugsbakk
-
+> Hello Kai
+>
+> On Tue, Dec 3, 2024, at 18:14, Kai Koponen wrote:
+> > The rev-list documentation doesn't mention that the given
+> > commit must be in the specified commit range, leading
+> > to unexpected results.
+> >
+> > Signed-off-by: Kai Koponen <kaikopone@google.com>
+> > ---
+> >  Documentation/rev-list-options.txt | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> I couldn=E2=80=99t apply this patch to `master` (cc01bad4a9f (The twelfth=
+ batch,
+> 2024-11-27)). It looks like it is because..
+>
+> >
+> > diff --git a/Documentation/rev-list-options.txt
+> > b/Documentation/rev-list-options.txt
+> > index 00ccf68744..f0a46f9da5 100644
+> > --- a/Documentation/rev-list-options.txt
+> > +++ b/Documentation/rev-list-options.txt
+> > @@ -412,7 +412,7 @@ Default mode::
+> >
+> >  --ancestry-path[=3D<commit>]::
+> >   When given a range of commits to display (e.g. 'commit1..commit2'
+> > - or 'commit2 {caret}commit1'), only display commits in that range
+> > + or 'commit2 {caret}commit1'), and a commit <commit> in that range,
+> > only display commits in that range
+>
+> This line got corrupted (linebreak).
+>
+> I see that you used git-send-email(1).  Did you edit the patch file
+> manually in order to add the quotation from Junio below? I=E2=80=99m gues=
+sing
+> the editor then broke that line since it is 102 characters when
+> combined/joined.  I guess you could use cat(1) instead.  I like to use
+> Git Notes.  You can add a note to the commit and then use that default
+> namespace (commits) when making the patch.
+>
+>     git notes edit
+>     git format-patch --notes=3Dcommits ...
+>
+> Although in this case it might be better to add a linebreak since the
+> line gets so long. You can add one short line so that you don=E2=80=99t g=
+et the
+> reflow-paragraph problem from the previous version:
+>
+> (these are with space indentation instead of tabs)
+>
+>      --ancestry-path[=3D<commit>]::
+>             When given a range of commits to display (e.g. 'commit1..comm=
+it2'
+>     -       or 'commit2 {caret}commit1'), only display commits in that ra=
+nge
+>     +       or 'commit2 {caret}commit1'), only display commits in that ra=
+nge,
+>     +       and a commit <commit> in that range,
+>             that are ancestors of <commit>, descendants of <commit>, or
+>             <commit> itself.  If no commit is specified, use 'commit1' (t=
+he
+>             excluded part of the range) as <commit>.  Can be passed multi=
+ple
