@@ -1,85 +1,90 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD5D1DE882
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 09:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F6A1DFE1A
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 09:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733218505; cv=none; b=K6y9P86d15WGRpvkWtiBDmwvluYOSkiRdZHXa8oGZZSiyhczPeALJsEsI7uAeSgCMsj+Ld64hbKj2g+u1ccKQbZjTaq8GPuA8U6N2ed0SX9G8MGq719OVz8PF9vxAwPh5sDYbfcWZZHLQN3xJtAnv65x84/grrQLW0Q72cE77e4=
+	t=1733219014; cv=none; b=rR8tA0mjnIByjQ+MYwDQTNiYrlyFMkNbjnXAVZk+b6wCMJTNuYH/tFkKjj1tnr712f6tcDURUSwLCN4Eh6gZxh7EU72/jNhUGVCbPJj6/YFOspFBtavR6T204MHBxBavGcpv8kDTuJ5wXyXk5W6OffB9NSr2l/aqeWtmzcGh9NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733218505; c=relaxed/simple;
-	bh=ALLKgDXCkpTR0EVWe3TR/IbHL2Rem9Q8tZkCt3sxmso=;
+	s=arc-20240116; t=1733219014; c=relaxed/simple;
+	bh=MGMNE4SXr/PPOSDj5vuShy4eMOMX1nvgE0tH7QXIh1U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bxnA1bguI1OU1RNn8TIrlwhHrTsmSsNLIEQvIaPkFhkwR244A6gTkzZUQVzzrEnX264yu6MMKLPsv9h7ewZgWQJAkU8riM2XjYm2VqyDv3yo7QolENPkz0op4e9uLTOPGZcC9Q7gyoN5AKjZqUIVviWgM3mGDF5PUnu6cp8R+3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XQkM24CC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IaCPKYHf; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=ElU5o+ouUVzFVpCvV6Ei/58AIHox1pYtqyCuu9Q5TWIfNYeYeTyhxbcaI+T4g5hY2/o+J5QQCixIxpNgjOvZQvBZ9EksNWL+U4KE1dF8AC6i4AANaKsB8XpjMxwkh7/Fi0aOUx4sy2DkDDx8indewMgjhiupznDpZke5K2A9+C0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GkImrE1r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mgy7TOoh; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XQkM24CC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IaCPKYHf"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E520F254018A;
-	Tue,  3 Dec 2024 04:35:01 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 03 Dec 2024 04:35:02 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GkImrE1r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mgy7TOoh"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4838F114017E;
+	Tue,  3 Dec 2024 04:43:31 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 03 Dec 2024 04:43:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1733218501; x=1733304901; bh=/U50o4h8E1
-	Xmc57WDD0qX1ukqR8YQT9156Z6gDOgM3s=; b=XQkM24CCu3M7u/bGqcOzysOvFg
-	TMOXdHIKKprvtyxSwNHY7d5hSP4a8EwjawV9BSEOy2xeovH1f7uspSLV+RZe5i/e
-	AytXtJzaWvXQwi8ns9yM1QM3U3j6W6zsy4lQk9RAV2eo4JLUWlIxtxMvcLja0u2a
-	goKA2FFt5q2RYISZFJ5XEnHRXiAAtYZWkFI9pdsmnyvEoNx1rAw1Abj0fiF7+iuZ
-	Qxc/nTne3YskTONvmlcOcjOBWbnZOuhgbVCvtqPcefzxuAboHhtp8A33KpbwNwsJ
-	qdOiKPpRoo4s0TPBuP/3FTeIXfismX8B190YekXXNlonYYjJI+KjTgehWifg==
+	:subject:to:to; s=fm1; t=1733219011; x=1733305411; bh=h/4CJRyKO8
+	gQJhZO3fBZbEjkB3Vt+0Mxz7UIhauyn3g=; b=GkImrE1rx2rS9NxKsSEFvRdkbn
+	p/m3TZc2kV7dZwHIrGFqILlqzgpZT7UR2tSsl0msteYrGzL0NGEVLIC9shshWY1N
+	h0PwApsd274OrkJhHyCseLmaq95EjaONx+njkrxDnbgrkyTj8HoXaoqnWKH7UVNG
+	1Os/vYLC5JZ/1BHORtFRTF609VZleA8fSnqk/GvgftwSSA089wG9hJyhm/JKlHSf
+	k8vqyTdngVx2nKAzVqK/ntUoQJO3FhiUI74fDVWQxqckjRWxjfkZk8bAlpWITQwo
+	S0twDLcG3kDTtYgeEahHQ/CUIqW2Aa/0zOeltPHrSK+D0HMElSmpCCIUNqDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733218501; x=1733304901; bh=/U50o4h8E1Xmc57WDD0qX1ukqR8YQT9156Z
-	6gDOgM3s=; b=IaCPKYHfo3sBsE9aRm6nDWRx4DnDCfQLaCEDZ8WcN5lh+0vACPS
-	6UQCCjCRDK9uCMupq6HP6zsmdOUUw4MtPsNdeCkMXNq9JaycHP4Nbbidx4g1OKe/
-	eams/KKGasyelQnfNj13FR4KOh4HAA1/MNgWnDCQs2LQ0B4iegOm0X7qSQnAnVuo
-	QWcUj6Gqx7o4KvbumOqTyrQulfrZfDCbr3vLOVywn0PTCnGiBWmU+4u2M+66VINs
-	4cqnWT1PQhk1wZfq4DNWPZ61zneEweBx7NUgoS9BwQbw6P60TF/aV//fdnyWvRKs
-	fWdIzqnqd6cCtycw/1Tqwvn02IAkNMdADgA==
-X-ME-Sender: <xms:xdBOZwda71JOogxChc6QPdbe6VhExAYCtuABrfLR3AsCuaj2mROz9g>
-    <xme:xdBOZyO7NbM1Ypt-YdOpl-Vd08kj4EnjtszAtzDA-KYpxwcKYknsKop2dWk0EKZ-W
-    TEg6p1u_4PCVG371Q>
-X-ME-Received: <xmr:xdBOZxh4pmlSW_VlEyRByInoXT0LwgNs2bmFIMPj6PqeT2LdkMlRfbLv6PSGWu3hw0PBm6MTPGow-0rCTWpy6VOYQ-4mbFMaktBl2WdJbZxscA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedvgddtiecutefuodetggdotefrodftvf
+	1733219011; x=1733305411; bh=h/4CJRyKO8gQJhZO3fBZbEjkB3Vt+0Mxz7U
+	Ihauyn3g=; b=Mgy7TOohTS17q9Wn63uTUCkQNw5gFO+IzDyFHEdPKpT914XIFDe
+	ZCScibxdMbp+ipPwf4GlLfctnj/D0SLnXnn2DkAhGBSppQa2xEC5gFoSgqgfnyfP
+	y/hrgSAQx91FqCA88brPSjvCG0Rn7TTVD9Ut+4JIsc+N2kwLk5nBrT7AEViF1o96
+	TwHURJe/WtqrQAxyq14kEUI8qClhvXi0sxzcE8p2gqCAtDgAgMUJCZ9d9240OsRA
+	1B34lQ0N8xlY2QoOLLjJYHkkuR1zOiTkgELRwg6B15wbsjjDv6o65OYzqVRjkkQE
+	Z6176EFeNcHbovYaZ6iMiwiiPF7tzMj1kTA==
+X-ME-Sender: <xms:wtJOZ_0aD1n8v5mXbh3LfRy9dPQMqN47Zm0BcM8gyJdyoE8jEJd1vw>
+    <xme:wtJOZ-Hn3wy8WQptiBLcdCw2xTjB0G0iP49ksTIfneCUGZfubDI5H33NCQDJG6jru
+    yXwRltKi-NBFm9__Q>
+X-ME-Received: <xmr:wtJOZ_44dn6ncETrBjiaBu1Hqaln7XjHROYDUXStuhLTDC0IOHM6QXDM-7NlDPmVw8faEs4XRKMzNAEcmsZHEyJLSuP7cWqXGpqaxzgrWDwh7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedvgddtkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
     hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:xdBOZ18eylZlGXaOh_4MXYQmZrba2WAnH5Leg9bSzikxBBYzsIIZ2w>
-    <xmx:xdBOZ8sMMCmkgmFyHD8eXyR1a9cCvON65ntNC6pFC4_fxre9rkhlwA>
-    <xmx:xdBOZ8Fw_gr2B7pUz8b1R317n1aReCEKKu8MkNirOGLwT6_SZe2crw>
-    <xmx:xdBOZ7P5LAqSqS9rKlwnWDxcVWD40UeLRHT6KvhFd8uAWUrwKcNkBw>
-    <xmx:xdBOZ4LNYYMArOF_rjUOSAWplsNvqlnoFYKueLjGpWsJT9fD1vhNgoLW>
+    enucggtffrrghtthgvrhhnpeejvedugefgffffieegtefhgfeikeevfeefheevvdegieet
+    geeujeeliefhiedtueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvse
+    htthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprh
+    gtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthht
+    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wtJOZ03klSIkm1mgMQdS77zIS7lfz7ZXX3WPgPxLQSZKl0HScM7P3A>
+    <xmx:wtJOZyEnL940230if6trGUefoknVmdOkKCKRcausZBAVNF8Oajf3cA>
+    <xmx:wtJOZ1_rjShnkorC8CuhLzkbmzY9-Tsduk1YD34KOFJ28V2JEibOlA>
+    <xmx:wtJOZ_kiFpZYQdaDNTjko_8aKBWUONXKb8OfxMoFVyBguy9I5fNm9A>
+    <xmx:w9JOZ345HYF179um8BKCo-W__auACuvASEzueIhSq0uL7Ddklr0KCT1l>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 04:35:00 -0500 (EST)
+ 3 Dec 2024 04:43:29 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 10bb3114 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Dec 2024 09:33:41 +0000 (UTC)
-Date: Tue, 3 Dec 2024 10:34:44 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d50060e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Dec 2024 09:42:10 +0000 (UTC)
+Date: Tue, 3 Dec 2024 10:43:13 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 3/4] fetch-pack: split out fsck config parsing
-Message-ID: <Z07QqowPVEgJ3sIw@pks.im>
-References: <20241127005707.319881-1-jltobler@gmail.com>
- <20241127233312.27710-1-jltobler@gmail.com>
- <20241127233312.27710-4-jltobler@gmail.com>
- <xmqqed2wox8n.fsf@gitster.g>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	me@ttaylorr.com, shejialuo@gmail.com,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 0/8] Change midx.c and midx-write.c to not use global
+ variables
+Message-ID: <Z07SsWL6sExkYUdi@pks.im>
+References: <20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com>
+ <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-0-c5a99f85009b@gmail.com>
+ <xmqq5xo8qh9h.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,79 +93,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqed2wox8n.fsf@gitster.g>
+In-Reply-To: <xmqq5xo8qh9h.fsf@gitster.g>
 
-On Thu, Nov 28, 2024 at 12:25:44PM +0900, Junio C Hamano wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
+On Thu, Nov 28, 2024 at 10:27:54AM +0900, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 > 
-> > For `fetch_pack_fsck_config()` to discern between errors and unhandled
-> > config variables, the return code when `git_config_path()` errors is
-> > changed to a different value also indicating success. This frees up the
-> > previous return code to now indicate the provided config variable
-> > was unhandled. The behavior remains functionally the same.
+> > Changes in v3:
+> > - Split out the first commit into a separate series [1].
+> > - Improved some of the commit messages to be more descriptive.
+> > - Merged the 8th and 9th commits together, since they were similar.
+> > - v2: https://lore.kernel.org/r/20241119-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v2-0-e2f607174efc@gmail.com
 > 
-> > @@ -1866,9 +1866,9 @@ static int fetch_pack_config_cb(const char *var, const char *value,
-> >  		char *path ;
-> >  
-> >  		if (git_config_pathname(&path, var, value))
-> > -			return 1;
-> > +			return 0;
+> Merging either v2 or v3 to 'master', together with their
+> prerequisite topics/patches, seems to result in identical trees,
+> which is fine if reviews on previous rounds did not find any bugs.
 > 
-> So, after getting complaint about a misconfiguration, the caller
-> used to be able to, if they wanted to, tell two cases apart: a
-> misconfigured variable was ignored here, and we happily parsed the
-> configuration.  Now they no longer can tell them apart, because we
-> return 0 for both cases.
+> Will queue.  Thanks.
 
-I wonder why we want to ignore these errors though. Grepping through the
-codebase surfaces that all other callsites of `git_config_pathname()`
-return its return value directly, which means that we'll die in case the
-path name cannot be parsed. Shouldn't we do the same here, or is there a
-good reason why we need to ignore it other than "We used to do it like
-that"? In other words, I would have the below diff.
+I've had another read through the series and couldn't find any issues
+with it. I also scanned through v2 to see whether there was any feedback
+on code, but it seems like the only complaints there were about commit
+messages. So I guess it is expected that the trees are identical.
 
-Other than that this patch series looks good to me.
+So this looks good to me overall, thanks!
 
 Patrick
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index fe1fb3c1b7c..c60627bba4e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1863,10 +1863,13 @@ static int fetch_pack_config_cb(const char *var, const char *value,
- 	const char *msg_id;
- 
- 	if (strcmp(var, "fetch.fsck.skiplist") == 0) {
--		char *path ;
-+		char *path;
-+		int err;
-+
-+		err = git_config_pathname(&path, var, value);
-+		if (err < 0)
-+			return -1;
- 
--		if (git_config_pathname(&path, var, value))
--			return 1;
- 		strbuf_addf(&fsck_msg_types, "%cskiplist=%s",
- 			fsck_msg_types.len ? ',' : '=', path);
- 		free(path);
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 138e6778a47..73d6b3874de 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -240,6 +240,15 @@ test_expect_success 'push with receive.fsck.skipList' '
- 	git push --porcelain dst bogus
- '
- 
-+test_expect_success 'fetch with implitcit fetch.fsck.skipList value fails' '
-+	test_when_finished "rm -rf source repo" &&
-+	git init source &&
-+	test_commit -C source initial &&
-+	git init repo &&
-+	test_must_fail git -C repo -c fetch.fsck.skipList fetch "file://$(pwd)/source" 2>err &&
-+	test_grep "unable to parse ${SQ}fetch.fsck.skiplist${SQ}" err
-+'
-+
- test_expect_success 'fetch with fetch.fsck.skipList' '
- 	refspec=refs/heads/bogus:refs/heads/bogus &&
- 	git push . $commit:refs/heads/bogus &&
