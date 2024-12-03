@@ -1,75 +1,119 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E221F76B6
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 15:30:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7331F75BC
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 15:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239857; cv=none; b=K9RKyJ3osLa0LcEbdBrqawoVoDEDyLdGeXsqGRomZ5eyZGjQMY1J1nSVpFFdpSonBGzplYUzseSY0dRxXAM6sr9U4Yq38BDw42DY+9CGNftIAmr28RLQbbr1Vx+54kNGQivM7zNEEpcd4rAYPqnNcSQJFazyhJwbJ4JQOvZHiJs=
+	t=1733239877; cv=none; b=Zoh/lRvL0hENie10uq/EWBOkTZVsbdAc9eIBNFZBiKs4y83XzrZXdNJTANKK5WnjzcZpqbJvaT5v04Y/+0RpEHGW/Ucgjt3qHCdqKXzldUYFZw8jPdRxg86FkPfd/7lWr1HZS9Tpk2+kkcK/Y+saIbmn4eH12+cC4/HivZUu/qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239857; c=relaxed/simple;
-	bh=RBxWz5b+X6YX+y5MnXrmknXZCjsXmbCkUmLTtsNoqeQ=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dk+ityhFh0Mx8+hVt0v0pvbdrScSWvZQHP/5ZW9Yl7P5JkcAl+c1V7EIa8F6tkphYdcXYfo8/hvEq+/+TU6j4wxGkEgkSUamwd+514wa4jQQnVFeOAUs3wWfCUNrhIE/lm/6ufDojqFZ/Huxi2dPbx12cwxDlY7ziaIG0AbUgQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=sgsnDCs8; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1733239877; c=relaxed/simple;
+	bh=djtxu0nmcGdC50+UIRm4mznF2eFRT7flYQdV8+ZTvfM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=GlOXGzuLXdSJ83imzzAGKzImvo3ULWzebX/uTtRognUT8TJAG4Gr1aU/oTPAXLdM14gELZyDlVWFSezMMGoqg2aPn/8rRTt+mbDdhyZDSjLfxDFVAPwsK/+S70aH2AhegqCVECWCvhADzXXvE4lVAUu119A0pC1nob+ezQFFemI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CMGF6yYW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nIUkbNDO; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="sgsnDCs8"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1733239849;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=m0oYdg1ueg/GbNL0Ub6sJi8mJ8vRNV13hOo2tYW12k8=;
-	b=sgsnDCs8wa4tCUDDddonZuUiiIZ0XMHTCu0GIwDeagYvVN1AHFv1tGnDtpkJqXmmSrsSlO
-	1AScxId2KEEi+GkF6plYuP9xLymQPQJnJF0JUp5DmUsoJhrF6DJn+f7qUwIiJtbA0J/Epk
-	CDD7PkIvg7rb/I2I6/z2I5tcKQP7isY=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2024, #01; Tue, 3)
-In-Reply-To: <xmqqed2pcled.fsf@gitster.g>
-References: <xmqqed2pcled.fsf@gitster.g>
-Date: Tue, 03 Dec 2024 16:30:35 +0100
-Message-ID: <87a5dckcmc.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CMGF6yYW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nIUkbNDO"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A3C1E13807C6;
+	Tue,  3 Dec 2024 10:31:13 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Dec 2024 10:31:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733239873;
+	 x=1733326273; bh=GeP3LX/mRslHpq3ViSo5a8piseA5KgSrQrIg9BKaky4=; b=
+	CMGF6yYWf8zfRm+tmBHh9UNCNSOTpDNJsAccysO1FVhdtYpoF9qM0CDRHCjNrfq1
+	Vds2Q9mgdR5ltxJdKzv6Pyjy8ClCKno8jUXT7LyxyX6ErZTqdKIajiRDArR6QQV1
+	FhZtJuK3goMCIbT0EJREMrYBqx/gV8htLvI1eaRrpEmXmmn1Dtg9AbxLcCY/PmGU
+	FwNcjAjxVTXa/T+BZ8+K4J4uXZyCaY2xM1JcvhSXjD+hVarqYYnpDnMKSxu+mYen
+	jJLnrIlS55/bJisTa9AddzXX69YOnVE73/XOPzRLfhC0mS0jF3E/0s1Laav/BZnc
+	GA/kQaixKcqsskpBGk81jA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733239873; x=
+	1733326273; bh=GeP3LX/mRslHpq3ViSo5a8piseA5KgSrQrIg9BKaky4=; b=n
+	IUkbNDOJY0JS7/fBuZliN87Pz/vazxm36o+lGisfJpHbnNq0IkBhIYWFG8Ng87Jq
+	H+h0kVs9mmSlAD8Eb+F0b4SHEET8aO5GyfgamrSAVt/941W6TkfhFE+TG6+A+Jqk
+	0KMNY2TBtMhOlDMVu1zmMWy77HRjGvFZuqVFZGi8Goa3zd/86DhadA36+y10kVTX
+	81SNCHw9AmCwJsvmHgPH9qi2NRAP2C0XkdA6SybddDqVSx06OpVExv0AJatxd72t
+	28oXqYd2eyDs8/PTUMOu/T8OxnMwBtlxR0c2Fbj8k6uZwDdmPrZAlDTTJvt/XVtU
+	ODrsrXnjyx0kN51xBkRtQ==
+X-ME-Sender: <xms:QSRPZ6Rs2moKMkwYVKptURWz4Cwsj-jndZQls2zUY5XTMsipAmtEBzo>
+    <xme:QSRPZ_y1wWMYE64kdGRB9wpRApyEUOpbuKn1oBCPoefxtnCYk1m6v_FmZk3I47szu
+    mvgXCVqDHCLHymcLA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieefgdeglecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeen
+    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
+    thgvrhhnpeelfeejudejfffgleduheegheeufeeffedtgfeffeevudeuleffgeektdelue
+    ekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehlihhurdguvghnthhonhesghhmrghilhdrtghomhdprh
+    gtphhtthhopehmghesmhgrgidrghgruhhtihgvrhdrnhgrmhgvpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:QSRPZ308q8Zh5sy_ViV6N2WgcDoq5lRyUOQ406MyDGOmib8f2Ofs4g>
+    <xmx:QSRPZ2B7YN0Zwv-dlg7IVUdxM2GZMeE6Nbcx969Qh-IqwxP-3Bpw7w>
+    <xmx:QSRPZziMsCmE3GZf1PZjRa5O5DBLyYxdhJnnmYzNScfNRozPt4zpYg>
+    <xmx:QSRPZyqgrLI8p-XVhqeIDGQOFP8kleFqoTTxc7weWn6L0sv_aTgW5Q>
+    <xmx:QSRPZ2vou88Yh4chUwVKV25sp4pFl7be9QJvd_cxEGF04VKjF-M3JavB>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 68C1178006B; Tue,  3 Dec 2024 10:31:13 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Date: Tue, 03 Dec 2024 16:30:53 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Max Gautier" <mg@max.gautier.name>, git@vger.kernel.org
+Cc: "Denton Liu" <liu.denton@gmail.com>
+Message-Id: <75269425-49ee-4a16-beef-614da392d528@app.fastmail.com>
+In-Reply-To: <Z08N4AlQKiNi-IOI@framework>
+References: <Z08N4AlQKiNi-IOI@framework>
+Subject: Re: Detecting squash-merged branches (and question about git-diff-tree)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Max
 
-> * kn/the-repository (2024-11-27) 10 commits
->  - packfile.c: remove unnecessary prepare_packed_git() call
->  - midx: add repository to `multi_pack_index` struct
->  - config: make `packed_git_(limit|window_size)` non-global variables
->  - config: make `delta_base_cache_limit` a non-global variable
->  - packfile: pass down repository to `for_each_packed_object`
->  - packfile: pass down repository to `has_object[_kept]_pack`
->  - packfile: pass down repository to `odb_pack_name`
->  - packfile: pass `repository` to static function in the file
->  - packfile: use `repository` from `packed_git` directly
->  - packfile: add repository to struct `packed_git`
->  (this branch is used by kn/midx-wo-the-repository.)
+On Tue, Dec 3, 2024, at 14:55, Max Gautier wrote:
+> Hi,
 >
->  Various implicit uses of 'the_repoository' in the packfile code
->  have been eliminated.
+> I tend to work on project which do a lot of "squash-merging" e.g, merge
+> branches by having a robot squash the branch in a new commit on top of
+> the main branch.
 >
->  Will merge to 'next'?
->  source: <cover.1732618495.git.karthik.188@gmail.com>
+> This makes it a bit hard to remove my branches when they are
+> "squash-merged" (in contrast to using `git branch --merged`)
+>
+>
+> I started a little script to detect such branches; initially I used git
+> cherry, but this only detect the case where the branch has 1 commit,
+> which is not enough.
 
-I did a thorough review of v7 and did another pass on the patches of v9.
-I don't have any more comments. The only thing left is whether the
-comments [1] & [2] from Kristoffer require a reroll. I'm fine either
-way.
+I=E2=80=99m working on a program/script to detect merged/squashed/rebase=
+d (or
+cherry-picked) refs.  Is it okay if I contact you if I finish it? ;)
 
--- 
-Toon
+There=E2=80=99s also this program which says it can do the same thing (n=
+ot tried):
 
-[1]: https://lore.kernel.org/git/9ca6bb8a-6597-400f-860f-3546296c441d@app.fastmail.com
-[2]: https://lore.kernel.org/git/69d332a6-fee3-4801-b920-e16da730c1c7@app.fastmail.com
+https://github.com/foriequal0/git-trim
+
+My program tries to be like a for-each-ref for merged etc. refs.
+More focused on reporting first since that can then be used for
+deletion or whatever else.
