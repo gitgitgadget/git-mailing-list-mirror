@@ -1,152 +1,113 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC157143759
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 20:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF157204F78
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:07:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733257291; cv=none; b=LEoCkahIa+YGRuzQxrehaQY5e/pXr0MF2D1Xs+nwoiVQ+VXCuVMKRbJp4tWh4EfpN35SqwVQpY0GybhfopqBzs1hbEfqHW/8XUZRWPh0IRGHKYE4wk8TWJTzqA1Nf/grb/vfH1JD9dMC7AcFG1E6ol/J1QD/sxy3piecNElql7Y=
+	t=1733260023; cv=none; b=QPMHhDl2QNtg/FbhrqIlu4WgNwv4Y32L+NB5o+b1e1MHSkI/5odGAV6lwvs9aCR5UWgdmWOYLLUWP6UJ4SKHaN/X++JaMK5JHwotVIPi186A7BI8XrFMmQG9XvPy/qxwUH6PqiX0l1SLAwaxyVVX6Xs/ZWOuP0t/K2y4xeWv+1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733257291; c=relaxed/simple;
-	bh=hjlzLUbMIZa2C0W2RAF51h+Xzx1iX0sKUHnuBLJ11oU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LKxvlud2wbcfMEkyC10d772w2TXtY/l38kc//zngveh/EnX/qAlyTmqfxnDOvJz9a88sgqMpPRbyk0WVh3DPWd8IxHkbvqEY8OICmigyAEwcuNumWV7ryW/v6caV0Uqj2wZXUvanZpAIm2aErIYsIzosOb+YKCdAfz4jD/HDmUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=R1Q6pytb; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1733260023; c=relaxed/simple;
+	bh=g5QEsqpc00Z7J9UfzNUaeX/naI97YTEXMjXhZVO6hq8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CrSfm4VJWD9yuy65m8xmhNxykOFad0fmzJ9ge4ob+/iQx176Jpu3tRod88aiRWVkJeKXz9od2qYqMiRyZsZ+WR6viQvZ2kjc0q6Hxu5ggjSLYdeOnb7Fw1vHrU0ZbdbA8+MPl7LWpHGcSjEZYUy3SgNavPNHMkMU2p8+h+/Qd3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aReUZrra; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R1Q6pytb"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5d0aab1aafcso2149a12.1
-        for <git@vger.kernel.org>; Tue, 03 Dec 2024 12:21:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733257288; x=1733862088; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SIc7eHvylaO2nJfyNars7aN1wSGLK2DriZAB1HljwBs=;
-        b=R1Q6pytbDJKYn7nyuzhGStynMHbb/yYK1JjJbjT34i8l3y7990E/FHdpYOTe8o5hmt
-         iT/Y03hBLavLAM712PnxvQYHgW5g9zZPNlkosBb1Lhca4X+fbSdByGAksaQHURfgcMav
-         34qp+vaK7Mf3vLwb08u8ksAv5DJ2bkUlRZJ48ZbKo7YGS1DW59hJ5rM+Pw2N6Oo8aZ9h
-         GmdEdOffqv+H0Fs8zv3MQ+udnGA6ZJX1A/uq+wIzJ3ygumGoOB/davKY7rFrLedL3ewl
-         XD1vP0iNddAtHrHjdKSWqAEthpqGrH8inRPsVyCbEUBhU67rzfjaQNIjKdEFsODd6vvd
-         2SZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733257288; x=1733862088;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SIc7eHvylaO2nJfyNars7aN1wSGLK2DriZAB1HljwBs=;
-        b=FsBEDDRC8sIiVyXQHA6174yoojXwxHJjBrkru1Xhj0WcztLuOgBhB/GgMX/A7PJFfU
-         On9Wp1NR9m10WvwDOgnlIaNOJiVKzdrtTfhAbvO+KA+SAaoAJO0c380lv5QigAg3qlTt
-         hpJBioF03Lp0Ci9I9qa7cpX0C0coV3mPAsehmbItxNMpigsAIG+OTjDDYOwGMPkFAsYf
-         CKvTtefvMz6kr8kaz1rL9dWFBrFoQzNtPDDfRmJza70c6Rs/idXJnwDeJaGq6H9z3+kQ
-         k1rLV5cBpymn/+oz41QyRnz1vNDJLnGjdBL7Z1r5KF1mut9TO2SSiErgxHh+1SPhIG63
-         IQLw==
-X-Gm-Message-State: AOJu0YwOaSOxbO6SlkDMt8kcxbwTrYHAqdrDenoYuEpedka0GwLWjK7x
-	t7oa2s7fM9UbGbmwM/3aMpMSQDu6SceBPxfik7QjueTgZF+Pe1mG8zr7I4+6wRS3/QPy0Iu4Q6M
-	j7h5OHUOXlaZJ0raLGgua1qo/Eg3hZf84p2KL2uUzAJ2CFM9wke6/
-X-Gm-Gg: ASbGncsDP7J8410P/Nqgd/rihJuz13U8E0vLihgKBlCWEKpKyCyN8vj+EGOBOzcbLt1
-	CLXMTWyNYj5sTqB/UtmEXrCAeEonNCoyrLRx1JPQA6MBXaTco/q4fxv/PAje5
-X-Google-Smtp-Source: AGHT+IE3uHyEPQ+RXApI0upvTrziNhR4y655KDzoV+LMSNSkeik6jPLrBIr2C++4qDUo2Vv3MeUEg00oFW+AVbyJ9Qs=
-X-Received: by 2002:a05:6402:3191:b0:5d0:dfe4:488a with SMTP id
- 4fb4d7f45d1cf-5d116933b9cmr16129a12.2.1733257287891; Tue, 03 Dec 2024
- 12:21:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aReUZrra"
+Received: (qmail 30458 invoked by uid 109); 3 Dec 2024 21:06:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=g5QEsqpc00Z7J9UfzNUaeX/naI97YTEXMjXhZVO6hq8=; b=aReUZrra0M3+xIb+0ehzcdbmtMmhmQnULRfGh+d7nW5ooDdYBAUJYSid4hGkBDT8wTwUZmOocok80VWlWUVUi+AsMUBaWp1Q0uaI37rx9nms1p3Gc7silmMHKtmM4rgYqlPPUvKMnnYXltEssq/UTFvvkMzw1SqhH8EfeF12/MhSMeHCkR05k/Wi67FCRH6f9vmshKlKsCOp6B1wVcidP6GNlDhJtGSvpxHfBUhYPF6zJpG4vPd+PvKSrtOEDh6iGqmjHnfIZueFKnhvjLPMbSzNraGfpPjBJ8uKwKWwNlOXpx3bmlGWE0ShbDQqT74OJai3l+4OfuJ1tNPQW35M0Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Dec 2024 21:06:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10197 invoked by uid 111); 3 Dec 2024 21:06:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Dec 2024 16:06:52 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 3 Dec 2024 16:06:52 -0500
+From: Jeff King <peff@peff.net>
+To: Elijah Newren <newren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: [PATCH 2/1] t9300: test verification of renamed paths
+Message-ID: <20241203210652.GA1413195@coredump.intra.peff.net>
+References: <pull.1832.git.1732740464398.gitgitgadget@gmail.com>
+ <pull.1832.v2.git.1732928970059.gitgitgadget@gmail.com>
+ <20241201214014.GC145938@coredump.intra.peff.net>
+ <CABPp-BGP8zrSzxcacTzLY-EuYAQW5EwyDGNAMh196udGN18fmg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
- <CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
- <CADYQcGpyTL18N2t8t-HwafB8VEVbBt452fsE0yMBvRvZd1mbVw@mail.gmail.com>
- <xmqqfrn5h8zj.fsf@gitster.g> <CADYQcGrD5KtM1sZQbccAtDaLmUXD8Gxv_nUWmapjfZm=TMq=Jw@mail.gmail.com>
- <3bf4e4bc-c807-4bbb-8920-afba077413b4@app.fastmail.com> <CADYQcGrME0wDrhDu6HQsX2Vo7A3bPPr3Ooio3bBFcBg6XaHuYQ@mail.gmail.com>
-In-Reply-To: <CADYQcGrME0wDrhDu6HQsX2Vo7A3bPPr3Ooio3bBFcBg6XaHuYQ@mail.gmail.com>
-From: Kai Koponen <kaikoponen@google.com>
-Date: Tue, 3 Dec 2024 15:21:16 -0500
-Message-ID: <CADYQcGoTvGBbSyiA1ZuS4Vd=gai-rLa=Vke4fCfFrbERJmP1NA@mail.gmail.com>
-Subject: Re: [PATCH] doc: mention rev-list --ancestry-path restrictions
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CABPp-BGP8zrSzxcacTzLY-EuYAQW5EwyDGNAMh196udGN18fmg@mail.gmail.com>
 
-Re-trying via GitGitGadget at
-https://lore.kernel.org/git/pull.1838.git.git.1733257083739.gitgitgadget@gm=
-ail.com/
+On Tue, Dec 03, 2024 at 12:01:51AM -0800, Elijah Newren wrote:
 
-On Tue, Dec 3, 2024 at 12:59=E2=80=AFPM Kai Koponen <kaikoponen@google.com>=
- wrote:
->
-> Apologies, I made a mistake while copying the patch in manually from
-> format-patch; my git install doesn't have send-email available, I'll
-> fix that.
->
-> On Tue, Dec 3, 2024 at 12:39=E2=80=AFPM Kristoffer Haugsbakk
-> <kristofferhaugsbakk@fastmail.com> wrote:
+> > On Sat, Nov 30, 2024 at 01:09:29AM +0000, Elijah Newren via GitGitGadget wrote:
 > >
-> > Hello Kai
-> >
-> > On Tue, Dec 3, 2024, at 18:14, Kai Koponen wrote:
-> > > The rev-list documentation doesn't mention that the given
-> > > commit must be in the specified commit range, leading
-> > > to unexpected results.
+> > >     Changes since v1:
 > > >
-> > > Signed-off-by: Kai Koponen <kaikopone@google.com>
-> > > ---
-> > >  Documentation/rev-list-options.txt | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >      * Moved the check to a higher level, as suggested by Peff.
 > >
-> > I couldn=E2=80=99t apply this patch to `master` (cc01bad4a9f (The twelf=
-th batch,
-> > 2024-11-27)). It looks like it is because..
-> >
-> > >
-> > > diff --git a/Documentation/rev-list-options.txt
-> > > b/Documentation/rev-list-options.txt
-> > > index 00ccf68744..f0a46f9da5 100644
-> > > --- a/Documentation/rev-list-options.txt
-> > > +++ b/Documentation/rev-list-options.txt
-> > > @@ -412,7 +412,7 @@ Default mode::
-> > >
-> > >  --ancestry-path[=3D<commit>]::
-> > >   When given a range of commits to display (e.g. 'commit1..commit2'
-> > > - or 'commit2 {caret}commit1'), only display commits in that range
-> > > + or 'commit2 {caret}commit1'), and a commit <commit> in that range,
-> > > only display commits in that range
-> >
-> > This line got corrupted (linebreak).
-> >
-> > I see that you used git-send-email(1).  Did you edit the patch file
-> > manually in order to add the quotation from Junio below? I=E2=80=99m gu=
-essing
-> > the editor then broke that line since it is 102 characters when
-> > combined/joined.  I guess you could use cat(1) instead.  I like to use
-> > Git Notes.  You can add a note to the commit and then use that default
-> > namespace (commits) when making the patch.
-> >
-> >     git notes edit
-> >     git format-patch --notes=3Dcommits ...
-> >
-> > Although in this case it might be better to add a linebreak since the
-> > line gets so long. You can add one short line so that you don=E2=80=99t=
- get the
-> > reflow-paragraph problem from the previous version:
-> >
-> > (these are with space indentation instead of tabs)
-> >
-> >      --ancestry-path[=3D<commit>]::
-> >             When given a range of commits to display (e.g. 'commit1..co=
-mmit2'
-> >     -       or 'commit2 {caret}commit1'), only display commits in that =
-range
-> >     +       or 'commit2 {caret}commit1'), only display commits in that =
-range,
-> >     +       and a commit <commit> in that range,
-> >             that are ancestors of <commit>, descendants of <commit>, or
-> >             <commit> itself.  If no commit is specified, use 'commit1' =
-(the
-> >             excluded part of the range) as <commit>.  Can be passed mul=
-tiple
+> > Thanks, the code change looks good. Is it worth tweaking one of the
+> > tests to do "R innocent-path .git/evil"? Otherwise I don't think there's
+> > any coverage of the file_change_cr() call at all.
+> 
+> I would say yes, but since this patch too has made it to next and is
+> marked for master, I'm kinda tempted to just leave it as-is...
+
+Is is tempting. :) I wrote this up, though, which can just go on top (of
+en/fast-import-verify-path).
+
+-Peff
+
+-- >8 --
+Subject: [PATCH] t9300: test verification of renamed paths
+
+Commit da91a90c2f (fast-import: disallow more path components,
+2024-11-30) added two separate verify_path() calls (one for
+added/modified files, and one for renames/copies). But our tests only
+exercise the first one. Let's protect ourselves against regressions by
+tweaking one of the tests to rename into the bad path. There are
+adjacent tests that will stay as additions, so now both calls are
+covered.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t9300-fast-import.sh | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index e2b1db6bc2..fd01a2353c 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -553,9 +553,16 @@ test_expect_success 'B: fail on invalid file path of .' '
+ 	commit refs/heads/badpath
+ 	committer Name <email> $GIT_COMMITTER_DATE
+ 	data <<COMMIT
+-	Commit Message
++	Good path
++	COMMIT
++	M 100644 :1 ok-path
++
++	commit refs/heads/badpath
++	committer Name <email> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	Bad path
+ 	COMMIT
+-	M 100644 :1 ./invalid-path
++	R ok-path ./invalid-path
+ 	INPUT_END
+ 
+ 	test_when_finished "git update-ref -d refs/heads/badpath" &&
+-- 
+2.47.1.707.g92f6f18526
+
