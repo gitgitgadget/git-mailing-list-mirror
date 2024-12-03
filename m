@@ -1,144 +1,121 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF321304BA
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 03:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26CB2905
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 03:42:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733196223; cv=none; b=AdRgIcPjtZr46MA4af2tXe+5ZVb46HR+U+3OBhgC5CVOgFcKgOfwrCaFw5BhuOlsdP74Z3WdC8Je1FROK6C3XwHJgf2k1uz9brVszpyDgzTkiAPKGj+NaMkd0smckiyHKJhNPVC0WvUnFj7h1RubxV0KZO7F2IdRuf8sJawVnZ0=
+	t=1733197331; cv=none; b=dCOkM4wGtHd3x25e7dNkeh17NKSbG4Ko/VJPjtviu+4qepiBYuUp+0fLA4zIF9fQKdviWjfPjIfgjk9cHeTq2HDs87mypGuAj0TVnaH43tk4DsY0sxDyNzcz1ddzcQ5gt7hZtB8AM5XKcjzmLWumI2pL7dF4r2hUber5iDFcQFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733196223; c=relaxed/simple;
-	bh=Y9FzadFXDbnbm3+hD6OKMUdqSrhT2f6wn1FWO15lQTw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dyW0oSisQGIj8v8iLku/xlpfDzGp4NMoXGxiteJ1TtnSVuNoM5SA4iCvzSL2YmdgKPUo1RYzmzXwedEPiJZwXm/9hTC3VmeDaWvyU8zqj4Fm+EzlWeribegdDIkxSBUUQI+q7CSU+vV4oyf35JAIMbatG6GKCtWPBYoQVNFfAG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G20kru9m; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733197331; c=relaxed/simple;
+	bh=MGwLSgdLbpNeHRSUdWr6ic9GoUedZC3drV02ksEhbdI=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qpzlT78h+0cjBiOFv31AtbT7mU9WXxbizgsL1Q0K47HTgzvY0zx5mQNJUY9UOa7MDiNORr3kCt8ZTR/zJxacb2fgR1DK97xqEZBxeGuedJcG1UDtY/4IGU+brFbIbQNt8JiO6LHDDXjQDT1Ubopw4GzD4sMasuyceEGhKSxUIkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=azWRv7LP; arc=none smtp.client-ip=185.70.40.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G20kru9m"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id BF3A311400AF;
-	Mon,  2 Dec 2024 22:23:40 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Dec 2024 22:23:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733196220; x=1733282620; bh=34DW5oDjE+cGkOfYfejN9rcVw52OmhRRByl
-	caZEYKJ8=; b=G20kru9mgRv0TDMAEQKPSuNdtxSgqVrYvCei/XvqukY3jYmXwuh
-	mSeeptKncouTgpbVnUIpQfJ1g0/d2qH2D9bFqYMhseb0QAwt38CYvFE1ryvlSQap
-	ARKRlaKOeCcYZO9C6+HZ33Xe6ZxgpPGHkyuGNeyVAVZjCeGBW/6l05TrHkNGzYD6
-	LIYHvAjDq2J5fRN+K/DDYlwugJ8wewKNjPh6a3wa/zU/nE4Z2giNkltNLZ0xEhmQ
-	840hsiiTZFRekiRLKsZp3gg7tXGejhWxCcGzNnIkUEDsZLNkGLZf+UtTt2zI7Fd1
-	jq5ldhdAtNVU+8QUEA01n2/LtIoJi8pcGww==
-X-ME-Sender: <xms:vHlOZy0s3uROrCNyuMaiF42EysSEWtPol6wYkF5h3Im3E3l6BjW-9Q>
-    <xme:vHlOZ1FZuxU1THgyd5Ibf_eQjAVI0vS__fu280qTk0HwlRUz-Z1fYw0Wz_vdH7Mf5
-    bwZgwdggGssxwiV0A>
-X-ME-Received: <xmr:vHlOZ64lEB_9tQpss06L6Oc7G1wekGkO34jauyLlfkSB02MhOfj72ItQqJ2eprVhiy6j7-9dGvhRV2yxa8wEz2Zo0idm4H_pkn0nFnU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedtgdehiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
-    igrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
-    htohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgv
-    nhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgoh
-    hoghhlvgdrtghomh
-X-ME-Proxy: <xmx:vHlOZz3LBaHhKfWDjFpc431-JKkD2V7Fw8H4pFnWyHg0zhvsg4GZBw>
-    <xmx:vHlOZ1EbkEJJQxk2hzAylgBTSafUSf3XNaIvQSIXtimp9GEDyJu37g>
-    <xmx:vHlOZ88Deb1OC6m1a2R1BnnfXYKtfovHOSNgi_cpRsJVS5RXLU77pg>
-    <xmx:vHlOZ6kqZN2YbSnnSJLOCfnI2-rzYAtiA1x0Z-Wdv3RbgjnY8VTBxQ>
-    <xmx:vHlOZ0-oI6bESBowITzwWAHUtVrtWcGHSEPkLn9-pUtHGoKtgg_taROO>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 22:23:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  jonathantanmy@google.com,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/8] pack-objects: Create an alternative name hash
- algorithm (recreated)
-In-Reply-To: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Mon, 02 Dec 2024 23:21:14
-	+0000")
-References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
-	<pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
-Date: Tue, 03 Dec 2024 12:23:38 +0900
-Message-ID: <xmqq1pypfo05.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="azWRv7LP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1733197326; x=1733456526;
+	bh=Cmf1MzIY9f3AI8tYnE9J16oS2mCxXjVDjtEETp4CUEo=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=azWRv7LPqATTCqRnMh4YhINlBML63RCJd+seV3g2dfYCFLK3QJvaiHxvIMwTxH9yJ
+	 EapFBtA2AJoMQirfXmxOA1lvP9UUVNKXI+TDdziok5b72stIKyzLz2LLiqRyYj+6hN
+	 ip0yBp9SD1w/jPO7f76fG7z9rRkC/rGFosFRqSl8V1AvwR1aG9jiVAULnjmWpMrxwT
+	 qPUmZLYGvoAzxxDoUwfHObdguWHQxMEDFrTmECYBijmVGkRT2zNoBpPO6b0bAdToy1
+	 +/1eyhkcvv21sATpf0l7kAJ/7VC+eFCwofICDI70GuvUnEtgQqKWskyykhcbwU0CPw
+	 6wfvgrgthXDtA==
+Date: Tue, 03 Dec 2024 03:42:02 +0000
+To: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com
+From: Caleb White <cdwhite3@pm.me>
+Cc: 'Eric Sunshine' <sunshine@sunshineco.com>, 'shejialuo' <shejialuo@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] Ensure unique worktree ids across repositories
+Message-ID: <D61R68MFWDIU.12PI8AA8S3G86@pm.me>
+In-Reply-To: <xmqqiks1fqgl.fsf@gitster.g>
+References: <20241129-wt_unique_ids-v2-0-ff444e9e625a@pm.me> <xmqqed2qkfn0.fsf@gitster.g> <Z02eKA8i51QyXgJ-@ArchLinux> <xmqqed2pioff.fsf@gitster.g> <CAPig+cQHW9=A5ejU5aZ+Wy0uOQsLU_uqUibeYzZs2PXK37Vpbw@mail.gmail.com> <xmqqo71tfsif.fsf@gitster.g> <025b01db4526$3b05ef00$b111cd00$@nexbridge.com> <xmqqiks1fqgl.fsf@gitster.g>
+Feedback-ID: 31210263:user:proton
+X-Pm-Message-ID: 1ac256351f5f5a65e9520741e4e1f148d6a989f2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> This series creates a mechanism to select alternative name hashes using a
-> new --name-hash-version=<n> option. The versions are:
+On Mon Dec 2, 2024 at 8:30 PM CST, Junio C Hamano wrote:
+> <rsbecker@nexbridge.com> writes:
 >
->  1. Version 1 is the default name hash that already exists. This option
->     focuses on the final bytes of the path to maximize locality for
->     cross-path deltas.
+>>>Ah, yes, that exposes (and has to expose) the worktree ID.  It still doe=
+s
+>> not have to
+>>>be unique across repositories (only has to unique among the worktrees th=
+at
+>> share
+>>>the same single repository).
+>>
+>> I might be mistaken, but I think the intent of the worktree series being
+>> discussed
+>> deliberately wanted the worktree ID to be globally unique on a specific
+>> machine.
 >
->  2. Version 2 is the new path-component hash function suggested by Jonathan
->     Tan in the previous version (with some modifications). This hash
->     function essentially computes the v1 name hash of each path component
->     and then overlays those hashes with a shift to make the parent
->     directories contribute less to the final hash, but enough to break many
->     collisions that exist in v1.
->
->  3. Version 3 is the hash function that I submitted under the
->     --full-name-hash feature in the previous versions. This uses a
->     pseudorandom hash procedure to minimize collisions but at the expense of
->     losing on locality. This version is implemented in the final patch of
->     the series mostly for comparison purposes, as it is unlikely to be
->     selected as a valuable hash function over v2. The final patch could be
->     omitted from the merged version.
->
-> See the patches themselves for detailed results in the p5313-pack-objects.sh
-> performance test and the p5314-name-hash.sh test that demonstrates how many
-> collisions occur with each hash function.
+> That is my understanding, but I do not understand why such a
+> uniqueness is needed.  Repositories are not even aware of other
+> repositories, in any sense to make it matter to know worktree IDs
+> other repositories are using.  Until there is an attempt to link a
+> worktree that used to belong to a repository to a different
+> repository, that is.  At that time, names must be made unique among
+> worktrees that belong to the adopting repository, of course, but the
+> names used in the original repository for its worktrees would not
+> matter at that point, I would think.
 
-These do not sound like versions but more like variants to me,
-especially if one is expected to perform better than another in some
-cases and worse in some other cases.  Is it expected that JTan's hash
-to perform better than the original and current hash in almost all
-cases (I would not be surprised at all if that were the case)?
+Perhaps I should've have come up with a better series name, I think
+there's been a lot of hang-up with the term "unique". When I refer to
+uniqueness in this context, I'm not advocating for strict, absolute
+uniqueness in the sense of ensuring no collisions under any conceivable
+circumstance, or requiring that repositories are now aware of other
+repositories. Instead, I'm discussing uniqueness from a practical
+perspective: the combination of a random 32-bit integer from a CSPRNG
+with a worktree name should be "unique" for all intents and purposes.
+The theoretical risk of a collision does exist, of course, but the
+probability is astronomically lower than the current approach, rendering
+it effectively "unique" in practice.
 
-> In general, the v2 name hash function gets very close to the compression
-> results of v3 in the full repack case, even in the repositories that feature
-> many name hash collisions. These benefits come as well without downsides to
-> other kinds of packfiles, including small pushed packs, larger incremental
-> fetch packs, and shallow clones.
+You're correct in that the worktree ids are only relevant within the
+context of a single repository. However, I've already demonstrated that
+it's possible for a repository to "repair" (i.e., take over) a worktree
+belonging to another repository if the ids match (inferred backlink).
+In my experience, there's some pretty common names for worktrees (e.g.,
+"main", "master", "develop", "hotfix", etc.), and it's not uncommon for
+multiple repositories to have worktrees with the same name. This can be
+avoided entirely by introducing some randomness into the worktree id and
+significantly reducing the probability of a collision (e.g., one
+repository would have a `develop-54678976` id while another would have
+a `develop-987465246` id), which is the primary motivation behind this
+series.
 
-Nice.
+As I've mentioned earlier, the concept of a suffix is not new and should
+not be a breaking change. It's already possible to have worktrees with
+a different id from the public worktree directory name, so users and
+scripts should not just assume them to be the same (this is buggy
+behavior), but instead should be querying the worktree id from the `.git`
+file or `git rev-parse --git-dir` if they really need it (very rare).
+As part of this series I did add the worktree id to the `worktree list`
+output to make it easier for scripts to query this information if they
+do need it.
 
-> As we can see, v2 nearly reaches the effectiveness of v3 (and outperforms it
-> once!) but there is still a significant change between the
-> --name-hash-version feature and the --path-walk feature.
->
-> The main reason we are considering this --name-hash-version feature is that
-> it has the least amount of stretch required in order for it to be integrated
-> with reachability bitmaps, required for server environments. In fact, the
-> change in this version to use a numerical version makes it more obvious how
-> to connect the version number to a value in the .bitmap file format. Tests
-> are added to guarantee that the hash functions preserve their behavior over
-> time, since data files depend on that.
+Perhaps this "take-over" scenario is not that big of a concern in
+practice, I just noted that this behavior was made possible in the
+`es/worktree-repair-copied` topic and I thought it was worth addressing.
+If it's decided that this is not that big of a concern, then I suppose
+this series can be dropped (although I've made some other QoL
+improvements that may be useful).
 
-Yeah, that aspect certainly is an attractive one.  We should be able
-to teach the bitmap file to say which name-hash function is in use
-and all the pack data reuse logic we have should be reusable.
+Best,
+
+Caleb
 
