@@ -1,121 +1,108 @@
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26CB2905
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 03:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B97224F0
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 04:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733197331; cv=none; b=dCOkM4wGtHd3x25e7dNkeh17NKSbG4Ko/VJPjtviu+4qepiBYuUp+0fLA4zIF9fQKdviWjfPjIfgjk9cHeTq2HDs87mypGuAj0TVnaH43tk4DsY0sxDyNzcz1ddzcQ5gt7hZtB8AM5XKcjzmLWumI2pL7dF4r2hUber5iDFcQFI=
+	t=1733198978; cv=none; b=CuZXLWSLZPqtvzGKX7AAlqgNQeb10cmSRk2HN20CCtiVR/YQKZoPl+TalTR/9+Gc/ebfwizX+hvGqZQSc/s39CE4jKPmCzLzCjc0kxoD6HYRqEtuEKraglPYi808Oy6I9pmeBSnx09232Ks+1IJseWjQFS8XaBocu6CAxFrxyL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733197331; c=relaxed/simple;
-	bh=MGwLSgdLbpNeHRSUdWr6ic9GoUedZC3drV02ksEhbdI=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qpzlT78h+0cjBiOFv31AtbT7mU9WXxbizgsL1Q0K47HTgzvY0zx5mQNJUY9UOa7MDiNORr3kCt8ZTR/zJxacb2fgR1DK97xqEZBxeGuedJcG1UDtY/4IGU+brFbIbQNt8JiO6LHDDXjQDT1Ubopw4GzD4sMasuyceEGhKSxUIkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=azWRv7LP; arc=none smtp.client-ip=185.70.40.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+	s=arc-20240116; t=1733198978; c=relaxed/simple;
+	bh=8Wg2DzSYnR6OXIzji3M/+3bJyM6nprFaCNAFS/DLcaQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Is+N11Va86BH3RfIgUeZJeUyKM3tse1jQ/QzcpcNSGqZ2l8BpIMSYnH6q60e9QccwzoQt9DGBphyKHwmkxYebRy2yAGjYMy/MfbMmF08LydhVOKJxmiHE+dGyREgUPB50x5VmOpwF84PuTMP4aPoIeBZI2NYTEVtdvD/EmhTf4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tcTum/+1; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="azWRv7LP"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1733197326; x=1733456526;
-	bh=Cmf1MzIY9f3AI8tYnE9J16oS2mCxXjVDjtEETp4CUEo=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=azWRv7LPqATTCqRnMh4YhINlBML63RCJd+seV3g2dfYCFLK3QJvaiHxvIMwTxH9yJ
-	 EapFBtA2AJoMQirfXmxOA1lvP9UUVNKXI+TDdziok5b72stIKyzLz2LLiqRyYj+6hN
-	 ip0yBp9SD1w/jPO7f76fG7z9rRkC/rGFosFRqSl8V1AvwR1aG9jiVAULnjmWpMrxwT
-	 qPUmZLYGvoAzxxDoUwfHObdguWHQxMEDFrTmECYBijmVGkRT2zNoBpPO6b0bAdToy1
-	 +/1eyhkcvv21sATpf0l7kAJ/7VC+eFCwofICDI70GuvUnEtgQqKWskyykhcbwU0CPw
-	 6wfvgrgthXDtA==
-Date: Tue, 03 Dec 2024 03:42:02 +0000
-To: Junio C Hamano <gitster@pobox.com>, rsbecker@nexbridge.com
-From: Caleb White <cdwhite3@pm.me>
-Cc: 'Eric Sunshine' <sunshine@sunshineco.com>, 'shejialuo' <shejialuo@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] Ensure unique worktree ids across repositories
-Message-ID: <D61R68MFWDIU.12PI8AA8S3G86@pm.me>
-In-Reply-To: <xmqqiks1fqgl.fsf@gitster.g>
-References: <20241129-wt_unique_ids-v2-0-ff444e9e625a@pm.me> <xmqqed2qkfn0.fsf@gitster.g> <Z02eKA8i51QyXgJ-@ArchLinux> <xmqqed2pioff.fsf@gitster.g> <CAPig+cQHW9=A5ejU5aZ+Wy0uOQsLU_uqUibeYzZs2PXK37Vpbw@mail.gmail.com> <xmqqo71tfsif.fsf@gitster.g> <025b01db4526$3b05ef00$b111cd00$@nexbridge.com> <xmqqiks1fqgl.fsf@gitster.g>
-Feedback-ID: 31210263:user:proton
-X-Pm-Message-ID: 1ac256351f5f5a65e9520741e4e1f148d6a989f2
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tcTum/+1"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3864E11401F4;
+	Mon,  2 Dec 2024 23:09:35 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 02 Dec 2024 23:09:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733198975; x=1733285375; bh=79YPwILZCosvNCYlTdTgj70MS2cch5TItVd
+	I8sYsFZ4=; b=tcTum/+1/K4xG1OcPPM8OZV3e/W4n/B9s0cT88cPf3NNsuhA8nX
+	8n6USxOBe3mKigcIvV3/MkzNZ/TslseVEyHJxFcrg/ZYCq/dXaPk1YnwQkF0dyuC
+	VVV7OxWxjje/R1dbx4FyYZzXi0qRT0HJ2kaRzr/kUfOnJhs/aZoqcITxQR84aF5Z
+	wsOwFeDTlnKrrPzSzS5CT+OhB88F4uIQEeFxcm9+kHVzuSL8IVdGJw7OxvwKK6NH
+	e7m4NerkdA+lm/Hlj0OtBfPr9d9A0qt98aQF6LK8hGQCvUE26g1OO5udSZCYSgmy
+	Q2t01yADHQ83K96PZamD4kps9bZYEyLCeUw==
+X-ME-Sender: <xms:foROZ_IHpdKdfahLpPSWpJ0P8jxT6cESsbMDA7NQoMWcE2pQS9JQ1Q>
+    <xme:foROZzLqdWzhYhzpZbzgqFOxJx7_Px0AVn-DH5_NumTRh-Rr_WkcqhLFJvSCaaVQe
+    nnlbuxKSHMYWO3etw>
+X-ME-Received: <xmr:foROZ3v7FVgV_rRAh21CMl6UzxXl7UYgKocTrd1mMnVb80PyzkuBXTDqQRG-LC5SEmxCAj6f2HW4d3---18MBGFkqchEt9-JEQEwGVw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedtgdeihecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeevteev
+    veeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
+    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphhtthho
+    pehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgrnhihrghnghdrthho
+    nhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:foROZ4YBlAX1JBQMlfIwFLEhTcjCD1WmIgafyV6O3FkmRqIP4K122g>
+    <xmx:foROZ2bOLjEb_yZlIRGxTBx-u0Kw7uWaH740Vwsoexc2koGPVhFAFg>
+    <xmx:foROZ8AhTDlKEIE30HBiVsldhpMrgkcTG49v8avRw2er1TzCnQXZMQ>
+    <xmx:foROZ0ZwWtsI3RKDFpXZWpm4F81rLAT8BXkgNtq_-jriJ418aEda2g>
+    <xmx:f4ROZ9ybePGkQ7qQImN1Yj-_TFvmV3qrjJ1F57-aOO6bK-_LriVV9RIc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Dec 2024 23:09:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>,  git@vger.kernel.org,
+  hanyang.tony@bytedance.com
+Subject: Re: [PATCH 0/3] Performance improvements for repacking non-promisor
+ objects
+In-Reply-To: <s6adlnfgts43vamiyzdjbjk7bqwy4gvudskclr76uunkgyktbp@pziio343f43z>
+	(Josh Steadmon's message of "Mon, 2 Dec 2024 13:25:20 -0800")
+References: <cover.1733170252.git.jonathantanmy@google.com>
+	<s6adlnfgts43vamiyzdjbjk7bqwy4gvudskclr76uunkgyktbp@pziio343f43z>
+Date: Tue, 03 Dec 2024 13:09:32 +0900
+Message-ID: <xmqqwmghe7b7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon Dec 2, 2024 at 8:30 PM CST, Junio C Hamano wrote:
-> <rsbecker@nexbridge.com> writes:
+Josh Steadmon <steadmon@google.com> writes:
+
+>> Thanks in advance to everyone who reviews. While review is going on,
+>> we'll also be testing these at $DAYJOB (I've tested it to work on one
+>> known big repo, but there may be others).
+>> 
+>> [1] https://lore.kernel.org/git/cover.1730491845.git.jonathantanmy@google.com/
+>> 
+>> Jonathan Tan (3):
+>>   index-pack: dedup first during outgoing link check
+>>   index-pack: no blobs during outgoing link check
+>>   index-pack: commit tree during outgoing link check
+>> 
+>>  builtin/index-pack.c | 49 +++++++++++++++++++++++---------------------
+>>  1 file changed, 26 insertions(+), 23 deletions(-)
+>> 
+>> -- 
+>> 2.47.0.338.g60cca15819-goog
+>> 
+>> 
 >
->>>Ah, yes, that exposes (and has to expose) the worktree ID.  It still doe=
-s
->> not have to
->>>be unique across repositories (only has to unique among the worktrees th=
-at
->> share
->>>the same single repository).
->>
->> I might be mistaken, but I think the intent of the worktree series being
->> discussed
->> deliberately wanted the worktree ID to be globally unique on a specific
->> machine.
+> This series looks good to me, thanks!
 >
-> That is my understanding, but I do not understand why such a
-> uniqueness is needed.  Repositories are not even aware of other
-> repositories, in any sense to make it matter to know worktree IDs
-> other repositories are using.  Until there is an attempt to link a
-> worktree that used to belong to a repository to a different
-> repository, that is.  At that time, names must be made unique among
-> worktrees that belong to the adopting repository, of course, but the
-> names used in the original repository for its worktrees would not
-> matter at that point, I would think.
+> Reviewed-by: Josh Steadmon <steadmon@google.com>
 
-Perhaps I should've have come up with a better series name, I think
-there's been a lot of hang-up with the term "unique". When I refer to
-uniqueness in this context, I'm not advocating for strict, absolute
-uniqueness in the sense of ensuring no collisions under any conceivable
-circumstance, or requiring that repositories are now aware of other
-repositories. Instead, I'm discussing uniqueness from a practical
-perspective: the combination of a random 32-bit integer from a CSPRNG
-with a worktree name should be "unique" for all intents and purposes.
-The theoretical risk of a collision does exist, of course, but the
-probability is astronomically lower than the current approach, rendering
-it effectively "unique" in practice.
-
-You're correct in that the worktree ids are only relevant within the
-context of a single repository. However, I've already demonstrated that
-it's possible for a repository to "repair" (i.e., take over) a worktree
-belonging to another repository if the ids match (inferred backlink).
-In my experience, there's some pretty common names for worktrees (e.g.,
-"main", "master", "develop", "hotfix", etc.), and it's not uncommon for
-multiple repositories to have worktrees with the same name. This can be
-avoided entirely by introducing some randomness into the worktree id and
-significantly reducing the probability of a collision (e.g., one
-repository would have a `develop-54678976` id while another would have
-a `develop-987465246` id), which is the primary motivation behind this
-series.
-
-As I've mentioned earlier, the concept of a suffix is not new and should
-not be a breaking change. It's already possible to have worktrees with
-a different id from the public worktree directory name, so users and
-scripts should not just assume them to be the same (this is buggy
-behavior), but instead should be querying the worktree id from the `.git`
-file or `git rev-parse --git-dir` if they really need it (very rare).
-As part of this series I did add the worktree id to the `worktree list`
-output to make it easier for scripts to query this information if they
-do need it.
-
-Perhaps this "take-over" scenario is not that big of a concern in
-practice, I just noted that this behavior was made possible in the
-`es/worktree-repair-copied` topic and I thought it was worth addressing.
-If it's decided that this is not that big of a concern, then I suppose
-this series can be dropped (although I've made some other QoL
-improvements that may be useful).
-
-Best,
-
-Caleb
-
+Thanks.
