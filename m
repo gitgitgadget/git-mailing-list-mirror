@@ -1,55 +1,55 @@
-Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+Received: from mail-oa1-f74.google.com (mail-oa1-f74.google.com [209.85.160.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905BA1FBEA7
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:53:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F74D209F49
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:53:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733262785; cv=none; b=DiQPPZvWh55L2oJbHr802gOEIZEhP6LWGmwv12iXq3AapJwEoeQuljkNM1yjZVUOxBtRkoTUu9XPESZP9d5l0a1m8gYIpUvaQo4K0MRB9OTRLyyD7hB+pjkHkLyykpuzvq6BjxkQ6l9mA8vHcObRTqCkzqRxV7f/cZSOQHHcMLI=
+	t=1733262787; cv=none; b=bNZk+0s4rn9PjyovtL6K7xlXw/yvXUOzGe2K54oqjjeHghILl0x5q9mqGHOuAD6YJBD3x+cJ3h88t+Sjst2n13+u6WYJrdU5ulGCiBg4Zq/kiVm4c6gFakMvqiOv8iALq0vijMoFA4c+sRDie2QwJOAj9Q27eWslvr2u70RFU58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733262785; c=relaxed/simple;
-	bh=CUEIWvURSubmvumRn/4Dk/TphslCRo+Q/kDcOlNpgw4=;
+	s=arc-20240116; t=1733262787; c=relaxed/simple;
+	bh=RB858o40qlolunBXqIuHz9lOnO6CmSzXU4OGgb5LioE=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=OFuyrp/yVW1g44BobPftgy0JnBRPbpcXOrpJFNymt7cxg7AhN02EkrVfUYfvYw4ENRe1Lb34KmvqANB4xSzui/Ah9Fm10sQ8P3enB6AUt+YdGtMI1wIeLypWrOgjajIV1zBon8vVGj1QNqX9y/opwuP+GiG2uAyy+Ek3UQ8q1ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0YRRoQUu; arc=none smtp.client-ip=209.85.210.201
+	 To:Cc:Content-Type; b=bdQRvlHAWORI9hnK/KQCE9vbzKCd0EI+xkJJt6+WkVceRqJyaA9gC7GLZ2NU6e3W0H3I+gl7+96O3E1tRi21uoVQmmUUhjuFr+RaIPwoY9Bv+nv4aCdkn0CHk9VKAAUrdZFpyaDyvZ/1DbHct2oxsFTsVaEtCoPGrp7Mm7DnKvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WyjRwj5j; arc=none smtp.client-ip=209.85.160.74
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0YRRoQUu"
-Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-72467c300a6so185637b3a.0
-        for <git@vger.kernel.org>; Tue, 03 Dec 2024 13:53:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WyjRwj5j"
+Received: by mail-oa1-f74.google.com with SMTP id 586e51a60fabf-29e525890e4so3045109fac.3
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 13:53:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733262783; x=1733867583; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1733262784; x=1733867584; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=o2G4SSla57aF4GIAeWoBSIxKru0BAHIYgXUN7YmxNNU=;
-        b=0YRRoQUu3ScsLdniA4/eBusF0bTOZIhPdBzH7vD7mOVhooLTYsotSun+3EKf/rxJFx
-         aQj5SL+dgPh4ggXGXkKn0xA90No+eZijhfvo/oyjsxY8pp/zja14mDHC5L3oGLrJclPQ
-         IE2LGJnI7HZbvnSd1n55f2KyRHn8+LknEJAknyFV1rAvT32pV5eVlWQ18oF2IbB9bxpt
-         EV9UjmsK377vgzI/h74hunMSf0+fFmV2PrMHK9rpMN3ZvzUtCYqMybDmskfDR3GZnmWb
-         7s7hOAkvGiXyH44lEyD25YGeBrpuy1IuPh9Pl1PRzRJ/wl7ZtduYOYoufVRut6qeBQ63
-         DPHQ==
+        bh=I4c9dVPxmreSId8/F9kkGAoIDK59JPJqOkX4hBvaaRs=;
+        b=WyjRwj5jzzoCokqGbkRsEUQIcTyryFedhW31UV9UK105ock9H/3XNuGsv5epDD7nJh
+         Zp3kfWFqOiqj/NXtUqLoMdspn23HR+mGWlq9pQ9OopACWgwBa1nN53t4aIS6v4lJpAZh
+         NC/qjqAEmU3otxfF35UpbyjK+yb8CK5P3XBvTcw3lZD5Q+U36v8ZDWC/dDWelHTKpmWD
+         gEe5Ra56rGOuqJhRjU0TacrCg4ksxTV/VpYxBzaLdwK1WFtCAkcDaB2ZyBbfJYtFEWY4
+         Ofjnuwq9sYK6bUjEzyiUX5cZD1szCFHYXmMGob2qt5snVBqIzEpXVTtYQ4wmvOd1aRdL
+         gUuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733262783; x=1733867583;
+        d=1e100.net; s=20230601; t=1733262784; x=1733867584;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o2G4SSla57aF4GIAeWoBSIxKru0BAHIYgXUN7YmxNNU=;
-        b=ryb6R0RYDAG3+f/u34a26ao9VuBR+TS0DKJa36Sv6EDLma57UzuK/YojnMZhnVdbOV
-         0WsTN8KkYeLIFplJ8en6ifMgAf7SKQ2hQATxKPLUVWxr/2zCNFuAkuG4PwU3DbTos0oC
-         xdCbJtf42iOIlOVNv1q9op1LKtcOBXLSdym63+pTdE9YkS9XuOFH4mQwq53bXxeAZaib
-         wSTGHW7n9SWg3N8zxf8C9ipNG+AZCgqoy8VoO2Gf6nnMBRfxeVqOrPNlzMhYU2y1jWQV
-         nXjiSRrJQ6sXSO8FKhUUnC1pL2oLTjlZHS/UEMeo9oneJgqsjC0VVsIXeE7PHVlFHbOa
-         WFPA==
-X-Gm-Message-State: AOJu0YyaWzu7Ehd510fMU2GjUEEbN0vplSKElNxeKFwfcair0KN8cWxG
-	RUjryN60gKzstyTJi+TdOG1tjWFGakKgbez3RX6bf/gzIQBu8RVzGAyuh389MLdPkTWdozUOOL7
-	a5J97KoJM/jwVe03hsTfYNu/g0divnR4Yd5PAoK8EXkKZ14kMnUyKyMeEedKOJYT7SbBRDf/NjM
-	nCzdIj249E6AkeOXt9vz6tSxeCdeJc0CV8AyaC2v9qM8K0PBrRq7LXJiP5G8inQOMqOQ==
-X-Google-Smtp-Source: AGHT+IGXg+FqAS/hzQWA7mckdYFpk3j9kg1Kad2jFUQJnuKMCf378SEUjpFNJc8zF5Tw6lpwuDnxACD8cxR9GBjOD8Tr
-X-Received: from pjbsv12.prod.google.com ([2002:a17:90b:538c:b0:2ea:61ba:b8f7])
+        bh=I4c9dVPxmreSId8/F9kkGAoIDK59JPJqOkX4hBvaaRs=;
+        b=gEq32p6a0IqTlWuYQqGcqhjIDQcEhGoMz0J0UZ3tU0c4DyiFuRFVJ5pkK3pdyvaa+F
+         y2Q+JY0qcNafI7GqjJGP6ESApVXQfif1VT1gxortyp86Ifnho0UKHQR0k7q0+WEllR5B
+         rEXKzYnKZ1NOTaHMBxUdEk5GDj9C1GJrGR34+0AXt1rqNKaF+Ot7WgiHWKjZJgqdHLDm
+         EDwIdVaYiTN5X0pZkzjkUrI9xHc5b9YhDTgvlRKlkaBWoE3354JRpR5XAAthLNU2eJ3+
+         rZdpRF6LLqMKK2cGIIFKACkSQqsMRjJPYSmDjwz1dyds3x04gTHE9IEzkcGjA7VgPiVi
+         rTXQ==
+X-Gm-Message-State: AOJu0YxqLk6+lJHqocZCD5Y1HNpprw5j9CErLpZbM/kQ6aXYpDV6ytGS
+	10v26q55/F1CBH9gMhteHpku4PwjFwV6wko2f+Wn0wVjvm0e6uQJsYJQEqgidsQ8r7yavpDzRdF
+	VW5ZKM11+Ai6ozFbz6WepowGtkdw52rN0YyeWa/qg8/KC628ojYJAkBOJJ9+QL2dfU/p9xqg36/
+	n/bff/M2+ahU8h6YLHnJlliHsLWPm7yee8/Ynq2gI64IFTRgrs18Yrpsc+kxrWVAp3+A==
+X-Google-Smtp-Source: AGHT+IEdgO2HwB27JpP8QpK7YP8g1+L5VsCdOYr6UVHeHODo2nEcR3Iwx8WvGZJiCr0kfZEQMwFsvLWdn6ZgIETdyEO6
+X-Received: from oacpy6.prod.google.com ([2002:a05:6871:e406:b0:29d:c4b7:250d])
  (user=jonathantanmy job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:80c:b0:2ee:e2f6:8abc with SMTP id 98e67ed59e1d1-2eee2f68f8dmr11132619a91.10.1733262782782;
- Tue, 03 Dec 2024 13:53:02 -0800 (PST)
-Date: Tue,  3 Dec 2024 13:52:54 -0800
+ 2002:a05:6870:e386:b0:29e:7f8c:8f57 with SMTP id 586e51a60fabf-29e8884d9c9mr5298023fac.27.1733262784639;
+ Tue, 03 Dec 2024 13:53:04 -0800 (PST)
+Date: Tue,  3 Dec 2024 13:52:55 -0800
 In-Reply-To: <cover.1733262661.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,181 +59,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1733170252.git.jonathantanmy@google.com> <cover.1733262661.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <7ae21c921fe367d4b15cd4a299196009c15205d9.1733262662.git.jonathantanmy@google.com>
-Subject: [PATCH v3 1/3] index-pack --promisor: dedup before checking links
+Message-ID: <a1d2a202031e4b932d053b5c216ecd57ec9c728a.1733262662.git.jonathantanmy@google.com>
+Subject: [PATCH v3 2/3] index-pack --promisor: don't check blobs
 From: Jonathan Tan <jonathantanmy@google.com>
 To: git@vger.kernel.org
 Cc: Jonathan Tan <jonathantanmy@google.com>, ps@pks.im, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
-Commit c08589efdc (index-pack: repack local links into promisor packs,
-2024-11-01) fixed a bug with what was believed to be a negligible
-decrease in performance [1] [2]. But at $DAYJOB, with at least one repo,
-it was found that the decrease in performance was very significant.
+As a follow-up to the parent of this commit, it was found that not
+checking for the existence of blobs linked from trees sped up the fetch
+from 24m47.815s to 2m2.127s. Teach Git to do that.
 
-Looking at the patch, whenever we parse an object in the packfile to
-be indexed, we check the targets of all its outgoing links for its
-existence. However, this could be optimized by first collecting all such
-targets into an oidset (thus deduplicating them) before checking. Teach
-Git to do that.
+The tradeoff of not checking blobs is documented in a code comment.
 
-On a certain fetch from the aforementioned repo, this improved
-performance from approximately 7 hours to 24m47.815s. This number will
-be further reduced in a subsequent patch.
-
-[1] https://lore.kernel.org/git/CAG1j3zGiNMbri8rZNaF0w+yP+6OdMz0T8+8_Wgd1R_p1HzVasg@mail.gmail.com/
-[2] https://lore.kernel.org/git/20241105212849.3759572-1-jonathantanmy@google.com/
+(Blobs may also be linked from tag objects, but it is impossible to know
+the type of an object linked from a tag object without looking it up in
+the object database, so the code for that is untouched.)
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/index-pack.c | 73 +++++++++++++++++++++++++-------------------
- 1 file changed, 41 insertions(+), 32 deletions(-)
+ builtin/index-pack.c | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 95babdc5ea..d1c777a6af 100644
+index d1c777a6af..2e90fe186e 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -155,11 +155,11 @@ static int input_fd, output_fd;
- static const char *curr_pack;
- 
- /*
-- * local_links is guarded by read_mutex, and record_local_links is read-only in
-- * a thread.
-+ * outgoing_links is guarded by read_mutex, and record_outgoing_links is
-+ * read-only in a thread.
-  */
--static struct oidset local_links = OIDSET_INIT;
--static int record_local_links;
-+static struct oidset outgoing_links = OIDSET_INIT;
-+static int record_outgoing_links;
- 
- static struct thread_local_data *thread_data;
- static int nr_dispatched;
-@@ -812,18 +812,12 @@ static int check_collison(struct object_entry *entry)
- 	return 0;
+@@ -817,6 +817,35 @@ static void record_outgoing_link(const struct object_id *oid)
+ 	oidset_insert(&outgoing_links, oid);
  }
  
--static void record_if_local_object(const struct object_id *oid)
-+static void record_outgoing_link(const struct object_id *oid)
- {
--	struct object_info info = OBJECT_INFO_INIT;
--	if (oid_object_info_extended(the_repository, oid, &info, 0))
--		/* Missing; assume it is a promisor object */
--		return;
--	if (info.whence == OI_PACKED && info.u.packed.pack->pack_promisor)
--		return;
--	oidset_insert(&local_links, oid);
-+	oidset_insert(&outgoing_links, oid);
- }
- 
--static void do_record_local_links(struct object *obj)
-+static void do_record_outgoing_links(struct object *obj)
++static void maybe_record_name_entry(const struct name_entry *entry)
++{
++	/*
++	 * Checking only trees here results in a significantly faster packfile
++	 * indexing, but the drawback is that if the packfile to be indexed
++	 * references a local blob only directly (that is, never through a
++	 * local tree), that local blob is in danger of being garbage
++	 * collected. Such a situation may arise if we push local commits,
++	 * including one with a change to a blob in the root tree, and then the
++	 * server incorporates them into its main branch through a "rebase" or
++	 * "squash" merge strategy, and then we fetch the new main branch from
++	 * the server.
++	 *
++	 * This situation has not been observed yet - we have only noticed
++	 * missing commits, not missing trees or blobs. (In fact, if it were
++	 * believed that only missing commits are problematic, one could argue
++	 * that we should also exclude trees during the outgoing link check;
++	 * but it is safer to include them.)
++	 *
++	 * Due to the rarity of the situation (it has not been observed to
++	 * happen in real life), and because the "penalty" in such a situation
++	 * is merely to refetch the missing blob when it's needed (and this
++	 * happens only once - when refetched, the blob goes into a promisor
++	 * pack, so it won't be GC-ed, the tradeoff seems worth it.
++	*/
++	if (S_ISDIR(entry->mode))
++		record_outgoing_link(&entry->oid);
++}
++
+ static void do_record_outgoing_links(struct object *obj)
  {
  	if (obj->type == OBJ_TREE) {
- 		struct tree *tree = (struct tree *)obj;
-@@ -837,16 +831,16 @@ static void do_record_local_links(struct object *obj)
+@@ -831,7 +860,7 @@ static void do_record_outgoing_links(struct object *obj)
  			 */
  			return;
  		while (tree_entry_gently(&desc, &entry))
--			record_if_local_object(&entry.oid);
-+			record_outgoing_link(&entry.oid);
+-			record_outgoing_link(&entry.oid);
++			maybe_record_name_entry(&entry);
  	} else if (obj->type == OBJ_COMMIT) {
  		struct commit *commit = (struct commit *) obj;
  		struct commit_list *parents = commit->parents;
- 
- 		for (; parents; parents = parents->next)
--			record_if_local_object(&parents->item->object.oid);
-+			record_outgoing_link(&parents->item->object.oid);
- 	} else if (obj->type == OBJ_TAG) {
- 		struct tag *tag = (struct tag *) obj;
--		record_if_local_object(get_tagged_oid(tag));
-+		record_outgoing_link(get_tagged_oid(tag));
- 	}
- }
- 
-@@ -896,7 +890,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 		free(has_data);
- 	}
- 
--	if (strict || do_fsck_object || record_local_links) {
-+	if (strict || do_fsck_object || record_outgoing_links) {
- 		read_lock();
- 		if (type == OBJ_BLOB) {
- 			struct blob *blob = lookup_blob(the_repository, oid);
-@@ -928,8 +922,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 				die(_("fsck error in packed object"));
- 			if (strict && fsck_walk(obj, NULL, &fsck_options))
- 				die(_("Not all child objects of %s are reachable"), oid_to_hex(&obj->oid));
--			if (record_local_links)
--				do_record_local_links(obj);
-+			if (record_outgoing_links)
-+				do_record_outgoing_links(obj);
- 
- 			if (obj->type == OBJ_TREE) {
- 				struct tree *item = (struct tree *) obj;
-@@ -1781,26 +1775,41 @@ static void repack_local_links(void)
- 	struct object_id *oid;
- 	char *base_name;
- 
--	if (!oidset_size(&local_links))
-+	if (!oidset_size(&outgoing_links))
- 		return;
- 
--	base_name = mkpathdup("%s/pack/pack", repo_get_object_directory(the_repository));
-+	oidset_iter_init(&outgoing_links, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		struct object_info info = OBJECT_INFO_INIT;
-+		if (oid_object_info_extended(the_repository, oid, &info, 0))
-+			/* Missing; assume it is a promisor object */
-+			continue;
-+		if (info.whence == OI_PACKED && info.u.packed.pack->pack_promisor)
-+			continue;
- 
--	strvec_push(&cmd.args, "pack-objects");
--	strvec_push(&cmd.args, "--exclude-promisor-objects-best-effort");
--	strvec_push(&cmd.args, base_name);
--	cmd.git_cmd = 1;
--	cmd.in = -1;
--	cmd.out = -1;
--	if (start_command(&cmd))
--		die(_("could not start pack-objects to repack local links"));
-+		if (!cmd.args.nr) {
-+			base_name = mkpathdup(
-+				"%s/pack/pack",
-+				repo_get_object_directory(the_repository));
-+			strvec_push(&cmd.args, "pack-objects");
-+			strvec_push(&cmd.args,
-+				    "--exclude-promisor-objects-best-effort");
-+			strvec_push(&cmd.args, base_name);
-+			cmd.git_cmd = 1;
-+			cmd.in = -1;
-+			cmd.out = -1;
-+			if (start_command(&cmd))
-+				die(_("could not start pack-objects to repack local links"));
-+		}
- 
--	oidset_iter_init(&local_links, &iter);
--	while ((oid = oidset_iter_next(&iter))) {
- 		if (write_in_full(cmd.in, oid_to_hex(oid), the_hash_algo->hexsz) < 0 ||
- 		    write_in_full(cmd.in, "\n", 1) < 0)
- 			die(_("failed to feed local object to pack-objects"));
- 	}
-+
-+	if (!cmd.args.nr)
-+		return;
-+
- 	close(cmd.in);
- 
- 	out = xfdopen(cmd.out, "r");
-@@ -1899,7 +1908,7 @@ int cmd_index_pack(int argc,
- 			} else if (skip_to_optional_arg(arg, "--keep", &keep_msg)) {
- 				; /* nothing to do */
- 			} else if (skip_to_optional_arg(arg, "--promisor", &promisor_msg)) {
--				record_local_links = 1;
-+				record_outgoing_links = 1;
- 			} else if (starts_with(arg, "--threads=")) {
- 				char *end;
- 				nr_threads = strtoul(arg+10, &end, 0);
 -- 
 2.47.0.338.g60cca15819-goog
 
