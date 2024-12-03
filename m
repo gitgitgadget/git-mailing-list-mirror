@@ -1,80 +1,73 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C46143AB0
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 04:38:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE0E1F95A
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 04:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733200685; cv=none; b=Q/S/OReIl6nacOvyn//Ky17UTLkBls71NBrMfmpTAtZc5perDqawjbmfnMFP1RZtP4b+CYdipg+G+5CYrOTKYxXKVhpF6zcR2zVj5/AO1szqwjtR/0HwVodRCo49IcXX8DyLVW28yHz4DeoPgOGx5+1PAjZnPugh03YlEHlJrf4=
+	t=1733200751; cv=none; b=CpTgEfFLo3cnM7UNsPRN95cXunFX2VZElIvzsvNifawYlj78tgnIJg+sNBLIaq6iYAF2oh5+6XC7EBK2VYo1b0Bq2U/SD6Msy548S7xDCGr37ubiV2GC7k416n1y+voScGxaZPl5vQpw9DMekgzWpx6KiGl6yKLRA+zgiv7t6DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733200685; c=relaxed/simple;
-	bh=69g93VWZ4HQci1pTDT9L9HVjUZIoBfYU0QBGLNNmwZM=;
+	s=arc-20240116; t=1733200751; c=relaxed/simple;
+	bh=Gr6yWHZnRm0fgx1ilu6JhWInmgUASJoLVBXi78djugs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CvUGc+xRF3DeeJWl0HkHeQfqd3X4Eyy7WjcC5LILPnezagZ2uou4ZczKg9MeZgbKfWSiINtOCzxhtSHnuQNR7juf+yFoKHaPfXVQCTE897q3WBbS0im2voe5Dj2rscptwH+LuPsBb7BS1qLoQj2yVA8eeaQTr+iD98CLjRrVh6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ky/7+bq1; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=dHp1XqX0nwvf6Fl4vWKik8+mNTCvdcWrzAjrBO+f5563jlaIjswCJwjU3eUdCIQP8Z5lPd0R2kh3S0Ksa13x+Z4DTZSfYwKCtHStGw7XOgTIJpjS7vJGqkdpOB3xsXkiIfiU4ib3GBIPCEnvY+/Nl1PiCLoibxQaS2A10QXd7gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JPglLlEH; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ky/7+bq1"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B8B4725401F9;
-	Mon,  2 Dec 2024 23:38:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JPglLlEH"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 95407114010B;
+	Mon,  2 Dec 2024 23:39:08 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 02 Dec 2024 23:38:01 -0500
+  by phl-compute-05.internal (MEProxy); Mon, 02 Dec 2024 23:39:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733200681; x=1733287081; bh=jeg3pY46cV5vgtls4sn0wVRhSULSrnhxt42
-	uqGXZZCA=; b=Ky/7+bq1AILJBzEjkY9onGX+ZuJyJ1211N71luwQ5NvY1oGiDo6
-	T2Ee49n/FCn6smXBErKDebZ8l1p9b+nF/qw3J/XiX/HkMtruyezUnwvi2rI8TzNB
-	FCXTuomgkT9dUck2EQT0CofNrs2/LGfI5faHuyMnE1n8HYvSM+jgyey1otpiYdT2
-	L5bhresVaN/COUJa7ZS72rYOPeVOixGL2oeeWJcYrtmeKHFISR2VwiX3SBC/Rx0q
-	/cW2NiGUKecRJn0tRiLfmW483A42cJbMqI8wTB+CU5fNaMB1V4ay+dfMRHfvaG4H
-	buIpM5DL7Exp7YUYyNREDfEaxAbbRQFvkrA==
-X-ME-Sender: <xms:KYtOZ-oC8Ts6ClP8FAQpnrUZhAniv0xroVuUsaeTRgjcjNLTBIB6MQ>
-    <xme:KYtOZ8qV6vFRo9CHQUZQ_HvVDtcbhGg6v2Rap4XIsRr8JwZiCEccX7sKtJrRlV8gv
-    44bKExa_ZPl8kBQYA>
-X-ME-Received: <xmr:KYtOZzObDf1XPKuTSfHusRUQG-rhVu50XGFqsuuuiFFu2u3PXno-aimpPVThsZwy82A4FKsHd6aWc3I9WDFD6-VRt3XwDiWBkCDYWVg>
+	1733200748; x=1733287148; bh=uKYEukEJbLYpUSejxIbDV+4/tfUoC/mceGc
+	65+T8B2g=; b=JPglLlEHTgzjvDvHEaDxHv++qhjOGNyV2PBubeKU0p7IgeN3DM3
+	jISO4jMsmRsxmvWa6gjTAuR4yE5k+r1vPq+L6MlSTYcr1Et2doDUUml+zG+BKOgn
+	gHX9FC1rSCLKp/LDSpTr3v09Eu97BIQqoOFPMca8fWulIFSreUPdx6gHEKLnV9kR
+	grjZ7Qvwk+CjuMs5JsGVl7u5UZaNA1kWv/6Od6Z21JgE8FHwtD3z8diewHjDQzXN
+	3DL+X/ARtVMMLQ0MVMGaYDmay40qhwvsQHcq00fQ4OFZcKGR3Fe0H1gk+M+h3JK1
+	ia2kaiIYcljRXdRuMdTQByAJdgG4K/+fU5w==
+X-ME-Sender: <xms:bItOZ7pXPfn9H2_YVmKhnlpnuAnQFEUzOte1FRFRW_1ZL-eFnHscxA>
+    <xme:bItOZ1qSXa-V3phACXwioWtEpvD6efmnDxkR-FLycL7GL0datam8pjU20Q3Em7GeI
+    mM0ZJvERs2DfTVdGQ>
+X-ME-Received: <xmr:bItOZ4OErKoDYekaUTAA_5KZt7g2_18OM7CVfvciZ095tc91-JgiT_46kr526149t25WYqg5XD4UhKzo3a0huoK9RF2x834BYw6KPL8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedtgdejudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtugifhhhithgvfeesph
-    hmrdhmvgdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdp
-    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
-    htohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:KYtOZ95SIorYc1aoYigvIBddnxh1ynk2DCEq-QJZzApSKF0AhObqvg>
-    <xmx:KYtOZ96A_MtsVSIUwK3bb2h1Qcn48sEFnr8A724-VX4CLaiwVaXY6A>
-    <xmx:KYtOZ9ju2Ievu7w5Kz1aK4zYriZ5oPQTaGo4E3W1Rr-DD9AiJ_XT8A>
-    <xmx:KYtOZ35Tsa-q6BRUaIDZNSH3iaEKelQY2pi15SRabC6D3dsA9ZEkow>
-    <xmx:KYtOZ6v2rNc931Nc6SeiVdIq2YSt1IPakek1ULdABLP5msc-IQL7Kla9>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
+    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrghnhigr
+    nhhgrdhtohhnhiessgihthgvuggrnhgtvgdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:bItOZ-6JKbIPfzE_z8HkBTcmLbzeLuZxuY3qlpCMBgDqBa2bS2ONUw>
+    <xmx:bItOZ65SR_Vs9wu2EerokF7EBqDfplvg7fV61wgCjyjNMIeR4UCbGA>
+    <xmx:bItOZ2gk9SBFoVEGH7LGj0xjPnOBHZ1UJc2ZUrAwkf5aHmc-ig3GRg>
+    <xmx:bItOZ86Bk3mJ5o6-YMfLy2m-UIBnvh2egl1t2VLq1URbJ_LfGYaMcg>
+    <xmx:bItOZ108WlPFg5_TWV-lHIP7P-Cu-cRmmcv9_ZrJMsLmOUfBJM_eAJ59>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 23:38:00 -0500 (EST)
+ 2 Dec 2024 23:39:07 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Caleb White <cdwhite3@pm.me>
-Cc: rsbecker@nexbridge.com,  'Eric Sunshine' <sunshine@sunshineco.com>,
-  'shejialuo' <shejialuo@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] Ensure unique worktree ids across repositories
-In-Reply-To: <D61R68MFWDIU.12PI8AA8S3G86@pm.me> (Caleb White's message of
-	"Tue, 03 Dec 2024 03:42:02 +0000")
-References: <20241129-wt_unique_ids-v2-0-ff444e9e625a@pm.me>
-	<xmqqed2qkfn0.fsf@gitster.g> <Z02eKA8i51QyXgJ-@ArchLinux>
-	<xmqqed2pioff.fsf@gitster.g>
-	<CAPig+cQHW9=A5ejU5aZ+Wy0uOQsLU_uqUibeYzZs2PXK37Vpbw@mail.gmail.com>
-	<xmqqo71tfsif.fsf@gitster.g>
-	<025b01db4526$3b05ef00$b111cd00$@nexbridge.com>
-	<xmqqiks1fqgl.fsf@gitster.g> <D61R68MFWDIU.12PI8AA8S3G86@pm.me>
-Date: Tue, 03 Dec 2024 13:37:59 +0900
-Message-ID: <xmqqiks1e5zs.fsf@gitster.g>
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: git@vger.kernel.org,  hanyang.tony@bytedance.com
+Subject: Re: [PATCH 0/3] Performance improvements for repacking non-promisor
+ objects
+In-Reply-To: <xmqqmshde6sl.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	03 Dec 2024 13:20:42 +0900")
+References: <cover.1733170252.git.jonathantanmy@google.com>
+	<xmqqr06pe6vj.fsf@gitster.g> <xmqqmshde6sl.fsf@gitster.g>
+Date: Tue, 03 Dec 2024 13:39:06 +0900
+Message-ID: <xmqqed2pe5xx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,29 +77,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Caleb White <cdwhite3@pm.me> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> You're correct in that the worktree ids are only relevant within the
-> context of a single repository. However, I've already demonstrated that
-> it's possible for a repository to "repair" (i.e., take over) a worktree
-> belonging to another repository if the ids match (inferred backlink).
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> When merged to 'seen', this seems to break quite a many tests, all
+>> related to "pack".
+>>
+>> I haven't tried running tests on the topic stand-alone.
+>
+> Ah, sorry for a false alarm.  The breakage may be coming from some
+> other topic.  Haven't figured out which one yet.
 
-I know.  But isn't that a BUG in the code that "repair"s?  If a
-worktree had a name 'develop' that was OK in the context of
-repository X, and when you "repair" things so that it becomes one of
-the worktrees of a different repository Y, the "repair" operation is
-what MUST make sure that the worktree that used to be known as
-'develop' to repository X does not interfere any existing worktrees
-that is attached to the repository Y.  If the repository Y already
-had a worktree called 'develop', the "repair" operation must make
-sure that the newly adopted worktree would get a different name.
-
-But then, the concern is exactly the same when you try to create a
-new worktree (no "repair" involved) in repository Y and try to give
-it a name 'develop', isn't it?  You have to make sure that there is
-no worktree that is called 'develop' in the repository Y before
-giving it the name.  Is it broken?  If not, what are we doing to
-make sure we won't give the name 'develop' to the new worktree?
-Certainly we do not use any hash or random number for that, so why
-does this new series need to use a random number?
-
+Sorry for a double false alarm.  The breakages are due to this
+topic.  These do not break without this topic in 'seen', and do
+break with this topic in 'seen'.
