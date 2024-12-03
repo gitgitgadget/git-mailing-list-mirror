@@ -1,78 +1,80 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174926FC3
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 05:33:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DD82B9A2
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 05:36:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733203988; cv=none; b=clqn9StPfZUcsHjg3SPsEHwT1Ympo31CQuviTp6bQ9bsWmceABd7AE8k/izL9HaF+sdp2vRzbAoiKUTTWJfnPEKlVlcgNG6Is7//XPhGJap9onWP4THg9xhZuqdSV9bl6j9NP0FkR8k2DJ5yOmH+Ep5VaywR/roV8NQ32KjVkNI=
+	t=1733204195; cv=none; b=U8/XEsp+5vA8wnXEYJ4RgE0TAeH44lFYuhdY3idkunSeuWHQ6GgBTQo+ydURgBZWezD29AfU7NIBJV2M+EnLSfjkBUIjZZj2+cNRZl5ZjliyvZHy0Szsfol+V1zKQXnv3U7STkta1foybfRNcBTR+c/Ln3BNCNiPX7MvvfhRc3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733203988; c=relaxed/simple;
-	bh=N8/kc48L5+mcwa3Ddpbe6Hf00vc+ocbQfBK5vcMily0=;
+	s=arc-20240116; t=1733204195; c=relaxed/simple;
+	bh=qvI3qy9IV9Lr+nv0Jo4MMGYw9oQ7VCOexpLhvjvbjao=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NuqEVEL0xhspymZPlOtwgrxhnmkkRsgXN8mMmf1zM4CajNbAltgL4srhTdUL8sf8Q2V1SPGgvIdkgyEYGAsvvFzp1zGebPWu3lx3ovU521WP/BO8QQNyV9DwYHDWn0o6JnypeFRnRLWhm+eSPLcVhww5uHn3G8hGRd7ReGGfeRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iy2N9FT/; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=N8Kx2+hFg/oDYHy3SdPKDt/8SRNOPU4cABKk6+4LK5s/LmCUyJXMZyMUpeZSZQsW82BsFddS104yXtGqQXZl53Wwd4ZyU2aHgouq/+ehAu/F+OYYTbrDwho4wEM2hVF5vF465Ls2aN3MHyMclXYZPiyLuaCLyd70hrGENaJ6Nw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zRyHgAlB; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iy2N9FT/"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id CFE2C114016C;
-	Tue,  3 Dec 2024 00:33:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zRyHgAlB"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 63BA92540174;
+	Tue,  3 Dec 2024 00:36:32 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 03 Dec 2024 00:33:05 -0500
+  by phl-compute-10.internal (MEProxy); Tue, 03 Dec 2024 00:36:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733203984; x=1733290384; bh=WYzwniXy1WuQGYvg2c1OqfEZK18A0MdKXLW
-	mNY9OIEc=; b=iy2N9FT/LgPJRalioWAUEqESnNbbKk17SlN1Oxm5f+2nbjSHfs5
-	tYi1zWyfFmHnTM8VXKsuDfiHXoLjMNoJ0RnZNczSr+Y78AQlc95aKA4u2374Fza+
-	ORTHaj+wVR87xVJMmPnq9egnfd0AtSWfq9ScLbee6QpsfQJ5gAGMKbXX1rCJUzaq
-	G6KFUy9fKfk9YOshqa935s/IT46DeYY+knW9N1ekNGIFmQqMGNzQ7qOlF1QB9gLf
-	g23+8bQ7GqynRd1bleIs4FuOVdbcKXDa+crXMeTWmojondeenLAaQWWIBdjNxaGv
-	3+IERM8Av4gNXJR1h3WHo+wjZT9VckLZHrw==
-X-ME-Sender: <xms:EJhOZ1I3LMt16pvcGwg7ez2iFtT2AZ1uLcmdwjusPh_Nbm0NENcheQ>
-    <xme:EJhOZxJWFZ_YrXXmteVMo2RAfQX_ylCF9lZogwG3oEuuowZXWha5_GGoG4kuP8o64
-    lwZIH6RKGGArJWYjA>
-X-ME-Received: <xmr:EJhOZ9spYtNhHfwEL0FYB66r7zUbDCpLhrG9j92mJMA7cMkcB-Wv7PzItVSHzrgOlLi0oiDP8smal_T0DkdSCE7kCt5-uj8fiG33p7k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedugddthecutefuodetggdotefrodftvf
+	1733204192; x=1733290592; bh=qvI3qy9IV9Lr+nv0Jo4MMGYw9oQ7VCOexpL
+	hvjvbjao=; b=zRyHgAlBAfhuBezZ54jfqzfqhh5tzW9oFxueCtqD5ww6R0ZxCF/
+	fuYwntGN/4m3SrYP48vAgPGvG3KUI62GdYFIf3vIpbmCiUr++7iT5SD6JV6Y368P
+	SdhYNalB/gZOAp+xYlvRpF633zt3DIpM9hy4bX5AiSNwc7HafWZHavE6BZJ0yZB0
+	L04+Efh1tdWoh6zoZvt+8IDfngM7Yv7W3TF/meMO3VI1y337m1JeFIICE6Wq6zkn
+	LwDe4Xict3w5YDZQhUBpzbR7MWIVcb5Ps7BeNihmfc3Hxllq6VlaaiOsBq/crE/K
+	uHtZmzNvQu3l5pYgYpv/heyeKE/GIEXaWmQ==
+X-ME-Sender: <xms:35hOZ4eNtFm4Fotz65oCz97Z9wKOGX8cRtXjyDH_1HKCdyPt374ZzQ>
+    <xme:35hOZ6OocTsc6h1tys4lXWRkiQkkq1HCOlOQP-AKgjXHnzvN_qnQZ6hs5BEts5-zU
+    T1LY6eYFnpI_Iyvnw>
+X-ME-Received: <xmr:35hOZ5iXizQfGFnjeJ4l0uSq3-M4aLR5tSVznEm7DfxKnsNaPvP-jsDCpx5LaHGb8XudLDHIpvIL_7rmi_YHRgQzq6ovz4tyq3R5998>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedugddtiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
     hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohephiehtgeglhefsehprhhothhonhdrmhgvpdhrtghpthhtohep
-    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvth
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:EJhOZ2YALvdSvTv8mbWTt3hk6rpkeRsqpguoNdgR5KilnfzhDPB5fw>
-    <xmx:EJhOZ8aTPaFTpRmVOMl0jd9zn5LO-pYQNcIzFywjinxdW3IQs11Yrg>
-    <xmx:EJhOZ6Bramk0Q5e28jpswItWhc9j1YH26hiqRllvgl3eZTzVrCS-4w>
-    <xmx:EJhOZ6YkH-kEEJyhymXUbzHFOa2G0fNeAIJNymgV_Oo2o3sE6m6Bzg>
-    <xmx:EJhOZxMVPms2kTcvMN2w-5ej827ccq_n5bF7Nf8AHfgY_BWwbVhZh5Jm>
+    gtohhmqeenucggtffrrghtthgvrhhnpeeuudejgfehkeeggfdvjeffudeftdeitdfftedv
+    lefghedvffeigeffkeeiffeiudenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhkvg
+    hrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduvd
+    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhl
+    vgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvghm
+    rhgrshhssehgohhoghhlvgdrtghomhdprhgtphhtthhopehmhhesghhlrghnughiuhhmrd
+    horhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
+    rdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsuhhnshhhih
+    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguuddvfeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:35hOZ9-HpZ5tC_gBBp05yvaYXHtj4IcV_h5y2YGK9rD324RjDpY-uA>
+    <xmx:35hOZ0v4ZCRSDynds4bJNA2vZhmvPaURdVHA7qFX2sq9eLACZfCu0w>
+    <xmx:35hOZ0G2G6YLny6RUROgbtTL-n8Hr0qz75P3GhW_Yy4sHoyza6o_Mg>
+    <xmx:35hOZzORFHSQIcz47_eSqiq6vBA7VTPyr3LJN8oAlIxDt9HYUdlDuA>
+    <xmx:4JhOZ1FEIzQaK9vPA0Uy6BsYGSTjxpPF41u-5CC-XBw3q7KsMPsSwsZx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 00:33:03 -0500 (EST)
+ 3 Dec 2024 00:36:31 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>, Philip Yung <y5c4l3@proton.me>
-Cc: Taylor Blau <me@ttaylorr.com>,  Y5 via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] diff: setup pager only before diff contents truly ready
-In-Reply-To: <20241125113105.GA1070162@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 25 Nov 2024 06:31:05 -0500")
-References: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-	<20241019211938.GA589728@coredump.intra.peff.net>
-	<UZMh2lyzbLOgsf0PXfMnq6HnWVnCK3y36jY3IMKUykPi74ztNucf8bgywoeO0DdeApq31JDDGMZiEya99zAcI3l8y_zcVqiN8FpEnT1DRZU=@proton.me>
-	<20241021190045.GB1219228@coredump.intra.peff.net>
-	<ZxatqdBiB+NoMP+j@nand.local> <xmqq34jpl5sl.fsf@gitster.g>
-	<20241125113105.GA1070162@coredump.intra.peff.net>
-Date: Tue, 03 Dec 2024 14:33:02 +0900
-Message-ID: <xmqqo71tcovl.fsf@gitster.g>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  calvinwan@google.com,  emrass@google.com,
+  mh@glandium.org,  sandals@crustytoothpaste.net,  ps@pks.im,
+  sunshine@sunshineco.com,  phillip.wood123@gmail.com,
+  allred.sean@gmail.com,  rsbecker@nexbridge.com
+Subject: Re: [PATCH v5 0/5] Introduce libgit-rs, a Rust wrapper around libgit.a
+In-Reply-To: <cover.1729032373.git.steadmon@google.com> (Josh Steadmon's
+	message of "Tue, 15 Oct 2024 15:50:52 -0700")
+References: <cover.1723054623.git.steadmon@google.com>
+	<cover.1729032373.git.steadmon@google.com>
+Date: Tue, 03 Dec 2024 14:36:29 +0900
+Message-ID: <xmqqjzchcopu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,43 +84,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
-> On Mon, Nov 18, 2024 at 09:55:06AM +0900, Junio C Hamano wrote:
+> A quick note: normally I'd wait longer for more feedback before sending
+> out a new reroll, but due to some firefighting at $DAYJOB, I will not
+> have time to focus on this series for the next several weeks, possibly
+> up to a month. I wanted to get V5 out before then, but please understand
+> that I will not be able to address new feedback for a while.
 >
->> Taylor Blau <me@ttaylorr.com> writes:
->> 
->> >> You'd need to identify all of the possible diff code paths in order to
->> >> add tests for them, which is the same thing you had to do to fix the
->> >> code paths. I was mostly just commenting that we're not likely to be
->> >> able to rely on existing tests to help us here.
->> >>
->> >> It might be worth adding a test that shows off your improved diff
->> >> behavior, though I would be OK if it was a representative command and
->> >> not exhaustive. I think adding to t7006 should be fine.
->> >
->> > Agreed.
->> 
->> It seems that this topic is waiting for a reroll?
+> This series provides two small Rust wrapper libraries around parts of
+> Git: "libgit-sys", which exposes a few functions from libgit.a, and
+> "libgit", which provides a more Rust-friendly interface to some of those
+> functions. In addition to included unit tests, at $DAYJOB we have tested
+> building JJ[1] with our library and used it to replace some of the
+> libgit2-rs uses.
 >
-> I think we could go either way. I outlined a few further possible steps,
-> but there is no need to hold up this first step. The only question is
-> whether or not to add a single test to show off and protect the
-> improvement.
+> [1] https://github.com/martinvonz/jj
+>
+> Please find V1 cover letter here:
+> https://lore.kernel.org/git/cover.1723054623.git.steadmon@google.com/
 
-Hmph, a few messages upthread
-<UZMh2lyzbLOgsf0PXfMnq6HnWVnCK3y36jY3IMKUykPi74ztNucf8bgywoeO0DdeApq31JDDGMZiEya99zAcI3l8y_zcVqiN8FpEnT1DRZU=@proton.me>
-(Ugh, why do some MUAs or mail providers use such an overly long
-message ID, Yuck) was where I got the impression that we were
-waiting for a reroll.
+Haven't seen any traffic on this one since it was posted.
 
-I am not all that convinced that sprinkling setup_diff_pager() call
-all over the place is a good idea from longer-term maintainability's
-sake to begin with, by the way.  What problem are we really solving?
-Folks who run "git diff --no-such-option" see "behaviour inconsistency"?
-All I see is "error: invalid option: --invalid" followed by a help message,
-which is quite expected.
+It happened during my absense, but that is just one potential
+reviewer, and it is unnerving that nobody showed any interested in
+the topic, unlike any of the previous iterations with active
+discussion subthreads.
 
-So, I donno.
+Anybody interested in reviewing and championing the topic, or should
+we wait until the topic gets refined and resubmit?
 
 Thanks.
+
+
