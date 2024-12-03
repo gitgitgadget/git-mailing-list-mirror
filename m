@@ -1,43 +1,43 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50227E0E8
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 23:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB461AE00E
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 23:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733268251; cv=none; b=HiwtossVAZsFdUa5+yDzeMhMBeHKEsdm2bhuIPdL8d67xntEpqR8Y1bRqd65c2Xjc574Aer6OBEY4bggsTt9gY91Q1EITkDayLjKzrOV4HaoyX9V6ZTMqQhHGzT38qeBh3zz/I2J2xZ4SHMNz3LIlPzwI9hrLgnHBob/A35atSg=
+	t=1733268300; cv=none; b=u3ylt2PnbfMtXDEWgtBtnocL5lqCIg/UJ7SjjwA1X6EjYf6o6OMxdPWPUq0fuBFNQyu6zru+xL6xkHVUrNzUTUCRHYPb9hQvxv1bhMcPUa24y8QSv8UP0LExrfwfKHgKgv7PHPInCfqUYyFzOylMSCrPKR6n9j72HeXYXj6wEk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733268251; c=relaxed/simple;
-	bh=EVsG2RXXSYH0ObGIo/Ao+BV4H+t4yaWsqcUJl5Pghpk=;
+	s=arc-20240116; t=1733268300; c=relaxed/simple;
+	bh=ciZA9tkCw1VIybzdjVLM5Pb7Che5kHr3e8ErvgBkId4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M9RCmol+7ovsznqTsfgm8p91zacFatMPH8pqMRiOg6O7u9reNKEHmirsFu3/yBkVF2YJSA6WIDR4ws2h1xNAMkP1AbcLhFKe0sBN9u6pO45xDJ0r+RG9iJaXf+MobuFjO3BrTMiiCcr/LgJj0TOzskRVaviGOcJoo0AaXGOS1Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rb9WpJB2; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=Hc8qxZJFIGwa5DhTmHchWcj5PPPKq7EK0rjbzM4rnBehq82yS2JxZD2hTY4nn+ltb/I+JKC2xKwd759BOgGZFFrneHj8ZcW+4yRxfkHqqpp7M+pEGkrDu5GULzrpTCw6rbc89oQtxyu90jm1/amukNHz9wRcawzT2zFWqKxhpWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4E+efwa5; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rb9WpJB2"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8A62C25400D6;
-	Tue,  3 Dec 2024 18:24:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4E+efwa5"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 298FB2540150;
+	Tue,  3 Dec 2024 18:24:58 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 03 Dec 2024 18:24:08 -0500
+  by phl-compute-10.internal (MEProxy); Tue, 03 Dec 2024 18:24:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733268248; x=1733354648; bh=8XikRzh1K0hsc/C5mWW+PnUgkzNQqgVDKhh
-	lG9BCTl4=; b=rb9WpJB2Vjvmr/TFfgUv7Y3f/OASX0l/oBfk4dKbUMnpgGWV9Uw
-	Ku57IFEiZa3NUena0iCXHo6CT1/K+zJ3w9ORR+t9Aae7K8BADEZI71mc4OcpoQD9
-	dnH4xMFMuKsBg3ghCkFu3QpE0IbAEW5BCFtG25ODKCU4Fj5uMHjIBQXhv/MaCqUG
-	Ab7FDCfiza85ZutFtQ97jhML4P3yGZs9vErP67XdW0ntvVeiGaIb4np2fFvBvFTa
-	2aSHdQhUbSPylGoWRjA/Q6YI0IjdwRvZm9gXLidHqDXxubIlKJYyyUa9oOCE/UQC
-	tHeVWcvzYzgAwGaH2RfY13xT39vZAZlT6Dw==
-X-ME-Sender: <xms:F5NPZzWl7K_fNhENlqbSINWk3ddITm3q-AfqLWWMGiBlYxH5XsxHAg>
-    <xme:F5NPZ7kRAg9uhr2YgEAGBsUrYa-wBKJGjD7i5tKDBoVhyMbAH2x6oHeH5EoP3KHYD
-    3Qxoi_M-cBViZnbDg>
-X-ME-Received: <xmr:F5NPZ_YZuvvlseXjXEHrbswLdfBWM9fCci2eqjiRDb1HqTI1jSUkHr1jwvyusdJgjgrssvg0eFfHldDsPqVhy6mIApDZxXnYpcnEsC8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddtkecutefuodetggdotefrodftvf
+	1733268298; x=1733354698; bh=Oo8maGW0gKOO5DL/XRU7jsPvCu0eNMQIJDI
+	GEKfAFfU=; b=4E+efwa5FbwJHNzTCp7ct4X9U0+N9Jj1AZuz7M19FrPJAD6d9eg
+	COptwEroKuQOGhbMbl1lznK9zO9NI7B5BhLjUaaSiD6jVb9lwUawM4D05nQGW3Ei
+	XZ2Cum8QaQtdjfGz5aLqYPVcnGMA1uJdXjM3qIgWUt7ilaMiLvWQf+pJg5TxKzQQ
+	yYL8JQrPJdoIT+8xlMy9NSHQB066E7toFpcQC6Vw5Uh0gwGpKe/44ZfvbdbISIoT
+	JpTgu3mlLBCb5irZXrKL0nOBLgLry8E/AupHNUKfsqy2oCBU0pMaMotOEwJdhJTJ
+	SyWorubC4w6jFSgb5E2a8wolirEmpJ/jytw==
+X-ME-Sender: <xms:SZNPZ1cnsrusSpJpzGs6ylli0k4SAPSffOy9atvQbevUim4Gv-UwPw>
+    <xme:SZNPZzMGXficytjCYwv3HOUQfIDV9c2zxNRNQnWf9GYcYVqiS1alzH91fotkq08he
+    -DZfjINhJAu5rSiuw>
+X-ME-Received: <xmr:SZNPZ-jNkTsWTxIt5xtx-85qviDA52RBLFRnLWvUjbykpvg1-ir6GKvKE2si8gAIyB-qdQxjOgEx8vjI-Q3E3WozAz97oS47b-ktnzg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddtjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,34 +45,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddtkecutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrh
-    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehtohhonhes
-    ihhothgtlhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkh
-    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:F5NPZ-V9O-lnC34Qh8P352E7d8eVMfS2hSuTBy2Lq_ndXDnVzt7nzw>
-    <xmx:F5NPZ9kc0KJcrz1BVcRF3XLbzXGdr1VGxi4M7UKKIGyWuWNQJ5RfSw>
-    <xmx:F5NPZ7faeZOrVb56qZoDy2VW6zeBYkyu3aISDZvnIs3YFrK3IZp4Yg>
-    <xmx:F5NPZ3EbtApJvNugvA-T1hTbkStiqrliGUxI8ypggxkGc58bgujlWQ>
-    <xmx:GJNPZ7bB0esouIrOufnTE1krABcd4jdVBy1kKq0GOkkpx1NCjs7HsYLb>
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghikhhophhonhgvnh
+    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:SZNPZ--H1qKzfnw_3wy7_ZfFTurZ_Q1Qv97CrwIl18A2JL-6JTjR6w>
+    <xmx:SZNPZxtfEOLBr7X3F5ZeTbubBoDKMLN4rnvl3XwcSJ6KknsKp0g31A>
+    <xmx:SZNPZ9FcNY5rxKMGbQnECZsZhwe4odNjFpvS8Hg02zhf63jHvP0grA>
+    <xmx:SZNPZ4PcZb-cvDjUCYIwK2hkg0pZbsCrX5xxBCZEj2fXBA6Uzzc0eg>
+    <xmx:SpNPZ7JY94AOfmvKngcr99YoF0GMLEnj5-wfyErNThGFNSbvqYEeMPcV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 18:24:07 -0500 (EST)
+ 3 Dec 2024 18:24:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
-    Toon Claes <toon@iotcl.com>,
-    Patrick Steinhardt <ps@pks.im>
-Cc: "Karthik Nayak" <karthik.188@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v10 00/10] packfile: avoid using the 'the_repository'
- global variable
-In-Reply-To: <14f1ff64-bdd6-4233-9358-d56eb64a2d57@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 03 Dec 2024 17:46:41 +0100")
-References: <cover.1729504640.git.karthik.188@gmail.com>
-	<cover.1733236936.git.karthik.188@gmail.com>
-	<14f1ff64-bdd6-4233-9358-d56eb64a2d57@app.fastmail.com>
-Date: Wed, 04 Dec 2024 08:24:05 +0900
-Message-ID: <xmqqplm89wq2.fsf@gitster.g>
+To: Kai Koponen <kaikoponen@google.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] doc: mention rev-list --ancestry-path restrictions
+In-Reply-To: <CADYQcGrD5KtM1sZQbccAtDaLmUXD8Gxv_nUWmapjfZm=TMq=Jw@mail.gmail.com>
+	(Kai Koponen's message of "Tue, 3 Dec 2024 12:14:34 -0500")
+References: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
+	<CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
+	<CADYQcGpyTL18N2t8t-HwafB8VEVbBt452fsE0yMBvRvZd1mbVw@mail.gmail.com>
+	<xmqqfrn5h8zj.fsf@gitster.g>
+	<CADYQcGrD5KtM1sZQbccAtDaLmUXD8Gxv_nUWmapjfZm=TMq=Jw@mail.gmail.com>
+Date: Wed, 04 Dec 2024 08:24:56 +0900
+Message-ID: <xmqqldww9won.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,11 +79,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Kai Koponen <kaikoponen@google.com> writes:
 
-> Nice, thank you.
+> The rev-list documentation doesn't mention that the given
+> commit must be in the specified commit range, leading
+> to unexpected results.
+>
+> Signed-off-by: Kai Koponen <kaikopone@google.com>
+> ---
+>  Documentation/rev-list-options.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/rev-list-options.txt
+> b/Documentation/rev-list-options.txt
+> index 00ccf68744..f0a46f9da5 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -412,7 +412,7 @@ Default mode::
+>
+>  --ancestry-path[=<commit>]::
+>   When given a range of commits to display (e.g. 'commit1..commit2'
+> - or 'commit2 {caret}commit1'), only display commits in that range
+> + or 'commit2 {caret}commit1'), and a commit <commit> in that range,
+> only display commits in that range
+>   that are ancestors of <commit>, descendants of <commit>, or
+>   <commit> itself.  If no commit is specified, use 'commit1' (the
+>   excluded part of the range) as <commit>.  Can be passed multiple
 
-Yeah, together with a few responses from Toon and Patrick, this
-topic seems to be very well done by now.  Let me mark it for 'next'.
+Thanks for accomodating my pickyness ;-)  This version reads very
+well.
 
-Thanks, all.
+Will queue.
+
