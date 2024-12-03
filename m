@@ -1,117 +1,281 @@
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356DB1FBEA7
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CBE19259E
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 21:58:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733262788; cv=none; b=H1klCVif9JoCC1QxJOaGd+MZ3h7A8s52YRtrV6nGQyVi4Wu7++lBFArF1jixZ2eoolbBsYT4UGxg9VfCSC4I0NJhq9pIuafg50/n6Kjvc4Pt/s7hJ71y7L4uJUAPdB6SnMqEPacua3tQ7PAfNWKErtIUh0L2mBeT1Y8IuTTMvkw=
+	t=1733263106; cv=none; b=CnQihzBQpvmC71tjYKLlNaSTILMCw+/IzNyvbj30rDfvXx2Npfqn1gcaFfEuoTt6l3p2jPmh8Ei3nvSZJdy9yCA9wO3iD1GeJIK8fsYbu3uR3QAXpjvf121SqjLBVwR31bVuYYz/HdCYcehmeQB9wrkAYOxQBMq47dkaYFbvc8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733262788; c=relaxed/simple;
-	bh=qRXNHc3e9qElHF+XE3Rmr8l4+eLxZnEpJc36Ach+4S4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Mg/oHbeIfD/D8LAwCS27lHYBiMCVobiD00fZfyHp9ev84GEkCqjDXM/co4p7RZoLqRLvCFMWETX0HhoYX3ENgGHgo5V/EVKX+nBTZoVdLl8yb7GNMQOyQgT781DV/nCg7H3knTapAtDbWmbj1Ic4O15ztOkgX2vNqJ/QTbVq39c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=jKXm4czn; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
+	s=arc-20240116; t=1733263106; c=relaxed/simple;
+	bh=PwLmB3w/IOvV0PdqyS0iZPx8mrrHXslTG2YUb2pytA0=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=hHsSQOQVKb0BUmM9tY/8qzl3/sMSWMP2GEwjJjcNa7VidgdpMVp8ftHuWmnU0TeBT6lM7/iL6ohH2RHL0xj7DFxxxhM9gSZnkhfg9RxcYWJeDoa3v38QmDjwwM78qXjzDwAxwJq+YQVhrJlBfWb9/P0zYREaKPEkuRPtBub+OFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=SIuSKaIn; arc=none smtp.client-ip=192.29.178.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="jKXm4czn"
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-7ee3c2a2188so4488967a12.3
-        for <git@vger.kernel.org>; Tue, 03 Dec 2024 13:53:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733262786; x=1733867586; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ci6rzfBnd5EQ5ISlpqG5ZO5OAcQKCvNSZGqaRLwh/HQ=;
-        b=jKXm4cznPGSNRug0Kjlq1T2HXWUQH8vBmzM6TGTgZ9tVSXfUseF6QYr8Rro4KRbKJr
-         YUXpofdK82gxlFvTdw2Z3MXmHxzJWt7/qM2j4JfngixVkgMv76lw+1xCvz6dmRtw8g9r
-         flW7kVhdzSUtfEfshxGqS6kEmQtGWp3efRJ+Wrtm7Xj60HXn78c/1bvGbHhiobTywPeU
-         ycY9ildyBqN5lvESMkoUn2a3LE3iz50TQ9CBEHop5+xiDb8c3Ool0ruzsc/qEQrZrXJL
-         vPaAi34n9pBdOY3sakHDNMRjBggkzXkrVe4KB7jWUFjYo5+tu23YL/BjwFFY3VkprcX3
-         XZoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733262786; x=1733867586;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ci6rzfBnd5EQ5ISlpqG5ZO5OAcQKCvNSZGqaRLwh/HQ=;
-        b=YRxXMwFf8/Yfecve6HsNN2LMIABi0FW6jgSDO10lKYEzFoZFKdEnFmbPv5nT3ttfSR
-         7kh8QcTkeXclbcw7wlTwNWfeEVa0ZUrzPKuMzGdsCjsK/3c8YakD9KJgFWYAYM5WjUn2
-         tLe3MOgXWaaXpFlggLKe7WZcD+/hKLJIr4btvl/P1WH0Z7OKJ9ZK3ewxLaZUxLeFPS0Q
-         bdfLFqwFoNpfNFxo9CjdsfDKlnsM8It6LPOcxntqoGcmWjfC0FmiSwPeJHbbxoWwAzqI
-         ysbYUnTBw+AuE4nCeUItWFix4Qcxg4vQpHB96j/PnQ/pdiZxbnXLwrc+ikwDBcif6Rw1
-         I2mA==
-X-Gm-Message-State: AOJu0YyVH3WbgKV9+hbL5YSQNf7rFxPKWmcnb/7rWJYmcOQ4xgehSK3X
-	xTW4np14fwxlHd4DPf0X6awzfdyMhhKeHAltg2Hntlg28LVozsXkOIPHTfjE5btDy6EYpUizM5i
-	QqTG+ElSPDUAoupMA0Be4uwCUwuZuKAykbS5IKAOV7EkRAAy6Klpcz7D73UXqhfGp3RbhbyvH6f
-	ihrNjNHQDWWqJ/GoD1QMK+XJsK+eGuOzbCxyNqoqPhlUhKj5Bk9WpPJCnKGNM4DQ0VTg==
-X-Google-Smtp-Source: AGHT+IHSi+ScM7xkX+aZUq2QmZJBHF3UV9Ra71YJ1jmhYGcTBKa5w89HyJBfRF3eSmqS+dqfJq6+TPi32QRwSxJIJRPH
-X-Received: from pfbbe16.prod.google.com ([2002:a05:6a00:1f10:b0:724:eb96:cf5c])
- (user=jonathantanmy job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:c947:b0:215:94c0:f6ea with SMTP id d9443c01a7336-215bd1878c7mr38472465ad.56.1733262786352;
- Tue, 03 Dec 2024 13:53:06 -0800 (PST)
-Date: Tue,  3 Dec 2024 13:52:56 -0800
-In-Reply-To: <cover.1733262661.git.jonathantanmy@google.com>
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="SIuSKaIn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=yJp1fsfLBheuVdkDCxyC9owzPuorta2XcJ1D5wDF/qY=;
+ b=SIuSKaInimTRkBhi1/ucmPqeuBkjsz3haTN/eBCcqiw3QlGUHXzTW2kcAXaXAGvqOFmSKha+VbGn
+   OFhPQ+8MCVYwvUcZ0h8eBtLtApPrcdIMchxhS73InC4DpSxDFK99jIN6uk5nAflENaWICjADY6Tz
+   A3AIBC7THsYaiCYJXJjHnXNQnb4SaGPAoecS/hKi4n1lnEqY0fxUoSQR9rJrDFJV0adlTVqm3Gvk
+   riwJrYa0TDA2Gmg5XiKKwYAcrlOYTOAnCM9tsi855GgRiG6AHfoLXTjkMAH7jVfk1oBQTUvqJN/i
+   4SznyKSC9x2+Xz5MZBmhgNvRZxaYm5m1rqF1pQ==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SNX00C0WUD39AF0@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Tue, 03 Dec 2024 21:58:15 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: phillip.wood@dunelm.org.uk,	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,	karthik.188@gmail.com,
+	Taylor Blau <me@ttaylorr.com>,	Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [RFC PATCH v1 1/2] fetch set_head: add warn-if-not-$branch option
+Date: Tue,  3 Dec 2024 22:56:47 +0100
+Message-id: <20241203215713.135068-2-bence@ferdinandy.com>
+In-reply-to: <20241203215713.135068-1-bence@ferdinandy.com>
+References: <xmqqiks7oprx.fsf@gitster.g>
+ <20241203215713.135068-1-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1733170252.git.jonathantanmy@google.com> <cover.1733262661.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <f9f9969a8f399fda701b0ccd44dd124e953bf36d.1733262662.git.jonathantanmy@google.com>
-Subject: [PATCH v3 3/3] index-pack --promisor: also check commits' trees
-From: Jonathan Tan <jonathantanmy@google.com>
-To: git@vger.kernel.org
-Cc: Jonathan Tan <jonathantanmy@google.com>, ps@pks.im, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAFqDQYZm1jFPCZW4D1Fmo9zRzjP+gpQNTqhKjfCq3HsU0+faZzMQLQkVEsEkPva
+ 9litAjVwA0PDvpxXpARVDFf+FhVB+PGHqivSIFTNtjeT2NUDb0P/FbzrHK/dYO/T
+ hyzx1Tza+FHqL0JKwtX0TpJ+oGw2aCQFvu594mo3vWKjVdund16SR3xUl6ibSdIU
+ wSBYaUZpcgj2IKUvSTtz0rTGzvOtoah5rcZEGn9aKSxVHgD4EgQV9bPzARRQD27g
+ KlpFHCrZODJvbW/oGho9vMXMsxQ3gJTNYNHFtz7mNJ8VCMvGRkqBo5+/5WOeU9cg
+ /ERjdyCHpnyanePcvonVgTm4fKPv9Dd6Dhq9LeWRNS4Hytdyt1TV4JDzpBVb2bz5
+ qhTlb0DTgkRTtQo6tOVlmb1h53KfwogBXBKlmPnK+RYiPjANg/xhENtL/rni+11F
+ zjmxeUGxVmexONDlSBsjBu0M1dFhzMiuSLa7/r2hVUw2wHDFec2nJhE=
 
-Commit c08589efdc (index-pack: repack local links into promisor packs,
-2024-11-01) seems to contain an oversight in that the tree of a commit
-is not checked. Teach git to check these trees.
+Currently if we want to have a remote/HEAD locally that is different
+from the one on the remote, but we still want to get a warning if remote
+changes HEAD, our only option is to have an indiscriminate warning with
+"follow_remote_head" set to "warn". Add a new option
+"warn-if-not-$branch", where $branch is a branch name we do not wish to
+get a warning about. If the remote HEAD is $branch do not warn,
+otherwise, behave as "warn".
 
-The fix slows down a fetch from a certain repo at $DAYJOB from 2m2.127s
-to 2m45.052s, but in order to make the fetch correct, it seems worth it.
+E.g. let's assume, that our remote origin has HEAD
+set to "master", but locally we have "git remote set-head origin seen".
+Setting 'remote.origin.followRemoteHEAD = "warn"' will always print
+a warning, even though the remote has not changed HEAD from "master".
+Setting 'remote.origin.followRemoteHEAD = "warn-if-not-master" will
+squelch the warning message, unless the remote changes HEAD from
+"master". Note, that should the remote change HEAD to "seen" (which we
+have locally), there will still be no warning.
 
-In order to test this, we could create server and client repos as
-follows...
+Improve the advice message in report_set_head to also include silencing
+the warning message with "warn-if-not-$branch".
 
- C   S
-  \ /
-   O
-
-(O and C are commits both on the client and server. S is a commit
-only on the server. C and S have the same tree but different commit
-messages. The diff between O and C is non-zero.)
-
-...and then, from the client, fetch S from the server.
-
-In theory, the client declares "have C" and the server can use this
-information to exclude S's tree (since it knows that the client has C's
-tree, which is the same as S's tree). However, it is also possible for
-the server to compute that it needs to send S and not O, and proceed
-from there; therefore the objects of C are not considered at all when
-determining what to send in the packfile. In order to prevent a test of
-client functionality from having such a dependence on server behavior, I
-have not included such a test.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 ---
- builtin/index-pack.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/fetch.c  | 26 ++++++++++++++++++-------
+ remote.c         |  5 +++++
+ remote.h         |  6 ++++--
+ t/t5510-fetch.sh | 49 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 4 files changed, 75 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2e90fe186e..1594f2b81d 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -865,6 +865,7 @@ static void do_record_outgoing_links(struct object *obj)
- 		struct commit *commit = (struct commit *) obj;
- 		struct commit_list *parents = commit->parents;
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 88c5c5d781..fd7f3694cc 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1579,6 +1579,15 @@ static const char *strip_refshead(const char *name){
+ 	return name;
+ }
  
-+		record_outgoing_link(get_commit_tree_oid(commit));
- 		for (; parents; parents = parents->next)
- 			record_outgoing_link(&parents->item->object.oid);
- 	} else if (obj->type == OBJ_TAG) {
++static void set_head_advice_msg(const char *remote, const char *head_name) {
++
++	printf("Run 'git remote set-head %s %s' to follow the change, or\n"
++		"'git config set remote.%s.warn-if-not-%s' to disable this warning\n"
++		"until the remote changes HEAD again.\n",
++		remote, head_name, remote, head_name);
++
++}
++
+ static void report_set_head(const char *remote, const char *head_name,
+ 			struct strbuf *buf_prev, int updateres) {
+ 	struct strbuf buf_prefix = STRBUF_INIT;
+@@ -1590,20 +1599,19 @@ static void report_set_head(const char *remote, const char *head_name,
+ 	if (prev_head && strcmp(prev_head, head_name)) {
+ 		printf("'HEAD' at '%s' is '%s', but we have '%s' locally.\n",
+ 			remote, head_name, prev_head);
+-		printf("Run 'git remote set-head %s %s' to follow the change.\n",
+-			remote, head_name);
++		set_head_advice_msg(remote, head_name);
+ 	}
+ 	else if (updateres && buf_prev->len) {
+ 		printf("'HEAD' at '%s' is '%s', "
+ 			"but we have a detached HEAD pointing to '%s' locally.\n",
+ 			remote, head_name, buf_prev->buf);
+-		printf("Run 'git remote set-head %s %s' to follow the change.\n",
+-			remote, head_name);
++		set_head_advice_msg(remote, head_name);
+ 	}
+ 	strbuf_release(&buf_prefix);
+ }
+ 
+-static int set_head(const struct ref *remote_refs, int follow_remote_head)
++static int set_head(const struct ref *remote_refs, int follow_remote_head,
++		const char *no_warn_branch)
+ {
+ 	int result = 0, create_only, is_bare, was_detached;
+ 	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
+@@ -1660,7 +1668,10 @@ static int set_head(const struct ref *remote_refs, int follow_remote_head)
+ 		result = 1;
+ 		goto cleanup;
+ 	}
+-	if (follow_remote_head == FOLLOW_REMOTE_WARN && verbosity >= 0)
++	if ((follow_remote_head == FOLLOW_REMOTE_WARN ||
++		(follow_remote_head == FOLLOW_REMOTE_WARN_IF_NOT_BRANCH &&
++		strcmp(no_warn_branch, head_name))
++		) && verbosity >= 0)
+ 		report_set_head(remote, head_name, &b_local_head, was_detached);
+ 
+ cleanup:
+@@ -1889,7 +1900,8 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
+-	if (set_head(remote_refs, transport->remote->follow_remote_head))
++	if (set_head(remote_refs, transport->remote->follow_remote_head,
++		transport->remote->no_warn_branch))
+ 		;
+ 		/*
+ 		 * Way too many cases where this can go wrong
+diff --git a/remote.c b/remote.c
+index 0b18840d43..f0e1b1b76a 100644
+--- a/remote.c
++++ b/remote.c
+@@ -515,6 +515,7 @@ static int handle_config(const char *key, const char *value,
+ 		return parse_transport_option(key, value,
+ 					      &remote->server_options);
+ 	} else if (!strcmp(subkey, "followremotehead")) {
++		const char *no_warn_branch;
+ 		if (!strcmp(value, "never"))
+ 			remote->follow_remote_head = FOLLOW_REMOTE_NEVER;
+ 		else if (!strcmp(value, "create"))
+@@ -523,6 +524,10 @@ static int handle_config(const char *key, const char *value,
+ 			remote->follow_remote_head = FOLLOW_REMOTE_WARN;
+ 		else if (!strcmp(value, "always"))
+ 			remote->follow_remote_head = FOLLOW_REMOTE_ALWAYS;
++		else if (skip_prefix(value, "warn-if-not-", &no_warn_branch)) {
++			remote->follow_remote_head = FOLLOW_REMOTE_WARN_IF_NOT_BRANCH;
++			remote->no_warn_branch = no_warn_branch;
++		}
+ 	}
+ 	return 0;
+ }
+diff --git a/remote.h b/remote.h
+index 184b35653d..75be3977ba 100644
+--- a/remote.h
++++ b/remote.h
+@@ -62,8 +62,9 @@ struct remote_state *remote_state_new(void);
+ 	enum follow_remote_head_settings {
+ 		FOLLOW_REMOTE_NEVER = -1,
+ 		FOLLOW_REMOTE_CREATE = 0,
+-		FOLLOW_REMOTE_WARN = 1,
+-		FOLLOW_REMOTE_ALWAYS = 2,
++		FOLLOW_REMOTE_WARN_IF_NOT_BRANCH = 1,
++		FOLLOW_REMOTE_WARN = 2,
++		FOLLOW_REMOTE_ALWAYS = 3,
+ 	};
+ 
+ struct remote {
+@@ -116,6 +117,7 @@ struct remote {
+ 	struct string_list server_options;
+ 
+ 	enum follow_remote_head_settings follow_remote_head;
++	const char *no_warn_branch;
+ };
+ 
+ /**
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 2467027d34..be0c60be2c 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -124,7 +124,9 @@ test_expect_success "fetch test followRemoteHEAD warn no change" '
+ 		git fetch >output &&
+ 		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+ 			"but we have ${SQ}other${SQ} locally." >expect &&
+-		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change." >>expect &&
++		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change, or" >>expect &&
++		echo "${SQ}git config set remote.origin.warn-if-not-main${SQ} to disable this warning" >>expect &&
++		echo "until the remote changes HEAD again." >>expect &&
+ 		test_cmp expect output &&
+ 		head=$(git rev-parse refs/remotes/origin/HEAD) &&
+ 		branch=$(git rev-parse refs/remotes/origin/other) &&
+@@ -161,7 +163,9 @@ test_expect_success "fetch test followRemoteHEAD warn detached" '
+ 		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
+ 			"but we have a detached HEAD pointing to" \
+ 			"${SQ}${HEAD}${SQ} locally." >expect &&
+-		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change." >>expect &&
++		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change, or" >>expect &&
++		echo "${SQ}git config set remote.origin.warn-if-not-main${SQ} to disable this warning" >>expect &&
++		echo "until the remote changes HEAD again." >>expect &&
+ 		test_cmp expect output
+ 	)
+ '
+@@ -184,6 +188,47 @@ test_expect_success "fetch test followRemoteHEAD warn quiet" '
+ 	)
+ '
+ 
++test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is same" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git rev-parse --verify refs/remotes/origin/other &&
++		git remote set-head origin other &&
++		git rev-parse --verify refs/remotes/origin/HEAD &&
++		git rev-parse --verify refs/remotes/origin/main &&
++		git config set remote.origin.followRemoteHEAD "warn-if-not-main" &&
++		output=$(git fetch) &&
++		test "z" = "z$output" &&
++		head=$(git rev-parse refs/remotes/origin/HEAD) &&
++		branch=$(git rev-parse refs/remotes/origin/other) &&
++		test "z$head" = "z$branch"
++	)
++'
++
++test_expect_success "fetch test followRemoteHEAD warn-if-not-branch branch is different" '
++	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
++	(
++		cd "$D" &&
++		cd two &&
++		git rev-parse --verify refs/remotes/origin/other &&
++		git remote set-head origin other &&
++		git rev-parse --verify refs/remotes/origin/HEAD &&
++		git rev-parse --verify refs/remotes/origin/main &&
++		git config set remote.origin.followRemoteHEAD "warn-if-not-some/different-branch" &&
++		git fetch >output &&
++		echo "${SQ}HEAD${SQ} at ${SQ}origin${SQ} is ${SQ}main${SQ}," \
++			"but we have ${SQ}other${SQ} locally." >expect &&
++		echo "Run ${SQ}git remote set-head origin main${SQ} to follow the change, or" >>expect &&
++		echo "${SQ}git config set remote.origin.warn-if-not-main${SQ} to disable this warning" >>expect &&
++		echo "until the remote changes HEAD again." >>expect &&
++		test_cmp expect output &&
++		head=$(git rev-parse refs/remotes/origin/HEAD) &&
++		branch=$(git rev-parse refs/remotes/origin/other) &&
++		test "z$head" = "z$branch"
++	)
++'
++
+ test_expect_success "fetch test followRemoteHEAD always" '
+ 	test_when_finished "git config unset remote.origin.followRemoteHEAD" &&
+ 	(
 -- 
-2.47.0.338.g60cca15819-goog
+2.47.1.297.g6455f89743
 
