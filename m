@@ -1,118 +1,142 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17E31E47D4
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 11:53:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7711E3789
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 14:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733226791; cv=none; b=Zk5Yd2t3nG6upIdKwS0R1XBzkF9a6Vdb6a0HxHbW7s9JUQzkJMM4JjgCiHMuP8NF2l0Fk/felrD2/azsNU6jJEntR5GvSgDsnH3ktM1RncVnN021nN8UUQN35pGpMhx5uZ18piIk7VB4Ut0dutFgsJpq2EgN2sS3r949HwgekT4=
+	t=1733234629; cv=none; b=eFkxA8RF+AoDgIl+vajHxIuxq63CP5tLY0mjSFOcvxnQT+LTTERyxgYaCjj7LNl7QYstd+ZUF28qNm18nDPQa/Loaafy1xDfH5wHqdUkHhd/6WXKyl+4vHVe2pyARyiWXq1epAc+6dEU4kRP3Nl4Zjll57Bqyxv6lZQvWggyyD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733226791; c=relaxed/simple;
-	bh=CdWA0p5tA/D5+wE11oRZ232VYCKYi5QdWyuDuvjE8qg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=igLQJcW7TrZbpUU9fUnKhX+WmpNufW6yjxKwukx6lik5B1UqNJ2d8ld9vzbhtNpOpyD/5JY5c1s7TNPraNEGriYoRAtpGtg4Q+TlrzOBDSzjDXZBnQlwjMSz8ckkIY2kL/lCz/RuDxj4/lj2kFbec8h6alowHYZm6j2HZlr6fLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mEsCyE3z; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733234629; c=relaxed/simple;
+	bh=SdEauIF4TQHb+Ig2Svo8YKRLnxJcw77IGwBnkzun7qk=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=rTPqY8Diru0DFCc9rlpt4MIdYpX+xOnTH5kPsUUFdl4HTtYA79x31yGe5hSwqJdE/ZlU4i5htsUjKHXWbayUZyCpDree3eDcbR2o7Jt9L+pf1zagpSmx9c7o4toZEv4IyRtBLNk2GpiVU1ydiIprVJHgPC8WivB8B0FKsbBuQBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=JlgybZ3H; arc=none smtp.client-ip=80.67.169.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mEsCyE3z"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6ef7c9e9592so32154997b3.1
-        for <git@vger.kernel.org>; Tue, 03 Dec 2024 03:53:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733226789; x=1733831589; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bcT8y2a2EIzCqcwbvW/asvSn+ViOL/2DsrLUqr2GgWo=;
-        b=mEsCyE3zxp4XE3xRRL+8nqm33A78dKtNHBUBzrBfaecelQpSGGFbRrGhQ6ji5i/q0M
-         IuHqVB/wlynxvVbT94ExX4hMHMbCm0t+I8BdqDK2mbZpnGxOQdXaB6WPVtjO5ELW92+c
-         zHjQcnZOc9q62pj4eX0HVcJ0WsU7VLkrm6lJby8oALaMs5Wo9VwjOgIIJQKaGJJ/jNcA
-         yJg88vkSXZed2J7auHRcDVUQf9Xj4BnRZ9bVnMNcuzQCWVlLjvMaXpI5RKW0LNWmzxzc
-         Lj7PL5pf5FESK3IBsoeqDE3rlEDU4BtAA7Ymq+IIV4aITU3AlNvY/NnZjYlcP1UJOdqK
-         Zn/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733226789; x=1733831589;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bcT8y2a2EIzCqcwbvW/asvSn+ViOL/2DsrLUqr2GgWo=;
-        b=Xfw3wjU9H/Jotj5jr+nh64J7nCdDAiqt9++u0U09jICWisqOp/X63xwRuM2buXnt6+
-         qvx5/SrGA6u98CHniR8f1pyIUuwZRYLNKjQYLKQ6zMfzzgqyYb588UeG4JVkPoi4mVSS
-         WME626Bv/gbked0aWUqdLDbhMsCvipdtAH1AUMzso+YgO9quOumk9femz/ojspy0ardQ
-         EU4++51K2vzreNXdY9mTyNYEaq1J4pemQ5tkHDqL2cKhWNcvI5rWUDILgbL8WWdxM92p
-         dVCAqB2pOGwJVVxrJpGcljZYUkdMAWyd8QSoTZk0njh2hCAjqGxlVTf9wv6NrfWlou+z
-         AQvA==
-X-Gm-Message-State: AOJu0Yzzf/D/5BIHOGS/tCzWYVWfXiKQWZc5FJXaLMai5/IdyyVeQBta
-	+tS46ghi2Y26O8AH247D8BTFxXp0lc8k7KQSSrU5HXYNMHJDYAE+r1MZ8e7lnSqnfi5DG3QMu+q
-	Ci3k4uSVzRO7467FSpPc1dsc8ISc=
-X-Gm-Gg: ASbGncuztqlM+OKxFuXSkpKMeTfcziV0D1unBere4sMwnF1LfCMVb3O14G4Fij8rnXF
-	ldL4bhzKDsf387ZwaZNYZ6kppcgglX5+X
-X-Google-Smtp-Source: AGHT+IGJrZE048l8MS2bV3MQBFS56ScBhMUkf/VHuKQEBRCKeX7e0NDZ8Gw8sOFBvabNV4buy9s0TQTWqYBciM2wy+A=
-X-Received: by 2002:a05:690c:6089:b0:6ee:fabb:d5ea with SMTP id
- 00721157ae682-6efad329009mr26977747b3.30.1733226788931; Tue, 03 Dec 2024
- 03:53:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="JlgybZ3H"
+Received: from localhost (unknown [IPv6:2001:910:10ee:0:666:7ab6:84f4:fbbf])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by taslin.fdn.fr (Postfix) with ESMTPSA id A87AF60A9C;
+	Tue,  3 Dec 2024 14:55:44 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
+	s=fdn; t=1733234144;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=TC/xgryxUlRrB/P/R3ZPOL7qNB/MyFnT94TnlajAYOw=;
+	b=JlgybZ3Hvm+oRPr1wa2d2zaH1X7ZrZqmSjAAH9yDZaZv2Xew+AxA8BfV1J7E3x5v07ZXQ4
+	VEoZgW0MNWobrxUW7inSdo2PAOjev0o8xqFQlU6XBE2njNRlF1V6HfPpH21yUq6Hni/lWL
+	gRdIeVAm07hXa6g39hTmHXOpkJXfAtm8zdPCXnjBpx4HfNqLgBz3sXZX+DteoLzcw2nVjq
+	2vULcKXJWW1vf34xeWItB5uEly2DQJhU4YXbKw5Xz/GW+iib7UXaXIUebl2fcDEs1DnvKf
+	OmohxGXTxCbgczX3JpNGI3/Tjw98qftjRHuKLK3A4VM/L7bS8elYXfkYkR+LIw==
+Date: Tue, 3 Dec 2024 14:55:44 +0100
+From: Max Gautier <mg@max.gautier.name>
+To: git@vger.kernel.org
+Cc: Denton Liu <liu.denton@gmail.com>
+Subject: Detecting squash-merged branches (and question about git-diff-tree)
+Message-ID: <Z08N4AlQKiNi-IOI@framework>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANYiYbHGdJsTgdzJj1r4sPdTAcZCf3C-qA538fcXbD1jjB1BUw@mail.gmail.com>
- <cover.1731603991.git.zhiyou.jx@alibaba-inc.com> <7cedfd718c4f2d6fed7420a3341e82c9287d2085.1731603991.git.zhiyou.jx@alibaba-inc.com>
- <Z0Q0sSsUXg47gn6Y@pks.im>
-In-Reply-To: <Z0Q0sSsUXg47gn6Y@pks.im>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Tue, 3 Dec 2024 19:52:56 +0800
-Message-ID: <CANYiYbEoa4fJ4TmQVf+brEk74b3-mY13dxtFVgvTvtOD8TO++w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] t5548: new test cases for push --porcelain and --dry-run
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jiang Xin <zhiyou.jx@alibaba-inc.com>, 
-	"Larry D'Anna" <larry@elder-gods.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Mon, Nov 25, 2024 at 4:26=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Fri, Nov 15, 2024 at 01:15:32AM +0800, Jiang Xin wrote:
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > Refactor t5548 and add new test cases for git-push with both --porcelai=
-n
-> > and --dry-run flags in order to cover the issues reported by Patrick.
-> >
-> > When executing git-push(1) with the "--porcelain" flag, then we will
-> > print updated references in a machine-readable format that looks like
-> > this:
-> >
-> > To destination
-> > =3D   refs/heads/noop:refs/heads/noop [up to date]
-> > !   refs/heads/rejected:refs/heads/rejected [rejected] (atomic push fai=
-led)
-> > !   refs/heads/noff:refs/heads/(off (non-fast-forward)
-> > Done
-> >
-> > The final "Done" stanza was introduced via 77555854be (git-push: make
-> > git push --porcelain print "Done", 2010-02-26), where it was printed
-> > "unless any errors have occurred". For the purpose of the "Done" line,
-> > knowing a ref will be rejected in a --dry-run does not count as an
-> > error. Actual rejections in non --dry-run pushes do count as errors.
-> >
-> > The new test cases will be used in the next commit to protect the above
-> > behaviors of porcelain output of git push.
->
-> It's a bit hard to make sense of this commit: does it introduce new
-> tests? Does it refactor existing tests? Does it change the test setup?
-> It seems to be a mixture of all of these, which makes it hard to see
-> what the actual change is.
->
-> I'd propose to split up this commit into multiple ones: one that
-> introduces `restore_upstream()`, one that adapts the test data, and one
-> that introduces new tests.
+Hi,
 
-I've been quite busy lately, but I plan to revisit this next week,
-incorporating both your and Junio's suggestions. Thank you for your
-input!
+I tend to work on project which do a lot of "squash-merging" e.g, merge
+branches by having a robot squash the branch in a new commit on top of
+the main branch.
 
->
-> Patrick
+This makes it a bit hard to remove my branches when they are
+"squash-merged" (in contrast to using `git branch --merged`)
+
+
+I started a little script to detect such branches; initially I used git
+cherry, but this only detect the case where the branch has 1 commit,
+which is not enough.
+
+Sharing below if anyone is interested and/or want to give some feedback
+(warning, this is probably full of bash-ism/gnu-ism).
+
+Which leads me to my actual question:
+I wanted to use diff-tree in --stdin mode (instead of calling it
+repeatedly in a loop), feeding it my target branch and
+the list of relevant commits, but apparently --merge-base and --stdin
+are mutually exclusive. What's the reason for that ?
+I suppose it's related to the 3 possible line forms diff-tree accepts in
+--stdin mode, but I didn't find a spelled out explanation in the
+original thread implementing --merge-base [1].
+
+Is there another alternative for computing the patches ids of branches
+in that way ? A '%(mergebase)' token for git for-each-ref would also
+work, but there is no such thing either that I know of. 
+
+(Of course, the script as such runs ~reasonably~ well, but it does spend
+95% of it's time waiting for subprocess, which bugs me a little^^)
+
+Thanks for reading me !
+
+[1]: https://lore.kernel.org/git/cover.1599332861.git.liu.denton@gmail.com/
+
+---
+
+#!/bin/bash
+# $1 : target ref (in which we search for squashed branches)
+# (default: upstream/HEAD)
+# ${@:2} (all scripts args after the first one): git for-each-ref
+# patterns for refs candidates for squash-merge detection
+# (default: refs/{remotes/origin,heads}/}
+
+declare -A commit_by_patch_ids
+oldest_merge_base=${1-upstream/HEAD}
+ref_patterns=${@:2}
+ref_patterns=${ref_patterns:-refs/remotes/origin/ refs/heads/}
+
+for ref in $(git for-each-ref ${ref_patterns} \
+                --format='%(objectname)' \
+                --no-merged=${1-upstream/HEAD} )
+do
+  patch_id=( $(git diff-tree -p --merge-base ${1-upstream/HEAD} $ref \
+              | git patch-id --stable) )
+  commit_by_patch_ids[$patch_id[0]]=$ref
+  # Caveat:
+  # It's possible for different commit to have the save patch-id
+  # (for instance on a feature branch do: git checkout feature;git branch
+  # old;git rebase main -> old and feature would probably have the same
+  # patch-id, if I understand this correctly)
+  # proper treatment of this would need to use array of commits by
+  # patch-id, but bash does not support multidimensional arrays.
+
+  # Check oldest commit we will need to go back to when checking if a
+  # patch-id exist in the source branch.
+  # This assumes that branches are not squash-merged before their fork
+  # point.  This avoids going back all the way to the first commit,
+  # which can be prohibitively expensive on repository with a long
+  # history (e.g, linux kernel tree takes 13 minutes on a recent machine
+  # for git log -p | git patch-id)
+  oldest_merge_base=$(git merge-base $oldest_merge_base $ref)
+done
+
+declare -a squashed
+# Extract commits whose patch-id exist in the target branch.
+#
+for patch_id in $(git log -p ${oldest_merge_base}..${1-upstream/HEAD} \
+                 | git patch-id --stable | cut -d ' ' -f 1)
+do
+    if [[ -n "${commit_by_patch_ids[$patch_id]+exists}" ]];then
+        squashed+=("--points-at=${commit_by_patch_ids[$patch_id]}")
+    fi
+done
+
+printf "%s\n" "$(git for-each-ref $ref_patterns \
+                    --format='%(refname:short)' \
+                    ${squashed[@]})"
+
+-- 
+Max Gautier
