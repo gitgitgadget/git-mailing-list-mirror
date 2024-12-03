@@ -1,68 +1,68 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2811F667A
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 14:44:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F001F4716
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 14:44:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733237052; cv=none; b=iOD5+n45UrrcIXi0BGZPyTz3GNtIYmtzW/gw4sGRv7s0UJS5qX77ny6Ob8oT8mm3UtDO1O/efOEN/SmiIrypiD936qa8g5t4nzzb49BgkxykZZP9jjh5zqen7l4cnibK9ammaBLqKTARRUoyGZdGLydEGO4wTjHsYxaVi0EEsmE=
+	t=1733237052; cv=none; b=g6aF1q6zyeusiIEjr+DEkOIAgHpe/NaAiNI+u7BdnY1iN8/mRhnY/Hz0EZELc+fmuEILxY8voKUq+TdYzZx2LqSQ0PUG+N3a5a21TAzF1sLmUQF2jWOdxmy6zZdat8H4QAkAtt70dhqJso/9q5GwIQtedbsRw5kpluPkXT97lzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733237052; c=relaxed/simple;
-	bh=n3CrN93rlONgAiVeEaO44TriyQzBlHDw7ECL9VlofKU=;
+	bh=/keEvDfELwjli74Bn5tZdBvTpk75Eq5YFChGAkL29b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PIaq83g8IwiMAQ15EHEnMVk84HJVeCrw7b2lprfYTLeLo5auvRa0FXvbIuGJTaI1H0U4uvO6jZi8a2sZufUb4kC24MqPUCeWN/CoibUijX+aY4lT2GSG8AN0ux07vtK/45sQf7HwJQYCahN33JSpYoGCf86ns0oNsj8nNLBk21Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSFc9CDQ; arc=none smtp.client-ip=209.85.208.49
+	 MIME-Version; b=aj6l9+5ztIQmhZsxrvy4JFo/WdQNDceDkr6jE52OurgkUm+/fKwLkIqcTLlqGKdIwkZI2laqWTz2V4ZgJ5ZMQLXNyOAvPWlXJRQZw7f9uVtMKedYcIbs8zU2pd10qen6fV1SVoCd4KLxsRy0Iw3Wm6x5Eda8aOhJ6QYzzVvAezQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jnZw9riT; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSFc9CDQ"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5ceca0ec4e7so7017761a12.0
-        for <git@vger.kernel.org>; Tue, 03 Dec 2024 06:44:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jnZw9riT"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aa503cced42so825621266b.3
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 06:44:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733237048; x=1733841848; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733237049; x=1733841849; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3y7CAg3qHYqC6uwPqgfWsVKX6SAPEjbJ92SMNAXBrgc=;
-        b=bSFc9CDQVpgwGf9sDyJtKisHrh6BQYiKOBd5ZlErVShVFh/YOOr9pRJaeJ3b/VsN8k
-         RmagDuiTDd4DooIvvWhHbB7dXRcXNJmhTYRE+ZPjW4ZnfvweuBEb6+X/bgebXclZgZDC
-         JaA/QGKZFV2uH4GdKh09ufheqXgks6+KF9q1KY2S5T/gz/dmzQpwIbSQxZp5oJx4N+pa
-         npNzyTYQEVMu1ZffmWnixTYZTDdcWFOYbmQAXrvQ/R9+RtgcTle5cvbJf9RJiLwNw6N5
-         VO1HoG2OdfDRte7xptIfQL2Bghkl9uMRpUR4VrN3KdvlObHnjrZC651WWSFaQJYKey4X
-         Pe4w==
+        bh=qLqqK+0Wo9b4bnYzMq/djZtY2ZLUEoEI89FTjNC9uYE=;
+        b=jnZw9riTKU0nax4Is41JdGb9ejXNqSSgFPabOjljQsOEBM1HWxwhDyHiPJ/awoQ+IB
+         a89urSbG+8rBVvTUaOEM6WvDa8tHpzf4qN/n8GG5u+9yskWj/UxAGzOzVVFreP7nSHq2
+         VgVHivJwNnXuoOBa+nw9hRjzJyBqxQx/thnQ0dIYI2JrXUYXj2x8YDryEplIuuUCpkoT
+         S7UZkPrSIodwV2snw+ErnSaBtzWT7Ps7BqGbmpY6XYj5EcnZnkJEXeKiWnA1LSl0MhrN
+         7PvpdXgIkl6p20+sCECB8Wz60HtvuGhmUjqu+4FJV7JtXYx80tvNAlw72NcglIi/f6SK
+         w4dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733237048; x=1733841848;
+        d=1e100.net; s=20230601; t=1733237049; x=1733841849;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3y7CAg3qHYqC6uwPqgfWsVKX6SAPEjbJ92SMNAXBrgc=;
-        b=Kl864J8L5UFgLiJ2+SCwvrcksVLDmphoCPBFs/+GOuyEWIzDIJJQBZjcONdNYQ0pwN
-         dsyY5G0j3DowQSm+h8TRafgTbOCBSiT1VrgL0o3yHFVwgExMXdlsSenYus7HVfmlZtqZ
-         bxvltkPFyMuqYuvDCs3RYJkn9l/7J+wbCNuoCW5XQhNzFP0H9FGkQTlFWBsGwUviqqBv
-         U1INyd/81TpBOr5nyHN4oqV8/qIOjNKgEaKnjvVQLfbz7UyA2hxPMDT4fucwyxEuOrzS
-         FfErlHvK/3W34Y7si0r6zURDj0Kobe7ZsTYimyfw05LT6e09aIMaPzjqyWENGGshA3B/
-         2AGw==
-X-Gm-Message-State: AOJu0YydWMsBy1GRzAy/DLkYhnSnEUm35s4i0rnPGWKR9jKsHwkEod9G
-	lNR0YGaSFJ5P0rXe4UBvTuFLzTqLl/W7V3m6AUepR0J+0paoluEu
-X-Gm-Gg: ASbGncuFIRa4JSNIWLM3y/wHxNNsSA1MvVESINjCYHBsEO6afc68JxWy+xQwtdn4/Rz
-	HOddxioz0qeD5ZUHKhS5lmgXBrEmlunanHzCobFLBavxpmpZdhhvld0fM+PpsrS5WJ6MTP9avn2
-	hyRW06DQhpdco2wuzqDx/yKh82Yg5IZQvNrXnmzvgRSYkUT86IoXOKwYFIvsEigSYmOLv/Q9sC6
-	bq7O88uYj6hbry5Y+H56igASTlI4XG1wG9WqVDyPWR7uPRCYBd1QcZx3j80KVbxNfkP
-X-Google-Smtp-Source: AGHT+IEQRmQczUbn4wnts3zh51VMzsTKVwByij4gTyC1jRaV4s9ySJEp2Vk7/Xfh5l8BO8m5Fz5t+Q==
-X-Received: by 2002:a17:906:23f1:b0:aa1:dd58:aebc with SMTP id a640c23a62f3a-aa5f7f0065bmr198872366b.39.1733237048033;
+        bh=qLqqK+0Wo9b4bnYzMq/djZtY2ZLUEoEI89FTjNC9uYE=;
+        b=UXdiwYsisVy2oDmu5zSPFqKwkeqtNe8Pf9TnoQTsqJ6mY7MiXgt1dItwWu7SVWe+UG
+         7kGmBQq8Dizok5AvksTJDC3XCT3/851GjuGj7RLJmek0RP6Ii+pYrDB0xJ2kiKXXh90h
+         rP3fhbUxlqGb8YJ0NXwBwaM/GZemEugVqM7x2qfzE3PgZJJOGpttEZycFm6fAGOBhV8W
+         wnFsBITiXBLLv8YAgbIkXk4SG57GSuHMN3yvI5nXNFXCexgXbe7aHkS+Yp8PoBaMrRKm
+         OwwNNij0ekH3KuxI/yBsa8bScyyh761dkoRmsLD4POhlJYW6FtQktI5iyCMaU2vh4nHO
+         BlIQ==
+X-Gm-Message-State: AOJu0YxV52WmfQjftZ7flbaSOrZQtPSEQ2D28C+Zzmzed0hWbhiDgzhf
+	w+HPi3wT2TgbFuZ+yOaB4Lz1ZxrTH5VhZXuN3/pXlHdtEyY5V7Q4eCmMdePw
+X-Gm-Gg: ASbGncs5shsMjbpLR7aByUDMpaAICpJj2Paehe1zApxHvWXxKEPvsRz5sl2LCi2qHIQ
+	1kYoLWiMKzmJfbSWGyF6d1gbxThWAWve+kV2eFP9HU8w71Pp362X53CNc5ZnYQ1EtOsGzkTQqjc
+	IjbT8tSzAsfYGJu7yd7B/ikJA7QUGmG0Q1e2ROGafiajytjJrWnvdoa5ySUOl5CxxPIzYj0hJRy
+	Q6HtJCBu/HmP0li21xMG9HS10vXoiOSkAhhKj1uoHOr3CDqee1pDje447EaJMBHw7vd
+X-Google-Smtp-Source: AGHT+IHmwnncdV+07IWYGblYumvGaRfqy1KYicLca26gEb0bD0A5h+IC8Ciff9/6LjUIitDvzPE0og==
+X-Received: by 2002:a17:906:3199:b0:aa5:3fa9:e90c with SMTP id a640c23a62f3a-aa5f7de5754mr217785866b.32.1733237048793;
         Tue, 03 Dec 2024 06:44:08 -0800 (PST)
 Received: from archlinux.fritz.box ([2a02:2455:825d:6a00:6bb4:436f:5699:ff21])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5996de782sm619021466b.56.2024.12.03.06.44.07
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa5996de782sm619021466b.56.2024.12.03.06.44.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2024 06:44:07 -0800 (PST)
+        Tue, 03 Dec 2024 06:44:08 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: karthik.188@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v10 01/10] packfile: add repository to struct `packed_git`
-Date: Tue,  3 Dec 2024 15:43:55 +0100
-Message-ID: <d6d571c58ec833a57c812a35f60f445d196b0749.1733236936.git.karthik.188@gmail.com>
+Subject: [PATCH v10 02/10] packfile: use `repository` from `packed_git` directly
+Date: Tue,  3 Dec 2024 15:43:56 +0100
+Message-ID: <fa69763468399b63ee37ebc5cc6bae04c664dfe3.1733236936.git.karthik.188@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733236936.git.karthik.188@gmail.com>
 References: <cover.1733236936.git.karthik.188@gmail.com>
@@ -74,256 +74,207 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The struct `packed_git` holds information regarding a packed object
-file. Let's add the repository variable to this object, to represent the
-repository that this packfile belongs to. This helps remove dependency
-on the global `the_repository` object in `packfile.c` by simply using
-repository information now readily available in the struct.
-
-We do need to consider that a packfile could be part of the alternates
-of a repository, but considering that we only have one repository struct
-and also that we currently anyways use 'the_repository', we should be
-OK with this change.
-
-We also modify `alloc_packed_git` to ensure that the repository is added
-to newly created `packed_git` structs. This requires modifying the
-function and all its callee to pass the repository object down the
-levels.
+In the previous commit, we introduced the `repository` structure inside
+`packed_git`. This provides an alternative route instead of using the
+global `the_repository` variable. Let's modify `packfile.c` now to use
+this field wherever possible instead of relying on the global state.
+There are still a few instances of `the_repository` usage in the file,
+where there is no struct `packed_git` locally available, which will be
+fixed in the following commits.
 
 Helped-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- builtin/fast-import.c |  3 ++-
- builtin/index-pack.c  |  6 ++++--
- commit-graph.c        |  2 +-
- connected.c           |  3 ++-
- http.c                |  2 +-
- midx-write.c          |  2 +-
- midx.c                |  2 +-
- object-store-ll.h     |  5 +++++
- packfile.c            | 15 +++++++++------
- packfile.h            |  6 ++++--
- 10 files changed, 30 insertions(+), 16 deletions(-)
+ packfile.c | 50 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 76d5c20f14..da7e2d613b 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -765,6 +765,7 @@ static void start_packfile(void)
- 
- 	p->pack_fd = pack_fd;
- 	p->do_not_close = 1;
-+	p->repo = the_repository;
- 	pack_file = hashfd(pack_fd, p->pack_name);
- 
- 	pack_data = p;
-@@ -888,7 +889,7 @@ static void end_packfile(void)
- 		idx_name = keep_pack(create_index());
- 
- 		/* Register the packfile with core git's machinery. */
--		new_p = add_packed_git(idx_name, strlen(idx_name), 1);
-+		new_p = add_packed_git(pack_data->repo, idx_name, strlen(idx_name), 1);
- 		if (!new_p)
- 			die("core git rejected index %s", idx_name);
- 		all_packs[pack_id] = new_p;
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 9d23b41b3a..be2f99625e 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1552,7 +1552,8 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 
- 	if (do_fsck_object) {
- 		struct packed_git *p;
--		p = add_packed_git(final_index_name, strlen(final_index_name), 0);
-+		p = add_packed_git(the_repository, final_index_name,
-+				   strlen(final_index_name), 0);
- 		if (p)
- 			install_packed_git(the_repository, p);
- 	}
-@@ -1650,7 +1651,8 @@ static void read_v2_anomalous_offsets(struct packed_git *p,
- 
- static void read_idx_option(struct pack_idx_option *opts, const char *pack_name)
- {
--	struct packed_git *p = add_packed_git(pack_name, strlen(pack_name), 1);
-+	struct packed_git *p = add_packed_git(the_repository, pack_name,
-+					      strlen(pack_name), 1);
- 
- 	if (!p)
- 		die(_("Cannot open existing pack file '%s'"), pack_name);
-diff --git a/commit-graph.c b/commit-graph.c
-index 5bd89c0acd..83dd69bfeb 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1914,7 +1914,7 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
- 		struct packed_git *p;
- 		strbuf_setlen(&packname, dirlen);
- 		strbuf_addstr(&packname, pack_indexes->items[i].string);
--		p = add_packed_git(packname.buf, packname.len, 1);
-+		p = add_packed_git(ctx->r, packname.buf, packname.len, 1);
- 		if (!p) {
- 			ret = error(_("error adding pack %s"), packname.buf);
- 			goto cleanup;
-diff --git a/connected.c b/connected.c
-index a9e2e13995..3099da84f3 100644
---- a/connected.c
-+++ b/connected.c
-@@ -54,7 +54,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		strbuf_add(&idx_file, transport->pack_lockfiles.items[0].string,
- 			   base_len);
- 		strbuf_addstr(&idx_file, ".idx");
--		new_pack = add_packed_git(idx_file.buf, idx_file.len, 1);
-+		new_pack = add_packed_git(the_repository, idx_file.buf,
-+					  idx_file.len, 1);
- 		strbuf_release(&idx_file);
- 	}
- 
-diff --git a/http.c b/http.c
-index 58242b9d2d..6744e18409 100644
---- a/http.c
-+++ b/http.c
-@@ -2439,7 +2439,7 @@ static int fetch_and_setup_pack_index(struct packed_git **packs_head,
- 	if (!tmp_idx)
- 		return -1;
- 
--	new_pack = parse_pack_index(sha1, tmp_idx);
-+	new_pack = parse_pack_index(the_repository, sha1, tmp_idx);
- 	if (!new_pack) {
- 		unlink(tmp_idx);
- 		free(tmp_idx);
-diff --git a/midx-write.c b/midx-write.c
-index b3a5f6c516..c57726ef94 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -154,7 +154,7 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 			return;
- 
- 		ALLOC_GROW(ctx->info, ctx->nr + 1, ctx->alloc);
--		p = add_packed_git(full_path, full_path_len, 0);
-+		p = add_packed_git(the_repository, full_path, full_path_len, 0);
- 		if (!p) {
- 			warning(_("failed to add packfile '%s'"),
- 				full_path);
-diff --git a/midx.c b/midx.c
-index e82d4f2e65..8edb75f51d 100644
---- a/midx.c
-+++ b/midx.c
-@@ -464,7 +464,7 @@ int prepare_midx_pack(struct repository *r, struct multi_pack_index *m,
- 					strhash(key.buf), key.buf,
- 					struct packed_git, packmap_ent);
- 	if (!p) {
--		p = add_packed_git(pack_name.buf, pack_name.len, m->local);
-+		p = add_packed_git(r, pack_name.buf, pack_name.len, m->local);
- 		if (p) {
- 			install_packed_git(r, p);
- 			list_add_tail(&p->mru, &r->objects->packed_git_mru);
-diff --git a/object-store-ll.h b/object-store-ll.h
-index 53b8e693b1..d46cd0e654 100644
---- a/object-store-ll.h
-+++ b/object-store-ll.h
-@@ -10,6 +10,7 @@
- struct oidmap;
- struct oidtree;
- struct strbuf;
-+struct repository;
- 
- struct object_directory {
- 	struct object_directory *next;
-@@ -135,6 +136,10 @@ struct packed_git {
- 	 */
- 	const uint32_t *mtimes_map;
- 	size_t mtimes_size;
-+
-+	/* repo denotes the repository this packfile belongs to */
-+	struct repository *repo;
-+
- 	/* something like ".git/objects/pack/xxxxx.pack" */
- 	char pack_name[FLEX_ARRAY]; /* more */
- };
 diff --git a/packfile.c b/packfile.c
-index 9560f0a33c..6058eddf35 100644
+index 6058eddf35..5bfa1e17c2 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -217,11 +217,12 @@ uint32_t get_pack_fanout(struct packed_git *p, uint32_t value)
- 	return ntohl(level1_ofs[value]);
- }
+@@ -79,7 +79,7 @@ static int check_packed_git_idx(const char *path, struct packed_git *p)
+ 	size_t idx_size;
+ 	int fd = git_open(path), ret;
+ 	struct stat st;
+-	const unsigned int hashsz = the_hash_algo->rawsz;
++	const unsigned int hashsz = p->repo->hash_algo->rawsz;
  
--static struct packed_git *alloc_packed_git(int extra)
-+static struct packed_git *alloc_packed_git(struct repository *r, int extra)
- {
- 	struct packed_git *p = xmalloc(st_add(sizeof(*p), extra));
- 	memset(p, 0, sizeof(*p));
- 	p->pack_fd = -1;
-+	p->repo = r;
- 	return p;
- }
- 
-@@ -233,11 +234,12 @@ static char *pack_path_from_idx(const char *idx_path)
- 	return xstrfmt("%.*s.pack", (int)len, idx_path);
- }
- 
--struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path)
-+struct packed_git *parse_pack_index(struct repository *r, unsigned char *sha1,
-+				    const char *idx_path)
- {
- 	char *path = pack_path_from_idx(idx_path);
- 	size_t alloc = st_add(strlen(path), 1);
--	struct packed_git *p = alloc_packed_git(alloc);
-+	struct packed_git *p = alloc_packed_git(r, alloc);
+ 	if (fd < 0)
+ 		return -1;
+@@ -243,7 +243,7 @@ struct packed_git *parse_pack_index(struct repository *r, unsigned char *sha1,
  
  	memcpy(p->pack_name, path, alloc); /* includes NUL */
  	free(path);
-@@ -703,7 +705,8 @@ void unuse_pack(struct pack_window **w_cursor)
- 	}
- }
+-	hashcpy(p->hash, sha1, the_repository->hash_algo);
++	hashcpy(p->hash, sha1, p->repo->hash_algo);
+ 	if (check_packed_git_idx(idx_path, p)) {
+ 		free(p);
+ 		return NULL;
+@@ -278,7 +278,7 @@ static int unuse_one_window(struct packed_git *current)
  
--struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
-+struct packed_git *add_packed_git(struct repository *r, const char *path,
-+				  size_t path_len, int local)
- {
+ 	if (current)
+ 		scan_windows(current, &lru_p, &lru_w, &lru_l);
+-	for (p = the_repository->objects->packed_git; p; p = p->next)
++	for (p = current->repo->objects->packed_git; p; p = p->next)
+ 		scan_windows(p, &lru_p, &lru_w, &lru_l);
+ 	if (lru_p) {
+ 		munmap(lru_w->base, lru_w->len);
+@@ -540,7 +540,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 	unsigned char *idx_hash;
+ 	ssize_t read_result;
+-	const unsigned hashsz = the_hash_algo->rawsz;
++	const unsigned hashsz = p->repo->hash_algo->rawsz;
+ 
+ 	if (open_pack_index(p))
+ 		return error("packfile %s index unavailable", p->pack_name);
+@@ -597,7 +597,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 	if (read_result != hashsz)
+ 		return error("packfile %s signature is unavailable", p->pack_name);
+ 	idx_hash = ((unsigned char *)p->index_data) + p->index_size - hashsz * 2;
+-	if (!hasheq(hash, idx_hash, the_repository->hash_algo))
++	if (!hasheq(hash, idx_hash, p->repo->hash_algo))
+ 		return error("packfile %s does not match index", p->pack_name);
+ 	return 0;
+ }
+@@ -637,7 +637,7 @@ unsigned char *use_pack(struct packed_git *p,
+ 	 */
+ 	if (!p->pack_size && p->pack_fd == -1 && open_packed_git(p))
+ 		die("packfile %s cannot be accessed", p->pack_name);
+-	if (offset > (p->pack_size - the_hash_algo->rawsz))
++	if (offset > (p->pack_size - p->repo->hash_algo->rawsz))
+ 		die("offset beyond end of packfile (truncated pack?)");
+ 	if (offset < 0)
+ 		die(_("offset before end of packfile (broken .idx?)"));
+@@ -711,6 +711,7 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
  	struct stat st;
  	size_t alloc;
-@@ -721,7 +724,7 @@ struct packed_git *add_packed_git(const char *path, size_t path_len, int local)
- 	 * the use xsnprintf double-checks that)
- 	 */
- 	alloc = st_add3(path_len, strlen(".promisor"), 1);
--	p = alloc_packed_git(alloc);
-+	p = alloc_packed_git(r, alloc);
- 	memcpy(p->pack_name, path, path_len);
+ 	struct packed_git *p;
++	struct object_id oid;
  
- 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".keep");
-@@ -877,7 +880,7 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
+ 	/*
+ 	 * Make sure a corresponding .pack file exists and that
+@@ -751,9 +752,13 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
+ 	p->pack_size = st.st_size;
+ 	p->pack_local = local;
+ 	p->mtime = st.st_mtime;
+-	if (path_len < the_hash_algo->hexsz ||
+-	    get_hash_hex(path + path_len - the_hash_algo->hexsz, p->hash))
+-		hashclr(p->hash, the_repository->hash_algo);
++	if (path_len < r->hash_algo->hexsz ||
++	    get_oid_hex_algop(path + path_len - r->hash_algo->hexsz, &oid,
++			      r->hash_algo))
++		hashclr(p->hash, r->hash_algo);
++	else
++		hashcpy(p->hash, oid.hash, r->hash_algo);
++
+ 	return p;
+ }
  
- 		/* Don't reopen a pack we already have. */
- 		if (!hashmap_get(&data->r->objects->pack_map, &hent, pack_name)) {
--			p = add_packed_git(full_name, full_name_len, data->local);
-+			p = add_packed_git(data->r, full_name, full_name_len, data->local);
- 			if (p)
- 				install_packed_git(data->r, p);
- 		}
-diff --git a/packfile.h b/packfile.h
-index 08f88a7ff5..aee69d1a0b 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -46,7 +46,8 @@ const char *pack_basename(struct packed_git *p);
-  * and does not add the resulting packed_git struct to the internal list of
-  * packs. You probably want add_packed_git() instead.
-  */
--struct packed_git *parse_pack_index(unsigned char *sha1, const char *idx_path);
-+struct packed_git *parse_pack_index(struct repository *r, unsigned char *sha1,
-+				    const char *idx_path);
+@@ -1243,9 +1248,9 @@ off_t get_delta_base(struct packed_git *p,
+ 	} else if (type == OBJ_REF_DELTA) {
+ 		/* The base entry _must_ be in the same pack */
+ 		struct object_id oid;
+-		oidread(&oid, base_info, the_repository->hash_algo);
++		oidread(&oid, base_info, p->repo->hash_algo);
+ 		base_offset = find_pack_entry_one(&oid, p);
+-		*curpos += the_hash_algo->rawsz;
++		*curpos += p->repo->hash_algo->rawsz;
+ 	} else
+ 		die("I am totally screwed");
+ 	return base_offset;
+@@ -1266,7 +1271,7 @@ static int get_delta_base_oid(struct packed_git *p,
+ {
+ 	if (type == OBJ_REF_DELTA) {
+ 		unsigned char *base = use_pack(p, w_curs, curpos, NULL);
+-		oidread(oid, base, the_repository->hash_algo);
++		oidread(oid, base, p->repo->hash_algo);
+ 		return 0;
+ 	} else if (type == OBJ_OFS_DELTA) {
+ 		uint32_t base_pos;
+@@ -1608,7 +1613,7 @@ int packed_object_info(struct repository *r, struct packed_git *p,
+ 				goto out;
+ 			}
+ 		} else
+-			oidclr(oi->delta_base_oid, the_repository->hash_algo);
++			oidclr(oi->delta_base_oid, p->repo->hash_algo);
+ 	}
  
- typedef void each_file_in_pack_dir_fn(const char *full_path, size_t full_path_len,
- 				      const char *file_name, void *data);
-@@ -113,7 +114,8 @@ void close_pack(struct packed_git *);
- void close_object_store(struct raw_object_store *o);
- void unuse_pack(struct pack_window **);
- void clear_delta_base_cache(void);
--struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
-+struct packed_git *add_packed_git(struct repository *r, const char *path,
-+				  size_t path_len, int local);
+ 	oi->whence = in_delta_base_cache(p, obj_offset) ? OI_DBCACHED :
+@@ -1897,7 +1902,7 @@ int bsearch_pack(const struct object_id *oid, const struct packed_git *p, uint32
+ {
+ 	const unsigned char *index_fanout = p->index_data;
+ 	const unsigned char *index_lookup;
+-	const unsigned int hashsz = the_hash_algo->rawsz;
++	const unsigned int hashsz = p->repo->hash_algo->rawsz;
+ 	int index_lookup_width;
  
- /*
-  * Unlink the .pack and associated extension files.
+ 	if (!index_fanout)
+@@ -1922,7 +1927,7 @@ int nth_packed_object_id(struct object_id *oid,
+ 			 uint32_t n)
+ {
+ 	const unsigned char *index = p->index_data;
+-	const unsigned int hashsz = the_hash_algo->rawsz;
++	const unsigned int hashsz = p->repo->hash_algo->rawsz;
+ 	if (!index) {
+ 		if (open_pack_index(p))
+ 			return -1;
+@@ -1933,11 +1938,10 @@ int nth_packed_object_id(struct object_id *oid,
+ 	index += 4 * 256;
+ 	if (p->index_version == 1) {
+ 		oidread(oid, index + st_add(st_mult(hashsz + 4, n), 4),
+-			the_repository->hash_algo);
++			p->repo->hash_algo);
+ 	} else {
+ 		index += 8;
+-		oidread(oid, index + st_mult(hashsz, n),
+-			the_repository->hash_algo);
++		oidread(oid, index + st_mult(hashsz, n), p->repo->hash_algo);
+ 	}
+ 	return 0;
+ }
+@@ -1959,7 +1963,7 @@ void check_pack_index_ptr(const struct packed_git *p, const void *vptr)
+ off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
+ {
+ 	const unsigned char *index = p->index_data;
+-	const unsigned int hashsz = the_hash_algo->rawsz;
++	const unsigned int hashsz = p->repo->hash_algo->rawsz;
+ 	index += 4 * 256;
+ 	if (p->index_version == 1) {
+ 		return ntohl(*((uint32_t *)(index + st_mult(hashsz + 4, n))));
+@@ -2159,7 +2163,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ 	int r = 0;
+ 
+ 	if (flags & FOR_EACH_OBJECT_PACK_ORDER) {
+-		if (load_pack_revindex(the_repository, p))
++		if (load_pack_revindex(p->repo, p))
+ 			return -1;
+ 	}
+ 
+@@ -2227,7 +2231,7 @@ int for_each_packed_object(each_packed_object_fn cb, void *data,
+ }
+ 
+ static int add_promisor_object(const struct object_id *oid,
+-			       struct packed_git *pack UNUSED,
++			       struct packed_git *pack,
+ 			       uint32_t pos UNUSED,
+ 			       void *set_)
+ {
+@@ -2235,12 +2239,12 @@ static int add_promisor_object(const struct object_id *oid,
+ 	struct object *obj;
+ 	int we_parsed_object;
+ 
+-	obj = lookup_object(the_repository, oid);
++	obj = lookup_object(pack->repo, oid);
+ 	if (obj && obj->parsed) {
+ 		we_parsed_object = 0;
+ 	} else {
+ 		we_parsed_object = 1;
+-		obj = parse_object(the_repository, oid);
++		obj = parse_object(pack->repo, oid);
+ 	}
+ 
+ 	if (!obj)
 -- 
 2.47.1
 
