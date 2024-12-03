@@ -1,119 +1,200 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7331F75BC
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 15:31:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F781F76AB
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 15:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733239877; cv=none; b=Zoh/lRvL0hENie10uq/EWBOkTZVsbdAc9eIBNFZBiKs4y83XzrZXdNJTANKK5WnjzcZpqbJvaT5v04Y/+0RpEHGW/Ucgjt3qHCdqKXzldUYFZw8jPdRxg86FkPfd/7lWr1HZS9Tpk2+kkcK/Y+saIbmn4eH12+cC4/HivZUu/qI=
+	t=1733240047; cv=none; b=FIWfdc/VuN9xIB2vZEjG1QjJasVpXI3ijIOLBjTss43S+5hgckLJc6GQ+vS0T4M96dLhukbD7OCkcgGrKN9RNP7B7SrXLCaJ8sg75ffFbr0olUIV3NeLdL804zfNmTdjB/hdh7l9I5DAPjK5QCKdBIEf1295/66fqTKQ7UMJAPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733239877; c=relaxed/simple;
-	bh=djtxu0nmcGdC50+UIRm4mznF2eFRT7flYQdV8+ZTvfM=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=GlOXGzuLXdSJ83imzzAGKzImvo3ULWzebX/uTtRognUT8TJAG4Gr1aU/oTPAXLdM14gELZyDlVWFSezMMGoqg2aPn/8rRTt+mbDdhyZDSjLfxDFVAPwsK/+S70aH2AhegqCVECWCvhADzXXvE4lVAUu119A0pC1nob+ezQFFemI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=CMGF6yYW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nIUkbNDO; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1733240047; c=relaxed/simple;
+	bh=pvmEEgMQL8XHY08NR1R7p4k1OgTLIuGXtlTeWjQbsSw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UJ6D9/UPTsq45rIojb5xsN6hQKuxI2+DUrCdMrI4KGd216lb+sStQuxT940L3Qj+fxZdqCbEILP0Eyf5bcDb0XvYRQzAiydrLIA5kACgvo2EqaVn2RXqMgkBX/xeqnZqQZuKIATMbWQLKbls8PTR/FRsTLMK50PG1vgOM+mU87o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=vUMij4Zy; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=advVOrOG; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Zsbj4hD5; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jw6WQx1B; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="CMGF6yYW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nIUkbNDO"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id A3C1E13807C6;
-	Tue,  3 Dec 2024 10:31:13 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Dec 2024 10:31:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733239873;
-	 x=1733326273; bh=GeP3LX/mRslHpq3ViSo5a8piseA5KgSrQrIg9BKaky4=; b=
-	CMGF6yYWf8zfRm+tmBHh9UNCNSOTpDNJsAccysO1FVhdtYpoF9qM0CDRHCjNrfq1
-	Vds2Q9mgdR5ltxJdKzv6Pyjy8ClCKno8jUXT7LyxyX6ErZTqdKIajiRDArR6QQV1
-	FhZtJuK3goMCIbT0EJREMrYBqx/gV8htLvI1eaRrpEmXmmn1Dtg9AbxLcCY/PmGU
-	FwNcjAjxVTXa/T+BZ8+K4J4uXZyCaY2xM1JcvhSXjD+hVarqYYnpDnMKSxu+mYen
-	jJLnrIlS55/bJisTa9AddzXX69YOnVE73/XOPzRLfhC0mS0jF3E/0s1Laav/BZnc
-	GA/kQaixKcqsskpBGk81jA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733239873; x=
-	1733326273; bh=GeP3LX/mRslHpq3ViSo5a8piseA5KgSrQrIg9BKaky4=; b=n
-	IUkbNDOJY0JS7/fBuZliN87Pz/vazxm36o+lGisfJpHbnNq0IkBhIYWFG8Ng87Jq
-	H+h0kVs9mmSlAD8Eb+F0b4SHEET8aO5GyfgamrSAVt/941W6TkfhFE+TG6+A+Jqk
-	0KMNY2TBtMhOlDMVu1zmMWy77HRjGvFZuqVFZGi8Goa3zd/86DhadA36+y10kVTX
-	81SNCHw9AmCwJsvmHgPH9qi2NRAP2C0XkdA6SybddDqVSx06OpVExv0AJatxd72t
-	28oXqYd2eyDs8/PTUMOu/T8OxnMwBtlxR0c2Fbj8k6uZwDdmPrZAlDTTJvt/XVtU
-	ODrsrXnjyx0kN51xBkRtQ==
-X-ME-Sender: <xms:QSRPZ6Rs2moKMkwYVKptURWz4Cwsj-jndZQls2zUY5XTMsipAmtEBzo>
-    <xme:QSRPZ_y1wWMYE64kdGRB9wpRApyEUOpbuKn1oBCPoefxtnCYk1m6v_FmZk3I47szu
-    mvgXCVqDHCLHymcLA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieefgdeglecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpeelfeejudejfffgleduheegheeufeeffedtgfeffeevudeuleffgeektdelue
-    ekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehlihhurdguvghnthhonhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehmghesmhgrgidrghgruhhtihgvrhdrnhgrmhgvpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:QSRPZ308q8Zh5sy_ViV6N2WgcDoq5lRyUOQ406MyDGOmib8f2Ofs4g>
-    <xmx:QSRPZ2B7YN0Zwv-dlg7IVUdxM2GZMeE6Nbcx969Qh-IqwxP-3Bpw7w>
-    <xmx:QSRPZziMsCmE3GZf1PZjRa5O5DBLyYxdhJnnmYzNScfNRozPt4zpYg>
-    <xmx:QSRPZyqgrLI8p-XVhqeIDGQOFP8kleFqoTTxc7weWn6L0sv_aTgW5Q>
-    <xmx:QSRPZ2vou88Yh4chUwVKV25sp4pFl7be9QJvd_cxEGF04VKjF-M3JavB>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 68C1178006B; Tue,  3 Dec 2024 10:31:13 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="vUMij4Zy";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="advVOrOG";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Zsbj4hD5";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="jw6WQx1B"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 2B52921157;
+	Tue,  3 Dec 2024 15:34:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1733240044; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=b3RU0cJwfT1hxT05m5ccZ6T85w1zDJxUYg9hD82Hhro=;
+	b=vUMij4ZyIkIxEFanBU2pJOF9LhcKvpyx4QA/JHmkZWM/ELE6AT641f8XICcDSfRryBFPuD
+	eGsEguzzoybVHm+FkY1olC9pL9U78V/BCvrpjxcA1b5Tukp0BiTqHhNEb6AlHQqMptvt0N
+	qxcFKZ7UPhCBf6mCd1PHbbmT0T9b3QI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1733240044;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=b3RU0cJwfT1hxT05m5ccZ6T85w1zDJxUYg9hD82Hhro=;
+	b=advVOrOGSjFTZuYBqWOaGjHyOgR20q5ZEayjBDWocMbNan+jElr/MqtvE743bFj4TQG4kM
+	wuR5964JUwbRabCQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1733240043; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=b3RU0cJwfT1hxT05m5ccZ6T85w1zDJxUYg9hD82Hhro=;
+	b=Zsbj4hD53655/Lv7nISTFsMbLD9tCUbN9H1hCjOeGSIUzbv2kPpX8Luh5OgYk0hRBWlcDA
+	b89UN9KJPagtjOs6mNT0CBCmjJ1JsJWij8WSrHpZUltK+nbZ6Qc0AsofqO8azfjJU/1rqZ
+	Au6Np1e/uzaQXrjPvksatOusW6fqEFc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1733240043;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=b3RU0cJwfT1hxT05m5ccZ6T85w1zDJxUYg9hD82Hhro=;
+	b=jw6WQx1Bbjr01TxmPNsod7P5nKH1i6G93u3rCPLS7UfaCPIRLPldXFrkxF8Z6cUg5YzyUL
+	sh1dab7Rh1CTIoDg==
+Date: Tue, 3 Dec 2024 16:34:02 +0100
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2] builtin/clone: teach git-clone(1) the --revision=
+ option
+Message-ID: <Z08k6hANEQVe2g70@kitsune.suse.cz>
+References: <20241129-toon-clone-refs-v2-1-dca4c19a3510@iotcl.com>
+ <Z02_YwCgHp_MVj3M@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 03 Dec 2024 16:30:53 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Max Gautier" <mg@max.gautier.name>, git@vger.kernel.org
-Cc: "Denton Liu" <liu.denton@gmail.com>
-Message-Id: <75269425-49ee-4a16-beef-614da392d528@app.fastmail.com>
-In-Reply-To: <Z08N4AlQKiNi-IOI@framework>
-References: <Z08N4AlQKiNi-IOI@framework>
-Subject: Re: Detecting squash-merged branches (and question about git-diff-tree)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z02_YwCgHp_MVj3M@pks.im>
+X-Spam-Level: 
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_ENVRCPT(0.00)[fastmail.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[iotcl.com,vger.kernel.org,fastmail.com];
+	RCPT_COUNT_THREE(0.00)[4];
+	FROM_EQ_ENVFROM(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[kitsune.suse.cz:helo,kitsune.suse.cz:mid]
+X-Spam-Score: -4.30
+X-Spam-Flag: NO
 
-Hi Max
+Hello
 
-On Tue, Dec 3, 2024, at 14:55, Max Gautier wrote:
-> Hi,
->
-> I tend to work on project which do a lot of "squash-merging" e.g, merge
-> branches by having a robot squash the branch in a new commit on top of
-> the main branch.
->
-> This makes it a bit hard to remove my branches when they are
-> "squash-merged" (in contrast to using `git branch --merged`)
->
->
-> I started a little script to detect such branches; initially I used git
-> cherry, but this only detect the case where the branch has 1 commit,
-> which is not enough.
+On Mon, Dec 02, 2024 at 03:08:35PM +0100, Patrick Steinhardt wrote:
+> On Fri, Nov 29, 2024 at 01:00:42PM +0100, Toon Claes wrote:
+> > The git-clone(1) command has the option `--branch` that allows the user
+> > to select the branch they want HEAD to point to. In a non-bare
+> > repository this also checks out that branch.
+> > 
+> > Option `--branch` also accepts a tag. When a tag name is provided, the
+> > commit this tag points to is checked out and HEAD is detached. Thus
+> > `--branch` can be used to clone a repository and check out a ref kept
+> > under `refs/heads` or `refs/tags`. But some other refs might be in use
+> > as well. For example Git forges might use refs like `refs/pull/<id>` and
+> > `refs/merge-requests/<id>` to track pull/merge requests. These refs
+> > cannot selected upon git-clone(1).
+> 
+> s/cannot/cannot be/
+> 
+> > Add option `--revision` to git-clone(1). This option accepts a fully
+> > qualified reference, or a raw commit hash. This enables the user to
+> > clone and checkout any revision they want. `--revision` can be used in
+> 
+> s/checkout/check out/
+> 
+> Does this have to be a raw commit hash, or do we also accept an
+> arbitrary committish like a tag that peels down to a commit?
+> 
+> > conjunction with `--depth` to do a minimal clone that only contains the
+> > sources for a single revision. This can be useful for automated tests.
+> 
+> It's implicity, but automated tests in this context probably means CI
+> systems.
+> 
+> > This type of shallow clone could also be achieved with the following set
+> > of commands:
+> > 
+> >     git init the-repo
+> >     cd ./the-repo
+> >     git remote add origin <url>
+> >     git fetch --depth=1 origin <commit-id>
+> >     git checkout <commit-id>
+> > 
+> > Unfortunately, this approach uses git-fetch(1) instead of git-clone(1),
+> > and only on git-clone(1) the bundle URIs advertised by the server are
+> > used. By adding this option `--revision` to git-clone(1) allows us to
+> > get the same end result, while benefiting from bundle URIs if advertised
+> > by the server.
+> 
+> I'd claim that this is not only about enabling bundle URIs, but also
+> about making this easier to work with in the first place. The above is
+> rather on the complex side even though the use case at hand is not all
+> that esoteric.
+> 
+> > diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> > index 7acb4cb17618c6cbee5d6ebe41a53be03ebfaa6c..2a3f6d9deae4b817db50d8c4e555a6f33b8296f1 100644
+> > --- a/Documentation/git-clone.txt
+> > +++ b/Documentation/git-clone.txt
+> > @@ -218,6 +218,13 @@ objects from the source repository into a pack in the cloned repository.
+> >  	`--branch` can also take tags and detaches the `HEAD` at that commit
+> >  	in the resulting repository.
+> >  
+> > +`--revision` _<rev>_::
+> > +	This clones the given revision, and that revision only. The argument can
+> > +	be a symbolic ref name (e.g. `refs/heads/main`), or a raw commit hash.
+> 
+> Nit: while I know what you want to say with "symbolic ref name", I think
+> it's a bit awkwardly worded because a reader may confuse it with an
+> actual symbolic ref. I would just drop the "symbolic".
+> 
+> We should also clarify whether this accepts tags that peel down to a
+> commit.
+> 
+> > +	Unless the revision points to a branch (i.e. ref starting with
+> > +	`refs/heads/`), the HEAD is detached.
+> 
+> Okay, makes sense. When cloning a tag or committish we wouldn't know how
+> to name the branch, so we instead put us into detached HEAD mode.
+> 
+> I could see an argument that we should do this unconditionally even when
+> cloning a branch to simplify the UX by always doing the same thing, no
+> matter what the user has passed.
 
-I=E2=80=99m working on a program/script to detect merged/squashed/rebase=
-d (or
-cherry-picked) refs.  Is it okay if I contact you if I finish it? ;)
+I don't think that's expected, most commands that take a committish
+would create a detached head only when it cannot be attached or when
+specifically instructed, see eg.
 
-There=E2=80=99s also this program which says it can do the same thing (n=
-ot tried):
+usage: git worktree add [-f] [--detach] [--checkout] [--lock [--reason <string>]]
+                        [--orphan] [(-b | -B) <new-branch>] <path> [<commit-ish>]
 
-https://github.com/foriequal0/git-trim
 
-My program tries to be like a for-each-ref for merged etc. refs.
-More focused on reporting first since that can then be used for
-deletion or whatever else.
+       git checkout [-q] [-f] [-m] [<branch>]
+       git checkout [-q] [-f] [-m] --detach [<branch>]
+       git checkout [-q] [-f] [-m] [--detach] <commit>
+
+Thanks
+
+Michal
