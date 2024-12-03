@@ -1,62 +1,127 @@
-Received: from taslin.fdn.fr (taslin.fdn.fr [80.67.169.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00101F8AD6
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 16:18:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.169.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB07F1304BA
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 16:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733242712; cv=none; b=IBdoc3+BcOO7PmXHwnb9k/sCvT0/5Zmk638sptcHRkinkNGRQwtDODq3ZQPlnxTcrznJCK1M5Fw55nqxTAUt7A5LvMVhXlAYyqtOOdltA5E3hpRPjeElhVgqZutPvTUoFd9rIww751vHDh+RAXrWtE94RQ6Gc7yAc5t7d00yQAo=
+	t=1733244425; cv=none; b=Fyt1gP1W+GHBV/+D365eLVul77zEWmRZnjbWbkqQiNFF21E8qgoJzt+UjTn8+Gv94RdYtIbqF964Qdw675zxtoJB0wiKiOlH+NcLVk5SftWuq5V0lNalNXvdzVJyk4cxX/cxvBleQtNlulxI2BQ+xK3/YXGlSvb2SxiZnaJ/BG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733242712; c=relaxed/simple;
-	bh=xICQzzMDrtahf8yDb61jhHQUoz8wgB2eGr8PtyHgPL4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=jhiPxRKWU/PFRW8dSVmh63ppAS9sdraWD8iLR5E2jKeZkV1sB5SCm1aTPy96y0Hg9RHabznvqYMQloKXAiMyw2W4d3EzOT+3bvp5iz/WrvK6nByM6KZ215rrmHAmDdArsU73gSOfJTRil46wQbsz+cx3NHwp2DDiqwg1x34oi9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name; spf=pass smtp.mailfrom=max.gautier.name; dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b=tq/QkhXg; arc=none smtp.client-ip=80.67.169.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=max.gautier.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=max.gautier.name
+	s=arc-20240116; t=1733244425; c=relaxed/simple;
+	bh=8lEJP3fUvizipMeOVH9+pcTudev/nJuT7p/nQjeisq4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=CwtH3Cg9bEOMJGqrJ5PbOnOgdBngJyXaPEmt5i8uJ1/GROY/ATUrI+cKkqxvk+zHWBEy8+48UbwzCf/4n+wd2AaXY0xqX2hdQNA7POB9N4HkCWy44tasBLa+RzNgqBDN2lzPbdAEYIF4bygAytguk505QU+eDExLuJu40Ne4ZRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=jOuoWR5x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rxVOGELc; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=max.gautier.name header.i=@max.gautier.name header.b="tq/QkhXg"
-Received: from localhost (unknown [IPv6:2001:910:10ee:0:666:7ab6:84f4:fbbf])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by taslin.fdn.fr (Postfix) with ESMTPSA id 906D060AA3;
-	Tue,  3 Dec 2024 17:18:27 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=max.gautier.name;
-	s=fdn; t=1733242707;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to; bh=5qZfgtyX/DgLVkArqP8oKvRn/zk/Qk+JwE6ufWn1WH4=;
-	b=tq/QkhXg4U14Ks8gRh+Q94glElfgzyViExzJj85sEMJCpcurd3HsUg39YE8VrPSbF5ggWA
-	8mPWREmJygMd/6scNn7oj2O5pGnXRbQ7HF+uibSkIB+bbfrydkB1wgUe362oZUhF6Brqeq
-	YZFyY16BflqYwts3VWkb8Id+odkqlDHzMATWHceYG1JGVvz4b1a1eElDYNCmC+wWMS0h7i
-	xg165IIeTHkUx7T7PznnpleLFjq3wkQHzXuCRNw881ODzywPnIDCyYM67n1V7oRcTgOCZE
-	lSODdB9hItyo29Wlw8QTszhYFQZrUdbhLIgXSCh8PWutgWK6ww2b7xmxhsu6bw==
-Date: Tue, 3 Dec 2024 17:18:27 +0100
-From: Max Gautier <mg@max.gautier.name>
-To: git@vger.kernel.org
-Cc: mg@max.gautier.name, liu.denton@gmail.com
-Subject: Re: Detecting squash-merged branches (and question about
- git-diff-tree)
-Message-ID: <Z08vUxoyK67LXZc3@framework>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="jOuoWR5x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rxVOGELc"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C5882114017D;
+	Tue,  3 Dec 2024 11:47:01 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Dec 2024 11:47:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733244421;
+	 x=1733330821; bh=EkkaQHdmXGUp18Z5z9RCVPiJu/AunXGD28/sXBgntH4=; b=
+	jOuoWR5xtDOGSBiyJWHJ5IFl6gDf0EXgW1TZUb7yptpGQcvxr1pbgRZn2i3QnZls
+	DclSIR6+xgLazbR/DmB0KzqiYRZwVkzbiJ5J3KR1mxzaTGO/1xpLFAn4PFQBe17d
+	Z+TcNFNw/xieiYrII28DJ5D+g1nFceMedoxxt8oJO91s6YN/cZE2NcpMbLArDxR2
+	VWjBOoEazU2LVrcvjybUfhwcRH8OahcaiKce37AStou7W7IhsLn7GrJt31bwhY8b
+	i0tQ3b0tGEFldGQRl6uiK3bvlypi3C0sC6njyaVEgO6GhKKj1162bOgODX0n2jfO
+	xoanVPF60zhXyvmc6ESWsw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733244421; x=
+	1733330821; bh=EkkaQHdmXGUp18Z5z9RCVPiJu/AunXGD28/sXBgntH4=; b=r
+	xVOGELcL9KuVZwbItXEF7EzR134APgfujvRJTK7aOAajRfNHb4S+MYxYqbgV7HQA
+	W0UIOyHUedY1ghVuCYAfeQSoeigl4LxTr/Ug1DUZgCZjgpHXrVJpTerUx5xQPoG1
+	wZZzEKGPIkCJSu04Vt0nXIZ5/fHAQOisPNiE4ZP1vm09hkjOVY9oKl+DT9NiGv7i
+	zU7qKvuuXQJ+cDk9OM88uAFbfcLAGS6lbacS8faU9w0YMACjuuqRHWVItQzijAhf
+	6o6cJVXjWdZI9vEqsiquisAAlsJUrXijG+a4/NS2Z39FBIk616XDw1ztnNujVvxO
+	pWw8sDjhHqxGeiAwKMvtA==
+X-ME-Sender: <xms:BTZPZ2xoctYYROCozA9mvpXe-MFGq2DGObY6DypWPMLkVMjCKmNcp1A>
+    <xme:BTZPZySaDUxYA8RcVDYZD7bcpk__Xr0k4CTxBS2p9LGqWArWodB5VdxMD6YeBu3Ts
+    _ioXKZfJZdlemNQBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieefgdeigecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredttden
+    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
+    thgvrhhnpeegtdejieetgefhuedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetff
+    ejffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhi
+    khdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:BTZPZ4VR1-KueblkVjr-5OACHShnV_rawP1UNc8C1XH9b9QEaIlRmw>
+    <xmx:BTZPZ8ifasqcxj4MqmFcjt4mpdNl-tAn1ViSAzhkRwFZOI_MZNf6jA>
+    <xmx:BTZPZ4B8l_Oi5Iof0NbcrWpZeDb6yEohiXdQ-Q2hE8QC9v_h7L2_jA>
+    <xmx:BTZPZ9KeQRiTUUClVWJEcbFFG4NCEANlh9Y8yfq3j6dai3V9GQp5ig>
+    <xmx:BTZPZ7OZJbh4tyVPHUtCcQI5YFIqIu7W-TudM7sAgA8qdInmxTtclLap>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 850DA780069; Tue,  3 Dec 2024 11:47:01 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z08N4AlQKiNi-IOI@framework>
+Date: Tue, 03 Dec 2024 17:46:41 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Karthik Nayak" <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <14f1ff64-bdd6-4233-9358-d56eb64a2d57@app.fastmail.com>
+In-Reply-To: <cover.1733236936.git.karthik.188@gmail.com>
+References: <cover.1729504640.git.karthik.188@gmail.com>
+ <cover.1733236936.git.karthik.188@gmail.com>
+Subject: Re: [PATCH v10 00/10] packfile: avoid using the 'the_repository' global
+ variable
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Uh, btw, there is a typo in the script in the previous email, it should
-actually be:
+On Tue, Dec 3, 2024, at 15:43, Karthik Nayak wrote:
+> Range-diff against v9:
+>  1:  d1fdd6996a !  1:  d6d571c58e packfile: add repository to struct 
+> `packed_git`
+>     @@ Commit message
+>          on the global `the_repository` object in `packfile.c` by 
+> simply using
+>          repository information now readily available in the struct.
+>     
+>     -    We do need to consider that a pack file could be part of the 
+> alternates
+>     +    We do need to consider that a packfile could be part of the 
+> alternates
+>          of a repository, but considering that we only have one 
+> repository struct
+>     -    and also that we currently anyways use 'the_repository'. We 
+> should be
+>     +    and also that we currently anyways use 'the_repository', we 
+> should be
+>          OK with this change.
+>     
+>          We also modify `alloc_packed_git` to ensure that the 
+> repository is added
+>  2:  65c09858ce =  2:  fa69763468 packfile: use `repository` from 
+> `packed_git` directly
+>  3:  80632934d1 !  3:  c6acbece46 packfile: pass `repository` to static 
+> function in the file
+>     @@ Commit message
+>          packfile: pass `repository` to static function in the file
+>     
+>          Some of the static functions in the `packfile.c` access global
+>     -    variables, which can simply be avoiding by passing the `repository`
+>     +    variables, which can simply be avoided by passing the `repository`
+>          struct down to them. Let's do that.
 
- commit_by_patch_ids[${patch_id[0]}]=$ref
-
-on line 20 (instead of $patch_id[0])
-
-Not sure how I ended up sending the wrong version.
-
--- 
-Max Gautier
+Nice, thank you.
