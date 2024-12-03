@@ -1,109 +1,120 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CBF19CCF9
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 22:17:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B441362
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 22:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733264240; cv=none; b=L9v+nw3SRzZWKrjLiadD8YhUvj9XyYa+DCHECcBo8vWx/ewXlBn1pQ5jr1vMKa7OlBSgVhD2c2uqTEDyjT924dbUVKK4i/DY+lr8s+2H0MvW7Oyj+FAImpV1v0qxBXZ+8BTBSf+/rSbLR5j7JoORE4Vb35fEfK3Gs7nDK+/+WhY=
+	t=1733264558; cv=none; b=L+r4REN/+aULsW2eW5NsnFtu1IVFPuArTFYcUf9YtzhKhoUcBGopB6nLo8kvp6SEZyrk42fRXZztdYIWV9Y/SCiGEig0oDbt2872ikfPtf824KyixTQKf+DJq4dEUJRUBHYKKA8L/9H0jgfdIGlAYtUZlDNxb3x57Hshp6y3ZBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733264240; c=relaxed/simple;
-	bh=dhDXApfQXf4fVbLuGMfdAfLXIIflU8N04Elq8qiJgzc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U4mLT1Imqcg1gsDr2UwhvRIddefAhoBmvNGJAEHdaaRPUReuMNnTonZBIzdgtRLE/cvMEEXcmpQffLzSS28iJwpZfjP01ZLZN28WGJJJbmdrKk8wemWVaP35u80fSSYv3GSQXQ2T0RkEwYSK0VQzSmAdGFLjKaKfE9ngX1tcFWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n8vSYSjl; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733264558; c=relaxed/simple;
+	bh=jVTP9tSnAaW0h20lJbaBkxc92k3q5afZEkfrL8J3n4Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q9cANOnIDfoVjIyqFbfoVqpfFPN0+/zhf6PtmT70+6ZViKN88hEHLMfMQrRp6gCJPSK418WW9BnIDm6VzxCzZAavjr1UC1MkvaClP85HQTaiZ4N3mQLyK0dLD8czToszfk8+nXR5i3Ahw4FaFC8MGVWwYOPPr11U/6V5sULDUDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NfnlfBAy; arc=none smtp.client-ip=209.85.166.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n8vSYSjl"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id C95A2114010F;
-	Tue,  3 Dec 2024 17:17:17 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 03 Dec 2024 17:17:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733264237; x=
-	1733350637; bh=p+N8q5MO5zi1+bZfm7Hvvk34bBb/22thErzcR9d/1cE=; b=n
-	8vSYSjl8fWW5Bq3V9ufRtHkhvp8Gu96mdXmFF7dCbPwUkNmi6isu7eQWTMf/o/fS
-	8qsD+CALvWs9HX+zWA2idYEISMmrmvQXyHMrTS/QUTwHqKToLcWd740DA4HzILOX
-	c4JaeGuP28UVU++xuixJAZyPSXM7AtGwdX1tPF7yK5IjZ4Xp3ezjyacdgK0thT8k
-	8OqUBk+QnY4HZkT2cZEO629S7FoAggi3OGvzMh2LNFTZVQ0H5n/OzvLsT2aZTDcf
-	rsbETeZ2USbysfFzb0KUMGLGGENOTATAfXO3ozQhUXvMuswhBBx8FB5vWsdZ5pdz
-	34MfSaNZgDUEo1xJNd5ZA==
-X-ME-Sender: <xms:bYNPZ4DumRYGfed-y8KYDlVTfu3vDuZjBATqy3VfS6PgdE8huinuIA>
-    <xme:bYNPZ6ioxxG0uPUKZJB7tACGlIqeuxeNEcDM9LRam3qlsdD1M2TdJA0YWuWRc00gU
-    x-vYgGzGo4OT1tcKg>
-X-ME-Received: <xmr:bYNPZ7kXyhV5cjNazS67r3RtGzIjIJ0D1ih4LOoAaFgth3RoVmIvs48woSF1-1m3Y4tlMqi7eeM44mPCN026SQCjV_EC5-qO3bwPSvQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieefgdduvdelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkefotddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdtjefh
-    gfekhffhteeiffetheelhedtgfehtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
-    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bYNPZ-y7y2lWMyiLT97gmzu6gnAV99FwHUfvAYpqobzmJIovgC6WKg>
-    <xmx:bYNPZ9TPaDjC5bS3-pdZy_0Cr72SAU3Xzyo2R0vGBgeCqEsJiNklwg>
-    <xmx:bYNPZ5aRrx9-pbDmK9xfgOfPHozgZCQ8HeNSYcUvcZMsFKpt4GDlfg>
-    <xmx:bYNPZ2RSc_dabkEw7UNXORjc8mDB6t1s-Y1eF8K4GmNRWdqwfEO8Xw>
-    <xmx:bYNPZ4FgAnTuD1kg4Y-EAb9nz5Etdw3RCAhb0L0rr51MR52JnRlHNTd8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 17:17:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Jeff King <peff@peff.net>,  Elijah Newren via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Eric Sunshine
- <sunshine@sunshineco.com>,  Patrick Steinhardt <ps@pks.im>,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2] fast-import: disallow more path components
-In-Reply-To: <CABPp-BGP8zrSzxcacTzLY-EuYAQW5EwyDGNAMh196udGN18fmg@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 3 Dec 2024 00:01:51 -0800")
-References: <pull.1832.git.1732740464398.gitgitgadget@gmail.com>
-	<pull.1832.v2.git.1732928970059.gitgitgadget@gmail.com>
-	<20241201214014.GC145938@coredump.intra.peff.net>
-	<CABPp-BGP8zrSzxcacTzLY-EuYAQW5EwyDGNAMh196udGN18fmg@mail.gmail.com>
-Date: Wed, 04 Dec 2024 07:17:15 +0900
-Message-ID: <xmqqwmggbedw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NfnlfBAy"
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-84198253281so213705839f.0
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 14:22:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733264555; x=1733869355; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ujo3AKv4v6FWquf57BC5YT646JRWYdDvfwFXeAUGjAo=;
+        b=NfnlfBAyFFlyIXuzQ+SN9yqArQ814S+rPaNwuymw3FqdQcQJN7zRbCQ0tgxyYgscqB
+         wUNyUKw0fW4cq1lcpCZVqrxhRL85alaGJI5mGYpEvZNRflXdZrbVj1DIXVCvNliIR0t/
+         wysWLFN+PwC7NWKh4QLwUB1NzaTW/FXAFPJL7ecgX8/NL4rePLrK0pIIKKxs8l53p3ny
+         B1xMuU81dn3NY2H9wX869O/WZyZVmgcsJ3iECMsLMs2lZSf8j7y/TI70vxHlEAQ0D+Vf
+         4nQE8o9xmhwU160NDV/xgju2yOkOncB0X04fawEWIicDEnmblY/o8SGihQjQI6hN9K7s
+         4pZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733264555; x=1733869355;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ujo3AKv4v6FWquf57BC5YT646JRWYdDvfwFXeAUGjAo=;
+        b=cOU+ZBr6GD1zZdjpfQAyQTDZxgWzbuGEsYTMnPYOw/To8JLENe/OYsi0hvR5pmVAkg
+         X1QbVCWl6pJX07V3Y+CxcUObA79Mxy4MOH8E4yTjVNnTZk0sGlK/9bjm/s+L4TnOs/yK
+         Tz2mxODJvO+UwZbno2Nklz+RU58zhAEYCJlHxGQ3ALlz01Qtv1gzphemPAxxvyPymAfY
+         Vctqmd3166JSz2DHC3S4cRA/BBNAyT/inojDp69pNfiA/xDMaawZseBfjCjMyDt5uHFz
+         HSxTHxH6ptGqy+h0724pXfNx/QkPmjNAAMDTuDXmGXqLVVUBJV/Rd01gke5y1Cs4eTHU
+         Gt3g==
+X-Gm-Message-State: AOJu0YxZ8z54Cu2Tbw5GqZvbsw7e1xCLzdfNuh9qc3+Xq6OKvjHKsEAN
+	ozPiE1Z97jheqQ/n0fUgMGp//vfLe1GhFMD5SEXuJQdqaBW0YKPHhxTISkyXZgifNjcikjzcffo
+	iVwJ1hdni+w2FoOlNsEOxi0EgFUo=
+X-Gm-Gg: ASbGncv0WZMavAg3CVshBxKCuI+f8eosFMd2nv1EzXxB4/2rDieP+o1QMStwgo6gd3V
+	Ptx3Qgktt+qORMCFrZ3UmqANLsVFgbLvMAb4d9Syn943nhg==
+X-Google-Smtp-Source: AGHT+IH4EfCcOMFalArZ+u5Fm2ODmIEb0IcfEo61SNs93iUADiVAWgC2Upljx3FE0daI509f10CGkX5Yd8tHSXEXPSA=
+X-Received: by 2002:a05:6602:27c5:b0:83a:a746:68a6 with SMTP id
+ ca18e2360f4ac-8445b5519cbmr639685039f.5.1733264555698; Tue, 03 Dec 2024
+ 14:22:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1838.git.git.1733257083739.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1838.git.git.1733257083739.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 3 Dec 2024 14:22:24 -0800
+Message-ID: <CABPp-BEiYvz-0MDS92iSb1Bj_UyBBUjy6D5SDsbPcoPnjzjucg@mail.gmail.com>
+Subject: Re: [PATCH] doc: mention rev-list --ancestry-path restrictions
+To: Kai Koponen via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Kai Koponen <kaikoponen@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> writes:
-
-> On Sun, Dec 1, 2024 at 1:40 PM Jeff King <peff@peff.net> wrote:
->>
->> On Sat, Nov 30, 2024 at 01:09:29AM +0000, Elijah Newren via GitGitGadget wrote:
->>
->> >     Changes since v1:
->> >
->> >      * Moved the check to a higher level, as suggested by Peff.
->>
->> Thanks, the code change looks good. Is it worth tweaking one of the
->> tests to do "R innocent-path .git/evil"? Otherwise I don't think there's
->> any coverage of the file_change_cr() call at all.
->>
->> -Peff
+On Tue, Dec 3, 2024 at 12:18=E2=80=AFPM Kai Koponen via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> I would say yes, but since this patch too has made it to next and is
-> marked for master, I'm kinda tempted to just leave it as-is...
+> From: Kai Koponen <kaikoponen@google.com>
+>
+> The rev-list documention doesn't mention that the given
+> commit must be in the specified commit range, leading
+> to unexpected results.
+>
+> Signed-off-by: Kai Koponen <kaikoponen@google.com>
+> ---
+>     doc: mention rev-list --ancestry-path restrictions
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-183=
+8%2Fgkaikoponen%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1838/g=
+kaikoponen/master-v1
+> Pull-Request: https://github.com/git/git/pull/1838
+>
+>  Documentation/rev-list-options.txt | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-=
+options.txt
+> index 00ccf687441..459e5a02f52 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -412,7 +412,8 @@ Default mode::
+>
+>  --ancestry-path[=3D<commit>]::
+>         When given a range of commits to display (e.g. 'commit1..commit2'
+> -       or 'commit2 {caret}commit1'), only display commits in that range
+> +       or 'commit2 {caret}commit1'), and a commit <commit> in that range=
+,
+> +       only display commits in that range
+>         that are ancestors of <commit>, descendants of <commit>, or
+>         <commit> itself.  If no commit is specified, use 'commit1' (the
+>         excluded part of the range) as <commit>.  Can be passed multiple
+>
+> base-commit: cc01bad4a9f566cf4453c7edd6b433851b0835e2
+> --
+> gitgitgadget
 
-It is perfectly OK to have a follow-up patch that adds a test or two
-;-)
+Might be worth linking to the thread where this was discussed (in
+single-commit gitgitgadget PRs, that'd be done in the PR description),
+over here: https://lore.kernel.org/git/CADYQcGpXm=3DRTEYyxqdSowQ4Vg9jmXuCzO=
+Opd-TgDX8U814BReg@mail.gmail.com/
+
+Anyway, patch looks good to me.
