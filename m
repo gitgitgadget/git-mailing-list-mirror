@@ -1,43 +1,43 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6276F8460
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 23:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A91207A33
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 23:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733267363; cv=none; b=HI4/VpXY/UZlJhGy1fIFER284l6qPb+2U8+AFstuPzmXfu7AMNY4x9pYdSMXmfMIz+DVQ0pnQ4QvA77p2Q1xCYDokTdn/nNImdGUecxT/0RUMtPh503IedpneB4bA3eZWjmGIfrdq1sP/BJ2HdWLgj/ilGTgTP8p8eFAMEDF67s=
+	t=1733267870; cv=none; b=Mbu59zoe5XNZ44s3TNcRqxqkYiuFUluF2f4ptnvGIlBGQy2h4rWc4vmOh9CXfaNYqSgeg2TiH9/J4Zogf1+mYGokJQVeQ4WUwQiUE7ntBi4JxRwy9p+K6yziaahNTxLvI7VAeq7LXkH9rE9qkQ7Cft8gfz8SjDs7KCz5AsnySNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733267363; c=relaxed/simple;
-	bh=DQNuCXsF1Ite0MpbXWTsnrYonFUBzFvtXeiPtHKM74I=;
+	s=arc-20240116; t=1733267870; c=relaxed/simple;
+	bh=6UAmmO/XWqCByuUhngM1UJRiqhyhIKebenUSk+0eTpY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DovOU5HD4Zz2Im86OoThyhqIYb3CIjhEyu6oA/0h3UZwCeMUesxWKBarCCyis0OcgddPhMUF0Kkw0GkSgdeOoNqea6BawNinz7OJ8Cpabr1L8g6lR2KsqNtdLiTbD6QYRsK445SFSlz/67CGSdpmFgVwB//JJn8+C1FcMwuUMoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XdmbWOW6; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=DxdObvQh594AHmBIIFWxvGXntWiyVuoJbtaHN1wq26Ub5zad/QzzhrhZfVlBzB+6qBk7mLe74ZA6k6Xj2fYmRJyVfqpi0n9xuZ18UAQfUJ3PIztqFFkRJR7Vu5Mj2doQN/SwaLSX/qvY8ODrICKIIL/LUQHqO4sBnVi8EOchG1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CRW22k5j; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XdmbWOW6"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 666B11140106;
-	Tue,  3 Dec 2024 18:09:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Dec 2024 18:09:20 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CRW22k5j"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 39D59114014F;
+	Tue,  3 Dec 2024 18:17:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 03 Dec 2024 18:17:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733267360; x=1733353760; bh=HDUm6zBYg7Dq7G16jLma5TmDEjojqoP8WMw
-	/e3v3O1c=; b=XdmbWOW6PuNVTRzoT8AzJ51Oz2qRbm3V/28lk9pn8mP6V5xBezy
-	SE5qvaaUmqo7U+B5QgjsJrB1+kYlL47Iyuni7DKVluUZToWnjszPJmD/Xadp0ozN
-	kne7jclQ3+/tqc+ng8JIILG6uxmk9cxlcV1G+WTLrGRyvrFxflM1B6XMG1+/QD3g
-	HT7vnFrYABn6FhmjP8KghZohXgoTPN4dqAjs9ogbpoeVtyaBoxoRz8zc8/FdZLtR
-	UxldQ8m/Hbe3iqUlhtRxYGT7q37aBXf6Wden/MUE4doeiPOoGIaPLZmI56oK06Wi
-	mvF0LB9/rRmQBZWfMLiUgFeU0ATQqKuq/0Q==
-X-ME-Sender: <xms:oI9PZ5_TMNI0Lgj__ySuXwJL5tV2vSFJepoLZAx0n4iyG8OHMBg-ag>
-    <xme:oI9PZ9sQdZ2_5kZhPETbuMikVPJckGHM0srJFqIaug9_RiecP4cT7bAV9QFKGEZxT
-    LFWcdqAgWIqwZHz_A>
-X-ME-Received: <xmr:oI9PZ3BHQaOB9-tcFFPJP57KtZjb2NLQ-dHSaFB2j5u4n0j5ZPIaODfngD9kLrik5o6KPGqpjKz1zWaE57KZPfQSSXvwJTV_ahtksMo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddthecutefuodetggdotefrodftvf
+	1733267867; x=1733354267; bh=DeA/9cL5icA5t55S905r8i4HaLBAk6RaYLb
+	wPZk4qlE=; b=CRW22k5j3sRQvVzgWU9EffTq6NejwSbHzDAPACLVbAmFIQoNrgW
+	N0jbtkeO/4mK6z9gIHQ+Tw8GPld6gDA9JzCvPEVLzxBqUCZdo0CvJhFQOr4fYlR9
+	j3hrkD28m8LfP0298E9T772/I9u/4TQxrLOBluDg4qKy7fBWIY6fH8EZdH502qR7
+	qgU/hTsYfQwg4vK+NTaaYifh5Zdc0UDnnS4loQIJb1JUvf3bUweu5BAoUcY7Mb+V
+	2oQhTCF1IFTXyEtppwsWiQUN1PZEZ0NLw8UG9yLT1F9hxsnf9M92GeQo2Sbl/+fr
+	ZF/SbnN34IiAUgyBBbESfJQiXWG9JygbjPw==
+X-ME-Sender: <xms:mpFPZ7SxiAI0QZBm38A-B9rIRz3a24ATaVjcWIBrwpWOP8N9G-NrFA>
+    <xme:mpFPZ8x9wRX3jw44_GZXnrwIQcIodolGVRIVVGIK9J2R6GPots9wR9Eg72hN6rftH
+    NoZpD1AVibm2Z4cDg>
+X-ME-Received: <xmr:mpFPZw0w2PFoR9Au75KrwT1i1HhYJUJ1jiCpZrTsMbFWjLZSW-2u4NmkoxrGjSmH3up4fURUa22NF0dAgB59uYcK8YZ0wJgtvYdbljw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddtiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,29 +45,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddthecutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehk
-    rghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:oI9PZ9d2HWlZrFW8ur8S2-K_qc7SrStUEfsfzw0d-kQtkP0BNJvJrQ>
-    <xmx:oI9PZ-OHyHY8l5mhVVTQHLc0yJ5IQS-j3ablVY83CV0gJssPPjCcIA>
-    <xmx:oI9PZ_lpol0Yso9rSOw5cxHRI-pWcJoPvU1TlDkLOjzdZ2FIRYavBQ>
-    <xmx:oI9PZ4tmhtvUwhVW1KGRsdkv6_Icq7T7DWSLMcDu2QiST4jfLDpKXw>
-    <xmx:oI9PZ13g0Q_wK4V_uWNMzkkvuUnCdUt5zmNmd1O8F4NrBGjQSI9JONu0>
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:mpFPZ7CPFws7eFpjwL10CA7JBus-8F9ROZGqO97Q2Z3AtSbG_WkSiw>
+    <xmx:mpFPZ0gSpDb5IudXzRSb78kYEIq860lTSplNuyqGWS7x4JJhtwNhaw>
+    <xmx:mpFPZ_oUj3fKDhG1BEt44yC0RMKZx3bnjcLbO05YcifoInT7NyeHuQ>
+    <xmx:mpFPZ_gb2gmttJi3md2X5ia1iVQnXP_lXUJj98RNjafkSF1LD7ujaA>
+    <xmx:m5FPZ8cxRiSBPWUL2c4dzqr6-zrFtQtDCFddOp7YDVF6TL03N7VZh8WR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 18:09:19 -0500 (EST)
+ 3 Dec 2024 18:17:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Justin
- Tobler <jltobler@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2024, #01; Tue, 3)
-In-Reply-To: <Z07auxNCcysPovdo@pks.im> (Patrick Steinhardt's message of "Tue,
-	3 Dec 2024 11:17:41 +0100")
-References: <xmqqed2pcled.fsf@gitster.g> <Z07auxNCcysPovdo@pks.im>
-Date: Wed, 04 Dec 2024 08:09:18 +0900
-Message-ID: <xmqq34j4bbz5.fsf@gitster.g>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 3/4] fetch-pack: split out fsck config parsing
+In-Reply-To: <Z08VoOHGZ1wecUx6@pks.im> (Patrick Steinhardt's message of "Tue,
+	3 Dec 2024 15:28:48 +0100")
+References: <20241127005707.319881-1-jltobler@gmail.com>
+	<20241127233312.27710-1-jltobler@gmail.com>
+	<20241127233312.27710-4-jltobler@gmail.com>
+	<xmqqed2wox8n.fsf@gitster.g> <Z07QqowPVEgJ3sIw@pks.im>
+	<i7tvwk462uwe3syarrnmjttgu4p7urtymq4n72kj7ziaptu7iy@vh4td5fd24ko>
+	<Z08VoOHGZ1wecUx6@pks.im>
+Date: Wed, 04 Dec 2024 08:17:45 +0900
+Message-ID: <xmqqy10w9x0m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,25 +82,10 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> * ps/send-pack-unhide-error-in-atomic-push (2024-11-15) 6 commits
->>  - push: not send push-options to server with --dry-run
->>  - push: only ignore finish_connect() for dry-run mode
->>  - t5543: atomic push reports exit code failure
->>  - t5504: modernize test by moving heredocs into test bodies
->>  - push: fix the behavior of the Done message for porcelain
->>  - t5548: new test cases for push --porcelain and --dry-run
->> 
->>  "git push --atomic --porcelain" used to ignore failures from the
->>  other side, losing the error status from the child process, which
->>  has been corrected.
->> 
->>  Probably needs a redesign.
->>  cf. <Z0Q0wfSTk_cUXH0F@pks.im>
->>  source: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com>
->
-> I wonder whether we want to roll with the first version that I have sent
-> instead of using v2 from Jiang.
+> I think the current version of this patch series is fine as-is then. It
+> might be a good idea to adapt this in a follow-up series, unless there
+> is a good reason not to.
 
-That's a thought.  Let's go back to the series and take a look.
-
-Thanks.
+Sounds good.  We may want to tighten the rules a bit to reject
+obvious misconfigurations, but that is outside the scope of this
+topic.
