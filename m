@@ -1,56 +1,56 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659713B2B8
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 19:23:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4783A1FC100
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 19:26:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733253794; cv=none; b=necpJuAC0JVDNfWbkZXXqaWt2D3OsVJxVN57HAcELaeto+ZIJekYo78VG4UIJbKYNzo82aZlCdU8RTi7yfuVSWCQVBA7KkcZkVDEvVew4CHdvEbMApIGF1KK1HXKcye544RGE3qqaDV6CjSqE77Hut4OYysR1WaWnPHCg9q1Nhw=
+	t=1733253995; cv=none; b=KZZlxDnLTVodoP48B5q1N3rBtGQUI+l2/HXBN1LXHROyQEoejhewPBsF+NVqmA7bAFc5XJvT9z4fhFGxoZsauEAcmBWbbJZUs8PRiIGQ5syIGiLElw2MZkM79sNTFDqEIpPle0wO+pbSSfzuq1J7j/a/BEpGHMbbpoPvdYS1FMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733253794; c=relaxed/simple;
-	bh=iSoSSyLaVcsAyPS2zjS4R2BjmDwmeBT/g+jW4pxhnKk=;
+	s=arc-20240116; t=1733253995; c=relaxed/simple;
+	bh=T5/ku9AfXNrwVkxV/jeRlQ2Hf840by/q9Q18s43EEWA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=inKNEXgwzwz1+phiemQNp28nqgv/MDJfAjFLjVYNfATi5KE42wtU1WogHZlyt+hWbzDBDEIaJmZGI0zqKvTYyN34a2aP4IKpfSvvKaDxPREnw2dNzz/nhX3pljhrSmdd4wljWvUatrtv/KRfaPr3hdg44cQDeakxEBdyui9vS18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m29NZdBL; arc=none smtp.client-ip=209.85.219.180
+	 To:Cc:Content-Type; b=rtxkAe0Rb3IJxptSQqr4K2e4L3wnubwYY7xkea0V9lqeWRhW4xPSTJyEKVhH+DojBxJC47ZoB0urWXZrbs9u0Tq7G3yTU1k4TAwF5G0pwuqZcY/B2CSGGhjN3+cHPwwvwa1CJYbQJeLJTVmKRiIvM/ghZOTsKDZePGJzMCAt7eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bkRNbJr5; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m29NZdBL"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e38938a55e7so4963844276.2
-        for <git@vger.kernel.org>; Tue, 03 Dec 2024 11:23:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bkRNbJr5"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e39841c8fd6so4413389276.3
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 11:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733253792; x=1733858592; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733253993; x=1733858793; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uQvnhiPhDDlLR8jeawT9KULlOAcbri88ZwA4NrUkrTM=;
-        b=m29NZdBL3uFuOtui1SrrZca2k3pECcsqxb/fKo26MsAq+vSxqiKdhWW/MWL1/gfJwG
-         l+Z/kz2o9UCVSzCH+MR8ornqqn3aWgGn/RPVhMsD392VUnBmbENNujRWuC++BdJiB4Sl
-         64wEYu3a4yEKLcQksq4KoKoKLu1WymgD7frO6WXNV8pcmoQSssh3N6K+XPlgPXURd2iJ
-         GaqfuU94Qj+6nvObjUJxS5WWWCBWv6OL0MY07ehOMif1A2HWGRT4P2U7frXHK+LbkYvr
-         Dd3CshsGM6o/lmG9dIMQaQgn7VbNEV+nit+80y/CtEXySW8Fb19WBOmFvh+TjMyTtFCs
-         bbUw==
+        bh=ybTRmrrLiEoTHSEdztZiF3/aG2wtxG2dwv9QefiWpyY=;
+        b=bkRNbJr5tdaUnssBwf4I0Iom7ceA8Hc1NsjJ1pSz71B/pLQQLLNkdF7kOV6RPkPzvm
+         mC5v0B7PklkfNWJOl4IV2Bqx7jALPPzAO9kufSod+fdF820vERLIdU0l/6dvYvuMbCCo
+         Fplobvgq8BsN0+Jab0ave5vWpN9mIaVom9hFYQjJlIdhB7o0wioXoH8oKkPA6bJUD591
+         mZugsQFcBjmig+sTuY4ZAkbRR+4PBiVDfUEgQ6El5tFLj4kZZJmNBa8SaXbWn04lfhxQ
+         4ZFZ808aNlt1ES2F2cgJM/H0bRx3R81aZcojaSnIU3Hyn9jG1Zl7mhfrRuhZWXN0AKTe
+         AlNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733253792; x=1733858592;
+        d=1e100.net; s=20230601; t=1733253993; x=1733858793;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uQvnhiPhDDlLR8jeawT9KULlOAcbri88ZwA4NrUkrTM=;
-        b=jTtdPMK+2h5FufDNyHh10UzuN9OLhIecb6pdWnmwPqnz+dJ0G2tWIUOtiaGiC5u69I
-         kdY7ROieAQ47ORxi1NxsyEKhbHuxcedCdzOkFHqujS60SRmGrNxmhiI8wJkXHQnuF+r6
-         kYxTMJXc7dVHfArnmsIFwkbc0fkUzenLHIMPTwTbFpc0I8IUtl2b6R9zNGM9IiHkRw5E
-         Wo8io6lVJ1X6ALUGj7kzNmdE1+juvsWhD2XOL96WBIaDGVcavBmO0tqbX636tEIt/4uX
-         FfrqmSHkmW84UMl6R1fRLFLKXP+7SdXV1LUIBz8mLxAyNmLR3sxQeRXjCUaAfoEwYsYk
-         ONjQ==
-X-Gm-Message-State: AOJu0YxbPd1fYzmIcDKa2lt4dmYfihX/3le//ZSJj9VYuH+Rz9c2BsD0
-	pg+1cp2wHtR2+us969OzC3ESD8PSw/3vLqHXID+IIPYDmu920jlhJkpStmdD/cbw97FKZUEZu7u
-	AwNDOoNtwYRKUToFUd1PCiKU9XGE=
-X-Gm-Gg: ASbGnctXoh58R0KCVOCzY9tx8i7s1rVRyqKeLP5d0DKTZnDhNm2kJUmhryb2J6ckUbD
-	STK4uMAatQMre0gUMUDQTtT4ZewhR/W83
-X-Google-Smtp-Source: AGHT+IEUUmqtjxkLnP1DzETatkgGBlV5GZj8O+4XK1nUQdokUgzQWIZAa9geUksc0fVbf4UTsEBurFl4l2RLYFwKz0w=
-X-Received: by 2002:a05:6902:f84:b0:e38:c03f:7883 with SMTP id
- 3f1490d57ef6-e39d39f01d4mr4243626276.1.1733253791883; Tue, 03 Dec 2024
- 11:23:11 -0800 (PST)
+        bh=ybTRmrrLiEoTHSEdztZiF3/aG2wtxG2dwv9QefiWpyY=;
+        b=S2BDr/5us0f+vtG/ZthWsXCO4+mlTwgoan2xwZpyt0UNz58KFvMLQkrTJOd7vCHL7D
+         bJ0NODjZYAUXK5fw0knObViYap7Qn5xkgo7/dN+tsxyhkmn0ffDpSM3qxncYvM/4/t97
+         OerHk3pU5bScSutX0p3QgTDfyUo8qgjwZmV88tAOpWA0hE1GLJhbJB36UhzaoqCjhJsZ
+         LF36Y2C97eUDARRouj9qL0lFeqpMwCSwSQXPNkjJ8wzywEdLMc3eGo0OuinWWKbh5L+c
+         5tFwoXcyBYfTvFCWSO5uR+N9ofv8BxYaU54NWKvhBqWTV8MV9YeSi76/kvrsi0Tm5Gu2
+         X3qg==
+X-Gm-Message-State: AOJu0Yyo227WXU9z+UDtJVpjFD2762dtT0PIyHkxKKP28wZU2iJRCZLD
+	V9seWbMXWMUJ7e1b8vndQOqhthQkAROeWrTztvvutfJJu8zXrAyBUyrH+KKn+ExfLFbQMTVkQN0
+	lUc3tgAlUY1HMq2BaIQ6xgdrXT88=
+X-Gm-Gg: ASbGncsGNXC8UK5sGJ7aPC8cGdF9Y8K8sc9aeUAJE61E4b2RE0b6UknGs3VQWKkdHNw
+	x56BepEVPkiBEekpYjYcl5iPW5eylQmKQ
+X-Google-Smtp-Source: AGHT+IGY2b387Vmhw+UKUVk+XdtL54QZ6ac7Uzeu9oqjQcWpLGKIJzzU7U5JcDmqcAHJqTFwhkJniesEbc5nzgKykaU=
+X-Received: by 2002:a05:6902:2308:b0:e30:cc34:af1a with SMTP id
+ 3f1490d57ef6-e39d43712b0mr4383129276.35.1733253993226; Tue, 03 Dec 2024
+ 11:26:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,13 +58,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241125053616.25170-1-eric.peijian@gmail.com> <20241125053616.25170-7-eric.peijian@gmail.com>
- <Z0RIrw2PszaY2Way@pks.im>
-In-Reply-To: <Z0RIrw2PszaY2Way@pks.im>
+ <20241125053616.25170-1-eric.peijian@gmail.com> <20241125053616.25170-2-eric.peijian@gmail.com>
+ <Z0RIpRh0QlPWk3F8@pks.im>
+In-Reply-To: <Z0RIpRh0QlPWk3F8@pks.im>
 From: Peijian Ju <eric.peijian@gmail.com>
-Date: Tue, 3 Dec 2024 14:23:01 -0500
-Message-ID: <CAN2LT1C6mZrhWiK8x27yOPjRt=v8f_jnYwc6g_LtxhVGy3bQaQ@mail.gmail.com>
-Subject: Re: [PATCH v7 6/6] cat-file: add remote-object-info to batch-command
+Date: Tue, 3 Dec 2024 14:26:22 -0500
+Message-ID: <CAN2LT1Ao=oV3Ufv=-2Eiq2xj+YfEF8-Dw8SoANdzOx1FhJua0g@mail.gmail.com>
+Subject: Re: [PATCH v7 1/6] cat-file: add declaration of variable i inside its
+ for loop
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
 	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
@@ -75,130 +76,32 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, Nov 25, 2024 at 4:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
 >
-> On Mon, Nov 25, 2024 at 12:36:16AM -0500, Eric Ju wrote:
-> > diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-fil=
-e.txt
-> > index d5890ae368..6a2f9fd752 100644
-> > --- a/Documentation/git-cat-file.txt
-> > +++ b/Documentation/git-cat-file.txt
-> > @@ -314,7 +323,10 @@ newline. The available atoms are:
-> >       line) are output in place of the `%(rest)` atom.
-> >
-> >  If no format is specified, the default format is `%(objectname)
-> > -%(objecttype) %(objectsize)`.
-> > +%(objecttype) %(objectsize)`, except for `remote-object-info` commands=
- which use
-> > +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not s=
-upported yet.
-> > +WARNING: When "%(objecttype)" is supported, the default format WILL be=
- unified, so
-> > +DO NOT RELY on the current the default format to stay the same!!!
->
-> Is this stale or do we still not support `%(objecttype)`? I thought we
-> wanted to support that, as well, so that we don't have to change the
-> default format.
->
-
-Please see my next reply.
-
-> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> > index 5db55fabc4..ad17be69b0 100644
-> > --- a/builtin/cat-file.c
-> > +++ b/builtin/cat-file.c
-> > @@ -576,6 +582,59 @@ static void batch_one_object(const char *obj_name,
-> >       object_context_release(&ctx);
-> >  }
-> >
-> > +static int get_remote_info(struct batch_options *opt, int argc, const =
-char **argv)
-> > +{
-> > +     int retval =3D 0;
-> > +     struct remote *remote =3D NULL;
-> > +     struct object_id oid;
-> > +     struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
+> On Mon, Nov 25, 2024 at 12:36:11AM -0500, Eric Ju wrote:
+> > diff --git a/fetch-pack.c b/fetch-pack.c
+> > index fe1fb3c1b7..bb7ec96963 100644
+> > --- a/fetch-pack.c
+> > +++ b/fetch-pack.c
+> > @@ -1328,9 +1328,8 @@ static void write_fetch_command_and_capabilities(=
+struct strbuf *req_buf,
+> >       if (advertise_sid && server_supports_v2("session-id"))
+> >               packet_buf_write(req_buf, "session-id=3D%s", trace2_sessi=
+on_id());
+> >       if (server_options && server_options->nr) {
+> > -             int i;
+> >               ensure_server_supports_v2("server-option");
+> > -             for (i =3D 0; i < server_options->nr; i++)
+> > +             for (int i =3D 0; i < server_options->nr; i++)
+> >                       packet_buf_write(req_buf, "server-option=3D%s",
+> >                                        server_options->items[i].string)=
 ;
-> > +     static struct transport *gtransport;
-> > +
-> > +     /*
-> > +      * Change the format to "%(objectname) %(objectsize)" when
-> > +      * remote-object-info command is used. Once we start supporting o=
-bjecttype
-> > +      * the default format should change to DEFAULT_FORMAT
-> > +     */
-> > +     if (!opt->format)
-> > +             opt->format =3D "%(objectname) %(objectsize)";
+> >       }
 >
-> Seems like it isn't stale. Hum.
+> It's somewhat curious that you change the type to `size_t` while at it
+> in other spots, but not here. Doubly so because `server_options` is a
+> `struct string_list`, and `string_list::nr` is of type `size_t`.
 >
-
-No, this isn=E2=80=99t stale. As I mentioned in my response to Junio in
-https://lore.kernel.org/git/CAN2LT1Cmsw3RB1kbRBvoeLs8WaQeZWqrG96EQfMkMe_jdK=
-aO4g@mail.gmail.com/,
-adding type support is planned for the next patch series. Based on the
-documentation at https://git-scm.com/docs/protocol-v2#_object_info, it
-seems type isn=E2=80=99t yet supported on the server side either. My plan i=
-s
-to implement the logic for both server and client in the next series.
-
-Unless the reviewers feel strongly that this must be included now, I=E2=80=
-=99d
-prefer to stick to the original plan.
-
-> > +     remote =3D remote_get(argv[0]);
-> > +     if (!remote)
-> > +             die(_("must supply valid remote when using remote-object-=
-info"));
-> > +
-> > +     oid_array_clear(&object_info_oids);
-> > +     for (size_t i =3D 1; i < argc; i++) {
-> > +             if (get_oid_hex(argv[i], &oid))
-> > +                     die(_("Not a valid object name %s"), argv[i]);
-> > +             oid_array_append(&object_info_oids, &oid);
-> > +     }
->
-> Should we return an error when the user didn't pass any object IDs?
->
-
-Thank you. Revising in v8 and also adding a new test case to cover it.
-
-> > @@ -667,6 +726,45 @@ static void parse_cmd_info(struct batch_options *o=
-pt,
-> >       batch_one_object(line, output, opt, data);
-> >  }
-> >
-> > +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> > +                                      const char *line, struct strbuf =
-*output,
-> > +                                      struct expand_data *data)
-> > +{
-> > +     int count;
-> > +     const char **argv;
-> > +
-> > +     char *line_to_split =3D xstrdup_or_null(line);
-> > +     count =3D split_cmdline(line_to_split, &argv);
-> > +     if (get_remote_info(opt, count, argv))
-> > +             goto cleanup;
-> > +
-> > +     opt->use_remote_info =3D 1;
-> > +     data->skip_object_info =3D 1;
-> > +     for (size_t i =3D 0; i < object_info_oids.nr; i++) {
-> > +
->
-> Nit: empty newline at the start of a block.
->
-
-Thank you. Fixing in v8.
-
-> > diff --git a/t/lib-cat-file.sh b/t/lib-cat-file.sh
-> > new file mode 100644
-> > index 0000000000..9fb20be308
-> > --- /dev/null
-> > +++ b/t/lib-cat-file.sh
->
-> I think it would make sense to split the introduction of
-> "lib-cat-file.sh" into a separate commit.
->
-
-Thank you. Will split it into a separate commit in v8.
-
 > Patrick
+
+Thank you.
+
+Yes, I missed that. Will correct it in v8.
