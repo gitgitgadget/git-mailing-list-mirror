@@ -1,73 +1,74 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A52E22611
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 00:57:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD75C25745
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 01:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733187454; cv=none; b=IXkctTPvxEx9LFGrChzEjq+w30oL77XDUTQdQCdedKRfexX0Lk5+0PZecL2/3c4d47sw6nbWqCKoV+BesUyAl3uUPpjZtH3tXa4cKy1ghUqDcGoDhgOfNIKHnT6Giwp8kz2OnxerZoxTeH0fL12XoG3mY+ZSUJ3HRH+cwEzhMR8=
+	t=1733187909; cv=none; b=XT+uMarAgBoxqKwLvgTi3pve0LP99VWNVHw4nQLlH+Xn+cTAztffNXZ5Pn//8OmGPG49Jz3uE8u6dueGgvAQMQEJfko3lpNtNYq9cVtsPbiMTxxqNCqDCnin5zBQK0y7ggAG1TdMgkFcrqcDflbuX3DGUtG+Co1grwlz8Aeyobo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733187454; c=relaxed/simple;
-	bh=synV33Od7i9nvFDz0yaqX315hHJ6RkTOOFLutEoe4cc=;
+	s=arc-20240116; t=1733187909; c=relaxed/simple;
+	bh=KPVz+HBoObbnKyVDbI9qGaQta0GeaiP0owYKiNnIRdY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A84Cq0E3Fkg/ptYoNuUdjyhjBpuV/lq+vdNIFqWbS/9WkYQQxsYg/v0DCG4ZePccfLQnp2uZi/VYITqng2J0xcfJ94+slqmZBfWerE32rTrM3LFIziTNIOAnrSAZ0wz+0idWOdsucW5sHfpXoGKUfsK6r4fJ0snQUtEj6ejpyyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VzS+RBDl; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=bFa9noQV7R5mNYyudurNuRU4AezXAtjl2KIp+EETKpHOKKbZlS6wMVcwOgLGwnzHA2aMCKmaD5roHfzAO582SXkLkvg3zmI9hF7rCfBvJ1x4e41UZzWPG5fjSJo2fzQzo7xrRDY7hPMB6rFU+/CpiBU9GHiQ7fHSeboN8uArZq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E6FdWTLk; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VzS+RBDl"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2218B1140175;
-	Mon,  2 Dec 2024 19:57:31 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 02 Dec 2024 19:57:31 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E6FdWTLk"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A6CDE25401EC;
+	Mon,  2 Dec 2024 20:05:06 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 02 Dec 2024 20:05:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733187450; x=
-	1733273850; bh=xBgfwSRfNQbDnnk+MI1tS1ZjK02lZLU9z1NM4PhRtG4=; b=V
-	zS+RBDljzlw+Dsyjhn7K9X4skiCzygE9IpDDO7J9Rikilmf/7bXudhxJ9D+GDIl8
-	LhOVOAtNuz84EF+e//eOYPzKB6LzTUVMonhUZmLpf8SuZCeU5nQ/sgpgsexiOLTf
-	diZtZcxUPTBkECgD5BHtKb4udCnju6NEDqjDSG07UXoXBiCQssrEyU4eqNF2/inn
-	iRgEt/BPrOZ4fMDl5i/kkcoGmVn9m4fHJ1QZDg50lUydbD8Ysl4TLT+fRdX/6w6+
-	067OTwphP96MmUPZ0PvHJpaKxBGdQGVptlXcKvnxTrOr97+CFolJkeCg5Z3rfe33
-	liK3fGQJZ2tX/FlcqnSsg==
-X-ME-Sender: <xms:eldOZ_IgEx0LuOxWtd4G_YDv37HOaYqZ0QpEhGFP2NFvXBHvVv2QJg>
-    <xme:eldOZzKPzBMfi2RRoEYeLfF5vWNf5SMN1VZXkUZYlfwKQu2d4UHMzD7uvEUe5pxHz
-    NdzLa3qrPAfJyMP4w>
-X-ME-Received: <xmr:eldOZ3s8OIzTrFJWUH4YEnUhDJLTP1w507UeRh3NN5KPPmSRxKXN54_e7BL1Ewcua8k_tYQavbWGTw90yE3W1Bt07d-1lWq77Cy3io0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedtgddvjecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733187906; x=1733274306; bh=cvREcR6tQCXxtO8rCjVXwdkxCCUALf1d5EP
+	3j+cKtzg=; b=E6FdWTLk03xlsF0y0OP/hO6l5q8HDMGXMQYXTvN4dhe5F6p2iL3
+	hVkK/+E7K8oWCTWxcgXvuDCQ3HMOwFTGFtRBAum/croQrdK6NlbGtQ/UWVm3ntBa
+	46UDVD3TlgNkD6M8sqQGhYnJJWi5kFsiOzOAj96br6vpBhNp6liRvEqHePq0r9Ug
+	YQdvldI7f5DRyRqoblcZyHp2S2IlWOg69pj5LS3htv7FWKyXk6IRuY20tPo7v8W+
+	qB5vBqkEMB9ZMF0JUK9/uxigg0ow1EgH7JzvaSpkR4OwleYHDiJ611yHsRihW/vg
+	xRYZmEdG0rYAC7kStlrPIN3kYCfVLcNu02w==
+X-ME-Sender: <xms:QllOZ8B4fopYIhVi5OieaY2SPBbeB7unNjtLniYy_bcX0GMW_lhriw>
+    <xme:QllOZ-gFTLFqOxwtOv8-9qO7Mz90zoyZqBVWSYyWlBVq7LN7bOHe6I-7Wf-FEjmkk
+    mV2Z_AIAtltCCW_tw>
+X-ME-Received: <xmr:QllOZ_lL7WNuTPf9qKPQxHmnc4YHBYnW3gYXpZfpm-B4IZPm49u1DfPAO-gsvSYdm9nxV1YxY7bIMRpbQl1Lpm15qFkN1YgqaO8mriI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedtgddvkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishdrthhorh
-    gvkhesghhmrghilhdrtghomhdprhgtphhtthhopehthhgvsghoohhkohhfuhhnkhhnohif
-    rggslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eldOZ4auj-q0-_6NNENRDwKtK8KGylCDCEv2JJKxkQYY0mDNL64k-Q>
-    <xmx:eldOZ2Z3xUkuu6CK-nTLRD3vKEQJUSShkmKMmKzqoKl7sL6dCXjKZQ>
-    <xmx:eldOZ8AWSNnFIN6IsOpHqmExeNhdOvBnXS_5YkOZCii53fm6NyWpAA>
-    <xmx:eldOZ0bBvzNGAteDDqj94PORP20wvj83J3SB3nM4Y7iZ7dqBdhHAzg>
-    <xmx:eldOZ9Xy0YIM_zqsLT8Mmo4GMUZ6L_I2EqSYqKXwdo0cax1iqZL_FbpG>
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghikhhophhonhgvnh
+    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QllOZyx7uvrSWy9VhCo2KQEiEHjGaDrdOuy1oGhvKNyZgWOVTHGWHw>
+    <xmx:QllOZxS-4zwcEhvQwlP2J8rPYrPxy5XbG4GAqYZHh06ihzoBhVKz6g>
+    <xmx:QllOZ9aCFJ22fD-vMuydGrerX35NIlCDJ-bKFNfWt5TnuHt0fesi5g>
+    <xmx:QllOZ6SKLfPEip30ERUtW3wYoC1-M2I8NFn__fBCtyhaRd3oF5vfTQ>
+    <xmx:QllOZ_NJoNzpRKSgYk8NesmcYx9Wq3QSX5Jh6s6hUth83dwSzWvmOvCL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 19:57:30 -0500 (EST)
+ 2 Dec 2024 20:05:05 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: tao lv <thebookofunknowable@gmail.com>,  git@vger.kernel.org
-Subject: Re: How to revert to a specific commit?
-In-Reply-To: <CAPx1Gve_dCRux9_cF7NTspomS4K=Hp_y74d94S-Hm0amuovUqQ@mail.gmail.com>
-	(Chris Torek's message of "Mon, 2 Dec 2024 04:39:13 -0800")
-References: <CAFePT4zytyuLB0TgyJ+mbrNvz=Xt1x+gJv4e-2j07YK7Cg1bzw@mail.gmail.com>
-	<CAPx1Gve_dCRux9_cF7NTspomS4K=Hp_y74d94S-Hm0amuovUqQ@mail.gmail.com>
-Date: Tue, 03 Dec 2024 09:57:29 +0900
-Message-ID: <xmqqser5h9c6.fsf@gitster.g>
+To: Kai Koponen <kaikoponen@google.com>
+Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org
+Subject: Re: rev-list --ancestry-path with arg - bug or undocumented
+ requirement
+In-Reply-To: <CADYQcGpyTL18N2t8t-HwafB8VEVbBt452fsE0yMBvRvZd1mbVw@mail.gmail.com>
+	(Kai Koponen's message of "Mon, 2 Dec 2024 14:45:17 -0500")
+References: <CADYQcGpXm=RTEYyxqdSowQ4Vg9jmXuCzOOpd-TgDX8U814BReg@mail.gmail.com>
+	<CABPp-BE1C2izp1a0Xm8_0KU+kas8XKejDyix+AzXqbCOeVp2Dg@mail.gmail.com>
+	<CADYQcGpyTL18N2t8t-HwafB8VEVbBt452fsE0yMBvRvZd1mbVw@mail.gmail.com>
+Date: Tue, 03 Dec 2024 10:05:04 +0900
+Message-ID: <xmqqfrn5h8zj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -75,64 +76,73 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Chris Torek <chris.torek@gmail.com> writes:
+Kai Koponen <kaikoponen@google.com> writes:
 
-> On Mon, Dec 2, 2024 at 4:15 AM tao lv <thebookofunknowable@gmail.com> wrote:
->> I want to revert the code to a specific commit. ...
+> From 447a2367f8d3318e69adccc1b011b0d04792e438 Mon Sep 17 00:00:00 2001
+
+Do not include this line.
+
+It is not a part of message, but merely added as a mark that a new
+message starts here in case there are two or more patch e-mail
+messages in a file.  Since you are sending one patch per one e-mail
+message, you do not want it.
+
+> From: Kai Koponen <kaikoponen@google.com>
+
+Let your MUA have it on the From: header of your message; you do not
+want this line when your MUA is configured correctly (and yours is;
+we see From: header saying the same thing).
+
+> Date: Mon, 2 Dec 2024 19:32:25 +0000
+
+You do not want this, either.  Your MUA records on Date: header the
+time general public saw this change for the first time.
+
+> Subject: [PATCH] doc: mention rev-list --ancestry-path restrictions
+
+Put this in the e-mail header.  We add [PATCH] for a very good reason:
+make it easier to find patches in the mailing list traffic.
+
 >
-> OK, first some background:
+
+Here is where you "sell" your changes by explaining why we are
+making this change (like "existing text allows misinterpretation
+that makes it sound like doing this and that are possible, which is
+not true").  Please do not leave it empty.
+
+> Signed-off-by: Kai Koponen <kaikopone@google.com>
+> ---
+>  Documentation/rev-list-options.txt | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
 >
->  * A commit _is_ a full snapshot of every file, as of the state
->    it had at the time you (or whoever) made that particular
->    commit. Hence, if you want the particular files from a
->    particular commit, you simply check out that (historical)
->    commit.
+> diff --git a/Documentation/rev-list-options.txt
+> b/Documentation/rev-list-options.txt
+> index 00ccf68744..1c678294af 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -412,12 +412,13 @@ Default mode::
 >
-> Now:
->
->> I don't want to revert each individual commit; I just want to restore
->> the code to this specific commit while retaining all the current
->> history commits.
->>
->> How can I achieve this? Is there a better way than using the revert function?
->
->     git checkout [--detach] <hash>   # or git switch --detach <hash>
->     git reset --soft <branch-name>
->
->     git restore --no-overlay -S -W <hash>
+>  --ancestry-path[=<commit>]::
+>   When given a range of commits to display (e.g. 'commit1..commit2'
+> - or 'commit2 {caret}commit1'), only display commits in that range
+> - that are ancestors of <commit>, descendants of <commit>, or
+> - <commit> itself.  If no commit is specified, use 'commit1' (the
+> - excluded part of the range) as <commit>.  Can be passed multiple
+> - times; if so, a commit is included if it is any of the commits
+> - given or if it is an ancestor or descendant of one of them.
+> + or 'commit2 {caret}commit1'), and a commit <commit> in that range,
+> + only display commits in that range that are ancestors of <commit>,
+> + descendants of <commit>, or <commit> itself. If no commit is
+> + specified, use 'commit1' (the excluded part of the range) as
+> + <commit>.  Can be passed multiple times; if so, a commit is
+> + included if it is any of the commits given or if it is an ancestor
+> + or descendant of one of them.
 
-While that would _work_ in the sense that you can revert the effect
-of what the discarded commits did, I would not recommend any of the
-above since it does not leave any record of what you discarded.
+As these files in Documentation/ are input to formatting programs,
+please do not reflow the text unnecessarily so that what you changed
+stand out, instead of forcing reviewers to go word-by-word to sift
+through the changes to see what got really changed.
 
-Imagine that I regret doing everything since we tagged, say, v2.47.0
-release and want to discard everythig on 'master' newer than that
-commit.  If I want to "keep" the history of failed commits that I
-regret having made since v2.47.0, here is a way to do it:
-
- $ git checkout master
- $ git reset --hard v2.47.0
- $ git merge -s ours --no-ff -m 'Discard everything since v2.47.0' master@{1}
-
-The first two steps just discard the unwanted commits.  The third
-step is a trick to
-
- - Keep the tree contents of the current commit (i.e. -s ours) as
-   the result,
-
- - Make sure the result is recorded as a merge commit (i.e.
-   --no-ff), not "fast-forward" to the tip of the history I am
-   discarding, and
-
- - Record the discarded history (i.e. master@{1}) as the side branch
-   of the resulting history.
-
-The last part would help if I later need to merge changes that were
-based on 'master' I am discarding.  The presense of the side branch
-makes sure that only the effects from the new work done on the
-discarded history, and not from the commits such a new work was
-based on (which are the commits I regret having made and I am
-discarding), are taken into account when computing further merges.
+Thanks.
