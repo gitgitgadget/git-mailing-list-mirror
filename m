@@ -1,94 +1,119 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351F4847C
-	for <git@vger.kernel.org>; Tue,  3 Dec 2024 01:23:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1132AEE4
+	for <git@vger.kernel.org>; Tue,  3 Dec 2024 01:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733189010; cv=none; b=VbwqT6MSE8bE021yOeXFvApQ8skMR1dRXisyEjW2yQTNte8Sog5oBl8Y/3HaPughaX8ZTNR1pnaFB9FeBJopZ1luKrwycn9oPVU0WYwtLYmL7AbZD9Xi8jLvfdtBv/HxI7J6gBNECzfL3TzDi1wmd+2r29xDzYQHsqBXH8JZUvw=
+	t=1733189074; cv=none; b=RwxxE2oysoj2T19J7I41e0tsbgB+eBy6T7CTrLAFtCD47pHMO04TudeReTJjP/1JR2OolrJYH+A+rGloG2DsGHYbbeqi//KvjlmWuVr360AsY57k51XlC0bHSGlNwz9tNyQIkzSsySSNgpAZ4HuVGA4OLWBjHTkG0r7N8xFgEyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733189010; c=relaxed/simple;
-	bh=n4EZxYO69Fq3kr3Zin1H5HmWKYUcuwLupFGvUCdEDAA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EWtMKlZnPxjZ0H03s575/MLdQ0jNwa+tCyr8V2vgjwt7eJaGVRmsneaU6o9i9qz2w2FgGmKsBOPCHvDorbMkMWtsHC3wv98vzrGSb/ih4MDQim+n4V4mwggxnbKSR1fDXRbtO4berQOpfaFlTz1RFJJtFVPi5TrIgvPzjuR6fBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bvnsekQS; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733189074; c=relaxed/simple;
+	bh=hbl286R7/kn/g5jmWUi2iS26Es2HynBQmJoYaQWTgHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tQk1qBxAH66o/IbJPSVwo6n/c8jQZ/MDLK/DZVwC/hQBgGRY8eiEUjlMhofmZPzFhATMY3t9iyCfbyKUK343zZhJEnC7j7mZpJsoklwd2xZAAhl+67m0PY+7iEDuLWds/Zfnr6oALPiV3aCqQIfoA9gIMCFGJpFiNeNzfxG1Vjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ieXZc5C3; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bvnsekQS"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1B66A1140081;
-	Mon,  2 Dec 2024 20:23:27 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 02 Dec 2024 20:23:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733189006; x=1733275406; bh=WWwMkHBDowKajslbPBPw7vZNo7EWSW5o9Js
-	AGNjtrqs=; b=bvnsekQSAaMy4qagQgSADKlH4d919YlYwrs6PbVAWoMan1bZFfz
-	Fh6+piVrC7ZJtulaUNQ4jMEOzSk/G0wmMyBxbrS75DBpAFTL6E9UxW2X+/V5Agbr
-	E54qgXLjSpLOt2Umifjqp/3u+1Dd4Ljw4FGmswdilghWZffxjsUa18bNa26oVT5x
-	uyn6XQy8m3Po27Xan/pfo2pBIRcCAojQiKdEe1qJhpeJaDY1yrYy/sgv0AUbcXFp
-	Lvr2PuILnHx0E4BolGZ/epL7ZW3B6in2YGn8UitMHBT1Yk+RK32vXFfS2R+SpNnH
-	2/WjbhA6N9hJJ5PmaCLQhTCBYVj3sbmE4Vg==
-X-ME-Sender: <xms:jl1OZ59FmFs_Q4HHDhUWbB08kmCCNqKkpfDh2rzcUOOBR48KZOH_EA>
-    <xme:jl1OZ9ua7CaQzOpkSeMnx-APAwvkfN83ukmsAofIwgM8gHZEYF1G0EJlwSuq-TcDa
-    -nie9ySmTdXn3ICig>
-X-ME-Received: <xmr:jl1OZ3AJI8kpn9QP-FltHSwmLYko55P86Gq1DyDtB2lYDretctuGigDv3d-_F-ZHpBXyWcllV3D5NuxGxYCx_WcPlr5DUmr1IzKJJ1c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddriedtgdefvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithesjhhofihilhdruggvpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jl1OZ9cQiTalw1XU5t0nW7xZTH4tnju77cg98MrQfD2A3FKnafbtrQ>
-    <xmx:jl1OZ-MZ9ZEHwDmCS7H2JsT-7QzRDNGwiWbrsJ2w3qLGTFTrQybd1Q>
-    <xmx:jl1OZ_mTyJL21iALmWyS9lXwSjWAh-nO24yYUzfMhcWShMsIVMHu1A>
-    <xmx:jl1OZ4tIgn5i-I4MOMJN_-_QtdgeYK7mz4eVNf2KsSZInYqR2l3HSw>
-    <xmx:jl1OZ7o94l9eR4r_iIHd68kwMFx5QAR_68RRfdoXyeVmurWS9l9QKrlX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Dec 2024 20:23:26 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org,  git@jowil.de
-Subject: Re: [PATCH 1/4] refs: move ref name helpers around
-In-Reply-To: <20241202203743.GB776185@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 2 Dec 2024 15:37:43 -0500")
-References: <20241202070714.3028549-1-gitster@pobox.com>
-	<20241202070714.3028549-2-gitster@pobox.com>
-	<20241202203743.GB776185@coredump.intra.peff.net>
-Date: Tue, 03 Dec 2024 10:23:25 +0900
-Message-ID: <xmqqbjxth84y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ieXZc5C3"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-724f41d550cso2947162b3a.2
+        for <git@vger.kernel.org>; Mon, 02 Dec 2024 17:24:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733189072; x=1733793872; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=COz/prF1nk+oP7h/5XwBGiPCV2U2C4bLv8zXshkTCgM=;
+        b=ieXZc5C3jytvVEl19aIGN+1Zbj1k4Pfr3XnQ7fZkeSB+eEPrJb8/P+jSkflHtZz+ZR
+         VSYaoiWUeR/VKHaEQLa4srGmAddA4S66RieIbiv3+/OXA4rg9OfYYBRVvGGyFxROcA8C
+         EX195nnpxZzDJIuTgWIpuPo2oUeKRgQK8xWVSpac54KdsCi8l8cVz01Q+moqtKsmic6j
+         oktgI4zwKJ3ns/NBfJsJSd8r0P7WaRHUyD0BbtHUo7A47I5RFsvOnl+vjrjWr7BHaOZw
+         zGuRWpv02udodWgyb63c/Q8REz/c92l+sX9u6DAXh/i3a4VUs1t2MTita/Ca30+FNo2F
+         kD+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733189072; x=1733793872;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=COz/prF1nk+oP7h/5XwBGiPCV2U2C4bLv8zXshkTCgM=;
+        b=iwfVsP8vnDGqtiCjHApBPWS209JIGdOuXKufuonctCWb+7Lib35V/lFikNDzLbHOsq
+         /EBJBsVChRQNO8wmyDKUAkEZvtjtAxtSW815Icdjdli7YS1DRxp/OlvOCTY7vDC8PfnE
+         CQWXkrnHdkTcaLndXJVdqi6+F1Tg/b5Dg47r7/ViJXHSrkHV7WMJIe7IBulQoMT1joKp
+         LUIttn8EtuYFhVDqhB+VpyjRJ7eavIeJEOdxg8YIbr8I7XOs7pPPLPPis5zbkvZ1TvlI
+         jTO2y3jslCl6cm9Ky6A/oKTHakDQoM3Vno645gVd/jzk9YT5UoaGiqrm4k9DmMBAfUv6
+         ze1A==
+X-Forwarded-Encrypted: i=1; AJvYcCVW6/UcF1N9eQwtOLsMXh+dyalXIaSsNMWV8DaKBPQ/JiMLvgHyx+oAyiWagqYDOpJ837c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpWAeWJdjxsnQUw8R+pbPql5I+3QLBuoRqfNOhV9YscQRld2Ue
+	3YrewQB2Qm08vquXpQWB9x8nopUWsyADaORtoOrF3lKQCQ/Xz7LaArLr8w==
+X-Gm-Gg: ASbGncuLqG+ZWU7u8NIUgx9W2llsqe2rIkNKVtWBNlF7xAHk0zlrOvy5LjGrrliT1Um
+	Yz8a7dgAo8TtzBueAu+UU4t8kQ/igtQNx3sdql/6QYI7/s+S5jB9B6thlJMI0MWQECjB4pUWAB8
+	B8nFTMP2pZC9udZn5ZcI2oK2W/LPJBM2DHCWAjrj7VNtBOKqwicLYK+msFaXGMjvf1zgviflHoG
+	b90I0PloAqb7BaN+fZIuDX7+KJ+FWcKnzZhvZkd1NYWFA==
+X-Google-Smtp-Source: AGHT+IFdRARm12JMToudUDD86BLv7RI4hMxShmLGMYL53535Nq4ZLms4Euzjnv7uJUYrDYuNiJKmsQ==
+X-Received: by 2002:a05:6a00:983:b0:71e:7745:85b8 with SMTP id d2e1a72fcca58-7257fa40e5fmr655622b3a.1.1733189071974;
+        Mon, 02 Dec 2024 17:24:31 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72541762c0csm9223674b3a.33.2024.12.02.17.24.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2024 17:24:31 -0800 (PST)
+Date: Tue, 3 Dec 2024 09:24:54 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Caleb White <cdwhite3@pm.me>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/3] Ensure unique worktree ids across repositories
+Message-ID: <Z05d5pjvcIyJsAeG@ArchLinux>
+References: <20241129-wt_unique_ids-v2-0-ff444e9e625a@pm.me>
+ <xmqqed2qkfn0.fsf@gitster.g>
+ <Z02eKA8i51QyXgJ-@ArchLinux>
+ <xmqqed2pioff.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqed2pioff.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Dec 03, 2024 at 09:46:12AM +0900, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > But cross-ref operations between worktrees must explicitly specify the
+> > worktree id, so I am wondering whether we should allow the user do
+> > cross-ref operations in the first place:
+> >
+> >   1. main worktree symref points to linked worktree ref.
+> >   2. A linked worktree ref points to another linked worktree ref.
+> 
+> What is a cross-ref operation?  A worktree is either the primary
+> working tree for a (non-bare) repository, or something added with
+> "git add worktree" (i.e. whose .git is not the repository but a
+> link file into the real repository).  Are you adding another mode
+> where a worktree points at another worktree and not the repository?
 
-> On Mon, Dec 02, 2024 at 04:07:11PM +0900, Junio C Hamano wrote:
->
->> strbuf_branchname(), strbuf_check_{branch,tag}_ref() are helper
->> functions to deal with branch and tag names, and the fact that they
->> happen to use strbuf to hold the name of a branch or a tag is not
->> essential.  These functions fit better in the refs API than strbuf
->> API, the latter of which is about string manipulations.
->
-> Wow, they are declared in strbuf.h but not even implemented there. So it
-> was doubly confusing. This looks like a nice cleanup.
+I am sorry that my words may confuse you here. And the Eric has already
+explained what I mean here. At current, we have the ability to mention
+a ref another worktree within the current worktree. You also have tole
+me that in [1], there is a possibility that the user could create a
+symbolic link to some worktree-specific ref in another worktree.
 
-Yup.  Another home that may want to adopt them is the object-name
-API, but I think refs API is good enough, and certainly better than
-strbuf.
+So, if our intention is to deliberately hide the worktree id. Why we
+allow such ability? Let me give an example.
+
+If we are in the main-worktree, and we want to access the worktree
+specified refs, we must specify the worktree id like the following
+(also if we are in the linked-worktree, we want to access another
+linked-worktree refs):
+
+    worktrees/<worktree id>/refs/worktree/foo
+
+We do not want to the user know the worktree id. However, we allow
+above. This is something I feel really strange during the review
+process. To the front-end user, the worktree path is the interface.
+However, for above ability, we need the user to explicitly specify the
+worktree id.
+
+From my perspective, this is not a good design which is against our
+design.
+
+[1] https://lore.kernel.org/git/xmqq5xqn8w6r.fsf@gitster.g/
