@@ -1,144 +1,306 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A5029415
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 02:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0022907
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 04:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733279949; cv=none; b=qN18Wg7miq5hBXdH47e4hpqpU93P1z+lvf8JJpQfocu0XxCBL2gb8Ic3OPkpGVMy2d9ibHorhzIZM8hCwOsXqct8//4xh/cGl/8GjQjNRHqHEJvoQjzhXJYiY7Cbsn85c+xPDHQH2HZMeVXn4x/5irC3eIDVYEXuC1hOJP1MN0E=
+	t=1733286810; cv=none; b=UG7Xzv/if2bcrsC85o7gWqBBMTu0l2N4C0egKa+st+jGxYzN1tRs06u4+rr1tUc8x4fb63WWSv5ZU8qkrc1W+h1emvajA55rUBM792/eH+2aGSlFcFhLr0Z3I8ZW/RlKwnCzRcSPN46FjPvQN77vMKSRC3kIYsM1AwH+Hj42RlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733279949; c=relaxed/simple;
-	bh=AZNaBiZpJ7MY8hapDjzvrKO9zWE5Ff6Tq5owsEIgJQE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oKpNhWpXWaLvQeEY0Tx2pi+JjhClJk3MrlMqpsssJsWLS0va0xPdxtUvb8TxCwgIOEN0w7ZU5FxAvNHxAQhfwEIHq2cdqf9nFbCC9xEd4Ii/8dbPKaWoC6iUGZ2i3IzOx+H6/z880S0m8OBEvNCa44ES0DrFwjVPCkr45p61zjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tQnJpk6l; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733286810; c=relaxed/simple;
+	bh=Ut3Tl99jPpABaCfYlgpe4Vo0xrFLP9m+PjKWGzTT7/s=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=lI8YfMhCkpu7e50H5Wy0+06GSiDTR3wYaHHmyCuR2mF12H8OsxaE5FxWLOf+vpYyRZ/jt6KnrUxw1QFbWvjAsnj9Jv6Yy4azbTmiukEdj8QHviuRf0v7cizDAe0PKDY7NbMJDebk/5A5qaAVOiQu9ffsyKWTwFx1JK5vr9RCM9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g0wbJwyQ; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tQnJpk6l"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id F2B141380604;
-	Tue,  3 Dec 2024 21:39:06 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 03 Dec 2024 21:39:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733279946; x=1733366346; bh=gLkIKNGbOoVAwPGgjk25qU60F5szzB+IvQH
-	B6bY8BK0=; b=tQnJpk6l8IhRT2EHtEZh04T7EGgB4RDH1hxtT2QfweJvbyGOF3G
-	X3XsftX4qQdzq4kGTQvtZB8Bm/UdMxbcRlw7ek40VM8h3Qi4nW/xUMEbVIk3ZAZu
-	E9hArURYD9Rkl2tUZhTxggg+n3bu9r74IKjwgq8tngsSd15r0oPD0EG9xq7gVwwl
-	VacSewGTAMR3ncJrqW/coPpXFog+WAwfOlLxfsEkU8VxX7GquOcLjEVlfT/XIgPs
-	do+jFsF5cJIIGigXDyR+benZa/P6YMB843p0Ek+zuPkdCFLmh3gIwzeDSgRveU3D
-	6m/piN5c//+y+zDt9/4sJUhEL6m1EjKmBkA==
-X-ME-Sender: <xms:ysBPZ-uauJVDjCcr_i3wpviDVr2J_3djh3rt4tHXl5hdrMM220_v2Q>
-    <xme:ysBPZzc0Y33m2rndjgPSk0QRtm2Zhci38DK4kYTpTVF-yf5snotNzOUCk5zncpYCN
-    gkqz09_WZsh9JPi4g>
-X-ME-Received: <xmr:ysBPZ5z9OlD7vmXyUCnuK4jLk46v_GlGL0QiJcYxAVJ8h0uA4UcUTjBvFHY6j9IfozFW_NdCZI1ODnvd1S_EHG1WZKej1_Ft4qb5DRY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggdegiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:ysBPZ5OPq4FW2A_CdlMqwPsFamVYyAQQ_vXR2-eaR3hFs6GU7DM1QQ>
-    <xmx:ysBPZ-_30WqglWgMgwTnREGlWNebG47AQ2pNVdlds6fglBRX7mTK3g>
-    <xmx:ysBPZxXnYXNrsWWqYrI3Dncd94tXp51m_mQJrZY7-jyig41asVWA7Q>
-    <xmx:ysBPZ3fTRcZpl3dJRQMvQE4RS1coYvvk3yOYmMqtqqgZsjARVS-_Qg>
-    <xmx:ysBPZya6e7tV18p6TOukT366qsLpdiHnN5XwBGVgAOGEN-cH-14wHYJX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 21:39:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 3/4] fetch-pack: split out fsck config parsing
-In-Reply-To: <xmqqy10w9x0m.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	04 Dec 2024 08:17:45 +0900")
-References: <20241127005707.319881-1-jltobler@gmail.com>
-	<20241127233312.27710-1-jltobler@gmail.com>
-	<20241127233312.27710-4-jltobler@gmail.com>
-	<xmqqed2wox8n.fsf@gitster.g> <Z07QqowPVEgJ3sIw@pks.im>
-	<i7tvwk462uwe3syarrnmjttgu4p7urtymq4n72kj7ziaptu7iy@vh4td5fd24ko>
-	<Z08VoOHGZ1wecUx6@pks.im> <xmqqy10w9x0m.fsf@gitster.g>
-Date: Wed, 04 Dec 2024 11:39:04 +0900
-Message-ID: <xmqq34j45fzr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g0wbJwyQ"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-841a9366b08so206515339f.1
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 20:33:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733286807; x=1733891607; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=y9H1zWBHcmQVXbYcDLt3Ou8H4yyWFtwIvfykwv+WABY=;
+        b=g0wbJwyQcZPLN3X6g36SukmXVL09hJiC6x0Zs8bZk2v1frcMloo//aZ0QJd8XqiFL6
+         M2yjvQDmMjiWfDfHG2Pfuc7fALrswVK2/JBQMC1+DhH/sbCEk8dYsCDFJsRKrh+bqQKt
+         7Te9bLIxpsg2/eqFv48l0S2hpiVvZZywRzmEsYVVmgoHE86xvRi2+sayWkxLIvU1ZZa2
+         C8ay+2nQJdT/DQyFqhiu1nrHHluuj+uFDN81KzzQbsls5/UXr1MzhR7QavyBstmDiQLo
+         4lzfncESIrmyxEZQSZprJBqUlzXH8u250pcZKgB9gg79E8glroEvBjrbwGGr1EJuYCIE
+         siuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733286807; x=1733891607;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=y9H1zWBHcmQVXbYcDLt3Ou8H4yyWFtwIvfykwv+WABY=;
+        b=MuyBQbYskbVJbuoEDyBN/knvd+j/ew6hg1yFqqAjnSWcvaDx676TYNSY7EaH1ejg5j
+         E+yaqHrf4k7pFgAUl/1LyR6bdtYcHe1xpMojQkS8rgzQngayRwpUyJPLMVbtBKmpI+5M
+         xBQQAl8GWowdnqXSWLqW/z/QPRn0g94ADtCQQxoq6aQdaZYOu+E0fE1DS5ZuM+XSg0Z6
+         k7AruvodQuJy5eUs/6KYMOT4GwnoeXujCBvJOUc45j5j+nEviyzAKU/GReGv6SQTyF0U
+         WiXp+u/y/75T84Z0W7b+q1HE59tf1FHE+kjmuVGKaE61afchiuS2dU37Bdw+6MO3XTmC
+         LiEw==
+X-Gm-Message-State: AOJu0Yw2LXw9a2coDqsWFghWTT8qAGBqVknQtIAy7w5EKmFJdz9VZUOM
+	FfaaYSOXbvNOwfYBGMhzFLWUqb0WQxOdYFyRIvIQaQVRsUp6UFU9QhUNwHw+ZkY4yTSfcHgRiWp
+	AiwMoNjRlZNCB4ScZYV3ppA9PP73T0Ayx
+X-Gm-Gg: ASbGncuwhpMAETAe/A8F+wrnvBbMpsYTiD1yS86oKGGD1p/JjsT2luUSaoPtw1el76l
+	lAlCyzgE/OAvxoyv3XUIZ4SaUizbdPcKkZERoD6dqpu7EwQ==
+X-Google-Smtp-Source: AGHT+IGGsVLpUysPudpVCXxk2nnyLQCsiBgFxdxQfGqE3ziyeF2VPiy+rAHsytbTw2uHUERPG65uq3TonkDtbBXdVgo=
+X-Received: by 2002:a05:6602:1694:b0:83a:aa8e:5f72 with SMTP id
+ ca18e2360f4ac-8445b55af77mr726285539f.4.1733286806725; Tue, 03 Dec 2024
+ 20:33:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 3 Dec 2024 20:33:15 -0800
+Message-ID: <CABPp-BEEZdcdmtVFXSNnJ1NF+idyY_Npqxg+9Zv2ns+YDYuO_w@mail.gmail.com>
+Subject: [ANNOUNCE] git-filter-repo 2.47.0
+To: Git Mailing List <git@vger.kernel.org>, git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+I am pleased to announce the release of git-filter-repo v2.47.0.
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> I think the current version of this patch series is fine as-is then. It
->> might be a good idea to adapt this in a follow-up series, unless there
->> is a good reason not to.
->
-> Sounds good.  We may want to tighten the rules a bit to reject
-> obvious misconfigurations, but that is outside the scope of this
-> topic.
+git filter-repo is a versatile tool for rewriting git repository
+history.  The public repo of filter-repo is at
 
-This reminds me of a slightly related tangent.
+    https://github.com/newren/git-filter-repo
 
-There are pathname-valued ones that we added deliberately as an
-optional configuration variable, IIRC, and fsck.skiplist may be one
-of them.  In other words, they mean "In a repository that I want the
-configuration to affect, I'll have the configuration file at this
-path, but it is merely optional.  If it is missing, pretend as if
-the configuration variable does not even exist".
+The tarballs can be found at:
 
-In retrospect, it was a mistake to define that this variable is
-required and triggers an error when misconfigured, and that variable
-is optional and triggers only a warning when misconfigured.  That is
-one more thing for the user to remember and does not scale.
+    https://github.com/newren/git-filter-repo/releases
 
-We probably should have done something like
+git-filter-repo can also be installed via a variety of package managers
+across Windows, Mac OS, or Linux (and maybe others)[1].
 
- - the value given to all pathname valued configuration variables
-   and command name options MUST correctly name a path that the
-   command can read, and a misconfigured configuration variable or
-   an invalid command line option should trigger an error when the
-   command needs to access it.
+[1] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md
 
- - the value (not the variable) can say "I am optional--if the path
-   does not appear on this system, or if it is unreadable, pretend
-   as if this configuration variable or the command line option were
-   not given".
+This is the biggest release of git-filter-repo (and by a significant
+margin), excluding its first release.  It is comprised of 81 non-merge
+commits since v2.45.0, including six commits from five new
+contributors:
 
-The "when the command needs to" part is important.  Ideally, "git
-log" should not fail when core.hookspath is misconfigured, because
-it does not trigger any hook, but it currently dies while parsing
-the configuration files in git_default_config():
+  * Aaron Cooper
+  * David Linke
+  * Lars Schneider
+  * Sebastian Andrzej Siewior
+  * Vladislav Javadov
 
- $ git -c core.hookspath log
- error: missing value for 'core.hookspath'
- fatal: unable to parse 'core.hookspath' from command-line config.
+----------------------------------------------------------------------
 
-which we may want to fix.  Unsurprisingly there are other variables
-that do behave correctly, like
+git-filter-repo 2.47 Release Notes
+==================================
 
- $ git -c core.pager --no-pager log -20 >/dev/null
- $ git -c core.pager log -20 >/dev/null
- error: missing value for 'core.pager'
- fatal: unable to parse command-line config
+Given that this is such a big release, I thought I'd provide a highlight
+of the highlights:
 
-where a misconfigured core.pager does not cause any trouble when the
-pager is not in use.
+  * Multiple bug fixes, including a few longstanding issues
+  * Several usability improvements to reduce confusion in special cases
+  * New --file-info-callback for operating on combination of filename &
+    file contents & file mode
+  * New --sensitive-data-removal flag, to assist users trying to remove
+    sensitive data from a repository and all its clones
+  * Rewriting stashes with the rest of the repository history
+  * New collection of example filterings based on user-filed issues
 
-Any of the above are not within the scope of this topic, obviously.
+Full list of user-visible changes:
 
-cf. <20241014204427.1712182-1-gitster@pobox.com>
+(Note: numeric references refer to GitHub issue IDs at
+https://github.com/newren/git-filter-repo/issues/)
+
+* Backward compatibility
+  * Bump python requirement to 3.6
+  * By default, do not create new replace references *and* consume the ones
+    that exist.  Use the --replace-refs option to change this, if wanted.
+    (#235)
+
+* Fixes:
+  * We have always bypassed fresh-clone safety checks if the user runs
+    git-filter-repo again.  However, if the
+    $GIT_DIR/filter-repo/already_ran file is really old, that may
+    suggest they have forgotten their previous rewrite.  If the file is
+    older than a day, prompt users for whether to consider this rewrite
+    a continuation of their previous one.
+  * Fix gnarly but rare corner case bug in tracking the combination of
+    pruned and inserted commits that could mess up rewrites, which could
+    e.g. cause a crash by making a commit think its ancestor was a
+    commit that does not exist)
+  * Skip over unexpected git-catfile output in --analyze mode for weird
+    (and possibly corrupted?) largo monorepos, so that --analyze can
+    complete (#602)
+  * Handle origin refs without an origin remote, for git-svn users (#171)
+  * Fix rare but problematic pruning of degenerate "evil" merges that
+    should not be pruned, and which caused some files to not be deleted
+    or not be introduced as expected (#261, #174, #313)
+  * Don't die if a repo uses refnames that look like git-describe output
+    and those refnames are pruned as part of the rewrite (#261)
+  * [insert-beginning contrib script] Add some sanity checks on the
+    passed filename (#260)
+  * Allow --path-rename arguments before --path arguments; don't require
+    them to always come after (#142, #182, #504)
+
+* Features
+  * add --no-gc option (#531)
+  * Rewrite the stash too, for all those users who insist on not making
+    a fresh clone (#115)
+  * add a --file-info-callback, allowing users to operate on the combination
+    of filename and file contents and file mode (addresses usecases such as
+    #74, #345, #464, #468, #509, #549, #597, and others; also kind of
+    obsoletes the lint-history contrib script)
+  * add tracking of First Changed Commit(s), meaning commits that were
+    rewritten whose parents were not rewritten, and write to
+    $GIT_DIR/filter-repo/first-changed-commits
+  * add recording of changed references, written to
+    $GIT_DIR/filter-repo/changed-refs
+  * add a --sensitive-data-removal flag/mode, to assist users trying to
+    expunge sensitive data from their repository.  This includes:
+      * automatically fetching refs other than branches and tags in case
+        those also reference the sensitive data (clone by default only fetches
+branches and tags)
+      * not removing the origin remote, since users need to force push
+        back to it
+      * track and report on first changed commit(s), so that it can be
+        provided to others who need to expunge it from their clones or their
+git server
+      * track whether and which LFS objects were orphaned by the rewrite, so
+        that LFS objects with sensitive data can also be deleted/purged from
+the LFS server
+      * assistance in terms of next steps needed to ensure the sensitive data
+        is removed from other copies, including the force push command that
+should be run
+
+* Usability -- improved notifications
+  * Provide warnings about filterability on subpar filesystems, e.g. when
+    refs differ in case only and doing filtering on a case-insensitive
+    filesystem (#48, #156, #325, #512, #566, #572)
+  * Notify users when we remove the origin remote
+  * Notice and signal if cleanup commands fail (#121)
+
+* Usability:
+  * Avoid the need to specify --force with git-replace, so we can more
+    universally recommend against the use of --force (#165)
+  * Prevent __pycache__ entry made by running git-filter-repo from triggering
+    the not-a-frash-clone-check (#522)
+  * Update commit-map and ref-map files (under $GIT_DIR/filter-repo) instead of
+    overwriting.  (See also under "Fixes" above about an "already_ran" file
+    that is older than a day.)
+    * Also, output commit-map and ref-map files in predictable orders
+
+* Documentation:
+  * Add a new and very detailed "Sensitive Data Removal" subsection in
+    the manual to cover the many special considerations facing folks who
+    need to try to remove sensitive data from a git repository and its
+    clones.
+  * Add a new large collection of example filterings based on user-filed
+    issues
+  * Add a new Frequently Answered Questions document
+  * fix some misleading statements
+  * clarify the purpose of the --tag-callback (#591)
+  * clarify docs for to-subdirectory-filter (#605)
+  * note additional default capabilities
+  * mention pipx as an alternative in installation instructions (#487)
+
+* Miscellaneous:
+  * Make testsuite work when running a version of git built against zlib-ng
+  * Make ref deletion output easier to scan through with --debug
+
+
+
+Full list of changes since v2.45.0 are as follows:
+
+Aaron Cooper (1):
+      Reword to-subdirectory-filter help
+
+David Linke (2):
+      INSTALL.md: Mention pypi / pipx as install option
+      INSTALL.md: fix typo
+
+Lars Schneider (1):
+      filter-repo: skip over unexpected git-catfile output
+
+Sebastian Andrzej Siewior (1):
+      t9394: Mask compressed size for comparison.
+
+Vladislav Javadov (1):
+      filter-repo: add --no-gc option
+
+Elijah Newren (75):
+      Makefile: pypi overhauled their authentication stuff; update note
+      t9390: in sanity check tests, put temporaries outside test repo
+      filter-repo: fix misleading help message for --replace-message
+      filter-repo: add --proceed option to bypass no-args-specified check
+      filter-repo: Do not require --force when using git-replace
+      filter-repo: change the --replace-refs default to 'delete-no-add'
+      Bump python requirement to 3.6
+      filter-repo: notify users when we remove the origin remote
+      filter-repo: rewrite the stash too
+      filter-repo: avoid calling `git config` multiple times
+      filter-repo: provide warnings about filterability on subpar filesystems
+      filter-repo: notice and signal when cleanup commands fail
+      filter-repo: handle origin refs without origin remote
+      t9390: skip the version test if we are in some kind of installation
+      filter-repo: ignore __pycache__ untracked files for fresh clone check
+      filter-repo: clarify the purpose of the --tag-callback
+      pyproject.toml: mark filter-repo stable
+      git-filter-repo.txt: note additional default capabilities
+      git-filter-repo.txt: remove case specific explanation of commit-map file
+      git-filter-repo.txt: correct location of metadata files
+      filter-repo: make debug ref deletion output easier to scan through
+      filter-repo: add some clarifying comments about the purpose of
+the _IDs class
+      filter-repo: explain data structures in AncestryGraph
+      filter-repo: fix gnarly bug in _IDs.record_rename
+      filter-repo: allow tracking commit hashes in AncestryGraph
+      filter-repo: fix bug in _IDs.__str__()
+      filter-repo: remove/rename ID_TO_HASH and HASH_TO_ID
+      filter-repo: fix some unfortunate local variable names
+      filter-repo: extract part of _record_metadata into a new function
+      t9390: add disgusting hack to --analyze test so it works with zlib-ng
+      filter-repo: only conditionally heed the already_ran file
+      filter-repo: output commit-map and ref-map in predictable orders
+      t9390: add a new test demonstrating problems with pruning of merges
+      filter-repo: update commit-map metadata file instead of overwriting
+      filter-repo: make purpose of trim_extra_parents clearer
+      filter-repo: start tracking new_id -> new_hash mapping as well
+      filter-repo: rename old_1st_parent -> prev_1st_parent
+      filter-repo: add a new _remap_to() convenience function
+      filter-repo: add explanatory note for complicated condition
+      filter-repo: add a new get_parent_hashes() convenience function
+      filter-repo: update ref-map metadata file instead of overwriting
+      filter-repo: fix corner case involving bad pruning of evil
+degenerate merge
+      filter-repo: add tracking and recording of first changed commit(s)
+      filter-repo: limit searches for ref values to actual refs
+      filter-repo: avoid shadowing built-in names
+      filter-repo: determine files modified by callbacks *after* callbacks
+      t: restructure tests a bit
+      t9394: prefer 'python3' to 'python'
+      filter-repo: avoid parsing already_ran file multiple times
+      docs: correct a couple items in explanation of ref-map file
+      filter-repo: more thorough stash rewriting
+      filter-repo: add a --file-info-callback
+      git-filter-repo.txt: tweak the quoting
+      filter-repo: add --sensitive-data-removal flag
+      filter-repo: add special handling of origin for sensitive data removal
+      git-filter-repo.txt: add Sensitive Data Removal subsection
+      filter-repo: allow users to override automatic fetch forcing in --sdr
+      filter-repo: handle locally modified refs vs. automatic fetch of --sdr
+      t9393: add testcases for tracking orphaning of lfs objects
+      filter-repo: send blobs through RepoFilter._insert_into_stream()
+      filter-repo: add LFSObjectTracker class
+      filter-repo: set up data structures to track LFS objects
+      filter-repo: add necessary blob and commit investigation of LFS objects
+      filter-repo: report on and record LFS objects we find
+      filter-repo: for multi-run invocations, update LFS tracking information
+      filter-repo: handle LFS orphan tracking with partial history rewrites
+      git-filter-repo.txt: add details about orphaning of LFS objects
+      filter-repo: help users complete sensitive data removal; show next steps
+      filter-repo: provide a changed-refs metadata file as well
+      insert-beginning: add some sanity checking on the passed filename
+      examples-from-user-filed-issues.md: new collection of example filterings
+      filter-repo: also allow --path-rename arguments before --path arguments
+      FAQ.md: new file with frequently answered questions
+      INSTALL.md, README.md: make installation instructions less "sassy"
+      README.md: record latest git commits in support of git-filter-repo
