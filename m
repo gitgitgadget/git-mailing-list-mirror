@@ -1,119 +1,105 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD6F18FC92
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 20:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA47E18C322
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 21:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733345632; cv=none; b=pqeeLpZfd78DOZGauWg2vpViNCXxMK89SC4ZCW7tfm/SSfewVGj2w1mQWhswGUmv2a7c4z8YSEwZ1tUS84dxpCSHuXddzbYAnr22f59+LjJVvDFOSUrdSom+1RoQeEjicun2bsXxPrWG/ZjO235aDDWgw9HOkLZPcBBAAxT10yg=
+	t=1733346309; cv=none; b=a3PJmn5TkaLF1dDTPJ8v1dibxxCNTHeYXaTrNc0+SfUBRKORxU82YDXNObfW6yiqU0u8ZSL8qcnae7mFjq2daUP7JG+HRjsNy3ONjm1BRaXohTlM7Yhu4tVJlfpuXEQjxpKUVhfX00D+4bvBAb1QtRMy/3GCG0oJU8jeV6VE4rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733345632; c=relaxed/simple;
-	bh=41+uVxzYyZNIfL8T3C8xOgYBdGdSjEuiUjT0mmIqqI8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GHwbTZXhhr8Hdd49WHrEu8Y1GfW79i3eOG+uoHNo7gOhSmjpOtCfmIx9a89wfTLnMeCbgtSI0SrxsC2av+vVTImZgLM0dF9jnLjdghSfarr8wl/n0cm/LlazF5svEl0FlDSmCKeXaNh6Y4zcpYkyg08/pALGJd/A6eS1HFXwHOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wv5HwFuU; arc=none smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733346309; c=relaxed/simple;
+	bh=PC60oBhmlIpwW1HXn41fw7Fww9reI6oqYNXBTFSH5lE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SMUT9zEGgASIUY2OS0Q97NmOeB7xUx32xYaLr0BHZSToSHNGuDbfxCM7jDoeQv4m3rEy7K/fHRuaCPhZNLKSiaMnQKzz7GgEMvO0MdI6FK2uastMDjg5VP6oZPOqAIpWDSe/rOOgCqNQexjKLa3NIXl62uQrLX9IHEOmTeTBgTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KoVR7eZU; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wv5HwFuU"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4af38d1a28fso43577137.1
-        for <git@vger.kernel.org>; Wed, 04 Dec 2024 12:53:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733345630; x=1733950430; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5DYu3m1v3c8lOJ4dtcpvzWcMo9RA3Owt+Yunrsh5Zug=;
-        b=Wv5HwFuU2YtZ7P4q0lZcBo1yNnOZF7B16pRdbYlmLOIuC718LPja6+4o4HeeeLXhil
-         Rlx8WmPTme7yCfnTJOUc+QICGvXqOIv39MQHAp8nEMlQLAqvC5kV2yVU77bZFz0y5I/y
-         iM6mhhs35WeuAnAb5WTnZhuLyEW7xyU8toHBshvwX91TZdEBfKKf5dqYW73/lDncVTL3
-         IYS4nwcqsF9ssIKmZnqcCmti2XcK9l3CljgltGysuzk3iYE7l1s0gehowjbPumRRH1A/
-         Xuc13YbioFOclq5MYVNR7swrSK1M4UFgK+snPDKl7bWnqMzAzGy7i1SSURfM3aBD/Ab0
-         28GQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733345630; x=1733950430;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5DYu3m1v3c8lOJ4dtcpvzWcMo9RA3Owt+Yunrsh5Zug=;
-        b=UX0alSUn5s9anZ5xcyTo+GLExV2pSoaj0pQ8aQ9mNmmj2l28F1bdya+b9GUG9zQuZh
-         9qwPu1lMM+lkFpYxaLRWrW55MyBbGdlpNEeFllk5y6lGNlBRCo0zjVgnw/pcFW7fnfnE
-         1hdpIigJ5+CCOOFEhwaInIyZx6Haj0JKwKH7vwM0XKaho+JbNcvfW1yhyGZAplnTuKad
-         dxcJxoGWal81h05CjMPnJtMTiocl2J9g64R0SJjWEk3nQTCBC313nWF1u8FP1NdHeb6P
-         KC9s/Is8AT20RRzvXf/cZi3Bld5rLQ8yjKnRPeH8u7C3Co3ahc8WzEMVwZ5NW+Xtl6AM
-         FYDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCULGx78nZO+iD5ZwRSNu5xn8YafIrAptcnoOIVNUtRbtiJXpY4Ecmm07ft8YvfZPPjQnP0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtiRk6/Y7n+ZTr7Y8AsGM4kDRDrztI3IIZUoYirMeddl1O5w5P
-	AH5/3qdS5V+Pv0tWtE/PnzNjRfriAdq4fMp8p6AjwHji/KdIG6xOxq/J5i/y7K/w5fyGY/kY7+8
-	fnsGCZiTMHt1jFLcIQbfaPuEk0/M=
-X-Gm-Gg: ASbGnctp9YRn2QEG0IJH+3Yn6ebqlbng+JDoDu4q0QuYzDdSwgVru4sSi/bNC1uX6TK
-	hv/E2mI3gwTyqz/kfBV3Sfxr0sEURrkR/Biie9vA8I9bvFxpBa+1NVqbkixp6KJsX
-X-Google-Smtp-Source: AGHT+IFaVWnhx1e4wGJKe9K8ZqOOess3oHbGjbbwStOCvxncMcB71ooOZT+UsLMoYExUMp0rolrsL6wD16lZXNOfyPo=
-X-Received: by 2002:a05:6102:50a8:b0:4af:5c2e:4426 with SMTP id
- ada2fe7eead31-4af97268489mr11145151137.13.1733345630087; Wed, 04 Dec 2024
- 12:53:50 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 Dec 2024 15:53:49 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <fb52ca509da6b7a58d7148e3a15ae222ff209cc6.1733181682.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KoVR7eZU"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id E2CBD13806CA;
+	Wed,  4 Dec 2024 16:05:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Wed, 04 Dec 2024 16:05:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733346306; x=1733432706; bh=bK8/O0cTUPuPIPCjnUgwDhEP772e9gFgtNy
+	UJMIYwes=; b=KoVR7eZUO0ce9qfDdP5F4CbR2hoCijchKDoAvjXxZ6iW+U8/boU
+	OlO9DeDJ2mcpWAQF9wSc8ZzHEgSVGdKaHU1frdv0BrI3Rur7yrCxRuF654t9/Ldg
+	KXtfLTocmTBXp8O8Mj7WRjh5OiujgjK86lKwHFyks2DcsJrPAIUCCNzIEOC0rr8j
+	5amNY7rN5el4qyCvZeX2hPBNYkBds2EdxhQrB5VXPOJy77tqAC9s8Z7N0syrqERC
+	C8vy0ULQsiwvDVzarTqx8cSZ1BQ/s8Dcls0Q+qs5jrYO3ggLRyX+OTVmmqD83n+o
+	sbHoJarSv7WXQOs9aYRKIPb8wI3IZACQWzA==
+X-ME-Sender: <xms:AsRQZ7cNb3eJZ9bpgIbT0f7ZRuL47zE5JmWZzeemq76fcVdnSXfspQ>
+    <xme:AsRQZxNdRT9MOj6_VD287aE6ds_Wo21X6toB88_R4qeyzjWpIcPNS02CRNKIfTz1-
+    9fzminPqKIM-MUQ0w>
+X-ME-Received: <xmr:AsRQZ0gLDIEpH8_YbUlFf8SwqFiw-_9j7Fl_N-BQUPTuiwK6f7V2eRfrZb9FLZE8F7YCo5hPOm3Ie0i2oeYjS9VQzPIM1eU0eM2QrvM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieehgddugedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdp
+    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepjhho
+    hhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrg
+    hilhdrtghomh
+X-ME-Proxy: <xmx:AsRQZ8_pht9DyORq4Fkgm7khrqeixjjdjjyiE9QRs4iz52dWnHf1fA>
+    <xmx:AsRQZ3tLmat0ouciuS5OoGNJCbRzSsHcuegdE4uEjxvdwPCMbD5mCw>
+    <xmx:AsRQZ7FBYIqE4y_C6VdTFyZQQekTvRMLLKf-r5diIlL4Kodyu-9cvQ>
+    <xmx:AsRQZ-OPyuVjsrcfvUXEUCSpANypVBfeYnvvwXlshWEjg85BvLYkfA>
+    <xmx:AsRQZwFPFufdr-RoZ1hUcS6ecEma6DZcOShmrPLJRHTfB1BUyRIXN0OL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Dec 2024 16:05:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: Jonathan Tan via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
+  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
+  Derrick Stolee <stolee@gmail.com>,  Jonathan Tan
+ <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 1/8] pack-objects: create new name-hash function version
+In-Reply-To: <CAOLa=ZRTgJafxDTB_LWGJxGZ_YOP4fO3=s14BHNvPaHEqf4Q_A@mail.gmail.com>
+	(karthik nayak's message of "Wed, 4 Dec 2024 20:06:48 +0000")
 References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
- <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com> <fb52ca509da6b7a58d7148e3a15ae222ff209cc6.1733181682.git.gitgitgadget@gmail.com>
+	<pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+	<454b070d5bb0f64e11cab993b126ef5d37a3615b.1733181682.git.gitgitgadget@gmail.com>
+	<CAOLa=ZRTgJafxDTB_LWGJxGZ_YOP4fO3=s14BHNvPaHEqf4Q_A@mail.gmail.com>
+Date: Thu, 05 Dec 2024 06:05:04 +0900
+Message-ID: <xmqqbjxr2m7z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 4 Dec 2024 15:53:49 -0500
-Message-ID: <CAOLa=ZR9QbEZ15aiEKCFcRaewMw7mWs=5xes+NM=9UJ4_CJo7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/8] pack-objects: add --name-hash-version option
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, 
-	me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com, 
-	jonathantanmy@google.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: multipart/mixed; boundary="0000000000008e15c7062877fa2e"
+Content-Type: text/plain
 
---0000000000008e15c7062877fa2e
-Content-Type: text/plain; charset="UTF-8"
+karthik nayak <karthik.188@gmail.com> writes:
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 2. Generally in hashing algorithms the XOR is used to ensure that the
+> output distribution is uniform which reduces collisions. Here, as you
+> noted, we're more finding values for sorting rather than hashing in the
+> traditional sense. So why use an XOR?
 
-[snip]
+I am not Jonathan, but since the mixing-of-bits is done with XOR in
+the original that Linus and I wrote, I think the question applies to
+our version as well.  We prefer not to lose entropy from input
+bytes, so we do not want to use OR or AND, which tend to paint
+everything with 1 or 0 as you mix in bits from more bytes.
 
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index d6bb37e84ae..05e13adb87f 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -58,6 +58,7 @@ struct pack_objects_args {
->  	int no_reuse_object;
->  	int quiet;
->  	int local;
-> +	int full_name_hash;
->  	struct list_objects_filter_options filter_options;
->  };
->
-
-This variable doesn't seem to be used anywhere in this commit, and the
-following commit replaces it. I'm guessing it is from the previous
-version.
-
-[snip]
-
---0000000000008e15c7062877fa2e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 20e4855eb1ba1923_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kUXdWc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOGtxQy85bFpaNXo1K2FXWmNwQXhLeWNZeGxDZnRQWgpPNlRtUWh3MHRx
-K2Z0YnN5Nk1xS29EWktyclpFaTJnNEI5VXFxNDBiRndEaUlMYTduYU80STRPT0VlbG13b1pCCmxo
-NDM5MjMrcWcvN21CU0s3NkJ3ZnJxbWd2T3A0RzdFTFpScTk3eWFCSzc2Zno1cWxaeHNxTFlWNE9P
-cXRWRGMKdlNBK1l5Qll2RzMvTEhCSnNKeWhsYk9ZRmNFZitITUpXaU5PMDlldGRja3VGTEExVUdj
-OUMvRlN5MFhHeUF3OQpPTUNiT0lyS3RZSnFCeE5mZ0N3ZC9IOWdkbnlEdkJVOU5vWmcrUUVZTGJy
-QkpnOFRlSU9jSGpqUmFMK2tKTkhaCnJPUGNkZXppRFY0ZTVOekFkMHA2bG1nUXpYMllvMlBJNjkx
-eXZOY3hhdmQwZHJZdDI1cGxRQlpaVkgwTERDZDgKU251a0Y0Wjc2YmxLZU1DRmNMZ2NQckRBeWZx
-L1R5Qm85RGhHa1VCQnZCNC9qWVlqdzZkdzBTdHhyR2FDVzdhNApCWXBFTGlQSlJtQkNwVnFkaVBv
-bk9qUVo2dGJCZTBqZk9NZkFoRi9ReG15cDQ2NHRpS2p6ZlVKSjNJWnBhSGpCCmJMMWVqV3RQYlQ0
-dDIzdTZ6TUFiTU9DWi9VVm5sSnpqbDJMWGRwVT0KPU9vcFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008e15c7062877fa2e--
+Anyway the question sounds like "generally when you take tests you
+write with a pencil, but right now you are merely taking notes and
+not taking any tests. why are you writing with a pencil?"  There are
+multiple occasions that a pencil is a great fit as writing equipment.
