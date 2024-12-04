@@ -1,368 +1,116 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+Received: from fallback3.i.mail.ru (fallback3.i.mail.ru [79.137.243.69])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7071B87E2
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 13:15:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF91120CCC4
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 16:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.69
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733318146; cv=none; b=lbSN2D0WjbihRNxXiCqMYOaLAqTial7IOXnOMVy4DeyKuI9dylQTV05+5LaiZG1k8RvxQ1SwCEYBwhSMgOLos19oGtNnA4YRtZiRUi+9aCsi44YJW7U5SrT6DYV5kCrL5HNZ8HgGJCNrqMityd4q4muoC5V8kE5qYFgXXWWML6I=
+	t=1733330627; cv=none; b=WzjVXu3LXPtwYmoKfaP+QXTBfK28IEuxuBJr+PI4+H6OwQbj144lJ5bYHkHOSxFAezHA3D+4VcWkb2dQm6EJyn7mSDyjXspT+xfWFW/Kbqg5dotxvo2Hv69EP1IE2DQWQc8/E0o46v4L1J7PXPjYeSn2U3AISbTZJjKOG6aR27w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733318146; c=relaxed/simple;
-	bh=D4lV+d2NMn6p3cgjJdk8bVhYc7wVKyOHprCV49ejq/s=;
-	h=From:To:Cc:Subject:Date:Message-id:MIME-version; b=ViDFtYZ42IrXT6DjIL0VSkIAPRxrQl+9e+xZSNIE2dvsG05SEs0E9Q29KgIeFAyHAEfVVR9y1nY5Ju69KpgIQudQqLipTHUvaCYjCxYLWujY3vApfsRPdUuLCqIExU4OPwCjwoANHzFpPW49ARbODJWPg5nVs6TZQvHz9X4IORo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=W26nII5w; arc=none smtp.client-ip=192.29.178.126
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1733330627; c=relaxed/simple;
+	bh=mvUoeV3p3by86xshWb3/dGCiRx7YBjZXioe5BJ5sG/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FQtLz9tHHssGc2GnzAFs+Md5vnOyGamoqbW1tg3jWc5z3t6RQgah1aZKgi4hCkyTWzHnwfwTSL8Ujk2umoJ5AF3rV8mHd97QAweL7NFB+68B1wQOgEMVCy2CmYBdUk9aTIvlZcMS4iNziYce6h1jrvOZ538Cpc0MZfArIpo+wvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=cm2jrAQx; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=mobO9702; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=a+OeN7Y9; arc=none smtp.client-ip=79.137.243.69
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="W26nII5w"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=CJ5FOM6mIxNe/SGSIHugUn6Qlt+EJiTCrmcRp5VVDEs=;
- b=W26nII5w1Oex/75yllJkfxCljCh40+6JLFGQ0yVQZx0XAx2nyP9zxqdfegTMIygB6RcjwX0fu1vE
-   BCPsuyiwofT3dTGgBZfWTF7ZFtG025ChEnx4H7a/Kkwrkwbw7l8TQ8SDBrD1B3jEXFNktkWBHJ2r
-   wMmVyZ9HwWD9sH/L/CoEsWq2iEvgUJ2GAfxE0y0GFT9RR0oPXdpVO5qsnYOtsPHHwMw9BQRfeIct
-   o+wSuGrpeEdi8kORnCWd2oqKIjfc3xtaXkFTc3hjpHAe6AY99OPUrHoppLeq21Bxqm+UUOxKSLR1
-   nAyPkXhslGoW5ThStsQ12RpdImpIiEIPfkdr5Q==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
- 2024))
- with ESMTPS id <0SNZ00KQX0LMID80@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Wed, 04 Dec 2024 13:10:34 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,	Heba Waly <heba.waly@gmail.com>,
-	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH] advice: suggest using subcommand "git config set"
-Date: Wed,  4 Dec 2024 14:08:47 +0100
-Message-id: <20241204130928.1059851-1-bence@ferdinandy.com>
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="cm2jrAQx";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="mobO9702";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="a+OeN7Y9"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=DCrXwAhGsta5fPfUcwV+FgS22lZ9MR76OepzlFMwURQ=;
+	t=1733330622;x=1733420622; 
+	b=cm2jrAQxVDnQ2zKyPl/KDobQE66ApalvyPNybxh5vuylngCBehPx9c7WbtYBMgfRHbt4jS711jvdVFHKKoPvRnZn5Gj+l0kjyNQPCx92QdvEtXxFmcYYYSWvF4mZfmPippqYE6DcqXaQ6JoqK5/phz50VjMYILSmK7KhNc+1iIs=;
+Received: from [10.113.97.159] (port=35726 helo=send100.i.mail.ru)
+	by fallback3.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1tIrki-00FEVS-T9
+	for git@vger.kernel.org; Wed, 04 Dec 2024 18:57:25 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=DCrXwAhGsta5fPfUcwV+FgS22lZ9MR76OepzlFMwURQ=; t=1733327844; x=1733417844; 
+	b=mobO9702r7rSqntwQxx48mrCmwLPE6j1r7d3fLpxKWqHWo3u/Vhy2HRvs4yueFAvasuGzOX38e0
+	kKEk4PgogATlOsW7u3U1zhsY06W4uNq2QR3WihjW6ocE2L15oEofworpHw7Oh3Kw3jvT5NsvF9sUX
+	fVB8qW3+i479zeox0gc=;
+Received: from [10.113.77.217] (port=39148 helo=send220.i.mail.ru)
+	by exim-fallback-777bd747b9-ktgl8 with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1tIrka-00000000SFu-2W7f
+	for git@vger.kernel.org; Wed, 04 Dec 2024 18:57:16 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=DCrXwAhGsta5fPfUcwV+FgS22lZ9MR76OepzlFMwURQ=; t=1733327836; x=1733417836; 
+	b=a+OeN7Y9xik01YqfE9Af6utDEZeJLhPlcB0vjBvNc1+Gu3ZgYl4buwBLTdv7lVz/ndYcsJN/AUm
+	3DRxB5RoCQMR/VctgfAaChfw187GF6L9mukXgEgLseVup0ohq1TciR7c8IJtzHW8EOa8ioFTTVB6t
+	IqxDzXP+ySDDb1xse40=;
+Received: by exim-smtp-5dbb8c54cf-ktkhf with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1tIrkP-00000000UZJ-2Yxi; Wed, 04 Dec 2024 18:57:06 +0300
+Date: Wed, 4 Dec 2024 18:57:04 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: martin f krafft <madduck@madduck.net>
+Cc: git@vger.kernel.org
+Subject: Re: git-daemon not consulting ~/.gitconfig
+Message-ID: <20241204155704.sxti6mn7zyr3vmyt@carbon>
+Mail-Followup-To: martin f krafft <madduck@madduck.net>,
+	git@vger.kernel.org
+References: <fj5vgwmc5wtyzcxxnmcgw7whclm6qf7p5sxzh3nbao3feyutj6@daizbooxk22j>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAHOKH0aw5eaVKc63M4M4ao9kKIl07ANGmSQwZIyc9hesvhDWDGZAEM8m1gKwreK
- BmiWpsCH0YrIGvHNKyyVG8Ya3aFP/0HL8XaL9ctfepv4JYqOYohVxxWoR1RTzDBy
- FctlZUn8A1eW3i1i0S4Vnha/NuotHUW4XJ6XxziK4yNlWYe0ez3S3HTjLzpVq+8Q
- LMHwrP7SR/2P+1hUcQTgeI65Y+CLUASgaDiLTVHZ2yBwBaLxp2zrLSP/aawwuDHu
- 3YbUdUYram19V9e4E26s+qMnDCZw9HLC3XRdhMs8facoInNRaeIfZlDgQjXtSXpq
- X3UuJD4NBB4JqC0Hf60MuobyXjSKzVa1yOGwv5tAdno6FlXiusbNeZc1BNZXFPro
- BKGCH0oQhqa+b+h98vmrFCKRxGSGYo0ixTmDYU9tN8jqSS80+Yy2X4tXrKQTFB+1
- glmgMp6AdefOk3Uob6br1e1KvzM3hX7A4dzk8NcoREE8mXEPaVyZOkI=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fj5vgwmc5wtyzcxxnmcgw7whclm6qf7p5sxzh3nbao3feyutj6@daizbooxk22j>
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD9A8C4BB59E01B6E9F648BA0BCD7732E988D586D4DFC7E4796182A05F5380850404C228DA9ACA6FE2706AE08F5AAE0652F3DE06ABAFEAF670512E4DD3DC02D7B6745D2578103E45E16C4241D229770A8A5
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7C6068CE86C2B75F5EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637D99F96657F58F1038638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8DE469046ECFB51074894751A8191B36BD2712B1E53A81C41CC7F00164DA146DAFE8445B8C89999728AA50765F7900637CAEE156C82D3D7D9389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC82FFDA4F57982C5F4F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C67F1C1C3ABB44F3A2D242C3BD2E3F4C64AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C30C3F171C468AE86FBA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF17B107DEF921CE791DD303D21008E298D5E8D9A59859A8B6B372FE9A2E580EFC725E5C173C3A84C321259270BBF67A2035872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-C1DE0DAB: 0D63561A33F958A50D4C0A42CEC829B15002B1117B3ED696C21CF0848CF93392B2920F75BA9A967F823CB91A9FED034534781492E4B8EEAD47A3109F1ACFD409BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D342C0B628602DFD0BCD831C7F9D3CCB2659913370568F3CCFC669DF480C1B0E500D5B49145C4A243F01D7E09C32AA3244C5D4E75038657E60577DD89D51EBB774219C072837BD66560EA455F16B58544A2E30DDF7C44BCB90D3871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojwp1kXJWyJOa4CIKrlcjIGg==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138FE1391822F18F406E9E07FF329DA7D4792F9BF4964C537F391EAE9FFF4F056EB2F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4CE318559F77298F491764EEA0D295AB716880AF0EE296514049FFFDB7839CE9EF37DFD9029CDAB4BB3D97DEFB37D5A251AF0747B41B1BC5DDD072FC12F27CA952A7E163C7F79FD79
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSpZAf3ZdhvE+Zf1Wbpd8t+6
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4CE318559F77298F491764EEA0D295AB7FB40A21BF0FF00A4049FFFDB7839CE9EF37DFD9029CDAB4BDB43BD249D23CE36CFD07847233B4D8F0EA88AED9C519990
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSqDNa1okXa/85uf5RTkiCWD
+X-Mailru-MI: 20000000000000800
+X-Mras: Ok
 
-The advice message currently suggests using "git config advice..." to
-disable advice messages, but since 00bbdde141f we have the "set"
-subcommand for config. Change the disable advice message to use the
-subcommand instead. Change all uses of "git config advice" in the tests
-to use the subcommand.
+On Wed, Dec 04, 2024 at 11:23:36AM +0100, martin f krafft wrote:
 
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
----
+[...]
+> in the logs. However, adding the config to `~gitdaemon/.gitconfig` did not
+> have the desired effect. Neither did adding it to `~root/.gitconfig` and
+> only `/etc/gitconfig` works.
+> 
+> So I checked `strace` and found that when invoked by `git-daemon`, Git
+> doesn't even consult `~/.gitconfig`, and I think this may be a bug.
+[...]
 
-Notes:
-    For the tests I just indiscriminately ran:
-    sed -i "s/git config advice\./git config set advice./" t[0-9]*.sh
+Given the following passage from the docs, describing the "--user" option,
 
- advice.c                        | 2 +-
- t/t0018-advice.sh               | 2 +-
- t/t3200-branch.sh               | 2 +-
- t/t3404-rebase-interactive.sh   | 6 +++---
- t/t3501-revert-cherry-pick.sh   | 2 +-
- t/t3507-cherry-pick-conflict.sh | 6 +++---
- t/t3510-cherry-pick-sequence.sh | 2 +-
- t/t3511-cherry-pick-x.sh        | 2 +-
- t/t3602-rm-sparse-checkout.sh   | 2 +-
- t/t3700-add.sh                  | 6 +++---
- t/t3705-add-sparse-checkout.sh  | 2 +-
- t/t7002-mv-sparse-checkout.sh   | 4 ++--
- t/t7004-tag.sh                  | 2 +-
- t/t7201-co.sh                   | 4 ++--
- t/t7400-submodule-basic.sh      | 2 +-
- t/t7508-status.sh               | 2 +-
- 16 files changed, 24 insertions(+), 24 deletions(-)
+| Like many programs that switch user id, the daemon does not reset
+| environment variables such as $HOME when it runs git programs, e.g.
+| upload-pack and receive-pack. When using this option, you may also want to
+| set and export HOME to point at the home directory of <user> before starting
+| the daemon, and make sure any Git configuration files in that directory are
+| readable by <user>.
 
-diff --git a/advice.c b/advice.c
-index 6b879d805c..f7a5130c2c 100644
---- a/advice.c
-+++ b/advice.c
-@@ -93,7 +93,7 @@ static struct {
- 
- static const char turn_off_instructions[] =
- N_("\n"
--   "Disable this message with \"git config advice.%s false\"");
-+   "Disable this message with \"git config set advice.%s false\"");
- 
- static void vadvise(const char *advice, int display_instructions,
- 		    const char *key, va_list params)
-diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-index 9a3db02fde..f68e08d0b1 100755
---- a/t/t0018-advice.sh
-+++ b/t/t0018-advice.sh
-@@ -10,7 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- test_expect_success 'advice should be printed when config variable is unset' '
- 	cat >expect <<-\EOF &&
- 	hint: This is a piece of advice
--	hint: Disable this message with "git config advice.nestedTag false"
-+	hint: Disable this message with "git config set advice.nestedTag false"
- 	EOF
- 	test-tool advise "This is a piece of advice" 2>actual &&
- 	test_cmp expect actual
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 2295db3dcb..a3a21c54cf 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1696,7 +1696,7 @@ test_expect_success 'errors if given a bad branch name' '
- 	cat <<-\EOF >expect &&
- 	fatal: '\''foo..bar'\'' is not a valid branch name
- 	hint: See `man git check-ref-format`
--	hint: Disable this message with "git config advice.refSyntax false"
-+	hint: Disable this message with "git config set advice.refSyntax false"
- 	EOF
- 	test_must_fail git branch foo..bar >actual 2>&1 &&
- 	test_cmp expect actual
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index b11f04eb33..ecfc02062c 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -2258,20 +2258,20 @@ test_expect_success 'non-merge commands reject merge commits' '
- 	error: ${SQ}pick${SQ} does not accept merge commits
- 	hint: ${SQ}pick${SQ} does not take a merge commit. If you wanted to
- 	hint: replay the merge, use ${SQ}merge -C${SQ} on the commit.
--	hint: Disable this message with "git config advice.rebaseTodoError false"
-+	hint: Disable this message with "git config set advice.rebaseTodoError false"
- 	error: invalid line 1: pick $oid
- 	error: ${SQ}reword${SQ} does not accept merge commits
- 	hint: ${SQ}reword${SQ} does not take a merge commit. If you wanted to
- 	hint: replay the merge and reword the commit message, use
- 	hint: ${SQ}merge -c${SQ} on the commit
--	hint: Disable this message with "git config advice.rebaseTodoError false"
-+	hint: Disable this message with "git config set advice.rebaseTodoError false"
- 	error: invalid line 2: reword $oid
- 	error: ${SQ}edit${SQ} does not accept merge commits
- 	hint: ${SQ}edit${SQ} does not take a merge commit. If you wanted to
- 	hint: replay the merge, use ${SQ}merge -C${SQ} on the commit, and then
- 	hint: ${SQ}break${SQ} to give the control back to you so that you can
- 	hint: do ${SQ}git commit --amend && git rebase --continue${SQ}.
--	hint: Disable this message with "git config advice.rebaseTodoError false"
-+	hint: Disable this message with "git config set advice.rebaseTodoError false"
- 	error: invalid line 3: edit $oid
- 	error: cannot squash merge commit into another commit
- 	error: invalid line 4: fixup $oid
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index 17a9937962..78b03d769d 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -177,7 +177,7 @@ test_expect_success 'advice from failed revert' '
- 	hint: You can instead skip this commit with "git revert --skip".
- 	hint: To abort and get back to the state before "git revert",
- 	hint: run "git revert --abort".
--	hint: Disable this message with "git config advice.mergeConflict false"
-+	hint: Disable this message with "git config set advice.mergeConflict false"
- 	EOF
- 	test_commit --append --no-tag "double-add dream" dream dream &&
- 	test_must_fail git revert HEAD^ 2>actual &&
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
-index f3947b400a..44596cb1e8 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -34,7 +34,7 @@ test_expect_success setup '
- 	git commit --allow-empty --allow-empty-message &&
- 	git tag empty &&
- 	git checkout main &&
--	git config advice.detachedhead false
-+	git config set advice.detachedhead false
- 
- '
- 
-@@ -60,7 +60,7 @@ test_expect_success 'advice from failed cherry-pick' '
- 	hint: You can instead skip this commit with "git cherry-pick --skip".
- 	hint: To abort and get back to the state before "git cherry-pick",
- 	hint: run "git cherry-pick --abort".
--	hint: Disable this message with "git config advice.mergeConflict false"
-+	hint: Disable this message with "git config set advice.mergeConflict false"
- 	EOF
- 	test_must_fail git cherry-pick picked 2>actual &&
- 
-@@ -75,7 +75,7 @@ test_expect_success 'advice from failed cherry-pick --no-commit' "
- 	error: could not apply \$picked... picked
- 	hint: after resolving the conflicts, mark the corrected paths
- 	hint: with 'git add <paths>' or 'git rm <paths>'
--	hint: Disable this message with \"git config advice.mergeConflict false\"
-+	hint: Disable this message with \"git config set advice.mergeConflict false\"
- 	EOF
- 	test_must_fail git cherry-pick --no-commit picked 2>actual &&
- 
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index 7eb52b12ed..66ff9db270 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -25,7 +25,7 @@ pristine_detach () {
- }
- 
- test_expect_success setup '
--	git config advice.detachedhead false &&
-+	git config set advice.detachedhead false &&
- 	echo unrelated >unrelated &&
- 	git add unrelated &&
- 	test_commit initial foo a &&
-diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
-index 84a587daf3..98ef13f0a3 100755
---- a/t/t3511-cherry-pick-x.sh
-+++ b/t/t3511-cherry-pick-x.sh
-@@ -51,7 +51,7 @@ trailing empty lines
- "
- 
- test_expect_success setup '
--	git config advice.detachedhead false &&
-+	git config set advice.detachedhead false &&
- 	echo unrelated >unrelated &&
- 	git add unrelated &&
- 	test_commit initial foo a &&
-diff --git a/t/t3602-rm-sparse-checkout.sh b/t/t3602-rm-sparse-checkout.sh
-index 08580fd3dc..02c7acd617 100755
---- a/t/t3602-rm-sparse-checkout.sh
-+++ b/t/t3602-rm-sparse-checkout.sh
-@@ -20,7 +20,7 @@ test_expect_success 'setup' "
- 	hint: If you intend to update such entries, try one of the following:
- 	hint: * Use the --sparse option.
- 	hint: * Disable or modify the sparsity rules.
--	hint: Disable this message with \"git config advice.updateSparsePath false\"
-+	hint: Disable this message with \"git config set advice.updateSparsePath false\"
- 	EOF
- 
- 	echo b | cat sparse_error_header - >sparse_entry_b_error &&
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 4c543a1a7e..df580a5806 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -31,7 +31,7 @@ test_expect_success 'Test with no pathspecs' '
- 	cat >expect <<-EOF &&
- 	Nothing specified, nothing added.
- 	hint: Maybe you wanted to say ${SQ}git add .${SQ}?
--	hint: Disable this message with "git config advice.addEmptyPathspec false"
-+	hint: Disable this message with "git config set advice.addEmptyPathspec false"
- 	EOF
- 	git add 2>actual &&
- 	test_cmp expect actual
-@@ -375,7 +375,7 @@ test_expect_success '"git add" a embedded repository' '
- 		hint: 	git rm --cached inner1
- 		hint:
- 		hint: See "git help submodule" for more information.
--		hint: Disable this message with "git config advice.addEmbeddedRepo false"
-+		hint: Disable this message with "git config set advice.addEmbeddedRepo false"
- 		warning: adding embedded git repository: inner2
- 		EOF
- 		test_cmp expect actual
-@@ -413,7 +413,7 @@ cat >expect.err <<\EOF
- The following paths are ignored by one of your .gitignore files:
- ignored-file
- hint: Use -f if you really want to add them.
--hint: Disable this message with "git config advice.addIgnoredFile false"
-+hint: Disable this message with "git config set advice.addIgnoredFile false"
- EOF
- cat >expect.out <<\EOF
- add 'track-this'
-diff --git a/t/t3705-add-sparse-checkout.sh b/t/t3705-add-sparse-checkout.sh
-index 2bade9e804..53a4782267 100755
---- a/t/t3705-add-sparse-checkout.sh
-+++ b/t/t3705-add-sparse-checkout.sh
-@@ -54,7 +54,7 @@ test_expect_success 'setup' "
- 	hint: If you intend to update such entries, try one of the following:
- 	hint: * Use the --sparse option.
- 	hint: * Disable or modify the sparsity rules.
--	hint: Disable this message with \"git config advice.updateSparsePath false\"
-+	hint: Disable this message with \"git config set advice.updateSparsePath false\"
- 	EOF
- 
- 	echo sparse_entry | cat sparse_error_header - >sparse_entry_error &&
-diff --git a/t/t7002-mv-sparse-checkout.sh b/t/t7002-mv-sparse-checkout.sh
-index 26582ae4e5..4d3f221224 100755
---- a/t/t7002-mv-sparse-checkout.sh
-+++ b/t/t7002-mv-sparse-checkout.sh
-@@ -32,7 +32,7 @@ test_expect_success 'setup' "
- 	hint: If you intend to update such entries, try one of the following:
- 	hint: * Use the --sparse option.
- 	hint: * Disable or modify the sparsity rules.
--	hint: Disable this message with \"git config advice.updateSparsePath false\"
-+	hint: Disable this message with \"git config set advice.updateSparsePath false\"
- 	EOF
- 
- 	cat >dirty_error_header <<-EOF &&
-@@ -45,7 +45,7 @@ test_expect_success 'setup' "
- 	hint: To correct the sparsity of these paths, do the following:
- 	hint: * Use \"git add --sparse <paths>\" to update the index
- 	hint: * Use \"git sparse-checkout reapply\" to apply the sparsity rules
--	hint: Disable this message with \"git config advice.updateSparsePath false\"
-+	hint: Disable this message with \"git config set advice.updateSparsePath false\"
- 	EOF
- "
- 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index b1316e62f4..7cd5e16dc8 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1850,7 +1850,7 @@ test_expect_success 'recursive tagging should give advice' '
- 	hint: already a tag. If you meant to tag the object that it points to, use:
- 	hint:
- 	hint: 	git tag -f nested annotated-v4.0^{}
--	hint: Disable this message with "git config advice.nestedTag false"
-+	hint: Disable this message with "git config set advice.nestedTag false"
- 	EOF
- 	git tag -m nested nested annotated-v4.0 2>actual &&
- 	test_cmp expect actual
-diff --git a/t/t7201-co.sh b/t/t7201-co.sh
-index 793da6e64e..9bcf7c0b40 100755
---- a/t/t7201-co.sh
-+++ b/t/t7201-co.sh
-@@ -224,7 +224,7 @@ test_expect_success 'switch to another branch while carrying a deletion' '
- '
- 
- test_expect_success 'checkout to detach HEAD (with advice declined)' '
--	git config advice.detachedHead false &&
-+	git config set advice.detachedHead false &&
- 	rev=$(git rev-parse --short renamer^) &&
- 	git checkout -f renamer &&
- 	git clean -f &&
-@@ -244,7 +244,7 @@ test_expect_success 'checkout to detach HEAD (with advice declined)' '
- '
- 
- test_expect_success 'checkout to detach HEAD' '
--	git config advice.detachedHead true &&
-+	git config set advice.detachedHead true &&
- 	rev=$(git rev-parse --short renamer^) &&
- 	git checkout -f renamer &&
- 	git clean -f &&
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 981488885f..d6a501d453 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -212,7 +212,7 @@ test_expect_success 'submodule add to .gitignored path fails' '
- 		The following paths are ignored by one of your .gitignore files:
- 		submod
- 		hint: Use -f if you really want to add them.
--		hint: Disable this message with "git config advice.addIgnoredFile false"
-+		hint: Disable this message with "git config set advice.addIgnoredFile false"
- 		EOF
- 		# Does not use test_commit due to the ignore
- 		echo "*" > .gitignore &&
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index f9a5c98f3f..b2070d4e39 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -1699,7 +1699,7 @@ test_expect_success 'setup slow status advice' '
- 		EOF
- 		git add .gitignore &&
- 		git commit -m "Add .gitignore" &&
--		git config advice.statusuoption true
-+		git config set advice.statusuoption true
- 	)
- '
- 
--- 
-2.47.1.398.g18e7475ebe
+the behavior does indeed look like a bug.
 
