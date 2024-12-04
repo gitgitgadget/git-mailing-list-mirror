@@ -1,165 +1,145 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCD41925B4
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 21:15:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF9B18B460
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 21:21:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733346904; cv=none; b=o4fk3XOxK2MU9AwRpV7id8ZjWViiaNXnCo4b15HtE5DPbLMO04Ph7iAthEQBCFqAubmSLXwRa7O6ejgM8kbWSO3B5QzaeNbyiSd+1nh9ZwADLuQHqSYWgBTOas6eDvpUuYv8WcRbgl76upl5cf9SuwEh5ng70MXNH34OT6sobg4=
+	t=1733347286; cv=none; b=TDOR9MFaExY9Em7e3V4/ksP2OLY/33ylK7UjGHZD1A91PTpOmb3D4sMtoCAB9dfvDofUf7sYRNW+3Dm1pMzHWe69SX8TXfo1hM5x9Y+wMP0RXHEc5qNtI3gAPZ7S7IGvtMfljA5iW3QFvP32Kb804ZqSFuXBHMQbMJXDRbi6BCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733346904; c=relaxed/simple;
-	bh=NS34Xo5s8sDC81EKX+7UPo9mQiBhmF0ggKSjehV6aTw=;
+	s=arc-20240116; t=1733347286; c=relaxed/simple;
+	bh=cx0YnwlmE+tSJBBj65j9fIcWq4Pguwtsjajo7nHuI/k=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IDA9ADxMQTH9lvq+rotvv823FMi4rkM9yK5SD1lcvKhwiUz8rkLs1gQHgDtrkil4MpcXlNPOnRDLwoRUN6QwpLaG+Ohgq1SQUGHQ/UfJs+Xya6rBjSt9JKF0NzLho0tgQg5owblCaieqR6MGFMBkFuz21U3pryz3mHYZSbYDy+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RfiQ/ZQ7; arc=none smtp.client-ip=209.85.217.46
+	 To:Cc:Content-Type; b=t4+aC++3xXN5MQ/sICFG0fdPhVDm5pt/QvcT1ACjtvYkOKhJ5xNvWq7ku8yHsP56P3/ABcUxs7x1acmm2tG86A9gOH6VVYRpDRx9F9ispaOsmq9jzwwAIGs9XNgrg/ddtVkhHnfKyzxYbYh6VGuVQXyK84tnuWpek1np7j4n1/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dl28QAzs; arc=none smtp.client-ip=209.85.217.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RfiQ/ZQ7"
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4af3bfbb721so57713137.3
-        for <git@vger.kernel.org>; Wed, 04 Dec 2024 13:15:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dl28QAzs"
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4af60a0478fso124603137.1
+        for <git@vger.kernel.org>; Wed, 04 Dec 2024 13:21:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733346902; x=1733951702; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733347283; x=1733952083; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+dhyWSzcVnONy5q1yxmpplF52uEHTd94b1OFv1MWyHQ=;
-        b=RfiQ/ZQ7cWcpvXywVBKheXalFHH1YBkd3AJqBZKvRzgt9Fp/cR1YpTChPL5Oh2r98/
-         hv9ucVC3k0cJ2/rDA2u1giGHvcJP82ar5V7dMpi8x3uasfNZ7MgoPlUq8LsibUd02CeC
-         FHSIYv4Ny7NAlSixXV045pu1YpAYBHZaHxvGOd2E5P/q1L+a5GMNZWml5uZm4ocLHU3L
-         oEWXerCGumj1xZh6tHDBfsV1KRZa59KutrMHu4JRiG9HoQY/npluPs5uOu7fRo2TRE5h
-         3yLgjyBKLVlN5Znd1Ah5JMrtY2E5uZq1QB4sGlNNrhR54ozNqU0acPDyNJSqEx3J7X2A
-         zMdA==
+        bh=cx0YnwlmE+tSJBBj65j9fIcWq4Pguwtsjajo7nHuI/k=;
+        b=Dl28QAzsYOTYzu0hUUdYHPmbvI7W++t9JfG1u62Uw003hAcTpZepyKuObRufd+cyYG
+         br6y7tDd5nuLEKVegp+sGjCsamco8sHEB4za4pMBMZ4KAqnd7ueO3Zq/SqYwiC5cqAii
+         yBOP/vxKoF1aJcHM+izIxsFmsoatq//fKwoHFqS3Q5htAX28a8n5Jp+MWd9N4GHyAZvU
+         EQ/cjqlb3yAT3V+94RrUyvqjt2LFUJSV4Y+TuX0l6A9V+x0Zhn9N87zSexbyIDvdrmMS
+         5W4JZJbVBsLrlc6lw8r0MKF6C4IFemxYWTkkwzJksO+NyqRqfCl7EXjhbn6ThxCGzRA5
+         Wgmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733346902; x=1733951702;
+        d=1e100.net; s=20230601; t=1733347283; x=1733952083;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+dhyWSzcVnONy5q1yxmpplF52uEHTd94b1OFv1MWyHQ=;
-        b=UPWJK9g2QEKjwo7bol6SqixFbItMyc4PUblfxyxcONYWVR5BUxSQheGIbeI00maL5J
-         d9eofpD9t3d5yzVeMoshKGNofDAp3VmbC9Jl2SSyCOWOKBCEXMwPzx/BCRtSQb4XVSjZ
-         5fcJogJ5Tkh+tonpt0FQi+CkL4JbOOsGSK8QAdZX0dJ0Qgh+ZbpPIMct83x6TozbN6Dy
-         29YHuMU4mFMqT7xE4VShTxbd670p+LYxzjeTByRcTCy+4fyU4b6AkKr+Nqi8RiroTuoG
-         Pyf2/NGRdsPXKVTPnWudbQ0FI+thgkVC+lZ2cPRhNaBm1+dzbk07Yhvftvt75PzzdmOP
-         qnOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMEv1GHNTT8zyN+2F0L041u7Z4EYGDwwNG1ki5laRzQZuxaJ7AaPGuShhg4CchKZkcdHs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzz1S6cytowcdsUFF5eDhiO0UbRtDplHjbABS95EhzwQTG0jSB+
-	lmCcHT4178DmG5Xzxm1Knv/DLtsEAocf2vimSnrHBJBAGHW69LJv8DnSqWVAiYYBrvzepSR8Rza
-	lvEjA7OHbVWxUJ5DWvieg26hpVUI=
-X-Gm-Gg: ASbGncsFOtgX6+91GJtZDhbzRn/kEWU/pzjIWv4hSbdqIEYBFCZoGmLoW80WKESll76
-	6BqAdMQXNhdNChZJsRmScxHOG0YGZQ+F+ygQ+K17mwGAxFYnsVzWcwiyZpaLry4vZ
-X-Google-Smtp-Source: AGHT+IEW7kqW0kUNYIHpNV3voK9y/DEbJCYZlLuQqj1a4eem4DeQYj3jtXFtKw0h5aKuass7+qQk+QfxV3x5SHZhi1Y=
-X-Received: by 2002:a05:6102:2ad0:b0:4af:5b9a:3350 with SMTP id
- ada2fe7eead31-4af971fce54mr12286753137.3.1733346901739; Wed, 04 Dec 2024
- 13:15:01 -0800 (PST)
+        bh=cx0YnwlmE+tSJBBj65j9fIcWq4Pguwtsjajo7nHuI/k=;
+        b=leYg7+xNSXJBZdwsd1qawxlVMmwNKDWwUZ74OU+5uKnCG0JK/4f+UsPVB0tr4AtXDd
+         1JMm8QzFUIRwzqLZWT7aHWCzbRSWVIeRCFdy37H2BYiyrymaa5LbfegRih+iSyQmxTxZ
+         YM6uvbrru6NNwWOHDzuoOtUA6kBEgiaA8yIxKbSXB5QzT2xK39/qW7UWVwg5jfjaaYn8
+         c7GqypZNKtChkRfAqeTg81IS6jt5dPHyFGYLkuvz3Il1RUnYRkkt2TbgjeLXrlrsn6CJ
+         QtLNePJ6hfW+h5TQywIts3iD7PoktmK0uDg2UYdaGpXM3Vbggn7be4oIcW9dLFg5IPGD
+         xGOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWYoP4/Uzb1jmBJEoBSkDD4KqWIgjFBrW0MyURX4fAmLJBAk9JbCV8c+Ar2llro7CAPMpY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwybpF0MCYem8F2ZiYBTDsfJNbFKmj1iCfBD8i5WjL3Kd6GGBEt
+	wSXza9m/YKd3y+HFRVtWzt6tM2sEjB8Cohc28+gWu6s7ywCuPF2MfZrkVZEOpk16kJ75KxhXfVi
+	HdwhcntlOhrWri5xz0+0EJDPXcoc=
+X-Gm-Gg: ASbGncsffewnlsuBZyDlEvu8qx3o8WebiwfJH/aNEv8S/ozASSckc72pKX0k/OtogPG
+	6QsZsDB2MTI78Es0JpQY2VOu553zurUmQ7UsLP0UQiYjTaCjfXr5H6MR7fy9/r9wq
+X-Google-Smtp-Source: AGHT+IFhTqRj3omI9uOWQEBqIs8KmuGftxSJ8C+FzOpH+hJyg004Qd7sddliKqpc/sGGFu+x9qZVSvvR+JPmXSM1+7A=
+X-Received: by 2002:a67:ef8a:0:b0:4af:456e:5427 with SMTP id
+ ada2fe7eead31-4afb9534a48mr1320226137.4.1733347283632; Wed, 04 Dec 2024
+ 13:21:23 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 Dec 2024 13:15:01 -0800
+ HTTPREST; Wed, 4 Dec 2024 16:21:22 -0500
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <1947d1bf448d71ccd4a44ef25751bab50784a73e.1733181682.git.gitgitgadget@gmail.com>
+In-Reply-To: <6a95708bf972cb22c8abf1da389350fc9f53c4ca.1733181682.git.gitgitgadget@gmail.com>
 References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
- <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com> <1947d1bf448d71ccd4a44ef25751bab50784a73e.1733181682.git.gitgitgadget@gmail.com>
+ <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com> <6a95708bf972cb22c8abf1da389350fc9f53c4ca.1733181682.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 4 Dec 2024 13:15:01 -0800
-Message-ID: <CAOLa=ZQcicLN462PFz_2sFeKKB0VvthPZhgwuR3CM0RSM6Y-Ow@mail.gmail.com>
-Subject: Re: [PATCH v2 3/8] repack: add --name-hash-version option
+Date: Wed, 4 Dec 2024 16:21:22 -0500
+Message-ID: <CAOLa=ZTuAKtYvtWoR0cvaORiXPsjBxq-nhXL8NJZpJSmBtEdpg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/8] pack-objects: add GIT_TEST_NAME_HASH_VERSION
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, 
 	me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com, 
 	jonathantanmy@google.com, Derrick Stolee <stolee@gmail.com>
-Content-Type: multipart/mixed; boundary="00000000000059ef350628784660"
+Content-Type: multipart/mixed; boundary="0000000000001d45c50628785de0"
 
---00000000000059ef350628784660
+--0000000000001d45c50628785de0
 Content-Type: text/plain; charset="UTF-8"
 
 "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-[snip]
-
->  DESCRIPTION
->  -----------
-> @@ -249,6 +251,36 @@ linkgit:git-multi-pack-index[1]).
->  	Write a multi-pack index (see linkgit:git-multi-pack-index[1])
->  	containing the non-redundant packs.
+> From: Derrick Stolee <stolee@gmail.com>
 >
-> +--name-hash-version=<n>::
-> +	While performing delta compression, Git groups objects that may be
-> +	similar based on heuristics using the path to that object. While
-> +	grouping objects by an exact path match is good for paths with
-> +	many versions, there are benefits for finding delta pairs across
-> +	different full paths. Git collects objects by type and then by a
-> +	"name hash" of the path and then by size, hoping to group objects
-> +	that will compress well together.
-> ++
-> +The default name hash version is `1`, which prioritizes hash locality by
-> +considering the final bytes of the path as providing the maximum magnitude
-> +to the hash function. This version excels at distinguishing short paths
-> +and finding renames across directories. However, the hash function depends
-> +primarily on the final 16 bytes of the path. If there are many paths in
-> +the repo that have the same final 16 bytes and differ only by parent
-> +directory, then this name-hash may lead to too many collisions and cause
-> +poor results. At the moment, this version is required when writing
-> +reachability bitmap files with `--write-bitmap-index`.
-> ++
-> +The name hash version `2` has similar locality features as version `1`,
-> +except it considers each path component separately and overlays the hashes
-> +with a shift. This still prioritizes the final bytes of the path, but also
-> +"salts" the lower bits of the hash using the parent directory names. This
-> +method allows for some of the locality benefits of version `1` while
-> +breaking most of the collisions from a similarly-named file appearing in
-> +many different directories. At the moment, this version is not allowed
-> +when writing reachability bitmap files with `--write-bitmap-index` and it
-> +will be automatically changed to version `1`.
-> +
-> +
+> Add a new environment variable to opt-in to differen values of the
 
-Nit: I wonder if it'd be nicer to simply point to the documentation in
-'Documentation/git-pack-objects.txt'. This would ensure we have
-consistent documentation and a single source of truth.
->
->  CONFIGURATION
->  -------------
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 05e13adb87f..5e7ff919c1a 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -39,7 +39,9 @@ static int run_update_server_info = 1;
->  static char *packdir, *packtmp_name, *packtmp;
->
->  static const char *const git_repack_usage[] = {
-> -	N_("git repack [<options>]"),
-> +	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
-> +	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
-> +	   "[--write-midx] [--name-hash-version=<n>]"),
->  	NULL
->  };
+s/differen/different
 
-So this fixes the mismatch in t0450 which is seen below.
+> --name-hash-version=<n> option in 'git pack-objects'. This allows for
+> extra testing of the feature without repeating all of the test
+> scenarios. Unlike many GIT_TEST_* variables, we are choosing to not add
+> this to the linux-TEST-vars CI build as that test run is already
+> overloaded. The behavior exposed by this test variable is of low risk
+> and should be sufficient to allow manual testing when an issue arises.
+>
+> But this option isn't free. There are a few tests that change behavior
+> with the variable enabled.
+>
+> First, there are a few tests that are very sensitive to certain delta
+> bases being picked. These are both involving the generation of thin
+> bundles and then counting their objects via 'git index-pack --fix-thin'
+> which pulls the delta base into the new packfile. For these tests,
+> disable the option as a decent long-term option.
+>
+> Second, there are two tests in t5616-partial-clone.sh that I believe are
+> actually broken scenarios. While the client is set up to clone the
+> 'promisor-server' repo via a treeless partial clone filter (tree:0),
+> that filter does not translate to the 'server' repo. Thus, fetching from
+> these repos causes the server to think that the client has all reachable
+> trees and blobs from the commits advertised as 'haves'. This leads the
+> server to providing a thin pack assuming those objects as delta bases.
+> Changing the name-hash algorithm presents new delta bases and thus
+> breaks the expectations of these tests. An alternative could be to set
+> up 'server' as a promisor server with the correct filter enabled. This
+> may also point out more issues with partial clone being set up as a
+> remote-based filtering mechanism and not a repository-wide setting. For
+> now, do the minimal change to make the test work by disabling the test
+> variable.
+>
+> Third, there are some tests that compare the exact output of a 'git
+> pack-objects' process when using bitmaps. The warning that ignores the
+> --name-hash-version=2 and forces version 1 causes these tests to fail.
+> Disable the environment variable to get around this issue.
+>
 
-Nit: might be worthwhile adding this in the commit message.
+The patch itself looked good to me.
 
 [snip]
 
---00000000000059ef350628784660
+--0000000000001d45c50628785de0
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 9ce48eb60832f68c_0.1
+X-Attachment-Id: 1e5f27a8bedc391f_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kUXhsTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM1hWREFDRWt0T2JvR3ZGM0FWeG1xSkdTdW5Pc0FGcApqcnJHQ0t4bm15
-TzRlcitOZVdxNkt3eUNNWTBoTmJPcWRSQ2c4MTFHVkxGTlJwTkZIQklFL05qZlFOWGowYnE5Cmxh
-a3BjSlpEQ25MY2ROMVRKelg3QUpFeG9yanMyVUNjQVA1blkyNFA5Vmo0OG5YQkh6ZHBWZW02TEpk
-bmVVWnMKQkhSTk9JQUN1T1hZd3hiblhvK2ZRY2pQT2prTHlhQmRpNjE3WEk5Skx4Y2pCWFU2TGo4
-bW5mMEljUTY2eWlPSgpnZjhLNUtOQUtIbm9EMDRPbDhXaVFSOXdNdXg4NmxvcGN3LzB3cTJLSjFO
-VXBpek1pTlhjTm9HTHFLVUZIZThWCm5kR2Y4L1FjRWpoek9uUG5GMmhVZkk4L1FGM2RQQjF4bFY3
-blFBMjJpb085Z1I2U1dyditSUEhtNmNSR2lIS0oKandyWXFCT3MrZml1QVJiTEE0ZkQ3QmVXZllv
-eEhwbURtYUpWQkJXa2JQL1lhY2hYOTNiWWZsNkIzbEhFNU1OZQpmUEtSb0dRbmFCS2JoNW1OVk1I
-QUpNTEU3WnlGVTVLWHJpcXBsSTBNMU1QWlRkdjVqelFIUnNMUGZnNlVZc1R1CitjSU12emVUQ2tE
-Q3hBM1loSDN4RXJxWkdwKzlEVm9aaUdWT050Zz0KPTJvejUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kUXg5QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMWQwQy80anluVUJvVVRPL2RWMkZWc1d6MTJtNjkvQgpJaTZtQXlKWm1Q
+dTM5MGowUzdRTVc1RUFsTjJndTlHSzAxenRvMklKVExvZFJWa3Vjc2RrWVltYjg5UmtMTTZTCkNR
+VGR5RWszRkl3cHk5MEhEbU5SdWRhUGxFTFhNdjErK3ZZZk1xOHQ2WFhER2VSay95S3FENklBWlRJ
+OWdMWE0KR2dnMFdxaGtBd2FLcjhBSGMreEJHeXYyUXAwZS84YjZvNjBtcTNlT0c5T05kRTNyTUFu
+STIwRTJwTVBBSHFrOQpKYlg5TmFmSUx5Mmx6ZTIzMGY5OVF2b2I3djBDY3I3U2RDaEQ1dnRaN1hw
+dkRQa3lTakcvdGlJa0dkbDQzWndRCkRUdDVZTXR5MzQ4UXFiKzU3UUtUaVJ2aWJEYjZkd0xiQkVL
+dVA1Nmpob0pzTk9LQ0laK21MVFRMc0R3amcxSFUKQ2R0OUloMUc0WW8waHF5TEVJeU43TjFNckFr
+SUJBWEg2T2tkZ000ZXhKK05iSEFjemRrYUdCTEdXUHRSeEU3SApZb1J3Ymt1QVROdTAxVlZMbFBD
+UVBOa0ZrSnlWQjBzYVZYVEk1ZjhNSkYyc1AwYkZSUTlhVEtFeHBVMkNhNjNCCm1jblRSNWh5MlNr
+S1hYRGxINDNMaUtnUTBHTVpMNVg1OEUya3Y5ND0KPTM1L1UKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000059ef350628784660--
+--0000000000001d45c50628785de0--
