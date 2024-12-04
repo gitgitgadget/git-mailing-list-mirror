@@ -1,205 +1,112 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468CE1A8F7E
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 22:44:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A3B1865FA
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 23:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733352271; cv=none; b=cgCFYj0JhFmxk/V/zzisWOxc/nvkGN+3jIxV3xSx7dn7Ng8FElrlRBcaLA8sh45pRKWbAm8pj2UX2pdRDzjWnxtEDvEU7IFpkWWecgkTRdeQOf6qEVB72va3ZeTJ8/XZ5D9Ca02xds9g5luDCaLyeUFMATOIcEgZi0pjx6UCt2A=
+	t=1733353508; cv=none; b=dlfri7TtdX0Sw7xKtS2I6uBlka93lZxbIUYHnE6cITHgdIhye9uxfffOny1BcS+qDc4HVsNRNEwiuY6CtuMDOU8YpJcgRBEfkerqzKjxzrovs9pO5FNgy7iy8+kLDZ3ushP2+zlXRkm1NL98qk1Ii2Cs14Lk4vOu2s7Hyc7DqCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733352271; c=relaxed/simple;
-	bh=GVOqrl0V+wczjATPQqqCyOY14srTs25yXnBuilhBtp8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=dga2DQ4cIS88+oGcMmj1ZnahyYjtssAcfh4CCg1raVoX4tvpKa5DedmJSeUTjXxN4Lkdb2fXLHsm5tYpcK+bMAC05FmVimEoBPzcLkHcxZrLs+FoRjle82/BAfMwUzAFCH6Bx1BJkNkYwuKHqv5CMiVMvdYyLKst0Q8X/DVMLJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AGzgHgvQ; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733353508; c=relaxed/simple;
+	bh=p67uYdpeNMPKCUYerCuz8tUcz3q8UQFnieUN68fh2Vc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iSLuAygOqdmXy9KU5hI8/OZoKrXU9P5FpUl0/0aDQhXAxszgVNKq6zWWCP/xEB7CUyGz9iQz/G+b6z5Vxs/94cGg77hBAJiXCgcJBF4bRtcjZP7mMb2LwKNfGIWbYp+GExPkqFhUO4TJTRY/43CfUmzSGNlY03Lvnw6vCU/134c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Umq0sKoT; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AGzgHgvQ"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-434ab938e37so2050965e9.0
-        for <git@vger.kernel.org>; Wed, 04 Dec 2024 14:44:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Umq0sKoT"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-21561f7d135so15005ad.1
+        for <git@vger.kernel.org>; Wed, 04 Dec 2024 15:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733352266; x=1733957066; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+        d=google.com; s=20230601; t=1733353506; x=1733958306; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pW3X3iY7WYodMUjQ9uwLc/tBQKU/rrysrD2nOueHlOA=;
-        b=AGzgHgvQP+KbCpQX4l4dVAsNnWD8bKJIL/5ESmaBjAij1rjqoz0ecTdrAecRV5Whke
-         yD7AXqlQCzwM59E4C7jt/fys8y3QhWe2zfmXjZNULt297g5vrmpxiRSkRAie9/HYaqLM
-         irPQiaZlHSWCFns6HAR3tkz0jcVjocxfqVOYmtVQw1KmHz2PIPWY6G6p8Zb4F+ZmcwGV
-         g7buzOgQuf2gFc1Qpc+OLvSCuu2aAzkimL0iAD8wXlRLcQcCl3wvYMyZ3ejZtkWCo8AF
-         t5qr1G1ibVEWPlirUOS198GvKQ6OONCeSpSsvGblIBIzZTuXciOogf8Pta7k8HGD/aef
-         M0Yg==
+        bh=V7416LtRKQCsLU3Kzu9T1PVL3HtsK9pq3pjBSYJN3PM=;
+        b=Umq0sKoTRvXQZiUAQa25sGIi4b0CMjOzywgMI4ixHgcTMzZKAelxSNtfnqubV981In
+         wVfzzjI/OY6AYq+Cd7xM2NfBxPgPt++n8pgTB5PbIZrO9Z0UpRNiN1L2TZPNLm9sdGWe
+         2gtjjdBZwop4bj4CDe8xpsVRoGpN1hSZFA5aK3qWgS4l+XfxlH80M9nhb8V8oNW/KwvH
+         1ZB8NJnTcvNkA2SKO5HJuZxACqAfZHBhTqWC5/pQhGZDJVJGcA+chijXiwxvoWdVhmJJ
+         jjS2QxFyf3r6nLPpLpV/mXFDF6iNxDoD932b2IOU1nnys7BIwB/S6J9BDtqv24uxxBan
+         dmuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733352266; x=1733957066;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1733353506; x=1733958306;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pW3X3iY7WYodMUjQ9uwLc/tBQKU/rrysrD2nOueHlOA=;
-        b=lq+Mc44HR7ya3AwX668rfin4Bt37N54b0Ylatp5V1aD+kq4+r79a40qA/ePQIH7lCe
-         WqtITtGeyignGdatZH/qD7z2Q6v5m9I9pbJWJ37ho/OYEKhyFnIFjwNIdVrn73/pbT+Y
-         secrpJa6eQOLW3lPEfe8JAuFRh8CzXbS88D9Gdi6Rk4OOu6Y+VQkiptpq/hls3FTyQU+
-         T1Gt74Sv+0rqgQGYJieWW0iKdNT719FUqXvaECHxmIHxV3GTvfJo/+tAiy6GlAyEEYHU
-         eoD5eSI2rOpIP5Dr8ThqHMOihUUvg/RRtf2JedIntz3w1ZFW1E5XteMgsFelOcPofJ13
-         iXLQ==
-X-Gm-Message-State: AOJu0YwhMRXTqyMyXb+b4cyVnA0bEGvxlZVaahQH2HnXXay3m23Nwz1o
-	XQr49pPbEy+Jwg8zCw/kBpmgDlPAdt17mCzJY6uVpevv6EyeATbWzvwCPw==
-X-Gm-Gg: ASbGnctJPFvkjIsxl9IwlLnFNJ6mjkIkYICpV1D6nSwmhrG1QKL+m7q3nax4UDPXhhF
-	++ZAh3UcO/JB4d7LJe/pCeTDPQqR4cZzEOZ6UfKvbAB9l+J413LxFbwuv7vskeqTMbhhjPOTfxg
-	Y6ogAZOwiaHYVJGSfcPZJAdvFTfM3o/zZWxorBS+n4J854Mq2VB03ykAyyXpZXxj72K/zimICx1
-	KHgA2qkalZPdsV+tPOH6ae6I/3szfcOn/LocHz9
-X-Google-Smtp-Source: AGHT+IE9s49Q+10aNEIXB1RTwq//2Tf9F4llJBvQmRos7ZcLCU2aifc9ajx2e8Kd+fGp2OwJvggxTw==
-X-Received: by 2002:a05:600c:4fcd:b0:434:a968:89b5 with SMTP id 5b1f17b1804b1-434d3fa0485mr53765945e9.9.1733352266482;
-        Wed, 04 Dec 2024 14:44:26 -0800 (PST)
-Received: from gmail.com ([88.14.48.231])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434d43a0df4sm35193955e9.1.2024.12.04.14.44.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2024 14:44:25 -0800 (PST)
-Message-ID: <3c7b3c26-7501-4797-8afa-c7f7e9c46558@gmail.com>
-Date: Wed, 4 Dec 2024 23:44:25 +0100
+        bh=V7416LtRKQCsLU3Kzu9T1PVL3HtsK9pq3pjBSYJN3PM=;
+        b=u1sN/Ufwx8vKrs9xyU37KkjVm9iKx5evEY0jQXDBKUC2O75Tk1ddF64S0g3FnMRUXU
+         vGIi4kGOUqIV8aBB358P+flUuxWeGS+ZoZOhcOETmSB9fvXf/4T9er3GyX01QfEB33op
+         QTKYk9+vQvRpVOw43xZtBzZ0L2UjGSxMYJ7Bgi9eqZj6XpjSA5H0mVuxB2KR29TPezQl
+         MB09jKPRVvFSEH8OeKPZNKyN1nFW1cjtpUTrQBOsm0lj+/gCoFCkskMiXePVHqOGawen
+         B8mS4vH2tWk4lBc8twQ/11trPBVFznZeyY6B1+AFE8plQoF/WACvhpe95QOcCXRhWaGd
+         DZcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWGFM/bJBe67Nw/N8adHiPOK/5d+Dazzv/jiwOpaUydpU6H5/WKxJwJnqdqgO+5azwTsqs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YycxVl0C/WcYgZ+/rxao5lVgsPLZbULcU0eY+gwq5EX73veyuoj
+	D8AuH/M9R/YchQ9jsrFCIOir15wh9XkxpmVpPpoNDEFrLis1jepxjrUXSl314w==
+X-Gm-Gg: ASbGnctvjwJlMELEgtEzbrlTxgS1w6rebW92+y7Hbdxntn5SZXXw24uEQvHppbU6CiW
+	gacomZltYXuvBJB0Pb7+AC3073uKOlSmvGxSuSCJ/ga6yKCrRory/60tEp8GZdBuzERIG6JrQt7
+	LN0ixvhCS+pI/4t90fiqI0h+Rnwpbn3f+3Ro/Hw/FUMVCE+zO4tq+NkwEXeulYVS6seCy0WmUb/
+	PgLGviQhiuew3QlBKkMSxe1RaUTZwIm+fglELK+ku1eAhzK
+X-Google-Smtp-Source: AGHT+IGfvilQxErZ9kBemyUFIgoBQu92y3jkc3VKG0pa24qNIEQl3AbilrqlL1wpDYeJepDPuTzHDQ==
+X-Received: by 2002:a17:902:ccd2:b0:215:61b4:4084 with SMTP id d9443c01a7336-215f8d3173amr318695ad.29.1733353505673;
+        Wed, 04 Dec 2024 15:05:05 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:9c3a:bb2a:d0bf:3ce9])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ef45f7d3d6sm84391a91.4.2024.12.04.15.05.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Dec 2024 15:05:04 -0800 (PST)
+Date: Wed, 4 Dec 2024 15:04:59 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, 
+	Benno Evers <benno.martin.evers@gmail.com>, Rasmus Villemoes <ravi@prevas.dk>, 
+	Benno Evers <benno@bmevers.de>, Josh Poimboeuf <jpoimboe@kernel.org>, 
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: Re: [PATCH 0/4] perf improvements for git-describe with few tags
+Message-ID: <fxbv4ihz4sgdfwtq4vkadntank2lzwkt6abgipuojhumjmuxjs@fegutv3kcamo>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, git@vger.kernel.org, 
+	Benno Evers <benno.martin.evers@gmail.com>, Rasmus Villemoes <ravi@prevas.dk>, 
+	Benno Evers <benno@bmevers.de>, Josh Poimboeuf <jpoimboe@kernel.org>, 
+	Masahiro Yamada <masahiroy@kernel.org>
+References: <309549cafdcfe50c4fceac3263220cc3d8b109b2.1730337435.git.jpoimboe@kernel.org>
+ <87bjz0k17c.fsf@prevas.dk>
+ <20241031114210.GA593548@coredump.intra.peff.net>
+ <20241031122456.GB593548@coredump.intra.peff.net>
+ <20241031144351.GA1720940@coredump.intra.peff.net>
+ <CAEQVFRFWT02QTL7PTf84p6AAferijHx8L_Tu6ON1H7U=iEdb3A@mail.gmail.com>
+ <20241106192236.GC880133@coredump.intra.peff.net>
+ <xmqqldx61t65.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v3] strvec: `strvec_splice()` to a statically initialized
- vector
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>, karthik nayak <karthik.188@gmail.com>
-References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
- <5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
-Content-Language: en-US
-In-Reply-To: <5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqldx61t65.fsf@gitster.g>
 
-We use a singleton empty array to initialize a `struct strvec`;
-similar to the empty string singleton we use to initialize a `struct
-strbuf`.
+On 2024.11.26 14:05, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > So here's the series I came up with, which starts by adjusting the tests
+> > to be resilient to the later changes, but also to show the existing
+> > failure mode.
+> >
+> > And then the rest of the patches add the performance improvements we've
+> > been discussing in the thread.
+> 
+> So, this did not get any comments, but I had a time to read it over,
+> and did not find anything suspicious in there.
+> 
+> Let me mark it for 'next', this time for real, in the What's cooking
+> draft I have.
+> 
+> Thanks.
+> 
 
-Note that an empty strvec instance (with zero elements) does not
-necessarily need to be an instance initialized with the singleton.
-Let's refer to strvec instances initialized with the singleton as
-"empty-singleton" instances.
-
-    As a side note, this is the current `strvec_pop()`:
-
-    void strvec_pop(struct strvec *array)
-    {
-    	if (!array->nr)
-    		return;
-    	free((char *)array->v[array->nr - 1]);
-    	array->v[array->nr - 1] = NULL;
-    	array->nr--;
-    }
-
-    So, with `strvec_pop()` an instance can become empty but it does
-    not going to be the an "empty-singleton".
-
-This "empty-singleton" circumstance requires us to be careful when
-adding elements to instances.  Specifically, when adding the first
-element:  when we detach the strvec instance from the singleton and
-set the internal pointer in the instance to NULL.  After this point we
-apply `realloc()` on the pointer.  We do this in
-`strvec_push_nodup()`, for example.
-
-The recently introduced `strvec_splice()` API is expected to be
-normally used with non-empty strvec's.  However, it can also end up
-being used with "empty-singleton" strvec's:
-
-       struct strvec arr = STRVEC_INIT;
-       int a = 0, b = 0;
-
-       ... no modification to arr, a or b ...
-
-       const char *rep[] = { "foo" };
-       strvec_splice(&arr, a, b, rep, ARRAY_SIZE(rep));
-
-So, we'll try to add elements to an "empty-singleton" strvec instance.
-
-Avoid misapplying `realloc()` to the singleton in `strvec_splice()` by
-adding a special case for strvec's initialized with the singleton.
-
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
-
-This iteration fixes a problem we saw when running with SANITIZE=leak.
-Although it wasn't a leak.
-
-We need to end the array because `realloc(NULL)` is not going to give
-us that { NULL }.  I know it's something I considered at some point
-because I thought about a change like `CALLOC_GROW()`.  Perhaps
-another time.
-
- strvec.c              | 11 +++++++----
- t/unit-tests/strvec.c | 10 ++++++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/strvec.c b/strvec.c
-index d1cf4e2496..62283fcef2 100644
---- a/strvec.c
-+++ b/strvec.c
-@@ -61,16 +61,19 @@ void strvec_splice(struct strvec *array, size_t idx, size_t len,
- {
- 	if (idx + len > array->nr)
- 		BUG("range outside of array boundary");
--	if (replacement_len > len)
-+	if (replacement_len > len) {
-+		if (array->v == empty_strvec)
-+			array->v = NULL;
- 		ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
- 			   array->alloc);
-+		array->v[array->nr + (replacement_len - len) + 1] = NULL;
-+	}
- 	for (size_t i = 0; i < len; i++)
- 		free((char *)array->v[idx + i]);
--	if (replacement_len != len) {
-+	if ((replacement_len != len) && array->nr)
- 		memmove(array->v + idx + replacement_len, array->v + idx + len,
- 			(array->nr - idx - len + 1) * sizeof(char *));
--		array->nr += (replacement_len - len);
--	}
-+	array->nr += replacement_len - len;
- 	for (size_t i = 0; i < replacement_len; i++)
- 		array->v[idx + i] = xstrdup(replacement[i]);
- }
-diff --git a/t/unit-tests/strvec.c b/t/unit-tests/strvec.c
-index 855b602337..e66b7bbfae 100644
---- a/t/unit-tests/strvec.c
-+++ b/t/unit-tests/strvec.c
-@@ -88,6 +88,16 @@ void test_strvec__pushv(void)
- 	strvec_clear(&vec);
- }
- 
-+void test_strvec__splice_just_initialized_strvec(void)
-+{
-+	struct strvec vec = STRVEC_INIT;
-+	const char *replacement[] = { "foo" };
-+
-+	strvec_splice(&vec, 0, 0, replacement, ARRAY_SIZE(replacement));
-+	check_strvec(&vec, "foo", NULL);
-+	strvec_clear(&vec);
-+}
-+
- void test_strvec__splice_with_same_size_replacement(void)
- {
- 	struct strvec vec = STRVEC_INIT;
-
-Interdiff against v2:
-  diff --git a/strvec.c b/strvec.c
-  index 087c020f5b..62283fcef2 100644
-  --- a/strvec.c
-  +++ b/strvec.c
-  @@ -66,6 +66,7 @@ void strvec_splice(struct strvec *array, size_t idx, size_t len,
-   			array->v = NULL;
-   		ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
-   			   array->alloc);
-  +		array->v[array->nr + (replacement_len - len) + 1] = NULL;
-   	}
-   	for (size_t i = 0; i < len; i++)
-   		free((char *)array->v[idx + i]);
--- 
-2.47.0.281.g735430a4cf
+This breaks the case of `git describe --always $SOME_HASH` (we hit the
+die at builtin/describe.c:340) when there are no tags in the repo. I can
+send a test case and a small fix shortly.
