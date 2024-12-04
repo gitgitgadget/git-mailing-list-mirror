@@ -1,181 +1,181 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from aib29agh122.zrh1.oracleemaildelivery.com (aib29agh122.zrh1.oracleemaildelivery.com [192.29.178.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5646018A6C5
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 07:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC573136338
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 08:16:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.122
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733298102; cv=none; b=diJY18asB87mzhj9WbnMm2MHzhI37BDUh7lNuHTvFBeiHQOHfU3BTfzQ+hoAYY5Fqeu+rh2kRoKZRUsgWK2zDvcD3ucpieKjVX5/uiNbK7gJv+ylt7tEJsGDNANpa2jBBcLT7tiRne/OBmdaIAPlArnUWmzVXtDfMvt51PwEMH0=
+	t=1733300177; cv=none; b=FSFpapCkgIy9v1L+GvLn61S7XziBRFDZwW9IgLegawf7V95I49FcIKK4be+qHUv7Rz5z2Wyjc7QO7Dk6lmvWj3u+nCO0AvR3qRtndplm4yCPe1c1wwLFMH19Ncz+tn35u2lBebZeIKrvy9sijfOjorRaOj77DTrd4BGPaEC/0vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733298102; c=relaxed/simple;
-	bh=mw8LpD2n7xiVwZKYZUvVN/Pm5O82km1zmhuHqJvxoVA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IyKpmaKo4Di7DaGyL0MhY8njhcTOVLosc7SZ8RNWsvZGE6rjRORA952TqltHz1Gmolje5mC3gfJBKVZSnjk/hvwAC+8qr0udCL8LTOlIf/vMJbPSga9Pu4vDqZxEuT6v7hFv1W9vGF47ukOGdXzADYMrZVdG2sufW21/vWOOgjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rVzUqDNb; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733300177; c=relaxed/simple;
+	bh=letcXqb/ZcHRbBKyze1jYZk71+6AIx23XX5XFg4tfI8=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=a3P4zdVTfuhcHUabJqXWo48snZAQvziG7Q7ONoT3C87WjpnlSDvuRZF2GlzHqv1RPTRT6fidsT5IBf4rQxNeJBmJ8a1xjiotRCheCxdXFTwR+qIEZnyH1YLQLQGtHwG3xu6XJ/SKN7coq30fN7YQHuv6T2LbrkcL4y+7Itmqb6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=V4IGPu0R; arc=none smtp.client-ip=192.29.178.122
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rVzUqDNb"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A54F1140207;
-	Wed,  4 Dec 2024 02:41:38 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 04 Dec 2024 02:41:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733298098; x=1733384498; bh=RQ6rM0HcsbOqELP58AB+7OzrEMzNJj1Q7sR
-	a1KFnEZ4=; b=rVzUqDNbisdPFtLBH0jBkrwJDzE3f3SwVJ5e5yGm8zb9XS7j75y
-	vPakyKMtEf+LJm0+2K4zvuNXhY89st305Ll/j+58BEtGIij+m0iudck4Jz8B4IGA
-	/itUY04oGUiuQ1qRKXC7DE+2dj/Avp2XfArYo2p49YoB6zNfZs4JLStSceF/elmP
-	u+gnCl4Uv9Z4G/YFFp8qjaVYvPRsk4A1v4SPomND0VIE1LBrNd2bbqWA058yLy+Z
-	eOuSefJbP8amtVW87d77BJAhEXxSi+E2dCtYz4njXURvPnBBypy9ZmZnqO3hUU7o
-	sczJC7W2XagSYO1dQYsvfpBIC2F5N4xZLlw==
-X-ME-Sender: <xms:sgdQZwjBhZiuzWyTrMX2KsTnjU00rbGck06IgYBxjp9znAXlK-Mw4A>
-    <xme:sgdQZ5B8tkd5rYnhpLsHRTyqgAq_D6M8lu11iqvBi606Wd-mQlrVf2cZYo36sWX-4
-    vbM9GCSo-86GVghfw>
-X-ME-Received: <xmr:sgdQZ4HBvCi1j1Bxdq8wwEvMQmmtvwFhhuF8dG7qfqmSS7vAd9fvruHIHZRELxQOcNVyE33QVw8KhrkgvXR2u_I8Z3-ZkBLlpXqaam0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddutdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:sgdQZxS2B3TILVLZNPSByJWkoZYPH81yrVy1y91KhMkiznicLQI1Ww>
-    <xmx:sgdQZ9xCksNosdljsm-PfUJsAndz-3urfNbrwTTUHaO88qXpt5Dyig>
-    <xmx:sgdQZ_67Dpn_TNnIxeu8JheJ9a83VR2kp1c2yFw4qKVimwfXOkKl5Q>
-    <xmx:sgdQZ6zQ8WwtqXoamGoQg-GNihgJwaZ-0_fiBP9_evuh6QsfQXDhYA>
-    <xmx:sgdQZ_tIlI2_6VDtrUYOBqbJjArr2OnRc7RRX9zflM_T-rW8gqk78n55>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Dec 2024 02:41:37 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] strvec: `strvec_splice()` to a statically
- initialized vector
-In-Reply-To: <5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 3 Dec 2024 20:47:43 +0100")
-References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
-	<5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
-Date: Wed, 04 Dec 2024 16:41:36 +0900
-Message-ID: <xmqqwmgf3nf3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="V4IGPu0R"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=h66RBfEfCQiBQ7XBz3jMqPeXx0c24+Oy1ZPmD7Ai85c=;
+ b=V4IGPu0RFA7o5RA5r3V1aefn1wr5CvPksQNtNfOdjTKuYjyB/huOcIkIswQC1UNVkvSKAA5Y0yFG
+   kbqiXSqCI3ZlWA6TtETShBT06j9mruCy5leX0Wb4NttGcwKgv5MegXMyFsOlKADM1sYUV9x3IxTy
+   maZq191vw+bLbkscguy4kDcRXJ1f/5OQOCUurbk5U5LNzy/epkb/RaPA6Qm3/zAnBY9MsT2JXnoK
+   2ZGHuFNAT5XfeDcV/DPM9UWjOsNQa3A9DgX8aPI0Us0zXq8hOLa1+3RGLdgV1T7wz96fINNn6xK3
+   CHQQ8MfyszeI13sr2oXNPYa5MFcBVDJM7pnUYA==
+Received: by omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SNY00IE3MYV3L70@omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Wed, 04 Dec 2024 08:16:07 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Wed, 04 Dec 2024 09:15:27 +0100
+Message-id: <D62RM601U1FN.12YBAISXW0ORI@ferdinandy.com>
+Subject: Re: [RFC PATCH v1 1/2] fetch set_head: add warn-if-not-$branch option
+Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>,
+ =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>,
+ "Taylor Blau" <me@ttaylorr.com>, "Patrick Steinhardt" <ps@pks.im>
+To: "Junio C Hamano" <gitster@pobox.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <xmqqiks7oprx.fsf@gitster.g>
+ <20241203215713.135068-1-bence@ferdinandy.com>
+ <20241203215713.135068-2-bence@ferdinandy.com> <xmqqh67k5gv8.fsf@gitster.g>
+In-reply-to: <xmqqh67k5gv8.fsf@gitster.g>
+Reporting-Meta:
+ AAHS+YWIshjBAsVdOJ3hmVq/RKm/T1E1W5UM0c0XTQpGI33mRFeDfeDOq96ykXZa
+ KfJRzZQFMHF0D5qgJfmrUdCjY6Y5Y9nzYL2poWko0YCUE8eVlnHeo1odkJv/ARrv
+ VgEfZY8vgBhKrYKIwYC4cnBXFzGPx+OQIMSRiudVNdDTtkPMFWq0NzYzv2ag/2DP
+ PsevZTY+k/1g39MEwobLguxxLVVArpbVrf7kS76rdFFs6zp7XJdkG/7e+GByK1kZ
+ bzKl7cuhGnfRxFJQ5D1AlxlspjHBbDMsIDtIFecjD93bWoTQBiwrIpBuNK1HJ/hL
+ OsYZ9WaAYYWoI0C9WhZ23mPudjEM8CpdO88GWm5w42/JZR67f2rR1jIny35fKSX5
+ lLMNYGLV7abz4vy+/M0Cgh1jurhfn0+7BBsVO2ufdnNyRhLHwokiYhszasHj4LZv
+ ChUdhR5BapWOLzzbE3Rv0tKuG8hqx1u558pFnormvyDSaj3wnscgLrc5
 
-This is queued as rj/strvec-splice-fix, and t/unit-tests/bin/unit-tests
-dies of leaks under leak-check.
+
+On Wed Dec 04, 2024 at 03:20, Junio C Hamano <gitster@pobox.com> wrote:
+> Bence Ferdinandy <bence@ferdinandy.com> writes:
+>
+>> +static void set_head_advice_msg(const char *remote, const char *head_na=
+me) {
+>> +
+>> +	printf("Run 'git remote set-head %s %s' to follow the change, or\n"
+>> +		"'git config set remote.%s.warn-if-not-%s' to disable this warning\n"
+>> +		"until the remote changes HEAD again.\n",
+>> +		remote, head_name, remote, head_name);
+>> +
+>> +}
+>
+> Style. "{" that encloses the function body sits on a line of its
+> own.
+>
+> Perhaps use the advise_if_enabled(), so that those who already
+> learned how to deal with the situation can squelch the "how to fix"
+> message.
+>
+>> -static int set_head(const struct ref *remote_refs, int follow_remote_he=
+ad)
+>> +static int set_head(const struct ref *remote_refs, int follow_remote_he=
+ad,
+>> +		const char *no_warn_branch)
+>>  {
+>>  	int result =3D 0, create_only, is_bare, was_detached;
+>>  	struct strbuf b_head =3D STRBUF_INIT, b_remote_head =3D STRBUF_INIT,
+>> @@ -1660,7 +1668,10 @@ static int set_head(const struct ref *remote_refs=
+, int follow_remote_head)
+>>  		result =3D 1;
+>>  		goto cleanup;
+>>  	}
+>> -	if (follow_remote_head =3D=3D FOLLOW_REMOTE_WARN && verbosity >=3D 0)
+>> +	if ((follow_remote_head =3D=3D FOLLOW_REMOTE_WARN ||
+>> +		(follow_remote_head =3D=3D FOLLOW_REMOTE_WARN_IF_NOT_BRANCH &&
+>> +		strcmp(no_warn_branch, head_name))
+>> +		) && verbosity >=3D 0)
+>
+> Reorder conditions combined with &&- to have more expensive ones
+> later.
+>
+> 	if (verbosity >=3D 0 &&
+>             (follow_remote_head =3D=3D FOLLOW_REMOTE_WARN ||
+> 	    (follow_remote_head =3D=3D FOLLOW_REMOTE_WARN_IF_NOT_BRANCH &&
+> 	     strcmp(no_warn_branch, head_name)))
+>
+> As human readers, we may know that no_warn_branch is always valid
+> when (follow_remote_head =3D=3D FOLLOW_REMOTE_WARN_IF_NOT_BRANCH), but
+> semi clever compilers may not realize it and give a false warning
+> about using no_warn_branch potentially uninitialized.
+>
+> We could do without adding FOLLOW_REMOTE_WARN_IF_NOT_BRANCH and reuse
+> FOLLOW_REMOTE_WARN, like so:
+>
+> 	if (verbosity >=3D 0 &&
+>             follow_remote_head =3D=3D FOLLOW_REMOTE_WARN &&
+> 	    (!no_warn_branch || strcmp(no_warn_branch, head_name)))
+>
+> That is, "if set to remote-warn, always warn, or no_warn_branch is
+> not NULL, only warn if the current head is different from it".
+
+Ah, nice, this has the added benefit of a bad configuration where
+"warn-if-not-" doesn't actually specify a branch to fall back to just "warn=
+".
+
+>
+>> diff --git a/remote.c b/remote.c
+>> index 0b18840d43..f0e1b1b76a 100644
+>> --- a/remote.c
+>> +++ b/remote.c
+>> @@ -515,6 +515,7 @@ static int handle_config(const char *key, const char=
+ *value,
+>>  		return parse_transport_option(key, value,
+>>  					      &remote->server_options);
+>>  	} else if (!strcmp(subkey, "followremotehead")) {
+>> +		const char *no_warn_branch;
+>>  		if (!strcmp(value, "never"))
+>>  			remote->follow_remote_head =3D FOLLOW_REMOTE_NEVER;
+>>  		else if (!strcmp(value, "create"))
+>> @@ -523,6 +524,10 @@ static int handle_config(const char *key, const cha=
+r *value,
+>>  			remote->follow_remote_head =3D FOLLOW_REMOTE_WARN;
+>>  		else if (!strcmp(value, "always"))
+>>  			remote->follow_remote_head =3D FOLLOW_REMOTE_ALWAYS;
+>> +		else if (skip_prefix(value, "warn-if-not-", &no_warn_branch)) {
+>> +			remote->follow_remote_head =3D FOLLOW_REMOTE_WARN_IF_NOT_BRANCH;
+>> +			remote->no_warn_branch =3D no_warn_branch;
+>> +		}
+>
+> If we were to do without FOLLOW_REMOTE_WARN_IF_NOT_BRANCH, then the
+> above becomes
+>
+> 			remote->follow_remote_head =3D FOLLOW_REMOTE_WARN;
+> 			remote->no_warn_branch =3D NULL;
+> 		} else if (skip_prefix(value, "warn-if-not-", &no_warn_branch)) {
+> 			remote->follow_remote_head =3D FOLLOW_REMOTE_WARN;
+> 			remote->no_warn_branch =3D no_warn_branch;
+> 		} else if (!strcmp(value, "always")) {
+> 			remote->follow_remote_head =3D FOLLOW_REMOTE_ALWAYS;
+> 		} else {
+> 			warn(_("unrecognized followRemoteHEAD value '%s' ignored"),
+> 			     value);
+> 		}
+>
+> We'd want the new choice documented before we graduate this topic
+> out of the RFC status.
+>
+> Thanks.
 
 
 
-$ t/unit-tests/bin/unit-tests
-TAP version 13
-# start of suite 1: ctype
-ok 1 - ctype::isspace
-ok 2 - ctype::isdigit
-ok 3 - ctype::isalpha
-ok 4 - ctype::isalnum
-ok 5 - ctype::is_glob_special
-ok 6 - ctype::is_regex_special
-ok 7 - ctype::is_pathspec_magic
-ok 8 - ctype::isascii
-ok 9 - ctype::islower
-ok 10 - ctype::isupper
-ok 11 - ctype::iscntrl
-ok 12 - ctype::ispunct
-ok 13 - ctype::isxdigit
-ok 14 - ctype::isprint
-# start of suite 2: strvec
-ok 15 - strvec::init
-ok 16 - strvec::dynamic_init
-ok 17 - strvec::clear
-ok 18 - strvec::push
-ok 19 - strvec::pushf
-ok 20 - strvec::pushl
-ok 21 - strvec::pushv
-not ok 22 - strvec::splice_just_initialized_strvec
-    ---
-    reason: |
-      String mismatch: (&vec)->v[i] != expect[i]
-      'bar' != '(null)'
-    at:
-      file: 't/unit-tests/strvec.c'
-      line: 97
-      function: 'test_strvec__splice_just_initialized_strvec'
-    ---
-ok 23 - strvec::splice_with_same_size_replacement
-ok 24 - strvec::splice_with_smaller_replacement
-ok 25 - strvec::splice_with_bigger_replacement
-ok 26 - strvec::splice_with_empty_replacement
-ok 27 - strvec::splice_with_empty_original
-ok 28 - strvec::splice_at_tail
-ok 29 - strvec::replace_at_head
-ok 30 - strvec::replace_at_tail
-ok 31 - strvec::replace_in_between
-ok 32 - strvec::replace_with_substring
-ok 33 - strvec::remove_at_head
-ok 34 - strvec::remove_at_tail
-ok 35 - strvec::remove_in_between
-ok 36 - strvec::pop_empty_array
-ok 37 - strvec::pop_non_empty_array
-ok 38 - strvec::split_empty_string
-ok 39 - strvec::split_single_item
-ok 40 - strvec::split_multiple_items
-ok 41 - strvec::split_whitespace_only
-ok 42 - strvec::split_multiple_consecutive_whitespaces
-ok 43 - strvec::detach
 
-=================================================================
-==5178==ERROR: LeakSanitizer: detected memory leaks
+--=20
+bence.ferdinandy.com
 
-Direct leak of 192 byte(s) in 1 object(s) allocated from:
-    #0 0x5600496ec825 in __interceptor_realloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x67825) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
-    #1 0x56004973b4cd in xrealloc /usr/local/google/home/jch/w/git.git/wrapper.c:140:8
-    #2 0x560049714c6f in strvec_splice /usr/local/google/home/jch/w/git.git/strvec.c:67:3
-    #3 0x5600496f0c1d in test_strvec__splice_just_initialized_strvec /usr/local/google/home/jch/w/git.git/t/unit-tests/strvec.c:96:2
-    #4 0x5600496f627b in clar_run_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:315:3
-    #5 0x5600496f46fa in clar_run_suite /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:412:3
-    #6 0x5600496f43e1 in clar_test_run /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:608:4
-    #7 0x5600496f4bdf in clar_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:651:11
-    #8 0x5600496f787c in cmd_main /usr/local/google/home/jch/w/git.git/t/unit-tests/unit-test.c:42:8
-    #9 0x5600496f793a in main /usr/local/google/home/jch/w/git.git/common-main.c:9:11
-    #10 0x7f59ea91dc89 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-
-Direct leak of 48 byte(s) in 1 object(s) allocated from:
-    #0 0x5600496ec640 in __interceptor_calloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x67640) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
-    #1 0x5600496f4cee in clar__fail /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:687:15
-    #2 0x5600496f5f25 in clar__assert_equal /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:844:3
-    #3 0x5600496f0db6 in test_strvec__splice_just_initialized_strvec /usr/local/google/home/jch/w/git.git/t/unit-tests/strvec.c:97:2
-    #4 0x5600496f627b in clar_run_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:315:3
-    #5 0x5600496f46fa in clar_run_suite /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:412:3
-    #6 0x5600496f43e1 in clar_test_run /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:608:4
-    #7 0x5600496f4bdf in clar_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:651:11
-    #8 0x5600496f787c in cmd_main /usr/local/google/home/jch/w/git.git/t/unit-tests/unit-test.c:42:8
-    #9 0x5600496f793a in main /usr/local/google/home/jch/w/git.git/common-main.c:9:11
-    #10 0x7f59ea91dc89 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-
-Indirect leak of 18 byte(s) in 1 object(s) allocated from:
-    #0 0x5600496ec3c6 in __interceptor_malloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x673c6) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
-    #1 0x7f59ea9964f9 in strdup string/strdup.c:42:15
-    #2 0x296c6c756e28271f  (<unknown module>)
-
-Indirect leak of 4 byte(s) in 1 object(s) allocated from:
-    #0 0x5600496ec3c6 in __interceptor_malloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x673c6) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
-    #1 0x7f59ea9964f9 in strdup string/strdup.c:42:15
-
-SUMMARY: LeakSanitizer: 262 byte(s) leaked in 4 allocation(s).
