@@ -1,117 +1,102 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6319624
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 00:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F56FC08
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 01:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733271705; cv=none; b=fLhrNELemgO5gaM1S5uuX+6u0G8GwMiEMLJCH/mPNNLRmRYXZVmUQzGUjOLhlttTidS2VS1pQMa89PzuPyVonu6LfX7umJCQS/FQH7hbIVtbenVbwb03+2hi2hNEtGWp9FqmdnpDyzKxkxuXAUhimRfsHnKdW0H8dy2QITQy8iY=
+	t=1733274510; cv=none; b=sb19nTcbp5wtugp2r0ETIbOomXxuYAaRCUck0x5cEyEFlC7xCRSb6k9NIsrW1QRIjdea9evHa1z1BDh5KO8X56FLXFvlmHOI79w62yz8Wr40pewHmR5n64FxKj7QwvGXDKvtjtkjTe9SOp9OpLV4FayxwP248UA2uB9YU+wLThw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733271705; c=relaxed/simple;
-	bh=2//5Y4T34NM5MD/4vqaIqKM59dyE58LqN5favEAoUk4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H6FIbCaEzQk47+PKIwQceWpZ0VxO5FnB/GWGSaB3QQ0rkM+zvHrhTJFa/XO1RZ8oa5140SezbD79ympidbG06xz6P0VDHpW298EgiNdLe/T096X0oWkpqe2Syum1kyD9yJ72puujK7UKBHPECmHlHdvoxwdq3EJTZZ0z7KKfD4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zeheYRvB; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733274510; c=relaxed/simple;
+	bh=8z4HzdPmXHZ2+EL4f58yaRSSTGu7RGHSXdenb6h4W0U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RDCfUKPbCRSj/+xBFNYnzmSYn5oW/PaEc/jBkDLACEuVzcntPbc8U/2nvYQN8l6irez/1GsIdYg2jJhYq9iCHmeIJ/1Tp17bFtwauzp55UXEgvwf/yvoaTj3CzKo0LkjxtSY8nbe4YphSDqKvLOVPXp4mPnneZh8aCrPgHxhM1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G+lP/X5S; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zeheYRvB"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E66C311400E8;
-	Tue,  3 Dec 2024 19:21:42 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Tue, 03 Dec 2024 19:21:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733271702; x=1733358102; bh=xSj4cPbaXv8v5aHDvS74414SrkKi+llaXRe
-	TxAbXLWo=; b=zeheYRvBx0b0Yx8VkV0AFJ+1R4UIxWMgfSKVctlm9Rgf14U8Mgt
-	wcqJMbDl3L3k8+WLLv/jWrfXVruMVbuxxmKYGSaO69TZgWOqB/swDcBbte16WdNX
-	JZ9ywyq1IGkG589k9r3Jbkv9zST1qcBxVpbLPUbilC/6xwWRl166c8U2tsZkVTI3
-	LvpAqLy1HXauXhmIg/fVeloPgzstiOOQy/O+ArKznuYIUdDpQO8iz37QjjmMAqTy
-	V+Gmvv12Jc7QAKZoid+bEtc38SPey+BcVgMkKSH3WxCQJOd8ZUxiDu33bHiRBN8W
-	Iowr00c48MYInbJppOg0BHgL8+S/p2043nQ==
-X-ME-Sender: <xms:lqBPZ387u1OTZrLy3A7gj57ApfHZ5YPsUTKp1u8rYKg79leAI5ws7Q>
-    <xme:lqBPZzuLNiGm6VlvZhSswgwWzAMDj-cvTw0zTx-j5-NsvwzqjUaidzA72rrHzm77k
-    gppKuYWmW7qHjsqFQ>
-X-ME-Received: <xmr:lqBPZ1CiFKEBmmF3prAhiabFPHjqJJEq4dc42V698C1CeSZxAOJB573ocNB2YlrZoFhYqZt2Sy2RADSuThCZqz7Ik6JC6m9nkYxDRco>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddukecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrghnhigr
-    nhhgrdhtohhnhiessgihthgvuggrnhgtvgdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:lqBPZzdoQGZ1az9TloWgwGQAqVIT9m1CLOL0FKvazGtQqLk4B2Ot2w>
-    <xmx:lqBPZ8ONBWhWCVTizioU_XBjaHOmTf1YnAFMroaG30lg4ql8RSxlvg>
-    <xmx:lqBPZ1kqZZL3_v8JWRhc7kdpbHsiiS3mDpvEfUYGqfVkoPqqyYmhdQ>
-    <xmx:lqBPZ2uPyONLIO6PtJXvTlRFGaaXxULAD9Bae26WHYoY8oZLVzc37A>
-    <xmx:lqBPZ5qAVnJe0nYAUlw9ZWQyNhOQIOQQlDU_rXXhHq6X9N318jL8SM4J>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 19:21:41 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org,  hanyang.tony@bytedance.com
-Subject: Re: [PATCH 3/3] index-pack: commit tree during outgoing link check
-In-Reply-To: <20241203214209.2033773-1-jonathantanmy@google.com> (Jonathan
-	Tan's message of "Tue, 3 Dec 2024 13:42:09 -0800")
-References: <20241203214209.2033773-1-jonathantanmy@google.com>
-Date: Wed, 04 Dec 2024 09:21:40 +0900
-Message-ID: <xmqq4j3k70x7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G+lP/X5S"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-434a8640763so51689905e9.1
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 17:08:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733274507; x=1733879307; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sYLe02Tv/Er9QQnqqlZ5MnoxIYeJX54FTPG7hj6jedE=;
+        b=G+lP/X5ShGJeZ7gEDduTSYgQR4Wjvg+gNQ9mVwb6WW2NFyk/apJQg+BpT0Xi6yUbca
+         7cgDkWBnfmsA/683hHl3UokTRNQT11WFDNWegDEjRmW9oUK1x/rJupQQMqS44IbLdMUE
+         eS+Qu3/l3cnTjyiJz5rhyy0ndCtorJconivV1g9G79pXlI53WuqrFVWpMkAla4XAnEtF
+         UhBsmahnPcgINnS+GJ0PiDIqg23i2xNuBAAw2Igm8abqEtsU7ogeFnirzugwwNTKhRlz
+         FaVNYjREThx9JdW5a1TnJWrcUQ7Cj+5RthbN+89H6UbQAbLI7N635N0RNJA2GuJO0XB8
+         2/Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733274507; x=1733879307;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sYLe02Tv/Er9QQnqqlZ5MnoxIYeJX54FTPG7hj6jedE=;
+        b=PDti7/ugVtgzNHvqGSU0CQNF2eSspKzUYJ3tc/ytNcWKACP/QPRgFuyiGWSPQwiMRT
+         3IKcPlSCz1YC1S2biGThm78ASrBcejPVvewjG1dVKWRzBlmUGjKRwCXaS/Q/MYrdZ3/F
+         aT4qcD0/8S+Wkkn/lIfjY9HI9r7pYBBbxplbsY1FjLsdtZDavrgxaiUH8/7cV2T8daQR
+         /AwjilXOsSLjyEznGwLsaZcZKsSCO/4b6clU1l/uKHDmTzlALFtRnT9H8zZ6AssXAtTC
+         UIXcX8faGnZtQ57BdvbGNm5CiqFXRYeqIU1QlWkomvRwIdbykXmAQats0edpEQkroxPo
+         O63w==
+X-Gm-Message-State: AOJu0YwpatSNQranXuBAZzFGDjVTpBCdC2Xj7aH7sGrKi0qU3GJmoqxS
+	jgHtmJHu3pce+V9FXRJ05pSHWX+vf9U8HUcSwqFKEE+hNDZOeWk9
+X-Gm-Gg: ASbGnctMvIJLC2QjuKh6p0TzGIIF91W93j6XvlJaN6MfMnAznAmathA/ZPOd2DOGV07
+	HY++844o+1FaH0zhLBcd7WC/JYVYzExp4bfCeh5JJ4PS4PubZUL2H0cYRY4XvuUILM03XERhj6A
+	xURbfI0FlYXSR11eClhtxFo5fXql2ZpxIrWQVi1FnkL9hOZ4Wu5v/plla5KRTaOWyvIKC46x76q
+	2jB08Xwk+rxNH3jRTE7nO1FuixjaaEWZxwuyS8PsU+upxIGYGwRqcz4kjcIM+YzMhqsuFMjCTVr
+	j28JKw==
+X-Google-Smtp-Source: AGHT+IEqk8H3zobEXBh/yFTowBsLE2unpIV9q+yfvBTuwi2YsVVfAF2IY7vlLHZ+zXDXaQxZeP7YtA==
+X-Received: by 2002:a05:6000:1866:b0:385:f984:2cca with SMTP id ffacd0b85a97d-385fd3e87bamr4470438f8f.25.1733274506710;
+        Tue, 03 Dec 2024 17:08:26 -0800 (PST)
+Received: from gmail.com (87.red-88-14-55.dynamicip.rima-tde.net. [88.14.55.87])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385ccd3a71bsm16750950f8f.55.2024.12.03.17.08.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Dec 2024 17:08:25 -0800 (PST)
+Message-ID: <d669e92a-5499-4a33-9abc-525542615677@gmail.com>
+Date: Wed, 4 Dec 2024 02:08:25 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] strvec: `strvec_splice()` to a statically initialized
+ vector
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
+References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
+ <5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com> <xmqqplm871hb.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <xmqqplm871hb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Wed, Dec 04, 2024 at 09:09:36AM +0900, Junio C Hamano wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> > The fix slows down a fetch from a certain repo at
->> > $DAYJOB from 2m2.127s to 2m45.052s, but in order to make the fetch
->> > correct, it seems worth it.
->> 
->> And "the fix" is not described so a reader is left wondering.  Is
->> the fix for an oversight of not checking merely to check it?  IOW,
->> is
->> 
->>     c08589efdc made outgoing links to be checked for commits, but
->>     failed to do so for trees.  Make sure we check both
->> 
->> what is happening?
->
-> Yes. I was trying to keep to the character limit and in doing so, made
-> the commit message title hard to understand. I think the new title
-> should be easier to understand (and also stated explicitly in the commit
-> message what is being taught to Git).
+> > The recently introduced `strvec_splice()` API is expected to be
+> > normally used with non-empty strvec's.
+> 
+> It is perfectly sensible to expect that you can splice your stuff
+> into an empty strvec, so all this sentence is saying is that a
+> strvec is more often non-empty than empty.
+
+I also wanted to introduce a reason why we might have overlooked
+making `strvec_splice()` aware of the singleton object, without using
+a verb like "forget".
+
+> Notice that I didn't have to invent a new
+> term "empty-singleton" at all ;-).
+
+:-D
+
+In my defense, I wrote the message late last night and was already
+tired.  And when I read it today, it didn't seem so bad to me, in the
+context of the message.
 
 Thanks.
-
->> > However, it is also possible for
->> > the server to compute that it needs to send S and not O, and proceed
->> > from there;
->> 
->> If O, C, and S have all identical trees, then wouldn't such a test
->> work well?  At that point it does not matter which between O and C 
->> the server bases its decision to send S but not S's tree on, no?
->> 
->> In any case, will queue.  Thanks.
->
-> O has a different tree from C and S. I will add a note to clarify this.
-
-No, that is not what I meant.  "If you arrange your test so that all
-three have the same tree, then would't the reason why such a test
-would not work you cited disappear and make this fix testable?" is
-what I wanted to ask.
-
