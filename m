@@ -1,116 +1,135 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98522500D6
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 04:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D171514CC
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 04:56:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733287615; cv=none; b=uxIerhsM3RCbrngVhJ5h8OdknEd0BsqpS0gC07TZeaS2JYaAp240yESe2JFZFtiPd1hbLjw/CkCE7Ye245jbPNHDZhMluFLgR7rcabjFaYd667d0fIVQsNRDKuHhhFM/L6tuheIGRu6v/bnD9CBUUzDGl68E0WCul6PwOvcHbKA=
+	t=1733288198; cv=none; b=IPfO9TmD5+B+x3JykMbE70NNI5yVaLh2z/go0ixHTz+5EqH2xLvF52MkHMEfKikOvhKQRydZ1JrLT0njRMaS3GzJb5Uw41c9xyxg9sGBmcRlwh84H+fbzYU1gen5Jgj4q7RAooLb0bBF93oOPKF/zy30Prcc3cOno3fx8EpA3Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733287615; c=relaxed/simple;
-	bh=NUmua8ORmsEIUAb6xAMjdsLvwl1P0MYAH53IhyQTVKo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R+IyjKuTPHo02sCd6ial0gIGdi46tcsbd34egZrT3zebTONB45pGMwuO2qhBKDBoSyn5yKZu823fNcTc+SkncsFz/lV2W7Kuar+UvtrL8UZh7ikJqKGW4KFSfN+HJT6a+J45k2wP4nb/TNDlhQ6Iaj1s2fGMoS+i0Gda2c2I/U0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UXzcFbQ9; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733288198; c=relaxed/simple;
+	bh=xV/ZUIQ3TQBo+HNmtqYAF/iZo5tryCv/CHJG04syxF8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sLYH3eYjkaKCefixG+ZYl+yBHQDZsKdwkg+C6deD7EqydZDqIgSVUU5RUFhDdZGROzEYtRpc5o6dDJA5KciV3ELiAM4gF4u5eSUoxWQlwwLJlJW0tl2+AePjCSSfPtV1CFcay/WdARACWY9RzrySKIBKL0sw8YHRx7K3rP8wacU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCLs/LZy; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UXzcFbQ9"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EF717114020A;
-	Tue,  3 Dec 2024 23:46:51 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 03 Dec 2024 23:46:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733287611; x=1733374011; bh=WvqBrAaxEovw1SnkAjYqOqNmr3/3NpscuYy
-	T62JsszU=; b=UXzcFbQ9N2QUb7pZRcnwuJhKWWbMZTSwsGrgtc2aXOxJZWsytrx
-	UW9yqfZ0r17cg/7xKidU6goEAScCg57NoZJXhUYfXuNLW36+u7r5+l0pa+q1SREJ
-	7/L5KEyabfmUXq/oye77cyD4rt/9FulpD+YPbLIkA1HkWc7ePx0qFQ10Nkysr7rk
-	ceQqhUDGbCp6DScs0/RLEGvCwwrlp6ExkChapFC8c4PPfapKvHId2Jp8gWuOw2XH
-	mHD/FbIeYO2BBCeL1zGicIz5gql6MWKy8cJRxDy6zUnIIVS0g9Xu3BMDOcv00z7R
-	1Rl5C5Ot63HvsAWqS4Y0YLgbuOqmZsVVrYQ==
-X-ME-Sender: <xms:u95PZ1kCo-kNQHtCybV3V-WlHhPsXJJQIZdyMNBJIgiisbTuA3IQDQ>
-    <xme:u95PZw0Sho5IQgeyocwdAeVrfMj-_xPZL1YoMYpH-snBlJFVUWZeP_FO9g0ubGn5q
-    TyHUWXbWCnIRhRpHA>
-X-ME-Received: <xmr:u95PZ7q1qQTMofKQlA7V8OqxLyL5kBe_OfFBIv1un55tiUkg32WnedLX8e4jg2m4jcnA-JUGi7a1Q-AKOG1aDOC9IaK4IUbuc7OSo9E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggdejvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepffeite
-    eujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgr
-    ihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhnrghthhgrnhhtrg
-    hnmhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:u95PZ1no4o3pKvyUcPYaJZlin5xWHTklkN-RyiQNe-JITGqNM605lQ>
-    <xmx:u95PZz2orOJbP2El0v-bNFEffHYx3GTaGeT1xmE68fhwoUJQ2tHwNQ>
-    <xmx:u95PZ0sMzSH9_o_3-30SP2mzYbBOHR6bR1VFDk0Xern7GF5myLHjyA>
-    <xmx:u95PZ3UvG28Z53aN5r2IQfukkgkiMNzaDAhu16TbcWhjLYqF3fpdiw>
-    <xmx:u95PZ-RX1RCJpUjQl7NhRuhhcl7Vktro1LTc7ORMqOZ7w49u7tG6IsAp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Dec 2024 23:46:51 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jonathan Tan <jonathantanmy@google.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: [PATCH 4/3] index-pack: work around false positive use of
- uninitialized variable
-In-Reply-To: <cover.1733262661.git.jonathantanmy@google.com> (Jonathan Tan's
-	message of "Tue, 3 Dec 2024 13:52:53 -0800")
-References: <cover.1733170252.git.jonathantanmy@google.com>
-	<cover.1733262661.git.jonathantanmy@google.com>
-Date: Wed, 04 Dec 2024 13:46:50 +0900
-Message-ID: <xmqqr06o3vid.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCLs/LZy"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6eeb31b10ceso55498497b3.1
+        for <git@vger.kernel.org>; Tue, 03 Dec 2024 20:56:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733288196; x=1733892996; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=B8Znii6fpRdga6ASGtsNBWL8Pe42WIAHYhIcy3LDU+w=;
+        b=NCLs/LZyLA+T7hEsbTIDm1itkepttgQqg894gB/Tl2BdWHhBVuSnSvWRKc54bdQ82Y
+         /8zlCOyXRbUPnKYrkl/OLB2KZ4kWKfa8VnfFpD6LmEjX9io3Ki4z5lQWnnYV+yPa7oob
+         QwjRT2x/pm70dWw86ncjRLiqaGi/GLxO21EDvurGJ8Hq/0mtEhRpcKveDBupU3NBmZGS
+         duMgBrgqSs9zZ3Q8/yYqLR2vuhbtQ7VQ7sRTs2F9TDZtu5qYlsEaWLfvw10Qnu+c3F7k
+         ZOPp4n94fIrmj5edDVSUH3nmqcUau0+GECki5327KF89DvcCuoSIrnmXrWRBnUfL3AaQ
+         D+pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733288196; x=1733892996;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B8Znii6fpRdga6ASGtsNBWL8Pe42WIAHYhIcy3LDU+w=;
+        b=WQiNwrlgWspzL6ryQVyuNdXFMyYkPrfOoiOytMtUtGc8Ymx/17KG3Yy0o6G+sznMYA
+         jc2TopykzB4pX5laEevN8hhjGPKvPr1EQJgUDZYMWX1lDAvmGCX71uePoUcMS1DVX+gz
+         yp/eicvZSoqJ5gm0Fwt4wHvGA/x2rTlpRrrz3TMgg0C8Cer4sKJ4Cs1sTwXjjqUqCv8o
+         5Fn81WHh8ueRrED4BZad9Mm57Yi91C0H/DfqyYjq5JmKIkcYQKOCqiqaMROsNe+RIZ+T
+         DQR84JxYPjVS8SMWdiZzdICly7MzFBfuBpgqI4QGhJ74yNtKTYXvaHnGhDB4RpTmVxLs
+         ckSg==
+X-Gm-Message-State: AOJu0YzMY4jVo8A3IT2YmdHR+KWY4QiuvYsGan7dGMfMl7pOif6aXxS5
+	dpxKD9cF40Mxp9dbTXobY6Bozz7nV9WQyJ13puQjC3aUyJZwIAFO
+X-Gm-Gg: ASbGncv3d8xE+Ta3mLtWGfm6i30bCxC0BQVJkd1rJBwWHIC43Umiqu1GeuhJibK+zj3
+	MNV5/89+ra2y5cB9U111EhKqUZ2BefF382iRrbELZW4nUYiJ/sQZoZcbTlm1+X+uZPBoAZwhZmu
+	o9gkUOWPrR5U/d9pg//0zPH21wh6+8apCkJ22UotoKztxZCHMAX/K1IbANuztUkM3Gc7dg9T/Vz
+	2/jgPrPMS0hrQXa6qpAw8BZEXPqfxsIoaedfGW9Z2I8tDcy3A9kYB/lt3QQPGGYqSVfdJzr4pOi
+	ww2pY/9ELsLeXMdey7yF7fLhDzQO+SZC4L+7IQ==
+X-Google-Smtp-Source: AGHT+IEQn68+jsNaDQJl14W2Ethi1Kv2hH3BNJ9C5cIQA77n7ZzIx7mrnT+PDn06kiwCXRJNDKC4XQ==
+X-Received: by 2002:a05:690c:490d:b0:6ee:a81e:6191 with SMTP id 00721157ae682-6efbd360e28mr38341487b3.22.1733288195745;
+        Tue, 03 Dec 2024 20:56:35 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:b135:d598:34fd:c583? ([2600:1700:60ba:9810:b135:d598:34fd:c583])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6ef653a7e5bsm24615287b3.117.2024.12.03.20.56.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Dec 2024 20:56:34 -0800 (PST)
+Message-ID: <b07c6b94-b1cc-4391-83fd-adc5bb5f92e3@gmail.com>
+Date: Tue, 3 Dec 2024 23:56:33 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] pack-objects: Create an alternative name hash
+ algorithm (recreated)
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+ ps@pks.im, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
+ jonathantanmy@google.com
+References: <pull.1823.git.1730775907.gitgitgadget@gmail.com>
+ <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+ <xmqq1pypfo05.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqq1pypfo05.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-The base_name variable in this function is given a value if cmd.args
-array is not empty (i.e., if we run the pack-objects command), and
-the function returns when cmd.args is empty before hitting a call to
-free(base_name) near the end of the function, so to a human reader,
-it can be seen that the variable is not used uninitialized, but to a
-semi-intelligent compiler it is not so clear.
+On 12/2/24 10:23 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> This series creates a mechanism to select alternative name hashes using a
+>> new --name-hash-version=<n> option. The versions are:
+>>
+>>   1. Version 1 is the default name hash that already exists. This option
+>>      focuses on the final bytes of the path to maximize locality for
+>>      cross-path deltas.
+>>
+>>   2. Version 2 is the new path-component hash function suggested by Jonathan
+>>      Tan in the previous version (with some modifications). This hash
+>>      function essentially computes the v1 name hash of each path component
+>>      and then overlays those hashes with a shift to make the parent
+>>      directories contribute less to the final hash, but enough to break many
+>>      collisions that exist in v1.
+>>
+>>   3. Version 3 is the hash function that I submitted under the
+>>      --full-name-hash feature in the previous versions. This uses a
+>>      pseudorandom hash procedure to minimize collisions but at the expense of
+>>      losing on locality. This version is implemented in the final patch of
+>>      the series mostly for comparison purposes, as it is unlikely to be
+>>      selected as a valuable hash function over v2. The final patch could be
+>>      omitted from the merged version.
+>>
+>> See the patches themselves for detailed results in the p5313-pack-objects.sh
+>> performance test and the p5314-name-hash.sh test that demonstrates how many
+>> collisions occur with each hash function.
+> 
+> These do not sound like versions but more like variants to me,
+> especially if one is expected to perform better than another in some
+> cases and worse in some other cases.  Is it expected that JTan's hash
+> to perform better than the original and current hash in almost all
+> cases (I would not be surprised at all if that were the case)?
 
-Squelch a false positive by a meaningless NULL initialization.
+There are some cases, such as the Linux kernel repo, that have slightly
+worse compression using JTan's hash. But the naming conventions in that
+repo are such that the v1 name hash was already pretty effective for
+that repo. The Git repository has similar issues. See Patch 5 for
+detailed analysis of these scenarios using the p5313-pack-objects.sh
+test script.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+It may be possible to adapt some of the collision rate analysis from
+the test helper in Patch 6 to create a tool that recommends or
+dynamically selects the hash function that works best for the repo.
+Such a feature should be delayed until this code is exercised in more
+places.
 
- * Tentatively queued to unblock CI.  There may be breakages due to
-   other topics in flight, but at least this one is easy to resolve
-   (hopefully---I haven't pushed it out).
+Thanks,
+-Stolee
 
-   https://github.com/git/git/actions/runs/12152173257
-
- builtin/index-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1594f2b81d..8e600a58bf 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1803,7 +1803,7 @@ static void repack_local_links(void)
- 	struct strbuf line = STRBUF_INIT;
- 	struct oidset_iter iter;
- 	struct object_id *oid;
--	char *base_name;
-+	char *base_name = NULL;
- 
- 	if (!oidset_size(&outgoing_links))
- 		return;
--- 
-2.47.1-574-g3b2d6bb55a
 
