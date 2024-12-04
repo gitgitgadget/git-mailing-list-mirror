@@ -1,210 +1,107 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA57198848
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 08:50:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5422500D2
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 10:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733302223; cv=none; b=ciBc6MGsytyn8JGVwFKRtQ221Hk4gSli36sEFOlgHVLj6URdo6DEifpu3fCD7hgEoVzXVkUzGQg2nEuSe64mpex+5uPgKzH/GJ5aBYL7wYDddqo//9U0bi1p/Xb6kfsnkAY6660PHOQI2vrfxmQaYjGm0dpXcxJeTv3aRWiwzAs=
+	t=1733307350; cv=none; b=XRzXvlp/HIqqhBpWRJtQUGuYL0007hhETiWqp74ziu+CUlhyhOPIvqmYoLBkX6WHDL3KNmOiPB1YWcVvP7tigzLqkLW6j5NhzwDpgiG2Z6B1vB/9x9Mxy+xGsP4I7fQdFJ4SO2A5x6viW9CeYj/iyHTdijTFYIo0JFGgv5CWnB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733302223; c=relaxed/simple;
-	bh=7j09DC/2NtI1i6+O0Xoizzp4HlXTfBxlj7pEXJVVXjI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=UC/nvWL1Qo6fx9oRn/OYlaAyx69LJvhd1eElTxbavfZDRJD2c2Yg+/ckibzLIMG8Ezu4WbGLrdPOyV/DcxohW23DS+tPxWbpLE8QoRUD+uACYUePdnpDOKccYFrVuAvVha/KQHFiAhDsigQuepR0sC8z+aknYcP8P9hzXdleA84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K6OFwc76; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733307350; c=relaxed/simple;
+	bh=V+ojMZyix1/F0+xTKbtHHKsxdOUE7vlhQ/M9ZPLEC4o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fVKZF/AeFggIsHA8aQ/z4FeiN32ZynFnt+lfe46TMixefEJ8ZgiPqjL4R3NO2WzQH5RlAkm3dHMx8Upr66qrio5AG3uPg7VMitjkd6TdLikrqXqfmwSvTskd9comgRaqUZV9dPpiruhWCr0oJmY/sGYgeuUWpbOUS1ckcO45Y8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3YAIWYEJ; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K6OFwc76"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-434a752140eso55027365e9.3
-        for <git@vger.kernel.org>; Wed, 04 Dec 2024 00:50:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733302220; x=1733907020; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=p1qx0eXrjtIhQAFVSiJZOf0WlMlp0RSZ3dxIK7ZrGpA=;
-        b=K6OFwc761R+mzfrg2Kt56LShy4eYAJI/IjE0iDzYwDOiYRJBG1A5B8D+X50lb6jbPQ
-         TypfyC71klCWJqLOnTH+g4EuUoSP3GaIZLdDewL0d9i4y6r9p/UQ3O+Q0QKyV3zqkStP
-         UFbcEmGAc38z6Cnq/VY1V8zREV+/R1u3Hbe2EwrHRuZbX3xpgPWfYDbq67X2MzS4pm9f
-         LsnrTCuEnRYryhKMVHD6Zo1R42Y/vb5NszY+KqmFdpFsRD4fwGbpOzM7tlutjdLJ6bmz
-         S3UvabsQk7v4Feyn40J3RlEGoEr2ZmNSXL5RyWfxKTGmVVt8tuXeDPG+l/Ay71F9nc58
-         VglA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733302220; x=1733907020;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p1qx0eXrjtIhQAFVSiJZOf0WlMlp0RSZ3dxIK7ZrGpA=;
-        b=uugLbj5Hq3+ivLLBmqQ+jLYccaBrvx1fzMBcGGvw2femWBgQ0/gBI4lVuPqwj2d906
-         BmoUeHvN2CPp2mvQ4cahVYZ8epCuKT0jDny6SL9g9Iu98G9XaDp7pkz4zIm1tSRQhEBd
-         iSJJa+ORPuGAXMKWGG8EdbnUf18rbBWVOj9KCI3TmHEGEURk7WSGUkNzYJDU6X3OqS7Z
-         /CgPa+i8PaDrbvZ9akSNu9LoDTGVeRfXXjBfMXxfTsG9q55Igjn/w8n/rOMOnlIGfgM6
-         aCYZdcwCat9YmO9l0+QmO7ONgc08Tq+I3tG+hwIi+XdUuRh9379ua+R771CVWDCDFdIg
-         o63Q==
-X-Gm-Message-State: AOJu0Yw2tdoJ0WU4a5fN5HhHw94v8jB3hJNRtd1pfaRSDEDQQ6sDPNW7
-	rEyEPycrUgX5HPtOPTEY2n34f/6HCIDrBRxPQxrLXotkUiSIaITg
-X-Gm-Gg: ASbGnctfRyKePHWCVIm7Kv5QApk09cvuH0/ocYSwlOHRkNk+usmb0XE0sSfiSxaUHGD
-	VRGaBZovvgdTxmv9++g0UkUWizm3kUydIw798EbMj7tay7S8ejRdvTP/wO5thSPTU/TpjP8EPL/
-	hmKXHd+DM7PiZVFXn/lLd0OqU1Rug/Y9C8+OchmP4GDXQZ98bMsjbegpQheoGe35EO0b0Hpz3wx
-	5q62L1uxS4+/2PjfPC9S7LxkudGbZrDIR0qNBMH5cJ7+FcnDSPxjXxI5IVI1cXQTtVmTVjMADhA
-	/jWCCIVx
-X-Google-Smtp-Source: AGHT+IGZ+L8Fzx3V3yQ6vS9Vao4tlmGQs4cVncpYmYGpWNhNv3reqsWx9xa18n100RaF+fkpdg0zWw==
-X-Received: by 2002:a05:600c:3b83:b0:434:a902:97cf with SMTP id 5b1f17b1804b1-434d09bf0edmr47808705e9.14.1733302219909;
-        Wed, 04 Dec 2024 00:50:19 -0800 (PST)
-Received: from gmail.com (231.red-88-14-48.dynamicip.rima-tde.net. [88.14.48.231])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-385e32ee381sm12788747f8f.76.2024.12.04.00.50.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Dec 2024 00:50:19 -0800 (PST)
-Message-ID: <4e60eedc-e4d9-423c-b2e7-f1c65bccc254@gmail.com>
-Date: Wed, 4 Dec 2024 09:50:18 +0100
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3YAIWYEJ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2D00C138097E;
+	Wed,  4 Dec 2024 05:15:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 04 Dec 2024 05:15:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733307347; x=
+	1733393747; bh=ERl2hTk6pyKlFSDQl8j+Xz0JPHvtGASmPz7DI93c4M0=; b=3
+	YAIWYEJF8j1S4L3C90iCO0y8dj2y93QqZXSsJgzkR8Pg10lT3LSsBFi2ojMNBcDD
+	F2y251n+egM+yG7NBDGby+JtljGj/hECXU0hm4HzrWpPk0AXZBu4CXKzw5k720F4
+	x8YOQ3SxKSDXKrPUD15cz/v7exZKU7tbXpkUYraOddfnMHVWuIO03DD4R0Juf3RN
+	607ct+cPKMvXiFjNhZvFa0x1bTsVJkIHYNbJxI3roJORKGyH1dPOlPeZA4kcmQHC
+	3ZVPd0eJlqayzJbFr/SAQ4mTG/InlEHatwvB44ZzltJO8q+TcjYXA021kCRtZqBH
+	i2du71QDLvD7jhYcATkMQ==
+X-ME-Sender: <xms:0itQZ8C0zP8kQS22ownOkDJB7rqUmaGgJ4ghuObRehQ5f9qT_MmU5w>
+    <xme:0itQZ-iRgz2cESboA1XZRs0nW6P4xL3Z80mPUE7vZWQxjqmVV-aUiLqNh7NZPj3nq
+    JstJmuxaOnOgljcxw>
+X-ME-Received: <xmr:0itQZ_nnWw-wbuiDUXqr1ey9N7PT-AhUjlx8wfYbMEP-wUdCGaCd5iJA-R-TvwsmgsTkb4RG3uHnPmSu4C05SkoNjGaR4iziEek4nkk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieehgdduvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
+    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:0itQZyzn-igzrf9ih5U9bLPszdCUEiaffHV9clhHGdb8W60ktT7t-Q>
+    <xmx:0itQZxS6WV-gnMt-Gzs90KAJ5As6zoHrBZz58HFp1LZ0VN1T1Fi49A>
+    <xmx:0itQZ9bOuJl__ZKFlnbv_lEmSqevDaXB02TDNhJjShiMkuIptPvl9w>
+    <xmx:0itQZ6TmaTE-U7y6IuIHhYhfPpmk20O2ezP1m7V5XNE6uP01w7ZFoQ>
+    <xmx:0ytQZ_MljKscKSlPHhBfj_Bi9ywoc2gai_JYMLRUJYfCxRplPamPlTvx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Dec 2024 05:15:46 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] strvec: `strvec_splice()` to a statically
+ initialized vector
+In-Reply-To: <4e60eedc-e4d9-423c-b2e7-f1c65bccc254@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Wed, 4 Dec 2024 09:50:18 +0100")
+References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
+	<5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
+	<xmqqwmgf3nf3.fsf@gitster.g>
+	<c949fea0-817b-45f9-b8b2-55e1cb55e915@gmail.com>
+	<4e60eedc-e4d9-423c-b2e7-f1c65bccc254@gmail.com>
+Date: Wed, 04 Dec 2024 19:15:45 +0900
+Message-ID: <xmqqser33ga6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] strvec: `strvec_splice()` to a statically initialized
- vector
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>
-References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
- <5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com> <xmqqwmgf3nf3.fsf@gitster.g>
- <c949fea0-817b-45f9-b8b2-55e1cb55e915@gmail.com>
-Content-Language: en-US
-In-Reply-To: <c949fea0-817b-45f9-b8b2-55e1cb55e915@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
+Rubén Justo <rjusto@gmail.com> writes:
 
+>> @@ -66,6 +66,7 @@ void strvec_splice(struct strvec *array, size_t idx, size_t len,
+>>                         array->v = NULL;
+>>                 ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
+>>                            array->alloc);
+>> +               array->v[array->nr + 1] = NULL;
+>
+> I mean:
+>
+> +               array->v[array->nr + (replacement_len - len) + 1] = NULL;
+>
+>
+>>         }
+>>         for (size_t i = 0; i < len; i++)
+>>                 free((char *)array->v[idx + i]);
+>> 
+>> Sorry.  I'll re-roll later today.
 
-On 12/4/24 9:46 AM, Rubén Justo wrote:
-> On Wed, Dec 04, 2024 at 04:41:36PM +0900, Junio C Hamano wrote:
->> This is queued as rj/strvec-splice-fix, and t/unit-tests/bin/unit-tests
->> dies of leaks under leak-check.
-> 
-> Right! We need this:
-> 
-> diff --git a/strvec.c b/strvec.c
-> index 087c020f5b..b1e6c5d8cd 100644
-> --- a/strvec.c
-> +++ b/strvec.c
-> @@ -66,6 +66,7 @@ void strvec_splice(struct strvec *array, size_t idx, size_t len,
->                         array->v = NULL;
->                 ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
->                            array->alloc);
-> +               array->v[array->nr + 1] = NULL;
-
-I mean:
-
-+               array->v[array->nr + (replacement_len - len) + 1] = NULL;
-
-
->         }
->         for (size_t i = 0; i < len; i++)
->                 free((char *)array->v[idx + i]);
-> 
-> Sorry.  I'll re-roll later today.
-> 
->>
->>
->>
->> $ t/unit-tests/bin/unit-tests
->> TAP version 13
->> # start of suite 1: ctype
->> ok 1 - ctype::isspace
->> ok 2 - ctype::isdigit
->> ok 3 - ctype::isalpha
->> ok 4 - ctype::isalnum
->> ok 5 - ctype::is_glob_special
->> ok 6 - ctype::is_regex_special
->> ok 7 - ctype::is_pathspec_magic
->> ok 8 - ctype::isascii
->> ok 9 - ctype::islower
->> ok 10 - ctype::isupper
->> ok 11 - ctype::iscntrl
->> ok 12 - ctype::ispunct
->> ok 13 - ctype::isxdigit
->> ok 14 - ctype::isprint
->> # start of suite 2: strvec
->> ok 15 - strvec::init
->> ok 16 - strvec::dynamic_init
->> ok 17 - strvec::clear
->> ok 18 - strvec::push
->> ok 19 - strvec::pushf
->> ok 20 - strvec::pushl
->> ok 21 - strvec::pushv
->> not ok 22 - strvec::splice_just_initialized_strvec
->>     ---
->>     reason: |
->>       String mismatch: (&vec)->v[i] != expect[i]
->>       'bar' != '(null)'
->>     at:
->>       file: 't/unit-tests/strvec.c'
->>       line: 97
->>       function: 'test_strvec__splice_just_initialized_strvec'
->>     ---
->> ok 23 - strvec::splice_with_same_size_replacement
->> ok 24 - strvec::splice_with_smaller_replacement
->> ok 25 - strvec::splice_with_bigger_replacement
->> ok 26 - strvec::splice_with_empty_replacement
->> ok 27 - strvec::splice_with_empty_original
->> ok 28 - strvec::splice_at_tail
->> ok 29 - strvec::replace_at_head
->> ok 30 - strvec::replace_at_tail
->> ok 31 - strvec::replace_in_between
->> ok 32 - strvec::replace_with_substring
->> ok 33 - strvec::remove_at_head
->> ok 34 - strvec::remove_at_tail
->> ok 35 - strvec::remove_in_between
->> ok 36 - strvec::pop_empty_array
->> ok 37 - strvec::pop_non_empty_array
->> ok 38 - strvec::split_empty_string
->> ok 39 - strvec::split_single_item
->> ok 40 - strvec::split_multiple_items
->> ok 41 - strvec::split_whitespace_only
->> ok 42 - strvec::split_multiple_consecutive_whitespaces
->> ok 43 - strvec::detach
->>
->> =================================================================
->> ==5178==ERROR: LeakSanitizer: detected memory leaks
->>
->> Direct leak of 192 byte(s) in 1 object(s) allocated from:
->>     #0 0x5600496ec825 in __interceptor_realloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x67825) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
->>     #1 0x56004973b4cd in xrealloc /usr/local/google/home/jch/w/git.git/wrapper.c:140:8
->>     #2 0x560049714c6f in strvec_splice /usr/local/google/home/jch/w/git.git/strvec.c:67:3
->>     #3 0x5600496f0c1d in test_strvec__splice_just_initialized_strvec /usr/local/google/home/jch/w/git.git/t/unit-tests/strvec.c:96:2
->>     #4 0x5600496f627b in clar_run_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:315:3
->>     #5 0x5600496f46fa in clar_run_suite /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:412:3
->>     #6 0x5600496f43e1 in clar_test_run /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:608:4
->>     #7 0x5600496f4bdf in clar_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:651:11
->>     #8 0x5600496f787c in cmd_main /usr/local/google/home/jch/w/git.git/t/unit-tests/unit-test.c:42:8
->>     #9 0x5600496f793a in main /usr/local/google/home/jch/w/git.git/common-main.c:9:11
->>     #10 0x7f59ea91dc89 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
->>
->> Direct leak of 48 byte(s) in 1 object(s) allocated from:
->>     #0 0x5600496ec640 in __interceptor_calloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x67640) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
->>     #1 0x5600496f4cee in clar__fail /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:687:15
->>     #2 0x5600496f5f25 in clar__assert_equal /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:844:3
->>     #3 0x5600496f0db6 in test_strvec__splice_just_initialized_strvec /usr/local/google/home/jch/w/git.git/t/unit-tests/strvec.c:97:2
->>     #4 0x5600496f627b in clar_run_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:315:3
->>     #5 0x5600496f46fa in clar_run_suite /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:412:3
->>     #6 0x5600496f43e1 in clar_test_run /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:608:4
->>     #7 0x5600496f4bdf in clar_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:651:11
->>     #8 0x5600496f787c in cmd_main /usr/local/google/home/jch/w/git.git/t/unit-tests/unit-test.c:42:8
->>     #9 0x5600496f793a in main /usr/local/google/home/jch/w/git.git/common-main.c:9:11
->>     #10 0x7f59ea91dc89 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
->>
->> Indirect leak of 18 byte(s) in 1 object(s) allocated from:
->>     #0 0x5600496ec3c6 in __interceptor_malloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x673c6) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
->>     #1 0x7f59ea9964f9 in strdup string/strdup.c:42:15
->>     #2 0x296c6c756e28271f  (<unknown module>)
->>
->> Indirect leak of 4 byte(s) in 1 object(s) allocated from:
->>     #0 0x5600496ec3c6 in __interceptor_malloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x673c6) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
->>     #1 0x7f59ea9964f9 in strdup string/strdup.c:42:15
->>
->> SUMMARY: LeakSanitizer: 262 byte(s) leaked in 4 allocation(s).
+No need to say "sorry".  Thanks for quickly reacting and starting to
+work on it.
 
