@@ -1,73 +1,74 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556F0487BF
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 05:47:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5646018A6C5
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 07:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733291247; cv=none; b=VEbbm7+2TuXQtbK8gJXz8wjW+5YG19Od7mYR+27SKvwoBslBCgvYhySDLr/tOiD0DmydGJEjbZW0flUyILP3KnjoulvzDa59b47nx+UAKYd78vU1EAsbY8Ik5ctAdm4HtotGHKDahh7BzZc5mZ1bQTFxuNO3jMROvSXdALh97kY=
+	t=1733298102; cv=none; b=diJY18asB87mzhj9WbnMm2MHzhI37BDUh7lNuHTvFBeiHQOHfU3BTfzQ+hoAYY5Fqeu+rh2kRoKZRUsgWK2zDvcD3ucpieKjVX5/uiNbK7gJv+ylt7tEJsGDNANpa2jBBcLT7tiRne/OBmdaIAPlArnUWmzVXtDfMvt51PwEMH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733291247; c=relaxed/simple;
-	bh=eaOSVf0OVXpQZNuZW6NLEf4/nvy7B5si0bTKyTSJi84=;
+	s=arc-20240116; t=1733298102; c=relaxed/simple;
+	bh=mw8LpD2n7xiVwZKYZUvVN/Pm5O82km1zmhuHqJvxoVA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B7+WLNvFGgxnNX8CatpnxKk//tajA7L3INrdMEKwGIoJWVYVBb6MGWodrEx2CJ3BU2MBnHC9H/igWRuBSph0z/HVA236GT3B8MQJCF5fNR9SNht3ErFn2btItgwzkuLeAHu8hJ0uV0WLzmYsKwfrTlueuQWhNFix9yt6ITjRL44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x8gzMgFG; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=IyKpmaKo4Di7DaGyL0MhY8njhcTOVLosc7SZ8RNWsvZGE6rjRORA952TqltHz1Gmolje5mC3gfJBKVZSnjk/hvwAC+8qr0udCL8LTOlIf/vMJbPSga9Pu4vDqZxEuT6v7hFv1W9vGF47ukOGdXzADYMrZVdG2sufW21/vWOOgjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rVzUqDNb; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x8gzMgFG"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5463E138072B;
-	Wed,  4 Dec 2024 00:47:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 04 Dec 2024 00:47:24 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rVzUqDNb"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A54F1140207;
+	Wed,  4 Dec 2024 02:41:38 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 04 Dec 2024 02:41:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733291244; x=1733377644; bh=/MKnYkAvkQXwTxvjIpScJXfQ8r5/PIWCRko
-	ODjtOc7I=; b=x8gzMgFGQWH50t9V7n3xDje0S3NAsBqS93bCsvYLrEj7a+45R6o
-	aj4CdD5k6lOZ0m487Au4MIq5dxUb6B7E4OQgEndo3Biq4oH4qkpDCYmnzXGwoMMJ
-	0LRc4LM7gb5EaxGcy2f0sRyoKR/UZxXE7+0VuFDJgCfbA9k3U0FIZwk1Z/ggm9ae
-	DiZZSf/ffug4kC5N/mVFm9TB+U9NVdxMs/tBdWYS2Za/+y180XOyd3/DPcHtvj5i
-	0k6K3HfDlTbD6lUQXLCNxNpFCjJDxCPPpHQyPRKmpdusL0AuGlwvHYqpcidL0xs8
-	++ZvoXAnT5KWhkWHx5Bf3qsiA4Mh0p2rP+A==
-X-ME-Sender: <xms:7OxPZ9IbOIb3ytDGDLHXFgajIxpAdYUb-hYBk6DTyvKDvj9i05fBrg>
-    <xme:7OxPZ5KgcJjC3f3TooiZ0g0qTXEAGG5t5tKXhyhjWN-bmXcuBkFYNyCxCoPUwShV4
-    xVWV1ZXxAhDqOsvDQ>
-X-ME-Received: <xmr:7OxPZ1viL7LEotPqmcrFcTbyZuaLGXxqBFyC1UWdEm2WOeajdNA9KKulmYZi8je5AmsHphx9b3g3mnCTKESciuWQktACfFNTjyE_ql4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggdekfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
-    hhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7OxPZ-aOiL7JUDj1BSrMHP9R0qP5BW2c5gNUTdB8gaHsqrWRF0NEww>
-    <xmx:7OxPZ0ZA0zwrya2BDyT0ZLoA2RZJv2ddwHtVfpWNFatoSLTRVARFkg>
-    <xmx:7OxPZyDeHyfkR0TKuoGcuLVJ06O3k9SvCNxSiMGlDvBlq3niOHPfFw>
-    <xmx:7OxPZyblP0LK5FjhhjuGDPpGumlJu8I2nVv5ZFn_YNNrddKp9M9UbA>
-    <xmx:7OxPZzyrJfg9JcARKnZ_htgktNxcUbLbwa5TA2p08OJ_Fj77cUq-1gdO>
+	1733298098; x=1733384498; bh=RQ6rM0HcsbOqELP58AB+7OzrEMzNJj1Q7sR
+	a1KFnEZ4=; b=rVzUqDNbisdPFtLBH0jBkrwJDzE3f3SwVJ5e5yGm8zb9XS7j75y
+	vPakyKMtEf+LJm0+2K4zvuNXhY89st305Ll/j+58BEtGIij+m0iudck4Jz8B4IGA
+	/itUY04oGUiuQ1qRKXC7DE+2dj/Avp2XfArYo2p49YoB6zNfZs4JLStSceF/elmP
+	u+gnCl4Uv9Z4G/YFFp8qjaVYvPRsk4A1v4SPomND0VIE1LBrNd2bbqWA058yLy+Z
+	eOuSefJbP8amtVW87d77BJAhEXxSi+E2dCtYz4njXURvPnBBypy9ZmZnqO3hUU7o
+	sczJC7W2XagSYO1dQYsvfpBIC2F5N4xZLlw==
+X-ME-Sender: <xms:sgdQZwjBhZiuzWyTrMX2KsTnjU00rbGck06IgYBxjp9znAXlK-Mw4A>
+    <xme:sgdQZ5B8tkd5rYnhpLsHRTyqgAq_D6M8lu11iqvBi606Wd-mQlrVf2cZYo36sWX-4
+    vbM9GCSo-86GVghfw>
+X-ME-Received: <xmr:sgdQZ4HBvCi1j1Bxdq8wwEvMQmmtvwFhhuF8dG7qfqmSS7vAd9fvruHIHZRELxQOcNVyE33QVw8KhrkgvXR2u_I8Z3-ZkBLlpXqaam0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieeggddutdejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:sgdQZxS2B3TILVLZNPSByJWkoZYPH81yrVy1y91KhMkiznicLQI1Ww>
+    <xmx:sgdQZ9xCksNosdljsm-PfUJsAndz-3urfNbrwTTUHaO88qXpt5Dyig>
+    <xmx:sgdQZ_67Dpn_TNnIxeu8JheJ9a83VR2kp1c2yFw4qKVimwfXOkKl5Q>
+    <xmx:sgdQZ6zQ8WwtqXoamGoQg-GNihgJwaZ-0_fiBP9_evuh6QsfQXDhYA>
+    <xmx:sgdQZ_tIlI2_6VDtrUYOBqbJjArr2OnRc7RRX9zflM_T-rW8gqk78n55>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Dec 2024 00:47:23 -0500 (EST)
+ 4 Dec 2024 02:41:37 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  shejialuo <shejialuo@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: [PATCH] sign-compare: 32-bit support
-In-Reply-To: <20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im> (Patrick
-	Steinhardt's message of "Mon, 02 Dec 2024 13:04:32 +0100")
-References: <20241129-pks-sign-compare-v1-0-fc406b984bc9@pks.im>
-	<20241202-pks-sign-compare-v2-0-e7f0ad92a749@pks.im>
-Date: Wed, 04 Dec 2024 14:47:22 +0900
-Message-ID: <xmqq4j3k3sph.fsf_-_@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2] strvec: `strvec_splice()` to a statically
+ initialized vector
+In-Reply-To: <5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Tue, 3 Dec 2024 20:47:43 +0100")
+References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
+	<5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
+Date: Wed, 04 Dec 2024 16:41:36 +0900
+Message-ID: <xmqqwmgf3nf3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,53 +78,104 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-On 32-bit platforms, ssize_t may be "int" while size_t may be
-"unsigned int".  At times we compare the number of bytes we read
-stored in a ssize_t variable with "unsigned int", but that is done
-after we check that we did not get an error return (which is
-negative---and that is the whole reason why we used ssize_t and not
-size_t), so these comparisons are safe.
+This is queued as rj/strvec-splice-fix, and t/unit-tests/bin/unit-tests
+dies of leaks under leak-check.
 
-But compilers may not realize that.  Cast these to size_t to work
-around the false positives.  On platforms with size_t/ssize_t wider
-than a normal int, this won't be an issue.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
 
- * These were needed to make linux32 CI job compile the
-   -Wsign-compare topic cleanly.
+$ t/unit-tests/bin/unit-tests
+TAP version 13
+# start of suite 1: ctype
+ok 1 - ctype::isspace
+ok 2 - ctype::isdigit
+ok 3 - ctype::isalpha
+ok 4 - ctype::isalnum
+ok 5 - ctype::is_glob_special
+ok 6 - ctype::is_regex_special
+ok 7 - ctype::is_pathspec_magic
+ok 8 - ctype::isascii
+ok 9 - ctype::islower
+ok 10 - ctype::isupper
+ok 11 - ctype::iscntrl
+ok 12 - ctype::ispunct
+ok 13 - ctype::isxdigit
+ok 14 - ctype::isprint
+# start of suite 2: strvec
+ok 15 - strvec::init
+ok 16 - strvec::dynamic_init
+ok 17 - strvec::clear
+ok 18 - strvec::push
+ok 19 - strvec::pushf
+ok 20 - strvec::pushl
+ok 21 - strvec::pushv
+not ok 22 - strvec::splice_just_initialized_strvec
+    ---
+    reason: |
+      String mismatch: (&vec)->v[i] != expect[i]
+      'bar' != '(null)'
+    at:
+      file: 't/unit-tests/strvec.c'
+      line: 97
+      function: 'test_strvec__splice_just_initialized_strvec'
+    ---
+ok 23 - strvec::splice_with_same_size_replacement
+ok 24 - strvec::splice_with_smaller_replacement
+ok 25 - strvec::splice_with_bigger_replacement
+ok 26 - strvec::splice_with_empty_replacement
+ok 27 - strvec::splice_with_empty_original
+ok 28 - strvec::splice_at_tail
+ok 29 - strvec::replace_at_head
+ok 30 - strvec::replace_at_tail
+ok 31 - strvec::replace_in_between
+ok 32 - strvec::replace_with_substring
+ok 33 - strvec::remove_at_head
+ok 34 - strvec::remove_at_tail
+ok 35 - strvec::remove_in_between
+ok 36 - strvec::pop_empty_array
+ok 37 - strvec::pop_non_empty_array
+ok 38 - strvec::split_empty_string
+ok 39 - strvec::split_single_item
+ok 40 - strvec::split_multiple_items
+ok 41 - strvec::split_whitespace_only
+ok 42 - strvec::split_multiple_consecutive_whitespaces
+ok 43 - strvec::detach
 
- csum-file.c | 2 +-
- pkt-line.c  | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+=================================================================
+==5178==ERROR: LeakSanitizer: detected memory leaks
 
-diff --git a/csum-file.c b/csum-file.c
-index c203ebf11b..c8ec7b73e6 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -23,7 +23,7 @@ static void verify_buffer_or_die(struct hashfile *f,
- 
- 	if (ret < 0)
- 		die_errno("%s: sha1 file read error", f->name);
--	if (ret != count)
-+	if ((size_t)ret != (size_t)count)
- 		die("%s: sha1 file truncated", f->name);
- 	if (memcmp(buf, f->check_buffer, count))
- 		die("sha1 file '%s' validation error", f->name);
-diff --git a/pkt-line.c b/pkt-line.c
-index 1c7e8d826d..a2bce206c2 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -360,7 +360,7 @@ static int get_packet_data(int fd, char **src_buf, size_t *src_size,
- 	}
- 
- 	/* And complain if we didn't get enough bytes to satisfy the read. */
--	if (ret != size) {
-+	if ((size_t)ret != (size_t)size) {
- 		if (options & PACKET_READ_GENTLE_ON_EOF)
- 			return -1;
- 
--- 
-2.47.1-574-g3b2d6bb55a
+Direct leak of 192 byte(s) in 1 object(s) allocated from:
+    #0 0x5600496ec825 in __interceptor_realloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x67825) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
+    #1 0x56004973b4cd in xrealloc /usr/local/google/home/jch/w/git.git/wrapper.c:140:8
+    #2 0x560049714c6f in strvec_splice /usr/local/google/home/jch/w/git.git/strvec.c:67:3
+    #3 0x5600496f0c1d in test_strvec__splice_just_initialized_strvec /usr/local/google/home/jch/w/git.git/t/unit-tests/strvec.c:96:2
+    #4 0x5600496f627b in clar_run_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:315:3
+    #5 0x5600496f46fa in clar_run_suite /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:412:3
+    #6 0x5600496f43e1 in clar_test_run /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:608:4
+    #7 0x5600496f4bdf in clar_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:651:11
+    #8 0x5600496f787c in cmd_main /usr/local/google/home/jch/w/git.git/t/unit-tests/unit-test.c:42:8
+    #9 0x5600496f793a in main /usr/local/google/home/jch/w/git.git/common-main.c:9:11
+    #10 0x7f59ea91dc89 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
 
+Direct leak of 48 byte(s) in 1 object(s) allocated from:
+    #0 0x5600496ec640 in __interceptor_calloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x67640) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
+    #1 0x5600496f4cee in clar__fail /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:687:15
+    #2 0x5600496f5f25 in clar__assert_equal /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:844:3
+    #3 0x5600496f0db6 in test_strvec__splice_just_initialized_strvec /usr/local/google/home/jch/w/git.git/t/unit-tests/strvec.c:97:2
+    #4 0x5600496f627b in clar_run_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:315:3
+    #5 0x5600496f46fa in clar_run_suite /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:412:3
+    #6 0x5600496f43e1 in clar_test_run /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:608:4
+    #7 0x5600496f4bdf in clar_test /usr/local/google/home/jch/w/git.git/t/unit-tests/clar/clar.c:651:11
+    #8 0x5600496f787c in cmd_main /usr/local/google/home/jch/w/git.git/t/unit-tests/unit-test.c:42:8
+    #9 0x5600496f793a in main /usr/local/google/home/jch/w/git.git/common-main.c:9:11
+    #10 0x7f59ea91dc89 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+Indirect leak of 18 byte(s) in 1 object(s) allocated from:
+    #0 0x5600496ec3c6 in __interceptor_malloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x673c6) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
+    #1 0x7f59ea9964f9 in strdup string/strdup.c:42:15
+    #2 0x296c6c756e28271f  (<unknown module>)
+
+Indirect leak of 4 byte(s) in 1 object(s) allocated from:
+    #0 0x5600496ec3c6 in __interceptor_malloc (/usr/local/google/home/jch/w/git.git/t/unit-tests/bin/unit-tests+0x673c6) (BuildId: 6efbef9c6f87bfa879e770b463031b396d4d5efe)
+    #1 0x7f59ea9964f9 in strdup string/strdup.c:42:15
+
+SUMMARY: LeakSanitizer: 262 byte(s) leaked in 4 allocation(s).
