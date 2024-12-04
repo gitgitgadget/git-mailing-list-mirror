@@ -1,107 +1,116 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from ambassador.madduck.net (ambassador.madduck.net [188.174.253.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5422500D2
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 10:15:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D49C19E982
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 10:23:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.174.253.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733307350; cv=none; b=XRzXvlp/HIqqhBpWRJtQUGuYL0007hhETiWqp74ziu+CUlhyhOPIvqmYoLBkX6WHDL3KNmOiPB1YWcVvP7tigzLqkLW6j5NhzwDpgiG2Z6B1vB/9x9Mxy+xGsP4I7fQdFJ4SO2A5x6viW9CeYj/iyHTdijTFYIo0JFGgv5CWnB4=
+	t=1733307822; cv=none; b=Ul11pDAAxSN13XjqOxMfjArpaN24+Sn5bnemPJ3GgPGIa4ACa4AD7AJp/SlYqFRChJPFgHvflLgktYZfecImOV3YrCZGYrejOYkRh4HetuL0HkuDza7AZcxUpMLfFXpu1AHbGwNEySq7UJSEN0goZlnrMa8fmlVpRx6pzA5gIMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733307350; c=relaxed/simple;
-	bh=V+ojMZyix1/F0+xTKbtHHKsxdOUE7vlhQ/M9ZPLEC4o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fVKZF/AeFggIsHA8aQ/z4FeiN32ZynFnt+lfe46TMixefEJ8ZgiPqjL4R3NO2WzQH5RlAkm3dHMx8Upr66qrio5AG3uPg7VMitjkd6TdLikrqXqfmwSvTskd9comgRaqUZV9dPpiruhWCr0oJmY/sGYgeuUWpbOUS1ckcO45Y8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3YAIWYEJ; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733307822; c=relaxed/simple;
+	bh=iXjoiTdOyvsgJzC0PC4zmqv7PM71SO5sNHyXEhGgzRU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=JnMqodBsTun6VHq36rRrRrNyidh8Jaapml5St6Yk+0Yr1oY3ehxW7v9YuktuGAUrYigCsINRYecde7fQMN8OcsayK+Ek8iIIsg3MZE+Iq0YDzqpCi4lL/ud6NubpP66/YLbYZSU87x0IoyoSc3HhAHU3PBH3AzUwNThOvcNrHJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=madduck.net; spf=pass smtp.mailfrom=madduck.net; dkim=pass (1024-bit key) header.d=madduck.net header.i=@madduck.net header.b=TQX2Cr6Q; arc=none smtp.client-ip=188.174.253.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=madduck.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=madduck.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3YAIWYEJ"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2D00C138097E;
-	Wed,  4 Dec 2024 05:15:47 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Dec 2024 05:15:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733307347; x=
-	1733393747; bh=ERl2hTk6pyKlFSDQl8j+Xz0JPHvtGASmPz7DI93c4M0=; b=3
-	YAIWYEJF8j1S4L3C90iCO0y8dj2y93QqZXSsJgzkR8Pg10lT3LSsBFi2ojMNBcDD
-	F2y251n+egM+yG7NBDGby+JtljGj/hECXU0hm4HzrWpPk0AXZBu4CXKzw5k720F4
-	x8YOQ3SxKSDXKrPUD15cz/v7exZKU7tbXpkUYraOddfnMHVWuIO03DD4R0Juf3RN
-	607ct+cPKMvXiFjNhZvFa0x1bTsVJkIHYNbJxI3roJORKGyH1dPOlPeZA4kcmQHC
-	3ZVPd0eJlqayzJbFr/SAQ4mTG/InlEHatwvB44ZzltJO8q+TcjYXA021kCRtZqBH
-	i2du71QDLvD7jhYcATkMQ==
-X-ME-Sender: <xms:0itQZ8C0zP8kQS22ownOkDJB7rqUmaGgJ4ghuObRehQ5f9qT_MmU5w>
-    <xme:0itQZ-iRgz2cESboA1XZRs0nW6P4xL3Z80mPUE7vZWQxjqmVV-aUiLqNh7NZPj3nq
-    JstJmuxaOnOgljcxw>
-X-ME-Received: <xmr:0itQZ_nnWw-wbuiDUXqr1ey9N7PT-AhUjlx8wfYbMEP-wUdCGaCd5iJA-R-TvwsmgsTkb4RG3uHnPmSu4C05SkoNjGaR4iziEek4nkk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieehgdduvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhjuhhsthhosehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:0itQZyzn-igzrf9ih5U9bLPszdCUEiaffHV9clhHGdb8W60ktT7t-Q>
-    <xmx:0itQZxS6WV-gnMt-Gzs90KAJ5As6zoHrBZz58HFp1LZ0VN1T1Fi49A>
-    <xmx:0itQZ9bOuJl__ZKFlnbv_lEmSqevDaXB02TDNhJjShiMkuIptPvl9w>
-    <xmx:0itQZ6TmaTE-U7y6IuIHhYhfPpmk20O2ezP1m7V5XNE6uP01w7ZFoQ>
-    <xmx:0ytQZ_MljKscKSlPHhBfj_Bi9ywoc2gai_JYMLRUJYfCxRplPamPlTvx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Dec 2024 05:15:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2] strvec: `strvec_splice()` to a statically
- initialized vector
-In-Reply-To: <4e60eedc-e4d9-423c-b2e7-f1c65bccc254@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Wed, 4 Dec 2024 09:50:18 +0100")
-References: <37d0abbf-c703-481d-9f26-b237aac54c05@gmail.com>
-	<5bea9f20-eb0d-409d-8f37-f20697d6ce14@gmail.com>
-	<xmqqwmgf3nf3.fsf@gitster.g>
-	<c949fea0-817b-45f9-b8b2-55e1cb55e915@gmail.com>
-	<4e60eedc-e4d9-423c-b2e7-f1c65bccc254@gmail.com>
-Date: Wed, 04 Dec 2024 19:15:45 +0900
-Message-ID: <xmqqser33ga6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=madduck.net header.i=@madduck.net header.b="TQX2Cr6Q"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=madduck.net;
+	s=2015-11-14; t=1733307816;
+	bh=iXjoiTdOyvsgJzC0PC4zmqv7PM71SO5sNHyXEhGgzRU=;
+	h=Date:From:To:Subject:From;
+	b=TQX2Cr6QYybezG+YyqjEzTW2Us+y+nPFS/3Y01t4Si2UnjGLyLwg8/p1nyY1I/jtI
+	 9Mc/qRYXQPvRiT4Y8uIChR035WllHnILwgudHartGHJE92FONCl77t+ltAxyqSOaqi
+	 M1jEwiNmvqGeOL41BPO+oNgW2636FgiwYDF92XVI=
+X-MadduckNet-Submission: from albatross.fo.krafftwerk.de (host-80-81-19-185.customer.m-online.net [80.81.19.185]); Creds Client CN "albatross.fo.krafftwerk.de", Issuer "E5" (not verified)
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 1.0.7 at ambassador.madduck.net
+Date: Wed, 4 Dec 2024 11:23:36 +0100
+From: martin f krafft <madduck@madduck.net>
+To: git@vger.kernel.org
+Subject: git-daemon not consulting ~/.gitconfig
+Message-ID: <fj5vgwmc5wtyzcxxnmcgw7whclm6qf7p5sxzh3nbao3feyutj6@daizbooxk22j>
+X-OS: Debian GNU/Linux trixie/sid kernel 6.11.9-amd64 x86_64
+X-Motto: Keep the good times rollin'
+X-Subliminal-Message: debian/rules!
+X-Spamtrap: madduck.bogus@madduck.net
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Description: Plain-text version
+Content-Disposition: inline
 
-Rubén Justo <rjusto@gmail.com> writes:
+Hello,
 
->> @@ -66,6 +66,7 @@ void strvec_splice(struct strvec *array, size_t idx, size_t len,
->>                         array->v = NULL;
->>                 ALLOC_GROW(array->v, array->nr + (replacement_len - len) + 1,
->>                            array->alloc);
->> +               array->v[array->nr + 1] = NULL;
->
-> I mean:
->
-> +               array->v[array->nr + (replacement_len - len) + 1] = NULL;
->
->
->>         }
->>         for (size_t i = 0; i < len; i++)
->>                 free((char *)array->v[idx + i]);
->> 
->> Sorry.  I'll re-roll later today.
+I found that git-daemon stopped serving repositories managed by 
+gitolite, i.e. by a different Unix user. Hence, no big surprise that 
+I would get
 
-No need to say "sorry".  Thanks for quickly reacting and starting to
-work on it.
+```
+git-daemon[3126249]: detected dubious ownership in repository at '/srv/git/repositories/madduck/pub/etc/ssh.git'
+                      To add an exception for this directory, call:
+                      git config --global --add safe.directory /srv/git/repositories/madduck/pub/etc/ssh.git
+```
+
+in the logs. However, adding the config to `~gitdaemon/.gitconfig` 
+did not have the desired effect. Neither did adding it to 
+`~root/.gitconfig` and only `/etc/gitconfig` works.
+
+So I checked `strace` and found that when invoked by `git-daemon`, 
+Git doesn't even consult `~/.gitconfig`, and I think this may be a 
+bug.
+
+Here is the relevant strace for an access to git-daemon that 
+triggers the above
+error:
+
+```
+root@alan:~# strace -fp 3146653 -e file 2>&1 | grep config
+[pid 3154713] access("/etc/gitconfig", R_OK) = 0
+[pid 3154713] openat(AT_FDCWD, "/etc/gitconfig", O_RDONLY) = 3
+[pid 3154713] access("/etc/gitconfig", R_OK) = 0
+[pid 3154713] openat(AT_FDCWD, "/etc/gitconfig", O_RDONLY) = 4
+[pid 3154713] openat(AT_FDCWD, "./config", O_RDONLY) = 4
+[pid 3154713] access("/etc/gitconfig", R_OK) = 0
+[pid 3154713] openat(AT_FDCWD, "/etc/gitconfig", O_RDONLY) = 4
+[pid 3154713] access("config", R_OK)    = 0
+[pid 3154713] openat(AT_FDCWD, "config", O_RDONLY) = 4
+[pid 3154714] access("/etc/gitconfig", R_OK) = 0
+[pid 3154714] openat(AT_FDCWD, "/etc/gitconfig", O_RDONLY) = 3
+[pid 3154714] access("/etc/gitconfig", R_OK) = 0
+[pid 3154714] openat(AT_FDCWD, "/etc/gitconfig", O_RDONLY) = 3
+[pid 3154714] openat(AT_FDCWD, "./config", O_RDONLY) = 3
+[pid 3154714] access("/etc/gitconfig", R_OK) = 0
+[pid 3154714] openat(AT_FDCWD, "/etc/gitconfig", O_RDONLY) = 3
+[pid 3154714] access("config", R_OK)    = 0
+[pid 3154714] openat(AT_FDCWD, "config", O_RDONLY) = 3
+```
+
+[System Info]
+git version:
+git version 2.39.5
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.1.0-28-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.119-1 (2024-11-22) x86_64
+compiler info: gnuc: 12.2
+libc info: glibc: 2.36
+$SHELL (typically, interactive shell): /bin/bash
+
+
+-- 
+martin krafft | https://matrix.to/#/#madduck:madduck.net
+ 
+officer, arrest that man! he's whistling a copyrighted song.
+{: .blockquote }
+ 
+spamtraps: madduck.bogus@madduck.net
+{: .hidden }
 
