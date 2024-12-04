@@ -1,85 +1,78 @@
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB09239180
-	for <git@vger.kernel.org>; Wed,  4 Dec 2024 23:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439D61F03FF
+	for <git@vger.kernel.org>; Wed,  4 Dec 2024 23:20:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733354146; cv=none; b=hll/N7jIoteMuU8FGCgDG7T3p2BcfSfcVcPKT4dxrfYPyRSIp8Ycfh/MT96CEKhp4e70sflCnuwufc1C2GHoowjSpCv5d1lbH3bNVHm/N0FhbsFoSjJ+ROLjhGc+mxmO0lqMXN4e9vOq6VkjNv1Q0a/1BDej+4OaLakUhBdg4Og=
+	t=1733354426; cv=none; b=ljPpZH1gYVcXG9rWwsuWNEiqfNE0H5sw0qTNzXdSl3Bdy87/+6lAnaRdX2FcFcgXCkdFsYrp18+coeo2cz2YbBtv+lhRNkY6ZqM2vJq4Bh5GWyE5Ghi5mnGUWNZ//aazfDk0E6/rijSDtTKEl0A2ync6Aroj82gK09iPwdFeUYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733354146; c=relaxed/simple;
-	bh=63sujDndVvxw5UZIb+WwwWQnNazFv0jAYkv6F491zrc=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=O4Zn87JPh+SiQWMMJ+Tnt23vv02CeXqiHHp9ERrwJXFOa/ebxkiwpq5fnpxbfc0v0l1Sk7xceRInfkl6tHSs5WUFZMiAeRasbs3FNWMwrbJsNDzDI9wrI84AtBphE4homfYe3uU3QnXPEfIczUFDgSs3voKnWSSvMYnwH8ZeeM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WNE3zbyL; arc=none smtp.client-ip=209.85.215.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1733354426; c=relaxed/simple;
+	bh=QxF2+CjD4jMo/zwEN0N3n/605xM1M3e09g3oefzcEIs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JV4grnl/sdJ7QgY6Ftoj80OaeoF3aatTQtmymsyiKiZPE7m3/FF9RyuWiMYwFIiTuX86sFeFlorrTvyW54VcnuFytstOk5glQFQ/akNnOg+13iK0YPMB9tiFC38VhfnHDENVC7D9en6tZZzk4b1HNuATLuzl3jtPgH+4LUC9Hps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MKNLJAPs; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WNE3zbyL"
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-7c6b192a39bso192718a12.2
-        for <git@vger.kernel.org>; Wed, 04 Dec 2024 15:15:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733354144; x=1733958944; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+hoyx8wVzwQ7G5MK6MR+TA9RALs3frZPdevFJjpHa30=;
-        b=WNE3zbyLRyPO08ucIXoQW7hstq7Bf1TeaifHKLpnjXbh5el5bZmoVF4bPFLX6rg6si
-         kf7boIT5G0/7IMGUXrZxYqDRfTC9pN0MsejH6cHrFKeaC00LD88+3EOIXWUv0o9RPf+F
-         9VJDFr+9y7XmnLoZx71yq2pS6NNYJDafz12VB7OC/LhUgDoOf8GVAapwRmbv9UKsvYFY
-         JJWbuuPeUYJfiAWTBzHOftJDqQ9KHvZijh7PxRCDKcFgWcbOHscvNZJAwinAHQLO6fau
-         5mtfeoW4l8l/We6zKunQNuUasN0Tl+h83OjrajMH8DcArnf0bNa7rsPEZsI3Cacfz6fk
-         9TFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733354144; x=1733958944;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+hoyx8wVzwQ7G5MK6MR+TA9RALs3frZPdevFJjpHa30=;
-        b=R5OsyCJDBpqOCAhyMB2fY+tB6NTon82A2mnGX6/4o0bztgvcgag9QBdA7ytHgen9Vg
-         5SyuYb5QZbSp2zgkSuaZo6N5tMGFbaLuhaIOCpJgvVaoJxPA2A7Kc5n3dPtTWLG++Xad
-         Dm+FAUCdMFQaXddokj3cySLDRN6XkKzq2BH80JkLuz4U8Ybi9RmcrItgJzvWjauJgYn+
-         fASn47Shjgy6v2/ENtnlkh8FO6RPrNencZ3wRKa5IHx0aI37vVAwkQyeCdmSNkpsO0TC
-         mkuS5kg3e5PciqXxay3rjQpKQz8+pxS64HOFPiNphyqVXC2FCOfjrsjILhLNrzSJ0vUo
-         X5ag==
-X-Gm-Message-State: AOJu0Ywmf8d5p0SZa7gIeOzCKZo1BOGeYtP5Y2RIl6Marx75vzR5iFlc
-	zwtEttN+Ki7NRsTtKvXIUVYpynox29JGyZ6nVkZn2KOxZcj+nFpAdan1Y+BjGjZT0sXwKcI4YTL
-	K6nD+aD7OZGxtzI1S8OMZt2fEsHXoaMonZdUWPklqmHlD/Yp3b4OuFjXNY3ywZ/OxxRVtQI/YPj
-	y7BxbqLwN0u8wsiw6HqyyesJM3Y3nK7asoCVlsfZI=
-X-Google-Smtp-Source: AGHT+IFUexna+voPnfS8f6apovENFN9FL+Gdi+MjQd1NA0nY0e/WajB98gMu2ZbPydRLccvjXhOaO6yuIpjG9w==
-X-Received: from pgbeu12.prod.google.com ([2002:a05:6a02:478c:b0:7fc:2404:1fe9])
- (user=steadmon job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:258f:b0:1dc:5023:e8d9 with SMTP id adf61e73a8af0-1e1653c587amr13609855637.25.1733354144471;
- Wed, 04 Dec 2024 15:15:44 -0800 (PST)
-Date: Wed,  4 Dec 2024 15:15:42 -0800
-In-Reply-To: <20241106211717.GD956383@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MKNLJAPs"
+Received: (qmail 18650 invoked by uid 109); 4 Dec 2024 23:20:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=QxF2+CjD4jMo/zwEN0N3n/605xM1M3e09g3oefzcEIs=; b=MKNLJAPsHaRDYlmPHKHblG2+OqaL7ceDibCkv5oAJwbD6dEjzKzWaO+8/hImCGQgGZF1BPHlN7A7xe5U5iT3A40KUyoAA51MKCRxO1WeBjdgjx+vsEmxqcXIlvOTpOyvh4lHO1ZgcBlfT0aDJxKH+2qBk26p/xi8Q49oSSaherGFsTukNb7c0Lw8JJ5vqymTiiQOM64kB5jDksBXHN2Y99Qp874rSoc01VKWBiIXDQTav3B6Q5JLuS/3o2q0hOE2nO1bjGqzrbCWnGYnVP+/entTaUXsl05n3dobwj0luCgSp9Lk1tqrK63wR/QxeSGi2GVmCk/KtyPxz9/p3whVIg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Dec 2024 23:20:17 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28078 invoked by uid 111); 4 Dec 2024 23:20:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Dec 2024 18:20:16 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 4 Dec 2024 18:20:16 -0500
+From: Jeff King <peff@peff.net>
+To: Josh Steadmon <steadmon@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Benno Evers <benno.martin.evers@gmail.com>,
+	Rasmus Villemoes <ravi@prevas.dk>, Benno Evers <benno@bmevers.de>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: Re: [PATCH 0/4] perf improvements for git-describe with few tags
+Message-ID: <20241204232016.GA1460459@coredump.intra.peff.net>
+References: <309549cafdcfe50c4fceac3263220cc3d8b109b2.1730337435.git.jpoimboe@kernel.org>
+ <87bjz0k17c.fsf@prevas.dk>
+ <20241031114210.GA593548@coredump.intra.peff.net>
+ <20241031122456.GB593548@coredump.intra.peff.net>
+ <20241031144351.GA1720940@coredump.intra.peff.net>
+ <CAEQVFRFWT02QTL7PTf84p6AAferijHx8L_Tu6ON1H7U=iEdb3A@mail.gmail.com>
+ <20241106192236.GC880133@coredump.intra.peff.net>
+ <xmqqldx61t65.fsf@gitster.g>
+ <fxbv4ihz4sgdfwtq4vkadntank2lzwkt6abgipuojhumjmuxjs@fegutv3kcamo>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20241106211717.GD956383@coredump.intra.peff.net>
-X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
-Message-ID: <00270315b83b585f7d62ad1204ca1df93a668791.1733354035.git.steadmon@google.com>
-Subject: [PATCH] fixup! describe: stop traversing when we run out of names
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: peff@peff.net, gitster@pobox.com, benno.martin.evers@gmail.com, 
-	benno@bmevers.de, ravi@prevas.dk, jpoimboe@kernel.org, masahiroy@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <fxbv4ihz4sgdfwtq4vkadntank2lzwkt6abgipuojhumjmuxjs@fegutv3kcamo>
 
-Don't exit when we run out of names if we also set --always
+On Wed, Dec 04, 2024 at 03:04:59PM -0800, Josh Steadmon wrote:
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- builtin/describe.c  |  2 +-
- t/t6120-describe.sh | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+> This breaks the case of `git describe --always $SOME_HASH` (we hit the
+> die at builtin/describe.c:340) when there are no tags in the repo. I can
+> send a test case and a small fix shortly.
+
+Yeah, this is easy to reproduce. I think it was always broken with:
+
+  git describe --candidates=0 --always ...
+
+since there is a line that skips the whole algorithm and bails early if
+there are no candidates allowed. But that should surely not kick in if
+"always" is set. I.e., I'd expect the fix to be something like:
 
 diff --git a/builtin/describe.c b/builtin/describe.c
-index 8ec3be87df..065c1bde6e 100644
+index d6c77a714f..d4c869e3d5 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -336,7 +336,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
+@@ -332,7 +332,7 @@ static void describe_commit(struct object_id *oid, struct strbuf *dst)
  		return;
  	}
  
@@ -88,31 +81,7 @@ index 8ec3be87df..065c1bde6e 100644
  		die(_("no tag exactly matches '%s'"), oid_to_hex(&cmit->object.oid));
  	if (debug)
  		fprintf(stderr, _("No exact match on refs or tags, searching to describe\n"));
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index 5633b11d01..9aebf09d3d 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -715,4 +715,18 @@ test_expect_success 'describe --broken --dirty with a file with changed stat' '
- 	)
- '
- 
-+test_expect_success '--always with no refs falls back to commit hash' '
-+	git init always-no-refs &&
-+	(
-+		cd always-no-refs &&
-+		test_commit --no-tag A &&
-+		test_commit --no-tag B &&
-+		test_commit --no-tag C &&
-+		git describe --abbrev=12 --always HEAD^ >actual &&
-+		echo 13 >expected_size &&
-+		test_file_size actual >actual_size &&
-+		test_cmp expected_size actual_size
-+	)
-+'
-+
- test_done
 
-base-commit: a4f8a869558d59677e8d9798666a23391f0b4ca8
--- 
-2.47.0.338.g60cca15819-goog
+But I'll wait and see what your proposed fix looks like.
 
+-Peff
