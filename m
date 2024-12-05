@@ -1,100 +1,130 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF58A1BBBF1
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 22:28:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01E618FDDA
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 23:16:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733437733; cv=none; b=iyV+VGYlW6OhFt49R6wnYVRDtJ3xOBcCImjNuNcdKqPlW/uqVZCZ/ANgIrhpxDv1W3dJJbSEjLLtanrSyUmFjZCDRTumHU6TloBwqynxF5/Phu9zC5CqbpkoC5J+z9s6+RjnQDBJVQa0igUIUZ4fUOgxHviERr5WHAGAwBZuKFc=
+	t=1733440618; cv=none; b=nsz1h0mgWWOPg8GGCYBDX1/Lz4TiWqJ86CKK/3WYPTxyPM2gfYs91B+gUKDTi1yj7JXfTI4+2s00z2WFHjOOsC/ZF956PAWNgPSB/FpXASy69+Z8h3eS9kJ4mpRekDmCDtMp0u5+Z8bATyFDeoHvKiCKV8GPZPEGxcvfa45y+YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733437733; c=relaxed/simple;
-	bh=I9HpZR/N86c0n62tEHRiUQymAX0kDcdaBNh/szvAcR4=;
+	s=arc-20240116; t=1733440618; c=relaxed/simple;
+	bh=+qImaWA1LKhJgM53GrUWZjJLPWTARoUcM5zAnlOvmrg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rTpbDrNgNQwdnWrwZfyUB0MYIMzb4gJA+po699l8nfqRH4FRI7d6n7lCYruwlZeLBLIDFB8qNIEDzsU+fNHKgFzwBmj+XeRwo0nToQd1/EPuiYM9dLmyI9TXbYrf4lSkUbrsFBrxB5l5W9233/IPfr+n++R94TCFzEY9hlgBPEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=IzhMcnBv; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=tSWinhQxxOAc8nPLXSzpVj2YP8gSzjP4W1durNxRBn6gRM5bMp+E8vistXWIr3mqhAxq5lhkxK1yBYLp5KbtzwbwnhqggatU74ZgrFN54bG3d723XoWjHKVJRzCx6EfTz1TEKwYKAVtQuntDqDlns1gpZm4JpyZLbaepKZu8JZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UPab8pT1; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IzhMcnBv"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2154dc36907so58095ad.0
-        for <git@vger.kernel.org>; Thu, 05 Dec 2024 14:28:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733437731; x=1734042531; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ux6kiNRpvutWolGmscnhm1aXKgruAYp4tXfwTSRsSCY=;
-        b=IzhMcnBvFeWSwlMXoe954niNGDHVKc0/y9X+Kh5CVK+YYNI3QGmZFl/I4DTg3UH5iq
-         WoLd5rWm4nvxAH/atkZLTyHTwTCJ8Rt7sH72l6mQpPXLcvEVDJyXYWvMEVIKHcco4GwL
-         EwQMcloPkQeqiq3xXgHZAWVnIEsKPqgJIDKv2kcdW6j1jZegHKimhvbX52WKU8aoCQdQ
-         6hxldL64Jz/X72QF0XyX/hOR1rmOi40bDB1GiCtlqecpESyqOEVc6R4Tsif3nswuvh6U
-         MtQavrY0GohUYCiGcwO1sXw0WfmUnhqRupq5eO77dDDEhKQBYbpUHStTXTBiiMIi68Ls
-         9rIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733437731; x=1734042531;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ux6kiNRpvutWolGmscnhm1aXKgruAYp4tXfwTSRsSCY=;
-        b=g05EMSpYzajykEgnBa1Jhawq7UzajheKPHJ/j6dOwQcKD0eVSG5aFmREkymTZkF+CS
-         ST+LFwNmORDOnV9wjElRdqWehVE1IlYrhsj7nAQw71/uFttf6zSlyYTi4BvZjFSYxrQq
-         HvCE6FjRLtO+jfGRdZGAxuKqE1wNe306cqkCRjbFF0FCR8OocmJg0jLMvN5KJLJZmCnE
-         S1oP9gpMyvRSfxclllU61H6hEM7BHrwCq5pJUP9ea/nvDxWBQJHSoWPoAzmrOa4xR3Z+
-         q+SttK5z9Vkbnfbrem8gEw2YH2oWetE+LuvLlvMw844nKuRx8LK+JTA0xZPqNSX9qa0o
-         ydJQ==
-X-Gm-Message-State: AOJu0YwcH3Z+SXjzYabxcKK/qZbqb4BAEEkoonwkCJBgTQRzlYFfCDME
-	0xznkyl5jYKTYI0xji1HQO6ln95YlJmvceEpPSPncroX/X0ZduQ4nZlZNsd1lQ==
-X-Gm-Gg: ASbGncvzWzptadlvarJsMBT55G9hh6sRYj4+T1je5lUDbA0/2DgrFcEX3zAW+X2UQXZ
-	+1vYNFQ/Wh3sfEPWpKaZNa9lEuvnDC3/d0mV/KqcfyX8qfnKTX7utb0yfiQ74sK9gB0qrz0Ce9r
-	MjDWqf9jTr4Jk99EiNxf52n7fqhTLH6Wmj14evGPmP3CdphZa0AJLARAO3ETYyx2QNH1y8xXMIo
-	j7yYGXdO/cVXI3mpLWgT/CsydgI+X/PdV04Cg5TzMRfQ1Nx
-X-Google-Smtp-Source: AGHT+IE81bLgQG9qBjET46EIrqZT10XSo0D+1ApkpX6tpT5TBP1pbJnlPJPh5ETlZ1rIT39208Qf7A==
-X-Received: by 2002:a17:903:290:b0:215:a3e9:88cc with SMTP id d9443c01a7336-216166a307dmr223325ad.3.1733437731000;
-        Thu, 05 Dec 2024 14:28:51 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:80c2:988f:e15c:5983])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ef45fa6688sm1878854a91.24.2024.12.05.14.28.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Dec 2024 14:28:50 -0800 (PST)
-Date: Thu, 5 Dec 2024 14:28:45 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, gitster@pobox.com, benno.martin.evers@gmail.com, 
-	benno@bmevers.de, ravi@prevas.dk, jpoimboe@kernel.org, masahiroy@kernel.org
-Subject: Re: [PATCH] describe: drop early return for max_candidates == 0
-Message-ID: <plncccgcchrmspkelepacifqpfua7nzsb4y5xzjv4vzc3p36yr@r63i2xo6avba>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com, 
-	benno.martin.evers@gmail.com, benno@bmevers.de, ravi@prevas.dk, jpoimboe@kernel.org, 
-	masahiroy@kernel.org
-References: <20241106211717.GD956383@coredump.intra.peff.net>
- <00270315b83b585f7d62ad1204ca1df93a668791.1733354035.git.steadmon@google.com>
- <20241204232750.GA1460551@coredump.intra.peff.net>
- <20241205201449.GA2635755@coredump.intra.peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UPab8pT1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1733440608;
+	bh=+qImaWA1LKhJgM53GrUWZjJLPWTARoUcM5zAnlOvmrg=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=UPab8pT14lBaMITS6zOktZD+l4Ox4NbcX86bqbz1WMgw3WAUMYDrmxcs68fVPKmno
+	 gBjpdhvTstx/3TBb2g/rgUpiYFYI5Lizs5J4UsAtzNVQdZzsprCRynUkMf7GohaZJe
+	 0CUPmS/6REfsQ8HQuF48XYIvLDB/xRahfw8QAAJ+PT50anoTd/YBRJXtXXfMrKlYmk
+	 enFqm6rhInFAbaHpVi/gffE8v+Mm0dYwA66iub2Ob8MGC+sUiii8HbMybVGt2fBN8N
+	 TRvA1NezAVATRjpW5mreq92QV1Vl7k70QpbFwvQziSh/x2BGbCni+nm9YuXAuMNS0/
+	 x3Qd8jeccrcSWUA4mbe432fzV6NG1X6a9RT+0oB3xqFsX1hRazBVC4981Bx0TxIJSI
+	 mhCkmWd/Kj1ydupkY5NLo8PcA7E/EMGKI0h+KN/yLe+IkzRlfZAeGejh+c0Kv0Hq7t
+	 zXj7tAjFC/jITObM1xOjx9ek2fDEJd4yC92C6wHAgAV44oxyJ8/
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CD91820994;
+	Thu,  5 Dec 2024 23:16:48 +0000 (UTC)
+Date: Thu, 5 Dec 2024 23:16:47 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: "dangling ." <kasperkantz@outlook.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Proposal: Allow Customization of Git Merge Commit Message
+ Template
+Message-ID: <Z1I0XzE6QWlsyZkH@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"dangling ." <kasperkantz@outlook.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <DM4PR14MB4880061D71993B749F44F2EDA7302@DM4PR14MB4880.namprd14.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="X9WFK+EotMrBXL4/"
 Content-Disposition: inline
-In-Reply-To: <20241205201449.GA2635755@coredump.intra.peff.net>
+In-Reply-To: <DM4PR14MB4880061D71993B749F44F2EDA7302@DM4PR14MB4880.namprd14.prod.outlook.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 2024.12.05 15:14, Jeff King wrote:
-> On Wed, Dec 04, 2024 at 06:27:50PM -0500, Jeff King wrote:
-> 
-> > > Subject: Re: [PATCH] fixup! describe: stop traversing when we run out of names
-> > 
-> > This commit is already in 'next', so it's too late to squash in a change
-> > (though I'd have done this separately anyway, as it's already an issue
-> > for a manual --candidates=0 setting, as unlikely as that is).
-> > 
-> > Can you re-send with a full commit message?
-> 
-> Actually, after thinking on this a bit more, I think the solution below
-> is a bit more elegant. This can go on top of jk/describe-perf.
-> 
 
-Thanks, and sorry for not replying earlier, I got distracted by a
-different $DAYJOB breakage:
-https://lore.kernel.org/git/b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com/
+--X9WFK+EotMrBXL4/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-12-05 at 17:00:56, dangling . wrote:
+> Proposal:
+> Introduce an option (e.g., a configuration setting or CLI flag) that allo=
+ws users to specify a custom merge commit message template. For example:
+>=20
+> - A new configuration option:
+>   ```sh
+>   [merge]
+>       messageTemplate =3D "Merge %s into %s"
+>   ```
+>   Here, `%s` placeholders could represent the source and destination bran=
+ches, respectively.
+
+I think in general that such an option would need multiple placeholders.
+Just because in English we place the name of the second head before the
+name of the first head does not mean that that is true in all languages
+or translations.
+
+> - Alternatively, a command-line flag:
+>   ```sh
+>   git merge --message-template=3D"Merge %s into %s" upstream/main
+>   ```
+
+I think this can be done more generally with a `prepare-commit-msg`
+hook:
+
+----
+#!/bin/sh
+
+COMMIT_MSG_FILE=3D$1
+COMMIT_SOURCE=3D$2
+
+case "$COMMIT_SOURCE" in
+ merge)
+   /usr/bin/perl -i.bak -pe '
+   s/Merge remote-tracking branch '\''(.*)'\''/Merge $1/
+   ' "$COMMIT_MSG_FILE"
+   ;;
+ *) ;;
+esac
+----
+
+That's the approach we would generally recommend here, since it's more
+flexible and allows you more customization over the message.  Of course,
+you can use sed or Ruby instead (or even ed or ex) if you prefer.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--X9WFK+EotMrBXL4/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ1I0XwAKCRB8DEliiIei
+gVCuAP9+l4vo3nJxthqPQ10qK3FFXBJ96QdtS9JHZi3VKgbLOAEAmuNO6NCe0x4p
+NuVic7R6JcUTt1a3l8zBT7jYwQPwvgk=
+=+bvc
+-----END PGP SIGNATURE-----
+
+--X9WFK+EotMrBXL4/--
