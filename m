@@ -1,37 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A2679DC
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 20:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C10193
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 20:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733429996; cv=none; b=VOkHQRYBvjXoK26PnZ8PvpSU+HkMowNdqyyX1VSNuvmZUfqwhqoyRDlamRrRhBh6NadtKSM/gjgCbntuknmbxbG4nifju/eNZ/DLlsXCUZuzUh2b21nqLlrJbqYR9jackZWbUtjPG4ckOXiga7GJbxddc5xGVoKPfMXFrHd3AMw=
+	t=1733430341; cv=none; b=ZJt1MHuGgLiwAWhSj/D3U6NpbtDML5eMprdju4dX/rXKA0EXhdfvFNToEdSfD9Rzy1v2MH+hUYCjjDgiO6OJe1hxjrJHBW28u8LSN18001O6SFoyIpButs2fSlNyc7Pt0etdI+i7hZMwlnuURbmRp4odF2M0NCRWJXHgQ69Fcko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733429996; c=relaxed/simple;
-	bh=6s7W0BSje5BffZ3ofroey0BpiibP8i3Q4oOWZVAROB8=;
+	s=arc-20240116; t=1733430341; c=relaxed/simple;
+	bh=uXi5KtkgSWbqnIXpKCfP3SY8U5zqjJAxBmzQ1U0rqy4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OETCQcaqcnpEr6MTcT8dmPXFfbFIvPKMmF3C/EJcPucbE54q5SpX6aw1g7JQ3I1N2R2S9og7wKVDQktiNU7lX8Zu7O+0vSuC4HisiPXw9/nFjeGX/hipYSN/+LoPx7fBejymAw68HTQbAFW6U6oen4KWjKIOlZVS2IWem7Ayfuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dHukb2vG; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=nvUg2TWnq2CEF3Dtb1aXAKKq3SmO5rIXWayiPtcgCGfUUUu5+1vg/OD3zBkSAHO2GSY+dUq4aFn2urc9lOngkJW1/gFRPpz+rbYbDq2IrvNpzQJO5E2lAESxQJTS1zOnxWFFGNigzpTOWzQiOEmcH8x7DOL+LNCFxG6MgM4+oc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KVAHxh+k; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dHukb2vG"
-Received: (qmail 32016 invoked by uid 109); 5 Dec 2024 20:19:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6s7W0BSje5BffZ3ofroey0BpiibP8i3Q4oOWZVAROB8=; b=dHukb2vGEth+e6z5PmS7XbgUVv1DLfRNtt1QcCTs9SwmKinGE6lDHpcnQkIB3SbaNubaqla+vqLs4VuIn8smIeYnGhZsUgwPNRL+nprHxO/muAj8N0IRSsdLFrLpjK7eLsObb7dE0o3YDxtkplHe6tNtlXCGvcCRC2tGhIEZHQrwGcEz5krVJ7Uhy+ZZVJZcq6Et68l4JcGe1P1jRekfCQDmdn/CeaCDQ63geFBmq3uz7+49cCSMWMaxoe8DYQn/hlJqOZXPITHryjdYSSLK+Xq03ZsbrrP+y/4OHcFVDP1xPxRRCfdsH8kLE3ElK5IVYycU0D/SAj4dKg3AIabg5Q==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KVAHxh+k"
+Received: (qmail 32085 invoked by uid 109); 5 Dec 2024 20:25:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=uXi5KtkgSWbqnIXpKCfP3SY8U5zqjJAxBmzQ1U0rqy4=; b=KVAHxh+kaxkGg2jTCUMXzXqEhgo0lHw3RAqz2Apy8Qil3xInvyHmjwzOzLikaeYJioH29C1ytYRo43YK2A8/HMcjZDJvjNlu5GWaA9zMNKRCuhNIlSalZa5Eql/hyTyjdPx6oPn5IcpL2GUTYNffdGkg3uGyXqEwRoIBbbK31ticPnEXqfczTBkdBPPcLxq4jkLZPHywSfgPwkmJJTTxkWMC0HIA+l7MvbT+zzeRe/8vTI3sHnaI0YlSwdniT+0ZJbgVeQTA9YqMDRD7oWCBxtHV37BOpozOtLGB+PmX4xtWGufkvLzU3DdQw1yPUSGWmZZqOMgH/PDrJo9dT4PttA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Dec 2024 20:19:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Dec 2024 20:25:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9576 invoked by uid 111); 5 Dec 2024 20:19:52 -0000
+Received: (qmail 9636 invoked by uid 111); 5 Dec 2024 20:25:37 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Dec 2024 15:19:52 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Dec 2024 15:25:37 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Dec 2024 15:19:52 -0500
+Date: Thu, 5 Dec 2024 15:25:37 -0500
 From: Jeff King <peff@peff.net>
-To: A bughunter <A_bughunter@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [help] git status doesn't seem to work.
-Message-ID: <20241205201952.GB2635755@coredump.intra.peff.net>
-References: <n8KYxrArhb3MywPvDHVmEz0dka8QYYWikLDZE_aboUX9GBgF2X9uomuxtrPA6VmS33TxXyltJB4xqjALIuprVvE12prKd_ZW4MYM9kC4Qds=@proton.me>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	git@vger.kernel.org, git@jowil.de
+Subject: Re: [PATCH 3/4] t5604: do not expect that HEAD is a valid tagname
+Message-ID: <20241205202537.GD2629822@coredump.intra.peff.net>
+References: <20241202070714.3028549-1-gitster@pobox.com>
+ <20241202070714.3028549-4-gitster@pobox.com>
+ <477f0dbd-60ed-4f73-b945-cdbdaf9f510a@app.fastmail.com>
+ <20241202210006.GE776185@coredump.intra.peff.net>
+ <xmqq34j5h7v9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,53 +45,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <n8KYxrArhb3MywPvDHVmEz0dka8QYYWikLDZE_aboUX9GBgF2X9uomuxtrPA6VmS33TxXyltJB4xqjALIuprVvE12prKd_ZW4MYM9kC4Qds=@proton.me>
+In-Reply-To: <xmqq34j5h7v9.fsf@gitster.g>
 
-On Thu, Dec 05, 2024 at 07:52:37PM +0000, A bughunter wrote:
+On Tue, Dec 03, 2024 at 10:29:14AM +0900, Junio C Hamano wrote:
 
-> [help] git status doesn't seem to work. See how a pull caused updates after status showed "up to date"
+> I have "git one" (and "git who") aliased to this script:
 > 
-> ```
-> ~/Peeranoia_Framework $ git status
-> On branch main
-> Your branch is up to date with 'origin/main'.
+>     $ cat $(type --path git-onewho)
+>     #!/bin/sh
+>     if sha1=$(git rev-parse -q --verify "$1")
+>     then
+>             git show --date=short -s --abbrev=8 --pretty='format:%h (%s, %ad)' "$1"
+>     else
+>             git log -1 --format="%aN <%aE>" --author="$1" --all
+>     fi | tr -d "\012"
+>     $ git help one
+>     'one' is aliased to 'onewho'
+>     $ git help who
+>     'who' is aliased to 'onewho'
+>     
+> so that I can say "\C-u ESC ! git one HEAD" (or "git one peff")
+> while writing a piece of e-mail.  I can drop --abbrev=8 from there
+> but the machinery knows to bust that limit if it is necessary to
+> ensure uniqueness, so ...
 
-This is comparing your branch with the local tracking branch we have,
-refs/remotes/origin/main. It doesn't touch the network, and that
-tracking branch is essentially a cache of the last value we fetched.
+Yeah, I have something similar. IMHO a manual --abbrev there is working
+against your goal.
 
-> ~/Peeranoia_Framework $ git pull
-> Enter passphrase for key '/data/data/com.termux/files/home/.ssh/id_ed25519':
-> remote: Enumerating objects: 17, done.
-> remote: Counting objects: 100% (17/17), done.
-> remote: Compressing objects: 100% (15/15), done.
-> remote: Total 15 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
-> Unpacking objects: 100% (15/15), 6.41 KiB | 312.00 KiB/s, done.
-> From github.com:freedom-foundation"up to date"/Peeranoia_Framework
->    03edf66..4cf4f51  main       -> origin/main
-> Updating 03edf66..4cf4f51
-> Fast-forward
->  README.md | 24 +++++++++++++++++++++---
->  1 file changed, 21 insertions(+), 3 deletions(-)
+We do increase that to find a unique answer, but that is not very
+future-proof; it is only extending by one character taking into account
+what objects you have _now_. It might not be true for somebody else's
+repo with more objects, or even your own repo in the near future.
 
-This pull is doing a fetch under the hood (since pull is essentially
-"fetch + merge"). It updates the tracking branch origin/main, at which
-point a "git status" would show that your local branch is not up to
-date. But since it then immediately merges the result, you find that
-afterwards:
-
-> ~/Peeranoia_Framework $ git status
-> On branch main
-> Your branch is up to date with 'origin/main'.
-
-...your branch is now up to date.
-
-This is all working as expected. If you want a more up-to-date view of
-"origin/master" when you run your "git status", try "git fetch" to hit
-the network first.
-
-You might also find more information in:
-
-  https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches
+The auto-scaling of core.abbrev done by default these days also suffers
+from that problem (it can only count how many objects you have now, not
+how many you expect to have a year from now). But I think our heuristics
+there give a bit higher safety margin for future-proofing the values.
 
 -Peff
