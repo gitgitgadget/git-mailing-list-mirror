@@ -1,120 +1,87 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD11D225797
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 18:58:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D099522256F
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 19:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733425125; cv=none; b=ZS1t7lUg/vdkXYIU3hpYPzRRc3Un1KFidca+NwUMsHgrT+nz8HTLONdB/vNqtgs03ruQAnOvip1Z5mOc5pDcYsW0pzt612mT1OcQ9XQnurS7GPMvGhBC+IsksCTJfBbiz9PJXbNGr6YVi9FPTPUnr8zy8XQuZFLvn4xAMI/1A3Q=
+	t=1733425986; cv=none; b=KI7eLyOYXt+aGN9j8Yj6j3Zse7FU74Ek6LZlkKTnRNPIkcSEDanfhlFttFZmlqRrQNHDvdgSQsj7mm/OsDdXfUsV6ol27bxU4AhY6g8r6BEA8DspLGJ/LK0qH393OomBNrinn1kO0KwPdbM61yQnYMqrXlJGD8umRTLODhFOxco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733425125; c=relaxed/simple;
-	bh=6b5h5jZKRWUhwmSF5o2qZIXCZLMU3RdXHxADJOE27dI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tdqgjyo8gZ7rmiRSmpbXn+xJ1gtFRAyXjjdmEQfjEIuZYqxmrK8wl3NgP0Fp5aeeSKqzVSMFgbhwnWFGFIz+LrOjw3026o+aAo+9/JVn4cTlpg5Pv+QsXpT8AAXF6J5lGmTJYfXF7yu17uDJXBHZxmFwT2f5IY+rBQX6mUxnSAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KDFw8dvG; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1733425986; c=relaxed/simple;
+	bh=pILSZZeXs8LjfgXFhiakGm6T6srYlJBp9ZXUw100yp0=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=PV16zFBFTlURzXWNPryphOYwR7cVw9avRT+aWY8OwFEU6V+6ETjTg6nnS0SNb4zWKgSrxe7Uyw/7n7vmVpqA/62mKaVDJhnFxgCAKQOio8nFTpa1PgM+Fwqp5ctzir0KV8Sipn0kbT/qWPfgVdSdFRQFu81INrBZ8Z9VghgBWUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=F8kHnnDi; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KDFw8dvG"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-21561f7d135so10295ad.1
-        for <git@vger.kernel.org>; Thu, 05 Dec 2024 10:58:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733425123; x=1734029923; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9oqlNylXQEZ3SIvyu1PQ48bM9QNeh3q5sMf1Wlne+j8=;
-        b=KDFw8dvGBrPKKqMRd9f5kj2yzTqm16n+r1EWscRz5NWfA+qpUQrgJZ/0IrXVgHX4Tj
-         jtE6kLC1ZkqsRD4YEZYzqIVVtNxxTJMlrBPRUFGkYqjveZt/L1ksKK8RLQ05qhjRgaPh
-         Tk2POCZJFr1zzpPg6068K7nZn82L80T9G7E4aD2sCzOCS0QFoEYGKDCeXFD2utTbwQJJ
-         1eeNy9wcqtAkqXuLTl+cpOUmJs8758R/Di6UqvmBL8zDI2kNVS1uXj+fZYZnxSws0arh
-         kVvr+wAX/LJ4sxGx9CFv7ABHh0HrnfoPy449DMQ9UkrB46mQiXNk6eKcj1tp/1x2WO5D
-         Dt1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733425123; x=1734029923;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9oqlNylXQEZ3SIvyu1PQ48bM9QNeh3q5sMf1Wlne+j8=;
-        b=I3wqUTGj5PQi3RlVklOTVzr4uOXLmXewOyPJq/Ox62QlB+QTT4+Al0/Kyl+JIYoE4B
-         YavZRm+eEL4SwHgLPHmoeBPmOD9DaddRcgtbW7ddTPMeV5yBYnpmJFwwzgkiUKaKxx8u
-         7FbcX9O9tFRJVbtzcIjGj/ktX5VW6H7e4Tqhi3vcZUIglrfx9r0Cx/CNK3xA/OMNiRvc
-         3SAppcXA5fclGxfq11SThzL5W6VFyUN8FSB0seAyXJ0dRhjYQsvOnx3FNPsx0SH1iG9T
-         I1S2MEadTgVt58OpkoVsQGhQF9uM4l0OYi5oiZCxg6nHldXzvnoEVEMoGBBJZJFQFTSX
-         1O0g==
-X-Gm-Message-State: AOJu0Yxil5LrbwG9bhViWMkDFsaBFhocP47VolFpKpxp/tE/LiL3kbh+
-	XGWVmyI2tzwGvep1vShJBqJvB/P4b6YblzleOEo7dLVWQQYqmbO2ILEKVJ2c2w==
-X-Gm-Gg: ASbGncvSz1+VqDCTgrNMrVn6/exFneGEFckk+ft6cvxu5Y1hUiTTsfU3njY6Ew97qVv
-	9uLehBo6QnLA/UUVfTtTOG8aBkK5poIWI2Dp7v68yRpeZtK92RnFsshZbiloDCCl2O8s+Ctgkuw
-	bmumL2n2E0vsPzE7oJmJUnQ8W7liqVORVr+V2StmDiSWErmwIgeNYSAEyc5msb1beTktvrZb6fh
-	zeRitAG71VnZEKV0HX44RwljBWBCnbOSCANufRVeLA8mbK/
-X-Google-Smtp-Source: AGHT+IHj4synO7PxxPj2wrznW+QL7iBY1fyQq08GDT2mMcyOF9060OaTWGJty0mF4eQW7S0/CUrPNQ==
-X-Received: by 2002:a17:902:ce03:b0:215:69a3:1c94 with SMTP id d9443c01a7336-21613785d23mr105965ad.28.1733425122877;
-        Thu, 05 Dec 2024 10:58:42 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:80c2:988f:e15c:5983])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-215f8e3fd47sm15829205ad.39.2024.12.05.10.58.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Dec 2024 10:58:41 -0800 (PST)
-Date: Thu, 5 Dec 2024 10:58:37 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>, 
-	Patrick Steinhardt <ps@pks.im>, jonathantanmy@google.com
-Subject: Re: [PATCH v15 09/10] fetch: set remote/HEAD if it does not exist
-Message-ID: <wmu5ld4xsfjz2tpp54jmxqroma423t5nn2jh3q5gq2wswr6fkm@vrlhigyuxfzu>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>, 
-	Patrick Steinhardt <ps@pks.im>, jonathantanmy@google.com
-References: <20241121225757.3877852-1-bence@ferdinandy.com>
- <20241122123138.66960-1-bence@ferdinandy.com>
- <20241122123138.66960-10-bence@ferdinandy.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="F8kHnnDi"
+Received: (qmail 31202 invoked by uid 109); 5 Dec 2024 19:13:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type:in-reply-to; s=20240930; bh=pILSZZeXs8LjfgXFhiakGm6T6srYlJBp9ZXUw100yp0=; b=F8kHnnDi0k/IlsT0hj24zYJZDfEbBm0bzeQG7Lc6zOzJMYQWW7uAXnh6tpi2G6870h3dw5TvobRXpwxmiWUrUxpWBHwEADaGt0SI/PlvjByFxzuNzsPlZ5Q/jnP2f+DiqrsVKDJD5y35aAiHeKJzmlQOm5pskxxVd7uwnavtP6oEDFcLMkNQvlrbkthA+yOyMxnZGkw2GclW66B0/IC7EHUD2akwWPw+dEXRYWkb/zlzNFsHIZbZY0AKJI+7WkfCdsbHFg5R3wZl7LvIn2iISdjOGZJpjYe9EkfYWoS0Tq6hhTphp87R0OW7GKyE1WFRrDSWctRYlAeyJAOvoEZ6xA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Dec 2024 19:13:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8993 invoked by uid 111); 5 Dec 2024 19:13:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Dec 2024 14:13:02 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Dec 2024 14:13:01 -0500
+From: Jeff King <peff@peff.net>
+To: Dmitriy Panteleyev <dpantel@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] commit fails with 'bus error' when working directory is on
+ an NFS share
+Message-ID: <20241205191301.GA2629822@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241122123138.66960-10-bence@ferdinandy.com>
+In-Reply-To: <CAJ-DG_BC=J3-wc2w_-xLSDbN6B9xkS2aWPUMFJYVRHkE+Ch9Ow@mail.gmail.com>
+ <CAJ-DG_BdAiFk_2eV=JDF7Lth9+Ay=86w-VT26Rt+T5fdN1vd_w@mail.gmail.com>
 
-On 2024.11.22 13:28, Bence Ferdinandy wrote:
-> When cloning a repository remote/HEAD is created, but when the user
-> creates a repository with git init, and later adds a remote, remote/HEAD
-> is only created if the user explicitly runs a variant of "remote
-> set-head". Attempt to set remote/HEAD during fetch, if the user does not
-> have it already set. Silently ignore any errors.
+On Wed, Dec 04, 2024 at 08:59:03PM -0700, Dmitriy Panteleyev wrote:
+
+> Strace with NO_MMAP=1, I gives:
 > 
-> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+> openat(AT_FDCWD,
+> ".git/objects/34/5819b235838e219d66420b536a54ce4cf0624c",
+> O_RDONLY|O_CLOEXEC) = 4
+> fstat(4, {st_mode=S_IFREG|0444, st_size=154, ...}) = 0
+> pread64(4, 0x61a0292e15d0, 154, 0)      = -1 ESTALE (Stale file handle)
+> write(2, "fatal: mmap failed: Permission d"..., 38) = 38
+> 
+> Weirdly, it's throwing ESTALE not EACCESS...
 
-At $DAYJOB, we noticed that this breaks `git fetch --tags`, although I
-haven't had a chance to figure out what causes the error just yet.
+Ah, interesting. So yeah, it seems like there is some configuration
+issue or other problem that is causing your NFS handles to time out, and
+we get unexpected failures while reading. I _think_ that exonerates the
+commit you found, as the code it removed was helping only by chance, by
+creating slightly different filesystem access patterns.
 
-I was able to bisect down to this commit using Jonathan Tan's
-reproduction script:
+> > Does your system have AppArmor enabled?
+> 
+> Yes, but I don't see any profiles related to git. And I can't image
+> AppArmor would be version-dependent.
 
-rm -rf test_tag_1 test_tag_2
-GIT=~/git/bin-wrappers/git
-mkdir test_tag_1 && cd test_tag_1
-REMOTE=$(pwd)
-$GIT init .
-touch foo.txt
-$GIT add foo.txt
-$GIT commit foo.txt -m "commit one"
-$GIT tag foo
-cd ..
-mkdir test_tag_2 && cd test_tag_2
-$GIT init .
-echo fetch --tags
-$GIT fetch --tags "file://$REMOTE"
-echo regular fetch
-$GIT fetch "file://$REMOTE" 'refs/tags/*:refs/tags/*'
-$GIT --version
+I think this was probably a long shot anyway. In the link I found it was
+"man", which sensibly would have AppArmor profiles that disallow network
+access. But clearly "git" would not have the same ones, since we expect
+it to hit the network (not "git commit", but it is all one binary, so
+AppArmor doesn't distinguish).
 
+> Hrm. I just spun up a couple of different VMs on my server with old
+> and new NFS versions, and git works fine from those shares.
+> 
+> I think we should put a pin in it, since I can't reproduce the problem
+> outside of my specific server instance.
 
-Prior to this change, the first `$GIT fetch --tags "file://$REMOTE"`
-fetches the `foo` tag; with this change, it does not.
+Yeah, that makes sense. You might find something interesting in the
+server-side logs that explains the stale NFS handles.
+
+Thanks for going through all the back-and-forth. :)
+
+-Peff
