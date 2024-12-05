@@ -1,35 +1,35 @@
 Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6652E1CEAD3
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 08:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDF278C91
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 08:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733386480; cv=none; b=egkkivvOPAsFm+q4+SnQhhF6C+qjxS3F6j5TT5ynI1CoZJxflGvin2lILjrMT1h4bilM6x3+S2eJoSajJPmIph289vd55IFMPit7ggbOTpBpssYcspJZF3FofL1G+pRX/UqXPsPEXohc4aNqcxoa+Sb4JMl8lEjtpO7+vf+kulo=
+	t=1733386938; cv=none; b=NTSUnj4TIXlvchP+Qz3g97Z5/EQMLuy9XKHi+GfAx5jphX5FwPMx5H/R1kx92ccSFTjn0XwaBPAXMGq38NfcbYLPJcmx49z6d8Gjcb5vWWNIwHdF85pQgkUV+Q+xPrqUMTXVxyqHeAX5AxnmQ6Pae2SN0NbgR81ZCfgFWOyuo6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733386480; c=relaxed/simple;
-	bh=ci8S95zlIMTHTGJmGCt+BWNGmSSP/0CriISFhZ16Dvk=;
-	h=MIME-version:Content-type:Date:Message-id:To:From:Subject:Cc:
-	 References:In-reply-to; b=kyj6aEca1Irk/fid0i9I9IkhvD195FsgDhFEUKZz+0fWOCGmRExcUOXXpole3SqyrWut+kWOJHiEFmScURJ3ruqyTlpXqwYhCbTDWHPt91QeCOP+F2YxZ6fwW6qYIBnmNORCiyBts2/NGGYWgqxlvQSW7CeepRRACmTAocakxW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=n6QWA5RW; arc=none smtp.client-ip=192.29.178.124
+	s=arc-20240116; t=1733386938; c=relaxed/simple;
+	bh=3Fwb4aYGkvU6UyU2urTbaU/kenFOYZPNaAHR95Ra8TU=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=s4L1xO44LSqqYMPy1p2KdDwKV31liFsuNfl3iC45/9OQw588ShF2Np/sC/SUh54D5diOj4vBsn1GGjgO9ov1zSuEmG+yM30SfZyAZXvuQ3lFd90Qg8BBWdHCzMwyqov1SkVVVwNz03x2LQbQDgCj0QvOg3dRHVEenixSxgDU1i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=dmdMukAA; arc=none smtp.client-ip=192.29.178.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="n6QWA5RW"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="dmdMukAA"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=ZrrAcVkwBXPrH5VHOWA51jWk4DQQ2bBeMeudkL467Vw=;
- b=n6QWA5RWBNDJo1TM4HMwtX4LJUL+ogBzlSYChX/vmi4+CGvo+EYFKR9lr1gCTsYoXFAnh4OrZGnn
-   /XDdAokTQkSmX0wo16Q6AsPQT6wtuVhGsHTkFFA+P2Tz++Oydfe1Kupg46UhMuCSFnUa+/+LgBO/
-   zXa/gQ7eK6PqNjwpB3KAeIe8oCXKuJBXyg41QFbv4vUNIyAO378t0llYizDovVvR25W6PcMbWdRX
-   Gxh3AYAyfnOgawwOt09ElnFLQVxGt8eMZF1G2HjmgwI9GOukwK3mf18iZm1vRjNRqPWigiTNCil0
-   ERBaDqdzNIsOlS67CwyqUr65pjjUB9ijdFauxw==
+ bh=FQyUk9YEvgiYxujMYxA5aZyVkvxs5oHmUJLZucaZPd8=;
+ b=dmdMukAAQA+l7n9flE+Xgvrl2Clqg1qgZqALv+ZOFwhX8rgz0/MSS1ZTAZUvp8J1hoz39dAS61du
+   5WYg+Gf8SYCLL6cv67UWEXRCsgcfM12sGqDv8aWJCxU4i8LQ1SY0FUPB1/FqAuFQvAkpVAEE5wo/
+   q5675rd355Kj6sF6HEgfER4yrarHgdLtC7Arc+KJkW+4hUAhfUkrosdLSrqxq2Cbr7TCMV9eUA8p
+   5GJDoN5ZxF1UlGEzbUyuVc/NHhREAILQCmfXB44RC5jTmRlhee6GU1WfLFvJaXVyekP4BiOhYwGI
+   GcXVKeDeNEwbzlDbtxCwo4QmBU7QEw+yE9XG9Q==
 Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
  2024))
- with ESMTPS id <0SO0006U7HK6YD80@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Thu, 05 Dec 2024 08:14:30 +0000 (GMT)
+ with ESMTPS id <0SO0006VXHX2YD90@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Thu, 05 Dec 2024 08:22:14 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,69 +39,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: quoted-printable
 Content-type: text/plain; charset=UTF-8
-Date: Thu, 05 Dec 2024 09:14:00 +0100
-Message-id: <D63M7LIBTL4B.EXTQ3OSFM9XO@ferdinandy.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
+Date: Thu, 05 Dec 2024 09:21:32 +0100
+Message-id: <D63MDD4V1FLQ.SL5FXZ9YS8J6@ferdinandy.com>
+Subject: Re: [PATCH] advice: suggest using subcommand "git config set"
+Cc: <git@vger.kernel.org>, "Patrick Steinhardt" <ps@pks.im>,
+ "Heba Waly" <heba.waly@gmail.com>,
+ =?utf-8?q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
  "Junio C Hamano" <gitster@pobox.com>
+To: "Justin Tobler" <jltobler@gmail.com>
 From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: [PATCH v2 3/3] remote set-head: set followRemoteHEAD to "warn" if
- "always"
-Cc: <git@vger.kernel.org>, "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- =?utf-8?q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
- "Karthik Nayak" <karthik.188@gmail.com>, "Taylor Blau" <me@ttaylorr.com>,
- "Patrick Steinhardt" <ps@pks.im>
-References: <20241203215713.135068-1-bence@ferdinandy.com>
- <20241204104003.514905-1-bence@ferdinandy.com>
- <20241204104003.514905-3-bence@ferdinandy.com>
- <cfd54be2-af8f-429f-a4c6-41f54c33c89c@app.fastmail.com>
- <xmqqh67j2ndc.fsf@gitster.g>
- <173ea521-6a2e-45aa-ae5e-4da99060cc4f@app.fastmail.com>
-In-reply-to: <173ea521-6a2e-45aa-ae5e-4da99060cc4f@app.fastmail.com>
+References: <20241204130928.1059851-1-bence@ferdinandy.com>
+ <fsqe37ibvarrsjugc4r2cairndr37cmyc64jneaqzhkq4qiiqd@6rskou37aqat>
+In-reply-to: <fsqe37ibvarrsjugc4r2cairndr37cmyc64jneaqzhkq4qiiqd@6rskou37aqat>
 Reporting-Meta:
- AAHxBdUgdmJtBsrilB8uFyMEvDU3RE5WXku/p1eVde6E8yCosx36MGjjWVcXTfWH
- qkHOENlQH+e3wON+uJ2++6x7+P95PS7SBr90Wg8kwkA+7wQ6IOfsX6/VA9iOzpJN
- xAYKAX9r7/hdaqUlR8+WA81fksskPp/LxmzgRbukVD9FROBh3MMr+lXV3WEZD0LY
- KrVLt/GiRppPqaYIUzWx2Fd7qgq/tL3zWyXfMxUGqXuyenFKuOjud5+veOEF8HmA
- m8veUAMpPfdCQl1N5tlZ3R674V0l7uxJzYSxztZiMkf/U55gqZPMpUwU74PfVLds
- /unuIAtDQ/4hccxbkwGM1fGI+1b3Vdns93OA3YoBBfrV4bBZZ/PWs/T3oirfEZnm
- pjsQMW5OOkbUeATOk3QDRIiYlx6nowg+M/maWf1V+2uxYFOE1u7VUd+yD4BK1Zlw
- 0fRpkIrLBrDcuOwSnh+cICMfBh6A69I+/IWpir6xIVLxYpYxVng9bWfO
+ AAH11yhriUhgHy62OA9uybEiraNYFSONNmX64BVGEwUSEhg8BLOQd4mzo9UFnSBZ
+ AHNwwSRX2ekeyf72T4Z61EwnSD0wYBViIwKkxP+yfl+X2LbDOCnaGSAswErt2dae
+ eTlKWGnc/FIXxkNmeKf7mq/kSR9wb5XkC69YCxXJ6Kxi2Fw35GKCgQxlTDUdeEPk
+ XnmV8//I12L3EP58RfewdpbBUPmHefhZKdaJ4GBcwVx3gzQZ8ifv8Mun3amCsgCw
+ P/9FeHajagdCZ5jxN9pz9RszbM7jbFZ9rc8OQhYWxYB3Gzvu0VhJitgqhbz1U9dy
+ zIuL7UyzPwXSk+8g/GUUXrNmHt1HXJokUcvfjoiVb2xfkitGfyEWB0cjm1rSrSwD
+ 08I7fB57cjP4MIsC50cIeTOhJwYEeoojGKlKfXAh2IxYM5oEsppPkBhMZ/fNF2f/
+ 7Kf4MUuWc/+z72W75UowTGo2ATiZVvGJWew+u/Nis3IvdBQf1UZtyaY=
 
 
-On Wed Dec 04, 2024 at 21:44, Kristoffer Haugsbakk <kristofferhaugsbakk@fas=
-tmail.com> wrote:
-> On Wed, Dec 4, 2024, at 21:40, Junio C Hamano wrote:
->> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->>
->>> On Wed, Dec 4, 2024, at 11:39, Bence Ferdinandy wrote:
->>>> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
->>>> index 7411aa770d..daf70406be 100755
->>>> --- a/t/t5505-remote.sh
->>>> +++ b/t/t5505-remote.sh
->>>> @@ -504,6 +504,17 @@ test_expect_success 'set-head --auto has no
->>>> problem w/multiple HEADs' '
->>>>  	)
->>>>  '
->>>>
->>>> +test_expect_success 'set-head changes followRemoteHEAD always to warn=
-' '
->>>> +	(
->>>> +		cd test &&
->>>
->>> I think you need to `cd` in a subshell here.  See `t/README`, =E2=80=9C=
-Don't
->>> chdir around in tests.=E2=80=9D.
->>
->> Puzzled.  Isn't this inside a (subshell) already?
+On Wed Dec 04, 2024 at 18:19, Justin Tobler <jltobler@gmail.com> wrote:
+> On 24/12/04 02:08PM, Bence Ferdinandy wrote:
+>> The advice message currently suggests using "git config advice..." to
+>> disable advice messages, but since 00bbdde141f we have the "set"
 >
-> Aha, then I didn=E2=80=99t read the context properly.
+> When referencing an existing commit, I think there is a preference to
+> use the output of:
+>
+>   $ git show -s --format=3Dreference 00bbdde141f
+>   00bbdde141 (builtin/config: introduce "set" subcommand, 2024-05-06)
 
-Thanks for the review! What I gathered is that v3 needs an s/output/actual =
-and
-we're good. I'll send that soonish.
+Ack.
+
+>
+>> subcommand for config. Change the disable advice message to use the
+>> subcommand instead. Change all uses of "git config advice" in the tests
+>> to use the subcommand.
+>
+> Both "git config <config> <value>" and "git config set <config> <value>"
+> are functionally the same operation. So the motivation for this seems to
+> be to push/promote usage of the new "set" subcommand. I find the newer
+> interface to be more intuitive and in line with modern command
+> interfaces so updating the advice turn off messages here seems
+> reasonable to me.
+
+Yes, that was the motivation, I'll make that explicit in the commit message=
+.
+
+>
+> There does appear to be other instances where the the advice turn off
+> instructions are open-coded and thus retain the prior format. This does
+> result in some inconsistency, which may not be a big deal, but maybe it
+> would make sense to also adjust those sites as part of this series as
+> also. Otherwise the changes in this patch look correct.
+
+Fair point. Grepping the .c files yielded three more instances, I'll change
+those as well.
+
 
 Thanks,
 Bence
-
-
