@@ -1,81 +1,58 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF8614A90
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 04:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0F72F56
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 07:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733374747; cv=none; b=KqRE4h2TpKpF8ombq4l1sJeYT6VYrZC/NmHfK7+zinsOLfa/ebWDWGZ+tPM+emFwUViuyq2zVsGQEiGMcUSsyA6P5z/Sj1PZw/5a9Tle5YlHdvry29FTPyCxREHuMFrSgkJz9NF0q8fuwCk/iP6WxtqSSZJl4faKmXjr5UBqOf0=
+	t=1733382204; cv=none; b=OEyvb1NhxhuulV1zzZY75B3cm7z69eHXCQsM+LWnXctc5+nbjCDUzGZjeZSLwb7zE1hh/5FEFcmK+0mkskrPhqjrySOFb/Roov/vgkASQ/Ksx6bdSzfeIhBqbGY0fMCIlHD9cvld+ZXFnAs75PNqvt0FnDMBRg1GIOekD9cdzDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733374747; c=relaxed/simple;
-	bh=8+TbUbeHVJESlSWchYJMvZ2OIOEwc3OLSNGS5ZeSxSo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ecqrEMZc1dnEu0w+g/L/MY3cjQ8OMMiv/TD/F/k86+RqU4iLbW7SPMeVxBhIkQlsu9sUHFGCf28TQxnBsyMfEuZJBrjCazNaqp2w5TyFUIzETokR6avCBbF2OJcv6grOgsaCrcqCD489J2si/djTTRDw9OMTZOr7U0gUj0DMpPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jEUY7d0b; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733382204; c=relaxed/simple;
+	bh=kizQpilwN+l3aMOV0hXPCyO4SizvdijTixLQ6xFbB6k=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DiuarruHgG9RiwO3W6LNBLBRe1PPmQq7o3jlPZgA/2uszvbtAT/w2boF83z7eEFsnczzrZB0XAsHeldMl0lDxMfyphVqTfXRH58SxJ9gAIv07eIJbR0O0ktbTow5bxXVDL7BOdnCdRIa9fF/RjFIs38cg7DzDZ2kPHDNsfgUQc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=calamity.inc; spf=pass smtp.mailfrom=calamity.inc; dkim=pass (2048-bit key) header.d=calamity.inc header.i=@calamity.inc header.b=UDU8amCy; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=calamity.inc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=calamity.inc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jEUY7d0b"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2ffd796ba0aso3993051fa.3
-        for <git@vger.kernel.org>; Wed, 04 Dec 2024 20:59:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733374744; x=1733979544; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8+TbUbeHVJESlSWchYJMvZ2OIOEwc3OLSNGS5ZeSxSo=;
-        b=jEUY7d0bdHgAa+dkZrs2+/lAFBqJ/MURqdx9s6v4k6m9PyqtOkszLvEF11xCx1xQ6b
-         gxMiJAEmqUqdas0mIIFuokD0dwgnLuk/DRAzxDV3WCro9pSHUwowT9rWpEXfESGELtXs
-         MJyGbullKVkAXIUonJRXezCNHja9dG35VnBd2tOc4qjKSQDyDalKYXnDd+tRIDISt6Z+
-         NBoWBthyG2YTezckG/yf3kInmeFDskH6JB2VKXuBNBOdG5lMUpLHyHG6lZIkgedyL75u
-         PAws6piPFpx06ga/bWaa5LBxPAIs1KQzhMCUmXoP/bEmi/F2voIVrSct7sHKEyLZztnf
-         xjzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733374744; x=1733979544;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8+TbUbeHVJESlSWchYJMvZ2OIOEwc3OLSNGS5ZeSxSo=;
-        b=ggiU1LEeEkUXee/OkYyG3WZMioGcpLyPUOapDZJwnUjl+CpKuNZLv0I/a6rRrkJDhT
-         Q3mnMNgj+kkbbospkmgSwLe441aKZysBA374ErFY5RKviaSaEYUTbjfUaSHxOzFWc+MT
-         ImZEycs3jWO2OcJGV5bOu9elOHWfPX2NnLB/mc0gqsiiUdecT4tsFf8lg0E6GlRDO+Oz
-         YWiy7N7pRrpxv0c1nxd9hqPRY4gstFIt60nyS1dIxa9ugVsPkblhbuVIvU2Lry1RYvBP
-         AWMS5s+VsdTDbanH8uWvH/lx2LEPJ6XnWC4o2vRTFhAH8qdEoYsV1+Abds2o9Z9vMymO
-         437Q==
-X-Gm-Message-State: AOJu0YwnIseqNfi+U1mrrFJttZD4v/oDbq7ydKgUkUeYRI4+FKEqUj5U
-	OH91k7Rb7SUavbX1eRu/QI/jci0x/UIgmUkRoZaYBTBAT6RfcmRwDuHo+sjplR4CMEc2o4M3sr8
-	nN/zFesnkfbTaJdcBP7fMzJnDVX8=
-X-Gm-Gg: ASbGnctqTqjLC6czjyHjiGO6ajGSNhY78NAi1NzK0vABCPLR9bOYNEdGJtAFEvbLKBl
-	cP0ZQPnvxFLh1zgxr+DyVSNvwPwOOHnM=
-X-Google-Smtp-Source: AGHT+IGfmc62G9+rT6+fwATVfRJ35Z6cJFsoAg9WGCxn44k5uGomtprkORImkiMecMfXufWq0nV22uH4zh07bGH88Sk=
-X-Received: by 2002:a2e:a5c1:0:b0:2ff:e5af:e67b with SMTP id
- 38308e7fff4ca-30009cb1899mr58739111fa.35.1733374743905; Wed, 04 Dec 2024
- 20:59:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=calamity.inc header.i=@calamity.inc header.b="UDU8amCy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=calamity.inc;
+	s=protonmail; t=1733382185; x=1733641385;
+	bh=kizQpilwN+l3aMOV0hXPCyO4SizvdijTixLQ6xFbB6k=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=UDU8amCyo1GjyqTp/3pWYbdTnl8orrg7Y9EMnizXMdRKPlfZc2gh24OsQDrj3o8FI
+	 jZIbEHz5uVIgmb0oFRQIDR7o1opVZJ9Z9bQUg4PK4eqEsxh/sHBBFt1LWLTXYhpINU
+	 eq4Xfe70idU9Td8BiwZoUEPmVOIIcNJRzt+d5QyqIuRoM5W6F45ngewoOMPDfhmtjf
+	 f65RBNVLiYxddsH8N/XEkmDFfmk2qCNeZ2WwO4YaugzWJzW37k4JqMypB69X4PQsl6
+	 iduu/BdZV+5bUCEDCS/ebT2wMQ235cxQnovaFhjz9pOE8oXTuGl8YEbu9/C2MmDlbH
+	 TJsbKqHFpnGGw==
+Date: Thu, 05 Dec 2024 07:03:03 +0000
+To: Justin Tobler <jltobler@gmail.com>
+From: Sainan <sainan@calamity.inc>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Some feedback on 'git clone create'
+Message-ID: <oEOA5yj-xh-iOJdB-TSYMB2RpjLqNmu-jqrQekiII-mTEYSXfC2Fqz71iRyriWaUiED-r4KyDOypwu47cu0v0ZGxoVHBexKkMMMFalfP7IQ=@calamity.inc>
+In-Reply-To: <pgz37cgfssouykfqxvmjt6pc2lycta6tmyjkovsceqwibww4fw@424usnt3dlh2>
+References: <AfLIcOv4X1AxLOaODNS89HA-bMeI7bj0xUGsLD-6xmVAS_a_2xOzy2uX-wXxpNA7kCpKYudELCEKv73roW_-HTd83Fcz3FZ_yJQOswQHW48=@calamity.inc> <pgz37cgfssouykfqxvmjt6pc2lycta6tmyjkovsceqwibww4fw@424usnt3dlh2>
+Feedback-ID: 116374642:user:proton
+X-Pm-Message-ID: 8a46d196c0fa0ad1217f02f59db62660fd747daf
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAJ-DG_DpNVmn1e=8hBX4YbEhzgX4xxn7AVBQnhKJOvHX4hx7kA@mail.gmail.com>
- <20241130163801.GA110697@coredump.intra.peff.net> <CAJ-DG_CNPGgfafyTcKWYeNXHD4gsspWakzQoRhfggMqZjenkyg@mail.gmail.com>
- <20241201213636.GB145938@coredump.intra.peff.net> <CAJ-DG_A3RY0ngY-pc6riho=OyzX2VjeaR2LRGb5=ru3CNruECA@mail.gmail.com>
- <20241202203451.GA776185@coredump.intra.peff.net> <CAJ-DG_BLtwg51UoBN4m64ejYUcS99zu54oPYGnC5p+55tNtzpQ@mail.gmail.com>
- <20241203211830.GA1423791@coredump.intra.peff.net> <CAJ-DG_AU8cFdLqfAnEE8N2KSqnQgJ47YJszyXWOvXuuKreAbCw@mail.gmail.com>
- <20241205032246.GA2573761@coredump.intra.peff.net> <CAJ-DG_BdAiFk_2eV=JDF7Lth9+Ay=86w-VT26Rt+T5fdN1vd_w@mail.gmail.com>
-In-Reply-To: <CAJ-DG_BdAiFk_2eV=JDF7Lth9+Ay=86w-VT26Rt+T5fdN1vd_w@mail.gmail.com>
-From: Dmitriy Panteleyev <dpantel@gmail.com>
-Date: Wed, 4 Dec 2024 21:58:52 -0700
-Message-ID: <CAJ-DG_BC=J3-wc2w_-xLSDbN6B9xkS2aWPUMFJYVRHkE+Ch9Ow@mail.gmail.com>
-Subject: Re: [BUG] commit fails with 'bus error' when working directory is on
- an NFS share
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hrm. I just spun up a couple of different VMs on my server with old
-and new NFS versions, and git works fine from those shares.
+> You can create an incremental bundle covering a specified range.
 
-I think we should put a pin in it, since I can't reproduce the problem
-outside of my specific server instance.
+Yeah, I know that you can bundle a delta, but I mean an analogue to a shall=
+ow clone, which is kind of like traversing the tree in a different directio=
+n.
 
-Thanks for all the troubleshooting, Peff.
+(Sorry for double-send, forgot to CC git@vger.kernel.org on the reply.)
+
+-- Sainan
