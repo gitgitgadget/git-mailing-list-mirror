@@ -1,136 +1,126 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch [185.70.40.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3441E492
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 19:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A48B19ABC6
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 19:52:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733428262; cv=none; b=jv8exw5T62YH3/LLV1ygLFmJQ7PEpuVOMtKfcSL2Q9yURQcsEJpSu6OCeh7s32jW9eUnQf7lywg/mzWYP6DtnDlIrsRxDt8eTn3RopThCGmPM8BkOOToUI+f1STM56A5NZn1khVcmT3qgxld8RT+Qf5akxGyfRyLsKa2ESkJoZk=
+	t=1733428371; cv=none; b=KDqY7MpGnh8tImCsLNmmpKNVGfJDbzqa/bK/dgjMMDcpX+xxXqE3tU9jrIY+DnDsN4ampMzozE2rpIlKQUal0f6GX3ZLNcdFmdNPm/D7lAyGsFY81GhwJ/FhMrY69ooJgGihEQ0Naw2Y0+3vRUZE9zl1hdEIsCQ502axY6kYyhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733428262; c=relaxed/simple;
-	bh=1kAoqW7BTyiG8TwoD+oQDaeny5cbpmZ+hb+ny8H3EHY=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=svl2wdP6JZBm9fZXE+jEPPYdjraVJXez7uLi3h0kBsqgwzZqMYi0ka/8gEar6Rp3/PMGpua/JLmlm3tTwjw52aQvVcL6av/Ph2B/othbya4a01dH+Nu94B/xgHeWdomd1E59Kql1w7UmIf/CXmnHtWuQtRxPiS9aJT+ljBhvmto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PjvIQR4V; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1733428371; c=relaxed/simple;
+	bh=43QfBISovb8SNGuOIPDxNJfqu/3XBcmo8lts5JZfbBQ=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=bkCGWygTOaSH+6339k2s7bNYaK+ZkgW7XbHm7ceup6boe1pVWDmR1dkg6Y1MxXKe5HllCCqna8wzySGPwolwcNl6OVpxRNkslbhRCGDqDB4rFAl1Tb2pwYGnhzSyuS8oBl1pXikELELjqFswWlZ9gtuAzHzb5jDYioYtG1/bMGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=eBi9ZSE0; arc=none smtp.client-ip=185.70.40.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PjvIQR4V"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2154dc36907so29325ad.0
-        for <git@vger.kernel.org>; Thu, 05 Dec 2024 11:51:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1733428260; x=1734033060; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CSUQ4UVDPZgJkxhql9rzztvLLKUSp0z4z1BtACvVT+E=;
-        b=PjvIQR4VwEpWbm1DdgxSAPprzrMapDjUxKjmYDfk4NW9B557pzgGcCuAb1/Taz7ruj
-         h+LU//cItO5P+LP7/WALVL8ADb1GqceWt1dHCuqFR4CW/i0EpQsKdFizQGeIijOPVurf
-         FV2o7d4F/wGIsX6hkjEkyxSfeeIzdc3InG8h5kHbeOMTQfiWGt2K3KIlZ2gR3E2FEmGD
-         qhBZSGj6O+/ByVJMZSz87fJRqfOuX4kUA2LUVsK7exOFK8iku8ZnWDBLbJj8fsl/wxxb
-         /7NIvPLywjYkl9rpyHL5/2XmMfsk+gHALuGaAWkxz0eVPuFnD57BIpOFbV6RveZd7+N7
-         BMtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733428260; x=1734033060;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CSUQ4UVDPZgJkxhql9rzztvLLKUSp0z4z1BtACvVT+E=;
-        b=MxaIJRBzVad+tRAsUQovNGmXgrW9lyDjpEmqCfeV31vJd1p7//41KfJapu/yBj/9br
-         feSIvFVvIOf0qzFdG+MGVGJcbG2rGc+ekXK+3Hveu+bT0sKHbWhRSBtr+t6g5xhqz3cg
-         vqIqbL5zNsRvfqVoRnSVvB+gjelG7o91wQ3ArPDreXZQPrs1JfyWyNLJxVZGEFsIvkMR
-         yDqfaQw2r9xp1VrIb6sy9I0HzInP1XQ//X9S9UjwRSB8Pqfq2xVWGuov5gFm6Arlfw4S
-         nFSMbBswIZUwwBb+HFJ9kBBaRiGboF4qfMdYfxN0A4Ru+AzS76dXm1kV5nnrJLbNKwMb
-         Expg==
-X-Forwarded-Encrypted: i=1; AJvYcCV8BJdDnrgqWZEPOHM/Z2ihLCQbMj9gTmIPSNlSnKl+GeWcXccd9yzUI30/GzSBLUajRdM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRbjEgnLuMEzsDua60tDETLXQm/LORTxDJCPJVq57wqHK1XXMc
-	oy6FXem52oVVGZJ4BhNfc5BV0+gKO72ZH6h6+rSMEPBKyUDOlHCgfpJtOTPg/g==
-X-Gm-Gg: ASbGncte3e+VYab4ZYXfF5hnJH1VpNYUz68QaUO2N1fzgpAPW3XjK5uk9wdigCY1l0i
-	vyQ+61KqWAXdIhP1kOA3PXl+U/iMQxfUylliPScT2/XqJK7OUurip6VhbKVzV/w0LBrslbidZuU
-	yWIAYRgh4MO1VdIVy45uQ09yd1zAA3v+5hm8VAUxiOnTcotO9iK9BJLAP/RE2crECpAnVelcGpx
-	gZ1fGQJZlD2eEH89vwjgtfXSz0o+vVmxfZ2ht6mQ5olJrMK
-X-Google-Smtp-Source: AGHT+IH/Fytswlj3Ulvq3EKfQ2fgRC5H59oVl/jax1z/Avn2LqdN4cds9w0xbteT3qWNMW88X0Y1GA==
-X-Received: by 2002:a17:903:2bcc:b0:215:b182:ba44 with SMTP id d9443c01a7336-216138d6e94mr213265ad.27.1733428260061;
-        Thu, 05 Dec 2024 11:51:00 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:80c2:988f:e15c:5983])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-215f8e5f15csm16167585ad.76.2024.12.05.11.50.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Dec 2024 11:50:59 -0800 (PST)
-Date: Thu, 5 Dec 2024 11:50:54 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org, 
-	phillip.wood@dunelm.org.uk, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com, 
-	Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>, jonathantanmy@google.com
-Subject: Re: [PATCH v15 09/10] fetch: set remote/HEAD if it does not exist
-Message-ID: <444kgiknevb3kwtypjjc2glryaav27t5fafgyzqq5257w7o4pf@4fngcyfmvfcp>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>, 
-	Patrick Steinhardt <ps@pks.im>, jonathantanmy@google.com
-References: <20241121225757.3877852-1-bence@ferdinandy.com>
- <20241122123138.66960-1-bence@ferdinandy.com>
- <20241122123138.66960-10-bence@ferdinandy.com>
- <wmu5ld4xsfjz2tpp54jmxqroma423t5nn2jh3q5gq2wswr6fkm@vrlhigyuxfzu>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="eBi9ZSE0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1733428361; x=1733687561;
+	bh=YDRBrr/7FmCRpEOfEiaBEvymFwTE1Wl+TxKdvBrP7Uk=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=eBi9ZSE0xzDr1pgCEK6RaifE7Hd8hrh8efovgKps21SICqKiyN2FSX3vXaaauQOJI
+	 PMq7/2VhHPhv1pNsAwtPDP0qdFViyw0x97RrhbP+e1CySmuImpyaKlxMlRJy3SyCu/
+	 5g8L+v1nfi4rQjMOcHKmOXjAvY7dhUJ/QQKjaPi5Zr3hQX5AmBYbN8BaQbtVElFRES
+	 Mk1pzUZ/aFZadO0ymdkQodovG7PP8fdIX9MMX4UAOe5mcNmbv+N3bvV4x8h/Go1YPS
+	 SCpdOYLbRx9rcWVHyWsk8L5hKr1vQe2u8MTmJwJPYZW1XAP79firtk0zea0dzWiY6b
+	 976Foc8T3GKig==
+Date: Thu, 05 Dec 2024 19:52:37 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: [help] git status doesn't seem to work.
+Message-ID: <n8KYxrArhb3MywPvDHVmEz0dka8QYYWikLDZE_aboUX9GBgF2X9uomuxtrPA6VmS33TxXyltJB4xqjALIuprVvE12prKd_ZW4MYM9kC4Qds=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: b6335414d3e0dc08fdc2789b20f08423b8ccbd0a
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <wmu5ld4xsfjz2tpp54jmxqroma423t5nn2jh3q5gq2wswr6fkm@vrlhigyuxfzu>
+Content-Type: multipart/mixed;
+ boundary="b1=_UpKYLst2CZ0tH9IkLtzu7y5w81SEHZzYJuATLDCpCU"
 
-On 2024.12.05 10:58, Josh Steadmon wrote:
-> On 2024.11.22 13:28, Bence Ferdinandy wrote:
-> > When cloning a repository remote/HEAD is created, but when the user
-> > creates a repository with git init, and later adds a remote, remote/HEAD
-> > is only created if the user explicitly runs a variant of "remote
-> > set-head". Attempt to set remote/HEAD during fetch, if the user does not
-> > have it already set. Silently ignore any errors.
-> > 
-> > Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
-> 
-> At $DAYJOB, we noticed that this breaks `git fetch --tags`, although I
-> haven't had a chance to figure out what causes the error just yet.
-> 
-> I was able to bisect down to this commit using Jonathan Tan's
-> reproduction script:
-> 
-> rm -rf test_tag_1 test_tag_2
-> GIT=~/git/bin-wrappers/git
-> mkdir test_tag_1 && cd test_tag_1
-> REMOTE=$(pwd)
-> $GIT init .
-> touch foo.txt
-> $GIT add foo.txt
-> $GIT commit foo.txt -m "commit one"
-> $GIT tag foo
-> cd ..
-> mkdir test_tag_2 && cd test_tag_2
-> $GIT init .
-> echo fetch --tags
-> $GIT fetch --tags "file://$REMOTE"
-> echo regular fetch
-> $GIT fetch "file://$REMOTE" 'refs/tags/*:refs/tags/*'
-> $GIT --version
-> 
-> 
-> Prior to this change, the first `$GIT fetch --tags "file://$REMOTE"`
-> fetches the `foo` tag; with this change, it does not.
+--b1=_UpKYLst2CZ0tH9IkLtzu7y5w81SEHZzYJuATLDCpCU
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
 
-FWIW, moving this:
 
-@@ -1643,6 +1703,8 @@ static int do_fetch(struct transport *transport,
-                                    "refs/tags/");
-        }
 
-+       strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-+
+[help] git status doesn't seem to work. See how a pull caused updates after=
+ status showed "up to date"
 
-to just above the prior `if` block fixes our issue and doesn't break any
-tests. However, I'm not sure yet why the order of ref_prefixes should
-matter here.
+```
+~/Peeranoia_Framework $ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+~/Peeranoia_Framework $ git pull
+Enter passphrase for key '/data/data/com.termux/files/home/.ssh/id_ed25519'=
+:
+remote: Enumerating objects: 17, done.
+remote: Counting objects: 100% (17/17), done.
+remote: Compressing objects: 100% (15/15), done.
+remote: Total 15 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (15/15), 6.41 KiB | 312.00 KiB/s, done.
+From github.com:freedom-foundation"up to date"/Peeranoia_Framework
+   03edf66..4cf4f51  main       -> origin/main
+Updating 03edf66..4cf4f51
+Fast-forward
+ README.md | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
+~/Peeranoia_Framework $ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+from A_bughunter@proton.me
+
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmdSBIIJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAALjBAP45ZhMdBcf1zjdJRoyhz32ikG5ndCkNXFn95CpUH0txcwD/WuZQ
+ZJCa46Cavsdv6ZL6kFm0w+KA9SEifL1N5eoYgg0=3D
+=3DjjzN
+-----END PGP SIGNATURE-----
+
+--b1=_UpKYLst2CZ0tH9IkLtzu7y5w81SEHZzYJuATLDCpCU
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_UpKYLst2CZ0tH9IkLtzu7y5w81SEHZzYJuATLDCpCU
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmdSBIIJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAF6CAQC1uyyr
+RJf/cXW9JDPP/klB+2RYavtpGIa12ibhKmWAiQEAuYz3h6WFI3rmyIl2CfZknC+/x0AP0M6Tb1f1
+mjt1VAU=
+
+--b1=_UpKYLst2CZ0tH9IkLtzu7y5w81SEHZzYJuATLDCpCU--
+
