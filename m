@@ -1,42 +1,43 @@
-Received: from mail-40138.protonmail.ch (mail-40138.protonmail.ch [185.70.40.138])
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DD15028C
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 21:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C827B5028C
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 21:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733432626; cv=none; b=loCDvxmPndUPupVkSu4tJWskfR/753c7fSZJva7p7jUtfxRs+4OI2JJ9UQp3C+qgIk3g/m60+NyXmbprU4jYsb2sKwmb9KziBk3ki+3SsKOJQg902Q1si3NpHwmuQvJNi76PivyLT5EZQAwNRMTcwniXC/ZJCLPWpE/unBQ+VIA=
+	t=1733432923; cv=none; b=t/qv7VKvqE9pmSa6dnOA8XpG6u2XpM/w0GtE8lOLbEcAxXp+otBH8VbTwqE47LZbtKx7DC8JEOWslOweMMK8HTnZIYg9y/voVyRRiDSitPkjHIvpxwV/Yk7g7yJdDf3S9v4QlPu9Vkz9tqNcLvJDOJj/2aNsq2ywdLnQ/2pWzDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733432626; c=relaxed/simple;
-	bh=42mHDO3FB7G3srjSPVY+Z5dfHw+QVAVvR6aBtUmhoSc=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mL4oCKTuZX+sP4693jim248w9TYi1rTFC3Bcc5ipSatqmPgQWXs/j9r50p1wLQvaONQPfQ0ReRpADuBHXIMLIDWjJXpL3rtRR6km740knOtjgOJPsURMVv3OioC4HlLfw1tY8gPOhSJ011TfmQ725Zk4GsokSRsTw20VJlzOibU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=IQ2/30lU; arc=none smtp.client-ip=185.70.40.138
+	s=arc-20240116; t=1733432923; c=relaxed/simple;
+	bh=19ZIV+gsSvXUuXbp6agX1G1MkFWnd7QkDNlYRnzAOac=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=e/VB3GRVUd12KjT7u+GDNDYv2IR2CoR1aGLxfUtVTqrUMerPTY+ufhPW28qqyL0FUZuyctkx7+/1BpWhHE8ipywllp/opXpmYxfGI3oYktH5aBDpDW9mibjbjpw1CnF4T8SbCuNO6smZ2iAeRLp53/5glzz1tKBneB4x9lTKTpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=FM3sTP0X; arc=none smtp.client-ip=185.70.43.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="IQ2/30lU"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="FM3sTP0X"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1733432616; x=1733691816;
-	bh=42mHDO3FB7G3srjSPVY+Z5dfHw+QVAVvR6aBtUmhoSc=;
-	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	s=protonmail; t=1733432913; x=1733692113;
+	bh=19ZIV+gsSvXUuXbp6agX1G1MkFWnd7QkDNlYRnzAOac=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=IQ2/30lUEFYFnB43pQ5OnDjD/N40AFqQzXLmF04cF7vrrOX1A5qWsh46Bq9Hkukib
-	 akqpD788E77UvBD2cRjaUmGCliMCpTGp8a84bQiuWM0/AhpSvBvBc7QOYsAXQUTl4L
-	 YL7ltCDTv8GBmg24lIOEJidFYKHDWMXO9UxFTA0XzbxX7MpGvZe8Nw5KdTskB45zdn
-	 /pT+NuOzqx6vOk6k5sKO6wLI5d+VRYCkNgeGiY7ODR1rUz7gowPm4Wj3kLK5TgSiCt
-	 80tYaWd5ABOy01tIoggwbEuyB75NAdkaceAI4EshU4Aa86gLjvn2L9NEcibO9Nex82
-	 txqF2whSeTr7w==
-Date: Thu, 05 Dec 2024 21:03:33 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
+	b=FM3sTP0XnojLBs9938S4jeoIVAIRofkpg+6G+s38ZTxv6uZZytU2v3pY4JXMhOfAn
+	 wV83/bPByf+VT/iQDO1dB+PM2eUpESJm+ptIgJisBm1eouOm8uMw7FJGyodzyEXOzn
+	 oZF/i4sr2uixFhQMhq7kAFTvYnWuY0M3wtUoVqBKdA+RvyRpCoUVtdee9/NMgYn/F4
+	 1ZdgiimpU+zSTjE0KafvA1erpLPxF9Nxsrfd97GamiIhxY7VE5osWLrhCNxTP3Tn3c
+	 DWAfurfyy5GMTDV1Zygy9WuT/Fhft3icsvulu+VjINo7ejTGEcTYt0a2G7RIeL6Jq/
+	 qcICHtPuQTbcg==
+Date: Thu, 05 Dec 2024 21:08:28 +0000
+To: Jeff King <peff@peff.net>
 From: A bughunter <A_bughunter@proton.me>
-Subject: Re: How do you undo an add
-Message-ID: <0fyZjFuLfvDKSV32a70rBZ4q-iPMLmZtv4ITVBuqoUbtyUiD9CAbaCFgOKNsSh9Rq0tMszzyT1-kqf9bsWroZxEJXW_-Fg-VvBHKUqfCZZM=@proton.me>
-In-Reply-To: <0ATsUGlsstLIpL-SRj2TaZ_LH0y2vDNYRledGKNf-Fkvn7OcpLUm4uvUzcQyeEZ3XPVbrqTbbU7j64bSg9GAaSvcmzYd_O9z9X4K4TE4o_E=@proton.me>
-References: <4hiTc8Kx5yNhYuN8abv3QFJBuptM6VWZ9OKvkdZFlSI5y0zoK-lN_VHf-QCSEjllmSWvu9V-tbrvFOx17_P0Nq8UKxEcK3Rs2d02FjbYuUc=@proton.me> <0ATsUGlsstLIpL-SRj2TaZ_LH0y2vDNYRledGKNf-Fkvn7OcpLUm4uvUzcQyeEZ3XPVbrqTbbU7j64bSg9GAaSvcmzYd_O9z9X4K4TE4o_E=@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [help] git status doesn't seem to work.
+Message-ID: <LgXFUHKOZ9fW4415YWA5y3is9qOJfG04kXCgoAtEB5Oe7YrvY1RuzfogI4ISvdjV76-bn1orZp8FG7KkDlJ5CC0zkWTqMaXDwkAenywEqJM=@proton.me>
+In-Reply-To: <20241205201952.GB2635755@coredump.intra.peff.net>
+References: <n8KYxrArhb3MywPvDHVmEz0dka8QYYWikLDZE_aboUX9GBgF2X9uomuxtrPA6VmS33TxXyltJB4xqjALIuprVvE12prKd_ZW4MYM9kC4Qds=@proton.me> <20241205201952.GB2635755@coredump.intra.peff.net>
 Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: ae8f0cba1276509f343ef85690f1e64736959464
+X-Pm-Message-ID: 9eff3a9584d09b661a43f14082e9e8182c49ec74
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,9 +45,9 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="b1=_7hUBIYpgMMDlVg1KpbvT41DE54ZI1TdAKAL3f8wiFYQ"
+ boundary="b1=_HwZL7UER8wNzDTzJ5PoROqYQZjMkdiTrwbQpEji9E"
 
---b1=_7hUBIYpgMMDlVg1KpbvT41DE54ZI1TdAKAL3f8wiFYQ
+--b1=_HwZL7UER8wNzDTzJ5PoROqYQZjMkdiTrwbQpEji9E
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
@@ -56,38 +57,79 @@ Hash: SHA512
 
 
 
-A lingering [help] question answered interspersed.
+Good answer Peff. It answers a lingering question here https://lore.kernel.=
+org/git/0fyZjFuLfvDKSV32a70rBZ4q-iPMLmZtv4ITVBuqoUbtyUiD9CAbaCFgOKNsSh9Rq0t=
+MszzyT1-kqf9bsWroZxEJXW_-Fg-VvBHKUqfCZZM=3D@proton.me/
 
 from A_bughunter@proton.me
 
 Sent with Proton Mail secure email.
 
-On Wednesday, November 20th, 2024 at 14:01, A bughunter <A_bughunter@proton=
-.me> wrote:
+On Thursday, December 5th, 2024 at 14:19, Jeff King <peff@peff.net> wrote:
 
-> On Sunday, November 17th, 2024 at 05:24, A bughunter A_bughunter@proton.m=
-e wrote:
-
-> Q. how does git status compare if it does not ssh
-> use git log to find the commit-id?
-> A. git status uses ANSWER_HERE to compare with remote.
-
-Q. How does git status compare if it does not ssh? A. git status uses essen=
-tially a cache of the last value we fetched to compare with remote. See als=
-o "is comparing your branch with the local tracking branch we have, refs/re=
-motes/origin/main. It doesn't touch the network, and that tracking branch i=
-s essentially a cache of the last value we fetched." ( https://lore.kernel.=
-org/git/20241205201952.GB2635755@coredump.intra.peff.net/ )
+> On Thu, Dec 05, 2024 at 07:52:37PM +0000, A bughunter wrote:
+>=20
+> > [help] git status doesn't seem to work. See how a pull caused updates a=
+fter status showed "up to date"
+> >=20
+> > ```
+> > ~/Peeranoia_Framework $ git status
+> > On branch main
+> > Your branch is up to date with 'origin/main'.
+>=20
+>=20
+> This is comparing your branch with the local tracking branch we have,
+> refs/remotes/origin/main. It doesn't touch the network, and that
+> tracking branch is essentially a cache of the last value we fetched.
+>=20
+> > ~/Peeranoia_Framework $ git pull
+> > Enter passphrase for key '/data/data/com.termux/files/home/.ssh/id_ed25=
+519':
+> > remote: Enumerating objects: 17, done.
+> > remote: Counting objects: 100% (17/17), done.
+> > remote: Compressing objects: 100% (15/15), done.
+> > remote: Total 15 (delta 4), reused 0 (delta 0), pack-reused 0 (from 0)
+> > Unpacking objects: 100% (15/15), 6.41 KiB | 312.00 KiB/s, done.
+> > From github.com:freedom-foundation"up to date"/Peeranoia_Framework
+> > 03edf66..4cf4f51 main -> origin/main
+> > Updating 03edf66..4cf4f51
+> > Fast-forward
+> > README.md | 24 +++++++++++++++++++++---
+> > 1 file changed, 21 insertions(+), 3 deletions(-)
+>=20
+>=20
+> This pull is doing a fetch under the hood (since pull is essentially
+> "fetch + merge"). It updates the tracking branch origin/main, at which
+> point a "git status" would show that your local branch is not up to
+> date. But since it then immediately merges the result, you find that
+> afterwards:
+>=20
+> > ~/Peeranoia_Framework $ git status
+> > On branch main
+> > Your branch is up to date with 'origin/main'.
+>=20
+>=20
+> ...your branch is now up to date.
+>=20
+> This is all working as expected. If you want a more up-to-date view of
+> "origin/master" when you run your "git status", try "git fetch" to hit
+> the network first.
+>=20
+> You might also find more information in:
+>=20
+> https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches
+>=20
+> -Peff
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wnUEARYKACcFgmdSFSIJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
-8pkAAIzzAQCCC3GPjxGsJu/OE51LuIBbmhZ7o3FwxuRo61m9l4V0rAEAjn82
-cLmBej/67p7s3eYLzQdtqfBP1LQz3bloa9uXjQE=3D
-=3D5q/u
+wnUEARYKACcFgmdSFkoJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAABrFAQCbDOZHArmE9Tb1IEfKiptP1L2sKGjWvMRq2HcVzC1yfgD/Q83n
+S+eVEQTC65XKGxb4a3v9RSOiXgFxfrAE6dBd+wY=3D
+=3DZGvg
 -----END PGP SIGNATURE-----
 
---b1=_7hUBIYpgMMDlVg1KpbvT41DE54ZI1TdAKAL3f8wiFYQ
+--b1=_HwZL7UER8wNzDTzJ5PoROqYQZjMkdiTrwbQpEji9E
 Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
@@ -105,14 +147,14 @@ QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
 eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
 UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
 
---b1=_7hUBIYpgMMDlVg1KpbvT41DE54ZI1TdAKAL3f8wiFYQ
+--b1=_HwZL7UER8wNzDTzJ5PoROqYQZjMkdiTrwbQpEji9E
 Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
 
-wnUEABYKACcFgmdSFSIJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAClaAP9v1Z9U
-aOF+J5keOj25wtCbKBCG9zRm3WJpc660tuX8mgD/dR1ugsC1dxdjXNcszMk5kSEEU+pbPFVYz1Ls
-ZSMU6AQ=
+wnUEABYKACcFgmdSFkoJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAHWhAP4oNV7Q
+HY0dI5dqkv4BpurcgB6EtxhOu4uvihowQUQkwgEAj54nHUODA745Kqhs8BMfTF2HMJjV888xma9q
+VPliHgU=
 
---b1=_7hUBIYpgMMDlVg1KpbvT41DE54ZI1TdAKAL3f8wiFYQ--
+--b1=_HwZL7UER8wNzDTzJ5PoROqYQZjMkdiTrwbQpEji9E--
 
