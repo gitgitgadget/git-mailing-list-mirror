@@ -1,244 +1,168 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12olkn2052.outbound.protection.outlook.com [40.92.23.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CD921C164
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 15:50:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733413804; cv=none; b=XUHHr7iMFATQEbhgHbpFpGjYHvWbQFgpls3zKKD4NmflPgBevWPVc9gq2jmB33vfE46tXQJGLBjKoeNF9+jLG6RxXmgYzx7zzPFMzzp1nSerc596Gu7j4fh4JvBOZzZ86yPxqit5Dfupd0LRo68grI6zRosjONums67dAVIekfo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733413804; c=relaxed/simple;
-	bh=fFFLtOP564VpooDeWAyxhtG8Oo3gBf5SiiTZKRRmnhI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dRZgNcc4cfqcAJWmlrrckjhBE+QLiaBn1gFivtRmq+nRFZ/PNrcrfan4/dKGJm2rHo0s1KTkSAgG1SvY/2RSQTMzTtVHpfya9UXVIJbw28FFFpzUjgV77h/5C9SjDWWskI3/9pxgvTb5NBWUHCRzXHQjYqUDusjxI2rTTwAzbyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=djMJ7XUd; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757A61773A
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 17:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.23.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733418062; cv=fail; b=N7c531mJCCbkpTOAMrEpfmz4Jsx5dpihussg1tNUJACRabHfh2elOvQz2FU/SmCP8r49daDZ/c3cCWH/ctj8xV6Oe+AojzH5S+XbnmMHYXbLyrCZqQDBs1LRP3BSsxVgHQ2qmTawOyArx+qQml2YUSmiJ+hWgHrSPbabSAp8xX4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733418062; c=relaxed/simple;
+	bh=PcC3l1JWzr7XFicU5i/ha7Ue+VXlMbKNkIjDP6SL5CA=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=nrHkZe/wJM9F3MPQLN7vzW2M7o2VVgNJ6Gh27gG/MNELmRI66yJDAyNcFLj7QHDNr83cKN6c43LtwYwSffQlGuzNYVoYwMGQSNodwELUMtV2OXUja/vEj/XKONQLbcQayPfmk4KMdiFwmHYHkqR3lknXqNhyYSVJ8Kj9vi9DaQ4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=T2Nz697x; arc=fail smtp.client-ip=40.92.23.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="djMJ7XUd"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-aa54adcb894so186675966b.0
-        for <git@vger.kernel.org>; Thu, 05 Dec 2024 07:50:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733413800; x=1734018600; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MXOkl1662KDxqJxgNJT1Fca6oEnzH65kzM+2cXNrJe8=;
-        b=djMJ7XUdk0C9EH3J355He7xdasuYQo75ej4nXtL+m4PyMZ/a1NcY39ku3RCv4E/9Ee
-         zKu9YsILXQV9mJvZaAkEVb/G4MkQrkmtFohVvF/e8drq/NtotEVozwRxYLPOWZ8FkM9D
-         WviyU6y2yHFAirISiY8FutioFP1BcmuAQ6N2fsX6FXfFASdzS7tEsROnUjLuN4o37FNK
-         F7Z5iO1V1BwZaLepWUrcxkVAe3PfJmtgzs/ktJJeskVdKag8BQJEMgDrYTPrm4htMZTV
-         hg0IUtzgw6xjw7GRHc1doFACdurLfApFpjw/m8HbRmno7S/h+jZgAVjBKZS5zGntftS1
-         ASMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733413800; x=1734018600;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MXOkl1662KDxqJxgNJT1Fca6oEnzH65kzM+2cXNrJe8=;
-        b=sWYKXRUYr364dBRaspSHzDahE4ASmGOPsY1Jh6imasmBo8x78mpR/QvabcEJowDiR2
-         fZ/TiXDlcqn7M4aDci+XrKpFKAkmwqi9IyXnfY+lRkLbBl683c51vCKQdHb0GtRbHYFI
-         RLEyUQXa718NJj/FtGaoR9LgdRAmnDNMv9RazsWxMs3x5BOZjea0Fqco2UYq5EE1SwNq
-         pg/pQmyLWtcFFnkfKGEG0zng4i5BV38sqsLJgc+oDmFnrhYPE1IsKubwnlXUjjedNfzi
-         0tqO4H45PqKFfG4cRi36YI8Z9ll2S0CLVcneBH+KCA8n/qVziRdADz/UR7R46Qq1p1T7
-         oN4w==
-X-Gm-Message-State: AOJu0YxQiBPyM0wwAC0bnTB3SRN/6PcOg6Khs3NwgJSvAuhXznqinm2j
-	QkrlNI9NPREjv+lfvTBQCfS/E6YtKys8SUu+vIgodCDM8SeUi2XFSy0dB5WT
-X-Gm-Gg: ASbGncuZ20j4Dj9cE3r4vo8hxlTE/TvZMgP+kxBoqrLkUe2p4lCQhRSY/A7lpUGYOaD
-	rIpzlfy21dzdR5mWwsnLsibGxXyD02zXgfwPKQ+Sxb7KfaF8pXhKQBJwY4/uAMGQE4E4xtamdtw
-	47S/NeZBUl/YMrFKsiXYYF9BOA/hk17WU3h6JwaWjWQenRdQNjQ9rU+NpKYslQYGVdJyKVjRqaX
-	ybvcledXynueHP7kk/amoFT5JVnIgsCWnclMFlr5/p529BZ1c97
-X-Google-Smtp-Source: AGHT+IFa0x91+ETGOG/FRt/+GBwK4Sk8tYH4ahcBtXVKUnhifMVPuBoxyx3hDclAyHdByYN+GTCfGA==
-X-Received: by 2002:a17:906:18a1:b0:aa5:15ab:a5d4 with SMTP id a640c23a62f3a-aa5f7d50305mr954039466b.22.1733413800019;
-        Thu, 05 Dec 2024 07:50:00 -0800 (PST)
-Received: from [10.82.4.202] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa625e5c660sm109255166b.19.2024.12.05.07.49.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Dec 2024 07:49:59 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Thu, 05 Dec 2024 16:49:57 +0100
-Subject: [PATCH] reftable/writer: ensure valid range for log's update_index
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="T2Nz697x"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CEv3fD2HbpGXs8OhcRH+iA8jkA9VimOBG3nmJtIq1GN1DZVwz2kwR9ZWUsmUN1w8K7ghKWiYUrAUR8+7i2zb/ADAd0s2UWw+4nZTKd5uShovLXZLoN3IM2Er9k0kv/5DLREEQbE2kUf4ruBxaz6CkckHjxNUo5HalHBr79V0nHh4W9Zv0GiVQRrnwQUrJbJ0nlPlnJ/GqcaLmfEoi1fo5PutPlQzDLHTQmVfh5vrsEPjH20rSq0TJvIBRd/9FCHVLNrYrabNPpp+++NcMFKnEZqyDgJgcQHa8V7rVX22fbn/QGpjv/ejVJKbH0mW/dZqBWoKhI4X8TnNSRVvpzEMKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=g5hKXEXUF1gijVBLRoPsgmChhXdpodcIl5GHSJfWnbc=;
+ b=rSHXCl7qOZW6euIAhQA/Z3zdERtVY48D0hd32Bcb38fix7kPngIgtG+CuMGBvVSIDZFu6K4QeYI6DxsPymk6zJ8fH5p97J/bWJGfBF9fdsozC/2Af/pz4TVjuLQxDhU2+vXUZkHe+amUhKtMPA//bVoYTnJ+al+7k2fgjyuaYar05c4Ta6lTtgqzrfpIG5Fsn1+fVsQIvOttzAZn98zew1QgG64sZV/jfzNTBkwb1IE6gRkqqT0eR5EZwq/MEte0XBI8J9RAHED//do+A2P8/99LIGq55kh6eG3OwbkYM/tQqUVrPYWzMLoIaYSt5g9rrqn7x2tEKCb5NGvk82xjzA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=g5hKXEXUF1gijVBLRoPsgmChhXdpodcIl5GHSJfWnbc=;
+ b=T2Nz697x8eYBSy2s+Myq6hT+TdW0EevAjSWqNkgw07i4Ag+HCN8gD+zHiPDEcSMl78pyoTSPHzWY5UpUBsW5dbVF54snuBQViC923dsr/UArYgRCaP2JibJbNV+jp1WdXlqn14jPWQQfaKZhJLOiqHcfWgrIwMxk4yN9ugjQIv+QfistxQ3zXKkQnxKP5vb1oYNe0+QNLYFGusDwrayYNWifxcoxTdKowmv7OxczLL9TMWYBCXbTdd6yIWem8Qi/arh2SmdXfTOWesNoGLitv1pnTrQagNwkopKOO2a5b17yKdqPrPwf3MKfzLR1eZW/vt6r8pfzGQy3IfH0BkDxZQ==
+Received: from DM4PR14MB4880.namprd14.prod.outlook.com (2603:10b6:5:390::9) by
+ IA0PR14MB6766.namprd14.prod.outlook.com (2603:10b6:208:403::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.11; Thu, 5 Dec
+ 2024 17:00:57 +0000
+Received: from DM4PR14MB4880.namprd14.prod.outlook.com
+ ([fe80::cab3:9377:6fa4:3de0]) by DM4PR14MB4880.namprd14.prod.outlook.com
+ ([fe80::cab3:9377:6fa4:3de0%5]) with mapi id 15.20.8230.010; Thu, 5 Dec 2024
+ 17:00:57 +0000
+From: "dangling ." <kasperkantz@outlook.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Proposal: Allow Customization of Git Merge Commit Message Template
+Thread-Topic: Proposal: Allow Customization of Git Merge Commit Message
+ Template
+Thread-Index: AQHbRzaT4wyMGQCfz0aUl4wAJ1X1ow==
+Date: Thu, 5 Dec 2024 17:00:56 +0000
+Message-ID:
+ <DM4PR14MB4880061D71993B749F44F2EDA7302@DM4PR14MB4880.namprd14.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM4PR14MB4880:EE_|IA0PR14MB6766:EE_
+x-ms-office365-filtering-correlation-id: 885e3262-d4f2-41ff-840f-08dd154e62f0
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|461199028|8062599003|15080799006|15030799003|19110799003|8060799006|7092599003|3412199025|440099028|102099032;
+x-microsoft-antispam-message-info:
+ =?Windows-1252?Q?qyseRaupsp5PwrWN/1ma5xpnrOe2atLPbWEdMdykIuWI97mpTk5hiYPe?=
+ =?Windows-1252?Q?HJ7QrOIygPKS5az/vtVIRBJQRF4K06Qm6ZPi1QOkPPutAN4hAhBi9j60?=
+ =?Windows-1252?Q?RXQ+7NhhDK2MKV2oIIpo7aOPybFIFZ3b6PZAdYJW6ShIgY9mKXp79JxS?=
+ =?Windows-1252?Q?Z1q0BY4mBTU5ZFZCIq78qkaIiryg+LpyEosBlrbBsq68tNPIJ30jyywt?=
+ =?Windows-1252?Q?pO1NcdvztJx+fWKIwus+N6eVtLAA1XKP2WGFq/DRK+ckPtJd5mTW3Qae?=
+ =?Windows-1252?Q?wOspg/dW0MMBYg8dfs4jn0ESURJppPuxWoXo2bweHjBoJkh1S073w7BW?=
+ =?Windows-1252?Q?ABemTCl6s+38rkChxhbPRZf/C9R5QIm5exhHfxoaRk39ppKT13/qv5CZ?=
+ =?Windows-1252?Q?HyFq6fkj1bWNSBdlF7VCG9jtH3YlNParjw67PdL7gOwidJHbKIU6rZM9?=
+ =?Windows-1252?Q?bEZSWvlNlURMAD24UrZmERFE+9A96jdew38aSy4ocorn1XMe9AY3bG7f?=
+ =?Windows-1252?Q?gBvubxfkrK3snvwf3udxdflmY1SAFMa3aFDiRl64Hy54Gg+RCsjyRArL?=
+ =?Windows-1252?Q?O1ONzlgBXjBwJ2eCU1/lD0iIiK0UfLAuanz2KMv7zr3kl7XuoDeAnudn?=
+ =?Windows-1252?Q?x0ya3sYtyiHa+MyOemzfDKWs2sbTAveDXKkZovLdDu4mxZaN5zHt77J4?=
+ =?Windows-1252?Q?iXXKcUJBxA7KJHJRGYJckvj8sfDjjG5LenMoZ5X/FRbb0mtBIEA64Li8?=
+ =?Windows-1252?Q?6EtKeo4ZsRV4UwILSMf5LUDfJCHUWa0KJis7EJkT2brB7PE08M/qEYO/?=
+ =?Windows-1252?Q?xfSMhzk5U2XzoQxW0hMmYQ6m5+hvmjfMloV2J8Xyo/cPMbH0csaPCKcU?=
+ =?Windows-1252?Q?fL8CNMNCplCFBm+xtr2d/JB9HDQgQZcGnMznQbTyX//CxmnNYNtC2kjz?=
+ =?Windows-1252?Q?K69ooc9rBcid+R5S4vxcxGeBwSxDVlwNhUG7kBrTiir5/OJHSb0SeqyX?=
+ =?Windows-1252?Q?B+Afq1j4nulO1Uo/UPwhOkHInKxevclVrrPT+aw+RWEmifNdO6cEdwM7?=
+ =?Windows-1252?Q?hlVjonwcpkL2YWhe5tc8BeFnp32ga+PdyMWkprT264gUeLVGMFV/O1DQ?=
+ =?Windows-1252?Q?1RXPiH4LvJwFQ1hxQ+yJDsoM?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?oUy2GjW1ooJF10jo1nuttVl00KUa2qSQZVG71Xxdkf5YDIFab84oWFmT?=
+ =?Windows-1252?Q?CzFKYRl/362BnEkFrWz8zJg8RfzmJUDDK7g8GJfrdJlBAaKjesOOhRSa?=
+ =?Windows-1252?Q?Bw+NDgm176W8eeee/Ei7UYgnGDHblPFQmHCNk290SU/2TI65ygFYbKii?=
+ =?Windows-1252?Q?3ltxtmJb99Fj3LswDTJeVs7ZFFEHuay1g1BmQeb7UjOPqGvtiAeZPP/R?=
+ =?Windows-1252?Q?n2iVoWvkQTaq5e0ryCllulBfPwk8z1Qz+LdJh35LryLKpZm9vY+Lqwzh?=
+ =?Windows-1252?Q?ayKYAptpVWOhi3OkGYl7Ihz4HEjqmZTt/IOk0bJ4jzrnvlHqANNqh3Ma?=
+ =?Windows-1252?Q?I67sNGm8tQmcMo9X6g3zxtSjRQQP47Tbeq78oFO4wVIR2iE+4h2d5FuP?=
+ =?Windows-1252?Q?2TQ7J7X1FtjBVtfRlFJ2dEJ5aKV8zqpC6L1JziR3FuOodr9UMzmQ8OQd?=
+ =?Windows-1252?Q?SH5hQzOfdbFituJgsxs6behs13FHfOpL8vE0pBFX5uqqFeRnuktJh15A?=
+ =?Windows-1252?Q?O8aBJKF3VTSVqfma/Jweah/fDXaq4CEnn6xj6tke4o5EdtrR75PM5x6S?=
+ =?Windows-1252?Q?sVrnsi0dlHp5oOMhDxCR1T79agT/rEhlr01/bwqoDmV0WBV//Tr7jdUO?=
+ =?Windows-1252?Q?qoHHyn4YQrF3qUhxTNMwyT3ukamYJvYzH6KRTl8wZU7TJSLuBI20WQ4P?=
+ =?Windows-1252?Q?hp4imwnl0igT5UPSVgRVixLtwMbU4T9jlymwMd7sPdJ20OsVVf+rNCRK?=
+ =?Windows-1252?Q?UQt7iFc+h3PvkRFrBtqFLzV0siXdeGNmwGbYoY4bKaZxcxPk9qRNiK+L?=
+ =?Windows-1252?Q?fA2DMoEwFPFMF1RAygEmb5Dy5h6VvnOgnKfX4ndBovq4UQ4aSG2mrOeI?=
+ =?Windows-1252?Q?kwOKBYFFwwr6KMxDf3P9SkgSZ3fXbv7HrNirYsYITdPwTBgodBVXr8f4?=
+ =?Windows-1252?Q?/peBZoQlVSqzZFcVTZWRvrOm+Iy160r9r3nE7LIkQbBodObVQfuvqtld?=
+ =?Windows-1252?Q?uzcKdO1dmcpfD5KwmxpkDjs+kdK4UcRNadsIXu+cdOF+NbPG3ixiJd1o?=
+ =?Windows-1252?Q?/4C8qczKAYUt41B4ONN738WcXyt+WnQNzWbsOS4QD82uI1aM280APjEK?=
+ =?Windows-1252?Q?+PQ4eUmBbCPWVHWM6QxM8+nQXVnkYyPozpLv54VD6/km6fGEvzsau/yd?=
+ =?Windows-1252?Q?5+RXkWSrtTTe4ZB3tD6X3Qb2sodr6do6JSexsLk0n5njmsEnKUwdcZwR?=
+ =?Windows-1252?Q?nNPnvx2EALSLMrwCmwX2u4EkJSWbmXltTcRPsZhK28etgbxZ+n1Nun+R?=
+ =?Windows-1252?Q?QuxBvthnFTj7XWB7btzxRt2GrVg=3D?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241205-424-reftable-writer-add-check-for-limits-v1-1-b287b055204e@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAKXLUWcC/x2NywrCMBAAf6Xs2YXsGlH8FfGQx8Yu1lY2oQql/
- 27wOIeZ2aCKqVS4DhuYrFp1mTvQYYA0hvkhqLkzsGNPxA49ezQpLcRJ8GPaxDDkjGmU9MSyGE7
- 60lbRUaQSz+544gv03Ltb+v2vbvd9/wHr5c7PegAAAA==
-X-Change-ID: 20241120-424-reftable-writer-add-check-for-limits-01b1fb703528
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5696; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=fFFLtOP564VpooDeWAyxhtG8Oo3gBf5SiiTZKRRmnhI=;
- b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnUcun0HVkkP1Yz8SQMdIF4Fup3umVBTfCTO+pI
- z+L1ZT5d86JAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ1HLpwAKCRA+1Z8kjkaM
- f1MVDACGqjh6OpOovfYxVZJRSKBeRxdWFmJg/Z5HcSpf5IKH9uVr4tkHtde3K51SzqliL0aenTw
- RmpeSSnJQa3gPf3HXbHyLidXwbWuYwP+F7+ETRxz0ykt0eKElCtGerZPGIP/xcGJXrH7Ad6h2PA
- UqpN1H3BV3LtpxAILx4x9f30pCUlDlGmLztwikuiygvteM49ZkpP0aaRwep7ecY4XqPcBeSW7vb
- n9lvgvE+tgOBJ8GysVT+rv8vmdxySr3TyuXOpryqPc7PJTQirLKZhZsk6U6+kgxiTMXuEIfx9Wv
- Hvdy77l5FhQNoLaIbDx9MP+G7kw+U06K8xlxrzTQGbc+o9AfOXQ/utTPf4jb2I7Z6aotKtDlMC5
- Ch3GpCTfY3alDWUSCpl/Y1gd0BLNBs+zokRGQQxmarRh9c03W20klQasO65c2geO1wAWfFQuj3v
- Oh1YwX0obHuzBbEzM3/+8eS+kPnXtYe4ED3S6waNcOAjk+OJMAK0wl8KnE4QJGKRZCn8M=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR14MB4880.namprd14.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 885e3262-d4f2-41ff-840f-08dd154e62f0
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Dec 2024 17:00:56.7576
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR14MB6766
 
-Each reftable addition has an associated update_index. While writing
-refs, the update_index is verified to be within the range of the
-reftable writer, i.e. `writer.min_update_index < ref.update_index` and
-`writer.max_update_index > ref.update_index`.
-
-The corresponding check for reflogs in `reftable_writer_add_log` is
-however missing. Add a similar check, but only check for the upper
-limit. This is because reflogs are treated a bit differently than refs.
-Each reflog entry in reftable has an associated update_index and we also
-allow expiring entries in the middle, which is done by simply writing a
-new reflog entry with the same update_index. This means, writing reflog
-entries with update_index lesser than the writer's update_index is an
-expected scenario.
-
-Add a new unit test to check for the limits and fix some of the existing
-tests, which were setting arbitrary values for the update_index by
-ensuring they stay within the now checked limits.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- reftable/writer.c                   | 12 ++++++++++
- t/unit-tests/t-reftable-readwrite.c | 44 +++++++++++++++++++++++++++++++++++--
- t/unit-tests/t-reftable-stack.c     |  8 +++++--
- 3 files changed, 60 insertions(+), 4 deletions(-)
-
-diff --git a/reftable/writer.c b/reftable/writer.c
-index fd136794d5a27b33b5017f36fbd6b095ab8dac5b..f87086777cd20a9890a63f10c5d6932310dd5610 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -412,6 +412,18 @@ int reftable_writer_add_log(struct reftable_writer *w,
- 	if (log->value_type == REFTABLE_LOG_DELETION)
- 		return reftable_writer_add_log_verbatim(w, log);
- 
-+	/*
-+	 * Verify only the upper limit of the update_index. Each reflog entry
-+	 * is tied to a specific update_index. Entries in the reflog can be
-+	 * replaced by adding a new entry with the same update_index,
-+	 * effectively canceling the old one.
-+	 *
-+	 * Consequently, reflog updates may include update_index values lower
-+	 * than the writer's min_update_index.
-+	 */
-+	if (log->update_index > w->max_update_index)
-+		return REFTABLE_API_ERROR;
-+
- 	if (!log->refname)
- 		return REFTABLE_API_ERROR;
- 
-diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
-index d279b86df0aeda11b3fb4d2c15803760ae394941..5ad1c72f6901abcfe7fdc6c3e69e26b58d0013a6 100644
---- a/t/unit-tests/t-reftable-readwrite.c
-+++ b/t/unit-tests/t-reftable-readwrite.c
-@@ -90,7 +90,7 @@ static void t_log_buffer_size(void)
- 	int i;
- 	struct reftable_log_record
- 		log = { .refname = (char *) "refs/heads/master",
--			.update_index = 0xa,
-+			.update_index = update_index,
- 			.value_type = REFTABLE_LOG_UPDATE,
- 			.value = { .update = {
- 					   .name = (char *) "Han-Wen Nienhuys",
-@@ -127,7 +127,7 @@ static void t_log_overflow(void)
- 	int err;
- 	struct reftable_log_record log = {
- 		.refname = (char *) "refs/heads/master",
--		.update_index = 0xa,
-+		.update_index = update_index,
- 		.value_type = REFTABLE_LOG_UPDATE,
- 		.value = {
- 			.update = {
-@@ -151,6 +151,45 @@ static void t_log_overflow(void)
- 	reftable_buf_release(&buf);
- }
- 
-+static void t_log_write_limits(void)
-+{
-+	struct reftable_write_options opts = { 0 };
-+	struct reftable_buf buf = REFTABLE_BUF_INIT;
-+	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
-+	struct reftable_log_record log = {
-+		.refname = (char *)"refs/head/master",
-+		.update_index = 1,
-+		.value_type = REFTABLE_LOG_UPDATE,
-+		.value = {
-+			.update = {
-+				.old_hash = { 1 },
-+				.new_hash = { 2 },
-+				.name = (char *)"Han-Wen Nienhuys",
-+				.email = (char *)"hanwen@google.com",
-+				.tz_offset = 100,
-+				.time = 0x5e430672,
-+			},
-+		},
-+	};
-+	int err;
-+
-+	reftable_writer_set_limits(w, 1, 2);
-+
-+	err = reftable_writer_add_log(w, &log);
-+	check_int(err, ==, 0);
-+
-+	log.update_index = 2;
-+	err = reftable_writer_add_log(w, &log);
-+	check_int(err, ==, 0);
-+
-+	log.update_index = 3;
-+	err = reftable_writer_add_log(w, &log);
-+	check_int(err, ==, REFTABLE_API_ERROR);
-+
-+	reftable_writer_free(w);
-+	reftable_buf_release(&buf);
-+}
-+
- static void t_log_write_read(void)
- {
- 	struct reftable_write_options opts = {
-@@ -917,6 +956,7 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 	TEST(t_corrupt_table_empty(), "read-write on an empty table");
- 	TEST(t_log_buffer_size(), "buffer extension for log compression");
- 	TEST(t_log_overflow(), "log overflow returns expected error");
-+	TEST(t_log_write_limits(), "writer limits for writing log records");
- 	TEST(t_log_write_read(), "read-write on log records");
- 	TEST(t_log_zlib_corruption(), "reading corrupted log record returns expected error");
- 	TEST(t_table_read_api(), "read on a table");
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index 72f6747064f62106e87c9a90e5fe315139d46e60..52b81475c36aa94ff09f3bf77a7d23992957deb4 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/t-reftable-stack.c
-@@ -770,8 +770,12 @@ static void t_reftable_stack_tombstone(void)
- 		}
- 
- 		logs[i].refname = xstrdup(buf);
--		/* update_index is part of the key. */
--		logs[i].update_index = 42;
-+		/*
-+		 * update_index is part of the key so should be constant.
-+		 * The value itself should be less than the writer's upper
-+		 * limit.
-+		 */
-+		logs[i].update_index = 1;
- 		if (i % 2 == 0) {
- 			logs[i].value_type = REFTABLE_LOG_UPDATE;
- 			t_reftable_set_hash(logs[i].value.update.new_hash, i,
-
----
-
-
-
---- 
-
-base-commit: cc01bad4a9f566cf4453c7edd6b433851b0835e2
-change-id: 20241120-424-reftable-writer-add-check-for-limits-01b1fb703528
-
-Thanks
-- Karthik
-
+Hello Git mailing list,=0A=
+=0A=
+I=92d like to propose a feature to allow users to modify the default merge =
+commit message template generated by `git merge`. Currently, when running:=
+=0A=
+=0A=
+```=0A=
+git merge --no-ff upstream/main=0A=
+```=0A=
+=0A=
+Git produces a message like:=0A=
+```sh=0A=
+Merge remote-tracking branch 'upstream/main' into my-branch=0A=
+```=0A=
+=0A=
+While informative, this message can be verbose and sometimes makes branch n=
+ames difficult to fit within the recommended 52-character first line. Perso=
+nally, I find a simplified format like this more concise and effective:=0A=
+```sh=0A=
+Merge upstream/main into my-branch=0A=
+```=0A=
+=0A=
+Proposal:=0A=
+Introduce an option (e.g., a configuration setting or CLI flag) that allows=
+ users to specify a custom merge commit message template. For example:=0A=
+=0A=
+- A new configuration option:=0A=
+  ```sh=0A=
+  [merge]=0A=
+      messageTemplate =3D "Merge %s into %s"=0A=
+  ```=0A=
+  Here, `%s` placeholders could represent the source and destination branch=
+es, respectively.=0A=
+=0A=
+- Alternatively, a command-line flag:=0A=
+  ```sh=0A=
+  git merge --message-template=3D"Merge %s into %s" upstream/main=0A=
+  ```=0A=
+=0A=
+Looking forward to your thoughts.=0A=
+=0A=
+/k=
