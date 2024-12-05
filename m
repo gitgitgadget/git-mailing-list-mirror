@@ -1,139 +1,120 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B26C21D5A0
-	for <git@vger.kernel.org>; Thu,  5 Dec 2024 18:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD11D225797
+	for <git@vger.kernel.org>; Thu,  5 Dec 2024 18:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733424330; cv=none; b=FPIQ7r9L2oC8NQPn1DRfBnFZD14xoHnC7cpJqki2jfgK5V0jJL9BUPLAnwa3oFiVfRrmk0Q5cEtet4pgcYxqiojLEpNR4DcyhUL0nitx8juuOSOgtkhMgEAtjArOJHD2FOpAmhiTXXUA1Ve7ptOFRcikzUH49nGYqwSD/WSrLHQ=
+	t=1733425125; cv=none; b=ZS1t7lUg/vdkXYIU3hpYPzRRc3Un1KFidca+NwUMsHgrT+nz8HTLONdB/vNqtgs03ruQAnOvip1Z5mOc5pDcYsW0pzt612mT1OcQ9XQnurS7GPMvGhBC+IsksCTJfBbiz9PJXbNGr6YVi9FPTPUnr8zy8XQuZFLvn4xAMI/1A3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733424330; c=relaxed/simple;
-	bh=FoxdF9XzRkTsGJOFlWKTkQVjm+mKIlWsoKBBSdbypjU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GfPQy95DPoi+F1QFYEo+JfhwT0VTboOcl/MG5GfS9RHRnHWhrc3zDDQ4JejtoIfRjiQne8lQmIn/+dq+h8ue/7m38tuZnsP/T6SpV8NMmbsIyqgjSAlafWnNPODMA2yC8X/+BIqfq4g+0MtQ9aUKIr2IXt0r/T59fZSWfz14eAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=54LJZQ8R; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733425125; c=relaxed/simple;
+	bh=6b5h5jZKRWUhwmSF5o2qZIXCZLMU3RdXHxADJOE27dI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tdqgjyo8gZ7rmiRSmpbXn+xJ1gtFRAyXjjdmEQfjEIuZYqxmrK8wl3NgP0Fp5aeeSKqzVSMFgbhwnWFGFIz+LrOjw3026o+aAo+9/JVn4cTlpg5Pv+QsXpT8AAXF6J5lGmTJYfXF7yu17uDJXBHZxmFwT2f5IY+rBQX6mUxnSAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KDFw8dvG; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="54LJZQ8R"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 10A111381CFF;
-	Thu,  5 Dec 2024 13:45:27 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 05 Dec 2024 13:45:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733424327; x=1733510727; bh=SR44pG+ag8QrQj1O0W825Qv7BEeBhC6BZZv
-	0lvLmQ/s=; b=54LJZQ8RtDFUnP6XH++aRYR/j3aZ9awv6jecXY/UuSZGDUnP58W
-	GziV4diNZTBTr+HyDWK7MYOHM7xgmWvTmBYuInq5ejt9wrYT1KwNRV46sQVgefgN
-	Z+DSUfV0jr7HJlE0ru/VpDil2qJzjQfIUFa/OyhNZIsiQTkmpD7+2g9GRyrrDDOd
-	1O3AGN9W6rV08q2rsl1cOb0yJCthTei2ykP6IrFRdV+GWHOfr5O+rRftv1XhLGPU
-	rwklgUh6zKOl0tnnmXQ8Fw+Gymltn+410PFZMATEjVaFBzIsLPdbynViNR3qmX1E
-	jmjs0GHFU4wn50MVG4QTBMmR+9f4pwZYaiQ==
-X-ME-Sender: <xms:xvRRZ3aVIFXb-MzucG3BjWRMa3UBVOaaqauaeBdbzmolojBCztRrPg>
-    <xme:xvRRZ2bD5enO3b6Q9HCSMV0eFGy1SzVYNJPSjnxoNtFYnydHOjXXJtoZWt7Kx5oft
-    1IGw7rWGDo0jA7P7g>
-X-ME-Received: <xmr:xvRRZ58uypF7TZ06PJm0KVP5ipvc6Wx2vZyFmedp4yuI9bELLnNYR8BiKuHIZO_s6KVjG0qbw6rW5R334udCmrhkDMXJBkToKEDm4vc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieejgdduudehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehs
-    rghinhgrnhestggrlhgrmhhithihrdhinhgtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xvRRZ9ofcNr6d6dFvmdDg9bSgubZZCCtN4Kuuk4zogGSm_16LYYrhQ>
-    <xmx:xvRRZyowl2PBluLEc3mgDaSHEexYUWle7H-eXcYzfX6pRTP_Fuo6lg>
-    <xmx:xvRRZzTaQ5CKisiMf8xmf2pOkqpTKmxMbNlz2vqnnPEFOq8JB-tOaA>
-    <xmx:xvRRZ6oxfBUxUn0vv9FPTf0bN_e3yYQCFw4G6pZEXjgqd1VTyv6pog>
-    <xmx:x_RRZ_Cpnool1HlnIzdWkVdg2xbntZ2B1TcCxoIVfNVWypzn-ETeeJos>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Dec 2024 13:45:26 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Sainan <sainan@calamity.inc>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Some feedback on 'git clone create'
-In-Reply-To: <6okfwtbgcve77xwjdqjnvsa4yigo5tymlsrypjgztbrmabjtrz@o7dfhaltih35>
-	(Justin Tobler's message of "Thu, 5 Dec 2024 09:27:15 -0600")
-References: <AfLIcOv4X1AxLOaODNS89HA-bMeI7bj0xUGsLD-6xmVAS_a_2xOzy2uX-wXxpNA7kCpKYudELCEKv73roW_-HTd83Fcz3FZ_yJQOswQHW48=@calamity.inc>
-	<pgz37cgfssouykfqxvmjt6pc2lycta6tmyjkovsceqwibww4fw@424usnt3dlh2>
-	<Z1Fma7OLPOkxRncd@pks.im>
-	<6okfwtbgcve77xwjdqjnvsa4yigo5tymlsrypjgztbrmabjtrz@o7dfhaltih35>
-Date: Fri, 06 Dec 2024 03:45:24 +0900
-Message-ID: <xmqqttbi0y0r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KDFw8dvG"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-21561f7d135so10295ad.1
+        for <git@vger.kernel.org>; Thu, 05 Dec 2024 10:58:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1733425123; x=1734029923; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9oqlNylXQEZ3SIvyu1PQ48bM9QNeh3q5sMf1Wlne+j8=;
+        b=KDFw8dvGBrPKKqMRd9f5kj2yzTqm16n+r1EWscRz5NWfA+qpUQrgJZ/0IrXVgHX4Tj
+         jtE6kLC1ZkqsRD4YEZYzqIVVtNxxTJMlrBPRUFGkYqjveZt/L1ksKK8RLQ05qhjRgaPh
+         Tk2POCZJFr1zzpPg6068K7nZn82L80T9G7E4aD2sCzOCS0QFoEYGKDCeXFD2utTbwQJJ
+         1eeNy9wcqtAkqXuLTl+cpOUmJs8758R/Di6UqvmBL8zDI2kNVS1uXj+fZYZnxSws0arh
+         kVvr+wAX/LJ4sxGx9CFv7ABHh0HrnfoPy449DMQ9UkrB46mQiXNk6eKcj1tp/1x2WO5D
+         Dt1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733425123; x=1734029923;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9oqlNylXQEZ3SIvyu1PQ48bM9QNeh3q5sMf1Wlne+j8=;
+        b=I3wqUTGj5PQi3RlVklOTVzr4uOXLmXewOyPJq/Ox62QlB+QTT4+Al0/Kyl+JIYoE4B
+         YavZRm+eEL4SwHgLPHmoeBPmOD9DaddRcgtbW7ddTPMeV5yBYnpmJFwwzgkiUKaKxx8u
+         7FbcX9O9tFRJVbtzcIjGj/ktX5VW6H7e4Tqhi3vcZUIglrfx9r0Cx/CNK3xA/OMNiRvc
+         3SAppcXA5fclGxfq11SThzL5W6VFyUN8FSB0seAyXJ0dRhjYQsvOnx3FNPsx0SH1iG9T
+         I1S2MEadTgVt58OpkoVsQGhQF9uM4l0OYi5oiZCxg6nHldXzvnoEVEMoGBBJZJFQFTSX
+         1O0g==
+X-Gm-Message-State: AOJu0Yxil5LrbwG9bhViWMkDFsaBFhocP47VolFpKpxp/tE/LiL3kbh+
+	XGWVmyI2tzwGvep1vShJBqJvB/P4b6YblzleOEo7dLVWQQYqmbO2ILEKVJ2c2w==
+X-Gm-Gg: ASbGncvSz1+VqDCTgrNMrVn6/exFneGEFckk+ft6cvxu5Y1hUiTTsfU3njY6Ew97qVv
+	9uLehBo6QnLA/UUVfTtTOG8aBkK5poIWI2Dp7v68yRpeZtK92RnFsshZbiloDCCl2O8s+Ctgkuw
+	bmumL2n2E0vsPzE7oJmJUnQ8W7liqVORVr+V2StmDiSWErmwIgeNYSAEyc5msb1beTktvrZb6fh
+	zeRitAG71VnZEKV0HX44RwljBWBCnbOSCANufRVeLA8mbK/
+X-Google-Smtp-Source: AGHT+IHj4synO7PxxPj2wrznW+QL7iBY1fyQq08GDT2mMcyOF9060OaTWGJty0mF4eQW7S0/CUrPNQ==
+X-Received: by 2002:a17:902:ce03:b0:215:69a3:1c94 with SMTP id d9443c01a7336-21613785d23mr105965ad.28.1733425122877;
+        Thu, 05 Dec 2024 10:58:42 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:80c2:988f:e15c:5983])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-215f8e3fd47sm15829205ad.39.2024.12.05.10.58.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Dec 2024 10:58:41 -0800 (PST)
+Date: Thu, 5 Dec 2024 10:58:37 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>, 
+	Patrick Steinhardt <ps@pks.im>, jonathantanmy@google.com
+Subject: Re: [PATCH v15 09/10] fetch: set remote/HEAD if it does not exist
+Message-ID: <wmu5ld4xsfjz2tpp54jmxqroma423t5nn2jh3q5gq2wswr6fkm@vrlhigyuxfzu>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org, phillip.wood@dunelm.org.uk, 
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	Junio C Hamano <gitster@pobox.com>, karthik.188@gmail.com, Taylor Blau <me@ttaylorr.com>, 
+	Patrick Steinhardt <ps@pks.im>, jonathantanmy@google.com
+References: <20241121225757.3877852-1-bence@ferdinandy.com>
+ <20241122123138.66960-1-bence@ferdinandy.com>
+ <20241122123138.66960-10-bence@ferdinandy.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241122123138.66960-10-bence@ferdinandy.com>
 
-Justin Tobler <jltobler@gmail.com> writes:
+On 2024.11.22 13:28, Bence Ferdinandy wrote:
+> When cloning a repository remote/HEAD is created, but when the user
+> creates a repository with git init, and later adds a remote, remote/HEAD
+> is only created if the user explicitly runs a variant of "remote
+> set-head". Attempt to set remote/HEAD during fetch, if the user does not
+> have it already set. Silently ignore any errors.
+> 
+> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
 
-> When trying to unbundle an incremental bundle into a repository that
-> lacks the prerequisite objects, Git fails. These prerequisite objects
-> are also listed in the bundle header. Maybe it would be nice if we were
-> able to create a shallow repository from this bundle.
+At $DAYJOB, we noticed that this breaks `git fetch --tags`, although I
+haven't had a chance to figure out what causes the error just yet.
 
-The prerequisite objects are required for two reasons when unpacking
-a bundle.  One is to ensure that the resulting history is complete,
-as the central idea of bundle was to "freeze the over-the-wire data
-transferred during a fetch" but it predates "shallow clone", which
-allows a clone to be lacking history beyond certain point in the
-topology.  The other is that the pack data stream recorded in a
-bundle is allowed to be a "thin pack", with objects represented as a
-delta against other objects that do not exist in the same pack---the
-recipient is expected to supply these delta base objects to ensure
-that these deltified objects can be reconstituted, which is where
-the "prerequisite" comes from.
+I was able to bisect down to this commit using Jonathan Tan's
+reproduction script:
 
-In order to allow creating a shallow clone out of a bundle when
-using revision exclusions (see "git bundle --help"), we'd update the
-bundle format to allow us to create a bundle using "thick pack",
-which we do not currently do.  And more importantly, the recipient
-must be able to identify such a "thick pack", as the data currently
-defined, a bundle with "prerequisite" by definition is "thin" and
-cannot be used to create a shallow clone out of.  Which means we'd
-need an updated bundle file format.
+rm -rf test_tag_1 test_tag_2
+GIT=~/git/bin-wrappers/git
+mkdir test_tag_1 && cd test_tag_1
+REMOTE=$(pwd)
+$GIT init .
+touch foo.txt
+$GIT add foo.txt
+$GIT commit foo.txt -m "commit one"
+$GIT tag foo
+cd ..
+mkdir test_tag_2 && cd test_tag_2
+$GIT init .
+echo fetch --tags
+$GIT fetch --tags "file://$REMOTE"
+echo regular fetch
+$GIT fetch "file://$REMOTE" 'refs/tags/*:refs/tags/*'
+$GIT --version
 
-> I'm not quite sure I follow. According to gitformat-bundle(5), we should
-> see "obj-id SP refname LF" in the header. Inspecting the header of a
-> bundle created from `git bundle create inc.bundle master~..master` also
-> shows "refs/heads/master" in the header.
 
-Yes, if there is one thing I regret in the way the bundle header was
-designed and wish I could fix is to that we lack "HEAD" unless we
-force to include it, and "git clone" out of a bundle sometimes fails
-because of it (you can "git fetch" out of the bundle, naming the
-refs you find in the bundle header instaed).
-
-> It looks like when creating a bundle in `bundle.c:create_bundle()`, if
-> the call to `write_bundle_refs()` returns a reference count of 0, git
-> dies with the error seen. When a commit hash is used for the
-> rev-list-arg, it is not able to determine a reference from it.
-
-Yes.  It is not fundamental, though.  There are occasions where "git
-fetch" that does not transfer any object data is still useful (e.g.,
-when they create a new branch that points at a commit that already
-is included in the history of another branch, you only need to learn
-what that new ref is pointing at, but you already have all the
-object data).  As the central idea of "bundle" is to freeze the data
-that goes over the wire for a fetch (to allow you sneaker-net
-instead of "git fetch"), a bundle that says "you are expected to
-have the history reachable from these commits, now you be aware of
-the fact that this and that ref points at this and that objects"
-should be possible.  Such a bundle would have the prerequisite
-section and the ref advertisement section, but there is no need for
-any pack data.
-
+Prior to this change, the first `$GIT fetch --tags "file://$REMOTE"`
+fetches the `foo` tag; with this change, it does not.
