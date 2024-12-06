@@ -1,140 +1,123 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094091FF7D8
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:46:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB0E1BDA97
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:47:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733485594; cv=none; b=VuBqqIPabsuER+sT1qnXE5y7KvyLltxrpcapfxtz6k5nFZOim6VZdQcij8wEV23wK9ZyOZEmvgJibzyl/qC7bY/02MfBX9I9rQqH5QnLePbXAXjoU718Or0qfYGAXAPLtrc/Hf17rY4dz4Zc0X3Hw0a9zbE4MnytRR32NuFjlqE=
+	t=1733485648; cv=none; b=u40e1TXlDKsoj+Uk4Keft7NEWArVNCcL8vgjmM03fl24slyK/fnfs5tdVwTi6i2/9Jl/PokX/8ESOLNK5lkgb5mFU/hdajrsO/P4ZTmU68w/Iv5ucxPQgtESbivj/3t5B9ySijspHN0N/bSNsEh8phwvQuIS7qV/ZekB+t4NX7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733485594; c=relaxed/simple;
-	bh=8CZ5udlnu49ix6aM08ybcRo5oooPaQt/3QWkWFJyg/A=;
+	s=arc-20240116; t=1733485648; c=relaxed/simple;
+	bh=NH+qENIpwN4fmydIdUfi7TDhrW/W5rz+xggdIIJO4fs=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=ixYROMx6H8etGcn5rJXMRzgUhOrUz6HXREQrgZqOC+UQxd2mxkrtdvaF1bBCh7U2EHqF7S2ypTurbcdDMqnwdAwQhrjsoMD46HkF9AoqBJ8vh/nu2OXuhh4HyqcQGvUHsykdmGWvB9sNXbGQ7wy3/rmh8KrpbFYEhkBi5fsA1Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WkXNTvJV; arc=none smtp.client-ip=209.85.222.43
+	 To:Content-Type; b=D8WHanmLz2OOkp8QyycDUMuVdHX8HWib7KT7uDDVY7QAUkXh8RS1lo3nlTvp1FYzt3I8olHifvnqhmcCXfqW4YNvQQU5Dmw3iaCKZ0ENkLkURYRexvq3Or4IyWyyP4x983KDycXLXS5Bao9Qh23D2NnrSTlrphSjx8QmTJilQFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbC9KN1D; arc=none smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WkXNTvJV"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-85bc5d0509bso419624241.1
-        for <git@vger.kernel.org>; Fri, 06 Dec 2024 03:46:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbC9KN1D"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4afccfd925fso345988137.1
+        for <git@vger.kernel.org>; Fri, 06 Dec 2024 03:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733485592; x=1734090392; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733485646; x=1734090446; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cAv9yZyBl22Wu6mSD8Ir/FpaoRQW6xO1j/5w9Amnjk4=;
-        b=WkXNTvJV786IHE9q6sqK0Ymlk1sQePfW7s/vgXI1Td8vKyB/KKY/UipqhEe1vcP2JV
-         9Fu/QyrrwVVxyHXrVeFtX177AtJ7oO/KrRpay3PsZRz6je8dmo+1/dMLL91neWVUVEKx
-         qYdXksGRWi7DRK0rMnnbvbbKDBjDnJF0yuYOhwiEJqjtvf9TD+qgR7+E/wxqGguSgAxR
-         1PWRWlBeLl45nM1iEDaFRQ0PC91w2lykEo6DbLM/0U0MmlHQCtYi3RUdaeHg4IY7hghV
-         Lqo8Hrn6aE3yrXLEjQj4ahpLEQD5s4HS5vSo5Pwn9SgWCJp0N63bcXa7CEDkxp6G6FuU
-         7BDA==
+        bh=7GoV9i72uVQepKRbrPu4BfaQVJ3GL5pcDY6sv2dkEOg=;
+        b=XbC9KN1Dl54b+wqQ2Lx+Jx66l0lqHWEhyud59YAs6opjJ87Yb66m9llsL/eLztGsEG
+         u9QFLAUm6wuBxvP4tari5Zd3ZrBniAIZAkiShckAptw7RjgAOcyNLPsISAFf8uz2ThFf
+         PAUiTbGA43JNux/vfrVPNeeYIi3KW7oMx6xlu6MX8d4SUIwgCyqVszGaEoFm8ghB9pKc
+         o/3Z77AXpnHdexBw6KrACrmjk+t7rwhUE1e22rN0nETVNECziFXm1ruQjIUyWL5sEu19
+         u0BoxMcPbCtaRnqvdN+J9n2+LIusYFgvvK8wxaXvNe9e8sR+OEIt3+mRdS49vaHknfjM
+         QNwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733485592; x=1734090392;
+        d=1e100.net; s=20230601; t=1733485646; x=1734090446;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cAv9yZyBl22Wu6mSD8Ir/FpaoRQW6xO1j/5w9Amnjk4=;
-        b=ngWi5SX8gx3GmmLejzm626adJYG1NwknYhPpP03LdQV77PgJrLIQptW4YNFozybVB3
-         O382Owsw3nay5bhk64aPERQ8kRfOglcp9NeNUINHfo1tFFU1mV1h6bsiAKnaNLdsc4j7
-         WXOuSWpMA9D+pWoUEeu6EWla8iywdKQbINrY2ORS56tfqMTdASCgqKrkfUW1UC1mFJGz
-         DAPyLvKLBKlwzapJjfxRuRFDUdFQCYz63beUcPO08f5hNnLLAT+Tr/RUd3moNbgKuu96
-         aFROtg3quH20qyoAhjNkw0nOpsPH8ptoKhmEZL+S0b2Hv45SIWMeRHTzqM2UQ2a1q+R0
-         LXhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXMYPa6BrApQwDfXAfqOmoMGh39SQpyETC5kVo+YiPCRg6qpvz72HYqpgMUQ/kTXviRqvg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFJVt+fFbfXfRwPC6eaalt/vr5+X9PzhN6WFV7q0YtIConwgyc
-	s8mKUkmq4WjhJQKOAdFasDDMoHok9Ma3RgDTnecxc8F2Iron8Xs5GmhY+vF9RqAudW6jYDH6x4H
-	lqi4oMYSrhirOjop+7Db6i9hloVdTzuOG
-X-Gm-Gg: ASbGncvzbq3NP4VYLVgDp6hcD6DNbtZ3UklxSdprD1NPf47WJ5bigtNJfyqO1oo/rYf
-	rkzMCg8iTA3UsefFa7z/WN7TwjwRXPQ==
-X-Google-Smtp-Source: AGHT+IFKFjahqTchCdban4lKmcOHHdLL07W/mcawD+BpyXciSJHy+rghhqyCA5diQN1Ww0OjILLp23tY76MaxgxGDmY=
-X-Received: by 2002:a05:6102:b05:b0:4af:c31d:b4e9 with SMTP id
- ada2fe7eead31-4afcaa3cf78mr3173340137.13.1733485591881; Fri, 06 Dec 2024
- 03:46:31 -0800 (PST)
+        bh=7GoV9i72uVQepKRbrPu4BfaQVJ3GL5pcDY6sv2dkEOg=;
+        b=fgfuyjX6QDzcA/b1k1vRvra2tJCWM1+suO0sNp2YXmH+vXwTF1KdEvq1uxXITsmNOU
+         1mpAJaopPbQzzAHTdAvEm5sSunYKTReDonE8nL14fypeBb3NJXZXxXzhfpkBJfTZqosq
+         cixL7IdjdUWt/9gzBg992/0rg2qZ3P6JneSjrxy0AmzO4O4eJ3T9P/Di5W2CmTNxPW8u
+         K7C8vLFNFo96IsI9DlhASi334PosnVL5h9XpPw9IhzuTfypZb7A3aCtU9wUsyIesNULr
+         Fwlka+4wR4XQU9/yPzgal4xGmawc/m6otDJJSdBoDHEmboY2YTdnQJSs52iFibU3XPtB
+         K4cA==
+X-Forwarded-Encrypted: i=1; AJvYcCUROlVMDPbvhUCfMO7CR+M++mQXYbsskdgX7bHw3je7toVlhrL3K3YMnr93GdCr/D4b84c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyKYGIWuH9APnEb6GjmjoOGWHgG/AZwRPAukVSmSOTN8KURYVou
+	/hetEB1bWkX8xWfHZC3e3Mlw2YrR9TqCTxiaviedNQ9LOVU/ZyjVO+6Bz1ryRAYEZXs867LGJEY
+	kRKv0hG525rfighm8UYJI4WFBpHs5q3LI
+X-Gm-Gg: ASbGncthlKFWubGPl4l1olRtIy0I8LCe3QdjFM2gPEw0BrKAwrv3Q6/oa8QwwW4W7ZB
+	UVDwG6lQZa9wkyqNCn0c8UKLw2gQHag==
+X-Google-Smtp-Source: AGHT+IEdMbIF+48AEyCUJ0KQOoZDHlKXZBbpdEE8+coFERmTYdZZ4tkkmQ6qeUvOu6mAYs+G6oOmkk0fL76vjK7Yl4c=
+X-Received: by 2002:a67:f511:0:b0:4af:d263:de23 with SMTP id
+ ada2fe7eead31-4afd263e057mr325147137.9.1733485645759; Fri, 06 Dec 2024
+ 03:47:25 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 6 Dec 2024 06:46:30 -0500
+ HTTPREST; Fri, 6 Dec 2024 03:47:25 -0800
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241206-pks-ci-section-fixes-v1-4-7ab1b69e3648@pks.im>
-References: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im> <20241206-pks-ci-section-fixes-v1-4-7ab1b69e3648@pks.im>
+In-Reply-To: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
+References: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 6 Dec 2024 06:46:30 -0500
-Message-ID: <CAOLa=ZTdpmfKfuLj9PcXuO6_EqqR-2V4y8s2mpR3iXAS0sT32A@mail.gmail.com>
-Subject: Re: [PATCH 4/4] ci/lib: fix "CI setup" sections with GitLab CI
+Date: Fri, 6 Dec 2024 03:47:25 -0800
+Message-ID: <CAOLa=ZQeRWHog4Fjkb4MgK_34kV5JVEp4yAQ7Obgx6cnDJgyAA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Random improvements to GitLab CI
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000ed9701062898906d"
+Content-Type: multipart/mixed; boundary="00000000000023aae8062898942e"
 
---000000000000ed9701062898906d
+--00000000000023aae8062898942e
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Whenever we source "ci/lib.sh" we wrap the directives in a separate
-> group so that they can easily be collapsed in the web UI. And as we
-> source the script multiple times during a single CI run we thus end up
-> with the same section name reused multiple times, as well.
+> Hi,
 >
-> This is broken on GitLab CI though, where reusing the same group name is
-> not supported. The consequence is that only the last of these sections
-> can be collapsed.
+> this small patch series includes a couple of more-or-less random
+> improvements to GitLab CI.
 >
-> Fix this issue by including the name of the sourcing script in the
-> group's name.
+
+Apart from one suggestion(?) in the first commit, I think the series
+looks great! Thanks
+
+> Thanks!
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> Patrick
+>
 > ---
->  ci/lib.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Patrick Steinhardt (4):
+>       gitlab-ci: update macOS images to Sonoma
+>       ci/lib: remove duplicate trap to end "CI setup" group
+>       ci/lib: use echo instead of printf to set up sections
+>       ci/lib: fix "CI setup" sections with GitLab CI
 >
-> diff --git a/ci/lib.sh b/ci/lib.sh
-> index ba8f4da39caf29db5edaffde160bc81a7c58c329..2cdc99e7fd05650ef80715b621b42d15d6b13a12 100755
-> --- a/ci/lib.sh
-> +++ b/ci/lib.sh
-> @@ -55,7 +55,7 @@ group () {
->  	return $res
->  }
+>  .gitlab-ci.yml | 4 ++--
+>  ci/lib.sh      | 9 ++++-----
+>  2 files changed, 6 insertions(+), 7 deletions(-)
 >
-> -begin_group "CI setup"
-> +begin_group "CI setup via $(basename $0)"
 >
->  # Set 'exit on error' for all CI scripts to let the caller know that
->  # something went wrong.
-> @@ -393,5 +393,5 @@ esac
->
->  MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
->
-> -end_group "CI setup"
-> +end_group "CI setup via $(basename $0)"
->  set -x
+> ---
+> base-commit: e66fd72e972df760a53c3d6da023c17adfc426d6
+> change-id: 20241206-pks-ci-section-fixes-1bb91ceb50b8
 
-Nice. Before, only the last instance of "CI setup" would be collapsible.
-Now that should be fixed.
-
-Here are the links for without and with this series.
-
-Without: https://gitlab.com/gitlab-org/git/-/jobs/8565481567#L20
-With: https://gitlab.com/gitlab-org/git/-/jobs/8567031049
-
---000000000000ed9701062898906d
+--00000000000023aae8062898942e
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: a4a81a18ce04a208_0.1
+X-Attachment-Id: bf88ecd8d6b8115e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kUzVCVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL2JCQy85blUyNG4zNTM5ZTdRS1hWSGZpMDFRdFZYOAphaUdRc0dtSi9M
-R0xRNitvRlo2Q1RHV04rQi9pMG5MN0hVcmlMczZSRGNoY3NRRmVZeUhUYk93TWZoczJOWmg2CjlJ
-bzJyemFuaU1uSzIwT1UrdXc5WDd1Sm5lL3RyZzRJaCtCOGZaZnhXb3RlZ1BWNy9KUjdUaXlxOHJN
-LzdCTTMKNWN6L3c0OWNDYXRFRUhJck5mNFhPU0pONmpSTFBBTkJVOTA2cVpuamYwcVFLcWFwS0Jy
-MGZCZytiaUdhL2h0ZgpKdFRCdVZLQ3FoeHduUG9xOURLVmkxdHJWbjVKU3NkTm9oNFZ5eWphVmJK
-OTZDQzhsV3NXYUZ4RC9BanZINS9NCit0ZStpWHlJM1JpL2hYOW95VFNvTkFCOEVoWHBVeElzN0NS
-YU0rWlpJWUorWVhmSm1HZ2d2RVJlOEREeXZwczgKK1BRR29FMVNoT0VYRWNyRWR1bEg0TVBPKzZ2
-eklmcVlWaC9kdXVhOWU0YXVMQ3Vka2NENmxoZnkxUzB6RnA3cwoyV0N3Y2gwUHdiaTRVTUdRbmtM
-bzd0bXlDUlVRaElaMVlDeEE3V0lwakZ6MmdPYy92bzFGNjRCUU5KeDl5WFFBCi9lMkQ2RDNiRUdT
-VFE2R2hvbGlCV1lhOVgvZkJ1YnJ1T1Z0eHZKMD0KPVg2eW0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kUzVFd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFd6Qy85NGl0dUNvakZEckhkUWwrc2xtM3haZ1cvegpOcmtaeXBtNFJi
+MlRTUkE3dFM2KzBUa05lUkg5WjgwVkd6Y3JpY2xwMGw2ZHpPcVRIUHZBVFB1K0VJRGhRWjVOCjdM
+dUlsMDlEU051Rm93NlpMRnlJcHNMbmZDM0REMUNLQldxVlF2Qk9jdE1JbGYxZFg4bUUwcDcwNGNH
+MmQ5UUoKYkNOM3lTZGpRbmc3ZGxGenQ3WlMvWm9ZMWl0T3VHUzNZQnRqYVkyM2dFbEJDR1FZU2th
+a0dPUzBoMFNMdTN5VQpWVHdOZEJJNU1pNk9FZ2dQNW8xQm1xL3ZmZFFwMEN5cHdoRTVhU214YXBa
+RjBxdUY4RFNaeTV0aWNDd2F5TTBSCk0rUmxENHJlcFNXRDlLL0liZnIvaHBZVWJldDhsK1ZkdHRI
+UTR0ZE15cStlRnNTMlZDVTd6MnNCWVU5T1NXd0QKQmlEelIramx1dWU1Z3FhUWhjUnVlbm5uT3ph
+MW12U0ZFc0lCWEk2QmxjTjF2ckdYTlQ1TGlYZXo0QXlzMjFXbApXMmo1eENKZE9aQkZMek1XclhY
+bkFSK3ArMzlsTCtvYm55S1BicVVSdnJQSDdRWlI2OGpUTU9vYnJDeStSTmNDCkxDY3g0Ykc1VU1O
+aUlMYy8xVm54d1Z4ZC83emx0YllhMXhaVUVObz0KPUhzMHAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000ed9701062898906d--
+--00000000000023aae8062898942e--
