@@ -1,80 +1,77 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8842206F02
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 10:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C59B155C94
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733480875; cv=none; b=VjBl9pzuwo94IUJ7ZG3+ivm63/iXhvF3bX3BkDcByPIhrOr3cyA40iNcSKopHhfhrlWcYDVXJAYsupBIrGNivRPj6/ggxdDDHjycvYN9TtvmGfzkX0ydf95mIJkgxnGi77Eza/QvTYE/+9JbsVtb8f3bi40WvV5R29FyspGQ6Ik=
+	t=1733483434; cv=none; b=QPsi/CMzxOjJjFEvteUsbEwyMOR/aOLyqFkLMeLjUlZ0aTG4eEMfL5gEsP7jKggar0Uz+d70fNGt9ZhnZOBNLmoxwSvMfmVBfiD6RcJc0G5YQh9jMQ3mDyAIOW63Z7JCzW34EXSLcaiqG3QIpfsL6uffLp05emxkaXCblR7BII4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733480875; c=relaxed/simple;
-	bh=JkYboJKZHZM+ac9wiyc90QKzF5VInOMnSQN9tRtdM3s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EnjDD+IX0SG/ciIHkFcyEU2/p4V/iyhSqmTxes53iYKHsBCoug6sY3AOwanXHY67/Ph+BSxz1SRPOvBYEfA6UBDbZzwBHqQgDff/akynfshMVX3pNS6rkJgI4896msdmOwsUpeGNBxrhjHmAg+m53RjtXftNQUhKrTNVyzxGR8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Pi9CsvK4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EgrdIXJ4; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1733483434; c=relaxed/simple;
+	bh=oaYKOACkSP40yahSdlcMLm8OuSI6HLUau6Hr9SYBSoI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TDq9gY99ugFSRfBBgSNXQEan5Hv4peIptMBB+SI5PkGtRsmyfIaule/q2fNSSjIGaQ/z6D9/lSyWU3ktDfeU+uxqpeXO8UcqcJ5S78tcWmusf+/B01/MHU2qmeaYt6+mIw0+aXE2HbFKjLjtgnwVEj+6pJ0ede4JDG3xNcKnXTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uZgSSeMF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wTRs43Wg; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Pi9CsvK4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EgrdIXJ4"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id F3BD1114017B;
-	Fri,  6 Dec 2024 05:27:52 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Dec 2024 05:27:53 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uZgSSeMF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wTRs43Wg"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2B4EB1140185
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 06:10:32 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 06 Dec 2024 06:10:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733480872;
-	 x=1733567272; bh=6lo4x03kqPtlSZAbT88AtH6OR/rU64pzA4QOdeYe26A=; b=
-	Pi9CsvK4Ckz34VDpL2OI832Eg72/Ux6xZoXnLP1IXGqksBOmB1oKPSW2yZVo5Ice
-	NpoRb6FJe8W18oFS0Af22wCFwLXTT1chxBO7cGAJ72e0bbGXOuxV72X5/7Fhopko
-	sOg6CcqZ/sMVvvUT7ryePPN7LnRLJF6toF43tYUOqFjX/qvNOVA92jl9tQCNteA8
-	cVZ8QmPeRzhEhj8sIcQJjnJ3usvpjAjntIOEPjfdDAxyhY11e5sIsQufwmktSmr5
-	GdK+hDwjQMywCHVa7clx+WXPiMUHh7vfTCKlbIDaVolAPTvUMCvQnqRL1UpxFkUD
-	aZC5RvZhIHEoeWLIw1jTQg==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1733483432; x=1733569832; bh=/PnY0fWwKm
+	ySlprcXxu+IBC910qLitujqUgl+weHUD4=; b=uZgSSeMF4euZZ9NuJlUHG6V9jq
+	r6QbbD4yozXPwKAWNbXRHpkZYqrXLTBzAdK//KYIIUDAllgWbxXq4gsh8CbjuQ1A
+	yB3VYKPyZigxTlMGfnwW5YHKZPcEOYZ1GKHIJQdhtcNlOplQIq+Gov8UQL5zNN6Q
+	RCtIe5CFoAdwOwZrToRfjCk1FFq5ezFX9uIS4qe6P6VRDaFGAEiXsi/WEjlvZQsc
+	aP22meYXiCdncf9El5AG6mP73zxzxBO8+wE1+n4KT2v8D0g9luBR/k6RLkP7WJ/6
+	TmwmwsHAWzrS9PqYZjDFxvpAkjWTiaYXHAF2hxDqkU1+eJp0O5Zaq1C0UKlg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733480872; x=
-	1733567272; bh=6lo4x03kqPtlSZAbT88AtH6OR/rU64pzA4QOdeYe26A=; b=E
-	grdIXJ4ZzmAmWtwRWjIj3jT0T72u/FdY632GOfrebrSGU80f/QKynHctPVfRVqG+
-	vkV11/VWkm76dVmoTCHXrBRowCSfI9SPaSRXv+rVYxLxnGH/mUONVd4ctT4gPixb
-	/K+vVNo1tcPpkhcNneYgfn8OUXYZn23QPRom004EstI1TzHI17bV77evLSkNtXZS
-	0cCX5p67UEaVWcRvi1rbOX9Qy7fDmoPAYiXyHczXvn4xOaaAeEOOftpEOYRZZ0aw
-	9eDBXEDdO9bvELUmvoaHKWuK2aWiZVBrRijjBcauhfrFnUUtvl6xWZURf3xIIdmr
-	UIp08trX/da00XMwklVPw==
-X-ME-Sender: <xms:qNFSZ8x7Byso55KezkuduZkuKOxTMetSlvlTy4zF5LXD-kRlmuMpKg>
-    <xme:qNFSZwQab1u9DCqsoIQKMYYlrSdEGBsyE-XZn6w0e3zzajc8TGphXcIBiZXHuJ2LE
-    NsMdV-W0shlk8zTtQ>
-X-ME-Received: <xmr:qNFSZ-UDviqwSEa9PbWKBRLpM-Sje4ebzGzNSnKAqxpaRB8RTPyc1AHP4PDINmg5secodQyZCGrDhQ4VINTOpwFf_brz_tjX5vl6kA7uYrx0vA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdduhecutefuodetggdotefrodftvf
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1733483432; x=1733569832; bh=/PnY0fWwKmySlprcXxu+IBC910qL
+	itujqUgl+weHUD4=; b=wTRs43WgItx88rsz+Ng1XZbziDmEGJX7XUYYQVD0Zywb
+	Dpoc7cPvZfRHupFun2D0n0MKHyZ6OOxJZwKYteOWCUKkRD7juQ0iWLuzSmhM1Zsa
+	qzx4sGxA1i528bHsSAXgPa+ilhHjkPBWoMsxIPNd5kBfdz9zY6Q1M+TDbY+x67pp
+	RlHwnpOdjqV8ieJhWUtsGHdVAFpGtr4n1QQKF/8w5wHLoEjHL5idPEyvumHNl50C
+	gEJ0srYTZPdxjfxyWKfS1PTrsUbasJp8NXptriqm6H2NHogdPDXdVaRHnpu//B79
+	g0/YfJUUQm6XjAUVt2yNUO9m4OGNkpSuzX9qoHbkPA==
+X-ME-Sender: <xms:p9tSZw8ck4fH8RL85qOsg_vxDXoXbQdyT0eaZeTnZTRa4xnkyENLdw>
+    <xme:p9tSZ4uIogw0_AwBk54hDLGnwcMaTPAQtj2ZdR7s_06vT91B1VXLkWb9JFaA5CiIl
+    0LYfhCPSxtAIl0FKg>
+X-ME-Received: <xmr:p9tSZ2BdZcm46tIhSoQItMBZShjlZX81jDDixxnGTTnjmT69Od0yOpotZglId9M_cYM34tF3XFVhuoaNlTBZHK4NqHJVb4G-bNFOJRWC5Bv_VA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgddvfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
-    fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
-    ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
-    ufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhh
-    vghjihgrlhhuohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:qNFSZ6jSZlxqjatjoxu5HO1RAkXdoBfhaiXnGNgNHPhEfHkFBocrMg>
-    <xmx:qNFSZ-BlLthL8rLARdHcgssvMvAmNXrH7yqfDLfd0nRt2IcVNCOV6g>
-    <xmx:qNFSZ7I8r2ZCxpVATuwpmfAf1yxyUo9i6fozgtuwDeIkd0Ecqjj1Ew>
-    <xmx:qNFSZ1BV2uv8GFwhY9QsT5X3n7U3WiV82MOnil_mmO5l_X8JhHTxpg>
-    <xmx:qNFSZx8-o1sQWhoRF9bwPMen1qVJSAOlfmcA6WWUn_5N2kB2RG8X6PRw>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffufffkgg
+    gtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
+    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevueegkedtteeige
+    ejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucevlhhushhtvghrufhi
+    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
+    gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:p9tSZwducGvtSewHtKZ49CwpBo82SW2wIRHeIp3neTEyaQIR0OHocg>
+    <xmx:p9tSZ1PncH6WjG-yoUnytpQ4oYQQW6Ujd0frNr4wSn-rcJa3_C5oZA>
+    <xmx:p9tSZ6msUQEYDZw7mkIZy-U3ac8pIaYE8yOpyI84M0QPofDSIeMjeA>
+    <xmx:p9tSZ3vrTx3kPE6t3xuDX3qnpjZniu-u5qmVpZqKSvhmdL36u8BBRQ>
+    <xmx:qNtSZz2TLgnCg6pK6PNhoHYZrQWqXcMs-y1cTGJxPOjUYbqyARnSIKDf>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Dec 2024 05:27:51 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 6 Dec 2024 06:10:31 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f4d64569 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Dec 2024 10:26:25 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0e8db636 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 6 Dec 2024 11:09:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Dec 2024 11:27:31 +0100
-Subject: [PATCH v4 16/16] t/helper: don't depend on implicit wraparound
+Subject: [PATCH 0/4] Random improvements to GitLab CI
+Date: Fri, 06 Dec 2024 12:10:12 +0100
+Message-Id: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,73 +80,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241206-pks-sign-compare-v4-16-0344c6dfb219@pks.im>
-References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
-In-Reply-To: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
+X-B4-Tracking: v=1; b=H4sIAJTbUmcC/x2LQQqAMAzAviI9W9iGivoV8eBm1SLMsYoI4t8tH
+ kOSB4Qyk0BfPJDpYuEjKtiygLBNcSXkWRmccZV1psG0CwZGoXBqigvfJGi972wgXxvfgq4p0y/
+ 0HMb3/QAZtYHMZgAAAA==
+X-Change-ID: 20241206-pks-ci-section-fixes-1bb91ceb50b8
 To: git@vger.kernel.org
-Cc: shejialuo <shejialuo@gmail.com>, Jeff King <peff@peff.net>, 
- Junio C Hamano <gitster@pobox.com>
+Cc: 
 X-Mailer: b4 0.14.2
 
-In our test helpers we have two cases where we assign -1 to an `unsigned
-long`. The intent is to essentially mean "unbounded output", which is
-achieved via implicit wraparound of the value.
+Hi,
 
-This pattern causes warnings with -Wsign-compare though. Adapt it and
-instead use `ULONG_MAX` explicitly.
+this small patch series includes a couple of more-or-less random
+improvements to GitLab CI.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Thanks!
+
+Patrick
+
 ---
- t/helper/test-csprng.c    | 5 +----
- t/helper/test-genrandom.c | 4 +---
- 2 files changed, 2 insertions(+), 7 deletions(-)
+Patrick Steinhardt (4):
+      gitlab-ci: update macOS images to Sonoma
+      ci/lib: remove duplicate trap to end "CI setup" group
+      ci/lib: use echo instead of printf to set up sections
+      ci/lib: fix "CI setup" sections with GitLab CI
 
-diff --git a/t/helper/test-csprng.c b/t/helper/test-csprng.c
-index ea9b9b656307d32bdc1f2e15a91793b1dda9c463..a4a0aca61773b0b30de618955e5a5b61bba2d0cc 100644
---- a/t/helper/test-csprng.c
-+++ b/t/helper/test-csprng.c
-@@ -1,9 +1,6 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "test-tool.h"
- #include "git-compat-util.h"
- 
--
- int cmd__csprng(int argc, const char **argv)
- {
- 	unsigned long count;
-@@ -14,7 +11,7 @@ int cmd__csprng(int argc, const char **argv)
- 		return 2;
- 	}
- 
--	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : -1L;
-+	count = (argc == 2) ? strtoul(argv[1], NULL, 0) : ULONG_MAX;
- 
- 	while (count) {
- 		unsigned long chunk = count < sizeof(buf) ? count : sizeof(buf);
-diff --git a/t/helper/test-genrandom.c b/t/helper/test-genrandom.c
-index 5b51e6648d8e698b09f400efcf67a0708c226e9d..51b67f2f87469471a40288e369d9c784eb2ccba0 100644
---- a/t/helper/test-genrandom.c
-+++ b/t/helper/test-genrandom.c
-@@ -4,8 +4,6 @@
-  * Copyright (C) 2007 by Nicolas Pitre, licensed under the GPL version 2.
-  */
- 
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "test-tool.h"
- #include "git-compat-util.h"
- 
-@@ -24,7 +22,7 @@ int cmd__genrandom(int argc, const char **argv)
- 		next = next * 11 + *c;
- 	} while (*c++);
- 
--	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : -1L;
-+	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : ULONG_MAX;
- 
- 	while (count--) {
- 		next = next * 1103515245 + 12345;
+ .gitlab-ci.yml | 4 ++--
+ ci/lib.sh      | 9 ++++-----
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
--- 
-2.47.0.366.g5daf58cba8.dirty
+
+---
+base-commit: e66fd72e972df760a53c3d6da023c17adfc426d6
+change-id: 20241206-pks-ci-section-fixes-1bb91ceb50b8
 
