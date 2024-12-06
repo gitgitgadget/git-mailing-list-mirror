@@ -1,68 +1,66 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0AC328B6
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 08:07:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7032D328B6
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 08:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733472435; cv=none; b=gy4aQs6e7WPLMWThPEo+9JrXpEYHHzUVYjLBlWW0E+qLfhORtrqajbklFSGoa8hPj+dpflDHFeFZ70hv43d+OObgkGCrFOIytZiymolVp6P4fsFZCHmPkhDyVE8/l2PNFDpsJ30+ZjETljTyS44nEi6ZhE6NHBrVvvxu2qlLoiM=
+	t=1733472485; cv=none; b=CuL9xQWyBO6j5ps0XBQmJtE+tFUG6wXDV10nzIl2D8cInLnCC8U2FEN6EL8s7ApsLL1v3IJIF9q9fM7kLxVEy3yZQ7JEblH7W6UIVR9jMwAO5p2XlD0sKlsBngoS8HxzTz/hrhXLzH7+dk7wcl/IKdmE8c+pxdEdV1ZQlG8PvRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733472435; c=relaxed/simple;
-	bh=MRrRkIJ6W1GnahSM/0y7eVvEQ7vYs3UuMBjpNrhxM4A=;
+	s=arc-20240116; t=1733472485; c=relaxed/simple;
+	bh=aC7AWVmERV7ERXDcBshazFMqPfBFhu3Jx/VLoFbk+sI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uDHAthhnMJkQEAiwLn7qLfhKrO5hdO8UYND6YOH0Z5zZZwqTGak6Oza4A35MQYyVE7i9fFU4iNcJbfnEqjPPWVU0lN8FqoSLXTkpaAmC4mmQfYDK8kZHqzGnGAbyRhOk5SQoQMhZ0sjQ6ci6jA+3vDOJx4iKnWO19ZjrFHItiGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OsqA6rQT; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=WZC7VADhfcxQNY0l1habHMKsA/1SpV6MCI6rQmQG3QowDhfs/BW8I1SpkpycllRtKZhP827BRcn50hXoXfW8+s8EUjyGPb+6v4irfBElM7pQjYunsHOZvhwuPfRKMn9fSdEOyeLWsdNO3Me58Ht1kn/Z52OGCpOwjWO7vqf3Yd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hcx62BHB; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OsqA6rQT"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9C1DD114015B;
-	Fri,  6 Dec 2024 03:07:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hcx62BHB"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 420E32540177;
+	Fri,  6 Dec 2024 03:08:02 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 06 Dec 2024 03:07:12 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 06 Dec 2024 03:08:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733472432; x=
-	1733558832; bh=jfeo1Q0NZpRdcK43K1qhyecGbO9BgeYE/TZZ6TQb7ZI=; b=O
-	sqA6rQTP5MEg56PGu2vCJiqBNsoVN9bVjVyBzkSz/3eWigBIW2jEOkhDLmd+eGDJ
-	LoKd+eYV6tAqLPDwYw28XsZQnxxwMphjQQTGZVPfeD+p7VLZOT18nYwt8vAnweRf
-	+sCodERfR7/a6mUixuAtxl4ZCD0qYSIqYHwXnBiZ5jC+ISIcLOcrB+TMTo8NzFeb
-	1Ehs+V1aVFtWbLu3LaAKqGZIpw2diEaIdDTA13LSprl/cKIVHzoPldSwy4deDooA
-	kBkblBAcxvsiOmn8xJrYe4yU2YzNjPHrvr4PKou4u5o9yEAu/4XSEkBKG4PhEfej
-	e85whS/7SQS9/yEW9fAIw==
-X-ME-Sender: <xms:r7BSZw48G129Ibd1Uiqy3RWU_6dQJjxcbrAW4ErJKRZR3wfBAPrA_A>
-    <xme:r7BSZx5Ca-WBeGVSMFeCQoLViz4mWYSTvfAIR07x-3LNyS2a4v_8V_SoY2lMb8P9V
-    4gi_dlcHKBM7Moepg>
-X-ME-Received: <xmr:r7BSZ_dyGvtY_ihugAskhzgJVelZgcNu8QVRvYiCzhoh4r6-Sf18h1aoSAJZAIpuZvsVkgjVVIOV6gZm7ERz_ixgKDzGf4NgFz96S9Q>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733472482; x=1733558882; bh=mypiPzVpBo0Xqfed1JN7bW5978oMAitIzyK
+	fpj1Jwes=; b=hcx62BHBXGhWIQfLcwVDzSf4lmrW1P5ir8e2jTSaIDUyh7EjfbC
+	g7cGehO3a/cSY57i/RdIiOIW5Wr4Bjj6TNswoDpkhUB0RggEotUzTOcciIUn4u1u
+	Y7pywvMRL7llraBFCBMSIMgYjgByGlDKx1MTUIvs2uhJJ6U6QeXkE9Agr9ujllph
+	pMcwcmEeEtQYQksYCkacqd67MuWoucK1ywFLGb6//LeAdkdwAU2QaK34aDEP45+h
+	RnD+XXdPqEKoyVy1Z1fSJZzPRdFa0a4Wegtu5oE8C0cUc1zO6F18eO4LKHu8gpwJ
+	ZrfW4CKb+QLhfMeyXYeUEe+61LaU8KkM0hw==
+X-ME-Sender: <xms:4bBSZ_VWHmOocfRO0sdQSuFXekgawn-cCGhl3Mara2kr24_JArvGdA>
+    <xme:4bBSZ3lA3V25eY3y58jwgFnteGNUeagnV6hzIlx8Y3MNtP6qKn8QeEDrHLc70vMIm
+    8iYbFrOkDZzkyd1AA>
+X-ME-Received: <xmr:4bBSZ7aBDRQ44z88NToco-UpRpM-bqif4DiDDH7vd_7nx_xR2tfwYFlso0xMvXGqdfFWocIT6sMqP58gspEzA9RSUPmoyWsSBOXYwbA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieekgdduudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeuhffhkefhveekveelvefgkeetgedvuddv
-    keefgfejvdfhffdvhfeuvdetveejueenucffohhmrghinhepghhithhhuhgsrdgtohhmpd
-    hfvghttghhrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduud
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhl
-    vgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepphhh
-    ihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheplhdrsh
-    drrhesfigvsgdruggvpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhi
-    nhesghhmgidruggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimh
-X-ME-Proxy: <xmx:r7BSZ1JJJCDepXYUzVFJT6UaYtluxpZlJJqNV4j3rNyJopVYu0E_nw>
-    <xmx:r7BSZ0KoLjkYqTp1LiO-UShQUBTtqQy6S5zcUlEMIfu_lp8dAvKobA>
-    <xmx:r7BSZ2yMxx0ncCXi6RH2y9pdwdLO4QYmqsOP3F_Pv2ce3_QpfDXJUQ>
-    <xmx:r7BSZ4JjTYThG2Rb1Vg28-hdfMuxD57YIy2zkUkxPaA3e6RrWo483Q>
-    <xmx:sLBSZyySSX59lfYfq6kEYN6kezEeU-AxRdyz0SCi9TQX8Sv1ojWVvoQN>
+    htshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhephfetheetgefhgeefvdetieeiheffhfduvdek
+    ieehffehteelgfejleeiffetkeefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhgtvg
+    esfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
+    seguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpd
+    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhr
+    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
+    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:4bBSZ6Uq9VisR22HGGyIW6JecDdVXcHQdHfu9TfRdd0ezC_FxHf99g>
+    <xmx:4bBSZ5kqE8fhNjl_2WY-xt67hWEdUvkKtfVebPLkFTGnbGe_6cazlQ>
+    <xmx:4bBSZ3c1YW_fAZ5Ipwc_Z2U2twuj9ayQiphTZnNilMwABuT4Uihmsg>
+    <xmx:4bBSZzE_vrDuRQInAUcMvoMywTnaXPexa-3GqWNIEk5X4Y0xyBmkVQ>
+    <xmx:4rBSZ_eTmyI8YzsNUPK1vf5sEmbcUotvqWApUE-i3X5370G5lJpJ_CUx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Dec 2024 03:07:11 -0500 (EST)
+ 6 Dec 2024 03:08:00 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Josh Steadmon <steadmon@google.com>
 Cc: git@vger.kernel.org,  bence@ferdinandy.com,  phillip.wood@dunelm.org.uk,
@@ -74,17 +72,16 @@ In-Reply-To: <xmqqcyi5zdzb.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
 References: <hpaekjhdpcovhdptdntdligp5jcdp7mygh5brnggu7itf5grzp@vl4l7uwnb3n7>
 	<b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
 	<xmqqcyi5zdzb.fsf@gitster.g>
-Date: Fri, 06 Dec 2024 17:07:09 +0900
-Message-ID: <xmqqfrn1xmj6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Fri, 06 Dec 2024 17:08:00 +0900
+Message-ID: <xmqqcyi5xmhr.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 Junio C Hamano <gitster@pobox.com> writes:
 
@@ -123,7 +120,7 @@ layering violation started when we started limiting the ls-remote
 request with narrowing common prefixes, and it would take a larger
 surgery to fix, I would think.
 
-００００---- >8 ----
+---- >8 ----
 Subject: [PATCH] fetch: do not ask for HEAD unnecessarily
 
 In 3f763ddf28 (fetch: set remote/HEAD if it does not exist,
@@ -148,10 +145,6 @@ request, this affected how the requests for tags are added to the
 same ls-remote request, breaking "git fetch --tags $URL" performed
 against a URL that is not configured as a remote.
 
-Make sure we ask to list "HEAD" from the remote only when we are
-fetching with configured remote for which we use remote-tracking
-branches.
-
 Reported-by: Josh Steadmon <steadmon@google.com>
 [jc: tests are also borrowed from Josh's patch]
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
@@ -172,15 +165,15 @@ Signed-off-by: Junio C Hamano <gitster@pobox.com>
    Bence's series, the same refs/tags/ logic saw that (ref_prefix.nr
    == 0), didn't it?  So that does not sound like a sufficient
    explanation on how the series regressed.
-
+---
  builtin/fetch.c  | 20 +++++++++++++++++++-
  t/t5510-fetch.sh | 17 +++++++++++++++++
  2 files changed, 36 insertions(+), 1 deletion(-)
 
-diff --git c/builtin/fetch.c w/builtin/fetch.c
+diff --git a/builtin/fetch.c b/builtin/fetch.c
 index a64de4485f..3eb6f3acc9 100644
---- c/builtin/fetch.c
-+++ w/builtin/fetch.c
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
 @@ -1643,6 +1643,21 @@ static int set_head(const struct ref *remote_refs)
  	return result;
  }
@@ -215,10 +208,10 @@ index a64de4485f..3eb6f3acc9 100644
  
  	if (must_list_refs) {
  		trace2_region_enter("fetch", "remote_refs", the_repository);
-diff --git c/t/t5510-fetch.sh w/t/t5510-fetch.sh
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
 index 87698341f5..d7602333ff 100755
---- c/t/t5510-fetch.sh
-+++ w/t/t5510-fetch.sh
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
 @@ -189,6 +189,23 @@ test_expect_success 'fetch --prune --tags with refspec prunes based on refspec'
  	git rev-parse sometag
  '
@@ -243,3 +236,5 @@ index 87698341f5..d7602333ff 100755
  test_expect_success REFFILES 'fetch --prune fails to delete branches' '
  	cd "$D" &&
  	git clone . prune-fail &&
+-- 
+2.47.1-576-g9f8c8eb655
