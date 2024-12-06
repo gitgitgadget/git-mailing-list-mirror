@@ -1,220 +1,244 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE78146426
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB7946426
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733484070; cv=none; b=B416yqBeGpymggOuDUfcMvcf1cvJsq0ZoEKjcwrNqYYuKlVso57sUQq2oYu/P9h/oi69Mg8zGGbVRiOHOUeZXtFlse/hfj30tinkl3L1Wdl2LSp0BMFFaGxEEDYC9UejvOF7u+L0RKTB/vgzBtVFMBSeOnWxXQgmAGF+TGxqBBY=
+	t=1733484248; cv=none; b=HTmJf+IawTmY+KmdpBcMkc7G721qg+5j6Mkt2h5djCBlz1ErfglOGkgX8JUFiKEbD/tffpkClRdfvT/h61RGlSGZZCNDvCvKtB8R/lmSxJoqzf5oSJXLryLiWs+364lbvR4LqeLOijumwQIGH4yq8lICTo5oLcQx0o2hkVP3Zqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733484070; c=relaxed/simple;
-	bh=oAUQWy6AJBJL1AKTTwC6d855dms8KjIGYBE/krBiYY8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rYtycYyfyLbOOlpjCJ5kW2r6I323cgRImlyChKrDl20kJJG3vSkjAyQkm+QbXQfPY1nunj0RQrx/9ieIVNYj3y5bEXOKZw6sGRqK4v42Sz0x8blVpvmHDOl8TIXoO5nAz7xQ76D5M0A7t4wUKnBwGjQ61osJlvQ5NbnWMDEkH9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=IoYHE7uR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5SWFsdhz; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1733484248; c=relaxed/simple;
+	bh=NHxGaUl4jX/0FVrSomwMH9w1uDVWpqt0iuAPpMc4iug=;
+	h=MIME-version:Content-type:Date:Message-id:From:Subject:Cc:To:
+	 References:In-reply-to; b=uAoCLyf6QYXumPAbr85zZ/BWCka1NeUd9DuVHkjVROfaWJSFK4kSECnVfhoL+oxabKSKXcInMWExEhZYsB4FzI28b0dofnHjV+1Zh0bW0vhNyNAP+M85qyEsYgkY+8D+XHaiiJhM3kbhfg4lGtXApKgUO6KDAmHgK0/ktGKcT80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=NJcY0hJC; arc=none smtp.client-ip=192.29.178.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="IoYHE7uR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5SWFsdhz"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id DED05114018D;
-	Fri,  6 Dec 2024 06:21:06 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Fri, 06 Dec 2024 06:21:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733484066;
-	 x=1733570466; bh=W9wdLPGEv9VOr7qrmh8pSAQS/rx0+T6HhsoES8RXr3w=; b=
-	IoYHE7uRHAXUIWyHaB5TbWFKx3FWPAVNj2IiqVEAkbdzm51cfMZAt4CS6mZdKuBU
-	WbrmtYZtXeN66kpYGtCEy3kJVtl9XV1KiimVDijJ61ws/uLLMN1pvP10ZvNolicR
-	WmUtmTtMDl8o063g2//9MmkqFQLFJgA2V60mEbmtTtUdCxto90TUyR8onwG/6dyi
-	28MUrGn7R8Aa++7Lmd+Tffh3a8Zn6wR71QhzGzFVdmGie6LIAyOeK3C6dh3jVpdc
-	2G/A8uL0bj2SdzIN+L/6NMs3KK7YC1YeD1b5C5UvMEieZeRIEjaWBHiH2KBwdW9A
-	KStV8fP7H5tGU6/LQEg1/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733484066; x=
-	1733570466; bh=W9wdLPGEv9VOr7qrmh8pSAQS/rx0+T6HhsoES8RXr3w=; b=5
-	SWFsdhz/P5yP816UdSX2r+9821jA5n2WyYuS4enHme10RLXsHNXAmM6uDzV5Knrt
-	/Xq+dt/HhSt/wtCrowvV4tSAU5TgjoxmWK/rG+yLhyo5MpMH3P5iI2JhkDLea/Ck
-	khFTIg27JeLS46LCZudTHQL9R8wG4nc9yIZIklCk+9dXU4+lnr0MU87CLsu8cVQJ
-	BBLfD4+yvJ98uGlvxQ7ik21e4R8G2ftDQJ434m3gqZQ90yNzQJoyDgCz5Y4VMzO3
-	KV4pdbcZzcHoS+8eqPGrKwpvbdpqu8xgXEn1YpHoaOSzkMPNP1hHlZSYAmBs6lhA
-	GVM3ETf+M1qglzWC3xR2A==
-X-ME-Sender: <xms:It5SZw0MX7QKFrKXRA6gsrPRfO-E_Nh9WqCtyZ_CvGwMn1rFwoF_tBw>
-    <xme:It5SZ7HrPdvL7rFY9X0bUmS8uRmE8NNJspCeiwVbl6KsZ3cwAv2mx2g-357_Adlo8
-    8MKCnkQwlnbW3GkIQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgddviecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeen
-    ucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrght
-    thgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeevjedugeevfe
-    dvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopegrrghrnhhisehvrghlohhhrghirdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:It5SZ464qrdtTSjyDxhgy_VqPue5vsb0jamhCYTpZb7qzwTp_m9YIw>
-    <xmx:It5SZ52USyE06FjfaXn2hRjEB_dkeD7SmaJlk3VJ-krTAyggVII6eQ>
-    <xmx:It5SZzEZs3f72ccskmUroyDMlYq9C-iqLXBsW8O4Yaa_mItR74JiBA>
-    <xmx:It5SZy9c9hfkomBmp7bcup8-u2wcm3w93FVtmDU-mPxRPxfBThgsQg>
-    <xmx:It5SZ7B4doPGeeZCdGyrVyQXZKSu-itQqlPHkkSRgRMqlRySVpfzkh3v>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 791EB780068; Fri,  6 Dec 2024 06:21:06 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="NJcY0hJC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=vOfh5fvBNTo8zn/k433yH5o16Lu4PXbuPcXotXnOhkc=;
+ b=NJcY0hJCEzo7rwgSLTaLYy9ntegpPiFpQCrVPL2vHMUhYRqYv3c1+WBofA1OyKIpHBVEGmdZFnEG
+   DECu6T2id5pBYSI/QIwfmN7n40kI0QNBwoSezho7ipuVAYxmAyNDV9/vvtBtfItXSK/qi1ILpRKU
+   nVBYpFYqVde4esHO6cc9/IGZM1QZSlhj4/eOgN6TKpzHaETWqkfrVbWqFbN2tk3RJ5eJ4kTfsUWQ
+   kFPpNJ+VROEn0ZSTuCPcSrMijcyIiP/JeHs5RobJMLgrpz/O4vQbkvAvH59sdjQHYUDV4cmqDS3M
+   eQU6TSMSfvNX0h+gjGJpMAnoV4gZHkSa30MuHw==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SO200B4QKZZVXE0@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Fri, 06 Dec 2024 11:23:59 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Fri, 06 Dec 2024 12:20:45 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
-Cc: "Aarni Koskela" <aarni@valohai.com>, "Jeff King" <peff@peff.net>
-Message-Id: <9c7b9090-8cf2-4095-8e86-2c85b6fe407f@app.fastmail.com>
-In-Reply-To: 
- <20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im>
-References: 
- <20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im>
-Subject: Re: [PATCH] object-name: fix reversed ordering with magic pathspecs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Fri, 06 Dec 2024 12:23:36 +0100
+Message-id: <D64KVBBE5WVH.19V9S7ZY89IZS@ferdinandy.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: Re* [PATCH] Fix `git fetch --tags` in repo with no configured
+ remote
+Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>, <l.s.r@web.de>,
+ <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>, <me@ttaylorr.com>,
+ <ps@pks.im>, <jonathantanmy@google.com>
+To: "Junio C Hamano" <gitster@pobox.com>, "Josh Steadmon" <steadmon@google.com>
+References: <hpaekjhdpcovhdptdntdligp5jcdp7mygh5brnggu7itf5grzp@vl4l7uwnb3n7>
+ <b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
+ <xmqqcyi5zdzb.fsf@gitster.g> <xmqqcyi5xmhr.fsf@gitster.g>
+In-reply-to: <xmqqcyi5xmhr.fsf@gitster.g>
+Reporting-Meta:
+ AAFpnKTqviHAYguBHvnSJ1YdHBL6X+JyKq38ekviXAwpp3XZRwrZ81Ng9/1RsHBO
+ J5CK8Y54Liprxexsm2oOh8Ex50r+UdMtspQ5mO+sLWTSqNMkyxicmYZY1+dHNVYO
+ kGi6MpH2PLoGZCZkTgLAdQNajsmIBXETSqR+repHxXFemhdLcdDgCCPiExtGxyjp
+ FckNAqLHvMIxzdTKKsCvmZseteqWZGsOyz5ayfHxnb35RWAi2uWToqxsREa4v+KY
+ 21fFDQvfyI1gW8xLATLl4aZphAi+uO6yGqPFufMW3M9HjI+HzkUnBNefurNTdyaX
+ mSN5WmXL7O+trGRrCmEpN5Qeps1l7ll6vy3hefjid9xHt4c8OPGs7tA4F2gPNfUd
+ 6ZXDHNDWCop09ozqqES/WXjQLgMVldUP9majM5sxZjEWDpB9Tyqpqjg8n7V81qX7
+ k6LC0QrGNDeFcx8/wwHKLXBWUG6B/0r8SAcuO5HHQBNWrxioTY72FYZC
 
-Hi
 
-On Fri, Dec 6, 2024, at 10:51, Patrick Steinhardt wrote:
-> It was reported
-
-It would be nice with a hyperlink since this email is not part of the
-email thread for the report.
-
-https://lore.kernel.org/git/Z1LJSADiStlFicTL@pks.im/T/#mae906ec74d5657e7=
-02165e29b90927f730280c29
-
-> It was reported that magic pathspecs started to return results in
-
-I=E2=80=99m not used to this being called =E2=80=9Cmagic pathspecs=E2=80=
-=9D as a user.
-gitglossary(7) talks about (magic) pathspecs as filepaths.
-
-(c.f. gitrevisions(7) where this revision selection syntax
-is discussed.)
-
-> reverse recency order starting with Git v2.47.0. This behaviour bisects
-> to 57fb139b5e (object-name: fix leaking commit list items, 2024-08-01),
-
-Nit: Can it be simply be asserted that it is caused by that commit?
-Because that would make for a simpler/more assertive narrative.
-
-=E2=80=9CThis bisects to=E2=80=9D can be a nice phrase when it is follow=
-ed by a =E2=80=9Cbut=E2=80=9D
-subclause,[1] i.e. when the straightforward troubleshooting can turn up
-misleading leads.
-
-=E2=80=A0 1: 615d2de3b45 (config.c: avoid segfault with --fixed-value an=
-d valueless
-    config, 2024-08-01)
-
-> which has refactored `get_oid_oneline()` to plug a couple of memory
-> leaks.
+On Fri Dec 06, 2024 at 09:08, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> As part of that refactoring we have started to create a copy of the
-> passed-in list of commits and work on that list instead. The intent of
-> this was to stop modifying the caller-provided commit list such that t=
-he
+>> Stepping back a bit, do we even need to learn where HEAD points at
+>> in the remote, when we are not doing the "opportunistically set
+>> $REMOTE/HEAD"?  Your example is "in repo with no configured remote",
+>> which by definition means that we do not use any refs/remotes/*/ ref
+>> hierarchy to keep track of the remote-tracking branches for the
+>> remote we are fetching from.  There is no place we record what we
+>> learn by running ls-remote HEAD against them, so should we even push
+>> "HEAD" to the ls-remote prefixes in such a case?
 
-Nit: s/The intent of this was/The intent was/
+Yes, it probably doesn't make any sense to do that.
 
-> caller can properly free all commit list items, including those that we
-> might potentially drop.
+>>
+>> While this change may hide the breakage you saw in your set-up, we
+>> may be now asking to ls-remote HEAD even in cases we do not need to.
+>>
+>>> Fix this by adding HEAD to the ref_prefixes list prior to handling the
+>>> `--tags` flag, and removing the now obsolete check whether ref_prefixes
+>>> is empty or not.
+>>
+>> And if we unconditionally add HEAD even when we do not need to,
+>> especially with the loss of the ref-prefixes condition that was
+>> there in order to implement "learn refs/tags/* hierarchy only when
+>> we are doing the default fetch", wouldn't it mean we may learn
+>> refs/tags/* even when we do not have to?
 >
-> We already knew to create such a copy beforehand with the `backup` lis=
-t,
-> which was used to clear the `ONELINE_SEEN` commit mark after we were
-> done. So the refactoring simply renamed that list to `copy` and started
-> to operate on that list instead. There is a gotcha though: the backup
-> list, and thus now also the copied list, is always being prepended to,
-> so the resulting list is in reverse order! The end result is that we
-> pop commits from the wrong end of the commit list, returning commits in
-> reverse recency order.
-
-Nice explanation.
-
+> In other words, what I think the "fix" should look like is more like
+> the attached.  It seems to pass your test, as well as existing tests
+> Bence added and other tests about "git fetch".
 >
-> Fix the bug by appending to the list instead.
+> One thing I am not happy about is the abstraction violation that is
+> needed to make the uses_remote_tracking() helper aware of the "use
+> the rs, the refspec given from the command line, or if it is empty,
+> use the configured 'fetch' refspec from the remote" rule, which is
+> primarily used by get_ref_map() that is much later called, but the
+> layering violation started when we started limiting the ls-remote
+> request with narrowing common prefixes, and it would take a larger
+> surgery to fix, I would think.
 >
-> Reported-by: Aarni Koskela <aarni@valohai.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> [snip]
-> diff --git a/t/t4208-log-magic-pathspec.sh
-> b/t/t4208-log-magic-pathspec.sh
+> ---- >8 ----
+> Subject: [PATCH] fetch: do not ask for HEAD unnecessarily
+>
+> In 3f763ddf28 (fetch: set remote/HEAD if it does not exist,
+> 2024-11-22), git-fetch learned to opportunistically set $REMOTE/HEAD
+> when fetching by always asking for remote HEAD, in the hope that it
+> will help setting refs/remotes/<name>/HEAD if missing.
+>
+> But it is not needed to always ask for remote HEAD.  When we are
+> fetching from a remote, for which we have remote-tracking branches,
+> we do need to know about HEAD.  But if we are doing one-shot fetch,
+> e.g.,
+>
+>   $ git fetch --tags https://github.com/git/git
+>
+> we do not even know what sub-hierarchy of refs/remotes/<remote>/
+> we need to adjust the remote HEAD for.  There is no need to ask for
+> HEAD in such a case.
+>
+> Incidentally, because the unconditional request to list "HEAD"
+> affected the number of ref-prefixes requested in the ls-remote
+> request, this affected how the requests for tags are added to the
+> same ls-remote request, breaking "git fetch --tags $URL" performed
+> against a URL that is not configured as a remote.
+>
+> Reported-by: Josh Steadmon <steadmon@google.com>
+> [jc: tests are also borrowed from Josh's patch]
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>
+>  * Even though I borrowed some part of the commit log message from
+>    Josh's version, it not clear to me how "*after* deciding" led to
+>    whatever the observed breakage (which was not described in the
+>    log message), in the following part.
+>
+>       Specifically, we now unconditionally add HEAD to the
+>       ref_prefixes list, but we did this *after* deciding whether we
+>       also need to explicitly request tags.
+>
+>    Bence's change asks "HEAD" after "if we are fetching something,
+>    then also ask about refs/tags/" logic thought we are not fetching
+>    anything (i.e. ref_prefixes.nr =3D=3D 0 at that point).  But before
+>    Bence's series, the same refs/tags/ logic saw that (ref_prefix.nr
+>    =3D=3D 0), didn't it?  So that does not sound like a sufficient
+>    explanation on how the series regressed.
 
-Yes, so here is that magic pathspec name.  But this test file has a lot
-of tests that test positional argument ambiguity.  Which seems very
-relevant to pathspecs in particular.  And revision selection syntax
-seems to be used to test how things are interpreted.  Not really how
-things are ultimately processed (that seems secondary).
+I did a bit of poking around on what is happening. For one I can confirm, t=
+hat
+both before and after the set_head series
+`transport_ls_refs_options.ref_prefixes.nr` is 0. So the difference must be
+happening somewhere after that, and is not a side effect of calling set_hea=
+d
+either, but I didn't manage to pin it down further.
 
-The tests involving `:/` in particular seem to only be about
-ambiguity testing.
+I also checked what happens in set_head, just to be on the safe side: `head=
+s`
+is empty so we reach the if where we check `heads.nr` which is 0. So at lea=
+st
+no strange refs are created :)
 
-Is this the correct test file?
 
-> index
-> 2a46eb6bedbe283a08fd77917b7fb17da155b027..2d80b9044bcf9ec8e2f11b6afd2b=
-0fe8e2fcabfd
-> 100755
-> --- a/t/t4208-log-magic-pathspec.sh
-> +++ b/t/t4208-log-magic-pathspec.sh
-> @@ -58,6 +58,19 @@ test_expect_success '"git log :/any/path/" should
-> not segfault' '
->  	test_must_fail git log :/any/path/
+
+> ---
+>  builtin/fetch.c  | 20 +++++++++++++++++++-
+>  t/t5510-fetch.sh | 17 +++++++++++++++++
+>  2 files changed, 36 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index a64de4485f..3eb6f3acc9 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1643,6 +1643,21 @@ static int set_head(const struct ref *remote_refs)
+>  	return result;
+>  }
+> =20
+> +static int uses_remote_tracking(struct transport *transport, struct refs=
+pec *rs)
+> +{
+> +	if (!remote_is_configured(transport->remote, 0))
+> +		return 0;
+> +
+> +	if (!rs->nr)
+> +		rs =3D &transport->remote->fetch;
+> +
+> +	for (int i =3D 0; i < rs->nr; i++)
+> +		if (rs->items[i].dst)
+> +			return 1;
+> +
+> +	return 0;
+> +}
+> +
+>  static int do_fetch(struct transport *transport,
+>  		    struct refspec *rs,
+>  		    const struct fetch_config *config)
+> @@ -1712,7 +1727,10 @@ static int do_fetch(struct transport *transport,
+>  				    "refs/tags/");
+>  	}
+> =20
+> -	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+> +	if (uses_remote_tracking(transport, rs)) {
+> +		must_list_refs =3D 1;
+> +		strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+> +	}
+> =20
+>  	if (must_list_refs) {
+>  		trace2_region_enter("fetch", "remote_refs", the_repository);
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 87698341f5..d7602333ff 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -189,6 +189,23 @@ test_expect_success 'fetch --prune --tags with refsp=
+ec prunes based on refspec'
+>  	git rev-parse sometag
 >  '
->
-> +test_expect_success ':/ favors more recent matching commits' '
-
-This wasn=E2=80=99t mentioned in the report but `HEAD^{/}` is a similar =
-syntax.
-That one is more controllable since you provide a ref yourself
-(`:/` returns the youngest commit from any ref).
-
-I have indeed noticed that `HEAD^{/}` returns a sensible thing while
-`:/` does something strange like finding the root commit.  (Then I
-shrugged and half-assumed that I hadn=E2=80=99t read some fine print)
-
-gitrevisions(7) calls out the relation between these two. It could be
-nice for a regression test to assert that these two syntaxes return the
-same commit. I.e. when you have just made a commit, `:/<search>` and
-`HEAD^{/<search>}` return the same commit, and that commit is
-the youngest.
-
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
+> =20
+> +test_expect_success 'fetch --tags gets tags even without a configured re=
+mote' '
+> +	REMOTE=3D"$(pwd)/test_tag_1" &&
+> +	git init test_tag_1 &&
 > +	(
-> +		cd repo &&
-> +		test_commit common-old &&
-> +		test_commit --no-tag common-new &&
-> +		git rev-parse HEAD >expect &&
-> +		git rev-parse :/common >actual &&
+> +		cd test_tag_1 &&
+> +		test_commit foo
+> +	) &&
+> +	git init test_tag_2 &&
+> +	(
+> +		cd test_tag_2 &&
+> +		git fetch --tags "file://$REMOTE" &&
+> +		echo "foo" >expect &&
+> +		git tag >actual &&
 > +		test_cmp expect actual
 > +	)
 > +'
 > +
->  # This differs from the ":/a" check above in that :/in looks like a p=
-athspec,
->  # but doesn't match an actual file.
->  test_expect_success '"git log :/in" should not be ambiguous' '
->
-> ---
-> base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-> change-id: 20241206-pks-rev-parse-fix-reversed-list-0f94a20a6165
+>  test_expect_success REFFILES 'fetch --prune fails to delete branches' '
+>  	cd "$D" &&
+>  	git clone . prune-fail &&
+
+
