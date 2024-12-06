@@ -1,86 +1,85 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DD4207E02
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D7B207DFF
 	for <git@vger.kernel.org>; Fri,  6 Dec 2024 13:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733491528; cv=none; b=W+CM+5fU1OqW3FIouVw810KtQdkD+xhG+7QJ1z4a94+Zlm7tGBDB0rpZcoaymzempAb2ZJ0gz0LPNRkCuwPytWjWFGzj6AyZOfplcbCa1tw/vIHoISZq1PnYbSZ0ZvoJ4WQY2vnwRAdszjgVu7QdfSidQs0V00JRc5NO76/5wE8=
+	t=1733491529; cv=none; b=MJIeANA9uxsxiyyBfdNHsdf2LgndYV3rd7JJsW/brrDOXcVNnuiCA/5RGxh4uTJ83/iP7kIZK8UU59kZ9JCS8pjTuT1M7uklITDMaZb5eY5kEkWSAubdILSiwh6ea6ldX3zapBr5aKCOr5YcpO6OexwwwBQpl2Qq4I1w6ux+sHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733491528; c=relaxed/simple;
-	bh=+i0FovYi1amnC9qzA3KaZwDFHk2Db1bwvMuaOkZwdy4=;
+	s=arc-20240116; t=1733491529; c=relaxed/simple;
+	bh=/2lyygtkfnxVaIqSWd0NMMXm5QSZdcZ5SNthFvy6RiM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UflnehkRxaxR5cEqNpJZwpMLjh0+VM0yx5HAk4x88bvsFslxuWYrCs1J1xYE2InivZdIXRxe7tMhEu+k7bQAdDTwc1gUFllLq7OE/6of0G/u9mhmYhwfC7WQbW5EtkQCOcXcbjE0q/Jg6OLxyUXehUYrypo90Gd1GJ82ncOWa9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QhhdrH6V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=egL652Cg; arc=none smtp.client-ip=202.12.124.153
+	 In-Reply-To:To:Cc; b=rhgxsiVD+ZEuLBjMCym2yNQjnOoJFNltoY2PA80QajvDWn4EKAI0t0AUkyjK5llFEJLnDoYyZ++RK6yj6vaDOmshkzkx9ENyPZcfV4wq2zN/DlxtoEuwZzpOh+g6h5P/S7iLFfXFduJaQcXgOyNFfGI0HHFRNvYHaAGIlzlRuik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mRxplx03; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mtjB6CBJ; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QhhdrH6V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="egL652Cg"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5AA652540164;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mRxplx03";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mtjB6CBJ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5C0F5254016E;
 	Fri,  6 Dec 2024 08:25:25 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 06 Dec 2024 08:25:25 -0500
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Fri, 06 Dec 2024 08:25:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1733491525;
-	 x=1733577925; bh=jNO7ulr6uyL+kJY8eJEMC3LirRE/OgIhPQhp9M6tpTg=; b=
-	QhhdrH6ViTGZR3iT5ngSzBOnWrKPperFLPx/aWb6mKR9Bkb5XQbp139G8ANXbF2S
-	ei4ecyFJ2PwiuxYjl3kIdacMqbmQWCMaCr9SJlEoJhyck2vKH1d0PNHK1sxvJT1I
-	FxwxyOE31bkjbfdeMx1jmnzWIMfRg15IbD7C4fK7Hls26vY7l9lu6aqTjH1a9SvD
-	bDXFJ0+/Bm4tTEb2A/An+Wu/ZJJqwhRa4PClMV9mHeIOj3Qr2jwwWsjFWUOQLaDa
-	g5Uu0aA5QsEKFXNO5cdSGYs8W1bW3E5YzFXm78CmjXjSrzpIyFs6J33RuMth+m/x
-	pRpgNTwNVLfZWLNG+Pqr8w==
+	 x=1733577925; bh=w32C4Zxgg32gscQS7tHko0rtYrwWahrirNvrXTAwLOI=; b=
+	mRxplx03HcMRYt1IIeJYwjy9AQfpWTz/Rr1b0UeylAINkQrSZysumi9dOork1gST
+	fFdSOqnyyuwTPR2wPB94IWQ3sQMsuL1OxMtqJOfRDYWER4hg9YjnzHoN/zjs+Txu
+	Mog0p/30XwV1az6hKzlBMlM4zA72GlwBwzGg4e0LyynkggQKNLv037oAi/XJmN4g
+	BOY5RSF3fElyRGY9fqSMCIPGO949ms8X2bI/13XJqV1PCPfIqMYs97uncef7ep8l
+	ClUYNY4vtKtoAFEY2eVBggrQFHyuQ7DDVlhJ75sB/JDVMssiMdCMBX0hovUY7hoa
+	vM4PDg6ypTnNX65er1SLIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733491525; x=
-	1733577925; bh=jNO7ulr6uyL+kJY8eJEMC3LirRE/OgIhPQhp9M6tpTg=; b=e
-	gL652CgjGN3bI9lMdlrJ9pvf4cH+KFR4lFbrXopzuU0JaTfH7byf0V3NV3d2EoPC
-	BUhtbonHH/3O+B4FABkxUccdq/lpUjtVZEbXWd34GEIt5WS1ND8lzH/WcdySOs+9
-	4tjnuiVDD2xSou/mrPONmvMyryxb/FwqIyXy7Ls7rFFVTW6MKNk6hkeXOEQqYhNs
-	j3X5R6vMqu2IgbgU9poR+tXy5HmhFNl6798W3UKw33r6BpXVDsz0g3BTSMKLxyPN
-	SCQJUOUstapmNgRqQpIas+V+9c0UwheOqBqh2IYYcDefhBkzUsMQYguz8qWal8c8
-	T+26osrTmsSncXVlmWRjA==
-X-ME-Sender: <xms:RPtSZ_aQdFPZgMMof9_gXXgwhhXqjKJe7xiPYWcBWiblURfL5SUNKA>
-    <xme:RPtSZ-bYnIFrEndkOZ_W0gKm2AkUheuOnzC4W0US05EOqtWudqYd6NOsoMO_VrtfX
-    6WX4E6LgFcPzvqFow>
-X-ME-Received: <xmr:RPtSZx9WD3qOlLTK6TURxdo8jp68z7q_nmN_Zp3aZTFVdSUrjcUZjqmJU9FwqTQQtv1h1oJk-oJOfzDtVB6LjvOBvY4JDQl3yLmd98hlsUJzpA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdehtdcutefuodetggdotefrodftvf
+	1733577925; bh=w32C4Zxgg32gscQS7tHko0rtYrwWahrirNvrXTAwLOI=; b=m
+	tjB6CBJXGboIn5ykr60lXqP6V7rzpkAoc3RMH59MbbRrdtCjVfNDZVk1kzB2dwGo
+	VayQeeQYkgfewlxsboJVdCEnQTdNxldAXW/ecWaHhOnxfXP7NsW2KlsyaBJcFXpE
+	+BjjfVoh20IFpWTRm4ey0HZg5V3BACQLhfSmrbUWogURFhlSVQ/x/y738NWo5xtA
+	eYCa7umGO5eu4Oa9YL2H35SbZpLxUtdt6SO8ht3U5pnM38AJKFBeCr5f25q0LlM4
+	fiKDjj+mNl+lFUiATBoprIXnch28rpCiUug6hsmFy8cYZMHxoMndAiD99M00IGmT
+	GOEjHjRvpacSZfove1VHw==
+X-ME-Sender: <xms:RftSZ5XIsZRu72g03KXNDsaFExvgzjwnAGqBFMK472AElDFcB-Y5VQ>
+    <xme:RftSZ5lhOnF_xtmfbqYhAdX0U3Y2S_OS2CPMxpvjZYFqo64KwMSXOWWJ_19WLnnVF
+    EZQbsGMaJcnmVor8g>
+X-ME-Received: <xmr:RftSZ1Zc90fn9Vk4OFu7zk5O58SqVNIuULqKFjhuCwC6J30AvqYsK6-aJfdJia5zUA8FOck1ZNkVFlfKzKsjTfIDk4_T0P9FNQWQOg24P79L_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdehudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
-    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddupdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghord
-    gtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdr
-    tghomhdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtghomhdprhgtphhtthhope
-    hjiehtsehkuggsghdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdroh
-    hrgh
-X-ME-Proxy: <xmx:RPtSZ1rxXkvNe-SQelvflN939uWkDuSVnigehSbe6RNjieKcM8GwVw>
-    <xmx:RPtSZ6pjfyuWZ3576c7Lc6E4PQ4MhIJ-JiMMNRBCmnsXTWp0iu-Xnw>
-    <xmx:RPtSZ7THZsa94_gNjmq8hEpXNT7lxwdFdZs8cXrsOAQFfwcwE-5U8g>
-    <xmx:RPtSZypRvHXmQ8tuUn3QhZN1pbr6kN4TobfAWaaveFTPVizAoPclXA>
-    <xmx:RftSZ3Qvzmnfng8006DR7nZUQplpIDCAeeTNISb8Pibz7G7QopJe7hVY>
+    eqnecuggftrfgrthhtvghrnheptdeuvdegkeevuedtleelveelgfehgfdvheevuefhueeg
+    jeefleejhfdvkeehudetnecuffhomhgrihhnpehrtgdrihhnnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjiehtsehkug
+    gsghdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthht
+    oheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvg
+    esshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgv
+    thdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtth
+    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:RftSZ8UAc9mXCkHti1Hi7Ajvld0G4sse4qlyz9E4PikcaxxP8Q87bA>
+    <xmx:RftSZzkWiLCvIj9pEIHyccDiOG906SnEpuYYdomK6uaIHwGEX_2ZdQ>
+    <xmx:RftSZ5dIW9lJ4SjyZXLwoPKYotyMR7f5d9g5Ug9T7uoFv-85U4czvg>
+    <xmx:RftSZ9Ej5944iH10FAFi6oP1i-fgwPYLjDNbbKMVUfuRKhJ5xrFGeg>
+    <xmx:RftSZxevwKlBdKjKJ3ezxDgO8rPWt3gid5At-8hm9R5O3lFOxYdFVKRo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
  6 Dec 2024 08:25:23 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e88d2e10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id 80a0ca98 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Fri, 6 Dec 2024 13:23:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Dec 2024 14:24:39 +0100
-Subject: [PATCH v11 04/26] Makefile: propagate Git version via generated
- header
+Date: Fri, 06 Dec 2024 14:24:40 +0100
+Subject: [PATCH v11 05/26] Makefile: generate "git.rc" via GIT-VERSION-GEN
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241206-pks-meson-v11-4-525ed4792b88@pks.im>
+Message-Id: <20241206-pks-meson-v11-5-525ed4792b88@pks.im>
 References: <20241206-pks-meson-v11-0-525ed4792b88@pks.im>
 In-Reply-To: <20241206-pks-meson-v11-0-525ed4792b88@pks.im>
 To: git@vger.kernel.org
@@ -102,151 +101,152 @@ Cc: Eli Schwartz <eschwartz@gentoo.org>,
  Johannes Sixt <j6t@kdbg.org>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-We set up a couple of preprocessor macros when compiling Git that
-propagate the version that Git was built from to `git version` et al.
-The way this is set up makes it harder than necessary to reuse the
-infrastructure across the different build systems.
+The "git.rc" is used on Windows to embed information like the project
+name and version into the resulting executables. As such we need to
+inject the version information, which we do by using preprocessor
+defines. The logic to do so is non-trivial and needs to be kept in sync
+with the different build systems.
 
-Refactor this such that we generate a "version-def.h" header via
-`GIT-VERSION-GEN` instead.
+Refactor the logic so that we generate "git.rc" via `GIT-VERSION-GEN`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
  .gitignore                          |  1 +
- GIT-VERSION-GEN                     |  7 +++++++
- Makefile                            | 13 ++++++-------
- contrib/buildsystems/CMakeLists.txt | 16 ++++++++++++----
- version-def.h.in                    |  8 ++++++++
- version.c                           |  1 +
- 6 files changed, 35 insertions(+), 11 deletions(-)
+ GIT-VERSION-GEN                     |  8 ++++++--
+ Makefile                            | 13 +++++++------
+ contrib/buildsystems/CMakeLists.txt | 19 +++++++++++++------
+ git.rc => git.rc.in                 |  6 +++---
+ 5 files changed, 30 insertions(+), 17 deletions(-)
 
 diff --git a/.gitignore b/.gitignore
-index 6687bd6db4c0a6adf02292a9cb545d3e5270e2b0..e17963e84252fa094c10f5e84c0e3724153c819c 100644
+index e17963e84252fa094c10f5e84c0e3724153c819c..d3be460040c6120d862a25dff1abd325b93b37fd 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -195,6 +195,7 @@
- /config-list.h
- /command-list.h
- /hook-list.h
-+/version-def.h
+@@ -199,6 +199,7 @@
  *.tar.gz
  *.dsc
  *.deb
++/git.rc
+ /git.spec
+ *.exe
+ *.[aos]
 diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index 7afc7aad1413d552cbadc68b7582ba639faa4d8a..c18f24e515436b71ef40120b88b6fbb0b5621c01 100755
+index c18f24e515436b71ef40120b88b6fbb0b5621c01..a1c8146f05cfa7fbc6c47804aec5fb848e67c69c 100755
 --- a/GIT-VERSION-GEN
 +++ b/GIT-VERSION-GEN
-@@ -52,6 +52,11 @@ else
+@@ -58,14 +58,18 @@ then
+ 	GIT_USER_AGENT="git/$GIT_VERSION"
  fi
  
- GIT_VERSION=$(expr "$VN" : v*'\(.*\)')
-+GIT_BUILT_FROM_COMMIT=$(git -C "$SOURCE_DIR" rev-parse -q --verify HEAD 2>/dev/null)
-+if test -z "$GIT_USER_AGENT"
-+then
-+	GIT_USER_AGENT="git/$GIT_VERSION"
-+fi
+-read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION trailing <<EOF
+-$(echo "$GIT_VERSION" 0 0 0 | tr '.a-zA-Z-' ' ')
++# While released Git versions only have three numbers, development builds also
++# have a fourth number that corresponds to the number of patches since the last
++# release.
++read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION GIT_PATCH_LEVEL trailing <<EOF
++$(echo "$GIT_VERSION" 0 0 0 0 | tr '.a-zA-Z-' ' ')
+ EOF
  
- read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION trailing <<EOF
- $(echo "$GIT_VERSION" 0 0 0 | tr '.a-zA-Z-' ' ')
-@@ -61,6 +66,8 @@ sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
+ sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
  	-e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
  	-e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
  	-e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
-+	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
-+	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
++	-e "s|@GIT_PATCH_LEVEL@|$GIT_PATCH_LEVEL|" \
+ 	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
+ 	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
  	"$INPUT" >"$OUTPUT"+
- 
- if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
 diff --git a/Makefile b/Makefile
-index a529df85ad4c68f6db981c8dc05540e9e4991995..53b98eccbacb8ddd65020d9aebfee532e92d2196 100644
+index 53b98eccbacb8ddd65020d9aebfee532e92d2196..f8ae750ffdb1dc4c4ad547029799710841665d1e 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -2508,13 +2508,11 @@ PAGER_ENV_CQ_SQ = $(subst ','\'',$(PAGER_ENV_CQ))
- pager.sp pager.s pager.o: EXTRA_CPPFLAGS = \
- 	-DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
+@@ -2568,11 +2568,12 @@ $(SCRIPT_LIB) : % : %.sh GIT-SCRIPT-DEFINES
+ 	$(QUIET_GEN)$(cmd_munge_script) && \
+ 	mv $@+ $@
  
--version.sp version.s version.o: GIT-VERSION-FILE GIT-USER-AGENT
--version.sp version.s version.o: EXTRA_CPPFLAGS = \
--	'-DGIT_VERSION="$(GIT_VERSION)"' \
--	'-DGIT_USER_AGENT=$(GIT_USER_AGENT_CQ_SQ)' \
--	'-DGIT_BUILT_FROM_COMMIT="$(shell \
--		GIT_CEILING_DIRECTORIES="$(CURDIR)/.." \
--		git rev-parse -q --verify HEAD 2>/dev/null)"'
-+version-def.h: version-def.h.in GIT-VERSION-GEN GIT-VERSION-FILE GIT-USER-AGENT
-+	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
+-git.res: git.rc GIT-VERSION-FILE GIT-PREFIX
+-	$(QUIET_RC)$(RC) \
+-	  $(join -DMAJOR= -DMINOR= -DMICRO= -DPATCHLEVEL=, $(wordlist 1, 4, \
+-	    $(shell echo $(GIT_VERSION) 0 0 0 0 | tr '.a-zA-Z-' ' '))) \
+-	  -DGIT_VERSION="\\\"$(GIT_VERSION)\\\"" -i $< -o $@
++git.rc: git.rc.in GIT-VERSION-GEN GIT-VERSION-FILE
++	$(QUIET_GEN)$(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
 +	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
 +
-+version.sp version.s version.o: version-def.h
++git.res: git.rc GIT-PREFIX
++	$(QUIET_RC)$(RC) -i $< -o $@
  
- $(BUILT_INS): git$X
- 	$(QUIET_BUILT_IN)$(RM) $@ && \
-@@ -3729,6 +3727,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) $(FUZZ_PROGRAMS)
- 	$(RM) $(SP_OBJ)
- 	$(RM) $(HCC)
-+	$(RM) version-def.h
- 	$(RM) -r bin-wrappers $(dep_dirs) $(compdb_dir) compile_commands.json
- 	$(RM) -r po/build/
- 	$(RM) *.pyc *.pyo */*.pyc */*.pyo $(GENERATED_H) $(ETAGS_TARGET) tags cscope*
+ # This makes sure we depend on the NO_PERL setting itself.
+ $(SCRIPT_PERL_GEN): GIT-BUILD-OPTIONS
+@@ -3718,7 +3719,7 @@ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) -r .build $(UNIT_TEST_BIN)
+ 	$(RM) GIT-TEST-SUITES
+ 	$(RM) po/git.pot po/git-core.pot
+-	$(RM) git.res
++	$(RM) git.rc git.res
+ 	$(RM) $(OBJECTS)
+ 	$(RM) headless-git.o
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 376d748ce9021710eb72258ab3b9bac52950a933..3cc5e318190292dd66981aa8593e7bd2739eea1d 100644
+index 3cc5e318190292dd66981aa8593e7bd2739eea1d..865b3af9fb2c1e7bdc1e7cecd0f021ee460971dd 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -229,10 +229,7 @@ add_compile_definitions(PAGER_ENV="LESS=FRX LV=-c"
- 			GIT_HTML_PATH="share/doc/git-doc"
- 			DEFAULT_HELP_FORMAT="html"
- 			DEFAULT_GIT_TEMPLATE_DIR="share/git-core/templates"
--			GIT_VERSION="${PROJECT_VERSION}.GIT"
--			GIT_USER_AGENT="git/${PROJECT_VERSION}.GIT"
--			BINDIR="bin"
--			GIT_BUILT_FROM_COMMIT="")
-+			BINDIR="bin")
+@@ -691,18 +691,25 @@ list(TRANSFORM reftable_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
+ add_library(reftable STATIC ${reftable_SOURCES})
  
  if(WIN32)
- 	set(FALLBACK_RUNTIME_PREFIX /mingw64)
-@@ -668,6 +665,17 @@ parse_makefile_for_sources(libgit_SOURCES "LIB_OBJS")
++	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.rc
++			COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
++				"${CMAKE_SOURCE_DIR}"
++				"${CMAKE_SOURCE_DIR}/git.rc.in"
++				"${CMAKE_BINARY_DIR}/git.rc"
++			DEPENDS "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
++				"${CMAKE_SOURCE_DIR}/git.rc.in"
++			VERBATIM)
++
+ 	if(NOT MSVC)#use windres when compiling with gcc and clang
+ 		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
+-				COMMAND ${WINDRES_EXE} -O coff -DMAJOR=${PROJECT_VERSION_MAJOR} -DMINOR=${PROJECT_VERSION_MINOR}
+-					-DMICRO=${PROJECT_VERSION_PATCH} -DPATCHLEVEL=0 -DGIT_VERSION="\\\"${PROJECT_VERSION}.GIT\\\""
+-					-i ${CMAKE_SOURCE_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
++				COMMAND ${WINDRES_EXE} -O coff -i ${CMAKE_BINARY_DIR}/git.rc -o ${CMAKE_BINARY_DIR}/git.res
++				DEPENDS "${CMAKE_BINARY_DIR}/git.rc"
+ 				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+ 				VERBATIM)
+ 	else()#MSVC use rc
+ 		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/git.res
+-				COMMAND ${CMAKE_RC_COMPILER} /d MAJOR=${PROJECT_VERSION_MAJOR} /d MINOR=${PROJECT_VERSION_MINOR}
+-					/d MICRO=${PROJECT_VERSION_PATCH} /d PATCHLEVEL=0 /d GIT_VERSION="${PROJECT_VERSION}.GIT"
+-					/fo ${CMAKE_BINARY_DIR}/git.res ${CMAKE_SOURCE_DIR}/git.rc
++				COMMAND ${CMAKE_RC_COMPILER} /fo ${CMAKE_BINARY_DIR}/git.res ${CMAKE_BINARY_DIR}/git.rc
++				DEPENDS "${CMAKE_BINARY_DIR}/git.rc"
+ 				WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+ 				VERBATIM)
+ 	endif()
+diff --git a/git.rc b/git.rc.in
+similarity index 67%
+rename from git.rc
+rename to git.rc.in
+index cc3fdc6cc6cb83b084eebe2ad49f3c78c981789b..e69444eef3f0c558707e067d52820668d2116308 100644
+--- a/git.rc
++++ b/git.rc.in
+@@ -1,6 +1,6 @@
+ 1 VERSIONINFO
+-FILEVERSION     MAJOR,MINOR,MICRO,PATCHLEVEL
+-PRODUCTVERSION  MAJOR,MINOR,MICRO,PATCHLEVEL
++FILEVERSION     @GIT_MAJOR_VERSION@,@GIT_MINOR_VERSION@,@GIT_MICRO_VERSION@,@GIT_PATCH_LEVEL@
++PRODUCTVERSION  @GIT_MAJOR_VERSION@,@GIT_MINOR_VERSION@,@GIT_MICRO_VERSION@,@GIT_PATCH_LEVEL@
+ BEGIN
+   BLOCK "StringFileInfo"
+   BEGIN
+@@ -11,7 +11,7 @@ BEGIN
+       VALUE "InternalName", "git\0"
+       VALUE "OriginalFilename", "git.exe\0"
+       VALUE "ProductName", "Git\0"
+-      VALUE "ProductVersion", GIT_VERSION "\0"
++      VALUE "ProductVersion", "@GIT_VERSION@\0"
+     END
+   END
  
- list(TRANSFORM libgit_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
- list(TRANSFORM compat_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/")
-+
-+add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/version-def.h"
-+	COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
-+		"${CMAKE_SOURCE_DIR}"
-+		"${CMAKE_SOURCE_DIR}/version-def.h.in"
-+		"${CMAKE_BINARY_DIR}/version-def.h"
-+	DEPENDS "${SH_EXE}" "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
-+		"${CMAKE_SOURCE_DIR}/version-def.h.in"
-+	VERBATIM)
-+list(APPEND libgit_SOURCES "${CMAKE_BINARY_DIR}/version-def.h")
-+
- add_library(libgit ${libgit_SOURCES} ${compat_SOURCES})
- 
- #libxdiff
-diff --git a/version-def.h.in b/version-def.h.in
-new file mode 100644
-index 0000000000000000000000000000000000000000..347995df0611e19428cf96ec9539f0dcfea999d2
---- /dev/null
-+++ b/version-def.h.in
-@@ -0,0 +1,8 @@
-+#ifndef VERSION_DEF_H
-+#define VERSION_DEF_H
-+
-+#define GIT_VERSION "@GIT_VERSION@"
-+#define GIT_BUILT_FROM_COMMIT "@GIT_BUILT_FROM_COMMIT@"
-+#define GIT_USER_AGENT "@GIT_USER_AGENT@"
-+
-+#endif /* VERSION_DEF_H */
-diff --git a/version.c b/version.c
-index 41b718c29e1b9fc2981d7d14a3d25e69c31a3030..7adc4d51ff25a0841607c21807deaf20721252de 100644
---- a/version.c
-+++ b/version.c
-@@ -1,5 +1,6 @@
- #include "git-compat-util.h"
- #include "version.h"
-+#include "version-def.h"
- #include "strbuf.h"
- 
- const char git_version_string[] = GIT_VERSION;
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
