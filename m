@@ -1,175 +1,196 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD5B14AD0D
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 03:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3470A191F9B
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 03:28:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733455123; cv=none; b=KBRYLeVc8ZEgRRDGmGeB9UIrTkKGmdoWesS2SLm9bTg+2MtnYyoiUTF0J22OSJDR0y+9aj6g67TG1lD8FjmqjQ17v0BBnjhvT4Cr5Fb9t8JV2Cgx4vuWblvz6GMFS+yvZu+gGa0WAp6CqSIaoqvGDvZIQlnR7K9W9/puUUDN/xs=
+	t=1733455692; cv=none; b=BYErbqJKAEKZX0jFnk/k6zwV5XZtVIT/KINTAtapf162Tmee/wxLHHxo8o1514wxmMaH/Qx76V7lczXy/IumBtyMAoMOevw0WO4O8eGE1l4CPl/wAAMqyZjh+83HEGStTFn7ddVc4yGWHPZJg7d9zOkCuq3rvwpkiiI/cWxKWZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733455123; c=relaxed/simple;
-	bh=i488qOPEUY0CukDr9jGfcALUpwcl4P9x/hPZVOXq/jo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VGx507lGrx34mtl9tCU/QWrlNvA/Cy1M4hOp4WWlF+Iso8ZZRC2cTgZ1Pinhis2ZMZeBZ0OPsM/2qCeqgypDNgCA6fL2vx5BCwfU9GBnHTVsqVVmUt6+ybDeprxwg0lc3DRAgJEkgQW4Y38KopFy4OMWR7h3t8koAwd5mVOu1oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=atlassian.com; spf=pass smtp.mailfrom=atlassian.com; dkim=pass (2048-bit key) header.d=atlassian.com header.i=@atlassian.com header.b=lKeHuiBi; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=atlassian.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atlassian.com
+	s=arc-20240116; t=1733455692; c=relaxed/simple;
+	bh=utrdblqgKSuKT1fVzHCRjQDxZ3zrntwoft5tneHNNwE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LhKwPfManoU91MqMkm1YTgmGDNxV9GKq/AHJ9U5VghD50NabKVfU1Zr8266cURT5AL+UC7Vvg3abD+zxvxq7E0NisPO8aYnmaEKmivyEtTGb2I0EL8v8nyr8BYZY7QkaZD3kgBFAXPfS3GbKRE5HWydsxcmI4KH8kqoAMK2o6QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=APTSpMNV; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=atlassian.com header.i=@atlassian.com header.b="lKeHuiBi"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5d0ac3be718so222881a12.1
-        for <git@vger.kernel.org>; Thu, 05 Dec 2024 19:18:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian.com; s=google; t=1733455119; x=1734059919; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4gvtgs+IMjWWKp6z/ei8gCmQ2HU2gmAhzX9/rcczzs8=;
-        b=lKeHuiBijcf+Aaq4JhXQ7CnKRsuWADStJU96J8yLmP0xaY5O/tewa8DAbfNaXBveuw
-         6uP3Au9BmvAMePSfK0x+eyOUNHHpP4YA5GxUEm+2ihmrsL6t4A3Lb7qjlT0o+KkiYkwz
-         YeM0UVUXuwRm7vlL1/loGcuD/izMZxJgPu8h75dX94A8ga1PvNcIR9eolU0WEmdXA2OE
-         temJwt+9j5I3MvF48qdlNyTgXai+A/VRgBtajSh6iN1W380ZxUEjfSCD0rt9Si0Ij43o
-         j02TA+rfyRCTPizNnvFNM8iyllLcl70ii+tLm4D2+vs+FRAQoKK4nvSWxtsToUytvhh6
-         siZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733455119; x=1734059919;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4gvtgs+IMjWWKp6z/ei8gCmQ2HU2gmAhzX9/rcczzs8=;
-        b=d/eg3DS0qdbcscROD8+9WDQevFGBLDoDdfjY8Ao8RFHqGvD6gV9p6BWUsijpliGb92
-         yD+8/XfDhVkICY5/fEKd3nkHE8ILepGBwD4vENDo0A4TZ+eFwVPkWKxNIv2swzJ02rrO
-         H7qSfxXESVZW3GP3PedcfrUm0+lonFvThzAoIisKpT73FXBjybus5LHUjSrpPi3o5Qkk
-         xfXwwGbGt4DSAS7tzl1sL3EJGBFszRkDDcVLCiANS08I+wHnhQK7eUfdzORN+FiYZtHH
-         8tnZx1PPvFwyNd6LANEg8/1EvypIN+6WCh+SL/gI063e8/52x3GpPzR3MNUmXtBx8oQ0
-         3oyA==
-X-Gm-Message-State: AOJu0YzBTl4yOZd4ehoaWAj/G76c73zOMxXuIz/2gw/Lil4r1SYhEo/l
-	1QFwoKgbToNJ7oXnERI0l4H7yaakEee3WRVkwagFEy73W3hEEUJff+Df7FLBk6Px4hU2ujpgJd2
-	36Qf9Qkq6gvqkskAvYkmC8epjkhMVlCOJDUrp5nKJc8F++bU3HkZHN2g=
-X-Gm-Gg: ASbGncu2YMLLA/uh4S0VX0dzWF0BNpwyt98aFX0/sMWJA9LrB5Nl7fwwiur3t0GAH7a
-	lGpm/JOFA+8m8r7sDjCy8N6jxpUF4exfl
-X-Google-Smtp-Source: AGHT+IHnZJAMToyHlGKHBvL/Ru6gakHmO32NL8zQ2z2oj2csFVdd4wJ/dyqCeCl2MRZhYxL7t8lVxZ+R4l+phMu29Zs=
-X-Received: by 2002:a05:6402:51cb:b0:5d3:ba42:e9e1 with SMTP id
- 4fb4d7f45d1cf-5d3be74c1c9mr438437a12.6.1733455119378; Thu, 05 Dec 2024
- 19:18:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="APTSpMNV"
+Received: (qmail 4448 invoked by uid 109); 6 Dec 2024 03:28:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=utrdblqgKSuKT1fVzHCRjQDxZ3zrntwoft5tneHNNwE=; b=APTSpMNViBWRkNWeySEAp1H0H85fV7SZcOkKdUy+O+neMZI7SZwuCP2DtQNUaEA+SCL+J6KnuUVXKjh8QuNUTQsYdS6Bc+KXGJn1FYrWD6yKi+0OpSqF1hGrQ8YHRKr6ECvRTXqwzwlvH0T8nBt52gTqOA+7bwgucOer558iKhGMkMQ7sxNtOX9my3QdQ89sd6/1VIhu5aYBjG9oVgACP9E24J7p66wjmLrEuPcTdD+yux9ENu7GLv8dkWMSltyIw3VQiPAh0YQDH3sLY/ld8CfUI4H2uQM9um82cvdEvneovpMGiFLmS6/pL8yG/GCtBWk6TtlzxtIQIO1fcG94nw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Dec 2024 03:28:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13211 invoked by uid 111); 6 Dec 2024 03:28:08 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Dec 2024 22:28:08 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 5 Dec 2024 22:28:07 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	benno.martin.evers@gmail.com, benno@bmevers.de, ravi@prevas.dk,
+	jpoimboe@kernel.org, masahiroy@kernel.org
+Subject: Re: [PATCH] describe: drop early return for max_candidates == 0
+Message-ID: <20241206032807.GA3176362@coredump.intra.peff.net>
+References: <20241106211717.GD956383@coredump.intra.peff.net>
+ <00270315b83b585f7d62ad1204ca1df93a668791.1733354035.git.steadmon@google.com>
+ <20241204232750.GA1460551@coredump.intra.peff.net>
+ <20241205201449.GA2635755@coredump.intra.peff.net>
+ <xmqqser1zf8q.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACfndskJZyOf2k2JHVo=8C6+RE3nUdMF5my3t_qcL1+3dW26og@mail.gmail.com>
- <CACfndskPgu5yxSCYE+x0XTq3U+KzfmN4e=rqifA1_n6HQqdG6A@mail.gmail.com> <CABPp-BECMyPS6TOfKprdRyfkJC1CbFzVm+xG0D4LNNU2E1Jtyg@mail.gmail.com>
-In-Reply-To: <CABPp-BECMyPS6TOfKprdRyfkJC1CbFzVm+xG0D4LNNU2E1Jtyg@mail.gmail.com>
-From: Manoraj K <mkenchugonde@atlassian.com>
-Date: Fri, 6 Dec 2024 08:48:28 +0530
-Message-ID: <CACfndskzmJEVPN7UXi2sF-4pUqDEkeG85nOtCVsHYD2_SNrhLg@mail.gmail.com>
-Subject: Re: [QUESTION] Performance comparison: full clone + sparse-checkout
- vs partial clone + sparse-checkout
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, stolee@gmail.com, 
-	Shubham Kanodia <skanodia@atlassian.com>, 
-	Ajith Kuttickattu Sakharia <asakharia@atlassian.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqser1zf8q.fsf@gitster.g>
 
-Hi Elijah,
+On Fri, Dec 06, 2024 at 12:01:41PM +0900, Junio C Hamano wrote:
 
-Thanks for your response! Sorry for not responding sooner.
-
--- `git pull` will both fetch updates for _all_ branches, as well as
-merge (or rebase) the updates for the current branch.
-
-The `git pull` here is actually `git pull origin master`. I guess it
-will fetch objects and blobs for the master branch only, and in this
-case, both partial clone pull and full clone pull should perform
-equally.
-
--- I'm a bit surprised by the `git commit` case; how can it take so
-long on your repo (2-3s)?
-
-I run these with `--no-verify,` so hooks don't impact these benchmarks.
-
-How does git understand that it's a partial clone repository during
-the object lookup? How does it understand that the object needs to be
-fetched instead of coming to understand that the object is not found
-in error?
-
-
-On Fri, Nov 8, 2024 at 10:54=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
-ote:
->
-> On Wed, Nov 6, 2024 at 8:52=E2=80=AFPM Manoraj K <mkenchugonde@atlassian.=
-com> wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > Actually, after thinking on this a bit more, I think the solution below
+> > is a bit more elegant. This can go on top of jk/describe-perf.
 > >
-> > Bump
+> > -- >8 --
+> > From: Josh Steadmon <steadmon@google.com>
+> > Subject: [PATCH] describe: drop early return for max_candidates == 0
+> 
+> OK, so the patch authorship still blames Josh.  But there is no
+> sign-off because ... the approach to the fix is so different that
+> blaming Josh for this implementation is no longer appropriate?
+
+Oh, whoops. I had originally intended to just write the commit message
+and leave him with credit, but then I ended up changing approach.
+Leaving him as the author was an oversight.
+
+> > Before we even start the describe algorithm, we check to see if
+> > max_candidates is 0 and bail immediately if we did not find an exact
+> > match. This comes from 2c33f75754 (Teach git-describe --exact-match to
+> > avoid expensive tag searches, 2008-02-24), since the the --exact-match
+> > option just sets max_candidates to 0.
+> > ...
+> > So this:
 > >
-> > On Mon, Oct 28, 2024 at 4:00=E2=80=AFPM Manoraj K <mkenchugonde@atlassi=
-an.com> wrote:
-> > >
-> > > Hi,
-> > >
-> > > We've conducted benchmarks comparing Git operations between a fully
-> > > cloned and partially cloned repository (both using sparse-checkout).
-> > > We'd like to understand the technical reasons behind the consistent
-> > > performance gains we're seeing in the partial clone setup.
-> > >
-> > > Benchmark Results:
-> > >
-> > > Full Clone + Sparse-checkout:
-> > > - .git size: 8.5G
-> > > - Git index size: 20MB
-> > > - Pack objects: 18,761,646
-> > > - Operations (mean =C2=B1 std dev):
-> > >   * git status: 0.634s =C2=B1 0.004s
-> > >   * git commit: 2.677s =C2=B1 0.019s
-> > >   * git checkout branch: 0.615s =C2=B1 0.005s
-> > >   * git pull (no changes): 5.983s =C2=B1 0.391s
-> > >
-> > > Partial Clone + Sparse-checkout:
-> > > - .git size: 2.0G
-> > > - Git index size: 20MB
-> > > - Pack objects: 13,560,436
-> > > - Operations (mean =C2=B1 std dev):
-> > >   * git status: 0.575s =C2=B1 0.012s (9.3% faster)
-> > >   * git commit: 2.164s =C2=B1 0.032s (19.2% faster)
-> > >   * git checkout branch: 0.724s =C2=B1 0.154s
-> > >   * git pull (no changes): 1.866s =C2=B1 0.018s (68.8% faster)
-> > >
-> > > Key Questions:
-> > > 1. What are the technical factors causing these performance
-> > > improvements in the partial clone setup?
-> > > 2. To be able to get these benefits, is there a way to convert our
-> > > existing fully cloned repository to behave like a partial clone
-> > > without re-cloning from scratch?
-> > >
-> > > Appreciate any insights here.
-> > >
-> > > Best regards,
-> > > Manoraj K
->
-> Taking some wild guesses:
->
-> `git pull` will both fetch updates for _all_ branches, as well as
-> merge (or rebase) the updates for the current branch.  Your "no
-> changes" probably means there's no merge/rebase needed, but that
-> doesn't mean there was nothing to fetch.  A partial clone isn't going
-> to download all the blobs, so it has much less to download and is thus
-> significantly faster.
->
-> `git checkout branch` would likely be slower in a partial clone
-> because sometimes objects are missing and need to be downloaded.  And
-> indeed, it shows as being a little slower for you.
->
-> `git status` is harder to guess at.  The only guess I can come up with
-> for this case is that fewer objects means faster lookup (I'm not
-> familiar with the packfile code, but  think object lookups use a
-> bisect to find the objects in question, and fewer objects to bisect
-> would make things faster if so); not sure if this could account for a
-> 9% difference, though.  Maybe someone who understands packfiles,
-> object lookup, and promisor remotes has a better idea here?
->
-> I'm a bit surprised by the `git commit` case; how can it take so long
-> on your repo (2-3s)?  Do you have commit hooks in place?  If so, what
-> are they doing?  (And if you do, I suspect whatever they are doing is
-> responsible for the differences in timings between the partial clone
-> and the full clone, so you'd need to dig into them.)
+> >   git describe --exact-match --always
+> >
+> > and likewise:
+> >
+> >   git describe --exact-match --candidates=0
+> 
+> Did the latter mean to say "git decribe --candidates=0 --always", as
+> the earlier paragraph explains that "--exact" affects the number of
+> candidates?
+
+Urgh, yes, you are correct. I can resend, but I think we should resolve
+the questions below.
+
+> Without this patch, all three give the same result:
+> 
+>     $ git describe --exact-match --always HEAD
+>     fatal: no tag exactly matches '59d18088fe8ace4bf18ade27eeef3664fb6b0878'
+>     $ git describe --exact-match --candidates=0 HEAD
+>     fatal: no tag exactly matches '59d18088fe8ace4bf18ade27eeef3664fb6b0878'
+>     $ git describe --candidates=0 --always HEAD
+>     fatal: no tag exactly matches '59d18088fe8ace4bf18ade27eeef3664fb6b0878'
+> 
+> With this patch, we instead get this:
+> 
+>     $ ./git describe --exact-match --always HEAD
+>     59d18088fe
+>     $ ./git describe --exact-match --candidates=0 HEAD
+>     fatal: No tags can describe '59d18088fe8ace4bf18ade27eeef3664fb6b0878'.
+>     Try --always, or create some tags.
+>     $ ./git describe --candidates=0 --always HEAD
+>     59d18088fe
+
+Right, exactly.
+
+> > But this interacts badly with the --always option (ironically added only
+> > a week later in da2478dbb0 (describe --always: fall back to showing an
+> > abbreviated object name, 2008-03-02)). With --always, we'd still want to
+> > show the hash rather than calling die().
+> > ...
+> > has always been broken.
+> 
+> Hmph, I am not sure if the behaviour is _broken_ in the first place.
+> 
+> The user asks with "--exact-match" that a result based on some ref
+> that does not directly point at the object being described is *not*
+> acceptable, so with or without "--always", it looks to me that it is
+> doing the right thing, if there is no exact match (or there is no
+> tag and the user only allowed tag to describe the objects) and the
+> result is "no tag exactly matches object X" failure.
+> 
+> Or is our position that these mutually incompatible options, namely
+> "--exact-match" and "--always", follow the "last one wins" rule?
+> The implementation does not seem to say so.
+
+I think you could argue that they are mutually incompatible. But we have
+never marked them as such, nor do we do any sort of last-one-wins.
+They are two distinct options, but in --exact-match mode, --always is
+simply ignored. Which I think is a bug.
+
+> So I am not sure if the "buggy" behaviour is buggy to begin with.
+> The way these two are documented can be read both ways,
+> 
+>     --exact-match::
+>             Only output exact matches (a tag directly references the
+>             supplied commit).  This is a synonym for --candidates=0.
+> 
+>     --always::
+>             Show uniquely abbreviated commit object as fallback.
+> 
+> but my reading is when you give both and when the object given is
+> not directly pointed at by any existing tag, "ONLY output exact
+> matches" cannot be satisified.  And "show as fallback" cannot be
+> satisfied within the constraint that the command is allowed "only
+> output exact matches".
+
+I think there can be a more expansive reading of --exact-match (or of
+--candidates=0), which is: only output a tag that matches exactly. And
+then --always is orthogonal to that. There is no other output to
+produce, so we show the commit object itself.
+
+Now that more expansive reading is not what --exact-match says above.
+But it is the only thing that makes sense to me for --candidates=0, and
+the two are synonyms.
+
+> I think the complexity from the point of view of a calling script to
+> deal with either behaviour is probably similar.  If you ask for
+> "--exact-match" and there is no exact match, you can ask rev-parse
+> to give a shortened one, and you know which one you are giving the
+> user.  We can change what "--exact-match + --candidate=0" combination
+> means to let it fallback, but then you'd need to check the output to
+> see if you got an exact tag or a fallback, and for that you'd
+> probably need to ask "show-ref refs/tags/$output" or something.
+> 
+> So I am not sure if it is worth changing the behaviour this late in
+> the game?
+
+I think there are really two questions here:
+
+  1. Is the current behavior of "describe --exact-match --always" a bug?
+     I'll grant that probably nobody cares deeply, which is why the
+     interaction has not been noticed for all of these years. I think
+     the semantics this patch gives are the only ones that make sense,
+     but I also don't care that deeply. But...
+
+  2. What should we do about the new regression caused by limiting the
+     candidate list? I.e., my earlier patches in this topic make us
+     behave as if --candidates=<n> was given when there are fewer tags
+     in the repo. That runs afoul of the special-casing of
+     --candidates=0 when there are no tags in the repo (or you limit the
+     candidates to zero via --match).
+
+     If we are not going to address (1) as this patch does, then we need
+     another solution. We can internally hold an extra variable to
+     distinguish the number of user-requested candidates from the number
+     of actual candidates available. But I think my solution to (1) here
+     harmonizes the --candidates=0 case with --always, and then the
+     auto-adjusted max-candidates case just falls out naturally.
+
+-Peff
