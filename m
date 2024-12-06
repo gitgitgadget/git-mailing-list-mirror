@@ -1,240 +1,178 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7032D328B6
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 08:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8D23D6B
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 08:43:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733472485; cv=none; b=CuL9xQWyBO6j5ps0XBQmJtE+tFUG6wXDV10nzIl2D8cInLnCC8U2FEN6EL8s7ApsLL1v3IJIF9q9fM7kLxVEy3yZQ7JEblH7W6UIVR9jMwAO5p2XlD0sKlsBngoS8HxzTz/hrhXLzH7+dk7wcl/IKdmE8c+pxdEdV1ZQlG8PvRs=
+	t=1733474602; cv=none; b=Z3Vr0NyZf87T/7clwI03qxoT/RoVMcfp7ibIgA5qORXzU9M6tHxvIXv9lYIg2sFI+ocD7nDVlW6Rsqpx2MNAOfmOOljdCmt50p2d1e6gSee7ClPqIFely3vW2lRLoPQ/qRgnCsKaPEiAY+QzxGoMguM3eUaKJcPY4VvHObGDdfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733472485; c=relaxed/simple;
-	bh=aC7AWVmERV7ERXDcBshazFMqPfBFhu3Jx/VLoFbk+sI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WZC7VADhfcxQNY0l1habHMKsA/1SpV6MCI6rQmQG3QowDhfs/BW8I1SpkpycllRtKZhP827BRcn50hXoXfW8+s8EUjyGPb+6v4irfBElM7pQjYunsHOZvhwuPfRKMn9fSdEOyeLWsdNO3Me58Ht1kn/Z52OGCpOwjWO7vqf3Yd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hcx62BHB; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733474602; c=relaxed/simple;
+	bh=SB75755t37mibW19sIGQVTCbZYcHBRomI41N6yujv/Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iz6fOyuUwBMCX7eHwNsX34akM1b9VRNRE7IhSybsron5t+flQRegLbpQVCVgygrPUEQFnhcAflsKjKtEMIIX98pdbKuAq4LOxWuDpX9yCTc8bspBkCGrL6qtEF1Epyf9Mu8HbXiZcdn1RLzNrzO/8XtGY6ztKbLVHmF4HxL3P/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=atlassian.com; spf=pass smtp.mailfrom=atlassian.com; dkim=pass (2048-bit key) header.d=atlassian.com header.i=@atlassian.com header.b=VtpEdcuX; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=atlassian.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=atlassian.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hcx62BHB"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 420E32540177;
-	Fri,  6 Dec 2024 03:08:02 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 06 Dec 2024 03:08:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733472482; x=1733558882; bh=mypiPzVpBo0Xqfed1JN7bW5978oMAitIzyK
-	fpj1Jwes=; b=hcx62BHBXGhWIQfLcwVDzSf4lmrW1P5ir8e2jTSaIDUyh7EjfbC
-	g7cGehO3a/cSY57i/RdIiOIW5Wr4Bjj6TNswoDpkhUB0RggEotUzTOcciIUn4u1u
-	Y7pywvMRL7llraBFCBMSIMgYjgByGlDKx1MTUIvs2uhJJ6U6QeXkE9Agr9ujllph
-	pMcwcmEeEtQYQksYCkacqd67MuWoucK1ywFLGb6//LeAdkdwAU2QaK34aDEP45+h
-	RnD+XXdPqEKoyVy1Z1fSJZzPRdFa0a4Wegtu5oE8C0cUc1zO6F18eO4LKHu8gpwJ
-	ZrfW4CKb+QLhfMeyXYeUEe+61LaU8KkM0hw==
-X-ME-Sender: <xms:4bBSZ_VWHmOocfRO0sdQSuFXekgawn-cCGhl3Mara2kr24_JArvGdA>
-    <xme:4bBSZ3lA3V25eY3y58jwgFnteGNUeagnV6hzIlx8Y3MNtP6qKn8QeEDrHLc70vMIm
-    8iYbFrOkDZzkyd1AA>
-X-ME-Received: <xmr:4bBSZ7aBDRQ44z88NToco-UpRpM-bqif4DiDDH7vd_7nx_xR2tfwYFlso0xMvXGqdfFWocIT6sMqP58gspEzA9RSUPmoyWsSBOXYwbA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieekgdduudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhephfetheetgefhgeefvdetieeiheffhfduvdek
-    ieehffehteelgfejleeiffetkeefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsggvnhgtvg
-    esfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
-    seguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpd
-    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhr
-    tghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:4bBSZ6Uq9VisR22HGGyIW6JecDdVXcHQdHfu9TfRdd0ezC_FxHf99g>
-    <xmx:4bBSZ5kqE8fhNjl_2WY-xt67hWEdUvkKtfVebPLkFTGnbGe_6cazlQ>
-    <xmx:4bBSZ3c1YW_fAZ5Ipwc_Z2U2twuj9ayQiphTZnNilMwABuT4Uihmsg>
-    <xmx:4bBSZzE_vrDuRQInAUcMvoMywTnaXPexa-3GqWNIEk5X4Y0xyBmkVQ>
-    <xmx:4rBSZ_eTmyI8YzsNUPK1vf5sEmbcUotvqWApUE-i3X5370G5lJpJ_CUx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Dec 2024 03:08:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org,  bence@ferdinandy.com,  phillip.wood@dunelm.org.uk,
-  l.s.r@web.de,  Johannes.Schindelin@gmx.de,  karthik.188@gmail.com,
-  me@ttaylorr.com,  ps@pks.im,  jonathantanmy@google.com
-Subject: Re* [PATCH] Fix `git fetch --tags` in repo with no configured remote
-In-Reply-To: <xmqqcyi5zdzb.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	06 Dec 2024 12:28:56 +0900")
-References: <hpaekjhdpcovhdptdntdligp5jcdp7mygh5brnggu7itf5grzp@vl4l7uwnb3n7>
-	<b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
-	<xmqqcyi5zdzb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Fri, 06 Dec 2024 17:08:00 +0900
-Message-ID: <xmqqcyi5xmhr.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=atlassian.com header.i=@atlassian.com header.b="VtpEdcuX"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e396e33d47dso1697487276.0
+        for <git@vger.kernel.org>; Fri, 06 Dec 2024 00:43:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=atlassian.com; s=google; t=1733474599; x=1734079399; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SB75755t37mibW19sIGQVTCbZYcHBRomI41N6yujv/Y=;
+        b=VtpEdcuXXVDCFeZeDlgQfk1SBRq5bfE2OQxI8d5z1VeafcFB/ySlMpD9TBHH1eqnah
+         phyUn36NyLO5/yW57szX1Xx2BMezcvSceTnFmGk3DoU9TPFOiZuXWnjeWbVrFHKkfvCP
+         fwXhM/xaYfNt9xSCTkWyPUjP2ls64AWhuWGHtZawgfKvfKO4RzCXFhdPIMiwJ9Vtgh37
+         JMvVslfkH0I43ji6mGgQTzoRwB6BuZei7QQ71D0SxvFpJYo5oN88NgYuWfESUE+0PAUr
+         8gD7eTxBcZGW8b7+3ZtF0UAHWvghUzIVtknjJnFOPG2b51sHYBgzUdQITxE8HJaoT8Fa
+         XaXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733474599; x=1734079399;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SB75755t37mibW19sIGQVTCbZYcHBRomI41N6yujv/Y=;
+        b=Kpg5dBUf72zhRkyh54ujQGQKUD8GxX22XswB9ypVTUA3U0HhPemOdQmQvBVBbqsXfh
+         kwUJRkDdoi84OAw/Y/LDYVuKgzhXvnMdj6PmNUdeBqEbi/MyTuUv4eGrJJvDQI/mMQiS
+         AgR5VCz/se0i/PqdPnnhupRE/pbKz9JbA5nQ68MX1aLhQpdpCkPerctyax0KS6HXtDyA
+         WOAemv+k+4Vr0LdLdoBkbnc7g0P24Z8dtUFeU0IGMPeiuN6oI2eLFJoGoOW22WKoLnx3
+         9x8CpB2OpI4404gDK1bIDCJOta3dEu0SWBerHjI4HSMU04JjjFahyl2xW5lCExpsnx1h
+         Dlug==
+X-Gm-Message-State: AOJu0YwGSi2VBPwHDLiw5B0XLY4zYSTx1p3P2bjdJhZWd15+8qOIt8iC
+	zkV3GcJed3p4AxXSrboqdpHL21U9IMU7uUbbr46kvO3y41nM/RTWsM0aNwU/mGHRQ4YD1T2CUpk
+	pPNSiU9BpSwzhdaj1NjxHO0tGFp5hlKAde8ah
+X-Gm-Gg: ASbGncsiNjhSkA4dtPqKqSn+aC7lmhjkPucTx0Np6P+0xN5qcFQP3i4oxKGtrYWTnac
+	e75tK7LJRmRH8dTtBmC5tQcNV1Q8Q
+X-Google-Smtp-Source: AGHT+IFrO1RbXR1BECV5ppNLFYJI18uvMRvVfneR5G90YyCyM59TCgRh3cR3B627QSE8TFJLf7Wyfi62IUrXbkZNXAY=
+X-Received: by 2002:a05:6902:70a:b0:e39:811:f2b4 with SMTP id
+ 3f1490d57ef6-e3a0b07dd5emr1843283276.1.1733474599157; Fri, 06 Dec 2024
+ 00:43:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CACfnds=++C75pg8ojn5sJzjKzLcgnyPxgR2c6pOPCRmf2rDKvQ@mail.gmail.com>
+ <CACfnds=J=Q+viagTEoiQ3edUxU8GSY_s7=biGUGY4NKbQpsTvw@mail.gmail.com>
+In-Reply-To: <CACfnds=J=Q+viagTEoiQ3edUxU8GSY_s7=biGUGY4NKbQpsTvw@mail.gmail.com>
+From: Shubham Kanodia <skanodia@atlassian.com>
+Date: Fri, 6 Dec 2024 14:13:08 +0530
+Message-ID: <CAARMkVGYOKb0H3pmUdcDWTs2p3hZZMX0dsdU1rT=Hg5a6M7Z6g@mail.gmail.com>
+Subject: Re: git add -p is slow for sparse checkout
+To: Manoraj K <mkenchugonde@atlassian.com>
+Cc: git@vger.kernel.org, Victor Chan <vchan@atlassian.com>, 
+	Shrey Somaiya <ssomaiya@atlassian.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Stepping back a bit, do we even need to learn where HEAD points at
-> in the remote, when we are not doing the "opportunistically set
-> $REMOTE/HEAD"?  Your example is "in repo with no configured remote",
-> which by definition means that we do not use any refs/remotes/*/ ref
-> hierarchy to keep track of the remote-tracking branches for the
-> remote we are fetching from.  There is no place we record what we
-> learn by running ls-remote HEAD against them, so should we even push
-> "HEAD" to the ls-remote prefixes in such a case?
+On Fri, Dec 6, 2024 at 9:53=E2=80=AFAM Manoraj K <mkenchugonde@atlassian.co=
+m> wrote:
 >
-> While this change may hide the breakage you saw in your set-up, we
-> may be now asking to ls-remote HEAD even in cases we do not need to.
+> ++ CC
 >
->> Fix this by adding HEAD to the ref_prefixes list prior to handling the
->> `--tags` flag, and removing the now obsolete check whether ref_prefixes
->> is empty or not.
->
-> And if we unconditionally add HEAD even when we do not need to,
-> especially with the loss of the ref-prefixes condition that was
-> there in order to implement "learn refs/tags/* hierarchy only when
-> we are doing the default fetch", wouldn't it mean we may learn
-> refs/tags/* even when we do not have to?
+> On Fri, Dec 6, 2024 at 9:16=E2=80=AFAM Manoraj K <mkenchugonde@atlassian.=
+com> wrote:
+> >
+> > Hi team,
+> >
+> > I am currently on a sparse checkout repository, and it looks like the
+> > `git add=E2=80=94p` command is much slower than in a full checkout repo=
+sitory.
+> >
+> > When run, the `git add=E2=80=94p` command expands to the full index and=
+ takes
+> > more time to start showing the patch.
+> >
+> > Also, we have git trace2 enabled, and the timings of the subcommands
+> > gave us an indication that the `git apply=E2=80=94-cached` subcommand i=
+s
+> > taking way too long, with an average P50 of 3000ms against 300ms in
+> > the full checkout repository. The other notable spikes are in `git
+> > diff-files --color` (180ms vs 80ms) and `git diff-files --no-color`
+> > (180ms vs 80ms).
+> >
+> > I am really interested in understanding why `git add -p` expands to a
+> > full index, which I believe is the issue with start-up regression.
+> > Also, would be great to understand the difference in performance of
+> > the subcommands.
 
-In other words, what I think the "fix" should look like is more like
-the attached.  It seems to pass your test, as well as existing tests
-Bence added and other tests about "git fetch".
+I started tracing execution of `git add -p`, it seems that `git add
+-p` seems to require a
+full index whereas a regular `git add` does not, because `git add -p`
+ends up calling
+ `do_read_index` in `read_cache.c`.
 
-One thing I am not happy about is the abstraction violation that is
-needed to make the uses_remote_tracking() helper aware of the "use
-the rs, the refspec given from the command line, or if it is empty,
-use the configured 'fetch' refspec from the remote" rule, which is
-primarily used by get_ref_map() that is much later called, but the
-layering violation started when we started limiting the ls-remote
-request with narrowing common prefixes, and it would take a larger
-surgery to fix, I would think.
 
----- >8 ----
-Subject: [PATCH] fetch: do not ask for HEAD unnecessarily
+`do_read_index` seems to then call `prepare_repo_settings` that resets
+the value of
+`istate->repo.settings.command_requires_full_index` to `1`, even though
+`istate->repo.settings.command_requires_full_index` passed to
+`do_read_index` was
+initially `0` for `git add -p`.
 
-In 3f763ddf28 (fetch: set remote/HEAD if it does not exist,
-2024-11-22), git-fetch learned to opportunistically set $REMOTE/HEAD
-when fetching by always asking for remote HEAD, in the hope that it
-will help setting refs/remotes/<name>/HEAD if missing.
+```
+int do_read_index(struct index_state *istate, const char *path, int must_ex=
+ist)
+{
+....
+/*
+* If the command explicitly requires a full index, force it
+* to be full. Otherwise, correct the sparsity based on repository
+* settings and other properties of the index (if necessary).
+*/
+prepare_repo_settings(istate->repo);
+```
 
-But it is not needed to always ask for remote HEAD.  When we are
-fetching from a remote, for which we have remote-tracking branches,
-we do need to know about HEAD.  But if we are doing one-shot fetch,
-e.g.,
+The comment here seems confusing to me =E2=80=94 it seems like the intent h=
+ere
+was to preserve
+sparseness when as possible, but `prepare_repo_settings` seemsto do a
+blanket reset =E2=80=94
 
-  $ git fetch --tags https://github.com/git/git
+```
+void prepare_repo_settings(struct repository *r)
+{
+....
+/*
+* This setting guards all index reads to require a full index
+* over a sparse index. After suitable guards are placed in the
+* codebase around uses of the index, this setting will be
+* removed.
+*/
+r->settings.command_requires_full_index =3D 1;
+```
 
-we do not even know what sub-hierarchy of refs/remotes/<remote>/
-we need to adjust the remote HEAD for.  There is no need to ask for
-HEAD in such a case.
+Retaining the original setting seems to fix the problem and makes `git
+add -p` fast,
+however I don't know if there's a reason why it wasn't already done this wa=
+y.
 
-Incidentally, because the unconditional request to list "HEAD"
-affected the number of ref-prefixes requested in the ls-remote
-request, this affected how the requests for tags are added to the
-same ls-remote request, breaking "git fetch --tags $URL" performed
-against a URL that is not configured as a remote.
+```
+read-cache.c | 5 +++++
+1 file changed, 5 insertions(+)
 
-Reported-by: Josh Steadmon <steadmon@google.com>
-[jc: tests are also borrowed from Josh's patch]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * Even though I borrowed some part of the commit log message from
-   Josh's version, it not clear to me how "*after* deciding" led to
-   whatever the observed breakage (which was not described in the
-   log message), in the following part.
-
-      Specifically, we now unconditionally add HEAD to the
-      ref_prefixes list, but we did this *after* deciding whether we
-      also need to explicitly request tags.
-
-   Bence's change asks "HEAD" after "if we are fetching something,
-   then also ask about refs/tags/" logic thought we are not fetching
-   anything (i.e. ref_prefixes.nr == 0 at that point).  But before
-   Bence's series, the same refs/tags/ logic saw that (ref_prefix.nr
-   == 0), didn't it?  So that does not sound like a sufficient
-   explanation on how the series regressed.
----
- builtin/fetch.c  | 20 +++++++++++++++++++-
- t/t5510-fetch.sh | 17 +++++++++++++++++
- 2 files changed, 36 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index a64de4485f..3eb6f3acc9 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1643,6 +1643,21 @@ static int set_head(const struct ref *remote_refs)
- 	return result;
- }
- 
-+static int uses_remote_tracking(struct transport *transport, struct refspec *rs)
-+{
-+	if (!remote_is_configured(transport->remote, 0))
-+		return 0;
+diff --git a/read-cache.c b/read-cache.c
+index 01d0b3ad22..92f7561a88 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2339,7 +2339,12 @@ int do_read_index(struct index_state *istate,
+const char *path, int must_exist)
+* to be full. Otherwise, correct the sparsity based on repository
+* settings and other properties of the index (if necessary).
+*/
++ int previous_full_index_setting =3D
++ istate->repo->settings.command_requires_full_index;
 +
-+	if (!rs->nr)
-+		rs = &transport->remote->fetch;
+prepare_repo_settings(istate->repo);
++ istate->repo->settings.command_requires_full_index =3D
+previous_full_index_setting;
 +
-+	for (int i = 0; i < rs->nr; i++)
-+		if (rs->items[i].dst)
-+			return 1;
-+
-+	return 0;
-+}
-+
- static int do_fetch(struct transport *transport,
- 		    struct refspec *rs,
- 		    const struct fetch_config *config)
-@@ -1712,7 +1727,10 @@ static int do_fetch(struct transport *transport,
- 				    "refs/tags/");
- 	}
- 
--	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-+	if (uses_remote_tracking(transport, rs)) {
-+		must_list_refs = 1;
-+		strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-+	}
- 
- 	if (must_list_refs) {
- 		trace2_region_enter("fetch", "remote_refs", the_repository);
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 87698341f5..d7602333ff 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -189,6 +189,23 @@ test_expect_success 'fetch --prune --tags with refspec prunes based on refspec'
- 	git rev-parse sometag
- '
- 
-+test_expect_success 'fetch --tags gets tags even without a configured remote' '
-+	REMOTE="$(pwd)/test_tag_1" &&
-+	git init test_tag_1 &&
-+	(
-+		cd test_tag_1 &&
-+		test_commit foo
-+	) &&
-+	git init test_tag_2 &&
-+	(
-+		cd test_tag_2 &&
-+		git fetch --tags "file://$REMOTE" &&
-+		echo "foo" >expect &&
-+		git tag >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_expect_success REFFILES 'fetch --prune fails to delete branches' '
- 	cd "$D" &&
- 	git clone . prune-fail &&
--- 
-2.47.1-576-g9f8c8eb655
+if (istate->repo->settings.command_requires_full_index)
+ensure_full_index(istate);
+else
+```
