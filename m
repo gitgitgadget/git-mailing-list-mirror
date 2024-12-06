@@ -1,244 +1,189 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB7946426
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F326B1DA0E9
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733484248; cv=none; b=HTmJf+IawTmY+KmdpBcMkc7G721qg+5j6Mkt2h5djCBlz1ErfglOGkgX8JUFiKEbD/tffpkClRdfvT/h61RGlSGZZCNDvCvKtB8R/lmSxJoqzf5oSJXLryLiWs+364lbvR4LqeLOijumwQIGH4yq8lICTo5oLcQx0o2hkVP3Zqc=
+	t=1733484271; cv=none; b=UstsDFDEPNrAyOqlca0PuVDjggHQk/qB+fCRCjrOWOd4S7gnNfh++JjcLPPkwllv1IDXsCPN0h108YmuJ+fDYArIk7pTAcZO4V1O3xK+F4F6ZDfyfHksMCZY4K17DGputPF3eYPtF2q7xJ2h/xpz+ddwWLIiAijxgM3XSGd5neo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733484248; c=relaxed/simple;
-	bh=NHxGaUl4jX/0FVrSomwMH9w1uDVWpqt0iuAPpMc4iug=;
-	h=MIME-version:Content-type:Date:Message-id:From:Subject:Cc:To:
-	 References:In-reply-to; b=uAoCLyf6QYXumPAbr85zZ/BWCka1NeUd9DuVHkjVROfaWJSFK4kSECnVfhoL+oxabKSKXcInMWExEhZYsB4FzI28b0dofnHjV+1Zh0bW0vhNyNAP+M85qyEsYgkY+8D+XHaiiJhM3kbhfg4lGtXApKgUO6KDAmHgK0/ktGKcT80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=NJcY0hJC; arc=none smtp.client-ip=192.29.178.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1733484271; c=relaxed/simple;
+	bh=1D6MVH/o2BXGISt3kOYPAlm947vxibdhKIjimlUOo90=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=smtJ5K5AtfnzNa9c12F6UFw5DZ10PqICKEgZdmsETd2lqX5GkuwF40k0jHhHBL3f/vfiYCPoaQ9utQ9/GirS3NYIK8JZ3IQtqM4OgzLLO2SLVQAGwckn9m49ObZhsaoHGUBkrSbfR4KAh2+tl1xN51zGBoxnUtcvKti6OGjIegM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mfw8TEqI; arc=none smtp.client-ip=209.85.221.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="NJcY0hJC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=vOfh5fvBNTo8zn/k433yH5o16Lu4PXbuPcXotXnOhkc=;
- b=NJcY0hJCEzo7rwgSLTaLYy9ntegpPiFpQCrVPL2vHMUhYRqYv3c1+WBofA1OyKIpHBVEGmdZFnEG
-   DECu6T2id5pBYSI/QIwfmN7n40kI0QNBwoSezho7ipuVAYxmAyNDV9/vvtBtfItXSK/qi1ILpRKU
-   nVBYpFYqVde4esHO6cc9/IGZM1QZSlhj4/eOgN6TKpzHaETWqkfrVbWqFbN2tk3RJ5eJ4kTfsUWQ
-   kFPpNJ+VROEn0ZSTuCPcSrMijcyIiP/JeHs5RobJMLgrpz/O4vQbkvAvH59sdjQHYUDV4cmqDS3M
-   eQU6TSMSfvNX0h+gjGJpMAnoV4gZHkSa30MuHw==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
- 2024))
- with ESMTPS id <0SO200B4QKZZVXE0@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Fri, 06 Dec 2024 11:23:59 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mfw8TEqI"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-515c7971553so534469e0c.1
+        for <git@vger.kernel.org>; Fri, 06 Dec 2024 03:24:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733484269; x=1734089069; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q7PP++t/wMbY2lvbxJThk/qG6aqCOBajVRJpyzhsTmk=;
+        b=mfw8TEqIcqNm8mEoP982BwDgc9XGxiF0s7fstl3+uhQ2ox+6yTXO2MGJDIsxQnzXZ5
+         q0kYtZC93ed2yeR5+XbjqCf8x4qaYypTqam3b1f0ho+lv6fd0m2oDvfIUMwMDcg+fema
+         JfeSjPzoPWoIUqwN/e7zowBPdLwI3ZdNgx/DxJn/gUT+Bz7pl3KnHvK2f6+IjicxuCzk
+         HsdpI3mS/WQuCC7OjsyzX6neEiJmSZHt2+s5bCqwWNKplIxYm9HFZ+rhrJ7Po9a0DvTG
+         15fABcT52dhEnqJ8dltV/cZXrQW9HaNyRo/ax4UAldGrTT6MBerD58vyRFxPrpUdRWkG
+         cptQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733484269; x=1734089069;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q7PP++t/wMbY2lvbxJThk/qG6aqCOBajVRJpyzhsTmk=;
+        b=Ve94Rp3fl/A3kiBOVSTghZBcCwamkxU3kA9iOvJnnUoKYjf7OontNb7/6qOpN38L3k
+         PS0nTOGbGngZjTJlv8bBv/HTC+yPERpQI94sISaeMvC8TlNCy0eV7PLzJ6FXY+314iAj
+         iRJoAiC8dPex9L1tXPfvyGQLpUasuLotZ2J6589Itl/LPt0JbBfkxdnYiwticAstT+ML
+         Fj3iSK+daBu1P6lgj7TIwm6cjf26t1kjLbOQkJtVNQSvR/MzBS3cojGPK8Frzd1FkeqG
+         /OGgX2E5QmgAIBdPYgIRcevOxEYbpCFILuXReoEeTQAkCf/FUjlmm1NTdJDzTK0Uo2dH
+         0VCA==
+X-Gm-Message-State: AOJu0YxjU/nNOrwmoqY09hkCRnQOvzUU9lCRV9dazJv6qAbHcYKIs509
+	adyM3Zz3bMNXOEF4Tn6Fkl8zSaGZVIsadRbC2hza6144SWbzHwCUih41Ly2tNenj7PSyPewI524
+	tkn9lBCt8v8gUCnN8EG6dP9tByguucOX4
+X-Gm-Gg: ASbGncsMa5sMsBfKa/QRwmEhf/OTgPEeK1JgiYC86BFCq55UES7JMrbYpKfVyuBBB5o
+	Wu+zrzb+64JiRfWjQR5TaaX8d3kfvkA==
+X-Google-Smtp-Source: AGHT+IGmOstXSA9d4Y0FDyUMbfjAx05eF6MKWW+y4iXh3qzSplVZxuKsuxnj2nNducyHFe8aYsIrGdXKq0xEfaR2Lno=
+X-Received: by 2002:a05:6122:3716:b0:515:3c4a:3c0f with SMTP id
+ 71dfb90a1353d-515fc9d6fbamr2931759e0c.3.1733484268884; Fri, 06 Dec 2024
+ 03:24:28 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 6 Dec 2024 03:24:28 -0800
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <Z1K-rXakmMQHN9If@pks.im>
+References: <20241205-424-reftable-writer-add-check-for-limits-v1-1-b287b055204e@gmail.com>
+ <Z1K-rXakmMQHN9If@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Fri, 06 Dec 2024 12:23:36 +0100
-Message-id: <D64KVBBE5WVH.19V9S7ZY89IZS@ferdinandy.com>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: Re* [PATCH] Fix `git fetch --tags` in repo with no configured
- remote
-Cc: <git@vger.kernel.org>, <phillip.wood@dunelm.org.uk>, <l.s.r@web.de>,
- <Johannes.Schindelin@gmx.de>, <karthik.188@gmail.com>, <me@ttaylorr.com>,
- <ps@pks.im>, <jonathantanmy@google.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Josh Steadmon" <steadmon@google.com>
-References: <hpaekjhdpcovhdptdntdligp5jcdp7mygh5brnggu7itf5grzp@vl4l7uwnb3n7>
- <b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
- <xmqqcyi5zdzb.fsf@gitster.g> <xmqqcyi5xmhr.fsf@gitster.g>
-In-reply-to: <xmqqcyi5xmhr.fsf@gitster.g>
-Reporting-Meta:
- AAFpnKTqviHAYguBHvnSJ1YdHBL6X+JyKq38ekviXAwpp3XZRwrZ81Ng9/1RsHBO
- J5CK8Y54Liprxexsm2oOh8Ex50r+UdMtspQ5mO+sLWTSqNMkyxicmYZY1+dHNVYO
- kGi6MpH2PLoGZCZkTgLAdQNajsmIBXETSqR+repHxXFemhdLcdDgCCPiExtGxyjp
- FckNAqLHvMIxzdTKKsCvmZseteqWZGsOyz5ayfHxnb35RWAi2uWToqxsREa4v+KY
- 21fFDQvfyI1gW8xLATLl4aZphAi+uO6yGqPFufMW3M9HjI+HzkUnBNefurNTdyaX
- mSN5WmXL7O+trGRrCmEpN5Qeps1l7ll6vy3hefjid9xHt4c8OPGs7tA4F2gPNfUd
- 6ZXDHNDWCop09ozqqES/WXjQLgMVldUP9majM5sxZjEWDpB9Tyqpqjg8n7V81qX7
- k6LC0QrGNDeFcx8/wwHKLXBWUG6B/0r8SAcuO5HHQBNWrxioTY72FYZC
+MIME-Version: 1.0
+Date: Fri, 6 Dec 2024 03:24:28 -0800
+Message-ID: <CAOLa=ZRVy46gZP3JK5sUHaJVCCXacqbT+aW_Yr0WdboRVks9dw@mail.gmail.com>
+Subject: Re: [PATCH] reftable/writer: ensure valid range for log's update_index
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000123a000628984220"
 
+--000000000000123a000628984220
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri Dec 06, 2024 at 09:08, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Thu, Dec 05, 2024 at 04:49:57PM +0100, Karthik Nayak wrote:
+>> Each reftable addition has an associated update_index. While writing
+>> refs, the update_index is verified to be within the range of the
+>> reftable writer, i.e. `writer.min_update_index < ref.update_index` and
+>> `writer.max_update_index > ref.update_index`.
 >
->> Stepping back a bit, do we even need to learn where HEAD points at
->> in the remote, when we are not doing the "opportunistically set
->> $REMOTE/HEAD"?  Your example is "in repo with no configured remote",
->> which by definition means that we do not use any refs/remotes/*/ ref
->> hierarchy to keep track of the remote-tracking branches for the
->> remote we are fetching from.  There is no place we record what we
->> learn by running ls-remote HEAD against them, so should we even push
->> "HEAD" to the ls-remote prefixes in such a case?
+> These should probably be `<=` and `>=`, respectively.
+>
 
-Yes, it probably doesn't make any sense to do that.
+Indeed, good catch, will fix.
 
+>> diff --git a/reftable/writer.c b/reftable/writer.c
+>> index fd136794d5a27b33b5017f36fbd6b095ab8dac5b..f87086777cd20a9890a63f10c5d6932310dd5610 100644
+>> --- a/reftable/writer.c
+>> +++ b/reftable/writer.c
+>> @@ -412,6 +412,18 @@ int reftable_writer_add_log(struct reftable_writer *w,
+>>  	if (log->value_type == REFTABLE_LOG_DELETION)
+>>  		return reftable_writer_add_log_verbatim(w, log);
 >>
->> While this change may hide the breakage you saw in your set-up, we
->> may be now asking to ls-remote HEAD even in cases we do not need to.
+>> +	/*
+>> +	 * Verify only the upper limit of the update_index. Each reflog entry
+>> +	 * is tied to a specific update_index. Entries in the reflog can be
+>> +	 * replaced by adding a new entry with the same update_index,
+>> +	 * effectively canceling the old one.
+>> +	 *
+>> +	 * Consequently, reflog updates may include update_index values lower
+>> +	 * than the writer's min_update_index.
+>> +	 */
+>> +	if (log->update_index > w->max_update_index)
+>> +		return REFTABLE_API_ERROR;
+>
+> Yup, looks sensible.
+>
+>>  	if (!log->refname)
+>>  		return REFTABLE_API_ERROR;
 >>
->>> Fix this by adding HEAD to the ref_prefixes list prior to handling the
->>> `--tags` flag, and removing the now obsolete check whether ref_prefixes
->>> is empty or not.
+>> diff --git a/t/unit-tests/t-reftable-readwrite.c b/t/unit-tests/t-reftable-readwrite.c
+>> index d279b86df0aeda11b3fb4d2c15803760ae394941..5ad1c72f6901abcfe7fdc6c3e69e26b58d0013a6 100644
+>> --- a/t/unit-tests/t-reftable-readwrite.c
+>> +++ b/t/unit-tests/t-reftable-readwrite.c
+>> @@ -151,6 +151,45 @@ static void t_log_overflow(void)
+>>  	reftable_buf_release(&buf);
+>>  }
 >>
->> And if we unconditionally add HEAD even when we do not need to,
->> especially with the loss of the ref-prefixes condition that was
->> there in order to implement "learn refs/tags/* hierarchy only when
->> we are doing the default fetch", wouldn't it mean we may learn
->> refs/tags/* even when we do not have to?
+>> +static void t_log_write_limits(void)
+>> +{
+>> +	struct reftable_write_options opts = { 0 };
+>> +	struct reftable_buf buf = REFTABLE_BUF_INIT;
+>> +	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
+>> +	struct reftable_log_record log = {
+>> +		.refname = (char *)"refs/head/master",
+>> +		.update_index = 1,
+>> +		.value_type = REFTABLE_LOG_UPDATE,
+>> +		.value = {
+>> +			.update = {
+>> +				.old_hash = { 1 },
+>> +				.new_hash = { 2 },
+>> +				.name = (char *)"Han-Wen Nienhuys",
+>> +				.email = (char *)"hanwen@google.com",
+>> +				.tz_offset = 100,
+>> +				.time = 0x5e430672,
+>> +			},
+>> +		},
+>> +	};
+>> +	int err;
+>> +
+>> +	reftable_writer_set_limits(w, 1, 2);
+>> +
+>> +	err = reftable_writer_add_log(w, &log);
+>> +	check_int(err, ==, 0);
+>> +
+>> +	log.update_index = 2;
+>> +	err = reftable_writer_add_log(w, &log);
+>> +	check_int(err, ==, 0);
+>> +
+>> +	log.update_index = 3;
+>> +	err = reftable_writer_add_log(w, &log);
+>> +	check_int(err, ==, REFTABLE_API_ERROR);
+>> +
+>> +	reftable_writer_free(w);
+>> +	reftable_buf_release(&buf);
+>> +}
 >
-> In other words, what I think the "fix" should look like is more like
-> the attached.  It seems to pass your test, as well as existing tests
-> Bence added and other tests about "git fetch".
+> Makes sense, as well. We could trivially extend this test to also assert
+> that we can successfully write a log record with update index 0, which
+> would be smaller than the lower bound.
 >
-> One thing I am not happy about is the abstraction violation that is
-> needed to make the uses_remote_tracking() helper aware of the "use
-> the rs, the refspec given from the command line, or if it is empty,
-> use the configured 'fetch' refspec from the remote" rule, which is
-> primarily used by get_ref_map() that is much later called, but the
-> layering violation started when we started limiting the ls-remote
-> request with narrowing common prefixes, and it would take a larger
-> surgery to fix, I would think.
->
-> ---- >8 ----
-> Subject: [PATCH] fetch: do not ask for HEAD unnecessarily
->
-> In 3f763ddf28 (fetch: set remote/HEAD if it does not exist,
-> 2024-11-22), git-fetch learned to opportunistically set $REMOTE/HEAD
-> when fetching by always asking for remote HEAD, in the hope that it
-> will help setting refs/remotes/<name>/HEAD if missing.
->
-> But it is not needed to always ask for remote HEAD.  When we are
-> fetching from a remote, for which we have remote-tracking branches,
-> we do need to know about HEAD.  But if we are doing one-shot fetch,
-> e.g.,
->
->   $ git fetch --tags https://github.com/git/git
->
-> we do not even know what sub-hierarchy of refs/remotes/<remote>/
-> we need to adjust the remote HEAD for.  There is no need to ask for
-> HEAD in such a case.
->
-> Incidentally, because the unconditional request to list "HEAD"
-> affected the number of ref-prefixes requested in the ls-remote
-> request, this affected how the requests for tags are added to the
-> same ls-remote request, breaking "git fetch --tags $URL" performed
-> against a URL that is not configured as a remote.
->
-> Reported-by: Josh Steadmon <steadmon@google.com>
-> [jc: tests are also borrowed from Josh's patch]
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->
->  * Even though I borrowed some part of the commit log message from
->    Josh's version, it not clear to me how "*after* deciding" led to
->    whatever the observed breakage (which was not described in the
->    log message), in the following part.
->
->       Specifically, we now unconditionally add HEAD to the
->       ref_prefixes list, but we did this *after* deciding whether we
->       also need to explicitly request tags.
->
->    Bence's change asks "HEAD" after "if we are fetching something,
->    then also ask about refs/tags/" logic thought we are not fetching
->    anything (i.e. ref_prefixes.nr =3D=3D 0 at that point).  But before
->    Bence's series, the same refs/tags/ logic saw that (ref_prefix.nr
->    =3D=3D 0), didn't it?  So that does not sound like a sufficient
->    explanation on how the series regressed.
+> Patrick
 
-I did a bit of poking around on what is happening. For one I can confirm, t=
-hat
-both before and after the set_head series
-`transport_ls_refs_options.ref_prefixes.nr` is 0. So the difference must be
-happening somewhere after that, and is not a side effect of calling set_hea=
-d
-either, but I didn't manage to pin it down further.
+Yeah, that does make sense, will add and send in a new version. Thanks
+for the quick review!
 
-I also checked what happens in set_head, just to be on the safe side: `head=
-s`
-is empty so we reach the if where we check `heads.nr` which is 0. So at lea=
-st
-no strange refs are created :)
+Karthik
 
+--000000000000123a000628984220
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b511513f6f229a70_0.1
 
-
-> ---
->  builtin/fetch.c  | 20 +++++++++++++++++++-
->  t/t5510-fetch.sh | 17 +++++++++++++++++
->  2 files changed, 36 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index a64de4485f..3eb6f3acc9 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1643,6 +1643,21 @@ static int set_head(const struct ref *remote_refs)
->  	return result;
->  }
-> =20
-> +static int uses_remote_tracking(struct transport *transport, struct refs=
-pec *rs)
-> +{
-> +	if (!remote_is_configured(transport->remote, 0))
-> +		return 0;
-> +
-> +	if (!rs->nr)
-> +		rs =3D &transport->remote->fetch;
-> +
-> +	for (int i =3D 0; i < rs->nr; i++)
-> +		if (rs->items[i].dst)
-> +			return 1;
-> +
-> +	return 0;
-> +}
-> +
->  static int do_fetch(struct transport *transport,
->  		    struct refspec *rs,
->  		    const struct fetch_config *config)
-> @@ -1712,7 +1727,10 @@ static int do_fetch(struct transport *transport,
->  				    "refs/tags/");
->  	}
-> =20
-> -	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-> +	if (uses_remote_tracking(transport, rs)) {
-> +		must_list_refs =3D 1;
-> +		strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-> +	}
-> =20
->  	if (must_list_refs) {
->  		trace2_region_enter("fetch", "remote_refs", the_repository);
-> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-> index 87698341f5..d7602333ff 100755
-> --- a/t/t5510-fetch.sh
-> +++ b/t/t5510-fetch.sh
-> @@ -189,6 +189,23 @@ test_expect_success 'fetch --prune --tags with refsp=
-ec prunes based on refspec'
->  	git rev-parse sometag
->  '
-> =20
-> +test_expect_success 'fetch --tags gets tags even without a configured re=
-mote' '
-> +	REMOTE=3D"$(pwd)/test_tag_1" &&
-> +	git init test_tag_1 &&
-> +	(
-> +		cd test_tag_1 &&
-> +		test_commit foo
-> +	) &&
-> +	git init test_tag_2 &&
-> +	(
-> +		cd test_tag_2 &&
-> +		git fetch --tags "file://$REMOTE" &&
-> +		echo "foo" >expect &&
-> +		git tag >actual &&
-> +		test_cmp expect actual
-> +	)
-> +'
-> +
->  test_expect_success REFFILES 'fetch --prune fails to delete branches' '
->  	cd "$D" &&
->  	git clone . prune-fail &&
-
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kUzN1c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md0VGQy8wYitITnFla2lDQXluZUdXczJvS1NOTXFBUAplMjBUVDFJbHVs
+a0JIclhoUTdQT1JyamxVWWVLUDliV0FNN0VHckxKdlZDb0d5ZmRBMUk1c0RBQkFONTQyU1N1CnBT
+aEVibi9YQ2Q4YksyOW5KM0hRMHVSdU5wUUptTXZDQU4ybnoyZkl4YXZDUSttUXZGa2NhV1ZqaDhU
+Wm4zbW4KcDMwRnZJQWoxKzZOaE5qWG0xRW5FY2xNVE8wM2drdHoyOUV0RldBUVoxcjcyYjBXSzNq
+UXRma1lGeUxocU1Rbwpvbml0aTJMay84WkxVcTR3a3FET0dsNzBjY1VadnFVOUYweDFvMUNKK0gw
+ektlSHg3cU5GekVTeENYWGVLMGlmClR0NHl6Z1lRUTVoVWlLQ3YwUkhjOFZBeEFZYnNUanhrenZZ
+UHN1NW1NVytvdnBvSXdFOWpZY29NVStCOU1SdDcKQ00yRUZZendBY3B1NkNHSzBNUFNRMXdiOHdQ
+SVBhMXJXWlNZNS80bFV1N21vZU5ZbzkvS0t0eVJ5Y0xJcDdIOApIT0VGeUJrMU4vZHVhWFFsUklk
+UVR6dS9uZEd6Ykd2ZnBwc1BUeTZ3cHpZR1E0dE53SGhDRi95UVM2d29kMldtClRvcUF6MGlTS0Nm
+cFc2OTVVYVpWNE1FVjFPK0dXZlZyRjNGcWZtZz0KPWFWbkYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000123a000628984220--
