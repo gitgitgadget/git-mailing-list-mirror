@@ -1,83 +1,81 @@
-Received: from flow-b3-smtp.messagingengine.com (flow-b3-smtp.messagingengine.com [202.12.124.138])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDFE1FC110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4701FC7CB
 	for <git@vger.kernel.org>; Fri,  6 Dec 2024 10:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.138
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733480861; cv=none; b=gUDYxwYQQ9QfiH/6K8SdzdeW1fsRV40IypkjBDVMZ+Jf13gA63fXYTLFMdWDjySIRLZc6M+qaPuaEJrs+hKvDoyEXCDzl4ar70Lir05LgyannkQkF2yHS9lCF0PIOr9Bviffy2nF5ImmwTuErJ49YGpxm7xr7SeHUCJ0NYF58t8=
+	t=1733480861; cv=none; b=UfLWK6OkcvDHoF0Agl/BKB4eJmgKaVcFYrdSE/TKUsx8PXxoNZj2Eh8o7A7ohyyPvI9B6S6KzkF0CmqH9jQTxq9xBW2fyK0DRQ0FaquqxkL3gLmvwttwZOALEt++Et8YNPGGL87MOVvOt73UCsckWUKjxIF6LBgb8ALRpDMe3K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733480861; c=relaxed/simple;
-	bh=+GAZHQwsNXOz5X6RBqCMGSS0jJ6zg/37nifc597U8/4=;
+	bh=D6Hhpn7vxHV7XfFB4j51n7BZsMwQz9dQhOFEKLgOFAM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gXxTwa5hDCu+ysd40sejNGC5PjfT5cQBK6iIXIgy/uaF57/x1Zc0zGtn4g5rXeG7v/ysn8WOAuUAuIFEyYzlaoZhZI6BckMZ2Fn0awdbOml1JeePsmF9yRV1irrmLKYc6AiT8hQm327w1ohV651IJxEhLXCXULFyv9YAC8D+f7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e4LXxtsR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mk0Z81oR; arc=none smtp.client-ip=202.12.124.138
+	 In-Reply-To:To:Cc; b=QSqIk7lRF+Y8jlyl7rRwxoo9PBWXiO4TOKofnHncTXVFQzg03t2HOOv/qA1lWD8x2uyP1CZTGCwTokpDeWk66esXD/AJyINIjbPW21rtUtQNgKeECO0r6sEzrHyXS/B9QXUGJZzD/ThSVSHoR6jhi92C0BqE/NeeQAyCF4rp1zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T8P1Pmgx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yvNCknma; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e4LXxtsR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mk0Z81oR"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailflow.stl.internal (Postfix) with ESMTP id 3C60A1D40636;
-	Fri,  6 Dec 2024 05:27:38 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Dec 2024 05:27:38 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T8P1Pmgx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yvNCknma"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3F8F2114017B;
+	Fri,  6 Dec 2024 05:27:39 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Fri, 06 Dec 2024 05:27:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733480858;
-	 x=1733488058; bh=b6ho0wcLsh01aSmlNVS0ZfrjkuOVmB9vVz4X/lCsbbs=; b=
-	e4LXxtsRV65h4aGmVyeS836e40ABbkIIsN7V+qTNjKxuLliKu2o+Bt19bGZWPEyB
-	+DZhyH8m8sCi7QhIYylZytZT7G4tWCscEgYsqrlTsUQ9PXCnzN5ngqf66jOX7MQA
-	VxCgIPD7Z2sed5eOOHDBFl5OOho30rmvSPFsRu6mAqoc93c/00oXYJ3nbaXOzMqy
-	5y39P94SbV8Qp1JMapoUwDdxfh743QhVEI+6ARD+FReNNqigEYkkKnDEF2AsXMDa
-	pIZESdJ2BtZm9CPHXLVAkmJpEHIFm2Yq6YsyunWJxHZDnpEZRZyfq81VIKIv6O94
-	Jv6wr4FwkMNn+KJnsuWkIQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733480859;
+	 x=1733567259; bh=lHuP+MI7HPf2IiuivPg3fmZ1QpVXDTwAnm9MlbxjQls=; b=
+	T8P1PmgxyHFv+bTWI396kTSGjXtS6hWBkzLsuZ+XnoNSIVZ/0OTaXCTESPTXIhk8
+	xnDtsAFfxTgf0ibcp00y1oyRuD74vGCwLvGmfV6A7kbJ/XD0glJfJEEdHtxHXtzd
+	ZjrVb5FA+nKPkJTJEPAGHKWfabVOKFGIi0jJSYfgMAGev2kjZf2f3Om1ItffNVg8
+	U9pDxQszfoZmiSLpkeKwUD7KsegU+W9UJqg4/P0UAXXZnO54P8SEJUUTd2KwD9UT
+	rpAK8c2u/HLe8a6xNmYcc8+9ThuZ7BRpH1M8wCzwSaH08rUN5U9Z0GbsjNptb9m7
+	9G0g2K0yZNl9OGxjcdf0Ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733480858; x=
-	1733488058; bh=b6ho0wcLsh01aSmlNVS0ZfrjkuOVmB9vVz4X/lCsbbs=; b=M
-	k0Z81oRTsWP/853cSfGfp6JRHAU6I7dIDcNnYgdxMMdOcjKLaMQ6VNN3OnHdSVxP
-	jZC16ELag3Za33M/bfKH7IyfzR6IjmsdKIkaw4HdGVK7vnTQaMKGmEJCXyh9IWNu
-	/M3r4siv/nPBOtWwIoutheHze2a6zgrQ9mzsORJkLu4CG43N82/FLkOAoNNec5bW
-	YT36WJpsEwAYs3yE1wZksQnCbUkCog55FKg/rzbXKIvPXYPvl6XIhwovNnmWVUFR
-	zff9aZ7yN8SRdAgCGdGzWsTM52iVbZK+VLiTD56yK3VEo1mGN/yfmPIFDT05n0IX
-	9Q127bZoq1GJRAGRr7lJQ==
-X-ME-Sender: <xms:mdFSZyWs0gp2oQ3yvLI8KXfqhDo-WCZVWPB-cvwgGGakVZ7GTQ6Z8Q>
-    <xme:mdFSZ-mlbvIMtB7ier8TuxIIiF6gnzOG96zeD_8mNediEVIxDZVZwNZ30V2NjhAHj
-    c7gMwAe1xs5IdU5HA>
-X-ME-Received: <xmr:mdFSZ2ZSWJoLWqJEH1V1HIgGJVbqBK0ON-OZLgOvKE8i75LcX4Vm_YUPu2vjEt5OolxGFA6W7CzLVnUXNPCn4Kz1Zn2Xrv_zjTgsgHYd6e_AiQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733480859; x=
+	1733567259; bh=lHuP+MI7HPf2IiuivPg3fmZ1QpVXDTwAnm9MlbxjQls=; b=y
+	vNCknma4+8s/PQG6q9cqqVHgTvaeUDjFps7x8U4W7q264EkmlHOzetzNL9KnRrlT
+	iDwvzKXRzz7dLz4WDg2v04LlxCkz3AZtd3i0a4D25FOJUlRECnieyetWx/XC3VWu
+	SzbaSYyTahz3diT2i57vhOaykAiNSh9UJzl+tBNR6I/y0rI8fpH9Dw4zMYxIYNyw
+	4UyqzSf0SL9eL3X9q8hh2014KAKjHLm2weBj+eNZidqcFkaOCi6QpGjqH6d0cYH5
+	WFuTwtOdY0jDdgTMz0dfZpgNoBzywp6JxFL0QHEQnNr2loHteyLtgMN3W6OuAEoe
+	ZVV0yUgCykBtzieEgTn1w==
+X-ME-Sender: <xms:mtFSZ_Z5HOLUo768BabDCoaJjDhkj31nl0vF3kBxcCNKrOur7rs8Lg>
+    <xme:mtFSZ-YNceb6Xqcz7Ms5RmwYSVpwekllRKhazlJ0HtmkK-P9RyXLCxIoiu35UkdJK
+    EezLeObpjaukmScpw>
+X-ME-Received: <xmr:mtFSZx_nB-wSqZhe8TJ3WYAp0Ef-vHMYlYYI35v_r5O8XcWOWT6acXv4SrG4RfXgQLhto3Tq44ISXLAWmNNQmvtGFgqP4nL1yqJp7fgVI9SzkQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdduhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecuogfuphgrmhgfrhhlucdlfe
-    dttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhm
-    pefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtf
-    frrghtthgvrhhnpeegleejtdelfeffleetvdeivdeuuefgheetjeehudetjeehhefhheej
-    teeugfffvdenucffohhmrghinhepghhnuhdrohhrghenucfuphgrmhgfrhhlpehhthhtph
-    emsddsfiiffidrghhnuhdrohhrghdslhhitggvnhhsvghsnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtg
-    hpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:mdFSZ5UljsAxS5BmEtebps8XEJzI0cq4O2hIA3aPn_Ro5AgGidYAtQ>
-    <xmx:mdFSZ8mi6cmHKWX0Bffbkin2jKnqCyVEXPsL6i6nM9HTW9vTRGO2cg>
-    <xmx:mdFSZ-eB7cDDLouZOFtiCQQ1eE7iS-mCMRFgWe47OhIWxUWXhfPjxw>
-    <xmx:mdFSZ-FqZw1Sp-ewELBDYPtN1Hjnmm2T8eZsrTAw3zNdd5PQ_ZmiAw>
-    <xmx:mtFSZ4tuijAyUKq48sUaeGLUo0wLSdJYkf6Es8dHSBqmKh15mKmSpO2A>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
+    fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
+    ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:m9FSZ1quetBA0MCwCVgiK2ZtCKSgPrXTP5wG_STSmfBjsQdegbG-Mw>
+    <xmx:m9FSZ6rcHAA220WidJRvABEHobOVU1DCoDQd1PTdmRP9eYWFmEjccg>
+    <xmx:m9FSZ7RMKVQXy0WaDn24jvt-XSGD8Vm9FWzhS6T0_5mgZTaUKaSdvA>
+    <xmx:m9FSZyryDDGCTrjiwPAgy2gr7VDT8F82CUpmKdhdhR44k7ejFcZwxg>
+    <xmx:m9FSZzncFsiUf6uZNRoN5-Ju0pTjfgtrpOXWhMTCCuhsHcis2XCezFoZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Dec 2024 05:27:36 -0500 (EST)
+ 6 Dec 2024 05:27:37 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b5defb24 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Dec 2024 10:26:12 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 441f1ec0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Dec 2024 10:26:13 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Dec 2024 11:27:17 +0100
-Subject: [PATCH v4 02/16] compat/regex: explicitly ignore "-Wsign-compare"
- warnings
+Date: Fri, 06 Dec 2024 11:27:18 +0100
+Subject: [PATCH v4 03/16] compat/win32: fix -Wsign-compare warning in
+ "wWinMain()"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241206-pks-sign-compare-v4-2-0344c6dfb219@pks.im>
+Message-Id: <20241206-pks-sign-compare-v4-3-0344c6dfb219@pks.im>
 References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
 In-Reply-To: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
 To: git@vger.kernel.org
@@ -94,33 +92,65 @@ Cc: shejialuo <shejialuo@gmail.com>, Jeff King <peff@peff.net>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Explicitly ignore "-Wsign-compare" warnings in our bundled copy of the
-regcomp implementation. We don't use the macro introduced in the
-preceding commit because this code does not include "git-compat-util.h"
-in the first place.
+GCC generates a warning in "headless.c" because we compare `slash` with
+`size`, where the former is an `int` and the latter is a `size_t`. Fix
+the warning by storing `slash` as a `size_t`, as well.
 
-Note that we already directly use "#pragma GCC diagnostic ignored" in
-"regcomp.c", so it shouldn't be an issue to use it directly in the new
-spot, either.
+This commit is being singled out because the file does not include the
+"git-compat-util.h" header, and consequently, we cannot easily mark it
+with the `DISABLE_SIGN_COMPARE_WARNING` macro.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- compat/regex/regex.c | 2 ++
- 1 file changed, 2 insertions(+)
+ compat/win32/headless.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/compat/regex/regex.c b/compat/regex/regex.c
-index e6f4a5d177bb7d44345fcc25fabca1e62b0eebc4..4b09cc4e1457dc362b2c974e82a6f9739b499a83 100644
---- a/compat/regex/regex.c
-+++ b/compat/regex/regex.c
-@@ -17,6 +17,8 @@
-    License along with the GNU C Library; if not, see
-    <http://www.gnu.org/licenses/>.  */
+diff --git a/compat/win32/headless.c b/compat/win32/headless.c
+index 11392a0b9a6dac5522bc5042064f492bd73cc871..a6eb116ddc7b586fea80f46ac36d50a4b3ddb656 100644
+--- a/compat/win32/headless.c
++++ b/compat/win32/headless.c
+@@ -53,7 +53,8 @@ int WINAPI wWinMain(_In_ HINSTANCE instance,
+ 	wchar_t git_command_line[32768];
+ 	size_t size = sizeof(git_command_line) / sizeof(wchar_t);
+ 	const wchar_t *needs_quotes = L"";
+-	int slash = 0, i;
++	size_t slash = 0;
++	int len;
  
-+#pragma GCC diagnostic ignored "-Wsign-compare"
-+
- #ifdef HAVE_CONFIG_H
- #include "config.h"
- #endif
+ 	STARTUPINFO startup_info = {
+ 		.cb = sizeof(STARTUPINFO),
+@@ -66,7 +67,7 @@ int WINAPI wWinMain(_In_ HINSTANCE instance,
+ 	DWORD exit_code;
+ 
+ 	/* First, determine the full path of argv[0] */
+-	for (i = 0; _wpgmptr[i]; i++)
++	for (size_t i = 0; _wpgmptr[i]; i++)
+ 		if (_wpgmptr[i] == L' ')
+ 			needs_quotes = L"\"";
+ 		else if (_wpgmptr[i] == L'\\')
+@@ -79,16 +80,16 @@ int WINAPI wWinMain(_In_ HINSTANCE instance,
+ 	extend_path(_wpgmptr, slash);
+ 
+ 	/* Then, add the full path of `git.exe` as argv[0] */
+-	i = swprintf_s(git_command_line, size, L"%ls%.*ls\\git.exe%ls",
+-		       needs_quotes, slash, _wpgmptr, needs_quotes);
+-	if (i < 0)
++	len = swprintf_s(git_command_line, size, L"%ls%.*ls\\git.exe%ls",
++			 needs_quotes, (int) slash, _wpgmptr, needs_quotes);
++	if (len < 0)
+ 		return 127; /* Too long path */
+ 
+ 	if (*command_line) {
+ 		/* Now, append the command-line arguments */
+-		i = swprintf_s(git_command_line + i, size - i,
+-			       L" %ls", command_line);
+-		if (i < 0)
++		len = swprintf_s(git_command_line + len, size - len,
++				 L" %ls", command_line);
++		if (len < 0)
+ 			return 127;
+ 	}
+ 
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
