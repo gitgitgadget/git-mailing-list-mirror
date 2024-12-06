@@ -1,67 +1,62 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC6E204564
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 19:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA371D6DBC
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 20:07:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733514372; cv=none; b=kYbmk0zS8XMeqcE7Dfgi2MFrSQx6i93Uvq4pCFMJX/ZPuBz+Q4/UCyCpSIT+guX7hoygcmt8mqX3eWRP9cnmcZIeaDBHFIK6zF3dvsfMzjFtpvkb6xu71ngfeLkXBDZT+9ojWttOguajk9O4cEKk+sWMaf0VzU4E5FRAUmHLW3k=
+	t=1733515643; cv=none; b=Sz/em5W+3Ohtm+6n58DC7l77NM/1L3kWShJjwqZMDgE3D/hypA7VIcDqajxvLH5NUhGAjspY9lDXQv8gaAKBrxw1WJ1aHGT6l7hFICyxMtIvYyAu250QJ42Db1MHRlNVb3y2GUbC612Y+jrursP+o5qcu2H9NLWU7coHvJatKtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733514372; c=relaxed/simple;
-	bh=wgirCaqzhIn7DEnoeZ4103AqxtLupneOjv31ZXYuunU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OLrZ1Yr4Rjp3e0kQ3J600PODt/jGc4u0wQEkRNFBq+jRiTifuBbV4pgL8Gaxs3FOrgyA+b5w9lwqAqzB7l3CI4X4cKd936AQrtfYVWm+Y8nJBe8FGvr++M/TnUz00iZofWDkOwNMrYAnuVGn2yy96uu/rmJ0q7b++ZOuoPyELpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cJWa/AUR; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1733515643; c=relaxed/simple;
+	bh=pSGPPC5mBiUzWT7O3UcmqKkolSEWySV+j4nHl4YBgLc=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=o6RBbA98+y+b+em2EDyY24fOjEYh+rDZjW9bxPqnis96OF3GDhuuuO7ueshLfQ5IMlW234Yx3e8R5MVOFuhxhmSUJoCkyWQVZYy6a3VPBPCouugs2Gjp34da5aRHKVOnR26jZTF3E5mG25CtgsFd9RUB2TOinKPCuhs90k+fLkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OxxeJKNy; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cJWa/AUR"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43494a20379so23222935e9.0
-        for <git@vger.kernel.org>; Fri, 06 Dec 2024 11:46:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OxxeJKNy"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385deda28b3so1900176f8f.0
+        for <git@vger.kernel.org>; Fri, 06 Dec 2024 12:07:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733514368; x=1734119168; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733515639; x=1734120439; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nUoNUVZhp2X/K+lyPKOKreIkzuDEhzLtrHnBQukIBRI=;
-        b=cJWa/AURWl1V0v3U/7F5chu5GcIf37VIvI1tP0FkxZQhHuf157Huq74Gby+zyxNiEf
-         Oxk1rJYk2mrpB7CO/tIvb+MlyBUUeEyxe8S+TL/GqH3m1iT/QVeIgfWKubhNIkSB7MFr
-         4qdON91zmq3eDFYZ67IS09NKQB9Kyx+MLrFNLmR8a9UQ9Fyay38ksXob/u8Q+Hbkf/bp
-         gETB6TpspJhLwFCMJ6wHBc5uo+W5VD3llOs5Txwt7oAy1ZcXiSqcAFpAqesBlZLLh+vL
-         IxzdhLt9jiqtAEobBHXkG9vYdQ2guLj55yH4qHbzByMqcico+dTzXpclQFnHXr5Fury3
-         1tyg==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=o8c6+xLjx/xH84ucPgUs0SCOzMAGaT+Fxx2D4DbTKGM=;
+        b=OxxeJKNyeLTO6yQZVRTqRshRcwLUhhIZZC9YAhRy0VYxWdYcIhc+4GbeKXymv7lD8M
+         BXeZfrRsuvHEzHlZFQLHhtAXH9JzTbEVLTfn7fGQU9rU+nwlWQdFrY8Iva+6qeGM7ybm
+         QVKzoYfOguJjzuNZVOA1CPb97Eq/8ivjzUsbcLJytCScDSnfnmooRqJPR6BbvnZ7blDA
+         cBcOaTEascJxXxqKG2j75sdCGFY3pEELZqCfVgczVX/nwmP9nCWDkA4YwD+XOiDfhci2
+         sh+gfsVXfxBsCADPvJLJp4Ug91voDIs1qTXjoQUqN9owtC9fXyhvezBnh1zfoAcY89F+
+         WtkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733514368; x=1734119168;
+        d=1e100.net; s=20230601; t=1733515639; x=1734120439;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nUoNUVZhp2X/K+lyPKOKreIkzuDEhzLtrHnBQukIBRI=;
-        b=BAQ5A/sWuqVgrufTP5y1t+rLc0kB6iy7Sop1y8SoWZQwKMZoNyt8/m4NRivNT76lr1
-         4p/2PlVbPbKOHNWvmnmfBNXGlMMfiEvsYLe55HrUGwn6RCNOhcUMX4c4vuww2UaX9llH
-         MzbrHNS1834QlwYz+L5gPtfDhGTu0vj/I0gqoh6c51xg0ck3yyDNW5enVVAAzXOHRNfX
-         ocF9Iiofkm1x+0fRmo5BMki7bpm5yY4HvWk2eBcDiL2XhvY7IqeGTjTTKbhHZSOIlyJy
-         a1W3GleLScNCuEDjM4QtUqwEs7FqkAGp4Tm9eM4AzfWJMpoS3FoxqVc11BPm5P5nscC0
-         FEeA==
-X-Gm-Message-State: AOJu0YxLxp2ZcpisM8i1xMQu8eq9FYtNornsgWuYWEIpSfHoRfPpsifp
-	z/96WK5FPVtKaYqHgStL4pcN2G4sRPd2NAu3sOsyaRqNLDkGxbfo6sT8ZA==
-X-Gm-Gg: ASbGncuMe0mJEfBjtbOva1ccpfymuI6lG8Hq6l4MTTH7xCg+XBZ057QdxHkaCdvE1oF
-	ElZ8ry9XFk4uK4o5xViz2R0HYdL7ICexbnAfjZfth2C0IXCX244osZx8WkKJZDSeglFFOrn/FkM
-	3l+4lbiO2s9nctzsgpez0cY+sYJnvA/XRj56RbYbwed6XNW8sMn70rNqxjmnGGW0xzwonv+6kYc
-	q7s9drf6+Nq7ilSGybPkyLGIps6ndzG0rzctXDQVJfTcd8HI5E=
-X-Google-Smtp-Source: AGHT+IET32QvB85AMWt2xUXzWKfFKu9u1t3ifBvxxfEW1BaxQXGhP1j2Qox757OQ5fEAAk2VY3BX0g==
-X-Received: by 2002:a05:600c:548b:b0:434:a71f:f804 with SMTP id 5b1f17b1804b1-434ddeae72fmr40882515e9.3.1733514367339;
-        Fri, 06 Dec 2024 11:46:07 -0800 (PST)
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o8c6+xLjx/xH84ucPgUs0SCOzMAGaT+Fxx2D4DbTKGM=;
+        b=h41KRlS7wMi0ug5uspCOHIVMrQn5oy0I4DqYTMhk3bhibsuTDl+cF4twqKCG4ZUk45
+         jQOqHP/klg754fxoIzTt5sv1AHmkN9BPmMVVPihqBUM7OdA+KIAs++O3Kh6l/Cn3xi2A
+         YMqE3qC+Yb4KZOFUmaijKYXLuepUH3uF+Lbvg4BZKvpcnQ6SgnHJ8FnGsGPEiycmE3ke
+         rnLE19+fbPNJVDA+iSzzcnw2P/fonP52oJjDz5Sl1DB1IqdeqnYNCceesVBkDOwz10H/
+         rB6vBnZwRVfL4D7g7K8BkiDx+lmyS6Ik2buV76HEbXOGoxsPKbIo8px00INVcDRmkBY/
+         I6Dg==
+X-Gm-Message-State: AOJu0YwVAxqN6REYV5/61S7JmyYY8n5TFaod6t9DDGEUx/4gf0U0LMws
+	3sxyIL7OfJc0gR7yuMS6VMW3S2yyYv54BKBAka33l1Jq1qwCH0IXb0mXtw==
+X-Gm-Gg: ASbGnct9v+GjyE3X9Efwis9Bdzaf9ezjI6f7IFAg9aVsBDcx1+OVNJnxXhpzenRSeFa
+	QSnI8obw/uVCm/OhLvRorqrAu/9Fk395zsqYQSMVU+U+RBiBqWUPEa9KsDECIC2t7Zhv5QVauGd
+	jgrIPP84+aiP8kbGauiMCRJcefGJSoGuEnLY6NicYymmf+SlB3yel9XiM+ZurHGqL2pDk2x9OfU
+	jouKkTAtCGSZT+SjUuzBI9U+izAWGwoZxIlA7SCWNCDD37uXqg=
+X-Google-Smtp-Source: AGHT+IEjq7SjfBLk3R8ykg26XVCX7K39mcvxC4mh6YFRBgbCU1gmWTYnVuQBTrolNbWl4WVLmm1+tw==
+X-Received: by 2002:a05:6000:709:b0:385:e1e8:40db with SMTP id ffacd0b85a97d-3862b37b40fmr3822091f8f.24.1733515639386;
+        Fri, 06 Dec 2024 12:07:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434da0d6961sm64593015e9.12.2024.12.06.11.46.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3861fd46b73sm5305896f8f.58.2024.12.06.12.07.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Dec 2024 11:46:06 -0800 (PST)
-Message-Id: <e716672c041473dd2bf257b7532b86696fef32a0.1733514359.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
-References: <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
-	<pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
+        Fri, 06 Dec 2024 12:07:18 -0800 (PST)
+Message-Id: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 06 Dec 2024 19:45:58 +0000
-Subject: [PATCH v3 7/7] path-walk: reorder object visits
+Date: Fri, 06 Dec 2024 20:07:13 +0000
+Subject: [PATCH 0/5] PATH WALK III: Add 'git backfill' command
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,362 +77,123 @@ Cc: gitster@pobox.com,
     christian.couder@gmail.com,
     kristofferhaugsbakk@fastmail.com,
     jonathantanmy@google.com,
-    karthik nayak <karthik.188@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>,
+    karthik.188@gmail.com,
     Derrick Stolee <stolee@gmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+This is based on v3 of ds/path-walk-1 [1] and an earlier version was part of
+my initial path-walk RFC [2].
 
-The path-walk API currently uses a stack-based approach to recursing
-through the list of paths within the repository. This guarantees that
-after a tree path is explored, all paths contained within that tree path
-will be explored before continuing to explore siblings of that tree
-path.
+[1]
+https://lore.kernel.org/git/pull.1818.v3.git.1733514358.gitgitgadget@gmail.com/
 
-The initial motivation of this depth-first approach was to minimize
-memory pressure while exploring the repository. A breadth-first approach
-would have too many "active" paths being stored in the paths_to_lists
-map.
+[2]
+https://lore.kernel.org/git/pull.1786.git.1725935335.gitgitgadget@gmail.com/
 
-We can take this approach one step further by making sure that blob
-paths are visited before tree paths. This allows the API to free the
-memory for these blob objects before continuing to perform the
-depth-first search. This modifies the order in which we visit siblings,
-but does not change the fact that we are performing depth-first search.
+This series adds a new 'git backfill' command that uses the path-walk API to
+download missing blobs in a blobless partial clone. Users can specify
+interaction with the sparse-checkout using '--[no-]sparse' but the
+'--sparse' option is implied by the existence of a sparse-checkout.
 
-To achieve this goal, use a priority queue with a custom sorting method.
-The sort needs to handle tags, blobs, and trees (commits are handled
-slightly differently). When objects share a type, we can sort by path
-name. This will keep children of the latest path to leave the stack be
-preferred over the rest of the paths in the stack, since they agree in
-prefix up to and including a directory separator. When the types are
-different, we can prefer tags over other types and blobs over trees.
+The reason to use the path-walk API is to make sure that the missing objects
+are grouped by a common path, giving a reasonable process for batching
+requests and expecting the server to compress the resulting packfile nicely
+together.
 
-This causes significant adjustments to t6601-path-walk.sh to rearrange
-the order of the visited paths.
+I first prototyped this feature in June 2024 as an exploration and created
+the path-walk algorithm for this purpose. It was only my intuition that led
+me to believe that batching by path would lead to better packfiles. This has
+been proven out as a very important feature due to recent investigations to
+compressing full repositories by doing a better job of grouping objects by
+path. See the --name-hash-version series [3] or the 'git pack-objects
+--path-walk' series [4] (currently on hold as it conflicts with the
+--name-hash-version series).
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- path-walk.c          |  60 ++++++++++++++++-----
- t/t6601-path-walk.sh | 122 +++++++++++++++++++++----------------------
- 2 files changed, 109 insertions(+), 73 deletions(-)
+[3]
+https://lore.kernel.org/git/pull.1823.v2.git.1733181682.gitgitgadget@gmail.com/
 
-diff --git a/path-walk.c b/path-walk.c
-index 896ec0c4779..b31924df52e 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -11,6 +11,7 @@
- #include "list-objects.h"
- #include "object.h"
- #include "oid-array.h"
-+#include "prio-queue.h"
- #include "revision.h"
- #include "string-list.h"
- #include "strmap.h"
-@@ -50,16 +51,50 @@ struct path_walk_context {
- 	struct strmap paths_to_lists;
- 
- 	/**
--	 * Store the current list of paths in a stack, to
--	 * facilitate depth-first-search without recursion.
-+	 * Store the current list of paths in a priority queue,
-+	 * using object type as a sorting mechanism, mostly to
-+	 * make sure blobs are popped off the stack first. No
-+	 * other sort is made, so within each object type it acts
-+	 * like a stack and performs a DFS within the trees.
- 	 *
- 	 * Use path_stack_pushed to indicate whether a path
- 	 * was previously added to path_stack.
- 	 */
--	struct string_list path_stack;
-+	struct prio_queue path_stack;
- 	struct strset path_stack_pushed;
- };
- 
-+static int compare_by_type(const void *one, const void *two, void *cb_data)
-+{
-+	struct type_and_oid_list *list1, *list2;
-+	const char *str1 = one;
-+	const char *str2 = two;
-+	struct path_walk_context *ctx = cb_data;
-+
-+	list1 = strmap_get(&ctx->paths_to_lists, str1);
-+	list2 = strmap_get(&ctx->paths_to_lists, str2);
-+
-+	/*
-+	 * If object types are equal, then use path comparison.
-+	 */
-+	if (!list1 || !list2 || list1->type == list2->type)
-+		return strcmp(str1, str2);
-+
-+	/* Prefer tags to be popped off first. */
-+	if (list1->type == OBJ_TAG)
-+		return -1;
-+	if (list2->type == OBJ_TAG)
-+		return 1;
-+
-+	/* Prefer blobs to be popped off second. */
-+	if (list1->type == OBJ_BLOB)
-+		return -1;
-+	if (list2->type == OBJ_BLOB)
-+		return 1;
-+
-+	return 0;
-+}
-+
- static void push_to_stack(struct path_walk_context *ctx,
- 			  const char *path)
- {
-@@ -67,7 +102,7 @@ static void push_to_stack(struct path_walk_context *ctx,
- 		return;
- 
- 	strset_add(&ctx->path_stack_pushed, path);
--	string_list_append(&ctx->path_stack, path);
-+	prio_queue_put(&ctx->path_stack, xstrdup(path));
- }
- 
- static int add_children(struct path_walk_context *ctx,
-@@ -372,8 +407,8 @@ static void setup_pending_objects(struct path_walk_info *info,
- 			const char *tagged_blob_path = "/tagged-blobs";
- 			tagged_blobs->type = OBJ_BLOB;
- 			tagged_blobs->maybe_interesting = 1;
--			push_to_stack(ctx, tagged_blob_path);
- 			strmap_put(&ctx->paths_to_lists, tagged_blob_path, tagged_blobs);
-+			push_to_stack(ctx, tagged_blob_path);
- 		} else {
- 			oid_array_clear(&tagged_blobs->oids);
- 			free(tagged_blobs);
-@@ -384,8 +419,8 @@ static void setup_pending_objects(struct path_walk_info *info,
- 			const char *tag_path = "/tags";
- 			tags->type = OBJ_TAG;
- 			tags->maybe_interesting = 1;
--			push_to_stack(ctx, tag_path);
- 			strmap_put(&ctx->paths_to_lists, tag_path, tags);
-+			push_to_stack(ctx, tag_path);
- 		} else {
- 			oid_array_clear(&tags->oids);
- 			free(tags);
-@@ -410,7 +445,10 @@ int walk_objects_by_path(struct path_walk_info *info)
- 		.repo = info->revs->repo,
- 		.revs = info->revs,
- 		.info = info,
--		.path_stack = STRING_LIST_INIT_DUP,
-+		.path_stack = {
-+			.compare = compare_by_type,
-+			.cb_data = &ctx
-+		},
- 		.path_stack_pushed = STRSET_INIT,
- 		.paths_to_lists = STRMAP_INIT
- 	};
-@@ -493,8 +531,7 @@ int walk_objects_by_path(struct path_walk_info *info)
- 
- 	trace2_region_enter("path-walk", "path-walk", info->revs->repo);
- 	while (!ret && ctx.path_stack.nr) {
--		char *path = ctx.path_stack.items[ctx.path_stack.nr - 1].string;
--		ctx.path_stack.nr--;
-+		char *path = prio_queue_get(&ctx.path_stack);
- 		paths_nr++;
- 
- 		ret = walk_path(&ctx, path);
-@@ -511,8 +548,7 @@ int walk_objects_by_path(struct path_walk_info *info)
- 			push_to_stack(&ctx, entry->key);
- 
- 		while (!ret && ctx.path_stack.nr) {
--			char *path = ctx.path_stack.items[ctx.path_stack.nr - 1].string;
--			ctx.path_stack.nr--;
-+			char *path = prio_queue_get(&ctx.path_stack);
- 			paths_nr++;
- 
- 			ret = walk_path(&ctx, path);
-@@ -526,6 +562,6 @@ int walk_objects_by_path(struct path_walk_info *info)
- 
- 	clear_strmap(&ctx.paths_to_lists);
- 	strset_clear(&ctx.path_stack_pushed);
--	string_list_clear(&ctx.path_stack, 0);
-+	clear_prio_queue(&ctx.path_stack);
- 	return ret;
- }
-diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index a317cdf289e..7d765ffe907 100755
---- a/t/t6601-path-walk.sh
-+++ b/t/t6601-path-walk.sh
-@@ -84,20 +84,20 @@ test_expect_success 'all' '
- 	3:tree::$(git rev-parse refs/tags/tree-tag^{})
- 	3:tree::$(git rev-parse refs/tags/tree-tag2^{})
- 	4:blob:a:$(git rev-parse base~2:a)
--	5:tree:right/:$(git rev-parse topic:right)
--	5:tree:right/:$(git rev-parse base~1:right)
--	5:tree:right/:$(git rev-parse base~2:right)
--	6:blob:right/d:$(git rev-parse base~1:right/d)
--	7:blob:right/c:$(git rev-parse base~2:right/c)
--	7:blob:right/c:$(git rev-parse topic:right/c)
--	8:tree:left/:$(git rev-parse base:left)
--	8:tree:left/:$(git rev-parse base~2:left)
--	9:blob:left/b:$(git rev-parse base~2:left/b)
--	9:blob:left/b:$(git rev-parse base:left/b)
--	10:tree:a/:$(git rev-parse base:a)
--	11:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
--	12:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
--	13:blob:child/file:$(git rev-parse refs/tags/tree-tag:child/file)
-+	5:blob:file2:$(git rev-parse refs/tags/tree-tag2^{}:file2)
-+	6:tree:a/:$(git rev-parse base:a)
-+	7:tree:child/:$(git rev-parse refs/tags/tree-tag:child)
-+	8:blob:child/file:$(git rev-parse refs/tags/tree-tag:child/file)
-+	9:tree:left/:$(git rev-parse base:left)
-+	9:tree:left/:$(git rev-parse base~2:left)
-+	10:blob:left/b:$(git rev-parse base~2:left/b)
-+	10:blob:left/b:$(git rev-parse base:left/b)
-+	11:tree:right/:$(git rev-parse topic:right)
-+	11:tree:right/:$(git rev-parse base~1:right)
-+	11:tree:right/:$(git rev-parse base~2:right)
-+	12:blob:right/c:$(git rev-parse base~2:right/c)
-+	12:blob:right/c:$(git rev-parse topic:right/c)
-+	13:blob:right/d:$(git rev-parse base~1:right/d)
- 	blobs:10
- 	commits:4
- 	tags:7
-@@ -155,18 +155,18 @@ test_expect_success 'branches and indexed objects mix well' '
- 	1:tree::$(git rev-parse base~1^{tree})
- 	1:tree::$(git rev-parse base~2^{tree})
- 	2:blob:a:$(git rev-parse base~2:a)
--	3:tree:right/:$(git rev-parse topic:right)
--	3:tree:right/:$(git rev-parse base~1:right)
--	3:tree:right/:$(git rev-parse base~2:right)
--	4:blob:right/d:$(git rev-parse base~1:right/d)
--	4:blob:right/d:$(git rev-parse :right/d)
--	5:blob:right/c:$(git rev-parse base~2:right/c)
--	5:blob:right/c:$(git rev-parse topic:right/c)
--	6:tree:left/:$(git rev-parse base:left)
--	6:tree:left/:$(git rev-parse base~2:left)
--	7:blob:left/b:$(git rev-parse base:left/b)
--	7:blob:left/b:$(git rev-parse base~2:left/b)
--	8:tree:a/:$(git rev-parse refs/tags/third:a)
-+	3:tree:a/:$(git rev-parse refs/tags/third:a)
-+	4:tree:left/:$(git rev-parse base:left)
-+	4:tree:left/:$(git rev-parse base~2:left)
-+	5:blob:left/b:$(git rev-parse base:left/b)
-+	5:blob:left/b:$(git rev-parse base~2:left/b)
-+	6:tree:right/:$(git rev-parse topic:right)
-+	6:tree:right/:$(git rev-parse base~1:right)
-+	6:tree:right/:$(git rev-parse base~2:right)
-+	7:blob:right/c:$(git rev-parse base~2:right/c)
-+	7:blob:right/c:$(git rev-parse topic:right/c)
-+	8:blob:right/d:$(git rev-parse base~1:right/d)
-+	8:blob:right/d:$(git rev-parse :right/d)
- 	blobs:7
- 	commits:4
- 	tags:0
-@@ -186,15 +186,15 @@ test_expect_success 'topic only' '
- 	1:tree::$(git rev-parse topic^{tree})
- 	1:tree::$(git rev-parse base~1^{tree})
- 	1:tree::$(git rev-parse base~2^{tree})
--	2:tree:right/:$(git rev-parse topic:right)
--	2:tree:right/:$(git rev-parse base~1:right)
--	2:tree:right/:$(git rev-parse base~2:right)
--	3:blob:right/d:$(git rev-parse base~1:right/d)
--	4:blob:right/c:$(git rev-parse base~2:right/c)
--	4:blob:right/c:$(git rev-parse topic:right/c)
--	5:tree:left/:$(git rev-parse base~2:left)
--	6:blob:left/b:$(git rev-parse base~2:left/b)
--	7:blob:a:$(git rev-parse base~2:a)
-+	2:blob:a:$(git rev-parse base~2:a)
-+	3:tree:left/:$(git rev-parse base~2:left)
-+	4:blob:left/b:$(git rev-parse base~2:left/b)
-+	5:tree:right/:$(git rev-parse topic:right)
-+	5:tree:right/:$(git rev-parse base~1:right)
-+	5:tree:right/:$(git rev-parse base~2:right)
-+	6:blob:right/c:$(git rev-parse base~2:right/c)
-+	6:blob:right/c:$(git rev-parse topic:right/c)
-+	7:blob:right/d:$(git rev-parse base~1:right/d)
- 	blobs:5
- 	commits:3
- 	tags:0
-@@ -210,12 +210,12 @@ test_expect_success 'topic, not base' '
- 	cat >expect <<-EOF &&
- 	0:commit::$(git rev-parse topic)
- 	1:tree::$(git rev-parse topic^{tree})
--	2:tree:right/:$(git rev-parse topic:right)
--	3:blob:right/d:$(git rev-parse topic:right/d):UNINTERESTING
--	4:blob:right/c:$(git rev-parse topic:right/c)
--	5:tree:left/:$(git rev-parse topic:left):UNINTERESTING
--	6:blob:left/b:$(git rev-parse topic:left/b):UNINTERESTING
--	7:blob:a:$(git rev-parse topic:a):UNINTERESTING
-+	2:blob:a:$(git rev-parse topic:a):UNINTERESTING
-+	3:tree:left/:$(git rev-parse topic:left):UNINTERESTING
-+	4:blob:left/b:$(git rev-parse topic:left/b):UNINTERESTING
-+	5:tree:right/:$(git rev-parse topic:right)
-+	6:blob:right/c:$(git rev-parse topic:right/c)
-+	7:blob:right/d:$(git rev-parse topic:right/d):UNINTERESTING
- 	blobs:4
- 	commits:1
- 	tags:0
-@@ -233,12 +233,12 @@ test_expect_success 'fourth, blob-tag2, not base' '
- 	1:tag:/tags:$(git rev-parse fourth)
- 	2:blob:/tagged-blobs:$(git rev-parse refs/tags/blob-tag2^{})
- 	3:tree::$(git rev-parse topic^{tree})
--	4:tree:right/:$(git rev-parse topic:right)
--	5:blob:right/d:$(git rev-parse base~1:right/d):UNINTERESTING
--	6:blob:right/c:$(git rev-parse topic:right/c)
--	7:tree:left/:$(git rev-parse base~1:left):UNINTERESTING
--	8:blob:left/b:$(git rev-parse base~1:left/b):UNINTERESTING
--	9:blob:a:$(git rev-parse base~1:a):UNINTERESTING
-+	4:blob:a:$(git rev-parse base~1:a):UNINTERESTING
-+	5:tree:left/:$(git rev-parse base~1:left):UNINTERESTING
-+	6:blob:left/b:$(git rev-parse base~1:left/b):UNINTERESTING
-+	7:tree:right/:$(git rev-parse topic:right)
-+	8:blob:right/c:$(git rev-parse topic:right/c)
-+	9:blob:right/d:$(git rev-parse base~1:right/d):UNINTERESTING
- 	blobs:5
- 	commits:1
- 	tags:1
-@@ -253,10 +253,10 @@ test_expect_success 'topic, not base, only blobs' '
- 		-- topic --not base >out &&
- 
- 	cat >expect <<-EOF &&
--	0:blob:right/d:$(git rev-parse topic:right/d):UNINTERESTING
--	1:blob:right/c:$(git rev-parse topic:right/c)
--	2:blob:left/b:$(git rev-parse topic:left/b):UNINTERESTING
--	3:blob:a:$(git rev-parse topic:a):UNINTERESTING
-+	0:blob:a:$(git rev-parse topic:a):UNINTERESTING
-+	1:blob:left/b:$(git rev-parse topic:left/b):UNINTERESTING
-+	2:blob:right/c:$(git rev-parse topic:right/c)
-+	3:blob:right/d:$(git rev-parse topic:right/d):UNINTERESTING
- 	blobs:4
- 	commits:0
- 	tags:0
-@@ -289,8 +289,8 @@ test_expect_success 'topic, not base, only trees' '
- 
- 	cat >expect <<-EOF &&
- 	0:tree::$(git rev-parse topic^{tree})
--	1:tree:right/:$(git rev-parse topic:right)
--	2:tree:left/:$(git rev-parse topic:left):UNINTERESTING
-+	1:tree:left/:$(git rev-parse topic:left):UNINTERESTING
-+	2:tree:right/:$(git rev-parse topic:right)
- 	commits:0
- 	blobs:0
- 	tags:0
-@@ -308,14 +308,14 @@ test_expect_success 'topic, not base, boundary' '
- 	0:commit::$(git rev-parse base~1):UNINTERESTING
- 	1:tree::$(git rev-parse topic^{tree})
- 	1:tree::$(git rev-parse base~1^{tree}):UNINTERESTING
--	2:tree:right/:$(git rev-parse topic:right)
--	2:tree:right/:$(git rev-parse base~1:right):UNINTERESTING
--	3:blob:right/d:$(git rev-parse base~1:right/d):UNINTERESTING
--	4:blob:right/c:$(git rev-parse base~1:right/c):UNINTERESTING
--	4:blob:right/c:$(git rev-parse topic:right/c)
--	5:tree:left/:$(git rev-parse base~1:left):UNINTERESTING
--	6:blob:left/b:$(git rev-parse base~1:left/b):UNINTERESTING
--	7:blob:a:$(git rev-parse base~1:a):UNINTERESTING
-+	2:blob:a:$(git rev-parse base~1:a):UNINTERESTING
-+	3:tree:left/:$(git rev-parse base~1:left):UNINTERESTING
-+	4:blob:left/b:$(git rev-parse base~1:left/b):UNINTERESTING
-+	5:tree:right/:$(git rev-parse topic:right)
-+	5:tree:right/:$(git rev-parse base~1:right):UNINTERESTING
-+	6:blob:right/c:$(git rev-parse base~1:right/c):UNINTERESTING
-+	6:blob:right/c:$(git rev-parse topic:right/c)
-+	7:blob:right/d:$(git rev-parse base~1:right/d):UNINTERESTING
- 	blobs:5
- 	commits:2
- 	tags:0
+[4]
+https://lore.kernel.org/git/pull.1813.v2.git.1729431810.gitgitgadget@gmail.com/
+
+This idea can be further demonstrated by the evidence in testing this
+feature: by downloading objects in small batch sizes, the client can force
+the server to repack things more efficiently than a full repack.
+
+The example repository I have used in multiple places is the
+microsoft/fluentui repo [5] as it has many CHANGELOG.md files that cause
+name hash collisions that make the full repack inefficient.
+
+[5] https://github.com/microsoft/fluentui
+
+If we create a blobless clone of the fluentui repo, then this downloads 105
+MB across two packfiles (the commits and trees pack, followed by the blobs
+needed for an initial checkout). Running 'git backfill --batch-size=' for
+different sizes leads to some interesting results:
+
+| Batch Size      | Pack Count | Pack Size | Time   |
+|-----------------|------------|-----------|--------|
+| (Initial clone) | 2          | 105 MB    |        |
+| 5K              | 53         | 348 MB    | 2m 26s |
+| 10K             | 28         | 365 MB    | 2m 22s |
+| 15K             | 19         | 407 MB    | 2m 21s |
+| 20K             | 15         | 393 MB    | 2m 28s |
+| 25K             | 13         | 417 MB    | 2m 06s |
+| 50K             | 8          | 509 MB    | 1m 34s |
+| 100K            | 5          | 535 MB    | 1m 56s |
+| 250K            | 4          | 698 MB    | 1m 33s |
+| 500K            | 3          | 696 MB    | 1m 42s |
+
+
+The smaller batches cause the server to realize that the existing deltas
+cannot be reused and it finds better deltas. This takes some extra time for
+the small batches, but halves the size of the repo. Even in the 500K batch
+size, we get less data than the 738 MB of a full clone.
+
+Implementing the --sparse feature is best done by augmenting the path-walk
+API to be aware of a pattern list. This works for both cone and non-cone
+mode sparse-checkouts.
+
+There are future directions we could take this command, especially to run
+the command with a user-specified pathspec. The tricky case for that
+additional feature is trying to make the path-walk more efficient by
+skipping tree paths that would not lead to a match of the pathspec. It would
+likely need optimization in a small subset of pathspec features (such as
+prefix matches) to work as efficiently as possible. I did prototype a
+version that puts the pathspec match in the callback function within
+builtin/backfill.c, but I found that uninspiring and unnecessary for now.
+
+Thanks, -Stolee
+
+Derrick Stolee (5):
+  backfill: add builtin boilerplate
+  backfill: basic functionality and tests
+  backfill: add --batch-size=<n> option
+  backfill: add --sparse option
+  backfill: assume --sparse when sparse-checkout is enabled
+
+ .gitignore                                |   1 +
+ Documentation/git-backfill.txt            |  60 ++++++++
+ Documentation/technical/api-path-walk.txt |  11 +-
+ Makefile                                  |   1 +
+ builtin.h                                 |   1 +
+ builtin/backfill.c                        | 147 ++++++++++++++++++
+ command-list.txt                          |   1 +
+ dir.c                                     |  10 +-
+ dir.h                                     |   3 +
+ git.c                                     |   1 +
+ path-walk.c                               |  18 +++
+ path-walk.h                               |  11 ++
+ t/helper/test-path-walk.c                 |  22 ++-
+ t/t5620-backfill.sh                       | 178 ++++++++++++++++++++++
+ t/t6601-path-walk.sh                      |  32 ++++
+ 15 files changed, 488 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/git-backfill.txt
+ create mode 100644 builtin/backfill.c
+ create mode 100755 t/t5620-backfill.sh
+
+
+base-commit: e716672c041473dd2bf257b7532b86696fef32a0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1820%2Fderrickstolee%2Fbackfill-upstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1820/derrickstolee/backfill-upstream-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1820
 -- 
 gitgitgadget
