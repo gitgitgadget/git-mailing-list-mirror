@@ -1,123 +1,169 @@
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB0E1BDA97
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:47:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6913E191F9B
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:57:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733485648; cv=none; b=u40e1TXlDKsoj+Uk4Keft7NEWArVNCcL8vgjmM03fl24slyK/fnfs5tdVwTi6i2/9Jl/PokX/8ESOLNK5lkgb5mFU/hdajrsO/P4ZTmU68w/Iv5ucxPQgtESbivj/3t5B9ySijspHN0N/bSNsEh8phwvQuIS7qV/ZekB+t4NX7E=
+	t=1733486229; cv=none; b=osZ00A7FOXFo7KQ9qW/cU1CstsNlOHbq+rKDH//NsC/OjlEKDLHI+yT7tSEx/b5fK6drS36P3UyjWlybEQSXj6L75t2h8dotL+B8rYGOq+rz8ZgvnjLiSuV98lAMBOfRCwWHnPZQy2mnpkceH+byWvOMz+z/M+T4EdmerbZLY94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733485648; c=relaxed/simple;
-	bh=NH+qENIpwN4fmydIdUfi7TDhrW/W5rz+xggdIIJO4fs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=D8WHanmLz2OOkp8QyycDUMuVdHX8HWib7KT7uDDVY7QAUkXh8RS1lo3nlTvp1FYzt3I8olHifvnqhmcCXfqW4YNvQQU5Dmw3iaCKZ0ENkLkURYRexvq3Or4IyWyyP4x983KDycXLXS5Bao9Qh23D2NnrSTlrphSjx8QmTJilQFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbC9KN1D; arc=none smtp.client-ip=209.85.217.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733486229; c=relaxed/simple;
+	bh=oop70tZ8/lWznbWl3UlY1N5FPs6HLEyxtGT9D8Z5eYw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dHFrjPZW7yPwj739kwVg1K2xYy2ZAQ13qBjhHSDeyv3i5ePV3md5J2AQ6u+rVlX0YW9CsGFg41g5UkIZ1qxS64YWqV+nu3Gq0rReAIuPXpYHTwL5GUTxE0k2LZKTh8uM6CQu/WkMD6QIRl1CxoIDi4m1sFpA8pJyWDEJKZFPyLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sbxc93lj; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbC9KN1D"
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4afccfd925fso345988137.1
-        for <git@vger.kernel.org>; Fri, 06 Dec 2024 03:47:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733485646; x=1734090446; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7GoV9i72uVQepKRbrPu4BfaQVJ3GL5pcDY6sv2dkEOg=;
-        b=XbC9KN1Dl54b+wqQ2Lx+Jx66l0lqHWEhyud59YAs6opjJ87Yb66m9llsL/eLztGsEG
-         u9QFLAUm6wuBxvP4tari5Zd3ZrBniAIZAkiShckAptw7RjgAOcyNLPsISAFf8uz2ThFf
-         PAUiTbGA43JNux/vfrVPNeeYIi3KW7oMx6xlu6MX8d4SUIwgCyqVszGaEoFm8ghB9pKc
-         o/3Z77AXpnHdexBw6KrACrmjk+t7rwhUE1e22rN0nETVNECziFXm1ruQjIUyWL5sEu19
-         u0BoxMcPbCtaRnqvdN+J9n2+LIusYFgvvK8wxaXvNe9e8sR+OEIt3+mRdS49vaHknfjM
-         QNwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733485646; x=1734090446;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7GoV9i72uVQepKRbrPu4BfaQVJ3GL5pcDY6sv2dkEOg=;
-        b=fgfuyjX6QDzcA/b1k1vRvra2tJCWM1+suO0sNp2YXmH+vXwTF1KdEvq1uxXITsmNOU
-         1mpAJaopPbQzzAHTdAvEm5sSunYKTReDonE8nL14fypeBb3NJXZXxXzhfpkBJfTZqosq
-         cixL7IdjdUWt/9gzBg992/0rg2qZ3P6JneSjrxy0AmzO4O4eJ3T9P/Di5W2CmTNxPW8u
-         K7C8vLFNFo96IsI9DlhASi334PosnVL5h9XpPw9IhzuTfypZb7A3aCtU9wUsyIesNULr
-         Fwlka+4wR4XQU9/yPzgal4xGmawc/m6otDJJSdBoDHEmboY2YTdnQJSs52iFibU3XPtB
-         K4cA==
-X-Forwarded-Encrypted: i=1; AJvYcCUROlVMDPbvhUCfMO7CR+M++mQXYbsskdgX7bHw3je7toVlhrL3K3YMnr93GdCr/D4b84c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKYGIWuH9APnEb6GjmjoOGWHgG/AZwRPAukVSmSOTN8KURYVou
-	/hetEB1bWkX8xWfHZC3e3Mlw2YrR9TqCTxiaviedNQ9LOVU/ZyjVO+6Bz1ryRAYEZXs867LGJEY
-	kRKv0hG525rfighm8UYJI4WFBpHs5q3LI
-X-Gm-Gg: ASbGncthlKFWubGPl4l1olRtIy0I8LCe3QdjFM2gPEw0BrKAwrv3Q6/oa8QwwW4W7ZB
-	UVDwG6lQZa9wkyqNCn0c8UKLw2gQHag==
-X-Google-Smtp-Source: AGHT+IEdMbIF+48AEyCUJ0KQOoZDHlKXZBbpdEE8+coFERmTYdZZ4tkkmQ6qeUvOu6mAYs+G6oOmkk0fL76vjK7Yl4c=
-X-Received: by 2002:a67:f511:0:b0:4af:d263:de23 with SMTP id
- ada2fe7eead31-4afd263e057mr325147137.9.1733485645759; Fri, 06 Dec 2024
- 03:47:25 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 6 Dec 2024 03:47:25 -0800
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
-References: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sbxc93lj"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 45067254011C;
+	Fri,  6 Dec 2024 06:57:06 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 06 Dec 2024 06:57:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733486226; x=
+	1733572626; bh=nFbaMpX43R38EGxoOhNZ1abY6N8RY9li3TfOdGPN7hk=; b=s
+	bxc93ljyLmrNRtAtpuMvL/IgxYdZ5YwreQj41FgYvhc1ltuVu97OHbrhZ9iBLzoe
+	zkJq90vb9PS7IwOO6SQa9zVbzE7s08ErY9wQYc3D58DR5PkQHHCbFP+CAmGopT/W
+	EIN+BzWHNDvTy8LJMoGRVJCM7dcYaNraajnVr+qcO9radE6sC6nyQQ0YmJcz3Vkv
+	nsGTJsrG8Xw3PSvtVpaaTncSK5FO+jGZ0cylnEJO1xgvTlhbXQlMEmZnR4I2YvGX
+	FH3UCbvlIwqrVUuRCqmeE2pUSoT/g2zg1lLd5fgVlYDn37g4aPA4FpVLUOmK8eGy
+	RqfaCPl1a70SA+8UhZDqQ==
+X-ME-Sender: <xms:keZSZyeFIKT0A8AgVQp5OKTmCZcNslI5TrNLjfK3hFPhE4QltJhzUg>
+    <xme:keZSZ8PXY_NmnP-VXECJrbgkme8GI-ZjQufcrfe9Y0kxcZY18FxF_2Wgx2xbVOF2q
+    jSFpvY7TGaMvZOrdQ>
+X-ME-Received: <xmr:keZSZzhogE6oqZfjZdP2EK8-T43fY1t0944k1cvgr8tyTuXmc-2I-aIPiD1YK9RoriBbl9pKre6B433Jki8ck_-n1LyYqvyc_XTLQtk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdeffecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhephfetvdejheduheegleehfeeivedtgeelfedv
+    ffdtvedtudffieekieeijedvlefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
+    rghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrrghrnhhisehvrghlohhh
+    rghirdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:keZSZ_8b0rJP-S2EPi_0wi-NJSWir9GRASRnHRDrTxhYl3M0rukqJA>
+    <xmx:keZSZ-vJ9BW2Mgu31iY_EzYz_6g_XR6uYWuKzef0OkeSMdTvtaUd0g>
+    <xmx:keZSZ2G3LbZaGTQi5vlw-jWpik89_QlQwePMeDF6feB8raplIi_15g>
+    <xmx:keZSZ9PLQUJQzWY70Xy_5YrSUJ1CAIHK2FxugCyjiSg0_qSMRzmvkg>
+    <xmx:kuZSZyiCZY4iyhyCOSfUhR7tJX5SwT6XWQAXeA8UAwFg-zHGc9S1CQQ1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Dec 2024 06:57:05 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: "Patrick Steinhardt" <ps@pks.im>,  git@vger.kernel.org,  "Aarni Koskela"
+ <aarni@valohai.com>,  "Jeff King" <peff@peff.net>
+Subject: Re: [PATCH] object-name: fix reversed ordering with magic pathspecs
+In-Reply-To: <9c7b9090-8cf2-4095-8e86-2c85b6fe407f@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Fri, 06 Dec 2024 12:20:45 +0100")
+References: <20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im>
+	<9c7b9090-8cf2-4095-8e86-2c85b6fe407f@app.fastmail.com>
+Date: Fri, 06 Dec 2024 20:57:04 +0900
+Message-ID: <xmqqcyi5vxbj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 6 Dec 2024 03:47:25 -0800
-Message-ID: <CAOLa=ZQeRWHog4Fjkb4MgK_34kV5JVEp4yAQ7Obgx6cnDJgyAA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Random improvements to GitLab CI
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000023aae8062898942e"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
---00000000000023aae8062898942e
-Content-Type: text/plain; charset="UTF-8"
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
+> On Fri, Dec 6, 2024, at 10:51, Patrick Steinhardt wrote:
+>> It was reported
+>
+> It would be nice with a hyperlink since this email is not part of the
+> email thread for the report.
+>
+> https://lore.kernel.org/git/Z1LJSADiStlFicTL@pks.im/T/#mae906ec74d5657e702165e29b90927f730280c29
+>
+>> It was reported that magic pathspecs started to return results in
+>
+> I’m not used to this being called “magic pathspecs” as a user.
+> gitglossary(7) talks about (magic) pathspecs as filepaths.
 
-> Hi,
->
-> this small patch series includes a couple of more-or-less random
-> improvements to GitLab CI.
->
+Thanks for catching the mistaken phrasing.  It would have caused
+unnecessary confusion later to "git log" readers.
 
-Apart from one suggestion(?) in the first commit, I think the series
-looks great! Thanks
+The syntax to say that the following path is from the top-level of
+the working tree even when you are running the command from a
+subdirectory, e.g.
 
-> Thanks!
->
-> Patrick
->
-> ---
-> Patrick Steinhardt (4):
->       gitlab-ci: update macOS images to Sonoma
->       ci/lib: remove duplicate trap to end "CI setup" group
->       ci/lib: use echo instead of printf to set up sections
->       ci/lib: fix "CI setup" sections with GitLab CI
->
->  .gitlab-ci.yml | 4 ++--
->  ci/lib.sh      | 9 ++++-----
->  2 files changed, 6 insertions(+), 7 deletions(-)
->
->
-> ---
-> base-commit: e66fd72e972df760a53c3d6da023c17adfc426d6
-> change-id: 20241206-pks-ci-section-fixes-1bb91ceb50b8
+    cd Documentation
+    git log :/t
 
---00000000000023aae8062898942e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: bf88ecd8d6b8115e_0.1
+is described in gitglossary(7):
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kUzVFd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMFd6Qy85NGl0dUNvakZEckhkUWwrc2xtM3haZ1cvegpOcmtaeXBtNFJi
-MlRTUkE3dFM2KzBUa05lUkg5WjgwVkd6Y3JpY2xwMGw2ZHpPcVRIUHZBVFB1K0VJRGhRWjVOCjdM
-dUlsMDlEU051Rm93NlpMRnlJcHNMbmZDM0REMUNLQldxVlF2Qk9jdE1JbGYxZFg4bUUwcDcwNGNH
-MmQ5UUoKYkNOM3lTZGpRbmc3ZGxGenQ3WlMvWm9ZMWl0T3VHUzNZQnRqYVkyM2dFbEJDR1FZU2th
-a0dPUzBoMFNMdTN5VQpWVHdOZEJJNU1pNk9FZ2dQNW8xQm1xL3ZmZFFwMEN5cHdoRTVhU214YXBa
-RjBxdUY4RFNaeTV0aWNDd2F5TTBSCk0rUmxENHJlcFNXRDlLL0liZnIvaHBZVWJldDhsK1ZkdHRI
-UTR0ZE15cStlRnNTMlZDVTd6MnNCWVU5T1NXd0QKQmlEelIramx1dWU1Z3FhUWhjUnVlbm5uT3ph
-MW12U0ZFc0lCWEk2QmxjTjF2ckdYTlQ1TGlYZXo0QXlzMjFXbApXMmo1eENKZE9aQkZMek1XclhY
-bkFSK3ArMzlsTCtvYm55S1BicVVSdnJQSDdRWlI2OGpUTU9vYnJDeStSTmNDCkxDY3g0Ykc1VU1O
-aUlMYy8xVm54d1Z4ZC83emx0YllhMXhaVUVObz0KPUhzMHAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000023aae8062898942e--
+    A pathspec that begins with a colon `:` has special meaning.  In the
+    short form, the leading colon `:` is followed by zero or more "magic
+    signature" letters (which optionally is terminated by another colon `:`),
+    and the remainder is the pattern to match against the path.
+    The "magic signature" consists of ASCII symbols that are neither
+    alphanumeric, glob, regex special characters nor colon.
+    The optional colon that terminates the "magic signature" can be
+    omitted if the pattern begins with a character that does not belong to
+    "magic signature" symbol set and is not a colon.
+
+and even though the word "magic" signature is used, there is no
+definition given for the entire construct, i.e. the pathspec that
+uses a special meaning introduced by the use of "colon followed by
+one or more magic signature letters".  We probably should add a
+sentence to officially define it, if only to reduce the need for
+exchanges like this ;-)
+
+    ... and is not a colon.  Such a pathspec that uses these "magic"
+    meaning is called "magic pathspec".
+
+But more importantly, the syntax that triggered this topic in
+
+<CAKOEJdcPYn3O01p29rVa+xv=Qr504FQyKJeSB-Moze04ViCGGg@mail.gmail.com>
+
+is *NOT* a magic pathspec at all.  It is a revision syntax to name
+the first commit that is reachable from the current HEAD with a
+commit log message, that matches the given patterh, i.e.
+
+    git show ":/my message"
+
+which is a (rather lousy) short-hand for a more general
+
+    git show "HEAD^{/my message}"
+
+i.e. <startingRev>^{/<pattern>}.  There is no specific name for
+this syntax.
+
+I suspect that "filepath" you mentioned may be something some folks
+(but not me or any other long timers) would call yet another syntax,
+which is :<path>, that names the object sitting at <path> in the
+index.  Because ":/myMessage" look so similar to ":myFile", yet
+they mean so different things, as I said, ":/myMessage" is a rather
+lousy short-hand for the more general "^{/<pattern>}" suffix that
+is less ambiguous.
+
+Patrick, let's not use a wrong word.  This is not about pathspec at
+all, and is a revision syntax.  As there is no specific jargon for
+the syntax, here is what I would write, if I were explaining the
+problem being solved:
+
+    Recently it was reported [*1*] that "look for the youngest
+    reachable commit with log message that match the given pattern"
+    syntax (e.g. :/myMessagePattern, or HEAD^{/myMessagePattern})
+    started to show older commit.
+
+    [Footnote]
+    *1* <CAKOEJdcPYn3O01p29rVa+xv=Qr504FQyKJeSB-Moze04ViCGGg@mail.gmail.com>
+
+Thanks.
