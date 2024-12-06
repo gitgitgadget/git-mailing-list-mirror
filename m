@@ -1,55 +1,55 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CE71DA0ED
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D4F1F03F6
 	for <git@vger.kernel.org>; Fri,  6 Dec 2024 11:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733483435; cv=none; b=E/VLWG5Ly6Q7/bWlh24LR3/npx8LedS344DVw2FVq02gqfS9AMrc5A/WHLSVTzwPpDp1R80I3PqFMzHGkb4YyDJCgNjZZuGKSS1avqM1FNXKtiSCYZVdjJJHn5vUp2d9ZBSJJC3kWEVFS0TD4mB1UwYsCngJwo7RGGkBYQhU/G4=
+	t=1733483436; cv=none; b=tckS5NwXC9KFzpGBTmDyCYbbu+/4NKGwNxcXF625L7A/S+wDMMIFa+GefkKj9vzpwjK7erP4x76xchVV/5hMU/mg1KorCcdBsfEo3ARhaEWK38gWBPn3mN7ZBOgrVe1mnliYKIIGmiPWpfmqXkjLoyRWBAPM+CR0qbRWZnljZX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733483435; c=relaxed/simple;
-	bh=/fPSMBQRI4/hyM+oil+aXJ5+p6+tRsmR7CCvatq0MVs=;
+	s=arc-20240116; t=1733483436; c=relaxed/simple;
+	bh=NqVbaJi+uxrcPG5Zk/W8wWKSdAFa5mDyiaIv8JB4wF4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a6MrRDzk98l/qYcOkb5iVEtHhRwk42ysb/mUGSmbcPt/0U9EjUKPe9x9ShxIDm4/ZRNVLYXnhHWvxofjwgtkeMFEDWyWuMcsuKlUOpzvYZKFnS/o2JziMTtBwBxuAZZHtUspWobkGyFYBy5e1BnA2XUgYwBzOJBKMeq161m2/3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=reVBpsNo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NC4Y8eM7; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=ANKzqLUFyusWk+u/kvk0+yxV7fsApkl9aIC/sIhhts9JdrIyvZP93cNbPMRbGzAMid5bwaqTByEZINVRbKmMIV9DCS+qKpQlTJoR8oD6H+Dd9JZJrAFXOZrbJ6OaFo6C9caeIfh8Diyn9h848zZ54es2aQUyZg9ZP2O20YmJDZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JlVb6Etb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=smD3cyad; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="reVBpsNo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NC4Y8eM7"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5AF6725401E6
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JlVb6Etb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="smD3cyad"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 39B0A25401E2
 	for <git@vger.kernel.org>; Fri,  6 Dec 2024 06:10:33 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 06 Dec 2024 06:10:33 -0500
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Fri, 06 Dec 2024 06:10:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1733483433;
-	 x=1733569833; bh=+/EFK/EHv0Sv4d0xiYwgFcjRqRH31A5hY8d21r+hMts=; b=
-	reVBpsNor0061kIzqyHOn2p9bYOEWdNMFuebg2GUMR0bZhxXlMgM1tQUPbxtK/s4
-	Gb0KtIrLcCancLZE9/rQYm9l2RrMInWQKM1sot5VkDquowkBej2H/2f0p3wuuHwN
-	ca5SrhIxwuWm54/cNFHVhOg8MWnZuD3JOmu/uhfvmPYJZIy0+9Kpmx22f4aeNQUp
-	Y/nuu3VGn1w3hCCTB9OOyS9Rfqv2HWxT+jr9BmiTjMkXAPW76WnneU2/XiThUBml
-	gP4FAYj61CfaKx3JjtlD/WKODO1Mf2q/byfKnq3onfZoeeAWCaSNC9YZNLvGCqXV
-	O0Yg8bHlBW3y1OU5B4OZYw==
+	 x=1733569833; bh=EMhHdp03G3XmOaYu9ioqu0bpzLGnkdaNUro7FfitjWo=; b=
+	JlVb6EtbeB2qJGm5eHvrio3xjr/oZBSpQZBSaTuHw5Sw8/N9na1ZxLVl01QyUtai
+	DN9fAoZI38OUBhgd/doqFY0vUCKa/sOfCXi5CT6+T/ECQvuoFYJ3DadGvyqI3pWr
+	9T+3CzHxcz7fveABiCsb2EDQSHGAO55kOa5n6009uf3fQ7KMyna4m7QiV9/DnJYb
+	lYOxVBGVqWA3O/3Pitds4RfzGrk8HmCiXpolYokjBEDfidZ48iW+laOm/tM+bseL
+	VqGa8weUTLPzUWj4VeKBoT6b5mIjKb0u5+LDDDxzFJMdcFV5z/+7eDK0tQKs5rAz
+	jzIh6OAp7ZiTL0GA38CjCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733483433; x=
-	1733569833; bh=+/EFK/EHv0Sv4d0xiYwgFcjRqRH31A5hY8d21r+hMts=; b=N
-	C4Y8eM73eWsKm5QHenR/xXbwKYB7ibSC1IKjmnnOzUmFgrErTac9Xb+u0q3F38X6
-	T8QD9EkRLGLMWLGNuGxN3WuIO7GHrxQix3Q0y0Gg0Bn0YmHuEbhVJsRJ2f4UoKxA
-	Qqzm/FlGLLJ/zLkBnSVw/3D91v02f1NKQSteuK6Yx4hHf3HWR4AH0c2CjyiAWShT
-	qqrLFH/ZBmGTmGPK2f+gPF3uAavQC3iErBjeVaVeeyTscLfq6L77/8Gv0fU3gdy0
-	Qzg3YLpfZshFXLPx+vLSex/y7lK9t9J5WHKaBlOwpputgr9eBlUl1CkuZR6B8+1m
-	+zsDdhcKxkNjvJpn8OxRg==
-X-ME-Sender: <xms:qdtSZ7Po6Yr5cMocyq4L6txIEBr4kSX26DVRZ_HJUKk0kxBBM0GABQ>
-    <xme:qdtSZ18Co1Nv7ZPjDAtexijUjhklH1c1ZL-EyORZhUvB4u67YniZf2dqMynY4LFQy
-    MOnIYtSFyFoFNFmpg>
-X-ME-Received: <xmr:qdtSZ6S0fZk3nMMGN3K3luN7LbFcYG-gzqMmhtCS8AD6_DQCXKMgF6Fa0Q_vUlEpRp98CWec3orF7W2EOte5UjeRjblF4HSgATEnxXyH4IF4rw>
+	1733569833; bh=EMhHdp03G3XmOaYu9ioqu0bpzLGnkdaNUro7FfitjWo=; b=s
+	mD3cyadIYFT6p4rCooXA1d/5MhLKEYOcmTpNzPVbdMcV7oOISK7pTvd6b8TgSX0m
+	K+TYKH9aE2mDvm1fU2rmU+ewVI7DVf8su1PstqJDEsbsHf0QL/IfXtQmju8uLRhO
+	91tvJ08zc7TQb/W2hu3YJbzFkod4spCSUNvs4/yOafZT9spttAHnkzhnD3QvLJZq
+	8cZaTJEOMrDi+pq/rI8GXGLJgJGs8knjaoQE0ivXrnm3503bI/5SpVnk5M8nzt0I
+	S2yRYt7UIRpobJ6WjIh8qEBTHSeriuASi4l5DsEp40td8fPy+VzHhoeO1q/ubOH/
+	ZceGHk/f4izGwtyTLchiw==
+X-ME-Sender: <xms:qNtSZ2BnUMNiawmUmQYfklwaa66VpMshUly4S9udKmxYcs55v8C2Dg>
+    <xme:qNtSZwhgkjpn-UoinTt79Np7n63Lw1lE1oTHaqIC6WC1utzutlnFU91_mIbkEd6A9
+    bKXXrjjr8GHj3G-vQ>
+X-ME-Received: <xmr:qNtSZ5lrWuE0BVGA8CeKzobyYVJTMcCOraghZ9blMMq8hH1NUFqyNKQDnl0lN3v_-uTL6hY4_7LBDgT-bXTC0d3JNnWpUdkirFqFB8vFoxgCLg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgddvfecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgddvfecutefuodetggdote
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:qdtSZ_ut5E6gY5-ZYdpw3S92UK1AtJR0-0j7eSwF4WloZrBtM3Ipng>
-    <xmx:qdtSZzdaVVVXzjXwrigNPV_na6h6yDQj0DeQtLShUbz2TKfQuybvEg>
-    <xmx:qdtSZ71v_2GruY2OMBqJXY5Pyl3L67Jd3dnhwl1BjKHPQGzMJU1zZQ>
-    <xmx:qdtSZ__y_5LL87L-NVYxvKVd_7TwKKBQPsoBGYDkA0c0O0wSARHLpA>
-    <xmx:qdtSZ7FdJ1ndW9ONgLqC9K08Nq8ZzPY_OnRn9k0k3WBM99QJqGM5prfA>
+X-ME-Proxy: <xmx:qNtSZ0yyGlRZqxe0d7PgHpHjTmfHvo368PrkhXsqGkxUlQK4myETdA>
+    <xmx:qNtSZ7T24U09_g5o_gn-GYTN4gQvMN3loAuklalZM08r_tFPEaEhJQ>
+    <xmx:qNtSZ_ZesjM23wI6DQ13iJrakgA5SWumKBAws6GRhNR_tYkwcXir0w>
+    <xmx:qNtSZ0QEqZVlZbusbZjSlU1llgl9cP3Sg1pMC47ZoFuqmfb6ND2C4Q>
+    <xmx:qdtSZyI7gYCGtHRewpEdc7zwvptwoxGfnWilJT4Nxhkp3l3rZuSZF-4f>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
  <git@vger.kernel.org>; Fri, 6 Dec 2024 06:10:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bb4d49d6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 86543c46 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 6 Dec 2024 11:09:06 +0000 (UTC)
+	Fri, 6 Dec 2024 11:09:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Dec 2024 12:10:14 +0100
-Subject: [PATCH 2/4] ci/lib: remove duplicate trap to end "CI setup" group
+Date: Fri, 06 Dec 2024 12:10:13 +0100
+Subject: [PATCH 1/4] gitlab-ci: update macOS images to Sonoma
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,36 +82,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241206-pks-ci-section-fixes-v1-2-7ab1b69e3648@pks.im>
+Message-Id: <20241206-pks-ci-section-fixes-v1-1-7ab1b69e3648@pks.im>
 References: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
 In-Reply-To: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-We exlicitly trap on EXIT in order to end the "CI setup" group. This
-isn't necessary though given that `begin_group ()` already sets up the
-trap for us.
-
-Remove the duplicate trap.
+The macOS Ventura images we use for GitLab CI runners have been
+deprecated. Update them to macOS 14, aka Sonoma.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/lib.sh | 1 -
- 1 file changed, 1 deletion(-)
+ .gitlab-ci.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 930f98d7228166c37c236beb062b14675fb68ef3..a54601be923bf475ba1a9cafd98bb1cb71a10255 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -56,7 +56,6 @@ group () {
- }
- 
- begin_group "CI setup"
--trap "end_group 'CI setup'" EXIT
- 
- # Set 'exit on error' for all CI scripts to let the caller know that
- # something went wrong.
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 526ecfe030a43e0a5a83ddd35cb7c96d46ab2485..61c56ccac8fdc940075d91dd4cb0b54ee33d5199 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -99,10 +99,10 @@ test:osx:
+   parallel:
+     matrix:
+       - jobname: osx-clang
+-        image: macos-13-xcode-14
++        image: macos-14-xcode-15
+         CC: clang
+       - jobname: osx-reftable
+-        image: macos-13-xcode-14
++        image: macos-14-xcode-15
+         CC: clang
+   artifacts:
+     paths:
 
 -- 
 2.47.0.366.g5daf58cba8.dirty
