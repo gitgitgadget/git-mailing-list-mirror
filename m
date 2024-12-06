@@ -1,203 +1,127 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B09201100
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 12:29:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C14C20124E
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 12:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733488154; cv=none; b=Q9V6/kvNTYLL9CceXxpcJEygihwtMx9JXOlkIKCLIgMmH80W8FsHRAtR02tpaardD/tqTVZjrIroVhFDGV0ng9yhyLeqR7sD1oxdPrJsyG0IdSiHiCrHOyq2Ign3TrRWZei78fG3Z1zYNzCFYTzGQIEn4nCg+Uld090FPxm+xao=
+	t=1733488354; cv=none; b=ZuepfDWQL6RFDvd1Zs+vVeyEc/HAbxKH+xo1uZo0DnrcwHxv5MIlwYbqQG8Wz0iVR/aaqLdSBX4cM/xkdWGMXIfeO1DjTPHS3YiKYtm/4IL2Laf1aBod7HbfPy1b6Vs9khfWG7n/49rzsNEC4T1LRFZUPBiGm27+FniYsaCd6R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733488154; c=relaxed/simple;
-	bh=5SrqF/oV2IHezEwrejCizKoBAAo3semCOuidP2+j40A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=rS9TVye9PYM7iawcxRDGVgTkA4VBLAaiS1H4l+NQBb5a2s+jTqRKDa6GSwdLxWtnker70epfaQ5PcxOyDXjUOultEL7zeVmz37GNDg4PgYjHQlU1v8s+Hh8rNWFiOiyvihLJvdcDXTSMm9Zk+AsrsExb7SgONP6XIlsRETaCuTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fMCiyXZx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j0Bi8GZ0; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1733488354; c=relaxed/simple;
+	bh=LzhCpQ+6W7wvNWhSKesjM2BUf2NuIsViBhAo2gPV2eQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tJ5qtLwLN2oI2Pq+mvTkx0SRoSBAz+dWzI3QfgJwI6iA0lMoEFrlwSi6TnqtMPc2+i/EyGp2fsIk/q1vP6pd478MzPa8q2t1crfrR7wL3QJ39QeRgMwQ6PWUuGLiIom3UK1uZE7hn+0+U37w7gpr2Fo0GpI1nwqVcqjOoPrbf98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cMAJA1/R; arc=none smtp.client-ip=209.85.160.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fMCiyXZx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j0Bi8GZ0"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ACCBE25400F5;
-	Fri,  6 Dec 2024 07:29:11 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 06 Dec 2024 07:29:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733488151;
-	 x=1733574551; bh=6IMem6yT9cZnt/nh4omPNrPftJeACzRPGh0M5RYPbCU=; b=
-	fMCiyXZxoxoMY47dFHQmcpp2MG4ZV+0Rkv4R18U3ZIa4LM8lQLCFKTxF6a05GWFz
-	AYW2FGKP3s4gtb5c6SeIhTalOsw8p6Mj6DXZ03EY4W0btIUV+55xb9DvI904I7Wo
-	1UexYaUnEEr2+3BuhQzQhjwyouQF+Xn0MTJCWEP3glaqx69vE3QqdzElANRX5+nE
-	6llnoUldnLMHcbRzhZRTcDBOtMli798gFWNWdz+pVvs0GL2X1M9w8dmGLGa8cXuI
-	xlfCCoJs7fKKYRE1jM/zyU2nFOtYnFVzj7M+1AmVFUrSdgwG2yTLj7DL+WYpJ2Em
-	J+HXPqSW7XWJRWE40UKyrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733488151; x=
-	1733574551; bh=6IMem6yT9cZnt/nh4omPNrPftJeACzRPGh0M5RYPbCU=; b=j
-	0Bi8GZ0lOrwYtUxe9xRFPBIW58QQ1cdw6DWCS7iLm4d/qCGRf6rfHECqeo4eAY7/
-	QcilORpkMV/iW5pHzQ+VMGyW3gyVm74ojBx4gKxA9t8BFnPXYhiv+5vy4sgJrV3U
-	sjXF9ADDkgLQMeZFghKCcsNWppcaw9CuxoZl3s7XcOlSOvyMuSyim59blKSHZXXr
-	GKLXNkjXmfGgTKm27NhX52voRVgRWB5VmvCNH52zR6jbrYxqbusOsBUD8o7aODmL
-	R6Yzpf+K6/A4Kny5SVFjXkRkMdIAHOh1ny5nWzL6AP9QfLPEwEK7/WaPAzZRxUqb
-	+gKNuecFOXId2POF9/Ifw==
-X-ME-Sender: <xms:F-5SZ7w3HF5kqegFYIlgUSOv6iLpyATKwaZulLr4Y7pgyTrNTkLkoA>
-    <xme:F-5SZzS_XB0-WNfoNwEMssjJb6o8wtPqhEEza4lZMqVFBPbO4WJ6LN9vhDMIMoR1J
-    sZLG3MBUYp4HBkkIQ>
-X-ME-Received: <xmr:F-5SZ1V5lifisJp3yV3YNDHzaVfOSWga1FWtv_KwUKF8Bw3Yx6Pj8q0SYR3ZH-q9R8LAn8_5jmgV28aHXUfjutmg5J5j3mIjZ1pMAPpqG-z_XQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieelgdeflecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhfffugggtgffkjghfvfevofesthejredtredtjeen
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepieduvddvfeegudfhteegueffjeelhfekheefkeetueet
-    leehuddtieefkeettdeinecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrrg
-    hrnhhisehvrghlohhhrghirdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrhhishhtohhffhgv
-    rhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:F-5SZ1hzU-Ea3p1xjYRZQ2uobGmkxU7fseEtKTgbCdM1A36Q8iqv-A>
-    <xmx:F-5SZ9DwjMug65-MtCd7mSlkFbuK5f3Yizl3TzbtEhbfVPlYe1JaLg>
-    <xmx:F-5SZ-IEBCwxoOFWyRQ1k03QFhwnB2R5D5mM2iiEd6io8cuhhBQFgQ>
-    <xmx:F-5SZ8CxDkme9C1tdi6maO7b6xH1r5avOf3BJnR57yecx3rj17s6xw>
-    <xmx:F-5SZw4FiGNhWTRuKl72u8khwL-XrPhIdliucalgEehMJX2O4lAA_WCs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Dec 2024 07:29:10 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 678a819e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Dec 2024 12:27:46 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 06 Dec 2024 13:28:54 +0100
-Subject: [PATCH v2] object-name: fix reversed ordering with ":/<PATTERN>"
- revisions
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cMAJA1/R"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-29737adb604so1157151fac.1
+        for <git@vger.kernel.org>; Fri, 06 Dec 2024 04:32:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733488350; x=1734093150; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vJnYhecshx+cozcLkFTMiV2NLTQMyr8hu0kcxAMBMzM=;
+        b=cMAJA1/R5mlc2vw0lXsnIuvWVchNSttQWaL1S90BV2MOAu4PqVoZOi0sImJJg7Y45w
+         rgGTv15DOhT6277/A0vDjV5zgq0oO+YNo5QOV66LZPQyvMCd8E79UhE9aWvOmEwWBumT
+         3AYi2PMj9gAHxqI7Jpc/wpWb6+osBcBf5045MWv1impJVlnN45Wi7rVhikzrc5dliR6r
+         Abq57Q6gg13wl7FHsXSR7tNZI+YOpvN+asXfMCOo91Qjm1pwQvHiGRmW407eCj5RClAI
+         jcjt5Rhe4PCPHz/6PtoQEnQg2Nzw2o04hi20aUlcrYRePeBUSA3I4KrvB4hhTc1g0znH
+         6+HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733488350; x=1734093150;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vJnYhecshx+cozcLkFTMiV2NLTQMyr8hu0kcxAMBMzM=;
+        b=ZlAoSHeeFnfPSZBnenDCYE7RA02BKhFoMqgtbJuIlq6CBae8yAUIVObdSZ2r13THSq
+         Bciz+loac5h9KBqOabCrwRsuhYBYYOIfMLYaWW4iWfrHkG6Sj/Voj11uy6DAoGvXVuqc
+         at8iTloDD1yVjkB6M922KjufxK/QXpY9RGCMzhvj1UH+LZSr3keWYHvrMRRSN/+nUF67
+         Or76BYNouI6XhWMS7o0ksstLWYKgY/baeN32WFY3nqZGLjKAKNuVPgJbyQQKp9l5V/bR
+         oPkOEFAhXcNcetzrcMwG6Nz2Y7q0M+A+52TAIMNWLWy4Xq0k12kJEUEia6m8aUZj+DdD
+         CYUg==
+X-Forwarded-Encrypted: i=1; AJvYcCX3W4VLtPwQFcVUYQeA/rh/RERBlmGacnAo1VSmdfnREB1CYqKBx47QMHlmFI7/IHsSd7c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YweLjCkyY3qQyEgCmuCo0nDHBFUFwfL/POjLoeM1nT6ZVGw5NQm
+	q3nghA/C3eTHi0klnbd36Zmsip01aw1S+ouH9ARU3ha9sYU1ofX0XaWvOE/C285qhCjfJn+gI52
+	GfP9nD7NQJ83NuDq17waq/FmcNxw=
+X-Gm-Gg: ASbGncvNdwo04nqhHLv3FoaXc3MC3CJ2FugBEPSTluiwDPdyyPZZcufl5oCb8iVbgTE
+	mW8aVU/oR7ofls5rmDLXXfzDHjAYdHw==
+X-Google-Smtp-Source: AGHT+IGAPRPfMovmbc79YuHVkpzXyYMVy1ME75vwmMLie1aLGMQpaMoUA2V91H2rkor6u2zh7DLk5jlAQFCaZap8XJU=
+X-Received: by 2002:a05:6358:79b:b0:1c5:fde0:ff97 with SMTP id
+ e5c5f4694b2df-1cb170fc811mr173287655d.1.1733488350368; Fri, 06 Dec 2024
+ 04:32:30 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 6 Dec 2024 07:32:29 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <20241206-pks-sign-compare-v4-1-0344c6dfb219@pks.im>
+References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im> <20241206-pks-sign-compare-v4-1-0344c6dfb219@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241206-pks-rev-parse-fix-reversed-list-v2-1-190514278ead@pks.im>
-X-B4-Tracking: v=1; b=H4sIAAXuUmcC/42NQQrCMBBFr1Jm7UgSkkhceQ/pIpipHdS2JBKUk
- rs77QnczRve/3+FQpmpwLlbIVPlwvMkYA4d3MY43Qk5CYNRxmqjPC6PgiLiEnMhHPizEcmd8Mn
- ljWoINhoVvfYOpGXJJNK+cO2FR5Hm/N0Hq96+/3dXjRqDi8E7b6NNp4skjvyCvrX2A8FbqnjLA
- AAA
-X-Change-ID: 20241206-pks-rev-parse-fix-reversed-list-0f94a20a6165
-In-Reply-To: <20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im>
-References: <20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im>
-To: git@vger.kernel.org
-Cc: Aarni Koskela <aarni@valohai.com>, Jeff King <peff@peff.net>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Date: Fri, 6 Dec 2024 07:32:29 -0500
+Message-ID: <CAOLa=ZRjo27U5fWkqV8GOOO6HUF_=dgDD1Dhm=5Tb5JLT0fOCQ@mail.gmail.com>
+Subject: Re: [PATCH v4 01/16] git-compat-util: introduce macros to disable
+ "-Wsign-compare" warnings
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: shejialuo <shejialuo@gmail.com>, Jeff King <peff@peff.net>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="000000000000593f56062899358b"
 
-Recently it was reported [1] that "look for the youngest reachable
-commit with log message that match the given pattern" syntax (e.g.
-':/<PATTERN>' or 'HEAD^{/<PATTERN>}') started to return results in
-reverse recency order. This regression was introduced in Git v2.47.0 and
-is caused by a memory leak fix done in 57fb139b5e (object-name: fix
-leaking commit list items, 2024-08-01).
+--000000000000593f56062899358b
+Content-Type: text/plain; charset="UTF-8"
 
-The intent of the identified commit is to stop modifying the commit list
-provided by the caller such that the caller can properly free all commit
-list items, including those that the called function might potentially
-remove from the list. This was done by creating a copy of the passed-in
-commit list and modifying this copy instead of the caller-provided list.
+Patrick Steinhardt <ps@pks.im> writes:
+[snip]
 
-We already knew to create such a copy beforehand with the `backup` list,
-which was used to clear the `ONELINE_SEEN` commit mark after we were
-done. So the refactoring simply renamed that list to `copy` and started
-to operate on that list instead. There is a gotcha though: the backup
-list, and thus now also the copied list, is always being prepended to,
-so the resulting list is in reverse order! The end result is that we
-pop commits from the wrong end of the commit list, returning commits in
-reverse recency order.
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index a06d4f3809e5664863d4d0f312c88b3e1364ee74..e283c46c6fa06e4079851296a55c9bd5472a65b4 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -44,6 +44,16 @@ struct strbuf;
+>   #define GIT_GNUC_PREREQ(maj, min) 0
+>  #endif
+>
+> +#if defined(__GNUC__) || defined(__clang__)
+> +#  define PRAGMA(pragma)           _Pragma(#pragma)
+> +#  define DISABLE_WARNING(warning) PRAGMA(GCC diagnostic ignored #warning)
 
-Fix the bug by appending to the list instead.
+Seems like clang [1] also support `#pragma GCC diagnostic`, so this
+works with both.
 
-[1]: <CAKOEJdcPYn3O01p29rVa+xv=Qr504FQyKJeSB-Moze04ViCGGg@mail.gmail.com>
+> +#else
+> +#  define DISABLE_WARNING(warning)
+> +#endif
+> +
+> +#ifdef DISABLE_SIGN_COMPARE_WARNINGS
+> +DISABLE_WARNING(-Wsign-compare)
+> +#endif
 
-Reported-by: Aarni Koskela <aarni@valohai.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-This patch applies on top of v2.47.0, which is the first version which
-had this regression.
+Looks good.
 
-Changes in v2:
+Thanks
 
-  - Include the message ID of the report in the commit message.
+[1]: https://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas
 
-  - Fix terminology used by the commit message.
+--000000000000593f56062899358b
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 88419e4d61fe4124_0.1
 
-  - Move the test from t4208 to t1500.
-
-  - Link to v1: https://lore.kernel.org/r/20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im
-
-Thanks!
-
-Patrick
----
- object-name.c        |  4 ++--
- t/t1500-rev-parse.sh | 15 +++++++++++++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/object-name.c b/object-name.c
-index c892fbe80aa7173dfcc1995de5a75bc322c6adb7..34433d2a01d6a23ce6b4ca19b85c53b7b82fd0e5 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -1401,7 +1401,7 @@ static int get_oid_oneline(struct repository *r,
- 			   const char *prefix, struct object_id *oid,
- 			   const struct commit_list *list)
- {
--	struct commit_list *copy = NULL;
-+	struct commit_list *copy = NULL, **copy_tail = &copy;
- 	const struct commit_list *l;
- 	int found = 0;
- 	int negative = 0;
-@@ -1423,7 +1423,7 @@ static int get_oid_oneline(struct repository *r,
- 
- 	for (l = list; l; l = l->next) {
- 		l->item->object.flags |= ONELINE_SEEN;
--		commit_list_insert(l->item, &copy);
-+		copy_tail = &commit_list_insert(l->item, copy_tail)->next;
- 	}
- 	while (copy) {
- 		const char *p, *buf;
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-index 30c31918fde6539d52800e18dfbb3423b5b73491..42c4a63cb95eed781ed7d3029c4ff5e600e6f8b8 100755
---- a/t/t1500-rev-parse.sh
-+++ b/t/t1500-rev-parse.sh
-@@ -310,4 +310,19 @@ test_expect_success '--short= truncates to the actual hash length' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success ':/ and HEAD^{/} favor more recent matching commits' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit common-old &&
-+		test_commit --no-tag common-new &&
-+		git rev-parse HEAD >expect &&
-+		git rev-parse :/common >actual &&
-+		test_cmp expect actual &&
-+		git rev-parse HEAD^{/common} >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
-
----
-base-commit: 777489f9e09c8d0dd6b12f9d90de6376330577a2
-change-id: 20241206-pks-rev-parse-fix-reversed-list-0f94a20a6165
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kUzd0d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mODdYREFDT09zNk1Tc05GNmExTDRiRVhXdjRDaXpZWQp1U1ZETmFnUytq
+ZkVGUHl2Ym1HTWVIQnJsS0JJS3pjQ2JkbFhjSm1URktZRW5jUENMTHdBejlkTFlZVzFpNHJ6CnFl
+bEtsSnBLa1ovUmZBRjAySDdyT1MrK2Ywc2k0Z1MvK3J4M2RUVk13VFpucXNJVDBIWkc5SndUcXpN
+RU1SS1MKeHdrMmpOSU1JaEI4cGZCVnVDRVJQUlRTU2h5eFdLK2svZlVkSjZCbGFYN3ZHNWc2MTNQ
+WXZ0UEhqcUtZNy9KTApIRitFai9vTHZzWHo5S0tVYW51Y3U0WWdkU0lBRk9LTmtyTjBCTzJEY0o2
+MWtHUlB4ZkRhMk90cHVmT0lXZGZxCm04M0REMHcvdjBFVWhxcFJaUjV2QjR2emVlOHJ2RndUK09L
+YWtPcUtvZnZPQ0FKUno3cVB4eksyWlY0d1Eram8KSkwvL2FQVTlqMHdZSytlY1hnNUFNMW9tcVV5
+eFZHeXU3c3ZrNzJzT2J4UkcvTFpLRVRBUFMzR0dVb0haVHphUApWUUk3UERQRnJEUXkzeGZpVG5z
+dHpDU1NUTUM4OW4rSkl5cENON2J2Mm9yT283UXRqM0gwaEc4UkNiRjllQkk3Ckk0NTFGQ3piZXVh
+ZmVPcTdpS3Z3WmJpUUhIZXBDd0VDZlNFbVdWYz0KPVpXYWoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000593f56062899358b--
