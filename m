@@ -1,196 +1,204 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3470A191F9B
-	for <git@vger.kernel.org>; Fri,  6 Dec 2024 03:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8E618C932
+	for <git@vger.kernel.org>; Fri,  6 Dec 2024 03:28:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733455692; cv=none; b=BYErbqJKAEKZX0jFnk/k6zwV5XZtVIT/KINTAtapf162Tmee/wxLHHxo8o1514wxmMaH/Qx76V7lczXy/IumBtyMAoMOevw0WO4O8eGE1l4CPl/wAAMqyZjh+83HEGStTFn7ddVc4yGWHPZJg7d9zOkCuq3rvwpkiiI/cWxKWZ8=
+	t=1733455741; cv=none; b=n8/nXuxA9BwxwJVfGYKARZwraNhU+2S6QxAOSa/6YoK+0X/HqICnIGlcHnuoM6FZIkrNQ9pUXcwy5q4e9ETiP87JC6Jktnwo0lOXLYMOE4o6LIx6KEGuO33wCoCXfoX0h33+acWgWSHGIqe/W71BAb/cd/NdVj/rP/7rxRQBVFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733455692; c=relaxed/simple;
-	bh=utrdblqgKSuKT1fVzHCRjQDxZ3zrntwoft5tneHNNwE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LhKwPfManoU91MqMkm1YTgmGDNxV9GKq/AHJ9U5VghD50NabKVfU1Zr8266cURT5AL+UC7Vvg3abD+zxvxq7E0NisPO8aYnmaEKmivyEtTGb2I0EL8v8nyr8BYZY7QkaZD3kgBFAXPfS3GbKRE5HWydsxcmI4KH8kqoAMK2o6QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=APTSpMNV; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1733455741; c=relaxed/simple;
+	bh=zVbiicYIwCQs0m8E9urVrVV2WSXpRBkt9Qfb/zto/R0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t09snFRrMtVU8CLi/xuDoFny4tNx7U+ff8PDwmlht1VfRwL4yU42FLFnXwEKwl1DxPqgZsbW0aJCxuvA8ujzvYBe1ap9U0qdVbCvhKOu/Hkgwfn1GL/ZFHAZ/PnlDsSCagAZyjaU8Y2MeD4GRYj3uXR2HasmS7JFfP6losG0/K0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BDFA5tR5; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="APTSpMNV"
-Received: (qmail 4448 invoked by uid 109); 6 Dec 2024 03:28:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=utrdblqgKSuKT1fVzHCRjQDxZ3zrntwoft5tneHNNwE=; b=APTSpMNViBWRkNWeySEAp1H0H85fV7SZcOkKdUy+O+neMZI7SZwuCP2DtQNUaEA+SCL+J6KnuUVXKjh8QuNUTQsYdS6Bc+KXGJn1FYrWD6yKi+0OpSqF1hGrQ8YHRKr6ECvRTXqwzwlvH0T8nBt52gTqOA+7bwgucOer558iKhGMkMQ7sxNtOX9my3QdQ89sd6/1VIhu5aYBjG9oVgACP9E24J7p66wjmLrEuPcTdD+yux9ENu7GLv8dkWMSltyIw3VQiPAh0YQDH3sLY/ld8CfUI4H2uQM9um82cvdEvneovpMGiFLmS6/pL8yG/GCtBWk6TtlzxtIQIO1fcG94nw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Dec 2024 03:28:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13211 invoked by uid 111); 6 Dec 2024 03:28:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Dec 2024 22:28:08 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Dec 2024 22:28:07 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	benno.martin.evers@gmail.com, benno@bmevers.de, ravi@prevas.dk,
-	jpoimboe@kernel.org, masahiroy@kernel.org
-Subject: Re: [PATCH] describe: drop early return for max_candidates == 0
-Message-ID: <20241206032807.GA3176362@coredump.intra.peff.net>
-References: <20241106211717.GD956383@coredump.intra.peff.net>
- <00270315b83b585f7d62ad1204ca1df93a668791.1733354035.git.steadmon@google.com>
- <20241204232750.GA1460551@coredump.intra.peff.net>
- <20241205201449.GA2635755@coredump.intra.peff.net>
- <xmqqser1zf8q.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BDFA5tR5"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 891A11140114;
+	Thu,  5 Dec 2024 22:28:58 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 05 Dec 2024 22:28:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733455738; x=1733542138; bh=XPPcsAENmrnuw/dVNnSHkx98Kq0thdqUsiK
+	Z0qfxnCw=; b=BDFA5tR5484NHQociYHbgbxmDBD1uSnSqR4VbKbjkDdp7iPpmrx
+	NcnWrGzdtvb4qNdAGjLNGRPkbYO/pUGR90md7JymNiPEvrLmkCN8EMMC5tPhTS6h
+	0drjUevcQkArHzK/MG+8wtGfbcgqBTGXu1STwBDrNjfLDd7eo/iMuUAfGFkF/fIc
+	x37hacW4he1f/EKiWkdxqUwi7qYPWfF1UtxtulvvO1lodea78JrUpeBJ3qzNqEVI
+	FQT+aTs82uf7GprzNjy4Kj8GMkzKomRBw8UqmTwqFQMbmq2If5SDoiG4ssaVCiqZ
+	N4lci9xjKYRzqS9wEntaHhgCVIqXQaS16TQ==
+X-ME-Sender: <xms:eW9SZ2egxVeUvVULAqb1jlBbKwclDnVXuKvsEHdiZmV64WE1NDOy9w>
+    <xme:eW9SZwPyK2Yq1EbtvgmKhA0NbpeJI4e9rV9ORySnDfsX4DLK_wmx-_q9LXm5gj2oL
+    ELUXCcKz2mm9CvbMQ>
+X-ME-Received: <xmr:eW9SZ3gVSaisXqRtK5OLczkkK14KScGSGMtr5Itnh-zKyUq2paA6fMc9CH6_tzMNVBYbY9wMZHGTl8KzT-JSUWkYbXItvj9YLIs2XyE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrieekgdehkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpefhledvheeuieegudefgefhkeefleevjeefledu
+    udekgeevffefgfekffefvefgtdenucffohhmrghinheprhgvfhgpphhrvghfihigvghsrd
+    hnrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduuddpmhhouggvpe
+    hsmhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsg
+    gvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdr
+    fihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoheplhdrshdrrhesfigvsg
+    druggvpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidr
+    uggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
+    htthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhi
+    mh
+X-ME-Proxy: <xmx:em9SZz9g628Ukvu3gZMtomYAhxW8kx5kE26jyckYzbhNz1jA98Phtg>
+    <xmx:em9SZytZCLj9UewBl0xtUKdVQe11soqZe3RIXEehlJDe3VJoNM9myg>
+    <xmx:em9SZ6E1NdqrJuh_e2AfSN9m6V3hUT6xBn3iidIH-ohCflr2DgA8IA>
+    <xmx:em9SZxMN4Dd3rLB2fcnUPqSQG5z1sPyPBZl8UNaA8n5vihWuRxbGIQ>
+    <xmx:em9SZ6Hyd727f_eaSCiEHQ0Qd1fsK8iM_P9ttHs_WRNbiyjPv-MHiq_E>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Dec 2024 22:28:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  bence@ferdinandy.com,  phillip.wood@dunelm.org.uk,
+  l.s.r@web.de,  Johannes.Schindelin@gmx.de,  karthik.188@gmail.com,
+  me@ttaylorr.com,  ps@pks.im,  jonathantanmy@google.com
+Subject: Re: [PATCH] Fix `git fetch --tags` in repo with no configured remote
+In-Reply-To: <b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
+	(Josh Steadmon's message of "Thu, 5 Dec 2024 12:27:20 -0800")
+References: <hpaekjhdpcovhdptdntdligp5jcdp7mygh5brnggu7itf5grzp@vl4l7uwnb3n7>
+	<b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
+Date: Fri, 06 Dec 2024 12:28:56 +0900
+Message-ID: <xmqqcyi5zdzb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqser1zf8q.fsf@gitster.g>
+Content-Type: text/plain
 
-On Fri, Dec 06, 2024 at 12:01:41PM +0900, Junio C Hamano wrote:
+Josh Steadmon <steadmon@google.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Actually, after thinking on this a bit more, I think the solution below
-> > is a bit more elegant. This can go on top of jk/describe-perf.
-> >
-> > -- >8 --
-> > From: Josh Steadmon <steadmon@google.com>
-> > Subject: [PATCH] describe: drop early return for max_candidates == 0
-> 
-> OK, so the patch authorship still blames Josh.  But there is no
-> sign-off because ... the approach to the fix is so different that
-> blaming Josh for this implementation is no longer appropriate?
+> In 3f763ddf28 (fetch: set remote/HEAD if it does not exist, 2024-11-22),
+> git-fetch learned to opportunistically set $REMOTE/HEAD when fetching.
+> However, this broke the logic for the `--tags` flag. Specifically, we
+> now unconditionally add HEAD to the ref_prefixes list, but we did this
+> *after* deciding whether we also need to explicitly request tags.
+>
+> Fix this by adding HEAD to the ref_prefixes list prior to handling the
+> `--tags` flag, and removing the now obsolete check whether ref_prefixes
+> is empty or not.
+>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  builtin/fetch.c  |  9 ++++-----
+>  t/t5510-fetch.sh | 17 +++++++++++++++++
+>  2 files changed, 21 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b2a36a5d95..e7b0c79678 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1699,15 +1699,14 @@ static int do_fetch(struct transport *transport,
+>  		}
+>  	}
+>  
+> +	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+> +
+>  	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
+>  		must_list_refs = 1;
+> -		if (transport_ls_refs_options.ref_prefixes.nr)
+> -			strvec_push(&transport_ls_refs_options.ref_prefixes,
+> -				    "refs/tags/");
+> +		strvec_push(&transport_ls_refs_options.ref_prefixes,
+> +			    "refs/tags/");
+>  	}
 
-Oh, whoops. I had originally intended to just write the commit message
-and leave him with credit, but then I ended up changing approach.
-Leaving him as the author was an oversight.
+Stepping back a bit, do we even need to learn where HEAD points at
+in the remote, when we are not doing the "opportunistically set
+$REMOTE/HEAD"?  Your example is "in repo with no configured remote",
+which by definition means that we do not use any refs/remotes/*/ ref
+hierarchy to keep track of the remote-tracking branches for the
+remote we are fetching from.  There is no place we record what we
+learn by running ls-remote HEAD against them, so should we even push
+"HEAD" to the ls-remote prefixes in such a case?
 
-> > Before we even start the describe algorithm, we check to see if
-> > max_candidates is 0 and bail immediately if we did not find an exact
-> > match. This comes from 2c33f75754 (Teach git-describe --exact-match to
-> > avoid expensive tag searches, 2008-02-24), since the the --exact-match
-> > option just sets max_candidates to 0.
-> > ...
-> > So this:
-> >
-> >   git describe --exact-match --always
-> >
-> > and likewise:
-> >
-> >   git describe --exact-match --candidates=0
-> 
-> Did the latter mean to say "git decribe --candidates=0 --always", as
-> the earlier paragraph explains that "--exact" affects the number of
-> candidates?
+While this change may hide the breakage you saw in your set-up, we
+may be now asking to ls-remote HEAD even in cases we do not need to.
 
-Urgh, yes, you are correct. I can resend, but I think we should resolve
-the questions below.
+> Fix this by adding HEAD to the ref_prefixes list prior to handling the
+> `--tags` flag, and removing the now obsolete check whether ref_prefixes
+> is empty or not.
 
-> Without this patch, all three give the same result:
-> 
->     $ git describe --exact-match --always HEAD
->     fatal: no tag exactly matches '59d18088fe8ace4bf18ade27eeef3664fb6b0878'
->     $ git describe --exact-match --candidates=0 HEAD
->     fatal: no tag exactly matches '59d18088fe8ace4bf18ade27eeef3664fb6b0878'
->     $ git describe --candidates=0 --always HEAD
->     fatal: no tag exactly matches '59d18088fe8ace4bf18ade27eeef3664fb6b0878'
-> 
-> With this patch, we instead get this:
-> 
->     $ ./git describe --exact-match --always HEAD
->     59d18088fe
->     $ ./git describe --exact-match --candidates=0 HEAD
->     fatal: No tags can describe '59d18088fe8ace4bf18ade27eeef3664fb6b0878'.
->     Try --always, or create some tags.
->     $ ./git describe --candidates=0 --always HEAD
->     59d18088fe
+And if we unconditionally add HEAD even when we do not need to,
+especially with the loss of the ref-prefixes condition that was
+there in order to implement "learn refs/tags/* hierarchy only when
+we are doing the default fetch", wouldn't it mean we may learn
+refs/tags/* even when we do not have to?
 
-Right, exactly.
-
-> > But this interacts badly with the --always option (ironically added only
-> > a week later in da2478dbb0 (describe --always: fall back to showing an
-> > abbreviated object name, 2008-03-02)). With --always, we'd still want to
-> > show the hash rather than calling die().
-> > ...
-> > has always been broken.
-> 
-> Hmph, I am not sure if the behaviour is _broken_ in the first place.
-> 
-> The user asks with "--exact-match" that a result based on some ref
-> that does not directly point at the object being described is *not*
-> acceptable, so with or without "--always", it looks to me that it is
-> doing the right thing, if there is no exact match (or there is no
-> tag and the user only allowed tag to describe the objects) and the
-> result is "no tag exactly matches object X" failure.
-> 
-> Or is our position that these mutually incompatible options, namely
-> "--exact-match" and "--always", follow the "last one wins" rule?
-> The implementation does not seem to say so.
-
-I think you could argue that they are mutually incompatible. But we have
-never marked them as such, nor do we do any sort of last-one-wins.
-They are two distinct options, but in --exact-match mode, --always is
-simply ignored. Which I think is a bug.
-
-> So I am not sure if the "buggy" behaviour is buggy to begin with.
-> The way these two are documented can be read both ways,
-> 
->     --exact-match::
->             Only output exact matches (a tag directly references the
->             supplied commit).  This is a synonym for --candidates=0.
-> 
->     --always::
->             Show uniquely abbreviated commit object as fallback.
-> 
-> but my reading is when you give both and when the object given is
-> not directly pointed at by any existing tag, "ONLY output exact
-> matches" cannot be satisified.  And "show as fallback" cannot be
-> satisfied within the constraint that the command is allowed "only
-> output exact matches".
-
-I think there can be a more expansive reading of --exact-match (or of
---candidates=0), which is: only output a tag that matches exactly. And
-then --always is orthogonal to that. There is no other output to
-produce, so we show the commit object itself.
-
-Now that more expansive reading is not what --exact-match says above.
-But it is the only thing that makes sense to me for --candidates=0, and
-the two are synonyms.
-
-> I think the complexity from the point of view of a calling script to
-> deal with either behaviour is probably similar.  If you ask for
-> "--exact-match" and there is no exact match, you can ask rev-parse
-> to give a shortened one, and you know which one you are giving the
-> user.  We can change what "--exact-match + --candidate=0" combination
-> means to let it fallback, but then you'd need to check the output to
-> see if you got an exact tag or a fallback, and for that you'd
-> probably need to ask "show-ref refs/tags/$output" or something.
-> 
-> So I am not sure if it is worth changing the behaviour this late in
-> the game?
-
-I think there are really two questions here:
-
-  1. Is the current behavior of "describe --exact-match --always" a bug?
-     I'll grant that probably nobody cares deeply, which is why the
-     interaction has not been noticed for all of these years. I think
-     the semantics this patch gives are the only ones that make sense,
-     but I also don't care that deeply. But...
-
-  2. What should we do about the new regression caused by limiting the
-     candidate list? I.e., my earlier patches in this topic make us
-     behave as if --candidates=<n> was given when there are fewer tags
-     in the repo. That runs afoul of the special-casing of
-     --candidates=0 when there are no tags in the repo (or you limit the
-     candidates to zero via --match).
-
-     If we are not going to address (1) as this patch does, then we need
-     another solution. We can internally hold an extra variable to
-     distinguish the number of user-requested candidates from the number
-     of actual candidates available. But I think my solution to (1) here
-     harmonizes the --candidates=0 case with --always, and then the
-     auto-adjusted max-candidates case just falls out naturally.
-
--Peff
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  builtin/fetch.c  |  9 ++++-----
+>  t/t5510-fetch.sh | 17 +++++++++++++++++
+>  2 files changed, 21 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index b2a36a5d95..e7b0c79678 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1699,15 +1699,14 @@ static int do_fetch(struct transport *transport,
+>  		}
+>  	}
+>  
+> +	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+> +
+>  	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
+>  		must_list_refs = 1;
+> -		if (transport_ls_refs_options.ref_prefixes.nr)
+> -			strvec_push(&transport_ls_refs_options.ref_prefixes,
+> -				    "refs/tags/");
+> +		strvec_push(&transport_ls_refs_options.ref_prefixes,
+> +			    "refs/tags/");
+>  	}
+>  
+> -	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+> -
+>  	if (must_list_refs) {
+>  		trace2_region_enter("fetch", "remote_refs", the_repository);
+>  		remote_refs = transport_get_remote_refs(transport,
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> index 87698341f5..d7602333ff 100755
+> --- a/t/t5510-fetch.sh
+> +++ b/t/t5510-fetch.sh
+> @@ -189,6 +189,23 @@ test_expect_success 'fetch --prune --tags with refspec prunes based on refspec'
+>  	git rev-parse sometag
+>  '
+>  
+> +test_expect_success 'fetch --tags gets tags even without a configured remote' '
+> +	REMOTE="$(pwd)/test_tag_1" &&
+> +	git init test_tag_1 &&
+> +	(
+> +		cd test_tag_1 &&
+> +		test_commit foo
+> +	) &&
+> +	git init test_tag_2 &&
+> +	(
+> +		cd test_tag_2 &&
+> +		git fetch --tags "file://$REMOTE" &&
+> +		echo "foo" >expect &&
+> +		git tag >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>  test_expect_success REFFILES 'fetch --prune fails to delete branches' '
+>  	cd "$D" &&
+>  	git clone . prune-fail &&
+>
+> base-commit: 3f763ddf28d28fe63963991513c8db4045eabadc
