@@ -1,79 +1,75 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21211E505
-	for <git@vger.kernel.org>; Sat,  7 Dec 2024 23:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C7780BFF
+	for <git@vger.kernel.org>; Sat,  7 Dec 2024 23:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733613851; cv=none; b=SNwD5mCrm38FkATJxAA3IF33gUkOao1+wJvNU7NBTdV3+H4pEi6WD73Yw8xpSYwYXJDsxG5wSBbR2H/gTEzrXgKVJQetXKjskf94mEo/lyQkttVOXboxN/a3xrqgsKIRIzGm+apNOgdbVhRmJeXzZMlqB0YavgXGfpjJQAxa84U=
+	t=1733615018; cv=none; b=J8BBEuVCoz/63mL/Fz1k7OWGFz2l1xSj+Bjqro7/Ybjq/76y3GnlIkbXN78ZJCFbb3hXJGe2NCH6KbaiKSA7fdAbZUhj7LZTjf9qL+So90xfIFRMFeiiHOPic6wsU94lnc3wz6TCEejf5v3dnIql0+b68BfWvdt4iEBwO6lyoMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733613851; c=relaxed/simple;
-	bh=TbLL4PXhGD7ytrqDjyJvkweInEw2WMO5PL6pRKb+q4g=;
+	s=arc-20240116; t=1733615018; c=relaxed/simple;
+	bh=KFRzUePSjkHUWvCQaejr6jJxXEzIKElnweKJvPzZ/LA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QO+VRae3BzBcptExzPj6DsY8sMS6FQuNy1h2oCvyZBU1ehdEh6fLidUZ5R1LvmBhC3vGyqP9BUhGKsDNGaZG2RCNwED5UINgSqgIqpiqSZLtR4XpmNkrptAeSIXDlt08l2LcOi6WLoJmiqinlz5HkCqk9t09LeV7+a5d2sf7K34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HmqAIrGs; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=egisEksstt2tWLbiOuuxNp08EjX6IrPeujhkknTLhOigdKRnBZOWrsiqy0FaTnGrfAA8y3pihIoFdTjNKq5vGDsDKNrGbYDYWMAIT2gt/xG1N4QermjktPImnQIDJh3XPddJlMvRcukcxVphDEzw+ALp7IhCI6+mniJ7YXBOMqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pm3E7IfT; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HmqAIrGs"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BFDFB114011B;
-	Sat,  7 Dec 2024 18:24:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pm3E7IfT"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id ADFBE114011A;
+	Sat,  7 Dec 2024 18:43:35 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 07 Dec 2024 18:24:07 -0500
+  by phl-compute-12.internal (MEProxy); Sat, 07 Dec 2024 18:43:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733613847; x=
-	1733700247; bh=Tbs635GdvT77s0kwSA+f7KLFkCSASmIi2neEpmt1xoc=; b=H
-	mqAIrGsJO0OiUu/G9bvb/M4RIWzaKSAR+M1lKCSjCAsYJToNj7x4/mrIuBZsAom9
-	sW4EV6aVwD/96gHihUxzF3oK0BQQ6bkhpU1jNFkqQjcKpWBzI9hBd/JhWiwD53k5
-	4noHz2CIEizSoHoyAD9IgA3KlcSqQwsrnmc++L7epQRoihlYArnMb2H+OY5tXy78
-	q7+UosCgfMZvm/LbdfRCHLrRj2Nq1YZ9Zcfm4wOZdnsX6kNgqGMk1qnxZXgwEi/Q
-	/NgKHHYK0fq7fulfHhpYdkGPKtTBm0Oq/2cYd90vHxDcSOiWc6UbFNA5v89dBZDQ
-	oCFpgPcQvXDpbj9TrHzAw==
-X-ME-Sender: <xms:F9lUZ8twliVVi4sI4iksdlquz0Vdfxz-Ok-3fojjWox-_mBME0EmfQ>
-    <xme:F9lUZ5eEfnc9IQTRrqIdMPd8yWXWMxUI39fRTNPUfkL0SrpaTvBBuHBaoTSfxu42m
-    ic8rwDlofALctUQkg>
-X-ME-Received: <xmr:F9lUZ3x2krBUY8fYqVfRdpKEaI2CIK3hHrItK1hZloUCoFTcOcCDFdOyL9OuAjqx35h-TRit-2HeIeFU24UGKIeo3reIwpcjXjmkP-0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjedvgddtkecutefuodetggdotefrodftvf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733615015; x=1733701415; bh=zRaS+yn8kozzPIiPylAQMkBIKUb3QY8IpEm
+	BWMSnfM8=; b=Pm3E7IfTRZEz/5Go/I155ThhGPE682aBe8i5XhTijtiDqEKdUG9
+	JOSt1yTLo3OFvW1UNieY5f+7NbwNdKpOCu5Swjke1dOA9KbDY5VN8czJ+nM0G/7G
+	yymdw/UWYhWWz0oBb3d3PXollzPMsdYj2BZ24CP19x205iO5gBJ8+W+d1AMJKP0x
+	lfZXnAgIZja9TNs9YEYOyJMUHBX691uDiXEncc9KrW3o9O361Wh4ZRZFCSXHSM74
+	0La8lPMpWVNxhT93/6pEOzuCgthOJLx+hz+8NoX6dEeBPegRx2HcRP6uXh3MXvtG
+	DTs2A/3xqLWLbAL9ToQ2/zch5ELmmcHU+Dw==
+X-ME-Sender: <xms:p91UZ6_Qwo8CpXJ95vBJiN8fFxAIfnmhNKMNc02Cw7uwRxFPf_aXyQ>
+    <xme:p91UZ6swuqj8e6li1qjLn2Eib1MoKoybYGCg96tuZIWqYgxXcMJT88Ke-V86xY8NR
+    n_8vl50voqiXmUxGw>
+X-ME-Received: <xmr:p91UZwCzBD5xUzfQY3XWQAd1K96E1fq_BsNJ3xCU42-5_pBysWiEyzoxRS7cRET7IBQL9zEH28hbZEMzDTm_6iiAZnYhPCmYxZIwUb0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjedvgddufecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtoheprggrrhhnihesvhgrlhhohhgrihdrtghomhdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:F9lUZ_NGA8wqVEcxLFjOy7_kSczW0A_eQarfbQdjccEH6bRbIiiEsw>
-    <xmx:F9lUZ89Lay1SLLNGVuOC73XotOCtFr8eY8HYI5Lba-CYOX4sB_mjBw>
-    <xmx:F9lUZ3XdhaKPX4xoh_26BkdTvUKB17rOp45tcTnKppfUN1aB3mkCLw>
-    <xmx:F9lUZ1f6b4j8uiL-fBMAISalZSUlOWxWFoDiJgTLVVi69dNrzYLX_A>
-    <xmx:F9lUZ5Ni_voyr4YZ7oCUKA8GczqEn86K_yaWUOAhWkAsGNC6uTcUW0bD>
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrohihvghluggrrhdtse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehjoh
+    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:p91UZyejtemrBUGfi6O9wqOuWlWXKUbM_ETPP6MNxsHR5AzbXbcxZQ>
+    <xmx:p91UZ_NFIylrhXQOae5FEHSMDjTnYg4ymDbnOhvUHSWOg8110vnogA>
+    <xmx:p91UZ8m2x-vgGq2AmC_jYOazRW8nqQkj_q_AOqpED8bpRZq6QBTgPw>
+    <xmx:p91UZxv7KhQAdi2A2eHB2eccP_eDYcEJctieb91Ws1WQlTXTkqeRzQ>
+    <xmx:p91UZ61bc4KQ9bAMrmZxYm37xAiZaHrd6Oj5SbAspQBRJV7FXQLT8Cq6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Dec 2024 18:24:06 -0500 (EST)
+ 7 Dec 2024 18:43:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Patrick Steinhardt" <ps@pks.im>,  git@vger.kernel.org,  "Aarni Koskela"
- <aarni@valohai.com>,  "Jeff King" <peff@peff.net>,  "Justin Tobler"
- <jltobler@gmail.com>
-Subject: Re: [PATCH v3] object-name: fix reversed ordering with
- ":/<PATTERN>" revisions
-In-Reply-To: <3ef4f213-a49e-4d72-8f45-00a5fa030852@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Sat, 07 Dec 2024 16:51:39 +0100")
-References: <20241206-pks-rev-parse-fix-reversed-list-v1-1-95a96564a4d7@pks.im>
-	<20241206-pks-rev-parse-fix-reversed-list-v3-1-d934c17db168@pks.im>
-	<3ef4f213-a49e-4d72-8f45-00a5fa030852@app.fastmail.com>
-Date: Sun, 08 Dec 2024 08:24:05 +0900
-Message-ID: <xmqqcyi3t6ui.fsf@gitster.g>
+To: Roy Eldar <royeldar0@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] git-submodule.sh: make some variables boolean
+In-Reply-To: <20241207135201.2536-2-royeldar0@gmail.com> (Roy Eldar's message
+	of "Sat, 7 Dec 2024 15:51:59 +0200")
+References: <20241207135201.2536-1-royeldar0@gmail.com>
+	<20241207135201.2536-2-royeldar0@gmail.com>
+Date: Sun, 08 Dec 2024 08:43:34 +0900
+Message-ID: <xmqqzfl7rrdl.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,14 +77,61 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Roy Eldar <royeldar0@gmail.com> writes:
 
-> This isn’t “e.g. ':/<PATTERN>'” any more since you are not listing
-> examples.  “i.e.” perhaps?
+> When git-submodule.sh parses various options and switchs, it sets some
+> variables to values; in particular, every switch that is passed causes a
+> corresponding variable to be set to 1, which then affects the options
+> given to git-submodule--helper.
+>
+> There are some variables are assigned "$1", although there is no reason
+> for it; this was actually noticed in 757d092 for the "$cached" variable.
 
-Will locally amend (and with s/PATTERN/text/ to match the relevant
-part of the documentation).  Thanks for carefully reading.
+Wearing devil's advocate hat on.
 
+This can cut both ways.  If you are doing a thin wrapper front-end,
+when calling into the underlying machinery that has its own option
+parser, it is often easier to write and read
+
+    submodule--helper $force $cached
+
+instead of
+
+    submodule--helper ${force:+--force} ${cached:+--cached}
+
+In addition, when debugging such a script by running it under "sh -x",
+a typical construct like
+
+	if test "$force" = 1
+	then
+		... do the force thing ...
+
+would appear in the "-x" trace as
+
+	+test 1 = 1
+	+... do the force thing ...
+
+if you force yourself to use "1", but 
+
+	if test "$force" = "--force"
+	then
+		... do the force thing ...
+
+would show either
+
+	+test --force = --force
+
+or
+
+	+test "" = --force
+
+and the latter is especially useful when you are wondering why the
+"--force" you gave from the command line is not taking effect.
+
+Having said all that, as long as the use of these switch variables
+are done consistently (e.g., consistently set effective ones to "1",
+and consistently set ones that are off to ""), we are OK.
+
+Thanks.
