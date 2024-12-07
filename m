@@ -1,43 +1,43 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C124A1C
-	for <git@vger.kernel.org>; Sat,  7 Dec 2024 06:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920F2360
+	for <git@vger.kernel.org>; Sat,  7 Dec 2024 06:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733552474; cv=none; b=i1Gz8MVz6i4pabCHR4rkcK+jCsHVchmSIcRkAjCJw2ZPiO+GSHV2ZFNzBINnZDf+8Bwwy0zlLXpafIS0E5LilZyzGJJwtvhYYRKoXbfIYVDgWuAQnsB7FOwDdc6rwH417wn+4NKJlDCWYe1NIaHtRA/LQhI2QBk+ZxfRajNli+k=
+	t=1733553351; cv=none; b=cb8SLZzVHGDP3t2lqEwpoteN+a569qpCN1fRWI3+WsmEh4yydZQ/35jf61PSmRzImAgbUeE4IjR4al+HFqtMgu6KTFoNMViCvnIgZ4tb8rHOjKU8BzA2pYP+/LrGOrPhSP4xBeIceBpC9S1H/hFRIK75DrHSSXzHLp2JRoNaTEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733552474; c=relaxed/simple;
-	bh=gkkBVZ+mHzB8oKy4Tz2/7yfNfvG+BYwbJ8tGHMmBfds=;
+	s=arc-20240116; t=1733553351; c=relaxed/simple;
+	bh=cOVU3F1L0UTPqT4C+fZgWmKoJqiqwIHlxt9yhHUl/lc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LKWGcmo63b/xlxo6ns/rIIKOb0O6p7IgcZTh+U2ofLk0NLbp1XiumIWSf19fLq5QYlr3i0jIZazp+ueytDwACUbVzr+QFS0bhnVQOt2Alc4L3b4QhJoyADymrm29ilAehe4AANitl/qg0mXEf7RlwWNAhwAXweX3dFhZj5RnLGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QlSRw6s8; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=e5i7/MJADTcDJccztFrxpRj8qCwDqEwYHKnj/LtrwYHd6AUHr+KM9cSUIH9YIKNE0RfEXHby1iDHk9KCujg4eUfqg+p5ZHCgL0OwiXh4r53lExwWAPHnTL9l3e53Ts7ajmmWhz8CmqWrVJmUR2rgXrh6WN6/FGHWW9wXOztIwu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wIwTtd03; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QlSRw6s8"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1AA321140196;
-	Sat,  7 Dec 2024 01:21:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wIwTtd03"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 73FEA13836F1;
+	Sat,  7 Dec 2024 01:35:48 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Sat, 07 Dec 2024 01:21:11 -0500
+  by phl-compute-03.internal (MEProxy); Sat, 07 Dec 2024 01:35:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733552471; x=1733638871; bh=NqwCYURwjRhl1jCsz0FhqhDyX1x07McW16q
-	L/dG+vP0=; b=QlSRw6s8PEkeyCg4sSy/V+Ds3847bzGMc2WIMzbDmiw+a3aLOLh
-	WsmRyNNVbIakRswqpnvQFXVK327sEjI2NHjN6GgqDlVwRfdN2UPZrtuA1gqtE6Ac
-	yxjcQxwsEbsHamRl121O08svTHhTLkdrnA4MBUMh0ON/ekBwL33OyXIKCkpelcF/
-	AHcczucseUVU9j98EVXiDmWDloPNDXg08iSKsGhRPr7RSVsRk/8GFY3lSb02PUeF
-	nCbIlEvRMkWcYF9OKKqhJ7GFW4/7ETZ0davRTVhauaRDFYvcgRSu2s14+srAC8Th
-	15mM86BfLNPXJld6AP5FixHLS38CK7eVgpw==
-X-ME-Sender: <xms:VulTZ8rht6_AuYbcPPBijh6JxjWv6sY4xf8TV6FHmOJtd2OaUJa_qQ>
-    <xme:VulTZyq7VKCGq4NzhXYGw1quaCiwHB-6XDjS9VNXLL4cgllDTbwchOVago72UBbhD
-    Nt4dtgFpkJkAoIhOQ>
-X-ME-Received: <xmr:VulTZxPFU1KHLRDx-AfhCpteS4o_eUVgihnZqw_sBfhoZCGPLt9kzpvNYw_VnbnDJCy4n0GI5lPdYwZ6XaG6P0-uXCTE6ka2_K2vW8w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjedtgdekkecutefuodetggdotefrodftvf
+	1733553348; x=1733639748; bh=ZoxUwiDzPHNtuK2CQ8k+MHZs1Cn0w5Hm5kt
+	V+pMBoAo=; b=wIwTtd03HxNN8UVFhjDLhOnX2KIlghQtALcFqzKBe9p8Y1KgLTV
+	FvP9RqXCuhowsOopS4CC9j6W4Qu5Y3viid93hFwtaX+5MLl6s4nTWXgpMvz6BRl+
+	SPxvVD/Po/yYnYAy3U3PI8lICbO4E80vJOsiMKuMNk30HzuAAfr4hnyWTCJAslpk
+	AHRFM6NfLJ5FwuNd+uhJVqSsz+bf1NzcxUWkfVUsGGBWyJOqU9a0180I7s5l5+jN
+	R1OrSsC2efVUReGAJnlye7ySWzCewaWoigDkYpBOH+TyA5LsMNtUziftoOLUXpvf
+	KZlKHN3lW5eKXnxew78CTui8NgUll9Twe1Q==
+X-ME-Sender: <xms:w-xTZzlhOy6cUSDXCfd2FIfY4tU9miQg8vEUDlSiYYMDGHzsczBi1g>
+    <xme:w-xTZ223I19RCJSWkYKo_6oTm-MRdfK9NSYVFvMM6hKq5GxiWndjVZSwRusH7O-HM
+    5nFY2QxHwNq2X13gg>
+X-ME-Received: <xmr:w-xTZ5pf3S61-R7ck_IPotPJKxGVtWE2hSqwTp63JK6j8Qhcfpqjsii4xZQazrK3f_orNR_sGSVpyh_NaENPSDfE3BFtEQb5groCl68>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjedtgdeludcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -52,27 +52,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjedtgdekkecutefuodetggdote
     rhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
     hmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgt
     phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:VulTZz5nIb01LXA8xiXwQZF6qUkugPIDsMB-sUPx--wcsJMvS06jwQ>
-    <xmx:VulTZ75tZrfvSdq9yrajIYyeFGcisb-vk1TNJvzyGlxt-X-3niKz1g>
-    <xmx:VulTZzgKRI3xeel6-jsgFylPeTdtDwNNIl6h-XPP25jvVRwrl2ECew>
-    <xmx:VulTZ147ZLVlIMHDFeZVomWimQK6uKnaQXj2f2EuV1YDDMooG6MHNQ>
-    <xmx:V-lTZ1sYGjMs1xmr_PQlmoDljJx5AxOuysZ2u4amIwXqRKFUsREAURRF>
+X-ME-Proxy: <xmx:w-xTZ7l8AcsRODwAhEfp3GFF_ikXOogQjLBL41eKcSQdsk-8oXzgvQ>
+    <xmx:w-xTZx0VgGoJFvOqlz5R-8Rc2qUqykSagjwOJ_EzbTH9YJqRJA9BJQ>
+    <xmx:w-xTZ6unI4mX7CrZemUB1Sq9b7fHHdRThdhNnJJTio42QpRlpcFfzQ>
+    <xmx:w-xTZ1WXE7unW3At2KlBsGWSnSeRG_74GBb0svJMTCsqjOlUN2ogNA>
+    <xmx:xOxTZ6Jia-or25TA6xxM8cJjnqwIr2GCTs0kpAbz_klrqJ3DGtAXFhVW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Dec 2024 01:21:10 -0500 (EST)
+ 7 Dec 2024 01:35:47 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
  Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
  <sunshine@sunshineco.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 1/5] version: refactor strbuf_sanitize()
-In-Reply-To: <20241206124248.160494-2-christian.couder@gmail.com> (Christian
-	Couder's message of "Fri, 6 Dec 2024 13:42:44 +0100")
+Subject: Re: [PATCH v3 2/5] strbuf: refactor strbuf_trim_trailing_ch()
+In-Reply-To: <20241206124248.160494-3-christian.couder@gmail.com> (Christian
+	Couder's message of "Fri, 6 Dec 2024 13:42:45 +0100")
 References: <20240910163000.1985723-1-christian.couder@gmail.com>
 	<20241206124248.160494-1-christian.couder@gmail.com>
-	<20241206124248.160494-2-christian.couder@gmail.com>
-Date: Sat, 07 Dec 2024 15:21:08 +0900
-Message-ID: <xmqqfrn0ui7f.fsf@gitster.g>
+	<20241206124248.160494-3-christian.couder@gmail.com>
+Date: Sat, 07 Dec 2024 15:35:46 +0900
+Message-ID: <xmqqzfl8t2yl.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,80 +84,79 @@ Content-Type: text/plain
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> +/*
-> + * Trim and replace each character with ascii code below 32 or above
-> + * 127 (included) using a dot '.' character. Useful for sending
-> + * capabilities.
-> + */
-> +void strbuf_sanitize(struct strbuf *sb);
+> We often have to split strings at some specified terminator character.
+> The strbuf_split*() functions, that we can use for this purpose,
+> return substrings that include the terminator character, so we often
+> need to remove that character.
+>
+> When it is a whitespace, newline or directory separator, the
+> terminator character can easily be removed using an existing triming
+> function like strbuf_rtrim(), strbuf_trim_trailing_newline() or
+> strbuf_trim_trailing_dir_sep(). There is no function to remove that
+> character when it's not one of those characters though.
 
-I am not getting "Useful for sending capabilities" here, and feel
-that it is somewhat an unsubstantiated claim.  If some information
-is going to be transferred (which the phrase "sending capabilities"
-hints), I'd expect that we try as hard as possible not to lose
-information, but redact-non-ASCII is the total opposite of "not
-losing information".
+Heh, totally uninteresting (alternative being open coding this one).
+If we pass, instead of a single character 'c', an array of characters
+to be stripped from the right (like strspn() allows you to skip from
+the left), I may have been a bit more receptive, though ;-)
 
-> diff --git a/version.c b/version.c
-> index 41b718c29e..951e6dca74 100644
-> --- a/version.c
-> +++ b/version.c
-> @@ -24,15 +24,10 @@ const char *git_user_agent_sanitized(void)
+> +void strbuf_trim_trailing_ch(struct strbuf *sb, int c)
+> +{
+> +	while (sb->len > 0 && sb->buf[sb->len - 1] == c)
+> +		sb->len--;
+> +	sb->buf[sb->len] = '\0';
+> +}
+
+So, trim_trailing will leave "foo" when "foo,,," is fed with c set
+to ','.
+
+> diff --git a/trace2/tr2_cfg.c b/trace2/tr2_cfg.c
+> index 22a99a0682..9da1f8466c 100644
+> --- a/trace2/tr2_cfg.c
+> +++ b/trace2/tr2_cfg.c
+> @@ -35,10 +35,7 @@ static int tr2_cfg_load_patterns(void)
 >  
->  	if (!agent) {
->  		struct strbuf buf = STRBUF_INIT;
-> -		int i;
->  
->  		strbuf_addstr(&buf, git_user_agent());
-> -		strbuf_trim(&buf);
-> -		for (i = 0; i < buf.len; i++) {
-> -			if (buf.buf[i] <= 32 || buf.buf[i] >= 127)
-> -				buf.buf[i] = '.';
-> -		}
-> -		agent = buf.buf;
-> +		strbuf_sanitize(&buf);
-> +		agent = strbuf_detach(&buf, NULL);
+>  	tr2_cfg_patterns = strbuf_split_buf(envvar, strlen(envvar), ',', -1);
+>  	for (s = tr2_cfg_patterns; *s; s++) {
+> -		struct strbuf *buf = *s;
+> -
+> -		if (buf->len && buf->buf[buf->len - 1] == ',')
+> -			strbuf_setlen(buf, buf->len - 1);
+> +		strbuf_trim_trailing_ch(*s, ',');
+
+And the only thing that prevents this rewrite from being buggy is
+the use of misdesigned strbuf_split_buf() function (which by now we
+should have deprecated!).  Because it splits at ',', we won't have
+more than one ',' trailing, but we still split that one trailing
+comma because the misdesigned strbuf_split_buf() leaves the
+separator at the end of each element.
+
+This does not look like a very convincing example to demonstrate why
+the new helper function is useful, at least to me.  
+
+If somebody would touch this area of code, I think a lot nicer
+clean-up would be to rewrite the thing into a helper function that
+is called from here, and the other one in the next hunk in a single
+patch, and then clean up the refactored helper function not to use
+the strbuf_split_buf().  Looking at the way tr2_cfg_patterns and
+tr2_cfg_env_vars are used, they have *NO* valid reason why they have
+to be a strbuf.  Once populated, they are only used for a constant
+string pointed at by their .buf member.  A string_list constructed
+by appending (i.e. not sorted) would be a lot more suitable data
+structure.
+
+>  		strbuf_trim_trailing_newline(*s);
+>  		strbuf_trim(*s);
 >  	}
+> @@ -74,10 +71,7 @@ static int tr2_load_env_vars(void)
 >  
->  	return agent;
-
-This is very faithful rewrite of the original.  The original had a
-strbuf on stack, and after creating user-agent string in it, a
-function scope static variable "agent" is made to point at it and
-then the stack the strbuf was on is allowed to go out of scope.
-Since the variable "agent" is holding onto the piece of memory, the
-leak checker does not complain about anything.  The rewritten
-version is leak-free for exactly the same reason, but because it
-calls strbuf_detach() before the strbuf goes out of scope to
-officially transfer the ownership to the variable "agent", it tells
-what is going on to readers a lot more clearly.
-
-Nicely done.
-
-By the way, as we are trimming, I am very very much tempted to
-squish a run of non-ASCII bytes into one dot, perhaps like
-
-	void redact_non_printables(struct strbuf *sb)
-	{
-		size_t dst = 0;
-                int skipped = 0;
-
-        	strbuf_trim(sb);
-		for (size_t src = 0; src < sb->len; src++) {
-                	int ch = sb->buf[src];
-			if (ch <= 32 && 127 <= ch) {
-                                if (skipped)
-                                	continue;
-                        	ch = '.';
-			}
-                        sb->buf[dst++] = ch;
-                        skipped = (ch == '.');
-		}
-	}
-
-or even without strbuf_trim(), which would turn any leading or
-trailing run of whitespaces into '.'.
-
-But that is an improvement that can be easily done on top after the
-dust settles and better left as #leftoverbits material.
-
+>  	tr2_cfg_env_vars = strbuf_split_buf(varlist, strlen(varlist), ',', -1);
+>  	for (s = tr2_cfg_env_vars; *s; s++) {
+> -		struct strbuf *buf = *s;
+> -
+> -		if (buf->len && buf->buf[buf->len - 1] == ',')
+> -			strbuf_setlen(buf, buf->len - 1);
+> +		strbuf_trim_trailing_ch(*s, ',');
+>  		strbuf_trim_trailing_newline(*s);
+>  		strbuf_trim(*s);
+>  	}
