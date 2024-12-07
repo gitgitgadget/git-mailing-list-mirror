@@ -1,143 +1,94 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB9061FDF
-	for <git@vger.kernel.org>; Sat,  7 Dec 2024 09:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C45A101E6
+	for <git@vger.kernel.org>; Sat,  7 Dec 2024 13:52:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733565274; cv=none; b=ECkbSD9sj6CiViVAnuVOFhDpHlqR4vLyQkv2E9Au8xA2lJRM8pD6hxUxzWCKBVDoPcnVfgu2ktmVODXj70RrQKIjkd1wSsMIkN+PeanbX/UpTWRfujsSbotbf1iurP3mWTGBYArqofDBcb2/QkC8zEpd8ifxOK5ycIAv4N1Beo8=
+	t=1733579569; cv=none; b=VZk9XXLboEnBQX4geJLD9R7UpamQH+5t44+DbRBT3ijU/zou2bE8KSA+5AKEqm1aEaef1b9j0bwIMyjrbxnlDkB6tktyaeJIemr/8yWgsnP70akACsibrbCOC7H6vmRzuIOeuAKcuptOFeiW6k0yUAb3OjfJ4lvpHrDza7UAmd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733565274; c=relaxed/simple;
-	bh=KC+sErJ1chCC8CO6W7aHSwj6beIxzHExnhgeM89YyBE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OTHevFLj+oHAEUtUpR9nSZ1yMrlEy13YGzA3kGMraulWm2GddMl0aqtdVL6PgqI9hi8LvtHuf//fkVdyIfCTOEL4w7qo3mXjfhPZNBlEW4Qi1+gRNJulweopxvCP+Z2gaPp4f3LnRcQ8HTp19rHhzBYB3TK0jWHdbYXpHWBhcD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PVULvqL7; arc=none smtp.client-ip=209.85.222.46
+	s=arc-20240116; t=1733579569; c=relaxed/simple;
+	bh=FCZnfj/nLr8P2jtHz7ssB3dl08qmF+eEK2gHttgrSKI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=dfg4EMxPRQ3WolBvprvRJsauGa2Ik63GtpW8NZzohR/XGEoJ21UUHKYrTz45oa/pCXtBC+gkETr3RgzEqkfH1b5ln64hJQZ/thE820IwlWChRsgjH/mGAIAkOGf26Wstt5M+J7dt0YdF5pXw+oDOjDJFTRDdntway5ENoaqF3i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9v0AkBg; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PVULvqL7"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-85c41442fdeso415939241.1
-        for <git@vger.kernel.org>; Sat, 07 Dec 2024 01:54:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9v0AkBg"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa63584e157so37504866b.1
+        for <git@vger.kernel.org>; Sat, 07 Dec 2024 05:52:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733565272; x=1734170072; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BPhOqJyDtRO+hULZFo96ZRyZq/SEUvya6GBoPDVab10=;
-        b=PVULvqL7a6mXJTOA4W+rDi78XWGcZ71F3pdJf/q32sz6Y1sSe9wpI1JMAVRTzSjADB
-         5tt3Ely4TIlKY/etalCdKnKW/6gJSB9ycqyyOUP/JIftrUiEH7SXr6VoklvMmPoBEIVd
-         kCINp+SzRjeNBCZ/0GzSl5IHqEBQPzNEhEvkXsAi89jT0zpgzcBYBGcG+L63+Vc8QPoi
-         VyaJ+k7a6wxg67DOWWdslUOeaawPQZw4frQZnlbRYTA0axFOUTo1zhMeXQqOeXRFw+4e
-         zLNqUhX0VNX8Ed/eMdy5nJScTVl4HEeDXU4g4pwh6ghqb0/2hiJAQTlCDgeM/FQ6pWid
-         DPQw==
+        d=gmail.com; s=20230601; t=1733579566; x=1734184366; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5ZPv0tQCN5S42cWgh787iuRJgqoizdaUDAdbGkq2dpY=;
+        b=P9v0AkBg6+fm/jNsb9LM3qmmRGrb4cVvEuCW34A8xdEopblrLhNWOs2VXzHDLos8/k
+         rzuKP4CoPSMhM/+U1aDGePV8RSFrEr0p9BBO73dqthrPJbeVgnAeDHuPis2pPWY5dcCU
+         czG5eNBt791WPpNTO8VFiGe+qOs2x2oCIBOGyiaQbs2TBBJzf0yanmk0s1iSL5z+PC2y
+         WChYOU0DcOArfxrrSb7u9wUuDV6BFncOwarlfFBA9TlL6QoqOChrSuFQmaCK/58eWCPF
+         MeR9naWmjjBJQDJQpJ7on23QYzSJZ2YblHu2yADrN+XDituZOvslGWfdv7YhkHvkeU64
+         KBRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733565272; x=1734170072;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BPhOqJyDtRO+hULZFo96ZRyZq/SEUvya6GBoPDVab10=;
-        b=n2daxNwAbWe+w3nSah9dpdauMl1dYGuCk1NrIls7In9wLBwg+l0pZjxR6FzNsw6pe5
-         EVFqFEKqZLyDFZx042Rh+jvoPx+g8ML/fDysOLGGzj9E8jNSJzMFMV3n9rQgB6Se/0L/
-         rjs//cKg6y/xfabPuAgGsCf25VQEAzHo8OqM/Wdmlus8kxoj2FIfMC2ZKGCkUoUeR/nu
-         mMFvfGSJEZlKEh3JTWLJRDZv5cZJ6TSobPW6PIDpXHNb7NNieByUNdl3+RV/c/lQo9vS
-         C+SKIo9D0nC2RLyF0GGSZnR/AwhTnnmCOiFLhG01lja+fxeFD8uXR/+06YSmYSMYMYCj
-         paOg==
-X-Gm-Message-State: AOJu0YxABYEeOQbsyytFTtovY/JkjZ0PJj++WAxoJ+mlCVoe2jMrCM2G
-	47ITE89PKe1SbD8buE+fo31C7DXMfSp/awmAjMPnvwEuNEH6ukAB8JN/pNAg7x8nOAkF2Z0LSq6
-	7Z5dfjiIdc4GpE4PGFNLm6XR4JfA=
-X-Gm-Gg: ASbGncsfe7y9UYCNsXT+2aoX8boI3ktAVELdQhhbmofaCgCVsj9tPLcpR2FGBG5GqiM
-	k9fDLe/GHWP/Z9HV4/tWomLZf2iDYTAYMrtyJDKIk2iIxlGCCGB/WLfDJMJBwfx0Y
-X-Google-Smtp-Source: AGHT+IGUZ51D3OctkvCFPZCkXxQFJGfASoemZwSwKcKvwecaawCT0S7iSdGyJ2VRfBrVZKZwjcKu1eb93YhDdKachHA=
-X-Received: by 2002:a05:6102:3751:b0:4af:bb73:9987 with SMTP id
- ada2fe7eead31-4afcaaed226mr6473715137.18.1733565271628; Sat, 07 Dec 2024
- 01:54:31 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 7 Dec 2024 01:54:30 -0800
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqwmgcv23b.fsf@gitster.g>
-References: <20241205-424-reftable-writer-add-check-for-limits-v1-1-b287b055204e@gmail.com>
- <20241206-424-reftable-writer-add-check-for-limits-v2-1-82ca350b10be@gmail.com>
- <xmqqwmgcv23b.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1733579566; x=1734184366;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5ZPv0tQCN5S42cWgh787iuRJgqoizdaUDAdbGkq2dpY=;
+        b=FGjePHQwafS7K6y32bapgDo3H3kdBoORrFwq17RP4mnkEkZBOgY1jc1fDeghpEoczD
+         0kOocAYMOp5k7YXoyN3V5OPY1JO970qOubaQUVUSfznSnsO2awI5UiREJvsVgb0Tj7vC
+         H4moMTfrd5AJD41d+zNHU0gskA2+ohwTXoYfMpskJGq34+q90kGoOeaOx4W3M/eOn6i6
+         JfYNw0msWLALRnEzaWD9+XNgMd5D2d6vp2P1XaQAVzll6ZJ6yNKRTrwZtrHy7U1sMkQH
+         tP1RmPsxTGO8D7xEc+JT5dM2Pt20HZehQz6hm8Ku2Kqrlw9uSxsbzCaSdAMWATQhJpDE
+         Onrg==
+X-Gm-Message-State: AOJu0YwDuUrR1nHohOAOw4WRwBb4KCBm/nxZzSAg2RzCIWVQrajh4j0T
+	gdpYcinLKn7WrZaAnc5CK6oWPsBUyxNhGYD108t2DIwPN/jX2Ww+8Rcdtn3yuW0=
+X-Gm-Gg: ASbGncufoCYACh5BWE/od7m64A9qxNEpnm13YT86gjP9g5VXR+xqOVUh7I/y3Wxkph7
+	5KEStsqAkttLpX3JvB5UvBaH+DQeW0bt1+A4BFjaDRl2wY6MXu64+iyiFY7k6xPhO+RpVeCaRfO
+	OHpDQzjYnNFakQwfbBn1zlYewawowsjjqC90KdgUbrJ7AG+4iBzPo2qkYmnJaZBS6JfCV0YJTKW
+	xhLLu64aAenHP0HsWfvb296140fvGzkFaaD62aVuOsU1YyubakjhUSZSQg=
+X-Google-Smtp-Source: AGHT+IG7m6fqHlilHMR2N89CgGO5jcmmT7b0kKuzJkFIosLSdn1v22J3BVBBFMo7BUS7UCjlQrOZ7A==
+X-Received: by 2002:a17:907:d212:b0:aa5:3969:671a with SMTP id a640c23a62f3a-aa63a287df0mr236191366b.9.1733579565314;
+        Sat, 07 Dec 2024 05:52:45 -0800 (PST)
+Received: from localhost.localdomain ([5.29.161.23])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa62601f4e0sm385811966b.119.2024.12.07.05.52.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Dec 2024 05:52:44 -0800 (PST)
+From: Roy Eldar <royeldar0@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Roy Eldar <royeldar0@gmail.com>
+Subject: [PATCH 0/3] git-submodule.sh: improve parsing of options
+Date: Sat,  7 Dec 2024 15:51:58 +0200
+Message-Id: <20241207135201.2536-1-royeldar0@gmail.com>
+X-Mailer: git-send-email 2.30.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 7 Dec 2024 01:54:30 -0800
-Message-ID: <CAOLa=ZRYDqhAPMiuAS-HGaC1huiUGgLW3hL_dDNwrFA5c8ewEQ@mail.gmail.com>
-Subject: Re: [PATCH v2] reftable/writer: ensure valid range for log's update_index
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000003605700628ab1e6f"
+Content-Transfer-Encoding: 8bit
 
---0000000000003605700628ab1e6f
-Content-Type: text/plain; charset="UTF-8"
+When we run "git submodule", the script parses the various options and
+then invokes "git-submodule--helper". Unlike most builtin git commands
+which parse short/long options using parse-options.c, the parsing of
+arguments is completely done within git-submodule.sh; therefore, there
+are some inconsistencies with the rest of the commands, in particular
+the parsing of option arguments given to various options.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Improve the handling of option arguments for both long & short options;
+for example, passing flags such as "--branch=master" or "-j8" now works.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> The corresponding check for reflogs in `reftable_writer_add_log` is
->> however missing. Add a similar check, but only check for the upper
->> limit. This is because reflogs are treated a bit differently than refs.
->> Each reflog entry in reftable has an associated update_index and we also
->> allow expiring entries in the middle, which is done by simply writing a
->> new reflog entry with the same update_index. This means, writing reflog
->> entries with update_index lesser than the writer's update_index is an
->> expected scenario.
->>
->> Add a new unit test to check for the limits and fix some of the existing
->> tests, which were setting arbitrary values for the update_index by
->> ensuring they stay within the now checked limits.
->
-> Interesting.  I am a little curious how this was found.  As long as
-> the other parts of the system (i.e. the callers) are not buggy, the
-> update pointer will stay within the range, and that is why I do not
-> think I can write an end-to-end test to trigger an existing bug that
-> would be caught by this "fix".
+Roy Eldar (3):
+  git-submodule.sh: make some variables boolean
+  git-submodule.sh: improve parsing of some long options
+  git-submodule.sh: improve parsing of short options
 
-I was reading the reftable code and noticed it. So mostly luck. Agreed
-with what you're saying, I'd say this is mostly a 'safeguard'.
+ git-submodule.sh | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
-> Fixing the existing unit tests that
-> feed a wrong input and expect some right outcome is good, but would
-> it be a good to also have a new unit test that validates that such
-> an incorrect precondition for calling is caught and the caller gets
-> the expected REFTABLE_API_ERROR as a result, I wonder?
+-- 
+2.30.2
 
-I'm confused, I did add a _new_ test in this patch to do exactly what
-you're suggesting.
-
-> Being able
-> to trigger a condition that is harder to do with the end-to-end test
-> is one good thing about having unit test framework, no?
->
-
-Totally, these kind of specific changes are perfect for unit-tests. Plus
-it was very simple to add one too.
-
-> Will queue.  Thanks.
-
-Thanks!
-
-Karthik
-
---0000000000003605700628ab1e6f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f227678ace8e32e8_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kVUcxVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mODZzREFDUG1rQWJpMmNXYVdlKzR0Y05BUVdyeitsNQpmZWV6VmxhNmZs
-K01OcWJQN3JqNUJjNnhuSE4zZ0pwVXpqaGVVWVMwUW9VV1Q0NkRaVHU4YXQ1MXJtQTdSeGtmCkpH
-bmR0cFJUTllhZllIaHY1Y0lrekRuRjg2THpLRE1pSFdHNEo1MlRGUUloSEtiZHJ2WXVxeHZPcTJw
-dkNoZHgKTGY3MU1DL042SEhLd2pPcEpnMFVCR2JGYWwyQlZIcktab09DcWs0cnZEY0kwODhmY3JL
-L21mZlpOUEtHd0ZLdQpZUjZYNERLUDdnR0ZUc2h6cHZCWkxWK1o2SGZtMHBRYmVHWXpKeXo3UnlG
-RCtZZ3g1amxUd0NUcXNLcEgzVENICkhsSnhEVi8rWDM3WlF1VXRwOGIxdy9YaEdkRm5YUjBwaW1C
-OXFxeVZRVUtDeStHVG5tTHpBRlFUV25uU2c5eTkKaHJGK1NNVEtDdkJVd0tEZ2VZeGpmZHlZeWhh
-T2hJeStqQ1BVeTdpbFBoV2Y3ZjdIT3kzcXZ4ajRsTVN6Z28vSApOMlRmZW1OL2pJUHJ1U2tiRkJB
-YW40VVdSRWExQ1VOWHpPaEEvTUxhdGRoSVR1dGRIb1NrdDRzWi90MTRpN2JvCmFrakVsdEV3TWZG
-MzE1U0RSNHZPc0NMVUtFc20ydUNxT2hyN0VyRT0KPUI3RSsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003605700628ab1e6f--
