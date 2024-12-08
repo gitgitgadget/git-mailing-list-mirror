@@ -1,165 +1,220 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CBE1B960
-	for <git@vger.kernel.org>; Sun,  8 Dec 2024 08:12:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F489461
+	for <git@vger.kernel.org>; Sun,  8 Dec 2024 09:02:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733645567; cv=none; b=aEKtS6/rpp1P7PDy00WI2qPtFejtPh8nmv9MofRehfPN/mvB/UfFqH0G88cNBbZixd4icRLh+TaLdGhd3/cFUqAl/rf9aaFOQ4Pp5FtyiprHH+U9pTfwhR2mNPNW/ljP0uzfiKUImRgWOVqtNKYz9K/2Aw0l9JMSJF0D0NQ+yAs=
+	t=1733648555; cv=none; b=DE4uvmPwsp1lrRaOWuFlv0QiQxjDClqQWx8+qVIMYF4mqMk31QRo0CDniXNK4gNDpzMaEnJxyalbKoVxJjjvsqJiOiXPtNdaDTLx5fZY+Ry6Iks0Jif4PBl9gttpPEoSNk7kgbWzXsKZhLbYGVgoza+f2Xn95TpSQfvvEcV3b40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733645567; c=relaxed/simple;
-	bh=8TlqgXYkeKE2anDBleRD6v8CmsT39NubFTKG+lEhdwA=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=p0bptOKkz1R4LIKECNfrJ0LWY2C0HOPaIViB3SZWOxzup7tRLf6Pi0s8hCQ5phxxrbe8DuXOgTayNv7Vc2SCBct9t7z+7y3kOZsP+7LjO/xLUTA7llqHistGW004G/kVYcja8MME/fUgNOgvjI+QAl5c3gTeT79MOk72ZSbcny4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ao8EAO5T; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1733648555; c=relaxed/simple;
+	bh=GBNtDE5xyhH/3VBxJ0al/a7AFsldHKWW8pruRKShkjM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=g+99zIzyofbCImln2j4GMsSb9qPkY5JCeniQKttsBHA07te4RKqrtZIW/2wCna7Ftrk4fEN4eaBHpVG/4VPIik5zwm1nlCD8guVBUZXRzTNObPqJl40tRr5DOhbelbC/OTZfGtooOs9lzxiuv5g+pvmc7o6YFRByWZKpdy6DbEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CC3rZ3cM; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ao8EAO5T"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-434f74e59c7so213285e9.3
-        for <git@vger.kernel.org>; Sun, 08 Dec 2024 00:12:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CC3rZ3cM"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3a77131adebso1156805ab.1
+        for <git@vger.kernel.org>; Sun, 08 Dec 2024 01:02:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733645564; x=1734250364; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zPfKA3cHhCIKxBxResRZbk0rYWcfQCPnBpFat7OksNU=;
-        b=Ao8EAO5ThvOAJZcK91ibIHeCqJmHVrBjWrpx5gthixiFGToch7Qg1g/FFlWWD1v2PR
-         fcY5vJWcz+99X0bfzTFy2CzOfWoM5+1cNqJH+8oIUaereyMTlAAf3GhR7RnJ2SlD2l9z
-         rq8zDUMI5UZM6881WdQOqYYyekLrSF7IN4n5ef4KNI5QfDdZAvelbKVHKcWJFhc0v4mP
-         0poZNyAHMqFLunJY1I1J19TrOKHBT9E5l5nd2gSAdVj2WZmpA5lPhZ3Tm5eEjYC9BFre
-         OgCIlqs4b4M87KE1DllWZ2BIMmnJ/0F1aL0yPOTk3loT4moJ/11gcr4AckDKMDNDvdHf
-         KvCw==
+        d=gmail.com; s=20230601; t=1733648552; x=1734253352; darn=vger.kernel.org;
+        h=mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EvvmJKmeZSNWAhgmif/UmzticaICoFYyWhlj7NH3+II=;
+        b=CC3rZ3cMVVXCiJd9t5BN3+4ugDTZxb9COLL91n+EfS0rLyPaaMYgk9HjhEeFBRQC3v
+         elTgcESiHtzvXArxbpvBqSf+Yk6/iHKL6Ez52JWLNPKjPxkGOVL0iuriC7g5uySucyiz
+         qniqLg3dwwr6A0PGW1bRwh6bNYJVvU6PVzH3poF5oLvhT5UEOuDi8ADjxvTsqGt+GNl6
+         YmYpW9aQ/9wHy2z7PA9h0YxouekC9FWsnnpuEii2uaxmldgQ5tLWyQhvA4xMw7O9O1kQ
+         VyQGvga7xc0UByYEw44PR0lblgTfoH2rjC+X7OAlRfWRLZsHpvn5bwP6kB/CzYTpYekZ
+         64bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733645564; x=1734250364;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zPfKA3cHhCIKxBxResRZbk0rYWcfQCPnBpFat7OksNU=;
-        b=R+6iPvbp/NSyrsMTWYyG5Jb3/BdYzjOZ+C52U5oPL+CqtoZ2s8a/UNJqMoulFyGVwU
-         eFVcwrPPWEWL37ExO9IOkQ8+TfID44fw7yVgUu+DfpqfcNunhSQVbPDxM+1xFi6BvknK
-         PuQBPlSJarjn6Cx4pk/OvfKdq5BxESPHN44anpSezBu/5ZVuRI5NFye2TwIFze1thd6S
-         EdshUyArfwBqZhXZIc8fXnT7rgnxYo6ebHxwU8IMYEKnITqd/YPTD5Elo8IS3lIvHVh0
-         E4EFeEGhhTKdyfVXC5/qjd5zZXsngnoc+YYotWK37TV/82aO9Yq6LJTOVWlJ9zbg+DrJ
-         6sdw==
-X-Forwarded-Encrypted: i=1; AJvYcCWPcQadNo4K7bFsUg+CYuE+JUj8t9FSJNDDm3gjQKWPB1Atr6gCs8EzaRNjauOlIO2KeHw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywi0MdecxbOYDPm0Y179c/1IQsighUmgTQcUo/eZaXXYrI4kFjo
-	cEGvhutMYpAY/qwquLjKnm6DFmlaCJCi05biLvZCCef9uPU1p+oJO1gltQ==
-X-Gm-Gg: ASbGnctQJpYrJrlfNP37MuqFHiyoCyq+yTdHDt/5YwBFwrh/GljGHlp3qxkEtQPJH6y
-	wFuEkxfqK0K326gT7GcmZFmaj4L9JR4f16L8uNukOaqXIghcWmuIZ3yAoQjOoyRIRM3o5JqnJVa
-	TOm9+mzNwF/RvTaE57DFOcCBfTB9Cn2i7HsqKlzDcm09jfCzZQoewD/OErFJfk2/rcmh9+7rpd+
-	TOTC6mnQTcw4s78BcMGM9KuNraoznuwKg1TBIc4
-X-Google-Smtp-Source: AGHT+IH289UTPq+np+YOJ53jZUWh3q4MdCljiu3xNmt0wbFIx9pwFS5tkIY/ncBcsV3yFl65nMDcVw==
-X-Received: by 2002:a05:600c:4684:b0:432:d735:cc71 with SMTP id 5b1f17b1804b1-434dded7e52mr68725935e9.25.1733645564447;
-        Sun, 08 Dec 2024 00:12:44 -0800 (PST)
-Received: from gmail.com ([88.14.46.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38621fbbdd8sm9364264f8f.95.2024.12.08.00.12.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Dec 2024 00:12:44 -0800 (PST)
-Message-ID: <43a66f17-c910-498a-8faa-f801194e6c8e@gmail.com>
-Date: Sun, 8 Dec 2024 09:12:43 +0100
+        d=1e100.net; s=20230601; t=1733648552; x=1734253352;
+        h=mime-version:message-id:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EvvmJKmeZSNWAhgmif/UmzticaICoFYyWhlj7NH3+II=;
+        b=xE7pI9Le2uIJvAi44nEOY5JtjMmteJoIRqpHLpJvvTDoRNoiY+M8KEkrE3vT10Lkon
+         sDGTEmtPJVkXmEawsbq9ih7fCQHkF8ZIfyAJi9Cml3j2HEq/dRh78AZl5rZbtWB8pPZx
+         uTvIY2xDRkL4M1JYxNkmH2x4eeybdKXlqVyzwgfPzy1JV1/kYVWwQatD22lFb0U90WqV
+         PoSHR0nSzatVnXAAQDRTYNeFkD3KG6OthWI+Y0WacQ8iAxIseM07D2mPsBlUuCyI22Nj
+         77Vqo6U0zQfaLLltHwbV5AVqmj+gtL9bM6WqQG2m5PcoJ/8T/klP68yK881zWQsFpb4b
+         /8YQ==
+X-Gm-Message-State: AOJu0Yy5Wou76LJVZBG1zcmtTcEyLHSZ0ZeZWQ3kLhRi+G+N3vyjoJWT
+	72qOJ2YiRQIXdayux0wNNNz9X+WXn9KgDiQBFiAHK2Hr3TeIZvBnYx3q5Q==
+X-Gm-Gg: ASbGncsig1FgQ1KFgmXnTVior1iaUEhVBaYhSEZeVdilFoQNnzaAxIa2U6+WCStNGiK
+	28kWRt549LpFseOtxFOmAtE8Ek+pfdI3qyEZjOk04H0MpqZMRVUJf/xHTdtt/t/P/QjlR2gIoDo
+	ybNpQ4A1QO+sODUFIep7ssR0jlRV+Euz1TKz0lvPIGWd5lKiuzzaa1p5+mDZylKxD821kJQ9mpq
+	HNbvs+OJlD30nG+xXEQgnMYwuGtqvItCLLeQA7dz7TZUJNQ
+X-Google-Smtp-Source: AGHT+IGsO3hRJHuVZXVdk0pUntyzj9oYUaIeEj4ImKXEC9tJdf2hpPugdlPIj6FsFXOFgJ8kOq+o+w==
+X-Received: by 2002:a92:cd8f:0:b0:3a7:bceb:d572 with SMTP id e9e14a558f8ab-3a811df24dbmr27768865ab.4.1733648551948;
+        Sun, 08 Dec 2024 01:02:31 -0800 (PST)
+Received: from kf-ir16 ([2607:fb90:bf0b:c24f:90dd:1923:e54e:b3c0])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3a9caa29ed3sm6794325ab.79.2024.12.08.01.02.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Dec 2024 01:02:31 -0800 (PST)
+Date: Sun, 8 Dec 2024 03:02:22 -0600
+From: Aaron Rainbolt <arraybolt3@gmail.com>
+To: git@vger.kernel.org
+Cc: adrelanos@kicksecure.com
+Subject: [Bug] git difftool "--submodule=diff" argument does nothing
+Message-ID: <20241208030222.60e7ac70@kf-ir16>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH 3/3] object-name: advice to avoid refs that resemble hashes
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-References: <Z1FkrsQ5tkz1pFUz@pks.im>
- <20241205122225.1184215-1-bence@ferdinandy.com>
- <0e139151-7162-42b3-afae-248c28bf4c4b@gmail.com>
-Content-Language: en-US
-In-Reply-To: <0e139151-7162-42b3-afae-248c28bf4c4b@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; boundary="Sig_/LYDgjnHh00dDXPAFdLruCyv";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
 
-If we detect a reference resembling a hash, we advice the user to
-avoid using it and delete it.
+--Sig_/LYDgjnHh00dDXPAFdLruCyv
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Let's use the `advise_if_enabled()` API to display the advice with the
-aim of achieving simplicity and consistency in how the advice is
-presented.
+I'm working with a project that has a lot of submodules. Like, a
+shockingly large number of submodules. Each submodule is a miniature
+project in its own right, with its own version history, version
+numbers, etc. The "master project" is then used to build all of them
+and integrate them into an installable Linux image. This works great,
+except for when we want to look at all of the changes from one version
+of the project to the next.
 
-While we're here, let's add some tests for this advice to gain
-visibility if we unintentionally make changes about it.
+As one might expect, using something like `git difftool --tool=3Dmeld
+--dir-diff prior-version-tag` doesn't work right. Rather than showing
+the changes within the submodules, git simply shows the submodules
+themselves, with contents such as 'Subproject commit
+idontactuallywanttotypeasha256hashhere'. I don't really want to see
+that, I want to see the contents of the submodules.
 
-Finally, the change from `const char*` to `const char[]` is to avoid
-problems with "-Werror=format-security".
+According to `man git-difftool`, the `git difftool` command supports
+all of the same options as `git diff`:
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- object-name.c                       |  9 ++++-----
- t/t1512-rev-parse-disambiguation.sh | 15 ++++++++++++++-
- 2 files changed, 18 insertions(+), 6 deletions(-)
+    git difftool is a frontend to git diff and accepts the same options
+    and arguments.
 
-diff --git a/object-name.c b/object-name.c
-index c892fbe80a..baf5422013 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -943,7 +943,7 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 			 struct object_id *oid, unsigned int flags)
- {
- 	static const char *warn_msg = "refname '%.*s' is ambiguous.";
--	static const char *object_name_msg = N_(
-+	static const char object_name_msg[] = N_(
- 	"Git normally never creates a ref that ends with 40 hex characters\n"
- 	"because it will be ignored when you just specify 40-hex. These refs\n"
- 	"may be created by mistake. For example,\n"
-@@ -951,8 +951,7 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 	"  git switch -c $br $(git rev-parse ...)\n"
- 	"\n"
- 	"where \"$br\" is somehow empty and a 40-hex ref is created. Please\n"
--	"examine these refs and maybe delete them. Turn this message off by\n"
--	"running \"git config advice.objectNameWarning false\"");
-+	"examine these refs and maybe delete them.");
- 	struct object_id tmp_oid;
- 	char *real_ref = NULL;
- 	int refs_found = 0;
-@@ -964,8 +963,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
- 			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, 0);
- 			if (refs_found > 0) {
- 				warning(warn_msg, len, str);
--				if (advice_enabled(ADVICE_OBJECT_NAME_WARNING))
--					fprintf(stderr, "%s\n", _(object_name_msg));
-+				advise_if_enabled(ADVICE_OBJECT_NAME_WARNING,
-+						  object_name_msg);
- 			}
- 			free(real_ref);
- 		}
-diff --git a/t/t1512-rev-parse-disambiguation.sh b/t/t1512-rev-parse-disambiguation.sh
-index 70f1e0a998..18bf4f0046 100755
---- a/t/t1512-rev-parse-disambiguation.sh
-+++ b/t/t1512-rev-parse-disambiguation.sh
-@@ -371,13 +371,26 @@ test_expect_success 'rev-parse --disambiguate drops duplicates' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'ambiguous 40-hex ref (with advice declined)' '
-+	git config set advice.objectNameWarning false &&
-+	TREE=$(git mktree </dev/null) &&
-+	REF=$(git rev-parse HEAD) &&
-+	VAL=$(git commit-tree $TREE </dev/null) &&
-+	git update-ref refs/heads/$REF $VAL &&
-+	test $(git rev-parse $REF 2>err) = $REF &&
-+	grep "refname.*${REF}.*ambiguous" err &&
-+	test_grep ! hint: err
-+'
-+
- test_expect_success 'ambiguous 40-hex ref' '
-+	git config unset advice.objectNameWarning &&
- 	TREE=$(git mktree </dev/null) &&
- 	REF=$(git rev-parse HEAD) &&
- 	VAL=$(git commit-tree $TREE </dev/null) &&
- 	git update-ref refs/heads/$REF $VAL &&
- 	test $(git rev-parse $REF 2>err) = $REF &&
--	grep "refname.*${REF}.*ambiguous" err
-+	grep "refname.*${REF}.*ambiguous" err &&
-+	test_grep hint: err
- '
- 
- test_expect_success 'ambiguous short sha1 ref' '
--- 
-2.47.1.407.gf6b6eee3e5
+`git diff` supports a `--submodule=3Ddiff` argument, which will show me
+exactly the info I want to see, but in a massive long diff file that
+is painful to read and easy to miss stuff in. So, I tried running `git
+difftool --submodule=3Ddiff --tool=3Dmeld --dir-diff prior-version-tag`
+and... it did exactly the same thing as what it does without
+`--submodule=3Ddiff`. It didn't crash, it didn't complain that I gave it
+a bad argument, it just... pretended like the option wasn't there.
+
+After experimenting and a bit of research, I don't think git has a way
+of doing this yet. I found someone else on the mailing list mentioning
+this same problem, and it was suggested that they use something along
+the lines of `git submodule foreach git diff`. The problem with that is
+it assumes that all of the submodules are going to have the exact same
+version tags as the "master repo", which they don't, by design. Trying
+this on my repo results in an error `fatal: ambiguous reference
+'prior-version-tag': unknown revision or path not in the working tree`.
+So that won't work.
+
+Due to my unwillingness to be subjected to reading massive git diff
+output, I went ahead and wrote a script that basically emulates the
+behavior I want out of `git difftool`. This works, but it's non-ideal
+for a number of reasons (it's hardcoded to use meld, it's written in
+bash, it's not integrated into git, it does nothing about the fact that
+the git manpage is incorrect when it comes to difftool's feature set,
+etc.). If it was just me and the devs I work with using this, I
+probably wouldn't mind it so much, but the problem is we expect people
+who use our code to also audit our code, and it's decidedly non-ideal
+that people would have to install a special script on their system just
+to be able to run a user-friendly diff against our code for audit
+purposes.
+
+So... are there any particular roadblocks to making this work? Anything
+I should be aware of aside from standard contribution guidelines before
+sending a patch?
+
+Thanks,
+Aaron
+
+P.S.: The script I wrote for emulating `git difftool --submodule=3Ddiff
+--tool=3Dmeld --dir-diff`:
+
+#!/bin/bash
+
+## Copyright (C) 2024 - 2024 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
+## See the file COPYING for copying conditions. (AGPLv3+ licensed.)
+
+set -x
+set -e
+set -o pipefail
+set -o errtrace
+set -o nounset
+set -o pipefail
+
+cleanup() {
+   rm "${git_diff_file}"
+   rm -rf "${git_difftool_current_dir}"
+   rm -rf "${git_difftool_selected_rev_dir}"
+}
+
+trap cleanup EXIT
+
+pushd "$(git rev-parse --show-toplevel)"
+
+git_ref=3D"${1:-}"
+[ -z "${git_ref}" ] && exit 1
+
+git_diff_file=3D"$(mktemp)"
+git_difftool_current_dir=3D"$(mktemp -d)"
+git_difftool_selected_rev_dir=3D"$(mktemp -d)"
+git diff --submodule=3Ddiff "${git_ref}" > "${git_diff_file}" || exit 1;
+git_diff_file_line_seek=3D'n'
+git_diff_target_file=3D''
+while read -r git_diff_line; do
+   if [[ "${git_diff_line}" =3D~ ^diff\ --git\ a/ ]]; then
+      git_diff_file_line_seek=3D'y'
+      continue
+   elif [ "${git_diff_file_line_seek}" =3D 'y' ]; then
+      if [[ "${git_diff_line}" =3D~ ^'+++ b/' ]]; then
+         # trim off the +++ b/ at the start
+         git_diff_target_file=3D"${git_diff_line:6}"
+         git_diff_target_dirname=3D"$(dirname "${git_diff_target_file}")"
+         mkdir -p "${git_difftool_selected_rev_dir}/${git_diff_target_dirna=
+me}"
+         mkdir -p "${git_difftool_current_dir}/${git_diff_target_dirname}"
+         if [ -f "${git_diff_target_file}" ]; then
+            cp "${git_diff_target_file}" "${git_difftool_selected_rev_dir}/=
+${git_diff_target_file}"
+            cp "${git_diff_target_file}" "${git_difftool_current_dir}/${git=
+_diff_target_file}"
+         fi
+         git_diff_file_line_seek=3D'n'
+      fi
+   fi
+done < "${git_diff_file}"
+
+pushd "${git_difftool_selected_rev_dir}"
+patch -R -p1 < "${git_diff_file}"
+
+popd # git_difftool_selected_rev_dir
+popd # git rev-parse --show-toplevel
+
+meld "${git_difftool_current_dir}" "${git_difftool_selected_rev_dir}"
+
+--Sig_/LYDgjnHh00dDXPAFdLruCyv
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIyBAEBCgAdFiEEudh48PFXwyPDa0wGpwkWDXPHkQkFAmdVYJ4ACgkQpwkWDXPH
+kQkr5w/4s/QH0wV2mlKphT0uF9PuNDIpeVkgbD+B0W+Su4uE835FQyu0Dahv8GZ6
+G4nL7vo2BanfeL4i2pwm0gDd5EssyII8TX2la8xHCq4O1kJI3n3hlhn3aNeNqNUI
+/kuddNDoDcC1FJHe2Lu8YL+9QSc/uln87O8RtRrSg9OzylqYYYYawvNTDNn8yZef
+1xYeEmiQDMAHpQ7+jrL9arSK3J8cbv+93wzECtw2FRY3pKGT9Zwlm8wByf2gIgNw
+37+dDR4VGuBBwOo4e+QdbtiiP+vCM4eJTwQdEksiIxgprS2Sbr26T7VxsG0RFZR0
+eg4SoMsQGn5xwEVpj4M9GeXSbl5wkMhAf5KqeI+23XnrOQ/7jvLqahMLfVqp59ai
+czOoD0gYX/s5Y3tSLLfMDbiB2RMR7ldKADdMoFej+3ybnm2spxmzeEpsHtQMPREC
+u7UR0gQWes1f7FJbqz7qq9rV9tDeKPddT7PMa6IxJLnumN0JVLYpZZ4QQkJYzOXr
+7O7TsQf37MjkSrWur9eFJVUeOAaSFymLqIzoRN5uygb6UMx/Q1QBFdBmwOW/+y64
+iICO8DDEpzAMSqm07YxOk0OcDtVk831yUWH8UBYXsHCdHLXdPDQZ3THJ8oxuKubD
+VkVnzArLI1M0DdgMYNvdsFht7XiLpRgGbZzdz6vpa+AYctKGew==
+=+UNd
+-----END PGP SIGNATURE-----
+
+--Sig_/LYDgjnHh00dDXPAFdLruCyv--
