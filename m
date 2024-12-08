@@ -1,63 +1,63 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C451B960
-	for <git@vger.kernel.org>; Sun,  8 Dec 2024 08:12:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2671B960
+	for <git@vger.kernel.org>; Sun,  8 Dec 2024 08:12:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733645536; cv=none; b=aE/cKs7NC5NKYCL/pc3rFQ9zLe0Z7YJbaqOswycjXJ/+pFL+fAzUcYvOoZWDILHOdfbQ/ueTIDAO1oE51fwQSckdMAf/ZbDB+8uDMKQgkoBJZMalWnVHg3XQpwVwsU01uLs2z5ma2dpBG7K29O5i8TPO0EP9fgMGhLti5T+M2tw=
+	t=1733645550; cv=none; b=Mfxt1Jc/TzDUayuXoyRG097qPd2Ou9d5mVqCFLVfG5f1TA39Wz4smteNVlueuVdzIC0IX6UNGkDKKOOE+F+NoHXpp22H2e07l6hEFuAyVCCwJe8cFmr3xN2IYneHlUQaIL/9u2lwgs/07ILGMPDG+pAWrjr3vkoJw1qb8btbXY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733645536; c=relaxed/simple;
-	bh=NJ7wkJFYVS3Ls6rd1+LS46gNU9fLNLY/mvL0/eBdAxo=;
+	s=arc-20240116; t=1733645550; c=relaxed/simple;
+	bh=7+7rujhOquUS15p/BifQEefYMl/f58o/9k7GGREsCl4=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=auFC+T8HVgodnr3yi4Fn2UJ5O1n5FSYZjkbrLXpQODzmXBvjhbTQ885ZF1A5O3iIW78c2dzBk1vHiL7MZrJVHN3pfJrmpfVVD3DyWqIOT4P27JEJgLNTGP7kslwZcj8QPlHsTQznNYQRSGS1KlCtrHrwmhd65zz8wYyE5g54+Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G2ArHZwe; arc=none smtp.client-ip=209.85.221.54
+	 In-Reply-To:Content-Type; b=VnaoiIDwalP2r+dvcFhm6z7aVkhKLc1VR+G1RY/X8WT08qxCHziFunLCgrzR0IM74u1Kct3SJy+x/dcvv1MA5RLVO7GMbldWh2owKsfluF3kTz7clehwu4LCb4gkDU2X8Y7GjjjuY8KseMfL7AVRTHMN4PIU1Zy58S3S1VYfBeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UvkycgcS; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G2ArHZwe"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-385de9f789cso2511429f8f.2
-        for <git@vger.kernel.org>; Sun, 08 Dec 2024 00:12:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UvkycgcS"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-434a90fed23so22092685e9.1
+        for <git@vger.kernel.org>; Sun, 08 Dec 2024 00:12:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733645533; x=1734250333; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733645547; x=1734250347; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=T0nAuqLUqhDrPzvkYhZ73OdiGfXHbN1ADi9LquAIauY=;
-        b=G2ArHZweApFvaOIBfrHjiDTOA/X0TrYK7wrgnvTIGeaD9KU3jKz2ucT9IFD4sAdvgm
-         UqsrT1rM/C0s0GPoDIWrdVtRwbFf5y5GNYVjkJJreUWdSvvF4QBB0QazQRuaR1iLOUZa
-         DuezoHFFUrTA6E08dRZ0fbxM+Z8zDeqUoSQqDNhnhZcTrnh+btAzMlAVEECKZFJnf8DS
-         SacyvVyWcrAtHMSISU34fWPSA4qcHbaeLkyVkXR93ZcgT+dAMmG9uzBOoGGlkE0Uz6D5
-         zZA0zw9Nl0RX9MviI2eiB/WGHojX0PPvZwrRRAC5aHh/fLsUE7zrIg/SxlW0RA8whbOp
-         fUZg==
+        bh=Mpwpcs+ryRwJIgEjxi5IvAb6h6sG1dquLLkXWwk8Hiw=;
+        b=UvkycgcSIztMwNpeIbd1tJnZ4n/F5018W3tsoHcBW+EIFm8y+s0QFs5DMcLLNe8BB7
+         baSB9uXQgMSbJaEXoj8bk4a3U/yFML9Ms8xCWHq/KKKvFQ+HQfSw8JaOtSUE2d3d8EWy
+         Vct+x7SkLWmJqZJyoe16J10CTbN1j6bYK7q80aNXhhavYDr4yCqZSF/04MB3evs/A2zd
+         DAu1/6uQhzGuZKGFdBlXh+5M7M31ZZPn6m6ORy10A1vkHyGW+BbVBLT9AgeZx2weKF93
+         Fkpn1dy5L3/UURE+BoGgx9sPTGxOU/5GzxA9/+5cfVYPSQWJHuvBWYQ3PVTAwvtiEo55
+         XdhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733645533; x=1734250333;
+        d=1e100.net; s=20230601; t=1733645547; x=1734250347;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T0nAuqLUqhDrPzvkYhZ73OdiGfXHbN1ADi9LquAIauY=;
-        b=hM9dg0VHRBgITtRwV+jjBJY4OB4CsAcNINTn7WGTNU5r9VYHJJrSFR2XlvqjkCPHEf
-         07MXDcDXf71KQYJbSXi66apurjV7pmy+9rUs6tmRJeqx+q6QyO7gvXGr3bordYWy9cUa
-         MGiTjqyb/QQiBwo8jOzuxlnuBTQltSSHs7uT0GHe3bGHhmmFEMQ5V3DeqJ1QSSBNu28X
-         e+rncbOufOKAgUhRBt7ZVVYSGUEDiVWBs+qBiMNaRKTa30fqBa3heQj4304tXwLTKqZ5
-         p/WJWGRbw5rDcLoFainx6pSR0kXhwXeW7uqcuw/E3ELrypY74RIZwTIWsGOTznXozzh0
-         GLfg==
-X-Forwarded-Encrypted: i=1; AJvYcCXZ+nv+5UXXn5x/0zPfgFDBYOjgeNjv1yw8ZmOqw1DRE2Uz6fvOeG7Cpxg19YS2Wv9NsX0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeYl9pRYogz0rjs3VaDftbtEAlEV8rA9f78b14Bk72K1Kw9658
-	LXOYYC1DpvEYTQt18b1m3YzYNYPPreVjo7Ac+dxDe3lu/O2F6Ilg
-X-Gm-Gg: ASbGncvsY5LzhUvJO73cTPZsvmZUU+KySLceutbEZbyqmNtGkFZupp3O8aQh/BsZQc9
-	Gxql2DyF5ephqV1mTW22Ygwvb3B5jD5QLUVy1gxA5tNNNb0dJusPtX05KermvcHXUtnNLsHqM8X
-	zIj95VdEkb/zhIHOkg/rSqyADWnJzaU3fU4ZbRndxQby4Dy6cH7Js4REN/7cQexZZfrBqX3OdiT
-	OXqko3VKP1Q3csjrkzU212vpGW5mEskUgpyaC5e
-X-Google-Smtp-Source: AGHT+IE7BdxaJux2djv+taFqAK2hswpThX9JKi1U6AaZo5aR9c8eCKFOGbiIvqGmKMfA0Te/ASEpVg==
-X-Received: by 2002:a05:6000:1846:b0:385:f44a:a53 with SMTP id ffacd0b85a97d-3862b3337c2mr6292189f8f.4.1733645532918;
-        Sun, 08 Dec 2024 00:12:12 -0800 (PST)
+        bh=Mpwpcs+ryRwJIgEjxi5IvAb6h6sG1dquLLkXWwk8Hiw=;
+        b=AiGaSZRv8GS+qCGEvUYkQDKZWoaQTrCvuEcG39YXmi1ap4psfz8t9qDcVrprZ1laar
+         OukEPYQK3gqZ2lt02y1qYlbg8R/SANhnnIK0pGjNppHiUhWCmGbt00Aznj2y3n2cdsgH
+         g8MonylNtbUYz8X1BvP3shRWsEqjc0+kM2O1lF6Ymvd8ILcF4TrwMNexSuUBKfQOf3fM
+         fDkt0jDouQCg3lZpbYx3PxRH6AJndUU2yua6pxMj+RL5L8KiPuqnK8Qc9gUdMZb1MdPD
+         jsKql/y5bIIDGwDO45M7wDx6eqxKFBlp/9JfDhbRi3zB79TFLE8TVZiyEPUnlrL03TUK
+         ftFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW1Ojxg11SqtQ4gnnrekk0CuaRvoJl8nURQpUcaTqQ8Izce2b+2DAEoev3NBwBye+BuBIw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzaR1obY6FXYwT0RXv9PzSaBAivdQwpiFJOp8w5VyuO81CVwmCj
+	u4iQBd2EWFzkUxMbcVo7M43kp4juI6bVz3RQmjUM6c7R1vIIVL1+
+X-Gm-Gg: ASbGncv9NPZB5tYb4hLUnygGeXYc3H3NcebuZJZsccfRvdJjWv9d2KZ4DoUkpHchAgN
+	PRpKUIuJ1O7kJMS2sqvmHQ3gtJqlB4BFPxQDW9FzVPCt3QtpH6RUVu2NnU29ysjskLg3DubgKap
+	J62WO2yGQa15p34vVndCr5UwnfGXjZgHLP2UwwJQS/3YKzTOZ2yP7RnbTHDyQQJ0Pf93baEdbZM
+	YKkAt5xB5UL+VAi1lJM0RkRFRYkve2eso9zm/KM
+X-Google-Smtp-Source: AGHT+IGHaK3Y7bktaig6AXspaCW0W+hd9ea4MZc7K0ZLyg9ATi6MrWDGhf+tdfSlviOWvfHD/TK2hQ==
+X-Received: by 2002:a05:600c:198b:b0:434:a10f:52fa with SMTP id 5b1f17b1804b1-434dded657fmr59971255e9.32.1733645547081;
+        Sun, 08 Dec 2024 00:12:27 -0800 (PST)
 Received: from gmail.com ([88.14.46.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38621909739sm9282454f8f.66.2024.12.08.00.12.12
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-434f4dfdcdfsm9246855e9.39.2024.12.08.00.12.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Dec 2024 00:12:12 -0800 (PST)
-Message-ID: <47cf2e55-364c-49d2-a364-4f1276196071@gmail.com>
-Date: Sun, 8 Dec 2024 09:12:11 +0100
+        Sun, 08 Dec 2024 00:12:26 -0800 (PST)
+Message-ID: <ec2a47c1-9bfd-4c80-a495-22154e6c0d24@gmail.com>
+Date: Sun, 8 Dec 2024 09:12:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,8 +65,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 1/3] advice: enhance `detach_advice()` to
- `detach_advice_if_enabled()`
+Subject: [PATCH 2/3] commit: use `advise_if_enabled()` in `read_graft_file()`
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
 To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
 References: <Z1FkrsQ5tkz1pFUz@pks.im>
@@ -77,114 +76,52 @@ In-Reply-To: <0e139151-7162-42b3-afae-248c28bf4c4b@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-We have the `detachedHead` advice since 13be3e31f1 ("Reword 'detached
-HEAD' notification", 2010-01-29).
+We have a deprecation notice in `read_graft_file()` since f9f99b3f7d
+(Deprecate support for .git/info/grafts, 2018-04-29).
 
-This advice is shown to the user in the `detach_advice()` function, and
-its only two clients verify beforehand if the advice is desired, in
-order to call the function accordingly.
+This deprecation notice is shown using `advice_enabled()` plus
+`advise()`.
 
-The `advise_if_enabled()` API encapsulates some functionality that we
-can take advantage of:
+Let's use the `advise_if_enabled()` API which combines the
+functionality of both APIs and offers some advantages, such as:
+standardizing the presentation of the help on how to disable the
+advice.
 
- - Checks if the advice is desired, using `advice_enabled()`.
-
- - Automatically adds help, when needed, on how to disable the
-   advice: "Turn off this advice by ...".
-
- - Displays the message consistently with other advise messages,
-   prefixing each line with 'hint:'.
-
-Let's simplify the logic for the clients of `detach_advice()` by
-eliminating their need to decide whether to show the advice, bringing
-that decision into `detach_advice()`.  Also, let's make the it use
-`advice_if_enabled()` to ensure consistency with other advice messages.
-
-To better reflect the changes in the function let's rename it to
-`detach_advice_if_enabled()`.
-
-Finally, note that we have two tests in t7201 related to this advice:
-"checkout to detach HEAD (with advice declined)" and "checkout a detach
-HEAD".  They are unaffected by the change we're doing here, so it is
-not necessary to adjust them in this step.
+The test we have in t6001 "show advice that grafts are deprecated"
+does not need to be adjusted due to the changes in this step.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- advice.c           | 8 +++-----
- advice.h           | 2 +-
- builtin/checkout.c | 5 ++---
- builtin/clone.c    | 3 +--
- 4 files changed, 7 insertions(+), 11 deletions(-)
+ commit.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/advice.c b/advice.c
-index 6b879d805c..399ae58437 100644
---- a/advice.c
-+++ b/advice.c
-@@ -272,7 +272,7 @@ void advise_on_updating_sparse_paths(struct string_list *pathspec_list)
- 			    "* Disable or modify the sparsity rules."));
- }
- 
--void detach_advice(const char *new_name)
-+void detach_advice_if_enabled(const char *new_name)
- {
- 	const char *fmt =
- 	_("Note: switching to '%s'.\n"
-@@ -288,11 +288,9 @@ void detach_advice(const char *new_name)
- 	"\n"
- 	"Or undo this operation with:\n"
- 	"\n"
--	"  git switch -\n"
--	"\n"
--	"Turn off this advice by setting config variable advice.detachedHead to false\n\n");
-+	"  git switch -\n");
- 
--	fprintf(stderr, fmt, new_name);
-+	advise_if_enabled(ADVICE_DETACHED_HEAD, fmt, new_name);
- }
- 
- void advise_on_moving_dirty_path(struct string_list *pathspec_list)
-diff --git a/advice.h b/advice.h
-index d7466bc0ef..739c5e4987 100644
---- a/advice.h
-+++ b/advice.h
-@@ -79,7 +79,7 @@ void NORETURN die_resolve_conflict(const char *me);
- void NORETURN die_conclude_merge(void);
- void NORETURN die_ff_impossible(void);
- void advise_on_updating_sparse_paths(struct string_list *pathspec_list);
--void detach_advice(const char *new_name);
-+void detach_advice_if_enabled(const char *new_name);
- void advise_on_moving_dirty_path(struct string_list *pathspec_list);
- 
- #endif /* ADVICE_H */
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index c449558e66..e1366556d7 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1009,9 +1009,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
- 				NULL,
- 				REF_NO_DEREF, UPDATE_REFS_DIE_ON_ERR);
- 		if (!opts->quiet) {
--			if (old_branch_info->path &&
--			    advice_enabled(ADVICE_DETACHED_HEAD) && !opts->force_detach)
--				detach_advice(new_branch_info->name);
-+			if (old_branch_info->path && !opts->force_detach)
-+				detach_advice_if_enabled(new_branch_info->name);
- 			describe_detached_head(_("HEAD is now at"), new_branch_info->commit);
- 		}
- 	} else if (new_branch_info->path) {	/* Switch branches. */
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 21721db28a..d0c5e89a2a 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -752,8 +752,7 @@ static int checkout(int submodule_progress, int filter_submodules,
- 		return 0;
- 	}
- 	if (!strcmp(head, "HEAD")) {
--		if (advice_enabled(ADVICE_DETACHED_HEAD))
--			detach_advice(oid_to_hex(&oid));
-+		detach_advice_if_enabled(oid_to_hex(&oid));
- 		FREE_AND_NULL(head);
- 	} else {
- 		if (!starts_with(head, "refs/heads/"))
+diff --git a/commit.c b/commit.c
+index cc03a93036..8d92bc1044 100644
+--- a/commit.c
++++ b/commit.c
+@@ -267,16 +267,13 @@ static int read_graft_file(struct repository *r, const char *graft_file)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	if (!fp)
+ 		return -1;
+-	if (!no_graft_file_deprecated_advice &&
+-	    advice_enabled(ADVICE_GRAFT_FILE_DEPRECATED))
+-		advise(_("Support for <GIT_DIR>/info/grafts is deprecated\n"
+-			 "and will be removed in a future Git version.\n"
+-			 "\n"
+-			 "Please use \"git replace --convert-graft-file\"\n"
+-			 "to convert the grafts into replace refs.\n"
+-			 "\n"
+-			 "Turn this message off by running\n"
+-			 "\"git config advice.graftFileDeprecated false\""));
++	if (!no_graft_file_deprecated_advice)
++		advise_if_enabled(ADVICE_GRAFT_FILE_DEPRECATED,
++			_("Support for <GIT_DIR>/info/grafts is deprecated\n"
++			  "and will be removed in a future Git version.\n"
++			  "\n"
++			  "Please use \"git replace --convert-graft-file\"\n"
++			  "to convert the grafts into replace refs.\n"));
+ 	while (!strbuf_getwholeline(&buf, fp, '\n')) {
+ 		/* The format is just "Commit Parent1 Parent2 ...\n" */
+ 		struct commit_graft *graft = read_graft_line(&buf);
 -- 
 2.47.1.407.gf6b6eee3e5
