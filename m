@@ -1,141 +1,103 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD7E192B94
-	for <git@vger.kernel.org>; Sun,  8 Dec 2024 20:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF7C28EA
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 00:09:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733690907; cv=none; b=rUazTI4YlU4/jomH3A6KBU/dVrzkvUXZZnZXyfikyRswqMsCs1WHAlkPjOP8EiXx0u3UJpbb05O6P7liH50LR0nwQOu4U8ofFr05osGFkx3CAVqzHdKSZpwOWA7bl/Oqw55ITZnB4QMiBKeo4PGY+/7an9vKF/ko45C+ItwDirM=
+	t=1733702980; cv=none; b=Zz859GhVQTkwZaPYOPKHDLZzH2Ixj7HpsGROzQi4zPKHTesZ8r1gZBjFNrn0Te50MYxomL1v+bBvlLBDhSdSpom6EdPuZNimoi12R3413VSRYam4OkF2ObsG1TbK+Kudk+aMiyibS6qTTKxGp0ym4maR9qiVRMcMx9BDM31eQ4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733690907; c=relaxed/simple;
-	bh=643/CBawqwhLRqNKERnFloB0ipRoZynOuyf9Cx8bR2A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mVT9lbzJWf3Rjiy1kV7eWIza1v0OocHNNQiyRXK7BRnWYXMYEpBj+9hzsR57puip5aCHY5AfFQwewiQYJOuB2SEd2DwTpdmfR7bayp+MrpTUxZ3fmq+QXMUspJfFjuOFLkincZULhJeuq0luOt7kHiulhz9QLeK+FCDIwlNI0P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MXbCo8Hn; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733702980; c=relaxed/simple;
+	bh=mzYHllVv7xLGTgRjIj0psb4qXVjjIXkXxz+s4+q+fPo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qcATNCmQFdblWf0aq7+8DC3hhuNlHmJRJ1hu2HBx0Gu6WmBaDQ+4xFZ4Dc7iNsjyXzsdx7NnLUxKf7RBBvXqJG/IB5UfHcHjCOIjI/aIKqE+bNF+Z/ZQcU0B0NLvt6YQm5xSvrxMcXLW6/RzQxNOzkB4HqZBmx8WmqIy5boYMqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GEtIqrZz; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MXbCo8Hn"
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7b6d24069b2so46356885a.0
-        for <git@vger.kernel.org>; Sun, 08 Dec 2024 12:48:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733690904; x=1734295704; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MSvD2qvMeicicHNIU4OaltBTuq7qo7FhQv3OxNcbmB4=;
-        b=MXbCo8HnHAnqERzWQu/DCYW2Wr7/L7m1dHbq8K6HdUCumVycpMJXlAT7AlvQufwrRC
-         Zfn8AEFRevi0DpbIjcbrnmOY5/Dj2YYyMnWRl1qbSy/MW4KeixSVCrLwuSVFLTr2lt7P
-         0o2p5UBNpEhAfaSxJ1YHIxHdEB7dWZLNDTsqB0zsnni2eST0Zz3PlOrvVNMZUYpH7Gg+
-         WWv0uyssLmh9rN/ehBrWKfeRC2Ij9x/iJjqLC1YSnuq+5vY0ecmboB3YGIr5srrRtRwj
-         TtFbm+eFu5nvGOYoBeOOiZnw+bu6dnz1WLX76Sz29/g1QXmU+VxB0Ra9CRytEeP/QjkU
-         cehw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733690904; x=1734295704;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MSvD2qvMeicicHNIU4OaltBTuq7qo7FhQv3OxNcbmB4=;
-        b=xBLjVQjdF2apajOAgb/dRMRoKgA9dY4RVMeiINU40gAEg1ze/oHXkOTNrKrm5KrQJ6
-         vBuLCu6d+c0wPBV+oLGkPWBNTYxfGHTU3qjwd3iEAmsGqlSqGb3CeMq9i8ybwsgS6p8d
-         qs1UI7sr3v9AYCg1jMTx3pEr31gEMHIXdU5Q4YqISzSEHZUWfQjaX2DyCFQ7OKfY9YFO
-         HvRVvcgIZC5Fi98EfHTemRId1p/fAWX/U3TTjZiX9bLwg/5NLNjZZpKKFaAWEd0R1jcd
-         B65Wu9qnbc0F9rPeoXP38SkLuhP4a7PQlEzGohd/SMoq9Sn+ZOdlu1lRBojOO2HXFWEB
-         Wv2A==
-X-Gm-Message-State: AOJu0Yzariv1P7bcbofxSWYCFADrxxUYDExCi8Sn7Cx804enyweJbrbK
-	NxpkCktCu7/f0tTYZ21QId8NKWZH35i58JqIQBVmuvV2f+k2uVFZRpcjGw==
-X-Gm-Gg: ASbGncuAG2XfOWhvtW74SoN9rnW4OHLCmC72G7p9UDNh8lfbycqjvFJsTC7CuzG0fIg
-	vr2X1gKHnRCKavqgwT6fnYnn2S+1+RUSGUArWMYmxt6BbgRRsWlrIJ7Ts0x1geDlJRd3PR8EFeT
-	3HDhMGceU3MvPC47N58rXZXFU42DdsRvxcPdYEnAT8ONvIqbGrFIwrtn+2yZRTfu+1YxB28ws5x
-	aXIx24rPfyIR+bDAIkJnhJBgAU+lxwoa52hm18J2uVppU0YQ1ALvfUeSg2FpaSRAEj+oKNc+pT/
-	vT3s9yzrh2fSUV1kcxOonzuGfvpg86YRXPWltzUCg+m2GGaBgo6bZHDXxstX41Hdve57rrC4xE4
-	N
-X-Google-Smtp-Source: AGHT+IEUrgS+UWcN2QmNQyoDKS69tXMGcQ7o4LVhD8pLdQNEYCKxjvnKlnp+IdkVE6no/tji6bT3nQ==
-X-Received: by 2002:a05:620a:4115:b0:7b6:64ad:827a with SMTP id af79cd13be357-7b6bcb849b1mr1451780785a.57.1733690904469;
-        Sun, 08 Dec 2024 12:48:24 -0800 (PST)
-Received: from McConnellsteinsMonster.computercalum.com (guest40.skill.lafayette.edu. [139.147.200.40])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b6d8454780sm4247285a.81.2024.12.08.12.48.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Dec 2024 12:48:23 -0800 (PST)
-Received: from calum by McConnellsteinsMonster.computercalum.com with local (Exim 4.98)
-	(envelope-from <calum@mcconnellsteinsmonster.computercalum.com>)
-	id 1tKOCV-00000001H9I-0zyO;
-	Sun, 08 Dec 2024 15:48:23 -0500
-From: Calum McConnell <calumlikesapplepie@gmail.com>
-To: git@vger.kernel.org
-Cc: Calum McConnell <calumlikesapplepie@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] verify-pack: Fix documentation of --stat-only to reflect behavior
-Date: Sun,  8 Dec 2024 15:47:17 -0500
-Message-ID: <20241208204733.304109-2-calumlikesapplepie@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <1ee9f3ef2bffd148b6225138135462d2d4a5928d.camel@gmail.com>
-References: <1ee9f3ef2bffd148b6225138135462d2d4a5928d.camel@gmail.com>
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GEtIqrZz"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 55C7511400D2;
+	Sun,  8 Dec 2024 19:09:37 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Sun, 08 Dec 2024 19:09:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733702977; x=1733789377; bh=NpIeH1+wl+E1sSRDclf8F/RRgJzEkBYSvPf
+	NmXmQn4E=; b=GEtIqrZzlEDY/aGd7AtPThbKyDxoJYvFVDffCCJnkXsVkp4K2tp
+	3uWMJEGvu5L2VZcwAgtGQxqCfAPKtP/CZKWyyJCAJ1Q1CeY51f6c8GstB8X4rddC
+	DI8rQTYHjN8Rm/RVzExjS6mknqkrLXuhZfXwQHO+G6h29PLwM2yPFV1X+efU9k7I
+	633Eew+pOujk5zpojP2yFvZ+oTpA9LGneCp1lL6I3uPgp/O8F/AzHTZAit8c78Vt
+	X9/kDivyV1i5+SZ41vF2p4/SzB86BUhYY1h9yX5u/1eFh46C1npnxxHpd+TEEe8S
+	L11teiYi1D/ZcBxn2R6yqW/kox6k7zeriJQ==
+X-ME-Sender: <xms:QDVWZ42nfYvmj7D5sKVPXKOzIiqzNx_QTbpENlU1xFVFV8JIgTU8OA>
+    <xme:QDVWZzEh-0xaF0lGwHj5vBc8Su7m5RY-UoJPs8Ma-RSFXXR_DFixMvi-FYN8fJ6Xk
+    S7v7Yk8y1kaB7YLNg>
+X-ME-Received: <xmr:QDVWZw6AS3XHv-YV9wkA28ZCNam0pfyZcG_rdFTXxVK97NEyvejxLgqjspvM5Oef0nGJk60qrNAKMJLsfdAbxz92Bcm_7XLKbjPh_9I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeeggddulecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:QDVWZx2G_TuHe1on30BK0a9FZMTPlE9_7jUyTrCtcy7qRM6gwgT94g>
+    <xmx:QTVWZ7Hsb1aM1biXBiVe8h9ywqP3XXib854NdlixaJNWBfOKcT3jjw>
+    <xmx:QTVWZ69pYY4zqjeyV0-3kW48NxvsjEQ2clE8G5KB1hEJ5KOJtTLv7Q>
+    <xmx:QTVWZwnLXsZEkVFtBwhl-2J2PiYHJQEBIMcRKYOuNsFdBWD8QuiEtQ>
+    <xmx:QTVWZ8OsbSBtntnYG4ZDqUVL6qm5u_fpaHOsqwQru__u4n5M6lNslaBb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 8 Dec 2024 19:09:36 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  shejialuo
+ <shejialuo@gmail.com>
+Subject: Re: [PATCH v4 08/16] pkt-line: fix -Wsign-compare warning on 32 bit
+ platform
+In-Reply-To: <20241208195703.GA1231962@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 8 Dec 2024 14:57:03 -0500")
+References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
+	<20241206-pks-sign-compare-v4-8-0344c6dfb219@pks.im>
+	<20241208195703.GA1231962@coredump.intra.peff.net>
+Date: Mon, 09 Dec 2024 09:09:35 +0900
+Message-ID: <xmqqttbdra2o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Ever since verify-pack was refactored to use `index-pack.c` in commit
-3de89c9 (verify-pack: use index-pack --verify, 2011-06-06), the
---stat-only option has been verifying the full pack, rather than just
-reading the index file, as it was originally documented to do.
+Jeff King <peff@peff.net> writes:
 
-Allowing users to get details of packed objects rapidly without
-needing to hash all the objects in packfile is a useful ability.
-Interested consumers could use such data to more rapidly estimate the
-effectiveness of git's compression, such as to determine if their
-.gitignore is adequate, or if they should be removing additional files.
-However, implementing that ability would require more changes to index-pack
-than the author is able to do at this time, and so a quick fix to simply
-update the documentation to reflect current behavior is done instead.
+> ... Whenever I think "but no callers
+> do X", I always try to double-check: "might new callers want to do X"?
+> And in this case, I think the answer is "no".
 
-This commit also re-orders the if-else block, to ensure that if both
---stat-only and --verbose are specified, the verbose details are provided.
-This fixes another longstanding documentation bug with `verify-pack`.
+A very good piece of advice for those who are watching from
+sidelines.  I agree that a return value that tries to tell more than
+"yup, I read everything as instructed" would not help in this case.
 
-Signed-off-by: Calum McConnell <calumlikesapplepie@gmail.com>
----
- Documentation/git-verify-pack.txt | 4 ++--
- builtin/verify-pack.c             | 6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-verify-pack.txt b/Documentation/git-verify-pack.txt
-index d7e8869..f734e90 100644
---- a/Documentation/git-verify-pack.txt
-+++ b/Documentation/git-verify-pack.txt
-@@ -30,8 +30,8 @@ OPTIONS
- 
- -s::
- --stat-only::
--	Do not verify the pack contents; only show the histogram of delta
--	chain length.  With `--verbose`, the list of objects is also shown.
-+	As --verbose, but only show the histogram of delta
-+	chain length.
- 
- \--::
- 	Do not interpret any more arguments as options.
-diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
-index 34e4ed7..5860a96 100644
---- a/builtin/verify-pack.c
-+++ b/builtin/verify-pack.c
-@@ -20,10 +20,10 @@ static int verify_one_pack(const char *path, unsigned int flags, const char *has
- 
- 	strvec_push(argv, "index-pack");
- 
--	if (stat_only)
--		strvec_push(argv, "--verify-stat-only");
--	else if (verbose)
-+	if (verbose)
- 		strvec_push(argv, "--verify-stat");
-+	else if (stat_only)
-+		strvec_push(argv, "--verify-stat-only");
- 	else
- 		strvec_push(argv, "--verify");
- 
--- 
-2.45.2
-
+> They are asking to read a
+> whole packet, and it is an error if we don't come up with whole thing.
+> Showing the partial garbage we did get is unlikely outside of debug
+> tracing (and in that case we'd probably put the tracing inside this
+> function anyway).
+>
+>>  pkt-line.c | 20 +++++++++++---------
+>>  1 file changed, 11 insertions(+), 9 deletions(-)
+>
+> The patch itself looks good.
+>
+> -Peff
