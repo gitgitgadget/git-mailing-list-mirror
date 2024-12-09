@@ -1,120 +1,219 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7809215071
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 10:40:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEDF12D758
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 10:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733740840; cv=none; b=g8LhtWM+f4SFvYmmJxIwLKsYRkLA3yo6PlIUC6EvfQyLm833Zw8/Ew87xWNl1W9Pm7zsg5nckOeyEeor/2q8GHCq/gamr1R+6814py4+eORnizVVUvC9bM5zageHnHUkyRBLzk8zn4+/z12qPtdqNqLPBOhEcnVNhP/aLbZAeRI=
+	t=1733740926; cv=none; b=r0sWzgmooWGRP/XuVxVLmaxzz3o33XFIbxbwV4pnWee/y4hbN0nOvU6LDFZJRAi9EPaZmFhML3oh9EB/eF2HVi5atyGT+htepgm7FqfZmw/Ua+SnZdtlUMwVA9dZroF1L4y8/lv9xvHLiZtzTogrD9e0T3QBGCoNYA8l+uU/2Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733740840; c=relaxed/simple;
-	bh=k/o2Cmzw1ewdrbI959scB1PdbcKKWSVYAk39CJN4kHw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I36CFb7LbFPDDKq/xZP1zALuJyuM7ql2WHENDBa0p7DovJKhH9aB+bDjentMi0VXi1qWUShgz9YIyDuz5KkYiR0ezX1ZTGE4bTobcl4W9pkcfVMaWyDof/NKH3PhYrTpEwsk0cXHbhf6Q4wmhZRksTAYnGbzOxGy+xLzs4bVMtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ngq7KObG; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733740926; c=relaxed/simple;
+	bh=EM91sEJUgybda6PA7iITR5qyBsHA5XLME0IsqGdctx0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qg5L8/cRWVTgVmltihvj/VCvQP14CkCd/jrr+42FoOqrYBW93rkuzFhH+jVIYbjmDyuxADvIa6+HccxdU4trI4NEwbA5UAInjPGIAM3nOL2+5OSek3UbuEwtchJCQnU8EKSXXXEcrWmHh48wS+Lm72gNE6uFzvM5LOKGLrhPmUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=mA3wwEhp; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ngq7KObG"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5cec9609303so4659936a12.1
-        for <git@vger.kernel.org>; Mon, 09 Dec 2024 02:40:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733740837; x=1734345637; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ufXapYx2sifTw+DkM/FvyacZefhVE8waW9yEnLL3DfU=;
-        b=Ngq7KObGaPHCWKG9YQVM+r0wxv64O2jIYHac7IkCIULjbjviOwx2zL5Pib3xjjt34B
-         1dQqFB8P5r751qeVP25pl9RimcAnuSKovBB0Lo6dJuq5fiqYjBrMn8m63FKqcxu9u13s
-         RBY7S+K/rIH5GvAp5RzfL99Y6l6z6lzDGrZMqBgbJkKVid15WFYuA8NERVLjvqHdSiA7
-         Roc9PQhiWhod+M2mEQkF6m5LMjeUPw4WI9l7XPMoQgoVl7NK6URMHKxxIT30o/CSz6Gw
-         w35QYLhEL+fBemmFUQWgGxuHC5hhd7mjIg8jYqEiC/S8ldChsYcAgSUo6MB0goQV09AX
-         jInQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733740837; x=1734345637;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ufXapYx2sifTw+DkM/FvyacZefhVE8waW9yEnLL3DfU=;
-        b=eEOTJist4Hsygn7/Kyddy6n67Tf6eae1Km/Zrj3PcvN2y5dARwEE6Q+k43clKGhBfp
-         k4d7ae0dujuuVolR9nRWfaZZmQ7GTKtox6IgF5tHVfZqbwBL2bjaE6xSql3ho5AqLDXM
-         hXjHtID0OwXIWHvIEI0j+UM9tJnHZvXTPGlt7hgqFSqtQR+RdgIOnDMRCLzl8W598Whd
-         jUsNdP3vf/X1eYQ76CbPLCWVjHuBKrmUh8sN/jkM6Yyu7e2D/foIiJEOuvUhwzPMDjrs
-         GRrj/BCwE1+TTAaeQJkgnN9PfYNxHp4mdj7RfM2a/ujrJ7hkaCjuL1b53DWoNi+CyoWv
-         yt8g==
-X-Gm-Message-State: AOJu0Yx+BQKocV7gIDbPfOjUiRxwH4Mjf1ycUFXfElEn5mq7QjgC2HRV
-	zYWAy/Ng1PuKXK0fPTgwkEmwa3zX63SfZX5gVyqRjp5aBcZ2YQBG4wYyH/roFdFkhV/MIIDbeto
-	f51YK9qQqlRDWsEHoko/WvlzJZPU=
-X-Gm-Gg: ASbGncsHf+/NgvCauk9oxGtwJmLVZajZNXts0d2Dfyy2djl9GZotGid8optlw15nyNo
-	ycvGuvrnlVDTIs2zQlCcdVq+TbrFeufxiqg==
-X-Google-Smtp-Source: AGHT+IEBKjX0EU1zszA2GXcuh//UMWGL2bK5wCm58S09wXIPGKUr1ES6IybL77CDUjewCKQM2JH8KpZWQf4PNOvZpuU=
-X-Received: by 2002:a05:6402:2349:b0:5d0:b9c7:479a with SMTP id
- 4fb4d7f45d1cf-5d3be7f04e6mr12138164a12.25.1733740837034; Mon, 09 Dec 2024
- 02:40:37 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="mA3wwEhp"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1733740916;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=SObB9/pVZxxz5WBTysTXlQaEYBiHRpUmj5VF7AqiMqc=;
+	b=mA3wwEhpMIlS2Ebj0xmYxn3IOXySU9AccE0fc/VNT0DaKEnq3+x6UevpPaOvPRRQZYzw+2
+	OU2QUs2oH6syiipjzd1iq+MHrpBytGk6fjz7XT3B8zidpueXh02PqMxPwKrWYLS7xQTn9T
+	XiFbFx2BtJsDeHtbgQVh8joKH41E2Pw=
+From: Toon Claes <toon@iotcl.com>
+Date: Mon, 09 Dec 2024 11:41:29 +0100
+Subject: [PATCH] bundle: remove unneeded code
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240910163000.1985723-1-christian.couder@gmail.com>
- <20241206124248.160494-1-christian.couder@gmail.com> <xmqqikrtnuyp.fsf@gitster.g>
-In-Reply-To: <xmqqikrtnuyp.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 9 Dec 2024 11:40:24 +0100
-Message-ID: <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Introduce a "promisor-remote" capability
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241209-fix-bundle-create-race-v1-1-e6513bdcbf8a@iotcl.com>
+X-B4-Tracking: v=1; b=H4sIAFjJVmcC/x2MSwqEMBAFryK9noYkuIlXkVnk89QGidIZZUC8u
+ 8FlQVVdVKGCSkN3keKUKltpYD8dpSWUGSy5MTnjeutMz5P8OR4lr+CkCD+whgTOJuYUbJy899T
+ iXdHMdzx+7/sB12BhrWgAAAA=
+X-Change-ID: 20241204-fix-bundle-create-race-d0bdca1bf999
+To: git@vger.kernel.org
+Cc: Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Dec 9, 2024 at 9:04=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
+The changes in commit c06793a4ed (allow git-bundle to create bottomless
+bundle, 2007-08-08) ensure annotated tags are properly preserved when
+creating a bundle using a revision range operation.
+
+At the time the range notation would peel the ends to their
+corresponding commit, meaning ref v2.0 would point to the v2.0^0 commit.
+So the above workaround was introduced. This code looks up the ref
+before it's written to the bundle, and if the ref doesn't point to the
+object we expect (for tags this would be a tag object), we skip the ref
+from the bundle. Instead, when the ref is a tag that's the positive end
+of the range (e.g. v2.0 from the range "v1.0..v2.0"), then that ref is
+written to the bundle instead.
+
+Later, in 895c5ba3c1 (revision: do not peel tags used in range notation,
+2013-09-19), the behavior of parsing ranges was changed and the problem
+was fixed at the cause. But the workaround in bundle.c was not reverted.
+
+Now it seems this workaround can cause a race condition. git-bundle(1)
+uses setup_revisions() to parse the input into `struct rev_info`. Later,
+in write_bundle_refs(), it uses this info to write refs to the bundle.
+As mentioned at this point each ref is looked up again and checked
+whether it points to the object we expect. If not, the ref is not
+written to the bundle. But, when creating a bundle in a heavy traffic
+repository (a repo with many references, and frequent ref updates) it's
+possible a branch ref was updated between setup_revisions() and
+write_bundle_refs() and thus the extra check causes the ref to be
+skipped.
+
+The workaround was originally added to deal with tags, but the code path
+also gets hit by non-tag refs, causing this race condition. Because it's
+no longer needed, remove it and fix the possible race condition.
+
+Signed-off-by: Toon Claes <toon@iotcl.com>
+---
+Earlier I reported[1] a race condition bug could occur if a ref is
+updated while a git-bundle(1) creation process is running. I've
+demonstrated it's possible to reproduce this by using a debugger.
+
+> To reproduce, I've been running git-bundle(1) with
+> `create my.bndl --all --ignore-missing` in a debugger. I've set a
+> breakpoint at bundle.c:515[1] where setup_revisions() is called. After
+> stepping over this line I see in the debugger `revs.pending` is
+> populated.
 >
-> Christian Couder <christian.couder@gmail.com> writes:
+>     (gdb) p *revs.pending.objects
+>     $6 = {item = 0x7a2fb0, name = 0x78d7e0 "refs/heads/master", path = 0x0, mode = 12288}
+>     (gdb) p *revs.pending.objects.item
+>     $7 = {parsed = 1, type = 1, flags = 0, oid = {hash = "R\026\370\365\304\b\236\302\234\344\232\372\024t4\302>\017\001c\000\000\000\000sS\344\367\377\177\000", algo = 1}}
 >
-> > This work is part of some effort to better handle large files/blobs in
-> > a client-server context using promisor remotes dedicated to storing
-> > large blobs. To help understand this effort, this series now contains
-> > a patch (patch 5/5) that adds design documentation about this effort.
+> The hash value is the binary representation of
+> `5216f8f5c4089ec29ce49afa147434c23e0f0163`, the current HEAD of
+> `master`. At this point I've updated `master` in another terminal
+> window:
 >
-> https://github.com/git/git/actions/runs/12229786922/job/34110073072
-> is a CI-run on 'seen' with this topic.  linux-TEST-vars job is failing.
+>     git commit --allow-empty -m"dummy"
 >
-> A CI-run for the same topics in 'seen' but without this topic is
-> https://github.com/git/git/actions/runs/12230853182/job/34112864500
->
-> This topic seems to break linux-TEST-vars CI job (where different
-> settings like + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmaster
-> is used).
+> Then in the debugger I continue the process to create the bundle. The
+> resulting bundle seems to be missing `refs/heads/master`.
 
-Yeah, in the "CI tests" section in the cover letter I wrote:
+I started digging into this bug again. And I've discovered the changes
+made by c06793a4ed (allow git-bundle to create bottomless bundle,
+2007-08-08) cause some trouble. Those changes look up the refs for a
+second time, and if they mismatch, they might not get written to the
+bundle output file.
 
-> One test, linux-TEST-vars, failed much earlier, in what doesn't look
-> like a CI issue as I could reproduce the failure locally when setting
-> GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL to 1. I will investigate,
-> but in the meantime I think I can send this as-is so we can start
-> discussing.
+It seems the workaround is not needed anymore since
+895c5ba3c1 (revision: do not peel tags used in range notation,
+2013-09-19) and thus I'm removing it while adding some tests.
+Unfortunately, I was not able to implement a test that hits the race
+condition bug.
 
-I noticed that fcb2205b77 (midx: implement support for writing
-incremental MIDX chains, 2024-08-06)
-which introduced GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL adds lines lik=
-e:
+[1]: https://lore.kernel.org/git/87eddlpx5k.fsf@iotcl.com/
+---
+ bundle.c               | 30 ------------------------------
+ t/t6020-bundle-misc.sh | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 30 deletions(-)
 
-GIT_TEST_MULTI_PACK_INDEX=3D0
-GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=3D0
+diff --git a/bundle.c b/bundle.c
+index 4773b51eb1df8057466c87f48445c49bc1f594ee..dfb5b7a5ec6b98e00078359afe991bac55cae739 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -420,36 +420,6 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 				e->name);
+ 			goto skip_write_ref;
+ 		}
+-		/*
+-		 * If you run "git bundle create bndl v1.0..v2.0", the
+-		 * name of the positive ref is "v2.0" but that is the
+-		 * commit that is referenced by the tag, and not the tag
+-		 * itself.
+-		 */
+-		if (!oideq(&oid, &e->item->oid)) {
+-			/*
+-			 * Is this the positive end of a range expressed
+-			 * in terms of a tag (e.g. v2.0 from the range
+-			 * "v1.0..v2.0")?
+-			 */
+-			struct commit *one = lookup_commit_reference(revs->repo, &oid);
+-			struct object *obj;
+-
+-			if (e->item == &(one->object)) {
+-				/*
+-				 * Need to include e->name as an
+-				 * independent ref to the pack-objects
+-				 * input, so that the tag is included
+-				 * in the output; otherwise we would
+-				 * end up triggering "empty bundle"
+-				 * error.
+-				 */
+-				obj = parse_object_or_die(&oid, e->name);
+-				obj->flags |= SHOWN;
+-				add_pending_object(revs, obj, e->name);
+-			}
+-			goto skip_write_ref;
+-		}
+ 
+ 		ref_count++;
+ 		write_or_die(bundle_fd, oid_to_hex(&e->item->oid), the_hash_algo->hexsz);
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 5d444bfe201a330527e86dde7229721fc386fc93..f398a59424dcd025ce616cadcd7eece9be5301a3 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -504,6 +504,40 @@ test_expect_success 'unfiltered bundle with --objects' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'bottomless bundle upto tag' '
++	git bundle create v2.bdl \
++		v2 &&
++
++	git bundle verify v2.bdl |
++		make_user_friendly_and_stable_output >actual &&
++
++	format_and_save_expect <<-EOF &&
++	The bundle contains this ref:
++	<TAG-2> refs/tags/v2
++	The bundle records a complete history.
++	$HASH_MESSAGE
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'bundle between two tags' '
++	git bundle create v1-v2.bdl \
++		v1..v2 &&
++
++	git bundle verify v1-v2.bdl |
++		make_user_friendly_and_stable_output >actual &&
++
++	format_and_save_expect <<-EOF &&
++	The bundle contains this ref:
++	<TAG-2> refs/tags/v2
++	The bundle requires these 2 refs:
++	<COMMIT-E> Z
++	<COMMIT-B> Z
++	$HASH_MESSAGE
++	EOF
++	test_cmp expect actual
++'
++
+ for filter in "blob:none" "tree:0" "tree:1" "blob:limit=100"
+ do
+ 	test_expect_success "filtered bundle: $filter" '
 
-at the top of a number of repack related test scripts like
-t7700-repack.sh, so I guess that it should be OK to add the same lines
-at the top of the t5710 test script added by this series. This should
-fix the CI failures.
+---
+base-commit: e66fd72e972df760a53c3d6da023c17adfc426d6
+change-id: 20241204-fix-bundle-create-race-d0bdca1bf999
 
-I have made this change in my current version.
+Best regards,
+-- 
+Toon Claes <toon@iotcl.com>
 
-Thanks.
-
-
-
-Yeah, not sure why
