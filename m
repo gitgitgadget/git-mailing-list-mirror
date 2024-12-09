@@ -1,92 +1,118 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7039F13C81B
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 16:21:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B90BA3D
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 16:34:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733761279; cv=none; b=kSknp4kd+pAYe45cjahJNLdZgFYPSkw2JD7rUR4k1sDIgkR0kTJB1LwJebXeCHoDd3BbEqQGGQKUvb2v6IxzDUGNxnPoyO4VqFa6VQud0I1slvaDUt8z8eHaM7fU/LwZXaQY9p8HJ2VlqUvgeyXpPKf98B+QZXB6zPXj0Nv19Yo=
+	t=1733762088; cv=none; b=jstxNlq2h7XtIdRRRF8HoeVUNEfn1sGliJ/681jf49vgrq010NTH73IpWPXRyoI8Zt871wF4tIipV9ZnMLI4ojRTeg6BmlC8qYZtg8ioagOeD8d+Q+ZpgPfMjm2lD8B1uEXxydHJj0aDhrPqRYiBdJlplyclz1hlgzY2LrIkbFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733761279; c=relaxed/simple;
-	bh=91v1o4W1Epz6s/Pdcu+jlVRxw/aLoH9XzVyMjlvYQyE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z+u3nRkV9/XzoaUE4hnmFq7lM5/MFQCoQAQjwOqeNkd4u9z5H/+mNkpfQSeBbVqT8yaVadUHiGoRDjkNeRtzr08b9rslg2lbvnYKcGI8MNCY4dzhiSALmewn65Jnxt7J5El58MGzHMJtMCOd27iVJG780YFSGvNY7F8qqCjOjnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UTlKzMjM; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UTlKzMjM"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e3a0bee567cso427784276.2
-        for <git@vger.kernel.org>; Mon, 09 Dec 2024 08:21:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733761277; x=1734366077; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=91v1o4W1Epz6s/Pdcu+jlVRxw/aLoH9XzVyMjlvYQyE=;
-        b=UTlKzMjMseJ54kOtHrddzswvn6xwfZTY7Z+w2VBgBqjxgyMCbPJ2iDKsqDyNr/GE0b
-         ekzBYFE5Qafe8xVmvjKClM+OzHfZv1h5/P4ULhftvaPwSi8v9Hu4OMKokKHFtFnjwyqx
-         b7bewha3M8CWWgV85a59E3+Nd26NGqzjPdEwpjR/MNJlAKeUKyXIBxZKnxok03R3j9kM
-         mPcGoxOojlY2YnSGeIVQ+1pOOC+VVYr1KnAXa2ctix/4mnbJC24w9wxgXsuBhbJib2vZ
-         ZyIM4HfObAxYQxRvHLB+VtEQi7NZNzLRZlXPmv1Ov8iFPD69S5M8wyfUbSOgVWEGg4dJ
-         +kyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733761277; x=1734366077;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=91v1o4W1Epz6s/Pdcu+jlVRxw/aLoH9XzVyMjlvYQyE=;
-        b=WGvcXn3CQb7LEgUiIxyx4OjhnPnREtlonMzvmnOGRYmrnRU8V4jVBvq1iGCmPwMN3E
-         e8V54mxioRX1HDIu4LjM5ByLoCYMs7N3XXYyAUj/jWcTfHCeaMX2ck+wYu9U9sHkgG38
-         eIjn/h3B+EtEYwxI2nyYJR6szwVN5RSsdueJSE7AnhNnYu6BRHYfOlHZp7Yu/DFAUej5
-         I4BV/mcrQ4jzIhen6CYzRVUg2WaPE5Y0zy1Zfedq9fxzdU8p1j/j3KK8dsyvtk/XAWK6
-         HbBOYXxhQnfIlQ/Ozc0dDRRh6kR8F0RvDwsXnRwetPUm3a5okL2XLc7wp/sDhok37fEs
-         2wMA==
-X-Gm-Message-State: AOJu0YzJmCh0fTPddL4GVzjVgdH166uMzeAQYwqWsjdiORJfQfhUHlG8
-	E4rY4J6j+oo+xv75wsvRYgA8+2wewJU2Q7ScEK1ROEFzzbsFco8VHFed+ga5BcngyrjeDb8yTCK
-	aKB5Myj+0Vf78y5cyFdfPwF1aNoh71re7GSI=
-X-Gm-Gg: ASbGncvZ8CXph8cSI6w1qM7UKU+SSP42VmpIQ4W0mn23FIeN1rMXLTDmdL+sR1POG40
-	UwCgx18zcuWyoU+k3gr00nEZJb+uG
-X-Google-Smtp-Source: AGHT+IEY1+iMswhXswU5T6NtUoU1vYch6EJ6ta6wJVXgdchoEfVM8zl6X7A329kqlJb58zGLfu7mZ69XpC/WS71gtGw=
-X-Received: by 2002:a05:6902:1b87:b0:e39:8a00:d443 with SMTP id
- 3f1490d57ef6-e3a0b6e4764mr4572068276.9.1733761277322; Mon, 09 Dec 2024
- 08:21:17 -0800 (PST)
+	s=arc-20240116; t=1733762088; c=relaxed/simple;
+	bh=+X+AwsZkTCY9qnVWw4Cvxkt6CXs0DN7GfXHoIq5rvNc=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A5c0vsr4FQCiU/jtk1dN/X2Y6Jw3+xhflgqn4IU4ChfYbMBUKJrrxSitBhuCP2oUVqjmTdizHnDXejdtNQ0rSphOUGRJrhgY/JTWPbtVlCLwgIPnRg+dLeoQY8BY8tcP9+onk05PeXT8b1dPF4pdvJrN98boQRrBEX8VlwVuo00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4B9GYXPc112669
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 9 Dec 2024 16:34:34 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Usman Akinyemi'" <usmanakinyemi202@gmail.com>, <gitster@pobox.com>
+Cc: <Johannes.Schindelin@gmx.de>, <christian.couder@gmail.com>,
+        <git@vger.kernel.org>, <johncai86@gmail.com>, <ps@pks.im>
+References: <xmqqfrt7y3xp.fsf@gitster.g> <20241209161445.10321-1-usmanakinyemi202@gmail.com>
+In-Reply-To: <20241209161445.10321-1-usmanakinyemi202@gmail.com>
+Subject: RE: [PATCH 0/3] Advertise OS version
+Date: Mon, 9 Dec 2024 11:34:28 -0500
+Organization: Nexbridge Inc.
+Message-ID: <00e201db4a58$3b198fb0$b14caf10$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241207135201.2536-1-royeldar0@gmail.com> <20241207135201.2536-4-royeldar0@gmail.com>
- <xmqqr06jrqiv.fsf@gitster.g>
-In-Reply-To: <xmqqr06jrqiv.fsf@gitster.g>
-From: Roy E <royeldar0@gmail.com>
-Date: Mon, 9 Dec 2024 18:21:06 +0200
-Message-ID: <CAOfFammyK1Ef4_gOV+a5hiZR+Xhgu0o+=1Uu4BE2bGUACo3Jtg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] git-submodule.sh: improve parsing of short options
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQLyRRqI/aFN8MyxQnA6vHKyrUPA/wLxTrVHsJiba9A=
+Content-Language: en-ca
 
-Hi,
+On December 9, 2024 11:15 AM, Usman Akinyemi wrote:
+>Thank you to everyone who participated in this discussion. I am Usman =
+Akinyemi,
+>one of the two selected Outreachy interns. I have been selected to work =
+on the
+>project =E2=80=9CFinish adding an 'os-version'
+>capability to Git protocol v2,=E2=80=9D which involves implementing the =
+features discussed in
+>this thread.
+>
+>You can find the full discussion about my proposal for this project
+>here: https://public-inbox.org/git/CAPSxiM_rvt-tkQjHYmYNv-
+>Wyr0=3DX4+123dt=3DvZKtc++PGRjQMQ@mail.gmail.com/
+>
+>In summary, this is an outline of my proposal and what I plan to =
+implement, which
+>has been influenced by the discussion in this thread:
+>
+>- Send only the OS name by default while allowing a knob (custom
+>configuration) to specify other information (e.g., version details) and =
+disable
+>sending OS names and any other information entirely.
+>
+>After discussing with my mentor, @Christian, we think that adding this =
+as a new
+>capability (os-version) is a better option compared to appending it to =
+the user-
+>agent. This ensures that we do not disrupt people's scripts that =
+collect statistics
+>from the user-agent or perform other actions.
+>
+>Intentions of implementing this project:
+>- For statistical purposes.
+>- Most importantly, for security and debugging purposes. This will =
+allow servers to
+>instruct users to upgrade or perform specific debugging actions when =
+necessary.
+>
+>For example:-
+>A server seeing that a client is using an old Git version that has =
+security issues on
+>one platform, like MacOS, could check if the user is indeed running =
+MacOS before
+>sending it a message to upgrade.
+>
+>Also a server seeing a client that could benefit from an upgrade, for =
+example for
+>performance reasons, could better customize the message it sends to the =
+client to
+>nudge it to upgrade. If the client is on Windows for example the server =
+could send it
+>a link to https://gitforwindows.org/ as part of the message.
+>
+>Please, if anyone has any suggestion or addition or concerns that =
+might, kindly add.
+>Thank you very much.
 
-Junio C Hamano <gitster@pobox.com> wrote:
+Is this build-time or runtime? If run-time, please make sure the code is =
+portable or provides
+hooks so that non-linux systems can contribute content.
 
-> As I said in the devil's advocate section in my review for 1/3, I
-> often find the value of the variable spelling out the option name
-> as well as the option value (i.e., force="--force", not force=1;
-> branch="--branch=foo", not branch=foo; jobs=--jobs=4, not jobs=4)
-> easier to debug and drive other programs using these variables, so I
-> do not mind jobs=--jobs=4 at all, but if we want to be consistent in
-> the other direction, this would probably want to be modified in the
-> name of consistency?
+Thanks,
+Randall
 
-I find this approach better as well, and I agree this is easier to read,
-and has some other advantages like better ability to debug the script.
-I modified the script so that all of the variables are assigned values
-which contain the option name as well as the option value, and I will
-post a v2 patch series soon.
+--
+Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)
+NonStop(211288444200000000)
+-- In real life, I talk too much.
 
-> Other than that, all three patches looked sane to me.
 
-Thanks a lot!
+
