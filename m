@@ -1,72 +1,82 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019945234
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 00:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB11320B
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 01:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733705486; cv=none; b=Jcrm6TvvR0lFkDvi8LWlZk8XAHaDQ5u5K1XS1SdjbGHod8OxrSV8ohYEXRyX7wkF4DMtK06uSvI4zf/RojKYiuwBNyu2MkPrmkxb2I+xNSkQg4UpiLFpfEWCx04iZHUSCNl2Y0Vn8Mrt+mciOymdm0roodI3FD69b9cz1TSbYbM=
+	t=1733707247; cv=none; b=QHGQbmyqbVjv0bZECHtQTiLvJ6o/jFxdXBCNiXgHbSGQmldrZktOBsL/hH5iXGn3ssEXng06kcBeBcLL3Z3i9aFEm56nlwxz85ETUbUXZaswfBl628hybH1nzml2N26O5LSa9YLDIzrx/SocTO4IwjjJzgayNLVamsNEiytJrlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733705486; c=relaxed/simple;
-	bh=0Irg2Z3EkFxMwDaJDd8m/Y3s/jK0g4SmKrijg6yxCqk=;
+	s=arc-20240116; t=1733707247; c=relaxed/simple;
+	bh=iRVO0iBmsMo9qnGOvH65mhxQasVPjlPsx1qFzJqLxEI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UG425zF3MlEJHidnVeYacRLbRxeb+CyEHVba577zatjBHAJs/6nvdciQmeEkzErN5TK1feElK5T9Z83r3ysEu4DUhsLR6kswFmkEVKHIRJW/16IhRP45XyxHwzq7RHBHFvezOKXfkgEyyTThn2dgGMi/dFkd+BuxyUKIFjK+w84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=njMshu9C; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=H9qq/7i4NWi9GtPzxo9xiFR96cvQmsWensd5yJO6s/Jh5KK3hNLPyEDYUuaCBusvFNV3gdCPMEeKoiYfi8UnPv8SGWF5NlG9Lk+9Ml1bfed2sj85rKSg42VI0ZkVfHNtwoqrJCZhvN8zn4iq5QsrpqRtdss2cWlR2wcHzqBST9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F4zwrkI9; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="njMshu9C"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EF4FA11400C3;
-	Sun,  8 Dec 2024 19:51:22 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sun, 08 Dec 2024 19:51:22 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F4zwrkI9"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A321A1140132;
+	Sun,  8 Dec 2024 20:20:43 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Sun, 08 Dec 2024 20:20:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733705482; x=1733791882; bh=xY8vB5t9Jc/aQf/jhHPGNH7DDrrk+UgLPJB
-	zfSNwPL8=; b=njMshu9Co6It+8B6LXUWRJhXiGM72gNy1LsV2wDAXGxh+9vVq5g
-	h+SavhRi1pYgSACWTDBdpbxpR+tBkzbF1Aswkqj+f1UAkuG8v+QXOxQGb+zAW2PT
-	IMvU4JE6sKsinYvxUApBoe02+4hnT514tq/11tkydTeBcS7VNKkTv+sU7S4n7ZyJ
-	P7bZqbNJeaMd5PZsDMnK9ONWXAGRkdEUUY91rpn8viOHdrxHmwsnWE3BWLS5x1qA
-	2zHyuM1ZxtWGmHxMxF9O966zJG7cCobDXEmCdV2wjv1di95QkD2t/cykQNjJtwJa
-	IL9YkKXd71h/vjmZQTGieS1hr3n60Ga8JdA==
-X-ME-Sender: <xms:Cj9WZwv5UYNsTt76JxBFBsnz_7lYT1BClrfGr2BUijezrb011rJqCw>
-    <xme:Cj9WZ9cHwfeCabdajPr5uAKefFD_OA1dMKNBme7_suk5VVPmDQqAddJeXxcDjNGsy
-    rL_DqO5k5LrqJHo3w>
-X-ME-Received: <xmr:Cj9WZ7zYz40puzBny0iw5RYjYxRHQLjGAPPmWWDY3mLqPpnx9xFgaQAw881HqOsGPQ_2yGs7iKPD5WmOS4ISiSJs2zQVxlwYIhp4TRQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeeggddviecutefuodetggdotefrodftvf
+	1733707243; x=1733793643; bh=I9KRE581lXXWestenYBj0gj48Vy9GjsJ2tN
+	TfsumLpo=; b=F4zwrkI90JMyrLW4SWXOxedLPpG29k87K7c1vICtydNVJQxlb+Z
+	SnUNQsXDoWuRXAyl2OiQ0l9Orj81o1JUZBA7fVATPzUtfzMb5OUNdmIZ358saSdG
+	epRKYPIjLMSwQfIaETkWKnRHjrH0ybOel+BgNJcMGFBpMcvk+LifAsk73uyTCRwV
+	uXtj72q6amA5jHBuohvnfqnNwLKzZw7teXQTQBuGrQXouBvsZKRrB5eJSkBa8AiL
+	3cN4EousyTMPXy7iq0VBg+/cfQDf0nuVzYUKpBmD9/jvqAfoNQOPEoADaoLytNA3
+	TAQ6ImayeO71GsiqA4b3scPehZ/09b7A67A==
+X-ME-Sender: <xms:6kVWZwzlhA7shhB7sE-2SO9oIb5vs38sbs-vfP8mFCVZgsYsDnSD0w>
+    <xme:6kVWZ0RqZGv49MiXOvuGvLrJPgL0evda6p-u5DimvOwc96Ja6NXE6EmULJUgtRnXG
+    5noLMjso8dH2QDklQ>
+X-ME-Received: <xmr:6kVWZyWvStcaKh1POYV8QhAnsU9ldi5nT3O3-O6IPfIpb6v1F9dUINHRIVqVkPpdkSgZjiRfkoSLseAckICiks2R7zRgbzDGuO49n2M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeeggdeffecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtoheptggrlhhumhhlihhkvghsrghpphhlvghpihgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Cj9WZzOcazgc5_L32PDpbSZrmH97rjCxOWqc3IQWBX0Snbb4nU6jEQ>
-    <xmx:Cj9WZw8Ybyl5eMUL4ExpnEeAN6CRg0nepu5xL4KKYwDE7IY4vy6GIw>
-    <xmx:Cj9WZ7VUpSSmbkdV33gFPgztryiP3brAQ9MNd13M62fHQEs8fN3oPQ>
-    <xmx:Cj9WZ5dA-aN-FvbSDxhHFMmHzh1KVBuBRd-ib8B9zmmkTF1uYaVbVw>
-    <xmx:Cj9WZ_a7vfeuiaWZZ6hth5mVaxZdh7ToGSyV-PuyH7GJWpT2lLfvsVDq>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeffieetueejveefheduvdejudffieejgeefhfdt
+    vdekfeejjeehtdegfefgieejtdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
+    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepuddvpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhooh
+    drohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegurghvvhhiug
+    esghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:6kVWZ-g8J5Wb-U0rbIA-efv4uw5w7YYC0YbG-lKdR78d8l48jR9lLg>
+    <xmx:6kVWZyAjkVRxtv3WZec8SalLWo57X40Gb25xZKMOLJL1LQ5F0qT0Mg>
+    <xmx:6kVWZ_JQwQlgk_pWpm7R8MpkgJfYcGZBl8RUkdbBovl9w4gLhyigWg>
+    <xmx:6kVWZ5B0vsP_JI-wNQZBNStGFG54mnLkGOtTqZI6_5qYhARy4RqVGQ>
+    <xmx:60VWZ-64MKhxAlkgAaOUUcnsvWsffo6qIawWrXU5xSnOjnIyOusS64pH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Dec 2024 19:51:22 -0500 (EST)
+ 8 Dec 2024 20:20:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Calum McConnell <calumlikesapplepie@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] verify-pack: Fix documentation of --stat-only to
- reflect behavior
-In-Reply-To: <20241208204733.304109-2-calumlikesapplepie@gmail.com> (Calum
-	McConnell's message of "Sun, 8 Dec 2024 15:47:17 -0500")
-References: <1ee9f3ef2bffd148b6225138135462d2d4a5928d.camel@gmail.com>
-	<20241208204733.304109-2-calumlikesapplepie@gmail.com>
-Date: Mon, 09 Dec 2024 09:51:20 +0900
-Message-ID: <xmqq7c89r853.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eli Schwartz <eschwartz@gentoo.org>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Ramsay Jones <ramsay@ramsayjones.plus.com>,
+  Taylor Blau <me@ttaylorr.com>,  David Aguilar <davvid@gmail.com>,  Jeff
+ King <peff@peff.net>,  Johannes Sixt <j6t@kdbg.org>,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v11 25/26] meson: fix conflicts with in-flight topics
+In-Reply-To: <xmqqikruswtd.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+	08 Dec 2024 12:00:46 +0900")
+References: <20241206-pks-meson-v11-0-525ed4792b88@pks.im>
+	<20241206-pks-meson-v11-25-525ed4792b88@pks.im>
+	<xmqqikruswtd.fsf@gitster.g>
+Date: Mon, 09 Dec 2024 10:20:40 +0900
+Message-ID: <xmqq34ixr6s7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -76,86 +86,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Calum McConnell <calumlikesapplepie@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Ever since verify-pack was refactored to use `index-pack.c` in commit
-> 3de89c9 (verify-pack: use index-pack --verify, 2011-06-06), the
-> --stat-only option has been verifying the full pack, rather than just
-> reading the index file, as it was originally documented to do.
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> Allowing users to get details of packed objects rapidly without
-> needing to hash all the objects in packfile is a useful ability.
+>> I've split this commit out into a separate fixup-style commit such that
+>> it is possible to test this topic both with and without "seen" merged
+>> into it. You can simply revert this commit to test without "seen".
+>
+> Now I had to reconstruct these "fixup-style" commits and they appear
+> under ref/merge-fix/ hierarchy in my broken-out repository published
+> at https://github.com/gitster/git.git/ (and no other fallback URLs;
+> it might make sense to have another repository for redundancy, but
+> it is an unrelated tangent).  In addition to these listed four, a
+> newly added ds/backfill also needs refs/merge-fix/ds/backfill to
+> adjust.
 
-Thanks for noticing.
+I now have merge-fix changes for the topics that add new sources and
+test scripts that are not covered by [01-24/26] of this series, and
+dropped [26/26] (the reversion of [25/26]).  The [25/26], adjustment
+for topics in flight in 'seen', is still at the tip of ps/build but
+the merge of ps/build into 'seen' is now a no-op, which is a good
+sign, as these merge-fix changes for each topic are designed to make
+resulting merge of each of these topics successfully work with the
+meson build infrastructure, and ps/build~1 [01-24/26] is merged a
+lot earlier on the master..seen chain in preparation for merging
+them to 'next'.
 
-> However, implementing that ability would require more changes to index-pack
-> than the author is able to do at this time, and so a quick fix to simply
-> update the documentation to reflect current behavior is done instead.
+The next step for me is to see if we want v12 of the series, and if
+not, merge [01-24/26] down to 'next'.
 
-Wouldn't it etch the "wrong" behaviour even more strongly into
-stone, making future fixes harder, though?
-
-> This commit also re-orders the if-else block, to ensure that if both
-> --stat-only and --verbose are specified, the verbose details are provided.
-> This fixes another longstanding documentation bug with `verify-pack`.
-
-This part is puzzling.  My understanding is that a documentation bug
-would be fixed by adjusting the documentation to reality, so a
-change to the code would not be involved.
-
-Is this closer to what is happening?
-
- - There are two gotchas that the actual behaviour and the
-   documentation do not match.
-
- - "--stat-only" being described as "quickly count without
-   verifying" but doing a lot more than statistics gathering is one.
-   This is "fixed" by updating the documentation to match the
-   implemented behaviour.
-
- - "--verbose" is documented to be verbose even when given together
-   with "--stat-only", but when "--stat-only" is given, it is
-   ignored.  This is "fixed" by updating the behaviour to match the
-   documentation.
-
-But the thing is, the third point, the second "fix", to allow you to
-treat "-v -s" or "-s -v" as if they were "-v" comes from the second
-sentence in this paragraph:
-
-        -s::
-        --stat-only::
-                Do not verify the pack contents; only show the histogram of delta
-                chain length.  With `--verbose`, the list of objects is also shown.
-
-But ...
-
->  -s::
->  --stat-only::
-> -	Do not verify the pack contents; only show the histogram of delta
-> -	chain length.  With `--verbose`, the list of objects is also shown.
-> +	As --verbose, but only show the histogram of delta
-> +	chain length.
-
-... this change loses the "list of objects is also shown", which I
-think is the justification for passing "--verify-stat" when both are
-given.
-
-So, I dunno.
-
-> diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
-> index 34e4ed7..5860a96 100644
-> --- a/builtin/verify-pack.c
-> +++ b/builtin/verify-pack.c
-> @@ -20,10 +20,10 @@ static int verify_one_pack(const char *path, unsigned int flags, const char *has
->  
->  	strvec_push(argv, "index-pack");
->  
-> -	if (stat_only)
-> -		strvec_push(argv, "--verify-stat-only");
-> -	else if (verbose)
-> +	if (verbose)
->  		strvec_push(argv, "--verify-stat");
-> +	else if (stat_only)
-> +		strvec_push(argv, "--verify-stat-only");
->  	else
->  		strvec_push(argv, "--verify");
+Thanks.
