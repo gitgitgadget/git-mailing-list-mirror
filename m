@@ -1,118 +1,113 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B90BA3D
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 16:34:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60098145B18
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 16:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733762088; cv=none; b=jstxNlq2h7XtIdRRRF8HoeVUNEfn1sGliJ/681jf49vgrq010NTH73IpWPXRyoI8Zt871wF4tIipV9ZnMLI4ojRTeg6BmlC8qYZtg8ioagOeD8d+Q+ZpgPfMjm2lD8B1uEXxydHJj0aDhrPqRYiBdJlplyclz1hlgzY2LrIkbFg=
+	t=1733763079; cv=none; b=Bs26Q5FbKeU+pBV4XFJ32nKWwRpRGZQ8AP474th0fht9vtk/Ie3og9tv5aNuhRgvRe36XlE/mKYHujJW1iss66UinJUw8QHq57cFiijr8J4JEIgHzsNK7t1CTWcDLu8pI1W230nP3WSg1/iqWeILadJihuodp8ecUrqRsun/S28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733762088; c=relaxed/simple;
-	bh=+X+AwsZkTCY9qnVWw4Cvxkt6CXs0DN7GfXHoIq5rvNc=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A5c0vsr4FQCiU/jtk1dN/X2Y6Jw3+xhflgqn4IU4ChfYbMBUKJrrxSitBhuCP2oUVqjmTdizHnDXejdtNQ0rSphOUGRJrhgY/JTWPbtVlCLwgIPnRg+dLeoQY8BY8tcP9+onk05PeXT8b1dPF4pdvJrN98boQRrBEX8VlwVuo00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4B9GYXPc112669
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Dec 2024 16:34:34 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Usman Akinyemi'" <usmanakinyemi202@gmail.com>, <gitster@pobox.com>
-Cc: <Johannes.Schindelin@gmx.de>, <christian.couder@gmail.com>,
-        <git@vger.kernel.org>, <johncai86@gmail.com>, <ps@pks.im>
-References: <xmqqfrt7y3xp.fsf@gitster.g> <20241209161445.10321-1-usmanakinyemi202@gmail.com>
-In-Reply-To: <20241209161445.10321-1-usmanakinyemi202@gmail.com>
-Subject: RE: [PATCH 0/3] Advertise OS version
-Date: Mon, 9 Dec 2024 11:34:28 -0500
-Organization: Nexbridge Inc.
-Message-ID: <00e201db4a58$3b198fb0$b14caf10$@nexbridge.com>
+	s=arc-20240116; t=1733763079; c=relaxed/simple;
+	bh=cyYj59H5M5GC+KFVmnpIOXPZClucBd2xlIJqvcMQyag=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=P0ssJQb07/dTT+JSSWuCw0St+o2k8eBeBDwsYJ0C0GeTbE79QwoNxnvruJWPmUjBOjnnA6wqC2TmUEJQCcjchHWmSW6oOw8daPfsP6OPinGb0Ojv1c/eBVe7OBzLWQ+gxIJg0LvlZmtyAxGXOdBvb3rIc0d2OV+7us5USpLNkyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iGaj2QmR; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iGaj2QmR"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-aa659775dd5so27426866b.0
+        for <git@vger.kernel.org>; Mon, 09 Dec 2024 08:51:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733763075; x=1734367875; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HmLTGrfanphQq8deoywRnwX7tsfX/UWz40ST2nzYHtc=;
+        b=iGaj2QmRxGwwYegwsCVCU4MzIQjvLPUqpJydwyLgNFQDyYFL4ce7CXUpHllcvMCjiP
+         1n0GpbftGjm1WIEeCYUObRP4DHqjE2LFc49/vWLHUToiUk1/QnIyCg1XstrG1uH/EQMd
+         ALa/PBbVljA3Keob8+2XBbwlmOz+rjPcsdzqchieDdzG3eUWQhkGxHzL4Q5DKtf70bV2
+         WTfohUZ29izh5Eq4VyMxxKsHf3+PAEoR/y0zsH7QKesJBdSAii/Ybv2T7KmP8DT5lvR8
+         0WuLsybgTZOXXdRxXLnEBaJBvLd5l/bGZSdGE1a+nmjv+nV3HalSyi3SrRlGSXt3X+jo
+         7bFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733763075; x=1734367875;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HmLTGrfanphQq8deoywRnwX7tsfX/UWz40ST2nzYHtc=;
+        b=hhCCa90gQYZhdBq0c1TISkITFVe1TzZ1eJRHrVgo+ki3VfhzrKOCfuwQ/wGLfHcQb7
+         uDPKSixcEbf7JBXENo0KPlOPGic9lbLP+ip+CHJ0/cP+3qq6sk/BqnicFnDVydiFijuK
+         W7i0mMJT4bCZ0zaoERIbCSzHrFECdw9XuwzGpGEwR6p4WkITIu3vG+NUBMcGtxY1lRa0
+         0rLJ7E4YORABoke1Q8C6y5ZXIapqAmg95lIjNNOk7XCcdgx/dOdNLGW2aw+5XXOxuEE/
+         kNlRZUwACiZqc9F/L/pf7JEG6+REDFAuCaErE7vKRcHrE22UktIkPioYH46gwq1dMM4L
+         7ipw==
+X-Gm-Message-State: AOJu0YypPcdX5PCzcSyiIzZ3nXgPXx10acF3Fqq4Lcd/9kuDghUgtvsw
+	32VIySwxIWMuzfodqy3h9fqpMBqyGmRerB/XPkLsbDpAb6CRSa6OiIMOvYE/
+X-Gm-Gg: ASbGncubOOmG4sgAOs/6gSScKfNam+LDqjYrS8AfVxXKe1sjHxVmPG4grxilM3gd9mB
+	lks1qMi+4lsdY1gDzZLUDBehwIOIoKsj1yM4Aws3YmhNoD3bJVwEA3mKk87ODRNkrFsXhLeNhHn
+	zH1xb/U5aNhNJEe6JvYeIBAkWS/06EvlUo9PkOHgVKoJbRtx28ZXYfw0nS3oC38Hooi0FdmoIsY
+	0hMWL18EQ9f5cnbbCqaRE6hwm6pkxOuavIs+aAHc5EMYneRbftpoPGrKjI=
+X-Google-Smtp-Source: AGHT+IGiU+satkm8cdx2XZH1KOrqFsvhCLOzjLYtI21Qe0BY6uW+3tBrwhs7UUw/62GTHWEaAYujPQ==
+X-Received: by 2002:a17:907:7285:b0:aa6:6792:8bce with SMTP id a640c23a62f3a-aa69f13df7bmr15613066b.3.1733763075162;
+        Mon, 09 Dec 2024 08:51:15 -0800 (PST)
+Received: from localhost.localdomain ([5.29.161.23])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa673474e27sm300539766b.102.2024.12.09.08.51.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Dec 2024 08:51:14 -0800 (PST)
+From: Roy Eldar <royeldar0@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Roy Eldar <royeldar0@gmail.com>
+Subject: [PATCH v2 0/8] git-submodule.sh: improve parsing of options
+Date: Mon,  9 Dec 2024 18:50:01 +0200
+Message-Id: <20241209165009.40653-1-royeldar0@gmail.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20241207135201.2536-1-royeldar0@gmail.com>
+References: <20241207135201.2536-1-royeldar0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQLyRRqI/aFN8MyxQnA6vHKyrUPA/wLxTrVHsJiba9A=
-Content-Language: en-ca
+Content-Transfer-Encoding: 8bit
 
-On December 9, 2024 11:15 AM, Usman Akinyemi wrote:
->Thank you to everyone who participated in this discussion. I am Usman =
-Akinyemi,
->one of the two selected Outreachy interns. I have been selected to work =
-on the
->project =E2=80=9CFinish adding an 'os-version'
->capability to Git protocol v2,=E2=80=9D which involves implementing the =
-features discussed in
->this thread.
->
->You can find the full discussion about my proposal for this project
->here: https://public-inbox.org/git/CAPSxiM_rvt-tkQjHYmYNv-
->Wyr0=3DX4+123dt=3DvZKtc++PGRjQMQ@mail.gmail.com/
->
->In summary, this is an outline of my proposal and what I plan to =
-implement, which
->has been influenced by the discussion in this thread:
->
->- Send only the OS name by default while allowing a knob (custom
->configuration) to specify other information (e.g., version details) and =
-disable
->sending OS names and any other information entirely.
->
->After discussing with my mentor, @Christian, we think that adding this =
-as a new
->capability (os-version) is a better option compared to appending it to =
-the user-
->agent. This ensures that we do not disrupt people's scripts that =
-collect statistics
->from the user-agent or perform other actions.
->
->Intentions of implementing this project:
->- For statistical purposes.
->- Most importantly, for security and debugging purposes. This will =
-allow servers to
->instruct users to upgrade or perform specific debugging actions when =
-necessary.
->
->For example:-
->A server seeing that a client is using an old Git version that has =
-security issues on
->one platform, like MacOS, could check if the user is indeed running =
-MacOS before
->sending it a message to upgrade.
->
->Also a server seeing a client that could benefit from an upgrade, for =
-example for
->performance reasons, could better customize the message it sends to the =
-client to
->nudge it to upgrade. If the client is on Windows for example the server =
-could send it
->a link to https://gitforwindows.org/ as part of the message.
->
->Please, if anyone has any suggestion or addition or concerns that =
-might, kindly add.
->Thank you very much.
+When we run "git submodule", the script parses the various options and
+then invokes "git-submodule--helper". Unlike most builtin git commands
+which parse short/long options using parse-options.c, the parsing of
+arguments is completely done within git-submodule.sh; therefore, there
+are some inconsistencies with the rest of the commands, in particular
+the parsing of option arguments given to various options.
 
-Is this build-time or runtime? If run-time, please make sure the code is =
-portable or provides
-hooks so that non-linux systems can contribute content.
+Improve the handling of option arguments for both long & short options;
+for example, passing flags such as "--branch=master" or "-j8" now works.
 
-Thanks,
-Randall
+Changes since v1:
 
---
-Brief whoami: NonStop&UNIX developer since approximately
-UNIX(421664400)
-NonStop(211288444200000000)
--- In real life, I talk too much.
+- Make variable values always contain the option name.
+- Rename a couple of variables in order to improve consistency.
 
+Link to v1:
 
+https://lore.kernel.org/git/20241207135201.2536-1-royeldar0@gmail.com
+
+Roy Eldar (8):
+  git-submodule.sh: make some variables boolean
+  git-submodule.sh: improve parsing of some long options
+  git-submodule.sh: improve parsing of short options
+  git-submodule.sh: get rid of isnumber
+  git-submodule.sh: get rid of unused variable
+  git-submodule.sh: add some comments
+  git-submodule.sh: improve variables readability
+  git-submodule.sh: rename some variables
+
+ git-submodule.sh | 214 +++++++++++++++++++++++------------------------
+ 1 file changed, 104 insertions(+), 110 deletions(-)
+
+-- 
+2.30.2
 
