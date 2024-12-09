@@ -1,81 +1,72 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA24A1BDC3
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 00:34:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 019945234
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 00:51:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733704453; cv=none; b=Ds7h+U1u2Qj1QaFjOLW3NO6dNQI0jRdMO5b2p3EwWm6hnJiXYRamqGQ451gT70EPNd2USYqpT9Ja5DCWyYTH3H/PGtuXhBFemNcozmNabRdTCD+jPdzIcjUYyVEc/odslRz82SZIFUEnb82lS+Y2uSgJdrRZQzX3Op69uQzgJ0I=
+	t=1733705486; cv=none; b=Jcrm6TvvR0lFkDvi8LWlZk8XAHaDQ5u5K1XS1SdjbGHod8OxrSV8ohYEXRyX7wkF4DMtK06uSvI4zf/RojKYiuwBNyu2MkPrmkxb2I+xNSkQg4UpiLFpfEWCx04iZHUSCNl2Y0Vn8Mrt+mciOymdm0roodI3FD69b9cz1TSbYbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733704453; c=relaxed/simple;
-	bh=cbv8z/2AIXrb6U7QWj9r4c2lpbngwmKDfCCyUzu6T3A=;
+	s=arc-20240116; t=1733705486; c=relaxed/simple;
+	bh=0Irg2Z3EkFxMwDaJDd8m/Y3s/jK0g4SmKrijg6yxCqk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P0Zglk+8/lqcNZzw6UI2M6NyGu4kXHkpEXxCgMQQ4fwtNAMVANA2pmyIexgPbs+VGOWayTpIGarYYGXA2v4dMmZSLXWMEoRx1lEhzsEAzyoLipUZW0S26Srb8aWH/0t0mxeXTLy/nV01G3/zZWnELZUhvp/6fUUUkJl9k7rGVKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hXzfX2Q/; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=UG425zF3MlEJHidnVeYacRLbRxeb+CyEHVba577zatjBHAJs/6nvdciQmeEkzErN5TK1feElK5T9Z83r3ysEu4DUhsLR6kswFmkEVKHIRJW/16IhRP45XyxHwzq7RHBHFvezOKXfkgEyyTThn2dgGMi/dFkd+BuxyUKIFjK+w84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=njMshu9C; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hXzfX2Q/"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id AB14113838EF;
-	Sun,  8 Dec 2024 19:34:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="njMshu9C"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EF4FA11400C3;
+	Sun,  8 Dec 2024 19:51:22 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 08 Dec 2024 19:34:09 -0500
+  by phl-compute-03.internal (MEProxy); Sun, 08 Dec 2024 19:51:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733704449; x=1733790849; bh=6x09c++jCR/zrIgmOQqEA2q11AncR8oY8wz
-	BWcVciBw=; b=hXzfX2Q/IZKWdEnwLg6d6AvJN0Y8DVSzvFFX1M8dsh2t5CRx8Qp
-	ALKEEoTM/i2lrFwPCykbwKg0uEjgsv14TFTL78+pwqPJSkfBgZJ/4cD5wdm6IicQ
-	pDXutDU93nMXrnqA0ikBrI5ezx4pXarCP8wR8OWamroRdlGXQ25j5E4VO66jIXUy
-	Ryo5CI7I+tmvLt4voEpt5PRl30zOuRzmEdkcaJjS0jAnza+nWLfC81jaE1AVflf2
-	013SnE3tldfj+DldZMafoYoY57aTYkaYAOxBGRd3XMmhcY70qMi/e92ZDxeyevMR
-	GANWhzKgGjnsIY+U/2FCwpRZn1d8eSlJz6Q==
-X-ME-Sender: <xms:ATtWZ7KElCtWAA1ke_JK4sW-0PymDyb6Aztmhhg25-0NIPBLiprhmQ>
-    <xme:ATtWZ_KHgvUbaQaXqItHmlhwF8a3VJ7vn-OJucs20691eWSW6ew73CYqib_wU7MxE
-    4siEOIZ8vyOuX3B7w>
-X-ME-Received: <xmr:ATtWZzumL_Vw6Ie5yZlsyMvlbfCt4xHAecmAHEi3cHCdh1MGdxQsG1qeATrSYe5xR42AejWp43yX4h9AO9qZfJIm8ysEH7FUcj9KFH4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeeggddvfecutefuodetggdotefrodftvf
+	1733705482; x=1733791882; bh=xY8vB5t9Jc/aQf/jhHPGNH7DDrrk+UgLPJB
+	zfSNwPL8=; b=njMshu9Co6It+8B6LXUWRJhXiGM72gNy1LsV2wDAXGxh+9vVq5g
+	h+SavhRi1pYgSACWTDBdpbxpR+tBkzbF1Aswkqj+f1UAkuG8v+QXOxQGb+zAW2PT
+	IMvU4JE6sKsinYvxUApBoe02+4hnT514tq/11tkydTeBcS7VNKkTv+sU7S4n7ZyJ
+	P7bZqbNJeaMd5PZsDMnK9ONWXAGRkdEUUY91rpn8viOHdrxHmwsnWE3BWLS5x1qA
+	2zHyuM1ZxtWGmHxMxF9O966zJG7cCobDXEmCdV2wjv1di95QkD2t/cykQNjJtwJa
+	IL9YkKXd71h/vjmZQTGieS1hr3n60Ga8JdA==
+X-ME-Sender: <xms:Cj9WZwv5UYNsTt76JxBFBsnz_7lYT1BClrfGr2BUijezrb011rJqCw>
+    <xme:Cj9WZ9cHwfeCabdajPr5uAKefFD_OA1dMKNBme7_suk5VVPmDQqAddJeXxcDjNGsy
+    rL_DqO5k5LrqJHo3w>
+X-ME-Received: <xmr:Cj9WZ7zYz40puzBny0iw5RYjYxRHQLjGAPPmWWDY3mLqPpnx9xFgaQAw881HqOsGPQ_2yGs7iKPD5WmOS4ISiSJs2zQVxlwYIhp4TRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeeggddviecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeetheetgedtveefveetudekhfegvdfgkeeiheej
-    teeludejveekteeitdfhfffhgfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdgsrg
-    gtkhhfihhllhdrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepud
-    egpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhksh
-    drihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehj
-    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmh
-    grihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgr
-    ihhlrdgtohhm
-X-ME-Proxy: <xmx:ATtWZ0Y16uGISu3AX-_TbSmcgZ6wMNcZgJ3JELhF0OJdkrrKVF9CeA>
-    <xmx:ATtWZyZXYakQVKloZSvVjxE2bbYB34fORHu2vxn66rQLj_NVJR0_9Q>
-    <xmx:ATtWZ4DbrF4ku8WDM_puWiwa-KsAOlkXmuAcz-Q_6MjNZiwJ2p1zAg>
-    <xmx:ATtWZwYHbGlj-BfboPFyHDv9oohBK1F1ma8OyBbNkECIV1vCGYCiGg>
-    <xmx:ATtWZ4wdA8Y5hQpTooidCmuTsQeUjJzAUwGMK5_Bwoc2XzISA8BARjT_>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
+    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
+    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtoheptggrlhhumhhlihhkvghsrghpphhlvghpihgvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Cj9WZzOcazgc5_L32PDpbSZrmH97rjCxOWqc3IQWBX0Snbb4nU6jEQ>
+    <xmx:Cj9WZw8Ybyl5eMUL4ExpnEeAN6CRg0nepu5xL4KKYwDE7IY4vy6GIw>
+    <xmx:Cj9WZ7VUpSSmbkdV33gFPgztryiP3brAQ9MNd13M62fHQEs8fN3oPQ>
+    <xmx:Cj9WZ5dA-aN-FvbSDxhHFMmHzh1KVBuBRd-ib8B9zmmkTF1uYaVbVw>
+    <xmx:Cj9WZ_a7vfeuiaWZZ6hth5mVaxZdh7ToGSyV-PuyH7GJWpT2lLfvsVDq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Dec 2024 19:34:08 -0500 (EST)
+ 8 Dec 2024 19:51:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  christian.couder@gmail.com,  kristofferhaugsbakk@fastmail.com,
-  jonathantanmy@google.com,  karthik.188@gmail.com,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH 0/5] PATH WALK III: Add 'git backfill' command
-In-Reply-To: <xmqqy10qqwco.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-	08 Dec 2024 19:53:43 +0900")
-References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
-	<xmqqy10qqwco.fsf@gitster.g>
-Date: Mon, 09 Dec 2024 09:34:07 +0900
-Message-ID: <xmqqjzc9r8xs.fsf@gitster.g>
+To: Calum McConnell <calumlikesapplepie@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] verify-pack: Fix documentation of --stat-only to
+ reflect behavior
+In-Reply-To: <20241208204733.304109-2-calumlikesapplepie@gmail.com> (Calum
+	McConnell's message of "Sun, 8 Dec 2024 15:47:17 -0500")
+References: <1ee9f3ef2bffd148b6225138135462d2d4a5928d.camel@gmail.com>
+	<20241208204733.304109-2-calumlikesapplepie@gmail.com>
+Date: Mon, 09 Dec 2024 09:51:20 +0900
+Message-ID: <xmqq7c89r853.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,71 +76,86 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Calum McConnell <calumlikesapplepie@gmail.com> writes:
 
-> It seems that the result of calling init_revisions() from backfill
-> is leaked?
+> Ever since verify-pack was refactored to use `index-pack.c` in commit
+> 3de89c9 (verify-pack: use index-pack --verify, 2011-06-06), the
+> --stat-only option has been verifying the full pack, rather than just
+> reading the index file, as it was originally documented to do.
 >
-> https://github.com/git/git/actions/runs/12218430154/job/34083929479 
->
-> I did not dig further but the below is from my local leaksanitizer
-> run.
+> Allowing users to get details of packed objects rapidly without
+> needing to hash all the objects in packfile is a useful ability.
 
-The attached patch seems to plug the leaks observed by your backfill
-tests.  If you agree with the implementation of the change, you are
-welcome to squash it in.  I may be missing a better mechanism in the
-path-walk API that I could use to plug the leaks, in which case, of
-course a fix using such a better mechanism is very much welcomed.
+Thanks for noticing.
 
-A few things I noticed about path-walk API during my poking are:
+> However, implementing that ability would require more changes to index-pack
+> than the author is able to do at this time, and so a quick fix to simply
+> update the documentation to reflect current behavior is done instead.
 
- - struct path_walk_info has PATH_WALK_INFO_INIT() macro, but not a
-   matching path_walk_info_init() helper function to help initialize
-   any heap-allocated instances.  In general, anything that requires
-   _INIT() macro by definition wants to be initialized with more
-   than nul-initialized (otherwise, it would be fine to leave it
-   uninitialized in the BSS, clear with = {0} initialization on the
-   stack), so lack of matching path_walk_info_init() raises an
-   eyebrow.
+Wouldn't it etch the "wrong" behaviour even more strongly into
+stone, making future fixes harder, though?
 
- - struct path_walk_info seems to lack a destructor.  In general,
-   anything complex enough to require initializer should have one.
+> This commit also re-orders the if-else block, to ensure that if both
+> --stat-only and --verbose are specified, the verbose details are provided.
+> This fixes another longstanding documentation bug with `verify-pack`.
 
- - lack of destructor for path_walk_info requires users to release
-   resources held by "struct pattern_list" instance at pwi.pl; if we
-   had a destructor, we wouldn't have 2 of the three leaks we had to
-   fix here.
+This part is puzzling.  My understanding is that a documentation bug
+would be fixed by adjusting the documentation to reality, so a
+change to the code would not be involved.
 
-Thanks.
+Is this closer to what is happening?
 
+ - There are two gotchas that the actual behaviour and the
+   documentation do not match.
 
-diff --git c/builtin/backfill.c w/builtin/backfill.c
-index 225764f17e..1cf2df9303 100644
---- c/builtin/backfill.c
-+++ w/builtin/backfill.c
-@@ -92,8 +92,11 @@ static int do_backfill(struct backfill_context *ctx)
- 
- 	if (ctx->sparse) {
- 		CALLOC_ARRAY(info.pl, 1);
--		if (get_sparse_checkout_patterns(info.pl))
-+		if (get_sparse_checkout_patterns(info.pl)) {
-+			clear_pattern_list(info.pl);
-+			free(info.pl);
- 			return error(_("problem loading sparse-checkout"));
-+		}
- 	}
- 
- 	repo_init_revisions(ctx->repo, &revs, "");
-@@ -113,6 +116,11 @@ static int do_backfill(struct backfill_context *ctx)
- 		download_batch(ctx);
- 
- 	clear_backfill_context(ctx);
-+	release_revisions(&revs);
-+	if (info.pl) {
-+		clear_pattern_list(info.pl);
-+		free(info.pl);
-+	}
- 	return ret;
- }
- 
+ - "--stat-only" being described as "quickly count without
+   verifying" but doing a lot more than statistics gathering is one.
+   This is "fixed" by updating the documentation to match the
+   implemented behaviour.
 
+ - "--verbose" is documented to be verbose even when given together
+   with "--stat-only", but when "--stat-only" is given, it is
+   ignored.  This is "fixed" by updating the behaviour to match the
+   documentation.
+
+But the thing is, the third point, the second "fix", to allow you to
+treat "-v -s" or "-s -v" as if they were "-v" comes from the second
+sentence in this paragraph:
+
+        -s::
+        --stat-only::
+                Do not verify the pack contents; only show the histogram of delta
+                chain length.  With `--verbose`, the list of objects is also shown.
+
+But ...
+
+>  -s::
+>  --stat-only::
+> -	Do not verify the pack contents; only show the histogram of delta
+> -	chain length.  With `--verbose`, the list of objects is also shown.
+> +	As --verbose, but only show the histogram of delta
+> +	chain length.
+
+... this change loses the "list of objects is also shown", which I
+think is the justification for passing "--verify-stat" when both are
+given.
+
+So, I dunno.
+
+> diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+> index 34e4ed7..5860a96 100644
+> --- a/builtin/verify-pack.c
+> +++ b/builtin/verify-pack.c
+> @@ -20,10 +20,10 @@ static int verify_one_pack(const char *path, unsigned int flags, const char *has
+>  
+>  	strvec_push(argv, "index-pack");
+>  
+> -	if (stat_only)
+> -		strvec_push(argv, "--verify-stat-only");
+> -	else if (verbose)
+> +	if (verbose)
+>  		strvec_push(argv, "--verify-stat");
+> +	else if (stat_only)
+> +		strvec_push(argv, "--verify-stat-only");
+>  	else
+>  		strvec_push(argv, "--verify");
