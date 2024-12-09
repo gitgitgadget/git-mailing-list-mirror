@@ -1,114 +1,73 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478C319DF8B
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 23:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D568D19E99A
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 23:12:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733785272; cv=none; b=dm73WqCUc2EsIU9lEP+jzQyr95dbY14/MhosicFeAmo1UIS0xvD35ScrxyeaymMn2WM7HKzikqGDP2q6e+ChsqoxGhw0aRB4a9MSNUogB1R5ogOdGYLrGJ+ysk5Lm4mbM5gyQrD5zswEjHxQw1phigRccOC/Gj9L7vCUTtW8I/E=
+	t=1733785925; cv=none; b=iKEYDTrrpcwoARk2pMWigTCQDPYikowgGvcPUe7q5hBZYG/Mm7nxapfORA3tyNW7VFNrOGA1N410VEUjTzO6AWsebbJuI20JFZ/9Lb1SWDdtsFxKYT0gDHOhUvknuvhvZFI61Pvtu05za8ciOziDjX7u9JMw3FvPBJpAIgTcDb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733785272; c=relaxed/simple;
-	bh=vrRaT0apRXgsxfNbFBVCq+BxciJSHLcJIbDIEQ2kQVg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MocaSc4NthRKcw7XBUfnqYBTbkZPg4Z0tHPSdYjiPc2t3/zewN5SBTank04ZtfcG60zOqjpOXS6XOlX3pLRWvbs4dXTmPxJXyA0cowVIMZSXFq7R7Ns4zA781qfeKOMHAg2SKWFt2pCYrx2539mXrehbCLrjzcq6S0YJ7YUeOGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VFXNvo/Z; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733785925; c=relaxed/simple;
+	bh=+3lTzP984fPiPMOoTZbnNNw0EF4Ax+nIAHLe0gAhjQM=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=lXsvGczuvmaWnwPaCykZGTE7wRwY7mMui+VeUj7CgftWRdHysuJiBvAaf2+lLYn6g9JrVc64nWiC3jiXY5CbY5gYg6k6VnMZdBupfncPH+iCSdEgg3bsBUxmxEESXiV4kMw7Wh1t4ZXBVY7W3kzc7ovCLB5kNkD2wmtAwLXBerY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=nAeGYFPN; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VFXNvo/Z"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6BBAE1383937;
-	Mon,  9 Dec 2024 18:01:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 09 Dec 2024 18:01:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733785269; x=1733871669; bh=IgAa0pXfWk/Dcn92sq7niz9ZD4qCSuUqb2D
-	VKgpPzC0=; b=VFXNvo/ZHk8a8Y5QD7onRFB+ImoYYQbbETx3+CchqcQt1D7avIQ
-	D+QskBCHetiuEK9V98dvL6ysYVzH05WVZdO5rdqsxHcGi8ybsqlYMNVjbKY9Toio
-	kEfLpEAT9DtBYmC0TYhsC0muC9ADnu4HBoiNrOdrKpl4r1XzO2KKRTwZqsEOmN/Y
-	WUYBoLENaRizISc+wp5HxC2eu/UqzEvpXf0Y8dNAPDu9bgqR2tQx9jg6puaVTrQ0
-	y5fHa3vVa75/aJT/TLFXjRaTtSZ2FP6sEQuWYGDE0l/e3qGm+GBXH2e5IDRDvPiT
-	jcrI0Ys18v8LNo9DYsOCxrHkUb8VmjFOVhw==
-X-ME-Sender: <xms:tHZXZ_vk2HX8Gn4LIGvFDy0WiUsLrIEGPMKqMAUuwRBtKeTm2u9F4g>
-    <xme:tHZXZwcdbRSfDJ4KFSIJMaiVlRDCggnO1kNhbf-cdywKnFff-ZYbzrp7ZSeFeIvjw
-    BkGe5xqvyN7wPeQaQ>
-X-ME-Received: <xmr:tHZXZyz-XYbM8qwz4xIxDde4dPWyfn1W34MEqkTCY9otT8_sqd-__Gdl9f5NDi6KYyDlMdp5WC79qL-6x6nuhgGiD33TCIliTTwMff4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeejgddthecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrd
-    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:tHZXZ-Ms1GUctG7qh_NvWeDHkijm8_Bs1hm3iJnrC7Tf6iB-TMFECg>
-    <xmx:tHZXZ__SMnNRnnuYdR6YGsQf6woyoR0yM2xV6Eoz0tCbyChQCdj33A>
-    <xmx:tHZXZ-WML9znWE-8QX2mnLn0HV-xLDo2jZjXT881D9qzzkTik4NLAQ>
-    <xmx:tHZXZwdNjmRtXDiVDmkKNud2KuG98GxHITrlhHipeodCFXZmEYrphQ>
-    <xmx:tXZXZwP3g8MAYNeor_zr61cY8vLYHX53TgMtu5KCSyYakODemNq-Yati>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Dec 2024 18:01:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 0/5] Introduce a "promisor-remote" capability
-In-Reply-To: <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
-	(Christian Couder's message of "Mon, 9 Dec 2024 11:40:24 +0100")
-References: <20240910163000.1985723-1-christian.couder@gmail.com>
-	<20241206124248.160494-1-christian.couder@gmail.com>
-	<xmqqikrtnuyp.fsf@gitster.g>
-	<CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
-Date: Tue, 10 Dec 2024 08:01:06 +0900
-Message-ID: <xmqqed2go40d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nAeGYFPN"
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-7ea8baba4d5so8191539a12.2
+        for <git@vger.kernel.org>; Mon, 09 Dec 2024 15:12:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1733785923; x=1734390723; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=hSZtvwcCE2GnoN4Y/+Rl0YozhlT2TR/fKHeZXQy2epA=;
+        b=nAeGYFPNnewjIfnp55GwK0zbrPlKRA5XzPAW/UK0CBVE+SMJX3RDAjCbbHbedJUMQM
+         ELpWU646B4OW1wR6M4gNgnxcHvQBEf+mlANkXU7TVUObA/ScCztPzpj0zx6PkSNbT5Jm
+         uawRGO/FSNiN5je4k/w07+JPc8kQO0Iz/hF36LizQNOeDeutRS91iY/231HuB+WtIVYW
+         3umTqEi9hBCT26PAA/j4b9KQhERNjuAt/srf1SHeqi5JggwdU6lWHnzoPemzLFhfiuEL
+         Xe5eeITswGJ1WR4xYlPwUnc+Nco6wnhlLfRvWv7xnFgp3bxkbtvnSVigiSmgK9DIs1j9
+         vlAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733785923; x=1734390723;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hSZtvwcCE2GnoN4Y/+Rl0YozhlT2TR/fKHeZXQy2epA=;
+        b=gOZsSUX/YfYZvqInjE6Va9uqNJhpGCmbxl2tmsMdiEQQ4HrGB3p+fCWAlyEwjNiI55
+         U8I4H33MiZsL+YDZlDt8DQXeBk9F2TNFT6was9ZX/+5U180Atp2yxGHSwiLo/kfaQqmk
+         2tn1cJL5qyA//39ND7UagnfAqlk506cTLgfzY+g4LDYUkzNxP6TX3KQd62k/js/NLMgz
+         04SdNr5lHFB3sMUwN5hGcp2e3wiJbtU+9VJ8E2tqbSvqqB/gqYHPMTk+9HFE0Vg5H9od
+         lv/Wo+eDZsXIA9xPC92cUrHAAheekpRyQTDZw/S7sPT5eyFZZZBx8t4L/Zql/wdpBrZv
+         ie7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCV/igaYget8tsbLqVSQCt6A0v+T16d914Xi5eV7XS7EAtzZS8d4XzDmLZReIgYou88gYU4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3Ko/mO4BAJxo0AszlJzfHG1lumGTTl/9awmWDaHZ+6jw6PrPJ
+	oqOlhMLXdK8FolIclrQh4JT2Ftv3EpWTjVQfhuLGSujNSV07nKDvTCNCDP+585Mi9Ycc6rUIZIx
+	4AWKOOWd7vBidjI4ECg7KxIqyvGSbUA==
+X-Google-Smtp-Source: AGHT+IH8JLMIbpqncObiv7auz0Ko5lmgKzGq0qDcZFKO1SSNbmkoV/m6Wy6fg1i5+7mU2m8zoOudReS908iY9M0ReATT
+X-Received: from pfbay26.prod.google.com ([2002:a05:6a00:301a:b0:727:3b66:ace])
+ (user=jonathantanmy job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a21:7189:b0:1e1:9f57:eaaf with SMTP id adf61e73a8af0-1e19f57ee14mr9349204637.6.1733785923149;
+ Mon, 09 Dec 2024 15:12:03 -0800 (PST)
+Date: Mon,  9 Dec 2024 15:12:00 -0800
+In-Reply-To: <6a95708bf972cb22c8abf1da389350fc9f53c4ca.1733181682.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241209231201.841076-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v2 4/8] pack-objects: add GIT_TEST_NAME_HASH_VERSION
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org, gitster@pobox.com, 
+	johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im, me@ttaylorr.com, 
+	johncai86@gmail.com, newren@gmail.com, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>  t/t5616-partial-clone.sh        | 26 ++++++++++++++++++++++++--
 
-> I noticed that fcb2205b77 (midx: implement support for writing
-> incremental MIDX chains, 2024-08-06)
-> which introduced GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL adds lines like:
->
-> GIT_TEST_MULTI_PACK_INDEX=0
-> GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
->
-> at the top of a number of repack related test scripts like
-> t7700-repack.sh, so I guess that it should be OK to add the same lines
-> at the top of the t5710 test script added by this series. This should
-> fix the CI failures.
->
-> I have made this change in my current version.
-
-Thanks.
-
-Is it because the feature is fundamentally incompatible with the
-multi-pack index (or its incremental writing), or is it merely
-because the way the feature is verified assumes that the multi-pack
-index is not used, even though the protocol exchange, capability
-selection, and the actual behaviour adjustment for the capability
-are all working just fine?  I am assuming it is the latter, but just
-to make sure we know where we stand...
-
-Thanks, again.
-
-
-
+I believe the changes to this file are no longer needed.
