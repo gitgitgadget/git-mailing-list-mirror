@@ -1,117 +1,87 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF58D14F9FB
-	for <git@vger.kernel.org>; Mon,  9 Dec 2024 20:35:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4576119C558
+	for <git@vger.kernel.org>; Mon,  9 Dec 2024 20:40:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733776508; cv=none; b=hDj2gtzjDFGq8yDLfBGrXn3mZRJXiGsF6XLBTK1ncB/wlFNcGfzCDKvoRGe12qW7gsihSvfbvvy8RjQeEP/ITB8WGVhofbEvTO3bhqs+6pDJlgDlFCj8AzWOkJO194PF4L6hXEv7gMXgjbcnIfsyLpmEABX0a9bDJpc5nJgyIGI=
+	t=1733776803; cv=none; b=VCpYMAjtwhvoHzY2160dg4fHTqGc0OKa1fonyYg3F88mM9pmcHGjzMBV7BGtF2zzTHHuV1+ZQ4pgSm1KbeFE5Ec+UJ3z0ENAGjs4YguS2JUk3mWljxa63rFUQgVJKniXs91LYVmMxbdMV3fnp43FfhG9wP/14PmD8iwnO2WFZtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733776508; c=relaxed/simple;
-	bh=hTKVyWVpJqibFaYFUIyH4v0L9CkKSdrz8HsJ2nPHDC8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EhBr4DtOOYxvMFwZg+Z7XiOWkD2TtIUBv/bARtCGopuqXrSm7ibX6uGl/U9NgGgMW5XkBuIgeZUAC3WYa1IbKhyCPcS7RjhfoQuCV3LapNRmwixhKXywmO60/LSnoBHTLNx0dIlmaoYU66mUCDjIDdQP243vYiALZnOiqq1/ptE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c6kVC6ty; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733776803; c=relaxed/simple;
+	bh=W/2zyRg6g6Ht/uVM9WRpsTSDQ9gXQXFNXkyWiNH99Y0=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=Q5OHPVq8v4lg6AXDt8glCLJhrSw/mOmyVGmixv10ovMEvmF3NHrJXjZedHK7iOO8exdCBOgWotIkqiC5bVsCNRij7ma9LoENH0E30LMWDsXP3CSpf9x38YCMQNl+WGVtcNITv1adx6djZx2wpUdctC24cwe8ayV13AEzMJjRji8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mciH8ngE; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--jonathantanmy.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c6kVC6ty"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4350398046fso184775e9.0
-        for <git@vger.kernel.org>; Mon, 09 Dec 2024 12:35:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mciH8ngE"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2ef9e38b0cfso1603103a91.0
+        for <git@vger.kernel.org>; Mon, 09 Dec 2024 12:40:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733776505; x=1734381305; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=85xFvnqZLSml01v2/vQU/pQo2BCS88Q2y19SZgryS14=;
-        b=c6kVC6tyWZ32zm1Vkopm9/+XFN9jsq+s6Q2Ufxs1Xgg3ZHpe7URdso6ZQv6+sAxDix
-         k6ZXC4e/CtkkGBbcyBbEsJIkYVsL2XVqToHvuZXDUi8KXkkEnsoChqLlQy9LSVCy1uBa
-         vHT0tyL1YKM5m/f7jZc8oGFBFzX7LS4xIb8N3YagyWlW1NnnMDVxLXDqgeurqhe/V6Jj
-         OSvfDwUwoy680ueem/ZIt8T//7FudIZlb+3qL4Ir9nsyzDjbJqNaOc/0zTJ7uS5K/qC0
-         cRaZXcx4q8pj2S+9sWxJRDXAiGSjgqrxKqlkKgMFWUFZP5BEJfNaVx8GuZuuCLYw0CB2
-         FEwQ==
+        d=google.com; s=20230601; t=1733776801; x=1734381601; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yRoTImK0Ng4QsKTDxVdj+PVgRgcMFAmkmL0Frd8Wb/E=;
+        b=mciH8ngEmNEpsOLW9m0m7O6myY1YPEYirfKIh/zSG/LDGAenkSGIYzm1+LKG2peuoZ
+         yEU7rzgq6z8Ttm1svhmkZNkc1/0dknkQN0Np1Rg4CuT0wzM4vSnYlwnf0103FxV7t6mt
+         +prmdhp4lTUlIpXW0UN/1WOH68elTYBfLE+BbgWkalP4hHjZ00toqjFROk3NyXW94Kel
+         nVtNbK6yXN1QyoT5EHFRvtD7z1KVPFt1St/5zS+Por0otrre91x64LnN8qFTatvAXQhH
+         QgxWfRAhu6lQtmOwwRPsVxHGdc+aJL/fNvKwkTE8gAXJxQ0S6R8chUTnZV1ywpENMVTk
+         A2lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733776505; x=1734381305;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1733776801; x=1734381601;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=85xFvnqZLSml01v2/vQU/pQo2BCS88Q2y19SZgryS14=;
-        b=Yh6nH4YnxzAmeIaslmvSTrUr0QcnMFS4UFEnjWWrDaNyvHQWYk6akITDC6IJOBDRfK
-         RS7ZGhD3xU7P7w/Rew59hd5DmsfnxlzS5fqVrv7U9nAomvn2dUAUnXqvs0u5fRFVAvzd
-         wwrcdAZbqjIDsm3l26Erj0tYpIkFiu9kFZTgSH90iNV+tQVZKAIRXzDSRta7doDOUqxv
-         EBBkRdr4Qqg1u4CmbL0APD+f5nzBmhyK5DqcDpVnjPhlSeLNO2VEb5WpqAg0M/T5FGMQ
-         P6lmhcabIxgLR45bp7Zdv+OESELoCOVnI6o0E3pOFYX3z7216CJiDeHwJxUwWAX5Kq6u
-         k8SA==
-X-Forwarded-Encrypted: i=1; AJvYcCV0bTCahaP72w2dhvPz7pGlL0+djgbcCgFhnWaK7XKT+pnL8x+GV3SAd9e5aoLLt/elJ/s=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyysQuzrKrh3faifc+OBIJhGO8wwB9xln28J/7rm0vC8+J3VgLP
-	L7Js1RN8Io4R6saVBziwebFg+ZbwBQzxcNwcRU136gjpouqC06Yg
-X-Gm-Gg: ASbGncttDQ/O88eBEkJGv6qcL/8rlJ/1RyRuL9kBuhTAmXvTsWZu/0FEin6kAEZSO1k
-	xCfXS+TusceqW2A9l31w54Fijk+qiD5uIH0pnIqrpsbjdWstJVGSzmSZ0Hy8digBGnm39tBxPdk
-	8OhMY17gltN1y1Bo0a4FIyEtn9ecBJ/Srf+UEIreou6gIS2/BnGa66h0Je3DMd4TMc46Rwngkj7
-	wW9kUIw2tfQjmnMGLuW4ZP2QwvU7axBExxBmWxcIZqs+wtojicbZlXzhTBX7GD+Y5tsK55tzBJ/
-	VJ04gvtWChk=
-X-Google-Smtp-Source: AGHT+IEutjaBOPKyGQycj3FwtFR7mlLHCr8ob1bvmjydhvk62Rm1l2hDWpA6BgvDAA5QodiU//Z9SQ==
-X-Received: by 2002:a5d:6487:0:b0:385:f092:e1a with SMTP id ffacd0b85a97d-386453d271dmr1905612f8f.11.1733776504802;
-        Mon, 09 Dec 2024 12:35:04 -0800 (PST)
-Received: from gmail.com (193.red-88-14-197.dynamicip.rima-tde.net. [88.14.197.193])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3862190975fsm13927865f8f.68.2024.12.09.12.35.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Dec 2024 12:35:04 -0800 (PST)
-Message-ID: <be4ee78e-12d4-44c2-9f82-4f0db7706fea@gmail.com>
-Date: Mon, 9 Dec 2024 21:35:03 +0100
+        bh=yRoTImK0Ng4QsKTDxVdj+PVgRgcMFAmkmL0Frd8Wb/E=;
+        b=c6yRLSJD89/BuTQTwDTib+YyBAh+eeYiMtS7ek6oaJdPjIjhM2uOQbsL4PgF2zgJVg
+         4FpJfL/2wDdJ40RhHjDRozlTuyZzyyi3noFyrpO5NTo/UA6NEgkV7lGWz7kfoK0Gn2qy
+         4gjbqWgkDtmHCbwhDNrucectryzhdckZScpT+fXRYMvvjVtfx+uESN213wgdsRTV6FH5
+         gXLMwma4dKmYlsh8Cam/FAt19Jbq0Hj+SyCQdfGn9aAO37TBbQ32GTH4Aw96rNwCEmfW
+         1O3V9OW9d5pe1faD6hsG8LA25u11od2w/8MBm9Ptq7LEXzuv1tbnAfp9I+5qsduqlcHS
+         1xYA==
+X-Forwarded-Encrypted: i=1; AJvYcCX/yUbS6WLZjkhOSemXlEm51YcV2gj0Vy2lIRaQiBHYU2yxOWWZ4Rm02I7MuGUynjfXc4g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YymyvzZ+03zZEWswa2QJpf8QPe0OrPJdebGPjQE/NYmkOPPROY/
+	ztU6MkweLFrkwmF40xbDrPN/e6R3BnTK0jO2jl//Ci202xyEpffbImenDHOHrx1HRO880VMM48s
+	tUnspJb1L8Kgen/qPOzmvDWB92uFg5A==
+X-Google-Smtp-Source: AGHT+IHWzJg680exCGTT7mQIj+FwbloB7YHCs3/xGxezpXJWtumlB1y7t8Ti79yDxR2QNMIFpGBgZ+jv1NkCe1sf3xfC
+X-Received: from pjuw15.prod.google.com ([2002:a17:90a:d60f:b0:2ef:977f:1108])
+ (user=jonathantanmy job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90a:ca97:b0:2ee:6d08:7936 with SMTP id 98e67ed59e1d1-2ef6a6c10cemr21253381a91.20.1733776801623;
+ Mon, 09 Dec 2024 12:40:01 -0800 (PST)
+Date: Mon,  9 Dec 2024 12:39:58 -0800
+In-Reply-To: <xmqq7c8asepo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] advice: suggest using subcommand "git config set"
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Heba Waly <heba.waly@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <Z1FkrsQ5tkz1pFUz@pks.im>
- <20241205122225.1184215-1-bence@ferdinandy.com>
- <0e139151-7162-42b3-afae-248c28bf4c4b@gmail.com>
- <D674P6875UXA.LXGHCJ9EFE0N@ferdinandy.com>
- <D6791Z2QPSUW.1LP269FO886XF@ferdinandy.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <D6791Z2QPSUW.1LP269FO886XF@ferdinandy.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.47.0.338.g60cca15819-goog
+Message-ID: <20241209203958.801143-1-jonathantanmy@google.com>
+Subject: Re: What's cooking in git.git (Dec 2024, #03; Sun, 8)
+From: Jonathan Tan <jonathantanmy@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Dec 09, 2024 at 03:46:04PM +0100, Bence Ferdinandy wrote:
-
-> I started to split the commit, but realized that I only updated "git config
-> advice\." to "git config set advice." in the tests. If I split the around five
-> instances of actually using "git config advice" in the code, then it starts to
-> make a lot less sense for why it is only for "advice" and not for all the other
-> uses of "git config" in the tests.
-
-If I understand the intention of this series correctly, the main goal
-is to update the help messages we give to the user on how to disable
-the advice messages.  I think you have addressed that.
-
-Updating the tests to use the new UI "git config set advice" sounds
-in this series, because it's related to the advice machinery.
-
-Updating the test suite to use the new "git config" UI seems out of
-scope, I think.
-
-> So I'm now inclined to think that I either
-> leave the patch as is, or simple just remove the parts that are not updating
-> expected test outcomes and leave updating usage of "git config" in tests for
-> a later as it would likely be a larger effort to clean up everything to use
-> explicit set/get. This cleanup would also only make sense if there are plans to
-> deprecate the old implicit setting syntax at some point.
+Junio C Hamano <gitster@pobox.com> writes:
+> * jt/fix-fattening-promisor-fetch (2024-12-04) 4 commits
+>  - index-pack: work around false positive use of uninitialized variable
+>  - index-pack --promisor: also check commits' trees
+>  - index-pack --promisor: don't check blobs
+>  - index-pack --promisor: dedup before checking links
 > 
-> So should I remove the changes to usage in tests or just leave the patch as is?
+>  Fix performance regression of a recent "fatten promisor pack with
+>  local objects" protection against an unwanted gc.
+> 
+>  Need to squash the fix-up at the tip.
+>  source: <cover.1733262661.git.jonathantanmy@google.com>
 
-I don't have a strong opinion on this.  Since my message, Junio has
-marked this series to be merged to "next".  I can be perfectly happy
-with the patch as is.
+I just replied [1] to what I believe is the last outstanding question,
+so I don't think there is any code change needed besides the squashing
+of the fix-up (as you said). If you could squash it locally (onto
+"index-pack --promisor: dedup before checking links") that would be
+great; if not let me know and I'll send an updated version.
 
-On the other hand, perhaps I could send my patches about
-`advise_if_enabled()`, later, rebuilt on this series once the dust has
-settled.
+[1] https://lore.kernel.org/git/20241209202935.799059-1-jonathantanmy@google.com/ 
