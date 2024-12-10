@@ -1,92 +1,121 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5880A1A2398
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 12:13:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A60D23DE9A
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 12:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733832815; cv=none; b=GqZnqDqYe2zw8Bm9YA+uISeeQnw/4Oibf4GJnPf0qnv2sQk5ucFhjywRPQgrvojs+VFd+7/+BGkSUzXaX1CjESSY5sYL9T8fxpwWmOAaU32sqTo7E76/K3gsSHQG7dGu/4BPZPcCGZxhrgEOj3ifvAWgizpter3MjaFz6nUtnbQ=
+	t=1733833189; cv=none; b=WEaMcubY9IiaSeAjgZ1K/OFC+J+3KCsgE2LNlX20xN2p18ENX95Jily7PVkMKTP7D49weydaHqMgPVOcsDKKS+0AY85FU7AZymManiK7CusUVSFLLWuoG4vwzGVkD/iOBGd+ogYvaORNGEDQckfzsQUlBeBQdmv73pw8Vi8eADQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733832815; c=relaxed/simple;
-	bh=EJ/dzygDHrnYB2egmxgH+zcEQFOFkkDYQ9Lr6spcORo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cXid5swxqFKlwtredJBlBuOosFpZZvPkdK6kBMX5Z0R8HehxEpUjp8CLIx4Mkb1Pmq19oDtwJAVVDvvSo9/oQBsLWLPYNixrDfTZ8mSEp8C1z36vhjkFbORMZCLBOaS4kQGr9REwQg9Z9deoRZOR0xU3CtJduj2icNgTPAAhjlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HlJDk5fp; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733833189; c=relaxed/simple;
+	bh=cZXW9hsxIt+ORaLLJIZtNK4jNPH+i6cJ+aoQ510sKgQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pvdW4kErXbXVaymO6N2UvkCU2Fh0bZ0GCLZAGajhyPsKL9VCt5OQwuA0fdVAZDAg/rz8fLgSo0aERbhh9x9CxGAVLoJjYPtIAihLUWqZ18LDwZLKs9+uUAnnvJ1HoL+N33E41gDXsi9u0o1L5WbVJf7Q3VjgfWWs1px3HRVwJwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hh3K4JeT; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HlJDk5fp"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 29416254018E;
-	Tue, 10 Dec 2024 07:13:32 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 10 Dec 2024 07:13:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733832812; x=1733919212; bh=rH5366aYwyqwvgJSxOl+QhYHRS3g/w99bkZ
-	pdUQRGs8=; b=HlJDk5fpescMGnva8W1NR7vKWvMuJ/KR7f4Q7eIDv/APE+QHNLG
-	87UvkneS1rChANhxIDt+e4b3xpgJi+p40D7kizJVmgugWvzkt80YTJSaySGqebvS
-	nTHvrcYD6IgapRkjpDfAOsb98V33YgUpxLcmOy5d/BoQJDvYA5UGvrQ9K2Gxp0Zr
-	BpJpM2CrETLIOZK51sr21aLYSoPPJSFK711ss+dgMXUeLPGKqOs3YviWB2bIc2ED
-	c+4zaqIUgZZNZnPDRl9ClVWy3f52xp2hoS1e9B0TY1Z7npMXsPBGrfUJCOZe676K
-	D+Wg3A/WZqICjsx+/QoFKcwbqDlIhJzLTLg==
-X-ME-Sender: <xms:azBYZ5vd-CCtJI7z681Sa_0qHNMs7VBuk8Ccd167C-YTUOWgyqke8Q>
-    <xme:azBYZye56Z06B6mMekCut2GsVJJafrYW3aVS436gbj74jouuJ4GWq1-WGrH91AMTJ
-    e5mGKtwoskQUI-1tw>
-X-ME-Received: <xmr:azBYZ8w3MbJD3TcWwtnb6q6QLdXniKbExOTmEMTauVsh463dMe6dD-nO5fp22x5lEsvqv1m52Y5rRC2UsqMV4ipWfEF1fvUyG2UE1Yk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeekgdefiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopegthh
-    hrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:azBYZwN2CbSHGz92zcA7kMW0iPpTOu-7TxIlx-sD0X_qUsaNAOrttQ>
-    <xmx:azBYZ5-1FcmgZ0sY9ifiLNFPxsAscfHOUmIzc79ZaW7RD5bamywLlg>
-    <xmx:azBYZwXL5fDDxKRnFEdAW3M8N2dLyrIfb24PS7gFr_CV4HT1y9HMsQ>
-    <xmx:azBYZ6eAd_edpnpbsfKjo5DEA5Hl0jzGYB48VZLfOHNp_wkB9Y8p0A>
-    <xmx:bDBYZ8l38ZdjFsf64H6qUNF781JXcr8QAs5Sq4FsHEMBQX7r3KUXZBLB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Dec 2024 07:13:30 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  toon@iotcl.com,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 0/7] refs: add reflog support to `git refs migrate`
-In-Reply-To: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
-	(Karthik Nayak's message of "Mon, 09 Dec 2024 12:07:14 +0100")
-References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
-Date: Tue, 10 Dec 2024 21:13:29 +0900
-Message-ID: <xmqq34ivlora.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hh3K4JeT"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6ef66fd2183so49841697b3.1
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 04:19:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733833186; x=1734437986; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M6lJn08WGX3/7SHPF4Fb3P4y/bW7xFejcjAcMANwGik=;
+        b=hh3K4JeTBgpQqM7RMSR5+wn1k2QeNC2vRtFy+MwMw+r6fNpgD7BJLpKx3LJrkG6Z32
+         XgK+XXUmOzxaDlKD1stskq2e9uy/dKkWbVtlJlUvIS+uWwOaPBYj7hpcnVY81YSnl0T8
+         Rg+YRRzZErk7quUjwpXlZQOPbPHQr2pym+TfFxxEf+GYN6nRWQLh4Dlh++NBaxP3uepF
+         i+5PYwzRNzMRBJFFwfwWNiVlJy5tgwUllljBirNxQai1Sn0BZfVuELtXWgiHAp0IjgY9
+         nOMDDlXkigQJfC3Y9QUjBb00aDZwozP4UyJ9qUi9cOLiiFW3F7hSVkQIyHKEL3vQpMYK
+         gzkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733833186; x=1734437986;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M6lJn08WGX3/7SHPF4Fb3P4y/bW7xFejcjAcMANwGik=;
+        b=jmPEYry9r8h3XQSn/H7cOZGhBLyT4mr1W+i7hfENSKbdqmvw/yn58nyGDaaUL5TIZJ
+         OJpID2lu5dEG4vK4D2/puIeKKFLxoUF5s3xwbtaTqa7gBc2gvcu2WW9Qiz6nV2zPc7Xf
+         Wpo7o0SoT9jB8cAv4A/hLuqE28kgaHDFc9xufvz8D6Plr105GiHZN/IQAwdoeranrXyW
+         RxNqR+U+g0vtiFOiuP0/IoRlopf2FvMIhPGBx4V24JPJvG3Dr/qqcETXOFRIlP1Pb/CR
+         LcQXbQFdCF4AIHi8mo+Ah8TOjgJepD9/G112x165i2D4JpgYpchTAyOJukV+lqjuZ57L
+         L3RQ==
+X-Gm-Message-State: AOJu0YzWnz35taoKOxAq+Z91exzNlMz56XlwZRqH8GVd1hjIij8qwmpR
+	TCoQvZhuTwr184DMmB2qCNVzlra2/6lG7N2UxiLBTiAlXXIMVO5TrKre5MR0rzeAoPJzuGJj+ye
+	6QzcWSEsXDLIslzyzQkJEEwXTi4ARf2dq
+X-Gm-Gg: ASbGnctHMpg/nsxw+5HY/kGE1TyJaNL8ZtA10yresoAtY3t0UaNJAXjZIyM62m8ashT
+	aP6NFIhYbgiACvi/uidLJ+zl7txR3PTJr2V/B
+X-Google-Smtp-Source: AGHT+IF//4qXXiD1bslo6v8CdU59/jrR4L2eFu8e1zWcfv56EkUyTZrOiPLJ61eIPIC/7qcCixTozH5BpXLm+sFsL7s=
+X-Received: by 2002:a05:690c:46c7:b0:6ef:57f9:ec4 with SMTP id
+ 00721157ae682-6efe3bcf570mr142705257b3.5.1733833186228; Tue, 10 Dec 2024
+ 04:19:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com>
+ <cover.1733830410.git.zhiyou.jx@alibaba-inc.com> <93123988ae00d865d0251ca0667c4f4584772021.1733830410.git.zhiyou.jx@alibaba-inc.com>
+In-Reply-To: <93123988ae00d865d0251ca0667c4f4584772021.1733830410.git.zhiyou.jx@alibaba-inc.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Tue, 10 Dec 2024 20:19:35 +0800
+Message-ID: <CANYiYbHQVsm=Q-DXfmYu-Ar+NYpbv4vcSeWO413iD7qYzu0zNg@mail.gmail.com>
+Subject: Re: [PATCH v3 5/8] t5548: add porcelain push test cases for dry-run mode
+To: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Tue, Dec 10, 2024 at 7:36=E2=80=AFPM Jiang Xin <worldhello.net@gmail.com=
+> wrote:
+>
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> New dry-run test cases:
+>
+>  - git push --porcelain --dry-run
+>  - git push --porcelain --dry-run --force
+>  - git push --porcelain --dry-run --atomic
+>  - git push --porcelain --dry-run --atomic --force
+>
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> ---
+>  t/t5548-push-porcelain.sh | 153 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 153 insertions(+)
+>
+> diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
+> index 799f6066a3..ba68808459 100755
+> --- a/t/t5548-push-porcelain.sh
+> +++ b/t/t5548-push-porcelain.sh
+> @@ -310,10 +310,159 @@ run_git_push_porcelain_output_test() {
+>         '
+>  }
+>
+> +run_git_push_dry_run_porcelain_output_test() {
+> +       case $1 in
+> +       http)
+> +               PROTOCOL=3D"HTTP protocol"
+> +               URL_PREFIX=3D"http://.*"
+> +               ;;
+> +       file)
+> +               PROTOCOL=3D"builtin protocol"
+> +               URL_PREFIX=3D"/.*"
 
-> The `git refs migrate` command was introduced in
-> 25a0023f28 (builtin/refs: new command to migrate ref storage formats,
-> 2024-06-06) to support migrating from one reference backend to another.
+This line breaks CI on Windows, see:
+https://github.com/jiangxin/git/actions/runs/12255233680/job/34188220514
+ Should remove the leading "/". as follows:
 
-This topic pass the tests standalone for me locally, but seems to
-fail 1460.17 and 1460.31 when merged to 'seen'.  I'll push out the
-integration result tonight; it would be very much appreciated if you
-can help find if there are semantic (or otherwise) mismerges that
-are causing this breakage.
-
-Thanks.
+1:  93123988ae ! 1:  9e764b6faf t5548: add porcelain push test cases
+for dry-run mode
+    @@ t/t5548-push-porcelain.sh: run_git_push_porcelain_output_test() {
+     +          ;;
+     +  file)
+     +          PROTOCOL=3D"builtin protocol"
+    -+          URL_PREFIX=3D"/.*"
+    ++          URL_PREFIX=3D".*"
+     +          ;;
+     +  esac
+     +
