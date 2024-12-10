@@ -1,43 +1,43 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D25241C6C
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 00:50:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23E2382
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 01:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733791841; cv=none; b=M4jRORZdZg3wuoi05CZ+cujSZ+w/i6aFkmL+GatEE+F526ud4RFk/rAwuNGgdCuDkqZ40+JZTzhe2OJOaVoD5HZDYHt60JhS6uMxG76mAefdv3OUKPjM5LMYmJA2P2swZQ7/B1XpXNku6f4khZwjj2Edr16tovELSVCnK1ubUeQ=
+	t=1733794124; cv=none; b=FhuUaP3ZoHOkuZ/n/+9U+aOCRJ2UO0TYbzkFpa84UWaHCy/T6JbNb05MUZLfGcFKOlz7glPzVcOv+jegZQKsEeWCeFwxfVepTqBYMCrmj64qQaZ0PwAx5xxYb2LAReb11v1vI1ryEXb1YlsGA/BczNKWqhOirzDffNEYC1BCzJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733791841; c=relaxed/simple;
-	bh=4zVrWFvNde3wCgUSoGfnbe7pbN4vgDcUI1uJWTX59dE=;
+	s=arc-20240116; t=1733794124; c=relaxed/simple;
+	bh=mjFKuqFgBrVxyP0uwneOg+Uxf+XkFZTBBk2MEGT2hz8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XcXNtPPnkcGWgcTS1tk3Dqmz6eMvzy6saf7ZRYmeD3H2o9l6mSKvfeFliFT3IdxU284UHE2yvMzPzOE62fuULNjlwePl+RS3yFrla+liH7wDk9xxarq4faYgDzFOiUcrysUjhCpweFrlK/W+/Eq5p8PnBhTAJ9X/zvTcSdZDng0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vbt3YMnw; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=jZ5i2mNT1vVt2ZQ+GS3kcTgUbXU+yOXUG0RKSXwk4pVh8imilgdkbmkjou5JB1JiqncmNZJmEOYiEZnjKwiwgWIc+fjtRfYavbQ5J0VJ62W8n6IxKO1y0fywl5Bb5WCFoTTrXvbSSBxVx8uzXZfLb8sbQTYiHmK6lx+nA3pePno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wgA7Mrxf; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vbt3YMnw"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 29AFB1383ED0;
-	Mon,  9 Dec 2024 19:50:38 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 09 Dec 2024 19:50:38 -0500
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wgA7Mrxf"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A35C413838C5;
+	Mon,  9 Dec 2024 20:28:36 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 09 Dec 2024 20:28:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733791838; x=1733878238; bh=tCXDmDYGsRtJ9+vgfV1G5pp8+KMvamdaDt7
-	zc8588Fw=; b=Vbt3YMnwP+pHOFvgS3nvWh6iP1HvJkrLBR9VbXWn6SPsWsjxqLW
-	uER6YO/nPDoYCHz8o2PzI41iD4GHLBuZxfTf85YGB9ZC0FvYcVxmF5RfDBSMjhUa
-	UhtwN8Dkqg+R2bpqcAZ1WiNUKXybdL2NboaTeVVkjnga9hBJSr327m8NP8ajf1uo
-	FvtNRfKmH2jBc0lfA1y+WxEeaAU6e/spJleC9YUveIzbiyCt/NFYIb7vTu39f08Y
-	2NKiT29rXpHGDdAxeycHTuBGmM8JfHg6mdztNzUSGZ216MVYvG4POxPhV5Au/Sqo
-	y6KpP2j9nQLLzCHpekVTNogSL02WNl0JK/A==
-X-ME-Sender: <xms:XZBXZxj8t0EyWcZVILJVN6BJD2C-j-bsn53NEKGsUUE3B0BbOJ85eQ>
-    <xme:XZBXZ2AC6sVK3L2XdkKd_uwRgMv8VPpk6Rj0OLXONMMkGE4opkhFVyp89b0AHPIsm
-    FH6jhyMuYVJW73QxQ>
-X-ME-Received: <xmr:XZBXZxGbperz7kYDTBsHs2q9e4Bc4oLNeYsUkQl3yMGM6X7dnm7E1QpAeaBBS25UdCPj2rLdW7rQP8s9a_F2kTR47TV8fo4_JD0n6O4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeejgddvjecutefuodetggdotefrodftvf
+	1733794116; x=1733880516; bh=qyrJTFhM+zrifOLRJIk5oitJKIVty53qsqm
+	3fpoX3nQ=; b=wgA7MrxfAFJGtO403OJGV1B1ZutAALLf9udEZhxcPL6q49uXf/z
+	P50FmgvYILdvkdIdCHkTiQcJ087KDl6+LUzLJWas7VnBd81LjRblZzKaE4Tmny6v
+	/T561g/BmcEJRWFYzQ2Ts8diEPqIlKDjfgNJEz0Km79wVj4I4Aob1HBjZOAFYUGQ
+	oOixGa7YFyXqoHTW1DqjVyWKcqHIEbTVzM1St3neLMFzpmBZh5x7BHQlsfve4do0
+	aKjJITbZAXQS4nkv4jHIRluwBIGucfWbCiI+6+/Y4dolXQ22h3zAdtHSmepf/unI
+	JUZwLdP5EXoMstgoJdbxIqIy/epJyAkDvDQ==
+X-ME-Sender: <xms:P5lXZ6KnqqidbRyiXZzw-Sg3bBrX5-tx8wC38ykeAjiLd9GizTamGA>
+    <xme:P5lXZyIIk3Btv0eLflvgFge2hLIvAbnOMibZBdT7-8h0a289mIW67N6BAf-wA_8EY
+    Gl5IAV8ukwMyjwuuw>
+X-ME-Received: <xmr:P5lXZ6taofrPwSURCgwG50FOoYvQdS9A5l3tUrZNf5IjUiAWTSLT78qJRPhYgRKJKEy4hW-plLRE2yU3yLbrjUMX246znXJ617oNjAg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeejgdefhecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
@@ -45,34 +45,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeejgddvjecutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrohihvghluggrrhdtse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehjoh
-    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehsuhhn
-    shhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:XZBXZ2S4Y6hz9-9o2-dmZwka_yLf9p_8HXLHEzKZ3FoYTQOBEymIBA>
-    <xmx:XZBXZ-wekzq8FSpdluWghAts4WEW3n1xzl_oxF5fWZPcmJ7XjBNs7Q>
-    <xmx:XZBXZ87O4sg__M1lf33S6Ml4YjWAvV4P7lHlIYnGH-K3jzXGMZlYYw>
-    <xmx:XZBXZzyz5ArIrLUksiuCBZCOcqGBlCiOp1uScgnjseaac9b6poG_rQ>
-    <xmx:XpBXZ1mX_AVk5T66cKrDkLGyDfeUk7cMr2NOPMElYin1YyxYW0ubhzuf>
+    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrd
+    gtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
+    hmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:P5lXZ_aosNK7tfiuuGQX5r_oqArvsLBAyO2VEPs0Z0OQFmFZbpuuCQ>
+    <xmx:P5lXZxa5EMD4WPTV0GJNwSEahGdlZcLWNH4VQDAa3cgvNeEohmxTwA>
+    <xmx:P5lXZ7AulwITtU_D-7e8Y814jxkJ-cj6kXHOb-5AFoT5HnsaDOSLRg>
+    <xmx:P5lXZ3aSLgso05dE1SKtiC_BICI_Y3thwm9h7AFoP_h8Us6EXHiOfQ>
+    <xmx:RJlXZ_ND2FIYp9QOsrgnIuTQ_yHzey-Kc6Kxw7R98hdFmXdrE9nfVn0U>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Dec 2024 19:50:37 -0500 (EST)
+ 9 Dec 2024 20:28:31 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Roy Eldar <royeldar0@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Eric Sunshine
- <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 0/8] git-submodule.sh: improve parsing of options
-In-Reply-To: <xmqq1pygo2ti.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	10 Dec 2024 08:26:49 +0900")
-References: <20241207135201.2536-1-royeldar0@gmail.com>
-	<20241209165009.40653-1-royeldar0@gmail.com>
-	<xmqq1pygo2ti.fsf@gitster.g>
-Date: Tue, 10 Dec 2024 09:50:36 +0900
-Message-ID: <xmqqa5d4mkdf.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 5/5] doc: add technical design doc for large object
+ promisors
+In-Reply-To: <20241206124248.160494-6-christian.couder@gmail.com> (Christian
+	Couder's message of "Fri, 6 Dec 2024 13:42:48 +0100")
+References: <20240910163000.1985723-1-christian.couder@gmail.com>
+	<20241206124248.160494-1-christian.couder@gmail.com>
+	<20241206124248.160494-6-christian.couder@gmail.com>
+Date: Tue, 10 Dec 2024 10:28:29 +0900
+Message-ID: <xmqq5xnsmima.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,19 +83,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> After reading this, it was confusing to see [1/8] still doing "1 or
-> empty" boolean, only to be further modified in [7/8].  We prefer to
-> see a single series stumbling in the middle and changing the course.
+> Let's add a design doc about how we could improve handling liarge blobs
+> using "Large Object Promisors" (LOPs). It's a set of features with the
+> goal of using special dedicated promisor remotes to store large blobs,
+> and having them accessed directly by main remotes and clients.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  .../technical/large-object-promisors.txt      | 530 ++++++++++++++++++
+>  1 file changed, 530 insertions(+)
+>  create mode 100644 Documentation/technical/large-object-promisors.txt
 
-Facepalm.  Of course, we prefer _not_ to see such a change of course
-in the middle.
+Kudos to whoever suggested to write this kind of birds-eye view
+document to help readers understand the bigger picture.  Such a "we
+want to go in this direction, and this small piece fits within that
+larger picture this way" is a good way to motivate readers.
+
+Hopefully I'll have time to comment on different parts of the
+documents, but the impression I got was that we should write with
+fewer "we could" and instead say more "we aim to", i.e. be more
+assertive.
 
 Thanks.
-
-> I am assuming (but I don't use "git submodule" very often, so my
-> assumption may be way off) that there is no such variable we need to
-> pass, but if not, we may need to reconsider and use the "variable has
-> only value of the option" for at least some of them.
-
