@@ -1,69 +1,69 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A446E210F7F
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B98212D75
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733830600; cv=none; b=bG2SASyNdD6Q5dU1t2eBz10O77N8muuCY4FMs7SnH680A7qDj2vM8ptNaoUgRsbc1zRJ95b2U9W/GkJtib0392ajeEaLPeYiRwYoCtp5hURYPVxlmJs5oSYprnZXc4tQdbE03Emcp9tn3Js6jA3PBdGs0EDS2BHb6+yxJ34qu8U=
+	t=1733830601; cv=none; b=k/eG52SoqK5y4s11vcOKITnustyQYG92D1nvH8tPnFLF5QrfblwngaaulTgxE2qybVbxeO8icrVJIUGwsCEPveSYj0yVPlDdCBQxvfdGKyjY5AnU02ECeJOvz2FLD7r+RcuZnnGzWLq2faHScyXwyJGTNeuP86u4FxVHlJeG4h4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733830600; c=relaxed/simple;
-	bh=M8bV1CIlGHkSFEO0Am6Mp7hHFijEVzMy+ymwyThmHpk=;
+	s=arc-20240116; t=1733830601; c=relaxed/simple;
+	bh=7d0v/fW2aB00bJFmfvVyS4Q+inPguWQFl7wcOxNzL8M=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DEwN+RIh2NqhCmvUVQYADMJp2ANSdR7sbnFAVtin4OcqWr1c1xh9CCQqxv3qpnxjp8bM/YKM/4dYRUlh5S6JW4+VqJG8ILhJcPitacz3tqAVVo0mJrjoKynzMu0UFUXFAfUOJYYtNyKqFMTy5ZH2oaf6BCLUjjSXiFnToBzqGSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxdzutFJ; arc=none smtp.client-ip=209.85.210.170
+	 MIME-Version; b=WdiVlV3JLXJwg3bxhJAJbkeAw6tkGCbYrnIsqho7JLHJqUKUQCJ6aqqzP6T3sK9AzUWzXdJUHJ8WT9gGs1p8kulwtfOBduI3Ycp2BKuyQW0PypittIeg7x4B/e2VEQBbgAOfik6XzgoGJVTn7aRZbg9p96W1dEH+DcQLcEiFu/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTOXVTo6; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxdzutFJ"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-725ee6f56b4so1741755b3a.3
-        for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTOXVTo6"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-728ea1573c0so33775b3a.0
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733830598; x=1734435398; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733830599; x=1734435399; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zMz+P7c9fNk1zlAalcvH/pjmfqrBeaOCLQfZlN8gH34=;
-        b=RxdzutFJcMYbDgih+Tnke/ZSnwNixFHOtDRQ0qlhf+qKqNPwgpNvXIoV9pk5B4rpB8
-         ABGBxXG+WHY8bCp37PKSRbLKMbz7fX94t6r9Tbiihk9GxIAklrnWLTLxXv2PkFLBYhvZ
-         QnwNMm0zjJ5kRlMvZ3sz6lF889RgcRT5GdexWScAmki+ozP2nd7E5FIN/47usYp32gdi
-         Sybaz+Hma7rpG2HMxjMEM/S7Ax1wwsDgAq1PdU+/e2o+zTEMxBdVEUBYJLWNmQHRSlR0
-         ruoDHQppS3f6nvZZwncRNARhgrkxW9/KprwliZ7QJG7PZ9UCvJgE1Z5vrnExjFUDlWbW
-         eb9w==
+        bh=8m0Jv3x4S5mP1SNWqB3cmjfYtz3xeIJv4zIjzXdeCK4=;
+        b=bTOXVTo679629gxMuGjeXmJtAy3AjitOs5+ahfARiwHZg6jpSRxYgzw+0Ynkd52Ho4
+         PbeorV2IuGwSo4TUkEHEgdTIWilqoCnqyR9oMLU6XPPavFulKRbyHviwSMq9nHRXUTLi
+         TQtJ5iYg/SWr+iTtZHa4be7oqh+WkMMeyp4iOkohI138reu4USoLNnIFgwxe4lt4L4dC
+         BK7OVH2/WADL/72u9pGSDU95iKL9MEFDoU3pmfYovUZtP4yaJf6p3ZSDbEash5DEzMJq
+         rQUCa8iN3bDDKtgzVxgDQStoHV7OApbC8HmVqlbUHGBzFsoMlP6M5kEOQLAvxxHPom2v
+         E/iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733830598; x=1734435398;
+        d=1e100.net; s=20230601; t=1733830599; x=1734435399;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zMz+P7c9fNk1zlAalcvH/pjmfqrBeaOCLQfZlN8gH34=;
-        b=mSZLZZK7iUuUF9A/pX8L+hh8xFtmZiAYmH3pFXHMr1MyZ6igLty5qSYUjiKUjVthN6
-         I+xYVbeeQSC/L8Jj4CWs5HowbNxoYBFtgzLD3MH1cJlNHtihd2V9/89KrTeHoJaJkUTW
-         SBoPtEzQQDinpk8LDu5eE1+TTJf1olc8zFe/ARMH78wWn3KK1XkqfHhxzeg5zO+k57QV
-         xg2ZSFVoGkuV68366tkwOdomZ+VEPuEW7eFozJQU8NUXuGW0WleKYaaBBGf1zm4GllaQ
-         Hk5uqtG+58+DR7HjYqwbcUTw5+SDZZY82Gt4z+JAyYaD8xo7De/RXLRELQPvNQ9/y6f/
-         czPg==
-X-Gm-Message-State: AOJu0YyV95ORdhSQVfl/SwvZsJR1nCeCKakZaww5i1Lv9NbwyxVwv5xg
-	tZEXeHeRSKtYX5zQ1A3GtXJsBDYh6CPo7KswHhUy1kGhRVRqmb291Xz4xg==
-X-Gm-Gg: ASbGncu2dxXqFpTBtwdqG0/HVZtRo2SUGa/xGhKLB4pMdWbv6UGGzUtOW2zyDQK9zLz
-	sjjm8MHQs7juzgrOUadYx3B9t+dcTk9NyPx02gbMrNxnqNTwiUZtx3IC+cbgc+pzNSDWn8771Fv
-	MA+c3EUHAOOyEs93lr3xgVN8x9orbtxP6D+djqdZWWDTn7nvq9MznuFp8mfWYI5GNMF4pIDSVGj
-	aG9Om/d54ExTPj9SY2zadvHmeVfcSslSU0syGMmMY3B9gLOGMJE1ngJv+7iI9H3d3Z5Kc86MHJO
-	y4FMjSIFDihijyrdY2T4euFAqBpWXnKOwENQy037hN8p1A==
-X-Google-Smtp-Source: AGHT+IH21tFgZuP4/eCVPT76AKFRIQicVQSTM50Grr0JBVEa2EQbLoJIwmoQrompHBC4QNa1eHJ2VQ==
-X-Received: by 2002:a05:6a20:c78c:b0:1e0:d848:9e83 with SMTP id adf61e73a8af0-1e1870cc3c8mr28095204637.25.1733830597756;
-        Tue, 10 Dec 2024 03:36:37 -0800 (PST)
+        bh=8m0Jv3x4S5mP1SNWqB3cmjfYtz3xeIJv4zIjzXdeCK4=;
+        b=BhoujCsTYXjCQZ4m0sgqqJejn/7eQaaEv2JLTfiuqkdDdq+DCDtl3mXhbxD7pwxwkS
+         tGWaHMyKnomB+ztni2kW/Iy9yDrCe7ONVcdpDOAHKeDzpnG2LnWoH3AxgfchL006cXU8
+         n9pJf4YUrcXRifw9lILgQxjNe0YZ8GIsogwSeGKWe03RI0ZAotzHev1lng9geZ3mYMwF
+         RVxkdJJecES4WH5r5z7c5P6jMoJJ/jDvwCq/OmV+MqgxGpvmJHFf1Gm1AC2BsP7j/hTG
+         VdZIBYajrIWb6CDI7WGy8rCeKD4FmqoeUR5RM8BpnHDriEI+VeNWTV7+48q+V1hh4wcE
+         uaXA==
+X-Gm-Message-State: AOJu0YwRQwM19aLD89Aspin5lDkc6rDzNyngz1SI2E07h9d9A8GozcLC
+	Xqwg18MK0nlEFDyonDC/Kq3AGVO5l2ufS8yrD/4m3yjSqChb9tbAKJcaSw==
+X-Gm-Gg: ASbGncvadHnOiMP+lTy400MO3oUgobPbhCinHxRiKelw8KoEJMJjeOGJ5iROhvRzDHj
+	L+S/kOm6S4tLhvHBQeml5Ijz9oIZRiXvean5FxEWzlyb/lycaKUd7cKsf5vV1tmoTWsHe31QotZ
+	/NIkMNcVJfkwPLym9O06l58ywy1dSHKslW7Pe1RZTe3a0gRnh5KmUX6B6Wtv9Q7je5tx3IOS0Oo
+	X9UDhNxY5nF17Gpt4QfshKhJKUimF0piX8v7ircUMfcRMjpvfyT0OiRB6gBSnkhFkfjLqKTGNrw
+	TdjxrrJ93Ckvl7zKnT8LluNZKjoqFhkNvw9x50uNR6kKzw==
+X-Google-Smtp-Source: AGHT+IHUB5KXRfVAokENtxzUceSSdLuQE1Pot7OY2yn3A/9+pnOAGpB3uUaJFL90kO0alyjXIaKdpw==
+X-Received: by 2002:a05:6a00:3c8b:b0:725:e057:c3de with SMTP id d2e1a72fcca58-725e057cd56mr14175635b3a.23.1733830598639;
+        Tue, 10 Dec 2024 03:36:38 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
         by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.37
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Dec 2024 03:36:37 -0800 (PST)
+        Tue, 10 Dec 2024 03:36:38 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: git@vger.kernel.org,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
 Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 4/8] t5548: add new porcelain test cases
-Date: Tue, 10 Dec 2024 19:36:24 +0800
-Message-Id: <26248735e1b81df8d34cb692ddd9d5fb55e22329.1733830410.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 5/8] t5548: add porcelain push test cases for dry-run mode
+Date: Tue, 10 Dec 2024 19:36:25 +0800
+Message-Id: <93123988ae00d865d0251ca0667c4f4584772021.1733830410.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
 References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com> <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
@@ -77,43 +77,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Change order of test cases and add new test cases:
+New dry-run test cases:
 
- - git push --porcelain                  # failed: non-fast-forward
- - git push --porcelain --force
- - git push --porcelain --atomic         # failed: non-fast-forward
- - git push --porcelain --atomic --force
- - git push --porcelain --force          # failed: pre-receive declined
+ - git push --porcelain --dry-run
+ - git push --porcelain --dry-run --force
+ - git push --porcelain --dry-run --atomic
+ - git push --porcelain --dry-run --atomic --force
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t5548-push-porcelain.sh | 90 ++++++++++++++++++++++++++++-----------
- 1 file changed, 65 insertions(+), 25 deletions(-)
+ t/t5548-push-porcelain.sh | 153 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 153 insertions(+)
 
 diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
-index ededd8edb9..799f6066a3 100755
+index 799f6066a3..ba68808459 100755
 --- a/t/t5548-push-porcelain.sh
 +++ b/t/t5548-push-porcelain.sh
-@@ -4,6 +4,9 @@
- #
- test_description='Test git push porcelain output'
+@@ -310,10 +310,159 @@ run_git_push_porcelain_output_test() {
+ 	'
+ }
  
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++run_git_push_dry_run_porcelain_output_test() {
++	case $1 in
++	http)
++		PROTOCOL="HTTP protocol"
++		URL_PREFIX="http://.*"
++		;;
++	file)
++		PROTOCOL="builtin protocol"
++		URL_PREFIX="/.*"
++		;;
++	esac
 +
- . ./test-lib.sh
- 
- # Create commits in <repo> and assign each commit's oid to shell variables
-@@ -132,6 +135,40 @@ run_git_push_porcelain_output_test() {
- 		;;
- 	esac
- 
 +	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
 +	# Refs of workbench: main(A)                  baz(A)  next(A)
 +	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. git-push --porcelain ($PROTOCOL)" '
-+		test_when_finished "setup_upstream \"$upstream\"" &&
-+		test_must_fail git -C workbench push --porcelain origin \
++	test_expect_success ".. git-push --porcelain --dry-run ($PROTOCOL)" '
++		test_must_fail git -C workbench push --porcelain --dry-run origin \
 +			main \
 +			:refs/heads/foo \
 +			$B:bar \
@@ -134,108 +134,134 @@ index ededd8edb9..799f6066a3 100755
 +		git -C "$upstream" show-ref >out &&
 +		make_user_friendly_and_stable_output <out >actual &&
 +		cat >expect <<-EOF &&
-+		<COMMIT-B> refs/heads/bar
++		<COMMIT-A> refs/heads/bar
 +		<COMMIT-A> refs/heads/baz
++		<COMMIT-A> refs/heads/foo
 +		<COMMIT-B> refs/heads/main
-+		<COMMIT-A> refs/heads/next
 +		EOF
 +		test_cmp expect actual
 +	'
 +
- 	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
- 	# Refs of workbench: main(A)                  baz(A)  next(A)
- 	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-@@ -203,13 +240,9 @@ run_git_push_porcelain_output_test() {
- 	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
- 	# Refs of workbench: main(A)                  baz(A)  next(A)
- 	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
--	test_expect_success ".. pre-receive hook declined ($PROTOCOL)" '
--		test_when_finished "rm -f \"$upstream/hooks/pre-receive\" &&
--			setup_upstream \"$upstream\"" &&
--		test_hook --setup -C "$upstream" pre-receive <<-EOF &&
--			exit 1
--		EOF
--		test_must_fail git -C workbench push --porcelain --force origin \
-+	test_expect_success ".. git push --porcelain --atomic --force ($PROTOCOL)" '
-+		test_when_finished "setup_upstream \"$upstream\"" &&
-+		git -C workbench push --porcelain --atomic --force origin \
- 			main \
- 			:refs/heads/foo \
- 			$B:bar \
-@@ -219,10 +252,10 @@ run_git_push_porcelain_output_test() {
- 		format_and_save_expect <<-EOF &&
- 		> To <URL/of/upstream.git>
- 		> =	refs/heads/baz:refs/heads/baz	[up to date]
--		> !	<COMMIT-B>:refs/heads/bar	[remote rejected] (pre-receive hook declined)
--		> !	:refs/heads/foo	[remote rejected] (pre-receive hook declined)
--		> !	refs/heads/main:refs/heads/main	[remote rejected] (pre-receive hook declined)
--		> !	refs/heads/next:refs/heads/next	[remote rejected] (pre-receive hook declined)
-+		>  	<COMMIT-B>:refs/heads/bar	<COMMIT-A>..<COMMIT-B>
-+		> -	:refs/heads/foo	[deleted]
-+		> +	refs/heads/main:refs/heads/main	<COMMIT-B>...<COMMIT-A> (forced update)
-+		> *	refs/heads/next:refs/heads/next	[new branch]
- 		> Done
- 		EOF
- 		test_cmp expect actual &&
-@@ -230,29 +263,37 @@ run_git_push_porcelain_output_test() {
- 		git -C "$upstream" show-ref >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		cat >expect <<-EOF &&
--		<COMMIT-A> refs/heads/bar
-+		<COMMIT-B> refs/heads/bar
- 		<COMMIT-A> refs/heads/baz
--		<COMMIT-A> refs/heads/foo
--		<COMMIT-B> refs/heads/main
-+		<COMMIT-A> refs/heads/main
-+		<COMMIT-A> refs/heads/next
- 		EOF
- 		test_cmp expect actual
- 	'
- 
- 	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
- 	# Refs of workbench: main(A)                  baz(A)  next(A)
--	# git-push         : main(A)                          next(A)
--	test_expect_success ".. non-fastforward push ($PROTOCOL)" '
--		(
--			cd workbench &&
--			test_must_fail git push --porcelain origin \
--				main \
--				next
--		) >out &&
-+	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. pre-receive hook declined ($PROTOCOL)" '
-+		test_when_finished "rm -f \"$upstream/hooks/pre-receive\" &&
-+			setup_upstream \"$upstream\"" &&
-+		test_hook --setup -C "$upstream" pre-receive <<-EOF &&
-+			exit 1
-+		EOF
-+		test_must_fail git -C workbench push --porcelain --force origin \
++	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
++	# Refs of workbench: main(A)                  baz(A)  next(A)
++	# push             : main(A)  NULL    (B)     baz(A)  next(A)
++	test_expect_success ".. git-push --porcelain --dry-run --force ($PROTOCOL)" '
++		git -C workbench push --porcelain --dry-run --force origin \
 +			main \
 +			:refs/heads/foo \
 +			$B:bar \
 +			baz \
 +			next >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		format_and_save_expect <<-EOF &&
- 		> To <URL/of/upstream.git>
--		> *	refs/heads/next:refs/heads/next	[new branch]
--		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
++		make_user_friendly_and_stable_output <out >actual &&
++		format_and_save_expect <<-EOF &&
++		> To <URL/of/upstream.git>
 +		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		> !	<COMMIT-B>:refs/heads/bar	[remote rejected] (pre-receive hook declined)
-+		> !	:refs/heads/foo	[remote rejected] (pre-receive hook declined)
-+		> !	refs/heads/main:refs/heads/main	[remote rejected] (pre-receive hook declined)
-+		> !	refs/heads/next:refs/heads/next	[remote rejected] (pre-receive hook declined)
- 		> Done
- 		EOF
- 		test_cmp expect actual &&
-@@ -264,7 +305,6 @@ run_git_push_porcelain_output_test() {
- 		<COMMIT-A> refs/heads/baz
- 		<COMMIT-A> refs/heads/foo
- 		<COMMIT-B> refs/heads/main
--		<COMMIT-A> refs/heads/next
- 		EOF
- 		test_cmp expect actual
- 	'
++		>  	<COMMIT-B>:refs/heads/bar	<COMMIT-A>..<COMMIT-B>
++		> -	:refs/heads/foo	[deleted]
++		> +	refs/heads/main:refs/heads/main	<COMMIT-B>...<COMMIT-A> (forced update)
++		> *	refs/heads/next:refs/heads/next	[new branch]
++		> Done
++		EOF
++		test_cmp expect actual &&
++
++		git -C "$upstream" show-ref >out &&
++		make_user_friendly_and_stable_output <out >actual &&
++		cat >expect <<-EOF &&
++		<COMMIT-A> refs/heads/bar
++		<COMMIT-A> refs/heads/baz
++		<COMMIT-A> refs/heads/foo
++		<COMMIT-B> refs/heads/main
++		EOF
++		test_cmp expect actual
++	'
++
++	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
++	# Refs of workbench: main(A)                  baz(A)  next(A)
++	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
++	test_expect_success ".. git-push --porcelain --dry-run --atomic ($PROTOCOL)" '
++		test_must_fail git -C workbench push --porcelain --dry-run --atomic origin \
++			main \
++			:refs/heads/foo \
++			$B:bar \
++			baz \
++			next >out &&
++		make_user_friendly_and_stable_output <out >actual &&
++		format_and_save_expect <<-EOF &&
++		> To <URL/of/upstream.git>
++		> =	refs/heads/baz:refs/heads/baz	[up to date]
++		> !	<COMMIT-B>:refs/heads/bar	[rejected] (atomic push failed)
++		> !	(delete):refs/heads/foo	[rejected] (atomic push failed)
++		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
++		> !	refs/heads/next:refs/heads/next	[rejected] (atomic push failed)
++		> Done
++		EOF
++		test_cmp expect actual &&
++
++		git -C "$upstream" show-ref >out &&
++		make_user_friendly_and_stable_output <out >actual &&
++		cat >expect <<-EOF &&
++		<COMMIT-A> refs/heads/bar
++		<COMMIT-A> refs/heads/baz
++		<COMMIT-A> refs/heads/foo
++		<COMMIT-B> refs/heads/main
++		EOF
++		test_cmp expect actual
++	'
++
++	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
++	# Refs of workbench: main(A)                  baz(A)  next(A)
++	# push             : main(A)  NULL    (B)     baz(A)  next(A)
++	test_expect_success ".. git-push --porcelain --dry-run --atomic --force ($PROTOCOL)" '
++		git -C workbench push --porcelain --dry-run --atomic --force origin \
++			main \
++			:refs/heads/foo \
++			$B:bar \
++			baz \
++			next >out &&
++		make_user_friendly_and_stable_output <out >actual &&
++		format_and_save_expect <<-EOF &&
++		> To <URL/of/upstream.git>
++		> =	refs/heads/baz:refs/heads/baz	[up to date]
++		>  	<COMMIT-B>:refs/heads/bar	<COMMIT-A>..<COMMIT-B>
++		> -	:refs/heads/foo	[deleted]
++		> +	refs/heads/main:refs/heads/main	<COMMIT-B>...<COMMIT-A> (forced update)
++		> *	refs/heads/next:refs/heads/next	[new branch]
++		> Done
++		EOF
++		test_cmp expect actual &&
++
++		git -C "$upstream" show-ref >out &&
++		make_user_friendly_and_stable_output <out >actual &&
++		cat >expect <<-EOF &&
++		<COMMIT-A> refs/heads/bar
++		<COMMIT-A> refs/heads/baz
++		<COMMIT-A> refs/heads/foo
++		<COMMIT-B> refs/heads/main
++		EOF
++		test_cmp expect actual
++	'
++}
++
+ setup_upstream_and_workbench upstream.git
+ 
+ run_git_push_porcelain_output_test file
+ 
++setup_upstream_and_workbench upstream.git
++
++run_git_push_dry_run_porcelain_output_test file
++
+ ROOT_PATH="$PWD"
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+@@ -325,4 +474,8 @@ setup_upstream_and_workbench "$HTTPD_DOCUMENT_ROOT_PATH/upstream.git"
+ 
+ run_git_push_porcelain_output_test http
+ 
++setup_upstream_and_workbench "$HTTPD_DOCUMENT_ROOT_PATH/upstream.git"
++
++run_git_push_dry_run_porcelain_output_test http
++
+ test_done
 -- 
 2.47.0.rc1.21.g81e7bd6151
 
