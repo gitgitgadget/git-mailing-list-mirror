@@ -1,114 +1,122 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF94F155308
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 02:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361A4233159
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 02:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733796672; cv=none; b=di28zhPJ3Tg6mXQ/07HMqi9v4EruOHwfNUEIedKkBQ5UFhHq37vxhUTGSrK3DUf/I54yochEXXE3/jX4zcrrpq5okxpnHZ56260FHkaGm/KKbo5cyZBUZcMPWbDM8eV+n3biU68afqBOpO25pxVCMHfKQ2erEqvn0UJafl/Ab3E=
+	t=1733797408; cv=none; b=KYT4yPrBXOGk7QBvst0L5jScKQllhQyQQG/l4mItyH0x0A9v8294n/eiPmpv5S2l8MSuYGwCJ54xWALpXisfR6U+MDUXfrn7eJh5Is6FGQYdKNXHVhV5eMK6HKk49Yl4vWbL0K+RKvaCf8he8YAyKhc9Ohq/gd1ZODOVzRi1QJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733796672; c=relaxed/simple;
-	bh=2WXgR9mLDagOToC+rAeohFtuhdCIG0/9ANV6SH+uaIA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U3q/bFJmxolWxKzupy4UvqaT85lpnV3hFFidFW2N2zrfWgNNmrINaJ11/FgaTgElRr7FWuuP/SIvTwFKlbjk8HpsdxN/FEI4iaUJkaaOv503QJmPGATqXgHPBkxwgmnlnwuHdKXquo5O1OzZRF2ErWT84RnAbHIwQa36bt3Jdes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sx5cToJ5; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733797408; c=relaxed/simple;
+	bh=7j1PEBOuBfcDzZJ3QrEzuPV3ql8iDCi3FUM2jGS+eyQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vh+Oq8l02P9zE/SWtIZz1eHvN4UTF8Mrl1hXA6QHfESA+UMq03PXk+zvKd6gPlWAvzTt4G7PnR5urJIilxUaRa4Px+cuaL34rIpKSypGwMAH+72wuN6kXoPbwVBHmptSU4FWAS2E89jyNMBO/ApXGyTUfhp225UZYopZ0AFt3c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=jjYaSZ8u; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sx5cToJ5"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D425D114019B;
-	Mon,  9 Dec 2024 21:11:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 09 Dec 2024 21:11:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733796668; x=1733883068; bh=2WXgR9mLDagOToC+rAeohFtuhdCIG0/9ANV
-	6SH+uaIA=; b=Sx5cToJ5OIHpWCgxObj5Oo73gIUAHiMCa70O7ML1W09qxDm12M1
-	QMZb++2KyF5WBp9sHVjuL8n9LXkJAso2cJaxO/BNRtIZagVu2DnzIvPfV9B37zx9
-	wteLyDTSAag8tm2pMRqwqdl6hjnq71N2/2hI/c7TxA+pknx/Qa+4eOg7U1MyL6MM
-	RXngMXKsZBu8BA7DXOdvp58DWHKy7utsDG8kuDuSdi3uxS3gJ1ck3tugBKc7WreA
-	yfktvucP2ZcWU0FZ0t0F0yh6URK5JhPZ3aiJsD43GAfCPEb0ozmjawiizgDxCk5Y
-	HMTSPYGiV+wJrxJQeARbpXAsxcahO7SNtGA==
-X-ME-Sender: <xms:O6NXZzh6PQ7ouSPMgKCru7vpc7j06alcLSMRNEKFEdSinqRySJuSzw>
-    <xme:O6NXZwB2kc_vDuAMAImVyi2_-uhdkH5AMkNpiPiTEShODZ4MEX-yrYHaS5sjmnhCF
-    ZUw0R47zdam2I2NRA>
-X-ME-Received: <xmr:O6NXZzGWU9DSncnOrWtwxJSpzcrNvdOSumvvYT_f2Ovpeikj-fMLKVplsIAkwi5F4Y3MZrFiBB-ed73ohH5l7tkw6yFuchxAsO66SBo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeejgdegfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:O6NXZwRllgSKuk-ZuBC0B2Wb35LcKOgEkEnPzxZ02P14ZTD8f-2ZZw>
-    <xmx:O6NXZwxfvuZOFqgksW525D6fYBnP4juhlgf0P5n9UopVFTebDYk18Q>
-    <xmx:O6NXZ27cadBXWL3du0PF0LQEpmybZzIgGKXa0jWv9GYInjtAmJOiBw>
-    <xmx:O6NXZ1xAI-UxxFGEpBiB_qww1l8CRDZukwE4JzRtu1ztUPC4xcF3RA>
-    <xmx:PKNXZ88hHLFhrOL_RusTKbI0OGZUTDzXk7C5zQ6zp702JqMWdBXdEX8b>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Dec 2024 21:11:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="jjYaSZ8u"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1733797398;
+	bh=7j1PEBOuBfcDzZJ3QrEzuPV3ql8iDCi3FUM2jGS+eyQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=jjYaSZ8ujQ47CdOdLB39O2ycGzxIiay3Zsx/sCuzwKWNTE2JdLIHh5YbgSERihoUd
+	 WKNVf2V9S89K6A1q+84UQ5HzW2rjC+uRShS4DYU7Jue+4viCaA1XkY5EglUb/BB5u5
+	 ImPrjP4BJr/BQQOohp1Rohe3HueN402xkcIneABFJ1x5yYNoHNJalDDzOG05i02yq1
+	 YKXrQYyFSF5mAc/8DTuvNW4ogShE1bySM8MlBmYU92MMo1CJBhvS+8k2ldUzeWzifR
+	 1uFsk6x0PGd74YQlui3bn9ci+OnxcLgOIMDsBhVxZ13uawpoIam55XCfJh4nT15QbB
+	 o1lAqcc/ZuYs6yVW7P7GGjbqpsxjItu+GJix7CysWfhTGdJwPgSnvfZxhUVjXXtJba
+	 S8xTlydQcurv2xB4LRVNLfanuYBUS0kP0qpWZucs4BpXTOC88vSpX4j3Kbxs/i20HC
+	 GUTm7Jh2pf+vghIgrG+l7j+V20nwmk6NR9Sih5N7cAfZSvPAbk/
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 51B9720994;
+	Tue, 10 Dec 2024 02:23:18 +0000 (UTC)
+Date: Tue, 10 Dec 2024 02:23:17 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Homyee King <homyeeking@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] bundle: remove unneeded code
-In-Reply-To: <20241209-fix-bundle-create-race-v1-1-e6513bdcbf8a@iotcl.com>
-	(Toon Claes's message of "Mon, 09 Dec 2024 11:41:29 +0100")
-References: <20241209-fix-bundle-create-race-v1-1-e6513bdcbf8a@iotcl.com>
-Date: Tue, 10 Dec 2024 11:11:06 +0900
-Message-ID: <xmqqzfl4l22t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: git clean --exclude broken?
+Message-ID: <Z1emFS-L-f4caBJ1@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Homyee King <homyeeking@gmail.com>, git@vger.kernel.org
+References: <1A13EB2A-6075-4CA9-855E-B72ACDA67C0C@gmail.com>
+ <Z0Nsq3lQZKJZxd-y@tapette.crustytoothpaste.net>
+ <CABAKogYaajvedff2ihsC5g+156L-Oe2N_XR3c+uyyfoovVQ5gg@mail.gmail.com>
+ <Z0jZfltm0O3y9QoW@tapette.crustytoothpaste.net>
+ <CABAKogZQ4bAh-KPE79q0W7iBBoRmxW26RK_6VSg=6Y-Sg68tig@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bElD+DSzWMvyZBoo"
+Content-Disposition: inline
+In-Reply-To: <CABAKogZQ4bAh-KPE79q0W7iBBoRmxW26RK_6VSg=6Y-Sg68tig@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Toon Claes <toon@iotcl.com> writes:
 
-> The changes in commit c06793a4ed (allow git-bundle to create bottomless
-> bundle, 2007-08-08) ensure annotated tags are properly preserved when
-> creating a bundle using a revision range operation.
->
-> At the time the range notation would peel the ends to their
-> corresponding commit, meaning ref v2.0 would point to the v2.0^0 commit.
-> So the above workaround was introduced. This code looks up the ref
-> before it's written to the bundle, and if the ref doesn't point to the
-> object we expect (for tags this would be a tag object), we skip the ref
-> from the bundle. Instead, when the ref is a tag that's the positive end
-> of the range (e.g. v2.0 from the range "v1.0..v2.0"), then that ref is
-> written to the bundle instead.
->
-> Later, in 895c5ba3c1 (revision: do not peel tags used in range notation,
-> 2013-09-19), the behavior of parsing ranges was changed and the problem
-> was fixed at the cause. But the workaround in bundle.c was not reverted.
->
-> Now it seems this workaround can cause a race condition. git-bundle(1)
-> uses setup_revisions() to parse the input into `struct rev_info`. Later,
-> in write_bundle_refs(), it uses this info to write refs to the bundle.
-> As mentioned at this point each ref is looked up again and checked
-> whether it points to the object we expect. If not, the ref is not
-> written to the bundle. But, when creating a bundle in a heavy traffic
-> repository (a repo with many references, and frequent ref updates) it's
-> possible a branch ref was updated between setup_revisions() and
-> write_bundle_refs() and thus the extra check causes the ref to be
-> skipped.
->
-> The workaround was originally added to deal with tags, but the code path
-> also gets hit by non-tag refs, causing this race condition. Because it's
-> no longer needed, remove it and fix the possible race condition.
+--bElD+DSzWMvyZBoo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is always a pleasure to read a patch based on the idea to
-directly target a nicely analyzed "root cause".
+On 2024-12-09 at 04:53:24, Homyee King wrote:
+> But if you try *git clean -xdn -e foo*, the *foo *will be excluded and not
+> what you said *"it _adds_ to the ignore rules".  *It's the confusing part
+> of *`-e` *option, and I think it should always exclude something within t=
+he
+> given pattern.
+> If we follow what you said, it should be *--include,* what do you think?
 
-Thanks.
+The `--exclude` option means "exclude this (mark this as ignored)
+additionally".  I agree it could be misinterpreted, but `--include`
+could as well.  The manual page says this about `-e`:
+
+  Use the given exclude pattern in addition to the standard ignore rules
+  (see gitignore(5)).
+
+And the text says this about `-x`:
+
+  Don=E2=80=99t use the standard ignore rules (see gitignore(5)), but still=
+ use
+  the ignore rules given with -e options from the command line. This
+  allows removing all untracked files, including build products. This
+  can be used (possibly in conjunction with git restore or git reset) to
+  create a pristine working directory to test a clean build.
+
+That means that when you say `git clean -xdn -e foo`, Git ignores only
+`foo`, and says it will remove everything else that would normally be
+ignored (which is no longer ignored, and thus untracked).  Remember that
+`git clean` only removes untracked files and directories, and `-x` just
+makes all files normally ignored untracked temporarily for the life of the
+command.  Equivalent text exists in the description section of the
+manual page.
+
+I don't think this is confusing or that the text is inaccurate, but of
+course if you want to submit a patch to improve the text, I'm sure we'd
+be happy to take a look.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--bElD+DSzWMvyZBoo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ1emFAAKCRB8DEliiIei
+gVigAP9fo9V/AANBwrXuKNbzePhP7uoKeiH63ZBsA3SbXMsY2AD/WcOm8fq3rLUU
+2JjZalCjqQhYgTPsWrGi8zoyTPLjkgc=
+=A6Jo
+-----END PGP SIGNATURE-----
+
+--bElD+DSzWMvyZBoo--
