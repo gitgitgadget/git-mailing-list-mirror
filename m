@@ -1,125 +1,82 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7ED1C07C9
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 02:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17314230D19
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 08:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733798771; cv=none; b=igFMinYefL4JmtSfynZd9+TxQBFHaxcl+pXPd7tnv1GQtbBH0ZgVc3qL38h4y2NyDl47O4kB6mRcF74RkxFmLBVPQ3gZS2LL1AhosYDrn4mBu4IFhpy4xyHdpsp7SryiiL0bySPa2tA/H+kdDs2TFNVfffh87iK2u0olmG8jfd0=
+	t=1733820160; cv=none; b=fWnSDvwf3hrd8o2D/7Ot+U7lTGwyNRB1mdhB8WnLxWXRG71bB0/eDdEc3Rry5c699WgRtE1bjR7KyAmWcVCFfYNeQpjtUidC92FWt4LdozDnwc7/vZqp1ei8PYjjZZeDmSFDGmh3oM0Hrhyvxy4zu2WBuL4m8g00+7gyfdcaBPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733798771; c=relaxed/simple;
-	bh=DdYw6WA/RICwR0x7G8oFhO19PwHKAqLupmgSGyoiyIY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SquN1tw3cNZW7SihuMXBlJTyAbNXB/UvgD1rNzN0gW+xTQkEa0UueXkU0CHV5p+XvRxVplv/W60tUrFaoM2fa56thO8Z9u7+sWYIoeG7euDJ4KihW+AB1YfmkElMUi+m5Swx3yXbEopFgKfMi2dqmbCeW88Ggo/xJi/Z8Qn4gnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=KtcGh7k6; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KtcGh7k6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1733798765;
-	bh=DdYw6WA/RICwR0x7G8oFhO19PwHKAqLupmgSGyoiyIY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=KtcGh7k6QZTJO0fxobSR6GumHg17dYKFAXs4In+bLbOpbkEtWdc7MSibQSTuri06u
-	 ZVuCAx+JO3TA7RURNMzw5DXHbFFuQPZ2/+ECwAgWAfbYOozqZ55wk5ggdodH+RntrP
-	 ybev0Va58lxyh5va2Qro+ANRVN5O6sC9nLnS/KImX6OZm+mskUjbVvVsnMDd/FtuGQ
-	 67xq3TeNJgsxJOcndZo30zykuboybws3hCLq6me5/LMyXPs6eq68wRb4+WUY/IvXUv
-	 9I6EcIVLx+K76oc7Q9xWL9sM3L9B6i0o67+ADXHzCUysMzr0U5D/8s7FllhHkuSy8H
-	 CzbsBfPD1xBJebfEKZv3wkp2J46n6xx9rvGJ/PNkwo1AlvQDgS0qA3tza5OMEMxqAx
-	 Z2iBwcuIuyP5lNA8VvTHh9DY8Z38/Rh5pvAzeNbB6wopgxF+2bTQ+2pjv+T7jAVhWt
-	 csideMULm2NqHnvfwodIrvlXvRGjODeXV4tRwWZCKVC4F8J0Dfg
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8441820994;
-	Tue, 10 Dec 2024 02:46:05 +0000 (UTC)
-Date: Tue, 10 Dec 2024 02:46:04 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Sergey Ivanov <icegood1980@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git credentials store: removed line when token expired
-Message-ID: <Z1erbLD33V7ENGGq@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Sergey Ivanov <icegood1980@gmail.com>, git@vger.kernel.org
-References: <CAJCbrz5_8nCWSsb2PYGmQoYDKE2vH5kURx9ePabPjosbJsMH_g@mail.gmail.com>
+	s=arc-20240116; t=1733820160; c=relaxed/simple;
+	bh=Ly+5uBdBtFlZfcgu9fgF2XIaSHEH8uRw89T+ogQ+2Qk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ga8kQ0HW9XMWZXIWu6i0C5nbQTyFQLVmFosB1jHpNM7T6AwNR8xVZKCxriajbQCssXMEc5TlItMJo7HQnxM9Lb1DUnOcLuNvfDiwLvBwXmCpXwX7h0q/Fet4R2HZELhIEvxGl8gcFCXB7vnKj9e262n22JZYYE6AOCUcTWd4W2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Y6rmm1MH2z7QWtc
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 09:02:16 +0100 (CET)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4Y6rmR3746zRnmF;
+	Tue, 10 Dec 2024 09:01:58 +0100 (CET)
+Message-ID: <a337ef76-096b-4995-ac06-d1be3b34750d@kdbg.org>
+Date: Tue, 10 Dec 2024 09:01:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gAmQWSaOGASpv6b4"
-Content-Disposition: inline
-In-Reply-To: <CAJCbrz5_8nCWSsb2PYGmQoYDKE2vH5kURx9ePabPjosbJsMH_g@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Document HOME environment variable
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>,
+ Alejandro Barreto <alejandro.barreto@ni.com>,
+ M Hickford via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1834.git.1733771894867.gitgitgadget@gmail.com>
+ <xmqqwmg8mnab.fsf@gitster.g>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <xmqqwmg8mnab.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+Am 10.12.24 um 00:47 schrieb Junio C Hamano:
+> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Alejandro Barreto <alejandro.barreto@ni.com>
+>> +System
+>> +~~~~~~~~~~~~~~~~~~
+>> +`HOME`::
+>> +	Specifies the path to the user's home directory. On Windows, if
+>> +	unset, Git will set a process environment variable equal to:
+>> +	`$HOMEDRIVE$HOMEPATH` if both `$HOMEDRIVE` and `$HOMEPATH` exist;
+>> +	otherwise `$USERPROFILE` if `$USERPROFILE` exists.
 
---gAmQWSaOGASpv6b4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Makes sense and matches the implementation in compat/mingw.c. GfW uses
+the same method with with additional checks for existence of the
+$HOMEDRIVE$HOMEPATH combination.
 
-On 2024-12-09 at 16:03:49, Sergey Ivanov wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 1) My remote token to git repo was expired
-> 2) I have git config --global credential.helper
-> store
-> and had line with given url added here
-> What did you expect to happen? (Expected behavior)
-> Git will say that token is not working
-> and will NOT touch credentials file.
+> I wondered what the reaction by the readers on non-Windows would be,
+> but hopefully they would read this to mean that HOME will not be
+> mucked with, even if they leave it unset (or they take it granted
+> that HOME is set somewhere while they log in and they do not have to
+> worry about it), so it may be OK.
 
-When a credential is not valid, Git invokes the helper with the `erase`
-argument to delete the bad credential.  That's documented in
-git-credential(1) and gitcredentials(7).
+Since all Windows specific text is in a single sentence, I think it is
+difficult to misread. I would leave away the colon, though.
 
-If Git didn't do that, then when it needed to prompt for a new
-credential, it would get exactly the same credential before, and it
-wouldn't work.  Because most credential helpers store data in opaque
-stores (like the system password manager), it would be nearly impossible
-for the average user to understand how to clear the credential if Git
-didn't do it itself.
+> Just out of curiousity, is Git the only thing that uses $HOME on
+> Windows?  Or among may other programs on Windows that use $HOME, is
+> the way Git gives a fall-back value out of these three variables
+> unusual and deserves documentation?
 
-> What happened instead? (Actual behavior)
-> Git removes whole urk from git-credentials
-> and says 'not token'
+No Windows native program uses $HOME. Only POSIX-derived tools would
+consider doing so. So, I would answer your question: yes, Git is the
+"only" one insisting in HOME being set. We are free to choose how we set
+it, and the way we do it makes the most sense for Git's purpose. It is
+certainly useful to document how we do it.
 
-This file is entirely managed by the credential helper.  I know it seems
-like a plain text file you can edit by hand, and you can, but it's an
-implementation detail that the data is stored that way.  It's not
-designed as a general-purpose URL store or user-owned config file that
-the credential helper will never edit.
+-- Hannes
 
-> What's different between what you expected and what actually happened?
-> I want manually change token only, noe whole URK format of which i
-> constantly forgetting
-
-I'm very sorry that this didn't end up working out how you expected.  I
-think your URL may be available via `git remote -v` in your repository,
-which hopefully should let you recover the URL if it was associated with
-a remote.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---gAmQWSaOGASpv6b4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ1erawAKCRB8DEliiIei
-gTIUAP4ndxtMvU9/v2C952YutM5Qt5yTlSOMnAsT6xKhjdSeewEA04dUs0nN1YfD
-gRJiewP/tK8SgEY9rmIQWXnnK1ucdQI=
-=e6ce
------END PGP SIGNATURE-----
-
---gAmQWSaOGASpv6b4--
