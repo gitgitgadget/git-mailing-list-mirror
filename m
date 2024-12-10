@@ -1,60 +1,60 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC1F2046AF
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 18:45:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E820214210
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 18:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733856341; cv=none; b=X/QuavvqaBruhiJJTmskL2CGEMCCP18i+LceEU4aniBhXviA+vAEM5/j7fwzwUrNQK2Nya/2vGFJxKm0gs7DUpzeqovq5JE5cKhCL/8GfMdGFdo79yYIGo/oMZLlp/hQl5xQjub+gXVxxzrbtBU368z05zH5uLpno3wfdqhwIp0=
+	t=1733856344; cv=none; b=mG0qtfkDX+hJcHu8xH0nnJ0tkbSKkhjBiL54Cao4MMYec8bajrqClZlnfS0Z3m+KGdIxGGaJdBxIDVFGbyslWfVcwsl2xWw7wc6GYUat9njscavGNDScJs6n/QS9jMgl5yyKZUyhwK1DDMByBanKooGCaFCLTya3cGmRK9+y4VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733856341; c=relaxed/simple;
-	bh=8T2UCdjSXSwqFmhj4MAHT9nZHFKA156xwfqP/euEr6A=;
+	s=arc-20240116; t=1733856344; c=relaxed/simple;
+	bh=V/I7Dvl/5Zke3ph+/P0X+edNcPqmV/qQwgUZEFlBvnY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=IxjP2rcetbWDxjBegeT5nHOAfhKd83lcIPiKl59k974DMYwVlarbOy4lozAxJKUdiEhuelxUzAIufreVa10L19txH4ERd7dd8/6xVjDzRbbWUIyYctLAahx4Ud7WLaKwTIqh1PMM+DoHsbUxd2b1fzsvNX4OysKbg3YjLBIYGZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fA+i7tYZ; arc=none smtp.client-ip=209.85.208.54
+	 MIME-Version; b=cH/AWVwnINNmqkMu4E+/ulqfzIEqve8gkspXa0WPc6aPh0eK7u5idtoEd9FPKLwZCwhoCRSRffZZrTGHiEMcbs+HnAqFdm4nxj2n/AUvhCSGKAMFNy3CxQ9RjslQZG9BSf6cXIuAZEFwGT6pn80J0ExXSNll/N3Im8oGFhKEjps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jbjSQHyW; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fA+i7tYZ"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5d3da226a2aso359844a12.0
-        for <git@vger.kernel.org>; Tue, 10 Dec 2024 10:45:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jbjSQHyW"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5d0bf4ec53fso989866a12.0
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 10:45:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733856338; x=1734461138; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733856341; x=1734461141; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lUJYImH9KbEfelezgsKyr0GU7/pksSBxA3JcvekS0NA=;
-        b=fA+i7tYZRUPoEX8ZyPM8HU6ecbFZclZ8+pCkKi6HgNZvjWyzOAj8X24pQe+gNiIGYO
-         xobNpV/SUhEqrOpmEQ6nSNzhpjE+UP+yjP92nYrXBTbxuRxnfZ8s6wk5uRBRZ8ilnFNz
-         3ejYewVfYKiDWX71Na/5+6s2p56Xpq0tlMwWFaeh0qC7HPJKR5tn8hB/Rp5r/+MQUwdi
-         ijn3ZkbnTT0tgl3e9MhAG5sNBGHJz76sf8yBfkvsJu6tnmWMA8p8CecCRT8dCW2efjc9
-         ncQdqI6k4nUKFLd22kAcmsq3ftNyEwXE0Rwt/cMD3tK5CBygznRxfEfqIwcm0WmvwLLQ
-         HiAQ==
+        bh=kBbMUzMWawmcW2jowGRZQ6BZLgaxctDNOZUijJGP71g=;
+        b=jbjSQHyWb0UQykp8b4o2OdiSdkCxd24CO/yo9jg5g5/vqL0SPWICBulT48FvEvzrxJ
+         nn11nfEP0KOoZvOrpoM2A6miHgsKTDFmW5V+qRbkr3/I1xxsYFv7VyNtlM8Od0jfcvCg
+         7hrEb8k/KSpPlZ5sB/2ltw0aawq7Mdev8NFFg/dqqZPcQIeQUBEiO43twby/B5ccUCQi
+         Fbf8I1ugo7QKUu+7dK301wyzaQy9HlePEB8rNwg9jYUPx4GOKYCUG5b0oLBegO/B7hlg
+         QJpDxkxr9i/onegRReggknJVOBtkN8iiZ206FP+6vK1+r0tNHn0cRIQpwrJKgsz2pUFr
+         4bXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733856338; x=1734461138;
+        d=1e100.net; s=20230601; t=1733856341; x=1734461141;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lUJYImH9KbEfelezgsKyr0GU7/pksSBxA3JcvekS0NA=;
-        b=RwXZAeDzfxGlbJ+EtrpUpHT04xkt9kq22uyqyymHeBc1xjXxp4K5LkXrOR+Ne0Wlia
-         CD+QR8Y6vkxI7rMsxpesiW35WvePASC9rlnxe05nn1r7cYN+dtKy6letrrCU+8X0uIE/
-         TfRgFMzoibLXvHUhYDX4T+k66Jib5aYBPjh6f54fKfGCe0u4oPfhoPw7EY+z/XQkrl8j
-         MIrYl9DJHSL4xrKxZqS1DN42eJXycy01ohH/77WXzhJQDQpc7+LBMajOxI5XhUjpBHDg
-         vR1Fi8sLTj8OxoiEEKIBXod7xelx2EMPd2BHaAJ91yyNmi0Ift3+aRjwwETDt8cSeY+u
-         XLAA==
-X-Gm-Message-State: AOJu0YzS5HYbQInb3JSPURfCnolnuLSGi3s1IOO9oL3xuqDlxPaNVSLv
-	0DYGJv9vVNZihC0gy9X5wW55GQvcOmE7pBGoD4l0D1naKW7XwQlLV0SQWS7F
-X-Gm-Gg: ASbGncsbBIleSTG8S8cY5q7NqlKThQJdYGNQTQUAPcCZ4heeM8fLhaWRozoHoc+Dkxz
-	pd301YSvRH7fkcpxhtUlNO5bCbhw4k5VFfXpMCrUwAObILlp8bTNhgH+JKjaRJKepdMQTs69+49
-	Js43TjwOJXWjD4iXMbCYQaAcxTd0CggKfeMX4UAcCodeIOD8Vuj4jm+gpqmP7uKMws+KixPXW08
-	ZuL+KZJSTGQdUFRMiy22Zwwf9VKOCVN4qqykG8o3d7AkuUYgO4a+RLX+t2orL0=
-X-Google-Smtp-Source: AGHT+IH230h6VffoYY4bYjosjEAaS2cjScWPr4MS2FbnX8D+pqiOOqtIo0SdeZzunvTyJYQjrCZYlQ==
-X-Received: by 2002:a05:6402:234a:b0:5d3:e843:fcfd with SMTP id 4fb4d7f45d1cf-5d41c66b00dmr1659679a12.11.1733856337617;
-        Tue, 10 Dec 2024 10:45:37 -0800 (PST)
+        bh=kBbMUzMWawmcW2jowGRZQ6BZLgaxctDNOZUijJGP71g=;
+        b=ixf8JiEMcgnVng5jYJIpDvigTrXO83kfUb/Mwz3jbm9duzZmAo/Rx25Gm5Vd6DGwoN
+         heMrAnSSwMKHp3sf/f4AqspIKxiPQaAWNUQPQ+g8M5NQTb1Cch4AVPqReQ4BgRv/e2wl
+         9TdYI8VTltPHBtyU6VAkpUQcDn3N3OKCYY4F2ynaauhgx7wgr9f513vaiH4ZOZcVFPXh
+         F7rbrX7X8A276DtmLXLz28uhD8iLP49g0q3MItwJSFIuPIOfxni7Q6GsttxwNZIhJOFZ
+         svFsl5GTNGjD0gctLdJqk7t88CPt5icLnY+tqTeTfuz29vFNkybJSW1yI29uwyYiV2B5
+         f5Xg==
+X-Gm-Message-State: AOJu0Yxnzx0VtUFZXjQPsickE6c7fcs9UmKKJh0IB2Q3i5KR4HC7hA6b
+	9bydOdqMUvWSx36TeMyb1KTNJRfbX+Lv79t1NfmyAA71BvsQE+0Ng43LzSx3
+X-Gm-Gg: ASbGncvG+gUTl3WJHKn5KAoUi384oNgrxLRcYUzHHv1OWOdd9h/ioFrTEak3QHccZG0
+	uL5fpxzsKmF1nqryaXZ689ojux5TUs8/hcLBcRNZqa9WTVNjodJACQgHDscgyPaa4VaE7RMkm/9
+	wjsMyzUkPuEKuwUXhDf2PFa+evcN6pZb54Qmv+eySUsQZzi0fmLlrdwSV0IsX3cwUpdprdbFE7a
+	rzSvWn8P+NtfTpTRtWYyw6EmP74CWKBJlkNRYOH0JnLf1T01sZd+HrRz6audNY=
+X-Google-Smtp-Source: AGHT+IEc0g0IcJPdj1/2VL8qowSUougwjjXsaHfy0mpqfqMzfSsYD4NFtlg+i0JKvK9MAfOV5rmPGQ==
+X-Received: by 2002:a05:6402:348f:b0:5d0:bb73:4947 with SMTP id 4fb4d7f45d1cf-5d41c3255a5mr1846421a12.0.1733856340497;
+        Tue, 10 Dec 2024 10:45:40 -0800 (PST)
 Received: from localhost.localdomain ([5.29.161.23])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a48882sm7895896a12.24.2024.12.10.10.45.35
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a48882sm7895896a12.24.2024.12.10.10.45.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 10:45:36 -0800 (PST)
+        Tue, 10 Dec 2024 10:45:40 -0800 (PST)
 From: Roy Eldar <royeldar0@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -62,9 +62,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Roy Eldar <royeldar0@gmail.com>
-Subject: [PATCH v3 2/7] git-submodule.sh: improve parsing of short options
-Date: Tue, 10 Dec 2024 20:44:37 +0200
-Message-Id: <20241210184442.10723-3-royeldar0@gmail.com>
+Subject: [PATCH v3 3/7] git-submodule.sh: get rid of isnumber
+Date: Tue, 10 Dec 2024 20:44:38 +0200
+Message-Id: <20241210184442.10723-4-royeldar0@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20241210184442.10723-1-royeldar0@gmail.com>
 References: <20241209165009.40653-1-royeldar0@gmail.com>
@@ -77,63 +77,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some command-line options have a short form which takes an argument; for
-example, "--jobs" has the form "-j", and it takes a numerical argument.
+It's entirely unnecessary to check whether the argument given to an
+option (i.e. --summary-limit) is valid in the shell wrapper, since it's
+already done when parsing the various options in git-submodule--helper.
 
-When parsing short options, support the case where there is no space
-between the flag and the option argument, in order to improve
-consistency with the rest of the builtin git commands.
+Remove this check from the script; this both improves consistency
+throughout the script, and the error message shown to the user in case
+some invalid non-numeric argument was passed to "--summary-limit" is
+more informative as well.
 
 Signed-off-by: Roy Eldar <royeldar0@gmail.com>
 ---
- git-submodule.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ git-submodule.sh | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index d3e3669fde..fd54cb8fa6 100755
+index fd54cb8fa6..3adaa8d9a3 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -77,6 +77,9 @@ cmd_add()
- 			branch=$2
+@@ -53,11 +53,6 @@ jobs=
+ recommend_shallow=
+ filter=
+ 
+-isnumber()
+-{
+-	n=$(($1 + 0)) 2>/dev/null && test "$n" = "$1"
+-}
+-
+ #
+ # Add a new submodule to the working tree, .gitmodules and the index
+ #
+@@ -524,17 +519,15 @@ cmd_summary() {
+ 			for_status="$1"
+ 			;;
+ 		-n|--summary-limit)
++			case "$2" in '') usage ;; esac
+ 			summary_limit="$2"
+-			isnumber "$summary_limit" || usage
  			shift
  			;;
-+		-b*)
-+			branch="${1#-b}"
-+			;;
- 		--branch=*)
- 			branch="${1#--branch=}"
+ 		-n*)
+ 			summary_limit="${1#-n}"
+-			isnumber "$summary_limit" || usage
  			;;
-@@ -352,6 +355,9 @@ cmd_update()
- 			jobs="--jobs=$2"
- 			shift
- 			;;
-+		-j*)
-+			jobs="--jobs=${1#-j}"
-+			;;
- 		--jobs=*)
- 			jobs=$1
- 			;;
-@@ -431,6 +437,9 @@ cmd_set_branch() {
- 			branch=$2
- 			shift
- 			;;
-+		-b*)
-+			branch="${1#-b}"
-+			;;
- 		--branch=*)
- 			branch="${1#--branch=}"
- 			;;
-@@ -519,6 +528,10 @@ cmd_summary() {
- 			isnumber "$summary_limit" || usage
- 			shift
- 			;;
-+		-n*)
-+			summary_limit="${1#-n}"
-+			isnumber "$summary_limit" || usage
-+			;;
  		--summary-limit=*)
  			summary_limit="${1#--summary-limit=}"
- 			isnumber "$summary_limit" || usage
+-			isnumber "$summary_limit" || usage
+ 			;;
+ 		--)
+ 			shift
+@@ -554,7 +547,7 @@ cmd_summary() {
+ 		${files:+--files} \
+ 		${cached:+--cached} \
+ 		${for_status:+--for-status} \
+-		${summary_limit:+-n $summary_limit} \
++		${summary_limit:+-n "$summary_limit"} \
+ 		-- \
+ 		"$@"
+ }
 -- 
 2.30.2
 
