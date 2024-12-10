@@ -1,69 +1,68 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933BB210F6E
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6349F2153D7
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733830602; cv=none; b=rsIAzJDNcxv4vI+6N5d0lP+5RbECnbdqb2kUbn7NNxa9frAE0SViMFRgkxKo53zuQX936+4gI+axWWxpXASm8yM62GC1rTj/4WHGOamzuaWsOYwgFNlorfzOLFdq5z/3DTmq2Bd6gFtIBoMAx1Jp0zfxTdfaOHdTBqT4FR0+vbY=
+	t=1733830602; cv=none; b=EhpylAv8Q70EnyOaa4qTeiVOWKfRzuIPJCvXvDx7fgURQzj3Hyzk7/qUCETa28o6HvvBMy/002DsKOq7en1Qh4/4ZYKsqvB1kn8jvwcRpvQWjkMbuJvO8D04nz7GC0JPF3qB3W2Me9x3f8amfBy3e/tv1E5JINYWqp8zgTaFPeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733830602; c=relaxed/simple;
-	bh=6UZ6NPaB93dwITRwaQEC9l1HrfmGkEvslrvsJQs4cSc=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=M7xvOYJraOjc28ePUkFTns+UMbRHipe87e3Kj0Zu3GcxlkXEoFjhio27B4z8U+6gbS3F/hLtnhca+y3n3mmF74RycmsSnZF8gBM+63UY+wIv8wCo3kpz9Ak+7uwn81FOVnTDTUItkQFfAIlIACrvMZij53BtXL1sxdL7DBxpu9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DNho3vD5; arc=none smtp.client-ip=209.85.210.180
+	bh=12HyVJEPaZU7CJGSRJ+apTWgDxiijhUVgWTbYvHa/aE=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=SnvmyjzANk0ZonG46IIGiZ0rsc/BfSmjMF5Fze8c3dFRXN4pQkzAZrx7aLvgmIeQ0iMb3CN7phwXD6BC4IpBSoGk52nengsGfepMcozNRN49LesRmsbujkRrvj/l12ePrQG/eINY7vZ2oU7PrWaYjiuJ53o94HdpkV48/83LRgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gieHqF2w; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DNho3vD5"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-725abf74334so4440817b3a.3
-        for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gieHqF2w"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-725dbdf380aso2136449b3a.3
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733830599; x=1734435399; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733830600; x=1734435400; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q4NGtyNaxxvQ0Fi51uChUd3uXGsfuST/Ggr61mmi7oA=;
-        b=DNho3vD5OF4dyXz9iwTAl4gNesuiqknRgukH821xenL9IRmf7VB1/ogn82yYgIW5Ug
-         W/eHJbMwbg3fK7bdHnddI1SdO8ZuUYgWY2f8UCI9ual0t4wVo3UEODg93rXHFOxb6dwo
-         6BX7i3lrblrUg2iGCw0KppF4FLE72LVWtFy+jhWWYUCCM0z0phEfI8ky4PJefUE5sl29
-         ArynUAk3nGlJP4ddq/Nf6E0LV70Pa7QZ6khdOJYIVmal9aHIc1F7boWMRmBtjZmwT5aX
-         fkpnUjGRJrISxnFWvcvhPqzgJ0oYArbu+G6Pja6dgwzSE1YoOoOzAcqwtq3BPrXDyvre
-         waew==
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fXa6+0s6oflD6keUk9vHi1w4s5eMXdsBz3MNKHzZCJI=;
+        b=gieHqF2wQmBNV/osd20ufPnHGF98y+dH++jTo/ieBtAjl51nmgl3gzuNXyrDYl/qHu
+         X+WrCxdHYQI2TauL2xXxgAqE28DIWtLUiikW6KnsFnAXFOuqoVm1qNHlvpxOIWtD89qk
+         YmI/Vb3cB0aWgI/EU5bv6B8YdY6diYx9gt9iUPCQrFbb35Tow4Hl3lBO9evIcaw81t3K
+         PTUUSBO/qHV4apYQNAcucjTO2mFIjr4NlpYHWG0LB9S+P4UzrRU+FgllvXaLG+Znpy0i
+         Kyg7vOUs29ESs0+9XLMoEyxLdCa8+qQESEfea7wTDV12KOrTCYQPLiPIeSBcLKIn4d2E
+         Qi8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733830599; x=1734435399;
+        d=1e100.net; s=20230601; t=1733830600; x=1734435400;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q4NGtyNaxxvQ0Fi51uChUd3uXGsfuST/Ggr61mmi7oA=;
-        b=rPPafmyUkV7yeg05jTPp1sOwTITU966dBfelcSr5fT+rjQTd4spcmz5HVXX1YxiT14
-         DH9T3++CKfxEeyFUPZH92t30eoLo4FRdinYkdY31G0LsmVIr8S8iNY9ozVP1N0Scaz/i
-         epTORSeFRO/1Igyp8SVghGTyRKXPCbSQwwF5uG9gIBkN9XnMHz4Z5IkUWc4lzywPKU9V
-         gSZ5K5DtdsOdLSbRzKXuf5x5Y1JM+bH1NEEy5nJAagSssiuOuOeJyYwWvMCKvoKCJuQE
-         /qnLoLDUwpsNwMe/k7gqpj26ZOJK71FF64dDehb0w2Rt9dgo7ZpjpLG2pooA74aDTLfE
-         6Feg==
-X-Gm-Message-State: AOJu0YxGVZk4EFKR+HVmO3MLveRoqkEMlqWI6101LaVd+UTrpk23SaDU
-	zBKXGELgY2vvFyvwv8Usr6Dzrtv2FYYTZPQkTKOuHm6opdQriIohxH1prA==
-X-Gm-Gg: ASbGncvrumhVKt+VdJZcT0h/PE8ZDDU7FqQWoqS3i94ZaKkAU3eczd0DmJCmn2ObwOC
-	boXiFyoNXiiWLAm9wa+o70xJlAtTvuM9UDZiemhlHIg6VWXbYLyogcCKJtkMoSklqIpIKhhZkwR
-	ts1SOMG5+7mQ7CiDSRP7GS6EkTxixgzAu6nrFZyxihCXfQmeCF/mM9oFjyahG/3LAGEKI5z/iLC
-	yShe4BsIkV5XkwMzaZsg/aOH43IPVSQtdMGhHMaqpu/C6MDNxBrqU5Yop+Z9TvF3oT2N3kWZeut
-	TQ0LQEhwe3Mb08+x+rWjDPjfvP8XpnSMxQXuHqZ9zaE17A==
-X-Google-Smtp-Source: AGHT+IFQtdp+NeT4B/jP+VO41ToWdpB30XFHcpyGyQT6sK9eZHxyfse8AJb/dwkDE8ujjM8W3T52tw==
-X-Received: by 2002:a05:6a00:178e:b0:728:e196:b5b5 with SMTP id d2e1a72fcca58-728e196b7c2mr3321764b3a.20.1733830599589;
-        Tue, 10 Dec 2024 03:36:39 -0800 (PST)
+        bh=fXa6+0s6oflD6keUk9vHi1w4s5eMXdsBz3MNKHzZCJI=;
+        b=Vk47qe9PERraOvXbQGBOe/+g6TBvl+sBtXNnBYZRs4SQ0BsHM4kFWC88+hIoncaIUv
+         6vW8DYTPmjec513z7VDATdSkQcE4qWZmqeSieG+96C7booJBUG5rH/Lle8QRUFB5hPjW
+         EQw49vCGg4JBuYhQgAUJNEDuq0rTQfJRkaAv2u7ZaWy33oWh/aRov1+ghTej8gLr92b4
+         to5tMK37apP/+1XE9/hNAhIoXyOpebaZEmrpEem+ji1sGDsR3CsDtkI462G3wH6kUcyk
+         x0XJiJVArxTL25npWJbDq7ZAUW59OeJAc1i/cjAibiBbi+tfqJOJ9LhFw4nbxHETMLj3
+         PP6A==
+X-Gm-Message-State: AOJu0YxG7psSC0LRB2Ia0MHdEx/4GV0Pqzo/dFcFPsAeldpJIjN+x929
+	8SuSy9tPPVdxV9DCPINJZ7nbBuUPUQ5WV0OCIY5QiXRuwncpUDxLVNCkYA==
+X-Gm-Gg: ASbGncsprV+0UpLCPImfKzLWCRzSV6ayDZTbNK+IqlLwHUt93kGYDpOW/xpLHklPQzB
+	b6nSsGsBPHxc0SyDw9XAOLpXOI9eQ3KqO7Hl9CsddUskqM54f5EYrDYm4fyguwlRTcWzbQmVI0M
+	WysXmxH/Tn8paN/8juRwiwvM3u25rBgwYg1GAE+gV1EIwfINPauZhlqXV50KNEAysRQaxny8lmQ
+	jv1QtJKbKCyXSgTC3uARQHXkmusKpO36rZ+vAgA/2CamrSzX/sLQ3k2WJU/H0mHYnmT6PJsVod/
+	L0JYMzX/7VIVSKh/sgWIevcrMcET9yHzFo1xPUgesrSOLA==
+X-Google-Smtp-Source: AGHT+IGzGmGIqyzaewz1sFT1w6BEts2zpLTw1O+ubEgeloPJ+N3FiKg4fbBVcS++3iTcZ5gLPWsmog==
+X-Received: by 2002:a05:6a21:6da5:b0:1e0:dc06:4f4d with SMTP id adf61e73a8af0-1e1b1b09c09mr5999301637.19.1733830600393;
+        Tue, 10 Dec 2024 03:36:40 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.38
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.39
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Dec 2024 03:36:39 -0800 (PST)
+        Tue, 10 Dec 2024 03:36:40 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: git@vger.kernel.org,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 6/8] send-pack: new return code "ERROR_SEND_PACK_BAD_REF_STATUS"
-Date: Tue, 10 Dec 2024 19:36:26 +0800
-Message-Id: <77f5e128fc1b66a9c8b0df3ce274a98921800685.1733830410.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 7/8] t5543: atomic push reports exit code failure
+Date: Tue, 10 Dec 2024 19:36:27 +0800
+Message-Id: <7c78dbeffb24fc84e5e6d5e01e77c58324bf60c9.1733830410.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
 References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com> <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
@@ -75,101 +74,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+From: Patrick Steinhardt <ps@pks.im>
 
-The "push_refs" function in the transport_vtable is the handler for
-git-push operation. All the "push_refs" functions for different
-transports (protocols) should have the same behavior, but the behavior
-of "git_transport_push()" function for builtin_smart_vtable in
-"transport.c" (which calls "send_pack()" in "send-pack.c") differs from
-the handler of the HTTP protocol.
+Add new test cases in t5543 to avoid ignoring the exit code of
+git-receive-pack(1) during atomic push with "--porcelain" flag.
 
-The "push_refs()" function for the HTTP protocol which calls the
-"push_refs_with_push()" function in "transport-helper.c" will return 0
-even when a bad REF_STATUS (such as REF_STATUS_REJECT_NONFASTFORWARD)
-was found. But "send_pack()" for Git smart protocol will return -1 for
-a bad REF_STATUS.
+We'd typically notice this case because the refs would have their error
+message set. But there is an edge case when pushing refs succeeds, but
+git-receive-pack(1) exits with a non-zero exit code at a later point in
+time due to another error. An atomic git-push(1) would ignore that error
+code, and consequently it would return successfully and not print any
+error message at all.
 
-We cannot ignore bad REF_STATUS directly in the "send_pack()" function,
-because the function is also used in "builtin/send-pack.c". So we add a
-new non-zero error code "SEND_PACK_ERROR_REF_STATUS" for "send_pack()".
-We can choose to ignore the specific error code in the
-"git_transport_push()" function to have the same behavior as
-"push_refs()" for HTTP protocol.
-
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- send-pack.c | 9 ++-------
- send-pack.h | 3 +++
- transport.c | 7 +++++++
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ t/t5543-atomic-push.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/send-pack.c b/send-pack.c
-index 6677c44e8a..f1556dd53c 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -630,7 +630,7 @@ int send_pack(struct send_pack_args *args,
- 				reject_atomic_push(remote_refs, args->send_mirror);
- 				error("atomic push failed for ref %s. status: %d",
- 				      ref->name, ref->status);
--				ret = args->porcelain ? 0 : -1;
-+				ret = ERROR_SEND_PACK_BAD_REF_STATUS;
- 				goto out;
- 			}
- 			/* else fallthrough */
-@@ -761,11 +761,6 @@ int send_pack(struct send_pack_args *args,
- 	if (ret < 0)
- 		goto out;
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 04b47ad84a..32181b9afb 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -280,4 +280,34 @@ test_expect_success 'atomic push reports (reject by non-ff)' '
+ 	test_cmp expect actual
+ '
  
--	if (args->porcelain) {
--		ret = 0;
--		goto out;
--	}
--
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		switch (ref->status) {
- 		case REF_STATUS_NONE:
-@@ -773,7 +768,7 @@ int send_pack(struct send_pack_args *args,
- 		case REF_STATUS_OK:
- 			break;
- 		default:
--			ret = -1;
-+			ret = ERROR_SEND_PACK_BAD_REF_STATUS;
- 			goto out;
- 		}
- 	}
-diff --git a/send-pack.h b/send-pack.h
-index 7edb80596c..ee88f9fe9f 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -12,6 +12,9 @@ struct ref;
- #define SEND_PACK_PUSH_CERT_IF_ASKED 1
- #define SEND_PACK_PUSH_CERT_ALWAYS 2
- 
-+/* Custom exit code from send_pack. */
-+#define ERROR_SEND_PACK_BAD_REF_STATUS 1
++test_expect_failure 'atomic push reports exit code failure' '
++	write_script receive-pack-wrapper <<-\EOF &&
++	git-receive-pack "$@"
++	exit 1
++	EOF
++	test_must_fail git -C workbench push --atomic \
++		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" \
++		up HEAD:refs/heads/no-conflict 2>err &&
++	cat >expect <<-EOF &&
++	To ../upstream
++	 * [new branch]      HEAD -> no-conflict
++	error: failed to push some refs to ${SQ}../upstream${SQ}
++	EOF
++	test_cmp expect err
++'
 +
- struct send_pack_args {
- 	const char *url;
- 	unsigned verbose:1,
-diff --git a/transport.c b/transport.c
-index 47fda6a773..454d7f21a9 100644
---- a/transport.c
-+++ b/transport.c
-@@ -914,6 +914,13 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	case protocol_v0:
- 		ret = send_pack(&args, data->fd, data->conn, remote_refs,
- 				&data->extra_have);
-+		/*
-+		 * Ignore the specific error code to maintain consistent behavior
-+		 * with the "push_refs()" function across different transports,
-+		 * such as "push_refs_with_push()" for HTTP protocol.
-+		 */
-+		if (ret == ERROR_SEND_PACK_BAD_REF_STATUS)
-+			ret = 0;
- 		break;
- 	case protocol_unknown_version:
- 		BUG("unknown protocol version");
++test_expect_failure 'atomic push reports exit code failure with porcelain' '
++	write_script receive-pack-wrapper <<-\EOF &&
++	git-receive-pack "$@"
++	exit 1
++	EOF
++	test_must_fail git -C workbench push --atomic --porcelain \
++		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" \
++		up HEAD:refs/heads/no-conflict-porcelain 2>err &&
++	cat >expect <<-EOF &&
++	error: failed to push some refs to ${SQ}../upstream${SQ}
++	EOF
++	test_cmp expect err
++'
++
+ test_done
 -- 
 2.47.0.rc1.21.g81e7bd6151
 
