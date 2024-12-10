@@ -1,69 +1,69 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B98212D75
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933BB210F6E
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733830601; cv=none; b=k/eG52SoqK5y4s11vcOKITnustyQYG92D1nvH8tPnFLF5QrfblwngaaulTgxE2qybVbxeO8icrVJIUGwsCEPveSYj0yVPlDdCBQxvfdGKyjY5AnU02ECeJOvz2FLD7r+RcuZnnGzWLq2faHScyXwyJGTNeuP86u4FxVHlJeG4h4=
+	t=1733830602; cv=none; b=rsIAzJDNcxv4vI+6N5d0lP+5RbECnbdqb2kUbn7NNxa9frAE0SViMFRgkxKo53zuQX936+4gI+axWWxpXASm8yM62GC1rTj/4WHGOamzuaWsOYwgFNlorfzOLFdq5z/3DTmq2Bd6gFtIBoMAx1Jp0zfxTdfaOHdTBqT4FR0+vbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733830601; c=relaxed/simple;
-	bh=7d0v/fW2aB00bJFmfvVyS4Q+inPguWQFl7wcOxNzL8M=;
+	s=arc-20240116; t=1733830602; c=relaxed/simple;
+	bh=6UZ6NPaB93dwITRwaQEC9l1HrfmGkEvslrvsJQs4cSc=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=WdiVlV3JLXJwg3bxhJAJbkeAw6tkGCbYrnIsqho7JLHJqUKUQCJ6aqqzP6T3sK9AzUWzXdJUHJ8WT9gGs1p8kulwtfOBduI3Ycp2BKuyQW0PypittIeg7x4B/e2VEQBbgAOfik6XzgoGJVTn7aRZbg9p96W1dEH+DcQLcEiFu/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTOXVTo6; arc=none smtp.client-ip=209.85.210.179
+	 MIME-Version; b=M7xvOYJraOjc28ePUkFTns+UMbRHipe87e3Kj0Zu3GcxlkXEoFjhio27B4z8U+6gbS3F/hLtnhca+y3n3mmF74RycmsSnZF8gBM+63UY+wIv8wCo3kpz9Ak+7uwn81FOVnTDTUItkQFfAIlIACrvMZij53BtXL1sxdL7DBxpu9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DNho3vD5; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTOXVTo6"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-728ea1573c0so33775b3a.0
-        for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DNho3vD5"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-725abf74334so4440817b3a.3
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1733830599; x=1734435399; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8m0Jv3x4S5mP1SNWqB3cmjfYtz3xeIJv4zIjzXdeCK4=;
-        b=bTOXVTo679629gxMuGjeXmJtAy3AjitOs5+ahfARiwHZg6jpSRxYgzw+0Ynkd52Ho4
-         PbeorV2IuGwSo4TUkEHEgdTIWilqoCnqyR9oMLU6XPPavFulKRbyHviwSMq9nHRXUTLi
-         TQtJ5iYg/SWr+iTtZHa4be7oqh+WkMMeyp4iOkohI138reu4USoLNnIFgwxe4lt4L4dC
-         BK7OVH2/WADL/72u9pGSDU95iKL9MEFDoU3pmfYovUZtP4yaJf6p3ZSDbEash5DEzMJq
-         rQUCa8iN3bDDKtgzVxgDQStoHV7OApbC8HmVqlbUHGBzFsoMlP6M5kEOQLAvxxHPom2v
-         E/iw==
+        bh=Q4NGtyNaxxvQ0Fi51uChUd3uXGsfuST/Ggr61mmi7oA=;
+        b=DNho3vD5OF4dyXz9iwTAl4gNesuiqknRgukH821xenL9IRmf7VB1/ogn82yYgIW5Ug
+         W/eHJbMwbg3fK7bdHnddI1SdO8ZuUYgWY2f8UCI9ual0t4wVo3UEODg93rXHFOxb6dwo
+         6BX7i3lrblrUg2iGCw0KppF4FLE72LVWtFy+jhWWYUCCM0z0phEfI8ky4PJefUE5sl29
+         ArynUAk3nGlJP4ddq/Nf6E0LV70Pa7QZ6khdOJYIVmal9aHIc1F7boWMRmBtjZmwT5aX
+         fkpnUjGRJrISxnFWvcvhPqzgJ0oYArbu+G6Pja6dgwzSE1YoOoOzAcqwtq3BPrXDyvre
+         waew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1733830599; x=1734435399;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8m0Jv3x4S5mP1SNWqB3cmjfYtz3xeIJv4zIjzXdeCK4=;
-        b=BhoujCsTYXjCQZ4m0sgqqJejn/7eQaaEv2JLTfiuqkdDdq+DCDtl3mXhbxD7pwxwkS
-         tGWaHMyKnomB+ztni2kW/Iy9yDrCe7ONVcdpDOAHKeDzpnG2LnWoH3AxgfchL006cXU8
-         n9pJf4YUrcXRifw9lILgQxjNe0YZ8GIsogwSeGKWe03RI0ZAotzHev1lng9geZ3mYMwF
-         RVxkdJJecES4WH5r5z7c5P6jMoJJ/jDvwCq/OmV+MqgxGpvmJHFf1Gm1AC2BsP7j/hTG
-         VdZIBYajrIWb6CDI7WGy8rCeKD4FmqoeUR5RM8BpnHDriEI+VeNWTV7+48q+V1hh4wcE
-         uaXA==
-X-Gm-Message-State: AOJu0YwRQwM19aLD89Aspin5lDkc6rDzNyngz1SI2E07h9d9A8GozcLC
-	Xqwg18MK0nlEFDyonDC/Kq3AGVO5l2ufS8yrD/4m3yjSqChb9tbAKJcaSw==
-X-Gm-Gg: ASbGncvadHnOiMP+lTy400MO3oUgobPbhCinHxRiKelw8KoEJMJjeOGJ5iROhvRzDHj
-	L+S/kOm6S4tLhvHBQeml5Ijz9oIZRiXvean5FxEWzlyb/lycaKUd7cKsf5vV1tmoTWsHe31QotZ
-	/NIkMNcVJfkwPLym9O06l58ywy1dSHKslW7Pe1RZTe3a0gRnh5KmUX6B6Wtv9Q7je5tx3IOS0Oo
-	X9UDhNxY5nF17Gpt4QfshKhJKUimF0piX8v7ircUMfcRMjpvfyT0OiRB6gBSnkhFkfjLqKTGNrw
-	TdjxrrJ93Ckvl7zKnT8LluNZKjoqFhkNvw9x50uNR6kKzw==
-X-Google-Smtp-Source: AGHT+IHUB5KXRfVAokENtxzUceSSdLuQE1Pot7OY2yn3A/9+pnOAGpB3uUaJFL90kO0alyjXIaKdpw==
-X-Received: by 2002:a05:6a00:3c8b:b0:725:e057:c3de with SMTP id d2e1a72fcca58-725e057cd56mr14175635b3a.23.1733830598639;
-        Tue, 10 Dec 2024 03:36:38 -0800 (PST)
+        bh=Q4NGtyNaxxvQ0Fi51uChUd3uXGsfuST/Ggr61mmi7oA=;
+        b=rPPafmyUkV7yeg05jTPp1sOwTITU966dBfelcSr5fT+rjQTd4spcmz5HVXX1YxiT14
+         DH9T3++CKfxEeyFUPZH92t30eoLo4FRdinYkdY31G0LsmVIr8S8iNY9ozVP1N0Scaz/i
+         epTORSeFRO/1Igyp8SVghGTyRKXPCbSQwwF5uG9gIBkN9XnMHz4Z5IkUWc4lzywPKU9V
+         gSZ5K5DtdsOdLSbRzKXuf5x5Y1JM+bH1NEEy5nJAagSssiuOuOeJyYwWvMCKvoKCJuQE
+         /qnLoLDUwpsNwMe/k7gqpj26ZOJK71FF64dDehb0w2Rt9dgo7ZpjpLG2pooA74aDTLfE
+         6Feg==
+X-Gm-Message-State: AOJu0YxGVZk4EFKR+HVmO3MLveRoqkEMlqWI6101LaVd+UTrpk23SaDU
+	zBKXGELgY2vvFyvwv8Usr6Dzrtv2FYYTZPQkTKOuHm6opdQriIohxH1prA==
+X-Gm-Gg: ASbGncvrumhVKt+VdJZcT0h/PE8ZDDU7FqQWoqS3i94ZaKkAU3eczd0DmJCmn2ObwOC
+	boXiFyoNXiiWLAm9wa+o70xJlAtTvuM9UDZiemhlHIg6VWXbYLyogcCKJtkMoSklqIpIKhhZkwR
+	ts1SOMG5+7mQ7CiDSRP7GS6EkTxixgzAu6nrFZyxihCXfQmeCF/mM9oFjyahG/3LAGEKI5z/iLC
+	yShe4BsIkV5XkwMzaZsg/aOH43IPVSQtdMGhHMaqpu/C6MDNxBrqU5Yop+Z9TvF3oT2N3kWZeut
+	TQ0LQEhwe3Mb08+x+rWjDPjfvP8XpnSMxQXuHqZ9zaE17A==
+X-Google-Smtp-Source: AGHT+IFQtdp+NeT4B/jP+VO41ToWdpB30XFHcpyGyQT6sK9eZHxyfse8AJb/dwkDE8ujjM8W3T52tw==
+X-Received: by 2002:a05:6a00:178e:b0:728:e196:b5b5 with SMTP id d2e1a72fcca58-728e196b7c2mr3321764b3a.20.1733830599589;
+        Tue, 10 Dec 2024 03:36:39 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.37
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.38
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Dec 2024 03:36:38 -0800 (PST)
+        Tue, 10 Dec 2024 03:36:39 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: git@vger.kernel.org,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
 Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 5/8] t5548: add porcelain push test cases for dry-run mode
-Date: Tue, 10 Dec 2024 19:36:25 +0800
-Message-Id: <93123988ae00d865d0251ca0667c4f4584772021.1733830410.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 6/8] send-pack: new return code "ERROR_SEND_PACK_BAD_REF_STATUS"
+Date: Tue, 10 Dec 2024 19:36:26 +0800
+Message-Id: <77f5e128fc1b66a9c8b0df3ce274a98921800685.1733830410.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
 References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com> <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
@@ -77,191 +77,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-New dry-run test cases:
+The "push_refs" function in the transport_vtable is the handler for
+git-push operation. All the "push_refs" functions for different
+transports (protocols) should have the same behavior, but the behavior
+of "git_transport_push()" function for builtin_smart_vtable in
+"transport.c" (which calls "send_pack()" in "send-pack.c") differs from
+the handler of the HTTP protocol.
 
- - git push --porcelain --dry-run
- - git push --porcelain --dry-run --force
- - git push --porcelain --dry-run --atomic
- - git push --porcelain --dry-run --atomic --force
+The "push_refs()" function for the HTTP protocol which calls the
+"push_refs_with_push()" function in "transport-helper.c" will return 0
+even when a bad REF_STATUS (such as REF_STATUS_REJECT_NONFASTFORWARD)
+was found. But "send_pack()" for Git smart protocol will return -1 for
+a bad REF_STATUS.
+
+We cannot ignore bad REF_STATUS directly in the "send_pack()" function,
+because the function is also used in "builtin/send-pack.c". So we add a
+new non-zero error code "SEND_PACK_ERROR_REF_STATUS" for "send_pack()".
+We can choose to ignore the specific error code in the
+"git_transport_push()" function to have the same behavior as
+"push_refs()" for HTTP protocol.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t5548-push-porcelain.sh | 153 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 153 insertions(+)
+ send-pack.c | 9 ++-------
+ send-pack.h | 3 +++
+ transport.c | 7 +++++++
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
-index 799f6066a3..ba68808459 100755
---- a/t/t5548-push-porcelain.sh
-+++ b/t/t5548-push-porcelain.sh
-@@ -310,10 +310,159 @@ run_git_push_porcelain_output_test() {
- 	'
- }
+diff --git a/send-pack.c b/send-pack.c
+index 6677c44e8a..f1556dd53c 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -630,7 +630,7 @@ int send_pack(struct send_pack_args *args,
+ 				reject_atomic_push(remote_refs, args->send_mirror);
+ 				error("atomic push failed for ref %s. status: %d",
+ 				      ref->name, ref->status);
+-				ret = args->porcelain ? 0 : -1;
++				ret = ERROR_SEND_PACK_BAD_REF_STATUS;
+ 				goto out;
+ 			}
+ 			/* else fallthrough */
+@@ -761,11 +761,6 @@ int send_pack(struct send_pack_args *args,
+ 	if (ret < 0)
+ 		goto out;
  
-+run_git_push_dry_run_porcelain_output_test() {
-+	case $1 in
-+	http)
-+		PROTOCOL="HTTP protocol"
-+		URL_PREFIX="http://.*"
-+		;;
-+	file)
-+		PROTOCOL="builtin protocol"
-+		URL_PREFIX="/.*"
-+		;;
-+	esac
-+
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. git-push --porcelain --dry-run ($PROTOCOL)" '
-+		test_must_fail git -C workbench push --porcelain --dry-run origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		format_and_save_expect <<-EOF &&
-+		> To <URL/of/upstream.git>
-+		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		>  	<COMMIT-B>:refs/heads/bar	<COMMIT-A>..<COMMIT-B>
-+		> -	:refs/heads/foo	[deleted]
-+		> *	refs/heads/next:refs/heads/next	[new branch]
-+		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
-+		> Done
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git -C "$upstream" show-ref >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		cat >expect <<-EOF &&
-+		<COMMIT-A> refs/heads/bar
-+		<COMMIT-A> refs/heads/baz
-+		<COMMIT-A> refs/heads/foo
-+		<COMMIT-B> refs/heads/main
-+		EOF
-+		test_cmp expect actual
-+	'
-+
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# push             : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. git-push --porcelain --dry-run --force ($PROTOCOL)" '
-+		git -C workbench push --porcelain --dry-run --force origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		format_and_save_expect <<-EOF &&
-+		> To <URL/of/upstream.git>
-+		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		>  	<COMMIT-B>:refs/heads/bar	<COMMIT-A>..<COMMIT-B>
-+		> -	:refs/heads/foo	[deleted]
-+		> +	refs/heads/main:refs/heads/main	<COMMIT-B>...<COMMIT-A> (forced update)
-+		> *	refs/heads/next:refs/heads/next	[new branch]
-+		> Done
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git -C "$upstream" show-ref >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		cat >expect <<-EOF &&
-+		<COMMIT-A> refs/heads/bar
-+		<COMMIT-A> refs/heads/baz
-+		<COMMIT-A> refs/heads/foo
-+		<COMMIT-B> refs/heads/main
-+		EOF
-+		test_cmp expect actual
-+	'
-+
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. git-push --porcelain --dry-run --atomic ($PROTOCOL)" '
-+		test_must_fail git -C workbench push --porcelain --dry-run --atomic origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		format_and_save_expect <<-EOF &&
-+		> To <URL/of/upstream.git>
-+		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		> !	<COMMIT-B>:refs/heads/bar	[rejected] (atomic push failed)
-+		> !	(delete):refs/heads/foo	[rejected] (atomic push failed)
-+		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
-+		> !	refs/heads/next:refs/heads/next	[rejected] (atomic push failed)
-+		> Done
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git -C "$upstream" show-ref >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		cat >expect <<-EOF &&
-+		<COMMIT-A> refs/heads/bar
-+		<COMMIT-A> refs/heads/baz
-+		<COMMIT-A> refs/heads/foo
-+		<COMMIT-B> refs/heads/main
-+		EOF
-+		test_cmp expect actual
-+	'
-+
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# push             : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. git-push --porcelain --dry-run --atomic --force ($PROTOCOL)" '
-+		git -C workbench push --porcelain --dry-run --atomic --force origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		format_and_save_expect <<-EOF &&
-+		> To <URL/of/upstream.git>
-+		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		>  	<COMMIT-B>:refs/heads/bar	<COMMIT-A>..<COMMIT-B>
-+		> -	:refs/heads/foo	[deleted]
-+		> +	refs/heads/main:refs/heads/main	<COMMIT-B>...<COMMIT-A> (forced update)
-+		> *	refs/heads/next:refs/heads/next	[new branch]
-+		> Done
-+		EOF
-+		test_cmp expect actual &&
-+
-+		git -C "$upstream" show-ref >out &&
-+		make_user_friendly_and_stable_output <out >actual &&
-+		cat >expect <<-EOF &&
-+		<COMMIT-A> refs/heads/bar
-+		<COMMIT-A> refs/heads/baz
-+		<COMMIT-A> refs/heads/foo
-+		<COMMIT-B> refs/heads/main
-+		EOF
-+		test_cmp expect actual
-+	'
-+}
-+
- setup_upstream_and_workbench upstream.git
+-	if (args->porcelain) {
+-		ret = 0;
+-		goto out;
+-	}
+-
+ 	for (ref = remote_refs; ref; ref = ref->next) {
+ 		switch (ref->status) {
+ 		case REF_STATUS_NONE:
+@@ -773,7 +768,7 @@ int send_pack(struct send_pack_args *args,
+ 		case REF_STATUS_OK:
+ 			break;
+ 		default:
+-			ret = -1;
++			ret = ERROR_SEND_PACK_BAD_REF_STATUS;
+ 			goto out;
+ 		}
+ 	}
+diff --git a/send-pack.h b/send-pack.h
+index 7edb80596c..ee88f9fe9f 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -12,6 +12,9 @@ struct ref;
+ #define SEND_PACK_PUSH_CERT_IF_ASKED 1
+ #define SEND_PACK_PUSH_CERT_ALWAYS 2
  
- run_git_push_porcelain_output_test file
- 
-+setup_upstream_and_workbench upstream.git
++/* Custom exit code from send_pack. */
++#define ERROR_SEND_PACK_BAD_REF_STATUS 1
 +
-+run_git_push_dry_run_porcelain_output_test file
-+
- ROOT_PATH="$PWD"
- . "$TEST_DIRECTORY"/lib-gpg.sh
- . "$TEST_DIRECTORY"/lib-httpd.sh
-@@ -325,4 +474,8 @@ setup_upstream_and_workbench "$HTTPD_DOCUMENT_ROOT_PATH/upstream.git"
- 
- run_git_push_porcelain_output_test http
- 
-+setup_upstream_and_workbench "$HTTPD_DOCUMENT_ROOT_PATH/upstream.git"
-+
-+run_git_push_dry_run_porcelain_output_test http
-+
- test_done
+ struct send_pack_args {
+ 	const char *url;
+ 	unsigned verbose:1,
+diff --git a/transport.c b/transport.c
+index 47fda6a773..454d7f21a9 100644
+--- a/transport.c
++++ b/transport.c
+@@ -914,6 +914,13 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 	case protocol_v0:
+ 		ret = send_pack(&args, data->fd, data->conn, remote_refs,
+ 				&data->extra_have);
++		/*
++		 * Ignore the specific error code to maintain consistent behavior
++		 * with the "push_refs()" function across different transports,
++		 * such as "push_refs_with_push()" for HTTP protocol.
++		 */
++		if (ret == ERROR_SEND_PACK_BAD_REF_STATUS)
++			ret = 0;
+ 		break;
+ 	case protocol_unknown_version:
+ 		BUG("unknown protocol version");
 -- 
 2.47.0.rc1.21.g81e7bd6151
 
