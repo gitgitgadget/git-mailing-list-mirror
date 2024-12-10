@@ -1,806 +1,221 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFA319D082
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 14:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD862343B4
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 16:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733841072; cv=none; b=H8pFXYdw+HxNjUSrOcZN2jpZdUkNWEUfLIP/8YQbJX1/H2G7ai5JLFCIwjP0qzMA/qySpIq8aWEQ43Yc26+whgS/DmkIJzc/us/1EFV2EzHnZO1LPWf9dIG/4qBac+QUMg3L/dl5PPi7LR9S7YK+7nCyA8xzLj0NUhgdmVsbEwI=
+	t=1733849534; cv=none; b=TWmFt2ZHblOG2xr4R/AOUqmgna1pItQ7GN7Xn5lQROTMUfamCNnnY1J3MTzkM7TxkyPpRwQe2Tty3ROwPc2qghFl5lm28ix2Zf+Y5/9RO1zbORgvvKe4JcoXzPEolxw5GDSXzl4BB5wmeul2PG16bmFyySMIvMeNqAfGrd53UVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733841072; c=relaxed/simple;
-	bh=n9XNv8z+x8wj94x57bWQQEQbgVU7De27ImeZ5dFfjY8=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GpXSIC6jYsem0dVtKEOzQLUoo1WGfMks4A1W7eWbr584/NSpxZVIhlaRPp4sHkCcjIo3Z1lL8UwlT7hD70Am1i3E9CbtjpB0Ar4JyMMqdamWaOtqLlYHZmt0c2+/BgrMO4+M+0ZEry+TpwCM4BZqlLHqZPfu33wrP29IaVMS4tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rIDkdoAe; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733849534; c=relaxed/simple;
+	bh=2OTSkfRFs+sKcHm+gBxlJDlL8XXbGEEkIYnCzM2z1XQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=frDZbWN1XQ7S61/Li+o7bcAidPgZ7z3Yk5EXMFxXBhUYAFM4O26df2CFglrVFOvXP5O1oXSUjSE1WSm7PF3/ThYsk57My+Ggcj64W+cdStJSKAJT5TS2gDmA7Cz2FqpasOzE1U5OFFCkSIdJ4ifQlIqWuLDp2DiD0cRBrvXNf7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NmHs0Wkm; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rIDkdoAe"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5E8C625401B2;
-	Tue, 10 Dec 2024 09:31:08 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 10 Dec 2024 09:31:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733841068; x=
-	1733927468; bh=Rn6vDlF0Gn0f6/mH7T0srp++d1ne1sC2EMxlALwodmw=; b=r
-	IDkdoAeBkVraOwGCT6ZTV70rfFx7I5Lggg12r3b6xBd8IY1OSJAgEL64PNyJgxCT
-	EM3TLIKkteujCKS/U/ZxoOUmRsEuCQac+Uyn0kp/99A6b2yNvgOEGjB1zhQJPzdz
-	DH00NpW0FYsna7vie1SlI6VfDOaN+MApGMRhFXH9jdLpD7DQ0bvS5oHBYlwkFzRl
-	wz92AW0/5AM9lMoiz7bUvUGaxbJz0I7it6l44j4BV1J9R5OxsySg2U0a+zlNN/4M
-	UKGjF0QbjL0ekzcMpMKl6GdencWTYjMPXl8vGEorK2EG3b1Dr2ltJwULRtaz77yT
-	aCcDvoHihEU4+DVfJGuhA==
-X-ME-Sender: <xms:q1BYZ_4GQ6vGB4rKmR4JcA2XNARxkT_ug7gA8_-ykHbMpXF9IsUfkg>
-    <xme:q1BYZ05K8CGlSBj59sn9J_TucRw2igGp6xJ3ak9w-rGTYXXQWY5C6U7SS1STBbziV
-    WccAgEvBfmE4nuqbg>
-X-ME-Received: <xmr:q1BYZ2cPWnEq9wTZnsVWR6OgVhxd9v6PAEw-hbPSWp0nT_SJ9O-gS41E65Z5SHvpCdYjoqjxqA9ufYvLwFW6oIZWYnTHbB-_MGeGSHw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeekgdeifecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkf
-    gfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeettdejheeuue
-    elieelueeugefffedtteegueegueetfeegveduudeiieeivdekvdenucffohhmrghinhep
-    khgvrhhnvghlrdhorhhgpdhorhdrtgiipdhgohhoghhlvghsohhurhgtvgdrtghomhdpgh
-    hithhhuhgsrdgtohhmpdhgihhtlhgrsgdrtghomhdpphhkshdrihhmpdhmrghkrdguvghv
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:rFBYZwKFBve8HJgeqkMwQZduVDKx5J19z3mJ3FcuVC84N9ChJF1Dwg>
-    <xmx:rFBYZzIyYp-OogQLm4LVBWi-xoI5Djps2Apngr6ehu4ysz1LEs-fqA>
-    <xmx:rFBYZ5zn5jhV427eAeltc6okrw-yzq6mjJjza0lhTCJV-bRQy6hkww>
-    <xmx:rFBYZ_JW1Oya6IgQl7T2m9iLPyp4HEx7oGGU10s5JXQHbj-KdFdjVQ>
-    <xmx:rFBYZ70k0gJNon2uoTfl5C3rLSDDSgx4dTaMQN4SsckRa4tYJtvwqolA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Dec 2024 09:31:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Dec 2024, #04; Tue, 10)
-X-master-at: caacdb5dfd60540ecec30ec479f147f3c8167e11
-X-next-at: c27f4b7a9fc45cdb75b4a22d3d3e0e7ac90f80b2
-Date: Tue, 10 Dec 2024 23:31:06 +0900
-Message-ID: <xmqqpllzk3th.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NmHs0Wkm"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5cecbddb574so7603920a12.1
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 08:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733849531; x=1734454331; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/AehknQitiJv+jtnjmXLh0Om/iGuowvbxuyGbbE7Amw=;
+        b=NmHs0Wkmtt/iPHMbfuuLWG6Fb5+wyxf0C4A2VuBemNSUhcFX+nNVqUggQpYzthBHm6
+         tTeloB0Au6Bn5wxAGz12yMjMkYyBebKnzCGNlZM04s/fYkEjH3VrfoBclZtNkudr0qgf
+         bmbrdVZJlKw4AtLkemXZmRe3VKYGD6z1lUDXomZlJFniyPBtPZJo6kKM1lH22xhlfafa
+         vdY6TrYcKfn3NqRpjl/d++4KKEJ9+FvjPb4zd/4XXE13vAG/qFOJiaTmF/wmMRob7P9O
+         WHrEiEkmoGY5wMgslqL9VDePR9tLHrYTcOIpYLFfZLp/rvDC+0v6usZOEmO+FI/bKB3u
+         oYgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733849531; x=1734454331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/AehknQitiJv+jtnjmXLh0Om/iGuowvbxuyGbbE7Amw=;
+        b=Wzn+PzBVvrnsFtS4wtKqIQlYXPu1Wy4hUzOJ4UfuwLlQtUfvsXXYKLPg59ljEgGp3A
+         iNDzAaAQqFBjeIFyoqKvw28ta1Wdh8Cknp7b8vGp0a/AhPi6NjRobq9cZsamKxPJIIDq
+         3bVNLCXnKqETB16wJmmejpLXJ0EXYwS9bYSk5dqHd7nna+aUynWIErnWEhjWWq0ZRS04
+         et9Lr1CKLkHcO6sdTmjRh+A8/OZ8uqNVPLWnTxWrNGvIctvloTynNrkeA0mTsKyEhQLJ
+         LVc0s4HO2irrozBJWZ8XD4RODLGqBhQuOMlKXnGce1nijrWHVoYnvxSLgJ+O5aA6tdfP
+         uX5g==
+X-Gm-Message-State: AOJu0YyY2YMIQ0qF66PBHOBUo01gZ75CRavIE3PBYus3M4Qxlelv95Dd
+	omj3W5BS/VCF55NVLR+jWuL9kF1LwFzTiQX5U5j0Snw4B4FspujMh5B2IaGr9qg0WaW7LXRV43x
+	3GimA/Xh8CVjfTbN4+5vnSeINwlM=
+X-Gm-Gg: ASbGnctkG7ln4kip6x2I0GB8EWxO6MOtgWQDybfR0micY4ZfDqZKfDnVMiw/Pb5aSUD
+	EyDVDL2UcNe7vcm9x+trRkTLCcrTT9WuHGm6IWg==
+X-Google-Smtp-Source: AGHT+IHBrWmrHn3M4V5j1iiQYyk3zBHqgsc6yCJCpSQmUR7uvvLOS9AHym9unC1G4pZka5QOJDmeMV/abt0mp5SaRt0=
+X-Received: by 2002:a05:6402:3553:b0:5d1:2631:b877 with SMTP id
+ 4fb4d7f45d1cf-5d3be678015mr15559018a12.9.1733849530522; Tue, 10 Dec 2024
+ 08:52:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* bc/allow-upload-pack-from-other-people (2024-11-15) 1 commit
-  (merged to 'next' on 2024-12-02 at bf711f018c)
- + Allow cloning from repositories owned by another user
-
- Loosen overly strict ownership check introduced in the recent past,
- to keep the promise "cloning a suspicious repository is a safe
- first step to inspect it".
- cf. <xmqqed2yzc5z.fsf@gitster.g>
- source: <20241115005404.3747302-2-sandals@crustytoothpaste.net>
-
-
-* bc/ancient-ci (2024-11-01) 3 commits
-  (merged to 'next' on 2024-12-02 at f6128744ce)
- + Add additional CI jobs to avoid accidental breakage
- + ci: remove clause for Ubuntu 16.04
- + gitlab-ci: switch from Ubuntu 16.04 to 20.04
-
- Drop support for ancient environments in various CI jobs.
- source: <20241031234934.3451390-1-sandals@crustytoothpaste.net>
-
-
-* jc/doc-opt-tilde-expand (2024-11-25) 1 commit
-  (merged to 'next' on 2024-12-02 at e345717b87)
- + doc: option value may be separate for valid reasons
-
- Describe a case where an option value needs to be spelled as a
- separate argument, i.e. "--opt val", not "--opt=val".
- source: <xmqqh67w6m4m.fsf@gitster.g>
-
-
-* pb/mergetool-errors (2024-11-25) 5 commits
-  (merged to 'next' on 2024-12-02 at b439b146c2)
- + git-difftool--helper.sh: exit upon initialize_merge_tool errors
- + git-mergetool--lib.sh: add error message for unknown tool variant
- + git-mergetool--lib.sh: add error message if 'setup_user_tool' fails
- + git-mergetool--lib.sh: use TOOL_MODE when erroring about unknown tool
- + completion: complete '--tool-help' in 'git mergetool'
-
- End-user experience of "git mergetool" when the command errors out
- has been improved.
- source: <pull.1827.v2.git.1732305022.gitgitgadget@gmail.com>
-
-
-* ps/reftable-detach (2024-11-19) 8 commits
-  (merged to 'next' on 2024-12-02 at e105e787b6)
- + reftable/system: provide thin wrapper for lockfile subsystem
- + reftable/stack: drop only use of `get_locked_file_path()`
- + reftable/system: provide thin wrapper for tempfile subsystem
- + reftable/stack: stop using `fsync_component()` directly
- + reftable/system: stop depending on "hash.h"
- + reftable: explicitly handle hash format IDs
- + reftable/system: move "dir.h" to its only user
- + Merge branch 'ps/reftable-strbuf' into ps/reftable-detach
- (this branch is used by ps/reftable-iterator-reuse.)
-
- Isolates the reftable subsystem from the rest of Git's codebase by
- using fewer pieces of Git's infrastructure.
- source: <cover.1731943954.git.ps@pks.im>
-
-
-* ps/reftable-iterator-reuse (2024-11-26) 11 commits
-  (merged to 'next' on 2024-12-02 at 3c1d2e2a6a)
- + refs/reftable: reuse iterators when reading refs
- + reftable/merged: drain priority queue on reseek
- + reftable/stack: add mechanism to notify callers on reload
- + refs/reftable: refactor reflog expiry to use reftable backend
- + refs/reftable: refactor reading symbolic refs to use reftable backend
- + refs/reftable: read references via `struct reftable_backend`
- + refs/reftable: figure out hash via `reftable_stack`
- + reftable/stack: add accessor for the hash ID
- + refs/reftable: handle reloading stacks in the reftable backend
- + refs/reftable: encapsulate reftable stack
- + Merge branch 'ps/reftable-detach' into ps/reftable-iterator-reuse
- (this branch uses ps/reftable-detach.)
-
- Optimize reading random references out of the reftable backend by
- allowing reuse of iterator objects.
- source: <20241126-pks-reftable-backend-reuse-iter-v4-0-b17fd27df126@pks.im>
-
---------------------------------------------------
-[New Topics]
-
-* kn/reflog-migration (2024-12-10) 7 commits
- - refs: add support for migrating reflogs
- - refs: allow multiple reflog entries for the same refname
- - refs: introduce the `ref_transaction_update_reflog` function
- - refs: extract out refname verification in transactions
- - refs/files: add count field to ref_lock
- - refs: add `index` field to `struct ref_udpate`
- - refs: include committer info in `ref_update` struct
-
- "git refs migrate" learned to also migrate the reflog data across
- backends.
-
- Needs review.
- source: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
-
-
-* mh/doc-windows-home-env (2024-12-10) 1 commit
- - Document HOME environment variable
-
- Doc update.
-
- Will merge to 'next'.
- source: <pull.1834.git.1733771894867.gitgitgadget@gmail.com>
-
-
-* tc/bundle-with-tag-remove-workaround (2024-12-10) 1 commit
- - bundle: remove unneeded code
-
- "git bundle create" with an annotated tag on the positive end of
- the revision range had a workaround code for older limitation in
- the revision walker, which has become unnecessary.
-
- Expecting a reroll.
- cf. <CAOLa=ZQpBf-ZE8BmXRUXJ247p44Enj0vrJv2KHVDXtGzY6SU8w@mail.gmail.com>
- source: <20241209-fix-bundle-create-race-v1-1-e6513bdcbf8a@iotcl.com>
-
---------------------------------------------------
-[Cooking]
-
-* bf/explicit-config-set-in-advice-messages (2024-12-06) 1 commit
- - advice: suggest using subcommand "git config set"
-
- The advice messages now tell the newer 'git config set' command to
- set the advice.token configuration variable to squelch a message.
-
- Will merge to 'next'.
- source: <20241205122225.1184215-1-bence@ferdinandy.com>
-
-
-* cc/lop-remote (2024-12-07) 5 commits
- . doc: add technical design doc for large object promisors
- . promisor-remote: check advertised name or URL
- . Add 'promisor-remote' capability to protocol v2
- . strbuf: refactor strbuf_trim_trailing_ch()
- . version: refactor strbuf_sanitize()
-
- Expecting a reroll.
- cf. <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
- source: <20241206124248.160494-1-christian.couder@gmail.com>
-
-
-* ds/backfill (2024-12-09) 7 commits
- - SQUASH??? leakfix
- - backfill: assume --sparse when sparse-checkout is enabled
- - backfill: add --sparse option
- - backfill: add --batch-size=<n> option
- - backfill: basic functionality and tests
- - backfill: add builtin boilerplate
- - Merge branch 'ds/path-walk-1' into ds/backfill
- (this branch uses ds/path-walk-1.)
-
- source: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
-
-
-* kn/reftable-writer-log-write-verify (2024-12-07) 1 commit
- - reftable/writer: ensure valid range for log's update_index
-
- source: <20241206-424-reftable-writer-add-check-for-limits-v2-1-82ca350b10be@gmail.com>
-
-
-* ps/ci-gitlab-update (2024-12-07) 4 commits
- - ci/lib: fix "CI setup" sections with GitLab CI
- - ci/lib: use echo instead of printf to set up sections
- - ci/lib: remove duplicate trap to end "CI setup" group
- - gitlab-ci: update macOS images to Sonoma
-
- source: <20241206-pks-ci-section-fixes-v1-0-7ab1b69e3648@pks.im>
-
-
-* ps/commit-with-message-syntax-fix (2024-12-08) 1 commit
- - object-name: fix reversed ordering with ":/<text>" revisions
-
- The syntax ":/<text>" to name the latest commit with the matching
- text was broken with a recent change, which has been corrected.
-
- Will merge to 'next'.
- source: <20241206-pks-rev-parse-fix-reversed-list-v3-1-d934c17db168@pks.im>
-
-
-* jc/set-head-symref-fix (2024-12-07) 2 commits
- - fetch: do not ask for HEAD unnecessarily
- - Merge branch 'bf/set-head-symref' into js/set-head-symref-fix
- (this branch uses bf/set-head-symref.)
-
- "git fetch" from a configured remote learned to update a missing
- remote-tracking HEAD but it asked the remote about their HEAD even
- when it did not need to, which has been corrected.  Incidentally,
- this also corrects "git fetch --tags $URL" which was broken by the
- new feature in an unspecified way.
-
- Will merge to 'next'.
- source: <xmqqcyi5xmhr.fsf@gitster.g>
-
-
-* re/submodule-parse-opt (2024-12-10) 8 commits
- - git-submodule.sh: rename some variables
- - git-submodule.sh: improve variables readability
- - git-submodule.sh: add some comments
- - git-submodule.sh: get rid of unused variable
- - git-submodule.sh: get rid of isnumber
- - git-submodule.sh: improve parsing of short options
- - git-submodule.sh: improve parsing of some long options
- - git-submodule.sh: make some variables boolean
-
- "git submodule" learned various ways to spell the same option,
- e.g. "--branch=B" can be spelled "--branch B" or "-bB".
-
- Will merge to 'next'?
- source: <20241209165009.40653-1-royeldar0@gmail.com>
-
-
-* jt/fix-fattening-promisor-fetch (2024-12-10) 3 commits
- - index-pack --promisor: also check commits' trees
- - index-pack --promisor: don't check blobs
- - index-pack --promisor: dedup before checking links
-
- Fix performance regression of a recent "fatten promisor pack with
- local objects" protection against an unwanted gc.
-
- Will merge to 'next'.
- source: <cover.1733262661.git.jonathantanmy@google.com>
-
-
-* kk/doc-ancestry-path (2024-12-04) 1 commit
-  (merged to 'next' on 2024-12-05 at 36d6c51c96)
- + doc: mention rev-list --ancestry-path restrictions
-
- The --ancestry-path option is designed to be given a commit that is
- on the path, which was not documented, which has been corrected.
-
- Will merge to 'master'.
- source: <CADYQcGrD5KtM1sZQbccAtDaLmUXD8Gxv_nUWmapjfZm=TMq=Jw@mail.gmail.com>
-
-
-* kh/doc-bundle-typofix (2024-12-02) 1 commit
-  (merged to 'next' on 2024-12-04 at 5da441ce36)
- + Documentation/git-bundle.txt: fix word join typo
-
- Typofix.
-
- Will merge to 'master'.
- source: <164b94bab9214f6030909df8f1e7c476b7f79e55.1732822997.git.code@khaugsbakk.name>
-
-
-* kh/doc-update-ref-grammofix (2024-12-02) 1 commit
-  (merged to 'next' on 2024-12-04 at 9905f16afc)
- + Documentation/git-update-ref.txt: add missing word
-
- Grammofix.
-
- Will merge to 'master'.
- source: <6cc7a9d60216c966bcf77675aa22a39cfa8993e2.1732906187.git.code@khaugsbakk.name>
-
-
-* ps/build-sign-compare (2024-12-06) 16 commits
- - t/helper: don't depend on implicit wraparound
- - scalar: address -Wsign-compare warnings
- - builtin/patch-id: fix type of `get_one_patchid()`
- - builtin/blame: fix type of `length` variable when emitting object ID
- - gpg-interface: address -Wsign-comparison warnings
- - daemon: fix type of `max_connections`
- - daemon: fix loops that have mismatching integer types
- - global: trivial conversions to fix `-Wsign-compare` warnings
- - pkt-line: fix -Wsign-compare warning on 32 bit platform
- - csum-file: fix -Wsign-compare warning on 32-bit platform
- - diff.h: fix index used to loop through unsigned integer
- - config.mak.dev: drop `-Wno-sign-compare`
- - global: mark code units that generate warnings with `-Wsign-compare`
- - compat/win32: fix -Wsign-compare warning in "wWinMain()"
- - compat/regex: explicitly ignore "-Wsign-compare" warnings
- - git-compat-util: introduce macros to disable "-Wsign-compare" warnings
-
- Start working to make the codebase buildable with -Wsign-compare.
-
- Will merge to 'next'?
- source: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
-
-
-* rj/strvec-splice-fix (2024-12-10) 2 commits
- - strvec: `strvec_splice()` to a statically initialized vector
- - Merge branch 'ps/leakfixes-part-10' into rj/strvec-splice-fix
-
- Correct strvec_splice() that misbehaved when the strvec is empty.
-
- Will merge to 'next'.
- source: <3c7b3c26-7501-4797-8afa-c7f7e9c46558@gmail.com>
-
-
-* jc/forbid-head-as-tagname (2024-12-03) 4 commits
- - tag: "git tag" refuses to use HEAD as a tagname
- - t5604: do not expect that HEAD can be a valid tagname
- - refs: drop strbuf_ prefix from helpers
- - refs: move ref name helpers around
-
- "git tag" has been taught to refuse to create refs/tags/HEAD
- as such a tag will be confusing in the context of UI provided by
- the Git Porcelain commands.
-
- Will merge to 'next'.
- source: <20241203023240.3852850-1-gitster@pobox.com>
-
-
-* en/fast-import-verify-path (2024-12-04) 3 commits
-  (merged to 'next' on 2024-12-05 at bbdd9b9659)
- + t9300: test verification of renamed paths
-  (merged to 'next' on 2024-12-02 at 2932fa51e4)
- + fast-import: disallow more path components
-  (merged to 'next' on 2024-11-27 at 8b145bb543)
- + fast-import: disallow "." and ".." path components
-
- "git fast-import" learned to reject paths with ".."  and "." as
- their components to avoid creating invalid tree objects.
-
- Will merge to 'master'.
- source: <pull.1831.v2.git.1732561248717.gitgitgadget@gmail.com>
- source: <pull.1832.git.1732740464398.gitgitgadget@gmail.com>
- source: <20241203210652.GA1413195@coredump.intra.peff.net>
-
-
-* bf/fetch-set-head-config (2024-12-06) 5 commits
- - remote set-head: set followRemoteHEAD to "warn" if "always"
- - fetch set_head: add warn-if-not-$branch option
- - fetch set_head: move warn advice into advise_if_enabled
-  (merged to 'next' on 2024-12-04 at 69bfc59fb5)
- + fetch: add configuration for set_head behaviour
- + Merge branch 'bf/set-head-symref' into bf/fetch-set-head-config
- (this branch uses bf/set-head-symref.)
-
- "git fetch" honors "remote.<remote>.followRemoteHEAD" settings to
- tweak the remote-tracking HEAD in "refs/remotes/<remote>/HEAD".
-
- Will merge to 'next'.
- source: <20241128230806.2058962-1-bence@ferdinandy.com>
- source: <20241204104003.514905-1-bence@ferdinandy.com>
- source: <20241128111946.366584-1-bence@ferdinandy.com>
-
-
-* jc/doc-error-message-guidelines (2024-11-29) 1 commit
-  (merged to 'next' on 2024-12-04 at 2d19ff44e5)
- + CodingGuidelines: a handful of error message guidelines
-
- Developer documentation update.
-
- Will merge to 'master'.
- source: <xmqqa5dkqjmr.fsf_-_@gitster.g>
-
-
-* kn/midx-wo-the-repository (2024-12-04) 10 commits
-  (merged to 'next' on 2024-12-05 at e48a185ed0)
- + midx: inline the `MIDX_MIN_SIZE` definition
- + midx: pass down `hash_algo` to functions using global variables
- + midx: pass `repository` to `load_multi_pack_index`
- + midx: cleanup internal usage of `the_repository` and `the_hash_algo`
- + midx-write: pass down repository to `write_midx_file[_only]`
- + write-midx: add repository field to `write_midx_context`
- + midx-write: use `revs->repo` inside `read_refs_snapshot`
- + midx-write: pass down repository to static functions
- + Merge branch 'kn/pass-repo-to-builtin-sub-sub-commands' into kn/midx-wo-the-repository
- + Merge branch 'kn/the-repository' into kn/midx-wo-the-repository
- (this branch uses kn/the-repository.)
-
- Yet another "pass the repository through the callchain" topic.
-
- Will merge to 'master'.
- source: <20241127-374-refactor-midx-c-and-midx-write-c-to-not-depend-on-global-state-v3-0-c5a99f85009b@gmail.com>
-
-
-* tb/unsafe-hash-test (2024-11-21) 2 commits
- - t/helper/test-tool: implement sha1-unsafe helper
- - t/helper/test-sha1: prepare for an unsafe mode
-
- Preliminary addition to the test tool to allow a plain SHA-1 hash
- algorithm without collision protection.
-
- Comments?
- cf. <xmqqr073antj.fsf@gitster.g>
- source: <cover.1730833506.git.me@ttaylorr.com>
-
-
-* jt/bundle-fsck (2024-11-28) 4 commits
-  (merged to 'next' on 2024-12-04 at bfd07a8936)
- + transport: propagate fsck configuration during bundle fetch
- + fetch-pack: split out fsck config parsing
- + bundle: support fsck message configuration
- + bundle: add bundle verification options type
-
- "git bundle --unbundle" and "git clone" running on a bundle file
- both learned to trigger fsck over the new objects with configurable
- fck check levels.
-
- Will merge to 'master'.
- cf. <Z08VoOHGZ1wecUx6@pks.im>
- source: <20241127233312.27710-1-jltobler@gmail.com>
-
-
-* tb/incremental-midx-part-2 (2024-11-20) 15 commits
- - midx: implement writing incremental MIDX bitmaps
- - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
- - pack-bitmap.c: keep track of each layer's type bitmaps
- - ewah: implement `struct ewah_or_iterator`
- - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
- - pack-bitmap.c: compute disk-usage with incremental MIDXs
- - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
- - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
- - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
- - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
- - pack-bitmap.c: open and store incremental bitmap layers
- - pack-revindex: prepare for incremental MIDX bitmaps
- - Documentation: describe incremental MIDX bitmaps
- - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
- - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
-
- Incrementally updating multi-pack index files.
-
- Needs review.
- source: <cover.1732054032.git.me@ttaylorr.com>
-
-
-* ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
- - transport: don't ignore git-receive-pack(1) exit code on atomic push
- - t5504: modernize test by moving heredocs into test bodies
-
- "git push --atomic --porcelain" used to ignore failures from the
- other side, losing the error status from the child process, which
- has been corrected.
-
- Needs review.
- source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
-
-
-* js/log-remerge-keep-ancestry (2024-11-12) 1 commit
- - log: --remerge-diff needs to keep around commit parents
-
- "git log -p --remerge-diff --reverse" was completely broken.
-
- Expecting a hopefully small and final reroll.
- cf. <xmqqa5e5berx.fsf@gitster.g>
- source: <pull.1825.v2.git.1731350009491.gitgitgadget@gmail.com>
-
-
-* jc/move-is-bare-repository-cfg-variable-to-repo (2024-11-07) 3 commits
- - repository: BUG when is_bare_cfg is not initialized
- - setup: initialize is_bare_cfg
- - git: remove is_bare_repository_cfg global variable
-
- Code rewrite to turn the is_bare_repository_cfg global variable
- into a member in the the_repo singleton repository object.
-
- Waiting for response to reviews.
- cf. <xmqqy116xvr3.fsf@gitster.g>
- source: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
-
-
-* jk/describe-perf (2024-12-06) 5 commits
- - describe: split "found all tags" and max_candidates logic
-  (merged to 'next' on 2024-12-02 at 0f34109a85)
- + describe: stop traversing when we run out of names
- + describe: stop digging for max_candidates+1
- + t/perf: add tests for git-describe
- + t6120: demonstrate weakness in disjoint-root handling
-
- "git describe" optimization.
-
- Will merge to 'next'.
- source: <20241106192236.GC880133@coredump.intra.peff.net>
- source: <20241206054218.GA3203047@coredump.intra.peff.net>
-
-
-* js/range-diff-diff-merges (2024-11-11) 1 commit
- - range-diff: optionally include merge commits' diffs in the analysis
-
- "git range-diff" learned to optionally show and compare merge
- commits in the ranges being compared, with the --diff-merges
- option.
-
- Expecting a (hopefully final and) small reroll.
- cf. <eb502feb-1563-b1b5-5345-784673c89c79@gmx.de>
- source: <pull.1734.v2.git.1731073383564.gitgitgadget@gmail.com>
-
-
-* ds/name-hash-tweaks (2024-12-03) 8 commits
- - pack-objects: add third name hash version
- - pack-objects: prevent name hash version change
- - test-tool: add helper for name-hash values
- - p5313: add size comparison test
- - pack-objects: add GIT_TEST_NAME_HASH_VERSION
- - repack: add --name-hash-version option
- - pack-objects: add --name-hash-version option
- - pack-objects: create new name-hash function version
-
- "git pack-objects" and its wrapper "git repack" learned an option
- to use an alternative path-hash function to improve delta-base
- selection to produce a packfile with deeper history than window
- size.
- source: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
-
-
-* ds/path-walk-1 (2024-12-07) 7 commits
- - path-walk: reorder object visits
- - path-walk: mark trees and blobs as UNINTERESTING
- - path-walk: visit tags and cached objects
- - path-walk: allow consumer to specify object types
- - t6601: add helper for testing path-walk API
- - test-lib-functions: add test_cmp_sorted
- - path-walk: introduce an object walk by path
- (this branch is used by ds/backfill.)
-
- Introduce a new API to visit objects in batches based on a common
- path, or by type.
-
- Will merge to 'next'?
- source: <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
-
-
-* cw/worktree-extension (2024-12-02) 8 commits
-  (merged to 'next' on 2024-12-05 at 7bd98d132c)
- + worktree: refactor `repair_worktree_after_gitdir_move()`
- + worktree: add relative cli/config options to `repair` command
- + worktree: add relative cli/config options to `move` command
- + worktree: add relative cli/config options to `add` command
- + worktree: add `write_worktree_linking_files()` function
- + worktree: refactor infer_backlink return
- + worktree: add `relativeWorktrees` extension
- + setup: correctly reinitialize repository version
-
- Introduce a new repository extension to prevent older Git versions
- from mis-interpreting worktrees created with relative paths.
-
- Will merge to 'master'.
- cf. <103c7a4d-a74b-4381-a9c7-33a89d5db192@gmail.com>
- source: <20241129-wt_relative_options-v6-0-44e4e0bec8c3@pm.me>
-
-
-* as/show-index-uninitialized-hash (2024-11-11) 2 commits
- - t5300: add test for 'show-index --object-format'
- - show-index: fix uninitialized hash function
-
- Regression fix for 'show-index' when run outside of a repository.
-
- Comments?
- source: <20241109092739.14276-1-abhijeet.nkt@gmail.com>
-
-
-* km/config-remote-by-name (2024-10-21) 1 commit
- - config: support remote name in includeIf.hasconfig condition
-
- Support conditionally including configuration by remote name, instead
- of just URL.
-
- Will discard?
- source: <20241020173216.40852-2-ken@kmatsui.me>
-
-
-* y5/diff-pager (2024-10-21) 1 commit
- - diff: setup pager only before diff contents truly ready
-
- Delay setting up the pager in 'git diff' until after the diff contents
- itself is fully prepared.
-
- Will discard?
- source: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-
-
-* es/oss-fuzz (2024-10-16) 3 commits
-  (merged to 'next' on 2024-12-05 at 1f973aece2)
- + fuzz: port fuzz-url-decode-mem from OSS-Fuzz
- + fuzz: port fuzz-parse-attr-line from OSS-Fuzz
- + fuzz: port fuzz-credential-from-url-gently from OSS-Fuzz
-
- Backport oss-fuzz tests for us to our codebase.
-
- Will merge to 'master'.
- source: <cover.1728939687.git.steadmon@google.com>
-
-
-* bf/set-head-symref (2024-11-25) 10 commits
-  (merged to 'next' on 2024-12-02 at b142ff3d8e)
- + fetch set_head: handle mirrored bare repositories
- + fetch: set remote/HEAD if it does not exist
- + refs: add create_only option to refs_update_symref_extended
- + refs: add TRANSACTION_CREATE_EXISTS error
- + remote set-head: better output for --auto
- + remote set-head: refactor for readability
- + refs: atomically record overwritten ref in update_symref
- + refs: standardize output of refs_read_symbolic_ref
- + t/t5505-remote: test failure of set-head
- + t/t5505-remote: set default branch to main
- (this branch is used by bf/fetch-set-head-config and jc/set-head-symref-fix.)
-
- When "git fetch $remote" notices that refs/remotes/$remote/HEAD is
- missing and discovers what branch the other side points with its
- HEAD, refs/remotes/$remote/HEAD is updated to point to it.
-
- Needs to wait until set-head-symref-fix topic solidifies.
- source: <20241122123138.66960-1-bence@ferdinandy.com>
-
-
-* ps/build (2024-12-08) 25 commits
- - meson: fix conflicts with in-flight topics
- - Introduce support for the Meson build system
- - Documentation: add comparison of build systems
- - t: allow overriding build dir
- - t: better support for out-of-tree builds
- - Documentation: extract script to generate a list of mergetools
- - Documentation: teach "cmd-list.perl" about out-of-tree builds
- - Documentation: allow sourcing generated includes from separate dir
- - Makefile: simplify building of templates
- - Makefile: write absolute program path into bin-wrappers
- - Makefile: allow "bin-wrappers/" directory to exist
- - Makefile: refactor generators to be PWD-independent
- - Makefile: extract script to generate gitweb.js
- - Makefile: extract script to generate gitweb.cgi
- - Makefile: extract script to massage Python scripts
- - Makefile: extract script to massage Shell scripts
- - Makefile: use "generate-perl.sh" to massage Perl library
- - Makefile: extract script to massage Perl scripts
- - Makefile: consistently use PERL_PATH
- - Makefile: generate doc versions via GIT-VERSION-GEN
- - Makefile: generate "git.rc" via GIT-VERSION-GEN
- - Makefile: propagate Git version via generated header
- - Makefile: refactor GIT-VERSION-GEN to be reusable
- - Makefile: consistently use @PLACEHOLDER@ to substitute
- - Makefile: use common template for GIT-BUILD-OPTIONS
-
- Build procedure update plus introduction of Mason based builds
-
- Will merge to 'next' (except for the tip one).
- source: <20241206-pks-meson-v11-0-525ed4792b88@pks.im>
-
-
-* ej/cat-file-remote-object-info (2024-11-25) 6 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - cat-file: add declaration of variable i inside its for loop
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Expecting a reroll.
- cf. <Z0RIrKwUnaWWm_gJ@pks.im>
- source: <20241125053616.25170-1-eric.peijian@gmail.com>
-
-
-* js/libgit-rust (2024-10-16) 5 commits
- - Makefile: add option to build and test libgit-rs and libgit-rs-sys
- - libgit: add higher-level libgit crate
- - libgit-sys: also export some config_set functions
- - libgit-sys: introduce Rust wrapper for libgit.a
- - common-main: split init and exit code into new files
-
- An rust binding to libgit.a functions has been introduced.
-
- Will discard?
- source: <cover.1729032373.git.steadmon@google.com>
-
-
-* kn/the-repository (2024-12-04) 10 commits
- + packfile.c: remove unnecessary prepare_packed_git() call
- + midx: add repository to `multi_pack_index` struct
- + config: make `packed_git_(limit|window_size)` non-global variables
- + config: make `delta_base_cache_limit` a non-global variable
- + packfile: pass down repository to `for_each_packed_object`
- + packfile: pass down repository to `has_object[_kept]_pack`
- + packfile: pass down repository to `odb_pack_name`
- + packfile: pass `repository` to static function in the file
- + packfile: use `repository` from `packed_git` directly
- + packfile: add repository to struct `packed_git`
- (this branch is used by kn/midx-wo-the-repository.)
-
- Various implicit uses of 'the_repoository' in the packfile code
- have been eliminated.
-
- Will merge to 'master'.
- source: <cover.1733236936.git.karthik.188@gmail.com>
-
---------------------------------------------------
-[Discarded]
-
-* js/set-head-symref-fix (2024-12-06) 2 commits
- . Fix `git fetch --tags` in repo with no configured remote
- - Merge branch 'bf/set-head-symref' into js/set-head-symref-fix
- (this branch uses bf/set-head-symref.)
-
- Superseded by jc/set-head-symref-fix
- source: <b41ae080654a3603af09801018df539f656cf9d8.1733430345.git.steadmon@google.com>
+References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
+ <20241209-320-git-refs-migrate-reflogs-v1-1-d4bc37ee860f@gmail.com>
+In-Reply-To: <20241209-320-git-refs-migrate-reflogs-v1-1-d4bc37ee860f@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 10 Dec 2024 17:51:57 +0100
+Message-ID: <CAP8UFD3FXtbuHH1G==rR00_O7MBjqQiw_qzGHPVLK4P13RRtjQ@mail.gmail.com>
+Subject: Re: [PATCH 1/7] refs: include committer info in `ref_update` struct
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Dec 9, 2024 at 12:10=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
+
+
+> If there is no `committer_info`
+> provided, the reference backends default to using
+> `git_committer_info(0)`. The field itself cannot be set to
+> `git_committer_info(0)` since the values are dynamic and must be
+> obtained right when the reflog is being committed.
+
+
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 64f51f0da905a9a8a1ac4109c6b0a9a85a355db7..13f8539e6caa923cd4834775f=
+cb0cd7f90d82014 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -1858,6 +1858,9 @@ static int log_ref_write_fd(int fd, const struct ob=
+ject_id *old_oid,
+>         struct strbuf sb =3D STRBUF_INIT;
+>         int ret =3D 0;
+>
+> +       if (!committer)
+> +               committer =3D git_committer_info(0);
+
+It looks like this is where we obtain the value "right when the reflog
+is being committed".
+
+> +
+>         strbuf_addf(&sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new_=
+oid), committer);
+>         if (msg && *msg) {
+>                 strbuf_addch(&sb, '\t');
+> @@ -1871,8 +1874,10 @@ static int log_ref_write_fd(int fd, const struct o=
+bject_id *old_oid,
+>  }
+>
+>  static int files_log_ref_write(struct files_ref_store *refs,
+> -                              const char *refname, const struct object_i=
+d *old_oid,
+> -                              const struct object_id *new_oid, const cha=
+r *msg,
+> +                              const char *refname,
+> +                              const struct object_id *old_oid,
+> +                              const struct object_id *new_oid,
+> +                              const char *committer_info, const char *ms=
+g,
+>                                int flags, struct strbuf *err)
+>  {
+>         int logfd, result;
+> @@ -1889,8 +1894,7 @@ static int files_log_ref_write(struct files_ref_sto=
+re *refs,
+>
+>         if (logfd < 0)
+>                 return 0;
+> -       result =3D log_ref_write_fd(logfd, old_oid, new_oid,
+> -                                 git_committer_info(0), msg);
+> +       result =3D log_ref_write_fd(logfd, old_oid, new_oid, committer_in=
+fo, msg);
+
+Here we just pass the committer_info to the above function.
+
+>         if (result) {
+>                 struct strbuf sb =3D STRBUF_INIT;
+>                 int save_errno =3D errno;
+> @@ -1974,8 +1978,7 @@ static int commit_ref_update(struct files_ref_store=
+ *refs,
+>         files_assert_main_repository(refs, "commit_ref_update");
+>
+>         clear_loose_ref_cache(refs);
+> -       if (files_log_ref_write(refs, lock->ref_name,
+> -                               &lock->old_oid, oid,
+> +       if (files_log_ref_write(refs, lock->ref_name, &lock->old_oid, oid=
+, NULL,
+>                                 logmsg, flags, err)) {
+
+Here we don't have the info so we pass NULL.
+
+>                 char *old_msg =3D strbuf_detach(err, NULL);
+>                 strbuf_addf(err, "cannot update the ref '%s': %s",
+> @@ -2007,8 +2010,8 @@ static int commit_ref_update(struct files_ref_store=
+ *refs,
+>                 if (head_ref && (head_flag & REF_ISSYMREF) &&
+>                     !strcmp(head_ref, lock->ref_name)) {
+>                         struct strbuf log_err =3D STRBUF_INIT;
+> -                       if (files_log_ref_write(refs, "HEAD",
+> -                                               &lock->old_oid, oid,
+> +                       if (files_log_ref_write(refs, "HEAD", &lock->old_=
+oid,
+> +                                               oid, git_committer_info(0=
+),
+
+Here we don't have the info either, so I think we should also pass
+NULL. It would then be computed "right when the reflog is being
+committed" in the above function. No?
+
+>                                                 logmsg, flags, &log_err))=
+ {
+>                                 error("%s", log_err.buf);
+>                                 strbuf_release(&log_err);
+
+
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index 647ef9b05b1dc9a376ed054330b487f7595c5caa..e882602487c66261d586a9410=
+1bb1b4e9a2ed60e 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -1379,11 +1379,21 @@ static int write_transaction_table(struct reftabl=
+e_writer *writer, void *cb_data
+
+It is not your fault but write_transaction_table() does the following
+right at the beginning of the function:
+
+       committer_info =3D git_committer_info(0);
+       if (split_ident_line(&committer_ident, committer_info,
+strlen(committer_info)))
+               BUG("failed splitting committer info");
+
+but then 'committer_ident' is only used in the hunk you are changing:
+
+>                         if (create_reflog) {
+> +                               struct ident_split c;
+> +
+>                                 ALLOC_GROW(logs, logs_nr + 1, logs_alloc)=
+;
+>                                 log =3D &logs[logs_nr++];
+>                                 memset(log, 0, sizeof(*log));
+>
+> -                               fill_reftable_log_record(log, &committer_=
+ident);
+> +                               if (u->committer_info) {
+> +                                       if (split_ident_line(&c, u->commi=
+tter_info,
+> +                                                            strlen(u->co=
+mmitter_info)))
+> +                                               BUG("failed splitting com=
+mitter info");
+> +                               } else {
+
+I would think it would be more efficient to only compute
+'committer_ident' here, right before we use it if needed. Or is there
+something I am missing?
+
+> +                                       c =3D committer_ident;
+> +                               }
+> +
+> +                               fill_reftable_log_record(log, &c);
+>                                 log->update_index =3D ts;
+>                                 log->refname =3D xstrdup(u->refname);
+>                                 memcpy(log->value.update.new_hash,
