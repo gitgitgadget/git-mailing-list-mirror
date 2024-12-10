@@ -1,72 +1,71 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3965B2080C1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F972080DD
 	for <git@vger.kernel.org>; Tue, 10 Dec 2024 11:36:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733830596; cv=none; b=SEFSU1rksO5PjF/oRC1XDthf0sg6wdbVSqkvOclBTcYnjCS10g6fBAxygXllwiNtXVotAc71Lw3d+rXR5IKaez8FFkTQwtafcPdDkTBOxghKBkJSIt8V60H+NYuVMXy+f6qDawor1l8+i/t+K7Ez8stQNVQtQiHRGipX/wpfrwE=
+	t=1733830597; cv=none; b=MAVyZGfrnDwOmMTJ1n4BYt8Xat25N9xXR+QtGkw/MXZey8H7poMwU3Vcof2Bv03PkjNdeyK/kx/OTLtiMIPXBb3PAyNt2H6NVw/sYfbSZ/me5eNp/LJTlKrznkWwbkiDSw27via3KMBmTZE+GtjAPit/cd/auuCJ/aIaWbHjLQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733830596; c=relaxed/simple;
-	bh=Q6gx3prx5o79szlwXSYzmAi8ze9CQjzAjMt87+VmPRA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=X1JNEikY7lKY89esoCw/bpSutt/311W2qYX9mjyfjI04NAw/X7d7igf7d3XqmXrZ39x3XSrOZRn0hJsAaGoFEOGKNBpOBNiA9XaPCdHoQ08L7hmPJ5MUvtmewAiLC60Hex0OwBqnOpLXNySRsmkcFxSdwWHqrtYmlrawQrh28as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h++jV1Bw; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1733830597; c=relaxed/simple;
+	bh=OvQ0OR0Y5WXPzWh3oAH8iGHrcbFahFnY/NuRWuIIiX4=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=FkyyFbwY5JdFf3GnOiuF1+oR07kU9TvrwTbrCdFU9NtZDoZeWYabwww3v2RI4QSYplV+qgPnGDhVs8IyuutLgADL4NmSX9GiEUxSf4nkxhcSr3xEadFxOXmDbDvWIjShawm61GyLcBPcfCGhiqJfQXkuoHF5QalZxANzA0LagEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J8/B6jqS; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h++jV1Bw"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-725ee27e905so2213075b3a.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J8/B6jqS"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-725f2f79ed9so1473094b3a.2
         for <git@vger.kernel.org>; Tue, 10 Dec 2024 03:36:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733830594; x=1734435394; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733830595; x=1734435395; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pcxkaU8uPKqOGFxXNbC8ipIMKJSUq2HYp5uR0QBXBDo=;
-        b=h++jV1BwDAU6LtuwhUPYeD3B3g0cjOq5xRdhdi3uu/j2hQ6B9OCfwSPiJwE4MpbjnA
-         FjQaREzZb74niSOYNqRZF7dPh/dz/sLpzPMNk+nMPSa9UY58Jx7d5w7YldNlQnpWt+u6
-         Z8LfqUETT1Q5AzcCCOjE07ApGdvheblixdQnwliVUZdBCif/DiSIgi0/OZMwaWZaG1/8
-         nNUI9jceeVnX9gUgNZpzZcoLFNp9TjCtoENf3YWRGV11vRPIgsQSazvAzp6v/n6GmXD9
-         A5oQyuGsdaQc/oZyBcFfmPoCTKFvjBiKArwrA4bfyq7aWYRb4Q8LYmGCaG5MZLPejlpJ
-         miZw==
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ytE0n8QglSSbvsk4IgL17vDebAiFFYEMEursA2qRDL0=;
+        b=J8/B6jqS6MK9o5S0Ipcb83rtwLtdHaniE9QNNCaX/mlhhxaRVdZfCTVFp+VHRx4FKK
+         fM+WswMxEU+IJlCTIGPyAUH01G/IvWJd+bUUiJX2S0g16ku1t047lA79Ez8KZtGt81Ge
+         XAHBblhe61uW4y4ebs4LKdb9SsdPaAdxJnQ0FwBQZxpUVXBVwpmJnq+kGlmXdUswItXR
+         Yjsk6IznMIJ98BtVuhApqBLe/xeplFK5HPZh/QF7iHhwZBXmGfISAju6jNItjSddyRwY
+         JAtT4/T8hHpu9O2rBO7J2xq1xBR2Yj79po7Xrcu3nCmSTBr25FC5tTOZNJ7QSBcnN4q0
+         aNjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733830594; x=1734435394;
+        d=1e100.net; s=20230601; t=1733830595; x=1734435395;
         h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pcxkaU8uPKqOGFxXNbC8ipIMKJSUq2HYp5uR0QBXBDo=;
-        b=rE7KkVC+yhemGYN45sP4SMko95XGsZt2J/NyPU3q45m9h9OqEcT4Mt3Uagqnzycw+/
-         ciluqLNYcbFFqB/+DZuhUrzxdVpVEeRFwGU7p/Fr78i7axwYjqLcJMRlGb2HK3/1W8cp
-         pPbopL+OQiIAJGB4jNqRKnp+/cjDkLnBV7SDWAbktLh891B5Qd5TJXu6AaCTMfVSBtZ5
-         vtSnXjcJtAZWPDhgdtzFRDYJ+wWBpm/3ssRxvdesl8nTVmua8D8aEIf+SERmGlRI7lWu
-         jYl5EUTDBm8DL4LlL3dQXgcImAsV38X+BsODgqsLXfXdR6hGAroe6EGt2sOR5aBDVOvi
-         Ub/w==
-X-Gm-Message-State: AOJu0YwCnYMjtTKgIBiBT1BUQ2zqZmm5ejogLvr2TtSxX71i3a0alNg7
-	sku1/03R8leDMyjaZvSlCaxakFaW5c57bwsXd2Eyrymz0OAsngPp9mGYmw==
-X-Gm-Gg: ASbGncsZKZzkjrRSyxHAbyzXNmy21vppJQbIW9P45HpU7FGU1pWeKS5puHOe38HX2dv
-	LEpWWZlFj37nJmAEvoQbxLsWG7BKONb/HmaLLeks+LVO2f8mMCT+WSuMDOLnyug0OKY5jaI35oK
-	CAODrDAtHmgaDlzN0UUQ57AIa/IUwn4Wb5iBUTgVSPXViRjYoTqR8OMf2X+zLF7Y1VeBB+HnCCf
-	TIPs8Fl9/kkShHOrcw6m4ofJKD4pMRZyEpT1YA8kLi3gYgr6p8RbxOyYgD4nBBzGLJvqf2oX51g
-	LXhzRP5rgjWoProd6XBQO4hlq+jaVmpVBql9DN7IL5D/dg==
-X-Google-Smtp-Source: AGHT+IEXRnxtFOxXW/LXPGk+bjfEq+7dZ7QtQt0MXxIM59d9fmCvhaELpEBj5S1fpCSuYZHUFF5AxA==
-X-Received: by 2002:a05:6a00:1896:b0:728:e81c:2bf4 with SMTP id d2e1a72fcca58-728e81c45edmr627448b3a.11.1733830594147;
-        Tue, 10 Dec 2024 03:36:34 -0800 (PST)
+        bh=ytE0n8QglSSbvsk4IgL17vDebAiFFYEMEursA2qRDL0=;
+        b=DIlotBsTidWKPJ+vf/MkUMX0m9KrGXI6sIvHmhLyeCS5jyvm/pDaiiKA+m0Lc7Kcgs
+         6y0RsSWA8YnLIZdhMWhKDfTc4Sw4Eb6DDbNQfBGflhDmG+3HRFqYzsU1ykcqVAdsKJcm
+         5I39ggmrWpmHZ2unsWOc8AjJ33IAIEeWGhl+6r7TaNX/6V2jlC0rKcLV5g3WbrWK/dDl
+         YLMxe9oVRNlgOUGqX7LCjSYpMDwjyjr8XZenMvDos1sZRk5IDrw3Va6wZ6rKMa+In/pl
+         ipuenJuuQQ/EeZ8jHdP7b8lTB4OQNhqOWQMfGCnIPo1r5dqYaePo3BICLqJZ71fLyu6x
+         ugJQ==
+X-Gm-Message-State: AOJu0YxWkfK3T4dhs1TUpSaLo0FkQhX9QvydYQq6CBNJg2RAMGnxWmXr
+	M9fmkbVQ4/dWa+eVVZoF+PXtU0SPoYYc8y4K5bodhRzN7er+jRj+UWFsFA==
+X-Gm-Gg: ASbGncslqdjkZi72lIPuSnN2vQrLrLdwVT0863gMSMqGR+6DeVjED3czMquI0UHY/X2
+	NaOeE/KWF10KvSlZkYG1xFqPMwc/OkUGJo5z24xnNw8mXCWboSrAhkY+fmHgBHoi6tu/d8uF7/C
+	J2wRX+GDFaOhXNW65OP6BoNOMwPCLNpocmbYBw8Oi0M4grlGTCroo7ZqXzxAoK6msTBDh1AfnhG
+	iX9wvdfXD3ihClCFUpwbWm/UOLmMzrQGlA20VPmX6iVlTdxXisD2gk5yVQJGUxf40g9KA8bq1W1
+	M1RO2mwFKLxZRnlkVNl6Uvq2+M74kWHqfJhO3AUbJ2SLxQ==
+X-Google-Smtp-Source: AGHT+IGCWYd8hhBvGXRa9AcY+X06zoKWRMNEJCjK7himXHVVYcRKNyMFY9oA52/I2otWwK2qjSLAeQ==
+X-Received: by 2002:a05:6300:6308:b0:1e1:bdae:e04a with SMTP id adf61e73a8af0-1e1bdaee397mr630111637.39.1733830595117;
+        Tue, 10 Dec 2024 03:36:35 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.33
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd54aa2399sm2554532a12.39.2024.12.10.03.36.34
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Dec 2024 03:36:33 -0800 (PST)
+        Tue, 10 Dec 2024 03:36:34 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: git@vger.kernel.org,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v3 0/8] fix behaviors of git-push --porcelain
-Date: Tue, 10 Dec 2024 19:36:20 +0800
-Message-Id: <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v3 1/8] t5504: modernize test by moving heredocs into test bodies
+Date: Tue, 10 Dec 2024 19:36:21 +0800
+Message-Id: <4e509ef20465dc2a818f479b34e11df415e39906.1733830410.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com>
-References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com>
+In-Reply-To: <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
+References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com> <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,57 +74,92 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+From: Patrick Steinhardt <ps@pks.im>
 
-Patrick reported an issue that the exit code of git-receive-pack(1)
-is ignored during atomic push with "--porcelain" flag, and added new
-test cases in t5543.
+We have several heredocs in t5504 located outside of any particular test
+bodies. Move these into the test bodies to match our modern coding
+style.
 
-This issue originated from commit 7dcbeaa0df (send-pack: fix
-inconsistent porcelain output, 2020-04-17). At that time, I chose to
-ignore the exit code of "finish_connect()" without investigating the
-root cause of the abnormal termination of git-receive-pack. That was an
-incorrect solution.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t5504-fetch-receive-strict.sh | 35 +++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 19 deletions(-)
 
-The root cause is that an atomic push operation terminates early without
-sending a flush packet to git-receive-pack. As a result,
-git-receive-pack continues waiting for commands without exiting. By
-sending a flush packet at the appropriate location in "send_pack()", we
-ensure that the git-receive-pack process closes properly, avoiding an
-erroneous exit code for git-push.
-
-
-# Changes since v2
-
-* Split the changes made to t5548 into several commits for clarity.
-
-* Correct the inconsistent return code of "push_refs()" across different
-  transports to ensure that git push --porcelain behaves consistently.
-
-* Gracefully close the connection for early exist of atomic push to
-  resolve to root cause of wrong exit code of atomic git-push.
-
---
-
-Jiang Xin (6):
-  t5548: refactor to reuse setup_upstream() function
-  t5548: refactor test cases by resetting upstream
-  t5548: add new porcelain test cases
-  t5548: add porcelain push test cases for dry-run mode
-  send-pack: new return code "ERROR_SEND_PACK_BAD_REF_STATUS"
-  send-pack: gracefully close the connection for atomic push
-
-Patrick Steinhardt (2):
-  t5504: modernize test by moving heredocs into test bodies
-  t5543: atomic push reports exit code failure
-
- send-pack.c                     |  10 +-
- send-pack.h                     |   3 +
- t/t5504-fetch-receive-strict.sh |  35 ++-
- t/t5543-atomic-push.sh          |  30 +++
- t/t5548-push-porcelain.sh       | 425 +++++++++++++++++++++++---------
- transport.c                     |  17 +-
- 6 files changed, 374 insertions(+), 146 deletions(-)
-
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index 53dbc8ce3a..488310c340 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -64,12 +64,6 @@ test_expect_success 'fetch with transfer.fsckobjects' '
+ 	)
+ '
+ 
+-cat >exp <<EOF
+-To dst
+-!	refs/heads/main:refs/heads/test	[remote rejected] (missing necessary objects)
+-Done
+-EOF
+-
+ test_expect_success 'push without strict' '
+ 	rm -rf dst &&
+ 	git init dst &&
+@@ -78,6 +72,11 @@ test_expect_success 'push without strict' '
+ 		git config fetch.fsckobjects false &&
+ 		git config transfer.fsckobjects false
+ 	) &&
++	cat >exp <<-EOF &&
++	To dst
++	!	refs/heads/main:refs/heads/test	[remote rejected] (missing necessary objects)
++	Done
++	EOF
+ 	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
+ 	test_cmp exp act
+ '
+@@ -94,11 +93,6 @@ test_expect_success 'push with !receive.fsckobjects' '
+ 	test_cmp exp act
+ '
+ 
+-cat >exp <<EOF
+-To dst
+-!	refs/heads/main:refs/heads/test	[remote rejected] (unpacker error)
+-EOF
+-
+ test_expect_success 'push with receive.fsckobjects' '
+ 	rm -rf dst &&
+ 	git init dst &&
+@@ -107,6 +101,10 @@ test_expect_success 'push with receive.fsckobjects' '
+ 		git config receive.fsckobjects true &&
+ 		git config transfer.fsckobjects false
+ 	) &&
++	cat >exp <<-EOF &&
++	To dst
++	!	refs/heads/main:refs/heads/test	[remote rejected] (unpacker error)
++	EOF
+ 	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
+ 	test_cmp exp act
+ '
+@@ -129,15 +127,14 @@ test_expect_success 'repair the "corrupt or missing" object' '
+ 	git fsck
+ '
+ 
+-cat >bogus-commit <<EOF
+-tree $EMPTY_TREE
+-author Bugs Bunny 1234567890 +0000
+-committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
+-
+-This commit object intentionally broken
+-EOF
+-
+ test_expect_success 'setup bogus commit' '
++	cat >bogus-commit <<-EOF &&
++	tree $EMPTY_TREE
++	author Bugs Bunny 1234567890 +0000
++	committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
++
++	This commit object intentionally broken
++	EOF
+ 	commit="$(git hash-object --literally -t commit -w --stdin <bogus-commit)"
+ '
+ 
 -- 
 2.47.0.rc1.21.g81e7bd6151
+
