@@ -1,60 +1,60 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D132226863
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 18:45:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B237080A
+	for <git@vger.kernel.org>; Tue, 10 Dec 2024 18:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733856351; cv=none; b=Cxn242Gp7RUFvdnEMU2kFPXYxGrKXfu+GWqigqTBHNqogYkihCtaczHPsgJmrYiem2fUZ+foQMiVMe772Hozzm/O02EWNRXHqY02+x8Lt5dx3Cxw6nFE9N5knv1mushkET+qw1eEGCA9HR6PVE35yuaIHTkC4B/KJbTpg05I6/k=
+	t=1733856353; cv=none; b=Ex2Yrz8RGI8qPtWsASYoXzyrNRM0rg/LJwBtMmKYw0x+EoIPgOWNU6LxJOQpFbKvsRQTwNoEDVfSK+w9oPGvFe/OGRFec8E3QrRMFsxNRAY3frJNWstnD6FEmnjPulpCwAItzQlNhm97gzzNJIe+8u7MrAc5bF7fhY/3bt6ZsWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733856351; c=relaxed/simple;
-	bh=XwnzZxJcs3K00KAQwz78/GXLzjRXg5wYX9ZYRJQY/AM=;
+	s=arc-20240116; t=1733856353; c=relaxed/simple;
+	bh=Hm7eRlmMLyvj0use0LjmZMSobagTJl5SUqJSZdrz94s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=rJelkQb5j/NIVDfeoRWu2b6gToi4Frkz2AFc6RYXKL1UOpLGT2/f9SKNsvgN1ylh3aWfQKNtrhxznyoyGV/ICV9NZXfPk8m9e22npPo1CSnD16X89MGLDPdZ7dSqWgOHOvHfL4uyBOZS2KLT3VnQ4kgamJjPDIqvwSh8Hirq76c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Htpa7tSM; arc=none smtp.client-ip=209.85.208.45
+	 MIME-Version; b=hj360oXRyyaVO5Zr2HfJVUYrQHBiTuSSx/g0rv/iT47xcxV0lh0XYFBg8j5xDSmF6ASiA/GGJZxEt3sQ0xn0Ao+Owzj2zcfr0sRcN7yIPzGtWZCQfzJb51bqIlFkPMXf7bo+qVrJAfbNmGY1bSadGrrC6QJQgvduNR9OeJ9tbW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kO4Amch6; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Htpa7tSM"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5d3cd8e59fdso520500a12.3
-        for <git@vger.kernel.org>; Tue, 10 Dec 2024 10:45:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kO4Amch6"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5d0ac3be718so794207a12.1
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 10:45:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733856347; x=1734461147; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733856350; x=1734461150; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AQ5PEcU9+SKAXgBhoIQ1aBBsYp+JuKWi3YGid4h5en8=;
-        b=Htpa7tSMLh/RxqIDaIBXF6DVFEy3MOWCegMjMsRRegbm1Mj1JRb1PHEm9qh+9lPf9v
-         Mz78JH9tHoujMxnVNr348MNdZt42/rQ3/6UWVEna8ObRMpeK2n1yRla4XAcm9QAbaHXU
-         TUrcmTJPqingaa50f/ywOFtcL7q6rSQT+4ceRF0Fm40mS8lS85pzn9EWJZZT8O1RQE3Q
-         S+2NvbTXS6Rs51w3RWvWVNUPMku1fEdD9LKoypETS3Hfd5fB1hYGmJha2j7QzDDniDML
-         amDgfWlkwsW6qMu8+TGdouGZXNHxBqnB9o3+EHOdPrvKbEvV6oNHwiQXgsyUj6VUvxnc
-         eSwA==
+        bh=kYGCLeqLdul+mVz5NP0TeN7a4D3K+VPQJTzGLV8jr7o=;
+        b=kO4Amch6/hfMGG9jjAM7R+0SHpHyJ9plDPU26X39ZFsrlmHQ1O8u61OYzvrIH6Sy9t
+         WKsxw6A32Dy5IVUIPsgErmYnKCLjFMEyxssButIUZHhIbBc4jquC9mYXC/rkDp8qwgyK
+         n3rWkWXzGC39BOjioFbtFQlAipprMCxrt/I5UywsPSsm70NMkKARZ1At0m/Du8neaz0I
+         Q707rA7JcdzmR2Cy9IqMnAA346DvwCt8XwXTvAD5lmxIC2ALC5PvQ8LLF6oedY+kAXWi
+         pO+fiA0TEItMo98kUX+bhz22WkzbmMuorqMQHsrhRdDqCFxHzn8MXNNjDVZbjz2o2wqM
+         61eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733856347; x=1734461147;
+        d=1e100.net; s=20230601; t=1733856350; x=1734461150;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AQ5PEcU9+SKAXgBhoIQ1aBBsYp+JuKWi3YGid4h5en8=;
-        b=XEAAZI1d9hfK690np0/5JWCKQG2K0YpoRYe94OwQ2EfOioR6YccWRKDlSWA3pCTdve
-         VC1flP5NYzVhUGt0rJzqfSw/4lvWSxxR9rLVhqvC6ZYy2mYAV4DDujwrAViGhr77T5cL
-         6I1bsdg3QVcFLAUYpBv+6O58bTtY7WJ9PNa6//wWmLR+Uk/miQiQzSx7m3nf2F/noALz
-         GMpKdrYJvurbB8+C+UO21tCOq18oR41Vk6/gvJh2jwjWR6sjZeghCBLNgenx8wa6v03C
-         VCA3PnJcYOoJFKzhMI1n4s6LsNxIGYuWav7qy/D/wdHBKvT4FzLJX881UG14WEHf18bT
-         Wamw==
-X-Gm-Message-State: AOJu0Yx3Z+I6SXt3yqEUknHmGq8nz6IUmWX+aJLosKPRPP4pkaoTwHZY
-	RsFQXwLYdpQ8oImg8QxLsc/CKRO8Xa97WKxQcoO5PydasbmKNxK2xAM/9uYW
-X-Gm-Gg: ASbGncsPICKZ5OIxGfQa6SUkObSZW5oOfQfjERBlUA6oSh7RKZ1hDyih7QKSs0kSobz
-	ncQCRVlJ1p66wrDcJLDXgjW96DA9mIJjOalwYuSmp8CjafSDP1f4vURQZORSQZHUWDyY0czuNYt
-	3qEzDUvITmIsRFsj4C27MtFiweF2sjaACRvNXmLBwCTxjbkmvL+wt5Z6qHdEX723u/7Tqe3FsrG
-	BTbJ1HBbr0t2X59V/aVltjY2VliWL7YqMlKSuh1f2NRim/9Vb2AOlp43nsnIuUQpg==
-X-Google-Smtp-Source: AGHT+IHwKMKUCoAq0QTpMqJsTdHudpUH+mCcT2LgkjawtpBfCPuVOZ1e4btksMneILiVu3+hVyR7vQ==
-X-Received: by 2002:a05:6402:40c7:b0:5d2:7356:e0e2 with SMTP id 4fb4d7f45d1cf-5d41c426c0bmr1836832a12.4.1733856347125;
-        Tue, 10 Dec 2024 10:45:47 -0800 (PST)
+        bh=kYGCLeqLdul+mVz5NP0TeN7a4D3K+VPQJTzGLV8jr7o=;
+        b=FuElN+nB8eme8ETUYCm6VKppjdZHqHBvzMNsrSVHn1wxUxbWq/komFeu7RxC2WF5B9
+         +xOglxHyq4Umjgzr1H+sHgDk6DTNsvwBwSj1+Yy46/6jeOOpLpNKmxPURBCqdyrTSZfN
+         V9pM8KSuxJasH6LbhZWfdTGTTPFh6mSBwgN4Fridb72hFj09YTZR+EYYNIL0YyvJrMrO
+         XWP4CNWnG+qO0if49VgSdG3vSQ6wgkL9gGbVs0S/jyCq1K4c2R+ysqKaHaWb19XtBq6y
+         53QPpPFElIGtRlvIzwjqfNFNcFsPQv0rTcqfol5ErpsK7laUqubNNIYGsvpKYKreKPk0
+         NqZg==
+X-Gm-Message-State: AOJu0YwQVTWmhFnWRQAaSi79lI0tMSo5W0rU7chrniJtgzz/ok3W3UEJ
+	flEggWPR0wdHgWP4p2DyFTUZdzAq9JqtviUbK5mYvcP09ZismAKFP/u4b9zw
+X-Gm-Gg: ASbGncsodtkdKxbT3NQLksmoZ/ISOnUYIp6L6AVEK+V2t3we19EBkUwyGnoUGSs0EV8
+	C7HXS3lLMxZ79SVQw2QCaPvAbOFcVxiHVXV0O4HGrRvmuZHhN8P5+1P9zuDtpyCVP0Qnps50UvD
+	yf+HmapkptdYdp2B0nYGGY7l48WZ6Cgkwd5HrDIWvy6AXwsKaXldrHyD+6WdM4LIizFJHTlt+5l
+	fhl8M7hJ/z/+WOYNkI+aTTBG0KjVKTYcnEIYzkOh87zzYqsLksJBiLC9oJTuwU=
+X-Google-Smtp-Source: AGHT+IG2P2axJotZotl/honqhAHZHEqmkC8zfI13w/vu5Y7iEIfB5i21xVdxnNf8HDdHYq6BMAPrBA==
+X-Received: by 2002:a05:6402:518c:b0:5d3:ba42:e9e1 with SMTP id 4fb4d7f45d1cf-5d41c62c9bamr1446686a12.6.1733856349978;
+        Tue, 10 Dec 2024 10:45:49 -0800 (PST)
 Received: from localhost.localdomain ([5.29.161.23])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a48882sm7895896a12.24.2024.12.10.10.45.45
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5d149a48882sm7895896a12.24.2024.12.10.10.45.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Dec 2024 10:45:46 -0800 (PST)
+        Tue, 10 Dec 2024 10:45:49 -0800 (PST)
 From: Roy Eldar <royeldar0@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -62,9 +62,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Roy Eldar <royeldar0@gmail.com>
-Subject: [PATCH v3 6/7] git-submodule.sh: improve variables readability
-Date: Tue, 10 Dec 2024 20:44:41 +0200
-Message-Id: <20241210184442.10723-7-royeldar0@gmail.com>
+Subject: [PATCH v3 7/7] git-submodule.sh: rename some variables
+Date: Tue, 10 Dec 2024 20:44:42 +0200
+Message-Id: <20241210184442.10723-8-royeldar0@gmail.com>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20241210184442.10723-1-royeldar0@gmail.com>
 References: <20241209165009.40653-1-royeldar0@gmail.com>
@@ -77,531 +77,103 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When git-submodule.sh parses various options and switches, it sets some
-variables to values; the variables in turn affect the options given to
-git-submodule--helper.
+Every switch and option which is passed to git-submodule.sh has a
+corresponding variable which is set accordingly; by convention, the name
+of the variable is the option name (for example, "--jobs" and "$jobs").
 
-Currently, variables which correspond to switches have boolean values
-(for example, whenever "--force" is passed, force=1), while variables
-which correspond to options which take arguments have string values that
-sometimes contain the option name and sometimes only the option value.
+Rename "$custom_name", "$deinit_all" and "$nofetch", for consistency.
 
-Set all of the variables to strings which contain the option name (e.g.
-force="--force" rather than force=1); this has a couple of advantages:
-it improves consistency, readability and debuggability.
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Roy Eldar <royeldar0@gmail.com>
 ---
- git-submodule.sh | 213 +++++++++++++++++++++--------------------------
- 1 file changed, 95 insertions(+), 118 deletions(-)
+ git-submodule.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index ee86e4de46..2da4d55d64 100755
+index 2da4d55d64..24276847ad 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -52,6 +52,10 @@ single_branch=
+@@ -40,11 +40,11 @@ init=
+ require_init=
+ files=
+ remote=
+-nofetch=
++no_fetch=
+ rebase=
+ merge=
+ checkout=
+-custom_name=
++name=
+ depth=
+ progress=
+ dissociate=
+@@ -52,7 +52,7 @@ single_branch=
  jobs=
  recommend_shallow=
  filter=
-+deinit_all=
-+default=
-+summary_limit=
-+for_status=
- 
- #
- # Add a new submodule to the working tree, .gitmodules and the index
-@@ -63,37 +67,33 @@ filter=
- cmd_add()
- {
- 	# parse $args after "submodule ... add".
--	reference_path=
- 	while test $# -ne 0
- 	do
- 		case "$1" in
- 		-b | --branch)
- 			case "$2" in '') usage ;; esac
--			branch=$2
-+			branch="--branch=$2"
- 			shift
- 			;;
--		-b*)
--			branch="${1#-b}"
--			;;
--		--branch=*)
--			branch="${1#--branch=}"
-+		-b* | --branch*)
-+			branch="$1"
- 			;;
- 		-f | --force)
- 			force=$1
- 			;;
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			;;
- 		--progress)
--			progress=1
-+			progress=$1
- 			;;
- 		--reference)
- 			case "$2" in '') usage ;; esac
--			reference_path=$2
-+			reference="--reference=$2"
- 			shift
- 			;;
- 		--reference=*)
--			reference_path="${1#--reference=}"
-+			reference="$1"
- 			;;
- 		--ref-format)
- 			case "$2" in '') usage ;; esac
-@@ -104,15 +104,15 @@ cmd_add()
- 			ref_format="$1"
- 			;;
- 		--dissociate)
--			dissociate=1
-+			dissociate=$1
+-deinit_all=
++all=
+ default=
+ summary_limit=
+ for_status=
+@@ -108,11 +108,11 @@ cmd_add()
  			;;
  		--name)
  			case "$2" in '') usage ;; esac
--			custom_name=$2
-+			custom_name="--name=$2"
+-			custom_name="--name=$2"
++			name="--name=$2"
  			shift
  			;;
  		--name=*)
--			custom_name="${1#--name=}"
-+			custom_name="$1"
+-			custom_name="$1"
++			name="$1"
  			;;
  		--depth)
  			case "$2" in '') usage ;; esac
-@@ -120,7 +120,7 @@ cmd_add()
- 			shift
- 			;;
- 		--depth=*)
--			depth=$1
-+			depth="$1"
- 			;;
- 		--)
- 			shift
-@@ -142,14 +142,14 @@ cmd_add()
- 	fi
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper add \
--		${quiet:+--quiet} \
--		${force:+--force} \
--		${progress:+"--progress"} \
--		${branch:+--branch "$branch"} \
--		${reference_path:+--reference "$reference_path"} \
-+		$quiet \
-+		$force \
-+		$progress \
-+		${branch:+"$branch"} \
-+		${reference:+"$reference"} \
+@@ -149,7 +149,7 @@ cmd_add()
+ 		${reference:+"$reference"} \
  		${ref_format:+"$ref_format"} \
--		${dissociate:+--dissociate} \
--		${custom_name:+--name "$custom_name"} \
-+		$dissociate \
-+		${custom_name:+"$custom_name"} \
+ 		$dissociate \
+-		${custom_name:+"$custom_name"} \
++		${name:+"$name"} \
  		${depth:+"$depth"} \
  		-- \
  		"$@"
-@@ -168,10 +168,10 @@ cmd_foreach()
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			;;
- 		--recursive)
--			recursive=1
-+			recursive=$1
- 			;;
- 		-*)
- 			usage
-@@ -184,8 +184,8 @@ cmd_foreach()
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper foreach \
--		${quiet:+--quiet} \
--		${recursive:+--recursive} \
-+		$quiet \
-+		$recursive \
- 		-- \
- 		"$@"
- }
-@@ -202,7 +202,7 @@ cmd_init()
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			;;
- 		--)
- 			shift
-@@ -219,7 +219,7 @@ cmd_init()
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper init \
--		${quiet:+--quiet} \
-+		$quiet \
- 		-- \
- 		"$@"
- }
-@@ -230,7 +230,6 @@ cmd_init()
- cmd_deinit()
- {
- 	# parse $args after "submodule ... deinit".
--	deinit_all=
- 	while test $# -ne 0
- 	do
- 		case "$1" in
-@@ -238,10 +237,10 @@ cmd_deinit()
- 			force=$1
- 			;;
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
+@@ -240,7 +240,7 @@ cmd_deinit()
+ 			quiet=$1
  			;;
  		--all)
--			deinit_all=t
-+			deinit_all=$1
+-			deinit_all=$1
++			all=$1
  			;;
  		--)
  			shift
-@@ -258,9 +257,9 @@ cmd_deinit()
- 	done
- 
+@@ -259,7 +259,7 @@ cmd_deinit()
  	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper deinit \
--		${quiet:+--quiet} \
--		${force:+--force} \
--		${deinit_all:+--all} \
-+		$quiet \
-+		$force \
-+		$deinit_all \
+ 		$quiet \
+ 		$force \
+-		$deinit_all \
++		$all \
  		-- \
  		"$@"
  }
-@@ -277,31 +276,31 @@ cmd_update()
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			;;
- 		-v|--verbose)
--			quiet=0
-+			quiet=
- 			;;
- 		--progress)
--			progress=1
-+			progress=$1
- 			;;
- 		-i|--init)
--			init=1
-+			init=$1
- 			;;
- 		--require-init)
--			require_init=1
-+			require_init=$1
- 			;;
- 		--remote)
--			remote=1
-+			remote=$1
+@@ -294,7 +294,7 @@ cmd_update()
+ 			remote=$1
  			;;
  		-N|--no-fetch)
--			nofetch=1
-+			nofetch=$1
+-			nofetch=$1
++			no_fetch=$1
  			;;
  		-f|--force)
  			force=$1
- 			;;
- 		-r|--rebase)
--			rebase=1
-+			rebase=$1
- 			;;
- 		--ref-format)
- 			case "$2" in '') usage ;; esac
-@@ -320,22 +319,19 @@ cmd_update()
- 			reference="$1"
- 			;;
- 		--dissociate)
--			dissociate=1
-+			dissociate=$1
- 			;;
- 		-m|--merge)
--			merge=1
-+			merge=$1
- 			;;
- 		--recursive)
--			recursive=1
-+			recursive=$1
- 			;;
- 		--checkout)
--			checkout=1
--			;;
--		--recommend-shallow)
--			recommend_shallow="--recommend-shallow"
-+			checkout=$1
- 			;;
--		--no-recommend-shallow)
--			recommend_shallow="--no-recommend-shallow"
-+		--recommend-shallow|--no-recommend-shallow)
-+			recommend_shallow=$1
- 			;;
- 		--depth)
- 			case "$2" in '') usage ;; esac
-@@ -343,24 +339,18 @@ cmd_update()
- 			shift
- 			;;
- 		--depth=*)
--			depth=$1
-+			depth="$1"
- 			;;
- 		-j|--jobs)
- 			case "$2" in '') usage ;; esac
- 			jobs="--jobs=$2"
- 			shift
- 			;;
--		-j*)
--			jobs="--jobs=${1#-j}"
--			;;
--		--jobs=*)
--			jobs=$1
-+		-j*|--jobs*)
-+			jobs="$1"
- 			;;
--		--single-branch)
--			single_branch="--single-branch"
--			;;
--		--no-single-branch)
--			single_branch="--no-single-branch"
-+		--single-branch|--no-single-branch)
-+			single_branch=$1
- 			;;
- 		--filter)
- 			case "$2" in '') usage ;; esac
-@@ -385,22 +375,21 @@ cmd_update()
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper update \
--		${quiet:+--quiet} \
--		${force:+--force} \
--		${progress:+"--progress"} \
--		${remote:+--remote} \
--		${recursive:+--recursive} \
--		${init:+--init} \
--		${nofetch:+--no-fetch} \
--		${rebase:+--rebase} \
--		${merge:+--merge} \
--		${checkout:+--checkout} \
-+		$quiet \
-+		$force \
-+		$progress \
-+		$remote \
-+		$recursive \
-+		$init \
-+		$nofetch \
-+		$rebase \
-+		$merge \
-+		$checkout \
- 		${ref_format:+"$ref_format"} \
- 		${reference:+"$reference"} \
--		${dissociate:+"--dissociate"} \
-+		$dissociate \
- 		${depth:+"$depth"} \
--		${require_init:+--require-init} \
--		${dissociate:+"--dissociate"} \
-+		$require_init \
- 		$single_branch \
- 		$recommend_shallow \
- 		$jobs \
-@@ -415,9 +404,6 @@ cmd_update()
- # $@ = requested path
- #
- cmd_set_branch() {
--	default=
--	branch=
--
- 	# parse $args after "submodule ... set-branch".
- 	while test $# -ne 0
- 	do
-@@ -426,18 +412,15 @@ cmd_set_branch() {
- 			# we don't do anything with this but we need to accept it
- 			;;
- 		-d|--default)
--			default=1
-+			default=$1
- 			;;
- 		-b|--branch)
- 			case "$2" in '') usage ;; esac
--			branch=$2
-+			branch="--branch=$2"
- 			shift
- 			;;
--		-b*)
--			branch="${1#-b}"
--			;;
--		--branch=*)
--			branch="${1#--branch=}"
-+		-b*|--branch=*)
-+			branch="$1"
- 			;;
- 		--)
- 			shift
-@@ -454,9 +437,9 @@ cmd_set_branch() {
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-branch \
--		${quiet:+--quiet} \
--		${branch:+--branch "$branch"} \
--		${default:+--default} \
-+		$quiet \
-+		${branch:+"$branch"} \
-+		$default \
- 		-- \
- 		"$@"
- }
-@@ -472,7 +455,7 @@ cmd_set_url() {
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			;;
- 		--)
- 			shift
-@@ -489,7 +472,7 @@ cmd_set_url() {
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper set-url \
--		${quiet:+--quiet} \
-+		$quiet \
- 		-- \
- 		"$@"
- }
-@@ -503,32 +486,26 @@ cmd_set_url() {
- # $@ = [commit (default 'HEAD'),] requested paths (default all)
- #
- cmd_summary() {
--	summary_limit=-1
--	for_status=
--
- 	# parse $args after "submodule ... summary".
- 	while test $# -ne 0
- 	do
- 		case "$1" in
- 		--cached)
--			cached=1
-+			cached=$1
- 			;;
- 		--files)
--			files="$1"
-+			files=$1
- 			;;
- 		--for-status)
--			for_status="$1"
-+			for_status=$1
- 			;;
- 		-n|--summary-limit)
- 			case "$2" in '') usage ;; esac
--			summary_limit="$2"
-+			summary_limit="--summary-limit=$2"
- 			shift
- 			;;
--		-n*)
--			summary_limit="${1#-n}"
--			;;
--		--summary-limit=*)
--			summary_limit="${1#--summary-limit=}"
-+		-n*|--summary-limit=*)
-+			summary_limit="$1"
- 			;;
- 		--)
- 			shift
-@@ -545,10 +522,10 @@ cmd_summary() {
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper summary \
--		${files:+--files} \
--		${cached:+--cached} \
--		${for_status:+--for-status} \
--		${summary_limit:+-n "$summary_limit"} \
-+		$files \
-+		$cached \
-+		$for_status \
-+		${summary_limit:+"$summary_limit"} \
- 		-- \
- 		"$@"
- }
-@@ -569,13 +546,13 @@ cmd_status()
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			;;
- 		--cached)
--			cached=1
-+			cached=$1
- 			;;
- 		--recursive)
--			recursive=1
-+			recursive=$1
- 			;;
- 		--)
- 			shift
-@@ -592,9 +569,9 @@ cmd_status()
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper status \
--		${quiet:+--quiet} \
--		${cached:+--cached} \
--		${recursive:+--recursive} \
-+		$quiet \
-+		$cached \
-+		$recursive \
- 		-- \
- 		"$@"
- }
-@@ -611,11 +588,11 @@ cmd_sync()
- 	do
- 		case "$1" in
- 		-q|--quiet)
--			quiet=1
-+			quiet=$1
- 			shift
- 			;;
- 		--recursive)
--			recursive=1
-+			recursive=$1
- 			shift
- 			;;
- 		--)
-@@ -632,8 +609,8 @@ cmd_sync()
- 	done
- 
- 	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper sync \
--		${quiet:+--quiet} \
--		${recursive:+--recursive} \
-+		$quiet \
-+		$recursive \
- 		-- \
- 		"$@"
- }
-@@ -656,10 +633,10 @@ do
- 		command=$1
- 		;;
- 	-q|--quiet)
--		quiet=1
-+		quiet=$1
- 		;;
- 	--cached)
--		cached=1
-+		cached=$1
- 		;;
- 	--)
- 		break
+@@ -381,7 +381,7 @@ cmd_update()
+ 		$remote \
+ 		$recursive \
+ 		$init \
+-		$nofetch \
++		$no_fetch \
+ 		$rebase \
+ 		$merge \
+ 		$checkout \
 -- 
 2.30.2
 
