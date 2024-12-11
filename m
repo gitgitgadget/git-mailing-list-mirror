@@ -1,122 +1,101 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89FA35661
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 06:09:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E9B5661
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 06:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733897349; cv=none; b=YTj/pDnT/PHCt+vNzI+hRpc5O2EZ7l3CPXhBXhwqoYHrHeN3tuLpia2h3BGNbalRAUIYIgXQTCuH0Iz0DhvwJHC6dvBAGu4iNLfhAICBEPuvLXDp99WpMREwrz16IuPJEqO1bgotdHOQ62OxLbkru7vJ026nLPrvuMFCsQsKtac=
+	t=1733897631; cv=none; b=dk2v4cHRvISkfmMhubK5bYXxEb8AczSzfGkKrnNyxF+GwBkSIo40j+jtIU4C1p4Uhb9faQYDcFSz6xupChiYoCypKfe3M6HtTxfNfCZypMC9UOHzzYAEDxf+KEu0PYA3bHuUpMEMKftZmYHNso8B+AWiHp96pTyUjixkq/p1SZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733897349; c=relaxed/simple;
-	bh=f315iA0wQqaaE4yywcJjpMS74SwJ9zMBFvjynmrkBBg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bej+tievd6d82mbVq5W1qL8tdPKLwf20ggzDh1xl3HNPp1mfuZ07AHeD27pbdYTnSqIksw6HtpJbo0PAWG4Jgv+9vGc36/kRElpX3FnUbLGzx8w3IMwBrEaquYPHazRGpMKFzu39etnto6QqhRztaxq9kZDgV9/RVb/8fcm2eBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oWw7A0SN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=txycwPtn; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733897631; c=relaxed/simple;
+	bh=pLTxRxONlMxIZjGz2HNsmBCGIY+Q8o5jo0rRbznmnmA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KHea/QjiuL123HXcTMd5qDtu/rsWUcl+tBvlhVGVvb0ixjVltz/r/t5SmfXnlVB6oaax8IbObtcj2C0LFjPmRzHGK4rOXz0Yi+yXj14j8n54TGPeSxevRl9R01NguQIJ65vL+YqN2YjUsVZmG5o5lMpDHNgv42kNlntouzO0hgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evc71byK; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oWw7A0SN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="txycwPtn"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D38C25401C1;
-	Wed, 11 Dec 2024 01:09:05 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Dec 2024 01:09:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1733897345;
-	 x=1733983745; bh=B2rcBsIGAJAggvW7MSkISM041k+mymTev0cB7YS07uI=; b=
-	oWw7A0SNXaZ3A6KN2/ez57znF38+rita0CzccT+c844r2HniQbfJj/aA5YnR54jG
-	TlrL5GPLerA1uM14VJ4TMqquvW6Z7D6RNo6YCUZa9Hv21HgIDiYZzyvOdk6EjzXr
-	CEzyg664A2NFQYM6HLUODzFuA7bWg9WpStyIxQ/awv1ADIc5libcIg/0kfRSbiPe
-	ReJPfjnv67K4d8oGCW0xZn2fGtoh1iYkSj4BjhSRVUuhKpNIse25jplSjtvn0Gmq
-	pp7yw/LCjZwE4nlQnpMTo1m3G27BTeBp63lcwByapWkOEbec5uC6ExHRy54WhC45
-	gJZmeaNZP4qEj4zEApFLaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733897345; x=
-	1733983745; bh=B2rcBsIGAJAggvW7MSkISM041k+mymTev0cB7YS07uI=; b=t
-	xycwPtnC1mu8+uDQ2qqOZUm8m1XJglYLP6Sjnw2qlb6V8xm/THrNBemirkG+JQWX
-	gl2J0Mnwuqga+7QnPYkRdekAeiRzQ/wp6rd7/1JHpMA0BzIFDvM/Vkk/4n48e5nc
-	WflpJKM7K5mtQTiRtZEeB+64rZn5MPWlfDDGLGlh3p98x7PHu3eh323si/2Oed8s
-	7Pwk1m8X9xZVw9YPaEpe644sUlMLOgYfcnwB23ROhhh09rzNqwUskLjlZb1a6jOe
-	JWAZyadsFDvEe0WJrjyyvafTsKxHkrW1Vp7mUGcfK8Q3N6tS1lLUMDSaz6znDJYM
-	6DGlBMcq9//3K7APEglmw==
-X-ME-Sender: <xms:gCxZZ9tjjuLI0G3SCEWBO2YPq--7VXDNFAKZKJVIMBlGhj12WZnqAA>
-    <xme:gCxZZ2diMaTJrKnwnxEBH03DJAZOtryv4UJ2YtIoy7ECy1EhOB7_w2LWtLOyUa30u
-    bVsxSEuc-GI3FTVmg>
-X-ME-Received: <xmr:gCxZZwzIw0dAFHRLO-Wnp5aBXuoHttlAQtNwjgzy-XOzfPYzd-f2TuDk41fRivxUpd6XMYpWikc3wl-Cc_FeGPeITq7jJrbkREJypwU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeelgdeklecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
-    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghonhhguggrnhhhqh
-    igsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhohigvlhgurghrtdesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghs
-    rdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:gCxZZ0NhCoxoTmUaReWr9cJFZdrnuHGQX5xb6JcRpD1WYLom5Qu_PQ>
-    <xmx:gCxZZ99f1fP_M43cUDbeCyiuN1BWnMqKfRcIaORXcFRr0aGSfY7hUw>
-    <xmx:gCxZZ0XIdsoIpPWUCceBjTpq5sPpnudFludBYwgsmCFsZRDwr3BqKg>
-    <xmx:gCxZZ-fUutQ0tKciKWUgs1cKetG0Qa7zKv9KTq5X_W82aG13U_PyXg>
-    <xmx:gSxZZ2NUZDwKbX3fdeCmnLh59tE4lMjBaLoCmKQsPQ7bj2pTbBgnFhvZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Dec 2024 01:09:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
-Cc: Roy Eldar <royeldar0@gmail.com>,  git@vger.kernel.org,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 6/7] git-submodule.sh: improve variables readability
-In-Reply-To: <Z1jxSJKl8nwGbYa5@danh.dev> (=?utf-8?B?IsSQb8OgbiBUcuG6p24g?=
- =?utf-8?B?Q8O0bmc=?= Danh"'s message of
-	"Wed, 11 Dec 2024 08:56:24 +0700")
-References: <20241209165009.40653-1-royeldar0@gmail.com>
-	<20241210184442.10723-1-royeldar0@gmail.com>
-	<20241210184442.10723-7-royeldar0@gmail.com>
-	<Z1jxSJKl8nwGbYa5@danh.dev>
-Date: Wed, 11 Dec 2024 15:09:02 +0900
-Message-ID: <xmqq4j3akayp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evc71byK"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e3c8cfc9c9cso94582276.0
+        for <git@vger.kernel.org>; Tue, 10 Dec 2024 22:13:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733897629; x=1734502429; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gd8A7xsBxgGFpcZ4WR04X2lwUIsd/ZZRQyAAGxTZrFI=;
+        b=evc71byKrRja8lOsLfou4RMgl+njXpuYFjl6N57UiYkwMYsebOdgF9A5fWeGV9+ONk
+         gpHaJ15FgNaV9dXVKLT1Ip0eN9//c3iRRAmD6Hpde/AgGzh8Vuurw9Emx2mmbCkSSBRi
+         vivvFDywIRW9wuuJRgpIoosCjxIU/tCRKF4jbca42A5Pi1Imzq1XZVzkQ4iqYFI0aboe
+         3VOzPyy7g7QTDpORlLo/06LGVb7xgiWoZJos3JBxFCvUxMc9DLfExR5b//OlDwK60+Qu
+         nE1tmPEAnMcXij5vNixuFe/wszaQdMb1YrJaqykJJ5DmI3beTu9yubmLgJnweT/Tj0K1
+         krlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733897629; x=1734502429;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gd8A7xsBxgGFpcZ4WR04X2lwUIsd/ZZRQyAAGxTZrFI=;
+        b=XkI5JP2csn44FiRa70l5BxdoDf+PnLcCQ/BM+PeosEmHM7Q8LKwMkRwyRqGv8io4Y5
+         eRj+qN9c2XhI/FtYEl2Y1yfVtQDeM0YNtpMWVIVO/wo8J4XQ3+4agt7idLvn/5F23/wD
+         mqnk3C24FDsWaK0lWcbZKFyk22bcO+HYSqaLoPBDxdj602vCreWQBG2uDw1XvQBGulcd
+         OwRX/W+qdklvQuj2125lCohPs7dSBmcliSJcvoF6lFxUdzWrrbB5XLpIsO1ks8/P9XDh
+         Z6HuixNHGSyc3F0Lzx8qeQsepTmZc8XgrH/XGiddwXjTL1GeZ8znIpAKZ5sxRdtYM+5G
+         mLMQ==
+X-Gm-Message-State: AOJu0Yz0L3BsWqw1l9H1+fflWktwpysYztYUPFaWwtp2tRWJYT6HE5UD
+	GRbls62LIw5iuUHISlqSxlWtGuNfNRCYnpqdKoRFl6pv3lQWyOhM/UObRVtRJ8AAhp/7vn7z4gT
+	7reVIUVgMicme2jyUHP6reVBU/RU=
+X-Gm-Gg: ASbGncvalapQFZ8l4Ti0IvN8CAv6GwW3viXe0anv96GSnG6WXWgdidn0cPkEbTFsPcI
+	zRU4R0puw1RLcJlw7hmpqH1rc4r7OHVW5
+X-Google-Smtp-Source: AGHT+IGgJXsZ2fbtVvIc90NaeVmU90nMuTN3Ch6EPBLRfXbOXmx2y+NTNVh0LDxS+oQwhYijQghfbj1w6faSvoFX1no=
+X-Received: by 2002:a05:6902:2e10:b0:e39:97c3:c177 with SMTP id
+ 3f1490d57ef6-e3c8e44d2bbmr929581276.2.1733897629033; Tue, 10 Dec 2024
+ 22:13:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20241207135201.2536-1-royeldar0@gmail.com> <20241209165009.40653-1-royeldar0@gmail.com>
+ <xmqq1pygo2ti.fsf@gitster.g> <CAOfFamkEmJgUUj8C_TGbjgKs35vSBzNCDpLvK+utqnTtxd5iHQ@mail.gmail.com>
+ <xmqqikrrjdds.fsf@gitster.g>
+In-Reply-To: <xmqqikrrjdds.fsf@gitster.g>
+From: Roy E <royeldar0@gmail.com>
+Date: Wed, 11 Dec 2024 08:13:38 +0200
+Message-ID: <CAOfFam=_G=EPkw-fCQD___gFc3U7rwnVr_uteKG9-USK8=veRA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] git-submodule.sh: improve parsing of options
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Eric Sunshine <sunshine@sunshineco.com>, 
+	=?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Đoàn Trần Công Danh <congdanhqx@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
 
->>  		--reference=*)
->> -			reference_path="${1#--reference=}"
->> +			reference="$1"
+> Just to make sure we are on the same page,
 >
-> --reference takes a path to some repository,
-> (see also git-clone --reference),
-> thus it can have any characters, including but not limit to whitespace.
-> I think we need to discard this hunk!
+>     --foo "hello world"
+>
+> is an example of an option "foo" that takes exactly one argument, a
+> string which happens to have a whitespace in it, and is an example
+> for which "variable has the dash-dash option, equals, and its value"
+> pattern would not work well.
 
-I didn't double check the code that uses the variable, but as long
-as the code that uses $reference writs it correctly, e.g.
+I'm not sure why then this pattern would not work; when the argument is
+passed to the option in this case, we set the variable to "--foo=$2",
+so it should be fine (like you've written below).
 
-    git subcmd ${reference:+"$reference"} ...
+> If we can pass it as
+>
+>     --foo="hello world"
+>
+> then we are safe, as we can do
+>
+>         foo="--foo=hello world"
+>         ... later ...
+>         git cmd ${foo:+"$foo"}
 
-it should correctly pass what it received in the above assignment
-from the user in $1 just fine, even if its value can contain any
-arbitrary byte, I would think.
-
-
+All of the options with arguments of git-submodule--helper can be
+passed as "--foo=...", and spaces (or other misc characters) that
+appear in the option value shouldn't pose any problem whatsoever;
+the logic in parse-options.c::parse_long_opt confirms that.
