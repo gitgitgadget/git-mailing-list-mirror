@@ -1,173 +1,140 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7210F1BD9CA
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 18:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6C42594B3
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 20:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733940551; cv=none; b=eljO3ogHMFtlsWajMIwzxK8AOABVzgXNA8ojEj1njx2V39Ba49ZctlXTKbBao1V9GzAYNw3APf8uYX7EYMZaCnf4/MGavu5Q1DoaVxGkF8SqDva/YtvdGXzONFpEYiQANT/bXJNttTvw8mQCuxIepKdZOh1hlQ6MvfMxZjSUWx8=
+	t=1733948080; cv=none; b=CMwKedbsXbDHr3yTGwC2FKAX30xtHi+nYBSNEISs8l3B2a5o0+kYp7Dt7naMt5Bvk+TObqyycf6aFLVns6enPVMbgxG8sU3sD5NTKqR0IvzuqDQ0DGF3/wRap++mYbhpRVAbJUuF1fsIFMzbATdAUJCfwvDB5QORadHim/MBCFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733940551; c=relaxed/simple;
-	bh=u7ERv29x9xLhFRNnzqt+G0F03m0UPsYZNHXCzqZO5kg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cCBPIGss1UkadL3mew2Fo0MCWZN1wGxVHB/jd7uknIaNCdPp8OoI/bk/Oaw7qiz9NDLo+KDs4NLZK2SOAYcBaH4Fir7AlJoiYyYLqhiAKa0prbAxc0ctyWvEBluEUA1knwSAVqFsJrDmuFLAMy7jZ4sSAj9nPu9mciClUXC7sKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=grMyANt9; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733948080; c=relaxed/simple;
+	bh=uOMVEBRoyOyxxx02MdpKFg5jTzaP9bdOAtk13vfUJHA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=PJRlvd/gJ78w3EqPwyQw1YEK7pYJU1OlAtiv/OomhqBh8lo5sTErfB35PB6kaOVo64Wxyoe9wAbQDkYZrWtRZd4siq2Dn69ODsdJcXfU6UlHDxrTIKNRkGI/Iqz4oUIMQgseqKP3Se5zZjscOx0p5u5HQkimGrRxwco5Hnip5Uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Px3d/Yxn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GiE//a2p; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grMyANt9"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5187f6f7bcaso1051062e0c.3
-        for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:09:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733940548; x=1734545348; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o0GlNtCLkys/mQi8pKj9Zmt3wTZ+3pLRcn4xyK0kFSU=;
-        b=grMyANt97MgUex29tQ0mWwxmpxAkKS5t6x5dlzM8UdvbYgHZKoLXOvSrxZ8RY9fKGm
-         aRfjf404emga993wsMjh6ExIC5jHnusjuJvlgaJGyvbC3scXz1nBnjd+5PqYBE5f98ge
-         6bhPcdbDYt7OnKMDCTPqgA5W6lbm6mdZ9t949CRcJQhEITm/MMOfw7yK2dNfwyFDLDbA
-         2HSU8R4f3gbCX1fk8Oo3Z/NT8q0W87lKaZGAAAmhhiwCthcelRfXpRCP0ckULR6i8EHA
-         jPIn/UClgui2DWDg+FteTzyo0RsEYJWAhFLQYyz6D7f8lCDd2rtZ8RqtHzVAK30Q3BDm
-         yOrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733940548; x=1734545348;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o0GlNtCLkys/mQi8pKj9Zmt3wTZ+3pLRcn4xyK0kFSU=;
-        b=lvr9Z/SEr+ULAaR6JYULlRxOak2VS5B9PJbe/gwqybcuqAH/FsKpuokhgt9KiRbfqe
-         PG9WXraK5H6DsvwcF0EFyiFFxFPI08MirOZBs08IEHXG50Nak/pX0mErFZRaekVNZ6sh
-         md6Rs4CbFqWefN/fKHntdf7ev5DvlCNSwfxFssYJV8/L73eZe0dqwO42q3SQf7H5jbQ/
-         Nij/fbuRuTIHxlgrbh36pEbdnrh9Eor8hQelng8m62reO1ub6MAXmkDS27ujgg0dkmkF
-         5XdmMJ5yna21QZKcH9thxjSTE/Az5vTDpXahihfAccdvAPT9YSaR/+2zd2icYWGpTScv
-         ZiFQ==
-X-Gm-Message-State: AOJu0YyBC8NYPvOtSQ3WVBkWtv5qSgGt42L/1l6eUoV3qllFbIUH+9aV
-	iyHAgFJ7LzmXNbMv7FIJrI7lpesGoFnnrvAyIEnq+kov0KWKTBcqRCJTE5Q2usuvnE4PxQKvw0B
-	7McpmxpzClFXlGDZa1JPZx2elpc0=
-X-Gm-Gg: ASbGnctqdbdkkLHL+VUXMQxxkx7G2vEM+y5NL3plZwEcQ4l6SLurdnSuZul8U5KvVnQ
-	VX/ChZNeb08MPjzEi3cisnVjY8TATPL3EUTgq0iqcurUe1sdhXqFi8fToAbuzWuL+JTjGpQ==
-X-Google-Smtp-Source: AGHT+IGQP7XKISYBFDywXaqFGUnQ1eHkXbTpWuurcBoNcu35fRvS200FoilWAtVyKh/6TL5FfQYMWtPCwVQnjsXfbIc=
-X-Received: by 2002:a05:6122:82a8:b0:518:8bfe:d5f0 with SMTP id
- 71dfb90a1353d-518b5b641efmr322826e0c.0.1733940548348; Wed, 11 Dec 2024
- 10:09:08 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 10:09:07 -0800
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Z1mhCWXowokIaFR5@pks.im>
-References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-5-d4bc37ee860f@gmail.com> <Z1mhCWXowokIaFR5@pks.im>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Px3d/Yxn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GiE//a2p"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 47FFB25401B8;
+	Wed, 11 Dec 2024 15:14:36 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 11 Dec 2024 15:14:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733948076;
+	 x=1734034476; bh=uOMVEBRoyOyxxx02MdpKFg5jTzaP9bdOAtk13vfUJHA=; b=
+	Px3d/YxnLwqWg/0ucaIATWsznbq/+64qt+KPHMOX6pB06TXC7DRy7y9pijlo/nFL
+	bN6R2aJbhDJGJn4V5PbPFrW1qm0jP95jABrSasigd/RfMkFs0JwgI2uFF3sEjTJR
+	assLGSRiNmtvW5M3yd+ngjTfQirpm868GAvlU/ZZDALOl+d7F+yrnuwjnbO8zLm5
+	2Lbk74fT1vhlFljJXosQXG7u2p0nGQwDAwDnhYOHSxuyzbUchShkc0nqCw7QSrkh
+	NRB5UXngJgeYwQt64qLa6sbkC9iI+pG5fAMCi6qyqswQpl7Sxe01X8+xOYIkuO/w
+	Xhrb2X18fVp8/YOQVC+PEw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733948076; x=
+	1734034476; bh=uOMVEBRoyOyxxx02MdpKFg5jTzaP9bdOAtk13vfUJHA=; b=G
+	iE//a2p3mgilUn6moR7wrQq0zz5BZF5oWPTGFN1FA3qn7Up8ylzglakkt7oYWuBh
+	gyZqgnDeHu9v2jRK0tkJoke3+T6qGMBKZNCVag+xAeEzXjkSeV0gVW9VNUGdLqDE
+	69PmBfNo37wSCM8YRaulxi5oKSZ8yi2JQXu0pquW1n4G/CEaQiekvTfQRV2xk+SR
+	9Jr2RonCBW1G+eaJBpnDsUQ6BJ16Isjjyzduok+it7iKeYiCA3uoHYaN3jibwC+L
+	rG0D+8ARf++zYfJ6utNMvCH1XWB3DBdB2wFhLLB/UhC6uo4RV52jEceTPg6+nI0+
+	w93HmWc58A5wSsv5kk8lw==
+X-ME-Sender: <xms:q_JZZ5bqBbqwFIHC4uZBupWpXyUjjJFyCi5X3dJMqc5iO2Mup_APfqg>
+    <xme:q_JZZwbChSOOC4NFW4qQAfuk90zKjmWZMPn-9aRXpRqTjQdIsNVhQU5dDk7v7ZBx5
+    6TWeEraTpmkYFbdVw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddufeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepleefjedujeffgfeludehgeehueeffeeftdfgfeefveduueelffegkedtle
+    eukeeinecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpd
+    hrtghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:q_JZZ79YLVUNiQNhPPQUa369BwN3oc7uiSi-svKXSgYPhnHLWuug_g>
+    <xmx:q_JZZ3rPAblNNk40SsN0Jki5AmhjKAVaPo1cz2Hj67zcI-uQe8-JtQ>
+    <xmx:q_JZZ0q36LKAL9Pykcy2w2jvotMwp1J7sw8-n-pFNuqmkisUgN80aA>
+    <xmx:q_JZZ9Qi4eZifaC1OTfbUCTPO1t0LMfHgrMcn8XfOJT4l1YE98lqbA>
+    <xmx:rPJZZ_WO8zHWgnUDJXlCtd3wLwzi8TQ7kRuEABFa_hs92Wkt7qmf6bgm>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id B241E780068; Wed, 11 Dec 2024 15:14:35 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 11 Dec 2024 10:09:07 -0800
-Message-ID: <CAOLa=ZTLK=PL7YmkxzH5cZiHA21r1pM1qqbvu=fXi_rpRmHCYQ@mail.gmail.com>
-Subject: Re: [PATCH 5/7] refs: introduce the `ref_transaction_update_reflog` function
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, toon@iotcl.com, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000007277570629027e6d"
+Date: Wed, 11 Dec 2024 21:13:19 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Bence Ferdinandy" <bence@ferdinandy.com>, git@vger.kernel.org
+Cc: "Denton Liu" <liu.denton@gmail.com>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Message-Id: <4e8d3a75-0128-4d03-a429-59b7588f80b4@app.fastmail.com>
+In-Reply-To: <D68T28TFNW6N.2W0WV6WOUT6V0@ferdinandy.com>
+References: <D68T28TFNW6N.2W0WV6WOUT6V0@ferdinandy.com>
+Subject: Re: branch description as a note?
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
---0000000000007277570629027e6d
-Content-Type: text/plain; charset="UTF-8"
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Mon, Dec 09, 2024 at 12:07:19PM +0100, Karthik Nayak wrote:
->> diff --git a/refs.c b/refs.c
->> index 732c236a3fd0cf324cc172b48d3d54f6dbadf4a4..602a65873181a90751def525608a7fa7bea59562 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1160,13 +1160,15 @@ void ref_transaction_free(struct ref_transaction *transaction)
->>  	free(transaction);
->>  }
->>
->> -struct ref_update *ref_transaction_add_update(
->> -		struct ref_transaction *transaction,
->> -		const char *refname, unsigned int flags,
->> -		const struct object_id *new_oid,
->> -		const struct object_id *old_oid,
->> -		const char *new_target, const char *old_target,
->> -		const char *msg)
->> +struct ref_update *ref_transaction_add_update(struct ref_transaction *transaction,
->> +					      const char *refname,
->> +					      unsigned int flags,
->> +					      const struct object_id *new_oid,
->> +					      const struct object_id *old_oid,
->> +					      const char *new_target,
->> +					      const char *old_target,
->> +					      const char *committer_info,
->> +					      const char *msg)
->>  {
->>  	struct ref_update *update;
->>
+On Wed, Dec 11, 2024, at 11:39, Bence Ferdinandy wrote:
+> Hi,
 >
-> I'd personally avoid reindenting this block. It's somewhat-common
-> practice to not align all arguments with the opening brace when the line
-> would become too long. The reindents also distract a bit from the actual
-> changes done in other places further down.
+> so I've been wondering about branch descriptions being just a local
+> configuration. The only use-case I know for them is generating cover l=
+etters
+> and request-pull, although I could imagine maybe the maintainer uses b=
+ranch
+> descriptions for storing the - well - branch descriptions for the "Wha=
+t's
+> cooking" emails and the merge commit messages.
 >
-
-Makes sense, I'll undo that.
-
->> @@ -1190,8 +1192,15 @@ struct ref_update *ref_transaction_add_update(
->>  		oidcpy(&update->new_oid, new_oid);
->>  	if ((flags & REF_HAVE_OLD) && old_oid)
->>  		oidcpy(&update->old_oid, old_oid);
->> -	if (!(flags & REF_SKIP_CREATE_REFLOG))
->> +	if (!(flags & REF_SKIP_CREATE_REFLOG)) {
->> +		if (committer_info) {
->> +			struct strbuf sb = STRBUF_INIT;
->> +			strbuf_addstr(&sb, committer_info);
->> +			update->committer_info = strbuf_detach(&sb, NULL);
+> Now my problem with the description being a local configuration, is th=
+at
+> I often work on patches on two different computers. I can easily share=
+ my patch
+> notes with myself, but not the branch description. If these could be p=
+ushed and
+> fetched like a note, I think that would open up some other nice possib=
+ilities
+> as well, like having a standard place for MR/PR messages for forges, s=
+haring
+> proposed merge commit messages, maybe other things.
 >
-> Can't we simplify this via `xstrdup()`?
+> For my personal issue of sharing branch descriptions with myself, I co=
+uld
+> probably just make up a convention for myself, say using refs/notes/br=
+anches,
+> but it would be nice to have this built in, instead of the local confi=
+g branch
+> description.
 >
+> From usage perspective I could imagine a new `--branch` flag for notes=
+, which
+> would tell `git notes` to operate on notes attached to branches instea=
+d of
+> specific commits, probably stored under refs/notes/branches by default=
+. Maybe
+> add an `--edit-branch-note` to `git branch`. And of course have the op=
+tion to
+> use this note instead of the description configuration wherever it mak=
+es sense.
 
-Yup, Christian suggested the same too, will fix it up.
+See also this project idea https://github.com/gitgitgadget/git/issues/438
 
->> @@ -3080,10 +3081,12 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->>  		}
->>
->>  		/*
->> -		 * packed-refs don't support symbolic refs and root refs, so we
->> -		 * have to queue these references via the loose transaction.
->> +		 * packed-refs don't support symbolic refs, root refs and reflogs,
->> +		 * so we have to queue these references via the loose transaction.
->>  		 */
->> -		if (update->new_target || is_root_ref(update->refname)) {
->> +		if (update->new_target ||
->> +		    is_root_ref(update->refname) ||
->> +		    (update->flags & REF_LOG_ONLY)) {
->>  			if (!loose_transaction) {
->>  				loose_transaction = ref_store_transaction_begin(&refs->base, 0, err);
->>  				if (!loose_transaction) {
->
-> Makes sense. While we already had REF_LOG_ONLY beforehand, it was only
-> used in very specific cases and thus the support implemented by the
-> backends is lacking. And given that the packed-ref backend does not
-> support reflogs we have to queue these up via the loose backend.
->
-> Patrick
+Which also links to a 2019 thread.
 
---0000000000007277570629027e6d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d2fd293292aef1bb_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kWjFVQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOHFiQy80N29WWUs2a0pEY3hqQ0M3Rk5ZazJIZzVPQQpXYzRlZ0VHcE15
-dWJDWUJSV28vaFRKRStpMzg0eTBaVmRQaGhVcEJ0Y0k5Nk1kRWpneE5HK3p6VGJVOHB4K2hUCllo
-Ly9ONWhZcG9JVUlZZXZQeHY1RkZJVnNzSE16bm1RU2tyVEJXMTltWEw1U0wycnZ6QUZPYlZFRjky
-aDhTaXEKUjF2bmM1U3lPT21GQVRBZVBNT3Y4REphMVZnR1U1bkk0RXdVQzlYY3F5L0hJQ3hLNEJm
-c2oxamZMYUxtdjFPaQo0NzlySURMU2VHdkMzME1ma0YzL1hPcnFTdUlJZmM1YlNPbHd3TWZydjFJ
-Q0kvWjdJRUlTYlhDNFRBS2xucTI2ClhYZWlrM05LNjkxeXpERkdXZU5lUlN6SG1kcHhTTVNCdVc3
-djZ5VVU1cWtNZGVIZitWMHB6bmhSWTQ0OUR2UkQKUVdwQVJiWFlQN2wwTUpVWkY4MUpDT3BxRnFP
-aG9zSUhTT09RckZZZ1NjK3hRazZFa0Ryb1hhNmpVRGIxazFXQgpOUVNSMTVaQVRQRjBUMVZqeHBk
-U1Z6VDgxLzY2ZG5vVUV5Q2VudStWbS9NOUhwQ1E0ZWZTUVR5L21QZGpTS0JPClMvZnBWcmJyV2kx
-NVpKQ091M2pPaXJ0RUROdVdNL05HVVRKODVocz0KPVk3MzkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000007277570629027e6d--
+With +CC on the participants. I hope that=E2=80=99s okay.
