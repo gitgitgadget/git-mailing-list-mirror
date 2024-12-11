@@ -1,139 +1,183 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3384964F
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 14:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E72175D29
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 14:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733927202; cv=none; b=qg+YAQIbJBT4FcLvLLYkiusda28a5Qntvte+0F2XXhF3/YDKo+z8LN2erBZxATFXReWrV4Vo8GTtPk8Evo7u06Hm0hyExMY/FcQoxmIlJGfQINF4Rt3mfHZ5wJDvpn6eNapmfuPS5hVPcDTKGJ5UAzKBZhLh+iluAjeEtXgq3Cw=
+	t=1733927206; cv=none; b=biW+om6XoPxl/MxqktlJlZflzSGa0GYF2eJOxsgdGClSGKjmhZLjVj40k4y6oKBAynoPbw77MBsTdNyaWdrrqMU33jAPSljwpOViGO0IJ1K20Zfy8zAmY3xhEABFAPJm0HxT4yIINFA0AanrGmnvNgKbFMweTZHRIdsDRgqK4+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733927202; c=relaxed/simple;
-	bh=F6V1B+uiMHmKdfRp37Eb/phExNgnkkbPQiDok+0zMNU=;
+	s=arc-20240116; t=1733927206; c=relaxed/simple;
+	bh=vicFdhnSoeAve589S+6gqNJuIy47v/2u91ErQz6qoxE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R+G+1tVjU19U9x5RUgSQzpPEdDdv0HTWl5WkKQ5jiiiR5GNvCNLymvF3ETsIGAYLIH28x0gNIhvEMc8prHvra4PP4UsXcA0h05uI/vxInpT0Zpu1AQ4dAiRirztk/dgGuVIQsZczWg8bt39MzbozCX6Z+FdiSTXgHYdQsCqJLW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N0cb0svR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iKSBfnrp; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=Skz+6Ysa92iPvrHR0+TIk4+RachdLMn/Lg9cH7Z9/gvNlmnboy0K4Ayai8gc092l4S95CxsL5VVu6+FKJITWHCQ+cS8Wdwe5DWHQibwmLZNJRDNRpv8tzw3H/TniLQMWq85GFXhfdscb64dkTkiei6rtM7psHrbWtrATGyGo+QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aS5K7ZEJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tu4sRyGL; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N0cb0svR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iKSBfnrp"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D46CD254016A;
-	Wed, 11 Dec 2024 09:26:38 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aS5K7ZEJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tu4sRyGL"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id DADC61140147;
+	Wed, 11 Dec 2024 09:26:42 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 11 Dec 2024 09:26:39 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 11 Dec 2024 09:26:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733927198;
-	 x=1734013598; bh=oAY0uMLC4+tTVCmfkhrGwI0k2dQe9rIn9IVkH6/WerA=; b=
-	N0cb0svRTl066KPfkUIMNWY0shgKOvL321/LeyX0jqKCJZJDE8F95rsS14S8ky+P
-	FCp46KywMncpY4NIIiNIYJaHZtJSkRrMTTAddUsJbnoizkiTmNlKaNuvq8tiIt07
-	JLV5zAHp80xfTZs0iEOYzcHPg8bnKSo0lPX5Kd8yVdn8gwhzl9AFJ6wx77RPaILn
-	drUhLGzz3ApIgPjEG62OhP3WxaTFbEe1mGl+n4b0crjkY4hvtog6UR8b0avlLZXe
-	EnwUBf9JTOnW5ciwzQr7DJ7T7nEt4t5xzbItMEPw3ZBP1OIre3S+SsKrAY9SZnEl
-	5J7kB/eH8VCQENjgtPFbRw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1733927202; x=1734013602; bh=jpMmgtKE77
+	Z5UPyXZ1HpqDtSgSBQ2JMAPON8h/HVa2w=; b=aS5K7ZEJ5qFIQWCTNfahidOOer
+	8h8pHrJsboB7nVOAl/FZrQ5DLPpF+U46n0dTXW0FM87rwDsOvMOppNqMS9l/IhcY
+	TJU57ReFcsSCL2lZb2Lox3xQzaT9bV2lkeJcVAxBB+SvRu+hbzK1AKYWbhzIc/h7
+	TUJNue133oMeQgIjH3LrHvNKpufJAPz431EGxXM6/ZjiVv+k6BaQOOvUoipa3eza
+	Q2CBmthgfqgtxKQaw94XfGnABXPTmnVlOGzA6DqBjxHQDauzZYOcxJvIEujY00rz
+	YhPzZBGkrmn56VTqq03XybZaGfSpXtdmrm76pBtIVyZfh0LH3up+pWGPIyRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733927198; x=
-	1734013598; bh=oAY0uMLC4+tTVCmfkhrGwI0k2dQe9rIn9IVkH6/WerA=; b=i
-	KSBfnrp4ZR7r/5SRV7s9fOZcxpupdpUxRTvIpbw+AGsRR9dMQpNao2FUZefRcuQi
-	0zv28jsPxSHPSSC0Mx1tbZIBXQh16RIUFXUGpYUQOMLhPjf9KBdm/G39lo66UBSY
-	yxroHjqhxVZYIj0LIu5sY2Y0mlguZvSbS7Qgw3GLY5MXxYJRpmqWSQoP+dM7K1TL
-	9WZ2rBwQoCajxYX2jffPsGeP9/JGBKJ9fkQ2DdyssJ7/gkw3p9ef2GJYPw5FAR8L
-	sb4yzGIwfI7UgqfIiaXHlQsfJBYOoki35c8EJN/HwC3+OdM0RfAWyuibuJgakxrr
-	RzTK8nhaP0FuZoyM9zmHg==
-X-ME-Sender: <xms:HqFZZ3hlo1aqRFwdTIk0BDtK1Z-Lzsph1Y4j-wUtnLrTDqxRY4Zgrg>
-    <xme:HqFZZ0AgUpMfdClITGDmPsWpznaZq9aq7uzJ_zbZEi67C-slwGUGk3QesjnS-Dyw6
-    6q9CdoIYWSuVvVd3g>
-X-ME-Received: <xmr:HqFZZ3GTUbVrIhwXDjNvSJFUpCM8rg3Mw5zET6skpY9rdPUQtL_7wjq8oyg7FJc7q26z3NWbb_86svdkhQhu3ucDxxGqIM1TV6niiuQQRdSBRA>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733927202; x=1734013602; bh=jpMmgtKE77Z5UPyXZ1HpqDtSgSBQ2JMAPON
+	8h/HVa2w=; b=tu4sRyGLWRY2h2oN0WDGvroYdeKS4QUX1d8/fZtutMR27GzjPf0
+	eO1vXbwkVlq1dQfniWOqoTg7mmqSac8J4VTKX4XhOBY1fwvzQc/9MFl75VN2+mLG
+	TFD6fwsXt72V+ychN/kKzBMZRQx2Solg8x1DBgV4Dyb8HwJuJj28oGiLlADQQZxC
+	/tXS+7WJ/qRnnO/2ogAtC3R8xq5BdODO/JPwNHt6yQJY9IpuEFL+tXC1J3kZWkO3
+	lmIHuI1SRrlNFLhy1wSiooReXke1yaljaDw4YN8c/rdL8oHPlU266DoS5g+VRoS2
+	dhjRBRUaQnV2vOmQghOWH4BQNr84w+BRTMA==
+X-ME-Sender: <xms:IqFZZ8XxLLgMnkH9ibW1WVl_PeURmZQwcka0-Ay5IzpMKYoZ02alZQ>
+    <xme:IqFZZwkL7MuOu2xKuTnNCv0JL88e86Aj317y1Tk3S14hc4LPamKLyHX2Z8bYwNZqj
+    jA-u4Z11m5Uteju_A>
+X-ME-Received: <xmr:IqFZZwYhF9ek62FoEDvNHpdL_BG6Ih_4HruhuCucH3b-aOlitgpbQbulkAyYHKG3iyoehv3FyXwccICke8cMRfCPJMlw-q7EoRJ8IToife57dg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgdeifecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeen
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdevteff
-    vdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehkrghrthhhihhk
-    rddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugi
-    hfrghmihhlhidrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
-    ghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:HqFZZ0S5Qq15W4mBN-f_uCsnRZXXRBWPmc77rE5lic_8YKk_OfZXkQ>
-    <xmx:HqFZZ0y-z7Y_pstc7fj29o9107DhWCkbZYFey-vs21NQYcd2CiLT4w>
-    <xmx:HqFZZ67qYlI6r4eOhVxipK6e_Tns0e0HAVHssGoAmM9YLwdKk0Lm5Q>
-    <xmx:HqFZZ5zR-6GTzx8hEVKtLpqXknW7eMJAIsKyMAszKWhrO6p1QXb3MQ>
-    <xmx:HqFZZzonxMAwPEF8SYTu3T0IMKUOag8MzLYTLasFiZEIpKjQye7s_Das>
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
+    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgt
+    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:IqFZZ7Xf70ad1F3m5N6iPCyNUCUgmR5rc4wItmYQ3NuXV_GxjlvgIQ>
+    <xmx:IqFZZ2miPiSxVIhPIoU9Wiz_xEQPLRXfQtrDX6UTK8fg5Wdr1GEEdw>
+    <xmx:IqFZZwcZSPxfcwN6Vb5cZOAV6j2iWDu7yKtMa3eUNheG0zVAFAP-ag>
+    <xmx:IqFZZ4GDQMgukGsuCi09UlaAXasBQHVunevHBijUDBO_TwgmhzKVJw>
+    <xmx:IqFZZ3ChlFeFLnWSZyUOfDJ_gTGSEilVO2AmKeUzwePp_uTmFO4tKPfg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Dec 2024 09:26:37 -0500 (EST)
+ 11 Dec 2024 09:26:41 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9b9e994b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Dec 2024 14:25:02 +0000 (UTC)
-Date: Wed, 11 Dec 2024 15:26:23 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id cd507037 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 11 Dec 2024 14:25:06 +0000 (UTC)
+Date: Wed, 11 Dec 2024 15:26:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	toon@iotcl.com, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 4/7] refs: extract out refname verification in
- transactions
-Message-ID: <Z1mhD2M4KgzA17k0@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 6/7] refs: allow multiple reflog entries for the same
+ refname
+Message-ID: <Z1mhEsu8DBsCsYuA@pks.im>
 References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-4-d4bc37ee860f@gmail.com>
- <CAP8UFD3fZ21TXgtMcppXMHf35qgA-UH=0X9z-xJ456qXyV5=dA@mail.gmail.com>
+ <20241209-320-git-refs-migrate-reflogs-v1-6-d4bc37ee860f@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3fZ21TXgtMcppXMHf35qgA-UH=0X9z-xJ456qXyV5=dA@mail.gmail.com>
+In-Reply-To: <20241209-320-git-refs-migrate-reflogs-v1-6-d4bc37ee860f@gmail.com>
 
-On Wed, Dec 11, 2024 at 10:26:31AM +0100, Christian Couder wrote:
-> On Mon, Dec 9, 2024 at 12:11 PM Karthik Nayak <karthik.188@gmail.com> wrote:
-> > diff --git a/refs.c b/refs.c
-> > index f003e51c6bf5229bfbce8ce61ffad7cdba0572e0..732c236a3fd0cf324cc172b48d3d54f6dbadf4a4 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -1196,6 +1196,29 @@ struct ref_update *ref_transaction_add_update(
-> >         return update;
-> >  }
-> >
-> > +static int transaction_refname_verification(const char *refname,
-> > +                                           const struct object_id *new_oid,
-> > +                                           unsigned int flags,
-> > +                                           struct strbuf *err)
+On Mon, Dec 09, 2024 at 12:07:20PM +0100, Karthik Nayak wrote:
+> The reference transaction only allows a update for a given reference to
+> avoid conflicts. This, however, isn't an issue for reflogs. There are no
+> conflicts to be resolved in reflogs and when migrating reflogs between
+> backends we'd have multiple reflog entries for the same refname.
 > 
-> We have a number of functions named 'xxx_valid()' or 'xxx_ok()' while
-> I couldn't find any 'yyy_verification()' function, so it might be
-> better to name it 'transaction_refname_valid()' or maybe
-> 'transaction_refname_ok()'.
+> So allow multiple reflog updates within a single transaction. Also the
+> reflog creation logic isn't exposed to the end user. While this might
+> change in the future, currently, this reduces the scope of issues to
+> think about.
 > 
-> Also I think it should probably return a bool so 1 if the refname is
-> valid and 0 otherwise, unless we have plans in the future to follow
-> different code paths depending on the different ways it is not valid.
-> 
-> > +       ret = transaction_refname_verification(refname, new_oid, flags, err);
-> > +       if (ret)
-> > +               return ret;
-> 
-> Then the above could be just:
-> 
->        if (!transaction_refname_valid(refname, new_oid, flags, err))
->                return -1;
+> This is required to add reflog migration support to `git refs migrate`
+> which currently doesn't support it.
 
-The only question is whether we want to discern between an invalid
-refname and an error. But reading through the code it doesn't seem like
-we want to do that as we always return either `-1` on invalid names or
-`0` otherwise.
+Nit: the second half of this sentence starting with "which currently..."
+feels rather pointless, as it's implicit in the first half. I'd just
+drop it.
 
-So agreed, this is a good suggestion.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  refs/files-backend.c    | 15 +++++++++++----
+>  refs/reftable-backend.c | 16 +++++++++++++---
+>  2 files changed, 24 insertions(+), 7 deletions(-)
+> 
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 32975e0fd7a03ab8ddf99c0a68af99921d3f5090..10fba1e97b967fbc04c62a0a6d7d9648ce1c51fb 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2612,6 +2612,9 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+>  
+>  	update->backend_data = lock;
+>  
+> +	if (update->flags & REF_LOG_ONLY)
+> +		goto out;
+> +
+>  	if (update->type & REF_ISSYMREF) {
+>  		if (update->flags & REF_NO_DEREF) {
+>  			/*
+
+Hm. Does this mean that we don't lock at all for REF_LOG_ONLY updates?
+Reflogs themselves have no lockfile, so isn't it mandatory that we lock
+the corresponding ref like we used to do? Otherwise I cannot see how we
+avoid two concurrent writers to the same reflog.
+
+> @@ -3036,8 +3042,9 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
+>  
+>  	/* Fail if a refname appears more than once in the transaction: */
+>  	for (i = 0; i < transaction->nr; i++)
+> -		string_list_append(&affected_refnames,
+> -				   transaction->updates[i]->refname);
+> +		if (!(transaction->updates[i]->flags & REF_LOG_ONLY))
+> +			string_list_append(&affected_refnames,
+> +					   transaction->updates[i]->refname);
+>  	string_list_sort(&affected_refnames);
+>  	if (ref_update_reject_duplicates(&affected_refnames, err)) {
+>  		ret = TRANSACTION_GENERIC_ERROR;
+
+This on the other hand is sensible -- having multiple REF_LOG_ONLY
+transactions queued is fine.
+
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index b2e3ba877de9e59fea5a4d066eb13e60ef22a32b..d9d2e28122a00ddd7f835c35a5851e390761885b 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -1405,7 +1410,11 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+>  				}
+>  
+>  				fill_reftable_log_record(log, &c);
+> -				log->update_index = ts;
+> +
+> +				update_index = strintmap_get(&logs_ts, u->refname);
+> +				log->update_index = update_index;
+> +				strintmap_set(&logs_ts, u->refname, update_index+1);
+
+So we're now tracking update indices via another map in order to ensure
+that the update index will be increased if we have multiple reflog
+entries for the same refname. Can we avoid that overhead by instead just
+having a global update index counter that increases for every single
+reflog entry, regardless of whether we have multiple ones queued up for
+the same reference?
+
+I guess the result would be kind of weird as a single transaction with
+multiple ref updates would now always contain N different update
+indices. Maybe there's an alternative that allows us to reduce the cost,
+like only doing this for REF_LOG_ONLY updates?
+
+I'm mostly being careful because this here is the hot loop of writing
+refs, so I don't want to regress performance.
 
 Patrick
