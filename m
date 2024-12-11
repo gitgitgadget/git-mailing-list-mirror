@@ -1,246 +1,173 @@
-Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68797246344
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 18:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7210F1BD9CA
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 18:09:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733940397; cv=none; b=kW51zVJtp80IyT80cSdxXY/Sz02WeEap4+cTuugpulL5NRl7tduk4E4rQ4s71SwKR5wJFtDgw8OkferJkRm1jEBquu7UH028JBDcMlvPjHZwLDmEOAjShkcUB8gRirYKQKFIbbZbQ0aUJKYEz+EOxjfpQqvDMI8CazBmg50ANfk=
+	t=1733940551; cv=none; b=eljO3ogHMFtlsWajMIwzxK8AOABVzgXNA8ojEj1njx2V39Ba49ZctlXTKbBao1V9GzAYNw3APf8uYX7EYMZaCnf4/MGavu5Q1DoaVxGkF8SqDva/YtvdGXzONFpEYiQANT/bXJNttTvw8mQCuxIepKdZOh1hlQ6MvfMxZjSUWx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733940397; c=relaxed/simple;
-	bh=78X55q2so0BAdYtBDvPOslW08w65sM9FViRtoTkwHIs=;
+	s=arc-20240116; t=1733940551; c=relaxed/simple;
+	bh=u7ERv29x9xLhFRNnzqt+G0F03m0UPsYZNHXCzqZO5kg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GJa4cBLgrbGwrV0pPLdUd7JILJY5NgpzcDiZUYsNLxRBUVALh1OUbXZGyuqbHBUScP3hLmqy4dfsl75oUeMfmMRo+7kS/TkkQrhV4RO5bxtXWfXFtDXi/Xz2CgdCzqwQMxl9MDh16VMXxGuR3kLEph+DVz9++4wzcS7uuDU/ZgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gex0kmPv; arc=none smtp.client-ip=209.85.222.42
+	 To:Cc:Content-Type; b=cCBPIGss1UkadL3mew2Fo0MCWZN1wGxVHB/jd7uknIaNCdPp8OoI/bk/Oaw7qiz9NDLo+KDs4NLZK2SOAYcBaH4Fir7AlJoiYyYLqhiAKa0prbAxc0ctyWvEBluEUA1knwSAVqFsJrDmuFLAMy7jZ4sSAj9nPu9mciClUXC7sKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=grMyANt9; arc=none smtp.client-ip=209.85.221.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gex0kmPv"
-Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-85c4b057596so1071092241.3
-        for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:06:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grMyANt9"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5187f6f7bcaso1051062e0c.3
+        for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:09:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733940394; x=1734545194; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733940548; x=1734545348; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=b2hEct6W+/jYxws6le8nVLK8LveCJS5KJeIG3z8O5v4=;
-        b=Gex0kmPvMZ2I7baPapoyEf9vR8vgS/UCDWCyUYbfJIm9H552jXM6m1+gO4y14KoLHU
-         r8tPjDZnj+fe2alvIO/rld9rpD3F9R8A7OP7SosaceE8up7/0c6Mpqh35MPlQ3tD1xJg
-         crJWHFeb0z9USbcz5cxNDClIFlUul8yCXGWhJKRx6dqg//QRVdVYeR3PmYiB1UHmkCmt
-         68TmeRHMyBeFxvQ1m/NRqajKbQeqf+4V/XtHdj48AYjcfidMKlDDZfnX/HY5d3a+ArTn
-         Ly8qFwSZAu+RZAr5R4ptEe3/alKg6a/w9jQIHKXiTUP6C+c+UtxBmuqX6eqIgBKyfCwr
-         O5Gg==
+        bh=o0GlNtCLkys/mQi8pKj9Zmt3wTZ+3pLRcn4xyK0kFSU=;
+        b=grMyANt97MgUex29tQ0mWwxmpxAkKS5t6x5dlzM8UdvbYgHZKoLXOvSrxZ8RY9fKGm
+         aRfjf404emga993wsMjh6ExIC5jHnusjuJvlgaJGyvbC3scXz1nBnjd+5PqYBE5f98ge
+         6bhPcdbDYt7OnKMDCTPqgA5W6lbm6mdZ9t949CRcJQhEITm/MMOfw7yK2dNfwyFDLDbA
+         2HSU8R4f3gbCX1fk8Oo3Z/NT8q0W87lKaZGAAAmhhiwCthcelRfXpRCP0ckULR6i8EHA
+         jPIn/UClgui2DWDg+FteTzyo0RsEYJWAhFLQYyz6D7f8lCDd2rtZ8RqtHzVAK30Q3BDm
+         yOrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733940394; x=1734545194;
+        d=1e100.net; s=20230601; t=1733940548; x=1734545348;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b2hEct6W+/jYxws6le8nVLK8LveCJS5KJeIG3z8O5v4=;
-        b=qLJeU/1BdZPP4oxYSNoF3W4mChygd5QczOcNc3NX5fMbg8TQ0trDW9nfvsnjZVdyPz
-         WmpxuBcQyuR/23XC7AxY+QVAkFpIiwGAIbAbkdQ0UmelEkHFRSUygpayZpNa6soFXf2t
-         XwpkFjiSvMPaygtDxqWL1hi+OjSWCxRGJJi6jj9NCm52HcKp6mIRNXCrcTUlxXWUEway
-         RuoJJ1bC4WIqnI/DHV9w/jfMNKMPk8j2gvmnKRc7d8xShKI8eiObU9SYU8Hh+GYMxfwK
-         XQY3lfgeDk4HtALDt6D1OS+Fk4BG3u689UKMbTo+mvyC9JX+EeoI0UpVWkktml6Sn2Ws
-         CbDw==
-X-Gm-Message-State: AOJu0YzVjX20tzPQ+HKcUDAk5l9A3G9xWiRt/DwYmVnzXOz+Bi29G79m
-	xge4JOq3QHq0wBHeT+fhcdGiX95KIombYbqzbbx0dwFjXjWHzdrOHMw6YVAdwethCrAKQ4mo+Jy
-	ONB/PpOb7PW3QbmjfwbivAxboXOM=
-X-Gm-Gg: ASbGnctlRyhdTS+c2+J450sW42BRrypShbLMc5Zw3kGly6cA73lDIoctIqjdOcxs54U
-	S5ZgolB/S6Q9J6j1Tk39/3Ws+X6OSdWB//PWwmDFRPHFPRl0GG/ILMEBKCBCbH7aC2GA7bw==
-X-Google-Smtp-Source: AGHT+IEd/BMQ6yaByrHv52+2QM9d9JsCpnQ8MVMXV/1v8k7ZW7UIFDmJmrTvDQSyScA1k8I8HHg9n1hjjUkDboyW+ps=
-X-Received: by 2002:a05:6122:250a:b0:514:eeba:517 with SMTP id
- 71dfb90a1353d-518b5df1d49mr130584e0c.10.1733940394172; Wed, 11 Dec 2024
- 10:06:34 -0800 (PST)
+        bh=o0GlNtCLkys/mQi8pKj9Zmt3wTZ+3pLRcn4xyK0kFSU=;
+        b=lvr9Z/SEr+ULAaR6JYULlRxOak2VS5B9PJbe/gwqybcuqAH/FsKpuokhgt9KiRbfqe
+         PG9WXraK5H6DsvwcF0EFyiFFxFPI08MirOZBs08IEHXG50Nak/pX0mErFZRaekVNZ6sh
+         md6Rs4CbFqWefN/fKHntdf7ev5DvlCNSwfxFssYJV8/L73eZe0dqwO42q3SQf7H5jbQ/
+         Nij/fbuRuTIHxlgrbh36pEbdnrh9Eor8hQelng8m62reO1ub6MAXmkDS27ujgg0dkmkF
+         5XdmMJ5yna21QZKcH9thxjSTE/Az5vTDpXahihfAccdvAPT9YSaR/+2zd2icYWGpTScv
+         ZiFQ==
+X-Gm-Message-State: AOJu0YyBC8NYPvOtSQ3WVBkWtv5qSgGt42L/1l6eUoV3qllFbIUH+9aV
+	iyHAgFJ7LzmXNbMv7FIJrI7lpesGoFnnrvAyIEnq+kov0KWKTBcqRCJTE5Q2usuvnE4PxQKvw0B
+	7McpmxpzClFXlGDZa1JPZx2elpc0=
+X-Gm-Gg: ASbGnctqdbdkkLHL+VUXMQxxkx7G2vEM+y5NL3plZwEcQ4l6SLurdnSuZul8U5KvVnQ
+	VX/ChZNeb08MPjzEi3cisnVjY8TATPL3EUTgq0iqcurUe1sdhXqFi8fToAbuzWuL+JTjGpQ==
+X-Google-Smtp-Source: AGHT+IGQP7XKISYBFDywXaqFGUnQ1eHkXbTpWuurcBoNcu35fRvS200FoilWAtVyKh/6TL5FfQYMWtPCwVQnjsXfbIc=
+X-Received: by 2002:a05:6122:82a8:b0:518:8bfe:d5f0 with SMTP id
+ 71dfb90a1353d-518b5b641efmr322826e0c.0.1733940548348; Wed, 11 Dec 2024
+ 10:09:08 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 10:06:33 -0800
+ HTTPREST; Wed, 11 Dec 2024 10:09:07 -0800
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD1vTEH=7HBX1sudwkv7now9VUkFR3Y347EVNGfToZt8fA@mail.gmail.com>
+In-Reply-To: <Z1mhCWXowokIaFR5@pks.im>
 References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-5-d4bc37ee860f@gmail.com> <CAP8UFD1vTEH=7HBX1sudwkv7now9VUkFR3Y347EVNGfToZt8fA@mail.gmail.com>
+ <20241209-320-git-refs-migrate-reflogs-v1-5-d4bc37ee860f@gmail.com> <Z1mhCWXowokIaFR5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 11 Dec 2024 10:06:33 -0800
-Message-ID: <CAOLa=ZQFAMdW78QbPYSoCtqetwT1S6z8dmLS_XG6Ex0nUsp9Cg@mail.gmail.com>
+Date: Wed, 11 Dec 2024 10:09:07 -0800
+Message-ID: <CAOLa=ZTLK=PL7YmkxzH5cZiHA21r1pM1qqbvu=fXi_rpRmHCYQ@mail.gmail.com>
 Subject: Re: [PATCH 5/7] refs: introduce the `ref_transaction_update_reflog` function
-To: Christian Couder <christian.couder@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, toon@iotcl.com, 
 	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="00000000000041e0cb06290275da"
+Content-Type: multipart/mixed; boundary="0000000000007277570629027e6d"
 
---00000000000041e0cb06290275da
+--0000000000007277570629027e6d
 Content-Type: text/plain; charset="UTF-8"
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-[snip]
-
+> On Mon, Dec 09, 2024 at 12:07:19PM +0100, Karthik Nayak wrote:
 >> diff --git a/refs.c b/refs.c
 >> index 732c236a3fd0cf324cc172b48d3d54f6dbadf4a4..602a65873181a90751def525608a7fa7bea59562 100644
 >> --- a/refs.c
 >> +++ b/refs.c
 >> @@ -1160,13 +1160,15 @@ void ref_transaction_free(struct ref_transaction *transaction)
->>         free(transaction);
+>>  	free(transaction);
 >>  }
 >>
 >> -struct ref_update *ref_transaction_add_update(
->> -               struct ref_transaction *transaction,
->> -               const char *refname, unsigned int flags,
->> -               const struct object_id *new_oid,
->> -               const struct object_id *old_oid,
->> -               const char *new_target, const char *old_target,
->> -               const char *msg)
+>> -		struct ref_transaction *transaction,
+>> -		const char *refname, unsigned int flags,
+>> -		const struct object_id *new_oid,
+>> -		const struct object_id *old_oid,
+>> -		const char *new_target, const char *old_target,
+>> -		const char *msg)
 >> +struct ref_update *ref_transaction_add_update(struct ref_transaction *transaction,
->> +                                             const char *refname,
->> +                                             unsigned int flags,
->> +                                             const struct object_id *new_oid,
->> +                                             const struct object_id *old_oid,
->> +                                             const char *new_target,
->> +                                             const char *old_target,
->> +                                             const char *committer_info,
->
-> This change (adding a 'const char *committer_info' argument to
-> ref_transaction_add_update()) is not described in the commit message
-> and it requires a number of changes to the callers of this function,
-> so I think it might want to be in its own preparatory commit before
-> this one.
->
-
-I think this is a great suggestion, it would reduce the congnitive load
-of the commit and make it easier to review. Will do.
-
->> +                                             const char *msg)
+>> +					      const char *refname,
+>> +					      unsigned int flags,
+>> +					      const struct object_id *new_oid,
+>> +					      const struct object_id *old_oid,
+>> +					      const char *new_target,
+>> +					      const char *old_target,
+>> +					      const char *committer_info,
+>> +					      const char *msg)
 >>  {
->>         struct ref_update *update;
+>>  	struct ref_update *update;
 >>
+>
+> I'd personally avoid reindenting this block. It's somewhat-common
+> practice to not align all arguments with the opening brace when the line
+> would become too long. The reindents also distract a bit from the actual
+> changes done in other places further down.
+>
+
+Makes sense, I'll undo that.
+
 >> @@ -1190,8 +1192,15 @@ struct ref_update *ref_transaction_add_update(
->>                 oidcpy(&update->new_oid, new_oid);
->>         if ((flags & REF_HAVE_OLD) && old_oid)
->>                 oidcpy(&update->old_oid, old_oid);
->> -       if (!(flags & REF_SKIP_CREATE_REFLOG))
->> +       if (!(flags & REF_SKIP_CREATE_REFLOG)) {
->> +               if (committer_info) {
->> +                       struct strbuf sb = STRBUF_INIT;
->> +                       strbuf_addstr(&sb, committer_info);
->> +                       update->committer_info = strbuf_detach(&sb, NULL);
+>>  		oidcpy(&update->new_oid, new_oid);
+>>  	if ((flags & REF_HAVE_OLD) && old_oid)
+>>  		oidcpy(&update->old_oid, old_oid);
+>> -	if (!(flags & REF_SKIP_CREATE_REFLOG))
+>> +	if (!(flags & REF_SKIP_CREATE_REFLOG)) {
+>> +		if (committer_info) {
+>> +			struct strbuf sb = STRBUF_INIT;
+>> +			strbuf_addstr(&sb, committer_info);
+>> +			update->committer_info = strbuf_detach(&sb, NULL);
 >
-> Maybe:
->                       update->committer_info = xstrdup(committer_info);
+> Can't we simplify this via `xstrdup()`?
 >
 
-Indeed, I thought there was a better way. This is what I needed to have done.
+Yup, Christian suggested the same too, will fix it up.
 
->> +               }
->> +
->>                 update->msg = normalize_reflog_message(msg);
->> +       }
+>> @@ -3080,10 +3081,12 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
+>>  		}
 >>
->>         return update;
->>  }
->> @@ -1199,20 +1208,29 @@ struct ref_update *ref_transaction_add_update(
->>  static int transaction_refname_verification(const char *refname,
->>                                             const struct object_id *new_oid,
->>                                             unsigned int flags,
->> +                                           unsigned int reflog,
->>                                             struct strbuf *err)
->>  {
->>         if (flags & REF_SKIP_REFNAME_VERIFICATION)
->>                 return 0;
->>
->>         if (is_pseudo_ref(refname)) {
->> -               strbuf_addf(err, _("refusing to update pseudoref '%s'"),
->> -                           refname);
->> +               if (reflog)
->> +                       strbuf_addf(err, _("refusing to update reflog for pseudoref '%s'"),
->> +                                   refname);
->> +               else
->> +                       strbuf_addf(err, _("refusing to update pseudoref '%s'"),
->> +                                   refname);
+>>  		/*
+>> -		 * packed-refs don't support symbolic refs and root refs, so we
+>> -		 * have to queue these references via the loose transaction.
+>> +		 * packed-refs don't support symbolic refs, root refs and reflogs,
+>> +		 * so we have to queue these references via the loose transaction.
+>>  		 */
+>> -		if (update->new_target || is_root_ref(update->refname)) {
+>> +		if (update->new_target ||
+>> +		    is_root_ref(update->refname) ||
+>> +		    (update->flags & REF_LOG_ONLY)) {
+>>  			if (!loose_transaction) {
+>>  				loose_transaction = ref_store_transaction_begin(&refs->base, 0, err);
+>>  				if (!loose_transaction) {
 >
-> Maybe:
+> Makes sense. While we already had REF_LOG_ONLY beforehand, it was only
+> used in very specific cases and thus the support implemented by the
+> backends is lacking. And given that the packed-ref backend does not
+> support reflogs we have to queue these up via the loose backend.
 >
->               const char *what = reflog ? "reflog for pseudoref" : "pseudoref";
->               strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
->
+> Patrick
 
-Much nicer, will add.
-
->>                 return -1;
->>         } else if ((new_oid && !is_null_oid(new_oid)) ?
->>                  check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
->>                  !refname_is_safe(refname)) {
->> -               strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
->> -                           refname);
->> +               if (reflog)
->> +                       strbuf_addf(err, _("refusing to update reflog with bad name '%s'"),
->> +                                   refname);
->> +               else
->> +                       strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
->> +                                   refname);
->
-> Maybe:
->
->               const char *what = reflog ? "reflog with bad name" :
-> "ref with bad name";
->               strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
->
-
-Similar, will do.
-
->>                 return -1;
->>         }
->
-> [...]
->
->>  int ref_transaction_create(struct ref_transaction *transaction,
->> -                          const char *refname,
->> -                          const struct object_id *new_oid,
->> -                          const char *new_target,
->> -                          unsigned int flags, const char *msg,
->> -                          struct strbuf *err)
->> +                          const char *refname, const struct object_id *new_oid,
->> +                          const char *new_target, unsigned int flags,
->> +                          const char *msg, struct strbuf *err)
->
-> This looks like a wrapping or indenting only change. If you really
-> want to do it, it should probably be in its own preparatory commit.
->
-
-I think it was the auto linter, will remove.
-
->> index a5bedf48cf6de91005a7e8d0bf58ca98350397a6..b86d2cd87be33f7bb1b31fce711d6c7c8d9491c9 100644
->> --- a/refs.h
->> +++ b/refs.h
->> @@ -727,6 +727,18 @@ int ref_transaction_update(struct ref_transaction *transaction,
->>                            unsigned int flags, const char *msg,
->>                            struct strbuf *err);
->>
->> +/*
->> + * Similar to `ref_transaction_update`, but this function is only for adding
->> + * a reflog updates.
->
-> "a reflog update" or "reflog updates".
-
-Makes sense. Thanks.
-
---00000000000041e0cb06290275da
+--0000000000007277570629027e6d
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 4a93a4829e7edd5f_0.1
+X-Attachment-Id: d2fd293292aef1bb_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kWjFLVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNDZaQy80K0c4T0wrSlNZdjRtRXYxaUpURDdyS0pmQgo1WnlZSXR5Y2d0
-cjVRTzdvL0dCWmk0b0hzMHYwTktVRXBMY0tuRnE1UHlzdHdEVjRRL2dNZ2pTQ042T05XVzBPCkd4
-RXhpWGxrZ1cwZXVlc2hBY1lad0pDaXZsOXQrcDZoMDFaUzVzcVp1cVByYjNvRmNMOFlNVzBaRmZG
-cEg3T0oKWUFMd3Q0NDVwZGZMVW5MajVlajFxM25WODVXOWpsV0xBR3pHTTFvVzVETVJCeGY2Mzd6
-NWIzNVVzVnc1V2NMcwpIYmYvTVVrOUtUNlJXWkkrb1B1WW9iMDArU0Ezbm81WktOQ1BQVnFxNXM2
-bWIwdzhlaVA2dGFuRVphajlycmg2CkNoNjhReEs3bE9GcGtoeXlFWjBCTDNQS1RrNyt3a05namgv
-Z2Jmb0xHOEVWZERhaTZjeVJ0TTF1V2puOEFmTmsKY3VSV3VQbE1ZOTkyOVlndEcrZElMcCtZSEti
-UWJWQ1ppMllZZFlpeGdYNXlEejZ1OWxBK3JiSjJJL1RPQXlPcQppaGpTWnpEelhtRVNPUFNYc3Zy
-aDN5WkxRbEZpRFUwa0xWRVlRTVhzRkJqTFErYkZwYXc1aFhuNGF3MW9qcC91CmppbDNjN21lVmZy
-aHRqVHU5L0pmMEZUNjNIakh3bGZKUU5SeTUrST0KPWRqTDUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kWjFVQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOHFiQy80N29WWUs2a0pEY3hqQ0M3Rk5ZazJIZzVPQQpXYzRlZ0VHcE15
+dWJDWUJSV28vaFRKRStpMzg0eTBaVmRQaGhVcEJ0Y0k5Nk1kRWpneE5HK3p6VGJVOHB4K2hUCllo
+Ly9ONWhZcG9JVUlZZXZQeHY1RkZJVnNzSE16bm1RU2tyVEJXMTltWEw1U0wycnZ6QUZPYlZFRjky
+aDhTaXEKUjF2bmM1U3lPT21GQVRBZVBNT3Y4REphMVZnR1U1bkk0RXdVQzlYY3F5L0hJQ3hLNEJm
+c2oxamZMYUxtdjFPaQo0NzlySURMU2VHdkMzME1ma0YzL1hPcnFTdUlJZmM1YlNPbHd3TWZydjFJ
+Q0kvWjdJRUlTYlhDNFRBS2xucTI2ClhYZWlrM05LNjkxeXpERkdXZU5lUlN6SG1kcHhTTVNCdVc3
+djZ5VVU1cWtNZGVIZitWMHB6bmhSWTQ0OUR2UkQKUVdwQVJiWFlQN2wwTUpVWkY4MUpDT3BxRnFP
+aG9zSUhTT09RckZZZ1NjK3hRazZFa0Ryb1hhNmpVRGIxazFXQgpOUVNSMTVaQVRQRjBUMVZqeHBk
+U1Z6VDgxLzY2ZG5vVUV5Q2VudStWbS9NOUhwQ1E0ZWZTUVR5L21QZGpTS0JPClMvZnBWcmJyV2kx
+NVpKQ091M2pPaXJ0RUROdVdNL05HVVRKODVocz0KPVk3MzkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000041e0cb06290275da--
+--0000000000007277570629027e6d--
