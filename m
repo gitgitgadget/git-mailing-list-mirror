@@ -1,75 +1,75 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C889236FBF
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D293A236FB0
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733912801; cv=none; b=fjAG3k6vxk3yUc1jH71Nk6sDP/3msHJym0QFaw0jfHVOf3nywJpae1miNWbuvNyAztz7Dvcss+UUYUI4lskXDFxstA7WlTMhhiPecR9Yax5WXIObTq7gOcuX5h5dIOFpFTUVWIci8WWmi/dO6KrPzFHO+3/CHjoSlJxNzE8GAtU=
+	t=1733913110; cv=none; b=eot6l7RrkF94WtC5k83c6Dt33c1R17duwgqpd2ldJOlNxrIjF3qjVPoDF6GEAAqC6Wc9EHU6jHdfIaWb46g+PES06gLk/BWXutNJI3Mrese0y89DZMdBx1XOcuW4Ini6asmg3k/+6LJG1T6WuOy1M2wXSBBoeo7CcsL5OA6p3bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733912801; c=relaxed/simple;
-	bh=x9z8YaAdCV6hHwlS6gvekCUv1JmRjKq/v6bfN9rUo3Q=;
+	s=arc-20240116; t=1733913110; c=relaxed/simple;
+	bh=3bceZKFzm+v4hC1yThEx1KEuHUSar3fH13ZuX/vndH0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BaTs7HrVw2zwmplY1cTKLXkLYJaEJ0+ggdKFIxKw0E9DSdokOuU18HyWnkA07zBssgL+8EoRXniGnKJzffwbjBLbDtKOUdpSlvA8Fv400p+YYv2/nzR9Z/lJVZIdofqR9YvBBPLBJbGty/i+sog1WWSFLgMARmRb8EQL3Hkdl48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ewvxKa3y; arc=none smtp.client-ip=209.85.217.52
+	 To:Cc:Content-Type; b=f9hSv7j1zR2SUA7cG3eAugJPrPLSMmY07CBtxJJXYPO1b5+jFBeGl8gqwAWwSPw+LK6hnYD+A0BESwvU6Lk5dptiJ3ZBKApWlJZfQq0apGBm/irs7EoEVpMouwzcviaYwi7ztkHfWrJMf5U7CgTcOG31arlO6hDuoCl1SDQRHT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nbD68cw0; arc=none smtp.client-ip=209.85.221.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ewvxKa3y"
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4afdf300d07so2344560137.3
-        for <git@vger.kernel.org>; Wed, 11 Dec 2024 02:26:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nbD68cw0"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-51882748165so905760e0c.3
+        for <git@vger.kernel.org>; Wed, 11 Dec 2024 02:31:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733912799; x=1734517599; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733913108; x=1734517908; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fMYH2P1zHbyeABDaPEBPdT4z4i7HtGhVUCyOAz662CM=;
-        b=ewvxKa3yAO2GCTRT4ooa64R/ZqKq4fSXXvKreodgNyovw+BEZDtxYL6YAjOsYA5nHi
-         K/+AQKcPRQ11F0swValXMSOELL1R0byjyZUSIgDIlv7XyBfSxHObsAPpUJpUfx2mAnM1
-         3v9z833QC7wnur+7l4lA86bNVst0/PBVuFXJT2JBqTx0gcK6KJ3ooKCdnT9wRfdZVvMH
-         1PiesxJAYgeFMftzcU5qXZIT/tgso17+S81Sm0k4e1INP+JHt+9GLK2RcjdYnuNtmAkl
-         RQM82w3HAarXMeBed8RqlnwNMgVsJxXogYcVN51Eb9kL6cFoV032WE9pLbBKeRNQ+258
-         odRA==
+        bh=8VZp5F3Qq/hySqIHUjh6UjbtxUlkLUVkDSnXiw9kVuk=;
+        b=nbD68cw0z3TAkte5cBy2yzxPIZUnj0d84lFuvtFYBPcR29N9UrHwtieQX8IUHiBUDl
+         leBqfPFH37cqrhL4N4b/a+U0FmJkrq8jB4+FzhIyeKaidA3mhq85SXr7YqvZFfY89psI
+         RdjdZcYs3ztFRI/nX+oBn7rjHNKUBPvwQb9L7d5LhX4ghsq/8l09OwN52gbtiwLD5IPH
+         rTpZYxcwDVLvic4i1VxRvAy/XrseLmis8lZyyJK4iRAhpS/pVOhKHgKC4WAF55e6bm+S
+         Jl2gS5oLs7KcpWxNevzQrpJqiBEJylODLSJCJzAtEc6IKoB46+G1uXYLfz7ZNWb9QeFN
+         5ehQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733912799; x=1734517599;
+        d=1e100.net; s=20230601; t=1733913108; x=1734517908;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fMYH2P1zHbyeABDaPEBPdT4z4i7HtGhVUCyOAz662CM=;
-        b=Eicd9mpRNhS9PuT5EUmnUM3YvLiq0J5Wu8ZH7IVZgLPsWF0fSB7Q/lnm+IEBwPInpF
-         dmI09MXx7end2LFtWccJxG3zCXV0xJOsiXwnYeO/p/cHzHopYQjB1Vo/l1QHHUX8H8f/
-         cyBIw5bVKPSXC9HcgsEtemqPpMl3sFvisMMycR3xNmbHQd/ljeP4dVgKZQ5yfGzbBt2T
-         2N6HciuoHUyRk4DeugW7sYCWuyZIigon4CrahNVCSgfudZoAyPcGhCkbuFfVd2xCtzlP
-         QCHzj+/0HFKwJ1/Pqrq4dSfKrvOvexgAPeYD8HRQonNA9ubBos/rMQ5FLBFXF0E5/bWi
-         P73w==
-X-Gm-Message-State: AOJu0YzZBIVLHC6blrK/x3X7MpzMpXOXftjxT1qjwMZFGiaJzITLFkZT
-	FSSPy6DSQ4TxcJnrZ7K8/9s+vTFKShQm82qnUxDizAFbKWfmwGE4qrhbyqzQUydRLbKY0WAaqso
-	0BQt7VmP45Ew/x076UYB3gXxOKgs=
-X-Gm-Gg: ASbGncv9I8CZ7B2Kre3FGEqyR/YCzLLqG1LbPVq8EPSM+m1plg9vXG93MtK07hVZnTv
-	n8pUiQWgqzdq8N5kvbH1KbII/ypYp02l6TlmlohSXudqIO2iHob66dEAbPHPajuQGnOTEnw==
-X-Google-Smtp-Source: AGHT+IHRvyyXO2Y5mO9MCb7/z2lFkOyfDJtMbF8Wmge5pjHxr6OvDspJ6T4w/eTjJCimhh/msW+lg9rcxMMn7cUTC0s=
-X-Received: by 2002:a05:6102:dd4:b0:4af:597b:ef with SMTP id
- ada2fe7eead31-4b128fa170amr1890333137.8.1733912799111; Wed, 11 Dec 2024
- 02:26:39 -0800 (PST)
+        bh=8VZp5F3Qq/hySqIHUjh6UjbtxUlkLUVkDSnXiw9kVuk=;
+        b=SWkgUI92jQM4hAJYmZ/2AlXSbGb73/Bh5Wf81MGh9Pwbd2PgbNKRimuVTXXFVd3ZyS
+         8xERWzF/8+pZvq49tDKbORBBrCFQ5hfh9mziK3fluj+0u4lArOkWkAbXKqcv0ROOOdgr
+         5IyLGQg5gYksKk7iq+lzTa7+pOmgUBH3b30YXC8FgSZEEP3M0tCrw3tJLMCo1yAwDyGf
+         0XmgxbqzT9a8FpkE1UcZFlqrGHc9WCDRPwCoN+S6gLrJ6BDHfK+QEgPZBRC1DlGWtawm
+         RAuFULGqlm0ivhCsdfH20qiORxCA9+J4cxFsuJrVyXf3cmrNhehYtlohrIp0nl/jxO8U
+         VxmQ==
+X-Gm-Message-State: AOJu0Yxvbe0GF5L/y2nBZyDX/h8qydj2xECLFg2ggCkq7MwqjuueKGCx
+	DbP2utXNsnFt6aEzZ2lhLqexv/bUXt7lOvVwni8dR1ByGlFB+UXZbJcuMzQt0M5LORqmCbGwZZA
+	c870FpgNVHXI2YmgVa81bpIYu5M0=
+X-Gm-Gg: ASbGncvaJIVR2AhtSBkSPYLUco3Fzzq/fr1hlqwp9a7PcYPal92T6lslwmJJhZQCJ1L
+	O2CF6OYhPPLL2DrYQ7pp4yLkn8BJqyDwa0QPXlrwIqd1pQeP+DDRPyopPlBcDFZnOi2NmXw==
+X-Google-Smtp-Source: AGHT+IFGRnUCKw9H1wIptsS5Txa5B6tZWlWfnVnh8tweGCWXKwNIoaJN/kmixdG5fm8KPituiVJT/zxRjPpgkCAGoVw=
+X-Received: by 2002:a05:6122:91f:b0:518:859e:87c3 with SMTP id
+ 71dfb90a1353d-518a3c3045emr1799092e0c.7.1733913107647; Wed, 11 Dec 2024
+ 02:31:47 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 02:26:38 -0800
+ HTTPREST; Wed, 11 Dec 2024 02:31:46 -0800
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD3StHePPGe+44c83qBYoZLZme+Gw-cP7Weg-neyJg8DOw@mail.gmail.com>
+In-Reply-To: <CAP8UFD3fZ21TXgtMcppXMHf35qgA-UH=0X9z-xJ456qXyV5=dA@mail.gmail.com>
 References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-3-d4bc37ee860f@gmail.com> <CAP8UFD3StHePPGe+44c83qBYoZLZme+Gw-cP7Weg-neyJg8DOw@mail.gmail.com>
+ <20241209-320-git-refs-migrate-reflogs-v1-4-d4bc37ee860f@gmail.com> <CAP8UFD3fZ21TXgtMcppXMHf35qgA-UH=0X9z-xJ456qXyV5=dA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 11 Dec 2024 02:26:38 -0800
-Message-ID: <CAOLa=ZRmGtxRrWnYPW6i8VX1MjQxoY8srKESgyaoutQxR-aZ3A@mail.gmail.com>
-Subject: Re: [PATCH 3/7] refs/files: add count field to ref_lock
+Date: Wed, 11 Dec 2024 02:31:46 -0800
+Message-ID: <CAOLa=ZQtT9KXXro5kCbJUN7fFAAHirZXo06nStqn_u6urr149Q@mail.gmail.com>
+Subject: Re: [PATCH 4/7] refs: extract out refname verification in transactions
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, toon@iotcl.com, 
 	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000769abf0628fc08ca"
+Content-Type: multipart/mixed; boundary="000000000000da820a0628fc1a89"
 
---000000000000769abf0628fc08ca
+--000000000000da820a0628fc1a89
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -78,67 +78,87 @@ Christian Couder <christian.couder@gmail.com> writes:
 > On Mon, Dec 9, 2024 at 12:11=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
 com> wrote:
 >>
->> When refs are updated in the files-backend, a lock is obtained for the
->> corresponding file path. This is the case even for reflogs, i.e. a lock
->> is obtained on the reference path instead of the reflog path. This
->> works, since generally, reflogs are updated alongside the ref.
+>> Unless the `REF_SKIP_REFNAME_VERIFICATION` flag is set for an update,
+>> the refname of the update is verified for:
 >>
->> The upcoming patches will add support for reflog updates in ref
->> transaction. This means, in a particular transaction we want to have ref
->> updates and reflog updates. For refs, in a given transaction there can
->> only be one update.
+>>   - Ensuring it is not a pseudoref.
+>>   - Checking the refname format.
+>>
+>> These checks are also be needed in a following commit where the function
 >
-> Maybe something like: "For a given ref in a given transaction there
-> can be at most one update."
->
-
-Sure.
-
->> But, we can theoretically have multiple reflog
->> updates in a given transaction.
->
-> And: "But we can theoretically have multiple reflog updates for a
-> given ref in a given transaction."
+> s/are also be needed/will also be needed/
 >
 
-Will add.
+Will amend.
 
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 13f8539e6caa923cd4834775fcb0cd7f90d82014..9c929c1ac33bc62a75620e68=
-4a809d46b574f1c6 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -71,6 +71,8 @@ struct ref_lock {
->>         char *ref_name;
->>         struct lock_file lk;
->>         struct object_id old_oid;
->> +       /* count keeps track of users of the lock */
->> +       unsigned int count;
+>> to add reflog updates to the transaction is introduced. Extract the code
+>> out into a new static function.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  refs.c | 43 ++++++++++++++++++++++++++++---------------
+>>  1 file changed, 28 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index f003e51c6bf5229bfbce8ce61ffad7cdba0572e0..732c236a3fd0cf324cc172b4=
+8d3d54f6dbadf4a4 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1196,6 +1196,29 @@ struct ref_update *ref_transaction_add_update(
+>>         return update;
+>>  }
+>>
+>> +static int transaction_refname_verification(const char *refname,
+>> +                                           const struct object_id *new_=
+oid,
+>> +                                           unsigned int flags,
+>> +                                           struct strbuf *err)
 >
-> Nit: maybe the following is a bit better:
+> We have a number of functions named 'xxx_valid()' or 'xxx_ok()' while
+> I couldn't find any 'yyy_verification()' function, so it might be
+> better to name it 'transaction_refname_valid()' or maybe
+> 'transaction_refname_ok()'.
 >
->       unsigned int count; /* track users of the lock (ref update +
-> reflog updates) */
 
-This is better, will amend this in too!
+I think you're right, it helps to be consistent here. Will change to
+`transaction_refname_valid()`.
 
---000000000000769abf0628fc08ca
+> Also I think it should probably return a bool so 1 if the refname is
+> valid and 0 otherwise, unless we have plans in the future to follow
+> different code paths depending on the different ways it is not valid.
+>
+
+That is a good idea.
+
+>> +       ret =3D transaction_refname_verification(refname, new_oid, flags=
+, err);
+>> +       if (ret)
+>> +               return ret;
+>
+> Then the above could be just:
+>
+>        if (!transaction_refname_valid(refname, new_oid, flags, err))
+>                return -1;
+
+Yup, also will remove the need for the `ret` variable.
+
+--000000000000da820a0628fc1a89
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: b0f42cdb1079e61c_0.1
+X-Attachment-Id: 98e241a1c80e8994_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kWmFOMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md29hREFDS3U5aVQ3ODM5Zk9PaUZZejBQMnZuZFJvZQpGY0ZTeU1GS1E3
-Z0MvOUVWK3EyZUxPQXA5dnR2YVhJc1F2cmZBZ21hUFI3MlhEYllrazJEMkxWU2hVYUhHdDBYCkJJ
-UXBMZzJscitaMURPL2pNSFFrZ3pYalJEQmx2NVJ0bURaZCtYQm9ZVjVSbGZDN0wwUGdmMFRzdU5X
-akF5cGMKL083RS9yZ1JmYm5BbThZREtSN1JWRnZ2ZmhKdzk0Y0cxTnNOV2g3VGc4OUttZzZ2SXN4
-Vjcxb3N3QzhEaDNnQQo5TEpWMjgxWXJYV3B1YzRQdDQzRFU3TXdVcExLTWVhTE9QSUhvZUgrUUpq
-OEIyc1l5U0RRSExrUnpFbjJtbDNDCnlvdWR4WCs0TVJCeUVuY0NuZUV6cGxIN2lhZzFRM0dqVS9I
-ZzFIenhvclJ0SG51V1hpRDVTMGVCcU1mOWUwenEKV29BVXdJYnRyZ3BWWmlUcGh1YVRMQ3ZTUU96
-WTVBSGFrd20wejZtcFRPajlHTHVDUXJvVWliQmVjb1hwU3U0dwpRUGFqN25NeFhZRkx3Q3gxZldz
-M09pMTFOK0RzUHJaaGtsVnVrbU5HVUltUGt0UU9DeUYrZ1c2VUw0U0MvdjlTCkhCbTB5RW5LeUJi
-Qm92WUswRjZYVWJHa255VFRhQWM0eEhIdFRCUT0KPVBySE0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kWmFoQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md0NmREFDak81c0l4WnEzR2tMQmVhOGtoUjhwdG9VVAoycGZqa0FJdEFZ
+QmNkcWVjcitITG4vVGRJRkw4aEIvbUoxYlNBci94VXk4RkJvWnFtUUlWN0lUZldJNW0xcG5mClZv
+ZVlBb2NtZWhGR1VvZ09yYkRKZnd5QWEyVmNoSlFtbnJpelV5NUxMSDJhTGFYQWVna2w3UjIrUG1O
+ZDI1VmgKUEdoUk92bzZMY290MHVBSXpWSi9CbEJKRjYvbmlMOWtVZW93OUxqY2JaMUFRTjNjbEJv
+amR6bm5JditzeDVTSAp4elgrSmdWVjhOY2VpVzdQVlF1Y29MOFdoNkVFVDhpeGN5dkZrdmZaSlZ5
+ei84QVZDZVJRNitJSTlZK2d3VnJNCmtrUUdBWWFnZFk4Z3BTSGEzdmc2V1ZMMi8rcWlxQ2tHTGYx
+NFZ2OHE5bkxBcnBOT1kwcktnZUlwYmlmMERoNE0KaG9uS0xKQ1NpeTNvNEhacEdMZVB0UFZLWUlC
+eUV1Y0dKUm1DS1J4ckZ2M0FENmIzZkdzRHdOTWNHV2FYamJlOApvRW44blFSeDJWWXZvaUdrWW5l
+c0pjTzNYRnNLc1g3b3FkTXlBcGxNRXpmR1g3ODJUcHdDdUk5bTNBc1ZSTHFUCm00dkZBQ3c1b2dw
+UXJ0Z2V6QUpvWTFmeHRnbHJmbmZBSFdSWjNDVT0KPUc2N0wKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000769abf0628fc08ca--
+--000000000000da820a0628fc1a89--
