@@ -1,117 +1,128 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E23017D358
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 14:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C1D24634C
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 15:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733927210; cv=none; b=ZUKWFDyQ6OnoiAdxp9aQD/PFu/9Wj8hEEefR/rPcoCXjO4goORIO2OV6w6XTT5TsUkQxzW2O0oJCV+VbpkAS/TLN63BhZpzbvR97OPLUb9iHMHfLYzczJisl7GtCABB1jUNOdlUDaqvPK1K8gox3/hJDGfHeKzFJLX+5+h/SZnM=
+	t=1733929678; cv=none; b=PmDsn0806+FC/qI14BHjaKZqZ3cslKw6ZDKo/5iNYtoDTybuJjU61UBt7bVq7aLOAxneV1PZXmXWybr1Pxc/qBde9GUM2EjsXL1i68eAmj4a+VBa40HXXNCE2Ez6qxwAkqwJPID6L2z+7Qt/UY1Nh5x1BeT8ygd159WyI9eVBLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733927210; c=relaxed/simple;
-	bh=zk+o/tyu5Q98IZu9noGKCEPqQ7/4DtdcLcGZcAR87cE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WslLwtqReXNM/bfdNLY1UVUjZdPdL3SCNHbBLbZ4Xlc71H6ezF6aEAMUTnSmmNjTb4e23xvBgQX3oT2v1ir8ozfpCVsJxIiXU+HCfAVYr8ZduDtwaovGzmqrbbZo1smkRMGG5mMYYGq+Nmz9ORreDEEmjVCMo84qMEwGcI/Jj8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lqH4l3wl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2OwbM9+v; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1733929678; c=relaxed/simple;
+	bh=rBZZwy3FO8gTyq+wXExMjw3ncFa0QecmqzQ1HljzMh4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OckXqJ2DL3aqhGfs1yytz6oDgV0SlJY8j5KkF0IbttS/G9qvwITpkByD+2vuePP3voPaAxXgpF8d4ZxpJVqul3RtX1f89L37KL7IgQZHyDPk4tSzbRJrWrQeSGpaReg636N4Bju6fAaARbaeLdqemqbRT+Q1FXD1tv5UcdOXatI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NteIxtxR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lb7e/Ydf; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lqH4l3wl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2OwbM9+v"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C7E2F2540225;
-	Wed, 11 Dec 2024 09:26:46 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 11 Dec 2024 09:26:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NteIxtxR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lb7e/Ydf"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 985281383C87;
+	Wed, 11 Dec 2024 10:07:54 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 11 Dec 2024 10:07:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1733927206; x=1734013606; bh=Tt7nJOkJhI
-	N8HmgcmBgsBg7MrQ4quNSrJYjgyOyepH4=; b=lqH4l3wlYaPPNjjqkFBgak1NwI
-	uNCwi/23JBssyONbCFkKkpWSjKWzdlcYtJmtsvsjyDuvJ3OTiGeWMNpWlSD0H7zz
-	eVjkgLlp/0qrUiaLh9h+DOkEahnofyMaJUGOfn7SfLEKBdVIU6MHEAQTCudI0MDb
-	rElQl3aY3D/jG1dYXGlxtyA7sRcZWlqYwVQ66AebDbcwdPrGoU5/UXoINtj+l2wd
-	f8wray2DP3RdyalVkTxoKwMYQqlK7B0KnysmUaQOlPyUAw5LRRC19BF/zoORPajl
-	PROlgQ18yCvDiSj5YWLFTz5BelnKfLs8uQkT8+XGjlMmO62hgpN7c3AeMXnQ==
+	:subject:to:to; s=fm3; t=1733929674; x=1734016074; bh=U/MD6JBi3N
+	dCGum/AbUJlRsRx+J96vRADd0Wemw24+c=; b=NteIxtxRu8Esecly/nmZk9VB3/
+	h4HhFaGyjoF31kAAGQS5Y6f9syEOFRwiN57Lww6pF1kt1Npq6lUT3j2tiebHY2UG
+	2hDvrKAg8nbksiBAtFSY4ThpmCE31CS9qcv+8DCtanfbJ4mIQIJ20UJfGI0dS00R
+	YkmHptSjzE121p/JpYviBd0bjVUj/GG0xdiO+Vx0n5wrlrgU5vqMwXd6qpyanJC3
+	Dz2uOX06JV0AJdmkyQAmydPBDduJLZK67RHr3EPLK7ItUQd4/faeStmk1HzGpiMH
+	3TuNFe1jr0/43OXO9TqP9SW8YIxLOlqKKUSUWcmf5VJGdFaBgbohXKlzxlAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733927206; x=1734013606; bh=Tt7nJOkJhIN8HmgcmBgsBg7MrQ4quNSrJYj
-	gyOyepH4=; b=2OwbM9+vXtT6Oys5r0ywbcCz7HABoFS/1l9wK1i0SIVkAE87RLg
-	VAZQpvt+dK93Hinyddxl1VZi5L93bpAH6+CbnJCMdDmqdRZE4xRHD4Wsxni/zcCr
-	EYIMZXM58/rvWoEr/Yzv7AZAOa2Zsv/YA+W0+Vnj71YXYJ25afT5EwOFNVkHV1+7
-	ztG95fH+9JjEUESu/Jlwx+XfAH5YyWbHvAKxr1BMrcK14WQYD1FtDrj4teGj+VL5
-	oZXWager3rxAqfwkNTWmyFXwO0pOQhSJ7eALMkhs2YmzlnlS2xIfgWtAljJV7XnI
-	Wt+qGOehk6ahnt++M85QmSQegoJHHgI3Cvw==
-X-ME-Sender: <xms:JqFZZ1DLMTEsjyNTRVs7uRAcj0TXOYmIBLIh4TQRlhBTTgMvungSCQ>
-    <xme:JqFZZziNk8TrJJwETUQF7SJJu_PyATpo_fECCV3AAJYtC5Co0D-Y-SZFxHGWM-Ldx
-    DKv7pdTdnzZ5Sc8Tw>
-X-ME-Received: <xmr:JqFZZwnJs_rAP_dcZe0IBdAMM-GJdL2f1PRH8yX1yzoU_GY7XPPrIA7WyMsnvyMmdKg63Iw1j9cKut9Nv16mM_-7Tq4HbRNgEldfyEjXTDm5jA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgdeigecutefuodetggdotefrodftvf
+	1733929674; x=1734016074; bh=U/MD6JBi3NdCGum/AbUJlRsRx+J96vRADd0
+	Wemw24+c=; b=Lb7e/YdfwTSl9B/Sn17QCDFGqs0mj4oppqPQOIoaeQtU5Tb/hw7
+	tatmPxL+x8DoEMV6Nu39MpZiSL/0MI9Lz1CanLXiRHEaGROzUwcS04O9arnal1kc
+	mAag3+pTI+Vr3JY092BkGykhRFdZcmZAsbmvDAI7lpzh+LILtil6GnA/SbxLVRCi
+	Ouq+Me1ytEeW2WW6f4ASIlpts2Y3Ijj+XzyvsmJEk62VqxWCq/dhyK44d7+f1TLF
+	mt9DdRkW0KjzrQbQyeokFr9JceZqJnKJqU53hcRS3O9d0YM0U241/K2Blos1S+5H
+	qJfUMzvI+ikqUckRZ+UsuNRiW8r8S3wo+Dg==
+X-ME-Sender: <xms:yqpZZ7ET9FjFKmZE_OGrbVEUo8tpinzd7A4euNtceaEY5nx53ekm2g>
+    <xme:yqpZZ4WEvxYnpXY2rqLorjUs8WstWGYeDrUZwARh6TZW7TJOzzXBu-2xPg7l54DZt
+    1g2DB2W5nbMbpitfQ>
+X-ME-Received: <xmr:yqpZZ9JClziqkkA9B2lk_HRss92PM6_BNoCEuD2XeN7B9o5JphXBIqHCmvppEVVr9o1n-g9nWrjsERpXwWuFFW1aZG8gv5Ko1yh-Wkw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgdejvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
-    gthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepkhgrrhht
-    hhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:JqFZZ_waWqzl1oJoJ4ur9rKrHy0EZAvZ0x7JeZYOoXMbCnscFtiIfg>
-    <xmx:JqFZZ6SpL_t0aKrgEpE8caLchidxU_6-pOZokoJgWMvk8vHwq4Vbnw>
-    <xmx:JqFZZyYvy-Hdbq77B_VhR50BUWeeIkIKCTG4YjdvqnOkiAcaXp-G9A>
-    <xmx:JqFZZ7TIhI39QB1qc1cGkfTK2USVd4Wqkp7ckCzw9C_BifGJd-aCqw>
-    <xmx:JqFZZwM6u9lcGSexCEzIcookKAwUj5OoaV5b5IRme42-o10LmJhQCEaP>
-Feedback-ID: i197146af:Fastmail
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yqpZZ5GL6_jmY8kiZ5__jzNBPoIZd9CBC0JvBktaORnHrttUCc4_1g>
+    <xmx:yqpZZxV3nj-8cHPRFuJVy7NTxxOX4V8HjipMM7BZadAYipu5vrxmuw>
+    <xmx:yqpZZ0MuuPMer1cBz06cKi2HXie3dwP1eQJrD8GBwz1ypXKFDY4kug>
+    <xmx:yqpZZw12XXHVVF5GMemvMd2-dCaFtfNLWZQUnjEUyor2aBtsI6KVhw>
+    <xmx:yqpZZ3zZMCGknaRVU3tc8ZnpdhHR3P2R9nF1eFMLXQrM3v1thU9-C0B3>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Dec 2024 09:26:45 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6acd030f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 11 Dec 2024 14:25:09 +0000 (UTC)
-Date: Wed, 11 Dec 2024 15:26:30 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, toon@iotcl.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 7/7] refs: add support for migrating reflogs
-Message-ID: <Z1mhFqmznVxObmAn@pks.im>
-References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-7-d4bc37ee860f@gmail.com>
+ 11 Dec 2024 10:07:53 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2] bundle: remove unneeded code
+In-Reply-To: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
+	(Toon Claes's message of "Wed, 11 Dec 2024 10:28:15 +0100")
+References: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
+Date: Thu, 12 Dec 2024 00:07:52 +0900
+Message-ID: <xmqqcyhyi7g7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241209-320-git-refs-migrate-reflogs-v1-7-d4bc37ee860f@gmail.com>
+Content-Type: text/plain
 
-On Mon, Dec 09, 2024 at 12:07:21PM +0100, Karthik Nayak wrote:
-> @@ -2687,6 +2688,7 @@ int ref_update_check_old_target(const char *referent, struct ref_update *update,
->  }
->  
->  struct migration_data {
-> +	unsigned int index;
->  	struct ref_store *old_refs;
->  	struct ref_transaction *transaction;
->  	struct strbuf *errbuf;
+Toon Claes <toon@iotcl.com> writes:
 
-Calling this `reflog_index` might be a bit easier for context.
+> - No longer user the term "bottomless bundle" and use "full bundle" and
+>   "incremental bundle" instead, because they are more commonly used.
 
-> @@ -2868,8 +2894,8 @@ int repo_migrate_ref_storage_format(struct repository *repo,
->  	 *   1. Set up a new temporary directory and initialize it with the new
->  	 *      format. This is where all refs will be migrated into.
->  	 *
-> -	 *   2. Enumerate all refs and write them into the new ref storage.
-> -	 *      This operation is safe as we do not yet modify the main
-> +	 *   2. Enumerate all refs and reflogs and write them into the new ref
-> +	 *      storage. This operation is safe as we do not yet modify the main
+Good.
 
-I'd rather move this into a third step, as it is separate from the ref
-enumeration.
+> - To verify the full bundle created upto tag actually contains the tag
+>   object, add a test to clone from the created bundle.
 
-Patrick
+
+expecting success of 6020.17 'clone from full bundle upto annotated tag':
+        git clone --mirror v2.bdl tag-clone.git &&
+        git -C tag-clone.git show-ref |
+                make_user_friendly_and_stable_output >actual &&
+        cat >expect <<-\EOF &&
+        <TAG-2> refs/tags/v2
+        EOF
+        false &&
+        test_cmp expect actual
+
+Cloning into bare repository 'tag-clone.git'...
+Receiving objects: 100% (35/35), done.
+Resolving deltas: 100% (6/6), done.
+not ok 17 - clone from full bundle upto annotated tag
+#
+#               git clone --mirror v2.bdl tag-clone.git &&
+#               git -C tag-clone.git show-ref |
+#                       make_user_friendly_and_stable_output >actual &&
+#               cat >expect <<-\EOF &&
+#               <TAG-2> refs/tags/v2
+#               EOF
+#               false &&
+#               test_cmp expect actual
+#
+1..17
+
+What's the "false" doing here?
+
+
