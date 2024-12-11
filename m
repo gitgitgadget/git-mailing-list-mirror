@@ -1,156 +1,117 @@
-Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C02D23ED41
-	for <git@vger.kernel.org>; Tue, 10 Dec 2024 18:52:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038294C85
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 00:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733856733; cv=none; b=fbzMCo09toLOMZInEE4DuziNPstUBaqygPjQxrg6FzQ4pjXmklvjm+6VEPblZ1dQS4okKHHZJs2jD1t7oUvu2K3uQ0Esnap1ilASz9hStj3Zd/5PIT0jcoJNOI8x9l0N8W6TEwfzlsjVwUz4RrS1fZRcTHv6oiPNjp23CtXwP3k=
+	t=1733875333; cv=none; b=l8YolZZd67MyC3hm/yQm4+cUIWdLSDFvv6D3H08oK6lb4BFJo3P8057oaV07uG/eIyhIJ0h7dCRL6rVmWoRfkEGIvis2VwZ04H5ajvWDJf+uXRgfOkTSFm+V0YEu4S4NkPr0l2ZyFbnB7uh8zpDXzcPl2h00jsb3p9bkS3GJIMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733856733; c=relaxed/simple;
-	bh=ClHb8VXFKJr8BD2Z1A61uWcyS4V37Jg+gDVmdnI5qGI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FDmY3LZGHdeTm+GVxnsnjwWlQVS268CBBTXRnhHvAvb+szqB+WgYX9yFK9tvVUjnIsTiNmZhY3sU2V/9ZxdOkPyf11yUrzndlWeP/b340iq04Kg8+cM1wpPgAkysn+HV8emX6X6yftzw1cZpNvGZ9946Px9Jb4SjcL7UrkGPpZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ImrRpv6y; arc=none smtp.client-ip=209.85.222.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733875333; c=relaxed/simple;
+	bh=WyZOkPIKBaheqpNpgM3Nls3QRESWB3ao/FnMPnuv2LA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hELICkzxdmFEnB9fGEHHRqFswwxHqTeqQqNOxgvg/mVlkoXB41bwa3XfefpeyVpogsjHUNYSKX/getwOKEq5QMJh1aImty68GK9MCf5VU768vKd7dODy+kTn4w3/YZw/bKe8Nqz/eemCfLUiN6cKkZEEfOU5GLQ6Sj0Dx3oBVhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PM1VlBKL; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ImrRpv6y"
-Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-85ba8b1c7b9so3001068241.1
-        for <git@vger.kernel.org>; Tue, 10 Dec 2024 10:52:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733856731; x=1734461531; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ClHb8VXFKJr8BD2Z1A61uWcyS4V37Jg+gDVmdnI5qGI=;
-        b=ImrRpv6y9jc0GNYx7L6he2Sa2U7Fxziz9zP3Yc9eOspDzZy+CK647h99NJcjn+4b+U
-         TpnQhEPRK9bEhrDFf2/LTf7tSZfs8UOmQYLwTDCEs+5Zsh/N8VADDQGPBtv9fPCsfKuB
-         wvFO8gutlLCEHVO1/w2qhGjNGnzbJDJvBnRvDKzBQi8PoUDWCKFYVJle71zd7nrSz+j6
-         ZExm88ZAW/FXP2HyGkkD7uK3ctLdzvCYgzuklMK4AVNh0YxNI9qa0Q9SMgBSxO3qplNn
-         fkY32R0lre6eolgdHxoHVzWEN/N99mVVx0BhCZ8/aE+bSLqr8+yP1SvEcOh0/x0/xFlH
-         N8YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733856731; x=1734461531;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ClHb8VXFKJr8BD2Z1A61uWcyS4V37Jg+gDVmdnI5qGI=;
-        b=nRT/LcnmeAYoTir7iyujcdGSKSF0k0ULnQDt8YJFsJjZzsut9r0bdPergW+HfivIIx
-         so0ugvAaljT+jMONdBcKh+ciyZujO4Rpo1gQ2GjbH1qV8WPeWMNXHvDZuGNWdSQ0OPpR
-         YacgRg8VA86J3MIUAWHkHhEvzEDGLdZH1Te2qB57Mn91796GoaGVzufJFzPj9fcD0Wye
-         MLiPS5a4aVsWKV5JckoEqTlpH0yY9vtH+aQrdeOgMvWosAkxVyIQyT0benIFh67W2Awn
-         nyUvXUZvP6lfLdniFkbFgrEt+ZsMTtbGOL7FLhmfmlkOd+xvFIdaiBLfi2cu4KtGf+JZ
-         nmoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWqkEakVtrgA0r4cK2172BzDIcpV/ZqQKCEmN6hmBD5Ubxsc+F/GPbAM6j9mX/5eXSUpIc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxM4KImDvVh2BjgaCQuHzXBkMmMDjLKjZ2VTZPgH9I/1BaNCFZe
-	YdcvQ2vIzU8I5wleZkLiFJliwpJsmlXK4ebiEAmq9w80CtpEkg5jFnb977ysddMVefSjcVROWZA
-	wmD3AldHZzwWi3VMWOuSozmy1rFg=
-X-Gm-Gg: ASbGncsa11SjWtnceSNa7jQ9HCnHqKuA4ofNcwhgyfzd70pb48LTyCRKj8a478DCkNT
-	+FDQCboGl/w0hcWeix+CWz0z7VQ2bSbyitu0=
-X-Google-Smtp-Source: AGHT+IHGQ3iCMw2k2wrAR+wlFcXG1VQ27C7BrIZJYmToUll0SkXIbBCvedH081C5UsuAzcnREMerIWyvBBF9L3LHawc=
-X-Received: by 2002:a05:6102:162a:b0:4af:ed5a:b68d with SMTP id
- ada2fe7eead31-4b1196d9696mr3969502137.6.1733856731160; Tue, 10 Dec 2024
- 10:52:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PM1VlBKL"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id EE1571383E5C;
+	Tue, 10 Dec 2024 19:02:09 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Tue, 10 Dec 2024 19:02:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733875329; x=1733961729; bh=W1oh3oen2XCrWAjemiGvOc0MOcXLlnaebIW
+	7UI+4y8M=; b=PM1VlBKLPqPAHIOL3qfT3IO/jWtqPVZJtgAYKqCiCpJnfFI8Yur
+	Q7+5Op/GjERc8XTyRzykskNbaTHhxxH/kbpzqWmf3eZpZGN5LYVNmV4k2M+1/gCE
+	et8OL3S3b1WvVikkpHcTXnEVGbn41/twn9SFeo+C2tXM4b9hCenB4WJY8oiuBBpJ
+	g/te+1R95SN2DWllewEffTmXScGcaECpDHJXyQfw4/+DcP9JeTbKDLL8RJjMP/cy
+	xearLo5/ucjpaRRL6rn0OCzYvy9H5ZIoFBXOcuqrzyZUmb0zTxmYQWutT1EvxTxe
+	ZSq9veDZT6X+pBuYm188IYXxuk1l2/9+EjA==
+X-ME-Sender: <xms:gdZYZ4WXaOdydjh_e71Gib6dIRMmpIiQ12Ci4SrOt39Rzy2irdN9Aw>
+    <xme:gdZYZ8kdPMyo8vyhdjLokWRTHVy4mflndIJ32Kv8BvDU-_Ov9x_9obWN_HL5QHsNS
+    NpSBdD3lFmJ9LgjJg>
+X-ME-Received: <xmr:gdZYZ8acB7MkHr2vCl75Iyiem1kqTLoQKeqd2ale2pVfuwO6CYiqPikKuFQo6HrF3qbFt2MIEJ8Bq9-E5h2D_kArDePqWZ-ebx3TaM4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrjeelgdduhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
+    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrohihvghluggrrhdtse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehjoh
+    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehsuhhn
+    shhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:gdZYZ3UQg5CYutXmkpQY-iapliPe8TvQqPw2Mia3CpGC15waItMEig>
+    <xmx:gdZYZynktiZUo_2rhTTcpsQnLJrrGIPsgyuUXd845FNivBpWgewaTg>
+    <xmx:gdZYZ8eXjjGNGcDGtlNb0wo9jSAj-NV7HIrvb7j5OCH3p1hZwE2p8g>
+    <xmx:gdZYZ0H7JCa0Ox9KSuyUdOIWcUOEKMmNfQyJDArAb6s77c_teTAo9A>
+    <xmx:gdZYZwbobsZB8OzC6NzdVst-taaL8rHHp-RgDKnpNQt9iJ_8VCWmSYmi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Dec 2024 19:02:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Roy E <royeldar0@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,
+  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/8] git-submodule.sh: improve parsing of options
+In-Reply-To: <CAOfFamkEmJgUUj8C_TGbjgKs35vSBzNCDpLvK+utqnTtxd5iHQ@mail.gmail.com>
+	(Roy E.'s message of "Tue, 10 Dec 2024 20:11:53 +0200")
+References: <20241207135201.2536-1-royeldar0@gmail.com>
+	<20241209165009.40653-1-royeldar0@gmail.com>
+	<xmqq1pygo2ti.fsf@gitster.g>
+	<CAOfFamkEmJgUUj8C_TGbjgKs35vSBzNCDpLvK+utqnTtxd5iHQ@mail.gmail.com>
+Date: Wed, 11 Dec 2024 09:02:07 +0900
+Message-ID: <xmqqikrrjdds.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqfrt7y3xp.fsf@gitster.g> <20241209161445.10321-1-usmanakinyemi202@gmail.com>
- <00e201db4a58$3b198fb0$b14caf10$@nexbridge.com>
-In-Reply-To: <00e201db4a58$3b198fb0$b14caf10$@nexbridge.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 11 Dec 2024 00:21:59 +0530
-Message-ID: <CAPSxiM8hYPAuZhiTX06jmw7FRr0_6P5+4WjudM9Ad84Lid6gDA@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Advertise OS version
-To: rsbecker@nexbridge.com
-Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de, christian.couder@gmail.com, 
-	git@vger.kernel.org, johncai86@gmail.com, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Dec 9, 2024 at 10:04=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
->
-> On December 9, 2024 11:15 AM, Usman Akinyemi wrote:
-> >Thank you to everyone who participated in this discussion. I am Usman Ak=
-inyemi,
-> >one of the two selected Outreachy interns. I have been selected to work =
-on the
-> >project =E2=80=9CFinish adding an 'os-version'
-> >capability to Git protocol v2,=E2=80=9D which involves implementing the =
-features discussed in
-> >this thread.
-> >
-> >You can find the full discussion about my proposal for this project
-> >here: https://public-inbox.org/git/CAPSxiM_rvt-tkQjHYmYNv-
-> >Wyr0=3DX4+123dt=3DvZKtc++PGRjQMQ@mail.gmail.com/
-> >
-> >In summary, this is an outline of my proposal and what I plan to impleme=
-nt, which
-> >has been influenced by the discussion in this thread:
-> >
-> >- Send only the OS name by default while allowing a knob (custom
-> >configuration) to specify other information (e.g., version details) and =
-disable
-> >sending OS names and any other information entirely.
-> >
-> >After discussing with my mentor, @Christian, we think that adding this a=
-s a new
-> >capability (os-version) is a better option compared to appending it to t=
-he user-
-> >agent. This ensures that we do not disrupt people's scripts that collect=
- statistics
-> >from the user-agent or perform other actions.
-> >
-> >Intentions of implementing this project:
-> >- For statistical purposes.
-> >- Most importantly, for security and debugging purposes. This will allow=
- servers to
-> >instruct users to upgrade or perform specific debugging actions when nec=
-essary.
-> >
-> >For example:-
-> >A server seeing that a client is using an old Git version that has secur=
-ity issues on
-> >one platform, like MacOS, could check if the user is indeed running MacO=
-S before
-> >sending it a message to upgrade.
-> >
-> >Also a server seeing a client that could benefit from an upgrade, for ex=
-ample for
-> >performance reasons, could better customize the message it sends to the =
-client to
-> >nudge it to upgrade. If the client is on Windows for example the server =
-could send it
-> >a link to https://gitforwindows.org/ as part of the message.
-> >
-> >Please, if anyone has any suggestion or addition or concerns that might,=
- kindly add.
-> >Thank you very much.
->
-Hello Randall,
+Roy E <royeldar0@gmail.com> writes:
 
-> Is this build-time or runtime? If run-time, please make sure the code is =
-portable or provides
-> hooks so that non-linux systems can contribute content.
+>> I am assuming (but I don't use "git submodule" very often, so my
+>> assumption may be way off) that there is no such variable we need to
+>> pass, but if not, we may need to reconsider and use the "variable has
+>> only value of the option" for at least some of them.
 >
-Thanks for pointing this out.
+> Indeed, there aren't such variables; all of the options which take
+> arguments have exactly one argument.
 
-Yeah, the aim is to have it at runtime and to have hooks that can be
-used by non-linux systems.
+Just to make sure we are on the same page,
 
-Thank you.
-Usman.
-> Thanks,
-> Randall
->
-> --
-> Brief whoami: NonStop&UNIX developer since approximately
-> UNIX(421664400)
-> NonStop(211288444200000000)
-> -- In real life, I talk too much.
->
->
->
+    --foo "hello world"
+
+is an example of an option "foo" that takes exactly one argument, a
+string which happens to have a whitespace in it, and is an example
+for which "variable has the dash-dash option, equals, and its value"
+pattern would not work well.
+
+If we pass an argument that is an end-user provided message or is a
+project controlled pathname, we are likely to be in the same
+situation.
+
+If we can pass it as
+
+    --foo="hello world"
+
+then we are safe, as we can do
+
+	foo="--foo=hello world"
+	... later ...
+	git cmd ${foo:+"$foo"}
