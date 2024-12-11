@@ -1,83 +1,82 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7229520B81C
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 20:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E83D259490
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 20:55:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733950453; cv=none; b=Y8km/9BRRxk1/t992H7QXWwK11+VdLTeSAh7IvFzSE5YE/lIGUk8dndDJoCJ802s/KYdmWWLZPwChiTzYn5m0Dao6MSqJT6upQVIJQpuOkzm8PC+hyc1k6KDZVGZKnY+gOSUGfp0O6sIcVkAspO1jdGd0ky9qEIQHH/fdzFaaEs=
+	t=1733950551; cv=none; b=N+wv7up3vvQfdBA45BWIcCtSerxTiDm5nP3NGSbtxdukwaH98nNSr0UeFLuirkQmoS9kic2pRY9FXJ2odZBZzgC2S57RcbEY9OsNMC+5BCB22z37Ys36At87+YRox/n6noVRJspbIRPASX/a3caaN/Oq2eqwCLn8VlkEWU/TvZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733950453; c=relaxed/simple;
-	bh=WSDLAknzCshpq++TXEbubxmo6SxlCJiepXxiQGP8XEE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZlsuvQrp5X/zOideYkN0WWJINElNvsNoPCneRKsrJvLwhlzDLlHYDRxc41lC3DtBe7tF+UCXYOd7WVhafIs38HkHi+4cQGo5vVLBEmmpo3y5U5SvfymLmRsvcSCWsowBQ+VQMMhCDd7LR+LNdqPZSen2T+tgeMZjgHEzqFA6gQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=4NtcQJVO; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1733950551; c=relaxed/simple;
+	bh=OjW1mNeLQD+vUddHjnpn8/EQmIfRw4+SjFgS63tjbEA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=eP7OlfNwZCtDF4lKpGOHePS+meyFn17yJyY3alRQqEIWlFvlBnygz3l6eBGQIhjdZPEp1KmE9+Wl5MpQJXMbZdZ/Iv5+wFv9gubP38J0PC3ghLiPyjeP3+EcYu1bRU2XOOjyrChBKfiXJ/cAijvRNiTQ51vbd6McvOoGYXgWVv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WoBl9aSF; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="4NtcQJVO"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1733950447;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TBs7yExoGESxMG9gGc2AAQsMCciYkvJX2C8JId1DtzE=;
-	b=4NtcQJVOtZbCrfblO5esw9A1ExsiqB8sVUUiMmz0I9C+zqq21p4zqTDts4lvuz/LcGv3lG
-	bAfhUhmtIMntwzCTz5lMAsj++zxJYFwDJ082oVhxmgXXBn46+cDSkugbD/EofEjQnRxZuB
-	TaasjR6B22N3KNtmkKpKT/cCzbFPccg=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2] bundle: remove unneeded code
-In-Reply-To: <xmqqcyhyi7g7.fsf@gitster.g>
-References: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
- <xmqqcyhyi7g7.fsf@gitster.g>
-Date: Wed, 11 Dec 2024 21:53:57 +0100
-Message-ID: <87y10mhrfe.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WoBl9aSF"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-85c559ed230so989575241.0
+        for <git@vger.kernel.org>; Wed, 11 Dec 2024 12:55:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733950549; x=1734555349; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OjW1mNeLQD+vUddHjnpn8/EQmIfRw4+SjFgS63tjbEA=;
+        b=WoBl9aSFEmdcfIiyXvdFhHb0zirJmXSKwqk8c0wffFp25Oa1Xvqsp648jEBbdWA7JE
+         kKwdgY8HekZDWx1IyIiB2YU2AluS4PZPNP7mbe0y45EGLexakpMvwHUBpl2/YR1W3OwA
+         M+RWQ6fsH4hMc1gy/p6c415ik2V9BiXgnUXJ/4cZm8z2rpXOOTQBcONg/DVRCW9+oZ1b
+         9yySHUGdmFOHv/GeNmkl6zuwCPaLYL1PJFBJe+VnUaiGa43Q+TWOgkjNVZfXovP44RE0
+         5elcya0YBazzVBeQp1nG+fjQEe7ThS69FD1DfYOT5/PNxfFGqOJdRsonzIfKxqVA/dp6
+         XHXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733950549; x=1734555349;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OjW1mNeLQD+vUddHjnpn8/EQmIfRw4+SjFgS63tjbEA=;
+        b=UwhSO2i+yvlTYH4vvU0KZyzmJnFfrd/E3ShT+A4r4vxBrp0Uu95eAOS4YEwVmedLFI
+         c2uAF0Uu6CkVu1qcmxuid4No1gFeSfPPA9L1Mt9UY6e35x+WOTUA2fbi9zG+6g20dCkL
+         UKzi7+NRxuFDJFpSRAJ6AVwmCkpCgwqFljt9jKsjK3KA/xiAuWKUz3iRJdGF2Zv9HBlk
+         nFAfzmjrbjGw8OOCdat08oGbdUdK/Whn21c4Pkuu7Dc03A72owBg5HrM2LmK1eDBDDUh
+         fnPHSsmhsgSoRCH715p3ggvgLEfRW46W0U5BkozM4vb23bt5jVNGkGsXzHKoIPdVI7WS
+         bkkQ==
+X-Gm-Message-State: AOJu0Yxaf1oKJncR2Y/7ldnIVuTE65xtwLIXyTmcq2FogNA4I3Ni9CKi
+	hiwx57p9OwxiKlMC/xskRc8rdXCP6aNvkumq1ZXHDybwrJLCQ9IXz/kSNCUQy5xsCVxVVKgp6U+
+	lRMkxZ9pIpjHu/OaEK2wKTxH8J2UBTtHV
+X-Gm-Gg: ASbGnct8hhfmdpe/pCdgZxXL4IF5rYz5IPGNg4UazOodaSgZDDWiqBF0cZJmQvpOJU+
+	I8J1C61rINdBpI96JSDUhYjY7/PdhuHAVTfT3jCnLCCY12s+5yijc7dfTe5ZLSVZb6FFb
+X-Google-Smtp-Source: AGHT+IFcTHGEVWt7zsIjGC3BhWk1HGde0jUo2aaelS8se69BrQjycj9OX9abCrnBxvkNv36vexUt1KwRx/9u0hzAtdc=
+X-Received: by 2002:a05:6102:b11:b0:4b1:130f:9fbb with SMTP id
+ ada2fe7eead31-4b2478e161amr1846316137.26.1733950548963; Wed, 11 Dec 2024
+ 12:55:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+From: Ricardo Almeida <ric.almeida@gmail.com>
+Date: Wed, 11 Dec 2024 20:55:38 +0000
+Message-ID: <CAMKQPDZWgq_qCdaL_S8cYYn=wtZSJiq6nP5aqFjvUZcFSnrTzQ@mail.gmail.com>
+Subject: Git pull --rebase and --reset-author-date
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> expecting success of 6020.17 'clone from full bundle upto annotated tag':
->         git clone --mirror v2.bdl tag-clone.git &&
->         git -C tag-clone.git show-ref |
->                 make_user_friendly_and_stable_output >actual &&
->         cat >expect <<-\EOF &&
->         <TAG-2> refs/tags/v2
->         EOF
->         false &&
->         test_cmp expect actual
->
-> Cloning into bare repository 'tag-clone.git'...
-> Receiving objects: 100% (35/35), done.
-> Resolving deltas: 100% (6/6), done.
-> not ok 17 - clone from full bundle upto annotated tag
-> #
-> #               git clone --mirror v2.bdl tag-clone.git &&
-> #               git -C tag-clone.git show-ref |
-> #                       make_user_friendly_and_stable_output >actual &&
-> #               cat >expect <<-\EOF &&
-> #               <TAG-2> refs/tags/v2
-> #               EOF
-> #               false &&
-> #               test_cmp expect actual
-> #
-> 1..17
->
-> What's the "false" doing here?
+I just learned about being able to use "git rebase master
+--reset-author-date" to, as the name implies, reset the author date of
+the branch commits that will move to the top.
 
-I'm terribly sorry, how sloppy of me. I added that during debugging to
-be able to inspect the t/trash* directory. This shouldn't have made it
-to the final patch. My apologies, I've submitted v3 which doesn't
-include that line.
+But, when working in a branch, I use "git pull origin --rebase --stat
+master:master" to update the master branch and rebase the current
+branch with a single command (have it in an alias, to avoid typing it
+all). So, I tried to execute "git pull origin --rebase
+--reset-author-date --stat master:master" but it's not possible :(
 
---
-Toon
+error: unknown option `reset-author-date'
+
+So, I was wondering if there's a similar option that can be used with
+git pull --rebase or if I can request this feature to be added? :)
+
+Regards,
+Ricardo Almeida
