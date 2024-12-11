@@ -1,79 +1,79 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D6D1EE7A5
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D07205E06
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733914398; cv=none; b=cVsL+0J0EipwnI8qKHGRxZjCI1PENFsvpR3P68HeIj/JFV+oOUgqtJu8Gj2029VMgFM+YBFtERAdUF1tB4eT64yB1S2f6OtAOHB8ysFtgQbxfuimvIc2g/H4jVNHH9AxSeCSrISjWVOZJ0cJmDXkfEWK+r4lS/cUhF5XIFcj3RM=
+	t=1733914398; cv=none; b=fX4KCFI8Ug1T0lw6hh8yO9GS8E4rWRuScjLuugXeHvKvf6/IQj+cixIi/LBpK1hch/0bFPtpddd4Nl47ObJvczfFbnVU6qe3yJPUMuE2SD3AT2z8OKnQ7SLK6GukC1sJ1HHKWz5kE0ECWjXIlw9qOyvg7p8f7kF+5iXOAMeC6+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1733914398; c=relaxed/simple;
-	bh=PubPMK/xlAbfwqm0gFtI8AC7UTzvva9hi4gTOgGxTCc=;
+	bh=XSwJkfL8brVX3JDF2SqAIRy395fK4ItTQF+8GaRyRpg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PYS6uugfyrJjytAyGm7qlwNd57Sr/Gcf8WKvSy0bkyuXIYnHD0Z+ZEE5ekMENKMTi/H31FkRPFajO4d5ckjhn57mHyU5SB9o+LFgGfqLG7GGZcMYtlVK4O5zqa3zIeBLKblI0rAufGXaQSlckotuRyaunlfX1YQ9sicMi7JPfVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FKCI2WQq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KIUBzmIS; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=E6gjkt05vFLOCto41slcuZuQNixh1/Mv73upuxn2eFZ7hKdXUlGds7zG3P8cMRW6xM59fYLe3ctAeIAGdrSx0B14pTbXDpGpJGyG2Z6b0pe+Y2DuLGJuUwuQlHSDBgnDeIPqwiRl/PcvdOS0m01qkuTgSGhQS5oIGwDpRSuI4xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J+mKtJtg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bwlgCt9H; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FKCI2WQq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KIUBzmIS"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 57CD31140272
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:14 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Wed, 11 Dec 2024 05:53:14 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J+mKtJtg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bwlgCt9H"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1C80B1140273
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:15 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 11 Dec 2024 05:53:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1733914394;
-	 x=1734000794; bh=r5dPuSt4sqmM6+TSZ4KtTwSpUcDDhyCGnxdpl2fd0l0=; b=
-	FKCI2WQqavy9iVDUj8Ou8SM+ddaUCwlhyVbG/rNCFTd6I3viLtn/T5oDaFLp01jh
-	7aNTO+W5eEzIDRv4PWHmOFvm+Ym1DPG1TOU4/I7/Xw499UMYQ5miFpSxi+O4RMvE
-	yL3cY1wh4gS6CXRvvh5SeqDaRVMnCYaAjqY/4STND4jJ60G+RETmQxmOoakpvU5p
-	NroZu/QCMo6wkf+Q/F+mSVMy3oH5BQ31JWWUf0QyjdBPd2wQZBUMN7oGCcq6q93f
-	Iu/Wbsg6zPxAw0HHrX4ceoyngqi7HsulH0fR4htoTDACGKp5a3EkstKEie/hwaLY
-	IvxNH1IKfyRUnsQng9feRQ==
+	 x=1734000794; bh=GCyrGhhkOfxO/mCdYHzifqxLVUeVVPSSLCeBPI/ZPUk=; b=
+	J+mKtJtgVxIojvuvTcV5iP+AcAJGuGJ8HSa8KjE/3Ag1kzJe1u2oq5oolYM+7zyZ
+	gbJDX+7/Sunk+n/tre8TPuGPXAA1msnCTFzTigWNlp30TJDUiHmMr+FYc/h5HgpS
+	ZmGG9mSDW1jBW2+/XfcBeKiFDowuZ0W1FJQsE0VUqzJWv+RJmeu4iTmAlPpPnZQH
+	A2qZzjMXV40WWYNlk3+awE8poDZYzpAYiJUv8lG3RL6VYa6LOS7os6uAYPHVd+yq
+	esvgEEb9nCWP4fmx/olY7l3p0qpg6uzqhuTGjMQLTptYxjsvLrV/MQ8jigiPtSTP
+	kbKHyQNwKj7m8uRYJF/S8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733914394; x=
-	1734000794; bh=r5dPuSt4sqmM6+TSZ4KtTwSpUcDDhyCGnxdpl2fd0l0=; b=K
-	IUBzmISsEksuMgCqnu3djUey/0HxKG9MZczXXxTJI27JmW9Fa3i0LUIv0MAXlJ+T
-	ly57YYbvyjGo88LfTPUO4QPVAbi3kgww0k6WuaxYW7Z0LAEhfYifCwldLqQNJNJr
-	s4gGRdAv/NoZ6j8xwRf14hjnTHwdWkCdlq8+eD09/T0LAKIFTJe9JhO8AKgrFt4/
-	7rM/eJSZA62Xsq+7x9Aoahnk1tQt/zBwL0P6oZmu4Z4GfZ/ptME7M6w9z9zisfEj
-	K/9jDEYkJuPcuKeCjAnziDZcC5Xjyl60tF3RiwAl9jI9d/ZYduuHy3LnRoHU4GQE
-	fuuLTOS9CFwMekwfVuELg==
-X-ME-Sender: <xms:Gm9ZZwdJyK_JLi97_VtlVSjZB_HKNyluyQai8jb3upqB0sQZ_zw7Uw>
-    <xme:Gm9ZZyN-TXY_OGn-6pMYbzLVOqwH3F-ne1m0LIi2RdJ56w_koT67Z3n9EfGzBkT8K
-    96fj-8SzqqD667-3w>
-X-ME-Received: <xmr:Gm9ZZxh_9peXC3k2u_4xoXzUD6yjYCQCPYIWozgyK-Aqxl4lKr9dUwN9DK5EzTmwt-NYeRtpbnetiDjzD8G18Bg-UKzG-JqmQ-5W-6mmqd1qqA>
+	1734000794; bh=GCyrGhhkOfxO/mCdYHzifqxLVUeVVPSSLCeBPI/ZPUk=; b=b
+	wlgCt9HxZVxdkk0lbqs8CAm89GU9BCtwDSh3AttkobjE99TzI8NV1Zxs+XDy/GPg
+	1dGp9tCBtEbBoin5Z5qUvV1yqVhdIIwu6tYC/gY1+N2fmPixgtCHDbHJI3cDyOPh
+	ftlpWROkbJOuMmnjeKHxabKnC2395ByXUPZEKNOqIpT08foajbjCC5MP60Z5eq4c
+	sHcORC7Yle+DMvzJtV0vbyScbyjXQmBYutcZSrJ500B5U+MP2AGsx9ggPjyNIVVq
+	ZPG5XVlhpArmJySZZW8LxOtWtoUcib7LxJgLhegVFKMMy6r7ZeqLCLBZhEc2IzMe
+	7dDZyQ2kqracP4kqb2vxA==
+X-ME-Sender: <xms:Gm9ZZ1P5mBA1y-pkw7TvUzXBvKbNF9boGNK9CIvJXmbNtkpaxr88rQ>
+    <xme:Gm9ZZ3_WnJusqciiNfFbPHfSmmz0HRSTE8RdLcnKXnWftrJiL7eHEya5Tzi9ejxRo
+    c4MOIdfnleZqWHcDA>
+X-ME-Received: <xmr:Gm9ZZ0TG8QBldiKwMqAq3HOPM5kttiyYr4HEkKeQazbdXMHpWSH2cWh5OJ1yasGzAbRR5vF-3lYJ3pUK3GYXdGRliqA51jj0m5CLbsOLEGLXHw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddvudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
-    fgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelhe
-    efjeektdffhedvhfdvteefgfdtudffudevveetgeeuuedtkefhgeenucevlhhushhtvghr
+    fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
+    ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Gm9ZZ18ZJ2n27pmjxsW_3Br03movRvx1RMDIf37Zplf9_jvcyQcHBA>
-    <xmx:Gm9ZZ8vrSOi2lrxavus1sEcp3UtoTiDJtb2IG_9T896Na_-drpDsQQ>
-    <xmx:Gm9ZZ8Fj71SX8RXVNNpTn5pdNlqBPT7VYjOzVQFSe9V_ZdoJCcsFbA>
-    <xmx:Gm9ZZ7NwFgQQleLyfiuE_BVqujAOy1tWKvcIHl2OXGGPjLEXgTyTPg>
-    <xmx:Gm9ZZ5VR3p1iSZ-1bkDF4caFM_D6t3sctEnO47WYhHE0ynUwF7nb5lZw>
+X-ME-Proxy: <xmx:Gm9ZZxvvpaJHsLEEfDFbnKzwOXzxT1-_pOOCnlh_UxCHqfDRnIzWYg>
+    <xmx:Gm9ZZ9fUoGj-Rzi4ZRiK3A5f-FVAuOk6yY3hlvuAGKFw6C2S7hkPdQ>
+    <xmx:Gm9ZZ91lzjSc3C2R3V0imdN02A3OZioKwl3bPpD8WFqGYckFoLpCHw>
+    <xmx:Gm9ZZ59-v-vISyWfrDxAJlk_5abhdZWvc1gPgo-8xVDhNdoqf5EhHQ>
+    <xmx:Gm9ZZ9GiI3YrqpjJzCslvnUBEgCU4ww5qOMqtWpDn6mJnH9NT545GgI6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:13 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:14 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 93f03aff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1a51bc73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 11 Dec 2024 10:51:36 +0000 (UTC)
+	Wed, 11 Dec 2024 10:51:37 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 11 Dec 2024 11:52:37 +0100
-Subject: [PATCH 6/8] t: fix out-of-tree tests for some git-p4 tests
+Date: Wed, 11 Dec 2024 11:52:38 +0100
+Subject: [PATCH 7/8] t: introduce compatibility options to clar-based tests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,318 +81,85 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20241211-pks-meson-ci-v1-6-28d18b494374@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241211-pks-meson-ci-v1-7-28d18b494374@pks.im>
 References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
 In-Reply-To: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Both t9835 and t9836 exercise git-p4, but one exercises Python 2 whereas
-the other one uses Python 3. These tests do not exercise "git p4", but
-instead they use "git p4.py" so that the unbuilt version of "git-p4.py"
-is used that has "#!/usr/bin/env python" as shebang instead of the
-replaced shebang.
+Our unit tests that don't yet use the clar unit testing framework ignore
+any option that they do not understand. It is thus fine to just pass
+test options we set up globally to those unit tests as they are simply
+ignored. This makes our life easier because we don't have to special
+case those options with Meson, where test options are set up globally
+via `meson test --test-args=`.
 
-But "git-p4.py" is not in our PATH during out-of-tree builds, and thus
-we cannot locate "git-p4.py". The tests thus break with CMake and Meson.
-
-Fix this by instead manually setting up script wrappers that invoke the
-respective Python interpreter directly.
+But our clar-based unit testing framework is way stricter here and will
+fail in case it is passed an unknown option. Stub out these options with
+no-ops to make our life a bit easier.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t9835-git-p4-metadata-encoding-python2.sh | 48 ++++++++++++++-------------
- t/t9836-git-p4-metadata-encoding-python3.sh | 50 ++++++++++++++---------------
- 2 files changed, 50 insertions(+), 48 deletions(-)
+ parse-options.h          | 12 ++++++++++++
+ t/unit-tests/unit-test.c | 19 ++++++++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/t/t9835-git-p4-metadata-encoding-python2.sh b/t/t9835-git-p4-metadata-encoding-python2.sh
-index 036bf79c6674f6f1f0d667c7270674168428ffee..02f9ec09053890a4d41b7dc95644066d6481bbb6 100755
---- a/t/t9835-git-p4-metadata-encoding-python2.sh
-+++ b/t/t9835-git-p4-metadata-encoding-python2.sh
-@@ -14,23 +14,25 @@ python_target_version='2'
- ## SECTION REPEATED IN t9836 ##
- ###############################
+diff --git a/parse-options.h b/parse-options.h
+index f0801d4532a175b65783689f2a68fb56da2c8e87..d01361ca97fd7227a0005b5c447d954fea472ca0 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -353,6 +353,18 @@ struct option {
+ 	.callback = parse_opt_noop_cb, \
+ }
  
--# Please note: this test calls "git-p4.py" rather than "git-p4", because the
--# latter references a specific path so we can't easily force it to run under
--# the python version we need to.
--
--python_major_version=$(python -V 2>&1 | cut -c  8)
--python_target_binary=$(which python$python_target_version)
--if ! test "$python_major_version" = "$python_target_version" && test "$python_target_binary"
-+# These tests are specific to Python 2. Write a custom script that executes
-+# git-p4 directly with the Python 2 interpreter to ensure that we use that
-+# version even if Git was compiled with Python 3.
-+python_target_binary=$(which python2)
-+if test -n "$python_target_binary"
- then
- 	mkdir temp_python
--	PATH="$(pwd)/temp_python:$PATH" && export PATH
--	ln -s $python_target_binary temp_python/python
-+	PATH="$(pwd)/temp_python:$PATH"
-+	export PATH
++static char *parse_options_noop_ignored_value MAYBE_UNUSED;
++#define OPT_NOOP_ARG(s, l) { \
++	.type = OPTION_CALLBACK, \
++	.short_name = (s), \
++	.long_name = (l), \
++	.value = &parse_options_noop_ignored_value, \
++	.argh = "ignored", \
++	.help = N_("no-op (backward compatibility)"), \
++	.flags = PARSE_OPT_HIDDEN, \
++	.callback = parse_opt_noop_cb, \
++}
 +
-+	write_script temp_python/git-p4-python2 <<-EOF
-+	exec "$python_target_binary" "$(git --exec-path)/git-p4" "\$@"
-+	EOF
- fi
- 
--python_major_version=$(python -V 2>&1 | cut -c  8)
--if ! test "$python_major_version" = "$python_target_version"
-+git p4-python2 >err
-+if ! grep 'valid commands' err
- then
--	skip_all="skipping python$python_target_version-specific git p4 tests; python$python_target_version not available"
-+	skip_all="skipping python2 git p4 tests; python2 not available"
- 	test_done
- fi
- 
-@@ -81,14 +83,14 @@ test_expect_success 'init depot' '
- test_expect_success 'clone non-utf8 repo with strict encoding' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	test_must_fail git -c git-p4.metadataDecodingStrategy=strict p4.py clone --dest="$git" //depot@all 2>err &&
-+	test_must_fail git -c git-p4.metadataDecodingStrategy=strict p4-python2 clone --dest="$git" //depot@all 2>err &&
- 	grep "Decoding perforce metadata failed!" err
- '
- 
- test_expect_success 'check utf-8 contents with passthrough strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=passthrough p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=passthrough p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -100,7 +102,7 @@ test_expect_success 'check utf-8 contents with passthrough strategy' '
- test_expect_success 'check latin-1 contents corrupted in git with passthrough strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=passthrough p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=passthrough p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -114,7 +116,7 @@ test_expect_success 'check latin-1 contents corrupted in git with passthrough st
- test_expect_success 'check utf-8 contents with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -126,7 +128,7 @@ test_expect_success 'check utf-8 contents with fallback strategy' '
- test_expect_success 'check latin-1 contents with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -138,7 +140,7 @@ test_expect_success 'check latin-1 contents with fallback strategy' '
- test_expect_success 'check cp-1252 contents with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -150,7 +152,7 @@ test_expect_success 'check cp-1252 contents with fallback strategy' '
- test_expect_success 'check cp850 contents parsed with correct fallback' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback -c git-p4.metadataFallbackEncoding=cp850 p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback -c git-p4.metadataFallbackEncoding=cp850 p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -162,7 +164,7 @@ test_expect_success 'check cp850 contents parsed with correct fallback' '
- test_expect_success 'check cp850-only contents escaped when cp1252 is fallback' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -174,7 +176,7 @@ test_expect_success 'check cp850-only contents escaped when cp1252 is fallback'
- test_expect_success 'check cp-1252 contents on later sync after clone with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$cli" &&
- 		P4USER=cp1252_author &&
-@@ -186,7 +188,7 @@ test_expect_success 'check cp-1252 contents on later sync after clone with fallb
- 	(
- 		cd "$git" &&
- 
--		git p4.py sync --branch=master &&
-+		git p4-python2 sync --branch=master &&
- 
- 		git log p4/master >actual &&
- 		grep "sœme more cp-1252 tæxt" actual &&
-@@ -201,7 +203,7 @@ test_expect_success 'check cp-1252 contents on later sync after clone with fallb
- test_expect_success 'passthrough (latin-1 contents corrupted in git) is the default with python2' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=passthrough p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=passthrough p4-python2 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-diff --git a/t/t9836-git-p4-metadata-encoding-python3.sh b/t/t9836-git-p4-metadata-encoding-python3.sh
-index 63350dc4b5c6262480cd0be8fd88fba714c55428..5e5217a66b4fdb3c7fcf073a50952c7e9009e9fe 100755
---- a/t/t9836-git-p4-metadata-encoding-python3.sh
-+++ b/t/t9836-git-p4-metadata-encoding-python3.sh
-@@ -8,29 +8,29 @@ failing, and produces maximally sane output in git.'
- 
- . ./lib-git-p4.sh
- 
--python_target_version='3'
--
- ###############################
- ## SECTION REPEATED IN t9835 ##
- ###############################
- 
--# Please note: this test calls "git-p4.py" rather than "git-p4", because the
--# latter references a specific path so we can't easily force it to run under
--# the python version we need to.
--
--python_major_version=$(python -V 2>&1 | cut -c  8)
--python_target_binary=$(which python$python_target_version)
--if ! test "$python_major_version" = "$python_target_version" && test "$python_target_binary"
-+# These tests are specific to Python 3. Write a custom script that executes
-+# git-p4 directly with the Python 3 interpreter to ensure that we use that
-+# version even if Git was compiled with Python 2.
-+python_target_binary=$(which python3)
-+if test -n "$python_target_binary"
- then
- 	mkdir temp_python
--	PATH="$(pwd)/temp_python:$PATH" && export PATH
--	ln -s $python_target_binary temp_python/python
-+	PATH="$(pwd)/temp_python:$PATH"
-+	export PATH
-+
-+	write_script temp_python/git-p4-python3 <<-EOF
-+	exec "$python_target_binary" "$(git --exec-path)/git-p4" "\$@"
-+	EOF
- fi
- 
--python_major_version=$(python -V 2>&1 | cut -c  8)
--if ! test "$python_major_version" = "$python_target_version"
-+git p4-python3 >err
-+if ! grep 'valid commands' err
- then
--	skip_all="skipping python$python_target_version-specific git p4 tests; python$python_target_version not available"
-+	skip_all="skipping python3 git p4 tests; python3 not available"
- 	test_done
- fi
- 
-@@ -81,14 +81,14 @@ test_expect_success 'init depot' '
- test_expect_success 'clone non-utf8 repo with strict encoding' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	test_must_fail git -c git-p4.metadataDecodingStrategy=strict p4.py clone --dest="$git" //depot@all 2>err &&
-+	test_must_fail git -c git-p4.metadataDecodingStrategy=strict p4-python3 clone --dest="$git" //depot@all 2>err &&
- 	grep "Decoding perforce metadata failed!" err
- '
- 
- test_expect_success 'check utf-8 contents with passthrough strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=passthrough p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=passthrough p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -100,7 +100,7 @@ test_expect_success 'check utf-8 contents with passthrough strategy' '
- test_expect_success 'check latin-1 contents corrupted in git with passthrough strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=passthrough p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=passthrough p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -114,7 +114,7 @@ test_expect_success 'check latin-1 contents corrupted in git with passthrough st
- test_expect_success 'check utf-8 contents with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -126,7 +126,7 @@ test_expect_success 'check utf-8 contents with fallback strategy' '
- test_expect_success 'check latin-1 contents with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -138,7 +138,7 @@ test_expect_success 'check latin-1 contents with fallback strategy' '
- test_expect_success 'check cp-1252 contents with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -150,7 +150,7 @@ test_expect_success 'check cp-1252 contents with fallback strategy' '
- test_expect_success 'check cp850 contents parsed with correct fallback' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback -c git-p4.metadataFallbackEncoding=cp850 p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback -c git-p4.metadataFallbackEncoding=cp850 p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -162,7 +162,7 @@ test_expect_success 'check cp850 contents parsed with correct fallback' '
- test_expect_success 'check cp850-only contents escaped when cp1252 is fallback' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
-@@ -174,7 +174,7 @@ test_expect_success 'check cp850-only contents escaped when cp1252 is fallback'
- test_expect_success 'check cp-1252 contents on later sync after clone with fallback strategy' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git -c git-p4.metadataDecodingStrategy=fallback p4.py clone --dest="$git" //depot@all &&
-+	git -c git-p4.metadataDecodingStrategy=fallback p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$cli" &&
- 		P4USER=cp1252_author &&
-@@ -186,7 +186,7 @@ test_expect_success 'check cp-1252 contents on later sync after clone with fallb
- 	(
- 		cd "$git" &&
- 
--		git p4.py sync --branch=master &&
-+		git p4-python3 sync --branch=master &&
- 
- 		git log p4/master >actual &&
- 		grep "sœme more cp-1252 tæxt" actual &&
-@@ -202,7 +202,7 @@ test_expect_success 'check cp-1252 contents on later sync after clone with fallb
- test_expect_success 'fallback (both utf-8 and cp-1252 contents handled) is the default with python3' '
- 	test_when_finished cleanup_git &&
- 	test_when_finished remove_user_cache &&
--	git p4.py clone --dest="$git" //depot@all &&
-+	git p4-python3 clone --dest="$git" //depot@all &&
- 	(
- 		cd "$git" &&
- 		git log >actual &&
+ #define OPT_ALIAS(s, l, source_long_name) { \
+ 	.type = OPTION_ALIAS, \
+ 	.short_name = (s), \
+diff --git a/t/unit-tests/unit-test.c b/t/unit-tests/unit-test.c
+index a474cdcfd351d9d624178a769329252237f951b7..fa8818842a42478c7a8fa6f6ecbee0777bdf472f 100644
+--- a/t/unit-tests/unit-test.c
++++ b/t/unit-tests/unit-test.c
+@@ -18,8 +18,25 @@ int cmd_main(int argc, const char **argv)
+ 			 N_("immediately exit upon the first failed test")),
+ 		OPT_STRING_LIST('r', "run", &run_args, N_("suite[::test]"),
+ 				N_("run only test suite or individual test <suite[::test]>")),
+-		OPT_STRING_LIST('x', "exclude", &exclude_args, N_("suite"),
++		OPT_STRING_LIST(0, "exclude", &exclude_args, N_("suite"),
+ 				N_("exclude test suite <suite>")),
++		/*
++		 * Compatibility wrappers so that we don't have to filter
++		 * options understood by integration tests.
++		 */
++		OPT_NOOP_NOARG('d', "debug"),
++		OPT_NOOP_NOARG(0, "github-workflow-markup"),
++		OPT_NOOP_NOARG(0, "no-bin-wrappers"),
++		OPT_NOOP_ARG(0, "root"),
++		OPT_NOOP_ARG(0, "stress"),
++		OPT_NOOP_NOARG(0, "tee"),
++		OPT_NOOP_NOARG(0, "with-dashes"),
++		OPT_NOOP_ARG(0, "valgrind"),
++		OPT_NOOP_ARG(0, "valgrind-only"),
++		OPT_NOOP_NOARG('v', "verbose"),
++		OPT_NOOP_NOARG('V', "verbose-log"),
++		OPT_NOOP_ARG(0, "verbose-only"),
++		OPT_NOOP_NOARG('x', NULL),
+ 		OPT_END(),
+ 	};
+ 	struct strvec args = STRVEC_INIT;
 
 -- 
 2.47.1.447.ga7e8429e30.dirty
