@@ -1,255 +1,143 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B778489
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:13:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08971209660
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733912019; cv=none; b=I7SAWPfR6QL2uYE9Qbw6pTmecTcORPe2lyGtAjGAgTtBpqQlE8jW/76gtFz8B2A9NtdJTTa5WwL+i4sgtEoRh9hI1En/fiUpfI5ezxw539e9UIy0nwKVgLoWOWK1Q4Fi2O3PCtkYrm3fCGiTjT/WngIJ9WlUZzucgLhfw8XIIC8=
+	t=1733912334; cv=none; b=nY4B+SlWuP6Ojp3fNCAKVb3tg6lthGB9b84krmO7luYNDK1X39TJQmB4vPB4rH/nmJM9hG9Py/20tEwmff0PEHo3Lfow3cvg46T2WcqXScItsTGwbhZwaZ4tsGqRqUakb9PuAeu+lfSKQLtCY3sowT7TxX14IBCVLL4Qa4A1oBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733912019; c=relaxed/simple;
-	bh=S7zldBY/0PLOd//BWNd3zyC0VBOiemXPWjEOcIt+UKA=;
+	s=arc-20240116; t=1733912334; c=relaxed/simple;
+	bh=Bzjp6ZEgoe9ghXIc9HbgobQaowD8nBbOBj4aQednpr8=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uS0mRl4RQN4xuVMX0tcMprGTeMFJkGUqQjk2AqykNHSg+sCJ3mMWpyPr/wXqUZwmj98AfuLRYnpCgU5yvd+lEvCbKYBNwuJwPAWWLJoY9WPg3yBYJE4o/FOuGB2GB4hYwJXTvIZpJp3Ibzqs4FthuvdrKqYAnZ+ISTFK3hnFzPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Db9IpLcZ; arc=none smtp.client-ip=209.85.221.182
+	 To:Cc:Content-Type; b=VlB0Ongv/EquQfgy24HlUecHgXKLf0qVsnCauW8NY9b+6yRliYonb1YsfEjo6mHe60ITQH7NpcCHu29kJtd4/qHcF/CbsrRummFcBkVOeRMOeAZagOPsj3HK69D4H9fZmMf4f3PoL584qayJgQQH1fICCHS6NR3qIwIkS6JqOMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHbhMIcJ; arc=none smtp.client-ip=209.85.222.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Db9IpLcZ"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5174f9c0e63so970355e0c.1
-        for <git@vger.kernel.org>; Wed, 11 Dec 2024 02:13:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHbhMIcJ"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-85ba8b1c7b9so351080241.1
+        for <git@vger.kernel.org>; Wed, 11 Dec 2024 02:18:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733912016; x=1734516816; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1733912332; x=1734517132; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OPuT3PXAstQ2B13z+gK3zXIcZKRTO6pOcGFxWa+a+Kg=;
-        b=Db9IpLcZDCQq4jnRI7yvD0mjx1GCYxfnJz0bqh5/GcLYB9PbJ3WYz1w4jRJ2pOm5y9
-         3cWW07kCB8+3v+584zoS1wqfnXNFoi3omKJLJGyDF8WyKBm8SBvLYhRAus1C+StD/h5G
-         hDeR4y2V1ECj6QH70MD+ZBcCxsAX8QWa5PpvFhkBgrnh2JREquqd3R3PYnnOqcftB93r
-         uTm9Nb6R9x2666w1WHbqlb1TILQH/LYe63xmflwyw0cIOYaXh3SiVdGeL3OM+B0U3YB4
-         bBzXJ3ROwUeolguTYabdf/t9jBxy5EcXww0dRISdh1MoZFaN7hl9m25fYP9+/CXT5yJb
-         i/eQ==
+        bh=pP+F2O1hHGmXHR0IYb87ECaoCStdpwSw6k6opqSIg9A=;
+        b=SHbhMIcJEyYJmpGAQFzYiLle/VoUms2keHH3mvh51OALRPWy7AeniCX/Frrha+a/uB
+         3HHureefPJbY1OzhLLUTvhFZfrl0dushD/vrJzcvivXOndVZe2fMTb7KPKhEPYBXx8Xg
+         eFezwFQfvD/RAdZBmc2TnDr6un8lJxSBbwL1A2/OAUdXtYqgF1bR/QTq6aFgjAW8L5kM
+         fEJZgWY+KYehYg9rHfpkudGAKGFVptITy4I3M0IKmjr5etmwrjpv155fpHqNkCiZIih5
+         8KU2G+xtSgD3NFkXmvfHyJLUyqOMS9whEF6joSFLsObnX6D+RtHQQ6QBLo5SuqdbccZW
+         E5nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733912016; x=1734516816;
+        d=1e100.net; s=20230601; t=1733912332; x=1734517132;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OPuT3PXAstQ2B13z+gK3zXIcZKRTO6pOcGFxWa+a+Kg=;
-        b=QqNqwNO9pqChjrUgZ+dPSg297LZZx3RGMltcvFu7VWF0yUt2m5lstj0V3uELMftAP5
-         24b2o1vkq76RwD8Ker6vA9u0h81ZLQjFWHoqKIxeC0kkqjBZwwpUqPsX/D8Yhrp2DzdO
-         8FIxiDaDCxyWjTJ411psYE40oLN2oviYMUbZteQdNd+WvZxt/JijrYgDzh6YErOyy+oq
-         FVaSLhaF2gLW8hiAOYZdhHnPtBGV2gpVOYFYYFsjuqsEP7N54kBU9wQL8FR666wbFs4T
-         poAovd8oVetRA6DZ4g6qwu0azHJYPpKefGkevUhp1Du/JE+ANpfsziqgN1YZBMCb+25k
-         vuxA==
-X-Gm-Message-State: AOJu0YwTVRZxmrCbbol2TnWQqGgKP2ulhaOxmfH2o4q6dWAQdjZZ3S4A
-	ogaz6NcFaLDgbPGH1epD9F5G3LSryW5aHst7mJzgKZCNLuZ3zOQAauu2cUcPm7Dr2hbDFaqas7j
-	EIYJEexJbd8NMC7okKtx8CnzswVlCuXrD
-X-Gm-Gg: ASbGncsfTJscyFE2KC8zRz3geEadmfD+46iKwfJmoAclH3a6tcpkMZ0r+q3cKhEyEHb
-	cfimWqoOjumKfrqR3im4+5KNc+eB8aSrmobddKrCHsMRU/nbOXoD3Ncl9hrBuAfTmY4tUqg==
-X-Google-Smtp-Source: AGHT+IGwDS/WAYBFozURtedIwfi7h5Nf+dVcHxOMeESQZh59mcEfhVhRjNJLXsyKneSW4HORlO0dF9ANlYReNsBAr9w=
-X-Received: by 2002:a05:6102:e13:b0:4b1:1a11:16e0 with SMTP id
- ada2fe7eead31-4b1291b2319mr1851195137.27.1733912016297; Wed, 11 Dec 2024
- 02:13:36 -0800 (PST)
+        bh=pP+F2O1hHGmXHR0IYb87ECaoCStdpwSw6k6opqSIg9A=;
+        b=N867x7ib1h/VyuRBoiB76PSPkfYVjCFFG068i03vyYp2mMhwukBU8ZQ442KVsJvYrN
+         TtwjYNK+3hxHF2NKFzekIMMEZeODJ6dPuOjBKDB1BCWw19m+8mr/XnVV9svEdV1Kj1tc
+         puKdZZTKmNGYjJZOYEZ8AmnDCuM2eP5YqBoBE4FVwUzzCc0JCl8tX5Yu39C/+1HN7Pzc
+         4JoozBQzu54yZLL3W4xzQ1VqQkszoAioTqRPlDUK1myLtBlCrItpCnNLlbkIBMlH/FLl
+         I9VhFPCuViXkvB177uffgsx7eeQoICOIiYCngJ3EuVHldgKgjwk2xa9AXTiALoIpPjLT
+         rVnQ==
+X-Gm-Message-State: AOJu0YyH9bzfJiQKCsDCvbXcwt38r2FwtewrXN1/mAFuU1iMXUfMTkIh
+	3Wj6mOunRruuCHz8Co56RUr4kTf3fKkbns/+da2/fwp6YfP6e7rxh2Ou5TYBEizyq28wUfyNMdt
+	ggToGRz+rrPw8+KWtgGdkuCr7OCiZXSL5
+X-Gm-Gg: ASbGncvdu7T+As/Qj6P2oju+X30HjQGLwN4gz7YDKv/NPTwgeG4nrpPgMof3SfN+mxm
+	PPw7QIQ2626FsqdKZ8Rr8gcGz3M2msCp7f4ceKrqpQBaH7mFQbcqT1SJofxnaSK/ZZX73qw==
+X-Google-Smtp-Source: AGHT+IFFrs/mePiHQV2pI1MCH75mAQV9+apH6ENSDoWxWMRQhw2aj7ELFYKl/WJ4n9WnThkpua+C8yZZX8KrnWeYdcQ=
+X-Received: by 2002:a05:6102:5087:b0:4af:ef82:ce8d with SMTP id
+ ada2fe7eead31-4b1ba223422mr1266954137.0.1733912331844; Wed, 11 Dec 2024
+ 02:18:51 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Dec 2024 02:13:35 -0800
+ HTTPREST; Wed, 11 Dec 2024 04:18:51 -0600
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD3FXtbuHH1G==rR00_O7MBjqQiw_qzGHPVLK4P13RRtjQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0UAWib-GceEQi+ZzbosRcvSRbq-DuMLVVr9xuf8C03ow@mail.gmail.com>
 References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-1-d4bc37ee860f@gmail.com> <CAP8UFD3FXtbuHH1G==rR00_O7MBjqQiw_qzGHPVLK4P13RRtjQ@mail.gmail.com>
+ <20241209-320-git-refs-migrate-reflogs-v1-3-d4bc37ee860f@gmail.com> <CAP8UFD0UAWib-GceEQi+ZzbosRcvSRbq-DuMLVVr9xuf8C03ow@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 11 Dec 2024 02:13:35 -0800
-Message-ID: <CAOLa=ZRL0P4V11Eq3RYN2gPurCwgDUez4muH3+2yZoBvNNm0Xg@mail.gmail.com>
-Subject: Re: [PATCH 1/7] refs: include committer info in `ref_update` struct
+Date: Wed, 11 Dec 2024 04:18:51 -0600
+Message-ID: <CAOLa=ZRuuS_TW=BPeC36eWfgcYegT5hVKd+pVLG6TDMMjJ7tsg@mail.gmail.com>
+Subject: Re: [PATCH 3/7] refs/files: add count field to ref_lock
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, toon@iotcl.com, 
 	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000cdc44f0628fbd9ed"
+Content-Type: multipart/mixed; boundary="0000000000009cca500628fbec54"
 
---000000000000cdc44f0628fbd9ed
+--0000000000009cca500628fbec54
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> On Mon, Dec 9, 2024 at 12:10=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
+> On Mon, Dec 9, 2024 at 12:11=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
 com> wrote:
->
->
->> If there is no `committer_info`
->> provided, the reference backends default to using
->> `git_committer_info(0)`. The field itself cannot be set to
->> `git_committer_info(0)` since the values are dynamic and must be
->> obtained right when the reflog is being committed.
->
->
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 64f51f0da905a9a8a1ac4109c6b0a9a85a355db7..13f8539e6caa923cd4834775=
-fcb0cd7f90d82014 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -1858,6 +1858,9 @@ static int log_ref_write_fd(int fd, const struct o=
-bject_id *old_oid,
->>         struct strbuf sb =3D STRBUF_INIT;
->>         int ret =3D 0;
 >>
->> +       if (!committer)
->> +               committer =3D git_committer_info(0);
->
-> It looks like this is where we obtain the value "right when the reflog
-> is being committed".
->
->> +
->>         strbuf_addf(&sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new=
-_oid), committer);
->>         if (msg && *msg) {
->>                 strbuf_addch(&sb, '\t');
->> @@ -1871,8 +1874,10 @@ static int log_ref_write_fd(int fd, const struct =
-object_id *old_oid,
->>  }
+>> When refs are updated in the files-backend, a lock is obtained for the
+>> corresponding file path. This is the case even for reflogs, i.e. a lock
+>> is obtained on the reference path instead of the reflog path. This
+>> works, since generally, reflogs are updated alongside the ref.
 >>
->>  static int files_log_ref_write(struct files_ref_store *refs,
->> -                              const char *refname, const struct object_=
-id *old_oid,
->> -                              const struct object_id *new_oid, const ch=
-ar *msg,
->> +                              const char *refname,
->> +                              const struct object_id *old_oid,
->> +                              const struct object_id *new_oid,
->> +                              const char *committer_info, const char *m=
-sg,
->>                                int flags, struct strbuf *err)
->>  {
->>         int logfd, result;
->> @@ -1889,8 +1894,7 @@ static int files_log_ref_write(struct files_ref_st=
-ore *refs,
->>
->>         if (logfd < 0)
->>                 return 0;
->> -       result =3D log_ref_write_fd(logfd, old_oid, new_oid,
->> -                                 git_committer_info(0), msg);
->> +       result =3D log_ref_write_fd(logfd, old_oid, new_oid, committer_i=
-nfo, msg);
+>> The upcoming patches will add support for reflog updates in ref
+>> transaction. This means, in a particular transaction we want to have ref
+>> updates and reflog updates. For refs, in a given transaction there can
+>> only be one update. But, we can theoretically have multiple reflog
+>> updates in a given transaction.
 >
-> Here we just pass the committer_info to the above function.
->
->>         if (result) {
->>                 struct strbuf sb =3D STRBUF_INIT;
->>                 int save_errno =3D errno;
->> @@ -1974,8 +1978,7 @@ static int commit_ref_update(struct files_ref_stor=
-e *refs,
->>         files_assert_main_repository(refs, "commit_ref_update");
->>
->>         clear_loose_ref_cache(refs);
->> -       if (files_log_ref_write(refs, lock->ref_name,
->> -                               &lock->old_oid, oid,
->> +       if (files_log_ref_write(refs, lock->ref_name, &lock->old_oid, oi=
-d, NULL,
->>                                 logmsg, flags, err)) {
->
-> Here we don't have the info so we pass NULL.
->
->>                 char *old_msg =3D strbuf_detach(err, NULL);
->>                 strbuf_addf(err, "cannot update the ref '%s': %s",
->> @@ -2007,8 +2010,8 @@ static int commit_ref_update(struct files_ref_stor=
-e *refs,
->>                 if (head_ref && (head_flag & REF_ISSYMREF) &&
->>                     !strcmp(head_ref, lock->ref_name)) {
->>                         struct strbuf log_err =3D STRBUF_INIT;
->> -                       if (files_log_ref_write(refs, "HEAD",
->> -                                               &lock->old_oid, oid,
->> +                       if (files_log_ref_write(refs, "HEAD", &lock->old=
-_oid,
->> +                                               oid, git_committer_info(=
-0),
->
-> Here we don't have the info either, so I think we should also pass
-> NULL. It would then be computed "right when the reflog is being
-> committed" in the above function. No?
+> Nit: Giving an example might help understand where multiple reflog
+> updates can happen in a given transaction. Alternatively pointing to
+> an existing doc that contains such an example or explanations might
+> help too.
 >
 
-Indeed, passing NULL should be sufficient here, good catch.
+The use-case is added in the series. I've added a note about how this is
+needed in reflog migration.
 
->>                                                 logmsg, flags, &log_err)=
-) {
->>                                 error("%s", log_err.buf);
->>                                 strbuf_release(&log_err);
->
->
->> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->> index 647ef9b05b1dc9a376ed054330b487f7595c5caa..e882602487c66261d586a941=
-01bb1b4e9a2ed60e 100644
->> --- a/refs/reftable-backend.c
->> +++ b/refs/reftable-backend.c
->> @@ -1379,11 +1379,21 @@ static int write_transaction_table(struct reftab=
-le_writer *writer, void *cb_data
->
-> It is not your fault but write_transaction_table() does the following
-> right at the beginning of the function:
->
->        committer_info =3D git_committer_info(0);
->        if (split_ident_line(&committer_ident, committer_info,
-> strlen(committer_info)))
->                BUG("failed splitting committer info");
->
-> but then 'committer_ident' is only used in the hunk you are changing:
->
->>                         if (create_reflog) {
->> +                               struct ident_split c;
->> +
->>                                 ALLOC_GROW(logs, logs_nr + 1, logs_alloc=
-);
->>                                 log =3D &logs[logs_nr++];
->>                                 memset(log, 0, sizeof(*log));
+>> @@ -2572,18 +2588,25 @@ static int lock_ref_for_update(struct files_ref_=
+store *refs,
+>>                         goto out;
+>>         }
 >>
->> -                               fill_reftable_log_record(log, &committer=
-_ident);
->> +                               if (u->committer_info) {
->> +                                       if (split_ident_line(&c, u->comm=
-itter_info,
->> +                                                            strlen(u->c=
-ommitter_info)))
->> +                                               BUG("failed splitting co=
-mmitter info");
->> +                               } else {
+>> -       ret =3D lock_raw_ref(refs, update->refname, mustexist,
+>> -                          affected_refnames,
+>> -                          &lock, &referent,
+>> -                          &update->type, err);
+>> -       if (ret) {
+>> -               char *reason;
+>> +       lock =3D strmap_get(&backend_data->ref_locks, update->refname);
+>> +       if (lock) {
+>> +               lock->count =3D lock->count + 1;
 >
-> I would think it would be more efficient to only compute
-> 'committer_ident' here, right before we use it if needed. Or is there
-> something I am missing?
+> Nit:
+>               lock->count++;
 >
 
-It would if there wasn't a loop. Since we loop over multiple updates,
-computing committer_ident for each would end up being expensive. So it
-is done before the loop starts.
+Will fix, thanks.
 
->> +                                       c =3D committer_ident;
->> +                               }
->> +
->> +                               fill_reftable_log_record(log, &c);
->>                                 log->update_index =3D ts;
->>                                 log->refname =3D xstrdup(u->refname);
->>                                 memcpy(log->value.update.new_hash,
+[snip]
 
---000000000000cdc44f0628fbd9ed
+--0000000000009cca500628fbec54
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 9df77e7b8f4ea73_0.1
+X-Attachment-Id: b0bff164c675f0fc_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kWlpjNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mem84REFDSGxFMzI0SFlPQnFnYjBtakJ3dlFkZEc0dAphVDVMQmRPTEEz
-NEZvSHNUY2ozMlYzcDJCL3kxb1ZNQ3JiRUUxQTdCb093dmI2VmtjLzlIdWtKcTFQTVlVTnFKCjhF
-OE5KRHJnTlduNjlLL1NNUU0vcDBseEt4Ui9jKzlrcU9UUllWNVB1eWxDN0czWmtWTEhURnRmWVdM
-U1hnbTcKWGcyM2Y0K0hySVRMeGJnTXlMZjNwTE1UaElEWFY4YjNteFh0N3l4dzNTMVlXZDR2TVRB
-RU12ZklrSUpOSXNrZgpxc1J4RXFPcG9WbTNkYUdXWGl5alJlQ2JSMnp0ak1EQWN2NUFlZnl1UDNJ
-WUw4SXJOWVVmM1pyYXVDYUFHclNvCkV5TXlwbWFxcEhyNHJVRU9kSjN4VzMrdTNwZHZETmM1S2U3
-OUtjM3dxekh2bTN0L1prM3NqNUxOY0pZR2MrYWIKMVJ2eGdUK2VQVmU1QTNaRWtTeE9IdVFjV21p
-aGl2Zkd2dEhWOGF5bzlodGNsTG9HSGRPVXIrWjFRL0d1TkhMbAppa1N6ak5ncG9NVjlRZDZhUGMw
-OVZIM3RGR2U2ZEpyUHNLcmVJdmRDV0dYbTRMeTBORkt3cHdkOWNjcHYvZTZGCjBaTE1HTUg5U0Ra
-dHFIRWViT0JqRldFdDBPV3RnZ1hENXNBeEl5RT0KPUg3RTYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kWlp3a1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM0tkREFDTnhRLzlnRzlZWnQzZERKbkhERWdHQ2p6SQpyWEI5Y3I3U0VJ
+RVBnOTR5R25jb2UyVDVHYXhhdmE5a2NJQStOQ2RuN2c4b3ZyNnhjZFdnN3puQnUrL0EwWk16CmhZ
+TjgxTEk5WnQ0endxZFlDSkoraEdBcjBIRDJ6bFZTbStrYVhNSDhxMXlmNFNZWGxnQjlaNURFdncx
+cjdkcHAKL2cvQkpaRVZVZ21YTGorRit5aVY2QlpLbFhjMTRJZSt0cnhNOWZ5TWtRWmQxNGhlTGk5
+anZWdS9aYTZ0WXBFNAp6ZytuVEowMGlmYjlKMFRRL2s5SnltY2xxRmRnRXN1c29HWjVkZlhnaDlS
+M1NmWFcwZEZ3QmxtTGR0a0dYK0JkCm9BZnUrbXN4ZXJEbStRenhWZC9rQi9VQjlpVW5STFlXTjVS
+N2doaDJTSzVpTGNOZjY5RWZXSkdYdGtSWm5mTEcKTGMrZitXZ2pCMU9paWc0dGJLTFBFakFjMXJs
+bmYwTzhaV25COWpDYmpFV3A4dFJBbmwwZHRMS2IxMTFvdkwxUApQNGFuQ1dycEVaZ3BYbEdvQUJM
+RzdOMkVzU3lxeS9xMWxKMnBjY0ZjdTNNZkxaWlMzTUk4T05NVHh0blZoRjdPCm5TMUZWUmEzS1hW
+NTErbzVPN3Bad0hIRjduOFNNNUwxTjBsVlJBWT0KPUVSTUoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000cdc44f0628fbd9ed--
+--0000000000009cca500628fbec54--
