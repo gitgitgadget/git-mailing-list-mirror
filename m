@@ -1,55 +1,55 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527281FF1A1
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6026C208984
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:56:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733914619; cv=none; b=FgfSsuUFYABB7sJQh3XQ8aB0NNDW8szh8W1BhpAlpjh/0veqz9DU+yNykOqeclzS2gJ7xQyqFuGdMYKaEVkEJigrWCdUSq9KahsAgrALCfVrPwz+zvl1ZqoAtYQFkxr+VYeOBSMmz8k6O7bYHzqsRNGF04ZCuRX7SchKuo0uiwU=
+	t=1733914620; cv=none; b=FgqnoxKUzFkYLy1oLGYcF1gjliutwNTDcH7QxGntol8bVaioLtGfmaUtlQIOTmD9aipobjbmHmO4IunbqzydynAlb3QK9Y4u0eUnyT0hEfVmuKywCNfccJELjfSf6SCEmURtwIMUcmPOO5VH7qF9diaaWBNsqWNQwVGfeAKr1NA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733914619; c=relaxed/simple;
-	bh=eSUUVELttzcc7mCCmJ3L2/P4Ppgz7+1Lgt6VfuiyWrQ=;
+	s=arc-20240116; t=1733914620; c=relaxed/simple;
+	bh=4f69HuToOJlL9G9JHjhB5PBNqibdx5o7Luvuepza/RE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sRMgAixFYIw0YvOz4m/Y256c4e7cX9mmSOFn/SvHlqwAfIa8hxEmy+uZ7HxQkise2ib49a0YteaeN4kMSycwxV7MIBNCc/OtLQRvNtsnM8/9g3F8Rb/C06Bb/qkU1E/uaPdGv9xLaldNuVC4d91tbV6dJCo13WHQAk5403yAlpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BKtOM9WE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a9gscX+D; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=T+8+Xyd1c4yFlmSWt0K7iUEXB9bah5RAWIS7bUBCBTW0vUbp63KNJ5sj4C2kGELE5kHkvHxOmofP8bqV/V1ahS+XddpKh+qnhlZMW4vEsDbYWfzHxGeg+TC4mgHElmXV8dI+3opuz9VVdYbpD/km9Axg1wXb3RC8PzhzyAwtzMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=opWeHwPt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VMTFKxiG; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BKtOM9WE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a9gscX+D"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2E7CD114027A
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="opWeHwPt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VMTFKxiG"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4A04C2540267
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:57 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 11 Dec 2024 05:56:56 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 11 Dec 2024 05:56:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733914616;
-	 x=1734001016; bh=NDvg+T+gkNggBLVtUWHwWZ64GfdzPSEloZCUypHt1Es=; b=
-	BKtOM9WE4Xp4zx4/HBv5JEW6mSgF9tBLQWKCNYbp7e5S1ZhaM2KzqQK0O+o1H9nk
-	R5nupiNf4Y5WGd4bYuV/B0u/ZebGt1ggBpi/T6gK//XwqMyIsDu9//EL0KOQ+z12
-	m5RRLtw4RZb9QgoOfQNgwmdwVHEeg6wxKPvUNIQjdp3xYwy83Fln8KSqcQwCNZiv
-	CyCUb/mNwhxk957mReDnvI16SsXqzOsIBCUvR3X4uYIfI3LmWphbeRY+/MpXuFOQ
-	+gYErA3Aofz2eIDj7NfTtWmwqSXb1SvY2Equ4Lteg6ssGKWMKshDPGYsYmttrIbn
-	uNH+3irNQJXDKDoj8Ca2cQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733914617;
+	 x=1734001017; bh=yo9rPYSZk2gm83u5Ipt8nqXMKkyPAr7TXzfep/ZnSDM=; b=
+	opWeHwPt6FpjO9IHwkh+f6RM9h5YKuHQkV8QJGB/MUd2aBmG4p2ZphuPnQhCTnI6
+	nIjydPGW3rkIdj9FPfEQ29hzOPMJ4FLCkueSTSa/RJZTfFFoQaYP92xSoq+Z58i6
+	I4pMy0bCGBo4bWSIA1/N7M+Zt636jAnUd7FOZ+TVSaynX73jCSVfuaCZIuzsAvLz
+	+6r42CPg6q9fM/PRGqGpHYc20edRzahKcVT3uudjRRLMqhOB11QhQydqHqyGcQk0
+	pM3t7Kof2uimUcUIhiO0g9oZgbPkFQyJD05HPdw3FOu73hcSeVyh6H0nIRDJfMpL
+	Y90ezA3GJF724mnxT/4ewg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733914616; x=
-	1734001016; bh=NDvg+T+gkNggBLVtUWHwWZ64GfdzPSEloZCUypHt1Es=; b=a
-	9gscX+Dxyzr+tlLunhHU5l4EK3LZAziRFpqfTMZmjtbqjxBeX7r/HnUwFT0tk6+v
-	rAtgwybGWRKw/sSDqiW9g33fL3cSGdT0tGLHkI2buvyPSHFTjcXmwTjO/gVNCJDE
-	68WOr2N9If99XyGYUIm/LYb7Ys1/z2wPPvTm7wuZjnXnnuZmOgPoLoneZuwMAGLs
-	gqzVOxAF8FK4VZwd+yadBG60rmhGYUePncteD2Ie/VBB7u+mGGA3RgIViSZFuPBA
-	qdY6lHM97wrzMAfxQV2dHPM+hjRO0qDYbJ4b2Mdga8AhIwkCi0s0WdMIbPS8fC2S
-	qDv7K9XqnqsbDE0YQbYpg==
-X-ME-Sender: <xms:929ZZ2wwwzd2Ly9xv5r9huF_4-OYnZGpdg3bM6DBRzTeNy10xSGosw>
-    <xme:929ZZyTCIq_o0w8HaOKyrou-3LxnE31V58dlfehSgA4DpeATmBCli2yhIamEISESE
-    E3A9N5n9QLQid-qYg>
-X-ME-Received: <xmr:929ZZ4VZyfTtqKHO5aGyjkCttdY-AwCccxbfl-dZS5vkqUYcQMClq5wwhls0XuSaGAu6hfKoKZI2qzTZS8thvGbJapYZ8L9iqW0dvUjVFdgbFw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733914617; x=
+	1734001017; bh=yo9rPYSZk2gm83u5Ipt8nqXMKkyPAr7TXzfep/ZnSDM=; b=V
+	MTFKxiG+2w8hqw6W8xFWFgnqLZR4pfUPqPT6+wTPh9g6F6Koc1/N6CwhZD/zv1tS
+	wgDz5PBUTQDvtetGHOXDnlPv5ghKMI8LHKVXDY6McSanF/3QeNSYlWTsB7YwpZ9v
+	9SPsaexk18nFO/mEpkH2oVlTsbBXgUOtCc6Cfwl7rXIU/Xk7WKvEx0FvKvWby3eP
+	V8eFKxUhRudRk3nAXKbuFZwu5W++WxC40LmZQKPXAcHokewfZvWdCfqScvSB8rQC
+	TYtqwBrTiN4qN10jCVWmOfS1QjIhPZDIcKWd8D4qQpr6F0/ZFXrlI+omjmG5ICl9
+	BAEd11LUYZHMe+B9kXF7Q==
+X-ME-Sender: <xms:-W9ZZzjV8wnnTMeeIb4fn87wC4eJgm-9MB7qj2FGk9yXYouws6AZCA>
+    <xme:-W9ZZwA1-LWMkJfDKnuIInXjdbQzHjLhGX2DSiMmvDT-Vy9ruLAGWEi3x8DnMn_Gh
+    HJGDjCwjZbpO9UrQw>
+X-ME-Received: <xmr:-W9ZZzHprE2gYn8VBO7dyO6CDn4-7XnWNjCrHBgco_XzljRVdeVvOfk9ZONNf9twQTcCNt9F93cHtH7hMM_9V9RbuWCkfgNqHB7i13I-IdFDhQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddvvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddvvdcutefuodetggdote
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:929ZZ8gHqEE2l6VWTPyhrEWZk2sc_I_bxWkgG8VFVzO2U8QJ9TbaMg>
-    <xmx:929ZZ4DELMRvfZQOHpGeZ96n8sXZC6G85zyf6ukf4nD9OnQT_dCP0w>
-    <xmx:929ZZ9JGgWZaBpy0gwI4yeRj2i9LhNt0x96e7RtxIW6sTw651gbysg>
-    <xmx:929ZZ_Bk4aIJm2ywqWAgiGCEv-Qj5iiUlJMtnZu68CLftG_UHtkRPg>
-    <xmx:-G9ZZx5EvUYx6yCP9ly3U0xhWdiiasqmzvTK0vYWBxtVDaUbilQCvc5M>
+X-ME-Proxy: <xmx:-W9ZZwS8MCiDhwXZgJn_Zi0ovLXCdz1zsGUBvopmNXn1k9V59J2a1w>
+    <xmx:-W9ZZwxqn-3nCIppzmxKEe12QViFlKPXB-v8jBSfR-f-_h1gM5cjSA>
+    <xmx:-W9ZZ26LHRKfDpMFOSLEJ98cTtfuvxyA62ekZ5dtUq9ca8-g4o2u8w>
+    <xmx:-W9ZZ1zD3qEF91OW4gRs7knUky0JHKQdmBfPnytll075QOROng4fQg>
+    <xmx:-W9ZZ9rD-TYXCb176BGPsoGqmHZQeJtArziYDGQrRkGvTBDdYOUqMAUo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:55 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:56 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8117cc1d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id ca0b630e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 11 Dec 2024 10:55:19 +0000 (UTC)
+	Wed, 11 Dec 2024 10:55:20 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 11 Dec 2024 11:56:38 +0100
-Subject: [PATCH 2/5] ci: merge linux-gcc-default into linux-gcc
+Date: Wed, 11 Dec 2024 11:56:39 +0100
+Subject: [PATCH 3/5] ci: repurpose "linux-gcc" job for deprecations
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,95 +82,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241211-pks-remote-branches-deprecation-v1-2-1431e2369135@pks.im>
+Message-Id: <20241211-pks-remote-branches-deprecation-v1-3-1431e2369135@pks.im>
 References: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
 In-Reply-To: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The "linux-gcc-default" job is mostly doing the same as the "linux-gcc"
-job, except for a couple of minor differences:
+The "linux-gcc" job isn't all that interesting by itself and can be
+considered more or less the "standard" job: it is running with a
+reasonably up-to-date image and uses GCC as a compiler, both of which we
+already cover in other jobs.
 
-  - We use an explicit GCC version instead of the default version
-    provided by the distribution. We have other jobs that test with
-    "gcc-8", making this distinction pointless.
+There is one exception though: we change the default branch to be "main"
+instead of "master", so it is forging ahead a bit into the future to
+make sure that this change does not cause havoc. So let's expand on this
+a bit and also add the new "WITH_BREAKING_CHANGES" flag to the mix.
 
-  - We don't set up the Python version explicitly, and instead use the
-    default Python version. Python 2 has been end-of-life for quite a
-    while now though, making this distinction less interesting.
-
-  - We set up the default branch name to be "main" in "linux-gcc". We
-    have other testcases that don't and also some that explicitly use
-    "master".
-
-So overall, the job does not add much to our test coverage. Merge it
-into our "linux-gcc" job to reduce our test matrix a bit.
+Rename the job to "linux-breaking-changes" accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 4 ----
- .gitlab-ci.yml             | 4 ----
- ci/lib.sh                  | 5 -----
- 3 files changed, 13 deletions(-)
+ .github/workflows/main.yml | 2 +-
+ .gitlab-ci.yml             | 2 +-
+ ci/run-build-and-tests.sh  | 3 ++-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 808ddc19b8a799abc414c6d6ba078a6e5be6bdfb..32d35d2257812f02121b20c3cae342d626481553 100644
+index 32d35d2257812f02121b20c3cae342d626481553..46b96fb96cc6e2659fe0b4b640f7e671587d059a 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -271,7 +271,6 @@ jobs:
+@@ -269,7 +269,7 @@ jobs:
+           - jobname: linux-reftable
+             cc: clang
              pool: ubuntu-latest
-           - jobname: linux-gcc
+-          - jobname: linux-gcc
++          - jobname: linux-breaking-changes
              cc: gcc
--            cc_package: gcc-8
              pool: ubuntu-20.04
            - jobname: linux-TEST-vars
-             cc: gcc
-@@ -286,9 +285,6 @@ jobs:
-           - jobname: osx-gcc
-             cc: gcc-13
-             pool: macos-13
--          - jobname: linux-gcc-default
--            cc: gcc
--            pool: ubuntu-latest
-           - jobname: linux-leaks
-             cc: gcc
-             pool: ubuntu-latest
 diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index a1bc92893f27d6dd404133686b71c8061e55618c..b86bb0bdb3363e06e6fe4195c34babd67cf7e8cc 100644
+index b86bb0bdb3363e06e6fe4195c34babd67cf7e8cc..492e5d9082dbdb3389c173f2b5a45fe43f4bea41 100644
 --- a/.gitlab-ci.yml
 +++ b/.gitlab-ci.yml
-@@ -46,14 +46,10 @@ test:linux:
-       - jobname: linux-gcc
-         image: ubuntu:20.04
-         CC: gcc
--        CC_PACKAGE: gcc-8
-       - jobname: linux-TEST-vars
-         image: ubuntu:20.04
-         CC: gcc
-         CC_PACKAGE: gcc-8
--      - jobname: linux-gcc-default
--        image: ubuntu:latest
--        CC: gcc
-       - jobname: linux-leaks
+@@ -43,7 +43,7 @@ test:linux:
+       - jobname: linux-reftable
          image: ubuntu:latest
+         CC: clang
+-      - jobname: linux-gcc
++      - jobname: linux-breaking-changes
+         image: ubuntu:20.04
          CC: gcc
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 930f98d7228166c37c236beb062b14675fb68ef3..e67c481d4fe08d0ebc3253a7a832a96f65c79ffe 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -328,11 +328,6 @@ export SKIP_DASHED_BUILT_INS=YesPlease
+       - jobname: linux-TEST-vars
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 2e28d02b20f2469afddc4e04fdbd18465babb1ef..2ccd812fb4e025be3b8e9ab2ec6ae44e92944ab0 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -13,8 +13,9 @@ esac
+ run_tests=t
  
- case "$distro" in
- ubuntu-*)
--	if test "$jobname" = "linux-gcc-default"
--	then
--		break
--	fi
--
- 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
- 	# have it anymore. We thus only test with Python 2 on older LTS
- 	# releases.
+ case "$jobname" in
+-linux-gcc)
++linux-breaking-changes)
+ 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++	export WITH_BREAKING_CHANGES=YesPlease
+ 	;;
+ linux-TEST-vars)
+ 	export GIT_TEST_SPLIT_INDEX=yes
 
 -- 
 2.47.1.447.ga7e8429e30.dirty
