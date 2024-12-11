@@ -1,128 +1,73 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C1D24634C
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 15:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3689D1D14FA
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 15:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733929678; cv=none; b=PmDsn0806+FC/qI14BHjaKZqZ3cslKw6ZDKo/5iNYtoDTybuJjU61UBt7bVq7aLOAxneV1PZXmXWybr1Pxc/qBde9GUM2EjsXL1i68eAmj4a+VBa40HXXNCE2Ez6qxwAkqwJPID6L2z+7Qt/UY1Nh5x1BeT8ygd159WyI9eVBLY=
+	t=1733931142; cv=none; b=obHf7ZmGEmFe35cRZkPqJQvtNBWsw9zoOlWazK0RH3xycK3V1Plt/GM8oCWkIKx4jJ5PBbNpZiYKJLDC0TtNZ42XN0rSwu5KZcaLaXsOPBLGzhU4Hhn2BfvrGlcOfjbINedZphGzpKiMBmwYMIg6Dl0XyDuBbbDwTa8NBPgdlcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733929678; c=relaxed/simple;
-	bh=rBZZwy3FO8gTyq+wXExMjw3ncFa0QecmqzQ1HljzMh4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OckXqJ2DL3aqhGfs1yytz6oDgV0SlJY8j5KkF0IbttS/G9qvwITpkByD+2vuePP3voPaAxXgpF8d4ZxpJVqul3RtX1f89L37KL7IgQZHyDPk4tSzbRJrWrQeSGpaReg636N4Bju6fAaARbaeLdqemqbRT+Q1FXD1tv5UcdOXatI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NteIxtxR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lb7e/Ydf; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733931142; c=relaxed/simple;
+	bh=J3FzQ/JckLt7RjVRrsQ4sfLiJu0hXRyB7ohUtIdbYMY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=l7LY9FzYBozDxEk71rxE+RYN+Sve7B7nOu57omcrVUuuj7K/xsvmMbKfBTQ18Sa9n133Ui3AVTfmVuEeDjeCcRPrlpNag0NWGyse5zuj0JHpUh0YaVOtdK9bf3tjFxZkafrAVn56OxOH34xpkDNN3j8uvM7dlSBwBcgURf1mW+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dOCPVfrW; arc=none smtp.client-ip=209.85.128.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NteIxtxR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lb7e/Ydf"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 985281383C87;
-	Wed, 11 Dec 2024 10:07:54 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 11 Dec 2024 10:07:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1733929674; x=1734016074; bh=U/MD6JBi3N
-	dCGum/AbUJlRsRx+J96vRADd0Wemw24+c=; b=NteIxtxRu8Esecly/nmZk9VB3/
-	h4HhFaGyjoF31kAAGQS5Y6f9syEOFRwiN57Lww6pF1kt1Npq6lUT3j2tiebHY2UG
-	2hDvrKAg8nbksiBAtFSY4ThpmCE31CS9qcv+8DCtanfbJ4mIQIJ20UJfGI0dS00R
-	YkmHptSjzE121p/JpYviBd0bjVUj/GG0xdiO+Vx0n5wrlrgU5vqMwXd6qpyanJC3
-	Dz2uOX06JV0AJdmkyQAmydPBDduJLZK67RHr3EPLK7ItUQd4/faeStmk1HzGpiMH
-	3TuNFe1jr0/43OXO9TqP9SW8YIxLOlqKKUSUWcmf5VJGdFaBgbohXKlzxlAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733929674; x=1734016074; bh=U/MD6JBi3NdCGum/AbUJlRsRx+J96vRADd0
-	Wemw24+c=; b=Lb7e/YdfwTSl9B/Sn17QCDFGqs0mj4oppqPQOIoaeQtU5Tb/hw7
-	tatmPxL+x8DoEMV6Nu39MpZiSL/0MI9Lz1CanLXiRHEaGROzUwcS04O9arnal1kc
-	mAag3+pTI+Vr3JY092BkGykhRFdZcmZAsbmvDAI7lpzh+LILtil6GnA/SbxLVRCi
-	Ouq+Me1ytEeW2WW6f4ASIlpts2Y3Ijj+XzyvsmJEk62VqxWCq/dhyK44d7+f1TLF
-	mt9DdRkW0KjzrQbQyeokFr9JceZqJnKJqU53hcRS3O9d0YM0U241/K2Blos1S+5H
-	qJfUMzvI+ikqUckRZ+UsuNRiW8r8S3wo+Dg==
-X-ME-Sender: <xms:yqpZZ7ET9FjFKmZE_OGrbVEUo8tpinzd7A4euNtceaEY5nx53ekm2g>
-    <xme:yqpZZ4WEvxYnpXY2rqLorjUs8WstWGYeDrUZwARh6TZW7TJOzzXBu-2xPg7l54DZt
-    1g2DB2W5nbMbpitfQ>
-X-ME-Received: <xmr:yqpZZ9JClziqkkA9B2lk_HRss92PM6_BNoCEuD2XeN7B9o5JphXBIqHCmvppEVVr9o1n-g9nWrjsERpXwWuFFW1aZG8gv5Ko1yh-Wkw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgdejvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yqpZZ5GL6_jmY8kiZ5__jzNBPoIZd9CBC0JvBktaORnHrttUCc4_1g>
-    <xmx:yqpZZxV3nj-8cHPRFuJVy7NTxxOX4V8HjipMM7BZadAYipu5vrxmuw>
-    <xmx:yqpZZ0MuuPMer1cBz06cKi2HXie3dwP1eQJrD8GBwz1ypXKFDY4kug>
-    <xmx:yqpZZw12XXHVVF5GMemvMd2-dCaFtfNLWZQUnjEUyor2aBtsI6KVhw>
-    <xmx:yqpZZ3zZMCGknaRVU3tc8ZnpdhHR3P2R9nF1eFMLXQrM3v1thU9-C0B3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Dec 2024 10:07:53 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2] bundle: remove unneeded code
-In-Reply-To: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
-	(Toon Claes's message of "Wed, 11 Dec 2024 10:28:15 +0100")
-References: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
-Date: Thu, 12 Dec 2024 00:07:52 +0900
-Message-ID: <xmqqcyhyi7g7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dOCPVfrW"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6f006748fd1so35169787b3.3
+        for <git@vger.kernel.org>; Wed, 11 Dec 2024 07:32:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733931140; x=1734535940; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=J3FzQ/JckLt7RjVRrsQ4sfLiJu0hXRyB7ohUtIdbYMY=;
+        b=dOCPVfrWs6NwUxZdihT3oDha0UqYQm2G/KAT4/US6PMe2+KGenVjBKae7X08dLp2wg
+         QPUNEY0cQ1wA+Z5/yxD/frR93nTgECXLYg2ogKb+iw0dz9dhwk27ghqLA/oCXKwlJeSx
+         t2FQATsFlI6PwJ5WtfIyR5BmHmGMj4ZaJyi30saEzIki1rhWlTptlrUPBbwRB6LsvNqB
+         kk52tAA287crdguV6v7IPTAQIoZEPulslg7XC5mixJl5IhI1GYtEfKDz8e+O+DlnhxdL
+         rhKBdJ6tMePs3obKFClRBjwLkQTL9zlXqfeCSxVHxfWcenXU2wPtxK36vf1DT4VDKQ9T
+         HMNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733931140; x=1734535940;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=J3FzQ/JckLt7RjVRrsQ4sfLiJu0hXRyB7ohUtIdbYMY=;
+        b=WpQJGLI1KdkD5lznB571Dp0ky71LxS0tuugfy2fk0I46LBs3uHY5eoxxZnlUwJdawg
+         258JpkPEKlD85r8aY/GYXPzuYLIwyyNURfcVXGZvA5cYFOzbTg4ZB3XSAwFCumoJj//T
+         wS0+5V4/EmahUHFh6IZLeXzZ8RDH5TJ845uy0blyF87AngRNoeOlC4ylOZ+lEvhkyPIB
+         teHUuDsOIcCECMhoOqDGFjLUoW8m0903d6JP3DAqeISLidA+QHegeJ/uZ4kSX6iqID0k
+         LNPakxDxyNKgFzppanxFt7PNpsNfOmLLI5aFcQuAu9D+sT0nfqCA/ZNzF9mid7pxlXN+
+         IrCg==
+X-Gm-Message-State: AOJu0YzvVchIocTKU328EJKvWmp5F0gueeHdNMHowabBisHuozJfFIFk
+	CJblJb0FgDXRJWsOaqANyGVmK8vhlAL8AuzvwNmw2Rs4Yot2+DlOi7OliefhnrKEBJXxzKX/h+S
+	kyhpbwhcqg3OxYpPnblSmjmJbLRvGJ+7RwFRGqOj8
+X-Gm-Gg: ASbGncsiohysVquTFgwhzvITRORavQVDOOQK5jqleNU84OSgdI3n2j70QUB0fi4qtIM
+	0O5jP3J3o6sW6Svz7v7JYSC+3BPdxrlq5ZkyPNw==
+X-Google-Smtp-Source: AGHT+IEjTb+nWMkxAVUbPksREgSjL7agHsSQtm/XY40X3ZnRjt3Kvvye71drkSJC7EFNESmSIr6OyZgd/BtsBfXvQyQ=
+X-Received: by 2002:a05:690c:fc5:b0:6e2:43ea:552 with SMTP id
+ 00721157ae682-6f17d5ee333mr387607b3.16.1733931139872; Wed, 11 Dec 2024
+ 07:32:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Wed, 11 Dec 2024 16:32:06 +0100
+Message-ID: <CAGedMteHtyrSThWnsS43bFqKXBuNrDrRAbrP5uU94=3UYFgsSQ@mail.gmail.com>
+Subject: [Outreachy] Blog: Introducing myself as an intern working to convert
+ unit test to use clar
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Toon Claes <toon@iotcl.com> writes:
+Hello everyone, I just published my first Outreachy blog post
+introducing myself. I would love for you to check it out and share
+your thoughts!
 
-> - No longer user the term "bottomless bundle" and use "full bundle" and
->   "incremental bundle" instead, because they are more commonly used.
+Find the link here:
+https://seyi-kuforiji-902b48.gitlab.io/posts/week-1-Introduce-yourself
 
-Good.
-
-> - To verify the full bundle created upto tag actually contains the tag
->   object, add a test to clone from the created bundle.
-
-
-expecting success of 6020.17 'clone from full bundle upto annotated tag':
-        git clone --mirror v2.bdl tag-clone.git &&
-        git -C tag-clone.git show-ref |
-                make_user_friendly_and_stable_output >actual &&
-        cat >expect <<-\EOF &&
-        <TAG-2> refs/tags/v2
-        EOF
-        false &&
-        test_cmp expect actual
-
-Cloning into bare repository 'tag-clone.git'...
-Receiving objects: 100% (35/35), done.
-Resolving deltas: 100% (6/6), done.
-not ok 17 - clone from full bundle upto annotated tag
-#
-#               git clone --mirror v2.bdl tag-clone.git &&
-#               git -C tag-clone.git show-ref |
-#                       make_user_friendly_and_stable_output >actual &&
-#               cat >expect <<-\EOF &&
-#               <TAG-2> refs/tags/v2
-#               EOF
-#               false &&
-#               test_cmp expect actual
-#
-1..17
-
-What's the "false" doing here?
-
-
+Thanks
+Seyi
