@@ -1,77 +1,80 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E3F239BD7
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:53:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF8A1A8410
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733914394; cv=none; b=rklto00Z1p1+9m9eZ2AL0qrUXuIdCdpHiEZh7eDhoUGAZ2PlknfSlp9yFHRF724/NEmWNRWwwHMJpBwu/6MXaC2Dd70vvQVMMmTuf4BwahqSQWik4pylOrXxUL0Y+uo757PlKt7uOWt1X+LKb2bXZH/G3pZpAOAbdvFPptTU2Xs=
+	t=1733914395; cv=none; b=jAaGQTON3fyqY+Qlr47TQBupedxGhqtf8v+DPl9py4d0+0cgSDro8JxjGObmkxG10AJau5zMm29lTIr7cY7iaMs0MAjosUyyG07fqpJkm86vR18BuDnjeRCnkC22OW1T0LACU/sxJUGbXKVxVSaOrlpEYGk1hUdwBOOnkOYfT+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733914394; c=relaxed/simple;
-	bh=gveQlHLUNGmCdXDLl0ZYDhznxQsxrODScgrls3njzss=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=omG+zJ6t95g/3jsI/lZrjvcJGPGhngkGnyDn6MK9ejdvlQOkTWO1V+gFHcM9h8UdclyfMLkUj7N/kaR0p73BVrRsjjyMhRSN2YYyJbtDhyxDU2tEstPPedgkdtHxwdCokPF8Q/1XI0vNPSq1IH3IM7iILTSpcpgzArncrVgfcws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Rws3nFes; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qi+BSL1a; arc=none smtp.client-ip=202.12.124.152
+	s=arc-20240116; t=1733914395; c=relaxed/simple;
+	bh=cHbvpJqkh/AezI2BJTet2V3CTXisrLIKE1V3Ok8Tyrk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=lDcilnFVUPzbwSEnQHI6Pr39aE9+HWY7ps4FVfeJaRYxr73sN76aY4y6/x15PNWGf2oJmdtDD0KAfSXMvQ8UPBuvYYsEkKFvYFyWERapxLrczbVdO8N4cHtAyBXvt1LZCE1nu8NsPiTYqEOxvsNjVnBzBV4YfWQbQCEH9XbI+c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vj66AQWA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TPJwguGV; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rws3nFes";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qi+BSL1a"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vj66AQWA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TPJwguGV"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4C8C72540212
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:10 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 66373114026F
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:11 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Wed, 11 Dec 2024 05:53:10 -0500
+  by phl-compute-11.internal (MEProxy); Wed, 11 Dec 2024 05:53:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1733914390; x=1734000790; bh=D/RYs2vhZQ
-	GjVLuiK42lMOVzLeWZduaeuXvUqm3quXc=; b=Rws3nFesqYnJV/KbUc7Kmtyptg
-	RSb7Ax6W3wD/CYGXRXU+O2pKcvtcDZ86Ajg5tcCEs+3CdKf3SDMh0BskgV+FbCkh
-	1kF3VNZ7BzOOj1tgUMMCq2ss33GcdpUscO77lYllVokDX1JQhQm7Jzy8Hp0WuBu7
-	qJnDbefdYZMmjJLtKDhIXBdZObt2SZpD+kT1NJgpRDwtTGtlyz49YRw5ZxKEmC78
-	wEy9hk5HXNsTirb8BQgcYJV6hsp7sWoQchbAXE7B0V++uxlWzohAjqw3SM+ZhI0n
-	PLkz6+EF8jbsJnm9nzh7vbM9Y7Sdi5iRpuowc0qFBLEJ5ermVv94aZsCvopA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733914391;
+	 x=1734000791; bh=Wb81SKAlylxOhqw+0F7gG0BMGEpS87kNjGxaZagH7Q8=; b=
+	Vj66AQWAS9GGwHjPZcVHC3J5N9NCyILMPdOs8xk+cbb9v1PpPGRE2/k6Djr1Vyi1
+	WIgQiMVJpUt6fLNWWtQJmKJm+crdUSXGEQ8dFDyilvRu0Fgk9yEdHelNt97WiGKt
+	I/1EjYaZleoTyetMz/53mJyBjdhEFKSBA7OREUGFNwtUvnAlFUoQDZk/MIOLoG43
+	CP2Cjm/lROSyGFoS4+eBSqUCU7rrK6B+Ge7JxPgMr4si5AT57Bwlr+1oD0XrYS5q
+	ATbEJrOfjt6BJ6sign2QLQIixti1QSR82Nw/ljRGDnDvW5RtOYpv3zZcu7N1XcqQ
+	nw/SPvkN9dLwiS0TQHiemg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1733914390; x=1734000790; bh=D/RYs2vhZQGjVLuiK42lMOVzLeWZ
-	duaeuXvUqm3quXc=; b=Qi+BSL1adW3cjDqwgLfF6sYoyA2iyVVccLsttZqY+Wjc
-	qrFpQz+6bfRLxX1rJzuuSa0HJZF/QSUALyeB2MBMcWByV0IjZrkBUh5d8CwmoFru
-	thDfqAQuThZ7YekbHKd3PW/lezCAj0QY8B3MQZH3Gdwnuw/0Qqy2IsZzWJvhBOTn
-	gnS/eKwCiPX6dLnbOG7+G4RLSZlNLwpTpj3hmNG8TYJa1mSa6HjNUIfbSJxo/5Zd
-	Wf6HkAyZphc73tzoExrju3Ju063MIkxK644m1TMr9dWckF0fOepBQXHgMU0cHwi9
-	nCI6VUTOjQ5GDilDsQLQMF8R/8FvuqGuQjLyeFRu6Q==
-X-ME-Sender: <xms:FW9ZZ29JAJ_aE0TMO-FeUIs4tweVuXY1kta-hJtWrznBdRsFZg7GBg>
-    <xme:FW9ZZ2saYzH0V97eMvCQwcJ9dQaFAMJTd8dIaC8gRv35BBFTBAX563kCLQu16OkGE
-    cVa4HZ3luObmRF54Q>
-X-ME-Received: <xmr:FW9ZZ8C58iyTfd3JDw-DMqXdF0qrYNeo7gwJbCtB8gfK3dyanEIePJSRQRLb0XCQZxk_OLfxBzUONvpsI6mJRVtv8Y6RIdkYvk4KgMATen5_2g>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733914391; x=
+	1734000791; bh=Wb81SKAlylxOhqw+0F7gG0BMGEpS87kNjGxaZagH7Q8=; b=T
+	PJwguGVt9ZuE8KmCnaIo5gCvBWiDUR/Nsz6X9jUNsCCTlq7pMIHrvMnDAWTUMUJ4
+	o5sZO9NEB1fNqWmfWn5Io9op628jCqPB3IPZEoEdVet9pwSMizqGPthNWfNMGKAF
+	SFtOT5rlWp1WbsAB155Rah4OR/SmnPhddEIUQnm4bb2TUh44R1HBsLhw8mmJ3Qbf
+	0P8xmM1wwoDpsVtOrn+LdMB1Up1iCd5DplP9/t3IK7fHJwnG+LZ79L+fIH+qevmX
+	2TREL0XeMAEhJ4xeoALzGFnjCFEKLJr1Xir9L1Th5x4+U8YHcrXrcBvqvQ8TY9dz
+	bph89BHtod3hzZ1YMaBAw==
+X-ME-Sender: <xms:F29ZZ2EXrvKXtxRPMmVPCCjV7F5_9a6-Cua79qUNFKbcP9j8M6bZYQ>
+    <xme:F29ZZ3U2g7AKNfsNAjkvRhZT1BLWWYlrqHKTJVhpuwcDWFqn9apI-5R4NvAD1R7Gg
+    9o-ejTc3L5UnPeubA>
+X-ME-Received: <xmr:F29ZZwKmB6xqJ0oG6Nxy5-BoFXBFuBMrP8wEoKx9jKwmEWzVzpEblCViPKPKCbIvUpmilGWGheUghxHFvppdf8XvDoSuTG0q1uAtaiesNfOvSw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddvudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffufffkgg
-    gtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
-    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevueegkedtteeige
-    ejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
-    gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:FW9ZZ-cCHzgzRdOynHWupi0oxWaU9xWH8Ndgf4jVWa72o_0edXrbpw>
-    <xmx:FW9ZZ7OKB_1m02876LT6Fzu9nxO2AaVsYkX1eaKvTlwUncrKFtCnpg>
-    <xmx:FW9ZZ4l8vRr9IfncnwLbFGMh_8__IE6JNlFU6AzM6Dj9vBrFLkYFAA>
-    <xmx:FW9ZZ9uteq8LUhhjmAFvRgOg7PJ5_5g0a7_H4gAh-Si-2ir0J-o-yQ>
-    <xmx:Fm9ZZx3khn7v25gVvApxaYtUFybeqci9ILgXZzJIqwhgv6aMB22D9bYi>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
+    fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
+    ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:F29ZZwHnIikeOE3mQaZq6brmsbKmbltJPGD258TlIILiEz-M1O_SlA>
+    <xmx:F29ZZ8UFl-51Hy7WYI-yyxYifoFmBWEX2somALDxJCCAK6ceDxcXtg>
+    <xmx:F29ZZzMP_-2raRXCPEbBeqPEy3FA4rRCHzDh_NkBuKDb0Mo27JmrNw>
+    <xmx:F29ZZz3c4iyT64xjffWaJgxFwHF7_KauS3BU9Q4uhjtUx7jNlKOn6g>
+    <xmx:F29ZZ3dxdRiIHh8CSg5tc1s69bUCrTJEqGOxK6tmlmtgrm0bUBtb_rbw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:09 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 11 Dec 2024 05:53:10 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7b5b2948 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id cd515867 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
 	Wed, 11 Dec 2024 10:51:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/8] ci: wire up support for Meson
-Date: Wed, 11 Dec 2024 11:52:31 +0100
-Message-Id: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
+Date: Wed, 11 Dec 2024 11:52:32 +0100
+Subject: [PATCH 1/8] ci/lib: support custom output directories when
+ creating test artifacts
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,75 +83,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAO9uWWcC/x3MQQqAIBBA0avErBtQsaCuEi2yxhoiDQciEO+et
- HyL/zMIJSaBscmQ6GHhGCp028B6LGEn5K0ajDJWazPgfQpeJDHgyugWTVb1nfGOoCZ3Is/vv5v
- mUj6rTL6aXgAAAA==
-X-Change-ID: 20241129-pks-meson-ci-ba1e40652fbe
+Message-Id: <20241211-pks-meson-ci-v1-1-28d18b494374@pks.im>
+References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
+In-Reply-To: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Hi,
+Update `create_failed_test_artifacts ()` so that it can handle arbitrary
+test output directories. This fixes creation of these artifacts for
+macOS on GitLab CI, which uses a separate output directory already. This
+will also be used by our out-of-tree builds with Meson.
 
-this small patch series wires up Meson into our CI systems. The intent
-is to ensure that it does not regress in functionality as the Git code
-base evolves.
-
-To help with keeping it up-to-date, both Meson and our Makefiles learn
-to detect missing or superseded test files in "t/meson.build". This
-should give users an early notification in case they have to add a newly
-added or removed test to these build instructions. Overall I think that
-this shouldn't be too much of a burden given that adding a new test is
-trivial.
-
-One gap that still exists is newly added code files. Due to many sources
-being added to the build conditionally it's hard to have generic checks
-for these. So I refrain from doing so in this series -- the build would
-already fail anyway when we're missing code, so at least we will know
-that something is up.
-
-The series is built on top of caacdb5dfd (The fifteenth batch,
-2024-12-10) with ps/build at 904339edbd (Introduce support for the Meson
-build system, 2024-12-06) and cw/worktree-extension at 2037ca85ad
-(worktree: refactor `repair_worktree_after_gitdir_move()`, 2024-11-29)
-merged into it.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (8):
-      ci/lib: support custom output directories when creating test artifacts
-      Makefile: drop -DSUPPRESS_ANNOTATED_LEAKS
-      t/unit-tests: rename clar-based unit tests to have a common prefix
-      meson: detect missing tests at configure time
-      Makefile: detect missing Meson tests
-      t: fix out-of-tree tests for some git-p4 tests
-      t: introduce compatibility options to clar-based tests
-      ci: wire up Meson builds
+ ci/lib.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
- .github/workflows/main.yml                  |  7 ++++
- .gitlab-ci.yml                              |  9 ++++++
- Makefile                                    |  5 ++-
- ci/install-dependencies.sh                  |  7 ++++
- ci/lib.sh                                   | 14 ++++----
- ci/print-test-failures.sh                   |  2 +-
- ci/run-build-and-tests.sh                   | 31 ++++++++++++++----
- meson.build                                 |  1 -
- parse-options.h                             | 12 +++++++
- t/Makefile                                  | 18 ++++++++++-
- t/meson.build                               | 40 +++++++++++++++++++++--
- t/t9835-git-p4-metadata-encoding-python2.sh | 48 ++++++++++++++-------------
- t/t9836-git-p4-metadata-encoding-python3.sh | 50 ++++++++++++++---------------
- t/unit-tests/generate-clar-decls.sh         |  5 ++-
- t/unit-tests/{ctype.c => u-ctype.c}         |  0
- t/unit-tests/{strvec.c => u-strvec.c}       |  0
- t/unit-tests/unit-test.c                    | 19 ++++++++++-
- 17 files changed, 196 insertions(+), 72 deletions(-)
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 930f98d7228166c37c236beb062b14675fb68ef3..2e7a5f0540b66f24bd0f5744311c2c48b472d63d 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -180,9 +180,9 @@ handle_failed_tests () {
+ }
+ 
+ create_failed_test_artifacts () {
+-	mkdir -p t/failed-test-artifacts
++	mkdir -p "${TEST_OUTPUT_DIRECTORY:-t}"/failed-test-artifacts
+ 
+-	for test_exit in t/test-results/*.exit
++	for test_exit in "${TEST_OUTPUT_DIRECTORY:-t}"/test-results/*.exit
+ 	do
+ 		test 0 != "$(cat "$test_exit")" || continue
+ 
+@@ -191,11 +191,11 @@ create_failed_test_artifacts () {
+ 		printf "\\e[33m\\e[1m=== Failed test: ${test_name} ===\\e[m\\n"
+ 		echo "The full logs are in the 'print test failures' step below."
+ 		echo "See also the 'failed-tests-*' artifacts attached to this run."
+-		cat "t/test-results/$test_name.markup"
++		cat "${TEST_OUTPUT_DIRECTORY:-t}/test-results/$test_name.markup"
+ 
+-		trash_dir="t/trash directory.$test_name"
+-		cp "t/test-results/$test_name.out" t/failed-test-artifacts/
+-		tar czf t/failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
++		trash_dir="${TEST_OUTPUT_DIRECTORY:-t}/trash directory.$test_name"
++		cp "${TEST_OUTPUT_DIRECTORY:-t}/test-results/$test_name.out" "${TEST_OUTPUT_DIRECTORY:-t}"/failed-test-artifacts/
++		tar czf "${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts/$test_name.trash.tar.gz" "$trash_dir"
+ 	done
+ }
+ 
 
-
----
-base-commit: 2fcbf72f13e8ce3bf1cda9a689f392f8f6e5c65d
-change-id: 20241129-pks-meson-ci-ba1e40652fbe
+-- 
+2.47.1.447.ga7e8429e30.dirty
 
