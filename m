@@ -1,109 +1,246 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68502201258
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 18:00:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68797246344
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 18:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733940045; cv=none; b=ZYLNbSKybIuYIyfhf5ley6ymlGeLoeFbizi5g1+GMTpMqhEQbGoqXl/gcgSb/3gQX8r4z7eIzUgo6g8jNTiBigc/LTXB0+z5G8dKTMpmmHKlHgFYI6qFKMrNI5nTYF44DtSMDuE4qwZpVzt6paNFX4kF1WZQDXK19h71dV5aWGo=
+	t=1733940397; cv=none; b=kW51zVJtp80IyT80cSdxXY/Sz02WeEap4+cTuugpulL5NRl7tduk4E4rQ4s71SwKR5wJFtDgw8OkferJkRm1jEBquu7UH028JBDcMlvPjHZwLDmEOAjShkcUB8gRirYKQKFIbbZbQ0aUJKYEz+EOxjfpQqvDMI8CazBmg50ANfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733940045; c=relaxed/simple;
-	bh=qP5wJC40AIpF8tVOMbUBas1+TURt9IccK5r9Yfegx2Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mZaf3CaSmFBt/lyUY3WeTZC5cvW50Gmd0GcXnR7+Ue7QTBacf8lJ5Fkce+yMVuLI7BqVByv4s/zRNYyoln5fSBr7OX92tgJ/GvDHwHl0v5IsuX1ysZdm1FDASmupTgLMOyWjDokHTA6DislbkKtJNyCOF/t8lH39Wq78a0ROllY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TT4b5eQ7; arc=none smtp.client-ip=209.85.221.51
+	s=arc-20240116; t=1733940397; c=relaxed/simple;
+	bh=78X55q2so0BAdYtBDvPOslW08w65sM9FViRtoTkwHIs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GJa4cBLgrbGwrV0pPLdUd7JILJY5NgpzcDiZUYsNLxRBUVALh1OUbXZGyuqbHBUScP3hLmqy4dfsl75oUeMfmMRo+7kS/TkkQrhV4RO5bxtXWfXFtDXi/Xz2CgdCzqwQMxl9MDh16VMXxGuR3kLEph+DVz9++4wzcS7uuDU/ZgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gex0kmPv; arc=none smtp.client-ip=209.85.222.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TT4b5eQ7"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3862a921123so4194690f8f.3
-        for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:00:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gex0kmPv"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-85c4b057596so1071092241.3
+        for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733940041; x=1734544841; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uG3sD5jMSOu87RamLuU7rZ5BcpQTp3VEj8VP4O29de4=;
-        b=TT4b5eQ76ZqspA/FI+ZCEJr2atzz/5M5bvDlML1m4ObTpqJMdAzu0Lp/o6SjF0LkMz
-         m+l2sEGw2N7FJgZY/R93QMldt+8++FFIpvgHX2M4+UtCv4YIgzECkbRDqz34U2N4FHZe
-         sgqTZMRjOvi2ERlQOilA9BWqQuPEY7pA8nCnc7JZgI262AtZyjkJoKo1F+9brE9MShFC
-         02oO4dN850HHudW01r+1WhaS57LdvgSDl/moRn6YpoDjIgY2Nm+ZMnf8LCyO6Wtd25zm
-         Rk9MKa6GetSz7Hva/022j1u3SHk4UToKQYFPASnye8210AZnJKFOXG7puv55V4ojZSPU
-         nPNA==
+        d=gmail.com; s=20230601; t=1733940394; x=1734545194; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=b2hEct6W+/jYxws6le8nVLK8LveCJS5KJeIG3z8O5v4=;
+        b=Gex0kmPvMZ2I7baPapoyEf9vR8vgS/UCDWCyUYbfJIm9H552jXM6m1+gO4y14KoLHU
+         r8tPjDZnj+fe2alvIO/rld9rpD3F9R8A7OP7SosaceE8up7/0c6Mpqh35MPlQ3tD1xJg
+         crJWHFeb0z9USbcz5cxNDClIFlUul8yCXGWhJKRx6dqg//QRVdVYeR3PmYiB1UHmkCmt
+         68TmeRHMyBeFxvQ1m/NRqajKbQeqf+4V/XtHdj48AYjcfidMKlDDZfnX/HY5d3a+ArTn
+         Ly8qFwSZAu+RZAr5R4ptEe3/alKg6a/w9jQIHKXiTUP6C+c+UtxBmuqX6eqIgBKyfCwr
+         O5Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733940041; x=1734544841;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uG3sD5jMSOu87RamLuU7rZ5BcpQTp3VEj8VP4O29de4=;
-        b=U2g+Zvllnt9T2zJRFF2roxGnDKmqfpDDEsyTaSvyrGA1mIYyP+s2yMQW6ma14grYYV
-         F9PJFTGAtVLP/oFu9Js6e5l+aZJKLNkDoOYNggOm5KFv7FxR2QzvXPMBmGVGrgzpa0X/
-         4SBc/Im2rUbCpOa2IgTYcuVi8hNS4YJyA4fagYjEFkfaQcW4/YFF03oxSxfoy3Ji51bR
-         moM98GlvVKBRfZBtozIr4+Rhr7zG23+QeXaULuGPKEPI9ehVUvfyi1zG0fcpuvfU7kp2
-         luAO9gvutIFRId464/L+LEx0ZqISh+eS7Q4YVs9LLs/Gf2AZa6OTtgLFDfRj8/XcP9cl
-         C47w==
-X-Forwarded-Encrypted: i=1; AJvYcCXZZMPipnzki5VamPRcSDmAOiY/s3Dff/+JP9s82OJI8xSOWZRHijomzKxgS8/f1s8FPis=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxl9IIxG1dd4EObryljkBuT8qgcQu47z5owUV/uqfqHccOSOM4y
-	yMeXXWrzHVE/++u9w+G0SXu0Zr3asE14grVteuIu2lAIJNSFrqX/
-X-Gm-Gg: ASbGncuIOH94TMwPFLPBzTs6Ktnbdcks3aHOGLNn58K2G2xa5pHe3bJ2tbSzXvllYOw
-	WKB4gMTVCrfOSp9sVbnk7u0u9XnLC5FLsmBe6E7uTIDHUQdmeaHes1obDm50tx+oPnLfHbo+d+h
-	Lwv8DIDhaDzzII8fX2HK/jn1plf3Y3Bc6eEqzhLL+AWM+sy90oUOcjv1Vv3tGthK45s+JRUATPl
-	XQSA13nh5rOZbzv3VL3ppQ/J27PSR8ds2Fpxm58IxfycZZG63SYOgn8O2iMH6EVjQJIStpmEW9t
-	e9l8lcDwMVUJ
-X-Google-Smtp-Source: AGHT+IEg01N2LjZMCZJsRwKtM0PYyy53uyRT7ZO9AEkGhfmQsOZFjSLOCc+/kj6NhssNAQ7liXUI9w==
-X-Received: by 2002:adf:e193:0:b0:385:f638:c68a with SMTP id ffacd0b85a97d-38787697684mr475483f8f.30.1733940041147;
-        Wed, 11 Dec 2024 10:00:41 -0800 (PST)
-Received: from gmail.com (120.red-88-14-47.dynamicip.rima-tde.net. [88.14.47.120])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38782514da2sm1757715f8f.66.2024.12.11.10.00.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2024 10:00:40 -0800 (PST)
-Message-ID: <484a5e81-63fc-4bad-a385-252329287031@gmail.com>
-Date: Wed, 11 Dec 2024 19:00:40 +0100
+        d=1e100.net; s=20230601; t=1733940394; x=1734545194;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=b2hEct6W+/jYxws6le8nVLK8LveCJS5KJeIG3z8O5v4=;
+        b=qLJeU/1BdZPP4oxYSNoF3W4mChygd5QczOcNc3NX5fMbg8TQ0trDW9nfvsnjZVdyPz
+         WmpxuBcQyuR/23XC7AxY+QVAkFpIiwGAIbAbkdQ0UmelEkHFRSUygpayZpNa6soFXf2t
+         XwpkFjiSvMPaygtDxqWL1hi+OjSWCxRGJJi6jj9NCm52HcKp6mIRNXCrcTUlxXWUEway
+         RuoJJ1bC4WIqnI/DHV9w/jfMNKMPk8j2gvmnKRc7d8xShKI8eiObU9SYU8Hh+GYMxfwK
+         XQY3lfgeDk4HtALDt6D1OS+Fk4BG3u689UKMbTo+mvyC9JX+EeoI0UpVWkktml6Sn2Ws
+         CbDw==
+X-Gm-Message-State: AOJu0YzVjX20tzPQ+HKcUDAk5l9A3G9xWiRt/DwYmVnzXOz+Bi29G79m
+	xge4JOq3QHq0wBHeT+fhcdGiX95KIombYbqzbbx0dwFjXjWHzdrOHMw6YVAdwethCrAKQ4mo+Jy
+	ONB/PpOb7PW3QbmjfwbivAxboXOM=
+X-Gm-Gg: ASbGnctlRyhdTS+c2+J450sW42BRrypShbLMc5Zw3kGly6cA73lDIoctIqjdOcxs54U
+	S5ZgolB/S6Q9J6j1Tk39/3Ws+X6OSdWB//PWwmDFRPHFPRl0GG/ILMEBKCBCbH7aC2GA7bw==
+X-Google-Smtp-Source: AGHT+IEd/BMQ6yaByrHv52+2QM9d9JsCpnQ8MVMXV/1v8k7ZW7UIFDmJmrTvDQSyScA1k8I8HHg9n1hjjUkDboyW+ps=
+X-Received: by 2002:a05:6122:250a:b0:514:eeba:517 with SMTP id
+ 71dfb90a1353d-518b5df1d49mr130584e0c.10.1733940394172; Wed, 11 Dec 2024
+ 10:06:34 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Dec 2024 10:06:33 -0800
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <CAP8UFD1vTEH=7HBX1sudwkv7now9VUkFR3Y347EVNGfToZt8fA@mail.gmail.com>
+References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
+ <20241209-320-git-refs-migrate-reflogs-v1-5-d4bc37ee860f@gmail.com> <CAP8UFD1vTEH=7HBX1sudwkv7now9VUkFR3Y347EVNGfToZt8fA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] advice: suggest using subcommand "git config set"
-To: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Heba Waly <heba.waly@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-References: <Z1FkrsQ5tkz1pFUz@pks.im>
- <20241205122225.1184215-1-bence@ferdinandy.com>
- <0e139151-7162-42b3-afae-248c28bf4c4b@gmail.com>
- <D674P6875UXA.LXGHCJ9EFE0N@ferdinandy.com>
- <D6791Z2QPSUW.1LP269FO886XF@ferdinandy.com>
- <be4ee78e-12d4-44c2-9f82-4f0db7706fea@gmail.com>
- <D68QSB8Y9UTD.1IO0EU3X8ZX39@ferdinandy.com>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Content-Language: en-US
-In-Reply-To: <D68QSB8Y9UTD.1IO0EU3X8ZX39@ferdinandy.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Wed, 11 Dec 2024 10:06:33 -0800
+Message-ID: <CAOLa=ZQFAMdW78QbPYSoCtqetwT1S6z8dmLS_XG6Ex0nUsp9Cg@mail.gmail.com>
+Subject: Re: [PATCH 5/7] refs: introduce the `ref_transaction_update_reflog` function
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="00000000000041e0cb06290275da"
 
-On 12/11/24 9:52 AM, Bence Ferdinandy wrote:
-> 
-> On Mon Dec 09, 2024 at 21:35, Rubén Justo <rjusto@gmail.com> wrote:
-> [snip]
+--00000000000041e0cb06290275da
+Content-Type: text/plain; charset="UTF-8"
+
+Christian Couder <christian.couder@gmail.com> writes:
+
+[snip]
+
+>> diff --git a/refs.c b/refs.c
+>> index 732c236a3fd0cf324cc172b48d3d54f6dbadf4a4..602a65873181a90751def525608a7fa7bea59562 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1160,13 +1160,15 @@ void ref_transaction_free(struct ref_transaction *transaction)
+>>         free(transaction);
+>>  }
 >>
->> I don't have a strong opinion on this.  Since my message, Junio has
->> marked this series to be merged to "next".  I can be perfectly happy
->> with the patch as is.
+>> -struct ref_update *ref_transaction_add_update(
+>> -               struct ref_transaction *transaction,
+>> -               const char *refname, unsigned int flags,
+>> -               const struct object_id *new_oid,
+>> -               const struct object_id *old_oid,
+>> -               const char *new_target, const char *old_target,
+>> -               const char *msg)
+>> +struct ref_update *ref_transaction_add_update(struct ref_transaction *transaction,
+>> +                                             const char *refname,
+>> +                                             unsigned int flags,
+>> +                                             const struct object_id *new_oid,
+>> +                                             const struct object_id *old_oid,
+>> +                                             const char *new_target,
+>> +                                             const char *old_target,
+>> +                                             const char *committer_info,
+>
+> This change (adding a 'const char *committer_info' argument to
+> ref_transaction_add_update()) is not described in the commit message
+> and it requires a number of changes to the callers of this function,
+> so I think it might want to be in its own preparatory commit before
+> this one.
+>
+
+I think this is a great suggestion, it would reduce the congnitive load
+of the commit and make it easier to review. Will do.
+
+>> +                                             const char *msg)
+>>  {
+>>         struct ref_update *update;
 >>
->> On the other hand, perhaps I could send my patches about
->> `advise_if_enabled()`, later, rebuilt on this series once the dust has
->> settled.
-> 
-> I think that would be rather worthwhile, since having different mechanism for
-> displaying advice isn't the best for sure.
+>> @@ -1190,8 +1192,15 @@ struct ref_update *ref_transaction_add_update(
+>>                 oidcpy(&update->new_oid, new_oid);
+>>         if ((flags & REF_HAVE_OLD) && old_oid)
+>>                 oidcpy(&update->old_oid, old_oid);
+>> -       if (!(flags & REF_SKIP_CREATE_REFLOG))
+>> +       if (!(flags & REF_SKIP_CREATE_REFLOG)) {
+>> +               if (committer_info) {
+>> +                       struct strbuf sb = STRBUF_INIT;
+>> +                       strbuf_addstr(&sb, committer_info);
+>> +                       update->committer_info = strbuf_detach(&sb, NULL);
+>
+> Maybe:
+>                       update->committer_info = xstrdup(committer_info);
+>
 
-Indeed.
+Indeed, I thought there was a better way. This is what I needed to have done.
 
-> And it seems the patch has indeed
-> made it to "next" recently, so I think it would be safe to rebuild on it now.
+>> +               }
+>> +
+>>                 update->msg = normalize_reflog_message(msg);
+>> +       }
+>>
+>>         return update;
+>>  }
+>> @@ -1199,20 +1208,29 @@ struct ref_update *ref_transaction_add_update(
+>>  static int transaction_refname_verification(const char *refname,
+>>                                             const struct object_id *new_oid,
+>>                                             unsigned int flags,
+>> +                                           unsigned int reflog,
+>>                                             struct strbuf *err)
+>>  {
+>>         if (flags & REF_SKIP_REFNAME_VERIFICATION)
+>>                 return 0;
+>>
+>>         if (is_pseudo_ref(refname)) {
+>> -               strbuf_addf(err, _("refusing to update pseudoref '%s'"),
+>> -                           refname);
+>> +               if (reflog)
+>> +                       strbuf_addf(err, _("refusing to update reflog for pseudoref '%s'"),
+>> +                                   refname);
+>> +               else
+>> +                       strbuf_addf(err, _("refusing to update pseudoref '%s'"),
+>> +                                   refname);
+>
+> Maybe:
+>
+>               const char *what = reflog ? "reflog for pseudoref" : "pseudoref";
+>               strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
+>
 
-Yes.  I'll wait a few days, and then I'll send it.
+Much nicer, will add.
 
-Thanks.
+>>                 return -1;
+>>         } else if ((new_oid && !is_null_oid(new_oid)) ?
+>>                  check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
+>>                  !refname_is_safe(refname)) {
+>> -               strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
+>> -                           refname);
+>> +               if (reflog)
+>> +                       strbuf_addf(err, _("refusing to update reflog with bad name '%s'"),
+>> +                                   refname);
+>> +               else
+>> +                       strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
+>> +                                   refname);
+>
+> Maybe:
+>
+>               const char *what = reflog ? "reflog with bad name" :
+> "ref with bad name";
+>               strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
+>
+
+Similar, will do.
+
+>>                 return -1;
+>>         }
+>
+> [...]
+>
+>>  int ref_transaction_create(struct ref_transaction *transaction,
+>> -                          const char *refname,
+>> -                          const struct object_id *new_oid,
+>> -                          const char *new_target,
+>> -                          unsigned int flags, const char *msg,
+>> -                          struct strbuf *err)
+>> +                          const char *refname, const struct object_id *new_oid,
+>> +                          const char *new_target, unsigned int flags,
+>> +                          const char *msg, struct strbuf *err)
+>
+> This looks like a wrapping or indenting only change. If you really
+> want to do it, it should probably be in its own preparatory commit.
+>
+
+I think it was the auto linter, will remove.
+
+>> index a5bedf48cf6de91005a7e8d0bf58ca98350397a6..b86d2cd87be33f7bb1b31fce711d6c7c8d9491c9 100644
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -727,6 +727,18 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>>                            unsigned int flags, const char *msg,
+>>                            struct strbuf *err);
+>>
+>> +/*
+>> + * Similar to `ref_transaction_update`, but this function is only for adding
+>> + * a reflog updates.
+>
+> "a reflog update" or "reflog updates".
+
+Makes sense. Thanks.
+
+--00000000000041e0cb06290275da
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 4a93a4829e7edd5f_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kWjFLVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNDZaQy80K0c4T0wrSlNZdjRtRXYxaUpURDdyS0pmQgo1WnlZSXR5Y2d0
+cjVRTzdvL0dCWmk0b0hzMHYwTktVRXBMY0tuRnE1UHlzdHdEVjRRL2dNZ2pTQ042T05XVzBPCkd4
+RXhpWGxrZ1cwZXVlc2hBY1lad0pDaXZsOXQrcDZoMDFaUzVzcVp1cVByYjNvRmNMOFlNVzBaRmZG
+cEg3T0oKWUFMd3Q0NDVwZGZMVW5MajVlajFxM25WODVXOWpsV0xBR3pHTTFvVzVETVJCeGY2Mzd6
+NWIzNVVzVnc1V2NMcwpIYmYvTVVrOUtUNlJXWkkrb1B1WW9iMDArU0Ezbm81WktOQ1BQVnFxNXM2
+bWIwdzhlaVA2dGFuRVphajlycmg2CkNoNjhReEs3bE9GcGtoeXlFWjBCTDNQS1RrNyt3a05namgv
+Z2Jmb0xHOEVWZERhaTZjeVJ0TTF1V2puOEFmTmsKY3VSV3VQbE1ZOTkyOVlndEcrZElMcCtZSEti
+UWJWQ1ppMllZZFlpeGdYNXlEejZ1OWxBK3JiSjJJL1RPQXlPcQppaGpTWnpEelhtRVNPUFNYc3Zy
+aDN5WkxRbEZpRFUwa0xWRVlRTVhzRkJqTFErYkZwYXc1aFhuNGF3MW9qcC91CmppbDNjN21lVmZy
+aHRqVHU5L0pmMEZUNjNIakh3bGZKUU5SeTUrST0KPWRqTDUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000041e0cb06290275da--
