@@ -1,55 +1,55 @@
 Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6026C208984
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B1F208985
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 10:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733914620; cv=none; b=FgqnoxKUzFkYLy1oLGYcF1gjliutwNTDcH7QxGntol8bVaioLtGfmaUtlQIOTmD9aipobjbmHmO4IunbqzydynAlb3QK9Y4u0eUnyT0hEfVmuKywCNfccJELjfSf6SCEmURtwIMUcmPOO5VH7qF9diaaWBNsqWNQwVGfeAKr1NA=
+	t=1733914621; cv=none; b=EXfvCvm293pEnPh63AJrRcrwoBhZOhDXJ/ukGL8Bj/TgquXkGXRLPtnvDj+Lkl9lgvM0HqCI2clXcqJ917JUqriw3ygsSRVVQVOOBqUG8kTswi7Jnrs5C/P2m5og2K4XMGjrOYmaKVMW6fNoyAYAQuhWwhk/RaRsf4AXutOOT1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733914620; c=relaxed/simple;
-	bh=4f69HuToOJlL9G9JHjhB5PBNqibdx5o7Luvuepza/RE=;
+	s=arc-20240116; t=1733914621; c=relaxed/simple;
+	bh=RcDH65Lya9nvlFF9iLnwqaZDpRlj5exsS7JOnJMezjQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T+8+Xyd1c4yFlmSWt0K7iUEXB9bah5RAWIS7bUBCBTW0vUbp63KNJ5sj4C2kGELE5kHkvHxOmofP8bqV/V1ahS+XddpKh+qnhlZMW4vEsDbYWfzHxGeg+TC4mgHElmXV8dI+3opuz9VVdYbpD/km9Axg1wXb3RC8PzhzyAwtzMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=opWeHwPt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VMTFKxiG; arc=none smtp.client-ip=202.12.124.152
+	 In-Reply-To:To:Cc; b=nDtjyMoeuS2PlSHpLhx/nVd672gnImjYEmI9YXejyZzZE6/+8NGhQwb0aD6q4qCZK1Tdv26dRdXt7RPVbb+MB1O5pbiN26G+Rovu3aiZGCC3BE3BmkZijqyVRvmHyzULpyK4k42NUt23x+l2+QKWRe+LtMY78MK8Urda5Qu/Eqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aip+Xy5S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WnvMRN+O; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="opWeHwPt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VMTFKxiG"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4A04C2540267
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:57 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aip+Xy5S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WnvMRN+O"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 75E5D254026C
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:58 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 11 Dec 2024 05:56:57 -0500
+  by phl-compute-03.internal (MEProxy); Wed, 11 Dec 2024 05:56:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733914617;
-	 x=1734001017; bh=yo9rPYSZk2gm83u5Ipt8nqXMKkyPAr7TXzfep/ZnSDM=; b=
-	opWeHwPt6FpjO9IHwkh+f6RM9h5YKuHQkV8QJGB/MUd2aBmG4p2ZphuPnQhCTnI6
-	nIjydPGW3rkIdj9FPfEQ29hzOPMJ4FLCkueSTSa/RJZTfFFoQaYP92xSoq+Z58i6
-	I4pMy0bCGBo4bWSIA1/N7M+Zt636jAnUd7FOZ+TVSaynX73jCSVfuaCZIuzsAvLz
-	+6r42CPg6q9fM/PRGqGpHYc20edRzahKcVT3uudjRRLMqhOB11QhQydqHqyGcQk0
-	pM3t7Kof2uimUcUIhiO0g9oZgbPkFQyJD05HPdw3FOu73hcSeVyh6H0nIRDJfMpL
-	Y90ezA3GJF724mnxT/4ewg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733914618;
+	 x=1734001018; bh=IOTGSKjmXC4U8YroVozbqimtSclhvjkUP0Kuoapx4Cc=; b=
+	aip+Xy5S6syvF1SzgxvWmyvZB4nV8e0FB3FHWNceV3gFXmjOBMLMth/7l4WhN040
+	nEIZb4TPXHzfXbazaXu0vj+25kqyJQxldZzRbF/k+tznN+GGs4jothbc/WUm6fGQ
+	Ne40y1mvdklqPSsE2x6/mVvGA1z+NQTJ6ul8QyC/j1/y7p/bKI4MfDoBQWtPmGIl
+	BQsr4NlXPdkQLbkmsk1pkStrmhaD//WNIILmWwSOeq5gJ6gFkIzUqk3QYeHnNfNr
+	nhrEc3aIfWEbtJAAy/waxsdb1OvjdZURzUn1e3wrPRVUA2oBEzwqC4zC5JGzV1g6
+	0m5Jcw1t8/CJpOqHtD1UZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733914617; x=
-	1734001017; bh=yo9rPYSZk2gm83u5Ipt8nqXMKkyPAr7TXzfep/ZnSDM=; b=V
-	MTFKxiG+2w8hqw6W8xFWFgnqLZR4pfUPqPT6+wTPh9g6F6Koc1/N6CwhZD/zv1tS
-	wgDz5PBUTQDvtetGHOXDnlPv5ghKMI8LHKVXDY6McSanF/3QeNSYlWTsB7YwpZ9v
-	9SPsaexk18nFO/mEpkH2oVlTsbBXgUOtCc6Cfwl7rXIU/Xk7WKvEx0FvKvWby3eP
-	V8eFKxUhRudRk3nAXKbuFZwu5W++WxC40LmZQKPXAcHokewfZvWdCfqScvSB8rQC
-	TYtqwBrTiN4qN10jCVWmOfS1QjIhPZDIcKWd8D4qQpr6F0/ZFXrlI+omjmG5ICl9
-	BAEd11LUYZHMe+B9kXF7Q==
-X-ME-Sender: <xms:-W9ZZzjV8wnnTMeeIb4fn87wC4eJgm-9MB7qj2FGk9yXYouws6AZCA>
-    <xme:-W9ZZwA1-LWMkJfDKnuIInXjdbQzHjLhGX2DSiMmvDT-Vy9ruLAGWEi3x8DnMn_Gh
-    HJGDjCwjZbpO9UrQw>
-X-ME-Received: <xmr:-W9ZZzHprE2gYn8VBO7dyO6CDn4-7XnWNjCrHBgco_XzljRVdeVvOfk9ZONNf9twQTcCNt9F93cHtH7hMM_9V9RbuWCkfgNqHB7i13I-IdFDhQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733914618; x=
+	1734001018; bh=IOTGSKjmXC4U8YroVozbqimtSclhvjkUP0Kuoapx4Cc=; b=W
+	nvMRN+OeVLxuIEpMgscYIuEW6hplhw16JcEH5zZv80PkPXNM2Dl7GkZZr8ZpMmDG
+	4W7wvNALAhKKbcECcsv2IvM6/J6MEmll9BaHgz6bUZkQMJLcKYpAYWi8bdiLsvHj
+	mvojY4RR8C1qtuv2O36CT9CdpsYK9JVksqodN6HXQHr6O79NOrt7nO6Cbzd+1Pty
+	KW/wulskP3mmDyyv93E6RI6/3wTGSoMxMstmHlhLMxP2NjRBT3gPNSe5m0UUf7H4
+	QGQHcslwPJgFgShu/OpNY8+uPgBuXHZCE4u4POrPmg6Cnil79uEiJ9PrFyvGbAUU
+	TPqysCr3ASy0KEBVkYzUg==
+X-ME-Sender: <xms:-m9ZZ31QPNwHlbEu6vSs9H-5VHgrx4l3K5g61zFEzFCEyEWIjh0Qjw>
+    <xme:-m9ZZ2GvMNc0YFe4eX_PKAGcJLO1tS5_QTFmNquOydsdX4V5C-N7A2Veoq3vbKFPZ
+    gbKWp_XdqdF95DoDA>
+X-ME-Received: <xmr:-m9ZZ34qGCCx_22Ivas4fsgBrHFTC-y9OBA9ykRbSm1J7tLoZFtywJBxbrZeJJLXKjvo8NFS-jRwNCDCyBfDZpVodY9C-qY51VFTtwcmuFw2rQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddvvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
@@ -59,21 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgddvvdcutefuodetggdote
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:-W9ZZwS8MCiDhwXZgJn_Zi0ovLXCdz1zsGUBvopmNXn1k9V59J2a1w>
-    <xmx:-W9ZZwxqn-3nCIppzmxKEe12QViFlKPXB-v8jBSfR-f-_h1gM5cjSA>
-    <xmx:-W9ZZ26LHRKfDpMFOSLEJ98cTtfuvxyA62ekZ5dtUq9ca8-g4o2u8w>
-    <xmx:-W9ZZ1zD3qEF91OW4gRs7knUky0JHKQdmBfPnytll075QOROng4fQg>
-    <xmx:-W9ZZ9rD-TYXCb176BGPsoGqmHZQeJtArziYDGQrRkGvTBDdYOUqMAUo>
+X-ME-Proxy: <xmx:-m9ZZ823ghUvHGDhYosHrthSF2bwjNfJmMi2CpGab-wbBEw8pgbs_w>
+    <xmx:-m9ZZ6E0Cg1Y1vaDiYDzyA24c3tUDwSBN176qdbstNeq3WoWXyiQTw>
+    <xmx:-m9ZZ9-q81sqkjHZDoZx2nXKBFHa9mdD8CLWugz007fxmFUkbVIKAg>
+    <xmx:-m9ZZ3msdWyI4ePHx8mguEcnGiHNCtRMf-rVuY4JO3lIDRq1k4EkfQ>
+    <xmx:-m9ZZ8MP-vRuNo-_OWtiVZDo51m4mfJMyE3ntrLMqnVHRy6IZ_uHhYyK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:56 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 11 Dec 2024 05:56:57 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ca0b630e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 18ab70f7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 11 Dec 2024 10:55:20 +0000 (UTC)
+	Wed, 11 Dec 2024 10:55:21 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 11 Dec 2024 11:56:39 +0100
-Subject: [PATCH 3/5] ci: repurpose "linux-gcc" job for deprecations
+Date: Wed, 11 Dec 2024 11:56:40 +0100
+Subject: [PATCH 4/5] builtin/pack-redundant: remove subcommand with
+ breaking changes
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,73 +83,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241211-pks-remote-branches-deprecation-v1-3-1431e2369135@pks.im>
+Message-Id: <20241211-pks-remote-branches-deprecation-v1-4-1431e2369135@pks.im>
 References: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
 In-Reply-To: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The "linux-gcc" job isn't all that interesting by itself and can be
-considered more or less the "standard" job: it is running with a
-reasonably up-to-date image and uses GCC as a compiler, both of which we
-already cover in other jobs.
-
-There is one exception though: we change the default branch to be "main"
-instead of "master", so it is forging ahead a bit into the future to
-make sure that this change does not cause havoc. So let's expand on this
-a bit and also add the new "WITH_BREAKING_CHANGES" flag to the mix.
-
-Rename the job to "linux-breaking-changes" accordingly.
+The git-pack-redundant(1) subcommand has been announced for removal with
+53a92c9552 (Documentation/BreakingChanges: announce removal of
+git-pack-redundant(1), 2024-09-02). Stop compiling the subcommand in
+case the `WITH_BREAKING_CHANGES` build flag is set.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 2 +-
- .gitlab-ci.yml             | 2 +-
- ci/run-build-and-tests.sh  | 3 ++-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ Makefile                  | 2 ++
+ git.c                     | 2 ++
+ t/t5323-pack-redundant.sh | 6 ++++++
+ 3 files changed, 10 insertions(+)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 32d35d2257812f02121b20c3cae342d626481553..46b96fb96cc6e2659fe0b4b640f7e671587d059a 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -269,7 +269,7 @@ jobs:
-           - jobname: linux-reftable
-             cc: clang
-             pool: ubuntu-latest
--          - jobname: linux-gcc
-+          - jobname: linux-breaking-changes
-             cc: gcc
-             pool: ubuntu-20.04
-           - jobname: linux-TEST-vars
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index b86bb0bdb3363e06e6fe4195c34babd67cf7e8cc..492e5d9082dbdb3389c173f2b5a45fe43f4bea41 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -43,7 +43,7 @@ test:linux:
-       - jobname: linux-reftable
-         image: ubuntu:latest
-         CC: clang
--      - jobname: linux-gcc
-+      - jobname: linux-breaking-changes
-         image: ubuntu:20.04
-         CC: gcc
-       - jobname: linux-TEST-vars
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 2e28d02b20f2469afddc4e04fdbd18465babb1ef..2ccd812fb4e025be3b8e9ab2ec6ae44e92944ab0 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -13,8 +13,9 @@ esac
- run_tests=t
+diff --git a/Makefile b/Makefile
+index dc3c980aa7a4f42d27ed72415a636ac82b2a5684..e6b0d859803ac4d53079ec2a39143441a5662203 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1278,7 +1278,9 @@ BUILTIN_OBJS += builtin/mv.o
+ BUILTIN_OBJS += builtin/name-rev.o
+ BUILTIN_OBJS += builtin/notes.o
+ BUILTIN_OBJS += builtin/pack-objects.o
++ifndef WITH_BREAKING_CHANGES
+ BUILTIN_OBJS += builtin/pack-redundant.o
++endif
+ BUILTIN_OBJS += builtin/pack-refs.o
+ BUILTIN_OBJS += builtin/patch-id.o
+ BUILTIN_OBJS += builtin/prune-packed.o
+diff --git a/git.c b/git.c
+index 46b3c740c5d665388917c6eee3052cc3ef8368f2..a13c32bcdc694460fcafe8079d3aa6e8caea1b4c 100644
+--- a/git.c
++++ b/git.c
+@@ -589,7 +589,9 @@ static struct cmd_struct commands[] = {
+ 	{ "name-rev", cmd_name_rev, RUN_SETUP },
+ 	{ "notes", cmd_notes, RUN_SETUP },
+ 	{ "pack-objects", cmd_pack_objects, RUN_SETUP },
++#ifndef WITH_BREAKING_CHANGES
+ 	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP | NO_PARSEOPT },
++#endif
+ 	{ "pack-refs", cmd_pack_refs, RUN_SETUP },
+ 	{ "patch-id", cmd_patch_id, RUN_SETUP_GENTLY | NO_PARSEOPT },
+ 	{ "pickaxe", cmd_blame, RUN_SETUP },
+diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
+index 8dbbcc5e51c06d7c5f56fcb3107860fcb66a5106..688cd9706c876a7edcaf0bcd642ae08ece188d4d 100755
+--- a/t/t5323-pack-redundant.sh
++++ b/t/t5323-pack-redundant.sh
+@@ -36,6 +36,12 @@ relationship between packs and objects is as follows:
  
- case "$jobname" in
--linux-gcc)
-+linux-breaking-changes)
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+	export WITH_BREAKING_CHANGES=YesPlease
- 	;;
- linux-TEST-vars)
- 	export GIT_TEST_SPLIT_INDEX=yes
+ . ./test-lib.sh
+ 
++if ! test_have_prereq WITHOUT_BREAKING_CHANGES
++then
++	skip_all='skipping git-pack-redundant tests; built with breaking changes'
++	test_done
++fi
++
+ main_repo=main.git
+ shared_repo=shared.git
+ 
 
 -- 
 2.47.1.447.ga7e8429e30.dirty
