@@ -1,126 +1,279 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D249236F95
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 09:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64657236F95
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 09:28:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733909206; cv=none; b=D4vpCCCmrtb8n0ZZ0ExYigAN3FrmaAAoI53ME13AUPGfGepkRpoTsQaEUxT1uLgta1b6Wq+Mv7lknkpwqIsK883R6uuIyNUpKWkmOTG0snpU5QjWiCZLPG4nOCLtcoFjNfn+WQ0zccRHA/yr7Vef3nEasVmczGB3v3uuBhs3MNw=
+	t=1733909347; cv=none; b=iaYlwmSCYHUwLV26ZPdSbr9mXd7quLLDO9BWcD35Ogk0+LJGu9Z5/z1Gxy9JsskvcsWtPuNQDjePBI1zLECpAOqvtmAcT/nAGe+8ofA+q3Ak1ew77eNlygoDFXWOPwtJ23sPUDsIPym0Yex/oGeTDnKUYzvb5PwXY4ShKaP7jO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733909206; c=relaxed/simple;
-	bh=TZ947Q1I5rx3Mlczoe03alqq+KFu7TH777VWrqlN44w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZDPN4KbgNEzjq6cBz5S5/XDz1PFyowPPIu2Tszzyju2aS+e9+qchskmexCBppFIxV7Qbuc1qco0tEuVmIyTGQAWs2+Ihv3aytUBDx1km19Mos95I1TntfvavWG7PlqBCXcKpZYhgYcWL2sUGrU2DsZOE+S0D9YTyD87z1QVX0zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Njo0TezN; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1733909347; c=relaxed/simple;
+	bh=PlClc1XiF019YiTBEC1Ed7jUWJ731Nh54kobZyel3mQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=og2T6gzKOUmcdwf+G6NkvhenEJoD7gVoMOYalZSR/MyU3RCIaAV7GUWspmWYzd7u6VApQAbWO4EEy+ZQ9NHDiWr6/pcUr3EuaXC61Rq62JKhowfzBdzTlDBrTZHvghepS/yLRqWhmqUwCAO4iWpc5oGPVKUHz7RpVTxzHyx88MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=WO7FV9FO; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Njo0TezN"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5d3bbb0f09dso7165173a12.2
-        for <git@vger.kernel.org>; Wed, 11 Dec 2024 01:26:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733909203; x=1734514003; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D7pqUMtvMpJxTOXZKYHpsLIjkhNZZJX1z02p2Hj1HE0=;
-        b=Njo0TezN5JQybIR9blwXhGAqvTjV7HmHjUAqx/K3ffEX+ND/iQbAkAiSDBjhAZW8jC
-         Jq7Wz/dZpg3XcetIJBP6JzSNQxZSHEY22ngbXGSX559LfsXSZD7r0lFfGs0h7SEFMOG/
-         V1xpp0BcRhzz8JVMc7IKz+HUIjXatH4FOQZr6EiVxS9yHpMkLoOF94x0dzPHAI/+aF24
-         hbnsEL6RyifzefCm4RC30yLjMJtpBe1t+JH6+vt4BB6WAYYI/jEaoh+zSv4O0TTG6hEC
-         s3CeO1fwgBJ+/FT++der9PlmSNzP3OMmazqZA4U8AOImiUqYv0xYlp++shDvPrcfOzuI
-         6LUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733909203; x=1734514003;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D7pqUMtvMpJxTOXZKYHpsLIjkhNZZJX1z02p2Hj1HE0=;
-        b=eDvWWEDgihvs3h0M6jci1whdTtvGfN1349FPeH1pYpYGy8pBV/HO653aVGpnqgq0cF
-         w1XaT8PHv2GlZaW5y749BGlOMVBTQjISZU/S06Jy7BC7noTQfGvevy6uXFFU/Cq81YYa
-         eTLwdppIIBgvWX3pj710DN0QHh8sh95y2dWwO0TBsCfLmpp26mk2m8uoUiL2cVCjY2w5
-         nZMlsEAcNucns4hcFGzGhkOrv1ZVehgJgpLwaO/tkXeUJ9fEOBhdybFdvLsbHF1h2bhM
-         ZFiVxpePrHc+WkbGjulYCKrvBhjkawEzhkfFrOnuKbx37FQymf7jMc63J6MTKG0Wixmj
-         a3Aw==
-X-Gm-Message-State: AOJu0YwaJyEirVj0BxWesi6eIpWJke5U3Ec5dLGtp+jyA9q18CJpV4Ks
-	7q99iWZqnUYluIDMam1CgdbRhOLN1iEPA2ok6zPw64ruc3bPuQ39g82zACrYg9BKcqWePP2n3/T
-	0B2MsJNJf72tykH7gdCFE0Q7V1/4=
-X-Gm-Gg: ASbGncsop4HB8ddjeAnzE4ShBqJfR3rQUV4oWhEeCTKJLTEkilNS7H5nFeAbRK1HkVS
-	r6Z5TzrITymUqndA1eYHg/QknTY0wJA90J3vA/057
-X-Google-Smtp-Source: AGHT+IFNEyNPz1+qNZbtSZjUwkG9w0ytj5mG/YgkXWJGSvdRbgLnciMlZ8s/7CgXgf/fu5mIZ6TnYT2Jhh7wrAlH94Q=
-X-Received: by 2002:a05:6402:5242:b0:5d1:2440:9ad3 with SMTP id
- 4fb4d7f45d1cf-5d43316ff4dmr1954734a12.30.1733909203264; Wed, 11 Dec 2024
- 01:26:43 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="WO7FV9FO"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1733909336;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4mKavrfZcOBBIvVKPKjzzchH4Cu8U4N0ev2rddZtumQ=;
+	b=WO7FV9FO96NKu7wTt59Usd7vicsP8kV2xf1qyA9P5Tecx49TmeK2MoK4Bf0+xIULTPrLi5
+	cDoLTIewOR8iC2YCn/9I8f4Fjl0VkzOTZqMMAPiTR8+gLlRnsev8L8cHCm0LFzPQqU5+D5
+	3kIpcDd8qejeKPO3nPOicNu4R5euCf0=
+From: Toon Claes <toon@iotcl.com>
+Date: Wed, 11 Dec 2024 10:28:15 +0100
+Subject: [PATCH v2] bundle: remove unneeded code
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241209-320-git-refs-migrate-reflogs-v1-0-d4bc37ee860f@gmail.com>
- <20241209-320-git-refs-migrate-reflogs-v1-4-d4bc37ee860f@gmail.com>
-In-Reply-To: <20241209-320-git-refs-migrate-reflogs-v1-4-d4bc37ee860f@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 11 Dec 2024 10:26:31 +0100
-Message-ID: <CAP8UFD3fZ21TXgtMcppXMHf35qgA-UH=0X9z-xJ456qXyV5=dA@mail.gmail.com>
-Subject: Re: [PATCH 4/7] refs: extract out refname verification in transactions
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, toon@iotcl.com, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
+X-B4-Tracking: v=1; b=H4sIAC5bWWcC/3WNzQrCMBCEX6Xs2ZUkVjGefA/pIT8bu1CbksSil
+ L67seDR4zfMfLNApsSU4dIskGjmzHGsoHYNuN6Md0L2lUEJ1UolWgz8Qvsc/UDoEplCmIwj9MJ
+ 6Z6QNWmuo4ylRbW7iW1e551xiem8/s/ymP6X+p5wlSqTTUR6q2oazuXIsbti7+IBuXdcP4UDGk
+ rwAAAA=
+X-Change-ID: 20241204-fix-bundle-create-race-d0bdca1bf999
+To: git@vger.kernel.org
+Cc: karthik nayak <karthik.188@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Dec 9, 2024 at 12:11=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
-m> wrote:
+The changes in commit c06793a4ed (allow git-bundle to create bottomless
+bundle, 2007-08-08) ensure annotated tags are properly preserved when
+creating a bundle using a revision range operation.
+
+At the time the range notation would peel the ends to their
+corresponding commit, meaning ref v2.0 would point to the v2.0^0 commit.
+So the above workaround was introduced. This code looks up the ref
+before it's written to the bundle, and if the ref doesn't point to the
+object we expect (for tags this would be a tag object), we skip the ref
+from the bundle. Instead, when the ref is a tag that's the positive end
+of the range (e.g. v2.0 from the range "v1.0..v2.0"), then that ref is
+written to the bundle instead.
+
+Later, in 895c5ba3c1 (revision: do not peel tags used in range notation,
+2013-09-19), the behavior of parsing ranges was changed and the problem
+was fixed at the cause. But the workaround in bundle.c was not reverted.
+
+Now it seems this workaround can cause a race condition. git-bundle(1)
+uses setup_revisions() to parse the input into `struct rev_info`. Later,
+in write_bundle_refs(), it uses this info to write refs to the bundle.
+As mentioned at this point each ref is looked up again and checked
+whether it points to the object we expect. If not, the ref is not
+written to the bundle. But, when creating a bundle in a heavy traffic
+repository (a repo with many references, and frequent ref updates) it's
+possible a branch ref was updated between setup_revisions() and
+write_bundle_refs() and thus the extra check causes the ref to be
+skipped.
+
+The workaround was originally added to deal with tags, but the code path
+also gets hit by non-tag refs, causing this race condition. Because it's
+no longer needed, remove it and fix the possible race condition.
+
+Signed-off-by: Toon Claes <toon@iotcl.com>
+---
+Earlier I reported[1] a race condition bug could occur if a ref is
+updated while a git-bundle(1) creation process is running. I've
+demonstrated it's possible to reproduce this by using a debugger.
+
+> To reproduce, I've been running git-bundle(1) with
+> `create my.bndl --all --ignore-missing` in a debugger. I've set a
+> breakpoint at bundle.c:515[1] where setup_revisions() is called. After
+> stepping over this line I see in the debugger `revs.pending` is
+> populated.
 >
-> Unless the `REF_SKIP_REFNAME_VERIFICATION` flag is set for an update,
-> the refname of the update is verified for:
+>     (gdb) p *revs.pending.objects
+>     $6 = {item = 0x7a2fb0, name = 0x78d7e0 "refs/heads/master", path = 0x0, mode = 12288}
+>     (gdb) p *revs.pending.objects.item
+>     $7 = {parsed = 1, type = 1, flags = 0, oid = {hash = "R\026\370\365\304\b\236\302\234\344\232\372\024t4\302>\017\001c\000\000\000\000sS\344\367\377\177\000", algo = 1}}
 >
->   - Ensuring it is not a pseudoref.
->   - Checking the refname format.
+> The hash value is the binary representation of
+> `5216f8f5c4089ec29ce49afa147434c23e0f0163`, the current HEAD of
+> `master`. At this point I've updated `master` in another terminal
+> window:
 >
-> These checks are also be needed in a following commit where the function
-
-s/are also be needed/will also be needed/
-
-> to add reflog updates to the transaction is introduced. Extract the code
-> out into a new static function.
+>     git commit --allow-empty -m"dummy"
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  refs.c | 43 ++++++++++++++++++++++++++++---------------
->  1 file changed, 28 insertions(+), 15 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index f003e51c6bf5229bfbce8ce61ffad7cdba0572e0..732c236a3fd0cf324cc172b48=
-d3d54f6dbadf4a4 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1196,6 +1196,29 @@ struct ref_update *ref_transaction_add_update(
->         return update;
->  }
->
-> +static int transaction_refname_verification(const char *refname,
-> +                                           const struct object_id *new_o=
-id,
-> +                                           unsigned int flags,
-> +                                           struct strbuf *err)
+> Then in the debugger I continue the process to create the bundle. The
+> resulting bundle seems to be missing `refs/heads/master`.
 
-We have a number of functions named 'xxx_valid()' or 'xxx_ok()' while
-I couldn't find any 'yyy_verification()' function, so it might be
-better to name it 'transaction_refname_valid()' or maybe
-'transaction_refname_ok()'.
+I started digging into this bug again. And I've discovered the changes
+made by c06793a4ed (allow git-bundle to create bottomless bundle,
+2007-08-08) cause some trouble. Those changes look up the refs for a
+second time, and if they mismatch, they might not get written to the
+bundle output file.
 
-Also I think it should probably return a bool so 1 if the refname is
-valid and 0 otherwise, unless we have plans in the future to follow
-different code paths depending on the different ways it is not valid.
+It seems the workaround is not needed anymore since
+895c5ba3c1 (revision: do not peel tags used in range notation,
+2013-09-19) and thus I'm removing it while adding some tests.
+Unfortunately, I was not able to implement a test that hits the race
+condition bug.
 
-> +       ret =3D transaction_refname_verification(refname, new_oid, flags,=
- err);
-> +       if (ret)
-> +               return ret;
+[1]: https://lore.kernel.org/git/87eddlpx5k.fsf@iotcl.com/
+---
+Changes in v2:
 
-Then the above could be just:
+- No longer user the term "bottomless bundle" and use "full bundle" and
+  "incremental bundle" instead, because they are more commonly used.
 
-       if (!transaction_refname_valid(refname, new_oid, flags, err))
-               return -1;
+- To verify the full bundle created upto tag actually contains the tag
+  object, add a test to clone from the created bundle.
+
+- Explicitly mention in the test names that annotated tags are used,
+  because it's not obvious to see the function test_commit_setvar() used
+  with option `--tag` calls git-tag(1) with `-m` which implies `-a`.
+
+- Link to v1: https://lore.kernel.org/r/20241209-fix-bundle-create-race-v1-1-e6513bdcbf8a@iotcl.com
+
+Range-diff against v1:
+
+1:  2816666488 ! 1:  a7974c232f bundle: remove unneeded code
+    @@ t/t6020-bundle-misc.sh: test_expect_success 'unfiltered bundle with --objects' '
+        test_cmp expect actual
+      '
+
+    -+test_expect_success 'bottomless bundle upto tag' '
+    ++test_expect_success 'full bundle upto annotated tag' '
+     +  git bundle create v2.bdl \
+     +          v2 &&
+     +
+    @@ t/t6020-bundle-misc.sh: test_expect_success 'unfiltered bundle with --objects' '
+     +  test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'bundle between two tags' '
+    ++test_expect_success 'clone from full bundle upto annotated tag' '
+    ++  git clone --mirror v2.bdl tag-clone.git &&
+    ++  git -C tag-clone.git show-ref |
+    ++          make_user_friendly_and_stable_output >actual &&
+    ++  cat >expect <<-\EOF &&
+    ++  <TAG-2> refs/tags/v2
+    ++  EOF
+    ++  false &&
+    ++  test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success 'incremental bundle between two annotated tags' '
+     +  git bundle create v1-v2.bdl \
+     +          v1..v2 &&
+     +
+---
+ bundle.c               | 30 ------------------------------
+ t/t6020-bundle-misc.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 30 deletions(-)
+
+diff --git a/bundle.c b/bundle.c
+index 4773b51eb1df8057466c87f48445c49bc1f594ee..dfb5b7a5ec6b98e00078359afe991bac55cae739 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -420,36 +420,6 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 				e->name);
+ 			goto skip_write_ref;
+ 		}
+-		/*
+-		 * If you run "git bundle create bndl v1.0..v2.0", the
+-		 * name of the positive ref is "v2.0" but that is the
+-		 * commit that is referenced by the tag, and not the tag
+-		 * itself.
+-		 */
+-		if (!oideq(&oid, &e->item->oid)) {
+-			/*
+-			 * Is this the positive end of a range expressed
+-			 * in terms of a tag (e.g. v2.0 from the range
+-			 * "v1.0..v2.0")?
+-			 */
+-			struct commit *one = lookup_commit_reference(revs->repo, &oid);
+-			struct object *obj;
+-
+-			if (e->item == &(one->object)) {
+-				/*
+-				 * Need to include e->name as an
+-				 * independent ref to the pack-objects
+-				 * input, so that the tag is included
+-				 * in the output; otherwise we would
+-				 * end up triggering "empty bundle"
+-				 * error.
+-				 */
+-				obj = parse_object_or_die(&oid, e->name);
+-				obj->flags |= SHOWN;
+-				add_pending_object(revs, obj, e->name);
+-			}
+-			goto skip_write_ref;
+-		}
+ 
+ 		ref_count++;
+ 		write_or_die(bundle_fd, oid_to_hex(&e->item->oid), the_hash_algo->hexsz);
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 5d444bfe201a330527e86dde7229721fc386fc93..e7e8de92cd904f2f9a2dd6b4be21b288b6ea6154 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -504,6 +504,51 @@ test_expect_success 'unfiltered bundle with --objects' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'full bundle upto annotated tag' '
++	git bundle create v2.bdl \
++		v2 &&
++
++	git bundle verify v2.bdl |
++		make_user_friendly_and_stable_output >actual &&
++
++	format_and_save_expect <<-EOF &&
++	The bundle contains this ref:
++	<TAG-2> refs/tags/v2
++	The bundle records a complete history.
++	$HASH_MESSAGE
++	EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'clone from full bundle upto annotated tag' '
++	git clone --mirror v2.bdl tag-clone.git &&
++	git -C tag-clone.git show-ref |
++		make_user_friendly_and_stable_output >actual &&
++	cat >expect <<-\EOF &&
++	<TAG-2> refs/tags/v2
++	EOF
++	false &&
++	test_cmp expect actual
++'
++
++test_expect_success 'incremental bundle between two annotated tags' '
++	git bundle create v1-v2.bdl \
++		v1..v2 &&
++
++	git bundle verify v1-v2.bdl |
++		make_user_friendly_and_stable_output >actual &&
++
++	format_and_save_expect <<-EOF &&
++	The bundle contains this ref:
++	<TAG-2> refs/tags/v2
++	The bundle requires these 2 refs:
++	<COMMIT-E> Z
++	<COMMIT-B> Z
++	$HASH_MESSAGE
++	EOF
++	test_cmp expect actual
++'
++
+ for filter in "blob:none" "tree:0" "tree:1" "blob:limit=100"
+ do
+ 	test_expect_success "filtered bundle: $filter" '
+
+---
+base-commit: e66fd72e972df760a53c3d6da023c17adfc426d6
+change-id: 20241204-fix-bundle-create-race-d0bdca1bf999
+
+Best regards,
+-- 
+Toon Claes <toon@iotcl.com>
+
