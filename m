@@ -1,120 +1,116 @@
-Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A5F1C1F22
-	for <git@vger.kernel.org>; Wed, 11 Dec 2024 22:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7571E9B16
+	for <git@vger.kernel.org>; Wed, 11 Dec 2024 22:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733954606; cv=none; b=Uw3TSnfCe+Jus/7G2rkitYLg/Aup/N1+sjoMiCdvWkpQYhAIdsYb5MMdXlqo62zPlND+ejhqkcYJdjyS3UhVhr1TzBbNB6h9yblmDA6MUgeRqBXb5NVPtl3GAewgoIv7ORB+YCdG3XBykihvO7coZkMHDUM21o6AdWbXObkhC2g=
+	t=1733954901; cv=none; b=a8shvF7zNHpoSw3zYWpN5xxwTfXBIcE2k92PGcXIdm1co9PU0lsLKkkA2sLzW+cqpssEmz8Z8R8k3k5bB1xtMDR8LzKAcJOLqRzCDnmi457EcyTNQpQgGNf7/yEkjALOu2CRR43QmFhWHUCgRnTClgOk74KV8tgnfmAzwVnaH8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733954606; c=relaxed/simple;
-	bh=d57bbwiHLQxU53xFlQCXTmSKz3xglvfAjMQ0Mt6rGxs=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=m+Td4Cja0zm/C7XKsr5kSIgkHQ4gEgvDQtnNGCXesyJdF6lv1csrPyauw+PCpCwpEbJr5NT6WOC3OI3FjKlpOIs7ESJhlFyNddbUKjvAp/5mCtDLFude2C29rDQOFw5mc0Za3YdWbphWGL9jFL4qDOdq0tyqSeZU09FO1mSRCn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=ZWUKfdJV; arc=none smtp.client-ip=192.29.178.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1733954901; c=relaxed/simple;
+	bh=9JxwMG1C//iyRdug+pwKg8s/lB0s6Cus14vhqt/T5SA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=OSOP1B76IF4fw/A3oIqxGfn6lf720blZQd/aNbDXrmkiG35wQfNjJMqGd8Hg5XiyiUaEs2bKMrDvSiApvaCg9L3nGZQb3i7WuOoWMwX/v1rn5oqR0Dj+K1fJs55UvwPMb6w43mtP1BrFv6e6kkvLsRRQ9rltBJBt4o8KODfC1o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=c8hVl1MQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F3uND32/; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="ZWUKfdJV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=d57bbwiHLQxU53xFlQCXTmSKz3xglvfAjMQ0Mt6rGxs=;
- b=ZWUKfdJVe6bSRe8bDqKn3hJYPpBIy3Nj4NGSRw/gJxDoNVSWXjdiNGGD9t/oegcSXgMo0S0abCvq
-   TeMIti+XsCfb5IF7LPI7duiHmNQENNstIEISZPBq08j1mR+4JcJQAVWOQa2Tm8cS9GJV6QkDznK9
-   VVQ2EatMOS5JVQbLQ3hzP0TDlaNiCmK5IMbLWvKPbRnQKdfcLkgp5kMbk+odxKfouA9uu0oYQn/L
-   O//sZLS0JeJOInNAZSol/9eR+Y2EPRD21BMVQZAnA4ecC/DgpVSjdFrIJMZwRfJI0WyMmId9u6lh
-   PZ0CVtdktXh78eKIkSg2NL7/Kwd9l4RMkqsezA==
-Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
- 2024))
- with ESMTPS id <0SOC00A1TNXIKK70@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Wed, 11 Dec 2024 22:03:18 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="c8hVl1MQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F3uND32/"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9F06A1140330;
+	Wed, 11 Dec 2024 17:08:16 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 11 Dec 2024 17:08:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1733954896;
+	 x=1734041296; bh=hbhogLN4qw0urVIM2KFz/rSI9xwngBy3LVzkbNX9vcY=; b=
+	c8hVl1MQxsCpEsS2DUEDNJ7MiJodhZGAmCAdzGel7o/dBCoJsn5W2c1nGMa67JcG
+	75KWqV9UAgyeP3uqBx+g6yE6JLg+zsLUT/PzOPMWGnUld8Pb5OA7TC/lFWNGerje
+	E7DzeCkI86ipUJ+D1oRm6+zsT+Q7F+SbgpkH+I8d1+XsRwbp1I8M3MsBhm/7W87o
+	Ht+A+NGV7PAEWgxgmIioAtXlUqeP7jPOaA5hNwszzjts3BGWAcz51u08JYHBaAGn
+	6UCTSZHLwuUuDhfurk/gwFlgJcJQ2vjOqFJvpx5aC0Ga/4RpOdjxhCKe4YV7JjBL
+	wCoII+gGyoHMwpfDs5pImQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733954896; x=
+	1734041296; bh=hbhogLN4qw0urVIM2KFz/rSI9xwngBy3LVzkbNX9vcY=; b=F
+	3uND32/LurOgArJolW3vvMImDIStgYLl4HOUlMlTZ6js94aqYt+zQrbP7CdcrPwm
+	Dyv6TNTM3mw69juOE3DL+l9iTWfl7+Gn4BujPZDSaO6ICrbccVc9OPjTQ9ZsWyZt
+	2C4hM/ODi/7iILPfwe9+9JYpopxKO1qvEL+SNFQfSWbCjSSnasqfTQ3kcqmVEAiT
+	zU/utc1B8VH48syaXUF7HUF5fEUmZuQTyNWh3ldHb8G3p+O44hwb3kDnesS3JjZC
+	KRavbinlFx+D0e98rsp8t2VzXYvs3PSCaVTjtrN1u6pSZ50iuLdNC73EIp3/f1u5
+	Df1gFupMLkdQdXVX3Stew==
+X-ME-Sender: <xms:UA1aZ_w3_lMbzDqcODPo-i59717wIq4binVydJ5qjpAJwwKlPwKm0Gc>
+    <xme:UA1aZ3Ra0JUVNcQWXhr76451dxoSrpCOFsrO6XFgmf8DtzWDxvCyxdbpoA9hovM-6
+    LAGrBCtw2V9Q_5L0g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkedtgdduheeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepleefjedujeffgfeludehgeehueeffeeftdfgfeefveduueelffegkedtle
+    eukeeinecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpd
+    hrtghpthhtoheplhhiuhdruggvnhhtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:UA1aZ5UTS-3nwql1gDXmrbHtpLMg37uKqwAhcA9Gg0Lz-2DvekkfQg>
+    <xmx:UA1aZ5igzgTgB9pb9T5fIbqeYMlokXeHcmsBhcXR95to9Yx1rKVVnw>
+    <xmx:UA1aZxC1psgQtaa0lSYlATFrgk2jHC_Tk4Qz4WppDZZMkI8Nhb8ZIQ>
+    <xmx:UA1aZyIUToEP_70miubuH9DENo6-UzvJcZr3_vNYASMvMp1o0IN__A>
+    <xmx:UA1aZwMcJBbzcCdAKnm1hqKA-vXHuA1gwq5t6aLHuW7FR7arD2UsOnHV>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 40B29780068; Wed, 11 Dec 2024 17:08:16 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Wed, 11 Dec 2024 23:02:56 +0100
-Message-id: <D697LJWHRVMR.36YBMM1URT59U@ferdinandy.com>
-Subject: Re: branch description as a note?
-Cc: <git@vger.kernel.org>
-To: "Justin Tobler" <jltobler@gmail.com>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
+MIME-Version: 1.0
+Date: Wed, 11 Dec 2024 23:07:55 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Bence Ferdinandy" <bence@ferdinandy.com>, git@vger.kernel.org
+Cc: "Denton Liu" <liu.denton@gmail.com>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Message-Id: <07e3a0a3-7551-4f54-bc3c-afd8dae7da02@app.fastmail.com>
+In-Reply-To: <4e8d3a75-0128-4d03-a429-59b7588f80b4@app.fastmail.com>
 References: <D68T28TFNW6N.2W0WV6WOUT6V0@ferdinandy.com>
- <ldbhbymjanp5xg4suatp2bgbnk3etkgxqivytpqzyqkmsiuotk@hnro3pu2zqtj>
-In-reply-to: <ldbhbymjanp5xg4suatp2bgbnk3etkgxqivytpqzyqkmsiuotk@hnro3pu2zqtj>
-Reporting-Meta:
- AAHTorN5Q9PFyqj6wSgN3tdighfE6wLCguebq3ii8+rHHRPON74VFWP/5OpLLJa7
- neVM6jQwhMaRxn0itawa4EKRVCRzN9mfpqBXkWc/K1rCl+hngJfJcIc9jLVTVhzg
- P5jhvVz8hLRDQJhZxlpsTC3U7F+7Zf+c2TcOy0rGzSenOAUfYRoj5TxgkH01k+eZ
- /DirDhsDX1lYcsSEQmmlDJ/kPeVPt/mkEZLjYmstKknhQ6SaMJ6js1wq/FCMSCtM
- baO6uZKvtDZe4PM4oGJzTLE5ae93bCdiDqOZSd6tbtFanxmlkDPMivCei3OfPJyG
- jEPG9lsS0LTqbfCIClTVzTHJAqy+ivl9qVR9UeryD8/1TNrsrc/tWH2eYTIZDSBV
- y80ddOo52JOmU4s+mPEeFRUu8DU56MX2JJr9+rdhy2HesuJfUNgeQAlU4a/RJ7B5
- 0JIsKf3BlAo5Dq1Gudoui5F/bkE4kJrKoFFaPhaZy+QJXO6hk71EcYlk
+ <4e8d3a75-0128-4d03-a429-59b7588f80b4@app.fastmail.com>
+Subject: Re: branch description as a note?
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Dec 11, 2024, at 21:13, Kristoffer Haugsbakk wrote:
+> See also this project idea https://github.com/gitgitgadget/git/issues/=
+438
+>
+> Which also links to a 2019 thread.
+>
+> With +CC on the participants. I hope that=E2=80=99s okay.
 
-On Wed Dec 11, 2024 at 18:34, Justin Tobler <jltobler@gmail.com> wrote:
-> On 24/12/11 11:39AM, Bence Ferdinandy wrote:
->
->> Now my problem with the description being a local configuration, is that
->> I often work on patches on two different computers. I can easily share m=
-y patch
->> notes with myself, but not the branch description. If these could be pus=
-hed and
->> fetched like a note, I think that would open up some other nice possibil=
-ities
->> as well, like having a standard place for MR/PR messages for forges, sha=
-ring
->> proposed merge commit messages, maybe other things.
->
-> Recently I have started using branch descriptions to store MR/PR
-> messages and using a script to sync it with a forge over its web API.
-> This has got me thinking along the same lines. It would be nice if these
-> descriptions could be part of repository tree is some manner to more
-> easily facilitate distribution.
->
->> For my personal issue of sharing branch descriptions with myself, I coul=
-d
->> probably just make up a convention for myself, say using refs/notes/bran=
-ches,
->> but it would be nice to have this built in, instead of the local config =
-branch
->> description.
->>=20
->> From usage perspective I could imagine a new `--branch` flag for notes, =
-which
->> would tell `git notes` to operate on notes attached to branches instead =
-of
->> specific commits, probably stored under refs/notes/branches by default. =
-Maybe
->> add an `--edit-branch-note` to `git branch`. And of course have the opti=
-on to
->> use this note instead of the description configuration wherever it makes=
- sense.
->>=20
->> What do you think?
->
-> One problem I see with notes is they all live in a single notes tree and
-> are associated with individual commits. Therefore, I'm not quite sure
-> how a specific note could be correlated with a branch without having a
-> separate notes tree for each branch. Maybe the notes mechanism could be
-> extended to also support storing notes associated directly with a
-> reference in its tree? That might allow for notes to follow a reference
-> as it gets updated.
+Reiterating what I wrote there
 
-I haven't really looked into how this could be implemented, but somehow you=
-'d
-need to map the branch's name to the object for sure. I just thought it wou=
-ld
-help if the user facing part would be similar to notes, maybe even the same
-command just with the --branch flag to tell note that the branch name shoul=
-d
-not be resolved to a commit first and then to the note, but rather the name
-directly to a special "branch note".
+https://github.com/gitgitgadget/git/issues/438#issuecomment-2381017430
 
+I would store all ref metadata in one ref.  Either divide it
+up into files or have one structured file.  I=E2=80=99ve seen this idea
+floating around.  I haven=E2=80=99t seen any purpose-built tools for it =
+yet.
+
+What I do right now: store all cover letters and whatever notes in an
+untracked directory.  I plan to version it with a parallel Git database
+(named something like `.git-mine`).
+
+--=20
+Kristoffer Haugsbakk
