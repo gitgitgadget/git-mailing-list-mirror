@@ -1,59 +1,112 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFC4188938
-	for <git@vger.kernel.org>; Thu, 12 Dec 2024 18:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BD11885B3
+	for <git@vger.kernel.org>; Thu, 12 Dec 2024 20:23:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734029915; cv=none; b=A75r1qpbJuCuSyiBufgoD5JZPx1kTWyFF0h7nkofkomz5fKLFbEXNwoLae+a1Bw495QbiF1Z1mUZ/VtO2R4OdcadR/uEeaviZTCRE/IE4cJUSgBGrgxsP2ebt6mFQ4OdoswxPps2w8BgXFnmWYWAQrPB9ENeWEidTQYJgJt90lg=
+	t=1734035038; cv=none; b=E1rAh7Rtcx/CCMpbVM4/WhG4ycIqjnoCL+o/AWWSW6ADor08I1iHvlCSMBpvdFWQSdc4+/MCD4uSZGGU/WTh41HuReZ6x31RmmNIEC/rWo0M52OPf6rn2pNnZoCrq1AHwyTQVL/+syUEXDpPYbLvfMHY9HSzA+jrJ3fiuFjwerU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734029915; c=relaxed/simple;
-	bh=3Pwok7ubHBf52+S06Px9tTWFlocxKBBTeLqDq8T/crI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RgMjdy5ZKuemE6CYxGn8uoK1z1y5g4/45xmvWhOe3DGY42Z0Zhkbp6Gd95s/nBcGoqdhwUTSh2xasGJAftf1sYPkUnw2SNiZbQLg99Wt1Es0Kk+CPH9katsIaHp90hZsWdP4fm5KScnhwJiURyN9ZDkEvvlQ8gwgEkCc6T3DaPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.104])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4Y8MF34xWHz7QWlM
-	for <git@vger.kernel.org>; Thu, 12 Dec 2024 19:58:31 +0100 (CET)
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4Y8MDp3VMVzRpKl;
-	Thu, 12 Dec 2024 19:58:16 +0100 (CET)
-Message-ID: <c6cc8704-6043-4e6d-bc4a-d9801a372710@kdbg.org>
-Date: Thu, 12 Dec 2024 19:58:07 +0100
+	s=arc-20240116; t=1734035038; c=relaxed/simple;
+	bh=pYWezhCPe290YWPut3ayraILcK9UJjxRnND3+XS+kGw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KxoMg0/LJ867GnGt0Eq1yfEajkj1WlAiD3q6830/IT35lU10AClj06WsueQXz5ljrVZW7GjXnIYyQg1tYp5wITjbIZxaCdYfyHgMAZoDTvOiUW24gMNNYn/lMti3cvG6/jBb8AVuQtHYpHknjF/bpHsadTznAS8DfIYuvJ8EhWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ak8vuCzI; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ak8vuCzI"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-725b4f6332bso90622b3a.0
+        for <git@vger.kernel.org>; Thu, 12 Dec 2024 12:23:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734035035; x=1734639835; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=TIR1bVcQdhZXhTBmowUNWfVgU7h4f/kO4RAm1MjOD1o=;
+        b=Ak8vuCzI9ZyHFVMVXWJDVSsAmGDWGDgyLhxTnpmzGnE5XCzFpKq7tbcc+h4C6rr3yT
+         9VWX+w3joX6drDQIVtJkONIw6b+ohgEw8Otb0HfbrXpgWRroW8y8C9UwPwHwMyc+ePe6
+         7oLlgmzTqncMc/oBHizpvKl8JMzR6KeZKq5AtsQC9of20DaKzdhWkOBCM0BWAYxUJZAE
+         DiLqaW5Nxle5sT0h9RlHhl8Z8gxyWEZmpR9477oCb54wrE4dY9VXj98U5KeI42kyOe9K
+         tNAPpH0cnIjXnvC1a1/qhzvwEostpCPBzv/bJJgFK0hvwgZkDMwYptpV7TFcWhqOxZJH
+         Mhqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734035035; x=1734639835;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TIR1bVcQdhZXhTBmowUNWfVgU7h4f/kO4RAm1MjOD1o=;
+        b=oz5cNn/jZdeNqJTlHZpIvwMQombV34j8Gc5PaelTB/YfF+9L9aaF+7Nrd7kNEsZzbj
+         xQokHaOLkYszRZ3zJSfoHHwZpSTWrQYbecpzi+z0FJNj52ft27U17wCY0XY6yIT1HgCl
+         UfkC82+4XimUif2MYOqCce+IY1abGmeXNz3Xg9mayrB+iJCznyPTTC2iYke1+RI7twyP
+         X9K90QTszYow/Qcbh+MWt0ZB2lZu+/aetF9SU6FG0rIO+ABk2OJ5mNzYJXcF1z/BngK6
+         lQ0Y245vSkekM+FFI5vLgbEQ1SV0OQPJcQGa77BnTParvzbkZH973Ew/DE60fn0XSNDS
+         ie9g==
+X-Gm-Message-State: AOJu0YzOOe4kLnFlGfLXJ1Za1tFgajfO6XeT/BM9+q25Cy1OYrlj3x5O
+	ATMc+/Y81SBaQEx3A+sGmq8sigoa3JwCA6RzmZGpRlzjbL1NLm+TZM2dhQjhUO84vQzgTFj9J69
+	QFALvhdUdgUMPDKgUkG3Dwx4kTH/W3K0U
+X-Gm-Gg: ASbGncuvXpV/h1UQysQKasc4N1Zz2UxA0g+bYXcMTYCZ/QfQGAYpd5FQlTs+NsHBN3+
+	BkIAeMeV5GE6D1W/eJNgfrJ292PfneZ1M62qYsT6nNRQXfFKDqkacC+X7v0bXQqiCIl0=
+X-Google-Smtp-Source: AGHT+IEqfoOXT62zswGGYBC1dnMlIZ9XvpQl/ibpv67PnQgas5Wz76sALj9A6rLO27OyPRDj6y28lMTuMBKOapStChI=
+X-Received: by 2002:a05:6a21:7890:b0:1d9:9de1:b2e7 with SMTP id
+ adf61e73a8af0-1e1dabd136bmr1005814637.7.1734035035525; Thu, 12 Dec 2024
+ 12:23:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] gitk: add text wrapping preferences
-Content-Language: en-US
-To: Christoph Sommer via GitGitGadget <gitgitgadget@gmail.com>
-Cc: Christoph Sommer <sommer@cms-labs.org>, git@vger.kernel.org
-References: <pull.1835.git.1733767737.gitgitgadget@gmail.com>
- <e116685568e4f1db3bc71985945f0ff4e40e12fc.1733767737.git.gitgitgadget@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <e116685568e4f1db3bc71985945f0ff4e40e12fc.1733767737.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Brendan Jackman <bhenryj0117@gmail.com>
+Date: Thu, 12 Dec 2024 21:23:44 +0100
+Message-ID: <CAJUwWUMQF_tN_hyBMh+F4NtAHVAx1z+g0HYY=PD9-jd5RdcR9g@mail.gmail.com>
+Subject: failed to read .git/worktrees/test-worktree-xdrphX/commondir: Success
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Am 09.12.24 um 19:08 schrieb Christoph Sommer via GitGitGadget:
-> From: Christoph Sommer <sommer@cms-labs.org>
-> 
-> Add a new preference "wrapdefault" which allows enabling char/word wrap.
-> Impacts all text in the ctext widget for which no other preference exists.
-> 
-> Also make the (existing) preference "wrapcomment" configurable graphically.
-> Its setting impacts only the "comment" part of the ctext widget.
+I am developing a tool that uses Git via its CLI. The tool creates a
+bunch of worktrees on startup and tears them down on shutdown.
 
-Nice! I agree that it makes sense to wrap the comment differently than
-the patch text section. I notice, though, that the patch text wrapping
-is also applied to the commit header section. Personally, I don't mind
-it. If someone needs a third option, they can take this patch as a
-blueprint.
+When running its tests, it does this a lot. Sometimes, the git
+worktree add command fails with exit code 128. The output just looks
+like:
 
--- Hannes
+failed to read .git/worktrees/test-worktree-xdrphX/commondir: Success
 
+Naturally, whenever I try to strace anything, the bug stops
+reproducing. But, I have tried manually adding logging to my
+application to see the Git commands it's running.
+
+The test harness sets up a fresh repo and puts some commits in it,
+then runs multiple instances of the application (on the same repo).
+The one that fails seems to only be running these two commands:
+
+["-c", "color.ui=false", "log", "-n1", "--format=%H %T", "HEAD"]
+["-c", "color.ui=false", "worktree", "add",
+"/tmp/limmat-child3qE96Q/worktrees/test-worktree-sGVqA8", "HEAD"]
+
+And that second command fails with the error above.
+
+Any idea what's going wrong here? Is what I'm doing (i.e. creating
+worktrees in parallel) actually legit? Anything I can do to help
+narrow down the issue?
+
+.:: Details
+
+I've built git from next on Ubuntu 24.04.1 LTS, here's the git
+bugreport output:
+https://gist.github.com/bjackman/3377add9e8d7b747d9f74b52518e9101/edit
+
+But, I also experienced this issue with the Ubuntu packaged version of Git.
+
+The application with the hacks to add logging of Git commands is here:
+https://github.com/bjackman/limmat/tree/git-bug
+
+Here's an example of the test failing in CI:
+https://github.com/bjackman/limmat/actions/runs/12303338582/job/34338222752#step:5:337
+
+If you're willing to try and reproduce locally, in theory it should be
+enough to put your Git build in $PATH, clone my repo, install Cargo
+(https://doc.rust-lang.org/cargo/getting-started/installation.html),
+and then from the base of my repo run  `cargo test race` in a loop, in
+my case it usually fails relatively quickly.
+
+Many thanks,
+Brendan
