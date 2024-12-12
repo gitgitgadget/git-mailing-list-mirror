@@ -1,227 +1,172 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2099.outbound.protection.outlook.com [40.107.247.99])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544B72101A3
-	for <git@vger.kernel.org>; Thu, 12 Dec 2024 10:29:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733999358; cv=none; b=hVdf3FyUbqIusHyzOd8OwQN0f2QvrqnSMHQLvkY1sc+XxKUrtVii2iNkhaI/qgFJVN3D0Py8pBZkOomcQuld1pfPrlVhrmR+yDlApMVTsuiFrzpJMNyCFBI37rGcic5JhUIKTIKxHHR0XTg4FvBonntgf75Hogb3DHoiFaUxuf4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733999358; c=relaxed/simple;
-	bh=dgA0+SFCIxEtap21VTdlvkkUddl6S6YprXVs4deag1c=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KlDNToyk1HkwKtOeBKuDnjJhP4pN5AljkpOSy3NTcglURCovqhZBysJbJtt3KrdhF5h9xnyJa5BN69M89Fd+PYTiOe4QBRonQy+wYFdm3flFhbk9XJedcL0yrTxXmfsZeVez0Tx0BmpXsrIubrKiv0an/zgpuefTLnvMkqLCjmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ca4mtDm1; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2688210F60
+	for <git@vger.kernel.org>; Thu, 12 Dec 2024 10:30:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.247.99
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1733999404; cv=fail; b=VTjnOFKVBo6xoOLFseiNkfNEm0hX+IpaOQIIOSWK0Cy4Zw4Q9JIagCrHRclbQcVhhnwk5RHeR2SQ0AAfHsVh3NeWRZNnFuwAtN/BiLOSOqdkjhN70RO8psxfRsY6dEfziEZa6vLsKIVNEqUjKFRJ7tl+TblsMTTMoeBlxQP4W70=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1733999404; c=relaxed/simple;
+	bh=LIDq7uahpf0liBDGDzSUsJwprtb1a8TAlKtG2dfYaMA=;
+	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=gaduTTMphn6q9DOy5LDBZ3kmbTrjBHIUveCbvpDcnvvocvdlTreM1CM/9FmGZHyItuJ2rOMY6+ruGQ3cc/UFQ24r1U3ftlcgrOHXVpVYzZV0xK30FaQ9OMo9Kji6JlwDD/nbrEWeP/k3HOBOgzARD0Tap4MppqgBCFxTwIVQcBw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tracsis.com; spf=pass smtp.mailfrom=tracsis.com; dkim=pass (1024-bit key) header.d=tracsisplc.onmicrosoft.com header.i=@tracsisplc.onmicrosoft.com header.b=ZmSe/j+9; arc=fail smtp.client-ip=40.107.247.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tracsis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tracsis.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ca4mtDm1"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-386329da1d9so184302f8f.1
-        for <git@vger.kernel.org>; Thu, 12 Dec 2024 02:29:16 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=tracsisplc.onmicrosoft.com header.i=@tracsisplc.onmicrosoft.com header.b="ZmSe/j+9"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=cS2DWG1OXPI6w49Wdb2zQDxLtE6rJOf1kSazZLjHHi0c0edJ11aSSS988aiiMVItAZHGwjwfFgncUvKXcymQhE7jV+UJCSmALhjSRoJnZdUsQG9YS7aSvvHDuSqfiySZN0amML38mir9XuzXBUd+arKalxPcJTKxLGXQ1JV7UgKVmxUhybqgfnDU3TApQsRQoWvEyCU8WQgAsD9cBqJV/CM9oSAHpw/qaBbsi4hXpnoqQFwgywgUewjIN4yFzr6U4kdD2Nqm63RCS8mDqw810cTbdLStYxqpuJnGmJUO/VbPOqa2QylpHkD4zlNnnprBac8VY+jKS1APT3c0yElKXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LIDq7uahpf0liBDGDzSUsJwprtb1a8TAlKtG2dfYaMA=;
+ b=qXW3teq+7gxqwuRqVGVwWPPjqcZhbB8oGnZZt7OqHLH7Jng8tOpkMjlIvlFGSBPzKRdq8xHlnVKm1A2hSTNukP8KuSss+eY1mi8/Bc3tW9AQsZiNNn4rnsN+xtZSQ6zpo0h5sFOjcZGXoYi/W6baNT7wIGPk5ca9LLj6vEWfgObsc8dOOuotZsc5T/biOvUgXn9H4vkZSCkXm3uToUkiua3e8jsHhCcRikvAXGcfcsk4EWQWKhs5Xzq1L0mmkuiWGIdPIaz3BUozPjutt3xjpaaUuDjmN0KqZKNPmQnQzCGo3ngxn3UUteD4I9OitksV0DaRWYoYs98lWsmNVHiBbQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=tracsis.com; dmarc=pass action=none header.from=tracsis.com;
+ dkim=pass header.d=tracsis.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1733999354; x=1734604154; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IjcIAEkazCknbAZoSv2UmC8EFAZyAoBl3ROZVa0b/8c=;
-        b=Ca4mtDm1fuZE1dNbuYd5Cauu+wmrJri4IZJXGreKUCk+QLC0AzijW9IDPksA78ox25
-         ua/da9hmyxvbUT/Sz9eEBv+EBkqdXb3nj+U6zrgWX9bLwo3u+SPggW/1aj6Z/DLYA82v
-         /vR2jkGfEvNLuiaro+EBfngJ+FNd4DFIFrH9VlHOcIFBcBWIl+mDdhMx/ksGwmtJ44uI
-         aQyMtPjEUL09KHpTcThBBhzWcAF7Ahzsi/3bU9FtAC0t9MJXLQbbgbUuocm9VK4IFyrV
-         xbqnvfp9+QlQRN1Q2SsIaxoSmuWPoIVXFzaqAZpF8D11TLN+EsD+yNd6JOVB+OcA9lUn
-         S6+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733999354; x=1734604154;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IjcIAEkazCknbAZoSv2UmC8EFAZyAoBl3ROZVa0b/8c=;
-        b=OsUinFU8gh7n/eEfEdjmWmvISPPJ9j3GtdRNkH7wtUajCuUxN15d4td4rYHg9LXzVe
-         waHx64YSgn1Ci4Ep4VlgdFIHdee+YNY4J9R1SL7jZX5JznvxYrl6sQ5PTu49l6/Jy5II
-         YTX1aQTlz7tksCs94EGosFoulyx06ott2tBC+ul0JO+q7jXVgDR3z5wxDZzbgg6iXWiZ
-         SNLQ7nmf7FbkbVzCSNvyKmKFxmw9uQPpumxMB2MvB79MW3jFBT4PD4dm3xzBVfyTpRSj
-         Mo1+8qapc2WFGnBypGsSnTZgIimyKoqwIfyc6oNlLtS/gdkphbxIWa6jIJQrZkRB+tYM
-         PrCA==
-X-Gm-Message-State: AOJu0YwaB9y+xM5WVUNsuxqmowAzelRVt87lNEl3+RIZLTQslxfCqC+3
-	ZS9hYpzTd7frcDxEy/TpxcD/fKMn7UO5iMS0Gc8IdVKeHLVVs5eYZ+jJOQ==
-X-Gm-Gg: ASbGncs5Qas54Oube24mwBf7ntLARzP/xo24GOshaYizd7G+mZJAuKBccnrPszhwKkw
-	PG2VYjWMsq+HQXFzjNqmHfEeaKsVHbC8W7QG4Ro87KUhr+UuSbQzt9+EpcrWuiIX87sHrpBqyDH
-	vD+OpNfOmqgHQHDZyP4Ln6qRYWryf55BuGrMk9iSr2jR9i4tbGUuil6VdfaeN8mbuTatmFGV4hc
-	KIn/6dwHgfLCr9hDlA4E0do4C0Cu19/ZSu3Q6o4P/FD320fpcvbMoCdvw==
-X-Google-Smtp-Source: AGHT+IEr9YAWD3dadH59A/f0dtyMypoaciuRCWgnXkGuzHxFIiM5vubQyXnjy9ecAZJ5JcrAw7MeTQ==
-X-Received: by 2002:a05:6000:4804:b0:385:e429:e59a with SMTP id ffacd0b85a97d-3864ce5ff30mr5108706f8f.25.1733999353916;
-        Thu, 12 Dec 2024 02:29:13 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3878251c1d7sm3577343f8f.91.2024.12.12.02.29.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2024 02:29:13 -0800 (PST)
-Message-Id: <pull.1825.v3.git.1733999352289.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1825.v2.git.1731350009491.gitgitgadget@gmail.com>
-References: <pull.1825.v2.git.1731350009491.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 12 Dec 2024 10:29:12 +0000
-Subject: [PATCH v3] log: --remerge-diff needs to keep around commit parents
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+ d=tracsisplc.onmicrosoft.com; s=selector2-tracsisplc-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LIDq7uahpf0liBDGDzSUsJwprtb1a8TAlKtG2dfYaMA=;
+ b=ZmSe/j+9G3c2DfOEA0F2pWh/1VXhYBVXs6lunb0Z9MchGkCeyRKWegQxxP2mjhljVD/0OJ6Py5/rd+YjAHenSEE/oVm7ybW2qUarh6drrKDM3GcSxTCZqN0Bwn0lgD7lLUHq4HQZj7BlWcR6P+r9H1W7t9HT7l81ZtVMDUTIPNs=
+Received: from DB9PR08MB7194.eurprd08.prod.outlook.com (2603:10a6:10:2cd::21)
+ by PA6PR08MB10768.eurprd08.prod.outlook.com (2603:10a6:102:3d2::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.15; Thu, 12 Dec
+ 2024 10:29:59 +0000
+Received: from DB9PR08MB7194.eurprd08.prod.outlook.com
+ ([fe80::add6:5598:f30f:fd6f]) by DB9PR08MB7194.eurprd08.prod.outlook.com
+ ([fe80::add6:5598:f30f:fd6f%3]) with mapi id 15.20.8230.010; Thu, 12 Dec 2024
+ 10:29:59 +0000
+From: Francesco Occhipinti <Francesco.Occhipinti@tracsis.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: New checkout --track behaviour?
+Thread-Topic: New checkout --track behaviour?
+Thread-Index: AQHbTIBrkyO6uFJSqk+vXLc0lrp5MLLiaE87
+Date: Thu, 12 Dec 2024 10:29:59 +0000
+Message-ID:
+ <DB9PR08MB71949D21F5F0E81911F0D50F903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
+References:
+ <DB9PR08MB7194822B81F17420B2D3C149903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
+In-Reply-To:
+ <DB9PR08MB7194822B81F17420B2D3C149903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=tracsis.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB9PR08MB7194:EE_|PA6PR08MB10768:EE_
+x-ms-office365-filtering-correlation-id: c9d04efb-35bb-4903-2ea4-08dd1a97ee73
+x-ms-exchange-atpmessageproperties: SA
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?gFPvBsIhZAHhzTnXQHdyC33YgBNK/i5fbfQWCZiPeW8LgEUtJNdewZwmKq?=
+ =?iso-8859-1?Q?Z+LP3a0E2CnZL9y/WZJrY6g/mNIdMnPcpc+M0g4K1+CpV9Ub4Zrptsi5fY?=
+ =?iso-8859-1?Q?tO6nJUi9L8Nm0mIRiW1JvHC4Ouwpa2YiFisQpWrtYyP7kiKqxrl9+RnffN?=
+ =?iso-8859-1?Q?IEwEy1PhV+ZMJRbQ6m8QMgvNPrZSjobXDoNNDXoc1HsIWhZCe/LS2m8/yw?=
+ =?iso-8859-1?Q?7aDG5YBEFrApjR3fC8/BlKe2md7XwoTkFbmcZXhK/3lyHKB4rS8mq9Jl0w?=
+ =?iso-8859-1?Q?56ram3Wi1/b07LDHlzGoItHLCWabwCHrtPVhKNm1HpBmTiVfpZMYPfXNXh?=
+ =?iso-8859-1?Q?o0hf930QjC+ehnjEFx7MNMZdD8uB6BWCqZWRiVVMMI9w2od2VIcvY9plIp?=
+ =?iso-8859-1?Q?X1jBF3IU+L3XM0sRv1X5hRHjBAKbUWXqznlcGIXBrEJ5XFWSGNTSpLgVyZ?=
+ =?iso-8859-1?Q?5HFyX77+oQmBtgVBTA4UVQ3FxT36T9bhcaltkSpajzSmwvAT5GdbmjPkwr?=
+ =?iso-8859-1?Q?PSe7zoscIY/5ZbCSNK7YOlZ0yOgM5JiQmImpjsMesMzrTsAjIXRkPZjep7?=
+ =?iso-8859-1?Q?8zWpJqFb9iKmtPlVJrODdMKfOgpN/IhMF2MiWjXQOmNlnRgSxunL0zIPnd?=
+ =?iso-8859-1?Q?rsNr1OBw3EAtcHxlS+Kk/A7KHzbvdvax4rSNqNfpQPhsoMj07P/MPZuc0W?=
+ =?iso-8859-1?Q?KXfARSOpnrquTnC+mLFbTDtJLXStf3LnMjBYUEUeAWvSwf+Y9NEO1gdKG0?=
+ =?iso-8859-1?Q?wYbHd1Ixjv+9gOUdEJV+fDjLPTa8hmNS/M8SFzZQTncHwt9SAEeSFeBDh2?=
+ =?iso-8859-1?Q?PBc7//+IV4bBuUN6tUU0hM07kktONXLFTGPwht9yVUbG5RIfnHB9/6I0Ff?=
+ =?iso-8859-1?Q?UBSok9caSF2NoI+TjNzPBsZ0hzrM6sRvpDxgZKa9yX8SbCd825NOIYj7C4?=
+ =?iso-8859-1?Q?ijZIL9jfHNwSRuyJT8njKiOYPSf6UFmYTRsVyYpFhiLgkdFwMnGP8IjhQp?=
+ =?iso-8859-1?Q?GKOcMyFbyc9szKtZJ1j6G2Pre/aDR66Ph5Jju47cGWNskFxdNm292TTHto?=
+ =?iso-8859-1?Q?6wcFlFkRSn8a5mq7OwhQdNSOcUuCeN+bcytAtfpZgJdrhcgleZyv1HgAE6?=
+ =?iso-8859-1?Q?4axfZZUsTs9qW5pEq+RHw0tslvDPqhKPus5+NHuTkKYz0qCNrhMS5ACC0f?=
+ =?iso-8859-1?Q?/F8j6kfAzVB0hbWKiqYIkEKubnOnFj4XtjxRZ+gCi26bNAGI/VL2DNNdEF?=
+ =?iso-8859-1?Q?XiUiWRj1Mtp4jpA8EurFmJSayzLt0DdKhQGyhyhGvDuqgNu+5y7bXs7vKx?=
+ =?iso-8859-1?Q?uX+iCFdKTrvrqRU+ykp/kOjTfCTDoj777mzAFXr6zr2AsmiTOiQ6X+q4wU?=
+ =?iso-8859-1?Q?arOVZ31xQniBhLxtyeS/HOgQpdAw5Dbi2altTbuEmiSI8e7bnT8QVIKdf5?=
+ =?iso-8859-1?Q?ZZ+5NlW3EiD95YnEslewCvqUsmdF4AnG5uw6GA=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR08MB7194.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?H42g4knIrPK+gmveZDOpIhA/j22bnjHgnmz9jFnCLXNhLgZUNIBzOOyzwm?=
+ =?iso-8859-1?Q?PjNn2oGRJldSMhV8dhEaGNtH9MIYccOPka1ETe4F2AsWwKO2mS6A/Y7uaE?=
+ =?iso-8859-1?Q?XxjyC346kivf3rk5GIYWJv1ZPWH/cYCTWsgqZgrCr6tTwJXjZunwmG/lzk?=
+ =?iso-8859-1?Q?f0Zy+PaLpqYFVx+ziROJBq9FwhceyIWfdc0yn0OqhKVlUakZLVWx0kNd7T?=
+ =?iso-8859-1?Q?70LMV2nbL9rgTo3OHqvcHhemDHmWImAt118EgGz4GMO2r6Q5bA4IkU/YX/?=
+ =?iso-8859-1?Q?R1OgFUOcE9WD+1ub17YWMiMBTQ1I4FTbemyeCAfZT1B/b6/TL/Yr94cPwu?=
+ =?iso-8859-1?Q?EUJBQFKbho6nUNlBdU7w3DRY4Uzs3LkaUpEPQQKVlhxBpvBJI9aXMA0v4I?=
+ =?iso-8859-1?Q?JQ7Lmwh/Oj4uRKuvBPPcYTNgaEz1Jp5ynvdy0RAZQiK0PYdDU4a5eAyxbe?=
+ =?iso-8859-1?Q?rPO1dUzrEwVS+PWDgV65+k4yRLt+cJaLlUH5eS6CPwIMFadxD3Knjs4bao?=
+ =?iso-8859-1?Q?dE1zfHCx9ZUIvxSycqh3w7j9DQF+ESEZI3zdGTfQikhOJqnJQOSBRtDfPw?=
+ =?iso-8859-1?Q?oveh+/DQISWyKGId8ydZRRMnSOPdG9kMAeRnxM7ZXckkHSImRzkS3LU02X?=
+ =?iso-8859-1?Q?GNCx86QvbMjGjMvP2IgZVD9gzY7qmXogL/LWr7WYwwIfGz3i6KMmxDq8Gf?=
+ =?iso-8859-1?Q?AeG+Vw2L7KkPkQRtytrllKNs+vsiwuQilhHyns0zRyOzI+meaC/UaeNns7?=
+ =?iso-8859-1?Q?sQA8wDbUnETPV7KFnioGQzv06P2np9QFiv8ZqqORU8WLLCqIg1r7LydzZM?=
+ =?iso-8859-1?Q?wJ+piAIfD4rdlfW/V3HrWbuTxk4mWjJAqqIkAcjDiceofHkW1BPU989m6X?=
+ =?iso-8859-1?Q?IPtJyiGMCplelmtJkk6DcHlXxYcQczSlE7KlP8vH6ZnS6BfnGgvUFcm9Vd?=
+ =?iso-8859-1?Q?At97lOGeCJuNWu+ROwNi2owjS4VBBMjCfwHfzbtxM4qVXx9zjK4fZXuKlR?=
+ =?iso-8859-1?Q?a/W2jk/QEjK964x5SU6M1Fcj6DyVvLVOGQT7H4FFlRCVuAbQVN8nJwvOPH?=
+ =?iso-8859-1?Q?KjBMdLEvCwuwajJazsbZdImwjJuIO9YHLVII9R4nZukNIqW3pRWIHmAo2P?=
+ =?iso-8859-1?Q?UwNC7+9ibBr5jHxSZhdcFsLoBNqc9u4ETmG0V1R5gxjtDYKR282M0M4bV+?=
+ =?iso-8859-1?Q?OMCoVSAxV9uXOi28eVZ0fRu6IJ0ndgt0miDWIc7KnfcQ5zbtGpbFM4lAtJ?=
+ =?iso-8859-1?Q?hWcgPJfYr1F8ttBTd5Cq0AXNtav+oFoyDnundwO7GgY3EgwoIH4civEeo6?=
+ =?iso-8859-1?Q?cPea9Lwmr+mQACi5ETzEJmdnybsndGCaYs4SaGaFKkSzUpxSl3ySR0i6bl?=
+ =?iso-8859-1?Q?uU3YXhr6ht2nn/2QjPBkXCwR3jM34VLjNe6UcoD0Uw10jd4HLkxip3bDL7?=
+ =?iso-8859-1?Q?GIRMTpi36kMopNHt2eFlsJxLNpoaCBw4u3qI4y7/Zkd0BGDK2GivzsGGnN?=
+ =?iso-8859-1?Q?EhkF0nmwPi+EvH0jOf7H5jn/1GEopV4kdW+/an+3a9Y3f7+U7w+6aWYOCp?=
+ =?iso-8859-1?Q?ZcxW7/IIcuhIQ9XgyvT5qu9Mr5wzOuZHDYCBWyle4Dh1Q5MqYtIi0RUZaj?=
+ =?iso-8859-1?Q?14pFz9l8/KxH13VRAx1MUMYv7trP8Q79dL4jSJcwH+fnKdRojdQ7F4ag?=
+ =?iso-8859-1?Q?=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>,
-    Elijah Newren <newren@gmail.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+X-OriginatorOrg: tracsis.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR08MB7194.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c9d04efb-35bb-4903-2ea4-08dd1a97ee73
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Dec 2024 10:29:59.9151
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 6b98f266-7d23-4d0a-8b8a-7e4cf7fded86
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Tod+0mNzER8XcYzZZ+V026/JvwEwBE4myODuAf//qG7dxCKNgzGRwBtzo2wJdFwtZnWUjaxmDZM93jvBgKD5H8HSSoo05NLWKWu0kMz26l3h8JaIBpCyluJPN/DQ2h89
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR08MB10768
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-To show a remerge diff, the merge needs to be recreated. For that to
-work, the merge base(s) need to be found, which means that the commits'
-parents have to be traversed until common ancestors are found (if any).
-
-However, one optimization that hails all the way back to cb115748ec0d
-(Some more memory leak avoidance, 2006-06-17) is to release the commit's
-list of parents immediately after showing it _and to set that parent
-list to `NULL`_. This can break the merge base computation.
-
-This problem is most obvious when traversing the commits in reverse: In
-that instance, if a parent of a merge commit has been shown as part of
-the `git log` command, by the time the merge commit's diff needs to be
-computed, that parent commit's list of parent commits will have been set
-to `NULL` and as a result no merge base will be found (even if one
-should be found).
-
-Traversing commits in reverse is far from the only circumstance in which
-this problem occurs, though. There are many avenues to traversing at
-least one commit in the revision walk that will later be part of a merge
-base computation, for example when not even walking any revisions in
-`git show <merge1> <merge2>` where `<merge1>` is part of the commit
-graph between the parents of `<merge2>`.
-
-Another way to force a scenario where a commit is traversed before it
-has to be traversed again as part of a merge base computation is to
-start with two revisions (where the first one is reachable from the
-second but not in a first-parent ancestry) and show the commit log with
-`--topo-order` and `--first-parent`.
-
-Let's fix this by special-casing the `remerge_diff` mode, similar to
-what we did with reflogs in f35650dff6a4 (log: do not free parents when
-walking reflog, 2017-07-07).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    log: --remerge-diff needs to keep around commit parents
-    
-    This fixes a bug that is pretty much as old as the remerge-diff
-    machinery itself. I noticed it while writing my reply to Hannes Sixt's
-    concerns about my range-diff --diff-merges=<mode> patch
-    (https://lore.kernel.org/git/af576487-5de2-fba3-b341-3c082322c9ec@gmx.de/).
-    
-    Changes since v2:
-    
-     * Amended the commit message to illustrate why reverse walks are not
-       the only instances where this fix is relevant.
-    
-    Changes since v1:
-    
-     * Amended the code comment of the affected conditional code block in
-       harmony with the newly-added condition.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1825%2Fdscho%2Flog-remerge-diff-needs-commit-parents-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1825/dscho/log-remerge-diff-needs-commit-parents-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1825
-
-Range-diff vs v2:
-
- 1:  afff27f8222 ! 1:  ab75a565b4c log: --remerge-diff needs to keep around commit parents
-     @@ Commit message
-          work, the merge base(s) need to be found, which means that the commits'
-          parents have to be traversed until common ancestors are found (if any).
-      
-     -    However, one optimization that hails all the way back to
-     -    cb115748ec0d (Some more memory leak avoidance, 2006-06-17) is to release
-     -    the commit's list of parents immediately after showing it. This can break
-     -    the merge base computation.
-     -
-     -    Note that it matters more clearly when traversing the commits in
-     -    reverse: In that instance, if a parent of a merge commit has been shown
-     -    as part of the `git log` command, by the time the merge commit's diff
-     -    needs to be computed, that parent commit's list of parent commits will
-     -    have been set to `NULL` and as a result no merge base will be found.
-     +    However, one optimization that hails all the way back to cb115748ec0d
-     +    (Some more memory leak avoidance, 2006-06-17) is to release the commit's
-     +    list of parents immediately after showing it _and to set that parent
-     +    list to `NULL`_. This can break the merge base computation.
-     +
-     +    This problem is most obvious when traversing the commits in reverse: In
-     +    that instance, if a parent of a merge commit has been shown as part of
-     +    the `git log` command, by the time the merge commit's diff needs to be
-     +    computed, that parent commit's list of parent commits will have been set
-     +    to `NULL` and as a result no merge base will be found (even if one
-     +    should be found).
-     +
-     +    Traversing commits in reverse is far from the only circumstance in which
-     +    this problem occurs, though. There are many avenues to traversing at
-     +    least one commit in the revision walk that will later be part of a merge
-     +    base computation, for example when not even walking any revisions in
-     +    `git show <merge1> <merge2>` where `<merge1>` is part of the commit
-     +    graph between the parents of `<merge2>`.
-     +
-     +    Another way to force a scenario where a commit is traversed before it
-     +    has to be traversed again as part of a merge base computation is to
-     +    start with two revisions (where the first one is reachable from the
-     +    second but not in a first-parent ancestry) and show the commit log with
-     +    `--topo-order` and `--first-parent`.
-      
-          Let's fix this by special-casing the `remerge_diff` mode, similar to
-          what we did with reflogs in f35650dff6a4 (log: do not free parents when
-
-
- builtin/log.c           | 8 ++++++--
- t/t4069-remerge-diff.sh | 7 +++++++
- 2 files changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index c0a8bb95e98..2f88a3e607d 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -522,10 +522,14 @@ static int cmd_log_walk_no_free(struct rev_info *rev)
- 			 * but we didn't actually show the commit.
- 			 */
- 			rev->max_count++;
--		if (!rev->reflog_info) {
-+		if (!rev->reflog_info && !rev->remerge_diff) {
- 			/*
- 			 * We may show a given commit multiple times when
--			 * walking the reflogs.
-+			 * walking the reflogs. Therefore we still need it.
-+			 *
-+			 * Likewise, we potentially still need the parents
-+			 * of * already shown commits to determine merge
-+			 * bases when showing remerge diffs.
- 			 */
- 			free_commit_buffer(the_repository->parsed_objects,
- 					   commit);
-diff --git a/t/t4069-remerge-diff.sh b/t/t4069-remerge-diff.sh
-index 07323ebafe0..a68c6bfa036 100755
---- a/t/t4069-remerge-diff.sh
-+++ b/t/t4069-remerge-diff.sh
-@@ -317,4 +317,11 @@ test_expect_success 'remerge-diff turns off history simplification' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'remerge-diff with --reverse' '
-+	git log -1 --remerge-diff --oneline ab_resolution^ >expect &&
-+	git log -1 --remerge-diff --oneline ab_resolution >>expect &&
-+	git log -2 --remerge-diff --oneline ab_resolution --reverse >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-
-base-commit: bea9ecd24b0c3bf06cab4a851694fe09e7e51408
--- 
-gitgitgadget
+Hello,=0A=
+=0A=
+Did the interface change in recent git versions? I am pretty sure i=0A=
+used to git checkout -tb new_branch, now getting error: option=0A=
+`--track' expects "direct" or "inherit".=0A=
+=0A=
+User `geirha` on libera#git helped me troubleshooting. They noticed that:=
+=0A=
+=0A=
+- git help checkout differs in its description of --track between=0A=
+=A0 2.34.1 (ubuntu 22.04) and 2.43.0 (ubuntu 24.04), so looks like it=0A=
+=A0 did change recently=0A=
+=0A=
+- according to the commit message at=0A=
+=A0 https://github.com/git/git/commit/6327f0efed36c64d98a140110171362b7cb75=
+a52,=0A=
+=A0 -t is supposed to be equivalent to --track=3Ddirect, so likely a bug=0A=
+=A0 rather than intentional change=0A=
+=0A=
+I did read all options in `man git config` looking for something=0A=
+related. Found only branch.autoSetupMerge, but neither setting it to=0A=
+`always` nor `inherit` helped=0A=
+=0A=
+Cheers,=0A=
+fran=0A=
