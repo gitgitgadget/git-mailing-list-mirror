@@ -1,172 +1,173 @@
-Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2099.outbound.protection.outlook.com [40.107.247.99])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2688210F60
-	for <git@vger.kernel.org>; Thu, 12 Dec 2024 10:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.247.99
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733999404; cv=fail; b=VTjnOFKVBo6xoOLFseiNkfNEm0hX+IpaOQIIOSWK0Cy4Zw4Q9JIagCrHRclbQcVhhnwk5RHeR2SQ0AAfHsVh3NeWRZNnFuwAtN/BiLOSOqdkjhN70RO8psxfRsY6dEfziEZa6vLsKIVNEqUjKFRJ7tl+TblsMTTMoeBlxQP4W70=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733999404; c=relaxed/simple;
-	bh=LIDq7uahpf0liBDGDzSUsJwprtb1a8TAlKtG2dfYaMA=;
-	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=gaduTTMphn6q9DOy5LDBZ3kmbTrjBHIUveCbvpDcnvvocvdlTreM1CM/9FmGZHyItuJ2rOMY6+ruGQ3cc/UFQ24r1U3ftlcgrOHXVpVYzZV0xK30FaQ9OMo9Kji6JlwDD/nbrEWeP/k3HOBOgzARD0Tap4MppqgBCFxTwIVQcBw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tracsis.com; spf=pass smtp.mailfrom=tracsis.com; dkim=pass (1024-bit key) header.d=tracsisplc.onmicrosoft.com header.i=@tracsisplc.onmicrosoft.com header.b=ZmSe/j+9; arc=fail smtp.client-ip=40.107.247.99
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=tracsis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tracsis.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95F210F2
+	for <git@vger.kernel.org>; Thu, 12 Dec 2024 10:42:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734000165; cv=none; b=KOY2y1mugLLRUOs82G4F7aEZZY/cdXBGOHTVDl/ygOKsLs2kKMFKKj0ESLzeLh77eY45v3o82HgQk4JzXN/+/k6i23ADI+uxIJkQo31SWVGttZLqT1kCba6eyQw6usWxlOIfcR1ZOXvkU8gS0441wA9gfPIgbBpribO1zrOsF5M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734000165; c=relaxed/simple;
+	bh=x91ChNHe+9NyLiBfATMbWGOCM6Ck4+eZhL9JMVmpfMQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=abWjzUNo67OmdGBm8b7WKBqkBeBtMlESuFt+E4LqTTdy3tJunH93B/186hHTRbC1c2uHWXghcQ1cnJuD5wXA3KUD1oKcROAb9f/D4HQttRurViMZ7mMB2yiiSIdbXkwmwoL01Y+o9ELkuAaakyIuBNcrJugwK9B1gK1NaIk15JU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tf357A+u; arc=none smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tracsisplc.onmicrosoft.com header.i=@tracsisplc.onmicrosoft.com header.b="ZmSe/j+9"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=cS2DWG1OXPI6w49Wdb2zQDxLtE6rJOf1kSazZLjHHi0c0edJ11aSSS988aiiMVItAZHGwjwfFgncUvKXcymQhE7jV+UJCSmALhjSRoJnZdUsQG9YS7aSvvHDuSqfiySZN0amML38mir9XuzXBUd+arKalxPcJTKxLGXQ1JV7UgKVmxUhybqgfnDU3TApQsRQoWvEyCU8WQgAsD9cBqJV/CM9oSAHpw/qaBbsi4hXpnoqQFwgywgUewjIN4yFzr6U4kdD2Nqm63RCS8mDqw810cTbdLStYxqpuJnGmJUO/VbPOqa2QylpHkD4zlNnnprBac8VY+jKS1APT3c0yElKXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LIDq7uahpf0liBDGDzSUsJwprtb1a8TAlKtG2dfYaMA=;
- b=qXW3teq+7gxqwuRqVGVwWPPjqcZhbB8oGnZZt7OqHLH7Jng8tOpkMjlIvlFGSBPzKRdq8xHlnVKm1A2hSTNukP8KuSss+eY1mi8/Bc3tW9AQsZiNNn4rnsN+xtZSQ6zpo0h5sFOjcZGXoYi/W6baNT7wIGPk5ca9LLj6vEWfgObsc8dOOuotZsc5T/biOvUgXn9H4vkZSCkXm3uToUkiua3e8jsHhCcRikvAXGcfcsk4EWQWKhs5Xzq1L0mmkuiWGIdPIaz3BUozPjutt3xjpaaUuDjmN0KqZKNPmQnQzCGo3ngxn3UUteD4I9OitksV0DaRWYoYs98lWsmNVHiBbQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=tracsis.com; dmarc=pass action=none header.from=tracsis.com;
- dkim=pass header.d=tracsis.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tf357A+u"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-85c529e72bcso109365241.0
+        for <git@vger.kernel.org>; Thu, 12 Dec 2024 02:42:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tracsisplc.onmicrosoft.com; s=selector2-tracsisplc-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LIDq7uahpf0liBDGDzSUsJwprtb1a8TAlKtG2dfYaMA=;
- b=ZmSe/j+9G3c2DfOEA0F2pWh/1VXhYBVXs6lunb0Z9MchGkCeyRKWegQxxP2mjhljVD/0OJ6Py5/rd+YjAHenSEE/oVm7ybW2qUarh6drrKDM3GcSxTCZqN0Bwn0lgD7lLUHq4HQZj7BlWcR6P+r9H1W7t9HT7l81ZtVMDUTIPNs=
-Received: from DB9PR08MB7194.eurprd08.prod.outlook.com (2603:10a6:10:2cd::21)
- by PA6PR08MB10768.eurprd08.prod.outlook.com (2603:10a6:102:3d2::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.15; Thu, 12 Dec
- 2024 10:29:59 +0000
-Received: from DB9PR08MB7194.eurprd08.prod.outlook.com
- ([fe80::add6:5598:f30f:fd6f]) by DB9PR08MB7194.eurprd08.prod.outlook.com
- ([fe80::add6:5598:f30f:fd6f%3]) with mapi id 15.20.8230.010; Thu, 12 Dec 2024
- 10:29:59 +0000
-From: Francesco Occhipinti <Francesco.Occhipinti@tracsis.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: New checkout --track behaviour?
-Thread-Topic: New checkout --track behaviour?
-Thread-Index: AQHbTIBrkyO6uFJSqk+vXLc0lrp5MLLiaE87
-Date: Thu, 12 Dec 2024 10:29:59 +0000
-Message-ID:
- <DB9PR08MB71949D21F5F0E81911F0D50F903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
-References:
- <DB9PR08MB7194822B81F17420B2D3C149903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
-In-Reply-To:
- <DB9PR08MB7194822B81F17420B2D3C149903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=tracsis.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB9PR08MB7194:EE_|PA6PR08MB10768:EE_
-x-ms-office365-filtering-correlation-id: c9d04efb-35bb-4903-2ea4-08dd1a97ee73
-x-ms-exchange-atpmessageproperties: SA
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|1800799024|366016|38070700018;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?gFPvBsIhZAHhzTnXQHdyC33YgBNK/i5fbfQWCZiPeW8LgEUtJNdewZwmKq?=
- =?iso-8859-1?Q?Z+LP3a0E2CnZL9y/WZJrY6g/mNIdMnPcpc+M0g4K1+CpV9Ub4Zrptsi5fY?=
- =?iso-8859-1?Q?tO6nJUi9L8Nm0mIRiW1JvHC4Ouwpa2YiFisQpWrtYyP7kiKqxrl9+RnffN?=
- =?iso-8859-1?Q?IEwEy1PhV+ZMJRbQ6m8QMgvNPrZSjobXDoNNDXoc1HsIWhZCe/LS2m8/yw?=
- =?iso-8859-1?Q?7aDG5YBEFrApjR3fC8/BlKe2md7XwoTkFbmcZXhK/3lyHKB4rS8mq9Jl0w?=
- =?iso-8859-1?Q?56ram3Wi1/b07LDHlzGoItHLCWabwCHrtPVhKNm1HpBmTiVfpZMYPfXNXh?=
- =?iso-8859-1?Q?o0hf930QjC+ehnjEFx7MNMZdD8uB6BWCqZWRiVVMMI9w2od2VIcvY9plIp?=
- =?iso-8859-1?Q?X1jBF3IU+L3XM0sRv1X5hRHjBAKbUWXqznlcGIXBrEJ5XFWSGNTSpLgVyZ?=
- =?iso-8859-1?Q?5HFyX77+oQmBtgVBTA4UVQ3FxT36T9bhcaltkSpajzSmwvAT5GdbmjPkwr?=
- =?iso-8859-1?Q?PSe7zoscIY/5ZbCSNK7YOlZ0yOgM5JiQmImpjsMesMzrTsAjIXRkPZjep7?=
- =?iso-8859-1?Q?8zWpJqFb9iKmtPlVJrODdMKfOgpN/IhMF2MiWjXQOmNlnRgSxunL0zIPnd?=
- =?iso-8859-1?Q?rsNr1OBw3EAtcHxlS+Kk/A7KHzbvdvax4rSNqNfpQPhsoMj07P/MPZuc0W?=
- =?iso-8859-1?Q?KXfARSOpnrquTnC+mLFbTDtJLXStf3LnMjBYUEUeAWvSwf+Y9NEO1gdKG0?=
- =?iso-8859-1?Q?wYbHd1Ixjv+9gOUdEJV+fDjLPTa8hmNS/M8SFzZQTncHwt9SAEeSFeBDh2?=
- =?iso-8859-1?Q?PBc7//+IV4bBuUN6tUU0hM07kktONXLFTGPwht9yVUbG5RIfnHB9/6I0Ff?=
- =?iso-8859-1?Q?UBSok9caSF2NoI+TjNzPBsZ0hzrM6sRvpDxgZKa9yX8SbCd825NOIYj7C4?=
- =?iso-8859-1?Q?ijZIL9jfHNwSRuyJT8njKiOYPSf6UFmYTRsVyYpFhiLgkdFwMnGP8IjhQp?=
- =?iso-8859-1?Q?GKOcMyFbyc9szKtZJ1j6G2Pre/aDR66Ph5Jju47cGWNskFxdNm292TTHto?=
- =?iso-8859-1?Q?6wcFlFkRSn8a5mq7OwhQdNSOcUuCeN+bcytAtfpZgJdrhcgleZyv1HgAE6?=
- =?iso-8859-1?Q?4axfZZUsTs9qW5pEq+RHw0tslvDPqhKPus5+NHuTkKYz0qCNrhMS5ACC0f?=
- =?iso-8859-1?Q?/F8j6kfAzVB0hbWKiqYIkEKubnOnFj4XtjxRZ+gCi26bNAGI/VL2DNNdEF?=
- =?iso-8859-1?Q?XiUiWRj1Mtp4jpA8EurFmJSayzLt0DdKhQGyhyhGvDuqgNu+5y7bXs7vKx?=
- =?iso-8859-1?Q?uX+iCFdKTrvrqRU+ykp/kOjTfCTDoj777mzAFXr6zr2AsmiTOiQ6X+q4wU?=
- =?iso-8859-1?Q?arOVZ31xQniBhLxtyeS/HOgQpdAw5Dbi2altTbuEmiSI8e7bnT8QVIKdf5?=
- =?iso-8859-1?Q?ZZ+5NlW3EiD95YnEslewCvqUsmdF4AnG5uw6GA=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR08MB7194.eurprd08.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?H42g4knIrPK+gmveZDOpIhA/j22bnjHgnmz9jFnCLXNhLgZUNIBzOOyzwm?=
- =?iso-8859-1?Q?PjNn2oGRJldSMhV8dhEaGNtH9MIYccOPka1ETe4F2AsWwKO2mS6A/Y7uaE?=
- =?iso-8859-1?Q?XxjyC346kivf3rk5GIYWJv1ZPWH/cYCTWsgqZgrCr6tTwJXjZunwmG/lzk?=
- =?iso-8859-1?Q?f0Zy+PaLpqYFVx+ziROJBq9FwhceyIWfdc0yn0OqhKVlUakZLVWx0kNd7T?=
- =?iso-8859-1?Q?70LMV2nbL9rgTo3OHqvcHhemDHmWImAt118EgGz4GMO2r6Q5bA4IkU/YX/?=
- =?iso-8859-1?Q?R1OgFUOcE9WD+1ub17YWMiMBTQ1I4FTbemyeCAfZT1B/b6/TL/Yr94cPwu?=
- =?iso-8859-1?Q?EUJBQFKbho6nUNlBdU7w3DRY4Uzs3LkaUpEPQQKVlhxBpvBJI9aXMA0v4I?=
- =?iso-8859-1?Q?JQ7Lmwh/Oj4uRKuvBPPcYTNgaEz1Jp5ynvdy0RAZQiK0PYdDU4a5eAyxbe?=
- =?iso-8859-1?Q?rPO1dUzrEwVS+PWDgV65+k4yRLt+cJaLlUH5eS6CPwIMFadxD3Knjs4bao?=
- =?iso-8859-1?Q?dE1zfHCx9ZUIvxSycqh3w7j9DQF+ESEZI3zdGTfQikhOJqnJQOSBRtDfPw?=
- =?iso-8859-1?Q?oveh+/DQISWyKGId8ydZRRMnSOPdG9kMAeRnxM7ZXckkHSImRzkS3LU02X?=
- =?iso-8859-1?Q?GNCx86QvbMjGjMvP2IgZVD9gzY7qmXogL/LWr7WYwwIfGz3i6KMmxDq8Gf?=
- =?iso-8859-1?Q?AeG+Vw2L7KkPkQRtytrllKNs+vsiwuQilhHyns0zRyOzI+meaC/UaeNns7?=
- =?iso-8859-1?Q?sQA8wDbUnETPV7KFnioGQzv06P2np9QFiv8ZqqORU8WLLCqIg1r7LydzZM?=
- =?iso-8859-1?Q?wJ+piAIfD4rdlfW/V3HrWbuTxk4mWjJAqqIkAcjDiceofHkW1BPU989m6X?=
- =?iso-8859-1?Q?IPtJyiGMCplelmtJkk6DcHlXxYcQczSlE7KlP8vH6ZnS6BfnGgvUFcm9Vd?=
- =?iso-8859-1?Q?At97lOGeCJuNWu+ROwNi2owjS4VBBMjCfwHfzbtxM4qVXx9zjK4fZXuKlR?=
- =?iso-8859-1?Q?a/W2jk/QEjK964x5SU6M1Fcj6DyVvLVOGQT7H4FFlRCVuAbQVN8nJwvOPH?=
- =?iso-8859-1?Q?KjBMdLEvCwuwajJazsbZdImwjJuIO9YHLVII9R4nZukNIqW3pRWIHmAo2P?=
- =?iso-8859-1?Q?UwNC7+9ibBr5jHxSZhdcFsLoBNqc9u4ETmG0V1R5gxjtDYKR282M0M4bV+?=
- =?iso-8859-1?Q?OMCoVSAxV9uXOi28eVZ0fRu6IJ0ndgt0miDWIc7KnfcQ5zbtGpbFM4lAtJ?=
- =?iso-8859-1?Q?hWcgPJfYr1F8ttBTd5Cq0AXNtav+oFoyDnundwO7GgY3EgwoIH4civEeo6?=
- =?iso-8859-1?Q?cPea9Lwmr+mQACi5ETzEJmdnybsndGCaYs4SaGaFKkSzUpxSl3ySR0i6bl?=
- =?iso-8859-1?Q?uU3YXhr6ht2nn/2QjPBkXCwR3jM34VLjNe6UcoD0Uw10jd4HLkxip3bDL7?=
- =?iso-8859-1?Q?GIRMTpi36kMopNHt2eFlsJxLNpoaCBw4u3qI4y7/Zkd0BGDK2GivzsGGnN?=
- =?iso-8859-1?Q?EhkF0nmwPi+EvH0jOf7H5jn/1GEopV4kdW+/an+3a9Y3f7+U7w+6aWYOCp?=
- =?iso-8859-1?Q?ZcxW7/IIcuhIQ9XgyvT5qu9Mr5wzOuZHDYCBWyle4Dh1Q5MqYtIi0RUZaj?=
- =?iso-8859-1?Q?14pFz9l8/KxH13VRAx1MUMYv7trP8Q79dL4jSJcwH+fnKdRojdQ7F4ag?=
- =?iso-8859-1?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20230601; t=1734000163; x=1734604963; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/8uzLSap5SfAVxWRgojDu0CWTbH1g1PvuSCZQ3ZxG/Q=;
+        b=Tf357A+u011Yco63fPSYV96FfnHFRwBAu8rO3mp4Y46/Li9Z+eTWsQu2U1KONvbI9W
+         DX+9KAtp9JnhNOpfzHeX0iX2Qag0tmRYWzWTHOeaictRdRbriwj/QjfIpIQO94QZkjOG
+         9wgAC2g3qECAmZILSgmfIWQoHpUanxkpMoZsxhqaCSBK4duvkXyWT221iZsA3dfOSGDF
+         q33S+jualkABO3y9FF0Vc9rHqoadun+Acjd2cnFvp5uj9ZECyHJpX1YUSYmj9Uqh1DPH
+         LntnW2FETtYAv8pxooKIGTcvCoXPgF6yBqw42eLx4EwlLyuJvSZxUXWN2/ePsLVqGrVw
+         EAyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734000163; x=1734604963;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/8uzLSap5SfAVxWRgojDu0CWTbH1g1PvuSCZQ3ZxG/Q=;
+        b=e7lh/WCbdo6nEXVbGINF4HWzmnqxFvzKONi4y0GsXfuZTeZ+bIT4TiwsTStTJ51ojD
+         47kxbb7d1d2mC4IbNgGT15P+2qA0hCv5io89sI2QSzoBQKeHNo6uvcFqPhG4rA/QzMdG
+         VbHPeJ8DAQ6ugBmB6pWVyOsXcVb/wlbupSfPUudU0atfDZKqg1Z00FLvVkaKH7i3UNxR
+         fhlC3o6WrNPnMgFDhqcMY17wwF+gz/4DfB9OIPqrcxB2OMHGQZM/FM9jB6qCdqzbff+p
+         PmXBBa83noV7nLQ0bjbhWn37geIIB7Ta/L3YI7JAMW7WnK7it7DcXGOc2jd7c9rRgUCW
+         NaAg==
+X-Forwarded-Encrypted: i=1; AJvYcCWxuREUxZfatjqBm8qdzyrqxEC85cndzsShq4dCdrIrJE+KYQjjFWJYIzW0jUWU04QIFR0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywmrv6nzlQEr/gPJe1D5Hb5usmzxqOCQiN4fJkQcgCa1hn57iV/
+	hJ5IQN7gSjLgLw2bDudHAwyMqJekgCZNuGK87/DEdhCzwgxcV16hPpnCkHc+X+wQKDNzImU7enx
+	do5o+TOuDz1zbYF6mzhaPWD8prLE=
+X-Gm-Gg: ASbGncsdNF36278vJQDdM0nfiZPpTviPoMeG56HnDXiay523YQqhejq6yB6IS6uX7h2
+	QJOLkgTgn71H3ziR+FE5Ah6UHGyH/3FQBAJ5T
+X-Google-Smtp-Source: AGHT+IEEE9Z2uSMbC/h9fWV1sSKF+KEbGHUrYR3IlcLlzgY41V3xLxPVDs66PuX9ut4ZhO0h5DuUKhlWqHCmJY92R+M=
+X-Received: by 2002:a05:6102:2ac7:b0:4b0:93ef:d573 with SMTP id
+ ada2fe7eead31-4b247475747mr3521007137.0.1734000162787; Thu, 12 Dec 2024
+ 02:42:42 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 12 Dec 2024 02:42:41 -0800
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <20241211-pks-meson-ci-v1-3-28d18b494374@pks.im>
+References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im> <20241211-pks-meson-ci-v1-3-28d18b494374@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: tracsis.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB9PR08MB7194.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c9d04efb-35bb-4903-2ea4-08dd1a97ee73
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Dec 2024 10:29:59.9151
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6b98f266-7d23-4d0a-8b8a-7e4cf7fded86
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Tod+0mNzER8XcYzZZ+V026/JvwEwBE4myODuAf//qG7dxCKNgzGRwBtzo2wJdFwtZnWUjaxmDZM93jvBgKD5H8HSSoo05NLWKWu0kMz26l3h8JaIBpCyluJPN/DQ2h89
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA6PR08MB10768
+Date: Thu, 12 Dec 2024 02:42:41 -0800
+Message-ID: <CAOLa=ZRtQ2ab8_gf348eirDdrJYjSKm28aR6YPeY+7JE=77nOQ@mail.gmail.com>
+Subject: Re: [PATCH 3/8] t/unit-tests: rename clar-based unit tests to have a
+ common prefix
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000be79140629105fab"
 
-Hello,=0A=
-=0A=
-Did the interface change in recent git versions? I am pretty sure i=0A=
-used to git checkout -tb new_branch, now getting error: option=0A=
-`--track' expects "direct" or "inherit".=0A=
-=0A=
-User `geirha` on libera#git helped me troubleshooting. They noticed that:=
-=0A=
-=0A=
-- git help checkout differs in its description of --track between=0A=
-=A0 2.34.1 (ubuntu 22.04) and 2.43.0 (ubuntu 24.04), so looks like it=0A=
-=A0 did change recently=0A=
-=0A=
-- according to the commit message at=0A=
-=A0 https://github.com/git/git/commit/6327f0efed36c64d98a140110171362b7cb75=
-a52,=0A=
-=A0 -t is supposed to be equivalent to --track=3Ddirect, so likely a bug=0A=
-=A0 rather than intentional change=0A=
-=0A=
-I did read all options in `man git config` looking for something=0A=
-related. Found only branch.autoSetupMerge, but neither setting it to=0A=
-`always` nor `inherit` helped=0A=
-=0A=
-Cheers,=0A=
-fran=0A=
+--000000000000be79140629105fab
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+> All of the code files for unit tests using the self-grown unit testing
+> framework have have a "t-" prefix to their name. This makes it easy to
+
+s/have have/have
+
+> identify them and use globbing in our Makefile and in other places. On
+> the other hand though, our clar-based unit tests have no prefix at all
+> and thus cannot easily be discerned from other files in the unit test
+> directory.
+>
+> Introduce a new "u-" prefix for clar-based unit tests. This prefix will
+> be used in a subsequent commit to easily identify such tests.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  Makefile                              | 4 ++--
+>  t/meson.build                         | 4 ++--
+>  t/unit-tests/generate-clar-decls.sh   | 5 ++++-
+>  t/unit-tests/{ctype.c => u-ctype.c}   | 0
+>  t/unit-tests/{strvec.c => u-strvec.c} | 0
+>  5 files changed, 8 insertions(+), 5 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 2506f3b7e3377ab1a376338c86a727b2ae92a6e9..6eafaf174aaa380ad8e6a86f75d003eb6c058fb3 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1344,8 +1344,8 @@ THIRD_PARTY_SOURCES += sha1dc/%
+>  THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/%
+>  THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
+>
+> -CLAR_TEST_SUITES += ctype
+> -CLAR_TEST_SUITES += strvec
+> +CLAR_TEST_SUITES += u-ctype
+> +CLAR_TEST_SUITES += u-strvec
+>  CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
+>  CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
+>  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
+> diff --git a/t/meson.build b/t/meson.build
+> index 13fe854ba0a18f9b83dbc48651f581198042ffd3..9e676e69363ed6311426500d98fe281e30d26bcb 100644
+> --- a/t/meson.build
+> +++ b/t/meson.build
+> @@ -1,6 +1,6 @@
+>  clar_test_suites = [
+> -  'unit-tests/ctype.c',
+> -  'unit-tests/strvec.c',
+> +  'unit-tests/u-ctype.c',
+> +  'unit-tests/u-strvec.c',
+>  ]
+>
+>  clar_sources = [
+> diff --git a/t/unit-tests/generate-clar-decls.sh b/t/unit-tests/generate-clar-decls.sh
+> index 688e0885f4f28182c3afe19c067b6d59dcacccfc..3b315c64b3711bfccc5941852a0782e02cee82f0 100755
+> --- a/t/unit-tests/generate-clar-decls.sh
+> +++ b/t/unit-tests/generate-clar-decls.sh
+> @@ -11,6 +11,9 @@ shift
+>
+>  for suite in "$@"
+>  do
+> -	sed -ne "s/^\(void test_$(basename "${suite%.c}")__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)\)$/extern \1;/p" "$suite" ||
+> +	suite_name=$(basename "$suite")
+
+So this strips away all dir and keeps the file name.
+So `t/unit-tests/u-strvec.c` becomes `u-strvec.c`
+
+> +	suite_name=${suite_name%.c}
+
+We strip the .c here, so `u-strvec.c` becomes `u-strvec`
+
+> +	suite_name=${suite_name#u-}
+
+So we finally strip the `u-` prefix here.
+
+> +	sed -ne "s/^\(void test_${suite_name}__[a-zA-Z_0-9][a-zA-Z_0-9]*(void)\)$/extern \1;/p" "$suite" ||
+
+Then we find all test functions in those files. Makes sense.
+
+[snip]
+
+--000000000000be79140629105fab
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 1fdaafbaf6207f63_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kYXZoNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOHU5REFDQUF0V3VyRm5YUW1xVDJIY1daZmhnUXZxeAp1eVd6bVpiZ0hP
+dHVYQXFrWWNaeDBxc0Q2QkpnZSsxSzU5RGlWeEN5VTBKaFBFRFpOU0ZiVW9HbjVFa3g5bDBWClhO
+eDBNUnJjTVBkNm5KRHZoWUcraUdvZjFYekNocHNQZFk4MnQzVDltQklIeE5yUGNBT0M5cC9IVzlz
+TCtsanUKZGhaalo1TGRabnNrNHFISGJlMEtCWE9NazNuRFgxdlNpNVRuOVkxbS9FSEVoSEp5Z2xK
+d0tUalRXeE1lK3FyegpaZGhJSjNoREJhbUIvdGhLZU5KQm04RXhXWFZGcXE4RTJnUXNubk1ZRkNV
+UjNHMGl6UFZ4dUl2ZmJsV0lNU00wCjQvUnU0YUxvbXU2dGNJK3BkbVdSaW4zem1LZVJPL2VMbFhG
+NldjVlpocGxob2tHZWowMEh6OFMvSlYxTlBqU2wKeG1JbStnMWdYdHhncEpSdjNrb1VsdW83c1hF
+QnpUbmNXdnRCaU8rbE9ERkJyaGxNTVVCazVjajdWaUpkdGwzNAo4ZHVHVUVkTVFta3Vkcnl4NjRQ
+SHVRM0FEUzZxZ3pQRGVMQzQyUFdJTHptRlNQTUlYM3h2dEp4aWdYZ3BPVitXCkgxNHMvQWhITTdT
+S3U0SlBWdkMrMEp3VWMxb2tmL25qUGZRSk8vST0KPVZ6ZVgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000be79140629105fab--
