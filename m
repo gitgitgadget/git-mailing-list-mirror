@@ -1,111 +1,89 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D219A558BA
-	for <git@vger.kernel.org>; Thu, 12 Dec 2024 08:08:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6516B20E6E9
+	for <git@vger.kernel.org>; Thu, 12 Dec 2024 08:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733990889; cv=none; b=DX66bfj3u8swmVpGl0+XYpgMJi0r71CAeRvvExWH9NoiNF5CKRIYyR55hp9MyQzNhFXlruR90X5X0BaH++FeOmx3ZCbQtQLrW8Z0J8L3XSo3XVzfKHY+ZMvbo9eYiBy+tye5OeqG3s2RxAXTLdIfNRh1XUegDJJ9jK9zhIUHtfo=
+	t=1733991921; cv=none; b=WLN69TVIndMmDwjxijM99oTw4t9QpgKYqG/4Ghhk66LwC/DLkvmf2dLKgzjWYbwpn0u7qwn6IiwS0K7y90Rdz38d4dR8hgQjnGosAY397zNz2/1Pb3vD1IZVd97494ZkW+gAOiF32kdw9U0LlwcL7cR64fDGmzFe7+BMnbkrqg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733990889; c=relaxed/simple;
-	bh=pGmJmhBYpkAPX6ii9f8hnC6t6zft0XF2cXHtif6AM2w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aXiiG/GKYUEgIdFWB+cjbfozOiR24fa4FoYKODB3cO1JOsv5lLtl/isY5n8zTBIWrt7Q3fCoP+vQY5De0gbIWtKtVzOULmApHEFKxpFINWk03/ItBM/ah1JSC1OHA8IM+sNFhdLKeScqZcmmEVRwJgxKq/FqG3C0vTDZIg7N+lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uE5alUC1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iiRGUGAL; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1733991921; c=relaxed/simple;
+	bh=biUwhLN32NMELDyiNGuQXg+OKsuLcNBm1/2hfGVrYEU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CW8hyCgXTa5e7teGEZ//0TSWf7wUjtqoI8eWMqCs+yq4GEiDsk+g0MTP4ctlXrrp0PvVf3N5q0ruTEIkD9dYhrXAzF0fxLgp8Bo0I3xs0O2OzwGFcpdq1Cp9fOvs+n/1efUnlJlFrOCcANF7U7AvGLzanqGGBvma4f5/3kXB0pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c45Ow96d; arc=none smtp.client-ip=209.85.217.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uE5alUC1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iiRGUGAL"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 880FD25400E9;
-	Thu, 12 Dec 2024 03:08:05 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Thu, 12 Dec 2024 03:08:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1733990885; x=1734077285; bh=pnNrhn5cPg
-	QFuJsr5ozMY4gqCqorxRjDG9MloheVVSs=; b=uE5alUC1XnQgESiIsN0hdigj0S
-	TFsJ0tnndvilh/fbCv7YXt914/CMbaJXIGX+UCw63wRL6ohoV+aafw/RGKGElTjp
-	+RGpz2NYR3guDTOWxd8SXtHtArZc3zFHrhHkUe/tgDScKev/YfuaOHQ5t1xorCZ/
-	n14vtxLcTBp20pSrCrX+NTaEKQTz5f9BsQz+KiDqLfwhPrXb825AxZeE5G46t5Ow
-	fJGCFr1bEWKe6kGj+SlF5yHs33whs4c5scr/ExWxDgT3r7Vu2MCK1PFYblAb3Wpo
-	StEW9DPsdkGKMqwE7WEwLBoEhTOIunViQbo8btynN0BvPsKTdHDlXQU2j6cg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1733990885; x=1734077285; bh=pnNrhn5cPgQFuJsr5ozMY4gqCqorxRjDG9M
-	loheVVSs=; b=iiRGUGALHPwn4G9FAvrV6rSndRT+qYwwwXAsxXAPAItO9Pz2tfO
-	5deK9wZNf6+8ZAAMy7faR2nLmhVxtfjLM3E7iplhO63Lz0bUlG/oPjbQ2f6zImiR
-	zcSTbGL8Ax/zQzl8hDVocjRrNqTFp9CIMMIkKHMiyf4t0oSGXm/WuOn/uaGMkHv/
-	EuBGXHbocTi8XYU7VRuPv+i7z9MNuIll9yOFcoiqkHvvJL6nVCoMFdSEPGFgf7Be
-	aSbj91kNfFURBedPgJXx4ehw60lutNUuKn9+5WmuGGyX4mxseVwBhu6rnWPUjD6z
-	afVEcINuXpVYoF4qX9S44DxoYuOWhW0s62w==
-X-ME-Sender: <xms:5JlaZ_VExwOJo9guf_MAgi4cg-gKbC9-zPxYcl1C9PJ1h_5mo34Dyg>
-    <xme:5JlaZ3mWnvOiVGe6Gb3BCOjDE1-XUaE7CZy4MiudCqryrIod3TLcgKHc1oSD5zr9H
-    R2CSnADk_7cnZcPyA>
-X-ME-Received: <xmr:5JlaZ7Yfo9Kcqepdcpc0NvgPVOmfxWR_14pL0Ofitw6EAhjVt_0rG61QEzGtXknkiAiiJA0PVbQPwnG9DP1CETk_KqhwKXDLx0hnG74>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeeggdefiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
-    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5JlaZ6VwnZIVJ0i51AdOBJI3eE_nAlnqCOCpeF0zgPzLpYCPZo_FEg>
-    <xmx:5JlaZ5n4nAohpVvmNleVNREuXqSTlOKTZp8-vC1WOopKdpImLynhWA>
-    <xmx:5JlaZ3frIeg8Z6jpkKRxiwPU89aIw3tRWI2dLkqMK1fAaq5g5jYR4A>
-    <xmx:5JlaZzG9TwaY-E1azUdJW_YM_IADBgV0H0gC-dtwRSq-isbTa28K9g>
-    <xmx:5ZlaZyBhz3IYRtbIsWv3dQBekBYF6Thq4TbvYdh0c-uQtCeSssyznzXU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Dec 2024 03:08:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2] bundle: remove unneeded code
-In-Reply-To: <87y10mhrfe.fsf@iotcl.com> (Toon Claes's message of "Wed, 11 Dec
-	2024 21:53:57 +0100")
-References: <20241211-fix-bundle-create-race-v2-1-6a18bd07edec@iotcl.com>
-	<xmqqcyhyi7g7.fsf@gitster.g> <87y10mhrfe.fsf@iotcl.com>
-Date: Thu, 12 Dec 2024 17:08:02 +0900
-Message-ID: <xmqqldwlfhnh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c45Ow96d"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4b24bc0cc65so174825137.2
+        for <git@vger.kernel.org>; Thu, 12 Dec 2024 00:25:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733991917; x=1734596717; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=biUwhLN32NMELDyiNGuQXg+OKsuLcNBm1/2hfGVrYEU=;
+        b=c45Ow96dE7PszkEk3iVc9m4nJWLF0vhzOY3dnrnzItvC+wedBSWP3m+fslcqKa8WOC
+         VlLTRJIBZOKn+T5mAlHEmqPqZWJ6YCjMr6CdR0uBOW6YHwNXVNipoa8hJdY6p/w0VZ4G
+         f8Fe1BVOKF9pgjFYe90V/Xn9gVEewqycpNWaZsNWhHfY8CV32/zPlEZ9t4IvtFqx8voc
+         gUQ9wLeRLzJkWCPFPY5ikUoSxCVilvyb/opflvU3q6pwQerZuBo5aIYr/zpzqVwrAGhb
+         so37ZQCFH6ga3wy6HzOkXLn0LmGfo7w3ptF1LGuytk1mQpwrrdc8TzC1WHHP8jcgKTGo
+         jMZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1733991917; x=1734596717;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=biUwhLN32NMELDyiNGuQXg+OKsuLcNBm1/2hfGVrYEU=;
+        b=Uujrqe/oqiLmyfoTdBZkhVkx8vPvt5W8OfXY/qY2PoVSrkdu3gcyNbDAvKX0MW9ZlD
+         N62kf268fX2aMikVviQS8JqO2nIVKy2/j7Q48FS+VbGzoisCWiQ3Y5gxZW8iuxHcgUMa
+         WFv6UpWk3OuvPEsdOidW9yJb4JQN9eErtfHbKX77/HYLWiBuOWbRLTtU3g2Czm6IxUKm
+         QYmqEcsf1LyWZX0adkHzQe91rXUCDXJqUFFNXrB91EB823cXSsNjQFDdHSmkEFuvoqqm
+         5byPGKJLAWmozaWdIpzqk+QONG2LfZDfYdW7DJJUMiE7KWMIFzZDhNqjId4SBf14kWAY
+         P56Q==
+X-Gm-Message-State: AOJu0YyiMmtYYGKOruBYFiKu/D9AfLFBvvQq25bduw+qhLbytcYIwriS
+	xK0zNJ509xCuCzik9a6vct94F9AxY1Rb8KCBKvQDVFcwuJnYSMrTPWkrDKAmhvgLE1eflLUwXDD
+	9gdKGaXxODxtV8whnF5sLZByHPgwG84uz
+X-Gm-Gg: ASbGncsTPzB3nbtUqAI3gZz5CHxEu3Myg9NXEX0JtwPhG90a8b8fcmkl0lxCDxW/Zh+
+	QmKRtZU2ZaMn7RwNHY5kvIOSr4EL3XgAMO00gRN7e0v5bBdUTgPNrpw2tQoCw3x81JM+358s=
+X-Google-Smtp-Source: AGHT+IEZKJ6vGtN7jt0Unc2U/D+DRSGtEhpzsCuNSX1vvsPhzB8KNKeAPZOYVLJ+lOBLUYonAVMz1/NettwXzRFTxCc=
+X-Received: by 2002:a05:6102:31a1:b0:4b2:48b2:db9f with SMTP id
+ ada2fe7eead31-4b248b2dd28mr2117563137.13.1733991917283; Thu, 12 Dec 2024
+ 00:25:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAMKQPDZWgq_qCdaL_S8cYYn=wtZSJiq6nP5aqFjvUZcFSnrTzQ@mail.gmail.com>
+ <xmqqv7vpfv5g.fsf@gitster.g>
+In-Reply-To: <xmqqv7vpfv5g.fsf@gitster.g>
+From: Ricardo Almeida <ric.almeida@gmail.com>
+Date: Thu, 12 Dec 2024 08:25:06 +0000
+Message-ID: <CAMKQPDaB2fP-4n9_bw1fjB7JntZ1DWMSpO01h5uuMJ-LzzufdQ@mail.gmail.com>
+Subject: Re: Git pull --rebase and --reset-author-date
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Toon Claes <toon@iotcl.com> writes:
+Hi Junio,
 
->> #               false &&
->> #               test_cmp expect actual
->> #
->> 1..17
->>
->> What's the "false" doing here?
->
-> I'm terribly sorry, how sloppy of me.
+> Can't you just use "git fetch && git rebase --..." instead of "pull"
+> short-hand?
 
-Heh, let's not over-react (applies on both sides; I should also have
-stopped, took a deep breath, possibly try to remove it and see if it
-makes sense myself, before asking that question in a hostile tone,
-sorry).  Mistakes happen.
+But then it wouldn't update the master branch... When I'm on myBranch
+and execute "git pull origin --rebase --stat master:master" it does
+bring the master branch up to date, so, it's equivalent to doing:
 
-> I added that during debugging to
-> be able to inspect the t/trash* directory. This shouldn't have made it
-> to the final patch. My apologies, I've submitted v3 which doesn't
-> include that line.
+git checkout master
+git pull
+git checkout myBranch
+git rebase master
 
-Thanks, will replace.
+I have an alias for the pull command: "alias.rb=pull origin --rebase
+--stat master:master", so, it would be handier to just add the
+--reset-author-date to it but it's not supported atm :(
+
+Regards,
+Ricardo Almeida
