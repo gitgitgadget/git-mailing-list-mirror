@@ -1,135 +1,150 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30822181B8F
-	for <git@vger.kernel.org>; Thu, 12 Dec 2024 06:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81976186E27
+	for <git@vger.kernel.org>; Thu, 12 Dec 2024 06:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733986062; cv=none; b=MuUUMlMDZvpzQfscgAIzWu5nTYd2HqrWa0IwKcmFxE9t7lpAHYwbabzy9AzpOUuW6rwFxsGakh8exXAAem45hQinlPcvbaq/2ItbEl2JY+M40jEIaYNrwZoZL/6JRgFN1HnS46CTlpsDOtNglXUPfCrrskCUMVqJHXxEbUnyjEk=
+	t=1733986080; cv=none; b=OsIOcjBFndWCNqJQnhIGBJUzUFuswxiuW/E+EVILndaKeRTk0ibBeTK7HwTYeH64svLUHKudZCUYXUhWQD12FwAfqYBanxMimcZTAETMBpy6vcPeWb3t71eJI1RjQ0edzkZliRWFrYpxda3V6YEJsrp/YnBo5D0bN4f6WovdOmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733986062; c=relaxed/simple;
-	bh=iepnD6c0NlBrD/LuEoP8J3lXrzLO/j2QBhCmOwHhtVU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aEhIZ534IkvI4N7AbTCX2xH2kSbFCwD1lSEIgkd+HTUscoCqvNzEW8Pe9VIL78P6N2c7NXjDo1FdTGJyfLV5murE0tmnWbu5T4pAe6QZmMphd9aW3fIT4fJqO0c9p3zSPMkMG/k1A0rH0GOx0cJQ65rQTzDLasfSS/ZfbNPIVW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e4ybURAk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LhNxif4j; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1733986080; c=relaxed/simple;
+	bh=+DK+g34nouX+gOWa6duHurKMUuOnKkFZKggMRJG5ROY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZDQK4CuRwgTk4RokDLDVxCXVt9KemDqeZQMvyQUNpzeHOxrWYdv5siwkTG0N6c6sdV1c8uvS5NPztYfcdOWf2b51HcLwflQ+/jgq2+4R13G72Cg6g+fZ8W7ZzCGt0Rx5yHmCUAnqQCrH41zS8Czus/s544TD31JpFt2WkjCb/10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OM4LI1ke; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5oY3HWJv; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e4ybURAk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LhNxif4j"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 26F641140173;
-	Thu, 12 Dec 2024 01:47:38 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 12 Dec 2024 01:47:38 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OM4LI1ke";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5oY3HWJv"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8BB691383FE5;
+	Thu, 12 Dec 2024 01:47:57 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Thu, 12 Dec 2024 01:47:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1733986058;
-	 x=1734072458; bh=uabs0UdoJGVls4d5+ll2f3Cb972T+SboaXhMfUQ0MzE=; b=
-	e4ybURAkcJwZhkhHFz7dy+NiMpmFZEqQ96w7vpYggRk0/vmK+APXx6HRlEc+28Ro
-	fb7X6vMhoi23JsjuRB1O3I3ZQinc2asRsFVC6gzVaeBZpC4pOSjytvkDGfRfDQvU
-	W9MW3hXGXlV9ZiSOhqV5qGxtk2bNLZ0FYNLIc1H10eHCc8jXpyrJCqzbyxdXsSw5
-	Bmtxf1iONIRsY+WHgQyelghpddRTWKBOux292MMCtR8lAc2oXkr+ltCI+2ZhNUCn
-	aTOXfjY7ocukM9A9XsGCVwhtIFBzdipoPoFBM90KbkjOD4O0Yj7ohcpWacQ496tq
-	lrf2ekzA5PBRAH1uPTYPsQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1733986077; x=1734072477; bh=ZqYSktQKR8
+	CP1hRsWvnISm5nd/v5aXjDLiP9gpWH/Yo=; b=OM4LI1key+lKo0Tu5DYSJjZJRf
+	9RplE693dEOBsaWv6ob7rKrHti3WQZWfvf4u4mb8nJv79EaGi6CCDfe1/XUvDA2g
+	BLK0ZH4jOhH/zI0l/wy70994+3ANR59V2SNwnSCpzAmamfLOau5Yi3Nzay5myZMH
+	XbtXS3+XWnVGqBZfrIVK7xs403+o0gvXnP1WdU0dxFJw+39HiJgIl2tGcPhMvapa
+	Clr3XhwDwPEyk4FkvzJDOccjvBKpEgxMGiXb08ElE+UMljC6BBXFFMo1/Wy9HBfs
+	al3I3QDnQCkdgyUNEPc3caqO60BHtE/7hNupJVb9NipvuoaY1PvzbqQcPxXw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1733986058; x=
-	1734072458; bh=uabs0UdoJGVls4d5+ll2f3Cb972T+SboaXhMfUQ0MzE=; b=L
-	hNxif4j5XvXra5QGW+AGhJX6IvyibtY4YSMnuUtlL+wosh+vuQyVLGkfR7SMrWcm
-	M3ZLPbWwAQrNeV3nEQPXF0Bu56dE73lYn6xV/ltydQuKA9jF45bJ3WFkMAAsJYaI
-	NkTXzClqpofS/0IHjh1D5TNzB2y+evkmfi2TaJGFFMhMUHZ2ts6dJkp6+ej4a91L
-	S0e7sqcE1KLI4ujKYuTfg1kUeDdCRp39ZiCPj2ueOcqPwNOoaSvefkEbTBPGWJL0
-	vTeyFyVT+9w6RgTJ6am6YVYFmwjOF2+iqLq8oJPKQGbnYGTiKwjxm5+PSGxRf6Vb
-	Gi+lJ1jYXBd1VGaX+qOUg==
-X-ME-Sender: <xms:CYdaZ2L9eiN-H-XBg6svQJ7mXkZu3mhwYEhbg00sPGpDUVeUzitZzQ>
-    <xme:CYdaZ-IKUnUbh4uGl3z_E3A_hUZTBR7v4cGyYo1_rtOQS1paIt4XV5Rt_VTK5HOyN
-    I65E2zpU884g-oZ6A>
-X-ME-Received: <xmr:CYdaZ2sGbqV_SJ5SHcGjqlz1sh1EovNun-fpEg2qZ6-qzfEdQ57m-ts3nW8_wF5p4rlZfMf83zJQwJREk0kzvA01lB6ai9qQWoW5gQtoGa6MX_Lx>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1733986077; x=1734072477; bh=ZqYSktQKR8CP1hRsWvnISm5nd/v5aXjDLiP
+	9gpWH/Yo=; b=5oY3HWJv8oIUSUDsu5ltosiT9yws+6yvAmEVCby2w5E+LzzBRus
+	Dsu9JviaW6aUWMpwTRe10JjrLTtwuH1X3+JO3ukbCgpyruUl/VMtQc1/pp+g/mQv
+	HdX4xCcxP3UTbSAcCQWgqBMAHFOxk8/oqkWfU8kE6u8Vjfnru0EO6b/YG+BqhyaZ
+	KxptfXNC0U1Y41Ut4jVHhP8+d3WSUHZQOmDFgQBwYEn65bA9POlGbJ4SjppzYWpe
+	C7CzLSPK3EU05V+pAeNY4rCV9kxb4r7wthAAeBn9NErROLzqyZs+RnE6IW1vsNHN
+	WgVtA8llaFE29iUXCJoA/X4k+q9qqo4GJAw==
+X-ME-Sender: <xms:HYdaZwRZ5larQd9tS6xRlaBK9n1gf1dnqi2fHQPjVIAYbD7IyAycRQ>
+    <xme:HYdaZ9yas8OCkVrKo_N1Njmf-oMtcj9H37jx2x78e-r5z79kfYR978NmWpN90V28F
+    JuUNA9353NQQnzm8w>
+X-ME-Received: <xmr:HYdaZ93vyjKeCUPl9ehfbR8VE52knfb3vxI1pbJ1KVqhYH_FOfr-7ysyheROHi1LgpYHjckksmGy_o0aVGy2WgmRQ5yliaTKLXMWqMYVaPcOrpMV>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeeggddvtdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeen
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
-    teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhsfigrlhgurdgsuhguuggvnh
-    hhrghgvghnsehgmhigrdguvg
-X-ME-Proxy: <xmx:CodaZ7ZJJEO2BoNGzBFxt-b_CgbwYqpKNWGgU-EVJYqp99uIg_UHXA>
-    <xmx:CodaZ9aquDSYiNc_D1DjcSnduVLgdybR6y0zl-8TzfqO-YJyP0fw3Q>
-    <xmx:CodaZ3CdS-7Gy5OXuyU6n8vhb6nF-nqvdm7XaoLSaWZPGvOGyxbCEw>
-    <xmx:CodaZzY6ghuICCdzGQ02FJbatN3eqG5kfQwFkrsd6x_3MfFTWQZMmw>
-    <xmx:CodaZ8WZsLbePT5Q6WAoGKq3f_J9V7_GjhdZ7TpxUH0pgRe8mFnPm2Lj>
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepohhsfigrlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphht
+    thhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrdduke
+    eksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:HYdaZ0AbiP7MhZmWskU3ui1ousDp3NzUSvdYsJSbdsnnyHY066dg8g>
+    <xmx:HYdaZ5jesoNYjJpot_AhX35NZQQMvbB4o-d26JoWNizhfNfOPM4y5w>
+    <xmx:HYdaZwrzK0zedNOk3CZ0QLgBRrPxrzc91gNB9XYRTmGSBgFILVWNJQ>
+    <xmx:HYdaZ8gI5xbVS2sFBL27pVRY0_t3_1UmUEVuZzJ3eF-sMrKgPbulnQ>
+    <xmx:HYdaZ5foFURCHiJ6D1cmC07ubK_csO3bPePMLLXlX01M8qJ7G9TEZyKN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Dec 2024 01:47:37 -0500 (EST)
+ 12 Dec 2024 01:47:56 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a5691f2d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 12 Dec 2024 06:45:58 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f01dbd96 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 12 Dec 2024 06:46:19 +0000 (UTC)
+Date: Thu, 12 Dec 2024 07:47:41 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 12 Dec 2024 07:47:17 +0100
-Subject: [PATCH v3 4/4] ci/lib: fix "CI setup" sections with GitLab CI
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	karthik nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 3/4] ci/lib: do not interpret escape sequences in
+ `group ()` arguments
+Message-ID: <Z1qGmp4NC21XYC4a@pks.im>
+References: <20241210-pks-ci-section-fixes-v2-0-e087cfd174f4@pks.im>
+ <20241210-pks-ci-section-fixes-v2-3-e087cfd174f4@pks.im>
+ <874j3ajsym.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241212-pks-ci-section-fixes-v3-4-d9fe6baee21e@pks.im>
-References: <20241212-pks-ci-section-fixes-v3-0-d9fe6baee21e@pks.im>
-In-Reply-To: <20241212-pks-ci-section-fixes-v3-0-d9fe6baee21e@pks.im>
-To: git@vger.kernel.org
-Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, 
- karthik nayak <karthik.188@gmail.com>, Toon Claes <toon@iotcl.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <874j3ajsym.fsf@iotcl.com>
 
-Whenever we source "ci/lib.sh" we wrap the directives in a separate
-group so that they can easily be collapsed in the web UI. And as we
-source the script multiple times during a single CI run we thus end up
-with the same section name reused multiple times, as well.
+On Wed, Dec 11, 2024 at 01:37:53PM +0100, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > We use printf to set up sections with GitLab CI, which requires us to
+> > print a bunch of escape sequences via printf. The group name is
+> > controlled by the user and is expanded directly into the formatting
+> > string, which may cause problems in case the argument controls escape
+> > sequences or formatting directives.
+> 
+> Could it be you mean "contains" instead of "controls"?
 
-This is broken on GitLab CI though, where reusing the same group name is
-not supported. The consequence is that only the last of these sections
-can be collapsed.
+Oh, yeah.
 
-Fix this issue by including the name of the sourcing script in the
-group's name.
+> > Fix this potential issue by using formatting directives to pass variable
+> > data.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  ci/lib.sh | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index a54601be923bf475ba1a9cafd98bb1cb71a10255..f15f77f03a06120afbee438cee76ddc2683e1fa2 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -18,7 +18,7 @@ elif test true = "$GITLAB_CI"
+> >  then
+> >  	begin_group () {
+> >  		need_to_end_group=t
+> > -		printf "\e[0Ksection_start:$(date +%s):$(echo "$1" | tr ' ' _)[collapsed=true]\r\e[0K$1\n"
+> > +		printf '\e[0Ksection_start:%s:%s[collapsed=true]\r\e[0K%s\n' "$(date +%s)" "$(echo "$1" | tr ' ' _)" "$1"
+> 
+> Personally I find this line rather lengthy and hard to read with all the
+> single and double quotes. So I would suggest to split the line with a
+> backslash and put the arguments on a separate line. But I don't think
+> there's a general guideline on this, so feel free to ignore.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- ci/lib.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Fair, will do.
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index d403ada911722af554df6255e5cd3fa01b56fd22..5440eb6dc02784c03a5e4919f97dd7f07881f5c7 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -57,7 +57,7 @@ group () {
- 	return $res
- }
- 
--begin_group "CI setup"
-+begin_group "CI setup via $(basename $0)"
- 
- # Set 'exit on error' for all CI scripts to let the caller know that
- # something went wrong.
-@@ -395,5 +395,5 @@ esac
- 
- MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
- 
--end_group "CI setup"
-+end_group "CI setup via $(basename $0)"
- set -x
+> >  		trap "end_group '$1'" EXIT
+> >  		set -x
+> >  	}
+> > @@ -27,7 +27,7 @@ then
+> >  		test -n "$need_to_end_group" || return 0
+> >  		set +x
+> >  		need_to_end_group=
+> > -		printf "\e[0Ksection_end:$(date +%s):$(echo "$1" | tr ' ' _)\r\e[0K\n"
+> > +		printf '\e[0Ksection_end:%s:%s\r\e[0K\n' "$(date +%s)" "$(echo "$1" | tr ' ' _)"
+> 
+> Same here.
+> 
+> But that's all I've got on this patch series. Looking good!
 
--- 
-2.47.1.447.ga7e8429e30.dirty
+Thanks!
 
+Patrick
