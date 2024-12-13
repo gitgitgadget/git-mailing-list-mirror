@@ -1,39 +1,39 @@
-Received: from out-182.mta1.migadu.com (out-182.mta1.migadu.com [95.215.58.182])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91451B4153
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 09:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A609918BBAC
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734083949; cv=none; b=H+iS2gU/K6Jw8dNZF7GObRW9GKTg8eFPDt9xdPxg6J7/vjBxYmLjcgzqD/mLiZCR1Vx64JX0xHUozqt1dfLKWvthmuLZNutJpt5VyYeez4HLsiX4mIQZG41FPeihPQB/0rIOa0adswF4MSD6ue/JJy0XET/edVSXjkcTTOnH30M=
+	t=1734084047; cv=none; b=Q4FO2vjKh+XIlJBINQTQzfpT3RmIztKy2F9hijYljXl2BqPAvMNnk0PMaDrgsaL8JrgITjuOfiQL3WYtOIuCKqL1SxswNp4Jo4wdfGUUfiFR6jSzEHBrxTitXopLV/cvUYxMf7nd1XfjWsvhWjS0FdT5vk50oJlMXIukWPvou9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734083949; c=relaxed/simple;
-	bh=0PHW0qaTMPL5De4tEIBLaZozyWyRxmCjE7OUa1SADRM=;
+	s=arc-20240116; t=1734084047; c=relaxed/simple;
+	bh=YJZUoiT9vCc87PhDXSR1CeFLBNmSPNjJ5z9kdibsrS0=;
 	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k1D5bjAKx3BamIUoZHVRi7GBta65dgOhSbmxRf0L1JMeg7LPulE8Bv2gMC+ee/5pEXXiuUHmbcjtDM5ZuDwFn0X3ZN8gZ/D95/dVK1IwDpFPT43TirDrE1NsiSYtP38cO6cKv8U+1PZFso4keO9Q6hzwas4iWq9s9fJDrq40v+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=AJCUkeJn; arc=none smtp.client-ip=95.215.58.182
+	 MIME-Version:Content-Type; b=UPdz8kpvixwgfxVE9fvOfIPN+ozSUa5mqXyWqzOte5axxtsS3oMBDNXviLfmUwvmju2NkfRsX5/gLZBvZT/7Q5Bm7Gp0cIdZ/DAcuq8gxdiq5FkuH2RdHJKwbxydSGstMbI+U/MHj+ifWno8En5e4kAcxD7xA17W3wWVmfOjg+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=aZU+wsBe; arc=none smtp.client-ip=91.218.175.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="AJCUkeJn"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="aZU+wsBe"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1734083939;
+	t=1734084041;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ZMnT9CwOks/C3JYXA2OW+z4kUS8SA117JMnitqwKgCw=;
-	b=AJCUkeJnaHvPYHy7ZrHmzDRbGtOk3WFZ6QDErPmPnAJWtieDW2arVtLTJ5gk5Rnh+40nfT
-	EtGY5IbFB2pRxzvKisB0p174kzcwHAIoANmocJQC2FawxzOYkj7813of7rcpujBbjDO0Lu
-	G5Q9nEFvMDLfIZcwt934l8uiex5tngM=
+	bh=MPm+iP5OVcI8QTBbkjOP3Z4MUiJg1LrlO29vOp1LDZM=;
+	b=aZU+wsBeBP8+7TWrBoSy7P22A/RSeqf73b0XyMCFv3gX3b1QRIUkLUTrZyAL1l/GylA0tr
+	uouWWB4SWt6ojMjG/gOxIhw+R1GWmxaFSr84KjUgUM2NL1lurrcGm7u/2pb01ajPUK4z2s
+	r2CuhJGhtwZfDvKm03yWL3EVUkc3Q8g=
 From: Toon Claes <toon@iotcl.com>
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 4/8] meson: detect missing tests at configure time
-In-Reply-To: <20241211-pks-meson-ci-v1-4-28d18b494374@pks.im>
+Subject: Re: [PATCH 6/8] t: fix out-of-tree tests for some git-p4 tests
+In-Reply-To: <20241211-pks-meson-ci-v1-6-28d18b494374@pks.im>
 References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
- <20241211-pks-meson-ci-v1-4-28d18b494374@pks.im>
-Date: Fri, 13 Dec 2024 10:58:47 +0100
-Message-ID: <87bjxfj44o.fsf@iotcl.com>
+ <20241211-pks-meson-ci-v1-6-28d18b494374@pks.im>
+Date: Fri, 13 Dec 2024 11:00:23 +0100
+Message-ID: <87a5czj420.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,85 +45,116 @@ X-Migadu-Flow: FLOW_OUT
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> It is quite easy for the list of integration tests to go out-of-sync
-> without anybody noticing. Introduce a new configure-time check that
-> verifies that all tests are wired up properly.
+> Both t9835 and t9836 exercise git-p4, but one exercises Python 2 whereas
+> the other one uses Python 3. These tests do not exercise "git p4", but
+> instead they use "git p4.py" so that the unbuilt version of "git-p4.py"
+> is used that has "#!/usr/bin/env python" as shebang instead of the
+> replaced shebang.
+
+It took me a while to figure out what you mean by "the replaced
+shebang"? I think you mean something like:
+
+    These tests do not exercise "git p4", but instead they use "git
+    p4.py". This calls the unbuilt version of "git-p4.py", which has the
+    "#!/usr/bin/env python" shebang. This allows the test to modify
+    which `python` comes first in $PATH, making it possible to force a
+    Python version.
+
+> But "git-p4.py" is not in our PATH during out-of-tree builds, and thus
+> we cannot locate "git-p4.py". The tests thus break with CMake and Meson.
+>
+> Fix this by instead manually setting up script wrappers that invoke the
+> respective Python interpreter directly.
+
+I like this approach, way more explicit now the Python version is in the
+command itself.
+
 >
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/meson.build | 36 ++++++++++++++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
+>  t/t9835-git-p4-metadata-encoding-python2.sh | 48 ++++++++++++++-------------
+>  t/t9836-git-p4-metadata-encoding-python3.sh | 50 ++++++++++++++---------------
+>  2 files changed, 50 insertions(+), 48 deletions(-)
 >
-> diff --git a/t/meson.build b/t/meson.build
-> index 9e676e69363ed6311426500d98fe281e30d26bcb..f1fbc6ae179079f4d5d86f9a60956fad84d0495c 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -1092,6 +1092,42 @@ integration_tests = [
->    't9903-bash-prompt.sh',
->  ]
+> diff --git a/t/t9835-git-p4-metadata-encoding-python2.sh b/t/t9835-git-p4-metadata-encoding-python2.sh
+> index 036bf79c6674f6f1f0d667c7270674168428ffee..02f9ec09053890a4d41b7dc95644066d6481bbb6 100755
+> --- a/t/t9835-git-p4-metadata-encoding-python2.sh
+> +++ b/t/t9835-git-p4-metadata-encoding-python2.sh
+> @@ -14,23 +14,25 @@ python_target_version='2'
+>  ## SECTION REPEATED IN t9836 ##
+
+To be honest, I don't understand why this section wasn't put in a
+function in lib-git-p4.sh in the first place, instead of duplicating?
+Anyhow, I think for two test files it's fine to duplicate this code, and
+after all you're not changing that.
+
+But I've noticed you are no longer using `python_target_version`. I
+would suggest to either remove the variable, or use it again so the code
+between the two test files is identical again. Doing the latter would
+probably mean you also need to create a variable like
+`p4_python=p4-python$python_target_version` and use `$p4_python` instead
+of `p4-python2` throughout the script, so I'm not sure that improves
+things.
+
+>  ###############################
 >  
-> +# Sanity check that we are not missing any tests present in 't/'. This check
-> +# only runs once at configure time and is thus best-effort, only. It is
-> +# sufficient to catch missing test suites in our CI though.
-> +foreach glob, tests : {
-> +  't[0-9][0-9][0-9][0-9]-*.sh': integration_tests,
-> +  'unit-tests/t-*.c': unit_test_programs,
-> +  'unit-tests/u-*.c': clar_test_suites,
-> +}
-> +  actual_tests = run_command(shell, '-c', 'ls ' + glob,
-> +    check: true,
-> +    env: script_environment,
-> +  ).stdout().strip().split('\n')
+> -# Please note: this test calls "git-p4.py" rather than "git-p4", because the
+> -# latter references a specific path so we can't easily force it to run under
+> -# the python version we need to.
+> -
+> -python_major_version=$(python -V 2>&1 | cut -c  8)
+> -python_target_binary=$(which python$python_target_version)
+> -if ! test "$python_major_version" = "$python_target_version" && test "$python_target_binary"
+> +# These tests are specific to Python 2. Write a custom script that executes
+> +# git-p4 directly with the Python 2 interpreter to ensure that we use that
+> +# version even if Git was compiled with Python 3.
+> +python_target_binary=$(which python2)
+> +if test -n "$python_target_binary"
+>  then
+>  	mkdir temp_python
+> -	PATH="$(pwd)/temp_python:$PATH" && export PATH
+> -	ln -s $python_target_binary temp_python/python
+> +	PATH="$(pwd)/temp_python:$PATH"
+> +	export PATH
 > +
-> +  if tests != actual_tests
-> +    missing_tests = [ ]
-> +    foreach actual_test : actual_tests
-> +      if actual_test not in tests
-> +        missing_tests += actual_test
-> +      endif
-> +    endforeach
-> +    if missing_tests.length() > 0
-> +      error('Missing tests:\n\n - ' + '\n - '.join(missing_tests))
+> +	write_script temp_python/git-p4-python2 <<-EOF
+> +	exec "$python_target_binary" "$(git --exec-path)/git-p4" "\$@"
+> +	EOF
+>  fi
+>  
+> -python_major_version=$(python -V 2>&1 | cut -c  8)
+> -if ! test "$python_major_version" = "$python_target_version"
+> +git p4-python2 >err
+> +if ! grep 'valid commands' err
 
-This gives nice output:
+I like this sanity check, this verifies if the command actually works:
 
-    $ touch t/unit-tests/u-bar.c t/unit-tests/u-foo.c
+Thus the output when the script is properly created:
 
-    $ meson setup builddir --reconfigure
+    usage: /home/toon/devel/git/git-p4 <command> [options]
 
-    The Meson build system
-    Version: 1.4.1
-    [snip]
-    Configuring update.sample using configuration
-    Configuring exclude using configuration
+    valid commands: branches, clone, sync, submit, unshelve, commit, rebase
 
-    t/meson.build:1116:6: ERROR: Problem encountered: Missing tests:
+    Try /home/toon/devel/git/git-p4 <command> --help for command specific help.
 
-     - unit-tests/u-bar.c
-     - unit-tests/u-foo.c
 
-    A full log can be found at git/builddir/meson-logs/meson-log.txt
+And when the script was not written:
 
-But I think the error message is a little bit confusing. It sounds like
-the test file is missing, but it's the configuration of the test that is
-missing.
+    git: 'p4-python2' is not a git command. See 'git --help'.
 
-Now I've realized it hard to write a good error message here. But I
-would suggest something like "Tests files found, but not configured".
 
-> +    endif
-> +
-> +    superfluous_tests = [ ]
-> +    foreach integration_test : tests
-> +      if integration_test not in actual_tests
-> +        superfluous_tests += integration_test
-> +      endif
-> +    endforeach
-> +    if superfluous_tests.length() > 0
-> +      error('Superfluous tests:\n\n - ' + '\n - '.join(superfluous_tests))
+I noticed though, the stderr output isn's shallowed into /dev/null,
+resulting the output for the test to be the following if Python 2 is not found:
 
-Also here I would suggest different error message, maybe something like
-"Tests configured, but file not found"
+    make[2]: Entering directory '/home/toon/devel/git/t'
+    *** t9835-git-p4-metadata-encoding-python2.sh ***
+    which: no python2 in (/home/toon/devel/git/bin-wrappers:/home/toon/.local/bin:[snip])
+    git: 'p4-python2' is not a git command. See 'git --help'.
+    not ok 1 - start p4d
 
--- 
+
+I think that's totally fine though, it's giving the user proper
+information about what is wrong.
+
+--
 Toon
