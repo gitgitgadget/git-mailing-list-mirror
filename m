@@ -1,248 +1,235 @@
-Received: from ZRZP278CU001.outbound.protection.outlook.com (mail-switzerlandnorthazon11021134.outbound.protection.outlook.com [40.107.167.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664BF18A6D4
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:32:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.167.134
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734085957; cv=fail; b=oPAapkQ5pPC51Vs9a713B0Wyv/iWVMv1X8M71tqpHXC7dBc62Erg+JnO6IHtgjVuUJnCnrzCYiI09HA+ngNOhwMUPAsorRI/c0XH+Cj5slo+7bmEyscu0JbyYoN+TIzvj6Vz5IfbgRHNhHhAenAmXhA0t9BRCoQdfFK3KJPkpq0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734085957; c=relaxed/simple;
-	bh=GUBOkyOITAHt1vFoVEqHmHTl/x3xObB8kBmzZNOKZT4=;
-	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Y9J/RR2GKqe8eFcOE/T7q2ESk66TCr1+rDKI38R+oqROh7U8GNigZ2klUTdlsXqLFVOKJ3dPCV0gaJpzBFYZ2PGoN4AfsnY9mVO4PFl+TT2VFuz7Ve7lYi9ml4mDBJA8EFJiCpyjoz/UKZKZN/wEaJ5kJDNZIwWslKNUZafPl/4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=psi.ch; spf=pass smtp.mailfrom=psi.ch; dkim=pass (2048-bit key) header.d=psi.ch header.i=@psi.ch header.b=CJrjArcj; arc=fail smtp.client-ip=40.107.167.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=psi.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=psi.ch
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDB441BE251
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734086215; cv=none; b=BVL09Xj9RRawNOagvmGuR6FsJZ2PrNNsAtQ4v203kGgxMptJpSfFcIgm1gc1uT7Y/hzdhGZC8f7XuYdfSvSVVEIXQT5luBd3GIWbEy3XFM1krOUAVju0IhubwMO4XfTEZlMvWnFCHUwFOI1VUHjiXmrN5BCc6b5V7JHoHrjzjgA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734086215; c=relaxed/simple;
+	bh=1zQAW1gf6s8EkfhWmsjwMbxZIi5DU5Z49Kos2YDhOaQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=cpdLVQ6fGm769byNmcgK4o+yKy+VvPLoHBJ4tM8uKF3N567kzwqWHxmM30XlWNaXUqHIC0Vdt98PBoqJN1gfgWI9BNQxFMtzZhanOQKGnOA/3bYDagBdjA1XJNPiEsPb2iIYFy0RBnC4A5UdP7FFWWTd5fkRQVg/ZMVgcOUtHvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TU6/rvIE; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=psi.ch header.i=@psi.ch header.b="CJrjArcj"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V1dZzM5FZL2zwH4C+0Ncbp0dV0LBXo4rqN832W+8qCXmbWlm+RQcUpzExPE+4Vls/tPDyg+DhK7P3QbTl13bbCV61qIH2iPiZ5KGffyeSAJDkAOdb8awX1XSr9csxjEAEj6yUkERA0VOJa9pjQaznBXVZ1ypll44dsUpWdaG/Z+RdIzRbBW8u7B+U4ZsV04Z0S9dbRCy3P+idEUZUtMMmvuIIT+dKSHmB7AzLK3SyVlMrs2Zs+klq/Emyri79Uqx15cE4NtMVNFDBfsTqvCzuv97FrAZVPc/uhUPCUWm4NHRUTeXsAl4n84cPho8Kq8+3r8uf1H7JDuODzFFejk4uA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yUgjdnVqJA2dATVPOUZynkwRg9XyURqnhwwOT2zsEi4=;
- b=soYAKekInI6MAudSEz/0AxFT6OAEwUGFtwOtrYe5drkdDHSm6QjM8y+DO0XInWYhsxQ+aptHezL3IltfKGuc9pOGxRBKFdp76rdYn5xsBHqeJsDRFmHf4cy+4RibqcaN4BuWnjt7Wz59bCZymBZb3Ootgir4n/ONUxoCZDZRAjNlnaBu4norgIt4Zz65KpG8oXrSdzqixV2ClTHNuZt0jaEB+lFpsnWBRLp/iWGyO1VFTEUkirdOdrCtjRTzRzneb+5qikmfUx89K5OTw1gK+QDJo/M/h2kjmWtlm6PNulKas+2wDgcozYQ9RV5SQIpvn50ArPenFnz5ZkOjMSk2Fg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 20.250.75.252) smtp.rcpttodomain=crustytoothpaste.net smtp.mailfrom=psi.ch;
- dmarc=bestguesspass action=none header.from=psi.ch; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=psi.ch; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yUgjdnVqJA2dATVPOUZynkwRg9XyURqnhwwOT2zsEi4=;
- b=CJrjArcj6tWaN/kGryQO/aMn41U4ib813dURafjwzZEXKrm2DJUsl6AfKLMZnSPCO/493zvx1qP7kB7i/zkdgqJNTQyhftshj5qUKdMyJ46dGyydtvPCKz8Z4OPdojPCYF2XMjgIbKs17+A3GTQCqAYLTN4nwOpSQ63vi6biLI1xAtv5x5Es8GgYRUZALesEhsD67ijNpnT3JA5SUw1Yee5I7uWzFDg4vqwdGPokvQSLM4rpf2+qnlDOaQ6pXIybXsyzNWZmufgR6/6M0XrNfXqh2/b2BTPZGgktsNYhXsZ1Vq2bnSoP5N5lroarTKv7ZDf3lI3WqViiTpPipWwRjQ==
-Received: from ZR0P278CA0063.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:21::14)
- by ZR0P278MB1651.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:a5::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.17; Fri, 13 Dec
- 2024 10:32:27 +0000
-Received: from GV1PEPF000006F8.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:21:cafe::33) by ZR0P278CA0063.outlook.office365.com
- (2603:10a6:910:21::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.17 via Frontend Transport; Fri,
- 13 Dec 2024 10:32:27 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 20.250.75.252)
- smtp.mailfrom=psi.ch; dkim=none (message not signed)
- header.d=none;dmarc=bestguesspass action=none header.from=psi.ch;
-Received-SPF: Pass (protection.outlook.com: domain of psi.ch designates
- 20.250.75.252 as permitted sender) receiver=protection.outlook.com;
- client-ip=20.250.75.252; helo=seppmail2.psi.ch; pr=C
-Received: from seppmail2.psi.ch (20.250.75.252) by
- GV1PEPF000006F8.mail.protection.outlook.com (10.167.240.4) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.15
- via Frontend Transport; Fri, 13 Dec 2024 10:32:25 +0000
-Received: from seppmail2 (localhost [127.0.0.1])
-	by seppmail2.psi.ch (Postfix) with SMTP id 4Y8lyd19VJzMvT;
-	Fri, 13 Dec 2024 11:32:25 +0100 (CET)
-Received: from ZRAP278CU002.outbound.protection.outlook.com (mail-switzerlandnorthazlp17010001.outbound.protection.outlook.com [40.93.85.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by seppmail2.psi.ch (Postfix) with ESMTPS;
-	Fri, 13 Dec 2024 11:32:24 +0100 (CET)
-Authentication-Results-Original: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=psi.ch;
-Received: from GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:3b::13)
- by GVAP278MB0970.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:55::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.18; Fri, 13 Dec
- 2024 10:32:23 +0000
-Received: from GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM
- ([fe80::9163:7f88:662:9288]) by GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM
- ([fe80::9163:7f88:662:9288%3]) with mapi id 15.20.8251.015; Fri, 13 Dec 2024
- 10:32:23 +0000
-Message-ID: <c22a7d5e-cbfe-48a9-bdf5-e73f21ac648f@psi.ch>
-Date: Fri, 13 Dec 2024 11:32:22 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: chmod failure on GVFS mounted CIFS share
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-References: <d26f4b93-57a3-4536-8c32-3ed5b3e98a86@psi.ch>
- <Z1us2FpyObVpJlsM@tapette.crustytoothpaste.net>
-Content-Language: en-US
-From: "Konrad Bucheli (PSI)" <konrad.bucheli@psi.ch>
-In-Reply-To: <Z1us2FpyObVpJlsM@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: ZR0P278CA0010.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:910:16::20) To GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:3b::13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TU6/rvIE"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-aa5f1909d6fso287602966b.3
+        for <git@vger.kernel.org>; Fri, 13 Dec 2024 02:36:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734086212; x=1734691012; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2yP66MpHoRJMrRT8Yqjo1czS94YPdDgttlZIZ/ZdMEA=;
+        b=TU6/rvIEWR3IZwI3TGL6mlUezUaheBY8VHZSK9a8teFctKqvg/yoAOfe2onYgZip8W
+         dAveA3kFxOTPUkNvpWPvNR6ThokA/vszoInwVtWYIJXfDPoEh2CD+NKOHz4zioxNJWd3
+         Ns/dv/SP9kZiPQ9KsQDzW2FFCB7kZmFXgLPtFrsST5bpAi5Yaz7aJkS+8WLzQEZ0HFvY
+         7nDpdcRjN9/k/vu8E1Mr8v+Lwczo6uetu/b3WmR2vm5m1lLgdZYUWq55rLaAoZuY6kSq
+         mPQVc1so1jNFETCGOb/sMkojHELvJ4tGAxiy4kn6fHEApja2ogZF2rUiX3wZ/scotYXf
+         66gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734086212; x=1734691012;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2yP66MpHoRJMrRT8Yqjo1czS94YPdDgttlZIZ/ZdMEA=;
+        b=P7HFapmqE2+ohct2EjND1shZQtVZ2sb8N/AoAFaOictyeNSyf8zlhPQs63Xo+rSOme
+         EecgV5aUua2EKVhsuHYusnEti9x/xwCdZTzD7KuOodkr2m7LzCLTjZ0wsv+U7+4nSZVH
+         u6E0gbQSzB1gi2p54Qsv+XgyyyMzXtS04FaND/vf2xvUw9L+f3kvVwd7TSEDxq2PNC3s
+         G4Z6wFT4Aq9NxTboIT1fmtUFtJzCqK0ivx6qUo6Vj5C+RzrQtXHJmfdEgcV4+tYHJ+c1
+         nmqBnWLhy1GLWxVASukqbgTZz0J/gkhC+3OebpITSPNpyQEKvhrrWQXcHze288diPPRB
+         y73Q==
+X-Gm-Message-State: AOJu0YwxqX82QpjlrKbCcBjCek1nsHzEq4gPDUHT3tj+HjUtNy59L/ac
+	7T0LZSZRkLU+tI5fRHxC1yaX/UglNGqZP8lSflLNFsFuvFhXFZdz
+X-Gm-Gg: ASbGnctZ3G0gaGSJ7YhIgmjroMjQuASvh0fJnoQaHYbJdrqogTB9/1yKYsvaG0BEhr4
+	k5lRZQ2MKdsZgRou5lI0KF2871y6GCIXhOA492IdHj31W92YdECtpXH7+tCMoFY6pR6DX6EBlRW
+	+BSy5AJ3a/dPxk97S+kk6uLBGm8JcZBoeIbcZN/VBtvE/IBggAcMXfFybPBL3F2Yn0+HUPa/6MS
+	lZ7qwma0qNsUDtTOsQ7j/iFvQ4T/xMk5RjI5WDM0lzsMie/2hMtWKFe25g5C3bLd/oyZA==
+X-Google-Smtp-Source: AGHT+IHD1ss3qRydthDvpeokvQg4m5BQ34B2qytobXwm48isVD+DXXbGb1elPCkQRWyazKieeHlUdg==
+X-Received: by 2002:a17:907:7741:b0:aa5:4982:abc8 with SMTP id a640c23a62f3a-aab77989e01mr162590366b.22.1734086211825;
+        Fri, 13 Dec 2024 02:36:51 -0800 (PST)
+Received: from [192.168.178.20] ([2a02:2455:8256:2d00:9c39:c2d7:aedd:294d])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aa6883f65c3sm686785266b.157.2024.12.13.02.36.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Dec 2024 02:36:51 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Fri, 13 Dec 2024 11:36:46 +0100
+Subject: [PATCH v2 1/8] refs: include committer info in `ref_update` struct
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-TrafficTypeDiagnostic:
-	GVAP278MB0504:EE_|GVAP278MB0970:EE_|GV1PEPF000006F8:EE_|ZR0P278MB1651:EE_
-X-MS-Office365-Filtering-Correlation-Id: 36da9ef1-4229-4ac5-6340-08dd1b616fbe
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam-Untrusted:
- BCL:0;ARA:13230040|376014|366016|1800799024|10070799003;
-X-Microsoft-Antispam-Message-Info-Original:
- =?utf-8?B?djBLeERxQmFaQTNZckRPRmd5UzhLMUF6YVZmeVpZdUZhNEdEcDNmc2c2RVNG?=
- =?utf-8?B?QXU5NDc0dnJ5Y3NzeGFFdk9sOFY2Q01IVENCUjB2eEFuMmZ2MXRrOUpEK2VQ?=
- =?utf-8?B?TFRndVRxeHBFbGMzeHcwd3lvaXdHeTRiY0oyNmdjSEZGWXhCVXNKUzBsajhK?=
- =?utf-8?B?VThTTkN2ZTdRQWR1dEhJckhVNG0wV093aGIvdGJRdVp5V09namZuYmhLblB4?=
- =?utf-8?B?bXFxZ1BXNmRCMWR2a25FbTV3djdQVzF6U1lKZ3ZhRnJiZXM3a0RvMFJKNWhJ?=
- =?utf-8?B?UjFoNVdyTHhaWFNkV1FVM09SR2RTcStQdENKVTgrOHR3a3JqWVY3L2NFcTNx?=
- =?utf-8?B?NWRVNUlGQjE2MWlGQjBtN0pxdDVpTmJLWDlvckFBUnFNN0c3R3NNRWF4a2xT?=
- =?utf-8?B?ci90cTVmZndsRGtoYitneGk1VnFBUVhLYzNMU2JzZnVFb3V1ZzBDZUNpemN4?=
- =?utf-8?B?ZzB1N0tjeDdOMnpIbzdmT0JETW1IQUZuY3U3bHlVbkpwSitXWWJIRWFwWEtm?=
- =?utf-8?B?NFZQZWFDaHI0ay9paGFPc0l2aUltaXpuWG1mNTBZbDNvaVl4ZzZvZVZnL2tK?=
- =?utf-8?B?Zko0MGpBWEduSGtZUjl2ZFJQZ3pPWEpxb04zOVFTREE3cER2eXk5OFVGTWZs?=
- =?utf-8?B?U1g2SXFGdWJNN2dGMnAxdXoxTEZZR3pRcDRnWXBiSzNOVGpiMUpTYWlrQ2x4?=
- =?utf-8?B?TDBEaFNRRTlLZkt1aWtDN0ZCYWhXVG1nMUJOMWdFeUsrMDYwaVduZlRmRCtK?=
- =?utf-8?B?em1qdC9DOUpwVnhub3pOclQzK3Bqb21XUFZPTE83TjRMVDZpZ1ZDbExWR0p1?=
- =?utf-8?B?Mk0xenN0SkFRV3UveU5PYmZKWmw3UXdYdEdlOVRUNTVjbWNCUk1ybEJVQlhi?=
- =?utf-8?B?bG1lbm5oblFUU1d4Mjd5d1JCVkFUbDJUQi9FQWlYRW1aZ0NGTE51bm1kbG16?=
- =?utf-8?B?VjlvMU93RzUzSmRIcCs4Ti95YWlXOWJ6TnhWTXU2YkNLZklXTXZmL0hiLzcr?=
- =?utf-8?B?eHkzclNKaUJueStPYkl1aDhxUlhqSEFlT2xnTzhTWUUrY2EyekRweWtCQUxX?=
- =?utf-8?B?WHY4YUt2Z0NaSmxpbDlVV2ZwYVpqYzRDdFBrd1ltWnVHOFhiam5qMjd4QXF6?=
- =?utf-8?B?djZlSjJYaHZCMUhQVjY3S2VFOWJveWxWZk5SMkpPSjdLTmdMNzlmNUl2YmhE?=
- =?utf-8?B?SzZNZTFBWVN1NERwK3FkcFZhaXRwaFMreEpsT24rcXNkT1Vhc1pMQ0xqcmwy?=
- =?utf-8?B?VW9SN25RbXVHRUlNNjFBazVPWU5LeXZURTFBVVFCMXpHQ1YxNGU0Qy9uOGtW?=
- =?utf-8?B?UDlkY3JITEorc0RDR2RMaDlTY3JFUVE3VHMwaEh3VkZlNGxvMkxtVjZpSThJ?=
- =?utf-8?B?SkFKa2t0Q2lBZnEwRWJ1d0xQLzJES29MdFRhZ1k3b2dxaFV5U1lENTl0MWht?=
- =?utf-8?B?RUtqQXhyOS9TOGVNY01IWTNJcWZOS1pTR0Vqc3hjS1JRMFUwUFhoS2pXa090?=
- =?utf-8?B?WTA4eWlDeHE4ZWl0UXRuV1p2TlNMTEN0RDJDSkhUUmJQUnhQaldpREpyNlpx?=
- =?utf-8?B?bFNWWW9LMTRQMmRLQ1J5b1RwOUlLTXJzWjFoRkpJMHVWL0JoaEpnNk1adEY2?=
- =?utf-8?B?WnhLQ0RWdmFOeGVGaFEzQ3VncHV2d2NaR3dXdkdwOWl1T0I1MzFOZTdqeWc4?=
- =?utf-8?B?eFIwWTZiL0w2WktrN1NtamNybGJQeTF5enZsbjJwS1ZreEFjd1lyMVEweGYy?=
- =?utf-8?B?VjhQakgydGxsai9KYlUzZExobTB3UkNrNk9CaG1DYVVpQ0pJb1hFdk0rTHpG?=
- =?utf-8?B?dUVOSE5rL3ZzNDZqbHYzQT09?=
-X-Forefront-Antispam-Report-Untrusted:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(10070799003);DIR:OUT;SFP:1102;
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVAP278MB0970
-X-EOPAttributedMessage: 0
-X-MS-Exchange-Transport-CrossTenantHeadersStripped:
- GV1PEPF000006F8.CHEP278.PROD.OUTLOOK.COM
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id-Prvs:
-	99181996-edd3-41bd-87af-08dd1b616e46
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|376014|14060799003|35042699022|36860700013|1800799024|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?dHdOUS9NOGRiNjZuOFRVYkZwTUU2ck9JOEp5YU4reDk4Y0NIVzRvQVZ0cnpw?=
- =?utf-8?B?MVJCT0xVU0dJNEIxdUVWSVFjTTA0YUFFaEFUL2xaM2wrRk1HeUo3WVk5OS83?=
- =?utf-8?B?UXp3dDNEUjI5L3BRVjlCdkdGWi9ILy9RbVI0S1NjT1dkNGJPRnJoU0lQTkx5?=
- =?utf-8?B?SFBNa2FHOWtWRUlrcWpoQ21EUElVK0N1MnJFYlBYWklyaXc3M051QUgxTEVI?=
- =?utf-8?B?KzZzOU05VFh0NXQ0WjlGYUZocVV0eWhocFhHMEtVOHdaeGlDWm1YL3BPVERF?=
- =?utf-8?B?eXlFMHRqVnJJa1hkN0hUK28xR1U3Y2JRVUw1Z3d1SUxGR0QxYlNpcSsweGQv?=
- =?utf-8?B?ZTJkWFpPVUdMY1VyMzVrelhqS244b1VMZm1yTXo2MElhbFVGVmRmNkRhNGJH?=
- =?utf-8?B?OXZ4ZGpjNmlCbmRrTFVIS1VqYjVlZGt2cFhvSzhqWjVkRE5SUytRMkxrWjdi?=
- =?utf-8?B?eDFmVGlyS2VrOUVpT1hnVVJJd2FnVENXYk9aekQ4SXM3RFZrNmNUYXJYK3Rm?=
- =?utf-8?B?ZklkQkVUZk5RZDlzWS8wRjNNRGNKYU8rVnV1c0o1dWc4a3o4TmhZb1FnWXZG?=
- =?utf-8?B?YW5zZVV6TEpaZkVDNW5sOE10Zi9ucWpSSmtWNUVqRzNBeFlEaHd4c2d5WGU2?=
- =?utf-8?B?VW1NRHExYmN2NGU5VjVxTEVpYXQ5b0pob2F1c2tMRFBFVXFCZjMycCthRWo0?=
- =?utf-8?B?aGpKcEJ2WlZzVXRRM3BJdEpDYXFjalF3OUh0WWtlb2lzMzhjQ2phV2ZwK0Rs?=
- =?utf-8?B?MThrL2xVa0l4NGIwZURGQjJqdlVuMGg3TDZLK2RLQU5zbzNGUHJmSS8xTEZz?=
- =?utf-8?B?SVdQRTJVeVN6eVVrdFdCQjRtZjBzaEVxTVB1dkRNRnJCUlB3Q25YdjZyRkF0?=
- =?utf-8?B?U1FpcmNod2c2eFlLSjlVc1hwa08rZVEwUGdGWlJXK01jbEZVd1ZwdnN3OFBF?=
- =?utf-8?B?M3FWMmw5bVdza0NDVGJscGQxL25oZm1BK3NXOGgwdzJ4bGxMenEzUUxpejEv?=
- =?utf-8?B?VlhSb2xWMkNHNDBvN0dMWGlsOWE3R2pTUHZjWjg3ekNqWGd2MmtaSWJyM25B?=
- =?utf-8?B?RWI2ZnRjaW84ZlByKytsSTBKT2dVd3JGR1RZSExFaUdnL2pRMXlXcFZ2SnU1?=
- =?utf-8?B?SmxnZm1qVzZ4eUlQWGF3SXFTSHhIZEV2WGVyN1RBSTArdnhSKy9ER2dJSkhQ?=
- =?utf-8?B?NkYzZkUvTEJqRVJtOCtMZG5SZzlDemIrNHZRTTVMN2pwekNlNW1YTzBwRzRD?=
- =?utf-8?B?bWFkdm5nQ3c3ZExDWE1vRkpSQUFjZ28rd1NrcjNheW80Z0ZTd3hHelVGRXpR?=
- =?utf-8?B?dUwxK3pIcExQakNZUVl5ZEg2aW9HRXFVMnk4em4rQjJhamloaUJla0ZnUWgx?=
- =?utf-8?B?Q2NWa0VjS0JHTS9oTS9FQWQwcjZpRnhnZlllV2dWODJGaWVObndIRmlmQzAz?=
- =?utf-8?B?WmFuUmkvdXNjS0dBY29tc3cweS81alNXM3lQV2pjdFQ1NE40ditDYUk5Uk1z?=
- =?utf-8?B?ZkFrYnd0ejd1REpHWWt5cE0wZjB5S2hOUGNubHBFMVZtM3B6UnNCMHFUdTQ5?=
- =?utf-8?B?SXNlY0tXSXM1NmZOWmE5dW0rNWUzOER4Nm0yOVRxZ1FiNGN1bVdGM3Z2ZHkr?=
- =?utf-8?B?RUFoNVNqVzljMWMzbkVqeVJvY1EySmZOQTN1WFZPWHRCVWVoMDY5U1BVWFgx?=
- =?utf-8?B?bFhFUE1MWkh6SVBpTlRGNXpxenlrckg5cHRCU1NDbnJ0dWtRck92MFArUEhB?=
- =?utf-8?B?S2NXZGs1UWd1R3Q5TDlsRVhiUkU5Y2lBMVZDQ1dCcEluM2E5MFB2cCtoM0RK?=
- =?utf-8?B?UUwza01ncDdqZVR3eUluTGxVbEtDNWluSU8rMFdaUTl5LzUrVGUyaC9ScHIw?=
- =?utf-8?B?cnl1V0dPS0E5UEEvLzBobFJhZmt4UXJFeFlzUmVXMHBCa1o4MlFLNTBzb0lS?=
- =?utf-8?Q?B4KTcY1Ibw4QqhsSuSzLZfOuKOFBwPIP?=
-X-Forefront-Antispam-Report:
-	CIP:20.250.75.252;CTRY:CH;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:seppmail2.psi.ch;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(14060799003)(35042699022)(36860700013)(1800799024)(82310400026);DIR:OUT;SFP:1102;
-X-OriginatorOrg: psi.ch
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2024 10:32:25.6223
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 36da9ef1-4229-4ac5-6340-08dd1b616fbe
-X-MS-Exchange-CrossTenant-Id: 50f89ee2-f910-47c5-9913-a6ea08928f11
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=50f89ee2-f910-47c5-9913-a6ea08928f11;Ip=[20.250.75.252];Helo=[seppmail2.psi.ch]
-X-MS-Exchange-CrossTenant-AuthSource: GV1PEPF000006F8.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR0P278MB1651
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241213-320-git-refs-migrate-reflogs-v2-1-f28312cdb6c0@gmail.com>
+References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
+In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, 
+ Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5688; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=1zQAW1gf6s8EkfhWmsjwMbxZIi5DU5Z49Kos2YDhOaQ=;
+ b=kA0DAAgBPtWfJI5GjH8ByyZiAGdcDkCghjNk1Co6n6ltY6seXiRIcOxWA2E33Ur7K1uln7j5I
+ YkBswQAAQgAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnXA5AAAoJED7VnySORox/uVgL/1Mv
+ a+bVnzw2D2aKoybeRbLDRv+TDGGLd2R2uq1ps1kbs0HlZqbrYV+dkilnikv7NOU8xW6JVgvt+ML
+ 2rqT158KkZ/cVJLyZldSuUehk7ZNrv5Yq+yteR05ghYyuVacguEWMvhIAlRAnhqfAFap6oGpr45
+ XiwW3XyM3vFtA3rFzOFmuXh5sSNl/WlakGSfkC3GqYKhLU3Xxijgu0w+BBff6CRqfz4l93nnbsF
+ eucNXM3EgHm5TpIEmXdJGfPWy+AvUTohyJRCnrZa/HS/YcpTQpX3lZZWlGRp6ksLTuXg7QRQQfc
+ Gf74vcJrA4R/aUwjnJYCHzqu/gW+8Lz7mrXtZCPP/kQQUoBmnXd0tkMbiA59YOKhr/1U9tD2MG/
+ FW+wIw+VOHLtoourvLui0mnwKEYsRrkBg86NjSYgtWW3iuS4t0Mslcfu4jUyuqy5VMIbpi6Y4ex
+ kkOjGMd9q7ICY94BwyamFUaAHYNME7MfeqvQMcl6ctVbm7DrGAkqjefbJOoQ==
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On 13.12.24 04:41, brian m. carlson wrote:
-> On 2024-12-12 at 09:14:50, Konrad Bucheli (PSI) wrote:
->> Dear git developers
->>
->> Below my bug report:
->>
->> What did you do before the bug happened? (Steps to reproduce your issue)
->>
->> I do a `git init .` on a directory which is CIFS mounted via gio mount
->> (FUSE).
->> On RHEL8 this needs gvfs-smb and gvfs-fuse installed.
->> Mount command: gio mount smb://fs01.psi.ch/my_user_name$
-> 
-> In general, gvfs's FUSE driver isn't a good way to interact with files.
-> My experience with its SFTP driver is that it has a bunch of weird,
-> non-Unixy behaviour that's due to limitations in the gio interface.  So
-> it probably doesn't provide the functionality most Unix programs will
-> expect from a file system, which will cause you a world of problems down
-> the line, as you've seen here.
-> 
-True, but it has a big advantage: you can mount it without being root.
->> What did you expect to happen? (Expected behavior)
->>
->> It initializes the git repo.
->>
->> What happened instead? (Actual behavior)
->>
->> $ git init .
->> error: chmod on /run/user/44951/gvfs/smb-share:server=fs01.psi.ch,share=my_user_name$/git/foo/.git/config.lock
->> failed: Operation not supported
->> fatal: could not set 'core.filemode' to 'false'
->> $
-> 
-> This is indeed the case, since the chmod on the config file fails.  We
-> always rewrite the config file as a separate lock file, and then rename
-> into place.  (This prevents concurrent modification correctly even on
-> network file systems.)  The user generally wants the permissions to be
-> preserved, so this is the safe default.
-> 
-> This also happens when using a Linux Git on a WSL Windows mount.
-> 
-> Note that even Windows honours the read-only/read-write difference for
-> files, so in theory chmod is useful even on CIFS and other Windows file
-> systems.
-> 
-> If I remember correctly, the consensus last time this came up was that
-> someone is welcome to add a config option that ignores the chmod
-> failure, but that in general, we don't want to just silently ignore it.
-> Unfortunately, nobody has added such a configuration option yet.
-My suggestion is not to silently ignore all chmod errors, only ENOTSUP 
-for config.lock which basically tells that it is not a suitable location 
-for that operation and thus also not required.
-Would that be acceptable?
+The reference backends obtain the committer information from
+`git_committer_info(0)` when adding a reflog. The upcoming patches
+introduce support for migrating reflogs between the reference backends.
+This requires an interface to creating reflogs, including custom
+committer information.
 
+Add a new field `committer_info` to the `ref_update` struct, which is
+then used by the reference backends. If there is no `committer_info`
+provided, the reference backends default to using
+`git_committer_info(0)`. The field itself cannot be set to
+`git_committer_info(0)` since the values are dynamic and must be
+obtained right when the reflog is being committed.
 
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ refs.c                  |  1 +
+ refs/files-backend.c    | 24 ++++++++++++++----------
+ refs/refs-internal.h    |  1 +
+ refs/reftable-backend.c | 12 +++++++++++-
+ 4 files changed, 27 insertions(+), 11 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 762f3e324d59c60cd4f05c2f257e54de8deb00e5..f003e51c6bf5229bfbce8ce61ffad7cdba0572e0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1151,6 +1151,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 
+ 	for (i = 0; i < transaction->nr; i++) {
+ 		free(transaction->updates[i]->msg);
++		free(transaction->updates[i]->committer_info);
+ 		free((char *)transaction->updates[i]->new_target);
+ 		free((char *)transaction->updates[i]->old_target);
+ 		free(transaction->updates[i]);
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 64f51f0da905a9a8a1ac4109c6b0a9a85a355db7..6078668c99ee254e794e3ba49689aa34e6022efd 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1858,6 +1858,9 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret = 0;
+ 
++	if (!committer)
++		committer = git_committer_info(0);
++
+ 	strbuf_addf(&sb, "%s %s %s", oid_to_hex(old_oid), oid_to_hex(new_oid), committer);
+ 	if (msg && *msg) {
+ 		strbuf_addch(&sb, '\t');
+@@ -1871,8 +1874,10 @@ static int log_ref_write_fd(int fd, const struct object_id *old_oid,
+ }
+ 
+ static int files_log_ref_write(struct files_ref_store *refs,
+-			       const char *refname, const struct object_id *old_oid,
+-			       const struct object_id *new_oid, const char *msg,
++			       const char *refname,
++			       const struct object_id *old_oid,
++			       const struct object_id *new_oid,
++			       const char *committer_info, const char *msg,
+ 			       int flags, struct strbuf *err)
+ {
+ 	int logfd, result;
+@@ -1889,8 +1894,7 @@ static int files_log_ref_write(struct files_ref_store *refs,
+ 
+ 	if (logfd < 0)
+ 		return 0;
+-	result = log_ref_write_fd(logfd, old_oid, new_oid,
+-				  git_committer_info(0), msg);
++	result = log_ref_write_fd(logfd, old_oid, new_oid, committer_info, msg);
+ 	if (result) {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		int save_errno = errno;
+@@ -1974,8 +1978,7 @@ static int commit_ref_update(struct files_ref_store *refs,
+ 	files_assert_main_repository(refs, "commit_ref_update");
+ 
+ 	clear_loose_ref_cache(refs);
+-	if (files_log_ref_write(refs, lock->ref_name,
+-				&lock->old_oid, oid,
++	if (files_log_ref_write(refs, lock->ref_name, &lock->old_oid, oid, NULL,
+ 				logmsg, flags, err)) {
+ 		char *old_msg = strbuf_detach(err, NULL);
+ 		strbuf_addf(err, "cannot update the ref '%s': %s",
+@@ -2007,9 +2010,9 @@ static int commit_ref_update(struct files_ref_store *refs,
+ 		if (head_ref && (head_flag & REF_ISSYMREF) &&
+ 		    !strcmp(head_ref, lock->ref_name)) {
+ 			struct strbuf log_err = STRBUF_INIT;
+-			if (files_log_ref_write(refs, "HEAD",
+-						&lock->old_oid, oid,
+-						logmsg, flags, &log_err)) {
++			if (files_log_ref_write(refs, "HEAD", &lock->old_oid,
++						oid, NULL, logmsg, flags,
++						&log_err)) {
+ 				error("%s", log_err.buf);
+ 				strbuf_release(&log_err);
+ 			}
+@@ -2969,7 +2972,8 @@ static int parse_and_write_reflog(struct files_ref_store *refs,
+ 	}
+ 
+ 	if (files_log_ref_write(refs, lock->ref_name, &lock->old_oid,
+-				&update->new_oid, update->msg, update->flags, err)) {
++				&update->new_oid, update->committer_info,
++				update->msg, update->flags, err)) {
+ 		char *old_msg = strbuf_detach(err, NULL);
+ 
+ 		strbuf_addf(err, "cannot update the ref '%s': %s",
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 58aa56d1b27c85d606ed7c8c0d908e4b87d1066b..0fd95cdacd99e4a728c22f5286f6b3f0f360c110 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -113,6 +113,7 @@ struct ref_update {
+ 	void *backend_data;
+ 	unsigned int type;
+ 	char *msg;
++	char *committer_info;
+ 
+ 	/*
+ 	 * If this ref_update was split off of a symref update via
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 647ef9b05b1dc9a376ed054330b487f7595c5caa..e882602487c66261d586a94101bb1b4e9a2ed60e 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1379,11 +1379,21 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+ 			}
+ 
+ 			if (create_reflog) {
++				struct ident_split c;
++
+ 				ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+ 				log = &logs[logs_nr++];
+ 				memset(log, 0, sizeof(*log));
+ 
+-				fill_reftable_log_record(log, &committer_ident);
++				if (u->committer_info) {
++					if (split_ident_line(&c, u->committer_info,
++							     strlen(u->committer_info)))
++						BUG("failed splitting committer info");
++				} else {
++					c = committer_ident;
++				}
++
++				fill_reftable_log_record(log, &c);
+ 				log->update_index = ts;
+ 				log->refname = xstrdup(u->refname);
+ 				memcpy(log->value.update.new_hash,
+
+-- 
+2.47.1
 
