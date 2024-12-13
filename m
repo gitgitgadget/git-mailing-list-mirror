@@ -1,206 +1,107 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCE21822E5
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 04:26:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8771979F5
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 05:25:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734063984; cv=none; b=HG6Yd+06IIuS8Rc1oDwf1pUkgTbm7v1vN1GP9m/Jref7MvpvjorjEKNNeQs90fWDwtQzG/02seyFYpV/uoF1VOhAtER4O0Pq3WfnuyChMf84uv5b/79TF9BYCc+gbNqQGCtWzeNsxSIfbAMen0VaquLb2JN+Ss9PAo7eCQKKAe0=
+	t=1734067521; cv=none; b=tKU7hM8mEJFzR1N9IKNb65Jef84j2JUh0BpBjyhf13ZHmNXUDXKIyn4bk2Yqc3GEGPY3KoklGxEMMSdeH04A6WouuIYcTLmpB+P4rGCiDB6Djp98KHnE1u+MkpEf2m5Vpu8WPKiGzHb/u78WzgFfUdDJZd3seM5RlvDmxnQ0bjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734063984; c=relaxed/simple;
-	bh=3gknF6cNMDFYAFJ38nfk5s+EKIskefwOpbnGQpiq04U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJyjtbXHXHAxrOYhI+TDtwBt2cXrVMD5ohlDtFcbFGVd2Ag8DkG78kc62SS582hPRmGXY8FDkAj3D39x0PpAxzE6TaJxpUs1P6S2C4HsslGT4OynPkEjOX0+pzTgSU6y5O0yQpj/K7EWAn0sJ0JLO4npiC6l+YN87CBGCgmytyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CnKZDnur; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734067521; c=relaxed/simple;
+	bh=Bod3lcOi9wqfBxKj7jw6UkibJRxldaIa416b6ow/PQU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KyJ8UIiakpgaohvatYjLhTyGT1Un/t/v0cmPW6HowxX0QYa2CK1cmSiWdHC7pZpVvDQYSm4FulOQTOdSEqA7VYlpu6bxem+C1ZQGTP9/T+uQz00K+JGMr14KFINqVPCOXZpmS8Nz70/vVqhFaOn9JY6qpblBDop7VvBtxBY5Qxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qq9JpDY7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dk8+G8JA; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CnKZDnur"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5ee8eaa1694so629213eaf.0
-        for <git@vger.kernel.org>; Thu, 12 Dec 2024 20:26:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734063981; x=1734668781; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B8jOOdxwqEtp3jZJ/b4Fj0gnVnD8E3vzo6CJoILBGvI=;
-        b=CnKZDnurTg9ikBkHinfpr/JA/DWwQp5hLqI3a/iNIwKVAvGJHRkZ7wX3HHvnoEJShE
-         MlvxvF+bgdNTxIWomBpw8EiwSswiDjso2mHheRNY/LQ+ssHHlkpziUE5x86Ybg9K/uUX
-         Ucc+ii//h4fr5Dyb1G5q5rrv/oV8TfqOth/KWliEGYlKhMFT3enmsvdck6S6YY60d42T
-         u2WOELctZkjQp7HpuSZxlNW1fYUyZsWDcYJtD7CVA5cv7gWLeRHr2qYpr3O3+iXoYV2e
-         GoPWfIZgi2vBMi5TfsPcwE9ZRQ5lgc/otsZNkZUJFRtE1aeR2aWpceOzIWmon1ODMGLG
-         YKcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734063981; x=1734668781;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B8jOOdxwqEtp3jZJ/b4Fj0gnVnD8E3vzo6CJoILBGvI=;
-        b=Ao+pW00bkAzNa5nM8zubhajMWSXtcVkJN/DF9gNx+Dd/6D255eeQl62XBvYo7LrZmY
-         HT99yzD0tLNQHdbDoz96Ns+FjCV6X4Ikp9aD8OB6XOCmDW43Ad3+9XtY1uCSBWVLhJU9
-         OXOKOa9f5ifrhpvmx9O+XJ3CLGI2dxNaDj3msRnhpL+i8lw78woEDD6QGYGdPRizKcDy
-         eklAhV7Gofl4Zh4rGI0GhCKZuX/H17YPEBWBstI4Rv3L3zvTfTMTkAskqj+tQUo+L2Dc
-         JUy15mDflvuorqQ7lmqjtS9Zvea5v6xDXWyu7HsCj91gqOSIpSvXURY0nGCqV540Gdrt
-         qzpg==
-X-Gm-Message-State: AOJu0YxVtgFlSMuKxeYTsavk6txgPhgDFz9eHVWZKBZIqrMRK4F9jL67
-	nG7+glT6OLGPaRN/4rzCjimIO8SKbWShgH4RlmPv7E6cAcWoms2rvnPI9A==
-X-Gm-Gg: ASbGncs9UFdbGGghhHPc+sBKJ2H3ieq8FmChVLB6j2NeI4j3tar4Nic9/0SpbmNdgXD
-	6/d6maDsWX7sLXM6VqTM6aKNyOjrHtGPKPEUN35Zd97cl2qfnfYuo7ElTWo2NKnrNQ1a5yRltkp
-	Y2ZZIKexHCaF2CaFs749VBEd2dfIRJ0PRqT0wg6eUnr/7CwDaUSIy8ptf1M7iLnhlr7rWGvoI87
-	05F9FDKfi0+mbXVU8d4Z4iW5IFp+fPI8mGnX7tklTsq9FLdEJKSPOVdv2l6rbO4
-X-Google-Smtp-Source: AGHT+IEpYITkwNVYvjyF4P6yNYOLAxBbI4kKgLQeSFYEXUm0t2rrA5WLMdKir1C0ubEdFkpr9OcgXw==
-X-Received: by 2002:a05:6820:1e88:b0:5f2:af6a:e4c0 with SMTP id 006d021491bc7-5f32929d472mr798749eaf.1.1734063981547;
-        Thu, 12 Dec 2024 20:26:21 -0800 (PST)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71e37410edfsm342736a34.67.2024.12.12.20.26.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2024 20:26:20 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 3/3] builtin/diff-blob: Add "-z" option
-Date: Thu, 12 Dec 2024 22:23:12 -0600
-Message-ID: <20241213042312.2890841-4-jltobler@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241213042312.2890841-1-jltobler@gmail.com>
-References: <20241213042312.2890841-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qq9JpDY7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dk8+G8JA"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 31A19114015E;
+	Fri, 13 Dec 2024 00:25:15 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Fri, 13 Dec 2024 00:25:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1734067515; x=1734153915; bh=FoJEOVp99k
+	LyQIUezGvajx+EpbbOt4hkU1Y5O0glhM0=; b=Qq9JpDY7wYsBXBXspHu+8Crp9l
+	63gzgTIllxVoF0xeF47alCyAc6izG+ATfbEJTDQVzVyl13qRRNJ0pHuSAnIaeQ57
+	If6LFJQQDkHzyNJg/oUm1FIdzIS8f5fGXsz6XFOcF3LPM3ar2L7AfR1bvGb62rOW
+	51zzSm1w1ZeUQao0afLDIynRHaJZgm5qSzWUly/WID8XF50IZWyx2Sd+4Fy8HwDy
+	EHqLuUdyyV9fAitj2KWKbf/vmvV/QBevUaxpnyXTVX+IbYtPeVTxw2m8vvkI6ZdZ
+	SUJa/7X70aJSf0eq/hwyUT0ZvZUYtRz8JLhlszFZ/BhJB9eeHnD4gel7xRdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734067515; x=1734153915; bh=FoJEOVp99kLyQIUezGvajx+EpbbOt4hkU1Y
+	5O0glhM0=; b=dk8+G8JAI42LBJDEqbUfSlibXAT3p2gcl/VY1vh8qwzFanwxZy2
+	B9vdOBzyWkJPfnnAtRmX+S1bX9ozZQw7L3ChQ5XE0yFMTCYSrseO4ebKgUndcS8s
+	X+oFevA9ynVzF8eBYRVrtt34gfYPnz7+Rl+euvRD2WuZVIVLIDutS310Bw8dRodP
+	Ql66OkcqFAx6+qsdTFhTUB/TTtP//T6tYzw5HxkBjmwa/Tj64kPmslprk86Rz5Bv
+	tfR978SAj6zP4xCy2FZ1KLp3PCH7LBPt8kqMt/WHc31nnVphIalD8iTu1Xj0fNz6
+	t0+1muBHSy/YQB7qSPxW9lFUK40wfxmifNw==
+X-ME-Sender: <xms:OsVbZ2kvc-hAvl-hET6muftzLL-_DHTqejlg7cTLy_ogx1DC1-CYgg>
+    <xme:OsVbZ92hZYCg32nDwiJYBA37fgKWmG6z1Yp2aE8fsJ9-qw2oascaMQvmd77x5HM01
+    H-nVbDyOAUNaGLoDw>
+X-ME-Received: <xmr:OsVbZ0rRzs-G_Lvh-yBMLCjEGtyUPT745xWOlumHGebl62YW8m6aVYzuvdRWdYiaTJlcyOY-uXA2UnEcsh9rsi7fqvX-LpiJxpcR_9QAs4u7Xfc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeeigdekvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:OsVbZ6kEM6ydRdje-SI4f1y9HEoHKhuM-95o_yYNHMFR8IoOmMEM0w>
+    <xmx:OsVbZ02W-D2Abs1iwnxMZNVysI7Zj_T4UqDMN_qq8_okJ-uf3GC7eQ>
+    <xmx:OsVbZxvJw48PkGtgYSEo0Ysy9dPL3SJmyq-Y9eOVosYWzGzqtuyN7g>
+    <xmx:OsVbZwV0jF4-UhSsTm6IvNOMAvxjEQqcfuPGeVwB6Q-JUB3TUXB3Tw>
+    <xmx:O8VbZyBAUatmnx7c5cEYFPBKn7YCgdP85zJrB2APId2AHSSAnARqPA9r>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Dec 2024 00:25:14 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 27852729 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Dec 2024 05:23:34 +0000 (UTC)
+Date: Fri, 13 Dec 2024 06:24:57 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/8] ci/lib: support custom output directories when
+ creating test artifacts
+Message-ID: <Z1vFKSPMvLNFqBCK@pks.im>
+References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
+ <20241211-pks-meson-ci-v1-1-28d18b494374@pks.im>
+ <CAOLa=ZTtkM_unYCjgQf0FZCo=4KOmOiRosC8jPOcs_Np+tCd-g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZTtkM_unYCjgQf0FZCo=4KOmOiRosC8jPOcs_Np+tCd-g@mail.gmail.com>
 
-The "--stdin" option for git-diff-blob(1) reads two space separated
-blobs for each line of input. A blob may be specified by its ID or a
-path-scoped revision that resolves to a blob. It is possible for the
-path to contain whitespace or newline characters which must be escaped.
+On Thu, Dec 12, 2024 at 02:16:30AM -0800, karthik nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Update `create_failed_test_artifacts ()` so that it can handle arbitrary
+> > test output directories. This fixes creation of these artifacts for
+> > macOS on GitLab CI, which uses a separate output directory already. This
+> > will also be used by our out-of-tree builds with Meson.
+> >
+> 
+> So currently in the config: `TEST_OUTPUT_DIRECTORY: "/Volumes/RAMDisk"`.
+> So this is broken as is?
 
-To make input more simple, teach git-diff-blob(1) the "-z" option which
-changes the input delimiter for each blob to a NUL character. With this
-option, the command waits two NUL terminated blobs to read and then
-generates the diff. The diff output is also NUL terminated to help
-differentiate between outputted diffs.
+Yeah. I've noticed multiple times that the test output directory is not
+uploaded on failing macOS jobs.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-diff-blob.txt |  6 +++++-
- builtin/diff-blob.c             | 37 +++++++++++++++++++++++++--------
- 2 files changed, 33 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-diff-blob.txt b/Documentation/git-diff-blob.txt
-index f6ecd522fa..36cd686bb1 100644
---- a/Documentation/git-diff-blob.txt
-+++ b/Documentation/git-diff-blob.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git diff-blob' <blob> <blob>
--'git diff-blob' --stdin
-+'git diff-blob' --stdin [-z]
- 
- DESCRIPTION
- -----------
-@@ -26,6 +26,10 @@ OPTIONS
- 	from the command line.  Instead, it reads lines containing two <blob>
- 	from its standard input.  (Use a single space as separator.)
- 
-+-z::
-+	When `--stdin` has been given, use NUL characters to separate blob
-+	inputs and diff outputs.
-+
- include::pretty-formats.txt[]
- 
- include::diff-format.txt[]
-diff --git a/builtin/diff-blob.c b/builtin/diff-blob.c
-index 45edfdd979..60c92cec9c 100644
---- a/builtin/diff-blob.c
-+++ b/builtin/diff-blob.c
-@@ -81,23 +81,39 @@ static void parse_blob_stdin(struct object_array *blob_pair,
- 	object_context_release(&oc);
- }
- 
--static void diff_blob_stdin(struct repository *repo, struct diff_options *opts)
-+static void diff_blob_stdin(struct repository *repo, struct diff_options *opts,
-+			    int null_term)
- {
- 	struct strbuf sb = STRBUF_INIT;
- 	struct string_list_item *item;
- 
--	while (strbuf_getline(&sb, stdin) != EOF) {
-+	while (1) {
- 		struct object_array blob_pair = OBJECT_ARRAY_INIT;
- 		struct string_list list = STRING_LIST_INIT_NODUP;
- 
--		if (string_list_split_in_place(&list, sb.buf, " ", -1) != 2)
--			die("two blobs not provided");
-+		if (null_term) {
-+			if (strbuf_getline_nul(&sb, stdin) == EOF)
-+				break;
-+			parse_blob_stdin(&blob_pair, repo, sb.buf);
- 
--		for_each_string_list_item(item, &list) {
--			parse_blob_stdin(&blob_pair, repo, item->string);
-+			if (strbuf_getline_nul(&sb, stdin) == EOF)
-+				break;
-+			parse_blob_stdin(&blob_pair, repo, sb.buf);
-+		} else {
-+			if (strbuf_getline(&sb, stdin) == EOF)
-+				break;
-+
-+			if (string_list_split_in_place(&list, sb.buf, " ", -1) != 2)
-+				die("two blobs not provided");
-+
-+			for_each_string_list_item(item, &list) {
-+				parse_blob_stdin(&blob_pair, repo, item->string);
-+			}
- 		}
- 
- 		diff_blobs(&blob_pair.objects[0], &blob_pair.objects[1], opts);
-+		if (null_term)
-+			printf("%c", '\0');
- 
- 		string_list_clear(&list, 1);
- 		object_array_clear(&blob_pair);
-@@ -112,16 +128,19 @@ int cmd_diff_blob(int argc, const char **argv, const char *prefix,
- 	struct object_array_entry *old_blob, *new_blob;
- 	struct rev_info revs;
- 	int read_stdin = 0;
-+	int null_term = 0;
- 	int ret;
- 
- 	const char * const usage[] = {
- 		N_("git diff-blob <blob> <blob>"),
--		N_("git diff-blob --stdin"),
-+		N_("git diff-blob --stdin [-z]"),
- 		NULL
- 	};
- 	struct option options[] = {
- 		OPT_BOOL(0, "stdin", &read_stdin,
- 			N_("read blob pairs from stdin")),
-+		OPT_BOOL('z', NULL, &null_term,
-+			N_("inputed blobs and outputted diffs terminated with NUL")),
- 		OPT_END()
- 	};
- 
-@@ -149,13 +168,13 @@ int cmd_diff_blob(int argc, const char **argv, const char *prefix,
- 			usage_with_options(usage, options);
- 
- 		revs.diffopt.no_free = 1;
--		diff_blob_stdin(repo, &revs.diffopt);
-+		diff_blob_stdin(repo, &revs.diffopt, null_term);
- 		revs.diffopt.no_free = 0;
- 		diff_free(&revs.diffopt);
- 
- 		break;
- 	case 2:
--		if (read_stdin)
-+		if (read_stdin || null_term)
- 			usage_with_options(usage, options);
- 
- 		old_blob = &revs.pending.objects[0];
--- 
-2.47.1
-
+Patrick
