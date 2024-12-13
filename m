@@ -1,101 +1,125 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8871885BD
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 05:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52C41A76C7
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 08:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734067630; cv=none; b=hF6Nd81r5RtI3PO5OR3KS6LcinTVQESJLIgEgSdSrhAr5GE5wkfWiCQSkzyQQfDn6ODZB57yKLgrWK3dgEXAIhv8fs8aPpaKbJwcndy7SLq9mk8PJyAUD0olmnQVNiGzuya7ympNcb8f05mXZwHtDnE+525FxctSW399q9xiWT4=
+	t=1734077542; cv=none; b=t3a8AWNt0wSKb7XTyPJl7pZ9xnh/KhECDLq+sbLySjlJk5EYwkdx4i4la6eAlJ9XrRsWgxOJrrt9lerlFHo+mLpIkQ4rNbhmNZWZstCj/Ijd6ycIfw0BWAF8MNNH8uldruDJcObJ4OpU8jNyJcajMnxv/leN9VhZydeDlijhwAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734067630; c=relaxed/simple;
-	bh=wz0am7w5ApnbJQVX5T59JYKpiElx+2a8pkQhksyvAL4=;
+	s=arc-20240116; t=1734077542; c=relaxed/simple;
+	bh=Q05wTkes3t2FaL20AH8ow1twiAetVhuaQGByl8vfeM8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jxnlFFhhH2mPSfYDdBWb9rRaUVzbswmNfchaq65nLzWXqJxM0iLCg8s5GCZ0aKXR7sROoQTnxRSLCNvB2IalfhCYH3MruuZ33zT0jxt1U597qwdblcVIPYhKqwwO/M1710UtAeqi5swxMDGKQ/PUh6ZdL7bI5IGyzmlspZMmx7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vtif8cpN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eIfMflDW; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=RcdIN/lKxYjqLxhewgm6HKqsCxMj3P6aC7ozO1ENBCWHBp3OCCSkHPqx3Mz08/Q+C8IUfqg4rNRDd4T5sgEs2ND4JnxzKOGe1HS8TMlI3eWkK6HHbHGqGGWnr5zmXfHdTenYMygvOeSkJD1yaFJ4yw/8+nci2uMNfATR5D/mjuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eHDWlRyQ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vtif8cpN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eIfMflDW"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6A8B31383E9C;
-	Fri, 13 Dec 2024 00:27:07 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 13 Dec 2024 00:27:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734067627; x=1734154027; bh=SEEZ0O3uiS
-	4AUC4S5/rsv+6RpH0XN+FAOoS/tGNMbTQ=; b=Vtif8cpNsLAtgLH3MhmvBrNBix
-	EnYTzg1z5U+rgttXte9pkoyxZ7T73mrxjxvaQtYk3CCfAEQUjQgoRVdP80hzTSCk
-	WsDLhwlj5lMwNRieEdrerXk69sc8Yc5+dHdt4IRUA1oWAWxh8HYcz4zPW3asniI0
-	wEGo6A7n/bEAeUB/JCKZ0SNSYhaT4Jw80XNUh7oB82F3Jd4V5Ff2M2OHcTAOMmWf
-	QDAD+ZkohMEdNv7SNWgrQxkYxbjAvF507WqQT/c6YDsgu9go3q+8IfRDuaAGWCr/
-	jJmZH6p1mKw2hc4cX6kEmpD3vBSnNP9dSX7UhC5GKc7ydx71kUGXzj8nJrTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734067627; x=1734154027; bh=SEEZ0O3uiS4AUC4S5/rsv+6RpH0XN+FAOoS
-	/tGNMbTQ=; b=eIfMflDWRLQd4gXVhIXvqSQZME3qHzXqwPp4O4czx/7bH0S7OTm
-	06XkcPu/LM068LFahbFUjCq81OxPTSp8De722vj+KTbQ+XyhFi/wzlPawH/7NsdS
-	bQmWOvEktG2H6sH3djp2zToV2Sgkco6CCjScrPnOpfKVDl+x97okCFcUbeNFzgO2
-	StfkpbFZOO8U5z8q/8crhzuMGEBpVXNCoJjBPETXnxOqfK4FW1OaclA89QNss0fn
-	rlmzdEvs70XmsxH1Ro2p9YTn6acmaSZwGztuoEfm+JQlrmEFQdSpSjeDQLSWO8XT
-	XlTmIWr78sfx7pQ+kzb73JqwmFp8kNZnmsg==
-X-ME-Sender: <xms:q8VbZ9IDYwvNnhed7ZXg8XDtZbJZKdNwAZSsIajM_BWagqIyxH81OA>
-    <xme:q8VbZ5JoJbjtYxs-Lnj4atuapbuYrizZZwDB_5X21-srgVqteBdX0wdszKkZO7ApH
-    ixkJxOouiQEeMk1_A>
-X-ME-Received: <xmr:q8VbZ1sK2f2ZsHYTZ1uPqbCfz0amKCGhdDqInb6I5ipv9YZ2yGQeiU0SOJinfPWOXYT6ocX8G3dthwJI7XqbisDUW_U2Dei46xdTV7EuzhAVj2o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeeigdekvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:q8VbZ-aWfs9TP90nbup-ym5A_t54FWuLlruUD-f1DTJ_guam6KWODA>
-    <xmx:q8VbZ0aoxOBgIaLDv_iKg-r_4UlzeeDHn-yKRTwtBdXLX28vgW8A0Q>
-    <xmx:q8VbZyAmWbjswdjRQbFMi0P9jzYd3F1XtP8OtgMM19kMBuc9wwaBsg>
-    <xmx:q8VbZyaNU-5v3AbuXKBk7m1Jqz4_ewa5FQjZTbrGsNVYL28OHEPzdw>
-    <xmx:q8VbZzk4xqbtJ7z17F2Bb4LAHJICa_QuZ9wz1YYfWeU7Qs6QU-_Owic7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 00:27:06 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id da1a74b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Dec 2024 05:25:27 +0000 (UTC)
-Date: Fri, 13 Dec 2024 06:26:51 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] Makefile: wire up build option for deprecated
- features
-Message-ID: <Z1vFm2SrbhQxLsxX@pks.im>
-References: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
- <20241211-pks-remote-branches-deprecation-v1-1-1431e2369135@pks.im>
- <c421584f-4eed-4aab-b706-214a36fc4e32@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eHDWlRyQ"
+Received: (qmail 14896 invoked by uid 109); 13 Dec 2024 08:12:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Q05wTkes3t2FaL20AH8ow1twiAetVhuaQGByl8vfeM8=; b=eHDWlRyQ+1iIzc++LLK8XXOw+J8vXGgqIPSY5eq/fScXCwND50WBPFQuxmzaSUhaAH+3n3pEkv4J0pFrTHiuKL0DrUv5Lk/x2/25Bgse+/d3NWurwe19aouahu05LwucEdY03VICLjl/BkOZNzvCLZ8nhxQOjyLUDC72QZVHtc0EiSv4NEcA0GlV77TC2Gzb++FQbrIRF2jlPOgLoeC4jYCargjBrzFddXdwcNWCl7O+cg2fqj6IJwZ3Qz+9d6IwPHfASfPBbZJKlMmpVEV8am+t7W7DCXOmIDzMCfW+VMPiGnZGimyVmq4Rgqh5AgMqW19h7FlBwZG/3cq7uDC3Jw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Dec 2024 08:12:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25567 invoked by uid 111); 13 Dec 2024 08:12:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Dec 2024 03:12:12 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 13 Dec 2024 03:12:11 -0500
+From: Jeff King <peff@peff.net>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 0/3] batch blob diff generation
+Message-ID: <20241213081211.GA1443203@coredump.intra.peff.net>
+References: <20241213042312.2890841-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c421584f-4eed-4aab-b706-214a36fc4e32@app.fastmail.com>
+In-Reply-To: <20241213042312.2890841-1-jltobler@gmail.com>
 
-On Wed, Dec 11, 2024 at 02:06:42PM +0100, Kristoffer Haugsbakk wrote:
-> On Wed, Dec 11, 2024, at 11:56, Patrick Steinhardt wrote:
-> > logic that allows us to easily enable the breaking change at runtime.
+On Thu, Dec 12, 2024 at 10:23:09PM -0600, Justin Tobler wrote:
+
+> To enable support for batch diffs of multiple blob pairs, this
+> series introduces a new diff plumbing command git-diff-blob(1). Similar
+> to git-diff-tree(1), it provides a "--stdin" option that reads a pair of
+> blobs on each line of input and generates the diffs. This is intended to
+> be used for scripting purposes where more fine-grained control for diff
+> generation is desired. Below is an example for each usage:
 > 
-> s/at runtime/at compile-time/
+>     $ git diff-blob HEAD~5000:README.md HEAD:README.md
+> 
+>     $ git diff-blob --stdin <<EOF
+>     88f126184c52bfe4859ec189d018872902e02a84 665ce5f5a83647619fba9157fa9b0141ae8b228b
+>     HEAD~5000:README.md HEAD:README.md
+>     EOF
 
-Good catch, thanks!
+In the first example, I think just using "git diff" would work (though
+it is not a plumbing command). But the stdin example is what's
+interesting here anyway, since it can handle arbitrary inputs. So let's
+focus on that.
 
-Patrick
+Feeding just blob ids has a big drawback: we don't have any context! So
+you get bogus filenames in the patch, no mode data, and so on.
+
+Feeding the paths along with their commits, as you do on the second
+line, gives you those things from the lookup context. But it also has
+some problems. One, it's needlessly expensive; we have to traverse
+HEAD~5000, and then dig into its tree to find the blobs (which
+presumably you already did, since how else would you end up with those
+oids). And two, there are parsing ambiguities, since arbitrary revision
+names can contain spaces. E.g., are we looking for the file "README.md
+HEAD:README.md" in HEAD~5000?
+
+So ideally we'd have an input format that encapsulates that extra
+context data and provides some mechanism for quoting. And it turns out
+we do: the --raw diff format.
+
+If the program takes that format, then you can manually feed it two
+arbitrary blob oids if you have them (and put whatever you like for the
+mode/path context), like:
+
+  git diff-blob --stdin <<\EOF
+  :100644 100644 88f126184c52bfe4859ec189d018872902e02a84 665ce5f5a83647619fba9157fa9b0141ae8b228b M	README.md
+  EOF
+
+Or you can get the real context yourself (though it seems to me that
+this is a gap in what "cat-file --batch" should be able to do in a
+single process):
+
+  git ls-tree HEAD~5000 README.md >out
+  read mode_a blob oid_a path <out
+  git ls-tree HEAD README.md >out
+  read mode_b blob oid_b path <out
+  printf ":$mode_a $mode_b $oid_a $oid_b M\tREADME.md" |
+  git diff-blob --stdin
+
+But it also means you can use --raw output directly. So:
+
+  git diff-tree --raw -r HEAD~5000 HEAD -- README.md |
+  git diff-blob --stdin
+
+Now that command by itself doesn't look all that useful; you could have
+just asked for patches from diff-tree. But by splitting the two, you can
+filter the set of paths in between (for example, to omit some entries,
+or to batch a large diff into more manageable chunks for pagination,
+etc).
+
+The patch might look something like this:
+
+  https://lore.kernel.org/git/20161201204042.6yslbyrg7l6ghhww@sigill.intra.peff.net/
+
+:) That is what has been powering the diffs at github.com since 2016 or
+so. And continues to do so, as far as I know. I don't have access to
+their internal repository anymore, but I've continued to rebase the
+topic forward in my personal repo. You can fetch it from:
+
+  https://github.com/peff/git jk/diff-pairs
+
+in case that is helpful.
+
+-Peff
