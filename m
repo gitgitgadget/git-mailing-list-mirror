@@ -1,126 +1,124 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF858364D6
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 12:20:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF401DF256
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 12:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734092422; cv=none; b=V9+f8V+HriC9S7z3u5OhfRDnmZay4jZHoHudRl0aMMSeGBjNCSE8YbFnI9Sa4Ig8js0lOkeWRGiiLvoczdtiXddyKdXpuqqvz0mP3W+o+ugM+aocpFdoH2+wR5vaxXNaazFhkdYfZIdtZqSJ0QxCPtFQI6z7sicxBHeFYYyeXnQ=
+	t=1734092685; cv=none; b=kbwC9YSGZvR8l84S2shGHqqhDDGwtB62eW479bQhjz3MAH+QsySV4KUXyMQkrIp1xvQ0pOSGwhatBYFEOySjlEvJENwCRinu7N+MJh4TY6PqsoMRp/vB1Hi8ryjHk/xmTUs90e2KCWmB8OOgNNfwR6g1Nh1ws8FpNNNAKQ7Y3BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734092422; c=relaxed/simple;
-	bh=sENx2SA17qZzWHXiKwyJbVe6k5oImDtlUOHrpfP3ym8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QU6hLK6wmFrAdNvK1GzFGNU90F9I+g5ya91BMXx5oH6wV9oVV/1PnAbXN37kakkNr56XLQVTo1KDyDyP+I4TbKhpWnhK7ihQ9+1rL49ZMITbXvM19MosMD+a/QP32+k86RgKiJkPIhaVEMNJW45pDoyN+ZPqSSVMkwpUtMx4+cU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dtpIDzfC; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734092685; c=relaxed/simple;
+	bh=DlkPw7ku753Am15BvjI9rGXH2yWkDAsY/maG/hVLD/w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EnwQtZCGa7/eO6H6TQmdX8kNOpCxL84bItu4qpmPRc0uB397fYb1A8cqQtwEpSazBorzfA8GY+Pp3fcvx/YAbAXvLALzIv6hBfsssIJlBtjhQV2CyWZ23HkWMSNSF8RiHoqmxyR0lgJKTsUSVz+PW5f1y8dEomeoC2yEGy8ZLRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zylp5Tu2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CMrY4Y7a; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtpIDzfC"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5d647d5df91so217559a12.0
-        for <git@vger.kernel.org>; Fri, 13 Dec 2024 04:20:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734092418; x=1734697218; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lH9U/mA42Lm14jE5/tXYt7GipBTnBZeM0ekSttLXqKs=;
-        b=dtpIDzfCu9aD9QEZTNbUwAM1xmqdNqzcVTmCKuVKUEqmkVynw8x8fFTmZKDb8VDKZk
-         C8qkLOC5xLe+yN6YZZY5c4LdU8tU5BY649MahbkmBsel+PVCIgU8FiOjVMz5uxt/EGhq
-         DROqvXA8CN5aRcAYG8Q2PTkNvwtM6SRgDuYoI0rKqENChuyXsb1qV3MicFJP925a1ZRq
-         efG3FKuP7yqU+fsysghiuAvKCVWWNyEO8vyWdUgE6wJJZieskGldK6TCQY5BnYz1AaOA
-         Qn9JlFKDjf1hR5UoOXxiKNN2idATlRvHouhYFls2FmGlSnZsuI8k2z/mt4PZdHVi4N5Z
-         w0oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734092418; x=1734697218;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lH9U/mA42Lm14jE5/tXYt7GipBTnBZeM0ekSttLXqKs=;
-        b=JfEtErfvrLCnx8rWMDGac0KgQYhcSThJfUBHRdAm+tKD3rnMdrOxv3srG8C87G7yyR
-         7jMvq/vE40RVaQzp0nQOMHUEcUxdFhH+UUyqr3v5DuuSj6qDSklM5ytYvx0009BwWBh4
-         hhMfZlXgqsgGAzNXchDD37ZRJ9QVOkPT/pIWrIL8o3LwyOZWnfnRFoJQgy+4ZNeV6WKX
-         VRdpgYGBwsFnQMP/XiraeDTRuWahCYW2weDGpdOZgCnxKd77bdvYHKdZpUzAi3jXgCYg
-         ANOkPYqXtqxrgmcm41X414pmgacLSsXQHsyTY8R4Ak0J/7bh3oC6TNmrhukyMVts3qyy
-         h00w==
-X-Gm-Message-State: AOJu0YyS+DeXBDlEXjuY2iChnmhFtQuUrnF6o7dVRm35GQioWmn3I1HE
-	1mg+EHzkvHjNOJSorEyt5rEKbRYzxVt6jVGTpPW3YwsM1z0DI8/PcCusOAVGehCQrY1YtpbHBz6
-	MtnPB1+43SGN9wPNlvK+fsmQlGI2m1KQ10Q==
-X-Gm-Gg: ASbGncvQgAK+dqRISbdAiSAtM7ulkgwqsH5PPdlJUnxYt1ZR+nwXkR51IQk5kGQiCta
-	rtJv1GCmAIy8ckL6U9BeemfuM5/SJcQs+5sNs
-X-Google-Smtp-Source: AGHT+IHFdGh+NfoskrQbSB16iTPW2ukEcOkQUhYgNWYhte5IvvliAEoAKeoCCAz1Lqq97mWWJUwP/oDzOO6f1Zjccag=
-X-Received: by 2002:a05:6402:3885:b0:5d3:ff30:b4cc with SMTP id
- 4fb4d7f45d1cf-5d63c3c19e2mr1772330a12.33.1734092417689; Fri, 13 Dec 2024
- 04:20:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zylp5Tu2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CMrY4Y7a"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 57E99114015A;
+	Fri, 13 Dec 2024 07:24:41 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Fri, 13 Dec 2024 07:24:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1734092681; x=1734179081; bh=rddz5lVAX7
+	eKmrCkpku6ncXdr0xc9Q1fJV3VchBsN9A=; b=Zylp5Tu20vOFVsgEl/PeihnUp6
+	KTJXKz8J/8yOUxGwZJkm33wZPagwKBTVzIK/XFe3DB/HYC95TZFZMX8cC51Hg8I1
+	PKmQas7eSn/BzzzxBVD+79y3/FTYK3Z4TVZLsWl5CSQ2DyI9AVami21+neFTmFr/
+	GFTUytT/oZcWXQ/nBZqLP3Q35Sdh2FP2WFolujDJtq4gjqIo35Zvgl7ucNAJZiYs
+	7E47L1HrYUh0yrbYqJQhlWUsGQRhnes8VrdAppXRvfb3XbX2mPaeBBLSY65tO9LG
+	pWnSVXZiCkWqgJdCJNOIGhEhgiQYichxGc/a0d4QmhvH19r9X/woTTJYGK/Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734092681; x=1734179081; bh=rddz5lVAX7eKmrCkpku6ncXdr0xc9Q1fJV3
+	VchBsN9A=; b=CMrY4Y7a2e+rTNmM/veXZuJvMXXOtdO3jq0JIttr/C5B9CesUih
+	3m/zU/GrppXS1GMcdd/yeCpDpMpwxjycqsInbwiNQ/TbkAjV1xAry1p0x7vws6fS
+	3nrjwh9RfNVKMDnTs6So/5RWf8uxtrqWw/AAoEWQ+EaV5e3EqiLJQhVKup2PQiTJ
+	/1q/4Bs/E07ahD8T9D29tAMH0w+/4iB6gc0+VzN+Txj201yNbQC0hBm/ckmXdN7a
+	0c79TJBaKIaVpPLtkmMcWldKgdW23px5weJQC5rZleqElEGuaaxMfOqR5/dKwvtl
+	f1jmbgqrxThjXayyKneyhjlgOlwTjHFI4/g==
+X-ME-Sender: <xms:iCdcZx9ZX9uGbH7N5Hbj7NGjkbjWHAmkfIutcypwcpKQLhKX3WLArg>
+    <xme:iCdcZ1voNGQLl9ExRLrRoYq3SgTUWl3-jI8gS9Uy94mszbUXOOviWn31Kj1GF7my0
+    IElYBiyMAacU5ihJQ>
+X-ME-Received: <xmr:iCdcZ_AIjUh1PIUzO6RsvUA8FctVasxiRQatMSaoY1Y2Gde8nr4R8oiAiCCFMVFDBaxeXHxlto8BcfhC551D_uX7jiVkf09nZmWl6t5lOjlSWMA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdeflecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorh
+    hgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:iCdcZ1faNzzXnEJFGAvsf5HwwgoBRJ9RgmiclDzIC-rnjmC7K9SYqg>
+    <xmx:iCdcZ2PlacgbqyidDH5NkpuOYixYE_nqMF0ebihPzLd-Kedw3tg0hA>
+    <xmx:iCdcZ3k5WEtEVrU79ToDpqEW-vG_tuRO1fiJ_1pQZgM7HeKXkyuo7g>
+    <xmx:iCdcZwvAXLS8FvYuL1MBVLjm_x08PflcD08cEkFtooFZ0m4VH3VExg>
+    <xmx:iSdcZzr1Nt23p8MDF1p_cA0VJf9cjRbi2theofbq5moSJLrdU2oT5i14>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Dec 2024 07:24:39 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0fcc342a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Dec 2024 12:22:59 +0000 (UTC)
+Date: Fri, 13 Dec 2024 13:24:23 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 5/8] refs: add `committer_info` to
+ `ref_transaction_add_update()`
+Message-ID: <Z1wnbCoidG-lC7ui@pks.im>
+References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
+ <20241213-320-git-refs-migrate-reflogs-v2-5-f28312cdb6c0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMhVC3ZHsGJs8XJPZOPYCWBCHJOkp8xnau=5xH_Bj33JUZ4DNA@mail.gmail.com>
- <xmqqo7sq4khb.fsf@gitster.g>
-In-Reply-To: <xmqqo7sq4khb.fsf@gitster.g>
-From: Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
-Date: Fri, 13 Dec 2024 14:20:06 +0200
-Message-ID: <CAMhVC3Ztem+620b2yEYuHKWFZ5rofx1VD2nyvSSP8N_TY6b6Lg@mail.gmail.com>
-Subject: Re: push.default and "git push"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-5-f28312cdb6c0@gmail.com>
 
-It's been a while :) but... I've been researching some aspects of how
-git works, and stumbled upon this issue again.
+On Fri, Dec 13, 2024 at 11:36:50AM +0100, Karthik Nayak wrote:
+> The `ref_transaction_add_update()` creates the `ref_update` struct. To
+> facilitate addition of reflogs in the next commit, the function needs to
+> accommodate setting the `committer_info` field in the struct. So modify
+> the function to also take `committer_info` as an argument and set it
+> accordingly.
 
-I came up with the following explanation (of how `push.default =3D
-matching` works):
+I was wondering a bit whether we could instead pull out a
+`add_update_internal()` function so that we don't need to modify all
+callers of `ref_transaction_add_update()`. Because ultimately, we don't
+use the field anywhere except from `ref_transaction_add_reflog_update()`
+as far as I can see.
 
-> In this mode `git push` pushes matching branches, i.e. all local branches=
- that exist in a remote, to their remote counterparts (if there's a local b=
-ranch `ba` and a remote branch `origin/ba`, it pushes `ba` to `origin/ba`):
->
-> * First it chooses a remote:
->
->   * if the current branch has an upstream, it chooses the remote the upst=
-ream points to
->
->   * else if there's only one remote, it chooses this only remote
->
->   * else it chooses `origin` if it exists
->
->   * otherwise it fails
->
-> * Then it pushes matching branches to the remote.
->
-> * If the upstream of the current branch is in the local repo, there can b=
-e no matching branches by definition (there can't be 2 branches with the sa=
-me name in a repository).
->
-> * It never chooses a non-matching branch, even if it's an upstream. If `b=
-a` has an upstream `origin/ba2` and there's `origin/ba`, it will choose `or=
-igin/ba`.
+This is more of a thought than a strong opinion, so feel free to ignore.
 
-More in the following gist:
+> @@ -1190,8 +1191,12 @@ struct ref_update *ref_transaction_add_update(
+>  		oidcpy(&update->new_oid, new_oid);
+>  	if ((flags & REF_HAVE_OLD) && old_oid)
+>  		oidcpy(&update->old_oid, old_oid);
+> -	if (!(flags & REF_SKIP_CREATE_REFLOG))
+> +	if (!(flags & REF_SKIP_CREATE_REFLOG)) {
+> +		if (committer_info)
+> +			update->committer_info = xstrdup(committer_info);
+> +
+>  		update->msg = normalize_reflog_message(msg);
+> +	}
+>  
+>  	return update;
+>  }
 
-https://gist.github.com/x-yuri/0ac53cb7999b3b0352c1ec0ac8f5f4cc
+This can use `xstrdup_or_null()` and then drop the condition.
 
-The description given in the documentation:
-
-> matching - push all branches having the same name on both ends. This make=
-s the repository you are pushing to remember the set of branches that will =
-be pushed out (e.g. if you always push maint and master there and no other =
-branches, the repository you push to will have these two branches, and your=
- local maint and master will be pushed there).
-
-One can sort of make an argument that the remote repository kind of
-remembers the branches you push to it, but... if you delete the local
-branch that you just pushed, does that make the remote repository
-forget that you pushed the branch?.. The analogy is flawed. And
-confusing, because it's not at all clear that the state is stored "by
-the list of the branches".
-
-Also a lot of aspects of how `push.default =3D matching` works are left out=
-.
-
-Regards,
-Yuri
+Patrick
