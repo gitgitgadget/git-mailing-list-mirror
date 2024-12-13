@@ -1,117 +1,160 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6030E748D
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 03:49:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF69A17BB1C
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 04:26:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734061743; cv=none; b=Gw/aATzilQW3Zf5bw3F7mDfK36rD5ylnVEvm94cC5LpQJcRKylJ5CCh+/QKHJlV4Zfn0lrbjz6AsddAR5uCQpl5itdIBaiXBT4T7p7xgvjMGMTP3B9jn+0uGlrl4BypHw+lRBqy3lSlQlE/z23L6cOWnj+k25SyEY35K7/ZULGg=
+	t=1734063975; cv=none; b=gYH1kSkbv5n8/k2ig7l6ErmDu2XbzsxUF/tsBecKfYFy3J8ywsh8/qquUZrIlP5260WA+5X9ADdP6+lBvD6BAKEJNcvfrau54tJ3Aupyn78xpJy6K/iN6egq/eP6Ok5ZPjk6oHrhMWu591/+SjaQjEh9ULQJAp9ZONfWrJuVJ6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734061743; c=relaxed/simple;
-	bh=lbOyOuMfXHeeqWYSgeJ/bwGkcGD/YEgJb1E9/KviWlY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CkrPGPea8xnKYT3LMgOQsvZObFYkGFamByaiHQQpEVGqflkXQX8oYoNqFPidQpPc/lvbiMhdcUVU7MNtSL2YP7agSggzg0XE/s4B7A3jTvLoE9dE3f6/n2Zt/5d4S/rp/1VORT6B7x5aowJmgPNZ1BTSobskvCspyljWFd4cJB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Om0RRepu; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1734063975; c=relaxed/simple;
+	bh=/wSKxZTrU22j569uKR7huncXSg3Q/OWuWlviOh6JC1w=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RJcqRP1ODgXXXVEqxwIqGcqxHuE342PDT2dRLGhI9uq0cQDTFdRbslkNBSGOWHueapXSSQUUlbLA1uLp5Tw4Ec+kz/Dl35YZ3lXkXGAyxod51k+tVdDiE0coTs8/3RYhn0iTblch7kOXY9olXu8wuRA9ipLHSoBOo9N2NRKOYFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M9LcsiBF; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Om0RRepu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1734061739;
-	bh=lbOyOuMfXHeeqWYSgeJ/bwGkcGD/YEgJb1E9/KviWlY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Om0RRepu5+84fRWwQmlGx21IixHgqo1APe+SgyAcVF+m4b9od8t2v8RVbBSjuBFHy
-	 VtM+lLTRjpbHAJ2fVDN9bw2G1JKqP7Yf/6rnIYGOtVAffJnhIHGCbSaNXiFxUeE1g8
-	 c43VBeQUzrVALuxnhXntS+HHP2JDdKqJLuguPzSCc3YJo+3uB16/+iTWlbP/8tmgef
-	 bPZy563KqZG/9QooTxT1QLgupNQsjml/VkZ7XME1ZJpZTAtYvMG/it8eMFvqUX0DFc
-	 dsUIihlbeAjUcUWYBI9Q/16+rqgqLrzOJLtTSSjz1/nzvpzN2J3sXaGcIlv8FgRG5z
-	 mz2PmBSHoshJq0prOI2xDMaeRCaSy5umGqkQ/uY5SrgMnKWwJKIftcqzybueas5NNf
-	 u1VAryfZllm/V9tYcCsXbCBz182/aj56eW4adOjcYILBtreFyndqK1W1JzCJFIaj/O
-	 +w3+GeHdP2VB2WUuoU3kwv/ouF/HcJ+6qBXO4v0nDAvTlhr6n+1
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 56480209AD;
-	Fri, 13 Dec 2024 03:48:59 +0000 (UTC)
-Date: Fri, 13 Dec 2024 03:48:56 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Francesco Occhipinti <Francesco.Occhipinti@tracsis.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: New checkout --track behaviour?
-Message-ID: <Z1uuqKI_2rb0HXhP@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Francesco Occhipinti <Francesco.Occhipinti@tracsis.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <DB9PR08MB7194822B81F17420B2D3C149903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
- <DB9PR08MB71949D21F5F0E81911F0D50F903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9LcsiBF"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5f2e2608681so674343eaf.1
+        for <git@vger.kernel.org>; Thu, 12 Dec 2024 20:26:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734063972; x=1734668772; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NlOonv7ZZB3DRJLrvwKYl5X5XBixCpW9VudPFRNg22E=;
+        b=M9LcsiBFa6ZJvVLwGzoxoaqCvyqSP9oY2EkCrIPhAKdiSBV5sQ+O/WVLcKWt1jpObx
+         U0gHyTygUVNoMrZhuD0MGZFTGgA2YxYDvQWCSbyThMGr9iu+ah3ulofavkZLhA/C8QkM
+         nGC8440J8sr1C+suP2aUgZyNSLX0KlhFyqPjODcAOGTI7KpMK35zz73ZhZ+0kRO4oNnt
+         oYI+/zZnyp5e9Oja4j7zSJcumsmBJ6w1p9ZzNt7tPok5fiaQ7YwXWpz04A7KdD4SOfga
+         eQRpkhgQqBbcaCzG01eMRZE6jZE518zfZ4SudMDxE3rg9YjRhi7HEEefaObJTxn/vTjA
+         PUpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734063972; x=1734668772;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NlOonv7ZZB3DRJLrvwKYl5X5XBixCpW9VudPFRNg22E=;
+        b=WjO8uM7rXPUZhwNkT13wgOy/PhFlT6RlIH0rJgBw2fvneIgqMukeL3dc8qpiZpHbUC
+         Y9LDndA0J8PeTq/3ViUDg7WjOii5G4k0s4EjUpIp4jorJMyaQSnV6OSns3hHU5nprxFN
+         mNHRVWWfcb7KbNHjbHCbJh6PF8hOu2BsywJ9Jascl3MoLkR8b3ONZvtOr3SXJkL0waVi
+         EfrMjxE1PDEOH5uh51EVBHl6vMSvSfhb5zdds599FdGwHeY975WqZ51W1mpK2xZbmx5v
+         9bQWLz2YAlxXhCM07GFTbnvAYAs882XOlnjg3yQHvsCbJb4mog0Rcgl/0WyVtNk1CIcr
+         eLOw==
+X-Gm-Message-State: AOJu0YxaL3BWJjCC62j/8H2WcAbYW70egr162eeaiLAWORZk0Z5lcQFJ
+	Npbqd3+dVpBXuomT0znoV8uQ316NHvkmHAb5eIw09RQHR+uroYW0/N1Tfg==
+X-Gm-Gg: ASbGncv1tXoK6EuJHqxVHqt/NxhZLBl7x59Z3UYDE9WrDEnkDZ2SxepHkerAunF1Nuv
+	E0lL+QNMNVgJk0mZG4W7+yMdKmTyyGNItKV1yYLNRMhOkZeiRJIhG4N7rbNB8ItF1OE0ZIvKCAL
+	wgmTt8ZHH2EkJwn1mAWTG/dykxHgCXHQ/Ugj7xDS9ultN72SAqcYu+JL5avrIDq9oenoaz/aGKp
+	WEAszd5/23248CLA2w6kbeRSDyZ85ZDNiMTE3AET+/2wUzoW2mKZKX10BF8wz38
+X-Google-Smtp-Source: AGHT+IEfjv22x3pq9DlvbABhMO8SPQqbWG8bzg/yv3Jl769EGu5fyavmhUTDpB5G5pfYif9JFrmeTg==
+X-Received: by 2002:a05:6820:1b8c:b0:5ee:db2e:9f76 with SMTP id 006d021491bc7-5f328fc6729mr808226eaf.0.1734063972400;
+        Thu, 12 Dec 2024 20:26:12 -0800 (PST)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71e37410edfsm342736a34.67.2024.12.12.20.26.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Dec 2024 20:26:11 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH 0/3] batch blob diff generation
+Date: Thu, 12 Dec 2024 22:23:09 -0600
+Message-ID: <20241213042312.2890841-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TsHs1XlbwCY4yce0"
-Content-Disposition: inline
-In-Reply-To: <DB9PR08MB71949D21F5F0E81911F0D50F903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+Through git-diff(1) it is possible to generate a diff directly between
+two blobs. This is particularly useful when the pre-image and post-image
+blobs are known and we only care about the diff between them.
+Unfortunately, if a user has a batch of known blob pairs to compute
+diffs for, there is currently not a way to do so via a single Git
+process.
 
---TsHs1XlbwCY4yce0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+To enable support for batch diffs of multiple blob pairs, this
+series introduces a new diff plumbing command git-diff-blob(1). Similar
+to git-diff-tree(1), it provides a "--stdin" option that reads a pair of
+blobs on each line of input and generates the diffs. This is intended to
+be used for scripting purposes where more fine-grained control for diff
+generation is desired. Below is an example for each usage:
 
-On 2024-12-12 at 10:29:59, Francesco Occhipinti wrote:
-> Hello,
->=20
-> Did the interface change in recent git versions? I am pretty sure i
-> used to git checkout -tb new_branch, now getting error: option
-> `--track' expects "direct" or "inherit".
->=20
-> User `geirha` on libera#git helped me troubleshooting. They noticed that:
->=20
-> - git help checkout differs in its description of --track between
-> =C2=A0 2.34.1 (ubuntu 22.04) and 2.43.0 (ubuntu 24.04), so looks like it
-> =C2=A0 did change recently
->=20
-> - according to the commit message at
-> =C2=A0 https://github.com/git/git/commit/6327f0efed36c64d98a140110171362b=
-7cb75a52,
-> =C2=A0 -t is supposed to be equivalent to --track=3Ddirect, so likely a b=
-ug
-> =C2=A0 rather than intentional change
+    $ git diff-blob HEAD~5000:README.md HEAD:README.md
 
-`-t`, or `--track`, now takes an optional argument.  Before, it didn't,
-so `-tb` was interpreted as `--track -b`.  Now, it's interpreted as
-`--track=3Db`, since the `b` is interpreted as the option value to
-`--track`.  That's not a valid value, so you get the error message.
+    $ git diff-blob --stdin <<EOF
+    88f126184c52bfe4859ec189d018872902e02a84 665ce5f5a83647619fba9157fa9b0141ae8b228b
+    HEAD~5000:README.md HEAD:README.md
+    EOF
 
-This is indeed a subtle incompatibility in command-line option parsing,
-but it's not really avoidable and it does occur in pretty much any case
-where a short option learns to take an optional argument (for any
-software, not just Git).  So what you probably want to do is `git
-checkout -t -b new_branch`, and it will work as before.  That will also
-work on older versions as well, so if you have scripts or aliases that
-need to work across versions, that should be a safe syntax to use.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Some alternative approaches that were considered:
+Instead of creating a new plumbing command, the existing git-diff(1)
+could have been extended with a similar "--batch" option ("--stdin" is
+techinically already handled through setup_revisions() since it isn't
+disabled). This option could read from stdin and generate diffs for any
+valid revision pair that gets provided (not just blob diffs). The
+primary reason for not going down this route was that git-diff-tree(1)
+already has support for batch diff generation for commits/trees through
+its "--stdin" option and teaching git-diff(1) a superset of this
+functionality would further complicate this porcelain interface for
+something that seems like more of a plumbing feature.
 
---TsHs1XlbwCY4yce0
-Content-Type: application/pgp-signature; name="signature.asc"
+Another idea was to extend the existing git-diff-tree(1) to support
+generating diffs for blob pairs through its "--stdin" option. This
+didn't seem like a good fit either though as it is really outside the
+scope of responsibilities for that command.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+Ultimately I couldn't find an existing place that seemed like a good fit
+thus the new plumbing command route was chosen. I'm still not sure
+though if a standalone "diff-blob" command is the right choice here
+either. Its primary function of generating a single blob pair diff is a
+direct subset of git-diff(1) and is thus largely redundant. The only
+additional value comes from its "--stdin" option which enables batch
+processing. To an extent it seems much of the existing diff plumbing
+commands feature set can also be accessed through git-diff(1) so maybe
+this isn't a big deal. Feedback and suggestions are much appreciated.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ1uupwAKCRB8DEliiIei
-gbZhAPwLk9lvga/akM3ieCH+RpDvNNYEKzI6nvbGMVAo3EX4XAEAiKIDHtjeJZ3D
-68pAzD9HI3OUhnDqcybEeDCrdr+40w0=
-=2Fpt
------END PGP SIGNATURE-----
+This series is structured as follows:
 
---TsHs1XlbwCY4yce0--
+    - Patch 1 introduces the "diff-blob" plumbing command and its
+      surrounding setup.
+
+    - Patch 2 teaches "diff-blob" the "--stdin" option which allows
+      multiple blob pair diffs to be specified and processed.
+
+    - Patch 3 teaches "diff-blob" the "-z" option which, when used
+      with "--stdin", uses the NUL character to delimit the inputed
+      blobs and outputted diffs.
+
+The series is built on top of caacdb5d (The fifteenth batch, 2024-12-10)
+with ps/build at 904339ed (Introduce support for the Meson build system,
+2024-12-06) merged into it. This is done so the new command is
+integrated with the meson build system.
+
+-Justin
+
+Justin Tobler (3):
+  builtin: introduce diff-blob command
+  builtin/diff-blob: add "--stdin" option
+  builtin/diff-blob: Add "-z" option
+
+ .gitignore                      |   1 +
+ Documentation/git-diff-blob.txt |  39 +++++++
+ Documentation/meson.build       |   1 +
+ Makefile                        |   1 +
+ builtin.h                       |   1 +
+ builtin/diff-blob.c             | 200 ++++++++++++++++++++++++++++++++
+ command-list.txt                |   1 +
+ git.c                           |   1 +
+ meson.build                     |   1 +
+ t/t4063-diff-blobs.sh           | 108 ++++++++++-------
+ 10 files changed, 309 insertions(+), 45 deletions(-)
+ create mode 100644 Documentation/git-diff-blob.txt
+ create mode 100644 builtin/diff-blob.c
+
+-- 
+2.47.1
+
