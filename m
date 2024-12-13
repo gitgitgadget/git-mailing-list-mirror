@@ -1,147 +1,166 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF901B415F
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2A21BBBE4
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734086361; cv=none; b=WqZtPnW5Vc2g+dRf4Ckn30KSlV4UN0a7OUZn/0uSf4rlLAeLKRU4Xb259DoWDQorVerf5WiAuerhvRJvkjAwu719dRBfVHwxaHg7AJgO1E/u6V8iE783ESlT4XxK1BIfLlebxJ+QaqPtpOCZCY+ntGDsLpK5DLy2uTX7LgD2kgg=
+	t=1734086431; cv=none; b=JhKMKoUU2rx0qxBX/ItvAwE2QQK83oMdsSMi7ZB8waigdAV1mdqIRl/NCarrVsSYTrz/oW15hVlIUIdWZGBhT47rt8X/pUaNiFX18ZTsuK0iWGSNkHDXGAtUxbKI4vNW9OtdaMEgBRjWdELpsWME1xsgamnhUA1NU3rT3SeTTa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734086361; c=relaxed/simple;
-	bh=jrV6cZ80QcIlQHyQutu6yw9UIdq0sMzmAheFHcYNhKs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hgMtmXPH/wVFbvF9j4EP7kcV3rjGMJV49EeSTfTvpD1VvGAYkbndobxqeKjd/x1fld4T8GtW267iEfq17ppnDlme2fUp4iGF3PgfIzbdOGs/SH3Qz9zlW/nXKtzRl6jKbJyn2IbVAp5A9uKE2yMc3jHrcpVGduW7TP97pMdLFEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YlARyFNa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QcK6S4fk; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734086431; c=relaxed/simple;
+	bh=YE9Bv83jWGL/cv/HN2yp5e/oWNrjJU1/mDpl0aw3QnU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pK9dDAo5ZYTTqF33iMWCdvxSCGtk6UcD9uJcWmZhZQ61v9sW1q7C6EjJ0mplLxRoiQ/FshbegUfXIiQE2vANbmtQiKKAjWTONKJMM2bTvK73wQNCMrdPApWdLLqiEdZ8asMRw8gymGbcg048ICDD6osB01FRO071hiinA4Eu4Hw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=f1Ere/dE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=McqmHdHN; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YlARyFNa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QcK6S4fk"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id ED20B1140122;
-	Fri, 13 Dec 2024 05:39:16 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 13 Dec 2024 05:39:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="f1Ere/dE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="McqmHdHN"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id AF41F11400C1;
+	Fri, 13 Dec 2024 05:40:28 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 13 Dec 2024 05:40:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734086356; x=1734172756; bh=3TC+LesEP6
-	4MeP7aAwaLOCNczki4J0sWddTJNKv3A0c=; b=YlARyFNaJYI09svpMCNPb1lsBE
-	qEmB/9H+lc9nxOa77BUj0kmyN5lldnR+0DQQUVbKhTgJvno+vGIhs7XU8XMVcwB7
-	Rr0E49TUaMfAslMFQO6mVvub86fbG9pPK5TczOsEVJ2U1zZwf2uXmheAktFZOTB+
-	xPtRnJggHvEM7bvR2pZZRmH/8nUelZTIpIi98nyb1zNMdAP3i/4d+z+WMB9Yp2B4
-	Cw8jf0mSVdNGzW25cY3InbjN0XO3T/xm5PGTB+sII5znLwsT6j8t+ztSZGatieQ/
-	h+a4yV2b6jBVXuEX2/mPAIbFcmcF3B2XiHKODh+pRHOyHHpfY6VVsrufGdxA==
+	:subject:to:to; s=fm1; t=1734086428; x=1734172828; bh=N2aL6VnAxm
+	yvSzUFranGq4iK//I3MVgaImEjzk7y9Ok=; b=f1Ere/dETVYFVIuOlMW7fiyY7B
+	EVBOG9OBtENXKlLAYljh/OI/71X8JkXYBFF2KwD0yUxMAElEYz0Xm0q7SOWJVSN6
+	jWYNsdb2ImL5gdzruSPKxanD1ULZWN+n69KM9rVcrShJOjlnZ9IsEormDkYojPUN
+	v0cJpXDKdpeeuG0zzfPhaTfwRRlDGh9iCZVJAk37WKfgg1SMDJH8D688xxYpokGF
+	fBTAoscy7Be+V9lFf3ILQTZMceKQx27YSE+WiCea9dbWMFv7wFd709lqg8kVdTU6
+	L681WtaFJ9I8urUrAfBr9euNtw9wrNMGVG5WSQd07Kvnpum5I4FqnH8EiyEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734086356; x=1734172756; bh=3TC+LesEP64MeP7aAwaLOCNczki4J0sWddT
-	JNKv3A0c=; b=QcK6S4fkrG57PptShCwiTBVvSxnoMefApJD6k9d7/2NqczWLGMm
-	evG6qKyIO7OQx9yhxeRrCnr8nOBD1nEMYMh9zcbMPPTZSfQxplifx3hVSHQ7PuXZ
-	Eoa6vSHKfeCba5V7XOs5frI2JcFTcrHhNVqCAqFZT2nMvZ+CBio4gv6FVNfsC0ot
-	mcVnsPh3uH0SvhHhSGpz4wvMK1Dg2XQM5M2WDS3z4h7plPvVjcOQW1DFNUzUjF0p
-	r0jQ0d9j05xf623RAv70DJRDHmZFKwxoTHKrBtsW5oURZaqVcJ5ME5PnAw5djEmq
-	En1n8szbJHp3Rz88ArRrsoHQ+G5pgY0UO5A==
-X-ME-Sender: <xms:1A5cZ23YhdyBlKe17d61-Bd6W2LuYnCpxvQLkXnGCE-rRISEUjNEwA>
-    <xme:1A5cZ5Ew4Xf5YbIbIbudIN6AeheSYXevqIcogOkYuPcelfYDCDSxs1781OQexsnto
-    8H-ELYfNFkR6i2L-g>
-X-ME-Received: <xmr:1A5cZ-5LkNcLCVDHcwrccrP1BKbC801IGwrqmysLcDH-7iHyJ8LKhrXPExRlHK1OHFDx-Q-niQ73Rpwt_nQCUOdG3YvglKpx6NEyI1M>
+	1734086428; x=1734172828; bh=N2aL6VnAxmyvSzUFranGq4iK//I3MVgaImE
+	jzk7y9Ok=; b=McqmHdHNizCpuiQIthkZmDJaIXsnWxHJEU3C73UwkUU+nU5Ac87
+	T7UcGHNWi/JYCsoHH6Q29LzQdJ40M8Ap0CBPHOffW4zg8Xou9bGHZ0kdJ4di6Swy
+	bwneqhdBYT2L3NO3339Scw6Yq3/zBS1pg0tgq8lNK8hFqm5PlsIA6n1ZnFADZ9vL
+	b6mHQt69DHzfl4qWgoRf1PSM/ddrWfe9Agh1W1hGvVSLS1Q8xN0SDClxi2GeyAZ/
+	7QSiQiPZx1X/FxmNAgR6Po8sDpvaI+P2GKfefcA/W30xzTWFPko5CJptUzaCu6v8
+	9TwYahW0oldxDpSPulwtROuLFk9z8VdHTgA==
+X-ME-Sender: <xms:HA9cZ72Uiwe3-h3mN9z9EjnjmVVnIWMDX5kjhq4Cahee23-mjk7vtA>
+    <xme:HA9cZ6E-Qup4dH8iecF5SmC6lAdRPtDvKc91_cKPSbsKCw2FjnQB_FKpFHhM98BLE
+    pLTJuJ5b_VSdl8cxg>
+X-ME-Received: <xmr:HA9cZ76oRZSFILScM5TwIpwBxTHC4EqGW7n59f3ZeYhryrw9w-A_FqkEJfoPnqVF1scK4CJvD9D2c_sNB4tysgi5x4PUA_CHFdzCOSEKJ985zBw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgddukecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrh
-    hushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehfrhgrnhgtvghstgho
-    rdhotggthhhiphhinhhtihesthhrrggtshhishdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:1A5cZ32U8xQa1n1ywW5LFRw_2I5L0Aa0YeU6BCH256fnDUhSEnIzfA>
-    <xmx:1A5cZ5FLnkgJsqeow3ApfP4AN2gG6Cev9Y1_nOOkkFQsskC03UzHPg>
-    <xmx:1A5cZw8P3QthChoibEfYrQgHuBHHf5buU90iPu-xT-2YhLr9kfhkaQ>
-    <xmx:1A5cZ-l0GP_weB6_WHG1t5xQ7ep_puq3JIFtc_t54BixZSSMBDq4aQ>
-    <xmx:1A5cZ9hXYgSWGUwtrgoqkgokFxxzIleGXa_52ld-qWuIJ8kMt4fVPyru>
-Feedback-ID: if26b431b:Fastmail
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:HA9cZw35Tk-bBxfk4bEMg6Ci176hVvAoBRfzgybEgKB6ysceR2JVrQ>
+    <xmx:HA9cZ-F8odJMq29qY36IK3f46QRm8_uYwDFRuQ0hgH764rvSOuBPFA>
+    <xmx:HA9cZx_uRoNvgNYOmiPmAlGTtAlVADSRGJ9xTSlHJR-ujoJcc6hIvQ>
+    <xmx:HA9cZ7nOVHjPNo4xBF3ENHYBQVnrgYHPai9oM6QxQBJc5PGu_H00kA>
+    <xmx:HA9cZzTlsPuUvifhDkw1m6dVaAGxspnuzQH8mbv7U9ad3-aIMnY3Tqyo>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 05:39:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Francesco Occhipinti <Francesco.Occhipinti@tracsis.com>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: New checkout --track behaviour?
-In-Reply-To: <Z1uuqKI_2rb0HXhP@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 13 Dec 2024 03:48:56 +0000")
-References: <DB9PR08MB7194822B81F17420B2D3C149903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
-	<DB9PR08MB71949D21F5F0E81911F0D50F903F2@DB9PR08MB7194.eurprd08.prod.outlook.com>
-	<Z1uuqKI_2rb0HXhP@tapette.crustytoothpaste.net>
-Date: Fri, 13 Dec 2024 19:39:15 +0900
-Message-ID: <xmqqed2beujw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 13 Dec 2024 05:40:27 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 21e45076 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Dec 2024 10:38:47 +0000 (UTC)
+Date: Fri, 13 Dec 2024 11:40:11 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/8] meson: detect missing tests at configure time
+Message-ID: <Z1wPC1vSlqgWeFis@pks.im>
+References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
+ <20241211-pks-meson-ci-v1-4-28d18b494374@pks.im>
+ <87bjxfj44o.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87bjxfj44o.fsf@iotcl.com>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Fri, Dec 13, 2024 at 10:58:47AM +0100, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/t/meson.build b/t/meson.build
+> > index 9e676e69363ed6311426500d98fe281e30d26bcb..f1fbc6ae179079f4d5d86f9a60956fad84d0495c 100644
+> > --- a/t/meson.build
+> > +++ b/t/meson.build
+> > @@ -1092,6 +1092,42 @@ integration_tests = [
+> >    't9903-bash-prompt.sh',
+> >  ]
+> >  
+> > +# Sanity check that we are not missing any tests present in 't/'. This check
+> > +# only runs once at configure time and is thus best-effort, only. It is
+> > +# sufficient to catch missing test suites in our CI though.
+> > +foreach glob, tests : {
+> > +  't[0-9][0-9][0-9][0-9]-*.sh': integration_tests,
+> > +  'unit-tests/t-*.c': unit_test_programs,
+> > +  'unit-tests/u-*.c': clar_test_suites,
+> > +}
+> > +  actual_tests = run_command(shell, '-c', 'ls ' + glob,
+> > +    check: true,
+> > +    env: script_environment,
+> > +  ).stdout().strip().split('\n')
+> > +
+> > +  if tests != actual_tests
+> > +    missing_tests = [ ]
+> > +    foreach actual_test : actual_tests
+> > +      if actual_test not in tests
+> > +        missing_tests += actual_test
+> > +      endif
+> > +    endforeach
+> > +    if missing_tests.length() > 0
+> > +      error('Missing tests:\n\n - ' + '\n - '.join(missing_tests))
+> 
+> This gives nice output:
+> 
+>     $ touch t/unit-tests/u-bar.c t/unit-tests/u-foo.c
+> 
+>     $ meson setup builddir --reconfigure
+> 
+>     The Meson build system
+>     Version: 1.4.1
+>     [snip]
+>     Configuring update.sample using configuration
+>     Configuring exclude using configuration
+> 
+>     t/meson.build:1116:6: ERROR: Problem encountered: Missing tests:
+> 
+>      - unit-tests/u-bar.c
+>      - unit-tests/u-foo.c
+> 
+>     A full log can be found at git/builddir/meson-logs/meson-log.txt
+> 
+> But I think the error message is a little bit confusing. It sounds like
+> the test file is missing, but it's the configuration of the test that is
+> missing.
+> 
+> Now I've realized it hard to write a good error message here. But I
+> would suggest something like "Tests files found, but not configured".
+> 
+> > +    endif
+> > +
+> > +    superfluous_tests = [ ]
+> > +    foreach integration_test : tests
+> > +      if integration_test not in actual_tests
+> > +        superfluous_tests += integration_test
+> > +      endif
+> > +    endforeach
+> > +    if superfluous_tests.length() > 0
+> > +      error('Superfluous tests:\n\n - ' + '\n - '.join(superfluous_tests))
+> 
+> Also here I would suggest different error message, maybe something like
+> "Tests configured, but file not found"
 
-> This is indeed a subtle incompatibility in command-line option parsing,
-> but it's not really avoidable and it does occur in pretty much any case
-> where a short option learns to take an optional argument (for any
-> software, not just Git).
+Both good suggestions, thanks!
 
-Perhaps we'd want something along this line?  While it is not really
-avoidable if we have to add an optional value to an existing option,
-"not really avoidable" is not a very satisfactory explanation to
-please those whose established use cases they have, or their
-scripts, have got broken.
-
---- >8 ------ >8 ------ >8 ---
-Subject: gitcli: explain why short options are better spelled separately
-
-When the "--track" option of "git checkout" command learned to take
-an optional value a few years ago at d3115660 (branch: add flags and
-config to inherit tracking, 2021-12-20), "git checkout -tb foo" got
-broken, as it is no longer two options "--track" and "--branch=foo"
-given together, but "--track=b" and a regular argument "foo".  The
-command parser dies upon seeing "-tb" saying "b" is not a valid
-optional value to "-t".
-
-We already discourage users to spell short options in stuck form,
-and if they spelled "-t -b foo", they would not have noticed this
-breakage.  Add a bit more words to "git help cli" to explain why
-we discourage the stuck form.
-
-We might also want to add a note to ourselves (perhaps next to the
-Documentation/CodingGuidelines, we'd want design guidelines) to
-think very carefully before considering to introduce an option that
-takes an optional value, and refrain from adding an optional value
-to an existing option.  It would save the end users from confusion.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/gitcli.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-index bd62cbd043..dcc0aa5bf7 100644
---- c/Documentation/gitcli.txt
-+++ w/Documentation/gitcli.txt
-@@ -82,7 +82,9 @@ Here are the rules regarding the "flags" that you should follow when you are
- scripting Git:
- 
-  * Splitting short options to separate words (prefer `git foo -a -b`
--   to `git foo -ab`, the latter may not even work).
-+   to `git foo -ab`, the latter may not even work, and even if it
-+   worked, it will change the meaning once the '-a' option starts
-+   taking an optional value).
- 
-  * When a command-line option takes an argument, use the 'stuck' form.  In
-    other words, write `git foo -oArg` instead of `git foo -o Arg` for short
+Patrick
