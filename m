@@ -1,121 +1,113 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A671E0E08
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 14:33:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8681E04BF
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 14:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734100437; cv=none; b=SmouwyZDO/0l6qAiaDhRzCncgyG8LTux/mN6SNLY+07F2fZC5NZ0dakW516d/da7MsP78+nt3FwwWuej72PZxAfel1gDi1R06W0hElOd6VCECJuDDdx2NoZ1em8OSLXtfp94Kl/q8BTEHRqaXNl0DfClobz5M2KdcltpJgA78+Y=
+	t=1734100686; cv=none; b=Kf/PrD1UO6RAMDQRP8iblUq4bhyIJFGcyAiFWcS+oxOdg1ElKf/QODY/GcEetcYfLiV29NzN5LFM7O1gBWUARohs4mSdeYN1D2DqZxv3UtnoPiUXGdBVj0pK++oIVnNbA7blpwjb4vYYNT5eRsrrA95cAJ54VheLRZJHfau7lA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734100437; c=relaxed/simple;
-	bh=4FWbyynvcEfKvZEurfVgp3Ic9WIiThgBRANSQuPEbuQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cYsngWEEbl2O6IxiySzXwIn/hK89eefb6qAv/cdgHzEaKNlCC43bucj/ZlAg92vzb7njOCFBdZnhEi5ie5QqF4yN5wn6+4dxEGEvIjxLRsudpmssDqvF6Kz+3ekDUrK4LkfNo6Qztd4SuC9zDWBIW7V0uv9T2NsHswMkXiKRxYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lP8ax6Ez; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aLs8W5U2; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734100686; c=relaxed/simple;
+	bh=6GNHcXf9MiXauf9k6aHMeN/HjPnnBQ0d+tcfzN0Z9l8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=NTMaCT9Rr40WBkNRdSAVpKU+LRTDRnuuGheGMAu7yl0E+XWgjUH8MPdN+yO1OSsMnzbMJa9bleKktpOJbHK9FdqpOVrn16fZJRpj/eFI8O01xGwAq0KW7kNQKDkmwwfvwFGJL5mqCb0yarE7WIQC/Ixs7dUArEjL0mfz6SROUbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M2xqJN8G; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lP8ax6Ez";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aLs8W5U2"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id CB7561140095;
-	Fri, 13 Dec 2024 09:33:53 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 13 Dec 2024 09:33:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734100433; x=1734186833; bh=hBmUQ5Pb58
-	f/48vPUirGe/LhdxbrhR13Wr52ChRp31I=; b=lP8ax6Ez1wnh5bDMlelw4w2gTc
-	sl8HgroNBML6Hp4aMOXe6EG+4DeBRgt+sRhBRsjiU+0rG5tcot6yvUDEh+sau7FW
-	rjLd7TtPuvDg/8fDM5a7nAo0hUYmzyNpsKTZnJnWoY5aJDfekseKDmBt9Xi7hPWd
-	lRZiV0znSf/OXYj1jAfLkdSTM4EDatQnP5MnZTagUMMpfZJ76Fd0d9BZ1jf0x9En
-	anZ3D/QOMQS+VMiSHMSuXiDLpToPCQT6Cxz2eOcfE0X1mDZwTzuKdyH9yfTdoeC6
-	Aukmvo90U0qHIws5fxbyKXCHeWhzq36ltafBStfp091WlvPp5eNpTJ6Mihtw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734100433; x=1734186833; bh=hBmUQ5Pb58f/48vPUirGe/LhdxbrhR13Wr5
-	2ChRp31I=; b=aLs8W5U24B5+bTTbG+Mv8aBI/ye3b1Y52YaYUklL1yoSfviGq/7
-	LAI9SqVHNbSHIM+DkpPKtsqsk7FGp9Yg0XkJCtMNSwlRPScHumME1OV595gpfOFM
-	8RVy2TInUiV7YB5/y5Ta+Nc0OFaFOCBVH+gJFylpEAYOPRGI/vAj7rzX0HXyTFS6
-	6AekilyIFiTF8AV7ZDDKLcjxIJ+ViEEtu7Br6bkL/9rYk2FnPYYIbJNJQUtFdqJJ
-	suQ3GUD/+BRLBmoLo60IM9IRFNHhTAeuODX/v0L7KH8ZInEju+xLBkih1pBi1PHq
-	MvJHd3VVfW2oWG9ebuWr1wUWjQQ3eK3fJrA==
-X-ME-Sender: <xms:0UVcZ13xb3KfmhPdtQQpEHN648xgJkcdj1bvJ142PNI6FEP71cebAw>
-    <xme:0UVcZ8FuNbzGbV47cH5iGVMEMaYYqukRa6-ypwnJIrxySY66JA4pH4GmmxNQt7Rjq
-    jeJTsfts2chSDo_Fg>
-X-ME-Received: <xmr:0UVcZ17mjZN-OwprH-vUsRMrNiBEW5rx7_h03mwTVAPSC2kZptTKp7a6tP5bXkU92Hhqi-jotmNZAp8dU6TsNgbMjp2ffgFB3m75HJs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdeihecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:0UVcZy327nfWdJu_QBF_-tr4ikW8xJhorr1lQP5QD3fQprwoo0UeSg>
-    <xmx:0UVcZ4EDq_XUNCxSxgQsqlsifE0CmvX0Io-DcpzcVlLPLik-JAVGKQ>
-    <xmx:0UVcZz8AydjaH7Qa3g5DtNMuLgsQj66vpBZUB99hLuIM1EhS6xIdWA>
-    <xmx:0UVcZ1lGfzICFNMGqkESYfqLKHXNaWvXwqVuAu1ZbERM9knri0A_MQ>
-    <xmx:0UVcZ8CO09jEgRp5ZzfhKl9X6we0z58c9i8X-B5wP5ztugIuBhy6KphT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 09:33:53 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: karthik nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2024, #05; Thu, 12)
-In-Reply-To: <CAOLa=ZQmDyy1yajNzASUkRZeizroyCXcgsRK+fOtstatg5r=2A@mail.gmail.com>
-	(karthik nayak's message of "Thu, 12 Dec 2024 09:27:17 -0500")
-References: <xmqq8qslf5h1.fsf@gitster.g>
-	<CAOLa=ZQmDyy1yajNzASUkRZeizroyCXcgsRK+fOtstatg5r=2A@mail.gmail.com>
-Date: Fri, 13 Dec 2024 23:33:51 +0900
-Message-ID: <xmqq7c83ejow.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M2xqJN8G"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-436249df846so12929125e9.3
+        for <git@vger.kernel.org>; Fri, 13 Dec 2024 06:38:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734100683; x=1734705483; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=htAyILjydmR/x2wznYHMXhzeoRL8v8iaczcEAtxVkzo=;
+        b=M2xqJN8GmtmAA6LGAQKLNLJqcLUc5LjnPypXFms+ls82Hhc2S6Q08SFpdYREMZsuEp
+         xSBxZSywoVY4F8k6GosqqFxUHs3QEB4ml2r9qIrMMTfZbpSfhPUXPmVLLkcV1B8VId8b
+         B+v0dbJZ82WH4+cComdfL7je9c8rRt1VeHoMu61BFQycHKKrIIiRYE2/izzS3JeDVsON
+         2bzyOyD1hPKs5fx26dsXUVesKb4GJ+NEpxhYAYVL++mAHvFcemFMaRGR0DhRgaUC4Z88
+         V611nehds/5fft4zIBrYWgJhGnPO7XeZyWb9EDRLyafawHB8sLVaW3zslWQbclSYywow
+         ht3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734100683; x=1734705483;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=htAyILjydmR/x2wznYHMXhzeoRL8v8iaczcEAtxVkzo=;
+        b=eKUkIxS+3TPuuYS7FHcUIfQRe/x3heIn3/qgsxMapQpzxXnLsVfB8JBPE3WomgPCg7
+         CtipjfU0v56qlmRKB2SUDPr1YsJzfVrMPAIahXZkoV1JGX+EPgiz4ENHbbAD6J84U2VX
+         LsuZPNLyobakVlmz6iB3jzSvfCQEhgewXOub2J5P20+9YkbIdEJmuTluRnXfOO5BbwQI
+         I3X2/GtmcJzB908vGlk4I9NfiEq4QbI5Uu/dbCTtok/kQaCajdFYdSD3NoYywOqIS/Lm
+         ajlYdL7224mmN8VgdUq1cmQS2IWGhBVbcs7hcwHOKxi5jJ0NM0+17bEGqIShvTMg5VCs
+         EiAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzwrAETD+AjuxPvhN+APbUOFXPKFBVIJpaN05wwSBgsL30OtOcI5vH3IufIMgaBCu2HkQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzL34Th/b3SHybshzLATVhCfUd7wKQypWKGRfvVE96dC4KE3jQU
+	3R1OREdlM5tHU4jbFTA41URlHzfgg/bfWiJGX25I68p25ZuZCg+5
+X-Gm-Gg: ASbGnctScONMAwzzICNIneArfhnA0rwNRdBBndX+RrrFmu9EUNeX47Xd8n6ek8hft5u
+	jFqlK+lNqZpOYQochAH/VsPAyYYtnfwdqmitTYnhJPSsjOq3ERxl9X14VrIT9MwwznC0QTRo/Tc
+	ZeD5TRKUmgYevy09wnS0itgXg4nbP1YB099AEVr13Ry7mc7OSzTjXamjKpxQknnBxfcTPnJzVoI
+	It+khDDDSACWFkpMhLJsfUFQ+pLRheCbrtVPVhAB2sWOvTXSLACtSUPIPF0Jtp616TNJM/1pEzK
+	yimIFHXbqMAVqpPnUoHnvn0LElcBuT9G1fE=
+X-Google-Smtp-Source: AGHT+IFPGqF+OvMNg1ORX+ULQ4p5oaDET7Zyuh60xO1+qLOs02WRveAWMboG/Ec9qQsnBoKf15n9Sg==
+X-Received: by 2002:adf:f545:0:b0:385:f409:b42 with SMTP id ffacd0b85a97d-3888e0c0831mr1951889f8f.53.1734100682984;
+        Fri, 13 Dec 2024 06:38:02 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:62a:6d01:db19:6b99:fd5f:b9c2? ([2a0a:ef40:62a:6d01:db19:6b99:fd5f:b9c2])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3878251bc16sm7350074f8f.86.2024.12.13.06.38.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Dec 2024 06:38:02 -0800 (PST)
+Message-ID: <534e8534-a9bd-428b-87f9-a512c9378b19@gmail.com>
+Date: Fri, 13 Dec 2024 14:38:00 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: git rebase --continue error message is misleading
+To: =?UTF-8?Q?Bj=C3=B6rn_Lindqvist?= <bjourne@gmail.com>, git@vger.kernel.org
+References: <CALG+76eJL5dC3o+yq7zreoRDQan1MPgfNXB42k5f2iq2bZEbNw@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <CALG+76eJL5dC3o+yq7zreoRDQan1MPgfNXB42k5f2iq2bZEbNw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-karthik nayak <karthik.188@gmail.com> writes:
+Hi Björn
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> [snip]
->
->> * kn/reftable-writer-log-write-verify (2024-12-07) 1 commit
->>  - reftable/writer: ensure valid range for log's update_index
->>
->>  source: <20241206-424-reftable-writer-add-check-for-limits-v2-1-82ca350b10be@gmail.com>
->>
->
-> Hey Junio, this was reviewed by Patrick and Toon. I see this was added
-> to 'seen'. Is it also scheduled for 'next'?
+Thanks for reporting this
 
-If it does not say "Will do X", it is not scheduled for that.
+On 09/12/2024 13:02, Björn Lindqvist wrote:
+> $ LANG=C git rebase --continue
+> hint: Waiting for your editor to close the file... error: cannot run
+> vi: No such file or directory
+> error: unable to start editor 'vi'
+> Please supply the message using either -m or -F option.
 
-This applies to everybody, not specifically to you, but when you see
-an empty entry like the above in the "What's cooking" report, three
-things you can do are:
+This line comes from "git commit" whenever launch_editor() fails. I 
+wonder if we'd be better to recommend that the user sets up a working 
+editor instead. The message is certainly unhelpful when we run "git 
+commit" from "git cherry-pick/merge/rebase/revert" where we want to seed 
+the message that the user edits.
 
- (1) offer a few lines of topic summary
- (2) point at the review message(s)
- (3) suggest for updated status with rationale (e.g. "let's move
-     this to 'next' by day X, as this and that reviews at URL1 and
-     URL2 seem to indicate that we have a concensus that it is ready".
+> error: could not commit staged changes.
+> $ git rebase --continue -m "done"
+> ...
+> $ git rebase --continue -F "done ffs"
+> ...
+> 
+> It should say: Please commit the staged changes using git commit -m
+> "commit message"
 
-Patrick's comments were on the previous one, IIRC, but I do see Toon
-commented on the latest round.
+I don't think that is a good idea when "git commit" is being run from 
+"git rebase". In that case we want to preserve the original message and 
+authorship and using '-F' or '-m' would not do that.
 
-Thanks.
+Best Wishes
 
+Phillip
 
