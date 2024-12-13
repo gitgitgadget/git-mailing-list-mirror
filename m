@@ -1,67 +1,67 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2338149E00
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 04:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCE21822E5
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 04:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734063982; cv=none; b=pivOpSD6Cz2gc0+AP8BdjMGSeQh/8RvEmsPCdLT7hz42HxC/+xodiACtCeXihX/ySJsH+Enxipheq6ab6fJ86OsApbkI2kEFbs+SFQVQGxGugX7SfFCJu7FpubWw+5I4pr3GRfPpTzReHkVtSwXbc8qbOCXXFMI43tOQnSl5flw=
+	t=1734063984; cv=none; b=HG6Yd+06IIuS8Rc1oDwf1pUkgTbm7v1vN1GP9m/Jref7MvpvjorjEKNNeQs90fWDwtQzG/02seyFYpV/uoF1VOhAtER4O0Pq3WfnuyChMf84uv5b/79TF9BYCc+gbNqQGCtWzeNsxSIfbAMen0VaquLb2JN+Ss9PAo7eCQKKAe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734063982; c=relaxed/simple;
-	bh=72CM4Cjj7WtNHlTGSycHDBGt/RrWHpBODKp2lysFJfc=;
+	s=arc-20240116; t=1734063984; c=relaxed/simple;
+	bh=3gknF6cNMDFYAFJ38nfk5s+EKIskefwOpbnGQpiq04U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oreWe36ZAkoDpbngZtoUWRoJ2FBDzmalILYM4GsYv02+l6oQXEHwWEUeGwmTubQfSieUp+3ohJ7A/NRgG7mBrneGrd3TAerC4w5X+XxGQRtoNs9l2bTW+X9Pz3NGgyR9uUOZGNOPYVocjP+o30RAw5xCs5xvNfwMkl/e67BkT1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LTE4OdOD; arc=none smtp.client-ip=209.85.210.45
+	 MIME-Version; b=bJyjtbXHXHAxrOYhI+TDtwBt2cXrVMD5ohlDtFcbFGVd2Ag8DkG78kc62SS582hPRmGXY8FDkAj3D39x0PpAxzE6TaJxpUs1P6S2C4HsslGT4OynPkEjOX0+pzTgSU6y5O0yQpj/K7EWAn0sJ0JLO4npiC6l+YN87CBGCgmytyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CnKZDnur; arc=none smtp.client-ip=209.85.161.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LTE4OdOD"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-71e2aa8d5e3so718139a34.2
-        for <git@vger.kernel.org>; Thu, 12 Dec 2024 20:26:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CnKZDnur"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5ee8eaa1694so629213eaf.0
+        for <git@vger.kernel.org>; Thu, 12 Dec 2024 20:26:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734063980; x=1734668780; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734063981; x=1734668781; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VX9SzKPvYczFjd/zgQ+OkdhEyEw8jdVyLWuQCELWD38=;
-        b=LTE4OdODMpMU0F2FylhHF1LcSwG9KlyRJtdQndfm5vYwzlDOYhKSUjWuxnwtiPDOTl
-         n+UGNciE6FU0O5UW/Ss+yL6ksZrl09ij6pY4pt35pSM+FuxKitF9PA+ch2aV94OlpPKN
-         MxHefpj6bYCpSANFBwmEvgdi0l6ucgpoHcChnJqRITp67KSeMd3Do/yHFqy4FtvPCUVG
-         qrYJXWu3LbGunqXWu2cIBrxmcWopFjmE0zONs3HSNDFAbF/Ke+VjnjK31udh+4TBQ97D
-         YGDm0rscWzYTnpSg9T0ttTcE1uZOGFTHzXaS/KJBjkilslgW9KzrPrejbI9Hs6EAI77G
-         Vh2Q==
+        bh=B8jOOdxwqEtp3jZJ/b4Fj0gnVnD8E3vzo6CJoILBGvI=;
+        b=CnKZDnurTg9ikBkHinfpr/JA/DWwQp5hLqI3a/iNIwKVAvGJHRkZ7wX3HHvnoEJShE
+         MlvxvF+bgdNTxIWomBpw8EiwSswiDjso2mHheRNY/LQ+ssHHlkpziUE5x86Ybg9K/uUX
+         Ucc+ii//h4fr5Dyb1G5q5rrv/oV8TfqOth/KWliEGYlKhMFT3enmsvdck6S6YY60d42T
+         u2WOELctZkjQp7HpuSZxlNW1fYUyZsWDcYJtD7CVA5cv7gWLeRHr2qYpr3O3+iXoYV2e
+         GoPWfIZgi2vBMi5TfsPcwE9ZRQ5lgc/otsZNkZUJFRtE1aeR2aWpceOzIWmon1ODMGLG
+         YKcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734063980; x=1734668780;
+        d=1e100.net; s=20230601; t=1734063981; x=1734668781;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VX9SzKPvYczFjd/zgQ+OkdhEyEw8jdVyLWuQCELWD38=;
-        b=SYctnqutqxzC3oTGMc75Yny3+PzcavqpVJxqv62LdH81mLtX7hfseaUfMln0Q5hGuA
-         LrubXUaa0y+IPff1T46BknME2OMKdMO9HqC64E08+KyHHYGur6IAjyyrYEPff+bQ1R09
-         Or4+9ijY+opbuAN+DYmaiQcm9H7rxwOZNO8fLVrDLndM9qYKKI0MTrhh8x+B3c8BYJwq
-         N1lI6L/Rg+5DabFvn/NvFld+hb4po9TbcwcMpOPIk/sT8Bs0qcrVj8b9GqJrRDRHcxFp
-         hZiZ4qzsTtk6UfIM4xqZEhUqBhANQK5JGulDaY/avkHiYconTW/sxE5gkywcFxu8d+UW
-         bvFw==
-X-Gm-Message-State: AOJu0YyeAg0a9S7Uu5oizB1l6TM9G+hFPJ/SAXQopqtyiSuMzkGUPLFK
-	W1RSiP2Cdwh5FNCdXUGrS7x69Ch6gr4LuA0T72nUcZSNiD31Twop5WOuzQ==
-X-Gm-Gg: ASbGnct+CxvZUlcUThcfAntoWHxqyNgXTa3zaNU9B5RWE4L4eRwjjtC5LMkMfi4qtTA
-	d/UmN+zFmiuL47GtdVcg72w4VDQxGJ/i89Uz3jtoYgMUwxXuVf/QnMP8HND5G6YCC3i/Dk0rsTN
-	c50OVzRsgy5ZKcKEw9ccX0Gygz6BMachDj4pEqVD0dlJJkoS/AMo+eLiFO7aOyVb7QtTAifnvux
-	bDeVZSgp06EgKoYmOOI/ic8lJ0yhkZjHyJ34tahWFeWTAKhC9729orZMs0tFT95
-X-Google-Smtp-Source: AGHT+IFTdjZh3bgrFjp84zMVa4lSdUSUnnfUS0js6LQetMiCRfNuccN+8DYhRk8FJtCR4YPBu+Jwpg==
-X-Received: by 2002:a05:6830:6e18:b0:71d:f239:c0a8 with SMTP id 46e09a7af769-71e3b827be9mr665537a34.6.1734063979870;
-        Thu, 12 Dec 2024 20:26:19 -0800 (PST)
+        bh=B8jOOdxwqEtp3jZJ/b4Fj0gnVnD8E3vzo6CJoILBGvI=;
+        b=Ao+pW00bkAzNa5nM8zubhajMWSXtcVkJN/DF9gNx+Dd/6D255eeQl62XBvYo7LrZmY
+         HT99yzD0tLNQHdbDoz96Ns+FjCV6X4Ikp9aD8OB6XOCmDW43Ad3+9XtY1uCSBWVLhJU9
+         OXOKOa9f5ifrhpvmx9O+XJ3CLGI2dxNaDj3msRnhpL+i8lw78woEDD6QGYGdPRizKcDy
+         eklAhV7Gofl4Zh4rGI0GhCKZuX/H17YPEBWBstI4Rv3L3zvTfTMTkAskqj+tQUo+L2Dc
+         JUy15mDflvuorqQ7lmqjtS9Zvea5v6xDXWyu7HsCj91gqOSIpSvXURY0nGCqV540Gdrt
+         qzpg==
+X-Gm-Message-State: AOJu0YxVtgFlSMuKxeYTsavk6txgPhgDFz9eHVWZKBZIqrMRK4F9jL67
+	nG7+glT6OLGPaRN/4rzCjimIO8SKbWShgH4RlmPv7E6cAcWoms2rvnPI9A==
+X-Gm-Gg: ASbGncs9UFdbGGghhHPc+sBKJ2H3ieq8FmChVLB6j2NeI4j3tar4Nic9/0SpbmNdgXD
+	6/d6maDsWX7sLXM6VqTM6aKNyOjrHtGPKPEUN35Zd97cl2qfnfYuo7ElTWo2NKnrNQ1a5yRltkp
+	Y2ZZIKexHCaF2CaFs749VBEd2dfIRJ0PRqT0wg6eUnr/7CwDaUSIy8ptf1M7iLnhlr7rWGvoI87
+	05F9FDKfi0+mbXVU8d4Z4iW5IFp+fPI8mGnX7tklTsq9FLdEJKSPOVdv2l6rbO4
+X-Google-Smtp-Source: AGHT+IEpYITkwNVYvjyF4P6yNYOLAxBbI4kKgLQeSFYEXUm0t2rrA5WLMdKir1C0ubEdFkpr9OcgXw==
+X-Received: by 2002:a05:6820:1e88:b0:5f2:af6a:e4c0 with SMTP id 006d021491bc7-5f32929d472mr798749eaf.1.1734063981547;
+        Thu, 12 Dec 2024 20:26:21 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71e37410edfsm342736a34.67.2024.12.12.20.26.18
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-71e37410edfsm342736a34.67.2024.12.12.20.26.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Dec 2024 20:26:19 -0800 (PST)
+        Thu, 12 Dec 2024 20:26:20 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 2/3] builtin/diff-blob: add "--stdin" option
-Date: Thu, 12 Dec 2024 22:23:11 -0600
-Message-ID: <20241213042312.2890841-3-jltobler@gmail.com>
+Subject: [PATCH 3/3] builtin/diff-blob: Add "-z" option
+Date: Thu, 12 Dec 2024 22:23:12 -0600
+Message-ID: <20241213042312.2890841-4-jltobler@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241213042312.2890841-1-jltobler@gmail.com>
 References: <20241213042312.2890841-1-jltobler@gmail.com>
@@ -73,179 +73,134 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There is not a way to generate multiple blob diffs from a single
-process. Similar to git-diff-tree(1) with its "--stdin" option, it would
-be useful if multiple blob pairs could be provided to git-diff-blob(1)
-to compute blob diffs for.
+The "--stdin" option for git-diff-blob(1) reads two space separated
+blobs for each line of input. A blob may be specified by its ID or a
+path-scoped revision that resolves to a blob. It is possible for the
+path to contain whitespace or newline characters which must be escaped.
 
-Teach git-diff-blob(1) the "--stdin" option to allow a pair of blobs to
-be read from each line of stdin instead of relying on the single blob
-pair provided as arguments. When this option is specified, each valid
-line of input computes a blob diff thus allowing multiple blob diffs in
-a single process. A blob may be specified by its ID or a path-scoped
-revision that resolve to a blob. When a path-scoped revision is used,
-path and mode information is also extracted and presented in the
-resulting diff header.
+To make input more simple, teach git-diff-blob(1) the "-z" option which
+changes the input delimiter for each blob to a NUL character. With this
+option, the command waits two NUL terminated blobs to read and then
+generates the diff. The diff output is also NUL terminated to help
+differentiate between outputted diffs.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- Documentation/git-diff-blob.txt |  6 ++++
- builtin/diff-blob.c             | 64 +++++++++++++++++++++++++++++++++
- t/t4063-diff-blobs.sh           | 14 ++++++++
- 3 files changed, 84 insertions(+)
+ Documentation/git-diff-blob.txt |  6 +++++-
+ builtin/diff-blob.c             | 37 +++++++++++++++++++++++++--------
+ 2 files changed, 33 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/git-diff-blob.txt b/Documentation/git-diff-blob.txt
-index 732992d1d7..f6ecd522fa 100644
+index f6ecd522fa..36cd686bb1 100644
 --- a/Documentation/git-diff-blob.txt
 +++ b/Documentation/git-diff-blob.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
+@@ -10,7 +10,7 @@ SYNOPSIS
  --------
  [verse]
  'git diff-blob' <blob> <blob>
-+'git diff-blob' --stdin
+-'git diff-blob' --stdin
++'git diff-blob' --stdin [-z]
  
  DESCRIPTION
  -----------
-@@ -20,6 +21,11 @@ OPTIONS
- <blob>::
- 	The id of a blob object or path-scoped revision that resolves to a blob.
+@@ -26,6 +26,10 @@ OPTIONS
+ 	from the command line.  Instead, it reads lines containing two <blob>
+ 	from its standard input.  (Use a single space as separator.)
  
-+--stdin::
-+	When `--stdin` is specified, the command does not take <blob> arguments
-+	from the command line.  Instead, it reads lines containing two <blob>
-+	from its standard input.  (Use a single space as separator.)
++-z::
++	When `--stdin` has been given, use NUL characters to separate blob
++	inputs and diff outputs.
 +
  include::pretty-formats.txt[]
  
  include::diff-format.txt[]
 diff --git a/builtin/diff-blob.c b/builtin/diff-blob.c
-index 7cfa4eb436..45edfdd979 100644
+index 45edfdd979..60c92cec9c 100644
 --- a/builtin/diff-blob.c
 +++ b/builtin/diff-blob.c
-@@ -4,9 +4,12 @@
- #include "diffcore.h"
- #include "gettext.h"
- #include "hash.h"
-+#include "object-name.h"
- #include "object.h"
- #include "parse-options.h"
- #include "revision.h"
-+#include "strbuf.h"
-+#include "string-list.h"
- 
- static void diff_blobs(struct object_array_entry *old_blob,
- 		       struct object_array_entry *new_blob,
-@@ -59,18 +62,66 @@ static void diff_blobs(struct object_array_entry *old_blob,
- 	diff_flush(opts);
+@@ -81,23 +81,39 @@ static void parse_blob_stdin(struct object_array *blob_pair,
+ 	object_context_release(&oc);
  }
  
-+static void parse_blob_stdin(struct object_array *blob_pair,
-+			     struct repository *repo, const char *name)
-+{
-+	int flags = GET_OID_BLOB | GET_OID_RECORD_PATH;
-+	struct object_context oc;
-+	struct object_id oid;
-+	struct object *obj;
-+
-+	if (get_oid_with_context(repo, name, flags, &oid, &oc))
-+		die("invalid object %s given", name);
-+
-+	obj = parse_object_or_die(&oid, name);
-+	if (obj->type != OBJ_BLOB)
-+		die("object %s is not a blob", name);
-+
-+	add_object_array_with_path(obj, name, blob_pair, oc.mode, oc.path);
-+	object_context_release(&oc);
-+}
-+
-+static void diff_blob_stdin(struct repository *repo, struct diff_options *opts)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct string_list_item *item;
-+
-+	while (strbuf_getline(&sb, stdin) != EOF) {
-+		struct object_array blob_pair = OBJECT_ARRAY_INIT;
-+		struct string_list list = STRING_LIST_INIT_NODUP;
-+
-+		if (string_list_split_in_place(&list, sb.buf, " ", -1) != 2)
-+			die("two blobs not provided");
-+
-+		for_each_string_list_item(item, &list) {
-+			parse_blob_stdin(&blob_pair, repo, item->string);
-+		}
-+
-+		diff_blobs(&blob_pair.objects[0], &blob_pair.objects[1], opts);
-+
-+		string_list_clear(&list, 1);
-+		object_array_clear(&blob_pair);
-+	}
-+
-+	strbuf_release(&sb);
-+}
-+
- int cmd_diff_blob(int argc, const char **argv, const char *prefix,
- 		  struct repository *repo)
+-static void diff_blob_stdin(struct repository *repo, struct diff_options *opts)
++static void diff_blob_stdin(struct repository *repo, struct diff_options *opts,
++			    int null_term)
  {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct string_list_item *item;
+ 
+-	while (strbuf_getline(&sb, stdin) != EOF) {
++	while (1) {
+ 		struct object_array blob_pair = OBJECT_ARRAY_INIT;
+ 		struct string_list list = STRING_LIST_INIT_NODUP;
+ 
+-		if (string_list_split_in_place(&list, sb.buf, " ", -1) != 2)
+-			die("two blobs not provided");
++		if (null_term) {
++			if (strbuf_getline_nul(&sb, stdin) == EOF)
++				break;
++			parse_blob_stdin(&blob_pair, repo, sb.buf);
+ 
+-		for_each_string_list_item(item, &list) {
+-			parse_blob_stdin(&blob_pair, repo, item->string);
++			if (strbuf_getline_nul(&sb, stdin) == EOF)
++				break;
++			parse_blob_stdin(&blob_pair, repo, sb.buf);
++		} else {
++			if (strbuf_getline(&sb, stdin) == EOF)
++				break;
++
++			if (string_list_split_in_place(&list, sb.buf, " ", -1) != 2)
++				die("two blobs not provided");
++
++			for_each_string_list_item(item, &list) {
++				parse_blob_stdin(&blob_pair, repo, item->string);
++			}
+ 		}
+ 
+ 		diff_blobs(&blob_pair.objects[0], &blob_pair.objects[1], opts);
++		if (null_term)
++			printf("%c", '\0');
+ 
+ 		string_list_clear(&list, 1);
+ 		object_array_clear(&blob_pair);
+@@ -112,16 +128,19 @@ int cmd_diff_blob(int argc, const char **argv, const char *prefix,
  	struct object_array_entry *old_blob, *new_blob;
  	struct rev_info revs;
-+	int read_stdin = 0;
+ 	int read_stdin = 0;
++	int null_term = 0;
  	int ret;
  
  	const char * const usage[] = {
  		N_("git diff-blob <blob> <blob>"),
-+		N_("git diff-blob --stdin"),
+-		N_("git diff-blob --stdin"),
++		N_("git diff-blob --stdin [-z]"),
  		NULL
  	};
  	struct option options[] = {
-+		OPT_BOOL(0, "stdin", &read_stdin,
-+			N_("read blob pairs from stdin")),
+ 		OPT_BOOL(0, "stdin", &read_stdin,
+ 			N_("read blob pairs from stdin")),
++		OPT_BOOL('z', NULL, &null_term,
++			N_("inputed blobs and outputted diffs terminated with NUL")),
  		OPT_END()
  	};
  
-@@ -93,7 +144,20 @@ int cmd_diff_blob(int argc, const char **argv, const char *prefix,
- 		revs.diffopt.output_format = DIFF_FORMAT_PATCH;
+@@ -149,13 +168,13 @@ int cmd_diff_blob(int argc, const char **argv, const char *prefix,
+ 			usage_with_options(usage, options);
  
- 	switch (revs.pending.nr) {
-+	case 0:
-+		if (!read_stdin)
-+			usage_with_options(usage, options);
-+
-+		revs.diffopt.no_free = 1;
-+		diff_blob_stdin(repo, &revs.diffopt);
-+		revs.diffopt.no_free = 0;
-+		diff_free(&revs.diffopt);
-+
-+		break;
+ 		revs.diffopt.no_free = 1;
+-		diff_blob_stdin(repo, &revs.diffopt);
++		diff_blob_stdin(repo, &revs.diffopt, null_term);
+ 		revs.diffopt.no_free = 0;
+ 		diff_free(&revs.diffopt);
+ 
+ 		break;
  	case 2:
-+		if (read_stdin)
-+			usage_with_options(usage, options);
-+
+-		if (read_stdin)
++		if (read_stdin || null_term)
+ 			usage_with_options(usage, options);
+ 
  		old_blob = &revs.pending.objects[0];
- 		new_blob = &revs.pending.objects[1];
- 
-diff --git a/t/t4063-diff-blobs.sh b/t/t4063-diff-blobs.sh
-index 23615565fe..d7785d4a6e 100755
---- a/t/t4063-diff-blobs.sh
-+++ b/t/t4063-diff-blobs.sh
-@@ -98,4 +98,18 @@ for cmd in $commands; do
- 	'
- done
- 
-+test_expect_success 'diff-blob --stdin with blob ID' '
-+	echo $sha1_one $sha1_two | git diff-blob --full-index --stdin >diff &&
-+	check_index $sha1_one $sha1_two &&
-+	check_paths $sha1_one $sha1_two &&
-+	! grep mode diff
-+'
-+
-+test_expect_success 'diff-blob --stdin with revision' '
-+	echo HEAD:one HEAD:two | git diff-blob --full-index --stdin >diff &&
-+	check_index $sha1_one $sha1_two &&
-+	check_paths one two &&
-+	check_mode 100644 100755
-+'
-+
- test_done
 -- 
 2.47.1
 
