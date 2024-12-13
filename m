@@ -1,106 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C493018F2FB
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 20:23:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DB815573A
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 22:34:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734121413; cv=none; b=d6UPw2KJ7OkeipKxft/kKN5vWt8TXUPhfJeZ+CXavj/7DB/sOkqzLzHAHXweVVXv3dWJX5jE4wlhuA8Hu45mhcZ5/Qsv9RfDLxlOLeSLvpc3YnQbbLdqrQX+LlyLVVWTpx7EKb6LpEdGeh5RDf29JpbL9pubgGp7zCQZfFTACwA=
+	t=1734129293; cv=none; b=necZtq1JVbYFNVdNjxO3++PWUODkvwzaDgu7djz3Ig1ORfvT2q72QFDBHTvjuUtAzWGWV6xP2DWy/KV12dhmRuGpnClrQlEmpdq9snatwrIlIAUvPRHOqLTx7Xzkfnswgyj9rgk1SwWJGCctb6Ap5R3+Mvr+JFyBZDBYqK56zQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734121413; c=relaxed/simple;
-	bh=i8E/lGhpaGUjDrDqL7WGAcojgEh3WB2frai91XMdz+w=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=jady0QwhyqSBkYDO+/fVX666HV1fxy5aDr78qgOlEYaJOe+B6dLWMbeg683144vy+B1NKEakEptA11CvNIJIprTRU35H88CLbQ6XHMzumtyWRs9NWXVjNJIUOzbUpJ4XkMmJlFRt+SjSHXeDWjLvgPLXyd8P07gW2L18eWJHmac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6kZlNU0; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734129293; c=relaxed/simple;
+	bh=EISlfC3tDxEeejQXi7b+iU2OsCx0PewTzzcT/mZSL0o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BSGyeQaIcycYodxT+7mu4yUUPnZeOyhWPJDXxoTufhOmj3JFJfTIUekCgWo3T20w5frZyS1BDAyR7N3TwPnYm8QMt7ty2W/MQtf3xBZLO7MqmusIvFBn1b+jaIMX5agxwgNgpBrgqQOD7vEexefGwg/qZPhunfBnfNLjav7fYP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uDdHVOjV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pw4m0QEj; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6kZlNU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EBFC4CED0
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 20:23:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734121413;
-	bh=i8E/lGhpaGUjDrDqL7WGAcojgEh3WB2frai91XMdz+w=;
-	h=Date:From:To:Subject:From;
-	b=W6kZlNU0ZtFbPCfu5Esnt0J9gWDbe7WEvICQ+XjPz43cu/j+uUpB2y7SpIuhpLgrT
-	 lMQH9iVQra1gs0eQ5nWqerp7HD6l9YgK8In36a2H8hjHTJ7wy1TcA8N3tyqV51p6xA
-	 oDK71KCRSsFDRQ0EPcBp+OnFKD9kxkG86PrJiuDbsu9G/GmwoaDbXA238Q1lEN/zpU
-	 fyEAzawiphvd7ptYZKWr0PGHO1EFM8FkIdU7vEa4K774CkyPgd1su9CZ6Nrf8Aj3XP
-	 vyonPzXolBihspv7gk3+rhnY3UYfw/jK5NRaKc6y/6fO/8fWF9t18BINfASM0c/yhU
-	 SJO7Zk+BT86HQ==
-Date: Fri, 13 Dec 2024 21:23:29 +0100
-From: Carlos Maiolino <cem@kernel.org>
-To: git@vger.kernel.org
-Subject: [Bug report] signingKey beying bypassed
-Message-ID: <hx6q4liyd7udyezlqy2fzanxlicu24imtdqielig622sdqz2wc@lxa4ybnzyjs5>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uDdHVOjV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pw4m0QEj"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id C6848114011C;
+	Fri, 13 Dec 2024 17:34:49 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Fri, 13 Dec 2024 17:34:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734129289; x=1734215689; bh=uAfsB117Vi
+	3n6DdL3HTZDploRYvlJdXxIxvPcvRrpmY=; b=uDdHVOjVE+4byj4H8AYKW0DcBM
+	Y3MbUBKwWYoCHrA0CiiJ3VfdtVoQMgiN6MCbzwFMa3mrR/hIL19s674VvAYWZgjD
+	4B528T5CibLz6WDIWGCioh/ku2t0cIz5tIc7/k9wRQ7mYy4WLNIbSphavUftcRVh
+	sSaZQhTtUlvVkTgJKXaI1Zza5DJYXC9q5koyA2BGpRWPM+oVUfZqLROvXQwgMAxW
+	G6OCXWc509+b6HWs9jxdR/f8rRB3kIA+YzGaPz0Rjx5eevZ3KF9DBYUvEqefUMpd
+	ddDxCPG5Ij0c5gdHCPv+PT5t74gWwrL9p9M9fUsJm0mKAhgth5gmkzLVqOdw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734129289; x=1734215689; bh=uAfsB117Vi3n6DdL3HTZDploRYvlJdXxIxv
+	PcvRrpmY=; b=pw4m0QEjk0ngYspOF64hUWQqL2E8erw5LZtVJI6S1tsnC5m4tjX
+	+0aoipJV43kws5m/S4oOYS9ms2gDWW5gUqtrL9zylDI7JiZ6Ec2bu8cKNLW3Q5Fm
+	/hHI8kj9t/Bye7eLE5mrl8UWs7klE2IgJIG16oc6J+uCGHR3FZ8tF+yD1Vi1xAlD
+	gW4pdQljxLGQgpwhTkHnQyZXMZDid1zQ2Ez5TRCZg0ZyBnO/SACo3gaRXZlBUqLD
+	3WPFjxxAdLHIH9JwpXEVSZABeyTaj/GvnR6XWYAqAS7GAr1Ra+RkwosR0BNrCw5l
+	/ovUL1b0hV6Nqbt5levkK7GLIOsOrrwawMQ==
+X-ME-Sender: <xms:ibZcZ99txA3N4Ibs9Pgfrd9cWhgsoSLAZRdJ1DMq8HERRh2QDiVkqA>
+    <xme:ibZcZxs-40rJp9PSiLM7MslbqwQTC1bmuPLby23UeUGQS4I2_jVgbqGHbYYbpTBf-
+    H0NDjQrEasSu_QTSQ>
+X-ME-Received: <xmr:ibZcZ7AL0q6PK4db9CUvheGynWmxbmNx-nbrry436v3ThrYN29YElMUElzRtJXSskoBma-8Q6D2wqQ12jP1E1XmONLEEkIcz8htZ5YQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeekucetufdoteggodetrfdotffvucfrrh
+    hofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfurfetoffk
+    rfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculd
+    dquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhho
+    mheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomh
+    eqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedt
+    lefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhlthhosghlvghr
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:ibZcZxeGEtGhASPprJ33s5jF0NVsZ9Jpes7wWBxn2BR09DEo60KpZg>
+    <xmx:ibZcZyOG03RPOm8W2_i3tMenTnTXeMKF4SfCkV7Ars2Ug_2VUQobWw>
+    <xmx:ibZcZzkrvktVRz8VmkZ39xr5TWCIpNODeci22naJ_khQbesA_yXbog>
+    <xmx:ibZcZ8su99O-EuQKsupbZJoQJQ-MEBBoSo8maqfXC7ROZRhG3tYWnQ>
+    <xmx:ibZcZ53LHWiZbZK0_LDBpEyl88cyKJv3wjUNfwIYzJvdedbl8iXdEP9->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Dec 2024 17:34:48 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH 0/3] batch blob diff generation
+In-Reply-To: <20241213081211.GA1443203@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 13 Dec 2024 03:12:11 -0500")
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+	<20241213081211.GA1443203@coredump.intra.peff.net>
+Date: Fri, 13 Dec 2024 14:34:47 -0800
+Message-ID: <xmqqldwj9pq0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-I have reasons to believe git isn't honoring the configured signingKey config
-on the .gitconfig.
+> So ideally we'd have an input format that encapsulates that extra
+> context data and provides some mechanism for quoting. And it turns out
+> we do: the --raw diff format.
 
-the git-tag manpage states:
+Funny.  The raw diff format indeed was designed as an interchange
+format from various "compare two sets of things" front-ends (like
+diff-files, diff-cache, and diff-tree) that emits the raw format, to
+be read by "diff-helper" (initially called "diff-tree-helper") that
+takes the raw format and
 
-"
-CONFIGURATION
-	By default, git tag in sign-with-default mode (-s) will use your committer
-	identity (of the form Your Name <your@email.address>) to find a key. If you
-	want to use a different default key, you can specify it in the repository
-	configuration as follows:
+ - matches removed and added paths with similar contents to detect
+   renames and copies
 
-           [user]
-               signingKey = <gpg-key-id>
-"
+ - computes the output in various formats including "patch".
 
+So I guess we came a full circle, finally ;-).  Looking in the archive
+for messages exchanged between junkio@ and torvalds@ mentioning diff
+before 2005-05-30 finds some interesting gems.
 
-I do have my $HOME/.gitconfig configured to always sign tags with a specific key
-per above documentation, and I just take it for granted.
-Today I had two smartcards connected, and when signing a tag, git-tag used the
-wrong key to sign the tag, instead of the specified in the .gitconfig.
-
-I believe this might be a bug or some expected behavior that doesn't match the
-manpage. Or perhaps I misinterpreted the manpage?
-
-
-- What did you expect to happen? (Expected behavior)
-
-git-tag to sign a tag with the .gitconfig specified key or issue a warning it
-couldn't use it.
-
-- What happened instead? (Actual behavior)
-
-A tag has been signed with a key different than the one specified in the
-.gitconfig
-
-
-I can reproduce it on any git repository in my machine, even a fresh just
-initiate repo.
-
-[System Info]
-git version:
-git version 2.47.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.9.1
-OpenSSL: OpenSSL 3.2.2 4 Jun 2024
-zlib: 1.3.1.zlib-ng
-compiler info: gnuc: 14.2
-libc info: glibc: 2.40
-$SHELL (typically, interactive shell): /bin/bash
-
-No Enabled Hooks
-
-
-Thanks
-Carlos
-
-P.S. I'm not subscribed to the list, so, please Cc me on any reply.
+https://lore.kernel.org/git/7v1x8zsamn.fsf_-_@assigned-by-dhcp.cox.net/
