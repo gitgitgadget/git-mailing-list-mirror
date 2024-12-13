@@ -1,108 +1,248 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from ZRZP278CU001.outbound.protection.outlook.com (mail-switzerlandnorthazon11021134.outbound.protection.outlook.com [40.107.167.134])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782F61A8F8D
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734085084; cv=none; b=NLHQBn+x/ji0f8LtGm+G1ySSNRDdoRdiccZJSnMfrTpkNzPilqg0lOg5rAuYWtmDN2+3Y8uRt89V7sQloxwXnjDJeeWg6Y5+wlb+rxv2KKDeC0XhrmqAKuh01iJ6hhUcW5oMUWJ/Kzm/wSMSGkSZrNj4aaoupSuE0h11XzKtFpM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734085084; c=relaxed/simple;
-	bh=yG+7VCVQQYPoLRKNqeZ9vyU4RGeutCLBajCYHrru3u4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dU3JGl2D8D5W9XJNBnolNMsmSD72JtN1xe4sZuH9po8pcyGf8Ba0mL60vThhtgoPFwPLXx+WihksOkiQnwP/0jul881azRig6gZl/RDf9EhDEQ7IemDCXfwXPi40cWrIfRehYQZaxDu0Kv+1eSImZFNU6wQHg4AgG/xFZ6u2VxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=naSMyICE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IxI+043s; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664BF18A6D4
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 10:32:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.167.134
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1734085957; cv=fail; b=oPAapkQ5pPC51Vs9a713B0Wyv/iWVMv1X8M71tqpHXC7dBc62Erg+JnO6IHtgjVuUJnCnrzCYiI09HA+ngNOhwMUPAsorRI/c0XH+Cj5slo+7bmEyscu0JbyYoN+TIzvj6Vz5IfbgRHNhHhAenAmXhA0t9BRCoQdfFK3KJPkpq0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1734085957; c=relaxed/simple;
+	bh=GUBOkyOITAHt1vFoVEqHmHTl/x3xObB8kBmzZNOKZT4=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Y9J/RR2GKqe8eFcOE/T7q2ESk66TCr1+rDKI38R+oqROh7U8GNigZ2klUTdlsXqLFVOKJ3dPCV0gaJpzBFYZ2PGoN4AfsnY9mVO4PFl+TT2VFuz7Ve7lYi9ml4mDBJA8EFJiCpyjoz/UKZKZN/wEaJ5kJDNZIwWslKNUZafPl/4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=psi.ch; spf=pass smtp.mailfrom=psi.ch; dkim=pass (2048-bit key) header.d=psi.ch header.i=@psi.ch header.b=CJrjArcj; arc=fail smtp.client-ip=40.107.167.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=psi.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=psi.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="naSMyICE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IxI+043s"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9FB322540139;
-	Fri, 13 Dec 2024 05:18:01 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 13 Dec 2024 05:18:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734085081; x=1734171481; bh=CGeajt/BbF
-	f4/zrI0Z0bcLhxRKajSVkCL7zjmkdcMqw=; b=naSMyICE0SmvmadnxehCg/03/E
-	K9GFy0zciUfdCz3xSimsts1YdHMQfORUoQGrT5TJIUCKQecXCaEave73K6AkO66+
-	Z0vwwXSP9VeUbqd0BgNCbxEkK1BhVwMkHaB17tCBlk5W8UNWMWnXAwyDHpU7xzb2
-	JXIQHoz65uiYRD51M7adyOHNr1QQCqmbgnrkBGZ3gPwgZr8AF2hU+3XlayYmruA6
-	zducjF1r7oyOSJt75pCdbZ23OeNhx5/ExKNqMoqta00QBVVmodLsc+51UJ0GUmA9
-	0Bpo7ZGLNtKy6y7ARTO9Sz8FRMFc22FaLy6Q8sKwJYYt6zIVqGQqRktCInTw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734085081; x=1734171481; bh=CGeajt/BbFf4/zrI0Z0bcLhxRKajSVkCL7z
-	jmkdcMqw=; b=IxI+043s0uStPS+BF2fBoNJR5jTs4INqoNCoELD8KJNDOhBeLpb
-	jKoZgbDT8KeqebR4yj4IsIpiJc1WU0JjRV8cZSDo672VTr6R20T5dRgQtkyY7Q9u
-	4fgBR7UUE/SkdsyvvwMagGnObAnD7dp5h4AIqD5Bm5LgmjL3+367ZNPtnqItZyay
-	+KescNfxs0uGAuFEV5FuuMK9pJGokJGLMlaDNrTMP+fkO6zaFaYmFbdI0xEnJyQF
-	VulO1UnEYoNcOjUopFTnf6OsdYu+NhfMjPD09Bs2xo1Nab87aOu3Taj2lsABPSLe
-	fiunmCGMICxUABt9S6k+GGKBb90inTmPu6w==
-X-ME-Sender: <xms:2QlcZ0SqKNW3CpKu7R93ogCXMocIhpVx9GgxzCqCVfb2KXXPaJU39w>
-    <xme:2QlcZxyz74E5rL-4fpwWHMYqy2ZT_KsxHU0gVLYbTRUtc44Oeug1Ue7HZBdZy5n9x
-    JLZUjany7ZJXsNr0g>
-X-ME-Received: <xmr:2QlcZx3DKgtZ2LXq7vonR8NZ344Ac9VKp-nh3gXb7z9BjcP1LCRWlYp4sXWhZDJKCVAoflG_IEdZ2bUr6kGsUhvWEazkuEXDo0rG5ZU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgddugecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhksh
-    drihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:2QlcZ4CNIHZOIvD78LqTKdTtuWR5ypJcNiWw--K6J44aEeVwbTC-Hg>
-    <xmx:2QlcZ9gDQTnxj_XSMSziKA9jIlHpL3Qwvp8ANBhQMwOpR2qhi23AnA>
-    <xmx:2QlcZ0pPKSZOOwxOThlQhVyNWiT7MUvgA3RlMNAipuQoZS-SQ4bIWg>
-    <xmx:2QlcZwjQqBMAYdHOy2w6gAmb4DZ2HS_Or2o2qwkZVtAHj61XWDUXeA>
-    <xmx:2QlcZ7aGyvzUCRSmCxJpByUuuNPZEsZxFxzWk3GxrIpN0EJsecFWPm1n>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 05:18:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 0/3] batch blob diff generation
-In-Reply-To: <20241213081211.GA1443203@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 13 Dec 2024 03:12:11 -0500")
-References: <20241213042312.2890841-1-jltobler@gmail.com>
-	<20241213081211.GA1443203@coredump.intra.peff.net>
-Date: Fri, 13 Dec 2024 19:17:59 +0900
-Message-ID: <xmqqv7vnevjc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=psi.ch header.i=@psi.ch header.b="CJrjArcj"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=V1dZzM5FZL2zwH4C+0Ncbp0dV0LBXo4rqN832W+8qCXmbWlm+RQcUpzExPE+4Vls/tPDyg+DhK7P3QbTl13bbCV61qIH2iPiZ5KGffyeSAJDkAOdb8awX1XSr9csxjEAEj6yUkERA0VOJa9pjQaznBXVZ1ypll44dsUpWdaG/Z+RdIzRbBW8u7B+U4ZsV04Z0S9dbRCy3P+idEUZUtMMmvuIIT+dKSHmB7AzLK3SyVlMrs2Zs+klq/Emyri79Uqx15cE4NtMVNFDBfsTqvCzuv97FrAZVPc/uhUPCUWm4NHRUTeXsAl4n84cPho8Kq8+3r8uf1H7JDuODzFFejk4uA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yUgjdnVqJA2dATVPOUZynkwRg9XyURqnhwwOT2zsEi4=;
+ b=soYAKekInI6MAudSEz/0AxFT6OAEwUGFtwOtrYe5drkdDHSm6QjM8y+DO0XInWYhsxQ+aptHezL3IltfKGuc9pOGxRBKFdp76rdYn5xsBHqeJsDRFmHf4cy+4RibqcaN4BuWnjt7Wz59bCZymBZb3Ootgir4n/ONUxoCZDZRAjNlnaBu4norgIt4Zz65KpG8oXrSdzqixV2ClTHNuZt0jaEB+lFpsnWBRLp/iWGyO1VFTEUkirdOdrCtjRTzRzneb+5qikmfUx89K5OTw1gK+QDJo/M/h2kjmWtlm6PNulKas+2wDgcozYQ9RV5SQIpvn50ArPenFnz5ZkOjMSk2Fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 20.250.75.252) smtp.rcpttodomain=crustytoothpaste.net smtp.mailfrom=psi.ch;
+ dmarc=bestguesspass action=none header.from=psi.ch; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=psi.ch; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yUgjdnVqJA2dATVPOUZynkwRg9XyURqnhwwOT2zsEi4=;
+ b=CJrjArcj6tWaN/kGryQO/aMn41U4ib813dURafjwzZEXKrm2DJUsl6AfKLMZnSPCO/493zvx1qP7kB7i/zkdgqJNTQyhftshj5qUKdMyJ46dGyydtvPCKz8Z4OPdojPCYF2XMjgIbKs17+A3GTQCqAYLTN4nwOpSQ63vi6biLI1xAtv5x5Es8GgYRUZALesEhsD67ijNpnT3JA5SUw1Yee5I7uWzFDg4vqwdGPokvQSLM4rpf2+qnlDOaQ6pXIybXsyzNWZmufgR6/6M0XrNfXqh2/b2BTPZGgktsNYhXsZ1Vq2bnSoP5N5lroarTKv7ZDf3lI3WqViiTpPipWwRjQ==
+Received: from ZR0P278CA0063.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:21::14)
+ by ZR0P278MB1651.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:a5::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.17; Fri, 13 Dec
+ 2024 10:32:27 +0000
+Received: from GV1PEPF000006F8.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:21:cafe::33) by ZR0P278CA0063.outlook.office365.com
+ (2603:10a6:910:21::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.17 via Frontend Transport; Fri,
+ 13 Dec 2024 10:32:27 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 20.250.75.252)
+ smtp.mailfrom=psi.ch; dkim=none (message not signed)
+ header.d=none;dmarc=bestguesspass action=none header.from=psi.ch;
+Received-SPF: Pass (protection.outlook.com: domain of psi.ch designates
+ 20.250.75.252 as permitted sender) receiver=protection.outlook.com;
+ client-ip=20.250.75.252; helo=seppmail2.psi.ch; pr=C
+Received: from seppmail2.psi.ch (20.250.75.252) by
+ GV1PEPF000006F8.mail.protection.outlook.com (10.167.240.4) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.15
+ via Frontend Transport; Fri, 13 Dec 2024 10:32:25 +0000
+Received: from seppmail2 (localhost [127.0.0.1])
+	by seppmail2.psi.ch (Postfix) with SMTP id 4Y8lyd19VJzMvT;
+	Fri, 13 Dec 2024 11:32:25 +0100 (CET)
+Received: from ZRAP278CU002.outbound.protection.outlook.com (mail-switzerlandnorthazlp17010001.outbound.protection.outlook.com [40.93.85.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by seppmail2.psi.ch (Postfix) with ESMTPS;
+	Fri, 13 Dec 2024 11:32:24 +0100 (CET)
+Authentication-Results-Original: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=psi.ch;
+Received: from GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:3b::13)
+ by GVAP278MB0970.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:55::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.18; Fri, 13 Dec
+ 2024 10:32:23 +0000
+Received: from GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::9163:7f88:662:9288]) by GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::9163:7f88:662:9288%3]) with mapi id 15.20.8251.015; Fri, 13 Dec 2024
+ 10:32:23 +0000
+Message-ID: <c22a7d5e-cbfe-48a9-bdf5-e73f21ac648f@psi.ch>
+Date: Fri, 13 Dec 2024 11:32:22 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: chmod failure on GVFS mounted CIFS share
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+References: <d26f4b93-57a3-4536-8c32-3ed5b3e98a86@psi.ch>
+ <Z1us2FpyObVpJlsM@tapette.crustytoothpaste.net>
+Content-Language: en-US
+From: "Konrad Bucheli (PSI)" <konrad.bucheli@psi.ch>
+In-Reply-To: <Z1us2FpyObVpJlsM@tapette.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: ZR0P278CA0010.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:16::20) To GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:710:3b::13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-MS-TrafficTypeDiagnostic:
+	GVAP278MB0504:EE_|GVAP278MB0970:EE_|GV1PEPF000006F8:EE_|ZR0P278MB1651:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36da9ef1-4229-4ac5-6340-08dd1b616fbe
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam-Untrusted:
+ BCL:0;ARA:13230040|376014|366016|1800799024|10070799003;
+X-Microsoft-Antispam-Message-Info-Original:
+ =?utf-8?B?djBLeERxQmFaQTNZckRPRmd5UzhLMUF6YVZmeVpZdUZhNEdEcDNmc2c2RVNG?=
+ =?utf-8?B?QXU5NDc0dnJ5Y3NzeGFFdk9sOFY2Q01IVENCUjB2eEFuMmZ2MXRrOUpEK2VQ?=
+ =?utf-8?B?TFRndVRxeHBFbGMzeHcwd3lvaXdHeTRiY0oyNmdjSEZGWXhCVXNKUzBsajhK?=
+ =?utf-8?B?VThTTkN2ZTdRQWR1dEhJckhVNG0wV093aGIvdGJRdVp5V09namZuYmhLblB4?=
+ =?utf-8?B?bXFxZ1BXNmRCMWR2a25FbTV3djdQVzF6U1lKZ3ZhRnJiZXM3a0RvMFJKNWhJ?=
+ =?utf-8?B?UjFoNVdyTHhaWFNkV1FVM09SR2RTcStQdENKVTgrOHR3a3JqWVY3L2NFcTNx?=
+ =?utf-8?B?NWRVNUlGQjE2MWlGQjBtN0pxdDVpTmJLWDlvckFBUnFNN0c3R3NNRWF4a2xT?=
+ =?utf-8?B?ci90cTVmZndsRGtoYitneGk1VnFBUVhLYzNMU2JzZnVFb3V1ZzBDZUNpemN4?=
+ =?utf-8?B?ZzB1N0tjeDdOMnpIbzdmT0JETW1IQUZuY3U3bHlVbkpwSitXWWJIRWFwWEtm?=
+ =?utf-8?B?NFZQZWFDaHI0ay9paGFPc0l2aUltaXpuWG1mNTBZbDNvaVl4ZzZvZVZnL2tK?=
+ =?utf-8?B?Zko0MGpBWEduSGtZUjl2ZFJQZ3pPWEpxb04zOVFTREE3cER2eXk5OFVGTWZs?=
+ =?utf-8?B?U1g2SXFGdWJNN2dGMnAxdXoxTEZZR3pRcDRnWXBiSzNOVGpiMUpTYWlrQ2x4?=
+ =?utf-8?B?TDBEaFNRRTlLZkt1aWtDN0ZCYWhXVG1nMUJOMWdFeUsrMDYwaVduZlRmRCtK?=
+ =?utf-8?B?em1qdC9DOUpwVnhub3pOclQzK3Bqb21XUFZPTE83TjRMVDZpZ1ZDbExWR0p1?=
+ =?utf-8?B?Mk0xenN0SkFRV3UveU5PYmZKWmw3UXdYdEdlOVRUNTVjbWNCUk1ybEJVQlhi?=
+ =?utf-8?B?bG1lbm5oblFUU1d4Mjd5d1JCVkFUbDJUQi9FQWlYRW1aZ0NGTE51bm1kbG16?=
+ =?utf-8?B?VjlvMU93RzUzSmRIcCs4Ti95YWlXOWJ6TnhWTXU2YkNLZklXTXZmL0hiLzcr?=
+ =?utf-8?B?eHkzclNKaUJueStPYkl1aDhxUlhqSEFlT2xnTzhTWUUrY2EyekRweWtCQUxX?=
+ =?utf-8?B?WHY4YUt2Z0NaSmxpbDlVV2ZwYVpqYzRDdFBrd1ltWnVHOFhiam5qMjd4QXF6?=
+ =?utf-8?B?djZlSjJYaHZCMUhQVjY3S2VFOWJveWxWZk5SMkpPSjdLTmdMNzlmNUl2YmhE?=
+ =?utf-8?B?SzZNZTFBWVN1NERwK3FkcFZhaXRwaFMreEpsT24rcXNkT1Vhc1pMQ0xqcmwy?=
+ =?utf-8?B?VW9SN25RbXVHRUlNNjFBazVPWU5LeXZURTFBVVFCMXpHQ1YxNGU0Qy9uOGtW?=
+ =?utf-8?B?UDlkY3JITEorc0RDR2RMaDlTY3JFUVE3VHMwaEh3VkZlNGxvMkxtVjZpSThJ?=
+ =?utf-8?B?SkFKa2t0Q2lBZnEwRWJ1d0xQLzJES29MdFRhZ1k3b2dxaFV5U1lENTl0MWht?=
+ =?utf-8?B?RUtqQXhyOS9TOGVNY01IWTNJcWZOS1pTR0Vqc3hjS1JRMFUwUFhoS2pXa090?=
+ =?utf-8?B?WTA4eWlDeHE4ZWl0UXRuV1p2TlNMTEN0RDJDSkhUUmJQUnhQaldpREpyNlpx?=
+ =?utf-8?B?bFNWWW9LMTRQMmRLQ1J5b1RwOUlLTXJzWjFoRkpJMHVWL0JoaEpnNk1adEY2?=
+ =?utf-8?B?WnhLQ0RWdmFOeGVGaFEzQ3VncHV2d2NaR3dXdkdwOWl1T0I1MzFOZTdqeWc4?=
+ =?utf-8?B?eFIwWTZiL0w2WktrN1NtamNybGJQeTF5enZsbjJwS1ZreEFjd1lyMVEweGYy?=
+ =?utf-8?B?VjhQakgydGxsai9KYlUzZExobTB3UkNrNk9CaG1DYVVpQ0pJb1hFdk0rTHpG?=
+ =?utf-8?B?dUVOSE5rL3ZzNDZqbHYzQT09?=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GVAP278MB0504.CHEP278.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(10070799003);DIR:OUT;SFP:1102;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GVAP278MB0970
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ GV1PEPF000006F8.CHEP278.PROD.OUTLOOK.COM
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+	99181996-edd3-41bd-87af-08dd1b616e46
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|14060799003|35042699022|36860700013|1800799024|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?dHdOUS9NOGRiNjZuOFRVYkZwTUU2ck9JOEp5YU4reDk4Y0NIVzRvQVZ0cnpw?=
+ =?utf-8?B?MVJCT0xVU0dJNEIxdUVWSVFjTTA0YUFFaEFUL2xaM2wrRk1HeUo3WVk5OS83?=
+ =?utf-8?B?UXp3dDNEUjI5L3BRVjlCdkdGWi9ILy9RbVI0S1NjT1dkNGJPRnJoU0lQTkx5?=
+ =?utf-8?B?SFBNa2FHOWtWRUlrcWpoQ21EUElVK0N1MnJFYlBYWklyaXc3M051QUgxTEVI?=
+ =?utf-8?B?KzZzOU05VFh0NXQ0WjlGYUZocVV0eWhocFhHMEtVOHdaeGlDWm1YL3BPVERF?=
+ =?utf-8?B?eXlFMHRqVnJJa1hkN0hUK28xR1U3Y2JRVUw1Z3d1SUxGR0QxYlNpcSsweGQv?=
+ =?utf-8?B?ZTJkWFpPVUdMY1VyMzVrelhqS244b1VMZm1yTXo2MElhbFVGVmRmNkRhNGJH?=
+ =?utf-8?B?OXZ4ZGpjNmlCbmRrTFVIS1VqYjVlZGt2cFhvSzhqWjVkRE5SUytRMkxrWjdi?=
+ =?utf-8?B?eDFmVGlyS2VrOUVpT1hnVVJJd2FnVENXYk9aekQ4SXM3RFZrNmNUYXJYK3Rm?=
+ =?utf-8?B?ZklkQkVUZk5RZDlzWS8wRjNNRGNKYU8rVnV1c0o1dWc4a3o4TmhZb1FnWXZG?=
+ =?utf-8?B?YW5zZVV6TEpaZkVDNW5sOE10Zi9ucWpSSmtWNUVqRzNBeFlEaHd4c2d5WGU2?=
+ =?utf-8?B?VW1NRHExYmN2NGU5VjVxTEVpYXQ5b0pob2F1c2tMRFBFVXFCZjMycCthRWo0?=
+ =?utf-8?B?aGpKcEJ2WlZzVXRRM3BJdEpDYXFjalF3OUh0WWtlb2lzMzhjQ2phV2ZwK0Rs?=
+ =?utf-8?B?MThrL2xVa0l4NGIwZURGQjJqdlVuMGg3TDZLK2RLQU5zbzNGUHJmSS8xTEZz?=
+ =?utf-8?B?SVdQRTJVeVN6eVVrdFdCQjRtZjBzaEVxTVB1dkRNRnJCUlB3Q25YdjZyRkF0?=
+ =?utf-8?B?U1FpcmNod2c2eFlLSjlVc1hwa08rZVEwUGdGWlJXK01jbEZVd1ZwdnN3OFBF?=
+ =?utf-8?B?M3FWMmw5bVdza0NDVGJscGQxL25oZm1BK3NXOGgwdzJ4bGxMenEzUUxpejEv?=
+ =?utf-8?B?VlhSb2xWMkNHNDBvN0dMWGlsOWE3R2pTUHZjWjg3ekNqWGd2MmtaSWJyM25B?=
+ =?utf-8?B?RWI2ZnRjaW84ZlByKytsSTBKT2dVd3JGR1RZSExFaUdnL2pRMXlXcFZ2SnU1?=
+ =?utf-8?B?SmxnZm1qVzZ4eUlQWGF3SXFTSHhIZEV2WGVyN1RBSTArdnhSKy9ER2dJSkhQ?=
+ =?utf-8?B?NkYzZkUvTEJqRVJtOCtMZG5SZzlDemIrNHZRTTVMN2pwekNlNW1YTzBwRzRD?=
+ =?utf-8?B?bWFkdm5nQ3c3ZExDWE1vRkpSQUFjZ28rd1NrcjNheW80Z0ZTd3hHelVGRXpR?=
+ =?utf-8?B?dUwxK3pIcExQakNZUVl5ZEg2aW9HRXFVMnk4em4rQjJhamloaUJla0ZnUWgx?=
+ =?utf-8?B?Q2NWa0VjS0JHTS9oTS9FQWQwcjZpRnhnZlllV2dWODJGaWVObndIRmlmQzAz?=
+ =?utf-8?B?WmFuUmkvdXNjS0dBY29tc3cweS81alNXM3lQV2pjdFQ1NE40ditDYUk5Uk1z?=
+ =?utf-8?B?ZkFrYnd0ejd1REpHWWt5cE0wZjB5S2hOUGNubHBFMVZtM3B6UnNCMHFUdTQ5?=
+ =?utf-8?B?SXNlY0tXSXM1NmZOWmE5dW0rNWUzOER4Nm0yOVRxZ1FiNGN1bVdGM3Z2ZHkr?=
+ =?utf-8?B?RUFoNVNqVzljMWMzbkVqeVJvY1EySmZOQTN1WFZPWHRCVWVoMDY5U1BVWFgx?=
+ =?utf-8?B?bFhFUE1MWkh6SVBpTlRGNXpxenlrckg5cHRCU1NDbnJ0dWtRck92MFArUEhB?=
+ =?utf-8?B?S2NXZGs1UWd1R3Q5TDlsRVhiUkU5Y2lBMVZDQ1dCcEluM2E5MFB2cCtoM0RK?=
+ =?utf-8?B?UUwza01ncDdqZVR3eUluTGxVbEtDNWluSU8rMFdaUTl5LzUrVGUyaC9ScHIw?=
+ =?utf-8?B?cnl1V0dPS0E5UEEvLzBobFJhZmt4UXJFeFlzUmVXMHBCa1o4MlFLNTBzb0lS?=
+ =?utf-8?Q?B4KTcY1Ibw4QqhsSuSzLZfOuKOFBwPIP?=
+X-Forefront-Antispam-Report:
+	CIP:20.250.75.252;CTRY:CH;LANG:en;SCL:1;SRV:;IPV:CAL;SFV:NSPM;H:seppmail2.psi.ch;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(14060799003)(35042699022)(36860700013)(1800799024)(82310400026);DIR:OUT;SFP:1102;
+X-OriginatorOrg: psi.ch
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2024 10:32:25.6223
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36da9ef1-4229-4ac5-6340-08dd1b616fbe
+X-MS-Exchange-CrossTenant-Id: 50f89ee2-f910-47c5-9913-a6ea08928f11
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=50f89ee2-f910-47c5-9913-a6ea08928f11;Ip=[20.250.75.252];Helo=[seppmail2.psi.ch]
+X-MS-Exchange-CrossTenant-AuthSource: GV1PEPF000006F8.CHEP278.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR0P278MB1651
 
-Jeff King <peff@peff.net> writes:
+On 13.12.24 04:41, brian m. carlson wrote:
+> On 2024-12-12 at 09:14:50, Konrad Bucheli (PSI) wrote:
+>> Dear git developers
+>>
+>> Below my bug report:
+>>
+>> What did you do before the bug happened? (Steps to reproduce your issue)
+>>
+>> I do a `git init .` on a directory which is CIFS mounted via gio mount
+>> (FUSE).
+>> On RHEL8 this needs gvfs-smb and gvfs-fuse installed.
+>> Mount command: gio mount smb://fs01.psi.ch/my_user_name$
+> 
+> In general, gvfs's FUSE driver isn't a good way to interact with files.
+> My experience with its SFTP driver is that it has a bunch of weird,
+> non-Unixy behaviour that's due to limitations in the gio interface.  So
+> it probably doesn't provide the functionality most Unix programs will
+> expect from a file system, which will cause you a world of problems down
+> the line, as you've seen here.
+> 
+True, but it has a big advantage: you can mount it without being root.
+>> What did you expect to happen? (Expected behavior)
+>>
+>> It initializes the git repo.
+>>
+>> What happened instead? (Actual behavior)
+>>
+>> $ git init .
+>> error: chmod on /run/user/44951/gvfs/smb-share:server=fs01.psi.ch,share=my_user_name$/git/foo/.git/config.lock
+>> failed: Operation not supported
+>> fatal: could not set 'core.filemode' to 'false'
+>> $
+> 
+> This is indeed the case, since the chmod on the config file fails.  We
+> always rewrite the config file as a separate lock file, and then rename
+> into place.  (This prevents concurrent modification correctly even on
+> network file systems.)  The user generally wants the permissions to be
+> preserved, so this is the safe default.
+> 
+> This also happens when using a Linux Git on a WSL Windows mount.
+> 
+> Note that even Windows honours the read-only/read-write difference for
+> files, so in theory chmod is useful even on CIFS and other Windows file
+> systems.
+> 
+> If I remember correctly, the consensus last time this came up was that
+> someone is welcome to add a config option that ignores the chmod
+> failure, but that in general, we don't want to just silently ignore it.
+> Unfortunately, nobody has added such a configuration option yet.
+My suggestion is not to silently ignore all chmod errors, only ENOTSUP 
+for config.lock which basically tells that it is not a suitable location 
+for that operation and thus also not required.
+Would that be acceptable?
 
-> Feeding just blob ids has a big drawback: we don't have any context! So
-> you get bogus filenames in the patch, no mode data, and so on.
 
-And the lack of filenames and the tree object name at the root level
-means you do not get anything out of the attribute subsystem, which
-in turn may affect a few more things.
 
-Unfortunately the format used in the output from "diff --raw" does
-not capture this.
-
-Does this want to be a building block for the server side diff?
-Would it be a bit too low level for each "request" to comparing only
-two blob objects?  Can we place a lot more assumptions on the
-relationship among blob pairs that appear in the --stdin request
-(e.g., they all come from the same tree and share the same attr
-stack to look up attributes applicable for them)?
 
