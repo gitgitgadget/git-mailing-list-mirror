@@ -1,117 +1,115 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4314175AB
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 11:44:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870AC1632F0
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 11:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734090282; cv=none; b=o80iiw6rUvniyq967C0nCCDtbWNCDg6ZETdy4zSBhl9zTklWLWTVjRj+vadeDf7XBG1edw7ZaZXF+EdgZRCTddaGwpSco3fbGe0Qu6KTEMY6sJdXn0K50k0W5awHSchT5j2PernNq+CI4ZY0zk6A3CqaIpGjHhEM3P/VmyH+GTU=
+	t=1734091141; cv=none; b=IHEfDV2kUUWasKzVYP5H6bL1wmYZ0Dg1PHq23nerNNk95sZjSmhAytiAMqcVVyVxU6t9K9z4C+DTkLKtUAQ72+QXmiGvi57jtXHuRmKSA+tZIaI3aNEeFTrvBf2tubqybLseTjeKePgCQl9wjz0R7hzTJzrdaVrg79MDZuyNInk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734090282; c=relaxed/simple;
-	bh=LpJadftlHdQvriULaINlCMIuKkXgjlZhxuCUE/VigI0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ixkDwmSgHQhAsNUFkn9Y7tBItjAaPPk9mLshIerxELJ4tmTxZhxt2Nb4MTv0UelBHZxrlGjU4PCcLslElf86vXKv44kLNgT0a0FVcsSq4CQLJKM4tQtBwZUMDUWxnD2x7JREyd0C9Bx6QdkijOGSyJfi/+Iw3a5m3ydGF7QmSi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eY2kVYGT; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734091141; c=relaxed/simple;
+	bh=TmvDjbeneuN45++upiIEKbKlpcDTCVdH/oQjCSTeGnI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bwvi8ccfANuW83N4pXP6ZvDfYFbM2ZIlEtX/mkilxCdmRn6xyPPtifGusD/nYVUH/9QlbHfVptxAk5SdoPWNWeEFUIiGrrFR9IoP0wZhU+z8B3uWgz7WGv9mqBs1PbSLacPKck8FOVn3pLc8pxDmDbUaxFVGNzK9U3mEcg6tLMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NFj4Ighj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZP43mJ9q; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eY2kVYGT"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5cedf5fe237so2764167a12.3
-        for <git@vger.kernel.org>; Fri, 13 Dec 2024 03:44:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734090279; x=1734695079; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QB+1kxFcVPHpVMKXk8x+cP+0Z6eAeezSFfrZ7H9ByfU=;
-        b=eY2kVYGTMeBhLG7xC3Wd7ADlH5ha56w7JJyDdgZ7O/7C0ECZD87OISKIT7QHNThMNj
-         OLqGeLhs6rQaHH60JXET4nWB4Z2cTVhrdwTyx4MTjtDqoovCzhXzdzg9HNLuGXw6pzTv
-         4WlC3qyzp7V7KzYr4Jgq8I7DwNmv4xXX++6z1hpcVbRluNUswAOUjacMbI3R4bHwSFOk
-         jLUVADQ+acheopDZh/oRegN9Y/YTinmskJyE6zX+w2bw5fxLZtwylQRnHgFUp29FozxW
-         g3DD0hFt8ozEyiJskKIMZRummFffYvywPi2VzdzDKrtFCMOB9GWpfnpuuLcO2Dzzz6KA
-         t9eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734090279; x=1734695079;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QB+1kxFcVPHpVMKXk8x+cP+0Z6eAeezSFfrZ7H9ByfU=;
-        b=RQ5h9BorTpAL1kQiqfmq9WHq9YexP0iBjiLn1ntp/XYdcj/3nz9/W2w11f/dUus3pC
-         qkt/MTFVq1hli3c819Ys9Fa63m/c4s62nQi9mjNGGPu8n/Ie3Yy/5ug8M2Ep0LcHDlMN
-         Oge9PiL9s1zRhYLlTPFKpyJ8r2oN1bbEyBxCXzFfcAYXJ9Fl+T91XfeeAzIascmpdceM
-         sU9aZLdS35cU1xm44CxonBd0RzedQSNyS7+hFWQjwNst4r/jdPGe+s7NsyF/d8EC6G5Y
-         /515BHUT1MtBJI0Afg2Y4uUdU7UBs4RGWAxpmv/4CdpsseERUkif6jRH2ringsL3dRrY
-         11Eg==
-X-Gm-Message-State: AOJu0YwACvORWMWYdAVqSAotlWHFA+yGnikNwfcQhSmoctwRxFDZmzyB
-	P32fz2s4RXZVYKaLX/I6gtAx8sKaiW3yPVCfKlef6VLDMXpEoS9kGxKzsl9i567vYpln5XEaHGs
-	2/eGh12lBSXqEG802rWgMJEKa8xfOLUlJ
-X-Gm-Gg: ASbGncuo4YLDFOCWn+LT1EPblBV9I6wwUhdSpBvFZ0vKna35gLDZr87Q/Fuu8ksyXc8
-	bkaWi9ekOmnP9R1y+9pFKYE4gZcVTHgmZkfXaNdl8
-X-Google-Smtp-Source: AGHT+IGpBWYmDYMqwkrCbCP9ywCFaKZmpGXAcbanhFFYCmCpRnQml+4kTZB4r1FeOUWsHFFH4lt/VnY+TgmROvrZ35w=
-X-Received: by 2002:a05:6402:388e:b0:5d3:f141:ccf6 with SMTP id
- 4fb4d7f45d1cf-5d63c3c1dc4mr1654046a12.32.1734090278967; Fri, 13 Dec 2024
- 03:44:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NFj4Ighj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZP43mJ9q"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2AA26114021A;
+	Fri, 13 Dec 2024 06:58:57 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 13 Dec 2024 06:58:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1734091137; x=1734177537; bh=I6c4wC31Yv
+	dCBYbhC/6GZwZEmhipo4S5VJtqJzB3PBs=; b=NFj4IghjxYsH9AfP1RenzQ/uAH
+	fQ5dS/RSMGiVK3HJpgK++zkjipqg/d3kyevhlftpGAv3LutpMI9MuNBcocklcbdM
+	Y7ExqzYnASyLs9wtOBNU0XgRTHPqcc8n1+SX7qETVzYkQPjCrVmmNSbz44aGMST9
+	vtVG4SR9NPLB3Bs67VGDVKHNmVhwCtiQH3rjCLEnHAJiTlQISlgoKvhLwCbFHZQw
+	LpyfHjio0Fv3zEm/TTLMpLnqv6OmBYCxCmTAZtEnw/lPsaaAeZcp0+wJH4Y8fdFT
+	9zO0Xh+0IXQb3nvB1ruDCHHq1Xg3Kmscnp4M1EJ4m7OXbrppcrEluPx4bWqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734091137; x=1734177537; bh=I6c4wC31YvdCBYbhC/6GZwZEmhipo4S5VJt
+	qJzB3PBs=; b=ZP43mJ9qJDlD0vrRBhkfXFlvIm1Q5YE3QZrHYfLfYDGNtHpGf7/
+	C9JS7wyAInSkEugEhrEMDRs4wd7sUiTb4s/paEJqFkfmMp/ZKmmQZUkrvpVrbe+u
+	CRNRrrjPpt8ri/Ccrr6XWuo72AabymlL7fng0bMKXERJbELFr0MBGEv3jh8+gTI0
+	EnQJYNqbeFxp14MJMHOQLiLUQT7FZ8/RzIlde9nEdHfr1rQeHQ96zv63tuiFMseB
+	rfhCeO0Nx4tYX+RGj8LGscbKm7fhR1gSBqro/1Ha7uPy4ktUIvFeznV0LfV65yKS
+	s6N5MdzykfmHmI/hOvotf3cvfIOr2N/k15A==
+X-ME-Sender: <xms:gCFcZ3dat7zurQnXXphSfa8E4YJQJycVAsgUw-UAmwR9hr5Ildp7HQ>
+    <xme:gCFcZ9OKAvXqXrnTRAS9G6txfzIrIxbNt5xxobFhXTy-jfnAHNINzitVVfzcFCD1w
+    0M2AZsB1g0xt_Y5cA>
+X-ME-Received: <xmr:gCFcZwgGs4bGIMDJT6LnVkny9c2BawKWKMclQ58jky1ZEZSTTpXOz3UWxGAA8VXTsE7yEdIohp_Ang2chRXyqJj-ZcK2-OrILqt_2YR2p-hTjhk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdefgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedufedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
+    gtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehjohhnrghthhgrnhhtrghnmhihsehgohhoghhlvgdrtghomhdprhgt
+    phhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheptg
+    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:gCFcZ48t6PVxe4PgJU1KFKI_5SL-B4MTvSu7y9XpwO86RV3GA6IBHw>
+    <xmx:gCFcZzuk4YrAWfoxJZWOg7kN1Y_Ch12B00faM5iI6j5cEIbpTJ7YZA>
+    <xmx:gCFcZ3GL6uyoAZTzrbnQDIWCmVNa7VNMvi8WZyVghQXVPx903aNyEQ>
+    <xmx:gCFcZ6N27pX7RkMBfScgrtL-BmXr3asd02269J-pC-l6DpecVJLlaw>
+    <xmx:gCFcZ8M0UYO91_zt2MkC0MXsgKxvE6azuAgy3oJfOMg78vs7YR8YKbfN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Dec 2024 06:58:54 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a0aa04e2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Dec 2024 11:57:13 +0000 (UTC)
+Date: Fri, 13 Dec 2024 12:58:37 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, me@ttaylorr.com, johncai86@gmail.com,
+	newren@gmail.com, christian.couder@gmail.com,
+	kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com,
+	karthik nayak <karthik.188@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 0/7] PATH WALK I: The path-walk API
+Message-ID: <Z1whbcb71srg3hju@pks.im>
+References: <pull.1818.v2.git.1731181272.gitgitgadget@gmail.com>
+ <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
- <20241213-320-git-refs-migrate-reflogs-v2-6-f28312cdb6c0@gmail.com>
-In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-6-f28312cdb6c0@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 13 Dec 2024 12:44:27 +0100
-Message-ID: <CAP8UFD1MOChEhJhW1i4E3D62k_to5_r3P05LCbFRXMrEunvAfw@mail.gmail.com>
-Subject: Re: [PATCH v2 6/8] refs: introduce the `ref_transaction_update_reflog`
- function
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
 
-On Fri, Dec 13, 2024 at 11:36=E2=80=AFAM Karthik Nayak <karthik.188@gmail.c=
-om> wrote:
+On Fri, Dec 06, 2024 at 07:45:51PM +0000, Derrick Stolee via GitGitGadget wrote:
+> 
+> Introduction and relation to prior series
+> =========================================
 
-> +int ref_transaction_update_reflog(struct ref_transaction *transaction,
-> +                                 const char *refname,
-> +                                 const struct object_id *new_oid,
-> +                                 const struct object_id *old_oid,
-> +                                 const char *committer_info, unsigned in=
-t flags,
-> +                                 const char *msg, unsigned int index,
-> +                                 struct strbuf *err)
-> +{
-> +       struct ref_update *update;
-> +
-> +       assert(err);
-> +
-> +       if (!transaction_refname_valid(refname, new_oid, flags, 1, err))
-> +               return -1;
-> +
-> +       flags |=3D REF_LOG_ONLY | REF_NO_DEREF;
+Sorry for being late to the party -- I wanted to review this series a
+lot earlier, but never really found the time to do so. The patches
+mostly look good to me. I've got a couple of nits on the first patch and
+think that the error handling could be stricter so that we don't ignore
+anay kind of data corruption during the walk. But other than that I'm
+looking forward to the usecases this API will enable.
 
-If we could switch the above lines like this:
+Thanks!
 
-      flags |=3D REF_LOG_ONLY | REF_NO_DEREF;
-
-      if (!transaction_refname_valid(refname, new_oid, flags, 1, err))
-               return -1;
-
-maybe we wouldn't need transaction_refname_valid() to take an
-'unsigned int reflog' argument and we could instead use 'flags &
-REF_LOG_ONLY' inside that function?
-
-> +       update =3D ref_transaction_add_update(transaction, refname, flags=
-,
-> +                                           new_oid, old_oid, NULL, NULL,
-> +                                           committer_info, msg);
-> +       /*
-> +        * While we do set the old_oid value, we unset the flag to skip
-> +        * old_oid verification which only makes sense for refs.
-> +        */
-> +       update->flags &=3D ~REF_HAVE_OLD;
-> +       update->index =3D index;
-> +
->         return 0;
->  }
+Patrick
