@@ -1,53 +1,53 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF401DF256
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 12:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBDA1DF759
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 12:24:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734092685; cv=none; b=kbwC9YSGZvR8l84S2shGHqqhDDGwtB62eW479bQhjz3MAH+QsySV4KUXyMQkrIp1xvQ0pOSGwhatBYFEOySjlEvJENwCRinu7N+MJh4TY6PqsoMRp/vB1Hi8ryjHk/xmTUs90e2KCWmB8OOgNNfwR6g1Nh1ws8FpNNNAKQ7Y3BY=
+	t=1734092686; cv=none; b=rvkIKNRfg2gIiQYCrltGQu/D9LNe5Eib2864QTpnqXh0vIahys3qI/7zKRBv3BMkHBiVJUCctK4E+3eBtravnCKmbKDeFnvAEtF2Tqa1e0kRXch0t3j6vuJdHd6Jjnu0fz3+VyfRPpB2MReuHH6W+IUidLWsa+QgEmmKXsYnw2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734092685; c=relaxed/simple;
-	bh=DlkPw7ku753Am15BvjI9rGXH2yWkDAsY/maG/hVLD/w=;
+	s=arc-20240116; t=1734092686; c=relaxed/simple;
+	bh=hRTBcI3BW93HSYsVNoG9niBUwbdlTZzoCPN3s5Nqdww=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EnwQtZCGa7/eO6H6TQmdX8kNOpCxL84bItu4qpmPRc0uB397fYb1A8cqQtwEpSazBorzfA8GY+Pp3fcvx/YAbAXvLALzIv6hBfsssIJlBtjhQV2CyWZ23HkWMSNSF8RiHoqmxyR0lgJKTsUSVz+PW5f1y8dEomeoC2yEGy8ZLRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zylp5Tu2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CMrY4Y7a; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=LX+qkDhh9xlrufpNOqJXN3zLan8aHMj7RKgfjM2TqxQesXz9VWIFNLUkZQ2ooc47ol0bslOSJyzHGik9gzMH4K6TdiJy5ymLlfk8oeHGM0/Sla4zmYpHPBGr7yXvrLxwy25X2btey1oDA3H0LZfMOhaB7F4WTNtUDu/Nw6Djya0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y/pEDpYD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B6LhUWUz; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zylp5Tu2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CMrY4Y7a"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 57E99114015A;
-	Fri, 13 Dec 2024 07:24:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y/pEDpYD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B6LhUWUz"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 91EC01384060;
+	Fri, 13 Dec 2024 07:24:43 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 13 Dec 2024 07:24:41 -0500
+  by phl-compute-07.internal (MEProxy); Fri, 13 Dec 2024 07:24:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734092681; x=1734179081; bh=rddz5lVAX7
-	eKmrCkpku6ncXdr0xc9Q1fJV3VchBsN9A=; b=Zylp5Tu20vOFVsgEl/PeihnUp6
-	KTJXKz8J/8yOUxGwZJkm33wZPagwKBTVzIK/XFe3DB/HYC95TZFZMX8cC51Hg8I1
-	PKmQas7eSn/BzzzxBVD+79y3/FTYK3Z4TVZLsWl5CSQ2DyI9AVami21+neFTmFr/
-	GFTUytT/oZcWXQ/nBZqLP3Q35Sdh2FP2WFolujDJtq4gjqIo35Zvgl7ucNAJZiYs
-	7E47L1HrYUh0yrbYqJQhlWUsGQRhnes8VrdAppXRvfb3XbX2mPaeBBLSY65tO9LG
-	pWnSVXZiCkWqgJdCJNOIGhEhgiQYichxGc/a0d4QmhvH19r9X/woTTJYGK/Q==
+	:subject:to:to; s=fm1; t=1734092683; x=1734179083; bh=08nOdo6Quv
+	Q/1NtKGjTsvXv2bb1E0wjrPQ6eS+rI7iI=; b=Y/pEDpYD1GoFIGk6jppM/3z7Yu
+	Djl+l6tq58tsX1bbqLxEv3s27MtfUgyqXn9SKUbTqLbLLDtAxm9VXvhX9u7Kovnd
+	aug0fay9yNAgzPSrfc2KK3xPx7Y/XoeQNjLxNc8ZRoZjdnx9RX1AJktorz1zDRdg
+	NnWD9QBNLSX0ervcRykXQdapXEiJBG/RJtp/QdDeG2JRDxaG3r4hxR7ycIzB3Xa6
+	5DBr7NNF0OsEn2/dKrY3MyDW/+ndZYsQZwCBXGt5StUaQnZnAmcxWhMPtQTSFOvS
+	hXWKNuRc+ko+LKX0tVFb6fK2M6mvcAdpwUJJM82cZ5EgsW1V2/poNMc8yJZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734092681; x=1734179081; bh=rddz5lVAX7eKmrCkpku6ncXdr0xc9Q1fJV3
-	VchBsN9A=; b=CMrY4Y7a2e+rTNmM/veXZuJvMXXOtdO3jq0JIttr/C5B9CesUih
-	3m/zU/GrppXS1GMcdd/yeCpDpMpwxjycqsInbwiNQ/TbkAjV1xAry1p0x7vws6fS
-	3nrjwh9RfNVKMDnTs6So/5RWf8uxtrqWw/AAoEWQ+EaV5e3EqiLJQhVKup2PQiTJ
-	/1q/4Bs/E07ahD8T9D29tAMH0w+/4iB6gc0+VzN+Txj201yNbQC0hBm/ckmXdN7a
-	0c79TJBaKIaVpPLtkmMcWldKgdW23px5weJQC5rZleqElEGuaaxMfOqR5/dKwvtl
-	f1jmbgqrxThjXayyKneyhjlgOlwTjHFI4/g==
-X-ME-Sender: <xms:iCdcZx9ZX9uGbH7N5Hbj7NGjkbjWHAmkfIutcypwcpKQLhKX3WLArg>
-    <xme:iCdcZ1voNGQLl9ExRLrRoYq3SgTUWl3-jI8gS9Uy94mszbUXOOviWn31Kj1GF7my0
-    IElYBiyMAacU5ihJQ>
-X-ME-Received: <xmr:iCdcZ_AIjUh1PIUzO6RsvUA8FctVasxiRQatMSaoY1Y2Gde8nr4R8oiAiCCFMVFDBaxeXHxlto8BcfhC551D_uX7jiVkf09nZmWl6t5lOjlSWMA>
+	1734092683; x=1734179083; bh=08nOdo6QuvQ/1NtKGjTsvXv2bb1E0wjrPQ6
+	eS+rI7iI=; b=B6LhUWUzae3Bvne+rnXVuj500BKpOH/dSDgNzhkiXWDSmIW2Epg
+	9i+dsY05qdpaw6OLsKYAF3u8W5Lziu2LKnr0oRYOf9yynHhlSkwo6m2xlSXG0xfx
+	Jq/j/lejHhK+DOY3TJS9vwKztZ/KBDWdw+lML5rxO05NF92Mdjy0CJTuKRerOArd
+	QLI23B16hivsREYYlr7fMmykxK1iNuoAbi5LOCd6rDEJ27dfB6Z8AwJoF1wD1COL
+	YpXeuIUmkYw8VfyXY8aHkvXiOHs+Bh3C6/GMpFt37I1Qzncj0x6fGEaQ3F6bjtS+
+	qmgC3i1HJz+KuKxQXUdCOwKlS80v9zEwf+Q==
+X-ME-Sender: <xms:iydcZ1K4pwZwBo-IedfdqoGQ0mMxpUv5gy1Az2XaiR-L3ht-Yv2Z5w>
+    <xme:iydcZxJDkdS2UXrblDaTSBZsQQosx3mSA1ZCBmCW9IfMpfSGThFyIdGHIJ-AR8Njq
+    wDpSg6t7vfQ3LZTEg>
+X-ME-Received: <xmr:iydcZ9sSFGykS2dKUQYxM_IoLFBjCI5qtuYGXoD_LU3U1o97btIiiP5hpd53CB1eMWqhGUDrmkzFe5fRABdc3-3NEELosdwa0dKzI5jcJIhSoKA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdeflecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdeflecutefuodetggdote
     enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorh
-    hgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:iCdcZ1faNzzXnEJFGAvsf5HwwgoBRJ9RgmiclDzIC-rnjmC7K9SYqg>
-    <xmx:iCdcZ2PlacgbqyidDH5NkpuOYixYE_nqMF0ebihPzLd-Kedw3tg0hA>
-    <xmx:iCdcZ3k5WEtEVrU79ToDpqEW-vG_tuRO1fiJ_1pQZgM7HeKXkyuo7g>
-    <xmx:iCdcZwvAXLS8FvYuL1MBVLjm_x08PflcD08cEkFtooFZ0m4VH3VExg>
-    <xmx:iSdcZzr1Nt23p8MDF1p_cA0VJf9cjRbi2theofbq5moSJLrdU2oT5i14>
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegt
+    hhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:iydcZ2Y1RJ7P4FBfyyt3Mrmh03Exvfwjf8hoAwtbq4t2RsHzsKUvVA>
+    <xmx:iydcZ8YkUJXkwh310RSb5wcj6xHoALBAm9F5JF7ZF_bqYDncUGqZ-A>
+    <xmx:iydcZ6AomK-iIXrhcgnIO7dcUlOnZ1sqtx7L-_yRJmTqH8krVHvOnQ>
+    <xmx:iydcZ6adZh6xhiLQnvduYfN22JsIUyBJGNZefHvs_LSt0hSJjlc1kA>
+    <xmx:iydcZ0ECoUiTFhl_tW8X6kWKpFSrxSBOelmfebIGlKcjncI_tHZkG6qh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 07:24:39 -0500 (EST)
+ 13 Dec 2024 07:24:42 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0fcc342a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Dec 2024 12:22:59 +0000 (UTC)
-Date: Fri, 13 Dec 2024 13:24:23 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 922a196a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Dec 2024 12:23:03 +0000 (UTC)
+Date: Fri, 13 Dec 2024 13:24:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 5/8] refs: add `committer_info` to
- `ref_transaction_add_update()`
-Message-ID: <Z1wnbCoidG-lC7ui@pks.im>
+Subject: Re: [PATCH v2 6/8] refs: introduce the
+ `ref_transaction_update_reflog` function
+Message-ID: <Z1wne2iJAQGk-sG4@pks.im>
 References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
- <20241213-320-git-refs-migrate-reflogs-v2-5-f28312cdb6c0@gmail.com>
+ <20241213-320-git-refs-migrate-reflogs-v2-6-f28312cdb6c0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,38 +87,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-5-f28312cdb6c0@gmail.com>
+In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-6-f28312cdb6c0@gmail.com>
 
-On Fri, Dec 13, 2024 at 11:36:50AM +0100, Karthik Nayak wrote:
-> The `ref_transaction_add_update()` creates the `ref_update` struct. To
-> facilitate addition of reflogs in the next commit, the function needs to
-> accommodate setting the `committer_info` field in the struct. So modify
-> the function to also take `committer_info` as an argument and set it
-> accordingly.
-
-I was wondering a bit whether we could instead pull out a
-`add_update_internal()` function so that we don't need to modify all
-callers of `ref_transaction_add_update()`. Because ultimately, we don't
-use the field anywhere except from `ref_transaction_add_reflog_update()`
-as far as I can see.
-
-This is more of a thought than a strong opinion, so feel free to ignore.
-
-> @@ -1190,8 +1191,12 @@ struct ref_update *ref_transaction_add_update(
->  		oidcpy(&update->new_oid, new_oid);
->  	if ((flags & REF_HAVE_OLD) && old_oid)
->  		oidcpy(&update->old_oid, old_oid);
-> -	if (!(flags & REF_SKIP_CREATE_REFLOG))
-> +	if (!(flags & REF_SKIP_CREATE_REFLOG)) {
-> +		if (committer_info)
-> +			update->committer_info = xstrdup(committer_info);
-> +
->  		update->msg = normalize_reflog_message(msg);
-> +	}
+On Fri, Dec 13, 2024 at 11:36:51AM +0100, Karthik Nayak wrote:
+> diff --git a/refs.h b/refs.h
+> index a5bedf48cf6de91005a7e8d0bf58ca98350397a6..67f8b3eef3f2101409e5cc6eb2241d99e9f7d95c 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -727,6 +727,18 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>  			   unsigned int flags, const char *msg,
+>  			   struct strbuf *err);
 >  
->  	return update;
->  }
+> +/*
+> + * Similar to`ref_transaction_update`, but this function is only for adding
+> + * a reflog update. Supports providing custom committer information.
+> + */
+> +int ref_transaction_update_reflog(struct ref_transaction *transaction,
+> +				  const char *refname,
+> +				  const struct object_id *new_oid,
+> +				  const struct object_id *old_oid,
+> +				  const char *committer_info, unsigned int flags,
+> +				  const char *msg, unsigned int index,
+> +				  struct strbuf *err);
+> +
 
-This can use `xstrdup_or_null()` and then drop the condition.
+Nit: it would be great to explain what the index does in the doc, as it
+is completely non-obvious.
 
 Patrick
