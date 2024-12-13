@@ -1,54 +1,54 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBDA1DF759
-	for <git@vger.kernel.org>; Fri, 13 Dec 2024 12:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6C61DF991
+	for <git@vger.kernel.org>; Fri, 13 Dec 2024 12:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734092686; cv=none; b=rvkIKNRfg2gIiQYCrltGQu/D9LNe5Eib2864QTpnqXh0vIahys3qI/7zKRBv3BMkHBiVJUCctK4E+3eBtravnCKmbKDeFnvAEtF2Tqa1e0kRXch0t3j6vuJdHd6Jjnu0fz3+VyfRPpB2MReuHH6W+IUidLWsa+QgEmmKXsYnw2k=
+	t=1734092689; cv=none; b=Ga+HyKuoeQ5/jeMiijiaoES80hBLOi9OkmBNyGcqlmkQTLH6HeyjMcpgdjmqJTeDqjM+0ui024CFwJ1QSaUVwZWMUNBwiVrce6pc2vY6xOwp1PatIZmLGHlACAQ8g6JcQFEF+BRjJ19txh0k3hqHz8UeKez/gkVhh+mLFycbkjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734092686; c=relaxed/simple;
-	bh=hRTBcI3BW93HSYsVNoG9niBUwbdlTZzoCPN3s5Nqdww=;
+	s=arc-20240116; t=1734092689; c=relaxed/simple;
+	bh=WPd+uha4qRiPljjzSjwtmQREzO665rSd0ESiqijHwTQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LX+qkDhh9xlrufpNOqJXN3zLan8aHMj7RKgfjM2TqxQesXz9VWIFNLUkZQ2ooc47ol0bslOSJyzHGik9gzMH4K6TdiJy5ymLlfk8oeHGM0/Sla4zmYpHPBGr7yXvrLxwy25X2btey1oDA3H0LZfMOhaB7F4WTNtUDu/Nw6Djya0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y/pEDpYD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B6LhUWUz; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=PQ+JgDFNulAY5SjlNUREyb5acDB20FNVsOySVdvw4FxzU1zceh/19wVckR7ihR91xs+jfD0eiiNLx1G7OZO9oDsxFCBO1UFbsOKxsJEPSWsJrK/IbSNsNWtSsFvc4LKF3tNocf7uotTRTZ2yn61c6T+Ky3Kf228NrlyeG4qpghc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rTxetEIz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m6uGXAJ6; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y/pEDpYD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B6LhUWUz"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 91EC01384060;
-	Fri, 13 Dec 2024 07:24:43 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rTxetEIz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m6uGXAJ6"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 016681383FDD;
+	Fri, 13 Dec 2024 07:24:47 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 13 Dec 2024 07:24:43 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 13 Dec 2024 07:24:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734092683; x=1734179083; bh=08nOdo6Quv
-	Q/1NtKGjTsvXv2bb1E0wjrPQ6eS+rI7iI=; b=Y/pEDpYD1GoFIGk6jppM/3z7Yu
-	Djl+l6tq58tsX1bbqLxEv3s27MtfUgyqXn9SKUbTqLbLLDtAxm9VXvhX9u7Kovnd
-	aug0fay9yNAgzPSrfc2KK3xPx7Y/XoeQNjLxNc8ZRoZjdnx9RX1AJktorz1zDRdg
-	NnWD9QBNLSX0ervcRykXQdapXEiJBG/RJtp/QdDeG2JRDxaG3r4hxR7ycIzB3Xa6
-	5DBr7NNF0OsEn2/dKrY3MyDW/+ndZYsQZwCBXGt5StUaQnZnAmcxWhMPtQTSFOvS
-	hXWKNuRc+ko+LKX0tVFb6fK2M6mvcAdpwUJJM82cZ5EgsW1V2/poNMc8yJZA==
+	:subject:to:to; s=fm1; t=1734092686; x=1734179086; bh=4uw5X287Z+
+	JKNypmRQty1Jgg+Oe0ktlAv6V6rr+Kjkc=; b=rTxetEIzKIue+2Aar3Fh2fGhJZ
+	VCX4NLMwi9ToSvBIhqbIQ3iWowOVk4rywSZPM5ceQ85kf0p6tjb+6zZUmqdCPgSj
+	n5UXGep3q8i5GUMFGAPGTRQ0vRBJtVzKnBkLP/TS4nUBoa1Kg5TP7cQSef6R0Bre
+	MJ1HfxGmU1BY0zAPXerEWl9SEjliRlrW1+uFRhY7Adt9JYfPgTZOJuLt7QSEIaZA
+	6Q9F31TzOfO3k+YbJeKAzzywvO/9TyLiVLcemj3QQOq13V7/H2TfEZR5PPlNP/09
+	xZBZfG/FKbQ5dBTm17e/UYz3MA/zIX1wkldj2uu5/IHtbUNVm1LMt+J/XpEw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734092683; x=1734179083; bh=08nOdo6QuvQ/1NtKGjTsvXv2bb1E0wjrPQ6
-	eS+rI7iI=; b=B6LhUWUzae3Bvne+rnXVuj500BKpOH/dSDgNzhkiXWDSmIW2Epg
-	9i+dsY05qdpaw6OLsKYAF3u8W5Lziu2LKnr0oRYOf9yynHhlSkwo6m2xlSXG0xfx
-	Jq/j/lejHhK+DOY3TJS9vwKztZ/KBDWdw+lML5rxO05NF92Mdjy0CJTuKRerOArd
-	QLI23B16hivsREYYlr7fMmykxK1iNuoAbi5LOCd6rDEJ27dfB6Z8AwJoF1wD1COL
-	YpXeuIUmkYw8VfyXY8aHkvXiOHs+Bh3C6/GMpFt37I1Qzncj0x6fGEaQ3F6bjtS+
-	qmgC3i1HJz+KuKxQXUdCOwKlS80v9zEwf+Q==
-X-ME-Sender: <xms:iydcZ1K4pwZwBo-IedfdqoGQ0mMxpUv5gy1Az2XaiR-L3ht-Yv2Z5w>
-    <xme:iydcZxJDkdS2UXrblDaTSBZsQQosx3mSA1ZCBmCW9IfMpfSGThFyIdGHIJ-AR8Njq
-    wDpSg6t7vfQ3LZTEg>
-X-ME-Received: <xmr:iydcZ9sSFGykS2dKUQYxM_IoLFBjCI5qtuYGXoD_LU3U1o97btIiiP5hpd53CB1eMWqhGUDrmkzFe5fRABdc3-3NEELosdwa0dKzI5jcJIhSoKA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdeflecutefuodetggdotefrodftvf
+	1734092686; x=1734179086; bh=4uw5X287Z+JKNypmRQty1Jgg+Oe0ktlAv6V
+	6rr+Kjkc=; b=m6uGXAJ68cUgecmlrq9jKJaPWEd571s/v5zPF6S29Z23br4Z4LG
+	IdrHcs1sjBkjWFVUQPSudQTc/mr3rv3pXj0k2m43MsLMXeztXWMvHKInmv2iY9ue
+	c1XvkxEPffNpxGqaHpF7eQaHaE3khg0KuwpjmGDinQcAUIEAHglT+2WR6FNd5atH
+	dZGshLAoTRgm/eRJLx3OWCaVbUEbDfMYUnHFeGI6MJDZGAeeNeGiQRBB0xCuWGmy
+	EzJ9MCmf6m7/O04hvyOoAdCYiGiyOrAr1rUvPQ/vnGizYOU4myVdw4SOOBBb/OFE
+	T72l544r0mRe3xhwO2Nzyb8z9qUshXRLnbA==
+X-ME-Sender: <xms:jidcZ-QRi-vMfnkerpPjS41fTrMqmHeW-0FHbeSUsMV8Boxx107izA>
+    <xme:jidcZzySb7rJDVhGGpoEE7dyT48H21IJncu6tWwJ1QrOroSujTgOjdfRwsXadcZSZ
+    ZiY3WRBenP1gC7FTQ>
+X-ME-Received: <xmr:jidcZ72Dk21WkABMzrSIYvmx9PelRUMK5Jq04nPun3HAZc8bF7iLMb6pbHMtD5u6b46B7GHEkhVSWWIHJGN1wpEVR6JkFZQH_GIN5l4FTeIvE5A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdegtdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
     hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
@@ -57,28 +57,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrkeejgdeflecutefuodetggdote
     gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
     hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegt
-    hhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
-X-ME-Proxy: <xmx:iydcZ2Y1RJ7P4FBfyyt3Mrmh03Exvfwjf8hoAwtbq4t2RsHzsKUvVA>
-    <xmx:iydcZ8YkUJXkwh310RSb5wcj6xHoALBAm9F5JF7ZF_bqYDncUGqZ-A>
-    <xmx:iydcZ6AomK-iIXrhcgnIO7dcUlOnZ1sqtx7L-_yRJmTqH8krVHvOnQ>
-    <xmx:iydcZ6adZh6xhiLQnvduYfN22JsIUyBJGNZefHvs_LSt0hSJjlc1kA>
-    <xmx:iydcZ0ECoUiTFhl_tW8X6kWKpFSrxSBOelmfebIGlKcjncI_tHZkG6qh>
+    hpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:jidcZ6BRSs3nGB0EukN0h4RMlLDbrryFMg3J8XYBKI4o5iNVAKdCyg>
+    <xmx:jidcZ3hFvml5nT0eY2aNPG_eSa0hxptIekPI4vja1Q83oIJC8xkeRA>
+    <xmx:jidcZ2oA9JPnB7wLIVt8c4ZllgfMq0V4jSPb3FvQ4Ohuha4gqXFbiA>
+    <xmx:jidcZ6j6mPe7Mx2QNDcHSwYxSeofVrySqUFtC2siB93tI_GHXECJow>
+    <xmx:jidcZ0tJsGkM34MNMlS14wVar3pdpAe-BNrpDb_fZO-sacctCUx58Z4f>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Dec 2024 07:24:42 -0500 (EST)
+ 13 Dec 2024 07:24:45 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 922a196a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 13 Dec 2024 12:23:03 +0000 (UTC)
-Date: Fri, 13 Dec 2024 13:24:27 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 414277d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 13 Dec 2024 12:23:07 +0000 (UTC)
+Date: Fri, 13 Dec 2024 13:24:31 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 6/8] refs: introduce the
- `ref_transaction_update_reflog` function
-Message-ID: <Z1wne2iJAQGk-sG4@pks.im>
+Subject: Re: [PATCH v2 7/8] refs: allow multiple reflog entries for the same
+ refname
+Message-ID: <Z1wnf54rEq0POCb3@pks.im>
 References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
- <20241213-320-git-refs-migrate-reflogs-v2-6-f28312cdb6c0@gmail.com>
+ <20241213-320-git-refs-migrate-reflogs-v2-7-f28312cdb6c0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,31 +87,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-6-f28312cdb6c0@gmail.com>
+In-Reply-To: <20241213-320-git-refs-migrate-reflogs-v2-7-f28312cdb6c0@gmail.com>
 
-On Fri, Dec 13, 2024 at 11:36:51AM +0100, Karthik Nayak wrote:
-> diff --git a/refs.h b/refs.h
-> index a5bedf48cf6de91005a7e8d0bf58ca98350397a6..67f8b3eef3f2101409e5cc6eb2241d99e9f7d95c 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -727,6 +727,18 @@ int ref_transaction_update(struct ref_transaction *transaction,
->  			   unsigned int flags, const char *msg,
->  			   struct strbuf *err);
+On Fri, Dec 13, 2024 at 11:36:52AM +0100, Karthik Nayak wrote:
+> The reference transaction only allows a single update for a given
+> reference to avoid conflicts. This, however, isn't an issue for reflogs.
+> There are no conflicts to be resolved in reflogs and when migrating
+> reflogs between backends we'd have multiple reflog entries for the same
+> refname.
+> 
+> So allow multiple reflog updates within a single transaction. Also the
+> reflog creation logic isn't exposed to the end user. While this might
+> change in the future, currently, this reduces the scope of issues to
+> think about.
+> 
+> In the reftable backend, the writer sorts all updates based on the
+> update_index before writing to the block. When there are multiple
+> reflogs for a given refname, it is essential that the order of the
+> reflogs is maintained. So add the `index` value to the `update_index`.
+> The `index` field is only be set when multiple reflog entries for a
+
+s/only be/only
+
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index b2e3ba877de9e59fea5a4d066eb13e60ef22a32b..bec5962debea7b62572d08f6fa8fd38ab4cd8af6 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -1405,7 +1407,19 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
+>  				}
 >  
-> +/*
-> + * Similar to`ref_transaction_update`, but this function is only for adding
-> + * a reflog update. Supports providing custom committer information.
-> + */
-> +int ref_transaction_update_reflog(struct ref_transaction *transaction,
-> +				  const char *refname,
-> +				  const struct object_id *new_oid,
-> +				  const struct object_id *old_oid,
-> +				  const char *committer_info, unsigned int flags,
-> +				  const char *msg, unsigned int index,
-> +				  struct strbuf *err);
+>  				fill_reftable_log_record(log, &c);
+> -				log->update_index = ts;
 > +
+> +				/*
+> +				 * Updates are sorted by the writer. So updates for the same
+> +				 * refname need to contain different update indices.
+> +				 */
+> +				log->update_index = ts + u->index;
 
-Nit: it would be great to explain what the index does in the doc, as it
-is completely non-obvious.
+Okay. So instead of tracking things via a map, we now rely on the caller
+to provide the update index. And if they don't provide one then we
+cannot guarantee ordering.
+
+I guess that's a good solution. After all, there will only be a very
+limited amount of callers in the first place, so I think it's fine to
+shift the responsibility onto them to maintain reflog ordering. They're
+also the only ones who really know about the actual ordering.
+
+> +				/*
+> +				 * Note the max update_index so the limit can be set later on.
+> +				 */
+> +				if (log->update_index > max_update_index)
+> +					max_update_index = log->update_index;
+
+Makes sense, as well.
 
 Patrick
