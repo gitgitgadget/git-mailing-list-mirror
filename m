@@ -1,146 +1,118 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDD21758B
-	for <git@vger.kernel.org>; Sun, 15 Dec 2024 17:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65E01922FB
+	for <git@vger.kernel.org>; Sun, 15 Dec 2024 17:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734282562; cv=none; b=Xx5W/vOFrau/kc38MCObyCpxr87PobQvGFhD+OFhNW4G1hgKhQJbdsyAvCfKi6weuDr6hX+optRIRVWHUadDgqvM+uDL1WAJRKWEkyghkdP3mqWfaWALV2pA+4TIDP54hWy4DYGAxlyMNWmdNuviR/ztlHRI5xmPr95pWD4EbXA=
+	t=1734284609; cv=none; b=W0uaLHUIK8yDHSRCmopeiBXM539e/tFba3/9oFWh/QOUxhkUL4f0yEbOwGPoZqliAgAqSO8vUZh6lJGDrC2mfBMrHHiWjlTZ1Vo6WvYyWl2VzLSVB36nWcGVlCxT9Y7J+3i5FMTVY5TQV8/viWLRMZQVCBYO2seEqCIwRAhj+I8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734282562; c=relaxed/simple;
-	bh=hMVwQmaiWh8uf9cRwp/9CBfMHjaqIGXMqDw4Ywnjqqc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fpTgJ91LgSgGB6SxV5hmQztgaS/8c4JivfkA6+F8cD9hG5O7Sw2pBbdFkzkZdyWKRYOQpunQ8t7zt7ldJ9vukFBeAPrimok3ZyRkaR/x/iwzWCsA5FqTMMeZVElYQ4jopZPLTPFGUmzdSMTYuk9Uh2i2/mrAtl3gdQ7efKDkBkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5x6/+Ku; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734284609; c=relaxed/simple;
+	bh=512NdAgvTmMDEqHSwZKJ7hYxA1B5ojXYLMtUhNAcBzQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JpGLig8e2AQdme7KmqQ5RURGEv9RDMhl7El+WiX/qzLilWhPfPrjNAPDMiPpbUW8n/HSerwZ67Zpa2hZmSBjz+PpsvVsWLdgNCft+6UTlW+4V7zAgkE1yGj8mSsiCsKaIahpa1KJoIFMnfrD/Rz5jgIRGPSgaGxPumCiZaIiZk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X97DMCAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MGHHfsXU; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5x6/+Ku"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2ee51f8c47dso2260001a91.1
-        for <git@vger.kernel.org>; Sun, 15 Dec 2024 09:09:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734282560; x=1734887360; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hMVwQmaiWh8uf9cRwp/9CBfMHjaqIGXMqDw4Ywnjqqc=;
-        b=e5x6/+Kuec+J8Um5cV9qDtbUCQjgB92nwW5FoVg+jYxsWlAjUmnLNYydGY/VDeZuOV
-         oaZdu54Ck4Ma5eqJkTqYfUAeD7aCvSH7YASeffHqfO1rn1YqfreaidmekX5yOd/0vJik
-         xK8pXYGa2/Ne1IAWlS91RzF29ZuY/h2M2eVPTLGDI13uDUyxHPmgWtbvsXFbk++Yw5Qf
-         nTnMGI+Keb80IbkznsccHOcrHj6PzgktkctA6LGCZpAEdPabUB58qxXxR0boWfVSCVT4
-         RG/p/JCL+t7ViYyJzbeF7EY3BoM35GpxSJ9d9kEsgFqWyPoBVLbUq7BSdjvp0veJUKCs
-         Hw+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734282560; x=1734887360;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hMVwQmaiWh8uf9cRwp/9CBfMHjaqIGXMqDw4Ywnjqqc=;
-        b=Ce0CoKqfYKUMaHZBPpA7Wk1gcCRsK2Bp0Wdd8hZOSnL5yUkIPcevbuizbaskM+xNpQ
-         usSfGvBRoug3gb0T2TW6+913DOc0sRVfBGdTw2KzRkfbP1Z1yLUsNEFgzbkElLgs16kA
-         c21j4l372nAZ01ARD2JFWyAm5lsNhVHKGMOYNoQC1RN/MQgqzwjgfL1+c8MeouE87ul+
-         odCkygpRJVllAxS0WxeBy3FvZe0XKCoxRC3LjKAF84q07Q6rV9lg7D7bTdBmRl0ky5wl
-         oHBQ7UVXqj5WNwvbZNCAO4bijK5tJyqwkP0py100WPDTZTd8xeXDSjsSIl+WaBWpTuG9
-         yQCg==
-X-Forwarded-Encrypted: i=1; AJvYcCU1fTBZmPXSZ46u5PdY0Mmqmf0h7pyWXvkADsl9P4QwGRNaiEw7UyGH8s6cHeOL4pVOjrE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtmV6VhF0imDKUW7t0WVSfo/cmGYCRAdCLRRaAaQaK6WQ7R194
-	d3AtURfc/6OQcCngOBWxLL3fpWvR7ikKLkMd3zmBUW4yOMiMG/BqXei5I3TjHLB/P+yfZHrykkA
-	7CsGvNYcYstSgAv8kEn69O1nsY+Y=
-X-Gm-Gg: ASbGncuoXHh1KzAJmyCWNiC8n9JVh5AGPXXuJx2Q528k32Z/j+Hyz+mWJiF/hRxQzjL
-	YwyK1KMgThrT39QGo9xZrOCf9sKunHzHKxHcp2g==
-X-Google-Smtp-Source: AGHT+IFVvcu8v48ZQ4Dzs3jNHBH2lbbm4MfFpweCwlYR7IwAEsaG4A1mkHTLAdLrHCuejxQElKyamwZxRgWgzcawh4Q=
-X-Received: by 2002:a17:90a:ec84:b0:2ee:f80c:6889 with SMTP id
- 98e67ed59e1d1-2f290dbce03mr14918442a91.33.1734282559463; Sun, 15 Dec 2024
- 09:09:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X97DMCAN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MGHHfsXU"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BC15511400D0;
+	Sun, 15 Dec 2024 12:43:25 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Sun, 15 Dec 2024 12:43:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734284605; x=1734371005; bh=GrJ+8IKGJx
+	nJy2Mc/bhQ1NAvcFxC4gMYBsuMiuJb/y8=; b=X97DMCANkyb50+9nmhQ4ci0R3f
+	cCY95FwIMzTcjDXco6/VYozVAyEE2aBCRvLsepbqMyoacYOULK5ATnupxZk3Cjq7
+	z7LYkQGtZDBBPUtY+Aqu6MURJA9WZxe4y4Ms5KEaRQIzInQ/zxaoh8YK/X5zVphX
+	ysq2nXzBGijJEzFXluIqWz922MdyCtlBQaAeZszjawHo0OIYvXUbp+HsGomLJmZh
+	A9tk4wdDvHOmJVRGsmPblgknezFanVj0L+AgeeuQ7bw82gCa7+EsRST0ZRGRUffI
+	BZ4PyWEVzQpim0NO3Ru0+mEwF+OZ/PKHttdn5JtVOXl1CXqRLoUvSFI/NTOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734284605; x=1734371005; bh=GrJ+8IKGJxnJy2Mc/bhQ1NAvcFxC4gMYBsu
+	MiuJb/y8=; b=MGHHfsXUS9RLmguuXeRW88M/gpkTSCfQIYUVuSA2Jj9W/T+94ST
+	PigAtZeoul81Nw/s6ZZ4CgrApz5sPO4i5rZ4AvWPt1dCGnwqAP4YUFK+eZpLElUk
+	MNkMCPUvPGFoKxpTjXNvUH9wVq777ZXlJ0OAB+wlqwtkwIjfV9cQjJbUsbrzX7So
+	fcxSY3udESDi78ku3NWSTjDAOK7eICtJAlyMGM0fy3crCD6PXDWPe3xhiLQmQVLL
+	e9gy4bcJN0NqyrxZ0o7SZIznqoeygPYWzc2xVewZ1q4gH34sn9xl01ACvaaZz59p
+	x/eDkUQyI5ivHi8d4JJlDESPg1nRahj0QBw==
+X-ME-Sender: <xms:PRVfZ8tvu3Dqrzr6U4lCnpkVfL61yhesHq2yoxTgmBXdE8wFRXDNaA>
+    <xme:PRVfZ5cXWceP_XByh-KwgQJ5Z8MP3WGbLVHAS038dsWQnut3NGXVxPh0NGr8fJfFo
+    LBYsjCKP53-i2m-oQ>
+X-ME-Received: <xmr:PRVfZ3wNtZSKqrq2-TcxH1Dm6g5YuzRGUhz5FNJyDTXOnF4v8IjfPpXve_VSn_ympdYjDigv0OWX-HSpdAqOl6nR1rcUAjYK3ASZ6_A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrledugddutddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehfrhgvvgguohhmgegtohifshesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PRVfZ_ORZzZmv-kQZcuHGj6TxNdsnHECAoWBqhQoVKinat5CiZTu9Q>
+    <xmx:PRVfZ886gblH5temYZpWqWeJVXVgeEHVAS-bcLQ-_Ez1RJSBGkn5tg>
+    <xmx:PRVfZ3WgllDHQavYUefA4zKIpE9E0ORvN5t7l27dWSSE70MgdKURSw>
+    <xmx:PRVfZ1cBxXikxp_paaixMbWT_vTQnXAxvYRB0GTwnTGKOC9ieBOHQg>
+    <xmx:PRVfZwbEvnwgVsMSrFWWmvzknSW05mlmCB0epChIF8xmBR-M0I6fAwOF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 15 Dec 2024 12:43:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Oliver Blanthorn <freedom4cows@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: Bug report: ":/[text]" revision reference no longer returns
+ youngest commit
+In-Reply-To: <CADFnu5sMEvGyGy7xH1r0NGBUZJBznCi0waJ_bJ3tSHQ5Y2yX1Q@mail.gmail.com>
+	(Oliver Blanthorn's message of "Sun, 15 Dec 2024 12:51:40 +0100")
+References: <CADFnu5sMEvGyGy7xH1r0NGBUZJBznCi0waJ_bJ3tSHQ5Y2yX1Q@mail.gmail.com>
+Date: Sun, 15 Dec 2024 09:43:23 -0800
+Message-ID: <xmqqzfkw970k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <bdbe9b7c1123f70c0b4325d778af1df8fea2bb1b.camel@that.guru>
- <20220718173511.rje43peodwdprsid@meerkat.local> <kl6lo7xmt8qw.fsf@chooglen-macbookpro.roam.corp.google.com>
- <20220720192144.mxdemgcdjxb2klgl@nitro.local> <CANiSa6gou27CH-y8Yy7FX8xu2Kr66BM9ghvM9nDQkq0mkP0-QQ@mail.gmail.com>
-In-Reply-To: <CANiSa6gou27CH-y8Yy7FX8xu2Kr66BM9ghvM9nDQkq0mkP0-QQ@mail.gmail.com>
-From: Martin von Zweigbergk <martinvonz@gmail.com>
-Date: Sun, 15 Dec 2024 09:09:08 -0800
-Message-ID: <CANiSa6gwup5vXU235mG+Ybbc+P=SbwoNFEmuhg=iYu0yGvSXVA@mail.gmail.com>
-Subject: Re: Feature request: provide a persistent IDs on a commit
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: Glen Choo <chooglen@google.com>, Stephen Finucane <stephen@that.guru>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-I just noticed that my message from almost 2.5 years ago got blocked
-by the HTML filter, so here's a very late reply. I'd like to continue
-this discussion, but maybe I'll start a separate thread later if you
-prefer.
+Oliver Blanthorn <freedom4cows@gmail.com> writes:
 
-On Wed, Jul 27, 2022 at 1:26=E2=80=AFAM Martin von Zweigbergk
-<martinvonz@gmail.com> wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> `git show :/Merge` in git's git repo
 >
 >
-> On Wed, Jul 20, 2022, 21:47 Konstantin Ryabitsev <konstantin@linuxfoundat=
-ion.org> wrote:
->>
->> On Mon, Jul 18, 2022 at 02:24:07PM -0700, Glen Choo wrote:
->> > > I just started working on this for b4, with the notable difference t=
-hat the
->> > > change-id trailer is used in the cover letter instead of in individu=
-al
->> > > commits, which moves the concept of "change" from a single commit to=
- a series
->> > > of commits. IMO, it's much more useful in that scope, because as ser=
-ies are
->> > > reviewed and iterated, individual patches can get squashed, split up=
- or
->> > > otherwise transformed.
->> >
->> > My 2 cents, since I used to use Gerrit a lot :)
->> >
->> > I find persistent per-commit ids really useful, even when patches get
->> > moved around. E.g. Gerrit can show and diff previous versions of the
->> > patch, which makes it really easy to tell how the patch has evolved
->> > over time.
->>
->> The kernel community has repeatedly rejected per-patch Change-id trailer=
-s
->> because they carry no meaningful information outside of the gerrit syste=
-m on
->> which they were created.
+>
+> What did you expect to happen? (Expected behavior)
+>
+> The most recent commit matching the text "Merge" should have appeared
 >
 >
-> Since I didn't see a mention of it yet in this thread, I thought I'd poin=
-t of some possible ways that Git itself could use a change ID:
 >
-> * By allowing change IDs to be used for specifying a commit, you could do=
- e.g. `git rebase main <change ID>; git checkout <change ID>` without requi=
-ring the user to look up the hash of the rewritten commit.
-> * Can be used for identifying rewritten commits that still have descendan=
-ts (because you would have multiple reachable commits with the same change =
-ID). That could be used for suggesting which descendants to rebase to where=
- (a bit like Mercurial's `hg evolve`).
-> * Can be used by `git rebase` for skipping commits that are already in th=
-e destination.
-> * Can be used by `git cherry` for identifying commits that have been reba=
-sed. However, for `git cherry-pick`, we'd have to decide if we want to keep=
- the change ID or generate a new one. We would not want to reuse the change=
- ID if we consider multiple reachable commits with the same change ID a (so=
-ft) error.
+> What happened instead? (Actual behavior)
 >
->> Seeing a Change-Id trailer in a commit tells you
->> nothing about the history of that commit unless you know the gerrit syst=
-em on
->> which this patch was reviewed (and have access to it, which is not a giv=
-en).
->> This is not as opaque as it used to be now that Gerrit provided ability =
-to
->> clone the underlying notedb, but this still fails on commits that were
->> contributed to an upstream that doesn't use Gerrit.
->
->
-> Yes, that's a good point. There's the old "git evolve" proposal [1] that =
-may be a good solution for the problem of tracking rewrites across multi-re=
-mote exchanges.
->
-> [1] https://public-inbox.org/git/86d0spzoi1.fsf@gmail.com/T/
+> A commit from 19 years ago appeared
+
+Thanks for a well written report.  I think this is the same breakage
+reported in *1*, which was fixed with *2*.  Hopefully the fix will
+be part of the upcoming Git 2.48, scheduled soon after the new year.
+
+
+[References]
+
+ *1* https://lore.kernel.org/git/CAKOEJdcPYn3O01p29rVa+xv=Qr504FQyKJeSB-Moze04ViCGGg@mail.gmail.com/
+
+ *2* https://lore.kernel.org/git/20241206-pks-rev-parse-fix-reversed-list-v3-1-d934c17db168@pks.im
+
