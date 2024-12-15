@@ -1,172 +1,198 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B833614A099
-	for <git@vger.kernel.org>; Sun, 15 Dec 2024 11:09:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBE7154BEA
+	for <git@vger.kernel.org>; Sun, 15 Dec 2024 11:51:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734260967; cv=none; b=NXDEtJmLgfUo4Wlv/1o1PbQAQNR2mhIOc8aC3jRJwTkL5mNcjcsL7jESrUsO9i4B36FclLQzNu2DHyBWt7VqbJp5Xnxz0MxrzrGZgGtDJEsj0n7VSWEAB6pzanrEOkudrwt+UlbrAP7S1DuWnsZq6iQSwpFivg2Xa1nfisZcrsk=
+	t=1734263514; cv=none; b=H7L7EaPq9bxVbcCm9zX5Ig3jO7axpXBzMVz/zQMCHOX9oTEz9js5p27vEHus2NZ8KxTquWSjimMq0bpDNCfuNty+uEPuBDtOOddxPXmYyviN4waHi0zqE1hYzRhQ9qpL2ir7dRReOws7+jyRKv2THiulsdX2f12kEjJ8hN3yrR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734260967; c=relaxed/simple;
-	bh=F/NG1ZPxjTmr/Ob6McP5F/bUq+PnmsYBoJZQ62Ruun8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JbziSpClhPznNXtaBZ+D1O/5P6HKnbG22uL9SmcdvV0RnxmduzVGIuktWSR0IL39Xm7OGYLKRpjrRMb/G0+EbQ+z/5+D7hZrolOUKC8L4dyoCUG0IKLATA4KgzZHhZ50RMKV0xb20GGWNPMn6Knp1ECjcr3heDrnynp5zyzZ+OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jikOAyPN; arc=none smtp.client-ip=209.85.217.47
+	s=arc-20240116; t=1734263514; c=relaxed/simple;
+	bh=Y75vEMwEsknQXeoQ8JNv6jrE341nIJEjRDK8FmSvPVY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=TeCuDUAtkFssJ/ypMgCrf1NLcm5MIsS7wew9785mBVo4oi7fdovmFYPxAi554IhCpXazIGRViKxN1gG8quGSY7LHx5BaXs5KlhXwnzCUpX3rBo1TeugmWNsQSUeVQHa3yX38iFosq1pn9Z0/IBv8eMHWkIp3PUg81tZ5dwKK2QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RcvwOLbc; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jikOAyPN"
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-4afdf8520c2so902826137.2
-        for <git@vger.kernel.org>; Sun, 15 Dec 2024 03:09:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RcvwOLbc"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6ef924d84f2so1028547b3.2
+        for <git@vger.kernel.org>; Sun, 15 Dec 2024 03:51:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734260964; x=1734865764; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NjQ7BhY10nduhdONasNCa5MKzaVLr5aQhtxMydbjjrk=;
-        b=jikOAyPNqrwfeb51TbaStCONKhfISNG8MpJUrZGbmty09ppnx1UtfvAOgZRhbMJP2K
-         8yFluNDNE+PSiiOwWhj1+ZcuhZeJWGSuqXc2fZxkcdwhtZ6KmHwEEgrW8z15y+Rxf18h
-         jYnBngzZ+C+iWU2DdBOIwEx59Aj6tKDFfGv16p0r5vPMY4fMw7zWPMbg1X99xJTt7LB8
-         uhyDqO57vkvXIzF+Gw3HVfmMwNgmoejbIwjAE1hWkHWq5JaHSSfjmEdVOQdvuu25Tz+5
-         zPN1AFvlEbXYv94PRvyAE2mWJW+4/oR/AqB8GCD+6lfF8ApeuM/D7UocTlTuIKTn+FQM
-         ftNw==
+        d=gmail.com; s=20230601; t=1734263511; x=1734868311; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=aq3KQHqNWfW/E8jBno5V3VQw7ZhuTOFpN4GJK7rJYr8=;
+        b=RcvwOLbcrwMDZUk+aw/8jhdymtIlbKLlUP7vGif3DyK+XK9sQm+3ecQBs/X1pEclm4
+         uEoe6batOnasV93lr6hdMBXEHf3VNwtIZJJbs8fXmWyaf6RFr84zTrcKfg7xmzLX5CAF
+         REiMsRIRW1q/obTAIR1sHBAM+eH1pOjgC4JG3Ku/52UAjH2UCuh2bZvgV2M5bo4cxwWy
+         kWIeoO3l1ttt7e0Jb8SkALGOfctXqgByhhfjEvjNTxhBJSImrEl5AJgR6uWZvswnU6wz
+         p67O/3BpfvY6cQBUoPl8S5CBx5uSzuNsedg7ouBODBHHSvIJUeYZj4gOErW3HoaqR1Ew
+         AbhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734260964; x=1734865764;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NjQ7BhY10nduhdONasNCa5MKzaVLr5aQhtxMydbjjrk=;
-        b=Lp0M+xPDZTX/If8ZZLJmGtNSnHSC9Ok2nAouG3AlmL/O6IxFdxdLIJ1V1+bsRFPuSD
-         N5cAzT3tcGuyVvY93/UEijOIZOPazxr8nzx6YOAxSIBqBHl/DhUoMlgBvCpmAn8pDppx
-         Z+iegkpQFpVVCIkzr0E5zdavN99kD5RRyAdmtFwCv579SQ09mUCEYFZZxzQ+QYB/FUXx
-         bVDW6ACt3bAP/EwWQ3uczIzY+x81VeKcG8D7lS1KiiaCSGc+FEyXtKRBtVnDZSny2/0U
-         yxB/4rKNGtHhVaq3qfd2IQr6GWuI7YP7RgYdGQlpOTx8HnijHI2YArQD9mQkYSH5INJ8
-         Nf/Q==
-X-Gm-Message-State: AOJu0YylofpI7o1X1imeyPujVbg7V962hCvX9okqqamdWSciAi57wOY6
-	uOqx/ggPE3dqx7nTI7hwgZbjYfm3om7d8hEyoubQphz5Jwm38DJ1STj/QHNjfTG2GfdUnSEERs/
-	qbhPQoiR5kYHfUB4ELxbvJF00lXIiNc+G
-X-Gm-Gg: ASbGncsyFYaTDuCKI1f0IWHuo4GBhrpkT/Jca6hk00N0MNUbcUPOoCLpjsi9nEowFLj
-	ihkAi8IUboQQJa4z5KfkkIb61ua0ko+k1VhOj3JtsO21fssKtsm8yZ1ZgCf8REc4w2Qvg86ii
-X-Google-Smtp-Source: AGHT+IH3zrTfNN48l312nXpo06F0cnCmoovv9+82RvwX68jbUAKBTacveeds3LdtlikyzuUVfqh5ciUxKaSFtIGGHDM=
-X-Received: by 2002:a05:6102:5e86:b0:4af:ea3b:7b31 with SMTP id
- ada2fe7eead31-4b25dce71bemr9308722137.14.1734260964449; Sun, 15 Dec 2024
- 03:09:24 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 15 Dec 2024 03:09:23 -0800
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Z1wngv1Kox_QQcwK@pks.im>
-References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
- <20241213-320-git-refs-migrate-reflogs-v2-8-f28312cdb6c0@gmail.com> <Z1wngv1Kox_QQcwK@pks.im>
+        d=1e100.net; s=20230601; t=1734263511; x=1734868311;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aq3KQHqNWfW/E8jBno5V3VQw7ZhuTOFpN4GJK7rJYr8=;
+        b=eKsosVxFk2FCwuU4k0wJ8cRj8vY3DeRqO6vgSoLHkjyISipt/lrejCBrDnDiq0iATn
+         SIzJrU/mKI0GMjejysP0mKsIIGzpvLbH8fj8/Q6HotrFbt0UYe1xhCy1nuUNnkzDQ0JP
+         9r0orz3MU54I2Nc2IzhlhIDOImGwmoKXqlTS0Ota9yPIpg2SOW1L7p5MKGQb9oQjUHOH
+         +QyNPggM3bWjnd2VUzNSfo1ogWNwumh5M3HwwwdzhfLALGhoNtFglyQwde0Pxe8hKynU
+         0lFvWxIyvDNzl6PSvgvqD8ymjiBolghR7afDDUNmIB2QXnkdXoRjdLYMDWZEnLl3D16s
+         HG1Q==
+X-Gm-Message-State: AOJu0YxaATv36Lbp/xFRwwl4WGnmKR6WAgbFgIIMchqJwmzGLWjzi2FW
+	A/OXNbV1YgICuCNXwj/pka4oM9FpfSV1GcxFqjGW7KJIIYXQB2tV/0/P7idHKC7YjiGPfD40VOY
+	+reewHpdVIVZm8PXJjc+9fr8CcixVYv04
+X-Gm-Gg: ASbGncsZ2/AEByvOZOcd0v6xpdef9IOhvsMSRJ1Qu0m90+mJxcmraSL0MpN2/2pxHtQ
+	Wqz/sC/GYsu9flF+qWjBbxpTrr7m7kK4N7MT5
+X-Google-Smtp-Source: AGHT+IFevBA5ELSUXwr5UkPzxmwAnNrIpgiXU1LEBQ1V9qDqVzzxtzrkNuHQngovBaxSXNDetOXJv6ZgBIgK/ow/6rk=
+X-Received: by 2002:a05:690c:4d46:b0:6ef:9cbc:44f1 with SMTP id
+ 00721157ae682-6f279b94e11mr34012077b3.8.1734263510862; Sun, 15 Dec 2024
+ 03:51:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 15 Dec 2024 03:09:23 -0800
-Message-ID: <CAOLa=ZQ9SHD3gzTVaznGhkCBjrrJbHm1fDyi1F-h6VZvtdpxgw@mail.gmail.com>
-Subject: Re: [PATCH v2 8/8] refs: add support for migrating reflogs
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000bc04e006294d1818"
-
---000000000000bc04e006294d1818
+From: Oliver Blanthorn <freedom4cows@gmail.com>
+Date: Sun, 15 Dec 2024 12:51:40 +0100
+Message-ID: <CADFnu5sMEvGyGy7xH1r0NGBUZJBznCi0waJ_bJ3tSHQ5Y2yX1Q@mail.gmail.com>
+Subject: Bug report: ":/[text]" revision reference no longer returns youngest commit
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> On Fri, Dec 13, 2024 at 11:36:53AM +0100, Karthik Nayak wrote:
->> diff --git a/refs.c b/refs.c
->> index 9f539369bc94a25594adc3e95847f2fe72f58a08..f19292d50f0003881220e8f7cfcf6c7eb4b2e749 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2708,6 +2710,53 @@ static int migrate_one_ref(const char *refname, const char *referent UNUSED, con
->>  	return ret;
->>  }
->>
->> +struct reflog_migration_data {
->> +	unsigned int *index;
->> +	const char *refname;
->> +	struct ref_store *old_refs;
->> +	struct ref_transaction *transaction;
->> +	struct strbuf *errbuf;
->> +};
->> +
->> +static int migrate_one_reflog_entry(struct object_id *old_oid,
->> +				    struct object_id *new_oid,
->> +				    const char *committer,
->> +				    timestamp_t timestamp, int tz,
->> +				    const char *msg, void *cb_data)
->> +{
->> +	struct reflog_migration_data *data = cb_data;
->> +	struct strbuf sb = STRBUF_INIT;
->> +	const char *date;
->> +	int ret;
->> +
->> +	date = show_date(timestamp, tz, DATE_MODE(NORMAL));
->> +	/* committer contains name and email */
->> +	strbuf_addstr(&sb, fmt_ident("", committer, WANT_BLANK_IDENT, date, 0));
->> +
->> +	ret = ref_transaction_update_reflog(data->transaction, data->refname,
->> +					    new_oid, old_oid, sb.buf,
->> +					    REF_HAVE_NEW | REF_HAVE_OLD, msg,
->> +					    (*data->index)++, data->errbuf);
->
-> This is where we now increment the reflog index to ensure a proper
-> ordering.
->
->> +	strbuf_release(&sb);
->> +
->> +	return ret;
->> +}
->
-> We're now allocating one buffer per reflog entry. We may want to
-> optimize this by having a scratch buffer in `migration_data`, which we
-> could then pass on via `reflog_migration_data`.
->
+`git show :/Merge` in git's git repo
 
-That makes sense, let me do that.
 
->> @@ -2910,6 +2940,11 @@ int repo_migrate_ref_storage_format(struct repository *repo,
->>  	if (ret < 0)
->>  		goto done;
->>
->> +	data.reflog_index = 1;
->
-> I'm a bit surprised that we initialize the relfog entry here, because
-> that means we now have a globally increasing counter across all reflogs.
-> Couldn't we initialize the index per reflog instead? It ultimately does
-> not really matter, but feels like the more obvious design to me
 
-Yes, this was needed cause I initially didn't understand how the
-udpate_index worked and assumed two logs couldn't have the same
-update_index. I missed changing it, like you said, it works, but I'll
-fix it.
+What did you expect to happen? (Expected behavior)
 
-> Also, is there any specific reason why we start at 1 and not 0? Just curious.
+The most recent commit matching the text "Merge" should have appeared
 
-Not really, I wanted to distinguish between index entries vs non-indexed
-entries. But logically, no, I'll remove it, to remove any confusion.
 
-> Patrick
 
-Thanks
+What happened instead? (Actual behavior)
 
---000000000000bc04e006294d1818
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 87ccc1ede855d91e_0.1
+A commit from 19 years ago appeared
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kZXVOOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mKzZhQy80ak1kTkpIZTU2ZEN0NzdjNlRScXpiSGZUdgpKSGRqYmttM3By
-ZUFpcllhVTZDb3RnSEZNcmxvejVydkYrM2Q4eXhYeTd4djd2THUzMXRFL2wxaFF6QldhUDBXCkgy
-bGhlSmpJK25sZUwvOGx2M2RkZDZldGJkMk5RRVNKcXBTM3lXcTYrc2NtVXhFY1h0T2pLRDFQK3NB
-NkhSMlIKSllXMjRTQllPdGFQRzNFN1IzOHZHa2hzRUtuVkxESlZuZUNZZmZyb3gzOUdvSlNWR0FV
-N0RqTFdRVmtpZzRHNwpnZU1QQVlCTEpHZ0xPM25lZVFocTZPMjIrMmE3MUJyTmFkV2dFKzRIcWNJ
-WHRudHptVzdJbUppVlozWncvZGlyCm1nSEhBbUQ4OTQ5Qk9oREthellRVXdlcUFJTCtIWDdpWndT
-eEZRaTVuWEE4UEFaN0JzYnNTM2hYZ3UwVWo3cSsKUFlOZW5YcFlidlY0WjV3NUptenZHdmQ4Nlhv
-RkYzcWFKb0Y0NXZnTVUwS284NzZRMlJvSHk3MW5UUTNiQVFxKwozRjREdk1mZFg3SkRRamJRaTdR
-K0tmc3kzWkJUWGRtY2tsd3ZqN29BQlRTUjgya1Vwd3BSaUV2YkhxYmJBaVZPCmpvdkdZUWNEcXBI
-WFpkdm51eXdOYnQ4Y3NpYTBWczFOY1pnTGZzVT0KPU9vQ3IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000bc04e006294d1818--
+
+What's different between what you expected and what actually happened?
+
+`:/[text]` should match the most recent commit matching that fragment.
+There have been a few merges in the intervening 19 years
+
+
+
+
+Anything else you want to add:
+
+Bisect log:
+
+```
+57fb139b5ee7dcb2ea5182bf33bcd2b07df983c9 is the first bad commit
+commit 57fb139b5ee7dcb2ea5182bf33bcd2b07df983c9
+Author: Patrick Steinhardt <ps@pks.im>
+Date:   5 months ago
+
+    object-name: fix leaking commit list items
+
+    When calling `get_oid_oneline()`, we pass in a `struct commit_list` that
+    gets modified by the function. This creates a weird situation where the
+    commit list may sometimes be empty after returning, but sometimes it
+    will continue to carry additional commits. In those cases the remainder
+    of the list leaks.
+
+    Ultimately, the design where we only pass partial ownership to
+    `get_oid_oneline()` feels shoddy. Refactor the code such that we only
+    pass a constant pointer to the list, creating a local copy as needed.
+    Callers are thus always responsible for freeing the commit list, which
+    then allows us to plug a bunch of memory leaks.
+
+    Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+object-name.c                | 26 ++++++++++++++++----------
+t/t1511-rev-parse-caret.sh   |  1 +
+t/t6133-pathspec-rev-dwim.sh |  2 ++
+3 files changed, 19 insertions(+), 10 deletions(-)
+
+
+
+
+git bisect start
+# status: waiting for both good and bad commits
+# bad: [2ccc89b0c16c51561da90d21cfbb4b58cc877bf6] The sixteenth batch
+git bisect bad 2ccc89b0c16c51561da90d21cfbb4b58cc877bf6
+# status: waiting for good commit(s), bad commit known
+# good: [fe86abd7511a9a6862d5706c6fa1d9b57a63ba09] Git 2.41
+git bisect good fe86abd7511a9a6862d5706c6fa1d9b57a63ba09
+# good: [92e8388bd35cdddf312011a98e046706bb420fce] Merge branch
+'jc/local-extern-shell-rules'
+git bisect good 92e8388bd35cdddf312011a98e046706bb420fce
+# bad: [39e15b789ad3c3a192f4c8abde3daff83a053aaa] setup: merge
+configuration of repository formats
+git bisect bad 39e15b789ad3c3a192f4c8abde3daff83a053aaa
+# good: [22cf18fd9ede79bdfe5ac93e09986a64052e5781] Merge branch
+'gt/t-hash-unit-test'
+git bisect good 22cf18fd9ede79bdfe5ac93e09986a64052e5781
+# good: [ecf7fc600a5218c9ee3863ee70d5a6e312164f30] Merge branch
+'tb/path-filter-fix'
+git bisect good ecf7fc600a5218c9ee3863ee70d5a6e312164f30
+# good: [d02895ceccd3b5c5422c35671553b5aace0a6087] Merge branch
+'l10n-de-2.46' of github.com:ralfth/git
+git bisect good d02895ceccd3b5c5422c35671553b5aace0a6087
+# good: [25673b1c476756ec0587fb0596ab3c22b96dc52a] The third batch
+git bisect good 25673b1c476756ec0587fb0596ab3c22b96dc52a
+# bad: [0b2c4bc3ff6504467d84cb1bf6e73d877b553ce6] Merge branch
+'jk/apply-patch-mode-check-fix'
+git bisect bad 0b2c4bc3ff6504467d84cb1bf6e73d877b553ce6
+# bad: [1f0899978109d732abe5b4825b5cfa40ef1d5885] entry: fix leaking
+pathnames during delayed checkout
+git bisect bad 1f0899978109d732abe5b4825b5cfa40ef1d5885
+# good: [fc68633352180fc2645772b5926898fee4e006e3] builtin/remote: fix
+various trivial memory leaks
+git bisect good fc68633352180fc2645772b5926898fee4e006e3
+# good: [50ef4e09c386f46898886b1c3ae8bef5783b4e90] builtin/rerere: fix
+various trivial memory leaks
+git bisect good 50ef4e09c386f46898886b1c3ae8bef5783b4e90
+# good: [145c9790207b9847b609d997c86c7cf8cec043b2]
+builtin/credential-cache: fix trivial leaks
+git bisect good 145c9790207b9847b609d997c86c7cf8cec043b2
+# bad: [57fb139b5ee7dcb2ea5182bf33bcd2b07df983c9] object-name: fix
+leaking commit list items
+git bisect bad 57fb139b5ee7dcb2ea5182bf33bcd2b07df983c9
+# good: [11f841c1cc9c7ffadf5d462d25a378fcab5bb6e1] t/test-repository:
+fix leaking repository
+git bisect good 11f841c1cc9c7ffadf5d462d25a378fcab5bb6e1
+# first bad commit: [57fb139b5ee7dcb2ea5182bf33bcd2b07df983c9]
+object-name: fix leaking commit list items
+```
+
+Apologies if I've violated any mailing list etiquette - I've never
+filed a bug using one before :)
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.46.0.rc2.20.g11f841c1cc
+cpu: x86_64
+built from commit: 11f841c1cc9c7ffadf5d462d25a378fcab5bb6e1
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.11.0
+OpenSSL: OpenSSL 3.4.0 22 Oct 2024
+zlib: 1.3.1
+uname: Linux 6.12.1-arch1-1 #1 SMP PREEMPT_DYNAMIC Fri, 22 Nov 2024
+16:04:27 +0000 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
