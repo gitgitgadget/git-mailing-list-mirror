@@ -1,64 +1,64 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAED0192593
-	for <git@vger.kernel.org>; Sun, 15 Dec 2024 16:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 800F3193071
+	for <git@vger.kernel.org>; Sun, 15 Dec 2024 16:25:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734279959; cv=none; b=KCX7WwfeENK+y3smO7+s87yG/Ngl7tFWVR1wjk7Kyt0rB0gQfYqnuXN+qTQkWKUgdV8Uqvn1tnNDwlK5um53+cSAee7x57hlPpbKb6CckwXYh780Z3UonIYO1t+eEldQ/TeLumlR0DHPS86tzBZK0cnk/es0bmTNxvH5HaYaeXA=
+	t=1734279960; cv=none; b=exj7DXn3D8x+ZSnkH8hTvzc6AY9Ju0B3mRd54aqbLtrwOumR9X5h+VxkWuC7HswBVhNrgW/qawcibxV9nLKCL0nO3k7lu6mt+ok0x8a/TwgTXHG986PzB8go9qpyVBA74lMwA9NB8jrAuxRqK/zdofnOc3ljj1szA54r8WyoMu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734279959; c=relaxed/simple;
-	bh=NoEckIGxQa5jQrZ0dQ7BHqCovFckF/qXPjbGFqkkuA0=;
+	s=arc-20240116; t=1734279960; c=relaxed/simple;
+	bh=ATy4ssKxG+1kuX/UpGVdpNwF/duWxcYMcv9ZJ2nZT2Y=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mPpOemIDDsEMTHYd06KDDWyhNK+/oH9LKpiEK88flt5RgS6jlfzOUSkJb+wuyBQ34uexQa6rLEBAEz4dFF6a2xiKtehHU2IkZXtrOx64ReZu1zRNcd5U+maMBBOGihUj+PasLW8FAJrrCz15F7GIK5d3SXPNgWXB748USxGrPbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ol/Nv/zo; arc=none smtp.client-ip=209.85.218.54
+	 In-Reply-To:To:Cc; b=Zkzq9lTtxJzOpmzRTaQ/+YHlDQdFI5z9VmhoTO9rAnBIvip/qHtHKIdg5fUiNw+JCXO/OLUGtW6lBxHTDSBDu/iPSPoDW1UFUWca8A9OoS5VjUMzywm4kJktX5PCv9Q8y8gLsfNQmVUtdupZ+TLOyW8dlBECYQQjIz0EqYcVsck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OuUdj1aL; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ol/Nv/zo"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-aa662795ca3so850509766b.1
-        for <git@vger.kernel.org>; Sun, 15 Dec 2024 08:25:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OuUdj1aL"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa670ffe302so632976366b.2
+        for <git@vger.kernel.org>; Sun, 15 Dec 2024 08:25:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734279956; x=1734884756; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734279957; x=1734884757; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Io5XE6RXiBUov+SaLOGtphgg3UciL24hpxxR053Wce4=;
-        b=Ol/Nv/zoJTIaF7TIxjkUobZVJ72qdVAzE3knI268Otl+C92k0ko1XhCI9Y5FWlzuZx
-         q7tykWY6oOoDHq3wvqARpCziRiI+GPebqd7Y5JJbGx5ldqXcYjHWxNGlw8FSaHYcbZ/a
-         RO5K75CaGvt8+pwZjcP12srpTgh0zAd3bqxeE3GH8huucUxI1jL4tkIdObFB3pT0f11D
-         EBIzBWf+YImL438SXmsbmtm4MzVN/zZmdBS/k0QOaDZTXUM/OrYrXAg/YOBSSitTwt8J
-         7pItz3wWSEW3xCn1sYiiT2H+EcctcgUx9vdbSbUIbr3lnUkVqKdso227222IpAjtJQux
-         HhQA==
+        bh=W1ch3s3JnDSoPZxdCqvaf+8QiC2QUWbiyEX7XSSiSX0=;
+        b=OuUdj1aL1nz1LKZQQGlBw71viY/AcmmF6HUXPzU6w2TRU8zQAER1cbMUGVPA+gUC0u
+         8UqxXduPJLaO9xEEPV0o3LlUbwdqb4yDZBSBM6dB0DGpHlN9HjmZx0eBrETmJYftc4jy
+         JgxTmrTO2+ooQrUoWgvhkRGoMsZpC4O6OK3HQ2U1ttXT/GRpFtfCy1lE1DzssQ0Ukn4R
+         Mh+AQEbj3SMI5+6PYyghZmMlJOvoxWTMkglVg2yU79Ma4QY7ytdzpSd/u3FkTRMQ08Hv
+         P5Iomx2NS07C5IK0gJPJ/2iez8TNJjEdrTrc/24c0FYpY25uZiJntH4g/AN1Hzx+Vokv
+         hZ/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734279956; x=1734884756;
+        d=1e100.net; s=20230601; t=1734279957; x=1734884757;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Io5XE6RXiBUov+SaLOGtphgg3UciL24hpxxR053Wce4=;
-        b=EbxeDneB54qP3MTe9w9kb72axxQOO1aHuEO2Bq9fsM3T0pQDfsOJHHa5OICj2nGo3M
-         cukNrBtHXH5+P7NISPLqogKnusHvUa3Wb0K8bKdjZeeUBMXzg9En562nb4jHmU7kL2ud
-         XD1eLouqTg6AWo5cI5OIxjClx+rgCizjHWbnbPy1H3cJYJHuhb4Uac2XaA6AEFMIbOFn
-         JlR32IEHqBADrYXnPheU1xY3LqvLBCDUrAiG7fiBPddOgkQiEuLVLrHw5Fq5m8G92BzJ
-         H3QZzMLb1kwcCoEzhi4+5Cb3fyemv6fDFTqIlvvYQY77MtMf422XhQG5QjhTdDNutfix
-         fePA==
-X-Gm-Message-State: AOJu0YxSMbwevdyuqYgqUWZ0WM3Eix09T+cOlhoVtwDaMLw4i+XnDS9c
-	zhqCsqQSzNMAGoVBttpe+LtvAA9cCONYKFezE9sqhK0jdVM+RY0W
-X-Gm-Gg: ASbGncshujoqYYJuP2Jkr8JZoily9prMROKriNqjaUmA73GPcwg/ZSPBYtnlAoKzfVC
-	yg8ccD0sAqLyTcctB0HK1+KFcX/le0zM8Dlkul3jo5ltApWRFunuhCDL78cKvW0sDllELcJs8OX
-	gOPSADAbQp2rHxrb8uGiKgKGz/QiuudU5kA3P83Qzjn2QY+TxKzDMk0H1/oUqegtLXWaIxXZc87
-	8ozLVhOksXmpRMMjCHaamyi38xmBUoKDTSmrQlEK9Spv6rhf86UmdkF8ih5Xbtaw6vhAg==
-X-Google-Smtp-Source: AGHT+IHX4TVNU4s9QWZP0OvrrdjTEBrkhVdocyz+5grGI/M+nUl+ozWx1yXvtwFU7G7Xj8+DHDGxuw==
-X-Received: by 2002:a17:907:1c07:b0:aa6:7c36:3428 with SMTP id a640c23a62f3a-aab7ad158b3mr916404566b.0.1734279955843;
-        Sun, 15 Dec 2024 08:25:55 -0800 (PST)
+        bh=W1ch3s3JnDSoPZxdCqvaf+8QiC2QUWbiyEX7XSSiSX0=;
+        b=QWc1CVHHAPYjbDfdiCcSIfStsHwL54qH/5hnj7OnxmXlrmiOJH7L8+mAAD4zFJMQHk
+         vNNEOprXcc4u2xZPC3PqS/NDmdbKQgQ8sUSdnahf21gPsCQjLHhNrg8CG9B0qZ/pDQtm
+         jw/Ex5TDTh/Av9ro/+n7bW48Hw5wu4b/y4/GGBfKkid6P5rX4skcCQ1MXavfyzVVBTGe
+         siX1QPsbgLh1lNSvheXdxwSvpfyojiGGbUtfaXLEES0hhevP20UttQt2h9Sz4n9Mx4It
+         9rW8zvCad6R6PzHlWk3//Qec2l5vEIYzJd5vu0pcGS/tOKdHnXIByUBjJLQp3mUpyBia
+         kGiA==
+X-Gm-Message-State: AOJu0YxMyHGCFK/SKeWLEF8BpQpLnKBcEutoVFEF2zvzGbPWwe10Rf1T
+	6wORnjZNBI+gMKvr0ybRLzeFGnPxZdEWVLHqDFJyOLBTLOvMhnpf
+X-Gm-Gg: ASbGncs2Jz4+f3omtH6AOUGntSdjSS0M8PWfsHO91pKpKiMYxGjT0jI9QnGgVGH+wAq
+	ITiTFNm4bNLAYOynpS89Lc70Xtjvj28RjLzjptGVcrBgZXlU/bE5OwT3ujIjGfjK4/sPbN7ZK1x
+	yuEa9zurNMOrwxTSTkzntVh1bF6lAITwbbA2AsBgaGIxulcDo9slSeYCWVlgc1D1NaB5Mmca6Sp
+	jjizblD2bLS0C6V3pej3T835URvhfCMXJmM5/6J9vQHePX9EgouL6tkBIIAPrsKR+tpRA==
+X-Google-Smtp-Source: AGHT+IHvjA7ERkDCg9C5D2u7P8k2GkxwBJJ56JYN4aX9cnZoy1TAmegisBA25W5xOau36oWK+vy9IQ==
+X-Received: by 2002:a17:907:780a:b0:aa6:8520:7187 with SMTP id a640c23a62f3a-aab779c1398mr960499866b.36.1734279956571;
+        Sun, 15 Dec 2024 08:25:56 -0800 (PST)
 Received: from [192.168.178.20] ([2a02:2455:8256:2d00:9c39:c2d7:aedd:294d])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aab9638ad1asm224887866b.139.2024.12.15.08.25.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Dec 2024 08:25:55 -0800 (PST)
+        Sun, 15 Dec 2024 08:25:56 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sun, 15 Dec 2024 17:25:41 +0100
-Subject: [PATCH v3 4/8] refs: extract out refname verification in
- transactions
+Date: Sun, 15 Dec 2024 17:25:42 +0100
+Subject: [PATCH v3 5/8] refs: add `committer_info` to
+ `ref_transaction_add_update()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,98 +67,167 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241215-320-git-refs-migrate-reflogs-v3-4-4127fe707b98@gmail.com>
+Message-Id: <20241215-320-git-refs-migrate-reflogs-v3-5-4127fe707b98@gmail.com>
 References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
 In-Reply-To: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, 
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2366; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=NoEckIGxQa5jQrZ0dQ7BHqCovFckF/qXPjbGFqkkuA0=;
- b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnXwMOpgREDkZXHPSB4e0LhKgyiQHnfmGTqIAjq
- 33AKX+3snaJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ18DDgAKCRA+1Z8kjkaM
- f/yeC/90ICif0WavWU0cffLuAWqZ//1TAutknYYOxAb6uDAPB1d/FfeTmNbYvC67sFUwDPFriHf
- 4OohTEZ3x5v+ozR2QiX69z50iVZSFr1yK8mn3foTJjHjSQ+JRFgKowRNBeQDBGFW55QZjOpOOgL
- cYmfAq1DcdB9V+UBc0gJxABZFVH+l/CSchPVV78+2Sef1bSZ3C/vX3dxNK6e8NafvqSY583QxP+
- kWTJu2cRhCjJYSoywiMvISg39b0iYoaUEX5dWsOV1baQ/xljNnfABeuP8N/DgRBG+Ist0aqIjPd
- Kj2+7GZXiH5awX9LtykeJ5hCOyjDdEWwEX5/HJ3LDT7fDvTXC1JuR9ptUKKGFAOrq5YRdu77OyW
- uuMUdJce7qrmmhBIBDeB9TZTcitiZ19il1L5zstqddWO4lmbxEEXrOK8/7n5i0J/Xp4vqDaB5qP
- 3Ey8oO+0ScEHtKD+I2M5SpgPfMMaWCMswdYZiSlvKY2x9dWYygh6cC9d9+lRTr9HRuFLE=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5487; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=ATy4ssKxG+1kuX/UpGVdpNwF/duWxcYMcv9ZJ2nZT2Y=;
+ b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnXwMOmyYBfliGGIhJ2n/3fF+4NkZFkl5FNf797
+ K9yRLi3rXSJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ18DDgAKCRA+1Z8kjkaM
+ f1c9DACKtASTy9GGPJo6D6RZjFuc22IPvDbdhw56gN2IgcuLZpvITKB0Ws+OlqAPD1aNb1JakB3
+ HyWrIC0SdtL6S/oqxVgGzXbXF9390ASRzjAXE2F0S7J7kdiA8j3nkyyoGDWyo9MQQopYQ5ckcHQ
+ eIOVsMPiudt75TqSNxIrt2uc3/RaSVNqk4TmSNsWfuLK/2Lbhs+bhequl0E42Uwh4mgFhd9eF7L
+ AeobmACTrjhXNr21L3WPTiTtm1Q2/0f8yuF3hEBQ6WpA5+RZmga6EhcVUw4/fVa03aYTzith8j5
+ Kk4zutokN7jGuyAOCq9QOUfKIQPE6O2LAH+VSWGGE+jfq4nPWqIvioOET08ISNyoV1NVzCZO/Q/
+ z2bIxXuhL6sE+264BNAt/iAqQ9+oo4Q8/IKqZPlKwnXCSmKVmvTQEuBahsrLMIx0XS2vGHkRBkz
+ SyFra/C6etm0yrbJFLzr8jvDWm5eh9WbQMHfADFa7W8Ly96b1AZ4EnL2zfTudwpk2jgvM=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Unless the `REF_SKIP_REFNAME_VERIFICATION` flag is set for an update,
-the refname of the update is verified for:
-
-  - Ensuring it is not a pseudoref.
-  - Checking the refname format.
-
-These checks will also be needed in a following commit where the
-function to add reflog updates to the transaction is introduced. Extract
-the code out into a new static function.
+The `ref_transaction_add_update()` creates the `ref_update` struct. To
+facilitate addition of reflogs in the next commit, the function needs to
+accommodate setting the `committer_info` field in the struct. So modify
+the function to also take `committer_info` as an argument and set it
+accordingly.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c | 37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ refs.c                  |  7 +++++--
+ refs/files-backend.c    | 14 ++++++++------
+ refs/refs-internal.h    |  1 +
+ refs/reftable-backend.c |  6 ++++--
+ 4 files changed, 18 insertions(+), 10 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index f003e51c6bf5229bfbce8ce61ffad7cdba0572e0..9c9f4940c60d3cdd34ce8f1e668d17b9da3cd801 100644
+index 9c9f4940c60d3cdd34ce8f1e668d17b9da3cd801..782bf1090af65196263a3c35ed18d878bb4f2967 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1196,6 +1196,28 @@ struct ref_update *ref_transaction_add_update(
+@@ -1166,6 +1166,7 @@ struct ref_update *ref_transaction_add_update(
+ 		const struct object_id *new_oid,
+ 		const struct object_id *old_oid,
+ 		const char *new_target, const char *old_target,
++		const char *committer_info,
+ 		const char *msg)
+ {
+ 	struct ref_update *update;
+@@ -1190,8 +1191,10 @@ struct ref_update *ref_transaction_add_update(
+ 		oidcpy(&update->new_oid, new_oid);
+ 	if ((flags & REF_HAVE_OLD) && old_oid)
+ 		oidcpy(&update->old_oid, old_oid);
+-	if (!(flags & REF_SKIP_CREATE_REFLOG))
++	if (!(flags & REF_SKIP_CREATE_REFLOG)) {
++		update->committer_info = xstrdup_or_null(committer_info);
+ 		update->msg = normalize_reflog_message(msg);
++	}
+ 
  	return update;
  }
+@@ -1253,7 +1256,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
  
-+static int transaction_refname_valid(const char *refname,
-+				     const struct object_id *new_oid,
-+				     unsigned int flags, struct strbuf *err)
-+{
-+	if (flags & REF_SKIP_REFNAME_VERIFICATION)
-+		return 1;
-+
-+	if (is_pseudo_ref(refname)) {
-+		strbuf_addf(err, _("refusing to update pseudoref '%s'"),
-+			    refname);
-+		return 0;
-+	} else if ((new_oid && !is_null_oid(new_oid)) ?
-+		 check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
-+		 !refname_is_safe(refname)) {
-+		strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
-+			    refname);
-+		return 0;
-+	}
-+
-+	return 1;
-+}
-+
- int ref_transaction_update(struct ref_transaction *transaction,
- 			   const char *refname,
- 			   const struct object_id *new_oid,
-@@ -1213,21 +1235,8 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 		return -1;
+ 	ref_transaction_add_update(transaction, refname, flags,
+ 				   new_oid, old_oid, new_target,
+-				   old_target, msg);
++				   old_target, NULL, msg);
+ 	return 0;
+ }
+ 
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 02cb4907d8659e87a227fed4f60a5f6606be8764..255fed8354cae982f785b1b85340e2a1eeecf2a6 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -1270,7 +1270,7 @@ static void prune_ref(struct files_ref_store *refs, struct ref_to_prune *r)
+ 	ref_transaction_add_update(
+ 			transaction, r->name,
+ 			REF_NO_DEREF | REF_HAVE_NEW | REF_HAVE_OLD | REF_IS_PRUNING,
+-			null_oid(), &r->oid, NULL, NULL, NULL);
++			null_oid(), &r->oid, NULL, NULL, NULL, NULL);
+ 	if (ref_transaction_commit(transaction, &err))
+ 		goto cleanup;
+ 
+@@ -2417,7 +2417,7 @@ static int split_head_update(struct ref_update *update,
+ 			transaction, "HEAD",
+ 			update->flags | REF_LOG_ONLY | REF_NO_DEREF,
+ 			&update->new_oid, &update->old_oid,
+-			NULL, NULL, update->msg);
++			NULL, NULL, update->committer_info, update->msg);
+ 
+ 	/*
+ 	 * Add "HEAD". This insertion is O(N) in the transaction
+@@ -2481,7 +2481,8 @@ static int split_symref_update(struct ref_update *update,
+ 			transaction, referent, new_flags,
+ 			update->new_target ? NULL : &update->new_oid,
+ 			update->old_target ? NULL : &update->old_oid,
+-			update->new_target, update->old_target, update->msg);
++			update->new_target, update->old_target, NULL,
++			update->msg);
+ 
+ 	new_update->parent_update = update;
+ 
+@@ -2914,7 +2915,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 					packed_transaction, update->refname,
+ 					REF_HAVE_NEW | REF_NO_DEREF,
+ 					&update->new_oid, NULL,
+-					NULL, NULL, NULL);
++					NULL, NULL, NULL, NULL);
+ 		}
  	}
  
--	if (!(flags & REF_SKIP_REFNAME_VERIFICATION) &&
--	    ((new_oid && !is_null_oid(new_oid)) ?
--		     check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
--			   !refname_is_safe(refname))) {
--		strbuf_addf(err, _("refusing to update ref with bad name '%s'"),
--			    refname);
-+	if (!transaction_refname_valid(refname, new_oid, flags, err))
- 		return -1;
--	}
--
--	if (!(flags & REF_SKIP_REFNAME_VERIFICATION) &&
--	    is_pseudo_ref(refname)) {
--		strbuf_addf(err, _("refusing to update pseudoref '%s'"),
--			    refname);
--		return -1;
--	}
+@@ -3094,12 +3095,13 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
+ 			ref_transaction_add_update(loose_transaction, update->refname,
+ 						   update->flags & ~REF_HAVE_OLD,
+ 						   update->new_target ? NULL : &update->new_oid, NULL,
+-						   update->new_target, NULL, NULL);
++						   update->new_target, NULL, update->committer_info,
++						   NULL);
+ 		} else {
+ 			ref_transaction_add_update(packed_transaction, update->refname,
+ 						   update->flags & ~REF_HAVE_OLD,
+ 						   &update->new_oid, &update->old_oid,
+-						   NULL, NULL, NULL);
++						   NULL, NULL, update->committer_info, NULL);
+ 		}
+ 	}
  
- 	if (flags & ~REF_TRANSACTION_UPDATE_ALLOWED_FLAGS)
- 		BUG("illegal flags 0x%x passed to ref_transaction_update()", flags);
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index f5c733d099f0c6f1076a25f4f77d9d5eb345ec87..79b287c5ec5c7d8f759869cf93cda405640186dc 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -162,6 +162,7 @@ struct ref_update *ref_transaction_add_update(
+ 		const struct object_id *new_oid,
+ 		const struct object_id *old_oid,
+ 		const char *new_target, const char *old_target,
++		const char *committer_info,
+ 		const char *msg);
+ 
+ /*
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index c008f20be719fec3af6a8f81c821cb9c263764d7..b2e3ba877de9e59fea5a4d066eb13e60ef22a32b 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1078,7 +1078,8 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 			new_update = ref_transaction_add_update(
+ 					transaction, "HEAD",
+ 					u->flags | REF_LOG_ONLY | REF_NO_DEREF,
+-					&u->new_oid, &u->old_oid, NULL, NULL, u->msg);
++					&u->new_oid, &u->old_oid, NULL, NULL, NULL,
++					u->msg);
+ 			string_list_insert(&affected_refnames, new_update->refname);
+ 		}
+ 
+@@ -1161,7 +1162,8 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					transaction, referent.buf, new_flags,
+ 					u->new_target ? NULL : &u->new_oid,
+ 					u->old_target ? NULL : &u->old_oid,
+-					u->new_target, u->old_target, u->msg);
++					u->new_target, u->old_target,
++					u->committer_info, u->msg);
+ 
+ 				new_update->parent_update = u;
+ 
 
 -- 
 2.47.1
