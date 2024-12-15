@@ -1,100 +1,119 @@
-Received: from mail.toke.dk (mail.toke.dk [45.145.95.4])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B1D194C78
-	for <git@vger.kernel.org>; Sat, 14 Dec 2024 18:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.145.95.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B895579D2
+	for <git@vger.kernel.org>; Sun, 15 Dec 2024 02:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734200006; cv=none; b=c6XjfCgZwQvOZ9UucoXneHJ/3Yj9yL0Igbq9M2lT/jx7muBu4gqirsQ3kvpeWmxZ4HMw4LF1dfhUVd6qcG1q681xJE7aP85XRm2wUVw1LtLuV26bFVZ+HAMRuh+Gmz7QnnaA/pgMvRoRlv2dLTsh+VjXsPmng5Ln4MhG90W3w/k=
+	t=1734228435; cv=none; b=pCe5aGf5XD986VbRe7YAT0kyuafkmhKreY1sjzNXsbo61oJdJOmHXq7zfdTsZOK4MfKDE5hmMrHS4dTpTia11TTfnGMpXyYov3rvTt0IKFXBhXoZEzWMdXufWbuCfbR1lzTwvoUtVF+zR/S3FZyp/sZbMWKPyu8KfAYVMHV0Q2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734200006; c=relaxed/simple;
-	bh=0fRxM0GrdkufNpKqSNu05a+Vr0QUEkhYy8jdYfyQi2k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EtcCQXTPGPHbA4VS6+OGpjkilFCOfryUOIW1Eu2Y+0pCj/b33scIn4H+FMHoCH6q+LKv9mCjWmTK0AoF/utFS6U9oOVFvPDy1AywuZhB4MOibWBWq4Ofnr0AznNd6HdB/fh8T5dNMTOnGhN771La6KsxDct0iwLAS7DkjN59lvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=toke.dk; spf=pass smtp.mailfrom=toke.dk; dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b=HuzwNgEr; arc=none smtp.client-ip=45.145.95.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=toke.dk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=toke.dk
+	s=arc-20240116; t=1734228435; c=relaxed/simple;
+	bh=MviMhtr3QaagyA+rcSW2ZI7itvE4OeUdtHpKKYRdofw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=l7w6Y92ivCnm/dGC4MUV9z2JhPhDaG6PRKGUET8o+K7iSgtqNofeO1TEBAekJq2wCqwUHtYK4zgIbBQHtSxK98h4yl0G8RNpPEI4PEtKRmQ36hVETI3c+nasSrUa1yON8rK+4LD1CpoBx48zY/Hb2EjVn/ARahz15eCjfidkVC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X0T6wBw1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xCCI/QvM; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=toke.dk header.i=@toke.dk header.b="HuzwNgEr"
-From: =?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=toke.dk; s=20161023;
-	t=1734200001; bh=0fRxM0GrdkufNpKqSNu05a+Vr0QUEkhYy8jdYfyQi2k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=HuzwNgErB+bgplFK+UcETqXRVnjeQ1EuF4e3ZgSZ1RB9hAs3Kz5cL02nti5A1iPuS
-	 zo2WM6NojTBPusimtM9rdeEIMRcbY3FUMTdRIMPBje6iaBXsOedDO+I+ZlmrmgYBOm
-	 SOnUn5PYKaATWt9gKRvct7CNtlAiORVOqp6z4hjIpuo+W6ki5EjmngSXBtfUntDeBJ
-	 z2RAqLpHZwrWyzpVZ2GV6UjRhPN7TPzT7BUpUxwQL513pCg5mcP5jPz79YnkM6vuPQ
-	 eWXg02cpLIG9FZupzpKnd1HkqVzyL0l6rcZlrCnXr3NLkpL/F+B5nq2dnV31QuW6PZ
-	 7WhXwZrmTMZkg==
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>
-Subject: [filter-repo PATCH] Don't crash on multi-line config values
-Date: Sat, 14 Dec 2024 19:13:06 +0100
-X-Clacks-Overhead: GNU Terry Pratchett
-Message-ID: <20241214181306.296673-1-toke@toke.dk>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X0T6wBw1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xCCI/QvM"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ACACC25400D7;
+	Sat, 14 Dec 2024 21:07:11 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 14 Dec 2024 21:07:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734228431; x=1734314831; bh=wF7dJL+O59
+	eTd2u04jOqcgrKNDDCJcNIODzZY2yGpys=; b=X0T6wBw12WoPJcw+07pSNmDOOW
+	6Cu79dA2mcKoXZkBQTggilYUhxh9/CLTnva1UHcN0VXj2Xp5Pzk15EWSNrHxhASr
+	TTm8pTawMBPlDgmDqn4BCLFkcUA4XDtsWGz2kpTLRHYy53dPeajffBHBVgtuXrVu
+	1MCV7NyJk27A7+2KFE+TdctMWsBOWfhOmnyR/tXpU51PYZ+m4JfyhP7JZhxVcAjm
+	CTvG8u3FJjYFU4QsRRPzFvlTvUvmnCT5RWTbirqwHx+NNkzopZO6DpsXDHcJxunX
+	W+9qO4CH8BMfhWndIDUiLTqINAeQYOiMEk82CwvZu2srnl5DOjJLjTntu0IA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734228431; x=1734314831; bh=wF7dJL+O59eTd2u04jOqcgrKNDDCJcNIODz
+	ZY2yGpys=; b=xCCI/QvM3c6WRr5XUe59t/fbeLDYjHYWdzFkTqbXosSCtSrEYtI
+	JZ1GjvY91r1uzYhS82+iEItRQGim0RL3qZiI1BlH/nPjcMKintXKYEjF4ZzLSl9a
+	OPxvt/rXO1WlVrt7a/tzlTArNsz12H8skS/GFySB3Bq9IsTguHed1mln9YfDGLBY
+	KiBI/YoN0WA0QnG/an43WPrwQbg1pVh68Gsg8WoWij0++dSj+JmW7QIJnY/sQobT
+	BHggnRsGx+Q9OlqtzDpsnDyubsZoemUzRyOEUzH3i7itZtKJekOnKETTVMDIO0B8
+	TPaDtVsyl3tJD1orBLFGGPfiwD8z0a/ng/A==
+X-ME-Sender: <xms:zzleZ9GpaJhC52jc6m2i7xllDvSIMP1Suex3WlpGIV1XZGuC5ktFGw>
+    <xme:zzleZyUwxP_NQ5ON3Mvq-2xgZ6_dEKED4b8MwJmPQTXR_aOR29ptJQny6PtmU82-U
+    WhGJZ1vRYpKmPrJFA>
+X-ME-Received: <xmr:zzleZ_IVRpmvGT5r0BBWVKdgaJQEcJf96NhtquESRPeGImZNkWvDOJDZYU2GyjyYklvxHd8UuNdNUK6ikFrviHd9Z7NkQqo1LG6xml0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrledtgdegvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedv
+    udegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhksh
+    drihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:zzleZzEwipYiSZRdCnInMEIOvBlpSOjJAly1bXHLXME9jzSWLIwWaQ>
+    <xmx:zzleZzVPkmfeTAlCbZhTSV1HmAZIRrSi-ycJhqs4KRXKnQTnBQj1Fw>
+    <xmx:zzleZ-PzNwhZyqe5LBS8iyHau-kElxsXmZahwQEI4awf0Ld9R_igaw>
+    <xmx:zzleZy1b0uYW2edOcZDK1CQAysOeZyFh3fZeHsEFNkEtUarLxdbJBg>
+    <xmx:zzleZ5d66lMr7FpRlmR9P_mo1DIUdIXb0UhKLoqg_xKgWStTSUlEoOWo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Dec 2024 21:07:10 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH 0/3] batch blob diff generation
+In-Reply-To: <20241213103850.GA1456983@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 13 Dec 2024 05:38:50 -0500")
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+	<20241213081211.GA1443203@coredump.intra.peff.net>
+	<xmqqv7vnevjc.fsf@gitster.g>
+	<20241213103850.GA1456983@coredump.intra.peff.net>
+Date: Sat, 14 Dec 2024 18:07:09 -0800
+Message-ID: <xmqqcyhtaecy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The parsing of the output of `git config --list` fails if any of the
-config values contain newlines. Fix this by using the --null parameter
-to `git config`, which is designed for this purpose.
+Jeff King <peff@peff.net> writes:
 
-Add a simple test that causes the crash pre-patch.
+>> Unfortunately the format used in the output from "diff --raw" does
+>> not capture this.
+>
+> Don't we just use the working tree .gitattributes by default, and ignore
+> what's in the endpoints? In a bare repo we wouldn't have that, but I
+> think the recently added attr.tree and --attr-source options would work
+> there.
 
-Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
----
- git-filter-repo               |  6 +++---
- t/t9390-filter-repo-basics.sh | 11 +++++++++++
- 2 files changed, 14 insertions(+), 3 deletions(-)
+Yeah, you're right.  I forgot about attr.tree (does not seem to be
+documented, by the way) and --attr-source & GIT_ATTR_SOURCE.  I
+imagine that this feature is primarily meant to be used on the
+server side, and in bare repositories, only "diff-tree" makes sense
+among the diff-* family of commands, which (as server environments
+lack "the index" nor "the working tree") would already be using
+these mechanisms, so there is no new issues introduced here.
 
-diff --git a/git-filter-repo b/git-filter-repo
-index a40bce548d2c..3b75eadd81d7 100755
---- a/git-filter-repo
-+++ b/git-filter-repo
-@@ -1683,14 +1683,14 @@ class GitUtils(object):
-   def get_config_settings(repo_working_dir):
-     output = ''
-     try:
--      output = subproc.check_output('git config --list'.split(),
-+      output = subproc.check_output('git config --list --null'.split(),
-                                     cwd=repo_working_dir)
-     except subprocess.CalledProcessError as e: # pragma: no cover
-       raise SystemExit('fatal: {}'.format(e))
- 
-     # FIXME: Ignores multi-valued keys, just let them overwrite for now
--    return dict(line.split(b'=', maxsplit=1)
--                for line in output.strip().split(b"\n"))
-+    return dict(item.split(b'\n', maxsplit=1)
-+                for item in output.strip().split(b"\0") if item)
- 
-   @staticmethod
-   def get_blob_sizes(quiet = False):
-diff --git a/t/t9390-filter-repo-basics.sh b/t/t9390-filter-repo-basics.sh
-index c129799fb6a5..1dc2dca789ab 100755
---- a/t/t9390-filter-repo-basics.sh
-+++ b/t/t9390-filter-repo-basics.sh
-@@ -895,4 +895,15 @@ test_expect_success 'origin refs without origin remote does not die' '
- 	)
- '
- 
-+test_expect_success 'multi-line config value' '
-+	test_create_repo multiline_config &&
-+	(
-+		cd multiline_config &&
-+
-+		git config set test.test "test
-+test" &&
-+		git filter-repo --force
-+	)
-+'
-+
- test_done
--- 
-2.47.1
+> You can't use attributes from multiple trees in a single request, but I
+> doubt that would be a big drawback.
+
+I think it is also true with the normal diff-tree and friends; I do
+not think it looks up attributes from each tree independently when
+you run "git diff-tree -r A B" to compare the blob in tree A that is
+CRLF with the blob at the same path in tree B.  So we should be OK.
+
+Thanks.
 
