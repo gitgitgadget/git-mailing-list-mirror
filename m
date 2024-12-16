@@ -1,42 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23858204568
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 11:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405E1204099
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 11:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734347483; cv=none; b=VnGOLUZnT744EPX1ot2+gd0bXj5VEwSzWhAtTUhZJyx8oZMvIl1r2OHKTPQOV4ObioDITDnbfNGYKJUajWuX6CRs4PKl7e9MBIjCm31meEJuY7ts09oZukJRzCz8bJzCvjDpAcbMXyLy7b2tWIrG37fZPrKsbjnz1grFyxCigHw=
+	t=1734347915; cv=none; b=FgfdNlp1Fy3W7A+0vTYmLuy5yFVSiMeXlRYjUmXBziYF4ymwpVUxnYZ+9m4xDEus0yCLUCaeuqFMHpeXriPcKcRAkuedtzoSLK0tfFfLjkHHBlRElWfYr1QphvK219D3pPGlXPDVc2ueHmtKoEoEPa1KSf0DE55aXhpYD8GtIZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734347483; c=relaxed/simple;
-	bh=ObUUf3Y+JbXYKQz0yzBj8gCWwaROS6gBzI3UflMteBk=;
+	s=arc-20240116; t=1734347915; c=relaxed/simple;
+	bh=dMKN4WrSFrCLzc3F22+SzaqIfR02g2InTs/HLtrNIiE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U0WBg5GrpBHeuf81FAjGHX0H+8JZBKJoAb3uQeyC3kpEEzqHOVvPv9+sc+/0wGbJgZP3yVKi8MftSl3nEsgIadS6f6W7DmZBVcVSEvOQLxg5/NdH6JJGIDnh8rLJCjPyrDHeAM+DN2CYqnnOIkGg7SH8ZgIhWeegcMv3giENj04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DxC9mBjL; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=F41wbA3XEsyCZK95pY0GruMqKESAKUr2M3HRV87PBawRvb5ADj5/rYZpE2MEPNAttVN1NJDTdM6MacEXLOCCXcmeq7ddshvtVGq/Y3em+MGltE8fquf3HkVYvB6QF6Sac4f+oOdjsHhB6YPA/7/HClNIgjBWdDILAJyOTkalOys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AcE8/NUa; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DxC9mBjL"
-Received: (qmail 26193 invoked by uid 109); 16 Dec 2024 11:11:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ObUUf3Y+JbXYKQz0yzBj8gCWwaROS6gBzI3UflMteBk=; b=DxC9mBjLIfpJMlcsX55w1B7Cq6jmo7PAaloMe5XC043z1DaDpH6hU2mFoT90mPylh9iVlTkiaLBii0BGpY1JrsxagaT2LUb8+RnSXiqVJstkZE7nTxF9/hbcfmrvrfG0td7UXPu4vKg+Rr1Rr8XYrPZZcwO76/MVMK9/LK/K9S4+nmTxwkYBj74NAiKehq5RHI25/5ppLdGDlqQ7JhccmOxLrUQly/blZ6Qgr+OGtUO+L4LHs9+P3oTQC/3f9FO/Ldzu+3ORmLrXH1lhLLf1wZUIQQrEp+khV9wRU5nitSAeHgXcTHYC57TURkm0WTmu1u6GYTX+n299SbCXI+A7sA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AcE8/NUa"
+Received: (qmail 26286 invoked by uid 109); 16 Dec 2024 11:18:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=dMKN4WrSFrCLzc3F22+SzaqIfR02g2InTs/HLtrNIiE=; b=AcE8/NUaxdHboDkNsmYxZStzHh0tVZSa+JBZQPR69ccfL9ny3+ZOYtyH5YWuFTgyY268G7S2Ru/xe3IxsXQGNAq9aer71+WRkAuGRxarrDc9Y9wrbpSWKfCkfCPzk+RK3HNTugxPHo3CzmOx25asMsMk/mBUNmmyDfhcDLkcCgwFj2q/MMGyrzIdAYvTTRyJOKXNz/xt8Fe7+/i5PoNLS74e/FJLB23IhdvoqtWRuNY1030nrGiytaTjm8l7Td3LWbpOQJ+BlAzJxFxL+Ge2i0v15TxQUP90YTUAdlySatvjwj8xTf07vkUAC8TNKKBdr30OaNAxYIKyF62DjeJE9A==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Dec 2024 11:11:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Dec 2024 11:18:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26553 invoked by uid 111); 16 Dec 2024 11:11:13 -0000
+Received: (qmail 26627 invoked by uid 111); 16 Dec 2024 11:18:31 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Dec 2024 06:11:13 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Dec 2024 06:18:31 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 16 Dec 2024 06:11:12 -0500
+Date: Mon, 16 Dec 2024 06:18:31 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, ps@pks.im
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im
 Subject: Re: [PATCH 0/3] batch blob diff generation
-Message-ID: <20241216111112.GA2201417@coredump.intra.peff.net>
+Message-ID: <20241216111831.GB2201417@coredump.intra.peff.net>
 References: <20241213042312.2890841-1-jltobler@gmail.com>
  <20241213081211.GA1443203@coredump.intra.peff.net>
- <xmqqv7vnevjc.fsf@gitster.g>
- <20241213103850.GA1456983@coredump.intra.peff.net>
- <xmqqcyhtaecy.fsf@gitster.g>
- <xmqq5xnladwi.fsf@gitster.g>
+ <7q5dse6hbvuqwlhfceqwockouyfvvuxaekegahgelnri6nkv7h@2ph2qdfaktx2>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,31 +42,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5xnladwi.fsf@gitster.g>
+In-Reply-To: <7q5dse6hbvuqwlhfceqwockouyfvvuxaekegahgelnri6nkv7h@2ph2qdfaktx2>
 
-On Sat, Dec 14, 2024 at 06:17:01PM -0800, Junio C Hamano wrote:
+On Fri, Dec 13, 2024 at 10:41:25AM -0600, Justin Tobler wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> > The patch might look something like this:
+> > 
+> >   https://lore.kernel.org/git/20161201204042.6yslbyrg7l6ghhww@sigill.intra.peff.net/
+> > 
+> > :) That is what has been powering the diffs at github.com since 2016 or
+> > so. And continues to do so, as far as I know. I don't have access to
+> > their internal repository anymore, but I've continued to rebase the
+> > topic forward in my personal repo. You can fetch it from:
+> > 
+> >   https://github.com/peff/git jk/diff-pairs
+> > 
+> > in case that is helpful.
 > 
-> > Yeah, you're right.  I forgot about attr.tree (does not seem to be
-> > documented, by the way)
+> Thanks Peff! From looking at the mentioned thread and branch, it looks
+> like I'm basically trying to accomplish the same thing here. Just a bit
+> late to the conversation. :)
 > 
-> We do have an entry in Documentation/config/attr.txt that describes
-> the three; I simply assumed it is not documented as I didn't see it
-> mentioned in Documentation/git.txt where --attr-source &
-> GIT_ATTR_SOURCE are described.
-> 
-> We may want to add something like this, perhaps?
-> 
-> ----- >8 -----
-> Subject: doc: give attr.tree a bit more visibility
+> While the use-case is rather narrow, I think it would be nice to see
+> this functionality provided upstream. I see this as a means to faciliate
+> more fine-grained control of the blob diffs we actually want to compute
+> at a given time and it seems like it would be reasonable to expose as
+> part of the diff plumbing. I would certainly be interested in adapting
+> this series to instead use raw input from git-diff-tree(1) or trying to
+> revive the previous series if that is preferred.
 
-Yeah, that looks good to me.
+Yeah, if you want to take it in that direction, either by adapting the
+idea, or by starting with diff-pairs and polishing it up, I'm happy
+either way. GitHub folks may be happy if you keep the name "diff-pairs"
+and match the interface. ;)
 
-I recall that the performance of attr.tree is not great for _some_
-commands (like pack-objects). So it's perhaps reasonable to use for
-single commands like "git diff" but not to set in your on-disk config.
-It's possible we'd want to warn people about that before advertising it
-more widely? I dunno.
+> If there is interest in continuing, some lingering questions I have:
+> 
+> Being that the primary purpose of git-diff-blob(1) here is to handle
+> generating blob diffs as specified by stdin, is there any reason to have
+> a normal mode that accepts a blob pair as arguments? Or would it be best
+> to limit the input mechanism to stdin entirely? If the user wanted to
+> compute a single blob diff they could just use git-diff(1) already so
+> providing this as a part of git-diff-blob(1) is a bit redundant. Having
+> it as an option for the user does seem a bit more friendly though.
+
+I don't have a strong opinion. I agree it _could_ be more friendly, but
+it also raises questions about how that mode/path context is filled in.
+And also about other modes. E.g., "git diff HEAD:foo bar" will diff
+between a blob and a working tree. Should a new plumbing command support
+that, too?
+
+If those aren't things you immediately care about, I'd probably punt on
+it for now. I think it could be added later without losing compatibility
+(command-line arguments as appropriate for a  single pair, and since the
+stdin format starts with ":mode" there's room to extend it).
 
 -Peff
