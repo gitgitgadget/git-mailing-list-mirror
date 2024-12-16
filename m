@@ -1,82 +1,86 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAE329CA
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 08:11:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D381FFC53
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 08:36:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734336702; cv=none; b=JYpedpg8Csg4ErSe18uClJDgND7dqqWWEutoHi6tYEJG5ThChycUe+fEoSAyZueRSxau0UlBGAOutSrue/MElqci0umqeveE4X7Hh1D5EhnJbyo65jq0Cw9JLlwFTCm0SLfeYkkqVDw/6svIa5YHcYwjHOGmx85GhiiEpZ4t/Ew=
+	t=1734338206; cv=none; b=Yba4sZ/iAtqr/3O5Tc0zHoNy/61mHUSK+hgOCdO58gMH7W/hKkNHExbOCheDpYx7m1BAPHjOBdY5lCOWsfHXCD1NBQNE6tvZRmlZ55DO7+FasNhMHrr3ixaoKeNg3LegPOtGUuoP4VU45Y+GWF+f5q5dcDn7ArhuyV8E/IW6tTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734336702; c=relaxed/simple;
-	bh=TIShCOheqIVRUdmT+ut1gGtTYBdm4Djg5Ke+ScR0n3U=;
+	s=arc-20240116; t=1734338206; c=relaxed/simple;
+	bh=UMAQgy/5xewSWL71Z0F+d292VnAu7E4rbe57yEbn0v0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ID0dTPG3IHRWeFcQ74+gjhd+LL/eaV6+796xRJfyJq1lh/Wh7mm8nH15SuQNZeRF/8eRPXeCAAJQcwPzGTqf5ZHlMP9BuT5K/7PIv2fqV7mA0bMEivUV8bQfSGrVuZI97s3evLuSFX/pGOGY3vI2Oxkxb1QowEHUMm1mnJnGIrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eBypY3gX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KHe9Lhzl; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=mh/RfNQ02VFrZWuERzCL+kLobKfuHB9Vy0KlB5DbtKqGZBRW4oJJL0Ff6nPKFk8xl7OJ6ttuh+kDX6gZrvxVKS9GsjJckrbPm6hSx0nrqQmToGWYIyALqAf5Ew+xPgKUyLg4og7xm6S6+bKVTuQuOUxEzUwffY+7agAV4ldtWRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gc/pu0d/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C019vy0p; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eBypY3gX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KHe9Lhzl"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7E13825400B3;
-	Mon, 16 Dec 2024 03:11:39 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Mon, 16 Dec 2024 03:11:39 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gc/pu0d/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C019vy0p"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1FF3611400A8;
+	Mon, 16 Dec 2024 03:36:43 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 16 Dec 2024 03:36:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734336699; x=1734423099; bh=0EI+vRgqZT
-	haFxJUCrAK3J2clObO5n+JzQ6JlsAvqL4=; b=eBypY3gXopqTm8Al/eBvgMBK9p
-	0IFivfwND+TDS1p4Tpqs4GXrtFx9+IcNjgoGFrUNnQS5ORCwElHKQPvsD7gJQx0L
-	emGek+cAiS+DV1sgrBjv2pWOP1NyefBB+gI/cbA2O8b77z83iDD+4wp1uhQtZKKY
-	4YdhymMbiDWTcDBEm1p9TzTZrOZQE0W7HhjmShUTuXgiQP3H0Wh/2DsjEy4jetPV
-	xQxlxyB6ojhxjfqBdczswl+dONnq4i+Vxscm0D+HXH5TUsI5QhtX8eun+H5xvmrq
-	OQ34rkmeMck0gUGJ5RACBwmdYSUyE6o6tfjWJUx2enZnMZsXrgS9OC7KcaPg==
+	:subject:to:to; s=fm1; t=1734338202; x=1734424602; bh=IGd7x5VFUr
+	xU1ngmNfPXMFqn8MqDF4g68E0JZDyOuw4=; b=Gc/pu0d/r+tLfqxnHaOT42UrTp
+	lNvHaaJkdI/SRgYGgIveySUiDYZwX+UEqWP1qwDNW/mYWCjfhPVG4dOdCBqwd46t
+	zq0/z8zcy0H4lokX5/ITdapGXVat+LM1Nio32xPCEslc3OVnpmVd47VDLJutnib8
+	KJe1p7WH9x5FAGTDT8pvlUBVPaLvy7wnrarTRmIwnQr/uyi0+oag8lN0lkma3XD8
+	e9tttua1GcMkMsNbCbA6HGKrIRDl6Avf5WcCvSuYcCxqmXuZLtzPRKrbdsa4RmDM
+	BLSupUxxoYfk03Xs9SCX7BnIZh0Q5fjwlahAUsxgyKzuyHJM/vh3YLVz1hMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734336699; x=1734423099; bh=0EI+vRgqZThaFxJUCrAK3J2clObO5n+JzQ6
-	JlsAvqL4=; b=KHe9LhzlphPQmXfxSGn+rOhpMkxz5iP0aJqv5WmkBYaaae9UD3C
-	mmMCiiTHBr1TRO/ydhw9QMvXPnVOXkjgeeQemM+JhIVPiQcH8trHE3gqSCwdWyB0
-	J+vjhaEj4S4yzYzRV5AN3YyHnkb+7K0TMLn1RPMSEqcsWIC4uWu1V/irHHgkQL8n
-	iG1jwq5jmKOpnCWwyc9ZNk90+U+938D/YuiW9BcSEu9pncfV/ZQwCXgqNJY6jMZl
-	Oh5sa2R+Xc2dGdTYU8DkOpD0+uV8uJSwqKiRNLhDLiZGhWMEnna83dp40PQBIZXc
-	ua4WMBAGdqDmU9XJwabpqW8imxmCrBawxlw==
-X-ME-Sender: <xms:u-BfZxp80bwqJRDbyPgu2nEQSMM0O6MnAXzzYITF-rFYU3SEo6xfkg>
-    <xme:u-BfZzpPn9ZoZMLZU8U-NmqGkn-F3ekT7FskTPR7Mk5hCw0axSPsetMwMnMvAsjoZ
-    4O7VsBpyU2xgtRcCw>
-X-ME-Received: <xmr:u-BfZ-Mv28-Q3_USHR_zFy0kDxyn9hHRgZKo66RBqUI_vAMZ8Z29fh_b6Xa9N_L-qCibWl-EYx_xMmHy-BGj8Dp87_C0KOzTW7ZtZEPVwOOitg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrledvgdduudehucetufdoteggodetrfdotf
+	1734338202; x=1734424602; bh=IGd7x5VFUrxU1ngmNfPXMFqn8MqDF4g68E0
+	JZDyOuw4=; b=C019vy0plqt++w+dN/37S5ZpLV1qNLggJFEloHhqVg1VROCDlhU
+	pItbbRUm50qYkV1/zLrxjtXm2XV/CMk1YRs5tp/aZFIQeLiAMztwuqF5ZL/0d/Ti
+	A4Pio5Vn/JyXjTNQsiNnRthm5ugdDQrKZajndmeub3DFhPPC76RBZ/V4lPw80zfD
+	O2odAdJSnADPEe62vgBmTM6RC1pEnOzbWB+K2X1KugGr+/piszmolwtyz9Is3+s2
+	WnzqD2sAvKzJHKpygD1p7HWB2KB41b/ri1hfdOeDxItJ9NRynMrL4gxmYKHVZN/4
+	a2F++k09dnWwQQlYcPFk2dj/CiqHjydng3g==
+X-ME-Sender: <xms:muZfZ7a1UE4D5FhVGkJWQvZCUG0x6f2JARVSz2hjMMfgnhS10LpQQw>
+    <xme:muZfZ6b-XHtHW8q0Yz0ltryvTGD3YpSXatbZBh16-hREUFz5tCTizCL0tyPbZfvNo
+    junYoQ3_Oov2h3Uxg>
+X-ME-Received: <xmr:muZfZ9_oyb-YX6boz42ySoptI2B6c9af9z2-gtTWzWMvaMiC9_Fqd5lLMfMRn0vtmxGgAQhDYOSkOUfyC_ueeds5loa_loX7pE6WhygnhGhVHg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrledvgdduvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpefgieeiteefgf
-    efuedvueffteelveekteffgeevjeelffehgfffkeegueefkeelueenucffohhmrghinhep
-    mhgrkhdruggvvhdphigvshdrphhspdgruggurhgvshhsrdgrshenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggp
-    rhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:u-BfZ87BgLH-JFC4WV7s7oLAWV7lBD7P2pBhmvZd5-_GLqhoD5lUMA>
-    <xmx:u-BfZw5dHcxHuPYI7YxLLerIJx1lpWxVrgmFAJCHShKKUga-j-pCfg>
-    <xmx:u-BfZ0jP6bckK9RoV8tgGN9Xd4KH3kxkbSVERWXkdBVMmY3Os1Gwsw>
-    <xmx:u-BfZy6DxVeDf-PZDQx3zlyo_USdj3Pgd2BM1sr4ZuP27iY9iwRKbQ>
-    <xmx:u-BfZwG-ZW6zbVTf8INF9P2ZGQX1SYfw6Ef86hTcRXtfCXLQxvWYD36r>
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeiihhhihiho
+    uhdrjhigsegrlhhisggrsggrqdhinhgtrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:muZfZxrtp2SYB1ggwoPXSr9y306MWvYxpZYLNlz1YWj6zY1mdX53Xw>
+    <xmx:muZfZ2oUwRbJlzVj1EHmsN5vmvr-c0tey-DsdWLXANzYU6QZ8lnoIw>
+    <xmx:muZfZ3SJK2fcRDUOQw061aollTbxp_cWwZ7HMwPXVG5M8TvFT9Cq8g>
+    <xmx:muZfZ-pPlczK-nXC92Xgj0ba7i7is6CDbDUab4EH1rmC_IhVk4Y97g>
+    <xmx:muZfZ_kxpVNQYt-Rmg42bu2cgL-5VkIdwWCMpiqoH2y5MDHgVThEoenL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Dec 2024 03:11:38 -0500 (EST)
+ 16 Dec 2024 03:36:41 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a50dcd6b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Dec 2024 08:09:55 +0000 (UTC)
-Date: Mon, 16 Dec 2024 09:11:22 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4b6bad10 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Dec 2024 08:34:56 +0000 (UTC)
+Date: Mon, 16 Dec 2024 09:36:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2024, #05; Thu, 12)
-Message-ID: <Z1_gqiCuTZOdRVO0@pks.im>
-References: <xmqq8qslf5h1.fsf@gitster.g>
+To: Jiang Xin <worldhello.net@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v3 6/8] send-pack: new return code
+ "ERROR_SEND_PACK_BAD_REF_STATUS"
+Message-ID: <Z1_mgG7sqNtHWFnQ@pks.im>
+References: <cover.1731603991.git.zhiyou.jx@alibaba-inc.com>
+ <cover.1733830410.git.zhiyou.jx@alibaba-inc.com>
+ <77f5e128fc1b66a9c8b0df3ce274a98921800685.1733830410.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,78 +89,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8qslf5h1.fsf@gitster.g>
+In-Reply-To: <77f5e128fc1b66a9c8b0df3ce274a98921800685.1733830410.git.zhiyou.jx@alibaba-inc.com>
 
-On Thu, Dec 12, 2024 at 09:31:06PM +0900, Junio C Hamano wrote:
-> * ps/build-sign-compare (2024-12-06) 16 commits
->  - t/helper: don't depend on implicit wraparound
->  - scalar: address -Wsign-compare warnings
->  - builtin/patch-id: fix type of `get_one_patchid()`
->  - builtin/blame: fix type of `length` variable when emitting object ID
->  - gpg-interface: address -Wsign-comparison warnings
->  - daemon: fix type of `max_connections`
->  - daemon: fix loops that have mismatching integer types
->  - global: trivial conversions to fix `-Wsign-compare` warnings
->  - pkt-line: fix -Wsign-compare warning on 32 bit platform
->  - csum-file: fix -Wsign-compare warning on 32-bit platform
->  - diff.h: fix index used to loop through unsigned integer
->  - config.mak.dev: drop `-Wno-sign-compare`
->  - global: mark code units that generate warnings with `-Wsign-compare`
->  - compat/win32: fix -Wsign-compare warning in "wWinMain()"
->  - compat/regex: explicitly ignore "-Wsign-compare" warnings
->  - git-compat-util: introduce macros to disable "-Wsign-compare" warnings
-> 
->  Start working to make the codebase buildable with -Wsign-compare.
-> 
->  Will merge to 'next'?
->  source: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
+On Tue, Dec 10, 2024 at 07:36:26PM +0800, Jiang Xin wrote:
+> diff --git a/send-pack.c b/send-pack.c
+> index 6677c44e8a..f1556dd53c 100644
+> --- a/send-pack.c
+> +++ b/send-pack.c
+> @@ -630,7 +630,7 @@ int send_pack(struct send_pack_args *args,
+>  				reject_atomic_push(remote_refs, args->send_mirror);
+>  				error("atomic push failed for ref %s. status: %d",
+>  				      ref->name, ref->status);
+> -				ret = args->porcelain ? 0 : -1;
+> +				ret = ERROR_SEND_PACK_BAD_REF_STATUS;
+>  				goto out;
+>  			}
+>  			/* else fallthrough */
 
-I think this series should be ready to go, yes.
+Okay, this change looks sensible -- instead of having different
+behaviour with `--porcelain` we now have the exact same behaviour with
+and without that flag set, which is good.
 
-> * ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
->  - transport: don't ignore git-receive-pack(1) exit code on atomic push
->  - t5504: modernize test by moving heredocs into test bodies
-> 
->  "git push --atomic --porcelain" used to ignore failures from the
->  other side, losing the error status from the child process, which
->  has been corrected.
-> 
->  Needs review.
->  source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
+> @@ -761,11 +761,6 @@ int send_pack(struct send_pack_args *args,
+>  	if (ret < 0)
+>  		goto out;
+>  
+> -	if (args->porcelain) {
+> -		ret = 0;
+> -		goto out;
+> -	}
 
-There was a newer version of this series again sent by Jiang Xin. I'll
-try to have a look today.
+We don't reset the error code here anymore.
 
-> * ds/path-walk-1 (2024-12-07) 7 commits
->  - path-walk: reorder object visits
->  - path-walk: mark trees and blobs as UNINTERESTING
->  - path-walk: visit tags and cached objects
->  - path-walk: allow consumer to specify object types
->  - t6601: add helper for testing path-walk API
->  - test-lib-functions: add test_cmp_sorted
->  - path-walk: introduce an object walk by path
->  (this branch is used by ds/backfill.)
-> 
->  Introduce a new API to visit objects in batches based on a common
->  path, or by type.
-> 
->  Will merge to 'next'?
->  source: <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
+>  	for (ref = remote_refs; ref; ref = ref->next) {
+>  		switch (ref->status) {
+>  		case REF_STATUS_NONE:
+> @@ -773,7 +768,7 @@ int send_pack(struct send_pack_args *args,
+>  		case REF_STATUS_OK:
+>  			break;
+>  		default:
+> -			ret = -1;
+> +			ret = ERROR_SEND_PACK_BAD_REF_STATUS;
+>  			goto out;
+>  		}
+>  	}
 
-I was a bit late to the party, but have sent a couple of review comments
-to the mailing list late last week that Derrick may want to address.
+And this is the equivalent change without `--atomic`.
 
-> * as/show-index-uninitialized-hash (2024-11-11) 2 commits
->  - t5300: add test for 'show-index --object-format'
->  - show-index: fix uninitialized hash function
-> 
->  Regression fix for 'show-index' when run outside of a repository.
-> 
->  Comments?
->  source: <20241109092739.14276-1-abhijeet.nkt@gmail.com>
+Also, none of the existing code paths used to set `ret = 1`. We do call
+`ret = receive_status()` and bubble that up, but neither that nor any of
+its transitive calls set `ret = 1`, either. So this should be fine and
+we don't seem to have conflicting error codes.
 
-I've just had a look at it, looks good to me.
+> diff --git a/send-pack.h b/send-pack.h
+> index 7edb80596c..ee88f9fe9f 100644
+> --- a/send-pack.h
+> +++ b/send-pack.h
+> @@ -12,6 +12,9 @@ struct ref;
+>  #define SEND_PACK_PUSH_CERT_IF_ASKED 1
+>  #define SEND_PACK_PUSH_CERT_ALWAYS 2
+>  
+> +/* Custom exit code from send_pack. */
+> +#define ERROR_SEND_PACK_BAD_REF_STATUS 1
+> +
+>  struct send_pack_args {
+>  	const char *url;
+>  	unsigned verbose:1,
 
-Thanks!
+It might help to document `send_pack()` accordingly and point out the
+special return code.
+
+> diff --git a/transport.c b/transport.c
+> index 47fda6a773..454d7f21a9 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -914,6 +914,13 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+>  	case protocol_v0:
+>  		ret = send_pack(&args, data->fd, data->conn, remote_refs,
+>  				&data->extra_have);
+> +		/*
+> +		 * Ignore the specific error code to maintain consistent behavior
+> +		 * with the "push_refs()" function across different transports,
+> +		 * such as "push_refs_with_push()" for HTTP protocol.
+> +		 */
+> +		if (ret == ERROR_SEND_PACK_BAD_REF_STATUS)
+> +			ret = 0;
+>  		break;
+>  	case protocol_unknown_version:
+>  		BUG("unknown protocol version");
+
+And here we ignore the error code to retain compatibility.
+
+Is there any case where this causes a user-visible change in behaviour
+already? If so, we can add a test for this?
 
 Patrick
