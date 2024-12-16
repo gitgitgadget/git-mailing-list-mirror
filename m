@@ -1,71 +1,75 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094E7347B4
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 09:32:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23858204568
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 11:11:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734341560; cv=none; b=SVCTRX0Mwd3GmHwmeh+h6TPyVFhbOo4QlP/ewaMWg0irfyRzdqrbUWlw+hrBQJrBCDJ8kKNNp8i0y9oK9Oqfx1nUbFZNQWcIsLhS8w7BDaN6IjYVcKnW3vl6lZzNWw/NJrWLh+Izr99sd8pTkydnEJ9eZukSQ1L4oGRsBAEbMlA=
+	t=1734347483; cv=none; b=VnGOLUZnT744EPX1ot2+gd0bXj5VEwSzWhAtTUhZJyx8oZMvIl1r2OHKTPQOV4ObioDITDnbfNGYKJUajWuX6CRs4PKl7e9MBIjCm31meEJuY7ts09oZukJRzCz8bJzCvjDpAcbMXyLy7b2tWIrG37fZPrKsbjnz1grFyxCigHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734341560; c=relaxed/simple;
-	bh=R5F6uSw6EyBqYWEbPau75MYHH4A4neEE0vilpRc0DY0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O3MEVhdCmp3qOMYC1iYe2+Yfdzh3vHu/zdWiSfO6ecFdxjWlD06FmPehH1niyHGO9NX/5CRJXY0zqgU1kEEbA2Ve/hYSlcd/R1qS+QQzFOFHJ6wofkzyQTwpsLq/RpabyCLObFSNhjNcNhfTC8IPgViu6cTS2HpUFtjQKCx8pIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=sQfRFmiK; arc=none smtp.client-ip=91.218.175.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1734347483; c=relaxed/simple;
+	bh=ObUUf3Y+JbXYKQz0yzBj8gCWwaROS6gBzI3UflMteBk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U0WBg5GrpBHeuf81FAjGHX0H+8JZBKJoAb3uQeyC3kpEEzqHOVvPv9+sc+/0wGbJgZP3yVKi8MftSl3nEsgIadS6f6W7DmZBVcVSEvOQLxg5/NdH6JJGIDnh8rLJCjPyrDHeAM+DN2CYqnnOIkGg7SH8ZgIhWeegcMv3giENj04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DxC9mBjL; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="sQfRFmiK"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1734341547;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=jUYfs1Pqvl5O7hjEsiamCw0H9OZAZsTOM0yAs2pLIho=;
-	b=sQfRFmiKmjd+LIoWms93E22/60moKakpDfdGe3WFv+jmXy8JIxzkisBV0xl+WkNRvDmevJ
-	u1y8j2lAir9gpi6Z8kpZXfHfTrjxnUymVJrnIYzcaQi8U15XrJ1OuFPCH36mysIgBYvscB
-	5hP0Q+d4PmkMtkfdchNPNs3RCZGIEgA=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 0/8] ci: wire up support for Meson
-In-Reply-To: <20241213-pks-meson-ci-v2-0-634affccc694@pks.im>
-References: <20241211-pks-meson-ci-v1-0-28d18b494374@pks.im>
- <20241213-pks-meson-ci-v2-0-634affccc694@pks.im>
-Date: Mon, 16 Dec 2024 10:32:16 +0100
-Message-ID: <87zfkwgehr.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DxC9mBjL"
+Received: (qmail 26193 invoked by uid 109); 16 Dec 2024 11:11:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ObUUf3Y+JbXYKQz0yzBj8gCWwaROS6gBzI3UflMteBk=; b=DxC9mBjLIfpJMlcsX55w1B7Cq6jmo7PAaloMe5XC043z1DaDpH6hU2mFoT90mPylh9iVlTkiaLBii0BGpY1JrsxagaT2LUb8+RnSXiqVJstkZE7nTxF9/hbcfmrvrfG0td7UXPu4vKg+Rr1Rr8XYrPZZcwO76/MVMK9/LK/K9S4+nmTxwkYBj74NAiKehq5RHI25/5ppLdGDlqQ7JhccmOxLrUQly/blZ6Qgr+OGtUO+L4LHs9+P3oTQC/3f9FO/Ldzu+3ORmLrXH1lhLLf1wZUIQQrEp+khV9wRU5nitSAeHgXcTHYC57TURkm0WTmu1u6GYTX+n299SbCXI+A7sA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Dec 2024 11:11:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26553 invoked by uid 111); 16 Dec 2024 11:11:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Dec 2024 06:11:13 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 16 Dec 2024 06:11:12 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 0/3] batch blob diff generation
+Message-ID: <20241216111112.GA2201417@coredump.intra.peff.net>
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+ <20241213081211.GA1443203@coredump.intra.peff.net>
+ <xmqqv7vnevjc.fsf@gitster.g>
+ <20241213103850.GA1456983@coredump.intra.peff.net>
+ <xmqqcyhtaecy.fsf@gitster.g>
+ <xmqq5xnladwi.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5xnladwi.fsf@gitster.g>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Sat, Dec 14, 2024 at 06:17:01PM -0800, Junio C Hamano wrote:
 
-> Changes in v2:
->
->   - Improve a couple of commit messages.
->   - Explain why we remove `-x` from the unit-test driver.
->   - Remove unneeded `CC_PACKAGE` variable.
->   - Improve error messages when tests weren't found.
->   - Link to v1: https://lore.kernel.org/r/20241211-pks-meson-ci-v1-0-28d18b494374@pks.im
->
-> The series is built on top of caacdb5dfd (The fifteenth batch,
-> 2024-12-10) with ps/build at 904339edbd (Introduce support for the Meson
-> build system, 2024-12-06) and cw/worktree-extension at 2037ca85ad
-> (worktree: refactor `repair_worktree_after_gitdir_move()`, 2024-11-29)
-> merged into it.
->
-> Thanks!
->
-> Patrick
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Yeah, you're right.  I forgot about attr.tree (does not seem to be
+> > documented, by the way)
+> 
+> We do have an entry in Documentation/config/attr.txt that describes
+> the three; I simply assumed it is not documented as I didn't see it
+> mentioned in Documentation/git.txt where --attr-source &
+> GIT_ATTR_SOURCE are described.
+> 
+> We may want to add something like this, perhaps?
+> 
+> ----- >8 -----
+> Subject: doc: give attr.tree a bit more visibility
 
-I went through the range-diff and looked at the individual patches, and
-I've got no more comments.
+Yeah, that looks good to me.
 
--- 
-Toon
+I recall that the performance of attr.tree is not great for _some_
+commands (like pack-objects). So it's perhaps reasonable to use for
+single commands like "git diff" but not to set in your on-disk config.
+It's possible we'd want to warn people about that before advertising it
+more widely? I dunno.
+
+-Peff
