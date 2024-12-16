@@ -1,63 +1,63 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E15205AC6
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 16:44:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A727A207DF1
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 16:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734367480; cv=none; b=qGcV0JheZbri2hSdFy54GX1wl09f4mI72ulBw1Hg3zPlP6gNDoYSBWJpXhqoTO+2jCwA+Fs1rfwXHRMPg9E6SvS1CE5qPqhWw7iuaaefrRMdGx1Fxijx3HPGeS85nYSXegM96mqqTLDJcQtiaWdE6wLrqhBLUHs6Dcd+IJWprPk=
+	t=1734367481; cv=none; b=VZZ9D3yTMFYA9OYNEuTbd/Y9gjZDO1A/TbMpXRbyYpEHfpdsMi3lneo7Uc4g5/S0S47XPie+U5KjkJxNvRFi2F3NBSZodVOHB9TfLw8oBkNf7TdP+v21fqdKO0VPVNiMGqPA1A2OClPGj8ohTWc7E+9aeSvT69o6pEOudNz4dS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734367480; c=relaxed/simple;
-	bh=IB9h00v4zfs7q+FeZZk33xlgGFW2QmXAcKQGj56BkwY=;
+	s=arc-20240116; t=1734367481; c=relaxed/simple;
+	bh=ERhO5bUagvCcVWd1ajCqhTTv/qHXvpyDSomL3moOTTM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aeUieSbsIKBCMQggNCzXi3smLnrlOEKMZ711R8AiudWmLoMNieuriOo3rwgIvjUohVxBUF8NiMhDLMMXyDnY37lzlgwZ1kHAD3OoJlsmuLT+8jvz1lNKtePiuB18u/k9F6WaOTGb7BJm0JPvzEOebn76KqsuYpCnWW4dhOF10Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wn9k65Ow; arc=none smtp.client-ip=209.85.208.49
+	 In-Reply-To:To:Cc; b=LlfW4hc7nRY0nizM2kqWek2jki4K+dB3XMpHiP/S5U+o0fSvMG3qoW1Jgsaj4Bn9BWrZPJvfAfolfH7EkJDooRKL0Tuvcgy48OooPhaPnt91kgIlUxOz2IwBqtdpPrjNm+//Eu9pr/qQ6+ct5abg/o2ykHzBVunJWIc3f4vOSbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQ5N1k0k; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wn9k65Ow"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5d3f65844deso7263757a12.0
-        for <git@vger.kernel.org>; Mon, 16 Dec 2024 08:44:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQ5N1k0k"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a9e8522445dso881754966b.1
+        for <git@vger.kernel.org>; Mon, 16 Dec 2024 08:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734367476; x=1734972276; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734367478; x=1734972278; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=lUvb5dIPp19cc7hdfTanzPMDqohb3VapJTcypa4CDlg=;
-        b=Wn9k65OwMRrFkSigBtHR22QQ26YeucvrPZ2YafpvlIfFLW8S592xPF+1+f9eMf6kw1
-         9dLpXNt1drUDzKfsMQLcJIAWnOO9iRGf7nTHkGEc/Q5rb9s7e7C4NrdhqUj6c9Wn1l81
-         P2XbND1m/HX0zPaPoYjiwNs2Rzfr4Wbczo0cvU3m9sr1oV1kV7ncN6e3gAnNu+zy9QX1
-         HrOLl8k3BvAA71+cMzszjY8/p4xNvD/arzLA/4eITHkrysoTSr9NUZrHU2BT1EkvrQpw
-         cT2tTswSmhNr30Xun4G3b684RiVbs+6Tf9n++ms3r+P/x+ARnsdSqRAUZy2hMnWNhvwx
-         Q8zQ==
+        bh=5gNfOmPXL16KqA+CPu0YSmndFRynLUkndelIwKCAq4k=;
+        b=XQ5N1k0kAM4v3Syq4hsqah1jDAcOidl+Yv5RqBwaVhwXgdTfMSTsxTe3AJh8Tik60k
+         i33sP2HyxhD+wpb2yJuMAXi07k6pKr1Ukfo3c5WnTqi1QKxo1tmje9aDt+lHCP9o/l06
+         pGsLDUjTWLk1/OfG9prhqMS3e169vb8xc2ce5MZLJnUQrbFBrFFSkmzCFP1Ph84sDUl5
+         6Xc7fWmmp5uEEufbj4ctVu+Tp1hwG6jMkyy9VVEORoEAvG27hNR8Kno7mGhpQ9NIZ6k6
+         MqgiaPagdukT3ia7u2HLN/0Z8UQiJzFXjR1LJfRlA8UapsZQubt5gF6RzLE4teFYMA4P
+         gurA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734367476; x=1734972276;
+        d=1e100.net; s=20230601; t=1734367478; x=1734972278;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lUvb5dIPp19cc7hdfTanzPMDqohb3VapJTcypa4CDlg=;
-        b=DTPbCb0MVSGEOoj2S6Jmv3cJ4AcG2BwanQuFcvmKnZQXJz9GFAh75OU+CD7gcGHcsb
-         Eguk3MUIOvcjjfT4sA86H0x7aE3SvccFMuTQNhCR05Q0PWS8httwF0gaZ4+9zQy293Et
-         sOrMXKvjWMeTXl8Q/dJLfXnjD5z+hIgPUTfP93/cohEsj5KEewTCuDAX7D7sB5O3VLOb
-         cVw5j3cqq83cKB47bEwAwxMcWumqGi69MwK2MOBlShUX1RLR+snQxD7ZCs1m+tfnNEHN
-         PMlbkA9geeB+PEI9ANgE8Vk+keLyZ4F0DO5TryxKmBhRQlO5Ve11tqiQbMCQcfQiIsLf
-         vCyw==
-X-Gm-Message-State: AOJu0Yxl7bXFyOK9RCtSm6ZX5NzwiOlpeJbM1L+TgwNNGHVFI7byOaSt
-	Jl/8SxlCRacU1NdMs6NJCQwdIyH+9afyvm4yo+gsa4t9Wam6kATjRQ3Pieka
-X-Gm-Gg: ASbGncvFEKWk9I0hsE79/Zp3UVib4CIgpTxGR0A5G2N4CAJb2YaSsBhkOHqasNHIQZy
-	f3qz1LlTdiqw6zr5oKRquMs+IBSAUq+wjS9cSUr0wbwLVpRG6XGb0bB48bVs/GZL9/QJCFsBE/6
-	fMJdEDcUa++7zS7T+V3MmlCV1sU1zyeJaNIbhCLy21xFo67UjZWwzN2xLnWa3vPRhBM424iz/3h
-	LLkY146FQDuh0ANpWS0HQhq9QZYk/aYHqfs/vnzfhCwzLWFRf001CI+JuY=
-X-Google-Smtp-Source: AGHT+IGN9fflX82RNxXubu41UsdcYCiJ8+RmCwW0GhyLSkTP83PlOuhjdhNAJTDao//ZEbXYsFEn4A==
-X-Received: by 2002:a17:907:3e12:b0:aa6:ac19:b579 with SMTP id a640c23a62f3a-aab779af3bfmr1105046366b.26.1734367476191;
-        Mon, 16 Dec 2024 08:44:36 -0800 (PST)
+        bh=5gNfOmPXL16KqA+CPu0YSmndFRynLUkndelIwKCAq4k=;
+        b=AYivDwyCaeJ56SHsqbGjNHOavfYWZVmK7zAd/2N0Sb29zx74xB+jdufogqlqfIDwnL
+         fevjtrl/TmROaat7so+gGkAdrbUIMJ+ddtu3juYKCw+nx9W4mXWfRBiYRDsJFmn/sUe+
+         Hj8nQqpEgiZSr11wvTlUfN3EGPa9Gt/okuCiIL62tl3GF2yVWrjSV614B8BM/X1iTnhm
+         KvEMAc0U7mH49reBVBZLYOg3tc1p+P/71pyqTdeHHdTzWclMC/dmJdeEvivquw1cppRi
+         WpH6BN+11PhQJu4kYXJBPKG97//dwAyowtGEftxdPxzSv5CyIFwou1WOTIor7E0mi6sX
+         2KWg==
+X-Gm-Message-State: AOJu0Yz8UZQGEPp+BMWsLS/cgeyyvk3M2MOezTOPykJuLZIhKoAdV08q
+	ba/cZV0NMN1e3JcaPkbxX/dG09xzl6QPm9U25Y3Zx0bxAFCjmZ0wcOX9JvL6
+X-Gm-Gg: ASbGnctnWOrL9LTUiYWnfreV7UowEmasiEMQ61STk3AGnDQIwXswG7zAJq8ULCCsmjD
+	+PEJV6sU4h/KCmPgteF+odH00ZpyOGwPwQkR9IuHHG6IKVAkZg+tj8KmxsH6GAxDsF7FS3Tjnj+
+	xcir1GLaSPlaWLJNyZCVidGijvE1p1gBc5rTv6DeGKNgUiZUpztFBxMUp0GNhqbEM50DHPk6D0t
+	CsZJbT8M14Gj2qcieE0qXbHZG1KNsyYl20MgaGuwrMAsXA1wANo/sTK7to=
+X-Google-Smtp-Source: AGHT+IFA9qXAzllvbSArLN8cs6ZnI6rZIBWJfQDxk29LLtPv4xtlt/y1g1sjhIADmvTuBCXdyhaX4w==
+X-Received: by 2002:a17:907:6d16:b0:aa6:8f71:1645 with SMTP id a640c23a62f3a-aab77ed35abmr1328044866b.55.1734367477373;
+        Mon, 16 Dec 2024 08:44:37 -0800 (PST)
 Received: from [10.82.4.202] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aab9635957fsm354834366b.109.2024.12.16.08.44.35
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aab9635957fsm354834366b.109.2024.12.16.08.44.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2024 08:44:35 -0800 (PST)
+        Mon, 16 Dec 2024 08:44:36 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Mon, 16 Dec 2024 17:44:27 +0100
-Subject: [PATCH v4 2/8] refs: add `index` field to `struct ref_udpate`
+Date: Mon, 16 Dec 2024 17:44:28 +0100
+Subject: [PATCH v4 3/8] refs/files: add count field to ref_lock
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,85 +66,195 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241216-320-git-refs-migrate-reflogs-v4-2-d7cd3f197453@gmail.com>
+Message-Id: <20241216-320-git-refs-migrate-reflogs-v4-3-d7cd3f197453@gmail.com>
 References: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
 In-Reply-To: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, 
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2464; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=IB9h00v4zfs7q+FeZZk33xlgGFW2QmXAcKQGj56BkwY=;
- b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnYFjwkuWgX4RyG+aajJ1c18One0gFB1bAdPnfk
- 8m/trihzBGJAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ2BY8AAKCRA+1Z8kjkaM
- f0CGC/4xkK3ctoLg19Dr+R/qWVPkqKZP48H15BTlLv6dpBDk5ixtrsa6M2L/30B51up0pa+QV5J
- b3m/SeMg1Jl3glPXslQ4g0kd8rvO0O8gIXvKxwlGh+ULav1G8alPe1/7gXt6Ew6len4WLN2Zb0t
- WsRFttvv8BBjCj5wF0e/vfB+0L9eC2KLwcuG1Dv/SopgyYH/brd+W7NsWttdsy1OpNqqEOlWQaP
- LnwOl19u+Xl4H5U2FGl/rhB2IpOqsxekdReeVazWR//qJka6JOnarcWK6wbujqSjEJ9HOAy1rqJ
- W/hdZWBpx3Fiswrsd498MtEsV5CPhgvP8VFOAWhKQ/DYv1WSNrEv7krzVft2JdSXFEIhtLt/3n4
- GKks/vdfB0vciqpnaNd+d0CvYnyqobmQuajalwmbJBn122A4A3zvqs/6JJ1zmfAFOEi045HS10g
- u92l+y4M7rPatQs+6OOuItzLYlobGBSWaP+fe1nCdtwiLPM+hc8rZBda4FA0MhMSszrpc=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5670; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=ERhO5bUagvCcVWd1ajCqhTTv/qHXvpyDSomL3moOTTM=;
+ b=owEB7QES/pANAwAIAT7VnySORox/AcsmYgBnYFjwyVryaUgb+HLymh3pJc+6LHCjlUZ54L06Z
+ EePezgdKy6JAbMEAAEIAB0WIQRXzkx/Y3VxD8tlxgY+1Z8kjkaMfwUCZ2BY8AAKCRA+1Z8kjkaM
+ f2znC/0bk2EBNO6tvIKJxG5exJFEIZOzOVC0VndJSiLk5K5oYOdXxw/DkZ4SxkhDO0y8aB7nBrU
+ 3H1lqIoOusdI5BM0nOWD1YaAYbBoq0i33lutPiP8t10vwJ6OdWZ//s/dHbVmUl1VF57IF3lWBnr
+ iqtJQ1jInjo3oDJRfjTNhNFECPNApfF//2FD8zJ94jy9iDvNFbPVlS5WvpDPO7992Pgob0ydsH+
+ 0KjGXcl6TFtBKvtdGmYusO9+bdHHxLGJkeiur8TU02sW+NtbosrYZH/TYQpSHfmGw1/w8ARZVuf
+ eOO8ta7SGfvb8JFcbhzjXf303kf3DUWsKVtRs5DncXetVWn07mr8Rf3cgrRIXo4zyRZFT9DBi3S
+ PO96J+KKVRqR3wEHaPOSzyDRHDWoNzkm/7PccjL8Rctu8G1c9IA0qKxlggjPvQ1AgfFqH1kmOOP
+ iWVD2HXpfLXxi8DPNSzCILDvO8T+dKejHwzqureW8E6Fc8Zpicu3N9iYnxIHtwSFj+NPo=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The reftable backend, sorts its updates by refname before applying them,
-this ensures that the references are stored sorted. When migrating
-reflogs from one backend to another, the order of the reflogs must be
-maintained. Add a new `index` field to the `ref_update` struct to
-facilitate this.
+When refs are updated in the files-backend, a lock is obtained for the
+corresponding file path. This is the case even for reflogs, i.e. a lock
+is obtained on the reference path instead of the reflog path. This
+works, since generally, reflogs are updated alongside the ref.
 
-This field is used in the reftable backend's sort comparison function
-`transaction_update_cmp`, to ensure that indexed fields maintain their
-order.
+The upcoming patches will add support for reflog updates in ref
+transaction. This means, in a particular transaction we want to have ref
+updates and reflog updates. For a given ref in a given transaction there
+can be at most one update. But we can theoretically have multiple reflog
+updates for a given ref in a given transaction. A great example of this
+would be when migrating reflogs from one backend to another. There we
+would batch all the reflog updates for a given reference in a single
+transaction.
+
+The current flow does not support this, because currently refs & reflogs
+are treated as a single entity and capture the lock together. To
+separate this, add a count field to ref_lock. With this, multiple
+updates can hold onto a single ref_lock and the lock will only be
+released when all of them release the lock.
+
+This patch only adds the `count` field to `ref_lock` and adds the logic
+to increment and decrement the lock. In a follow up commit, we'll
+separate the reflog update logic from ref updates and utilize this
+functionality.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs/refs-internal.h    |  7 +++++++
- refs/reftable-backend.c | 13 +++++++++++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ refs/files-backend.c | 58 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 39 insertions(+), 19 deletions(-)
 
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 0fd95cdacd99e4a728c22f5286f6b3f0f360c110..f5c733d099f0c6f1076a25f4f77d9d5eb345ec87 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -115,6 +115,13 @@ struct ref_update {
- 	char *msg;
- 	char *committer_info;
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 6078668c99ee254e794e3ba49689aa34e6022efd..02cb4907d8659e87a227fed4f60a5f6606be8764 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -71,6 +71,7 @@ struct ref_lock {
+ 	char *ref_name;
+ 	struct lock_file lk;
+ 	struct object_id old_oid;
++	unsigned int count; /* track users of the lock (ref update + reflog updates) */
+ };
  
-+	/*
-+	 * The index overrides the default sort algorithm. This is needed
-+	 * when migrating reflogs and we want to ensure we carry over the
-+	 * same order.
-+	 */
-+	unsigned int index;
-+
- 	/*
- 	 * If this ref_update was split off of a symref update via
- 	 * split_symref_update(), then this member points at that
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index e882602487c66261d586a94101bb1b4e9a2ed60e..c008f20be719fec3af6a8f81c821cb9c263764d7 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1279,8 +1279,17 @@ static int reftable_be_transaction_abort(struct ref_store *ref_store UNUSED,
+ struct files_ref_store {
+@@ -638,9 +639,12 @@ int parse_loose_ref_contents(const struct git_hash_algo *algop,
  
- static int transaction_update_cmp(const void *a, const void *b)
+ static void unlock_ref(struct ref_lock *lock)
  {
--	return strcmp(((struct reftable_transaction_update *)a)->update->refname,
--		      ((struct reftable_transaction_update *)b)->update->refname);
-+	struct reftable_transaction_update *update_a = (struct reftable_transaction_update *)a;
-+	struct reftable_transaction_update *update_b = (struct reftable_transaction_update *)b;
-+
-+	/*
-+	 * If there is an index set, it should take preference (default is 0).
-+	 * This ensures that updates with indexes are sorted amongst themselves.
-+	 */
-+	if (update_a->update->index || update_b->update->index)
-+		return update_a->update->index - update_b->update->index;
-+
-+	return strcmp(update_a->update->refname, update_b->update->refname);
+-	rollback_lock_file(&lock->lk);
+-	free(lock->ref_name);
+-	free(lock);
++	lock->count--;
++	if (!lock->count) {
++		rollback_lock_file(&lock->lk);
++		free(lock->ref_name);
++		free(lock);
++	}
  }
  
- static int write_transaction_table(struct reftable_writer *writer, void *cb_data)
+ /*
+@@ -696,6 +700,7 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ 	*lock_p = CALLOC_ARRAY(lock, 1);
+ 
+ 	lock->ref_name = xstrdup(refname);
++	lock->count = 1;
+ 	files_ref_path(refs, &ref_file, refname);
+ 
+ retry:
+@@ -1169,6 +1174,7 @@ static struct ref_lock *lock_ref_oid_basic(struct files_ref_store *refs,
+ 		goto error_return;
+ 
+ 	lock->ref_name = xstrdup(refname);
++	lock->count = 1;
+ 
+ 	if (raceproof_create_file(ref_file.buf, create_reflock, &lock->lk)) {
+ 		unable_to_lock_message(ref_file.buf, errno, err);
+@@ -2535,6 +2541,12 @@ static int check_old_oid(struct ref_update *update, struct object_id *oid,
+ 	return -1;
+ }
+ 
++struct files_transaction_backend_data {
++	struct ref_transaction *packed_transaction;
++	int packed_refs_locked;
++	struct strmap ref_locks;
++};
++
+ /*
+  * Prepare for carrying out update:
+  * - Lock the reference referred to by update.
+@@ -2557,11 +2569,14 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ {
+ 	struct strbuf referent = STRBUF_INIT;
+ 	int mustexist = ref_update_expects_existing_old_ref(update);
++	struct files_transaction_backend_data *backend_data;
+ 	int ret = 0;
+ 	struct ref_lock *lock;
+ 
+ 	files_assert_main_repository(refs, "lock_ref_for_update");
+ 
++	backend_data = transaction->backend_data;
++
+ 	if ((update->flags & REF_HAVE_NEW) && ref_update_has_null_new_value(update))
+ 		update->flags |= REF_DELETING;
+ 
+@@ -2572,18 +2587,25 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 			goto out;
+ 	}
+ 
+-	ret = lock_raw_ref(refs, update->refname, mustexist,
+-			   affected_refnames,
+-			   &lock, &referent,
+-			   &update->type, err);
+-	if (ret) {
+-		char *reason;
++	lock = strmap_get(&backend_data->ref_locks, update->refname);
++	if (lock) {
++		lock->count++;
++	} else {
++		ret = lock_raw_ref(refs, update->refname, mustexist,
++				   affected_refnames,
++				   &lock, &referent,
++				   &update->type, err);
++		if (ret) {
++			char *reason;
++
++			reason = strbuf_detach(err, NULL);
++			strbuf_addf(err, "cannot lock ref '%s': %s",
++				    ref_update_original_update_refname(update), reason);
++			free(reason);
++			goto out;
++		}
+ 
+-		reason = strbuf_detach(err, NULL);
+-		strbuf_addf(err, "cannot lock ref '%s': %s",
+-			    ref_update_original_update_refname(update), reason);
+-		free(reason);
+-		goto out;
++		strmap_put(&backend_data->ref_locks, update->refname, lock);
+ 	}
+ 
+ 	update->backend_data = lock;
+@@ -2730,11 +2752,6 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 	return ret;
+ }
+ 
+-struct files_transaction_backend_data {
+-	struct ref_transaction *packed_transaction;
+-	int packed_refs_locked;
+-};
+-
+ /*
+  * Unlock any references in `transaction` that are still locked, and
+  * mark the transaction closed.
+@@ -2767,6 +2784,8 @@ static void files_transaction_cleanup(struct files_ref_store *refs,
+ 		if (backend_data->packed_refs_locked)
+ 			packed_refs_unlock(refs->packed_ref_store);
+ 
++		strmap_clear(&backend_data->ref_locks, 0);
++
+ 		free(backend_data);
+ 	}
+ 
+@@ -2796,6 +2815,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 		goto cleanup;
+ 
+ 	CALLOC_ARRAY(backend_data, 1);
++	strmap_init(&backend_data->ref_locks);
+ 	transaction->backend_data = backend_data;
+ 
+ 	/*
 
 -- 
 2.47.1
