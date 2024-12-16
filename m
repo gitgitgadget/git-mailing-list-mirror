@@ -1,90 +1,131 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614651FFC48
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 11:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3758220012C
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 11:47:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734349574; cv=none; b=qnsxvot1euiFdxbTpuSEFd96pBpTW4rocQ/aNS08MAKd8wjMYjL/l/tnvDYbj7uIdJTV8ByZ5AsnTKDDzZS249TXu9xJX5Cf+gjthhKQR45HYrmIFtH47NqjKAonvTmQY53Y29RsKVquvqid24PdHANgy89O2/7qbsTsNdC8Soc=
+	t=1734349641; cv=none; b=g7Qe7cJ5/ib3pSr51eJIKccmQCh5lm1j/bkjI2Ei/cOpPzjbkN54khj46Ny0j5MGIynFtIlvvoFfYzcilp80MW6h/sEPgwOw2LHQXec70wkGAMmQg8c35sd9flO3gnVfJ+kNxmNXsWtCgmQjFjtsR5zH2xsmAYyijmXCPbWMA6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734349574; c=relaxed/simple;
-	bh=b1gkRWvGRmp3R4N786BzwVrLtRSpaUt3PHwFhk/lzU8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=hbP7CmJ7ikcIENojCKkasM7cZIrkNinWEqyzRg9sGEk4gp7mb2uFthOrcjHe3VBEcRSwKkD7nn2eCsVnW3K9y8tF11UKxQhOUzKqRqOHzf/S2mU3RW2gSzF7bDMSvFmdegDcs0TyT4fFL2mydj2tHi6E1wf0oNu7L6r+2qk1SGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tet8V0Oh; arc=none smtp.client-ip=209.85.160.53
+	s=arc-20240116; t=1734349641; c=relaxed/simple;
+	bh=xY8yCOiFj3HiNWFQcFdqGiJ/gix5lboBF7KLSrgs8SA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hokJ3yhvKZ7j7eLP5DmtWeqegKMJKb5eGiQ8F08CCAbGXhLp8ETi4Qb1Ve3gHvH/3paL/+9wwoK3uwqH0qOkyEiU31DKTTuc9NqG5uWl9ftLwM3T0WrN96z68wFD4gV/HkKyKnpoyWWOGF1mEIo0XHfHYR7zkvE38hPElNwUNG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gNLjnqK/; arc=none smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tet8V0Oh"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2a3d8857a2bso1111695fac.1
-        for <git@vger.kernel.org>; Mon, 16 Dec 2024 03:46:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gNLjnqK/"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-51882748165so1158940e0c.3
+        for <git@vger.kernel.org>; Mon, 16 Dec 2024 03:47:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734349572; x=1734954372; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=b1gkRWvGRmp3R4N786BzwVrLtRSpaUt3PHwFhk/lzU8=;
-        b=Tet8V0Oh482fSyJf9sYW9Xrjgx7GDu8sPL2N/ALXTsWAXawSoCm0gsjflADwLFR9QG
-         gZSryEfW6P57CFpRTqml0eNPr1SuDHFNvWikBlmvjkQf12rd3PbbtS3p/v13xZMrS/3q
-         a7d2IQRa6ULsfZzjMDfZQRZnDo89CbI4weFW7BMM3bHmgUCvsidt61GVhWbCu1Xw566C
-         n+SLu5p2cgjYRSZabkHHRDR2OR49d3VKNvfNbCbxUOQWtaecMMdbFdkxPB/Orrl/tTWY
-         u+kvUxz88B40rHRg28CoSokWzdWQRzkKIQaoennGW4w0ksOEpIyo6m72NYW2zQHaChdj
-         nhDw==
+        d=gmail.com; s=20230601; t=1734349637; x=1734954437; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rhJE0wgN6rkpse3NIOezoEbGD0lTh6U4FIgxzNIF5M=;
+        b=gNLjnqK/2C/ShKIcBIgvtS6hzzRte1SVBGM6Tgm8TONVzi0ESACBfpt0RFwNeORt64
+         buzfn3VCKVIpMgOCpR9+u1aKb4lPVv/C6omtKecQp2+nnvp0JwuSFifGfvbC2BBXPzj5
+         V1e12Cl7eOcMRudO6P75SiI67YsGChq5ZgY0dUKpVBCZS/O0ae88cg1Ng4ilr9dKLo60
+         zbO3/z2PQuN1WfBuvfjceBDvammJzVLmoZQiXScO1KkjMMCtbuZVLp2kLeFhpPuAqDPG
+         AknKVhy8qxguY7e7t+pAA37/6VqdPNwTK1azvcJqBZubkJVLXpx7ZhIQqVdBRNS25PEG
+         q2MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734349572; x=1734954372;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b1gkRWvGRmp3R4N786BzwVrLtRSpaUt3PHwFhk/lzU8=;
-        b=LVQNJGNEKTdANz/E125ErvElf7wuwH7vJB8A5xIAlan9+A+Fhc7r6f8t1CGyL3xp9T
-         0r1Kx2CcwR2yJLl/5WDDCeoc9m01sF9qRpmZ04e5yeAFevpwGak863/PzcLVDuwCcSf9
-         +UXCvYA1FrdEC7deisYzqZ65qptJRafbZatS8/IklGWSLvEEMuNBpCeuWPDWUH6b/CPy
-         SKXFPWHbrBp5guMTkVy6FGeLcnkl2Bz9FaqlNH3cr+z43U5rfL3ZLwF3xib66/BS+Nk0
-         peUkBl17ieFOsDoJVyinYqQw4X7SpXjDOiSUm+UXyfKmwIrOXz/L2YGLBJmw/eXK6UAX
-         TY2A==
-X-Gm-Message-State: AOJu0YwlC/yeFilJjBdZaOd8Yz5RSDDwcJsTcy7lYZgiK6x1c7T+LV9w
-	LCltyihth4/IgAhRsck+d9Xdlz2nQqMjTZhRVchDq8YyXYgoJ1TPKnt2V44CAddBGTgwJ2lIIJq
-	7mUgsrwQwrIgdC+HN8FDyrf3Tj5UmXYz3
-X-Gm-Gg: ASbGncvaqPzwX/+6Kmzur79ORtXS6Ld9eqLazwSpht4GzYNNbs2Ssz0j2C07MHmyGFO
-	NgIpJBJruZyfH5yDE9/H2SjP4xg06u3NfEo6fIr8k
-X-Google-Smtp-Source: AGHT+IH6rnWgOgJwV05L+c+knOcerBRNdeoi/QSDS2hX19Lj5RDUo51u9Nbu1G6ULEiTXssxiqGXqPv1rGkZ7/QkPzc=
-X-Received: by 2002:a05:6870:d623:b0:29e:1b70:95cf with SMTP id
- 586e51a60fabf-2a3ac973cbbmr5825299fac.40.1734349572246; Mon, 16 Dec 2024
- 03:46:12 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734349637; x=1734954437;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rhJE0wgN6rkpse3NIOezoEbGD0lTh6U4FIgxzNIF5M=;
+        b=ieTjEsPt6/Zl1q/ssXLrMwV5TDuj/OzcFr+QvhZJDk5Gdm+lxNBHcgrt3jtGznl0ra
+         Cr12NNtZ+0dL6G39WqwAZ46wILJAK3MfNZLsFDDy++Vxc51tZW6WJ96G73PW6J2PaaRG
+         Uc9JYwJS7GU3ubGKUD2jnalp7KfBcPs8drW2CwbCHjcj2+Onu0jB81dhJW5as1KzQ1Ud
+         Sn6qb7KGHzcBQXrvIgufR65PTYIpa+Bvj8+zCn8QrygecOMp0nuc2ZPcQUfrxJnGxUZH
+         WlGFOofL1mLOjtIttLKOSdbv5kYr1QHyTUVzma8+3I1iq33jjeaUHFqBcSex14Qq0PTa
+         bYvA==
+X-Forwarded-Encrypted: i=1; AJvYcCX/WPZT2o1pff2pIx4sM1zVeI0J+oZQGzux2/Euuu+siUikVa2CYAEvgjCAIjELwrEzy/U=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzK2LPb0ehOm10YwQAqek1f1wdEXz6WDY6Gfs0Hk5eBHpS/qGXv
+	ENFpkwKmlEJlP/EZ4itv/Kbyx56WxSxuWQ5BnqsRPGO2QiA1HQmJPKsmZ7PkB6CBG/ymt4CI2xE
+	dpc0wj8S+za87YXLdBw9fLM1YE0Q=
+X-Gm-Gg: ASbGnctRANumPjtHKu/6Tn9Wj8BDmqmRd6IS6xqB5YlKOkG7EQvUlQwBEl2FMt58mcM
+	8iCXw1AloRCfV4Ag5BCCh44XAYNCBnzo+RFBc
+X-Google-Smtp-Source: AGHT+IFNAOFueJ1vfJlSInFDgAEor+623zM94ncc4wxaCwdJ/nouno/Lw4ITzs/tqGE1XhBggnc81l69Qw0cC44wr5I=
+X-Received: by 2002:a05:6122:8cc:b0:518:7ab7:afbb with SMTP id
+ 71dfb90a1353d-518ca30a781mr9762190e0c.8.1734349636994; Mon, 16 Dec 2024
+ 03:47:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Dec 2024 06:47:15 -0500
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <20241206124248.160494-3-christian.couder@gmail.com>
+References: <20240910163000.1985723-1-christian.couder@gmail.com>
+ <20241206124248.160494-1-christian.couder@gmail.com> <20241206124248.160494-3-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Mon, 16 Dec 2024 17:16:01 +0530
-Message-ID: <CAPhwyn20hzG=kBz1cUFhCaEbh1upV3V+M=PRuO=3MugDAKQiWA@mail.gmail.com>
-Subject: [GSoC] Introduction and selecting microproject
-To: git@vger.kernel.org
+Date: Mon, 16 Dec 2024 06:47:15 -0500
+Message-ID: <CAOLa=ZS-VYdmk-oDxFVXS93KSozPJWwfyUpp7c8fTaGW8Kib7g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] strbuf: refactor strbuf_trim_trailing_ch()
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>, 
+	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="00000000000007abf0062961be6d"
+
+--00000000000007abf0062961be6d
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi everyone,
+Christian Couder <christian.couder@gmail.com> writes:
 
-I am Meet Soni, a Computer Engineering bachelor=E2=80=99s student currently=
- in
-my 6th semester. I am an open-source enthusiast and enjoy contributing
-to various projects. I had the privilege of being a GSoC 2024 student
-with the Python Software Foundation, where I worked with cve-bin-tool.
+> We often have to split strings at some specified terminator character.
+> The strbuf_split*() functions, that we can use for this purpose,
+> return substrings that include the terminator character, so we often
+> need to remove that character.
+>
+> When it is a whitespace, newline or directory separator, the
+> terminator character can easily be removed using an existing triming
 
-I=E2=80=99ve been using Linux and Git for a couple of years now. Contributi=
-ng
-to Git feels like a natural step forward - a great opportunity to give
-back and learn while contributing to a project that has been so useful
-to my everyday workflow.
+Nit: s/triming/trimming
 
-After reading the applicant microproject documentation, I have
-selected the microproject involving the modernization of test scripts
-and would like to work on implementing test_path_is_* in the script
-t7611-merge-abort.sh.
+> function like strbuf_rtrim(), strbuf_trim_trailing_newline() or
+> strbuf_trim_trailing_dir_sep(). There is no function to remove that
+> character when it's not one of those characters though.
+>
+> Let's introduce a new strbuf_trim_trailing_ch() function that can be
+> used to remove any trailing character, and let's refactor existing code
+> that manually removed trailing characters using this new function.
+>
+> We are also going to use this new function in a following commit.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  strbuf.c         |  7 +++++++
+>  strbuf.h         |  3 +++
+>  trace2/tr2_cfg.c | 10 ++--------
+>  3 files changed, 12 insertions(+), 8 deletions(-)
+>
 
-I look forward to your guidance and feedback as I begin this
-contribution. Please let me know if there are any additional steps I
-need to follow or considerations to keep in mind.
+Shouldn't this patch also add unit tests? We already have some in
+'t/unit-tests/t-strbuf.c'. This applies to the previous patch too.
 
-Best regards,
-Meet Soni
+[snip]
+
+--00000000000007abf0062961be6d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7d931d3a0998c056_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kZ0UwQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWhNQy85d1hoanJtVC9Yc28xejI2TngvaG1RMlp2VQp4b2h1NDQ0TEpZ
+bFg3dmEzRSswY0l0Um9wbXUrRms3WjZaNXYxZWxXYWgwRHVqWFJKOFplbzU1NEVXNWs5S0hpCnB2
+dFV0VjdDR1dUQU9GbFhzbDRvOXBod0pXeWFCNm92dG1hN1BPSWxERDF3U01lTlhPeEhQaHQzeEZ6
+N2dvSjkKVDFKWWdqaHI4WHZNV3d3Tmptdy95eGttUU5NSDdDL2xXSXBoTjg2OW1SZU1KOHZjdHFZ
+RnBXN2R4MURnMzFFaQowTUdZcTk2azdwUmI1M1hrbHpkaXlFNHhGTkRleFhuOFZEZnBTTnBxR0Qy
+RUhCZ3ZiMWYxeS9oY1BaMm05WVc0CjdMRFNWZkZNdTRYTTZaSTlhV0JBa0tOR2JNL0pHMFNPVHJZ
+dWhhUXBWTzg1TFQ2MS9WOXl2amNFeGg0bFM4bU4KODBaekRhbWU1MFZKRE9HWWdkVnI0cUNrTWxj
+SCtZNzV5bTg4WVZvS0xYSjNSWkhHZnAxQ21ONEk1Q01OdkxPQwpYbFN1M2daMlhJS25hZnFvSjNo
+Z2lTNEkzVWFVTGpMcGp0WlVBdGkyYlhGeWJacTlVeFJCZ1FBQ013Tk9WdFV5CkpwSG8xOFAyVC9F
+ZlpFOEFKbGx0UXltYUF3ektqT2xjazhLMUx1ND0KPXZ6eHEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000007abf0062961be6d--
