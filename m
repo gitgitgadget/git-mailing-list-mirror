@@ -1,136 +1,167 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF732063CC
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 16:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41226839F4
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 18:12:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734367663; cv=none; b=ohK3Z8mgW/z/kF/RDayyhxwETQz+IEjlz5SmsER9zlIc42dwnRhUD0QYRJhS/AvzCXjh2xXFliFzlBa6HBk92rOJruVC2pJ3dLL3CO9P3cI/NJNxGniug8gmfatZF0jVF26Sb7731p+mrBu5rAqY/zvvPviOvseqv9sl3qYkRrc=
+	t=1734372734; cv=none; b=hZLDcKSnq3TKDejN7YZ+ZBwF5zUViVW6F17GuMG5rgeukI8BSoxtLnFfrzWItoSko8NHrH6ymbJ3H9m8OH2GtVfWbIN2j+fgSJE48IlAkv7HJdhKWx47nhmEnZst7wT/SE+oKC295X3gpO43VvD0OnuongUuKkgijsybC4ZQpmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734367663; c=relaxed/simple;
-	bh=O+Tr3q8anLr5JxvvS4bFA/ytI+GC9QRpjQTpCbAndp8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=khcT4G/n/Pf0cN4ZUsmwyyGQONHMCaBlo5fWvtIJNd2sCYs3+yaIMcyF5GVMC8ShqQ5ZwUhkZP47wMF/FwoXvkaBX4IXACbAeVnNB171+Ny98SCP+CosUN0XQoGb+xy8fQnCEQJU7z7da6XFWkv0CoCC5+G2Gguachovl8OroAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZKP6SXW; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734372734; c=relaxed/simple;
+	bh=buX9ZaUDnN03afYtg9B60auuW1+ghF24CLT1JeVNIN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aKPCncrKJZqLl5u9EtS+DO9/7GDpHd92iSlHqaNiZl4KND51Wj7zFCzXSsCe5Vl830isTJpwfMTM8uzgrZFwzzaRFAWuLvElodUgPWtjMx9DQdQYdASqNtxSuOIWfY7oSlGfrdd159VB32eKUqT2spNjPAKnIl1PwG4qyFGi41A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qA4oD7tR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R70oWaJZ; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZKP6SXW"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5cecbddb574so7379193a12.1
-        for <git@vger.kernel.org>; Mon, 16 Dec 2024 08:47:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734367659; x=1734972459; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KEg6m0jLAIuND2ziGtJylt5i/VSYNuebu6W4JRxNKic=;
-        b=VZKP6SXWgBlv8nwzEvtFH7PcOXRTKkYFcwehgt4KZKmSbur7j/QgfYOFRAeisQPxVJ
-         eR7PeHILK9/dAVORNnO2ZbzlqQ/cNS/0/xFZJ8VN7LzQcpOyCJguHqlH47rKMReF2TS8
-         ZW6R4DNn9PHEhcv7ckm+xvkv5X1GOWSnpRdJ5EB8FSF1o4N8al6939eYYgCPBjOkrCWw
-         J6IZi+aiuV9vHd7QwhVwOYbRO2bVuWet+HX8kUmBHjYNT8piT1CI8j502WhbBIB9bkwY
-         Fqpsh+N4oUC9MYgGDJrGruaBZAPZ/9hLxSyQU8dvyWFic8hyJKsLSJDeVoZDSKVbvFHy
-         7/5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734367659; x=1734972459;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KEg6m0jLAIuND2ziGtJylt5i/VSYNuebu6W4JRxNKic=;
-        b=HqTSokc+idvZXGWnMRgAr9hT4Pp+OPTzkHt8mBZJzkyS25ofbXbhWPhMI/0czGrCc4
-         IfIocOzP6saHAsg9vo2/p9QWiwvRf+8kBEbkYoFTwj87x9khmYntewLcDQZd7NGi+7Mc
-         4+NKsisvgRFBr6W4zr2asV/hZmEyUPFavL65CwPIhls1qhp7TPhn2M3CxK03EwB2jRuK
-         RSeyMnDjKw1RyqiwaJ4LaOGAZz86J7jKdgE3Nao/CaqAnwOF25GAts+PeuUUcVhj3hhn
-         b6JZ/CgUEpMZF8E1lMlNeJ0pVjnKCGxLtO7b4rbd1LpWVrSoADRmIUFVyiScfSaJkoQW
-         PT4w==
-X-Gm-Message-State: AOJu0YyPXkKX4sA71uGk41i88bIek+PDf5BuTTMurqmrsbFjtiIxqgRk
-	rXpl9F9HwIYzGruwCqRBhBTppMxsJTwUApIqKRgU555gqgANR8h2kCYXQf6etP+irHat5sy1gw+
-	+52KCLHd+Nde9gyDcXtQRfhcQ739RYtMhwA==
-X-Gm-Gg: ASbGnctOm4cR0qW2arcy882jQrrXlIlCCsE4B4gUGm1midPUIxUzuuR3p0qZv+/xF4J
-	GNOMqiEYzEODIoGUdL9EwcTejPpWBBEJGQKpX
-X-Google-Smtp-Source: AGHT+IEpsC1W0Ex4xYL+U6BIE/6ZHkAoZjhaj5mQCCrdhYa6Oafmq1O4f59/KYRiVQhQ5af/DxroB4610YayWjhGhMY=
-X-Received: by 2002:a05:6402:1e89:b0:5d4:4143:c07a with SMTP id
- 4fb4d7f45d1cf-5d63c2f8decmr8967266a12.1.1734367659443; Mon, 16 Dec 2024
- 08:47:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qA4oD7tR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R70oWaJZ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5F12A11400FF;
+	Mon, 16 Dec 2024 13:12:11 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 16 Dec 2024 13:12:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1734372731;
+	 x=1734459131; bh=K2Yhr138i/TS4IXui3/OignvpDVtgxO4FzRMx9anJJ8=; b=
+	qA4oD7tR/izGetep3OmU+HG/AEmn1Nw+Mj/l7l2tTmOhlyV3xQAnknLc0BzrkoBd
+	ayKRBPzqVz8WAO5sKrnAPsp4Lz8LG0Xq0w7UK9Tw+91p0foRCQEm9mbN39GzT/G/
+	fygA4hYf0igIlxYEjM5zvuo0KJfELBB5U8yKWq4A3bT6mnLSr/IgQFNcB7Sp3FQn
+	LFuUJXK+ZBNuGWU4XfMNoHzdZl0XLJ18BAM5ri0gmgTxYq6Rb62FL/kv8hoxLdB5
+	NwHALUFlWUI/wk/SyD0N5AbMouctQpYKz19iHEIUUx6FvMnXzRgOFwbjrZLR53qz
+	HnUzO1OtG/y8N9Zd52beaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734372731; x=
+	1734459131; bh=K2Yhr138i/TS4IXui3/OignvpDVtgxO4FzRMx9anJJ8=; b=R
+	70oWaJZk7R7cRhI0n5jOFTY+jvGvviF3ueu65r2RmkW6JrTmGZkpsu/3KpH9Xhf5
+	jf4lmFqlYe5R4uazN/pygRLvgUBrJuZGezkoYtY8CEhO1WzGj3+zzVJHK62UaFCR
+	iXGFrIAn2sBCe00evOzRXSdPizQeSoRnPqFcryjkepSpFR8fP6G45X7NvqW1vwFc
+	l8xTKwlr+9xDrEjkmGJGZqEszQ0AfwF22QD2Z5gR3d2IjjqKBX2JV7A2Urt9gE5O
+	md/dk0p92SMrlwqM3m22u59C46WFpglQ5Z8KnXq3pqZAl4m1uF6r/7MCYtYsyD7X
+	dGiU3nRUins4x7g/YVEvg==
+X-ME-Sender: <xms:e21gZ06apFBFwXC2OAllRGEg1iPmnp1KkMpU5gH9jocUWYYWDlT9uw>
+    <xme:e21gZ17jlWTztAu07cSTcZiogCOaGOFPeLgycvEuJzOxMDMcl3BT2A6E-CANKNDuD
+    grAxFXY01fWjFZl7A>
+X-ME-Received: <xmr:e21gZzebIJRhbRtv0jC7TXb2uOL4kKqpKSK_Z8l7Dwuj0f7dHyksK4_lVWR3-1GSS_j4OQG6j4vtrF9g6OVunoXvt5rnkqoJ0wTQRqk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleefgdduuddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
+    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihuhhrihdrkhgrnh
+    hivhgvthhskhihsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:e21gZ5Ls7Gotu9MrHGzRB47Izs9lI1hFNKxEqwcOvutCK9rfpEBgew>
+    <xmx:e21gZ4KqR1Ki68Hh9-9fNc7iT1Nc_S5U2p9QVR31SILtBmrMl7k-HA>
+    <xmx:e21gZ6wBc9jqqMr2P591dEkHU_PUiAv10IMFCdXnh-pibdaDMLszeQ>
+    <xmx:e21gZ8LPpaHRosAVRc1VefgP3i7-tTLbPJ8LTjaZPmd5QMYwa0ut3A>
+    <xmx:e21gZ81wYUwwqJiSL12lv9OyOBAmCaJQb2oNfeELyUYvepxlnI7J7vIo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Dec 2024 13:12:10 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: remote.<name>.push without dst doesn't behave as documented
+In-Reply-To: <CAMhVC3b+1TWLkKGYVb6VyBRyQjsDpbKRQQNT8SUXSmrWHfPnEQ@mail.gmail.com>
+	(Yuri Kanivetsky's message of "Mon, 16 Dec 2024 18:47:28 +0200")
+References: <CAMhVC3b+1TWLkKGYVb6VyBRyQjsDpbKRQQNT8SUXSmrWHfPnEQ@mail.gmail.com>
+Date: Mon, 16 Dec 2024 10:12:09 -0800
+Message-ID: <xmqqr0674hvq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
-Date: Mon, 16 Dec 2024 18:47:28 +0200
-Message-ID: <CAMhVC3b+1TWLkKGYVb6VyBRyQjsDpbKRQQNT8SUXSmrWHfPnEQ@mail.gmail.com>
-Subject: remote.<name>.push without dst doesn't behave as documented
-To: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Hi,
+Yuri Kanivetsky <yuri.kanivetsky@gmail.com> writes:
 
-> If git push [<repository>] without any <refspec> argument is set to updat=
-e some ref at the destination with <src> with remote.<repository>.push conf=
-iguration variable, :<dst> part can be omitted=E2=80=94such a push will upd=
-ate a ref that <src> normally updates without any <refspec> on the command =
-line. Otherwise, missing :<dst> means to update the same ref as the <src>.
+>> If git push [<repository>] without any <refspec> argument is set
+>> to update some ref at the destination with <src> with
+>> remote.<repository>.push configuration variable, :<dst> part can
+>> be omitted—such a push will update a ref that <src> normally
+>> updates without any <refspec> on the command line. Otherwise,
+>> missing :<dst> means to update the same ref as the <src>.
 
-https://git-scm.com/docs/git-push#Documentation/git-push.txt-ltrefspecgt823=
-08203
+This excerpt is for <refspec>... arguments that are given on the
+command line, e.g., the command line would look like
 
-The only case I can think of where refspec is not passed via command
-line and it updates a non-matching branch is when push.default =3D
-upstream. But with remote.<repository>.push without dst it starts
-updating a matching branch. Either I don't understand what's meant, or
-it doesn't behave as documented.
+    $ git push origin smart
 
-The second test fails:
+However, if we look at the command sequnce you gave,
 
-@test "normally a non-matching ref updates" {
-    start_cloned_repo
-    git config push.default upstream
-    git checkout -b bb
-    git branch -u origin/ba
-    git commit --allow-empty -m b
+> ...
+> The second test fails:
+>
+> @test "normally a non-matching ref updates" {
+> ...
+>     git push
+> ...
+> }
+>
+> @test "with remote.<name>.push without dst happens what happens normally" {
+> ...
+>     git push
+> ...
+> }
 
-    git push
+neither of the above "git push" invocations have <refspec>... on the
+command line.  So the rules you quoted would not apply to the above
+two "git push" invocations, wouldn't it?
 
-    assert_equal_refs origin/ba bb
-}
+In
 
-@test "with remote.<name>.push without dst happens what happens normally" {
-    start_cloned_repo
-    git config push.default upstream
-    git config remote.origin.push 'refs/heads/*'
-    git checkout -b bb
-    git branch -u origin/ba
-    git commit --allow-empty -m b
+    $ git push origin smart
 
-    git push
+a <refspec> "smart" is given, but "smart" lacks ":<dst>" part and
+only has <src> that is "smart", typically local branch "smart", iow,
+"refs/heads/smart".
 
-    assert_equal_refs origin/ba bb
-}
+The paragraph you quoted describes what happens with that command is
+designed to be similar to what "git push origin" without any
+<refspec> arguments does wrt the given <src> ref.
 
-start_cloned_repo() {
-    (mkrepo)
-    cd "$BATS_TEST_TMPDIR"
-    git clone --bare a a.git
-    git clone a.git b
-    cd b
-    git config push.default upstream
-    git config user.email you@example.com
-    git config user.name "Your Name"
-}
+For example, if
 
-mkrepo() {
-    cd "$BATS_TEST_TMPDIR"
-    mkdir a
-    (cd a
-    git init
-    git branch -m ba
-    git config user.email you@example.com
-    git config user.name "Your Name"
-    git commit --allow-empty -m a)
-}
+    $ git push origin
 
-More details in a gist:
-https://gist.github.com/x-yuri/943fd13704b38551da36c8363d7852e1
+is set to update some ref on the other side with "smart", "git push
+origin smart" would update the same ref on the other side.  e.g., if
+you have
 
-Regards,
-Yuri
+    [remote "origin"]
+	push = refs/heads/*:refs/remotes/satellite/*
+
+which would normally cause "git push origin" to use refs/heads/smart
+to update refs/remotes/satellite/smart, then
+
+    $ git push origin smart
+
+would do the same thing, i.e. send "refs/heads/smart" to
+"refs/remotes/satellite/smart" on the other side.  If your "git push
+origin" is configured to do the matching push, "git push origin
+master" would update their "refs/heads/master" with ours, because
+that is what "git push origin" would do to our "master".  That is
+what the paragraph you quoted describes, I think.
+
+Now, the command may behave differently from how we described in the
+documentation when you did give <refspec> from the command line, and
+in that case you may have found a bug.  But I do not think the @test 
+things you had in your report triggers the paragraph you quoted from
+the documentation, so would not demonstrate a bug in there.
+
+Thanks.
