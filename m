@@ -1,138 +1,142 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE8026AD0
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 15:59:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F871494CF
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 16:21:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734364800; cv=none; b=ImOK7SYddJuaMKCcIrzIb7Qh47y0LFkwgyl+7Qx0xRVegsqP/GD7CZESkzRQp/H5AU4A4AtconcACEA5MPB2iQ8ibguSHR78WGUPdTJRLY49P2kGegY4A8wDh+mOR4Fyn0v5V+lUvUSrRPLUx0+FX/jBGDtzxkCQlK9GGjbjYMo=
+	t=1734366085; cv=none; b=pSSIyPtBFESjxFR5sqdQtlw0R3h4VWZJePdFjkyUVnx3dH0qi3IHmBRYEFSiVSSoskVAU9vgaOUw+XicY9+PO1Hfi27VdFc7jI5Iuh8pgV9xKuuUcCrlZ8fG4c/EoLrDs1aCC+3z2KObrqC0R8Lf8bI6BfdRF1UbC6YGEyZRWjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734364800; c=relaxed/simple;
-	bh=sHPohuZxFm0R6tE9lnic1Uw4NOGAbRXeaDcSXqkVcKQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sdPVry+3LUoMoYxJD8qzlkHrnlbfJV63QLznnNRIEoloEUJcpuJCUiylpqPeOstow2E2rKlRsJ4l89VWkkSHFea4RiZaCo/w3WbNV0Hs3L8d4ebqxmCyHSxV/ZrmvVKq7zJ8avC3wWMmVlVMxu/f/1dBbLkTrAY+ZHA8nTs/Y18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f8ZHS//x; arc=none smtp.client-ip=209.85.222.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734366085; c=relaxed/simple;
+	bh=rwXA8gybGChb4oi2udTloNhehgWo5C23cWG/RNEtoJM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aesuq3yDKpZPifdhw0qEzstru0Qq0JuVFdIqFFzPo/cXgzxzbe/Uvfa7nW114NeuDHjy/31WrZVxszOYKkiQNuuDuc7zi32znyhB+JCHvmR//HU9nbeL8p7c6fHKq5xnr6Qsd3/uJEeOHtdK+IPiTphIHzF7A95i6kKclATlwyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pK4rqdd/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rYpJWHai; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f8ZHS//x"
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-85b92397fe2so787471241.3
-        for <git@vger.kernel.org>; Mon, 16 Dec 2024 07:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734364798; x=1734969598; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2+dXC02+Fa6VjrTGhdNyE6ieln2caBuNhkV05YvIy0k=;
-        b=f8ZHS//xlaYYnn3kRcokzwU//dpeX4l4rZDb6RJ0YIzejYayXyq8zHgXf37zEkw/vM
-         gN++2Qh5mDwRAtMo1x+C8fSniSfdFen1A7Hht2GDOyWilO1vifwZ/PtiGq37PkBQcPdK
-         0iGTO/PFPX4FrpTsu8+qnXWaRNjFuRSj3WSErrxmgzunmp9iAnfhbK9EV83FHjSLhFUY
-         f7ibISpK8ox64GKtn0YLtRTzD9IlClzkHEiVt+TU1HkafKLG+9WFOho/he5kT7xFX2S7
-         VduwdclqIBQsnKfePoVxQuyOjxrAPIZt9QEC3d5fqYMtY1Yp4vu/AhEdGQ+M11XKstWL
-         2ZXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734364798; x=1734969598;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2+dXC02+Fa6VjrTGhdNyE6ieln2caBuNhkV05YvIy0k=;
-        b=odHC7ur1YBLjDvo5tGNBCc99uI8/ZGruEdh81SGwRZxL74mzYY9b1WLfd8PMuA+nN8
-         ma3NkJ90UjIFT1f2TlFcxdMLFDrq5pYoRRbR3T/ipRhkUXbvKw3ygBa1PUs4gvgw7Ywt
-         o82w6MtkwCvzPp7Q7tB0phnldyH6QV1H/j8fAua4C7aC6Js+4k1p709+ielBj7nQkZP9
-         qCm46YWR2u4/1Xc4IlmaX4fVwopC4NakZS5fMTE3ufGa8vQ4A428mGe0WwvBxMJCzBaP
-         IuKYaIHslFdYi7zUBYmj5bEJZUcqMX8vrMz9eJEWo2QSEPLlA71Z/VpZHDSG3dNr/IGc
-         MXnw==
-X-Gm-Message-State: AOJu0Yzx7BtKO7plDb5sMI9RZiTWf945lQXNF0qn/G0cv2vXEkMwk+4V
-	PKLGi8x31Op9WYvdvdAJWDyNTkj9jeKcLgfnkeW1wcBu5dlMuW0QMsSIo7B5t9mce7oA83ajotU
-	m9wv+ejTzC25a2jmO/V039E+bg32JvMc8
-X-Gm-Gg: ASbGncu2+BGrX4LWLUAzJYt0VtGZ8ZdJmJsETpsUqvwUZ50dk3QF2m+t04grul/EXA/
-	ALs1mLcI6/UN2N9lXs2biJ3TZMFCgq2ViV867
-X-Google-Smtp-Source: AGHT+IHnBhpxJigY+9hkL3sDn4j+rcvKqs88j+UD7Vh8I6BS6gSWssz1xmGE1H12b4gdKFiSxfH71Wa67sjJGNlzvHk=
-X-Received: by 2002:a05:6102:3f07:b0:4b1:1f9e:193f with SMTP id
- ada2fe7eead31-4b29ca86550mr565148137.16.1734364798174; Mon, 16 Dec 2024
- 07:59:58 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Dec 2024 09:59:57 -0600
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqo71b7hkn.fsf@gitster.g>
-References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
- <20241215-320-git-refs-migrate-reflogs-v3-8-4127fe707b98@gmail.com>
- <Z1_KzlKc7RBfas4L@pks.im> <xmqqo71b7hkn.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pK4rqdd/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rYpJWHai"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5AAE61140098;
+	Mon, 16 Dec 2024 11:21:22 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 16 Dec 2024 11:21:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734366082; x=1734452482; bh=IL/rQZHOf0
+	13G7JMjAYV+pf+v7HWMwUk5+regcTdALs=; b=pK4rqdd/GOcK/YI9XIzgTq+XTn
+	I81/4FVHjW9C+KwCguGCt+zGkIOOpN67KGX1KA06C8n6Ie7NuGC0dzSErDpAwX69
+	zKAt6polC2ol70tY5Q9ausgtwHxU/wYn+bNzW/pIS0d1xCOPhDKX8dq8YXmvojpF
+	TtEKeM4nCOFTUOqMkuhArcoq0AJM/uiLLBDrveoO9ja3LuaWYWinwglIbyDDZnzn
+	dIq/FmrF96v5Jks6Pn6ulWsjc1jH9hd6l9rRZkrSHQOccmoCZj8RmyrZMLXtaNvR
+	uW3ipWOeoaSUSJaTOE5djFprHCgZrDMCI7QDwIeTNu06X3y6i/s26PyR0FoA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734366082; x=1734452482; bh=IL/rQZHOf013G7JMjAYV+pf+v7HWMwUk5+r
+	egcTdALs=; b=rYpJWHaiPp6ut3I6i1wtRdxSZMJInkiDv4vIc7GR/xZ4pe4scun
+	dqC1EZKkO6azWzaPr1PkaivnBCq4lRS52/IKxj8z8flJHgeo89W0GK3x46GjmMaP
+	AokjNNMBoENEUJ0TTJi4MYHMNtyoKbyglO1ZTRFPKQgzOAfUckv/FIhphyxI4Y4E
+	9KT59vgmzuO28j9V6uz/sNF+vkr1DUDIumOzSZK/zPAkycLg735MyruYr2cehfNY
+	8pUo2LygtNudOBx/QRuDhjOabZPkG1oa+OVgm7mV1hTd9JD8D69+qMYmFScW/3gt
+	1n4LwUC/eSgmHb6+rX64pN924GGGo0Xkq7g==
+X-ME-Sender: <xms:gVNgZ9u536KABzkkQD96pw9wcibg_9evUZL4oubTdNk9YXALukrQRw>
+    <xme:gVNgZ2cAF-Lw5SlKwpFO91JDhHG-ZNAX6i_N4d1Y1SzMpEB6oV-KaXQPL9IFNUlIc
+    nMOLNv6JbRl0W-_ww>
+X-ME-Received: <xmr:gVNgZwwOfJau7fbHS9ssKH2TopiYFnd53bTXyL3EFktX-JieCK3ba9bOMNj5kQvOy5fc_6OKc-4WigxvLQfhLKInDhmEx6xrpPh54Jo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleefgdekiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtoheprggshhhijhgvvghtrdhnkhhtsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrg
+    ihlhhorhhrrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohht
+    hhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gVNgZ0MvZCeq34-VS3tnRMDxI9b-NKS2Q4fCnj7GV9H5iaqHKmP7dw>
+    <xmx:gVNgZ98VJrAjj1LzXMuZhlAsGq-2sFT0dy9uiNjAoi_CNiu1Zv2IwQ>
+    <xmx:gVNgZ0VGWETak2Vkg7CGNvqtBOT0kgNn00wWSfaKpiest0MCNOCMzg>
+    <xmx:gVNgZ-d68Xg5sx91mNiynBnVYJek_J0lwBp3kgt0gPbZ81MnqWokJg>
+    <xmx:glNgZ9xL6xyKmjIbzw32BveYM5Wtnm7oSuZCl46udidWSldikOeDgcKg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Dec 2024 11:21:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Abhijeet Sonar <abhijeet.nkt@gmail.com>,  git@vger.kernel.org,
+  me@ttaylorr.com,  sandals@crustytoothpaste.net
+Subject: Re: [PATCH v6 0/2] show-index: fix uninitialized hash function
+In-Reply-To: <Z1_gnA2kwRSyCF02@pks.im> (Patrick Steinhardt's message of "Mon,
+	16 Dec 2024 09:11:08 +0100")
+References: <xmqq4j4mv5o6.fsf@gitster.g>
+	<20241109092739.14276-1-abhijeet.nkt@gmail.com>
+	<Z1_gnA2kwRSyCF02@pks.im>
+Date: Mon, 16 Dec 2024 08:21:20 -0800
+Message-ID: <xmqqjzbz7g5b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 16 Dec 2024 09:59:57 -0600
-Message-ID: <CAOLa=ZQniLNyxmvypm8BwMHyBRNb6E+SM8AXZiJpprpda5A4bg@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] refs: add support for migrating reflogs
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000b4e6020629654518"
+Content-Type: text/plain
 
---000000000000b4e6020629654518
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Patrick Steinhardt <ps@pks.im> writes:
+> On Sat, Nov 09, 2024 at 02:57:37PM +0530, Abhijeet Sonar wrote:
+>> That makes sense, applied.
+>> 
+>> Abhijeet Sonar (2):
+>>   show-index: fix uninitialized hash function
+>>   t5300: add test for 'show-index --object-format'
+>> 
+>>  builtin/show-index.c   |  9 +++++++++
+>>  t/t5300-pack-object.sh | 18 ++++++++++++++++++
+>>  2 files changed, 27 insertions(+)
+>> 
+>> Range-diff against v5:
+>> 1:  05ee1e2ea5 = 1:  05ee1e2ea5 show-index: fix uninitialized hash function
+>> 2:  c8a28aae55 ! 2:  778f3ca18e t5300: add test for 'show-index --object-format'
+>>     @@ t/t5300-pack-object.sh: test_expect_success SHA1 'show-index works OK outside a
+>>       
+>>      +for hash in sha1 sha256
+>>      +do
+>>     -+	test_expect_success 'setup: show-index works OK outside a repository with hash algo passed in via --object-format' '
+>>     -+		git init explicit-hash-$hash --object-format=$hash &&
+>>     -+		test_commit -C explicit-hash-$hash one &&
+>>     -+
+>>     -+		cat >in <<-EOF &&
+>>     -+		$(git -C explicit-hash-$hash rev-parse one)
+>>     -+		EOF
+>>     -+
+>>     -+		git -C explicit-hash-$hash pack-objects explicit-hash-$hash <in
+>>     -+	'
+>>     -+
+>>      +	test_expect_success 'show-index works OK outside a repository with hash algo passed in via --object-format' '
+>>     ++		test_when_finished "rm -rf explicit-hash-$hash" &&
+>>     ++		git init --object-format=$hash explicit-hash-$hash &&
+>>     ++		test_commit -C explicit-hash-$hash one &&
+>>     ++		git -C explicit-hash-$hash rev-parse one >in &&
+>>     ++		git -C explicit-hash-$hash pack-objects explicit-hash-$hash <in &&
+>>      +		idx=$(echo explicit-hash-$hash/explicit-hash-$hash*.idx) &&
+>>      +		nongit git show-index --object-format=$hash <"$idx" >actual &&
+>>     -+		test_line_count = 1 actual &&
+>>     -+
+>>     -+		rm -rf explicit-hash-$hash
+>>     ++		test_line_count = 1 actual
+>>      +	'
+>>      +done
+>>      +
 >
->>> +static int migrate_one_reflog(const char *refname, void *cb_data)
->>> +{
->>> +	struct migration_data *migration_data = cb_data;
->>> +	struct reflog_migration_data data;
->>> +
->>> +	data.refname = refname;
->>> +	data.old_refs = migration_data->old_refs;
->>> +	data.transaction = migration_data->transaction;
->>> +	data.errbuf = migration_data->errbuf;
->>> +	data.sb = &migration_data->sb;
->>
->> The `index` variable isn't getting initialized here anymore, so its
->> value is essenitally random. I'd propose to use designated initializers
->> for `data` to fix this:
->>
->>     struct reflog_migration_data data = {
->>         .refname = refname,
->>         .old_refs = migration_data->old_refs,
->>         .transaction = migration_data->transaction,
->>         .errbuf = migration_data->errbuf,
->>         .sb = &migration_data->sb,
->>     };
->
-> GOod.  As long as it is sensible to null-initialize the relevant
-> field and all the other fields not mentioned above, that certainly
-> would give us more predicitable behaviour ;-).  I do not offhand
-> know if 0 is the right value to initialize the .index member with,
-> though; didn't you two recently had an exchange about starting with
-> 0 or 1 or something?
->
+> Thanks, this version looks good to me.
 
-We did [1] indeed, context is that I set it to '1' to distinguish
-between indexed and non-indexed updates. But it wasn't logically needed
-and was confusing so I decided to remove that change (which caused the
-issue here!).
-
-[1]: https://lore.kernel.org/r/CAOLa=ZQ9SHD3gzTVaznGhkCBjrrJbHm1fDyi1F-h6VZvtdpxgw@mail.gmail.com
-
-> Thanks.
-
---000000000000b4e6020629654518
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 19ca1d13fcc69ce5_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kZ1Rub1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meEJKQy85bk55K1J3MFpQRzJQeHlBbkt6NW92Z3pNRwpMVHRZOHFzVEtR
-TmNDUUdQM3VLY3hzeGp6bjl3cGFIZlNzSWZVankzYkRsMHlSb2NTblBEZm9HVmdZbCtma1A0CjJR
-ZEM2UktObFVoekhDT3RpZVcyeVRaWUVCSUNmdFhOUEFkR3BLSXpxZEJ1YjVvZTZFcWFrbTdZRmEy
-cWZhSmYKaUF1UDhxOWMxbVpHOW4rR0RhWmZEdndjdEg2d1cwVkhBRURNMWpPbzNJeW5rZC95Zk5W
-TmhkM0R6eGhQU1V2NwptTnZONnpYMTNLVGNWWDhCT0RqcUt1ZzVVRzc3d3dWNEJBL3Rra3FodS9G
-RXpwM0xYdUlqWW4wdVVUUmpxM2VCCnUrMjQwNnlrd1Q0SmdmMC8wcStXMXZTS016NnFHTEdvQ1Qy
-cklFRWppT3N0bnZrbysyNlBtYjRvMnRRclI0Q2cKTDlKSlhUUFBOUGhJMG9SYjJVRStMOHN6UzZw
-NGFHV0Z1aTEzWG51Wlc4RFhsaVhlNXg1TVNDNFpodHRnWGR4Swo1WG1DdjYyQXdtL2pqNHBzWlhC
-c2ZHR2Fad0V4c0xoVUVObEFjUDNvY1ZOWkJXa01zZUNLdzc4VDhSVHFGODJTCk5vYy9FaWJ2Z1Yw
-U1ZhYzFyNzIzeHJzWkw0azJ1UHVqUGlGakhXTT0KPWdXWlIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000b4e6020629654518--
+Thanks, both.  Let me mark it for 'next', then.
