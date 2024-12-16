@@ -1,121 +1,158 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A09F1DDEA
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 14:33:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C013D29A
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 14:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734359608; cv=none; b=uQSsT9c1nrTzDpXrilu7xjQMu7QZZ8N/k9fX8SMJEOk3PjBRV6dx9b5ztM6H3iqElnKrjhK854LiLgPvm0ukt6C3J5xxWLcv+nFkTV0hfCGd24MpujBudt532IaGmPOMch6NtMEkQeJcnfMM8e8aE+Q92l2NyJqnHHAJj/FUv8E=
+	t=1734360562; cv=none; b=Yv3JXQCYvREdVuRrXuoX6qBdRSulHHKuzJ6NyZGxQU0dVQgNza8q9Ei3z5NfZI1fazvErm1B3sjGn2LwldzYOTBSXhCd8C0yYU9p3cHergm5daIsH6Qv1ZCf6iS5ZRCLeygcu2y1POYSqk/cyoglfJpkute8U7VMZvazTk8EfrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734359608; c=relaxed/simple;
-	bh=S8BZZ/+oYPATKMAif5nPvVXvzPidZppzkha7nSiZ+AE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fvzPy39OOIDx0WI49zsG4hIgIHx8RD+jv//YktWoL0yKqJnkE5qbQiFuncwrZ+xm8BeN24JoJ2ty5XBkpm5GLhcFaplD0LqlFBmMQzuNUmFgvVEOYmB1rfYMvImOmWTtvSc0ykXt4HwrEcduzPK9po9WaHpqIfs9yqrXUuR4CMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CYqXya/8; arc=none smtp.client-ip=209.85.217.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734360562; c=relaxed/simple;
+	bh=z18qYh/vpRYPQPQmTIfe3UEyQcW7YWPHhuhwCS9bYSY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OiU9VZngHLKSXvZUzs+IcXWqXPa0kJWTU67xYInMWxj4p9QNmaQ7e1W8FtsGGpfuLLTLMbRHnsR/n99174rdNoBF9REIxMFIHtKy30Thw5b83zkh5sEUrCDnOykqF4nerIgGSv72L5Yu1RYVtKnSnTKzUmCZzUnT5jfc9jePTXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EpMiesCC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v3rOjcMF; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYqXya/8"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-4afe7429d37so1147562137.2
-        for <git@vger.kernel.org>; Mon, 16 Dec 2024 06:33:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734359605; x=1734964405; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WZIWw2oDXrkgRo9/gllYrEOYiPKiiloswCk98s1wBZ0=;
-        b=CYqXya/8FYr/MZ1dqoHUUjK0FRqKvrTJLcyF8kTRt9FYbthXHvkuarO4aFGeo4qF41
-         WjXgQUHnbYPDw967BWswsnFo1Px6zx3e7eJMUfW7JJx8x7Rv/SKWTVMELmlweqHJq/P9
-         KhQ2cBHbmwrPW+Ccc2/E52eTJJnPJQCgPGKXNKO1FsO0bOHR8AFN8KrL8Jz/c4z4y8Io
-         cviW/rq+uyjClqGsy75w2+AIpWFie86PiIX9gTeCIpCOd8zcoStZV1Mn0go+N/r8BhHs
-         XlZnRq6dwqapDyYxBlcjdlS6s8wyYjROP6h8sb6y2/ZvT61B8frB6BCHZeYcnaWCAZWL
-         b7CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734359605; x=1734964405;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WZIWw2oDXrkgRo9/gllYrEOYiPKiiloswCk98s1wBZ0=;
-        b=tpgTRtZsnva0IJwetl6rpA9K1ypk+pOVyBY9FUTvVDbJmJn8rEhL3NkIHlLw2M3hKD
-         a4ivjuUB3Hl8pVpbnHxDW4AN1xmithutfmP8/wr+961Wh2FzFjIjL7fVhasd3LrybHnp
-         1A25DQbPG6CfuoeJrt4w2A3kAVkcFgq4SYOtFNPFbQRaLMmfUn7KbVQFAY/gUi62cHkU
-         b42ttKs+hONXBWybCrRDjyaeEP5URXQC8aOvGOQZwbuK14yyIXEuPTGrn+zhSbpt/VCB
-         OsFuFQtWApeQCX1MdE8PwBvwNlahdK+A5zpSF6aX1Bw0+qPE3Km6KEWQoVoxRqe+PA5C
-         2OIA==
-X-Gm-Message-State: AOJu0YzHas0fltRRrZM69YxkUb1jmVd8bW685E4nat9P+eAZ+K6Z9uRA
-	bgD4RIQ0a5bzXyvIDdWDmKmlLwx0Uy3FOertQKaq034vXHHF//+mn4zFaukJELyJ4H7CVi01w1n
-	g5ODSwuu+gIsq7mOEcTFaLJ42UPI=
-X-Gm-Gg: ASbGnctj+zOpZod8Jy5cowtQD910dITD8JTXq4YSzrPOumlnbu7SexPStU2OmGTYtpD
-	HaBRGrX13TVlc2M75D2R4RR9UAQ8jJ7a9mhZc
-X-Google-Smtp-Source: AGHT+IHeLEPSacCBjLZCYvI5kKJWPIEMC+ZVM0J4jkawpAPeOmwiiGj9WiA9khWVJMGc/g7DRWrGFxuP1KGdZjKXCno=
-X-Received: by 2002:a05:6122:2228:b0:518:9dca:f0fb with SMTP id
- 71dfb90a1353d-518ca47e2e8mr9668965e0c.11.1734359605387; Mon, 16 Dec 2024
- 06:33:25 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Dec 2024 09:33:24 -0500
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq34io8ptl.fsf@gitster.g>
-References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
- <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com> <xmqq34io8ptl.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EpMiesCC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v3rOjcMF"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 68D7525400EC;
+	Mon, 16 Dec 2024 09:49:19 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 16 Dec 2024 09:49:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1734360559; x=1734446959; bh=7iR3s1Kfou
+	1Km8CnoOxDH6xStI9gA9d2Kdg5nKIBokk=; b=EpMiesCCWzf5E22FaGNJaMTYqx
+	Tzfbl073eqRUdw2zR/c2j6zRFDIki3LMbg/uzIMbQF820Vx4CCNE1SMmAWYIeJkL
+	0EbWdMvZcqAyu4YcsYe1s+aBpZJb0LLZJr2DO8UdI8t5JBFCZ5XbiRFw31aujSci
+	u8ykgjIIqY3dX1JuQaQEKKXuhbJPVKzzeNhpOHaleZbmJTxeAqGNIFI3MgQclJu2
+	zUOMiQt6OgGuVfyiFicV0orJPGbE7WE9YZCCTaPNvTfmYFGrg0aL5qY0FQhZsLci
+	TBIAU5oq6IUGwGj6dMZa0IL/wxKIo9bPsiSsn7ZWLDCdHcTnzTjiYUUmM1jg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734360559; x=1734446959; bh=7iR3s1Kfou1Km8CnoOxDH6xStI9gA9d2Kdg
+	5nKIBokk=; b=v3rOjcMFoHGTTTnG70by/VFxGEEfy8VbmH6OJZdMV7Q5/AyhfR7
+	pqCnm73zO90TuohttGnvDop0t3ioiY9Vj8pd5kFXYpyP/Z1MHo4IzdI8YxHweuCl
+	hDsuLA0h3O3aQoXCn6l+uKvjshTYPulnl8taLxq3iG6AwVKYaghBs3N4bduhiPiY
+	AmAuNwQurJbQT42Y6Y6243eZeAptVuXRl/KwPX1yW9KZgjps6E7qaOcgCdeMDJcV
+	BfW1yBoMmYHqFS/VeJXCsd7Np9R+GK7Y568DXV4k8Gv6AwgCEJqtQdl9OPortLts
+	nkRkuD+LDRz2zmFYOwHDhfs++TuFgg4LWAQ==
+X-ME-Sender: <xms:7j1gZ8OteYItcZl3meOjrqG3-gPMXQdOORGpyw2a-T2dryI_vKGNYg>
+    <xme:7j1gZy9KpnFZ4dDAAqb2KFeDEIU6uFUknQDXZd-qmtU6LyVpyhQurwx0EBxxcLdDz
+    Z6yYIoxjrCngV_55w>
+X-ME-Received: <xmr:7j1gZzQoKOfQOwTxWiIXQkN4egbCUSu8eFy7DFGXOTplPMBELfucRIdHqi4xsWIVtNSJ1ndLqfUB0iIdaZw5vlEU4uvAF58RwmzEnXiqZxbvUg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleefgdeikecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepmhhhrghgghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:7j1gZ0tCC-0B5EuTUq1_4XZtGGlRzpga7fyQfOAnBJjBiMCPvZfXDw>
+    <xmx:7j1gZ0dgwm62L4Y1c-Y3BURB_78sVyg8jWqO2PeEnSr_gkK1IIlNDw>
+    <xmx:7j1gZ41knZ8URWPJcvdKhhbAf-HegUuidsX1EWDY6_Fs3WXH6g26GA>
+    <xmx:7j1gZ48P9MgE90y4fdGBE9yyFRRzaUQXQ3KIiQkSF9Oysjg_BvVf5A>
+    <xmx:7z1gZ5ERBGcjzskgw_qH_wfHg564ZxIdTcVK5U9wYYh62JBwINi2qaTo>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 16 Dec 2024 09:49:17 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4f74a617 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Dec 2024 14:47:33 +0000 (UTC)
+Date: Mon, 16 Dec 2024 15:49:01 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Implement consistency check for packed refs
+Message-ID: <Z2A93X2rxZEnYE76@pks.im>
+References: <Z2Ax9dtx4XE5xjgw@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 16 Dec 2024 09:33:24 -0500
-Message-ID: <CAOLa=ZQHaGO+o=9vda0eA62K1kvdpi0yjm6adxEDhVhn4NFbpA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/8] refs: add reflog support to `git refs migrate`
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="00000000000031492406296410f6"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z2Ax9dtx4XE5xjgw@ArchLinux>
 
---00000000000031492406296410f6
-Content-Type: text/plain; charset="UTF-8"
+On Mon, Dec 16, 2024 at 09:58:13PM +0800, shejialuo wrote:
+> Hi all,
+> 
+> At current, I have already implemented the consistency check for files
+> backend. My next step is to implement the consistency check for packed
+> refs. And during these days, I have learned the source code of the
+> "refs/packed-backend.c".
 
-Junio C Hamano <gitster@pobox.com> writes:
+Great. I'm also starting to work into the direction of consistency
+checks for reftables right now, which requires a couple more changes for
+the reftable library to expose reftable blocks. I'll probably get to it
+early in the next release cycle.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Overall, this series is a bit more involved, and I would appreciate it
->> if it receives a bit more scrutiny.
->>
->> The series is based on top of e66fd72e97 (The fourteenth batch,
->> 2024-12-06) with `kn/reftable-writer-log-write-verify` merged in.
->
-> t1460.6 does not pass for me.  I noticed it after I merged it to
-> 'seen', but it fails standalone as well.
->
+> The current "git-fsck(1)" implicitly checks the packed refs by calling
+> the method `refs/packed-backend.c::packed_refs_lock` which alls
+> `get_snapshot` and `create_snapshot`.
+> 
+> In the `create_snapshot` function, it will check some consistency of the
+> "packed-refs" file, if anything is wrong, the program will die.
+> "git-fsck(1)" relies on this to check the basic format correctness for
+> "packed-refs" file. It's not suitable to just call "packed_refs_lock"
+> in the code, we should not die the program.
+> 
+> Based on above, I have some ideas to implement the functionality. But
+> before I implement the actual code, I want to share my ideas to the
+> mailing list to get some feedback.
+> 
+> There are two ways we could add consistency check for packed refs.
+> 
+> 1. We simply read the raw file "packed-refs" file, check each line. Of
+> course, we should also need to check whether the content is sorted.
+> 2. We may reuse the data structure "struct snapshot" to do this. And we
+> call "packed_refs_lock" without calling the "creating_snapshot" instead,
+> we should just check. The reason why we do this is that we could reuse
+> some functions defined in the "packed-backend.c" instead of repeating
+> some logics. However, this way would be more complicated and require
+> more effort.
 
-Thanks Junio, seems like this passes on GCC and that is what I was
-using. Sadly, it also passes on older clang version, which is what the
-CI uses. Unfortunately I assumed that the CI passing [1] should be
-validation enough. But I can indeed reproduce this locally with clang.
+Hm. I cannot really say much on this. The important part is that you
+have enough information at hand to be able to implement those checks. If
+you have all necessary information in both cases I would recommend to go
+with the one that is simpler.
 
-Patrick posted a fix on the list [1] and also discovered one more while
-we were discussing off the list. I'll send in the next version with both
-of those included once I validate all the tests once more.
+> However, one thing I am not sure is that should we lock the raw file
+> when checking? From my perspective, we should lock the file because we
+> are checking the consistency of it. If other processes are processing
+> the "packed-refs", we may encounter inconsistency and things would be
+> strange.
 
-[1]: https://gitlab.com/gitlab-org/git/-/pipelines/1589854339
-[2]: https://lore.kernel.org/r/Z1_KzlKc7RBfas4L@pks.im
+The consistency checks may run for an extended amount of time in repos
+with huge number of refs, and locking for the whole duration may easily
+cause problems.
 
-[snip]
+Furthermore, "packed-refs" files are written atomically: the client
+writes a new "packed-refs.lock" file, syncs it to disk and then renames
+it into place. This operation doesn't invalidate any file descriptors
+that refer to the old file and you can continue reading from it, so the
+snapshot would remain consistent in itself. It could of course become
+inconsistent with any loose refs, but that's always the case with the
+"files" backend and something we'll have to accept.
 
---00000000000031492406296410f6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5e168a6a5df94475_0.1
+So I don't see any reason why the consistency checks should lock the
+"packed-refs" file.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kZ09qSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNHRIQy93T1lYdW9hQUkvY2Y2SEFtUnJ1Ung4WmJNNgpobzRjSTVuckFP
-bGs3czBCZkM2TGNMMHNhMXpwNzlKa21TNTFwQW8zalduL3Y3a3EyaVBxREE2ejFKWlJqOE9ECnFX
-QXFsaW95QkZzOGlOdExsNUwvWDBpMDdodkNQT2Q2elZ1ZnJPRUt1VmJwRDZ1SXdWVVBWbmhDZExW
-RSs1NUUKYTB6aUp1dDltUTlWb1AvYm5lTVN4WnZuSlllR0ozREVxc3FMVGlmZ3NzUFh1QTZVR3Rp
-NmlPWkVnNVV1RkFmQQpQZG5SaUNIWDFYRWFRdHhuQmFkWTVQRUZhRmxtbk15amdnZjYzTWtzSWtY
-MGlnRDZuTWhLWmhnZlRjQVVickJDCjNGdjYwUHM3ckZnRmczcmlETmszQ2ZNYkJsd3dYYkI3cklV
-bkFxS0NhRDlqRTJQZGpTQTBsVU5zUnV1cDZRakwKUHE3Zlhtemk4TmZvQkN3Y1dRdDJuK2ZSUFRZ
-d3hiS1psNGNuYnA0TENEcUFGcTZyWXVKdGhDMkRVd01pU0FlQworZUxyUlBVeGNFWUNndTJDTnRh
-R1dTVTk0elNWSFJQZDFBblIvQkVyVEdMaHI3R2FRaDNCRnFTNTVGN0FQTmorCkI5RzRkNVllYTJu
-Qk95WHQrVW55MGY1ZzJvbU5BOXZacXo3aHI2VT0KPUJHMjEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000031492406296410f6--
+Patrick
