@@ -1,83 +1,93 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FBD20E6
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 07:25:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3723C1FF7BC
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 08:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734333943; cv=none; b=nzE1otgXFBt3TI6OCWiM92ggwli3dhQjkeDda2Croxmnf1kbYRIx7vVLyRipMPyvnZyrVKk6XdEd0/nMgDxOrun3l3hRutlTMTXkQ1v0K6TtYqQpUSB/f0DKogzUFPHG5ghBF9VJiqBWBc/EehYMcbRPwOT82uy4EuxNQ6/F08c=
+	t=1734336100; cv=none; b=iP8zBprLN66do98zi5m7PgAjb0dBdBUzAkflrsTIWeqoLwa+WGaiEHvFCyuwx+aziNQ0anhsU0J6gzc+WpRX4RrSskmPEH38aHfWkNHnnMTF2h7f57LUm5xbKPKod3yFAp/Cwb8qe55oDdCbvTfkDdjvZlhAUUA0BURQS6OaiSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734333943; c=relaxed/simple;
-	bh=P6G+Z2nxs7pYsZDEY2NRnfOQJ2C/0x016PNsyhbnRCM=;
+	s=arc-20240116; t=1734336100; c=relaxed/simple;
+	bh=AWjohRKX8hcampTwbe3jXyRKvShDgP90IxEJyw3MU2s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PBmkBH6j8J7i7vVwSTM1RBf08UJq9VZf7Jdkul3eErUBKc1lP9SqnRh9qx6MPOSedCTUM9pEpnYPX0yP/UVXMqvUM79iwVeEZR/t3lzocQ+v72ESo4kLTPTrYC8aA6PCFKXivovbwwLNAYqc2Rli33qIRUQ05htOguika6LkVxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wj1/Wsh+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tbF7NFJH; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=RTR3Io+bGyC6jLBbn/MRBSU2rS0Y4iADLcSeF4NCsRqH85gp4lYjzvnwjMnDBne/OuMYIjwON87Cj5dZGvNOOl1e5fBPV13bW0m8gumDEgNlYKgdpbzs8pbzy0bZd1mUzrgrQ+GnHOG8/cxmwzUHAzZHYGidktCFnDfXUJmtenk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lA+fZvWk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YDlZBmk8; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wj1/Wsh+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tbF7NFJH"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0BA302540062;
-	Mon, 16 Dec 2024 02:25:39 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lA+fZvWk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YDlZBmk8"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id DD81711400E3;
+	Mon, 16 Dec 2024 03:01:36 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 16 Dec 2024 02:25:39 -0500
+  by phl-compute-10.internal (MEProxy); Mon, 16 Dec 2024 03:01:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734333938; x=1734420338; bh=wfXlJTgfkY
-	xDqM2Lirj/pt7tIvxZUklitdXZTY8NZ98=; b=wj1/Wsh+bQka6gJ4jBdowPhDhs
-	g8gLBxO7/PKOjYRLCCVCO6ZvOysRc3jmOPcE3r5l2gE6LktHl2i2l3vjKGpxCh5I
-	QYg9kv2NadyhehKxmqolpDNidrf1rOR7HZNrZeICRwqbquKFGlU5HLJxOsALCOr/
-	XvqbrShQicBlLxpBwxMEMi43xaUK9tL2iGfjg8XmvZhuyn2lDFbMxwKPw5PvgJ+s
-	GrtHd4qPU82Hpdc/JQmKkn9L+nGgVN5yhxGJtAd5oUG5uLvHmhUvUrcvb+75zYbn
-	ueyrAazCCPo+DibFzD6zz+HzYKh+em97UzuzIFE8oa4gR53GAoRzovvKQiyA==
+	:subject:to:to; s=fm1; t=1734336096; x=1734422496; bh=lX+Q59Om1G
+	tiC2EXrUR02yPjnI9A5M7fCe6XJHs5Cho=; b=lA+fZvWkgW3uGI68tzOicdmZVW
+	95wBOFvXBIKpiIpxj62EFx1rYKCT2a2S5I3NCo793Nwax1v2pT4UZlVzAwJ0gW9u
+	+QgIlvkS4hRD1KbrIRqRvxN+4RXyCtMyU4QCiXETfWQZl3+FvKAVfzjNFs9Bsq53
+	gi6ynCNmfKMdmk4a00fbWNBcrQYIBYGIgvhbU9QeQMzWVaJvlXJvrM8hUYjZkpF2
+	Sdo5OZrMVX3/dD2oHNPl29wuF2BR5Gn/nGRrY38oQi+19tOfmMt2EKra5BSN6zEq
+	ttycjI2LJEP+fJLvvLPNY3Hp9qzMe+XcKzIeSCYDFdC4AfNmsMnLye5nrwYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734333938; x=1734420338; bh=wfXlJTgfkYxDqM2Lirj/pt7tIvxZUklitdX
-	ZTY8NZ98=; b=tbF7NFJHgrAO2s76gaRGhIpVnf/wsncpeJrvXqzDCDlHeMdKo16
-	XJYCVkg86ABvfK79waDgqyKOB91wQkYu7KlE2mH44gPqdMbDd8c8UQYUiFrPnjaT
-	OWCh71MgIhWI+ebnLyTSg2EGOOB74yEqJgiyu67dGWrwompjUeo4junIsyv1F8ue
-	lHKRysIpkE/9sqi/MUDN30RFlKZ/iW5Vxw/kqK7wERB4XsNFIRWtGuSqZHEl4PJn
-	FjZ4pB+03Eig+Kus3RkEZwO1lDZ4Zjre6/I2r4RTEH9uEi6oAHlczOQgJSzV/xYq
-	RJV5fqfYK+7IFCd8tKLi86mvUemV2iLfQ6g==
-X-ME-Sender: <xms:8dVfZ7RoO9vASpEdBxLkK-XbEyYEKnl0_P3lXHM6BYkaoxLzfJd4sQ>
-    <xme:8dVfZ8xoQ57QYayAJNXYTfGMLbASErR-FEOmWy2zrH1fksNfAbRIRVtp7kzW1c2fj
-    W12LeOr8S1ErvO6pA>
-X-ME-Received: <xmr:8dVfZw0_S24jkzgCuSbN_ZQp5LduZnaZpf0qbZpAd42SZIXTZTtf3h5F7vPA8q9R00c0EASkrv3TkpQHn1yvgp6X5YOeboX50IP8J2YCNi1NNw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrledvgddutdeiucetufdoteggodetrfdotf
+	1734336096; x=1734422496; bh=lX+Q59Om1GtiC2EXrUR02yPjnI9A5M7fCe6
+	XJHs5Cho=; b=YDlZBmk8tgonX99efG6PYbfOOZCRqoYstAtmFj8x20B+4joQq6W
+	PMzYAZsoiGzMWepjCjuAegktyNan6Zix8blArT6fa2HBy5cbmEUH7FUYGDP78RiB
+	CguCP1RnTCF3J4NbByPG8zRuaPmVw6cfLhEf27cpX6PMxAxtYfnNYkHhAXEL2WJn
+	/veP4ibNhVSkAZDCZtJb4UWKmbjvfApxi5AL0tMy+85xTdC9XDgDujPCYlmeLCp6
+	Fs8lxcT9deP4FxpgmVvaVqST/qiXrZzRc8gZCDjfAuzxye61YVjtVfU9Evhe8CKf
+	j1NdXBJCtK/7RQuh2qx2Ni5NWV138ymfXyA==
+X-ME-Sender: <xms:YN5fZz8dfNzqznLf7nNFutr-wvGlgH0TTDQ-C3K_rVO1UvCI08n8xA>
+    <xme:YN5fZ_spKUODs8fBhBDCMqKOfY0UeajnQClsHdk8GawRU8fRaGMCESghblS3-btl1
+    04pl6B7ATBYIDGMLw>
+X-ME-Received: <xmr:YN5fZxC6Aun7eaZkneEoJo9r6487ZO5Yt1RBx_hfbkX_BfiG53v9Dm6Z7R7iF_hwrhNXiwhWnfX7hsRn1kqKi7hjnhRn2OR4_LiJV1ONw1mAiw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrledvgdduudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:8dVfZ7DyjjsSpGmXiH4-A3cJ2drxEumOEdbVKgGcpIKp1P7oOEorlA>
-    <xmx:8dVfZ0g5a2BsmmxRXS32XrQZjo8YtfzDZII7QewyIBPERXIdLctvuw>
-    <xmx:8dVfZ_qvZCIZlcPk2haHdTyUFRQqOzqu4YcY5PLDj-Wda-0aS6pxcA>
-    <xmx:8dVfZ_gaD5QG2bw5GRVnXaC-BF_CdmRIShItgKs2uFUVeOnMHMrSwQ>
-    <xmx:8tVfZ9taEZNisNgzh5RYehyVCwUBTYXnTz_cq_69ovabzUr2LXihOKF7>
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepudegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghp
+    thhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:YN5fZ_cE91RtFtz-gnzuCm8oiIyoOyp7EHqYJyJSw2hcnQqHtXfl-Q>
+    <xmx:YN5fZ4PLmh3-L2k0JZtfRxW0wfupU8IUjgCFkE-CHBeRQGmPXQZGCg>
+    <xmx:YN5fZxn1amVkQgawY6Not1IEMcuK55cCKDaN_56rgaA_kjEpoZjh6A>
+    <xmx:YN5fZytjaFqamE0HdnxnFeXdw1IWHXs-LkY-B2fd5ylJPar4zT-X_g>
+    <xmx:YN5fZ_n_q9hMHAmaYAUbTmOHZnGE5nfxpwn4Q1H1Q5DttQ28mIUuFdzc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Dec 2024 02:25:36 -0500 (EST)
+ 16 Dec 2024 03:01:33 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 585c0b09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Dec 2024 07:23:53 +0000 (UTC)
-Date: Mon, 16 Dec 2024 08:25:19 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6890a9cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 16 Dec 2024 07:59:49 +0000 (UTC)
+Date: Mon, 16 Dec 2024 09:01:16 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 8/8] refs: add support for migrating reflogs
-Message-ID: <Z1_KzlKc7RBfas4L@pks.im>
-References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
- <20241215-320-git-refs-migrate-reflogs-v3-8-4127fe707b98@gmail.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, me@ttaylorr.com, johncai86@gmail.com,
+	newren@gmail.com, christian.couder@gmail.com,
+	kristofferhaugsbakk@fastmail.com, jonathantanmy@google.com,
+	karthik.188@gmail.com, Derrick Stolee <stolee@gmail.com>,
+	Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/5] backfill: add --batch-size=<n> option
+Message-ID: <Z1_eTHk6IEJ0BEEg@pks.im>
+References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
+ <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,67 +96,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241215-320-git-refs-migrate-reflogs-v3-8-4127fe707b98@gmail.com>
+In-Reply-To: <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
 
-On Sun, Dec 15, 2024 at 05:25:45PM +0100, Karthik Nayak wrote:
-> @@ -2705,6 +2707,52 @@ static int migrate_one_ref(const char *refname, const char *referent UNUSED, con
->  	return ret;
->  }
+On Fri, Dec 06, 2024 at 08:07:16PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+> Users may want to specify a minimum batch size for their needs. This is only
+> a minimum: the path-walk API provides a list of OIDs that correspond to the
+> same path, and thus it is optimal to allow delta compression across those
+> objects in a single server request.
+
+Okay, here you explicitly say that this is a minimum batch size, so this
+is by design and with a proper reason. Good.
+
+> We could consider limiting the request to have a maximum batch size in the
+> future. For now, we let the path-walk API batches determine the
+> boundaries.
+
+Should we maybe rename `--batch-size` to `--min-batch-size` so that it
+does not become awkward if we ever want to have a maximum batch size, as
+well? Also helps to set expectations with the user.
+
+[snip]
+> Based on these experiments, a batch size of 50,000 was chosen as the
+> default value.
+
+Thanks for all the data, this is really helpful!
+
+> diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
+> index 0e10f066fef..9b0bae04e9d 100644
+> --- a/Documentation/git-backfill.txt
+> +++ b/Documentation/git-backfill.txt
+> @@ -38,6 +38,14 @@ delta compression in the packfile sent by the server.
+>  By default, `git backfill` downloads all blobs reachable from the `HEAD`
+>  commit. This set can be restricted or expanded using various options.
 >  
-> +struct reflog_migration_data {
-> +	unsigned int index;
-> +	const char *refname;
-> +	struct ref_store *old_refs;
-> +	struct ref_transaction *transaction;
-> +	struct strbuf *errbuf;
-> +	struct strbuf *sb;
-> +};
+> +OPTIONS
+> +-------
 > +
-> +static int migrate_one_reflog_entry(struct object_id *old_oid,
-> +				    struct object_id *new_oid,
-> +				    const char *committer,
-> +				    timestamp_t timestamp, int tz,
-> +				    const char *msg, void *cb_data)
-> +{
-> +	struct reflog_migration_data *data = cb_data;
-> +	const char *date;
-> +	int ret;
-> +
-> +	date = show_date(timestamp, tz, DATE_MODE(NORMAL));
-> +	strbuf_reset(data->sb);
-> +	/* committer contains name and email */
-> +	strbuf_addstr(data->sb, fmt_ident("", committer, WANT_BLANK_IDENT, date, 0));
-> +
-> +	ret = ref_transaction_update_reflog(data->transaction, data->refname,
-> +					    new_oid, old_oid, data->sb->buf,
-> +					    REF_HAVE_NEW | REF_HAVE_OLD, msg,
-> +					    data->index++, data->errbuf);
-> +	return ret;
-> +}
-> +
-> +static int migrate_one_reflog(const char *refname, void *cb_data)
-> +{
-> +	struct migration_data *migration_data = cb_data;
-> +	struct reflog_migration_data data;
-> +
-> +	data.refname = refname;
-> +	data.old_refs = migration_data->old_refs;
-> +	data.transaction = migration_data->transaction;
-> +	data.errbuf = migration_data->errbuf;
-> +	data.sb = &migration_data->sb;
+> +--batch-size=<n>::
+> +	Specify a minimum size for a batch of missing objects to request
+> +	from the server. This size may be exceeded by the last set of
+> +	blobs seen at a given path. Default batch size is 16,000.
 
-The `index` variable isn't getting initialized here anymore, so its
-value is essenitally random. I'd propose to use designated initializers
-for `data` to fix this:
+This is stale: s/16,000/50,000/
 
-    struct reflog_migration_data data = {
-        .refname = refname,
-        .old_refs = migration_data->old_refs,
-        .transaction = migration_data->transaction,
-        .errbuf = migration_data->errbuf,
-        .sb = &migration_data->sb,
-    };
+> diff --git a/builtin/backfill.c b/builtin/backfill.c
+> index e5f2000d5e0..127333daef8 100644
+> --- a/builtin/backfill.c
+> +++ b/builtin/backfill.c
+> @@ -112,6 +112,8 @@ int cmd_backfill(int argc, const char **argv, const char *prefix,
+> struct reposit
+>                 .batch_size = 50000,
+>         };
+>         struct option options[] = {
+> +               OPT_INTEGER(0, "batch-size", &ctx.batch_size,
+> +                           N_("Minimun number of objects to request at a time")),
 
-Maybe that fixes the issue that Junio has seen?
+s/Minimun/Minimum
 
 Patrick
