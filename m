@@ -1,158 +1,131 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C013D29A
-	for <git@vger.kernel.org>; Mon, 16 Dec 2024 14:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F00E13A868
+	for <git@vger.kernel.org>; Mon, 16 Dec 2024 15:09:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734360562; cv=none; b=Yv3JXQCYvREdVuRrXuoX6qBdRSulHHKuzJ6NyZGxQU0dVQgNza8q9Ei3z5NfZI1fazvErm1B3sjGn2LwldzYOTBSXhCd8C0yYU9p3cHergm5daIsH6Qv1ZCf6iS5ZRCLeygcu2y1POYSqk/cyoglfJpkute8U7VMZvazTk8EfrU=
+	t=1734361763; cv=none; b=gcBbeHjlcOdr2zjX0tVFhj3XIg4GeUrUYIyKVnx+yBGobNu++0zKQrtfiP/+GjRHKccObwdE1PJSNsNM0Hk8y0HrHPDTuZWao5hOA0ch0dFR9M91Py0A5BbCYOy27jL5cwmWtYUTjSZFz+vAVG2dlkPyUCtadThBb1fznDa76Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734360562; c=relaxed/simple;
-	bh=z18qYh/vpRYPQPQmTIfe3UEyQcW7YWPHhuhwCS9bYSY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OiU9VZngHLKSXvZUzs+IcXWqXPa0kJWTU67xYInMWxj4p9QNmaQ7e1W8FtsGGpfuLLTLMbRHnsR/n99174rdNoBF9REIxMFIHtKy30Thw5b83zkh5sEUrCDnOykqF4nerIgGSv72L5Yu1RYVtKnSnTKzUmCZzUnT5jfc9jePTXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EpMiesCC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v3rOjcMF; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1734361763; c=relaxed/simple;
+	bh=grHowsS7eKcEmRzjIXzeyEa0+cBXVz2r2xuWMoiPhss=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=r4MrJ7uMfSDecp6yOuvNdPHGA79yLZOGInfdWVTyll2okbYnXUrQmzC61Lg3I3wg5XSa6Uf5F61RpfW+VYPbA2XcXFvzxLclWQRzHLV1pfqIg6UoTumEJzQ8N5yn6qge+NmhpLD4Z3abIJnaQnzz7uDd50T6oO2ljASbqIa30Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=akorzy.net; spf=pass smtp.mailfrom=akorzy.net; dkim=pass (2048-bit key) header.d=akorzy-net.20230601.gappssmtp.com header.i=@akorzy-net.20230601.gappssmtp.com header.b=iPQpgkzn; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=akorzy.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=akorzy.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EpMiesCC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v3rOjcMF"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 68D7525400EC;
-	Mon, 16 Dec 2024 09:49:19 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 16 Dec 2024 09:49:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734360559; x=1734446959; bh=7iR3s1Kfou
-	1Km8CnoOxDH6xStI9gA9d2Kdg5nKIBokk=; b=EpMiesCCWzf5E22FaGNJaMTYqx
-	Tzfbl073eqRUdw2zR/c2j6zRFDIki3LMbg/uzIMbQF820Vx4CCNE1SMmAWYIeJkL
-	0EbWdMvZcqAyu4YcsYe1s+aBpZJb0LLZJr2DO8UdI8t5JBFCZ5XbiRFw31aujSci
-	u8ykgjIIqY3dX1JuQaQEKKXuhbJPVKzzeNhpOHaleZbmJTxeAqGNIFI3MgQclJu2
-	zUOMiQt6OgGuVfyiFicV0orJPGbE7WE9YZCCTaPNvTfmYFGrg0aL5qY0FQhZsLci
-	TBIAU5oq6IUGwGj6dMZa0IL/wxKIo9bPsiSsn7ZWLDCdHcTnzTjiYUUmM1jg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734360559; x=1734446959; bh=7iR3s1Kfou1Km8CnoOxDH6xStI9gA9d2Kdg
-	5nKIBokk=; b=v3rOjcMFoHGTTTnG70by/VFxGEEfy8VbmH6OJZdMV7Q5/AyhfR7
-	pqCnm73zO90TuohttGnvDop0t3ioiY9Vj8pd5kFXYpyP/Z1MHo4IzdI8YxHweuCl
-	hDsuLA0h3O3aQoXCn6l+uKvjshTYPulnl8taLxq3iG6AwVKYaghBs3N4bduhiPiY
-	AmAuNwQurJbQT42Y6Y6243eZeAptVuXRl/KwPX1yW9KZgjps6E7qaOcgCdeMDJcV
-	BfW1yBoMmYHqFS/VeJXCsd7Np9R+GK7Y568DXV4k8Gv6AwgCEJqtQdl9OPortLts
-	nkRkuD+LDRz2zmFYOwHDhfs++TuFgg4LWAQ==
-X-ME-Sender: <xms:7j1gZ8OteYItcZl3meOjrqG3-gPMXQdOORGpyw2a-T2dryI_vKGNYg>
-    <xme:7j1gZy9KpnFZ4dDAAqb2KFeDEIU6uFUknQDXZd-qmtU6LyVpyhQurwx0EBxxcLdDz
-    Z6yYIoxjrCngV_55w>
-X-ME-Received: <xmr:7j1gZzQoKOfQOwTxWiIXQkN4egbCUSu8eFy7DFGXOTplPMBELfucRIdHqi4xsWIVtNSJ1ndLqfUB0iIdaZw5vlEU4uvAF58RwmzEnXiqZxbvUg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleefgdeikecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
-    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepmhhhrghgghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeekse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:7j1gZ0tCC-0B5EuTUq1_4XZtGGlRzpga7fyQfOAnBJjBiMCPvZfXDw>
-    <xmx:7j1gZ0dgwm62L4Y1c-Y3BURB_78sVyg8jWqO2PeEnSr_gkK1IIlNDw>
-    <xmx:7j1gZ41knZ8URWPJcvdKhhbAf-HegUuidsX1EWDY6_Fs3WXH6g26GA>
-    <xmx:7j1gZ48P9MgE90y4fdGBE9yyFRRzaUQXQ3KIiQkSF9Oysjg_BvVf5A>
-    <xmx:7z1gZ5ERBGcjzskgw_qH_wfHg564ZxIdTcVK5U9wYYh62JBwINi2qaTo>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Dec 2024 09:49:17 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4f74a617 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 16 Dec 2024 14:47:33 +0000 (UTC)
-Date: Mon, 16 Dec 2024 15:49:01 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Implement consistency check for packed refs
-Message-ID: <Z2A93X2rxZEnYE76@pks.im>
-References: <Z2Ax9dtx4XE5xjgw@ArchLinux>
+	dkim=pass (2048-bit key) header.d=akorzy-net.20230601.gappssmtp.com header.i=@akorzy-net.20230601.gappssmtp.com header.b="iPQpgkzn"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2efa856e4a4so3000291a91.0
+        for <git@vger.kernel.org>; Mon, 16 Dec 2024 07:09:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=akorzy-net.20230601.gappssmtp.com; s=20230601; t=1734361759; x=1734966559; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=grHowsS7eKcEmRzjIXzeyEa0+cBXVz2r2xuWMoiPhss=;
+        b=iPQpgkznPK8f3CFG9LM095IxQUQt8+uy8XQORLNYAGxdOKG93mYX4FIeABnxa2nJUN
+         VhK4VUYhlVkcEO8WSO1C7/aDgvKhjuEzbfjrQ5/qxB+KOF9DUyS6Gxk+cTsMrJec+GbJ
+         5xMOydAKu3I96KPo4XnhzTyn7tBzwlFhBlJJzCrUCC2D6byDoowxnfsRUh/8goSiDKdo
+         JY8vdGUQsU1GJrehowfT1ltJLlKXhnznsO8A3U/vO85pfbKGSxIm/zH1VUwco18OnB2c
+         4WXWZNKD1sEleAEgjivWdVd1EYmEBEZODX3w2uBlax9dS7XoQJNKeStItvivwx5FhSWU
+         xT6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734361759; x=1734966559;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=grHowsS7eKcEmRzjIXzeyEa0+cBXVz2r2xuWMoiPhss=;
+        b=JCOKs9+FgenWJXdnqQUV3TEs9pGUhAMI8aY7LymuIY7PNtB4UbU3RGEJWfudm9q8Vf
+         jRvKqDtJ5OfzZ14+8o5g0in3jH5EhZcYXxHUEkWOKMpGjhL5OZmw2CbNpxeVA1t8i/bj
+         4UN/G7ddAzrhA+kUx0/9qbg/eS1t0CsP85LeL6QipHlr+frcu+OL9QtDxYyf5cHX6y4l
+         Ibd4m+KP4i8H44hJBFuSt9sGQFZwj8p5bsENzbyXmrd8Wq+6bt72WumZMFWw4nJl7AEq
+         kmTBdnAL4don1BqKHvNZYl8W1AclKi0OE99dVZ508Sh6rFi+BUVqnWC1t18/Wh7C2RoL
+         dKOw==
+X-Gm-Message-State: AOJu0Yz915Fs29uqjREe5r0M02ClxoR8N/9I/MLfblC+OaZVCyv5QT/S
+	9dkBo9PZTeoV/KL8SGhaeLTT58TmFJ8mUaUDulyAOygh5/01BaRENX80KfmTqzP/QStsLpfuar2
+	lX18PKOzslb3BbK/I63je1Ds8Nz6+D+/kGvSc48ZA14FII/qtyck+kOSPTu4=
+X-Gm-Gg: ASbGncvA/40vWHIk5c3REZM7TznZj3hVHXVw+0FXvpfu+nme+wBg962cW2QCgEjYj1n
+	hUR7SGhFeF/LYUJqwarE9iqasqQQGgPEiDMYyug==
+X-Google-Smtp-Source: AGHT+IHR46u17a410bdDpT7nTd+Ax/nR2Tk0K9KVC4YSFQgX8n5fhSF/5088E1sUx2wH403kTG/XhxeoViN9BAhKnJc=
+X-Received: by 2002:a17:90a:c2c6:b0:2ee:f076:20f1 with SMTP id
+ 98e67ed59e1d1-2f28f869282mr20869392a91.0.1734361759341; Mon, 16 Dec 2024
+ 07:09:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z2Ax9dtx4XE5xjgw@ArchLinux>
+From: =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
+Date: Mon, 16 Dec 2024 16:09:07 +0100
+Message-ID: <CAEtHj8AXKrQfyAW9FSv6yC-8GF1AkPixMFjSye+B51pJ4fOtWA@mail.gmail.com>
+Subject: [Bug] --simplify-by-decoration prints undecorated commit
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Dec 16, 2024 at 09:58:13PM +0800, shejialuo wrote:
-> Hi all,
-> 
-> At current, I have already implemented the consistency check for files
-> backend. My next step is to implement the consistency check for packed
-> refs. And during these days, I have learned the source code of the
-> "refs/packed-backend.c".
+Hello,
 
-Great. I'm also starting to work into the direction of consistency
-checks for reftables right now, which requires a couple more changes for
-the reftable library to expose reftable blocks. I'll probably get to it
-early in the next release cycle.
+In the following scenario, --simplify-by-decoration prints an
+undecorated commit, which seems to be a bug.
 
-> The current "git-fsck(1)" implicitly checks the packed refs by calling
-> the method `refs/packed-backend.c::packed_refs_lock` which alls
-> `get_snapshot` and `create_snapshot`.
-> 
-> In the `create_snapshot` function, it will check some consistency of the
-> "packed-refs" file, if anything is wrong, the program will die.
-> "git-fsck(1)" relies on this to check the basic format correctness for
-> "packed-refs" file. It's not suitable to just call "packed_refs_lock"
-> in the code, we should not die the program.
-> 
-> Based on above, I have some ideas to implement the functionality. But
-> before I implement the actual code, I want to share my ideas to the
-> mailing list to get some feedback.
-> 
-> There are two ways we could add consistency check for packed refs.
-> 
-> 1. We simply read the raw file "packed-refs" file, check each line. Of
-> course, we should also need to check whether the content is sorted.
-> 2. We may reuse the data structure "struct snapshot" to do this. And we
-> call "packed_refs_lock" without calling the "creating_snapshot" instead,
-> we should just check. The reason why we do this is that we could reuse
-> some functions defined in the "packed-backend.c" instead of repeating
-> some logics. However, this way would be more complicated and require
-> more effort.
+> What did you do before the bug happened? (Steps to reproduce your issue)
 
-Hm. I cannot really say much on this. The important part is that you
-have enough information at hand to be able to implement those checks. If
-you have all necessary information in both cases I would recommend to go
-with the one that is simpler.
+# Clone this repo
+$ git clone https://github.com/bitnami/charts.git
 
-> However, one thing I am not sure is that should we lock the raw file
-> when checking? From my perspective, we should lock the file because we
-> are checking the consistency of it. If other processes are processing
-> the "packed-refs", we may encounter inconsistency and things would be
-> strange.
+# Test --simplify-by-decoration with -1, which should display the
+first decorated commit
+$ git log -1 --simplify-by-decoration --oneline f137d2178d
+f137d2178d (HEAD -> main, tag: gitea/3.1.2, origin/main, origin/HEAD)
+[bitnami/gitea] Release 3.1.2 (#31031)
+# The above output makes sense: the commit is decorated.
 
-The consistency checks may run for an extended amount of time in repos
-with huge number of refs, and locking for the whole duration may easily
-cause problems.
+# Now, let's try --simplify-by-decoration on another commit
+$ git log -1 --simplify-by-decoration --oneline 1e3ef455cc
+025a87d9db Merge branch 'master' into master
+# The above output seems incorrect, because the commit isn't decorated
 
-Furthermore, "packed-refs" files are written atomically: the client
-writes a new "packed-refs.lock" file, syncs it to disk and then renames
-it into place. This operation doesn't invalidate any file descriptors
-that refer to the old file and you can continue reading from it, so the
-snapshot would remain consistent in itself. It could of course become
-inconsistent with any loose refs, but that's always the case with the
-"files" backend and something we'll have to accept.
+# Let's confirm if the above commit is decorated
+$ git show-ref --tags --heads | grep 025a87d9db
+$
+# No output, so the commit isn't decorated. That seems to confirm the bug.
 
-So I don't see any reason why the consistency checks should lock the
-"packed-refs" file.
+> What did you expect to happen? (Expected behavior)
 
-Patrick
+I expected --simplify-by-decoration to display decorated commits.
+
+> What happened instead? (Actual behavior)
+
+Git printed commit 025a87d9db, which isn't decorated.
+
+> What's different between what you expected and what actually happened?
+
+Commit 025a87d9db isn't decorated, but the --simplify-by-decoration
+command prints it.
+
+> Anything else you want to add:
+
+No
+
+
+[System Info]
+git version:
+git version 2.47.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.4.0
+zlib: 1.2.12
+uname: Darwin 23.6.0 Darwin Kernel Version 23.6.0: Mon Jul 29 21:13:00
+PDT 2024; root:xnu-10063.141.2~1/RELEASE_X86_64 x86_64
+compiler info: clang: 15.0.0 (clang-1500.3.9.4)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /usr/local/bin/bash
+
+
+[Enabled Hooks]
+
+--
+Best regards,
+Aleksander Korzynski
