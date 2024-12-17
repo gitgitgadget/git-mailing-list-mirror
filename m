@@ -1,89 +1,105 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDACA4A23
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 21:25:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27F21DD54C
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 21:28:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734470757; cv=none; b=CY87i7jk5OXlqeknSXQY2n7K/6pmaQ3J1ERaTcEQcII6Iqyg+weneOOgZ/tXbdmq1KOGwZe0qXO2tlCWiBdBcbXfBE/VDxk5w9uLmkpCASg5ZNqDnPNpradqCfaNC/fhMK9v6yTV7FEI9D0yM8ftgp65+edciCy7e8z+c6oa9NM=
+	t=1734470894; cv=none; b=K4mWl/9/tUhDTjRfzDCnB89vYI8qZmpA/9wdaA5LQr2XiUGLvQP2nY6tEahLpDN/jJlEfr21I7VewJHdAM553pCppL76HLOZaQQV5vj3i/ynJOI1Wo2E83hT5WruQ53NJMg4x8oymNRWysn0W591saXJnmi5KpNAM2lEK+LU08w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734470757; c=relaxed/simple;
-	bh=VKgdMtmVB56++X1cebn1wKXauDOC2rsafO2L8IdIsJw=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=imPEVitGf8dwLRdQoFb2ghiOTGxJks/WRvreCH34+3BlgppKRLp1QHcm7QFmcG7LrJ4HhTrZ2jNuj6YG4Rj1r8urT3nwQALvM3oBuu78jITgb6nXp6w1GLTLaVDGIgj5f0CNe7th60u4j8jT3Pv+wVDNU7BVAnmX+sl5k5+//ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4YCVGg6YcVzRpKY;
-	Tue, 17 Dec 2024 22:25:47 +0100 (CET)
-Message-ID: <ce2827ab-7827-42d6-8fd9-77be18bcda4c@kdbg.org>
-Date: Tue, 17 Dec 2024 22:25:47 +0100
+	s=arc-20240116; t=1734470894; c=relaxed/simple;
+	bh=pcnwlxoyMJfD4sNE2o7RgKF0i8VrAoMy9qy5vhn+Diw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=p0axJL6mWNPxH7629nlr3TKgBMQEwr6p50lpUFrRT28LPHn2uV5eJhOHaQnvDZAu5ySdxaxZRmQUBdBz0hbgKp1Mw4xa4JAva/c+VRBrpbCUcyveDJNFTJDU3vo+oYCG2Ehkl/1Z2p1ZAZeVR+nAjZHlK6XoECxGrmR3mrMMGd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TSi48izN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NrZ/aWJv; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TSi48izN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NrZ/aWJv"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6E2C91140124;
+	Tue, 17 Dec 2024 16:28:10 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 17 Dec 2024 16:28:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734470890; x=1734557290; bh=V26UCDh7TM
+	3oX1aEQ8n1du25e9lxU/gO6/AZUuskhCQ=; b=TSi48izNubt36VixMLhMuUsCk8
+	wvtUGsABS7b1m2utaZzZFM6/zYv4ucRTSc9D9r7a1bnfe7mSP2SRzGzLxoyu3aoV
+	cKeJ1g8jr7GbOTMoEmGUXlCTnQvK+BYUdTZmU7EwNVbwOg5Lt/u1K1cRU+Py2emv
+	6+YDQupGSMC+EuALaFZK+WpKL+0MgPUWxU4Zmggbq5Z103/gUzq5s6f6YXpL4TVT
+	4QIiFQdDxx8KGuF6Pv9fAhcwJQ7n1ZdLiLLbW+ZgeWnqVELoRoPeDhnEC20C6GWm
+	EVDEqaQVPjFCsGb2SMEnbDBzDd4Qshjeb513OvnojudeWsCl7vCVF14jXwFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734470890; x=1734557290; bh=V26UCDh7TM3oX1aEQ8n1du25e9lxU/gO6/A
+	ZUuskhCQ=; b=NrZ/aWJvdJ7HPRWe/KMeXxuZs9VePGDYMwNo1NY8wkLlZTHAGpE
+	EVc8xbJwTh2HkC8O1mUVgoye53njCeoBEy+MX6Ka2598Us993/LUYz140kzMMj15
+	dKVxuGARgbKL2ucl6nVK4RbTRotDct4W7L5Ciw0Utr5ILrMOndURt3r7M5uncNYX
+	0mHG6KltdBIcr4l8p+hZ8kwUqq6E1hiuWnB35d/V2r8LXtwj0OwViAdpUxn+vNG9
+	Tv2Adl7i1E+idRzhQaJ5NAZdZTgYEqA0xD24JbkoVs0g4TBVp36xQbUfw7CrRgix
+	8QDzOat74xcsRbwcEUiJ2d8wOMOmIFu7QEw==
+X-ME-Sender: <xms:6exhZ_zUUVyPDWnjheWd4YFRo0-bGd9SLzACPcoc_1-SwrUE-qapDQ>
+    <xme:6exhZ3QzePwD1hxuKx0e7OdI5cq0wPCHP-hxLgoPCMClfzHN_byWnejF8Rmf02kYX
+    1v38oUPj-etCRv4AA>
+X-ME-Received: <xmr:6exhZ5V4uHsP9ZIxbsSLaTDD2CJLB8Ds_FImS9kbDx7CaUJ2qBR22FeVns3HU5vzCGaKymvLcOH8DI9QGzSveuXRcM1t4csqYPuVI8g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleehgdduheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrud
+    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhstg
+    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:6exhZ5ihIA6qCqlE6tQnhTPUw4eo3rvMe74ux-5gy-D57ygh3Qi41Q>
+    <xmx:6exhZxAid1kLtJaYvdEoaWVYSn1N1FOwbAx3qcUO-ztd0bEOeqRvwQ>
+    <xmx:6exhZyJ9-uc4XsHWVzfCBPdvHsDHE0l1UYi_CMpbcFazGfF3nwxexg>
+    <xmx:6exhZwBlCRzC0aoXzxy3f_3UPxzcZJFmsU4z1SwHHUVr6ZxRNQNGig>
+    <xmx:6uxhZ07fYcp-G_22fYO6yCBFFMqDS1OAv5ceC-o3obNvIvWCvsQRihSV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Dec 2024 16:28:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: karthik nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4 0/8] refs: add reflog support to `git refs migrate`
+In-Reply-To: <CAOLa=ZSzGk1FqiciTktTgv4J1uH6CW6VpbxXOXdKmrXJtR6iyQ@mail.gmail.com>
+	(karthik nayak's message of "Tue, 17 Dec 2024 01:35:10 -0800")
+References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
+	<20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
+	<Z2EhZpL5V0LlhEvj@pks.im>
+	<CAOLa=ZSzGk1FqiciTktTgv4J1uH6CW6VpbxXOXdKmrXJtR6iyQ@mail.gmail.com>
+Date: Tue, 17 Dec 2024 13:28:07 -0800
+Message-ID: <xmqqv7vixamw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [GIT PULL] gitk: macOS startup, commit ID to clipboard, text wrapping
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-The following changes since commit c18400c6bb04f4e8875c1930db72ddd9b94649ca:
+karthik nayak <karthik.188@gmail.com> writes:
 
-  Makefile(s): avoid recipe prefix in conditional statements (2024-11-24 13:45:49 +0100)
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> The range-diff looks as expected, so this version of the series looks
+>> good to me. Thanks!
+>>
+>> Patrick
+>
+> Thanks Patrick for your review!
 
-are available in the Git repository at:
-
-  https://github.com/j6t/gitk.git master
-
-for you to fetch changes up to 661734e6c8c38d2cd2000481ffb22cca6e2b0e5e:
-
-  Merge branch 'ah/commit-id-to-clipboard' (2024-12-17 21:54:58 +0100)
-
-These updates add the following features to Gitk:
-
- * The commit message and the patch text can optionally be displayed
-   with lines wrapped. There are separate options for these two kinds
-   of text.
-
- * When a commit is selected, the commit ID is copied to the "X11
-   selection" (to be pasted with a middle mouse click, only available
-   on X11). The commit ID can now also optionally be copied to the
-   primary clipboard (to be pasted with Ctrl-V typically).
-
- * Section headers in the Preferences dialog are now better visible.
-
-There is also a bug fix:
-
-  * Starting Gitk on macOS no longer hangs indefinitely.
-
-----------------------------------------------------------------
-Avi Halachmi (:avih) (3):
-      gitk: UI text: change "SHA1 ID" to "Commit ID"
-      gitk: prefs dialog: refine Auto-select UI
-      gitk: support auto-copy comit ID to primary clipboard
-
-Christoph Sommer (2):
-      gitk: make headings of preferences bold
-      gitk: add text wrapping preferences
-
-Johannes Sixt (3):
-      Merge branch 'sv-20231026' of https://github.com/nafmo/gitk-l10n-sv
-      gitk: offer "Copy commit ID to X11 selection" only on X11
-      Merge branch 'ah/commit-id-to-clipboard'
-
-Peter Krefting (1):
-      gitk: sv.po: Update Swedish translation (323t)
-
-Tobias Pietzsch (1):
-      gitk: check main window visibility before waiting for it to show
-
- gitk     |  86 +++++---
- po/sv.po | 734 ++++++++++++++++++++++++++++++++-------------------------------
- 2 files changed, 439 insertions(+), 381 deletions(-)
-
+Thanks, both.  Let's queue it again.
