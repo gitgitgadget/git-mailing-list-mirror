@@ -1,77 +1,79 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1EA1DB933
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 06:44:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EF61DD87D
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 06:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734417860; cv=none; b=SfaVJB02u7ts3i2CVdBb0kk7UpdL/d/Sow4NxyK7iNVoBOfyNiQQQCO3tefezvVCiqiO5yjBkAg2UpsEkOOcPZTmeP6FavXQMtdBj68sJ61rSO+Zr0OIE1YozwfFtbwgK9jfynMFH+8zr3HRYPQQ8HjHJahLpS7Ur2iRS5n6RPY=
+	t=1734417860; cv=none; b=EusybkBaofl89e64H+3JVWZ4FPCt12K1ueDoCGCFBtarBAB0bjl1SKRkzWhzqXjDHMsOxmP5cHLwrE3xVgaOnAZj+EmA3BKCs0YvnycMFjqaYMuWNNHrLnJGIFUR1DpETWBEhC7dqzv+DekKN79wcnbbdvp05J9ZYuGckvPy6LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1734417860; c=relaxed/simple;
-	bh=0G1YESgdQgTXUYkPiNzawo0Wd6ei2Qww8ECj8rcmZtE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ON3PSGj1XE5tNCyXMn/xd0TNeeRaltsN+FfJ6Xo1WKOk53x7dKWrn3rD9+9e6e77j1y8i1lSsjtH1MyiaQbi710o9aDXkfyUo+lHRWqkY08j8o2VrVwgJVOcyC0YqrTl2IwPUlRe4FfzIe+wdsUPyJnNB1XjwAWTvSGlV77aSJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ehm4XzK6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fmoOVb4Q; arc=none smtp.client-ip=103.168.172.146
+	bh=FJyI5r4xZQiPflRI/vxdp15o4bbUrNYXPwaTD4VhKjw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=mfisCHdk9xH3C36RC8ajU7JylZs3m/ByL4IUmMR+S2LrRAranF/gwC8FNnvMR9U2wEI9zRdnZ9EtZskamgLiGKBBcLLGnksITSZbPgXu8vhxIcg4Iq6t+ib5lIoYamPVw9ERX9sHtsrvyOvFdiH5+ZFoV3yI2qn93uwLaUY+bV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nkfzNs4e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x/k/tlSb; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ehm4XzK6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fmoOVb4Q"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nkfzNs4e";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x/k/tlSb"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9365113801C7
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:16 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 666B91140251
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:17 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 17 Dec 2024 01:44:16 -0500
+  by phl-compute-06.internal (MEProxy); Tue, 17 Dec 2024 01:44:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1734417856; x=1734504256; bh=PVwWNCd4ya
-	xnnSSEyhd2MGIiqpifwcN+EcOiyKm0Wk0=; b=Ehm4XzK6GkOVmaz7w33PoMCnUB
-	zq6oMcDljt9nagO6OwwSwMXC7TQ9+XUNme+9uVrZy48BX31D2KC5ZszDQgoZqX6a
-	BaG5fn5OOi/t7c8X/a2BS/sktlJDuYrNZD7SyeK8x1zGklHV9jmexBtN12aqGqxL
-	/KUv86FS1DXXUv5SE0uXvFpvm4L+e9TTvmUAM3wQs7eSp4gNZOdq4Wpce/Y+XmsT
-	zvtuVvbh7XDUBIfWKByzzkGcTQQhfbdFsYUXnkjZPNGhxLD9xRKAlF3o8bqAlJE2
-	Y86jWKA2siJ4HBr6Vi0McJleH5vaPQq0BsmnWZBHwcqQclFW3kdJT09CByEw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734417857;
+	 x=1734504257; bh=j/taV5dwkF3Xc9sMNkslwDnek2ALS3JKLSmiRkvoP9Y=; b=
+	nkfzNs4eLVnlpZ+EJ/duOO7bkgnMuXxImhcXGnhsgJ5WvJ1BHVk8J5qwsohJDOqB
+	RgkegmVGVu7rpTExd4Uw0xEIkcp1ecKhXiPzqMOgezitgFobgg0ZTA1El4mYOX8Y
+	SpdPq612B9jLrqaG+2u1yoUFDTf21fRsRSEnIWh9zktLnPkcxSjQWazwaLKnBKg7
+	efuCKJW+dotm62kyIqaWBCXGaPbCK2XSVSyeY/UZCeTTX8w+Ibz+bJMBJb1yIzYt
+	fP0UaSfiMcLCnJhxDTumQUaq+QkKbWD0LjbjyXDf7oJ1tINJUTiTnO9hKN9AaMcS
+	RZrImUmepqdW0ymA1v9wwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1734417856; x=1734504256; bh=PVwWNCd4yaxnnSSEyhd2MGIiqpif
-	wcN+EcOiyKm0Wk0=; b=fmoOVb4Q869Xeu/IvTUmy6EATeDeQ5AI5PUWSe30FnFU
-	jGOWdzFeXY0wFy3alv9jclWrOhM/kKi4TGStnHbrHwVQzz8/WZ6FhpKMb5iAEfew
-	nvcOZ4XRmczXGDngndTPNd5nDe5s0jCILottp4AAIVsHLPaUQGRU3TJVT/kX+oUz
-	9MQQth1qxawHxHj1HQ2rclijE5FyvuNWHPgo/zkQqp9C/enONZDyCBG6QaN2X6dg
-	df9chHaO/EP+q0ShigMiXQiJPTJDzL8QtD68xwiqTjfz1KiIjBxb+NNLzQaWUZzV
-	VaPD1yn76q9M3c7L0XC+Hnvt15ZTJh+AQRvd9nnCjQ==
-X-ME-Sender: <xms:wB1hZxUTXi0wC7_dQ-a4H2QQlCaJodgHrP9f2wulCFcwuQBjZwCcVA>
-    <xme:wB1hZxkahesWRAupJ_D8nqyqypn7UrBBgqHdknhgyEd61QjQfEJNWenHXPFiHppxS
-    mBDXq3JTT9GwKuQLQ>
-X-ME-Received: <xmr:wB1hZ9bqipGpRlxmAR5JiliAlnpvOD37q5rnWJ_tfsJDcO9OnhY2R7Yib-UtvgBhtmVVUNxVtkpUOTq-9Tm1i4iUlL1xpKywXtuMfDJvaujXsqg>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734417857; x=
+	1734504257; bh=j/taV5dwkF3Xc9sMNkslwDnek2ALS3JKLSmiRkvoP9Y=; b=x
+	/k/tlSbeuM76Hth3ESIfMd4X1L6dhiGHu3NYz/H7+0gwW67VSDTaRHEzsqmxFy2M
+	EGlVbyqO1fkzdtNqdk23VSnU5iCuyhxZfQ/lt/L8rT+ti5FTPegzza0RoTsFEVTe
+	DjebsLj+Vdi+R9KgNX0gEZP+iVB1l2XaYcrqzOANpv7Lgw/gMpPb/nCemrB1g5Kb
+	BFWxD3yqRp5k8fEKf/m+fd1TXshRTDps1Cm9SC7SxUd2DdtI/m4LjA1/3MNzMKww
+	ujjEYX2Ur1k354mZm2uGiAF0AaYaHkmC4Wir7oVYwZDvygUW/74M3SQ90zvBTiU9
+	0tENMKnl0A9wpUWs53fmw==
+X-ME-Sender: <xms:wR1hZ85UrbLuOahvZfvJtY7Zaj4NgNuyuQ8tJDE_V3VCY6ZrC02ulQ>
+    <xme:wR1hZ95L3Of3rDVLtgLHzRNSi0OYyQxxDNPj9faA24a89pQzd0LnRyTtjcY59HSly
+    u_mrcgR8eQjsls7uA>
+X-ME-Received: <xmr:wR1hZ7cZ_hDF6zuLL108khxD7sE_aTdY5SvmHPTE_FWS7SeVzNC3ZEiuw6-fb1d9JKyiy9IB54m_5-N5TxfWeBAIVlfpyawMTr6iLfYy5ZAAOBI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggdellecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffufffkgg
-    gtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgr
-    rhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevueegkedtteeige
-    ejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprh
-    gtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:wB1hZ0WtTR3VBVHeNI6QkPpYU7iO-tr0jo0Ip6TlVSg1SqDYS0z9rg>
-    <xmx:wB1hZ7mInhGPRrXHPuZhqhgj5iL0YAhbHHNGb1wRbRK1-mrux0_UGA>
-    <xmx:wB1hZxcJyeirff7nrayTGWSnJwQvWbwz3iMxXgf8TDNlSZkJeZP4Gw>
-    <xmx:wB1hZ1EalYF4o4_2wnBEOvKcmhW--sRvPcPx6AEJc7kwvpbI_QZVUQ>
-    <xmx:wB1hZzs88QbC8-iJImuyNuFgNkrBjxcxl2D64AnOYJAq70-lHEM7lOzy>
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
+    fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
+    ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:wR1hZxLJ4jIF87eAzzYZusLkmWmDwhTO2CEKNJdFBKtNZMtf7GNiGQ>
+    <xmx:wR1hZwKNEaB3RndDVKfA9aaHCXc_-iz3EG01sazr0ODciHrY8s3Z8g>
+    <xmx:wR1hZyxy5yYhHeHUdjMXC-JiAYbexLvrJ-O8vkXOOlJnj7ke8CChJA>
+    <xmx:wR1hZ0K2TFwajKl3LGUe_xSMMB_YEkMOfh3VKbweNgq9GKPyJ7059A>
+    <xmx:wR1hZ6gkD8MknWiAsIShSPqmqMOIVk0X7CIYMocYz51H4hxUZ9bWLq5d>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:15 -0500 (EST)
+ <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:16 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a00d0ac1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id be3f6f3c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 17 Dec 2024 06:42:29 +0000 (UTC)
+	Tue, 17 Dec 2024 06:42:30 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/14] Stop using `the_repository` in some trivial cases
-Date: Tue, 17 Dec 2024 07:43:47 +0100
-Message-Id: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+Date: Tue, 17 Dec 2024 07:43:49 +0100
+Subject: [PATCH 02/14] pager: stop using `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,181 +82,300 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKQdYWcC/yWOS47CMBBErxJ5PT1qOz8nQqO5B2JhO5XBGiUOd
- ohAiLtjwvJ1qaveQyREjyT64iEiNp98mDPIr0K4s5n/QH7ILBSrSkqlaflPdE2g9QyKWELya4h
- 3cmHeEN/f5MqqMWNZag2I3LNEjP62bxxPH464XPPU+jkKa3KhC9Pk177gprQOdmTXyVZW7Ayj5
- dpZ8DjASNWiY9bNu3pCSmZ37IvDrqi42RVzklU2KYmpVjWGqu2U1fo3h99++hGn5/MFY7ToXf0
- AAAA=
-X-Change-ID: 20241128-pks-use-the-repository-conversion-c346af3388ee
+Message-Id: <20241217-pks-use-the-repository-conversion-v1-2-0dba48bcc239@pks.im>
+References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Hi,
+Stop using `the_repository` in the "pager" subsystem by passing in a
+repository when setting up the pager and when configuring it.
 
-this small patch series performs some refactorings to stop using
-`the_repository` in several subsystems. There wasn't really any
-criterium for which subsystems I picked, except that all of them have
-been trivial to convert.
+Adjust callers accordingly by using `the_repository`. While there may be
+some callers that have a repository available in their context, this
+trivial conversion allows for easier verification and bubbles up the use
+of `the_repository` by one level.
 
-In this patch series I'm merely bubbling up `the_repository` one more
-layer even though some calling contexts already have a repository
-available. For the sake of triviality I decided not to handle these
-cases though and instead let a future patch series worry about them.
-
-This series is built on v2.48.0-rc0 with ps/build-sign-compare at
-e03d2a9ccb (t/helper: don't depend on implicit wraparound, 2024-12-06)
-merged into it. There's a single merge conflict with 'seen' that can be
-solved like this:
-
-diff --cc pack-bitmap.c
-index 48e3b99efb,7d8f910588..0000000000
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@@ -2572,16 -2761,8 +2761,10 @@@ void test_bitmap_walk(struct rev_info *
-        if (prepare_revision_walk(revs))
-                die(_("revision walk setup failed"));
-
--       tdata.bitmap_git = bitmap_git;
--       tdata.base = bitmap_new();
--       tdata.commits = ewah_to_bitmap(bitmap_git->commits);
--       tdata.trees = ewah_to_bitmap(bitmap_git->trees);
--       tdata.blobs = ewah_to_bitmap(bitmap_git->blobs);
--       tdata.tags = ewah_to_bitmap(bitmap_git->tags);
-+       prepare_bitmap_test_data(&tdata, bitmap_git);
- -      tdata.prg = start_progress("Verifying bitmap entries", result_popcnt);
- +      tdata.prg = start_progress(revs->repo,
- +                                 "Verifying bitmap entries",
- +                                 result_popcnt);
--       tdata.seen = 0;
-
-        traverse_commit_list(revs, &test_show_commit, &test_show_object, &tdata);
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (14):
-      progress: stop using `the_repository`
-      pager: stop using `the_repository`
-      trace: stop using `the_repository`
-      serve: stop using `the_repository`
-      send-pack: stop using `the_repository`
-      server-info: stop using `the_repository`
-      diagnose: stop using `the_repository`
-      mailinfo: stop using `the_repository`
-      credential: stop using `the_repository`
-      resolve-undo: stop using `the_repository`
-      tmp-objdir: stop using `the_repository`
-      add-interactive: stop using `the_repository`
-      graph: stop using `the_repository`
-      match-trees: stop using `the_repository`
+ add-patch.c     |  2 +-
+ builtin/am.c    |  4 ++--
+ builtin/blame.c |  2 +-
+ builtin/grep.c  |  4 ++--
+ builtin/help.c  |  4 ++--
+ builtin/log.c   |  4 ++--
+ builtin/var.c   |  2 +-
+ diff.c          |  4 ++--
+ git.c           |  8 ++++----
+ pager.c         | 14 ++++++--------
+ pager.h         |  7 ++++---
+ 11 files changed, 27 insertions(+), 28 deletions(-)
 
- add-interactive.c            | 19 ++++++-----
- add-patch.c                  |  2 +-
- builtin/am.c                 |  6 ++--
- builtin/blame.c              |  6 ++--
- builtin/bugreport.c          |  2 +-
- builtin/commit-graph.c       |  1 +
- builtin/credential.c         |  6 ++--
- builtin/diagnose.c           |  4 ++-
- builtin/fsck.c               | 12 ++++---
- builtin/grep.c               |  4 +--
- builtin/help.c               |  4 +--
- builtin/index-pack.c         |  7 ++--
- builtin/log.c                |  7 ++--
- builtin/mailinfo.c           |  2 +-
- builtin/pack-objects.c       | 21 ++++++++----
- builtin/prune.c              |  3 +-
- builtin/receive-pack.c       |  4 +--
- builtin/remote.c             |  3 +-
- builtin/repack.c             |  2 +-
- builtin/rev-list.c           |  3 +-
- builtin/send-pack.c          |  2 +-
- builtin/unpack-objects.c     |  3 +-
- builtin/update-server-info.c |  2 +-
- builtin/upload-pack.c        |  6 ++--
- builtin/var.c                |  2 +-
- bulk-checkin.c               |  2 +-
- commit-graph.c               | 20 ++++++++++--
- credential.c                 | 34 +++++++++----------
- credential.h                 | 11 ++++---
- delta-islands.c              |  3 +-
- diagnose.c                   | 15 +++++----
- diagnose.h                   |  5 ++-
- diff.c                       |  4 +--
- diffcore-rename.c            |  1 +
- entry.c                      |  4 ++-
- git.c                        | 10 +++---
- graph.c                      |  3 +-
- http.c                       | 24 +++++++-------
- imap-send.c                  | 10 +++---
- log-tree.c                   |  2 +-
- mailinfo.c                   |  5 ++-
- mailinfo.h                   |  4 ++-
- match-trees.c                | 50 +++++++++++++++-------------
- midx-write.c                 | 11 +++++--
- midx.c                       | 13 +++++---
- pack-bitmap-write.c          |  6 ++--
- pack-bitmap.c                |  4 ++-
- pager.c                      | 14 ++++----
- pager.h                      |  7 ++--
- preload-index.c              |  4 ++-
- progress.c                   | 34 +++++++++++--------
- progress.h                   | 13 +++++---
- prune-packed.c               |  3 +-
- pseudo-merge.c               |  3 +-
- read-cache.c                 |  7 ++--
- remote-curl.c                |  4 +--
- resolve-undo.c               | 14 ++++----
- resolve-undo.h               |  6 ++--
- send-pack.c                  | 77 +++++++++++++++++++++++---------------------
- send-pack.h                  |  3 +-
- serve.c                      | 36 ++++++++++-----------
- serve.h                      |  6 ++--
- server-info.c                | 40 ++++++++++++-----------
- server-info.h                |  4 ++-
- t/helper/test-progress.c     |  6 +++-
- t/helper/test-serve-v2.c     |  7 ++--
- tmp-objdir.c                 | 15 +++++----
- tmp-objdir.h                 |  5 +--
- trace.c                      |  9 +++---
- trace.h                      |  4 ++-
- transport.c                  |  2 +-
- unpack-trees.c               |  4 ++-
- walker.c                     |  3 +-
- 73 files changed, 406 insertions(+), 298 deletions(-)
+diff --git a/add-patch.c b/add-patch.c
+index 7b598e14df016402ca41e1998466b5ba45623f90..95c67d8c80c4f33bfa6180f69fdf2065d0b5b85c 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -1464,7 +1464,7 @@ static int patch_update_file(struct add_p_state *s,
+ 		if (file_diff->hunk_nr) {
+ 			if (rendered_hunk_index != hunk_index) {
+ 				if (use_pager) {
+-					setup_pager();
++					setup_pager(the_repository);
+ 					sigchain_push(SIGPIPE, SIG_IGN);
+ 				}
+ 				render_hunk(s, hunk, 0, colored, &s->buf);
+diff --git a/builtin/am.c b/builtin/am.c
+index 1338b606febdde6700c573b45f89aa70785f54e8..27ccca8341feefcda5e1c4a850f14fce9e4deecb 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1786,7 +1786,7 @@ static int do_interactive(struct am_state *state)
+ 			}
+ 			strbuf_release(&msg);
+ 		} else if (*reply == 'v' || *reply == 'V') {
+-			const char *pager = git_pager(1);
++			const char *pager = git_pager(the_repository, 1);
+ 			struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 			if (!pager)
+@@ -2246,7 +2246,7 @@ static int show_patch(struct am_state *state, enum resume_type resume_mode)
+ 	if (len < 0)
+ 		die_errno(_("failed to read '%s'"), patch_path);
+ 
+-	setup_pager();
++	setup_pager(the_repository);
+ 	write_in_full(1, sb.buf, sb.len);
+ 	strbuf_release(&sb);
+ 	return 0;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index dd78288530f06efa99ec7a1ca767aa388805fd97..1f44c341c50ecd80fd76d2f055d488884cfcd20c 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1202,7 +1202,7 @@ int cmd_blame(int argc,
+ 	stop_progress(&pi.progress);
+ 
+ 	if (!incremental)
+-		setup_pager();
++		setup_pager(the_repository);
+ 	else
+ 		goto cleanup;
+ 
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d00ee76f24cfdea8ac15e08f812aa5868906940c..d1427290f773b6cec539fcd838ada2b61acb22c8 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1084,7 +1084,7 @@ int cmd_grep(int argc,
+ 	}
+ 
+ 	if (show_in_pager == default_pager)
+-		show_in_pager = git_pager(1);
++		show_in_pager = git_pager(the_repository, 1);
+ 	if (show_in_pager) {
+ 		opt.color = 0;
+ 		opt.name_only = 1;
+@@ -1246,7 +1246,7 @@ int cmd_grep(int argc,
+ 	}
+ 
+ 	if (!show_in_pager && !opt.status_only)
+-		setup_pager();
++		setup_pager(the_repository);
+ 
+ 	die_for_incompatible_opt3(!use_index, "--no-index",
+ 				  untracked, "--untracked",
+diff --git a/builtin/help.c b/builtin/help.c
+index 05136279cf7b1007ab754f5630c34536a5f9461f..c257079cebc3c09fb91f258c3b0148e2f204c0e7 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -658,7 +658,7 @@ int cmd_help(int argc,
+ 	case HELP_ACTION_ALL:
+ 		opt_mode_usage(argc, "--all", help_format);
+ 		if (verbose) {
+-			setup_pager();
++			setup_pager(the_repository);
+ 			list_all_cmds_help(show_external_commands,
+ 					   show_aliases);
+ 			return 0;
+@@ -692,7 +692,7 @@ int cmd_help(int argc,
+ 		return 0;
+ 	case HELP_ACTION_CONFIG:
+ 		opt_mode_usage(argc, "--config", help_format);
+-		setup_pager();
++		setup_pager(the_repository);
+ 		list_config_help(SHOW_CONFIG_HUMAN);
+ 		printf("\n%s\n", _("'git help config' for more information"));
+ 		return 0;
+diff --git a/builtin/log.c b/builtin/log.c
+index 317335e60d450128685d9fce99eb8fe8f9860fd9..3a6a3362f3c36ee257215e79cf40085f76c9efb3 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -369,7 +369,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 	if (rev->line_level_traverse)
+ 		line_log_init(rev, line_cb.prefix, &line_cb.args);
+ 
+-	setup_pager();
++	setup_pager(the_repository);
+ }
+ 
+ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+@@ -2292,7 +2292,7 @@ int cmd_format_patch(int argc,
+ 		rev.commit_format = CMIT_FMT_MBOXRD;
+ 
+ 	if (use_stdout) {
+-		setup_pager();
++		setup_pager(the_repository);
+ 	} else if (!rev.diffopt.close_file) {
+ 		int saved;
+ 
+diff --git a/builtin/var.c b/builtin/var.c
+index 1449656cc924f849ee9c881c18b734a3ec55e9f3..50d024de66604ab9e8faa1bd59f662127bc62159 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -42,7 +42,7 @@ static char *sequence_editor(int ident_flag UNUSED)
+ 
+ static char *pager(int ident_flag UNUSED)
+ {
+-	const char *pgm = git_pager(1);
++	const char *pgm = git_pager(the_repository, 1);
+ 
+ 	if (!pgm)
+ 		pgm = "cat";
+diff --git a/diff.c b/diff.c
+index d28b4114c8dffba5cb5339152d198588550135a0..0822ae443361f80271c91a863a6f03b0e8c403c3 100644
+--- a/diff.c
++++ b/diff.c
+@@ -7386,6 +7386,6 @@ void setup_diff_pager(struct diff_options *opt)
+ 	 * --exit-code" in hooks and other scripts, we do not do so.
+ 	 */
+ 	if (!opt->flags.exit_with_status &&
+-	    check_pager_config("diff") != 0)
+-		setup_pager();
++	    check_pager_config(the_repository, "diff") != 0)
++		setup_pager(the_repository);
+ }
+diff --git a/git.c b/git.c
+index 71d644dc1c59902b2f14c14914c78285ffa92638..d977ebc84cfba611c3e452cace3bda1ce13faf5d 100644
+--- a/git.c
++++ b/git.c
+@@ -125,7 +125,7 @@ static void commit_pager_choice(void)
+ 		setenv("GIT_PAGER", "cat", 1);
+ 		break;
+ 	case 1:
+-		setup_pager();
++		setup_pager(the_repository);
+ 		break;
+ 	default:
+ 		break;
+@@ -136,7 +136,7 @@ void setup_auto_pager(const char *cmd, int def)
+ {
+ 	if (use_pager != -1 || pager_in_use())
+ 		return;
+-	use_pager = check_pager_config(cmd);
++	use_pager = check_pager_config(the_repository, cmd);
+ 	if (use_pager == -1)
+ 		use_pager = def;
+ 	commit_pager_choice();
+@@ -462,7 +462,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
+ 	precompose_argv_prefix(argc, argv, NULL);
+ 	if (use_pager == -1 && run_setup &&
+ 		!(p->option & DELAY_PAGER_CONFIG))
+-		use_pager = check_pager_config(p->cmd);
++		use_pager = check_pager_config(the_repository, p->cmd);
+ 	if (use_pager == -1 && p->option & USE_PAGER)
+ 		use_pager = 1;
+ 	if (run_setup && startup_info->have_repository)
+@@ -750,7 +750,7 @@ static void execv_dashed_external(const char **argv)
+ 	int status;
+ 
+ 	if (use_pager == -1 && !is_builtin(argv[0]))
+-		use_pager = check_pager_config(argv[0]);
++		use_pager = check_pager_config(the_repository, argv[0]);
+ 	commit_pager_choice();
+ 
+ 	strvec_pushf(&cmd.args, "git-%s", argv[0]);
+diff --git a/pager.c b/pager.c
+index 40b664f893c8ec61af0e6d00d58956f45b247d65..5531fff50eb73f7d22defcc7d8e752c94f741d66 100644
+--- a/pager.c
++++ b/pager.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "config.h"
+ #include "editor.h"
+@@ -84,7 +82,7 @@ static int core_pager_config(const char *var, const char *value,
+ 	return 0;
+ }
+ 
+-const char *git_pager(int stdout_is_tty)
++const char *git_pager(struct repository *r, int stdout_is_tty)
+ {
+ 	const char *pager;
+ 
+@@ -94,7 +92,7 @@ const char *git_pager(int stdout_is_tty)
+ 	pager = getenv("GIT_PAGER");
+ 	if (!pager) {
+ 		if (!pager_program)
+-			read_early_config(the_repository,
++			read_early_config(r,
+ 					  core_pager_config, NULL);
+ 		pager = pager_program;
+ 	}
+@@ -143,10 +141,10 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
+ 	pager_process->trace2_child_class = "pager";
+ }
+ 
+-void setup_pager(void)
++void setup_pager(struct repository *r)
+ {
+ 	static int once = 0;
+-	const char *pager = git_pager(isatty(1));
++	const char *pager = git_pager(r, isatty(1));
+ 
+ 	if (!pager)
+ 		return;
+@@ -293,7 +291,7 @@ static int pager_command_config(const char *var, const char *value,
+ }
+ 
+ /* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
+-int check_pager_config(const char *cmd)
++int check_pager_config(struct repository *r, const char *cmd)
+ {
+ 	struct pager_command_config_data data;
+ 
+@@ -301,7 +299,7 @@ int check_pager_config(const char *cmd)
+ 	data.want = -1;
+ 	data.value = NULL;
+ 
+-	read_early_config(the_repository, pager_command_config, &data);
++	read_early_config(r, pager_command_config, &data);
+ 
+ 	if (data.value)
+ 		pager_program = data.value;
+diff --git a/pager.h b/pager.h
+index 103ecac476fdd6523930d7ff8fe542eeec038438..d070be6348971663d3ac913ed702a7ba541cb4e8 100644
+--- a/pager.h
++++ b/pager.h
+@@ -2,15 +2,16 @@
+ #define PAGER_H
+ 
+ struct child_process;
++struct repository;
+ 
+-const char *git_pager(int stdout_is_tty);
+-void setup_pager(void);
++const char *git_pager(struct repository *r, int stdout_is_tty);
++void setup_pager(struct repository *r);
+ void wait_for_pager(void);
+ int pager_in_use(void);
+ int term_columns(void);
+ void term_clear_line(void);
+ int decimal_width(uintmax_t);
+-int check_pager_config(const char *cmd);
++int check_pager_config(struct repository *r, const char *cmd);
+ void prepare_pager_args(struct child_process *, const char *pager);
+ 
+ extern int pager_use_color;
 
-
----
-base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
-change-id: 20241128-pks-use-the-repository-conversion-c346af3388ee
-prerequisite-message-id: <20241206-pks-meson-v11-0-525ed4792b88@pks.im>
-prerequisite-patch-id: 39559d044bc4db5a61d8d428ba227596b6f9a572
-prerequisite-patch-id: 76040d8ec266b78f698065cdc891c7a44a7deb59
-prerequisite-patch-id: 6a99a5acb7d2a9d331bd2fa364c5f048c4807630
-prerequisite-patch-id: f9bf8d3c7bd9ac8f1beeafc0d7bfa99809624ff5
-prerequisite-patch-id: b3b09e0cc0b35176a63e768e3dae4f39ed2bbd96
-prerequisite-patch-id: b2f0b893f4093ac7ac4466efe23472c381c207bf
-prerequisite-patch-id: 942b24fe8f6b5a1d2fd892e4dd52b83238b2bf6a
-prerequisite-patch-id: 95f28ecdf77807e7e6968c0bc75e29ea8fa5d687
-prerequisite-patch-id: 58e4f31b532d41d4394654ea1de6a3d2a3c54bff
-prerequisite-patch-id: 331073f51ccb93b8b02f14b6e52f8fb70651afc5
-prerequisite-patch-id: c357c6e7040737739a8d5d76424348bcc9444a79
-prerequisite-patch-id: d643b636c49ef0bca14fd198290ffbda331d2823
-prerequisite-patch-id: aeee0e7f421acd0c5e6d8a9cd45eb22b8f52a322
-prerequisite-patch-id: 88175b9418f0575a627ed6b592c61406bed0972c
-prerequisite-patch-id: 95241bfd7e6798b39187c3dfc03d47ab37ca50c4
-prerequisite-patch-id: 73dd2f88f2629f3a54ab01c2882962b9effd6055
-prerequisite-patch-id: 291c5ec532ed3738a59ad7001ef3a84e2c43aa78
-prerequisite-patch-id: 3b29840c001ec89f137b8e37796d710f60436a6a
-prerequisite-patch-id: 78bd944cca8c7404feb1f54d9adfcbfea481fa96
-prerequisite-patch-id: 9f34d87c5455cada6a68350daa86cb1069e7accc
-prerequisite-patch-id: 798827dcb73a002d4d604472e1b1a3b64f9b159d
-prerequisite-patch-id: a110e45c7f97287acbd8c69640d6f03d2e7d9bef
-prerequisite-patch-id: 3ce7cd65e984c138658841e3a4802178cc9129b2
-prerequisite-patch-id: 9cb10256bf2b131cf434ec078807f27be3a4d6cf
-prerequisite-patch-id: a97085715ee32eaaad3bcde53e7d41582424f0f9
-prerequisite-patch-id: 7a5e50bc7d49ec891a9679b1ea71575f41483187
+-- 
+2.48.0.rc0.184.g0fc57dec57.dirty
 
