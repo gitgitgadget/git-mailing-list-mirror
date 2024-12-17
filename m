@@ -1,108 +1,156 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8889D18B46E
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 07:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEBB12E1CD
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 07:22:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734418811; cv=none; b=L3MIrRNlbjFZbpOsazeGACFnjrszlReFw3+PuA7ydpfHN9YhcLLDWcG+ZnbayJVO71BXdrMfxV0f3Y7E3hOSPmsagb47hLL3jby9a4e4lCo8xlZO0Ub07JPIbmFTljDNwXtAxxUoJ2OzdI7pNQnP0miwgaQb3TcGjONvbYEhoFc=
+	t=1734420136; cv=none; b=fxHMYEL9AlmDJhdiDOnphu1MTB+FOtnruglQoGrMjb5Kg3qrZUDDwzYwKhhmKIHHL+ythD/VKqvOWo7rDPd8KZOJyHwcCr4PpPBAJFd48IhY03aWTmTIqfQ7c9llmi0p+BTFZmv///U6opSK3Qd/dVl7gWjvQz3WwdkpImr3UuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734418811; c=relaxed/simple;
-	bh=BRYIEgHjSjtr6lkCordsuPLJm7g529P1Ja2QBgeRrVM=;
+	s=arc-20240116; t=1734420136; c=relaxed/simple;
+	bh=Nt5T8qpwe+yMLLBbr3Yg/vkm2Tf6ssEY2H1YYp8+K10=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pr+282zaHRaSbGGLR06fkEBUmR9Vd6jIlPIxzxcpQyWPRQ9neq/vr+2jzF0mfv2j+zCFsBNbW8jNeo74IJJlm5L/DTliMxMmxVFCmNL5B7LjbgI95kkowIuigK0dy/5da3yDBrgQZYp+6ox8b4SnEvon6gvqIbsBLxWAqNqzqyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aPB4X7lt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nbR5Vq2q; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=W3GMk7MSUntEmRMV5hFDBKlY3y7e/At5PPULGMA2FvpkhCpaxYZz0IryaVuyZHoScCY+CQ7gnPr+33XR86fq2O9I0jSg8iY8Jnt5U+Q+Lj+90WuihWzlpTpGT3u8tQQsO3aUWQR6HQeM04kAhJFmxEkILFQzxLpg3oGWxkquHZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tkDCTOd8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HYN9vKC/; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aPB4X7lt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nbR5Vq2q"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9070F1140269;
-	Tue, 17 Dec 2024 02:00:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tkDCTOd8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HYN9vKC/"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D5D811140262;
+	Tue, 17 Dec 2024 02:22:11 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 17 Dec 2024 02:00:08 -0500
+  by phl-compute-07.internal (MEProxy); Tue, 17 Dec 2024 02:22:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734418808; x=1734505208; bh=AMV3/AtiDn
-	M9pu39QjhjRCsu+on4rGjAN7hwuXDB8Zc=; b=aPB4X7ltlfR6vNyBFArXzjWQVK
-	jOcILPiUAxp2i4OrfUzpL969Xrl2knXLLrCjhuDpe6cOFc29y3but6lJ0+mqg8ia
-	R4UYqdbkFwgdqir8DV3NjAIY2hS5oLOpf4ynKylGftMWUdKJ6tgVHDAa0glkTY7Y
-	aYRXSdUzisZtKWH6KHairTs4pXRIGnIBaZub/EpViVU+vSM+p+30pwK8zuX3g/wo
-	V7FnonllFhv3pj8Tdte5WVUE2pfelwx449w4tz5fyuilWrjPhTbeVqTxMPq1DZZI
-	CFQ72r8FTTYCWK2iiz/ujh/zXDaK/+OtGOiFM4JDYhSgxZhiqi5F2Tvza+iA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734420131;
+	 x=1734506531; bh=tBrZRK3bLtdOyPoGDpBpeFpR6KhcwG6cI2n5jV2+kHA=; b=
+	tkDCTOd8GL8XuH42Vl6lJXNB39e9iv0kd2uhiGcv7sA1nbGbgSgY6z+NK6oAccxm
+	/udKD+1lbEeaTuPYaHehT3JH4tqkxB03jzF6GrYbGxpgFURRNKeQyR4Y+3MKxnLx
+	FkhjOcwjMx0AFKgQmkzF3t7B6YkqrQGKFgsDaIhcBNBaT+5po/dgUvPYMaRtFWMW
+	CILOlNyiP6clCUYt3uicnIauf2Uccd0xQfmCclnr9RvE1WFExtqr3ZzQzImPb5vl
+	CsKq6cVSyv86mm7alazxhD0LGeHtO9NjcJlW1ZLIc8fpPbxexaPLZdCjRsddRPfS
+	KhrSn5xTkGX5qxnOqSid3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734418808; x=1734505208; bh=AMV3/AtiDnM9pu39QjhjRCsu+on4rGjAN7h
-	wuXDB8Zc=; b=nbR5Vq2qqeeUwdtH4eY83DlZ+wh5KZMR/B5+wOb8nzs5pQxPhJB
-	ZXG+oOqc9W62H1QoHZ1J6f/GtDFyyKvYlEquuCqzwF7L7jTfAOr+Tzana56AVPDD
-	imNhzKWP6mf7mB3UU8K9pTLfZ/Ly1toTOq7Z374xJZVrewZPUhA1mnu5DPZ/+b5r
-	4+ns6OM39SWD7do23DJUnqLWfNN2RLXSvD8mMTHcj495h+uzUUgoZfSDgUpHHjuv
-	p5DKfHg3n+zOQrUkOOYoBkrKmHJJYXtgfNpaC9XZ2B4XTsbGfLaI3RfH2SlqmD01
-	zGPUw4zxa041xpvoEkLBK/yF0GAbBS5GpVA==
-X-ME-Sender: <xms:dyFhZxXU4SSRnK3hdb0Nyo3ICKgj4GTl2HaACeHkSGHXg_uCR-VXrg>
-    <xme:dyFhZxlHBJqdWdpeX664SgK8c76aFgpDwR0mOXD76d1OxP6NfLkPorHx5oiFveoAQ
-    ZruTKKKwNPGlBJ5Mw>
-X-ME-Received: <xmr:dyFhZ9YTH5xwjTfIQ1GYQCPC2KWA2fovzI_HefJBwC4_10bCaAsYPQYlR0McMoem5hRzZMA5nlgiFbrh3B0wG9bC8nwZyclHzdkEjtZbGwDrjDY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggddutddvucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734420131; x=
+	1734506531; bh=tBrZRK3bLtdOyPoGDpBpeFpR6KhcwG6cI2n5jV2+kHA=; b=H
+	YN9vKC/f8P9DTzwqwqlLJPfhLZjSu3gup7ulVqBmf1BWhaOGmg3ufRK1PBvgxpwV
+	xxdohxWmYSrJiTnt3eGOTAy9R2XDZhrJpsfw//6MhmCZ00Lk2QjB1gP9UkNg3T/v
+	TAcGeSg3e03i35taxP16F8+80i9dO4hqh5DXYUhGhsSnHtR9o2ABtZY/Yh5Q8yrh
+	Ci6J59JY88BiRVxvce8BkXIsYCZCVMadx197RbFg4MYpGfFp2Gj89GxgpURh4KyF
+	gc5InnqpI0GnKEfCRxBwqn20Ux+fdj6oTZ/dAioOT6Z4nqqF8/H7J8gqhCa2NlEg
+	KzfDVz9C0LKVlDm3+yAkA==
+X-ME-Sender: <xms:oyZhZ2W8Cmf_iOKrbx1CDXOhEO15gqUwk5d8x951OxHX2TyPFNEj1Q>
+    <xme:oyZhZykR5w-XUbP3oxdk78oxvhTWONukEbIo7eDVMRtX0VzGi77HkqNbFDSWtkH3o
+    pVu4XsPXr2JGx5N3Q>
+X-ME-Received: <xmr:oyZhZ6Z8-bXMgZ4F-q2p_Ct-7Vg787wi6hmZhoh0lbpaWwnxuW46SYuphvt6sbq0fYgSflvO6M3buZMWbfd7lpktazNj48CkA4eNdsVkqdTFVXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggddutdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
-    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhes
-    thhugihfrghmihhlhidrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
-    grihhlrdgtohhm
-X-ME-Proxy: <xmx:eCFhZ0UiOYfalYKRvb691ArR5sNX9QupEqtIf-X1zMG_-WMmfHU6xA>
-    <xmx:eCFhZ7lZ_ZFUvRsGaZzacFflQ1nWWMLwBfCUlZ2mMsK_LPdpauuy1A>
-    <xmx:eCFhZxcG7mzuvVGePbFd1TFNWWQED4I5vLxINOGuT4csRMMGd_Hwnw>
-    <xmx:eCFhZ1HTojzTuX_ZA0VjpyjrPIvKXtAuIvPH2xprTO7oOzJt8xaaSg>
-    <xmx:eCFhZ5h3cvDBSQfusGwIAKJZqz06R_E0GDyqX874N3qo9fQExh6AZ3uy>
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehshhhusghhrghmrdhkrghnohguihgruddtsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:oyZhZ9WiIsPyCAtWr2k_IHBP9pqHXBRppbl0Gw2qpDsNYnZguJl0Aw>
+    <xmx:oyZhZwl3qkKi_bfkLwdR5XOMBZTqJYP8d7TGZeZc5yzN1AbzRkdXQw>
+    <xmx:oyZhZydhuZTJGx6QdZT47t1Mr6FLEh21BrHNGaOPkhO_5QJqae24gA>
+    <xmx:oyZhZyH5yLR60V6WUlzgariu6ogUVY4TVerdbNnMPhDv2n0mxeYa8g>
+    <xmx:oyZhZ6gkiHhP_jji7eIAtWVKLld25QD07PWAtD6H49rx5jhG4QDBU9yY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Dec 2024 02:00:07 -0500 (EST)
+ 17 Dec 2024 02:22:10 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 17bc566e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 17 Dec 2024 06:58:21 +0000 (UTC)
-Date: Tue, 17 Dec 2024 07:59:50 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e954ed0b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 17 Dec 2024 07:20:25 +0000 (UTC)
+Date: Tue, 17 Dec 2024 08:21:54 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 0/8] refs: add reflog support to `git refs migrate`
-Message-ID: <Z2EhZpL5V0LlhEvj@pks.im>
-References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
- <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
+To: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Subject: Re: Consider adding pruning of refs to git maintenance
+Message-ID: <Z2Emh42DJkHFGWq7@pks.im>
+References: <CAG=Um+0v=BmmYjvBAXs4r4My6zYvpJvcE+0U6SAnxKUcd1-A4w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAG=Um+0v=BmmYjvBAXs4r4My6zYvpJvcE+0U6SAnxKUcd1-A4w@mail.gmail.com>
 
-On Mon, Dec 16, 2024 at 05:44:25PM +0100, Karthik Nayak wrote:
-> Changes in v4:
-> - Fix broken tests, due to two reasons in patch 8/8:
->   - The `index` field in `reflog_migration_data` wasn't initialized to
->     0. This specifically doesn't break the test, but causes undefined
->     behavior. Fix this by using designated initializers.
->   - The strbuf within `migration_data` wasn't initialized when the flow
->     exited early, causing memory leaks. Fix this too by using designated
->     initializers.
-> - Thanks to Junio for reporting and Patrick for helping shed some light
->   on these broken tests.
-> - Link to v3: https://lore.kernel.org/r/20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com
+On Mon, Dec 16, 2024 at 06:03:03PM +0530, Shubham Kanodia wrote:
+> Remote-tracking refs accumulate quickly in large repositories as users
+> merge and delete their branches. While these branches are cleaned up
+> on the remote, local repositories may retain stale references to
+> deleted branches unless explicitly pruned. The number of local refs
+> can have an impact on git performance of several commands.
+> 
+> Git currently provides two ways for orphan local refs to be cleaned up —
+> 1. Automated: `fetch.prune` and `fetch.pruneTags` configurations with
+> `git fetch/pull`
+> 2. Manual: `git remote prune`
+> 
+> However, both approaches have issues:
+> - Full `git fetch/pull` operations are expensive on large
+> repositories, pulling thousands of irrelevant refs
+> - Manual `git remote prune` requires user intervention
 
-The range-diff looks as expected, so this version of the series looks
-good to me. Thanks!
+Fair. Neither of those issues feel insurmountable, but I can see why it
+could make our users lifes easier.
+
+> Proposal:
+> Add remote pruning to the daily `git-maintenance` task. This would
+> clean stale refs automatically without requiring full fetches or
+> manual intervention.
+> 
+> This is especially useful for users who historically pulled all
+> refs/tags but now use targeted fetches. Moreover, it decouples the
+> cleanup action (pruning) from the action to fetch more refs.
+
+I think we need to consider a couple of things:
+
+  - It's somewhat awkward to have maintenance jobs that interact with a
+    remote, as that may not work in contexts where you actually need to
+    authenticate. But there is precedent with the "prefetch" task, so we
+    have already opened that can of worms.
+
+  - Maintenance tries to be as non-destructive as reasonably possible,
+    and deleting refs certainly is a destructive operation.
+
+  - We try to avoid bad interactions with a user that works concurrently
+    in the repo that git-maintenance(1) runs in. This is the reason why
+    the "prefetch" task does not fetch into `refs/remotes`, but into a
+    separate ref namespace.
+
+If we want to have such a feature I'd thus claim that it would be most
+sensible to make it opt-in rather than opt-out. I wouldn't want to be
+surprised by remote refs vanishing after going to bed, but may be okay
+with it when I explicitly ask for it.
+
+At that point one has to raise the question whether it is still all that
+useful compared to running `git remote prune` manually every now and
+then. Mostly because explicitly configuring maintenance is probably
+something that only power users would do, and those power users would
+likely know to prune manually.
+
+In any case, that's just my 2c. I can see a usecase for your feature,
+but think we should be careful with how it is introduced.
+
+> Happy to submit on a patch for the same unless there's something
+> obvious that I've missed here.
+
+I'm happy to have a look in case you decide to implement this feature.
 
 Patrick
