@@ -1,66 +1,66 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D841F8EF6
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 17:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD57B1F8EF8
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 17:32:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456727; cv=none; b=UDd5zKU+K0sdz4d5/+g2MTLBfoEtTHVZ6YpIjxgB0sK5vw2koaKh9EvPUbyJ32OfXzEq4/zLL6cfvsKeThlSCBYcLTq27pRRFOrHVDSx8tOUlhuFat3PctiIKf7ULTiMJBWoMoiROAy9TyB3pZNOraowGCldGOegTGwbGqioCeI=
+	t=1734456728; cv=none; b=A7Q+mYf9LMWwyp4kbf/QwqranXNwK7JEDz0eC2BZQ+SJjpGv52gFBsoZpJGVLkbQuFl8xA3PltxE1RmwpoACNDADofVshA3rqqW7hzE/1ydbCvrXR66Dm0YAV5mqOINHn+d/bLVNrtgU6gJWDK3oW/UjEge6o+EvW7Xwlp1bPAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456727; c=relaxed/simple;
-	bh=bgHXxMQSrD5tijJ6ez7EoXYM5JxCBx2QcB7M1ISAw6g=;
+	s=arc-20240116; t=1734456728; c=relaxed/simple;
+	bh=P6FA2brIU34vW7hhp1bnEEGgTpm5cTf03OWRiJtK4bk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JDgGWQLEe+ut8ulZe0bfLLcOHb5obYUbguRSWcpa23Lb3De502+xZStyj4QdURHQuk/yoDMUdm+ms12sFvHXswVABc+yfR+w/Aig7UA83bIbrMhqw/57Yx+zA9Xzp9m5OLf2t+T4ijGNlwg1w4pVpXmfQOYybNURFPztnIxyJD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AB/WqLHs; arc=none smtp.client-ip=209.85.128.45
+	 MIME-Version:To:Cc; b=oAoazMcz+mID/py+bY1mEtr19b3l3ksAV3gLxLXeoWEXoR826AEcRgRkTOP9qtByItxi+bw9qk3q816frOvrOZX6JyoHRQaSTq3sOYfSYBUEtdRqG/7Ruhdki64EGetTzXjHzdg6a19ankszTaXt66KBecncHi8P2UKjO7c+okw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ck3i6ESL; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AB/WqLHs"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43621d27adeso39289415e9.2
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 09:32:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ck3i6ESL"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4363ae65100so32632015e9.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 09:32:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734456723; x=1735061523; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734456725; x=1735061525; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/O/DpKuJJiAyJAaszUEC2BEOuV/2AgG46dlUjVauZbA=;
-        b=AB/WqLHs2hp8BhoHz4Cp1KXQpMpaH6giBnKRfMb0THE8IDcG+qleiQY9sf/OWpHYVt
-         6r1C/7MZ1h6CSDyCFKOmaFngWfetuhuRrqleC/kDacZTno7ixyWVQ00TaxXgk6K7Jzna
-         EJJ4x5Xx6u0Jwe9IyTcVSxtQo5r+yU/4rnwpgt0gZebvc20mXYBXf9c7Owb5sT+pxa9P
-         1cNU+/05sZWr6MzoLU0Dobnt66dQqAbGZtuvDWwvdYTjItK4PkYPSFbFl/8xoW2Ky3FZ
-         4Udbr0yE0KScEugoS2sOB/gASw+9lPAVRNk/aU+hpcp5jFRiZU2W95kY0oYNhxG8af0U
-         c21g==
+        bh=UakZ+hvIcUvU724qRc20K/pSWwgLYi23Yx4m+v6xfWk=;
+        b=ck3i6ESLWoonDGI1HQUlAgkdhTkt3xqTuj/rilPFaIHHe/3fsUHig2xmIS7434lhCC
+         ZaUHIdIqPdAIzfX82AeIwW+c0XtuDAE0MigiqAnkwhI89JlTiNtQEfDhF6aWp+uprqzq
+         WoZTQ13FkO6QNFncf8m/N+LtqAHR74VKfOqiiEksNCKcL5E1I1M4HENISSMYmOoYvbZG
+         Ig+pE9tT/cM2Kjrqi8/JhSG5F7QYJz+DNuxh7zoVD2SxypTqyTgqfGxmP3T+u7+bZpVX
+         RKe5dajr3ahMvwpDNu33XKlsn+YGyunS6Rlp+taxcw4vKD3QsiGErKMhIs8QOdtEfN55
+         9JpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734456723; x=1735061523;
+        d=1e100.net; s=20230601; t=1734456725; x=1735061525;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/O/DpKuJJiAyJAaszUEC2BEOuV/2AgG46dlUjVauZbA=;
-        b=cqd/BYTd3sRz2ZFb7aivGR6XA063fJRROlFK6CsRFy4T6B/gpp0oEGEfE/Uj6mSvA8
-         Qj2ktI5DzwEzh3jqs+O5sbmxyv7p+s05z/1q6GSTDY1QkMXsatm7QKxp7oynrDpcOp3W
-         C8z2C7R1u+AKcQZlbhleKf0Czj0G379qzdnDH4M7DRRtT/YKEMi/raRv/nevxX6U4z8F
-         EWt2Zve1iD6tqbp6VOVCwtXiyuA47P/xMbOMuxDNrnmri7IbcGysvcdumu5HcEW3IrkT
-         4qUZkyGIqCB/GYUfHcV1qR1jf3JqMfYinauasZl99Op4Q0IatOVCZn4M9RHxQESYlj0S
-         Kntg==
-X-Gm-Message-State: AOJu0YwFf32/Im/abfGiBlgrbYNmqCexuQO5ajxIX7pPQyACHaUs+Jeb
-	l/DzkiLCXB7LtDgMCIMYdjoCJykveype52aoT+iffvBavDVHHA3bmJs3xw==
-X-Gm-Gg: ASbGnctGRNCYSmnirN4TyuklN7nJnr0Od3ZlxdpxYN1trcqwHTiSJbstNEdBD+TMtUj
-	Py7EGddwG6hMH1v12MSMKEyTwoIkvFa97sbvErxQsI+QyIxfAp/sXQIQjoAoteCP7iVbZ5iN3TK
-	ho3at+woeV4CAUaISG+NNepg8YALxTtZiiP4ZPFILS9UnRQdCLe2RzVsNRVRKEsmmDUIP+aUIpu
-	PsxrPVs71Gu2UfpcIS5RC/+1S1GmRITUQqHbNBcFuDWPD+HFqce9w4+lg==
-X-Google-Smtp-Source: AGHT+IEHFiVjLIvDzweQiWNenJzjwcqSTMignUtakiGI3IMeVZo7UwxL6VbEKpI/Qcl7xvpEKUt8Eg==
-X-Received: by 2002:a05:6000:1ac9:b0:382:47d0:64b1 with SMTP id ffacd0b85a97d-38880ac61ebmr16066092f8f.2.1734456723188;
-        Tue, 17 Dec 2024 09:32:03 -0800 (PST)
+        bh=UakZ+hvIcUvU724qRc20K/pSWwgLYi23Yx4m+v6xfWk=;
+        b=OnFFJP1wTvd0w0SlGD48VpF4hrG5B8tCLHz4CPm8LzIhsO7xfGhRP2TNNcun4HNGZf
+         krzyGQLsa62LJKXXGK9I8DzMJO8ShqAOVxeauEm5672zSTBYe2PluNhWgaizAt2Kzt+W
+         MFsufCpCcCIabP8J3UQ6IOGOlNilpMnIUO1rfZ/icE7nl9eg70DUH8JAxytgOEZETF7U
+         ZhIM9RpEU5BUjOVGhIOls/nHtqsxYBfD7d2Wpvi1JbKId0meL2PgAsgiKErBaLpuwZ5i
+         yQJTC0DMIijaL6hsh+sSRWMw1S15BbB8OTcTNkjVlGRIj6jJgSstsp4KKXvgcJ0/SLBy
+         6nKA==
+X-Gm-Message-State: AOJu0Yx5toYHFZ18WY1TijvY9xcC3kAVZbwmSO52U6WJWg6hvRtSX9t6
+	ADDEzKcHx3AWnv/ifgi+gnU6ccKUlWuPZHVfGxCMn78VWoV4Aj6RTGB54g==
+X-Gm-Gg: ASbGncuZ51Oj+Wrd0MvuGUUIzanpHnJO7k8MRTcydlQWQ2pbdl+ChzATrukr9DyQ4HN
+	eZT/8boJIcyVZrdUDHJBTfOP21kCYkoiiqwijgATN96764DY1ujSF8Qh6seVkXTdE5nn+6k0Jv3
+	/UCgfNrQ6edavETCqLekSGn/VlDlriZkS/CsJKuVfC0ZiMH/9uUIHMBlOjjFihW1bgmGMOQTpuX
+	yHiIXbAjYEs0t8VD2BkZRlPeCiT5V5/cKMyN4K5hMcknotpH12GUORS0g==
+X-Google-Smtp-Source: AGHT+IFE8MsGfSqJBXm9SJVQvzdffG0uQywC0BTKSsEh7rAQ/nnQZTW3Bl0mdyQRkKQqPaqktl47WA==
+X-Received: by 2002:a05:600c:8518:b0:434:a04d:1670 with SMTP id 5b1f17b1804b1-4362a987aecmr185065525e9.0.1734456724534;
+        Tue, 17 Dec 2024 09:32:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436360154c7sm123180125e9.1.2024.12.17.09.32.02
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4363601574bsm123057005e9.7.2024.12.17.09.32.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 09:32:02 -0800 (PST)
-Message-Id: <187888ca9cd723d78b7bb96ba4d10a64450f553d.1734456721.git.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 09:32:03 -0800 (PST)
+Message-Id: <1170b6d01f1a9aadd403a833650b16f9f3378e53.1734456721.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1840.git.1734456721.gitgitgadget@gmail.com>
 References: <pull.1840.git.1734456721.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Dec 2024 17:31:57 +0000
-Subject: [PATCH 1/5] cmake: better support for out-of-tree builds follow-up
+Date: Tue, 17 Dec 2024 17:31:58 +0000
+Subject: [PATCH 2/5] cmake(mergetools): better support for out-of-tree builds
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,53 +77,41 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In 7e0730c8baa (t: better support for out-of-tree builds, 2024-12-06),
-the `bin-wrappers/` strategy was changed so that it no longer hard-codes
-the template directory to be `@BUILD_DIR@/templates/blt`, but instead
-interpolates the `@TEMPLATE_DIR@` placeholder during the build.
+In 7e0730c8baa (t: better support for out-of-tree builds, 2024-12-06)
+the strategy was changed from letting `t7609-mergetool--lib.sh`
+hard-code the directory where it expects to find the merge tools to
+hard-coding that value in the placeholder `@GIT_TEST_MERGE_TOOLS_DIR@`
+that is replaced during the build.
 
-However, this commit only adjusted the `Makefile`-based build.
+However, likely due to a copy/paste mistake (and reviewers missed this,
+too), the CMake-based build was adjusted incorrectly, replacing that
+placeholder not with the path to the merge tools, but with a Boolean
+indicating whether to use a runtime-generated path prefix or not.
 
-Let's adjust the CMake-based build as well. This fixes t0000.15 which
-would otherwise fail with:
+Let's fix that, addressing this CMake-build's symptom:
 
-  ++ echo ''\''t1234-verbose/err'\'' is not empty, it contains:'
-  't1234-verbose/err' is not empty, it contains:
-  ++ cat t1234-verbose/err
-  warning: templates not found in @TEMPLATE_DIR@
+  Initialized empty Git repository in D:/a/git/git/t/trash directory.t7609-mergetool--lib/.git/
+  ++ . true/vimdiff
+  ./test-lib.sh: line 1021: true/vimdiff: No such file or directory
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/buildsystems/CMakeLists.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ contrib/buildsystems/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 49904ca8a93..926f0d7b86c 100644
+index 926f0d7b86c..3dd6b3a130e 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1087,6 +1087,7 @@ set(wrapper_test_scripts
- foreach(script ${wrapper_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
- 	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
-+	string(REPLACE "@TEMPLATE_DIR@" "'${CMAKE_BINARY_DIR}/templates/blt'" content "${content}")
- 	string(REPLACE "@PROG@" "${CMAKE_BINARY_DIR}/${script}${EXE_EXTENSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
- endforeach()
-@@ -1094,12 +1095,14 @@ endforeach()
- foreach(script ${wrapper_test_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
- 	string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
-+	string(REPLACE "@TEMPLATE_DIR@" "'${CMAKE_BINARY_DIR}/templates/blt'" content "${content}")
- 	string(REPLACE "@PROG@" "${CMAKE_BINARY_DIR}/t/helper/${script}${EXE_EXTENSION}" content "${content}")
- 	file(WRITE ${CMAKE_BINARY_DIR}/bin-wrappers/${script} ${content})
- endforeach()
- 
- file(STRINGS ${CMAKE_SOURCE_DIR}/bin-wrappers/wrap-for-bin.sh content NEWLINE_CONSUME)
- string(REPLACE "@BUILD_DIR@" "${CMAKE_BINARY_DIR}" content "${content}")
-+string(REPLACE "@TEMPLATE_DIR@" "'${CMAKE_BINARY_DIR}/templates/blt'" content "${content}")
- string(REPLACE "@GIT_TEXTDOMAINDIR@" "${CMAKE_BINARY_DIR}/po/build/locale" content "${content}")
- string(REPLACE "@GITPERLLIB@" "${CMAKE_BINARY_DIR}/perl/build/lib" content "${content}")
- string(REPLACE "@MERGE_TOOLS_DIR@" "${CMAKE_SOURCE_DIR}/mergetools" content "${content}")
+@@ -1195,7 +1195,7 @@ string(REPLACE "@GIT_TEST_TEXTDOMAINDIR@" "'${CMAKE_BINARY_DIR}/po/build/locale'
+ string(REPLACE "@GIT_TEST_POPATH@" "'${CMAKE_BINARY_DIR}/po'" git_build_options "${git_build_options}")
+ string(REPLACE "@GIT_TEST_TEMPLATE_DIR@" "'${CMAKE_BINARY_DIR}/templates/blt'" git_build_options "${git_build_options}")
+ string(REPLACE "@GIT_TEST_GITPERLLIB@" "'${CMAKE_BINARY_DIR}/perl/build/lib'" git_build_options "${git_build_options}")
+-string(REPLACE "@GIT_TEST_MERGE_TOOLS_DIR@" "'${RUNTIME_PREFIX}'" git_build_options "${git_build_options}")
++string(REPLACE "@GIT_TEST_MERGE_TOOLS_DIR@" "'${CMAKE_BINARY_DIR}/mergetools'" git_build_options "${git_build_options}")
+ string(REPLACE "@RUNTIME_PREFIX@" "'${RUNTIME_PREFIX}'" git_build_options "${git_build_options}")
+ string(REPLACE "@GITWEBDIR@" "'${GITWEBDIR}'" git_build_options "${git_build_options}")
+ string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
 -- 
 gitgitgadget
 
