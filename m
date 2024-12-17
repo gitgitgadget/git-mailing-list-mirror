@@ -1,138 +1,168 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF7D1F03DE
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:52:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEB41E8823
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 13:22:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734439930; cv=none; b=AADMoWVDAJYUSJJJmTqIY0EAHq814Va9j1RLE4kpKXkWAPl3bmiGGGbdqcAu0GiEOzjQ6JvJFMGfk45PUzMBToK4RhpdjhiAJ/1WveAi6ZTrJezOXdSX3BXUkAgDnzF0WDrXXYtvWRGa9P+oVZaQMl6m2XOLmL2uRMkat31J8PI=
+	t=1734441774; cv=none; b=krHjYAStoMRY0QDZ6j/iTvXgmOWCgB+pEqacg/2e3EyY1uISLhdi/cQXR8NWPfhbtDEkceEah71SAHB71RwgnYYT45fKl83iMReIduEjtqgYn04IMSv7uvngh1P3Z4vY3A0MviEd0AMpcLA1o2sRcPRxz6MPfc1AzwNgCg0UvUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734439930; c=relaxed/simple;
-	bh=T1J5bzf87RWNl8tE0onf9VZoPbT79WqFK8uIx23/Txk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VRJOmUcgegTwymirgvcatnmbZ9v4f0imBwtYWnBsPuhhdi8bPxnBYUuluwxaEcdQ2m/jzE8AotWxrjHA231PpcoJECMwxRQaUJPNSunHGUGZ162k/GONBmapYZBolezc6XVRSVDOqzwEiNMe07Gs8JY+j4sqydJfd4IWsVn8diM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZPvrwpdJ; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1734441774; c=relaxed/simple;
+	bh=Y12+ynYrH/FB0OydLJKGwky4EvHZf9NpfRDfsAWYUqY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YWRwJQ9K8/cM5ThvrwI40aBOCKU/tOw0OzVGFjgxmnRyQwWVDoouicbq5fRYHCMRsCsMW63AOm5dIUNjJ3ecTXta+tpUtTk/BE08XxlVNIMkemidddEG3Nn4t9Bkkxn75keGPJn6A4vK2a0i90H+7mQoCE8BSCjAl+O3X7I2TTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=By74qeJt; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZPvrwpdJ"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-386329da1d9so2449751f8f.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 04:52:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="By74qeJt"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2163bd70069so53750075ad.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 05:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734439926; x=1735044726; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qqzs6LX9hRHMXm/wFHloW2srIsbZQFtlgPHXz1OigL0=;
-        b=ZPvrwpdJG54p0w0gv/oY3zBMVB4XxB+iIdc5Q0JdHxr6IAY0Froz7oY901RGF+vSc/
-         qGVAhlEKND/BW9+z6i29ivnpMAFS0pNrrxjQDyfxm3XMx9FGk2iL9kUJohiapEhMZyQd
-         pWHKrM+4sw5RRx5aQBd36NkFpUWAfThn/DPUbCdYDvcEGB96KsUXvkRwUO11sLIB6iJl
-         snzjSgQq8VA2fAguBdBrwLx8LDdATOKa4Bezd7BNV1HdGwz/h7bXc1nrjnp6yHPRHazd
-         2aK1dDzVP/oY4ioPl488CSaQsxE7cxCYG0D1L6hw4zmFS44JQ+mqnTFbDL2o5hrqXEqJ
-         U+/g==
+        d=gmail.com; s=20230601; t=1734441773; x=1735046573; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=22oA8EaAA1MTWePJbbYXLkpFqqSIxarPIgNKAzFy1lE=;
+        b=By74qeJtJLeGvEcGuN3bIpcu/M6bG1o1p0tci+cZQDcyV0+l0ZsxGJWQ8Dk7iS/Jav
+         uT4khkfAlHTqnj6v/bRQ7THGQXJIAe0N2sINDYCk/9xyLhguKDS22BinNFtyx9ewnAxi
+         6+a/a5EIGY7sMXy9bDVluM6fSoEd9PBceWiuTU24ap6QmGrSg3IlRlFda+A5gvdSb0rW
+         0pfK6hcjmSGpYyijfHtt2Y/PQgYzhPH+2bdiIEJCT8R0S0fGQs7ZTrS0HG9DZPhyQnVK
+         ggfy/L7QAErvggsKs7aeI+8fzrTQ+VgJP05K5KjVPP3iB7p8Ganwhyeq2KSvWy5l/RMq
+         P/qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734439926; x=1735044726;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qqzs6LX9hRHMXm/wFHloW2srIsbZQFtlgPHXz1OigL0=;
-        b=tWY7yvUMJldmUjRD4C/C/Uj00vIqxUWWkDhlF9GDHjzXRymOnxoQrKTYo50wH4SfcW
-         NHEFUgHCo5zCy4DdgyT/0NnSYZOi3wCo5iB0Qo6MGc4/+R7HKb4l36BnCI18k2EQPdiv
-         EqvWUWZHzSlaVymanBvfnkl9fLfpiFTEv9BjuVW4WGGGno3R/AQp4a5DmfVTfTWiT2mD
-         46B8R8fBVVOyVqZFKA48pKs8bx9BExqAk+ayI5GpQI5hE+TVZk9eP8Ly4VW05DdEvNOu
-         DVbLdAziU2sbp5OY5HC9d/diRHpGTk/MfDKQraqwZzMgPbJbmmQjSZ8IBEmi+dcZGoci
-         ZkrA==
-X-Gm-Message-State: AOJu0Ywrm1FWPZIEmDaBl1EIxXtCb3cTmRP63Qg/SupAULw8ZASTHgAO
-	dm6iIM8NFRuIMh97yJ4g+5Z74ixOW+pp4/8Fu9wyFtxpTH4yabyOEMwxzg==
-X-Gm-Gg: ASbGncsYMU6RfZ7eAg4H617pM69GYqPnvwBLWWxspdPpgS0pOYitIzUFNrQWANm3qUN
-	p4bwRaUugiH0i0mHJr8bF93QrXuOhoxic6J3XhjXyU3xCJLRj3jj6wGLLbW2AnKfqcHzYtIT1F3
-	WmHdQJjTxtV/zMcGhBzgUrEfSzm0fx+H9EDWAAwsuYuoNgx7uJ1xI4gjoDY5HfDgdqDIvrWZO4k
-	CUESDS2+JnbZmRLYiSPiXPhJP7tripKj0mFedcwwOsx2hoxxgMMuJhtAA==
-X-Google-Smtp-Source: AGHT+IE5JRTUx2S/JmVaEDe6G9JHFEjhDwTREROVcpZzOYUCA5UMxlioOtO5xd5KTm1Rop6l5Qm1PA==
-X-Received: by 2002:a05:6000:156b:b0:386:3d16:9609 with SMTP id ffacd0b85a97d-38880ad7959mr13539713f8f.17.1734439925817;
-        Tue, 17 Dec 2024 04:52:05 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4363602b1a1sm117828635e9.10.2024.12.17.04.52.05
+        d=1e100.net; s=20230601; t=1734441773; x=1735046573;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=22oA8EaAA1MTWePJbbYXLkpFqqSIxarPIgNKAzFy1lE=;
+        b=GupfzUx5nSis4NLPvf/7+JICWUjBbQIwp7b1o3C31Q0gQJ5+Bm/T6+x3Pvut6n/xy+
+         az3GXc0MQmMY1JipNpA9HL4cNlxH4vk1A0KptziwVQYiohngPpwOCWMt95Q4zkHqNp8Z
+         cXSxZnYP/anEONNiDFEr482sP5nf+yrX/rrWZ4Lh8uarGNgc3WsCUGg4oNrTqhGfbJi3
+         XVXr/NwmpVlF94FcEzpgixhCw71jEeheEvBrG5LvEoz6G7wpauWlUkxih1Ej1X1oK5wQ
+         uB1fsR2R+UAOiZJHh2vhcz1Yd7hB/IMib2nKmmK0BxG5dNRcfqe+85XGtPRvb/TRyWF1
+         AJOQ==
+X-Gm-Message-State: AOJu0YwZ4Qv09wkoni+EKH7baAqqWmZPYtL0YnnRm9OgqFIHZ6QFEvs0
+	l4/5/1Ifwxwozw2PY7mi9JRDrUphG0Cv+D2j0b8AhbOeP5m15V5f
+X-Gm-Gg: ASbGncuCy68Pc1lQcPhS/yyYr9ma4tLZBTazOY2ofkZnQIPtXnn6ejMac0J9ASIzstV
+	xGRdZIHuE15jEZNYAGhvOLFJ399cVuXPvcQioSrTK++9xm4Xi4SBURPN7l29sjX7JTHAGTl1LZ0
+	6ukxVAqLdkehodddql0bzNRMTZaj72w7ZFNd0nJzDnGwDliUvfDx/ETz1HY18yzPsgDNQGG6j8e
+	RqbMcVpagRIa0FkKiF5fAO58fcVESdC5xs08Xbn+2v1TV77JV3o
+X-Google-Smtp-Source: AGHT+IHirfoZirBcBx22rTPdZf0PehFKnJ5oqp8VddtdYNGaWaH3YuTgF6syZAj2/l1oeyRB5megFA==
+X-Received: by 2002:a17:902:db07:b0:216:7cde:51a with SMTP id d9443c01a7336-218929d82bbmr276863405ad.28.1734441772608;
+        Tue, 17 Dec 2024 05:22:52 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e63751sm58891175ad.217.2024.12.17.05.22.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 04:52:05 -0800 (PST)
-Message-Id: <pull.1839.git.1734439924842.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Dec 2024 12:52:04 +0000
-Subject: [PATCH] mingw_rename: do support directory renames
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 17 Dec 2024 05:22:52 -0800 (PST)
+Date: Tue, 17 Dec 2024 21:23:32 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Wang Bing-hua via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Wang Bing-hua <louiswpf@gmail.com>
+Subject: Re: [PATCH] remote: align --verbose output with spaces
+Message-ID: <Z2F7VAsTjfBCVCrG@ArchLinux>
+References: <pull.1837.git.1734439176360.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1837.git.1734439176360.gitgitgadget@gmail.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Dec 17, 2024 at 12:39:36PM +0000, Wang Bing-hua via GitGitGadget wrote:
+> From: Wang Bing-hua <louiswpf@gmail.com>
+> 
+> Remote names exceeding a tab width could cause misalignment.
+> Align --verbose output with spaces instead of a tab.
+> 
 
-In 391bceae435 (compat/mingw: support POSIX semantics for atomic
-renames, 2024-10-27), we taught the `mingw_rename()` function to respect
-POSIX semantics, but we did so only as a fallback after `_wrename()`
-fails.
+Good enhancement.
 
-This hid a bug in the implementation that was not caught by Git's test
-suite: The `CreateFileW()` function _can_ open handles to directories,
-but not when asked to use the `FILE_ATTRIBUTE_NORMAL` flag, as that flag
-only is allowed for files.
+> Signed-off-by: Wang Bing-hua <louiswpf@gmail.com>
+> ---
+>     remote: align --verbose output with spaces
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1837%2Flouiswpf%2Fremote-align-verbose-output-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1837/louiswpf/remote-align-verbose-output-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1837
+> 
+>  builtin/remote.c  | 30 ++++++++++++++++++++++++++----
+>  t/t5505-remote.sh |  4 ++--
+>  2 files changed, 28 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 1ad3e70a6b4..876274d9dca 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -16,6 +16,7 @@
+>  #include "strvec.h"
+>  #include "commit-reach.h"
+>  #include "progress.h"
+> +#include "utf8.h"
+>  
+>  static const char * const builtin_remote_usage[] = {
+>  	"git remote [-v | --verbose]",
+> @@ -1279,6 +1280,20 @@ static int get_one_entry(struct remote *remote, void *priv)
+>  	return 0;
+>  }
+>  
+> +static int calc_maxwidth(struct string_list *list)
+> +{
+> +	int max = 0;
+> +
+> +	for (int i = 0; i < list->nr; i++) {
 
-Let's fix this by using the common `FILE_FLAG_BACKUP_SEMANTICS` flag
-that can be used for opening handles to directories, too.
+Nit: we should use "size_t" to declare/define loop variable `i`
+because the type of `list-nr` is `size_t`.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    mingw_rename: do support directory renames
-    
-    This is not quite a critical bug fix for Git because (unlike Git for
-    Windows) it attempts _wrename() first. If that succeeds, we'll not
-    bother with the POSIX semantics.
-    
-    However, Git for Windows knows how to deal with symbolic links, and
-    _wrename() does not work for them. Therefore, that _wrename() call was
-    patched out there and we rely on the native Win32 API call to
-    SetFileInformationByHandle() to rename files and directories.
-    
-    It is that latter part that is at heart of this here bug fix: To be able
-    to call SetFileInformationByHandle(), we need a handle, and
-    CreateFileW() is what we use, for files, and crucially, also for
-    directories.
-    
-    So while it is not critical for Git to take this patch, it still is
-    important because that _wrename() call can fail, even when renaming
-    directories, and then we want the fallback to fail not because we tried
-    to obtain a handle using incorrect flags, but only because the actual
-    rename operation failed.
-    
-    This patch is based on ps/mingw-rename.
+Recently, Patrick has provided a patch to start warn unsigned value
+compared with signed value in [1] which has not been merged into the
+master.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1839%2Fdscho%2Fps%2Fmingw-rename-followup-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1839/dscho/ps/mingw-rename-followup-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1839
+[1] https://lore.kernel.org/git/20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im
 
- compat/mingw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +		struct string_list_item *item = list->items + i;
+> +		int w = utf8_strwidth(item->string);
+> +
+> +		if (w > max)
+> +			max = w;
+> +	}
+> +	return max;
+> +}
+> +
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index c4320769db6..e8f491d03a7 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2273,7 +2273,7 @@ repeat:
- 
- 		old_handle = CreateFileW(wpold, DELETE,
- 					 FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
--					 NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-+					 NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
- 		if (old_handle == INVALID_HANDLE_VALUE) {
- 			errno = err_win_to_posix(GetLastError());
- 			return -1;
+So, here we traverse the list to find the max "utf8_strwidth". However,
+we should not EXPLICITLY traverse the string list. There are two ways
+you could do:
 
-base-commit: 391bceae4350136a05d977573caeaa07059f2136
--- 
-gitgitgadget
+1. Use the helper macro "for_each_string_list_item" in "string-list.h"
+to do above.
+2. Use the helper function "for_each_string_list" in "string-list.c" to
+do above.
+
+>  static int show_all(void)
+>  {
+>  	struct string_list list = STRING_LIST_INIT_DUP;
+> @@ -1292,10 +1307,17 @@ static int show_all(void)
+>  		string_list_sort(&list);
+>  		for (i = 0; i < list.nr; i++) {
+>  			struct string_list_item *item = list.items + i;
+> -			if (verbose)
+> -				printf("%s\t%s\n", item->string,
+> -					item->util ? (const char *)item->util : "");
+> -			else {
+> +			if (verbose) {
+> +				struct strbuf s = STRBUF_INIT;
+> +
+> +				strbuf_utf8_align(&s, ALIGN_LEFT,
+> +						  calc_maxwidth(&list) + 1,
+> +						  item->string);
+
+So, here we call `calc_maxwidth` in the loop. That does not make sense.
+We should not call this function when we are traversing the string list.
+I think we should firstly calculate the max width outside of the loop.
+
+Thanks,
+Jialuo
