@@ -1,116 +1,89 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274481EE7CB
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 20:49:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDACA4A23
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 21:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734468577; cv=none; b=Ev47zzv27zzzybNJswRIixnDCYeiJM/fS3bPaJpOBYAVPZvcprUQ2Zk2Fy4UUfj9n5xt26Ij1irRTdPAW1z/7JJ82+rWV3P1jcg6I2EtMHQ6Ti3VCHwWt+ZtZkFROyEnZcPA7XDDt/pcqNS3LkmQiNIKArcxU1ySHcVWfD8xVyY=
+	t=1734470757; cv=none; b=CY87i7jk5OXlqeknSXQY2n7K/6pmaQ3J1ERaTcEQcII6Iqyg+weneOOgZ/tXbdmq1KOGwZe0qXO2tlCWiBdBcbXfBE/VDxk5w9uLmkpCASg5ZNqDnPNpradqCfaNC/fhMK9v6yTV7FEI9D0yM8ftgp65+edciCy7e8z+c6oa9NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734468577; c=relaxed/simple;
-	bh=Y56MoqAVT9adzIA6ppFSE9Zrz+jV8VZ1zhs7twQBHv8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qEkN9LbmqL//h24Ou5xOYCej9GpWsKYjCwD/FOHQDQ+ts5BiVVafew8NAqmh+BjW2FMpUJiXEvL3utJdtxV5r0IMSjAHeqMmEydemvnjc79+1epWcEpOrYQVK5g7++uv782fS1Hsj8QzCDnocYUFNWz2gC/McpDPsQosorytjc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CQnw8slp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HvVRWa89; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CQnw8slp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HvVRWa89"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0E21F114006E;
-	Tue, 17 Dec 2024 15:49:35 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 17 Dec 2024 15:49:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734468574; x=1734554974; bh=Std1QiXAkA
-	8IFWzPOxMg1IuUKeU92GKH1BalunRi3pc=; b=CQnw8slp5Yw1orcmF1xbpALefE
-	v2zreisTRI/L+BeoNDDInU+z6/94kb//jW4kuHFl0qvoyvMFpJ1JTOs6FtNI9xxz
-	p5J6YKu7pGCd+rKuUQiaR6klxu21/Yfp1kU6bDuTWqi0OTHJlh+eclIJp5zvkhfG
-	CrTlJSVQjTAtdlR0Yr5jfVPDGl1JKn6GQoictwiECQ+L8UecQnelteu9YX+pelKv
-	UtQzLcSusb1iBqoNygxd3DjKhfFyC35ikcUPMjCv6A7ftF4HpG+S1nrTCF94ctUa
-	JnOOlWx2vhgMT32HooQl6zh7fMcoh21x+XlKv+12GnMfI8qPVAZWGZS8sMcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734468574; x=1734554974; bh=Std1QiXAkA8IFWzPOxMg1IuUKeU92GKH1Ba
-	lunRi3pc=; b=HvVRWa89Wh3rR1KoJZ8GqyhYb/RxQxud+iRJy3G5F/+yLsWNH+s
-	VpDhOQeaPmACZJRSvtO8E8yCrQCNApKuXxen+FnygiwRgHKPB4n3T9UxvEeOo8SK
-	34tUSAhd1jJmua354WF6brImPTRGBz4aogU8tPUvMe6HJursGu6xV62a+cJj3kX6
-	UO6cnbkofZBW8nxHm4D0h6yrhm6oEwGIYfBZn8fuyj9O6IUvsLqm6rB0rKyGkT0n
-	Ry0Rw1xW031CrOyxNaDUd/wjxd1kRcAAeIMyOo/UOhIYGfTqEcodUlaxSTQ4IiZ9
-	vwm58FAeTXjI5b/Mc6O2qyYll68xJtveQ5w==
-X-ME-Sender: <xms:3uNhZ1tYY5MemlCTzjICajgjUciRxL6Ed1Pp9bdNjdsYSizl9aW16g>
-    <xme:3uNhZ-d8iKhSKFHZgZlTZpQb5HmUBotuQbX-8YqEjPQPF2xxdFGZ2E0K9ISleBP8B
-    LMCUCChL3KwJfM6nQ>
-X-ME-Received: <xmr:3uNhZ4wQqdDNogo9DHGIg3BU6yPx5IUF2bZ-UGKQ3JemYrwNjave8cS8gMNlHpOWsYVKsCxqvk6_LcZP0VbCvdN4w8PJrwhwErbUgMQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleehgddugeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefh
-    tddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehg
-    mhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3uNhZ8M_zapuOvo8TUL6I560XDgOi81ac6mXpssT_hZmEhE-mjQo5A>
-    <xmx:3uNhZ18ctT4xCdEUAhXYaU5fRZ3tVCK_txE1tAzfZLYbz7YuI0SwdA>
-    <xmx:3uNhZ8UKFXXe8otSuLMDbwZcaUwF7rmSU5A3MqwuATuVz-OWcISZCw>
-    <xmx:3uNhZ2cl3Pey3suXeef77IRl5IESRUuq8yubHcSCfkuzld-it4NExA>
-    <xmx:3uNhZ4kVVwkyEfqJ_aI3shbHeL24tz_MiQNe7U9NWLrOhw_rZxFVDc8p>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Dec 2024 15:49:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] ps/build follow-ups
-In-Reply-To: <pull.1840.git.1734456721.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Tue, 17 Dec 2024 17:31:56
-	+0000")
-References: <pull.1840.git.1734456721.gitgitgadget@gmail.com>
-Date: Tue, 17 Dec 2024 12:49:32 -0800
-Message-ID: <xmqqzfkuxcf7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1734470757; c=relaxed/simple;
+	bh=VKgdMtmVB56++X1cebn1wKXauDOC2rsafO2L8IdIsJw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=imPEVitGf8dwLRdQoFb2ghiOTGxJks/WRvreCH34+3BlgppKRLp1QHcm7QFmcG7LrJ4HhTrZ2jNuj6YG4Rj1r8urT3nwQALvM3oBuu78jITgb6nXp6w1GLTLaVDGIgj5f0CNe7th60u4j8jT3Pv+wVDNU7BVAnmX+sl5k5+//ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4YCVGg6YcVzRpKY;
+	Tue, 17 Dec 2024 22:25:47 +0100 (CET)
+Message-ID: <ce2827ab-7827-42d6-8fd9-77be18bcda4c@kdbg.org>
+Date: Tue, 17 Dec 2024 22:25:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [GIT PULL] gitk: macOS startup, commit ID to clipboard, text wrapping
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+The following changes since commit c18400c6bb04f4e8875c1930db72ddd9b94649ca:
 
-> These patches were required in the course of getting Git for Windows rebased
-> onto Git v2.48.0-rc0. They are based on ps/build.
+  Makefile(s): avoid recipe prefix in conditional statements (2024-11-24 13:45:49 +0100)
 
-Thanks.  Let me mark it to be fast-tracked to 'master'.
-Queued.
->
-> Johannes Schindelin (5):
->   cmake: better support for out-of-tree builds follow-up
->   cmake(mergetools): better support for out-of-tree builds
->   cmake: use the correct file name for the Perl header
->   cmake: put the Perl modules into the correct location again
->   cmake/vcxproj: stop special-casing `remote-ext`
->
->  config.mak.uname                    |  4 ----
->  contrib/buildsystems/CMakeLists.txt | 15 +++++++++++----
->  2 files changed, 11 insertions(+), 8 deletions(-)
->
->
-> base-commit: 904339edbd80ec5676616af6e072b41804c1c8eb
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1840%2Fdscho%2Fps-build-followups-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1840/dscho/ps-build-followups-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1840
+are available in the Git repository at:
+
+  https://github.com/j6t/gitk.git master
+
+for you to fetch changes up to 661734e6c8c38d2cd2000481ffb22cca6e2b0e5e:
+
+  Merge branch 'ah/commit-id-to-clipboard' (2024-12-17 21:54:58 +0100)
+
+These updates add the following features to Gitk:
+
+ * The commit message and the patch text can optionally be displayed
+   with lines wrapped. There are separate options for these two kinds
+   of text.
+
+ * When a commit is selected, the commit ID is copied to the "X11
+   selection" (to be pasted with a middle mouse click, only available
+   on X11). The commit ID can now also optionally be copied to the
+   primary clipboard (to be pasted with Ctrl-V typically).
+
+ * Section headers in the Preferences dialog are now better visible.
+
+There is also a bug fix:
+
+  * Starting Gitk on macOS no longer hangs indefinitely.
+
+----------------------------------------------------------------
+Avi Halachmi (:avih) (3):
+      gitk: UI text: change "SHA1 ID" to "Commit ID"
+      gitk: prefs dialog: refine Auto-select UI
+      gitk: support auto-copy comit ID to primary clipboard
+
+Christoph Sommer (2):
+      gitk: make headings of preferences bold
+      gitk: add text wrapping preferences
+
+Johannes Sixt (3):
+      Merge branch 'sv-20231026' of https://github.com/nafmo/gitk-l10n-sv
+      gitk: offer "Copy commit ID to X11 selection" only on X11
+      Merge branch 'ah/commit-id-to-clipboard'
+
+Peter Krefting (1):
+      gitk: sv.po: Update Swedish translation (323t)
+
+Tobias Pietzsch (1):
+      gitk: check main window visibility before waiting for it to show
+
+ gitk     |  86 +++++---
+ po/sv.po | 734 ++++++++++++++++++++++++++++++++-------------------------------
+ 2 files changed, 439 insertions(+), 381 deletions(-)
+
