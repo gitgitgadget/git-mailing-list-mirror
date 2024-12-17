@@ -1,115 +1,103 @@
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D367F1D54D1
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 09:35:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F4B1DF721
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 10:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734428114; cv=none; b=ofQvD6k9MLbQu/T8s8WP6ROF+65eyO2qrN9SZSm59koyU9vVXoEaGr5Rzfh2JjL+KsWOjTsIgIpINY+xZnoM6GjzljM7hk7WDOai51Ey9+LEXTNRdrqy9sI9oCTHFs58C5SaJ3+PyPd/xjtuOyx2sW/CK4763Jx9ne75PMJsB88=
+	t=1734430386; cv=none; b=mOj7WEh/kmYxYKOJjzV/7Zz3f1Vls2kQ+NjRbQNN8bZRF7Jj0OolldHZCKZgHQI/6mZIHdChMOclM+FCYyeZVdzqldkf65s3cAXj9KDcij62Mq2PCWTSUDFLGo9aVdR79cP3Bpc2nduX0HWGRfKzSzIx+fbVcvnws2luTPOq7iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734428114; c=relaxed/simple;
-	bh=hEX+Nip1+f8UAhg9itQ/iXMEITCh5RpUs770S8V+SKc=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mvyPNSI3H7uQ1zltxkIR6LRkf17kwPdWTobVEJg5hEhoz4pOjZo4ooUFPyDaskuqctX+0z4/jgZHhamO+DxqG1Y1eMUM9+PhV1fTfoXstm2ht6d4LwJKdg63nED2/yXt3CU3gIB4QppWmEigjPbeeEgBRJ9au8hTQE8DSy7zYes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F/5EK6VI; arc=none smtp.client-ip=209.85.217.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734430386; c=relaxed/simple;
+	bh=E6OGZXozQC4j1PEqx7fjooQ/L5AgJpof+Evbxm7hUUk=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=nkAyvhjA2SRI39oTaxdXCpGMgZpW6D49kKKEM9/KdANxS5cxtFya4h4e6s0cm03qIpRA3y6fvWEP9U1oAAkcVVvGF9twER3hou3PlDw2rWAdHsi2vbKlMaQj+QwGB6QCGw9zrUQiROvUyaOdIvouSYMk7DtDRxxl1tIumQ7J+aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=M7Wo8LpR; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F/5EK6VI"
-Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-4affd0fb6adso1332819137.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 01:35:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734428111; x=1735032911; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VekHBQgRxIi4ENaZYxmFFllwfwFm/1AbBPr0ME9hZxE=;
-        b=F/5EK6VINixM+4g1fWzJyOgED1QB37ALd0hBoT5zMgDYGNvnRaXh6G485GtWuD6jQW
-         65zVtZMVyhVaXP8aEyytuGkceZ+1VlL48qhjOnbRRWQuStywc4/KeChLVs4ljC/bogvg
-         rNMTtAUpAP/CDhyR+N+8Ts4LIyj+NEPSnnwA5tzawzmQv+hpXcHMJiVk30IZoc0SvPir
-         OF28qUAZRHQgNawHrDBEnb3/RL22B4qxKwx3iNFm69p+HO9frCqQ5KMShYt0pbU4FaTI
-         ZDD+yueX+NInynHcpTyyx7lbzTw/9jGsiM1DudTWs/FOhZpqfQxnCdO0jRjN2mYZs0/J
-         26CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734428111; x=1735032911;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VekHBQgRxIi4ENaZYxmFFllwfwFm/1AbBPr0ME9hZxE=;
-        b=lkkhcUQYZsMAuwb+gTA/NxWst5TWR7W0A0YYuq3yVmaENAFIxqHC6f31yyHFdhVga1
-         5Fo15dV4SdP60NKm3NnoVTN5TZYvfS33dJne52+CUBt1AcWgezvCNhgrCc3qp0/4YXTp
-         FK+ch/qFWa4e5g5V6G5lmkGqxy/UOglFHrFfMGnEj5tAkc+gm4WcQaxVbBcVTGHPcbxv
-         h1fjvWYKpACSxXdSkHYY8otfkXzKX2NogaAdMmjwlYpw8mkNNygTa1ynYCo/KFMSOO0m
-         cDC66LhNOPJ6YAXOKjU/wm2xxWy+gbJDElNPWIn3ltqM8OZGIhpCLwMo4+3jR3wQeulH
-         Zlww==
-X-Gm-Message-State: AOJu0Yymia7nZCTbbCmj170EaqA8mSc1zfm+vTbVMDE9OCa6E58MoGDn
-	wPat46pGAu0eL5AgixDo3bDPvSkpQ4XGOxjmsVFrbhi2swNhTwvuAdv2Bey+T/TI1Be+psBq4FS
-	49TjkKtk+KB/Ngw28+M3AzA/xlcIsvu16
-X-Gm-Gg: ASbGncu0f9DZ7TpLPUWlob9+pv63ihBg34sOeoKEjuOTkdpUD8wshdFXF6rM/JDdllJ
-	oOGdcTuTA1P0V3YqLTXAqSia3pNRtU0jDgBrOPylkHYuk1VtmqiRhvIrC5UiA6Eoguz5OOTnh
-X-Google-Smtp-Source: AGHT+IH9t8oMnGFIexajHQdq9dvAo8QgHCy4RO770oaWIbNkK0B6H/NptfhotIvgvRlVAmUy5qfitc5yo/z+mhn/suw=
-X-Received: by 2002:a05:6102:3ed4:b0:4af:5972:d593 with SMTP id
- ada2fe7eead31-4b25dae9addmr15931223137.17.1734428111360; Tue, 17 Dec 2024
- 01:35:11 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Dec 2024 01:35:10 -0800
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <Z2EhZpL5V0LlhEvj@pks.im>
-References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
- <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com> <Z2EhZpL5V0LlhEvj@pks.im>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="M7Wo8LpR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=tk4ywivxmjhj3bla5zoqjzfpim.protonmail; t=1734430373; x=1734689573;
+	bh=E6OGZXozQC4j1PEqx7fjooQ/L5AgJpof+Evbxm7hUUk=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=M7Wo8LpRsnj9xeLfV5+GHNJMYjOS2QEi2qAyWi/Fw5A9O+gpmceGIY78SzKs3E9yG
+	 nhFaSr0sheofcm7on6IzWoOi+JdBDvPO8bF5IAbCduxH4C7pPcXpzVtG0GyI02Ll2p
+	 NHcu8VfGxg6bKRTZPUIOdbxGq+6CkyLr96FkdLAGV9IIkh1mvAXUnaUDIPl57Zlwfo
+	 pTOk+QdUPDkuPDnA0L8v5Fn0SKgYjxu5/MfYOzF8FJTR+cuQIk0v+40BsHxNGTz0l3
+	 Y5U1eisJOUSd+6DbP5bmclewJHwUjmfufq++ybuoHdXmba0STeduTOnF8viD9jTx+S
+	 PNM4Zq9/eURAA==
+Date: Tue, 17 Dec 2024 10:12:46 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: A bughunter <A_bughunter@proton.me>
+Subject: [help] can nobody get me an email
+Message-ID: <4wL3MobzQEJEcq565GgPg4K-l5xzGERtmFhRm9FgCnlyU5rOMCgLMaWB3qzFR5httauT4gi7peWUjIfR0j_nBtiatlTpqp5xfTXnz-kX0Jw=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: 2de9e0abb6747ce978046ff3e4d7da0177c6dc8d
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 17 Dec 2024 01:35:10 -0800
-Message-ID: <CAOLa=ZSzGk1FqiciTktTgv4J1uH6CW6VpbxXOXdKmrXJtR6iyQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/8] refs: add reflog support to `git refs migrate`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000007770220629740386"
+Content-Type: multipart/mixed;
+ boundary="b1=_RESglPh2pL6nxUtfzcz03LVBMJVyCbxUJt37y2wi8Y"
 
---0000000000007770220629740386
-Content-Type: text/plain; charset="UTF-8"
+--b1=_RESglPh2pL6nxUtfzcz03LVBMJVyCbxUJt37y2wi8Y
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-> On Mon, Dec 16, 2024 at 05:44:25PM +0100, Karthik Nayak wrote:
->> Changes in v4:
->> - Fix broken tests, due to two reasons in patch 8/8:
->>   - The `index` field in `reflog_migration_data` wasn't initialized to
->>     0. This specifically doesn't break the test, but causes undefined
->>     behavior. Fix this by using designated initializers.
->>   - The strbuf within `migration_data` wasn't initialized when the flow
->>     exited early, causing memory leaks. Fix this too by using designated
->>     initializers.
->> - Thanks to Junio for reporting and Patrick for helping shed some light
->>   on these broken tests.
->> - Link to v3: https://lore.kernel.org/r/20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com
->
-> The range-diff looks as expected, so this version of the series looks
-> good to me. Thanks!
->
-> Patrick
+I can't really start much of anything without an email. In the conscerns of=
+ OpSec all online security concatenates to email. Google is not an option b=
+ecause of Google Chrome for android Criminal espionage bug https://github.c=
+om/users/freedom-foundation/projects/2 and Proton is in cahoots with Google=
+ (or fakeGoogle) and outlook keeps locking me out. I will use aerc and send=
+-email/format-patch for email interactions. And for development, I use Neov=
+im. Can nobody get me an email?
 
-Thanks Patrick for your review!
 
---0000000000007770220629740386
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
+
+from A_bughunter@proton.me
+
+Sent with Proton Mail secure email.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wnUEARYKACcFgmdhTpoJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu
+8pkAAGKNAP46ibXUzKuIKhGstr5ZFfBsFr9WVBz8HlE/+Y4H6brI0AD+OY4B
+wO82Ytw0Tmxnxu+Kt+fTSFXoAOMfx06kx4B0AAU=3D
+=3DaXLB
+-----END PGP SIGNATURE-----
+
+--b1=_RESglPh2pL6nxUtfzcz03LVBMJVyCbxUJt37y2wi8Y
+Content-Type: application/pgp-keys; name="publickey - A_bughunter@proton.me - 0x66540805.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: d7ce19cd94133025_0.1
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc"
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kaFJjb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mK21sQy85RUg0U1BPRjNqZFFqK1kxeUh0a0VIeHd6eApwQmpPR2FLSUY3
-d21STFUzVzF0a20xOUhPcXFtM1lSRTlBdzVxQkZKdFRXNnJ4ZXpLeENhYUw5T3U3SCtUNlFuCkJ2
-VXgxT3ArL3NaNkRjazdRVHdRRVJSaGcyTEFMZXF5ZU1WaTNObGVWaVM4WjFaK3JMODdJb0dXcGFN
-SWhZRisKQmtzZHRETE9OUktzcXFObE5GVE5HblZFUnV6Yk1pcTZBVHVIN2pJWnJBMjhGNjBhTm5P
-RWY2a3FiZGVEVW5WTAorZS9JUGcyZWVnWWkvS2tIQmZTcDhnMTI4aUNUWkNrL2pRR0wyMlNQZHhK
-V3FxQlhmK1hOWDN5QVk1NFhlTVVOClFxc1AzV1lHaFBtRFdBeUVTMitKRG00K2o3VTR3Mk44ejlh
-Z0xYTG9aajBGbTl0Z3FHSlBvMWpuaGd2Z0ZKR0wKWkdvMHYxelh3TTV4cUJ4R1VrMkh1TFpKQ1ZX
-ZlNMejlRbzBBcXJHVXlkdXY5Z0wydTc4dVBYNkVzV2R5bUtOUAphVlpiZC9tWW9weVZuWFk4MVQ4
-SDhOdnE3KytRZHQzbnh4c0VYcE5FdjFiQnhXTnRmSkh5OC9IZFVZMzlqa01xCkgycVBRTkJJOFNC
-aUJzcGM3RTQ2VWhGT00ybk9OOXhNMDNQM2hzWT0KPTNuQ2MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000007770220629740386--
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWnUwWDF4WUpLd1lCQkFI
+YVJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0gKeGE4eTArZG1ONWJOTFVG
+ZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBCmNISnZkRzl1TG0x
+bFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRVwpBQUlCQWhr
+QkFwc0RBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkVDYKNTZH
+a2E5TnRNdm1kb1k1a3ROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXRiY1NlMVEr
+CjNjeFlMeE5oalU3bXluUXNwdjlkeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQkFRZEFuZnAv
+ejJGdwpSa3B2VWdmN21xWUk5UktuVFZhZHdHZmdhUUxobXdnM0x4TURBUWdId25nRUdCWUtBQ29G
+Z21idEY5Y0oKa0trV1pUbFFydktaQXBzTUZpRUVabFFJQmNBeWNaMmxPOXoycVJabE9WQ3U4cGtB
+QUppOEFRQytmbk9tCjRWajlRbUg0SDBHVnQ3UnVPUUsrd09RMVBSdnB5bVNqZXlCSk93RDlHWXV2
+eE9BVks4aUF1cEorcHB3TQpyMzZWdWtJZTFwWHVIbzlSaGp2ZUF3MD0KPUZRRncKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+
+--b1=_RESglPh2pL6nxUtfzcz03LVBMJVyCbxUJt37y2wi8Y
+Content-Type: application/pgp-signature; name="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - A_bughunter@proton.me - 0x66540805.asc.sig"
+
+wnUEABYKACcFgmdhTpoJkKkWZTlQrvKZFiEEZlQIBcAycZ2lO9z2qRZlOVCu8pkAAMVwAQDgS1vB
+RjIzvzN4hMQ/aHKgYEh3+ELGt8VS/53qxwyj9wEAz3hHD0GowOzgcVE+B59Yj7OWw/356bwEX4TZ
+NhY0uwQ=
+
+--b1=_RESglPh2pL6nxUtfzcz03LVBMJVyCbxUJt37y2wi8Y--
+
