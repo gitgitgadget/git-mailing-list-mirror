@@ -1,79 +1,79 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77B21DDA0E
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 06:44:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC991DE2C9
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 06:44:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734417861; cv=none; b=YvbqhcmxOV7NNfE0tINlMX7GMss4OGAyDExyYvTJAVQ8EpJ5ATeqiKXsj+FeEqZgZl+yMM6v6nVsTnoVw9MDeAdhgkAz/RVO1f1i5QkJcX9xYwmZIUzbmVpDQ6fu70cnLTwGjpVp2wCI8MkF1zzw80c39hZso9+HkaX1b5/v4qU=
+	t=1734417863; cv=none; b=DZKtSkL39RnPnbtfMX3ihjuAECGDWtLf2pyQej6TF0eJ5UtnbUD0P+ROKfeEu+P/ZII2aBk5drAogmG1t/SF7PluZlVosb8IK6nFtokRGBnLaNpOMkoPSS00V1nJUD0sf3N/GNwvjqKIdO/sdSQ8e4uan2aAqG+HYuTpI/Y/hkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734417861; c=relaxed/simple;
-	bh=ZIIsYwzS0kCr64PVcNtObQ3wmpPUIqfOBjr4XGzKb0M=;
+	s=arc-20240116; t=1734417863; c=relaxed/simple;
+	bh=bDyK/TqpZCyeeqqH+w1Hh69b5q7vRA5xvcmxTKUtFVs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=R6p0WCXNCobmwnSttexGsdqXp1DTXxyX6OCLHukZqMYqR+b1EvWo4HpmSyIHEi/2s50hspE2aBzNkpzVzKT8nppvIvYST082svbvSNBCGyYZ85joShrSnbBGhKwBBFvSqX716u/u5EIx84re2fvNmIgW4A71/hX9wQpbed6+xmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h99cenEz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UPWLz7ml; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=d/5Dbx+8ra2eBmhk9DI/IbgiEadrT2HJGaGtnA2wMhL46cNUNs3LUDJchh4nakAv1l0hV2KedGCQI34Wbt6OdUR9darJtQKwumVDq3nWUrD5pt3xw2uhgenfR0CyZ5PNSKl6USthXLnvK1+UjOchuoH5H6kQ3aB6P0Ba5AVTyqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b6nG8Vuw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=2MZQZaOF; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h99cenEz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UPWLz7ml"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1456213801D7
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:19 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b6nG8Vuw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2MZQZaOF"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id DD0DC13801C7
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:20 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 17 Dec 2024 01:44:19 -0500
+  by phl-compute-10.internal (MEProxy); Tue, 17 Dec 2024 01:44:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1734417859;
-	 x=1734504259; bh=zKaaoGZNRdpfntIS9+sYcHuin6fsO3x1M/Ys0n9Z2gE=; b=
-	h99cenEzU0Lu2/AIUBzPeUF0vtkitpDcGWDrWRnKaBZeSragFA7lm2eXVGtSok+V
-	4R5dPhUrkdiIP0KqReIh/5msNGOAbL9ocRj1Q6+5xYGDw3mYfgkcNXg2LCUlG9gx
-	vUDLpIxVSEGcvxMAELWwT2M5mWtCrqLdaAIxz/eKfI8C7OTqe/hTod6ISs+16Zvd
-	rQUB3JLC6QlUS/+mJKtLRriA8z6V/ypcphJPATMklo5sOUkD3tRaHn27TNXz4GAQ
-	X6tjgU2ymy4SxJdViF6H2XTvmr3ADVvrjGzkHVkvngA5a5gMMCQXjZKZ1butkYA+
-	UORdb8yH0+WcCW5U5zoMSw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734417860;
+	 x=1734504260; bh=IuVol64cSOrsqOLovb8qXHLetYoglsuKswANwpDlxFY=; b=
+	b6nG8Vuw4efjGWwKLWq0AlM8rUvpENlM51cx0vjVAh9jkXRmbWmhV+qt8o2RxW6a
+	Uvhu7TSSVlTefMVLUUajdbqYsHmmi0n7wEYS56jZcBaU8lI+ylja8u2isMxY9YU1
+	zSB1b5BhLGfVPNsuSqGMjo8+aXqeQ/e5gD/OnEBzJOdXTV4o1cOdJTi7SxsNMYxZ
+	AuSm4jr9akbo7vA3Y+7FWSA15s1W/a2PPEK/C+dOSNkto2AvmlieUTKzMBNU5+DP
+	QLjhOzFR6kHZpa0RZkrXeYsMvNXcWDac49yKXnLIa4/qmh07AQVNmZcDUphvLR7/
+	FnX3xrknomaXMdry4Muvig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734417859; x=
-	1734504259; bh=zKaaoGZNRdpfntIS9+sYcHuin6fsO3x1M/Ys0n9Z2gE=; b=U
-	PWLz7mlE5gcBrM3KJ+BhsvWZEQkZVNfsRrxhTJWC0Ql/ZWg8BEtp/iJBjdSLN0sD
-	1AcdQXDUvlbJy74dHkpwk8ksUunyg07jvhEesyRP9mtNYXrUCvCWl70x/ZUwHBPh
-	JjLfFStF0xOr7ctoWylZXu7kCi20jzvto2QPn+HJcoUVYKXVNazgfkxQ20e59Y1y
-	JPe9xdFpBwKbY15RG1x6OapF4cBUNa7YIv3vuLN5NzHppPyiyHUs6c/arHCZZLQf
-	Tm7dMJLtc1Viz6DKYGqCMChH2IXWhbCrgAWIzjR3m/+uqewqkLjjvm+z8RxwuNZq
-	14YDzsyPmXlg7/rYFms4w==
-X-ME-Sender: <xms:wh1hZ9ln8G1l_Hmp4MSkZTYZsivfQj3DzE10onDhNTODRuH-LlRGiA>
-    <xme:wh1hZ41Jq_6t_D1CMJnzcIcuS0zjro5fYxQK52gywXXuIglNFbEvqtY84EKodM3a8
-    Pr39FUeFKhTSkItEw>
-X-ME-Received: <xmr:wh1hZzpXX17k8-lPV8H8KSbCkYVRYuLy6lCtYk22Jw5jR-xeHGN6aGfOw3lUDUkAb5_GfyVdB-WSu8_z4eHGdWHOXDLy85ow4gtWag74JQaNLT4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggddutddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
-    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
-    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:wh1hZ9mrUdHNYgCOOGCh6D25Zyaukh1ZPIn5vb1-faqSPz0JLBdDoQ>
-    <xmx:wh1hZ73lelYRQp2HusR3VMx-NhF9Kiq-BcZtS1R1To_Jiotqyga9yQ>
-    <xmx:wh1hZ8s73m2RsMqYa2mHKCE23aqgmH0vaqfzrdjBB2jsoBOcw9l-0A>
-    <xmx:wh1hZ_VoGQ3oRJHNf6pVaHtlHSoBm8hjnGPhRCNgaWF-bfb9qQJm3g>
-    <xmx:wx1hZ0_59m1SXp1T56aEZSuL51JXaHZ2HhGgxgdz8ciThgsxh8jP1q2x>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734417860; x=
+	1734504260; bh=IuVol64cSOrsqOLovb8qXHLetYoglsuKswANwpDlxFY=; b=2
+	MZQZaOFmklxV6m24LHUzDnV7XzOCN5ZNM4WyLIvFYI4euAZ1yV/nuneyqXTI7IrN
+	Hg4fWLMAlcACRQ0tgrOlsrEHK38E+uoDM/IYO/WYmss2ikVNWTEWlso6POiVhuZM
+	DyUhbameFdqbBB3bbeI7dWiF9Ow53gRfK5kVajiyK8pcij45uVHfDmkrJ8ptG3AM
+	DDJSmjf92JUCWGirFCtxfiNAGh8pHv1/gfbbFVlt2WAq5RC1N1QsEVEVhgWFC9Lg
+	l459GfNLI5JZowdz4G95Q0Scdu52i5TSWie8D/8N1KGDicSNqOO49zhSgX/OeA2d
+	P0poS0SHvngJTiNyn90zQ==
+X-ME-Sender: <xms:xB1hZ6vpglyOrg72CAd2UQnGI9Hy9MRebS2JfT2mv7UCBvdQMaFSRA>
+    <xme:xB1hZ_c7R_2L2VVy6yzhVPcTs__4Evk3-u1qT6igqFNVpN1mdarIdBkAB3jgm9LZq
+    mGxNEHJVQn8oAcw8w>
+X-ME-Received: <xmr:xB1hZ1zKSEgX8F37yHQgxaeVGr6Vj-8_7bkugDwqNkV64y3cIi585utZeUAVNAXh0wPGIheS9Hx8Noslb9Y2A4_NapCLEUNnn4qag4grMGANwHA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggdellecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
+    fgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvd
+    ekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:xB1hZ1M9gMYC_An6CivvJdRtbeIJNp8bvoWHBA4NWGkedil3MWIzsg>
+    <xmx:xB1hZ69yenpGZ8jFkJlLRj4cYiVxy7JjiLidkf0lviLl_BS06ayRSA>
+    <xmx:xB1hZ9WqZiUqUqjMKancxgSJpoAPLJuV2zIbeIsyEbCjyikL7tPoUg>
+    <xmx:xB1hZzesK8-PYRuBtK96l3-2tPyex6RjGzZtIu6NqSTZjxGLxYQIjw>
+    <xmx:xB1hZwmA9MGpskxN6o4HdI6C8QI_tIyv-mh-ssbkHadT0hQli8f5fbaT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:18 -0500 (EST)
+ <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:20 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 060afcab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d73ae9b8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 17 Dec 2024 06:42:34 +0000 (UTC)
+	Tue, 17 Dec 2024 06:42:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 17 Dec 2024 07:43:53 +0100
-Subject: [PATCH 06/14] server-info: stop using `the_repository`
+Date: Tue, 17 Dec 2024 07:43:54 +0100
+Subject: [PATCH 07/14] diagnose: stop using `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,16 +82,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241217-pks-use-the-repository-conversion-v1-6-0dba48bcc239@pks.im>
+Message-Id: <20241217-pks-use-the-repository-conversion-v1-7-0dba48bcc239@pks.im>
 References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Stop using `the_repository` in the "server-info" subsystem by passing in
-a repository when updating server info and storing the repository in the
-`update_info_ctx` structure to make it accessible to other functions.
+Stop using `the_repository` in the "diagnose" subsystem by passing in a
+repository when generating a diagnostics archive.
 
 Adjust callers accordingly by using `the_repository`. While there may be
 some callers that have a repository available in their context, this
@@ -100,198 +99,129 @@ of `the_repository` by one level.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/receive-pack.c       |  2 +-
- builtin/repack.c             |  2 +-
- builtin/update-server-info.c |  2 +-
- server-info.c                | 40 ++++++++++++++++++++++------------------
- server-info.h                |  4 +++-
- 5 files changed, 28 insertions(+), 22 deletions(-)
+ builtin/bugreport.c |  2 +-
+ builtin/diagnose.c  |  4 +++-
+ diagnose.c          | 15 ++++++++-------
+ diagnose.h          |  5 ++++-
+ 4 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c2e9103f112c1e37e9f030308633daf49eec1ecf..191b5eeb34e6791776f93a3a9509efa887e4e087 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2628,7 +2628,7 @@ int cmd_receive_pack(int argc,
- 			}
- 		}
- 		if (auto_update_server_info)
--			update_server_info(0);
-+			update_server_info(the_repository, 0);
- 		clear_shallow_info(&si);
- 	}
- 	if (use_sideband)
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 0c6dad7df47a1665026a348921c33b2067b59976..81d13630ea41f832bd0210971c13a82a3ddc0971 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1565,7 +1565,7 @@ int cmd_repack(int argc,
- 	}
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 7c2df035c9cff06f649c2b35394ea3db3d39f469..0ac59cc8dc5824fbc155674e9107bb845d8e054c 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -167,7 +167,7 @@ int cmd_bugreport(int argc,
+ 		strbuf_addftime(&zip_path, option_suffix, localtime_r(&now, &tm), 0, 0);
+ 		strbuf_addstr(&zip_path, ".zip");
  
- 	if (run_update_server_info)
--		update_server_info(0);
-+		update_server_info(the_repository, 0);
+-		if (create_diagnostics_archive(&zip_path, diagnose))
++		if (create_diagnostics_archive(the_repository, &zip_path, diagnose))
+ 			die_errno(_("unable to create diagnostics archive %s"), zip_path.buf);
  
- 	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0)) {
- 		unsigned flags = 0;
-diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
-index 6769611a025d0d69bcd3dbbd06f5fed056262911..47a3f0bdd9c3498808b86c2e31f4489926226102 100644
---- a/builtin/update-server-info.c
-+++ b/builtin/update-server-info.c
-@@ -27,5 +27,5 @@ int cmd_update_server_info(int argc,
- 	if (argc > 0)
- 		usage_with_options(update_server_info_usage, options);
- 
--	return !!update_server_info(force);
-+	return !!update_server_info(the_repository, force);
- }
-diff --git a/server-info.c b/server-info.c
-index ef2f3f4b5c7b04c46520b2fd9d4352b806658f40..31c3fdc118447d42745362935e3483c59b7e0bc2 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -18,6 +17,7 @@
- #include "tempfile.h"
- 
- struct update_info_ctx {
-+	struct repository *repo;
- 	FILE *cur_fp;
- 	FILE *old_fp; /* becomes NULL if it differs from cur_fp */
- 	struct strbuf cur_sb;
-@@ -73,7 +73,7 @@ static int uic_printf(struct update_info_ctx *uic, const char *fmt, ...)
-  * it into place. The contents of the file come from "generate", which
-  * should return non-zero if it encounters an error.
-  */
--static int update_info_file(char *path,
-+static int update_info_file(struct repository *r, char *path,
- 			int (*generate)(struct update_info_ctx *),
- 			int force)
- {
-@@ -81,6 +81,7 @@ static int update_info_file(char *path,
- 	struct tempfile *f = NULL;
- 	int ret = -1;
- 	struct update_info_ctx uic = {
-+		.repo = r,
- 		.cur_fp = NULL,
- 		.old_fp = NULL,
- 		.cur_sb = STRBUF_INIT,
-@@ -152,7 +153,7 @@ static int add_info_ref(const char *path, const char *referent UNUSED, const str
- 			void *cb_data)
- {
- 	struct update_info_ctx *uic = cb_data;
--	struct object *o = parse_object(the_repository, oid);
-+	struct object *o = parse_object(uic->repo, oid);
- 	if (!o)
- 		return -1;
- 
-@@ -160,7 +161,7 @@ static int add_info_ref(const char *path, const char *referent UNUSED, const str
- 		return -1;
- 
- 	if (o->type == OBJ_TAG) {
--		o = deref_tag(the_repository, o, path, 0);
-+		o = deref_tag(uic->repo, o, path, 0);
- 		if (o)
- 			if (uic_printf(uic, "%s	%s^{}\n",
- 				oid_to_hex(&o->oid), path) < 0)
-@@ -171,14 +172,14 @@ static int add_info_ref(const char *path, const char *referent UNUSED, const str
- 
- static int generate_info_refs(struct update_info_ctx *uic)
- {
--	return refs_for_each_ref(get_main_ref_store(the_repository),
-+	return refs_for_each_ref(get_main_ref_store(uic->repo),
- 				 add_info_ref, uic);
- }
- 
--static int update_info_refs(int force)
-+static int update_info_refs(struct repository *r, int force)
- {
--	char *path = git_pathdup("info/refs");
--	int ret = update_info_file(path, generate_info_refs, force);
-+	char *path = repo_git_path(r, "info/refs");
-+	int ret = update_info_file(r, path, generate_info_refs, force);
- 	free(path);
- 	return ret;
- }
-@@ -284,14 +285,14 @@ static int compare_info(const void *a_, const void *b_)
- 		return 1;
- }
- 
--static void init_pack_info(const char *infofile, int force)
-+static void init_pack_info(struct repository *r, const char *infofile, int force)
- {
- 	struct packed_git *p;
- 	int stale;
- 	int i;
- 	size_t alloc = 0;
- 
--	for (p = get_all_packs(the_repository); p; p = p->next) {
-+	for (p = get_all_packs(r); p; p = p->next) {
- 		/* we ignore things on alternate path since they are
- 		 * not available to the pullers in general.
- 		 */
-@@ -340,33 +341,36 @@ static int write_pack_info_file(struct update_info_ctx *uic)
- 	return 0;
- }
- 
--static int update_info_packs(int force)
-+static int update_info_packs(struct repository *r, int force)
- {
- 	char *infofile = mkpathdup("%s/info/packs",
--				   repo_get_object_directory(the_repository));
-+				   repo_get_object_directory(r));
- 	int ret;
- 
--	init_pack_info(infofile, force);
--	ret = update_info_file(infofile, write_pack_info_file, force);
-+	init_pack_info(r, infofile, force);
-+	ret = update_info_file(r, infofile, write_pack_info_file, force);
- 	free_pack_info();
- 	free(infofile);
- 	return ret;
- }
- 
- /* public */
--int update_server_info(int force)
-+int update_server_info(struct repository *r, int force)
- {
- 	/* We would add more dumb-server support files later,
- 	 * including index of available pack files and their
- 	 * intended audiences.
- 	 */
- 	int errs = 0;
-+	char *path;
- 
--	errs = errs | update_info_refs(force);
--	errs = errs | update_info_packs(force);
-+	errs = errs | update_info_refs(r, force);
-+	errs = errs | update_info_packs(r, force);
- 
- 	/* remove leftover rev-cache file if there is any */
--	unlink_or_warn(git_path("info/rev-cache"));
-+	path = repo_git_path(r, "info/rev-cache");
-+	unlink_or_warn(path);
-+	free(path);
- 
- 	return errs;
- }
-diff --git a/server-info.h b/server-info.h
-index 13bbde2c55fafe7bf07eb38377cec2f109de3164..e634d1722bdfaaa506777b4df370d908b05005e9 100644
---- a/server-info.h
-+++ b/server-info.h
-@@ -1,7 +1,9 @@
- #ifndef SERVER_INFO_H
- #define SERVER_INFO_H
- 
-+struct repository;
+ 		strbuf_release(&zip_path);
+diff --git a/builtin/diagnose.c b/builtin/diagnose.c
+index 66a22d918e68a48a7c31ef3b75335f9a2bad7ab1..33c39bd5981f22d96b1b19e19ff83dec1c2873a6 100644
+--- a/builtin/diagnose.c
++++ b/builtin/diagnose.c
+@@ -1,3 +1,5 @@
++#define USE_THE_REPOSITORY_VARIABLE
 +
- /* Dumb servers support */
--int update_server_info(int);
-+int update_server_info(struct repository *r, int force);
+ #include "builtin.h"
+ #include "abspath.h"
+ #include "gettext.h"
+@@ -58,7 +60,7 @@ int cmd_diagnose(int argc,
+ 	}
  
- #endif /* SERVER_INFO_H */
+ 	/* Prepare diagnostics */
+-	if (create_diagnostics_archive(&zip_path, mode))
++	if (create_diagnostics_archive(the_repository, &zip_path, mode))
+ 		die_errno(_("unable to create diagnostics archive %s"),
+ 			  zip_path.buf);
+ 
+diff --git a/diagnose.c b/diagnose.c
+index b11931df86c4ba84f7aec77cb7965083f5aa31fa..bd485effea22ce400c4300a1e085b45204a3b42e 100644
+--- a/diagnose.c
++++ b/diagnose.c
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "diagnose.h"
+ #include "compat/disk.h"
+@@ -12,6 +10,7 @@
+ #include "object-store-ll.h"
+ #include "packfile.h"
+ #include "parse-options.h"
++#include "repository.h"
+ #include "write-or-die.h"
+ 
+ struct archive_dir {
+@@ -179,7 +178,9 @@ static int add_directory_to_archiver(struct strvec *archiver_args,
+ 	return res;
+ }
+ 
+-int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode)
++int create_diagnostics_archive(struct repository *r,
++			       struct strbuf *zip_path,
++			       enum diagnose_mode mode)
+ {
+ 	struct strvec archiver_args = STRVEC_INIT;
+ 	char **argv_copy = NULL;
+@@ -218,7 +219,7 @@ int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode)
+ 	strbuf_addstr(&buf, "Collecting diagnostic info\n\n");
+ 	get_version_info(&buf, 1);
+ 
+-	strbuf_addf(&buf, "Repository root: %s\n", the_repository->worktree);
++	strbuf_addf(&buf, "Repository root: %s\n", r->worktree);
+ 	get_disk_info(&buf);
+ 	write_or_die(stdout_fd, buf.buf, buf.len);
+ 	strvec_pushf(&archiver_args,
+@@ -227,7 +228,7 @@ int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode)
+ 
+ 	strbuf_reset(&buf);
+ 	strbuf_addstr(&buf, "--add-virtual-file=packs-local.txt:");
+-	dir_file_stats(the_repository->objects->odb, &buf);
++	dir_file_stats(r->objects->odb, &buf);
+ 	foreach_alt_odb(dir_file_stats, &buf);
+ 	strvec_push(&archiver_args, buf.buf);
+ 
+@@ -250,13 +251,13 @@ int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode)
+ 	}
+ 
+ 	strvec_pushl(&archiver_args, "--prefix=",
+-		     oid_to_hex(the_hash_algo->empty_tree), "--", NULL);
++		     oid_to_hex(r->hash_algo->empty_tree), "--", NULL);
+ 
+ 	/* `write_archive()` modifies the `argv` passed to it. Let it. */
+ 	argv_copy = xmemdupz(archiver_args.v,
+ 			     sizeof(char *) * archiver_args.nr);
+ 	res = write_archive(archiver_args.nr, (const char **)argv_copy, NULL,
+-			    the_repository, NULL, 0);
++			    r, NULL, 0);
+ 	if (res) {
+ 		error(_("failed to write archive"));
+ 		goto diagnose_cleanup;
+diff --git a/diagnose.h b/diagnose.h
+index f525219ab0cf9b36249892c847e731b952b081af..f7b38f49f5271ad00bf17d14e7b2aab3e9e174d5 100644
+--- a/diagnose.h
++++ b/diagnose.h
+@@ -4,6 +4,7 @@
+ #include "strbuf.h"
+ 
+ struct option;
++struct repository;
+ 
+ enum diagnose_mode {
+ 	DIAGNOSE_NONE,
+@@ -13,6 +14,8 @@ enum diagnose_mode {
+ 
+ int option_parse_diagnose(const struct option *opt, const char *arg, int unset);
+ 
+-int create_diagnostics_archive(struct strbuf *zip_path, enum diagnose_mode mode);
++int create_diagnostics_archive(struct repository *r,
++			       struct strbuf *zip_path,
++			       enum diagnose_mode mode);
+ 
+ #endif /* DIAGNOSE_H */
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
