@@ -1,55 +1,55 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40C1CDFDE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D5F1DD9D1
 	for <git@vger.kernel.org>; Tue, 17 Dec 2024 06:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734417861; cv=none; b=LuHm1rJWya45L6O6b+E5t9bnenYMuDCw2yaaH6uu5msLkXgDvcCLYEeowRbstXpvF36SHlwJDfSFlyyLwJsR+v2UVPjfHTBWmaVufNWoMuukqELzEEve9sbXMrr5ikw0u0wv38EVThKcQ6XybojkiQiQHoWCg0bZ+Gfo8ljkHB4=
+	t=1734417862; cv=none; b=Fi+9XnNcJdERt1LeyAY0Q5lZC85gYlc1p64LampBctT9/av0j9BTItljjng2cq2UmaxtrmTsnWYAUDO/NK7sW5mEv3waa2BlCj9gDOLpX/ZSz1FQPAGgnRQ0BcmMZ029p5ehuwEtpCa8KtXAqsPJRuvrXjR/1Inp/bkBHEEVRhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734417861; c=relaxed/simple;
-	bh=XKFMIIwGdf4XfrgkZVkKHXYPKjBUmejqOQOHFVhxspA=;
+	s=arc-20240116; t=1734417862; c=relaxed/simple;
+	bh=ZkPZi/zhhNjNhcbuYlJ24iAcKFzZhxa4sihiKlujb2I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TOyfLzBRnBmTvYFI9pFDN1E4i+kQNFd0vijHziS62RTxzoOs5scXxAXIdJ29lDKeviJLk06bVJrizupcf96kHa995OGo6IxCge0DURiJni32aKI8nc1FeFIjXrkqpzJk1PBRlwR/wgL0eR4TpGKIgtu8tXeWrRXydRF9CjtAh0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gmmo+EDu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1TJpWNou; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=UIz7f8QbuG1Z7iBYaHwHWkNh8LexLi3MoW86Fw0dEldOapvwRG7OyVwPsIO29x8kGgVavnWyP4danwP1k2ZnsWBVRMtTUHg2kxqzc4T6Die56W4usuZKDDVlfbtT1YdzVeHHB0h/+sIdjRb4OD2NxX4pj8jSL3T65ISYWn6VrnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uq8pN1dY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aNYFM1Oz; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gmmo+EDu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1TJpWNou"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3FB3C1140225
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uq8pN1dY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aNYFM1Oz"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id B2B7913801CB
 	for <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:18 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Tue, 17 Dec 2024 01:44:18 -0500
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 17 Dec 2024 01:44:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1734417858;
-	 x=1734504258; bh=nrXHItR8pkv5Cvt1+lij1K08YzghxL16A29KK+nUm9k=; b=
-	Gmmo+EDuLhMS59Z09oJGDIn2CjrbQy3IRrSRrb0qFuurKXtZlZoK/98+4gVpsojR
-	YqnRkfrhApTYSLrC5GqRIKhtnPdSYKgr7xZ+Px9YatLEIVg0o58CDRfby6id4gx9
-	1htVtihjAyvdUw3p3fM/NxWmUFB+S9214gydkVigLozpUJAIpEuv3+QBbDTgmzLi
-	JvBf2BMXvyG0MYkKC8dxETfWCDeqcHYhQWTFQwhuF78cqw/WZ2LWphG+7eZMyo1f
-	ndlagxeyoIPleUwFfnEvga0QLs+JlaxWV8p8reSwAFhg3G0tqYlAHZK1T7TkEsfX
-	OEJmEjiuUeeSFmZSfi15dA==
+	 x=1734504258; bh=jm5UI4q0nAlJk46tBEpCVCm2dBLkLtgPRvbgqg58MAQ=; b=
+	uq8pN1dYGGaqik+T6JgGroFj587xubTlJ4gzSNj+hYeT1EkEN9lshoNBSTQI/5xv
+	RqXm0MFwca+Y+vUEI7v4j8V1dlN+/8vREPMFG4EOW+9se/8ZrBKvUwOBNwx4zOv+
+	28c1Vbi4VWl3epUnlPZML2OMDcvS2NN0lYkz8wQXyMAiSsvuP3O2TqTukmTA0d/6
+	mDDZVDs5apTLX4Jb58XSKUOgNRRLcG0roX5h2ZnuXDpZZMuMo1mKCsZiZ2FZ0dj1
+	rlRX3SQuYiQpFueHhvSymZbKM1TGIhg/p2qFIdOWGoct7mw9it2vN9tTTbfnzlI4
+	3r+li3PrIY1jXlcNCd1WJw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734417858; x=
-	1734504258; bh=nrXHItR8pkv5Cvt1+lij1K08YzghxL16A29KK+nUm9k=; b=1
-	TJpWNout20iIvE6dXGwGBAgqVl+yK4zfF/nhGbeFvB61IdSWdE4VAtdQX+9hTbiD
-	UFrud1djsDjyPai8jt83kfIcMwtXRVhYcvmNuOPGGx/fZsQZrCzGvXyLM/Q8XgX3
-	SxBH5fEz0ufKqiemIxqjR5eMCVbFwC+sYBVf75Z0lCY9NYyvtKYj9Jv96s5pAWQI
-	vjMOtA7XhFA3IepQRizY6bWj3ZmDVeTlKRw8QYvyKX7aV5Qm0bQQsfXUE8S/WVZF
-	kIVENIj1vwOSFisJyL5Vdu5J+noWXWvVlnMqGsI1lPzyVcQVouDA8gBFP7QPOwjH
-	vO9LvIOq0UfmxjrQ7q+OA==
-X-ME-Sender: <xms:wh1hZ0WSiNfbutzwsDZ-rAcE6MNR5XoqSTX9luJjmQ-6_KyuQJ3w0A>
-    <xme:wh1hZ4lhIm5j5xX-woJK2omEwQ0msdxxzvoKxEwXW2hNend72ihIlOaZJSw6hNc2G
-    C10BQML9p2nePPtfQ>
-X-ME-Received: <xmr:wh1hZ4b18HeYopKjQal8DqdaJYKT6XFEwALLdAWahnXiGJGLEt0fjHORd79xTX7DFNvuDGq2FOuLiEOwWpFq7UOn-amEJwlW-Mk1AQ5_9PYbHYA>
+	1734504258; bh=jm5UI4q0nAlJk46tBEpCVCm2dBLkLtgPRvbgqg58MAQ=; b=a
+	NYFM1OzMjhgUnCVQzDw6XovRENLE574kciWdSSk7XSFbG202Ua2ihvkBYxXgSBjK
+	xceLg/UcbNXy8/sDYuTkxE6jmvJuITd9LpNhrtlvhDzkLUVSkEh0/Gupc96Z1fkR
+	ZeWbohw5xodcSfT4EuS21mSW3zpgYmVqJ0jnb3YqDTtUvzyZUpIfir3aDrGBX9k4
+	W68XWUf7zV81uBYz1TeVxF095eKus/UPwduwK5GvH4vbahXFoS/MaNogAvc+Zi8f
+	Dcfai9CrZJ9lx5DlT5tqM9hoS7AnB2PwFcLr2SQk2KtgWMbg3eYfS5zJAij4mx00
+	xsLRTv6sHiWnnTX/3H17A==
+X-ME-Sender: <xms:wh1hZy16QhbhkAAEkR9nXIxltvl1xohoPKDM2-ZrwON9UDhBrOElGA>
+    <xme:wh1hZ1GPhCMy8wu_s5Xou1uvsu0TBUGR-KzIoymJMJ6ELC8uDyRhQ414pOP_5KE3j
+    QA5YqZ8jZNRvzBkyw>
+X-ME-Received: <xmr:wh1hZ64jQIwG8ry_LqTkzlJ4voxAYilvvSQpFd4JU60DfiCIkwagu-PSj8u41ogtOoWhZPjDxwkNwgiVC0Ihtrj829tVchuC_xKVm0Vabwd0Z_Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggdellecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffufggtg
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeggdellecutefuodetggdote
     ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
     gprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
     ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:wh1hZzVaml6OrefmVrtfv5R57BYby3tGgCEZujcb3FK5t5MhJISxVg>
-    <xmx:wh1hZ-nK40-iOR04N7FKlTbo13lsodYbu5GxfXa3x0orpoxP5YmZxw>
-    <xmx:wh1hZ4dX_UmeUMeln4mb_LRonRqrIP8rKyAtMLJbghl0oK86Lywlkw>
-    <xmx:wh1hZwEgk1IJ83MCdZlTW4_pYKx2JNTVDGcMsvx4wPujIdGYlqfk2g>
-    <xmx:wh1hZyuX7B-mGVLh22876Sj_yrRhP2NuJDH6i2P-LbrKnmeVokWdkHv_>
+X-ME-Proxy: <xmx:wh1hZz3xqGQ6vCJEXgnLdhjw5efjQK-kjpJUCx5nd5dQE03ud2yrVQ>
+    <xmx:wh1hZ1FJKyt8YWTUZCzGkNUMWNSfsSdzEEaw4BadFKIyUIiOmj5cfg>
+    <xmx:wh1hZ8-Z35rFMw4aRpHh8RntL6TsyAkQUe6droU0G561Ofdh1VxDmQ>
+    <xmx:wh1hZ6kI1pRYVKhNBhyjpdpYN1tsZ4xzSjJ23AQHnsdPN4HwjaMqRg>
+    <xmx:wh1hZzMHxMOoPvzRZqujhgpaX3Br_QLMH5BAx81mX0rpRd1dXFosu7yk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:17 -0500 (EST)
+ <git@vger.kernel.org>; Tue, 17 Dec 2024 01:44:18 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d63e0433 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d6d1404f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 17 Dec 2024 06:42:32 +0000 (UTC)
+	Tue, 17 Dec 2024 06:42:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 17 Dec 2024 07:43:51 +0100
-Subject: [PATCH 04/14] serve: stop using `the_repository`
+Date: Tue, 17 Dec 2024 07:43:52 +0100
+Subject: [PATCH 05/14] send-pack: stop using `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,15 +82,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241217-pks-use-the-repository-conversion-v1-4-0dba48bcc239@pks.im>
+Message-Id: <20241217-pks-use-the-repository-conversion-v1-5-0dba48bcc239@pks.im>
 References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Stop using `the_repository` in the "serve" subsystem by passing in a
-repository when advertising capabilities or serving requests.
+Stop using `the_repository` in the "send-pack" subsystem by passing in a
+repository when sending a packfile.
 
 Adjust callers accordingly by using `the_repository`. While there may be
 some callers that have a repository available in their context, this
@@ -99,196 +99,320 @@ of `the_repository` by one level.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/upload-pack.c    |  6 ++++--
- serve.c                  | 36 +++++++++++++++++-------------------
- serve.h                  |  6 ++++--
- t/helper/test-serve-v2.c |  7 +++++--
- 4 files changed, 30 insertions(+), 25 deletions(-)
+ builtin/send-pack.c |  2 +-
+ send-pack.c         | 77 ++++++++++++++++++++++++++++-------------------------
+ send-pack.h         |  3 ++-
+ transport.c         |  2 +-
+ 4 files changed, 44 insertions(+), 40 deletions(-)
 
-diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
-index dd63d6eadfe0028b3a62d7d14f777c919f567cc8..c2bbc035ab0c91baf5d66cee8bb370ecf1640505 100644
---- a/builtin/upload-pack.c
-+++ b/builtin/upload-pack.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "builtin.h"
- #include "exec-cmd.h"
- #include "gettext.h"
-@@ -63,9 +65,9 @@ int cmd_upload_pack(int argc,
- 	switch (determine_protocol_version_server()) {
- 	case protocol_v2:
- 		if (advertise_refs)
--			protocol_v2_advertise_capabilities();
-+			protocol_v2_advertise_capabilities(the_repository);
- 		else
--			protocol_v2_serve_loop(stateless_rpc);
-+			protocol_v2_serve_loop(the_repository, stateless_rpc);
- 		break;
- 	case protocol_v1:
- 		/*
-diff --git a/serve.c b/serve.c
-index c8694e375159ca0044cb045500954770e1e5cb93..f6dfe34a2bee6b24bedace2c272f8377dec9fb91 100644
---- a/serve.c
-+++ b/serve.c
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 59b626aae8cd8291104d83b5ec201207c97715e8..8d461008e2e860a3de91a69412d66dcbde4d7b96 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -317,7 +317,7 @@ int cmd_send_pack(int argc,
+ 	set_ref_status_for_push(remote_refs, args.send_mirror,
+ 		args.force_update);
+ 
+-	ret = send_pack(&args, fd, conn, remote_refs, &extra_have);
++	ret = send_pack(the_repository, &args, fd, conn, remote_refs, &extra_have);
+ 
+ 	if (helper_status)
+ 		print_helper_status(remote_refs);
+diff --git a/send-pack.c b/send-pack.c
+index 7e8321368379efe2600a1f573e2e4cd5140a008d..772c7683a0157004ede74e56157e3a5d7f082e75 100644
+--- a/send-pack.c
++++ b/send-pack.c
 @@ -1,5 +1,3 @@
 -#define USE_THE_REPOSITORY_VARIABLE
 -
  #include "git-compat-util.h"
- #include "repository.h"
  #include "config.h"
-@@ -159,7 +157,7 @@ static struct protocol_capability capabilities[] = {
- 	},
- };
- 
--void protocol_v2_advertise_capabilities(void)
-+void protocol_v2_advertise_capabilities(struct repository *r)
- {
- 	struct strbuf capability = STRBUF_INIT;
- 	struct strbuf value = STRBUF_INIT;
-@@ -170,7 +168,7 @@ void protocol_v2_advertise_capabilities(void)
- 	for (size_t i = 0; i < ARRAY_SIZE(capabilities); i++) {
- 		struct protocol_capability *c = &capabilities[i];
- 
--		if (c->advertise(the_repository, &value)) {
-+		if (c->advertise(r, &value)) {
- 			strbuf_addstr(&capability, c->name);
- 
- 			if (value.len) {
-@@ -214,20 +212,20 @@ static struct protocol_capability *get_capability(const char *key, const char **
- 	return NULL;
+ #include "commit.h"
+@@ -44,10 +42,11 @@ int option_parse_push_signed(const struct option *opt,
+ 	die("bad %s argument: %s", opt->long_name, arg);
  }
  
--static int receive_client_capability(const char *key)
-+static int receive_client_capability(struct repository *r, const char *key)
+-static void feed_object(const struct object_id *oid, FILE *fh, int negative)
++static void feed_object(struct repository *r,
++			const struct object_id *oid, FILE *fh, int negative)
  {
- 	const char *value;
- 	const struct protocol_capability *c = get_capability(key, &value);
- 
--	if (!c || c->command || !c->advertise(the_repository, NULL))
-+	if (!c || c->command || !c->advertise(r, NULL))
- 		return 0;
- 
- 	if (c->receive)
--		c->receive(the_repository, value);
-+		c->receive(r, value);
- 	return 1;
- }
- 
--static int parse_command(const char *key, struct protocol_capability **command)
-+static int parse_command(struct repository *r, const char *key, struct protocol_capability **command)
+ 	if (negative &&
+-	    !repo_has_object_file_with_flags(the_repository, oid,
++	    !repo_has_object_file_with_flags(r, oid,
+ 					     OBJECT_INFO_SKIP_FETCH_OBJECT |
+ 					     OBJECT_INFO_QUICK))
+ 		return;
+@@ -61,7 +60,8 @@ static void feed_object(const struct object_id *oid, FILE *fh, int negative)
+ /*
+  * Make a pack stream and spit it out into file descriptor fd
+  */
+-static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
++static int pack_objects(struct repository *r,
++			int fd, struct ref *refs, struct oid_array *advertised,
+ 			struct oid_array *negotiated,
+ 			struct send_pack_args *args)
  {
- 	const char *out;
+@@ -74,7 +74,7 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 	FILE *po_in;
+ 	int rc;
  
-@@ -238,7 +236,7 @@ static int parse_command(const char *key, struct protocol_capability **command)
- 		if (*command)
- 			die("command '%s' requested after already requesting command '%s'",
- 			    out, (*command)->name);
--		if (!cmd || !cmd->advertise(the_repository, NULL) || !cmd->command || value)
-+		if (!cmd || !cmd->advertise(r, NULL) || !cmd->command || value)
- 			die("invalid command '%s'", out);
+-	trace2_region_enter("send_pack", "pack_objects", the_repository);
++	trace2_region_enter("send_pack", "pack_objects", r);
+ 	strvec_push(&po.args, "pack-objects");
+ 	strvec_push(&po.args, "--all-progress-implied");
+ 	strvec_push(&po.args, "--revs");
+@@ -87,7 +87,7 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 		strvec_push(&po.args, "-q");
+ 	if (args->progress)
+ 		strvec_push(&po.args, "--progress");
+-	if (is_repository_shallow(the_repository))
++	if (is_repository_shallow(r))
+ 		strvec_push(&po.args, "--shallow");
+ 	if (args->disable_bitmaps)
+ 		strvec_push(&po.args, "--no-use-bitmap-index");
+@@ -104,15 +104,15 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 	 */
+ 	po_in = xfdopen(po.in, "w");
+ 	for (size_t i = 0; i < advertised->nr; i++)
+-		feed_object(&advertised->oid[i], po_in, 1);
++		feed_object(r, &advertised->oid[i], po_in, 1);
+ 	for (size_t i = 0; i < negotiated->nr; i++)
+-		feed_object(&negotiated->oid[i], po_in, 1);
++		feed_object(r, &negotiated->oid[i], po_in, 1);
  
- 		*command = cmd;
-@@ -253,7 +251,7 @@ enum request_state {
- 	PROCESS_REQUEST_DONE,
- };
+ 	while (refs) {
+ 		if (!is_null_oid(&refs->old_oid))
+-			feed_object(&refs->old_oid, po_in, 1);
++			feed_object(r, &refs->old_oid, po_in, 1);
+ 		if (!is_null_oid(&refs->new_oid))
+-			feed_object(&refs->new_oid, po_in, 0);
++			feed_object(r, &refs->new_oid, po_in, 0);
+ 		refs = refs->next;
+ 	}
  
--static int process_request(void)
-+static int process_request(struct repository *r)
- {
- 	enum request_state state = PROCESS_REQUEST_KEYS;
- 	struct packet_reader reader;
-@@ -278,8 +276,8 @@ static int process_request(void)
- 		case PACKET_READ_EOF:
- 			BUG("Should have already died when seeing EOF");
- 		case PACKET_READ_NORMAL:
--			if (parse_command(reader.line, &command) ||
--			    receive_client_capability(reader.line))
-+			if (parse_command(r, reader.line, &command) ||
-+			    receive_client_capability(r, reader.line))
- 				seen_capability_or_command = 1;
- 			else
- 				die("unknown capability '%s'", reader.line);
-@@ -319,30 +317,30 @@ static int process_request(void)
- 	if (!command)
- 		die("no command requested");
- 
--	if (client_hash_algo != hash_algo_by_ptr(the_repository->hash_algo))
-+	if (client_hash_algo != hash_algo_by_ptr(r->hash_algo))
- 		die("mismatched object format: server %s; client %s",
--		    the_repository->hash_algo->name,
-+		    r->hash_algo->name,
- 		    hash_algos[client_hash_algo].name);
- 
--	command->command(the_repository, &reader);
-+	command->command(r, &reader);
- 
+@@ -146,10 +146,10 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *advertised,
+ 		 */
+ 		if (rc > 128 && rc != 141)
+ 			error("pack-objects died of signal %d", rc - 128);
+-		trace2_region_leave("send_pack", "pack_objects", the_repository);
++		trace2_region_leave("send_pack", "pack_objects", r);
+ 		return -1;
+ 	}
+-	trace2_region_leave("send_pack", "pack_objects", the_repository);
++	trace2_region_leave("send_pack", "pack_objects", r);
  	return 0;
  }
  
--void protocol_v2_serve_loop(int stateless_rpc)
-+void protocol_v2_serve_loop(struct repository *r, int stateless_rpc)
- {
- 	if (!stateless_rpc)
--		protocol_v2_advertise_capabilities();
-+		protocol_v2_advertise_capabilities(r);
+@@ -164,7 +164,8 @@ static int receive_unpack_status(struct packet_reader *reader)
+ 	return 0;
+ }
  
- 	/*
- 	 * If stateless-rpc was requested then exit after
- 	 * a single request/response exchange
- 	 */
- 	if (stateless_rpc) {
--		process_request();
-+		process_request(r);
- 	} else {
- 		for (;;)
--			if (process_request())
-+			if (process_request(r))
- 				break;
+-static int receive_status(struct packet_reader *reader, struct ref *refs)
++static int receive_status(struct repository *r,
++			  struct packet_reader *reader, struct ref *refs)
+ {
+ 	struct ref *hint;
+ 	int ret;
+@@ -172,7 +173,7 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 	int new_report = 0;
+ 	int once = 0;
+ 
+-	trace2_region_enter("send_pack", "receive_status", the_repository);
++	trace2_region_enter("send_pack", "receive_status", r);
+ 	hint = NULL;
+ 	ret = receive_unpack_status(reader);
+ 	while (1) {
+@@ -221,10 +222,10 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			if (!strcmp(key, "refname"))
+ 				report->ref_name = xstrdup_or_null(val);
+ 			else if (!strcmp(key, "old-oid") && val &&
+-				 !parse_oid_hex(val, &old_oid, &val))
++				 !parse_oid_hex_algop(val, &old_oid, &val, r->hash_algo))
+ 				report->old_oid = oiddup(&old_oid);
+ 			else if (!strcmp(key, "new-oid") && val &&
+-				 !parse_oid_hex(val, &new_oid, &val))
++				 !parse_oid_hex_algop(val, &new_oid, &val, r->hash_algo))
+ 				report->new_oid = oiddup(&new_oid);
+ 			else if (!strcmp(key, "forced-update"))
+ 				report->forced_update = 1;
+@@ -271,7 +272,7 @@ static int receive_status(struct packet_reader *reader, struct ref *refs)
+ 			new_report = 1;
+ 		}
+ 	}
+-	trace2_region_leave("send_pack", "receive_status", the_repository);
++	trace2_region_leave("send_pack", "receive_status", r);
+ 	return ret;
+ }
+ 
+@@ -293,9 +294,9 @@ static int advertise_shallow_grafts_cb(const struct commit_graft *graft, void *c
+ 	return 0;
+ }
+ 
+-static void advertise_shallow_grafts_buf(struct strbuf *sb)
++static void advertise_shallow_grafts_buf(struct repository *r, struct strbuf *sb)
+ {
+-	if (!is_repository_shallow(the_repository))
++	if (!is_repository_shallow(r))
+ 		return;
+ 	for_each_commit_graft(advertise_shallow_grafts_cb, sb);
+ }
+@@ -426,13 +427,14 @@ static void reject_invalid_nonce(const char *nonce, int len)
  	}
  }
-diff --git a/serve.h b/serve.h
-index f946cf904a242db5106625e280d7daa671348516..85bf73cfe53cb9cbb4b042c43a1f6a55338ad6ed 100644
---- a/serve.h
-+++ b/serve.h
-@@ -1,7 +1,9 @@
- #ifndef SERVE_H
- #define SERVE_H
  
--void protocol_v2_advertise_capabilities(void);
--void protocol_v2_serve_loop(int stateless_rpc);
-+struct repository;
-+
-+void protocol_v2_advertise_capabilities(struct repository *r);
-+void protocol_v2_serve_loop(struct repository *r, int stateless_rpc);
+-static void get_commons_through_negotiation(const char *url,
++static void get_commons_through_negotiation(struct repository *r,
++					    const char *url,
+ 					    const struct ref *remote_refs,
+ 					    struct oid_array *commons)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	const struct ref *ref;
+-	int len = the_hash_algo->hexsz + 1; /* hash + NL */
++	int len = r->hash_algo->hexsz + 1; /* hash + NL */
+ 	int nr_negotiation_tip = 0;
  
- #endif /* SERVE_H */
-diff --git a/t/helper/test-serve-v2.c b/t/helper/test-serve-v2.c
-index 054cbcf5d83946b225774dc9da6b0ec1d112e79d..63a200b8d46f68bfd69f63f844977cc8e382bb32 100644
---- a/t/helper/test-serve-v2.c
-+++ b/t/helper/test-serve-v2.c
-@@ -1,6 +1,9 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "test-tool.h"
- #include "gettext.h"
- #include "parse-options.h"
-+#include "repository.h"
- #include "serve.h"
- #include "setup.h"
- 
-@@ -28,9 +31,9 @@ int cmd__serve_v2(int argc, const char **argv)
- 			     PARSE_OPT_KEEP_UNKNOWN_OPT);
- 
- 	if (advertise_capabilities)
--		protocol_v2_advertise_capabilities();
-+		protocol_v2_advertise_capabilities(the_repository);
- 	else
--		protocol_v2_serve_loop(stateless_rpc);
-+		protocol_v2_serve_loop(the_repository, stateless_rpc);
- 
- 	return 0;
+ 	child.git_cmd = 1;
+@@ -466,7 +468,7 @@ static void get_commons_through_negotiation(const char *url,
+ 			break;
+ 		if (read_len != len)
+ 			die("invalid length read %d", read_len);
+-		if (parse_oid_hex(hex_hash, &oid, &end) || *end != '\n')
++		if (parse_oid_hex_algop(hex_hash, &oid, &end, r->hash_algo) || *end != '\n')
+ 			die("invalid hash");
+ 		oid_array_append(commons, &oid);
+ 	} while (1);
+@@ -480,7 +482,8 @@ static void get_commons_through_negotiation(const char *url,
+ 	}
  }
+ 
+-int send_pack(struct send_pack_args *args,
++int send_pack(struct repository *r,
++	      struct send_pack_args *args,
+ 	      int fd[], struct child_process *conn,
+ 	      struct ref *remote_refs,
+ 	      struct oid_array *extra_have)
+@@ -518,17 +521,17 @@ int send_pack(struct send_pack_args *args,
+ 		goto out;
+ 	}
+ 
+-	git_config_get_bool("push.negotiate", &push_negotiate);
++	repo_config_get_bool(r, "push.negotiate", &push_negotiate);
+ 	if (push_negotiate) {
+-		trace2_region_enter("send_pack", "push_negotiate", the_repository);
+-		get_commons_through_negotiation(args->url, remote_refs, &commons);
+-		trace2_region_leave("send_pack", "push_negotiate", the_repository);
++		trace2_region_enter("send_pack", "push_negotiate", r);
++		get_commons_through_negotiation(r, args->url, remote_refs, &commons);
++		trace2_region_leave("send_pack", "push_negotiate", r);
+ 	}
+ 
+-	if (!git_config_get_bool("push.usebitmaps", &use_bitmaps))
++	if (!repo_config_get_bool(r, "push.usebitmaps", &use_bitmaps))
+ 		args->disable_bitmaps = !use_bitmaps;
+ 
+-	git_config_get_bool("transfer.advertisesid", &advertise_sid);
++	repo_config_get_bool(r, "transfer.advertisesid", &advertise_sid);
+ 
+ 	/* Does the other end support the reporting? */
+ 	if (server_supports("report-status-v2"))
+@@ -554,7 +557,7 @@ int send_pack(struct send_pack_args *args,
+ 	if (server_supports("push-options"))
+ 		push_options_supported = 1;
+ 
+-	if (!server_supports_hash(the_hash_algo->name, &object_format_supported))
++	if (!server_supports_hash(r->hash_algo->name, &object_format_supported))
+ 		die(_("the receiving end does not support this repository's hash algorithm"));
+ 
+ 	if (args->push_cert != SEND_PACK_PUSH_CERT_NEVER) {
+@@ -596,7 +599,7 @@ int send_pack(struct send_pack_args *args,
+ 	if (use_push_options)
+ 		strbuf_addstr(&cap_buf, " push-options");
+ 	if (object_format_supported)
+-		strbuf_addf(&cap_buf, " object-format=%s", the_hash_algo->name);
++		strbuf_addf(&cap_buf, " object-format=%s", r->hash_algo->name);
+ 	if (agent_supported)
+ 		strbuf_addf(&cap_buf, " agent=%s", git_user_agent_sanitized());
+ 	if (advertise_sid)
+@@ -646,7 +649,7 @@ int send_pack(struct send_pack_args *args,
+ 	}
+ 
+ 	if (!args->dry_run)
+-		advertise_shallow_grafts_buf(&req_buf);
++		advertise_shallow_grafts_buf(r, &req_buf);
+ 
+ 	/*
+ 	 * Finally, tell the other end!
+@@ -686,7 +689,7 @@ int send_pack(struct send_pack_args *args,
+ 	}
+ 
+ 	if (args->stateless_rpc) {
+-		if (!args->dry_run && (cmds_sent || is_repository_shallow(the_repository))) {
++		if (!args->dry_run && (cmds_sent || is_repository_shallow(r))) {
+ 			packet_buf_flush(&req_buf);
+ 			send_sideband(out, -1, req_buf.buf, req_buf.len, LARGE_PACKET_MAX);
+ 		}
+@@ -711,7 +714,7 @@ int send_pack(struct send_pack_args *args,
+ 			   PACKET_READ_DIE_ON_ERR_PACKET);
+ 
+ 	if (need_pack_data && cmds_sent) {
+-		if (pack_objects(out, remote_refs, extra_have, &commons, args) < 0) {
++		if (pack_objects(r, out, remote_refs, extra_have, &commons, args) < 0) {
+ 			if (args->stateless_rpc)
+ 				close(out);
+ 			if (git_connection_is_socket(conn))
+@@ -724,7 +727,7 @@ int send_pack(struct send_pack_args *args,
+ 			 * we get one).
+ 			 */
+ 			if (status_report)
+-				receive_status(&reader, remote_refs);
++				receive_status(r, &reader, remote_refs);
+ 
+ 			if (use_sideband) {
+ 				close(demux.out);
+@@ -743,7 +746,7 @@ int send_pack(struct send_pack_args *args,
+ 		packet_flush(out);
+ 
+ 	if (status_report && cmds_sent)
+-		ret = receive_status(&reader, remote_refs);
++		ret = receive_status(r, &reader, remote_refs);
+ 	else
+ 		ret = 0;
+ 	if (args->stateless_rpc)
+diff --git a/send-pack.h b/send-pack.h
+index 7edb80596c7b0edf607ea5cd0f01315106d02b73..d256715681b363d46db284b7ed22658960781571 100644
+--- a/send-pack.h
++++ b/send-pack.h
+@@ -6,6 +6,7 @@
+ struct child_process;
+ struct oid_array;
+ struct ref;
++struct repository;
+ 
+ /* Possible values for push_cert field in send_pack_args. */
+ #define SEND_PACK_PUSH_CERT_NEVER 0
+@@ -35,7 +36,7 @@ struct option;
+ int option_parse_push_signed(const struct option *opt,
+ 			     const char *arg, int unset);
+ 
+-int send_pack(struct send_pack_args *args,
++int send_pack(struct repository *r, struct send_pack_args *args,
+ 	      int fd[], struct child_process *conn,
+ 	      struct ref *remote_refs, struct oid_array *extra_have);
+ 
+diff --git a/transport.c b/transport.c
+index 10d820c33353f695691506560f817c7515218139..81ae8243b9a32ab5289149e51a5a4b46340ac1fe 100644
+--- a/transport.c
++++ b/transport.c
+@@ -932,7 +932,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
+ 		break;
+ 	case protocol_v1:
+ 	case protocol_v0:
+-		ret = send_pack(&args, data->fd, data->conn, remote_refs,
++		ret = send_pack(the_repository, &args, data->fd, data->conn, remote_refs,
+ 				&data->extra_have);
+ 		break;
+ 	case protocol_unknown_version:
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
