@@ -1,66 +1,66 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5DE1FC7CC
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 17:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEE01F8F02
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 17:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734456731; cv=none; b=oHmuCyo5D6rFYHVPJKEvfvCLgtEcxYhCPWR5Ox4y4Lv+USLB/2OrciDS5p9PuQHOzijr8DxldifvNa9WRcACzYJTKHhwHCXZsb9tI2S9wdfjzMBeDQO1yoNiCR95zVqFG62cobQ8XWiwPLz75O5hxSpPbgOOjQOjfkmIzvkZH7w=
+	t=1734456732; cv=none; b=s5TSH1HTl0jQJ3pHOgNBV0y1cS0SrfSEBTHIfBwLWX49igzeQdTdsIhrL2JFS89uy+jYOfpaBCPqpkFqyF8VCsJvjknX5q50N9FzMwFWJu2jgWPuX3NPLb/4EceH0OUlo++UgM+J15aGX1FZqv8t5V33VHtkDiLsYdCu8om57uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734456731; c=relaxed/simple;
-	bh=EbqOnR0WeSPPHuqqC9iUc+FhZRPjT7a0fCItxCrwnDk=;
+	s=arc-20240116; t=1734456732; c=relaxed/simple;
+	bh=C2cESSgGNnQgEaWwKXEfkHQO6Aeor5OmO4Jh1oJ5tYA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=asR2J/ZoGM+Wga7tE5NbGMlTRHMoeZ24nuJ6Y1hVSX5vFRtmApICapjqWVL0rByymXNvF2WEGtUejuz6ltYrk1Xr3aPFI7Qn+kT8OOOfYnwkEWBkyQIClRABMq3Q2z9RpH3C8CgCECMWxyhdEa1zUYYKRmJamIt0TfrN5eYOLMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xi8X25PA; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=V1z3KTlE/xEUsXQ56Yn+u8wWD4K2Ozk64J4udnEfo0W32grkYAL+pyE2Q9q0G3lAsV3tCFa7CBRpHq5nyl8ULKg1ug33v2kCwY0BOCjgtLx02U65zQtPs1Q6nj3RAvS6YI7o5gDOilzT3I4UIOb0KSQMElY0eA0Q6XBoHcclzJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VXe5tt3V; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xi8X25PA"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43621d27adeso39289725e9.2
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 09:32:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VXe5tt3V"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43634b570c1so27881945e9.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 09:32:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734456727; x=1735061527; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734456725; x=1735061525; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=g7QqL+BMAPchUH65wWTiYb1YjOcN45jjN13iy41PKfU=;
-        b=Xi8X25PArVlbVAYiB7cAiv3CGhQD02HzgbRcTssTw0++MegJgKn6TJz86kpeokb8Z6
-         bi+iS0u7SAXQ4QA2KewzrigHwRZI0NuQt48eiPeWPIlqR+6op54FAWKoXPpqwvvSzXRU
-         LcYanSCcuJ5F6Cs3NR90AytMHPyDt2Bxx8+5enpWW5gpeAo14DgErq9fyyrKiZugA4CY
-         IX47Gi3kVvFzaBneBXrXxn8dCEg50cJkW/Q4wDaJ0Z8YDpXUayhyc3xnoffp6KV/cm1G
-         hhaY+G998Po0sNy9rD7FaCBtp5+SWG9whN0IIRDPDymNDcIUm5NCsIAXX82omC2E61FG
-         J1Dg==
+        bh=04q9NqqvW3HGbGsohWhTVicn0hqFEUGD2yemBcvOq7A=;
+        b=VXe5tt3Ve7L0LZ4m2PNKaDsxixfVfv47PmHsaz9vNuJ4VdKX1PulDWWThlZqD5IROd
+         GVFsZgrdjfd45L5/ZFAsl62kHwMxxiNafTwziqIlyL+YqBAZjgm/J0Uz2Q6R/jOMBPcu
+         cwA7kfLruYD6DTSIM7PLKtzW3XmDK8GymEb7sY0g4fvZwlrYak8Mq2ODX0JRH5StyHsx
+         naSYI5UJAMXY8iS4CKkadKb/BUm3nhxTWFIUyL/kCfBmSoraHvGsT7HiE+aLmLvDYHLL
+         jPIwtnGJdTXg/W+u8OcNRT9IRA7xoFGTyDhZScBq3JV+COV+QoEx3toBxJNfCw/BnLm5
+         ixkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734456727; x=1735061527;
+        d=1e100.net; s=20230601; t=1734456725; x=1735061525;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=g7QqL+BMAPchUH65wWTiYb1YjOcN45jjN13iy41PKfU=;
-        b=hGiL8OgXByv4MAe/ju5QJyWxRQPpTCIPgyD2kyA3gPQonvTKrPkkfqgeBpm7FFrHhN
-         GGgG9xR9BxJGK5x15Be/1SCctP1DcYgVtqHXUwMl7EQvEGmVvqrwj7Yyvxgdz5ilO+Me
-         frlD6o2+4/1IUhR7isgUzs9qfaQ7A0ih9CdgcNwKCwDDMHFPdDAdB4Xo5qvcDVz0ZhgL
-         vtMnGpUs7lRqVYBS1OGQbemSXagc5rQe7q8t98nvCfOGnLK+yHrulWliruD+Bd9Xox3N
-         nOisrR37jrtX6ce/M5EVzInVFh8wcOKKZsHr3vb5TdIXlEmPUDnf/jXBypidVImwybZ9
-         hokQ==
-X-Gm-Message-State: AOJu0YxbTBB9CvzEMtugrdeyeGcEv97XEbTbw4xEEqr1oE0YnExwSzxX
-	+O7dAr+Tm/Cnuu9I/4oR3l1tF5O4KFvqZ9/emeOO4SJHoUlEe83qNuyx9w==
-X-Gm-Gg: ASbGnct+TEef0AylEAIjiPYpvXeFXPAAJ91VAW9pVH0vnl99wQBxBEtCDCPR4nFHxA7
-	s/VCcGyuUQy26bkcsEfvaZSSU0CTJqBuEYUG+CJchug6jXVO2uGS+FgtMBlIATxtdoo6FJlIjos
-	0ortKQGRWAmbHDUJgea7+bPBhgr+owUy5ZTNCcwLM2SGO7z+51jEyjMYwRFVV+z9F6tBgnv6bxM
-	nXKNIJkeat+l0I7zJjgdMyz8NvTiM4c0XWS4i2oLkOMgKfbXLVtHKiyJg==
-X-Google-Smtp-Source: AGHT+IGl6nAAKeGVffPqnbmeCKMpgkV9X5EfU2laWFpA3OSEoVa+Y5fOcn9lP+tHCZKoUi1d5pYYnA==
-X-Received: by 2002:a05:600c:4f4f:b0:436:346a:fa9b with SMTP id 5b1f17b1804b1-436346afda1mr119690705e9.20.1734456727240;
-        Tue, 17 Dec 2024 09:32:07 -0800 (PST)
+        bh=04q9NqqvW3HGbGsohWhTVicn0hqFEUGD2yemBcvOq7A=;
+        b=uviOTq59wDzFpoWLIdCDNS0Y6TEnYftMbNF4b4BU91qnoPtZI18WP6PszUp2b99sam
+         ncG53hEYKRw7bDsy2C5a++YL8zaKxO6j77NqjqqX1GUzq4jxXTJ4mu/eKWD61C5cvnQS
+         TIcCfJkymn1xE6w0DfA8jq3NAW/vvFXp4QVlOrGCBcwOStNwAe8wNFjNOxLZWzWJZX1Q
+         u5FfgXCScu7RJqQFkNYefI3U3K7l10nSWb401wLevLmSjPYSmuniKcFXfzvKFwRtSetp
+         xQ5I2CvqTZA1iZYrLyf/OBsE526lmb/GU+LhRaEuOjtcn/rG1FIBl5YADKy/IE9FQM6A
+         u02A==
+X-Gm-Message-State: AOJu0Yxrgi3AAteKztWA28dOyrYwk7jIu/kw/elYQL6stA4/V9duxM8a
+	aJpw/SVQxraSgpd4S/sMZGqsLbb3wSpG3sea1Sq7P45WyicNCGZQLd5YnA==
+X-Gm-Gg: ASbGncsy1j6TwRVCWd0zO3gElM0prSIovF4zcpz9PiUQ9uSYk0HjvlshsP9if3ADFUH
+	GzAcpERtkHA49Lj33jlFnKyIyFvADfimsHySTDt1+waR8DLMikSmDrsfSh+Z60+xsRBV2Na3XF3
+	BysfU/ty4YY4uGAHfM5J6YjNy7kLyBOOp8Qo4kLHpBKDZZvxczLdxBMEmALuaa2961v+3ocR2NJ
+	FY+ifObasxmZZJxSrc3ynqUBueMMAbcWC+gUojF08GW7IuiHFUAj0LPjQ==
+X-Google-Smtp-Source: AGHT+IE+aRua32MlQeG7WhWJBz12/RXnFxx5QmnP4otAV1LyfWU9wKT+HPcKRpKvgdBG6w0ZwyZ23Q==
+X-Received: by 2002:a5d:5984:0:b0:385:fc32:1ec6 with SMTP id ffacd0b85a97d-3888e0c081bmr13580835f8f.50.1734456725275;
+        Tue, 17 Dec 2024 09:32:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c80120e8sm11906141f8f.6.2024.12.17.09.32.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c7fac5bbsm12114031f8f.0.2024.12.17.09.32.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 09:32:06 -0800 (PST)
-Message-Id: <c539b5200a72a512c800012660ca997b35232083.1734456721.git.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 09:32:04 -0800 (PST)
+Message-Id: <e687da666eed9a25a717ef6d09cd0f471610b835.1734456721.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1840.git.1734456721.gitgitgadget@gmail.com>
 References: <pull.1840.git.1734456721.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Dec 2024 17:32:01 +0000
-Subject: [PATCH 5/5] cmake/vcxproj: stop special-casing `remote-ext`
+Date: Tue, 17 Dec 2024 17:31:59 +0000
+Subject: [PATCH 3/5] cmake: use the correct file name for the Perl header
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,53 +77,42 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When the `vcxproj` target was introduced in `config.mak.uname` to allow
-building Git with the Visual C toolchain, the `git remote-ext` command
-was always executed in its dashed form. Therefore, it was impossible to
-pass the test suite unless that command existed in its dashed form, and
-we had to special-case this.
+In e4b488049a5 (Makefile: extract script to massage Perl scripts,
+2024-12-06), the code was refactored that is used to transform the Perl
+scripts/modules to their final form.
 
-Later, when the `vcxproj` target got out of fashion because Visual
-Studio gained native support for CMake builds, this special-casing was
-copied without questioning it.
-
-But as of 675df192c5f (transport-helper: do not run git-remote-ext etc.
-in dashed form, 2020-08-26), the reason for this special-casing no
-longer exists. So let's just drop it.
+Even the CMake-based build was adjusted, but the change used the file
+name `PERL-HEADER` instead of the file name used by the Makefile-based
+build (same name but with the `GIT-` prefix). Let's adjust the former to
+the latter.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname                    | 4 ----
- contrib/buildsystems/CMakeLists.txt | 2 +-
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ contrib/buildsystems/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index d5112168a4c..b12d4e168ae 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -819,10 +819,6 @@ vcxproj:
- 	sed -i 's|\(git\)-\([-a-z]*\)\.exe"|\1.exe" \2|g' \
- 		bin-wrappers/git-{receive-pack,upload-archive}
- 	git add -f $(test_bindir_programs)
--	# remote-ext is a builtin, but invoked as if it were external
--	sed 's|receive-pack|remote-ext|g' \
--		<bin-wrappers/git-receive-pack >bin-wrappers/git-remote-ext
--	git add -f bin-wrappers/git-remote-ext
- 
- 	# Add templates
- 	$(MAKE) -C templates
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 36f18ab2dd1..802445c1eb0 100644
+index 3dd6b3a130e..6f35cd66f39 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1082,7 +1082,7 @@ endif()
+@@ -867,7 +867,7 @@ list(TRANSFORM perl_modules REPLACE "${CMAKE_SOURCE_DIR}/" "")
+ file(STRINGS ${CMAKE_SOURCE_DIR}/perl/header_templates/fixed_prefix.template.pl perl_header )
+ string(REPLACE "@PATHSEP@" ":" perl_header "${perl_header}")
+ string(REPLACE "@INSTLIBDIR@" "${INSTLIBDIR}" perl_header "${perl_header}")
+-file(WRITE ${CMAKE_BINARY_DIR}/PERL-HEADER ${perl_header})
++file(WRITE ${CMAKE_BINARY_DIR}/GIT-PERL-HEADER ${perl_header})
  
- #wrapper scripts
- set(wrapper_scripts
--	git git-upload-pack git-receive-pack git-upload-archive git-shell git-remote-ext scalar)
-+	git git-upload-pack git-receive-pack git-upload-archive git-shell scalar)
- 
- set(wrapper_test_scripts
- 	test-fake-ssh test-tool)
+ add_custom_command(OUTPUT "${CMAKE_BINARY_DIR}/GIT-VERSION-FILE"
+ 	COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/GIT-VERSION-GEN"
+@@ -888,7 +888,7 @@ foreach(script ${git_perl_scripts} ${perl_modules})
+ 		COMMAND "${SH_EXE}" "${CMAKE_SOURCE_DIR}/generate-perl.sh"
+ 			"${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS"
+ 			"${CMAKE_BINARY_DIR}/GIT-VERSION-FILE"
+-			"${CMAKE_BINARY_DIR}/PERL-HEADER"
++			"${CMAKE_BINARY_DIR}/GIT-PERL-HEADER"
+ 			"${CMAKE_SOURCE_DIR}/${script}"
+ 			"${CMAKE_BINARY_DIR}/${perl_gen_path}"
+ 		DEPENDS "${CMAKE_SOURCE_DIR}/generate-perl.sh"
 -- 
 gitgitgadget
+
