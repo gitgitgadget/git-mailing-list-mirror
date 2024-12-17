@@ -1,163 +1,96 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB511F2395
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:39:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FAA1F3D42
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:45:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734439181; cv=none; b=C+T2KytM6olj0A2fCyPCIMziEZf1vIfvEiQorv+7guKnZFMHYK87ou9TmJO6DcdsAfSKNRgPW8WfUR9lOjR9tdVI8dAIhxhrOUtrlPj1oPbKGSwdCfkR7pQZkSBe9x+xeHzt4K5yCtnw7RQutp3yxuFTw1I+B0A1GWWKwsQkazE=
+	t=1734439516; cv=none; b=qp5TQ/IRmoIgby0e1ofae9I0XUHesSKeQVBdhrCXuyJtmlOwGYpHSDdwcKCcJ/LpOmrRNmtM5mGxFHBgzzkjfgQ+BpPjjRD4YWUrrQxZmYwTKPL4WxnqbfHUJuhSvkteZJRvY+ZoEXr1DhxFgXOAvQglxnvwEhiheqvihSN2hOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734439181; c=relaxed/simple;
-	bh=1KC96zSPmHJya2DIzaL09EhECZ5b8CYsxTP7yoV/INU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jir5zXEA0D3UO3lNn7TCQ2URQq6LzgrzHdV24TVRq48f3Lr3ayb4H+OkkBfHGMyZ5MwFcFEHHcxsbZwHwMfAmUum/bbK6feybT+kCnhKGhve1uaV2WnwqmAi3oxIzXrtobWQr/QSGg6jMs+WogAwmn+qaAj5QdIz+gAfMjxl1zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Az1/pXz4; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1734439516; c=relaxed/simple;
+	bh=urw9Nhdq5mWwqwleTfOzm7BiPN90hkBG9RlX9qPI48w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s/55/WDMvDrbQMwq5eVrVnxi/7/7WH35MuD5I3Du6WZY7mEVvqReVDrPb9K6NRSPlo8+neVD5sp40w3sUU6q10tX1JUA7mLkfq5n9lSghOmGq7XdQruKebqM6BiOcvWH3KZsa4tNNRj33C2rGbJLzrm2I0vL7q5a+H5Gpl+rXZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CF1U++MQ; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Az1/pXz4"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso37878425e9.2
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 04:39:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CF1U++MQ"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-21669fd5c7cso45093385ad.3
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 04:45:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734439178; x=1735043978; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MPJEHl7tw84DtsSczzVnMJZ8iuiLayGU4nsIWvmjYF4=;
-        b=Az1/pXz4RY5ds6BIneSBX+j1KF1PJzQybuTiboge452yOeihyAT1QgDlzH87/qYNxW
-         +kosafUUdSsoaRRl0ly0vljCIwZHC8hvCS8PZdClSjgUvIq/4E0NHWiPEdVTko/TcN6p
-         0uP9efzfMKt0Qeu1/4os1baJfim1Tb5MDihn66cKkmSAdngUMxUNebFAbuzh2CF/oCR7
-         hJJbajkyMi53z6uuFwdWLWqYgSGoNYqxBItVN+/OYS/slbPzsguGtVBqZTu4aB80TzdD
-         QqGIdowqzyYWNq4XkUtWrCucat94acpieD8mQwIpVD5PF5ecagIKzWrpieOvJ0LkupPE
-         j9fg==
+        d=gmail.com; s=20230601; t=1734439514; x=1735044314; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0ib6ap4f3bkUgqpwiqDzIV6o1ixwKZ9a4qqVsDMLAn0=;
+        b=CF1U++MQoncULtkrl3YTH4vQR3IiWbDWQs0YJ2F3Qui/rAuwEPEHorw+w/udPG3b+7
+         jhV7V4+GFjKxkOKD1KJc3cxYtseAZpWwba1BY4tGpQZag+BfzQGAc3T4mkUVvDQU2zA1
+         Z6Qc+NROg5pLzrPj6SMUYguCVkxAaddWAJt4Ak2qdtGbMvxFGqxxmE3hq7098dHDb3Wa
+         eXBgrqy14Ks84yEX77s2hkNBGeRVaWI0Ej67n1/2xh9Or/Z9OstWtV3ayadxCTdjQOds
+         u7N0CvJBvqAZfcATE7DPPok4iqZhBg5ee4dIa0VSw/tEDQSh5gAQiWz7nWyDF/lGdXOB
+         AwSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734439178; x=1735043978;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MPJEHl7tw84DtsSczzVnMJZ8iuiLayGU4nsIWvmjYF4=;
-        b=RQotiumLfqkHmJp2MIkwmBDe1AQBIIaBJP4iQLVZZ9pyuoZ6VsfhqrF7vpODQq5yyz
-         xI6C5y/bnWsUq1n1Mgi372SqwdmfheSrHD67X7L19+otXEsbhjWFxb1Q3RDMHmDlatV0
-         TxVJqWOZBtoKCnlnWnBg99XJkWfog+uVfOIfzqDX1siRlCXTdUktsdVyQ3cFE8Jo1wIB
-         PPd33NqZshVETA24vOuWjKo6ZHXIYTbKokm1ClEirXTu6qKCa3CFvikOQilOGcKTOWg0
-         9iryW5/IjLeZySC2i5v35f1D+lrrPKd5AYLBlOctUIJVr003aqEkzMMTZxKW4A3+ET5T
-         MkUw==
-X-Gm-Message-State: AOJu0YyIEaT86rFf+eCeiPl/r5FixJuf/eteIz2oEyBy1ZwZDIFDSKeB
-	hfh5kY9vWAzJnDtYOMEWbQ6Pf4ERJshtgSOqF+pj6cNMVzxWN+40WEgjkQ==
-X-Gm-Gg: ASbGncuYdGp18BOVxqfC6VJk3N9ZHnhXS9T/NnaWI2OHEI8Zo9s+QnKRnq/S2trcwLg
-	WP2jum84njP/uebK7glTkKqGcc53cDpeHKRPO3TEJqIaE8A5pfrQL/Zx2qtqbJwA5lZKrfHVA+H
-	aMHBpNwB+4fwP5iW16M1b5mKwY6agTsvyHvCK81fXEzfEJar/XSEVa5yNqKRm2eIsHMXMMNHTdp
-	ySkexAaUYfEyP77SxyX7B1WuPcybJaXUD6MkvbGKWF6I9Xd/yUscBmLLw==
-X-Google-Smtp-Source: AGHT+IG4dhoFVZh2Bu93d6ac2bVPyHU88Cges+TYlwZXullxZZcuEytru6Os1ll3u8k2Zsk1x2Eo6Q==
-X-Received: by 2002:a05:600c:3596:b0:434:a529:3b87 with SMTP id 5b1f17b1804b1-4364769028fmr38596125e9.10.1734439177444;
-        Tue, 17 Dec 2024 04:39:37 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43625717c9fsm171505435e9.44.2024.12.17.04.39.36
+        d=1e100.net; s=20230601; t=1734439514; x=1735044314;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0ib6ap4f3bkUgqpwiqDzIV6o1ixwKZ9a4qqVsDMLAn0=;
+        b=fzyNo6w3F4tG8SaCRqHm9UVWCEAbOD8zSW6tgz1wQh8KUHXNUjQMcYky1Hsd5AF+QO
+         mdLLY2ZBAjt8+Otnd6vP04oYrAF9hnmg/nlWNE4ZZk25RB56VApg+x5TqyR3J51TXpPc
+         AtGNXHzAD58AgSTdc05jUwhnvLn4b9XHSNo91Rw8TiBGMtdmtSkBfom4xGmotn9yUeq6
+         VasXZZBAdNlv90FSVFkMjvvGyhrcYCKCRwd1DfQcaSUZWLOjrKbq8obxn1qZaEXLRM8E
+         28UntemGi6xk5Vk83N1NVOy5OFh7q33aap5mz8SO59Mnyp9303s8rCZBe047oLVmpL9L
+         W35A==
+X-Gm-Message-State: AOJu0YxaIubAPz4JNQt6Zi/7Pe24l76kyVmxIkXYWykslRsx9p3Qcg56
+	lWx8SL8ezK00hsjh0GYS4aDIA33iXvmF6+t8vhwmjWZCBDRaOS/AV2OAFA==
+X-Gm-Gg: ASbGnctnXp8nTa2om+SnQUQp7AlyDGUpY6WX62CEE1erESIT7x8KK3Lc5lH5nyHpY71
+	AnGcQiEgct4MLqZukzafZKHDDX44fYqIAL8cKzksmXXAzBAz22GRmqiSEsQJPnVZ85fK/buUzxe
+	sOLrc/FL/SgIN7ewsejkyGZJdhhM14cLkMES9r5CES29jwQZXQXjQIoADywvHuX8PivvCMC+Maw
+	LixhUVZgwj1LdA0Lucw2qcoGv9XB8WPNALYlBqeRTa3G1vx939r
+X-Google-Smtp-Source: AGHT+IGNTis4gQ3ownm9tRGF5yHJs4QlnUeaczSpf9A67uU0riTn3V0YgOKE8bNo88ilt5+fpau2fQ==
+X-Received: by 2002:a17:902:f648:b0:216:554a:2127 with SMTP id d9443c01a7336-21892a5871emr241342435ad.41.1734439514148;
+        Tue, 17 Dec 2024 04:45:14 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e50ab8sm58110305ad.115.2024.12.17.04.45.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 04:39:36 -0800 (PST)
-Message-Id: <pull.1837.git.1734439176360.gitgitgadget@gmail.com>
-From: "Wang Bing-hua via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Dec 2024 12:39:36 +0000
-Subject: [PATCH] remote: align --verbose output with spaces
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 17 Dec 2024 04:45:13 -0800 (PST)
+Date: Tue, 17 Dec 2024 20:45:54 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/14] Stop using `the_repository` in some trivial cases
+Message-ID: <Z2Fygp-5pFQi1p41@ArchLinux>
+References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Wang Bing-hua <louiswpf@gmail.com>,
-    Wang Bing-hua <louiswpf@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
 
-From: Wang Bing-hua <louiswpf@gmail.com>
+On Tue, Dec 17, 2024 at 07:43:47AM +0100, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this small patch series performs some refactorings to stop using
+> `the_repository` in several subsystems. There wasn't really any
+> criterium for which subsystems I picked, except that all of them have
+> been trivial to convert.
+> 
+> In this patch series I'm merely bubbling up `the_repository` one more
+> layer even though some calling contexts already have a repository
+> available. For the sake of triviality I decided not to handle these
+> cases though and instead let a future patch series worry about them.
+> 
 
-Remote names exceeding a tab width could cause misalignment.
-Align --verbose output with spaces instead of a tab.
+Actually, I am excited to see that we remove the global variable
+"the_repository" in some subsystems because I have seen every patch with
+"<subsystem>: stop using `the_repository`".
 
-Signed-off-by: Wang Bing-hua <louiswpf@gmail.com>
----
-    remote: align --verbose output with spaces
+By this, we make the problem smaller, which is good. I have read through
+all the patches, which looks to me.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1837%2Flouiswpf%2Fremote-align-verbose-output-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1837/louiswpf/remote-align-verbose-output-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1837
-
- builtin/remote.c  | 30 ++++++++++++++++++++++++++----
- t/t5505-remote.sh |  4 ++--
- 2 files changed, 28 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 1ad3e70a6b4..876274d9dca 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -16,6 +16,7 @@
- #include "strvec.h"
- #include "commit-reach.h"
- #include "progress.h"
-+#include "utf8.h"
- 
- static const char * const builtin_remote_usage[] = {
- 	"git remote [-v | --verbose]",
-@@ -1279,6 +1280,20 @@ static int get_one_entry(struct remote *remote, void *priv)
- 	return 0;
- }
- 
-+static int calc_maxwidth(struct string_list *list)
-+{
-+	int max = 0;
-+
-+	for (int i = 0; i < list->nr; i++) {
-+		struct string_list_item *item = list->items + i;
-+		int w = utf8_strwidth(item->string);
-+
-+		if (w > max)
-+			max = w;
-+	}
-+	return max;
-+}
-+
- static int show_all(void)
- {
- 	struct string_list list = STRING_LIST_INIT_DUP;
-@@ -1292,10 +1307,17 @@ static int show_all(void)
- 		string_list_sort(&list);
- 		for (i = 0; i < list.nr; i++) {
- 			struct string_list_item *item = list.items + i;
--			if (verbose)
--				printf("%s\t%s\n", item->string,
--					item->util ? (const char *)item->util : "");
--			else {
-+			if (verbose) {
-+				struct strbuf s = STRBUF_INIT;
-+
-+				strbuf_utf8_align(&s, ALIGN_LEFT,
-+						  calc_maxwidth(&list) + 1,
-+						  item->string);
-+				if (item->util)
-+					strbuf_addstr(&s, item->util);
-+				printf("%s\n", s.buf);
-+				strbuf_release(&s);
-+			} else {
- 				if (i && !strcmp((item - 1)->string, item->string))
- 					continue;
- 				printf("%s\n", item->string);
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 08424e878e1..6586f020f74 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -249,8 +249,8 @@ test_expect_success 'without subcommand' '
- 
- test_expect_success 'without subcommand accepts -v' '
- 	cat >expect <<-EOF &&
--	origin	$(pwd)/one (fetch)
--	origin	$(pwd)/one (push)
-+	origin $(pwd)/one (fetch)
-+	origin $(pwd)/one (push)
- 	EOF
- 	git -C test remote -v >actual &&
- 	test_cmp expect actual
-
-base-commit: 2ccc89b0c16c51561da90d21cfbb4b58cc877bf6
--- 
-gitgitgadget
+Thanks,
+Jialuo
