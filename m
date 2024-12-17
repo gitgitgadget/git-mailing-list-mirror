@@ -1,67 +1,67 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967031D5CCC
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7191F37DE
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734437842; cv=none; b=kkKINwYu8Us2me16aKG5l0jB/fPdOQ5ThVFGw8HI3+Rs2uj/GKWK0/n87RGVH8e8zHmcarEtwtu76DQD5zRN82pt2AvxobG8ZdXMkYf5Imi89Le/MT1tp3rANWPaJgcJXg/Ls7sPNPWzAMhBp4MiL4XFlgJAHEKmxXA8o1WyAa0=
+	t=1734438626; cv=none; b=SEOKV5IvLXzZjl2loCb2jnEHHSpZI+DLPm3bTmsJo3/Nc36+EUCKEv50p+0OKjk6IHkrMnSXeAmp+06EMkvJJCV1iVqonOJadvjc1gbIeZtmk+OSc3wG/CfREpAIVCJDdQ3Gt9TmUsOEL026R9LT3dxnnoC+/Zg2FjEWHJzI4K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734437842; c=relaxed/simple;
-	bh=P0j22z07qOt/XUlXPqp0zgC/yEjWAAWOJLA7aLR2i3M=;
+	s=arc-20240116; t=1734438626; c=relaxed/simple;
+	bh=rK83Mdu0rcPw9j1KTzXFbLDnEfGXB9OXQ386VZgFLvA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=slxPdeP1ZuMJW2ebh0dK/+CuFcLsA6cQEYteTXfmASSugbLNDU6rguIhzXuIz8HN4e1JAuw2vvQX/ooqwFDMSKxtP5u7zhXQCjsqzm69lSPVm0K/K4bxqkgz3NwNv/yqEtPnv7AFQf2tFZzjUx4rIXO8BBhwf1Q6GtZFvfhP2ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WiNlofmJ; arc=none smtp.client-ip=209.85.210.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=V+FQ9j7tu70fEFMuZgDk9nlY5IKDNmRHoo839lDggObUoo3KD5Djn4LTRsiowoHUVW/Rp3QkFGzN795EPDG1Rs63BCyvaxMgQOcLfiHUEpUl1u87KQ4Dh74u/Ekcf3hZN8hGf83sFxYBTVYjy4cw7BRmN7lZbr0s4hdTv/tR0sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dASC/Fnu; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WiNlofmJ"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-725f4025e25so4380840b3a.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 04:17:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dASC/Fnu"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-728ea1e0bdbso3969521b3a.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 04:30:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734437840; x=1735042640; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734438624; x=1735043424; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gYHhYwO/jtYAhqj6gHmDNHmgYphkce8G+/PUomOJ7ds=;
-        b=WiNlofmJrLiGtmS8uf6dSTPHb+yXUDhaitlv2f14EdHf1b1QYwyjMyM6eOAfJWJcTu
-         TAD6JEpBxGfTAjUwQwJ/y53P2kZAaO+NXHoWJCfP9sWiO40+pYHOUYlNW8lDLOuee09m
-         /YzSuByfopsJrf/uV4SLsssx6JISde905bY6mPkqKfPq/0D949IpwK5Fn88cOaRjszNK
-         PrmLeQ2L0rJgh+nS7J69IrJayae/s2dpbngvXuEYsAUmEheO4sskRRwOL/z6ahzwJVEG
-         8pyzlUhmBtGls8yRearzrAQfLexBPGOdGYZTMISdFK1ZTIrSGmSfDLhNnBF10g7pjQaP
-         TQyw==
+        bh=fQCjyWkSP254k1ZfHEm1o3oSqdTuhWgN0DOJN31lqHo=;
+        b=dASC/FnufekppvORDa248qW6GDxwgSI6/qqrx5lmt57m50ocd0D+hmLxg4j2e5sDRQ
+         b/yWDA83Crw4frJ2pDB+ZIwzGsLjapx5QViSkRbi7h3aeFeZ8+gbMwnwWLPp86/BGoHj
+         JxQ6mAH6gR2lKzyZWNY7k6zRjZKBKyOChXAfGnnchG3QDNUgqfmmHRY6TObg4BqUX1OK
+         4TEFNeHVcsXSjiDdSfOb7u3v19G6qed9fDUkzeTqHXs+l9ue5JAr7qKUxfLINI/T/8mh
+         ZA/ae8AfLhXjFAIEV86q/3Y2uDojCbe4nGN+8Dx7MB7CKeGrZzLLWBmUYgdQ9p8fqqQ4
+         /gBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734437840; x=1735042640;
+        d=1e100.net; s=20230601; t=1734438624; x=1735043424;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gYHhYwO/jtYAhqj6gHmDNHmgYphkce8G+/PUomOJ7ds=;
-        b=NUEczxEkUpp2Y4b+s84WXid6VPQuEYSKMX22lgQF9C0EyIHDkGdRp2NbQxLt99kFSk
-         JEolJQYrteCODQLkSp8cyAhMMW1IyPpClA2mlnNC0XMUDDmX/A2XbfXmDrqc+M2q2OCQ
-         w8+iwDr+KQdLAOrarQNT4+s5XNYNEbLMjNhP39NLabbxj8uE9g8v/gJt2j9JxfjoX1n5
-         lI2sjg4lZISu0CdPCeUP0tFZk2jNO4Uth8hrQ+i5xDmB5tweGGoGt6iVcVCiCT0Au8Me
-         r6IHU5py+I+YPMCJBPcqdNIzSI0ejo9HAEX9YzlrNw3FJqpWi+rkgNB1EAYb7EWdzlI8
-         OYug==
-X-Gm-Message-State: AOJu0YysaXIKaowgZhhLFAARtSQAjeTqaP7gQCkYugdEQlysaXB4Tcqw
-	0WXwNfXuTOf4nb7j7Vtm7DsZxamEaAlcRNTmijgBlpf9bZxJfYfyf3FUWA==
-X-Gm-Gg: ASbGncu2o5yk3MHCTw6PtDfA5DE9yPkISt82j/wDWUtHf/LqUzjc4T92ixC2O7L8ivX
-	DAs4hyyZ8ILWHOuUIGu8f9kOLX3hHvCoZmNt0xvNovYSFO5/lQq9MjXYyr/FAopgTELtro1x/Av
-	yVDM0LTiRKc1ALeATzjuHfhMSlawOojwXMqU7UTGw34cqwzXxSG9IKzubTuYyJnMsH3V1qL+aGs
-	uCgLqdEvBT4W9EjaBHlnFHZ/HngPSkAAeG8x0LBs14e6dDFGG91
-X-Google-Smtp-Source: AGHT+IFC5AnHvElsdcL5bTiheqfwAjxzYp2jabhaAFStCsAHrbT7h8ulpDH/x01bJVUG5dpsGk0IzQ==
-X-Received: by 2002:a05:6a20:431b:b0:1e1:a211:bb4b with SMTP id adf61e73a8af0-1e462d60913mr6767375637.31.1734437839843;
-        Tue, 17 Dec 2024 04:17:19 -0800 (PST)
+        bh=fQCjyWkSP254k1ZfHEm1o3oSqdTuhWgN0DOJN31lqHo=;
+        b=jteyYZEHrwaOwMKaYh5Lo7GnRmJPf/qgeGf5Tnycq0RM0Xi+xr4WMjoRZn/DI4GelX
+         hOfADJJMvps45DXC2ytE8dCavnVRtAdurXS2NnmL+N126iFSAg0VdMlUO2MvD9lkW5vD
+         P5Glqzomj0lx495rLpQvMJhb7t606pzdQJM/4Ft+qxWFctDtlD7xZDHhtTJ7Top4/+bG
+         K92B1mRJl/XgRVCkqz2lWtIB7xcMjydAvu8390CJxPKGX6h6MIWGL1q6uSJ+BJvELSiy
+         vy9cLu8X55sM3p+o8ICrP6QSEGhvMwGWicNaP++feYbu6hN6Gi7mRo9wkdenGQn2c/6v
+         klKA==
+X-Gm-Message-State: AOJu0Yx44W3YQM7T0Qks5FEY+g0NgmVUpkkgVv1cE/+o2zeVBhVZaEBo
+	/L488m0ZG4lpmYnLY+wQKHnRSrkIPYZ+nkGRnDUk9M3dW8GfmBUqZSQfww==
+X-Gm-Gg: ASbGnctciGZQSj9NjFpUuMP/fzb4X49Wl6tRVATDJ3Ozw0kQwl3GrU9W9RP6M31tYGh
+	uEO4j60oSxbvQWRhF4JQpfnXNcSOrcUxHpCgfal6Q/fjLqsFAw1QHPkfTm6ypbtjz8F0qSsLkY0
+	+ZDjK2mOXdCGXctt5VRf4AYp1IUiiNjSPrvqdNUP1HONQGcT+RX7iX7qYX8j4MePWmOfmqTlgTF
+	DVzdf031PYMoti3zn8aKp+ubAKXwZ/yhuhro/BX6Qin3qsyAANd
+X-Google-Smtp-Source: AGHT+IE6hG2OQkOf7vyeSPg+oxVMEioMhMCipG8JehGpeucKZp8RiChcG9sqwojYqZWOKkqdWZrVtQ==
+X-Received: by 2002:a05:6a00:1ad0:b0:725:96f2:9e63 with SMTP id d2e1a72fcca58-7290c273be8mr24065903b3a.24.1734438624394;
+        Tue, 17 Dec 2024 04:30:24 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72918ad780asm6719727b3a.66.2024.12.17.04.17.18
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72918b78f93sm6502292b3a.119.2024.12.17.04.30.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 04:17:19 -0800 (PST)
-Date: Tue, 17 Dec 2024 20:17:59 +0800
+        Tue, 17 Dec 2024 04:30:23 -0800 (PST)
+Date: Tue, 17 Dec 2024 20:31:04 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/14] pager: stop using `the_repository`
-Message-ID: <Z2Fr90U9ujGFv2IT@ArchLinux>
+Subject: Re: [PATCH 06/14] server-info: stop using `the_repository`
+Message-ID: <Z2FvCKYdRLZzHJVC@ArchLinux>
 References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
- <20241217-pks-use-the-repository-conversion-v1-2-0dba48bcc239@pks.im>
+ <20241217-pks-use-the-repository-conversion-v1-6-0dba48bcc239@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,11 +70,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-2-0dba48bcc239@pks.im>
+In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-6-0dba48bcc239@pks.im>
 
-On Tue, Dec 17, 2024 at 07:43:49AM +0100, Patrick Steinhardt wrote:
-> Stop using `the_repository` in the "pager" subsystem by passing in a
-> repository when setting up the pager and when configuring it.
+On Tue, Dec 17, 2024 at 07:43:53AM +0100, Patrick Steinhardt wrote:
+> Stop using `the_repository` in the "server-info" subsystem by passing in
+> a repository when updating server info and storing the repository in the
+> `update_info_ctx` structure to make it accessible to other functions.
 > 
 > Adjust callers accordingly by using `the_repository`. While there may be
 > some callers that have a repository available in their context, this
@@ -83,36 +84,39 @@ On Tue, Dec 17, 2024 at 07:43:49AM +0100, Patrick Steinhardt wrote:
 > 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  add-patch.c     |  2 +-
->  builtin/am.c    |  4 ++--
->  builtin/blame.c |  2 +-
->  builtin/grep.c  |  4 ++--
->  builtin/help.c  |  4 ++--
->  builtin/log.c   |  4 ++--
->  builtin/var.c   |  2 +-
->  diff.c          |  4 ++--
->  git.c           |  8 ++++----
->  pager.c         | 14 ++++++--------
->  pager.h         |  7 ++++---
->  11 files changed, 27 insertions(+), 28 deletions(-)
+>  builtin/receive-pack.c       |  2 +-
+>  builtin/repack.c             |  2 +-
+>  builtin/update-server-info.c |  2 +-
+>  server-info.c                | 40 ++++++++++++++++++++++------------------
+>  server-info.h                |  4 +++-
+>  5 files changed, 28 insertions(+), 22 deletions(-)
 > 
-> diff --git a/builtin/help.c b/builtin/help.c
-> index 05136279cf7b1007ab754f5630c34536a5f9461f..c257079cebc3c09fb91f258c3b0148e2f204c0e7 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -658,7 +658,7 @@ int cmd_help(int argc,
->  	case HELP_ACTION_ALL:
->  		opt_mode_usage(argc, "--all", help_format);
->  		if (verbose) {
-> -			setup_pager();
-> +			setup_pager(the_repository);
 
-It's possible we run "git help" outside of the repository. Here we still
-pass "the_repository" to the "setup_pager", it may be a little strange.
-But later we will use the "repo" parameter instead of the global
-variable "the_repository", so this is OK.
+> -int update_server_info(int force)
+> +int update_server_info(struct repository *r, int force)
+>  {
+>  	/* We would add more dumb-server support files later,
+>  	 * including index of available pack files and their
+>  	 * intended audiences.
+>  	 */
+>  	int errs = 0;
+> +	char *path;
+>  
+> -	errs = errs | update_info_refs(force);
+> -	errs = errs | update_info_packs(force);
+> +	errs = errs | update_info_refs(r, force);
+> +	errs = errs | update_info_packs(r, force);
+>  
+>  	/* remove leftover rev-cache file if there is any */
+> -	unlink_or_warn(git_path("info/rev-cache"));
+> +	path = repo_git_path(r, "info/rev-cache");
+> +	unlink_or_warn(path);
+> +	free(path);
+>  
 
->  			list_all_cmds_help(show_external_commands,
->  					   show_aliases);
->  			return 0;
+The original "git_path" will be returned from the static string buffers,
+so there is no need to free. But "repo_git_path" will return a allocated
+string, the caller need to explicit free this. Make sense.
 
+>  	return errs;
+>  }
