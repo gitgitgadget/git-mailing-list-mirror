@@ -1,167 +1,183 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8131F4E23
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 14:24:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AB61F6679
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 14:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734445480; cv=none; b=klumDs+22/vwc82Dggj1+gWtxB+naE3GGPCmnj4k4tvj8WgKyMPkJTIafbAse/mtyRSf5ld4EHFLztII0zEKSueQBlCLI7z9Yv3IRk9pVDElDVI0sUjAPq/chwqdUW2uKKGoSc3VOV1F40RUKCaxyaZc46GSlo9NJ9+VBrjodsc=
+	t=1734447464; cv=none; b=sgucVR8tul6Wb7/ObU5FhmUFiD21WkSTdml1W5Rz2vXIZ6eRt/cpDAtMjFu8MTzNwAW//Z2AiFat1iXyNuLfxGKe6k1sCUKVXoqU6HMFXFHuY7c4yNrfE3pdGpYSOxypPhyEt8AsSlA54Bdx1qdyx0IFJqA2amPLlfMI/q5mzBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734445480; c=relaxed/simple;
-	bh=NHs8kjYHPedr5vmmvBY/EhBlRgv5akXqfcMvLwWmS6Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RZFrChU/RibGyvcRclbcQKqm8ZvPaa+hTZjb4PUUfVa4Q3TEZo6qFKX8yykF4iAq9IBIvy0RxuqVRwcmcq5GLuep2fXYh4e2GS8HZfCgp//XLCMvbi1tgSgWFC06atytyGMWsRX3iMCIXyDrXGxksyu5xLhAkECPUnBgv8poDIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KKj05tqc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xjbwLzzh; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1734447464; c=relaxed/simple;
+	bh=YRFPh1Sy5tSh51PIA5O4NBlUCPpWnYUK5WjIBWhl08c=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GEzP/BZxAEQgkAbxXAHQGvyC6Bz04KaiilA/AxQuUKL8Y0otLADH4U4SNQsAuIMeCZqDrTNLm9OrFFkR5kbz6ns6BPEJfmowhCPyhadZziOzzlAHNZAqEIC9Z+9Ph/HtLAg/gKmRm4hkBtwsFeA8bB8XyzpLg8VZ8Rw4YRxQTYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fjp8I0GP; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KKj05tqc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xjbwLzzh"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B11431380211;
-	Tue, 17 Dec 2024 09:24:36 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 17 Dec 2024 09:24:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734445476; x=1734531876; bh=7eu66lgBaS
-	ne9+AGzcWHxOg+5yBkKWcSNgWXl2XQ1Ec=; b=KKj05tqckCwoIhgUCN0w2VBGqC
-	eEZT4ZWAk88+kSr5MW62qppNBeuNxpwzBm1GjZqcGC9w0esLhjktqx3fNmyUNIZk
-	5hiRwNLpxYFUsb7DtLH7Crf8H1Wx0VceT4jg3pgXWbRY8Ns7xtZQuaZJi9sOS5me
-	UFm2Ah//Uz+vt+C/YILiwAZWtx6qyseSqJBdsT+42aHOx8j97MT/vE/FLHwv0hhT
-	YJ1hPZ+YIyc0nYIZNcZnMFZUvNgraSULWM1ymQMsgICosaABmNhNgHakoUA3bZ1n
-	Af1bbMYdzukp6qz8uJ9mzTMHHaiaOO3jzSa9BOGEvj15lXaLel0koEezjmuA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734445476; x=1734531876; bh=7eu66lgBaSne9+AGzcWHxOg+5yBkKWcSNgW
-	Xl2XQ1Ec=; b=xjbwLzzhdVPLnL2ELeyOs2eoQA22HRKovO7drzWIJeISjdcVNho
-	NV41qkYAUObV1903VZeUaEWIXfv9uyyxL/zAqPEGVwtp6tgIWR6UTtvwBZp0Bq/L
-	X512T80T5vTpUHMWsueDahSBK1rDXjc4O15eYZfB0nuQejmhc58BNDC4wK7tH7cr
-	VfosaiokmTLeLnlzW1CYz0TrOqf9OxvQZpdASDnN9hiqInyroaa2hO3VB9TRYyB6
-	c/bt4OnUKOI2CJOoj/7ZtJuHDTwODT5d4n/VUZ3++wJErDZdyX389nDjv4/HNpjP
-	V8RhSG/helCexYldWllquOqLbAEyd8HuMlw==
-X-ME-Sender: <xms:pIlhZ_YJUIPxFl4w9Ht9akSp7VD2xoLmHOaeSaPRy-MXrCSAVrjpbg>
-    <xme:pIlhZ-ZdxZxLgsNd-GDWX1ValjZKFk9vLRw_Tf1NoOL7X3wP2ivJtxgbcI1NnprXU
-    2PlWmIS56oEssIxpw>
-X-ME-Received: <xmr:pIlhZx_3zQ0PT3oLJJJxKfAgRjCVzXYVJTuN3Vp-EShZ_S-01gnOZ35isuXwy3sjrdhpxMZSImbIFr6oct21YagIsqSbBRPbfzHmiRzVxhmcSdQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleehgdeiiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
-    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepgfevhfeutdevff
-    egheefffefvdejtdegudekvdefgefhffffudfhudeutdffjefhnecuffhomhgrihhnpehk
-    vghrnhgvlhdrohhrghdpghhoohhglhgvshhouhhrtggvrdgtohhmpdhorhdrtgiipdhgih
-    hthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
-    fhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrshgsvggtkh
-    gvrhesnhgvgigsrhhiughgvgdrtghomh
-X-ME-Proxy: <xmx:pIlhZ1p-L-QHWhwOQ28aFZzpff_UsDtZQd9bLlrSLyJ89W1F445a2w>
-    <xmx:pIlhZ6ps-ZZsk9xqdFPcNLRzy--iNxkHD-nn5c-Egh_0c5wjfutD3A>
-    <xmx:pIlhZ7SccnlrKQO_bpyR9A2Q-gQxB7TZS1nUrQDvr9PVfEuh3oI9kQ>
-    <xmx:pIlhZyoCJK-c3GSuyHB3zzz8pcH-h1DzvfL4-rBdg3MA2yy_8VgB4g>
-    <xmx:pIlhZ9Vkxi7iUUhUtuTDzjyUack78SUcYS7YgyNX3qwTgAywcpOTAQU->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Dec 2024 09:24:35 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 651974d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 17 Dec 2024 14:22:48 +0000 (UTC)
-Date: Tue, 17 Dec 2024 15:24:18 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: rsbecker@nexbridge.com
-Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.48.0-rc0
-Message-ID: <Z2GJkolZyebD-8PD@pks.im>
-References: <xmqqfrmn4hr9.fsf@gitster.g>
- <00ad01db5017$aa9ce340$ffd6a9c0$@nexbridge.com>
- <Z2EC9rq3F0rTljff@pks.im>
- <010a01db508a$4544d750$cfce85f0$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fjp8I0GP"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-436326dcb1cso27287585e9.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 06:57:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734447460; x=1735052260; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LjpvCOISvvS8395ruyZuPpNA9wpRc47N2ib/iO3gA4g=;
+        b=fjp8I0GPpunH2vd/sfaZlz18iXOdbP0phV6JMJ2tiW8I86Vw38fz4FnRNyvUNnWfLS
+         n/AvyEqp6MP976g4TLxagK4Z4nxUQsSnQeFqI5bCL/akjMDQyxJnqpvwCXf02EaXK72G
+         W7hEJ17s5i9Jx+n3lc1j/lfxUk5YOhiShwfgC9E0C0QWp+jH2kDulxyiwOGb/IqtwK+D
+         VEiIXuH/GogrBT+0fs3v6pZBCYAKO41601drdyVzIytklxbezRi/t/xpg6jVU5tbVvSY
+         Gn98H3pluBRIvj4jZazFKxQeu/mEESzhYDbQgpwTKHPU/NWs1enWuWQFSFOuPW3qNefg
+         pv1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734447460; x=1735052260;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LjpvCOISvvS8395ruyZuPpNA9wpRc47N2ib/iO3gA4g=;
+        b=dDCvhf8CpOImaCbkLw0LopErBPukfRdhWEsRX+e1kMZNZcRGEioh6+IoYZK6HgS28p
+         G2iA7qoWUvEfthRVtEXU5Q2db69o8vemz0iPAon/gedGc07zFwDMdWku3DbeduB8V4Uh
+         R9wTRRE0CrT4bK4MeI+wvRQ9lRW9tYhk7MgET2b5Dl0Wcb54C0AwrECzYZ0zHkD8KedV
+         InVQE+9TKaPmC4ZPE7oTwSIMvHQrz5mxHaA7dcH/hTxP/Lg85u5um3HBlNSTenvCFYXS
+         7hSruIWen3F3L2B+vY/yPGFZTlISEZHJCi8vxGaNeXhGjHPEkptKmk+nAM/gLoznZC4e
+         ljlw==
+X-Gm-Message-State: AOJu0YyiFqphpjl1XKhfx376EBilndtrJ7l2KRtv1anNMfFO+6t2sAwR
+	j6DbiRo1qGB6m4/o2Sv/f1eFeWKsKbGdCQDf20qMGC7VNJOsA6ff76bS2A==
+X-Gm-Gg: ASbGnctcHbNk+KLx/tuUCSAn53uEIHTW2o4qdchOoc9kvyTsHDhDQbQXQ81Zcby7HlE
+	aKuQdI8/E5hhgZVsg00Wv31bKe0R87BH6YU436vpGJU5TehpC68wURdP1PTs+OyV50VlPszjhGM
+	iYSdxeup+gd3yy2Zr0g5mY9ood9fWMjHaVYYmztAgDqKuhgOD51TLfRjRu842rc1AUzHQ42FYER
+	DRNElsu54UJaB20CaKwpLp2l7oJ3pVwB0Ueo2DwJ4aieMrsSafmwHHEpg==
+X-Google-Smtp-Source: AGHT+IGEG8HKT/n9m8ez5CG4tY/dDtIN4Yk2VFDWBJWE8smw8Q4dwIX+qSlMBcm2f1j9r4EWeElFJg==
+X-Received: by 2002:a05:600c:1c07:b0:434:ff25:1988 with SMTP id 5b1f17b1804b1-4362aaa9632mr134134055e9.32.1734447460153;
+        Tue, 17 Dec 2024 06:57:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436360147desm120147635e9.9.2024.12.17.06.57.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Dec 2024 06:57:39 -0800 (PST)
+Message-Id: <pull.1841.git.1734447458896.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 17 Dec 2024 14:57:38 +0000
+Subject: [PATCH] GitHub ci(windows): speed up initializing Git for Windows'
+ minimal SDK again
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <010a01db508a$4544d750$cfce85f0$@nexbridge.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Tue, Dec 17, 2024 at 08:47:47AM -0500, rsbecker@nexbridge.com wrote:
-> 
-> >-----Original Message-----
-> >From: Patrick Steinhardt <ps@pks.im>
-> >Sent: December 16, 2024 11:51 PM
-> >To: rsbecker@nexbridge.com
-> >Cc: 'Junio C Hamano' <gitster@pobox.com>; git@vger.kernel.org; 'Linux
-> Kernel'
-> ><linux-kernel@vger.kernel.org>; git-packagers@googlegroups.com
-> >Subject: Re: [ANNOUNCE] Git v2.48.0-rc0
-> >
-> >On Mon, Dec 16, 2024 at 07:07:25PM -0500, rsbecker@nexbridge.com wrote:
-> >> On December 16, 2024 1:15 PM, Junio C Hamano wrote:
-> >> >An early preview release Git v2.48.0-rc0 is now available for testing
-> >> >at the usual places.  It is comprised of 446 non-merge commits since
-> >> >v2.47.0, contributed by 66 people, 26 of which are new faces [*].
-> >> >
-> >> >The tarballs are found at:
-> >> >
-> >> >    https://www.kernel.org/pub/software/scm/git/testing/
-> >> >
-> >> >The following public repositories all have a copy of the
-> >> >'v2.48.0-rc0' tag and the 'master' branch that the tag points at:
-> >> >
-> >> >  url = https://git.kernel.org/pub/scm/git/git
-> >> >  url = https://kernel.googlesource.com/pub/scm/git/git
-> >> >  url = git://repo.or.cz/alt-git.git
-> >> >  url = https://github.com/gitster/git
-> >>
-> >> Did I miss something about GIT_TEST_DEFAULT_REF_FORMAT=reftable being
-> >> removed from the test suite? That was available under 2.47.0 but if I
-> >> supply it now, the tests crash at git init.
-> >
-> >Nothing should've changed here, and a local test run with that environment
-> >variable works alright on my system. Could you please provide more details?
-> 
-> This is on the latest OS version of NonStop x86. The test is done via the
-> following:
-> With OpenSSL 3.4 The T0625 is Expat.
-> 
-> When run as follows:
-> GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true
-> /usr/coreutils/bin/make -k test V=1 CFLAGS="-g -O2 -Winline
-> -I/usr/local-ssl3.4/include -I/usr/coreutils/include
-> -I/usr/tandem/xml/T0625L01_AAE/include" LDFLAGS="/usr/coreutils/lib/libz.a
-> -L/usr/local-ssl3.4/lib -L/usr/coreutils/lib
-> -L/usr/tandem/xml/T0625L01_AAE/lib"  TEST_LINT=
-> SHELL=/usr/coreutils/bin/bash
-> 
-> The results are:
-> *** t0000-basic.sh ***
-> error: cannot run git init
-> Makefile:77: recipe for target 't0000-basic.sh' failed
-> make[2]: *** [t0000-basic.sh] Error 1
-> *** t0001-init.sh ***
-> error: cannot run git init
-> Makefile:77: recipe for target 't0001-init.sh' failed
-> make[2]: *** [t0001-init.sh] Error 1
-> *** t0002-gitfile.sh ***
-> error: cannot run git init
-> Makefile:77: recipe for target 't0002-gitfile.sh' failed
-> make[2]: *** [t0002-gitfile.sh] Error 1
-> etc for all tests.
-> 
-> Removing GIT_TEST_DEFAULT_REF_FORMAT=reftable allows the whole
-> test suite to pass.
-> 
-> There are environment size limits (about 32Kb) in bash on the box, so it is
-> possible
-> a boundary was crossed internal to the test setup.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Could you please provide a backtrace for git-init(1)?
+It used to be the case that initializing the minimal SDK (i.e. a
+radically slimmed-down subset of Git for Windows' development
+environment intended to perform the CI builds and little else) took
+a bit over one minute, would then be cached, and subsequent jobs would
+take at most half a dozen seconds to initialize said minimal SDK.
 
-Patrick
+It is important that this step is fast because we have to run the test
+suite in parallel, in a set of matrix jobs, to offset the slowness of
+the shell-based test suite, and each and every job has to initialize the
+very same minimal SDK.
+
+While it may sound as if parallelizing the jobs might only waste the
+generously-provided build minutes but at least the _wallclock_ time
+would pass quick, in reality it matters a lot: Frequently Git for
+Windows' or GitGitGadget PRs get stuck waiting for quite a while before
+CI builds start because other PRs' builds still spend substantial
+amounts of time to run, blocking due to the concurrency limit being
+reached.
+
+Since 91839a88277 (ci: create script to set up Git for Windows SDK,
+2024-10-09), the situation has worsened: every job that requires the
+minimal Git for Windows SDK spends roughly two-and-a-half minutes doing
+so.
+
+With the switch away from the GitHub Action `setup-git-for-windows-sdk`,
+we incurred more downsides:
+
+- It is no longer possible for said Action to fix problems independently
+  from the Git repository, e.g. when new rules about GitHub Actions
+  require changes in the way the minimal SDK is initialized.
+
+- The minimal SDK was installed specifically outside of the worktree so
+  as not to clutter it nor incur an additional cost to verify that the
+  worktree is clean.
+
+Therefore, even if it would be nice to have a shared process between
+GitHub and GitLab based CI builds, let's switch the GitHub-based CI back
+to the tried-and-tested `setup-git-for-windows-sdk` Action.
+
+This commit partially reverts 91839a88277 (ci: create script to set up
+Git for Windows SDK, 2024-10-09).
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    Speed up the Git for Windows SDK initialization again
+    
+    While waiting for way too many builds in
+    https://github.com/gitgitgadget/git/actions to finish, I noticed that
+    the minimal Git for Windows SDK initialization now takes a whopping 2.5
+    minutes. That's way too much. It used to take a little over a minute
+    when uncached, and 2-5 seconds when cached.
+    
+    Let's fix this regression by reverting to using the
+    setup-git-for-windows-sdk GitHub Action (also because that Action will
+    soon see another dramatic speed-up, see
+    https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/965).
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1841%2Fdscho%2Fci-windows-jobs-speedup-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1841/dscho/ci-windows-jobs-speedup-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1841
+
+ .github/workflows/main.yml | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 9301a1edd6d..916a64b6736 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -113,15 +113,13 @@ jobs:
+       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
+     steps:
+     - uses: actions/checkout@v4
+-    - name: setup SDK
+-      shell: powershell
+-      run: ci/install-sdk.ps1
++    - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: build
+-      shell: powershell
++      shell: bash
+       env:
+         HOME: ${{runner.workspace}}
+         NO_PERL: 1
+-      run: git-sdk/usr/bin/bash.exe -l -c 'ci/make-test-artifacts.sh artifacts'
++      run: . /etc/profile && ci/make-test-artifacts.sh artifacts
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+@@ -149,12 +147,10 @@ jobs:
+     - name: extract tracked files and build artifacts
+       shell: bash
+       run: tar xf artifacts.tar.gz && tar xf tracked.tar.gz
+-    - name: setup SDK
+-      shell: powershell
+-      run: ci/install-sdk.ps1
++    - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: test
+-      shell: powershell
+-      run: git-sdk/usr/bin/bash.exe -l -c 'ci/run-test-slice.sh ${{matrix.nr}} 10'
++      shell: bash
++      run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       shell: bash
+
+base-commit: 631ddbbcbd912530e1b78e5d782e72879f7f1fb2
+-- 
+gitgitgadget
