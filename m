@@ -1,96 +1,107 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FAA1F3D42
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:45:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08311F03DE
+	for <git@vger.kernel.org>; Tue, 17 Dec 2024 12:48:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734439516; cv=none; b=qp5TQ/IRmoIgby0e1ofae9I0XUHesSKeQVBdhrCXuyJtmlOwGYpHSDdwcKCcJ/LpOmrRNmtM5mGxFHBgzzkjfgQ+BpPjjRD4YWUrrQxZmYwTKPL4WxnqbfHUJuhSvkteZJRvY+ZoEXr1DhxFgXOAvQglxnvwEhiheqvihSN2hOI=
+	t=1734439705; cv=none; b=qqADufi0fJO/7jj1UHlJsfw6CEVnxZQ4rZpII+zwtjDgbjtElotKPpS0iVXqrjnfesKMSpyeKSpeED4c4Vr2ZtruuFnKuE3Q5KIeugrKs4Jvq6DJAdnaqpueUuCOIaMrFi03G1xxfIezFj14scvGwgv3OITEkIf4WGwetbCfn5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734439516; c=relaxed/simple;
-	bh=urw9Nhdq5mWwqwleTfOzm7BiPN90hkBG9RlX9qPI48w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s/55/WDMvDrbQMwq5eVrVnxi/7/7WH35MuD5I3Du6WZY7mEVvqReVDrPb9K6NRSPlo8+neVD5sp40w3sUU6q10tX1JUA7mLkfq5n9lSghOmGq7XdQruKebqM6BiOcvWH3KZsa4tNNRj33C2rGbJLzrm2I0vL7q5a+H5Gpl+rXZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CF1U++MQ; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734439705; c=relaxed/simple;
+	bh=XeIARKHCTdxSS5pL36oxEvLM+gxE7J4sVE0UAGvl8hY=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=FFnxkdqyn9CjyuFh+MT7oM2pEqwe/wpJxoX5j0JUG8YBHhr4i4MLx2EMStAECDiTo7UomHV6HolgsQgdLSRNIxQA6VJiFT4TbZU5iT/byaNjHlKEgA8DcbHEbN+b6O6S6yJ3KSsakbw2v/xgQHcTUD/xF/PHAP/KkKHV7Yi6V98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=HU1zxuVs; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CF1U++MQ"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-21669fd5c7cso45093385ad.3
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 04:45:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734439514; x=1735044314; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ib6ap4f3bkUgqpwiqDzIV6o1ixwKZ9a4qqVsDMLAn0=;
-        b=CF1U++MQoncULtkrl3YTH4vQR3IiWbDWQs0YJ2F3Qui/rAuwEPEHorw+w/udPG3b+7
-         jhV7V4+GFjKxkOKD1KJc3cxYtseAZpWwba1BY4tGpQZag+BfzQGAc3T4mkUVvDQU2zA1
-         Z6Qc+NROg5pLzrPj6SMUYguCVkxAaddWAJt4Ak2qdtGbMvxFGqxxmE3hq7098dHDb3Wa
-         eXBgrqy14Ks84yEX77s2hkNBGeRVaWI0Ej67n1/2xh9Or/Z9OstWtV3ayadxCTdjQOds
-         u7N0CvJBvqAZfcATE7DPPok4iqZhBg5ee4dIa0VSw/tEDQSh5gAQiWz7nWyDF/lGdXOB
-         AwSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734439514; x=1735044314;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0ib6ap4f3bkUgqpwiqDzIV6o1ixwKZ9a4qqVsDMLAn0=;
-        b=fzyNo6w3F4tG8SaCRqHm9UVWCEAbOD8zSW6tgz1wQh8KUHXNUjQMcYky1Hsd5AF+QO
-         mdLLY2ZBAjt8+Otnd6vP04oYrAF9hnmg/nlWNE4ZZk25RB56VApg+x5TqyR3J51TXpPc
-         AtGNXHzAD58AgSTdc05jUwhnvLn4b9XHSNo91Rw8TiBGMtdmtSkBfom4xGmotn9yUeq6
-         VasXZZBAdNlv90FSVFkMjvvGyhrcYCKCRwd1DfQcaSUZWLOjrKbq8obxn1qZaEXLRM8E
-         28UntemGi6xk5Vk83N1NVOy5OFh7q33aap5mz8SO59Mnyp9303s8rCZBe047oLVmpL9L
-         W35A==
-X-Gm-Message-State: AOJu0YxaIubAPz4JNQt6Zi/7Pe24l76kyVmxIkXYWykslRsx9p3Qcg56
-	lWx8SL8ezK00hsjh0GYS4aDIA33iXvmF6+t8vhwmjWZCBDRaOS/AV2OAFA==
-X-Gm-Gg: ASbGnctnXp8nTa2om+SnQUQp7AlyDGUpY6WX62CEE1erESIT7x8KK3Lc5lH5nyHpY71
-	AnGcQiEgct4MLqZukzafZKHDDX44fYqIAL8cKzksmXXAzBAz22GRmqiSEsQJPnVZ85fK/buUzxe
-	sOLrc/FL/SgIN7ewsejkyGZJdhhM14cLkMES9r5CES29jwQZXQXjQIoADywvHuX8PivvCMC+Maw
-	LixhUVZgwj1LdA0Lucw2qcoGv9XB8WPNALYlBqeRTa3G1vx939r
-X-Google-Smtp-Source: AGHT+IGNTis4gQ3ownm9tRGF5yHJs4QlnUeaczSpf9A67uU0riTn3V0YgOKE8bNo88ilt5+fpau2fQ==
-X-Received: by 2002:a17:902:f648:b0:216:554a:2127 with SMTP id d9443c01a7336-21892a5871emr241342435ad.41.1734439514148;
-        Tue, 17 Dec 2024 04:45:14 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e50ab8sm58110305ad.115.2024.12.17.04.45.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 04:45:13 -0800 (PST)
-Date: Tue, 17 Dec 2024 20:45:54 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 00/14] Stop using `the_repository` in some trivial cases
-Message-ID: <Z2Fygp-5pFQi1p41@ArchLinux>
-References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="HU1zxuVs"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1734439700; x=1735044500;
+	i=johannes.schindelin@gmx.de;
+	bh=eChn/eMnykR4NALYJ2kyOPAsPApljyY1kveYbOkXByU=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=HU1zxuVs1YM1m+lK1KSt7N3G2G16fjQGpm5HPRfFn5mSihaRJI8KDA+CwVcBKJBh
+	 HMI1lnnR1FUwK87vr/KJFCw4CIHdsRnGd5Bcq2lIS6bJR4D9SftPE0jsVpjsfGCzF
+	 Li566/yKZrKl0dV8KctbmSJdpCsO3El3e2O4ArP+2nrpI9tWT8CU7mJjJMDxzO7K+
+	 Wm/vb6t3Gx7O7Ocfgv4Zpv+m3/RroXSBp93xDqasmrWDbSz1gpn+CToLTohQgHvd0
+	 yTaZy9nItHhiXcmPIFU2hw2iQwAMaoyMen4wyWr6J8RbqhZlqsy8sj2b4P05oV2JG
+	 7m5CVhn4FNz/T2FauQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.216]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MqJqD-1tsggp0HA3-00fihF; Tue, 17
+ Dec 2024 13:48:20 +0100
+Date: Tue, 17 Dec 2024 13:48:19 +0100 (CET)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
+    git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.48.0-rc0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1M5wPh-1tUOUB0QmJ-00HLAH@mail.gmx.net>
+X-Provags-ID: V03:K1:IWhNq1fbmyBfbIxC4qyuW5hpa5S3wrqSxN0MvS8dXVbZThrgWC6
+ JN7rD+ZdHIQINmNv51ZrzhjqYpC9e4Xw+OAxpJgksgiyoNZZ9NKUCpi8FgKJkfSNKUF4h5i
+ BBoc9qFTv26AsPTdnF5o4I+Rrli30Z6QKEH1dkd6x4cN3IMN5nQddkTEbGwFyyaZeuS3pwI
+ B2xe8oeDlNu+IM/dwaNog==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:FC3Qn1EFfJo=;+96RtyXnMH+B/Sbfb1F2FizSAyf
+ uXYzBh+CXqJs2wGW7oiVTPohrPLrLxytK78sWlMBzsdVNZxkIYBoMkTYiRTV9ZjKREmpNdDVZ
+ x9vlFbdQtpdJ4F9VjzFuJP8CC6CgGvQcRC5sapz8Hy82VxxtWiEsJrEZ2pGOlgpXJwNQuYt0O
+ 0py88kE3A1l9xF41EgGelfHhVZnl3QD9myb5EfUrH7/vhlJhF0OsEVnkq24gwSjIjOkazBNbF
+ csFeCHX6UrcsJWfG41Ijz8BOZhw+ok+0hc7abp2xtjmYQtijCpU9OaY+yGXUxUuiTNzeX7T/6
+ qnpnYY8yGD7/Xo08i7vpeDNIovYCCK25lDuubFDGZt8etQWz/uXcJ0dPmFeWBJlsn5kQNcw0n
+ 4MaEox0gWY8d3t4wMR1/BR96SewRt03yxt904Yh7Aw6sQzjODZ3z2FdZW9jkP/C6aHKIBoOVe
+ 9UpGKhCpt3f3tBaarOLpE+7uSa8TGFYjLc1zO5bcwFp0CotYCzNi+alFlVmrwo4z10rtwPqds
+ UEUD5lmLdhsKMjN7mwuo8a727BLIvMHHXppRn9bkJCl0O5GWcqmltXWvLfl6pExR4wtRCSCYf
+ Cx+Kzio6/WdbEq8Jd0jzaAjEWRwGR8F1STZA+SZiuFb26Ssud6b7RyHA1XQsiikw8iDX9y2q2
+ 903/XJdx2MutqjWVf2eh/hrZR3B6s4Gf4o6E7UaivznpQX9onzRLqWa4ECjWIubGhRuS7AHsl
+ /S5nkHaNgFOhm2VXB+Dq5M+M47ead1kIyOt5EyGV+n4smt1ai+e3bjFU3+IGs/fW6s1N3HuCG
+ NFz3cNIqaRr02rg2ptWjFcfABWEdJyp/+y4AfB/sN34LQQYygROKdhKeXrrwAqG1tD22TgzmN
+ CpsgVAlETHha9BQXLyoTr/T2SCRJE9fxm1+sbH79f5c3W/xD1YmSair9wdqeKZxKH4Vqmuj26
+ PsBRlhp++Z66wAugRrxwOfU9hp0GhaRvdERPvmitXFoMoXmc+MnhgXUtDgERanrvGT/P55Mov
+ rqE86ZmNYAzOwSnOlNXInWYKWLGcIf4CmQEFayED5UcLFfNulko33Tv2w56oOmPJz0blEGYau
+ M8CDqz+mgY6k4bN7x+ui1fl/ktEfurMYCDNkTAkV+A+vvwfb8zprkTDybhgzP8FqbIlCqo0Ms
+ =
 
-On Tue, Dec 17, 2024 at 07:43:47AM +0100, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this small patch series performs some refactorings to stop using
-> `the_repository` in several subsystems. There wasn't really any
-> criterium for which subsystems I picked, except that all of them have
-> been trivial to convert.
-> 
-> In this patch series I'm merely bubbling up `the_repository` one more
-> layer even though some calling contexts already have a repository
-> available. For the sake of triviality I decided not to handle these
-> cases though and instead let a future patch series worry about them.
-> 
+Dear Git users,
 
-Actually, I am excited to see that we remove the global variable
-"the_repository" in some subsystems because I have seen every patch with
-"<subsystem>: stop using `the_repository`".
+I hereby announce that Git for Windows 2.48.0-rc0 is available from:
 
-By this, we make the problem smaller, which is good. I have read through
-all the patches, which looks to me.
+    https://github.com/git-for-windows/git/releases/tag/v2.48.0-rc0.windows.1
 
-Thanks,
-Jialuo
+Changes since Git for Windows v2.47.1 (November 25th 2024)
+
+New Features
+
+  * Comes with Git v2.48.0-rc0.
+  * Comes with cURL v8.11.1.
+
+Bug Fixes
+
+  * The installer now correctly blocks the installation on Windows 7
+    and Windows 8 as these versions of Windows are no longer supported
+    since Git for Windows v2.47.0
+
+Git-2.48.0-rc0-64-bit.exe | 553815da6a9652516a3162bf4bea4b60e13bfc3da710af60c034ee673bc92e93
+Git-2.48.0-rc0-32-bit.exe | be45795f4deca6e6bc68c75bbc891b46b890347d53738d26ebde276a487f8bb3
+PortableGit-2.48.0-rc0-64-bit.7z.exe | a94687e8d822b50f9ffcaed49d9e1a4836c50447ea8ce3fecc556214536473b0
+PortableGit-2.48.0-rc0-32-bit.7z.exe | 4c8f62b2738326b7ec1db4a4c2c899792cdff6e48da6bea94ef24f0ed21ba5ef
+MinGit-2.48.0-rc0-64-bit.zip | 981516b24ad7a83f44c6e7dd20ef70f60ef1f1e97772a1ecc9cd7ff7287c4cf9
+MinGit-2.48.0-rc0-32-bit.zip | 63d86253c3654bb2310e71d6376dd8b986254b94c3c8e91add62548faba45e34
+MinGit-2.48.0-rc0-busybox-64-bit.zip | f1bc9a83f59907690c954dc429ede14dae8ede7f0602628a5f0c34878c54d0ce
+MinGit-2.48.0-rc0-busybox-32-bit.zip | bb2a3f6dbe5330aa1cf51c34387ede08f1ebf8035b30135f9316469c2d230565
+Git-2.48.0-rc0-64-bit.tar.bz2 | 0459027325f1bb353ced02bfde2f007e6e5c7dc61d7ebc9205eea4a033a3c99d
+Git-2.48.0-rc0-32-bit.tar.bz2 | 8abcc6c10767b6031d2171ef1288f9a79f1974424245e73b17867c13b409a26f
+Git-2.48.0-rc0-arm64.tar.bz2 | 3d5ad1d678e273451358553c69a33b0d49696314a397a61b7ea164c79dd3455b
+Git-2.48.0-rc0-arm64.exe | 5e7eec6217fd4f2612d6a745073044d4a49fdc730273885a996fbd86cc496b4d
+MinGit-2.48.0-rc0-arm64.zip | 11b64e06c885a3a10c566649578e7897275f67c30aa6f4c8321469febd2d8fb9
+PortableGit-2.48.0-rc0-arm64.7z.exe | 291f12d7c0acf59a22f939ffad8b2f3559f96b9780161d60ee92d5d4f3c8a044
+
+Ciao,
+Johannes
