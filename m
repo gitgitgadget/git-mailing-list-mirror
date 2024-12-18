@@ -1,67 +1,67 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54331487DC
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 03:06:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368BD13BC0E
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 03:10:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734491178; cv=none; b=OvbSTQtBPrO5Wi0KNcWVk3uYWg3iygl9eIwJAEEyg+HNe6Vd2zHLr4ReDOhYMebp5Jnkm16AQZbOkEMSjG8hK6Fogt5ZxVodo6fYRLE0GUNm3Kj8/7x07LJBx40gXO/NI3QJ1/Q1T0cen0dq0fKx5ycfpxu71zw2gEA7HKSdJ5g=
+	t=1734491430; cv=none; b=EA/PKT0mmru/IbRnoQMCzMUMX/4MsZ6A01evC4yaJHpFjy2N75d3WvbWRhLbz37naLIFzvfPMAsQu+hLC41FjQzNW4tgI8/OMETsVQPxJRgGa0HQp/DGFGQi5Yb0IuBghSL6hKXnfukqPSavO98qwIRGId3xGzX8/GA/wuB2iIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734491178; c=relaxed/simple;
-	bh=FkOOzXxoLuSU6FxsGrXuvfCZZV1oPJltrVYJ+qLQWsc=;
+	s=arc-20240116; t=1734491430; c=relaxed/simple;
+	bh=lYCT3aaTjOJ5XOWI3lhePIn7IJ8+djjyd+xKanTq2Jk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=K7ClCZW6zZ8dlXSBQco3exKuOPt22bTBCGPZqzFhrgXhkA/IpXWoFd2vznQ6yVpVI1gAYcWaym63zDmvHguM7vwfSyLkZZVQ8YVaMLN9xm+HojvP2t9IqLsUZVHSTEtqaV5hYffMDYuy2DXgKFc91lPEzU5NcAa+Hk9+oxYmSx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k8MDf7/X; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=M5ELyV8ZJ6eSSHaVDYW3CYuJB4BqeHoEwGsRoFyOzYutpw0UyX43gph1veh1hz3NMDjzlqYE31RKvs6AwtUXkk3bNDrYHubMOAqWpZg6NH1CnA/faC7rpKKZnbN0APJjHbrTf9Lvewfpk5qBAvVDJ0l9UBI8SfJ5pRmAykJ6/gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=krewGnV5; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k8MDf7/X"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4361a50e337so41767775e9.0
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 19:06:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="krewGnV5"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43626213fffso1654075e9.1
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 19:10:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734491175; x=1735095975; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734491424; x=1735096224; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TPu7oYCsQn34Yi3Ka5yB6c5fY7wRf2V5cXJweCqm8UM=;
-        b=k8MDf7/XM2SWLnMvuSCA77KTiNEHAUPeNPWrObIra2cVRuPOulnO0lq2i1BL3qksuK
-         FtMG/+nn/F1BRhGduS+G2TfqWnDuUsnDY2mv0VwMMmRhsp95Hgko4OOIV/p4TvSIQPyz
-         4xGQxy8/5VAd1GSRbQ32f0Lt/vEZlgpY7X3xAPiue3/UnEgO2CeE3aqCgapdVOE4ak0r
-         oC/LEC296UIrAsGeCCt0OlJzTq7BwWvzUFkjLjwVAZagtpuMqWeNvnUA8KddQjiXOHM1
-         EIf1nbV2/KPXcD8OA01vLmdpLdnULQu1dm9htf4QOVXlC8tvV17/t2hDBSP+17vCQM5p
-         Bnyg==
+        bh=V6b6ESWDxMEreYjSSFJhi0rHRk12UHtA9RRI4GcbXl0=;
+        b=krewGnV5qTe1wP57ns2InFMei5ZD1QJAw66eyCBGWq6dN1mzETqmVhzABsn2pOM3P3
+         KXh9ovDPZp1/H1/XlVthrh1ujLG4UMxjy3f4GHUo2OoeOU75rpaMy9rSdzQHfFP5tcc7
+         Xx7Ou5duG3aSMpzi4DBpiIMPrzZQBzEBcfYkd1hw1qWuHhiDIMjUmf2J4rYLm/lwwkxx
+         4c9gYXcDeN3QKmovD7vsPYpPs8z/NmP9qfgfFL9jMvgrF0NO0t21avQROy1xqypVAjgF
+         gv7wKYuC3YHQMcGZt2V2OaTWQYoAr8TsBOnFnBnJOtp3B+crJoxQcG+tSeVKYatdEWDH
+         s/LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734491175; x=1735095975;
+        d=1e100.net; s=20230601; t=1734491424; x=1735096224;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TPu7oYCsQn34Yi3Ka5yB6c5fY7wRf2V5cXJweCqm8UM=;
-        b=lCAy4YGAZ4PeU8IeawVZsmm45N1+KNgTgaV3VPGAcBnGs290CrTlgymVezHzChkD5/
-         6ohxmI1/DUf8qJia1ZKDexepha0qqyonnXpuDYL5mvsEBwnhJ7mf4CYPuuqvoRSSxZbD
-         tewFX09aqfk6trOYhtbqMkOsPFByAiKG0a+kyfJSV8Ec17niPjR9uHts+DEF95Bo4LfJ
-         JQCh+X3Par7s0lnGT0MPOd69rsUO+M89R+nB17aFmyt4eeQSxMO4SM6fdJ3XjQvMhsmA
-         BVpFNwWKZvy2LbXH3CyGjzAXEInpB0ca8ymXspIbPKq8T92pcPQQIFaUjI2CREot5boI
-         HPtA==
-X-Gm-Message-State: AOJu0Yyv1+CSNFVcMh4TeBEHFvJFkvUJHCwaCEXgDHzyWHzw3ovuYe3I
-	hHk5RhC89wzYzlLaWSZWso87jjX7tlcCDPGS6zxtSn7l956gtc/YPujqNw==
-X-Gm-Gg: ASbGnctr6hqASA40zoQfZ3X2vXbAOB7xaTgQKHVzNH4C+SZfCrvLZK/Twwo4FylyAGh
-	gZSj6KQ9jVRMBxzaGQS/1J0f/t0qxkjoEP+u8zZ/+0H69ML5mpChJGxFG5c+VczMh5FwNWZX3wl
-	qAvGlQBkwrR1d+1/7vNbJUEuS1L5GTuImuS/BXK5u4Xz5nx3+G3KXMpFUlqOESGRhn7M8lKV1vs
-	45WT9gRD1CmMeNujbiX1L7mhqIUs7YIWY+Ky1XbHcE0CBePQH4MKDMBww==
-X-Google-Smtp-Source: AGHT+IGw582CReNe/XrgqhMx8a7KMd9+OePtp3AXs8VXwLF+cE+o6UbabCJphgps9mIkoYUBIf2biA==
-X-Received: by 2002:a05:600c:35cb:b0:434:f1d5:1453 with SMTP id 5b1f17b1804b1-436550af29bmr8604095e9.0.1734491174631;
-        Tue, 17 Dec 2024 19:06:14 -0800 (PST)
+        bh=V6b6ESWDxMEreYjSSFJhi0rHRk12UHtA9RRI4GcbXl0=;
+        b=TI/zWasSU3qYoUco8fwdv1cXebOw7AoHfZRqk9wFRUXQdjiNczfNDU+4dchc2bOidu
+         1ATwUbnNYb6ZTTk17HNl3YNFbI2bM0vwEevr04g3mhuFVXiFsCheqp2yD+u+579qJMC1
+         mIX4T2nAOYcyOTVQ6NbyfVa2UFBNNMyVfIWt2yoLieogFHfMsrBtW/0BT+RKM9Bkot/v
+         bZt8L/TQ01HyWaP9zTUXaLygt8kNqTqiAWpI6QjPGjIKpLS6jMghyfd6dSR9eTdugmj6
+         snGKLZuWKlaOzLg3YsghxplOyx37q5ifSzAD0EhWJ3pF0q7LxxG8PdcPNHjBaqpnesI0
+         5/Cw==
+X-Gm-Message-State: AOJu0YxOvCEZReC7/XJc3lmFcH1SXZWDNEwWcq7bjjmgnMeksto0cFoH
+	kGKLXw+a5d2hO+gG3tpXC+VupY9oUMcHG7zlcvrjcJk980GaQNB0FHOIYg==
+X-Gm-Gg: ASbGncuMvuJSWXjmfN126p8q2QYWwEf2XDpPwqM3SJYCFA0+72mzb0QsK1J1cZNbXZu
+	O9QETSwDK11ONpamxYpfQWPEzTdrtzdBZ2anQ2QMuCrFs12cV2DBHNgWA1Szkdc6itRDmhxP7Nd
+	CRwJTfBexnJ4XiiIPgtaKLQHu9kR2d8qSU1560xYJOoFINgsVm1tdBwBmyjSOoWbqCO3nkMPyEw
+	4Kxiya6DDe8hZgv/mEy73i9D52+HQTggQCoklOyWYma9GRGCdK0RumJ8Q==
+X-Google-Smtp-Source: AGHT+IFMCRwvl1DoQNLge+/Rp+lSAXbiBvrOgcrotG/JCEEXH+oeQPtyoslecC03vVKAXvjJBOuS9g==
+X-Received: by 2002:a05:6000:1869:b0:385:f349:ffe5 with SMTP id ffacd0b85a97d-388db29e5efmr4629575f8f.29.1734491423889;
+        Tue, 17 Dec 2024 19:10:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656afc254sm5404095e9.2.2024.12.17.19.06.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b01c88sm5513835e9.17.2024.12.17.19.10.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 19:06:14 -0800 (PST)
-Message-Id: <pull.1436.v4.git.git.1734491173098.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1436.v3.git.git.1734490498710.gitgitgadget@gmail.com>
-References: <pull.1436.v3.git.git.1734490498710.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 19:10:23 -0800 (PST)
+Message-Id: <pull.1843.v3.git.git.1734491422385.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1843.v2.git.git.1734485729135.gitgitgadget@gmail.com>
+References: <pull.1843.v2.git.git.1734485729135.gitgitgadget@gmail.com>
 From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 03:06:12 +0000
-Subject: [PATCH v4] git: replace strbuf_addstr with strbuf_addch for all
- strings of length 2
+Date: Wed, 18 Dec 2024 03:10:22 +0000
+Subject: [PATCH v3] git: use signed loop counters when comparing with signed
+ vars
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,312 +72,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-    AreaZR <gfunni234@gmail.com>,
+Cc: AreaZR <gfunni234@gmail.com>,
     Seija Kijin <doremylover123@gmail.com>
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-Adding the char directly instead of a string of length 2
-is clearer and more efficient.
+The compiler (at least LLVM) treats them better anyway
+because of the C standard not defining signed overflow.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    git: replace strbuf_addstr with strbuf_addch for all strings of length 2
+    git: use signed loop counters when comparing with signed vars
+    
+    The compiler (at least LLVM) treats them better anyway because of the C
+    standard not defining signed overflow.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1436%2FAreaZR%2Fstrbuf-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1436/AreaZR/strbuf-v4
-Pull-Request: https://github.com/git/git/pull/1436
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1843%2FAreaZR%2Fone-more-time-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1843/AreaZR/one-more-time-v3
+Pull-Request: https://github.com/git/git/pull/1843
 
-Range-diff vs v3:
+Range-diff vs v2:
 
- 1:  96a093dec36 ! 1:  413c5ab1f1b git: replace strbuf_addstr with strbuf_addch for all strings of length 2
-     @@ bisect.c: static int register_ref(const char *refname, const char *referent UNUS
-       	if (!strcmp(refname, term_bad)) {
-       		free(current_bad_oid);
-      
-     - ## builtin/am.c ##
-     -@@ builtin/am.c: static void write_author_script(const struct am_state *state)
-     - 
-     - 	strbuf_addstr(&sb, "GIT_AUTHOR_NAME=");
-     - 	sq_quote_buf(&sb, state->author_name);
-     --	strbuf_addch(&sb, '\n');
-     - 
-     --	strbuf_addstr(&sb, "GIT_AUTHOR_EMAIL=");
-     -+	strbuf_addstr(&sb, "\nGIT_AUTHOR_EMAIL=");
-     - 	sq_quote_buf(&sb, state->author_email);
-     --	strbuf_addch(&sb, '\n');
-     - 
-     --	strbuf_addstr(&sb, "GIT_AUTHOR_DATE=");
-     -+	strbuf_addstr(&sb, "\nGIT_AUTHOR_DATE=");
-     - 	sq_quote_buf(&sb, state->author_date);
-     - 	strbuf_addch(&sb, '\n');
-     - 
-     -
-     - ## builtin/blame.c ##
-     -@@ builtin/blame.c: static void get_ac_line(const char *inbuf, const char *what,
-     - 
-     - 	if (split_ident_line(&ident, tmp, len)) {
-     - 	error_out:
-     --		/* Ugh */
-     --		tmp = "(unknown)";
-     --		strbuf_addstr(name, tmp);
-     --		strbuf_addstr(mail, tmp);
-     --		strbuf_addstr(tz, tmp);
-     -+		strbuf_addstr(name, "(unknown)");
-     -+		strbuf_addstr(mail, "(unknown)");
-     -+		strbuf_addstr(tz, "(unknown)");
-     - 		*time = 0;
-     - 		return;
-     - 	}
-     -
-       ## builtin/ls-tree.c ##
-      @@ builtin/ls-tree.c: static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
-       	} else if (padded) {
-     @@ builtin/ls-tree.c: static void expand_objectsize(struct strbuf *line, const stru
-       }
-       
-      
-     + ## convert.c ##
-     +@@ convert.c: static void trace_encoding(const char *context, const char *path,
-     + 			((i+1) % 8 && (i+1) < len ? ' ' : '\n')
-     + 		);
-     + 	}
-     +-	strbuf_addchars(&trace, '\n', 1);
-     ++	strbuf_addch(&trace, '\n');
-     + 
-     + 	trace_strbuf(&coe, &trace);
-     + 	strbuf_release(&trace);
-     +
-       ## diff.c ##
-      @@ diff.c: static void add_line_count(struct strbuf *out, int count)
-       		strbuf_addstr(out, "0,0");
-     @@ log-tree.c: void fmt_output_subject(struct strbuf *filename,
-       	}
-       	strbuf_addf(filename, "%04d-%s", nr, subject);
-      
-     + ## merge-ort.c ##
-     +@@ merge-ort.c: static void path_msg(struct merge_options *opt,
-     + 
-     + 	va_start(ap, fmt);
-     + 	if (opt->priv->call_depth) {
-     +-		strbuf_addchars(dest, ' ', 2);
-     ++		strbuf_addstr(dest, "  ");
-     + 		strbuf_addstr(dest, "From inner merge:");
-     + 		strbuf_addchars(dest, ' ', opt->priv->call_depth * 2);
-     + 	}
-     +
-       ## path.c ##
-      @@ path.c: const char *remove_leading_path(const char *in, const char *prefix)
-       
-     @@ path.c: const char *remove_leading_path(const char *in, const char *prefix)
-       		strbuf_addstr(&buf, in + j);
-       	return buf.buf;
-      
-     + ## pretty.c ##
-     +@@ pretty.c: void pp_user_info(struct pretty_print_context *pp,
-     + 
-     + 		strbuf_addf(sb, "%s: ", what);
-     + 		if (pp->fmt == CMIT_FMT_FULLER)
-     +-			strbuf_addchars(sb, ' ', 4);
-     ++			strbuf_addstr(sb, "    ");
-     + 
-     + 		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
-     + 			    (int)maillen, mailbuf);
-     +
-       ## protocol-caps.c ##
-      @@ protocol-caps.c: static void send_info(struct repository *r, struct packet_writer *writer,
-       
-     @@ protocol-caps.c: static void send_info(struct repository *r, struct packet_write
-       				strbuf_addf(&send_buffer, " %lu", object_size);
-       			}
-      
-     + ## send-pack.c ##
-     +@@ send-pack.c: static int generate_push_cert(struct strbuf *req_buf,
-     + 	if (args->push_options)
-     + 		for_each_string_list_item(item, args->push_options)
-     + 			strbuf_addf(&cert, "push-option %s\n", item->string);
-     +-	strbuf_addstr(&cert, "\n");
-     ++	strbuf_addch(&cert, '\n');
-     + 
-     + 	for (ref = remote_refs; ref; ref = ref->next) {
-     + 		if (check_to_send_update(ref, args) < 0)
-     +
-       ## setup.c ##
-      @@ setup.c: static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
-       				return GIT_DIR_DISALLOWED_BARE;
+ 1:  c8552548fe9 = 1:  754e4a60ff6 git: use signed loop counters when comparing with signed vars
 
 
- bisect.c                | 2 +-
- builtin/ls-tree.c       | 2 +-
- convert.c               | 2 +-
- diff.c                  | 2 +-
- log-tree.c              | 2 +-
- merge-ort.c             | 2 +-
- path.c                  | 2 +-
- pretty.c                | 2 +-
- protocol-caps.c         | 2 +-
- send-pack.c             | 2 +-
- setup.c                 | 2 +-
- trace2/tr2_tgt_normal.c | 2 +-
- 12 files changed, 12 insertions(+), 12 deletions(-)
+ add-interactive.c | 2 +-
+ bloom.c           | 2 +-
+ git.c             | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index d71c4e4b44b..94bb53c9bf6 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -454,7 +454,7 @@ static int register_ref(const char *refname, const char *referent UNUSED, const
+diff --git a/add-interactive.c b/add-interactive.c
+index 49042b30261..12c23fa10ba 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -848,7 +848,7 @@ static int get_untracked_files(struct repository *r,
+ 			       const struct pathspec *ps)
  {
- 	struct strbuf good_prefix = STRBUF_INIT;
- 	strbuf_addstr(&good_prefix, term_good);
--	strbuf_addstr(&good_prefix, "-");
-+	strbuf_addch(&good_prefix, '-');
+ 	struct dir_struct dir = { 0 };
+-	size_t i;
++	int i;
+ 	struct strbuf buf = STRBUF_INIT;
  
- 	if (!strcmp(refname, term_bad)) {
- 		free(current_bad_oid);
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 8542b5d53e4..605ddb5a719 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -37,7 +37,7 @@ static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
- 	} else if (padded) {
- 		strbuf_addf(line, "%7s", "-");
- 	} else {
--		strbuf_addstr(line, "-");
-+		strbuf_addch(line, '-');
- 	}
- }
+ 	if (repo_read_index(r) < 0)
+diff --git a/bloom.c b/bloom.c
+index c4286341059..42db509bea9 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -314,7 +314,7 @@ static int has_entries_with_high_bit(struct repository *r, struct tree *t)
  
-diff --git a/convert.c b/convert.c
-index c9a31eb4f03..3ee5a22b2a8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -337,7 +337,7 @@ static void trace_encoding(const char *context, const char *path,
- 			((i+1) % 8 && (i+1) < len ? ' ' : '\n')
- 		);
- 	}
--	strbuf_addchars(&trace, '\n', 1);
-+	strbuf_addch(&trace, '\n');
+ 		init_tree_desc(&desc, &t->object.oid, t->buffer, t->size);
+ 		while (tree_entry(&desc, &entry)) {
+-			size_t i;
++			int i;
+ 			for (i = 0; i < entry.pathlen; i++) {
+ 				if (entry.path[i] & 0x80) {
+ 					t->object.flags |= HIGH_BITS;
+diff --git a/git.c b/git.c
+index 46b3c740c5d..86f7112f4bf 100644
+--- a/git.c
++++ b/git.c
+@@ -946,7 +946,7 @@ int cmd_main(int argc, const char **argv)
+ 	 */
+ 	setup_path();
  
- 	trace_strbuf(&coe, &trace);
- 	strbuf_release(&trace);
-diff --git a/diff.c b/diff.c
-index 266ddf18e73..61434c6cb45 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1763,7 +1763,7 @@ static void add_line_count(struct strbuf *out, int count)
- 		strbuf_addstr(out, "0,0");
- 		break;
- 	case 1:
--		strbuf_addstr(out, "1");
-+		strbuf_addch(out, '1');
- 		break;
- 	default:
- 		strbuf_addf(out, "1,%d", count);
-diff --git a/log-tree.c b/log-tree.c
-index 83cc4b1cfb7..d0dc065e4f3 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -452,7 +452,7 @@ void fmt_output_subject(struct strbuf *filename,
+-	for (size_t i = 0; i < argc; i++)
++	for (int i = 0; i < argc; i++)
+ 		strvec_push(&args, argv[i]);
  
- 		strbuf_addf(&temp, "v%s", info->reroll_count);
- 		format_sanitized_subject(filename, temp.buf, temp.len);
--		strbuf_addstr(filename, "-");
-+		strbuf_addch(filename, '-');
- 		strbuf_release(&temp);
- 	}
- 	strbuf_addf(filename, "%04d-%s", nr, subject);
-diff --git a/merge-ort.c b/merge-ort.c
-index 11029c10be3..a36c2c936fe 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -827,7 +827,7 @@ static void path_msg(struct merge_options *opt,
- 
- 	va_start(ap, fmt);
- 	if (opt->priv->call_depth) {
--		strbuf_addchars(dest, ' ', 2);
-+		strbuf_addstr(dest, "  ");
- 		strbuf_addstr(dest, "From inner merge:");
- 		strbuf_addchars(dest, ' ', opt->priv->call_depth * 2);
- 	}
-diff --git a/path.c b/path.c
-index 4dcf3c8d40d..04085c164d0 100644
---- a/path.c
-+++ b/path.c
-@@ -982,7 +982,7 @@ const char *remove_leading_path(const char *in, const char *prefix)
- 
- 	strbuf_reset(&buf);
- 	if (!in[j])
--		strbuf_addstr(&buf, ".");
-+		strbuf_addch(&buf, '.');
- 	else
- 		strbuf_addstr(&buf, in + j);
- 	return buf.buf;
-diff --git a/pretty.c b/pretty.c
-index 098378720a4..84c96fc5a80 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -590,7 +590,7 @@ void pp_user_info(struct pretty_print_context *pp,
- 
- 		strbuf_addf(sb, "%s: ", what);
- 		if (pp->fmt == CMIT_FMT_FULLER)
--			strbuf_addchars(sb, ' ', 4);
-+			strbuf_addstr(sb, "    ");
- 
- 		strbuf_addf(&id, "%.*s <%.*s>", (int)namelen, namebuf,
- 			    (int)maillen, mailbuf);
-diff --git a/protocol-caps.c b/protocol-caps.c
-index 855f279c2f7..a841a457bbd 100644
---- a/protocol-caps.c
-+++ b/protocol-caps.c
-@@ -65,7 +65,7 @@ static void send_info(struct repository *r, struct packet_writer *writer,
- 
- 		if (info->size) {
- 			if (oid_object_info(r, &oid, &object_size) < 0) {
--				strbuf_addstr(&send_buffer, " ");
-+				strbuf_addch(&send_buffer, ' ');
- 			} else {
- 				strbuf_addf(&send_buffer, " %lu", object_size);
- 			}
-diff --git a/send-pack.c b/send-pack.c
-index 6677c44e8ac..9eb7cdc6ee7 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -373,7 +373,7 @@ static int generate_push_cert(struct strbuf *req_buf,
- 	if (args->push_options)
- 		for_each_string_list_item(item, args->push_options)
- 			strbuf_addf(&cert, "push-option %s\n", item->string);
--	strbuf_addstr(&cert, "\n");
-+	strbuf_addch(&cert, '\n');
- 
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		if (check_to_send_update(ref, args) < 0)
-diff --git a/setup.c b/setup.c
-index 39ff48d9dc5..27535f9f9a2 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1550,7 +1550,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 				return GIT_DIR_DISALLOWED_BARE;
- 			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report))
- 				return GIT_DIR_INVALID_OWNERSHIP;
--			strbuf_addstr(gitdir, ".");
-+			strbuf_addch(gitdir, '.');
- 			return GIT_DIR_BARE;
- 		}
- 
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index baef48aa698..8a05cf2109a 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -226,7 +226,7 @@ static void fn_child_start_fl(const char *file, int line,
- 	if (cmd->dir) {
- 		strbuf_addstr(&buf_payload, " cd ");
- 		sq_quote_buf_pretty(&buf_payload, cmd->dir);
--		strbuf_addstr(&buf_payload, ";");
-+		strbuf_addch(&buf_payload, ';');
- 	}
- 
- 	/*
+ 	while (1) {
 
 base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
 -- 
