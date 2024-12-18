@@ -1,69 +1,70 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC7317C219
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 13:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797B31ACEDC
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 13:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734528638; cv=none; b=RMOYaTomJIcm1W9W6XqQpEKipND/MOroq/s75F7YDj2CZYr29KolCo3PfIDIL11B2Li5OPPwMKsvovPOhWzXzQU90hy0Zu7VoujxIdiTyfpPJUBorJ1TTzlItaE+GAIjmev7cLoO/VixB6dRt0OJHD29yQa0iJjllgOo7n56tV8=
+	t=1734529920; cv=none; b=dpTiOTyRL18tjHhk88xJ53IlAo8p1N1611ZgpU4mJwYZtGllYv8L1SZ1FjDDesOFTvPO0rjMIrJEoPFcD1/iUWN78/TQYEG586TuqSN4fl0mVpX4Cl8W+MEL90wd5htRHFC5Lai+1csKUm8AahGPVJ7xjM15KMGINKtIS6xFgxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734528638; c=relaxed/simple;
-	bh=tXUJ7G8CzM2/zrOALOomxlySREIeU6ajfMSM1VR3xDA=;
+	s=arc-20240116; t=1734529920; c=relaxed/simple;
+	bh=GXc4xJShltmzb2n5GcyPBAkov5pAxh/9irfZNFno3ZU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FNOOM5+4W1PR+Du0rva/VkfDaaGPyZ14h4zbxuB/XHbM1xY6FYz8IiUm2+oVdkmu7ZI3EL7CLohJJ1E9GpbOU8h8mOM0HwhJtIBrM7Y4fIv6ZWxw90/F8goUN/9w5KFopALAF562GU0OVpc+LDXCgiWemaiCWuvc5MSlzG1MFJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dAvYZbRb; arc=none smtp.client-ip=209.85.214.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=aDmq2O9m5dXT3iulkd9tDr7Y2LQrKev2ctDOhs5TO2dZyUm5vdxzNHfN24MBHN15lO7JtMUb7hCLkoxyTogFsrc3LTfvOXT4acGljWxZlF7ExP21bd+RSaWQaP7UARtd/M+7ubPI5RK3e3WaDd/OcHz2E3Vs+4bgumwTdF3uPhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPopEu6W; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dAvYZbRb"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21683192bf9so61920085ad.3
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 05:30:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPopEu6W"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-21644e6140cso61353065ad.1
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 05:51:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734528636; x=1735133436; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734529919; x=1735134719; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nyb6Yq1T+PYWu2Kc0paHM7wB8XSMSXLIWVAP52a6oKk=;
-        b=dAvYZbRb/bNcOmKQ90IgZLMroDXXNhAIWc9YgUPtVwTlgJGEqmR3Tvleiz/wKV/gt5
-         hw7PtAtkKNbVNhrgVrQjo4/mAgaU4nnUlOMJrVx0/hEyPV2hg2gjAobpteamLRUObEQa
-         lsy+7LzD5jQXHbqmKeeqaFd7gcZYardJzNMJWLDPunk/OdMYRRTncsom25tOXbqIscEp
-         mzxv9u6kl8OCi3K2/fimoemzW/hgSTvFU/QttPZFLnr+AbM5mdhF0DAn7+QLbOAYL0ao
-         /4CniZt2TaBLUKcr8ip+lElRgl2gAymKg9RdELWan0zJQaXdO6uvMtiDvO7cCnAzvavz
-         J+GA==
+        bh=Ru0BuGZ0eC7MP9UhfxEfG9I34xC5JzUWt0YqSA/DQgk=;
+        b=GPopEu6Wsbq+ro/tvzB2EUoMr4aNvD0Bpw1pNgZVFT7AJNSZ3jqg357t+cpfhDIDKX
+         YZojgCI9t0WT59LpG34UFduIU9zBflHlIZMPMHw1lIgcWlUztrgNnksqdz5SAodbTg1N
+         olCRrqI1F99rp7dsqNQ+TTij5CfVyZXx1NrRgkTemp976p7m5cFAXxyMv9PLNx+NN9I6
+         SPf2WZdlhKaYh4KW3XCFQ/6Ujqy/jBSxdoeTWcWjwoBbxb6ur5Imc0cJZgqHNpfjO293
+         Y6jDsFIfgzijZw+4QPUs5M85IHVzLNTUOd4LmeCqsMJdlGueIr2woThLg7hSQiR93Hi5
+         5pzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734528636; x=1735133436;
+        d=1e100.net; s=20230601; t=1734529919; x=1735134719;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nyb6Yq1T+PYWu2Kc0paHM7wB8XSMSXLIWVAP52a6oKk=;
-        b=Lzt8CrUDJgI5rPdFq1PgePxg7JeVxZlymO7LwLFR59QO+zy2Yna6Y6wIDJwqJ6lSpQ
-         /vuG9aOkqj8Yn2V5rStmoyoY/l4srWu7+EpigSgRwhq2NYWCrCR6sKiE9P23rKUCTPv1
-         XRRAdV5eUdcDu9PquhzUZEck3JnXDGNFVjqp3LkNCdJtN8bn4FZrqoPpMlRqB7y59zga
-         zwEqi3ilvbGrUAALPOpiNvx+a46VLsXMCRbDCqVgUV+Lqlvj9c+QQHVmxjy66mVE38t7
-         LZE3kAwGcBA31gVsJAdJpQ56mXkE+ug3JKTQ3c9Mc1TgHH/a9LNMma51qO2Lgznemwg0
-         khgw==
-X-Gm-Message-State: AOJu0YwCNlJiDKVdpF4a5GOQe9tHlT2PRchn1Q8KutAsD+W/IZoz5V2k
-	9LbGkdLo/7doeu2VYbn2jSbds0J9o9wORwwt/l1TDsoc97Ut/fjlP/G3lg==
-X-Gm-Gg: ASbGncs/d+fEDzecobb0QGqVCnLME3lF23Te8eE8eYxaV5YDYMCkAjsiVH+oMqRuhv4
-	x46H1LZltVTSNLzqtPCOt2Uhsumk+IJLG0qhogs27ZDrGZoCdm11yniMcnsd9RxstxlyS/rC1/O
-	J9gQ0ku5qHvxY59fuIZ2z9SV4+q6flSGPQLhImx1LFvD6qxrdYT1VOhs9b6cus2PvT3rxY6kHI1
-	IsHSpojTfAj6/znFiVzZ5GBu8ithAd+gEnUV993gc7+cUMCPOF+
-X-Google-Smtp-Source: AGHT+IFyU9tNnQqXKkXg87lBRu9K2Xba8+RTElDcEfzyMu1WPLL0AKRjVij+1hUh/1SS1NRmzV0r0g==
-X-Received: by 2002:a17:903:32cb:b0:216:2f91:92c7 with SMTP id d9443c01a7336-218d6fd5ea4mr49006715ad.12.1734528636146;
-        Wed, 18 Dec 2024 05:30:36 -0800 (PST)
+        bh=Ru0BuGZ0eC7MP9UhfxEfG9I34xC5JzUWt0YqSA/DQgk=;
+        b=J0t2SckYe/e1pXvgLQopv1niYasFT514w+1HXQLT81PfsnCJBTlncxFfzjrfbSQ1Hx
+         PJ+B3+gDuyDdXYGmq+2LmPOZuZtXlmyVvxxJRHF6z32r+uV9cyiGgcGN9ZlMj7HdEXbU
+         peNRMfndAEM4O2z3DBdIgjx+VY9R9dwZ4Tcre7tEAi8nPFC+xAq12rLGDe+uNkCnbfSK
+         nEduLnbX0TJ0jGcFRmNOMZgfqoGWNWeSyaGRKNtp4UAm+i8/54o4g42MlEHw3kvO2/9x
+         hL+B8Dp+I4RAEoO7r6qsETEzdf9NnNpEC1cLiDPUDcLYAX6zB2d0AMwuRkhFGIYISMYe
+         8h+w==
+X-Forwarded-Encrypted: i=1; AJvYcCX9pPg5VrQdiM19YxtxWX/yA+IQW5RAY9VLqYNW5En1Un7tUKY/3aerrDW6Xri01xe+0A4=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy5grxZQH7wc4Ovm51h2Df8SS8XWmneAIwGz4tUpRIm0kY+mQBs
+	cB64R1zt9LxL8kPA9S/4SMbVQhBpeJKDxK+v9G6LoAf6pnp20jme
+X-Gm-Gg: ASbGncv71MZv6el6oJC9tyxuPK+ITp47S4KZk83SXhOUHkf0UXOUm4+aiITTUo/ED6W
+	IxS7T350zvp8uAwUYuXNMzCriIgO0VJcLJospcrzzAQUNnZ5I42QnzMUm3voF82fnbgYYT8kzsq
+	5ccclnOpPzzOV1fx3/G4gezMp9BEgIPCB0P0V+Embn/An6M+XdadSczNTG51/hsQBdXmca8hkcK
+	zxddrjnL33JgL5VB9FJvDK5DyQ+qcI9HbRpUuBAWfgCSRJ05FVC
+X-Google-Smtp-Source: AGHT+IFBoTL4DFdgEb9MLrLPCoMPovIGrIrK6u5X/uj8VIZPOeFqyrZ7Rcqq14XsD0sNZFf9ShsyMg==
+X-Received: by 2002:a17:902:cec4:b0:215:b190:de6 with SMTP id d9443c01a7336-218d6fcd43amr35394205ad.3.1734529918646;
+        Wed, 18 Dec 2024 05:51:58 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1db8676sm75779155ad.12.2024.12.18.05.30.35
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e648b2sm76784195ad.242.2024.12.18.05.51.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 05:30:35 -0800 (PST)
-Date: Wed, 18 Dec 2024 21:31:16 +0800
+        Wed, 18 Dec 2024 05:51:58 -0800 (PST)
+Date: Wed, 18 Dec 2024 21:52:39 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: AreaZR via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, AreaZR <gfunni234@gmail.com>,
-	Seija Kijin <doremylover123@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] refs: exit early from the loop if it is not a main
- worktree
-Message-ID: <Z2LOpOxu0oAY0DW3@ArchLinux>
-References: <pull.1848.git.git.1734488445457.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Wang Bing-hua via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Wang Bing-hua <louiswpf@gmail.com>
+Subject: Re: [PATCH] remote: align --verbose output with spaces
+Message-ID: <Z2LTp60u03Y9iiUd@ArchLinux>
+References: <pull.1837.git.1734439176360.gitgitgadget@gmail.com>
+ <Z2F7VAsTjfBCVCrG@ArchLinux>
+ <xmqqr066ysa6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,53 +73,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.1848.git.git.1734488445457.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqr066ysa6.fsf@gitster.g>
 
-On Wed, Dec 18, 2024 at 02:20:45AM +0000, AreaZR via GitGitGadget wrote:
-> From: Seija Kijin <doremylover123@gmail.com>
+On Tue, Dec 17, 2024 at 12:21:37PM -0800, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
 > 
-> The is_main_worktree function just checks for !wt->id,
-> but the compiler doesn't know this as it is in a different
-> file, so just exit out early.
+> > On Tue, Dec 17, 2024 at 12:39:36PM +0000, Wang Bing-hua via GitGitGadget wrote:
+> >> From: Wang Bing-hua <louiswpf@gmail.com>
+> >> 
+> >> Remote names exceeding a tab width could cause misalignment.
+> 
+> If all of them are named with ten ASCII characters, on a terminal
+> with fixed-width font, things will still display aligned ;-)
+> 
+> >> Align --verbose output with spaces instead of a tab.
+> >> 
+> >
+> > Good enhancement.
+> 
+> With a Devil's advocate hat on, a change like this will completely
+> break tools when they are reading the "--verbose" output and
+> expecting that the fields are separated with a TAB (in other words,
+> the tab is *not* about alignment in the first place for them).
 > 
 
-I think maybe we should exit out the loop early. However, the above
-statement is confusing. As you have said, `is_main_worktree` checks
-whether the `wt->id` is NULL. Why compiler doesn't know this? And why we
-need to exit out the loop due to above reason?
+Yes, I agree. Although we may provide convenience for the end user, but
+we may break other tools parsing the output. I think I bring confusion
+to the Wang. Actually, I have seen that Wang contributes to Git in the
+first time, so I just want to courage.
 
-> Signed-off-by: Seija Kijin <doremylover123@gmail.com>
-> ---
->     refs: exit early from the loop if it is not a main worktree
->     
->     The is_main_worktree function just checks for !wt->id, but the compiler
->     doesn't know this as it is in a different file, so just exit out early.
+> Now with that hat off.
 > 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1848%2FAreaZR%2Fexit-early-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1848/AreaZR/exit-early-v1
-> Pull-Request: https://github.com/git/git/pull/1848
+> For users with that many remotes where the alignment of URLs in the
+> interactive "git remote -v" output matter, I am not sure if this
+> change is a real improvement enough that it is worth the possible
+> risk of breaking existing tools.  With that many remotes defined,
+> wouldn't they be doing "git remote -v" piped to "grep '^name<TAB>'"
+> or something?  That use case would break with the change, too.
 > 
->  refs.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/refs.c b/refs.c
-> index 8b713692359..cce63a618d7 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2791,6 +2791,7 @@ static int has_worktrees(void)
->  		if (is_main_worktree(worktrees[i]))
->  			continue;
->  		ret = 1;
-> +		break;
-
-So, when we find a linked worktree, we just return the value. From my
-perspective, if we decide to optimize like this way, we could drop the
-loop because the first element of the result of `get_worktrees` is the
-main worktree. And we could just check whether the "worktrees[1]" is
-NULL to do above.
-
-However, I don't know whether it's a good idea to exit the loop early
-in the first place. CC Patrick to help.
-
-Thanks,
-Jialuo
+> Thanks.
