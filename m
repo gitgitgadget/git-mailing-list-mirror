@@ -1,41 +1,44 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD56165F16
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 11:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B4019E97B
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 11:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734521618; cv=none; b=GpiajQh9E19/bvPMihVJiPqNlNNKUvIfPLc5qjvOj/zsda5CyvLCssNZgMeCPwf90WFIV2LByADt7mWuvUTWOtaMD8IdGZcc8Qqy8MIoL6Zfm0VHlgOio39H03QZIdPdtq2NuEeqvcyAQf7omQfq+U+YCh02h6Ijxmk7wuG6o9A=
+	t=1734521972; cv=none; b=XKacjfNapLQNuBjGr3LXjmdYMsL64poHqm6PJon2yyQdA6a/k0KSzXyCYvK8KZkJS0FtmZmlgQ1Sd+KkwkOIajnK6vV63XTotPueSZKRjQpQWERG3o3D7uQvpK3We11sR10k/FCrf3+0kFsbFQyNZxQAKS9zM1NNY3KBKhTB1wI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734521618; c=relaxed/simple;
-	bh=4AwrV6gVESuRlprmW2lApfUuLZWuPzXUmSphn0zT0h0=;
+	s=arc-20240116; t=1734521972; c=relaxed/simple;
+	bh=P34F0ORcTgP4rt1Ze0EwZv6T1BCgw+7S8OAX/5+X9Vo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VW5q57uBkvKzLTkaAFEOng+YOnnEyYkv5KxIfHbaFJLgluBIyaQF1H0/UiPfWufToCPXifA1MYiG6xVRPAkaNR+BPgD2s34Xjo+Ohv4hXrng/rDMTsvKHgMhLhVnqoalVsTwG6qMsXKhjDI+yN+z4XYGn4ybgskxAE7X3243B0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=V+7Cs8p+; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=LWfiD+Gm/hdFuNyWpEKvFZ5Auhq3cToN7YYqMbuW7cRH2Nqj24pJ3mtThUXsq0ApRA+W4hcJohPEcNmz9NA2nAgV5BYyXR9U+yCiQy6MPdooGAO40T+hSXEcml2F6b5qKC8MMYAYWtm5GSYoX/m0LayU3CwqdNZU7xDBEzD495U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=THVsxRcU; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="V+7Cs8p+"
-Received: (qmail 5689 invoked by uid 109); 18 Dec 2024 11:33:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4AwrV6gVESuRlprmW2lApfUuLZWuPzXUmSphn0zT0h0=; b=V+7Cs8p+b5mIwZUqhxCXaJuLbQImN7sfVTth7c7v8Mm5EFm6/Z7zCv0+6OsTurG/FqaxPWGnaSaxq3hvmHc8ZjOL8BFILcZkNP0noFZeQPEJ3PDOEGNcpQ6IsYPJ5ijfJleS+hDB/3paRKO35x/lIiw3RcV6zseEvEbts6ZukH5AoNhFqskSs3TCy3jw92ZGb4YRxme26U+dPKG3c4csWi+gcdp6cpjDnaLdlrlVjXeXUR9pKvAfJCec735CO692ry8y5Cw8Gnf1GfEuIsYzbMxWDpBv2oAZ1rDDfrrhRwtscFGt+HqpNoQV2/FXIGDGuX5zal10p7WKb+uF4H0sfg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="THVsxRcU"
+Received: (qmail 5746 invoked by uid 109); 18 Dec 2024 11:39:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=P34F0ORcTgP4rt1Ze0EwZv6T1BCgw+7S8OAX/5+X9Vo=; b=THVsxRcUn3XfhkBpaY7LMMB8T2rtQKvHrKSvX4K/L/nCYwKfJliCmLWFdmMdr8ilk9TupWadXwASf3tX0EEt0KQuzeQiBdsOKxZohyhz5y7nl17XU5VId5uZEpRP3IqClTHzr3TfAN5ZtY73O9yggYiCqqNK6T3OC5Tro5HjJVE7zG5s82r4cDKeYSRvCKzzo375OKjRuWZnjF04qzXKWB7rryaOXIUO8+u2zAPzlkdyaxXo1MpqXH+xQu7GQNxZvHlYJljLB2B7BYpQ+CjEToQIikWicfH9wlz5N1bjCoM9bYyf6aQgSjUQxSfh4rG94FcE9wAZEDJuHEtKT75h/Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Dec 2024 11:33:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Dec 2024 11:39:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24377 invoked by uid 111); 18 Dec 2024 11:33:25 -0000
+Received: (qmail 24530 invoked by uid 111); 18 Dec 2024 11:39:28 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2024 06:33:25 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2024 06:39:28 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 18 Dec 2024 06:33:24 -0500
+Date: Wed, 18 Dec 2024 06:39:27 -0500
 From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Kyle Lippincott <spectral@google.com>
-Subject: make GIT_VERSION=foo broken, was Re: [PATCH v2] doc: remove extra
- quotes in generated docs
-Message-ID: <20241218113324.GA594795@coredump.intra.peff.net>
-References: <pull.1847.git.git.1734479267736.gitgitgadget@gmail.com>
- <pull.1847.v2.git.git.1734483422181.gitgitgadget@gmail.com>
- <xmqqbjx9yedb.fsf@gitster.g>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 0/3] batch blob diff generation
+Message-ID: <20241218113927.GB594795@coredump.intra.peff.net>
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+ <20241213081211.GA1443203@coredump.intra.peff.net>
+ <xmqqv7vnevjc.fsf@gitster.g>
+ <20241213103850.GA1456983@coredump.intra.peff.net>
+ <xmqqcyhtaecy.fsf@gitster.g>
+ <xmqq5xnladwi.fsf@gitster.g>
+ <20241216111112.GA2201417@coredump.intra.peff.net>
+ <xmqq5xnj7fre.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,83 +47,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqbjx9yedb.fsf@gitster.g>
+In-Reply-To: <xmqq5xnj7fre.fsf@gitster.g>
 
-On Tue, Dec 17, 2024 at 05:22:08PM -0800, Junio C Hamano wrote:
+On Mon, Dec 16, 2024 at 08:29:41AM -0800, Junio C Hamano wrote:
 
-> > -<refmiscinfo class="source">Git 2.47.1.409.g9bb10d27e7</refmiscinfo>
-> > -<refmiscinfo class="manual">Git Manual</refmiscinfo>
-> > +<refmiscinfo class="source">'Git 2.47.1.410.ga38edab7c8'</refmiscinfo>^M
-> > +<refmiscinfo class="manual">'Git Manual'</refmiscinfo>^M
-> >  </refmeta>
-> >  <refnamediv>
-> >      <refname>git-bisect</refname>
-> > ```
+> Jeff King <peff@peff.net> writes:
 > 
-> Thanks for filling the blanks in ;-)
+> > I recall that the performance of attr.tree is not great for _some_
+> > commands (like pack-objects). So it's perhaps reasonable to use for
+> > single commands like "git diff" but not to set in your on-disk config.
+> > It's possible we'd want to warn people about that before advertising it
+> > more widely? I dunno.
 > 
-> The above differences however seem to be absorbed before these
-> strings reach git-bisect.1 by the documentation toolchain;
-> Running Documentation/doc-diff with --asciidoc or --asciidoctor
-> options do not show the difference in single quotes.
+> Or we disable the unusably-inefficient feature before doing so.
+> Would attr.tree be much less efficient than GIT_ATTR_SOURCE?
 
-Hmm. I thought that might be because we override the version and date
-strings in doc-diff to prevent extra output. But it seems that was
-broken by the same commit. Try:
+Whether it's unusably inefficient depends on what you throw at it. IIRC,
+the performance difference for pack-objects on git.git was fairly
+negligible. The problem in linux.git is that besides being big, it has a
+deep(er) directory structure. So collecting all of the attributes for a
+file like drivers/gpu/drm/foo/bar.h needs to open all of those
+intermediate trees.
 
-  ./doc-diff a38edab7^ a38edab7
+So I'd be inclined to leave it in place, in case somebody is actually
+happily using it.
 
-and you'll get a bunch of:
-
--Git omitted                        1970-01-01                        GIT-ADD(1)
-+Git 2.47.1.410.ga                  2024-12-06                        GIT-ADD(1)
-
-diffs which show the breakage starting (and after that, you get further
-changes as each version changes by one commit).
-
-The override is done by setting GIT_VERSION on the make command line.
-And indeed, it seems like:
-
-  make GIT_VERSION=foobar
-
-no longer has any effect. That could be a problem for packagers, as
-well, if they try to inject a custom version string (e.g., to represent
-the upstream version plus their patches). I don't know if anybody does
-that, though.
-
-The root of the problem is that we used to generate GIT-VERSION-FILE and
-source it as a Makefile snippet. That let the usual Makefile precedence
-rules override what was in the file. But after that commit, we use the
-script to directly generate the version _and_ replace the contents of
-asciidoc.conf, etc.
-
-I think the workaround here would be to manually override asciidoc's
-config like this:
-
-  make ASCIIDOC='asciidoc -amansource="Git omitted" -arevdate=1970-01-01'
-
-But besides being horrible, I think that only works because asciidoc
-gives us a layer of indirection. The same problem exists for the
-built-in version-def.h. Try this:
-
-  $ git checkout v2.47.0
-  $ make GIT_VERSION=super-secret
-  [...]
-  $ bin-wrappers/git version
-  git version super-secret
-
-  $ git checkout v2.48.0-rc0
-  $ make GIT_VERSION=super-secret
-  [...]
-  $ bin-wrappers/git version
-  git version 2.48.0.rc0
-
-I wondered if this would also leak out over the network via the agent
-string, but it doesn't seem to. I think because GIT_USER_AGENT is
-handled specially in the script; we accept the value from the
-environment and only default it to git/$GIT_VERSION.
-
-Perhaps the script should be doing the same for GIT_VERSION itself,
-along with GIT_DATE?
+GIT_ATTR_SOURCE suffers all of the same problems; it's just that you'd
+presumably only use it with a few select commands (as far as I know,
+pack-objects is the worst case because it's looking up one attribute on
+every single blob in all of history).
 
 -Peff
