@@ -1,62 +1,66 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3813A182C5
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 02:22:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F8243179
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 02:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734488555; cv=none; b=ALrUbuZRWvxZ+a3VBY6rA9CLvIzEX5l7egwDvogjujZaYRO9JryTKvf9ExCF2e4yP7k3zVc8iTJsqGxLLJd5WSTHl8HWyziIkgfa2tSBtOsOodfAAX/BEvjXmY/zr5IRm0riMKqcnkybB5HG3EWYnEuvSa8bubKMcTfOKmE/CRo=
+	t=1734489546; cv=none; b=cnpBe4eGFRXJhuKpJCpt31E9YrOOlPtO31PZ0a3NvwfNiippnalQYAGHfAWq/qJWZTbA/GhGSTZ+fn7jG8YsTt6CgL74wYq/9CXE1d6bv7VvyZPJxXwS2C85Afc6Bx7qbkr0yPBd6QokOW5HOj/azA5OvJP/tOK5FBDaB1LvWks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734488555; c=relaxed/simple;
-	bh=+1BmgzxgOqLkdO09A82O8O1bwSFDRFIEhtWlRuwbwdU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VjaoC4f6l4oVNuoBPgpeAodcX4rhOzxHx5iKPdvma7oq3Of7Udlh4MNkthJvjtrIL7hg+av7O0oSa+0iJskXxgtsOXjQMpf4STd5js62bnuhefM7PbGA19o65SEi/p32fLAPUP5E7oto0UuZeI38JJBNOIB7K8XR8Wu36x/78Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZI1Bczp; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1734489546; c=relaxed/simple;
+	bh=FxnjK7/Z8WA7SYXwD5PEl6NuxC7iUtcXe3/XFiWU3V8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=PYNyph9b8kNPqxLNzn1E+zoGk94fIt2P5SFmVfngopvpLQ0uT7RbAhcjWlBIXgJfdOThQEK3qxGHvKoi+AHAvn8mX1QB/UdADZpBaJdF+a4ZbUwakEDLH38r9cpoyYuT1wgdejS9C5MStlokDFTEWYifl0Zg4HSD7w0PxmCKi7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k28hFmV5; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZI1Bczp"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-436341f575fso46986995e9.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 18:22:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k28hFmV5"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4361d5dcf5bso64652945e9.3
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 18:39:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734488551; x=1735093351; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734489542; x=1735094342; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tTzeMq9M+nxOnsYQZwKy2Q0xF2o7jPmSp7BqxW1scNg=;
-        b=DZI1BczpQOg0Jz8RdR7fspmiMw4szcG6jysQcFuNlKT+SBczknlKmCZAZ6JoyCr1yM
-         cCPRnQYTlg34kRo1acSOk79xCFeFTbU2paa+/ibnjhbmC4obF4/G6OHIW5TG+ccEdmBw
-         Z5XGGHQGNe+cUzsRMWGi9jjfpBp78F7Fpq/L6yVu68ZZAq3mzmAqr19xRE2gtRAlV//e
-         nCeLWtewc39NeN9Tdt1gZZV/oNQUg7ksme1sUbIaeSYjaE5T2gEn48MFwEqL2iX/2pDE
-         xkKmWlB1q26x3WdQ3mbv50z+VKJ9Mou0Q+OvVnn3IZjZ5AnfUBps8KnrnonRugrdFgEe
-         dp/w==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8+RkArDq8GTEJuO+MfPeTFK1Q2QcVOYz31niP5hkWyA=;
+        b=k28hFmV5dBLXgoqXwWIKVb2uFOVgmJwAidX+N9LZcIvGuFtnArRJUGtJ0v9AoLPUvJ
+         0Mok8pT+QVkIjyP0H9xfAsthAjL69iu9i2j2xwpf8NscXaU+QkrgentAgmpcp5iE54HK
+         8Y7QWzn4eFt5qLEtoTYjnLllIfwJIu4n8NeOfCcj8eF4GyNVs/MjEBgJTlKgyTsaxJHi
+         PBsdlSyAM8jj+0f8XdYJ7BnonOsHo3LhFjTJwar0TO2TLMJYjEVjEo4sIrgAIGwbAfUH
+         psFdlF5xO8ylMknLICHwPbR5ZnKWb5v8Zy8JVRARy5tS/A1Z617TmbTYNg12itZKvwp1
+         tf8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734488551; x=1735093351;
+        d=1e100.net; s=20230601; t=1734489542; x=1735094342;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tTzeMq9M+nxOnsYQZwKy2Q0xF2o7jPmSp7BqxW1scNg=;
-        b=Rt93ehk7aJxn22FXKyENMbwLgqXQr8993Ov+tVnBDxtyVMLHQ1rB2o0+nZudPuzYaS
-         vfm3g/9hZWcSj/mGVhOtgYiUkWwKjONbvFgiz8YspRiW2bSDPx3GlfDaztR1EDG7QQx4
-         jO5BRY/CCONoWK2t2Fw+zwhjcYwwrQitTmzPnwfrugwhKflK5li6LT0lJi2GD8B+8FgC
-         r/oUR5uBNUilDY1oWpX+ipqtUEdJ0X3pkVYA4DEnbk3G7UQTLroBXsJQjVzAhhVSV05X
-         tDr555ZXol1JZpdMFprw9eba+HF8kf8ZUmlbR5XoJ9dYTn0tO0s5hRzMXSaozth6OGww
-         C+Ow==
-X-Gm-Message-State: AOJu0YwYM587tlFLZnw2wQHK2IoRqfGhG4Iks18slyuVJDmpGIcZzhAw
-	o/YuSaTNRVqgJlTuK4YBa9kGKJ7NJ+W/k5utzPl9xWyR5Bnd3BZYOlwUQw==
-X-Gm-Gg: ASbGncvz8g0WwXC4bPljX+n7dc/yT/7PUNOGuoh3JawCq9MXhUkDNuBSy9SCtw+PxkQ
-	NuqnrMjxsQumGnVZyzS8NVqsYwnHe/cOw7+XTMD0CnHCgV6CfOriaX2dLvEYoMsVqY+hJR0PgHx
-	bdwnP/EvkwKIRt8SkT8lAXds7+FyCBREApYo/u0BA9JlYIZg6nf+Cf7RTY0zqOJFdEkZQCKtgoT
-	31DlVNDrLeF/JhRUn2V6VZr195N2fnvDxIGnOq35olWjxL/x1jLtRQkKw==
-X-Google-Smtp-Source: AGHT+IHRx6f1E2k2njxLHn2/Ju0pPPUmQavANvNDnfZjzdt58I8KzULpbI7v9Fu1+QHO0bPZ41b7vg==
-X-Received: by 2002:a5d:47cf:0:b0:386:43c9:3ac2 with SMTP id ffacd0b85a97d-388e4d83912mr760992f8f.15.1734488550576;
-        Tue, 17 Dec 2024 18:22:30 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8+RkArDq8GTEJuO+MfPeTFK1Q2QcVOYz31niP5hkWyA=;
+        b=uVMkSXJ+LSYqvN8qOmhCatRX8+YE6YvTNPzf2SgqECZ6i2+WT6AGuqNKylZXF0WSDa
+         xv2f2xqK1EcPQTtER75q6nA6IDKmfc+AapXfKxe+9ulryqoqor4C1vj8J17qT1EoObbK
+         hZSyhQ2IcMZ2LHoyB677w/xMYDMfeXWb+YAquYrIVKKLt5KVo7mK8qHSYSuSH8HjiB1O
+         i+sjVdt8DMkbmu4XHTsDADHaThP+vdspxA+c4tOqxNFm6xTcEGdwEIN60GhNxSMSrF8R
+         xq5hbfY4kNGbqPL8p3pD1+q6cdE0gfjbkO59WmBwXoP/a6MuKligS+UzI7GCjPaLO6rc
+         MaDA==
+X-Gm-Message-State: AOJu0Yx+YB07lo2kFjiABXbPs1hZK6AH1bXS5C1JnG5LvkkEWqZ/dryU
+	n7Ek+ldBAf9pmR72ySguCPHem/ka7ldPhj9dDKtuqLJ9f5a83WHtosGBTw==
+X-Gm-Gg: ASbGncuP0VwVc0z7sbysjf9COzw5BzTa/O5hpDG4Ie54XmNpiYvDL18HSNfvxuMzepX
+	LS8FpnugMDaxtXyoByrzB4xZUxbY0GzIAR4qyTob7fZzSST3yAr+A1Bi06XsDZ2//pT+c6Uhz+v
+	G+PL12ZYj4AXufWyPPjHUmXz5gXtLiRj0UkRjZKjz3LctIRZcTtZuDwFkJoTMhq1407pNY2CDUi
+	dSdezaCu0XTHhwfFmS17b5Rx7E1GA8JDtM+hdNRNge8nvNn3ZP2EgzH2A==
+X-Google-Smtp-Source: AGHT+IFdU4002KAVyS8AughEb1nt341b7PHvpKkDm+r/wFyA0NGCMJmlY56UWv0jvJvZxDwAOmPKgA==
+X-Received: by 2002:a05:600c:3c83:b0:434:edcf:7474 with SMTP id 5b1f17b1804b1-43655406304mr6165615e9.33.1734489541815;
+        Tue, 17 Dec 2024 18:39:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c8060144sm12878058f8f.89.2024.12.17.18.22.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4364a376846sm35575325e9.0.2024.12.17.18.39.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 18:22:30 -0800 (PST)
-Message-Id: <pull.1849.git.git.1734488549111.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 18:39:01 -0800 (PST)
+Message-Id: <pull.1620.v4.git.git.1734489540328.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1620.v3.git.git.1734482536998.gitgitgadget@gmail.com>
+References: <pull.1620.v3.git.git.1734482536998.gitgitgadget@gmail.com>
 From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 02:22:28 +0000
-Subject: [PATCH] git: use U to denote unsigned to prevent UB
+Date: Wed, 18 Dec 2024 02:38:59 +0000
+Subject: [PATCH v4] git: use ^=1 to toggle between 0 and 1
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,293 +71,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: AreaZR <gfunni234@gmail.com>,
+Cc: Dragan Simic <dsimic@manjaro.org>,
+    Jeff King <peff@peff.net>,
+    =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    AreaZR <gfunni234@gmail.com>,
     Seija Kijin <doremylover123@gmail.com>
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-1 << can be UB if 1 ends up overflowing and
-being assigned to an unsigned int or long.
+If it is known that an int is either 1 or 0,
+doing an exclusive or to switch instead of a
+modulus makes more sense and is more efficient.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    git: use U to denote unsigned to prevent UB
+    git: use ^=1 to toggle between 0 and 1
     
-    1 << can be UB if 1 ends up overflowing and being assigned to an
-    unsigned int or long.
+    If it is known that an int is either 1 or 0, doing an exclusive or to
+    switch instead of a modulus makes more sense and is more efficient.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1849%2FAreaZR%2F1U-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1849/AreaZR/1U-v1
-Pull-Request: https://github.com/git/git/pull/1849
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1620%2FAreaZR%2Fbuffer-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1620/AreaZR/buffer-v4
+Pull-Request: https://github.com/git/git/pull/1620
 
- builtin/checkout.c     |  2 +-
- builtin/merge-tree.c   |  4 ++--
- builtin/receive-pack.c |  2 +-
- color.c                |  4 ++--
- delta-islands.c        |  2 +-
- diff-delta.c           |  2 +-
- diff.c                 |  2 +-
- help.c                 |  2 +-
- imap-send.c            |  2 +-
- merge-ort.c            | 18 +++++++++---------
- xdiff/xhistogram.c     |  2 +-
- xdiff/xprepare.c       |  4 ++--
- 12 files changed, 23 insertions(+), 23 deletions(-)
+Range-diff vs v3:
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5e5afa0f267..a636e71e05c 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -223,7 +223,7 @@ static int check_stages(unsigned stages, const struct cache_entry *ce, int pos)
- 		ce = the_repository->index->cache[pos];
- 		if (strcmp(name, ce->name))
- 			break;
--		seen |= (1 << ce_stage(ce));
-+		seen |= (1U << ce_stage(ce));
- 		pos++;
- 	}
- 	if ((stages & seen) != stages)
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index c5ed472967a..d0104dfa0c7 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -270,13 +270,13 @@ static void unresolved(const struct traverse_info *info, struct name_entry n[3])
- 	unsigned dirmask = 0, mask = 0;
- 
- 	for (i = 0; i < 3; i++) {
--		mask |= (1 << i);
-+		mask |= (1U << i);
- 		/*
- 		 * Treat missing entries as directories so that we return
- 		 * after unresolved_directory has handled this.
- 		 */
- 		if (!n[i].mode || S_ISDIR(n[i].mode))
--			dirmask |= (1 << i);
-+			dirmask |= (1U << i);
- 	}
- 
- 	unresolved_directory(info, n);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9d2c07f68da..b958eeee8fe 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1306,7 +1306,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 	struct shallow_lock shallow_lock = SHALLOW_LOCK_INIT;
- 	struct oid_array extra = OID_ARRAY_INIT;
- 	struct check_connected_options opt = CHECK_CONNECTED_INIT;
--	uint32_t mask = 1 << (cmd->index % 32);
-+	uint32_t mask = 1U << (cmd->index % 32);
- 	int i;
- 
- 	trace_printf_key(&trace_shallow,
-diff --git a/color.c b/color.c
-index 227a5ab2f42..ab9a3d2a097 100644
---- a/color.c
-+++ b/color.c
-@@ -317,7 +317,7 @@ int color_parse_mem(const char *value, int value_len, char *dst)
- 		}
- 		val = parse_attr(word, wordlen);
- 		if (0 <= val)
--			attr |= (1 << val);
-+			attr |= (1U << val);
- 		else
- 			goto bad;
- 	}
-@@ -340,7 +340,7 @@ int color_parse_mem(const char *value, int value_len, char *dst)
- 			sep++;
- 
- 		for (i = 0; attr; i++) {
--			unsigned bit = (1 << i);
-+			unsigned bit = (1U << i);
- 			if (!(attr & bit))
- 				continue;
- 			attr &= ~bit;
-diff --git a/delta-islands.c b/delta-islands.c
-index 84435512593..a041cfa1ab3 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -78,7 +78,7 @@ static int island_bitmap_is_subset(struct island_bitmap *self,
- }
- 
- #define ISLAND_BITMAP_BLOCK(x) (x / 32)
--#define ISLAND_BITMAP_MASK(x) (1 << (x % 32))
-+#define ISLAND_BITMAP_MASK(x) (1U << (x % 32))
- 
- static void island_bitmap_set(struct island_bitmap *self, uint32_t i)
- {
-diff --git a/diff-delta.c b/diff-delta.c
-index 77fea08dfb0..fbdfec7037f 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -156,7 +156,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	}
- 	hsize = entries / 4;
- 	for (i = 4; (1u << i) < hsize; i++);
--	hsize = 1 << i;
-+	hsize = 1u << i;
- 	hmask = hsize - 1;
- 
- 	/* allocate lookup index */
+ 1:  f6e75d8eff0 ! 1:  db1f0b1a323 git: use ^=1 to toggle between 0 and 1
+     @@ Commit message
+          doing an exclusive or to switch instead of a
+          modulus makes more sense and is more efficient.
+      
+     -    Signed-off-by: Seija <doremylover123@gmail.com>
+     +    Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+      
+       ## diff.c ##
+      @@ diff.c: static void mark_color_as_moved(struct diff_options *o,
+
+
+ diff.c                     | 2 +-
+ t/helper/test-path-utils.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
 diff --git a/diff.c b/diff.c
-index 266ddf18e73..021df059e0b 100644
+index 266ddf18e73..5c2ac8d6fd1 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4815,7 +4815,7 @@ static void prepare_filter_bits(void)
+@@ -1231,7 +1231,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 							    &pmb_nr);
  
- 	if (!filter_bit[DIFF_STATUS_ADDED]) {
- 		for (i = 0; diff_status_letters[i]; i++)
--			filter_bit[(int) diff_status_letters[i]] = (1 << i);
-+			filter_bit[(int) diff_status_letters[i]] = (1U << i);
- 	}
- }
+ 			if (contiguous && pmb_nr && moved_symbol == l->s)
+-				flipped_block = (flipped_block + 1) % 2;
++				flipped_block ^= 1;
+ 			else
+ 				flipped_block = 0;
  
-diff --git a/help.c b/help.c
-index 8a830ba35c6..839596156fe 100644
---- a/help.c
-+++ b/help.c
-@@ -394,7 +394,7 @@ void list_cmds_by_category(struct string_list *list,
- 
- 	for (i = 0; category_names[i]; i++) {
- 		if (!strcmp(cat, category_names[i])) {
--			cat_id = 1UL << i;
-+			cat_id = 1U << i;
- 			break;
- 		}
- 	}
-diff --git a/imap-send.c b/imap-send.c
-index 25c68fd90d7..fdb9e658e70 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -644,7 +644,7 @@ static void parse_capability(struct imap *imap, char *cmd)
- 	while ((arg = next_arg(&cmd)))
- 		for (i = 0; i < ARRAY_SIZE(cap_list); i++)
- 			if (!strcmp(cap_list[i], arg))
--				imap->caps |= 1 << i;
-+				imap->caps |= 1U << i;
- 	imap->rcaps = imap->caps;
- }
- 
-diff --git a/merge-ort.c b/merge-ort.c
-index 11029c10be3..5a99bec7a04 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1218,7 +1218,7 @@ static void collect_rename_info(struct merge_options *opt,
- 		return;
- 
- 	for (side = MERGE_SIDE1; side <= MERGE_SIDE2; ++side) {
--		unsigned side_mask = (1 << side);
-+		unsigned side_mask = (1U << side);
- 
- 		/* Check for deletion on side */
- 		if ((filemask & 1) && !(filemask & side_mask))
-@@ -2026,7 +2026,7 @@ static void initialize_attr_index(struct merge_options *opt)
- 
- 		ASSIGN_AND_VERIFY_CI(ci, mi);
- 		for (stage = 0; stage < 3; stage++) {
--			unsigned stage_mask = (1 << stage);
-+			unsigned stage_mask = (1U << stage);
- 
- 			if (!(ci->filemask & stage_mask))
- 				continue;
-@@ -2362,7 +2362,7 @@ static char *handle_path_level_conflicts(struct merge_options *opt,
- 	 */
- 	if (c_info->reported_already) {
- 		clean = 0;
--	} else if (path_in_way(&opt->priv->paths, new_path, 1 << side_index)) {
-+	} else if (path_in_way(&opt->priv->paths, new_path, 1U << side_index)) {
- 		c_info->reported_already = 1;
- 		strbuf_add_separated_string_list(&collision_paths, ", ",
- 						 &c_info->source_files);
-@@ -2747,7 +2747,7 @@ static void apply_directory_rename_modifications(struct merge_options *opt,
- 		ci->filemask = 0;
- 		ci->merged.clean = 1;
- 		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
--			if (ci->dirmask & (1 << i))
-+			if (ci->dirmask & (1U << i))
- 				continue;
- 			/* zero out any entries related to files */
- 			ci->stages[i].mode = 0;
-@@ -2915,7 +2915,7 @@ static int process_renames(struct merge_options *opt,
- 				assert(side1 == side2);
- 				memcpy(&side1->stages[0], &base->stages[0],
- 				       sizeof(merged));
--				side1->filemask |= (1 << MERGE_BASE);
-+				side1->filemask |= (1U << MERGE_BASE);
- 				/* Mark base as resolved by removal */
- 				base->merged.is_null = 1;
- 				base->merged.clean = 1;
-@@ -3002,7 +3002,7 @@ static int process_renames(struct merge_options *opt,
- 		target_index = pair->score; /* from collect_renames() */
- 		assert(target_index == 1 || target_index == 2);
- 		other_source_index = 3 - target_index;
--		old_sidemask = (1 << other_source_index); /* 2 or 4 */
-+		old_sidemask = (1U << other_source_index); /* 2 or 4 */
- 		source_deleted = (oldinfo->filemask == 1);
- 		collision = ((newinfo->filemask & old_sidemask) != 0);
- 		type_changed = !source_deleted &&
-@@ -3116,7 +3116,7 @@ static int process_renames(struct merge_options *opt,
- 			 */
- 			memcpy(&newinfo->stages[0], &oldinfo->stages[0],
- 			       sizeof(newinfo->stages[0]));
--			newinfo->filemask |= (1 << MERGE_BASE);
-+			newinfo->filemask |= (1U << MERGE_BASE);
- 			newinfo->pathnames[0] = oldpath;
- 			if (type_changed) {
- 				/* rename vs. typechange */
-@@ -3139,7 +3139,7 @@ static int process_renames(struct merge_options *opt,
- 				memcpy(&newinfo->stages[other_source_index],
- 				       &oldinfo->stages[other_source_index],
- 				       sizeof(newinfo->stages[0]));
--				newinfo->filemask |= (1 << other_source_index);
-+				newinfo->filemask |= (1U << other_source_index);
- 				newinfo->pathnames[other_source_index] = oldpath;
- 			}
- 		}
-@@ -3990,7 +3990,7 @@ static int process_entry(struct merge_options *opt,
- 		ci->match_mask = (ci->match_mask & ~ci->dirmask);
- 		ci->dirmask = 0;
- 		for (i = MERGE_BASE; i <= MERGE_SIDE2; i++) {
--			if (ci->filemask & (1 << i))
-+			if (ci->filemask & (1U << i))
- 				continue;
- 			ci->stages[i].mode = 0;
- 			oidcpy(&ci->stages[i].oid, null_oid());
-diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
-index 16a8fe2f3f3..18a037a3ba8 100644
---- a/xdiff/xhistogram.c
-+++ b/xdiff/xhistogram.c
-@@ -265,7 +265,7 @@ static int find_lcs(xpparam_t const *xpp, xdfenv_t *env,
- 	index.rcha.head = NULL;
- 
- 	index.table_bits = xdl_hashbits(count1);
--	index.records_size = 1 << index.table_bits;
-+	index.records_size = 1U << index.table_bits;
- 	if (!XDL_CALLOC_ARRAY(index.records, index.records_size))
- 		goto cleanup;
- 
-diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-index c84549f6c50..18c176462ec 100644
---- a/xdiff/xprepare.c
-+++ b/xdiff/xprepare.c
-@@ -72,7 +72,7 @@ static int xdl_init_classifier(xdlclassifier_t *cf, long size, long flags) {
- 	cf->flags = flags;
- 
- 	cf->hbits = xdl_hashbits((unsigned int) size);
--	cf->hsize = 1 << cf->hbits;
-+	cf->hsize = 1U << cf->hbits;
- 
- 	if (xdl_cha_init(&cf->ncha, sizeof(xdlclass_t), size / 4 + 1) < 0) {
- 
-@@ -174,7 +174,7 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
- 		goto abort;
- 
- 	hbits = xdl_hashbits((unsigned int) narec);
--	hsize = 1 << hbits;
-+	hsize = 1U << hbits;
- 	if (!XDL_CALLOC_ARRAY(rhash, hsize))
- 		goto abort;
- 
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 3129aa28fd2..0810647c722 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -188,7 +188,7 @@ static int check_dotfile(const char *x, const char **argv,
+ 	int res = 0, expect = 1;
+ 	for (; *argv; argv++) {
+ 		if (!strcmp("--not", *argv))
+-			expect = !expect;
++			expect ^= 1;
+ 		else if (expect != (is_hfs(*argv) || is_ntfs(*argv)))
+ 			res = error("'%s' is %s.git%s", *argv,
+ 				    expect ? "not " : "", x);
 
-base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
+base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
 -- 
 gitgitgadget
