@@ -1,225 +1,126 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A2119CC11
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 11:17:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD56165F16
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 11:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734520668; cv=none; b=CHX2pe2O9IHxhSZUiKM1T5SOSvAdvOUgmAIgzMCnZHrEY4H5Z8Odh+q0YZZqxT7NMHNlqGWQJlKxLNuRK7ZfJU/dp3ipuuX9esk3zMc7mUh4ogqTos0+jtoaxHgqcruiLxXWfofz7RGMIO+MjwKRjaGWAhfb0CkhEkqxZPSZi/U=
+	t=1734521618; cv=none; b=GpiajQh9E19/bvPMihVJiPqNlNNKUvIfPLc5qjvOj/zsda5CyvLCssNZgMeCPwf90WFIV2LByADt7mWuvUTWOtaMD8IdGZcc8Qqy8MIoL6Zfm0VHlgOio39H03QZIdPdtq2NuEeqvcyAQf7omQfq+U+YCh02h6Ijxmk7wuG6o9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734520668; c=relaxed/simple;
-	bh=65MxGKJJHUderKUvm3+P7UtMgCmBMkjzEq7X2CRwMY8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=U+68JiyXRg2uQLGgNcrSPQonkuKgsfTJ52mz/aZXAUlx0bbmFrCEbotYzhxMIwQ4TogUfGYNAPE4xrbCEHdO8U2x+3H1NBVRbOj8O2pvlFgMwBWmz9LbtaPPgTj1BTCQFQD8YnUd2AcjqixPDKUWLLE8cjSCAdLKk7flvdq//0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FC8r89eQ; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734521618; c=relaxed/simple;
+	bh=4AwrV6gVESuRlprmW2lApfUuLZWuPzXUmSphn0zT0h0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VW5q57uBkvKzLTkaAFEOng+YOnnEyYkv5KxIfHbaFJLgluBIyaQF1H0/UiPfWufToCPXifA1MYiG6xVRPAkaNR+BPgD2s34Xjo+Ohv4hXrng/rDMTsvKHgMhLhVnqoalVsTwG6qMsXKhjDI+yN+z4XYGn4ybgskxAE7X3243B0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=V+7Cs8p+; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FC8r89eQ"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21675fd60feso65703445ad.2
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 03:17:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734520666; x=1735125466; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZVEp/I5qtuevILepEXNn2KQhv0b82vEmn868//7YeS4=;
-        b=FC8r89eQHuQ2cXl6D0cYUu4VMJv/Y/hUW8+hSlZUCgocJFwrIYcP4++ngS1tbiyF+x
-         n03VEdDJy27KkskMG0v7hhRj9kcfxRhxp9G+DcBGj5GY4E/m9bx5+rtdTun66dHdbPyl
-         ZlS6qLyKPwvyYQKRomiSJTS8zyeVgvbZBtaasuiPIjus1yMzmweIRS3wSjf1SjDP2WgM
-         gMzGtLWZkf4CEXSzbD9fjpFHIfd2yuawcTMXpy6c0JssQljKOncgP3K7TcJql1yS4Cq5
-         hr+iDay5L0HhDIgFbc9yrIsXwEfC204HZpdJx7NqFTI+9BVs/QOV773YR8griAfXt63w
-         RG1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734520666; x=1735125466;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZVEp/I5qtuevILepEXNn2KQhv0b82vEmn868//7YeS4=;
-        b=oDF+yfQBGGIaK2n5p19+eclnltSeirxyYSgaIX6532TINpP47tYwOUzpKEd5pVlIVx
-         u7yF/2CARmT968HqakHZrsnr5dzCIHVe2XBZzaDK1iMp1mAPU4JPuu1nz2TQervtzALH
-         FJj2RAiCyYdbMFxP8JsLAsJKa/uYbWnmznuma77iv47snbXHrqlB6k0JHC9rUPCa+CV0
-         zoPg8YuA3FH/jIkBar0vd2rSy24X7+CbMSW4SgOto7TehoOTEI6BEQpLmMjAO06NHg+Z
-         +uGoiYL/ISiwvTfU+KO5m2wc327lb+N39UR5J0eT5FSdB/G2GuEzI0WAbob0YSBNqJBh
-         Zvjw==
-X-Gm-Message-State: AOJu0YwWKml/Ct4fRfWYYqhGhwooEqHqpzazWdgNdxVXajeji93+jMw4
-	jNmeBIs9CjSDJcEk5OCHVW1Tt/3JHapqIOMT+mwQdoyiCdxRVUdAsqdqJr9h
-X-Gm-Gg: ASbGncsBankSijjaKJTRaUayyyOgoUks6NAIAD9AKm6dA3BihKIzEl3KGzLXZVDw2Ui
-	7dBmvt7i7u0DQ7IpFiPRNG3Iog+QaYBGSMwtTHLt91kskFJ+blZK9TRtIF5J/zQryIxxRvJ5VuK
-	yQL4Age85bsA+VpW+kvAL4d0MRbLWTIp0CDP97iissKexIYlkjDgpKPGhWoPtZ975zGgoxbHke0
-	B80MCYreAkmBIBvVIF+zTRFELwhDtrOWYbT8uPHTdmpfgmfhb6mcgU=
-X-Google-Smtp-Source: AGHT+IFb7bMn2ZuFkytcMU7am2aPvCPYhuse9ssKGthiWO3gA9jIOMpPU06T+YA3jk9w0vSvec9HZw==
-X-Received: by 2002:a17:902:d4cf:b0:215:3661:747e with SMTP id d9443c01a7336-218d6fd6008mr31702765ad.8.1734520665680;
-        Wed, 18 Dec 2024 03:17:45 -0800 (PST)
-Received: from meet.. ([103.240.169.233])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e64672sm73685985ad.216.2024.12.18.03.17.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 03:17:45 -0800 (PST)
-From: Meet Soni <meetsoni3017@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	karthik.188@gmail.com,
-	kaartic.sivaraam@gmail.com,
-	ps@pks.im,
-	shyamthakkar001@gmail.com,
-	shejialuo@gmail.com,
-	chandrapratap3519@gmail.com,
-	Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC] [PATCH] t7611: replace test -f with test_path_is* helpers
-Date: Wed, 18 Dec 2024 16:47:15 +0530
-Message-Id: <20241218111715.1030357-1-meetsoni3017@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="V+7Cs8p+"
+Received: (qmail 5689 invoked by uid 109); 18 Dec 2024 11:33:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=4AwrV6gVESuRlprmW2lApfUuLZWuPzXUmSphn0zT0h0=; b=V+7Cs8p+b5mIwZUqhxCXaJuLbQImN7sfVTth7c7v8Mm5EFm6/Z7zCv0+6OsTurG/FqaxPWGnaSaxq3hvmHc8ZjOL8BFILcZkNP0noFZeQPEJ3PDOEGNcpQ6IsYPJ5ijfJleS+hDB/3paRKO35x/lIiw3RcV6zseEvEbts6ZukH5AoNhFqskSs3TCy3jw92ZGb4YRxme26U+dPKG3c4csWi+gcdp6cpjDnaLdlrlVjXeXUR9pKvAfJCec735CO692ry8y5Cw8Gnf1GfEuIsYzbMxWDpBv2oAZ1rDDfrrhRwtscFGt+HqpNoQV2/FXIGDGuX5zal10p7WKb+uF4H0sfg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Dec 2024 11:33:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24377 invoked by uid 111); 18 Dec 2024 11:33:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2024 06:33:25 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 18 Dec 2024 06:33:24 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Kyle Lippincott <spectral@google.com>
+Subject: make GIT_VERSION=foo broken, was Re: [PATCH v2] doc: remove extra
+ quotes in generated docs
+Message-ID: <20241218113324.GA594795@coredump.intra.peff.net>
+References: <pull.1847.git.git.1734479267736.gitgitgadget@gmail.com>
+ <pull.1847.v2.git.git.1734483422181.gitgitgadget@gmail.com>
+ <xmqqbjx9yedb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbjx9yedb.fsf@gitster.g>
 
-test -f does not provide verbose error message on test failures, so use
-test_path_is_file, test_path_is_missing instead.
+On Tue, Dec 17, 2024 at 05:22:08PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
----
- t/t7611-merge-abort.sh | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+> > -<refmiscinfo class="source">Git 2.47.1.409.g9bb10d27e7</refmiscinfo>
+> > -<refmiscinfo class="manual">Git Manual</refmiscinfo>
+> > +<refmiscinfo class="source">'Git 2.47.1.410.ga38edab7c8'</refmiscinfo>^M
+> > +<refmiscinfo class="manual">'Git Manual'</refmiscinfo>^M
+> >  </refmeta>
+> >  <refnamediv>
+> >      <refname>git-bisect</refname>
+> > ```
+> 
+> Thanks for filling the blanks in ;-)
+> 
+> The above differences however seem to be absorbed before these
+> strings reach git-bisect.1 by the documentation toolchain;
+> Running Documentation/doc-diff with --asciidoc or --asciidoctor
+> options do not show the difference in single quotes.
 
-diff --git a/t/t7611-merge-abort.sh b/t/t7611-merge-abort.sh
-index d6975ca48d..1a251485e1 100755
---- a/t/t7611-merge-abort.sh
-+++ b/t/t7611-merge-abort.sh
-@@ -54,13 +54,13 @@ test_expect_success 'fails without MERGE_HEAD (unstarted merge)' '
- '
- 
- test_expect_success 'fails without MERGE_HEAD (unstarted merge): .git/MERGE_HEAD sanity' '
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)"
- '
- 
- test_expect_success 'fails without MERGE_HEAD (completed merge)' '
- 	git merge clean_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	# Merge successfully completed
- 	post_merge_head="$(git rev-parse HEAD)" &&
- 	test_must_fail git merge --abort 2>output &&
-@@ -68,7 +68,7 @@ test_expect_success 'fails without MERGE_HEAD (completed merge)' '
- '
- 
- test_expect_success 'fails without MERGE_HEAD (completed merge): .git/MERGE_HEAD sanity' '
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$post_merge_head" = "$(git rev-parse HEAD)"
- '
- 
-@@ -79,10 +79,10 @@ test_expect_success 'Forget previous merge' '
- test_expect_success 'Abort after --no-commit' '
- 	# Redo merge, but stop before creating merge commit
- 	git merge --no-commit clean_branch &&
--	test -f .git/MERGE_HEAD &&
-+	test_path_is_file .git/MERGE_HEAD &&
- 	# Abort non-conflicting merge
- 	git merge --abort &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff)" &&
- 	test -z "$(git diff --staged)"
-@@ -91,10 +91,10 @@ test_expect_success 'Abort after --no-commit' '
- test_expect_success 'Abort after conflicts' '
- 	# Create conflicting merge
- 	test_must_fail git merge conflict_branch &&
--	test -f .git/MERGE_HEAD &&
-+	test_path_is_file .git/MERGE_HEAD &&
- 	# Abort conflicting merge
- 	git merge --abort &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff)" &&
- 	test -z "$(git diff --staged)"
-@@ -105,7 +105,7 @@ test_expect_success 'Clean merge with dirty index fails' '
- 	git add foo &&
- 	git diff --staged > expect &&
- 	test_must_fail git merge clean_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff)" &&
- 	git diff --staged > actual &&
-@@ -114,7 +114,7 @@ test_expect_success 'Clean merge with dirty index fails' '
- 
- test_expect_success 'Conflicting merge with dirty index fails' '
- 	test_must_fail git merge conflict_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff)" &&
- 	git diff --staged > actual &&
-@@ -129,10 +129,10 @@ test_expect_success 'Reset index (but preserve worktree changes)' '
- 
- test_expect_success 'Abort clean merge with non-conflicting dirty worktree' '
- 	git merge --no-commit clean_branch &&
--	test -f .git/MERGE_HEAD &&
-+	test_path_is_file .git/MERGE_HEAD &&
- 	# Abort merge
- 	git merge --abort &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff --staged)" &&
- 	git diff > actual &&
-@@ -141,10 +141,10 @@ test_expect_success 'Abort clean merge with non-conflicting dirty worktree' '
- 
- test_expect_success 'Abort conflicting merge with non-conflicting dirty worktree' '
- 	test_must_fail git merge conflict_branch &&
--	test -f .git/MERGE_HEAD &&
-+	test_path_is_file .git/MERGE_HEAD &&
- 	# Abort merge
- 	git merge --abort &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff --staged)" &&
- 	git diff > actual &&
-@@ -159,7 +159,7 @@ test_expect_success 'Fail clean merge with conflicting dirty worktree' '
- 	echo xyzzy >> bar &&
- 	git diff > expect &&
- 	test_must_fail git merge --no-commit clean_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff --staged)" &&
- 	git diff > actual &&
-@@ -168,7 +168,7 @@ test_expect_success 'Fail clean merge with conflicting dirty worktree' '
- 
- test_expect_success 'Fail conflicting merge with conflicting dirty worktree' '
- 	test_must_fail git merge conflict_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff --staged)" &&
- 	git diff > actual &&
-@@ -183,7 +183,7 @@ test_expect_success 'Fail clean merge with matching dirty worktree' '
- 	echo bart > bar &&
- 	git diff > expect &&
- 	test_must_fail git merge --no-commit clean_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff --staged)" &&
- 	git diff > actual &&
-@@ -194,7 +194,7 @@ test_expect_success 'Fail conflicting merge with matching dirty worktree' '
- 	echo barf > bar &&
- 	git diff > expect &&
- 	test_must_fail git merge conflict_branch &&
--	test ! -f .git/MERGE_HEAD &&
-+	test_path_is_missing .git/MERGE_HEAD &&
- 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
- 	test -z "$(git diff --staged)" &&
- 	git diff > actual &&
+Hmm. I thought that might be because we override the version and date
+strings in doc-diff to prevent extra output. But it seems that was
+broken by the same commit. Try:
 
-base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
--- 
-2.34.1
+  ./doc-diff a38edab7^ a38edab7
 
+and you'll get a bunch of:
+
+-Git omitted                        1970-01-01                        GIT-ADD(1)
++Git 2.47.1.410.ga                  2024-12-06                        GIT-ADD(1)
+
+diffs which show the breakage starting (and after that, you get further
+changes as each version changes by one commit).
+
+The override is done by setting GIT_VERSION on the make command line.
+And indeed, it seems like:
+
+  make GIT_VERSION=foobar
+
+no longer has any effect. That could be a problem for packagers, as
+well, if they try to inject a custom version string (e.g., to represent
+the upstream version plus their patches). I don't know if anybody does
+that, though.
+
+The root of the problem is that we used to generate GIT-VERSION-FILE and
+source it as a Makefile snippet. That let the usual Makefile precedence
+rules override what was in the file. But after that commit, we use the
+script to directly generate the version _and_ replace the contents of
+asciidoc.conf, etc.
+
+I think the workaround here would be to manually override asciidoc's
+config like this:
+
+  make ASCIIDOC='asciidoc -amansource="Git omitted" -arevdate=1970-01-01'
+
+But besides being horrible, I think that only works because asciidoc
+gives us a layer of indirection. The same problem exists for the
+built-in version-def.h. Try this:
+
+  $ git checkout v2.47.0
+  $ make GIT_VERSION=super-secret
+  [...]
+  $ bin-wrappers/git version
+  git version super-secret
+
+  $ git checkout v2.48.0-rc0
+  $ make GIT_VERSION=super-secret
+  [...]
+  $ bin-wrappers/git version
+  git version 2.48.0.rc0
+
+I wondered if this would also leak out over the network via the agent
+string, but it doesn't seem to. I think because GIT_USER_AGENT is
+handled specially in the script; we accept the value from the
+environment and only default it to git/$GIT_VERSION.
+
+Perhaps the script should be doing the same for GIT_VERSION itself,
+along with GIT_DATE?
+
+-Peff
