@@ -1,66 +1,66 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9935FC0E
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:42:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927BD1E529
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:48:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734482542; cv=none; b=qB1pTRmuYmPD8k52LKiNA+oTJSN2rkuAmhy63tna496bVI6/0pAqKP3JBqpX7RfGYX+v4H4cilCGpIb5UXa+eYQ+N7qwbtVM469VEyHoAaf8SxPe4DTpfjGOy/yTPuWNSxkrca2xZwmcn98K1vKQM3fMyrFx5MdFMUN8kpwxaeA=
+	t=1734482902; cv=none; b=eHa5pPPahe/V6rsUUSvknquNMpnBOQSKHV2bldWiA+d3BxzNSXdu7n4TEoxY/wWzutJ3L1IqREPvbRtWMyH4z42FPvixZi/OV9o8wwhR84nzO+LwYs5AV5rX8PV7hXVle1BnFtyAjby99D+9n98WREopyiN3NG3qDJGj/ispN8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734482542; c=relaxed/simple;
-	bh=h+xmG0cf1Vn5BNQ5QhRYg0RRi4zNL/JUc7gGWdaEFJI=;
+	s=arc-20240116; t=1734482902; c=relaxed/simple;
+	bh=AKm6Ojnh0n7G2CYr30zHGM5drW+R1r2UnmhKN9Q4cYE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=EcDUzdxt5WCW2xUOH9+eserwHk7CtwBuYK+W2Z4vx5bibkUT2eHmJog1u9p92NOMw7A1n1Kn1NGqGpzrgbw1C9i/tnBvKMYkvKe3oqOqeKyUhi+KMS2zcrZRs2kE3i0sKxa5tjduW62WMHWMO/vpdJtS7wvL8f1qNndipSratHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JpY2hY06; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version:To:Cc; b=Rvg/1VlS3wrWP+D68S61Yod5uxpkZkBJ+N2c/QHfuqWHQYmim5NOShedHibdVWNWLrY3ZyEQl4Jg1kuA10a6JMXIFK9RdROc61K8VjyhXaKa9Bl+XnVekIEMozKS9ScrrZDeQU8p5u4sGom0qPTRaT59TvVH9bXs/0ACcsN8NVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z2253bP+; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JpY2hY06"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-385ddcfc97bso4895092f8f.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 16:42:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2253bP+"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4362bae4d7dso34099715e9.1
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 16:48:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734482538; x=1735087338; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734482897; x=1735087697; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yW6JsaC1Hbi3vYKMY2RpG1d5S8cNC+v8oVr7rbpS3aA=;
-        b=JpY2hY06LYC7rzVkZHUa+y65J1ckWkyVRneaMmL8owc8PV1NU9Km+sJ5ygO85OnE+g
-         /GcfdldHWS1mDWZg3kTlj0wecrlZu2fesccFrSroz/We0GT7VjupIHnVtHeEM5jezt1B
-         hjQqTE0M5OhJfJP1v+35cf1H+DJJJ6qsQ/M3nH5nHqrYkyZgr+sP3Pf0n3V27H5Az6Q5
-         KU7INoAoCsopuZrUREoC6fhxA+FALS8pW+9B2nlqvLzCS1+H3TzyYZzS8qcN1GI0XBbs
-         3b2LfRAdiY7ukn0mI2RXgRvbuBVSilXeIqs7ULR0yKMBUPB5WNAnsaZVmuiQ61zU/Kz5
-         17VA==
+        bh=Hk2T5f78d46i5gc8o3R3U1mB3DZlfMMlDMkjwlT2M0Q=;
+        b=Z2253bP+Undc7rLnOvPj/jbaYDHtqJiD4aINrjbariNy3y3YnJMAmayYK56orOQMaR
+         44C13faMLp0OzX03XzYtAx5Ym7PepRwdrhQmE8L6G9p4QDe/l52OjjlLjRVSTaVfvKRk
+         Rkyos2EDCvhl/i9KQU3t6mSNcRDCzwqc0WgV5ZituqaflK01fSa0hfC+eF8zvXVscc+m
+         JMYNuwwgvR0QY06d2tnD36VpRn3iMjLmpzsFeIJsqZAjJxjvVNn/rAFtbLFK+wwBxIyr
+         sak7i7+zPKI3Dab0OxfzzoOlCuexj87+8itnZs/M9DLAbjP6kYywKfIlmvoVoNCSnMQI
+         +RXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734482538; x=1735087338;
+        d=1e100.net; s=20230601; t=1734482897; x=1735087697;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yW6JsaC1Hbi3vYKMY2RpG1d5S8cNC+v8oVr7rbpS3aA=;
-        b=cY7FrL9m12CKGQ0lknFBHwxTNhrQRS151adwWGfjRG2qMKwScijqT/R9MVNKrngKO3
-         cyhs8OICen+IiRuS4jCPfeLeOVVYAdOsibOH6+anQCu71X4aV9sXbPynxpAF4P6ggbI2
-         ECCVdA7w6FSVw1CDqOf0ZssuM3aoLZd7w2J38IobOTgEy+huAOuu1LqhBwXrb4Lr8zrQ
-         ZFqJtnkQWZE6bw64NG2D59P14QOuIRT7WLvNaQxqFb/0/M+ELkbb0tnrKHUY1XH7gPTy
-         cyuEGO9+RLpcMsnJn75Hw+pcU3YX3yw7nYUXRxt8uvCGNmCEt+YWIPP21LDCYfstTfSy
-         SLHA==
-X-Gm-Message-State: AOJu0Yz1NtNWqJpq0IpVuNFlcvgut1x/uGVa/CZyMqhxFmPyxQIJl+Nj
-	fQGIsuML79Ts+JQUeBoSXVtbtzzJzspD1U5qRPMieKyPyPCDzQX3+QhKYg==
-X-Gm-Gg: ASbGnctDP9sDOJD24kD5uaGR+ewFBFGMVQVpKf4EfE0toSd05lEjhznRrLAn9w8kscw
-	w7OIGbrQDgXk8w0Rd/Rj5REWRC+LgjbxR4vnCW6U6qklqMz10YQRM591DwKpJOUs6yHaduekZJ5
-	LL0mX04g3jTYfdb6l3PM2l6rzDyGq46LrwbNWnq4aDkygzvQxwfMnMI7UYOWOnKdCjQcEM00AVK
-	1ot3+HnOzeaxfB8e2adPMonugHsvf/9PEprinUgFCXUa9KiBRtohyf1MQ==
-X-Google-Smtp-Source: AGHT+IH3ybVa8uFF5AQUp5UP4560V35EqsIIxoA4Zaw/lZo7/LivMJy7EDf+0TGPhPO7xjC5eu03HQ==
-X-Received: by 2002:a5d:6d8a:0:b0:385:dffb:4d56 with SMTP id ffacd0b85a97d-388e4d9aad6mr661472f8f.53.1734482538333;
-        Tue, 17 Dec 2024 16:42:18 -0800 (PST)
+        bh=Hk2T5f78d46i5gc8o3R3U1mB3DZlfMMlDMkjwlT2M0Q=;
+        b=DalVpqiFFr/mBg5kwnjvZCVq80wwGcxqAG63sYQ8WluK2HkkWYupBZ8wWl7fxHpEWC
+         ovJHAF4AS3QQVQCycx2X5UkAtb4+UL5n49AfAF1Q8qjxvbIQypvlpSKpZJCam9TEa9QE
+         zsFtBY8p5IIWvnkULpboZu3I5aLkxOzs/CAM4rzZtRt7HwoUIYFBvQAO2/9e3dfRsn9y
+         gkilenyUQF5/4UHWOZn/QngAmkKiV55/gXLiBrSfjaFFdYanVmnNNUkZGy0jcaHj0/HP
+         HuNOPnEMM4SOe0ArXahnQtDWinyt/zcH8ThYE4b9+0xdFuoNQ4lUk5LKu+ulVOslOwgk
+         4K4g==
+X-Gm-Message-State: AOJu0YzgzmbqiLUuU6QZZNdslC9mSi7ZF6AvTCOIKBtXcpb1+SDLyV9c
+	FISIU8RGLn7n4L3PjfUQQyQUMc9/VwXp0B5YdZexIBfY2CVIAdcgPNfPMw==
+X-Gm-Gg: ASbGncv3v7ULBp+HK4oLNF79RZ1aDHsqrHKEn5YMsxgKvQ8Fk1+sPXNouzslR14STCJ
+	TtEP2+2FSZQTsoi+2DmeeQWKqpXMo6aH/Z8ePxCggUGSu9hTCOH5z/StoBPU6opGlfUeQ2xeYhq
+	Tdcc9iemcFI88HDRA0C+hnwX8aHzWHSG2zYvynTvjAqmUOXW72QlKYlKOGZAVFREw2+UeBQguVD
+	/Mc4BvXL/bo3N1UjWfjWsRUsvIX+jljEQB+7nSKRYjqRyWZjAkmelMkcA==
+X-Google-Smtp-Source: AGHT+IFGTqP43M98iG39WbiRmkdgjArdm+IDBGhDA8gfbruZJIzUy80v0m0BIPckujOLEMYsoirr2A==
+X-Received: by 2002:a05:600c:4fc5:b0:435:192:63ca with SMTP id 5b1f17b1804b1-436553f4d35mr4911725e9.21.1734482897097;
+        Tue, 17 Dec 2024 16:48:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c801af46sm12435951f8f.61.2024.12.17.16.42.17
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b119d7sm2807875e9.20.2024.12.17.16.48.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 16:42:17 -0800 (PST)
-Message-Id: <pull.1620.v3.git.git.1734482536998.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1620.v2.git.git.1734481009264.gitgitgadget@gmail.com>
-References: <pull.1620.v2.git.git.1734481009264.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 16:48:16 -0800 (PST)
+Message-Id: <pull.1390.v8.git.git.1734482895877.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1390.v7.git.git.1734481847156.gitgitgadget@gmail.com>
+References: <pull.1390.v7.git.git.1734481847156.gitgitgadget@gmail.com>
 From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 00:42:16 +0000
-Subject: [PATCH v3] git: use ^=1 to toggle between 0 and 1
+Date: Wed, 18 Dec 2024 00:48:15 +0000
+Subject: [PATCH v8] git: use calloc instead of malloc where possible
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,76 +71,162 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Dragan Simic <dsimic@manjaro.org>,
-    Jeff King <peff@peff.net>,
-    =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-    Phillip Wood <phillip.wood123@gmail.com>,
+Cc: "Jeff Hostetler [ ]" <git@jeffhostetler.com>,
+    "=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason [ ]" <avarab@gmail.com>,
+    "Bagas Sanjaya [ ]" <bagasdotme@gmail.com>,
     AreaZR <gfunni234@gmail.com>,
     Seija Kijin <doremylover123@gmail.com>
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-If it is known that an int is either 1 or 0,
-doing an exclusive or to switch instead of a
-modulus makes more sense and is more efficient.
+We can avoid having to call memset by calling calloc.
 
 Signed-off-by: Seija <doremylover123@gmail.com>
 ---
-    git: use ^=1 to toggle between 0 and 1
+    git: use calloc instead of malloc where possible
     
-    If it is known that an int is either 1 or 0, doing an exclusive or to
-    switch instead of a modulus makes more sense and is more efficient.
+    We can avoid having to call memset by calling calloc
     
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
+    Signed-off-by: Seija doremylover123@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1620%2FAreaZR%2Fbuffer-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1620/AreaZR/buffer-v3
-Pull-Request: https://github.com/git/git/pull/1620
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1390%2FAreaZR%2Fcalloc-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1390/AreaZR/calloc-v8
+Pull-Request: https://github.com/git/git/pull/1390
 
-Range-diff vs v2:
+Range-diff vs v7:
 
- 1:  5819a51526b ! 1:  f6e75d8eff0 Use ^=1 to toggle between 0 and 1
+ 1:  e91cea8dea8 ! 1:  b78f068b3a3 revision: use calloc instead of malloc where possible
      @@ Metadata
       Author: Seija Kijin <doremylover123@gmail.com>
       
        ## Commit message ##
-     -    Use ^=1 to toggle between 0 and 1
-     +    git: use ^=1 to toggle between 0 and 1
+     -    revision: use calloc instead of malloc where possible
+     +    git: use calloc instead of malloc where possible
       
-          If it is known that an int is either 1 or 0,
-          doing an exclusive or to switch instead of a
+     -    We can avoid having to call memset by calling calloc
+     +    We can avoid having to call memset by calling calloc.
+      
+          Signed-off-by: Seija <doremylover123@gmail.com>
+      
+     - ## builtin/pack-redundant.c ##
+     -@@ builtin/pack-redundant.c: static inline struct llist_item *llist_item_get(void)
+     - 	return new_item;
+     - }
+     - 
+     --static inline void llist_init(struct llist **list)
+     --{
+     --	*list = xmalloc(sizeof(struct llist));
+     --	(*list)->front = (*list)->back = NULL;
+     --	(*list)->size = 0;
+     --}
+     --
+     - static void llist_free(struct llist *list)
+     - {
+     - 	for (struct llist_item *i = list->front, *next; i; i = next) {
+     -@@ builtin/pack-redundant.c: static struct llist * llist_copy(struct llist *list)
+     - 	struct llist *ret;
+     - 	struct llist_item *new_item, *old_item, *prev;
+     - 
+     --	llist_init(&ret);
+     -+	CALLOC_ARRAY(ret, 1);
+     - 
+     - 	if ((ret->size = list->size) == 0)
+     - 		return ret;
+     -@@ builtin/pack-redundant.c: static void load_all_objects(void)
+     - 	struct pack_list *pl = local_packs;
+     - 	struct llist_item *hint, *l;
+     - 
+     --	llist_init(&all_objects);
+     -+	CALLOC_ARRAY(all_objects, 1);
+     - 
+     - 	while (pl) {
+     - 		hint = NULL;
+     -@@ builtin/pack-redundant.c: static void cmp_local_packs(void)
+     - 
+     - 	/* only one packfile */
+     - 	if (!pl->next) {
+     --		llist_init(&pl->unique_objects);
+     -+		CALLOC_ARRAY(pl->unique_objects, 1);
+     - 		return;
+     - 	}
+     - 
+     -@@ builtin/pack-redundant.c: static struct pack_list * add_pack(struct packed_git *p)
+     - 		return NULL;
+     - 
+     - 	l.pack = p;
+     --	llist_init(&l.remaining_objects);
+     -+	CALLOC_ARRAY(l.remaining_objects, 1);
+     - 
+     - 	if (open_pack_index(p))
+     - 		return NULL;
+     -@@ builtin/pack-redundant.c: int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
+     - 		scan_alt_odb_packs();
+     - 
+     - 	/* ignore objects given on stdin */
+     --	llist_init(&ignore);
+     -+	CALLOC_ARRAY(ignore, 1);
+     - 	if (!isatty(0)) {
+     - 		struct object_id oid;
+     - 		while (fgets(buf, sizeof(buf), stdin)) {
+     -
+       ## remote.c ##
+      @@ remote.c: void apply_push_cas(struct push_cas_option *cas,
+       
 
 
- diff.c                     | 2 +-
- t/helper/test-path-utils.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ remote.c    |  4 ++--
+ submodule.c | 10 +++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 266ddf18e73..5c2ac8d6fd1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1231,7 +1231,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 							    &pmb_nr);
+diff --git a/remote.c b/remote.c
+index 10104d11e3c..462ff105273 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2854,9 +2854,9 @@ void apply_push_cas(struct push_cas_option *cas,
  
- 			if (contiguous && pmb_nr && moved_symbol == l->s)
--				flipped_block = (flipped_block + 1) % 2;
-+				flipped_block ^= 1;
- 			else
- 				flipped_block = 0;
+ struct remote_state *remote_state_new(void)
+ {
+-	struct remote_state *r = xmalloc(sizeof(*r));
++	struct remote_state *r;
  
-diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
-index 3129aa28fd2..0810647c722 100644
---- a/t/helper/test-path-utils.c
-+++ b/t/helper/test-path-utils.c
-@@ -188,7 +188,7 @@ static int check_dotfile(const char *x, const char **argv,
- 	int res = 0, expect = 1;
- 	for (; *argv; argv++) {
- 		if (!strcmp("--not", *argv))
--			expect = !expect;
-+			expect ^= 1;
- 		else if (expect != (is_hfs(*argv) || is_ntfs(*argv)))
- 			res = error("'%s' is %s.git%s", *argv,
- 				    expect ? "not " : "", x);
+-	memset(r, 0, sizeof(*r));
++	CALLOC_ARRAY(r, 1);
+ 
+ 	hashmap_init(&r->remotes_hash, remotes_hash_cmp, NULL, 0);
+ 	hashmap_init(&r->branches_hash, branches_hash_cmp, NULL, 0);
+diff --git a/submodule.c b/submodule.c
+index 7ec564854d0..7707c6f48f0 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1489,14 +1489,13 @@ struct fetch_task {
+  */
+ static const struct submodule *get_non_gitmodules_submodule(const char *path)
+ {
+-	struct submodule *ret = NULL;
++	struct submodule *ret;
+ 	const char *name = default_name_or_path(path);
+ 
+ 	if (!name)
+ 		return NULL;
+ 
+-	ret = xmalloc(sizeof(*ret));
+-	memset(ret, 0, sizeof(*ret));
++	CALLOC_ARRAY(ret, 1);
+ 	ret->path = name;
+ 	ret->name = name;
+ 
+@@ -1536,8 +1535,9 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
+ 					    const char *path,
+ 					    const struct object_id *treeish_name)
+ {
+-	struct fetch_task *task = xmalloc(sizeof(*task));
+-	memset(task, 0, sizeof(*task));
++	struct fetch_task *task;
++
++	CALLOC_ARRAY(task, 1);
+ 
+ 	if (validate_submodule_path(path) < 0)
+ 		exit(128);
 
 base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
 -- 
