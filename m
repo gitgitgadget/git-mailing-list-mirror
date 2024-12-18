@@ -1,63 +1,63 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A9812A177
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 15:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95D71E0DED
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 15:09:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734534199; cv=none; b=SNbkwMvH5lWcFX3PbmXXK+8t7uF1oVupJqarWRroSjfY2/WMZkOAFEWp3fvV5xpTIyOFTLbydYd1oEgE7/BDhA2U7FZjVk+IwDtYpgqxKvlUXGeZX5YQUK6aGnPselFx0YKZAePUTFP06UdfCT7qG9IDvAfK5apEIWtcK/Duwkc=
+	t=1734534582; cv=none; b=JsU9QTK3vPlGPtYZBsfQ1wDLy9nJz3+gd56FLHcn+1WpgYPZveKfPrFWxlFbTVawXmKTVsUFFiOuW/jvLzei2UzhpP877HyvxLhIUdP2JfFspLjLlcb/HlduLIzPIXJphGNuVLSnaktExzXEm4riF4/Osa6ZcQ4fXKNrCro8Oaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734534199; c=relaxed/simple;
-	bh=bGboQ2S1PGe8UwpJawRyY3u4NmA7QZf/2P/uYqXhskM=;
+	s=arc-20240116; t=1734534582; c=relaxed/simple;
+	bh=eKxjAahbSX5SLTmufH2YPGTZIKUiC3IYUMy6ZVxyQk8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VEvP9hH2IUVDy/Q3y6zQNgV8j/hu1JXEg8EYIwiXT7/663dofL0RnqkH302wY5xo2cQVU3TsqHGgvasc87aeWJDqf+S6V6sfDJZ3U19nnrBhLyssvpaiD2TeGSP3V/0/siKe0OkGsDuRjPVAMX5SBwJBwkwNehtIQ5MwYDVFhYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EIMS6106; arc=none smtp.client-ip=209.85.128.182
+	 In-Reply-To:Content-Type; b=BHIvw/pyPZNUX17ySirQ39tWsadOCFQXt/ejdDa5fQTXjhS1C2R0BWYjITqEAr7Gi/J6BKlHh2imzPDKXZA/ZwWXWoMzfOhG8wDZshHDWEz0/H9wR5d9G+qulqLjDHEIDCaRFzn4RG+CP5gXRGXFP5R/MpvlASRY97Qx4XEMqxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VOOg2UsM; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EIMS6106"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6eff8289d0eso64277977b3.0
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 07:03:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VOOg2UsM"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6eff4f0d627so59380627b3.1
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 07:09:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734534195; x=1735138995; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734534580; x=1735139380; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=JY/Wy669nZHdOGFKZkZvmIie6tXDBeUB38bLSIoz1aQ=;
-        b=EIMS6106dr/L8LUQn5tIv26Pf1M5xJ9LT3dMe/T1ja58buBy7UJOBliLTE+OtCKNQ8
-         1rO0j0uVWEak53v1TOx7HXjLGWZ6bBPZMoJLYQBw4+5rg8chFeelY288TBGVRkCxoK6k
-         mcut9ZkEpVzPFTx0ISMNbuAXV3HmsY+eXA8IwczPwuLsY20CxyVpvoCSuOEaXkgyTu0u
-         5qco74uqtJ+LBaQZJJ7vTU+8TJVDEOIqpJ8mlpq6jrZzayX4NsjTWRbY2PayuFn9PlQd
-         4ae+MluXkwkY6p3tQWyegAchDupMu080sBa49PePSOz1pe6pYHq6b2X1SKefyvwF5glx
-         yoUQ==
+        bh=+REf39VPiq9ogUM9ZqES86BsoOvKce8pM3dcdqYdlB8=;
+        b=VOOg2UsMOWZ5D+CT/8K4NAe4o5cK2xpIZoxEPC1ihBMCmQ7AC5dQRARmSvAHK+9t+q
+         f07TBhQoqgnAj9xlA3qlx5ILWYEPH3sgG1oLcV2oxgU9Dl6HZgGJN6A24S9EguN666YD
+         Ko77P2HC33D9ZXluk7KROs1bLsJ8I1USgJX/O98b9Mib4FWLIpW8BLrRu5ktk14fkALS
+         vQ9Gvlf9yFfiFSckhll1MlGZ9iS9lZQ2lSMEhmPeXQzCz4dL5bEhyGk0UToVBSkJhRHa
+         oElGwkwHtt2OORVJdIww9G6/7n5EDQrMbA2RNCuyHy6+ZDTkrRrEjhY3ie5FEd1Z8jEJ
+         v1mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734534195; x=1735138995;
+        d=1e100.net; s=20230601; t=1734534580; x=1735139380;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JY/Wy669nZHdOGFKZkZvmIie6tXDBeUB38bLSIoz1aQ=;
-        b=arJYkatf32kerQEGOVshczwJ760o2EvLUEc9j4UF3Wnm1mGlRO6qjrYcscWE0HYz2s
-         Trg4/+YHwykgOrsVxmdzAL/K3Yx0gfBbIO9O3UAG07h4Oi5sNymldmLEjvy8getJNwjm
-         yoMXbSNfDNKQJA3Z6dJ0Nk0IAP3G7p1RPXZYXlgirbvEfEmAz9mz1yTa+jfMdbgIzvdK
-         7CdN+tjzpUBl0fzpV1tduTLI55++Q9/hiE44INC3JDwZOf/hkWgB9Z9lExz9wypil0WR
-         Bz+2PT24BM/1UjVc1wLqIOtS3dE9x9/FW4vlu2k6XenPPbwYqoZQyc+yl/KxtASgBmIc
-         O7Kg==
-X-Gm-Message-State: AOJu0YycO3EVgNmj90OzeP8YSpN37Q+ymzjPbJGWYvKzN70rYXJBheJP
-	5VBd2hI+oova23MjqEc0/8FMQiL4W1p6O9etdBJCgJE/QCYrSaOs
-X-Gm-Gg: ASbGncsTXUbzl4bENXAnRo8UD8Ac7lafMRk7+CvscqA1aj9Dawhsj0/+JbZCCR/4B6B
-	/GHrjgzAIRIItfufl7jukd74Y/KJF284ooGUbAwh01FkDdfyJX00ldx8suOqQKK4sdhqdzVUvZN
-	ay2HJ9GNDC7ZysBqoNXdUYoHcXXhAapCLbeZxQjJoZkx5cuhjE+AnXshbyt5T6/QxNYsrynhLQm
-	fjUcXM3qFHYRXz7g1AMeH7SneN+HUDztN6sURP4+y+WVqgpy3i5Jh83zb13YHP0dxc+PKBl2/3m
-	Uy+ZKS0svDDJ14UX55SxOUJzW4Z206CMnOiU1SlZug==
-X-Google-Smtp-Source: AGHT+IGEK8IEPKB/TuUxs1/BfsFbXY6WMlQ8KTIKv/uslTJXRTr/EycD+MWd4ZPVWK5yEMjlmRLc+Q==
-X-Received: by 2002:a05:690c:6913:b0:6ef:8e8a:6348 with SMTP id 00721157ae682-6f3d269df4fmr24277227b3.42.1734534195264;
-        Wed, 18 Dec 2024 07:03:15 -0800 (PST)
+        bh=+REf39VPiq9ogUM9ZqES86BsoOvKce8pM3dcdqYdlB8=;
+        b=BI9hafE0eo7UeJuRAj1TBzqbcnS2LVlcw3o4lQqGji3pDc0eVcJMSZ/HJWSmpVjnoJ
+         Vang91baOM6p0q/dOz0Gol9M6ILR64VuBy3RjCmrUltWIL8lXHrObiQodONYxAdOhosv
+         8Unno3YLDR6ATTw9jAQ6X+oztOAwMhH9/ODj9lRyJTsoyyLLhkDc3uXVP519/GOL1oC7
+         CmqErK4dKy0chjI6AT1iCVNo6zNBA0//0oHoNUgj2ojO35pBWX7/OmZ4HiFPWr9q8vS7
+         0rObuW8tHx+7oqEim4q7UGXZVQbJwje97a4dOF8OCP3EqBZbC8GfZ7dIJvoVXMEnF4+1
+         esjQ==
+X-Gm-Message-State: AOJu0YyDBXN4qaQM1u2WX4QZdd/kuWV/HrMUmg+V872+o6NgMbv5v2xp
+	H37zMVeE1MW4rCCgy7FaXlOT/cnbMQExM37cISbfG1iJWTW4Qw/QTpm4fGEd
+X-Gm-Gg: ASbGncuIUjcZhCq0/WoShpxlLVTdfM5UcxNfjBJw/x9NUnlAwZ/a5NIQzi5M0qbxjHo
+	JtejTBP5GTpDZpxiwvFMuy6hXClWDvHNEXcyWG83KYNU2l8L5gv2ZrPz0jpByrnjGVlv9/gz+OZ
+	aeyxwq+bE3tbxrCXuZq4sl909dgiDcz7h8wPPyfyzI8MBSRYpSx8lKq8qOwpR3s4IJoLF7RF0xB
+	AxEFBQ6d0Llx5Hn+i0msgNzM8ixHn9HJwcQjBazeOEKNwKmBZMLO6wLat4RaL9Ys4C1LkW+U+Ak
+	Ik1QGRSrZckUZfjbP6JIRJrVdMfEcDz4O4+r5iEUXw==
+X-Google-Smtp-Source: AGHT+IF0lqu0t5wZRiFjVLYzoPfpA5JhRNC9qstiM1pqBsYWFdVE6MVld5r0hMiOKf0xo7590prsVA==
+X-Received: by 2002:a05:690c:4881:b0:6ef:5ab8:2c53 with SMTP id 00721157ae682-6f3d0e3148bmr21204007b3.19.1734534579782;
+        Wed, 18 Dec 2024 07:09:39 -0800 (PST)
 Received: from ?IPV6:2600:1700:60ba:9810:749d:17a4:27e:8972? ([2600:1700:60ba:9810:749d:17a4:27e:8972])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f2891ef11csm24082547b3.111.2024.12.18.07.03.14
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f289033fd9sm24080827b3.66.2024.12.18.07.09.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2024 07:03:14 -0800 (PST)
-Message-ID: <79e8b04c-f8e4-4a8d-b55d-74f39d5978b6@gmail.com>
-Date: Wed, 18 Dec 2024 10:03:13 -0500
+        Wed, 18 Dec 2024 07:09:39 -0800 (PST)
+Message-ID: <d8e64f60-79c2-4c3d-9dc4-5e9842943de3@gmail.com>
+Date: Wed, 18 Dec 2024 10:09:38 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,7 +65,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] backfill: basic functionality and tests
+Subject: Re: [PATCH 3/5] backfill: add --batch-size=<n> option
 To: Patrick Steinhardt <ps@pks.im>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
@@ -74,124 +74,72 @@ Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
  jonathantanmy@google.com, karthik.188@gmail.com,
  Derrick Stolee <derrickstolee@github.com>
 References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
- <5728dd2702195b7ba3a208859f114e40ba2b6bbd.1733515638.git.gitgitgadget@gmail.com>
- <Z1_eUSGN3B13uGmM@pks.im>
+ <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
+ <Z1_eTHk6IEJ0BEEg@pks.im>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Z1_eUSGN3B13uGmM@pks.im>
+In-Reply-To: <Z1_eTHk6IEJ0BEEg@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 12/16/24 3:01 AM, Patrick Steinhardt wrote:
- > On Fri, Dec 06, 2024 at 08:07:15PM +0000, Derrick Stolee via GitGitGadget wrote:
-
- >> +The `git backfill` command provides a way for the user to request that
- >> +Git downloads the missing blobs (with optional filters) such that the
- >> +missing blobs representing historical versions of files can be downloaded
- >> +in batches. The `backfill` command attempts to optimize the request by
- >> +grouping blobs that appear at the same path, hopefully leading to good
- >> +delta compression in the packfile sent by the server.
+ > On Fri, Dec 06, 2024 at 08:07:16PM +0000, Derrick Stolee via GitGitGadget wrote:
+ >> From: Derrick Stolee <derrickstolee@github.com>
+ >>
+ >> Users may want to specify a minimum batch size for their needs. This is only
+ >> a minimum: the path-walk API provides a list of OIDs that correspond to the
+ >> same path, and thus it is optimal to allow delta compression across those
+ >> objects in a single server request.
  >
- > Hm. So we're asking the user to fix a usability issue of git-blame(1),
- > don't we? Ideally, git-blame(1) itself should know to transparently
- > batch the blobs it requires to compute its output, shouldn't it? That
- > usecase alone doesn't yet convince me that git-backfill(1) is a good
- > idea as I'd think we should rather fix the underlying issue.
-
-I've looked into making this change for 'git blame' and it is a
-nontrivial change. I'm not sure on the timeline that we could expect
-'git blame' to be improved.
-
-But you're right that this is not enough justification on its own. It's
-an example of a kind of command that has these problems, including 'git
-log [-p|-L]'.
-
- > So are there other usecases for git-backfill(1)? I can imagine that it
- > might be helpful in the context of scripts that know they'll operate on
- > a bunch of blobs.
-
-One major motivation is that it can essentially provide a way to do
-resumable clones: get the commits and trees in one go with a blobless
-clone, then download the blobs in batches. If something interrupts the
-'git backfill' command, then restarting it will only repeat the most
-recent batch.
-
-Finally, in a later patch we can see that the --sparse option allows a
-user to operate as if they have a full clone but where they only include
-blob data within their sparse-checkout, providing reduced disk space and
-network time to get to that state.
-
- >> +	if (ctx->current_batch.nr >= ctx->batch_size)
- >> +		download_batch(ctx);
+ > Okay, here you explicitly say that this is a minimum batch size, so this
+ > is by design and with a proper reason. Good.
  >
- > Okay, so the batch size is just "best effort". If we walk a tree that
- > makes us exceed the batch size then we wouldn't issue a fetch during the
- > tree walk. Is there any specific reason for this behaviour?
+ >> We could consider limiting the request to have a maximum batch size in the
+ >> future. For now, we let the path-walk API batches determine the
+ >> boundaries.
  >
- > In any case, as long as this is properly documented I think this should
- > be fine in general.
+ > Should we maybe rename `--batch-size` to `--min-batch-size` so that it
+ > does not become awkward if we ever want to have a maximum batch size, as
+ > well? Also helps to set expectations with the user.
 
-The main reason is that we expect the server to return a packfile that
-has many delta relationships within the objects at a given path. If we
-split the batch in the middle of a path batch, then we are artificially
-introducing breaks in the delta chains that could be wasteful.
+Good idea. Will do.
 
-However, this batching pattern could be problematic if there are a
-million versions of a single file and the batch is too large to download
-efficiently. This "absolute max batch size" is currently left as a
-future extension.
-
- >> +	clear_backfill_context(ctx);
- >
- > Are we leaking `revs` and `info`?
-
-At the moment. Will fix.
-
- >> +	return ret;
- >> +}
+ >> diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
+ >> index 0e10f066fef..9b0bae04e9d 100644
+ >> --- a/Documentation/git-backfill.txt
+ >> +++ b/Documentation/git-backfill.txt
+ >> @@ -38,6 +38,14 @@ delta compression in the packfile sent by the server.
+ >>   By default, `git backfill` downloads all blobs reachable from the `HEAD`
+ >>   commit. This set can be restricted or expanded using various options.
+ >>
+ >> +OPTIONS
+ >> +-------
  >> +
- >>   int cmd_backfill(int argc, const char **argv, const char *prefix, struct 
-repository *repo)
- >>   {
- >> +	struct backfill_context ctx = {
- >> +		.repo = repo,
- >> +		.current_batch = OID_ARRAY_INIT,
- >> +		.batch_size = 50000,
- >> +	};
- >>   	struct option options[] = {
- >>   		OPT_END(),
- >>   	};
- >> @@ -23,7 +123,5 @@ int cmd_backfill(int argc, const char **argv, const char 
-*prefix, struct reposit
- >>
- >>   	repo_config(repo, git_default_config, NULL);
- >>
- >> -	die(_("not implemented"));
- >> -
- >> -	return 0;
- >> +	return do_backfill(&ctx);
- >>   }
+ >> +--batch-size=<n>::
+ >> +	Specify a minimum size for a batch of missing objects to request
+ >> +	from the server. This size may be exceeded by the last set of
+ >> +	blobs seen at a given path. Default batch size is 16,000.
  >
- > The current iteration only backfills blobs as far as I can see. Do we
- > maybe want to keep the door open for future changes in git-backfill(1)
- > by implementing this via a "blob" subcommand?
+ > This is stale: s/16,000/50,000/
 
-I think that one tricky part is to ask "what could be missing?". With
-Git's partial clone, it seems that we could have treeless or depth-
-based tree restrictions. Technically, there could also be clones that
-restrict to a set of sparse-checkout patterns, but I'm not aware of any
-server that will respect those kinds of clones.  At the moment, the tree
-walk would fault in any missing trees as they are seen, but this is
-extremely inefficient.
+Thanks!
 
-I think that the path-walk API could be adjusted to be more careful to
-check for the existence of an object before automatically loading it.
-That would allow for batched downloads of missing trees, though a
-second scan would be required to get the next layer of objects.
+ >> diff --git a/builtin/backfill.c b/builtin/backfill.c
+ >> index e5f2000d5e0..127333daef8 100644
+ >> --- a/builtin/backfill.c
+ >> +++ b/builtin/backfill.c
+ >> @@ -112,6 +112,8 @@ int cmd_backfill(int argc, const char **argv, const char 
+*prefix,
+ >> struct reposit
+ >>                  .batch_size = 50000,
+ >>          };
+ >>          struct option options[] = {
+ >> +               OPT_INTEGER(0, "batch-size", &ctx.batch_size,
+ >> +                           N_("Minimun number of objects to request at a 
+time")),
+ >
+ > s/Minimun/Minimum
 
-I'm not sure a subcommand is the right way to solve for this potential
-future, but instead later we could adjust the logic to be better for
-these treeless or tree-restricted clones.
+Thanks for the careful eye for detail.
 
-Thanks,
 -Stolee
