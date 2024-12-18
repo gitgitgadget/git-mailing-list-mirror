@@ -1,114 +1,84 @@
 Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 797B31ACEDC
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 13:51:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B0915853C
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 14:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734529920; cv=none; b=dpTiOTyRL18tjHhk88xJ53IlAo8p1N1611ZgpU4mJwYZtGllYv8L1SZ1FjDDesOFTvPO0rjMIrJEoPFcD1/iUWN78/TQYEG586TuqSN4fl0mVpX4Cl8W+MEL90wd5htRHFC5Lai+1csKUm8AahGPVJ7xjM15KMGINKtIS6xFgxI=
+	t=1734530980; cv=none; b=eI1KeMrU9vUc5kdBiTVjdI8rP5ROfPXX7Y4djHMvoidJqbfg8lNNq+Z5xnShLZRQ1VbTbmFztTY1bC6HFOrVo7Fd+9y+3xrHNZwxu5VqWL/vXfaCd6hN8D+0STjQ3JcnHvuodMvQMWMSVaRlpnypPmc0IGi5QGMJk6ZaVpffHVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734529920; c=relaxed/simple;
-	bh=GXc4xJShltmzb2n5GcyPBAkov5pAxh/9irfZNFno3ZU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aDmq2O9m5dXT3iulkd9tDr7Y2LQrKev2ctDOhs5TO2dZyUm5vdxzNHfN24MBHN15lO7JtMUb7hCLkoxyTogFsrc3LTfvOXT4acGljWxZlF7ExP21bd+RSaWQaP7UARtd/M+7ubPI5RK3e3WaDd/OcHz2E3Vs+4bgumwTdF3uPhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPopEu6W; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1734530980; c=relaxed/simple;
+	bh=+OZqjgAvK+6bbVFoPqWFMuF6XAhXFf9qjtspRtw1KG0=;
+	h=MIME-Version:From:To:Cc:In-Reply-To:Subject:Message-ID:Date:
+	 Content-Type; b=OXXe2I6VFpgUFwbgrzUPFMMWMZ5ECxiHV5fGBbSq1dvJujCkN0KeqSY8RQmWD453TVqqAtTWzbK/OzHcLDvIoJlafYO8lObVEqyhjMBpDgJwf6dvE3MM5OqNXjwz/2VK3wrH9Bu/gWO0CFIlM55CRmvVN0FPFGVHL9cqFfYvSQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VxONGt4Y; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPopEu6W"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-21644e6140cso61353065ad.1
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 05:51:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VxONGt4Y"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-216634dd574so38524085ad.2
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 06:09:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734529919; x=1735134719; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ru0BuGZ0eC7MP9UhfxEfG9I34xC5JzUWt0YqSA/DQgk=;
-        b=GPopEu6Wsbq+ro/tvzB2EUoMr4aNvD0Bpw1pNgZVFT7AJNSZ3jqg357t+cpfhDIDKX
-         YZojgCI9t0WT59LpG34UFduIU9zBflHlIZMPMHw1lIgcWlUztrgNnksqdz5SAodbTg1N
-         olCRrqI1F99rp7dsqNQ+TTij5CfVyZXx1NrRgkTemp976p7m5cFAXxyMv9PLNx+NN9I6
-         SPf2WZdlhKaYh4KW3XCFQ/6Ujqy/jBSxdoeTWcWjwoBbxb6ur5Imc0cJZgqHNpfjO293
-         Y6jDsFIfgzijZw+4QPUs5M85IHVzLNTUOd4LmeCqsMJdlGueIr2woThLg7hSQiR93Hi5
-         5pzg==
+        d=gmail.com; s=20230601; t=1734530978; x=1735135778; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:in-reply-to:cc:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+OZqjgAvK+6bbVFoPqWFMuF6XAhXFf9qjtspRtw1KG0=;
+        b=VxONGt4YvsPNFtL/H5c1raIVgyfnlhOaWLkK8KiE6ZhXGltpbzTelPmzwoPdi2LnEk
+         f4q7mDSFF5VTt7lt86dCHoU0+1ltWtO3WZrcuA/qJWRB3kPFmc3TIi+/zyaZaAn10QHP
+         ra16YmuMdJbXOKJnwzEpuqV3ueEEzZqZMUiGzlfbs9UsOCcJlx9/9KXh2WjuiMO34qng
+         2Vrp3o8YLYSxkqYhDtWRr71poYfEHlg3Jvv6loU0m7nkK/msoj5iljcmj33bZhT7orHq
+         sjw/N2coZ6zLXFmfvxos7wCme5LO8NC/AgEry+XWIBKSXkWK3d8f2lluP0t/qCRV8BQS
+         jkVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734529919; x=1735134719;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1734530978; x=1735135778;
+        h=content-transfer-encoding:date:message-id:subject:in-reply-to:cc:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ru0BuGZ0eC7MP9UhfxEfG9I34xC5JzUWt0YqSA/DQgk=;
-        b=J0t2SckYe/e1pXvgLQopv1niYasFT514w+1HXQLT81PfsnCJBTlncxFfzjrfbSQ1Hx
-         PJ+B3+gDuyDdXYGmq+2LmPOZuZtXlmyVvxxJRHF6z32r+uV9cyiGgcGN9ZlMj7HdEXbU
-         peNRMfndAEM4O2z3DBdIgjx+VY9R9dwZ4Tcre7tEAi8nPFC+xAq12rLGDe+uNkCnbfSK
-         nEduLnbX0TJ0jGcFRmNOMZgfqoGWNWeSyaGRKNtp4UAm+i8/54o4g42MlEHw3kvO2/9x
-         hL+B8Dp+I4RAEoO7r6qsETEzdf9NnNpEC1cLiDPUDcLYAX6zB2d0AMwuRkhFGIYISMYe
-         8h+w==
-X-Forwarded-Encrypted: i=1; AJvYcCX9pPg5VrQdiM19YxtxWX/yA+IQW5RAY9VLqYNW5En1Un7tUKY/3aerrDW6Xri01xe+0A4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5grxZQH7wc4Ovm51h2Df8SS8XWmneAIwGz4tUpRIm0kY+mQBs
-	cB64R1zt9LxL8kPA9S/4SMbVQhBpeJKDxK+v9G6LoAf6pnp20jme
-X-Gm-Gg: ASbGncv71MZv6el6oJC9tyxuPK+ITp47S4KZk83SXhOUHkf0UXOUm4+aiITTUo/ED6W
-	IxS7T350zvp8uAwUYuXNMzCriIgO0VJcLJospcrzzAQUNnZ5I42QnzMUm3voF82fnbgYYT8kzsq
-	5ccclnOpPzzOV1fx3/G4gezMp9BEgIPCB0P0V+Embn/An6M+XdadSczNTG51/hsQBdXmca8hkcK
-	zxddrjnL33JgL5VB9FJvDK5DyQ+qcI9HbRpUuBAWfgCSRJ05FVC
-X-Google-Smtp-Source: AGHT+IFBoTL4DFdgEb9MLrLPCoMPovIGrIrK6u5X/uj8VIZPOeFqyrZ7Rcqq14XsD0sNZFf9ShsyMg==
-X-Received: by 2002:a17:902:cec4:b0:215:b190:de6 with SMTP id d9443c01a7336-218d6fcd43amr35394205ad.3.1734529918646;
-        Wed, 18 Dec 2024 05:51:58 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1e648b2sm76784195ad.242.2024.12.18.05.51.57
+        bh=+OZqjgAvK+6bbVFoPqWFMuF6XAhXFf9qjtspRtw1KG0=;
+        b=OliZIkJ9h4DCq0skUq8cvHStVvkAb5MtZmPpkq4mxsZ8RJRMaZcQuky7k3Qgyfuth3
+         cvrE4FDntTwpJQcGmEsFlV3iaSg2GyUYRveyTk6YGsUP9DN8Y12FsCRtp/ThdQx+CgP6
+         lt/+2Ys8wbzpO5FIXDcGN8ddYj7hRy+MdX9cCc2gaT7g6wwz/W19BNOaSPB+NfGqrO+6
+         Gq+vFvb0xncloRjb8F+yT+F+BNOFmXQyjS+LxZTVbSTdNpMWBG+CYswbgGjWxPtAbOzF
+         Z8qRNYnI5y91uH1ecAD/vsWEmhkSQqHcEubCOzrN5b6BRN6MJyRZCXxSSdv18MQHQp7e
+         yegA==
+X-Gm-Message-State: AOJu0YwV8WISQUcbhJKJ9CskfGw/bdLqxTvS+q70guqCGXvOCCrFDpIP
+	+NBiMrEen3a92P0fS7PRn4ydgM9P0FX9Fzpi90xM4imHP+5XOQkj
+X-Gm-Gg: ASbGncvXbQFVtVG+SgHYX2Af7ctMEVBrrn0Wivuv4+xKxtcN0y4QNWGCbc7duSbGUq2
+	1xTkRRlC0NnZuisKVw+Oq/mkAhyabroaaCZBSQhuhiqM/qEGdd6K8Tq3YqEkPRiU3L66Fhd6hfH
+	bDdetENAjD6ndjtTtrLQNJk5pS2IDcGx2fW8BZrROESuDRBLb2owG9RFxULk7WRx8hJesj45Hbt
+	KDJrxEz6j3iuqMIypgzRi8SyiqlvXhpSUuCy3duuvqt4EzAFrrdyOk1EbSweK91AWhTQu9STOsD
+	ZasAiw==
+X-Google-Smtp-Source: AGHT+IEIKsSEDFHI3WBpXXYG4c+z10Fi3nx8xT842giHA7xoSPoDBMA3KK9BAv96JQGDPkDTvoK9JA==
+X-Received: by 2002:a17:902:d503:b0:215:b087:5d62 with SMTP id d9443c01a7336-218d724458amr44961105ad.36.1734530978468;
+        Wed, 18 Dec 2024 06:09:38 -0800 (PST)
+Received: from host (36-230-86-110.dynamic-ip.hinet.net. [36.230.86.110])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-218a1db63c3sm77204315ad.48.2024.12.18.06.09.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 05:51:58 -0800 (PST)
-Date: Wed, 18 Dec 2024 21:52:39 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Wang Bing-hua via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Wang Bing-hua <louiswpf@gmail.com>
-Subject: Re: [PATCH] remote: align --verbose output with spaces
-Message-ID: <Z2LTp60u03Y9iiUd@ArchLinux>
-References: <pull.1837.git.1734439176360.gitgitgadget@gmail.com>
- <Z2F7VAsTjfBCVCrG@ArchLinux>
- <xmqqr066ysa6.fsf@gitster.g>
+        Wed, 18 Dec 2024 06:09:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr066ysa6.fsf@gitster.g>
+From: "Wang Bing-hua" <louiswpf@gmail.com>
+To: "shejialuo" <shejialuo@gmail.com>, 
+	"Junio C Hamano" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>
+In-Reply-To: <Z2LTp60u03Y9iiUd@ArchLinux>
+Subject: Re: [PATCH] remote: align --verbose output with spaces
+Message-ID: <18124abbd9d6169f.305d7269b347c5c2.ae083dd7649e4539@host>
+Date: Wed, 18 Dec 2024 14:09:37 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
-On Tue, Dec 17, 2024 at 12:21:37PM -0800, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > On Tue, Dec 17, 2024 at 12:39:36PM +0000, Wang Bing-hua via GitGitGadget wrote:
-> >> From: Wang Bing-hua <louiswpf@gmail.com>
-> >> 
-> >> Remote names exceeding a tab width could cause misalignment.
-> 
-> If all of them are named with ten ASCII characters, on a terminal
-> with fixed-width font, things will still display aligned ;-)
-> 
-> >> Align --verbose output with spaces instead of a tab.
-> >> 
-> >
-> > Good enhancement.
-> 
-> With a Devil's advocate hat on, a change like this will completely
-> break tools when they are reading the "--verbose" output and
-> expecting that the fields are separated with a TAB (in other words,
-> the tab is *not* about alignment in the first place for them).
-> 
 
-Yes, I agree. Although we may provide convenience for the end user, but
-we may break other tools parsing the output. I think I bring confusion
-to the Wang. Actually, I have seen that Wang contributes to Git in the
-first time, so I just want to courage.
 
-> Now with that hat off.
-> 
-> For users with that many remotes where the alignment of URLs in the
-> interactive "git remote -v" output matter, I am not sure if this
-> change is a real improvement enough that it is worth the possible
-> risk of breaking existing tools.  With that many remotes defined,
-> wouldn't they be doing "git remote -v" piped to "grep '^name<TAB>'"
-> or something?  That use case would break with the change, too.
-> 
-> Thanks.
+On 18/12/2024 21:52, shejialuo wrote:
+> Yes, I agree. Although we may provide convenience for the end user, but
+> we may break other tools parsing the output. I think I bring confusion
+> to the Wang. Actually, I have seen that Wang contributes to Git in the
+> first time, so I just want to courage.
+
+No worries. Thank you for encouraging words :)
+
