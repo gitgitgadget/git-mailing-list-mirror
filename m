@@ -1,72 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF392E630
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 12:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5A0156225
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 13:21:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734526678; cv=none; b=pEpGAb6ejBzzQNAJfuN9dPzJNcTMhWEaNWwP/33ogIKm4idSrd3hGnirMKkwd0Sv2zyd8dxbIcbLap3G79Ri/MDgLnbszeRctzRu28FXEUQGUOslzw0WTb3m7hfjcJDs8Df9Aws1y7NXgpMPxixftzuQFoNXDqt5LiDBlaf1Xbo=
+	t=1734528093; cv=none; b=RHqoZjruum0fnQUTAiacLYqov2sUHTbL5Dlmzw6Pn0MinjTPxnrVyJlWEXtm7MUI/ldIUic2X9yoGKdR8Hc9yCcM6zycMEGhNR5FMX51ghfpMYrVpJhMXxhqpKwW8Xy4lqpJDbkiT9YYS/zH3LXD4gv84QouGT1sY6WvVQUhVeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734526678; c=relaxed/simple;
-	bh=/HYKmDfrVt7QTWP8VelZ07QCHzBeaEZjLWRc8ussDMc=;
+	s=arc-20240116; t=1734528093; c=relaxed/simple;
+	bh=TrIzsjWlt1tI2nDPPKG3VIkkB3YMj4sPIfJLshobj+w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YIqhGpLRnXOgCDZh7tCch9OGbhfYay4AwHneoIA/EX45LxWaU456ldLFCOBie8IG346DW95bUCPsD3hXsNOq2qDpj+y0dJMGwOOQsL8zQQ+y2sdadSdIPXPm+2nnspETKElmMwdIS6BYtKbvFq1dd5c8QDM7ZrPANEdb58RB2bY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L9n+8UwH; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zqey9eI52Y5onYnEvXLKJ1i5hKMDFbrsGJjjBDKcwpF5Wl6QZj01GGDs1WwNfsLyhsdYWbr6ORM6BGYg7ab/YQLzyu+Un7rqP9wSfrXXCdmStyZrC6GO0KFOYlpfYltY3G4vYLq/8tFR8qi9B7r/ERayqAjRqmvhptX4gYmOpNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oaZqwzID; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XnkWC8xm; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L9n+8UwH"
-Received: (qmail 7378 invoked by uid 109); 18 Dec 2024 12:57:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/HYKmDfrVt7QTWP8VelZ07QCHzBeaEZjLWRc8ussDMc=; b=L9n+8UwHD3bqOUya8hl6JPByvPS0pBjnhEAVI9hF+hak5HhIciUxh6ziDDr5RcNkrm5Y8RXgvbgDOiuF9mo3GVzjJCYWzSFFjbHIaWHAFuWooucGQ9RBk2VoUm3nSHOp5rmOQcKH+HEl32ZWnXRrs9u1KexqsoalMBmpBJ0GsC4/0NTs5YmV0d2lxkdu+hHAKKeUYTrXHNwYPvRq4mvP0NrOqLzJjWBP/oCW1QtfxPlq+KTrR/dlNmRF8XoytccPScJGC84ULsdvhDRMFkul9tCNHqqy/vDcDsrKbksAc/ghsbdBkSW7YgMw7g1Vu13B2bu+wT924nOdh5UU2BtWDA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Dec 2024 12:57:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25390 invoked by uid 111); 18 Dec 2024 12:57:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2024 07:57:54 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 18 Dec 2024 07:57:54 -0500
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 00/11] pack-bitmap: convert offset to ref deltas where
- possible
-Message-ID: <20241218125754.GC695807@coredump.intra.peff.net>
-References: <cover.1728505840.git.me@ttaylorr.com>
- <20241011083838.GI18010@coredump.intra.peff.net>
- <Zz0aaPdHiFyoRkKg@nand.local>
- <Zz0gdHrwC4CTAtZn@nand.local>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oaZqwzID";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XnkWC8xm"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 55C0213801CB;
+	Wed, 18 Dec 2024 08:21:29 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 18 Dec 2024 08:21:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1734528089; x=1734614489; bh=TrIzsjWlt1
+	tI2nDPPKG3VIkkB3YMj4sPIfJLshobj+w=; b=oaZqwzIDqWjN0JmJHZPSkuX7xi
+	1JhqfMy3wXHjyr7Jbq58/iMX4xXgcz5rqr05b9gF3YTGuamcrxfmqjoBjtvPFjZ5
+	mmkYXLTQ0WdnZxcdXOKWNfzhJ+J9+rzTSNBe92laW8szZ+cmggE5DTO4wpu2ZIXH
+	yHpFIP1j85qUcAeGCFK8bEXn1jVDvGqFAgZQFeTHwtKfTOvSSImPllSnV8fJCywH
+	6Y94BhwVzeVttKWU/mF0iqckFaR30YSbLI50cOABbNpYf57bGpHHnEoZm0uBjvgs
+	BhhmpYpcokUn2bHtUbpglYox3J1R4/8ml1gufT2S9p/RMtcQWGn1epu652ZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734528089; x=1734614489; bh=TrIzsjWlt1tI2nDPPKG3VIkkB3YMj4sPIfJ
+	Lshobj+w=; b=XnkWC8xmsqW0c6QNFDPpJSXy9+nqdz/pNL+ipqNknOEIBcMDNh2
+	uYckLj9P6d8DDH6oBMZCYUiqnvOyYv/K4lOEgFDYoBKVWEJiuZ3IixLWUssp1Tjg
+	B1VihocnuRaZz0Aitbk2JmrbWIiaVhvPUsZDCIielflcR/4fO4fvFvHYiyQd4zgJ
+	NmlE78eKS22p9E33Y5muAASvkOsMgsWV0CzeiGKei0f90ijEtt3ixEhQV358awso
+	ueEwYHVLAXv6SVRemhqTdbMd6De1X7h/eUlEZOdx9ZebED6/jBJjbYTYyfd/7+U1
+	85iLTHJ5ZoVplUcmYJAt+UwdLbJ32AWMRTg==
+X-ME-Sender: <xms:WMxiZ7v0sD13u_kwjZ-8FB8lmKtAIVrWoe4F7jpgVdeZp4ZgnXAMrA>
+    <xme:WMxiZ8dRkk6DdYp9-qzlCQSONGkhx7MKQw9e6jqU6iULoQyAxh1Ix_CW1I-FDLzjK
+    50tCfqMcYKm_mXbWg>
+X-ME-Received: <xmr:WMxiZ-zzmdYHcxX8sRRiyyA6-Qm360ruvVDHB5TZwRQZbnBUwKxtAEj3a11qcZCzhq20GO4xq4uzPnYODFqkLUmxZ4VPNhslQ7WZwAG-e8QJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleekgdehtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuf
+    fkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitd
+    eludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvthdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:WcxiZ6NPJnuL2X7hl9e2IOY0vmvx0aPyFTH6ZagrVY7Pn-av-H_ExQ>
+    <xmx:WcxiZ78eZNv7goD9l0y9Gr3lVOnzwkVHZRKVLO55Nzb279dGj8fqwA>
+    <xmx:WcxiZ6VNO9jFdLgwmDq36sCWRET2UuGE3a9kzPteHSrKW4gL3hYmFw>
+    <xmx:WcxiZ8feu3XbvGkLPbR2wc3zq5UzvVRG6DUQYf_d71kucR8a6OcTTA>
+    <xmx:WcxiZ3bfSf2tkz-x3AoEjMV-FSS-EsmV8wdUCFKGUxYQH2mqVRak7fnl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Dec 2024 08:21:27 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id d822d22e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 18 Dec 2024 13:19:38 +0000 (UTC)
+Date: Wed, 18 Dec 2024 14:19:48 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Kyle Lippincott <spectral@google.com>
+Subject: Re: make GIT_VERSION=foo broken, was Re: [PATCH v2] doc: remove
+ extra quotes in generated docs
+Message-ID: <Z2LL9F8WANokZJ7R@pks.im>
+References: <pull.1847.git.git.1734479267736.gitgitgadget@gmail.com>
+ <pull.1847.v2.git.git.1734483422181.gitgitgadget@gmail.com>
+ <xmqqbjx9yedb.fsf@gitster.g>
+ <20241218113324.GA594795@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zz0gdHrwC4CTAtZn@nand.local>
+In-Reply-To: <20241218113324.GA594795@coredump.intra.peff.net>
 
-On Tue, Nov 19, 2024 at 06:34:12PM -0500, Taylor Blau wrote:
+On Wed, Dec 18, 2024 at 06:33:24AM -0500, Jeff King wrote:
+> Perhaps the script should be doing the same for GIT_VERSION itself,
+> along with GIT_DATE?
 
-> On Tue, Nov 19, 2024 at 06:08:24PM -0500, Taylor Blau wrote:
-> > Then when running the same command, we get results that are quite
-> > encouraging. The runtime jumps to 24.213 seconds, which is ~9.73 seconds
-> > slower than the average of the baseline measurements. But it takes
-> > ~10.418 seconds on my machine to compute the forward index. So it's
-> > really around 688ms *faster* than the baseline, despite doing a little
-> > more work.
-> 
-> Sorry, there is a much quicker way to generate the forward index at
-> runtime, which is the following:
-> [...]
+I won't be able to have a look today or tomorrow, but will have a look
+on Friday and send a patch, unless somebody else beats me to it.
 
-Neat. I didn't see timings for this method, but I'd assume it's quite
-fast. So if it shaves off the same 688ms, I'd expect it to be an overall
-win. The code itself looks reasonable to me.
+Thanks for the report!
 
-I think when you re-post this series it might make sense to add a t/perf
-script to demonstrate these timings (not just what we're discussing
-here, but also the overall speedup we're hoping to achieve).
-
--Peff
+Patrick
