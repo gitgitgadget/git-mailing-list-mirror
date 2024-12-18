@@ -1,117 +1,91 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E6D12CD8B
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 03:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9910135963
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 04:43:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734493997; cv=none; b=kZcqJaPqYfMz7AojvE8Ii+oxBGQgnONQCDkAJ2z7SkFGOls8TnMoM5rSNqPZSxBe18oyHVSrh5demrwLMNOfjlKu5pj1LvsR5j6xObXk1m5nvWX9HATpjspKbi+YwYh1V9lnOyosoCmMk01mODfRHsq8OUmaixp/dpvNX5jpPi4=
+	t=1734497034; cv=none; b=dZhZXmcK6TAX/hsWLndDUu37CSBSPcA9dWmLY5CJP1D8MRLOjxAUZsVnJH/0LVLIiMGLRUjwB5rusk7FB9M7YDTR3nclHH2ti5wwWdWKp0plQcl1ryrh8mhI1JFsvX5bT8mfWowm/ZIZWlKM9PIIxfZE+2jgMKh4rVFCfHtj6qU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734493997; c=relaxed/simple;
-	bh=37s4NC9i4kEpi3gLYIyrTp4QdhnwqV7+Tyes/95u97A=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=lDOw9IVlQZNkmrTky8eDF4dIR5MI5uE7uLMSGcZqGuNZ2oGbdCP31wZZtairKLIWYQfKYWRwpYqNUzGTv26zZzaExnuYecc8mpYzdw9ujROA9QdHbHq1xvQ7VQlkwm+gVFKyEKwEg9Fn6BT8mYX6TGwvE0SoGK3CZ2p5JgdrfKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V7LUbG+u; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734497034; c=relaxed/simple;
+	bh=Q+vVoqWU3yffxd4ISZVi/moSH12OM428Wz9TZjTgGSw=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Wp1xLDqb7gJ8OJPN9AyRs59LxjE9X8WZgPU3zYq9w3fDRCFd1GNJF2DuCwqPmFQnUw34eA+bCeRmtpR8dMQX1f47yqWWzrdqFvVZpFftcDHiqC5a2f9wxUeCyi+rmlKPNTyRKGjkp9k5VhzFB6APW6T3VqTmMkYAMBad4tdbPNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=hVMDFNNx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=debfa3u6; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V7LUbG+u"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4361f796586so66215295e9.3
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 19:53:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734493993; x=1735098793; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=m8Fkp5bgBdgLNkahIl7ShgNGAYGF5rSGnQ6U9oNqpP8=;
-        b=V7LUbG+uQmj8lu/iPdS652ADjOViMGdDYv/8KHeSJt0Dw33vakA6rkOHRUmgsUCSlO
-         Ey922pvDNY6zf0Oer+kbqrNScdESG+lKP7yqymMY5eZS4OLegddxyIpVkssX754ahmkC
-         6nC+QjQTAJTTicp5SJUiTKnUrT1F3iR6+bx5RIB7HLgXt66MilL4/r3UTqhOrszO/pj9
-         4l1TVC7l8VrDf5yUNMtVS9BydBhKiNpnHwhFknaR7cMjQjpJ3xT5zBXrXXphG03x50gi
-         Egp5fzSpN9rUNmrAr8aw9N5CV5n4Jyc45LTd/IiC3kqUNY7cSfD4ps5UPaSHoBjPDw0T
-         Z5fQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734493993; x=1735098793;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m8Fkp5bgBdgLNkahIl7ShgNGAYGF5rSGnQ6U9oNqpP8=;
-        b=Dhj7Yu4p4tElXGEFaOTp4dJBPFSVZoUSv5RMc6HVodLjlnE7S+3cSu7tZs6r/jihsa
-         6oRrXGH8LHDEfGDEDYxk/afkG/IW6eCLqIUtJkiKj41cUKAwhUYSPYNDedMv4VjSvRYm
-         Ygrzp9FyFEslge1NE1QOCPapmJ+M2J3xwKRZZHJk9vwuvg+p8GNqvcufMPcWOlS9BLNV
-         m8hjqF+9z4DtcsSbydsXecH9o69f6YQIPtxERN4K/ra7CVkNz3SbSzV9NG52NedCm3LW
-         KKW0Uo3V3zC8LzSou3fcrdcJOJoFpLwcnCMa9cv14eLwGOxzopIGuRmCR7FJLw58hOT6
-         A0cw==
-X-Gm-Message-State: AOJu0YzM3bcYHfrkIocPqlBHFsPwlIkGihF85sJZ0HKzcKd4rVfbZc7h
-	aqcCDbEEH2fnMr4VwGUeh4nSXQL3DmbRT/I3IBUGaiGWYb/hS0SQxZPhkg==
-X-Gm-Gg: ASbGnct7E8sVcsC/pdTTfTyzzZLhwyzFxCnRmSJ5GkrWCH3Z7x1ORhGWCSjiS2Gw60R
-	wytolDaTM0UUgDABjZ4Kdm35Rd80NrvytC91ffuc2REWvG/fpxLl6fqe+h1sYDwWq/QNIiesH8v
-	bOsjSdxQ/a+RC1PfS4HDmxxUzDcdtf2E2Y3zo90Pdl6UWHEJsXOyZNsZl3XmdXM94Pp5DyCQRMU
-	122P+LVy61mrZcWQVhWRL5ejdTykqJYIlC3Uu+lk9kokQ0JHGeQUgmgMA==
-X-Google-Smtp-Source: AGHT+IH2rYeFV6QSXBM0Ay3b/fM8fjkhJl+dDkSiTot7MJHzc+UTVQLctAAW3+uN7m82CclmG/twgg==
-X-Received: by 2002:a05:600c:46c9:b0:434:a26c:8291 with SMTP id 5b1f17b1804b1-436553ed0a7mr7375985e9.24.1734493993338;
-        Tue, 17 Dec 2024 19:53:13 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c804a2f9sm12980669f8f.77.2024.12.17.19.53.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 19:53:12 -0800 (PST)
-Message-Id: <pull.1453.git.git.1734493992236.gitgitgadget@gmail.com>
-From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 03:53:12 +0000
-Subject: [PATCH] pathsec: make check for PATHSPEC_LITERAL more readable
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="hVMDFNNx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="debfa3u6"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9FB48114014E;
+	Tue, 17 Dec 2024 23:43:50 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 17 Dec 2024 23:43:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734497030;
+	 x=1734583430; bh=Q+vVoqWU3yffxd4ISZVi/moSH12OM428Wz9TZjTgGSw=; b=
+	hVMDFNNxN39915TZtOt7ars1gIMVTFlioRz8eIDM1QfwH7gmvWkToC+2F58ZmfjW
+	4nqU93JBdx10TsaOMAM/RH8CF/ESuoXH7NiVhzHh/lNZK11+1I0NpgGej3FlVn3b
+	oql+1Y/huHcBGzfXZ0mM3xP6j76Shmu17QQsgOy4oMn3IK+FyBl7BKfx6iDfRCTA
+	vAYQ1pmmKItGOBSU7DWH48KOlS1lZHQ5UoTRxjDgXlfKQcrPQtsFnpml5cy7p+dQ
+	Wa98DS/4ZtpST5Us6aWAT2Y0jLg1uCHme7KIu/HRKqNcpkJ0K+QLAj94Y466VziF
+	2bLyd38fSPyb3WTfDeOgsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734497030; x=
+	1734583430; bh=Q+vVoqWU3yffxd4ISZVi/moSH12OM428Wz9TZjTgGSw=; b=d
+	ebfa3u667eFMRWsKYOHSugKotcmdy9oGPVJbFijvC1HQMGFyWQf/g8Tv9rX/L2A0
+	e3qp2Kt7zKH/votBSl3++Yj3gIJXb3E96KGtDpgZPORYGbMEXTZEhBet81LJPNWv
+	QkVxVbZLmQPVEsukBRflnFvkZ+NrHAvWiS1/j4nW00xnEgczgq5MFA8FdOQ0CgXp
+	oN24R2izA7m0oP3qRoFmSA10Q3ayNq5Vpipr25YBvAnG1yol3h/YfweMUQroyhk8
+	0687rhYow9QvFWXVmt5YgluJbGoIZe1QAnnQGXE28SJ+6D/zku2HTNEMm1XG6RW9
+	UeKF2Q/A2rRD7rHTvfQyw==
+X-ME-Sender: <xms:BlNiZ-E8Y26JCVdGMQznoIk4Lp8L7uRVdtpmZwygS7PLOO6xfZg9dTY>
+    <xme:BlNiZ_UtVa6VLbhPV7l24qSdLCAntl8PTNgJk1yrr3sc2CTB_Dr362_xezUHrniO5
+    GDNeYWXT_-66IUcSA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleejgddujecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggfffhvf
+    evkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
+    rghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepgedtjeeiteeghfeutdeutddtiefg
+    vdegteektdeutddugfekleeugfelteffjeffnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopeguohhrvghmhihlohhvvghruddvfeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgfhhunhhnihdvfeegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:BlNiZ4IHy4zJpViWEUPQK7uK_nPZxIvUdBdhIe59tWtOyZQKg1VCTQ>
+    <xmx:BlNiZ4Fq7EeYSwJjt-dScFclGcfqt2eDaM8-3Y8PsTiWcSlR-g-ANg>
+    <xmx:BlNiZ0UDiVBBa9MnCbl5QaSHUepaQ-nHgkHQmiIn-i_RV8qSY7VlEQ>
+    <xmx:BlNiZ7P-yL0al4XAogBHKZ1rSDAbchkum5lt_lAFu4HNLH4OGrVLeA>
+    <xmx:BlNiZ7RnoS-ZI6yw7s7rDgcsUP5R7EqElFI7Ac14rzHMkzyKnJ6p4nYk>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 667B7780068; Tue, 17 Dec 2024 23:43:50 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: AreaZR <gfunni234@gmail.com>,
-    Seija Kijin <doremylover123@gmail.com>
+Date: Wed, 18 Dec 2024 05:43:25 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: AreaZR <gfunni234@gmail.com>, "Seija Kijin" <doremylover123@gmail.com>
+Message-Id: <56a77219-d60b-45bc-ad6b-1225e9ee313c@app.fastmail.com>
+In-Reply-To: <pull.1453.git.git.1734493992236.gitgitgadget@gmail.com>
+References: <pull.1453.git.git.1734493992236.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] pathsec: make check for PATHSPEC_LITERAL more readable
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-From: Seija Kijin <doremylover123@gmail.com>
-
-This check is designed to die if global_magic
-has the PATHSPEC_LITERAL and any other setting.
-
-This can be written is a much more obvious way:
-if global_magic has PATHSPEC_LITERAL, it can only
-BE PATHSPEC_LITERAL, and if it isn't then there are
-other settings.
-
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    pathsec: make check for PATHSPEC_LITERAL more readable
-    
-    This check is designed to die if global_magic has the PATHSPEC_LITERAL
-    and any other setting.
-    
-    This can be written is a much more obvious way: if global_magic has
-    PATHSPEC_LITERAL, it can only BE PATHSPEC_LITERAL, and if it isn't then
-    there are other settings.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1453%2FAreaZR%2Fredundant-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1453/AreaZR/redundant-v1
-Pull-Request: https://github.com/git/git/pull/1453
-
- pathspec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/pathspec.c b/pathspec.c
-index 0fc6f84a6e6..0af953d055d 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -313,7 +313,7 @@ static int get_global_magic(int element_magic)
- 		global_magic |= PATHSPEC_ICASE;
- 
- 	if ((global_magic & PATHSPEC_LITERAL) &&
--	    (global_magic & ~PATHSPEC_LITERAL))
-+	    (global_magic != PATHSPEC_LITERAL))
- 		die(_("global 'literal' pathspec setting is incompatible "
- 		      "with all other global pathspec settings"));
- 
-
-base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
--- 
-gitgitgadget
+Commit subject area: s/pathsec/pathspec/
