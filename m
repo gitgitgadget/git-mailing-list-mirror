@@ -1,105 +1,150 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C294A3C
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:18:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58D99460
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:29:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734481111; cv=none; b=ogb1FskdyacvxweDdof1TXPHuoD4kEmh09QNuCHDHk43h5Tqz5F+AG0GfW/3RqeKpXuv0fYTDkvGCEfArisqh0APqrCiqaXxLKw0RipiHPOi3y2yEhkqGbyqtCizh6nXRY/Jdl+avR4i+WiZb7u/BDS7M+n9E5geiGVotFJoYgA=
+	t=1734481795; cv=none; b=D+Grj4xUrjj/sdXMUJsdu48BP4LuRuiNmPVzk1FxnysU9XY4/mJb2a8/tLnRPjmJj2XToXf3Tzvxvi4bcWfGGvaTbX8RnCJEXhHSfDDKSiniuZEuR/q/QIQldVjhiZwcdApQwtZ9IECk7IwusTE2Ku/jAH1TDAOB4s6RmA1J8GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734481111; c=relaxed/simple;
-	bh=cwUXoYlbOfcb5BzF7oiuO2feMFwFn1YJkJvu9iLrpQk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b9jZ1+sR9RiwA1A5UhjZdLMCFoIxtEN94NCKXtuVSg3T0ZozLq1q1SdNkoM645gArZwg7LfTO+dWXpssw2rtDiaaq8JZKW20CJTZG7uigfcC2/f6rsj3X9K8dIKT+cmL0jxZXnZfD8EbqkU077jsYdT+h7qoAHJD8MZzAbQpHtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KBeWPJlU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTau/Aiq; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734481795; c=relaxed/simple;
+	bh=RrQ10dXMdwTEmUqvq8n1DaD1afqICtkUhGlWw+ni01w=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=V8WA7NKrWsP+rTzGZv9Q1bCTc+dxj78u9xOJGZnwUxNq88rq/O54ffdO77yOLQ+3S35+l26Zspm80whcKM1qLWXg8NIpVEkohSGjZqGLf6OOwvFkExcTPHymrsvcP2hS/pec/faEPK02y9OPoSU0kV6iVkEGE7bp48W0gNkTHL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U13phTuW; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KBeWPJlU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTau/Aiq"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 449DC1380238;
-	Tue, 17 Dec 2024 19:18:26 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 17 Dec 2024 19:18:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734481106; x=1734567506; bh=D8SOC5ye/o
-	yCzzBoufgg+v/GcAEb8j4HsX+qh1jpn6c=; b=KBeWPJlURMfm292QioVMnu057p
-	PZUE5JfJniuKAzsq4MO7rY+TIS7LYJcoL2xhfG/uZXQzI823PY5q5fRNq3CZL6Zr
-	akU1rbIdYngca3jQv8EFrnZ0DB0qcRCGONcXxtAgeD3OQD5YnUcznao2KmZ4DdNB
-	ik40AeE8iAiKrTTwSPrdN2d+9/byzbiA14jNxK+ucYpVUspczhVgghOxXgmg+BPJ
-	w6dKiMW9RVdHWxcFpoBzQgcBH5yhft5a3S6KHonBXg3iifm/KF5ivZm4DpRJld4n
-	nPByXUwAEEefX8nKSy3FSw2QBfWIbV6eVoSz31wsYZ64nsNhH+Uk+kAj6VlQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734481106; x=1734567506; bh=D8SOC5ye/oyCzzBoufgg+v/GcAEb8j4HsX+
-	qh1jpn6c=; b=lTau/AiqwhS/1eOz/kaV8Su9M2ozrowCOj40w0ahcs3vFo5jr1v
-	kVpUfIomMN4jwmc+EoITWWurz7jFGRv0Z6pJg8AoppZHGyGm4YXRiLKnVn8DeROk
-	+1aRVuxxIGY2/8XHJvKYp8umSwhi6gkj2Mt43wxpAbZTuuVGjP2V3JE8Ld8gsCMo
-	Chzf+02V/3AS6+v9AGhz/wLbIWQZDMdKQQ7U6HGvbqw4P9XKeBi1dLCpVRquvIUN
-	fM8fd5944zYcw+aesEYJr14JDcHnqB7b6KCiEPYE65RwrpROvt/aNXSic302FM7W
-	sYg+Pq+RZO7sBY+wYGAoSnmcXftKGIRmZuw==
-X-ME-Sender: <xms:0hRiZySZyGUtt2tHP2YyTEtPDjvW8bkdoR39nkj5K-xXy_A_WYFxfw>
-    <xme:0hRiZ3yoJT2M_KS6CaQz2k5QiteI4aevfOiz1xN9qEMSZa7p_S91kYDcRqYc9TVM2
-    iGoBykdYdySV7cLgg>
-X-ME-Received: <xmr:0hRiZ_18GLAtTrJVpHnJK5348IvbN3OXL4HlxQEtesIenOEURbJdi2Q7cxFyBXSE1sF9EE5RQIALgYGFscgEZDEXo6w_c6GoXIBUu84>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleeigddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepffeite
-    eujeevfeehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgr
-    ihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjiehtsehkuggsghdroh
-    hrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0hRiZ-Dx194nqLQaNwjBMxwtP6cChwFLjSsYLarF1b3pNaf1PNeH_g>
-    <xmx:0hRiZ7gABVxF88DmnmMzejUsjLHMFH-vJQ4Y9ZMGZdBpl9lha_oDOw>
-    <xmx:0hRiZ6o6TWfnpC7nrg5cmEg7MXCWKU5a-JLZrakwgGHj5r0D4J4K3A>
-    <xmx:0hRiZ-hH7FGo6k1HFgqsqYUhbYBzESzPzlApO6LoHICgUR0mBMl5lQ>
-    <xmx:0hRiZ4uLnj4C_qIiv68kH_zqJsYbLA8eBqK6wv9dDaiBqhHYI-vXYq5S>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Dec 2024 19:18:25 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: [GIT PULL] gitk: macOS startup, commit ID to clipboard, text
- wrapping
-In-Reply-To: <ce2827ab-7827-42d6-8fd9-77be18bcda4c@kdbg.org> (Johannes Sixt's
-	message of "Tue, 17 Dec 2024 22:25:47 +0100")
-References: <ce2827ab-7827-42d6-8fd9-77be18bcda4c@kdbg.org>
-Date: Tue, 17 Dec 2024 16:18:24 -0800
-Message-ID: <xmqqo719yhbj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U13phTuW"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-432d86a3085so39493795e9.2
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 16:29:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734481792; x=1735086592; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QepR5PG42GKoaw96GXVqT4/4JvRk+iPXfBOEjOjk9Bs=;
+        b=U13phTuWG+NknmLkkGPYZ9qKIpmcfAV6y1CCbr1qE3bjEQbFKzNhFn8r2wzOD7XpS/
+         XTqkpJz/HPYf6hzPX6HKrS4pmhCSqfuNQqjjlYogzxpVgLBa/y40QpvdKfNC9UnCGca1
+         HuiDGWacw9VDvLr+oFxq1d4rpSjK2lsdmPEQPb/SukzXSFCZEGs2/eTBFEtqqiosjyPj
+         jsjX0HeJWfaW9odIUh/HFXRVNr9xJcf97i8kzuaFumwJFZQLs8+Z03klZmmf5b0SSNMP
+         Xzr4hSmNRdBY514AMr2rD3JHwpks/50Oa4jLUwLlJZyx0mWzTdTNOfQaZnWfHvQV+RSU
+         p4gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734481792; x=1735086592;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QepR5PG42GKoaw96GXVqT4/4JvRk+iPXfBOEjOjk9Bs=;
+        b=KIhPxbaNyoegAOLdQO2juPtVlAsV4Ih3UA57Hrb1ElGrvc+vCJjiRNp9pyplxtxdwT
+         wXtrL0Nlb44p2pwFxEs0m6zxyZJmO8BiYQFwVNPVeeFjcJB5I8vH7zHnOF6B5OVnotw3
+         yYLv1eNtu0GoRoUGtmqbJU2vQSt8zm8YjJgdPvBA4cnszE3GQuZ9Q5Jsri/HUkJU3z89
+         Z6gc4gUmXxcmojl3qNsu1a7eoeTJxZbSNVhcQ/ehtGzOrdFoxF5/767JDYujEX2xOiVp
+         d7NIvfhAbkELKfWOkf2AeDyPI4hOgNnnrNHDq2zLhzMLhkEvy88VQ0dnYBLV99DoyiNK
+         hHDQ==
+X-Gm-Message-State: AOJu0Yxj6W4zGm5kXR1j8A3jFP0xdiDhAf2vpul1gcom/oOkeLBWJlV9
+	a2JZzSeu2OFrNca+W+aBYnPXk1LgHz8pnWy4ZUtBH4ZXJCIFfOhy+UUlsA==
+X-Gm-Gg: ASbGncuyeoMw/qET/Wz00N902N7b/Ve/3V83wDzero7rkArcX9fx3a9HbIJP7gS/GHl
+	QK1cSz4OgfpwgpwpbFHPr3LGL8mUh6BIwoME+QRdyvTJrko6q/HDRiIOmfcqWPIiHYIs3JU+VSI
+	+SJnWzVsFMN0E2w+wQFNNmtuQgfA2PsVyjHtl5RRgFD9B1vX3LUJcxtcAD5Lt0KlVSZLkuF20A1
+	6Hp6ia3soczrFQMLBSaKP+83sOPfy6Z5FK1N3MSXudV/NTxc0wa6QCGsQ==
+X-Google-Smtp-Source: AGHT+IHEHTbxLWZGpIJ79KWL9Npuc3SJCJlYPRFvJXgDORlT2n0ry6lDZsrnl2KSj7VQNr+Oye7uQQ==
+X-Received: by 2002:a05:6000:4b0c:b0:385:fcfb:8d4f with SMTP id ffacd0b85a97d-388e4d84cfbmr644281f8f.21.1734481791397;
+        Tue, 17 Dec 2024 16:29:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b01b2dsm2455875e9.12.2024.12.17.16.29.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Dec 2024 16:29:50 -0800 (PST)
+Message-Id: <pull.1404.v2.git.git.1734481790015.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1404.git.git.1671470222521.gitgitgadget@gmail.com>
+References: <pull.1404.git.git.1671470222521.gitgitgadget@gmail.com>
+From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 18 Dec 2024 00:29:49 +0000
+Subject: [PATCH v2] win32: ensure len does not cause any overreads
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    AreaZR <gfunni234@gmail.com>,
+    Seija Kijin <doremylover123@gmail.com>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+From: Seija Kijin <doremylover123@gmail.com>
 
-> The following changes since commit c18400c6bb04f4e8875c1930db72ddd9b94649ca:
->
->   Makefile(s): avoid recipe prefix in conditional statements (2024-11-24 13:45:49 +0100)
->
-> are available in the Git repository at:
->
->   https://github.com/j6t/gitk.git master
->
-> for you to fetch changes up to 661734e6c8c38d2cd2000481ffb22cca6e2b0e5e:
-> ...
->  gitk     |  86 +++++---
->  po/sv.po | 734 ++++++++++++++++++++++++++++++++-------------------------------
->  2 files changed, 439 insertions(+), 381 deletions(-)
+Check to make sure len is always two less than MAX_PATH,
+otherwise an overread will occur, which is
+undefined behavior.
 
-Thanks.  Pulled.
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    win32: ensure len does not cause any overreads
+    
+    Check to make sure len is always less than MAX_PATH, otherwise an
+    overread will occur, which is undefined behavior.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1404%2FAreaZR%2Foverread-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1404/AreaZR/overread-v2
+Pull-Request: https://github.com/git/git/pull/1404
+
+Range-diff vs v1:
+
+ 1:  f9ec5429d01 ! 1:  dfc34fb4c1a win32: ensure len does not cause any overreads
+     @@ Metadata
+       ## Commit message ##
+          win32: ensure len does not cause any overreads
+      
+     -    Check to make sure len is always less than MAX_PATH,
+     +    Check to make sure len is always two less than MAX_PATH,
+          otherwise an overread will occur, which is
+          undefined behavior.
+      
+     @@ Commit message
+      
+       ## compat/win32/dirent.c ##
+      @@ compat/win32/dirent.c: DIR *opendir(const char *name)
+     - 	DIR *dir;
+     - 
+     - 	/* convert name to UTF-16 and check length < MAX_PATH */
+     --	if ((len = xutftowcs_path(pattern, name)) < 0)
+     -+	if ((len = xutftowcs_path(pattern, name)) < 0 || len > MAX_PATH)
+     + 	if ((len = xutftowcs_path(pattern, name)) < 0)
+       		return NULL;
+       
+     ++	if (len + 2 >= MAX_PATH)
+     ++		return NULL;
+     ++
+       	/* append optional '/' and wildcard '*' */
+     + 	if (len && !is_dir_sep(pattern[len - 1]))
+     + 		pattern[len++] = '/';
+
+
+ compat/win32/dirent.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
+index 52420ec7d4d..fb63d1adbc5 100644
+--- a/compat/win32/dirent.c
++++ b/compat/win32/dirent.c
+@@ -30,6 +30,9 @@ DIR *opendir(const char *name)
+ 	if ((len = xutftowcs_path(pattern, name)) < 0)
+ 		return NULL;
+ 
++	if (len + 2 >= MAX_PATH)
++		return NULL;
++
+ 	/* append optional '/' and wildcard '*' */
+ 	if (len && !is_dir_sep(pattern[len - 1]))
+ 		pattern[len++] = '/';
+
+base-commit: 2ccc89b0c16c51561da90d21cfbb4b58cc877bf6
+-- 
+gitgitgadget
