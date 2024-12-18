@@ -1,67 +1,66 @@
 Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A7CF4F1
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03CDB2F2A
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734482233; cv=none; b=p13DB4JAb9nuekI7lkgYLGT7Knl/Z7yaqUrfnpB6uj7/20plCA4Su4UuGmcWswXa+Njzg6lZDMN8oWMwQorR8dyCMRPXqiX2LMxAs3o7lIIffYYGlPHBUOM7kPFGe5V7Rup+Uk/gz+D+DpLWAYexoQVGl1+Qeo3CwYG+OcCkXps=
+	t=1734482339; cv=none; b=EtPH0wnQdy4pIOg9IzaIUrlUriQyXrJhAWB9LrT1YoAjcVrmFeWworEth7oaPUH4t77DavLbfIzOxJ7wP0cnktsmeMz5Eu4RFQwmXmT/7TS90605J40KdnB5AscR/eH7uMsI098O8BLAVvMvHjiCQ+h2Fs8mavDlE1pUn4b8jrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734482233; c=relaxed/simple;
-	bh=s9gYDTLv4h+O/GUfy2Hzb5PZqiIwCVemIR5a2qvwnFE=;
+	s=arc-20240116; t=1734482339; c=relaxed/simple;
+	bh=lMNqngZrZgxgkoFMGeQd/5kV63g0T69oP31W9mMlEBc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BQL9d5k+h2HaVjm9wcye4hxiV21o14obh5kre5ot3jXG/V89y216718a1wkoNI+8vCmFPo8/tS1q07rBW13jCECQ1cX2sSvHzqnamx7WDv/oUCln8fJyFmlgUDTQS4mqAEpW4j7iaV+aTHPt+Ph+htwv6HKrWmva2MQbsY/4HR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nXZNI++f; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=eJG8DIeyBANZbT3XkJTP6O5YsioZGsFSiEGehsmLN6qoJ4AzoQPEmzBScwrFIwosjvh3quCdSRYLGlzIcAh/ojsqhYbBMcjl8hlDqY+vDFZLYWOk8YtXqLWHyliMjKYME/NyhFt9pPBUV0BJPniz5c2tHLdg2A0zkLHWfWaJ6gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=joUAkB08; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nXZNI++f"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso42837045e9.2
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 16:37:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="joUAkB08"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43634b570c1so30064565e9.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 16:38:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734482230; x=1735087030; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734482336; x=1735087136; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zOnc71S+sl0q3xDlrkMgwnLveaW9CVC2pE4MA+TqtrY=;
-        b=nXZNI++f/S8BxAMPngOgsBDCdY249NBbSciKc4xqL2R849ucF/icBIIHJJxNRzkkxc
-         wSSCSqHeV26S2wO4Sm6jQHclMsr/pEWfEa+ah6ci4EouWYKOq3tMpl/nmvPa8/5W5vGi
-         D3hSt+3nSMpZIu9w1X24ewioK/ag16BpeolqrRVqjpA1gONtS9nraYO6QrsIKj64xVa3
-         XJV7k+vppPOWLqd0E3txWlGIITZpyNrNTWitek1+JmgwIQdVSieCWnspi3rKkd9KJzeM
-         BELlE77iSc0xFu03QISPmxT2kBWgXUISi5jpujVgcuZSrFJMUDfckppLs+y9IwBivo/V
-         j17g==
+        bh=li4F0fbOdMdkSDJENB3acYzHUrR+ldNIevBYSeVMIz0=;
+        b=joUAkB08f/TVESyV7URs+a/eO4wmm0giOv52H3lQCd167oauVOFe2mNzdT+7rc44wO
+         KZILEv/81I9O7Ffa5GpSMDT4lV9pvmUpNQVNtp9KJsJlHEGUFQNBOhLP0WxNa/CYMW+9
+         BiKrpcePrvVSHlOchXiPOJLYuGyEV0mKM34RL/zC0c+VgrH9hvj8x5H4fcoU39xMgDDa
+         +RHo8QYp1Q9vuYbzsNAaiRPwtxw8KhuXxj/GQtLJ1oyn6ydhtneAnl7Gnljj1OnA+nBP
+         9AQQTTIL1geMVH798r23QCn/7CCM7daBgVPS7OXd0ygGV22c6uQuId1CRM2S/u9oFSiV
+         o2GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734482230; x=1735087030;
+        d=1e100.net; s=20230601; t=1734482336; x=1735087136;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zOnc71S+sl0q3xDlrkMgwnLveaW9CVC2pE4MA+TqtrY=;
-        b=VnP2AcwmVkj/vhzP92N0dYedkpOo4Uy/3Zsyk2UgFbIGCRUUEtoWqc9gktNqfNndOA
-         UJM5O0ldUaOji90jszJ7QmUnpW17M+0UeQjWAE7hDiqP+z1WFiIYFF0yJRScfJHEFmUN
-         dXaDE3V1RMamb41pzsEQHYCrEqaqiPSgy8f5GrHCT96S5lQ4GLzxPXaAqxnZqxl5irh3
-         Bijz1xXgTRr7PVRcCnVbvMdg0xjPYZiJAlvlVSNkjU38RWyuHG++XqfJ9tG9lrU5ViIT
-         VaiUhcvUmLaj+AuOqtUJ4agEtTefg7jgjcplJQXoHnKLZFEI4Rfh1ewb1zNN5+NYD832
-         Wbmw==
-X-Gm-Message-State: AOJu0YyxWMAYCnuxTlLy7oTyf+YgchNv2X7IcBfjiQR2dXoiBAAjO5N3
-	bMZSZl3iIyj34Xnj94dsJ3+Oza4RO9Rx4ELHb+DLzzAa9b0zco54cpKA2g==
-X-Gm-Gg: ASbGnctVoxU0udk+SnZdjV2s4aEix7SU5/pk4o6tEjQzqbM1hxlmAdC0YhhUGR/M/WE
-	VCC0BtfOJSEHxLsjUZ2W2ADU40lS0IIwQB9cMWkrOd6p3Kr41wOYlhdw9QeGrdjxwogtwrT5S3w
-	eGIVEFdKSt7JC7uHmXEkYfynwWuuYosdotlTZXhODsuOMekkOfeli5KUdsF71mLUfEHZWKlaDsc
-	WqVn8937t1DqvyZaEYXPyn8XOwAsZq00AeD0vBlvSTDEgjBviwwwtXfjg==
-X-Google-Smtp-Source: AGHT+IGoK3IW2UQg60O3CLyXR/RY5BhvTucxSezHaR2tbaoZtlCHhfmhvlZ9x1fJ0trOuHPJJPi62A==
-X-Received: by 2002:a05:600c:1382:b0:434:f0df:9f6 with SMTP id 5b1f17b1804b1-43656aff40dmr2142405e9.3.1734482230266;
-        Tue, 17 Dec 2024 16:37:10 -0800 (PST)
+        bh=li4F0fbOdMdkSDJENB3acYzHUrR+ldNIevBYSeVMIz0=;
+        b=B8RKeVUoairRGum2bYOa5KxNYn+Lv5onoSjsGuofcW1DA3YpTzZ2TnJ9RsIbBG8A7z
+         nCpKeC+4iOe27hl84Ksvm19OEMkXHDkr6FwsjGKfNa5HtDe9jodSw5tctR0IUfUbMx0+
+         He9moIdbpeWdq8GfxcEB4rmeoP7qW2udDPue/TrMzwimLLRn9BxdlqCPHbC3uS/MVlqX
+         Mx8JK9NvDjxe4lthLdd8906JRObdMuhpQHIzwF7KHOfYCMs4t2pq3A+0WPj9nSIURTam
+         NDvO6cXv5JwtPoffK31ynKyxBm5Yc/QGc8Qej/ed7kfC5pHHtSjQ9FqLb+gkZccy1kVT
+         jumQ==
+X-Gm-Message-State: AOJu0YwtH4aAJtkc2MnQTaCt6KH2ZwxE6UEnt4NfLlZwOrhlFKN2lcca
+	/ybTKLXdUEbEplNuAAEl+sYJv3gXrSdYJX4+afaawXz6Vtfwh3vnDgwmgg==
+X-Gm-Gg: ASbGncu5fHnUAv4n5EylckKG9mLFWJV1Ilq0Nuti92md7HNXxFRJtKYN8S+2+Czt2rF
+	vRya217j+x1dw3c6Fpzna9XBgh8YIVLJW8KcNPskkleeFeYkA5mKKGhAYm0QmKiSskm8jQZ5Ejy
+	U/GUnVc9nEwS45piYRc5HuRf973eOO1KzlwW/B2YqkmJCUoOu2F0G+wWWS2i7c1OH2lXjihKkAg
+	uQ2e0iqhNug0MHC5GGLtQX15IOCgKp3N1h8/GSZpsipZK7IjiDweEnmGA==
+X-Google-Smtp-Source: AGHT+IGQ0TMmwmukDxu62JYnk/3uhuRTmkr971IZh+LPlDSuToES7TpT7k29jeX80Jg62ZQo3FfYog==
+X-Received: by 2002:a05:600c:190f:b0:434:9e1d:7626 with SMTP id 5b1f17b1804b1-436553f4992mr4436825e9.25.1734482335680;
+        Tue, 17 Dec 2024 16:38:55 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b1f638sm2508285e9.37.2024.12.17.16.37.09
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b12399sm2631995e9.20.2024.12.17.16.38.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 16:37:09 -0800 (PST)
-Message-Id: <pull.1413.v4.git.git.1734482229018.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1413.v3.git.git.1673189354738.gitgitgadget@gmail.com>
-References: <pull.1413.v3.git.git.1673189354738.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 16:38:55 -0800 (PST)
+Message-Id: <pull.1432.v2.git.git.1734482334390.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1432.git.git.1673290620410.gitgitgadget@gmail.com>
+References: <pull.1432.git.git.1673290620410.gitgitgadget@gmail.com>
 From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 00:37:08 +0000
-Subject: [PATCH v4] mingw: check that the file attributes are valid before
- modifying them
+Date: Wed, 18 Dec 2024 00:38:54 +0000
+Subject: [PATCH v2] git: replace two checks with one not equal check
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,50 +76,65 @@ Cc: AreaZR <gfunni234@gmail.com>,
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-If the attributes are invalid, return -1
-to indicate an error.
+(version < 2 || version > 2) looks silly
+considering this is an integer.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    mingw: check that the file attributes are valid before modifying them
+    git: replace two checks with one not equal check
     
-    Thanks for taking the time to contribute to Git! Please be advised that
-    the Git community does not use github.com for their contributions.
-    Instead, we use a mailing list (git@vger.kernel.org) for code
-    submissions, code reviews, and bug reports. Nevertheless, you can use
-    GitGitGadget (https://gitgitgadget.github.io/) to conveniently send your
-    Pull Requests commits to our mailing list.
+    (version < 2 || version > 2) looks silly considering this is an integer.
     
-    Please read the "guidelines for contributing" linked above!
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1413%2FAreaZR%2Fset-hidden-flag-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1413/AreaZR/set-hidden-flag-v4
-Pull-Request: https://github.com/git/git/pull/1413
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1432%2FAreaZR%2Fversion-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1432/AreaZR/version-v2
+Pull-Request: https://github.com/git/git/pull/1432
 
-Range-diff vs v3:
+Range-diff vs v1:
 
- 1:  0cbe8bce617 = 1:  0fed7ade880 mingw: check that the file attributes are valid before modifying them
+ 1:  e9172aea097 ! 1:  07e0d614c21 git: replace two checks with one not equal check
+     @@ Commit message
+          Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+      
+       ## builtin/show-index.c ##
+     -@@ builtin/show-index.c: int cmd_show_index(int argc, const char **argv, const char *prefix)
+     +@@ builtin/show-index.c: int cmd_show_index(int argc,
+       		die("unable to read header");
+       	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
+       		version = ntohl(top_index[1]);
 
 
- compat/mingw.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ builtin/show-index.c | 2 +-
+ packfile.c           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 63f36c893bf..7f52a4362fe 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -446,6 +446,11 @@ static inline int needs_hiding(const char *path)
- static int set_hidden_flag(const wchar_t *path, int set)
- {
- 	DWORD original = GetFileAttributesW(path), modified;
-+	if (original == INVALID_FILE_ATTRIBUTES) {
-+		errno = err_win_to_posix(GetLastError());
-+		return -1;
-+	}
-+
- 	if (set)
- 		modified = original | FILE_ATTRIBUTE_HIDDEN;
- 	else
+diff --git a/builtin/show-index.c b/builtin/show-index.c
+index f164c01bbea..5fb71a1c425 100644
+--- a/builtin/show-index.c
++++ b/builtin/show-index.c
+@@ -44,7 +44,7 @@ int cmd_show_index(int argc,
+ 		die("unable to read header");
+ 	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
+ 		version = ntohl(top_index[1]);
+-		if (version < 2 || version > 2)
++		if (version != 2)
+ 			die("unknown index version");
+ 		if (fread(top_index, 256 * 4, 1, stdin) != 1)
+ 			die("unable to read index");
+diff --git a/packfile.c b/packfile.c
+index 9c4bd81a8c7..de0662b2353 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -114,7 +114,7 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
+ 
+ 	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
+ 		version = ntohl(hdr->idx_version);
+-		if (version < 2 || version > 2)
++		if (version != 2)
+ 			return error("index file %s is version %"PRIu32
+ 				     " and is not supported by this binary"
+ 				     " (try upgrading GIT to a newer version)",
 
 base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
 -- 
