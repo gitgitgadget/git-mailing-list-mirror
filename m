@@ -1,66 +1,66 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F6A13B58F
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 16:46:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6499B13B58F
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 16:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734540400; cv=none; b=uzB6SWr3RafM/CdPoEQ8yqWismq3gkAEBjCy2qTETUJiioeqmuiaTflBr5/iAMtslLaz+/ucsQueV+lEuPyw5pJ9MWC/+7zAcH/kKiMNwxXnMj0DVubFKg3cETN9RwxMvp3E2NQKKWtJ1mzJcc4IC/PyDICxy7fCoa1UUdbfIzA=
+	t=1734540525; cv=none; b=bcIGZSU2mN4cFzET2K8Gr7vS21loxsIGFCPor/2MNW05PNiATFUHKmO1VKuQWLwQ2Q88GFPYcQjj64SL053T2ofKjKuZl3GgNRh0E1tPIm6Tn1u5lrvW1IOx8fxdGrUkZcHDAyUaagWvqGpz9QcoPGnnkvzV0i6+SQQctq+KdaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734540400; c=relaxed/simple;
-	bh=UDYJMIW6D6HrZm9lVun9k0Xy28wjKx03csyeBsDC3vI=;
+	s=arc-20240116; t=1734540525; c=relaxed/simple;
+	bh=6/MQQTXk6V3DahMPeAdAYFkLhIvvt1CjyLjhC60jvKo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Km6IKSWSyGWUXdeBilBwFaYSeZoAFbRvOrgOXBU5cheGTtBIOIZ/yXgoDeB2LVMAQTgpqHxPdPeaeaWZmTWlI0dw+SDq0GmFXj0iL9NwAtxZTYPOnIu8YbNiLWNSbEXlEi7hMGVmamUUlH6S3DOnFq6lW6d/uwcwCj74Xg0vE1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DCl2tt4Q; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version:To:Cc; b=H4eEUMMcnvbmsInvKKYoeRL35fUHMfhuqrOjPstPlVmTq1D9yymvl7RB1Ezo3NxbE3grEycVxE5OiJMczPM4Ac9m97bq5/mJpRbgGqh3vyBc+9JwO6KLQbUYjE+MXAhkw97Ctl3flQvZuvSwniz/02O/4HsNRdEpwhUKOzbWsNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HuUe2pM2; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DCl2tt4Q"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4361e89b6daso47561195e9.3
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 08:46:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HuUe2pM2"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-436249df846so46892555e9.3
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 08:48:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734540397; x=1735145197; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734540520; x=1735145320; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AyiWxvsIAV4FdeY6oxaj/ywlB+kfDE0BUF/HiGCRvf8=;
-        b=DCl2tt4Q/urw3nhWgxAgycyaDkybAt1G660AhedgloQYel35uclL7eme0S4OH06olG
-         UUVA2XkZqH8ViBGBPhRn0C05H/KHAeA//jZmUjDb00H+kLiPJbMQumqOIrI/dJUA0wRc
-         qOkJ0R4//fcRdMv8nBFl8Y1QI32sxrgsUY6wqDh5jzN4ojR0Za3OEsSUESzUEtLUNQsq
-         lwk3dkLjdu10W2zHKALSQchXGSqbMKm0EHwz/5KwLvaDqJCOmpmvSm0HSRHpnGbrWTQa
-         4CZ+rd6lHmTKfsuX67G48q5PvAzixd3ZgOzZgesKKDh7ccFiwux4fNsSPARdxtGsYz/O
-         QDLw==
+        bh=96Nlrm1vdwBC3OCsenaMp9iSi4S1c4xrxkVgS664Bt8=;
+        b=HuUe2pM2UF/h0STIhhSb6V8iBYczddBNBFdf/YrvXqlvPzGIZVrI0A8VLm2DU1xoy6
+         M1LkT+HllRSKOSjeRvuGCVkpyRewMcvrqACUTFwsPiHxfdJ3lBcpFiiarxWsCrpXNE+O
+         dLdS/zDC7gvLXB5h5EgxOzMFqjhqBznTR+ohCP8VGcqs3XO9p3qfpMXzz4TMPB7YloxM
+         36HlJiiZqFmDFw1ICO+flTP94+zvSudjQGnXfLlBvGPU+1jUtxoHE1kbUCWBPuSGwN5/
+         IkOr4Df33keoN1Ai1bkBnB8BPr/IhORuqnhBDivY8BifbIiVIjuZlCM5Y5VK0CL8cEUN
+         cqkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734540397; x=1735145197;
+        d=1e100.net; s=20230601; t=1734540520; x=1735145320;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AyiWxvsIAV4FdeY6oxaj/ywlB+kfDE0BUF/HiGCRvf8=;
-        b=fD8HZ4m/V1eGbJ8tVfgXympAJIfF8VT0FW4PrSQUN0P7tEQnEHRjYHlZxeENjgqhF4
-         Igelj7cB+XDU3hCOLChLu29J8a5xxOI5ywLm2nY57fgOf6YY/YhK+iEvlhxjbOn9TIMW
-         jHnn7HnoetKGdIF7ftIii5k1zHMnRvK6ZC9SqwgatsVZk1MzKO9G1SnUZfbhToAImkMv
-         rgc/j9vbI9rp1bDoLmDq5+2cxNKeW/3f2Wd8E3ExE5+zb5axFJNIvcGoLSWP5Z5Qj2np
-         McJl9qFIAABLCS/dHmxiYEDdJ2P6/3lsJMM79eGwm5AcLfoe9Cp2+ZG2hmmlxqWq+OOE
-         iT+Q==
-X-Gm-Message-State: AOJu0Yya103Wmlk5AFOkNhbSP1BIYlbjYLtyRgikwnPon4kR5mqVnmCV
-	+z3GJgNYYdjmbmcCrdutXiiV75jLxVxPawdEDUY6QGKDN3zEYKd54u+ynA==
-X-Gm-Gg: ASbGncsAQrfwFfeHFwaiImh2O1VPnB/QHQJDxPUtr57VX/vi238/7eu8CafolffjI6C
-	F+6fnOH1svsvsZqhNcDDxG9H89GELRMjZ3n/5ndYXxpcU/H49uxHOrw3r2sAPIhKJpHR3siHQ4L
-	tSnS5x/VvoLm5HXE19RLnqw3kJ9Gq5FcJE3DpQn5EIMKTHZ8nPGugPVrh9ANLHUZnYog1CSfOyX
-	QbvOa36PYSkXjtBlJDVwQ4KbbH2lL2AiNH4h4pk8yK5ctDTqgct6lNctg==
-X-Google-Smtp-Source: AGHT+IF/NJvOoVFttUe0gWjiMSO2kC9TaQJCJsdFQGR8ITP3/dvFelJHnk94cG2WK3+LsND0UUPV0g==
-X-Received: by 2002:a05:600c:190c:b0:434:f7e3:bfbd with SMTP id 5b1f17b1804b1-43655426a47mr25931885e9.23.1734540396684;
-        Wed, 18 Dec 2024 08:46:36 -0800 (PST)
+        bh=96Nlrm1vdwBC3OCsenaMp9iSi4S1c4xrxkVgS664Bt8=;
+        b=T2Sz18FQ0lMd5IlCRmeCnuKh9k653UyeCeDjJlLKikZVb95Xd7/nEvBI6ucB7GHLWo
+         lkefHkyK9p7XkefeTk71Ijir7hYC+gwy0cqouowXb5nogRbng6/A5exG1tsiBviIEXIL
+         NXnCKohn/1sCxkJAihhq73h7Gw9alTbApxqxDMFT6erdxPPBEuIaeGvWCnuKavahb11H
+         DdAuNliYAMLPXkAhCYZl+9HiLK+TqCa2UPJrXQX/KudYGaYhfqCIkkomkypa3PGAV1FH
+         o+7yxjr6jqMSBIEsww97lME+2/hTSM0cOv2rzubAOyoaV2naAMcLUFAz7McejBNnhNZj
+         ivPw==
+X-Gm-Message-State: AOJu0YzcU44eXsux7YNBdJli5qEDyh1ItBTEE8IoTcwQNWpJj3b2Qr+M
+	HSNHWrlOmshiygZfuEPhaHIPPXWfEp4fHdfwV/Yi81JmeuvfYLXrEEHIyg==
+X-Gm-Gg: ASbGncvGIH1+LUERdlEA+wgs+XOwP7etlxruHkTfqQkKuJNpQZWhDId9CnxHFUsAjhH
+	rnF0wxM78XIr/dC13KVZWo02PPKh2lXEO2tSLPin/Bj+/B8J/Vk2Yf+22CEepPEnn8hH9jp0M0B
+	q+nCmX3IGbcrt+LHZ/hdErf1AC1NqAf+yuYfRNzvrBL581+4mJ+S3d3Iacr9Snm+OoSaVmoQwza
+	/WPjeTKHGXG5mufrpOELWDHdPuxTLzi5VB7y/DoMMVy1CYzaron6FsfSQ==
+X-Google-Smtp-Source: AGHT+IHUQIk3/V3AW0tJfxOt8Ljq9cyCBVLUDueWLTGkBGkmy5jBSvMY5vxfdp0Ah4nPIpbqEP4gxg==
+X-Received: by 2002:a05:600c:154c:b0:434:9f81:76d5 with SMTP id 5b1f17b1804b1-436553f321cmr28372305e9.22.1734540513994;
+        Wed, 18 Dec 2024 08:48:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b015b6sm25303115e9.17.2024.12.18.08.46.35
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b19217sm25191215e9.33.2024.12.18.08.48.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 08:46:35 -0800 (PST)
-Message-Id: <pull.1620.v5.git.git.1734540395021.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1620.v4.git.git.1734489540328.gitgitgadget@gmail.com>
-References: <pull.1620.v4.git.git.1734489540328.gitgitgadget@gmail.com>
+        Wed, 18 Dec 2024 08:48:33 -0800 (PST)
+Message-Id: <pull.1390.v11.git.git.1734540512582.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1390.v10.git.git.1734485187081.gitgitgadget@gmail.com>
+References: <pull.1390.v10.git.git.1734485187081.gitgitgadget@gmail.com>
 From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 16:46:34 +0000
-Subject: [PATCH v5] git: use ^=1 to toggle between 0 and 1
+Date: Wed, 18 Dec 2024 16:48:32 +0000
+Subject: [PATCH v11] git: use calloc instead of malloc + memset where possible
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,66 +71,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Dragan Simic <dsimic@manjaro.org>,
-    Jeff King <peff@peff.net>,
-    =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    AreaZR <gfunni234@gmail.com>,
+Cc: AreaZR <gfunni234@gmail.com>,
     Seija Kijin <doremylover123@gmail.com>
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-If it is known that an int is either 1 or 0,
-doing an exclusive or to switch instead of a
-modulus makes more sense and is more efficient.
+Avoid calling malloc + memset by calling calloc.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    git: use ^=1 to toggle between 0 and 1
+    git: use calloc instead of malloc + memset where possible
     
-    If it is known that an int is either 1 or 0, doing an exclusive or to
-    switch instead of a modulus makes more sense and is more efficient.
+    Avoid calling malloc + memset by calling calloc. cc: Jeff Hostetler
+    git@jeffhostetler.com cc: Ævar Arnfjörð Bjarmason avarab@gmail.com cc:
+    Bagas Sanjaya bagasdotme@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1620%2FAreaZR%2Fbuffer-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1620/AreaZR/buffer-v5
-Pull-Request: https://github.com/git/git/pull/1620
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1390%2FAreaZR%2Fcalloc-v11
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1390/AreaZR/calloc-v11
+Pull-Request: https://github.com/git/git/pull/1390
 
-Range-diff vs v4:
+Range-diff vs v10:
 
- 1:  db1f0b1a323 ! 1:  5bb2cf10062 git: use ^=1 to toggle between 0 and 1
-     @@ diff.c: static void mark_color_as_moved(struct diff_options *o,
-       			else
-       				flipped_block = 0;
-       
-     -
-     - ## t/helper/test-path-utils.c ##
-     -@@ t/helper/test-path-utils.c: static int check_dotfile(const char *x, const char **argv,
-     - 	int res = 0, expect = 1;
-     - 	for (; *argv; argv++) {
-     - 		if (!strcmp("--not", *argv))
-     --			expect = !expect;
-     -+			expect ^= 1;
-     - 		else if (expect != (is_hfs(*argv) || is_ntfs(*argv)))
-     - 			res = error("'%s' is %s.git%s", *argv,
-     - 				    expect ? "not " : "", x);
+ 1:  d7b7959be0a ! 1:  cd18ee951cc git: use calloc instead of malloc + memset where possible
+     @@ Commit message
+      
+          Avoid calling malloc + memset by calling calloc.
+      
+     -    Signed-off-by: Seija <doremylover123@gmail.com>
+     +    Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+      
+       ## remote.c ##
+      @@ remote.c: void apply_push_cas(struct push_cas_option *cas,
 
 
- diff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ remote.c    |  4 ++--
+ submodule.c | 10 +++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 266ddf18e73..5c2ac8d6fd1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1231,7 +1231,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 							    &pmb_nr);
+diff --git a/remote.c b/remote.c
+index 10104d11e3c..462ff105273 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2854,9 +2854,9 @@ void apply_push_cas(struct push_cas_option *cas,
  
- 			if (contiguous && pmb_nr && moved_symbol == l->s)
--				flipped_block = (flipped_block + 1) % 2;
-+				flipped_block ^= 1;
- 			else
- 				flipped_block = 0;
+ struct remote_state *remote_state_new(void)
+ {
+-	struct remote_state *r = xmalloc(sizeof(*r));
++	struct remote_state *r;
  
+-	memset(r, 0, sizeof(*r));
++	CALLOC_ARRAY(r, 1);
+ 
+ 	hashmap_init(&r->remotes_hash, remotes_hash_cmp, NULL, 0);
+ 	hashmap_init(&r->branches_hash, branches_hash_cmp, NULL, 0);
+diff --git a/submodule.c b/submodule.c
+index 7ec564854d0..7707c6f48f0 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1489,14 +1489,13 @@ struct fetch_task {
+  */
+ static const struct submodule *get_non_gitmodules_submodule(const char *path)
+ {
+-	struct submodule *ret = NULL;
++	struct submodule *ret;
+ 	const char *name = default_name_or_path(path);
+ 
+ 	if (!name)
+ 		return NULL;
+ 
+-	ret = xmalloc(sizeof(*ret));
+-	memset(ret, 0, sizeof(*ret));
++	CALLOC_ARRAY(ret, 1);
+ 	ret->path = name;
+ 	ret->name = name;
+ 
+@@ -1536,8 +1535,9 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
+ 					    const char *path,
+ 					    const struct object_id *treeish_name)
+ {
+-	struct fetch_task *task = xmalloc(sizeof(*task));
+-	memset(task, 0, sizeof(*task));
++	struct fetch_task *task;
++
++	CALLOC_ARRAY(task, 1);
+ 
+ 	if (validate_submodule_path(path) < 0)
+ 		exit(128);
 
 base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
 -- 
