@@ -1,144 +1,204 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9FE1917F1
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 16:57:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ED01FAC40
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 18:29:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734541042; cv=none; b=ElyUsAgimjII5OVlzl+Ye7lybEL27iKXxiW8s65L2qSQb2Ff6XAQ59zPtxHpbiQOfqkl79Te/yGlXvgiBFUvYhWCggFkCwXR4dlgi40FLwj/qkO0FoYRtrbJuMvmFcDhh0MCtTUeHppqhOC2RKBsRQALB3y8pSsQD4q4VMJWsS4=
+	t=1734546597; cv=none; b=gIvwNgphkHdy09XSqjPXJmH073xhGyZbbBzPqypecljzpZ7uVnIqdrYGFsBu5Mvulj39bI83pssYNJ/OWpQLjI8hgErg8rRQ9rblai4+JUWRyDtVrFSTFYaLbsssjCn2ulGGtajKxxboc2o4yEp3ajx5EsyOlXkSCvR54rfx4No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734541042; c=relaxed/simple;
-	bh=gjCz/FUMEPMOxuyOX+CgbuL26iqu6e3BPF4bjus+OqY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kwjQUUYGYSd5XrFmCngU/LdhV+8cuwOPd1BRFfamGFUwzqFsT6gJLOsp0FWODhHH225Q11XVtXsdUj62eAAE2V5+q8/eAur0cihRJWeM/eh71g5xbhaCcPeLevX4AUo31n/EGzL4tNnl44ldVUbU/kVs3k34sM7/fC4cLwd6tSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hvpARXQ+; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734546597; c=relaxed/simple;
+	bh=jaRKg/uMhSpUIyWs+ehR3y72rY9v4YtbqBc+Rh0pZco=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=OBO3J/jkRW5D8sadvuIo1X4dNhllJ0I2q6cNjJI4foE6P57C2QnmRe0GGWZ/ji1LeicRPkzPOTdJh7tUff6ThvZpayB9PGhW9AOkewme43UmG3Ed9XbEsxhT1teN/PPRofE/5Rpow19RErs9oyejcR8TOdpSnC1L/Uk7Ai61+SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hashgraph.com; spf=pass smtp.mailfrom=swirldslabs.com; dkim=pass (2048-bit key) header.d=hashgraph.com header.i=@hashgraph.com header.b=Y5LMRMmB; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=hashgraph.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=swirldslabs.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hvpARXQ+"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43625c4a50dso47322195e9.0
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 08:57:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=hashgraph.com header.i=@hashgraph.com header.b="Y5LMRMmB"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5d3e6f6cf69so4366717a12.1
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 10:29:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734541039; x=1735145839; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GwJ0H7zL99PUQ3WfelHhB6+qDkUK3ZlLQRmjFTuviOw=;
-        b=hvpARXQ+LqSWgKtq4HzBzWwaysH6+CL35USYLgBRcd4HoxOp/X4bSNH10iCOOeDePx
-         4pJQx/ddeGlthhixkQZlNueDITjMcJcVY+NROw/rVUDtCGpYVMpE91RynuwslwEW2Mzp
-         LsF2U7UPh6k96N4mJx063ijCg6T+wh5SxmnS2yUosn6dYS2NGYExb4hR9Gzptw6AUzG7
-         a/P2tybBq1C7MPV7Qd8eXUiekFDM39ojR09/9+sq7hZpja+YhTDaTVorW7xP0bo9HrJg
-         ZDhMhdrlIWH+0+a/ugEUM8nx9Ko1O8NzXi5l4psBxD2a1ZzMCgVCw72Ih7oGsYsH4V6/
-         RA0w==
+        d=hashgraph.com; s=google; t=1734546593; x=1735151393; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=rL5W+nZMiyUPE3Lafmbykr6Y0to0WxNKV7lmc8UNDZA=;
+        b=Y5LMRMmBjycAE0QalblZg5GY5FV9Ixa9CQYRLTNyWXKPMwSFCeUl1Af2C0/KGsNQ6J
+         qnUQTCYoB3JOUPYCjM8lzwspKA7FjwlSu/DrmEE6iS0dGGikxSO5PD37U87QLZlEhxcH
+         8Bv6JgRgQFDnt33dhUmmqgMmqmSZCXovpfJooPTnT5IG9f7OrzfhtC+UXDtB7/9eKf09
+         chdHtw9T+t2hBVEBDKVr2RDjG+3muoULVubBKBqxFr5f0K83MYYoPvot8YM+wrDaArs8
+         QxNe6bpOM2ie3y1EtVYUxg0skh1iClsr0Qg7EjhL/bj8jI3XDtQfRfxmB1bo//sGjMjw
+         z0yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734541039; x=1735145839;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GwJ0H7zL99PUQ3WfelHhB6+qDkUK3ZlLQRmjFTuviOw=;
-        b=rpS5YdRlrlyicJDH1xTrIM5zHwhoxviG5Q67OVGg6zZAAijEVkBBIMF8QaEDICdqHK
-         6SXkodRS1MoeMHwdFSX00M85dD6rCGhk/7pHR2EbHSmp/Ih54TtmnCXEAEounn6lghp7
-         h2Gn+rQWI4jmfOMX7PgvKDnAa2JCCwn2qANoPaZ00E4IhWIr9JXewhR3Qf7/GcK6jbqB
-         gQqqjlCSyxtAMP8I77KOmPUalpaJIu7pewuT35IV8IR5c8pzIX70ptAQTR2HyuZQTZOj
-         NZAkE0HUS3PJcgwRjK+5XYQ32YQIgfF+VAnxNmpMRFL/IZM+7epNdpqr0jdJ71wtWLjk
-         mEng==
-X-Gm-Message-State: AOJu0YySLYRTXw9ZggAj4w1E5THr1fDTXoC0xyrJ42YWuy4IEeU16ZT1
-	CPV+XCuWrlnaaPEuavo4lJgm0TIdAEIHBy+6JuEryZqSX/lsf5xzxR64Xw==
-X-Gm-Gg: ASbGnctnvylxwm7RgJ/9KyXQUaicdyBfBeAz9wyQU9ncplI9HeKHENDji775kys/nH3
-	cQYnIB8ELL3wdImvIxIkSsmnXaJuLM1WEPVcNuKonTXfcXi4daU5cOaonHBD3rKa5jKkp8O6cdx
-	O+1oVxlbC0GuNWnukEWWiV3XRvB2LzfnGtw6ZXZRkoKN/P9LN4VbznBD7m5mg6mTE9zhGlPPvPD
-	A1QSmCaEnUSY6/q1y4j25e/26rX3VKOLm4kgzxHcSGXznxIwrCcY1iZbA==
-X-Google-Smtp-Source: AGHT+IHwsNwCZJXlLU1nQnxQjUY3OAnMj0YKoGPXGcp++d3+2u9Me3YuOtwluIjwnVna0w1bkIhRjw==
-X-Received: by 2002:a05:6000:4612:b0:385:fd26:f6e0 with SMTP id ffacd0b85a97d-388e4d83b16mr3621501f8f.18.1734541038643;
-        Wed, 18 Dec 2024 08:57:18 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c8060174sm14361728f8f.96.2024.12.18.08.57.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 08:57:18 -0800 (PST)
-Message-Id: <pull.1620.v6.git.git.1734541037465.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1620.v5.git.git.1734540395021.gitgitgadget@gmail.com>
-References: <pull.1620.v5.git.git.1734540395021.gitgitgadget@gmail.com>
-From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 16:57:17 +0000
-Subject: [PATCH v6] git: use logical-not operator to toggle between 0 and 1
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1734546593; x=1735151393;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rL5W+nZMiyUPE3Lafmbykr6Y0to0WxNKV7lmc8UNDZA=;
+        b=tTTrUa28nxosideoHuD1G68XmF3cZbyLS2OqYEBvCgLLu6mdO7mGz/gZer1OfLFC9p
+         JBpiUxAdrea5MtJkBR0jwwNmnhK6AUp1X7a8FJrxl30i+ViRnv0Q2wieIKiAL/uxswPH
+         wTAn6KbS3MDe9nMvgzlUepFnRnr0HUYF8dGaVbMGG/X77lIDKi+cjE3ezjbjIrcy9u4b
+         hsqzv94x57j2+CV0YTcvLxDh5JdGEP+a8M3Hsd8VxO1udVwF9IuF0E7T3yFMzw6fIlac
+         SMNbzqPg/ErlTHv8pF5ClbOLBCwNVVwdS20qKRvfxzmKyZrUUtEsrZMcc3Q3pUGRfJpK
+         YyKw==
+X-Gm-Message-State: AOJu0Yy54v9DFUl5Wm90geSGxl8gW5TY+UzOhOk4CqZOaE6ZufIR6PU4
+	AVBpnTur3DWgEGZVktp7V0G+mJ/nH8Yug/p/h83e34n38lsn6q6o9cd4rKdNGsVjBHMFqedicxo
+	IYYuaCFADvAHZDLGR3VPFXRcUO+aG6s5IqLIavcEFYB1O6Nd2
+X-Gm-Gg: ASbGncskzxrwlFLRjQMk1+kDUn0zzS6cr7Ke0CYHvZT+n7dcRUvjIukqWlr7tA7B91u
+	l2DDvw1Nw3roQAnxtZux6gCxnR81u2apbl53N
+X-Google-Smtp-Source: AGHT+IEtkeFvCFdAS+IkJyXONbHK2WiWFGlPMbx0biPaNjniTKjJynp5I3saTtTlBp1zMgjlIJNI9uuRQjOSdX0ZoPg=
+X-Received: by 2002:a17:906:e212:b0:aa6:8a1b:8b84 with SMTP id
+ a640c23a62f3a-aabf4956e96mr357420366b.57.1734546593432; Wed, 18 Dec 2024
+ 10:29:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Matt Riben <matt.riben@hashgraph.com>
+Date: Wed, 18 Dec 2024 12:29:41 -0600
+Message-ID: <CAJgEbBfca_tFmLm1JojL+JPwvCz96-VJbuQ5xT8iBos8h8QTVA@mail.gmail.com>
+Subject: git-bugreport: core dump in git-difftool when there are no diffs
 To: git@vger.kernel.org
-Cc: Dragan Simic <dsimic@manjaro.org>,
-    Jeff King <peff@peff.net>,
-    =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    AreaZR <gfunni234@gmail.com>,
-    Seija Kijin <doremylover123@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000008ca9e206298f996d"
 
-From: Seija Kijin <doremylover123@gmail.com>
+--0000000000008ca9e206298f996d
+Content-Type: multipart/alternative; boundary="0000000000008ca9e106298f996b"
 
-If it is known that an int is either 1 or 0,
-using a logical-not to switch instead of a
-modulus makes more sense and is more efficient.
+--0000000000008ca9e106298f996b
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    git: use logical-not operator to toggle between 0 and 1
-    
-    If it is known that an int is either 1 or 0, doing an exclusive or to
-    switch instead of a modulus makes more sense and is more efficient.
+Hello,
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1620%2FAreaZR%2Fbuffer-v6
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1620/AreaZR/buffer-v6
-Pull-Request: https://github.com/git/git/pull/1620
+I get a core dump running `git difftool` when there are no diffs. It is
+easy for me to reproduce this core dump. The attached bug report includes a
+stack trace.
 
-Range-diff vs v5:
+Best regards,
+Matt
 
- 1:  5bb2cf10062 ! 1:  0fe9e776177 git: use ^=1 to toggle between 0 and 1
-     @@ Metadata
-      Author: Seija Kijin <doremylover123@gmail.com>
-      
-       ## Commit message ##
-     -    git: use ^=1 to toggle between 0 and 1
-     +    git: use logical-not operator to toggle between 0 and 1
-      
-          If it is known that an int is either 1 or 0,
-     -    doing an exclusive or to switch instead of a
-     +    using a logical-not to switch instead of a
-          modulus makes more sense and is more efficient.
-      
-          Signed-off-by: Seija Kijin <doremylover123@gmail.com>
-     @@ diff.c: static void mark_color_as_moved(struct diff_options *o,
-       
-       			if (contiguous && pmb_nr && moved_symbol == l->s)
-      -				flipped_block = (flipped_block + 1) % 2;
-     -+				flipped_block ^= 1;
-     ++				flipped_block = !flipped_block;
-       			else
-       				flipped_block = 0;
-       
+--0000000000008ca9e106298f996b
+Content-Type: text/html; charset="UTF-8"
 
+<div dir="ltr">Hello,<br><br>I get a core dump running `git difftool` when there are no diffs. It is easy for me to reproduce this core dump. The attached bug report includes a stack trace.<div><br></div><div>Best regards,</div><div>Matt</div></div>
 
- diff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--0000000000008ca9e106298f996b--
+--0000000000008ca9e206298f996d
+Content-Type: text/plain; charset="UTF-8"; name="git-bugreport-2024-12-18-1208.txt"
+Content-Disposition: attachment; 
+	filename="git-bugreport-2024-12-18-1208.txt"
+Content-Transfer-Encoding: base64
+Content-ID: <f_m4u7zyrl0>
+X-Attachment-Id: f_m4u7zyrl0
 
-diff --git a/diff.c b/diff.c
-index 266ddf18e73..48335971a4c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1231,7 +1231,7 @@ static void mark_color_as_moved(struct diff_options *o,
- 							    &pmb_nr);
- 
- 			if (contiguous && pmb_nr && moved_symbol == l->s)
--				flipped_block = (flipped_block + 1) % 2;
-+				flipped_block = !flipped_block;
- 			else
- 				flipped_block = 0;
- 
-
-base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
--- 
-gitgitgadget
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCgpJIHJhbiBgZ2l0IGRpZmZ0b29sYC4KCldoYXQgZGlkIHlvdSBl
+eHBlY3QgdG8gaGFwcGVuPyAoRXhwZWN0ZWQgYmVoYXZpb3IpCgpJIGV4cGVjdGVkIHRvIHNlZSBu
+byBkaWZmcy4KCldoYXQgaGFwcGVuZWQgaW5zdGVhZD8gKEFjdHVhbCBiZWhhdmlvcikKCkNvcmUg
+ZHVtcCBnZW5lcmF0ZWQgKFNJR1NFR1YpLgoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQg
+eW91IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwoKSSBkaWQgbm90IGV4cGVj
+dCB0aGUgY29yZSBkdW1wLgoKQW55dGhpbmcgZWxzZSB5b3Ugd2FudCB0byBhZGQ6CgotLS0gYmVn
+aW4gLS0tCuKsoiBbZGV2ZW52QHRvb2xieCBnaXRdJCBnaXQgZGlmZgrirKIgW2RldmVudkB0b29s
+YnggZ2l0XSQgZ2l0IGRpZmZ0b29sIC0tZGlyLWRpZmYgLXggZWNobwpTZWdtZW50YXRpb24gZmF1
+bHQgKGNvcmUgZHVtcGVkKQrirKIgW2RldmVudkB0b29sYnggZ2l0XSQgY29yZWR1bXBjdGwgZGVi
+dWcgL3Vzci9iaW4vZ2l0CkhpbnQ6IFlvdSBhcmUgY3VycmVudGx5IG5vdCBzZWVpbmcgbWVzc2Fn
+ZXMgZnJvbSBvdGhlciB1c2VycyBhbmQgdGhlIHN5c3RlbS4KICAgICAgVXNlcnMgaW4gZ3JvdXBz
+ICc0Mjk0OTY3Mjk1JywgJ3N5c3RlbWQtam91cm5hbCcgY2FuIHNlZSBhbGwgbWVzc2FnZXMuCiAg
+ICAgIFBhc3MgLXEgdG8gdHVybiBvZmYgdGhpcyBub3RpY2UuCiAgICAgICAgICAgUElEOiA1NzE5
+IChnaXQpCiAgICAgICAgICAgVUlEOiAxMDAwIChkZXZlbnYpCiAgICAgICAgICAgR0lEOiAxMDAw
+IChkZXZlbnYpCiAgICAgICAgU2lnbmFsOiAxMSAoU0VHVikKICAgICBUaW1lc3RhbXA6IFdlZCAy
+MDI0LTEyLTE4IDEyOjA1OjUxIENTVCAoOHMgYWdvKQogIENvbW1hbmQgTGluZTogZ2l0IGRpZmZ0
+b29sIC0tZGlyLWRpZmYgLXggZWNobwogICAgRXhlY3V0YWJsZTogL3Vzci9iaW4vZ2l0CiBDb250
+cm9sIEdyb3VwOiAvdXNlci5zbGljZS91c2VyLTEwMDAuc2xpY2UvdXNlckAxMDAwLnNlcnZpY2Uv
+dXNlci5zbGljZS9saWJwb2QtZTM5YjBjMDc0ZjY2YzZlNzZmMzM5ZjVjOTM1N2Y0YzM4ZWEzOWE3
+NzUzZDExY2M1NzMyMGJlMjIyMDE4MmYyMS5zY29wZS9jb250YWluZXIKICAgICAgICAgIFVuaXQ6
+IHVzZXJAMTAwMC5zZXJ2aWNlCiAgICAgVXNlciBVbml0OiBsaWJwb2QtZTM5YjBjMDc0ZjY2YzZl
+NzZmMzM5ZjVjOTM1N2Y0YzM4ZWEzOWE3NzUzZDExY2M1NzMyMGJlMjIyMDE4MmYyMS5zY29wZQog
+ICAgICAgICBTbGljZTogdXNlci0xMDAwLnNsaWNlCiAgICAgT3duZXIgVUlEOiAxMDAwIChkZXZl
+bnYpCiAgICAgICBCb290IElEOiAxNzMyNWM0NTMzYWI0YTI3OGU4NWJiOTdhOTRjZDNkZQogICAg
+TWFjaGluZSBJRDogZTZhN2M1MjRkMjFhNDE4NjhiZDlkNTc3M2IwMDI3OGUKICAgICAgSG9zdG5h
+bWU6IHRvb2xieAogICAgICAgU3RvcmFnZTogL3Zhci9saWIvc3lzdGVtZC9jb3JlZHVtcC9jb3Jl
+LmdpdC4xMDAwLjE3MzI1YzQ1MzNhYjRhMjc4ZTg1YmI5N2E5NGNkM2RlLjU3MTkuMTczNDU0NTE1
+MTAwMDAwMC56c3QgKHByZXNlbnQpCiAgU2l6ZSBvbiBEaXNrOiA0OEsKICAgICAgIFBhY2thZ2U6
+IGdpdC8yLjQ3LjEtMS5mYzQxCiAgICAgIGJ1aWxkLWlkOiA3NjIzZDE3ZDBhZjQyMGMwZjEyODBh
+MTNkMzJiMGJiNTI4YWI2NzNjCiAgICAgICBNZXNzYWdlOiBQcm9jZXNzIDU3MTkgKGdpdCkgb2Yg
+dXNlciAxMDAwIGR1bXBlZCBjb3JlLgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICBN
+b2R1bGUgbGliei5zby4xIGZyb20gcnBtIHpsaWItbmctMi4xLjctMy5mYzQxLmFhcmNoNjQKICAg
+ICAgICAgICAgICAgIE1vZHVsZSBsaWJwY3JlMi04LnNvLjAgZnJvbSBycG0gcGNyZTItMTAuNDQt
+MS5mYzQxLjEuYWFyY2g2NAogICAgICAgICAgICAgICAgTW9kdWxlIGdpdCBmcm9tIHJwbSBnaXQt
+Mi40Ny4xLTEuZmM0MS5hYXJjaDY0CiAgICAgICAgICAgICAgICBTdGFjayB0cmFjZSBvZiB0aHJl
+YWQgNTcxOToKICAgICAgICAgICAgICAgICMwICAweDAwMDBmZmZmOWEzZWVjNTAgZnJlZSAobGli
+Yy5zby42ICsgMHg5ZWM1MCkKICAgICAgICAgICAgICAgICMxICAweDAwMDBhYWFhZThhYWI0ODQg
+aGFzaG1hcF9jbGVhcl8ucGFydC4wIChnaXQgKyAweDFhYjQ4NCkKICAgICAgICAgICAgICAgICMy
+ICAweDAwMDBhYWFhZTg5NTYyODQgY21kX2RpZmZ0b29sIChnaXQgKyAweDU2Mjg0KQogICAgICAg
+ICAgICAgICAgIzMgIDB4MDAwMGFhYWFlODkwYTY0MCBoYW5kbGVfYnVpbHRpbi5sdG9fcHJpdi4w
+IChnaXQgKyAweGE2NDApCiAgICAgICAgICAgICAgICAjNCAgMHgwMDAwYWFhYWU4OTBhYjg0IHJ1
+bl9hcmd2Lmx0b19wcml2LjAgKGdpdCArIDB4YWI4NCkKICAgICAgICAgICAgICAgICM1ICAweDAw
+MDBhYWFhZTg5MDVlMDAgbWFpbiAoZ2l0ICsgMHg1ZTAwKQogICAgICAgICAgICAgICAgIzYgIDB4
+MDAwMGZmZmY5YTM3NjI5YyBfX2xpYmNfc3RhcnRfY2FsbF9tYWluIChsaWJjLnNvLjYgKyAweDI2
+MjljKQogICAgICAgICAgICAgICAgIzcgIDB4MDAwMGZmZmY5YTM3NjM3YyBfX2xpYmNfc3RhcnRf
+bWFpbkBAR0xJQkNfMi4zNCAobGliYy5zby42ICsgMHgyNjM3YykKICAgICAgICAgICAgICAgICM4
+ICAweDAwMDBhYWFhZTg5MDYyNzAgX3N0YXJ0IChnaXQgKyAweDYyNzApCiAgICAgICAgICAgICAg
+ICBFTEYgb2JqZWN0IGJpbmFyeSBhcmNoaXRlY3R1cmU6IEFBUkNINjQKCkdOVSBnZGIgKEZlZG9y
+YSBMaW51eCkgMTUuMi0zLmZjNDEKQ29weXJpZ2h0IChDKSAyMDI0IEZyZWUgU29mdHdhcmUgRm91
+bmRhdGlvbiwgSW5jLgpMaWNlbnNlIEdQTHYzKzogR05VIEdQTCB2ZXJzaW9uIDMgb3IgbGF0ZXIg
+PGh0dHA6Ly9nbnUub3JnL2xpY2Vuc2VzL2dwbC5odG1sPgpUaGlzIGlzIGZyZWUgc29mdHdhcmU6
+IHlvdSBhcmUgZnJlZSB0byBjaGFuZ2UgYW5kIHJlZGlzdHJpYnV0ZSBpdC4KVGhlcmUgaXMgTk8g
+V0FSUkFOVFksIHRvIHRoZSBleHRlbnQgcGVybWl0dGVkIGJ5IGxhdy4KVHlwZSAic2hvdyBjb3B5
+aW5nIiBhbmQgInNob3cgd2FycmFudHkiIGZvciBkZXRhaWxzLgpUaGlzIEdEQiB3YXMgY29uZmln
+dXJlZCBhcyAiYWFyY2g2NC1yZWRoYXQtbGludXgtZ251Ii4KVHlwZSAic2hvdyBjb25maWd1cmF0
+aW9uIiBmb3IgY29uZmlndXJhdGlvbiBkZXRhaWxzLgpGb3IgYnVnIHJlcG9ydGluZyBpbnN0cnVj
+dGlvbnMsIHBsZWFzZSBzZWU6CjxodHRwczovL3d3dy5nbnUub3JnL3NvZnR3YXJlL2dkYi9idWdz
+Lz4uCkZpbmQgdGhlIEdEQiBtYW51YWwgYW5kIG90aGVyIGRvY3VtZW50YXRpb24gcmVzb3VyY2Vz
+IG9ubGluZSBhdDoKICAgIDxodHRwOi8vd3d3LmdudS5vcmcvc29mdHdhcmUvZ2RiL2RvY3VtZW50
+YXRpb24vPi4KCkZvciBoZWxwLCB0eXBlICJoZWxwIi4KVHlwZSAiYXByb3BvcyB3b3JkIiB0byBz
+ZWFyY2ggZm9yIGNvbW1hbmRzIHJlbGF0ZWQgdG8gIndvcmQiLi4uClJlYWRpbmcgc3ltYm9scyBm
+cm9tIC91c3IvYmluL2dpdC4uLgoKVGhpcyBHREIgc3VwcG9ydHMgYXV0by1kb3dubG9hZGluZyBk
+ZWJ1Z2luZm8gZnJvbSB0aGUgZm9sbG93aW5nIFVSTHM6CiAgPGh0dHBzOi8vZGVidWdpbmZvZC5m
+ZWRvcmFwcm9qZWN0Lm9yZy8+CkVuYWJsZSBkZWJ1Z2luZm9kIGZvciB0aGlzIHNlc3Npb24/ICh5
+IG9yIFtuXSkgeQpEZWJ1Z2luZm9kIGhhcyBiZWVuIGVuYWJsZWQuClRvIG1ha2UgdGhpcyBzZXR0
+aW5nIHBlcm1hbmVudCwgYWRkICdzZXQgZGVidWdpbmZvZCBlbmFibGVkIG9uJyB0byAuZ2RiaW5p
+dC4KUmVhZGluZyBzeW1ib2xzIGZyb20gL3Zhci9ob21lL2RldmVudi8uY2FjaGUvZGVidWdpbmZv
+ZF9jbGllbnQvNzYyM2QxN2QwYWY0MjBjMGYxMjgwYTEzZDMyYjBiYjUyOGFiNjczYy9kZWJ1Z2lu
+Zm8uLi4KW05ldyBMV1AgNTcxOV0KW1RocmVhZCBkZWJ1Z2dpbmcgdXNpbmcgbGlidGhyZWFkX2Ri
+IGVuYWJsZWRdClVzaW5nIGhvc3QgbGlidGhyZWFkX2RiIGxpYnJhcnkgIi9saWI2NC9saWJ0aHJl
+YWRfZGIuc28uMSIuCkNvcmUgd2FzIGdlbmVyYXRlZCBieSBgZ2l0IGRpZmZ0b29sIC0tZGlyLWRp
+ZmYgLXggZWNobycuClByb2dyYW0gdGVybWluYXRlZCB3aXRoIHNpZ25hbCBTSUdTRUdWLCBTZWdt
+ZW50YXRpb24gZmF1bHQuCiMwICBfX0dJX19fbGliY19mcmVlIChtZW09PG9wdGltaXplZCBvdXQ+
+KSBhdCBtYWxsb2MuYzozMzc1CjMzNzUJICBpZiAoY2h1bmtfaXNfbW1hcHBlZCAocCkpICAgICAg
+ICAgICAgICAgICAgICAgICAvKiByZWxlYXNlIG1tYXBwZWQgbWVtb3J5LiAqLwooZ2RiKSBidAoj
+MCAgX19HSV9fX2xpYmNfZnJlZSAobWVtPTxvcHRpbWl6ZWQgb3V0PikgYXQgbWFsbG9jLmM6MzM3
+NQojMSAgMHgwMDAwYWFhYWU4YWFiNDg0IFtQQUNdIGluIGhhc2htYXBfY2xlYXJfIChtYXA9MHhm
+ZmZmZWFkNzE1MzgsIGVudHJ5X29mZnNldD08b3B0aW1pemVkIG91dD4pIGF0IC91c3Ivc3JjL2Rl
+YnVnL2dpdC0yLjQ3LjEtMS5mYzQxLmFhcmNoNjQvaGFzaG1hcC5jOjIwOAojMiAgMHgwMDAwYWFh
+YWU4OTU2Mjg0IFtQQUNdIGluIGhhc2htYXBfY2xlYXJfIChtYXA9MHhmZmZmZWFkNzE1MzgsIGVu
+dHJ5X29mZnNldD0wKSBhdCAvdXNyL3NyYy9kZWJ1Zy9naXQtMi40Ny4xLTEuZmM0MS5hYXJjaDY0
+L2hhc2htYXAuYzoyMDQKIzMgIHJ1bl9kaXJfZGlmZiAoZXh0Y21kPTxvcHRpbWl6ZWQgb3V0Piwg
+c3ltbGlua3M9MSwgcHJlZml4PTxvcHRpbWl6ZWQgb3V0PiwgY2hpbGQ9MHhmZmZmZWFkNzE0YzAp
+IGF0IGJ1aWx0aW4vZGlmZnRvb2wuYzo2NjcKIzQgIGNtZF9kaWZmdG9vbCAoYXJnYz08b3B0aW1p
+emVkIG91dD4sIGFyZ3Y9PG9wdGltaXplZCBvdXQ+LCBwcmVmaXg9PG9wdGltaXplZCBvdXQ+LCBy
+ZXBvPTxvcHRpbWl6ZWQgb3V0PikgYXQgYnVpbHRpbi9kaWZmdG9vbC5jOjgwMQojNSAgMHgwMDAw
+YWFhYWU4OTBhNjQwIFtQQUNdIGluIHJ1bl9idWlsdGluIChwPTB4YWFhYWU4ZDAwM2YwIDxjb21t
+YW5kcy5sdG9fcHJpdis5MTI+LCBhcmdjPTQsIGFyZ3Y9MHhmZmZmZWFkNzIzYzAsIHJlcG89MHhh
+YWFhZThkMTA3ZDggPHRoZV9yZXBvLmx0b19wcml2PikKICAgIGF0IC91c3Ivc3JjL2RlYnVnL2dp
+dC0yLjQ3LjEtMS5mYzQxLmFhcmNoNjQvZ2l0LmM6NDgzCiM2ICBoYW5kbGVfYnVpbHRpbiAoYXJn
+Yz00LCBhcmd2PTB4ZmZmZmVhZDcyM2MwKSBhdCAvdXNyL3NyYy9kZWJ1Zy9naXQtMi40Ny4xLTEu
+ZmM0MS5hYXJjaDY0L2dpdC5jOjc0OQojNyAgMHgwMDAwYWFhYWU4OTBhYjg0IFtQQUNdIGluIHJ1
+bl9hcmd2IChhcmdjcD0weGZmZmZlYWQ3MjEwYywgYXJndj0weGZmZmZlYWQ3MjEyOCkgYXQgL3Vz
+ci9zcmMvZGVidWcvZ2l0LTIuNDcuMS0xLmZjNDEuYWFyY2g2NC9naXQuYzo4MTkKIzggIDB4MDAw
+MGFhYWFlODkwNWUwMCBbUEFDXSBpbiBjbWRfbWFpbiAoYXJnYz08b3B0aW1pemVkIG91dD4sIGFy
+Z3Y9PG9wdGltaXplZCBvdXQ+KSBhdCAvdXNyL3NyYy9kZWJ1Zy9naXQtMi40Ny4xLTEuZmM0MS5h
+YXJjaDY0L2dpdC5jOjk1NAojOSAgbWFpbiAoYXJnYz01LCBhcmd2PTxvcHRpbWl6ZWQgb3V0Pikg
+YXQgL3Vzci9zcmMvZGVidWcvZ2l0LTIuNDcuMS0xLmZjNDEuYWFyY2g2NC9jb21tb24tbWFpbi5j
+OjY0Ci0tLSBlbmQgLS0tCgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0
+IGJlbG93LgpZb3UgY2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUu
+CgoKW1N5c3RlbSBJbmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40Ny4xCmNwdTogYWFy
+Y2g2NApubyBjb21taXQgYXNzb2NpYXRlZCB3aXRoIHRoaXMgYnVpbGQKc2l6ZW9mLWxvbmc6IDgK
+c2l6ZW9mLXNpemVfdDogOApzaGVsbC1wYXRoOiAvYmluL3NoCmxpYmN1cmw6IDguOS4xCk9wZW5T
+U0w6IE9wZW5TU0wgMy4yLjIgNCBKdW4gMjAyNAp6bGliOiAxLjMuMS56bGliLW5nCnVuYW1lOiBM
+aW51eCA2LjEyLjQtMjAwLmZjNDEuYWFyY2g2NCAjMSBTTVAgUFJFRU1QVF9EWU5BTUlDIE1vbiBE
+ZWMgIDkgMjA6MjQ6MDQgVVRDIDIwMjQgYWFyY2g2NApjb21waWxlciBpbmZvOiBnbnVjOiAxNC4y
+CmxpYmMgaW5mbzogZ2xpYmM6IDIuNDAKJFNIRUxMICh0eXBpY2FsbHksIGludGVyYWN0aXZlIHNo
+ZWxsKTogL2Jpbi9iYXNoCgoKW0VuYWJsZWQgSG9va3NdCnByZXBhcmUtY29tbWl0LW1zZwo=
+--0000000000008ca9e206298f996d--
