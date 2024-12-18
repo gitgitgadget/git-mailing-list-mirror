@@ -1,53 +1,53 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88E9D5FEE6
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 15:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05EC87080D
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 15:39:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734536387; cv=none; b=jZ32M3HT1g1yJtO6epwi1wPlS7aQtW3VOVRZer6IvRHmwycmZkK55tSn6XaRm0temTdtY24F2stJjXx/C6yV/g8/OsP4CWLd0JwQ5+8SEgwRQUy2bLiUVbs7vWwqNvbmXXKhUmP3hzqvskDbF7naeOeOGmq128iz55fUUMaKoXg=
+	t=1734536393; cv=none; b=MBCiC3vToZDwwKVbjKLra+94eVYvcfIzyoazJ7VHvcUHFk+oc54Hh3OawukEo15KKYRrTNW8tVYSTMoRxLtJEuNOuVUD4d7ZxF5IAHFcbru9XHXa2oVJbHD37kxf4Hv3s7oui6rPzSCPy0XQzs87jWxlbLW7oFxcfxUmL9f95kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734536387; c=relaxed/simple;
-	bh=Oeea9T3JAcO8t5fuN+em241MW5knT7nGZ2Ho6upxht4=;
+	s=arc-20240116; t=1734536393; c=relaxed/simple;
+	bh=GAFYUwVjePivlhjCq9PBiuv/w7Q1vVQ9DCKiaQhG4nI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AOVvx3cIjF+26gwQ0hXXTNmh+bWeFQ6pgfxH05dAKCKX0TNo2VcDWPWS2SpSjBE7+kxxy4feeBxhKD+hARplNRhQI5FHdi9GD4O8/9qrxeu2+jnps9VLuggAbkvI3fq35+8nxrLEh15fmrFDEt1ZoaLiT2xj+xTcBvbJM//WyVY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Loli4qqO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oat0Qfxa; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=rHD4krfAHD1qpWPE0d/0s1Iuj5FxG49vLUqy/ClVXRReMUQoYK2hvpG4fO9qC70GoeSmCpqhPMeF5IIM6ROndCrdYTOHIiA8d8AAH9874l4p4a+9CKjCtf6UsGQcfbuaitJUiyXWfXNO5zhuX35Ggg2Vv5KfNTknU9z0GRns7XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jPDyjpNi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XIInnPHM; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Loli4qqO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oat0Qfxa"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6A47D2540061;
-	Wed, 18 Dec 2024 10:39:44 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 18 Dec 2024 10:39:44 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jPDyjpNi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XIInnPHM"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 159EC25401F0;
+	Wed, 18 Dec 2024 10:39:51 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 18 Dec 2024 10:39:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734536384; x=1734622784; bh=jwSzGvoA+J
-	8ZX8kjrNzcROY0sqWM63ZCcys95jYx2Lc=; b=Loli4qqO2HIiDTzVIBh69UTCao
-	XTHTbQkkXWThl5v7woi9XehCefOhtERRod4gFqS1w+qHaC0DaSpglx3U7e0/bL4K
-	x8FDm0ye65pJ67DuLQmy5afYaqgdrqKsb8u4SJgr2NJ6sgWVbTZ6XWY8IJGTFEgf
-	1UcGgGHR2QZOZJKqrwZQbdcOQrB7IYJEG/W3+MAI3uWPiqgCvE0n3mwvK1JXB0Cc
-	VgZo7wu312010bxKy3fhqqaQfYtvdTWZqmC0g38btmdymsSfp42N5G2ffj/yBVGA
-	dc9bAHTBBIlW7M4a40C/WEaB582b05deRLXK4MDQOai2IHkoAyuCrjDujs8g==
+	:subject:to:to; s=fm3; t=1734536390; x=1734622790; bh=UIRrtVLrLI
+	RudC/TbUAEVWY49Ub4vErTR7X6DEP2sEw=; b=jPDyjpNipjWuY/g31l0395pMkT
+	5IU265Ds7Ca2MNRe/fPoAc7eub/Ln8ty4AU539VUUL+s4g/tnOw/Xa9uRdUrLA5C
+	Ee6XZHT1G9ymJSRpbrnS88ZNh5fYKnfgqM5E1AlT7RnYU7hWGg3oHbVnW5cXtPHJ
+	krEmiirboJLMa1l8AN8wAhoH4mjITQMmUdXHtdPkwpm8awyMB5sI0Yj0atcfMmXA
+	BcIh0W5JxPiQefazmY9poBZvt+d6Nwgl01wMtOlgTTtpv+BNnRhZNKuWRyg9TssF
+	rg7gVjaE/DOK36UsymFZJV4YG6oDiTObPp0paaCtSXRkDEhLZMDb0BeR4IgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734536384; x=1734622784; bh=jwSzGvoA+J8ZX8kjrNzcROY0sqWM63ZCcys
-	95jYx2Lc=; b=Oat0QfxaqNlwjYgZdIvMFgiDhlE3k/PypsgUleor2zQjtW9lhwo
-	xiTwBAe6Ky5MmAqW0E4cAINKMjxywBUC/ED9CKIOxNWhys22hhUpPB4nOABpgIzl
-	t9JuksFBU4om0lc/BPToj0bO9v1Xfdf4/jIqX2LxmcBFMIbt2RKSvL9Y8Zq/abOW
-	T3lM4eJNmU753tIUhG4R//dLUepXxW3BBySyhkMLwEZnVkDtBfeSw1V6qm3Q3jtX
-	ZrZ26dyKnzre2XwALDzgCTa/BlB9nwzWFNEMt69AHB3qKEdc7o6mBSzFcooV9LU1
-	1yIfy+uwOPUNwOs/lh+OtPCI2zUSOPYK2tQ==
-X-ME-Sender: <xms:v-xiZ-8PB9fS9UHRmnBfPmLefjfzYwgVRYAD5KyaI7ioAh27E8ycpg>
-    <xme:v-xiZ-uenCB0EKLgbxGwW0hU2sQoDecFl281rXWouT_RLBwDyPnpq4XaGR_15gOr8
-    U5VcsAFvy7ejNw9nA>
-X-ME-Received: <xmr:v-xiZ0Ake9tn6QEMiMQozmdqaWG01t1-Q3SmpPxAi-0V6NPbf-XPtcopfuabqrTOSzmhPbuPMTMrVF1Se3_jrKCMW7P1i1L_p5tMZyI>
+	1734536390; x=1734622790; bh=UIRrtVLrLIRudC/TbUAEVWY49Ub4vErTR7X
+	6DEP2sEw=; b=XIInnPHMSMh6Ew7eeD5/wK1mCIjS9NCmBsMFdWWKlgRHTVML1ok
+	SGRUoWgjGQv2DdJiiebpBuxXjtsRr6h7lFivtWJeJ0Uhdx1N27tCOZYYjtWgg/iR
+	c6UElltNdyJf9lidQp9ryfCAUC+fREgNCW4LZyBijNYtb/y42DwWKOk9rO9EB/LH
+	nzyDtAw83QYUuoFmQjeYhSSEMiDfg2Z7au19S6zIbY4uo7+Dq3GHqo/P/dKRkFMh
+	7l3nZ0S26i90PHH45nPEPHQXS1fhZryc3KZBkFqXjnj/3RekkmeLZLUB/5+mXX3m
+	P+mexJBiPEkURcI/1uR4UXzbWdnEqg3fMFg==
+X-ME-Sender: <xms:xuxiZzSS_Uel_cdAHX_nn0gXc281gfzSSCDIwEQ5e2gStMNg3H4STQ>
+    <xme:xuxiZ0wUOKBD0YnEqaEuEfZ_NsjfPnCy5VigTFQSRlZvZpL6X6iXAE0mCVXc3vxAQ
+    W05rAI8dfAA8LWzpw>
+X-ME-Received: <xmr:xuxiZ41EjS_57wMDUi7Djnty4NhEy7AIKMRKN65KBfibxJ_3_Gjbhkfp2k5fFqJLr0-APP9Hf95J11g0kwi8G72sYwmlTcO9E18KHg0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleekgdejkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -56,37 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleekgdejkecutefuodetggdote
     gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
     ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggugh
+    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggugh
     gvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithesjhgvfhhfhhhoshhtvghtlhgvrhdrtghomhdprh
-    gtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopegsrghgrghs
-    ughothhmvgesghhmrghilhdrtghomhdprhgtphhtthhopehgfhhunhhnihdvfeegsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepughorhgvmhihlhhovhgvrhduvdefsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:wOxiZ2db40Wcm7r6fTfC9WLiOTgV8HWJr8ZSf6Ky5eDsonc-xOYHlA>
-    <xmx:wOxiZzM5JNdQcOAp-C9uXOse98z-vETrnfHGQxhQqrxa66QXVkujTQ>
-    <xmx:wOxiZwnJupvo-bj71bbALMU7urQFe5HJzALjmnXoNYOrDRr0uQoj7A>
-    <xmx:wOxiZ1tAD7QhTARxHw74Oq64JZNib-8zwH1BIaSb8aI6oLYIo7NsLQ>
-    <xmx:wOxiZ8icO1XFPUOPh_qRnuXezPEurOtDQE4bp2QznDuEnSg0w1dY2i2P>
+    rdhorhhgpdhrtghpthhtohepghhfuhhnnhhivdefgeesghhmrghilhdrtghomhdprhgtph
+    htthhopeguohhrvghmhihlohhvvghruddvfeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:xuxiZzBKnOcMoPRXJ6uxe6Vcz20d99pzlIuaLbmE_cxNv1vDPtVO5A>
+    <xmx:xuxiZ8h6tkjfJIAkLgjaDIWpmlIEpa8Ahg-YnYDlwniSBw7MNojC8A>
+    <xmx:xuxiZ3qTSAl9EALPDfE05i5NXuiDq48gBNZZsxN74KhLRoHnm13zqQ>
+    <xmx:xuxiZ3j4e1uvcZuB4ar3vdL4PelMSkeHzr1Z29odnib17DRiNoAFmg>
+    <xmx:xuxiZ2akSAXwmcTT9Nh5StGZareGqPsAIrkgBanAX2dM_LmrwlIvAszy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Dec 2024 10:39:43 -0500 (EST)
+ 18 Dec 2024 10:39:50 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  "Jeff Hostetler [ ]" <git@jeffhostetler.com>,
-  =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason_=5B_=5D?=
- <avarab@gmail.com>,  "Bagas Sanjaya [ ]"
- <bagasdotme@gmail.com>,  AreaZR <gfunni234@gmail.com>,  Seija Kijin
+Cc: git@vger.kernel.org,  AreaZR <gfunni234@gmail.com>,  Seija Kijin
  <doremylover123@gmail.com>
-Subject: Re: [PATCH v10] git: use calloc instead of malloc + memset where
- possible
-In-Reply-To: <pull.1390.v10.git.git.1734485187081.gitgitgadget@gmail.com>
-	(AreaZR via GitGitGadget's message of "Wed, 18 Dec 2024 01:26:26
+Subject: Re: [PATCH v4] git: replace greater-than and less-than checks with
+ one not equal check
+In-Reply-To: <pull.1432.v4.git.git.1734489859673.gitgitgadget@gmail.com>
+	(AreaZR via GitGitGadget's message of "Wed, 18 Dec 2024 02:44:19
 	+0000")
-References: <pull.1390.v9.git.git.1734483511642.gitgitgadget@gmail.com>
-	<pull.1390.v10.git.git.1734485187081.gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 07:39:42 -0800
-Message-ID: <xmqqr065t2yp.fsf@gitster.g>
+References: <pull.1432.v3.git.git.1734483016515.gitgitgadget@gmail.com>
+	<pull.1432.v4.git.git.1734489859673.gitgitgadget@gmail.com>
+Date: Wed, 18 Dec 2024 07:39:49 -0800
+Message-ID: <xmqqjzbxt2yi.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,25 +93,28 @@ Content-Type: text/plain
 
 "AreaZR via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Seija Kijin <doremylover123@gmail.com>
->
-> Avoid calling malloc + memset by calling calloc.
->
-> Signed-off-by: Seija <doremylover123@gmail.com>
+>  	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
+>  		version = ntohl(top_index[1]);
+> -		if (version < 2 || version > 2)
+> +		if (version != 2)
+>  			die("unknown index version");
 
-Name mismatch.
+I am of two minds.  If the code never evolves and we will never
+support anything other than version #2, your rewrite certainly makes
+it easier to read.  On the other hand, if we plan to ever learn to
+grok versions #3 and later, the original would be easier to se what
+is going on, i.e.
 
->  remote.c    |  4 ++--
->  submodule.c | 10 +++++-----
->  2 files changed, 7 insertions(+), 7 deletions(-)
+		if (version < VERSION_LB || VERSION_UB < version)
+			die("version out of bounds");
 
-I somehow hoped to see that this shrinks the line count, as you are
-essentially replacing two calls (malloc + memset) with one, but that
-is not what is happening, which is a bit disapointing.
+and the code as written happens to have "2" as both lower- and
+upper-bound.
 
-But this is a strict improvement, I guess.  The reader needs to be
-familiar with the CALLOC_ARRAY() macro to understand it, which may
-make the code less newbie-friendly (as opposed to malloc+memset any
-reasonably competent C programmer would understand without any prior
-knowledge of the conventions used by this project).
+Of course when we do introduce version #3, this line must be updated
+anyway, but the final form would be as we have it with the second
+"2" replaced with "3", so leaving it in the current shape may be
+easier for the developer doing that work.
 
+So I do not know if the proposed change is an improvement for the
+longer term.
