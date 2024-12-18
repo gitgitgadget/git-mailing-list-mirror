@@ -1,37 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BF21A2544
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 12:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5190115957D
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 12:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734523715; cv=none; b=WlwSauYUze0ZaL4OWzEo63YO7Dl7pCX1TwYY1BojfS3Exb8451d4GgP0aaJ1kQLDJKRLij6iNY9t/qnscDj3VidAC42swkoMevPdexae9BKRU2bAB4VIK1E3OnsRS/+R9AyWekVgkfqII4PaFV+Z3w71S+mO1ZrR9kdNeIxBkVs=
+	t=1734524001; cv=none; b=VG8SlrwYfMxSgvoAHjTrRDyDrie3BRztPcmEDPurLuzQmyGT1S9sRRTZ32K9igeOCx21XGbRVA2o8/jz/cl+gM764A1DB6xqBIks4kdC/4VP0ygj8YEFikey2hCydrkQPcmLucpJAylojAF35yzTqlMmKnGKUQgdVefUcA2ApZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734523715; c=relaxed/simple;
-	bh=TZTYggABNzlcxI6/nk0TgP37ITf0QFrBnKf1865zPAg=;
+	s=arc-20240116; t=1734524001; c=relaxed/simple;
+	bh=FtcgKt7H/kFbwpiHpdRSkplBQvc2XsBjMOaznuV6cq4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dfNyaHpLw0Bdvs/VFTsb0ZdRzfjEmNLhOzIMFUDq5hoAthELuPrp9AuHmD2QqIfGAcATi1lMWFS4+Hu/HCxTsgXLH+bg0F/K/LRF2B11WCmmMZWRcpaXsBYa/0nVsBqAytutdoLsekq/WvispDnwzm7rxbu1QGNwQ/nM9nZ/PwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fq9ACMLU; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=DmmpPu8P/CVWopySxXkYGVwKi99pcCDw9Lv+F/vQpJgNQlow1tOGIjbtKo+chQ0zqIKH7Vac/Sn7ue6xge/0QInlkRGs8v9oniZhaqrg98IGhMClfFKA5LIZSVIdneBqa690iUAewH/E/OzxoIq4DiZq5ltdwRmihfA6+idPhP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OAYkhHYf; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fq9ACMLU"
-Received: (qmail 6445 invoked by uid 109); 18 Dec 2024 12:08:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=TZTYggABNzlcxI6/nk0TgP37ITf0QFrBnKf1865zPAg=; b=fq9ACMLU320BjWmfR0VnScO8/jTS15tJzbuoO/nt7KHdRv2wUaT1UtJAkTBlf7cPEGMHzjW/PsxcV+yXIn5b2wcuO8x5iSUa5MNljXmM084zkeWUhfwXGnyjvMUHo5D9tAiJN4g4ST6a5BU2aUZXPPAgZdIlBCDDjKabZcS9Dimx+J+YF6Vy3Bd5P+FYiXpU51c0dQZdlsJiS+atJu+Wic7hVZbupeY6TpEaUicSAbtD8aA/l1qKXrHajkbtlALh13l/6DepUbuQaWX6ZwgUzCjdU0E/MzL/92rRYL9+XO2xvD1k22aX4pMiCFjiWbPtWxy62FL2tUdP3356eOQJLw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OAYkhHYf"
+Received: (qmail 6573 invoked by uid 109); 18 Dec 2024 12:13:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FtcgKt7H/kFbwpiHpdRSkplBQvc2XsBjMOaznuV6cq4=; b=OAYkhHYfXD/CtT4NvIOtfYKK3wx6i9s4J1Jxk77FPz0sSfiVl649COHD41w4TfPvh1cqgkxWBZVkYgWb5k2Pyq0FIpUN9onb6t/4iVN9fNlvqQtLLpoKxcJL+Kx6kesR6agiJj/PT/VqXDhDQM9vfZnex9lsgmK+PfeccQ4+FcxLzkQW9v/YZcg7dxEk62rfvsqQzWTs2YG4Da+JnG4Uen1gpI2xB5U2AyoeiJp4MptVb6nbFB2f3dx9KC6m/T9g0uqsbmmD54rmdiivFZ8PJ3u6ftWDS38F2ck5OpCJrFnBK6nQfGMIzSiEwOzIJtWfR61hBDEYe2GvtE6EVE1kNQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Dec 2024 12:08:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 18 Dec 2024 12:13:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24932 invoked by uid 111); 18 Dec 2024 12:08:32 -0000
+Received: (qmail 24985 invoked by uid 111); 18 Dec 2024 12:13:17 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2024 07:08:32 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2024 07:13:17 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 18 Dec 2024 07:08:31 -0500
+Date: Wed, 18 Dec 2024 07:13:17 -0500
 From: Jeff King <peff@peff.net>
-To: Aleksander =?utf-8?Q?Korzy=C5=84ski?= <ak@akorzy.net>
-Cc: git@vger.kernel.org
-Subject: Re: [Bug] --simplify-by-decoration prints undecorated commit
-Message-ID: <20241218120831.GA695807@coredump.intra.peff.net>
-References: <CAEtHj8AXKrQfyAW9FSv6yC-8GF1AkPixMFjSye+B51pJ4fOtWA@mail.gmail.com>
+To: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH v2] doc: remove extra quotes in generated docs
+Message-ID: <20241218121317.GA696975@coredump.intra.peff.net>
+References: <pull.1847.git.git.1734479267736.gitgitgadget@gmail.com>
+ <pull.1847.v2.git.git.1734483422181.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,31 +41,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEtHj8AXKrQfyAW9FSv6yC-8GF1AkPixMFjSye+B51pJ4fOtWA@mail.gmail.com>
+In-Reply-To: <pull.1847.v2.git.git.1734483422181.gitgitgadget@gmail.com>
 
-On Mon, Dec 16, 2024 at 04:09:07PM +0100, Aleksander Korzyński wrote:
+On Wed, Dec 18, 2024 at 12:57:02AM +0000, Kyle Lippincott via GitGitGadget wrote:
 
-> # Now, let's try --simplify-by-decoration on another commit
-> $ git log -1 --simplify-by-decoration --oneline 1e3ef455cc
-> 025a87d9db Merge branch 'master' into master
-> # The above output seems incorrect, because the commit isn't decorated
+> Commit a38edab7c8 (Makefile: generate doc versions via GIT-VERSION-GEN,
+> 2024-12-06) moved these variables from the Makefile to asciidoc.conf.in.
+> When doing so, some extraneous quotes were added; these are visible in
+> the generated .xml files, at least, and possibly in other locations:
+> 
+> ```
+> --- a/tmp/orig-git-bisect.xml
+> +++ b/Documentation/git-bisect.xml
+> @@ -5,14 +5,14 @@
+>  <refentry lang="en">
+>  <refentryinfo>
+>      <title>git-bisect(1)</title>
+> -    <date>2024-12-06</date>
+> -<revhistory><revision><date>2024-12-06</date></revision></revhistory>
+> +    <date>'2024-12-06'</date>^M
+> +<revhistory><revision><date>'2024-12-06'</date></revision></revhistory>^M
+>  </refentryinfo>
+>  <refmeta>
+>  <refentrytitle>git-bisect</refentrytitle>
+>  <manvolnum>1</manvolnum>
+> -<refmiscinfo class="source">Git 2.47.1.409.g9bb10d27e7</refmiscinfo>
+> -<refmiscinfo class="manual">Git Manual</refmiscinfo>
+> +<refmiscinfo class="source">'Git 2.47.1.410.ga38edab7c8'</refmiscinfo>^M
+> +<refmiscinfo class="manual">'Git Manual'</refmiscinfo>^M
+>  </refmeta>
+>  <refnamediv>
+>      <refname>git-bisect</refname>
+> ```
 
-Yes, but it's a merge commit. From "git help log":
+BTW, for git.git patches you should indent example snippets like this
+rather than using markdown backticks.
 
-  Note that extra commits can be shown to give a meaningful history.
+Because it's not indented, "git am" thinks that "--- a/tmp/..." is the
+start of the diff, and the rest of the commit message is lost (and of
+course the patch does not apply, because we have no such file).
 
-Try:
+Leaving the "```" doesn't hurt anything, but of course it is not
+rendered by git-log, etc (nor even GitHub's web interface, since they
+don't assume commit messages themselves are markdown). IMHO it is ugly
+and not necessary if you've indented.
 
-  git log --simplify-by-decoration --oneline --graph 1e3ef455cc
-
-and you'll see that there are commits along both parent branches, and
-thus we show the merge.
-
-There are some other options listed after that for changing which
-commits are shown ("The following options affect the way the
-simplification is performed"). But I don't think there is one that will
-show only the decorated commits (however, I could be wrong; I've only
-ever used these options to show _more_ commits, not fewer).
+Looks like Junio kindly fixed this up while applying already, so no need
+to resend. Just thought I'd mention it for the future.
 
 -Peff
