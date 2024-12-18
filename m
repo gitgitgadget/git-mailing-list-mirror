@@ -1,66 +1,67 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB0D3FC2
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 01:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF053596E
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 01:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734485192; cv=none; b=bBx7h+UgzGyVhpiZulbF7HSsIUuaRKnIPbP6LBr0Dy9F0FZ4a4P4DpNIhQ5W/1Ukx3ithQ8RhZ4vkz+uuM2O6cABiAqCxT0cahDq72ksWlx3FhB0C3VEDAbO58drx8QAEUN5sTy15GHxD6r3qdrW5x9sm3UXYi6YdCe1pX4ocGk=
+	t=1734485734; cv=none; b=tdDBVPNLwEmEs/8yg3ANu7D8yIaR4CxkBuCguVeamOPvYvSZX5jO7JizL08vawVvvW3o6kEByoYqz8iU6IxjbnoK2d4XGTpD04IFetg3vm3b4Z34oVDgkJZSZ/S43Rj1cxeL7LpFYFOgX1MH3Q00MWfnlEEWFgVfbZApCRVss0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734485192; c=relaxed/simple;
-	bh=I4MxDOYgrdNhzRHfgTWnMEqbJ5ifcbdovAn4Cs2dXmM=;
+	s=arc-20240116; t=1734485734; c=relaxed/simple;
+	bh=4lle7JFtiz3fz6AJrIm5LMxz1is+eBDiJ4AiHAxWpyw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=MXIkES69bi2JxZwabUsss6cHhexEAg0qY9u8Q8IA7Zj6TLleCDokA4gkR9oQxUhyqwP74DQERvESkXJp9mpmJT12sPA9AcOTDkaGyokuz1KNKZSjlsuFa5OjhOXRZzG8bslSsC6B9L9gdMCgeYjn+BBbWvo+VBjsx8TxDl8T7gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=axlR0yGl; arc=none smtp.client-ip=209.85.221.44
+	 MIME-Version:To:Cc; b=MK1KmX5LrGpL3IuwpYi3y01slFAmdLay1gK2EKP99PcEhV8COMcVr43P0OCAGoUzAkO+8uC6s2CQt1n6K/S1xpMaKfHVREC4DdUC+psVbV9sGzLJOX3HtJKMoOGkHBoGM3HR7OeLuflHhuo6SmZv5ew90OkvLSFnIuP9ZiDGIcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ycq70OXw; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="axlR0yGl"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-385dece873cso2780073f8f.0
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 17:26:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ycq70OXw"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3862ca8e0bbso5039517f8f.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 17:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734485188; x=1735089988; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734485730; x=1735090530; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q4Rl7XnOUCMtt1o0ysP+M2GOigaTr4YIRmqt5+0yRp8=;
-        b=axlR0yGl0/cEEFdzBjc+a0tWugfUARIguqZJ4B3U3g2vfG9aELY7xPPku9r4eXhehr
-         mgYOHvwUeY0ikx78jj3Q8jsBnZbi6AYBcx6oOHhLINjMCowF2FtfXFonIstfPL1vi5vY
-         dFq/ABqgJ0a1VpQjla0Dju4Zz4AFtk+ZHYJp3Ix3rXTRDM5F8LUCyitKM66etF/Kp3Af
-         sYdFGNMJcGkqiUtbm5tgMhrRGcQfzazej40WO5kkJjGRmKcusftfj6Q8c4nQLfy0uuZf
-         d/BAzqDtjJsE7XNfxZR7U6FjeAWwnIVV+6rTeaGr7v06cuiOhpC2c54udq4lHrqvDqEn
-         fwkA==
+        bh=o5zbXgch16Oo5jjM5Y20IwGDn76btyUHDYFcbMGzDKU=;
+        b=Ycq70OXwyChcVrvxHK5uKy5g8QvKBneENn6L7Yx848eeynywAtbvfkL43zEMFv4wJJ
+         yurUd7mXExXx3fbHcKzHxRM4d5PFujP80glCOI+8wB+6MHZ+jIKGezhFGwKYuUZasZ1M
+         Bp+C1zLxyx9xAM2veS1FqzmlYbkR2lqYSmmE8kqx9gTYdskkbNFxYSgPM/A9Tld1U59g
+         e9d4kJ99XjrVORxdSm3BrXSMKAjZ6AcGigQbYXQ8gTopawAO5BLTMWzf6EUUccr0ivqX
+         vTk5Uh16kE6TAcOig/srrfV2UcJI57I/oRvTR5GYhaOQJGEUvc4oKl9PfZsEJYr9kUxt
+         7ofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734485188; x=1735089988;
+        d=1e100.net; s=20230601; t=1734485730; x=1735090530;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q4Rl7XnOUCMtt1o0ysP+M2GOigaTr4YIRmqt5+0yRp8=;
-        b=MKqZWkGuEID6fYYolZhaSakfLyLYpYMjQZAWuLryuv+B5+bGGjX/De9fe0JufEBlgg
-         S+JPFJxsMw0sRqK2PTD1hRluziwl6gVdxRXY/sahOMF2iO7qht/+9mA5BdeGE9XRwRtl
-         ZXe9b/lQY0c5vDIJ/lTVwXaRdEhqLT/sfVkAwXYVJ+iC0tEH74jBMBfnEuliJbg5vZfa
-         CrNnTq2yCOa8pROJWQm2+NbqMDFObE5F+i1XcobkLdE84vNC0R2VATTsMHZoCE3AOMGy
-         TVascGukxvw/V16GEXxtWLfur4+FH0qFbpFSrW7Waat3BEIzMHeQkKC8nAR9XLgjKu2C
-         ni6Q==
-X-Gm-Message-State: AOJu0Ywy8IGDdEvvohmwlcJuUX/XV+zr+yBcobMqI22K98DB/2T+gXq/
-	ddRjkJS88CJJoIjGkNi0R5CTUPRvUydNGC/Fs9eMbh2hZoPjoYq3L20DfA==
-X-Gm-Gg: ASbGncvRDRMOqA1YZX4A5gAX3ZEtsKm4XP1JS84gknJAx/eiFoZW8b18P+p2Ist+KAL
-	mcfMtQZQcw5mLKCIPXRrfQckcrjKXrzvTntS6O9tGFCI9M/9j5jZ21zf32hY00VpXpg7lQqgD0q
-	l7dUaQKTkt1F2yH+BqKbgdoNQ8u0Q0ENaRvhv9JuqaKFBtpBhGBu6HxzSxqD0lZo10pJQqLcD6a
-	Ys7mESRb2u7gQLn/tc6don/4CA7o6hMvgy27G4hoC24duZO9dKvR1pAZw==
-X-Google-Smtp-Source: AGHT+IFBHQT0yr2HS6d49/GfDBe06hKREafRCnQnnNXzv4jI6SoG6EeJ1wrZe1n38DDGFoT7r34EYQ==
-X-Received: by 2002:a5d:64cc:0:b0:385:edd1:2245 with SMTP id ffacd0b85a97d-388e4d5b3d3mr575640f8f.30.1734485188092;
-        Tue, 17 Dec 2024 17:26:28 -0800 (PST)
+        bh=o5zbXgch16Oo5jjM5Y20IwGDn76btyUHDYFcbMGzDKU=;
+        b=HIFtASaDDnBC/szHPuEV5TF6eE7S8ai6ETmbmJsd3Sbcyz2GT93N8zzaFnl3Rl5X6D
+         uFpZ615o2iTVI9UQcLm0yfvEHTHDhGauZJUnn1eNfaefIiCELbFrIgwUAoV6D47sNlys
+         hTlAdor6AGUFP290IMTaqlZ7jvibq+8DUAU1n25ohOeqs/X24H3clYfcpGgWV/Pk5qBe
+         BUgUwuwenKMX9PYwvypRBTFjGJYlPu48S+TZUeqc2j+HF901aSE12dCMOTvLLEDYknW/
+         8Oc5pCNq84/CSdjWrRQpuNM0x/PAhy1Jk/pwPmgG75qdarYCfSEh+kTJ1MBBViwk9q6t
+         +usQ==
+X-Gm-Message-State: AOJu0Yzg278MmXKzw5D5Cjj9fsyeKMaaPSusp2flqjF82jZ2GpKszD3v
+	868AB7mI81rUKeWF44CrJh7KjXcJDZdod4qZ1CCxbUtI65Y4/KTyoJCCGA==
+X-Gm-Gg: ASbGncvvNWvNssvsbyk2ODe6IK2EoKqjgBEcZZljMSYIsGtVaEbP6XVYyF4hj52PSVF
+	eE6uavuNL62+xDshlpXsqorqspRfuSlOgeH37FLtR2DLHo3hm2oc6oGF5yGROcKLbtI3HAXFwaR
+	ZWqkULd28tfl20gP7qxKgzMnJsBsx2BbpHqMRY2a1FBhLvXLYnb1DRZ1wbQaM7utcL9v8TG02X3
+	xgrJcKNMmsRTJlxk/luXShVUY2OPCczc5+P699RTkQrjgKIFryBSIN3QA==
+X-Google-Smtp-Source: AGHT+IF6YS8HPTDowPeGt3S9GRPOiC/LpfwaqpCgp/Vy5ATQOpNR87D7wHBnt6/AZNRrHWsHUmHNpQ==
+X-Received: by 2002:a5d:648f:0:b0:385:e2d5:cdf2 with SMTP id ffacd0b85a97d-388e4d83f1emr565139f8f.19.1734485730327;
+        Tue, 17 Dec 2024 17:35:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656a18a33sm3897805e9.0.2024.12.17.17.26.27
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b01b7esm3695435e9.13.2024.12.17.17.35.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 17:26:27 -0800 (PST)
-Message-Id: <pull.1390.v10.git.git.1734485187081.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1390.v9.git.git.1734483511642.gitgitgadget@gmail.com>
-References: <pull.1390.v9.git.git.1734483511642.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2024 17:35:29 -0800 (PST)
+Message-Id: <pull.1843.v2.git.git.1734485729135.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1843.git.git.1734480952423.gitgitgadget@gmail.com>
+References: <pull.1843.git.git.1734480952423.gitgitgadget@gmail.com>
 From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 18 Dec 2024 01:26:26 +0000
-Subject: [PATCH v10] git: use calloc instead of malloc + memset where possible
+Date: Wed, 18 Dec 2024 01:35:29 +0000
+Subject: [PATCH v2] git: use signed loop counters when comparing with signed
+ vars
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,98 +72,83 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: "Jeff Hostetler [ ]" <git@jeffhostetler.com>,
-    "=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason [ ]" <avarab@gmail.com>,
-    "Bagas Sanjaya [ ]" <bagasdotme@gmail.com>,
-    AreaZR <gfunni234@gmail.com>,
+Cc: AreaZR <gfunni234@gmail.com>,
     Seija Kijin <doremylover123@gmail.com>
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-Avoid calling malloc + memset by calling calloc.
+The compiler (at least LLVM) treats them better anyway
+because of the C standard not defining signed overflow.
 
-Signed-off-by: Seija <doremylover123@gmail.com>
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    git: use calloc instead of malloc where possible
+    git: use signed loop counters when comparing with signed vars
     
-    We can avoid having to call memset by calling calloc
-    
-    Signed-off-by: Seija doremylover123@gmail.com
+    The compiler (at least LLVM) treats them better anyway because of the C
+    standard not defining signed overflow.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1390%2FAreaZR%2Fcalloc-v10
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1390/AreaZR/calloc-v10
-Pull-Request: https://github.com/git/git/pull/1390
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1843%2FAreaZR%2Fone-more-time-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1843/AreaZR/one-more-time-v2
+Pull-Request: https://github.com/git/git/pull/1843
 
-Range-diff vs v9:
+Range-diff vs v1:
 
- 1:  35994dfb8af ! 1:  d7b7959be0a git: use calloc instead of malloc where possible
+ 1:  1dea0ce98b4 ! 1:  c8552548fe9 git: use signed counters when comparing with signed vars
      @@ Metadata
       Author: Seija Kijin <doremylover123@gmail.com>
       
        ## Commit message ##
-     -    git: use calloc instead of malloc where possible
-     +    git: use calloc instead of malloc + memset where possible
+     -    git: use signed counters when comparing with signed vars
+     +    git: use signed loop counters when comparing with signed vars
       
-     -    Avoid having to calling malloc+memset by calling calloc.
-     +    Avoid calling malloc + memset by calling calloc.
-      
-          Signed-off-by: Seija <doremylover123@gmail.com>
-      
+          The compiler (at least LLVM) treats them better anyway
+          because of the C standard not defining signed overflow.
 
 
- remote.c    |  4 ++--
- submodule.c | 10 +++++-----
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ add-interactive.c | 2 +-
+ bloom.c           | 2 +-
+ git.c             | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/remote.c b/remote.c
-index 10104d11e3c..462ff105273 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2854,9 +2854,9 @@ void apply_push_cas(struct push_cas_option *cas,
- 
- struct remote_state *remote_state_new(void)
+diff --git a/add-interactive.c b/add-interactive.c
+index 49042b30261..12c23fa10ba 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -848,7 +848,7 @@ static int get_untracked_files(struct repository *r,
+ 			       const struct pathspec *ps)
  {
--	struct remote_state *r = xmalloc(sizeof(*r));
-+	struct remote_state *r;
+ 	struct dir_struct dir = { 0 };
+-	size_t i;
++	int i;
+ 	struct strbuf buf = STRBUF_INIT;
  
--	memset(r, 0, sizeof(*r));
-+	CALLOC_ARRAY(r, 1);
+ 	if (repo_read_index(r) < 0)
+diff --git a/bloom.c b/bloom.c
+index c4286341059..42db509bea9 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -314,7 +314,7 @@ static int has_entries_with_high_bit(struct repository *r, struct tree *t)
  
- 	hashmap_init(&r->remotes_hash, remotes_hash_cmp, NULL, 0);
- 	hashmap_init(&r->branches_hash, branches_hash_cmp, NULL, 0);
-diff --git a/submodule.c b/submodule.c
-index 7ec564854d0..7707c6f48f0 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1489,14 +1489,13 @@ struct fetch_task {
-  */
- static const struct submodule *get_non_gitmodules_submodule(const char *path)
- {
--	struct submodule *ret = NULL;
-+	struct submodule *ret;
- 	const char *name = default_name_or_path(path);
+ 		init_tree_desc(&desc, &t->object.oid, t->buffer, t->size);
+ 		while (tree_entry(&desc, &entry)) {
+-			size_t i;
++			int i;
+ 			for (i = 0; i < entry.pathlen; i++) {
+ 				if (entry.path[i] & 0x80) {
+ 					t->object.flags |= HIGH_BITS;
+diff --git a/git.c b/git.c
+index 46b3c740c5d..86f7112f4bf 100644
+--- a/git.c
++++ b/git.c
+@@ -946,7 +946,7 @@ int cmd_main(int argc, const char **argv)
+ 	 */
+ 	setup_path();
  
- 	if (!name)
- 		return NULL;
+-	for (size_t i = 0; i < argc; i++)
++	for (int i = 0; i < argc; i++)
+ 		strvec_push(&args, argv[i]);
  
--	ret = xmalloc(sizeof(*ret));
--	memset(ret, 0, sizeof(*ret));
-+	CALLOC_ARRAY(ret, 1);
- 	ret->path = name;
- 	ret->name = name;
- 
-@@ -1536,8 +1535,9 @@ static struct fetch_task *fetch_task_create(struct submodule_parallel_fetch *spf
- 					    const char *path,
- 					    const struct object_id *treeish_name)
- {
--	struct fetch_task *task = xmalloc(sizeof(*task));
--	memset(task, 0, sizeof(*task));
-+	struct fetch_task *task;
-+
-+	CALLOC_ARRAY(task, 1);
- 
- 	if (validate_submodule_path(path) < 0)
- 		exit(128);
+ 	while (1) {
 
 base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
 -- 
