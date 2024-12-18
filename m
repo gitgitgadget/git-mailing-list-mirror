@@ -1,62 +1,62 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D801E489
-	for <git@vger.kernel.org>; Tue, 17 Dec 2024 23:47:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E75919A
+	for <git@vger.kernel.org>; Wed, 18 Dec 2024 00:15:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734479272; cv=none; b=sPr3U3PiaMY5qjsz89x+kr3E3bevpmhQ3gUiRP5KMlI5NMnWp809tA0oTXUszUWoPJ8YcXeA/0O14ZMl2/ItqWee4HECPVPSWp8zU+KgCh1MIv+BgaOzhJRTrezWMF9f52aVlw1J+CjuQWGFnWwK+8VDowiL43ru0t9+5Tth3Cc=
+	t=1734480958; cv=none; b=GMK+ajrZvVx+zXgkKDuNzgv87pvNYv2BPiM+sos+l5E56/CesKGE7T5DUMi4ChvsEw9eV32+CBRO0GVZLyMcP0t906Mzsu6ghws6bdbRUICwNDfoPwL15ch8yyE2g/uW28JiR2+R/Ho4X0GHRiyoyVLpavTyUO6lgrI3ERxbnkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734479272; c=relaxed/simple;
-	bh=VLSSWKjNiIS9NTm73Ld3UrHa616D+WV8Z0odVEf8s3U=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=PAXXaU1hffHGkEQuhkCPPEM6T9gBjykYyKj8crrlCa8VxHDQx8v96cZe6vg7ou+6sFrx7TWCZdbQHE6gbZkJ3v3W4dUV1erBuM3wdBRokZTYo3HUdkgx3S2NJsa4HijhFLK6AG8FtGBia0a+Zrmg7Hx5D0ukV4hAEnCzw4+J5n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fbEauf08; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1734480958; c=relaxed/simple;
+	bh=3zWzNprWCTJVqFJl+O2E98J5LYIwqWVjC4kUJhW0Txs=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=AGwmZ8q/u9lFsO0RWS+kE5EkNoRwMk57paj4Kh6+78KO7AAE6bAYdYeLip8IcCPFvxinZcs2ZdqpxrR8WyuULicqVMY/nYwQ/e/R2lu7xSu5J8LULfoW7tdgKvhjgf1SNGTP3zTvZFNTAvvLJaid82r1e7JXNI68N+vv1ccTKIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIHr3MuN; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fbEauf08"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43634b570c1so29865105e9.0
-        for <git@vger.kernel.org>; Tue, 17 Dec 2024 15:47:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIHr3MuN"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3862ca8e0bbso5014549f8f.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2024 16:15:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734479269; x=1735084069; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734480954; x=1735085754; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9/KcudCXy5EG8yGzTvZ09wRNHF2AriA5CjZ+kgKnu6s=;
-        b=fbEauf08mpc1XTn8Db0Z46rOuMBVWFZGkzJBZUaIoRElL1eF6TglL/9H/56nvcuUpN
-         HaFxRwNWQwPMBc233RY8O2XMEh2XIM5kkiZHn2yCv6I1us7vRN7i3arVHGm6CcpbhsMS
-         7/poLlmpetvu4SUOoFnR+KJmj7Dn9JAfbro4G86ulg8LlTlootiVZSj1GXcd8OmN93qn
-         xGUPYGjlD3AjlNDJYL4f161YcRjmbDfsZC3wgNhGIMvo1p6Pf6fXzb8J1ymkiO3Z7SAt
-         +RLCK7mwT1/JlyWYiwuI2yPvM+dtfgKTOGtQKH2hH75kdQyZhuddqmVyyDwH0VJx2ZV5
-         UBXg==
+        bh=I78l/p+h8as+lBMb1Vy7qaaKAznf2iRhdl7I2MaeWg4=;
+        b=CIHr3MuNbiL149YXzdxzOfH9wSCcRJ36Y9Y18TJu2kDVXL+ulY5XfZbAxnsVuOP1R0
+         YWmsy82VcnUb5esHLjNz5duzzHKohOHu956By0dEzvuXvNz6egh/uF9RLppmpJ0KQjsq
+         jlcNiYf2YUXunBqjxtjj2Njd1BSKXxCLpEf2ySc57b73LthJktN8qM34yh+UhVpSv/cX
+         CqfEZf70s+WNT+lTo5Ro34fDL0TOMVqpEgBY0gtVsgSWzrjYVf2Wa5sA7lqrsQ+dsHWq
+         6RhG7kSoCCc6ItdW/MdEsSk2vuSNKxAo9z4R3yOXJz7Er9If74pbBjWXgsa8c0BdX7I3
+         DTHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734479269; x=1735084069;
+        d=1e100.net; s=20230601; t=1734480954; x=1735085754;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9/KcudCXy5EG8yGzTvZ09wRNHF2AriA5CjZ+kgKnu6s=;
-        b=dq43KWvYN6zZux3T99ftnU5cn3cCNkui4a09ZDKc7jQzy2KmxVBqhRNem+pF0A+qQn
-         iCMqdMX8KWJct0JJ8R6KAs0dAGAPAEAeZJ8uqxTJc5q/oOG0NTvWhaLoK4LynyQu7Now
-         a2jwYlzwJc43s+abjzvmMULyeEREIsN6272jjwSFY2TEa7tjb8Cqti2OkKHNNQXhDkTF
-         unDRIKYn7RsvrYg6FbCNfAaa1xQomcTmssPXUYsEkrWnEmAb3X5cc/Z/aPAPwNLMY1fA
-         g9Dmjjo9aTwTadRfSzlsIhbMqNDkk8fb2qoJZlvMeC2olxuNzwnQb8mYI6Wh5ka80Mil
-         ayBQ==
-X-Gm-Message-State: AOJu0Yy0NkHC8bhjkdoJvVyyJW/eaTa+i8A76k7mEk7QzWsputu5EjKx
-	n2pHNA31KeQ/Sti4wMXTtlpxuVVHRJgIh9DBHMbHSgdvG6JuzOH+aHtZ6A==
-X-Gm-Gg: ASbGncsM6S045xK3vNPvQbC0b7TCM3VdG6mC7zPj1dOTAICHxEO/+A3ibI/JigFhtrq
-	w/Qfk1Z2dsmuOBBRQGwOEqycK8TxDjBQ8MBW7QF1DlwxFm2KxCWMdZBG+rW7tB5OTpublO4Ol6k
-	eDU/R459oqkDN4rBHlVHzM+JaQWTmEZJbx/zJTt5SLsLaZjaYbJdYJ7zVRga2TIXcM3W8hShZxD
-	l+z/C4TWWFdHxfhwKtVXquHK7JQH9BprHUHCRQOGtV7zfgXnY32AAKVwQ==
-X-Google-Smtp-Source: AGHT+IGKs073qpPxE1+n6JzBy01kiiqCNb2rQ19uiPPK8gRk1eipNzquMWcJTxk5hOrkFerx3wtuQw==
-X-Received: by 2002:a05:600c:468c:b0:433:c76d:d57e with SMTP id 5b1f17b1804b1-436553433ebmr4148815e9.5.1734479268758;
-        Tue, 17 Dec 2024 15:47:48 -0800 (PST)
+        bh=I78l/p+h8as+lBMb1Vy7qaaKAznf2iRhdl7I2MaeWg4=;
+        b=WrNumuzbnWFiW0jBunDK79W+JeIH15zqMtuU2xjL2RrzP48eFg3siuEqCkpRCtDNdh
+         C7vFN7OGQbKRo6c0FW0efrY090g85J/bJVd32cgbe6c3PYc7vvWNnlUkkvFfQLoCxMXr
+         jAF20ZzzK1cxCvQp0Ds0QzuLWPUrv+tp6mkCBpn2zBpV8M7x5ygUQ2TXbFV8qgkg9hbe
+         OJPCL2Ma7prRZ3TzOE6o5y6RzsHOlmNVGIcK7n9rgHsjO2AMRo3yXNvM3JjOOqlXDKgi
+         AnYTrXb5y9z2TqOjwAf1tEdf26lASh6+F6fNlCpNQQABUlmQ1oKex3fC0YHhTUBKbySw
+         IM/g==
+X-Gm-Message-State: AOJu0Yyh/rj1jFD6nYNCb/+8Mk5Udo8Ss6EH4pQRW+Hcd/70voEJZowS
+	INtbz3ugdZgZUIjmgqb+i9fIVFqfGLaSCBi7FhtmeVNyMjrSop0+ojxi8Q==
+X-Gm-Gg: ASbGncvybTbiOUzy3s4fp0v9GVZ01WnUXIPBVDL7bUO6aR785fAqc9VqJ/DAk/mbY3F
+	bW4gd7RnAxlQzc+EEylMW+yOBDNvS2FT4/ggaFe4loi0SUalrgkj6bEo50oiaepS0u2Kw+tu8n1
+	K2x9Qf6TOjrbVD3BJCqTTVmRiZw6BFpGsPIPft/3gd8aNXPhOOiagxUJtMoh+BSSd3qqtgpWKOW
+	4UxSmTbDY1wvBGUDcc9NWInzG/TdxauAnRkk8767NEV0J0XZGC6a16KmQ==
+X-Google-Smtp-Source: AGHT+IGQrEigq31GvR0frg/AP4b0o9da8Tc5MPE+RRuBkZI9U5CN8gaExkRG+o3exISfX1EExftP7g==
+X-Received: by 2002:a5d:6d81:0:b0:385:e88a:7037 with SMTP id ffacd0b85a97d-388e4d6aa52mr510879f8f.6.1734480953582;
+        Tue, 17 Dec 2024 16:15:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b119ccsm1660245e9.24.2024.12.17.15.47.48
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-388c801bb00sm12278895f8f.62.2024.12.17.16.15.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2024 15:47:48 -0800 (PST)
-Message-Id: <pull.1847.git.git.1734479267736.gitgitgadget@gmail.com>
-From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 17 Dec 2024 23:47:47 +0000
-Subject: [PATCH] doc: remove extra quotes in generated docs
+        Tue, 17 Dec 2024 16:15:53 -0800 (PST)
+Message-Id: <pull.1843.git.git.1734480952423.gitgitgadget@gmail.com>
+From: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 18 Dec 2024 00:15:52 +0000
+Subject: [PATCH] git: use signed counters when comparing with signed vars
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,49 +67,70 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Kyle Lippincott <spectral@google.com>,
-    Kyle Lippincott <spectral@google.com>
+Cc: AreaZR <gfunni234@gmail.com>,
+    Seija Kijin <doremylover123@gmail.com>
 
-From: Kyle Lippincott <spectral@google.com>
+From: Seija Kijin <doremylover123@gmail.com>
 
-Commit <FILL THIS IN> moved these variables from the Makefile to
-asciidoc.conf.in, and in doing so added some extraneous quotes. These
-are visible in the generated .xml files, at least, and possibly in other
-locations:
+The compiler (at least LLVM) treats them better anyway
+because of the C standard not defining signed overflow.
 
-```
-
-```
-
-Signed-off-by: Kyle Lippincott <spectral@google.com>
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    doc: remove extra quotes in generated docs
+    git: use signed counters when comparing with signed vars
+    
+    The compiler (at least LLVM) treats them better anyway because of the C
+    standard not defining signed overflow.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1847%2Fspectral54%2Fdoc-remove-extra-quotes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1847/spectral54/doc-remove-extra-quotes-v1
-Pull-Request: https://github.com/git/git/pull/1847
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1843%2FAreaZR%2Fone-more-time-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1843/AreaZR/one-more-time-v1
+Pull-Request: https://github.com/git/git/pull/1843
 
- Documentation/asciidoc.conf.in | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ add-interactive.c | 2 +-
+ bloom.c           | 2 +-
+ git.c             | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
-index dbe36a52eab..b89bccf2309 100644
---- a/Documentation/asciidoc.conf.in
-+++ b/Documentation/asciidoc.conf.in
-@@ -21,9 +21,9 @@ tilde=&#126;
- apostrophe=&#39;
- backtick=&#96;
- litdd=&#45;&#45;
--manmanual='Git Manual'
--mansource='Git @GIT_VERSION@'
--revdate='@GIT_DATE@'
-+manmanual=Git Manual
-+mansource=Git @GIT_VERSION@
-+revdate=@GIT_DATE@
+diff --git a/add-interactive.c b/add-interactive.c
+index 49042b30261..12c23fa10ba 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -848,7 +848,7 @@ static int get_untracked_files(struct repository *r,
+ 			       const struct pathspec *ps)
+ {
+ 	struct dir_struct dir = { 0 };
+-	size_t i;
++	int i;
+ 	struct strbuf buf = STRBUF_INIT;
  
- ifdef::backend-docbook[]
- [linkgit-inlinemacro]
+ 	if (repo_read_index(r) < 0)
+diff --git a/bloom.c b/bloom.c
+index c4286341059..42db509bea9 100644
+--- a/bloom.c
++++ b/bloom.c
+@@ -314,7 +314,7 @@ static int has_entries_with_high_bit(struct repository *r, struct tree *t)
+ 
+ 		init_tree_desc(&desc, &t->object.oid, t->buffer, t->size);
+ 		while (tree_entry(&desc, &entry)) {
+-			size_t i;
++			int i;
+ 			for (i = 0; i < entry.pathlen; i++) {
+ 				if (entry.path[i] & 0x80) {
+ 					t->object.flags |= HIGH_BITS;
+diff --git a/git.c b/git.c
+index 46b3c740c5d..86f7112f4bf 100644
+--- a/git.c
++++ b/git.c
+@@ -946,7 +946,7 @@ int cmd_main(int argc, const char **argv)
+ 	 */
+ 	setup_path();
+ 
+-	for (size_t i = 0; i < argc; i++)
++	for (int i = 0; i < argc; i++)
+ 		strvec_push(&args, argv[i]);
+ 
+ 	while (1) {
 
-base-commit: 0fc57dec578fcc8dcda5cc3de6b81fa1f6719770
+base-commit: 2ccc89b0c16c51561da90d21cfbb4b58cc877bf6
 -- 
 gitgitgadget
