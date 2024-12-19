@@ -1,143 +1,116 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB25D41C79
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 14:47:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288E622757C
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 15:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734619623; cv=none; b=CeGZ+IFU9dey938MTPE8tF8RyTvVFip3XQt800tg628wYDWv/u9H4CfsTxWR9WEV0MfmHtQfcwCNjsFuOlJTiacrDPlhkqW3u5DRVUQ+/Yb2wu96LLInAHp4UdOLoaIwhnrinSjw5kzPuVSPxdHTFE76X4KErcF2WzAKtvNxejQ=
+	t=1734623725; cv=none; b=Mn9yUsMDyP2WIzLCodNWzfVAE9MUxw55YgWpungAUnWpkA7cdo/D7MuYHszQYVyy7Me7+atbycyHLQONI1nmbdgQd0HG5jwMnCFnnozNVIwzJ1k9XS6pjPIHpvvC5pZOuf8VATE1je8DrKnal4PM+Nl51u5AfjQA5juUPv/WIro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734619623; c=relaxed/simple;
-	bh=jF1xgaZDvQcVTtr0gFCmQ/8g+P/IAdhec/Fo9hVJaNc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X3yByWXGcW+WBq1EmZJ86qlvr3IzmsaOi0Tb9fP2Oxn1fcaJ0VDZfKxggC56A3JTp/4VPTlJniHrL105qXhZ7lLHjGYkCcaJDDB/urbo5TV5h3Pcm1ZuMWlmMfXACw+n0QZuwjSFm+QShWpAvo5bw/rphYQ1NPxiuBWCN+r5Wis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YmHJfQgf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lIZo/Gv3; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734623725; c=relaxed/simple;
+	bh=VMtYppdeCmSozAsN4PyRwGivaP0dLzq8LFXSuw6/Olo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UOX+8gUAWMkQ0djVQigTXeEM1fR+gkwAcmFkn9LCr9QHcCfaAqvSsPlMrjTtboat0mU0FeIPiSIryYTVLJyQ1JZNIL3jy7JytPEcTwJ2cbmYwTY1/NwFp3SV2d24TKTWicaPnbvUrwFC5beL+DKkWBd28aQajDpTIHF2IlVxVvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ofpBrGXC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GKk8k793; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YmHJfQgf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lIZo/Gv3"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AA1A7254012F;
-	Thu, 19 Dec 2024 09:46:59 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 19 Dec 2024 09:46:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734619619; x=1734706019; bh=CtlD3l+4Yh
-	EgXMV7Lv/UnZbIzMuvtifirntSWfA5VcM=; b=YmHJfQgfoPI99zpYMMRr6Wpbkz
-	LEC5uvxMhZTycAWOtSGBdJtrJPqrMQt8AsipgAO8tBuxT0f9xrXaPQU8yr14JIe6
-	I/qKWD9dXfRDk3PjBLgRDFFbzNCylFYuOtomTsP5mia3rWxpucFQYwwy9EFRdwzv
-	47lsObjQtoiXMPKS2rv5nYb6hFghSS4XqRzLQeqK/yACVeezjIjWTTHrr/fKKqto
-	hFuzU5pXiAAZqYhQiSA2pBdbyBAZq/qzZ8CzvyBbB0NpN2F/c83mB9qX+AGQ+Xxd
-	gNSjqz42sCUSq2z42h7SCQpzjSmmeKFzwvoMK42AdwjPDq9HRpJxRxiKaEew==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ofpBrGXC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GKk8k793"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0E5E21380240;
+	Thu, 19 Dec 2024 10:55:22 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 19 Dec 2024 10:55:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1734623722; x=1734710122; bh=xvDiUZ/PE4
+	e4RTABupKF8+pls9neQON2F1RaadHw7Dg=; b=ofpBrGXCjkMSWGv5fDAjeVzzCS
+	Z/ge8e8ZeEjUeyNam/dSHlHW+rkb3a6R0psyKxO7+bg+BAjoABkXHYDdOANwMVeZ
+	Jn4n8bWhR2j5+mljh23XRbAYM66XL2PMFrMLfdUygKefL3D25i2GX8oKihQ1ZVzK
+	ZYL7NNC7g+dkWzyhDdJnUZN5+VlpusaTLPdf3Y8dGbjY3uZHn5zYyqa3KuDBAijX
+	WoloNKdEb9snz0taEurzPqiC0KQ23pYbulzsn3YE4Gefgg8twR0ccSsEz8uBwWWL
+	NEFdYsKRt5/NksHpuRS341f0QcplCrlxGsIsoMx6VymnovfyobGl+IlEOXJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734619619; x=1734706019; bh=CtlD3l+4YhEgXMV7Lv/UnZbIzMuvtifirnt
-	SWfA5VcM=; b=lIZo/Gv3zSm7K2gp8KkwSEKaxJ0K2JDg5L7SeQ/KBekP26ZYtp1
-	cIjSxZNKjo2JS6FRlPmKnso16+/YA9U96AknGzeuORi17WlYFBT72rNueBtnA2gp
-	qkq02DqdPYUwt8U4zd+q2psIg6wheUaer/W+k1qI+kqkllQVnuTkTx9IYGyU022g
-	4qOVt335ytglMLWT3/rUWTEaHCQ1vgWRuXrqXFtwms6pUWwavcjd09Dg+UAitq30
-	SqM25DAnILREyJApBt9aIaDYKEXfQ0TX1411ZdYIfkxGUnj17LSOxzaPMkwgP6Oj
-	p+TioN7n76EDrO4f0nNb5TY8MAKEph4Zacg==
-X-ME-Sender: <xms:4zFkZ5kXoW2p9pZfDQb5U_R0a-6Q6tkfRfG4gGg_NZ7PoBMqpr-nXA>
-    <xme:4zFkZ02ezB_pU-30LX5MFafaoxu8g-jzArrgR_5HfLymSZMiYnWy2pNlW2C2ufDlI
-    k3VxXRM0X_wR5bbIg>
-X-ME-Received: <xmr:4zFkZ_rstAy1b4-HH5hJJD4WSJ9RqEQ_uUx9cP2e5Le_ht-Ca_4kvpVnNidcaIPUopZPmMKrYH22hlegmsLKGo8cbHojTc_lWQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgieejucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1734623722; x=1734710122; bh=xvDiUZ/PE4e4RTABupKF8+pls9ne
+	QON2F1RaadHw7Dg=; b=GKk8k793XUmB0LvVsSd7Nq7aePxfCccQ9qlDwZCbcs9Z
+	kBK2yz+2DnD33XnjhXVNpZSTetJ5LOqP0oZ6dSoGUg8zQNJQJOwOTAfekHB/an0T
+	pxSZdTVj8v0ySx2YoW04HOpP1vGi+aP7yN7htKKQnJxMkLbGRrgaiafP88Yv28L+
+	iwqLfiLG/R6VDq3vRoMSacxmtT3yOnkE0Nt4aemlHC+jO0ZitiqckEk6DHo8zEv1
+	GdvLVf9cH6T1meP/8WEkNiAWWgNd391XQD4DSRRXQ8jI0K6okHbp864GrpWp9O0A
+	V5UIlVdBnRLZdp2JmYUl87nNvzNcoKimzpHwXWqTtw==
+X-ME-Sender: <xms:6UFkZ23A5QGs1_jYsaUK9UHYn2TG-CwUz7p2P_f2w3thH5sReTPCmA>
+    <xme:6UFkZ5H4JmzQ6tXfPWdcvf5TLlkP5vJYNXRKLDGohvdj3hZtCbVH0nXvWR0lDTQEq
+    k98rhYKo4rIt07w4g>
+X-ME-Received: <xmr:6UFkZ-5z9up_3saiRcZO2NjUr9feIoPF-BIXdJF1G0Nix8bXYHFUCp85Z6ZNotbRd5omI2cbbTFjAoEwLW8I5AJ-nx8rbWYperP95l2Af46wbA0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgkedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
-    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrghgrshguohhtmh
-    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtqdhluddtnhesghhoohhglhgvghhrohhuphhsrdgtoh
-    hmpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:4zFkZ5nuTH1GEzcxo1cNeVxPIoZL2JtZxdxnLNg3eAuqFxx8x10TZA>
-    <xmx:4zFkZ33RbleysP_GvXTf2-vp2QbBTOf0Cp00yZHegSAt0jVCH0ucJQ>
-    <xmx:4zFkZ4sciNCrcl_0ZtJS-Y1DXO7BScw6_Gqwj6A9kURiCe3KLKDh3w>
-    <xmx:4zFkZ7WaWmBVv1TpG9CykugEU_Z5-I4mXV-7tQp5yykC68SmJYgwyQ>
-    <xmx:4zFkZ39spSAVOtQ7C0F9mr-K37R43lNKeth129KOlvl9O5EUQ7xCAW-o>
-Feedback-ID: if26b431b:Fastmail
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
+    ggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetie
+    egjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:6UFkZ32cYv-XEmww73u7GBVqYw8uRIOnhhCn1T56AeExyHL5WVxAUg>
+    <xmx:6UFkZ5GzFDsY9lH7_3y5wwSkgYSYxfVA3zKCwExxmBAL_f82mbaaWg>
+    <xmx:6UFkZw9Xt4kUFbALQ0g_sXZplywJg2VCEI6yIOwo11-SoJEnPiLqrg>
+    <xmx:6UFkZ-kcuRFy47BjlbL-boOTGbh7HxksYS1_Fs9cfqvsXSURawch7Q>
+    <xmx:6kFkZ9j_b3sGWm4DOfvcbC4eu0sQ8p6CpYKJQiOv1_cWAFpUChyYC0Bq>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Dec 2024 09:46:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Bagas Sanjaya <bagasdotme@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>,  Git l10n discussion group
- <git-l10n@googlegroups.com>,  Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: OK to submit l10n PR with signed commits?
-In-Reply-To: <xmqqh670nrb9.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	18 Dec 2024 22:02:34 -0800")
-References: <Z2KfIl87JOWdcGR3@archie.me> <xmqqzfktujuk.fsf@gitster.g>
-	<Z2OAebI4pQ2K57vA@archie.me> <xmqqh670nrb9.fsf@gitster.g>
-Date: Thu, 19 Dec 2024 06:46:56 -0800
-Message-ID: <xmqqzfkrlogv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 19 Dec 2024 10:55:20 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 666ce455 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 19 Dec 2024 15:53:29 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] GIT-VERSION-GEN: fix overriding values
+Date: Thu, 19 Dec 2024 16:53:35 +0100
+Message-Id: <20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH9BZGcC/x2NwQqDMBAFf0X23IUkTQv6K9JDtK92EVfZSCiI/
+ 960x4Fh5qAME2TqmoMMRbKsWsFfGhrfSSewPCtTcCH64FseIm9z5kl2LrCfzkUSQ4vYqgt0Z3e
+ 9xdalAWO4Uw1thpd8/pP+cZ5fxhIgFnQAAAA=
+X-Change-ID: 20241219-b4-pks-git-version-via-environment-035490abec26
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Kyle Lippincott <spectral@google.com>, Jeff King <peff@peff.net>
+X-Mailer: b4 0.14.2
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
->>> Instead of talking first about drawbacks, we should consider the
->>> upsides.  Why would we even want to see your GPG signature, when
->>> most of us do not even have your GPG public key in our keychains?
->>> 
->>> What are we trying to achieve by doing this?
->>
->> Just to ensure that PR commits are really from the respective authors.
->
-> Yeah, but my point was that it would not ensure, because practically
-> nobody has ways to validate the signature was created with your
-> private key, and public keyservers have been tainted long time ago
-> with fake keys with the same fingerprint, so would not work as a
-> good way to obtain your public key and be sure it is yours.
+Peff reported that overriding GIT_VERSION and GIT_DATE broke recently
+due to the refactoring of GIT-VERSION-GEN. This small commit series
+fixes those cases, but also fixes the equivalent issue with
+GIT_BUILT_FROM_COMMIT.
 
-I think I should rethink this.
+Thanks!
 
-Even though I think it is fair to say that more than 99% of people
-won't have your public key and even if somebody gave them saying
-"this is Bagas' key", they do not have a way to independently verify
-it is truly your key (and I think the same thing can be said of my
-key).  But in today's world, there are a few places that it does not
-matter all that much that you and I do not have each others' keys:
-hosting sites.
+Patrick
 
-I think both GitHub and GitLab lets you register your public key, so
-when they are about to show a commit (or a tag for that matter),
-they can
+---
+Patrick Steinhardt (2):
+      GIT-VERSION-GEN: fix overriding version via environment
+      GIT-VERSION-GEN: fix overriding GIT_BUILT_FROM_COMMIT and GIT_DATE
 
- - notice it is signed;
- - look up the author/tagger/committer ident of the Git object;
- - look up the ident in their user database;
- - find the key(s) of that user account; and
- - verify the signature using the key(s).
+ GIT-VERSION-GEN | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-and display the user account that the Git object is signed by a key
-registered to it.
 
-Now there may be ways to contaminate hosting sites with fake keys
-that have the same fingerprints as the real ones registered to fake
-user accounts, and that may render such a feature at the hosting
-sites less useful.  I haven't thought through the security
-implications.
+---
+base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
+change-id: 20241219-b4-pks-git-version-via-environment-035490abec26
 
-Of course, $CORP or other organizations can have their members
-register their public keys and do pretty much the same thing within
-their closed world.  Safeguarding the public key database is their
-problem so I won't be worried about, unlike hosting sites where
-practically anybody and their dogs can create accounts ;-).
-
-Thanks.
