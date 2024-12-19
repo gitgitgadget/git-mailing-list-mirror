@@ -1,111 +1,157 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00887DF58
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 01:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537A843ACB
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 02:02:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734571872; cv=none; b=fCtPltCkIWmpdC/c9SihocVefVw6pr89uXp71KQmGJEgebjZEDuQw2AG0vXNrL7eOjaEjgJyvUfr6U89nPw+SX4hufgCIyiP7m3Gamwe5X0J6jsvrH3i9vpJ4T5YoBzdeOmSkNNxcrd9V6Whr64ywGGdA1BJ+QFkfnhrIi9HeRE=
+	t=1734573753; cv=none; b=Brci/m6OK39XIj0u7wUABu6EO0/1FMWFYjakF+6UlIBEgYhBepXpmIt6vbz53Eu7xCBwDop0hSddc0L7cOEBK2w7mOvm+qhscXhYw76yNdchrsDpvxD68aW7QpZIQD8kYfs9HMWzyCLuOEMSUL6PlqvOzCTW314asMqi91h9D/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734571872; c=relaxed/simple;
-	bh=PI1zHj6ftnOqYhgZNkJ1Xc5bLZzhIzT7kxoGwpYz94E=;
+	s=arc-20240116; t=1734573753; c=relaxed/simple;
+	bh=WXvgNW7pVak13O7AYAB+vXysBwJdR3D8sFKOcuPRlX0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OhnSnHN6vN3t9bg79fNJx77vrL9IKalGL5PhfQfczTvo2mKJTM5XTGTucCjNNkBWzNHzIwpvsMEqJBJgfkyDXPq+bb9Lu3bmsIuWvBPgBVZU1rV1ekolWU13Tdt1MBm8i91sH8GQyDnT5D0K9Fd7mggtxqUhhJliu+XSrLtymJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=uQXdWeWS; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=EHZbobxAEUK3nhGmvcJIj9tFJ7YGsD1tKGFqSueorHiKk0Ewu+S0+tK7132G5y+XeZ7i00VfAJ+vF1LpE/FCg/10jRmFQPrykoWnOXU6N3e8XfCiN1aEwlgsCDQX2hx+AfJ0EjNE4xP8MzYmuRKjx9rzqxgkcpGkzMj5gwFlyc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=r9sGTePf; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="uQXdWeWS"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6f145e5cd83so2577057b3.1
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 17:31:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1734571869; x=1735176669; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HlNGvkxBFYoU/+v+zVnQFhQXcTfl77hoj907a4oy+Cg=;
-        b=uQXdWeWSKYYWyqD6yROB/QghaKRqxhq77fVOuxC1H1fQjA9xURCwFwRHsospoKVrms
-         WCRgMJe0dawEgJ8sZ8DqncvrkNqdu724aV+LB57j7Yew4w7rZoGHUUH/fO82ApHf4tz6
-         S6YkZt2ahmJf0ECyHaeVO9y9iI8XaLRfM/vYB5MDg59Kg/DkEetipAyjAaDFp0luds7d
-         t5CKJsDODuQyxMfZi+nT7EiJudljOrprO7fC11EumdEwaZIpzwLy0xuzdi7C4HMCQEUS
-         WvOLkAHTNLO9Jmc0QmnslYwGP//PVZIMc1wldcrdcd7wAXPRMWcDGVdAZH0T0MxzfGPg
-         04ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734571869; x=1735176669;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HlNGvkxBFYoU/+v+zVnQFhQXcTfl77hoj907a4oy+Cg=;
-        b=eS8nCuAZPwVlCVXcwBtQF9XHTBW/ckEaH3DJClfijYqtwNxKSTOJDP6E2WZavZO5cT
-         /19TDLm6jDsXSHdPsGAg1+nQGVC3/cHWjFlIxUnksLDx5gFL+AmrTa43bgemvn7SsFVL
-         ceWVsfNLH1eCsIeypCnvPxI6Wvf8LPUHF902uQukzU62xuUchgIGRbXtM4QiFzPtM9ef
-         DCs8quxjQ2Gd5bpF/ETz99Bdp2MXuJ8V0s3agTFSraQ0MxQ8yKkgt09LWeMjPTAKCzwR
-         9Ypd7qQjtMngW+icG9MzCHXyIN8mjwYiyxh+bqyTvtqYhxEg6wKi0ngBkUyxUt09cel0
-         8yIA==
-X-Gm-Message-State: AOJu0YwpCW0nhQdScOBgyp115ehhtRBrX43vBmiuZvXeBdVl/OsnisHh
-	papts47kNW///+Cbc1hKRX7kj2tzE0hJR9QxfaSLrHP5+LGcu1ZVtcMDfRTdSPOAL4GxUQNYjzY
-	7NgI=
-X-Gm-Gg: ASbGnctroy2o9RXgsgER+FU2Yaz382G59WKifhRfJ2E9Pjf7ONyWzGd+0msnIiIA4S4
-	2qtavd6pcq48VofbwyI5X8Ec95bchs3WlLGhlwpruDdhteiyD9E6gUD+4JzDlWqMJ+J+Wr9JW2r
-	6cWuAfZqQvSYHmoi+aq/aaK5Mbw2+YmOC7SFs28FMbLrjMXY2/AY73uLMWVtFdIXx9RZrEb2iQ0
-	FEb3+lF65udoj3K8RQfjuOYVRbxBuQae3eLoEfl38w9rrIKWtgshxx/AccIw/NheuBtruF3nYWF
-	+1NzjhOLK/6gE+6M1U+ed/Pi7hWm
-X-Google-Smtp-Source: AGHT+IHRU9MGN3qY6SoHWVEvtQs5tnkx1A+15hurVF6WOK+XZquUfu1utWH7906fj/Id2Ws2CFmlOw==
-X-Received: by 2002:a05:690c:680d:b0:6ef:6ba2:e84d with SMTP id 00721157ae682-6f3d0f3294dmr46013207b3.17.1734571868915;
-        Wed, 18 Dec 2024 17:31:08 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e537cf74d97sm40677276.53.2024.12.18.17.31.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2024 17:31:08 -0800 (PST)
-Date: Wed, 18 Dec 2024 20:31:06 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] pack-bitmap.c: ensure pack validity for all reuse packs
-Message-ID: <Z2N3WkMj34ACPEoy@nand.local>
-References: <7fdbfadc04926efc094633b238a55168c92e3d58.1734117577.git.me@ttaylorr.com>
- <xmqqa5cspym9.fsf@gitster.g>
- <Z2NfhDOJOOUdK2Xk@nand.local>
- <xmqqplloo4jw.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="r9sGTePf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1734573742;
+	bh=WXvgNW7pVak13O7AYAB+vXysBwJdR3D8sFKOcuPRlX0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=r9sGTePfkD5gFOqHWkFIoV4OJww9jOSOuA1GBP7jSG9++Lv3rYgfwoWTe4xxxrIdx
+	 S/1NjgFIqkFxKqJJME36pGGzNkQzgx5Xc5dZJfxfP1/E1OmXlSTFDFr2RnpqIPF8EK
+	 fXQICvPP1ivLahcIavVg3wb2M8Zq3jFONdgsq9z6LvL6PZ7zi8b5qr15bmniilK/zS
+	 ByJSkgR2J0A6ZdbAcxlCc8ajDbFX4LpCJU49LnVo01V886pLlEtrnaw8xaeqORBHXJ
+	 5nTLCF9SAj1TgWj8rTwDwURDXkolIvaUILFcJgtAHu0b4WfLnezAFW1w2uEmVq3g1m
+	 qm1M+zoqynRxfEATTetvbYamz2OEZUwalBt+Q9lQfLUrF3nlP6HZEKy/a+GM1aQJbI
+	 n4Z0CgBnyvDcpxA8xH94yI1SC/HTJ1pi+BFtkvGYqgihkjneJhThyYD7DKMkpWlEeo
+	 8BwIUUUb7DRgb2LDEKR4Ipx3GVsrdGp7M3u5eWexuMBu9vZqt7H
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C8DEA209B3;
+	Thu, 19 Dec 2024 02:02:22 +0000 (UTC)
+Date: Thu, 19 Dec 2024 02:02:21 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: M Hickford <mirth.hickford@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: Fwd: [Bug] `credential fill` prints incomplete bearer credential
+Message-ID: <Z2N-rV4fhF3ZkGlp@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	M Hickford <mirth.hickford@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+References: <CAGJzqs=ksKqY2M8Px3uv6ut=MBwkmpPUqp3xVzVpNMJ0YBrBww@mail.gmail.com>
+ <CAGJzqsnAO_vDSYOC7ZbYUQHJ3fT10JuQ2RrC2cvY4hcPMnZ=bg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KaJZZQjVbQvcm09e"
+Content-Disposition: inline
+In-Reply-To: <CAGJzqsnAO_vDSYOC7ZbYUQHJ3fT10JuQ2RrC2cvY4hcPMnZ=bg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--KaJZZQjVbQvcm09e
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqplloo4jw.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 18, 2024 at 05:16:35PM -0800, Junio C Hamano wrote:
-> >> I wonder what we can do better to make sure the work a contributor has
-> >> already done (in this case, resolve interaction between two topics) is
-> >> not wasted and recreated (possibly incorrectly) by the maintainer.
-> >
-> > I am not sure. During the interim maintainer period, Patrick sent a
-> > couple of rounds of ps/build with a final patch to the effect of
-> > "unbreak everything in seen", which could be dropped.
-> >
-> > But I think an easier thing to do would have been for myself to indicate
-> > that you'd run into a non-trivial conflict here and provide the
-> > resolution proactively.
->
-> A trick used by recent series from Patrick say things like "this is
-> based on X, with Y and Z merged".  This patch could have done the
-> same way.  It of course makes two topics entangled and one takes the
-> other hostage, so we need to carefully judge if such a dependency is
-> worth it.  So far, I found Patrick's judgement on the choice of
-> dependencies quite solid (essentially, Y and Z must be cooked enough
-> at least for 'next', and can reasonably be expected to graduate while
-> we iterate on the new topic that is being built).
+On 2024-12-18 at 20:42:31, M Hickford wrote:
+> Hi. Is this a bug in git version 2.47.1? Or am I using it incorrectly?
+>=20
+> # erase existing example.com credentials
+> printf "host=3Dexample.com\nprotocol=3Dhttps\n" | git -c credential.helpe=
+r=3D -c credential.helper=3Dcache credential reject
+> # store bearer token with expiry in far future in credential-cache
+> printf "host=3Dexample.com\nprotocol=3Dhttps\nauthtype=3Dbearer\ncredenti=
+al=3Dletmein\npassword_expiry_utc=3D2147483640\n"
+> | git credential-cache store
+> # try to retrieve credential
+> printf "host=3Dexample.com\nprotocol=3Dhttps\n" | git -c credential.helpe=
+r=3D -c credential.helper=3Dcache credential fill
+>=20
+> Expected output (complete credential):
+>=20
+> protocol=3Dhttps
+> host=3Dexample.com
+> authtype=3Dbearer
+> credential=3Dletmein
+> password_expiry_utc=3D2147483640
+>=20
+> Actual output (incomplete credential, no prompt for username or password):
+>=20
+> protocol=3Dhttps
+> host=3Dexample.com
+> password_expiry_utc=3D2147483640
 
-I typically try and do the same, but I didn't want to base this topic on
-top of tb/incremental-midx-part-2, since that topic isn't mature enough
-and I didn't want to hold this one hostage as a result.
+This is expected.  Every request to a credential helper should include
+all of the capabilities that the caller supports on input, and the
+credential helper will always emit those on output.  `git credential`,
+however, will only emit the capabilities that were actually supported,
+so that general callers (including Git LFS) can determine the actual
+set of supported capabilities.
 
-I forgot that the other topic was still being held in 'seen'; I should
-have remembered and mentioned the conflict in the patch earlier. Sorry
-again for the trouble :-<.
+In this case, you asked the cache helper for a credential, but didn't
+tell it that you supported `authtype` and `credential`.  Therefore, the
+only safe thing it can assume is that you are incapable of parsing and
+understanding those fields, so it doesn't emit them.  This is a benefit
+for security, because some tooling logs all fields but the `password`
+field, and we don't want to include new secret fields that the caller is
+going to shovel into a file or syslog.
 
-Thanks,
-Taylor
+In addition, the helper could actually store two different sets of
+credentials, one which is a username and password, and one which is an
+authtype and credential.  If you provided the capability, the latter
+would be omitted, but otherwise the former would.  That can be helpful
+if you have a stronger credential type but might occasionally need to
+use older software (say, older versions of Git or Git LFS).
+
+However, if you provide the proper capability, this works as you expect:
+
+----
+% printf "host=3Dexample.com\nprotocol=3Dhttps\n" | git -c credential.helpe=
+r=3D -c credential.helper=3Dcache credential reject
+% printf "capability[]=3Dauthtype\nhost=3Dexample.com\nprotocol=3Dhttps\nau=
+thtype=3Dbearer\ncredential=3Dletmein\npassword_expiry_utc=3D2147483640\n" =
+| git credential-cache store
+% printf "capability[]=3Dauthtype\nhost=3Dexample.com\nprotocol=3Dhttps\n" =
+| git -c credential.helper=3D -c credential.helper=3Dcache credential fill
+capability[]=3Dauthtype
+authtype=3Dbearer
+credential=3Dletmein
+protocol=3Dhttps
+host=3Dexample.com
+password_expiry_utc=3D2147483640
+----
+
+Note that `capability[]` directives should always start the request to
+allow one-pass parsing.
+
+Hopefully this is helpful.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--KaJZZQjVbQvcm09e
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ2N+rAAKCRB8DEliiIei
+gfqOAQCqgt+ChXOgsBypKU5AwJWlO7XOxJdMBmz9Dahd8TJmaQD+NB8ZJYY9ADJE
+nEvVZJLLN8JAwt4G8suWJnyXRUJI0Qk=
+=1y0I
+-----END PGP SIGNATURE-----
+
+--KaJZZQjVbQvcm09e--
