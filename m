@@ -1,109 +1,75 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24DF7082F
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 02:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705D886336
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 03:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734574766; cv=none; b=CRHvWzbYb1Dwth0L/Q43yKUK/vlptF3bQ1tIEKX42EQJBRcEd9Qvl1NzkQG2R9/XZqVxgwQUYAuMu0yl+8fhq+lZtMTEYhKs2uoq4FBClRYE/m0ENWdYdECHP2cTVUn8ZEzUQSvaiHGXDW1NatiLkl0z/Fl0AqbiS2dhRkDB7Yc=
+	t=1734580111; cv=none; b=U67p6807vUQcTgL3kl4b7HNFkwB3Xanms64z0TZog3o0SFChYArE2rSCtPpcQnSgYpwLUNFZwUyuje+LXsqOAQxCA7e7ik1CjEuUjFsTh6WrGpkfOE21aRttwKTQvjuE7fzAeq7j9HJ590XiEk3E6GdNYdecNNg+8uYl4wJn2Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734574766; c=relaxed/simple;
-	bh=tYPwpJzFI+T9DlfyCA75osa1BEA1j8oh4T04bPsIk7M=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=tSYMmxsn9FWBzfzX8luRGMgcMwKiytzjLjziDL09uoYf4Xudpjl4e7QSslyx2WNS9eowg9qW/Hnw14XPaHlKT1iMhnJNkGxuobn+EKAxGp3TXOBg/pm9hQF8yvO2z6TZwKOqkC/o9sJtd+EhS1bul9yJedeApPwmC0Nj9bNh100=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kdqIXTZ5; arc=none smtp.client-ip=209.85.216.42
+	s=arc-20240116; t=1734580111; c=relaxed/simple;
+	bh=20cXpV3lYIYvuLHAE7dseH99yzgtU9+YP9+69rvAG98=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HR83XXe2hzT5j77zO9pe4PBemNtHgUtT4DQaebDHETy5U+Gm/WOtJWnyHJ6Yw73O28hvyHnjyMs4oK5JG3RtBuV5/gj8xLmdpEIUZuH8Hn1jF4ZT8M/+HYmf6tyR/4nCjchxYqU0y/72UWdOoiB8YmPgdP5lQZLzBrLL9XTMK+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EiWH+8oy; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kdqIXTZ5"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2ef89dbd8eeso193867a91.0
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 18:19:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EiWH+8oy"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5d414b8af7bso596472a12.0
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 19:48:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734574764; x=1735179564; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xXegRzjRGQh0lOdVflLaA3K/+aMfcxthIg2FGS9ee5c=;
-        b=kdqIXTZ5SE5SJfNk2ZY8Q6A4Bl9WZ2jGC38U0wmQ9LBfK13vaiwC2mtLqhGWXlcvHL
-         s42taUVC+BFcXV+WPweyfxXChZQlh7003HwiYv4qHv9w3rxw5QZktZz+wJIDQuT8pDi8
-         1E7Bxji6yM4xXZ2SzGoDS0R/yDZvdJFsaPSFj2xYXUrPSNYlXLG1TNqd/FSlfgayTs/8
-         1rqru72iheShaxvf/JXCO0gvHrFaQxF6uy/EFeqilkTx5oZxNTCKUj81DfrVNmbt8s7I
-         2y5/8IXFfpU3xM1Tvs97pUDejCJweUjJyYyw1NEJSL2CjSSlL7LMDrONS4g1OlJ0wYK8
-         jCmA==
+        d=gmail.com; s=20230601; t=1734580108; x=1735184908; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=20cXpV3lYIYvuLHAE7dseH99yzgtU9+YP9+69rvAG98=;
+        b=EiWH+8oyWudEUZ3ng9R9rmcnvekub2R4zArKvajKeaJrEsxqStfNFNxUZ8neen6+zg
+         jlYWu4fwkWZVAfq9sDWu/E6QGgtmyZsHUBQiZSu/A1NmjE+XpCrV41mA9JEYkP0QUGef
+         ZnLN7dm0EU5OxUQgD80dpWct53xEQssB5ZssMwuZ5QZIVS1RhANU9KT2Yjs66zjJsUF8
+         UALgyGVVMyS0RAbKj5bcJdVv3/ZToGhQGXIGML4Udcp4fIXaBqX7xsrqitl1pxZZJi07
+         jzGUuklWYflQLoUZ9TvOd0cfCtKeitO+Yp1zSfcZ0qUhAuVrQVU6amPF8dzRWNLyj8nF
+         hyUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734574764; x=1735179564;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xXegRzjRGQh0lOdVflLaA3K/+aMfcxthIg2FGS9ee5c=;
-        b=jph9YO/VcIX6Nt4LlK8eNGak5H4CcYNyl7c759efn/233wNlLCFZAvui6kOmK6+CFI
-         RPfo8NUM52ax6+vzIv4g1ElCfscNQfgUSpSSym3xLcRPBz8+AfCnfOfP8QqWSj9uu+B2
-         56wbBXWWn0yUtCv5pX5E9Dg7EngmrWk9qKCQFb1LXZgkq2XgrGyVlJjIMiL5yKZftVQO
-         1QAlYqc8i6FddbHGlZK1tY/dqqsW8JGAh8Yd+0eEKgMKV6/XxlIu/8HthturLODSZmZQ
-         SlDd6t2iIo1bPKkPP/ujbLadL/CDb3VfhYr2fTZWL7BaLaRh7Di0lXd5GK3ZGYFjc9uS
-         7LjA==
-X-Gm-Message-State: AOJu0YzaCfNnPRhIDp7btflwvLdL5SJcCvr4bRK7Jbx2TK+p4djOKzkt
-	gmTzQl10VR/+ygkqD/y4IgAmwIzOa9SSBT7yqeVyVo9vcDgs4LRHn91rAYykxY4HHZ5PIloJKa2
-	qRE528HDP4hhv/BJ9Mh1cyeaqgvrR2Rxi
-X-Gm-Gg: ASbGncv+waC/ukHIRsNzBaea+vTO14CskRXRJyjQvMvNv5zuxqL/eqs0oLs8x9+73qR
-	fBw5yFeMyvnjp0sIaoa6DakYBR9qRMuFY87Poxg==
-X-Google-Smtp-Source: AGHT+IGr0maWzjbnt6wWN5OkxVRiVIndByBWdtg9cYqX3uM5yHkHqVPT/elQ1FXMrZ6NZDii/ui8n/E/Qc4QSYpFK4E=
-X-Received: by 2002:a17:90b:2742:b0:2ea:3f34:f18f with SMTP id
- 98e67ed59e1d1-2f2e9302d14mr7165459a91.19.1734574763675; Wed, 18 Dec 2024
- 18:19:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734580108; x=1735184908;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=20cXpV3lYIYvuLHAE7dseH99yzgtU9+YP9+69rvAG98=;
+        b=vNBuaWrmkK/1obBYFIJrH5V3vsk04dthypgRrFrGaDPzN0V/ZjOHI6kg5B2PFVtoXo
+         uC3HZhTBLz9cHx+aUCc4eCOW3FHGAA5+FnOhww5Rt8i8ukybNN5YJCJA+cbGPW4DIHsI
+         3/HHBEyWqHdtDkcOVnIA2SE0C9gHr1UvmXcMAR8gRE9JiGEbTQ2Q0sAAkN9GdJhkJvNc
+         +mvIugIHWGWunatCzQ1UeF+vArvWYP8NZJypm9rWVcp0zL1lVZkutMpgDqd2C51DSvlJ
+         2UD6nq/4XS39JZbiTNUvmfT1cGcHgmjVpzZ9IEcYaSXCDYcL4kEs7ShpRDay1vLn2FRI
+         wxLQ==
+X-Gm-Message-State: AOJu0YxciKfyxXNRgEbPwUwnSVXUFPjjTiguWeoXHWh3ZFeb0cHIGbTk
+	7ZyagoWK3sLxt/J31OSZYtAgep7DkX0RP8hnx92eRp84YN9t7Ohy3RtgJh/et9J18QQ4oFcq+2m
+	xq1LMCpRMAkFRCA7bGZhGWZCT/w==
+X-Gm-Gg: ASbGnctdoUqBeRWdZSix/7sxmnTZwARxPDFRGcn8A23PCROqXjo1LipWS83896qwEeQ
+	XDDhfb83nZVJ0GpNfnerOMURmEsL/niQ+/9cO
+X-Google-Smtp-Source: AGHT+IG3zJ9HjX8CubHfY82PZP1tvS/IjJ0/Z1OdheoLO0oSilAdaFHV/S+cVyXuClS0Dhsf5lUE1LB6msUOtjzjJRY=
+X-Received: by 2002:a05:6402:3895:b0:5d1:2440:9ad3 with SMTP id
+ 4fb4d7f45d1cf-5d7ee410be4mr4881105a12.30.1734580107686; Wed, 18 Dec 2024
+ 19:48:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Boomman <boomman37@gmail.com>
-Date: Wed, 18 Dec 2024 18:19:06 -0800
-Message-ID: <CADMKT2-vsUUi-23YGexvxbW9wj0Br+cQcv34eStnw-0EDRiKMw@mail.gmail.com>
-Subject: git gc does not clean tmp_pack* files
-To: git@vger.kernel.org
+References: <CAMhVC3b+1TWLkKGYVb6VyBRyQjsDpbKRQQNT8SUXSmrWHfPnEQ@mail.gmail.com>
+ <xmqqr0674hvq.fsf@gitster.g> <CAMhVC3byz89UP_DJq+c6UVUNoFW0oRRSwbR7v=uUBAdBMLwqMg@mail.gmail.com>
+In-Reply-To: <CAMhVC3byz89UP_DJq+c6UVUNoFW0oRRSwbR7v=uUBAdBMLwqMg@mail.gmail.com>
+From: Yuri Kanivetsky <yuri.kanivetsky@gmail.com>
+Date: Thu, 19 Dec 2024 05:48:15 +0200
+Message-ID: <CAMhVC3Zegt+GYXq5g04hLrzsUOqvX63OEPM+HB1syX-4cD2U4A@mail.gmail.com>
+Subject: Re: remote.<name>.push without dst doesn't behave as documented
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+I guess I need to add, that I hoped that the beginning would be taken
+as a joke. If it wasn't the case, then sorry :( I didn't mean to
+offend anyone.
 
-I'm currently hitting an issue trying to garbage collect a git repo in
-case of low disk space.
-After running "git gc" a bunch of times I tried to clean up more and
-more space on the disk not realizing that when "git gc" fails it just
-leaves the tmp_pack file there.
-
-D:\Platform>git gc
-...blah...
-fatal: sha1 file '.git/objects/pack/tmp_pack_FG1inp' write error. Out
-of diskspace
-fatal: failed to run repack
-
-D:\Platform>git gc
-...blah...
-fatal: sha1 file '.git/objects/pack/tmp_pack_IFvamY' write error. Out
-of diskspace
-fatal: failed to run repack
-
-D:\Platform>git gc
-...blah...
-fatal: sha1 file '.git/objects/pack/tmp_pack_khHCC9' write error. Out
-of diskspace
-fatal: failed to run repack
-
-D:\Platform>dir .git\objects\pack\tmp*
- Directory of D:\Platform\.git\objects\pack
-
-12/18/2024  05:33 PM     7,367,032,832 tmp_pack_FG1inp
-12/18/2024  05:35 PM     3,787,194,368 tmp_pack_IFvamY
-12/18/2024  05:39 PM     7,713,062,912 tmp_pack_khHCC9
-09/11/2024  11:33 AM     3,068,002,304 tmp_pack_XTVFUi
-               4 File(s) 21,935,292,416 bytes
-               0 Dir(s)         339,968 bytes free
-
-I believe that before trying to write *anything* to disk "git gc"
-should try to take exclusive handles on these and wipe them, ideally
-by default. The total size of these tmp* files is multiple times
-larger than the repo I'm trying to compact, so if the command just did
-this pre-cleaning I'd not have hit this problem once I cleaned enough
-disk space.
-
-Please let me know your thoughts on this.
-
--Vitaly
+Regards,
+Yuri
