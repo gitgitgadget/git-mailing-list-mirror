@@ -1,92 +1,83 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C357082B
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 10:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55D91CD15
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 11:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734604520; cv=none; b=uj/kPgiju7SmfhsTcVw+lqgnepMHTsNBYUKUURpkGjNP8Osel/n83/gpXSsNVp1GjkYJ0n8Pr3bumbNwSl8fJLkDf9ridCuhxSWLpBoeDMTE2s2MgE+XjmSAJVXwzAzNKn2o2BY/3AcIiiDyZrXekWOtebA8CAaJ8pP+h/82M04=
+	t=1734607027; cv=none; b=EIpZlE2scCN+Kks7rHicwdUIbbJxu8ZcR+qODfDh45nr/DnomfPaXqRl2FE55E/Z4928gCq9eAWbdb5Cb3E9mr6JqFHE3pXkW1PgxrXNs0m2xPbsE1FSmFt9toeLgJlXNZsEyXRao3sL2YiZSnSeBcCRyjPgc0rQgZuf8Hf+9io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734604520; c=relaxed/simple;
-	bh=WjLwpNmNWeVFzwKsah0nWdqC/3DMR2GaZ610KIWpW64=;
+	s=arc-20240116; t=1734607027; c=relaxed/simple;
+	bh=Bv6FWf/BOz79quhETW98vvcvP/nIw8WPHQImOZYn3Aw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KnHkJYst+TU+XKpY/xB4FS0i0vLcHxPnPVfaLitc000ehlLp3UsxHgJ0fLASaxvWP0tIjNx/PBKxZLacb9HDP+1g/QVFdLy5s+uXE2lEZqk/Hh9414K/WC7jtUS5/ZTeVjh07N2nBsFMIws14QOeOww5RLVyC6i14Wt+U+6ZVdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N3I1QgKF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C2wiQMkQ; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=t57WVkC0dUVBpvvuerAqWC05D+6s0RMifpBab7Scz8rLjJ+mV9kJH2YPb9t3xJUYxVR0GJtHiR0TOV05XEgqBqXYFSdg9anmwLwCj8sV1UIlydTFqBp6ptGS13cIziLR0CZZCMHTfa6G6iK6/Pm9DI1mr9EEDoYm4ulFgl8wQ/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L5V1shqg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iSqKi8lF; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N3I1QgKF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C2wiQMkQ"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2A25D114015C;
-	Thu, 19 Dec 2024 05:35:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 19 Dec 2024 05:35:16 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L5V1shqg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iSqKi8lF"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CF3FE1140146;
+	Thu, 19 Dec 2024 06:17:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Thu, 19 Dec 2024 06:17:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734604516; x=1734690916; bh=OKuSPfFA3j
-	37JsXhQVHEchxM8THq1tzCzjLb0+ptZkg=; b=N3I1QgKF6lIuurodrE6VaCX5WW
-	skA+VmYUKsxN20Pz2DY6j6BSfbdaTSlv5NhCbGUcU2/CK7tAaVtJu2QhCybLbAiP
-	KEOAV2nzUxwFwShJzpy5Z58wXg2APu73QGnhV0zI8aZaOKdMS9U4M4Q25J5+wi35
-	6zmMm634tFi4ocjydH80m8kxP8qrV/QbcbGqhg5Se0nfxp0BY4lCoY8R7mfJMUdu
-	pc7vdggBcIDth51PGrfhMITm50Fj0ExDOq7e6EsY8u1HAjq6OYRxR18L47dxqqY1
-	5fhtZJnockeDE1Bh9BNIDGRP5c/W4Du5rqV2uPHyO+kHOz2gxsmdbsC84hpw==
+	:subject:to:to; s=fm3; t=1734607023; x=1734693423; bh=VPR2+Std7B
+	Xdym8clB25C0zbL2RehVerKERuj6L4YtU=; b=L5V1shqgHCCpfeR4Q9/ETOPExR
+	E92dOBaSakRYJQs4ZgiJJnm/AhA5QY1hZcn70ZZ+q9+v44TP5HMvMc8O2nUbs3GM
+	eHKsFY1ZCoyk+DYSaBDjlGlF41zzcij0aq+hlm/1j6qRn0N4jfby4ipDrup/+p51
+	g1XNRvtMcEULT5XYOimSxJ4wv+AxLbwKcwPecjb+LBfqYhFYeeftbYAx4cYQQ6wU
+	YB9K7WJ03rnqElnPR9GsmWcQzv9BsmzER3L/1FclD1FFzSV/EaQq8TeKevnz2HGl
+	w6+pELjy3JBwjQNto0vqxMl6tjjFsVV6cAWyJS8retGpnRosLbDRnvfNjbBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734604516; x=1734690916; bh=OKuSPfFA3j37JsXhQVHEchxM8THq1tzCzjL
-	b0+ptZkg=; b=C2wiQMkQrfK8Jp9Y7aC9a9S+k55j9WpYVgFqGR6hOlhPkDhZcRd
-	xUPo0MwcXMk8eyJxISGqxiuF3VTuT1UOBe5HPWT1Z1+xRhXsRIly7elpZgO6WDSP
-	iOBEvbdYXAMBvgdGJAVDXK21jCQNp5e2FcS6LSm5mkgPZkYefdLXL7sRDsDS2oD3
-	/g4mhB3l6P/ulsqZ1CPk+qsx1KAW1KsEhkj8L3+9udWP0F/LycHXSHSpROsyJxBm
-	uIdvnHYZUS+0y+sg0LRtEnp1xbFZOxqgwxIBDojHTD3fVoxnH/2qtzKi4FaKsZ7m
-	KQM0uw+GCCceVOViOZfKScHAQwsYeoQTrIw==
-X-ME-Sender: <xms:4_ZjZ9ByeftHop4fCnQWRq4dig7bcI7UOlXC8LOvlivI4zi9jD0udQ>
-    <xme:4_ZjZ7jekq-tbZ8qPgQscvhOPiq-r9jfQUuH01qtk8rfSPgjbcfDch2nkScIIQWt7
-    N81Re-FMdKlCXNwBg>
-X-ME-Received: <xmr:4_ZjZ4l8oo6ug463Uoa-cwXxL5wOU6XoRPYn1B9ERu_Ipq10wBlfOanW9aCX6f7xGttIw76h_lwWO8bZBGv4eBy1tlzi2MsFzg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgudeiucetufdoteggodetrfdotf
+	1734607023; x=1734693423; bh=VPR2+Std7BXdym8clB25C0zbL2RehVerKER
+	uj6L4YtU=; b=iSqKi8lFlDwDIScZ3N3ODavUk3DA4nTHwjaVUJBRgMaNH3NzWja
+	2ZFBPSPVwUPfrxC7+0oC6YH4UkT1+mAlo5CBEfpdRzdOiX73T8bS1h0z3BWUygTL
+	QWQ43YNyzvbAw/RaxmVIZyP3RpuF9aXPndXkN0Apax2Y8JlcXjLsFQC5PMQVngd8
+	rX4GuwZ6woiYZ+2Jia8iJ4ty4qK7mCFJiA8FIcggR7FTYysFx1znTVCyWWtGzDKs
+	EHxn+Okh8/3Hs2eJe1ML1ghiGnbY7WELv9QoPBRcGxXV9veDQ1XNz83xlzKeqmXg
+	d8KzetJzOAVNeUjp7pyMJLKP7lKTARuoE+g==
+X-ME-Sender: <xms:rwBkZ0ROQ6ykObAFzMvRAk4-jCLTBAEDoaJSBB5tMeM1V4_ftqgeyw>
+    <xme:rwBkZxyHnzdGzzBzBho8RQtW0RrvCQfqANsbMGTgbgxEcv_fttS5dT7KXcLxOkSa0
+    kj5vPCrL1B6k2a0iQ>
+X-ME-Received: <xmr:rwBkZx0HgM9dVDMxxoZx2dz73uS3sWzh1SQ0he9x5uqglHXP2FKusPgaK-R8YYwSKy8X1AbgIOZ3AOhMehpfUdsDwLbcsKcnGQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgvdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegushhimhhitgesmhgrnhhjrghrohdrohhrghdprhgtph
-    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplhdrshdrrhesfigvsgdr
-    uggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgfhhunhhnihdvfeegsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ughorhgvmhihlhhovhgvrhduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:4_ZjZ3yIQZieaxoYS3pdIx7IBcnSy4AOr0roI4tfUIeFsCMeZjK1Tg>
-    <xmx:4_ZjZyRJGkvjzoZLvExdMi2nUeYRihrIwsIFRRvUC9gRSU2Opj4zsw>
-    <xmx:4_ZjZ6YY_r2hqZ6ADZm_TzC5lIvhuhGekLoC6vGyp9b6f_Q7RGO0vQ>
-    <xmx:4_ZjZzQ0-06bxr1OODEiEsYGdyvUg00k7XCfSiwjSWh3aT4AVNUq6w>
-    <xmx:5PZjZz_A-aB76-anr8A5GxjlpZmGElUJU3j8kvr13n5bgxaHH5hymmHj>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
+    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopegsohhomhhmrghnfeejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:rwBkZ4CBhllYnW0tc9fw5u6CkTx-UF2ZH9BxLGDGj9BFCYEWjPSqpg>
+    <xmx:rwBkZ9jn4ZSDa20YRnfW-RIxtwOxfsgY_RtTO3V7Dq9KzLT5dVdi2w>
+    <xmx:rwBkZ0pjguZogRIdEyxtspaVFayzStIrcrj6s4tpLckpxi8ImC1BGw>
+    <xmx:rwBkZwhUjnFvo2M290q08_m9tfvdoZaShDMJOIpSuDWEMGaCwqzEvw>
+    <xmx:rwBkZ9dbo3tv01drw_oOGkZ3IEWK-iuHKf2TFGEB1tcguMn-kULzddwi>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Dec 2024 05:35:15 -0500 (EST)
+ 19 Dec 2024 06:17:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "AreaZR via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Dragan Simic <dsimic@manjaro.org>,  Jeff King
- <peff@peff.net>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Phillip
- Wood
- <phillip.wood123@gmail.com>,  AreaZR <gfunni234@gmail.com>,  Seija Kijin
- <doremylover123@gmail.com>
-Subject: Re: [PATCH v6] git: use logical-not operator to toggle between 0 and 1
-In-Reply-To: <pull.1620.v6.git.git.1734541037465.gitgitgadget@gmail.com>
-	(AreaZR via GitGitGadget's message of "Wed, 18 Dec 2024 16:57:17
-	+0000")
-References: <pull.1620.v5.git.git.1734540395021.gitgitgadget@gmail.com>
-	<pull.1620.v6.git.git.1734541037465.gitgitgadget@gmail.com>
-Date: Thu, 19 Dec 2024 02:35:13 -0800
-Message-ID: <xmqqttb0m04e.fsf@gitster.g>
+To: Boomman <boomman37@gmail.com>
+Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
+Subject: Re: git gc does not clean tmp_pack* files
+In-Reply-To: <CADMKT28cZcdW8UJ59vZHoMa0WEbyAccx4A10-jk3MiBkhZLxEg@mail.gmail.com>
+	(Boomman's message of "Thu, 19 Dec 2024 00:26:15 -0800")
+References: <CADMKT2-vsUUi-23YGexvxbW9wj0Br+cQcv34eStnw-0EDRiKMw@mail.gmail.com>
+	<20241219054222.GA2310556@coredump.intra.peff.net>
+	<CADMKT28cZcdW8UJ59vZHoMa0WEbyAccx4A10-jk3MiBkhZLxEg@mail.gmail.com>
+Date: Thu, 19 Dec 2024 03:17:01 -0800
+Message-ID: <xmqqmsgrncr6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,25 +87,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"AreaZR via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Boomman <boomman37@gmail.com> writes:
 
-> From: Seija Kijin <doremylover123@gmail.com>
->
-> If it is known that an int is either 1 or 0,
+> Yes, if the behavior in case of running out of disk space is to just
+> leave the malformed file there, it stands to reason that cleaning up
+> those malformed files should be the first operation to do for gc.
 
-This justification needs to be updated.
+It is misleading to call them malformed, isn't it?  When a Git
+process creates a packfile (or loose object file for that matter),
+they are written under these tmp_* names.  When the processes die
+without finalizing these (either removing or renaming into their
+final names), they are left behind, and it would be better if we can
+remove it _before_ another process wants to consume more disk space.
 
-The point of using flip = !flip pattern is not that you do not
-assume "1 or 0", but follow "zero or non-zero", which is more
-idiomatic in C.
+But the issue is how you tell which one of these "malformed" files
+are still being written and will be finalized, and which ones are
+leftover ones.  You want to remove the latter without molesting the
+former.  And you want to do so in a portable way, possibly even
+across the network file systems.
 
-Other than that, 
-
->       -				flipped_block = (flipped_block + 1) % 2;
->      -+				flipped_block ^= 1;
->      ++				flipped_block = !flipped_block;
-
-it indeed is a good change to avoid modulo-2 like this.
-
-Thanks.
-
+I guess, as Peff alluded to, we could do at the beginning of "gc" to
+prune only these "possibly in progress, possibly leftover" files
+that are too old, repack the clearly "finalized" ones, and then
+prune again, this time including the "finalized" ones that are no
+longer in use, which would help the creation of new packfiles from
+being blocked by these leftover files that are hoarding disk quota.
