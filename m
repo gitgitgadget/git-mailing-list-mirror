@@ -1,158 +1,143 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19D039FCE
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 13:20:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB25D41C79
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 14:47:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734614458; cv=none; b=JibWmJqW00YIWkYE5d28dAuqczy3WGagE7D+EVVddPWJcc+ouVVH8Am1WMlDSZRIWPQcP4NLQ323yXSvBlp1bLjENjPFT2NaVkDsOwW6Vnx4fbwHKaXv3Nt/THPKQTrNVZN4w/18XqLFMuUF4YZNBG7n6pMkadGmmGvSCuKdunU=
+	t=1734619623; cv=none; b=CeGZ+IFU9dey938MTPE8tF8RyTvVFip3XQt800tg628wYDWv/u9H4CfsTxWR9WEV0MfmHtQfcwCNjsFuOlJTiacrDPlhkqW3u5DRVUQ+/Yb2wu96LLInAHp4UdOLoaIwhnrinSjw5kzPuVSPxdHTFE76X4KErcF2WzAKtvNxejQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734614458; c=relaxed/simple;
-	bh=O0UQD93XZdM+rHPEY1Waab03I4yXqjIg+jkyty1syOU=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=kVwiJCGvW1zN4teXphBr4PVtE2R4HUCgJLGEafOqBnTeK7n8HiZoFrRwmO9ij+hlAdOGNhxKlzl5XesvAbQb22PaGWlSYEJyyTXMDSUv3Krsw/3h0vnIgOB+ViyPVOfumbglsx/dD37Nl51X4/61URSnkd/yQOmeqS2vRqK9i6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=KmDPj7Ox; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1734619623; c=relaxed/simple;
+	bh=jF1xgaZDvQcVTtr0gFCmQ/8g+P/IAdhec/Fo9hVJaNc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X3yByWXGcW+WBq1EmZJ86qlvr3IzmsaOi0Tb9fP2Oxn1fcaJ0VDZfKxggC56A3JTp/4VPTlJniHrL105qXhZ7lLHjGYkCcaJDDB/urbo5TV5h3Pcm1ZuMWlmMfXACw+n0QZuwjSFm+QShWpAvo5bw/rphYQ1NPxiuBWCN+r5Wis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YmHJfQgf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lIZo/Gv3; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="KmDPj7Ox"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1734614450; x=1735219250;
-	i=johannes.schindelin@gmx.de;
-	bh=O0UQD93XZdM+rHPEY1Waab03I4yXqjIg+jkyty1syOU=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=KmDPj7Ox1TiuNi1upk6tkC4KWYTts06jRjTWJF7lckKHoFP9LlHolCRnxi9iwWpd
-	 g/ZSt8dn4V09fbzJRGfcJWWlBSwyL9Ry6yUOPlfPWec8xnt9BbzjeAWHJEwfyuG69
-	 32C7TmMp5KeE4d8HFKiwN060C04BqDtaoVd9YLoqIQpujcffMG+HodJnldwi+/rIc
-	 epICDw/ltMMnSQZpywlk5JDn5JCgAtlcc28x+bRvzPgJDLb8x/CjKa8SMPFDIVbWP
-	 JihXmtcjVhyRkX/OcKL19ku4nEB0n7VR4hucFfFYa13ZZldjojAqdddxO4f+Mjgrt
-	 gXXVdk1RxkUmUE75mA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.212.216]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MSKuA-1t0A1a2tq4-00TUep; Thu, 19
- Dec 2024 14:20:50 +0100
-Date: Thu, 19 Dec 2024 14:20:50 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Junio C Hamano <gitster@pobox.com>, 
-    Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH] GitHub ci(windows): speed up initializing Git for Windows'
- minimal SDK again
-In-Reply-To: <Z2JkBv87zXik5QJa@pks.im>
-Message-ID: <0176d617-182c-45c4-3f2b-e0d433901c40@gmx.de>
-References: <pull.1841.git.1734447458896.gitgitgadget@gmail.com> <xmqqldweyrqx.fsf@gitster.g> <Z2JkBv87zXik5QJa@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YmHJfQgf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lIZo/Gv3"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AA1A7254012F;
+	Thu, 19 Dec 2024 09:46:59 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 19 Dec 2024 09:46:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734619619; x=1734706019; bh=CtlD3l+4Yh
+	EgXMV7Lv/UnZbIzMuvtifirntSWfA5VcM=; b=YmHJfQgfoPI99zpYMMRr6Wpbkz
+	LEC5uvxMhZTycAWOtSGBdJtrJPqrMQt8AsipgAO8tBuxT0f9xrXaPQU8yr14JIe6
+	I/qKWD9dXfRDk3PjBLgRDFFbzNCylFYuOtomTsP5mia3rWxpucFQYwwy9EFRdwzv
+	47lsObjQtoiXMPKS2rv5nYb6hFghSS4XqRzLQeqK/yACVeezjIjWTTHrr/fKKqto
+	hFuzU5pXiAAZqYhQiSA2pBdbyBAZq/qzZ8CzvyBbB0NpN2F/c83mB9qX+AGQ+Xxd
+	gNSjqz42sCUSq2z42h7SCQpzjSmmeKFzwvoMK42AdwjPDq9HRpJxRxiKaEew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734619619; x=1734706019; bh=CtlD3l+4YhEgXMV7Lv/UnZbIzMuvtifirnt
+	SWfA5VcM=; b=lIZo/Gv3zSm7K2gp8KkwSEKaxJ0K2JDg5L7SeQ/KBekP26ZYtp1
+	cIjSxZNKjo2JS6FRlPmKnso16+/YA9U96AknGzeuORi17WlYFBT72rNueBtnA2gp
+	qkq02DqdPYUwt8U4zd+q2psIg6wheUaer/W+k1qI+kqkllQVnuTkTx9IYGyU022g
+	4qOVt335ytglMLWT3/rUWTEaHCQ1vgWRuXrqXFtwms6pUWwavcjd09Dg+UAitq30
+	SqM25DAnILREyJApBt9aIaDYKEXfQ0TX1411ZdYIfkxGUnj17LSOxzaPMkwgP6Oj
+	p+TioN7n76EDrO4f0nNb5TY8MAKEph4Zacg==
+X-ME-Sender: <xms:4zFkZ5kXoW2p9pZfDQb5U_R0a-6Q6tkfRfG4gGg_NZ7PoBMqpr-nXA>
+    <xme:4zFkZ02ezB_pU-30LX5MFafaoxu8g-jzArrgR_5HfLymSZMiYnWy2pNlW2C2ufDlI
+    k3VxXRM0X_wR5bbIg>
+X-ME-Received: <xmr:4zFkZ_rstAy1b4-HH5hJJD4WSJ9RqEQ_uUx9cP2e5Le_ht-Ca_4kvpVnNidcaIPUopZPmMKrYH22hlegmsLKGo8cbHojTc_lWQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrghgrshguohhtmh
+    gvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtqdhluddtnhesghhoohhglhgvghhrohhuphhsrdgtoh
+    hmpdhrtghpthhtohepfihorhhlughhvghllhhordhnvghtsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:4zFkZ5nuTH1GEzcxo1cNeVxPIoZL2JtZxdxnLNg3eAuqFxx8x10TZA>
+    <xmx:4zFkZ33RbleysP_GvXTf2-vp2QbBTOf0Cp00yZHegSAt0jVCH0ucJQ>
+    <xmx:4zFkZ4sciNCrcl_0ZtJS-Y1DXO7BScw6_Gqwj6A9kURiCe3KLKDh3w>
+    <xmx:4zFkZ7WaWmBVv1TpG9CykugEU_Z5-I4mXV-7tQp5yykC68SmJYgwyQ>
+    <xmx:4zFkZ39spSAVOtQ7C0F9mr-K37R43lNKeth129KOlvl9O5EUQ7xCAW-o>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Dec 2024 09:46:58 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,  Git l10n discussion group
+ <git-l10n@googlegroups.com>,  Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: OK to submit l10n PR with signed commits?
+In-Reply-To: <xmqqh670nrb9.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	18 Dec 2024 22:02:34 -0800")
+References: <Z2KfIl87JOWdcGR3@archie.me> <xmqqzfktujuk.fsf@gitster.g>
+	<Z2OAebI4pQ2K57vA@archie.me> <xmqqh670nrb9.fsf@gitster.g>
+Date: Thu, 19 Dec 2024 06:46:56 -0800
+Message-ID: <xmqqzfkrlogv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:V3pqo8X3uKrlL0ALQn0yAo2qmvv/Z1/6PkbXcC+ZB/4TTa9ghLQ
- oGNv39z1RBFSFNpazBucIdGiuR1fy5Ksb74rrA/U8OUuLU0QjYjJltlzgz92xwPdo0eNTAK
- c0tMpNAYl1qnNTiMKXP/Z3bh0VT4m8RWl/atKuQPn/6MHW4AnT32ReAFuA9Tqf7GqUzOE/M
- kso6DhfbX7F0kWVR5MiXA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:grTkCsaXuSs=;Y+bwLN7jrfKuuPwelRd++xkP21I
- CQnC7UX2hmfPXxZCQE4NrykzN+l99aT90Q0cgvljsQKSEty298H9F8z6xqtZflGwAvSJhlYsa
- exSAfLQ+0kXfDNpPNH57erjAWpchStUhqIGXZJOdFfLJ7QAca0CblNqCy9MBw53NJz8qaolM3
- FzFE+zdESqaTyw6uLgi0DGSEVVPXv/7BqIkacxNczeNJ7dQIj3Kbm2RjCnfncOoVjo7pWDTxy
- mAIi0VV4uHTm36u9gEc4BH2xYWBZVenIO2x+wJ8JniuaoxVdf4DwClnXC0UaAL0ZOhoiki2lp
- n1oGhpQbR1ewMFBmHJq1RKEj+HqF0MqyIyJ/fUvDC3HkpwuH0uL1r7MfqXExDzJHGxEM57Mrn
- zlKMUU9DYDriBHQZqXKeKurTIwB5xqw2L31wM1RmRjJeUgjdg9BuDIIV1b7n2d9iL742sIbQ+
- CyL4GM18GffU5Coy9tOfh4xo3/0ni2GiSI5bf776xAemAAqrFQNzwpca5MQSFq4x0smteriqw
- f5Nyywcd/gtRPOzY3cRAP/AGmn8CZvJN3a9bwzE3D9KwUAMagEoPSCatBzgCcMnubPXR9yRIj
- imZOZJzNfCEPAbugjPLiKAKJ5yzmnooBIv47EKQFunvQZRUnOr5Prgfokbs+10rBy8O84UUhr
- 0WAT/OFjADtG+MCvCA8Igd71TEsESgGYi5MJCOetj1t9nn7EP/kLXNFRWOpuuDnp2I881JUyj
- znTzPC27db42PvLbH1eVemOUaC6FlHLw72+Cxio62ZumSphW6v9CIPIbA2W0puyz14nS/T0PP
- 4e0AzABmEi6z4uwZifTJmouXpfj0kn3uOLFKczbuwTJJJN/XNMGrITTyiK4s1FTsuOvGUKSu5
- 53oNxmcNv+nUF6F6+hDpA9W55//hz+UNoFjkXUYS1wiCZM7Kzp9bGVLg1oueRBBldjiuWO9Ps
- KuCWItc3rRcU1dP3wWPfO40VZKEKkYsRlLaAPSLXbd66sCgCWqwFzRxTbRGVtix5CGCx8E48S
- XzUlRlJg9aHAietP4BhRatPewSio2IJoOLyJw5XrZVaJEuQRDq1gF+iTze10k52uXJbs0C0KT
- MKsj52zR9eBkyvTD9D1klIpLdV/7Ma+p3SjPJxW8XjVh3LJ1AusWGInxAfVzjbP8XKS+zdKsE
- =
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Patrick,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, 18 Dec 2024, Patrick Steinhardt wrote:
-
-> On Tue, Dec 17, 2024 at 12:33:10PM -0800, Junio C Hamano wrote:
-> > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> > writes:
-> >
-> > > This commit partially reverts 91839a88277 (ci: create script to set =
-up
-> > > Git for Windows SDK, 2024-10-09).
-> >
-> > Thanks, will queue.
+>>> Instead of talking first about drawbacks, we should consider the
+>>> upsides.  Why would we even want to see your GPG signature, when
+>>> most of us do not even have your GPG public key in our keychains?
+>>> 
+>>> What are we trying to achieve by doing this?
+>>
+>> Just to ensure that PR commits are really from the respective authors.
 >
-> Okay. Too bad that things regressed this badly with the change. I agree
-> that reverting is the right thing to do for now. I may revisit this
-> again in the next release cycle to investigate whether we can get it up
-> to par with the GitHub Actions.
+> Yeah, but my point was that it would not ensure, because practically
+> nobody has ways to validate the signature was created with your
+> private key, and public keyservers have been tainted long time ago
+> with fake keys with the same fingerprint, so would not work as a
+> good way to obtain your public key and be sure it is yours.
 
-The way I implemented it should be eminently possible in PowerShell, too.
+I think I should rethink this.
 
-Something like `Start-Process`, launching not an `Invoke-WebRequest` but
-instead `C:\Windows\system32\curl.exe` [*1*] to download the `.tar.gz`
-file (not the `.zip` file, more about that below). Another `Start-Process`
-should then be opened that executes `tar.exe` [*2*], and then the `stdout`
-of the former should be piped to the latter [*3*].
+Even though I think it is fair to say that more than 99% of people
+won't have your public key and even if somebody gave them saying
+"this is Bagas' key", they do not have a way to independently verify
+it is truly your key (and I think the same thing can be said of my
+key).  But in today's world, there are a few places that it does not
+matter all that much that you and I do not have each others' keys:
+hosting sites.
 
-I do think that it makes a lot of sense to start extracting as soon as the
-first byte arrives instead of storing the archive as a temporary file and
-extracting it only once it has arrived completely.
+I think both GitHub and GitLab lets you register your public key, so
+when they are about to show a commit (or a tag for that matter),
+they can
 
-Now, why not use the `.zip` file instead of the `.tar.gz` file? In my
-analysis [*4*], I pointed out that the `.zip` file is about 10MB smaller,
-after all, and BSD tar (at least the version in `C:\Windows\system32`) is
-able to handle those, too, right? Not so fast. In my experiments, when
-streaming the `.zip` file to the `tar.exe -xf -` process, the `etc/`
-and `.sparse/` directories were consistently dropped. A bug, I guess. I
-ran out of time to investigate this in more depth.
+ - notice it is signed;
+ - look up the author/tagger/committer ident of the Git object;
+ - look up the ident in their user database;
+ - find the key(s) of that user account; and
+ - verify the signature using the key(s).
 
-Since the artifacts are now hosted in a GitHub Release and updated
-regularly, and since those updates cannot be atomic (you can only upload a
-release asset if no asset of the same name exists already, read: the
-automation has to _delete_ that asset before uploading a new version), it
-would also be good to kind of expect that the file may be intermittently
-absent and add a back-off strategy [*5*].
+and display the user account that the Git object is signed by a key
+registered to it.
 
-> It would be great if the build infra was shared between our CIs, so I
-> think there's some value in it. But if the answer is "no" then I guess
-> that's ultimately fine, as well.
+Now there may be ways to contaminate hosting sites with fake keys
+that have the same fingerprints as the real ones registered to fake
+user accounts, and that may render such a feature at the hosting
+sites less useful.  I haven't thought through the security
+implications.
 
-It _could_ be done. But the advantages of having it versioned outside of
-the Git repository outweigh the benefits of that shared infrastructure, I
-believe.
+Of course, $CORP or other organizations can have their members
+register their public keys and do pretty much the same thing within
+their closed world.  Safeguarding the public key database is their
+problem so I won't be worried about, unlike hosting sites where
+practically anybody and their dogs can create accounts ;-).
 
-Ciao,
-Johannes
-
-Footnote *1*:
-https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/965/comm=
-its/6db65223de699c4f75ab083f82f43947a53ad6ff#diff-6855ef61b94227f9264adab3=
-ff9f2de95c2d7b4e451019cc0105896d32550eb0R58-R73
-
-Footnote *2*:
-https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/965/comm=
-its/6db65223de699c4f75ab083f82f43947a53ad6ff#diff-6855ef61b94227f9264adab3=
-ff9f2de95c2d7b4e451019cc0105896d32550eb0R77-R86
-
-Footnote *3*:
-https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/965/comm=
-its/6db65223de699c4f75ab083f82f43947a53ad6ff#diff-6855ef61b94227f9264adab3=
-ff9f2de95c2d7b4e451019cc0105896d32550eb0R88
-
-Footnote *4*:
-https://github.com/git-for-windows/git-sdk-64/pull/87/commits/fdb0cea37389=
-3ce7d40bcfcfbeb7fd091a3c4020
-
-Footnote *5*:
-https://github.com/git-for-windows/setup-git-for-windows-sdk/pull/965/comm=
-its/3d4ea07041d0740b21160a9d9a4181f569e706d8
+Thanks.
