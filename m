@@ -1,42 +1,88 @@
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614ED1A071C
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 19:33:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D69E1BEF72
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 20:26:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734636813; cv=none; b=eLH0Cs02lO1gfsRnrCXCJiBAcFqqpe1ifHGpsjQzsNbt3eQgB5f7J+tkqhytOeO0hCYy9CG34jr1B2dEewl5kKF/LjWw+C5FWymeAyF3yop/XzTxmFKQ7cmCAmbbS+tfxQdYi3jLw9Z4XO+kgfIwmLPNbq1OxJwPfl0W6jgiCpE=
+	t=1734639967; cv=none; b=hjWDAfE1PVUWSk0YG8qedbneQJbmXzct5F6GfJyuMiBcZ440DkZUh/G84nnPZx3I3CRFpv+tJO0bNuIVDO8sJxUBLv/7BB+RIfYkUUuDyMn0tTE5l3sHlHxGC0kvLcIcSggO3BzP20qFJK39V5uahsNc8Tkc9JTx8Jdn4ERds6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734636813; c=relaxed/simple;
-	bh=6VdKuUWCKf5wY7w9RyC1nIVVjsRgh5zGRx42gtSOKxA=;
+	s=arc-20240116; t=1734639967; c=relaxed/simple;
+	bh=quRjvYQklEfKwyAR4JLYcS3WeinISgiKg6RsYDrelr8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=njrbTF7FHrazTTp/LgN+8muhqSIPITTRgsX1/ibLxMH6XJ8TQ3Zs4S1hRiY5OEwDnMsTnHYgFv+tqf3i8PzZGXVM0MC8LZyyc8YYMG75QJ61QYa+EB5MR+4fl3dwtwTd7796PFWjv4dyuF+f2zwvPhNRKNT8LjJXkVYJG9Q9M4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=xA48Gp01; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=ibU2L0wa67lqAlfQGsiPFveD5emHOHr4Bfv6ypabiWTx/15YYAEeyHJDpn9MOdPToEddVVS3RDhD+TcUWWaswY2v5Zmo4dQsHlCXy79c50HztmpOS0L3JdD8R6VKbk78NnwXYdHwFhnIA70InfK9kC4Mp9hGVbJZOyeqPseAodk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HA+sQwBA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5lrUTCMJ; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="xA48Gp01"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1734636809;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U5Bt2rZr0pIphoQfMIKjzgCHzI3wjN3LdJJcE7ZaCM4=;
-	b=xA48Gp01pPGUKXLYzkumzseZi/IwKzFC4yD1twAv3KtAIuc/PquuiBWqXfkL5XKx8yl4ma
-	Kohs0O766V0t4P/QzsnuhY+yBONOhUX3eLVTsfOqIjgnCVd8kua+0TIl14bXwWiUKky6Yz
-	eCYUUkwidhRZudcTp5k30mmyTuOJOcU=
-From: Toon Claes <toon@iotcl.com>
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 7/8] refs: allow multiple reflog entries for the same
- refname
-In-Reply-To: <20241216-320-git-refs-migrate-reflogs-v4-7-d7cd3f197453@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HA+sQwBA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5lrUTCMJ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4796A1140186;
+	Thu, 19 Dec 2024 15:26:00 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 19 Dec 2024 15:26:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734639960; x=1734726360; bh=1T5LGk+O6g
+	CyKoSWm1knu1U8HKllcfJ7shzGCb74p6U=; b=HA+sQwBA0q3eN+pAOnZJ/sFzpF
+	j65cw6+kHxJvgDq9hV+I6UkxzhX3W6LZSYqUle80GxVz/tD+CG1DeJHusGMP1PaK
+	Yh/DvE+yRSHS6tev7qG5cZaqz2LDuvmW/uN1pSckhZO3EjDgrzCty6/3+HHubS27
+	7mrXFLPlq3cp70wiS+70cdCuv7VhRVMf/Nf/KYrThE54n1f0nfibkhkk4xNWFfGs
+	bQ4k9oQrcxm+ZWVsoYA0seTlGlqTFDKZzvhA91PS28Nrt61mX7RQlY8oFPg3qiR6
+	zNt7+kZMajPD1MS5l0xGfamwUaU6hrSDMW/tZwg6L1VZrAH8yaNWgTM56ghg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734639960; x=1734726360; bh=1T5LGk+O6gCyKoSWm1knu1U8HKllcfJ7shz
+	GCb74p6U=; b=5lrUTCMJ8opm7e4OgcQkTZJq9QLYhdvkR3l/fHGNimoKnU2xBRu
+	x+qjJUeVpUOI4aKAHTFzpo03gg8K1NejyRF6UGf+CH0q84oiP/58C7oyS1WcEU3T
+	2XbP+yYou4aJe1gXbJd6RbWtHW0njzHJus6RwdZDU6GqrfRMURjvyLzkb7+czR8C
+	CWhC3xuW0JPuvAV37YvD99F9udzhIYzQ/bSvBzpYtmBCYUQcTHiWu7+SBCjSG/Vj
+	3YGHagvs/QK+NKHtygaCR9fPaDLImGikl/bm+NBPSkfIJLY+0oS/+8vGUy473j4z
+	xIEjBp8BNBOr/Tce9T34YORy0CYZRh4cYLw==
+X-ME-Sender: <xms:V4FkZyg5HVq2Y5f4Uu1sQl13SN02A-rIuY8w_3akbTrljoorgvaT-w>
+    <xme:V4FkZzBioUhM6RqvkCFrQkLChKa_9HndjF-QKBFTma6gfqcBX5z4LgLhi4d2-ceh3
+    n48jQh5_cFXL_nOjg>
+X-ME-Received: <xmr:V4FkZ6FGjgb-y_Q5TxjGbiMrT8FPeV8b2catwOgdOST-dkhjQ71D3HjAiPUmmIZy0B77IJ_jPdw8Mr6pX-9vYeWMmLXlSljmaw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgudefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhoth
+    gtlhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhl
+    hidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:V4FkZ7QkWJ0pGgjXyQZPlwUyPRROJhbd7iB54g6yr8-pBKpDCJMphw>
+    <xmx:V4FkZ_wctVlmjgLMImyHnwFz5DXWBvCa8pcyt5IkAD7ml6DNirpoug>
+    <xmx:V4FkZ55bXqsBaW-s67hI5WhuOlZPEbtVh3uQf2agChec-QFY3b41EQ>
+    <xmx:V4FkZ8yHwqmGB4VENP54YSGrNzNJbWXV6JkJL_AyHqFhfyAbaQrsTg>
+    <xmx:WIFkZ2k4a62q0KV1U-XaHnrHNw8mMvPCS7_3ffo6uCSxm_XHmjq011vD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 19 Dec 2024 15:25:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
+  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4 6/8] refs: introduce the
+ `ref_transaction_update_reflog` function
+In-Reply-To: <8734ijh3jg.fsf@iotcl.com> (Toon Claes's message of "Thu, 19 Dec
+	2024 20:32:35 +0100")
 References: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
- <20241216-320-git-refs-migrate-reflogs-v4-7-d7cd3f197453@gmail.com>
-Date: Thu, 19 Dec 2024 20:33:17 +0100
-Message-ID: <871py3h3ia.fsf@iotcl.com>
+	<20241216-320-git-refs-migrate-reflogs-v4-6-d7cd3f197453@gmail.com>
+	<8734ijh3jg.fsf@iotcl.com>
+Date: Thu, 19 Dec 2024 12:25:57 -0800
+Message-ID: <xmqq4j2zifmy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,152 +90,27 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> The reference transaction only allows a single update for a given
-> reference to avoid conflicts. This, however, isn't an issue for reflogs.
-> There are no conflicts to be resolved in reflogs and when migrating
-> reflogs between backends we'd have multiple reflog entries for the same
-> refname.
+>> +		const char *what = flags & REF_LOG_ONLY ? "reflog for pseudoref" : "pseudoref";
 >
-> So allow multiple reflog updates within a single transaction. Also the
-> reflog creation logic isn't exposed to the end user. While this might
-> change in the future, currently, this reduces the scope of issues to
-> think about.
+> These strings are not localized.
 >
-> In the reftable backend, the writer sorts all updates based on the
-> update_index before writing to the block. When there are multiple
-> reflogs for a given refname, it is essential that the order of the
-> reflogs is maintained. So add the `index` value to the `update_index`.
-> The `index` field is only set when multiple reflog entries for a given
-> refname are added and as such in most scenarios the old behavior
-> remains.
->
-> This is required to add reflog migration support to `git refs migrate`.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  refs/files-backend.c    | 15 +++++++++++----
->  refs/reftable-backend.c | 22 +++++++++++++++++++---
->  2 files changed, 30 insertions(+), 7 deletions(-)
->
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index c11213f52065bcf2fa7612df8f9500692ee2d02c..8953d1c6d37b13b0db701888b3db92fd87a68aaa 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2611,6 +2611,9 @@ static int lock_ref_for_update(struct files_ref_store *refs,
->  
->  	update->backend_data = lock;
->  
-> +	if (update->flags & REF_LOG_ONLY)
-> +		goto out;
-> +
->  	if (update->type & REF_ISSYMREF) {
->  		if (update->flags & REF_NO_DEREF) {
->  			/*
-> @@ -2829,13 +2832,16 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->  	 */
->  	for (i = 0; i < transaction->nr; i++) {
->  		struct ref_update *update = transaction->updates[i];
-> -		struct string_list_item *item =
-> -			string_list_append(&affected_refnames, update->refname);
-> +		struct string_list_item *item;
->  
->  		if ((update->flags & REF_IS_PRUNING) &&
->  		    !(update->flags & REF_NO_DEREF))
->  			BUG("REF_IS_PRUNING set without REF_NO_DEREF");
->  
-> +		if (update->flags & REF_LOG_ONLY)
-> +			continue;
-> +
-> +		item = string_list_append(&affected_refnames, update->refname);
->  		/*
->  		 * We store a pointer to update in item->util, but at
->  		 * the moment we never use the value of this field
-> @@ -3035,8 +3041,9 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->  
->  	/* Fail if a refname appears more than once in the transaction: */
->  	for (i = 0; i < transaction->nr; i++)
-> -		string_list_append(&affected_refnames,
-> -				   transaction->updates[i]->refname);
-> +		if (!(transaction->updates[i]->flags & REF_LOG_ONLY))
-> +			string_list_append(&affected_refnames,
-> +					   transaction->updates[i]->refname);
->  	string_list_sort(&affected_refnames);
->  	if (ref_update_reject_duplicates(&affected_refnames, err)) {
->  		ret = TRANSACTION_GENERIC_ERROR;
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index b2e3ba877de9e59fea5a4d066eb13e60ef22a32b..bec5962debea7b62572d08f6fa8fd38ab4cd8af6 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -990,8 +990,9 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  		if (ret)
->  			goto done;
->  
-> -		string_list_append(&affected_refnames,
-> -				   transaction->updates[i]->refname);
-> +		if (!(transaction->updates[i]->flags & REF_LOG_ONLY))
-> +			string_list_append(&affected_refnames,
-> +					   transaction->updates[i]->refname);
->  	}
->  
->  	/*
-> @@ -1301,6 +1302,7 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
->  	struct reftable_log_record *logs = NULL;
->  	struct ident_split committer_ident = {0};
->  	size_t logs_nr = 0, logs_alloc = 0, i;
-> +	uint64_t max_update_index = ts;
->  	const char *committer_info;
->  	int ret = 0;
->  
-> @@ -1405,7 +1407,19 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
->  				}
->  
->  				fill_reftable_log_record(log, &c);
-> -				log->update_index = ts;
-> +
-> +				/*
-> +				 * Updates are sorted by the writer. So updates for the same
-> +				 * refname need to contain different update indices.
-> +				 */
-> +				log->update_index = ts + u->index;
+>> +		strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
+>>  		return 0;
 
-During my review I was having a hard time figuring out when `u->index`
-was not 0 and where it is being set. Can you maybe explain a bit?
+And the structure forces sentence logo.  If "reflog for pseudoref"
+were masculine and "pseudoref" were feminine in a language where the
+verb "update" conjugates differently based on its object, the
+resulting construction cannot be translated.  Rather, we'd need to
+do something uglier like this:
 
-> +
-> +				/*
-> +				 * Note the max update_index so the limit can be set later on.
-> +				 */
-> +				if (log->update_index > max_update_index)
+	const char *refusal_msg;
+	if (flag & REF_LOG_ONLY)
+		refusal_msg = _("refusing to update reflog for pseudoref '%s'");
+	else
+		refusal_msg = _("refusing to update pseudoref '%s'");
+	...
+	strbuf_addf(err, refusal_msg, refname);
 
-Is there a lot of value in having this if clause? I was a bit confused
-why it is here, because I think we can do the assignment to
-max_update_index unconditionally.
-
-> +					max_update_index = log->update_index;
-> +
->  				log->refname = xstrdup(u->refname);
->  				memcpy(log->value.update.new_hash,
->  				       u->new_oid.hash, GIT_MAX_RAWSZ);
-> @@ -1469,6 +1483,8 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
->  	 * and log blocks.
->  	 */
->  	if (logs) {
-> +		reftable_writer_set_limits(writer, ts, max_update_index);
-
-So max_update_index is used to set the limits on the current writer, but
-using reftable_stack_next_update_index() it's also used to give the next
-stack it's starting point for their range. Now I'm not familiar enough
-with the code, but are all stacks handled in sequential order? And how
-does a stack relate to a reftable file?
-
-> +
->  		ret = reftable_writer_add_logs(writer, logs, logs_nr);
->  		if (ret < 0)
->  			goto done;
->
-> -- 
-> 2.47.1
