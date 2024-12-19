@@ -1,116 +1,114 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D69E1BEF72
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 20:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7DF3FD1
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 20:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734639967; cv=none; b=hjWDAfE1PVUWSk0YG8qedbneQJbmXzct5F6GfJyuMiBcZ440DkZUh/G84nnPZx3I3CRFpv+tJO0bNuIVDO8sJxUBLv/7BB+RIfYkUUuDyMn0tTE5l3sHlHxGC0kvLcIcSggO3BzP20qFJK39V5uahsNc8Tkc9JTx8Jdn4ERds6w=
+	t=1734641197; cv=none; b=hL4Tg1mUUhSXwDbZ3ezFwkLwf0aoYUqIQyw+jaQOYgqJQKaVegBTw0cDmkR47audg8X93/JZDTtvk2LlUjuJmhFkwwkP+BixF1FeUfVMBqQ+dLOC59aPbV3hTL8d5erscQND0rAsr2djaRmYvYiMEJ2DiZmyh2a1LnbNL4DeZkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734639967; c=relaxed/simple;
-	bh=quRjvYQklEfKwyAR4JLYcS3WeinISgiKg6RsYDrelr8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ibU2L0wa67lqAlfQGsiPFveD5emHOHr4Bfv6ypabiWTx/15YYAEeyHJDpn9MOdPToEddVVS3RDhD+TcUWWaswY2v5Zmo4dQsHlCXy79c50HztmpOS0L3JdD8R6VKbk78NnwXYdHwFhnIA70InfK9kC4Mp9hGVbJZOyeqPseAodk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HA+sQwBA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5lrUTCMJ; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HA+sQwBA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5lrUTCMJ"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4796A1140186;
-	Thu, 19 Dec 2024 15:26:00 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 19 Dec 2024 15:26:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734639960; x=1734726360; bh=1T5LGk+O6g
-	CyKoSWm1knu1U8HKllcfJ7shzGCb74p6U=; b=HA+sQwBA0q3eN+pAOnZJ/sFzpF
-	j65cw6+kHxJvgDq9hV+I6UkxzhX3W6LZSYqUle80GxVz/tD+CG1DeJHusGMP1PaK
-	Yh/DvE+yRSHS6tev7qG5cZaqz2LDuvmW/uN1pSckhZO3EjDgrzCty6/3+HHubS27
-	7mrXFLPlq3cp70wiS+70cdCuv7VhRVMf/Nf/KYrThE54n1f0nfibkhkk4xNWFfGs
-	bQ4k9oQrcxm+ZWVsoYA0seTlGlqTFDKZzvhA91PS28Nrt61mX7RQlY8oFPg3qiR6
-	zNt7+kZMajPD1MS5l0xGfamwUaU6hrSDMW/tZwg6L1VZrAH8yaNWgTM56ghg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734639960; x=1734726360; bh=1T5LGk+O6gCyKoSWm1knu1U8HKllcfJ7shz
-	GCb74p6U=; b=5lrUTCMJ8opm7e4OgcQkTZJq9QLYhdvkR3l/fHGNimoKnU2xBRu
-	x+qjJUeVpUOI4aKAHTFzpo03gg8K1NejyRF6UGf+CH0q84oiP/58C7oyS1WcEU3T
-	2XbP+yYou4aJe1gXbJd6RbWtHW0njzHJus6RwdZDU6GqrfRMURjvyLzkb7+czR8C
-	CWhC3xuW0JPuvAV37YvD99F9udzhIYzQ/bSvBzpYtmBCYUQcTHiWu7+SBCjSG/Vj
-	3YGHagvs/QK+NKHtygaCR9fPaDLImGikl/bm+NBPSkfIJLY+0oS/+8vGUy473j4z
-	xIEjBp8BNBOr/Tce9T34YORy0CYZRh4cYLw==
-X-ME-Sender: <xms:V4FkZyg5HVq2Y5f4Uu1sQl13SN02A-rIuY8w_3akbTrljoorgvaT-w>
-    <xme:V4FkZzBioUhM6RqvkCFrQkLChKa_9HndjF-QKBFTma6gfqcBX5z4LgLhi4d2-ceh3
-    n48jQh5_cFXL_nOjg>
-X-ME-Received: <xmr:V4FkZ6FGjgb-y_Q5TxjGbiMrT8FPeV8b2catwOgdOST-dkhjQ71D3HjAiPUmmIZy0B77IJ_jPdw8Mr6pX-9vYeWMmLXlSljmaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddttddgudefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhoth
-    gtlhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhl
-    hidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:V4FkZ7QkWJ0pGgjXyQZPlwUyPRROJhbd7iB54g6yr8-pBKpDCJMphw>
-    <xmx:V4FkZ_wctVlmjgLMImyHnwFz5DXWBvCa8pcyt5IkAD7ml6DNirpoug>
-    <xmx:V4FkZ55bXqsBaW-s67hI5WhuOlZPEbtVh3uQf2agChec-QFY3b41EQ>
-    <xmx:V4FkZ8yHwqmGB4VENP54YSGrNzNJbWXV6JkJL_AyHqFhfyAbaQrsTg>
-    <xmx:WIFkZ2k4a62q0KV1U-XaHnrHNw8mMvPCS7_3ffo6uCSxm_XHmjq011vD>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Dec 2024 15:25:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
-  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 6/8] refs: introduce the
- `ref_transaction_update_reflog` function
-In-Reply-To: <8734ijh3jg.fsf@iotcl.com> (Toon Claes's message of "Thu, 19 Dec
-	2024 20:32:35 +0100")
-References: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
-	<20241216-320-git-refs-migrate-reflogs-v4-6-d7cd3f197453@gmail.com>
-	<8734ijh3jg.fsf@iotcl.com>
-Date: Thu, 19 Dec 2024 12:25:57 -0800
-Message-ID: <xmqq4j2zifmy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1734641197; c=relaxed/simple;
+	bh=RLkCvyQq7Fdvc8vgQWyEJ4LTdmioR2AtpHeh5/cVJU8=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X6Sule2yTTry5xFVfXDC5uUE8VeoC90v22R7oa4LbmwkMvkxmvusr8it9pi901XaAUDNMJWNOtuY98TaZ0HFP5suiluaJs344IHoBbKLqpzY7gH7LVDGWQ4nSgIXqEg7VHr+Ef1j+FJO3i+ArXEDQjejDpirFXrMXmrTISKUyeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4BJKkOqR2302779
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Dec 2024 20:46:25 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Patrick Steinhardt'" <ps@pks.im>
+Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
+References: <xmqqfrmn4hr9.fsf@gitster.g> <00ad01db5017$aa9ce340$ffd6a9c0$@nexbridge.com> <Z2EC9rq3F0rTljff@pks.im> <010a01db508a$4544d750$cfce85f0$@nexbridge.com> <015901db50b5$e3a7f6e0$aaf7e4a0$@nexbridge.com> <Z2JyFB3CddYM_LP4@pks.im> 
+In-Reply-To: 
+Subject: RE: [ANNOUNCE] Git v2.48.0-rc0
+Date: Thu, 19 Dec 2024 15:46:20 -0500
+Organization: Nexbridge Inc.
+Message-ID: <00ca01db5257$12708d00$3751a700$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQFEfEaRNrZ6uu0wI6oVXmgPkoCy2gI/zh74AaCMqnQBl78GqAGqkn5VArNI4yqzyySw4IAB4IoA
+Content-Language: en-ca
 
-Toon Claes <toon@iotcl.com> writes:
-
->> +		const char *what = flags & REF_LOG_ONLY ? "reflog for pseudoref" : "pseudoref";
+On December 18, 2024 11:07 AM, I wrote:
+>On December 18, 2024 1:57 AM, Patrick Steinhardt wrote:
+>>On Tue, Dec 17, 2024 at 02:00:01PM -0500, rsbecker@nexbridge.com wrote:
+>>> On December 17, 2024 8:48 AM, I wrote:
+>>> >This is on the latest OS version of NonStop x86. The test is done
+>>> >via the
+>>> >following:
+>>> >With OpenSSL 3.4 The T0625 is Expat.
+>>> >
+>>> >When run as follows:
+>>> >GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true
+>>> >/usr/coreutils/bin/make -k test V=1 CFLAGS="-g -O2 -Winline
+>>> >-I/usr/local- ssl3.4/include -I/usr/coreutils/include
+>>> -I/usr/tandem/xml/T0625L01_AAE/include"
+>>> >LDFLAGS="/usr/coreutils/lib/libz.a
+>>> >-L/usr/local-ssl3.4/lib -L/usr/coreutils/lib
+>>> -L/usr/tandem/xml/T0625L01_AAE/lib"
+>>> >TEST_LINT= SHELL=/usr/coreutils/bin/bash
+>>> >
+>>> >The results are:
+>>> >*** t0000-basic.sh ***
+>>> >error: cannot run git init
+>>> >Makefile:77: recipe for target 't0000-basic.sh' failed
+>>> >make[2]: *** [t0000-basic.sh] Error 1
+>>> >*** t0001-init.sh ***
+>>> >error: cannot run git init
+>>> >Makefile:77: recipe for target 't0001-init.sh' failed
+>>> >make[2]: *** [t0001-init.sh] Error 1
+>>> >*** t0002-gitfile.sh ***
+>>> >error: cannot run git init
+>>> >Makefile:77: recipe for target 't0002-gitfile.sh' failed
+>>> >make[2]: *** [t0002-gitfile.sh] Error 1 etc for all tests.
+>>> >
+>>> >Removing GIT_TEST_DEFAULT_REF_FORMAT=reftable allows the whole test
+>>> >suite
+>>> to
+>>> >pass.
+>>> >
+>>> >There are environment size limits (about 32Kb) in bash on the box,
+>>> >so it is
+>>> possible a
+>>> >boundary was crossed internal to the test setup.
+>>>
+>>> I did find this, in t0000-basic:
+>>> not ok 69 - init with GIT_DEFAULT_REF_FORMAT=reftable
+>>
+>>You mean t0001-init.sh, right?
+>>
+>>> but have no more details. When should I break in gdb to get a backtrace?
+>>
+>>Can you please run that test with "-ix" and post the logs?
 >
-> These strings are not localized.
+>All tests, actually.
 >
->> +		strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
->>  		return 0;
+>$ GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true sh t0000-
+>basic.sh --verbose -i -x
+>error: reftable: transaction prepare: out of memory
+>error: cannot run git init
 
-And the structure forces sentence logo.  If "reflog for pseudoref"
-were masculine and "pseudoref" were feminine in a language where the
-verb "update" conjugates differently based on its object, the
-resulting construction cannot be translated.  Rather, we'd need to
-do something uglier like this:
+Any updates or hypothesis on this? Our test system has loads of memory - I
+cannot
+figure out where the allocation failure takes place. There is a limit to how
+much
+memory can be allocated, but it is very high and our virtual memory is
+extensive,
+but this is a 32-bit build.
 
-	const char *refusal_msg;
-	if (flag & REF_LOG_ONLY)
-		refusal_msg = _("refusing to update reflog for pseudoref '%s'");
-	else
-		refusal_msg = _("refusing to update pseudoref '%s'");
-	...
-	strbuf_addf(err, refusal_msg, refname);
+--Randall
 
