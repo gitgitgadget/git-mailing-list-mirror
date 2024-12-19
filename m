@@ -1,84 +1,130 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E19192B94
-	for <git@vger.kernel.org>; Wed, 18 Dec 2024 23:52:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294831863E
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 01:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734565938; cv=none; b=EQEjC+/O3tJiXMbmCaA6Scu+AOsW+wsKvEj/ZFvhPsa2jDHt7akf3SiBw+NNflBMjujZlXE4GtNSOkVjnFk5xdYVfnpQ1TLS6D0CiDphT0CkvLrGRK6Dzl5tzyyXoCqQxJBCuX+Au50Xu3x5fBUrJitqKWaqlGNlGRxPv064wZ0=
+	t=1734570630; cv=none; b=OrJtwhULjDUtNHVIDGwaEhfmRCw9Cwn7vlUvxyf50sJ2tDSsEtPXItMLT7KJ0W+URZzblknZiwMmOue2zFMMh+APbl1fSyfQ/Dldsf4yGa3UyzDBj0P0GU5/QG9fSdCDqss+u6aUK+b7AmtoWKCPChE9qzQ8v82JRDZmjI/XhQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734565938; c=relaxed/simple;
-	bh=NIWgCoTyxsLNu8Ogwn5IbMb9LEhnxbkbAXtEBJ/1pFM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Qb1biMa8BMSFy218AVbN54dXmrUDPjU4cBR7XHocytqPoQke4NIfEpo2HkjEiUy5FReB2E6f+cDVsSLg5+EjSqMITO/zHxZay0Jdra+O3GS5xDJU0RhrcxFHxTeHqlvpz7S5aQtoyGjgyRx4el3XtWOYb1NtAN/OQ7CyYFXAdRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6d8eacc4194so205586d6.2
-        for <git@vger.kernel.org>; Wed, 18 Dec 2024 15:52:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734565935; x=1735170735;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iQq/JnxwACZ3M4ORMIDs8wqa+aB/fnN/MXzEbOrn1cQ=;
-        b=KNuZM+0UIgPp/rtUM/5Ji4b1/XNYTKUdP0pkJ06dxeBFZBEzKA50dhaOM3SW4vRTyj
-         FkRT6rjE6b62t2sKUwR7k3ZiO0MDBP1fKoc7jV9h0ARnpnBX7EOrxmIdO7H9D/DQ+NY2
-         cbL98Xk9rFWVMjGQ4Wew0JU6MtapGeFF2WS2BNIqmE7+mP7U2Cb9+8Vv5o/EcgAWrs8L
-         nTWEESmCKmwWHhhWtUoaIkjsDdWqM2VEhoc+D/uQ6vgxsJq8XDu5XhjC8ptLsjmOQlYY
-         rTePhlv0q5W8GKBwoagUMH9AaV7skOQ04mD1O3iEt+va/dvXubPSw6oe77co0YS3e586
-         /yTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWqJy0Pa2PpyRT0LG+ruKKEFtpkcmM93POtk4TbgnvvAlV7n7WXUExwQ06IFnTA6i94TCc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwCtkjdjbKj60ToGKC0n8Q6TDol6aDokNiTXhixb3LlSbuxdQf
-	faLl+rsH5O3sjKGZbB8H39q+danHG1QcAjaWCqrCnXfIQ676SoMM4SJZfb0ib2pGNMMks5WQYGy
-	RXFvg7uNhorqC0Fdu/QmyJIRpJUPafCf2
-X-Gm-Gg: ASbGncs4UmSGsCTziJqCB63WhPM/WzhL0JLpw/AyqtmBZJiD/BU481+YxsCXn/hcbLE
-	51x49YbJ7y3KkDQZzqiGeJ10r7GOCst14AqHdL3b0oS4DyAWhxVqTJlwsOO0dqtDStTTtkp8=
-X-Google-Smtp-Source: AGHT+IEx77QFdD45jEpgfJBwB7dfPEqqOfYsQMnWnaWlF2UWD/R7VLEaPE32nA65yijWCEmYlbNevkDrw6U11tEwA0E=
-X-Received: by 2002:ad4:5948:0:b0:6d8:a5b7:6581 with SMTP id
- 6a1803df08f44-6dd0919889cmr28742046d6.3.1734565934904; Wed, 18 Dec 2024
- 15:52:14 -0800 (PST)
+	s=arc-20240116; t=1734570630; c=relaxed/simple;
+	bh=Mkp1Bv3nfaLLhqotDt1eGu8+jelEWbE1VfPldSNlLdU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Bm6+b04gsc55XgFZQi0YgXP/l45/00TpUiimo/PXfDl7aZuxeCTkIKugGf53BnWCN2ZDn1fXpZ6XxAKTP/UJ4vRHf+YnAn+N11PDVc8aFGW5ohUeTavROkfkPIWaFtMLRhITM9dVdR3zXVu3pbbSHdkgh4vuQ76IM5bMC/fWzXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R4JRsq2k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCHZPSLr; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R4JRsq2k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCHZPSLr"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F3E56114013D;
+	Wed, 18 Dec 2024 20:10:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 18 Dec 2024 20:10:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1734570626;
+	 x=1734657026; bh=ZL0oa7tCfjFEc9puj8nXTNmBsh6LPj+OEAAeV+dzNew=; b=
+	R4JRsq2kNzkt5Sqyh2Uh/AJOaMWPOv/TOzPKI/+VQT85TbbqkF0MWFqFdVYmTk6U
+	PLgIb/QGc+7HiHLEEbys/lMY8cFsf1C0opnP7/BCooiaWvuMOevoT4DcfW/NS7Ks
+	91ftLoEjjUEg+rfw6cijjUbaukaXZL13LKPJeeOStGLq0HDQQg3TxJSPtqbKo5Iv
+	4LrL4QaheLoSLHEepiJsR5pEW9OnqZdBokPcUalivmcizM4aB0875+D8td4DIE/B
+	mql8UEC7CPWHTrRgwaEQKOgpDWJcpFh22VTtiP+v+hnsEQ5L9+ld3E+MZRrXFchn
+	71Ywn2rV2REWDw6xF6o4zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734570626; x=
+	1734657026; bh=ZL0oa7tCfjFEc9puj8nXTNmBsh6LPj+OEAAeV+dzNew=; b=V
+	CHZPSLrS6iqwMD6JdBFdhsMP+AZJT4/Ja3taUgCxnEHgH9TnJtCWI4NbNDSNoQO0
+	Oup63xQiYpBTXlDgNyHlpzPufRnxSilb147lqkcyNUD6Vq/l3gKYdCvqlUqyNVsy
+	O5pMRE1GZJ4C0BuE1EBD5Ee0la6+cDaZlHKISAxMBPPjnu8/JCH1TTMnsOxTH6XX
+	Af5U348DLXUDdfxY0nMvWpEVg7DzkEPQJvXGKl+B751g9Jggmnf7ruMMJMSLIQt8
+	LDrflAvUzbPb1jnzbxGytydf7bIrMSftIybqjmJ5QdD2iblCBTkuI5cMJmsT++4D
+	Fqo7PP5w0FwPHyGtUNTdw==
+X-ME-Sender: <xms:gnJjZ3CqDxbhemZqPMeZFbrHPZSTHqFz59WbhQVyIaZYA2X4YiloGw>
+    <xme:gnJjZ9hNAv-ST9_Q5kRnZK17OQ3gMTju4u6UTfOz3g1om8uEmjd3KMoXucjtH00bd
+    NLl4Fjl1FrYWEV7dw>
+X-ME-Received: <xmr:gnJjZymNa7A15s04dk13MSsvac813s9sTg6v5Mdn5PpwE4NEvhsS_Qgh3MnKo8QaPJ7PP92L8bDDQu-2Pg660wqXmweMaYoERA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleelgdefudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeen
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeeh
+    iefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvse
+    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgfhhunhhnihdvfeegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepughorhgvmhihlh
+    hovhgvrhduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gnJjZ5xcTbN5xSL9oxHVes4y_OLuMwo_RPMOtF6VKkZAX4nnRjhvng>
+    <xmx:gnJjZ8RaOL2ji04eKS9KTX3yfr2NpBnYIoE4tHVzTKRkDaf5xs9ooA>
+    <xmx:gnJjZ8ZZIVgxPQ41b9GVwYSPLtU1WCapMhbuNDO84myus8RJjJiLkQ>
+    <xmx:gnJjZ9SuAGbQYDPmSR1g1bY9JiqwDsl6wmwTm31HlWGIye6n9VmCgQ>
+    <xmx:gnJjZ_ERrDCwCOrpAaWl11qHSGMAhQWHpB0vCVTsGjRra4wOt81Bu8Zv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 18 Dec 2024 20:10:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: shejialuo <shejialuo@gmail.com>,  AreaZR via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  AreaZR
+ <gfunni234@gmail.com>,  Seija Kijin <doremylover123@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] refs: exit early from the loop if it is not a main
+ worktree
+In-Reply-To: <CAPig+cQd=vc5rte47biFbR+w_DV2OhdCRpC2WH_dKsSi4wvZ2A@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 18 Dec 2024 18:52:02 -0500")
+References: <pull.1848.git.git.1734488445457.gitgitgadget@gmail.com>
+	<Z2LOpOxu0oAY0DW3@ArchLinux>
+	<CAPig+cQd=vc5rte47biFbR+w_DV2OhdCRpC2WH_dKsSi4wvZ2A@mail.gmail.com>
+Date: Wed, 18 Dec 2024 17:10:24 -0800
+Message-ID: <xmqqv7vgo4u7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1848.git.git.1734488445457.gitgitgadget@gmail.com> <Z2LOpOxu0oAY0DW3@ArchLinux>
-In-Reply-To: <Z2LOpOxu0oAY0DW3@ArchLinux>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 18 Dec 2024 18:52:02 -0500
-Message-ID: <CAPig+cQd=vc5rte47biFbR+w_DV2OhdCRpC2WH_dKsSi4wvZ2A@mail.gmail.com>
-Subject: Re: [PATCH] refs: exit early from the loop if it is not a main worktree
-To: shejialuo <shejialuo@gmail.com>
-Cc: AreaZR via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	AreaZR <gfunni234@gmail.com>, Seija Kijin <doremylover123@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 18, 2024 at 8:30=E2=80=AFAM shejialuo <shejialuo@gmail.com> wro=
-te:
-> On Wed, Dec 18, 2024 at 02:20:45AM +0000, AreaZR via GitGitGadget wrote:
-> >               if (is_main_worktree(worktrees[i]))
-> >                       continue;
-> >               ret =3D 1;
-> > +             break;
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Wed, Dec 18, 2024 at 8:30 AM shejialuo <shejialuo@gmail.com> wrote:
+>> On Wed, Dec 18, 2024 at 02:20:45AM +0000, AreaZR via GitGitGadget wrote:
+>> >               if (is_main_worktree(worktrees[i]))
+>> >                       continue;
+>> >               ret = 1;
+>> > +             break;
+>>
+>> So, when we find a linked worktree, we just return the value. From my
+>> perspective, if we decide to optimize like this way, we could drop the
+>> loop because the first element of the result of `get_worktrees` is the
+>> main worktree. And we could just check whether the "worktrees[1]" is
+>> NULL to do above.
 >
-> So, when we find a linked worktree, we just return the value. From my
-> perspective, if we decide to optimize like this way, we could drop the
-> loop because the first element of the result of `get_worktrees` is the
-> main worktree. And we could just check whether the "worktrees[1]" is
-> NULL to do above.
+> You're correct. get_worktrees() guarantees that the main worktree (or
+> bare repository) is the first item in the list, so merely checking
+> whether `worktrees[1]` is non-NULL would be sufficient to answer
+> whether linked worktrees are present; no looping is required.
 
-You're correct. get_worktrees() guarantees that the main worktree (or
-bare repository) is the first item in the list, so merely checking
-whether `worktrees[1]` is non-NULL would be sufficient to answer
-whether linked worktrees are present; no looping is required.
+Thanks for a well-reasoned write-up.
 
-> However, I don't know whether it's a good idea to exit the loop early
-> in the first place. CC Patrick to help.
+Would many other callers potentially want to know if the repository
+has more than one worktree?  It looks to me that the has_worktrees()
+helper function in refs.c is a sign that the worktree API is missing
+a function.  Calling get_worktrees() to prepare a list of worktrees
+and then counting the result, only to see if there are more than
+one, sounds a bit wasteful if we need to do so too often.
 
-If the loop is retained for some reason (though it really isn't
-needed), then exiting early is indeed desirable. I suspect that the
-missing `break` was just a silly oversight on Patrick's part.
+
