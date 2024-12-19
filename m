@@ -1,53 +1,71 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537A843ACB
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 02:02:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA4E3FD1
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 02:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734573753; cv=none; b=Brci/m6OK39XIj0u7wUABu6EO0/1FMWFYjakF+6UlIBEgYhBepXpmIt6vbz53Eu7xCBwDop0hSddc0L7cOEBK2w7mOvm+qhscXhYw76yNdchrsDpvxD68aW7QpZIQD8kYfs9HMWzyCLuOEMSUL6PlqvOzCTW314asMqi91h9D/c=
+	t=1734574208; cv=none; b=ueqp0olzsFD0iOu2WOOcYyXZwgEukxv9kTL3uaNpwy1ynlIS6ZPKVAXbhlYqnTkfb73ZyZfZewXl7uUJzikPXrq/67kHKt9LVOUe1uzMSx4gH0VoOu9HvGLLrSQ3fUdNWTcjY7O5RTPOV+gaBEOfm8eiYcIpGoHWddvx+8Hg1EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734573753; c=relaxed/simple;
-	bh=WXvgNW7pVak13O7AYAB+vXysBwJdR3D8sFKOcuPRlX0=;
+	s=arc-20240116; t=1734574208; c=relaxed/simple;
+	bh=2Q5HI65zHjB5IILShp6eiqiJMf2E+1uGTartI5FXdnY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EHZbobxAEUK3nhGmvcJIj9tFJ7YGsD1tKGFqSueorHiKk0Ewu+S0+tK7132G5y+XeZ7i00VfAJ+vF1LpE/FCg/10jRmFQPrykoWnOXU6N3e8XfCiN1aEwlgsCDQX2hx+AfJ0EjNE4xP8MzYmuRKjx9rzqxgkcpGkzMj5gwFlyc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=r9sGTePf; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=p12M99tydHHXlxJJDuBtzap+8T3/Ri92eFw13YxdSzE/l/2wXqATaQkrVjcd0xg4QR/zeIpVYrFciOLnhR0GCTPKtwH8qC6w4NPEdl5tHr8WMZHzorWcUxaocRSYQD0i7tTwLALRlWSVHO5fvT14mvHEUPdpZ3S+g1Oq7bhjwEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CXMP+ZwV; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="r9sGTePf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1734573742;
-	bh=WXvgNW7pVak13O7AYAB+vXysBwJdR3D8sFKOcuPRlX0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=r9sGTePfkD5gFOqHWkFIoV4OJww9jOSOuA1GBP7jSG9++Lv3rYgfwoWTe4xxxrIdx
-	 S/1NjgFIqkFxKqJJME36pGGzNkQzgx5Xc5dZJfxfP1/E1OmXlSTFDFr2RnpqIPF8EK
-	 fXQICvPP1ivLahcIavVg3wb2M8Zq3jFONdgsq9z6LvL6PZ7zi8b5qr15bmniilK/zS
-	 ByJSkgR2J0A6ZdbAcxlCc8ajDbFX4LpCJU49LnVo01V886pLlEtrnaw8xaeqORBHXJ
-	 5nTLCF9SAj1TgWj8rTwDwURDXkolIvaUILFcJgtAHu0b4WfLnezAFW1w2uEmVq3g1m
-	 qm1M+zoqynRxfEATTetvbYamz2OEZUwalBt+Q9lQfLUrF3nlP6HZEKy/a+GM1aQJbI
-	 n4Z0CgBnyvDcpxA8xH94yI1SC/HTJ1pi+BFtkvGYqgihkjneJhThyYD7DKMkpWlEeo
-	 8BwIUUUb7DRgb2LDEKR4Ipx3GVsrdGp7M3u5eWexuMBu9vZqt7H
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C8DEA209B3;
-	Thu, 19 Dec 2024 02:02:22 +0000 (UTC)
-Date: Thu, 19 Dec 2024 02:02:21 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: M Hickford <mirth.hickford@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: Fwd: [Bug] `credential fill` prints incomplete bearer credential
-Message-ID: <Z2N-rV4fhF3ZkGlp@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	M Hickford <mirth.hickford@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-References: <CAGJzqs=ksKqY2M8Px3uv6ut=MBwkmpPUqp3xVzVpNMJ0YBrBww@mail.gmail.com>
- <CAGJzqsnAO_vDSYOC7ZbYUQHJ3fT10JuQ2RrC2cvY4hcPMnZ=bg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CXMP+ZwV"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21670dce0a7so3472975ad.1
+        for <git@vger.kernel.org>; Wed, 18 Dec 2024 18:10:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734574207; x=1735179007; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gq4r+pWt389PS3HhGvqWKgsb562Z+dH6Fzb67T1ggVA=;
+        b=CXMP+ZwVu5WoTqxQrwa8xQkL027lxkwwnyO4jd8eIEOrENVlzTQTyVjQHb6brsHQPW
+         jGCGnSqZJZ4QhE232s0RGBGX5pnvtldJ7OvHRqA/RpYOj+VKXl4Qy1B6vLOtAGF8V5xr
+         UtwTmVXuUMEJG9hxAoO+u4DlqXxBC/CsH0l0OqEf3Vv+VkLXTG698rM23s/Y4GHrezsa
+         UGUHYPyY5elwUVZkGzwdkTc9ulbc+yPU6oXdSRkpSHnwTSQcLUemArvZjDYhqEVTXp51
+         1yuP0FSeXJZ6vgv1FDWB/U1q56KqMxGP9jRRcQS7mRLMXbDwTGpGQzvpDD+Le8+/g/dg
+         lCLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734574207; x=1735179007;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gq4r+pWt389PS3HhGvqWKgsb562Z+dH6Fzb67T1ggVA=;
+        b=ZcM9TrH9JBvua4dpp9nbEiZ3T85lKMC7XBypFwWj5174ejampDh+GBTDgU87Y9nCSr
+         sAegXgfNGu+kmDMg7VfGfoNY1C6B/PmlYuENWf3DStWJCf06TW91koQII7Rtvch9m3Bs
+         PUl9UUQZb4iR5JMLXDvi4HlktGMil4KKfQo0s6q2MFgRzqH6Gzv9zziZswy7kR8hD0QX
+         SZRlijWXjaAuhNqM8ydvUxOBLY9DYybbbSuPCyuJCAMWao/Z4gXPzm+PAS/aATD2LBfc
+         9UcW1R770AyAJIswLFduYCCJM0ORe8y00hH7Xh1pboTzZFVS1t/BmHPJPNd9p0giXGTM
+         WTjg==
+X-Gm-Message-State: AOJu0YyBKKoDS/7aTTqjR41MOTDGba6PvTyzY5Jew8PdfrM0uL9Y5xNP
+	sKFf51v1HJASAxIKfl8PdeooWM3WtBWHEegnEjM2/jJc8/xjiTRQ
+X-Gm-Gg: ASbGncv0ZFGLFS7JO3ZjrccOdVRMkXbUEgq1cj1XmSiz3FjFQ38cPRKIRS3vuPqfS2V
+	tuuvSTSNEv2CEZQH71Jfeft3am4slWSEJ5Sfe5Fg0mEV8CqsnnMQZXN5aDDS2Hr+I/iY4pMxch6
+	Z0YQi46SgzHS99msc9IlW5XyW+923MtCDLSPKr8PmOMi5d97vjLji9m5fDpGz3vK6eXwf9ogL2L
+	9SXbihBNg3eMEHCtFMeih/ENJYSEROPwb0if4sl80U78WqGcpClLSJs
+X-Google-Smtp-Source: AGHT+IG2r4BVOHgzwNb91wbV2nwcffqhd0hUIOCns27FY/PDFvUNSh9zLEA4Hgv+dTTuFFPQOuLauA==
+X-Received: by 2002:a17:902:f681:b0:216:45b9:43ad with SMTP id d9443c01a7336-219d968cd9cmr24774485ad.34.1734574206580;
+        Wed, 18 Dec 2024 18:10:06 -0800 (PST)
+Received: from archie.me ([103.124.138.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc962ca2sm2088305ad.5.2024.12.18.18.10.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2024 18:10:05 -0800 (PST)
+Received: by archie.me (Postfix, from userid 1000)
+	id 52B2D44DA0D3; Thu, 19 Dec 2024 09:10:01 +0700 (WIB)
+Date: Thu, 19 Dec 2024 09:10:01 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: OK to submit l10n PR with signed commits?
+Message-ID: <Z2OAebI4pQ2K57vA@archie.me>
+References: <Z2KfIl87JOWdcGR3@archie.me>
+ <xmqqzfktujuk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -55,103 +73,44 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KaJZZQjVbQvcm09e"
+	protocol="application/pgp-signature"; boundary="ZrjDo2Md5wm+djw4"
 Content-Disposition: inline
-In-Reply-To: <CAGJzqsnAO_vDSYOC7ZbYUQHJ3fT10JuQ2RrC2cvY4hcPMnZ=bg@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <xmqqzfktujuk.fsf@gitster.g>
 
 
---KaJZZQjVbQvcm09e
+--ZrjDo2Md5wm+djw4
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-12-18 at 20:42:31, M Hickford wrote:
-> Hi. Is this a bug in git version 2.47.1? Or am I using it incorrectly?
+On Wed, Dec 18, 2024 at 06:49:39AM -0800, Junio C Hamano wrote:
+> Bagas Sanjaya <bagasdotme@gmail.com> writes:
 >=20
-> # erase existing example.com credentials
-> printf "host=3Dexample.com\nprotocol=3Dhttps\n" | git -c credential.helpe=
-r=3D -c credential.helper=3Dcache credential reject
-> # store bearer token with expiry in far future in credential-cache
-> printf "host=3Dexample.com\nprotocol=3Dhttps\nauthtype=3Dbearer\ncredenti=
-al=3Dletmein\npassword_expiry_utc=3D2147483640\n"
-> | git credential-cache store
-> # try to retrieve credential
-> printf "host=3Dexample.com\nprotocol=3Dhttps\n" | git -c credential.helpe=
-r=3D -c credential.helper=3Dcache credential fill
+> > So I'm interested in GPG-sign my commits (that is, ``git commit -S``) f=
+or l10n
+> > pull request (which I should submit in this cycle). Is it OK to do that?
+> > Drawbacks?
 >=20
-> Expected output (complete credential):
+> Instead of talking first about drawbacks, we should consider the
+> upsides.  Why would we even want to see your GPG signature, when
+> most of us do not even have your GPG public key in our keychains?
 >=20
-> protocol=3Dhttps
-> host=3Dexample.com
-> authtype=3Dbearer
-> credential=3Dletmein
-> password_expiry_utc=3D2147483640
->=20
-> Actual output (incomplete credential, no prompt for username or password):
->=20
-> protocol=3Dhttps
-> host=3Dexample.com
-> password_expiry_utc=3D2147483640
+> What are we trying to achieve by doing this?
 
-This is expected.  Every request to a credential helper should include
-all of the capabilities that the caller supports on input, and the
-credential helper will always emit those on output.  `git credential`,
-however, will only emit the capabilities that were actually supported,
-so that general callers (including Git LFS) can determine the actual
-set of supported capabilities.
+Just to ensure that PR commits are really from the respective authors.
 
-In this case, you asked the cache helper for a credential, but didn't
-tell it that you supported `authtype` and `credential`.  Therefore, the
-only safe thing it can assume is that you are incapable of parsing and
-understanding those fields, so it doesn't emit them.  This is a benefit
-for security, because some tooling logs all fields but the `password`
-field, and we don't want to include new secret fields that the caller is
-going to shovel into a file or syslog.
-
-In addition, the helper could actually store two different sets of
-credentials, one which is a username and password, and one which is an
-authtype and credential.  If you provided the capability, the latter
-would be omitted, but otherwise the former would.  That can be helpful
-if you have a stronger credential type but might occasionally need to
-use older software (say, older versions of Git or Git LFS).
-
-However, if you provide the proper capability, this works as you expect:
-
-----
-% printf "host=3Dexample.com\nprotocol=3Dhttps\n" | git -c credential.helpe=
-r=3D -c credential.helper=3Dcache credential reject
-% printf "capability[]=3Dauthtype\nhost=3Dexample.com\nprotocol=3Dhttps\nau=
-thtype=3Dbearer\ncredential=3Dletmein\npassword_expiry_utc=3D2147483640\n" =
-| git credential-cache store
-% printf "capability[]=3Dauthtype\nhost=3Dexample.com\nprotocol=3Dhttps\n" =
-| git -c credential.helper=3D -c credential.helper=3Dcache credential fill
-capability[]=3Dauthtype
-authtype=3Dbearer
-credential=3Dletmein
-protocol=3Dhttps
-host=3Dexample.com
-password_expiry_utc=3D2147483640
-----
-
-Note that `capability[]` directives should always start the request to
-allow one-pass parsing.
-
-Hopefully this is helpful.
 --=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+An old man doll... just what I always wanted! - Clara
 
---KaJZZQjVbQvcm09e
+--ZrjDo2Md5wm+djw4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ2N+rAAKCRB8DEliiIei
-gfqOAQCqgt+ChXOgsBypKU5AwJWlO7XOxJdMBmz9Dahd8TJmaQD+NB8ZJYY9ADJE
-nEvVZJLLN8JAwt4G8suWJnyXRUJI0Qk=
-=1y0I
+iHUEABYKAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCZ2OAaAAKCRB7tWyQc2rT
+CArkAP9TRp6EqxeSpVBMzbu5T+9MG8SU4mn+4pqKpMjqB1tVjAEAv3LAp/zhgad+
+YERRj/ziISDbuN5lKsMZ2UGqcBKXfA0=
+=w/sl
 -----END PGP SIGNATURE-----
 
---KaJZZQjVbQvcm09e--
+--ZrjDo2Md5wm+djw4--
