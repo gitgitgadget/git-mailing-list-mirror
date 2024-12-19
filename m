@@ -1,169 +1,107 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-184.mta1.migadu.com (out-184.mta1.migadu.com [95.215.58.184])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8F319E98C
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 19:16:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ABB1AAA0D
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 19:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734635762; cv=none; b=gceGQGC3d8gKYoyF1DyvNLiHKx3wgtew7vR9uqEBXz6crhoMrcgzOwcaBJQ8VL1d0PVo68z+Xfzu1021KoyClRbE/Ny2K5A8H50cXlmOZBzjjItUX4+Hr6985e1XvpqalSEcaO1uQXgLkzQFLXJ1ZVynVRLvBawiuBuklYaDSkY=
+	t=1734636528; cv=none; b=qHfvmcD+0llTwNQuuKex0yzkjTRFidijkbQC5SNltWqdfntKRBQj/EsdGPQNLyUSfRfYJbswQoP/mwh7RaQWIp79xQTXB0Z52RQ7yX2kz6IlIcInFOfq8pQAPclCE0DNQaK30/PhHOOxjHwooM4AaIXlLVSv4PpzeNzILkeA3Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734635762; c=relaxed/simple;
-	bh=6ZCzFueYLrgQi4LjDFskJzxvHX35g7dCksJUnW+0uWA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=EmYwzdUDKquCfas4sLj565F1gWw0OPiDTmqmmWb+7FKD1BOSLaz90XBichqhX5clFjDXek5FULAXEKIMocpLuIfLXPKsHCGnubBPmyIOaZq78dq9ZujUdo7fwEDy6G+slK2rdfjk0s3NsNci/D7uuTSHO6qymxNQ4VrgBigKjtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=To4EO8gc; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734636528; c=relaxed/simple;
+	bh=y5GYpoWhrkbSHbOuTH1F3VpkRESOZLrE6H4YT87o5LE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=foU9JiIZlHVa6tWkY1IHCLlYxEWbT8JMgsv567kTY4pb/2SGKUHnNfhEecAemDFzOfS8B44Vei/pfQOVT6JvVOrtVl224yH5/Hv8acYeBjArIg3D1sIdYDQ/qkoe3007cVIAVtW4P/9n7vXWiT9Cr9lwWRqSkNWKMXfcqt1hZfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Ov8BWTOe; arc=none smtp.client-ip=95.215.58.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="To4EO8gc"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa680fafb3eso15833366b.3
-        for <git@vger.kernel.org>; Thu, 19 Dec 2024 11:16:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734635759; x=1735240559; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sNOBmwqwRj3yzOYPTCEEI8dhzc3mbBHJ18/WLJV+8LY=;
-        b=To4EO8gc8XaYU9GLWSWl/bi6IYqa3awv7XZYa7xAydlvcKbH7flq7WVlZ+X8Lnfd93
-         Uw6ddyFQ0kuUNzudew8uvdZDDDMwV5HHkTAYs2JQeHF2FYm39+R9gg7lpyWA4nJYSNXe
-         oKuh0LCX/6oCXfK043mrQRq9W28wUc7y/zz5vwVi42O3aOMDUTrjHmnug0a7NkdR1xvk
-         I8sRiZEwxBaNtohoXXhhTOeXrhVcxDuXIvlrNGuqL4Vn0DcybXQWTH3/ZWfK8LOKoXsB
-         LdQ/xqD3E6ixgz67xptymGw4hSDYeD0J+09jsOwOvEtjB9gM1WsgHFz2PbIM2Y0IGnQj
-         4c8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734635759; x=1735240559;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sNOBmwqwRj3yzOYPTCEEI8dhzc3mbBHJ18/WLJV+8LY=;
-        b=q16XGLwACMybWe862O4lYk+QlsYysZXNdfD2Cw7wBgECjHR3wDchvPOS0TLByrk9EJ
-         NfxI3VSz8Ut3OUBKxcgkcNp+qqs2VPFfQw297eWMf2jqLaubBtM3Chp/sbumV/TZxsXn
-         W1G62K+LpPCKwQ7fjRK7QD5BYUD6SkzoCT7OZqVE68zRu8Jryw6skSqshYz02DFdCSjB
-         Dzo6dHGaHE1cE6oPLUg6F3JCl/Ut4aIg8SmZCoyKTAeToy0rei7FGKQd7OS2fYrxlIkW
-         DAxiG0StAEzVSkTRNyW53c/y23z4plGdcTjf9wH1qKBKPVRdLguwhduRyYAw3wHxdQDg
-         6CWw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6gs727Yk9uWdhd8eLYiwza7qcPNNz2hmK1cVPVQPOYy2bHvIQDuKFeTEbfUpafpIz79A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwTmvY9oUdLKzlmHhXsd4k3giFLTRhx3zVCl4sCdDoaiNbI9XbZ
-	+5CIKSuclsMvSKpilfhqQUAWroGj8vHnMa9aXmTTEFJPgZ8QKtk6rePi78fbZNE86OtqME3gYpz
-	VP+UujOb9BQf9+3049+jEj3CEpOk=
-X-Gm-Gg: ASbGnct5lgoCvy7KJd/26qLFIiC8DcsQ3V3kskPbCkxx0e1gOY818TbpjfSR9MQPRfb
-	be/ZunxL++Wv+sRUO+XQr6pyximFSHDOF0dH9nR3w
-X-Google-Smtp-Source: AGHT+IFRjZ5gE1tVcLron6RpJpWDZy7hsTa8k0I5UHyiz6zDLDaE+5075nYzRjieKEMtuLyaXQGoXw7MWQk2vaAwbiw=
-X-Received: by 2002:a05:6402:4403:b0:5d0:b7c5:c40b with SMTP id
- 4fb4d7f45d1cf-5d81dd66e01mr25011a12.1.1734635758947; Thu, 19 Dec 2024
- 11:15:58 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Ov8BWTOe"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1734636520;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LbD5jMA5tenpuGS8kW1tV+fOaAyX326V/0NyhPnCSaA=;
+	b=Ov8BWTOe8mmQZ1ZYzoLi39IkUiDPftA9PG+mTFXCaX5rQZEohGRI6YpQ837YWplRe+HKjc
+	LPjGG5TS5Xt3CgGsyWxPH7OmCwQR30hMYsTAT4v9y1w9tg8hGUXHoQTwA992UmhTla2ih+
+	OUC4vbIr6wsdWnsfbXH4DIAcm2V87Lo=
+From: Toon Claes <toon@iotcl.com>
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, Christian Couder
+ <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4 2/8] refs: add `index` field to `struct ref_udpate`
+In-Reply-To: <20241216-320-git-refs-migrate-reflogs-v4-2-d7cd3f197453@gmail.com>
+References: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
+ <20241216-320-git-refs-migrate-reflogs-v4-2-d7cd3f197453@gmail.com>
+Date: Thu, 19 Dec 2024 20:28:30 +0100
+Message-ID: <87bjx7h3q9.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGJzqs=ksKqY2M8Px3uv6ut=MBwkmpPUqp3xVzVpNMJ0YBrBww@mail.gmail.com>
- <CAGJzqsnAO_vDSYOC7ZbYUQHJ3fT10JuQ2RrC2cvY4hcPMnZ=bg@mail.gmail.com> <Z2N-rV4fhF3ZkGlp@tapette.crustytoothpaste.net>
-In-Reply-To: <Z2N-rV4fhF3ZkGlp@tapette.crustytoothpaste.net>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Thu, 19 Dec 2024 19:15:00 +0000
-Message-ID: <CAGJzqsmQY9p+nxHPB67N1P4i361adMbvT-BNR7UKfsSY=QGi2A@mail.gmail.com>
-Subject: Re: Fwd: [Bug] `credential fill` prints incomplete bearer credential
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, M Hickford <mirth.hickford@gmail.com>, 
-	Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, 19 Dec 2024 at 02:02, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Karthik Nayak <karthik.188@gmail.com> writes:
+
+> The reftable backend, sorts its updates by refname before applying them,
+> this ensures that the references are stored sorted. When migrating
+> reflogs from one backend to another, the order of the reflogs must be
+> maintained. Add a new `index` field to the `ref_update` struct to
+> facilitate this.
 >
-> On 2024-12-18 at 20:42:31, M Hickford wrote:
-> > Hi. Is this a bug in git version 2.47.1? Or am I using it incorrectly?
-> >
-> > # erase existing example.com credentials
-> > printf "host=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential reject
-> > # store bearer token with expiry in far future in credential-cache
-> > printf "host=example.com\nprotocol=https\nauthtype=bearer\ncredential=letmein\npassword_expiry_utc=2147483640\n"
-> > | git credential-cache store
-> > # try to retrieve credential
-> > printf "host=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential fill
-> >
-> > Expected output (complete credential):
-> >
-> > protocol=https
-> > host=example.com
-> > authtype=bearer
-> > credential=letmein
-> > password_expiry_utc=2147483640
-> >
-> > Actual output (incomplete credential, no prompt for username or password):
-> >
-> > protocol=https
-> > host=example.com
-> > password_expiry_utc=2147483640
+> This field is used in the reftable backend's sort comparison function
+> `transaction_update_cmp`, to ensure that indexed fields maintain their
+> order.
 >
-> This is expected.  Every request to a credential helper should include
-> all of the capabilities that the caller supports on input, and the
-> credential helper will always emit those on output.  `git credential`,
-> however, will only emit the capabilities that were actually supported,
-> so that general callers (including Git LFS) can determine the actual
-> set of supported capabilities.
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  refs/refs-internal.h    |  7 +++++++
+>  refs/reftable-backend.c | 13 +++++++++++--
+>  2 files changed, 18 insertions(+), 2 deletions(-)
 >
-> In this case, you asked the cache helper for a credential, but didn't
-> tell it that you supported `authtype` and `credential`.  Therefore, the
-> only safe thing it can assume is that you are incapable of parsing and
-> understanding those fields, so it doesn't emit them.  This is a benefit
-> for security, because some tooling logs all fields but the `password`
-> field, and we don't want to include new secret fields that the caller is
-> going to shovel into a file or syslog.
->
-> In addition, the helper could actually store two different sets of
-> credentials, one which is a username and password, and one which is an
-> authtype and credential.  If you provided the capability, the latter
-> would be omitted, but otherwise the former would.  That can be helpful
-> if you have a stronger credential type but might occasionally need to
-> use older software (say, older versions of Git or Git LFS).
->
-> However, if you provide the proper capability, this works as you expect:
->
-> ----
-> % printf "host=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential reject
-> % printf "capability[]=authtype\nhost=example.com\nprotocol=https\nauthtype=bearer\ncredential=letmein\npassword_expiry_utc=2147483640\n" | git credential-cache store
-> % printf "capability[]=authtype\nhost=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential fill
-> capability[]=authtype
-> authtype=bearer
-> credential=letmein
-> protocol=https
-> host=example.com
-> password_expiry_utc=2147483640
-> ----
->
-> Note that `capability[]` directives should always start the request to
-> allow one-pass parsing.
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 0fd95cdacd99e4a728c22f5286f6b3f0f360c110..f5c733d099f0c6f1076a25f4f77d9d5eb345ec87 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -115,6 +115,13 @@ struct ref_update {
+>  	char *msg;
+>  	char *committer_info;
+>  
+> +	/*
+> +	 * The index overrides the default sort algorithm. This is needed
+> +	 * when migrating reflogs and we want to ensure we carry over the
+> +	 * same order.
+> +	 */
+> +	unsigned int index;
+> +
+>  	/*
+>  	 * If this ref_update was split off of a symref update via
+>  	 * split_symref_update(), then this member points at that
+> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> index e882602487c66261d586a94101bb1b4e9a2ed60e..c008f20be719fec3af6a8f81c821cb9c263764d7 100644
+> --- a/refs/reftable-backend.c
+> +++ b/refs/reftable-backend.c
+> @@ -1279,8 +1279,17 @@ static int reftable_be_transaction_abort(struct ref_store *ref_store UNUSED,
+>  
+>  static int transaction_update_cmp(const void *a, const void *b)
+>  {
+> -	return strcmp(((struct reftable_transaction_update *)a)->update->refname,
+> -		      ((struct reftable_transaction_update *)b)->update->refname);
+> +	struct reftable_transaction_update *update_a = (struct reftable_transaction_update *)a;
+> +	struct reftable_transaction_update *update_b = (struct reftable_transaction_update *)b;
+> +
+> +	/*
+> +	 * If there is an index set, it should take preference (default is 0).
+> +	 * This ensures that updates with indexes are sorted amongst themselves.
+> +	 */
+> +	if (update_a->update->index || update_b->update->index)
 
-I think a bug exists in credential-cache. Below it receives a query
-*without* capability authtype, upgrades it *with* capability authtype
-and prints a bearer credential.
+What if one of both simply isn't set, and the other one is? Then we
+compare an unset with one that is set? Or am I being too paranoid?
 
-git credential-cache exit
-# store bearer credential
-printf "capability[]=authtype\nhost=example.com\nprotocol=https\nauthtype=bearer\ncredential=letmein\npassword_expiry_utc=2147483640\n"
-| git credential-cache store
-# query with capability authtype (prints bearer credential as expected)
-printf "capability[]=authtype\nhost=example.com\nprotocol=https\n" |
-git credential-cache get
-# query without capability authtype (expect nothing)
-printf "host=example.com\nprotocol=https\n" | git credential-cache get
-
-If you agree that this is a bug, we could add a test case to
-helper_test_authtype.
-
-Here's a second simpler example of credential-cache of upgrading a request:
-
-git credential-cache exit
-# store credential
-printf "host=example.com\nprotocol=https\nusername=tim\npassword=hunter2\n"
-| git credential-cache store
-# get credential (response is upgraded with capability authtype)
-printf "host=example.com\nprotocol=https" | git credential-cache get
-
-
-
->
-> Hopefully this is helpful.
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
+--
+Toon
