@@ -1,114 +1,126 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7DF3FD1
-	for <git@vger.kernel.org>; Thu, 19 Dec 2024 20:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8561C78F4A
+	for <git@vger.kernel.org>; Thu, 19 Dec 2024 21:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734641197; cv=none; b=hL4Tg1mUUhSXwDbZ3ezFwkLwf0aoYUqIQyw+jaQOYgqJQKaVegBTw0cDmkR47audg8X93/JZDTtvk2LlUjuJmhFkwwkP+BixF1FeUfVMBqQ+dLOC59aPbV3hTL8d5erscQND0rAsr2djaRmYvYiMEJ2DiZmyh2a1LnbNL4DeZkA=
+	t=1734643167; cv=none; b=mRivnOfsqgdgclSbBgpyH82Vdn+lY6HSl0ZbBUzw7nIKUYLX3F5tbVfngN58yNewrXfa1OOPun0cHl7SCCvOLiPDUujLkNjkXx3u8DLymmiVy7SmkvWBWy58Mii1W3oU1mDQ1rNq3kWlUKJuXTL1X17oQkUSqqDLCtTnplkEyPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734641197; c=relaxed/simple;
-	bh=RLkCvyQq7Fdvc8vgQWyEJ4LTdmioR2AtpHeh5/cVJU8=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X6Sule2yTTry5xFVfXDC5uUE8VeoC90v22R7oa4LbmwkMvkxmvusr8it9pi901XaAUDNMJWNOtuY98TaZ0HFP5suiluaJs344IHoBbKLqpzY7gH7LVDGWQ4nSgIXqEg7VHr+Ef1j+FJO3i+ArXEDQjejDpirFXrMXmrTISKUyeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4BJKkOqR2302779
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Dec 2024 20:46:25 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Patrick Steinhardt'" <ps@pks.im>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <xmqqfrmn4hr9.fsf@gitster.g> <00ad01db5017$aa9ce340$ffd6a9c0$@nexbridge.com> <Z2EC9rq3F0rTljff@pks.im> <010a01db508a$4544d750$cfce85f0$@nexbridge.com> <015901db50b5$e3a7f6e0$aaf7e4a0$@nexbridge.com> <Z2JyFB3CddYM_LP4@pks.im> 
-In-Reply-To: 
-Subject: RE: [ANNOUNCE] Git v2.48.0-rc0
-Date: Thu, 19 Dec 2024 15:46:20 -0500
-Organization: Nexbridge Inc.
-Message-ID: <00ca01db5257$12708d00$3751a700$@nexbridge.com>
+	s=arc-20240116; t=1734643167; c=relaxed/simple;
+	bh=AJRGdW+PfmWk9dMlHkSTA8ItonCPawlYK0mnqiytGRs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OyFASkvzidLGJa0/+Nc+qzOj7EuwpSIyYh5bJDSfO5FUcU3i+/s2MWR64psAAkf06CXsTOZ4lWnhKdAXay7LygODXo48h2+oXpdrDC/HxCK/hkSeYV365fd7Qu27E3LsloJ6zaqVwutRtaciSgnwl4jmJP9MMPQ6t64PYHizm5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4lvmsF3J; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4lvmsF3J"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aa692211331so230521766b.1
+        for <git@vger.kernel.org>; Thu, 19 Dec 2024 13:19:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1734643164; x=1735247964; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V/BV1nifVOz9RxLKbI6qCmMx+T1BpyyQN9zPBR/BSWo=;
+        b=4lvmsF3JU4gFoO3lWlGbGtEaIJWn+OKrzuF39CTlJjI6F88q2xzn8qH7Z0Pf2u2I9F
+         AXfKFcx3wnuev85Djohsygma/TLWYOWA0EOAK1EGF7UeYcJ4gGvfvFGOEqsJIQjVOe06
+         tyMQ0ARuDAIGAp2qFEsPVzFiMxHYzltz1iUHAPFxJjEio52xCNOg0SZPvx6KvKrCGE2f
+         Po5sy5aVLH65ULjG3A4ylyRb+kwl1Y49gRVXQMVzOFBdW1sor/LdnxJqnonxkBbddw8A
+         OVamcWt+2UFtQO+xkjwb8aXJTevEzjENgUsVcMLF22EHllse3yOujf8zbtomCymLwast
+         y6MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734643164; x=1735247964;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V/BV1nifVOz9RxLKbI6qCmMx+T1BpyyQN9zPBR/BSWo=;
+        b=KE20rFI0dXiYA+AH4lAa6OwxxOzvw9LKkVOqHGREPV5bUiCtFrG9RIFET5pvr+Chwa
+         VMJIYgDJ69WDN55Y0hvvFqFUYrfdWwuw21raKnA35qFFeVSIGZt060Ed4d9+fHKRH8C/
+         /RtW3bWM+UBq+EezcvMapAoksci4SszbNh7+GWuoBZBNYeDkRIdZWfGIl9I83fK2jSzV
+         0C+ZgqP6KeyErgWQp6MTBb8CbNsWtTR60hzK4j0d7YJ9DOFiDTy2MT2R6zFN2Qn4HJQU
+         WIdkHoUs6eFfEeJJWpzaJvkQnopSlxazI9VqtIemEJNXav+Bb0qSRNkuhUVJG2Kmzsbc
+         zzGQ==
+X-Gm-Message-State: AOJu0YwTCG4zv4Gm4+z9LZflHE/us1zkcysFYXqMbr5dDUufGSW1Ugiz
+	0QICpPyMfk0dO/flrUJOZYrgKpu47+R6B0r1R4TfuKf6IAo23I8a4r+dbqWHE2a0JTon8f8lJ1G
+	5FZU/IRr6Hbl2jsVzv4FsLK2Uv1DO7ILWk+W4
+X-Gm-Gg: ASbGncsJNc/NA/SKc6y2ZHnl4lsTtk9pf9puFEuSMQ7c+iamJGK3STI+9xlsGxAi6t4
+	zoRrv0LfBlEnKvlqxnihR2fKLLCMWb428UOHJ/XV9MnIDLP2IY8umwj3pHRokezElag==
+X-Google-Smtp-Source: AGHT+IFTUUulGGCsB0TUBIGa24FfCqTLrWFpDf5UEHo4kIIXWVqaKPnnn15X4QufoNQTTQyXLMr+Mn1tKgRu2mWJh9Q=
+X-Received: by 2002:a17:907:7208:b0:aac:93b:269a with SMTP id
+ a640c23a62f3a-aac3469199amr20943166b.20.1734643163643; Thu, 19 Dec 2024
+ 13:19:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFEfEaRNrZ6uu0wI6oVXmgPkoCy2gI/zh74AaCMqnQBl78GqAGqkn5VArNI4yqzyySw4IAB4IoA
-Content-Language: en-ca
+References: <20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im>
+ <20241219-b4-pks-git-version-via-environment-v1-2-9393af058240@pks.im>
+In-Reply-To: <20241219-b4-pks-git-version-via-environment-v1-2-9393af058240@pks.im>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 19 Dec 2024 13:19:12 -0800
+Message-ID: <CAO_smVhcai9reesTRSrd=hHz2Sa2T7Bs-U1NZ9KcCN5PNv6T5Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] GIT-VERSION-GEN: fix overriding GIT_BUILT_FROM_COMMIT
+ and GIT_DATE
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On December 18, 2024 11:07 AM, I wrote:
->On December 18, 2024 1:57 AM, Patrick Steinhardt wrote:
->>On Tue, Dec 17, 2024 at 02:00:01PM -0500, rsbecker@nexbridge.com wrote:
->>> On December 17, 2024 8:48 AM, I wrote:
->>> >This is on the latest OS version of NonStop x86. The test is done
->>> >via the
->>> >following:
->>> >With OpenSSL 3.4 The T0625 is Expat.
->>> >
->>> >When run as follows:
->>> >GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true
->>> >/usr/coreutils/bin/make -k test V=1 CFLAGS="-g -O2 -Winline
->>> >-I/usr/local- ssl3.4/include -I/usr/coreutils/include
->>> -I/usr/tandem/xml/T0625L01_AAE/include"
->>> >LDFLAGS="/usr/coreutils/lib/libz.a
->>> >-L/usr/local-ssl3.4/lib -L/usr/coreutils/lib
->>> -L/usr/tandem/xml/T0625L01_AAE/lib"
->>> >TEST_LINT= SHELL=/usr/coreutils/bin/bash
->>> >
->>> >The results are:
->>> >*** t0000-basic.sh ***
->>> >error: cannot run git init
->>> >Makefile:77: recipe for target 't0000-basic.sh' failed
->>> >make[2]: *** [t0000-basic.sh] Error 1
->>> >*** t0001-init.sh ***
->>> >error: cannot run git init
->>> >Makefile:77: recipe for target 't0001-init.sh' failed
->>> >make[2]: *** [t0001-init.sh] Error 1
->>> >*** t0002-gitfile.sh ***
->>> >error: cannot run git init
->>> >Makefile:77: recipe for target 't0002-gitfile.sh' failed
->>> >make[2]: *** [t0002-gitfile.sh] Error 1 etc for all tests.
->>> >
->>> >Removing GIT_TEST_DEFAULT_REF_FORMAT=reftable allows the whole test
->>> >suite
->>> to
->>> >pass.
->>> >
->>> >There are environment size limits (about 32Kb) in bash on the box,
->>> >so it is
->>> possible a
->>> >boundary was crossed internal to the test setup.
->>>
->>> I did find this, in t0000-basic:
->>> not ok 69 - init with GIT_DEFAULT_REF_FORMAT=reftable
->>
->>You mean t0001-init.sh, right?
->>
->>> but have no more details. When should I break in gdb to get a backtrace?
->>
->>Can you please run that test with "-ix" and post the logs?
+On Thu, Dec 19, 2024 at 7:55=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
->All tests, actually.
+> Same as with the preceding commit, neither GIT_BUILT_FROM_COMMIT nor
+> GIT_DATE can be overridden via the environment. Especially the latter is
+> of importance given that we set it in our own "Documentation/doc-diff"
+> script.
 >
->$ GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true sh t0000-
->basic.sh --verbose -i -x
->error: reftable: transaction prepare: out of memory
->error: cannot run git init
+> Make the values of both variables overridable.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  GIT-VERSION-GEN | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
 
-Any updates or hypothesis on this? Our test system has loads of memory - I
-cannot
-figure out where the allocation failure takes place. There is a limit to how
-much
-memory can be allocated, but it is very high and our virtual memory is
-extensive,
-but this is a 32-bit build.
+Looks good, thanks for fixing this and for all the work done on the
+cleanups for the build system changes.
 
---Randall
-
+>
+> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+> index 787c6cfd04f0a43d0c1c8a6690185d26ccf2fc2f..f8367f6d09ff2ada8868e575d=
+6ec8f1f9b27534d 100755
+> --- a/GIT-VERSION-GEN
+> +++ b/GIT-VERSION-GEN
+> @@ -53,10 +53,18 @@ then
+>  else
+>         VN=3D"$DEF_VER"
+>  fi
+> -
+>  GIT_VERSION=3D$(expr "$VN" : v*'\(.*\)')
+> -GIT_BUILT_FROM_COMMIT=3D$(git -C "$SOURCE_DIR" rev-parse -q --verify HEA=
+D 2>/dev/null)
+> -GIT_DATE=3D$(git -C "$SOURCE_DIR" show --quiet --format=3D'%as' 2>/dev/n=
+ull)
+> +
+> +if test -z "$GIT_BUILT_FROM_COMMIT"
+> +then
+> +    GIT_BUILT_FROM_COMMIT=3D$(git -C "$SOURCE_DIR" rev-parse -q --verify=
+ HEAD 2>/dev/null)
+> +fi
+> +
+> +if test -z "$GIT_DATE"
+> +then
+> +    GIT_DATE=3D$(git -C "$SOURCE_DIR" show --quiet --format=3D'%as' 2>/d=
+ev/null)
+> +fi
+> +
+>  if test -z "$GIT_USER_AGENT"
+>  then
+>         GIT_USER_AGENT=3D"git/$GIT_VERSION"
+>
+> --
+> 2.47.0
+>
