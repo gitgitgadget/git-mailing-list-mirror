@@ -1,186 +1,186 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF20219A77
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:30:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ACB3218EAC
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:30:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734712204; cv=none; b=kxll9s3Wrm5rlvxbxO/a/5pNuT7fd48JOZHVZAr110raTaJO45ToRnAuw44b/tPXDJbVUdNmzymFRfaVNm6rvVLnB+tACAj5mZ9SNFlzK2zKhxNJdiAf1QP17omHMm6m1bxFTctD6iMN+qc7RRtH54ue8ISY5pFwtyfxd+fO2+A=
+	t=1734712262; cv=none; b=Cveka5c988YqQgZ7kvt9waKnJtyYYraEbwSpm0auuThyywQOkObFTD7Iw85epmTbaEpsi6aH4p8u60j0yPaa8ktLcnCi5GG1CJWvzc+3SmB6vth/Yr5lo6AUiTINIlT/TT8osY8RLXOmMNv91K6LfUNcKhypNMiYCyLMOyHehTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734712204; c=relaxed/simple;
-	bh=XDea4SM47uZTaxiqD2d0YxjiZWfyu16jFGYVMBrkY5E=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rZpSdnsRzyRkPncEBvza5kK1G5gCSFduwz7D4fpXgFtTi3bxjSMUaSoMIJ2bcwRXVWanWlstTdPmRP54YH6OBY23fLOIv6v5pHgd4lscM7Kxx3lVZOtCCwToqz0Uj1A3xsV7UfdGz5BiHDMl2KKU/i+2UBV5nj7qAbMeF1JEcdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mRHe/udK; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734712262; c=relaxed/simple;
+	bh=KZ5FFrPL+T7xBYFVeVADlyUH8HK3HjSFWpokC2Zg7P0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=JujOM9gTJqDXWL/AGzzMM8JovfS01EThqkkPP1i5sBZxsRTB8TN1RH7/3EkjKPhyC3l9I9QL+juH9uEcHCdNKdxBtEAJGENjTjVvOeBg1VGEr/CrMSJBD3aMq/mdUbPqNCCUc9oiXkCXHWFKKhtf0O+KZbpGmK2qbkdv7TZYgXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wHrxo1i1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lz5Wpjym; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mRHe/udK"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-436345cc17bso15834675e9.0
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:30:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734712201; x=1735317001; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yFfuYDIR0ShN5czL+iyviziWMginciFo9bmJ0X1czjM=;
-        b=mRHe/udKT2Skk6uIDAIRr91rJdi6ATdNqqpVvk+D6uiQUGOSZhcnz0gRWdn9Fvqg9w
-         g5fHYvsCis8NrbXD/9Ff9nBGWM/QqQrEPO0/Sk79pxn7R2tx5bTdanff/br9kFQytP5z
-         mvq2lgSk3uUxvPGR+0Z3Ljn+zMicD1edQDdgrkzkzR11HzaPzNEyesNHbp0hHgMNYnH/
-         a57nTCxnRC7DCmrOnPGM8FIQHUHBeUuX53MlMOp6Uryqz+zzo7qT2CiWC8Huh0Sn4RXS
-         XjDZ7Y5qzZt9Al6v9VaETsfVdU6lDKYJL3UyaoGqhoI+ZM39oIIJVWZCQESyrwN/Vmem
-         PMEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734712201; x=1735317001;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yFfuYDIR0ShN5czL+iyviziWMginciFo9bmJ0X1czjM=;
-        b=NQfEIYa9FFUhQvJBKmFszZBZlmuboczviOUONLLcKthDKmmOixzV+4AqN5cRIGAQOe
-         CgBMyyq+s/FBYXfxbyjVG2i1me1s39brbbTZciwOvV+sQy6vcNinrQqsUS5rrz841Fqz
-         MvXWddKOyODt7K33RHWidsfpbbky+tpoQ4Nvh/qgjY3XTajs80VVpY/Z4lf6z2g1vdRq
-         Okmub+TNqQVMbru4ayXS3+r5XqHqOlUcRAmz2ykjY2M/Ek3RM5uO3rDyWWEJRihwL76N
-         Ogy/CiUrSCzKtKxxTGwQrIJu1zzf0go46L7yo5jmUEOoKLimnwZ1nupgbcbY0djPIRGx
-         wzpw==
-X-Gm-Message-State: AOJu0Yxu3UhuuHPhpuOHEFJ8IEe4E4g/nQK8DN2LM84yLocxvvQc3lIn
-	0h6OAwrBAenwO8kGdfef4T54vVevKm2vF6m7vdpRuLz+tZpaDs9YHUJWOA==
-X-Gm-Gg: ASbGnct2wksqQ8TZRQebqcFa/FA7LTbxAwIgPYXxdFYo4Ouk+v4YO44LxWdG613byZv
-	HwuHpp/SF9kwRTuzxZEX4POFxTY1xkZNqKI6PrLC2k3pPpdxdadJjKCPEbP5ToCcnVz+APLyQuo
-	qrT1scZsf/GOxFBULmEdIMoxxpCElihrFyix+GCMjA+oba7cilLHdFnwMJbuw5FchJ13eawmHhR
-	RtYK7APQVMF3OprTahKKNSj3iUcttfXZQgcyN9UteiFpcWHFakaoFKXGg==
-X-Google-Smtp-Source: AGHT+IHO9Xzf+tq91yeM9FsIke7tzxV3MxCan/cWN/X4nD1v55GXppz8ymL5ACbDvWCD9Xu47QsL3g==
-X-Received: by 2002:a05:600c:4f94:b0:434:f871:1b96 with SMTP id 5b1f17b1804b1-43668b7a1dfmr31184995e9.29.1734712200647;
-        Fri, 20 Dec 2024 08:30:00 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4364b053e91sm117648615e9.1.2024.12.20.08.29.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 08:29:59 -0800 (PST)
-Message-Id: <1f765409eaf0576de52948ed0a0eb8a5b3493977.1734712194.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
-References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
-	<pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Dec 2024 16:29:53 +0000
-Subject: [PATCH v2 5/5] backfill: assume --sparse when sparse-checkout is
- enabled
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wHrxo1i1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lz5Wpjym"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 52B921140163;
+	Fri, 20 Dec 2024 11:30:59 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 20 Dec 2024 11:30:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734712259;
+	 x=1734798659; bh=ARdjWdzZSaE34hLUSQkyO4TDLFRRNGDm3rGYyYWX3AM=; b=
+	wHrxo1i13k6LVYl3a99zfX/RDUbaC5G5M5p53Ufs2ddP7o6dd0SI8sZ7g9gPjbVy
+	YTnjLYpCg80CADpQwBmQaMtmOEqK+3SX2f5PcC9gQf3uHOM8KAZMGmFfdPCOR48q
+	/zHuG4EAeii7+wQpqCtd5I0G/zeCfuEVfN/BMJjsDenEG2qadC/0yqGvb8DTU9Dq
+	SIpJkjk4/1J7fEZ7GuT6v1U8iHsuKmqNZyAHUXYeXm709CXc5CasqQr0m99G1U+4
+	Iqp+nmC1Z6PWE76ayUBaGBpiK5Tlm/StXsR9a7igTTocHCW4UyGAK9MWTQCQgTCV
+	sSSHxhVRkKWCTNVj214mDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734712259; x=
+	1734798659; bh=ARdjWdzZSaE34hLUSQkyO4TDLFRRNGDm3rGYyYWX3AM=; b=l
+	z5Wpjymz7EvV8Uxs/miBu5GehRKKrt0K4jXsMGvsPVs0j0MZMak0m/cXatZOTTaj
+	ttXDcrrA5DQjcHg+NCdyJ+LMFtvYe7ZzNxo8wzaSQY3ZPqvleBixuYEOFCM6g+Yy
+	wqy3VPVE2sYAgjd9YqMBfkN8q+GqdcCFylzMR6e/Shx1juA5qXm0gjAvN9k/JTx6
+	tKoOWAwcX1boXO16AAwy2c9HlzLQDpDG5Tr5gKvwRB+iUPjAKOWO3wLLCqXyveTq
+	qjDQ0DBP88fMsLnASvjl2XTVNhvUpxNdVRtzqMUEooSVpKGMSQacpkuXhmMRhqIg
+	7km3K6dAlMOYIQ+BwGE1g==
+X-ME-Sender: <xms:w5tlZ_Uu53VqbVRQfEJuNB5J7Qnqt9REQr5H6g_uGMUUUb_D9zhnzQ>
+    <xme:w5tlZ3k4ce-6i7V1B56I0H8Ed1yWKAHBpwbquXrKnkl8jxNXJ9iVYxAXWMIU_I1rb
+    qL6V0pk-QA2Allzxw>
+X-ME-Received: <xmr:w5tlZ7YZ3qAMg899DiWdUO7ZSvimMtyVRwVIs1_XdWUQjTZoiTT4-8xt8E4XVsExyK3pbv-9A5Ptfd9oWXTruJTXTyGe6ZRAn2vyTfRNEIDZf8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddgkeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepieduvddvfe
+    egudfhteegueffjeelhfekheefkeetueetleehuddtieefkeettdeinecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegurghnihgvlhdrvghnghgsvghrghdrlhhishhtsh
+    esphihrhgvthdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:w5tlZ6XiVdaDtmzNAnmeDmEjRhj5Ez0VPz1B691k3o3Pod-UO5W9zw>
+    <xmx:w5tlZ5mCka682n3rRGsXLzYrRV0B1mpZYlF8nj-euVUIpNcgm3Q2uw>
+    <xmx:w5tlZ3etPKOSeyUYakzWxQ3kP6hk1DDakh1jnEXrBqWF5ueNjCZ2ig>
+    <xmx:w5tlZzFXAJP8LprPP2xPu6R9sc8zrxR-9DmLK1eDirxeu_wTcRZ-MA>
+    <xmx:w5tlZ_iqaptyFN6eV6BeqcKhaDTO3oyRTDEK8VLbu9iKxUAzU1dSGVWr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Dec 2024 11:30:58 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 891b016f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Dec 2024 16:29:01 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Fri, 20 Dec 2024 17:30:35 +0100
+Subject: [PATCH v2] meson: skip gitweb build when Perl is disabled
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241220-b4-pks-meson-fix-gitweb-wo-perl-v2-1-18ab23dd6446@pks.im>
+X-B4-Tracking: v=1; b=H4sIAKqbZWcC/4WNwQqDMBBEf0X23C1JDFR76n+IBzVbXVpNSERbx
+ H/vVnovc3rD8GaDRJEpwTXbINLCif0kYE4ZdEMz9YTshMEoY7XRBbYWwyPhSMlPeOcX9jyv1OL
+ qMVB8Ypnnl9I51RE5EEuIJKvjoaqFB06zj+/jcNHf9uc26q970ajRapWXjSsk9ibzM49Q7/v+A
+ XfKkPjLAAAA
+X-Change-ID: 20241218-b4-pks-meson-fix-gitweb-wo-perl-93379dd0ceed
+In-Reply-To: <20241220-b4-pks-meson-fix-gitweb-wo-perl-v1-1-41039ad8d8d4@pks.im>
+References: <20241220-b4-pks-meson-fix-gitweb-wo-perl-v1-1-41039ad8d8d4@pks.im>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    johannes.schindelin@gmx.de,
-    peff@peff.net,
-    ps@pks.im,
-    me@ttaylorr.com,
-    johncai86@gmail.com,
-    newren@gmail.com,
-    christian.couder@gmail.com,
-    kristofferhaugsbakk@fastmail.com,
-    jonathantanmy@google.com,
-    karthik.188@gmail.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <derrickstolee@github.com>
+Cc: Daniel Engberg <daniel.engberg.lists@pyret.net>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-From: Derrick Stolee <derrickstolee@github.com>
+It is possible to configure a Git build without Perl when disabling both
+our test suite and all Perl-based features. In Meson, this can be
+achieved with `meson setup -Dperl=disabled -Dtests=false`.
 
-The previous change introduced the '--[no-]sparse' option for the 'git
-backfill' command, but did not assume it as enabled by default. However,
-this is likely the behavior that users will most often want to happen.
-Without this default, users with a small sparse-checkout may be confused
-when 'git backfill' downloads every version of every object in the full
-history.
+It was reported by a user that this breaks the Meson build because
+gitweb gets built even if Perl was not discovered in such a build:
 
-However, this is left as a separate change so this decision can be reviewed
-independently of the value of the '--[no-]sparse' option.
+    $ meson setup .. -Dtests=false -Dperl=disabled
+    ...
+    ../gitweb/meson.build:2:43: ERROR: Unable to get the path of a not-found external program
 
-Add a test of adding the '--sparse' option to a repo without sparse-checkout
-to make it clear that supplying it without a sparse-checkout is an error.
+Fix this issue by introducing a new feature-option that allows the user
+to configure whether or not to build Gitweb. The feature is set to
+'auto' by default and will be disabled automatically in case Perl was
+not found on the system.
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
+Reported-by: Daniel Engberg <daniel.engberg.lists@pyret.net>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-backfill.txt |  3 ++-
- builtin/backfill.c             |  7 +++++++
- t/t5620-backfill.sh            | 13 ++++++++++++-
- 3 files changed, 21 insertions(+), 2 deletions(-)
+Changes in v2:
 
-diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
-index 4710e2c12e3..9eecc6210c0 100644
---- a/Documentation/git-backfill.txt
-+++ b/Documentation/git-backfill.txt
-@@ -56,7 +56,8 @@ OPTIONS
+  - Fix awkward description of the new "gitweb" option.
+  - Link to v1: https://lore.kernel.org/r/20241220-b4-pks-meson-fix-gitweb-wo-perl-v1-1-41039ad8d8d4@pks.im
+
+Thanks!
+
+Patrick
+---
+ meson.build       | 13 +++++++++++--
+ meson_options.txt |  2 ++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 0dccebcdf16b07650d943e53643f0e09e2975cc9..8e34a895dca80da77d6809a6fe90fe7661f142a1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -740,7 +740,7 @@ endif
+ # features. It is optional if you want to neither execute tests nor use any of
+ # these optional features.
+ perl_required = get_option('perl')
+-if get_option('tests')
++if get_option('tests') or get_option('gitweb').enabled()
+   perl_required = true
+ endif
  
- --[no-]sparse::
- 	Only download objects if they appear at a path that matches the
--	current sparse-checkout.
-+	current sparse-checkout. If the sparse-checkout feature is enabled,
-+	then `--sparse` is assumed and can be disabled with `--no-sparse`.
- 
- SEE ALSO
- --------
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index b9f1cc98501..d7c300dbe67 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -1,3 +1,6 @@
-+/* We need this macro to access core_apply_sparse_checkout */
-+#define USE_THE_REPOSITORY_VARIABLE
+@@ -1874,7 +1874,15 @@ if intl.found()
+   subdir('po')
+ endif
+ subdir('contrib')
+-subdir('gitweb')
 +
- #include "builtin.h"
- #include "git-compat-util.h"
- #include "config.h"
-@@ -5,6 +8,7 @@
- #include "repository.h"
- #include "commit.h"
- #include "dir.h"
-+#include "environment.h"
- #include "hex.h"
- #include "tree.h"
- #include "tree-walk.h"
-@@ -140,5 +144,8 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 
- 	repo_config(repo, git_default_config, NULL);
- 
-+	if (ctx.sparse < 0)
-+		ctx.sparse = core_apply_sparse_checkout;
++# Gitweb requires Perl, so we disable the auto-feature if Perl was not found.
++# We make sure further up that Perl is required in case the gitweb option is
++# enabled.
++gitweb_option = get_option('gitweb').disable_auto_if(not perl.found())
++if gitweb_option.enabled()
++  subdir('gitweb')
++endif
 +
- 	return do_backfill(&ctx);
- }
-diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index f87a471c221..3fafcf99b58 100755
---- a/t/t5620-backfill.sh
-+++ b/t/t5620-backfill.sh
-@@ -77,6 +77,12 @@ test_expect_success 'do partial clone 2, backfill min batch size' '
- 	test_line_count = 0 revs2
- '
+ subdir('templates')
  
-+test_expect_success 'backfill --sparse without sparse-checkout fails' '
-+	git init not-sparse &&
-+	test_must_fail git -C not-sparse backfill --sparse 2>err &&
-+	grep "problem loading sparse-checkout" err
-+'
-+
- test_expect_success 'backfill --sparse' '
- 	git clone --sparse --filter=blob:none		\
- 		--single-branch --branch=main 		\
-@@ -105,7 +111,12 @@ test_expect_success 'backfill --sparse' '
- 	test_trace2_data promisor fetch_count 8 <sparse-trace2 &&
- 	test_trace2_data path-walk paths 15 <sparse-trace2 &&
- 	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
--	test_line_count = 24 missing
-+	test_line_count = 24 missing &&
-+
-+	# Disabling the --sparse option (on by default) will download everything
-+	git -C backfill3 backfill --no-sparse &&
-+	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
-+	test_line_count = 0 missing
- '
- 
- test_expect_success 'backfill --sparse without cone mode' '
--- 
-gitgitgadget
+ # Everything but the bin-wrappers need to come before this target such that we
+@@ -1893,6 +1901,7 @@ summary({
+   'curl': curl.found(),
+   'expat': expat.found(),
+   'gettext': intl.found(),
++  'gitweb': gitweb_option.enabled(),
+   'https': https_backend,
+   'iconv': iconv.found(),
+   'pcre2': pcre2.found(),
+diff --git a/meson_options.txt b/meson_options.txt
+index 32a72139bae870745d9131cc9086a4594826be91..c374345b1a2e5bd9101fec07e9640b7726a623fb 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -23,6 +23,8 @@ option('expat', type: 'feature', value: 'enabled',
+   description: 'Build helpers used to push to remotes with the HTTP transport.')
+ option('gettext', type: 'feature', value: 'auto',
+   description: 'Build translation files.')
++option('gitweb', type: 'feature', value: 'auto',
++  description: 'Build Git web interface. Requires Perl.')
+ option('iconv', type: 'feature', value: 'auto',
+   description: 'Support reencoding strings with different encodings.')
+ option('pcre2', type: 'feature', value: 'enabled',
+
+---
+base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
+change-id: 20241218-b4-pks-meson-fix-gitweb-wo-perl-93379dd0ceed
+
