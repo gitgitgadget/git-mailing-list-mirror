@@ -1,71 +1,76 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8615211A3D
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 12:58:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE6C1C5F24
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 13:06:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734699531; cv=none; b=eW7xDH/DWJwPpCLbPVABnibyjp/koPkfiretMqbYvoqA4Gw54F6VtnOUxhEox6tpTbcjojgGLVuR/Jn8tof8lHwSoqyq9x/SOMetUCXji+Ggojt7iI/zYDUfx4jRw2P/8XerPUk/nf57AqJog/m8rmXEXdee0ISeZZEmg9L2pnw=
+	t=1734700018; cv=none; b=b0kYNTlh+Zf/2r916icGQNC8SriskC6JrPAU48C14uyWupCt+HkUOLZsx02WiQJoI9G1aUK15jKRNLRltGoAycnvtOzBqkfkiW86mQLcjU1TAEQG71Q4f+aPXmwMq43tCT2ldCWQYmx77GT1B71tnxEpFDUYTOgvRMfCqSgSCig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734699531; c=relaxed/simple;
-	bh=MVnSrUvioqFI4KDF3g4VqBo9X2jgtmIqyx7foJhiz3A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0KYAkz+whgIrkSbcOlV5vRaC89DMFfXdduy2rlXPv5Q4msWut9rjl11PNa3tRS8ViE6HcbLUEhst7jKP7x7Htxk4iPgtrH7vjfkfJ957DUY4QjKeLF9ShGkURajqNn313w1vSRmle2WtrZ2RQ5IvM1B6YFZrLoSzvZ19GHrAXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C+aWvtaA; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1734700018; c=relaxed/simple;
+	bh=3QK08KwxcMfpKfTnLiRO8/PP8FEfQnXhGi13cDPEWxY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=eDwOuVtMpCI/aboJMQrcuO5T5Y8iPP5EKnKn2LbqNpaX/4mDXLdYgbXIMwvwtUP7+ndsXcZ0ltViq9qVZncqIgJ2LO11dIn73rDjICOshG3vyGINHoZ3SistWdTXhagspnATVs3a/mMxWavuA2jhsBvEMbKr+yRm9Jhjk5zYtBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMBTzUDw; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+aWvtaA"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aa67ac42819so271909866b.0
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 04:58:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMBTzUDw"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-725ed193c9eso1685421b3a.1
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 05:06:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734699528; x=1735304328; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734700016; x=1735304816; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DGN8zYgDD+s953Dby9uj/oFzjOmgZ7Ra3WMpKF70POM=;
-        b=C+aWvtaAhgwEN9iBSS6wKyRQJo1oXb8qLHNaIAOTBCGp46iiqxKUINfYa60j/2puxV
-         i9Utegjaejp/jmbRk4KjVzLPZty8NAQNtTloCq2cW+AqfVUTHnX3BZSTJ7/GSfU//wjG
-         SfbmmnsCOve4rda70wPswtRAZ33+++ABI/3lujMEP7QGo0krh7zLlcJtu2ftefraAXu7
-         CoAG9KYHzsek0Zezq/DXuDWW7pzAlzdIX9pv7gcNwdIrCy7qr8/LBy+blJtQ8/mjHh/K
-         dz6rOKmGJY1burjQtAILT2elTaSiQHdVyih1RZvtSa3Y+jTnD00xbWDJpiIXFsjBzp/a
-         LSmA==
+        bh=TNJfTzzJPRcScWdn06MRRm57QW1y3u2nJwVmaR5hswA=;
+        b=VMBTzUDwieqTIo51QzarYBbGbzGydfIKnmYNvOsMfDJZAWRNjehALlZVd6Di82NWNP
+         aBDiCHvWz/OAzmt+MGb3nOrfaSxSEzba2gKTuaceJAByTFUlxtKbxpdGBP6RhoeT5L0X
+         +CJW8J7d/L1rRoMAuVMH9NPCrWJ0zkYR+um5BoHpAefs0W4GM4eixGrRisjpqaFNRCAn
+         R13RdHVcsW2XfW/wzjYK/8zDY2x1jwPACIIJ6ibgjNMSEcFq98PAgKQ7oMWwSDdwpYIw
+         Koza/VFpMxdF41ic8PTid7S4Qii8vEFM9/4zo3rhSZmU5QyF0HKj1FQiEDyhJMbYXVcT
+         0fGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734699528; x=1735304328;
+        d=1e100.net; s=20230601; t=1734700016; x=1735304816;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DGN8zYgDD+s953Dby9uj/oFzjOmgZ7Ra3WMpKF70POM=;
-        b=VNd0ZoT56VRQ9d8Wt1mZ2uNaZ+/JW6+Ire7KOMMz6E2Kk5gINOZKhQ6rs++0eKJpjT
-         wonHRUGzoJemKFVNeD0Jix8oVfIcWZZcs1jUb58O2HFOJfr1wTJkch1b3FxmbNlNNNMj
-         5CeWClFypkM0o37sFSBfDjAoFDwlFF/59Y4ygtie+gcdc4yzVq1xg1o2FjX4DrQHoNyb
-         sv9/hI9SCKqjnctoPWIUcTJQc1viPsTnZrw5428NJsTRFfr68JeLQiQ2qQMjBAQwQpYM
-         dI4k/tcpNqfyv8Mc6Q76SBXo8TuDkwNG1+S3FPhhzCuG70YxsvkG6UaBCrUP8PhwRtyX
-         0vPQ==
-X-Gm-Message-State: AOJu0YzVSU2dXQJ3iqs6MPZ2h8ZzLg/TbJi8HWgiVBed/c9j5eCT3ffn
-	dVAbimwMArOzcWPMgmXBhMopuj+qcu0sVmZH/CuZBMJ5SZnRNTMS
-X-Gm-Gg: ASbGncvTgSgCwEd2Rh5vutT/+Vvh6zT4NZEWgOBpxNGYMi34YLezgLvrwianwvDjoeu
-	V7/jAyn4tN3DDNcmwAJiYLd1qxXyNUnuijHoK65Q409TEJIvedrPCQ4RIqaIlW2exS1RaZv34X1
-	SPW6pycz5M8y56s7al4ibMi4HddlYhQHkxXNYhZ6DrfQX0kDF+t+emYDdDOU1qL9FUwd8zJ9Tut
-	Dv/7VPi7obkXz2Wrsom+FNUSPQP1cstOMwk0fd8bSxmb7suZtB+O6LPx0u37ArdhMKHXA==
-X-Google-Smtp-Source: AGHT+IGcNRzfZYz6pEjz0k/PmvrhNbch4mQ2b8roC9xzUWvZXrIodv5RwGGaNfNAaq4Wb8wgQqgVEQ==
-X-Received: by 2002:a17:907:c26:b0:aab:cce0:f883 with SMTP id a640c23a62f3a-aac348c41bbmr230116566b.51.1734699527857;
-        Fri, 20 Dec 2024 04:58:47 -0800 (PST)
-Received: from localhost.localdomain ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f06168bsm174462766b.173.2024.12.20.04.58.44
+        bh=TNJfTzzJPRcScWdn06MRRm57QW1y3u2nJwVmaR5hswA=;
+        b=d5fS3qYlqZgwQfsbJ6I4wygxPcrtIhvka8Hbf+j7ipVHMUNmCvaGV8USDqmbWz9P+n
+         MFvyYLnJw8OfdA0ygbxwAncJQT5OCTKGfZWJYcZpzNy1Ap42nNk4S5LW2joXC7x3O6f7
+         CtNa7bdEHkgfO4dM6M+nffgXjNquTDveR14HxhqrxNK0eX/Rd/gAEIccoD40B9FKaGdZ
+         784WPkSVSG2o1T1mc7duCXBouu4nEYSevWlTDEV1RCz7s2CHLZS9s9cVE1qIBoYWH/6Q
+         dKLxHn4EtrkxdhoLSR1l585a7/yAKErxg6DrkxtjDfg2dDkoDaFlxwj4MTrHxO5OBbeI
+         if2g==
+X-Gm-Message-State: AOJu0YwYApjEHLm+vtO/19PFaeIkwT/t40nVk2yCxA9uJBmvzmCj+9Gy
+	yp7kd34wxfFp3rC0OmbP3kvpdg0pgIUaeUSiMP5mBPMrQoB8/Sh3WWGUyPpa
+X-Gm-Gg: ASbGncszGzbJh4HhNmfWez+Iq7VONWn5UyfZ6GL+msVppYDA08WUFSUANvw/Xs3GyW6
+	dONI81pjStsLIg8YJq2uNN9th7pE7qIV93Bf9b2MhPa2YNjm7n+t5XpAwneWglmQ7RJOL3U7+u2
+	0jSOXxz0iIzui2Er6h9URkh7T0KnWede6INpJ2/lT5G537C8yekEBtkx20nUWwpjXSh30Kjt/9K
+	ScF3cCL2luBAoNZWI1f9ywyFWlKdctOy5bogdQwSS5ToIQTAAr2Kho=
+X-Google-Smtp-Source: AGHT+IGycFy9d57xWmAE8owel2Zv3o27+2q+oo3j4L7XpH8+car7MI2QxJOoEikGzSSDsr9K8is3oA==
+X-Received: by 2002:a05:6a20:d49b:b0:1e0:c7cf:bc1f with SMTP id adf61e73a8af0-1e5e0447f12mr4931554637.9.1734700015906;
+        Fri, 20 Dec 2024 05:06:55 -0800 (PST)
+Received: from meet.. ([103.240.169.233])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad83033esm3037855b3a.48.2024.12.20.05.06.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 04:58:47 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
+        Fri, 20 Dec 2024 05:06:55 -0800 (PST)
+From: Meet Soni <meetsoni3017@gmail.com>
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
 	karthik.188@gmail.com,
-	toon@iotcl.com
-Subject: [PATCH] refs: mark invalid refname message for translation
-Date: Fri, 20 Dec 2024 13:58:37 +0100
-Message-ID: <20241220125837.2774153-1-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <xmqq4j2zifmy.fsf@gitster.g>
-References: <xmqq4j2zifmy.fsf@gitster.g>
+	kaartic.sivaraam@gmail.com,
+	ps@pks.im,
+	shyamthakkar001@gmail.com,
+	shejialuo@gmail.com,
+	chandrapratap3519@gmail.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [PATCH v2] t7611: replace test -f with test_path_is* helpers
+Date: Fri, 20 Dec 2024 18:36:32 +0530
+Message-Id: <20241220130632.11826-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241218111715.1030357-1-meetsoni3017@gmail.com>
+References: <20241218111715.1030357-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,54 +79,157 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The error message produced by `transaction_refname_valid()` changes based
-on whether the update is a ref update or a reflog update, with the use
-of a ternary operator. This breaks translation since the sub-msg is not
-marked for translation. Fix this by setting the entire message using a
-`if {} else {}` block and marking each message for translation.
+Replace `test -f` and `test ! -f` with `test_path_is_file` and
+`test_path_is_missing` for better verbosity.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+While `test -f` ensures that the file exists and is a regular file,
+`test_path_is_file` provides clearer error messages on failure. Similarly,
+`test ! -f`, used to check either the absence of a regular file or the
+presence of a directory, has been replaced with `test_path_is_missing` for
+better readability and consistent handling of such cases.
+
+Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
+Updated commit message and subject according to review.
 
-Since the reflog migration topic has been merged to 'next', I am sending this 
-as an individual patch which applies on top of 'kn/reflog-migration'. 
+ t/t7611-merge-abort.sh | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-Junio, I'd also be happy to re-roll the series if that is better.
-
- refs.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 58e543ce39..9c887427f2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1255,14 +1255,22 @@ static int transaction_refname_valid(const char *refname,
- 		return 1;
+diff --git a/t/t7611-merge-abort.sh b/t/t7611-merge-abort.sh
+index d6975ca48d..1a251485e1 100755
+--- a/t/t7611-merge-abort.sh
++++ b/t/t7611-merge-abort.sh
+@@ -54,13 +54,13 @@ test_expect_success 'fails without MERGE_HEAD (unstarted merge)' '
+ '
  
- 	if (is_pseudo_ref(refname)) {
--		const char *what = flags & REF_LOG_ONLY ? "reflog for pseudoref" : "pseudoref";
--		strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
-+		const char *refusal_msg;
-+		if (flags & REF_LOG_ONLY)
-+			refusal_msg = _("refusing to update reflog for pseudoref '%s'");
-+		else
-+			refusal_msg = _("refusing to update pseudoref '%s'");
-+		strbuf_addf(err, refusal_msg, refname);
- 		return 0;
- 	} else if ((new_oid && !is_null_oid(new_oid)) ?
- 		 check_refname_format(refname, REFNAME_ALLOW_ONELEVEL) :
- 		 !refname_is_safe(refname)) {
--		const char *what = flags & REF_LOG_ONLY ? "reflog with bad name" : "ref with bad name";
--		strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
-+		const char *refusal_msg;
-+		if (flags & REF_LOG_ONLY)
-+			refusal_msg = _("refusing to update reflog with bad name '%s'");
-+		else
-+			refusal_msg = _("refusing to update ref with bad name '%s'");
-+		strbuf_addf(err, refusal_msg, refname);
- 		return 0;
- 	}
+ test_expect_success 'fails without MERGE_HEAD (unstarted merge): .git/MERGE_HEAD sanity' '
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)"
+ '
  
+ test_expect_success 'fails without MERGE_HEAD (completed merge)' '
+ 	git merge clean_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	# Merge successfully completed
+ 	post_merge_head="$(git rev-parse HEAD)" &&
+ 	test_must_fail git merge --abort 2>output &&
+@@ -68,7 +68,7 @@ test_expect_success 'fails without MERGE_HEAD (completed merge)' '
+ '
+ 
+ test_expect_success 'fails without MERGE_HEAD (completed merge): .git/MERGE_HEAD sanity' '
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$post_merge_head" = "$(git rev-parse HEAD)"
+ '
+ 
+@@ -79,10 +79,10 @@ test_expect_success 'Forget previous merge' '
+ test_expect_success 'Abort after --no-commit' '
+ 	# Redo merge, but stop before creating merge commit
+ 	git merge --no-commit clean_branch &&
+-	test -f .git/MERGE_HEAD &&
++	test_path_is_file .git/MERGE_HEAD &&
+ 	# Abort non-conflicting merge
+ 	git merge --abort &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff)" &&
+ 	test -z "$(git diff --staged)"
+@@ -91,10 +91,10 @@ test_expect_success 'Abort after --no-commit' '
+ test_expect_success 'Abort after conflicts' '
+ 	# Create conflicting merge
+ 	test_must_fail git merge conflict_branch &&
+-	test -f .git/MERGE_HEAD &&
++	test_path_is_file .git/MERGE_HEAD &&
+ 	# Abort conflicting merge
+ 	git merge --abort &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff)" &&
+ 	test -z "$(git diff --staged)"
+@@ -105,7 +105,7 @@ test_expect_success 'Clean merge with dirty index fails' '
+ 	git add foo &&
+ 	git diff --staged > expect &&
+ 	test_must_fail git merge clean_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff)" &&
+ 	git diff --staged > actual &&
+@@ -114,7 +114,7 @@ test_expect_success 'Clean merge with dirty index fails' '
+ 
+ test_expect_success 'Conflicting merge with dirty index fails' '
+ 	test_must_fail git merge conflict_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff)" &&
+ 	git diff --staged > actual &&
+@@ -129,10 +129,10 @@ test_expect_success 'Reset index (but preserve worktree changes)' '
+ 
+ test_expect_success 'Abort clean merge with non-conflicting dirty worktree' '
+ 	git merge --no-commit clean_branch &&
+-	test -f .git/MERGE_HEAD &&
++	test_path_is_file .git/MERGE_HEAD &&
+ 	# Abort merge
+ 	git merge --abort &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff --staged)" &&
+ 	git diff > actual &&
+@@ -141,10 +141,10 @@ test_expect_success 'Abort clean merge with non-conflicting dirty worktree' '
+ 
+ test_expect_success 'Abort conflicting merge with non-conflicting dirty worktree' '
+ 	test_must_fail git merge conflict_branch &&
+-	test -f .git/MERGE_HEAD &&
++	test_path_is_file .git/MERGE_HEAD &&
+ 	# Abort merge
+ 	git merge --abort &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff --staged)" &&
+ 	git diff > actual &&
+@@ -159,7 +159,7 @@ test_expect_success 'Fail clean merge with conflicting dirty worktree' '
+ 	echo xyzzy >> bar &&
+ 	git diff > expect &&
+ 	test_must_fail git merge --no-commit clean_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff --staged)" &&
+ 	git diff > actual &&
+@@ -168,7 +168,7 @@ test_expect_success 'Fail clean merge with conflicting dirty worktree' '
+ 
+ test_expect_success 'Fail conflicting merge with conflicting dirty worktree' '
+ 	test_must_fail git merge conflict_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff --staged)" &&
+ 	git diff > actual &&
+@@ -183,7 +183,7 @@ test_expect_success 'Fail clean merge with matching dirty worktree' '
+ 	echo bart > bar &&
+ 	git diff > expect &&
+ 	test_must_fail git merge --no-commit clean_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff --staged)" &&
+ 	git diff > actual &&
+@@ -194,7 +194,7 @@ test_expect_success 'Fail conflicting merge with matching dirty worktree' '
+ 	echo barf > bar &&
+ 	git diff > expect &&
+ 	test_must_fail git merge conflict_branch &&
+-	test ! -f .git/MERGE_HEAD &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
+ 	test -z "$(git diff --staged)" &&
+ 	git diff > actual &&
 -- 
-2.47.1
+2.34.1
 
