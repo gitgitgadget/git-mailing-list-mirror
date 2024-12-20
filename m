@@ -1,105 +1,66 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D5F218AB7
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 15:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9448D218AB7
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 15:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734710013; cv=none; b=bmOqjXv9px8/OLmV7cwoVe9b9RnfRwg/wySbMdKgzOx9IJ/CnPn77odcor8GCIPDOLFh3ZP5NLa08OiKMNW3ZrCIyQxTKQhVVR2kVxwJ9Uk3ITjxq95WlLc7sC70zOInU/JIqYWC3Ruo8OtnP/HnHVuse4U+OxnddY7O6cXfsxk=
+	t=1734710026; cv=none; b=hgfdX00mDhF4ZGXeULhJ6QdiiJiekg5H2YU4wanf04kxsl00+TliN1CaainsfMFakRNlWL0jXSkKo9MJ0C5iqhsPmN76zAj22rNYpciNkQPfQkAmmE9J6Lc2urYANjYbZ6Z9zWHSLX2gGuJOVMmlSJEzrTG+bK2wNZqVKB/G8tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734710013; c=relaxed/simple;
-	bh=jhu6ZdFSgaz0y+UTKwwHXcUiravw/JFXo4sMOntPDbI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k3Ft5igpiwBFA7vnDpOiHEEJxpT8qSyjsxOGfYa6s7o4CbMg/cGhYrzkte72wqNYvgvGcTtjnLhBxFUzAM4Fhq4Q/w0DV2VA6o9m0D2hUeVLeGxaRcX/2IqD++8ueUN19SKvNQi3BIS4RevhiMiM5jKNtxfR17581R8T+3v7THo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QEW8D814; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t+wpwVlu; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734710026; c=relaxed/simple;
+	bh=OZOpVrVGCi5qi9D55Jnal0dvP8y6LSwR3hAkB4UVVXI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=urXHkYzX/+V/4fN+6xy8/OFpgZkY7KXE9T73UboyeJd7lLPSSBwe3SsdCo2rVXTzpn+Mo0TaEKchbDcjGwsxs5XDvvJGWty80tGbuu+b5LPjK97Zi7MKxZzAikorZo/p7huj9MCEPS3cKERrlw06mCCuDRZyeOWh0ck1AQw28ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cEA/p18k; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QEW8D814";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t+wpwVlu"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6705F254017C;
-	Fri, 20 Dec 2024 10:53:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 20 Dec 2024 10:53:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1734710010; x=1734796410; bh=nAyhCYaUH+
-	LFWXHu+bTEwFytkd5dsJON485YxyAHh8Y=; b=QEW8D814FBIT60xpywxU24klt4
-	oXpPxC+/638AZ1qJS9r5wIn7yx0bNkDRxLp72t3vfKhbRsrzcbSmPQtaxRTCGoOM
-	ZWwAv3te+dMQIPZK7WXAILt5Kycc+D2p5Qau1bBBJlZJ+72L+vTAPAeDCxsxSgoY
-	x/Wo5jTZYZoBIl5FgJoG/12icoGwO+s8/K7ygRwA9ivUHXDD4n+sWNFJBtRMioNL
-	sEYZ1Ov92UBpyCzhjde6bY74mv8ybGqIFY/JjJkUb5VhKAmlE8MIgoOjldaxs82l
-	CR+JQpEkIt735sPv+yEECN12nH0GZGn0mVxwbc4dkUNKBcH9RnfbtaNVUCCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734710010; x=1734796410; bh=nAyhCYaUH+LFWXHu+bTEwFytkd5dsJON485
-	YxyAHh8Y=; b=t+wpwVluZti9sSalvkAytHGgFseN27garykccp6H2bsfgNAhtve
-	nnYlDfQPiHjqsK059y4idtVKd8gueiUaZKy/g0mPGIoLArtP89vhXDZgLhhYXSgz
-	wAiUem36MV8amG1teLD5q3+jIPYfEB8CJbZiP88u5k0zuHtm2s+KAA77nyezlWi7
-	TyGpnL+w2uIR3VGgyt/gp92V6DfbrvsYbysMMRVUe6i1dS5Dc/o0qEMoZxjXvrtO
-	nhfEHo7jCAG1luqiBrAZtwxaNsDolXMH6YJflzpBe917XNLfrOG8r01BX7KYelFx
-	apUFjWHmDs3i1WzBiSc3LpCIlOu9Nl4hQHQ==
-X-ME-Sender: <xms:-ZJlZ5QFjVoGX92NXDSFEhOq_j6BtOtkoaTtmDfOVjpODqF4qnG9dg>
-    <xme:-ZJlZyx0dAXymFCiItIG_N8HgzERubuOcHm53r30euyAegvZRNaRellFu5GPMDIeE
-    X7lV-7UWj1ygMDIHA>
-X-ME-Received: <xmr:-ZJlZ-1W5Sqi-T-2LVdQbkB8pInEkjiHsCsyjcap2VbWENpdnE5JUzlJowO84ivLfNg5glMoLZ9gVla0sepHBCy-8IPh9-pC7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddgjeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrud
-    ekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-ZJlZxBdHj2nlG_c_YoZYcuIwLG5VbtflkV6IGH57BL1K4j9nd1zYw>
-    <xmx:-ZJlZyjEjTQ5MeFyhHwQrKpvHPqRQmIMkoVILm2Wdl5VIcZM_BWygA>
-    <xmx:-ZJlZ1oRX8QxxDh1QYfzzoLVuzUOtKRp3VmLDru5MoZVjtZlIqqk4A>
-    <xmx:-ZJlZ9jQpoMZ6fCnay5f6myIGv0Htn5K_9QnldhhLgLD7xWNRSaThg>
-    <xmx:-pJlZ6eiYEDbPrf3bH8yv-KtyylFWlghp8LWeIuIbs_GXK-8YoaliG8J>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 10:53:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  toon@iotcl.com
-Subject: Re: [PATCH] refs: mark invalid refname message for translation
-In-Reply-To: <20241220125837.2774153-1-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Fri, 20 Dec 2024 13:58:37 +0100")
-References: <xmqq4j2zifmy.fsf@gitster.g>
-	<20241220125837.2774153-1-karthik.188@gmail.com>
-Date: Fri, 20 Dec 2024 07:53:28 -0800
-Message-ID: <xmqqzfkqe4g7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cEA/p18k"
+Received: (qmail 13824 invoked by uid 109); 20 Dec 2024 15:53:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OZOpVrVGCi5qi9D55Jnal0dvP8y6LSwR3hAkB4UVVXI=; b=cEA/p18kzd1J1SXY+X/PAXtI5PVnsRWDmj50IXNIFElgTJuDw0Lw1P64NWfnkZnrCplXf1smcHujaApiEVeX5rqr7wvE3oR/pAUssg7WxVDbfd8/FkSrdAzDemWpXK92nWkklXlKJmTffLMk6OpjgXAOZz9F4jboPjmuqHBfViXjlItgFglSXiUI/qery2FiJr2UIsCpPujFOonBOzctWdbr45bSJ8wHzmu+HT1R55Refd0F8mYp29O7O4yh7+CqrfGjhj6O/XjAnz4LCKdedUl0bIqTf//UbNh/5rfWoblRhVJqPaoID6R9EZ8poTnonv5wgnSGrrcBiNHO8XV9yw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Dec 2024 15:53:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18520 invoked by uid 111); 20 Dec 2024 15:53:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Dec 2024 10:53:43 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 20 Dec 2024 10:53:42 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH v2 3/5] Makefile: drop unneeded indirection for
+ GIT-VERSION-GEN outputs
+Message-ID: <20241220155342.GB152570@coredump.intra.peff.net>
+References: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
+ <20241220-b4-pks-git-version-via-environment-v2-3-f1457a5e8c38@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241220-b4-pks-git-version-via-environment-v2-3-f1457a5e8c38@pks.im>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, Dec 20, 2024 at 01:22:47PM +0100, Patrick Steinhardt wrote:
 
-> The error message produced by `transaction_refname_valid()` changes based
-> on whether the update is a ref update or a reflog update, with the use
-> of a ternary operator. This breaks translation since the sub-msg is not
-> marked for translation. Fix this by setting the entire message using a
-> `if {} else {}` block and marking each message for translation.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->
-> Since the reflog migration topic has been merged to 'next', I am sending this 
-> as an individual patch which applies on top of 'kn/reflog-migration'. 
+> Some of the callsites of GIT-VERSION-GEN generate the target file with a
+> "+" suffix first and then move the file into place when the new contents
+> are different compared to the old contents. This allows us to avoid a
+> needless rebuild by not updating timestamps of the target file when its
+> contents will remain unchanged anyway.
+> 
+> In fact though, this exact logic is already handled in GIT-VERSION-GEN,
+> so doing this manually is pointless. This is a leftover from an earlier
+> version of 4838deab65 (Makefile: refactor GIT-VERSION-GEN to be
+> reusable, 2024-12-06), where the script didn't handle that logic for us.
+> 
+> Drop the needless indirection.
 
-Thanks, that is the most sensible way to fix up a glitch that was
-discovered too late ;-)  Will queue.
+Nice. I think when we can do stuff like this in an actual script instead
+of in a Makefile, the result is more readable.
+
+-Peff
