@@ -1,67 +1,67 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303CB227571
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 17:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D41227585
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 17:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734715207; cv=none; b=lG9W7gsUCxzRVwZU/6Q4R2fjjoYw5Ea5y5cn5cah8+ox8XKKKlAsbKess1qh6TFX+8evs9jeregtMfoWrSKQ9rYMWbocZ+ZoEh4+XPXMPjH/M4i9N5w4sWt9o4545Hf4m6jFTDf6FfK0hXQaUxlU9aBnazbSVas863abCDXLamY=
+	t=1734715208; cv=none; b=IYwkgPDq+2DbHrM+xpdRaaCSvFOL9XzyviKAchblzGu3BKSL2SWY0mLnMi+HFzp5D+hcs8PQL85sokuFvnJvi2WMF2Ir3pG1odutqxnhWsEykcn80plxGOgCn0GmHyihwQErQjIN1MS0Hw+T/q7aPJSwF8yVokZaNfYE5YMzSYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734715207; c=relaxed/simple;
-	bh=/bD6qCwBs7FMfZFdgS/bUKV61sJk3M+6KsZ3ijnHrYw=;
+	s=arc-20240116; t=1734715208; c=relaxed/simple;
+	bh=BgUc/QtagZeA9VpkxvXM6Uanl38sbEI/K9e0rtdzsUQ=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jSyD4yzBww3qPbwsPe7AlYY8u16e+RaunWXVo7716+NVgDKHPadLL8ZFzcE2sUI1nlJvk7aKU6RRHGZz6Uw4rJfNIzU5Zw0YqrpyjQkfznDYpI1RTj+ple228yAG50u4tvycoE0oN6G2zXVFXC3lr40bJmqhcUiGp8Aoe0MLiTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VcA7swUp; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version:To:Cc; b=ok1cluMqEnIebQaSv3Fm+AX6HJ5xEezMpKQUZsmFkOecKYe15NyQ8M74pWV3lB0BNEPcWAcTJvrezHvn5qG+/tVKRupEnXgnHVp/IudD6qNo2bYSjCywiT9d0wowImxNBZQftEHzeTJi5a3uzvDRQ7qX/TFQIQRuPYLp589Lgro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h5gpfzXd; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VcA7swUp"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-436345cc17bso16186515e9.0
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 09:20:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h5gpfzXd"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-385eed29d17so1156215f8f.0
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 09:20:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734715203; x=1735320003; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734715204; x=1735320004; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BnbYefj8n+7rAkXVOoyWudmPM1pS4P6SwY3WyjHlJqo=;
-        b=VcA7swUp4TjpoWi0UhfLRhYcyxvnyDK0NmRt0gDyBQJ97pQWEwhIEo0fbQjxbiOlwt
-         52t+8b4e92O9ZlfKbDVwgz6dc3ZXshkeW+4fjtquQEcfT0H4cE+hO2WSYRvgtlEY0FcT
-         hMji7ksy2anEjOVoZ/DTQdnFl/x09ZJ1o4h8PKnksVwTloOPykN94r9nUZVOipgRCQe0
-         5goW9Pk8UUJC7jH8JUWEtrFHjKdFYYNC2IhTcHB9KNoIXo3s1nQVlsObd/STCBwvgZwI
-         jQDR1Y8uHDysJs2Kcj34F4RKto7oGCfPvksRzscS3nhsPxTvam67KhZf1+vixrKVHBQU
-         G0Ug==
+        bh=geY20IR4kiL44kdAD/CIjMF+Nm3xkcAygLBrgaj+bMI=;
+        b=h5gpfzXd1x3/kUJE/1fdggTvhMEl0Y8Hq61bIIXB3OEhqLmcQB+d1zMbtoLa4QmsOI
+         jP5D81C8n7jn9edL4RJc2FAGraIrfhJFPdwPNCihtMNEYzEwcgmAfzofyaEZQmaOqK/o
+         FMHdS8+wLBxOmS5CrfwNiiLR4uT+N4Ww+pDcw6iWqs9eRLB72lTNilEAFeDFks65mJq5
+         1tjfsBOydhoF9Cd9L50UpYRjJTlnlnyajufByT6vX7IaaYpDaA3YGsBzzBR5VmIpcX/g
+         cPxoLqVIkWgNOAhMwCTB2rPR0herMQgMNNodZ2qRR4g5GN6MQwlTMTv4objotDRnJmwA
+         F9Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734715203; x=1735320003;
+        d=1e100.net; s=20230601; t=1734715204; x=1735320004;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BnbYefj8n+7rAkXVOoyWudmPM1pS4P6SwY3WyjHlJqo=;
-        b=Fk3zBJxWnulXVepDSBMETmegPPcnrUcyjaHFD4d38wN+s47jGHPh6Kog82cWFEBYsl
-         RCCiLcf6j9uzb1p+OtbU7BMnejF5uh2+dzO0zTOtv2mq7AN76sEGU/gP5pa/Q+vvjPcO
-         AUo3F4w9e736G5jd+3oN0ZIsSkPbvm1h55olAV7O3zkhxI/8NkW/Ry4ZHdL0Ijdy4XyS
-         AJudjPp4u4hyW41YQpaJ55nNhCYy5boP73Sy4UAPAyw8vGjMPC9qxAdV13K+ZI+l5HQv
-         btxy3JrB+BF3UqVHCtfR7LOEMKdul9T9GqVBaWyKKv8DRivHd8obLewHE727qIEeU103
-         pZsQ==
-X-Gm-Message-State: AOJu0Yy4dZE1wd3+LdaL8wOMEVjeMQjUv8g3hwdJUXdKSjs86sNN/gdE
-	SQZOKMTc14VJyJBjLaDxfAO+guE9lEkd6bu+jpcgW55BqNtKkTWtl5FvFw==
-X-Gm-Gg: ASbGnct/wpiYPTizR1+L1yIiGT3UKvfZ1iCxGfnq3yo5+HCJTsCWaKLDBJ8GNz0OFBH
-	LaAlV8XwErKNnX6qsCebs708znsEnLGl3Jp3h8K/R9Ub0acBfHRACrR+pe7HoWelZd6FjV1O95M
-	jvaNJT/6cxAER/teozS2E9U5Zh2g2FhjGuOQkcHWDwXWS2bBrJNZi0TCElgBrz9eCN/mWyzIHuf
-	a8w5bCe23RQOQlT7XYjZLqa717yliN3KPagK90nA3dpC8A7tkb34lhbaw==
-X-Google-Smtp-Source: AGHT+IHqIQ0LDWgI7jZhKaztCaPHpYvMvhYRf5+HPc99+Ev3p4q9c4XR73gr7DxGdhoLjhROaXyjrQ==
-X-Received: by 2002:a05:600c:3ca1:b0:434:a350:207c with SMTP id 5b1f17b1804b1-43668b5e22fmr31301145e9.23.1734715202813;
-        Fri, 20 Dec 2024 09:20:02 -0800 (PST)
+        bh=geY20IR4kiL44kdAD/CIjMF+Nm3xkcAygLBrgaj+bMI=;
+        b=KqkQ5SZniHrhY2vCygwnUSQm9qtntty60y/EmQYJnRA2gqKqY4oE5OikH4rsr7o+On
+         UkOmuMdlteM3U7r7s+1Ea1DxYqb05CPGVDnADXqa5/PKXd3/NumGxZFYZaibbeY5Bm5Y
+         X82N8rx1j6CD/y6ugODckBOSTy5RF5+TN9ikq1U6tWgKJ+c7Sa7hprj8/1TUqe5M89HL
+         IAAnbJ3MnvS1idyOcRxhRhvxYF6PAqg4EfbHOU0XYBO2DetN92itGkUQrqhNISw4RRYA
+         yvnZFSom/s0r3ihVY/wxlZq+67hQ+sYPft47l4eSwRrN3CocADQEO0aOEo7Irv3C2Wso
+         6TPg==
+X-Gm-Message-State: AOJu0YwI3mI4d7lXv1nBLNliZljQcV3NRWfJ4ljAMF485rXow4hYkpSl
+	oX82ArIiriPE63vmpRWaAO+aA4mtb4NtvCJ2gcsKEi/rWBxYazsHwPYuoA==
+X-Gm-Gg: ASbGnctl+jsJpXcF4QefdNdIypy52RRTVuni+vJ+ZNkSse7GaXF+JCtdBCp1e5wY7i+
+	YIqHUWlDGNyERaTOCjsOIXu7vSem5L8ghz8bu75nc7bzhHJ6SlNpnVrTXDEohwV2Ygq7mAvf1T7
+	A5Ag8KNgP8XzudpOlDZS/Xl+vkvjqk/rjQGKXC1CItCskLD7HgxBP9GMmpldU3XEs80H5LMEgq7
+	7ypvvtEx8jvMHnPUMGoIco7t8OlJxGEi06J21s66l9ZkaldvJgvmsF1ng==
+X-Google-Smtp-Source: AGHT+IH/nHt1BWFH2kOxjgyuGlvTX/VvyuzBQUA34KGKXlwGYr5wqtfYr0F7PnuXmIM8hfMPaw+6pQ==
+X-Received: by 2002:a5d:5e09:0:b0:385:fc32:1ec6 with SMTP id ffacd0b85a97d-38a223fd786mr3581974f8f.50.1734715204122;
+        Fri, 20 Dec 2024 09:20:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436612008bcsm50652205e9.16.2024.12.20.09.20.01
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8332absm4434175f8f.38.2024.12.20.09.20.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 09:20:01 -0800 (PST)
-Message-Id: <163aaab3e1bec5bf92e4e056df84aa76848b31a4.1734715194.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2024 09:20:03 -0800 (PST)
+Message-Id: <e9ce79fa6e770688f3fd14ca1c19bca185a81bbf.1734715194.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
 References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
 	<pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Dec 2024 17:19:51 +0000
-Subject: [PATCH v3 5/8] p5313: add size comparison test
+Date: Fri, 20 Dec 2024 17:19:52 +0000
+Subject: [PATCH v3 6/8] test-tool: add helper for name-hash values
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -86,138 +86,156 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-As custom options are added to 'git pack-objects' and 'git repack' to
-adjust how compression is done, use this new performance test script to
-demonstrate their effectiveness in performance and size.
+Add a new test-tool helper, name-hash, to output the value of the
+name-hash algorithms for the input list of strings, one per line.
 
-The recently-added --name-hash-version option allows for testing
-different name hash functions. Version 2 intends to preserve some of the
-locality of version 1 while more often breaking collisions due to long
-filenames.
+Since the name-hash values can be stored in the .bitmap files, it is
+important that these hash functions do not change across Git versions.
+Add a simple test to t5310-pack-bitmaps.sh to provide some testing of
+the current values. Due to how these functions are implemented, it would
+be difficult to change them without disturbing these values. The paths
+used for this test are carefully selected to demonstrate some of the
+behavior differences of the two current name hash versions, including
+which conditions will cause them to collide.
 
-Distinguishing objects by more of the path is critical when there are
-many name hash collisions and several versions of the same path in the
-full history, giving a significant boost to the full repack case. The
-locality of the hash function is critical to compressing something like
-a shallow clone or a thin pack representing a push of a single commit.
+Create a performance test that uses test_size to demonstrate how
+collisions occur for these hash algorithms. This test helps inform
+someone as to the behavior of the name-hash algorithms for their repo
+based on the paths at HEAD.
 
-This can be seen by running pt5313 on the open source fluentui
-repository [1]. Most commits will have this kind of output for the thin
-and big pack cases, though certain commits (such as [2]) will have
-problematic thin pack size for other reasons.
+My copy of the Git repository shows modest statistics around the
+collisions of the default name-hash algorithm:
+
+Test                               this tree
+--------------------------------------------------
+5314.1: paths at head                         4.5K
+5314.2: distinct hash value: v1               4.1K
+5314.3: maximum multiplicity: v1                13
+5314.4: distinct hash value: v2               4.2K
+5314.5: maximum multiplicity: v2                 9
+
+Here, the maximum collision multiplicity is 13, but around 10% of paths
+have a collision with another path.
+
+In a more interesting example, the microsoft/fluentui [1] repo had these
+statistics at time of committing:
+
+Test                               this tree
+--------------------------------------------------
+5314.1: paths at head                        19.5K
+5314.2: distinct hash value: v1               8.2K
+5314.3: maximum multiplicity: v1               279
+5314.4: distinct hash value: v2              17.8K
+5314.5: maximum multiplicity: v2                44
 
 [1] https://github.com/microsoft/fluentui
-[2] a637a06df05360ce5ff21420803f64608226a875
 
-Checked out at the parent of [2], I see the following statistics:
+That demonstrates that of the nearly twenty thousand path names, they
+are assigned around eight thousand distinct values. 279 paths are
+assigned to a single value, leading the packing algorithm to sort
+objects from those paths together, by size.
 
-Test                                         HEAD
----------------------------------------------------------------
-5313.2: thin pack with version 1             0.37(0.44+0.02)
-5313.3: thin pack size with version 1                   1.2M
-5313.4: big pack with version 1              2.04(7.77+0.23)
-5313.5: big pack size with version 1                   20.4M
-5313.6: shallow fetch pack with version 1    1.41(2.94+0.11)
-5313.7: shallow pack size with version 1               34.4M
-5313.8: repack with version 1                95.70(676.41+2.87)
-5313.9: repack size with version 1                    439.3M
-5313.10: thin pack with version 2            0.12(0.12+0.06)
-5313.11: thin pack size with version 2                 22.0K
-5313.12: big pack with version 2             2.80(5.43+0.34)
-5313.13: big pack size with version 2                  25.9M
-5313.14: shallow fetch pack with version 2   1.77(2.80+0.19)
-5313.15: shallow pack size with version 2              33.7M
-5313.16: repack with version 2               33.68(139.52+2.58)
-5313.17: repack size with version 2                   160.5M
+With the v2 name hash function, the maximum multiplicity lowers to 44,
+leaving some room for further improvement.
 
-To make comparisons easier, I will reformat this output into a different
-table style:
+In a more extreme example, an internal monorepo had a much worse
+collision rate:
 
-| Test         | V1 Time | V2 Time | V1 Size | V2 Size |
-|--------------|---------|---------|---------|---------|
-| Thin Pack    |  0.37 s |  0.12 s |   1.2 M |  22.0 K |
-| Big Pack     |  2.04 s |  2.80 s |  20.4 M |  25.9 M |
-| Shallow Pack |  1.41 s |  1.77 s |  34.4 M |  33.7 M |
-| Repack       | 95.70 s | 33.68 s | 439.3 M | 160.5 M |
+Test                               this tree
+--------------------------------------------------
+5314.1: paths at head                       227.3K
+5314.2: distinct hash value: v1              72.3K
+5314.3: maximum multiplicity: v1             14.4K
+5314.4: distinct hash value: v2             166.5K
+5314.5: maximum multiplicity: v2               138
 
-The v2 hash function successfully differentiates the CHANGELOG.md files
-from each other, which leads to significant improvements in the thin
-pack (simulating a push of this commit) and the full repack. There is
-some bloat in the "big pack" scenario and essentially the same results
-for the shallow pack.
-
-In the case of the Git repository, these numbers show some of the issues
-with this approach:
-
-| Test         | V1 Time | V2 Time | V1 Size | V2 Size |
-|--------------|---------|---------|---------|---------|
-| Thin Pack    |  0.02 s |  0.02 s |   1.1 K |   1.1 K |
-| Big Pack     |  1.69 s |  1.95 s |  13.5 M |  14.5 M |
-| Shallow Pack |  1.26 s |  1.29 s |  12.0 M |  12.2 M |
-| Repack       | 29.51 s | 29.01 s | 237.7 M | 238.2 M |
-
-Here, the attempts to remove conflicts in the v2 function seem to cause
-slight bloat to these sizes. This shows that the Git repository benefits
-a lot from cross-path delta pairs.
-
-The results are similar with the nodejs/node repo:
-
-| Test         | V1 Time | V2 Time | V1 Size | V2 Size |
-|--------------|---------|---------|---------|---------|
-| Thin Pack    |  0.02 s |  0.02 s |   1.6 K |   1.6 K |
-| Big Pack     |  4.61 s |  3.26 s |  56.0 M |  52.8 M |
-| Shallow Pack |  7.82 s |  7.51 s | 104.6 M | 107.0 M |
-| Repack       | 88.90 s | 73.75 s | 740.1 M | 764.5 M |
-
-Here, the v2 name-hash causes some size bloat more often than it reduces
-the size, but it also universally improves performance time, which is an
-interesting reversal. This must mean that it is helping to short-circuit
-some delta computations even if it is not finding the most efficient
-ones. The performance improvement cannot be explained only due to the
-I/O cost of writing the resulting packfile.
-
-The Linux kernel repository was the initial target of the default name
-hash value, and its naming conventions are practically build to take the
-most advantage of the default name hash values:
-
-| Test         | V1 Time  | V2 Time  | V1 Size | V2 Size |
-|--------------|----------|----------|---------|---------|
-| Thin Pack    |   0.17 s |   0.07 s |   4.6 K |   4.6 K |
-| Big Pack     |  17.88 s |  12.35 s | 201.1 M | 159.1 M |
-| Shallow Pack |  11.05 s |  22.94 s | 269.2 M | 273.8 M |
-| Repack       | 727.39 s | 566.95 s |   2.5 G |   2.5 G |
-
-Here, the thin and big packs gain some performance boosts in time, with
-a modest gain in the size of the big pack. The shallow pack, however, is
-more expensive to compute, likely because similarly-named files across
-different directories are farther apart in the name hash ordering in v2.
-The repack also gains benefits in computation time but no meaningful
-change to the full size.
-
-Finally, an internal Javascript repo of moderate size shows significant
-gains when repacking with --name-hash-version=2 due to it having many name
-hash collisions. However, it's worth noting that only the full repack
-case has significant differences from the v1 name hash:
-
-| Test      | V1 Time   | V2 Time  | V1 Size | V2 Size |
-|-----------|-----------|----------|---------|---------|
-| Thin Pack |    8.28 s |   7.28 s |  16.8 K |  16.8 K |
-| Big Pack  |   12.81 s |  11.66 s |  29.1 M |  29.1 M |
-| Shallow   |    4.86 s |   4.06 s |  42.5 M |  44.1 M |
-| Repack    | 3126.50 s | 496.33 s |   6.2 G | 855.6 M |
+Here, we can see that the v2 name hash function provides somem
+improvements, but there are still a number of collisions that could lead
+to repacking problems at this scale.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- t/perf/p5313-pack-objects.sh | 70 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
- create mode 100755 t/perf/p5313-pack-objects.sh
+ Makefile                  |  1 +
+ t/helper/test-name-hash.c | 23 +++++++++++++++++++++++
+ t/helper/test-tool.c      |  1 +
+ t/helper/test-tool.h      |  1 +
+ t/perf/p5314-name-hash.sh | 31 +++++++++++++++++++++++++++++++
+ t/t5310-pack-bitmaps.sh   | 30 ++++++++++++++++++++++++++++++
+ 6 files changed, 87 insertions(+)
+ create mode 100644 t/helper/test-name-hash.c
+ create mode 100755 t/perf/p5314-name-hash.sh
 
-diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
-new file mode 100755
-index 00000000000..be5229a0ecd
+diff --git a/Makefile b/Makefile
+index 6f5986b66ea..65403f6dd09 100644
+--- a/Makefile
++++ b/Makefile
+@@ -816,6 +816,7 @@ TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
+ TEST_BUILTINS_OBJS += test-match-trees.o
+ TEST_BUILTINS_OBJS += test-mergesort.o
+ TEST_BUILTINS_OBJS += test-mktemp.o
++TEST_BUILTINS_OBJS += test-name-hash.o
+ TEST_BUILTINS_OBJS += test-online-cpus.o
+ TEST_BUILTINS_OBJS += test-pack-mtimes.o
+ TEST_BUILTINS_OBJS += test-parse-options.o
+diff --git a/t/helper/test-name-hash.c b/t/helper/test-name-hash.c
+new file mode 100644
+index 00000000000..af1d52de101
 --- /dev/null
-+++ b/t/perf/p5313-pack-objects.sh
-@@ -0,0 +1,70 @@
++++ b/t/helper/test-name-hash.c
+@@ -0,0 +1,23 @@
++/*
++ * test-name-hash.c: Read a list of paths over stdin and report on their
++ * name-hash and full name-hash.
++ */
++
++#include "test-tool.h"
++#include "git-compat-util.h"
++#include "pack-objects.h"
++#include "strbuf.h"
++
++int cmd__name_hash(int argc UNUSED, const char **argv UNUSED)
++{
++	struct strbuf line = STRBUF_INIT;
++
++	while (!strbuf_getline(&line, stdin)) {
++		printf("%10u ", pack_name_hash(line.buf));
++		printf("%10u ", pack_name_hash_v2((unsigned const char *)line.buf));
++		printf("%s\n", line.buf);
++	}
++
++	strbuf_release(&line);
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 1ebb69a5dc4..e794058ab6d 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -44,6 +44,7 @@ static struct test_cmd cmds[] = {
+ 	{ "match-trees", cmd__match_trees },
+ 	{ "mergesort", cmd__mergesort },
+ 	{ "mktemp", cmd__mktemp },
++	{ "name-hash", cmd__name_hash },
+ 	{ "online-cpus", cmd__online_cpus },
+ 	{ "pack-mtimes", cmd__pack_mtimes },
+ 	{ "parse-options", cmd__parse_options },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 21802ac27da..26ff30a5a9a 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -37,6 +37,7 @@ int cmd__lazy_init_name_hash(int argc, const char **argv);
+ int cmd__match_trees(int argc, const char **argv);
+ int cmd__mergesort(int argc, const char **argv);
+ int cmd__mktemp(int argc, const char **argv);
++int cmd__name_hash(int argc, const char **argv);
+ int cmd__online_cpus(int argc, const char **argv);
+ int cmd__pack_mtimes(int argc, const char **argv);
+ int cmd__parse_options(int argc, const char **argv);
+diff --git a/t/perf/p5314-name-hash.sh b/t/perf/p5314-name-hash.sh
+new file mode 100755
+index 00000000000..4ef0ba77114
+--- /dev/null
++++ b/t/perf/p5314-name-hash.sh
+@@ -0,0 +1,31 @@
 +#!/bin/sh
 +
 +test_description='Tests pack performance using bitmaps'
@@ -228,66 +246,68 @@ index 00000000000..be5229a0ecd
 +
 +test_perf_large_repo
 +
-+test_expect_success 'create rev input' '
-+	cat >in-thin <<-EOF &&
-+	$(git rev-parse HEAD)
-+	^$(git rev-parse HEAD~1)
-+	EOF
-+
-+	cat >in-big <<-EOF &&
-+	$(git rev-parse HEAD)
-+	^$(git rev-parse HEAD~1000)
-+	EOF
-+
-+	cat >in-shallow <<-EOF
-+	$(git rev-parse HEAD)
-+	--shallow $(git rev-parse HEAD)
-+	EOF
++test_size 'paths at head' '
++	git ls-tree -r --name-only HEAD >path-list &&
++	wc -l <path-list &&
++	test-tool name-hash <path-list >name-hashes
 +'
 +
 +for version in 1 2
 +do
-+	export version
-+
-+	test_perf "thin pack with version $version" '
-+		git pack-objects --thin --stdout --revs --sparse \
-+			--name-hash-version=$version <in-thin >out
++	test_size "distinct hash value: v$version" '
++		awk "{ print \$$version; }" <name-hashes | sort | \
++			uniq -c >name-hash-count &&
++		wc -l <name-hash-count
 +	'
 +
-+	test_size "thin pack size with version $version" '
-+		test_file_size out
-+	'
-+
-+	test_perf "big pack with version $version" '
-+		git pack-objects --stdout --revs --sparse \
-+			--name-hash-version=$version <in-big >out
-+	'
-+
-+	test_size "big pack size with version $version" '
-+		test_file_size out
-+	'
-+
-+	test_perf "shallow fetch pack with version $version" '
-+		git pack-objects --stdout --revs --sparse --shallow \
-+			--name-hash-version=$version <in-shallow >out
-+	'
-+
-+	test_size "shallow pack size with version $version" '
-+		test_file_size out
-+	'
-+
-+	test_perf "repack with version $version" '
-+		git repack -adf --name-hash-version=$version
-+	'
-+
-+	test_size "repack size with version $version" '
-+		gitdir=$(git rev-parse --git-dir) &&
-+		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
-+		test_file_size "$pack"
++	test_size "maximum multiplicity: v$version" '
++		sort -nr <name-hash-count | head -n 1 |	\
++			awk "{ print \$1; }"
 +	'
 +done
 +
 +test_done
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index c30522b57fd..871ce01401a 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -27,6 +27,36 @@ has_any () {
+ 	grep -Ff "$1" "$2"
+ }
+ 
++# Since name-hash values are stored in the .bitmap files, add a test
++# that checks that the name-hash calculations are stable across versions.
++# Not exhaustive, but these hashing algorithms would be hard to change
++# without causing deviations here.
++test_expect_success 'name-hash value stability' '
++	cat >names <<-\EOF &&
++	first
++	second
++	third
++	a/one-long-enough-for-collisions
++	b/two-long-enough-for-collisions
++	many/parts/to/this/path/enough/to/collide/in/v2
++	enough/parts/to/this/path/enough/to/collide/in/v2
++	EOF
++
++	test-tool name-hash <names >out &&
++
++	cat >expect <<-\EOF &&
++	2582249472 1763573760 first
++	2289942528 1188134912 second
++	2300837888 1130758144 third
++	2544516325 3963087891 a/one-long-enough-for-collisions
++	2544516325 4013419539 b/two-long-enough-for-collisions
++	1420111091 1709547268 many/parts/to/this/path/enough/to/collide/in/v2
++	1420111091 1709547268 enough/parts/to/this/path/enough/to/collide/in/v2
++	EOF
++
++	test_cmp expect out
++'
++
+ test_bitmap_cases () {
+ 	writeLookupTable=false
+ 	for i in "$@"
 -- 
 gitgitgadget
 
