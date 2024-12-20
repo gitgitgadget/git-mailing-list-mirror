@@ -1,67 +1,67 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8B1219E93
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885A621A435
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:30:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734712202; cv=none; b=Bxl68Fwnv/9bc1GD6Y1WEpTAhVTLX830FDr3jC5X23aNyVi0vHe9wvXtNfmoBzwyqY0Mft2tAqMBWjLo6uD1h+4M/oGqGAWFoNRkJYWbhC6yvNQj0hIYUD1rtF/U3VM92LHdkydFe+4qKiH75Aozm8csNGNYL9DkqIkjl6RRE3s=
+	t=1734712203; cv=none; b=nOQgVfFT1kDr6ofn+7N6Get1zc/a+pcCky+jvc9PPAIRmT+Aarp7GZ+sk/DooBnZ3D8ZZYkQJddDVrPfgOE3KDt59Jdat/GdWl7Gj1dCXQndfYgoka2xhMEMBp6+JzUGxppnusVVH5lrGPisODDPeLjn3kcQyKLJTX7+CeHXU2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734712202; c=relaxed/simple;
-	bh=TZoCoFrF/t/CIwFC9xzlxTCQoRyTOhtb5XUXNnOOOv0=;
+	s=arc-20240116; t=1734712203; c=relaxed/simple;
+	bh=OrE/BJT+TFOOZFQUqM6QhIhB7siz/fPv5ZsRwM644gY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jAMWONE2V1twlr+BeFyU8M9bk+c2EOKOxIjUcdtLU0kD88g3DKeaiPeSRuuz40l/pGfjimd/v/NCGeGtYjMoMI77sk1uYqmAz63CbOn2LycO2Cd4bf9VVCBwdLUvp9duLZl6ZLU91GjcbEoDhEv+oV0hF5VcoWDINRJSk0MsPqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PR+v1Y+p; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=VUFtjpHbReKch5eJyJFBMCez+NkpbC1w2iPVd3bQgrojsc5mvvs34xnQwabDQbaYfrXL8aT32uuSgC1ACkQd1FOv83lEoF3qIfoOMmplHmcpzPlUnTFLuGwfJ0j2Su5rPq2In4ZwVN5GZxAtdwCc6s2I78lIszHVUtyQtvt7bVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jzO+qvyX; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PR+v1Y+p"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4361a50e337so14886335e9.0
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:29:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jzO+qvyX"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-385e2880606so1661764f8f.3
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:30:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734712197; x=1735316997; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734712199; x=1735316999; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=R46F2SvtDdcV3I/HyD8wyLC+bxL0tz5N2DNmYNh631g=;
-        b=PR+v1Y+p22gvcxdyeHMkhUFSYTstp0lzkKE1lO3wXb11k4qo4aojokOxsG8tJysOVG
-         hZ75VVZEO8JYYMBi8AXwufavj+mgNJx4KJlVn57IxklQ39l5nsq6uxGEWOjvVlc1cApS
-         hbykYaAKyzZ7Wvb5iK3Q+CAlwe/k+IB7C5X1ZPBnurLEpYP8zfbGXqexLxyX114UHAmz
-         PERVTOK/YTGZrrwt2R+4bZIqZfjNV4W4X8DbHE9JUVbayYsSbPtQCRrMPu7o4pE8CLQv
-         XwQC5Mn2p0ZOIiCJG8POt428gP9LLVO567it5QCYSD494+7VSl55yGrYik//TLnFsNnR
-         oVMw==
+        bh=Jjzqe7SHB3EtX1dHFAhd3Yik9uUjQJiAEJUVL39okkI=;
+        b=jzO+qvyXnJGhmW1Sf0kDIWVRWPCNCP1Oo5QWoltyksdHxrMtYMnxK+F4W8aBEe6Mjo
+         nqT/RvFyg708wSSFt8CaxdJkPYZnu4RwHxcLiXHhnCrALhbVdtxmuLCEQvsFHzBvcM7i
+         rbj2PgalSJrwwsSuW6OXuokpqMMEDr8ODkxA0/cIV5/5L/X3YgnQjAS2DE1y/7Vbykun
+         D8FHfFxNYnOwRiCVPSPdm/nc5stsuNnqKaSaq0IZPVuqExcG6FQfIm89PXfJjVjcZs/t
+         iQg88unJnzaVNtBiK2rYSWTNpsd9FMisMik2Y63OxIY9aQiWYKw2k5U3uewEd4iXMGGR
+         ZEXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734712197; x=1735316997;
+        d=1e100.net; s=20230601; t=1734712199; x=1735316999;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=R46F2SvtDdcV3I/HyD8wyLC+bxL0tz5N2DNmYNh631g=;
-        b=SwVJSj8vFruNX4Vbbs2GS9jahVAWXNu03/J2TIZ5lECjAH7Q+OD7OF9zBdMucvkeJZ
-         ++PwF+lEgp7NP1YCEKJM0MFcr9R6/FisPeTApxLSe3DyL4NMTNTDJarpu+LtRXrWqMOo
-         LFjA4ub5yl9b8qKdAUSD9XmVDUyPGa4+bY0eW/o8nLlhvlkDhm0w7fiokUa26SFos10P
-         JHync6Q2OaqUanJ48SuaRg4djMECRJfxwT7JKFTfHQsOHqnatVd4NMUDHJ+MKZcJvzRO
-         3hrrzWKSjjVEi3K/vA+5s2pZl0qia87n8SXNDPuDdssXRPkv5DzXxqdiV54dTlneAXw6
-         KJ2w==
-X-Gm-Message-State: AOJu0YxXb0kS+OoUmrPeaDIka/rhAwFj+7BPOr6NA0tvuWkgOKotB6ol
-	nNS8y39UyJwlwKWpKBID4kMfTZwTMNx9IW3kG2vlBpgWjQT6Gat1TIQkHg==
-X-Gm-Gg: ASbGncs+vUBnP3xJpyknnEKlcHbo5sfr9O+k3fWiXeDY1Oq1+3qKxkoJ7h2Qun/FOMp
-	GMygj+Ob23oN5TpTxSFm0gYda+LeE/on7fVWwF91tidbM2n89yp5Xujl5AlUcf5JbiLSdEGdqVi
-	ZjIdOUINaaVPzXun3cqlF5NRmt1Pr4IzCJ2J3EmW5F3oxZdyX5HPx+6kVX/5Lf3JzrkR+xLJ+pv
-	ysbpOUwlS7HQPjYlImgDZ0q05KF8rjnjGw3PMFkbG9CzbzUhp3PDYUVmw==
-X-Google-Smtp-Source: AGHT+IGVV0uTu+czqf6UJ8DKYoUSJOW9qWLqMt+EpP8DKX2+c2xAxXpEX5ECkMzO1D4oHEF4ThMLMQ==
-X-Received: by 2002:a05:600c:1c0b:b0:435:9ed3:5688 with SMTP id 5b1f17b1804b1-43668646750mr34257425e9.18.1734712197064;
-        Fri, 20 Dec 2024 08:29:57 -0800 (PST)
+        bh=Jjzqe7SHB3EtX1dHFAhd3Yik9uUjQJiAEJUVL39okkI=;
+        b=IEsjInP1BLPmxhpYi6Fqke9tGutAKsewbAmp1sIDxGIOseXMJM+SEhstzSb5fUskNo
+         VZ1Ae+r6JXOiOD84qtAVbhRHeW4bSebAJEui5BndSTtngdamFuaET3dvsn/jMxCw9RPO
+         AppMgXueSKc8uXZDVj8Cb95uLbUe5nrTQYrYLLGKFA66HHNM+bFZYX1Pvvum8vN+GN4H
+         z3x8Vmey2flTjqyONgc7YcAW+mGNPzrduEweJxbyBm+WAgVpUqbBc5HUA/d55iiSgRij
+         7TfrzFI2rlSTHkyAwrSwVGhxFDZDiu53Ex5+gV9/BdvmX/Lp+5bX13VYpvRoE26c9pf8
+         KBkg==
+X-Gm-Message-State: AOJu0YxbdZ0dtgZs/Lj2nqRlsZGfC4HJdznW5m2lT+/Oznecx0ntnW76
+	wOhUEuaEH0mj3dOq6WmMDWPvjzBpeDPAF3NMoa4Z8dkRsF+MPmNxY/V9TQ==
+X-Gm-Gg: ASbGnctywIjJIHVPcwzSISPLGssDU8KN43DBWJISt7PIGF5onNqs89JpOjJVDWuEdN4
+	BzAvrCYZvXpqNcqpZD2nSAdsJYKkGRyYHHLFR6O0FF4XZkb6gt0uo6JFeSFWtblsaXYlB7+nSRu
+	q0CHpmqoC48YOv0AmTQfLPVg3BhhAHLSjaJG4ZhmOrmHRJKLDK6R1WWHQe7FROeMwm4clCUR8+L
+	Y/VwC7p9Rgj6QP738m3XW1thXqIgqbFBLnKB7OV7MQ6B/bZ5lzQA5o9Xw==
+X-Google-Smtp-Source: AGHT+IHmaGlU8ZtYvxgL7q2M9AqalHhJDmOisI2XwB19HU7A+js0UaEnH1iULAOscX/SQaUoOz42RA==
+X-Received: by 2002:a5d:47c8:0:b0:386:33e3:853c with SMTP id ffacd0b85a97d-38a221e2394mr3683444f8f.12.1734712198821;
+        Fri, 20 Dec 2024 08:29:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b3b1f6sm85130475e9.31.2024.12.20.08.29.56
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656af6cbbsm84034065e9.3.2024.12.20.08.29.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 08:29:56 -0800 (PST)
-Message-Id: <e4e88794cae7edc568dd054b1376caac7fd30076.1734712193.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2024 08:29:58 -0800 (PST)
+Message-Id: <2723143afb397507cbc794375525c37497046dc2.1734712193.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
 References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
 	<pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Dec 2024 16:29:50 +0000
-Subject: [PATCH v2 2/5] backfill: basic functionality and tests
+Date: Fri, 20 Dec 2024 16:29:52 +0000
+Subject: [PATCH v2 4/5] backfill: add --sparse option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,323 +88,493 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The default behavior of 'git backfill' is to fetch all missing blobs that
-are reachable from HEAD. Document and test this behavior.
+One way to significantly reduce the cost of a Git clone and later fetches is
+to use a blobless partial clone and combine that with a sparse-checkout that
+reduces the paths that need to be populated in the working directory. Not
+only does this reduce the cost of clones and fetches, the sparse-checkout
+reduces the number of objects needed to download from a promisor remote.
 
-The implementation is a very simple use of the path-walk API, initializing
-the revision walk at HEAD to start the path-walk from all commits reachable
-from HEAD. Ignore the object arrays that correspond to tree entries,
-assuming that they are all present already.
+However, history investigations can be expensive as computing blob diffs
+will trigger promisor remote requests for one object at a time. This can be
+avoided by downloading the blobs needed for the given sparse-checkout using
+'git backfill' and its new '--sparse' mode, at a time that the user is
+willing to pay that extra cost.
 
-The path-walk API provides lists of objects in batches according to a
-common path, but that list could be very small. We want to balance the
-number of requests to the server with the ability to have the process
-interrupted with minimal repeated work to catch up in the next run.
-Based on some experiments (detailed in the next change) a minimum batch
-size of 50,000 is selected for the default.
+Note that this is distinctly different from the '--filter=sparse:<oid>'
+option, as this assumes that the partial clone has all reachable trees and
+we are using client-side logic to avoid downloading blobs outside of the
+sparse-checkout cone. This avoids the server-side cost of walking trees
+while also achieving a similar goal. It also downloads in batches based on
+similar path names, presenting a resumable download if things are
+interrupted.
 
-This batch size is a _minimum_. As the path-walk API emits lists of blob
-IDs, they are collected into a list of objects for a request to the
-server. When that list is at least the minimum batch size, then the
-request is sent to the server for the new objects. However, the list of
-blob IDs from the path-walk API could be much longer than the batch
-size. At this moment, it is unclear if there is a benefit to split the
-list when there are too many objects at the same path.
+This augments the path-walk API to have a possibly-NULL 'pl' member that may
+point to a 'struct pattern_list'. This could be more general than the
+sparse-checkout definition at HEAD, but 'git backfill --sparse' is currently
+the only consumer.
+
+Be sure to test this in both cone mode and not cone mode. Cone mode has the
+benefit that the path-walk can skip certain paths once they would expand
+beyond the sparse-checkout.
+
+To test this, we can create a blobless sparse clone, expand the
+sparse-checkout slightly, and then run 'git backfill --sparse' to see
+how much data is downloaded. The general steps are
+
+ 1. git clone --filter=blob:none --sparse <url>
+ 2. git sparse-checkout set <dir1> ... <dirN>
+ 3. git backfill --sparse
+
+For the Git repository with the 'builtin' directory in the
+sparse-checkout, we get these results for various batch sizes:
+
+| Batch Size      | Pack Count | Pack Size | Time  |
+|-----------------|------------|-----------|-------|
+| (Initial clone) | 3          | 110 MB    |       |
+| 10K             | 12         | 192 MB    | 17.2s |
+| 15K             | 9          | 192 MB    | 15.5s |
+| 20K             | 8          | 192 MB    | 15.5s |
+| 25K             | 7          | 192 MB    | 14.7s |
+
+This case matters less because a full clone of the Git repository from
+GitHub is currently at 277 MB.
+
+Using a copy of the Linux repository with the 'kernel/' directory in the
+sparse-checkout, we get these results:
+
+| Batch Size      | Pack Count | Pack Size | Time |
+|-----------------|------------|-----------|------|
+| (Initial clone) | 2          | 1,876 MB  |      |
+| 10K             | 11         | 2,187 MB  | 46s  |
+| 25K             | 7          | 2,188 MB  | 43s  |
+| 50K             | 5          | 2,194 MB  | 44s  |
+| 100K            | 4          | 2,194 MB  | 48s  |
+
+This case is more meaningful because a full clone of the Linux
+repository is currently over 6 GB, so this is a valuable way to download
+a fraction of the repository and no longer need network access for all
+reachable objects within the sparse-checkout.
+
+Choosing a batch size will depend on a lot of factors, including the
+user's network speed or reliability, the repository's file structure,
+and how many versions there are of the file within the sparse-checkout
+scope. There will not be a one-size-fits-all solution.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-backfill.txt            |  31 +++++++
- Documentation/technical/api-path-walk.txt |   3 +-
- builtin/backfill.c                        | 106 +++++++++++++++++++++-
- t/t5620-backfill.sh                       |  94 +++++++++++++++++++
- 4 files changed, 230 insertions(+), 4 deletions(-)
- create mode 100755 t/t5620-backfill.sh
+ Documentation/git-backfill.txt            |  6 ++-
+ Documentation/technical/api-path-walk.txt |  8 ++++
+ builtin/backfill.c                        | 15 ++++++-
+ dir.c                                     | 10 ++---
+ dir.h                                     |  3 ++
+ path-walk.c                               | 28 +++++++++---
+ path-walk.h                               | 11 +++++
+ t/helper/test-path-walk.c                 | 22 ++++++++-
+ t/t5620-backfill.sh                       | 55 +++++++++++++++++++++++
+ t/t6601-path-walk.sh                      | 32 +++++++++++++
+ 10 files changed, 175 insertions(+), 15 deletions(-)
 
 diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
-index 640144187d3..ece887831f6 100644
+index e392517869c..4710e2c12e3 100644
 --- a/Documentation/git-backfill.txt
 +++ b/Documentation/git-backfill.txt
-@@ -14,6 +14,37 @@ SYNOPSIS
+@@ -9,7 +9,7 @@ git-backfill - Download missing objects in a partial clone
+ SYNOPSIS
+ --------
+ [verse]
+-'git backfill' [--batch-size=<n>]
++'git backfill' [--batch-size=<n>] [--[no-]sparse]
+ 
  DESCRIPTION
  -----------
+@@ -54,6 +54,10 @@ OPTIONS
+ 	blobs seen at a given path. The default minimum batch size is
+ 	50,000.
  
-+Blobless partial clones are created using `git clone --filter=blob:none`
-+and then configure the local repository such that the Git client avoids
-+downloading blob objects unless they are required for a local operation.
-+This initially means that the clone and later fetches download reachable
-+commits and trees but no blobs. Later operations that change the `HEAD`
-+pointer, such as `git checkout` or `git merge`, may need to download
-+missing blobs in order to complete their operation.
-+
-+In the worst cases, commands that compute blob diffs, such as `git blame`,
-+become very slow as they download the missing blobs in single-blob
-+requests to satisfy the missing object as the Git command needs it. This
-+leads to multiple download requests and no ability for the Git server to
-+provide delta compression across those objects.
-+
-+The `git backfill` command provides a way for the user to request that
-+Git downloads the missing blobs (with optional filters) such that the
-+missing blobs representing historical versions of files can be downloaded
-+in batches. The `backfill` command attempts to optimize the request by
-+grouping blobs that appear at the same path, hopefully leading to good
-+delta compression in the packfile sent by the server.
-+
-+In this way, `git backfill` provides a mechanism to break a large clone
-+into smaller chunks. Starting with a blobless partial clone with `git
-+clone --filter=blob:none` and then running `git backfill` in the local
-+repository provides a way to download all reachable objects in several
-+smaller network calls than downloading the entire repository at clone
-+time.
-+
-+By default, `git backfill` downloads all blobs reachable from the `HEAD`
-+commit. This set can be restricted or expanded using various options.
++--[no-]sparse::
++	Only download objects if they appear at a path that matches the
++	current sparse-checkout.
 +
  SEE ALSO
  --------
  linkgit:git-clone[1].
 diff --git a/Documentation/technical/api-path-walk.txt b/Documentation/technical/api-path-walk.txt
-index 7075d0d5ab5..1fba0ce04cb 100644
+index 1fba0ce04cb..3e089211fb4 100644
 --- a/Documentation/technical/api-path-walk.txt
 +++ b/Documentation/technical/api-path-walk.txt
-@@ -60,4 +60,5 @@ Examples
+@@ -56,6 +56,14 @@ better off using the revision walk API instead.
+ 	the revision walk so that the walk emits commits marked with the
+ 	`UNINTERESTING` flag.
+ 
++`pl`::
++	This pattern list pointer allows focusing the path-walk search to
++	a set of patterns, only emitting paths that match the given
++	patterns. See linkgit:gitignore[5] or
++	linkgit:git-sparse-checkout[1] for details about pattern lists.
++	When the pattern list uses cone-mode patterns, then the path-walk
++	API can prune the set of paths it walks to improve performance.
++
+ Examples
  --------
  
- See example usages in:
--	`t/helper/test-path-walk.c`
-+	`t/helper/test-path-walk.c`,
-+	`builtin/backfill.c`
 diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 38e6aaeaa03..177fd4286c7 100644
+index ddccececc36..b9f1cc98501 100644
 --- a/builtin/backfill.c
 +++ b/builtin/backfill.c
-@@ -1,16 +1,118 @@
- #include "builtin.h"
-+#include "git-compat-util.h"
- #include "config.h"
+@@ -4,6 +4,7 @@
  #include "parse-options.h"
  #include "repository.h"
-+#include "commit.h"
-+#include "hex.h"
-+#include "tree.h"
-+#include "tree-walk.h"
- #include "object.h"
-+#include "object-store-ll.h"
-+#include "oid-array.h"
-+#include "oidset.h"
-+#include "promisor-remote.h"
-+#include "strmap.h"
-+#include "string-list.h"
-+#include "revision.h"
-+#include "trace2.h"
-+#include "progress.h"
-+#include "packfile.h"
-+#include "path-walk.h"
+ #include "commit.h"
++#include "dir.h"
+ #include "hex.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+@@ -21,7 +22,7 @@
+ #include "path-walk.h"
  
  static const char * const builtin_backfill_usage[] = {
- 	N_("git backfill [<options>]"),
+-	N_("git backfill [--batch-size=<n>]"),
++	N_("git backfill [--batch-size=<n>] [--[no-]sparse]"),
  	NULL
  };
  
-+struct backfill_context {
-+	struct repository *repo;
-+	struct oid_array current_batch;
-+	size_t batch_size;
-+};
-+
-+static void backfill_context_clear(struct backfill_context *ctx)
-+{
-+	oid_array_clear(&ctx->current_batch);
-+}
-+
-+static void download_batch(struct backfill_context *ctx)
-+{
-+	promisor_remote_get_direct(ctx->repo,
-+				   ctx->current_batch.oid,
-+				   ctx->current_batch.nr);
-+	oid_array_clear(&ctx->current_batch);
-+
-+	/*
-+	 * We likely have a new packfile. Add it to the packed list to
-+	 * avoid possible duplicate downloads of the same objects.
-+	 */
-+	reprepare_packed_git(ctx->repo);
-+}
-+
-+static int fill_missing_blobs(const char *path UNUSED,
-+			      struct oid_array *list,
-+			      enum object_type type,
-+			      void *data)
-+{
-+	struct backfill_context *ctx = data;
-+
-+	if (type != OBJ_BLOB)
-+		return 0;
-+
-+	for (size_t i = 0; i < list->nr; i++) {
-+		off_t size = 0;
-+		struct object_info info = OBJECT_INFO_INIT;
-+		info.disk_sizep = &size;
-+		if (oid_object_info_extended(ctx->repo,
-+					     &list->oid[i],
-+					     &info,
-+					     OBJECT_INFO_FOR_PREFETCH) ||
-+		    !size)
-+			oid_array_append(&ctx->current_batch, &list->oid[i]);
+@@ -29,6 +30,7 @@ struct backfill_context {
+ 	struct repository *repo;
+ 	struct oid_array current_batch;
+ 	size_t min_batch_size;
++	int sparse;
+ };
+ 
+ static void backfill_context_clear(struct backfill_context *ctx)
+@@ -84,6 +86,14 @@ static int do_backfill(struct backfill_context *ctx)
+ 	struct path_walk_info info = PATH_WALK_INFO_INIT;
+ 	int ret;
+ 
++	if (ctx->sparse) {
++		CALLOC_ARRAY(info.pl, 1);
++		if (get_sparse_checkout_patterns(info.pl)) {
++			path_walk_info_clear(&info);
++			return error(_("problem loading sparse-checkout"));
++		}
 +	}
 +
-+	if (ctx->current_batch.nr >= ctx->batch_size)
-+		download_batch(ctx);
-+
-+	return 0;
-+}
-+
-+static int do_backfill(struct backfill_context *ctx)
-+{
-+	struct rev_info revs;
-+	struct path_walk_info info = PATH_WALK_INFO_INIT;
-+	int ret;
-+
-+	repo_init_revisions(ctx->repo, &revs, "");
-+	handle_revision_arg("HEAD", &revs, 0, 0);
-+
-+	info.blobs = 1;
-+	info.tags = info.commits = info.trees = 0;
-+
-+	info.revs = &revs;
-+	info.path_fn = fill_missing_blobs;
-+	info.path_fn_data = ctx;
-+
-+	ret = walk_objects_by_path(&info);
-+
-+	/* Download the objects that did not fill a batch. */
-+	if (!ret)
-+		download_batch(ctx);
-+
-+	backfill_context_clear(ctx);
-+	path_walk_info_clear(&info);
-+	release_revisions(&revs);
-+	return ret;
-+}
-+
- int cmd_backfill(int argc, const char **argv, const char *prefix, struct repository *repo)
- {
-+	struct backfill_context ctx = {
-+		.repo = repo,
-+		.current_batch = OID_ARRAY_INIT,
-+		.batch_size = 50000,
-+	};
+ 	repo_init_revisions(ctx->repo, &revs, "");
+ 	handle_revision_arg("HEAD", &revs, 0, 0);
+ 
+@@ -112,10 +122,13 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
+ 		.repo = repo,
+ 		.current_batch = OID_ARRAY_INIT,
+ 		.min_batch_size = 50000,
++		.sparse = 0,
+ 	};
  	struct option options[] = {
+ 		OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
+ 			    N_("Minimum number of objects to request at a time")),
++		OPT_BOOL(0, "sparse", &ctx.sparse,
++			 N_("Restrict the missing objects to the current sparse-checkout")),
  		OPT_END(),
  	};
-@@ -23,7 +125,5 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
  
- 	repo_config(repo, git_default_config, NULL);
+diff --git a/dir.c b/dir.c
+index c43b5e30813..32af7ee294d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1088,10 +1088,6 @@ static void invalidate_directory(struct untracked_cache *uc,
+ 		dir->dirs[i]->recurse = 0;
+ }
  
--	die(_("not implemented"));
+-static int add_patterns_from_buffer(char *buf, size_t size,
+-				    const char *base, int baselen,
+-				    struct pattern_list *pl);
 -
--	return 0;
-+	return do_backfill(&ctx);
+ /* Flags for add_patterns() */
+ #define PATTERN_NOFOLLOW (1<<0)
+ 
+@@ -1181,9 +1177,9 @@ static int add_patterns(const char *fname, const char *base, int baselen,
+ 	return 0;
+ }
+ 
+-static int add_patterns_from_buffer(char *buf, size_t size,
+-				    const char *base, int baselen,
+-				    struct pattern_list *pl)
++int add_patterns_from_buffer(char *buf, size_t size,
++			     const char *base, int baselen,
++			     struct pattern_list *pl)
+ {
+ 	char *orig = buf;
+ 	int i, lineno = 1;
+diff --git a/dir.h b/dir.h
+index a3a2f00f5d9..6cfef5df660 100644
+--- a/dir.h
++++ b/dir.h
+@@ -467,6 +467,9 @@ void add_patterns_from_file(struct dir_struct *, const char *fname);
+ int add_patterns_from_blob_to_list(struct object_id *oid,
+ 				   const char *base, int baselen,
+ 				   struct pattern_list *pl);
++int add_patterns_from_buffer(char *buf, size_t size,
++			     const char *base, int baselen,
++			     struct pattern_list *pl);
+ void parse_path_pattern(const char **string, int *patternlen, unsigned *flags, int *nowildcardlen);
+ void add_pattern(const char *string, const char *base,
+ 		 int baselen, struct pattern_list *pl, int srcpos);
+diff --git a/path-walk.c b/path-walk.c
+index 136ec08fb0e..c7456a9c1c0 100644
+--- a/path-walk.c
++++ b/path-walk.c
+@@ -12,6 +12,7 @@
+ #include "object.h"
+ #include "oid-array.h"
+ #include "prio-queue.h"
++#include "repository.h"
+ #include "revision.h"
+ #include "string-list.h"
+ #include "strmap.h"
+@@ -173,6 +174,23 @@ static int add_tree_entries(struct path_walk_context *ctx,
+ 		if (type == OBJ_TREE)
+ 			strbuf_addch(&path, '/');
+ 
++		if (ctx->info->pl) {
++			int dtype;
++			enum pattern_match_result match;
++			match = path_matches_pattern_list(path.buf, path.len,
++							  path.buf + base_len, &dtype,
++							  ctx->info->pl,
++							  ctx->repo->index);
++
++			if (ctx->info->pl->use_cone_patterns &&
++			    match == NOT_MATCHED)
++				continue;
++			else if (!ctx->info->pl->use_cone_patterns &&
++				 type == OBJ_BLOB &&
++				 match != MATCHED)
++				continue;
++		}
++
+ 		if (!(list = strmap_get(&ctx->paths_to_lists, path.buf))) {
+ 			CALLOC_ARRAY(list, 1);
+ 			list->type = type;
+@@ -583,10 +601,10 @@ void path_walk_info_init(struct path_walk_info *info)
+ 	memcpy(info, &empty, sizeof(empty));
+ }
+ 
+-void path_walk_info_clear(struct path_walk_info *info UNUSED)
++void path_walk_info_clear(struct path_walk_info *info)
+ {
+-	/*
+-	 * This destructor is empty for now, as info->revs
+-	 * is not owned by 'struct path_walk_info'.
+-	 */
++	if (info->pl) {
++		clear_pattern_list(info->pl);
++		free(info->pl);
++	}
+ }
+diff --git a/path-walk.h b/path-walk.h
+index 414d6db23c2..473ee9d361c 100644
+--- a/path-walk.h
++++ b/path-walk.h
+@@ -6,6 +6,7 @@
+ 
+ struct rev_info;
+ struct oid_array;
++struct pattern_list;
+ 
+ /**
+  * The type of a function pointer for the method that is called on a list of
+@@ -48,6 +49,16 @@ struct path_walk_info {
+ 	 * walk the children of such trees.
+ 	 */
+ 	int prune_all_uninteresting;
++
++	/**
++	 * Specify a sparse-checkout definition to match our paths to. Do not
++	 * walk outside of this sparse definition. If the patterns are in
++	 * cone mode, then the search may prune directories that are outside
++	 * of the cone. If not in cone mode, then all tree paths will be
++	 * explored but the path_fn will only be called when the path matches
++	 * the sparse-checkout patterns.
++	 */
++	struct pattern_list *pl;
+ };
+ 
+ #define PATH_WALK_INFO_INIT {   \
+diff --git a/t/helper/test-path-walk.c b/t/helper/test-path-walk.c
+index 7f2d409c5bc..61e845e5ec2 100644
+--- a/t/helper/test-path-walk.c
++++ b/t/helper/test-path-walk.c
+@@ -1,6 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+ #include "test-tool.h"
++#include "dir.h"
+ #include "environment.h"
+ #include "hex.h"
+ #include "object-name.h"
+@@ -9,6 +10,7 @@
+ #include "revision.h"
+ #include "setup.h"
+ #include "parse-options.h"
++#include "strbuf.h"
+ #include "path-walk.h"
+ #include "oid-array.h"
+ 
+@@ -65,7 +67,7 @@ static int emit_block(const char *path, struct oid_array *oids,
+ 
+ int cmd__path_walk(int argc, const char **argv)
+ {
+-	int res;
++	int res, stdin_pl = 0;
+ 	struct rev_info revs = REV_INFO_INIT;
+ 	struct path_walk_info info = PATH_WALK_INFO_INIT;
+ 	struct path_walk_test_data data = { 0 };
+@@ -80,6 +82,8 @@ int cmd__path_walk(int argc, const char **argv)
+ 			 N_("toggle inclusion of tree objects")),
+ 		OPT_BOOL(0, "prune", &info.prune_all_uninteresting,
+ 			 N_("toggle pruning of uninteresting paths")),
++		OPT_BOOL(0, "stdin-pl", &stdin_pl,
++			 N_("read a pattern list over stdin")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -99,6 +103,17 @@ int cmd__path_walk(int argc, const char **argv)
+ 	info.path_fn = emit_block;
+ 	info.path_fn_data = &data;
+ 
++	if (stdin_pl) {
++		struct strbuf in = STRBUF_INIT;
++		CALLOC_ARRAY(info.pl, 1);
++
++		info.pl->use_cone_patterns = 1;
++
++		strbuf_fread(&in, 2048, stdin);
++		add_patterns_from_buffer(in.buf, in.len, "", 0, info.pl);
++		strbuf_release(&in);
++	}
++
+ 	res = walk_objects_by_path(&info);
+ 
+ 	printf("commits:%" PRIuMAX "\n"
+@@ -107,6 +122,11 @@ int cmd__path_walk(int argc, const char **argv)
+ 	       "tags:%" PRIuMAX "\n",
+ 	       data.commit_nr, data.tree_nr, data.blob_nr, data.tag_nr);
+ 
++	if (info.pl) {
++		clear_pattern_list(info.pl);
++		free(info.pl);
++	}
++
+ 	release_revisions(&revs);
+ 	return res;
  }
 diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-new file mode 100755
-index 00000000000..64326362d80
---- /dev/null
+index 36107a51c54..f87a471c221 100755
+--- a/t/t5620-backfill.sh
 +++ b/t/t5620-backfill.sh
-@@ -0,0 +1,94 @@
-+#!/bin/sh
-+
-+test_description='git backfill on partial clones'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+# We create objects in the 'src' repo.
-+test_expect_success 'setup repo for object creation' '
-+	echo "{print \$1}" >print_1.awk &&
-+	echo "{print \$2}" >print_2.awk &&
-+
-+	git init src &&
-+
-+	mkdir -p src/a/b/c &&
-+	mkdir -p src/d/e &&
-+
-+	for i in 1 2
-+	do
-+		for n in 1 2 3 4
-+		do
-+			echo "Version $i of file $n" > src/file.$n.txt &&
-+			echo "Version $i of file a/$n" > src/a/file.$n.txt &&
-+			echo "Version $i of file a/b/$n" > src/a/b/file.$n.txt &&
-+			echo "Version $i of file a/b/c/$n" > src/a/b/c/file.$n.txt &&
-+			echo "Version $i of file d/$n" > src/d/file.$n.txt &&
-+			echo "Version $i of file d/e/$n" > src/d/e/file.$n.txt &&
-+			git -C src add . &&
-+			git -C src commit -m "Iteration $n" || return 1
-+		done
-+	done
-+'
-+
-+# Clone 'src' into 'srv.bare' so we have a bare repo to be our origin
-+# server for the partial clone.
-+test_expect_success 'setup bare clone for server' '
-+	git clone --bare "file://$(pwd)/src" srv.bare &&
-+	git -C srv.bare config --local uploadpack.allowfilter 1 &&
-+	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
-+'
-+
-+# do basic partial clone from "srv.bare"
-+test_expect_success 'do partial clone 1, backfill gets all objects' '
-+	git clone --no-checkout --filter=blob:none	\
+@@ -77,6 +77,61 @@ test_expect_success 'do partial clone 2, backfill min batch size' '
+ 	test_line_count = 0 revs2
+ '
+ 
++test_expect_success 'backfill --sparse' '
++	git clone --sparse --filter=blob:none		\
 +		--single-branch --branch=main 		\
-+		"file://$(pwd)/srv.bare" backfill1 &&
++		"file://$(pwd)/srv.bare" backfill3 &&
 +
-+	# Backfill with no options gets everything reachable from HEAD.
-+	GIT_TRACE2_EVENT="$(pwd)/backfill-file-trace" git \
-+		-C backfill1 backfill &&
++	# Initial checkout includes four files at root.
++	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 44 missing &&
 +
-+	# We should have engaged the partial clone machinery
-+	test_trace2_data promisor fetch_count 48 <backfill-file-trace &&
++	# Initial sparse-checkout is just the files at root, so we get the
++	# older versions of the four files at tip.
++	GIT_TRACE2_EVENT="$(pwd)/sparse-trace1" git \
++		-C backfill3 backfill --sparse &&
++	test_trace2_data promisor fetch_count 4 <sparse-trace1 &&
++	test_trace2_data path-walk paths 5 <sparse-trace1 &&
++	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 40 missing &&
 +
-+	# No more missing objects!
-+	git -C backfill1 rev-list --quiet --objects --missing=print HEAD >revs2 &&
-+	test_line_count = 0 revs2
++	# Expand the sparse-checkout to include 'd' recursively. This
++	# engages the algorithm to skip the trees for 'a'. Note that
++	# the "sparse-checkout set" command downloads the objects at tip
++	# to satisfy the current checkout.
++	git -C backfill3 sparse-checkout set d &&
++	GIT_TRACE2_EVENT="$(pwd)/sparse-trace2" git \
++		-C backfill3 backfill --sparse &&
++	test_trace2_data promisor fetch_count 8 <sparse-trace2 &&
++	test_trace2_data path-walk paths 15 <sparse-trace2 &&
++	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 24 missing
 +'
 +
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+start_httpd
++test_expect_success 'backfill --sparse without cone mode' '
++	git clone --no-checkout --filter=blob:none		\
++		--single-branch --branch=main 		\
++		"file://$(pwd)/srv.bare" backfill4 &&
 +
-+test_expect_success 'create a partial clone over HTTP' '
-+	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
-+	rm -rf "$SERVER" repo &&
-+	git clone --bare "file://$(pwd)/src" "$SERVER" &&
-+	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
-+	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
++	# No blobs yet
++	git -C backfill4 rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 48 missing &&
 +
-+	git clone --no-checkout --filter=blob:none \
-+		"$HTTPD_URL/smart/server" backfill-http
++	# Define sparse-checkout by filename regardless of parent directory.
++	# This downloads 6 blobs to satisfy the checkout.
++	git -C backfill4 sparse-checkout set --no-cone "**/file.1.txt" &&
++	git -C backfill4 checkout main &&
++
++	GIT_TRACE2_EVENT="$(pwd)/no-cone-trace1" git \
++		-C backfill4 backfill --sparse &&
++	test_trace2_data promisor fetch_count 6 <no-cone-trace1 &&
++
++	# This walk needed to visit all directories to search for these paths.
++	test_trace2_data path-walk paths 12 <no-cone-trace1 &&
++	git -C backfill4 rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 36 missing
 +'
 +
-+test_expect_success 'backfilling over HTTP succeeds' '
-+	GIT_TRACE2_EVENT="$(pwd)/backfill-http-trace" git \
-+		-C backfill-http backfill &&
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
+index 5f04acb8a2f..c89b0f1e19d 100755
+--- a/t/t6601-path-walk.sh
++++ b/t/t6601-path-walk.sh
+@@ -176,6 +176,38 @@ test_expect_success 'branches and indexed objects mix well' '
+ 	test_cmp_sorted expect out
+ '
+ 
++test_expect_success 'base & topic, sparse' '
++	cat >patterns <<-EOF &&
++	/*
++	!/*/
++	/left/
++	EOF
 +
-+	# We should have engaged the partial clone machinery
-+	test_trace2_data promisor fetch_count 48 <backfill-http-trace &&
++	test-tool path-walk --stdin-pl -- base topic <patterns >out &&
 +
-+	# Confirm all objects are present, none missing.
-+	git -C backfill-http rev-list --objects --all >rev-list-out &&
-+	awk "{print \$1;}" <rev-list-out >oids &&
-+	GIT_TRACE2_EVENT="$(pwd)/walk-trace" git -C backfill-http \
-+		cat-file --batch-check <oids >batch-out &&
-+	! grep missing batch-out
++	cat >expect <<-EOF &&
++	0:commit::$(git rev-parse topic)
++	0:commit::$(git rev-parse base)
++	0:commit::$(git rev-parse base~1)
++	0:commit::$(git rev-parse base~2)
++	1:tree::$(git rev-parse topic^{tree})
++	1:tree::$(git rev-parse base^{tree})
++	1:tree::$(git rev-parse base~1^{tree})
++	1:tree::$(git rev-parse base~2^{tree})
++	2:blob:a:$(git rev-parse base~2:a)
++	3:tree:left/:$(git rev-parse base:left)
++	3:tree:left/:$(git rev-parse base~2:left)
++	4:blob:left/b:$(git rev-parse base~2:left/b)
++	4:blob:left/b:$(git rev-parse base:left/b)
++	blobs:3
++	commits:4
++	tags:0
++	trees:6
++	EOF
++
++	test_cmp_sorted expect out
 +'
 +
-+# DO NOT add non-httpd-specific tests here, because the last part of this
-+# test script is only executed when httpd is available and enabled.
-+
-+test_done
+ test_expect_success 'topic only' '
+ 	test-tool path-walk -- topic >out &&
+ 
 -- 
 gitgitgadget
 
