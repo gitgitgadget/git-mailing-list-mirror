@@ -1,81 +1,82 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203252046A4
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 12:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AAF1C4612
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 12:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734697391; cv=none; b=H1FDxdL3fX8GPQJpKyjlXO1seDsiq31qG5zpoNsr/F7QW/++Lqbq4yDqN6vTxSBi0cd1MgmqIc1Lzxww+MXby7XWtT50xWs906AOikehfOaltsd8f0y986hw02538vZUnlXu4V2uTKJff6jhKuXuKW0d4eBNCCQLPP6zNvSJxuw=
+	t=1734697393; cv=none; b=jPhrGhCF4xam9ImqiA0jU6OCUOQJWtMEQmAJlZMRmu1k8e+hzU7nQm4I+81hgLq06+7zrX0uJeyrcdBNd/VShdsPRY5qun3lD/EQEy/xQc+DwiKwHzCMWL23XgykJRfdqCCRGEa0Y9BHFhVzjg2aZ3w29pdfXnGua+V1kkDmlQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734697391; c=relaxed/simple;
-	bh=BmIHvYmtLQ0YrlXEuCeU+f3RO/IIX7ECgByEvqOK62E=;
+	s=arc-20240116; t=1734697393; c=relaxed/simple;
+	bh=ic7+mXkqhVsJtimnn8bOCl684AgLWvhlgZyUXQ9BuRc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IVE5brSFBUt9F5fuk90AzryovcALRI0I1raYtNWlJ+N6vgvZFaNajapZbXBbPenEjfJ2nFF9FefuVEg7Ik3PlmB+/QXN+ociGbMln27e0XRDoY8J1kg/3WL46KZweXA9K7KSMHIQaeA/xyI08yEuD2R7Lgty2JtjUnvmqYB7OAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kDGmhAUy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5IN12MwG; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=Zbp71t8WaUotb2L3PRgrTyUZTDhmviBshgXSioAiCXQvmpdHviVcMpWUoi1L/8JmNDBnR6nL5LKrpJOflnEnDRKTJCxyrRr6S4/6HxG50bz8NzyxxQFTuGk+BRDRDvigvMIIwyO5r9lxIIBFNKTjiBzKfUlCWQE3NxdvoV3cNQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=0WQc2YWR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DCqgqoez; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kDGmhAUy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5IN12MwG"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 113D31380227;
-	Fri, 20 Dec 2024 07:23:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="0WQc2YWR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DCqgqoez"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 69121114006F;
+	Fri, 20 Dec 2024 07:23:10 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 20 Dec 2024 07:23:09 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 20 Dec 2024 07:23:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1734697389;
-	 x=1734783789; bh=6MJKtxu/GEX1NH87n/nbPAJ6yqi1SBUVJ3SPf2KN9PU=; b=
-	kDGmhAUy9ug3R5Hci5QbObT1AiVfXvEVbBvZcQ1e7ZInpEk2XptIRS74wLrM7Qqn
-	0AehRPjB7r/wl8fKkxuD5Nvj5sclaifFZNDw/JOMYP6Rln3FKez4rD30h65GQ8t5
-	aTAw7Ml53aMJNbcVmvJZJXrrXnL5PgyD2qYO9a0m/iChUF9L7H/IilvNjv/hzpHU
-	3SlwMMBtocyqy30+QX/HiQOwLat7pj2uVZmq6G++6wqLB3ZYrIYYEkKj2YORelpA
-	zXrQZVhLDGSw/vYbuOqLMLKEQ7MfLnccdKl/2A05t2iFdyCAVEyA4kpYjsNELvOk
-	+c7CMTJ3aKp7040XJp2D+A==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734697390;
+	 x=1734783790; bh=LA3qmVc4cwd1EBDe7rRX9RyD63W5mqVP93pHUW4776Y=; b=
+	0WQc2YWRlYIy/IJ++ozuFWQstxpywFTywHHYslRcFrINFrSCMGS95OkknZGFE3hJ
+	BfQdQlg64peCXPT2MLURKaMjxF+7CajEFMZHnbwZO/W5JG7t7oIEtF0HYNr8vih1
+	L8G5YAm7uZDF1D4s5VfdnbuG1auP14kuakA2xUYCPA6DCNkHGUCB3erMSuYJAmhJ
+	GpQjJ74utYanFL8v8/lSj6lVcyFA1XTSCJOr1KdaZG6gjzEGzXXOJHvspv9o3Uuy
+	x0/mSlN+9JtFP4oiLPbGCrI6GEdYXmNUfxYFiMkL5cdz030q2qp00+qFEkNRnNdp
+	RvmsrnEiG8B7oNVzlh61pA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734697389; x=
-	1734783789; bh=6MJKtxu/GEX1NH87n/nbPAJ6yqi1SBUVJ3SPf2KN9PU=; b=5
-	IN12MwGPbz3HTDV2vTXFwAgfir7yEVc3VBfbmETa94NE5TsL/ZtiL5gTj5UoX1Rb
-	hrGtxQRofu0P/qyxrm1nnDyVf0Lr/2P3dU2cAVBABbK4UHpLKg/Icv1CGuTWt61M
-	KR+O9U3+y+FJqmiEwNGy/dt0JU3l+pag9FluOXwMovnHgqxmMR981tXSVwwT+cE1
-	h+TIekGo7QbnYY/64+OmlzsZaPDEFX+pY9sf3HbgYs5Pf9q8kT7IAVbu0mXetDuk
-	Sthlj9iFTAN0Do1MzctNah4peQa3vSgXzPLMxZ2CuQgrqN7+PI2J+mFhlee8yjZ7
-	7CV1BtiNfBdgZLG1viDgA==
-X-ME-Sender: <xms:rGFlZyjw2HILl2pc4fHfWCNaSAkvezOrUwFsOti7YpB8yRmXb1fSNg>
-    <xme:rGFlZzBN-CpvusgbFlTqplJyCfw5gSvZ5wJWub4Mbz24KYe_9eRLIb694W9GOx9n4
-    1k0BSFVMw_A3h2tPQ>
-X-ME-Received: <xmr:rGFlZ6FVsiC1fooK343lw58W3hYWL9OOQN_8XMD9qwsZcGwFHTjt4bcAPEL80_kSO0t4nIqIEYPQpVFjvPaTKfUq6-V_RPGgfyKWwOwwNPlXU1s>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734697390; x=
+	1734783790; bh=LA3qmVc4cwd1EBDe7rRX9RyD63W5mqVP93pHUW4776Y=; b=D
+	Cqgqoez4vewRmQgeqmtBEJi0P492lYlt5h4NLoG2i0UNgKMC9taXq9e7N73GwvFx
+	qGidQae5fIU60XGacCPVOzWquDVzvSV+E3hgtPWWrfx8AaRn9RkfBnb77msBIoI+
+	ORw+rQylqhHdxIbuD9/LxDzTuZOqrK00kzRGkITCfcHG5bbgQZB1g2LrHZeAXzvb
+	3e/IYEsenrgBKqPo4yGSwyNAMvtMIbFPfdnhpk9eN2k82SFkAVBtDldm1Dt1Bf26
+	POSYV+0ngvSEcJ2AaKU8wkT00Y+J/CLSTGZi/ZBQJnvtgFTi8UpjPVWdbdIQ11HN
+	DQB/WvRZtPSurhDsfmLvw==
+X-ME-Sender: <xms:rmFlZz9ySCJia-rkyF1dmR96Nn05eQ0AYNxbXny833lXIgfrahQ7cg>
+    <xme:rmFlZ_tah-u-nDb6-7jMWptNU92vwVK4mQcHgxhZJz08YVL1YemUUw4NNuvBDJbZ_
+    0HghNpIO1a47g4Z3A>
+X-ME-Received: <xmr:rmFlZxCXI2Uhg-prmsah8iEqCA7t57ZG-h8dplBiTCjD0WPd88cXq3kpPxONXH4GlnRj-S11KTr5P64IMeLLRDesdiY0ZQcegN2-kF9MacotSRs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddgfeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
     gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
-    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsphgvtghtrhgrlhesghhooh
-    hglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rGFlZ7SHLPjwqrzuznUVeLROC1e1ho7Ftn17t1IRoFO0CQ46RMjUBg>
-    <xmx:rGFlZ_xDFRs_jVEo1s8rX7nrPW0UN9HMqJZ0bJxFTxpJxRPWZWInhA>
-    <xmx:rGFlZ572WFirLR6mjor1PO94taZE504gcfWDwzXR5TZZO5RcI-ZCgg>
-    <xmx:rGFlZ8yGuFtLipTlNOlw4TbB-VZCeDX0b3YCW_lXhDRPbqospAS7Cg>
-    <xmx:rWFlZxuj7_LMjAoF0AEXbdjrhmO0_EgwNdYNAzjg3tYujwHcN6HRBkiV>
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjefhgfette
+    evtdfgveekkeelfeetgfelteejkeekvddvgfdufefhkeelgffhffetnecuffhomhgrihhn
+    pehrsgdrihhnpdgtohhnfhdrihhnpdhrtgdrihhnnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthht
+    ohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhr
+    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:rmFlZ_cdg3HZMyOBiI0pYLtpYsN62ZVhL_iFo87vymXsterH6ThWsQ>
+    <xmx:rmFlZ4Nwty86G85SPsGgoltl1D4QvFQQtW1Qgl6Q5tq-F6gELktbKg>
+    <xmx:rmFlZxk22_Pf7X2akSDXXK7dOnwdgUpa6ab4cmp81T9AMbwicPOR9w>
+    <xmx:rmFlZysQmsaMXAoiik9zc64zNzLkBaWlBMETMH3807AFScNoJGbBkA>
+    <xmx:rmFlZ1pZD6oi-jJMXe-kLAJViTdMTciOxLqLmniFk8SDZ8R-leFJDkLZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 07:23:07 -0500 (EST)
+ 20 Dec 2024 07:23:09 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a75e2e63 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Dec 2024 12:21:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id e823b8e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Dec 2024 12:21:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Dec 2024 13:22:46 +0100
-Subject: [PATCH v2 2/5] GIT-VERSION-GEN: fix overriding
- GIT_BUILT_FROM_COMMIT and GIT_DATE
+Date: Fri, 20 Dec 2024 13:22:47 +0100
+Subject: [PATCH v2 3/5] Makefile: drop unneeded indirection for
+ GIT-VERSION-GEN outputs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-b4-pks-git-version-via-environment-v2-2-f1457a5e8c38@pks.im>
+Message-Id: <20241220-b4-pks-git-version-via-environment-v2-3-f1457a5e8c38@pks.im>
 References: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
 In-Reply-To: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
 To: git@vger.kernel.org
@@ -92,41 +93,68 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Kyle Lippincott <spectral@google.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-Same as with the preceding commit, neither GIT_BUILT_FROM_COMMIT nor
-GIT_DATE can be overridden via the environment. Especially the latter is
-of importance given that we set it in our own "Documentation/doc-diff"
-script.
+Some of the callsites of GIT-VERSION-GEN generate the target file with a
+"+" suffix first and then move the file into place when the new contents
+are different compared to the old contents. This allows us to avoid a
+needless rebuild by not updating timestamps of the target file when its
+contents will remain unchanged anyway.
 
-Make the values of both variables overridable.
+In fact though, this exact logic is already handled in GIT-VERSION-GEN,
+so doing this manually is pointless. This is a leftover from an earlier
+version of 4838deab65 (Makefile: refactor GIT-VERSION-GEN to be
+reusable, 2024-12-06), where the script didn't handle that logic for us.
+
+Drop the needless indirection.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- GIT-VERSION-GEN | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ Documentation/Makefile | 6 ++----
+ Makefile               | 6 ++----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index 27f9d6a81f77248c652649ae21d0ec51b8f2d247..4273d5284008e2787854928163e31802bf8a3d27 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -61,8 +61,16 @@ then
-     GIT_VERSION=$(expr "$VN" : v*'\(.*\)')
- fi
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 3392e1ce7ebc540784912476847380d9c1775ac8..cee88dbda66265141b87d5e5c16bf86df22fa4ef 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -211,12 +211,10 @@ XMLTO_EXTRA += --skip-validation
+ XMLTO_EXTRA += -x manpage.xsl
  
--GIT_BUILT_FROM_COMMIT=$(git -C "$SOURCE_DIR" rev-parse -q --verify HEAD 2>/dev/null)
--GIT_DATE=$(git -C "$SOURCE_DIR" show --quiet --format='%as' 2>/dev/null)
-+if test -z "$GIT_BUILT_FROM_COMMIT"
-+then
-+    GIT_BUILT_FROM_COMMIT=$(git -C "$SOURCE_DIR" rev-parse -q --verify HEAD 2>/dev/null)
-+fi
-+
-+if test -z "$GIT_DATE"
-+then
-+    GIT_DATE=$(git -C "$SOURCE_DIR" show --quiet --format='%as' 2>/dev/null)
-+fi
-+
- if test -z "$GIT_USER_AGENT"
- then
- 	GIT_USER_AGENT="git/$GIT_VERSION"
+ asciidoctor-extensions.rb: asciidoctor-extensions.rb.in FORCE
+-	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@+
+-	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
++	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
+ else
+ asciidoc.conf: asciidoc.conf.in FORCE
+-	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@+
+-	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
++	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
+ endif
+ 
+ ASCIIDOC_DEPS += docinfo.html
+diff --git a/Makefile b/Makefile
+index 79739a13d2132204f56b1ef4ca879bd51c5164b4..695a9d9765daf864605002d572129bae7a8c4e40 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2512,8 +2512,7 @@ pager.sp pager.s pager.o: EXTRA_CPPFLAGS = \
+ 	-DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
+ 
+ version-def.h: version-def.h.in GIT-VERSION-GEN GIT-VERSION-FILE GIT-USER-AGENT
+-	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
+-	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
++	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@
+ 
+ version.sp version.s version.o: version-def.h
+ 
+@@ -2554,8 +2553,7 @@ $(SCRIPT_SH_GEN) $(SCRIPT_LIB) : % : %.sh generate-script.sh GIT-BUILD-OPTIONS G
+ 	mv $@+ $@
+ 
+ git.rc: git.rc.in GIT-VERSION-GEN GIT-VERSION-FILE
+-	$(QUIET_GEN)$(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
+-	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
++	$(QUIET_GEN)$(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@
+ 
+ git.res: git.rc GIT-PREFIX
+ 	$(QUIET_RC)$(RC) -i $< -o $@
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
