@@ -1,138 +1,149 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85929222570
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 18:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BD1222570
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 18:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734717741; cv=none; b=dLgQXGyBISvt+xNmDmdRHxVbnwdTxa7oLkNr/QB5DcT9ipQxD7V8EZVVJ+7YxI7q7TCEL7Byc42XSGGkOSs6Jp/35QPATBBZ8hReRD3+vpx8NQU43QEK2RvPAjDR05LO4y55lCCrk9Qenjgdn/de4ToGcXSnDj7D0ARc9yfpQ5k=
+	t=1734717754; cv=none; b=LpvgUS5jPC4XeeR/R656Qdpj2YcaF39ayT9KhXmQOVI4Otlj+AxEESJUxKvqkHxsDbSXU1ovolpEqjaQWLXaiBMBDHbevogWbrFeoovN6omuS0Tuze+t2Bdr/TMWgjamfKTJ2k1LMTebrqbFB4JUhdEaxd9jjUukydX+KzqBQuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734717741; c=relaxed/simple;
-	bh=tBriLOuVjR1osW9Mx+d+2/7nmSGBXHokG7jij7v+UdY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DL0MdEbBuQMUiqbyGv7cY9iJvxAFUA8ATSJHb4v7WnezgcTpoJd3v+Snc2bUAgPwPyvW2or4MRkLiCHstoj0w2U6li8mUmtVgf9c320SnotGfICZ7Veo8O3e/897X7vtAOwNOOAAkf1Y20P2cX2lrTZht7a0gbkbLyM57TURenM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bT4bZwC2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q3QMZKMl; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734717754; c=relaxed/simple;
+	bh=S3esyriCoqm18W57cNj450DsDCkfPWEkjsaswrR2oAU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rpl/lhkt7cqvskHsV3evhso9+FAyNKFIfBnf8blM6aLM3KnQktODbpi9fR1/ZXemoT4q2fNRDHxIKdkqewsJOdxZkUmV+9eE4eeuas5oeCngmZeTQlVsAIcNzyFJ3SWr4J9MP11akjYmKajr2RTxY9kYlT3eH50kSiLq+yLXQi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GClYOMbe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5qucDpF1; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bT4bZwC2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q3QMZKMl"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7E54C254012C;
-	Fri, 20 Dec 2024 13:02:17 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 20 Dec 2024 13:02:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GClYOMbe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5qucDpF1"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 36450254012C;
+	Fri, 20 Dec 2024 13:02:31 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Fri, 20 Dec 2024 13:02:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1734717737; x=1734804137; bh=947QTuSGF0J7eBf4Umef/ZtwCTA1k3Ci
-	EFc/Z96jepA=; b=bT4bZwC2n9CmptG0GSL9Zv1ED2HkNP9bj/x58VqHW0EwF/r0
-	Nh9gN4952enUnBAtna+dJpMh1Y9U9AdRIlxMi6lwhDq1qcwTCpQ0+Z43oENvV9k6
-	EKFeqwL/LaSIlL2pVWQ4tBwS9g/84I7tXFkh7krEzuUFdvcm6tzipKpYaaaNm31k
-	o3b5K093K3OF+eW2lwoHN6xbsAxCOIVuewwHSXwkPHJIYj9ze8U/MvmdrLuDFIQ3
-	KaZu8ASkLS4AeZZHEvEE+UD62ysNJVtjWSXrwu05kZvGjOdVgumrNL6VWLf/EqwT
-	5mjuhcoAxUBDNv0unp3Zl0K2yO6lU+cbYapvfQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1734717751; x=1734804151; bh=nNaz42iv51
+	B/w83eEXzGJCkGnFQGtc/6zyRaLT9Trv8=; b=GClYOMbewAwlxuYMKmTWqCPvzA
+	oKXuw3G+u9X5JijqhaO/EfEJkCjTwu+wBNptm9R/HHJC/CvRes/rSu8xKF67ttJu
+	3kZfT/zG+GuheAcdtq55Wn7ZmiwrmkS8XImz1b5CRqmRp/MtaU1XouaUJdqgPZnk
+	HmAgDMsJeUVIemNdT9+c3laRfWINQxHD6d03GdNNR7O/w67PcuW47m1QYCw/l+X3
+	gHHsFUswyrZT6V5RmmuBaGDgCtqzWs0gq7p5MmB4swMRBNI7knXSTvtcnQvpkeSE
+	O034RzqD31K9UcVu5tqCtn2NgBqBLbDMYQE02qeAQHqdoNpDJ/Gxws0oE9hQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734717737; x=
-	1734804137; bh=947QTuSGF0J7eBf4Umef/ZtwCTA1k3CiEFc/Z96jepA=; b=q
-	3QMZKMlxpE/bBtNSCpmSuHeVbF8SrrgUC5Tb8Dd8IyZ/MNoROFt7lzc1AWNL/2X8
-	QmWL2IDXrbRKDq0oI4wxo1J6jbNkfT4nPdFqbMZy6fuf7j6M5vtXeQMotnOJSH9+
-	KXzT1wRsQd96liIbq16/RV3xQuesyXvzoK73lvKAOuNL1f7MVk1Wg9UMt6zeZ2pQ
-	5lb7hB5Iba5CyZP02KzQXxtERLBV1oBun7y7fvA32DqkJtBwXVkJf7p69fwWCSSr
-	v0OCzSiiUCA8PZwB5STmBwocryqolIDlIWJPUvAjIRabghtaDTfgNhKT3ysT1w7H
-	erQhGr3mXSmKI/HBISAHw==
-X-ME-Sender: <xms:KbFlZwl59itUu33yHBUQ4HZogrUEONzfytPY_FnZcV4UISksuU2NFg>
-    <xme:KbFlZ_268dJbRcxYaR3u1FOCEtXK7D6UT94459R5jHY6yseKb2x0_FE9OS1pXrgdV
-    JMcoHjGr4O81b7BGA>
-X-ME-Received: <xmr:KbFlZ-pDiL1nbNjZW8V_rTXhg3_GSqCfgJri-CSVxc_TV1S8IKDAnZ-ZV9cAP72Xwz2ekIujDmk-LB-m4rRS23uD9wu0k1ZzCQ>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734717751; x=1734804151; bh=nNaz42iv51B/w83eEXzGJCkGnFQGtc/6zyR
+	aLT9Trv8=; b=5qucDpF16aMzNP63i4iTCN6Tt9Vr1yqVeImZ7YkEcFtsvmS8kPj
+	SxL/ygFijsWVjVa+GyV/KAXeVzkuJp8s62bMLdzU+YcfunLkNM/A27UBLoYXwmYF
+	73A2Nl46bHSYAT3cxv3FHQBDSrv3D7lJpKh8T4YVMacZWuURYvnrbuRI0B/KpG35
+	TvdAMdJLxW4I1gPrqVMJ5MxyhfPFhvxxL5oUTuRdGj5AWFtRaIXcVPtKA25ZRIbs
+	zJVZua9k1Lc9pvb6+O8uKqLvr/jvf/DZJn/lAU+jdbQ2Z9wn1tI65nybTdaeitP3
+	NV/yYdITyONOjfbUoyW1KDxMEZutqzn84kw==
+X-ME-Sender: <xms:NrFlZwXrwfFwGSzMdE-nDt2aOlgfp6HkmRVHaMf4G5UqMSVILm5DXw>
+    <xme:NrFlZ0mrSW8qY_4xlsVG3bnd0SAfJ5dFVqM4io7NCCZiiSE51Bjh0-p9HNkU8J-TO
+    P35VPtY8Ff4hHfP4w>
+X-ME-Received: <xmr:NrFlZ0bc7b7ISMcy-dcGCRMCVlR-wpzJ4QI6NOe8zuX8GjhwciJvOE4eGvr0lgq1-gvKcw-eQA9Bc6dMICrg5ch5s1ynK0HHIWNHUsGWMJX7rys>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddguddthecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvuf
-    ffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcu
-    oehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetledvhe
-    ejtdefuedvveejudeujeetheeftedtudekjeefledvkeeukeeiteegvdenucffohhmrghi
-    nhepshhhohifqdhinhguvgigrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:KbFlZ8mSpOzibCa12rzdjUDLNmaCSzznmrHamcds80YZMy6-eV1rLQ>
-    <xmx:KbFlZ-3ZgnkHYt4_5OBb9WwKgpFFyohNYa7ndBls33KylQMziHnuAg>
-    <xmx:KbFlZztU5DlIgMf1jEf3WtDbdU3m6hMwJnDFjjRarrUxCPFI87YDVA>
-    <xmx:KbFlZ6Vw5gwZdf29ijxggRGrfa2sU6O_djieYHHz8leZw9-ITZyHTQ>
-    <xmx:KbFlZ8BXRF56XFQQKpt2STRfZ6X5-AD7Djhr1d83Kx9azB_tpGaHcK-0>
-Feedback-ID: if26b431b:Fastmail
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepleeufedule
+    duteegieduledulefhgeetvdevleevleekhefghfehgeetvddvgfeunecuffhomhgrihhn
+    pehrsgdrihhnnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtohepshhpvggtthhrrghlsehgohhoghhlvgdrtghomhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghf
+    fhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:NrFlZ_UZmQib81kIdmEKIUR-Ts-YLd-Zuj_WLDPBhkidQfjfXQIjCA>
+    <xmx:NrFlZ6nvodZMAnkXB5FZJQIivCQ0OA2TRQVx1QnaRqav8eE0koEAPg>
+    <xmx:NrFlZ0d9994fIOP_5gX3toOO0_PfgUVJyVpG44KgGvOyqRrjt0OR4w>
+    <xmx:NrFlZ8Gy_8uOeX2qDeCHhirlIODsErpb6bbu46hSG56vrxx0lPW5UQ>
+    <xmx:N7FlZ7B40iV94lY8e5sliq3UizCeojM6BibK8304NkGUexwzdL0p8OW7>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 13:02:16 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] show-index: the short help should say the command reads
- from its input
-Date: Fri, 20 Dec 2024 10:02:15 -0800
-Message-ID: <xmqqfrmidyhk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 20 Dec 2024 13:02:29 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4220380f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Dec 2024 18:00:32 +0000 (UTC)
+Date: Fri, 20 Dec 2024 19:02:09 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH v2 4/5] Makefile: respect build info declared in
+ "config.mak"
+Message-ID: <Z2WxIRcV0LOvx6OX@pks.im>
+References: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
+ <20241220-b4-pks-git-version-via-environment-v2-4-f1457a5e8c38@pks.im>
+ <20241220155433.GC152570@coredump.intra.peff.net>
+ <Z2WfirfrpYYFgYdw@pks.im>
+ <20241220175136.GA203033@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241220175136.GA203033@coredump.intra.peff.net>
 
-The short help text given by "git show-index -h" says
+On Fri, Dec 20, 2024 at 12:51:36PM -0500, Jeff King wrote:
+> On Fri, Dec 20, 2024 at 05:47:14PM +0100, Patrick Steinhardt wrote:
+> 
+> > > This looks good. It fixes the issue, and I am happy that:
+> > > 
+> > > >  asciidoctor-extensions.rb: asciidoctor-extensions.rb.in FORCE
+> > > > -	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
+> > > > +	$(QUIET_GEN)$(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
+> > > 
+> > > ...these spots get even simpler.
+> > 
+> > Meh. I just noticed that this doesn't work: we include GIT-VERSION-FILE
+> > and export its value, and consequently any subsequent invocation of
+> > GIT-VERSION-GEN will continue to use the value that we have in
+> > GIT-VERSION-FILE. So it's effectively only computed the first time.
+> 
+> I'm not sure what you mean.
+> 
+> I wondered earlier if we might into a chicken-and-egg problem like that,
+> but I tested and it seemed to work fine. The rule for GIT-VERSION-FILE
+> means we'll build it before make reads it, so that first run of it will
+> get the updated value. And:
+> 
+>   make GIT_VERSION=foo && bin-wrappers/git version
+>   make GIT_VERSION=bar && bin-wrappers/git version
+> 
+> does what you'd expect. And the docs work the same way:
+> 
+>   cd Documentation
+>   make GIT_VERSION=foo git.1 && man -l git.1
+>   make GIT_VERSION=bar git.1 && man -l git.1
+> 
+> Is there a case you found that doesn't work?
 
-    $ git show-index -h
-    usage: git show-index [--object-format=<hash-algorithm>]
+Yes:
 
-        --[no-]object-format <hash-algorithm>
-                              specify the hash algorithm to use
+    $ make GIT-VERSION-FILE GIT_VERSION=foo
+    GIT_VERSION=foo
+    make: 'GIT-VERSION-FILE' is up to date.
+    $ cat GIT-VERSION-FILE
+    GIT_VERSION=foo
 
+    # And now run without GIT_VERSION set.
+    make: 'GIT-VERSION-FILE' is up to date.
+    GIT_VERSION=foo
 
-The command takes a pack .idx file from its standard input.  The
-user has to _know_ this, as there is no indication from this output.
+So the value remains "sticky" in this case. And that is true whenever
+you don't set GIT_VERSION at all, we always stick with what is currently
+in that file.
 
-Give a hint that the data to work on is fed from its standard input.
+I've got a version now that works for all cases, but I had to use
+Makefile templates and some shuffling to make it work.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * I also found the option description somewhat funny in that
-
-   (1) it makes it look like "--no-object-format sha256" is
-   accepted, which is not a case, and
-
-   (2) "git show-index --no-object-format" already is a curious
-   thing to say; the command certainly needs to work in _some_
-   format.
-
-   But (2) is common to all the usual command line options to allow
-   defeating another instance of the same option that is given
-   positively previously on the command line (i.e. "git show-index
-   --object-format=sha256 --no-object-format" should behave as if no
-   object-format option was given), and (1) is shared by all the
-   other options that allow such override.  So I'll let it pass, but
-   if we really wanted to improve it, the fix should go into how the
-   parse-options subsystem works.
-
- builtin/show-index.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git c/builtin/show-index.c w/builtin/show-index.c
-index f164c01bbe..8678b741a4 100644
---- c/builtin/show-index.c
-+++ w/builtin/show-index.c
-@@ -7,7 +7,7 @@
- #include "parse-options.h"
- 
- static const char *const show_index_usage[] = {
--	"git show-index [--object-format=<hash-algorithm>]",
-+	"git show-index [--object-format=<hash-algorithm>] < <pack-idx-file>",
- 	NULL
- };
- 
-
-
-
-
+Patrick
