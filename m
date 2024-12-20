@@ -1,62 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from ext7.scm.com (ext7.scm.com [49.12.148.225])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DEB218E9A
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 15:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABB71CAAC
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 15:56:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.148.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734710174; cv=none; b=bXXeoexrSCM5JSWrDooWv6jsfweSjB+3yCcZLcVto5d/GvQSKIVvV/KPiiVEs1iZr6ImbAP81WR6CJBHos+ZMZ0q0BcWlHpsLtKfwyQaXXNIu0OHRRYrjXDAxHQLtRtOrdiqvTPZe+f6m9tDjfobTqm8+9a7zUAwVHrmAR3ndqk=
+	t=1734710215; cv=none; b=F42ieDb6XThYnMuMZ70kghiJen45KsNxJX0A1f/+8wNGFMk6nrdbJQ5MTVNWD3EMlJexK6ZUpNHuYY2/u3+0f03VbYKqf2AKZUZ1YlmFp2Dc0v+kx4qWAqX/j8ngbEHXc39Wk0VygEGuSUQbzPNsbzz6grUGxqdIM7kf8KeZ+c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734710174; c=relaxed/simple;
-	bh=auoRvX8+nCtRrfa7CPKOdEUl7AE0eTk7OApKxa3Yhg4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EFTk/LVfZLy/NSzWgxN6yeAY6qOoL3WHWZpvCqZ7JzKxDjsAw63LhSsCd89qpyH4zRgZNTGmoh3TAn+vsA2BYBi2/guhoWUV9VzDmt7Vw/OwF8+vyL6PBdgKaXoY9k9dRhjn0hFdD1eGtHD6PSkTXMsdAgzyk4uGfT6nf8c9suk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=O8jSp+cG; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1734710215; c=relaxed/simple;
+	bh=M5g0n3ipCLptce5pYv8dt71RCxAqLtQVilr2NcRwPCo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KdCch03E4ZXbgigYW0/11Wp4Vz6iciJcFSsaie2pfp3z0Q8RJqEwd/v2z2qG3JV8VdB63TbccoqLtssbecN8uzpBkY7ioQqCWrYu9DUtNdD+9tHvVOKPDTGaon/7T9AkNQSbzxxc1BvYUMBLN5fHZ14Hm9zfw1L8rr7I3onPXsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com; spf=pass smtp.mailfrom=scm.com; dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b=v83dO1l9; arc=none smtp.client-ip=49.12.148.225
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="O8jSp+cG"
-Received: (qmail 13882 invoked by uid 109); 20 Dec 2024 15:56:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=auoRvX8+nCtRrfa7CPKOdEUl7AE0eTk7OApKxa3Yhg4=; b=O8jSp+cGFgNKShMHgrww4AEauVW+rrcygS7Nz3FXLaedI4INRqpaXxoeicKYBkVOQDAjF5wI+QPZWpap6ZZBfL6L2L4PyefLw8ZvkbuGYeEll/ns9a21SO6kSPQ5hOOJrKr4bXWk0TXai/OE5d5BELkUza8tYMdopIHcDUHUohWWyF0Cn95k8SX+0+5W8+RfpdWwutzzyaFdzDpgzTTWpRTeZ7FKzuAHglh1g5TJy1aaJ2Fto5p/6VslJ5CnJIdq2j6jgznMlvw1vUYFdTpkdMothFRb6WwgvuqTq8LkBKnK7qmoURYmTgSnR7JLD/l0eGgjXITnOVjvDWczGD/6aQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Dec 2024 15:56:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18584 invoked by uid 111); 20 Dec 2024 15:56:11 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Dec 2024 10:56:11 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 20 Dec 2024 10:56:10 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH v2 0/5] GIT-VERSION-GEN: fix overriding values
-Message-ID: <20241220155610.GD152570@coredump.intra.peff.net>
-References: <20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im>
- <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
+	dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b="v83dO1l9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scm.com;
+	s=ext7dkim24; t=1734709818;
+	bh=c8K2fhGa94WSl/MQTVJDQQvKLBg08qTe5AW9cHBMweA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=v83dO1l9+RX5zsiaWE2bp69fWB/1akAyIZznG6A4adtJ4ZfDcixjd9uohN6vXsNjs
+	 GuAo9vuaZYKpWOFbc4jHb1HjngV6iMxTz567cj7aeFPNa9sWIZ9V7CRN2Lr+KoeLVn
+	 e6RtpvLWC5+cuNIaA4ySy/5lVJRHc1140GO19p3ZEm68oX4sRjMIZ+5Vv5+t2OOyp3
+	 lYki0jVJzS+jCXWZngvZ7Lw2tjq3kGk6rNuM8fo2REHuWz+gxYGnotFi1bFqME73n8
+	 h2+WvQL0sTyOa2I0ZryJW2qG3LgwvvphLmGfZ8Nb2yHeej+ZK7iZD+Ap0SBX1/H9Ed
+	 4RAQ6T49SFblNhq80l2xKVG+LQ7tl1Icx13iuFsoXzQeLFIXd4zG/OTZqAZfNECLJd
+	 bFYXnSbTgM9LRDsd9sDJNI0kCPeuKOiRKNOH7gurKEYPBMXYWHuX7LouDksraU3MiC
+	 n7T6371LnrKJ07AqSD3Wjh2LSjOSO9TPRRcjzwEt/kRgu19huymhG512afWAzVXi1C
+	 2ifcZPiZCPhP/iYwk7ahACoWetFbCwVTOK/lYLC0cWRwtqXAC4Q29xBKFWs8Tvrg1o
+	 xKyPCphnnFtMgqM1TZOt2TjfBrFK9w+bSNVSBC7SDaS3FyRU9NdinK8Ir1A/CkmFHK
+	 hDR1Y5CV5J+OY73addnkRcEA=
+X-Virus-Scanned: Debian amavisd-new at ext7.scm.com
+From: =?UTF-8?B?VG9tw6HFoQ==?= Trnka <trnka@scm.com>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>
+Subject:
+ [RFC PATCH] builtin/repack: Honor --keep-pack and .keep when repacking
+ promisor objects
+Date: Fri, 20 Dec 2024 16:50:16 +0100
+Message-ID: <26692704.1r3eYUQgxm@electra>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Fri, Dec 20, 2024 at 01:22:44PM +0100, Patrick Steinhardt wrote:
+git-repack currently does not pass --keep-pack or --honor-pack-keep to
+the git-pack-objects handling promisor packs. This means that settings
+like gc.bigPackThreshold are completely ignored for promisor packs.
 
-> Changes in v2:
-> 
->   - Don't strip leading `v`s when `GIT_VERSION` was set explicitly.
->   - Allow setting build info via "config.mak" again.
->   - Wire up build info options for Meson.
->   - Link to v1: https://lore.kernel.org/r/20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im
+The simple fix is to just copy the keep-pack logic into
+repack_promisor_objects(), although this could possibly be improved by
+making prepare_pack_objects() handle it instead.
 
-Thanks, I confirmed that this fixes the doc-diff issue, and setting
-values in config.mak works.
+Signed-off-by: Tom=C3=A1=C5=A1 Trnka <trnka@scm.com>
+=2D--
 
-I left some small comments on patch 1. Patches 2-4 look good to me, and
-I'm not qualified to comment on meson patches. ;)
+RFC: This probably needs a test, but where and how should it be
+implemented? Perhaps in t7700-repack.sh, copying one of the tests using
+prepare_for_keep_packs and just touching .promisor files? Or instead in
+t/t0410-partial-clone.sh using a copy/variant of one of the basic=20
+repack tests there?
 
--Peff
+ builtin/repack.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/repack.c b/builtin/repack.c
+index d6bb37e84a..fe62fe03eb 100644
+=2D-- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -388,15 +388,23 @@ static int has_pack_ext(const struct generated_pack_d=
+ata *data,
+ }
+=20
+ static void repack_promisor_objects(const struct pack_objects_args *args,
+=2D				    struct string_list *names)
++				    struct string_list *names,
++				    struct string_list *keep_pack_list)
+ {
+ 	struct child_process cmd =3D CHILD_PROCESS_INIT;
+ 	FILE *out;
+ 	struct strbuf line =3D STRBUF_INIT;
++	int i;
+=20
+ 	prepare_pack_objects(&cmd, args, packtmp);
+ 	cmd.in =3D -1;
+=20
++	if (!pack_kept_objects)
++		strvec_push(&cmd.args, "--honor-pack-keep");
++	for (i =3D 0; i < keep_pack_list->nr; i++)
++		strvec_pushf(&cmd.args, "--keep-pack=3D%s",
++			     keep_pack_list->items[i].string);
++
+ 	/*
+ 	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
+ 	 * hints may result in suboptimal deltas in the resulting pack. See if
+@@ -1350,7 +1358,7 @@ int cmd_repack(int argc,
+ 		strvec_push(&cmd.args, "--delta-islands");
+=20
+ 	if (pack_everything & ALL_INTO_ONE) {
+=2D		repack_promisor_objects(&po_args, &names);
++		repack_promisor_objects(&po_args, &names, &keep_pack_list);
+=20
+ 		if (has_existing_non_kept_packs(&existing) &&
+ 		    delete_redundant &&
+
+base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
+=2D-=20
+2.47.1
+
+
+
+
