@@ -1,159 +1,158 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084DF1BEF63
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 11:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C94E1A0BFA
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 11:31:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734693812; cv=none; b=FEJE9Fjrh69xlkC7+ISZs6w6UEhPaKBLs6RKLhk19jmal4pJLHpAa4lR75srF+jrPPZhhXEcL+QFNruGvfJQspRRWzHXFSHXzx30W9FCBlJMLv9bu5u27pEEp5iv3QA26MbKuzxddxp52pIfKxr/F4NllgWJ1v/wmtamIRRJbhs=
+	t=1734694278; cv=none; b=jC4v4LDdDCujGibQ1QygXSJV+wKEfd4ruORSVBZFQwRAzdgO18Wfc8OD3D+g2I2jCeGS0heYZbG9vd2/+cv1GW5oWIouZ/YD7xvWK6y4AHz1F7dy3JsQm7t/GMmbWIpBafWgBnB8ZxZyJVw54DXR0PJyyL7KQ5xISGGiZYy3JGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734693812; c=relaxed/simple;
-	bh=h0rH67niSIzZUa10oGdM772sNK4VyrHlfm3R8Xj2N0w=;
+	s=arc-20240116; t=1734694278; c=relaxed/simple;
+	bh=RgxlNj7USlRfjt1oDbGI1iueccrHw+6ZUYKpl15qLtg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dHf/PLRjoBvaMPf3JBEN3N2a2IzNzQxXa5U9Lbh4eWwnTtfI8GFqT5UVnpRWRNhllIGWctxx+1LchAdautqEliOpN8BtbU0lDDBXi/f7LBhOMTdr5NCdMfY378vm2KJwypKlw9EDpcdeURxCGSpsfdYU+VXyCTP0x9g3mdR8dxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YZv+wSTH; arc=none smtp.client-ip=209.85.221.174
+	 To:Cc:Content-Type; b=MaX4GNRBceF7fHG7ucuDIqBRXLJPpYY0NAaZReNdrDZzId3fwZc448NKBK2MbDwcVRIDSSNCE5+Mv6LBCC81YLvaPru7Woct8oox+EESm+Zh0CxOEiGjRTQpDu3pm47H8+CFHB0dtuX6sAL21+1ebovHKy5dl6ToM5k0ownqkVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aKjW0NWL; arc=none smtp.client-ip=209.85.222.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YZv+wSTH"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-51623968932so958037e0c.1
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 03:23:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aKjW0NWL"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-85c559ed230so401411241.0
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 03:31:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734693810; x=1735298610; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734694276; x=1735299076; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=B5O3OzAVx+K7F5nxKpPDbWizfTcnlz6EDYfPF6chXxM=;
-        b=YZv+wSTH1lFPBhGYsGpA64GZqhT7AT88SFUE5HZjBCxEJei3/IWcgnL4OIFLgxJ08J
-         4gFCScT5KEVXdlRo2uIS2MeJkbn9NRWwZqIhJqDbk+xBaZ1y8VMGRRQyb9Bt29DsDTcf
-         Ga8S2JgVqagZ8TBVBWPo0qYpzWUdM+y5+v/LhsEo9QSNwHQdHcezQf8Bd1QQQiJ56s79
-         n+yZJCj1OSROuaideNRG3O2o1uYUOlIaMYNAIy1dQLMHti5NbjjlSzChxpSbnNpTT9sT
-         5feHkk3+ivMBQSRJkqLMklVVsA0MP3d+mBVljXgWfxBMWbL8+FphsD40y7KV2vhGzdEA
-         tDdg==
+        bh=RgxlNj7USlRfjt1oDbGI1iueccrHw+6ZUYKpl15qLtg=;
+        b=aKjW0NWLYsMAtGKpgR+H1SVdNsGK1RvgF5dVlYcM2KyyMXO/ctCkAdl97pD1PFBz2r
+         F0gKnPAj02f8SVD4L40nLVS1Ldprlg35avgB27qGpvJwsBuD8BoM/AEQZZTJTAPvOOTQ
+         rjw9V3Tv6YymKssxubxnj4nmsPxuyICSHxXyNCVwU5UTLlKgC6DT5umOLF1HQisJTaku
+         kGVNKMu9jVtjQR8I80D0WJGtdvTJ93lX1XrYsr4lPyH++EVCdZWtnzMtwm2FTPG8Evqd
+         JX8pVJBbAJYjUNKHKtqSvgj32rfSgWcI3ciNYimq7wf0xsQ4hdLk/DZ95oQlEeQcyyGb
+         +0wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734693810; x=1735298610;
+        d=1e100.net; s=20230601; t=1734694276; x=1735299076;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B5O3OzAVx+K7F5nxKpPDbWizfTcnlz6EDYfPF6chXxM=;
-        b=OlLjw7hLnMyewGJkS1JdBI0b44hh+pvST9JrKqNoN35Gu/QR3o6z0iZh5FOHVE3DqN
-         /K7ydQaIzLQM+DKzXupQIB13RX8isOLisTr/9k2d+VxVkYjoNjBFce7Ne/hr7J8axVnm
-         kR6lcuJfisNIucxUOVQ+r60XXeOcbF5D0ctZJLj5fBjDP9o3a23c7HLocM6ZlX0TGlEz
-         5sq/hRYXn05eB8ip/y9YndkRKqFtI2Kye4NWCsaV2ATmz6XkEPbJNiaSH/v4cRjuTcdR
-         4zDwrIORFvyy0811TH77mrYcYrx2Ye0v/ow5hb+1Q6e1zrlA0D2B7EycrFA8PCMc8jEZ
-         IHpg==
-X-Forwarded-Encrypted: i=1; AJvYcCW/FK5t9nztBIHBzcFsJ5YhGCNk9CyvWqhG5oErLXpVWZHWq9DM+lMknW/bNLhPnpLwIjs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywhh9WH09GyHOPm6kcIIfox0Ca1As59HWW9zF/kgVskl/1RvVbT
-	O4lFuCHXLaLXrjoTm2yGP7i6s8nb4Gv3MabM5v6Ojjjo32wC6IuXxrivA6Szdt53vFbj/vCNYJA
-	9oB+ZcuX0FZ4d4ovHhFHxjqEVL+Q=
-X-Gm-Gg: ASbGncsBCnJ0p+hrCXhLTS/1o14j/6XjWiBkrMF8BVaQay9rVTL+zPtoaf6bBL2s+hf
-	rn0GV/y4qd79ZscnOTnQ1qsc7gGWnT0G/qT0v
-X-Google-Smtp-Source: AGHT+IEx5xJ2kPqq/c0eCudEHxtgTbxPY8a3NdIJuXNbtIqBLKMIA8feUF3R8tbCStCMlr3MFHxOy2WQsiuC3isZszQ=
-X-Received: by 2002:a05:6122:8c15:b0:518:9582:dba2 with SMTP id
- 71dfb90a1353d-51b75d67f88mr1678974e0c.10.1734693809860; Fri, 20 Dec 2024
- 03:23:29 -0800 (PST)
+        bh=RgxlNj7USlRfjt1oDbGI1iueccrHw+6ZUYKpl15qLtg=;
+        b=WEOOTQz67si1OokeXliOVdsodMbKoWsL6xSTx4ECFyCIS4JSPX8U7W8GHM72Hg0I59
+         ROb9H01I/GCPhnP5iYQCuAAwVl/YBMleWhjsHhsrSnjksE2wrfbEzhIW62YeBvSGsqVw
+         i6EJjVwRagEkXZHkSThn+joe1GYHRDpuhSNX39MDc+34G1JxKayR1WurMC0vWwW1woZz
+         hft9DJOfl8jyjCdOTyLpfI7qXfpIifAmmEejwHybQac8MUFS769Ej+pdKaeouBymV2pu
+         urwbKMsIwEbcXHcBNngC2O3uCZEmi79ieKfyUB1CKq1WbdIho+XrUsJvKf6todYTBxwl
+         3McQ==
+X-Gm-Message-State: AOJu0YwwzrdXZWCiuL6o2BS3Io5ufgUONSgFDKJoa273amoQG0cwZIWs
+	ItPoZFiOUdpSrQcEKUGBqdUHcVv2Heb4YLX3F6wg+6TYBs8sLgggxnObgkTdTX51JCgieGuhowb
+	Ic/ey+biLv/ypg465XQeTC5SJdUs=
+X-Gm-Gg: ASbGncsUwKlp/i+2cj2qIkMyMqlyygrQLCvdUTWIcR5DKNAtEvaBJ2qebA1G3OvQ1jk
+	bm2zSE48mJGoh37kj6qQ9F0962F6hznwK5Fao
+X-Google-Smtp-Source: AGHT+IHqHAErGfx1JUQPFGPLMO8bFuy7+Mn2qwnP5TuAtKLamhD9zolF6/tWP2HmJaw/LJP23LU79c7NPgSyKKfaky0=
+X-Received: by 2002:a05:6102:3709:b0:4af:fc14:f138 with SMTP id
+ ada2fe7eead31-4b2cc35f97bmr2419547137.7.1734694275934; Fri, 20 Dec 2024
+ 03:31:15 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Dec 2024 03:23:29 -0800
+ HTTPREST; Fri, 20 Dec 2024 06:31:15 -0500
 From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <874j2zh3jv.fsf@iotcl.com>
-References: <20241215-320-git-refs-migrate-reflogs-v3-0-4127fe707b98@gmail.com>
- <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com> <874j2zh3jv.fsf@iotcl.com>
+In-Reply-To: <875xnfh3kx.fsf@iotcl.com>
+References: <20241213-320-git-refs-migrate-reflogs-v2-0-f28312cdb6c0@gmail.com>
+ <20241213-320-git-refs-migrate-reflogs-v2-5-f28312cdb6c0@gmail.com>
+ <Z1wnbCoidG-lC7ui@pks.im> <CAOLa=ZT9KDNaz84DLoRBzY_yaZ3kZ2FUWADohZhM4EcrJgmS+A@mail.gmail.com>
+ <875xnfh3kx.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 20 Dec 2024 03:23:29 -0800
-Message-ID: <CAOLa=ZRcp+OxiQxYGJeQ8AEWNk-6SkrRsZdi8bnNtNaWe_zrhg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/8] refs: add reflog support to `git refs migrate`
-To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Cc: ps@pks.im, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="00000000000054dd510629b1e03b"
+Date: Fri, 20 Dec 2024 06:31:15 -0500
+Message-ID: <CAOLa=ZTx3T=md4VQ6tRb5U41nOHsbhTB5d6VsmyUHFxHgQQ88g@mail.gmail.com>
+Subject: Re: [PATCH v2 5/8] refs: add `committer_info` to `ref_transaction_add_update()`
+To: Toon Claes <toon@iotcl.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000001c92800629b1fca7"
 
---00000000000054dd510629b1e03b
+--0000000000001c92800629b1fca7
 Content-Type: text/plain; charset="UTF-8"
 
 Toon Claes <toon@iotcl.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> karthik nayak <karthik.188@gmail.com> writes:
 >
->> The `git refs migrate` command was introduced in
->> 25a0023f28 (builtin/refs: new command to migrate ref storage formats,
->> 2024-06-06) to support migrating from one reference backend to another.
+>> Patrick Steinhardt <ps@pks.im> writes:
 >>
->> One limitation of the feature was that it didn't support migrating
->> repositories which contained reflogs. This isn't a requirement on the
->> server side as repositories are stored as bare repositories (which do
->> not contain any reflogs). Clients however generally use reflogs and
->> until now couldn't use the `git refs migrate` command to migrate their
->> repositories to the new reftable format.
+>>> On Fri, Dec 13, 2024 at 11:36:50AM +0100, Karthik Nayak wrote:
+>>>> The `ref_transaction_add_update()` creates the `ref_update` struct. To
+>>>> facilitate addition of reflogs in the next commit, the function needs to
+>>>> accommodate setting the `committer_info` field in the struct. So modify
+>>>> the function to also take `committer_info` as an argument and set it
+>>>> accordingly.
+>>>
+>>> I was wondering a bit whether we could instead pull out a
+>>> `add_update_internal()` function so that we don't need to modify all
+>>> callers of `ref_transaction_add_update()`. Because ultimately, we don't
+>>> use the field anywhere except from `ref_transaction_add_reflog_update()`
+>>> as far as I can see.
+>>>
+>>> This is more of a thought than a strong opinion, so feel free to ignore.
+>>>
 >>
->> One of the issues for adding reflog support is that the ref transactions
->> don't support reflogs additions:
->>   1. While there is REF_LOG_ONLY flag, there is no function to utilize
->>   the flag and add reflogs.
->>   2. reference backends generally sort the updates by the refname. This
->>   wouldn't work for reflogs which need to ensure that they maintain the
->>   order of creation.
->>   3. In the files backend, reflog entries are added by obtaining locks
->>   on the refs themselves. This means each update in the transaction, will
->>   obtain a ref_lock. This paradigm fails to accompany the fact that there
->>   could be multiple reflog updates for a refname in a single transaction.
->>   4. The backends check for duplicate entries, which doesn't make sense
->>   in the context of adding multiple reflogs for a given refname.
->>
->> We overcome these issue we make the following changes:
->>   - Update the ref_update structure to also include the committer
->>   information. Using this, we can add a new function which only adds
->>   reflog updates to the transaction.
+>> Yes, that is a possible change, but the number of code changes are
+>> relatively low and I didn't think it made so much difference. Also
+>> because we'd now have one more function. But I don't mind doing it
+>> either, if anyone feels strongly about it, I'll happily make that
+>> change.
 >
-> Out of interest, I see various changes happen around committer info. But
-> why is the committer info more relevant for reflog updates, in contrast
-> to normal ref updates?
+> Yes, I agree the number of callsites isn't that large, but on the other
+> hand, I see various calls to this function having four `NULL`s in a row
+> as arguments. Personally, I think that starts to smell a bit.
 >
+
+I agree with your reasoning here..
+
+> Now, before you change anything. I'm not sure what Patrick was
+> suggesting? Would it mean we basically rename
+> `ref_transaction_add_update()` to `add_update_internal()` and create a
+> new wrapper function `ref_transaction_add_update()` that simply calls
+> `add_update_internal(<ARGS>..., NULL, msg)`? I don't think that's a
+> great solution either.
+>
+
+Yes, agreed with this too.
+
+> Alternively, because ref_transaction_add_update() returns the `struct
+> ref_update`, why not add a function `ref_update_set_committer` and call
+> that where we need to set the committer? I see this also will help in a
+> future commit where you call ref_transaction_add_update() differently
+> depending on reflog updates.
+>
+
+I think this seems like a nice way to go about it. Currently all the
+logic pertaining to creating an `ref_update` struct is contained within
+`ref_transaction_add_update()`. So having individual functions would
+make sense, but the con here is that this doesn't enforce fields to be
+set. But for `committer_info` it does make sense. I'm going to leave it
+for now since the series is merged to `next`. Maybe something to do in
+the future as part of #leftoverbits.
+
 > --
 > Toon
 
-The committer info is metadata around a ref update. It is only stored in
-the reflogs. So they're only relevant for reflogs! For e.g. in the files
-backend, we can see:
-
-  $ cat .git/logs/HEAD | tail -1
-  7a929cb27ca6df69d4db64b008e27e002c691028
-bc8e00178b671da2b845ccbba175f6c093ed6949 Karthik Nayak
-<karthik.188@google.com> 1734624674 +0100	commit: c10
-
-Here the 'Karthik Nayak <karthik.188@gmail.com> 1734624673 +0100'
-section is the committer_info. Whereas if you see the reference itself
-
-  $ cat .git/HEAD
-  ref: refs/heads/master
-
-It only contains reference information. So, the `committer_info` is
-not needed for regular ref updates. Earlier we dynamically obtain the
-information when a reflog was being created. But for migration of
-existing reflogs we need to pass this information from the source to the
-ref transaction mechanism. So we pass the `committer_info` through the
-layers.
-
-Thank you for the review.
-
---00000000000054dd510629b1e03b
+--0000000000001c92800629b1fca7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: a0a3ee133b24eda8_0.1
+X-Attachment-Id: 7526469404a7a30d_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kbFU3QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md1QwQy8wUzh3M2M2M1Y3NGwwYTRvQ0twSDNZRlRTSgpubnpEZmcrTUo3
-UXVsRXh2MXFNU0ZpNm5ZWElkN0dIdFM1UnZNd2RZSERLUksyOTlsdXAyRzRld3BxdjlrUlM0ClVm
-cm5xS2VXcVNUUVJOenBBNEcwcHhoUjZSMEsxU1JPSkdJVnp4L1JnU0ZlQm9TN0Y1R3pwWkNNdUVr
-RDNPRVoKNkhMNUxpWldaaFpRcVNLRlUzcjJTSytlRmV3NTVBd0VMMkYraElobGc5VGNOTWtPanpy
-THcvTTg1dXdBTHlEaQpBcDJGVzdLSUVmcEZjWjZRd0pGMStHNzhRaVFtaEtQaVlhaEU3clVoSlFr
-N0NNMTJGdk1yN2JyZnB6S3hxWEx3CkdSL01Vb2g0bnFjdjdTV3J2RHhFNnd5NmxhRkd2bzN1Z0tZ
-MXZScG82RlpaZWt6UW42ZE5WelJMZElrRXRjVWkKci9LRitibUFIRTlVNVhHYzB1YU4vYU5NZmht
-MGVBbXA0OTk0UFpDb1hxV0twK0xsT1lja3ZyNEVJdk44ZTQ4SwpSVDRWdnJ2UkRKR2g1QmE1V20x
-eVVCK2lmZkFIRDF2aGZSUk40bnJ4N0FkVDhqQzhIZTg4VmF5TUxQV2ZlT3JTCjJVU256V2ZwQlU1
-ZUJCMWxrZUNmbWJ6Nms5STh4K3hMbUU4OXN2dz0KPTJNcG8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kbFZZRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md3liQy9vRDRkamdQeTdIWmQ3anRWS0JhR3JpRHo4SwoxelQrNkhGanIy
+cVh0bkdDVzRQVWowYnVRZ3BTUm1QWFVBaEJiWmV3UC9INjViL1ZMWmhrRUVtMmMyME5sMVdPCkN1
+UFVrM1MrOFlzTWJyRHZ6eTVKQ3VHVlZaTzZWY3FEMzc0Y3ZtdnZDeFdVZzhuRXNyenU5cTc0UGVL
+Z3M1SEkKcXE1bHQreXNLWXBoQzFUY2ErWjdDOHduQkZEaFRrdTFSVHBaV2wveXJNWVBNMHRFalFS
+ZzRlSG4vMy9HTGZPZgpaS09FK3hxQnVsTHZKWjVYVUdnRk9GQ0JGTFE5TmpvK3A3ekszMDdRQVZn
+cWc3SjZCUFJLcXhHaHdNZEFFcEU1ClNNYmFpUStid0ZwODhXeWpFZ250c21Rd0VDaXlpZ0NQUWNT
+eGFCckpyaDRaa1p4MHFFU1l1TjNVaWFWUUcyOWcKRUxGbUJkd0h2V1pUUEZmc3pNQnlHSS8yV1g0
+RTNJaGsxSk1Cb0RyNmo1STE2QlVHZ0k1UGJVVVpidGFhWXFSQQpHSFNraHVUZ0tNNk1JeklSZEhV
+ZXJqSDY2SzZJOGg1N3drKzZ0N2U4ajZGaVFjZm03d3J4R2VVemNjazNWbEl5CmpsUGRTVUs1NUl3
+UWdWZGtUTEhRMHRkdExtc1Y2OEFrMzFGVm5QQT0KPWZHT2kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000054dd510629b1e03b--
+--0000000000001c92800629b1fca7--
