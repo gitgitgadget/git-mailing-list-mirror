@@ -1,170 +1,119 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB66D1A3BD7
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 21:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBC02210F9
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 21:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734729733; cv=none; b=A+IoaPvJWysNm9d+Nyl1GKlfX2A3b+Vvwc3Z67g8j+TFqWZltoaBww2JBe7qwlnjXBLqpbwTAGgQdjq21aQDFLCm0DpR8f0YKzcWiRSAsHXtJdwKaNjX8Eu4T5V9vs8GWN/Krhj0oEBXCTtQatSLmne3XcYeCI2TuUCNcpNFK5Y=
+	t=1734731431; cv=none; b=R8Ai7j3HhrymPQ+mfqCC9INavYePM9AGaPxPjOlNyYvdqh2Wdjs8Pz9oDqMq+8hqSe3+8BKS71pLiN/n5ARdXc4L9SdBzqhtRW8epwZ9f7w6WS/O3yAv17L/21xhWIHcYjn0Pks/ut4ztmzvLF70W++an15NfiqFBofzkHFE1WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734729733; c=relaxed/simple;
-	bh=XZ+9O87Gr6p4BivBiZa9GKPOCPBQ+KZ/FvgwjZ2U3mY=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n3kFlndvH5fNOk7nBd6jk/141gQZDXgztq7dgM4C7t1qUNK7BJQEZ7mrM7garvWcjTTHRIXac0QTx2mZadtuXvkbTtZDLIMpPNZ4zdWS10grS2sbMJtcc5aDk5UX9iMV2xT0QbAvWG9ErO4JYIGzYPNnv7k9kQQ1Mj4pZAKmOqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4BKLLwen2530830
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Dec 2024 21:21:59 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Patrick Steinhardt'" <ps@pks.im>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>
-References: <xmqqfrmn4hr9.fsf@gitster.g> <00ad01db5017$aa9ce340$ffd6a9c0$@nexbridge.com> <Z2EC9rq3F0rTljff@pks.im> <010a01db508a$4544d750$cfce85f0$@nexbridge.com> <015901db50b5$e3a7f6e0$aaf7e4a0$@nexbridge.com> <Z2JyFB3CddYM_LP4@pks.im> <00ca01db5257$12708d00$3751a700$@nexbridge.com> <Z2UX2v8sc-DELaVm@pks.im> <015501db5314$b61ac2a0$225047e0$@nexbridge.com> <Z2XHfzLEBUfqygBq@pks.im>
-In-Reply-To: <Z2XHfzLEBUfqygBq@pks.im>
-Subject: RE: [ANNOUNCE] Git v2.48.0-rc0
-Date: Fri, 20 Dec 2024 16:21:53 -0500
-Organization: Nexbridge Inc.
-Message-ID: <016b01db5325$34c0fd80$9e42f880$@nexbridge.com>
+	s=arc-20240116; t=1734731431; c=relaxed/simple;
+	bh=QLJ0+/fBViBP2eYDxBh5C5JSVWBB5nEHYw5AIY/6kBQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Hb62JxQQH6O+G/bD+Y0qnDR7qAKRvFGy0whx5K6vd/A9M4mPG15SqjwGJUOPi77f4arj6sV0aq4sVhwivcRSQyGs+y7zK6vmOgK2FVczbnR/r/mSlYJbhW8Bl8KkTQ1Tyn5qTUzKoNd6N2mTdj/dIqGIF7w6SwTHgji/NL+gjaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jSl7l5Og; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KKhFe73/; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jSl7l5Og";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KKhFe73/"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 11694114014D;
+	Fri, 20 Dec 2024 16:50:28 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Fri, 20 Dec 2024 16:50:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1734731427; x=1734817827; bh=kQLEvZzuHv
+	ZTXcF3bV23r0G/q+RyCXdbhxegVlWq98s=; b=jSl7l5OgAGCcC/XQ4NEg7Gtgbu
+	fWI21qDcx16Z0oZyXOiG856Bct7ZKfGquePT0t9dx/gZb3fjJvgwFzGZVmBEuM7R
+	Kufi2j+mADjVTX6GwSCdAYUbMJq2Wygm+nF2SeI6+U19J6N/ITZpETp/wiirEu1m
+	xsGOdt44TPgWEa9+OZ0osvoyhU4AdskvuYgBgYTElvmQluOlBhUIKAgNtJLWhxCh
+	iRQiO1k8qB2bRrixYgTP4hfl6aKl3+fQZD5Kc7ZfBqN8//nGC2ewAMo447+dWsU2
+	Ua3kpww02kOnx6uTWBKkTstx7WPIfZIL8TdHKSo10iYs2FVQ4vGJUPzvbl2Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1734731427; x=1734817827; bh=kQLEvZzuHvZTXcF3bV23r0G/q+RyCXdbhxe
+	gVlWq98s=; b=KKhFe73/SS48lDUVq45+VahiqPtUCsehZ+12RV4sfKlbFlgVZua
+	NhPgqZsP38YZEr8jjxAfYriZHj5XX6MyIclnAav9ZjIzBhk5ZJxsK67+hBku0HKg
+	d7SYrqJcGpzKL8VnJR+AAU2Xfp1P2V24FPMy89FKZqDehq7eXxsmCibEGR3lncKu
+	dGNmGOTcyX9gcirTCAuTi69Fvq1a06xriesuMwUPSljNQw3DBeLUIfJ1fnp/SuQe
+	+pWL9gFw/xsxOnIgQRmUx2o3pd3R5CA3K5g77tOkTtwGPwjfvYcC4dH60LpTIcBE
+	hFrzpuBecWuWZPweQfkhxtJiQYf8BOg7jcg==
+X-ME-Sender: <xms:o-ZlZxKqHQo2FiTr_KXG_IpgYz4eDnDJvk5DbFylZcsqMuHbVhq62g>
+    <xme:o-ZlZ9Kx-6HWoWbjDw4uDTaATpzbq9nElhdTHMFFmfVfZtoi9fwdQoVNosW4OacIZ
+    GR8ANxYht2CEcE00g>
+X-ME-Received: <xmr:o-ZlZ5u65RrcEWCc1PjbDnWQG_FizjAg0-y0Hj-ANog-XOo1l_CGPh-j2nIC5Mr1AuJG76UXW7m7sXrpH216ar0WyuYLy8qmWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddgudehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:o-ZlZyYiP49Sr_RzFJxHDN-UIaHTI-kgJULNmXsJetW95HWwckv2_g>
+    <xmx:o-ZlZ4Zy22EhWGFlDGgMvEdjMSNhuADgNEqVlzD0t9f8dqCb60O21g>
+    <xmx:o-ZlZ2DDwhua3rsFZ-i8aOA7wAhllCjV-F8qcpZghFiwwkPbnzwA4w>
+    <xmx:o-ZlZ2YBk5y363nAWPLEDDNjXuzEP1o3j15gRZnUFnCFRjKxxz4w0w>
+    <xmx:o-ZlZ3zau3g4rONUJOHpvCpGn_oEW3NH9Oafucd2P-Vlze5fpzFnHPQO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Dec 2024 16:50:27 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v3 4/6] GIT-VERSION-GEN: fix overriding GIT_VERSION
+In-Reply-To: <20241220-b4-pks-git-version-via-environment-v3-4-1fd79b52a5fb@pks.im>
+	(Patrick Steinhardt's message of "Fri, 20 Dec 2024 20:44:24 +0100")
+References: <20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im>
+	<20241220-b4-pks-git-version-via-environment-v3-4-1fd79b52a5fb@pks.im>
+Date: Fri, 20 Dec 2024 13:50:25 -0800
+Message-ID: <xmqq4j2ydnxa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFEfEaRNrZ6uu0wI6oVXmgPkoCy2gI/zh74AaCMqnQBl78GqAGqkn5VArNI4yoCossCbgJ/RS7RAc1uYKMCYDUlXLOEH57w
-Content-Language: en-ca
+Content-Type: text/plain
 
-On December 20, 2024 2:38 PM, Patrick Steinhardt wrote:
->On Fri, Dec 20, 2024 at 02:23:49PM -0500, rsbecker@nexbridge.com wrote:
->> On December 20, 2024 2:08 AM, Patrick Steinhardt wrote:
->> >On Thu, Dec 19, 2024 at 03:46:20PM -0500, rsbecker@nexbridge.com wrote:
->> >> On December 18, 2024 11:07 AM, I wrote:
->> >> >All tests, actually.
->> >> >
->> >> >$ GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true sh
->> >> >t0000- basic.sh --verbose -i -x
->> >> >error: reftable: transaction prepare: out of memory
->> >> >error: cannot run git init
->> >>
->> >> Any updates or hypothesis on this? Our test system has loads of
->> >> memory
->> >> - I cannot figure out where the allocation failure takes place.
->> >> There is a limit to how much memory can be allocated, but it is
->> >> very high and our virtual memory is extensive, but this is a 32-bit
-build.
->> >
->> >My hypothesis is that this is caused by ps/reftable-alloc-failures,
->> >but I
->> am unable to
->> >tell where exactly the error comes from. So I'm dependent on your input.
->> >
->> >Could you please bisect the error? Finding out where the error is
->> >raised
->> would also
->> >be quite helpful. It has to be one of the reftable functions that
->> >returns REFTABLE_OUT_OF_MEMORY_ERROR, but other than that I do not
->> >have any more gut feeling right now.
->>
->> This is what bisect shows:
->>
->> git bisect start
->> # status: waiting for both good and bad commits # good:
->> [777489f9e09c8d0dd6b12f9d90de6376330577a2] Git 2.47 git bisect good
->> 777489f9e09c8d0dd6b12f9d90de6376330577a2
->> # status: waiting for bad commit, 1 good commit known # bad:
->> [063bcebf0c917140ca0e705cbe0fdea127e90086] Git 2.48-rc0
->>
->> git bisect bad 063bcebf0c917140ca0e705cbe0fdea127e90086
->> # bad: [2037ca85ad93ec905b46543df6df4080f6ca258b] worktree: refactor
->> `repair_worktree_after_gitdir_move()`
->> git bisect bad 2037ca85ad93ec905b46543df6df4080f6ca258b
->> # bad: [6a11438f43469f3815f2f0fc997bd45792ff04c0] The fifth batch git
->> bisect bad 6a11438f43469f3815f2f0fc997bd45792ff04c0
->> # bad: [f004467b042d735a2fe8bd5706b053b04b1aec65] Merge branch
->> 'jh/config-unset-doc-fix'
->> git bisect bad f004467b042d735a2fe8bd5706b053b04b1aec65
->> # bad: [e29296745dc92fb03f8f60111b458adc69ff84c5] Merge branch
->> 'sk/doc-maintenance-schedule'
->> git bisect bad e29296745dc92fb03f8f60111b458adc69ff84c5
->> # bad: [5b67cc6477ce88c499caab5ebcebd492ec78932d] reftable/stack:
->> handle allocation failures in auto compaction git bisect bad
->> 5b67cc6477ce88c499caab5ebcebd492ec78932d
->> # good: [31f5b972e0231d4211987775dd58e67815734989] reftable/record:
->> handle allocation failures when decoding records git bisect good
->> 31f5b972e0231d4211987775dd58e67815734989
->> # bad: [18da60029319733e2d931f2758a8e47b8b25b117] reftable/reader:
->> handle allocation failures for unindexed reader git bisect bad
->> 18da60029319733e2d931f2758a8e47b8b25b117
->> # good: [74d1c18757d1a45b95e46836adf478193a34c42c] reftable/writer:
->> handle allocation failures in `reftable_new_writer()` git bisect good
->> 74d1c18757d1a45b95e46836adf478193a34c42c
->
->This is missing the last step for git-bisect(1). Right now it could be
-caused by one of
->these commits:
->
->    18da600293 (reftable/reader: handle allocation failures for unindexed
-reader,
->2024-10-02)
->    802c0646ac (reftable/merged: handle allocation failures in
->`merged_table_init_iter()`, 2024-10-02)
+Patrick Steinhardt <ps@pks.im> writes:
 
-They are there, it is just that Outlook wrapped the lines on me.  The
-802c064 is not in my repo - I bisected from 2.47.0 to 2.48.0-rc0, so may
-have skipped a more recent commit than rc0 has.
+> diff --git a/Documentation/Makefile b/Documentation/Makefile
+> index ff30ab6c4295525757f6a150ec4ff0c72487f440..a89823e1d1ee5042367bdcca6ed426196d49ce89 100644
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -181,6 +181,10 @@ endif
+>  -include ../config.mak.autogen
+>  -include ../config.mak
+>  
+> +# Set GIT_VERSION_OVERRIDE such that version_gen knows to substitute
+> +# GIT_VERSION in case it was set by the user.
+> +GIT_VERSION_OVERRIDE := $(GIT_VERSION)
+> +
+>  ifndef NO_MAN_BOLD_LITERAL
+>  XMLTO_EXTRA += -m manpage-bold-literal.xsl
+>  endif
 
->The first commit seems quite unlikely to be the root cause. The second
-commit is
->rather interesting though. I wonder whether NonStop's malloc returns a NULL
->pointer when given a size of 0?
->
->A quick stab into the dark, but does below patch on top of `master` make
-things
->work for you?
->
->Patrick
->
->-- >8 --
->
->diff --git a/reftable/merged.c b/reftable/merged.c index
-bb0836e344..7ae6f78d45
->100644
->--- a/reftable/merged.c
->+++ b/reftable/merged.c
->@@ -244,7 +244,7 @@ int merged_table_init_iter(struct reftable_merged_table
->*mt,
-> 	struct merged_iter *mi = NULL;
-> 	int ret;
->
->-	REFTABLE_CALLOC_ARRAY(subiters, mt->readers_len);
->+	REFTABLE_CALLOC_ARRAY(subiters, mt->readers_len + 1);
-> 	if (!subiters) {
-> 		ret = REFTABLE_OUT_OF_MEMORY_ERROR;
-> 		goto out;
->diff --git a/reftable/stack.c b/reftable/stack.c index
-59fd695a12..1b6b8cc9ea
->100644
->--- a/reftable/stack.c
->+++ b/reftable/stack.c
->@@ -1612,7 +1612,7 @@ static uint64_t
->*stack_table_sizes_for_compaction(struct reftable_stack *st)
-> 	int overhead = header_size(version) - 1;
-> 	uint64_t *sizes;
->
->-	REFTABLE_CALLOC_ARRAY(sizes, st->merged->readers_len);
->+	REFTABLE_CALLOC_ARRAY(sizes, st->merged->readers_len + 1);
-> 	if (!sizes)
-> 		return NULL;
->
+So the idea is that those targets and scripts may have their own
+GIT_VERION value when they run GIT-VERSION-GEN to cause GIT_VERSION
+to computed, and in such a case, they should pass the GIT_VERSION
+they have in GIT_VERSION_OVERRIDE, and thanks to the version_gen
+thing, this value in GIT_VERSION_OVERRIDE is passed in the
+environment as GIT_VERSION when GIT-VERSION-GEN is run, and the
+value in turn is passed intact.  Somehow this makes my head spin, as
+it looks quite convoluted, but the overall flow should yield the
+desired value.
 
-The fix above does not appear to make any difference.
-
+Queued.  Thanks.
