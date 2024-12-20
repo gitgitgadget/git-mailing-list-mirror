@@ -1,123 +1,108 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0449D1C3316
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 10:55:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8FE2594A8
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 11:13:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734692130; cv=none; b=HFZbY8thLqldFoYwpQ2RZTReBIPed7oepjaf8NSX6frhS5CgthKagXMPSFnxNnabEyqwN5JdaT3E8t/L5k56Q23Oi4SP6LTmpzy3NXvfhMnkzvnDEeh3U/xP62qihcRmCYmaQ1+5e9E2ZZ3VtTSXd+1FdNNU0TW4+LFPQkOy+ms=
+	t=1734693200; cv=none; b=kBTi9R4Sp8E6y1hXHunG86PdeEkEPb/c1/IAYO0pnokGxSWggQdBPVxBFk3KMCUjQmF9shfZV0VL5NOS/k2E7p8fRU28slpXw12SQgHjdgXbe0lwWLtSH+nOZFc7aCnG1JZiD8P5zGrIPQ3+vS7vlbe+r+4kQSWWmkT4f0HLHdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734692130; c=relaxed/simple;
-	bh=18qNwT3DjxoCcgxBKfKhrVFEQY8olnSGZTrCqbVZIe4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GyeuVWa7Omx48qkcdC7VzdjymH0j8zWfesVEfcH/uhX3cBhUjj0NA9jUUrvy/ae9HpfnFAOfeyaJlsZ6ZP2wjZy0VMseL1BAkNCYykiovxji8jEu34VpvXDwPm3tQPorv6Iw8+ma9IJPdqFh0JVXqq4+pniS3wvd+uUp5LVjlOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dBHlGPFA; arc=none smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734693200; c=relaxed/simple;
+	bh=ccd70uCsPRnCBrzSVAjCac5tPEj5hQS0yJnFXE1vPms=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PBc66t8kt9XC6RrVvNL5M+HKE4NRMsrgUK+4Qr8lte/2tsSRWpRzdDvxDDteqwcKr5o6m/sR7XTG0MwQLy9YHyK+4g2k/Rg+LGp4b/96VP4kulcnSfv/TKepHD+aePuqLGQDhmpta4Ude0bTpniC2PJC8l2KNGnmy52jIae6TEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=akorzy.net; spf=pass smtp.mailfrom=akorzy.net; dkim=pass (2048-bit key) header.d=akorzy-net.20230601.gappssmtp.com header.i=@akorzy-net.20230601.gappssmtp.com header.b=j1LpP7pV; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=akorzy.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=akorzy.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dBHlGPFA"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4afe70b41a8so504827137.3
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 02:55:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=akorzy-net.20230601.gappssmtp.com header.i=@akorzy-net.20230601.gappssmtp.com header.b="j1LpP7pV"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7fd51285746so1108231a12.3
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 03:13:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734692127; x=1735296927; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gD2lUFPQcNAsEPDrjfdSCouvxyiJHtoPn1lJPfypI8U=;
-        b=dBHlGPFAOcKSCENxPDrPb25Yuq+nmowJjkCrZV7Hn5iCQfWyBHHbkmJhwKN2tk8YAQ
-         TOtMmeOAd7sUeNAf8OGrAZa9m8LP45FesKOFq6j+71Sy0AQCGO237Hhi63GAfk4PzRIS
-         3WX1nmt6kO48RLXx3sjJsub1/Z7Q2n3UFPNtUczbmsERwbKDDi+EA67GcYqjgsVtc991
-         tPzp0NYRpWkdls+5evO7vKzChPtZO7UZaLzcLoI0VGhtaqLrdsiEMiZhTQu87VfUgFu4
-         vUP8YYbnm0LL7WQBDVIJ1G5Y+fw9wblqLOstu+EbVIJg66gWVf7J57xtC+1l25t1mFyp
-         XUCA==
+        d=akorzy-net.20230601.gappssmtp.com; s=20230601; t=1734693195; x=1735297995; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=koli2ceYHoEuB3LSOBeUp0RX+gEZiXhHrPf1l7x/FnU=;
+        b=j1LpP7pVnPUfIKWWNyVG/cntc07T6RGyhI899i4tS8aNgZUo+0VanALHdL38vsa5pP
+         mRI76ayohuLr0ns7Ldn38IUGirr5fUyBtV++J3KUesCOuQuEsAKGfOnjWb766+7zlLrb
+         4nTWO4FLluym8SOlE91oCmaFdK7R7dDfigFlLxoGizhIl+FErQm5nEOOSYJFW/i+0obq
+         NSRKLpCAnAEpYEwy69LjeruF8VX9JoZIAXRNxbmLMnuBtEA/To+850uYu+EV8iSV2HK1
+         eAZSR6Bey+TGDdbYfdiWRHNoeP9ZTvJdoLObd+qh6/eMTKdYRocfW/pjl4cz8EbuQK0Z
+         4PkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734692127; x=1735296927;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gD2lUFPQcNAsEPDrjfdSCouvxyiJHtoPn1lJPfypI8U=;
-        b=LB8HPEfv6tRjlHHL/oLO4ggp8Ofa3Hp/9Bj/GSpDJSaAknrMxjTrb5gCMMadQ4X19t
-         I0Elaoja8wJpDVZBQ0buvyZVGTS41/vfqOh6pGH/BJ5w7PLGNW9rNnM+MnkLP0n4WBo5
-         dygp2j5UE7nLPuIozKeHpk8OfsVZA7aPV8srHM075x+80ifLlPHXr9Nwtgwx57ZUcvuC
-         6q3ytuZzZlvDgD5lP2Pn7asZyqvEhsxiubDxHheXmOekzyXE4wU1heaQ96vEKC/jHSrD
-         mC8SYLBMU6PLbYjPzfqYvOU5JG0Z7xkQrBB68eQONsa2Jy9eVpqSLQcvgk0bEdrLOqCw
-         r0GA==
-X-Gm-Message-State: AOJu0Yzk0jUHeF/jbR10tfj9Tq5Y10Ilh83X2vVtXqQvJfDftT1I9qlP
-	Pffe5DfAmK+9QEO98/Bv0GyfBYpjMCuywto/sy4r0C0VLgyXwTPGdsEuNi8kvxSuZ+2broTdJoD
-	J0UFuQcTzZWXEXuYnr8uz+GYqGh0=
-X-Gm-Gg: ASbGncv3Sorm/Bwh5RI5KOQ+uIsjlqBPMrdM/eE9g90JFqfgnuXVOQREfxOnAPZfUhT
-	o3Ci6tJFoZds31vRdAtXWByN7pA/5RMU7I+rp
-X-Google-Smtp-Source: AGHT+IH4S0JGfORNbAWEQz9qW2oD3Vq13GVRZyetVGlFVltZPCQiVruZWPjvZ7737NnIMIYfGQsIsm8BAAITcVpxU00=
-X-Received: by 2002:a05:6102:a4f:b0:4b1:1439:b4f0 with SMTP id
- ada2fe7eead31-4b2cc45f0ecmr2007603137.20.1734692126668; Fri, 20 Dec 2024
- 02:55:26 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Dec 2024 02:55:25 -0800
-From: karthik nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq4j2zifmy.fsf@gitster.g>
-References: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
- <20241216-320-git-refs-migrate-reflogs-v4-6-d7cd3f197453@gmail.com>
- <8734ijh3jg.fsf@iotcl.com> <xmqq4j2zifmy.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1734693195; x=1735297995;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=koli2ceYHoEuB3LSOBeUp0RX+gEZiXhHrPf1l7x/FnU=;
+        b=DcucJyrS5ukljPHqITZ2yaFqIBEJ29pdu1ZF+Dj7lEW2XHtYGGzCrmKTaAeRsm2zr1
+         p1U7lc2yN2I1y8mGcdqMEf+OpybipOAvp/VYxMcsAx7SB8i8SYKqB/k9iFl0by97BnP3
+         vzduQlFdPhfS/ycUAJnceFCWwJy7wyDNWfmHtx5GwjBw+OcOJ+JLSsHn7vCMwp39Psvt
+         74tsA2CF3/7b9CoG/tMMpMk+BwmDmx9b6oSoQ6xQj70nlW2JJ7lMlBHfRCbiSdiT3GGU
+         NPf04VFSNERDrxvYKsvrUvFL/qDpEjR9ISJrDpWIxvx6hdJUdGW5kMyugzny7de/i3gf
+         rlVQ==
+X-Gm-Message-State: AOJu0Yx7pWQBNIBwIjTTqAPE7yr8bQo4YQ+fZajtTtq9oP40KHOxUzed
+	Pc6M013L+ybYEIj71VgPv7gHjCkNUcFfyapAMMEwlsv8HWidAGjopIvJLwJabDUKLao9FkEKTTC
+	1F0FCNXBNboHHk800RvosXEa8k7GHCkUZdgGP/g==
+X-Gm-Gg: ASbGncsN/E7OvybJ7PRzsvcSPl03fsr9XeCBff9KBWaLQJYzdLIpTr4KhzW8mspJ5+S
+	v8UEybwivfpMy9HpYJzp8KLE7/Yb5UTtPbFaDgg==
+X-Google-Smtp-Source: AGHT+IFs/2rBmngY40STpfnCxwuvSYVMAl1IuB7i3Nb6P0Ii9HFtlN93XqDhE9JqRBV/JDggtKQHVlotzU3f4u6OEds=
+X-Received: by 2002:a17:90b:2c84:b0:2ee:bbe0:98c6 with SMTP id
+ 98e67ed59e1d1-2f452dfcb28mr4436785a91.8.1734693195089; Fri, 20 Dec 2024
+ 03:13:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 20 Dec 2024 02:55:25 -0800
-Message-ID: <CAOLa=ZR3fNRdGyYcvOBi=79WyOEr5VF7KD=p3JuGO6jUCfxANw@mail.gmail.com>
-Subject: Re: [PATCH v4 6/8] refs: introduce the `ref_transaction_update_reflog`
- function
-To: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, ps@pks.im, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000000287810629b17c2d"
-
---0000000000000287810629b17c2d
+References: <CAEtHj8AXKrQfyAW9FSv6yC-8GF1AkPixMFjSye+B51pJ4fOtWA@mail.gmail.com>
+ <20241218120831.GA695807@coredump.intra.peff.net>
+In-Reply-To: <20241218120831.GA695807@coredump.intra.peff.net>
+From: =?UTF-8?Q?Aleksander_Korzy=C5=84ski?= <ak@akorzy.net>
+Date: Fri, 20 Dec 2024 12:13:03 +0100
+Message-ID: <CAEtHj8DUaDm7Hr+Dzc+K=F1MONj8u=GmuB1ju5kMU-swPa6Whw@mail.gmail.com>
+Subject: Re: [Bug] --simplify-by-decoration prints undecorated commit
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hello Peff,
 
-> Toon Claes <toon@iotcl.com> writes:
+Thanks for the response.
+
+--
+Best regards,
+Aleksander Korzy=C5=84ski
+
+
+On Wed, 18 Dec 2024 at 13:08, Jeff King <peff@peff.net> wrote:
 >
->>> +		const char *what = flags & REF_LOG_ONLY ? "reflog for pseudoref" : "pseudoref";
->>
->> These strings are not localized.
->>
->>> +		strbuf_addf(err, _("refusing to update %s '%s'"), what, refname);
->>>  		return 0;
+> On Mon, Dec 16, 2024 at 04:09:07PM +0100, Aleksander Korzy=C5=84ski wrote=
+:
 >
-> And the structure forces sentence logo.  If "reflog for pseudoref"
-> were masculine and "pseudoref" were feminine in a language where the
-> verb "update" conjugates differently based on its object, the
-> resulting construction cannot be translated.  Rather, we'd need to
-> do something uglier like this:
+> > # Now, let's try --simplify-by-decoration on another commit
+> > $ git log -1 --simplify-by-decoration --oneline 1e3ef455cc
+> > 025a87d9db Merge branch 'master' into master
+> > # The above output seems incorrect, because the commit isn't decorated
 >
-> 	const char *refusal_msg;
-> 	if (flag & REF_LOG_ONLY)
-> 		refusal_msg = _("refusing to update reflog for pseudoref '%s'");
-> 	else
-> 		refusal_msg = _("refusing to update pseudoref '%s'");
-> 	...
-> 	strbuf_addf(err, refusal_msg, refname);
-
-Indeed. Will add this in. I think its better to prioritize good
-translation here.
-
---0000000000000287810629b17c2d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: af1760807b3c18fd_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1kbFRSd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNFQ2Qy9zSDNmN1VEWHZKOGh3M0ZXaTMrd2pYL2c4TQpITTJ6VG9EVlRv
-K1BRWlZRd1JsSWdCK2FOZVk0Sks3bTVaWUxQYWNqb0F5YVRwQmlPQ2lSbjhJL2Q5MCtCNE1nCmds
-SmgwMFMxN1dOUk8wVmVDbklvR1cxZjBQZk54L3RpeGxqa2hxbG1qbllKaTdaS3pXMVVzWkM1UEs3
-VjJKWTYKelpoMVlHNFBTYVp6UEZUQmhHYjJBcE12YWJHbmFZWGFKMTQ5MVh1VVVXQzRZdmpkR2U5
-blRxMDEzc2l2Z2tFawprb1BLTWhZWnFpdlE0dWk1c09ZOXdEaSt4SFRGdUVjTTNIUTB6Q0Q0UXMw
-VWRyQk1PWUJwc3JiQXE2bm4wZUxrClhQWW1mSjRsd3FWTnF6YkN5NGY0SVBUcUhneHBiNEF4R0RB
-eVU4U1FGaEhteGNMbFY0bHpTTE5UcElQZXlsazYKNVdCVHRHZHZIUVdUWllaYmwrbVEwc21TdzBO
-Rk56NEFiVHVkUXd1cjVIMVVxbi9FVDRVNXh1cmZHay9nZlFMYgpYZ1c2cGFkL3VvVXozUkNibit1
-V2JSSDlkRW9uMTJZZkh6ZG9ZUVZlSVR4OVRUMXhkbG5ZaGg5dzdyUS9wNnNOCjhoRXJoRWp1bXRO
-dWFRT1hMRnhQbFN6UklMTCsxS0o0ODJLZ1kxST0KPTRFQzMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000287810629b17c2d--
+> Yes, but it's a merge commit. From "git help log":
+>
+>   Note that extra commits can be shown to give a meaningful history.
+>
+> Try:
+>
+>   git log --simplify-by-decoration --oneline --graph 1e3ef455cc
+>
+> and you'll see that there are commits along both parent branches, and
+> thus we show the merge.
+>
+> There are some other options listed after that for changing which
+> commits are shown ("The following options affect the way the
+> simplification is performed"). But I don't think there is one that will
+> show only the decorated commits (however, I could be wrong; I've only
+> ever used these options to show _more_ commits, not fewer).
+>
+> -Peff
