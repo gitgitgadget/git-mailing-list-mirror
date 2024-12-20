@@ -1,198 +1,129 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD38DF4FA
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 09:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963801A4E98
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 10:09:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734687112; cv=none; b=iqsvq+ITWb6c/fmdilq/wz7Wwkr8RfoEU6XQgyTI0WcqZdNBb32+P48n3alfT/+fugtqaXw9UX9CjGBL4bapUeBTBF3A/P7rgjblyU8Kw0bd+I3azToF/2J+lIvpe8lULboIfMDgFmhbGqE1Q0QbC33yj2n78GbPe/3GLjz5P4k=
+	t=1734689350; cv=none; b=sDlzeUCmFUj8+XGZqsH2Qk+rBXKVnsog4GNgIS0Jct7zgfJKVd5zz8Z1h1GpFyJjxx7RVw/TGLtUT335JKlqV59ms24mOHCuYRY/4EnzEnREtiW2fQ4t+ujQU7eU4O+ZzBQVQE1yj22d1Dns8faw9Nw/ai0rw7V/jVx+g18z7Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734687112; c=relaxed/simple;
-	bh=UQKzc/QyTFi3lNpvxlz0dGZgbonG+t5VL4kZg5m1jT8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fPLK3wo9d9/6t/4SbYQYacKiBhgUFC+DC2BvZ8idMhcTkSQZMnkhffROVWQ2dfTpRlhTePci5oyDZTKdtrrug+s1F+KnnYp32h8PdbAAcli6owdxMv4SoKcBqSZE2i+oSldEv36vFZmwm+eqSs1osFCTuyN0WB5NjU1m3nkwciI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PcsbYs88; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PCnFCVBd; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1734689350; c=relaxed/simple;
+	bh=pr66l0T79SwW4J5Hq+rc8NAqzoEQPsKSp43gSgiiW50=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W8qEptGPwAC7Z0JAMcKnalvbsXTIY1aE3/L3LB5Jo/ox/TaytHlV+eivrPyfrBDh9JkKJwfcsVXflrJrfiPk4g56VQfe2b30R6au6roM9fqL7P06T0vGhWyucPB8zt0g4WAAA5k9XOrBfitREDTINyl9jGpyWagjnODIQ1BpPpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WydxgCg3; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PcsbYs88";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PCnFCVBd"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id BD24013801A8;
-	Fri, 20 Dec 2024 04:31:48 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 20 Dec 2024 04:31:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734687108; x=1734773508; bh=PL1/COUqJI
-	9m+A3vmXP/LqFSf0Q9+2qQR+JivpPwhEo=; b=PcsbYs88IVCgxUO26M1iwWpC/9
-	wJzeFAeesA07DyskzYxewdeq48MqXZj5rE/S55V3uQnjiAv3JFB3/xVhKHztiDoc
-	jHYB336aDKjsS9mfKmd0JPkh2udOBa6+ttsnNFHMVJZ3aOC2MFpKXnr5g392fgMH
-	Rf902hOsiPjndPGrwkJS5sFfAmxq38MI4b47n1kHLep6bA/Wa8BSkH6KktWUDVAl
-	v49QfFNwsZzWlElHWAY4GNuzVaxGIrrScJMrEyokdnqPAJTk1s1wZRyb62BHcRHu
-	236FsC+KIwy6TXtkqiDgLYphZFw0edqeVFECOGETQ66aEc7qpyqWWdm16UYA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734687108; x=1734773508; bh=PL1/COUqJI9m+A3vmXP/LqFSf0Q9+2qQR+J
-	ivpPwhEo=; b=PCnFCVBdb1OsL7qm1S+lDDu0g+/zWzkhN9VhbTxgECffJo3MIvM
-	NxymhCgctPLSD1LnqoNLUzXhyfZYMHm9vvL7Y6edtfx/feoJzufNlzvQ09Ydo3+D
-	ZORw62TdXg0eAs8vU0qlI+FhLTBg22JFoqt1dW0Olr96K5s+d0y07uXug8pDeySz
-	TmllFlb1/KxM97PhWxJItUE2kSHmgRd9GIYrOlkEG9XfyLNWneaICPHJMkIFVtIe
-	wdDfF1m9JHzIfLyzCRDg/Qsn731QBfikTlJd193OZmyy9IEcg/Ip0e/8M08+S/qG
-	GdcIAQ3ykVM+WWjJ7pSd0ez2UJ65yncqOVA==
-X-ME-Sender: <xms:hDllZ1FKhqQPzkLN93DclFBhJH1akBgKu5S7-a7zWcL9lXZUt0UunA>
-    <xme:hDllZ6WGlLxz-DTlSGGqWsKZTqCRBk0uy_aM63jyAQAATFDiJzbDaIOpkbLJrEFR8
-    wA5A9syl_vZkajyeQ>
-X-ME-Received: <xmr:hDllZ3LqselIRg9htwx5WK3Z536ecpj7GoFEcA1-4gRI0WrobtidsxGytHrVuPI_qyw_NJPjLHYkOSxOF2NmtdF4q5fmg_sONJF8564y5LL5BGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddgtddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeuveevleeuve
-    eigefgkeejledthedvveeuudegtedvgfdvieefkedtueegkefgudenucffohhmrghinhep
-    rhgsrdhinhdptghonhhfrdhinhdprhgtrdhinhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthho
-    peegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsphgvtghtrhgrlhesghhooh
-    hglhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:hDllZ7GqXps779z0ij7FIXmxGlwc7EtZaAj_B4MnUa0kMRVP964m-g>
-    <xmx:hDllZ7V3GUorgMmFLI772vuIZvgXXv8ReYl_UvQ0NUz5ZVKPGkUoCQ>
-    <xmx:hDllZ2MyJ0CQxKzQCoJJGFCVjWuQCKGP7RVpLjoc16-nvUgDyCtvRg>
-    <xmx:hDllZ6331kcFAmJLNabphyM6q_FjIQ78TxOqlWEdrmZx6ezg2zyWdQ>
-    <xmx:hDllZxzvfFrMr6LeQlG7y6j9VlxUL5fwoQh8r2yeE32hamKzRozxqjTF>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 04:31:47 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d1aaffef (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Dec 2024 09:29:56 +0000 (UTC)
-Date: Fri, 20 Dec 2024 10:31:30 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH 1/2] GIT-VERSION-GEN: fix overriding version via
- environment
-Message-ID: <Z2U5cslf10hs_-Az@pks.im>
-References: <20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im>
- <20241219-b4-pks-git-version-via-environment-v1-1-9393af058240@pks.im>
- <20241220073437.GA2389154@coredump.intra.peff.net>
- <Z2UlpaDFjvl--zau@pks.im>
- <20241220085626.GB133148@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WydxgCg3"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5188311e61cso567848e0c.2
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 02:09:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734689347; x=1735294147; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7qOnOvIcBZ/Q9fzW+6Re/4vt7FkJqT9iGYONc20tQ8A=;
+        b=WydxgCg3yUDydl4xQk7itOQiXZP3lWVWwofAlflMPwGU2Fv+Oa6knDsyDHf2B8RjAn
+         i7MfDBqfO5xi0u4wGJbL1uJ5ULI+yvnEoPZ0HkJcjvoFP5bQnAByWm4gSJBtLNaxVFyz
+         czzk/zSc8KB4IaUf8l5No1C+LKTY+jNilwwiAPbl+qCgx0t+GNDhWxKXRkEHk6r0XJ/m
+         KTUSnnWB2uz7VPtaBrP8zwHcw8DUSkDyey1A+fFQU4f45vFYlWmMQd7VsMo1t2UK/9lR
+         AtqmK1m80Xjw1eFKn7Tba8rfH9UTVn+I7KsUQx9P7AW4jI5r6BhcyVtL6nHBZTdZWxvn
+         LnUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734689347; x=1735294147;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7qOnOvIcBZ/Q9fzW+6Re/4vt7FkJqT9iGYONc20tQ8A=;
+        b=iDg8DkeFWg2ZYhN9jZTFY1VqJLSj20Xu6rENKSJsg0IbO6mbFYqBCZmOaPxkVzCp8a
+         h/Q9WRwhOj0X4P8rkte8OwjfBwCQVaSkToKF2I85ODddHfoxvCmOSJ2sL9ZTjsMycP/8
+         ErWFYum0xbXQqEIA5ApOj80OKbF1+HeZ4gGc3oXx5jh7UDvGsnHBUItYerIJwGYZ3sz7
+         pUcGd+bNVZFU8F6ZP+f3/1/guOhV661QJDX+5RhO3eTMhZP1L5WYJgYwRMYPzkBKLJKk
+         2WrIf9iKQMC5hneUCEqP8vb9n6BZwLQARXj/NkWz4fET9GOVCgU4lh8qB0c/O5N+ss5M
+         uyRg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjKGN0b5r0JxEdnHNkbPsmuVa3Nf5K8M6N1KVBZniTrFyVNoPn2OLK3y//GHjXrTezQYE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxaKtPb92NpgzCudFDciBucVPMWrHtCGvar021f/WE0n+NJtyi
+	GOaoeIgQj8TDF9BOQ5yzvpXjIkconMpJAAhBOInfSpBb7YDG+s1mEWNt7qjRdvMeoH53J5/tJZE
+	Vaa35kSrqExH09u2lygJsRFMd5+E2BJXA
+X-Gm-Gg: ASbGncvv+alGOopNZDsuMBmvGxPMaSAHZ7pm/SHQ0rr4nZhEzF50ooVtQiHwUyyALql
+	8CKfAYVD2sorvSlBGolFnQ/0zxuXHhg85rvC8
+X-Google-Smtp-Source: AGHT+IGDKTGSSWIsM9aOLWEjShPDpQaIOABWoWI2pXs5Su4FG6Uti5nEHIQ/3pJS9j9teKEQUJraU2im7p9uI2xYHoU=
+X-Received: by 2002:a05:6122:370d:b0:516:2209:9032 with SMTP id
+ 71dfb90a1353d-51b75c31269mr2161571e0c.2.1734689347454; Fri, 20 Dec 2024
+ 02:09:07 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 20 Dec 2024 04:09:06 -0600
+From: karthik nayak <karthik.188@gmail.com>
+In-Reply-To: <87bjx7h3q9.fsf@iotcl.com>
+References: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
+ <20241216-320-git-refs-migrate-reflogs-v4-2-d7cd3f197453@gmail.com> <87bjx7h3q9.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241220085626.GB133148@coredump.intra.peff.net>
+Date: Fri, 20 Dec 2024 04:09:06 -0600
+Message-ID: <CAOLa=ZRs3uy6ZyMeHCJUGgcDC3u9KXAymoK5SWD8_KJk3jxygw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/8] refs: add `index` field to `struct ref_udpate`
+To: Toon Claes <toon@iotcl.com>, git@vger.kernel.org
+Cc: ps@pks.im, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="00000000000059eaf30629b0d689"
 
-On Fri, Dec 20, 2024 at 03:56:26AM -0500, Jeff King wrote:
-> On Fri, Dec 20, 2024 at 09:45:36AM +0100, Patrick Steinhardt wrote:
-> 
-> > >   version-def.h: version-def.h.in GIT-VERSION-GEN GIT-VERSION-FILE GIT-USER-AGENT
-> > >           $(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
-> > >           @if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-> > > 
-> > > Should we do the same thing for GIT_VERSION? And GIT_DATE, etc? If we're
-> > > going to do many of these, it might also be easier to just add "export
-> > > GIT_VERSION", etc, in the Makefile.
-> > 
-> > I guess. It'll become quite painful to do this at every callsite, so
-> > I'll add another commit on top to introduce a call template that does
-> > all of this for us.
-> 
-> Is there any reason not to just do:
-> 
->   export GIT_VERSION
->   export GIT_DATE
->   export GIT_BUILT_FROM_COMMIT
->   export GIT_USER_AGENT
-> 
-> in shared.mak? Then you only have to do it once, and no need for
-> templates.
+--00000000000059eaf30629b0d689
+Content-Type: text/plain; charset="UTF-8"
 
-You could do that, yeah, but the user needs to be aware that they can.
-I'm happy to not go down that path and live with the above solution.
-Alternatively, this would be what the call template would look like.
+Toon Claes <toon@iotcl.com> writes:
 
-Patrick
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+>> index e882602487c66261d586a94101bb1b4e9a2ed60e..c008f20be719fec3af6a8f81c821cb9c263764d7 100644
+>> --- a/refs/reftable-backend.c
+>> +++ b/refs/reftable-backend.c
+>> @@ -1279,8 +1279,17 @@ static int reftable_be_transaction_abort(struct ref_store *ref_store UNUSED,
+>>
+>>  static int transaction_update_cmp(const void *a, const void *b)
+>>  {
+>> -	return strcmp(((struct reftable_transaction_update *)a)->update->refname,
+>> -		      ((struct reftable_transaction_update *)b)->update->refname);
+>> +	struct reftable_transaction_update *update_a = (struct reftable_transaction_update *)a;
+>> +	struct reftable_transaction_update *update_b = (struct reftable_transaction_update *)b;
+>> +
+>> +	/*
+>> +	 * If there is an index set, it should take preference (default is 0).
+>> +	 * This ensures that updates with indexes are sorted amongst themselves.
+>> +	 */
+>> +	if (update_a->update->index || update_b->update->index)
+>
+> What if one of both simply isn't set, and the other one is? Then we
+> compare an unset with one that is set? Or am I being too paranoid?
+>
+> --
+> Toon
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3392e1ce7e..a7cb885b67 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -211,12 +211,10 @@ XMLTO_EXTRA += --skip-validation
- XMLTO_EXTRA += -x manpage.xsl
- 
- asciidoctor-extensions.rb: asciidoctor-extensions.rb.in FORCE
--	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@+
--	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-+	$(QUIET_GEN)$(call version_gen,$(shell pwd)/..,$<,$@)
- else
- asciidoc.conf: asciidoc.conf.in FORCE
--	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@+
--	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-+	$(QUIET_GEN)$(call version_gen,$(shell pwd)/..,$<,$@)
- endif
- 
- ASCIIDOC_DEPS += docinfo.html
-diff --git a/Makefile b/Makefile
-index 79739a13d2..9cfe3d0aa9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -593,7 +593,7 @@ include shared.mak
- 
- GIT-VERSION-FILE: FORCE
- 	@OLD=$$(cat $@ 2>/dev/null || :) && \
--	$(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" GIT-VERSION-FILE.in $@ && \
-+	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
- 	NEW=$$(cat $@ 2>/dev/null || :) && \
- 	if test "$$OLD" != "$$NEW"; then echo "$$NEW" >&2; fi
- -include GIT-VERSION-FILE
-@@ -2512,8 +2512,7 @@ pager.sp pager.s pager.o: EXTRA_CPPFLAGS = \
- 	-DPAGER_ENV='$(PAGER_ENV_CQ_SQ)'
- 
- version-def.h: version-def.h.in GIT-VERSION-GEN GIT-VERSION-FILE GIT-USER-AGENT
--	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
--	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-+	$(QUIET_GEN)$(call version_gen,"$(shell pwd)",$<,$@)
- 
- version.sp version.s version.o: version-def.h
- 
-@@ -2554,8 +2553,7 @@ $(SCRIPT_SH_GEN) $(SCRIPT_LIB) : % : %.sh generate-script.sh GIT-BUILD-OPTIONS G
- 	mv $@+ $@
- 
- git.rc: git.rc.in GIT-VERSION-GEN GIT-VERSION-FILE
--	$(QUIET_GEN)$(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" $< $@+
--	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-+	$(QUIET_GEN)$(call version_gen,"$(shell pwd)",$<,$@)
- 
- git.res: git.rc GIT-PREFIX
- 	$(QUIET_RC)$(RC) -i $< -o $@
-diff --git a/shared.mak b/shared.mak
-index 29bebd30d8..8e0a19691f 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -116,3 +116,14 @@ endef
- define libpath_template
- -L$(1) $(if $(filter-out -L,$(CC_LD_DYNPATH)),$(CC_LD_DYNPATH)$(1))
- endef
-+
-+# Populate build information into a file via GIT-VERSION-GEN. Requires the
-+# absolute path to the root source directory as well as input and output files
-+# as arguments, in that order.
-+define version_gen
-+GIT_BUILT_FROM_COMMIT="$(GIT_BUILT_FROM_COMMIT)" \
-+GIT_DATE="$(GIT_DATE)" \
-+GIT_USER_AGENT="$(GIT_USER_AGENT)" \
-+GIT_VERSION="$(GIT_VERSION)" \
-+$(SHELL_PATH) "$(1)/GIT-VERSION-GEN" "$(1)" "$(2)" "$(3)"
-+endef
+Those are expected scenarios, if one of them contains an index value,
+then it'll be sorted before the other. At the end, we need:
+1. Values with index to be sorted amongst themselves by index value.
+2. Values without index to be sorted amongst themselves by the refname.
+
+Karthik
+
+--00000000000059eaf30629b0d689
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7cd3b9ba6eda6b63_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ0FBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kbFFqNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meU4yREFDZTFJQ3lkVjBoTmVQcm5VcmwxM3lGYXY0egpHV0ZJTEE4dnBW
+TW10R2UvUW9uWi9Wc0lKMkQ2SGlzMzFjMWgwbkFZanpDalpCdTJKN2ZxZXFCSGZqaFpza2FrCkJr
+N0o4ZmxLVGt5N2tBKzI4UzhUQjIwL210S1FabWJMYVc2KzFnTGIzdjJVbjRoeVg1bFVZUTU0OURZ
+bTJWRk8KdDZjd3k0VWZHN1ZJV3huc3ZYNms3ME8zVGVrSmNJcmU0dlBYMHlBaEppVXc4aHZ1N1l3
+RHByRWFJQmI1NnBwSApxN1Y4M0l1eFJGekFjeTFwek9JM3hoUlNHcUMyZGlKblF5Y1k4amY4cHhG
+c2RFenFabU1yaWdOZUlvdE1ZcXpqClBYQ1gwOEN6N0E5V2Y4NjVhcHVoaXBaMUp5NWc1Qzc5WkMx
+b0JFNzBkcnp0WUQvL1ltYmJ5SWNLQ2c4RDJTcXQKSTkySHNIcTJMTEhzdWhWL04wUG9iYmo1UTVk
+dHVseEhpMkRTUGUxZ3BDdVF2a0NqN1dnbzBEaTNQZksyZWpVSApYMVVLVVdEQk1ManV1V1RJL3B3
+SXBzTUNHZ2NGa1czV055ZHNuZkZuTGJnUFUzOGNyUmRwUE1wWXlzbzh4MFNSClFJUnVpTitPUVM5
+WVFmYzloazRlODdwd0VrT1Z5alEzdXVhU25nST0KPWVUaHkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000059eaf30629b0d689--
