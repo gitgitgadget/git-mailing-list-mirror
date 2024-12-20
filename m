@@ -1,124 +1,94 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D39A219A63
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:56:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0374D219E82
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 17:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734713818; cv=none; b=PWdqRHVOW5cU7Hlr+O9HYQA7tfxdiP15fTk1LjROsX9iyNPr4fcfkTErZ4ZDyQBRyenI5tj0Mkx6as7jPiWkYO8eKZNgIp1aM19rC6va5cjvRJNvtUMxdbcfYOnVIGLP7VNJM8Go2Mjgg6fOhd7dstehFOUzT6/wVwQ/oA/lV6w=
+	t=1734714194; cv=none; b=rAOGrRBKRHtBYOG2YJRsZaDqEXLqZYvxxpLJwc2q0q7gBYw59emBFnZowGUh+pQb2O6Z/JUIVfl4Mw8NjbbGz08YaZIw9RTnHteeEfy/Os8r/IcStz/MdEqQYWK7m26LkKFlJunw8L1sZi7LeleqsUK95b7IlPNXjfYs/M+BghY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734713818; c=relaxed/simple;
-	bh=u2R28s6nVWTVrAM5kV51Rhz14ptPtNSCqZvC+oeBUWE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n8xyzZpaU9PxdRJ8mFci4V6AYe+hLQM01kVI4zpr/9XtCt7ZsU3p4Gb/tu9Mtb509lEtZpsDkDUGVRjJwYuDu4sD4rLjCxhLkul3nnUmsypjLD1v4w0J9gIEU2L0f1+P7aSQDN8KrGjzMYLmW/9ktJZRKQWM1XcI9yO/d7TpapE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fDLcz95z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iOdp9Ua0; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1734714194; c=relaxed/simple;
+	bh=GshU2/KLPNo74VmnFSPJXSPTOiG5BmshIYw+FBvXHEM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jK4RZaUsRvtnwTodW95bs4tcrpd5egeZbti7pp+mLdQyx1k3jSk3aWY5drsVet8WAbJpgok7HAh0V6mUt09D9wyrMq5SH6jj+vYBkjcMoRLJSchbg9OM+MaI7yWYADtEymT+ifevRYGT71CmNhCc2ywPgWAcbkjltpgHlB2kwVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DcHWency; arc=none smtp.client-ip=209.85.219.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fDLcz95z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iOdp9Ua0"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9857F1140225;
-	Fri, 20 Dec 2024 11:48:55 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 20 Dec 2024 11:48:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734713335; x=1734799735; bh=LYt5Pz6Gdq
-	ILwtxqycsOOnlHYjmU1RnArZ0y6pap8dk=; b=fDLcz95zrc/DBJRvFjcXn2fkE9
-	YJWlh67h5F6Ve2TOG2lhQgeo8tXgDaQD04+hrHVfa40ufYPHxUKC3Db5yEO+hZtK
-	e9nC0BVsXesxHk8Q5p8CIb6knA7mUmUIuXwdadhqDAlJAQXuUa+2dY2oVSx31xgV
-	+sXCOXtoJwGi+mz3IrSjI9GIuT2CyO5y8quvE15AioT0W9+G6ix/IcDSAQBUTsM7
-	Hrs4QLI49qM+oLTxyITW8tkFVUG0kYcSsotMimniOxkY/tUxarrsMw0VPnuUcABL
-	1bu9ssCAm4TeUDOtqJzBN0lmKjj7Q544HEn9KqCprm04+aj/VQozvqAImM1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734713335; x=1734799735; bh=LYt5Pz6GdqILwtxqycsOOnlHYjmU1RnArZ0
-	y6pap8dk=; b=iOdp9Ua0qnwPp/ZtdKbwmaBeHJBxF/9/cAtXyuExd8NADJzQPoY
-	trlSf10g69MdHqhxaJYI0nIscWh5RT5p/qM+h/j5NhVCF5sr/3TgjLy75P3JnX7+
-	y1OVcfM5XA8Z5U1d5MwsBDq28O9FC3SDV8b6vPJ8AeqjIHq9YaFnjnOnBHe4VJxG
-	xSsIJdIYLDq4ErFxPfeh2mt8olrwR6wqp34aGeK4LrSr9IhHJFOS7Qx/2fIXWP2m
-	/iN2w9mtDOF5f/avkVoZQMqfHWWuqe3bEYhFXYoHxyRlejiiltg7Q8ObjhbuUu/r
-	87ONzafqq7ObVnP3VxxWO91Kmk9Yj+0v6Zw==
-X-ME-Sender: <xms:959lZ_V0wb5hTWVjxHuKxMvT1D8ZbbYyXeKcLTI3HigZx6VdtCMnmA>
-    <xme:959lZ3kGRZdBm2s09ahY7hYQg-NBPymmpH5rdfHYklL206E4pnEMls_j2AaSSzIb_
-    NkIdcqCtU1M_maCVw>
-X-ME-Received: <xmr:959lZ7bPIEnrpUpl6bzWWtQHwr-A3lu7q0NwaQjryP_SWgf1u8yN6EzEs9DFyMks3qd3hDpYBjYz0MNgkb2mQcLA9_IGnVNvOlMf_cBcHzqeiCw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddgleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeelueefudelud
-    etgeeiudeludelhfegtedvveelveelkeehgffhheegtedvvdfgueenucffohhmrghinhep
-    rhgsrdhinhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtoh
-    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:959lZ6VgQTIhwwuF4L1qWQYkR0T8LKUFvM4I7zhjdIpbCriMex-mmA>
-    <xmx:959lZ5koCo1HVWZtMlxHhJNwrvXt_hlIlO2-b4fhnTDfGF8te8n5bQ>
-    <xmx:959lZ3dbv8lNnt1vQEbLLtaQt6CWLgpxXwXC9KtS-3CXCcH_kccieA>
-    <xmx:959lZzFt-MiZTbZ6vgU1m6Fsm1mcN1RpPywZSboH1U1X78mvkXBfRA>
-    <xmx:959lZyAR3r_-Gx-r7Iac8GlBouyjP7HLz-pqtRalMlzmGHYJVA1qsDeB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 11:48:54 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4dcbaf8b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Dec 2024 16:46:58 +0000 (UTC)
-Date: Fri, 20 Dec 2024 17:47:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH v2 4/5] Makefile: respect build info declared in
- "config.mak"
-Message-ID: <Z2WfirfrpYYFgYdw@pks.im>
-References: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
- <20241220-b4-pks-git-version-via-environment-v2-4-f1457a5e8c38@pks.im>
- <20241220155433.GC152570@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DcHWency"
+Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e39779a268bso1887468276.1
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 09:03:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734714192; x=1735318992; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DwNIiW3VtzsSTdx8q1Y3GnR+TMSlVX/lgIWzia084tU=;
+        b=DcHWencyQBXGJRLBCPArDpwCmAdufTdPETQi5YjOWdyX/vkfcx3kCBwcsNLQLDbjzU
+         Mev8umXMhQwH2ngDusBkIOVzmxTln3cKP8ITNnO8iWO1cARmrGHLz2vcgAytgilSpLCQ
+         rukMXPUk/yANfd/Zxif+1VxQWWtGDj/Eieq+HbioQuFWBxbk2WRlVQtcEtcu8VwP+aPH
+         l5fKLmZcrPf0JFBy2kT4/+02ymIQV+KqPbn5KrJZ1lV4dvQYa0uw/8tk1huWD4VDYR6L
+         R5jSud51U+m0O2lTIaEIYqEmUDQABVqOzindSwHJoj0qU5ChciLHINyXmKJSUbjpLFVE
+         dshA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734714192; x=1735318992;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DwNIiW3VtzsSTdx8q1Y3GnR+TMSlVX/lgIWzia084tU=;
+        b=wWiR554GufHLVMz6XtRfXDbcv1DxZhrtgMC0dLCzeAF99k5LkjpCS1jk0A0/jC1/RP
+         WzgmHdA2uzhBDNa2xQ02cwrfx/WmvMsOYZIqgt/rwUkwplhnpVguxufGMBOLbLuvTD2Z
+         bxhZlKu/X2/1wQnip3azrBhEsiTI05BC9570vcxAxNfgQFk/Dk/gx8eW/nSW7PZ0kFoe
+         SGOamEdbBbUV6oLOZseO+X+5NvrCCvSv6EbWgPjBUxp3eY80ReAIR3t100t7O7JschaA
+         fq1EN5mkl6ozd67/pk5CJ/c9bYkCcueuL8KovvfzZ1o0kwxZeriOnA+wzcfuYr6J37bI
+         SRsQ==
+X-Gm-Message-State: AOJu0YxTp8rNdFayld7v9MjvxATljtU6/XelWyTSmQvD0J1lkT9Td+TU
+	/0byiAMYcocF8p0gNUP/DOgLa7uc8JNDHIwEW1S8dkWCGVH0RTQT
+X-Gm-Gg: ASbGncv3OvJbOp/0hvTlQDEzMtC4C1DxfZv1UYSOxO5AkTbJXEf/j3C3lpCsHTuL74I
+	BEQlWOZikkPKBu4NHFKYTttRE8Hn4Q7pLuulMAfwsWx6r/UOETY+t2/OR+5IIapqAwfWkE10W7X
+	Uhy8ulXbdn++EVk569cW0rJ5+0I7rsk2dEU1SE1OZeYwZoyOEyIeV7n0Rlb3hcF9HM17GL3kQX3
+	hn0WL0dcGbZkjFu/j/3OtEVuTRaW4Sv1zzu0BHPjmpFMmWC7a/N21MteBcA5pYF9iGCinPCnIPo
+	8WV5uNA+6/sxawkE2Tr1/NiwUYru+FqWSfHShTP3sw==
+X-Google-Smtp-Source: AGHT+IEVdglFKW/EdIaxbSJ9Y6xokq8AuscLPCtCj9Me2dbQfB/wm49wCwm03SLt8Ce2T8PbKUUk/Q==
+X-Received: by 2002:a05:6902:280a:b0:e4e:32d6:e9f2 with SMTP id 3f1490d57ef6-e538cd02015mr3272181276.6.1734714191921;
+        Fri, 20 Dec 2024 09:03:11 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:749d:17a4:27e:8972? ([2600:1700:60ba:9810:749d:17a4:27e:8972])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e537cc7885bsm902680276.27.2024.12.20.09.03.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Dec 2024 09:03:11 -0800 (PST)
+Message-ID: <718f22e5-5ddb-4efc-a46e-33c8d7c4f362@gmail.com>
+Date: Fri, 20 Dec 2024 12:03:10 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241220155433.GC152570@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/8] pack-objects: add GIT_TEST_NAME_HASH_VERSION
+To: Jonathan Tan <jonathantanmy@google.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+ peff@peff.net, ps@pks.im, me@ttaylorr.com, johncai86@gmail.com,
+ newren@gmail.com
+References: <20241209231201.841076-1-jonathantanmy@google.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20241209231201.841076-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 20, 2024 at 10:54:33AM -0500, Jeff King wrote:
-> On Fri, Dec 20, 2024 at 01:22:48PM +0100, Patrick Steinhardt wrote:
+On 12/9/24 6:12 PM, Jonathan Tan wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>   t/t5616-partial-clone.sh        | 26 ++++++++++++++++++++++++--
 > 
-> > In preceding commits we fixed that build info set via e.g. `make
-> > GIT_VERSION=foo` didn't get propagated to GIT-VERSION-GEN. Similarly
-> > though, setting build info via "config.mak" does not work anymore either
-> > because the variables are only declared as Makefile variables and thus
-> > aren't accessible by the script.
-> > 
-> > Fix the issue by exporting those variables via "shared.mak". This also
-> > allows us to deduplicate the export of GIT_USER_AGENT.
-> 
-> This looks good. It fixes the issue, and I am happy that:
-> 
-> >  asciidoctor-extensions.rb: asciidoctor-extensions.rb.in FORCE
-> > -	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
-> > +	$(QUIET_GEN)$(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
-> 
-> ...these spots get even simpler.
+> I believe the changes to this file are no longer needed.
 
-Meh. I just noticed that this doesn't work: we include GIT-VERSION-FILE
-and export its value, and consequently any subsequent invocation of
-GIT-VERSION-GEN will continue to use the value that we have in
-GIT-VERSION-FILE. So it's effectively only computed the first time.
+You're right. They are only needed in the last patch when the v3
+name-hash is possible.
 
-This would all be much simpler if we didn't include the file in the
-first place. In Documentation/Makefile we don't indeed use it anymore.
-But in the top-level Makefile we do use it to generate the name of a
-couple of archives. I'll have a look there.
+(Unless maybe you fixed this issue in 'master' and I didn't see it)
 
-Patrick
+Thanks,
+-Stolee
+
