@@ -1,81 +1,81 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F421221475
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 19:44:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E8D02236E8
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 19:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734723892; cv=none; b=QSJW+N0W2j2VBE//1yeM005lbt5xIxMFyXYOT+MqA3mB8dNERUMrsNpYkQnj5IGv6aFrNtHqLIEQmv9+Kz7Q24T0cwaLgGTzbHsooMF1hYRJsf/ABy8A4SwIpSKW5mPYMNYTYKQ4bH7ffJnZxumdz7PqtKXOj3gAzc1rBx0iA8w=
+	t=1734723893; cv=none; b=Uc+8gJemhoiKJoAp2Xjt07Rshcf564z3m3KOLuRAgKgqaLCLjxODTXBC+e7s7fWPUv9fO/2bf/ztxBuo3ziRi8EMg5GlE4isZJACVYRrFNAz7zSQCrnI0eTkV//Dy39ioq8Q0XChhJAWwCtcuaCh3dehAeEkdj6Ay9/205fG32k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734723892; c=relaxed/simple;
-	bh=1t/FfGdnA25Nzdf5cyBL0KtjEpJYvDv/F17cw4HsJR4=;
+	s=arc-20240116; t=1734723893; c=relaxed/simple;
+	bh=SWtKVYqEH2dlesWv740OBSC1m8E0dSpAGnv/p18GXq8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CtZ5OYiD2KAdNNL671pUS4iDuKTbNCCE4CXlqvp7pcUEknKFVWBEB0eqbDxeWZ+IHyvwVfdbKajTIerPbdpc4YxYfhJ6noK9E9VI41anNttMSgT5fkJh8R7BU0K63Ft0mopQNZKEb4u3A6UrwXK+erYKmBWuYui5pQ1U1bpJ2Fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wxU6fGlW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4DBlr34h; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=mvAfRrLDTUoFBi/fhGT6SR+cXf55D/0MARc4Vs5yFpCqcmZ4usst6zTKXBeTl9dWlInkZDVHwa5xsRyFl72535d8yhBkqWRtSHKQGncWA32AB2in6NMV+RulJNljpC99fYWAApGt2yxsRxjlWLNryX/T2iXMOUE1NUqPXwmIPJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aq0TAz/O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KSeSACnh; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wxU6fGlW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4DBlr34h"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 24E1E11400C7;
-	Fri, 20 Dec 2024 14:44:49 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aq0TAz/O";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KSeSACnh"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A08E9254014E;
+	Fri, 20 Dec 2024 14:44:50 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 20 Dec 2024 14:44:49 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 20 Dec 2024 14:44:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1734723888;
-	 x=1734810288; bh=q8Y/Q2JsIIpyn74b9xgtzjcuPsOPWCy4jOw3Th31q9c=; b=
-	wxU6fGlWS85GFrtimPbDdDKuDygWSy0E5KiV2ZPH39cLPMlm8NwCcX38x89sHB75
-	PHTLe2fWttjzQYdMMteN2vB2Z4RbKw9PCou5NCEm6pIM0OxIs4fi1r+IX4hTGMKG
-	hXxiGEZuMygQKIkV66mUFwnkvfX2fTpCTM6L6PAhlFAK3+6r0JvcJXQbFdz3M+c/
-	gnqd7qc1qT54D8CmwZwrqZ3XSDjHWLN4qFfxA2oJyfA2TiM/u57sGPj2o1ogw+0q
-	vAY1pKplTENtRw+wCvvVW8bk+xG/CLqQfOwvo0lnDmsuc/REPFmHaJmaDvTkcTWr
-	I5Aah1S+jueCX4DZzzb3sw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1734723890;
+	 x=1734810290; bh=Ahhl40NFQT1iU3EMsw4mAJe4U7EYMH0GfxAueUAzjj4=; b=
+	aq0TAz/OByFH+XTgwyQOLjcbQ9yBHwySXOrrnzgJfepQ9FPOLQ0llxFdNeaggrQG
+	DAG3kqpgXnYKt9K8NIelFV6QJteAW9C1aXNaRaFdvhUiyUKfvabWEPUQzVjAt4lO
+	ziKsmxM6t5/7dlih5WfcMY/6ZL/aY1dMIk3jKsiwcpZA6q0RfY0qomg4oHhfL9xF
+	OZ3gdaZvyDkzCxLSDM1OCetTcYy5RQphqXYK2mqdtODpwgcX6Ifw78f18yQX6dTk
+	yR49jEcqYhrI7WmAFiTmp6+ChxDogxHoV+xOELKQDwKsdCDhfHdlzNX8bLKg9wd0
+	zrlQVNS+vD3abHQ281Nghg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734723888; x=
-	1734810288; bh=q8Y/Q2JsIIpyn74b9xgtzjcuPsOPWCy4jOw3Th31q9c=; b=4
-	DBlr34hoEEzoHTpc7tb3noeA1DlABHgtDt3GBG5rddKGpmpi8RpMfJFmDn+Ewgj6
-	vw7acOFZmMHATOZXCrqSSB+Hmrl3MoFhnEPgMvXfsNcSjekhn6OtPN+ebydjv21s
-	8qausLXw5HVHLg5KrPaeTjhDLP+ClcMIHQopEHjh3k5mbRSxtJX17+CEhqzUfqhF
-	MC2ifcNfNYAUcPO4XYAnvK0VIo5XM1XezK4vJGzzpApQWgwKDlOIWeKNSQLp0mU4
-	O6EZYa0G9NmslfpxSh9w7jd2B28Or2yXmxGMt5G8nQZmjqv+/+TJp4TlFTjPkUax
-	hHGDGkEXE1BOzSg8PyodQ==
-X-ME-Sender: <xms:MMllZ1-KeLA0dJ2WkpxPrOZKVMWuDe4qEu3VvB6tBnUZKwc7u8Amuw>
-    <xme:MMllZ5tgLqks-KkwkxgWsDPxcLPCddXEVke50u-W7hBy59Jis5E6rIiVC94FhvqnF
-    Bl2UT6LRRIqb40pyQ>
-X-ME-Received: <xmr:MMllZzC8ziNtUVAhoV00sF7CjXcuxH6ExBXduow6jqgE1ShPvNP-W5Ifa57ZtYrTjA86RmpbnGhxZTph77zes_JaTnq8NYZ33_KuwS7HH1vakfk>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734723890; x=
+	1734810290; bh=Ahhl40NFQT1iU3EMsw4mAJe4U7EYMH0GfxAueUAzjj4=; b=K
+	SeSACnhF3cjo5nqekrP4VUbNI2qW8DOJjbXflBm7aq2twT5YZna4MKbhY3e9Wx8H
+	+HIi6LcwRNRbU+ld79rvbOFMwJ4oIXPD94n+DFf3IlWcZ71WNw82y4+vrOWgjilN
+	wMJwnSvjcx/LCttQN6oTxxwEXB/T1o0OfjoWDCBbYDP5FLxxLSTPw1qQPKFKyrrc
+	3r9OKLww1WaoenvrtwzH5Gl6lCCZSUKxaV6WLCG2mp6omIbq4fq2kf97urL9KJ4d
+	xwvf/68M26N+OTjFpckjbY5Ob60tZTu8IULEbEDovpAmb2R5LFMZHQ8AGPQnAN65
+	Du6JorEdgacPWw0DlwWiw==
+X-ME-Sender: <xms:MsllZ5Z3wvlMIDVbkLT1WUtpRIESvLpEumxigLXio2vHcETqumsfsQ>
+    <xme:MsllZwbLe6ngb9XX6E4KCTvbsDbWhhrxVwxPwfzfJ6imeiQ2zc6K-XnRJQxfPyEQV
+    oMgRZFfsVeMvEfzMQ>
+X-ME-Received: <xmr:MsllZ78tBbcTTyyZlipWz7b1-lZhESAMoMipGtvOEVMxk9Ep_5FQRS0f6ErQiI76RJ63zGZpJbC0qugUiGC7tRuk3RjRHeWGhlBNE_6HzRXBLvk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddguddvhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
     ggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeefgfdtge
-    ejieetledvleeifeeuieetfeffvefhffffvdettdefkeffteekkeeiheenucffohhmrghi
-    nhepghhnuhdrohhrghdpmhgrkhdruggvvhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeg
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfse
-    hpvghffhdrnhgvth
-X-ME-Proxy: <xmx:MMllZ5esPF3cHNozZ1K4zE0oazlV17Qkn4P4-GV2zbSDiUsOUTEiFg>
-    <xmx:MMllZ6PqXH9MnzMQfG1wibx_lWma2RUO9S3v5w2vZxGmrmM5a2AEbA>
-    <xmx:MMllZ7n1iN7ZEx0NxpNolxhMs7aay6UblIh9xhe2M_G9lSWp3w69Ag>
-    <xmx:MMllZ0tnPjR4TukSYApNuijVjJ3oJEMJ4fbN8yMX0ytKZWsaNVkctw>
-    <xmx:MMllZ3p0-1WA6LlPxct0YGujlj6JInicUbDUKOJHPB5pzUspXXmMF-xv>
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeefieevtd
+    euhfduhfefudejteeifedvleeklefftdegkeeugeejjefgkeeufffhueenucffohhmrghi
+    nheptghonhhfrdhinhdprhgtrdhinhenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhpvggtthhrrghlsehgohhogh
+    hlvgdrtghomh
+X-ME-Proxy: <xmx:MsllZ3qARad-en3y5O0q2MVSxA_s72SWuho27GHDVAjePRt_d4z8OA>
+    <xmx:MsllZ0oUwSIUE_FwsxEmHZxRe5tRHJjg6yROVx3b5Rq_zWxC8vF94Q>
+    <xmx:MsllZ9S7jqXGTPCbuhHHZGw7f_1tXvTWQhDK6n6qrKN9NSN7WepQIg>
+    <xmx:MsllZ8oClCxx5ocW8o_VuNaPVMN4OzHqdPHuySXoq0Yto9hxrlrvGg>
+    <xmx:MsllZ9lg897P501L0p1O06Z4Rpph8WYa49U-UJ3-Aa-zdtq7Uwxna31u>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 14:44:47 -0500 (EST)
+ 20 Dec 2024 14:44:49 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 874a2bb6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Dec 2024 19:42:53 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id ab576976 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Dec 2024 19:42:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 20 Dec 2024 20:44:24 +0100
-Subject: [PATCH v3 4/6] GIT-VERSION-GEN: fix overriding GIT_VERSION
+Date: Fri, 20 Dec 2024 20:44:26 +0100
+Subject: [PATCH v3 6/6] meson: add options to override build information
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241220-b4-pks-git-version-via-environment-v3-4-1fd79b52a5fb@pks.im>
+Message-Id: <20241220-b4-pks-git-version-via-environment-v3-6-1fd79b52a5fb@pks.im>
 References: <20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im>
 In-Reply-To: <20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im>
 To: git@vger.kernel.org
@@ -92,188 +92,96 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Kyle Lippincott <spectral@google.com>, Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-GIT-VERSION-GEN tries to derive the version that Git is being built from
-via multiple different sources in the following order:
-
-  1. A file called "version" in the source tree's root directory, if it
-     exists.
-
-  2. The current commit in case Git is built from a Git repository.
-
-  3. Otherwise, we use a fallback version stored in a variable which is
-     bumped whenever a new Git version is getting tagged.
-
-It used to be possible to override the version by overriding the
-`GIT_VERSION` Makefile variable (e.g. `make GIT_VERSION=foo`). This
-worked somewhat by chance, only: `GIT-VERSION-GEN` would write the
-actual Git version into `GIT-VERSION-FILE`, not the overridden value,
-but when including the file into our Makefile we would not override the
-`GIT_VERSION` variable because it has already been set by the user. And
-because our Makefile used the variable to propagate the version to our
-build tools instead of using `GIT-VERSION-FILE` the resulting build
-artifacts used the overridden version.
-
-But that subtle mechanism broke with 4838deab65 (Makefile: refactor
-GIT-VERSION-GEN to be reusable, 2024-12-06) and subsequent commits
-because the version information is not propagated via the Makefile
-variable anymore, but instead via the files that `GIT-VERSION-GEN`
-started to write. And as the script never knew about the `GIT_VERSION`
-environment variable in the first place it uses one of the values listed
-above instead of the overridden value.
-
-Fix this issue by making `GIT-VERSION-GEN` handle the case where
-`GIT_VERSION` has been set via the environment.
-
-Note that this requires us to introduce a new GIT_VERSION_OVERRIDE
-variable that stores a potential user-provided value, either via the
-environment or via "config.mak". Ideally we wouldn't need it and could
-just continue to use GIT_VERSION for this. But unfortunately, Makefiles
-will first include all sub-Makefiles before figuring out whether it
-needs to re-make any of them [1]. Consequently, if there already is a
-GIT-VERSION-FILE, we would have slurped in its value of GIT_VERSION
-before we call GIT-VERSION-GEN, and because GIT-VERSION-GEN now uses
-that value as an override it would mean that the first generated value
-for GIT_VERSION will remain unchanged.
-
-Furthermore we have to move the include for "GIT-VERSION-FILE" after the
-includes for "config.mak" and related so that GIT_VERSION_OVERRIDE can
-be set to the value provided by "config.mak".
-
-[1]: https://www.gnu.org/software/make/manual/html_node/Remaking-Makefiles.html
+We inject various different kinds of build information into build
+artifacts, like the version string or the commit from which Git was
+built. Add options to let users explicitly override this information
+with Meson.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/Makefile |  4 ++++
- GIT-VERSION-GEN        | 48 ++++++++++++++++++++++++++----------------------
- Makefile               | 19 ++++++++++++-------
- shared.mak             |  1 +
- 4 files changed, 43 insertions(+), 29 deletions(-)
+ Documentation/meson.build |  1 +
+ meson.build               | 13 +++++++++++++
+ meson_options.txt         | 10 ++++++++++
+ 3 files changed, 24 insertions(+)
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index ff30ab6c4295525757f6a150ec4ff0c72487f440..a89823e1d1ee5042367bdcca6ed426196d49ce89 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -181,6 +181,10 @@ endif
- -include ../config.mak.autogen
- -include ../config.mak
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index f2426ccaa30c29bd60b850eb0a9a4ab77c66a629..fca3eab1f1360a5fdeda89c1766ab8cdb3267b89 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -219,6 +219,7 @@ asciidoc_conf = custom_target(
+   input: meson.current_source_dir() / 'asciidoc.conf.in',
+   output: 'asciidoc.conf',
+   depends: [git_version_file],
++  env: version_gen_environment,
+ )
  
-+# Set GIT_VERSION_OVERRIDE such that version_gen knows to substitute
-+# GIT_VERSION in case it was set by the user.
-+GIT_VERSION_OVERRIDE := $(GIT_VERSION)
-+
- ifndef NO_MAN_BOLD_LITERAL
- XMLTO_EXTRA += -m manpage-bold-literal.xsl
- endif
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index de0e63bdfbac263884e2ea328cc2ef11ace7a238..9b785da226eff2d7952d3306f45fd2933fdafaca 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -27,31 +27,35 @@ fi
- GIT_CEILING_DIRECTORIES="$SOURCE_DIR/.."
- export GIT_CEILING_DIRECTORIES
- 
--# First see if there is a version file (included in release tarballs),
--# then try git-describe, then default.
--if test -f "$SOURCE_DIR"/version
-+if test -z "$GIT_VERSION"
- then
--	VN=$(cat "$SOURCE_DIR"/version) || VN="$DEF_VER"
--elif {
--		test -d "$SOURCE_DIR/.git" ||
--		test -d "${GIT_DIR:-.git}" ||
--		test -f "$SOURCE_DIR"/.git;
--	} &&
--	VN=$(git -C "$SOURCE_DIR" describe --match "v[0-9]*" HEAD 2>/dev/null) &&
--	case "$VN" in
--	*$LF*) (exit 1) ;;
--	v[0-9]*)
--		git -C "$SOURCE_DIR" update-index -q --refresh
--		test -z "$(git -C "$SOURCE_DIR" diff-index --name-only HEAD --)" ||
--		VN="$VN-dirty" ;;
--	esac
--then
--	VN=$(echo "$VN" | sed -e 's/-/./g');
--else
--	VN="$DEF_VER"
-+	# First see if there is a version file (included in release tarballs),
-+	# then try git-describe, then default.
-+	if test -f "$SOURCE_DIR"/version
-+	then
-+		VN=$(cat "$SOURCE_DIR"/version) || VN="$DEF_VER"
-+	elif {
-+			test -d "$SOURCE_DIR/.git" ||
-+			test -d "${GIT_DIR:-.git}" ||
-+			test -f "$SOURCE_DIR"/.git;
-+		} &&
-+		VN=$(git -C "$SOURCE_DIR" describe --match "v[0-9]*" HEAD 2>/dev/null) &&
-+		case "$VN" in
-+		*$LF*) (exit 1) ;;
-+		v[0-9]*)
-+			git -C "$SOURCE_DIR" update-index -q --refresh
-+			test -z "$(git -C "$SOURCE_DIR" diff-index --name-only HEAD --)" ||
-+			VN="$VN-dirty" ;;
-+		esac
-+	then
-+		VN=$(echo "$VN" | sed -e 's/-/./g');
-+	else
-+		VN="$DEF_VER"
-+	fi
-+
-+	GIT_VERSION=$(expr "$VN" : v*'\(.*\)')
- fi
- 
--GIT_VERSION=$(expr "$VN" : v*'\(.*\)')
- GIT_BUILT_FROM_COMMIT=$(git -C "$SOURCE_DIR" rev-parse -q --verify HEAD 2>/dev/null)
- GIT_DATE=$(git -C "$SOURCE_DIR" show --quiet --format='%as' 2>/dev/null)
- if test -z "$GIT_USER_AGENT"
-diff --git a/Makefile b/Makefile
-index 9cfe3d0aa968eff10379d22edff6cc6f4518c2ff..3cdd2278fdaa40feb6139992aa275ad26aaae4a6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -591,13 +591,6 @@ include shared.mak
- #
- #        Disable -pedantic compilation.
- 
--GIT-VERSION-FILE: FORCE
--	@OLD=$$(cat $@ 2>/dev/null || :) && \
--	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
--	NEW=$$(cat $@ 2>/dev/null || :) && \
--	if test "$$OLD" != "$$NEW"; then echo "$$NEW" >&2; fi
---include GIT-VERSION-FILE
--
- # Set our default configuration.
- #
- # Among the variables below, these:
-@@ -1465,6 +1458,18 @@ ifdef DEVELOPER
- include config.mak.dev
+ asciidoc_common_options = [
+diff --git a/meson.build b/meson.build
+index 0dccebcdf16b07650d943e53643f0e09e2975cc9..be32d60e841a3055ed2bdf6fd449a48b66d94cd0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -201,6 +201,16 @@ if get_option('sane_tool_path') != ''
+   script_environment.prepend('PATH', get_option('sane_tool_path'))
  endif
  
-+GIT-VERSION-FILE: FORCE
-+	@OLD=$$(cat $@ 2>/dev/null || :) && \
-+	$(call version_gen,"$(shell pwd)",GIT-VERSION-FILE.in,$@) && \
-+	NEW=$$(cat $@ 2>/dev/null || :) && \
-+	if test "$$OLD" != "$$NEW"; then echo "$$NEW" >&2; fi
++# The environment used by GIT-VERSION-GEN. Note that we explicitly override
++# environment variables that might be set by the user. This is by design so
++# that we always use whatever Meson has configured instead of what is present
++# in the environment.
++version_gen_environment = script_environment
++version_gen_environment.set('GIT_BUILT_FROM_COMMIT', get_option('built_from_commit'))
++version_gen_environment.set('GIT_DATE', get_option('build_date'))
++version_gen_environment.set('GIT_USER_AGENT', get_option('user_agent'))
++version_gen_environment.set('GIT_VERSION', get_option('version'))
 +
-+# We need to set GIT_VERSION_OVERRIDE before including the version file as
-+# otherwise any user-provided value for GIT_VERSION would have been overridden
-+# already.
-+GIT_VERSION_OVERRIDE := $(GIT_VERSION)
-+-include GIT-VERSION-FILE
+ compiler = meson.get_compiler('c')
+ 
+ libgit_sources = [
+@@ -1485,6 +1495,7 @@ git_version_file = custom_target(
+   ],
+   input: meson.current_source_dir() / 'GIT-VERSION-FILE.in',
+   output: 'GIT-VERSION-FILE',
++  env: version_gen_environment,
+   build_always_stale: true,
+ )
+ 
+@@ -1501,6 +1512,7 @@ version_def_h = custom_target(
+   # Depend on GIT-VERSION-FILE so that we don't always try to rebuild this
+   # target for the same commit.
+   depends: [git_version_file],
++  env: version_gen_environment,
+ )
+ 
+ # Build a separate library for "version.c" so that we do not have to rebuild
+@@ -1544,6 +1556,7 @@ if host_machine.system() == 'windows'
+     input: meson.current_source_dir() / 'git.rc.in',
+     output: 'git.rc',
+     depends: [git_version_file],
++    env: version_gen_environment,
+   )
+ 
+   common_main_sources += import('windows').compile_resources(git_rc,
+diff --git a/meson_options.txt b/meson_options.txt
+index 32a72139bae870745d9131cc9086a4594826be91..8ead1349550807420bdb95e55298ea4f3f2ea9d0 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -16,6 +16,16 @@ option('runtime_prefix', type: 'boolean', value: false,
+ option('sane_tool_path', type: 'string', value: '',
+   description: 'A colon-separated list of paths to prepend to PATH if your tools in /usr/bin are broken.')
+ 
++# Build information compiled into Git and other parts like documentation.
++option('build_date', type: 'string', value: '',
++  description: 'Build date reported by our documentation.')
++option('built_from_commit', type: 'string', value: '',
++  description: 'Commit that Git was built from reported by git-version(1).')
++option('user_agent', type: 'string', value: '',
++  description: 'User agent reported to remote servers.')
++option('version', type: 'string', value: '',
++  description: 'Version string reported by git-version(1) and other tools.')
 +
- # what 'all' will build and 'install' will install in gitexecdir,
- # excluding programs for built-in commands
- ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
-diff --git a/shared.mak b/shared.mak
-index b23c5505c9692b032cd0b18d3e4ede288614d937..a66f46969e301b35d88650f2c6abc6c0ba1b0f3d 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -122,5 +122,6 @@ endef
- # as arguments, in that order.
- define version_gen
- GIT_USER_AGENT="$(GIT_USER_AGENT)" \
-+GIT_VERSION="$(GIT_VERSION_OVERRIDE)" \
- $(SHELL_PATH) "$(1)/GIT-VERSION-GEN" "$(1)" "$(2)" "$(3)"
- endef
+ # Features supported by Git.
+ option('curl', type: 'feature', value: 'enabled',
+   description: 'Build helpers used to access remotes with the HTTP transport.')
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
