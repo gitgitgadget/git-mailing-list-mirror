@@ -1,67 +1,67 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E65A219A9B
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:30:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8B1219E93
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:29:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734712202; cv=none; b=t3XXmx/locIDmHwjjj3//tAcA0tncKg8StzQ+FKq8Qk3GnKj6MWxUA1kh1y6I3Eevn6R+JIISYogPshNYUnMqgB7wMPS6DjyfIqIBo6wpk0vtLfOfnjAnEsTdjWKxzkSmo+0m6ikn+eldAMFRAC6u/lIFjhQbMxxdgYGajikYuw=
+	t=1734712202; cv=none; b=Bxl68Fwnv/9bc1GD6Y1WEpTAhVTLX830FDr3jC5X23aNyVi0vHe9wvXtNfmoBzwyqY0Mft2tAqMBWjLo6uD1h+4M/oGqGAWFoNRkJYWbhC6yvNQj0hIYUD1rtF/U3VM92LHdkydFe+4qKiH75Aozm8csNGNYL9DkqIkjl6RRE3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1734712202; c=relaxed/simple;
-	bh=ME1YLd5a96/jrECsyHIbbUX8ykWy3yDkabIopGfkeXk=;
+	bh=TZoCoFrF/t/CIwFC9xzlxTCQoRyTOhtb5XUXNnOOOv0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iMf/esa9IvJwmp3oIebeUJKHZzmy2tp9dZzKPCEbWcRvZpwKbgfx87dKoAllVptQaP4NmY3KV0MzuPMRzEjZCGq0dAykaDQuBUF4iXuMic9csti/Se6VqdgiiIB4WRC3zf9xqtmmlwhKrvLalzbNTQsQj1SI5rqezTlGW/5xnJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9maQm4b; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version:To:Cc; b=jAMWONE2V1twlr+BeFyU8M9bk+c2EOKOxIjUcdtLU0kD88g3DKeaiPeSRuuz40l/pGfjimd/v/NCGeGtYjMoMI77sk1uYqmAz63CbOn2LycO2Cd4bf9VVCBwdLUvp9duLZl6ZLU91GjcbEoDhEv+oV0hF5VcoWDINRJSk0MsPqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PR+v1Y+p; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9maQm4b"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43623f0c574so14708885e9.2
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:30:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PR+v1Y+p"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4361a50e337so14886335e9.0
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:29:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734712198; x=1735316998; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734712197; x=1735316997; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Iavcp7DQaRcLwqLmdmEgrLlPN3yQyImzLWHZt8CJ+8s=;
-        b=P9maQm4bdBqtN7heL+vQTPznfSNuXNlAj7e+kA5mIRsFWV3iofGi3bcsNQrGIJzxat
-         Vawgqy+lnIGGiaVINds9A4fJbQrUvGq2P1KFN/t2nzX6YwvD+O+mcatrZoQLDvTIPU/1
-         a4HTtGRLwLOoZeT+t342LEAkpOoQ4I5sDhsw47L+wgbkxSV5K/hhsqRr2fMrg9HsanHV
-         pfVqgMq87nwJq2eKg6J+QL0Zxu31QXZG1pijFsknfAYHGGEi8ZEG3bcnJpdSciTi+GDN
-         mePI1df+M9gG9U8VbBgsIuN+W6HThJWjWMFuo35SV0wUyrP8LPrgUZxByAFy30s5HiLJ
-         Q1Yw==
+        bh=R46F2SvtDdcV3I/HyD8wyLC+bxL0tz5N2DNmYNh631g=;
+        b=PR+v1Y+p22gvcxdyeHMkhUFSYTstp0lzkKE1lO3wXb11k4qo4aojokOxsG8tJysOVG
+         hZ75VVZEO8JYYMBi8AXwufavj+mgNJx4KJlVn57IxklQ39l5nsq6uxGEWOjvVlc1cApS
+         hbykYaAKyzZ7Wvb5iK3Q+CAlwe/k+IB7C5X1ZPBnurLEpYP8zfbGXqexLxyX114UHAmz
+         PERVTOK/YTGZrrwt2R+4bZIqZfjNV4W4X8DbHE9JUVbayYsSbPtQCRrMPu7o4pE8CLQv
+         XwQC5Mn2p0ZOIiCJG8POt428gP9LLVO567it5QCYSD494+7VSl55yGrYik//TLnFsNnR
+         oVMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734712198; x=1735316998;
+        d=1e100.net; s=20230601; t=1734712197; x=1735316997;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Iavcp7DQaRcLwqLmdmEgrLlPN3yQyImzLWHZt8CJ+8s=;
-        b=JadJf15Zi9aK3D9U8cuPm5sfii5EPoHBoQPWZYu1htA0jp8eVuQ0miR4IijAWfjBIc
-         Ik5BjeNcXpoR83JmCItDZVy6W+9KQRHkA1le+G7vwx2BRJPINum5ekgqRQnnOzgUs5Xx
-         y5By7QU96GpM/haikUGTNbEqFq01ngHf3ClS3kftQ+oY/vpNEbTUug8GUwK0CxR8b8rR
-         Fo+UiYL+PkQNJf407yu2GRZFX8zf8ejHx8gcDcVCjWpSOZf1fJ6St44FsjdnwoHi9tpj
-         EjSPzyv/Sg5DQz8GL9aLIroKfwRqFmEvna1/q++h5oyXMApv/aimIFBZQcWEW2e7xE+t
-         eoCQ==
-X-Gm-Message-State: AOJu0Yz5WJAG1bopC5Gk9IVvanR47vb1YGHQ2kdHuLifaZtgqAWU7NCz
-	H+yAMcsMoyJaISwVSVQZIYQn03+HKFNF6yjKUN3BdU2aoJaLOFdV2FaHRQ==
-X-Gm-Gg: ASbGnct+Y5LYc6k4qpMDr1lm9qIrvZtSomKwYNhrS1uYm8wE0uNJj/1QSAiqDpu1S0Q
-	Gxwos0X0dQdC+Fp6PnBHtysyQNHrRQpcunYlRF2TU2N3sNE+D1Qp4a6VQYHCn+BKRVgsao9IXcO
-	zEo5+TLR8swgp22BbsgxPI5onxrUtwbKqz0ZPptP7XnaR7M9WxvQtmtc+jugK5L0aWf4fCJbSpj
-	5nxdG658L8/RTxu0iTK4LmeHokhrBthtC/9uX6nYzCy07CclJUKO18tdQ==
-X-Google-Smtp-Source: AGHT+IE7qKBkslBionUz6pNV2079pi2wuRfSAfC3/QR1P2ZnoFiX057IJhk9yGFZoAquax2Kz6KoOg==
-X-Received: by 2002:a05:600c:1c1a:b0:434:f0df:a14 with SMTP id 5b1f17b1804b1-43668548500mr29899185e9.2.1734712197989;
+        bh=R46F2SvtDdcV3I/HyD8wyLC+bxL0tz5N2DNmYNh631g=;
+        b=SwVJSj8vFruNX4Vbbs2GS9jahVAWXNu03/J2TIZ5lECjAH7Q+OD7OF9zBdMucvkeJZ
+         ++PwF+lEgp7NP1YCEKJM0MFcr9R6/FisPeTApxLSe3DyL4NMTNTDJarpu+LtRXrWqMOo
+         LFjA4ub5yl9b8qKdAUSD9XmVDUyPGa4+bY0eW/o8nLlhvlkDhm0w7fiokUa26SFos10P
+         JHync6Q2OaqUanJ48SuaRg4djMECRJfxwT7JKFTfHQsOHqnatVd4NMUDHJ+MKZcJvzRO
+         3hrrzWKSjjVEi3K/vA+5s2pZl0qia87n8SXNDPuDdssXRPkv5DzXxqdiV54dTlneAXw6
+         KJ2w==
+X-Gm-Message-State: AOJu0YxXb0kS+OoUmrPeaDIka/rhAwFj+7BPOr6NA0tvuWkgOKotB6ol
+	nNS8y39UyJwlwKWpKBID4kMfTZwTMNx9IW3kG2vlBpgWjQT6Gat1TIQkHg==
+X-Gm-Gg: ASbGncs+vUBnP3xJpyknnEKlcHbo5sfr9O+k3fWiXeDY1Oq1+3qKxkoJ7h2Qun/FOMp
+	GMygj+Ob23oN5TpTxSFm0gYda+LeE/on7fVWwF91tidbM2n89yp5Xujl5AlUcf5JbiLSdEGdqVi
+	ZjIdOUINaaVPzXun3cqlF5NRmt1Pr4IzCJ2J3EmW5F3oxZdyX5HPx+6kVX/5Lf3JzrkR+xLJ+pv
+	ysbpOUwlS7HQPjYlImgDZ0q05KF8rjnjGw3PMFkbG9CzbzUhp3PDYUVmw==
+X-Google-Smtp-Source: AGHT+IGVV0uTu+czqf6UJ8DKYoUSJOW9qWLqMt+EpP8DKX2+c2xAxXpEX5ECkMzO1D4oHEF4ThMLMQ==
+X-Received: by 2002:a05:600c:1c0b:b0:435:9ed3:5688 with SMTP id 5b1f17b1804b1-43668646750mr34257425e9.18.1734712197064;
         Fri, 20 Dec 2024 08:29:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4366127c515sm50134715e9.30.2024.12.20.08.29.57
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656b3b1f6sm85130475e9.31.2024.12.20.08.29.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 08:29:57 -0800 (PST)
-Message-Id: <3fa32822dabb64266a0625c50530ae2ae0797de6.1734712193.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2024 08:29:56 -0800 (PST)
+Message-Id: <e4e88794cae7edc568dd054b1376caac7fd30076.1734712193.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
 References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
 	<pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Dec 2024 16:29:51 +0000
-Subject: [PATCH v2 3/5] backfill: add --min-batch-size=<n> option
+Date: Fri, 20 Dec 2024 16:29:50 +0000
+Subject: [PATCH v2 2/5] backfill: basic functionality and tests
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,214 +88,323 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Users may want to specify a minimum batch size for their needs. This is only
-a minimum: the path-walk API provides a list of OIDs that correspond to the
-same path, and thus it is optimal to allow delta compression across those
-objects in a single server request.
+The default behavior of 'git backfill' is to fetch all missing blobs that
+are reachable from HEAD. Document and test this behavior.
 
-We could consider limiting the request to have a maximum batch size in the
-future. For now, we let the path-walk API batches determine the
-boundaries.
+The implementation is a very simple use of the path-walk API, initializing
+the revision walk at HEAD to start the path-walk from all commits reachable
+from HEAD. Ignore the object arrays that correspond to tree entries,
+assuming that they are all present already.
 
-To get a feeling for the value of specifying the --batch-size parameter,
-I tested a number of open source repositories available on GitHub. The
-procedure was generally:
+The path-walk API provides lists of objects in batches according to a
+common path, but that list could be very small. We want to balance the
+number of requests to the server with the ability to have the process
+interrupted with minimal repeated work to catch up in the next run.
+Based on some experiments (detailed in the next change) a minimum batch
+size of 50,000 is selected for the default.
 
- 1. git clone --filter=blob:none <url>
- 2. git backfill
-
-Checking the number of packfiles and the size of the .git/objects/pack
-directory helps to identify the effects of different batch sizes.
-
-For the Git repository, we get these results:
-
-| Batch Size      | Pack Count | Pack Size | Time  |
-|-----------------|------------|-----------|-------|
-| (Initial clone) | 2          | 119 MB    |       |
-| 25K             | 8          | 290 MB    | 24s   |
-| 50K             | 5          | 290 MB    | 24s   |
-| 100K            | 4          | 290 MB    | 29s   |
-
-Other than the packfile counts decreasing as we need fewer batches, the
-size and time required is not changing much for this small example.
-
-For the nodejs/node repository, we see these results:
-
-| Batch Size      | Pack Count | Pack Size | Time   |
-|-----------------|------------|-----------|--------|
-| (Initial clone) | 2          | 330 MB    |        |
-| 25K             | 19         | 1,222 MB  | 1m 22s |
-| 50K             | 11         | 1,221 MB  | 1m 24s |
-| 100K            | 7          | 1,223 MB  | 1m 40s |
-| 250K            | 4          | 1,224 MB  | 2m 23s |
-| 500K            | 3          | 1,216 MB  | 4m 38s |
-
-Here, we don't have much difference in the size of the repo, though the
-500K batch size results in a few MB gained. That comes at a cost of a
-much longer time. This extra time is due to server-side delta
-compression happening as the on-disk deltas don't appear to be reusable
-all the time. But for smaller batch sizes, the server is able to find
-reasonable deltas partly because we are asking for objects that appear
-in the same region of the directory tree and include all versions of a
-file at a specific path.
-
-To contrast this example, I tested the microsoft/fluentui repo, which
-has been known to have inefficient packing due to name hash collisions.
-These results are found before GitHub had the opportunity to repack the
-server with more advanced name hash versions:
-
-| Batch Size      | Pack Count | Pack Size | Time   |
-|-----------------|------------|-----------|--------|
-| (Initial clone) | 2          | 105 MB    |        |
-| 5K              | 53         | 348 MB    | 2m 26s |
-| 10K             | 28         | 365 MB    | 2m 22s |
-| 15K             | 19         | 407 MB    | 2m 21s |
-| 20K             | 15         | 393 MB    | 2m 28s |
-| 25K             | 13         | 417 MB    | 2m 06s |
-| 50K             | 8          | 509 MB    | 1m 34s |
-| 100K            | 5          | 535 MB    | 1m 56s |
-| 250K            | 4          | 698 MB    | 1m 33s |
-| 500K            | 3          | 696 MB    | 1m 42s |
-
-Here, a larger variety of batch sizes were chosen because of the great
-variation in results. By asking the server to download small batches
-corresponding to fewer paths at a time, the server is able to provide
-better compression for these batches than it would for a regular clone.
-A typical full clone for this repository would require 738 MB.
-
-This example justifies the choice to batch requests by path name,
-leading to improved communication with a server that is not optimally
-packed.
-
-Finally, the same experiment for the Linux repository had these results:
-
-| Batch Size      | Pack Count | Pack Size | Time    |
-|-----------------|------------|-----------|---------|
-| (Initial clone) | 2          | 2,153 MB  |         |
-| 25K             | 63         | 6,380 MB  | 14m 08s |
-| 50K             | 58         | 6,126 MB  | 15m 11s |
-| 100K            | 30         | 6,135 MB  | 18m 11s |
-| 250K            | 14         | 6,146 MB  | 18m 22s |
-| 500K            | 8          | 6,143 MB  | 33m 29s |
-
-Even in this example, where the default name hash algorithm leads to
-decent compression of the Linux kernel repository, there is value for
-selecting a smaller batch size, to a limit. The 25K batch size has the
-fastest time, but uses 250 MB more than the 50K batch size. The 500K
-batch size took much more time due to server compression time and thus
-we should avoid large batch sizes like this.
-
-Based on these experiments, a batch size of 50,000 was chosen as the
-default value.
+This batch size is a _minimum_. As the path-walk API emits lists of blob
+IDs, they are collected into a list of objects for a request to the
+server. When that list is at least the minimum batch size, then the
+request is sent to the server for the new objects. However, the list of
+blob IDs from the path-walk API could be much longer than the batch
+size. At this moment, it is unclear if there is a benefit to split the
+list when there are too many objects at the same path.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-backfill.txt | 11 ++++++++++-
- builtin/backfill.c             | 10 ++++++----
- t/t5620-backfill.sh            | 18 ++++++++++++++++++
- 3 files changed, 34 insertions(+), 5 deletions(-)
+ Documentation/git-backfill.txt            |  31 +++++++
+ Documentation/technical/api-path-walk.txt |   3 +-
+ builtin/backfill.c                        | 106 +++++++++++++++++++++-
+ t/t5620-backfill.sh                       |  94 +++++++++++++++++++
+ 4 files changed, 230 insertions(+), 4 deletions(-)
+ create mode 100755 t/t5620-backfill.sh
 
 diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
-index ece887831f6..e392517869c 100644
+index 640144187d3..ece887831f6 100644
 --- a/Documentation/git-backfill.txt
 +++ b/Documentation/git-backfill.txt
-@@ -9,7 +9,7 @@ git-backfill - Download missing objects in a partial clone
- SYNOPSIS
- --------
- [verse]
--'git backfill' [<options>]
-+'git backfill' [--batch-size=<n>]
- 
+@@ -14,6 +14,37 @@ SYNOPSIS
  DESCRIPTION
  -----------
-@@ -45,6 +45,15 @@ time.
- By default, `git backfill` downloads all blobs reachable from the `HEAD`
- commit. This set can be restricted or expanded using various options.
  
-+OPTIONS
-+-------
++Blobless partial clones are created using `git clone --filter=blob:none`
++and then configure the local repository such that the Git client avoids
++downloading blob objects unless they are required for a local operation.
++This initially means that the clone and later fetches download reachable
++commits and trees but no blobs. Later operations that change the `HEAD`
++pointer, such as `git checkout` or `git merge`, may need to download
++missing blobs in order to complete their operation.
 +
-+--min-batch-size=<n>::
-+	Specify a minimum size for a batch of missing objects to request
-+	from the server. This size may be exceeded by the last set of
-+	blobs seen at a given path. The default minimum batch size is
-+	50,000.
++In the worst cases, commands that compute blob diffs, such as `git blame`,
++become very slow as they download the missing blobs in single-blob
++requests to satisfy the missing object as the Git command needs it. This
++leads to multiple download requests and no ability for the Git server to
++provide delta compression across those objects.
++
++The `git backfill` command provides a way for the user to request that
++Git downloads the missing blobs (with optional filters) such that the
++missing blobs representing historical versions of files can be downloaded
++in batches. The `backfill` command attempts to optimize the request by
++grouping blobs that appear at the same path, hopefully leading to good
++delta compression in the packfile sent by the server.
++
++In this way, `git backfill` provides a mechanism to break a large clone
++into smaller chunks. Starting with a blobless partial clone with `git
++clone --filter=blob:none` and then running `git backfill` in the local
++repository provides a way to download all reachable objects in several
++smaller network calls than downloading the entire repository at clone
++time.
++
++By default, `git backfill` downloads all blobs reachable from the `HEAD`
++commit. This set can be restricted or expanded using various options.
 +
  SEE ALSO
  --------
  linkgit:git-clone[1].
+diff --git a/Documentation/technical/api-path-walk.txt b/Documentation/technical/api-path-walk.txt
+index 7075d0d5ab5..1fba0ce04cb 100644
+--- a/Documentation/technical/api-path-walk.txt
++++ b/Documentation/technical/api-path-walk.txt
+@@ -60,4 +60,5 @@ Examples
+ --------
+ 
+ See example usages in:
+-	`t/helper/test-path-walk.c`
++	`t/helper/test-path-walk.c`,
++	`builtin/backfill.c`
 diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 177fd4286c7..ddccececc36 100644
+index 38e6aaeaa03..177fd4286c7 100644
 --- a/builtin/backfill.c
 +++ b/builtin/backfill.c
-@@ -21,14 +21,14 @@
- #include "path-walk.h"
+@@ -1,16 +1,118 @@
+ #include "builtin.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "parse-options.h"
+ #include "repository.h"
++#include "commit.h"
++#include "hex.h"
++#include "tree.h"
++#include "tree-walk.h"
+ #include "object.h"
++#include "object-store-ll.h"
++#include "oid-array.h"
++#include "oidset.h"
++#include "promisor-remote.h"
++#include "strmap.h"
++#include "string-list.h"
++#include "revision.h"
++#include "trace2.h"
++#include "progress.h"
++#include "packfile.h"
++#include "path-walk.h"
  
  static const char * const builtin_backfill_usage[] = {
--	N_("git backfill [<options>]"),
-+	N_("git backfill [--batch-size=<n>]"),
+ 	N_("git backfill [<options>]"),
  	NULL
  };
  
- struct backfill_context {
- 	struct repository *repo;
- 	struct oid_array current_batch;
--	size_t batch_size;
-+	size_t min_batch_size;
- };
- 
- static void backfill_context_clear(struct backfill_context *ctx)
-@@ -72,7 +72,7 @@ static int fill_missing_blobs(const char *path UNUSED,
- 			oid_array_append(&ctx->current_batch, &list->oid[i]);
- 	}
- 
--	if (ctx->current_batch.nr >= ctx->batch_size)
-+	if (ctx->current_batch.nr >= ctx->min_batch_size)
- 		download_batch(ctx);
- 
- 	return 0;
-@@ -111,9 +111,11 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 	struct backfill_context ctx = {
- 		.repo = repo,
- 		.current_batch = OID_ARRAY_INIT,
--		.batch_size = 50000,
-+		.min_batch_size = 50000,
- 	};
++struct backfill_context {
++	struct repository *repo;
++	struct oid_array current_batch;
++	size_t batch_size;
++};
++
++static void backfill_context_clear(struct backfill_context *ctx)
++{
++	oid_array_clear(&ctx->current_batch);
++}
++
++static void download_batch(struct backfill_context *ctx)
++{
++	promisor_remote_get_direct(ctx->repo,
++				   ctx->current_batch.oid,
++				   ctx->current_batch.nr);
++	oid_array_clear(&ctx->current_batch);
++
++	/*
++	 * We likely have a new packfile. Add it to the packed list to
++	 * avoid possible duplicate downloads of the same objects.
++	 */
++	reprepare_packed_git(ctx->repo);
++}
++
++static int fill_missing_blobs(const char *path UNUSED,
++			      struct oid_array *list,
++			      enum object_type type,
++			      void *data)
++{
++	struct backfill_context *ctx = data;
++
++	if (type != OBJ_BLOB)
++		return 0;
++
++	for (size_t i = 0; i < list->nr; i++) {
++		off_t size = 0;
++		struct object_info info = OBJECT_INFO_INIT;
++		info.disk_sizep = &size;
++		if (oid_object_info_extended(ctx->repo,
++					     &list->oid[i],
++					     &info,
++					     OBJECT_INFO_FOR_PREFETCH) ||
++		    !size)
++			oid_array_append(&ctx->current_batch, &list->oid[i]);
++	}
++
++	if (ctx->current_batch.nr >= ctx->batch_size)
++		download_batch(ctx);
++
++	return 0;
++}
++
++static int do_backfill(struct backfill_context *ctx)
++{
++	struct rev_info revs;
++	struct path_walk_info info = PATH_WALK_INFO_INIT;
++	int ret;
++
++	repo_init_revisions(ctx->repo, &revs, "");
++	handle_revision_arg("HEAD", &revs, 0, 0);
++
++	info.blobs = 1;
++	info.tags = info.commits = info.trees = 0;
++
++	info.revs = &revs;
++	info.path_fn = fill_missing_blobs;
++	info.path_fn_data = ctx;
++
++	ret = walk_objects_by_path(&info);
++
++	/* Download the objects that did not fill a batch. */
++	if (!ret)
++		download_batch(ctx);
++
++	backfill_context_clear(ctx);
++	path_walk_info_clear(&info);
++	release_revisions(&revs);
++	return ret;
++}
++
+ int cmd_backfill(int argc, const char **argv, const char *prefix, struct repository *repo)
+ {
++	struct backfill_context ctx = {
++		.repo = repo,
++		.current_batch = OID_ARRAY_INIT,
++		.batch_size = 50000,
++	};
  	struct option options[] = {
-+		OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
-+			    N_("Minimum number of objects to request at a time")),
  		OPT_END(),
  	};
+@@ -23,7 +125,5 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
  
+ 	repo_config(repo, git_default_config, NULL);
+ 
+-	die(_("not implemented"));
+-
+-	return 0;
++	return do_backfill(&ctx);
+ }
 diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index 64326362d80..36107a51c54 100755
---- a/t/t5620-backfill.sh
+new file mode 100755
+index 00000000000..64326362d80
+--- /dev/null
 +++ b/t/t5620-backfill.sh
-@@ -59,6 +59,24 @@ test_expect_success 'do partial clone 1, backfill gets all objects' '
- 	test_line_count = 0 revs2
- '
- 
-+test_expect_success 'do partial clone 2, backfill min batch size' '
+@@ -0,0 +1,94 @@
++#!/bin/sh
++
++test_description='git backfill on partial clones'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++
++# We create objects in the 'src' repo.
++test_expect_success 'setup repo for object creation' '
++	echo "{print \$1}" >print_1.awk &&
++	echo "{print \$2}" >print_2.awk &&
++
++	git init src &&
++
++	mkdir -p src/a/b/c &&
++	mkdir -p src/d/e &&
++
++	for i in 1 2
++	do
++		for n in 1 2 3 4
++		do
++			echo "Version $i of file $n" > src/file.$n.txt &&
++			echo "Version $i of file a/$n" > src/a/file.$n.txt &&
++			echo "Version $i of file a/b/$n" > src/a/b/file.$n.txt &&
++			echo "Version $i of file a/b/c/$n" > src/a/b/c/file.$n.txt &&
++			echo "Version $i of file d/$n" > src/d/file.$n.txt &&
++			echo "Version $i of file d/e/$n" > src/d/e/file.$n.txt &&
++			git -C src add . &&
++			git -C src commit -m "Iteration $n" || return 1
++		done
++	done
++'
++
++# Clone 'src' into 'srv.bare' so we have a bare repo to be our origin
++# server for the partial clone.
++test_expect_success 'setup bare clone for server' '
++	git clone --bare "file://$(pwd)/src" srv.bare &&
++	git -C srv.bare config --local uploadpack.allowfilter 1 &&
++	git -C srv.bare config --local uploadpack.allowanysha1inwant 1
++'
++
++# do basic partial clone from "srv.bare"
++test_expect_success 'do partial clone 1, backfill gets all objects' '
 +	git clone --no-checkout --filter=blob:none	\
 +		--single-branch --branch=main 		\
-+		"file://$(pwd)/srv.bare" backfill2 &&
++		"file://$(pwd)/srv.bare" backfill1 &&
 +
-+	GIT_TRACE2_EVENT="$(pwd)/batch-trace" git \
-+		-C backfill2 backfill --min-batch-size=20 &&
++	# Backfill with no options gets everything reachable from HEAD.
++	GIT_TRACE2_EVENT="$(pwd)/backfill-file-trace" git \
++		-C backfill1 backfill &&
 +
-+	# Batches were used
-+	test_trace2_data promisor fetch_count 20 <batch-trace >matches &&
-+	test_line_count = 2 matches &&
-+	test_trace2_data promisor fetch_count 8 <batch-trace &&
++	# We should have engaged the partial clone machinery
++	test_trace2_data promisor fetch_count 48 <backfill-file-trace &&
 +
 +	# No more missing objects!
-+	git -C backfill2 rev-list --quiet --objects --missing=print HEAD >revs2 &&
++	git -C backfill1 rev-list --quiet --objects --missing=print HEAD >revs2 &&
 +	test_line_count = 0 revs2
 +'
 +
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'create a partial clone over HTTP' '
++	SERVER="$HTTPD_DOCUMENT_ROOT_PATH/server" &&
++	rm -rf "$SERVER" repo &&
++	git clone --bare "file://$(pwd)/src" "$SERVER" &&
++	test_config -C "$SERVER" uploadpack.allowfilter 1 &&
++	test_config -C "$SERVER" uploadpack.allowanysha1inwant 1 &&
++
++	git clone --no-checkout --filter=blob:none \
++		"$HTTPD_URL/smart/server" backfill-http
++'
++
++test_expect_success 'backfilling over HTTP succeeds' '
++	GIT_TRACE2_EVENT="$(pwd)/backfill-http-trace" git \
++		-C backfill-http backfill &&
++
++	# We should have engaged the partial clone machinery
++	test_trace2_data promisor fetch_count 48 <backfill-http-trace &&
++
++	# Confirm all objects are present, none missing.
++	git -C backfill-http rev-list --objects --all >rev-list-out &&
++	awk "{print \$1;}" <rev-list-out >oids &&
++	GIT_TRACE2_EVENT="$(pwd)/walk-trace" git -C backfill-http \
++		cat-file --batch-check <oids >batch-out &&
++	! grep missing batch-out
++'
++
++# DO NOT add non-httpd-specific tests here, because the last part of this
++# test script is only executed when httpd is available and enabled.
++
++test_done
 -- 
 gitgitgadget
 
