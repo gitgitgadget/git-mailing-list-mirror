@@ -1,118 +1,181 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B36F18EAB
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 07:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3F013C914
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 07:26:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734678515; cv=none; b=QL7IM0udcAbw1YBGANUGMuBedO5sKl/2q9g7Z3d4DceWtzKHyQ400HdgJ0jNIwtJLEmZoNmaNmK1yHB39Tkx4MPwi6894EmnD5yvMWCPGPTjzF3PKW10sgrt0XIJop7LqEYEnbknRW4WDRFo3wZlJu2lO6ugLOIAeDPiiR8riZ0=
+	t=1734679614; cv=none; b=sQdtn9NB/WyWD5w/rIlW7GWo7Nb5hXxl7GCWAD7GtT2W5pr69/OZZs87ol0jL8vpXGaJLkOix+ERSLR0+ZjNKZYUF2RLzLX323VjUtmQQ/UsmuThh6nXowojVWUX+GZCHY4P4dj1U+odL5dVa0/cljXN20dhdhK7z5ZszXvJsXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734678515; c=relaxed/simple;
-	bh=zcxyWAMxUzr1mz0J6y+bY5HlfZ5fxqdwLY4o7Co+5sk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XTXbRfKJ4YmWDOzQptuDsjB9K9uBlo1gIHm0LQnDRhAs70XlDkxYLKLs5Dq3gcUSHoCdyqmMP/+SaNu0dMGYY8lSshJqQYG46F/tidKZiwgtP70zpjvrzKzicu4qstt0QAmxfPmlIKvu10nXYC/Aq9tDLAf4+WOKQrUcEedX9W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ReHWJgmq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iFuEntjc; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1734679614; c=relaxed/simple;
+	bh=E8xuQgusScG1fL+oNHkH48+IWNfQ7PIaYFg/rZIYaQI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=R16zCuy2v1t5/Cm7vOj3B9Aal6bsplcu3cicqxBhp25Cr4g8FbbCsWvOKThoRFmHB9f5fGORpx8xnWuDxT1rInP4eLQFabXNPOQMK56ir2b6oUY0X1UCoiXHi1N/JhRBd76PfsgngRsY65GIZw2Gv9FWIso/CEmscvP4PkHQSYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gm3OAoAK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yc9ijcPj; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ReHWJgmq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iFuEntjc"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 16A381380199;
-	Fri, 20 Dec 2024 02:08:31 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gm3OAoAK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yc9ijcPj"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6DBD211400FE;
+	Fri, 20 Dec 2024 02:26:51 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 20 Dec 2024 02:08:31 -0500
+  by phl-compute-06.internal (MEProxy); Fri, 20 Dec 2024 02:26:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734678511; x=1734764911; bh=OhbQ6xCPQg
-	CjLAkpBs0aR8/N5TLXURFRokVwXRmkTOQ=; b=ReHWJgmqJDxYtaW0IFsVyeBoEo
-	+ef6ISzJnC6pAWW41FuacPeIolz7WqvBRd3vAgF62DtGx0nWsU86Wnf8Vx6EiS4P
-	2f5QO2FKIfcu8JPlK2o3zjf4WoXkCNKVKe6gNvInT0FJkIQ6fbufsQk/bOmilGjn
-	VhK1NYWUdy00ki0bAJxuRz4CdgTdx7ULcVxPmzoNkEIm3rS5laFowzLZP+xW/nCb
-	XsqZwCEUUKAVL4h2QvmdXNN9KOg4wzhmSvQv8QI4PLGWCJxYwoNNkcby53iePGsz
-	b5GYCuDpCm4SLmo408qH0LqawilLiGY02EV4AsSwPFQE9AgouZM8J0CADUYQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1734679611; x=1734766011; bh=rWzpybRyy/
+	ttEy/D6OvIv6g3/c45rGQgkBkgYQo4Tsw=; b=gm3OAoAKXCRalm3nlbaY2+M1uv
+	NK959rYKDW0KUq5ual/Kd815v6PLTS0N9jFFsk7aJEuLBOqENxE80XjEQU2Z3Uuo
+	YRKwIgBXZOYdhM9wimvv0AsBBDyZfCySPQYrQVq1UzDQ8q9Ec5MuNj1DfqSvcXK8
+	JJrTIatUOsFMhwpjoyi/O6kS08D49dakGIeBnOcyNJ36iDe7TcnhKhHbiLOWQPUx
+	Xp+q4yRU9vrlGEIIq9D8pQiAV1hKnTqckyCrVBhvnksULqhPzOjymUy+AqAXiQxh
+	kc6uMqpCOMl5uUC1X38tfkNbv+4yaTc5C5xrkGeLQu05W9TMSHgOxYPd9l4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734678511; x=1734764911; bh=OhbQ6xCPQgCjLAkpBs0aR8/N5TLXURFRokV
-	wXRmkTOQ=; b=iFuEntjceLFddIgSkZHw8bBSFT2uboZHnj1IgaSFQedqHkkmFM3
-	4v62IJXyqoudr6r/PL+I3b5aA1CuHr0izmyluvBWtCKdnbu1TFklBBOtlTO9xNbg
-	An6TbSb42nT9p5VchOiEmrZanIuANU8gX/FK46mbZNjyJJLeRKl5y1C11ymqk+PY
-	roSZpAV10quQJXM/VErxqHB54RI3/qikb5cNGHruP7ZIcAmgthccJNiPujtj0tOT
-	VgLDn/5qFWhbLNH+CW0BRZAGEucSrc49WEMb+8bCY19v4l+X8qIOW76VRpt50nTH
-	mV1lb9fPqOw1L78nZc2htaO2dV72wrwWDzw==
-X-ME-Sender: <xms:7hdlZ7MLUPFrUXA9wqpg-mAqV0OsuRvpUWv1HT8zw09yTC7d62MlFg>
-    <xme:7hdlZ1_pkfRKJjGBBFWFli0ZK19xH3oiRaoH8idhr6vr7FpNXRBJoHBhnO3GTY4EW
-    VZ31NCBBN7DzSurlQ>
-X-ME-Received: <xmr:7hdlZ6QPwLZBto_WEjQIWlWr7mh7XNTx8_sIIfcoBNEwCs0TkqrxEcjTDfeAOSr2D3zSgAHMZuuZUCVl0-90CpZ7xyBOS3hDLWuAWpcTjLSXZEE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtuddguddtfecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1734679611; x=1734766011; bh=rWzpybRyy/ttEy/D6OvIv6g3/c45
+	rGQgkBkgYQo4Tsw=; b=yc9ijcPjpDXPcgKvq3BgwtpydnmYR3FjlX0WQ+NnuFZv
+	zknhtf6rfGPbFNFoMdZvjBVKGrWa9cTmq/oTkK+8he/hZeAJ1GwRU+IlTWaclh5f
+	muuoxDGJlrIeYNM9G7DE3aj60VB8LpO5KHD+apcuPFwGXHhh2i0GP6rr98zX6kI9
+	5jSwe7cK3BO0LYoegmbvs8jm6NbawC/adWsaKAKfM8/9akVcBmVDAJQ7AMlvKysm
+	AQ+ApCxBBsRkytk/Y+QHGkDuDZN9HzoY+E6We/ka8GKf1QUUefaShOwrdfBQYfFJ
+	01DMaL5Ypu9VXCqJY7tmOQp1T+ucWJ0sr7e6P9xr9w==
+X-ME-Sender: <xms:OxxlZ2Ry5BKFqOjhuEA11Q-Y3ZM3eEmVdZf9bY7PpwIY0H50Yv2K7g>
+    <xme:OxxlZ7yoML58gIH2pjlRMasoCQYLXGO6lYMUIZlTu0sNISoSqis8lEx0XUw0wylG9
+    vm42PNLrlw2wQAB6A>
+X-ME-Received: <xmr:OxxlZz0YAT81QaNAwF7P7H5eLiEffspr5j8ueQy6H4gCPyrUqCz5fYWxwlN5MNYVRYwszKrZKxjXQ2mzz-y16G1tuC-E01qQdj_VNrGtchpnj_M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtuddguddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhssggv
-    tghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7hdlZ_ts50Un8SIj21NkiJJllG-pOXgEQ3F8D9e2W7Ak_J_ZIThvPg>
-    <xmx:7hdlZzetGg3u82nFD9Yj5oedXuAvc5GWkqJ67fV8VvXd1YiDqp6ILw>
-    <xmx:7hdlZ73GlW2c0XrMcqDEwCDqEoSCnZ2dOhQyN_Aqc1H4FJyupv9wQw>
-    <xmx:7hdlZ__9LMgu54k_txPC5_z1jbOnl4xDFKZdFuDxqFntzDF2r0l1wA>
-    <xmx:7xdlZ_5mtyjSNKIN4ob_Cf1p8i9OiaLdceuTmCxzGAcZtHQKDUsez8yZ>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
+    ggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeigfeitdffff
+    dvvdeuheehjeehheeludduhfehkeekgeeggfeuffehveegteejfeenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepuggrnhhivghlrdgvnhhgsggvrh
+    hgrdhlihhsthhssehphihrvghtrdhnvght
+X-ME-Proxy: <xmx:OxxlZyCMXVIWpCisiFK8EKDokR0Fy90J9sW5FQ1Qb2xPLeNTXb-lDA>
+    <xmx:OxxlZ_gtfUdh3g8m6R0y_eR-7PZ9jS7PKmJ5u7eyr4Y_PtctTFNSaw>
+    <xmx:OxxlZ-r-H9lRyLaz-aXA7-CtFLPF015sASU8u2rbA6bZyo_dhhqD5Q>
+    <xmx:OxxlZyhX-4-WbYO59evwPPmBUNdo_SGmKEaSK80nTf0M3bU7T4QD_g>
+    <xmx:OxxlZysCU2D5CYMlwtmHQk_QkF5DnbR0Xf4jR348-ZZ0d2WfgjUf5X20>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 02:08:29 -0500 (EST)
+ 20 Dec 2024 02:26:50 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bc773ade (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Dec 2024 07:06:37 +0000 (UTC)
-Date: Fri, 20 Dec 2024 08:08:10 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id eb9aacf1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 20 Dec 2024 07:24:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: rsbecker@nexbridge.com
-Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.48.0-rc0
-Message-ID: <Z2UX2v8sc-DELaVm@pks.im>
-References: <xmqqfrmn4hr9.fsf@gitster.g>
- <00ad01db5017$aa9ce340$ffd6a9c0$@nexbridge.com>
- <Z2EC9rq3F0rTljff@pks.im>
- <010a01db508a$4544d750$cfce85f0$@nexbridge.com>
- <015901db50b5$e3a7f6e0$aaf7e4a0$@nexbridge.com>
- <Z2JyFB3CddYM_LP4@pks.im>
- <00ca01db5257$12708d00$3751a700$@nexbridge.com>
+Date: Fri, 20 Dec 2024 08:26:30 +0100
+Subject: [PATCH] meson: skip gitweb build when Perl is disabled
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <00ca01db5257$12708d00$3751a700$@nexbridge.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241220-b4-pks-meson-fix-gitweb-wo-perl-v1-1-41039ad8d8d4@pks.im>
+X-B4-Tracking: v=1; b=H4sIACUcZWcC/x2NQQrCMBQFr1L+2gdNWtB6FXFhm2f9qEnIL1Yov
+ bvB5cAws4mxKE3OzSaFHzVNsYI7NDI9bnEmNFQW3/reeXfC2CM/DW9airjrF7MuK0esCZnlhaH
+ rjkMI7UQGqZVcWK3/4XLd9x+sgoRmcQAAAA==
+X-Change-ID: 20241218-b4-pks-meson-fix-gitweb-wo-perl-93379dd0ceed
+To: git@vger.kernel.org
+Cc: Daniel Engberg <daniel.engberg.lists@pyret.net>
+X-Mailer: b4 0.14.2
 
-On Thu, Dec 19, 2024 at 03:46:20PM -0500, rsbecker@nexbridge.com wrote:
-> On December 18, 2024 11:07 AM, I wrote:
-> >All tests, actually.
-> >
-> >$ GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true sh t0000-
-> >basic.sh --verbose -i -x
-> >error: reftable: transaction prepare: out of memory
-> >error: cannot run git init
-> 
-> Any updates or hypothesis on this? Our test system has loads of memory
-> - I cannot figure out where the allocation failure takes place. There
-> is a limit to how much memory can be allocated, but it is very high
-> and our virtual memory is extensive, but this is a 32-bit build.
+It is possible to configure a Git build without Perl when disabling both
+our test suite and all Perl-based features. In Meson, this can be
+achieved with `meson setup -Dperl=disabled -Dtests=false`.
 
-My hypothesis is that this is caused by ps/reftable-alloc-failures, but
-I am unable to tell where exactly the error comes from. So I'm dependent
-on your input.
+It was reported by a user that this breaks the Meson build because
+gitweb gets built even if Perl was not discovered in such a build:
 
-Could you please bisect the error? Finding out where the error is raised
-would also be quite helpful. It has to be one of the reftable functions
-that returns REFTABLE_OUT_OF_MEMORY_ERROR, but other than that I do not
-have any more gut feeling right now.
+    $ meson setup .. -Dtests=false -Dperl=disabled
+    ...
+    ../gitweb/meson.build:2:43: ERROR: Unable to get the path of a not-found external program
+
+Fix this issue by introducing a new feature-option that allows the user
+to configure whether or not to build Gitweb. The feature is set to
+'auto' by default and will be disabled automatically in case Perl was
+not found on the system.
+
+Reported-by: Daniel Engberg <daniel.engberg.lists@pyret.net>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
+
+I received an off-list mail from a user interested in the new Meson
+build system who has done a bit of testing of it on FreeBSD. They found
+an issue when configuring the build without Perl enabled, which can be
+achieved by both disabling tests and Perl-based features. This patch
+here fixes the issue.
+
+Thanks!
 
 Patrick
+---
+ meson.build       | 13 +++++++++++--
+ meson_options.txt |  2 ++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 0dccebcdf16b07650d943e53643f0e09e2975cc9..8e34a895dca80da77d6809a6fe90fe7661f142a1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -740,7 +740,7 @@ endif
+ # features. It is optional if you want to neither execute tests nor use any of
+ # these optional features.
+ perl_required = get_option('perl')
+-if get_option('tests')
++if get_option('tests') or get_option('gitweb').enabled()
+   perl_required = true
+ endif
+ 
+@@ -1874,7 +1874,15 @@ if intl.found()
+   subdir('po')
+ endif
+ subdir('contrib')
+-subdir('gitweb')
++
++# Gitweb requires Perl, so we disable the auto-feature if Perl was not found.
++# We make sure further up that Perl is required in case the gitweb option is
++# enabled.
++gitweb_option = get_option('gitweb').disable_auto_if(not perl.found())
++if gitweb_option.enabled()
++  subdir('gitweb')
++endif
++
+ subdir('templates')
+ 
+ # Everything but the bin-wrappers need to come before this target such that we
+@@ -1893,6 +1901,7 @@ summary({
+   'curl': curl.found(),
+   'expat': expat.found(),
+   'gettext': intl.found(),
++  'gitweb': gitweb_option.enabled(),
+   'https': https_backend,
+   'iconv': iconv.found(),
+   'pcre2': pcre2.found(),
+diff --git a/meson_options.txt b/meson_options.txt
+index 32a72139bae870745d9131cc9086a4594826be91..1b38d9b716ee2d06ac1484a744529547f7ed4acd 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -23,6 +23,8 @@ option('expat', type: 'feature', value: 'enabled',
+   description: 'Build helpers used to push to remotes with the HTTP transport.')
+ option('gettext', type: 'feature', value: 'auto',
+   description: 'Build translation files.')
++option('gitweb', type: 'feature', value: 'auto',
++  description: 'Build Git web interface. Required Perl.')
+ option('iconv', type: 'feature', value: 'auto',
+   description: 'Support reencoding strings with different encodings.')
+ option('pcre2', type: 'feature', value: 'enabled',
+
+---
+base-commit: d882f382b3d939d90cfa58d17b17802338f05d66
+change-id: 20241218-b4-pks-meson-fix-gitweb-wo-perl-93379dd0ceed
+
