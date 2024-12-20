@@ -1,84 +1,38 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB43218EB9
-	for <git@vger.kernel.org>; Fri, 20 Dec 2024 18:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC44F21D5AC
+	for <git@vger.kernel.org>; Fri, 20 Dec 2024 18:24:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734718723; cv=none; b=KQXG5rVMgTnR2bgse169HOm3DRvom/+9pniyglZmOIe527B7mhADpvAx8mMlqO+fgf/EO/u9yHlEDM+ejNumOyBp8gjl2lACIik2mv+RHz8YaNg4DVaGA4QBq8UmPkIFLKZE3TAK/vU78R4vsi1Vsutw4SDGYFlTegNrhxr3l9s=
+	t=1734719070; cv=none; b=qG6rm2h1XQWTsegTMPRGqOwirUcyQRnFjSu//xB6COwgMynO86l6dWp41kqOjcyzMC1AzBMk4WCj20FBtp0DjuaKBYLxOrj0qmFWpqiXnbqVIrJm+qugc1ZLjDiRzsCAiw7q2hQfSGxQNwSl07uAOhpOevXDzKqeF0or9vcaf8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734718723; c=relaxed/simple;
-	bh=JGDmy0W4vcEexZU+LFFdQ2ztki8xPOr7FCuO08tvpBY=;
+	s=arc-20240116; t=1734719070; c=relaxed/simple;
+	bh=52+K0VY3i1LS21FdfjsDyis7NSZHpmA+f1JfjOmYMnY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HRwN9Q7rOcENErRiClfPogVJiZPzYksSfBkKb+pqyUx4ytR3sx7h7vy7qfSNtNFyLDr3Xz1aJdZGwPX7Bi0/zkuV7Yv5HVudPBHKlLwHGfJ2Z7vWuX9w7OpkYXtB+pgMFkVIpnZVU235UDeRRVbgj3KVfLy48oh7BPmOiU9Fvdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CARMMQ6U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bXzGjEFB; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fc+wF52G9rnfbKpVV56+MDHnyiJzfB8UqPz658KHUC+txexvyHl4F0/ikMYSE8rbDNtWxfh6xc1OTi6Cv1r95bjF1BU2s8aMPHuQeFI43gnvJSOpdxAlRqOu6dQ9IZwAsK1ivZNi62m+3KUAC0ZhBbnarQGxpj2C+BVNnbY0Jko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OUhR5dar; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CARMMQ6U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bXzGjEFB"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9EEB72540147;
-	Fri, 20 Dec 2024 13:18:39 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 20 Dec 2024 13:18:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734718719; x=1734805119; bh=38Iqyeo8hH
-	NSmthIZzo+ogrVMXZPSgfj8H62aI5eBM0=; b=CARMMQ6UoJGhkUbv9/GX3Hqq0E
-	jpJYsL7u6Y2zEvsKH1kEJH0rqEFsieu3AnFUSMUjCB2FhH3j90JCZq5eTGWFQ6ak
-	mxA+AFbLBB2r+rN55kboylbLidyH0pR8MKzPRnPmNzuupGLNJiN92jqM730vkuYX
-	T1r3ZWjGwymp7Kd6KuaAuin4X28NimXmK+CPHvigOU4jBo6R4C0W3PyDgBf2clKB
-	Yb6OR4C6qHJFClkmvXU37oFrVf1gU8wqzKalekm2uOVn1r0d2dFEzD6b/JXFMaDC
-	Bc/GJeyIgiWTlukYokLwO4aH6PlsVtCm3HecKL5TAfqop2vt+mPSXaM0IzSQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1734718719; x=1734805119; bh=38Iqyeo8hHNSmthIZzo+ogrVMXZPSgfj8H6
-	2aI5eBM0=; b=bXzGjEFBvlUj9sEeVbxAq0nR8xjtpweO0TjkqU1Mz6ibNtJxAbX
-	1b6NTADeA8h81Me+WSDXW26docBQEVhGwKg/qvumjb9oEtfhS63G2mfXG9OIXi4K
-	3n5ka+eUlUwyJGmprLa802g7vf+mKR++AsRgx41YVhGdIE8VZpZANs51AxXJjHE+
-	gbAvN43LoeLH3Zu3WDDKpXArhbb41fYFJNZ4apTrER2Emz4nI9iIGMQYAJAmF1Vn
-	26eVcXmRp+2+vKjW5dJhTAkNoRjUdqfgCMA1NB3UGiBGKFaPdtKHw+5q4ohrgCKP
-	BQ30YlE0DNTLZE/Zwj91jf1n58O/BdHlHiw==
-X-ME-Sender: <xms:_7RlZykX5UzKPWzdvC5-nss6KlyQOzngK5OijXGc3YwyNpIKofElgA>
-    <xme:_7RlZ53OG8BvqYrU70mhkg4J9wEnK5xfokMDCQbhOFZpC8xvi_uTUgTECa0Mh2Qtc
-    xDEhjY0Ejjc-zh0oA>
-X-ME-Received: <xmr:_7RlZwpflF1YHyKRCcEsXakcHsn1CgV1XedIAuv-ddGfNh-N2CPU69CrocBcoz2CNZuOvLOhHkXkukd-7EucU4oGxaqnZ2QLN96H4YmL0NLqkVY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtvddguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteetgedttd
-    eiuedtgeevhfejfeetffegieeltefhjeeutdejgfevgfdvhedvtdffnecuffhomhgrihhn
-    pehrsgdrihhnpdhgnhhurdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhho
-    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehsphgvtghtrhgrlhesghhoohhglh
-    gvrdgtohhm
-X-ME-Proxy: <xmx:_7RlZ2nfqrNhGdsJbyucZ2o-eREPlJLkaa51XM9ko_OUWpNVM0i4Sg>
-    <xmx:_7RlZw06iUM1cYu-sw4yfrrL_ZhKkYJdncgktzZpwJhg4x9AmoppeQ>
-    <xmx:_7RlZ9sBeFZ-79r6O3GyhVRtPHfT69z32CuD6U5bCvpqAfd0LUVNfQ>
-    <xmx:_7RlZ8UdRbVLppokRe2BAz7isFj48HNGn5a-BHasCzu4vpxRNIApIQ>
-    <xmx:_7RlZzTA0EiksU1gRDHkp6cYQYNXKLPrLwRrpWYqMyc9Ak4gUn0rnh55>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 13:18:38 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 07efe07c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 20 Dec 2024 18:16:42 +0000 (UTC)
-Date: Fri, 20 Dec 2024 19:18:19 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OUhR5dar"
+Received: (qmail 16552 invoked by uid 109); 20 Dec 2024 18:24:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=52+K0VY3i1LS21FdfjsDyis7NSZHpmA+f1JfjOmYMnY=; b=OUhR5darOp+jnSntCEg8cJWkZ00RD/WkNwvDgj01fnCnwFolzl+b0C+pH2SZJitRxRm+05FBrzORM0VCPFQEv7Qkghv/BU9TcYE3CC+DrRN9p1t3u9XKp8AZerZL1+Z+ZdoTewFg6sqnJe83BN0pyYiOe8Q5eeJT3iqkoBwqYcUxKKdPdMFLaUFm2knGS3oGiPMhKp87GNompJv1kjtaEdTliIB5JlDOTdPYqdf76oHGKL0GaIpxtSPJ9mpUk4z7U954rQmz2bU4fxYwtDPPYt8Joinia7GV7YmF2U+v0Xgo9MN54F0PtRF8OVd9K/Jadvose8dOzCCTkfVXjSzK/Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 20 Dec 2024 18:24:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20793 invoked by uid 111); 20 Dec 2024 18:24:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 20 Dec 2024 13:24:27 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 20 Dec 2024 13:24:27 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Kyle Lippincott <spectral@google.com>
 Subject: Re: [PATCH v2 4/5] Makefile: respect build info declared in
  "config.mak"
-Message-ID: <Z2W06zRsQei5E34D@pks.im>
+Message-ID: <20241220182427.GA213015@coredump.intra.peff.net>
 References: <20241220-b4-pks-git-version-via-environment-v2-0-f1457a5e8c38@pks.im>
  <20241220-b4-pks-git-version-via-environment-v2-4-f1457a5e8c38@pks.im>
  <20241220155433.GC152570@coredump.intra.peff.net>
@@ -91,43 +45,12 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <Z2WxIRcV0LOvx6OX@pks.im>
 
-On Fri, Dec 20, 2024 at 07:02:10PM +0100, Patrick Steinhardt wrote:
-> On Fri, Dec 20, 2024 at 12:51:36PM -0500, Jeff King wrote:
-> > On Fri, Dec 20, 2024 at 05:47:14PM +0100, Patrick Steinhardt wrote:
-> > 
-> > > > This looks good. It fixes the issue, and I am happy that:
-> > > > 
-> > > > >  asciidoctor-extensions.rb: asciidoctor-extensions.rb.in FORCE
-> > > > > -	$(QUIET_GEN)GIT_USER_AGENT="$(GIT_USER_AGENT)" $(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
-> > > > > +	$(QUIET_GEN)$(SHELL_PATH) ../GIT-VERSION-GEN "$(shell pwd)/.." $< $@
-> > > > 
-> > > > ...these spots get even simpler.
-> > > 
-> > > Meh. I just noticed that this doesn't work: we include GIT-VERSION-FILE
-> > > and export its value, and consequently any subsequent invocation of
-> > > GIT-VERSION-GEN will continue to use the value that we have in
-> > > GIT-VERSION-FILE. So it's effectively only computed the first time.
-> > 
-> > I'm not sure what you mean.
-> > 
-> > I wondered earlier if we might into a chicken-and-egg problem like that,
-> > but I tested and it seemed to work fine. The rule for GIT-VERSION-FILE
-> > means we'll build it before make reads it, so that first run of it will
-> > get the updated value. And:
-> > 
-> >   make GIT_VERSION=foo && bin-wrappers/git version
-> >   make GIT_VERSION=bar && bin-wrappers/git version
-> > 
-> > does what you'd expect. And the docs work the same way:
-> > 
-> >   cd Documentation
-> >   make GIT_VERSION=foo git.1 && man -l git.1
-> >   make GIT_VERSION=bar git.1 && man -l git.1
-> > 
+On Fri, Dec 20, 2024 at 07:02:09PM +0100, Patrick Steinhardt wrote:
+
 > > Is there a case you found that doesn't work?
 > 
 > Yes:
@@ -145,25 +68,35 @@ On Fri, Dec 20, 2024 at 07:02:10PM +0100, Patrick Steinhardt wrote:
 > So the value remains "sticky" in this case. And that is true whenever
 > you don't set GIT_VERSION at all, we always stick with what is currently
 > in that file.
-> 
-> I've got a version now that works for all cases, but I had to use
-> Makefile templates and some shuffling to make it work.
 
-The root of the problem is this [1]:
+Ah, right. Even though we have a recipe to build it, and make knows it
+must be built (because it depends on FORCE), make will read it (and all
+includes) first before executing any rules.
 
-    To this end, after reading in all makefiles make will consider each
-    as a goal target, in the order in which they were processed, and
-    attempt to update it. If parallel builds (see Parallel Execution)
-    are enabled then makefiles will be rebuilt in parallel as well.
+Something like this seems to work:
 
-So the Makefile will _first_ read in all includes before deciding
-whether or not it needs to regenerate any of them. So we already export
-the current GIT_VERSION in case "GIT-VERSION-FILE" exists at the time
-where we run "GIT-VERSION-GEN".
+diff --git a/Makefile b/Makefile
+index 788f6ee172..0eb08d98f4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -596,7 +596,12 @@ GIT-VERSION-FILE: FORCE
+ 	$(SHELL_PATH) ./GIT-VERSION-GEN "$(shell pwd)" GIT-VERSION-FILE.in $@ && \
+ 	NEW=$$(cat $@ 2>/dev/null || :) && \
+ 	if test "$$OLD" != "$$NEW"; then echo "$$NEW" >&2; fi
++# Never include it on the first read-through, only after make has tried to
++# refresh includes. We do not want the old values to pollute our new run of the
++# rule above.
++ifdef MAKE_RESTARTS
+ -include GIT-VERSION-FILE
++endif
+ 
+ # Set our default configuration.
+ #
 
-That behaviour is quite surprising to me, but it seems to work as
-designed.
 
-Patrick
+But I don't know if there are any gotchas (I did not even know about
+MAKE_RESTARTS until digging in the docs looking for a solution here).
+If we can stop including it as a Makefile snippet entirely, I think that
+is easier to reason about.
 
-[1]: https://www.gnu.org/software/make/manual/html_node/Remaking-Makefiles.html
+-Peff
