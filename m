@@ -1,66 +1,67 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587A622301
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE77219A69
 	for <git@vger.kernel.org>; Fri, 20 Dec 2024 16:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734711684; cv=none; b=sNwlDIMFZn7S7TPFOJXqTxc/VRhOPsXyCc8zBb9xKufinTlOkMorM0XVseCdMdHUZcNE1pfsqkDQewjp6sWnZ+zxTbOILxLxkCIqwxWum5Gi6HNO1fxEurHAeZqIUWXHbO038Qtaub2c1r3jXWItVuDQHeeuPUPxgV+dZ5EADO4=
+	t=1734711684; cv=none; b=PUX/bYX+6jFH+rqK5/TOt64NtZl59nD1hl4GiDUtDRYpR/DKkbbwXZgXrEDj8ECFB9VAEdJ4aspkiKXOBRJySLQXentUlGF4czAkr4fgDFb6tKncMW1stw8I6uaxpRrN/F4csBNS/VRPDtts4V4YbQSki61mylhcsCgH9G6rY64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1734711684; c=relaxed/simple;
-	bh=MgGNl4TGa96Bxn8/CQ3K5CYeBvg0jqMXfvZw7j6uPgM=;
+	bh=10kIavHsNQglQPjc1QLrR7lp8CzYceKQpzu9mepfkvs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=o8Qe4UuRztMpfr1cUN3fKmu8NQJd7/PpIT0EE8mmA2GfgPNMSUGioVfwAQxR1k9vBve3xsm9Smmu61rUT2r8s7QR5ZhhGcIfvLysLEOuzrZ/uwios+W5HiF2CYQjYRnQRL7S54h/3VmUaqPWCB//HShQRPqStNeWwIdsqiVAZ4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DDXiF36C; arc=none smtp.client-ip=209.85.128.54
+	 MIME-Version:To:Cc; b=keu8Br/X+FcNbjlqhXDxfzQhJtrOPoUCSfDioeCl4ldjY0Evqh0k9ONsZ9spaGAV08qfwI1afyXoOQ2HqITLE6QImG8uEXpp9/73t/elv5T5MDenfY4poHVT7cPrwwX9qAxC65Kbw8jNrQtjV6lyA2aOOFi8JH1gNzdDB9GGbRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BRRPbyQo; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DDXiF36C"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43621d27adeso14697735e9.2
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:21:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BRRPbyQo"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3862d6d5765so1335961f8f.3
+        for <git@vger.kernel.org>; Fri, 20 Dec 2024 08:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734711679; x=1735316479; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1734711680; x=1735316480; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=k6odIyKzkUDJtHC9vVl/AuqsZnWL+pqvFJvudlELXmM=;
-        b=DDXiF36CibNfFqoVRqUwxEKReoI2QtD+6xqjxHt/uGzCGxk+gZmzxFPHSF884w5Lwx
-         3hTZSE7TRkq8exWKzk1nzkyoO1MI/vpF4yDUksjWpg+4/MYI8k6naa6icZ4UoQAmvfky
-         sT6PbtstSw7/JxhZvJ3oL4F3KM3Ic6FD/u7sk/oC7BMMdrCE7nzxyWZ8QlzQIr4TazOd
-         RN+ztCFA73uQjVVk9sKF7gH/QyENiUoX9QYPAbSm2c4+LQcgbwP3YtkISIQOo2RMLB8Z
-         IYEffHeocxfnyvfwhnjxWk4TZ9u7HYbTQ6MByYNS2K52NrdVcuANkLBoi47khJ92Nd+7
-         8NQQ==
+        bh=Z6HFrEcwLiwhmvIYztVgNR2/ErfabQR3p2XsMXcKbOo=;
+        b=BRRPbyQoO+CiML8CHKhRZ1Kt4vQxOnyr+iQGD3zxNm/LAWjBFSWcacX+ZyO+lBIAUr
+         H0Dd4ceRW8icSU7oiH7dDTnvh2SZ1nblD9kh1N9+WmIdj1DPad9aqFMffpiPMbHrWMkx
+         uObHgpE1JyPKTd2RIEsQsCjzF41cmngISRi0mKaU8oJrIO9wpzEIDS8BdhXwk0Mf0JjV
+         Iy7CWXuIF3n38OydcyjYctfEeP/fcpqke5UXZVMFy7+7fteFsnjS4jXBj22mnHCO8R6j
+         /WIFzKzi2gO+wb0cyUVcx4CgGVNIEQwQSt8e8min6zdB/FNrXZMaMm/3ZkhmEzILERce
+         ni6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734711679; x=1735316479;
+        d=1e100.net; s=20230601; t=1734711680; x=1735316480;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=k6odIyKzkUDJtHC9vVl/AuqsZnWL+pqvFJvudlELXmM=;
-        b=WjiGvc01iWTKdDR94Ojc9f4yu95XFL8svfU5DYy7EqTiOP+TApyjL92nfkS4h6JLFF
-         obHyNJVPDm8fLnUdg1MwL5YYdA3k6hJ9lxmQ+NIfknlnxb7irvQTACyH8w1Mes76eeR4
-         kRtDMplGCAhJDIUckjgVdapIOOPl/KfqiL3kakAXO5Ive07mWa6JQYb7ABl9fGIdymAj
-         7w+kvS4hXJZO1SuXAzPhe2Qge3lW4LVPcRSaVL3GKCbTUo/KAa9h1dgPpzDP5JLYSA7s
-         GqmGJRVsZ+D+jymD2Ep3dzoLl7fwAWdp+HJS/48sxfyD1R+erol3Khv6D58z5SR3Tcot
-         PWVg==
-X-Gm-Message-State: AOJu0Yw20T3L4vkbDlJM+fNNRyA3Hmu15Tc42JBEegU9ipHpHVcK3C+v
-	PUON31vT2J44a1Cf4y/aUGjfXaPLjxKiNgRK4pQjbfbVNSGig08FqxW3Jw==
-X-Gm-Gg: ASbGncviHB2BSX2nhqC79SHTu8AeVbMa7kapdYuzAjZBWfk+G9OuRLADH6zAUJ1hO/m
-	o/quJKosYSoQfq15VXDkJXT/aqqAKdelNeeAhdr4iHChkfoMGGLb3D12xi8fApBa315sW1I2tjq
-	e53dPvL8AU4eeUK6H+HFkQttWBOoKXrAHKCmxzC8bijOaKQF4gJI2f+BXG9aQMIQMul1u9p8AFq
-	1+fsg+La9ETVS/3T82jSZMgcqhL0rW2NILqdZI9i1LOP9tRBPDmO8uJIw==
-X-Google-Smtp-Source: AGHT+IG2m2ejzIO46dqSLwE6MJ+97Azyu18HL4r0wrODa0vb7VmPm2VYFWCbRAnleUXv/bWamZ59lA==
-X-Received: by 2002:a05:600c:3554:b0:434:a923:9310 with SMTP id 5b1f17b1804b1-43668646103mr34868365e9.15.1734711678700;
-        Fri, 20 Dec 2024 08:21:18 -0800 (PST)
+        bh=Z6HFrEcwLiwhmvIYztVgNR2/ErfabQR3p2XsMXcKbOo=;
+        b=pbPD8CHtDUl2rgoYApPw4tMDvdAuZ3JPWWfSMUBmqjRyvyexu9VI4BC7nn3/M1h3s4
+         r+XFn2PWL40ERyeSxlkm7eVY7tCGmK9DWXfEd++hDTst2XeTSCSo28zTUOXdtxB+Pa4n
+         1AYy0STD+UQBtSOzA/ivTMSwjW7FHe0YishMaXemlxrAHDYYmiZChjZFh7RTvQJfDxSc
+         atGRxjDv+h2cZOaKwXTCTGQ7lvreC1oivWG9QooM/ySGmhWBV0+4TPf8jW8/yrtJ+zp6
+         xaMNmYatsrmWD1MIxbP1FlTGBeoxkObG+ERf9O2gKAPcHB+cEDspx2DayJTOKEMbRu8Q
+         2eDw==
+X-Gm-Message-State: AOJu0YxDnhiKFPTc9XMgtGgN9aYHixKGYrea/HAR3PD2Es1lL9N/J5Kw
+	nLyfGChE7VnPgVL6aaheMUAvCM1xHtR1uzHi5pk6wVS1O0plEgtTrhYSjw==
+X-Gm-Gg: ASbGncsMaSi+NDsCb9ELowb5me9aoOXPxosAaaVzli1bqG/R0P0+/Gugb9OtkMglH8d
+	VMwUWMM/GDrOVTx4EY7bFSnf8BQMCUT5FMvN1/CLFcj+qQpTbcXfIXzXy7PeSBIPua1WEw1RVnD
+	Ru6dLqAU8gfzCdu1j7mjLlsDjBGn1U4S2MxU4WaTeoApeDOvk20dohWA9NkQ+Buf6hOchoh1tFz
+	dPDkUuow8Nfc5LKHjc/NQNN//dwu4h81GJGyw+S3+amO27PUZM4L4roqA==
+X-Google-Smtp-Source: AGHT+IG2/qGp3w+UKPNMNdrqqemDaebL3HgBFfmRJGTfni0X8bFry/F9A7HYPOi0RmMZ/Q8UBUdU0w==
+X-Received: by 2002:a05:6000:1846:b0:385:ef97:78c with SMTP id ffacd0b85a97d-38a221f3179mr2617517f8f.6.1734711679600;
+        Fri, 20 Dec 2024 08:21:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4366a093cbfsm22353825e9.22.2024.12.20.08.21.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c6ad3e3sm4582018f8f.0.2024.12.20.08.21.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2024 08:21:17 -0800 (PST)
-Message-Id: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2024 08:21:19 -0800 (PST)
+Message-Id: <62f7aae477bc542dce0bb6f8b59438442a77d154.1734711676.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
 References: <pull.1818.v3.git.1733514358.gitgitgadget@gmail.com>
+	<pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 20 Dec 2024 16:21:08 +0000
-Subject: [PATCH v4 0/7] PATH WALK I: The path-walk API
+Date: Fri, 20 Dec 2024 16:21:09 +0000
+Subject: [PATCH v4 1/7] path-walk: introduce an object walk by path
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,643 +83,480 @@ Cc: gitster@pobox.com,
     kristofferhaugsbakk@fastmail.com,
     jonathantanmy@google.com,
     karthik nayak <karthik.188@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
+From: Derrick Stolee <stolee@gmail.com>
 
-Introduction and relation to prior series
-=========================================
+In anticipation of a few planned applications, introduce the most basic form
+of a path-walk API. It currently assumes that there are no UNINTERESTING
+objects, and does not include any complicated filters. It calls a function
+pointer on groups of tree and blob objects as grouped by path. This only
+includes objects the first time they are discovered, so an object that
+appears at multiple paths will not be included in two batches.
 
-This is a new series that rerolls the initial "path-walk API" patches of my
-RFC [1] "Path-walk API and applications". This new API (in path-walk.c and
-path-walk.h) presents a new way to walk objects such that trees and blobs
-are walked in batches according to their path.
+These batches are collected in 'struct type_and_oid_list' objects, which
+store an object type and an oid_array of objects.
 
-This also replaces the previous version of ds/path-walk that was being
-reviewed in [2]. The consensus was that the series was too long/dense and
-could use some reduction in size. This series takes the first few patches,
-but also makes some updates (which will be described later).
+The data structures are documented in 'struct path_walk_context', but in
+summary the most important are:
 
-[1]
-https://lore.kernel.org/git/pull.1786.git.1725935335.gitgitgadget@gmail.com/
-[RFC] Path-walk API and applications
+  * 'paths_to_lists' is a strmap that connects a path to a
+    type_and_oid_list for that path. To avoid conflicts in path names,
+    we make sure that tree paths end in "/" (except the root path with
+    is an empty string) and blob paths do not end in "/".
 
-[2]
-https://lore.kernel.org/git/pull.1813.v2.git.1729431810.gitgitgadget@gmail.com/
-[PATCH v2 00/17] pack-objects: add --path-walk option for better deltas
+  * 'path_stack' is a string list that is added to in an append-only
+    way. This stores the stack of our depth-first search on the heap
+    instead of using recursion.
 
-This series only introduces the path-walk API, but does so to the full
-complexity required to later add the integration with git pack-objects to
-improve packing compression in both time and space for repositories with
-many name hash collisions. The compression also at least improves for other
-repositories, but may not always have an improvement in time.
+  * 'path_stack_pushed' is a strmap that stores path names that were
+    already added to 'path_stack', to avoid repeating paths in the
+    stack. Mostly, this saves us from quadratic lookups from doing
+    unsorted checks into the string_list.
 
-Some of the changes that are present in this series that differ from the
-previous version are motivated directly by discoveries made by testing the
-feature in Git for Windows and microsoft/git forks that shipped these
-features for fast delivery of these improvements to users who needed them.
-That testing across many environments informed some things that needed to be
-changed, and in this series those changes are checked by tests in the
-t6601-path-walk.sh test script and the test-tool path-walk test helper.
-Thus, the code being introduced in this series is covered by tests even
-though it is not integrated into the git executable.
+The coupling of 'path_stack' and 'path_stack_pushed' is protected by the
+push_to_stack() method. Call this instead of inserting into these
+structures directly.
 
+The walk_objects_by_path() method initializes these structures and
+starts walking commits from the given rev_info struct. The commits are
+used to find the list of root trees which populate the start of our
+depth-first search.
 
-Discussion of follow-up applications
-====================================
+The core of our depth-first search is in a while loop that continues
+while we have not indicated an early exit and our 'path_stack' still has
+entries in it. The loop body pops a path off of the stack and "visits"
+the path via the walk_path() method.
 
-By splitting this series out into its own, I was able to reorganize the
-patches such that each application can be build independently off of this
-series. These are available as pending PRs in gitgitgadget/git:
+The walk_path() method gets the list of OIDs from the 'path_to_lists'
+strmap and executes the callback method on that list with the given path
+and type. If the OIDs correspond to tree objects, then iterate over all
+trees in the list and run add_children() to add the child objects to
+their own lists, adding new entries to the stack if necessary.
 
- * Better delta compression with 'git pack-objects' [3]: This application
-   allows an option in 'git pack-objects' to change how objects are walked
-   in order to group objects with the same path for early delta compression
-   before using the name hash sort to look for cross-path deltas. This helps
-   significantly in repositories with many name-hash collisions. This
-   reduces the size of 'git push' pacifies via a config option and reduces
-   the total repo size in 'git repack'.
+In testing, this depth-first search approach was the one that used the
+least memory while iterating over the object lists. There is still a
+chance that repositories with too-wide path patterns could cause memory
+pressure issues. Limiting the stack size could be done in the future by
+limiting how many objects are being considered in-progress, or by
+visiting blob paths earlier than trees.
 
- * The 'git backfill' command [4]: This command downloads missing blobs in a
-   bloodless partial clone. In order to save space and network bandwidth, it
-   assumes that objects at a common path are likely to delta well with each
-   other, so it downloads missing blobs in batches via the path-walk API.
-   This presents a way to use blobless clones as a pseudo-resumable clone,
-   since the initial clone of commits and trees is a smaller initial
-   download and the batch size allows downloading blobs incrementally. When
-   pairing this command with the sparse-checkout feature, the path-walk API
-   is adjusted to focus on the paths within the sparse-checkout. This allows
-   the user to only download the files they are likely to need when
-   inspecting history within their scope without downloading the entire
-   repository history.
+There are many future adaptations that could be made, but they are left for
+future updates when consumers are ready to take advantage of those features.
 
- * The 'git survey' command [5]. This application begins the work to mimic
-   the behavior of git-sizer, but to use internal data structures for better
-   performance and careful understanding of how objects are stored. Using
-   the path-walk API, paths with many versions can be considered in a batch
-   and sorted into a list to report the paths that contribute most to the
-   size of the repository. A version of this command was used to help
-   confirm the issues with the name hash collisions. It was also used to
-   diagnose why some repacks using the --path-walk option were taking more
-   space than without for some repositories. (More on this later.)
-
-Question for reviewers: I am prepped to send these three applications to the
-mailing list, but I'll refrain for now to avoid causing too much noise for
-folks. Would you like to see them on-list while this series is under review?
-Or would you prefer to explore the PRs ([3] [4] and [5])?
-
-[3] https://github.com/gitgitgadget/git/pull/1819
-PATH WALK II: Add --path-walk option to 'git pack-objects'
-
-[4] https://github.com/gitgitgadget/git/pull/1820
-PATH WALK III: Add 'git backfill' command
-
-[5] https://github.com/gitgitgadget/git/pull/1821
-PATH WALK IV: Add 'git survey' command
-
-
-Structure of the Patch Series
-=============================
-
-This patch series attempts to create the simplest version of the API in
-patch 1, then build functionality incrementally. During the process, each
-change will introduce an update to:
-
- * The path-walk API itself in path-walk.c and path-walk.h.
- * The documentation of the API in
-   Documentation/technical/api-path-walk.txt.
- * The test script t/t6601-path-walk.sh.
-
-The core of the API relies on using a 'struct rev_info' to define an initial
-set of objects and some form of a commit walk to define what range of
-objects to visit. Initially, only a subset of 'struct rev_info' options work
-as expected. For example:
-
- * Patch 1 assumes that only commit objects are starting positions, but the
-   focus is on exploring trees and blobs.
- * Patch 3 allows users to specify object types, which includes outputting
-   the visited commits in a batch.
- * Annotated tags and indexed objects are considered in Patch 4. These are
-   grouped because they both exist within the 'pending' object list.
- * UNINTERESTING objects are not considered until Patch 5.
-
-
-Changes in v1 (since previous version)
-======================================
-
-There are a few hard-won learnings from previous versions of this series due
-to testing this in the wild with many different repositories.
-
- * Initially, the 'git pack-objects --path-walk' feature was not tested with
-   the '--shallow' option because it was expected that this option was for
-   servers creating a pack containing shallow commits. However, this option
-   is also used when pushing from a shallow clone, and this was a critical
-   feature that we needed to reduce the size of commits pushed from
-   automated environments that were bootstrapped by shallow clones. The crux
-   of the change is in Patch 5 and how UNINTERESTING objects are handled. We
-   no longer need to push the UNINTERESTING flag around the objects
-   ourselves and can use existing logic in list-objects.c to do so. This
-   allows using the --objects-edge-aggressive option when necessary to
-   reduce the object count when pushing from a shallow clone. (The
-   pack-objects series expands on tests to cover this integration point.)
-
- * When looking into cases where 'git repack -adf' outperformed 'git repack
-   -adf --path-walk', I discovered that the issue did not reproduce in a
-   bare repository. This is due to 'git repack' iterating over all indexed
-   objects before walking commits. I had inadvertently put all indexed
-   objects in their own category, leading to no good deltas with previous
-   versions of those files; I had also not used the 'path' option from the
-   pending list, so these objects had invalid name hash values. You will see
-   in patch 4 that the pending list is handled quite differently and the
-   '--indexed-objects' option is tested directly within t6601.
-
- * I added a new 'test_cmp_sorted' helper because I wanted to simplify some
-   repeated sections of t6601.
-
- * Patch 1 has significantly more context than it did before.
-
- * Annotated tags are given a name of "/tags" to differentiate them slightly
-   from root trees and commits.
-
-
-Changes in v2
-=============
-
- * Updated the test helper to output the batch number, allowing us to
-   confirm that OIDs are grouped appropriately. This also signaled a few
-   cases where the callback function was being called on an empty set.
-
- * This change has resulted in significant changes to the test data,
-   including reordered lines and prepended batch numbers.
-
- * Thanks to Patrick for providing a recommended change to remove memory
-   leaks from the test helper.
-
-
-Changes in v3
-=============
-
- * Updated test helper to use type_string(), which leads to a change to use
-   lowercase strings in the test scripts. That will lead to the range-diff
-   looking pretty terrible.
-
- * Added a new patch that changes the visit order of the path-walk API. The
-   intention is to reduce memory pressure by emitting blob paths before
-   recursing into tree paths. This also has the effect of visiting blobs and
-   trees in lexicographic order instead of the reverse.
-
-
-Changes in v4
-=============
-
- * Several style fixes and function renames.
-
- * Better error handling, avoiding some die() statements.
-
- * Additional BUG() statements for "impossible" scenarios.
-
- * Optimizations around SEEN objects to avoid extra work. This does have
-   some impact on paths that appear in the index but no other versions are
-   discovered during the tree walk. This changes a test in t6601 and the
-   timing of visiting the blob path "a" being delayed to the end.
-
- * The path_walk_info struct now has proper initializers and destructors,
-   even though the current destructor is empty.
-
-Thanks, -Stolee
-
-Derrick Stolee (7):
-  path-walk: introduce an object walk by path
-  test-lib-functions: add test_cmp_sorted
-  t6601: add helper for testing path-walk API
-  path-walk: allow consumer to specify object types
-  path-walk: visit tags and cached objects
-  path-walk: mark trees and blobs as UNINTERESTING
-  path-walk: reorder object visits
-
- Documentation/technical/api-path-walk.txt |  63 +++
- Makefile                                  |   2 +
- path-walk.c                               | 592 ++++++++++++++++++++++
- path-walk.h                               |  69 +++
- t/helper/test-path-walk.c                 | 112 ++++
- t/helper/test-tool.c                      |   1 +
- t/helper/test-tool.h                      |   1 +
- t/t6601-path-walk.sh                      | 368 ++++++++++++++
- t/test-lib-functions.sh                   |  10 +
- 9 files changed, 1218 insertions(+)
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ Documentation/technical/api-path-walk.txt |  45 ++++
+ Makefile                                  |   1 +
+ path-walk.c                               | 279 ++++++++++++++++++++++
+ path-walk.h                               |  47 ++++
+ 4 files changed, 372 insertions(+)
  create mode 100644 Documentation/technical/api-path-walk.txt
  create mode 100644 path-walk.c
  create mode 100644 path-walk.h
- create mode 100644 t/helper/test-path-walk.c
- create mode 100755 t/t6601-path-walk.sh
 
-
-base-commit: e9356ba3ea2a6754281ff7697b3e5a1697b21e24
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1818%2Fderrickstolee%2Fapi-upstream-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1818/derrickstolee/api-upstream-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/1818
-
-Range-diff vs v3:
-
- 1:  b7e9b81e8b3 ! 1:  62f7aae477b path-walk: introduce an object walk by path
-     @@ path-walk.c (new)
-      +#include "tree.h"
-      +#include "tree-walk.h"
-      +
-     -+struct type_and_oid_list
-     -+{
-     ++struct type_and_oid_list {
-      +	enum object_type type;
-      +	struct oid_array oids;
-      +};
-     @@ path-walk.c (new)
-      +	string_list_append(&ctx->path_stack, path);
-      +}
-      +
-     -+static int add_children(struct path_walk_context *ctx,
-     -+			const char *base_path,
-     -+			struct object_id *oid)
-     ++static int add_tree_entries(struct path_walk_context *ctx,
-     ++			    const char *base_path,
-     ++			    struct object_id *oid)
-      +{
-      +	struct tree_desc desc;
-      +	struct name_entry entry;
-     @@ path-walk.c (new)
-      +		      oid_to_hex(oid));
-      +		return -1;
-      +	} else if (parse_tree_gently(tree, 1)) {
-     -+		die("bad tree object %s", oid_to_hex(oid));
-     ++		error("bad tree object %s", oid_to_hex(oid));
-     ++		return -1;
-      +	}
-      +
-      +	strbuf_addstr(&path, base_path);
-     @@ path-walk.c (new)
-      +			struct blob *child = lookup_blob(ctx->repo, &entry.oid);
-      +			o = child ? &child->object : NULL;
-      +		} else {
-     -+			/* Wrong type? */
-     -+			continue;
-     ++			BUG("invalid type for tree entry: %d", type);
-      +		}
-      +
-     -+		if (!o) /* report error?*/
-     ++		if (!o) {
-     ++			error(_("failed to find object %s"),
-     ++			      oid_to_hex(&o->oid));
-     ++			return -1;
-     ++		}
-     ++
-     ++		/* Skip this object if already seen. */
-     ++		if (o->flags & SEEN)
-      +			continue;
-     ++		o->flags |= SEEN;
-      +
-      +		strbuf_setlen(&path, base_len);
-      +		strbuf_add(&path, entry.path, entry.pathlen);
-     @@ path-walk.c (new)
-      +			strmap_put(&ctx->paths_to_lists, path.buf, list);
-      +		}
-      +		push_to_stack(ctx, path.buf);
-     -+
-     -+		/* Skip this object if already seen. */
-     -+		if (o->flags & SEEN)
-     -+			continue;
-     -+		o->flags |= SEEN;
-      +		oid_array_append(&list->oids, &entry.oid);
-      +	}
-      +
-     @@ path-walk.c (new)
-      +	/* Expand data for children. */
-      +	if (list->type == OBJ_TREE) {
-      +		for (size_t i = 0; i < list->oids.nr; i++) {
-     -+			ret |= add_children(ctx,
-     ++			ret |= add_tree_entries(ctx,
-      +					    path,
-      +					    &list->oids.oid[i]);
-      +		}
-     @@ path-walk.c (new)
-      +	return ret;
-      +}
-      +
-     -+static void clear_strmap(struct strmap *map)
-     ++static void clear_paths_to_lists(struct strmap *map)
-      +{
-      +	struct hashmap_iter iter;
-      +	struct strmap_entry *e;
-     @@ path-walk.c (new)
-      +		t = lookup_tree(info->revs->repo, oid);
-      +
-      +		if (!t) {
-     -+			warning("could not find tree %s", oid_to_hex(oid));
-     -+			continue;
-     ++			error("could not find tree %s", oid_to_hex(oid));
-     ++			return -1;
-      +		}
-      +
-      +		if (t->object.flags & SEEN)
-     @@ path-walk.c (new)
-      +	trace2_data_intmax("path-walk", ctx.repo, "paths", paths_nr);
-      +	trace2_region_leave("path-walk", "path-walk", info->revs->repo);
-      +
-     -+	clear_strmap(&ctx.paths_to_lists);
-     ++	clear_paths_to_lists(&ctx.paths_to_lists);
-      +	strset_clear(&ctx.path_stack_pushed);
-      +	string_list_clear(&ctx.path_stack, 0);
-      +	return ret;
-     ++}
-     ++
-     ++void path_walk_info_init(struct path_walk_info *info)
-     ++{
-     ++	struct path_walk_info empty = PATH_WALK_INFO_INIT;
-     ++	memcpy(info, &empty, sizeof(empty));
-     ++}
-     ++
-     ++void path_walk_info_clear(struct path_walk_info *info UNUSED)
-     ++{
-     ++	/*
-     ++	 * This destructor is empty for now, as info->revs
-     ++	 * is not owned by 'struct path_walk_info'.
-     ++	 */
-      +}
-      
-       ## path-walk.h (new) ##
-     @@ path-walk.h (new)
-      +struct path_walk_info {
-      +	/**
-      +	 * revs provides the definitions for the commit walk, including
-     -+	 * which commits are UNINTERESTING or not.
-     ++	 * which commits are UNINTERESTING or not. This structure is
-     ++	 * expected to be owned by the caller.
-      +	 */
-      +	struct rev_info *revs;
-      +
-     @@ path-walk.h (new)
-      +
-      +#define PATH_WALK_INFO_INIT { 0 }
-      +
-     ++void path_walk_info_init(struct path_walk_info *info);
-     ++void path_walk_info_clear(struct path_walk_info *info);
-     ++
-      +/**
-      + * Given the configuration of 'info', walk the commits based on 'info->revs' and
-      + * call 'info->path_fn' on each discovered path.
- 2:  cf2ed61b324 = 2:  8ad2a5e79a2 test-lib-functions: add test_cmp_sorted
- 3:  54886fcb081 = 3:  2bc0538bce9 t6601: add helper for testing path-walk API
- 4:  42e71e6285f ! 4:  db5c8611230 path-walk: allow consumer to specify object types
-     @@ Documentation/technical/api-path-walk.txt: It is also important that you do not
-       
-      
-       ## path-walk.c ##
-     -@@ path-walk.c: static int add_children(struct path_walk_context *ctx,
-     +@@ path-walk.c: static int add_tree_entries(struct path_walk_context *ctx,
-       		if (S_ISGITLINK(entry.mode))
-       			continue;
-       
-     @@ path-walk.h: struct path_walk_info {
-      +	.commits = 1,		\
-      +}
-       
-     - /**
-     -  * Given the configuration of 'info', walk the commits based on 'info->revs' and
-     + void path_walk_info_init(struct path_walk_info *info);
-     + void path_walk_info_clear(struct path_walk_info *info);
-      
-       ## t/helper/test-path-walk.c ##
-      @@ t/helper/test-path-walk.c: static const char * const path_walk_usage[] = {
- 5:  a41f53f7ced ! 5:  6df56f465d7 path-walk: visit tags and cached objects
-     @@ path-walk.c
-       
-      +static const char *root_path = "";
-      +
-     - struct type_and_oid_list
-     - {
-     + struct type_and_oid_list {
-       	enum object_type type;
-     + 	struct oid_array oids;
-      @@ path-walk.c: static int walk_path(struct path_walk_context *ctx,
-       
-       	list = strmap_get(&ctx->paths_to_lists, path);
-     @@ path-walk.c: static int walk_path(struct path_walk_context *ctx,
-       		ret = ctx->info->path_fn(path, &list->oids, list->type,
-       					ctx->info->path_fn_data);
-       
-     -@@ path-walk.c: static void clear_strmap(struct strmap *map)
-     +@@ path-walk.c: static void clear_paths_to_lists(struct strmap *map)
-       	strmap_init(map);
-       }
-       
-     -+static void setup_pending_objects(struct path_walk_info *info,
-     -+				  struct path_walk_context *ctx)
-     ++static int setup_pending_objects(struct path_walk_info *info,
-     ++				 struct path_walk_context *ctx)
-      +{
-      +	struct type_and_oid_list *tags = NULL;
-      +	struct type_and_oid_list *tagged_blobs = NULL;
-     @@ path-walk.c: static void clear_strmap(struct strmap *map)
-      +		/* Navigate annotated tag object chains. */
-      +		while (obj->type == OBJ_TAG) {
-      +			struct tag *tag = lookup_tag(info->revs->repo, &obj->oid);
-     -+			if (!tag)
-     -+				break;
-     ++			if (!tag) {
-     ++				error(_("failed to find tag %s"),
-     ++				      oid_to_hex(&obj->oid));
-     ++				return -1;
-     ++			}
-      +			if (tag->object.flags & SEEN)
-      +				break;
-      +			tag->object.flags |= SEEN;
-     @@ path-walk.c: static void clear_strmap(struct strmap *map)
-      +			free(tags);
-      +		}
-      +	}
-     ++
-     ++	return 0;
-      +}
-      +
-       /**
-        * Given the configuration of 'info', walk the commits based on 'info->revs' and
-        * call 'info->path_fn' on each discovered path.
-     -@@ path-walk.c: static void clear_strmap(struct strmap *map)
-     +@@ path-walk.c: static void clear_paths_to_lists(struct strmap *map)
-        */
-       int walk_objects_by_path(struct path_walk_info *info)
-       {
-      -	const char *root_path = "";
-     - 	int ret = 0;
-     +-	int ret = 0;
-     ++	int ret;
-       	size_t commits_nr = 0, paths_nr = 0;
-       	struct commit *c;
-     + 	struct type_and_oid_list *root_tree_list;
-      @@ path-walk.c: int walk_objects_by_path(struct path_walk_info *info)
-       	CALLOC_ARRAY(commit_list, 1);
-       	commit_list->type = OBJ_COMMIT;
-     @@ path-walk.c: int walk_objects_by_path(struct path_walk_info *info)
-      +	info->revs->blob_objects = info->revs->tree_objects = 0;
-      +
-      +	trace2_region_enter("path-walk", "pending-walk", info->revs->repo);
-     -+	setup_pending_objects(info, &ctx);
-     ++	ret = setup_pending_objects(info, &ctx);
-      +	trace2_region_leave("path-walk", "pending-walk", info->revs->repo);
-     ++
-     ++	if (ret)
-     ++		return ret;
-      +
-       	while ((c = get_revision(info->revs))) {
-       		struct object_id *oid;
-     @@ path-walk.h: struct path_walk_info {
-      +	.tags = 1,		\
-       }
-       
-     - /**
-     + void path_walk_info_init(struct path_walk_info *info);
-      
-       ## t/helper/test-path-walk.c ##
-      @@ t/helper/test-path-walk.c: struct path_walk_test_data {
- 6:  0f1e6c51b2c ! 6:  f2ffc32a303 path-walk: mark trees and blobs as UNINTERESTING
-     @@ path-walk.c
-       #include "object.h"
-       #include "oid-array.h"
-       #include "revision.h"
-     -@@ path-walk.c: struct type_and_oid_list
-     - {
-     +@@ path-walk.c: static const char *root_path = "";
-     + struct type_and_oid_list {
-       	enum object_type type;
-       	struct oid_array oids;
-      +	int maybe_interesting;
-       };
-       
-       #define TYPE_AND_OID_LIST_INIT { \
-     -@@ path-walk.c: static int add_children(struct path_walk_context *ctx,
-     - 		if (o->flags & SEEN)
-     - 			continue;
-     - 		o->flags |= SEEN;
-     +@@ path-walk.c: static int add_tree_entries(struct path_walk_context *ctx,
-     + 			strmap_put(&ctx->paths_to_lists, path.buf, list);
-     + 		}
-     + 		push_to_stack(ctx, path.buf);
-      +
-      +		if (!(o->flags & UNINTERESTING))
-      +			list->maybe_interesting = 1;
-     ++
-       		oid_array_append(&list->oids, &entry.oid);
-       	}
-       
-     @@ path-walk.c: static int walk_path(struct path_walk_context *ctx,
-       	/* Evaluate function pointer on this data, if requested. */
-       	if ((list->type == OBJ_TREE && ctx->info->trees) ||
-       	    (list->type == OBJ_BLOB && ctx->info->blobs) ||
-     -@@ path-walk.c: static void clear_strmap(struct strmap *map)
-     +@@ path-walk.c: static void clear_paths_to_lists(struct strmap *map)
-       	strmap_init(map);
-       }
-       
-     @@ path-walk.c: static void clear_strmap(struct strmap *map)
-      +	oid_array_append(&edge_tree_list->oids, &t->object.oid);
-      +}
-      +
-     - static void setup_pending_objects(struct path_walk_info *info,
-     - 				  struct path_walk_context *ctx)
-     + static int setup_pending_objects(struct path_walk_info *info,
-     + 				 struct path_walk_context *ctx)
-       {
-     -@@ path-walk.c: static void setup_pending_objects(struct path_walk_info *info,
-     +@@ path-walk.c: static int setup_pending_objects(struct path_walk_info *info,
-       		if (tagged_blobs->oids.nr) {
-       			const char *tagged_blob_path = "/tagged-blobs";
-       			tagged_blobs->type = OBJ_BLOB;
-     @@ path-walk.c: static void setup_pending_objects(struct path_walk_info *info,
-       			push_to_stack(ctx, tagged_blob_path);
-       			strmap_put(&ctx->paths_to_lists, tagged_blob_path, tagged_blobs);
-       		} else {
-     -@@ path-walk.c: static void setup_pending_objects(struct path_walk_info *info,
-     +@@ path-walk.c: static int setup_pending_objects(struct path_walk_info *info,
-       		if (tags->oids.nr) {
-       			const char *tag_path = "/tags";
-       			tags->type = OBJ_TAG;
- 7:  e716672c041 ! 7:  ef543429ed9 path-walk: reorder object visits
-     @@ path-walk.c: static void push_to_stack(struct path_walk_context *ctx,
-      +	prio_queue_put(&ctx->path_stack, xstrdup(path));
-       }
-       
-     - static int add_children(struct path_walk_context *ctx,
-     -@@ path-walk.c: static void setup_pending_objects(struct path_walk_info *info,
-     + static int add_tree_entries(struct path_walk_context *ctx,
-     +@@ path-walk.c: static int setup_pending_objects(struct path_walk_info *info,
-       			const char *tagged_blob_path = "/tagged-blobs";
-       			tagged_blobs->type = OBJ_BLOB;
-       			tagged_blobs->maybe_interesting = 1;
-     @@ path-walk.c: static void setup_pending_objects(struct path_walk_info *info,
-       		} else {
-       			oid_array_clear(&tagged_blobs->oids);
-       			free(tagged_blobs);
-     -@@ path-walk.c: static void setup_pending_objects(struct path_walk_info *info,
-     +@@ path-walk.c: static int setup_pending_objects(struct path_walk_info *info,
-       			const char *tag_path = "/tags";
-       			tags->type = OBJ_TAG;
-       			tags->maybe_interesting = 1;
-     @@ path-walk.c: int walk_objects_by_path(struct path_walk_info *info)
-       			ret = walk_path(&ctx, path);
-      @@ path-walk.c: int walk_objects_by_path(struct path_walk_info *info)
-       
-     - 	clear_strmap(&ctx.paths_to_lists);
-     + 	clear_paths_to_lists(&ctx.paths_to_lists);
-       	strset_clear(&ctx.path_stack_pushed);
-      -	string_list_clear(&ctx.path_stack, 0);
-      +	clear_prio_queue(&ctx.path_stack);
-       	return ret;
-       }
-     + 
-      
-       ## t/t6601-path-walk.sh ##
-      @@ t/t6601-path-walk.sh: test_expect_success 'all' '
-     @@ t/t6601-path-walk.sh: test_expect_success 'all' '
-       	commits:4
-       	tags:7
-      @@ t/t6601-path-walk.sh: test_expect_success 'branches and indexed objects mix well' '
-     + 	1:tree::$(git rev-parse base^{tree})
-       	1:tree::$(git rev-parse base~1^{tree})
-       	1:tree::$(git rev-parse base~2^{tree})
-     - 	2:blob:a:$(git rev-parse base~2:a)
-     +-	2:blob:a:$(git rev-parse base~2:a)
-      -	3:tree:right/:$(git rev-parse topic:right)
-      -	3:tree:right/:$(git rev-parse base~1:right)
-      -	3:tree:right/:$(git rev-parse base~2:right)
-     @@ t/t6601-path-walk.sh: test_expect_success 'branches and indexed objects mix well
-      -	7:blob:left/b:$(git rev-parse base:left/b)
-      -	7:blob:left/b:$(git rev-parse base~2:left/b)
-      -	8:tree:a/:$(git rev-parse refs/tags/third:a)
-     -+	3:tree:a/:$(git rev-parse refs/tags/third:a)
-     -+	4:tree:left/:$(git rev-parse base:left)
-     -+	4:tree:left/:$(git rev-parse base~2:left)
-     -+	5:blob:left/b:$(git rev-parse base:left/b)
-     -+	5:blob:left/b:$(git rev-parse base~2:left/b)
-     -+	6:tree:right/:$(git rev-parse topic:right)
-     -+	6:tree:right/:$(git rev-parse base~1:right)
-     -+	6:tree:right/:$(git rev-parse base~2:right)
-     -+	7:blob:right/c:$(git rev-parse base~2:right/c)
-     -+	7:blob:right/c:$(git rev-parse topic:right/c)
-     -+	8:blob:right/d:$(git rev-parse base~1:right/d)
-     -+	8:blob:right/d:$(git rev-parse :right/d)
-     ++	2:tree:a/:$(git rev-parse refs/tags/third:a)
-     ++	3:tree:left/:$(git rev-parse base:left)
-     ++	3:tree:left/:$(git rev-parse base~2:left)
-     ++	4:blob:left/b:$(git rev-parse base:left/b)
-     ++	4:blob:left/b:$(git rev-parse base~2:left/b)
-     ++	5:tree:right/:$(git rev-parse topic:right)
-     ++	5:tree:right/:$(git rev-parse base~1:right)
-     ++	5:tree:right/:$(git rev-parse base~2:right)
-     ++	6:blob:right/c:$(git rev-parse base~2:right/c)
-     ++	6:blob:right/c:$(git rev-parse topic:right/c)
-     ++	7:blob:right/d:$(git rev-parse base~1:right/d)
-     ++	7:blob:right/d:$(git rev-parse :right/d)
-     ++	8:blob:a:$(git rev-parse base~2:a)
-       	blobs:7
-       	commits:4
-       	tags:0
-
+diff --git a/Documentation/technical/api-path-walk.txt b/Documentation/technical/api-path-walk.txt
+new file mode 100644
+index 00000000000..c550c77ca30
+--- /dev/null
++++ b/Documentation/technical/api-path-walk.txt
+@@ -0,0 +1,45 @@
++Path-Walk API
++=============
++
++The path-walk API is used to walk reachable objects, but to visit objects
++in batches based on a common path they appear in, or by type.
++
++For example, all reachable commits are visited in a group. All tags are
++visited in a group. Then, all root trees are visited. At some point, all
++blobs reachable via a path `my/dir/to/A` are visited. When there are
++multiple paths possible to reach the same object, then only one of those
++paths is used to visit the object.
++
++Basics
++------
++
++To use the path-walk API, include `path-walk.h` and call
++`walk_objects_by_path()` with a customized `path_walk_info` struct. The
++struct is used to set all of the options for how the walk should proceed.
++Let's dig into the different options and their use.
++
++`path_fn` and `path_fn_data`::
++	The most important option is the `path_fn` option, which is a
++	function pointer to the callback that can execute logic on the
++	object IDs for objects grouped by type and path. This function
++	also receives a `data` value that corresponds to the
++	`path_fn_data` member, for providing custom data structures to
++	this callback function.
++
++`revs`::
++	To configure the exact details of the reachable set of objects,
++	use the `revs` member and initialize it using the revision
++	machinery in `revision.h`. Initialize `revs` using calls such as
++	`setup_revisions()` or `parse_revision_opt()`. Do not call
++	`prepare_revision_walk()`, as that will be called within
++	`walk_objects_by_path()`.
+++
++It is also important that you do not specify the `--objects` flag for the
++`revs` struct. The revision walk should only be used to walk commits, and
++the objects will be walked in a separate way based on those starting
++commits.
++
++Examples
++--------
++
++See example usages in future changes.
+diff --git a/Makefile b/Makefile
+index 7344a7f7257..d0d8d6888e3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1094,6 +1094,7 @@ LIB_OBJS += parse-options.o
+ LIB_OBJS += patch-delta.o
+ LIB_OBJS += patch-ids.o
+ LIB_OBJS += path.o
++LIB_OBJS += path-walk.o
+ LIB_OBJS += pathspec.o
+ LIB_OBJS += pkt-line.o
+ LIB_OBJS += preload-index.o
+diff --git a/path-walk.c b/path-walk.c
+new file mode 100644
+index 00000000000..021840ab41b
+--- /dev/null
++++ b/path-walk.c
+@@ -0,0 +1,279 @@
++/*
++ * path-walk.c: implementation for path-based walks of the object graph.
++ */
++#include "git-compat-util.h"
++#include "path-walk.h"
++#include "blob.h"
++#include "commit.h"
++#include "dir.h"
++#include "hashmap.h"
++#include "hex.h"
++#include "object.h"
++#include "oid-array.h"
++#include "revision.h"
++#include "string-list.h"
++#include "strmap.h"
++#include "trace2.h"
++#include "tree.h"
++#include "tree-walk.h"
++
++struct type_and_oid_list {
++	enum object_type type;
++	struct oid_array oids;
++};
++
++#define TYPE_AND_OID_LIST_INIT { \
++	.type = OBJ_NONE, 	 \
++	.oids = OID_ARRAY_INIT	 \
++}
++
++struct path_walk_context {
++	/**
++	 * Repeats of data in 'struct path_walk_info' for
++	 * access with fewer characters.
++	 */
++	struct repository *repo;
++	struct rev_info *revs;
++	struct path_walk_info *info;
++
++	/**
++	 * Map a path to a 'struct type_and_oid_list'
++	 * containing the objects discovered at that
++	 * path.
++	 */
++	struct strmap paths_to_lists;
++
++	/**
++	 * Store the current list of paths in a stack, to
++	 * facilitate depth-first-search without recursion.
++	 *
++	 * Use path_stack_pushed to indicate whether a path
++	 * was previously added to path_stack.
++	 */
++	struct string_list path_stack;
++	struct strset path_stack_pushed;
++};
++
++static void push_to_stack(struct path_walk_context *ctx,
++			  const char *path)
++{
++	if (strset_contains(&ctx->path_stack_pushed, path))
++		return;
++
++	strset_add(&ctx->path_stack_pushed, path);
++	string_list_append(&ctx->path_stack, path);
++}
++
++static int add_tree_entries(struct path_walk_context *ctx,
++			    const char *base_path,
++			    struct object_id *oid)
++{
++	struct tree_desc desc;
++	struct name_entry entry;
++	struct strbuf path = STRBUF_INIT;
++	size_t base_len;
++	struct tree *tree = lookup_tree(ctx->repo, oid);
++
++	if (!tree) {
++		error(_("failed to walk children of tree %s: not found"),
++		      oid_to_hex(oid));
++		return -1;
++	} else if (parse_tree_gently(tree, 1)) {
++		error("bad tree object %s", oid_to_hex(oid));
++		return -1;
++	}
++
++	strbuf_addstr(&path, base_path);
++	base_len = path.len;
++
++	parse_tree(tree);
++	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
++	while (tree_entry(&desc, &entry)) {
++		struct type_and_oid_list *list;
++		struct object *o;
++		/* Not actually true, but we will ignore submodules later. */
++		enum object_type type = S_ISDIR(entry.mode) ? OBJ_TREE : OBJ_BLOB;
++
++		/* Skip submodules. */
++		if (S_ISGITLINK(entry.mode))
++			continue;
++
++		if (type == OBJ_TREE) {
++			struct tree *child = lookup_tree(ctx->repo, &entry.oid);
++			o = child ? &child->object : NULL;
++		} else if (type == OBJ_BLOB) {
++			struct blob *child = lookup_blob(ctx->repo, &entry.oid);
++			o = child ? &child->object : NULL;
++		} else {
++			BUG("invalid type for tree entry: %d", type);
++		}
++
++		if (!o) {
++			error(_("failed to find object %s"),
++			      oid_to_hex(&o->oid));
++			return -1;
++		}
++
++		/* Skip this object if already seen. */
++		if (o->flags & SEEN)
++			continue;
++		o->flags |= SEEN;
++
++		strbuf_setlen(&path, base_len);
++		strbuf_add(&path, entry.path, entry.pathlen);
++
++		/*
++		 * Trees will end with "/" for concatenation and distinction
++		 * from blobs at the same path.
++		 */
++		if (type == OBJ_TREE)
++			strbuf_addch(&path, '/');
++
++		if (!(list = strmap_get(&ctx->paths_to_lists, path.buf))) {
++			CALLOC_ARRAY(list, 1);
++			list->type = type;
++			strmap_put(&ctx->paths_to_lists, path.buf, list);
++		}
++		push_to_stack(ctx, path.buf);
++		oid_array_append(&list->oids, &entry.oid);
++	}
++
++	free_tree_buffer(tree);
++	strbuf_release(&path);
++	return 0;
++}
++
++/*
++ * For each path in paths_to_explore, walk the trees another level
++ * and add any found blobs to the batch (but only if they exist and
++ * haven't been added yet).
++ */
++static int walk_path(struct path_walk_context *ctx,
++		     const char *path)
++{
++	struct type_and_oid_list *list;
++	int ret = 0;
++
++	list = strmap_get(&ctx->paths_to_lists, path);
++
++	if (!list->oids.nr)
++		return 0;
++
++	/* Evaluate function pointer on this data. */
++	ret = ctx->info->path_fn(path, &list->oids, list->type,
++				 ctx->info->path_fn_data);
++
++	/* Expand data for children. */
++	if (list->type == OBJ_TREE) {
++		for (size_t i = 0; i < list->oids.nr; i++) {
++			ret |= add_tree_entries(ctx,
++					    path,
++					    &list->oids.oid[i]);
++		}
++	}
++
++	oid_array_clear(&list->oids);
++	strmap_remove(&ctx->paths_to_lists, path, 1);
++	return ret;
++}
++
++static void clear_paths_to_lists(struct strmap *map)
++{
++	struct hashmap_iter iter;
++	struct strmap_entry *e;
++
++	hashmap_for_each_entry(&map->map, &iter, e, ent) {
++		struct type_and_oid_list *list = e->value;
++		oid_array_clear(&list->oids);
++	}
++	strmap_clear(map, 1);
++	strmap_init(map);
++}
++
++/**
++ * Given the configuration of 'info', walk the commits based on 'info->revs' and
++ * call 'info->path_fn' on each discovered path.
++ *
++ * Returns nonzero on an error.
++ */
++int walk_objects_by_path(struct path_walk_info *info)
++{
++	const char *root_path = "";
++	int ret = 0;
++	size_t commits_nr = 0, paths_nr = 0;
++	struct commit *c;
++	struct type_and_oid_list *root_tree_list;
++	struct path_walk_context ctx = {
++		.repo = info->revs->repo,
++		.revs = info->revs,
++		.info = info,
++		.path_stack = STRING_LIST_INIT_DUP,
++		.path_stack_pushed = STRSET_INIT,
++		.paths_to_lists = STRMAP_INIT
++	};
++
++	trace2_region_enter("path-walk", "commit-walk", info->revs->repo);
++
++	/* Insert a single list for the root tree into the paths. */
++	CALLOC_ARRAY(root_tree_list, 1);
++	root_tree_list->type = OBJ_TREE;
++	strmap_put(&ctx.paths_to_lists, root_path, root_tree_list);
++	push_to_stack(&ctx, root_path);
++
++	if (prepare_revision_walk(info->revs))
++		die(_("failed to setup revision walk"));
++
++	while ((c = get_revision(info->revs))) {
++		struct object_id *oid = get_commit_tree_oid(c);
++		struct tree *t;
++		commits_nr++;
++
++		oid = get_commit_tree_oid(c);
++		t = lookup_tree(info->revs->repo, oid);
++
++		if (!t) {
++			error("could not find tree %s", oid_to_hex(oid));
++			return -1;
++		}
++
++		if (t->object.flags & SEEN)
++			continue;
++		t->object.flags |= SEEN;
++		oid_array_append(&root_tree_list->oids, oid);
++	}
++
++	trace2_data_intmax("path-walk", ctx.repo, "commits", commits_nr);
++	trace2_region_leave("path-walk", "commit-walk", info->revs->repo);
++
++	trace2_region_enter("path-walk", "path-walk", info->revs->repo);
++	while (!ret && ctx.path_stack.nr) {
++		char *path = ctx.path_stack.items[ctx.path_stack.nr - 1].string;
++		ctx.path_stack.nr--;
++		paths_nr++;
++
++		ret = walk_path(&ctx, path);
++
++		free(path);
++	}
++	trace2_data_intmax("path-walk", ctx.repo, "paths", paths_nr);
++	trace2_region_leave("path-walk", "path-walk", info->revs->repo);
++
++	clear_paths_to_lists(&ctx.paths_to_lists);
++	strset_clear(&ctx.path_stack_pushed);
++	string_list_clear(&ctx.path_stack, 0);
++	return ret;
++}
++
++void path_walk_info_init(struct path_walk_info *info)
++{
++	struct path_walk_info empty = PATH_WALK_INFO_INIT;
++	memcpy(info, &empty, sizeof(empty));
++}
++
++void path_walk_info_clear(struct path_walk_info *info UNUSED)
++{
++	/*
++	 * This destructor is empty for now, as info->revs
++	 * is not owned by 'struct path_walk_info'.
++	 */
++}
+diff --git a/path-walk.h b/path-walk.h
+new file mode 100644
+index 00000000000..7cb3538cd8f
+--- /dev/null
++++ b/path-walk.h
+@@ -0,0 +1,47 @@
++/*
++ * path-walk.h : Methods and structures for walking the object graph in batches
++ * by the paths that can reach those objects.
++ */
++#include "object.h" /* Required for 'enum object_type'. */
++
++struct rev_info;
++struct oid_array;
++
++/**
++ * The type of a function pointer for the method that is called on a list of
++ * objects reachable at a given path.
++ */
++typedef int (*path_fn)(const char *path,
++		       struct oid_array *oids,
++		       enum object_type type,
++		       void *data);
++
++struct path_walk_info {
++	/**
++	 * revs provides the definitions for the commit walk, including
++	 * which commits are UNINTERESTING or not. This structure is
++	 * expected to be owned by the caller.
++	 */
++	struct rev_info *revs;
++
++	/**
++	 * The caller wishes to execute custom logic on objects reachable at a
++	 * given path. Every reachable object will be visited exactly once, and
++	 * the first path to see an object wins. This may not be a stable choice.
++	 */
++	path_fn path_fn;
++	void *path_fn_data;
++};
++
++#define PATH_WALK_INFO_INIT { 0 }
++
++void path_walk_info_init(struct path_walk_info *info);
++void path_walk_info_clear(struct path_walk_info *info);
++
++/**
++ * Given the configuration of 'info', walk the commits based on 'info->revs' and
++ * call 'info->path_fn' on each discovered path.
++ *
++ * Returns nonzero on an error.
++ */
++int walk_objects_by_path(struct path_walk_info *info);
 -- 
 gitgitgadget
+
