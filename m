@@ -1,148 +1,234 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E791F190E
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 11:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DE31F190F
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 11:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734781846; cv=none; b=Ww1EUfxACv6F9LsOhyhjTYrXKs1NkJb21F3RKvPhBiCN95ewC/d9QNk5ktB56kcXRYmRa22O6GHqY0Fcns+4uAKczjU0dAJ6d7rm87EdR8KxvcLeiLXnoYTYrZsVAKrsfiQNrba9XrIRcNBBWzX2GCBIjow4pzxuB6HYno4uxO8=
+	t=1734781881; cv=none; b=kJQa6d8g5rstFar5z4MFmSn2dbkYlgRwU9zZpIWoxIr3Lb3HZ2HkmoQRyLg1FT5Ce5VTJYWb5Ks5SG8PDQIRy32SNcnUdGkFHK+s7ABEpHllS4WbuHCunYZeFQYSvSLOjJmpkzuwkUo3NIsWfGLKyV57ckZTDoHS+peDBkYwenU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734781846; c=relaxed/simple;
-	bh=B72wCzzjAMScPASrFs+lO/j/sySeBigjXsrrfoNVCSE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JSJg+iYsgaqLdo5sfOdYNCKPnF2WrMkOiz02JJB7NzGiTHigqYEnFvYv8PPw1xItGs+zkuSx4xuTyVgA9Li7bCgwoQGQtOaBG254Thcw9Nu+i9pA2UM3LBsd7b71eI/HKohz8zhi5KdVbodiS6AuUx6I/96HkCiL35n3dEO9QMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j6tQ8dEr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IoZCpF7F; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1734781881; c=relaxed/simple;
+	bh=WcRhQxRRKPP8dE2kJ1B9itGRtKwnW+MY0MfCdXTy+WU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D7qvD6QcON9QGSaaZ+KhfM78pwnudd1AIDJ4W2zN75q6SAx0QgNymyiIK5wQN+7PagKb9mubomZ+OTBaUYikoXuiTjyVbXF0ieeaFwmaxFxB4iYjnNeqstfzUwh5mORAAOD1NfQg0+yWcMnmRtssvovcsTz/1X8xzP/z6UPeh0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CBeVHLde; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CRR/0qQX; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j6tQ8dEr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IoZCpF7F"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A239114018A;
-	Sat, 21 Dec 2024 06:50:43 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Sat, 21 Dec 2024 06:50:43 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CBeVHLde";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CRR/0qQX"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id E6F1013801CB;
+	Sat, 21 Dec 2024 06:51:16 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Sat, 21 Dec 2024 06:51:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1734781843;
-	 x=1734868243; bh=vM4VanXwFujuK2w2Psv62FAZc8cPmTAe1U8IwEHjapI=; b=
-	j6tQ8dErIS9YdQyBnqQp3fVKOdMMCRBdOTM04lASjNS4SMEwcMaq3RttcwXZidsW
-	SpG31U+uaCcAp8LG8p8pvXsAkRTgzIHdeje/MOuIXgsAajlZUibgqRTOSaoc3ble
-	Lp+QRyLN8cEy/4aaEO3Ewp01tsQQsBOIUnCk8yusI6H+LkmUGfrDIUz34DGs6Dub
-	AUI05zdNtSapblUuhdsdjmFD6ThneFKHg+dH9aLm8A6Fcqbq0R/2x1V9dBJ5k8nE
-	xMFJcLQGkwqIA5Sf3oso2Eug/kf9fHU8zGJ8zNDmklzSCWBIYfYz80mY6hDbeVn1
-	4eLXNglxrNuPW1CUPWaVtg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1734781876; x=1734868276; bh=nJrHyi1YwZ
+	sxO6ElILBkjsQzMYoyd/ZxV+uM1AQ70D8=; b=CBeVHLdeifIDGoTIkw+DzTexqu
+	LkcFPECMpNi/PlIZ0ZQWUeZY5WZASL9i7YX7lE/SQ6iboYl37lIPWDLnKxOGA5Qr
+	wn8Uc+qeSM5Zv0N9vxrbVcDBhtPntnvRNZUObJiEpNPifnVNQnWxTrL1uxxuaugV
+	CgWV+/4sfegDxFgK5P1CGLAxllf6Bs6NWvfgG6TEyVYXrZr+lmuzd2882R/N5J1+
+	fC6Tgt+AcScZhiIkj0ZKeIGIOZPpZJc8mZt6NalcHHUCbDpu52D811xeYAvdKYXk
+	TnMJLy3ApiQ1bhbY08ke9ym9dNIpVknotujPdydFjm8iq0fv1JhWgrMC/K6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734781843; x=
-	1734868243; bh=vM4VanXwFujuK2w2Psv62FAZc8cPmTAe1U8IwEHjapI=; b=I
-	oZCpF7FybTWzX/bvlPwEtxSGJBn0AcubKCLbE7uK1PCooOj/q1zxxBJoxUq7rf0U
-	W0kpzdAK9ndY6Gn3SgQbyC1AkY0xCi1cYuOohtBvt5EaEZs97DV3l9k+c1CFcNuG
-	fN0+HBa+JFZhfPBS6UbD1/U37x3mCw+4XQWERG983tGwyWO5/DqD8FO8yEKrZ4ea
-	iY9M7DEjanre6Y93HPnWGrK4gMI41GzM2GEZN5UjEb/tVqToypWYZMxLe6T1KPuP
-	q792jeyVorC+RQmYECKhz3toE/rh1UkW49QaeQnwOAVG3tGTq1fIdOR5cpQ1CnqV
-	XKvglIBvK8ELTqm60ZyCA==
-X-ME-Sender: <xms:k6tmZycBIdZ0U_uKreZk7FYpRiLp1fH-JDRK7vhKa2lJpNCsvr73BQ>
-    <xme:k6tmZ8OjAP3-4RWWHHqgts5yjzvzc98WAC50RDCNB0b-dPlTYYh5kpfVvykPOuu01
-    qslaeeWbRZx_yx6qg>
-X-ME-Received: <xmr:k6tmZzhEi1U-jCEOwIM2Y_DTsgiiqqTyCelVzN4KY1gvDTPO1_cOqGTO4yavm2bQ_q1M3b0ETMgyNIefnZFswebabX1l2u1HyyD-mPCVcr_KwygKrg>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1734781876; x=1734868276; bh=nJrHyi1YwZsxO6ElILBkjsQzMYoyd/ZxV+u
+	M1AQ70D8=; b=CRR/0qQXrFpXPryKI6wq5f/IQITSYI+74cppwN2QhXGblntAEuP
+	MFYVDxP1Ked0dPaepy3np9fcNPJ/karuwZpckBgsNv9na2HBtJHUosq9752DyYp0
+	6xIp7z4dsQhsGQfVXfdFLei43bQ/zJ69g6nrXjPkAB0EqtLoonve6qIivaUq7F7h
+	7ZBOHQBad7/UXlc8BmOByWFo8+G32SBw3U71f40AqGnIv0lj1crODI+0dDHbVOb8
+	dPWuQbvr9jNox1rm0nkKU0bdhNulaL0geK7R5r/Ogc0gNcUls2J+LvZV61djud5u
+	gJOM6hjiyRtQsQl6awBUBupo8/Kgmu9we0g==
+X-ME-Sender: <xms:tKtmZ8WAFRHH0hy05-lMKDCn3QIcpYctcSgaz7cc31vcfAZIt7HPIA>
+    <xme:tKtmZwnuamvUxe3qlgZEz1XKXiYwxCQWFHZyYKSKk1AEOs55g1hR9SmhvDsHq5wv3
+    WAByrOCYoXe8w5cUQ>
+X-ME-Received: <xmr:tKtmZwbIDwRGs3BHlgT2UPCLw4w4CcxTumfkbfTcOtNOdO9cuSSTCWCLL2oAlKhjB_bBq__F1GDqVqQ_dnpJS0u31YL28LAyOzpPHroJhGNB4zJBGw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehrrghnuggrlhhlrdgsvggtkhgvrhesnhgvgigsrh
-    hiughgvgdrtggrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:k6tmZ__HGUQgN7jQmpSr5TYPWIcxUEOsKsiSlo6_CtEFBdq0IMiHsQ>
-    <xmx:k6tmZ-sFAeZiGamaby5bi_dseRSSW1qCy1P12vcgUNPx8FKKtD9bUQ>
-    <xmx:k6tmZ2FDS5mws0e-2zXvmG7i749_5NKfrS8U-D1d3vasLCfJsze3jQ>
-    <xmx:k6tmZ9NnnpFDPLIbsE9WTw5cVuts0LchsNeLVsd3Q3ebHdt4wffxgw>
-    <xmx:k6tmZyJUOmNL2JZnDlPwlIKdLUAS8n8gyRwQttX7VIc2Atg5PvozENlk>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsg
+    hrihgughgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:tKtmZ7X62MYDoDQBj7x9ekI3R2XvhX0ElyclA6mDSg_UhrfetWDkFA>
+    <xmx:tKtmZ2khwex3n1qmxA-bcy_T_PV6F18VGzqp8GM8qu3pqLYpzgmJ0A>
+    <xmx:tKtmZwcs8q2kECsqzYZapDZ8F3RXhCcUHl51hh7mSrHa38to3oAMPw>
+    <xmx:tKtmZ4GavL4LH3U6JMzsoYODso3suPa__2e8PufdcltD999Vy3ScWA>
+    <xmx:tKtmZ4hrO3GIWsX6-6MqvM_Gvp1YN1pCJhdyBFaxP3xlAaYRKflCJ78t>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Dec 2024 06:50:42 -0500 (EST)
+ 21 Dec 2024 06:51:15 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c0067804 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 21 Dec 2024 11:48:44 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5d7071b5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 21 Dec 2024 11:49:20 +0000 (UTC)
+Date: Sat, 21 Dec 2024 12:50:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Sat, 21 Dec 2024 12:50:10 +0100
-Subject: [PATCH 4/4] reftable/basics: return NULL on zero-sized allocations
+To: rsbecker@nexbridge.com
+Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.48.0-rc0
+Message-ID: <Z2aroitgFL97dIbZ@pks.im>
+References: <00ad01db5017$aa9ce340$ffd6a9c0$@nexbridge.com>
+ <Z2EC9rq3F0rTljff@pks.im>
+ <010a01db508a$4544d750$cfce85f0$@nexbridge.com>
+ <015901db50b5$e3a7f6e0$aaf7e4a0$@nexbridge.com>
+ <Z2JyFB3CddYM_LP4@pks.im>
+ <00ca01db5257$12708d00$3751a700$@nexbridge.com>
+ <Z2UX2v8sc-DELaVm@pks.im>
+ <015501db5314$b61ac2a0$225047e0$@nexbridge.com>
+ <Z2XHfzLEBUfqygBq@pks.im>
+ <016b01db5325$34c0fd80$9e42f880$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-4-12db83a3267c@pks.im>
-References: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
-In-Reply-To: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- "Randall S. Becker" <randall.becker@nexbridge.ca>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <016b01db5325$34c0fd80$9e42f880$@nexbridge.com>
 
-In the preceding commits we have fixed a couple of issues when
-allocating zero-sized objects. These issues were masked by
-implementation-defined behaviour. Quoting malloc(3p):
+On Fri, Dec 20, 2024 at 04:21:53PM -0500, rsbecker@nexbridge.com wrote:
+> On December 20, 2024 2:38 PM, Patrick Steinhardt wrote:
+> >On Fri, Dec 20, 2024 at 02:23:49PM -0500, rsbecker@nexbridge.com wrote:
+> >> On December 20, 2024 2:08 AM, Patrick Steinhardt wrote:
+> >> >On Thu, Dec 19, 2024 at 03:46:20PM -0500, rsbecker@nexbridge.com wrote:
+> >> >> On December 18, 2024 11:07 AM, I wrote:
+> >> >> >All tests, actually.
+> >> >> >
+> >> >> >$ GIT_TEST_DEFAULT_REF_FORMAT=reftable GIT_TEST_CLONE_2GB=true sh
+> >> >> >t0000- basic.sh --verbose -i -x
+> >> >> >error: reftable: transaction prepare: out of memory
+> >> >> >error: cannot run git init
+> >> >>
+> >> >> Any updates or hypothesis on this? Our test system has loads of
+> >> >> memory
+> >> >> - I cannot figure out where the allocation failure takes place.
+> >> >> There is a limit to how much memory can be allocated, but it is
+> >> >> very high and our virtual memory is extensive, but this is a 32-bit
+> build.
+> >> >
+> >> >My hypothesis is that this is caused by ps/reftable-alloc-failures,
+> >> >but I
+> >> am unable to
+> >> >tell where exactly the error comes from. So I'm dependent on your input.
+> >> >
+> >> >Could you please bisect the error? Finding out where the error is
+> >> >raised
+> >> would also
+> >> >be quite helpful. It has to be one of the reftable functions that
+> >> >returns REFTABLE_OUT_OF_MEMORY_ERROR, but other than that I do not
+> >> >have any more gut feeling right now.
+> >>
+> >> This is what bisect shows:
+> >>
+> >> git bisect start
+> >> # status: waiting for both good and bad commits # good:
+> >> [777489f9e09c8d0dd6b12f9d90de6376330577a2] Git 2.47 git bisect good
+> >> 777489f9e09c8d0dd6b12f9d90de6376330577a2
+> >> # status: waiting for bad commit, 1 good commit known # bad:
+> >> [063bcebf0c917140ca0e705cbe0fdea127e90086] Git 2.48-rc0
+> >>
+> >> git bisect bad 063bcebf0c917140ca0e705cbe0fdea127e90086
+> >> # bad: [2037ca85ad93ec905b46543df6df4080f6ca258b] worktree: refactor
+> >> `repair_worktree_after_gitdir_move()`
+> >> git bisect bad 2037ca85ad93ec905b46543df6df4080f6ca258b
+> >> # bad: [6a11438f43469f3815f2f0fc997bd45792ff04c0] The fifth batch git
+> >> bisect bad 6a11438f43469f3815f2f0fc997bd45792ff04c0
+> >> # bad: [f004467b042d735a2fe8bd5706b053b04b1aec65] Merge branch
+> >> 'jh/config-unset-doc-fix'
+> >> git bisect bad f004467b042d735a2fe8bd5706b053b04b1aec65
+> >> # bad: [e29296745dc92fb03f8f60111b458adc69ff84c5] Merge branch
+> >> 'sk/doc-maintenance-schedule'
+> >> git bisect bad e29296745dc92fb03f8f60111b458adc69ff84c5
+> >> # bad: [5b67cc6477ce88c499caab5ebcebd492ec78932d] reftable/stack:
+> >> handle allocation failures in auto compaction git bisect bad
+> >> 5b67cc6477ce88c499caab5ebcebd492ec78932d
+> >> # good: [31f5b972e0231d4211987775dd58e67815734989] reftable/record:
+> >> handle allocation failures when decoding records git bisect good
+> >> 31f5b972e0231d4211987775dd58e67815734989
+> >> # bad: [18da60029319733e2d931f2758a8e47b8b25b117] reftable/reader:
+> >> handle allocation failures for unindexed reader git bisect bad
+> >> 18da60029319733e2d931f2758a8e47b8b25b117
+> >> # good: [74d1c18757d1a45b95e46836adf478193a34c42c] reftable/writer:
+> >> handle allocation failures in `reftable_new_writer()` git bisect good
+> >> 74d1c18757d1a45b95e46836adf478193a34c42c
+> >
+> >This is missing the last step for git-bisect(1). Right now it could be
+> caused by one of
+> >these commits:
+> >
+> >    18da600293 (reftable/reader: handle allocation failures for unindexed
+> reader,
+> >2024-10-02)
+> >    802c0646ac (reftable/merged: handle allocation failures in
+> >`merged_table_init_iter()`, 2024-10-02)
+> 
+> They are there, it is just that Outlook wrapped the lines on me.  The
+> 802c064 is not in my repo - I bisected from 2.47.0 to 2.48.0-rc0, so may
+> have skipped a more recent commit than rc0 has.
+> 
+> >The first commit seems quite unlikely to be the root cause. The second
+> commit is
+> >rather interesting though. I wonder whether NonStop's malloc returns a NULL
+> >pointer when given a size of 0?
+> >
+> >A quick stab into the dark, but does below patch on top of `master` make
+> things
+> >work for you?
+> >
+> >Patrick
+> >
+> >-- >8 --
+> >
+> >diff --git a/reftable/merged.c b/reftable/merged.c index
+> bb0836e344..7ae6f78d45
+> >100644
+> >--- a/reftable/merged.c
+> >+++ b/reftable/merged.c
+> >@@ -244,7 +244,7 @@ int merged_table_init_iter(struct reftable_merged_table
+> >*mt,
+> > 	struct merged_iter *mi = NULL;
+> > 	int ret;
+> >
+> >-	REFTABLE_CALLOC_ARRAY(subiters, mt->readers_len);
+> >+	REFTABLE_CALLOC_ARRAY(subiters, mt->readers_len + 1);
+> > 	if (!subiters) {
+> > 		ret = REFTABLE_OUT_OF_MEMORY_ERROR;
+> > 		goto out;
+> >diff --git a/reftable/stack.c b/reftable/stack.c index
+> 59fd695a12..1b6b8cc9ea
+> >100644
+> >--- a/reftable/stack.c
+> >+++ b/reftable/stack.c
+> >@@ -1612,7 +1612,7 @@ static uint64_t
+> >*stack_table_sizes_for_compaction(struct reftable_stack *st)
+> > 	int overhead = header_size(version) - 1;
+> > 	uint64_t *sizes;
+> >
+> >-	REFTABLE_CALLOC_ARRAY(sizes, st->merged->readers_len);
+> >+	REFTABLE_CALLOC_ARRAY(sizes, st->merged->readers_len + 1);
+> > 	if (!sizes)
+> > 		return NULL;
+> >
+> 
+> The fix above does not appear to make any difference.
 
-  If size is 0, either:
+Indeed, there was one more issue in `reftable_stack_reload_once()`. I
+could now reproduce those errors by adapting `reftable_malloc()` and
+`reftable_realloc()` to return `NULL` pointers when asked for a
+zero-sized allocation. This removes any implementation-defined behaviour
+of allocators and allowed me to surface the issues.
 
-    * A null pointer shall be returned and errno may be set to an
-      implementation-defined value, or
+I've sent a patch series now [1] that should address your issues.
 
-    * A pointer to the allocated space shall be returned. The
-      application shall ensure that the pointer is not used to access an
-      object.
+[1]: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
 
-So it is perfectly valid that implementations of this function may or
-may not return a NULL pointer in such a case.
-
-Adapt both `reftable_malloc()` and `reftable_realloc()` so that they
-return NULL pointers on zero-sized allocations. This should remove any
-implementation-defined behaviour in our allocators and thus allows us to
-detect such platform-specific issues more easily going forward.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/basics.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 7d84a5d62dead1cf1a60698b1bb12fe6ac41c090..70b1091d1495bb5b4c8aae63bd9213dc704aecde 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -17,6 +17,8 @@ static void (*reftable_free_ptr)(void *);
- 
- void *reftable_malloc(size_t sz)
- {
-+	if (!sz)
-+		return NULL;
- 	if (reftable_malloc_ptr)
- 		return (*reftable_malloc_ptr)(sz);
- 	return malloc(sz);
-@@ -24,6 +26,11 @@ void *reftable_malloc(size_t sz)
- 
- void *reftable_realloc(void *p, size_t sz)
- {
-+	if (!sz) {
-+		reftable_free(p);
-+		return NULL;
-+	}
-+
- 	if (reftable_realloc_ptr)
- 		return (*reftable_realloc_ptr)(p, sz);
- 	return realloc(p, sz);
-
--- 
-2.48.0.rc0.184.g0fc57dec57.dirty
-
+Patrick
