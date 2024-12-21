@@ -1,86 +1,87 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BCA191F88
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 10:43:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFA81F193C
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 10:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734777798; cv=none; b=cahmHQaC/DTH9UZMPR9cWd28CeKlPChIzaUCMbRWrB1Vgo1GTwtS29OdHXqWFyq9JL9OhLIGg8jDXmMDxVA2OzwJxNzGlAugq6GuK3jrIlHTaw2NccLDt8b+RT6AGeX0NOfpHy+/I+5Rs9WkrGKpFAmELZmWu3+emJpwxHyfxNE=
+	t=1734777819; cv=none; b=Ww1KeIIGOr/cKX2Z8PtsR0MlL6s6KNYaII5EfHZbz93YsF0EX9DfKWWhE84QL0T7OgzQ1aSf+dBcjwgSCfLF6LB7jlPqWVZpz8Nacz9Ywt5NNf4svQ0Bhp1aIAUeUVDYkO3bMDBHjJKtMVnu8lZvlxHUrWZrMZ/I4/R6U89g5lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734777798; c=relaxed/simple;
-	bh=x0OwdtHzBIW19AELb/BeapRGrhTLjqcmRY/dq6kjU0U=;
+	s=arc-20240116; t=1734777819; c=relaxed/simple;
+	bh=flfVssxVcu0p8xUkckpyfcCcn7fjr4I282glykHaQIk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mrg37XdBXg4SSxvJcfqvQCyBHXu2J9Fq+PnOimoXJ/6OvS4Dtk84WS3J9mpBYUH9Udp/fHsZlOIIZwwTmD0P46MyLlJ2C17WuWUvO9AvFv6JmcjvFjNNtRSPO4wHWe8x26OFmNma2hQgJrG7vSfr4UbHV3Tt4C4sqIZi35a43PY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aqAoxVld; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=odWZX68W; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=b6PkNO5eWMZdshQjLm43ipDb7r761YeyrvviDAbU0Dtfa3e3z9VMhxOcvu63h3JXpXcHAooYEHJ+tWXUfcb/yILKBxwCaV04OVgbewFrdj/b2Y5J52wBlNu8Q++AOe9UHkv2kjb6RegYT5pivp0jxh+dprg7gIdZO/lqHjTNyWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fqPCzoja; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QgrBo3Eu; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aqAoxVld";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="odWZX68W"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8A32B1140120;
-	Sat, 21 Dec 2024 05:43:14 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fqPCzoja";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QgrBo3Eu"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4A2821380208;
+	Sat, 21 Dec 2024 05:43:36 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sat, 21 Dec 2024 05:43:14 -0500
+  by phl-compute-11.internal (MEProxy); Sat, 21 Dec 2024 05:43:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1734777794;
-	 x=1734864194; bh=+wOAd/li5rweePFcPkXYZ8nFN6tVC5NCuRICWb9ZXUY=; b=
-	aqAoxVldyVGqX9ihP7azLqUCOYeWhu9d/nfUDKBzn6DkYYCuHiMbGN76+RS84vxQ
-	vJipH9xyIWAl+eEH9FoUEsIIsL5DvXBLf01M62JdhioIPizJKXs/z1gO/3yCH69D
-	261MaWsrFPDvRgHfxX/tMqZKFVjJKV7jzXgDWFbOav4t+c4hBHe6nr9GfXWSQEX9
-	VHvA1GM2Xyf5XftMXqFgSOK5qsxAsAFfsH/2dssj5jkcPGZ0mvZ9h+ugOm89WK1X
-	1usCgKKKSifpBgfdqCnmMcSMUMIItFjBWqyCxzdyZ5PKLmEnCdrCB3tAf99EPrfQ
-	DbYaSsJ6mN8Yqk2ph2bzgA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1734777816;
+	 x=1734864216; bh=Iviw5omwsVmDCFvS0gjTljYPgaUBJOCPBDzHa3M9vhA=; b=
+	fqPCzojajFeSFAsij9PyP3jHnIcUICFsC2Un9L/nPUCUZ3NLtPxuqNipiHPVGilu
+	xAhpiwSYrQt15w/+SoHKFDp+QvoVYFNPStpb5sBCK0+2Si6TdTP1tPabMHWnmkuj
+	ALbLhAcXHDTi8inQMoajdvHhBHXE9XvIgRlJdR7sqKCfGbpLELlwy62OHm77vIh3
+	c5ojAJksIKRY0TUHuKHgQP1or4ykDY59ICzP2TNXRzBi5PbpPnxelqpWjUkRZ3yQ
+	PdvHr5DiHXNcLq3I6iu8TkvCXlx2OjKE7CFxXHTng+UKDoRz30VjDtMkMcdaXRU4
+	Ez9qfWY44XfVFA0/0a1+dQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734777794; x=
-	1734864194; bh=+wOAd/li5rweePFcPkXYZ8nFN6tVC5NCuRICWb9ZXUY=; b=o
-	dWZX68Wmb6r8VD6+LPJ9G4lh3RjmX5kARXzFjC9DvWQaSagMvp5b1nPrAqZ7XGc8
-	+yOXkv8Zj5Z6P++ZFEUiMJMXW+yXLbBs+U8FX2kKYtQzNfqpegQ+ZyBIEH56/YqR
-	b0w81Xf8TrMvd69MCEvZP4A4Ra5CMTMG0ORvR/UMOOEXkTuajk2Exva3iJBdkDRO
-	/6G122TqtrU/9957y8Qd9qABeq3CUD/Qxebj/ER0xjVEQPD7Kwvx4G52PLwJFkIu
-	7NSgILjuRX1ceRh2OXZTMxN+gP4nHkkTLfCV/sz0pIpoNbWtt0Ijw21UE4gKWWfy
-	MFRKWcsQN/oXUN0nc8t4w==
-X-ME-Sender: <xms:wptmZ0tDXZTEyUxu3v6ou6wQSqRzaYt8IlhhHFlNeSnrnab0BM-xHg>
-    <xme:wptmZxclRVFbZ_yRuXCpg-YlXZQRgAQux-Tbl8X0FUMkVDt0mENmmaXqd5hXOQN6n
-    rZvmNzlD713bIR-iA>
-X-ME-Received: <xmr:wptmZ_zMV9TIF0eTAOGM_oGam6PvHtiEWhtTzUS8Gk1hg48nzMa-rxkfGo-f-Hytg0ErgOyiUEaj86edYRGrQcANZHBZkXEZdKEPLAev1GZUcUIkBQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734777816; x=
+	1734864216; bh=Iviw5omwsVmDCFvS0gjTljYPgaUBJOCPBDzHa3M9vhA=; b=Q
+	grBo3Euo5xRR1mT3tFnQ36tdgImIR1p2fkEtJdzHNsIHEJFLmffhsHqtIvnRSGu7
+	ijyJMufhURDVl2nm6O+VazWmooZPRVJBgfbs3hVvIwkgfv4QA3RCRA0wEQWe0VPS
+	lKpokCmrgiaimQ1h6pgtbDbaS7t6WRMGiyN87VNTdfWhaYsLjI37jLFHC3he+yUg
+	LSnKQf1uxlfrQDd1dk4hiblp0LQlINpytRGZGpqJD1PrGroagUcpbKxcIiSceZmV
+	yWHUiR74h8EI2RXKF+vmBbr4LIi+r6Ok8BYRUumcX2nqtM2igIlZb08vTImgi0aI
+	ySfHhkivS0Suus2fdtTPQ==
+X-ME-Sender: <xms:2JtmZ-2wgeyAXJYDorW3b-wNtkxy-xUMYXp_sZtJ1XWyM1On49M4Hg>
+    <xme:2JtmZxFfnyANMx1B1N_A88fAtrgygqE_8scvaoaIYx5NkhI9C6AeV--OqOtL1h_a9
+    fiVDjO7QR8-YvRbwQ>
+X-ME-Received: <xmr:2JtmZ24YUWzTAd8AnRKdQNjLAWjmiL_xWjEhzZnWGcLgSHrg-EnM4LuHVkLPPfTnz8gfSHM0uQSOdL7MhPbf_4kQob4NxLATFmQBv6yYD83aZ2Jb3g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtgedgudelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeegiedvgeeujedtiedvuddvffegtdelkedvleevteeh
-    heejgeejheeljeffjedtueenucffohhmrghinheprhgsrdhinhenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggp
-    rhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnrdgrghhrvghnsehg
-    mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:wptmZ3MbwBDtj--7fCyWSKSNcS6yWV5jDHscJ1vRQ5YyH_ilMuoicA>
-    <xmx:wptmZ0_GvP7h1Yo4q7h3Sila51TlA5Bsv7XYbPe-pIkNXiJON3DG3Q>
-    <xmx:wptmZ_UFRuQmSkupZOT70Z_x7JCiR_1nUAWOQdpj4TNCMlliHd8MPg>
-    <xmx:wptmZ9c4pIG9dpqiX70r535KRs2FaFTVkMaHwtVtme6m8Mgpyt_tGQ>
-    <xmx:wptmZ2Kutoz1Lwq2EUHxwQQisYexoJHHJypk6jBs6lU41EVgW53ljiQ5>
+    hmqeenucggtffrrghtthgvrhhnpeetheffvddtleettdetueeukedugeettedutdegueeu
+    keetheefueevvdeitddtveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnrdgrghhrvghnsehgmhgrihhlrd
+    gtohhm
+X-ME-Proxy: <xmx:2JtmZ_2mxShqG6N2BhQIjDmlSGl5lNl1XhdvmoXlHPTQqkxMJLqd5A>
+    <xmx:2JtmZxEsr4OE5dCpJnoJ8Ssv93NCbgjtBk-I9ZJbDiMeccvNJ_SIxg>
+    <xmx:2JtmZ4-lv1H4XuCbXxUieDhgWDhRXsmvP10RZShRKwjb-P-Q4kVsUw>
+    <xmx:2JtmZ2mJyREPjOJ3jobQ1KdsjeqPmiJ8hFTOVe99fAnph3WhKw6Lvw>
+    <xmx:2JtmZxCO2zWLczihX1toCF3F7iZuanzEjxNUOBB6D3rzLgh_nxcBKKx0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Dec 2024 05:43:13 -0500 (EST)
+ 21 Dec 2024 05:43:35 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 50ea945d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 21 Dec 2024 10:41:16 +0000 (UTC)
-Date: Sat, 21 Dec 2024 11:42:54 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9b2aa1bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 21 Dec 2024 10:41:39 +0000 (UTC)
+Date: Sat, 21 Dec 2024 11:43:17 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/3] asciidoctor-extensions.rb.in: delete existing
- <refmiscinfo/>
-Message-ID: <Z2abqCTOHjIlRcxx@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Asciidoctor fixes for 2.48.0
+Message-ID: <Z2abxaGVzA5Kce-s@pks.im>
 References: <cover.1734734612.git.martin.agren@gmail.com>
- <8bdc26c1ae74b59f2c3cd3408111336ce3af1447.1734734612.git.martin.agren@gmail.com>
+ <xmqqzfkpdaeq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,68 +91,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8bdc26c1ae74b59f2c3cd3408111336ce3af1447.1734734612.git.martin.agren@gmail.com>
+In-Reply-To: <xmqqzfkpdaeq.fsf@gitster.g>
 
-On Sat, Dec 21, 2024 at 12:18:16AM +0100, Martin Ågren wrote:
-> After the recent a38edab7c8 (Makefile: generate doc versions via
-> GIT-VERSION-GEN, 2024-12-06), building with Asciidoctor results in
-> manpages where the headers no longer contain "Git Manual" and the
-> footers no longer identify the built Git version.
+On Fri, Dec 20, 2024 at 06:42:21PM -0800, Junio C Hamano wrote:
+> Martin Ågren <martin.agren@gmail.com> writes:
 > 
-> Before a38edab7c8, we used to just provide a few attributes to
-> Asciidoctor (and asciidoc). Commit 7a30134358 (asciidoctor-extensions:
-> provide `<refmiscinfo/>`, 2019-09-16) noted that older versions of
-> Asciidoctor didn't propagate those attributes into the built XML files,
-> so we started injecting them ourselves from this script. With newer
-> versions of Asciidoctor, we'd end up with some harmless duplication
-> among the tags in the final XML.
-
-Okay. So if I understand correctly, we used to have the exact same
-values for those tags twice with newer versions of Asciidoctor, but
-starting with the change we have one "empty" set of tags and one set of
-tags that contain the replaced values. And because Asciidoctor ignores
-the latter the end result is that we have empty ref info.
-
-> Post-a38edab7c8, we don't provide these attributes and Asciidoctor
-> inserts empty-ish values. After our additions from 7a30134358, we get
+> > The Asciidoctor build of the documentation regressed a bit with
+> > a38edab7c8 (Makefile: generate doc versions via GIT-VERSION-GEN,
+> > 2024-12-06).
+> >
+> > I think these issues and fixes are fairly orthogonal to the recent
+> > discussions beginning at [1], with fixes being discussed beginning at
+> > [2]. I've tested these here patches on top of that series' v1 [2]
+> > rebased onto a38edab7c8, as well as on top of its recent v3 [3] as
+> > applied on the indicated base-commit.
+> >
+> > With these patches, I can use
+> >
+> >   make USE_ASCIIDOCTOR=YesPlease doc
+> >
+> > and
+> >
+> >   ./doc-diff --asciidoctor <...> <...>
+> >
+> > with similar results as pre-a38edab7c8.
+> >
+> > On top of current master [4], these patches help, but for "doc-diff",
+> > the GIT_VERSION injection is still broken (as expected, that's why
+> > [1,2,3] exist). These here patches don't refer to doc-diff or those
+> > other patches [2,3] and could go in independently or on top.
+> >
+> > These patches are based on [3] applied on its indicated base-commit.
+> >
+> > [1] https://lore.kernel.org/git/20241218113324.GA594795@coredump.intra.peff.net/
+> >
+> > [2] https://lore.kernel.org/git/20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im/
+> >
+> > [3] https://lore.kernel.org/git/20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im/
+> >
+> > [4] v2.48.0-rc0-38-gff795a5c5e
 > 
->   <refmiscinfo class="source">&#160;</refmiscinfo>
->   <refmiscinfo class="manual">&#160;</refmiscinfo>
->   <refmiscinfo class="source">2.47.1.[...]</refmiscinfo>
->   <refmiscinfo class="manual">Git Manual</refmiscinfo>
+> Thanks.  [2][3] are something we have to have before we can tag 2.48
+> to have a healthy build with the usual Makefile; so is a working
+> Asciidoctor based documentation generation, so building your doc
+> toolchain fixes on top of the fixes for 'GIT-VERSION-GEN' does not
+> give us any practical problem.
 > 
-> When these are handled, it appears to be first come first served,
-> meaning that our additions have no effect and we regress as described in
-> the first paragraph.
-> 
-> Remove existing "source" or "manual" <refmiscinfo/> tags before adding
-> ours. I considered removing all <refmiscinfo/> to get a nice clean
-> slate, instead of just those two that we want to replace to be a bit
-> more precise. I opted for the latter. Maybe one day, Asciidoctor learns
-> to insert something useful there which `xmlto` can pick up and make good
-> use of -- let's not interfere.
+> Thanks for a fix.  Will queue.
 
-Okay, makes sense.
+Thanks indeed, the changes look good to me.
 
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
-> ---
->  Documentation/asciidoctor-extensions.rb.in | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/Documentation/asciidoctor-extensions.rb.in b/Documentation/asciidoctor-extensions.rb.in
-> index c4c200dace..d8d06f9a57 100644
-> --- a/Documentation/asciidoctor-extensions.rb.in
-> +++ b/Documentation/asciidoctor-extensions.rb.in
-> @@ -29,6 +29,8 @@ module Git
->      class DocumentPostProcessor < Asciidoctor::Extensions::Postprocessor
->        def process document, output
->          if document.basebackend? 'docbook'
-> +          output = output.sub(/<refmiscinfo class="source">.*?<\/refmiscinfo>/, "")
-> +          output = output.sub(/<refmiscinfo class="manual">.*?<\/refmiscinfo>/, "")
->            new_tags = "" \
->              "<refmiscinfo class=\"source\">@GIT_VERSION@</refmiscinfo>\n" \
->              "<refmiscinfo class=\"manual\">Git Manual</refmiscinfo>\n"
+I guess my key learning is to do largish patch series like the build
+refactorings in smaller increments next time. I considered doing it
+several times while implementing the series, but shied away from it. I
+guess it would have been easier for everyone involved and would have led
+to fewer issues though if I did split it up.
 
-And this looks as expected.
+So thanks to all the people that are helping out in this context!
 
 Patrick
