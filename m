@@ -1,147 +1,177 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20752AE77
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 02:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70CA56B8C
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 08:09:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734748947; cv=none; b=tZf3f+Y+I8vLRDzGmRjjQTgIuVs1V80g+sHppSr1387zF66aZEMn51pkSnOVscmLQRTx2jSW8f7Piane5SY+7HQpYU/64Yr9rFtJedmTTjpwIFY7zvb7ccxXPBksiN221M6RskF3H+WSmU560/Wksx9NL3387iqfO4C5JnsjBOM=
+	t=1734768554; cv=none; b=DagZgPEevh/O2g0zFz5bm7xAToeWe3+j53R0NyRnKdsD2mmLuI9/ywJOypYPiZtaDI1tW3kxQMOh3JTRsquv7yYjKEN+17DrCbWExLfcp23LVolM5bwpBMus5kYcLYV7ZpeR/lsJ6Y11w9yk3ory0/+kKYyxKH+ZVZCosEM79kY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734748947; c=relaxed/simple;
-	bh=6ukUKDMdTajGhMdQwglCdZaoakzxnNCLCS4zix2mVSU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cWIezYPPczFfKka/TW/zu2v7QTT0hgK3LP8t5qQXHRoenAkhTewod7Fkz1RCWtAyIsaHgcwzoC03llkiyFsJkUKa1dqnnwN2bLcEpo4+nrN76fxvdT8MLnxR/09SEBjD9e/5+pxfyGlEvnNPpelX6PPgjIRc1UczZUcn3f+1JWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pDDoTXVV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dOsI2Stj; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1734768554; c=relaxed/simple;
+	bh=vtvnP0kLumOtimyuq+Vo3v6lhmzK03KGuW2hYVVL/ao=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NFXXiIOraFqfZ6a89BTPGcsnhlg5JbBbRnhaYszKtOJgCCXQTGN4760L2DhAQNcGlJF5MTsABF9PpX/poo91mE4qmqwUSaDvtEIWWsM3armVHEEVcN0Izhipy5rNaj8gbWF3+oZ94lSHFBIQLaz92WcNDI4oW+AFJrF4JC4RdIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E2Atik/G; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pDDoTXVV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dOsI2Stj"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C95221140145;
-	Fri, 20 Dec 2024 21:42:23 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 20 Dec 2024 21:42:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1734748943;
-	 x=1734835343; bh=DXs0odeZLPNYR3uXTvkVFrRodnrBOS/bO+7bufjfekc=; b=
-	pDDoTXVVC34M9ZQ9p2bjTbAwUvIjyi9pkqd7zCN1q6+IEHfKyTPkz1bSyDOA0mJt
-	Mjtr/oS8oYyUn+43OF8XIBPtyvgcs5oBiK2SvbCvkxadGexKCeIdXvOC+xJtHBia
-	h6k+AxOfw+o/f32sGXYUCTtTpK2w/ux/MqSmhwW2wjcZjYgAslSEcM4bz8uBfihy
-	QyFA8uzPRTgkgmL9cPnvSjyuMQlmU5DFkrcb/SFJqNjwzK6eQaeShLOUpJUWier3
-	Tqx9fprOXwRJ413NuXfZrnIJeoWIYJI5pf9f1XyxizzaaO3NrJZJ2n2juXcSGH7s
-	W6YKk3qpEli3PHXSXk2pVA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734748943; x=
-	1734835343; bh=DXs0odeZLPNYR3uXTvkVFrRodnrBOS/bO+7bufjfekc=; b=d
-	OsI2StjW8ikYiWgp+P6zZ2e3TQa3cN6mfL+1bkgymkMSeCFkmh8Jm9V6cACRLKef
-	XeiZXU5GQoZwS3A75F+Uc28VFDm1IhKproTdfY9HjTWGAxCgv2f8Xw15ZoivMf4e
-	MYdStLT4kM66siqW5r+FtXn5cjbDkCHvIJxdIVLoTRwqC0pNDeeUT5+NkVeBj24K
-	DIpvMYkkbw4r0qX7E6YEGt+xX56XbGmR1/kThn6NO5f/BbCuUFSJmPDFO/FWLRNN
-	FUoXjNeCqgarT5iM3KjQUKUapAwEmm8tbbujW+UTwMxtOWAUHIdosiwdbWvZnimQ
-	+zTYPScfzU4vil0oYnJ3g==
-X-ME-Sender: <xms:DytmZ0NJLVaHx57rCONYWkETxFQfNgXBicIvhx6Fhsxf18EMEQGiRw>
-    <xme:DytmZ69_1EwAlbIbCzDtFo6xuTPANaKSJQEfgbBnqdhfhVNVrZJQeP0v3nNCADfci
-    uegWc83i9YBHaianw>
-X-ME-Received: <xmr:DytmZ7Tv5Q8l515ovoWPBPbOdnOaz5NprMVgLNUprb9pTXQKyf3EoBDBLc_y-M3uz7eFOlRT9A7IVtL8eZdMeYn7gvs-0KICPw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtfedggeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkefotddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpefggffgudehgeffieetgeeffefhhffgkeff
-    tdefuddujeegtddvgedvvdeffeeljeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpd
-    hrsgdrihhnnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnrdgrghhrvghnsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:DytmZ8szFrHwkD4IP_2bkKLFqbKIQV0T9IdaMb1_a1UvgE3H3O3lEQ>
-    <xmx:DytmZ8czZF5r0uzcBwfnVRNgVD_5yBFvxJ3ZoIEZ_8aiEM_wl3efWg>
-    <xmx:DytmZw1yiQVmaivpM4-owxf2sjH1dte1p-ZlGrchSldD1aPPYO14Iw>
-    <xmx:DytmZw_PlrQzFMH1AdACVKUrUUeckeND_UiqtVVnDClOxiGbIedZeQ>
-    <xmx:DytmZ76QJ4Vc9pA2WpwNs1LlKJa2ApB3FNOrtMixQTZvRrD0IfQ_cx_a>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Dec 2024 21:42:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 0/3] Asciidoctor fixes for 2.48.0
-In-Reply-To: <cover.1734734612.git.martin.agren@gmail.com> ("Martin
- =?utf-8?Q?=C3=85gren=22's?=
-	message of "Sat, 21 Dec 2024 00:18:15 +0100")
-References: <cover.1734734612.git.martin.agren@gmail.com>
-Date: Fri, 20 Dec 2024 18:42:21 -0800
-Message-ID: <xmqqzfkpdaeq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E2Atik/G"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5d3da226a2aso382444a12.0
+        for <git@vger.kernel.org>; Sat, 21 Dec 2024 00:09:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734768551; x=1735373351; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AS6zCxuFCvEfAYCmEMp5rnoy30eZPYl5Efl+U8yKqGg=;
+        b=E2Atik/G7V7LwJGN4c/4m07i97W1nIvz4Cg4YEPc5i0+3znkc1FzDY6fC8DY0BvmC6
+         PCmG5uEOwU8e7y+rxllZ5rZN12K8211V0NWI6UVecOokQJTUgt8hTSoi5Fc30aVqLyAa
+         N6MfliCi6lEqcIgvYCqmAu2BzWB4Ug+PEA7xZ4E2fShlX4THG5wORkhSJFwuRHrCuARt
+         f1PkXwED4VTX1iirJ7879ZXxLC8MMxuWas+Br6V+iP8ZEXiEY4Om7mIW3IyZ/J1+DOCB
+         kapAeT5cqImjzTpn9YM3P71yyJJ5LRObEC8rSmo5BXYLXskk/7RtZZo8Kg/1LQBt5zSz
+         thfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734768551; x=1735373351;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AS6zCxuFCvEfAYCmEMp5rnoy30eZPYl5Efl+U8yKqGg=;
+        b=j6m5ye6ejMU2J6wIV6YIWU65Rk8b4JnZol/t2tC6c7uIeW6TlJ3CQ1Nnbpa9Wu52Hl
+         Xrw6BpkKiFUPqbXT35l9OB1SyzxaZKPT13SFP1alyU3VR3aAHL5JrVFUhDodldmc0ezd
+         lfVUhPEyZRCEI/5lLSVP5vQaa3AB9ZOwnVHJLmFCuPXTajsyRXM2b+vMduy0Ygaglmtx
+         4068JBNHpPRFcil1lA9XozYXpNM2a5KsIsYgrggmXHXgqnjruvNh6o2XZ8kHbJFeyU6J
+         yvMdAv0lEuFkAdNFFdvh0vbyWGXkut904KOPpjq6gY55ZZpDc5sE8Xvj+xXQ+l24aBt/
+         2Z/g==
+X-Forwarded-Encrypted: i=1; AJvYcCU6j9HGbKUweEdVt1fhd2vKOxMTF1hv+CsUjWVNATIGDY0Z8Byf8My7s9XzVMAda6ERFNU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOn8X7PFI43xk9WjQL3xPsH1XLcQFQqnZn2Wor/DynG6w7CyRv
+	LnclIBi6VbWoUv3523h5CkI7C2bYu9gSQRDvNQG0hXfJ+UFom3/gmkQE3AHIhBWGGoCB9w3JZT1
+	MMhBBNzoM/s61FmA7f6pW0ron1j3OV0sh
+X-Gm-Gg: ASbGncv5F0gGj3HNpJRcg/q6lhTLPJF8BBh2Jj4mCvTsPCDnA2hUiM62heEd8EMGyWp
+	L5HryMqrLWZMmVB6CaOrtwLZctP88FGneErVk
+X-Google-Smtp-Source: AGHT+IFzgqGDPcrUYVtXYBw0z6DmpeZ4DxxUPbmxoAIXwSVMqQ+kgVLby8FamXwOPWWL7bJHlHgUKpIh1H1w/eA/Aig=
+X-Received: by 2002:a05:6402:3550:b0:5d4:35c7:cd70 with SMTP id
+ 4fb4d7f45d1cf-5d81dd9cbebmr2024454a12.4.1734768550734; Sat, 21 Dec 2024
+ 00:09:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAGJzqs=ksKqY2M8Px3uv6ut=MBwkmpPUqp3xVzVpNMJ0YBrBww@mail.gmail.com>
+ <CAGJzqsnAO_vDSYOC7ZbYUQHJ3fT10JuQ2RrC2cvY4hcPMnZ=bg@mail.gmail.com>
+ <Z2N-rV4fhF3ZkGlp@tapette.crustytoothpaste.net> <CAGJzqsmQY9p+nxHPB67N1P4i361adMbvT-BNR7UKfsSY=QGi2A@mail.gmail.com>
+In-Reply-To: <CAGJzqsmQY9p+nxHPB67N1P4i361adMbvT-BNR7UKfsSY=QGi2A@mail.gmail.com>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Sat, 21 Dec 2024 08:08:29 +0000
+Message-ID: <CAGJzqskPyjhLQKP7DmfE8kYF9NHTPqQ35eG9nbOPGg9AD+oLXQ@mail.gmail.com>
+Subject: Re: Fwd: [Bug] `credential fill` prints incomplete bearer credential
+To: M Hickford <mirth.hickford@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Martin Ågren <martin.agren@gmail.com> writes:
+On Thu, 19 Dec 2024 at 19:15, M Hickford <mirth.hickford@gmail.com> wrote:
+>
+> On Thu, 19 Dec 2024 at 02:02, brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> >
+> > On 2024-12-18 at 20:42:31, M Hickford wrote:
+> > > Hi. Is this a bug in git version 2.47.1? Or am I using it incorrectly?
+> > >
+> > > # erase existing example.com credentials
+> > > printf "host=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential reject
+> > > # store bearer token with expiry in far future in credential-cache
+> > > printf "host=example.com\nprotocol=https\nauthtype=bearer\ncredential=letmein\npassword_expiry_utc=2147483640\n"
+> > > | git credential-cache store
+> > > # try to retrieve credential
+> > > printf "host=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential fill
+> > >
+> > > Expected output (complete credential):
+> > >
+> > > protocol=https
+> > > host=example.com
+> > > authtype=bearer
+> > > credential=letmein
+> > > password_expiry_utc=2147483640
+> > >
+> > > Actual output (incomplete credential, no prompt for username or password):
+> > >
+> > > protocol=https
+> > > host=example.com
+> > > password_expiry_utc=2147483640
+> >
+> > This is expected.  Every request to a credential helper should include
+> > all of the capabilities that the caller supports on input, and the
+> > credential helper will always emit those on output.  `git credential`,
+> > however, will only emit the capabilities that were actually supported,
+> > so that general callers (including Git LFS) can determine the actual
+> > set of supported capabilities.
+> >
+> > In this case, you asked the cache helper for a credential, but didn't
+> > tell it that you supported `authtype` and `credential`.  Therefore, the
+> > only safe thing it can assume is that you are incapable of parsing and
+> > understanding those fields, so it doesn't emit them.  This is a benefit
+> > for security, because some tooling logs all fields but the `password`
+> > field, and we don't want to include new secret fields that the caller is
+> > going to shovel into a file or syslog.
+> >
+> > In addition, the helper could actually store two different sets of
+> > credentials, one which is a username and password, and one which is an
+> > authtype and credential.  If you provided the capability, the latter
+> > would be omitted, but otherwise the former would.  That can be helpful
+> > if you have a stronger credential type but might occasionally need to
+> > use older software (say, older versions of Git or Git LFS).
+> >
+> > However, if you provide the proper capability, this works as you expect:
+> >
+> > ----
+> > % printf "host=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential reject
+> > % printf "capability[]=authtype\nhost=example.com\nprotocol=https\nauthtype=bearer\ncredential=letmein\npassword_expiry_utc=2147483640\n" | git credential-cache store
+> > % printf "capability[]=authtype\nhost=example.com\nprotocol=https\n" | git -c credential.helper= -c credential.helper=cache credential fill
+> > capability[]=authtype
+> > authtype=bearer
+> > credential=letmein
+> > protocol=https
+> > host=example.com
+> > password_expiry_utc=2147483640
+> > ----
+> >
+> > Note that `capability[]` directives should always start the request to
+> > allow one-pass parsing.
+>
+> I think a bug exists in credential-cache. Below it receives a query
+> *without* capability authtype, upgrades it *with* capability authtype
+> and prints a bearer credential.
+>
+> git credential-cache exit
+> # store bearer credential
+> printf "capability[]=authtype\nhost=example.com\nprotocol=https\nauthtype=bearer\ncredential=letmein\npassword_expiry_utc=2147483640\n"
+> | git credential-cache store
+> # query with capability authtype (prints bearer credential as expected)
+> printf "capability[]=authtype\nhost=example.com\nprotocol=https\n" |
+> git credential-cache get
+> # query without capability authtype (expect nothing)
+> printf "host=example.com\nprotocol=https\n" | git credential-cache get
+>
+> If you agree that this is a bug, we could add a test case to
+> helper_test_authtype.
 
-> The Asciidoctor build of the documentation regressed a bit with
-> a38edab7c8 (Makefile: generate doc versions via GIT-VERSION-GEN,
-> 2024-12-06).
->
-> I think these issues and fixes are fairly orthogonal to the recent
-> discussions beginning at [1], with fixes being discussed beginning at
-> [2]. I've tested these here patches on top of that series' v1 [2]
-> rebased onto a38edab7c8, as well as on top of its recent v3 [3] as
-> applied on the indicated base-commit.
->
-> With these patches, I can use
->
->   make USE_ASCIIDOCTOR=YesPlease doc
->
-> and
->
->   ./doc-diff --asciidoctor <...> <...>
->
-> with similar results as pre-a38edab7c8.
->
-> On top of current master [4], these patches help, but for "doc-diff",
-> the GIT_VERSION injection is still broken (as expected, that's why
-> [1,2,3] exist). These here patches don't refer to doc-diff or those
-> other patches [2,3] and could go in independently or on top.
->
-> These patches are based on [3] applied on its indicated base-commit.
->
-> [1] https://lore.kernel.org/git/20241218113324.GA594795@coredump.intra.peff.net/
->
-> [2] https://lore.kernel.org/git/20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im/
->
-> [3] https://lore.kernel.org/git/20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im/
->
-> [4] v2.48.0-rc0-38-gff795a5c5e
+Here's a small fix and test for credential-cache
+https://lore.kernel.org/git/pull.1842.git.1734729534213.gitgitgadget@gmail.com/
 
-Thanks.  [2][3] are something we have to have before we can tag 2.48
-to have a healthy build with the usual Makefile; so is a working
-Asciidoctor based documentation generation, so building your doc
-toolchain fixes on top of the fixes for 'GIT-VERSION-GEN' does not
-give us any practical problem.
-
-Thanks for a fix.  Will queue.
 >
-> Martin
+> Here's a second simpler example of credential-cache of upgrading a request:
 >
-> Martin Ågren (3):
->   asciidoctor-extensions.rb.in: delete existing <refmiscinfo/>
->   asciidoctor-extensions.rb.in: add missing word
->   asciidoctor-extensions.rb.in: inject GIT_DATE
+> git credential-cache exit
+> # store credential
+> printf "host=example.com\nprotocol=https\nusername=tim\npassword=hunter2\n"
+> | git credential-cache store
+> # get credential (response is upgraded with capability authtype)
+> printf "host=example.com\nprotocol=https" | git credential-cache get
 >
->  Documentation/asciidoctor-extensions.rb.in | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+>
+> >
+> > Hopefully this is helpful.
+> > --
+> > brian m. carlson (they/them or he/him)
+> > Toronto, Ontario, CA
