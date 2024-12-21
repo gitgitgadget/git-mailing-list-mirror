@@ -1,55 +1,55 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B957136341
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 11:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E791F190E
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 11:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734781845; cv=none; b=XNAlj36+VWcZtmPaw2fUi5JZg6gnzD7Cudn0scee4Vc3hOXNLg5lyU41XE+xOLr3qJhJxxt3FwCDpG6o+irYO+6kowYXJxeTzDhJL78EfnwR98H+v4AXANclUVhVFiZLt/MxZDyblBZIvXl3KU6MiuKlNyLoqvXxiDyhqf2pzdE=
+	t=1734781846; cv=none; b=Ww1EUfxACv6F9LsOhyhjTYrXKs1NkJb21F3RKvPhBiCN95ewC/d9QNk5ktB56kcXRYmRa22O6GHqY0Fcns+4uAKczjU0dAJ6d7rm87EdR8KxvcLeiLXnoYTYrZsVAKrsfiQNrba9XrIRcNBBWzX2GCBIjow4pzxuB6HYno4uxO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734781845; c=relaxed/simple;
-	bh=7sPWZDTZ3msS4yrlwNDnR9znuRi3FhizkmSGCtQh4i8=;
+	s=arc-20240116; t=1734781846; c=relaxed/simple;
+	bh=B72wCzzjAMScPASrFs+lO/j/sySeBigjXsrrfoNVCSE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lyzs9ZlMMvSKZ/ehwS5DtU3p5r1zXbivAcGKE4DU0wvgl4VVjlnggzdX2+FcOj+Gmg812Xl1VE6FrUJbNaFaAmezRALsVP5Ka785//RHef7Diia+iawcv+nQamuu+zDaVY3C03XTnpWW3wAsYVTBfPZ94eTuo+bXOPop7G8yVyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Xvx5jhMg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FcvR2Y6r; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=JSJg+iYsgaqLdo5sfOdYNCKPnF2WrMkOiz02JJB7NzGiTHigqYEnFvYv8PPw1xItGs+zkuSx4xuTyVgA9Li7bCgwoQGQtOaBG254Thcw9Nu+i9pA2UM3LBsd7b71eI/HKohz8zhi5KdVbodiS6AuUx6I/96HkCiL35n3dEO9QMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j6tQ8dEr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IoZCpF7F; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xvx5jhMg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FcvR2Y6r"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9387911400AF;
-	Sat, 21 Dec 2024 06:50:42 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Sat, 21 Dec 2024 06:50:42 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j6tQ8dEr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IoZCpF7F"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5A239114018A;
+	Sat, 21 Dec 2024 06:50:43 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Sat, 21 Dec 2024 06:50:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1734781842;
-	 x=1734868242; bh=cxVpHCEn+aRS0Ttq6rzbempLToXkqG6bsjfCOUo6fQY=; b=
-	Xvx5jhMgNoB0AFvixHznOplNGKDC57H225VCPFPSdAvY5c/u7oLAnW99DF2NxeZ+
-	7g8npkf44WGUkjj7nOUuGlkQFc9ClPDU0qDeZCUyoes/HpmQ6fmXw0P+wI8PbR7b
-	skhwlziE2glwC2KU5/VjpKgdSE90IknOz3YebTZKmgwToFAQvJmX323R7Vx9DUCw
-	SWbgYFtoGPL+mbl/taEtlnro9bmtoKe6EKN+Gnj/YE3j03XmdAe97P0k7NiGjfHB
-	ev13e+HY+OvSMqKEgoQGWX3YWErlUTDCvPz0b2kfdlTW5cBWo33wroUiBw4bHgjN
-	Et5ZyEq/BCgng+kFIV7kdQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1734781843;
+	 x=1734868243; bh=vM4VanXwFujuK2w2Psv62FAZc8cPmTAe1U8IwEHjapI=; b=
+	j6tQ8dErIS9YdQyBnqQp3fVKOdMMCRBdOTM04lASjNS4SMEwcMaq3RttcwXZidsW
+	SpG31U+uaCcAp8LG8p8pvXsAkRTgzIHdeje/MOuIXgsAajlZUibgqRTOSaoc3ble
+	Lp+QRyLN8cEy/4aaEO3Ewp01tsQQsBOIUnCk8yusI6H+LkmUGfrDIUz34DGs6Dub
+	AUI05zdNtSapblUuhdsdjmFD6ThneFKHg+dH9aLm8A6Fcqbq0R/2x1V9dBJ5k8nE
+	xMFJcLQGkwqIA5Sf3oso2Eug/kf9fHU8zGJ8zNDmklzSCWBIYfYz80mY6hDbeVn1
+	4eLXNglxrNuPW1CUPWaVtg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734781842; x=
-	1734868242; bh=cxVpHCEn+aRS0Ttq6rzbempLToXkqG6bsjfCOUo6fQY=; b=F
-	cvR2Y6rf/LF1s9v11GtvmmCkEtZDGmcG90vYNT8DYFd/iAjZEnpbOC3EFsKuiJhc
-	9mKy7Jlqwdo/l2hn6sTindTHqkKScp2ESzNUbRCJ9trrWKtxm3trXRSSklIw/qbn
-	lihKgvRiiBCMbqK6g3dPPJCtCZxWwbEP0nflOJn5DhPKFwrEASisRi+CWcmW7a5M
-	aYLgweBCqZv7EZjmH56juMI1cKx8txQhMAlgdbkdSgjsI57PqhdS+09s/qOiCfjh
-	aoM2RSSRukN1ZJ7aADpgKa2/zo/wlqZyZn/+qKIIY/u/QyIf3gkl9wAk+BinvekS
-	w0/3jfCxMBcK49IxKUiwQ==
-X-ME-Sender: <xms:kqtmZ7ylvP5l_gyMMTkPihMt_RNd8RfSi4Gp6FTg5jpW5oUlWJVhZw>
-    <xme:kqtmZzSVfwyLQZoezCTi6ztjQJqZ3QVLHiaNciLr6aLMY4jE_WEbwvj67-97NtKbN
-    XU2j3BKvdv5zPHPZA>
-X-ME-Received: <xmr:kqtmZ1WXr420qp5owrmdTsAzB-I12uo5xPQI3maaVg9en75snYg_lCzwcTM85xE3lFMJOlq1nSm4Vx0Iy4rGW0Ir7MG6QuuDqpSSEpODzoeKl8sVQA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734781843; x=
+	1734868243; bh=vM4VanXwFujuK2w2Psv62FAZc8cPmTAe1U8IwEHjapI=; b=I
+	oZCpF7FybTWzX/bvlPwEtxSGJBn0AcubKCLbE7uK1PCooOj/q1zxxBJoxUq7rf0U
+	W0kpzdAK9ndY6Gn3SgQbyC1AkY0xCi1cYuOohtBvt5EaEZs97DV3l9k+c1CFcNuG
+	fN0+HBa+JFZhfPBS6UbD1/U37x3mCw+4XQWERG983tGwyWO5/DqD8FO8yEKrZ4ea
+	iY9M7DEjanre6Y93HPnWGrK4gMI41GzM2GEZN5UjEb/tVqToypWYZMxLe6T1KPuP
+	q792jeyVorC+RQmYECKhz3toE/rh1UkW49QaeQnwOAVG3tGTq1fIdOR5cpQ1CnqV
+	XKvglIBvK8ELTqm60ZyCA==
+X-ME-Sender: <xms:k6tmZycBIdZ0U_uKreZk7FYpRiLp1fH-JDRK7vhKa2lJpNCsvr73BQ>
+    <xme:k6tmZ8OjAP3-4RWWHHqgts5yjzvzc98WAC50RDCNB0b-dPlTYYh5kpfVvykPOuu01
+    qslaeeWbRZx_yx6qg>
+X-ME-Received: <xmr:k6tmZzhEi1U-jCEOwIM2Y_DTsgiiqqTyCelVzN4KY1gvDTPO1_cOqGTO4yavm2bQ_q1M3b0ETMgyNIefnZFswebabX1l2u1HyyD-mPCVcr_KwygKrg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -58,24 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgtdelucetufdoteggod
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
     jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrrghn
-    uggrlhhlrdgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggr
-X-ME-Proxy: <xmx:kqtmZ1g5-ZLNLVxZ8SuoTD_8kqrn2Mhyetby0T5XzG3xTxNoKjBWMA>
-    <xmx:kqtmZ9A-BudshG8YC5r3niSyFC-d2z1VxYhG5iGsPWD31h3Upj9e5g>
-    <xmx:kqtmZ-I6vsLD66lF0Ak4HZNdOEnj63cJGyRBVcTpTl4Gsc7WhSg2RA>
-    <xmx:kqtmZ8Cv24qYO0vVXofhKvWDoBBdBMjPOvSxWV6WeSwTA5Kdp8mt4A>
-    <xmx:kqtmZ8Naagfk5lIufdnGx39yjX72l9lGTU23KI4dfNVqGw52rIxnIcGN>
+    shhmthhpohhuthdprhgtphhtthhopehrrghnuggrlhhlrdgsvggtkhgvrhesnhgvgigsrh
+    hiughgvgdrtggrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:k6tmZ__HGUQgN7jQmpSr5TYPWIcxUEOsKsiSlo6_CtEFBdq0IMiHsQ>
+    <xmx:k6tmZ-sFAeZiGamaby5bi_dseRSSW1qCy1P12vcgUNPx8FKKtD9bUQ>
+    <xmx:k6tmZ2FDS5mws0e-2zXvmG7i749_5NKfrS8U-D1d3vasLCfJsze3jQ>
+    <xmx:k6tmZ9NnnpFDPLIbsE9WTw5cVuts0LchsNeLVsd3Q3ebHdt4wffxgw>
+    <xmx:k6tmZyJUOmNL2JZnDlPwlIKdLUAS8n8gyRwQttX7VIc2Atg5PvozENlk>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Dec 2024 06:50:41 -0500 (EST)
+ 21 Dec 2024 06:50:42 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 81b8d943 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 21 Dec 2024 11:48:43 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c0067804 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 21 Dec 2024 11:48:44 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Sat, 21 Dec 2024 12:50:09 +0100
-Subject: [PATCH 3/4] reftable/stack: fix zero-sized allocation when there
- are no readers
+Date: Sat, 21 Dec 2024 12:50:10 +0100
+Subject: [PATCH 4/4] reftable/basics: return NULL on zero-sized allocations
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-3-12db83a3267c@pks.im>
+Message-Id: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-4-12db83a3267c@pks.im>
 References: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
 In-Reply-To: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
 To: git@vger.kernel.org
@@ -92,111 +91,57 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  "Randall S. Becker" <randall.becker@nexbridge.ca>
 X-Mailer: b4 0.14.2
 
-Similar as the preceding commit, we may try to do a zero-sized
-allocation when reloading a reftable stack that ain't got any tables.
-It is implementation-defined whether malloc(3p) returns a NULL pointer
-in that case or a zero-sized object. In case it does return a NULL
-pointer though it causes us to think we have run into an out-of-memory
-situation, and thus we return an error.
+In the preceding commits we have fixed a couple of issues when
+allocating zero-sized objects. These issues were masked by
+implementation-defined behaviour. Quoting malloc(3p):
 
-Fix this by only allocating arrays when they have at least one entry.
-Refactor the code so that we don't try to access those arrays in case
-they are empty.
+  If size is 0, either:
 
-Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+    * A null pointer shall be returned and errno may be set to an
+      implementation-defined value, or
+
+    * A pointer to the allocated space shall be returned. The
+      application shall ensure that the pointer is not used to access an
+      object.
+
+So it is perfectly valid that implementations of this function may or
+may not return a NULL pointer in such a case.
+
+Adapt both `reftable_malloc()` and `reftable_realloc()` so that they
+return NULL pointers on zero-sized allocations. This should remove any
+implementation-defined behaviour in our allocators and thus allows us to
+detect such platform-specific issues more easily going forward.
+
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 44 +++++++++++++++++++++++---------------------
- 1 file changed, 23 insertions(+), 21 deletions(-)
+ reftable/basics.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 6ca21965d8e1135d986043113d465abd14cd532c..8328bfc58e9c207983ce88355d6110c40be3fac1 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -270,40 +270,42 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
- 				      int reuse_open)
+diff --git a/reftable/basics.c b/reftable/basics.c
+index 7d84a5d62dead1cf1a60698b1bb12fe6ac41c090..70b1091d1495bb5b4c8aae63bd9213dc704aecde 100644
+--- a/reftable/basics.c
++++ b/reftable/basics.c
+@@ -17,6 +17,8 @@ static void (*reftable_free_ptr)(void *);
+ 
+ void *reftable_malloc(size_t sz)
  {
- 	size_t cur_len = !st->merged ? 0 : st->merged->readers_len;
--	struct reftable_reader **cur;
-+	struct reftable_reader **cur = NULL;
- 	struct reftable_reader **reused = NULL;
--	struct reftable_reader **new_readers;
-+	struct reftable_reader **new_readers = NULL;
- 	size_t reused_len = 0, reused_alloc = 0, names_len;
- 	size_t new_readers_len = 0;
- 	struct reftable_merged_table *new_merged = NULL;
- 	struct reftable_buf table_path = REFTABLE_BUF_INIT;
- 	int err = 0;
--	size_t i;
++	if (!sz)
++		return NULL;
+ 	if (reftable_malloc_ptr)
+ 		return (*reftable_malloc_ptr)(sz);
+ 	return malloc(sz);
+@@ -24,6 +26,11 @@ void *reftable_malloc(size_t sz)
  
--	cur = stack_copy_readers(st, cur_len);
--	if (!cur) {
--		err = REFTABLE_OUT_OF_MEMORY_ERROR;
--		goto done;
-+	if (cur_len) {
-+		cur = stack_copy_readers(st, cur_len);
-+		if (!cur) {
-+			err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+			goto done;
-+		}
- 	}
- 
- 	names_len = names_length(names);
--
--	new_readers = reftable_calloc(names_len, sizeof(*new_readers));
--	if (!new_readers) {
--		err = REFTABLE_OUT_OF_MEMORY_ERROR;
--		goto done;
-+	if (names_len) {
-+		new_readers = reftable_calloc(names_len, sizeof(*new_readers));
-+		if (!new_readers) {
-+			err = REFTABLE_OUT_OF_MEMORY_ERROR;
-+			goto done;
-+		}
- 	}
- 
--	while (*names) {
-+	for (size_t i = 0; i < names_len; i++) {
- 		struct reftable_reader *rd = NULL;
--		const char *name = *names++;
-+		const char *name = names[i];
- 
- 		/* this is linear; we assume compaction keeps the number of
- 		   tables under control so this is not quadratic. */
--		for (i = 0; reuse_open && i < cur_len; i++) {
--			if (cur[i] && 0 == strcmp(cur[i]->name, name)) {
--				rd = cur[i];
--				cur[i] = NULL;
-+		for (size_t j = 0; reuse_open && j < cur_len; j++) {
-+			if (cur[j] && 0 == strcmp(cur[j]->name, name)) {
-+				rd = cur[j];
-+				cur[j] = NULL;
- 
- 				/*
- 				 * When reloading the stack fails, we end up
-@@ -357,7 +359,7 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
- 	 * file of such an open reader wouldn't have been possible to be
- 	 * unlinked by the compacting process.
- 	 */
--	for (i = 0; i < cur_len; i++) {
-+	for (size_t i = 0; i < cur_len; i++) {
- 		if (cur[i]) {
- 			const char *name = reader_name(cur[i]);
- 
-@@ -388,11 +390,11 @@ static int reftable_stack_reload_once(struct reftable_stack *st,
- 	 * happen on the successful case, because on the unsuccessful one we
- 	 * decrement their refcount via `new_readers`.
- 	 */
--	for (i = 0; i < reused_len; i++)
-+	for (size_t i = 0; i < reused_len; i++)
- 		reftable_reader_decref(reused[i]);
- 
- done:
--	for (i = 0; i < new_readers_len; i++)
-+	for (size_t i = 0; i < new_readers_len; i++)
- 		reftable_reader_decref(new_readers[i]);
- 	reftable_free(new_readers);
- 	reftable_free(reused);
+ void *reftable_realloc(void *p, size_t sz)
+ {
++	if (!sz) {
++		reftable_free(p);
++		return NULL;
++	}
++
+ 	if (reftable_realloc_ptr)
+ 		return (*reftable_realloc_ptr)(p, sz);
+ 	return realloc(p, sz);
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
