@@ -1,119 +1,200 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728011EC4C2
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 12:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708052E64A
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 13:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734785633; cv=none; b=gqD2Jb8YgaxSYY0W327CFqZYMA15UB70xsel2nBJrxcKF0t5xVZ5qhrc+pYBo8PcixhpF3s396ln9dermRpT2ihEW+y+maltV9yis6/Pe0RkRGY45gPgJjEKtBlwKp32MBXDIJ+/3AIcgnFPJ9WkJGPV/DWVBbZxhOJ1+emxDDc=
+	t=1734789177; cv=none; b=eLmC58ZWmWZiGrGoa2rlHa5JS6seKnbUKe3SGb2RZMuvs5cUxszykYqLkMsl44WLRHJYZiJCcX5Ca1uv7MwBoSLFnRidCJTfyU/YBQTH9HS/N15Va03GqotFngKYfG/3QU82vn9VnFrUcrfgfnWA/k2D5LkfIa7/QeAom4SD2Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734785633; c=relaxed/simple;
-	bh=aDxbDsppP3cHdkWyHmFMjOaqCOm0CeQCiab0TAiikUA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=raiROU6TxrLJfsZe9eT255eMvhW+52QSYy7MrCQ5V5pwBCQEypCabunZUBTjgWDRYnzsToBtKP1vFeiibsWctX7GqQXUTqcBTHMlQiGzaW6q6BvijCUcR1d+73u9On08VEQF0htFDJubio9btPPXinC3GTP7M4EkzBcDWHPh52k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=QKjcq/02; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NSdu/xi+; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="QKjcq/02";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NSdu/xi+"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6F3CB11401C0;
-	Sat, 21 Dec 2024 07:53:50 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sat, 21 Dec 2024 07:53:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1734785630;
-	 x=1734872030; bh=+mWQZnkHGqpTedGCk6UmNTcHQuiPO3zAYIpA1ArLfQo=; b=
-	QKjcq/02ERs8GaoOfSsEQYjZzh8HgyiMPr13XWLJDtMWAC6PyafGdUh5HYCTsezc
-	otDwouxnmuGS0+iwHirpQbP34MnnDnBsqUxpSrscSnAdVTf5cxus6yKjiP+DtCMy
-	LCvPmPFf69k55rUjgPiVGlu6Wt19f2+3h+YqMYAZ6IIBq8vUMhhCVwjVGlqWEQsd
-	Oi6oawSxG/0P7L5rN27IYOz8CjmBQ4ypgb8K2ZagLpxEz8gZoxJGqSLA7VCHC0b3
-	YzlXW2VyE0o3KTk28yWxkf5ilwLM/oI4AL6u/YA6Iw8AFxYi2vRtt0tVUnpIZnBF
-	YalSoiPGhWGSxSgVgEeTdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734785630; x=
-	1734872030; bh=+mWQZnkHGqpTedGCk6UmNTcHQuiPO3zAYIpA1ArLfQo=; b=N
-	Sdu/xi+ujiLZu1NvuyG+n7M/s4y7xyFbCzUJom/2Y7ZlofPPsgKLuWrq2xTu3fsw
-	AiSoVNVAxRvGq4Gy0wR+SVCUU/scWtdNHp9+VeIJ71HCPMlQ12efnmrky2Mc9RkQ
-	YZR4O4O74PTtKfxw9JLCRZhj28j5tFft2psBsvkwluVKvGeGhYi+rbv76WSSOQWn
-	bMMSp3tnaqbZaQP0OvKD6dtR+rBfXLFkqtHJFV4Z9ggdoyvbSG0uxXBzSJZfPej+
-	Sdyb7d0QR53PY6Fgpf6RjreqZEEFfsZFy725rDN5pDzhjLhFsTQc4SRCO7dac73r
-	T5ym4tf8hEiuSIrlswWBQ==
-X-ME-Sender: <xms:XrpmZyrAdqG4cio_HuLlegelIUKmQA7fB4GjPvirjtRdKDFINv0XIK8>
-    <xme:XrpmZwqq40qa9JQTqOtcPNGx8iaPHDAd9FtvhufPmooOhWH9yHbFgE2u8Xuixpcbt
-    bsYXdcBxUg6CGy3Fg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgvddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugfelte
-    ffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrrghnuggr
-    lhhlrdgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepphhssehpkh
-    hsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:XrpmZ3O6TNIV7gTu7QfXzomjlZfqZ61JOntnfJekFGUgH8FLs6infw>
-    <xmx:XrpmZx4hFltkMnT3IflxH0M66ZvwjhB8G39v0BXi_fGK-1QKNEypNQ>
-    <xmx:XrpmZx7SGHIaew3pCnWTJ_xBhXsxFY2TyQEYn3riMTn3j-WRzp9olA>
-    <xmx:XrpmZxgH5xlpUg8LrqWMHF1Oh9WKNq7VYF36becf3r56jC_iURftwg>
-    <xmx:XrpmZ7k3UKj3_vr0M1JELZ6b4qMIG6mXEsKA2lQ3u2Usnum-6AuQGqZn>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 125FE780068; Sat, 21 Dec 2024 07:53:50 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1734789177; c=relaxed/simple;
+	bh=gjmIJSWIM9Dm82uYbeNJQOMXLCXPgnyns+mSH1z4+Qc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=uqVvX40/pguyFndNRipT9cPtzO6QPWZFEvY4DE+vaHt06lA93noZTbKJSiY9JDk7KXK0oXAXkV8RF3YMHe85CUr0TbYFsnPdqLJfbs536CcsC6QPI7/9oo1b2soRuL2Utf1M2cd1OjrU/Dtmtcmsn1MATY6pEORMJtXUd987ji4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.108])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4YFkzR0zCvz7QZWs
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 14:05:23 +0100 (CET)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4YFkzG5wx5zRq1m;
+	Sat, 21 Dec 2024 14:05:14 +0100 (CET)
+Message-ID: <8fbaa0d6-b7f5-4799-a579-ee9fa72a743d@kdbg.org>
+Date: Sat, 21 Dec 2024 14:05:14 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 21 Dec 2024 13:53:29 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>, git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Randall S. Becker" <randall.becker@nexbridge.ca>
-Message-Id: <1b833ccf-080d-4a92-afe2-3f469bc23dde@app.fastmail.com>
-In-Reply-To: 
- <20241221-b4-pks-reftable-oom-fix-without-readers-v1-4-12db83a3267c@pks.im>
-References: 
- <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
- <20241221-b4-pks-reftable-oom-fix-without-readers-v1-4-12db83a3267c@pks.im>
-Subject: Re: [PATCH 4/4] reftable/basics: return NULL on zero-sized allocations
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug: Git GUI "No differences detected"
+From: Johannes Sixt <j6t@kdbg.org>
+To: Steve <steves.sk@gmail.com>
+Cc: git@vger.kernel.org
+References: <CAAQS9UL14d_LxTKFMghGvQQWS6dfj1RhTJYyKsz0PKoFot8v5w@mail.gmail.com>
+ <2d7d6b38-b3f1-45f5-a6f0-54bd8a0d64d0@kdbg.org>
+Content-Language: en-US
+In-Reply-To: <2d7d6b38-b3f1-45f5-a6f0-54bd8a0d64d0@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On Sat, Dec 21, 2024, at 12:50, Patrick Steinhardt wrote:
-> In the preceding commits we have fixed a couple of issues when
-> allocating zero-sized objects. These issues were masked by
-> implementation-defined behaviour. Quoting malloc(3p):
->
->   If size is 0, either:
->
->     * A null pointer shall be returned and errno may be set to an
->       implementation-defined value, or
->
->     * A pointer to the allocated space shall be returned. The
->       application shall ensure that the pointer is not used to access an
->       object.
->
-> So it is perfectly valid that implementations of this function may or
-> may not return a NULL pointer in such a case.
->
-> Adapt both `reftable_malloc()` and `reftable_realloc()` so that they
-> return NULL pointers on zero-sized allocations. This should remove any
-> implementation-defined behaviour in our allocators and thus allows us to
-> detect such platform-specific issues more easily going forward.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Am 30.07.24 um 21:27 schrieb Johannes Sixt:
+> Am 25.07.24 um 12:37 schrieb Steve:
+>> Problem:
+>> Git GUI shows a "No differences detected" popup when clicking on a
+>> file, and it returns back to the same state after closing the popup.
+>> When I do `git status`, the file is listed there, but `git diff` (with
+>> any line-ending-related switches inspired by stackoverflow) doesn't
+>> show anything for the file.
 
-Nice commit message.
+> I suggest the following changes to Git GUI:
+> 
+> 1. Remove the popup.
+> 
+> 2. Write a message in the diff pane when the diff is empty saying that
+> no differences where found and that the file should be staged to remove
+> it from the unstaged file list.
+> 
+> 3. If the option "trust file modification times" is set, extend the
+> message with an hyperlink that, when clicked, runs the --refresh stage,
+> i.e., the action that currently happens when the popup is dismissed.
+
+Just these days I stumbled over a similar case of 'no differences
+detect' while I was operating a Git GUI that has the below patch, and it
+worked very well for me. I'll include it in the next release.
+
+---- 8< ----
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] git-gui: Remove forced rescan of stat-dirty files.
+
+It is possible that stat information of tracked files is modified without
+actually modifying the content. Plumbing commands would detect such files
+as modified, so that Git GUI runs `git update-info --refresh` in order to
+synchronize the cached stat info with the reality. However, this can be
+an expensive operation in large repositories. As remediation,
+e534f3a88676 (git-gui: Allow the user to disable update-index --refresh
+during rescan, 2006-11-07) introduced an option to skip the expensive
+part.
+
+The option was named "trust file modification timestamp". But the catch
+is that sometimes file timestamps can't be trusted. In this case, a file
+would remain listed in Unstaged Changes although there are no changes.
+So 16403d0b1f9d (git-gui: Refresh a file if it has an empty diff,
+2006-11-11) introduced a popup message informing the user about the
+situation and then removed the file from the Unstaged Changes list.
+
+Now users had to click away the message box for every file that was
+stat-dirty. Under the assumption that a file in such a state is not
+the only one, 124355d32c06 (git-gui: Always start a rescan on an empty
+diff, 2007-01-22) introduced a forced (potentially expensive) refresh
+that would de-list all stat-dirty files after the first notification was
+dismissed.
+
+Along came 6c510bee2013 (Lazy man's auto-CRLF, 2007-02-13) in Git. It
+introduced a new case where a file in the worktree can have no essential
+differences to the staged version, but still be detected as modified by
+plumbing commands. This time, however, the index cannot be synchronized
+fully by `git update-index --refresh`, so that the file remains listed
+in Unstaged Changes until it is staged manually.
+
+Needless to say that the message box now becomes an annoyance, because
+it must be dismissed every time an affected file is selected, and the
+file remains listed nevertheless.
+
+Remove the message box. Write the notice that no differences were found
+in the diff panel instead. Also include a link that, when clicked,
+initiates the rescan. With this scheme, the rescan does not happen
+automatically anymore, but requires an additional click. (This is now
+two clicks in total for users who encounter stat-dirty files after
+enabling the "trust file modification timestamps" option.) However,
+users whom the rescan does not help (autocrlf-related dirty files) save
+half the clicks because there is no message box to dismiss.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ git-gui.sh   |  3 ++-
+ lib/diff.tcl | 26 ++++++--------------------
+ 2 files changed, 8 insertions(+), 21 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 8fe7538..887d6d5 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -1357,7 +1357,6 @@ set current_diff_path {}
+ set is_3way_diff 0
+ set is_submodule_diff 0
+ set is_conflict_diff 0
+-set diff_empty_count 0
+ set last_revert {}
+ set last_revert_enc {}
+ 
+@@ -3594,6 +3593,8 @@ $ui_diff tag configure clr1 -font font_diffbold
+ $ui_diff tag configure clr4 -underline 1
+ 
+ $ui_diff tag conf d_info -foreground blue -font font_diffbold
++$ui_diff tag conf d_rescan -foreground blue -underline 1 -font font_diffbold
++$ui_diff tag bind d_rescan <Button-1> { clear_diff; rescan ui_ready 0 }
+ 
+ $ui_diff tag conf d_cr -elide true
+ $ui_diff tag conf d_@ -font font_diffbold
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index 871ad48..d657bfe 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -63,28 +63,17 @@ proc force_diff_encoding {enc} {
+ }
+ 
+ proc handle_empty_diff {} {
+-	global current_diff_path file_states file_lists
+-	global diff_empty_count
++	global current_diff_path file_states
++	global ui_diff
+ 
+ 	set path $current_diff_path
+ 	set s $file_states($path)
+ 	if {[lindex $s 0] ne {_M} || [has_textconv $path]} return
+ 
+-	# Prevent infinite rescan loops
+-	incr diff_empty_count
+-	if {$diff_empty_count > 1} return
+-
+-	info_popup [mc "No differences detected.
+-
+-%s has no changes.
+-
+-The modification date of this file was updated by another application, but the content within the file was not changed.
+-
+-A rescan will be automatically started to find other files which may have the same state." [short_path $path]]
+-
+-	clear_diff
+-	display_file $path __
+-	rescan ui_ready 0
++	$ui_diff conf -state normal
++	$ui_diff insert end [mc "* No differences detected; stage the file to de-list it from Unstaged Changes.\n"] d_info
++	$ui_diff insert end [mc "* Click to find other files that may have the same state.\n"] d_rescan
++	$ui_diff conf -state disabled
+ }
+ 
+ proc show_diff {path w {lno {}} {scroll_pos {}} {callback {}}} {
+@@ -387,7 +376,6 @@ proc read_diff {fd conflict_size cont_info} {
+ 	global ui_diff diff_active is_submodule_diff
+ 	global is_3way_diff is_conflict_diff current_diff_header
+ 	global current_diff_queue
+-	global diff_empty_count
+ 
+ 	$ui_diff conf -state normal
+ 	while {[gets $fd line] >= 0} {
+@@ -559,8 +547,6 @@ proc read_diff {fd conflict_size cont_info} {
+ 
+ 		if {[$ui_diff index end] eq {2.0}} {
+ 			handle_empty_diff
+-		} else {
+-			set diff_empty_count 0
+ 		}
+ 
+ 		set callback [lindex $cont_info 1]
+-- 
+2.48.0.rc0.201.g092d4fe2cc
+
