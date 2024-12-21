@@ -1,141 +1,147 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7098C10F2
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 01:18:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20752AE77
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 02:42:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734743888; cv=none; b=C8H4XMe3loEwXmFH+yLYtcJQiBPgrqVYPEQgETRc31ctGLADV9qG+wGTyqhuMeEsm1ntenosk2h+enMMmhIYT+193NYMfh2VQiNtHyLFjHHGtKZ1w2CaabUXjtGMzIeer/VfWmCjTE5LvdO/Zq0lsnWMI2VrcUk3WT5KCuArp84=
+	t=1734748947; cv=none; b=tZf3f+Y+I8vLRDzGmRjjQTgIuVs1V80g+sHppSr1387zF66aZEMn51pkSnOVscmLQRTx2jSW8f7Piane5SY+7HQpYU/64Yr9rFtJedmTTjpwIFY7zvb7ccxXPBksiN221M6RskF3H+WSmU560/Wksx9NL3387iqfO4C5JnsjBOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734743888; c=relaxed/simple;
-	bh=z47XMIMkM1qhgMw/7iBU/iBfeMstZvQACPA1wIttxW0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HT2sZf/JyVjb2ZbdR/9Up24kl0Y6+9M1aZvMFh4fYQtKx/9K9Z+rbYa74ClUakAyfYVhsSFNYsuBMpPyha83z2gMQYqtddNwR8OgyYtIBTKOEuwmXvNCAHTZwIaxP38Mr6UW92zYq4rTdbdAkXViastn2Py0gPZZxoeXHxCcAfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H3LHl7ij; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734748947; c=relaxed/simple;
+	bh=6ukUKDMdTajGhMdQwglCdZaoakzxnNCLCS4zix2mVSU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cWIezYPPczFfKka/TW/zu2v7QTT0hgK3LP8t5qQXHRoenAkhTewod7Fkz1RCWtAyIsaHgcwzoC03llkiyFsJkUKa1dqnnwN2bLcEpo4+nrN76fxvdT8MLnxR/09SEBjD9e/5+pxfyGlEvnNPpelX6PPgjIRc1UczZUcn3f+1JWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pDDoTXVV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dOsI2Stj; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H3LHl7ij"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-728f1525565so3004758b3a.1
-        for <git@vger.kernel.org>; Fri, 20 Dec 2024 17:18:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734743887; x=1735348687; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RoAgQsRvmoHPYCujqi6jLDD7bi8x9oh2GMoHNovJ4T4=;
-        b=H3LHl7ijOVNiJ9MRWf3/qat/BkifbaN5j4pvFtSfRIgA9iD82KkG8OMkQLNsmsQHig
-         dnFQDU332wZh/H41Mw2jHW8tDs+kKXsRczOeFxu3akfyi9hc/r9mgIcTrolgT71NQYWo
-         7nMGprWdq4Om3aSs3mRIfmmMuXjOG7Y6/HPdDKcODE38pFV/0nKkOnn9Axk0yqvcbugw
-         CONkTbcaslk1Mqxqhs0NmJI7kozZ+Ws6+MDGa6iK3X+n2/skcPYYpXkiIrIMpOf8CfYx
-         AQj0YYT5S0/WcCOqRFvx/x1Wy/NWEDT1mTt2ZcVo3+Nhk49EEMkSZ8P8JQ8xA0QFcaoJ
-         qyNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734743887; x=1735348687;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RoAgQsRvmoHPYCujqi6jLDD7bi8x9oh2GMoHNovJ4T4=;
-        b=v6Qs7jR/95imZR8umYgeqSEkGjf7Td/kpP9usXQEjtBTXvT5or6FEoTnug8GqEhAu6
-         +cRSqRRKBn5YLt3iGgfB7L7wo7wv8iLL8ikVJ8bHJxaYXZal7oMpq5lZ3Ouwafigrr42
-         XS//5d3UBa6MFTdw9sD1BRaH917rqxRcibCy+Cjtb2XakfnVkaHFxa4mCAbOjJA+o1U5
-         i9D34kKuG/By7w190UDPEYxKuvxEG8Vj98djw+GAT/orYWkIE4zk9+8oa20ssnJqy9sp
-         SppdAfyVmyUOIk9Qrk8TvPB/WYJYQNwk80BZJgeWCG8YyuXgOZYxPY0OTmQeQqZp2uer
-         i9fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXann0jAPexR2bdPzcMpNsfmrj0qwTg/EXtHoxSW7s6QLqjM42R205zyAx2KBDk33E09Zc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxzG//GNIINMfzlKPM8xPC+45Xs64/YYIUBc4Gd3H1KGjNUaZ/
-	PpXbiIBJk99gPlCl7ZWI9S146iD/zqJmLZPYsbYQbJxGYLGzzviuOmY7eeldjizCH12kRYyDdxf
-	B01ZRGRE48i1Ia4C0JjRkzQj2tCRntg==
-X-Gm-Gg: ASbGnctBzHUleP1SHG7w7bpITuj2/V5VcZLBWSnSxOl04Xziid8dmABrKECUqC/I19k
-	aGr6aX0/KmfV4QTUVrthP+XM1nRuThEqEdTCwYw==
-X-Google-Smtp-Source: AGHT+IFTwKtQWi21r7EliOr4KYkyszQnyxEXgBXUfyNfWjbpQVIO79LksODSnU7aKCm7a1HP6hJYEl+eRgucpIUbXUs=
-X-Received: by 2002:a05:6a00:410d:b0:727:3c37:d5fb with SMTP id
- d2e1a72fcca58-72abde8461bmr6858720b3a.16.1734743886626; Fri, 20 Dec 2024
- 17:18:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pDDoTXVV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dOsI2Stj"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C95221140145;
+	Fri, 20 Dec 2024 21:42:23 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Fri, 20 Dec 2024 21:42:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1734748943;
+	 x=1734835343; bh=DXs0odeZLPNYR3uXTvkVFrRodnrBOS/bO+7bufjfekc=; b=
+	pDDoTXVVC34M9ZQ9p2bjTbAwUvIjyi9pkqd7zCN1q6+IEHfKyTPkz1bSyDOA0mJt
+	Mjtr/oS8oYyUn+43OF8XIBPtyvgcs5oBiK2SvbCvkxadGexKCeIdXvOC+xJtHBia
+	h6k+AxOfw+o/f32sGXYUCTtTpK2w/ux/MqSmhwW2wjcZjYgAslSEcM4bz8uBfihy
+	QyFA8uzPRTgkgmL9cPnvSjyuMQlmU5DFkrcb/SFJqNjwzK6eQaeShLOUpJUWier3
+	Tqx9fprOXwRJ413NuXfZrnIJeoWIYJI5pf9f1XyxizzaaO3NrJZJ2n2juXcSGH7s
+	W6YKk3qpEli3PHXSXk2pVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734748943; x=
+	1734835343; bh=DXs0odeZLPNYR3uXTvkVFrRodnrBOS/bO+7bufjfekc=; b=d
+	OsI2StjW8ikYiWgp+P6zZ2e3TQa3cN6mfL+1bkgymkMSeCFkmh8Jm9V6cACRLKef
+	XeiZXU5GQoZwS3A75F+Uc28VFDm1IhKproTdfY9HjTWGAxCgv2f8Xw15ZoivMf4e
+	MYdStLT4kM66siqW5r+FtXn5cjbDkCHvIJxdIVLoTRwqC0pNDeeUT5+NkVeBj24K
+	DIpvMYkkbw4r0qX7E6YEGt+xX56XbGmR1/kThn6NO5f/BbCuUFSJmPDFO/FWLRNN
+	FUoXjNeCqgarT5iM3KjQUKUapAwEmm8tbbujW+UTwMxtOWAUHIdosiwdbWvZnimQ
+	+zTYPScfzU4vil0oYnJ3g==
+X-ME-Sender: <xms:DytmZ0NJLVaHx57rCONYWkETxFQfNgXBicIvhx6Fhsxf18EMEQGiRw>
+    <xme:DytmZ69_1EwAlbIbCzDtFo6xuTPANaKSJQEfgbBnqdhfhVNVrZJQeP0v3nNCADfci
+    uegWc83i9YBHaianw>
+X-ME-Received: <xmr:DytmZ7Tv5Q8l515ovoWPBPbOdnOaz5NprMVgLNUprb9pTXQKyf3EoBDBLc_y-M3uz7eFOlRT9A7IVtL8eZdMeYn7gvs-0KICPw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtfedggeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkefotddtreej
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpefggffgudehgeffieetgeeffefhhffgkeff
+    tdefuddujeegtddvgedvvdeffeeljeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpd
+    hrsgdrihhnnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhhtihhnrdgrghhrvghnsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:DytmZ8szFrHwkD4IP_2bkKLFqbKIQV0T9IdaMb1_a1UvgE3H3O3lEQ>
+    <xmx:DytmZ8czZF5r0uzcBwfnVRNgVD_5yBFvxJ3ZoIEZ_8aiEM_wl3efWg>
+    <xmx:DytmZw1yiQVmaivpM4-owxf2sjH1dte1p-ZlGrchSldD1aPPYO14Iw>
+    <xmx:DytmZw_PlrQzFMH1AdACVKUrUUeckeND_UiqtVVnDClOxiGbIedZeQ>
+    <xmx:DytmZ76QJ4Vc9pA2WpwNs1LlKJa2ApB3FNOrtMixQTZvRrD0IfQ_cx_a>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Dec 2024 21:42:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/3] Asciidoctor fixes for 2.48.0
+In-Reply-To: <cover.1734734612.git.martin.agren@gmail.com> ("Martin
+ =?utf-8?Q?=C3=85gren=22's?=
+	message of "Sat, 21 Dec 2024 00:18:15 +0100")
+References: <cover.1734734612.git.martin.agren@gmail.com>
+Date: Fri, 20 Dec 2024 18:42:21 -0800
+Message-ID: <xmqqzfkpdaeq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADMKT2-vsUUi-23YGexvxbW9wj0Br+cQcv34eStnw-0EDRiKMw@mail.gmail.com>
- <20241219054222.GA2310556@coredump.intra.peff.net> <CADMKT28cZcdW8UJ59vZHoMa0WEbyAccx4A10-jk3MiBkhZLxEg@mail.gmail.com>
- <xmqqmsgrncr6.fsf@gitster.g> <20241220090533.GC133148@coredump.intra.peff.net>
-In-Reply-To: <20241220090533.GC133148@coredump.intra.peff.net>
-From: Boomman <boomman37@gmail.com>
-Date: Fri, 20 Dec 2024 17:17:50 -0800
-Message-ID: <CADMKT2_QonR_XbZ5297Df34FrrTpbJp04Qy5BGjPb_Ov=uFF4A@mail.gmail.com>
-Subject: Re: git gc does not clean tmp_pack* files
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-For me, two "git gc" on a same repo fail to run:
-fatal: gc is already running on machine 'WIN-blah' pid 40304 (use
---force if not)
+Martin Ågren <martin.agren@gmail.com> writes:
 
-If you're already colliding on this, then I don't see why you can't
-use a normal looking name without a randomized string like
-"tmp_garbagecollecting", so that each execution would at least
-overwrite the same location. In this case --force could append _1
-probably.
+> The Asciidoctor build of the documentation regressed a bit with
+> a38edab7c8 (Makefile: generate doc versions via GIT-VERSION-GEN,
+> 2024-12-06).
+>
+> I think these issues and fixes are fairly orthogonal to the recent
+> discussions beginning at [1], with fixes being discussed beginning at
+> [2]. I've tested these here patches on top of that series' v1 [2]
+> rebased onto a38edab7c8, as well as on top of its recent v3 [3] as
+> applied on the indicated base-commit.
+>
+> With these patches, I can use
+>
+>   make USE_ASCIIDOCTOR=YesPlease doc
+>
+> and
+>
+>   ./doc-diff --asciidoctor <...> <...>
+>
+> with similar results as pre-a38edab7c8.
+>
+> On top of current master [4], these patches help, but for "doc-diff",
+> the GIT_VERSION injection is still broken (as expected, that's why
+> [1,2,3] exist). These here patches don't refer to doc-diff or those
+> other patches [2,3] and could go in independently or on top.
+>
+> These patches are based on [3] applied on its indicated base-commit.
+>
+> [1] https://lore.kernel.org/git/20241218113324.GA594795@coredump.intra.peff.net/
+>
+> [2] https://lore.kernel.org/git/20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im/
+>
+> [3] https://lore.kernel.org/git/20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im/
+>
+> [4] v2.48.0-rc0-38-gff795a5c5e
 
--Vitaly
+Thanks.  [2][3] are something we have to have before we can tag 2.48
+to have a healthy build with the usual Makefile; so is a working
+Asciidoctor based documentation generation, so building your doc
+toolchain fixes on top of the fixes for 'GIT-VERSION-GEN' does not
+give us any practical problem.
 
-
-On Fri, Dec 20, 2024 at 1:05=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+Thanks for a fix.  Will queue.
 >
-> On Thu, Dec 19, 2024 at 03:17:01AM -0800, Junio C Hamano wrote:
+> Martin
 >
-> > Boomman <boomman37@gmail.com> writes:
-> >
-> > > Yes, if the behavior in case of running out of disk space is to just
-> > > leave the malformed file there, it stands to reason that cleaning up
-> > > those malformed files should be the first operation to do for gc.
-> >
-> > It is misleading to call them malformed, isn't it?  When a Git
-> > process creates a packfile (or loose object file for that matter),
-> > they are written under these tmp_* names.  When the processes die
-> > without finalizing these (either removing or renaming into their
-> > final names), they are left behind, and it would be better if we can
-> > remove it _before_ another process wants to consume more disk space.
+> Martin Ågren (3):
+>   asciidoctor-extensions.rb.in: delete existing <refmiscinfo/>
+>   asciidoctor-extensions.rb.in: add missing word
+>   asciidoctor-extensions.rb.in: inject GIT_DATE
 >
-> We usually automatically clean up our tempfiles if we encounter an
-> error, but don't do so for partially written packs. I think this is
-> mostly historical, though occasionally it can be useful for debugging
-> (e.g., indexing a pack coming over the network).
->
-> It might make sense to register them as tempfiles in the usual way,
-> possibly with an environment variable option to ask for them to be kept
-> (for debugging).
->
-> That's not foolproof, since a process can die without cleaning up after
-> itself (e.g., on system crash). But it would mean that a repeatedly
-> failing "git repack -ad" does not fill up the disk. And the decision of
-> when to clean up tempfiles in git-gc is less important.
->
-> > But the issue is how you tell which one of these "malformed" files
-> > are still being written and will be finalized, and which ones are
-> > leftover ones.  You want to remove the latter without molesting the
-> > former.  And you want to do so in a portable way, possibly even
-> > across the network file systems.
->
-> Yeah, I think there are two issues being discussed in this thread:
->
->   - when to clean up leftover tempfiles
->
->   - how to decide which tempfiles are leftover
->
-> The second one is what the OP mentioned for locking. But not only does
-> that have portability questions, I'm not sure it is sufficient. Would we
-> ever write tmp_pack_*, complete our process, and then expect our caller
-> to do something with it (meaning there's a race where no process is
-> holding the lock)?
->
-> I'm not sure. We definitely write "tmp" packfiles via pack-objects and
-> expect git-repack to move them to their final names. I think we use a
-> slightly different name ("tmp-<pid>-pack-*"), but arguably we should
-> consider cleaning up stale versions of those, too.
->
-> -Peff
+>  Documentation/asciidoctor-extensions.rb.in | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
