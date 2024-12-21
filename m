@@ -1,54 +1,54 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C9AA59
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 17:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A187145B14
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 17:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734802619; cv=none; b=PLsToC8foZKeTyysZRctdaatXVB1Y3Hax5B8nkmO1xHFlGtwdkR8xmCm1ayyfYt2O1g5ln3eZlA9bWsrlJFvuZBX7GlmRB0SF95Ld4eq8688niOSjDT5HlFLriOIdzw3W9gZnGPzcTDAbkItZd9ka5hwHF0Sf+maeu3Jq6tj/Vk=
+	t=1734803018; cv=none; b=ZNfCbMOr+siJmy69kC4LIxGy5ytePmF118VaP2QhwO5/ZxteNjSo+3nVr3DKfr1aj5xuOYF49TG3EqVHFLEB8Zv05n++UJz2Y/Q3pbwGZz6V0203sw3I3cDGhJ9EoTGh+AoQCDv1zVjylvew7V93z90MjVyoZpGQpk5QRKGNWFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734802619; c=relaxed/simple;
-	bh=gCvYVDKzaX9j/QMe24nrzfJxljCjupjb8tNuDo8gKu8=;
+	s=arc-20240116; t=1734803018; c=relaxed/simple;
+	bh=YuVAHbzoaQRbHHYuwA8jOxXrE74DAj+TY8ELvKCPlDQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mmmzn9N1g3lGxo/m24ROjfEs+TBVurs6LXklU/eB4PS3sNaae6T4bpupZu9qI6RCtIfEDxQTDbeOkRO4VESw7uOW620Mz47sQ6mg1vfTiMwwFtZfAJ9G2BiyfiTRjBRrd3X3KoacIGBpHBaXfsp5hHmfR8sxHSVb++otIqwS87A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GvhzO9Al; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g+YrZzqK; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=tKXzQ30epg7OfRdupaqZpr/vhzSermDXfc7rKwLAq0RIjOfbrAstPOw+xuGY7r+qNdEVMIZimk3N2XummksmZ82j4pBA4fWdnhB373ST5gVVDd3qHYzmKPMe0ZSghY5Cj8vYxaYVH04/mcLEU2aa7UCY7i3vO6MQ4dbVuj9iBCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dgBjwfhW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=klLDcabQ; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GvhzO9Al";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g+YrZzqK"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F02551140135;
-	Sat, 21 Dec 2024 12:36:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dgBjwfhW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="klLDcabQ"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8520C1380111;
+	Sat, 21 Dec 2024 12:43:35 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Sat, 21 Dec 2024 12:36:56 -0500
+  by phl-compute-03.internal (MEProxy); Sat, 21 Dec 2024 12:43:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1734802616; x=1734889016; bh=jsrOglXMV2
-	9I5n4oWC6MNdF+1WkuYyRyIe9o2t27K2Y=; b=GvhzO9Alj0mfDXrRq2FI2bCrNI
-	ZtX1oLXHHJ1UicPKfItNZ+FvA8C8wxFRSmYLAssGix5dw294qVYs9jYRjEmXuh1c
-	jOmIgTZGIV/qIRSeos9ns86xu66cAeQYtM5Ri5Ym6Jh7tusMrDa29fsn/UKZTM+I
-	+XemPo19yW2OwH4KQBcRrO1VjVbjpdKBceOrUZxBqa+NMpfaxgPQnZW9Yin6pLU+
-	5mhUUtc/Jw+eLZk6c7K2IkaftdkMnCZP7FcXo7Syp3nBNfNXzlxsBRooziBebcoC
-	jfTm2siNevllcVsWvgodKX5T8+VPmh8Yh2Fc9esoVEiRaKQZ8PxcjcRF/e/A==
+	:subject:to:to; s=fm1; t=1734803015; x=1734889415; bh=dHRTrlk77b
+	pKhMPU7nqo1vwqGssq4c5cDwhUyfnIS94=; b=dgBjwfhWh26TfNlzHx2UEleLuJ
+	+TBr22NFZ/piNVlK5eK5X26W/2iYTGiW6Zr0a83gKSXQohq8YDRvcQA3E6eHm3ss
+	WvFfyLTgOvGnfbD1qkbdmzNZQOXoAX7S/OALLYKEduJn3MgQFvK55n1TnvyDzuHv
+	/weMvrtJF6YYA8IY5zBILJfKLn3Rb6mVKwoWgG6IYhU3R3Wj/4jZwlKTQkwOk8Mz
+	Knw5rJRWI2GO9ULYgQXkj/LvH72sSdVJDS4PnTKOISKT3NluMg7RqW+sYVaC4jsG
+	pzwFmcD07Ym2YIWYyBiK75VM6merig0jeaqj1RF1bva5HoqKCaLFIfTJMyGg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1734802616; x=1734889016; bh=jsrOglXMV29I5n4oWC6MNdF+1WkuYyRyIe9
-	o2t27K2Y=; b=g+YrZzqKx2PLJAE+Pv28fTUV8ZbskXfA5tcpV6pbG60DvZLOAv3
-	euCh1G/Dxs0UAmU/gj1BNIJQ0ccNVOEvGoaQJ5xTbm7xvP6wE9ydo61ninvREPAF
-	JD95kFoEMZ+0CdCqFf4Cfx9K9CXaEV7Gl3opchJhVAeOVBFWt88w7G8j4AXStQ1H
-	9GSdr12/jFwxAqu/p7yTqJL3elIJx4MsI8J1bdRIA8Xa9CWj6RKlY4JPHOqybGmG
-	Af8NB7VzExrmFbpAXeCSXQ0IjjqOnJphPNZWR3/4gD6IHwBIC9sgNcfk7yDV/hT0
-	zCbPHtxH/tyAtlsb8qT6vUm9+dANJj1QqNA==
-X-ME-Sender: <xms:uPxmZ0X8okyARvEfwBqf6r5Chicnsraild1HYa4K0JezDkxN7oRPIg>
-    <xme:uPxmZ4mDnb0-QnkGklSmOLRKzyOtvc5Ia9oOEjWiuQzv0bKsm1UHvp02TdyiwsOoQ
-    SwvsgOEkH5iBts36Q>
-X-ME-Received: <xmr:uPxmZ4Zv6ke4j8_HbC1aL8dX-u_0JTyLVvFmtYs9gFEDc55YMnlQg_ai2NMa-S317rf0Gn_OZEcPCmLyGVacccUR5uw3hrq7Qw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgjeekucetufdoteggodetrfdotf
+	1734803015; x=1734889415; bh=dHRTrlk77bpKhMPU7nqo1vwqGssq4c5cDwh
+	UyfnIS94=; b=klLDcabQ0yM6ysrxq2mTHWNDtCJe8abxgmfQUemH+g/ys76ZdxA
+	DR3eQnBIc5bYGALQJe4bdc6a/xb+Sa0+N3EJ4yQPF8VrAAo17xznKIUnX75klNn2
+	QlsFmUYVrHRK7s8FXV3d8lxn0NoIm32yFruV1knbiT0D6h9IvExb1FxkICrK0Uph
+	JXdmFrxDLEicYzab4i0V1R60v34xzD1Fr1UZAdDNISrpAazJlSJ0d/ja+nsiv8ii
+	8Gh8CnAH4WAuC6sXASJLP8mifVNqDIod1vST4LfwR3B8Md44HZBO4o+igETjdeqr
+	vtTCaEHoFuHAJ5D1AASUmMoK4Ox477dFDvg==
+X-ME-Sender: <xms:R_5mZxLVpoYMaqAXEO3h_Gru7qqapVowKMW1_SV4d5i9y27Y0equGw>
+    <xme:R_5mZ9IABYmvxpt9qB2cUfe1mZ20BhoqpMRRH9EdtZyTwYdXKrhunaacz2iH3ynut
+    bILG8lQNPpHEw5cYA>
+X-ME-Received: <xmr:R_5mZ5td1qoYXt_y_wqOBj-NjRsxPLnhGhHLPaOt5QyDmEJxxqIGU-ZoGErtc68PmTM4kU20vAtz4iCuNecqdToxXLzQz6cW5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgkedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgjeekucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    rhgrnhgurghllhdrsggvtghkvghrsehnvgigsghrihgughgvrdgtrgdprhgtphhtthhope
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrnhgurghllhdrsg
+    gvtghkvghrsehnvgigsghrihgughgvrdgtrgdprhgtphhtthhopehpshesphhkshdrihhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:uPxmZzVMb4dHiQ5aMVF0XpVv3o2ACb-7AkJJ5XWtbtHohSxRVzNvtw>
-    <xmx:uPxmZ-nU-hufQMcIDCA_EBndRVF0uShOGCpB26qqxcJLC4c5VvVSbA>
-    <xmx:uPxmZ4eZyBraVq3kNyVW5fHkEUdE06s4zBm0_PhOyBzUUGjIBxvTaw>
-    <xmx:uPxmZwE6aq7YzqMxX_QBw3l7rRjtqjftSvKoLnjU4nhQKuaDA1dXlg>
-    <xmx:uPxmZ_CnzstnIPdS4I6nsqOCR22lv62r7duLLvpPw-KslVEpgcHz7ekw>
+X-ME-Proxy: <xmx:R_5mZyaJJk9_NXMuqHsY9G3KMoCCBUp7rzhyuHoGne4OLjDSP3WhLg>
+    <xmx:R_5mZ4ZN7PF9WLTxutUx9_OE_NIw0HeUrddjk5gL10MReB7sZj0F_g>
+    <xmx:R_5mZ2ACsntBMEjOSA2uHfJDUTzi-rD4HyiUA1WUyM1ZmNmnlXnC-Q>
+    <xmx:R_5mZ2bUCnwbBMjRLWAc_u4nMmvH85limxKe5xYu3LqsVYlovw6sJQ>
+    <xmx:R_5mZ_VJABnomkz-JrU-JxidfELoFcg_7hNpmWW-aiVC7fSp9TmTOEmP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Dec 2024 12:36:56 -0500 (EST)
+ 21 Dec 2024 12:43:34 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "Randall S. Becker" <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH 3/4] reftable/stack: fix zero-sized allocation when
- there are no readers
-In-Reply-To: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-3-12db83a3267c@pks.im>
-	(Patrick Steinhardt's message of "Sat, 21 Dec 2024 12:50:09 +0100")
+To: Randall Becker <randall.becker@nexbridge.ca>
+Cc: Patrick Steinhardt <ps@pks.im>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: [PATCH 0/4] reftable: fix out-of-memory errors on NonStop
+In-Reply-To: <BL3PR17MB6020D6CB8712F2C6F36FC8CFF4002@BL3PR17MB6020.namprd17.prod.outlook.com>
+	(Randall Becker's message of "Sat, 21 Dec 2024 15:05:44 +0000")
 References: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
-	<20241221-b4-pks-reftable-oom-fix-without-readers-v1-3-12db83a3267c@pks.im>
-Date: Sat, 21 Dec 2024 09:36:54 -0800
-Message-ID: <xmqq34ihc4zt.fsf@gitster.g>
+	<BL3PR17MB6020D6CB8712F2C6F36FC8CFF4002@BL3PR17MB6020.namprd17.prod.outlook.com>
+Date: Sat, 21 Dec 2024 09:43:33 -0800
+Message-ID: <xmqqy109aq4a.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,42 +88,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Randall Becker <randall.becker@nexbridge.ca> writes:
 
-> Similar as the preceding commit, we may try to do a zero-sized
-> allocation when reloading a reftable stack that ain't got any tables.
-> It is implementation-defined whether malloc(3p) returns a NULL pointer
-> in that case or a zero-sized object. In case it does return a NULL
-> pointer though it causes us to think we have run into an out-of-memory
-> situation, and thus we return an error.
->
-> Fix this by only allocating arrays when they have at least one entry.
-> Refactor the code so that we don't try to access those arrays in case
-> they are empty.
->
-> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  reftable/stack.c | 44 +++++++++++++++++++++++---------------------
->  1 file changed, 23 insertions(+), 21 deletions(-)
+> Thank you for this series. I think the problem may not be limited
+> only to NonStop based on the documented ambiguous behaviour of
+> malloc.
 
-This somehow did not cleanly apply, so I whiggled it in manually.
+Yes, an implementation is allowed to return NULL when asked to
+allocate 0 bytes.  On the Git side, we sidestep the problem in
+exactly the opposite way---our malloc() wrapper makes another
+request to allocate 1-byte block after seeing NULL from a request
+for 0-byte allocation.  The reftable code takes an approach to
+eliminate the need to requiest 0-sized allocation in the first
+place, which is an arguably more valid solution.
 
-I probably wouldn't mixed the "size_t i" changes into this fix if I
-were doing it.  To avoid "while (*names)" loop, I would have made it
-to "for (size_t j = 0; j < names_len; j++)" and kept the existing
-use of "i" intact, instead.  And reintroducing for() scoped "i"
-three times did not seem to make it easier to read the result.
-
-I am not convinced we need to avoid "while (*names)", by the way.
-If "names" were NULL, names_length() would already have segfaulted
-anyway, and basics.c:parse_names(), when not returning NULL (which
-would have been caught by the sole caller of reload_once() as an
-error), makes sure it gives its caller a NULL-terminated array.
-
-But other than that, this seems to make sure that we avoid
-unnecessary work when cur_len or new_readers is zero and avoids
-asking for 0-sized allocation as a side effect of doing so, which is
-good.
-
-Will queue.  Thanks.
+Thanks, both, for finding and fixing the issue.
