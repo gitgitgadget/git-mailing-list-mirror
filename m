@@ -1,152 +1,126 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFA81F193C
-	for <git@vger.kernel.org>; Sat, 21 Dec 2024 10:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9CD1F0E4A
+	for <git@vger.kernel.org>; Sat, 21 Dec 2024 11:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734777819; cv=none; b=Ww1KeIIGOr/cKX2Z8PtsR0MlL6s6KNYaII5EfHZbz93YsF0EX9DfKWWhE84QL0T7OgzQ1aSf+dBcjwgSCfLF6LB7jlPqWVZpz8Nacz9Ywt5NNf4svQ0Bhp1aIAUeUVDYkO3bMDBHjJKtMVnu8lZvlxHUrWZrMZ/I4/R6U89g5lQ=
+	t=1734781844; cv=none; b=J5866wKGPMWlhJ0s/FloKVFbKPrUGlVtmvnBgZZMS1BNnrhrZypi3loFSnSbQ0GuEfa4SrCqCMjBUIb03kqM8PiC2fBGsYfAF//SvQilJcUuoXMbF0I5IIeEZHepUL7ZdYGUcRKyeGKyDWapR8laXgryAZdsBygdbRQZrbHC/6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734777819; c=relaxed/simple;
-	bh=flfVssxVcu0p8xUkckpyfcCcn7fjr4I282glykHaQIk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b6PkNO5eWMZdshQjLm43ipDb7r761YeyrvviDAbU0Dtfa3e3z9VMhxOcvu63h3JXpXcHAooYEHJ+tWXUfcb/yILKBxwCaV04OVgbewFrdj/b2Y5J52wBlNu8Q++AOe9UHkv2kjb6RegYT5pivp0jxh+dprg7gIdZO/lqHjTNyWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fqPCzoja; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QgrBo3Eu; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1734781844; c=relaxed/simple;
+	bh=bMP9ToLgT5yXeWHVPrNKrU2XFDRxt8rKjoPU9dMYexo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=iDeWE7AmrDQfY8590QP+meZeX6q4/x5NH4eMUB+juJHI/SrmqNO3/szEfU0kQ6Z2iosudfZvDLy/pXoaigydz5HH5YDBHbfpvNXa7+c80je2wDXUctnz9ruP7YuVDhKPVXaRk+xNuOtxtSE7zbpOU11+IqL7hbPYuQMOidNV798=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=alGxp3Kl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pnp1NuXH; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fqPCzoja";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QgrBo3Eu"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4A2821380208;
-	Sat, 21 Dec 2024 05:43:36 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="alGxp3Kl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pnp1NuXH"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 682621380208;
+	Sat, 21 Dec 2024 06:50:41 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Sat, 21 Dec 2024 05:43:36 -0500
+  by phl-compute-12.internal (MEProxy); Sat, 21 Dec 2024 06:50:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1734777816;
-	 x=1734864216; bh=Iviw5omwsVmDCFvS0gjTljYPgaUBJOCPBDzHa3M9vhA=; b=
-	fqPCzojajFeSFAsij9PyP3jHnIcUICFsC2Un9L/nPUCUZ3NLtPxuqNipiHPVGilu
-	xAhpiwSYrQt15w/+SoHKFDp+QvoVYFNPStpb5sBCK0+2Si6TdTP1tPabMHWnmkuj
-	ALbLhAcXHDTi8inQMoajdvHhBHXE9XvIgRlJdR7sqKCfGbpLELlwy62OHm77vIh3
-	c5ojAJksIKRY0TUHuKHgQP1or4ykDY59ICzP2TNXRzBi5PbpPnxelqpWjUkRZ3yQ
-	PdvHr5DiHXNcLq3I6iu8TkvCXlx2OjKE7CFxXHTng+UKDoRz30VjDtMkMcdaXRU4
-	Ez9qfWY44XfVFA0/0a1+dQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1734781841;
+	 x=1734868241; bh=Jtir8l3DbJOGTyXexSGb+KQTeSps0SquyKUOP7L3bBs=; b=
+	alGxp3KlpSBORJ2aw7suVMWWkD+n0Aso0FicHYv7F0Pn9oPRdR/Y1pylOlc2b9KY
+	RmuttqvkwVnWg1+So3l7eKZ9cD0tEBDDy4z8V/gbUmFpjNgIqWy5PzbADeK2ynOp
+	t1hhMYt7ULQqP+m+T7t8kOpNcHSvsCGpAqMXPZyMyd5s11swD/R6obn5J2PwE1ac
+	SYAT6HdknrwrbWVKylraC4UhWRxEpBt2dXjRn1JNGBItiZL1aj8wo8w8LwEyy8ld
+	79v3m6aUvjaOEHNi4w0Uut7e8FB3meblb9NsSYe9npg8naOCOxupJY+fdyjBZg1Q
+	zNDhwl5HKbgb2q1JUuHw+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734777816; x=
-	1734864216; bh=Iviw5omwsVmDCFvS0gjTljYPgaUBJOCPBDzHa3M9vhA=; b=Q
-	grBo3Euo5xRR1mT3tFnQ36tdgImIR1p2fkEtJdzHNsIHEJFLmffhsHqtIvnRSGu7
-	ijyJMufhURDVl2nm6O+VazWmooZPRVJBgfbs3hVvIwkgfv4QA3RCRA0wEQWe0VPS
-	lKpokCmrgiaimQ1h6pgtbDbaS7t6WRMGiyN87VNTdfWhaYsLjI37jLFHC3he+yUg
-	LSnKQf1uxlfrQDd1dk4hiblp0LQlINpytRGZGpqJD1PrGroagUcpbKxcIiSceZmV
-	yWHUiR74h8EI2RXKF+vmBbr4LIi+r6Ok8BYRUumcX2nqtM2igIlZb08vTImgi0aI
-	ySfHhkivS0Suus2fdtTPQ==
-X-ME-Sender: <xms:2JtmZ-2wgeyAXJYDorW3b-wNtkxy-xUMYXp_sZtJ1XWyM1On49M4Hg>
-    <xme:2JtmZxFfnyANMx1B1N_A88fAtrgygqE_8scvaoaIYx5NkhI9C6AeV--OqOtL1h_a9
-    fiVDjO7QR8-YvRbwQ>
-X-ME-Received: <xmr:2JtmZ24YUWzTAd8AnRKdQNjLAWjmiL_xWjEhzZnWGcLgSHrg-EnM4LuHVkLPPfTnz8gfSHM0uQSOdL7MhPbf_4kQob4NxLATFmQBv6yYD83aZ2Jb3g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtgedgudelucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734781841; x=
+	1734868241; bh=Jtir8l3DbJOGTyXexSGb+KQTeSps0SquyKUOP7L3bBs=; b=p
+	np1NuXHl1MH26Mo1dxF3G/kfS6pDZp+POELqMb7+AfDM0cX+FGGG84vPNwpjj1Ng
+	Z5Rws6V4BB61etdkzd41tRgHGTSQCp2KDr3Fy62yz8Wp0p9u+W5jV4qhE1eXkYo+
+	pQQUs14sXEi+fq/xBWolTWmiUZlr/C+6fDwKglxbDaVpsbh43UWu/s96v4v0rFMt
+	kZN3ILjU4knoKW9CQYCh48JgYG7yQ+ZBknab5xj4MhT9ulxHnil12IO7O4S+E5+s
+	6qnVA3oQKiPdlsX1+38zEsMZkHAKGjmObm/rVMqTA4O/w/2K2N6cqTZ2qdL9Cdm8
+	oPwhtEGA0SRnrJRKxawRA==
+X-ME-Sender: <xms:katmZ2aWHPjpYc_0tP3osPE2XHFgw7Jpojexu4H3NQ31et7iHnT3MA>
+    <xme:katmZ5bJSbVqk3PpCJ45L17yaSjyFnUaYz4Qg4DqmObJRm5NyMYKedCHF7uTRe0vg
+    MiGka-ZZxzMHh5Rqg>
+X-ME-Received: <xmr:katmZw_xL10DVfwJ0hU5Vz-RYZsby3PKo6kj435luJPXovuFWbmUdE2WYMMntc2m56oHbbXd4vPI0rDwhuvNtdDtXrdBVGsNMdwbpH-fK-A9jingSA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddthedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeetheffvddtleettdetueeukedugeettedutdegueeu
-    keetheefueevvdeitddtveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepmhgrrhhtihhnrdgrghhrvghnsehgmhgrihhlrd
-    gtohhm
-X-ME-Proxy: <xmx:2JtmZ_2mxShqG6N2BhQIjDmlSGl5lNl1XhdvmoXlHPTQqkxMJLqd5A>
-    <xmx:2JtmZxEsr4OE5dCpJnoJ8Ssv93NCbgjtBk-I9ZJbDiMeccvNJ_SIxg>
-    <xmx:2JtmZ4-lv1H4XuCbXxUieDhgWDhRXsmvP10RZShRKwjb-P-Q4kVsUw>
-    <xmx:2JtmZ2mJyREPjOJ3jobQ1KdsjeqPmiJ8hFTOVe99fAnph3WhKw6Lvw>
-    <xmx:2JtmZxCO2zWLczihX1toCF3F7iZuanzEjxNUOBB6D3rzLgh_nxcBKKx0>
+    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehrrghn
+    uggrlhhlrdgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggr
+X-ME-Proxy: <xmx:katmZ4qJtEAKoaVR-8qFgMEE-T_MSOz4p85Hk6ZID238r3leKGN3cA>
+    <xmx:katmZxpQ7HOa9TSGkxJfdz89gRXERm8aDsn3u4oLZGeYA0G7S_MQdg>
+    <xmx:katmZ2QTdJB8m5deYeCM43HfL2Jsy1bxN0cMV2kI7VOchIfJiXo_wQ>
+    <xmx:katmZxqrpdXwOwodGOh5jQ5SSYZMnx5LHkHQd251eMRrNvJ7tmf5qg>
+    <xmx:katmZ4UBHoYg0m1rYTQ22cN290SrP9XkKInzIcvRZ_Dr7YZ0WcRn3jZg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 21 Dec 2024 05:43:35 -0500 (EST)
+ 21 Dec 2024 06:50:40 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9b2aa1bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 21 Dec 2024 10:41:39 +0000 (UTC)
-Date: Sat, 21 Dec 2024 11:43:17 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 36ead942 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sat, 21 Dec 2024 11:48:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Asciidoctor fixes for 2.48.0
-Message-ID: <Z2abxaGVzA5Kce-s@pks.im>
-References: <cover.1734734612.git.martin.agren@gmail.com>
- <xmqqzfkpdaeq.fsf@gitster.g>
+Date: Sat, 21 Dec 2024 12:50:07 +0100
+Subject: [PATCH 1/4] reftable/stack: don't perform auto-compaction with
+ less than two tables
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqzfkpdaeq.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-1-12db83a3267c@pks.im>
+References: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
+In-Reply-To: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ "Randall S. Becker" <randall.becker@nexbridge.ca>
+X-Mailer: b4 0.14.2
 
-On Fri, Dec 20, 2024 at 06:42:21PM -0800, Junio C Hamano wrote:
-> Martin Ågren <martin.agren@gmail.com> writes:
-> 
-> > The Asciidoctor build of the documentation regressed a bit with
-> > a38edab7c8 (Makefile: generate doc versions via GIT-VERSION-GEN,
-> > 2024-12-06).
-> >
-> > I think these issues and fixes are fairly orthogonal to the recent
-> > discussions beginning at [1], with fixes being discussed beginning at
-> > [2]. I've tested these here patches on top of that series' v1 [2]
-> > rebased onto a38edab7c8, as well as on top of its recent v3 [3] as
-> > applied on the indicated base-commit.
-> >
-> > With these patches, I can use
-> >
-> >   make USE_ASCIIDOCTOR=YesPlease doc
-> >
-> > and
-> >
-> >   ./doc-diff --asciidoctor <...> <...>
-> >
-> > with similar results as pre-a38edab7c8.
-> >
-> > On top of current master [4], these patches help, but for "doc-diff",
-> > the GIT_VERSION injection is still broken (as expected, that's why
-> > [1,2,3] exist). These here patches don't refer to doc-diff or those
-> > other patches [2,3] and could go in independently or on top.
-> >
-> > These patches are based on [3] applied on its indicated base-commit.
-> >
-> > [1] https://lore.kernel.org/git/20241218113324.GA594795@coredump.intra.peff.net/
-> >
-> > [2] https://lore.kernel.org/git/20241219-b4-pks-git-version-via-environment-v1-0-9393af058240@pks.im/
-> >
-> > [3] https://lore.kernel.org/git/20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im/
-> >
-> > [4] v2.48.0-rc0-38-gff795a5c5e
-> 
-> Thanks.  [2][3] are something we have to have before we can tag 2.48
-> to have a healthy build with the usual Makefile; so is a working
-> Asciidoctor based documentation generation, so building your doc
-> toolchain fixes on top of the fixes for 'GIT-VERSION-GEN' does not
-> give us any practical problem.
-> 
-> Thanks for a fix.  Will queue.
+In order to compact tables we need at least two tables. Bail out early
+from `reftable_stack_auto_compact()` in case we have less than two
+tables.
 
-Thanks indeed, the changes look good to me.
+This is mostly defense in depth: `stack_table_sizes_for_compaction()`
+may try to allocate a zero-byte object when there aren't any readers,
+and that may lead to a `NULL` pointer on some platforms like NonStop
+which causes us to bail out with an out-of-memory error.
 
-I guess my key learning is to do largish patch series like the build
-refactorings in smaller increments next time. I considered doing it
-several times while implementing the series, but shied away from it. I
-guess it would have been easier for everyone involved and would have led
-to fewer issues though if I did split it up.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/stack.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-So thanks to all the people that are helping out in this context!
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 59fd695a12c2033ed589a21ef1c9155eeecc4641..6ca21965d8e1135d986043113d465abd14cd532c 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -1627,6 +1627,9 @@ int reftable_stack_auto_compact(struct reftable_stack *st)
+ 	struct segment seg;
+ 	uint64_t *sizes;
+ 
++	if (st->merged->readers_len < 2)
++		return 0;
++
+ 	sizes = stack_table_sizes_for_compaction(st);
+ 	if (!sizes)
+ 		return REFTABLE_OUT_OF_MEMORY_ERROR;
 
-Patrick
+-- 
+2.48.0.rc0.184.g0fc57dec57.dirty
+
