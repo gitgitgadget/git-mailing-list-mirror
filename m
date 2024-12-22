@@ -1,125 +1,110 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CC2913
-	for <git@vger.kernel.org>; Sun, 22 Dec 2024 14:43:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9EF19A2A3
+	for <git@vger.kernel.org>; Sun, 22 Dec 2024 16:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734878616; cv=none; b=rBsBtDzmMwG0EMG+mFcRnYg/mQtF/KBjLjSGKvK/Keh6iAy4zvF2ZAsMb8moqCa3pOHAZ/UmDXjgaiFrqCrsKWoFCKt8238X8id48n5GWhBNgFdpRbezVLKv1eqvRYz+UYxIhOiPnD1l2jm+9gPR58Kc6dFhpVN+0Q/G+1J4AA8=
+	t=1734885103; cv=none; b=YiSIUuK0O6H6brddSyq3CU6esd6c2IBt2joYWYJr5HypovAVpjwXxzq+voltWHDmzwWnslw/DNqJjRuWsjAVRDExdlEGqrLzE7t3gCWyz/4EdL67g4laBiz9m896vZRXVQ5Lz8ImFrtXYAk3i+SAScsf3avPP5APeo2nZIC+seo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734878616; c=relaxed/simple;
-	bh=fsRFkYoZhDiM8imCIUfQOaVBiwsUdcbY9PY4ShVbhpQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QzleeGsG2UfYtZwe1Ls29s/yFeTd5eYQ8Nm4FJpzS5Pd7Yx7nca0JxeAPih4I5iCKEmvEU5eEFrOHb9c05St5p68TTt7T8E1rrSA/rQPfiW4TDFcfTjEU8/s6aSA9Es8ZUQSHRe8hAbctHSVUR0GI9WSCbyjgsbXsMT5SlXXKK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bNaCuBjq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OyhPmNrP; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1734885103; c=relaxed/simple;
+	bh=N1W+trLhJZYikPp5Jt/pGIzYlNMlZU2XOH8CxGoqwqk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=klOarLGSpqRwQTYALXzUtYcxbo3pY6FX1cHHcDvqCFct146N0lywks4pTyNuhwFamO2ZFHU10I1CeFyypEffKB7oJ6/btvF1OQe69YjZGKEOej2jH+SMNB0zmRf3/NfFzVAN50mU7xiB0548ePM7MVo6jBfewntc5pS5p7pDy78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yzCAOs04; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dC3jsX+f; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bNaCuBjq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OyhPmNrP"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 15F8411400C7;
-	Sun, 22 Dec 2024 09:43:32 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Sun, 22 Dec 2024 09:43:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yzCAOs04";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dC3jsX+f"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 583351140100;
+	Sun, 22 Dec 2024 11:31:40 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Sun, 22 Dec 2024 11:31:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1734878611; x=1734965011; bh=4Yt1Ad/yTt
-	sqjxg3MXyHyw1YoG/QyBD0uEsgIVxFTxQ=; b=bNaCuBjqpH/UXkGIneCIBK45JA
-	zPiNC/IvxOtYRy/bWHYhV0iaF+AVleQV9ZMdesYdx/6j19Ew4YU+baggwJhqTycI
-	idgbI6LI7PjkLZqJhZl8Lk8JWGPLznVoigU4tUsUyQieJtiANgtJ7PNs+xYZQDq/
-	8efPRvGRQnnGBGbJkhF6pN0PMpJC/kPcKaG+Uv8Dl1xbUTAxd2zqHv9Sb+h9GS0K
-	mmBolWn91u12gYMklrBFKta5cRe1KeDQK1mgeT3Ys/0So1R8I7mjcj8dV33Z8wv+
-	hb766eNp1Qp7od4Z/pYT9hTTtdlo1X1LYGpaMpCiEg3i+2PVeuN9l+1KxFgQ==
+	:subject:to:to; s=fm1; t=1734885100; x=1734971500; bh=JoKG7SSADE
+	pDi25mrA+lXPbU31MoLXwH79VGapSdax0=; b=yzCAOs04U+LXfZoACPYF7fkdsR
+	1uCMD64icRiehKiU9961SUTC+JkUINJuA8iOh5Lvdu2An6zeGSP0/crTwmVQC4gH
+	V4DdveOj8/tvhhL6H4wLKJbdN1Fw8+GFJb8rSEhSY57O3xz2I0M76ZmxcaBe+xhZ
+	Izm66FRHyZvnEWQbpomc8MgTw0s/IvN4XfeDmjj6TIi6RMcXKSW+9bD9ZdtK9D24
+	RoWd1qc6tr10MrIv6sXLbgHKCnJBvbsW8c82YiEnMHQ9+TZtYEIvKtmjsWiH5o3c
+	bsSE3Q/GpTNzqbTs+/UsYQXSL+/Wi0pH88IwGYV1yfX5vKBG6TZ21ajiPO+A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1734878611; x=1734965011; bh=4Yt1Ad/yTtsqjxg3MXyHyw1YoG/QyBD0uEs
-	gIVxFTxQ=; b=OyhPmNrPd7RfANst4XIPkyl/c1H76sRAIY9oGWHqnrPLeOnZYfv
-	qSsyaXH5x0feQBaOYv/SJ3Bek2zBLeNHBTgpiY/XgsNRildYJ+YVxWxe+xasN/K5
-	nHWukC2otmvBWc6bdQJrLTy3Xp3QUVZtT+NUQWdJoir6L3zYaQtykJwPK8W4cZSW
-	MiQP9EvJexq8EyFI0WZLuWX3WHRkdwOr1dzwNhXmG6GfxL/wRtb9pO4T48coCr1C
-	d80LdStr5Gj/7vUtRJzW4L4p0ddqeSxpIdLtJR8gJAWxEnSk78UAl9UGrYMU0ctp
-	Io8uxS3rYsVVL4LR/Ihndv5j50HCWbfqPgw==
-X-ME-Sender: <xms:kiVoZ4mOyQA-Oh_GYfvYs82BRXKDJ5vMtlSz-6xlRPAXlYbrjJpRew>
-    <xme:kiVoZ33iIugxHSVTIrv7Tui1BQ0Rm1sgWWwQgD1YTRGpriKSPny5fzDM4_Of4caZc
-    CsvIwXKp1pdd2bzTA>
-X-ME-Received: <xmr:kiVoZ2oV81Y6JFHOAMiFTKYBm-Cwvo4AWqfUqKegwh8kuA7G0I1hd7IJe1uzaK1tT_RRmEplwopChJjFDWGvOgXsCZuYbg05Ip2DXjSxJjm04w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtkedgieejucetufdoteggodetrfdotf
+	1734885100; x=1734971500; bh=JoKG7SSADEpDi25mrA+lXPbU31MoLXwH79V
+	GapSdax0=; b=dC3jsX+fFC/FwCH1kKYa4YyL0H0rp8oUjvaPV9L+r1mamb8Vnp8
+	fXDr42yYne2z9UvVjwFUlSn045XrmhX7ecnPon7IOUYRABGlp6uowe2S35yl5MMp
+	rczxZjAp+UtQZYkJB9lvw32RbHt0uxSqiKKW0LLj1cVXrkMxaeP07B+SwkBXGBQh
+	stZVJFyo39T71LA8qxAE6WG0zkqI658oMJh6NBH3ThF4ClVfvLn9fu+evZ2vKHGC
+	uvrfLfvLgPY5ka9DhyxQwi8RFlMe3FJG6RW393OTLH2GL/yBJp62nluKF4Foj1OG
+	PtdkLO8hA+ndjZEJNrZvjVfJN/+Kyvhh9Yg==
+X-ME-Sender: <xms:6z5oZzZ5O0RBTxUaiGwR__WeSx6ilu6RjKq2HwcDtLXWbOB5Vrwr4g>
+    <xme:6z5oZyY891VWT3pQQ7tK_3T3ZN-MIDkuAPn5NciP6ANxG_wb6UknseQmChUaH3Wry
+    Y_0svA3x5cNByFA1A>
+X-ME-Received: <xmr:6z5oZ18YtxjMdYJZsNWOEL6kK_GQgvO646GDjx-T6f2Uk4OhVgT15wI9KW2hPxqgUnIMzxktLB6yuED9L_Aj61CmK7NyMK3Q4w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtkedgkeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgurhep
-    fffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuuf
-    htvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteev
-    vdetteegueelveeitdfhgeevhfeufefffeeiudegtdekkeehtddvheeutefgnecuffhomh
-    grihhnpehgihhtlhgrsgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruh
-    hkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:kiVoZ0nGWFnppYRTwtgU_qayOnat7anHYDB0sUj9xd8RoVMWXEpqEA>
-    <xmx:kiVoZ23HgSJK0lpQmhwm3GAT5EAG6p4RwCQLbhHoVBRvvPHCb1ViVA>
-    <xmx:kiVoZ7tz0Cl3atmAWMdiKkHMCKDqDhvGPP0j4SQrTieuMU2XRCIxBw>
-    <xmx:kiVoZyXavGKuwQzv-HHoHzY-00IpM5UT3rkjtguOtiXQxr1kZ480xA>
-    <xmx:kyVoZ7x1b6BDW3pEm_KVS2yrBVcHvwA975a8xmp1SH5IFUxE7MdxeV6x>
-Feedback-ID: i197146af:Fastmail
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehrrghnuggrlhhlrdgsvggt
+    khgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:6z5oZ5omUiRacoWkkihtm2qBXex6Lal36DlJG3hNzQMk6A7YQLH_rg>
+    <xmx:6z5oZ-qP5KP4Lt4RyEmMO7nlW4naR5DcrkAt6Kckm_ouuB2lqeGTVw>
+    <xmx:6z5oZ_QePDrLiQtJUi3Xg8ttRpfV9w0EoVFYFxk9vQv8_seOrY7bCA>
+    <xmx:6z5oZ2r39WKd_ItFlSCoV7P4LrbKIzUxYit6fLVO2xHtPcTpcJkHkQ>
+    <xmx:7D5oZ7D0Xc72GLgaPrmANAzfce2zPMnaWA7BTJAmIswNRoZUWNmq9zlY>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Dec 2024 09:43:30 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 74475847 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 22 Dec 2024 14:41:29 +0000 (UTC)
-Date: Sun, 22 Dec 2024 15:41:47 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Seyi Chamber <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
- convert unit test to use clar
-Message-ID: <Z2glK5uJOX6ARFUa@pks.im>
-References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
- <CAGedMtd9F3tZXC-z-5=csELdPakzFS=QU-e35So3Og_ak0mq3g@mail.gmail.com>
- <Z2e-T0NZzrMwEvmd@pks.im>
- <CAGedMtfDMj5P0T6x3soe3OUhRbpSw_-m1Vcm+rhDat1vvReK9w@mail.gmail.com>
+ 22 Dec 2024 11:31:39 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "Randall S. Becker"
+ <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH v2 0/4] reftable: fix out-of-memory errors on NonStop
+In-Reply-To: <20241222-b4-pks-reftable-oom-fix-without-readers-v2-0-19550090d15a@pks.im>
+	(Patrick Steinhardt's message of "Sun, 22 Dec 2024 08:24:27 +0100")
+References: <20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im>
+	<20241222-b4-pks-reftable-oom-fix-without-readers-v2-0-19550090d15a@pks.im>
+Date: Sun, 22 Dec 2024 08:31:38 -0800
+Message-ID: <xmqq34ifbrx1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGedMtfDMj5P0T6x3soe3OUhRbpSw_-m1Vcm+rhDat1vvReK9w@mail.gmail.com>
+Content-Type: text/plain
 
-On Sun, Dec 22, 2024 at 02:22:38PM +0100, Seyi Chamber wrote:
-> On Sun, 22 Dec 2024 at 08:23, Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Fri, Dec 20, 2024 at 11:37:23AM +0100, Seyi Chamber wrote:
-> > > Hello everyone,
-> > >
-> > > I just published a new blog post on unit test scripts I've selected
-> > > and prioritized for initial conversion to clar. I would love for you
-> > > to check it out and share your opinion!
-> > >
-> > > Find the link here:
-> > > https://seyi-kuforiji-902b48.gitlab.io/posts/week-2-prioritizing-test-scripts
-> >
-> > Thanks for the blog post! The initial selection looks reasonable to me.
-> > I was wondering whether it would make sense to evict "t-reftable-tree.c"
-> > out of the first batch and then handle all reftable-related tests in a
-> > single patch series. But we've got 9 of those, some of which are quite
-> > complex, so that patch series would become quite large overall. So I
-> > guess it's sensible to distribute the conversion of the reftable tests
-> > across different patch series.
-> >
-> > Patrick
-> 
-> I suppose I could still make that work if that's your recommendation.
-> I could divide the reftable-related tests into two sets and then treat
-> them together. What do you think?
+Patrick Steinhardt <ps@pks.im> writes:
 
-I'll leave it up to you, as there is no "right" or "wrong" in this
-context.
+> Changes in v2:
+>
+>   - Some small touchups to commit messages.
+>   - Explain why it is safe to stop auto-compacting with less than two
+>     tables.
+>   - Adapt `reftable_stack_reload_once()` so that we only do the minimum
+>     changes required to fix issue.
+>   - Link to v1: https://lore.kernel.org/r/20241221-b4-pks-reftable-oom-fix-without-readers-v1-0-12db83a3267c@pks.im
+>
+> Thanks!
 
-Patrick
+Thanks.  All four patches looked good.
+
+Will merge to 'next' and then to 'master'.
+
