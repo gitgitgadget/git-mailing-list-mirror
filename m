@@ -1,98 +1,125 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC55633D1
-	for <git@vger.kernel.org>; Sun, 22 Dec 2024 13:22:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2CC2913
+	for <git@vger.kernel.org>; Sun, 22 Dec 2024 14:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734873774; cv=none; b=I969Qq1xslDKm0BLOtaYbgxT67wSw1sw6b0Ec9PkGnEsVUvqYYG2S1HzsiCqCMGMZIsWpH1K5jnC5eBIr3vRqCmljKaV+6ldlnHpXB5x2FKOwxwbSun6Fjx+rTkKU9ePphjKi+0tNAsmpFBCVaAHASvFBnFKXwkmwHGmqSi3eXY=
+	t=1734878616; cv=none; b=rBsBtDzmMwG0EMG+mFcRnYg/mQtF/KBjLjSGKvK/Keh6iAy4zvF2ZAsMb8moqCa3pOHAZ/UmDXjgaiFrqCrsKWoFCKt8238X8id48n5GWhBNgFdpRbezVLKv1eqvRYz+UYxIhOiPnD1l2jm+9gPR58Kc6dFhpVN+0Q/G+1J4AA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734873774; c=relaxed/simple;
-	bh=4zT8sk+OCvqM7hPfwdVonAlOJHAyC93Rl49zs1bBW/s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kMrFzI0LMkC10fhfgueknCuWpd+kEHb4dRpvW9G1X95sHd0w7lijSSD+76n5msY3751S+grY66mj9NFa3A9oWrmKTgFgXjoZxl+YHZzHyyiMj5Wnvu8LSK5vOizH5MxplopLGFap7xktF5wLSJh1C+UOws4lxizN4zQ0sq4SSBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EYbVV5zl; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1734878616; c=relaxed/simple;
+	bh=fsRFkYoZhDiM8imCIUfQOaVBiwsUdcbY9PY4ShVbhpQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QzleeGsG2UfYtZwe1Ls29s/yFeTd5eYQ8Nm4FJpzS5Pd7Yx7nca0JxeAPih4I5iCKEmvEU5eEFrOHb9c05St5p68TTt7T8E1rrSA/rQPfiW4TDFcfTjEU8/s6aSA9Es8ZUQSHRe8hAbctHSVUR0GI9WSCbyjgsbXsMT5SlXXKK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bNaCuBjq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OyhPmNrP; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EYbVV5zl"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e3c8ae3a3b2so2459223276.0
-        for <git@vger.kernel.org>; Sun, 22 Dec 2024 05:22:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734873772; x=1735478572; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4zT8sk+OCvqM7hPfwdVonAlOJHAyC93Rl49zs1bBW/s=;
-        b=EYbVV5zlOJyC4tC9+t+K/KxwzArt/Y6SEz+mFz5Lvv5wIOc7+5Dn4FVn0hd4f0+RP+
-         44MrDoeMal5/btH6cV870BP2LXYVp2O09+a9zqnXwCZ0ra27MKaGLfAaDvsA1Mu2QAIB
-         Rqg2YGVP9LQPe6f8y3k3jqoK73Z6+D8xASPtdo4kXeywcQ8+67cxg9cCMH+MCpEPmWsE
-         +f+6yqFYbdQtW5hSuWCaiu9ICIVRbZ31FGqAUU0CGTJyuatfaJuCseGgdqeTUxJ42xje
-         NA4lWvEY3VPlrKx96NVz6cJGRkEQZ3VWY9RIK4qOPBBqcjRGeziHk1yqqQ/bLYY23yZC
-         jiNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734873772; x=1735478572;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4zT8sk+OCvqM7hPfwdVonAlOJHAyC93Rl49zs1bBW/s=;
-        b=tT2rUvbTiAflrN16XRy7oGS6160MJ3v1RX29AHD+KTi4IQyIpXogV6VSCm7om/RhQQ
-         qWICsGAOTukq8DadzuEjFmDNso10WgDa7aXHZCfc52FluxY4d+y7k+fY59VdGB4DsFhu
-         pDhl+GiJCOjBKA+rtEHtmWP96TCByFlix51DjgI5prJkuD8OMSpRv4HShPncHaAJstaT
-         q+4QTjKzJioa1ie8nYNKnkAADXkDE9oOtYAwkaH9dWk0yiEASZdVbyJNJ1gcr9zU1udF
-         T9xb12PWgIe5vvDdIdF/wjoMPr2wIjm3or1Nr+TI1sRwsCz61RfHXDBJHdcd1U7AwGm5
-         w6NQ==
-X-Gm-Message-State: AOJu0YygtrnwS4WPnzWd+brsv6klD2V9y2xlsnDPUYKebB0fQVpB4/sc
-	T3Oj7GE64fYUNrjm6gj8BYgtgAHrooJQ8wVSwXBWbATtUH3LpffEPxWkKVYGmN70KI46CM/CAJ0
-	1N1x03wnq3uyYG5OEwiEFkzqrA878LlaZMd38yQ==
-X-Gm-Gg: ASbGncvINTLimoF3J1xPlm6sNTJcOcTcVeVtPqG2tsU9XeOUXA1CW9X+5PYpCOBjq9+
-	GC2PYzkUvXoNlGPCIYRy2vcKddwEKbUqH/l3/3A==
-X-Google-Smtp-Source: AGHT+IHfS/7R5vzO3v48NXNH6krNpVFzQbJfjJFj8u6g+bJ4SR/7xuKBmBTfSBRntP88tC+oLxK2dr3j5eCCZz6PYAo=
-X-Received: by 2002:a05:6902:230c:b0:e39:7a90:eeb7 with SMTP id
- 3f1490d57ef6-e538c26f65dmr6949727276.22.1734873771762; Sun, 22 Dec 2024
- 05:22:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bNaCuBjq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OyhPmNrP"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 15F8411400C7;
+	Sun, 22 Dec 2024 09:43:32 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Sun, 22 Dec 2024 09:43:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1734878611; x=1734965011; bh=4Yt1Ad/yTt
+	sqjxg3MXyHyw1YoG/QyBD0uEsgIVxFTxQ=; b=bNaCuBjqpH/UXkGIneCIBK45JA
+	zPiNC/IvxOtYRy/bWHYhV0iaF+AVleQV9ZMdesYdx/6j19Ew4YU+baggwJhqTycI
+	idgbI6LI7PjkLZqJhZl8Lk8JWGPLznVoigU4tUsUyQieJtiANgtJ7PNs+xYZQDq/
+	8efPRvGRQnnGBGbJkhF6pN0PMpJC/kPcKaG+Uv8Dl1xbUTAxd2zqHv9Sb+h9GS0K
+	mmBolWn91u12gYMklrBFKta5cRe1KeDQK1mgeT3Ys/0So1R8I7mjcj8dV33Z8wv+
+	hb766eNp1Qp7od4Z/pYT9hTTtdlo1X1LYGpaMpCiEg3i+2PVeuN9l+1KxFgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1734878611; x=1734965011; bh=4Yt1Ad/yTtsqjxg3MXyHyw1YoG/QyBD0uEs
+	gIVxFTxQ=; b=OyhPmNrPd7RfANst4XIPkyl/c1H76sRAIY9oGWHqnrPLeOnZYfv
+	qSsyaXH5x0feQBaOYv/SJ3Bek2zBLeNHBTgpiY/XgsNRildYJ+YVxWxe+xasN/K5
+	nHWukC2otmvBWc6bdQJrLTy3Xp3QUVZtT+NUQWdJoir6L3zYaQtykJwPK8W4cZSW
+	MiQP9EvJexq8EyFI0WZLuWX3WHRkdwOr1dzwNhXmG6GfxL/wRtb9pO4T48coCr1C
+	d80LdStr5Gj/7vUtRJzW4L4p0ddqeSxpIdLtJR8gJAWxEnSk78UAl9UGrYMU0ctp
+	Io8uxS3rYsVVL4LR/Ihndv5j50HCWbfqPgw==
+X-ME-Sender: <xms:kiVoZ4mOyQA-Oh_GYfvYs82BRXKDJ5vMtlSz-6xlRPAXlYbrjJpRew>
+    <xme:kiVoZ33iIugxHSVTIrv7Tui1BQ0Rm1sgWWwQgD1YTRGpriKSPny5fzDM4_Of4caZc
+    CsvIwXKp1pdd2bzTA>
+X-ME-Received: <xmr:kiVoZ2oV81Y6JFHOAMiFTKYBm-Cwvo4AWqfUqKegwh8kuA7G0I1hd7IJe1uzaK1tT_RRmEplwopChJjFDWGvOgXsCZuYbg05Ip2DXjSxJjm04w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtkedgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgurhep
+    fffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuuf
+    htvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteev
+    vdetteegueelveeitdfhgeevhfeufefffeeiudegtdekkeehtddvheeutefgnecuffhomh
+    grihhnpehgihhtlhgrsgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruh
+    hkpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:kiVoZ0nGWFnppYRTwtgU_qayOnat7anHYDB0sUj9xd8RoVMWXEpqEA>
+    <xmx:kiVoZ23HgSJK0lpQmhwm3GAT5EAG6p4RwCQLbhHoVBRvvPHCb1ViVA>
+    <xmx:kiVoZ7tz0Cl3atmAWMdiKkHMCKDqDhvGPP0j4SQrTieuMU2XRCIxBw>
+    <xmx:kiVoZyXavGKuwQzv-HHoHzY-00IpM5UT3rkjtguOtiXQxr1kZ480xA>
+    <xmx:kyVoZ7x1b6BDW3pEm_KVS2yrBVcHvwA975a8xmp1SH5IFUxE7MdxeV6x>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 22 Dec 2024 09:43:30 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 74475847 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 22 Dec 2024 14:41:29 +0000 (UTC)
+Date: Sun, 22 Dec 2024 15:41:47 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Seyi Chamber <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
+ convert unit test to use clar
+Message-ID: <Z2glK5uJOX6ARFUa@pks.im>
+References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
+ <CAGedMtd9F3tZXC-z-5=csELdPakzFS=QU-e35So3Og_ak0mq3g@mail.gmail.com>
+ <Z2e-T0NZzrMwEvmd@pks.im>
+ <CAGedMtfDMj5P0T6x3soe3OUhRbpSw_-m1Vcm+rhDat1vvReK9w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
- <CAGedMtd9F3tZXC-z-5=csELdPakzFS=QU-e35So3Og_ak0mq3g@mail.gmail.com> <Z2e-T0NZzrMwEvmd@pks.im>
-In-Reply-To: <Z2e-T0NZzrMwEvmd@pks.im>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Sun, 22 Dec 2024 14:22:38 +0100
-Message-ID: <CAGedMtfDMj5P0T6x3soe3OUhRbpSw_-m1Vcm+rhDat1vvReK9w@mail.gmail.com>
-Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
- convert unit test to use clar
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGedMtfDMj5P0T6x3soe3OUhRbpSw_-m1Vcm+rhDat1vvReK9w@mail.gmail.com>
 
-On Sun, 22 Dec 2024 at 08:23, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Fri, Dec 20, 2024 at 11:37:23AM +0100, Seyi Chamber wrote:
-> > Hello everyone,
+On Sun, Dec 22, 2024 at 02:22:38PM +0100, Seyi Chamber wrote:
+> On Sun, 22 Dec 2024 at 08:23, Patrick Steinhardt <ps@pks.im> wrote:
 > >
-> > I just published a new blog post on unit test scripts I've selected
-> > and prioritized for initial conversion to clar. I would love for you
-> > to check it out and share your opinion!
+> > On Fri, Dec 20, 2024 at 11:37:23AM +0100, Seyi Chamber wrote:
+> > > Hello everyone,
+> > >
+> > > I just published a new blog post on unit test scripts I've selected
+> > > and prioritized for initial conversion to clar. I would love for you
+> > > to check it out and share your opinion!
+> > >
+> > > Find the link here:
+> > > https://seyi-kuforiji-902b48.gitlab.io/posts/week-2-prioritizing-test-scripts
 > >
-> > Find the link here:
-> > https://seyi-kuforiji-902b48.gitlab.io/posts/week-2-prioritizing-test-scripts
->
-> Thanks for the blog post! The initial selection looks reasonable to me.
-> I was wondering whether it would make sense to evict "t-reftable-tree.c"
-> out of the first batch and then handle all reftable-related tests in a
-> single patch series. But we've got 9 of those, some of which are quite
-> complex, so that patch series would become quite large overall. So I
-> guess it's sensible to distribute the conversion of the reftable tests
-> across different patch series.
->
-> Patrick
+> > Thanks for the blog post! The initial selection looks reasonable to me.
+> > I was wondering whether it would make sense to evict "t-reftable-tree.c"
+> > out of the first batch and then handle all reftable-related tests in a
+> > single patch series. But we've got 9 of those, some of which are quite
+> > complex, so that patch series would become quite large overall. So I
+> > guess it's sensible to distribute the conversion of the reftable tests
+> > across different patch series.
+> >
+> > Patrick
+> 
+> I suppose I could still make that work if that's your recommendation.
+> I could divide the reftable-related tests into two sets and then treat
+> them together. What do you think?
 
-I suppose I could still make that work if that's your recommendation.
-I could divide the reftable-related tests into two sets and then treat
-them together. What do you think?
+I'll leave it up to you, as there is no "right" or "wrong" in this
+context.
 
-Thanks
-Seyi
+Patrick
