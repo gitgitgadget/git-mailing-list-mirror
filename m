@@ -1,151 +1,146 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAED17B421
-	for <git@vger.kernel.org>; Sun, 22 Dec 2024 07:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0995717C68
+	for <git@vger.kernel.org>; Sun, 22 Dec 2024 12:20:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734852297; cv=none; b=SspgOivT5hL49csqE1dShMqQWLq1GhpySCUoAEcyPxG4YJMFuK8WjU+s8Z2YOp7ySbdiQXc702dL0B9ikhu7jq3mz/iiFKDnl7xOqjci+0WFmbbO12j2cs7kGksTDpCtYZH5XrB8AIoWL/mbcq/vbBDn9Qcb6CCeOz8dRBTkEGc=
+	t=1734870014; cv=none; b=s/szi8ezWmSiKtpOCLgB84OjdTXiHgSme+TNjIphid/EfEcDCeU/g+koZSiR+1PzeGGnZXHQU4NGZwIXUlhEy+DNhI1r7D8rqE2SjGNStNkU9lfNgT0Ig0ksxXZRK+JZeaEeg/ZJGOCn4e7feX3XTtEW5GceHguQ5xmilD53Ws4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734852297; c=relaxed/simple;
-	bh=B72wCzzjAMScPASrFs+lO/j/sySeBigjXsrrfoNVCSE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ptkh/M89kB+1zvLuv0GpY845DZjvBNLwCayVyIrAHZsrLj0XOdSy0SzN8lU0xTIxit3q1VMu0UVDOPHI/penfi+0ZVZ1Ue1z6ptDUfWv0fQ0a9kwYqLsv2xw9SPTosn5bYKziozlI3xKphcTwvul2d6tcmVW5Wez+j+TvJQw4aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O2zSzp2m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ov58S4Bt; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1734870014; c=relaxed/simple;
+	bh=x/2B/HcYGwRKrLam9NDqcHF15mLqO/iytDSY0XuuDQM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=knl6rdOVezHaMsQ1MCn+nujxar2wz9yKDP9Z84Rky/vuZSCisvvw5765+9pwerwqScLX8PsvocyZYSGC0WzPbblNu3jMoF9KXLW4xYyvlrDM4S7NgZqVkXUgX2SiPGwWlR2n7y/gcE5T/2rzPef4s4bifStjaZcRmB/RhnFFqlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FnM6omeC; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O2zSzp2m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ov58S4Bt"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 79C56254018A;
-	Sun, 22 Dec 2024 02:24:54 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Sun, 22 Dec 2024 02:24:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1734852294;
-	 x=1734938694; bh=vM4VanXwFujuK2w2Psv62FAZc8cPmTAe1U8IwEHjapI=; b=
-	O2zSzp2mZZYFqPc6iTaEyFgyOt5u8zh2Q5Nyng1EDmAvJwne5OXu/oUiasFDTtyH
-	MySlYap+aNNU7veRAJdUOD4lGmwDFtzvvFa+i2ppaS7FMjqFXm4ZUIHg9LeYLUh5
-	DUuzXv935+duwalXdmFDY/mkDms7LlwQ9MwKai1T7a4yOnVQNhzMUpX6mfDmMdBL
-	7mtOJqNP66vrKjEzvWcFuLTmhwzNw98VTrbjRYK0GRbBifDsWbuJGSEkXG8NAIRS
-	KEBX8ndbffDpw4H+yDa/y2wQNbZyDVUMfAJscGzCG8xjSHtm7MCe0Eez3QK/RoyM
-	gCHiQWpABvWZ6auh0dndGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734852294; x=
-	1734938694; bh=vM4VanXwFujuK2w2Psv62FAZc8cPmTAe1U8IwEHjapI=; b=O
-	v58S4BttPCjBPjA4A48P4zKlLMA3TjtGTI8gBEtoEW7r4heVXSBkxho9ZdwtcfRr
-	7Pald6bDmWdlUtixRITeEiGWwfwbtYPUj4dbAVA7h97iBFOwQN93gusO85Su59rp
-	hHAKiiqGzm3dZyktHLLuELwrW8xwWGWJmPvkF37jqOjXzHpO3raEWCz9xdSIq3S8
-	BFTSCYoNL2tai8OWVOpKskZwiaIfUMAkSJwHvbgC50JwJ55ofyhFy124RGdT+l53
-	qyXdExDqlRgESZEghMTUdUO8K8auC5gYUXf5cdfEYVSnjv0mgKtW061Q7bVZDHL4
-	qQ4yngBWEBzftNkabq6mQ==
-X-ME-Sender: <xms:xr5nZz1NNExlIoQ4A5_QkNvf6-hXFCCWFJXhTXHVoqukG6SR2smnIQ>
-    <xme:xr5nZyHN29Eqcw90-Z-O9MrxpIbMYo1a-90toTowMXGfLRnZadg8jw3VWmNCkxCz_
-    pefH49TEyf100VuAQ>
-X-ME-Received: <xmr:xr5nZz5VroQcjmr4x1fcb_tYBj8SAxFsqCBzQynGgdYMPbs91pZRxZbeZVvi2sqveS_maSmi8_tR6rscAO2aAao0QCr08UsqFOg6aF9RrIEQSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddtjedgtddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehrrghnuggrlhhlrdgsvggtkhgvrhes
-    nhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xr5nZ41r27yq9Sj7oVUexXvp9LJUTih0BjzbUwJJgYQQBJnm-CqncQ>
-    <xmx:xr5nZ2E9TTTOQRXx_wktdWGHOg4B8RAXqcvc38fIWMmAgJRgGdOPbA>
-    <xmx:xr5nZ5_kWt4Tk9LM55W8gwLQMMe12kKeI_Nu4cJ_GlIzVeQroQa0Xw>
-    <xmx:xr5nZznDS21S6ftUDHja3oPOWxFY0SJB8L5b3l6-teoYMrf-mo1jhw>
-    <xmx:xr5nZyggMxjPe9tNblrATIJ9y7gLIjqR9h0wZVMYBiP4LO7cw_j6mdYy>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Dec 2024 02:24:53 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 00e48c19 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 22 Dec 2024 07:22:54 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Sun, 22 Dec 2024 08:24:31 +0100
-Subject: [PATCH v2 4/4] reftable/basics: return NULL on zero-sized
- allocations
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FnM6omeC"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2eeb4d643a5so3166418a91.3
+        for <git@vger.kernel.org>; Sun, 22 Dec 2024 04:20:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734870012; x=1735474812; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kzmcEjbxGzwVCcCnlMRO3GrqiqZqEpNInGkFNTSh/5s=;
+        b=FnM6omeCJqEm+hB7Lcl5L0otwvEQrK9btcc2CxXKsoXZah/pvWbMcE2gmKFDLFbx4E
+         NDWVhEjWleKtrsKM55NlbEwB/j9IdCX9PzouhhcQoKwvxa8ibK9PvquYVSfidBpnnQ2N
+         LvCgjF2WaDWq4BtPfHEd+z/M8hxu4rzPqVbenmAGXQpIRtGBD1G5ZX9ZNLqOhlmriEvO
+         gcjjFYsw6c0O4OyY4b8T4V6Fq4VWLEkAiguPLYefQlNGNXJfp8CvTBqek2KmQH2wuil5
+         l8ObBna7Sxn5sJW9DKggYJ77LUYds72FjkWp/8PKb7A6tUu6UVUG//FhbfWg/B3GTTUc
+         gpjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734870012; x=1735474812;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kzmcEjbxGzwVCcCnlMRO3GrqiqZqEpNInGkFNTSh/5s=;
+        b=mch9Xl673W15PoVYDWQg5zgIDaenRv1psxay661gFra3rcYkeIaorh3CiZiGnX2VoY
+         6s0Z2f+DsiaSE8S0N5mz95y1C4T3wVGLqM6ptg2RyOF+d20NEtwNHuh/0IAhPLY7V2jn
+         DKXPoQxSZf1HsRn/44sk0hfj33b8BSc58ybekHaosQcCJXnmaYaqZuq9UhDNGMYfLrY9
+         w5dli56n1ZAh4qXLAOWHCFHaLmaua/tWcFaY0NDiMItXrUQR5vbCpRfm66cvdtYdRdv/
+         GA+8gbNJJEWMWrooSLk/61Q6ZHMSN4NDAqJYD7Kz1MLGmLMt12pq+SuhTG3NY74IeDkD
+         OKBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXKBwusVO+MBnynstL2IYJB96wC3Bf38Y+94JZrXSEnX/ldrJXeWbEmXmCUjKnsi33AWGU=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yycd2YFhoehfY8ekWaCMFE3/+khEP8R6xuA9unnr/wHeV5Tq3Ey
+	e2G/dyVKVLAkYofTZ99dawvZQSbElMkCvmySmkvPtsiUVS/3jqcRl5eLp646jlOsoQQR2znhSV8
+	DMBHP5XLgokI7PgBnQkZeI9nxw24=
+X-Gm-Gg: ASbGncsDwCPm5wZIRDdfnbWdriCEwa+8lPt2H2Q5/z+KWGsrI1A3h2u14PkwlVhERWE
+	1bSOwDx8upladYODCuucHPExj3fVsBCt3Op5IdA==
+X-Google-Smtp-Source: AGHT+IGOup7wcJu0a+hoVD23MkdC+90zQYbVL8IWK1gZHb4nPospupEy9EVUxv9nz6Wbpm7kgmK+fp5n5g/7Xc5vuHE=
+X-Received: by 2002:a17:90a:d647:b0:2ee:c9dd:b7ea with SMTP id
+ 98e67ed59e1d1-2f452eb12famr14288840a91.24.1734870012180; Sun, 22 Dec 2024
+ 04:20:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241222-b4-pks-reftable-oom-fix-without-readers-v2-4-19550090d15a@pks.im>
-References: <20241222-b4-pks-reftable-oom-fix-without-readers-v2-0-19550090d15a@pks.im>
-In-Reply-To: <20241222-b4-pks-reftable-oom-fix-without-readers-v2-0-19550090d15a@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- "Randall S. Becker" <randall.becker@nexbridge.ca>
-X-Mailer: b4 0.14.2
+References: <CAG=Um+0v=BmmYjvBAXs4r4My6zYvpJvcE+0U6SAnxKUcd1-A4w@mail.gmail.com>
+ <Z2Emh42DJkHFGWq7@pks.im> <xmqqcyhq3ge7.fsf@gitster.g> <CAG=Um+1NwB=ymwg+oM62f_W8G=3Gt14UFGe+S2MM3gTOdUcuHg@mail.gmail.com>
+ <CAG=Um+0yFYeBQGznkVG6TJeN-U+qySbt-0EbvM6Vd-BcvSCT4g@mail.gmail.com>
+ <xmqq7c7y13tc.fsf@gitster.g> <CAG=Um+0qGEf+pX0cjCA2Qti4NYwFeCb29zgS7k2Lu_0yfuEz-w@mail.gmail.com>
+ <xmqq34iluhqy.fsf@gitster.g>
+In-Reply-To: <xmqq34iluhqy.fsf@gitster.g>
+From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Date: Sun, 22 Dec 2024 17:49:35 +0530
+Message-ID: <CAG=Um+2cdMcys2x492_i47-qdvx5aJ7k6r=xSH5a3JZtMZBEZw@mail.gmail.com>
+Subject: Re: Consider adding pruning of refs to git maintenance
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In the preceding commits we have fixed a couple of issues when
-allocating zero-sized objects. These issues were masked by
-implementation-defined behaviour. Quoting malloc(3p):
+On Wed, Dec 18, 2024 at 9:05=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+...
 
-  If size is 0, either:
+> Ah, are they using "git fetch origin +foo:refs/remotes/origin/foo",
+> i.e., only selectively fetch the thing that they use and nothing
+> else (again, their wrappers may supply the refspec to do the
+> limiting)?  Now it slowly starts to make sense to me (sorry, I am
+> slow, especially without caffeine in the morning).
+>
+> Am I following / guessing your set-up more or less correctly so far?
 
-    * A null pointer shall be returned and errno may be set to an
-      implementation-defined value, or
+Yes. The root cause of the issue here is that the behaviour that `git
+fetch` / `git pull` fetches all refs by default is undesirable in
+large git repositories.
+It's almost never what you want to do. We advice users to execute `git
+fetch <remote> <ref>` when they want to run fetch (/pull) explicitly.
 
-    * A pointer to the allocated space shall be returned. The
-      application shall ensure that the pointer is not used to access an
-      object.
+Ideally, `git fetch` would only fetch the current branch when an
+explicit branch is not specified, and `git fetch --all` would pull in
+all.
+Now I believe git does provide a way to configure the default fetch
+refs via `remote.<name>.fetch`. So in theory I could just set =E2=80=94
 
-So it is perfectly valid that implementations of this function may or
-may not return a NULL pointer in such a case.
+```
+[remote "origin"]
+      fetch =3D +refs/heads/master:refs/remotes/origin/master
+```
 
-Adapt both `reftable_malloc()` and `reftable_realloc()` so that they
-return NULL pointers on zero-sized allocations. This should remove any
-implementation-defined behaviour in our allocators and thus allows us to
-detect such platform-specific issues more easily going forward.
+which would avoid someone pulling in all refs accidentally.
+However that has a side effect that now if you do want to fetch &
+start working on a remote ref that you weren't previously tracking, a
+command like
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/basics.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+```
+git fetch origin new-ref-branch-from-remote
+```
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 7d84a5d62dead1cf1a60698b1bb12fe6ac41c090..70b1091d1495bb5b4c8aae63bd9213dc704aecde 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -17,6 +17,8 @@ static void (*reftable_free_ptr)(void *);
- 
- void *reftable_malloc(size_t sz)
- {
-+	if (!sz)
-+		return NULL;
- 	if (reftable_malloc_ptr)
- 		return (*reftable_malloc_ptr)(sz);
- 	return malloc(sz);
-@@ -24,6 +26,11 @@ void *reftable_malloc(size_t sz)
- 
- void *reftable_realloc(void *p, size_t sz)
- {
-+	if (!sz) {
-+		reftable_free(p);
-+		return NULL;
-+	}
-+
- 	if (reftable_realloc_ptr)
- 		return (*reftable_realloc_ptr)(p, sz);
- 	return realloc(p, sz);
+no longer allows you to just start working on this new branch by doing
+a `git checkout new-ref-branch-from-remote`.
 
--- 
-2.48.0.rc0.184.g0fc57dec57.dirty
+If you wanted to be able to do that, you'd probably need to do =E2=80=94
 
+```
+    git fetch origin new-ref-branch-from-remote
+--refmap=3D+refs/heads/new-ref-branch-from-remote:refs/remotes/origin/new-r=
+ef-branch-from-remote
+```
+
+which is pretty awkward to type everytime.
+
+Now to come back from this little digression, for now =E2=80=94
+- We ask users to set both `fetch.prune` and `fetch.pruneTags` to true
+(so that if a third party tool does do something, the damage is
+limited and they don't have an ever-growing list of refs)
+- Setup this job that cleans stale remote refs on a periodic basis,
+which means that their ref counts heal over time (if they configure
+all third party tools right)
+
+
+> Now, the documentation should explain when this "periodically running
+> remote prune" is an acceptable workaround and/or a useful solution,
+> relative to setting fetch.prune, as most parts of the existing
+> documentation do assume that the users, intended audience of the
+> document, are using the bog-standard "git clone" result, that copies
+> all their branches to remote-tracking branches.
+
+Agreed, will update docs to include that.
+
+Thanks,
+Shubham K
