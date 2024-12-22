@@ -1,146 +1,98 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0995717C68
-	for <git@vger.kernel.org>; Sun, 22 Dec 2024 12:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC55633D1
+	for <git@vger.kernel.org>; Sun, 22 Dec 2024 13:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734870014; cv=none; b=s/szi8ezWmSiKtpOCLgB84OjdTXiHgSme+TNjIphid/EfEcDCeU/g+koZSiR+1PzeGGnZXHQU4NGZwIXUlhEy+DNhI1r7D8rqE2SjGNStNkU9lfNgT0Ig0ksxXZRK+JZeaEeg/ZJGOCn4e7feX3XTtEW5GceHguQ5xmilD53Ws4=
+	t=1734873774; cv=none; b=I969Qq1xslDKm0BLOtaYbgxT67wSw1sw6b0Ec9PkGnEsVUvqYYG2S1HzsiCqCMGMZIsWpH1K5jnC5eBIr3vRqCmljKaV+6ldlnHpXB5x2FKOwxwbSun6Fjx+rTkKU9ePphjKi+0tNAsmpFBCVaAHASvFBnFKXwkmwHGmqSi3eXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734870014; c=relaxed/simple;
-	bh=x/2B/HcYGwRKrLam9NDqcHF15mLqO/iytDSY0XuuDQM=;
+	s=arc-20240116; t=1734873774; c=relaxed/simple;
+	bh=4zT8sk+OCvqM7hPfwdVonAlOJHAyC93Rl49zs1bBW/s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=knl6rdOVezHaMsQ1MCn+nujxar2wz9yKDP9Z84Rky/vuZSCisvvw5765+9pwerwqScLX8PsvocyZYSGC0WzPbblNu3jMoF9KXLW4xYyvlrDM4S7NgZqVkXUgX2SiPGwWlR2n7y/gcE5T/2rzPef4s4bifStjaZcRmB/RhnFFqlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FnM6omeC; arc=none smtp.client-ip=209.85.216.50
+	 To:Cc:Content-Type; b=kMrFzI0LMkC10fhfgueknCuWpd+kEHb4dRpvW9G1X95sHd0w7lijSSD+76n5msY3751S+grY66mj9NFa3A9oWrmKTgFgXjoZxl+YHZzHyyiMj5Wnvu8LSK5vOizH5MxplopLGFap7xktF5wLSJh1C+UOws4lxizN4zQ0sq4SSBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EYbVV5zl; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FnM6omeC"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2eeb4d643a5so3166418a91.3
-        for <git@vger.kernel.org>; Sun, 22 Dec 2024 04:20:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EYbVV5zl"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e3c8ae3a3b2so2459223276.0
+        for <git@vger.kernel.org>; Sun, 22 Dec 2024 05:22:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734870012; x=1735474812; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kzmcEjbxGzwVCcCnlMRO3GrqiqZqEpNInGkFNTSh/5s=;
-        b=FnM6omeCJqEm+hB7Lcl5L0otwvEQrK9btcc2CxXKsoXZah/pvWbMcE2gmKFDLFbx4E
-         NDWVhEjWleKtrsKM55NlbEwB/j9IdCX9PzouhhcQoKwvxa8ibK9PvquYVSfidBpnnQ2N
-         LvCgjF2WaDWq4BtPfHEd+z/M8hxu4rzPqVbenmAGXQpIRtGBD1G5ZX9ZNLqOhlmriEvO
-         gcjjFYsw6c0O4OyY4b8T4V6Fq4VWLEkAiguPLYefQlNGNXJfp8CvTBqek2KmQH2wuil5
-         l8ObBna7Sxn5sJW9DKggYJ77LUYds72FjkWp/8PKb7A6tUu6UVUG//FhbfWg/B3GTTUc
-         gpjQ==
+        d=gmail.com; s=20230601; t=1734873772; x=1735478572; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4zT8sk+OCvqM7hPfwdVonAlOJHAyC93Rl49zs1bBW/s=;
+        b=EYbVV5zlOJyC4tC9+t+K/KxwzArt/Y6SEz+mFz5Lvv5wIOc7+5Dn4FVn0hd4f0+RP+
+         44MrDoeMal5/btH6cV870BP2LXYVp2O09+a9zqnXwCZ0ra27MKaGLfAaDvsA1Mu2QAIB
+         Rqg2YGVP9LQPe6f8y3k3jqoK73Z6+D8xASPtdo4kXeywcQ8+67cxg9cCMH+MCpEPmWsE
+         +f+6yqFYbdQtW5hSuWCaiu9ICIVRbZ31FGqAUU0CGTJyuatfaJuCseGgdqeTUxJ42xje
+         NA4lWvEY3VPlrKx96NVz6cJGRkEQZ3VWY9RIK4qOPBBqcjRGeziHk1yqqQ/bLYY23yZC
+         jiNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734870012; x=1735474812;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kzmcEjbxGzwVCcCnlMRO3GrqiqZqEpNInGkFNTSh/5s=;
-        b=mch9Xl673W15PoVYDWQg5zgIDaenRv1psxay661gFra3rcYkeIaorh3CiZiGnX2VoY
-         6s0Z2f+DsiaSE8S0N5mz95y1C4T3wVGLqM6ptg2RyOF+d20NEtwNHuh/0IAhPLY7V2jn
-         DKXPoQxSZf1HsRn/44sk0hfj33b8BSc58ybekHaosQcCJXnmaYaqZuq9UhDNGMYfLrY9
-         w5dli56n1ZAh4qXLAOWHCFHaLmaua/tWcFaY0NDiMItXrUQR5vbCpRfm66cvdtYdRdv/
-         GA+8gbNJJEWMWrooSLk/61Q6ZHMSN4NDAqJYD7Kz1MLGmLMt12pq+SuhTG3NY74IeDkD
-         OKBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXKBwusVO+MBnynstL2IYJB96wC3Bf38Y+94JZrXSEnX/ldrJXeWbEmXmCUjKnsi33AWGU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yycd2YFhoehfY8ekWaCMFE3/+khEP8R6xuA9unnr/wHeV5Tq3Ey
-	e2G/dyVKVLAkYofTZ99dawvZQSbElMkCvmySmkvPtsiUVS/3jqcRl5eLp646jlOsoQQR2znhSV8
-	DMBHP5XLgokI7PgBnQkZeI9nxw24=
-X-Gm-Gg: ASbGncsDwCPm5wZIRDdfnbWdriCEwa+8lPt2H2Q5/z+KWGsrI1A3h2u14PkwlVhERWE
-	1bSOwDx8upladYODCuucHPExj3fVsBCt3Op5IdA==
-X-Google-Smtp-Source: AGHT+IGOup7wcJu0a+hoVD23MkdC+90zQYbVL8IWK1gZHb4nPospupEy9EVUxv9nz6Wbpm7kgmK+fp5n5g/7Xc5vuHE=
-X-Received: by 2002:a17:90a:d647:b0:2ee:c9dd:b7ea with SMTP id
- 98e67ed59e1d1-2f452eb12famr14288840a91.24.1734870012180; Sun, 22 Dec 2024
- 04:20:12 -0800 (PST)
+        d=1e100.net; s=20230601; t=1734873772; x=1735478572;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4zT8sk+OCvqM7hPfwdVonAlOJHAyC93Rl49zs1bBW/s=;
+        b=tT2rUvbTiAflrN16XRy7oGS6160MJ3v1RX29AHD+KTi4IQyIpXogV6VSCm7om/RhQQ
+         qWICsGAOTukq8DadzuEjFmDNso10WgDa7aXHZCfc52FluxY4d+y7k+fY59VdGB4DsFhu
+         pDhl+GiJCOjBKA+rtEHtmWP96TCByFlix51DjgI5prJkuD8OMSpRv4HShPncHaAJstaT
+         q+4QTjKzJioa1ie8nYNKnkAADXkDE9oOtYAwkaH9dWk0yiEASZdVbyJNJ1gcr9zU1udF
+         T9xb12PWgIe5vvDdIdF/wjoMPr2wIjm3or1Nr+TI1sRwsCz61RfHXDBJHdcd1U7AwGm5
+         w6NQ==
+X-Gm-Message-State: AOJu0YygtrnwS4WPnzWd+brsv6klD2V9y2xlsnDPUYKebB0fQVpB4/sc
+	T3Oj7GE64fYUNrjm6gj8BYgtgAHrooJQ8wVSwXBWbATtUH3LpffEPxWkKVYGmN70KI46CM/CAJ0
+	1N1x03wnq3uyYG5OEwiEFkzqrA878LlaZMd38yQ==
+X-Gm-Gg: ASbGncvINTLimoF3J1xPlm6sNTJcOcTcVeVtPqG2tsU9XeOUXA1CW9X+5PYpCOBjq9+
+	GC2PYzkUvXoNlGPCIYRy2vcKddwEKbUqH/l3/3A==
+X-Google-Smtp-Source: AGHT+IHfS/7R5vzO3v48NXNH6krNpVFzQbJfjJFj8u6g+bJ4SR/7xuKBmBTfSBRntP88tC+oLxK2dr3j5eCCZz6PYAo=
+X-Received: by 2002:a05:6902:230c:b0:e39:7a90:eeb7 with SMTP id
+ 3f1490d57ef6-e538c26f65dmr6949727276.22.1734873771762; Sun, 22 Dec 2024
+ 05:22:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAG=Um+0v=BmmYjvBAXs4r4My6zYvpJvcE+0U6SAnxKUcd1-A4w@mail.gmail.com>
- <Z2Emh42DJkHFGWq7@pks.im> <xmqqcyhq3ge7.fsf@gitster.g> <CAG=Um+1NwB=ymwg+oM62f_W8G=3Gt14UFGe+S2MM3gTOdUcuHg@mail.gmail.com>
- <CAG=Um+0yFYeBQGznkVG6TJeN-U+qySbt-0EbvM6Vd-BcvSCT4g@mail.gmail.com>
- <xmqq7c7y13tc.fsf@gitster.g> <CAG=Um+0qGEf+pX0cjCA2Qti4NYwFeCb29zgS7k2Lu_0yfuEz-w@mail.gmail.com>
- <xmqq34iluhqy.fsf@gitster.g>
-In-Reply-To: <xmqq34iluhqy.fsf@gitster.g>
-From: Shubham Kanodia <shubham.kanodia10@gmail.com>
-Date: Sun, 22 Dec 2024 17:49:35 +0530
-Message-ID: <CAG=Um+2cdMcys2x492_i47-qdvx5aJ7k6r=xSH5a3JZtMZBEZw@mail.gmail.com>
-Subject: Re: Consider adding pruning of refs to git maintenance
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
+ <CAGedMtd9F3tZXC-z-5=csELdPakzFS=QU-e35So3Og_ak0mq3g@mail.gmail.com> <Z2e-T0NZzrMwEvmd@pks.im>
+In-Reply-To: <Z2e-T0NZzrMwEvmd@pks.im>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Sun, 22 Dec 2024 14:22:38 +0100
+Message-ID: <CAGedMtfDMj5P0T6x3soe3OUhRbpSw_-m1Vcm+rhDat1vvReK9w@mail.gmail.com>
+Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
+ convert unit test to use clar
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 18, 2024 at 9:05=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-...
-
-> Ah, are they using "git fetch origin +foo:refs/remotes/origin/foo",
-> i.e., only selectively fetch the thing that they use and nothing
-> else (again, their wrappers may supply the refspec to do the
-> limiting)?  Now it slowly starts to make sense to me (sorry, I am
-> slow, especially without caffeine in the morning).
+On Sun, 22 Dec 2024 at 08:23, Patrick Steinhardt <ps@pks.im> wrote:
 >
-> Am I following / guessing your set-up more or less correctly so far?
+> On Fri, Dec 20, 2024 at 11:37:23AM +0100, Seyi Chamber wrote:
+> > Hello everyone,
+> >
+> > I just published a new blog post on unit test scripts I've selected
+> > and prioritized for initial conversion to clar. I would love for you
+> > to check it out and share your opinion!
+> >
+> > Find the link here:
+> > https://seyi-kuforiji-902b48.gitlab.io/posts/week-2-prioritizing-test-scripts
+>
+> Thanks for the blog post! The initial selection looks reasonable to me.
+> I was wondering whether it would make sense to evict "t-reftable-tree.c"
+> out of the first batch and then handle all reftable-related tests in a
+> single patch series. But we've got 9 of those, some of which are quite
+> complex, so that patch series would become quite large overall. So I
+> guess it's sensible to distribute the conversion of the reftable tests
+> across different patch series.
+>
+> Patrick
 
-Yes. The root cause of the issue here is that the behaviour that `git
-fetch` / `git pull` fetches all refs by default is undesirable in
-large git repositories.
-It's almost never what you want to do. We advice users to execute `git
-fetch <remote> <ref>` when they want to run fetch (/pull) explicitly.
+I suppose I could still make that work if that's your recommendation.
+I could divide the reftable-related tests into two sets and then treat
+them together. What do you think?
 
-Ideally, `git fetch` would only fetch the current branch when an
-explicit branch is not specified, and `git fetch --all` would pull in
-all.
-Now I believe git does provide a way to configure the default fetch
-refs via `remote.<name>.fetch`. So in theory I could just set =E2=80=94
-
-```
-[remote "origin"]
-      fetch =3D +refs/heads/master:refs/remotes/origin/master
-```
-
-which would avoid someone pulling in all refs accidentally.
-However that has a side effect that now if you do want to fetch &
-start working on a remote ref that you weren't previously tracking, a
-command like
-
-```
-git fetch origin new-ref-branch-from-remote
-```
-
-no longer allows you to just start working on this new branch by doing
-a `git checkout new-ref-branch-from-remote`.
-
-If you wanted to be able to do that, you'd probably need to do =E2=80=94
-
-```
-    git fetch origin new-ref-branch-from-remote
---refmap=3D+refs/heads/new-ref-branch-from-remote:refs/remotes/origin/new-r=
-ef-branch-from-remote
-```
-
-which is pretty awkward to type everytime.
-
-Now to come back from this little digression, for now =E2=80=94
-- We ask users to set both `fetch.prune` and `fetch.pruneTags` to true
-(so that if a third party tool does do something, the damage is
-limited and they don't have an ever-growing list of refs)
-- Setup this job that cleans stale remote refs on a periodic basis,
-which means that their ref counts heal over time (if they configure
-all third party tools right)
-
-
-> Now, the documentation should explain when this "periodically running
-> remote prune" is an acceptable workaround and/or a useful solution,
-> relative to setting fetch.prune, as most parts of the existing
-> documentation do assume that the users, intended audience of the
-> document, are using the bog-standard "git clone" result, that copies
-> all their branches to remote-tracking branches.
-
-Agreed, will update docs to include that.
-
-Thanks,
-Shubham K
+Thanks
+Seyi
