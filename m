@@ -1,88 +1,80 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD30718A6B7
-	for <git@vger.kernel.org>; Mon, 23 Dec 2024 18:08:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB1628DA1
+	for <git@vger.kernel.org>; Mon, 23 Dec 2024 19:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734977318; cv=none; b=O+KXvEPlxliS+bGyQnVA3J15qoVWoc7RExXNPlgNtLifQqhj/6k/rCS7QtB3cMow2mYcltbrR4oEauWxQUJJcGlpo2YGd2OcsLToxiyHsP9oV5t4coTSg3YVwikqH9euvxtbeAkmuyc4/OHrvBoXdLmYwv3eOtF8xhp1XNlhTqI=
+	t=1734982067; cv=none; b=igdOdGajU71I1Ewv6j79ZCcuMpmw8n9okZK+ED1xUMexww1dE496vyUbmaBbunVg7s8bataOrB/ILC+EExJa3C9vPIPfLf0MHv84njDNB4TsTakjfFWodODrQJe0fOYnZoPkG0FK6QOTsxF1XM6gmZIl9Qyo+DG1xsl4ReoNuJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734977318; c=relaxed/simple;
-	bh=x3hAG5M10DCgcF3+XQvZvh7nXEIALSSrmBHIz+Zt8Wk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FeO11P/woY6RBIrlrCRdb3bC/7GcxUQQPBrv+HTlw8a5MLCBlT0viZ3zbd+0YTQPmwcXVcrVpSnN8YrTYl3y1C62BgvhpkaG2cvWLhjaToAO1b+/75M5Tkr6bhy91cuNxM8+ohwhG8z17E02WnUGbXLAFMrkUpLtz0MhjlMnubk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TwESwFFQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RhYsJaK7; arc=none smtp.client-ip=202.12.124.150
+	s=arc-20240116; t=1734982067; c=relaxed/simple;
+	bh=Nbi25/n1bmY4V1rCnKqlCFHAMtNkSNhimC5uARePw5U=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TyU0UIBHWjnY9bmqXagzFhUkGdxVy+2cNjReEu/B3zcHhuw1y+/HyT9twdRr3CWUaR36pAMkd7wVU+Unjm+DHhRlNBgC3wmXCcqxLuoPYfJxMOHTQYjzg0qunStk7u4BjOIKvB1NjeKv76s++kSH4LAjnKCTRYe32YWiZn6dYaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DEsIkdEO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eYaw2maD; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TwESwFFQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RhYsJaK7"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id D102C1140194;
-	Mon, 23 Dec 2024 13:08:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 23 Dec 2024 13:08:35 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DEsIkdEO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eYaw2maD"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 36CF4114015C;
+	Mon, 23 Dec 2024 14:27:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 23 Dec 2024 14:27:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1734977314;
-	 x=1735063714; bh=nINMp55EFiIJuaDr+xM3XAojuhKCBWKw/2T0qTp2p6Q=; b=
-	TwESwFFQRA6VrGqfUs1RvjvAKiFpsPzSmsMqNOpde3h0iUM7e+djd82GYHW5B61E
-	yHmLHi+4+f921sSievsKJyq4aiOoizGJGsQ/OsTPVrWJIK+JOGki3DLnGOX+vOh+
-	LyoLCEaDFn0n7tCLp7bnAxqB3AST2cfLeDNIyDtIsNypFxCmtIquotKnnfA6p7qL
-	kXNHxpq7c9Mpi4Jp1aoXm514xiVtVF80HpyshbpVbs+JmpbmrXnndy9btYYts5ft
-	Tb/DHhZUnlNmTorwK4RYo33hUTYMr9BhBdJEB7kx3KGqHKmnrAE2TY8tm5h2FrY6
-	L6ZPt3bHEXXL49cvxbu1jQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1734982063; x=1735068463; bh=SwYMRyOeHHnWv/6inrVeOSF6Buo5mqGh
+	mtS0c2VfOew=; b=DEsIkdEOFFwMPgyjVZCDx+nRqZTH8fVo4IBr5i5lBOvQ3+Jy
+	+p7WhRIoX1Nn20qlJQLHgz8ftjVXqALpIrPtD9QKkeUlZL0HvqrdwSlu+gfEmZ1F
+	g8cqAp5Ox1i2mniplu7Ya/nVzJaVMx+QYuzKtD1dvlSuxsHuCN3NgOMGvP4HhdG9
+	orEbkfJkIedahwUtq9Lh9cD7hM5L19lQf37fzppOY8wGTnxxXiJ2QbojkG1B4uP/
+	aO5xNOYy7PqoQI9YiT90BoBquobxAN47EtgWzD+wn2qtthMf2EWgZmbJ+u+FnOqm
+	uj8Pb/NTvDIHgHi/Ja3rUEnt0Qo+vWsqJOMgAw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734977314; x=
-	1735063714; bh=nINMp55EFiIJuaDr+xM3XAojuhKCBWKw/2T0qTp2p6Q=; b=R
-	hYsJaK7QeyJmtYxU9yaZbb61TCGLQP0OcZSTxGSdZhZ+sBMOU7+8/TLFl1fnlulO
-	UdEXdgZi+JuBBtqk/LNhmeyDS8z6H786TIRY6/QShXb99MTAmmhj7iqdoRz0kcET
-	s6kXh7wfVpFiErQHeMnOvtLvnfyIEIGS49rYo2busdLjyBS1WFjfWp7WRXCREYXm
-	UX3juRLIV+XQs4g/3uwLOLlkmNFISTfblXbIyBBr+GsltYMYVQsTC6KFbKdioxOo
-	5N2QVq7lxMxAyh6jFWHUJVS+C9YnNAfiuxpfMMti7Y68+5X7FGqDM8H6+bA3/9f1
-	UCXPIz6CGTBdF5BtFgBrg==
-X-ME-Sender: <xms:IqdpZ3OhikwTWiDR-YahvAsaJSPs1UazY7nwbyS9Oq9nvikIdZNkLQ>
-    <xme:IqdpZx8sDvyXjGCBUK6vG9std6Ad5SnvgmbYLMkU4a4bwnRv8h8e1eDiLodj8ZYlw
-    nXfXLewn8IV1bao7w>
-X-ME-Received: <xmr:IqdpZ2T7oJNpA20tGn-mJ_2x2oXL0VEoOxek7AFaYeXrDc_6PCTXIcgZvG7TAjt--zgKioOgLx2bes75KUeYcRqUsslDPif2bA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudduvddggeehucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1734982063; x=
+	1735068463; bh=SwYMRyOeHHnWv/6inrVeOSF6Buo5mqGhmtS0c2VfOew=; b=e
+	Yaw2maDWsqHW52+5u0HklLk+QWrcFSVYLFVYFVRg1Zxe8Nuw8c0s+ZUWh3MSnX8+
+	+Kh1a/DGiBJdwYABSQ7thtbmtzWWVDIO5mo2jfL99UzUvXYlxvxxEiVO5zkCO9AM
+	XrcxGbXmFmTrx6C1EYR1uWw8NFvw/AUOA1jSZe2JBtRWwwVW+NiAMAvsZJD9zP3W
+	OSjclU3sYvgEc0zvhdUFtps4SE+3ACfK1zILxfZ5zmQDUiXf4y+AUSYj2xdY5JhE
+	7BCV5B4qPMckOIZTwiD2YDPA8cGX2aHzhEkUZmI1N7/0SYxIl1TdC41sL5s7U+4f
+	01lxN1KyYW9+e2fRXKzjg==
+X-ME-Sender: <xms:rrlpZ_Ulqnb3Akyp_I0R6QXXrMzyLfeVDYt90brXi3dW6zIon6Zruw>
+    <xme:rrlpZ3ljXiC9L7gztJ6xlqQ8vl-OjZFQELzgP_fCIvqvWzSCc0zyLiHBXo0HC1Fc3
+    9djikQN-e2ica-0rA>
+X-ME-Received: <xmr:rrlpZ7Zoey5yMStxsP0P-unoEThirFe99xV0pv9btZEhCJy2jyzWeTR7ZadCPlEElp4vcvDdJKEm2UaqRuECaxdPdnudyyFV0w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudduvddgieduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjiehtsehkuggsgh
-    drohhrghdprhgtphhtthhopegrshhhsehkrghmsggrnhgrrhhirgdrohhrghdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfihorhhlug
-    hhvghllhhordhnvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgruhhluhhsseho
-    iihlrggsshdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IqdpZ7tNejpuaAVVzJxO9s8EG_0-4g1RMnuNZXKR9OEbhfXMcRvAQw>
-    <xmx:IqdpZ_fekNbBdGGChfw0yKqO_Hm8UA6iact1KzHhzdQsjBbJjEANIw>
-    <xmx:IqdpZ311m8I6eiaR0ru93sdSGRmh-UdX3Jy1ik0AzuAFRgbrxNXPdA>
-    <xmx:IqdpZ7_lmK-F-NrHDiy64L2j6KNw-98Je4PIjmLO4fx0hHqSYhoNRA>
-    <xmx:IqdpZ3RJ_3d_2mM9aWRdv3GhwEStyymM_71Ae1lXCJ5cap-j0y5KOZec>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
+    fkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
+    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepjeektdefge
+    fgfefhtefgfeehieduleeijeduhfffjefhgefgheevteefhfdvhffhnecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpd
+    hgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmpdhrsgdrihhnpdhmrghkrdguvghv
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:rrlpZ6WFSkvMkySrhfB97OJTvt-6ldC5hG_wArgJCrNfsdG-Mz2mpg>
+    <xmx:rrlpZ5npLIn22-QWHFq3jxvMr2ZZXu_zpAdU3zb3yWDDf31L5C4dmg>
+    <xmx:rrlpZ3eI8UnJjDjMEls4teHSCKW0oS6m-LR7vgyG6GuDqMPv_UlUuA>
+    <xmx:rrlpZzGWw-6zz_aHRxUZdVZv1jit9zvl-_Vd6khazPYwEIecnj-a3g>
+    <xmx:r7lpZyBahboUAI0Mqqo1iLhehuS52STekom04gPJAe6FWqb6RZl8lXUs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Dec 2024 13:08:33 -0500 (EST)
+ 23 Dec 2024 14:27:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Alexander Shopov <ash@kambanaria.org>,  git@vger.kernel.org,
-  worldhello.net@gmail.com,  paulus@ozlabs.org
-Subject: Re: [PATCH 1/1] gitk: Update Bulgarian translation (323t)
-In-Reply-To: <af81f74b-b5ef-4557-b929-c56fc3309d29@kdbg.org> (Johannes Sixt's
-	message of "Mon, 23 Dec 2024 18:31:19 +0100")
-References: <20241223133918.25133-3-ash@kambanaria.org>
-	<20241223133918.25133-4-ash@kambanaria.org>
-	<af81f74b-b5ef-4557-b929-c56fc3309d29@kdbg.org>
-Date: Mon, 23 Dec 2024 10:08:32 -0800
-Message-ID: <xmqqplliz2zj.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Dec 2024, #08; Mon, 23)
+X-master-at: 996f0c583b36aa5d6c6308285aea1421eb7efae7
+X-next-at: 73897bcc729bd26ea18552b27e1ed5ffad93a951
+Date: Mon, 23 Dec 2024 11:27:41 -0800
+Message-ID: <xmqq8qs6yzbm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,57 +82,550 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-> Am 23.12.24 um 14:39 schrieb Alexander Shopov:
->> Signed-off-by: Alexander Shopov <ash@kambanaria.org>
->> ---
->>  po/bg.po | 696 ++++++++++++++++++++++++++++---------------------------
->>  1 file changed, 360 insertions(+), 336 deletions(-)
->
->> -#: gitk:2203 gitk:8681
->> +#: gitk:2206 gitk:8739
->>  msgid "SHA1 ID:"
->>  msgstr "SHA1:"
->
->> -#: gitk:8700
->> +#: gitk:8758
->>  #, tcl-format
->>  msgid "Short SHA1 id %s is ambiguous"
->>  msgstr "Съкратената сума по SHA1 %s не е еднозначна"
->
->> -#: gitk:8717
->> +#: gitk:8775
->>  #, tcl-format
->>  msgid "SHA1 id %s is not known"
->>  msgstr "Непозната сума по SHA1 %s"
->
->> -#: gitk:11508
->> +#: gitk:11571
->>  msgid "Auto-select SHA1 (length)"
->>  msgstr "Автоматично избиране на SHA1 (дължина)"
->
-> These strings are no longer in the code: "SHA1" has been replaced by
-> "commit ID".
->
-> I am unfamiliar with the translation workflow. What am I expected to do
-> so that you can make translations of the current state?
+Let's wait for git-gui, gitk, and possibly po/ and delay the tagging
+of the -rc1.  Many people are already offline for the end-of-year
+holidays and it is a slow week, and 'master' front has too many new
+things graduated from 'next' a bit too early for me to feel
+comfortable.
 
-You have Jiang Xin on the CC line who is much more expert than I am,
-but in case you didn't hear from him...
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-The update-po target would run msgmerge to grab new messages in the
-code, mark existing translations as fuzzy when it is noticed that an
-existing message got updated, etc., and give you an up-to-date .po
-files to be edited manually.
+With maint, master, next, seen, todo:
 
-On Git itself, we used to make it a task for l10n coordinator to run
-the update-po and translators only updated their .po files, but the
-latest procedure IIUC is for the translators to perform both
-update-po and translation for their language.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-I do not remember how gitk/git-gui l10n was handled, however.
+With all the integration branches and topics broken out:
 
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* as/show-index-uninitialized-hash (2024-11-11) 2 commits
+  (merged to 'next' on 2024-12-16 at b54e9a56f0)
+ + t5300: add test for 'show-index --object-format'
+ + show-index: fix uninitialized hash function
+
+ Regression fix for 'show-index' when run outside of a repository.
+ source: <20241109092739.14276-1-abhijeet.nkt@gmail.com>
+
+
+* jk/prio-queue-sign-compare-fix (2024-12-20) 1 commit
+  (merged to 'next' on 2024-12-21 at 11a5c3d11f)
+ + prio-queue: use size_t rather than int for size
+
+ Type clean-up.
+ source: <20241220084949.GA132704@coredump.intra.peff.net>
+
+
+* js/github-windows-setup-fix (2024-12-17) 1 commit
+  (merged to 'next' on 2024-12-17 at 6d59340ec5)
+ + GitHub ci(windows): speed up initializing Git for Windows' minimal SDK again
+
+ Revert recent changes to the way windows environment is set up for
+ GitHub CI.
+ source: <pull.1841.git.1734447458896.gitgitgadget@gmail.com>
+
+
+* js/mingw-rename-fix (2024-12-17) 1 commit
+  (merged to 'next' on 2024-12-17 at 57dc9a0ebb)
+ + mingw_rename: do support directory renames
+
+ Update the way rename() emulation on Windows handle directories to
+ correct an earlier attempt to do the same.
+ source: <pull.1839.git.1734439924842.gitgitgadget@gmail.com>
+
+
+* js/ps-build-cmake-fixup (2024-12-17) 5 commits
+  (merged to 'next' on 2024-12-17 at 653a20d2f5)
+ + cmake/vcxproj: stop special-casing `remote-ext`
+ + cmake: put the Perl modules into the correct location again
+ + cmake: use the correct file name for the Perl header
+ + cmake(mergetools): better support for out-of-tree builds
+ + cmake: better support for out-of-tree builds follow-up
+
+ Build fixes for Windows.
+ source: <pull.1840.git.1734456721.gitgitgadget@gmail.com>
+
+
+* js/range-diff-diff-merges (2024-12-16) 3 commits
+  (merged to 'next' on 2024-12-18 at 47394ea998)
+ + range-diff: introduce the convenience option `--remerge-diff`
+ + range-diff: optionally include merge commits' diffs in the analysis
+ + Merge branch 'js/log-remerge-keep-ancestry' into js/range-diff-diff-merges
+
+ "git range-diff" learned to optionally show and compare merge
+ commits in the ranges being compared, with the --diff-merges
+ option.
+ source: <pull.1734.v3.git.1734358282.gitgitgadget@gmail.com>
+
+
+* kl/doc-build-fix (2024-12-17) 1 commit
+  (merged to 'next' on 2024-12-21 at d6f8295805)
+ + doc: remove extra quotes in generated docs
+
+ Build fix.
+ source: <pull.1847.v2.git.git.1734483422181.gitgitgadget@gmail.com>
+
+
+* kn/reflog-migration (2024-12-20) 10 commits
+  (merged to 'next' on 2024-12-22 at b75456bef5)
+ + refs: mark invalid refname message for translation
+  (merged to 'next' on 2024-12-18 at 5634446b20)
+ + refs: add support for migrating reflogs
+ + refs: allow multiple reflog entries for the same refname
+ + refs: introduce the `ref_transaction_update_reflog` function
+ + refs: add `committer_info` to `ref_transaction_add_update()`
+ + refs: extract out refname verification in transactions
+ + refs/files: add count field to ref_lock
+ + refs: add `index` field to `struct ref_udpate`
+ + refs: include committer info in `ref_update` struct
+ + Merge branch 'kn/reftable-writer-log-write-verify' into kn/reflog-migration
+ (this branch uses kn/reftable-writer-log-write-verify.)
+
+ "git refs migrate" learned to also migrate the reflog data across
+ backends.
+ source: <20241216-320-git-refs-migrate-reflogs-v4-0-d7cd3f197453@gmail.com>
+ source: <20241220125837.2774153-1-karthik.188@gmail.com>
+
+
+* kn/reftable-writer-log-write-verify (2024-12-07) 1 commit
+  (merged to 'next' on 2024-12-15 at 7e6b58d98e)
+ + reftable/writer: ensure valid range for log's update_index
+ (this branch is used by kn/reflog-migration.)
+
+ Reftable backend adds check for upper limit of log's update_index.
+ source: <20241206-424-reftable-writer-add-check-for-limits-v2-1-82ca350b10be@gmail.com>
+
+
+* ma/asciidoctor-build-fixes (2024-12-20) 4 commits
+  (merged to 'next' on 2024-12-22 at 7a2aad750e)
+ + asciidoctor-extensions.rb.in: inject GIT_DATE
+ + asciidoctor-extensions.rb.in: add missing word
+ + asciidoctor-extensions.rb.in: delete existing <refmiscinfo/>
+ + Merge branch 'ps/build-hotfix' into ma/asciidoctor-build-fixes
+ (this branch uses ps/build-hotfix.)
+
+ A topic to optionally build with meson, which has graduated to
+ 'master' recently, broke Documentation pipeline with asciidoctor
+ for the normal Makefile build as well as meson-based one, which
+ have been corrected.
+ cf. <Z2abxaGVzA5Kce-s@pks.im>
+ source: <cover.1734734612.git.martin.agren@gmail.com>
+
+
+* ps/build-hotfix (2024-12-20) 6 commits
+  (merged to 'next' on 2024-12-22 at 0d4dfd121e)
+ + meson: add options to override build information
+ + GIT-VERSION-GEN: fix overriding GIT_BUILT_FROM_COMMIT and GIT_DATE
+ + GIT-VERSION-GEN: fix overriding GIT_VERSION
+ + Makefile: introduce template for GIT-VERSION-GEN
+ + Makefile: drop unneeded indirection for GIT-VERSION-GEN outputs
+ + Makefile: stop including "GIT-VERSION-FILE" in docs
+ (this branch is used by ma/asciidoctor-build-fixes.)
+
+ A topic to optionally build with meson, which has graduated to
+ 'master' recently, has regressed the normal Makefile build, which
+ is being corrected.
+ source: <20241220-b4-pks-git-version-via-environment-v3-0-1fd79b52a5fb@pks.im>
+
+
+* ps/build-meson-gitweb (2024-12-20) 1 commit
+  (merged to 'next' on 2024-12-21 at f775554ea5)
+ + meson: skip gitweb build when Perl is disabled
+
+ meson-based build still tried to build and install gitweb even when
+ Perl is disabled, which has been corrected.
+ source: <20241220-b4-pks-meson-fix-gitweb-wo-perl-v2-1-18ab23dd6446@pks.im>
+
+
+* ps/build-sign-compare (2024-12-06) 16 commits
+  (merged to 'next' on 2024-12-16 at 1ddb1485df)
+ + t/helper: don't depend on implicit wraparound
+ + scalar: address -Wsign-compare warnings
+ + builtin/patch-id: fix type of `get_one_patchid()`
+ + builtin/blame: fix type of `length` variable when emitting object ID
+ + gpg-interface: address -Wsign-comparison warnings
+ + daemon: fix type of `max_connections`
+ + daemon: fix loops that have mismatching integer types
+ + global: trivial conversions to fix `-Wsign-compare` warnings
+ + pkt-line: fix -Wsign-compare warning on 32 bit platform
+ + csum-file: fix -Wsign-compare warning on 32-bit platform
+ + diff.h: fix index used to loop through unsigned integer
+ + config.mak.dev: drop `-Wno-sign-compare`
+ + global: mark code units that generate warnings with `-Wsign-compare`
+ + compat/win32: fix -Wsign-compare warning in "wWinMain()"
+ + compat/regex: explicitly ignore "-Wsign-compare" warnings
+ + git-compat-util: introduce macros to disable "-Wsign-compare" warnings
+ (this branch is used by ps/the-repository.)
+
+ Start working to make the codebase buildable with -Wsign-compare.
+ source: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
+
+
+* ps/ci-gitlab-update (2024-12-12) 4 commits
+  (merged to 'next' on 2024-12-15 at e0ca818197)
+ + ci/lib: fix "CI setup" sections with GitLab CI
+ + ci/lib: do not interpret escape sequences in `group ()` arguments
+ + ci/lib: remove duplicate trap to end "CI setup" group
+ + gitlab-ci: update macOS images to Sonoma
+
+ GitLab CI updates.
+ source: <20241212-pks-ci-section-fixes-v3-0-d9fe6baee21e@pks.im>
+
+
+* ps/ci-meson (2024-12-13) 10 commits
+  (merged to 'next' on 2024-12-17 at fc95a5a9cb)
+ + ci: wire up Meson builds
+ + t: introduce compatibility options to clar-based tests
+ + t: fix out-of-tree tests for some git-p4 tests
+ + Makefile: detect missing Meson tests
+ + meson: detect missing tests at configure time
+ + t/unit-tests: rename clar-based unit tests to have a common prefix
+ + Makefile: drop -DSUPPRESS_ANNOTATED_LEAKS
+ + ci/lib: support custom output directories when creating test artifacts
+ + Merge branch 'ps/build' into ps/ci-meson
+ + Merge branch 'cw/worktree-extension' into ps/ci-meson
+
+ The meson-build procedure is integrated into CI to catch and
+ prevent bitrotting.
+ cf. <87zfkwgehr.fsf@iotcl.com>
+ source: <20241213-pks-meson-ci-v2-0-634affccc694@pks.im>
+
+
+* ps/reftable-alloc-failures-zalloc-fix (2024-12-22) 4 commits
+  (merged to 'next' on 2024-12-22 at 92bc55b18e)
+ + reftable/basics: return NULL on zero-sized allocations
+ + reftable/stack: fix zero-sized allocation when there are no readers
+ + reftable/merged: fix zero-sized allocation when there are no readers
+ + reftable/stack: don't perform auto-compaction with less than two tables
+
+ Recent reftable updates mistook a NULL return from a request for
+ 0-byte allocation as OOM and died unnecessarily, which has been
+ corrected.
+ source: <20241222-b4-pks-reftable-oom-fix-without-readers-v2-0-19550090d15a@pks.im>
+
+
+* sk/calloc-not-malloc-plus-memset (2024-12-18) 1 commit
+  (merged to 'next' on 2024-12-18 at 5af85a77f3)
+ + git: use calloc instead of malloc + memset where possible
+
+ Code clean-up.
+ source: <pull.1390.v11.git.git.1734540512582.gitgitgadget@gmail.com>
+
+
+* tb/bitmap-fix-pack-reuse (2024-12-18) 1 commit
+  (merged to 'next' on 2024-12-21 at 104463402b)
+ + pack-bitmap.c: ensure pack validity for all reuse packs
+
+ Code to reuse objects based on bitmap contents have been tightened
+ to avoid race condition even when multiple packs are involved.
+ source: <7fdbfadc04926efc094633b238a55168c92e3d58.1734117577.git.me@ttaylorr.com>
+
+--------------------------------------------------
+[New Topics]
+
+* jc/show-index-h-update (2024-12-20) 1 commit
+ - show-index: the short help should say the command reads from its input
+
+ Doc and short-help text for "show-index" has been clarified to
+ stress that the command reads its data from the standard input.
+
+ Comments?
+ source: <xmqqfrmidyhk.fsf@gitster.g>
+
+--------------------------------------------------
+[Cooking]
+
+* ps/the-repository (2024-12-18) 15 commits
+ - match-trees: stop using `the_repository`
+ - graph: stop using `the_repository`
+ - add-interactive: stop using `the_repository`
+ - tmp-objdir: stop using `the_repository`
+ - resolve-undo: stop using `the_repository`
+ - credential: stop using `the_repository`
+ - mailinfo: stop using `the_repository`
+ - diagnose: stop using `the_repository`
+ - server-info: stop using `the_repository`
+ - send-pack: stop using `the_repository`
+ - serve: stop using `the_repository`
+ - trace: stop using `the_repository`
+ - pager: stop using `the_repository`
+ - progress: stop using `the_repository`
+ - Merge branch 'ps/build-sign-compare' into ps/the-repository
+
+ More code paths have a repository passed through the callchain,
+ instead of assuming the primary the_repository object.
+ source: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+
+
+* ps/build-meson-html (2024-12-13) 11 commits
+ - meson: install static files for HTML documentation
+ - meson: generate articles
+ - Documentation: refactor "howto-index.sh" for out-of-tree builds
+ - Documentation: refactor "api-index.sh" for out-of-tree builds
+ - meson: generate user manual
+ - Documentation: inline user-manual.conf
+ - meson: generate HTML pages for all man page categories
+ - meson: fix generation of merge tools
+ - meson: properly wire up dependencies for our docs
+ - meson: wire up support for AsciiDoctor
+ - Merge branch 'ps/build' into ps/build-meson-html
+
+ The build procedure based on meson learned to generate HTML
+ documention pages.
+
+ Needs review. On hold.
+ source: <20241213-b4-pks-meson-docs-v1-0-0c7895952cd3@pks.im>
+
+
+* jc/doc-attr-tree (2024-12-14) 1 commit
+ - doc: give attr.tree a bit more visibility
+
+ Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
+ attr.tree configuration variables appear at the same places in the
+ documentation.
+
+ On hold.
+ cf. <20241216111112.GA2201417@coredump.intra.peff.net>
+ source: <xmqq5xnladwi.fsf@gitster.g>
+
+
+* ps/3.0-remote-deprecation (2024-12-12) 6 commits
+ - remote: announce removal of "branches/" and "remotes/"
+ - builtin/pack-redundant: remove subcommand with breaking changes
+ - ci: repurpose "linux-gcc" job for deprecations
+ - ci: merge linux-gcc-default into linux-gcc
+ - Makefile: wire up build option for deprecated features
+ - Merge branch 'ps/build' into ps/3.0-remote-deprecation
+
+ Following the procedure we established to introduce breaking
+ changes for Git 3.0, allow an early opt-in for removing support of
+ $GIT_DIR/branches/ and $GIT_DIR/remotes/ directories to configure
+ remotes.
+
+ Needs review.
+ source: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
+
+
+* cc/lop-remote (2024-12-07) 5 commits
+ . doc: add technical design doc for large object promisors
+ . promisor-remote: check advertised name or URL
+ . Add 'promisor-remote' capability to protocol v2
+ . strbuf: refactor strbuf_trim_trailing_ch()
+ . version: refactor strbuf_sanitize()
+
+ Expecting a reroll.
+ cf. <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
+ source: <20241206124248.160494-1-christian.couder@gmail.com>
+
+
+* ds/backfill (2024-12-20) 6 commits
+ - backfill: assume --sparse when sparse-checkout is enabled
+ - backfill: add --sparse option
+ - backfill: add --min-batch-size=<n> option
+ - backfill: basic functionality and tests
+ - backfill: add builtin boilerplate
+ - Merge branch 'ds/path-walk-1' into ds/backfill
+ (this branch uses ds/path-walk-1.)
+
+ Lazy-loading missing files in a blobless clone on demand is costly
+ as it tends to be one-blob-at-a-time.  "git backfill" is introduced
+ to help bulk-download necessary files beforehand.
+
+ Comments?
+ source: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
+
+
+* re/submodule-parse-opt (2024-12-11) 7 commits
+  (merged to 'next' on 2024-12-21 at 9e65a56a63)
+ + git-submodule.sh: rename some variables
+ + git-submodule.sh: improve variables readability
+ + git-submodule.sh: add some comments
+ + git-submodule.sh: get rid of unused variable
+ + git-submodule.sh: get rid of isnumber
+ + git-submodule.sh: improve parsing of short options
+ + git-submodule.sh: improve parsing of some long options
+
+ "git submodule" learned various ways to spell the same option,
+ e.g. "--branch=B" can be spelled "--branch B" or "-bB".
+
+ Will cook in 'next'.
+ source: <20241211063234.7610-1-royeldar0@gmail.com>
+
+
+* tb/unsafe-hash-test (2024-11-21) 2 commits
+ - t/helper/test-tool: implement sha1-unsafe helper
+ - t/helper/test-sha1: prepare for an unsafe mode
+
+ Preliminary addition to the test tool to allow a plain SHA-1 hash
+ algorithm without collision protection.
+
+ Comments?
+ cf. <xmqqr073antj.fsf@gitster.g>
+ source: <cover.1730833506.git.me@ttaylorr.com>
+
+
+* tb/incremental-midx-part-2 (2024-11-20) 15 commits
+ - midx: implement writing incremental MIDX bitmaps
+ - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+ - pack-bitmap.c: keep track of each layer's type bitmaps
+ - ewah: implement `struct ewah_or_iterator`
+ - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+ - pack-bitmap.c: compute disk-usage with incremental MIDXs
+ - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+ - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+ - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+ - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+ - pack-bitmap.c: open and store incremental bitmap layers
+ - pack-revindex: prepare for incremental MIDX bitmaps
+ - Documentation: describe incremental MIDX bitmaps
+ - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+ - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+
+ Incrementally updating multi-pack index files.
+
+ Needs review.
+ source: <cover.1732054032.git.me@ttaylorr.com>
+
+
+* ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
+ - transport: don't ignore git-receive-pack(1) exit code on atomic push
+ - t5504: modernize test by moving heredocs into test bodies
+
+ "git push --atomic --porcelain" used to ignore failures from the
+ other side, losing the error status from the child process, which
+ has been corrected.
+
+ Needs to see if competing parallel topic needs to replace this one.
+ source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
+
+
+* jc/move-is-bare-repository-cfg-variable-to-repo (2024-11-07) 3 commits
+ . repository: BUG when is_bare_cfg is not initialized
+ . setup: initialize is_bare_cfg
+ . git: remove is_bare_repository_cfg global variable
+
+ Code rewrite to turn the is_bare_repository_cfg global variable
+ into a member in the the_repo singleton repository object.
+
+ Waiting for response to reviews.
+ cf. <xmqqy116xvr3.fsf@gitster.g>
+ Seems to break t0021-conversion on Windows.
+ cf. https://lore.kernel.org/git/xmqqzfl1hl52.fsf@gitster.g/
+ source: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
+
+
+* ds/name-hash-tweaks (2024-12-20) 8 commits
+ - pack-objects: add third name hash version
+ - pack-objects: prevent name hash version change
+ - test-tool: add helper for name-hash values
+ - p5313: add size comparison test
+ - pack-objects: add GIT_TEST_NAME_HASH_VERSION
+ - repack: add --name-hash-version option
+ - pack-objects: add --name-hash-version option
+ - pack-objects: create new name-hash function version
+
+ "git pack-objects" and its wrapper "git repack" learned an option
+ to use an alternative path-hash function to improve delta-base
+ selection to produce a packfile with deeper history than window
+ size.
+
+ Comments?
+ source: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+
+
+* ds/path-walk-1 (2024-12-20) 7 commits
+ - path-walk: reorder object visits
+ - path-walk: mark trees and blobs as UNINTERESTING
+ - path-walk: visit tags and cached objects
+ - path-walk: allow consumer to specify object types
+ - t6601: add helper for testing path-walk API
+ - test-lib-functions: add test_cmp_sorted
+ - path-walk: introduce an object walk by path
+ (this branch is used by ds/backfill.)
+
+ Introduce a new API to visit objects in batches based on a common
+ path, or by type.
+
+ Comments?
+ source: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
+
+
+* km/config-remote-by-name (2024-10-21) 1 commit
+ - config: support remote name in includeIf.hasconfig condition
+
+ Support conditionally including configuration by remote name, instead
+ of just URL.
+
+ Will discard?
+ source: <20241020173216.40852-2-ken@kmatsui.me>
+
+
+* y5/diff-pager (2024-10-21) 1 commit
+ - diff: setup pager only before diff contents truly ready
+
+ Delay setting up the pager in 'git diff' until after the diff contents
+ itself is fully prepared.
+
+ Will discard?
+ source: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
+
+
+* ej/cat-file-remote-object-info (2024-11-25) 6 commits
+ - cat-file: add remote-object-info to batch-command
+ - transport: add client support for object-info
+ - serve: advertise object-info feature
+ - fetch-pack: move fetch initialization
+ - fetch-pack: refactor packet writing
+ - cat-file: add declaration of variable i inside its for loop
+
+ "git cat-file --batch" and friends can optionally ask a remote
+ server about objects it does not have.
+
+ Expecting a reroll.
+ cf. <Z0RIrKwUnaWWm_gJ@pks.im>
+ source: <20241125053616.25170-1-eric.peijian@gmail.com>
+
+
+* js/libgit-rust (2024-10-16) 5 commits
+ - Makefile: add option to build and test libgit-rs and libgit-rs-sys
+ - libgit: add higher-level libgit crate
+ - libgit-sys: also export some config_set functions
+ - libgit-sys: introduce Rust wrapper for libgit.a
+ - common-main: split init and exit code into new files
+
+ A rust binding to libgit.a functions has been introduced.
+
+ Will discard?
+ source: <cover.1729032373.git.steadmon@google.com>
