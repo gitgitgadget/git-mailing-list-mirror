@@ -1,99 +1,114 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249EE28FF
-	for <git@vger.kernel.org>; Mon, 23 Dec 2024 20:29:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5591B6CFE
+	for <git@vger.kernel.org>; Mon, 23 Dec 2024 20:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734985743; cv=none; b=FbGY7ku8j8Yl6GG4wQuyfCrGTd3YeBR5Mw7js7dwZgPNeSYtPBxCNc75YqBAQSqfJCzxMR0v0TWzy4qU5s67C8mBD4FLdA2T1XtW5V3LbmlfTniumA8+MUj83NrDlBe65Q8yyogoFEWbPiQ722+tzRuqKD9f2LS8x86Hzh1cmsw=
+	t=1734986231; cv=none; b=LBKo7tcnbyZKXhcG9zdvF2XvD6w0DOoB6MbWXzOIynNl7ilc8TdjFGNJep4R0SAEP5dHtar5VJoPNmkvW+PCPgvy90AymoyfHHiy53NLb1YahEofzUh2fkLqWyT8yVxLiTElnazEz0LTBnsCH8uzozgTImvuU7GMVr9JqT/MPEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734985743; c=relaxed/simple;
-	bh=K2BNL1Z6buy4cjqnOEK7wmHq3Sy0gp6AFZCOwYW+7Ic=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Go0UQNV+XtlzZ9ronKYW2XUj8ej7SWjY8mXb8Fdvan1PQ4Rwe+wxEePmRp+innoY3vR0+ilejXCzh28iRinsf8DGXonHSXLrG+0Jjz0R3fGC9Jblz/6EY+52rYrwE+//hNqmy4qGO+sGZ74b4YwZ8bHcEt07z+kX+61NUiO64p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mFxshegR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1734986231; c=relaxed/simple;
+	bh=PKH3p2j0D+A8bP++IlSHSrRMyyu/xuYDS96OkLaMz6o=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=cftsoDPT43WtoUrtBNxBg1XuRKeVd/Crb3igewOn65uI+myL+CuB71udSDrkAkzg8XkNRskjWSZVkxwgXU80iI/uGKBxzou+K67ZscCMQuq29BQDbb1eLtPy4phWDk5MTeDjw3sLYPyNSQRMnLbJuItt842TVEf/JLkVodiO20o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=On/0msO1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fNCF4DVY; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mFxshegR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB9CC4CED3
-	for <git@vger.kernel.org>; Mon, 23 Dec 2024 20:29:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1734985742;
-	bh=K2BNL1Z6buy4cjqnOEK7wmHq3Sy0gp6AFZCOwYW+7Ic=;
-	h=Date:From:To:Subject:From;
-	b=mFxshegRn5/YU7Yaj8slVVQXLLj+FTCvGhK+bV23g6idONEW2l0+4rC9IiV7H6etk
-	 Jd2yJdRN+zuMGTIag+IqcjHMnkKIaG1KG273W0X37gMBTQ9xYN3ffJM1fnEsmMPmND
-	 fYP480EKY5/El0+QlUEHhOkWaliH49l1sFfx7WdIL90FaCj4LUfvMx0+6XfJWwnNTS
-	 T22OV3zgfSHAbdpw3Gf+txL5tYe6iqzPrSjkOs0QQLgXPqj1qvera5xVvZeeHOtX/g
-	 MM8thg+aA55twRdWuPxTfHVJ6zbNevw5yr27sNH7/xYf7II+lgxgyjPjXCwec7js/g
-	 17DDDF+zVfXKA==
-Date: Mon, 23 Dec 2024 21:28:59 +0100
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org
-Subject: git-log --format missing trailing newline character
-Message-ID: <cw7vyas4yw2q4lqiskbvil7mpkx5l5qilj25vnqzkrp5nuezrx@d6tsavm3ajzw>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="On/0msO1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fNCF4DVY"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB3AF138018B;
+	Mon, 23 Dec 2024 15:37:08 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Dec 2024 15:37:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1734986228;
+	 x=1735072628; bh=KE6HIYM5Kdxy53UY5CCDbfx7OPnWBQKZptSKyGOohZM=; b=
+	On/0msO1/cxiFhhWVMj7jmt6cIt0EtxPWLpMkJghh6eK8acfga7YCRP8ReJSpgZq
+	FWnpw/Ni96eg6eZmIlNnJ1UXDB1au2tgXXe3KEa1/fMFSYGhvGPqYZHZKjMdnqy5
+	khXRmvi6kLqur9juQ2q0MUoeFerRCH1eHkc3+ubXoF876+9nR3tXRSZSwoRffp79
+	jVl9qbx7tLXe/D/kWIXdg95rFVSjfaIPwMMaOGfE3nCnTc+gj0RsoNvl7t1G8FZN
+	Pw8sqI4Xzd0c0A9JWg8tvn+XuMYkO9N2mEQeJwH1fqAvlE7vchii1PdYvdLZq8h3
+	YbTsS/Sx1yjcywpJTTnK8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1734986228; x=1735072628; bh=K
+	E6HIYM5Kdxy53UY5CCDbfx7OPnWBQKZptSKyGOohZM=; b=fNCF4DVYDka/efsj8
+	JIJ/Fu59+weSRqb1xuOyKgGGkKZJrpwCg1ox4htDa1/7pApg5L2cPq9aIVGUAqe3
+	7VO2pnVgRP6fQuAKNyE62e9CH9OJBLP9/fZN/kFLE24tnws9OUnffuYsJE34AWBy
+	ftR4XACV/kI9z/jZm6Oi0E2i/+xriM0iwYgR8hySFHborQbUELGzcER7IkU9uJme
+	5wzT5TRdomNEfypUvUWpQOCIlpPaft9wsrw8iftZN9zYOYc8DVZ5Q6eC5T4JISGJ
+	K8J94lUM0fstr1nqt+nt6SnpwiM5muf7Z86KZbpg9ihIcq/dYX8003JdGMZqilKr
+	/9V/A==
+X-ME-Sender: <xms:9MlpZ7zlBwhbNMPwJZxPNFV_r6j7Vz3e626tEmcXBQY-UuMq9U0a38E>
+    <xme:9MlpZzTVCZ0_3dZUQ57FSHa-knLVpD1hS42LozSPdsgjJ7A_NNroH7YMCa4_sxM6D
+    _fJvZriIN5D22dqsA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudduvddgjeehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
+    rghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludev
+    heetfeekffehheefieehudekveelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopegrlhigsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:9MlpZ1XXDE5cXzJ3QNbkWnvqVzC1hN4WV1TpPyxj2zbsgWGUZ213AA>
+    <xmx:9MlpZ1h5LUJvP5IC6LqfD44HJbrN4zXLCP3jfUTu4zhQ0-B77t_nYg>
+    <xmx:9MlpZ9B-xXHN9GynGWL2i07QmOS_OsorDurCV0MLUL9TumM5WnkQsQ>
+    <xmx:9MlpZ-J6rKlEs03MBHOV_c7GJHlWJ7EF6rzWej33JRGd-TW7MGyTEw>
+    <xmx:9MlpZ65XSRPr40o3pJ-5Oj7Qttgy9NkYBBAisIQuSFQIbWGwTAI2euS3>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 6E2AD780068; Mon, 23 Dec 2024 15:37:08 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="brntunhnzt6owwr3"
-Content-Disposition: inline
+Date: Mon, 23 Dec 2024 21:36:48 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Alejandro Colomar" <alx@kernel.org>, git@vger.kernel.org
+Message-Id: <d813a3dd-68c2-4cbe-92a0-cfd1ece77e9b@app.fastmail.com>
+In-Reply-To: 
+ <cw7vyas4yw2q4lqiskbvil7mpkx5l5qilj25vnqzkrp5nuezrx@d6tsavm3ajzw>
+References: <cw7vyas4yw2q4lqiskbvil7mpkx5l5qilj25vnqzkrp5nuezrx@d6tsavm3ajzw>
+Subject: Re: git-log --format missing trailing newline character
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
+On Mon, Dec 23, 2024, at 21:28, Alejandro Colomar wrote:
+> Hi!
+>
+> I'm having trouble scripting around git-log(1), due to a missing newline
+> character at the end of the file.
+>
+> 	$ git -v
+> 	git version 2.45.2
+> 	$ git log --format=format:'%H' HEAD^^^..HEAD | wc -l
+> 	2
+> 	$ git log --format=format:'%H' HEAD^^^..HEAD
+> 	2ff431ab1b46a25088fe40baf1faf35ea9fac722
+> 	e75e6c4504022ae52d877926e63c908d9572088a
+> 	178442837d39560a789a8044a8eb90fde3ad7cd7
+>
+> Would you mind fixing this bug?  POSIX requires that text files end in a
+> newline character, precisely for being able to use UNIX tools to process
+> output from arbitrary commands.
 
---brntunhnzt6owwr3
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-From: Alejandro Colomar <alx@kernel.org>
-To: git@vger.kernel.org
-Subject: git-log --format missing trailing newline character
-MIME-Version: 1.0
+Is the format here simplified relative to your use case?  Or do you just
+want to process commits as one-hash-per-line?  I would use
+git-rev-list(1) instead in that case.
 
-Hi!
+-- 
+Kristoffer Haugsbakk
 
-I'm having trouble scripting around git-log(1), due to a missing newline
-character at the end of the file.
-
-	$ git -v
-	git version 2.45.2
-	$ git log --format=3Dformat:'%H' HEAD^^^..HEAD | wc -l
-	2
-	$ git log --format=3Dformat:'%H' HEAD^^^..HEAD
-	2ff431ab1b46a25088fe40baf1faf35ea9fac722
-	e75e6c4504022ae52d877926e63c908d9572088a
-	178442837d39560a789a8044a8eb90fde3ad7cd7
-
-Would you mind fixing this bug?  POSIX requires that text files end in a
-newline character, precisely for being able to use UNIX tools to process
-output from arbitrary commands.
-
-
-Have a lovely night!
-Alex
-
---=20
-<https://www.alejandro-colomar.es/>
-
---brntunhnzt6owwr3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE6jqH8KTroDDkXfJAnowa+77/2zIFAmdpyAsACgkQnowa+77/
-2zKqHg/7BmlOlhop6hkcihZRGzW0h9jRC5tNRYPIUhXF0Drrrg3IizrzoeJ8n8x7
-bbG+74UlkJi7xTc5IZsdG4TJJGqSCRNyss20GAJNz5aNW59CRZoccunZ6R5kq57E
-TEJA0Pq8m3N3fXm+UluVDQCdO+NvT1cBpWGekd/K8MtjNPrtw7xREE+JvzY63NY1
-gt4eQ2licsqy8xb7riQLgAM1F0TmwHR9cTsz4seCgWLWdhhtQuEOMc3AdMYOgYsU
-fXryA5rWyv/DNvGOLDQ3iLSHJu1beGKPSjMBpk2yNFw5qclYoNgs2gUxBWQJi2U2
-qmY3HBzrixOjtGCoWF/h7xK+Wuq9NttWJVI0uMp4QpEk45NJOtRj4IJYd6HjSo3q
-hj6boA5fsYLUEmtc/PuI9ckDTX6qpRnuf7dsBbyRw+0siTbb7vkmu27EWdysHJes
-EKkKiR/0CZjzd5IivpNI2dsBAQH6E7yk8sqF8Qyt3ls6fVWBfW7nwfcz1PpK9s4Q
-2GaMmySYJLLqKnkx6XY5MHtmNNkKL7qnrQZgX3MQ3E1NyOy5zxHCqezHTzGa5R+W
-/Jwkez6o/ueyPxv0wnw9Gj5Ic/ivDMy6ds5pVzWAiKG9ysKnMjfOcgwCGBYYLGdj
-fGvP4idJrHtQ3eue8j8knyQKZng0nlEv2h7y+2qyMQWic3F3wkg=
-=Fmgi
------END PGP SIGNATURE-----
-
---brntunhnzt6owwr3--
