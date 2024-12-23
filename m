@@ -1,56 +1,98 @@
-Received: from out-175.mta0.migadu.com (out-175.mta0.migadu.com [91.218.175.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E92E1A0B08
-	for <git@vger.kernel.org>; Mon, 23 Dec 2024 11:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB7C166307
+	for <git@vger.kernel.org>; Mon, 23 Dec 2024 12:03:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734954760; cv=none; b=lzbDjo63U8n428lfE9JpMfqlAQz7BI4jiVq/G6y2c6NuV877x0X+2V/7PA2BLrRDTRzXU6PSICgd2RyXNCNSktIaZYRNL1i0dE9CzSz+WjKXQc6QwI8vSPRcF5LFQEsDdkbE8uD4j/gONCQ4a+7KpfrSQJVmX1/dRpPB1hAFkV8=
+	t=1734955438; cv=none; b=X8geUF8Wjm4Si8wf6DzE/6UrXS4zpT1slnzz4qHdzc7Dv0tuGmk896VNIVkTliViFa3+2Sw40unyhP0JSQa1QQx08NRTMk5Skc0t3LuYLVcUykU68IpPjqviRhHizZGszcSM1AU2ZTWDLs/8+yUNGrjHWV1LUz0dbKbPhYA4jS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734954760; c=relaxed/simple;
-	bh=qyoqEM4NVwTuRzTaNqNywlOEamOjIFGksCCoDCtXv+Q=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=J3KykDIKXka0k0DninyZsj3y9M66VykLoCseRTCE0be6/Lw4r4u0NqyTDyJZa48yopLtzPU7N4eqzZRlaZjMxh90d3UpeYEHX6+iboQB+xWmJw3uwn7HF7SRqZjoKdGzteTwNvuwbSGkyROtXVkyA5C2Sj5qPeEs/2wk13wLv8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=wTFV0htf; arc=none smtp.client-ip=91.218.175.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1734955438; c=relaxed/simple;
+	bh=AYbY0+VT/pFyd+Gnzn5EcXtei1wURxlnqU8VhTJxrv4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=Kg9DNCIorWi2UNphIbIQVgDtgx89JFDqRG+5MvfJE54XG/EEMamJPZJtpfE3+JCrT7wQuEHshXTX+Xdtlm+DkKNqeqivPNFUXmu1NZK30wn5vuzmrbmL+K8M7fZ92PMgV1vCkh/IlC7QmDC6NBiIPdIQZ7jGfiSz4j5th5nWigY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WsQTSmvT; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="wTFV0htf"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1734954753;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Xt/RL7POlaBt7UxZccZovLhYt7yGNl2Ip43Y/d2CcdM=;
-	b=wTFV0htfDa9pWIvFRQ0Y2094Ui7S/Aq8kaPc1qHc307UDeF9B2t9mkxp5p7PpTS8RAwwwH
-	4Tyu5m6T9Q57hOBgwoRjaogp16flhearbmWkaOz55OZZFs479S8xDfrwcqAjqWy8t783d0
-	NMhz3dsnDIGOLlRtrzy42Lmvcdd1JIw=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 04/10] meson: generate HTML pages for all man page
- categories
-In-Reply-To: <20241213-b4-pks-meson-docs-v1-4-0c7895952cd3@pks.im>
-References: <20241213-b4-pks-meson-docs-v1-0-0c7895952cd3@pks.im>
- <20241213-b4-pks-meson-docs-v1-4-0c7895952cd3@pks.im>
-Date: Mon, 23 Dec 2024 12:52:25 +0100
-Message-ID: <87v7vafwg6.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WsQTSmvT"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-844ce6d0716so333958839f.1
+        for <git@vger.kernel.org>; Mon, 23 Dec 2024 04:03:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734955436; x=1735560236; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AYbY0+VT/pFyd+Gnzn5EcXtei1wURxlnqU8VhTJxrv4=;
+        b=WsQTSmvTXlrTZsF/6YK0YI4jw7mhRzK6PilrztrK3HTp6kY7zC2umnkHcE2rHFBlLK
+         V3RILEf2IoHtORt8llv0if9ou7eNTgQ0yKnKFZR12xggeBddU6yv6hwT4wFPiiANw2PP
+         kNdjZGHOXOPxi62BgHsz1cyZx994x59DuECA9h2M1hyUMQot2kvFHXzZAtho1IJzU3qo
+         +zSmRXNgwyHx4cVCj+kVASTspZYRZR2PV1DxcCDeHyEJxcuwwuIh/n97i5/dERcxe1N1
+         +omHLazPJ7Q1x9fJddrS1b1emdGmoJhEcb3s74EjdiZ4C4p0gkUvteEvMif6iNfZffge
+         Lnew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734955436; x=1735560236;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AYbY0+VT/pFyd+Gnzn5EcXtei1wURxlnqU8VhTJxrv4=;
+        b=lA8edYSKXyXfNdNnqxVXLd9OKPwQIH4+lMZTACMvNSHGrWADuda1CUaXFf2Kqw3EC6
+         5hZTiCkSok/eYgQAZLHOld4TWEOlDjTIrLaVBoKQsXi2uLAMwHNhorXwya9HjVq0MogS
+         c5+adGeJgvZdydIpEjSgDI9pGuKscTm052BIwjFwnA391/irDq7I1h80uRa53tmsX09i
+         v+uQDXG2/jP2m7JetqM39gIWty+RUYyQzgndtddo07hEus1H3MHqx/Gn+bbv3zdLnZbn
+         HO9xh3PfDX3wv/jGDZypi7DZmq2h3NZfShGz+Pp6qpTf2Wj+bXpr6UZtVNdWYP8VxeiR
+         +aFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUeTPp4pDKG9J5T3vaZFJ7YjLAG79VOf/NY47E0/eXN3P/ihrgmPrryiC4hL21auEIKdpk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxobcjtvTZzipNai/byicjQdmDLJYIaQmUwaV62OCDFYyAMnJvJ
+	CTBBVLjlTcy/8N8+rGZQyaBbPTR3zWSkqYU4/vfBrLEySgwu6KspOpmdeI+TftakX7MM7+ieWIl
+	OdezXGkiQvFcCTkuHt3lsmRK3nq1s/Q==
+X-Gm-Gg: ASbGncuObfcuVmh6qyv5InotEsTFwDTBFHNRdbC1CToqB3YjmWfo8fA8swUIGojf4sn
+	rGgy6+Bs5yFKEOKeKBpzynpTRxIkqu4TTC6UmPgg=
+X-Google-Smtp-Source: AGHT+IGdnNgFQzZ9fUntiRopWfwbwgNsq0D+jcF1wvKrvJnJlCcBnwNi6wmTANykYAX/cyfvBlQd/pn4TY+3RSztZbo=
+X-Received: by 2002:a05:6e02:19ca:b0:3a7:e7bd:9f09 with SMTP id
+ e9e14a558f8ab-3c2d1e7df64mr104820995ab.5.1734955435865; Mon, 23 Dec 2024
+ 04:03:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+References: <CAMmT1pKVMB6ZUbsEdB0RqbWERauGVqgo_RbXj4j9+csXLHCStw@mail.gmail.com>
+ <CAMmT1pJnZxxD3wFikiDRCqZZMxO8P6EgVHe9mJEsfA8PK4-OfA@mail.gmail.com>
+In-Reply-To: <CAMmT1pJnZxxD3wFikiDRCqZZMxO8P6EgVHe9mJEsfA8PK4-OfA@mail.gmail.com>
+From: Krishnamurthy Ganesh B <ganeshsurfs@gmail.com>
+Date: Mon, 23 Dec 2024 17:33:44 +0530
+Message-ID: <CAMmT1pJ0ReaX+g2_gFQ2oLUrzhR5wCXGvCj_WwDMXcfG2DNG_g@mail.gmail.com>
+Subject: [bug] encryption of metadata in .git metadata file inside .git folder
+To: "git-security@googlegroups.com" <git-security@googlegroups.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+hello,
 
-> When generating HTML pages for our man pages we only generate them for
-> category 1 in MEson, which are the pages corresponding to our built-in
+greetings.
 
-The tiniest nit: I don't think you intended to spell Meson with a
-capital E.
+i am raising a git security red flag on the.git metadata files storing
+git logs, commits, and other metadata inside .git folder not encrypted
+using a two way salt or some other way like using a key for a two way
+encryption or some method of software encryption internally if /
+because the .git folder metadata is not encrypted.
 
--- 
-Toon
+this has been raised to github before but will be raised again via
+hackerone security bug and to gitlab and altassian and other git
+repository source users if they are using their own internal modified
+sources.
+
+most of the errors like these will be directly closed.
+
+https://kondukto.io/blog/git-scm-affected-by-cve-2024-32002
+
+https://socradar.io/critical-security-updates-for-git-scm-cve-2024-32002-cve-2024-32004-lead-to-rce/
+
+https://stackoverflow.com/questions/45578579/what-file-metadata-is-preserved-by-git
+
+even packages like git-crypt do not encrypt metadata.
+https://github.com/AGWA/git-crypt
+
+have a nice day.
+
+regards,
+ganesh k
