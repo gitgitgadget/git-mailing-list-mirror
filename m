@@ -1,73 +1,133 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0089119CC0F
-	for <git@vger.kernel.org>; Tue, 24 Dec 2024 08:58:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1D4190072
+	for <git@vger.kernel.org>; Tue, 24 Dec 2024 09:39:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735030720; cv=none; b=l3zHM6vej0Mmmye2TTvU9FFJyyLxc8byf63pAxvfRZPgpphIHwsoNQF76JUKaMu3Z4KeIhkFhF/70PwMvS24BUGKzjZNHKJdakRvhLjtlBVeA3xWIe8DbYp2p477gkTejtrW09N9Ju35WX4dYQ910LQ7CuFBrUfFvCjQE0MAfPA=
+	t=1735033172; cv=none; b=H7ovedu5QKxJtVvvDnOAwYZuWyUaxSUP4tXqaY078J2r0U+g3ud0V/EDWWAVilin9/P1vnv/GZMJWv2qwKSvgGdyY8E8MHGynUdTkG+IeON2SdQcsD4qjuAGFNjI5jkAMrtyGPzI44D70NoxcwpsB2TxGuVv+5CtLbOSsXqNojA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735030720; c=relaxed/simple;
-	bh=PwQRhvIN02dMo0ayAc2tAoh7xEa+gyGiM4az0Za7GhM=;
+	s=arc-20240116; t=1735033172; c=relaxed/simple;
+	bh=zFdHoYSNyOpHrLgk6z+uKWbhdVx1lyxw7vpm40XguTI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OtdUGi01YuLVYuZloBSJbxrEqTEQqE7ZLn2TnxZkQFfICdp0eEF3Di6L3HwDlOXY6hVdZGHFp6FztzC5WWNTIvTB5RFXADYNcXPn1GTKxg3U22AqgpQYrP4F4XUjKxfTVZTOCWWBsKRykCdfhJlCz9EWzCzteyY1lN5CYUjw8iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/wlnkd0; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=LKEmdKKshzizvMCU1eZDH67otrrMzh4EbKnooF/ertk1mFbN9lr9ISp7xnoGEjfwM+XPvaEYoxbBxCXCEvYzz+Tw+GZTDv+pNEHR8eH/f9huqMJL/5eUmlSj2hnbWFTq+zkcJCpW6rz4luiDYSP6e9D3t/kXDoC5I40sc9a+HyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=Qsq0e1cV; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/wlnkd0"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e3978c00a5aso4320122276.1
-        for <git@vger.kernel.org>; Tue, 24 Dec 2024 00:58:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="Qsq0e1cV"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-300392cc4caso55350301fa.3
+        for <git@vger.kernel.org>; Tue, 24 Dec 2024 01:39:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735030718; x=1735635518; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=PwQRhvIN02dMo0ayAc2tAoh7xEa+gyGiM4az0Za7GhM=;
-        b=E/wlnkd0hoc4c+0a53/RVFVKeesz3VQVbLufXbypUbw6U79+ap3ZgWwo/6PJua98Qb
-         ljpcZuagJW6R0+0qsSBbsipPomBjM87i8WX7Gqtu7gwQA/GGjyrwMp08l5HyWs77uw7l
-         QxvmH7H42NREFy4Ce15521j0WTdItKTqvd7tM8rYw1s8Fzacxlv6RKMTr7ack5p9tFIq
-         WPNUYCefY8yjNJHdPDRbOM/+NBZfWJylsZC93dwShSMpBtcOe93rsNrgzGRjqffmCAne
-         G6y4/why15fb62aEpBXyzBPXrgKIKHNUIRH8+24iJ/38gcdr4y24xZJ1ntjvFiqDiHL7
-         dgoA==
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1735033168; x=1735637968; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b7ITtPIaq7j75+lCZ9nualmsCjd+cTdruCySte5NhiI=;
+        b=Qsq0e1cVRaERSVvX0/2X9TG3xKgpK0FwoeHnqEv0qR8n7n2TdPja6s8hUO2lb7kztI
+         y7cvOYorBNZU1ccYfpUz+5aXcDy2lsX6zql2AuBbbh/3Btp4AMOElf/9GceEusR6yY7d
+         do0s3OvqlXjTO2iwU03U9os/1vz+ITS6yXUMIMGrRFeQTXPewIbh9iR70tSz6LgA0kuy
+         bfjBSqJWh1iJ3OfQl8cmJlqYEKDDPwWpUSEweSiXl1sRrdyrLGtf9Ot1zcFI54xHG+V/
+         Lw8AIYVxPOUNqKN24/Qd+xwm+ly+BU0XTW3JSf6CAFSmGUgCU9asdcPtiL1IwgAApyU0
+         cZEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735030718; x=1735635518;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PwQRhvIN02dMo0ayAc2tAoh7xEa+gyGiM4az0Za7GhM=;
-        b=MbHzOngND5xwdGoeDrJFdp6/6V4KrA1RkvfAXXiBd4mPmDcliUiOT/QD0wr37fy2wu
-         ZYBjuuqKW0+UnY3MQiXEkXG3Zdh0e+mrYohWNu+nG8YJdnmRUdL6JWW7m2BcEnkgTjUy
-         +UWFq6DSzGbb5VsTjRrg1aQjr71YCPt9K5uDe1kgPJA0kTG7NPefZS0bdnw5js1x4l5P
-         DMyc1Olzw/jkfQs3z0BvP+f49yOA8VNo1d2zxO3nvT1wwA7mpoyb+phAPuU42BP7Sk80
-         cn1eL/PuyvsH5IqyZCfpmBsbdMBuN/Po4Piqju5Ym6QiVLIzUfrSQgXiaamfYyZN+2zg
-         RiNA==
-X-Gm-Message-State: AOJu0YwqzvSmFanfofjDbLdEI5+nAL+15faccoyjkCp7vqz+57Rc/jqx
-	k+jmLLawqUsQwxXysdhnWQuCjjZGURZn1uMRFzFLY38ochSQci2qxDE7G2WBN3L/WEN145IGx0S
-	ZABuqPVR3w2+xWvDr3b3FhfCN2TLT5/bYE5VWow==
-X-Gm-Gg: ASbGnct30MchR3fIcGshlk/+1FXkXSUB8d4VEx2ZXy9v6nqb2sRAlfjGw172mZJVVEh
-	5G4wxWOFL3nN8QaMmz/8CaVCdJezPUq/1hHWQC80=
-X-Google-Smtp-Source: AGHT+IES2yL2SqVHVqk3iGpKifGgvYh+ICs2NA6Sby+HxnwITZX806YsCFJ2avABSFrUzWcoPxkEzRKCH3t9FxhM6Vs=
-X-Received: by 2002:a25:ae52:0:b0:e4c:1b6e:593a with SMTP id
- 3f1490d57ef6-e538c3d6ed2mr10759141276.33.1735030717850; Tue, 24 Dec 2024
- 00:58:37 -0800 (PST)
+        d=1e100.net; s=20230601; t=1735033168; x=1735637968;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b7ITtPIaq7j75+lCZ9nualmsCjd+cTdruCySte5NhiI=;
+        b=C+MCWmG3w3GdKfFlCOOTgHicZOcMbmtG/lVxZVZWPoqGIl5deges+738BgMKDS6Gzr
+         a9r6lN2jqMEDeRLejRVuEFsdwWnyy+cYqFypi/EUC7IwIil3mfwl0gsP7hWtm0B0Z44t
+         4vCWMIDs1kRYwndQ5k2aZhVF9OUKH5bjSuf7D2LeBuZKyuDF6mB/N5PrMQ5X1pKUp3Ri
+         gIafQvDArxWwWhFfIH76QZBIRIGltEXYCOHMBfjt+WXrWZd2Rec5bmyfyz2aClTdTASu
+         65EwZEZC234SPxGOnACgzwqWfjsKUWfnb6HRVYqj1KaxW0OnUTosbEyX1t2kDHUlgJb1
+         pw/Q==
+X-Gm-Message-State: AOJu0YwFmdAnAhtLJaT/xb19TV4UuoAxW/tuT9C+w2f5fmipykc8OEWl
+	ZybrquK/h0aJkpTesuhpvYZ5JyVfXW6AusNtZIdLf8JxxpVz7WbIVESxyifmyxD+AHy3imWf9zO
+	domVYXavJt8K57lr7sSd/mX1M5M6IiJcVQUOROQ==
+X-Gm-Gg: ASbGncsQICXRJrb7AeZcjkzKuJILBhnxJD+Uemx/bH20l5oQqrnPrQcfYXwgsSadf0E
+	rKBBrmQzBYQxZCgs4/q4BFz8j9iqQT5S4DVDVZH2x
+X-Google-Smtp-Source: AGHT+IE7L3VPTG/R915AeMJQkjQ4os/JD7/3IHsNJmqmlGYpcPpVjqIqOTu5Ff4oJwxZQegptbom04My8+1QYMbwM4M=
+X-Received: by 2002:a05:651c:1506:b0:2fb:5035:a03 with SMTP id
+ 38308e7fff4ca-304685344a4mr47705601fa.14.1735033168372; Tue, 24 Dec 2024
+ 01:39:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
-In-Reply-To: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Tue, 24 Dec 2024 09:58:26 +0100
-Message-ID: <CAGedMtd0-m54075w97Z4pQ0wqAjgPRA8+HX5iar0POyuC6-GCA@mail.gmail.com>
-Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
- convert unit test to use clar
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20241223133918.25133-3-ash@kambanaria.org> <20241223133918.25133-4-ash@kambanaria.org>
+ <af81f74b-b5ef-4557-b929-c56fc3309d29@kdbg.org>
+In-Reply-To: <af81f74b-b5ef-4557-b929-c56fc3309d29@kdbg.org>
+From: Alexander Shopov <ash@kambanaria.org>
+Date: Tue, 24 Dec 2024 10:39:17 +0100
+Message-ID: <CAP6f5MmUW0=QYzHfLR2ObKFg7kLuTJO=7C8o1Kr+=cb-RLcnFA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] gitk: Update Bulgarian translation (323t)
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org, gitster@pobox.com, worldhello.net@gmail.com, 
+	paulus@ozlabs.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello everyone, I just published a new Outreachy blog post on the
-theme "Everyone Struggles." I would love for you to check it out and
-share your thoughts. Find the link here:
-https://seyi-kuforiji-902b48.gitlab.io/posts/everyone-struggles
+@Johannes Sixt
+> What am I expected to do so that you can make translations of the current=
+ state?
+I mostly need the proper origin and branch to sync with. In my case I
+synced with
+master of git://ozlabs.org/~paulus/gitk
+
+I now see that you have published https://github.com/j6t/gitk so I
+will sync with its master
+and resubmit the patch.
+
+@Junio C Hamano
+As gitk/git-gui have new homes - can the README point to them?
+Kind regards:
+al_shopov
+
+
+=D0=9D=D0=B0 =D0=BF=D0=BD, 23.12.2024=E2=80=AF=D0=B3. =D0=B2 18:31 Johannes=
+ Sixt <j6t@kdbg.org> =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0:
+>
+> Am 23.12.24 um 14:39 schrieb Alexander Shopov:
+> > Signed-off-by: Alexander Shopov <ash@kambanaria.org>
+> > ---
+> >  po/bg.po | 696 ++++++++++++++++++++++++++++---------------------------
+> >  1 file changed, 360 insertions(+), 336 deletions(-)
+>
+> > -#: gitk:2203 gitk:8681
+> > +#: gitk:2206 gitk:8739
+> >  msgid "SHA1 ID:"
+> >  msgstr "SHA1:"
+>
+> > -#: gitk:8700
+> > +#: gitk:8758
+> >  #, tcl-format
+> >  msgid "Short SHA1 id %s is ambiguous"
+> >  msgstr "=D0=A1=D1=8A=D0=BA=D1=80=D0=B0=D1=82=D0=B5=D0=BD=D0=B0=D1=82=
+=D0=B0 =D1=81=D1=83=D0=BC=D0=B0 =D0=BF=D0=BE SHA1 %s =D0=BD=D0=B5 =D0=B5 =
+=D0=B5=D0=B4=D0=BD=D0=BE=D0=B7=D0=BD=D0=B0=D1=87=D0=BD=D0=B0"
+>
+> > -#: gitk:8717
+> > +#: gitk:8775
+> >  #, tcl-format
+> >  msgid "SHA1 id %s is not known"
+> >  msgstr "=D0=9D=D0=B5=D0=BF=D0=BE=D0=B7=D0=BD=D0=B0=D1=82=D0=B0 =D1=81=
+=D1=83=D0=BC=D0=B0 =D0=BF=D0=BE SHA1 %s"
+>
+> > -#: gitk:11508
+> > +#: gitk:11571
+> >  msgid "Auto-select SHA1 (length)"
+> >  msgstr "=D0=90=D0=B2=D1=82=D0=BE=D0=BC=D0=B0=D1=82=D0=B8=D1=87=D0=BD=
+=D0=BE =D0=B8=D0=B7=D0=B1=D0=B8=D1=80=D0=B0=D0=BD=D0=B5 =D0=BD=D0=B0 SHA1 (=
+=D0=B4=D1=8A=D0=BB=D0=B6=D0=B8=D0=BD=D0=B0)"
+>
+> These strings are no longer in the code: "SHA1" has been replaced by
+> "commit ID".
+>
+> I am unfamiliar with the translation workflow. What am I expected to do
+> so that you can make translations of the current state?
+>
+> -- Hannes
+>
