@@ -1,108 +1,111 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D237E22615
-	for <git@vger.kernel.org>; Wed, 25 Dec 2024 18:38:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F2F45038
+	for <git@vger.kernel.org>; Thu, 26 Dec 2024 06:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735151936; cv=none; b=HgnpBPVQFjhYMLNrStOWeI6AAGOio3AJVNBH6gOLWyAJw2G2X+zpH5FM/Yn269HKRTaoyys3qU6npSvqbRWKyk8Jv0BOm3tyQEOT6oT7w15s+XI22PpjpL//6TcuFr9HAZW29P7E7cdGSf3EibfpCot9cs1U2I2eccl+iKjmf8E=
+	t=1735194012; cv=none; b=toFLOQFfCUHwdgofO7OO3m1uty17C+ln/Et3C+UoBVPlzw/rO7hq1xC6x+OihR8FRm3b8InJi36r+nrHuV/GywSSzd3L3IHv3fWFKf3Fz1N2G0La//sZMY1krNdsCTkLrofrO4z/cGVRdcqno/douDOJK+BXWD4TOowS2tZhbqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735151936; c=relaxed/simple;
-	bh=AMvxWrJKXlKe7act6hJa8/4dxI7g1era30ZozgVAgIk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=eRCrvffleCZPo8bpUV51Qn455OA0wjgufmq1k2KMEzDST/yKkF7KMH8pe1V0FxV14KodB8TlZxPCRGHLecAea9+fv85sqfECjwxQonFg2EmZNWgxskjIAp521ccnIIOLjxCMNtpBJy3AirSEBdd9y6iNRYoQYUv25+cgWj5CAaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=uEWpC5qq; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1735194012; c=relaxed/simple;
+	bh=aTP8BXRvQ9CqILYq9vz661cS6qE+g8Cgw46iXX0koHs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=er2lrlUhmqB2LZWmWCRAKZF9T0162DlbWD7CF2o32uxaBzQP6HHcIa4c6NLAt3e2+EZ8aA07XXNKtZ0JWACIwy23lal4JdiqIOjAIqkBVKpfIOLDjQa7VOBZPw6BMxvklMAWsge2xE+6f/XHxDtVoDG8aN12onxPSUCu11PBvzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BFWkRbNR; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="uEWpC5qq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1735151930; x=1735756730; i=l.s.r@web.de;
-	bh=BHk3O0sM//TK8QWaIGxz1AQbFuItjLHdy8eY9u1Bj/o=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=uEWpC5qqhhcuPTmqTKENDAWvzBR+9PECEDdGxTwsHfNjVw7MQKt2ahCbbJz4uBEg
-	 13iXg7y4m0a1i2ay7HC8ueEVir68rVPJC9S11IYTnbfzYwMZ06ukG9CQzCr/Poawc
-	 8rlv6Y1NxlysK6FbtgUtJwHMWrnMv3gZv+hymX1JjE6WyPFvCmnNrwQp2ICFwOjkS
-	 XYX3YNq1JNvNcH8nX7sd7FYRtXEknYSZd3PmFcS6CjcH9WLon3lNgpQPfbHLV15W7
-	 +Anr91zv+UqhyM79RwhnBzFj7ZRPbjxfq7Jcy7eb11jRKFjcBv7hCZafRyS1I+qCC
-	 XclGP3IHRdilcaUXrg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.20.45]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N62uQ-1tbc8I0SZE-016Row; Wed, 25
- Dec 2024 19:38:50 +0100
-Message-ID: <6084c017-9557-478b-b485-a1c1a21842e7@web.de>
-Date: Wed, 25 Dec 2024 19:38:49 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BFWkRbNR"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5d3dce16a3dso10966141a12.1
+        for <git@vger.kernel.org>; Wed, 25 Dec 2024 22:20:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735194008; x=1735798808; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aTP8BXRvQ9CqILYq9vz661cS6qE+g8Cgw46iXX0koHs=;
+        b=BFWkRbNRKX5pbCyJstWul3tEY5ffw6+8WktORTcYrz+UYe8/z7TmnnlplGwh2kWKPY
+         mxXMho4ksXeXIXOUzxrlW3893KGDZpbbQsl09CXyxgP601KtXRNFYbHneYOhXMJoYERt
+         iu7ns9cj6RcYyuL2QtOBkZ/zQdhoFKhDCEXjYsA5S+Q9YStIp06EpmJ/C5M98IQYB4nP
+         3eAgqDSuuMmTByGZWgRwAb2iH4xYv79ALGmjz81OdfoKvHnSce5RhqHg99bNxkXnpLe8
+         9+fYaiDISIgoBgP16/klOtkHaTV0M0TKAKvtNxP8C22bDO2Z2iqoZJcK77T9SF8Ioe//
+         kHuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735194008; x=1735798808;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aTP8BXRvQ9CqILYq9vz661cS6qE+g8Cgw46iXX0koHs=;
+        b=Zg0NPJS6AVHW77xHUWh0gueIYyFsGyjG0XWDgWWCV9p90VY7qU+NMdGmVfG5+3u7qY
+         H+0+lKckRhWHkfvt9GHPtwpeQ5Eroc358qiq9aQQ4Mst0ae6oZgJSo9HATuEDFh12r1Z
+         lRjsV1nX0fI+AN+ZFVLGYwI89j8P/6biENGHqShM1xaLGipBHxo+o31g7WJC7dnV9NTx
+         Qfmo56bpBvoHMeXU22MHN0DFr3WPKtJAPs30jRkKkiboUU+Iw5jrn+aaStllX1twwk7o
+         Vo5pCliXjXrvpcZCrQOyQ7u3HhbDDY3UCcIMu+VAF9gtQJ3zlMXwMpTBbq7rTlDypXKl
+         YsJg==
+X-Gm-Message-State: AOJu0YxjB84wojxXv5k3eDIF6O47SYDsgmNPJ0jGpWGfQLuoH8cVKjiR
+	tTshPdYD4v8hjtpetdA9xclaTEcQMB/QI+IEnXDSV3+M/qBkSAbZohBJZx2lJvqD8aDSzny6ryU
+	JURbwvEOAgUCOwDM9M4uqB3kUGZX2Pm8CQSYvcA==
+X-Gm-Gg: ASbGncsbT5S8TgAVJ7fWx6tM761fpRu/h59kD8gErWw6ZUoh8+FBCMduLSEgoiq10LW
+	Uw8qE2axuHeCgOP8jPyRepvMK/rr1iIlAEohTvg==
+X-Google-Smtp-Source: AGHT+IFauJoT4UdH886C8a+xpxmNJayUjkEyzOutWmtOC3D7AbYFF5khYNGIYwlhrMQUhssu5DN2kK/lO98NbE0EOY8=
+X-Received: by 2002:a05:6402:4304:b0:5d3:d2d0:12c9 with SMTP id
+ 4fb4d7f45d1cf-5d81e7507c9mr18309125a12.8.1735194007739; Wed, 25 Dec 2024
+ 22:20:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH 4/4] t-reftable-merged: check realloc errors
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-References: <2b9fba8d-be63-4145-9d25-a2151e422cfa@web.de>
-Content-Language: en-US
-In-Reply-To: <2b9fba8d-be63-4145-9d25-a2151e422cfa@web.de>
-Content-Type: text/plain; charset=UTF-8
+References: <CAOLTT8Q0cH3Q=yPnTYKAwn8bC+iDW7onibsLF=bzVr8tGw5J0Q@mail.gmail.com>
+ <CABvF+3ZU=96jQBmGw3eWmAQ4DjCdcm1VT7fHMVz_MxvW2xxPng@mail.gmail.com>
+In-Reply-To: <CABvF+3ZU=96jQBmGw3eWmAQ4DjCdcm1VT7fHMVz_MxvW2xxPng@mail.gmail.com>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Thu, 26 Dec 2024 14:19:56 +0800
+Message-ID: <CAOLTT8TraRjBObcLotNr7+a9Ap7Fy8VVy7HjHLLWwEB_LvBrUQ@mail.gmail.com>
+Subject: Re: [Possible Bug] --cruft option not work with git gc --prune=now
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rDljamnGyIvyYxt+Ot7PpKMf6hyLFgg/5awLj47J5WAzf0oQczX
- Ym8aHaEi6GpzQdXqxHcWKuD8DqjfLj7r67XiD7+W7UV9uTyeeP5z/caYZgvjJOQKWuVk42U
- jRXL5amzEDFG0od8Yds/IB9vN6cme+jswhxJksYMu6FHKCwl2KVbwM+j45KNhTz7Cq6h38Y
- 2nfsBBMB/xX/dgxaVfdJg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:7wwFwaqJFrc=;mje3eUYmiiBuiVYyxqaqkzo8GJG
- h/T2+gHR3df4MAuHECkzyQWKuFSMEy9DrnTy7IXQtg/6gDwKdOB6QmrA14vjOKsqQOvYtiFuA
- 1n1vzlgJa0/U9H2RoPv+oUooXhoKPZO8x3waIU93/xyZaLl8dertK/N3JZJr5xOxvflE1ZRRM
- f4TyTN5rW38RL71W4ZyBNs2Hg3ofIGF/MM+C0XdorBf0xidT2schepvfUZZ2D35NiFJnex+lv
- tvotitkiZqpiK+o8AtXlhJSb+B1PgZpyJbmMsWmsCJSZzu1MFvFH9is8bmQwkWcGH1qkN45v8
- li16dGpvJjuGCU20y7u+Md71Afu3bzevVG8LMcM0XaBPle303QjG0BVtuHBiTIxctXw5C0W2n
- pZ5M77HKwLPSPC6Am70e+fbwLu4pZzf/4+8r2OiiUCq4UBBxW6C1MQIBQEy2MZ9O4kRddnWGR
- i39+J6HO2C9Ooi2UX/hrJTzKgF9gnZh6IqigKbn/TAYPCDekLT34KugikcsimkXYfDifLRAg1
- NeXki8Wly/ANOZ5+UY10byMCTp1Ar68J4of/QoI4ZEo7zXZMmbdzhDlB1P/a5aCRWnscctHly
- 2hiFKKrnha7TiXi5ZUZ4hUPVOrpPHw8TR9Ob6WEvka2dyJDznBBJHYOt1TzOSbhXkl+JESfab
- uqKJi93KkH1nk008VeUifOurosRUX/OeOc7ExgQHJoJ20P705FGcfjfSNFI6q2tbzB0gL63F3
- ld8sbW+Wr2FT2/4hn80y/ZeYd6iSed9UFF2NcJi1OUmnxI00Sg4jQrBKMVFASB7/LOPEIRuI7
- 4MJ1TQNpAcReUqfD0qRvPpm8AnBoeNuzJ0/NyJYtgvt0Tze8t5GqUEQhL/QubapFptnwVmQQ7
- w9Y8yZQqJ83fidS+1k/NRKuUhN3Epz/Gg0a6hW4Y6DLzaRNYn5CyAX7WDttKVq3bJb0CieA34
- uxU3DZ+K6usvUIqgExUnX0G4uvmC9IFWojFPgKtX41G8upHn7/KGme+Plh6IeAIDPu/EEFKem
- MRzCP5DZHDidA2vvY19WkvHUnuDnVwJ7GcoxcqypEODdfgEpAxfiKCXbXjRAllyMUyfP+C207
- zW39QSCv8=
 
-Report reallocation errors in unit tests, like everywhere else.
+Taylor Blau <me@ttaylorr.com> =E4=BA=8E2024=E5=B9=B412=E6=9C=8824=E6=97=A5=
+=E5=91=A8=E4=BA=8C 23:39=E5=86=99=E9=81=93=EF=BC=9A
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/unit-tests/t-reftable-merged.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> On Tue, Dec 24, 2024 at 08:07:16PM +0800, ZheNing Hu wrote:
+> > I am trying to use the --cruft feature of git gc, and everything works
+> > well, but when I combine it with --prune=3Dnow, I notice that no cruft
+> > package is generated, which is very strange. So I turned on trace and
+> > checked: instead of executing `git repack --cruft`, it executed `git
+> > repack -d -l -a`. Is this normal? If `git gc --cruft --prune=3Dnow`
+> > doesn't work as expected, it won't be safe to further execute `git gc
+> > --cruft --expire-to=3D<dir> --prune=3Dnow`(in my another patch).
+> >
+> > I checked the code, and it appears that add_repack_all_option() first
+> > processes `--prune=3Dnow` before handling `--cruft` option.
+>
+> That's right, since --prune=3Dnow will cause your repository to purge any
+> unreachable objects immediately, regardless of their mtimes.
+>
+> So after a 'git gc --prune=3Dnow', your repository will only consist of
+> reachable objects, meaning that there will be nothing to put into a
+> cruft pack.
+>
+> Note that 'git gc' does not support the '--expire-to' option, but you
+> can use it via 'git repack'.
+>
 
-diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-me=
-rged.c
-index a12bd0e1a3..60836f80d6 100644
-=2D-- a/t/unit-tests/t-reftable-merged.c
-+++ b/t/unit-tests/t-reftable-merged.c
-@@ -178,7 +178,7 @@ static void t_merged_refs(void)
- 		if (err > 0)
- 			break;
+Okay, I know that gc doesn't have an --expire-to parameter,
+but here I was hoping to use git gc --prune=3Dnow --expire-to=3D<dir>,
+where expired and unreachable objects would be stored in <dir> for
+easy recovery in case of repository corruption. Moreover, it's more
+convenient compared to using git repack + git prune
+(isn't a single gc command much simpler? Plus, most users are
+likely familiar with gc rather than repack and prune).
 
--		REFTABLE_ALLOC_GROW(out, len + 1, cap);
-+		check(!REFTABLE_ALLOC_GROW(out, len + 1, cap));
- 		out[len++] =3D ref;
- 	}
- 	reftable_iterator_destroy(&it);
-@@ -459,7 +459,7 @@ static void t_merged_logs(void)
- 		if (err > 0)
- 			break;
+> Thanks,
+> Taylor
 
--		REFTABLE_ALLOC_GROW(out, len + 1, cap);
-+		check(!REFTABLE_ALLOC_GROW(out, len + 1, cap));
- 		out[len++] =3D log;
- 	}
- 	reftable_iterator_destroy(&it);
-=2D-
-2.47.1
+Thanks,
+ZheNing Hu
