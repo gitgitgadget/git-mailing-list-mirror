@@ -1,82 +1,86 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8611647
-	for <git@vger.kernel.org>; Thu, 26 Dec 2024 16:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9066D45C14
+	for <git@vger.kernel.org>; Thu, 26 Dec 2024 16:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735229155; cv=none; b=tN77ArMhn8p+yD7xPAXGNvllioTVbvXEEbkl44SNTUpLX/r8eEwcdoaZSbEhS2rSRqA5F5d5r/hqVxE2qcRMq4QeeDW/5niHC2IvsQorogvjyT9UnCgK3+9fTq49iJOEjoRHZlk43qadmf0qJc3ICvV8Z68xWvqQ6+DMp4Z+9hw=
+	t=1735229331; cv=none; b=KVB7uzJRwEi0ursU9AElam8+/jepHR5sLkK4LoVfU5Sk2MwP9QofDAzMMSC7yGCrrlDYNG8YGzGAAuKK1qBJGGpmMUg0o7OJndEOka/DiHsxJVmySJKT9NDu9IsBO7Q3HuKtefQELr/b3KBEn6DWVkHId5iwUOtoiyQWOi2L+B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735229155; c=relaxed/simple;
-	bh=S4Gbmj1rKVKJPSQixT2AvDZNwbvpO5bM4+6AXqibbHs=;
+	s=arc-20240116; t=1735229331; c=relaxed/simple;
+	bh=dYoewTnnb4jXS6bpM5XeHC/iN1dhsVU6suYlSUN26no=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X6V0whn0iWrHEmnyMdqMEyNbRiH2UORdDxlGqN/kYQ1b7srsu0y/e3EYEfsUhTIDCsiMswQ89tZZug3c/a1+O9w74OiZ1FptuYOqau/y2QsGJHrkjUOucpDsdKuvxrMtid1Ne61F6b6AUGUHmfUe89WZd0h6+7KHsfwEPdyO6W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hqzuu7ba; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BrxSbLl8; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=r/0fslgiIxqs0LpYNJ8mXSCjJypjdIA7hQgCQmTl321Mh28WRx+KuS4TxS2/K0dfeixqx5Vh1FcmVljTWYXY6Y4OIaa855CAmeyvApIVKOvtq4voOwj9sixYeKLOZ8deXwKlj9y0K4LMlE9rmx+6VTcD92ni3q1gqXvD+EWEqrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sznX5Zeb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l7Kpjuk1; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hqzuu7ba";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BrxSbLl8"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sznX5Zeb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l7Kpjuk1"
 Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id A550111400AD;
-	Thu, 26 Dec 2024 11:05:52 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 26 Dec 2024 11:05:52 -0500
+	by mailfout.stl.internal (Postfix) with ESMTP id 86006114012B;
+	Thu, 26 Dec 2024 11:08:48 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 26 Dec 2024 11:08:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735229152; x=1735315552; bh=S4Gbmj1rKV
-	KJPSQixT2AvDZNwbvpO5bM4+6AXqibbHs=; b=hqzuu7baxITD+xUDJYwF5s1PYS
-	vwG6deMXUm+DLAgTty3VXlIoTGe610HAhI1q4JqEL3shlk2l1d4zreBylLHaWQs5
-	inIcDbrR2x68Lm1XRn4ZxaBuOm2sMJGrLVkmBMWvCPOoX1hr+Z6GqaAsxowmqp1W
-	eUTMIIzQJ7r8s8QpL+JjU/nfND7w0AYyyWbcWCBUe4v6UYtdmRBZSLLD591fZt32
-	EAp3qWv+scIksBj07xrHkDEGnxtsmYUKJvmmLsk6CsFZULjfcyrogiYQYKpXSuOZ
-	7kfhltNWArugxabo2hYXRsbY6ySW6oqUQBNNuBVitaMbohteWYGtptaVaoaQ==
+	:subject:to:to; s=fm1; t=1735229328; x=1735315728; bh=k0h7jMI6vw
+	293gZy3eyNmby+1hutwW8K2wO8fXJDHeE=; b=sznX5ZebMFM1B75gUYgLL0745N
+	93yBNMCR89ohXul+cZOMvwRCO406pG1D4YFUv2jPnQn+1jSUUAF6NAje+t/lZzJS
+	KvyPiFj3wrpS9sKnEAdZdEUMxB3UayAlJNBWVoxecet73FnYdCzWyGfPLJqFDaS2
+	cJOjPeawuY9gIjdTEtQzlPO6j39ExtlVKe71I93MIvzujdrkPoQzBmgrOBPB2gOQ
+	JeE/mTK6XRmSkj9WWZuVuirpmEFgcURhC3d6xiKqX+jE4gj34Tq4irvWxba4XE1k
+	06Rg+FZlhbba7sfrCKt9YU4uEsX+rejd48q2he5xqKoc/X85zJ8lJpYUvGoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735229152; x=1735315552; bh=S4Gbmj1rKVKJPSQixT2AvDZNwbvpO5bM4+6
-	AXqibbHs=; b=BrxSbLl8ibh/gnbCk2UsObxgqVspCOydMGVy+PyZix7MagXG8Td
-	0OcIY1lmkhj1gjDedwQTLvUfCKJtu/984ljlkG4NaY8T0YSFnBtQmHfDFnwkJ1Tg
-	ylzSLOHsSZFaerE9bNGTbqrXkV83eWGeI7OFCZMrIHQUFra3+lRiEIFUxU9zbaQB
-	gHUNPi1/CRzSGuSpWetiHus+NWqWozYXLpulJz8k6xWrCkJ0eguz5zpKWSIGN8rQ
-	WcwyatkT4rrC0rPOylKL8O6jFXEUIamSdxjzddD4XVZPIAU2wr/X6pJ+TdBW+Vck
-	oVaku6631jIv+gVlF6sqhbgok6Ge3KhBYEg==
-X-ME-Sender: <xms:4H5tZ83e0XyNjv1qT_Owr0V4SdkzNqyjjnyieseI7Pd6ZoTBWMjHPw>
-    <xme:4H5tZ3EneiYmi6yIy3vzvREf5j5EhuYlfwhAmE5TKSOWDorubetmFvfLa250DhGij
-    AlXf4HZbIrqUAP-Qg>
-X-ME-Received: <xmr:4H5tZ06p_nJ4DvS5nBeq9rTyjVLUWP6KLbp_ALUIEHVT3mXdgY7hpzcOj43pWGw4AoRBRYa2LN1Pe2wKZ3M0GhAZ5JcZk4QZMw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgkeefucetufdoteggodetrfdotf
+	1735229328; x=1735315728; bh=k0h7jMI6vw293gZy3eyNmby+1hutwW8K2wO
+	8fXJDHeE=; b=l7Kpjuk1Mdeh+dnjqNxgDGGD0iOijvui6ke5uxcQ+9Jiy25qgl6
+	McxHGtYgUW8fJ/Q7XsagiMeGja3fMO+0CsVwsnYNc2CZaiR0z4MzDwUnxgejQYfh
+	KnmSwaiMGwpIFpW/JWAv6J8w5XMym49DzFct3NySuir/QMk0RaeCZMh0DpCsq45x
+	KR1QLrcqoC4FcytIFVIiiLsLG7kSErCWGL9IZwUwBGDFDLBiekP3PD5YO3AIeT7b
+	r50lJiB0SOoGJ1wtZv/BtbNULPIaeuqWz0WWJZ8yf+BP4xOx9dgSOiKjQum/zQcx
+	f79YAHtrpva0fS7JDNRNXpX7AOSGibQyT1g==
+X-ME-Sender: <xms:kH9tZ8qeD2y8WI9w4TrGeIA_l2HF3VjVPEIeqwpfa5d-qipRkki8gw>
+    <xme:kH9tZyo0fuGr9SkmNZe2wTjA0zyk5R-arlH827lRivRxXP1axur3QWuf_0Z76XYeE
+    8rEMB3fopAAWN_1sQ>
+X-ME-Received: <xmr:kH9tZxNKst8VWfnoisqfphZHhl2TxwMg_fN0smc-9LL5S5uxGmPjB9uMf1afSwCPOfbOJ0nXqsY6R-SM84m904EMNY6auxYVSA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgkeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:4H5tZ12WVb8R8BdAQXIn6hmKWiobc9mSoI6U8tx0dGcGe6DJPWnHeg>
-    <xmx:4H5tZ_FXiNzt-duLE07_vXkHdtvzhUU-xiLZlzqXbNQc8i4uDERUpg>
-    <xmx:4H5tZ--TIvaCigVjXi13r1-kIF2evtkM8TDjasn9py5y41Q-YBCZ9Q>
-    <xmx:4H5tZ0lIk_I1TVo_bg1cKk_5P6Jv0T15lvrafhGZWzwlZIybamB4Rw>
-    <xmx:4H5tZ3DoiexZLLeCBqv4HpP94uRH5PU31V0Z-nhGuT-_G0-rVjt2Ilnv>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepveefteejfeegfedtudeuleekffelhfevjefg
+    ieelgeduffevfffftddtgfeikeffnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpoh
+    iilhgrsghsrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepie
+    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghshheskhgrmhgsrghnrghrihgr
+    rdhorhhgpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeifohhrlhguhhgvlhhlohdr
+    nhgvthesghhmrghilhdrtghomhdprhgtphhtthhopehprghulhhushesohiilhgrsghsrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kH9tZz4I3nUvLQJasaybqB709cV9B2R86jrm7xXP-IkfamEpdKiPYg>
+    <xmx:kH9tZ776XERXHq3Jik6qZvk1l8PnAkbHcddJspLqSEIQRuhPO-z7PQ>
+    <xmx:kH9tZzgT7BBlZIAS6sIqiARJ0Bi9gj_bKKCGKA-pOqmuXmd7DgAnFg>
+    <xmx:kH9tZ14QBggnhbb48tRmP5BJmrO3XiooL6H1TowwA3Agyndmbj9sSg>
+    <xmx:kH9tZ4tKKu7orFj_RF0dsmSjMO9haFtbdLC5y3nCURGwzhg0uwZmkrqn>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 26 Dec 2024 11:05:51 -0500 (EST)
+ 26 Dec 2024 11:08:47 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2024, #08; Mon, 23)
-In-Reply-To: <edd2807e-4b2b-48d3-97e0-19b3a0dcab8f@kdbg.org> (Johannes Sixt's
-	message of "Tue, 24 Dec 2024 12:55:56 +0100")
-References: <xmqq8qs6yzbm.fsf@gitster.g>
-	<edd2807e-4b2b-48d3-97e0-19b3a0dcab8f@kdbg.org>
-Date: Thu, 26 Dec 2024 08:05:50 -0800
-Message-ID: <xmqqv7v6xwdd.fsf@gitster.g>
+To: Alexander Shopov <ash@kambanaria.org>
+Cc: j6t@kdbg.org,  git@vger.kernel.org,  worldhello.net@gmail.com,
+  paulus@ozlabs.org
+Subject: Re: [PATCH 1/1] Update the official repo of gitk
+In-Reply-To: <20241224122912.20666-2-ash@kambanaria.org> (Alexander Shopov's
+	message of "Tue, 24 Dec 2024 13:29:09 +0100")
+References: <xmqqplliz2zj.fsf@gitster.g>
+	<20241224122912.20666-2-ash@kambanaria.org>
+Date: Thu, 26 Dec 2024 08:08:46 -0800
+Message-ID: <xmqqr05uxw8h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,22 +90,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Alexander Shopov <ash@kambanaria.org> writes:
 
-> Am 23.12.24 um 20:27 schrieb Junio C Hamano:
->> Let's wait for git-gui, gitk, and possibly po/ and delay the tagging
->> of the -rc1.
+> Point out:
+> - current maintaner
+> - contribution flow is via the mailing list
 >
-> I've just sent a pull request for Git GUI to make the current master
-> better visible for translators. Gitk is already up-to-date.
->
-> I'll wait a week or so for translations to trickle in and then send
-> another round of pull requests. Is this a practical workflow?
-
-Yeah, it is that really slow part of the year now, so it would not
-make much sense to have rc releases without much changes in them.
-
-Let's have -rc1 on Monday, -rc2 after a week, and the final later on
-the same week.
+> Signed-off-by: Alexander Shopov <ash@kambanaria.org>
+> ---
+>  Documentation/SubmittingPatches | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
 
 Thanks.
+
+I love finding these patches that helps me do less after being
+offline from the list for a day or two ;-)
+
+Will apply.
+
+>
+> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+> index d8a8caa791..3968abcc4c 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -692,16 +692,17 @@ rebase when I receive your patches).
+>  Some parts of the system have dedicated maintainers with their own
+>  repositories.
+>  
+> -- `git-gui/` comes from git-gui project, maintained by Johannes Sixt:
+> +- `git-gui/` comes from the git-gui project, maintained by Johannes Sixt:
+>  
+>          https://github.com/j6t/git-gui
+>  
+> -- `gitk-git/` comes from Paul Mackerras's gitk project:
+> +   Contibutions should go via the git mailing list.
+>  
+> -	git://git.ozlabs.org/~paulus/gitk
+> +- `gitk-git/` comes from the gitk project, maintained by Johannes Sixt:
+>  
+> -   Those who are interested in improving gitk can volunteer to help Paul
+> -   maintain it, cf. <YntxL/fTplFm8lr6@cleo>.
+> +	https://github.com/j6t/gitk
+> +
+> +   Contibutions should go via the git mailing list.
+>  
+>  - `po/` comes from the localization coordinator, Jiang Xin:
