@@ -1,150 +1,108 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C901876
-	for <git@vger.kernel.org>; Thu, 26 Dec 2024 15:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98913647
+	for <git@vger.kernel.org>; Thu, 26 Dec 2024 16:00:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735228376; cv=none; b=qIeMpAHydiR6SB+cvphSovgHJ7w33Ip0zs7lOqxvQfQp/CcbJFYQ3XwzhBAdH2fkotWfyutZ92+/jfY15N9/52WLUMrvhzGtILMz484CRhJy6Uh1POfk4T3z2pNV9xKdtHODJPan9C/t+BV+42pKMSv+yQ2SfsPoJAsCkfQpyyk=
+	t=1735228847; cv=none; b=Qy6OYtS8kdO5Gr8YUUcVQ2OPY4SMOB7QpKZEZx2p1RxXJiSm5MtQNih22sFAGLczuVZz5CIb9GI9Dvdn8Sk5jGPqhoAKcrIgRrxYda4b356U2RcTC+wjkFPOkZjBlQ+OYYFxFkrbAruO2MnGsjAnjtrOGDNpHDI17HUivexmqI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735228376; c=relaxed/simple;
-	bh=Ci0bUFI2by7X3swL70YQPT+C/qgL8+R3AlAapJPCOGs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DBU50mDE1oUZQ3pjO9+Khz3Qzy45HPk5uN4OJFZ/7I5B4KUnrlLBzY02Zh8iRbhfDpzIX8aObPPV3Evl6XfIod3FL+M6wy1orGTBBgRwzAHrriTX90VoFWKdnbF3ufA6og+v6zyblkeuRPkeqR8L4T8NtKHjgdNvGYCDa5aKFnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VuUfZwwk; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1735228847; c=relaxed/simple;
+	bh=lp/b3SJNx30gUPtMrzX69J/Nbt8T72aQm9RgESioKGM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GYoelWqKT638FsgM+LYrN90vbqajCg05vLqGruMWM42qZv68FyEPb6loVYUpFvJEUcstk95Atao7Wgdz+e4maNoRwnEDD2OlRpSJjKXQjSAl9I68HhxjJVkrJWH8u3vR6TVwdWZVFJRXE5BEpZMSfGM2+hNj9jqmD/DXlBLrGOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V2Xp2KQi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IBd49Mx+; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VuUfZwwk"
-Received: (qmail 26818 invoked by uid 109); 26 Dec 2024 15:52:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Ci0bUFI2by7X3swL70YQPT+C/qgL8+R3AlAapJPCOGs=; b=VuUfZwwkYnTjISHKlkMWwFn83aCakh375lnS4Lns2/YKNSlTb3rR0axvqn+A2gMtuRGofiSvdAwZto1vPCq+/DC99pZBZJkW0CsM7Ouh7Py8/lmQtqz/dcQEf4D3KVx5IPbUz5qXfzK0mJpq/zQD6soGj0dJ8bRvqHGmtXWSnjjQwYE8bRmFMvfUKU8SsRJXcWf4Mo4nq1N5+dkSZY0qGwnPCcFIAc7g/BFnHcZn+RjHhSQ8e2D3o63UoCsc3qH/p+Pq1L3TqFEGZozvkECDZXrVZolxKqxU9sjh+yHigKxQtaFZ1cLsaz/akLy4kcxKJW4t1JV5Zqu91pqtVo4/1g==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Dec 2024 15:52:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1976 invoked by uid 111); 26 Dec 2024 15:52:52 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Dec 2024 10:52:52 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 26 Dec 2024 10:52:51 -0500
-From: Jeff King <peff@peff.net>
-To: "Mirochnik, Oleg V" <oleg.v.mirochnik@intel.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: "git fetch" fails for a --reference clone after an outer forced
- push
-Message-ID: <20241226155251.GA69868@coredump.intra.peff.net>
-References: <SJ0PR11MB581445B096273126D18F3724C60C2@SJ0PR11MB5814.namprd11.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V2Xp2KQi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IBd49Mx+"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9C05125400C9;
+	Thu, 26 Dec 2024 11:00:44 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Thu, 26 Dec 2024 11:00:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1735228844; x=1735315244; bh=PPqVMKCh11
+	esAYk9uWf5fvYG0J2DedDlrkrEUt8+mTs=; b=V2Xp2KQiZGSGIkv9TnJaYNc8uH
+	IiCRMcCgd/JElGBTB+kAZxauSrhjkqETAKkMAq3VYsLImw57JB/PHA0XilMLnbfG
+	/9Bj6DKrVHCW738a/4udx+4wbcNjzOwmPY4bSZj1AdKCE2uLtZ8G499OtxBJYCpt
+	T+XUSc+tPupdERy+kEs8o5WK7SqoN0kA6I0v57U48q+Aqw25BmXaszk8iHYdXJZl
+	RiEZPpUh03IAaWUVmIrST/0zUsTu5mtBhEk8MxEZkxmCIZidwPB10eYctdyhcDlW
+	PX6mUD+4EmEqq0gnJtDB7f3Bfjj+PObygZ9k7+VzNTT7xOqJFt4a8ZZw2fDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735228844; x=1735315244; bh=PPqVMKCh11esAYk9uWf5fvYG0J2DedDlrkr
+	EUt8+mTs=; b=IBd49Mx+jdqMQxXGVziL/L2/RGTjPQ+mHobJ8ZdTlFPdD0JX9BU
+	6nK+oKFjmbztVwcND6uK1WoTRUyvdsDpyUBpkjqZJec5yQbFpraFfxsY25lfFc+3
+	i1Wr23LE4C9v+cnD7dl8DHxLTFGkdCL2DzSEvMDafjR80+hcZh19LTM+Tv/XX/uO
+	8O0K9nPK7auas2JKojTijD3qLBvbog+p2ZFJIfepNeRXg4cuSn9vPKYOqn6TOfev
+	I/s6QD/dtSN4+xt2aDwdkwjMCPuCpKDkaWXGMZyumqgJs5pxz7Bauuhv+A+2CvUO
+	szp1r1+OQu+K1qQkfKKKrejBVu4gcKgSsyQ==
+X-ME-Sender: <xms:rH1tZxe43YrbnObOlx79epv-hYQqfPRtr9Uyg2U29aSH3XWzh80gQg>
+    <xme:rH1tZ_Mn9kKiIy2LT67ggzkk4axOwXdanunYUpzuZC2S2PsqStK4D3w0lDbnGjq_E
+    7Jrazyg59G-JJO4TQ>
+X-ME-Received: <xmr:rH1tZ6isFzDziWaZLDlWlCTpJf1WblLtFdYeJpbnLFM_Z8ddT2McCjMWEDhe5SS6n6T2NY3zwLD2wc45NpnNHF2Im7LSDmV7Lw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddukedgkeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghlgieskhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdrohhrghdp
+    rhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:rH1tZ6_f9t7Av-tH0uVh-KnxmcXaOCWNsXx1wJTAbyTDZWzpxLwd2Q>
+    <xmx:rH1tZ9s7rO_rSwUzA9fKQts-rfoiA36nvjWPYCtsh1MMu5hE2w3D-g>
+    <xmx:rH1tZ5Ha5mJI0yemiH_LI90iTVvq4h4KGWzqe7Q4HcJl9wfkIotZhw>
+    <xmx:rH1tZ0Pn8jLH0tov9HRhwaKFAEqKQ8JrUzjRrlKVdT9pEiB96g304Q>
+    <xmx:rH1tZ7Vx3nISlfMj0m25nFvgqRMqkSClsSgWGJJYqhXO4QRC-FVs_lSN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 26 Dec 2024 11:00:43 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Alejandro Colomar <alx@kernel.org>
+Cc: Andreas Schwab <schwab@linux-m68k.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org
+Subject: Re: git-log --format missing trailing newline character
+In-Reply-To: <elrdfos3fkzjdmhvyxbshsbt6nw723mr3m7blw7ghghnresxi6@vvj7u6jwlgur>
+	(Alejandro Colomar's message of "Mon, 23 Dec 2024 22:23:31 +0100")
+References: <cw7vyas4yw2q4lqiskbvil7mpkx5l5qilj25vnqzkrp5nuezrx@d6tsavm3ajzw>
+	<d813a3dd-68c2-4cbe-92a0-cfd1ece77e9b@app.fastmail.com>
+	<5aib7c6x5m6e4muutjuoqp3f4lvpeh3hz5qkwpayi2usm7b6yi@af2oucx5j4w5>
+	<8734ieyumd.fsf@igel.home>
+	<elrdfos3fkzjdmhvyxbshsbt6nw723mr3m7blw7ghghnresxi6@vvj7u6jwlgur>
+Date: Thu, 26 Dec 2024 08:00:42 -0800
+Message-ID: <xmqq4j2qzb6d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <SJ0PR11MB581445B096273126D18F3724C60C2@SJ0PR11MB5814.namprd11.prod.outlook.com>
+Content-Type: text/plain
 
-On Wed, Dec 25, 2024 at 05:23:13PM +0000, Mirochnik, Oleg V wrote:
+Alejandro Colomar <alx@kernel.org> writes:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 
-> $ cat ./doit
-> #!/bin/sh
-> set -xe
-> rm -rf tst
-> mkdir tst
-> cd tst
-> mkdir master
-> git -C master init --bare
-> git clone master local
-> touch local/foo
-> git -C local add .
-> git -C local commit -m init-commit
-> git -C local push
-> echo foo > local/foo
-> git -C local commit -a -m dummy-commit
-> git -C local push origin HEAD:refs/heads/dummy
-> git clone --mirror file://`pwd`/master mirror
-> git clone --reference `pwd`/mirror file://`pwd`/master local1
-> git -C local1 log --oneline origin/dummy
-> git -C local commit --amend -m new-dummy-commit
-> git -C local push -f origin HEAD:dummy
-> git -C mirror fetch
-> git -C mirror gc --prune=now
-> git -C local1 fetch
-> git -C local1 log --oneline origin/dummy
+> Hi Andreas,
 >
-> [...]
->
-> What happened instead? (Actual behavior)
-> 
-> + git -C local1 fetch
-> fatal: bad object refs/remotes/origin/dummy
-> error: file:///tmp/tst/master did not send all necessary objects
+> On Mon, Dec 23, 2024 at 10:09:14PM GMT, Andreas Schwab wrote:
+>> On Dez 23 2024, Alejandro Colomar wrote:
+>> 
+>> > Anyway, it feels awkward that git-log(1) skips the last newline whith
+>> > --format=format.  Should that be fixed?
+>> 
+>> If you want terminator semantics, use tformat: instead of format:.
 
-This is the expected behavior, and what the warning in "git help clone"
-is talking about:
-
-  NOTE: this is a possibly dangerous operation; do not use it unless you
-  understand what it does. If you clone your repository using this
-  option and then delete branches (or use any other Git command that
-  makes any existing commit unreferenced) in the source repository, some
-  objects may become unreferenced (or dangling). These objects may be
-  removed by normal Git operations (such as git commit) which
-  automatically call git maintenance run --auto. (See
-  git-maintenance(1).) If these objects are removed and were referenced
-  by the cloned repository, then the cloned repository will become
-  corrupt.
-
-Your "mirror" repository has no idea that other repositories are
-depending on it. To safely do a "git gc" there, it would need to know
-all of the objects that are referenced by the dependent repositories, to
-count them as reachable.
-
-One way to do that is something like:
-
-  1. Enable the "preciousObjects" flag in the mirror repo, to prevent
-     accidental destruction (e.g., from auto-gc):
-
-       git -C mirror config core.repositoryFormatVersion 1
-       git -C mirror config extensions.preciousObjects true
-
-  2. When you do want to run gc on the mirror repo, collect all of the
-     references from child repos first:
-
-       # collect references from all child repos; the destination
-       # doesn't really matter here, and you could even delete
-       # refs/child/* after the gc if you want
-       for $repo in local*; do
-         git -C mirror fetch --prune ../$repo refs/*:refs/child/$repo/*
-       done
-
-       # now gc, disabling preciousObjects temporarily
-       git -c extensions.preciousObjects=false gc --prune=now
-
-This is (roughly) what a site like GitHub is doing on the backend with
-repository forks. But Git doesn't ship any scripts to help with it, and
-I don't offhand know of any public ones. I assume GitLab does something
-similar, and their system may be open source.
-
-Some gotchas:
-
-  - this is obviously racy with simultaneous updates to the local repos
-
-  - you'd probably want to fetch HEAD as well, to cover detached HEADs
-
-  - it won't cover blobs/trees referenced by the index of each child
-    repo (but those are probably going to be local to those repos
-    anyway).
-
-  - it won't cover reflogs in the local repos either (but it's not the
-    end of the world if a reflog entry goes stale)
-
-Another, perhaps simpler approach, is to just never expire objects from
-the mirror repo (with the obvious downside being that you might carry
-objects forever that nobody cares about). You can set gc.pruneExpire to
-something high, and then look into gc.cruftPacks to store the old
-objects in a more efficient form.
-
-Hope that helps.
-
--Peff
+Or, "--format=%H" should do the right thing, as that is a mere
+short-hand for "--pretty=tformat:%H".
