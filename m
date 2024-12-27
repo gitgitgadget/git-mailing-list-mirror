@@ -1,55 +1,55 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7191F12F8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09541F1928
 	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735296443; cv=none; b=Vjvhj4FCYL1YBHceWVsNnSA936JRuvVEArUZ9iuq46T0/Uzk+bDynuyjZggmbCgxRznEfrs4cKMzgL5tYDOtF/OQjZ/Wpt8Rr4oByHTBqXM6hUiN32Y7Qu2a43DLbUYZuR0pbUkoOHuvEEnFCxs4BMEFz/wJ2jP3DzpQjUdGw4A=
+	t=1735296443; cv=none; b=o5rVvM3Xn8da6m+uslQrpqLCle996p3GMS77MN0sreOYjBFA0hleDmXBcezQil9UJSpxf5XgPp09mjOwzvNkAnVkNIR0czm+MJ2W+RhjnTWWZjC1zbuHn+MxWac7sD0hEkPlpNM+QFAFaVdhxsQUK+s6gqOCHUZ2+zsCWOUOQdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1735296443; c=relaxed/simple;
-	bh=HLHynNfCCOyl7r7y8m+vUGF0F/shQyUSdzjyDMCEhRU=;
+	bh=+l99LwHFc1MYAwaTp9Zp/LN5Lpan4f2C3lnuf4wpsLU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Uvj1ENBQkhaiiRB83zvBRH3f8Csir057MfAxvizh6zvteIyEiAozcDLxEHZIz+DU1jIZbCvtzYMXS88NITtFcO2fZD3PApBjGdafuZiLc726RhIZpE/lILdbd/OuZXdaUSlMkJRn41fD0A3JoFNzm+V32nqX7nzHw2cGYzzF7XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dkDKSc8a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wGECxv/L; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=IValCClKrB1GzZRk/XamXFfQONs/OQRPX+1iDPwwbEaAFnShfPoWpZlUZeejvFYRW9bNwJLb833O2fd4WIS/SxUSwPrNUxny6hTxyt4e6jlfMbll3yg3VRr29ZDGjbUzsaajCbY9vq9J+toWeOp2nzYTFLsOLgDBsHe8E/j6dk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vRlHeb2r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cTntg20o; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dkDKSc8a";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wGECxv/L"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8A67111400D8;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vRlHeb2r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cTntg20o"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EBA7D11400D9;
 	Fri, 27 Dec 2024 05:47:20 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 27 Dec 2024 05:47:20 -0500
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Fri, 27 Dec 2024 05:47:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm2; t=1735296440;
-	 x=1735382840; bh=5S6Vh/GlSTPlon10saubYRL0hUbdtAsBrSh9OPH4RY0=; b=
-	dkDKSc8ahSMQYsvGsZ9M2+osADTcrEeEodvpSS9Gqfn5Dftb3nQm6l1aBUc7NBqf
-	dqatVu9KXxubdEub56Gtzr/eiiNXTPcD4nAx0ux090NE1nv0O6b7YLHBn/2XqISA
-	cyhwuiYc7VJ+LEMSRF/Q4pYJL5rZaV8vW1lw0n1ojd03xKXdLv6GvpGiTdcKA0f2
-	ONDzQbXGB+4v89ZHmgJZ0FzeFq9aQxtjCQPpF97orIGUOEUM6Wns4/unf4KpJiiM
-	4iTkaX12nEWlpG2ygMs9zFNq0I5ZrAmqa9K7Y7dlD5nH+AxOpqnvoAYGbN32WEXx
-	iC5U5Z9K7En2drf97ggaUg==
+	 x=1735382840; bh=peLPTGtCri9lUYt7wnA+2OC/t2Ppy6husePTPzRP1qU=; b=
+	vRlHeb2r4uDe5TJLuIx/M9H86JzzXxU3jCxrTl0702uBTVkINyv0Sxl66IAeg0gP
+	GculsGecV7O73FbIKjoCPOPTeaWhBQMQ8gnwhU4AzRev3ARSLhkM6XOZNXOC/4iO
+	P30359/WbnKiYk1sexnIoVkQyCp23myeNsXdmAXw3D4DaJ8rtsgMhgAqn7piq7Qi
+	L6BGsL746oUslmlrweBFQldJfdE26akp8VNSxPaF/RO9A/qmwwDacYvc8cAfGUDz
+	g8oO0a86EFEX14m/Jvw8qnBbj6RbARFwcTb+6QufvUysKl7MBSxldxi62Mya0pgd
+	e2vDwsJmlaDwqcR802uBkw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735296440; x=
-	1735382840; bh=5S6Vh/GlSTPlon10saubYRL0hUbdtAsBrSh9OPH4RY0=; b=w
-	GECxv/LOOaaqoBJX9hG5D9LhFNX13WzevSZMCRJdHgJFHf49MjD8toiWuwAAejVS
-	tm0ZmDYj2HhPFCFmxh4hQYm83hnixiJX4pbUa9C67IHCkzP7LGrr1CtUKG+ZmQKj
-	S9z3BdvRZXn86ScmavfDm9KkPU2Vi3DhmOtq/Moqh/4Z5CiI3ZcS1309pUNX10j6
-	TrykaZr+4cuJrWTeIGwX9OtlDKImpyxnqAGONMk7OWNbJtOzLKMfq6UZwkud9zNH
-	5R7lVyC+dbcAESn8cWmvHJDvQzBUz2ssSl9F2u5/ytjGbZA1h8CVoo0fWZvoB+lR
-	MdduoExBWY3xW9rU8UZeg==
-X-ME-Sender: <xms:uIVuZ5kNA-J5UPdcA0K29DT4uWPDqC7tKmHDj8YC2H2Pq7SH8LrVhA>
-    <xme:uIVuZ01chng-95uTlzRfD3yqOtWLTN0Xc2IcYh2mCCkzJxYu0PqF539zRCxmeW4Ha
-    Srw17a7fGuSv1xGwA>
-X-ME-Received: <xmr:uIVuZ_rSftyTZ4sz4agdBNt63wGONvbUYlgjXm05DnehSd7rr189Os2oBAY0lt_iCZ6jW4lvMRKSKGoioo-ukZ-B9PSL98HdH3Kz7cX7v_aW0w>
+	1735382840; bh=peLPTGtCri9lUYt7wnA+2OC/t2Ppy6husePTPzRP1qU=; b=c
+	Tntg20opYy6HGcAMAMQttpLNpQnvcY5pDl7G5+HLfEsSWwGm6COKurV/3v8bI+15
+	UhxQHhFzxBgCCwAlJiq5eKJ5/ONCU7rR1QGwgjR8DunnripeTPp7MTdyKt3fqWW6
+	9STHT5dwbSzEtq96tqtSv+xHi8Jb1ADmcPOimX9/CzIhM6d89TXm74seqdQSoKrq
+	VNmVjDD2WLOzPZl2t+vazdghyGKJL2an7IhwmVHhjXgOBcNBTRctHKebDTIKgVZ1
+	omSU4d2YZCyFJb61Ui1KAQxdVS1TcQbn8VSdy/pFJS7/Cz9wh0uulnkxWPSXR2P+
+	dQ1+mU9r2JsZXbrFXAlBg==
+X-ME-Sender: <xms:uIVuZ2Z3BRWut9l2SjzfYvI4wy61mR_VxjL5vBSPvmogyiT__Hc0Xg>
+    <xme:uIVuZ5aWl6oc4dft9eCroNuT9mBQcYE5rRhO7GoDtP2hZhZ-kDqq0ALCf2pvR_6Tr
+    TRV7qjBzj4fbFlRCQ>
+X-ME-Received: <xmr:uIVuZw86frFC3ljJxUsiC6gsgrQ6XFqTI4CZ_JiUG9cp8uw7Nt5Eh4c1xbnopDwIUbbQ7iyNKE2jX69-jgtese5tT2VBq969O6caNjm6-M5CvQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
@@ -60,21 +60,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgvddtucetufdoteggod
     gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
     sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
     hg
-X-ME-Proxy: <xmx:uIVuZ5nc52JRKKofqiqj4Zxm94UfvQwzJlxmSO74NOspUq4PThNNJA>
-    <xmx:uIVuZ30nOrQ8aVkgciB0shcuvyz1QJuqAccq8kf5LAwVNrWgfqoMbA>
-    <xmx:uIVuZ4u6X0p5xjUDnk6pVdUQxb0y73V3ouOvnIn0HgqHSF3wgkl4mw>
-    <xmx:uIVuZ7XgHKHQUj3jkKuCuw_h58nZ81yEn3rIZzAiLHKhx04JC4U8yQ>
-    <xmx:uIVuZ1DH4W6JNuIpwpWlyyHWsV2EAfhmQVXz7e84p4c1g-HvHv63IHHq>
+X-ME-Proxy: <xmx:uIVuZ4qen8eKgP47YO4JLB5FGQeVe4l6cHWnN6enTkI2tBLNHWCN7A>
+    <xmx:uIVuZxpB4nauPZsd2CvnnmQHod0t3PJRZB885P0EC6idlWluxhiB_A>
+    <xmx:uIVuZ2SwsfUSdQXu7AfD1mzmlmjKxfvd97zGrSWcDASqxishKRez9g>
+    <xmx:uIVuZxqE7wcuxDRYdOK4oAfq5wkxMw0RWT3-Gj4amQcVZdElSYiVLQ>
+    <xmx:uIVuZ42XJiU1uiD0L2Hvbhewz40UTPRYIWmW4zTnf5duX_nqnyUby2ss>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 05:47:19 -0500 (EST)
+ 27 Dec 2024 05:47:20 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 153ea489 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Dec 2024 10:45:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0b36e5c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 10:45:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 27 Dec 2024 11:46:25 +0100
-Subject: [PATCH 5/9] commit-reach: use `size_t` to track indices in
- `get_reachable_subset()`
+Date: Fri, 27 Dec 2024 11:46:26 +0100
+Subject: [PATCH 6/9] builtin/log: use `size_t` to track indices
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,172 +82,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241227-b4-pks-commit-reach-sign-compare-v1-5-07c59c2aa632@pks.im>
+Message-Id: <20241227-b4-pks-commit-reach-sign-compare-v1-6-07c59c2aa632@pks.im>
 References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
 In-Reply-To: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-Similar as with the preceding commit, adapt `get_reachable_subset()` so
-that it tracks array indices via `size_t` instead of using signed
-integers to fix a couple of -Wsign-compare warnings. Adapt callers
-accordingly.
+Similar as with the preceding commit, adapt "builtin/log.c" so that it
+tracks array indices via `size_t` instead of using signed integers. This
+fixes a couple of -Wsign-compare warnings and prepares the code for
+a similar refactoring of `repo_get_merge_bases_many()` in a subsequent
+commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c       | 9 +++++----
- commit-reach.c | 8 ++++----
- commit-reach.h | 4 ++--
- commit.c       | 4 ++--
- commit.h       | 2 +-
- ref-filter.c   | 2 +-
- remote.c       | 4 ++--
- 7 files changed, 17 insertions(+), 16 deletions(-)
+ builtin/log.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 1a9069c9ad8a19d6e0ee45415407c70f36885514..7a1afc46e5fc0250212f5b6eaf952cf8e36b56fe 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -780,10 +780,10 @@ static struct commit *get_commit_reference(struct repository *r,
- }
+diff --git a/builtin/log.c b/builtin/log.c
+index 75e1b34123b348f57334d5592879398064de246e..805b2355d964915732edf5928d54fb6d06e394d4 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1746,11 +1746,12 @@ struct base_tree_info {
  
- static struct commit **get_bad_and_good_commits(struct repository *r,
--						int *rev_nr)
-+						size_t *rev_nr)
+ static struct commit *get_base_commit(const struct format_config *cfg,
+ 				      struct commit **list,
+-				      int total)
++				      size_t total)
  {
+ 	struct commit *base = NULL;
  	struct commit **rev;
--	int i, n = 0;
-+	size_t i, n = 0;
+-	int i = 0, rev_nr = 0, auto_select, die_on_failure, ret;
++	int auto_select, die_on_failure, ret;
++	size_t i = 0, rev_nr = 0;
  
- 	ALLOC_ARRAY(rev, 1 + good_revs.nr);
- 	rev[n++] = get_commit_reference(r, current_bad_oid);
-@@ -887,7 +887,7 @@ static enum bisect_error check_merge_bases(int rev_nr, struct commit **rev, int
- 	return res;
- }
- 
--static int check_ancestors(struct repository *r, int rev_nr,
-+static int check_ancestors(struct repository *r, size_t rev_nr,
- 			   struct commit **rev, const char *prefix)
+ 	switch (cfg->auto_base) {
+ 	case AUTO_BASE_NEVER:
+@@ -1885,13 +1886,12 @@ define_commit_slab(commit_base, int);
+ static void prepare_bases(struct base_tree_info *bases,
+ 			  struct commit *base,
+ 			  struct commit **list,
+-			  int total)
++			  size_t total)
  {
- 	struct strvec rev_argv = STRVEC_INIT;
-@@ -922,7 +922,8 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
- {
- 	char *filename;
- 	struct stat st;
--	int fd, rev_nr;
-+	int fd;
-+	size_t rev_nr;
- 	enum bisect_error res = BISECT_OK;
- 	struct commit **rev;
- 
-diff --git a/commit-reach.c b/commit-reach.c
-index d7f6f1be75e95cc834d60be719e930a77ad0518f..bab40f557580476d59d3a0b0ef56f40263e6615e 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -791,8 +791,8 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 				 timestamp_t min_generation)
- {
- 	struct commit **list = NULL;
+ 	struct commit *commit;
+ 	struct rev_info revs;
+ 	struct diff_options diffopt;
+ 	struct commit_base commit_base;
 -	int i;
--	int nr_commits;
-+	size_t i;
-+	size_t nr_commits;
- 	int result = 1;
  
- 	ALLOC_ARRAY(list, from->nr);
-@@ -944,8 +944,8 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
- 	return result;
- }
+ 	if (!base)
+ 		return;
+@@ -1906,7 +1906,7 @@ static void prepare_bases(struct base_tree_info *bases,
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	revs.max_parents = 1;
+ 	revs.topo_order = 1;
+-	for (i = 0; i < total; i++) {
++	for (size_t i = 0; i < total; i++) {
+ 		list[i]->object.flags &= ~UNINTERESTING;
+ 		add_pending_object(&revs, &list[i]->object, "rev_list");
+ 		*commit_base_at(&commit_base, list[i]) = 1;
+@@ -2007,7 +2007,7 @@ int cmd_format_patch(int argc,
+ 	struct rev_info rev;
+ 	char *to_free = NULL;
+ 	struct setup_revision_opt s_r_opt;
+-	int nr = 0, total, i;
++	size_t nr = 0, total, i;
+ 	int use_stdout = 0;
+ 	int start_number = -1;
+ 	int just_numbers = 0;
+@@ -2500,11 +2500,14 @@ int cmd_format_patch(int argc,
  
--struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
--					 struct commit **to, int nr_to,
-+struct commit_list *get_reachable_subset(struct commit **from, size_t nr_from,
-+					 struct commit **to, size_t nr_to,
- 					 unsigned int reachable_flag)
- {
- 	struct commit **item;
-diff --git a/commit-reach.h b/commit-reach.h
-index d5f3347376b6310727c74b81cb7660485b96c0bc..fa5408054ac01372c041d18595a405cfdaec6af3 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -95,8 +95,8 @@ int can_all_from_reach(struct commit_list *from, struct commit_list *to,
-  * This method uses the PARENT1 and PARENT2 flags during its operation,
-  * so be sure these flags are not set before calling the method.
-  */
--struct commit_list *get_reachable_subset(struct commit **from, int nr_from,
--					 struct commit **to, int nr_to,
-+struct commit_list *get_reachable_subset(struct commit **from, size_t nr_from,
-+					 struct commit **to, size_t nr_to,
- 					 unsigned int reachable_flag);
- 
- struct ahead_behind_count {
-diff --git a/commit.c b/commit.c
-index a127fe60c5e83c3968fc0538f0e801e4afd52acd..540660359d4190f7dbc1aaa7668b033a6d16afe9 100644
---- a/commit.c
-+++ b/commit.c
-@@ -778,11 +778,11 @@ static void clear_commit_marks_1(struct commit_list **plist,
- 	}
- }
- 
--void clear_commit_marks_many(int nr, struct commit **commit, unsigned int mark)
-+void clear_commit_marks_many(size_t nr, struct commit **commit, unsigned int mark)
- {
- 	struct commit_list *list = NULL;
- 
--	while (nr--) {
-+	for (size_t i = 0; i < nr; i++) {
- 		clear_commit_marks_1(&list, *commit, mark);
- 		commit++;
- 	}
-diff --git a/commit.h b/commit.h
-index 943e3d74b2ae026d77e3bac59a4e993314e79ce4..70c870dae4d4b972a1f608983fc17024ad04d2e9 100644
---- a/commit.h
-+++ b/commit.h
-@@ -210,7 +210,7 @@ struct commit *pop_most_recent_commit(struct commit_list **list,
- struct commit *pop_commit(struct commit_list **stack);
- 
- void clear_commit_marks(struct commit *commit, unsigned int mark);
--void clear_commit_marks_many(int nr, struct commit **commit, unsigned int mark);
-+void clear_commit_marks_many(size_t nr, struct commit **commit, unsigned int mark);
- 
- 
- enum rev_sort_order {
-diff --git a/ref-filter.c b/ref-filter.c
-index 23054694c2c96014ef411a225c6c941eb8d2d56c..bf5534605e234d7cdd01d52f5c83f5314745e13d 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -3041,7 +3041,7 @@ static void reach_filter(struct ref_array *array,
- 			 struct commit_list **check_reachable,
- 			 int include_reached)
- {
--	int i, old_nr;
-+	size_t i, old_nr;
- 	struct commit **to_clear;
- 
- 	if (!*check_reachable)
-diff --git a/remote.c b/remote.c
-index 18e5ccf391844516e2fcc54fc0d6835283ff6a48..0f6fba85625b523122e50e28a0f64b6e143cd9fb 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1535,7 +1535,7 @@ static struct ref **tail_ref(struct ref **head)
- 
- struct tips {
- 	struct commit **tip;
--	int nr, alloc;
-+	size_t nr, alloc;
- };
- 
- static void add_to_tips(struct tips *tips, const struct object_id *oid)
-@@ -1602,7 +1602,7 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
- 		const int reachable_flag = 1;
- 		struct commit_list *found_commits;
- 		struct commit **src_commits;
--		int nr_src_commits = 0, alloc_src_commits = 16;
-+		size_t nr_src_commits = 0, alloc_src_commits = 16;
- 		ALLOC_ARRAY(src_commits, alloc_src_commits);
- 
- 		for_each_string_list_item(item, &src_tag) {
+ 	if (show_progress)
+ 		progress = start_delayed_progress(_("Generating patches"), total);
+-	while (0 <= --nr) {
++	for (i = 0; i < nr; i++) {
++		size_t idx = nr - i - 1;
+ 		int shown;
+-		display_progress(progress, total - nr);
+-		commit = list[nr];
+-		rev.nr = total - nr + (start_number - 1);
++
++		display_progress(progress, total - idx);
++		commit = list[idx];
++		rev.nr = total - idx + (start_number - 1);
++
+ 		/* Make the second and subsequent mails replies to the first */
+ 		if (cfg.thread) {
+ 			/* Have we already had a message ID? */
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
