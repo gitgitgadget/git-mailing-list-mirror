@@ -1,98 +1,120 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310E728691
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 12:19:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7A1E48A
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 13:21:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735301965; cv=none; b=t3Q2WFW254SP682xM5DMZc1dh+r0Wmzw++17hPNZbOv75G/FqVAUHZBfswVWEyHalE7KCEaFm9Cdk6Mug540cbGevu22Zk3HDliC1f5kvQ3fztnElQe8rJConU+SE7eUhEdFZm/CWFN2S9/DkQpxoFj24n9dtOAjSfz7EPEFvVk=
+	t=1735305667; cv=none; b=uTpz2J0/MfaygLbZB5SmJy6f7JlB/InejkU8ODjxQBIMf8PE68xvNtG87ivpRM4Hc3gXDg6ak0cBQMX5pxrZe5nHG9Fq8Gx9hAzTbbx6q0KAZBO97YwbFLM0RDKemaLTk3geScsrfio2GMnluTLoi8dBY6K+llyvYJUr5S4lVsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735301965; c=relaxed/simple;
-	bh=8Aglu651e0HAX289ABGPcjB/0SsA3a0aBVeN4oD0OLo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=Dsxy09oR3FZ4RPRn8ztTMWGFACYw160HCD8juTdNEuxBH+MfftaaeHYe9hMetZ/yKQ1APVLlYZ88a+abGixMB5yP504nYUGDgUnNyad/nQv5StMSELx2lvdn5PC1zflNRra2Ss0WqcgzwDpHM3JYMvgdKW5eCNtxGo7K6hCqOec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aP/86584; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1735305667; c=relaxed/simple;
+	bh=77GwgdlLzB69Os3shd0MVsk9/Tuy0w65DArt1s0KeqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I5GNPxtBNEiZhMLbMDUCSaZRAFLepDOz0H/E/oqXTf7Heti4Vb4D5EP09YmgkmgBEBiKjb6wygk7hiZ/FKi8aMbrEpHu8PQxl6Au+p08z1C16bxbpynb7sVqAAV2nFdVq3YW6bnrnCP7UQF/71QAB8bBHzVI0N19RFNlg0pNFPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eQpD+lUS; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aP/86584"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-216281bc30fso101313535ad.0
-        for <git@vger.kernel.org>; Fri, 27 Dec 2024 04:19:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eQpD+lUS"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21683192bf9so91206445ad.3
+        for <git@vger.kernel.org>; Fri, 27 Dec 2024 05:21:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735301963; x=1735906763; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8Aglu651e0HAX289ABGPcjB/0SsA3a0aBVeN4oD0OLo=;
-        b=aP/86584qIK2FEU7PWy+Caij3fGUNJwZ+VpEIDq7fEboga/PY9LNFlQEhguS35FNeM
-         YDh8m+78WApXsWPaRuDnkFomXAurouIVJ5Gtv4q6sD4tmOZ6eM+QDOqAVM6oA1PQhrpf
-         9arpd6lULOaooCD5aY1xJY0G6ElfF+XIQZmA0YNwNmnOUfzn0UAugZnnu9iQMONCeRaB
-         Dn7TX0+1BCAt0xdyxwBQyxm2aaEpSncUY0udaABy5rgyjQEbnqMTsA+hOj2Tpfe3B1xt
-         8ZwGyg/TTwIJsnFxYYRhA/Ply3RkG4hiMayHR8fIyfSMos+SN1NyOtxewe0DMP37EQV4
-         +jsw==
+        d=gmail.com; s=20230601; t=1735305665; x=1735910465; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FONppq+5K9L+Ev1389RFi/aTFJraYWgXpWny9DbSJD4=;
+        b=eQpD+lUS/ZefGVLKk4BsYYJEev4KbiSCewhwTuquSVStgg4p7sZO6PqUbFOWF1Ife1
+         lsDBFJ4/gPmbJaRLF/PCoH5B22oxzSVfS+0VNN5m7MQK/KnJpqaPuWOwyWme82gs2965
+         OsZA4Y93UV1PswQ2KgJ3rGkRy9l5aix2zJ47OHP/r+JN/W8kPip+4PS/pkHeH3ufMcTi
+         yfEEWgqZlS/EsGqMBOxtbBgX7tKXLQ9nWnv4oyLW5qJ+tMcH+xBRG23eLWxjgVJAA28s
+         DI0HKSN5kJbtk7CizUS/o547PTRGaNSncfNQQys0o8xzr8/lFSBj7yQcx6Jra1HoPA8Z
+         KuPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735301963; x=1735906763;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8Aglu651e0HAX289ABGPcjB/0SsA3a0aBVeN4oD0OLo=;
-        b=JAizg2mUXcZ9LmdoYXtn1siZeCpgqbspqKF8AGYVjv+u4lj4VIeJRX95YhN+Fa6G1k
-         FhX7/KdvUBrUrrzaRbf2yOYEK3FKQh5xYZuh0n+X2kRJVmwygFdAi94AO5eBJWWNXSqC
-         xVlyXQuuSMIR86Gvwg6SWAffmy8BPUNvrBOpXPuvRQDXuWnNbMdwNtngRa/lfagT3Re4
-         PjLCq8wmVjzLqrr4d5rYkAkbZTv801ysITokCNeLdGBP8tLgQY+BaAECMH0kP18yGpOw
-         pHk1+xfFc7Dap/3It1BpQtxpc2SGxzzePTCLFS1sBpw/WRHzxybKjuIRPccXYyD/EuwP
-         XGfw==
-X-Forwarded-Encrypted: i=1; AJvYcCVcyIo9HLChtECTUs+A7X3sz89x1QB4ohbXONff9FmF3Eqz9wBR0AmE6pbtPF1CxQfgqCY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwohumZQCvbRlh4MDjqxPHBYuP2tEoPyzwt0Ha6KvR7y2wSO9vc
-	t2JszAZIs6JveHuIa9Ig8vV8RZIXJfVMnr3Zm6XGuwmto/CbPyZa
-X-Gm-Gg: ASbGncsCtssszh2mZIMsOdz5ThNzTDlYaPycD/68fumoyLITb/7pfhBmnSuH5uDa9m2
-	wOUoXy0azlU8xszcmKFN6poU0s13dIa3ge64kXyploCvGcwjUInuhjMXHfKXOS4Zm4cEeVFK9PE
-	ddZbx8KLFW1zljWbUb+6kCo+4AkilAKioR1xjyehsnlzuO020smi7X0y+dyOAkRepHMd6Eq4FgF
-	b2XPdTojVUaAlM1/6lJkvKz0RTsSssTjTQ1d/7Xhc1QD9pvXcurdNFxVD607oI2NytHIk4=
-X-Google-Smtp-Source: AGHT+IEwMyyaMgWxtTfEyeC2obY6RaNA7hQf23LeKsmchwxx7HeQIls9qzbYQeQcZHnjywSt5FP3Nw==
-X-Received: by 2002:a17:903:320a:b0:216:4cc0:aa4e with SMTP id d9443c01a7336-219e6f37f88mr395596565ad.47.1735301963254;
-        Fri, 27 Dec 2024 04:19:23 -0800 (PST)
-Received: from localhost ([103.31.220.51])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc96e76fsm134583385ad.65.2024.12.27.04.19.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Dec 2024 04:19:22 -0800 (PST)
+        d=1e100.net; s=20230601; t=1735305665; x=1735910465;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FONppq+5K9L+Ev1389RFi/aTFJraYWgXpWny9DbSJD4=;
+        b=b8dyxZKcWd3JPSKdN7E+1bA9duRNG+lqOGRCWAO1TKlNPD7aTFtqv9zQEspav9gkzJ
+         HoaQLJ/PiPZOX8ggKlKbSGTgoNPqI4i9sPfKedotUhly6LkzxTf7b6UTYu8Tp0Qrtb+s
+         wH60+HMdKsnq7STeONhhh4NEWGwlhCGGT8T7CuVHOpwZ40acU4Lrreynqlawp6F08hzk
+         FTfGKYFrA167HWrSILrRjUVyuONaziJRUwFpwTGdqowaTcn24Z2lg4MQdzQ1BzhoqYAE
+         977Z6xC9RY7xjKI61QllYvnr4Tpq1QY1XF2mYCoTu5zOkCRZjnYbZ8T1+RM1xAdukKFY
+         yCRQ==
+X-Gm-Message-State: AOJu0YwOLaMg5PTfUhbc8mDkeiuQN/SSNhv36F/XAn//4iICjJzaaIYj
+	s+dKfaEtt1F15TuBkqzQ3pNuIds9AKN3jnbrYLegKFpdXeD3AEE5G/dgwQ==
+X-Gm-Gg: ASbGnct2uPrUPpwLLtrtEsudeovOzHzPKOI33NHRS0CsGeYR9JdG9q9w4GrOAIpvq+I
+	dRDZe5oY+5CF5VBFRtA0cCMVk5GzSNspnOmVI/2vHL4ES4RKWRtlv6d4Sz+NCaDxqe63UswXOPh
+	X/+EJzxFrHGCPyCxhzHg55guzrr84322FSAxsuywCJi5fQixWxIyit0KECLmZuaeWuPOSnUV6+x
+	tHtSCFMtFuBt8Pq3ytPA+o8utlTxKGKzclVRwc2jNhdiLd0n8/v
+X-Google-Smtp-Source: AGHT+IE6B62cAJh3Ui9KJwN+R/InVmIAlaxZh6W4wDZ67hA/YVTkAfJTcZdquHsqAacc0yOTEUhf1Q==
+X-Received: by 2002:a05:6a20:cd92:b0:1e4:745c:49d6 with SMTP id adf61e73a8af0-1e5e082e7ccmr41161072637.45.1735305665448;
+        Fri, 27 Dec 2024 05:21:05 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad837395sm15147883b3a.69.2024.12.27.05.21.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Dec 2024 05:21:04 -0800 (PST)
+Date: Fri, 27 Dec 2024 21:21:56 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/9] builtin/log: fix remaining -Wsign-compare warnings
+Message-ID: <Z26p9GJbmyUd6bG-@ArchLinux>
+References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+ <20241227-b4-pks-commit-reach-sign-compare-v1-7-07c59c2aa632@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 27 Dec 2024 17:49:17 +0530
-Message-Id: <D6MH7E17E6I0.3IG5103E7XXP3@gmail.com>
-Cc: <christian.couder@gmail.com>, <karthik.188@gmail.com>,
- <kaartic.sivaraam@gmail.com>, <ps@pks.im>, <shejialuo@gmail.com>,
- <chandrapratap3519@gmail.com>, <gitster@pobox.com>
-Subject: Re: [PATCH v3] t7611: replace test -f with test_path_is* helpers
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Meet Soni" <meetsoni3017@gmail.com>, <git@vger.kernel.org>
-X-Mailer: aerc 0.18.2
-References: <20241220130632.11826-1-meetsoni3017@gmail.com>
- <20241227105345.10184-1-meetsoni3017@gmail.com>
-In-Reply-To: <20241227105345.10184-1-meetsoni3017@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241227-b4-pks-commit-reach-sign-compare-v1-7-07c59c2aa632@pks.im>
 
-On Fri Dec 27, 2024 at 4:23 PM IST, Meet Soni wrote:
-> Replace `test -f` and `test ! -f` with `test_path_is_file` and
-> `test_path_is_missing` for better debuggability.
->
-> While `test -f` ensures that the file exists and is a regular file,
-> `test_path_is_file` provides clearer error messages on failure. On the
-> other hand, `test ! -f`, used to check either the absence of a regular
-> file or the presence of any other filesystem object, but looking at
-> them in the test individually, all of them should've said `test ! e`,
-> i.e. "there shouldn't be anything at given path on filesystem."
-> Replaced these cases with `test_path_is_missing` for better
-> debuggability.
+On Fri, Dec 27, 2024 at 11:46:27AM +0100, Patrick Steinhardt wrote:
 
-'Replaced' -> 'Replace'. Cf. https://git-scm.com/docs/SubmittingPatches#imp=
-erative-mood
+[snip]
 
-Other than that, this LGTM.
+> @@ -717,14 +715,14 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
+>  	unsigned long size;
+>  	enum object_type type;
+>  	char *buf = repo_read_object_file(the_repository, oid, &type, &size);
+> -	int offset = 0;
+> +	unsigned long offset = 0;
 
-Thanks.
+Why here we use `unsigned long`, is this a special situation where we
+cannot use `size_t`?
+
+>  
+>  	if (!buf)
+>  		return error(_("could not read object %s"), oid_to_hex(oid));
+>  
+>  	assert(type == OBJ_TAG);
+>  	while (offset < size && buf[offset] != '\n') {
+> -		int new_offset = offset + 1;
+> +		unsigned long new_offset = offset + 1;
+>  		const char *ident;
+>  		while (new_offset < size && buf[new_offset++] != '\n')
+>  			; /* do nothing */
+
+> @@ -2183,7 +2182,7 @@ int cmd_format_patch(int argc,
+>  		fmt_patch_suffix = cfg.fmt_patch_suffix;
+>  
+>  	/* Make sure "0000-$sub.patch" gives non-negative length for $sub */
+> -	if (cfg.log.fmt_patch_name_max <= strlen("0000-") + strlen(fmt_patch_suffix))
+> +	if (cfg.log.fmt_patch_name_max <= cast_size_t_to_int(strlen("0000-") + strlen(fmt_patch_suffix)))
+
+A design question, why we don't change the type of
+`cfg.log.fmt_patch_name_max` to be `size_t`?
+
+>  		cfg.log.fmt_patch_name_max = strlen("0000-") + strlen(fmt_patch_suffix);
+>  
+>  	if (cover_from_description_arg)
+> 
+> -- 
+> 2.48.0.rc0.184.g0fc57dec57.dirty
+> 
+
+Thanks,
+Jialuo
