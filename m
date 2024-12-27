@@ -1,76 +1,79 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A896D53389
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:47:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CA21F130D
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735296441; cv=none; b=hgk2uGPhyHJfff3nbepBlBNZDDYPilZHd2k2HSBqjzL1nKq5kZCVFsK57uhSdYGqPAXBJ8fLD6SBfKdUu6EKdy5pu3Ttx4tRF6MEQ4xIwwff8yCadM1Q+TH9Ok/o9s9pdRfcv2bL1KCeWUjgbNHBxIYrySiyceyIVUlv1SuD96M=
+	t=1735296441; cv=none; b=OQd2gZx0DL2fw0DJ0kkymOZR6fMnncR4IMCGZwRs/2jlnb+OlBg0yndU0SVFOxU3/hI9umT7/rEeJcrm7YqtpFQRSUxp0LD4WTpcQFnnbZ5rsC7iERc0qOX0EG7urFE/aoJyT5kIqzUbsar6v2B4GCaQaVzWprgCcha7cvFsUY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1735296441; c=relaxed/simple;
-	bh=E/OMbmBRKYZDhJ/7fb3PUNnnxYmm2Eq+m2EVtDYfHPY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=g71sCzx9l+XBG/u2IAnVuo1juDuCxOZK4bPeh13uTgL63NXdzzPTd0Al+oX9l7ttyPrYS3AzUWbkidD5MFzt7a6yo3kaJV4xf55jazG3IBNG0CCP9jvl1BWZ2WPNwVqMJ25Z2+53pL17sUy30OCCmBcF4VYpmMGYSMJc17y/rWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QqJPVKfd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sRzsMptv; arc=none smtp.client-ip=103.168.172.156
+	bh=EUDVjAVZVhB7sueLaL46VD3nXlV8Wdoxtj0CwK1eoqA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=eJfxA83By8qgO9t28cK2atpBH3Yqw7wy26ZolXAGHdN9jsNtFIWOcKVMeMY5mb/18j8HD9XV6leV2jClbk2DcUQxBOOQtCraxzFpUT54zV4z9jxEdsgOKcBai3lzob1jQiQkzH8bZC+5JmmYHuH6d7CcZOUXpEiYYTRZUtOXSS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pYQhVV1l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W5gfFIwD; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QqJPVKfd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sRzsMptv"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AED8911400D2;
-	Fri, 27 Dec 2024 05:47:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pYQhVV1l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W5gfFIwD"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id A380C138009C;
+	Fri, 27 Dec 2024 05:47:18 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 27 Dec 2024 05:47:17 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 27 Dec 2024 05:47:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1735296437; x=1735382837; bh=TgSTdw+i3z
-	RX9LTa86ehrpPhT6CpOw9g0Myr8GHgYtE=; b=QqJPVKfdLsqxqiWnd6HI5TVhc7
-	fGWEKuo3rHiMctu7txBz0/qxCMj/bdYYPObyn16YAq7ajjjvSM9YGIiJB9M64H4r
-	7/nGZ89oT/et3Vm/5tQTCz4P65KHztNvj5PCFUTbJPUm4iLqs7mJPbvcf9gjUQUx
-	yqCBmbVdQ2uJys0UP/mbJDmAATc9vzV2Y48OfGc93acxgfK8doTmWbIBrZSzXV3X
-	UsPy2aYEZREpEmQcT9vnZu93UsNHVfIsggHOVyloYKSSCGdgZp7OM7+ELaWlLKKY
-	eqsbDx7otnWWpbL6iqm5MFcARzOCmTLagEmcmkA6Bj/SCMirtG6kjsYnAk0A==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735296438;
+	 x=1735382838; bh=/e4A7vHStJBS3+u6Z7NkXFgt2MTauRhGc6L5fOlUgoQ=; b=
+	pYQhVV1lFTaCoqSKOM/KabkX4Wvnbqm2QCQ9GuAXu8PmBvGTvGuQeseeYzNDgkzc
+	jBh3tVOFEFGRDNrZNeZXRffG7mA7R5jnSfNVrh4HpkWwG7JL5iQWkW/zNwy81+EE
+	S9tlyOIOEuu7XYPOVoT29R+D4zVPovtXqz/sh8Ie9rA22MKxvoRwIvJC0dN3FtGr
+	dogQ3axHMMlok4p48NhXhZRLKDi9WrWgCbBOrXX1UCI6A3MYsi/vcIeRfCURVHon
+	1y1yoofNuPnyIyvju+74qK1kCuCgF6GCMD78pW/aFWsrRUTQTnJVwd/wGDmphwyp
+	s6GDw+2aK+RRFazdVfRa9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1735296437; x=1735382837; bh=TgSTdw+i3zRX9LTa86ehrpPhT6Cp
-	Ow9g0Myr8GHgYtE=; b=sRzsMptvbSpF2V9NBbXsn5ZXJwGqDKEVCvDqX+McHKO/
-	kVvxBq8EC74G9TxBjU3PadUQ1yaFFGDJO/xqw9P4gz95RXxvKG45AISSK6nw2DTo
-	foi0uy5cV+rNQubfBDXR6+ktdJ+9iQ46jn/dKn9gOuOsW79IIgt+AvbRRGjjZyjt
-	69UGHpve/9NxUAoLQg/e9uw0OnryMCGihIex0NaRoinxQQOFeEy1Wj3UFvOoX6jn
-	/6YnvUdTVoYUNT+b5CouCheXyHsAAUesh5RlOho/LeV7EsWxpwMuIOivf49XG+Xy
-	ABQp0jS8wJBrlRF+VZacruKKe8pg1zLkJQuO43IiTQ==
-X-ME-Sender: <xms:tYVuZ-coDnHs8cbVlxjnU7n3QgOmr0PvuC6228pxRS2qN6Ng-zS8ew>
-    <xme:tYVuZ4MQsSqyz4wF7QJPNuOTdzJvna4LO0FxuL03fvkh2LjCjcgKErHFK_zd0j1bF
-    olwfI3aApVpoNFQGg>
-X-ME-Received: <xmr:tYVuZ_gRXgwrXeO3LDCz_SHTfbPyOP8ET4RllUj99GWgtsk4VJg-54A6BXGx8Yn4DuNzgbSLFBVKw7FOU_yCMZtXIhSFoW0mm-KRvlKfosj8ig>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735296438; x=
+	1735382838; bh=/e4A7vHStJBS3+u6Z7NkXFgt2MTauRhGc6L5fOlUgoQ=; b=W
+	5gfFIwDLbYVETbMJWRSucE93KEepJ4AkDsiTT4FLNbSDHMkNqFOIdtKkkJjNfuNd
+	NvtPqGeD4hn5B29QgM0/9RTb0EbmqwYEtthyK4KNZOGCEmbDvnaHEl1ydDCjRkQQ
+	2E9pBvpu4NHQr8tz65ZcEkqybIPtHavO0CNyCh2q03Ee/BF61lMMQUK56HkA0rBp
+	idf/cVOA2q8eu/IO5gXCvtdfR3BAFeHoSRadEwd4K807QyEGZToMA2PrGWibB/ni
+	WfynXz3svX1vrOk/lHyYlXo5dVedgPcCIXHSWOzK/VBNKia46KF4rk7MVTC5SfTD
+	nupCQkei77PtJz2/WapsQ==
+X-ME-Sender: <xms:toVuZ7eImxQqVZaoF2lOSlgBZaQW3ogCriKbeEFmkF--ChsyQpieHg>
+    <xme:toVuZxO8t4VMLZ4-IUj5Kidy_kk3GERPBOG8AZ5-oW-gUcfkQBKXXpBG1LAuDSj1d
+    tTaT1kkHsx92-QzVg>
+X-ME-Received: <xmr:toVuZ0h-GNX3qxON_hDFIxvSZPT-7uIaIJB99IlCFngus1ovEutL-Qcs9VrmgXcZh1LIOJ82aveiGNr1wTHeHvlfVZKfhXHlJ9yi8dpE1nb_sg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
-    ggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetie
-    egjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:tYVuZ7_ita3PH4HcNE1b7o69KwYXc-i8ZKJftUQEacr72vu4xMzWRg>
-    <xmx:tYVuZ6vpgEZdxwfW_eO-xMnQfNg_NdLrKI-V6f4m1t-VDG2vVV5JIA>
-    <xmx:tYVuZyG8XQsl3JM4Yy6Yv0xggQOMQh6NtjISh_IiuXflC1i8lcoVig>
-    <xmx:tYVuZ5NR-Ixy__VcZOIHd42_3aRnHnqYkAncMCUugLyLfHHAJu09mw>
-    <xmx:tYVuZz5hQd-EPbWDO_IDruz1gSxSK_pGetdNmhzS6Inl2DBaCwwIzav4>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
+    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    ht
+X-ME-Proxy: <xmx:toVuZ8_gJdz_xubTbem2dS_ogEIb_6NXCq0Sn5I5W3pkUpKu2lkJGg>
+    <xmx:toVuZ3t2MsHAWUAr7VMvw_O2wq7BTP0h2G3Jm5ndQu7ahqDwGKqGTg>
+    <xmx:toVuZ7GQOf3HaEWHqxdHTJo38sVXuqGhor3VY44NZtofQGXSqOYEJw>
+    <xmx:toVuZ-MyS91EJC5qEMUhZpf47ohYoguC1P3KiZVdQE5MNBMZ6_91Zg>
+    <xmx:toVuZw64qYBftm6jk60sJ51S3s_acGxj6kTPBJFe3bD0H2EWU9_IGqXp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 05:47:16 -0500 (EST)
+ 27 Dec 2024 05:47:17 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c3be2361 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Dec 2024 10:45:11 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d1ccf9c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 10:45:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/9] commit-reach: -Wsign-compare follow-ups
-Date: Fri, 27 Dec 2024 11:46:20 +0100
-Message-Id: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+Date: Fri, 27 Dec 2024 11:46:21 +0100
+Subject: [PATCH 1/9] prio-queue: fix type of `insertion_ctr`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,55 +82,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHyFbmcC/x2NQQqDMBAAvyJ77oJuLBa/Ij3EuNGlGMOulIL4d
- 2OPM4eZA4xV2KCvDlD+ismWCjSPCsLi08woU2GgmtqGqMOxxfwxDNu6yo7KPixoMqfbZK+M5J6
- +djHG0L2gZLJylN9/MbzP8wKyzhfscgAAAA==
-X-Change-ID: 20241227-b4-pks-commit-reach-sign-compare-235a03fffc78
+Message-Id: <20241227-b4-pks-commit-reach-sign-compare-v1-1-07c59c2aa632@pks.im>
+References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+In-Reply-To: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-Hi,
+In 62e745ced2 (prio-queue: use size_t rather than int for size,
+2024-12-20), we have converted `struct prio_queue` to use `size_t` to
+track the number of entries in the queue as well as the allocated size
+of the underlying array. There is one more counter though, namely the
+insertion counter, that is still using an `unsigned` instead of a
+`size_t`. This is unlikely to ever be a problem, but it makes one wonder
+why some indices use `size_t` while others use `unsigned`. Furthermore,
+the mentioned commit stated the intent to also adapt these variables,
+but seemingly forgot to do so.
 
-this patch series is a follow-up for [1], fixing two smallish issues
-introduced in that patch. Naturally I couldn't stop there and decided to
-also make "commit-reach.c" and two other files -Wsign-compare-clean.
+Fix the issue by converting those counters to use `size_t`, as well.
 
-Thanks!
-
-Patrick
-
-[1]: <20241220084949.GA132704@coredump.intra.peff.net>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (9):
-      prio-queue: fix type of `insertion_ctr`
-      commit-reach: fix index used to loop through unsigned integer
-      commit-reach: fix type of `min_commit_date`
-      commit-reach: use `size_t` to track indices in `remove_redundant()`
-      commit-reach: use `size_t` to track indices in `get_reachable_subset()`
-      builtin/log: use `size_t` to track indices
-      builtin/log: fix remaining -Wsign-compare warnings
-      shallow: fix -Wsign-compare warnings
-      commit-reach: use `size_t` to track indices when computing merge bases
+ prio-queue.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- bisect.c              | 11 ++++----
- builtin/log.c         | 50 +++++++++++++++++-----------------
- builtin/merge-base.c  |  4 +--
- commit-reach.c        | 75 +++++++++++++++++++++++++++------------------------
- commit-reach.h        | 10 +++----
- commit.c              |  4 +--
- commit.h              |  2 +-
- prio-queue.h          |  4 +--
- ref-filter.c          |  2 +-
- remote.c              |  4 +--
- shallow.c             | 38 +++++++++++++-------------
- shallow.h             |  6 ++---
- t/helper/test-reach.c |  6 ++---
- 13 files changed, 111 insertions(+), 105 deletions(-)
+diff --git a/prio-queue.h b/prio-queue.h
+index 36f370625f0802cb84082fea904ad6e8a456520a..38d032636d4cf9c544811cff6c3e6a080d6c7b82 100644
+--- a/prio-queue.h
++++ b/prio-queue.h
+@@ -22,13 +22,13 @@
+ typedef int (*prio_queue_compare_fn)(const void *one, const void *two, void *cb_data);
+ 
+ struct prio_queue_entry {
+-	unsigned ctr;
++	size_t ctr;
+ 	void *data;
+ };
+ 
+ struct prio_queue {
+ 	prio_queue_compare_fn compare;
+-	unsigned insertion_ctr;
++	size_t insertion_ctr;
+ 	void *cb_data;
+ 	size_t alloc, nr;
+ 	struct prio_queue_entry *array;
 
-
----
-base-commit: 76cf4f61c87855ebf0784b88aaf737d6b09f504b
-change-id: 20241227-b4-pks-commit-reach-sign-compare-235a03fffc78
+-- 
+2.48.0.rc0.184.g0fc57dec57.dirty
 
