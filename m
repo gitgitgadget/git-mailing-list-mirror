@@ -1,55 +1,55 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77371F4734
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:00:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC8D1F3D46
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735308003; cv=none; b=oSwaMBpe/lHAM7Kicq3Jo7E9QFFNFk5lmkPMrONMD6VWU5m+16CHDC+MWVKvuLQtF93/Gje1nCUEF1IjljlDsbzQijT4TMOgABjR28qSQUW70SK6xQBl21qTEY+YnvdE1stA87yUYHZ0OkKuRYHTulrS20lJag3atenxz91CClc=
+	t=1735308005; cv=none; b=SYbXtSds49j1lZ8qmvPJwuTwqrOSlzbT/iecSQ6wsxbmevTtX/3t8iJEqoJdH8Cd9Sps80469JTH/d+Fnkw3oTeKFFQQ8uwLFOh30d62jcpaCnMescTEI9WW0hBPUU2Z1FRpyA/7jAkfQ3OIOtpZrR0I5KozBpuRSDtsdRK/lBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735308003; c=relaxed/simple;
-	bh=Xky0MIsmSYb9kT1S4ct+k8qmtdizUeYDvHtSBtotcoI=;
+	s=arc-20240116; t=1735308005; c=relaxed/simple;
+	bh=YDWzGfV5zkk7Hpk9EzhsKEon5ABDfI7fMSB+XZm7C98=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gUDObcPYJEUdzsWapvrffVrs5Fp8bMWaxuGiasrSgAx9iPdID0kBPQHwTwkOg6V/Afx8bwpWsOM6Zjpy21W2D6IWP2wzeIHd7b96YNxatyF8LVJH9wmCK6rkdsAPHWvr0zq62DLIhW2hysk32WSqC3u9neN1n0W5l8JufdhFQ2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CApBolm5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dY256LWk; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=Pnz4ve/6ljxIAHlEApY5SZaxQRDf55EHeNlBxoo1BUrdCcbNycp9EhR2SBH5dKwNjNIHCk1e78Xz9O1FJzVaNzDcKqVX/UAWm8AujeAVxqGGSVC33YvmYOYoRxrnM7pz+rVnlQcVVWznf4ORL5jHOpPc/ZPvezvSTUXXDH2x1Yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OJR9ntVI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DR6Ogyis; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CApBolm5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dY256LWk"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 232EE2540185;
-	Fri, 27 Dec 2024 09:00:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OJR9ntVI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DR6Ogyis"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 16F6611400D9;
+	Fri, 27 Dec 2024 09:00:03 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 27 Dec 2024 09:00:01 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 27 Dec 2024 09:00:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1735308000;
-	 x=1735394400; bh=jeoeGWhyM+NktE1zo0heZRue3FElxswEzMgp4gw/oQo=; b=
-	CApBolm5L39MTocyfWAQ4ZsKz6+4BEorC/zcBq0UTJcofSu+Bry1/PUTYf8jG1qj
-	yTYC8asjvRkgKVi1e7n6MDZMirr0D7vEaVFYaIfIfssGz12CyTn8wgKxlFuEnq8u
-	pNpFpsvnpUjXCfbW+LPbIheGD7qBkKNxwKYAPkGZa8xXnlk1UKUqBAkfUowuuv6Y
-	qd0yz6AOE3a/bGBO1Szs7l7yhPuTS9m2EYJQ+p6mm7RV2f1qXeghq3je8X1V827Q
-	o0UkOO9bygI8YeYTPhOWGEpeDTCzyG6iCi3SMRTVBfvyL+k5j4Wu99aSOv88gIYb
-	5orlZuLdU1v+R79Ko4qVPQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735308002;
+	 x=1735394402; bh=m6PUH5hc5VnZEjAw45PgVSbEFwSbOCM6SRruq77T2TY=; b=
+	OJR9ntVIw7ExjL9bLf4whA+3DOOe4CoWkQatn2057wixTiwZn+98qk4v9CierS0o
+	mrxAtF+BcpHVlBYo5/9gVaZNvywBeo5YYK0GQ2AA0RBX2UNdb2DF0G4x/i6hDaOA
+	yZ4zhZmZzgLKUPC4wPPNKoSQLM7Q88QcsNlqPoZ8OLoXCDJtnB1EaIYwcaGV8RJQ
+	fJP0FhKzyEmmO59na0W2GsWMt+ipklfOk1WxAUOTy/Zc3JI0iYhpsVKqJgT2eVzk
+	aSiw7BDU89WGBhh5JK1D4Dcok4kfdhangEAJka0+g/vC3OjUD+YNgcAYguqNBr/3
+	hChO7AE2dn0a27o59BOtzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735308000; x=
-	1735394400; bh=jeoeGWhyM+NktE1zo0heZRue3FElxswEzMgp4gw/oQo=; b=d
-	Y256LWkVIUvCVDNBDt3feq19/m7CGtPT9okibe4DLnjD8IA6wDoNDE6ATY7+wN7t
-	TGnc8ZbqVWNraZJIXQPdriKdKOAubWmKej40zn+jTp9rrzxSVT8eUJtCj9N4ZJw+
-	DV+hR+RsX3QQl1wKPQ9yxtiUy7vfKmujUPol6PYJsAPQf42Jzfmljvr59faF+V5e
-	AbyktThCkoRvozjPxS9M2x8C0/p7RV52FS92/xGbiW+s2sRR8XGRiYusm3DrBkZF
-	PvkrsXmaDz7C6UP3r2MmNcI0bMIKdRSnwLlfC/8DINw/htGG5i0SFVn8qqyxD1B3
-	jiJV1tUOP4GnLQympUJNA==
-X-ME-Sender: <xms:4LJuZ4-ikucWmaV7-xAHwFV6EjpnyFM8D3ZepZiE1VdpIqwpY5uvBw>
-    <xme:4LJuZwvNRX3CCQiJ-c4SVtqGahZTak_2__ZrX-8oSGqpRa4hM6nB5ITuflDRpWOpf
-    0ek8hapfj8sebp1_A>
-X-ME-Received: <xmr:4LJuZ-CHdJRcFIwWZ8tL9DmcTj25mFNL_WGVk_qcuOuekPPH8Y5Z2H5yKUdHzNCjG7SGSC3eI7awqH0KaTXPCrqK9QrqE6xbNqywySEOGaAGuw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735308002; x=
+	1735394402; bh=m6PUH5hc5VnZEjAw45PgVSbEFwSbOCM6SRruq77T2TY=; b=D
+	R6Ogyis6HYJjF5pJ2tyyWT+OQehuwSvuE0AqKdBwgGP7AUrjqCY5Xehy6NQfVHYt
+	KRV0p3if8ko5U9a/ZiPq0Lt6dT3lO1Ucgk0pxPZ98+isef22FDNOkMeYeYnp1725
+	JFi3KhyO11sUlgRB/eJN0U3zujD0pb2/bSd/3GLsBL7b+01b51qbYf1Uwb2f5HJv
+	pHDaaNK26MBQEBkfI7PdPJqjORzo1+HQKFCnzk5v0pC8XbTwXN+dowJpXguf3VpS
+	es2odh4juXxn1pAplEd+xGyJYWmd0aLaGY5b7N/rwMalTYpXL86KDzf9emPkyCLI
+	ctW0Y48BeaZSWe1n1Kl7Q==
+X-ME-Sender: <xms:4rJuZ4ApCbxq3PkBV7U_RWHTG9sxxsGBhx-UhKy0a024OJWpmExiQg>
+    <xme:4rJuZ6jHJdVZrc8PGwW5X7TiITgSXc5N3ykYA71aA1h6t5mErG8AeEX8DxNRdIDCJ
+    c4CmRhEOF5oS6p4GQ>
+X-ME-Received: <xmr:4rJuZ7lKt2jK-Ytn9L_uFjoc9mN1Q6890g_OWweUR6RKwOsGYkydRMU0nUhoPo6B7B2tD88ShMm5n0NmCCI4aDXqUplusWkeFoWmBVDGtts9Rw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -61,20 +61,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgheekucetufdoteggod
     shdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtth
     hopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
     rhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:4LJuZ4eGFK_PCkndWDexPGYsm9yWqD3uammQ2FrNvOUq94wUclZRfg>
-    <xmx:4LJuZ9NVUk-nqOjN6AD2lbxQjiMj8M6dkBMn8UoIhTBobHOyCnq8gA>
-    <xmx:4LJuZym5lFhAp5WnKGR2VK-0SHJllh4t-HUMT98ybqKxCY16bgOTXw>
-    <xmx:4LJuZ_s9FwgLR6jFx97w_CSZmyoV5sv-Q7abHXJzpwXLPQdicgFEcA>
-    <xmx:4LJuZ2YqNY53ce_u5paGLamZxgQ46AkaJp4daos0NMRUyclIkLRD_l3Y>
+X-ME-Proxy: <xmx:4rJuZ-xynNit3d3QFJ2a6r1po_ofEO1lEd3wlj5Hl2f4J4Pe_hoePA>
+    <xmx:4rJuZ9S6sJ8QmGJpiDQ-WKFjdjruOTecA014G1yQkNJXn_-ExY4Yog>
+    <xmx:4rJuZ5agcFqvUHygY8s4NDZltqr02KdTueCJBzRPpdH5KLX6Aa-9fQ>
+    <xmx:4rJuZ2S1IEN3naiHjmQjhG9VEMWmzo7oD7DEzm95mtsE0_VhWzdQwQ>
+    <xmx:4rJuZ4fOQMMrAhXDyOQwe7pdzFv7Iy4572NozCY0g9O0HqDAlMlXeIGP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 09:00:00 -0500 (EST)
+ 27 Dec 2024 09:00:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f84c8ba6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Dec 2024 13:57:55 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5dec6fd0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 13:57:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 27 Dec 2024 14:59:29 +0100
-Subject: [PATCH v2 01/12] meson: wire up support for AsciiDoctor
+Date: Fri, 27 Dec 2024 14:59:30 +0100
+Subject: [PATCH v2 02/12] meson: properly wire up dependencies for our docs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,192 +83,126 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241227-b4-pks-meson-docs-v2-1-f61e63edbfa1@pks.im>
+Message-Id: <20241227-b4-pks-meson-docs-v2-2-f61e63edbfa1@pks.im>
 References: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
 In-Reply-To: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-While our Makefile supports both Asciidoc and AsciiDoctor, our Meson
-build instructions only support the former. Wire up support for the
-latter, as well.
+A couple of Meson documentation targets use `meson.current_source_dir()`
+to resolve inputs. This has the downside that it does not automagically
+make Meson track these inputs as a dependency. After all, string
+arguments really can be anything, even if they happen to match an actual
+filesystem path.
 
-Our Makefile always favors Asciidoc, but Meson will automatically figure
-out which of both to use based on whether they are installed or not. To
-keep compatibility with our Makefile it favors Asciidoc over Asciidoctor
-in case both are available.
+Adapt these build targets to instead use inputs.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/meson.build | 110 ++++++++++++++++++++++++++++++++++------------
- meson_options.txt         |   2 +
- 2 files changed, 84 insertions(+), 28 deletions(-)
+ Documentation/meson.build | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/meson.build b/Documentation/meson.build
-index fca3eab1f1360a5fdeda89c1766ab8cdb3267b89..acd6d86ec779e63230c88b7bff937aff330d2d4f 100644
+index acd6d86ec779e63230c88b7bff937aff330d2d4f..b3c8b6c56339e10099f8c37a4d8198f402192520 100644
 --- a/Documentation/meson.build
 +++ b/Documentation/meson.build
-@@ -204,29 +204,87 @@ manpages = {
-   'gitworkflows.txt' : 7,
- }
- 
--asciidoc = find_program('asciidoc')
--git = find_program('git', required: false)
--xmlto = find_program('xmlto')
-+docs_backend = get_option('docs_backend')
-+if docs_backend == 'auto'
-+  if find_program('asciidoc', required: false).found()
-+    docs_backend = 'asciidoc'
-+  elif find_program('asciidoctor', required: false).found()
-+    docs_backend = 'asciidoctor'
-+  else
-+    error('Neither asciidoc nor asciidoctor were found.')
-+  endif
-+endif
- 
--asciidoc_conf = custom_target(
--  command: [
--    shell,
--    meson.project_source_root() / 'GIT-VERSION-GEN',
--    meson.project_source_root(),
--    '@INPUT@',
--    '@OUTPUT@',
--  ],
--  input: meson.current_source_dir() / 'asciidoc.conf.in',
--  output: 'asciidoc.conf',
--  depends: [git_version_file],
--  env: version_gen_environment,
--)
-+if docs_backend == 'asciidoc'
-+  asciidoc = find_program('asciidoc', required: true)
-+  asciidoc_html = 'xhtml11'
-+  asciidoc_docbook = 'docbook'
-+  xmlto_extra = [ ]
- 
--asciidoc_common_options = [
--  asciidoc,
--  '--conf-file=' + asciidoc_conf.full_path(),
--  '--attribute=build_dir=' + meson.current_build_dir(),
--]
-+  asciidoc_conf = custom_target(
-+    command: [
-+      shell,
-+      meson.project_source_root() / 'GIT-VERSION-GEN',
-+      meson.project_source_root(),
-+      '@INPUT@',
-+      '@OUTPUT@',
-+    ],
-+    input: meson.current_source_dir() / 'asciidoc.conf.in',
-+    output: 'asciidoc.conf',
-+    depends: [git_version_file],
-+    env: version_gen_environment,
-+  )
-+
-+  asciidoc_common_options = [
-+    asciidoc,
-+    '--conf-file=' + asciidoc_conf.full_path(),
-+    '--attribute=build_dir=' + meson.current_build_dir(),
-+  ]
-+
-+  documentation_deps = [
-+    asciidoc_conf,
-+  ]
-+elif docs_backend == 'asciidoctor'
-+  asciidoctor = find_program('asciidoctor', required: true)
-+  asciidoc_html = 'xhtml5'
-+  asciidoc_docbook = 'docbook5'
-+  xmlto_extra = [
-+    '--skip-validation',
-+    '-x', meson.current_source_dir() / 'manpage.xsl',
-+  ]
-+
-+  asciidoctor_extensions = custom_target(
-+    command: [
-+      shell,
-+      meson.project_source_root() / 'GIT-VERSION-GEN',
-+      meson.project_source_root(),
-+      '@INPUT@',
-+      '@OUTPUT@',
-+    ],
-+    input: meson.current_source_dir() / 'asciidoctor-extensions.rb.in',
-+    output: 'asciidoctor-extensions.rb',
-+    depends: [git_version_file],
-+    env: version_gen_environment,
-+  )
-+
-+  asciidoc_common_options = [
-+    asciidoctor,
-+    '--attribute', 'compat-mode',
-+    '--attribute', 'tabsize=8',
-+    '--attribute', 'litdd=&#x2d;&#x2d;',
-+    '--attribute', 'docinfo=shared',
-+    '--attribute', 'build_dir=' + meson.current_build_dir(),
-+    '--load-path', meson.current_build_dir(),
-+    '--require', 'asciidoctor-extensions',
-+  ]
-+
-+  documentation_deps = [
-+    asciidoctor_extensions,
-+  ]
-+endif
-+
-+git = find_program('git', required: false)
-+xmlto = find_program('xmlto')
- 
- cmd_lists = [
-   'cmds-ancillaryinterrogators.txt',
-@@ -243,10 +301,6 @@ cmd_lists = [
-   'cmds-foreignscminterface.txt',
- ]
- 
--documentation_deps = [
--  asciidoc_conf,
--]
--
+@@ -229,7 +229,7 @@ if docs_backend == 'asciidoc'
+       '@INPUT@',
+       '@OUTPUT@',
+     ],
+-    input: meson.current_source_dir() / 'asciidoc.conf.in',
++    input: 'asciidoc.conf.in',
+     output: 'asciidoc.conf',
+     depends: [git_version_file],
+     env: version_gen_environment,
+@@ -261,7 +261,7 @@ elif docs_backend == 'asciidoctor'
+       '@INPUT@',
+       '@OUTPUT@',
+     ],
+-    input: meson.current_source_dir() / 'asciidoctor-extensions.rb.in',
++    input: 'asciidoctor-extensions.rb.in',
+     output: 'asciidoctor-extensions.rb',
+     depends: [git_version_file],
+     env: version_gen_environment,
+@@ -304,10 +304,11 @@ cmd_lists = [
  documentation_deps += custom_target(
    command: [
      perl,
-@@ -278,7 +332,7 @@ foreach manpage, category : manpages
-   if get_option('docs').contains('man')
-     manpage_xml_target = custom_target(
-       command: asciidoc_common_options + [
--        '--backend=docbook',
-+        '--backend=' + asciidoc_docbook,
+-    meson.current_source_dir() / 'cmd-list.perl',
++    '@INPUT@',
+     meson.project_source_root(),
+     meson.current_build_dir(),
+   ] + cmd_lists,
++  input: 'cmd-list.perl',
+   output: cmd_lists
+ )
+ 
+@@ -315,7 +316,7 @@ foreach mode : [ 'diff', 'merge' ]
+   documentation_deps += custom_target(
+     command: [
+       shell,
+-      meson.current_source_dir() / 'generate-mergetool-list.sh',
++      '@INPUT@',
+       '..',
+       'diff',
+       '@OUTPUT@'
+@@ -324,6 +325,7 @@ foreach mode : [ 'diff', 'merge' ]
+       'MERGE_TOOLS_DIR=' + meson.project_source_root() / 'mergetools',
+       'TOOL_MODE=' + mode,
+     ],
++    input: 'generate-mergetool-list.sh',
+     output: 'mergetools-' + mode + '.txt',
+   )
+ endforeach
+@@ -335,9 +337,10 @@ foreach manpage, category : manpages
+         '--backend=' + asciidoc_docbook,
          '--doctype=manpage',
          '--out-file=@OUTPUT@',
-         meson.current_source_dir() / manpage,
-@@ -301,7 +355,7 @@ foreach manpage, category : manpages
-         manpage_xml_target,
+-        meson.current_source_dir() / manpage,
++        '@INPUT@',
+       ],
+       depends: documentation_deps,
++      input: manpage,
+       output: fs.stem(manpage) + '.xml',
+     )
+ 
+@@ -345,10 +348,8 @@ foreach manpage, category : manpages
+     manpage_target = custom_target(
+       command: [
+         xmlto,
+-        '-m',
+-        meson.current_source_dir() / 'manpage-normal.xsl',
+-        '-m',
+-        meson.current_source_dir() / 'manpage-bold-literal.xsl',
++        '-m', '@INPUT0@',
++        '-m', '@INPUT1@',
+         '--stringparam',
+         'man.base.url.for.relative.links=' + get_option('prefix') / get_option('mandir'),
+         'man',
+@@ -356,6 +357,10 @@ foreach manpage, category : manpages
          '-o',
          meson.current_build_dir(),
--      ],
-+      ] + xmlto_extra,
+       ] + xmlto_extra,
++      input: [
++        'manpage-normal.xsl',
++        'manpage-bold-literal.xsl',
++      ],
        output: manpage_path,
        install: true,
        install_dir: get_option('mandir') / 'man' + category.to_string(),
-@@ -311,7 +365,7 @@ foreach manpage, category : manpages
-   if get_option('docs').contains('html') and category == 1
-     custom_target(
-       command: asciidoc_common_options + [
--        '--backend=xhtml11',
-+        '--backend=' + asciidoc_html,
+@@ -368,9 +373,10 @@ foreach manpage, category : manpages
+         '--backend=' + asciidoc_html,
          '--doctype=manpage',
          '--out-file=@OUTPUT@',
-         meson.current_source_dir() / manpage,
-diff --git a/meson_options.txt b/meson_options.txt
-index 4be7eab39939178ae2ffde1ff9e78f83a1b482b2..f50bb40cdf6046529a0cea0a03a8cb696c3a6b18 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -85,6 +85,8 @@ option('docs', type: 'array', choices: ['man', 'html'], value: [],
-   description: 'Which documenattion formats to build and install.')
- option('default_help_format', type: 'combo', choices: ['man', 'html'], value: 'man',
-   description: 'Default format used when executing git-help(1).')
-+option('docs_backend', type: 'combo', choices: ['asciidoc', 'asciidoctor', 'auto'], value: 'auto',
-+  description: 'Which backend to use to generate documentation.')
- 
- # Testing.
- option('tests', type: 'boolean', value: true,
+-        meson.current_source_dir() / manpage,
++        '@INPUT@',
+       ],
+       depends: documentation_deps,
++      input: manpage,
+       output: fs.stem(manpage) + '.html',
+       install: true,
+       install_dir: get_option('datadir') / 'doc/git-doc',
 
 -- 
 2.48.0.rc0.311.gb6c66824c1.dirty
