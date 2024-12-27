@@ -1,85 +1,83 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A819A80BFF
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5078642070
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735294594; cv=none; b=CpFEDQOpVbrtNlv9+kHX8pnnaOiJYX+HgZQ2zQM3QR1vnA5gOSQaBj0rF9UMX2TFuzfbCWoeL2T1jWK3sPAOIk+jJHaYdzql55UEIO6Dq9gD5PyI+S9rDaQsEM2k7a2/CE6+OVWNgPa4UPAwK0fpUadqQGm5u46hFLCEGB0tjDQ=
+	t=1735295660; cv=none; b=s/xasiVQknptTAuE/Oun1vRVxw3zgByv+EKMc28fJxCBjUgAw4Bezh21ZzwPumpreeEItvWv9HdiSucPigrbi1i0TcOuO3aCFGcNGXVK09WncaExeiv5ciws68cmOBAamD4N/mV2zvq549SF6K+pQVGQH/uBYoDlllUFiGtQ/F0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735294594; c=relaxed/simple;
-	bh=hx9lpb/NHoyJfJDKSCtWYo2NGROfhwo88i/iH4v9QeI=;
+	s=arc-20240116; t=1735295660; c=relaxed/simple;
+	bh=BYlx5zcYn13KCcw4vyU/o9Gbly4sFVd7Mf2gzoiHVFw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rF/OYkMINRCPPRBHI4QUN/1EMszPzh4qcLzzo0hXvLnpL7nQdXnJhKjmJf1H0ZRRckjdJ2fvPSOYkxyaLNaoIyOS99XfrEtJAsfXcy7ngiLTAcv97ErfErn93Yqvs9Ge1GcqRU9qIY3+LV7O/Nxem/k9vGzIgEyzG5doN7WrI3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bq5zXtqj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C6rqko2c; arc=none smtp.client-ip=103.168.172.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=QFmR3/C2pD4CHUDKiFOyeSa22oZPAD+5OiQft+pR6DkJD3XGO6nNv2ixEoikiuwrE9SVRU3tTMPrBkfMTNl19Z6e6Tz1yCgUht348/hjClA1FMVn6G1UO/38HBl/JXT227MBr5PR67OJ9iBMFdeZ9UK9uwGZeE0CHUdI0JnN7E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IlXsV3Nw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FIT8eMfA; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bq5zXtqj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C6rqko2c"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 97FD913801BE;
-	Fri, 27 Dec 2024 05:16:30 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IlXsV3Nw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FIT8eMfA"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 426B81380137;
+	Fri, 27 Dec 2024 05:34:17 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 27 Dec 2024 05:16:30 -0500
+  by phl-compute-07.internal (MEProxy); Fri, 27 Dec 2024 05:34:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1735294590;
-	 x=1735380990; bh=1qJvxVdmrz3z7bkBxQ8OjwmTsl33dc04yuPU12MArvI=; b=
-	bq5zXtqj16yyoTItY6R93nR3KPrbnhHekoqi7DfEmIHwMZMRCIdE+NL0b4KbUFdu
-	Y0WznCKXn/n3wi1dgKK56uUYhyfAJu5mF+2NNA0KboTHO6wuX4KLXGlwDNtFlLgQ
-	ZBYiHrl7ng054FsFsMa7egw3Q0O9pXLzcFRYI6ar2p2OHmFO7m9LqIK2BepgEBDV
-	2GjiQn/kb9x9Zk3+WgSSZEo/zkIWUk6/jVgFNx8uAp12RKBfTLqNWwpVb4Bw8Sm9
-	ixwYPMX7wHpHTVcpbNncqna35J0Q4skLBFPKddL2pX6Tv5j1elHkC2KjEia0Sy6t
-	rCB3cnhBVGn58YadXy1l5A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735295657;
+	 x=1735382057; bh=uwIRViihLEVnBAiiOAqoEcHcecpCN0vQA4/aKstH5K0=; b=
+	IlXsV3NwtNvJlSQgAH3r72Z4EwdjBTrOLBo9J0Aq8aNQ9I65YGjy93Gv3t4yJw5N
+	5LwI4wXwxqGpl7+MgSB9j78UeOVM7SEQ2ptYwXd1SfDdSJDSkDmvqhB6GP0QfM/U
+	ZrfXDToE+RS/WEhMxziL1nyX8d5pJhPif6LgEMM7rXKI7Eo7aIzYkqX2AldScPeP
+	r1hnUtyItHzaW9tyej/acQlt/0wtPvOIBVlNZGV4ptnvgGdKPFrZi5j7DrJ0HwE/
+	NACdld5CRoR2O8NLLPrahaAgJuQmlhjcE93uN76Je+A7b+5TVaV8unA311vXAQ0x
+	efvNi8zQdTQmSqUiP6giQA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735294590; x=
-	1735380990; bh=1qJvxVdmrz3z7bkBxQ8OjwmTsl33dc04yuPU12MArvI=; b=C
-	6rqko2c3MYyi3A6vP6uxda17hI0GAy1xZ8rjmpjcoaZsXB2+fmmmrOKHlKjVNGnW
-	OfvehOjm4eDsfNA9XfjCkMhhCy8WLELivyfmSJtpHP1nagqLvHctJTJ3gMIFTCav
-	e9tEJWmbZvU+Ok1ugd9YwuJOxZgU8RWL93pPhsuCQVrneX8FvGC8WtckuC4fTuaG
-	jxwodyuHWYsIXGundEh1OiRaV1dvcZfsHbrtdBNHlxpq3tb4bhkbbw2DYyZqog8+
-	rizOLFcF7lhcL8zPvtZCVBkUe+COJdxvW4Dnu3tQ1MeCdtLe/T22soMq0Dp7gDNw
-	dqouuKFpoHK6FUtc8R/XA==
-X-ME-Sender: <xms:fX5uZ7cq3EOHLxVbek0pKTJ_nlRaBYz3ajkgzR4PWFSeWzliCeBaKw>
-    <xme:fX5uZxO2yA0XthhQAwUtSTUcypQucLxY9wKC5_ljphyjMiFxgCrFcl8zOxDKLcn9L
-    oJ75JoN7xGu03_9wA>
-X-ME-Received: <xmr:fX5uZ0jw7nyrHUCpUHsksO1olBeGJdQdarwXrt02Yi4Upv0jekRVvaIg3HGPCiAw2iVjVOQbglOPbHLAWbGrXGdnh3hw06N2gvnPCNrHXi2oLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgudefucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735295657; x=
+	1735382057; bh=uwIRViihLEVnBAiiOAqoEcHcecpCN0vQA4/aKstH5K0=; b=F
+	IT8eMfAzWBV9yetNTxy0K1/qpDUiYNBrpf35JRUJaPjlt5pa3mY/qNCL8ErBp59N
+	ClkDC6OTMrPViaGwjGTtwCiiamAoW9Rer7BripCUQhli9A2Xq9SpkhSUA/UGTGpw
+	ht9NeoswTRfoB/i8g4xjcqVqLKVRRqZLOgjvniwxwZg5TdTqrS43UBEaizm74Jh/
+	uGddUd/Zq7kfdztHguSPeJciMM9vzL45+8o5gkIyN3B1REuL1gEvWlkOH0MQ6JDh
+	LAlg/KeHdK1kiryTQ9/SSCUrRL347n9fT8S6TteyW3aXMCat8ZEtiNOF+f23ojQu
+	rYYYj/XKsWEtFAd7fUT1Q==
+X-ME-Sender: <xms:qYJuZz2XZeDNG4gYvgAYbSwbiRp7uSJSd8WY3vQ1gCfRVN5K4w2BSQ>
+    <xme:qYJuZyFPVGvfZM5IrvTgXxnOWHIj6trgRxb1gBZpllsyMBewKqdK8YBDgx1cDqzwS
+    I9p_DFf0_ooMwzz9g>
+X-ME-Received: <xmr:qYJuZz6vyflZ6nKof-BKk3kHiM23HTbGHhj_XYaBwAyRfmZJ4h9KpjVgIorIqLDgIT3D9NWBrrc0bAw47N1gIfXXM6VgcMmx6E_nbYAZjiETLw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgudejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
     fukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
     nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitd
     etleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgv
     rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehsohgvkhhklhgvsehfrhgvvghnvg
-    htrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:fX5uZ89q4BRQooCHBxL9v3mcFBPlq-_sSZiN8FYkjFZo61W4tywDmA>
-    <xmx:fX5uZ3s4m7i9j_Akm6-1TuHW3qZACXalWExhYzyLe1iwhczcrkVi3g>
-    <xmx:fX5uZ7EqIEtpNDu8eCWDwMNM0u6s-gKNVpCb_koxNNdH3pyMwoo6Mg>
-    <xmx:fX5uZ-PE1i5k3K1xXouZZ37v2E46zbIwvXN2jbHXXPPfPyufVhfDhA>
-    <xmx:fn5uZ3LV5qlubn-tUOJe9ARyIfoV6d3fJuuy3ru4KcxfXSIW2L89Kb6D>
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdr
+    rhesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:qYJuZ429XCRSFG3czLRtpzFsU98VhYAfcCYzKYQzX3MX5Xhal2o-IA>
+    <xmx:qYJuZ2EnCQ4wE6kcz8D175vwvSiuB-_zMyh4PoqTLpXEnbbUlYrH6w>
+    <xmx:qYJuZ5-GmR8ZzWZWDYs8UWGdshVUlZ888ONaT818kzRzbhkECc12fw>
+    <xmx:qYJuZzm9gtKnbAeyaEU77CnbZTDPmuLsYAIDYHA9Uk9VtEVR4BPzmA>
+    <xmx:qYJuZ7RfcysdpNTu97Ps5d5cPsGZ04hgtJHKD7JoGEJam_Byh0vwK8ma>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 05:16:29 -0500 (EST)
+ 27 Dec 2024 05:34:16 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a5ca289a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Dec 2024 10:14:25 +0000 (UTC)
-Date: Fri, 27 Dec 2024 11:16:09 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0ab9e7b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 10:32:11 +0000 (UTC)
+Date: Fri, 27 Dec 2024 11:33:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?B?U8O2cmVu?= Krecker <soekkle@freenet.de>, git@vger.kernel.org
-Subject: Re: [PATCH 1/4] add-patch: Fix type missmatch rom msvc
-Message-ID: <Z25-aaS7s3baU7ly@pks.im>
-References: <20241223110407.3308-1-soekkle@freenet.de>
- <20241223110407.3308-2-soekkle@freenet.de>
- <xmqq34iaxh7r.fsf@gitster.g>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/4] reftable: avoid leaks on realloc error
+Message-ID: <Z26CjQpewcyLwfs4@pks.im>
+References: <2b9fba8d-be63-4145-9d25-a2151e422cfa@web.de>
+ <9b2f4baa-b602-4cc5-8dfc-dd941b1d7af6@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,53 +87,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq34iaxh7r.fsf@gitster.g>
+In-Reply-To: <9b2f4baa-b602-4cc5-8dfc-dd941b1d7af6@web.de>
 
-On Thu, Dec 26, 2024 at 01:33:12PM -0800, Junio C Hamano wrote:
-> Sören Krecker <soekkle@freenet.de> writes:
-> > @@ -1624,10 +1629,11 @@ static int patch_update_file(struct add_p_state *s,
-> >  			else if (0 < response && response <= file_diff->hunk_nr)
-> >  				hunk_index = response - 1;
-> >  			else
-> > -				err(s, Q_("Sorry, only %d hunk available.",
-> > -					  "Sorry, only %d hunks available.",
-> > -					  file_diff->hunk_nr),
-> > -				    (int)file_diff->hunk_nr);
-> > +				err(s,
-> > +				    Q_("Sorry, only %"PRIuMAX" hunk available.",
-> > +				       "Sorry, only %"PRIuMAX" hunks available.",
-> > +				       (uintmax_t)file_diff->hunk_nr),
-> > +				    (uintmax_t)file_diff->hunk_nr);
+On Wed, Dec 25, 2024 at 07:38:29PM +0100, René Scharfe wrote:
+> When realloc(3) fails, it returns NULL and keeps the original allocation
+> intact.  REFTABLE_ALLOC_GROW overwrites both the original pointer and
+> the allocation count variable in that case, simultaneously leaking the
+> original allocation and misrepresenting the number of storable items.
 > 
-> Again, this hunk may be needed, as the "hunk_nr" uses size_t, which
-> probably is overly wide.
-> 
-> So, I do not mind too much to adjust the code around hunk_nr,
-> hunk_alloc and other things that are already size_t (but before
-> doing so, we probably should see if it makes more sense to use ulong
-> for these members instead of size_t), hbut I am not sure if it is a
-> sensible move to change old_offset, count, etc. that count in number
-> of lines and use ulong (not bytes) to use size_t instead.
-> 
-> size_t _might_ be wider than some other forms of unsigned integers,
-> but it is not necessarily the widest, so "because on msvc ulong is
-> merely 32-bit and I want wider integer like everybody else!" is not
-> a good excuse for such a change (if it were, we'd all coding with
-> nothing but uintmax_t).
-> 
-> So I dunno.
+> parse_names() and reftable_buf_add() avoid leaking by restoring the
+> original pointer value on failure, but all other callers seem to be OK
+> with losing the old allocation.  Add a new variant of the macro,
+> REFTABLE_ALLOC_GROW_OR_NULL, which plugs the leak and zeros the
+> allocation counter.  Use it for those callers.
 
-In practice, the number of bytes and number of lines _can_ be the same
-when the file consists of newlines, only. That is of course unlikely to
-be the case in any sane input, but may be the case when processing input
-that was specifically crafted to trigger such an edge case. So using a
-type that can store the maximum size of a theoretically possible object
-feels like a sensible safeguard to me and requires us to worry less
-about such weird edge cases.
+Hm, okay. I find it a bit curious to discern those two macros from each
+other as all callers need to handle OOM errors anyway, so doing the safe
+thing should likely be our default here and all callsites that don't
+should be adapted, shouldn't they?
 
-I also doubt that widening the type to `size_t` would have a meaningful
-impact on performance, so I don't see a strong reason not to go there.
-I tend to think that using `size_t` in such size-like-fields should be
-our default unless there is a good reason not to pick it.
+In the case of `reftable_buf_add()` I kind of doubt the usefulness of
+handling the error just to keep the old pointer intact, as all callsites
+will ultimately error out anyway. But in the case of `parse_names()` we
+do in fact want to handle the case specially so that we can free any
+names we have already parsed, so that case makes sense indeed.
+
+So there is merit in having two separate wrappers, but it would be nice
+if `REFTABLE_ALLOC_GROW()` would be doing the "right thing" for most
+cases while the above two callsites would be adapted to use a wrapper
+that requires a bit more thought to use correctly. For example something
+like `REFTABLE_TRY_ALLOC_GROW()` or similar.
 
 Patrick
