@@ -1,55 +1,55 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09541F1928
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:47:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6EE1F2373
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 10:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735296443; cv=none; b=o5rVvM3Xn8da6m+uslQrpqLCle996p3GMS77MN0sreOYjBFA0hleDmXBcezQil9UJSpxf5XgPp09mjOwzvNkAnVkNIR0czm+MJ2W+RhjnTWWZjC1zbuHn+MxWac7sD0hEkPlpNM+QFAFaVdhxsQUK+s6gqOCHUZ2+zsCWOUOQdc=
+	t=1735296444; cv=none; b=J0p+k6Ky223h+EVwZGasiiKrHaq2F6kZVWRs0n87SMV98W7qF4xXmVk/ht2GKHC9NI5aayGLo5N3n5Mx4reCD+GaWaIbPwAeBEHBrF36+AvRXOBiL9PHf8+Mq8VPQ3hpuii1up6hph2HwYwqcJmyKHQqw6Y9Xyjt9VcG7XhwYbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735296443; c=relaxed/simple;
-	bh=+l99LwHFc1MYAwaTp9Zp/LN5Lpan4f2C3lnuf4wpsLU=;
+	s=arc-20240116; t=1735296444; c=relaxed/simple;
+	bh=k3O4KP1LZ2WQgWEnVxU7CVhX/pooq+KmWp7vQc3s52U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IValCClKrB1GzZRk/XamXFfQONs/OQRPX+1iDPwwbEaAFnShfPoWpZlUZeejvFYRW9bNwJLb833O2fd4WIS/SxUSwPrNUxny6hTxyt4e6jlfMbll3yg3VRr29ZDGjbUzsaajCbY9vq9J+toWeOp2nzYTFLsOLgDBsHe8E/j6dk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vRlHeb2r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cTntg20o; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=IutKqcm5Hao6cjaAdZG4nQPAqxh2AN3qvKsOn0OJo2oY0CadpOM+O4yQOjnubAnDZHVIQFigMXB9M0VrqvLPAGIiWHYt5Pkc39c+i3VBi/mI+ydiMC6E98HcspyXCHnR6nBaNEZiiZhFKC2dGnILemhZnmKccaWeK/myGvlGRsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bcm1hdvF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uIDod3fZ; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vRlHeb2r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cTntg20o"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EBA7D11400D9;
-	Fri, 27 Dec 2024 05:47:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bcm1hdvF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uIDod3fZ"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id DC15513801C5;
+	Fri, 27 Dec 2024 05:47:21 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Fri, 27 Dec 2024 05:47:20 -0500
+  by phl-compute-07.internal (MEProxy); Fri, 27 Dec 2024 05:47:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1735296440;
-	 x=1735382840; bh=peLPTGtCri9lUYt7wnA+2OC/t2Ppy6husePTPzRP1qU=; b=
-	vRlHeb2r4uDe5TJLuIx/M9H86JzzXxU3jCxrTl0702uBTVkINyv0Sxl66IAeg0gP
-	GculsGecV7O73FbIKjoCPOPTeaWhBQMQ8gnwhU4AzRev3ARSLhkM6XOZNXOC/4iO
-	P30359/WbnKiYk1sexnIoVkQyCp23myeNsXdmAXw3D4DaJ8rtsgMhgAqn7piq7Qi
-	L6BGsL746oUslmlrweBFQldJfdE26akp8VNSxPaF/RO9A/qmwwDacYvc8cAfGUDz
-	g8oO0a86EFEX14m/Jvw8qnBbj6RbARFwcTb+6QufvUysKl7MBSxldxi62Mya0pgd
-	e2vDwsJmlaDwqcR802uBkw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735296441;
+	 x=1735382841; bh=bzfII0eNrJq61Ponqi2eLztRVNnjc0dGan5XAEiw3UI=; b=
+	bcm1hdvFAMmE/hw2YoYuzOZMYunObn+/Pgls+9WKHDivqbULJno0gk6yOvBK1Rs5
+	9pezYHR1fJhG/0XLFWdk7HDrDCdcUylBrlH5zOtzVczIECybWpAhTeMUj4/Ia+5i
+	6ElyrlOOJxDjhHh+uLaWK9r+Eh6Nj6en78HrivxG2bzKWGc+FXwhg/HUA0bQmk1o
+	dYK2K+1th9dFx1u6duzwf1ECTprchawGL4Zm2XC/Ia6mQw6cd01Iz7nZ2qAT3kCz
+	LPQCguDKaxFd4hoP16zz9439u/ADokXKb09HbKxIxW4JL+tz5MyKyCmxYqs3OLUq
+	7Z+lFNoHrqDlDmL5EwBZ0w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735296440; x=
-	1735382840; bh=peLPTGtCri9lUYt7wnA+2OC/t2Ppy6husePTPzRP1qU=; b=c
-	Tntg20opYy6HGcAMAMQttpLNpQnvcY5pDl7G5+HLfEsSWwGm6COKurV/3v8bI+15
-	UhxQHhFzxBgCCwAlJiq5eKJ5/ONCU7rR1QGwgjR8DunnripeTPp7MTdyKt3fqWW6
-	9STHT5dwbSzEtq96tqtSv+xHi8Jb1ADmcPOimX9/CzIhM6d89TXm74seqdQSoKrq
-	VNmVjDD2WLOzPZl2t+vazdghyGKJL2an7IhwmVHhjXgOBcNBTRctHKebDTIKgVZ1
-	omSU4d2YZCyFJb61Ui1KAQxdVS1TcQbn8VSdy/pFJS7/Cz9wh0uulnkxWPSXR2P+
-	dQ1+mU9r2JsZXbrFXAlBg==
-X-ME-Sender: <xms:uIVuZ2Z3BRWut9l2SjzfYvI4wy61mR_VxjL5vBSPvmogyiT__Hc0Xg>
-    <xme:uIVuZ5aWl6oc4dft9eCroNuT9mBQcYE5rRhO7GoDtP2hZhZ-kDqq0ALCf2pvR_6Tr
-    TRV7qjBzj4fbFlRCQ>
-X-ME-Received: <xmr:uIVuZw86frFC3ljJxUsiC6gsgrQ6XFqTI4CZ_JiUG9cp8uw7Nt5Eh4c1xbnopDwIUbbQ7iyNKE2jX69-jgtese5tT2VBq969O6caNjm6-M5CvQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735296441; x=
+	1735382841; bh=bzfII0eNrJq61Ponqi2eLztRVNnjc0dGan5XAEiw3UI=; b=u
+	IDod3fZZl4bXzWQ9wbOrLkmo3fBakFhX/GEbAL+1vVICBJWcKYkVC5D/4pNWIARb
+	xPwLnvGPTT96/u1xizb65eZFTaCCCuaLkS9FmYlvkC/HrBdGtqkRF/DdlIw8DH9I
+	1FPJj2faFqthb051fbXd9gQGVrPbncK59bAeXGhudYxW+XhVv9gdQecdEZTxLOhe
+	xbF1HRLsmYrcgSjuFIPuyQ/DJq5FwawSwb9ILFM4xmQnbcmFE/84N2b95qyR50y1
+	IHXxNKcP6fvDkYSTmCgEYR5ML3x3rt5EHH4NpIacScBbNWbI/1IFT7qUHQI9N6pV
+	HI6FWqlsG91yc2yuEn1hA==
+X-ME-Sender: <xms:uYVuZ0NtJk6x-f8YN3V4YVn5v_RC14ZbD3021xwlDjWp_4J-Z5un8A>
+    <xme:uYVuZ6_TQOgGy0WRIvDuR12W1-0WjEVhoeX1OIjfmCxS5rIUDoFhc2Zu8DbEd0jcJ
+    4gpcqXwkdPL7ecrAg>
+X-ME-Received: <xmr:uYVuZ7SzfQAabXWwRnqp8DOHSAGHpMJOaK3MdSVKkTQTzQxp2WdGgNG9mjB_tuKDJM9XEncrBimyLPyElI5OKa2q1eKToCSvQXPpY3u5BFp30w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
@@ -57,23 +57,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgvddtucetufdoteggod
     nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
     dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
     rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:uIVuZ4qen8eKgP47YO4JLB5FGQeVe4l6cHWnN6enTkI2tBLNHWCN7A>
-    <xmx:uIVuZxpB4nauPZsd2CvnnmQHod0t3PJRZB885P0EC6idlWluxhiB_A>
-    <xmx:uIVuZ2SwsfUSdQXu7AfD1mzmlmjKxfvd97zGrSWcDASqxishKRez9g>
-    <xmx:uIVuZxqE7wcuxDRYdOK4oAfq5wkxMw0RWT3-Gj4amQcVZdElSYiVLQ>
-    <xmx:uIVuZ42XJiU1uiD0L2Hvbhewz40UTPRYIWmW4zTnf5duX_nqnyUby2ss>
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    ht
+X-ME-Proxy: <xmx:uYVuZ8unzCsqg7QwpwsEGzArG3XysXJebhVcfMGVO6EWKyW2NPxsdQ>
+    <xmx:uYVuZ8eXS3pRayFzBIKal7mrZA0UPwfKHy-e-IT4fQgZxf4D8H7Ujw>
+    <xmx:uYVuZw0G5_rKC17kTyNJNI3Gmz3x3j5UiYJHPPQ4V4EZfYitUKZVCg>
+    <xmx:uYVuZw_TZrBnnYihKNrKTBKhK0RVtsR22FiA0NvtiSMptuFme3McvA>
+    <xmx:uYVuZ9o2kfw0RItVBuewBNS525xfm65Jh6dDCaacyf1RpPJSGKEictD9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 05:47:20 -0500 (EST)
+ 27 Dec 2024 05:47:21 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0b36e5c6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7d2a8354 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Fri, 27 Dec 2024 10:45:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 27 Dec 2024 11:46:26 +0100
-Subject: [PATCH 6/9] builtin/log: use `size_t` to track indices
+Date: Fri, 27 Dec 2024 11:46:27 +0100
+Subject: [PATCH 7/9] builtin/log: fix remaining -Wsign-compare warnings
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,95 +82,115 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241227-b4-pks-commit-reach-sign-compare-v1-6-07c59c2aa632@pks.im>
+Message-Id: <20241227-b4-pks-commit-reach-sign-compare-v1-7-07c59c2aa632@pks.im>
 References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
 In-Reply-To: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-Similar as with the preceding commit, adapt "builtin/log.c" so that it
-tracks array indices via `size_t` instead of using signed integers. This
-fixes a couple of -Wsign-compare warnings and prepares the code for
-a similar refactoring of `repo_get_merge_bases_many()` in a subsequent
-commit.
+Fix remaining -Wsign-compare warnings in "builtin/log.c" and mark the
+file as -Wsign-compare-clean. While most of the fixes are obvious, one
+fix requires us to use `cast_size_t_to_int()`, which will cause us to
+die in case the `size_t` cannot be represented as `int`. This should be
+fine though, as the data would typically be set either via a config key
+or via the command line, neither of which should ever exceed a couple of
+kilobytes of data.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/log.c | 23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ builtin/log.c | 27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index 75e1b34123b348f57334d5592879398064de246e..805b2355d964915732edf5928d54fb6d06e394d4 100644
+index 805b2355d964915732edf5928d54fb6d06e394d4..a4f41aafcae069541ee987dc94d245edfe9787a8 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -1746,11 +1746,12 @@ struct base_tree_info {
+@@ -6,7 +6,6 @@
+  */
  
- static struct commit *get_base_commit(const struct format_config *cfg,
- 				      struct commit **list,
--				      int total)
-+				      size_t total)
- {
- 	struct commit *base = NULL;
- 	struct commit **rev;
--	int i = 0, rev_nr = 0, auto_select, die_on_failure, ret;
-+	int auto_select, die_on_failure, ret;
-+	size_t i = 0, rev_nr = 0;
+ #define USE_THE_REPOSITORY_VARIABLE
+-#define DISABLE_SIGN_COMPARE_WARNINGS
  
- 	switch (cfg->auto_base) {
- 	case AUTO_BASE_NEVER:
-@@ -1885,13 +1886,12 @@ define_commit_slab(commit_base, int);
- static void prepare_bases(struct base_tree_info *bases,
- 			  struct commit *base,
- 			  struct commit **list,
--			  int total)
-+			  size_t total)
+ #include "builtin.h"
+ #include "abspath.h"
+@@ -209,7 +208,6 @@ static void cmd_log_init_defaults(struct rev_info *rev,
+ 
+ static void set_default_decoration_filter(struct decoration_filter *decoration_filter)
  {
- 	struct commit *commit;
- 	struct rev_info revs;
- 	struct diff_options diffopt;
- 	struct commit_base commit_base;
 -	int i;
+ 	char *value = NULL;
+ 	struct string_list *include = decoration_filter->include_ref_pattern;
+ 	const struct string_list *config_exclude;
+@@ -243,7 +241,7 @@ static void set_default_decoration_filter(struct decoration_filter *decoration_f
+ 	 * No command-line or config options were given, so
+ 	 * populate with sensible defaults.
+ 	 */
+-	for (i = 0; i < ARRAY_SIZE(ref_namespace); i++) {
++	for (size_t i = 0; i < ARRAY_SIZE(ref_namespace); i++) {
+ 		if (!ref_namespace[i].decoration)
+ 			continue;
  
- 	if (!base)
- 		return;
-@@ -1906,7 +1906,7 @@ static void prepare_bases(struct base_tree_info *bases,
- 	repo_init_revisions(the_repository, &revs, NULL);
- 	revs.max_parents = 1;
- 	revs.topo_order = 1;
--	for (i = 0; i < total; i++) {
-+	for (size_t i = 0; i < total; i++) {
- 		list[i]->object.flags &= ~UNINTERESTING;
- 		add_pending_object(&revs, &list[i]->object, "rev_list");
- 		*commit_base_at(&commit_base, list[i]) = 1;
-@@ -2007,7 +2007,7 @@ int cmd_format_patch(int argc,
- 	struct rev_info rev;
- 	char *to_free = NULL;
- 	struct setup_revision_opt s_r_opt;
--	int nr = 0, total, i;
-+	size_t nr = 0, total, i;
- 	int use_stdout = 0;
- 	int start_number = -1;
- 	int just_numbers = 0;
-@@ -2500,11 +2500,14 @@ int cmd_format_patch(int argc,
+@@ -717,14 +715,14 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
+ 	unsigned long size;
+ 	enum object_type type;
+ 	char *buf = repo_read_object_file(the_repository, oid, &type, &size);
+-	int offset = 0;
++	unsigned long offset = 0;
  
- 	if (show_progress)
- 		progress = start_delayed_progress(_("Generating patches"), total);
--	while (0 <= --nr) {
-+	for (i = 0; i < nr; i++) {
-+		size_t idx = nr - i - 1;
- 		int shown;
--		display_progress(progress, total - nr);
--		commit = list[nr];
--		rev.nr = total - nr + (start_number - 1);
-+
-+		display_progress(progress, total - idx);
-+		commit = list[idx];
-+		rev.nr = total - idx + (start_number - 1);
-+
- 		/* Make the second and subsequent mails replies to the first */
- 		if (cfg.thread) {
- 			/* Have we already had a message ID? */
+ 	if (!buf)
+ 		return error(_("could not read object %s"), oid_to_hex(oid));
+ 
+ 	assert(type == OBJ_TAG);
+ 	while (offset < size && buf[offset] != '\n') {
+-		int new_offset = offset + 1;
++		unsigned long new_offset = offset + 1;
+ 		const char *ident;
+ 		while (new_offset < size && buf[new_offset++] != '\n')
+ 			; /* do nothing */
+@@ -1316,24 +1314,25 @@ static void print_signature(const char *signature, FILE *file)
+ 
+ static char *find_branch_name(struct rev_info *rev)
+ {
+-	int i, positive = -1;
+ 	struct object_id branch_oid;
+ 	const struct object_id *tip_oid;
+ 	const char *ref, *v;
+ 	char *full_ref, *branch = NULL;
++	int interesting_found = 0;
++	size_t idx;
+ 
+-	for (i = 0; i < rev->cmdline.nr; i++) {
++	for (size_t i = 0; i < rev->cmdline.nr; i++) {
+ 		if (rev->cmdline.rev[i].flags & UNINTERESTING)
+ 			continue;
+-		if (positive < 0)
+-			positive = i;
+-		else
++		if (interesting_found)
+ 			return NULL;
++		interesting_found = 1;
++		idx = i;
+ 	}
+-	if (positive < 0)
++	if (!interesting_found)
+ 		return NULL;
+-	ref = rev->cmdline.rev[positive].name;
+-	tip_oid = &rev->cmdline.rev[positive].item->oid;
++	ref = rev->cmdline.rev[idx].name;
++	tip_oid = &rev->cmdline.rev[idx].item->oid;
+ 	if (repo_dwim_ref(the_repository, ref, strlen(ref), &branch_oid,
+ 			  &full_ref, 0) &&
+ 	    skip_prefix(full_ref, "refs/heads/", &v) &&
+@@ -2183,7 +2182,7 @@ int cmd_format_patch(int argc,
+ 		fmt_patch_suffix = cfg.fmt_patch_suffix;
+ 
+ 	/* Make sure "0000-$sub.patch" gives non-negative length for $sub */
+-	if (cfg.log.fmt_patch_name_max <= strlen("0000-") + strlen(fmt_patch_suffix))
++	if (cfg.log.fmt_patch_name_max <= cast_size_t_to_int(strlen("0000-") + strlen(fmt_patch_suffix)))
+ 		cfg.log.fmt_patch_name_max = strlen("0000-") + strlen(fmt_patch_suffix);
+ 
+ 	if (cover_from_description_arg)
 
 -- 
 2.48.0.rc0.184.g0fc57dec57.dirty
