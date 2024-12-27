@@ -1,99 +1,135 @@
-Received: from flow-b3-smtp.messagingengine.com (flow-b3-smtp.messagingengine.com [202.12.124.138])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485481876
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 21:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E658213D518
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 21:37:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735333236; cv=none; b=chXGqGOGcYidN54GCTVYS8OX7nSfEZ5kbrH7jBb7rd+ZIlXnfDfqzNeL8xE0M3SoiMu1DuJgDjo7rcdXdL/utNKafy7VW4Jo1ZwSIJVENr8ylrFB6zHk3g95sJ9hMxbv6+/a3bZWzbXNXAoViCzfKRmoS0ee02Ggf/kKlN4B6Fw=
+	t=1735335464; cv=none; b=adCxG1qS/+es677nWb9FPMbZsoU0uEWZ+sR3zJOXQoTgC23WjeW7Y8HhmJKNPOb1EUEACSOFvHTpOyR892AUtJx848ITtl4QlbCucneERfP+2oTs2SC2TrGr2qkLknjpZq2WK1qk7XV2BSHnBasqJjYTTvo8ObS2dIjXQRJqcJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735333236; c=relaxed/simple;
-	bh=42WSCkV8gxIstHJc2y2NQnxQSOc70CAHzV4WUQaqTk4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To; b=AZMyG9Zk1xEydcETk36Z1sPmhTK12nZ0kiTl6SYrj3Od3QOv8tqItTw1KLXRCKOGzhERXYfH2fsUWeSmYnR8XoczmThBD3qrJuPqeqV1wWeRG4MQlfr0g4JB3t4qBVozUK8KN8szdRGbvoyaSKhJV7Z6XtvjVdFgBogaAuyp2yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=BxRzxbas; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nvb3LpSt; arc=none smtp.client-ip=202.12.124.138
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1735335464; c=relaxed/simple;
+	bh=0+nsEP9JuSkXml2kd80vWOYQpmXieSUkkcnqLJRfoV4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ebZYIJyz3udaywJxH8xhvj9gJIHJxJQN1CaOnwEpu/ri1m1YcJ5mSGXr6B5Dx2Lqgn41ypLdTZFPPewZZcGHuJIoA/XvczYpS+8YHdKkyluELaU6PeOEniT0BW7nBweQEHJQPZ5nzhYEM+Oc5xh6CLENbqkhJa+5w01D0VzbdoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hvJUsukO; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="BxRzxbas";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nvb3LpSt"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailflow.stl.internal (Postfix) with ESMTP id B197A1D40839
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 16:00:30 -0500 (EST)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-01.internal (MEProxy); Fri, 27 Dec 2024 16:00:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1735333230; x=1735336830; bh=zO5FTVnrST
-	QOky63FeKdUTMqbG7FADDVcPB4QSRhAIA=; b=BxRzxbaslmfTZe3NKr/wpLiiwt
-	siTuhtBEkKb2t3O2O3e6cV1kHPX5nXRSt9ZEInDzKfTSrepBxuCio3tacpwOygl5
-	a2yt4Bj4pQZMjknJdeEZhOEYkAARLteK8BkAls5vBwyDF/1KmVATjaTd8MjXXGb3
-	v4GluUl0eGj+BajUQ59w97KZ3vz2EFHFUq6M8HufvafzUBFfTAGH1qVcpS+GZBkx
-	XR91kpuEw516i2L39ofyytUCg/DrdcTAvxz8sE7EdatAfJejHkqIjYdWfoXiDw96
-	/6pCPVsnZxHc7apwW1vHYvbNIppgzN1/KPO6BXOYd3EYF+T399j8OXLacjAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735333230; x=1735336830; bh=zO5FTVnrSTQOky63FeKdUTMqbG7FADDVcPB
-	4QSRhAIA=; b=nvb3LpSt2QXVtCtRWnXISzdHlqvP6elpIzg+L7z5cQuECHxUXlg
-	RdPi3Z5DebOLwaYLZDEiTehmBMuUQzwJ5s91nV8WwCI7eLhmkNpVPPzv0UMZflRk
-	TYX+3GNvdl57EGLC8n2NeEyxm9YIs561+GXyw/4NjOntkoOhQpjSKDPSFSB4RVTS
-	RvnGpeHeeAt0EL9/TKUSuILUNr4PNKtHnkIiEjdRp2CrV27/XsQ/fKG9lLYyn1Ix
-	Zaq8QbNf/7C73Ev2tcNjFPrmQm32YWqGYDhVAR2I2qE2fIHHx3ZhTqSMHsCGop1/
-	TDj0VyszWmv//PsvgCYBga9gzPbqAnft53g==
-X-ME-Sender: <xms:bRVvZwgK3v-UpoFsQH7Ra_Li3K0Tv7bUiFdILdkMHYpUUCKTx2Tr-g>
-    <xme:bRVvZ5CR4-XrIqTdLX5i2EkOnhNxEfvr0vYXbiCkqUqYz9SnPLpjdTBBXKcLeahRx
-    yQ-0gOhzgjOfd7qC98>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgudeggecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofgggf
-    gtfffkuffhvffosehtqhertdertdejnecuhfhrohhmpeforghtvmhjucevvghplhcuoehm
-    tggvphhlsegtvghplhdrvghuqeenucggtffrrghtthgvrhhnpeejveeigedutdffieeghf
-    fhudejfefhtdekiedutddtueefkeejgfekueeulefgteenucffohhmrghinheptggvphhl
-    ohhvihdrtgiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepmhgtvghplhestggvphhlrdgvuhdpnhgspghrtghpthhtohepuddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:bRVvZ4GyzF5ktNH1WQ0kmg3kKCMPyGNY0KJAcBMUV-PY2JtV2mysbw>
-    <xmx:bRVvZxRTV_e2skMFSEYSUXF2XcFhquLjGlfR2S5aueOqCbP-mJFuEg>
-    <xmx:bRVvZ9wbhu-lolSv6di_CkTRQ-n8Cnmu82oWw5JBIh4lZA4E5aJk5Q>
-    <xmx:bRVvZ_4g2HB5PAyj6wdXlvNSJ3sUdGNO84WajB4zTjQTR61jjZKN0A>
-    <xmx:bRVvZxibPXMyFREwT9hgRf1CSop85rC4ON0x05SiGMQphQbcP6DwVgJp>
-Feedback-ID: i8c5e488c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3BECFB0006A; Fri, 27 Dec 2024 16:00:29 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hvJUsukO"
+Received: (qmail 11880 invoked by uid 109); 27 Dec 2024 21:37:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0+nsEP9JuSkXml2kd80vWOYQpmXieSUkkcnqLJRfoV4=; b=hvJUsukO1LPqEOvRom2mAqW793SQF8UJAqRNmLdftLmqmU2t6Iq1PFAGYZWpS+auUFO4WJBVW0v5q7e3MBgbKs6HudwevY3Ha1J8qghzZjRvifzT6sw10PbXakG6dap92wcCRj0ljWP7NKi4GqIKmK8oHJDoMVmIkA9P63HJHiJ8Ar/zywic0dbqU74GfaH97sBuoIvkERrVV4PFybE2lJx4+noMbxyrjLbtuqNWhck+DrF+5bVOC0tBVxfsqsnFd3hPd308JSCe+SdLahXE0kU0C4XHZ/I5bSuxFTdG6cv7svJAN4B2X7UUMKz45FxdhYzdPQgCwbFJbRtAP5HzMQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 27 Dec 2024 21:37:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18880 invoked by uid 111); 27 Dec 2024 21:37:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 27 Dec 2024 16:37:30 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 27 Dec 2024 16:37:29 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 0/9] commit-reach: -Wsign-compare follow-ups
+Message-ID: <20241227213729.GA796141@coredump.intra.peff.net>
+References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+ <xmqqbjwwucvy.fsf@gitster.g>
+ <xmqq7c7kubx8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 27 Dec 2024 22:00:28 +0100
-Message-Id: <D6MSAFOGX1QP.265MYAA4V7HW4@cepl.eu>
-Subject: Could git rebase be persuased to update .git-blame-ignore-revs ?
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: <git@vger.kernel.org>
-X-Mailer: aerc 0.18.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7c7kubx8.fsf@gitster.g>
 
-Contributors to a project I work on suggest to introduce =E2=80=9Cthe
-official=E2=80=9D .git-blame-ignore-revs, but I am hesitant to do so,
-because of my fear of heavy burden of maitaining it. For example,
-we are on Sourcehut, so there is a lot of rebasing on the topic
-branches: could git rebase be persuaded to update it?
+On Fri, Dec 27, 2024 at 12:08:03PM -0800, Junio C Hamano wrote:
 
-Merry Christmas, Happy Hanukkah, or anything else!
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Error: shallow.c:537:32: comparison of integer expressions of different signedness:
+> > 'unsigned int' and 'int' [-Werror=sign-compare]
+> >
+> >     537 |  if (!info->pool_count || size > info->end - info->free) {
+> >
+> > I didn't dig deeper than this.
+> 
+> What we want to express seems to be:
+> 
+>     If the region between "end" and "free" is smaller than the
+>     required "size" then we are in trouble.
+> 
+> which can be said more naturally with
+> 
+>     If the region of size "size" starting at "free" pointer overruns the
+>     "end" pointer, we are in trouble.
+> 
+> So perhaps something like this would help?  We are no longer making
+> a comparison between two integers with this rewrite.
+> 
+>  shallow.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git c/shallow.c w/shallow.c
+> index b8fcfbef0f..b54244ffa9 100644
+> --- c/shallow.c
+> +++ w/shallow.c
+> @@ -534,7 +534,7 @@ static uint32_t *paint_alloc(struct paint_info *info)
+>  	unsigned nr = DIV_ROUND_UP(info->nr_bits, 32);
+>  	unsigned size = nr * sizeof(uint32_t);
+>  	void *p;
+> -	if (!info->pool_count || size > info->end - info->free) {
+> +	if (!info->pool_count || info->end < info->free + size) {
+>  		if (size > POOL_SIZE)
+>  			BUG("pool size too small for %d in paint_alloc()",
+>  			    size);
 
-Mat=C4=9Bj
+I doubt it is a practical problem in this instance, but as a general
+rule, I think bounds checks like this should avoid using addition
+because it can lead to overflow. In this code, imagine that the free
+pool was allocated near the end of the address space, but somebody asked
+for a very large "size", causing the addition to wrap around.
 
---=20
-http://matej.ceplovi.cz/blog/, @mcepl@en.osm.town
-GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
-=20
-Necessit=C3=A9 faict gens mesprendre, // Et faim saillir le loup des boys.
-Nouze z lid=C3=AD lotry =C4=8Din=C3=AD // a vlky z les=C5=AF =C5=BEene hlad=
-.
-  -- Fran=C3=A7ois Villon: Le Grand Testament / Z=C3=A1v=C4=9B=C5=A5
+I think even without that overflow this might be undefined behavior,
+because "info->free + size" is forming a pointer that may be outside the
+allocated array.
+
+So as a general rule, bounds comparisons like this should be formulated
+as "how much free space do we have" compared to "how much are we asking
+for". And there "info->end - info->free" is the right way to ask the
+first half of that question.
+
+Now where it gets weird with -Wsign-compare is that the pointer
+difference is giving us a signed value. Which makes sense in the general
+case (you could ask for "info->free - info->end", for example). But we
+know that it will always be non-negative because we know that info->free
+is <= info->end, coming from earlier in the same allocation.
+
+I doubt there is a way to tell the compiler that (or that a compiler
+could even switch to an unsigned ptrdiff type if it knew that). But I
+wonder if there is a generalized helper we can devise that would avoid
+simply casting here. I guess that could be a checked cast like:
+
+  static inline size_t ptrdiff_to_size(ptrdiff_t v)
+  {
+	if (v < 0)
+		BUG("surprising negative value: %"PRIdMAX, v);
+	return (size_t)v;
+  }
+
+or even:
+
+  static inline bool has_space(const void *vs, const void *ve, size_t want)
+  {
+	const char *s = vs, e = ve;
+	return want <= ptrdiff_to_size(ve - vs);
+  }
+
+I don't love hiding basic things like this behind macros or inlines. But
+allocation and bounds comparisons do have gotchas (especially against an
+adversary that can try to create pathological situations). Maybe it's worth
+having an easy way to do them safely without having to think about each
+one. I dunno.
+
+-Peff
