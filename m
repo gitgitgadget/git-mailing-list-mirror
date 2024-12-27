@@ -1,55 +1,55 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA301F4E33
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D511F1F542B
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:00:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735308010; cv=none; b=Qo8A86QUNj1OIVnvYdBpmR6bii94IuqYx+xIYxEWcGyYyx79So1h7TeQHtoOgqc2Z/arpwATcayzfUg5os6xajffZzAY+KW34geU1IpgDMFvxRdb5XAzWSOYB+MglfkIMwbh/IfMv+uvwgFYrhVmw3gbd0ITXMcN5E/NPgIoYVw=
+	t=1735308012; cv=none; b=gwgn6d9zdBQwymx1PbRa6QyAcRSC45XLOtrNXJgSEo3Cw3U0UsK+tpa5Xy8SjHrfu/7Od45L1MLg27MU3UNeEKZeXXjU2W4IDQFfsSyzijc0I/TzAVOaQaa0V7jm6Ue2MyDkva9p5uF3AGqAgdLEhVbLfHmjg/rgb9cTxLUW1wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735308010; c=relaxed/simple;
-	bh=zOd5jXNRzQ19wQYT18g6HeoYGZDffEfQA2JtOamqBFQ=;
+	s=arc-20240116; t=1735308012; c=relaxed/simple;
+	bh=PfS8PUapD8hRKzjsI5m0gpW0HxEB81tdMJ91gQvoWcE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tqVebu7DpY5qlAyrGui3Alb79+zjVKLLM4yg0Gbcy3v5E9w+DggiE5+TFYDXM4nOFPBJUk7+RDVvljvDl7WMd4ImFgZDNCBzwrho0xJNesOnVDtLx2pD6OxbCvhbhxO1kbNBaPLcwbfkdUhcPWR7soum9xMVg3GI8eGA17KIf4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ogcLW9Xp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cURVMxsk; arc=none smtp.client-ip=202.12.124.159
+	 In-Reply-To:To:Cc; b=jCjyA6ndw6TOFUFc99s3GfeEiB2XZuYR3XCISK9GVRQrK4sdBQELMmysyRe8tP0jC80mtqHq9zpLlnxZWBGeS1T5ss260gURpNDsqlGRi4+eYEuIjV7ZdJsdRw0Jih1ywL+SOaI5tirhQCAioNDjBaaiJ+sH72hMBwsBZ5DdjYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gqQDPyP2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m/Uuo0AD; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ogcLW9Xp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cURVMxsk"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 952362540181;
-	Fri, 27 Dec 2024 09:00:08 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gqQDPyP2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m/Uuo0AD"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id E2401114012F;
+	Fri, 27 Dec 2024 09:00:09 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 27 Dec 2024 09:00:08 -0500
+  by phl-compute-06.internal (MEProxy); Fri, 27 Dec 2024 09:00:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1735308008;
-	 x=1735394408; bh=lAOOcmSFvyccUhlaF6nhWCaRod8ZSqSjvKYAMi68YcI=; b=
-	ogcLW9XpVfjTZ/r54QtcsVAXLEwZLffSIghgCfVp3/tEkcHo0ozvegHbHDyjLOiL
-	1HBqtJ3vEUu+0FaMcRcePOoA0waR/wFp91wTiftyNkVfmm/EjZ638Ur//1MnNBL0
-	yq4zE0tDrUwip68e7Okr5XHBFakc9k59SAng+C6QnM4unuiQNBJMDF8tOpKwaBWw
-	svf58pM/DRn6n7GsRKdN0eapOB8BcdehyOIDstgsTw5yOJQs26YcN8e2ZkgWkoxU
-	6VjXlhUK7rqUrtfzOtsrggkAZwfyXbiCzK6AU6fMmhQT0utU8PwpOTZdRAwsHEjD
-	/fx6JbgHnYw4Z8xKmShsXA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735308009;
+	 x=1735394409; bh=z1gHdqMScTaw/2M3LtgZdVKtiz6Q2s1s5EBHuaRRK/U=; b=
+	gqQDPyP2ef+MlcCbZWy4EY8fYFOY2DfHsvrgOuE+f97c7wY+tOOBYtlKg6rpW6tO
+	GihrxcwZ9OYTkJwJOvjzcett7aMp+3qgzFN/OZrTZoDOs4U3lJt/r9fH5m4zRrst
+	PQeHMPz2q5xWMrTQZiKMJ9tiQjw1eVxsj3QekOlEqxMkcixJowpzQhx2Xz8GmvMT
+	MQo9rnXGLfJ6ChyNFfITxD0EGcOhi70FaYnxAinznYFJ1bE8g6FwmRl3uT1ikg/z
+	4Dm0VF8NY2ye1KtZfFFoDTfigtwIXtgLagw+OGy9W0hZm6WH9+ds9CxzcQ6qBMbH
+	15E6wovEvhfVUnkf4yQUiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735308008; x=
-	1735394408; bh=lAOOcmSFvyccUhlaF6nhWCaRod8ZSqSjvKYAMi68YcI=; b=c
-	URVMxsknbOJrdAsZ04OkX4tdCOTwYnc4w03t1/Uk+lZ1RyLOsUrUpKEO+uskXa+G
-	cuYA0mVbk/puA8hri7AQLZLRjf5QeIfFuB4VHofBgM/bwB5kS8sQ9u6VhzK/RSBd
-	zjMsu9B4NDTiQc0hTe9pSxbVYf6Y4o+nehOjRrX+m40A0Q/QEcoKevWp0RG0IA+C
-	OjW7GH5VDbxpqx1BdXS4aWUviyjfOMdrXnvpPMZrz6msjYutv1kEe91zQgwpFip4
-	gam3V6VFKdZoN7FYTg/XK/rH05nLSQgBKvQN/KhtW4SupljApotBUrnI7VD5Y/u8
-	3CJZxs0NoiATfS1w1vOLg==
-X-ME-Sender: <xms:6LJuZwi2GY7AdexOZl-E3fx4xjO9UVyTUi0JAuioNvgj92pj0CD46A>
-    <xme:6LJuZ5DN06ELqBymJTEHRj3F9gZo9KPfXqjVIpKbGt3U1rBj_KgjYXZcfXnUBzbz9
-    DWaLU2Rv78ekJx_yw>
-X-ME-Received: <xmr:6LJuZ4E-_om4ABr6LGLWIcCJU0XLmkfm6tY9aXOHHfnVzM1RE68POWtvyvcFTZi7gvkvYZ5oJygbCp98DqbfH_7IbcPggnMPcCf7ydPomHvxoA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735308009; x=
+	1735394409; bh=z1gHdqMScTaw/2M3LtgZdVKtiz6Q2s1s5EBHuaRRK/U=; b=m
+	/Uuo0ADCke9oVLb7PY2jlNhQoEC73NPvjFaliSbEddP2iuATKffnWNRWLU40/ghY
+	MOlPlagWDX7+8wyGvN0JPePGN3NoP3mOzUWGfgcnT3vhICin1m7ZkzF33VmBgqsd
+	/JJwG8BXoMMjiLlLnW4HS3VFMoqnu0s0EHUJ4Iw4GSAHfJI2Ypge4h/yUL5jsTyN
+	bVsV/Gbf36fP70ddAm26Ev1LkkWRUEgaJX22APSCR7HJzJppPiBP2FozNr9OJkgJ
+	MAbl8MMObwOvHOYYL/xPT/gi+PD7cUl0e3HBXKvPeW6p6j0QBXef6JS8qIgfyB7T
+	xsh8EvX65GHjLsfFQF0pA==
+X-ME-Sender: <xms:6bJuZ6pHnQNs5KeHEGigbWAeZUyfOwWTre8s6ubMn4vJIIWyPnOslw>
+    <xme:6bJuZ4pbCJ148cqUt-64mglXAl5IYUXLOc-4ySDcClJFARZu8kVxzpGb4gMl_CB6u
+    _2i3nfjnzb7PWkB2Q>
+X-ME-Received: <xmr:6bJuZ_NNZWUL0yB3AED0zC9iBeSJ_GWKkwaV-6-WL4yIEn1egTL5LTUnoBI5EQ3rfjNeQQm485w6xsk5rLhuuMfSToUuErxke3i4e1ChIVpAuw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -58,22 +58,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgheekucetufdoteggod
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
     jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:6LJuZxTvN-9bqIvMDgN74iPMDJOCSee6poaR2CijODzDZowxeiZtyw>
-    <xmx:6LJuZ9yHUBZdXbZlF_4gygBM3ELeJWYKHJhDX0NxOHQ-RP50YWE-KA>
-    <xmx:6LJuZ_4cEGIFD318CbFYxQ7di52s1EmRkw0s0cwejKhlmoXd6blm3A>
-    <xmx:6LJuZ6wdrqvwsbPzA7CxdNV27JS3sfwCLP_aa3eGC_4vN_7vWAw9GA>
-    <xmx:6LJuZ480WugXxUhvQZGg5W9fGIcQ1KC-4YyFzi3hKISrYsM2zriY0WuI>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:6bJuZ57uEQufM4b_LuxYVP6omSDGT0wWs2vg_y1EsCg-h0SDbUyELQ>
+    <xmx:6bJuZ55R8AxOeC1SvfrUxEzyWoxgp1cqHsFX6g_baxm_WN-BJ0cpFg>
+    <xmx:6bJuZ5hQNS4pCcgdVtFDyuqXYEuptynazOpLCrUiyPaBVI901o_5xg>
+    <xmx:6bJuZz5y2SFhamqdJlZv08_vGNng5bemp7ySS4u7okQPZ8l5g-oSew>
+    <xmx:6bJuZ5G0TJjyBZGdF4kvv1e9IUGyt-cSfMhn5nlQcx-Uou0EqAK-gPNd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 09:00:07 -0500 (EST)
+ 27 Dec 2024 09:00:08 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 70a0140b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Dec 2024 13:57:59 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 54d7a279 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 13:58:00 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 27 Dec 2024 14:59:34 +0100
-Subject: [PATCH v2 06/12] meson: generate user manual
+Date: Fri, 27 Dec 2024 14:59:35 +0100
+Subject: [PATCH v2 07/12] Documentation: refactor "api-index.sh" for
+ out-of-tree builds
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,79 +83,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241227-b4-pks-meson-docs-v2-6-f61e63edbfa1@pks.im>
+Message-Id: <20241227-b4-pks-meson-docs-v2-7-f61e63edbfa1@pks.im>
 References: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
 In-Reply-To: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-Our documentation contains a user manual that gives people a short
-introduction to Git. Our Makefile knows to generate the manual into
-three different formats: an HTML page, a PDF and an info page. The Meson
-build instructions don't yet generate any of these.
+The "api-index.sh" script generates an index of API-related
+documentation. The script does not handle out-of-tree builds and thus
+cannot be used easily by Meson.
 
-While wiring up all these formats I hit a couple of road blocks with how
-we generate our info pages. Even though I eventually resolved these, it
-made me question whether anybody actually uses info pages in the first
-place. Checking through a couple of downstream consumers I couldn't find
-a single user of either the info pages nor of our PDF manual in Arch
-Linux, Debian, Fedora, Ubuntu, FreeBSD or OpenBSDFedora. So it's rather
-safe to assume that there aren't really any users out there, and thus
-the added complexity does not seem worth it.
-
-Wire up support for building the user manual in HTML format and
-conciously skip over the other two formats. This is basically a form of
-silent deprecation: if people out there use the other two formats they
-will eventually complain about them missing in Meson, which means we can
-wire them up at a later point. If they don't we can phase out these
-formats eventually.
+Refactor it to be independent of locations by both accepting a source
+directory where the API docs live as well as a path to an output file.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/meson.build | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ Documentation/Makefile               |  2 +-
+ Documentation/technical/api-index.sh | 19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 48583e9a7f4b037de218358f16f59ce08141cbe8..404cb20d10a2fbbe4e014bd8a7df74c49dad40a7 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -382,3 +382,35 @@ foreach manpage, category : manpages
-     )
-   endif
- endforeach
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 4f152077dded75bedd59abd56db5f6f0693908de..b2d146c44f4ded750b5e0766eb66b25cb5ec08e3 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -367,7 +367,7 @@ user-manual.xml: user-manual.txt $(ASCIIDOC_DEPS)
+ 
+ technical/api-index.txt: technical/api-index-skel.txt \
+ 	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
+-	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
++	$(QUIET_GEN)'$(SHELL_PATH_SQ)' technical/api-index.sh ./technical ./technical/api-index.txt
+ 
+ technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
+ $(patsubst %,%.html,$(API_DOCS) technical/api-index $(TECH_DOCS)): %.html : %.txt \
+diff --git a/Documentation/technical/api-index.sh b/Documentation/technical/api-index.sh
+index 9c3f4131b8586408acd81d1e60912b51688575ed..296488557434b7fff60ab25f4246a4dc270729c0 100755
+--- a/Documentation/technical/api-index.sh
++++ b/Documentation/technical/api-index.sh
+@@ -1,6 +1,17 @@
+ #!/bin/sh
+ 
++if test $# -ne 2
++then
++	echo >&2 "USAGE: $0 <SOURCE_DIR> <OUTPUT>"
++	exit 1
++fi
 +
-+if get_option('docs').contains('html')
-+  xsltproc = find_program('xsltproc')
++SOURCE_DIR="$1"
++OUTPUT="$2"
 +
-+  user_manual_xml = custom_target(
-+    command: asciidoc_common_options + [
-+      '--backend=' + asciidoc_docbook,
-+      '--doctype=book',
-+      '--out-file=@OUTPUT@',
-+      '@INPUT@',
-+    ],
-+    input: 'user-manual.txt',
-+    output: 'user-manual.xml',
-+    depends: documentation_deps,
-+  )
+ (
++	cd "$SOURCE_DIR"
 +
-+  custom_target(
-+    command: [
-+      xsltproc,
-+      '--xinclude',
-+      '--stringparam', 'html.stylesheet', 'docbook-xsl.css',
-+      '--param', 'generate.consistent.ids', '1',
-+      '--output', '@OUTPUT@',
-+      '@INPUT@',
-+      user_manual_xml,
-+    ],
-+    input: 'docbook.xsl',
-+    output: 'user-manual.html',
-+    install: true,
-+    install_dir: get_option('datadir') / 'doc/git-doc',
-+  )
-+endif
+ 	c=////////////////////////////////////////////////////////////////
+ 	skel=api-index-skel.txt
+ 	sed -e '/^\/\/ table of contents begin/q' "$skel"
+@@ -18,11 +29,11 @@
+ 	done
+ 	echo "$c"
+ 	sed -n -e '/^\/\/ table of contents end/,$p' "$skel"
+-) >api-index.txt+
++) >"$OUTPUT"+
+ 
+-if test -f api-index.txt && cmp api-index.txt api-index.txt+ >/dev/null
++if test -f "$OUTPUT" && cmp "$OUTPUT" "$OUTPUT"+ >/dev/null
+ then
+-	rm -f api-index.txt+
++	rm -f "$OUTPUT"+
+ else
+-	mv api-index.txt+ api-index.txt
++	mv "$OUTPUT"+ "$OUTPUT"
+ fi
 
 -- 
 2.48.0.rc0.311.gb6c66824c1.dirty
