@@ -1,117 +1,99 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC0B3D69
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 16:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917FD3D69
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 17:03:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735317779; cv=none; b=LIGwTi8qz4hWdx4mOrLi1ZkDt0FBBmS7IQeb/s8C7tPVatbyp4NTX0m3pQcj1NhGNUD/gyhVym+sfxBxyzAUoz+hKz2XVriAdwFqPjHZevYJ5VRFy29ZCKayVVuZJ/gy6MVydFbO/7ZnzHT+cb3xxi+zQIj+SmaySekrMBZq4Dc=
+	t=1735318993; cv=none; b=ueX+088RBu7hiue5epJq47x6KtL7k/uNusnk9oxQbfJVbnn29dpqyOJ6bZZTzmAq5TsLvUcFqWpWSbXuudKYQOv8XF3euDfTjl1UzBzB9j3CuA5s8cx8YsY9dtbc7dgz1o9mtbsqip+RTyWnZTiO59fMIhwvBSgRJbC+CMOTXKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735317779; c=relaxed/simple;
-	bh=dUlWqBbO5+WuYWk3IRmg6cS3WmM2IAzAA8eu+99bTcQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FN2C3xNE9r7JZ9rlrLHCsMK4jcSIYL5A0+yMa4j/vVbHzGC6WNBN90luSjjjz1zxdgqpr2/FryMdVtCySfjjSJpcGq9uGe5wHcHOT4L5wdm3QZKvwtaEF6RJddV4lK9PkM7vfHwqxhU+v47n2I4qbUCphSi7ihEBAqaIA2aKM2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Es1nTSyZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LaC3xKhj; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735318993; c=relaxed/simple;
+	bh=DVibmClF1d6ZJUljW/H06lokhR2xkupb7iF6Fs6Fpm4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iswWNPYZSag8wc7Y532SU82oF4jNy0aAOZVTDtFZJov2BnQBpabf/5kHxJIBIR6ellPP2Bvkt+xDbOtJ4cefSNsoUNW+aaTKYiiCsPqu06HElVGN+ULRJl8a3Okq3OFyb9wmBNmgP/Tqh9cC8kP1OceYmftI33onSs22E2lkfG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=bxcxzlBk; arc=none smtp.client-ip=188.165.51.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Es1nTSyZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LaC3xKhj"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3E26A114010B;
-	Fri, 27 Dec 2024 11:42:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 27 Dec 2024 11:42:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1735317776;
-	 x=1735404176; bh=Bmk5BIZsr0nD3myXzTPgxqgxyyeUgMK3bkkEhqcqO1Y=; b=
-	Es1nTSyZGe7LmmW9Um6sKQNjZP+6RsEhmjeMIriEc8riz8TvVY5O+5afQ1mtg3SB
-	3i97Cm4on+ivplM2bHTPTNRtsYosibkdtROjUHsiMUZvvwtWiRTVczJPY70mHGe0
-	cPuje/sZSJdOJcSThK0ToLvILLoRaJ3whRrr7Jdb5owIYtK+xDfKGKfdvmgHoRFW
-	mrQT/j0Bf4FG7Zu3BRAcA930GfoAzkR+Z1UlnLyQirMc5PPBmwyb4a5Ars1dWKs3
-	OZsDWeW3TXzI0OwHaObpgwf41iLffM/akkX3qorHs/r27oZGYoKzbSDYti2i+DNW
-	PFBPHC4MvEgpoVh2xQQ7xw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735317776; x=
-	1735404176; bh=Bmk5BIZsr0nD3myXzTPgxqgxyyeUgMK3bkkEhqcqO1Y=; b=L
-	aC3xKhj8jR0L96R9I/DzMRzld7brFuit/K+RRPR8B00lczpqlg118n52fq0lIX5D
-	XfhrF44Lk+ux7tPj9jdq2rNWs2xWEmNFXroRnDTwgHVyryCgsTW8pN8pis9RsnQz
-	7f6nb2BBXYpZvm+EI3U7S+zeza2h8IdpOHEPGgewxiHCUpPVjGdwLb9BVvyUUT3z
-	ga3EEp7rCwFp0qqo7BC+HRSy0XtoP+Ezvx/2IDnnG44KcvRWqjyi9RLiqwv5e96X
-	tFrzW0lWBb5V9fEm20bU+2HASiRIid2nqAdnhcttGI1oiEydYB8iCsHxuU3G4/S9
-	zRVRimb6zcfU5dNludUQA==
-X-ME-Sender: <xms:ENluZyhBatjLzucwsW8IWpjBRc4pYUyfFwtWhSr4H26NmzLRiVqYOw>
-    <xme:ENluZzDKnaSywlUgR2pXJ-Ak_rQng9gV3cSnIEYx6nPJCL6cqD8_er1sk4sWHGgfc
-    ivpe3FgzRY61o8LJw>
-X-ME-Received: <xmr:ENluZ6GOdtasAjRjE-JyYNwrP00vc4hevVLMNeWTZ3P0jPUONxsZTYHk_ywY9zc74mWsNVGB-JGhXIqFh5ACXwOh4q7dKaVpHA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgledvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsohgvkhhklhgvse
-    hfrhgvvghnvghtrdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:ENluZ7TM7jPeVRAtjDIlJDogW5iamQB_hWc34j9QQaDLBrtIakTnxA>
-    <xmx:ENluZ_ykyrKaX3TXCdknLfed-pgyYcq6l5U99KmlBP7b3v3VyU-zIg>
-    <xmx:ENluZ55DuVHi5vRNQw3OBm439f9ne_C0Sqm8Gtzx9DUsP_wHT3s1zQ>
-    <xmx:ENluZ8xP5woQ1Gy-bM27xAK1ydpx21ynJFheRVpaetpw-ZxS5Z7FSg>
-    <xmx:ENluZ6rf_heG0yoYhX1rzZg9V_7mkyjmevdQIHvNg1Dv76ofnDf52EAE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 11:42:55 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/4] add-patch: Fix type missmatch rom msvc
-In-Reply-To: <965ac9bd-7340-4dbd-88da-2daa88c126c4@freenet.de>
- (=?utf-8?Q?=22S=C3=B6ren?=
-	Krecker"'s message of "Fri, 27 Dec 2024 17:35:56 +0100")
-References: <20241223110407.3308-1-soekkle@freenet.de>
-	<20241223110407.3308-2-soekkle@freenet.de>
-	<xmqq34iaxh7r.fsf@gitster.g>
-	<e396131c-1bd3-46d0-bae6-cd97ca9710d8@gmail.com>
-	<xmqq5xn5urhv.fsf@gitster.g>
-	<965ac9bd-7340-4dbd-88da-2daa88c126c4@freenet.de>
-Date: Fri, 27 Dec 2024 08:42:54 -0800
-Message-ID: <xmqqfrm9t6up.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="bxcxzlBk"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1735318976; x=1735578176;
+	bh=DVibmClF1d6ZJUljW/H06lokhR2xkupb7iF6Fs6Fpm4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=bxcxzlBk+rpKeYo8VLX6hKZGHwTiIcFAux2pWtdS/5ShfXmG82u6Ds/fNdsT8grdK
+	 xMr6mKpBe1eEESldBs4B+00yGix7EVdsiHGSCDdLTJNvBrz8ByMiQvuQC5FkzeuFzp
+	 /0ZrHaZcpWGu3cuLTGkvtKJphM41GU+Q7t7dVvj4NdApMpl7OQzSet67S/3loHEsPL
+	 7nPFytLwq3gKBqKpxJ56DGUZPg5e56JSLZz1AOkRF/Fndqlv2OrmuIe7XZJ2Rm6tal
+	 KeXSI5/X4hZ6uKExleKy9XvbfIvgdB0AoNcQhpfjBI6ZKhdJnN2QlCAAgy8AvjjmsD
+	 jLMgRdJ53nA6w==
+Date: Fri, 27 Dec 2024 17:02:49 +0000
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+From: A bughunter <A_bughunter@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [help] can nobody get me an email
+Message-ID: <ErRnPDWInS44QmxYjAyDuZ9aaZgBwRoP0xRdx0qln2dHF_I6JK6zYErrx41iQaN6GOb0iOWeEMMEXtWzlVr4ayLUUX9L6yDkpj23O8ubNPg=@proton.me>
+In-Reply-To: <TpuMiCTLZ7JDXxJPgVNqcYXWFavK4asar9Gk9uJiiYp1nbqmKlP22mX6xiDOKHKr5yaN7ZH7jXoISqIY67wmbFfz8i8MsYokeomQu_6Ytis=@proton.me>
+References: <4wL3MobzQEJEcq565GgPg4K-l5xzGERtmFhRm9FgCnlyU5rOMCgLMaWB3qzFR5httauT4gi7peWUjIfR0j_nBtiatlTpqp5xfTXnz-kX0Jw=@proton.me> <hzyhvw4pe42yqbuqdbgl5bgnxz2kd5mxxh6jnklnqwvembueqv@b6oaetnegprl> <s44De1e7kjF5OIY_YVaSJ0DdAavD-4WeZ3XrrA7XJLJO67ShZWLM9Sb1ywSUq58wmCWOTkRfhBBOvw1qCpiiUyygy53wFTetUECruyO1SEw=@proton.me> <TpuMiCTLZ7JDXxJPgVNqcYXWFavK4asar9Gk9uJiiYp1nbqmKlP22mX6xiDOKHKr5yaN7ZH7jXoISqIY67wmbFfz8i8MsYokeomQu_6Ytis=@proton.me>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: 5399d59550730d226ec1f85d980ea349b9cc7a0f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------6274d9b750bddd996a4e6b74ecc372a4e6a7199c863a536a68f097a3d8dd687e"; charset=utf-8
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------6274d9b750bddd996a4e6b74ecc372a4e6a7199c863a536a68f097a3d8dd687e
+Content-Type: multipart/mixed; boundary=-------------------a07c1039fb551e2cba463e77cf7eb39f
+
+---------------------a07c1039fb551e2cba463e77cf7eb39f
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
 
-Sören Krecker <soekkle@freenet.de> writes:
+How do you move this mailing list to gmail this is too much for my proton =
+inbox here.
+---------------------a07c1039fb551e2cba463e77cf7eb39f
+Content-Transfer-Encoding: base64
+Content-Type: application/pgp-keys; filename="=?UTF-8?B?cHVibGlja2V5IC0gQV9
+ idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="; name="=?UTF-8?B?cHVi
+ bGlja2V5IC0gQV9idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="
+Content-Disposition: attachment; filename="=?UTF-8?B?cHVibGlja2V5IC0gQV9idW
+ dodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="; name="=?UTF-8?B?cHVibGl
+ ja2V5IC0gQV9idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="
 
-> If I understand your comments correctly, it would be preferably to
-> switch to a data type like uint32_t or uint64_t so that the behavior
-> is consisted on all platforms?
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246IEdvcGVuUEdQIDI
+ uOC4wCkNvbW1lbnQ6IGh0dHBzOi8vZ29wZW5wZ3Aub3JnCgp4ak1FWnUwWDF4WUpLd1lCQkFIY
+ VJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0h4YTh5CjArZG1ONWJOTFV
+ GZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBY0hKdmRHOXUKT
+ G0xbFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRV0FBSUJ
+ BaGtCQXBzRApBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkV
+ DY1NkdrYTlOdE12bWRvWTVrCnROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXR
+ iY1NlMVErM2N4WUx4TmhqVTdteW5Rc3B2OWQKeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQ
+ kFRZEFuZnAvejJGd1JrcHZVZ2Y3bXFZSTlSS25UVmFkd0dmZwphUUxobXdnM0x4TURBUWdId25
+ nRUdCWUtBQ29GZ21idEY5Y0prS2tXWlRsUXJ2S1pBcHNNRmlFRVpsUUlCY0F5CmNaMmxPOXoyc
+ VJabE9WQ3U4cGtBQUppOEFRQytmbk9tNFZqOVFtSDRIMEdWdDdSdU9RSyt3T1ExUFJ2cHltU2o
+ KZXlCSk93RDlHWXV2eE9BVks4aUF1cEorcHB3TXIzNlZ1a0llMXBYdUhvOVJoanZlQXcwPQo9R
+ lFGdwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0t
+---------------------a07c1039fb551e2cba463e77cf7eb39f--
+--------6274d9b750bddd996a4e6b74ecc372a4e6a7199c863a536a68f097a3d8dd687e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-I personally wouldn't prefer that.
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
 
-I'd rather stick to some "natural" platform type like ulong.  I see
-no strong need to say "we must behave identically on all platforms"
-in this area.  It is preferrable to have every platform use the most
-natural type on it, and make sure that we validate input that is too
-large to fit on each platform correctly (i.e. it is OK to diagnose
-"too big a line number" and die on 32-bit platform with much smaller
-line number than on 64-bit platform).
+wqsEARYIAF0Fgmdu3bgJkKkWZTlQrvKZNRQAAAAAABwAEHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmdhfiiBWtBsRuNqXy/Y91O0FiEEZlQIBcAycZ2l
+O9z2qRZlOVCu8pkAAMYDAQDy9TRRD317pOAJ/IWIY5TiZIuq3dC+eN2U2WO6
+VHajhgD9Gz5exImjZfGdGqpB8VbYyEENqaTjwMSwcOfYu4/WEwE=
+=HE02
+-----END PGP SIGNATURE-----
 
-Thanks.
+
+--------6274d9b750bddd996a4e6b74ecc372a4e6a7199c863a536a68f097a3d8dd687e--
 
