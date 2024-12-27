@@ -1,69 +1,82 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AC01DA21
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:02:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208231E489
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:06:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735308170; cv=none; b=bS+OhMEFilEBsdWnnsCO8D6SJfqXZK/5ZGaAZQcYd0Ac58N8wECeab8rI741PFtFiu1B0Jmax1gHr5cv3d3rP+pufumMCzaEJdAs3v4uFcXMr0dDehXgiKBnGznleXDQrQOPZZN0zpYcLEjrzoQWKj02Vnx5TTUFf+L5Ep4RjSc=
+	t=1735308399; cv=none; b=lq0aNhhgCQmkrJuPT5GEG5ur09hzUSYneaMrsPHf9P8EF6J4PmZolA9s7DtS/QO9VYm2HdIRBRidKi3uWyE+bLeb14RmMuYL5IcTupV6lkc2OOulzDkuPPrv0csESu8prQJoOPc7ZN0/e2VsNrHnJ7RCCY94A8Ns78gVPe8SWjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735308170; c=relaxed/simple;
-	bh=a8Q5xuH36QjbjaNQIvO1FGwMt0JsuODGdIZvQdi3sq4=;
+	s=arc-20240116; t=1735308399; c=relaxed/simple;
+	bh=IRBv1D0EuOwQQEj3TTVg1jqWv/Xl9dVTJ3W2a4eP+ys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PLLayAQX2RKwyqFcDYhsZzf9s2Kuc0sAH6WDxwYJWnzPc0gP1GazrUC55NDC5it4mUAE408yu1DCcktj9JvIXVUcMj0uYdXMloKdeytcNUCF9y5ilKqPBJB4hKO2ZU3NRaDbL47NQkOdItg4lTyEmT5DAR4Sax1PUuxBHROIn/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kz15Xd39; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=FLkLswneBpCCngJGLg2kxFu6+jegTujvSTeTUKRITNYjsig4CsMWG28qn+7CoRI751SCqw+JOrQ6q1HNxKOrrYsBya1ja+ZPKInrCnMe//9YsKmgGd7uX7ZszPVBXFKZ8xIjiQMOM/ozCaKRIDK1we+NSdtaqWudblWDS4FerAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rLWenWxd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BGBGBmo0; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kz15Xd39"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ee50ffcf14so8405873a91.0
-        for <git@vger.kernel.org>; Fri, 27 Dec 2024 06:02:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735308168; x=1735912968; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K3wXz4IB0bGgd4pq3HYRfiXWldJHCKn2ubYbqoZ7Iuw=;
-        b=Kz15Xd39YIvPyGl+qscrz7s9tnIZawL/GPuoJdgSh9Ch06hn6yC4f45Np/sdr/p3It
-         M6a/eweksEqV+vdnyT/1F3XQ4f0oxSvOwPbT3K90/+xIdjfiF3IqV17qEQ8uChLq1HSY
-         KKgcV6Zyxw7U9waYZwx0hb6+/Hk+ZjNYWvFroRguPoYI9fv//kqW+alLhJp5CP1VwwCE
-         i9+Mx2EvjfABU0jMCe4Yz0iy+Mj2ELH3fMTKdP0ctNg3j97mszi8ExnNiRMRTfWSUc37
-         34dLTSUSpzYEgAMpVfDfx00mtF50mio4CFWbRg+Tm0hjgEedTOTt/GYLJkpFV7ehlLx2
-         8gUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735308168; x=1735912968;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K3wXz4IB0bGgd4pq3HYRfiXWldJHCKn2ubYbqoZ7Iuw=;
-        b=byWxw+RrrEpHz2tipiDwBFDh3PkIHoZXahPJ92J2IxNKw7kMaPErdpfx9no9mUEm5y
-         a5pWBatjlLkYy+RNS7KaMkSmnEmZA/KHySJn6U6Ds/RFtnV6/T6F2QXx4QQbvP1NZ4gY
-         DXYoz+bMVIXM+97xpg+0YzcbA64jjbfkjRIzW1MTk4gGSs48D/zfeEsK94s/+7Xy3JWA
-         6ABkCWbF3DGS/Xu7G9tCAmxotCNSBqKr5uFEHrrO/Ur+H9C8Q2rFbyFlRu+VjodL+VrE
-         kO2JmvanVl5+3NF4MoaqDUiOcgQTFlhcVC2R3MiKlmE7ilMWoS/T9N/rrqN6keFzxbOK
-         9lwg==
-X-Gm-Message-State: AOJu0YwanwtgV7+qw/IB8mpGE1Ekx6e0jMUrYKI0/khMXWYwvz6Ujnr/
-	+t8gvWOlBzzMEBIyZzHoU3rfUAVP7UgCUrhB22ra7wLk8OZDU+xogCPUAQ==
-X-Gm-Gg: ASbGncu3vzdoutIAzw7yCgcSI3ypPomsca+wgnCl56sQur5nvVRZREodLgM784ine9e
-	dvF+87ACaTRPs4NoDtnqkw0L+xs5gj7uFJ5LFPlbqqyMdBUVB6f65RHJSU5bF1sohzJdwrMBz7D
-	77kelBCAG/s+6iEJrznZWQdYyC8H5XOt+86rdMy8eDZWCgZZ+9x1grV0wsf7IFbC+gjrr8YeNzq
-	pn1L2fYtls9lxLrUZlWrqdrnMLVUCaC2f7agWx356fb8IQDL9xj
-X-Google-Smtp-Source: AGHT+IFHuvMmpY0TxhESGqoXy7pAWHYjnB2kQ/Nq4MMv2S1CSRgxiAYYYUAq2B3YKpz0lxUUavd3aw==
-X-Received: by 2002:a17:90b:54d0:b0:2f1:2e10:8160 with SMTP id 98e67ed59e1d1-2f4536d193bmr39730472a91.11.1735308168344;
-        Fri, 27 Dec 2024 06:02:48 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9cde2csm135963415ad.156.2024.12.27.06.02.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2024 06:02:47 -0800 (PST)
-Date: Fri, 27 Dec 2024 22:03:39 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 7/9] builtin/log: fix remaining -Wsign-compare warnings
-Message-ID: <Z26zu7X7VCSX3yn9@ArchLinux>
-References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
- <20241227-b4-pks-commit-reach-sign-compare-v1-7-07c59c2aa632@pks.im>
- <Z26p9GJbmyUd6bG-@ArchLinux>
- <Z26yPlLMlxyecZVk@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rLWenWxd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BGBGBmo0"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4F071114005D;
+	Fri, 27 Dec 2024 09:06:34 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 27 Dec 2024 09:06:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1735308394; x=1735394794; bh=iu9Q9+1pr5
+	w+/o60B86j6sdlnUlQ/Rq2qwWs1/2DqCI=; b=rLWenWxdHw+0C+jypRM+ZlxPbP
+	0sLmqKPHPqQwkco4xJmnLv26paJCqcOXgm/P9H3bQHkfeuzQ6cmOzaXj6DVHwAws
+	WMOSnLGiVxNv5hDtB0phv9wjvtdiWFHJX8IJGK7sEZqcJDq1xcOQWDUzFvOzqMuy
+	KoZQow72Int4iBDAmU8Hy4zEPCDdPrCXgCB9zESJ+dIi8VOOea335c5ppjSNvQeF
+	cEZdbhtBliN5mEQV/XVLORvCTULFEt6C4+O3I5w5I/DMFjW34l90Toy0Vh5zFbFj
+	hUfSn1AwVrnTjNh/7VMw314b5hIJfbFsJWuJmyO+0o2tQzLyEIx9nCQIKkvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735308394; x=1735394794; bh=iu9Q9+1pr5w+/o60B86j6sdlnUlQ/Rq2qwW
+	s1/2DqCI=; b=BGBGBmo01eRN/ZQZExLnxmgfogLjuBanCuoYEo4zMZ+JLOGv96Q
+	lA05/+Al6Mr96KvXG/9r7IK1UD33cilS51XAoXSXhNnaa5bNAGqbI5mjNTgm5iRS
+	B50xOdelzjl/8aSTPtaD2fOwcFzxVoTy7Yy6X9/3+jakS2ACxn2p7MLFNjCZdGaH
+	2srWMWt8Z6qEZTA4Hlucg0ILPKtrzVuZrXrj26yPrCTWa5rgNq5Op9dGBoHTf9on
+	RD8AZbJt41qlPeIaSXLZAOOd/XKvOag5/Nn+Znfm/xj+Q8OVTOGNyhr1X3Qj4MmW
+	TFWCW2M3MPjb3HPuTY6oJFzseAihQYXiSJg==
+X-ME-Sender: <xms:arRuZ7U1usPK1X-KUtlG7LEC96yYeYVJUGjPqPNyAqQleEHPP17VAQ>
+    <xme:arRuZzmYW2P7mvP2ktACKmiR_aSQDeJmjNlfzMIwwJKz3gmiIcPtYvMURqBC4tcjQ
+    FiOuZurtsckAF5lNw>
+X-ME-Received: <xmr:arRuZ3Zer1IgYSfuMzKzwWvQV-uJMapmAn7sXd2tgIshvFp-wiZqFbcU4k8DWytAIdsKaUjUjFrBV0GuX3LvPfypXQrdSlB5VNIFmFVJB1h-iw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiteefteeile
+    dtgfeklefhieeikeeuudelhfffuedutedufeetgeevtdeuffekkeenucffohhmrghinhep
+    shhhohifqdhinhguvgigrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:arRuZ2WoNHFD4A9VK26DnaYRQ9PsyvsuT_mEnuXizuyjI3GR7nyMwA>
+    <xmx:arRuZ1k1FpI2LbrW58Ab7SV8455IJyJO3MhZGOq68SygYOa9Jd-HVQ>
+    <xmx:arRuZzdJVQR3Z7kNyOAv2GQ_3aQ2D0PnzuOsMoTOzNELAcs-rmwxng>
+    <xmx:arRuZ_EnaRusOQUYdP9D50uQC4BqVN0n4YM1u4HRk1ldr9ga-B8K0Q>
+    <xmx:arRuZ6w0p1l7U8_8qne5VbAkQ2al8071xUkb0b6rTi7vFw8R1nFnhQsO>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 27 Dec 2024 09:06:33 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 9a581337 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 14:04:28 +0000 (UTC)
+Date: Fri, 27 Dec 2024 15:06:13 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] show-index: the short help should say the command reads
+ from its input
+Message-ID: <Z260VVuIH_-0Ylis@pks.im>
+References: <xmqqfrmidyhk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,59 +85,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z26yPlLMlxyecZVk@pks.im>
+In-Reply-To: <xmqqfrmidyhk.fsf@gitster.g>
 
-On Fri, Dec 27, 2024 at 02:57:18PM +0100, Patrick Steinhardt wrote:
-> On Fri, Dec 27, 2024 at 09:21:56PM +0800, shejialuo wrote:
-> > On Fri, Dec 27, 2024 at 11:46:27AM +0100, Patrick Steinhardt wrote:
-> > > @@ -717,14 +715,14 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
-> > >  	unsigned long size;
-> > >  	enum object_type type;
-> > >  	char *buf = repo_read_object_file(the_repository, oid, &type, &size);
-> > > -	int offset = 0;
-> > > +	unsigned long offset = 0;
-> > 
-> > Why here we use `unsigned long`, is this a special situation where we
-> > cannot use `size_t`?
+On Fri, Dec 20, 2024 at 10:02:15AM -0800, Junio C Hamano wrote:
+> The short help text given by "git show-index -h" says
 > 
-> Mostly because other variables already use `unsigned long` here,
-> including `repo_read_object_file()`. So given that our object layer
-> doesn't support `size_t` it wouldn't make sense to use it for the
-> offset, either.
+>     $ git show-index -h
+>     usage: git show-index [--object-format=<hash-algorithm>]
 > 
-
-Make sense. Thanks for the explanation.
-
-> > >  
-> > >  	if (!buf)
-> > >  		return error(_("could not read object %s"), oid_to_hex(oid));
-> > >  
-> > >  	assert(type == OBJ_TAG);
-> > >  	while (offset < size && buf[offset] != '\n') {
-> > > -		int new_offset = offset + 1;
-> > > +		unsigned long new_offset = offset + 1;
-> > >  		const char *ident;
-> > >  		while (new_offset < size && buf[new_offset++] != '\n')
-> > >  			; /* do nothing */
-> > 
-> > > @@ -2183,7 +2182,7 @@ int cmd_format_patch(int argc,
-> > >  		fmt_patch_suffix = cfg.fmt_patch_suffix;
-> > >  
-> > >  	/* Make sure "0000-$sub.patch" gives non-negative length for $sub */
-> > > -	if (cfg.log.fmt_patch_name_max <= strlen("0000-") + strlen(fmt_patch_suffix))
-> > > +	if (cfg.log.fmt_patch_name_max <= cast_size_t_to_int(strlen("0000-") + strlen(fmt_patch_suffix)))
-> > 
-> > A design question, why we don't change the type of
-> > `cfg.log.fmt_patch_name_max` to be `size_t`?
+>         --[no-]object-format <hash-algorithm>
+>                               specify the hash algorithm to use
 > 
-> The whole infra around this uses `int`s, too, so changing this variable
-> here alone wouldn't suffice. We'd also have to adapt option handling,
-> config handling, `struct rev_info::patch_name_max` and other bits and
-> pieces. So in the end the size of required changes would likely balloon
-> and thus I decided to not go down this rabbit hole.
 > 
+> The command takes a pack .idx file from its standard input.  The
+> user has to _know_ this, as there is no indication from this output.
+> 
+> Give a hint that the data to work on is fed from its standard input.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Yes, I agree. If we do this, there is a lot of efforts we need to deal
-with.
+Makes sense.
 
-> Patrick
+>  * I also found the option description somewhat funny in that
+> 
+>    (1) it makes it look like "--no-object-format sha256" is
+>    accepted, which is not a case, and
+> 
+>    (2) "git show-index --no-object-format" already is a curious
+>    thing to say; the command certainly needs to work in _some_
+>    format.
+> 
+>    But (2) is common to all the usual command line options to allow
+>    defeating another instance of the same option that is given
+>    positively previously on the command line (i.e. "git show-index
+>    --object-format=sha256 --no-object-format" should behave as if no
+>    object-format option was given), and (1) is shared by all the
+>    other options that allow such override.  So I'll let it pass, but
+>    if we really wanted to improve it, the fix should go into how the
+>    parse-options subsystem works.
+
+Can't we already fix this via OPT_NONEG? Or is your point rather that it
+is awkward in general and choices like this should never have a negated
+variant by default?
+
+>  builtin/show-index.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git c/builtin/show-index.c w/builtin/show-index.c
+> index f164c01bbe..8678b741a4 100644
+> --- c/builtin/show-index.c
+> +++ w/builtin/show-index.c
+> @@ -7,7 +7,7 @@
+>  #include "parse-options.h"
+>  
+>  static const char *const show_index_usage[] = {
+> -	"git show-index [--object-format=<hash-algorithm>]",
+> +	"git show-index [--object-format=<hash-algorithm>] < <pack-idx-file>",
+>  	NULL
+>  };
+
+I was wondering whether we have any other usage strings that show an
+expected stdin like this, and indeed we do. The usage string in
+"builtin/mailinfo.c" uses different syntax though without the angular
+brackets, but "builtin/pack-objects.c" does use them. I think with the
+angular brackets is more idiomatic in our codebase though, so the
+addition looks good to me.
+
+Patrick
