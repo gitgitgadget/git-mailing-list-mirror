@@ -1,80 +1,79 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC8D1F3D46
-	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544FF1F5407
+	for <git@vger.kernel.org>; Fri, 27 Dec 2024 14:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735308005; cv=none; b=SYbXtSds49j1lZ8qmvPJwuTwqrOSlzbT/iecSQ6wsxbmevTtX/3t8iJEqoJdH8Cd9Sps80469JTH/d+Fnkw3oTeKFFQQ8uwLFOh30d62jcpaCnMescTEI9WW0hBPUU2Z1FRpyA/7jAkfQ3OIOtpZrR0I5KozBpuRSDtsdRK/lBk=
+	t=1735308006; cv=none; b=LeeM/Q1/ldlWudXrjpp4aKbOGR895YGWLMt7EVyBvCHZONSIbiSmMq9fOBGvQCZjpws1CedIw7cXDyZzZN8b3viNaI2prRSpkLA0pMmJBvw1uvD15ylSLdKBE8cvudjzRdmbPWEZ2gbDCDYc10Y02fYL2pz08+He61f3d8iL1YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735308005; c=relaxed/simple;
-	bh=YDWzGfV5zkk7Hpk9EzhsKEon5ABDfI7fMSB+XZm7C98=;
+	s=arc-20240116; t=1735308006; c=relaxed/simple;
+	bh=G7bll/iTqD6mOxHLRUiv3nmSOIv/sQaeQeVTDynXsu8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Pnz4ve/6ljxIAHlEApY5SZaxQRDf55EHeNlBxoo1BUrdCcbNycp9EhR2SBH5dKwNjNIHCk1e78Xz9O1FJzVaNzDcKqVX/UAWm8AujeAVxqGGSVC33YvmYOYoRxrnM7pz+rVnlQcVVWznf4ORL5jHOpPc/ZPvezvSTUXXDH2x1Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OJR9ntVI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DR6Ogyis; arc=none smtp.client-ip=202.12.124.150
+	 In-Reply-To:To:Cc; b=mVqSQ2DxzreVI+F2QW+VQqCc+iJxUThfsywhwi5WRMY/vF10QXUxv7SwPA9xPSujYhFHFNZhIS76gIYsbsTYNpiF5XNKIj5JtNI1gZDdGE5V8SOThS9TuO3+cvc4HlHUdcKstZP93n9NrgxRAoQl+ve/C+iYNXQvSbcoNZpMcFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CM2QZQ31; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=odvISTyw; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OJR9ntVI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DR6Ogyis"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 16F6611400D9;
-	Fri, 27 Dec 2024 09:00:03 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CM2QZQ31";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="odvISTyw"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9DCA0114011B;
+	Fri, 27 Dec 2024 09:00:04 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 27 Dec 2024 09:00:03 -0500
+  by phl-compute-08.internal (MEProxy); Fri, 27 Dec 2024 09:00:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1735308002;
-	 x=1735394402; bh=m6PUH5hc5VnZEjAw45PgVSbEFwSbOCM6SRruq77T2TY=; b=
-	OJR9ntVIw7ExjL9bLf4whA+3DOOe4CoWkQatn2057wixTiwZn+98qk4v9CierS0o
-	mrxAtF+BcpHVlBYo5/9gVaZNvywBeo5YYK0GQ2AA0RBX2UNdb2DF0G4x/i6hDaOA
-	yZ4zhZmZzgLKUPC4wPPNKoSQLM7Q88QcsNlqPoZ8OLoXCDJtnB1EaIYwcaGV8RJQ
-	fJP0FhKzyEmmO59na0W2GsWMt+ipklfOk1WxAUOTy/Zc3JI0iYhpsVKqJgT2eVzk
-	aSiw7BDU89WGBhh5JK1D4Dcok4kfdhangEAJka0+g/vC3OjUD+YNgcAYguqNBr/3
-	hChO7AE2dn0a27o59BOtzA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735308004;
+	 x=1735394404; bh=7QylO4lrZ14ILdgrFzFd6wQLgQojwvND8WJqqGggpHI=; b=
+	CM2QZQ318qhzVqKYwBvDOx5QrTWkFC0/DHVSjpmL85HFdSJ+5jdjVkfSTWe9XCpN
+	7ckUN3SpSoc4xadBm8Cuykn741PTAPskhPFDZQCj+xbg5FY2727LnjW3hR4dIbRE
+	Lz4I18ynI/gerR0PWhKvt1em+1JicDriBcVPQBHG7X4N54P76tOWexSHa8zV1wI9
+	gqfw29NuiYjnn2LnOMBgVqeI4ioYnUfuuxTIcmxcQUtDQcMRYWh0NXPWyp/7ZX3y
+	w6qCulUszsz0Y7xhMc2jKLgQQp5ANnRl5jU8z6686d0dTgNvmj8tZBfFQpca/RLx
+	gv686gJz7qZ4rusNgz0D4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735308002; x=
-	1735394402; bh=m6PUH5hc5VnZEjAw45PgVSbEFwSbOCM6SRruq77T2TY=; b=D
-	R6Ogyis6HYJjF5pJ2tyyWT+OQehuwSvuE0AqKdBwgGP7AUrjqCY5Xehy6NQfVHYt
-	KRV0p3if8ko5U9a/ZiPq0Lt6dT3lO1Ucgk0pxPZ98+isef22FDNOkMeYeYnp1725
-	JFi3KhyO11sUlgRB/eJN0U3zujD0pb2/bSd/3GLsBL7b+01b51qbYf1Uwb2f5HJv
-	pHDaaNK26MBQEBkfI7PdPJqjORzo1+HQKFCnzk5v0pC8XbTwXN+dowJpXguf3VpS
-	es2odh4juXxn1pAplEd+xGyJYWmd0aLaGY5b7N/rwMalTYpXL86KDzf9emPkyCLI
-	ctW0Y48BeaZSWe1n1Kl7Q==
-X-ME-Sender: <xms:4rJuZ4ApCbxq3PkBV7U_RWHTG9sxxsGBhx-UhKy0a024OJWpmExiQg>
-    <xme:4rJuZ6jHJdVZrc8PGwW5X7TiITgSXc5N3ykYA71aA1h6t5mErG8AeEX8DxNRdIDCJ
-    c4CmRhEOF5oS6p4GQ>
-X-ME-Received: <xmr:4rJuZ7lKt2jK-Ytn9L_uFjoc9mN1Q6890g_OWweUR6RKwOsGYkydRMU0nUhoPo6B7B2tD88ShMm5n0NmCCI4aDXqUplusWkeFoWmBVDGtts9Rw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735308004; x=
+	1735394404; bh=7QylO4lrZ14ILdgrFzFd6wQLgQojwvND8WJqqGggpHI=; b=o
+	dvISTywKxs6vxV340vOWRxrqADHrv8//U3VtlMkn9l7b4TUvppQ4A2cjb/GvdUOT
+	Yr24ugEqs0o6YbPQKj5ZfCIDr227edXWEqv2C/V9+O5bJoiwQysOpGyeFCTN4pzl
+	R3sBbAkLbfIZX6EUBKzU5jDmEEj8bxi0Qbk00nLdovpgYscgM9B57DIdZP0x/L5u
+	aSk/VYpkuPtA7AVjcbvnMDN+d+xxvZyjGLv7PoRj4nDXKhRRso/fCXdSLFBSjRc8
+	kuuess1jN5fljv/vSmRjmPHkUIBMgkMjJ8oLKN6NMHQSzLWgi0WcyAizWaFEiD7D
+	Lh9IWmtB04gDEeuAQAgJw==
+X-ME-Sender: <xms:5LJuZ1GSWOJ-228JjVtUBaYLd5RsDQVfqmfKUq5e7oRZSsRcaQYlfQ>
+    <xme:5LJuZ6UuzVs7yDcWTYi4vDDu7Pl3y_zxhGeVRRSm0b0v-Kv4gJ-yb2zUeuwvhy-gf
+    v5hyac7TlPpaKLYhg>
+X-ME-Received: <xmr:5LJuZ3JywXus8KhcVZuMgH-oI3XzJRAYiq-xiWZqWFi6gwxknZHknx9mbt7gxs-CktXTR2ZqvuGOA2U_aTaJdgXK1q3MlGSoSTe5o-TiuqWPNg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvtddgheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeeffeeliedvteehgfduheeuffehieehheejvdehkeel
-    gefftdffveeileduieetkeenucffohhmrghinheptghonhhfrdhinhdprhgsrdhinhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhk
-    shdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtth
-    hopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:4rJuZ-xynNit3d3QFJ2a6r1po_ofEO1lEd3wlj5Hl2f4J4Pe_hoePA>
-    <xmx:4rJuZ9S6sJ8QmGJpiDQ-WKFjdjruOTecA014G1yQkNJXn_-ExY4Yog>
-    <xmx:4rJuZ5agcFqvUHygY8s4NDZltqr02KdTueCJBzRPpdH5KLX6Aa-9fQ>
-    <xmx:4rJuZ2S1IEN3naiHjmQjhG9VEMWmzo7oD7DEzm95mtsE0_VhWzdQwQ>
-    <xmx:4rJuZ4fOQMMrAhXDyOQwe7pdzFv7Iy4572NozCY0g9O0HqDAlMlXeIGP>
+    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:5LJuZ7GSKyC8gnh9m9jEsCPOy6QmWncLSS0zvrvK-FUkH9CmzfQrjQ>
+    <xmx:5LJuZ7U_yM3HCUv-b0Xz-2K9u6Man4QkmUdbTZZTWRH-kKHuo9_z7Q>
+    <xmx:5LJuZ2NaQrl6nQh96RHWT4s17f6riaSHpHCK5T99XqqydKZGTIhn6Q>
+    <xmx:5LJuZ63_Vh7IZ4Mwoxum-eQbGOGRh8-EXLO7P_lGoIx8As2A2MkRsw>
+    <xmx:5LJuZ4iuVUNewvgdJEpvSkGmTl5N8bourJ1F7WntZwuN7g1UiVPPbp0e>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 27 Dec 2024 09:00:01 -0500 (EST)
+ 27 Dec 2024 09:00:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5dec6fd0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 27 Dec 2024 13:57:56 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 98f02edd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 27 Dec 2024 13:57:57 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 27 Dec 2024 14:59:30 +0100
-Subject: [PATCH v2 02/12] meson: properly wire up dependencies for our docs
+Date: Fri, 27 Dec 2024 14:59:31 +0100
+Subject: [PATCH v2 03/12] meson: fix generation of merge tools
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,126 +82,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241227-b4-pks-meson-docs-v2-2-f61e63edbfa1@pks.im>
+Message-Id: <20241227-b4-pks-meson-docs-v2-3-f61e63edbfa1@pks.im>
 References: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
 In-Reply-To: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-A couple of Meson documentation targets use `meson.current_source_dir()`
-to resolve inputs. This has the downside that it does not automagically
-make Meson track these inputs as a dependency. After all, string
-arguments really can be anything, even if they happen to match an actual
-filesystem path.
+Our buildsystems generate a list of diff and merge tools that ultimately
+end up in our documentation. And while Meson does wire up the logic, it
+tries to use the TOOL_MODE environment variable to set up the mode. This
+is wrong though: the mode is set via an argument that we have fixed to
+'diff' mode by accident.
 
-Adapt these build targets to instead use inputs.
+Fix this such that merge tools are properly generated.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/meson.build | 26 ++++++++++++++++----------
- 1 file changed, 16 insertions(+), 10 deletions(-)
+ Documentation/meson.build | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/Documentation/meson.build b/Documentation/meson.build
-index acd6d86ec779e63230c88b7bff937aff330d2d4f..b3c8b6c56339e10099f8c37a4d8198f402192520 100644
+index b3c8b6c56339e10099f8c37a4d8198f402192520..c2512328ca9b76a5dd512453ddbb776faea7967f 100644
 --- a/Documentation/meson.build
 +++ b/Documentation/meson.build
-@@ -229,7 +229,7 @@ if docs_backend == 'asciidoc'
-       '@INPUT@',
-       '@OUTPUT@',
-     ],
--    input: meson.current_source_dir() / 'asciidoc.conf.in',
-+    input: 'asciidoc.conf.in',
-     output: 'asciidoc.conf',
-     depends: [git_version_file],
-     env: version_gen_environment,
-@@ -261,7 +261,7 @@ elif docs_backend == 'asciidoctor'
-       '@INPUT@',
-       '@OUTPUT@',
-     ],
--    input: meson.current_source_dir() / 'asciidoctor-extensions.rb.in',
-+    input: 'asciidoctor-extensions.rb.in',
-     output: 'asciidoctor-extensions.rb',
-     depends: [git_version_file],
-     env: version_gen_environment,
-@@ -304,10 +304,11 @@ cmd_lists = [
- documentation_deps += custom_target(
-   command: [
-     perl,
--    meson.current_source_dir() / 'cmd-list.perl',
-+    '@INPUT@',
-     meson.project_source_root(),
-     meson.current_build_dir(),
-   ] + cmd_lists,
-+  input: 'cmd-list.perl',
-   output: cmd_lists
- )
- 
-@@ -315,7 +316,7 @@ foreach mode : [ 'diff', 'merge' ]
-   documentation_deps += custom_target(
-     command: [
+@@ -318,12 +318,11 @@ foreach mode : [ 'diff', 'merge' ]
        shell,
--      meson.current_source_dir() / 'generate-mergetool-list.sh',
-+      '@INPUT@',
+       '@INPUT@',
        '..',
-       'diff',
+-      'diff',
++      mode,
        '@OUTPUT@'
-@@ -324,6 +325,7 @@ foreach mode : [ 'diff', 'merge' ]
-       'MERGE_TOOLS_DIR=' + meson.project_source_root() / 'mergetools',
-       'TOOL_MODE=' + mode,
      ],
-+    input: 'generate-mergetool-list.sh',
+     env: [
+       'MERGE_TOOLS_DIR=' + meson.project_source_root() / 'mergetools',
+-      'TOOL_MODE=' + mode,
+     ],
+     input: 'generate-mergetool-list.sh',
      output: 'mergetools-' + mode + '.txt',
-   )
- endforeach
-@@ -335,9 +337,10 @@ foreach manpage, category : manpages
-         '--backend=' + asciidoc_docbook,
-         '--doctype=manpage',
-         '--out-file=@OUTPUT@',
--        meson.current_source_dir() / manpage,
-+        '@INPUT@',
-       ],
-       depends: documentation_deps,
-+      input: manpage,
-       output: fs.stem(manpage) + '.xml',
-     )
- 
-@@ -345,10 +348,8 @@ foreach manpage, category : manpages
-     manpage_target = custom_target(
-       command: [
-         xmlto,
--        '-m',
--        meson.current_source_dir() / 'manpage-normal.xsl',
--        '-m',
--        meson.current_source_dir() / 'manpage-bold-literal.xsl',
-+        '-m', '@INPUT0@',
-+        '-m', '@INPUT1@',
-         '--stringparam',
-         'man.base.url.for.relative.links=' + get_option('prefix') / get_option('mandir'),
-         'man',
-@@ -356,6 +357,10 @@ foreach manpage, category : manpages
-         '-o',
-         meson.current_build_dir(),
-       ] + xmlto_extra,
-+      input: [
-+        'manpage-normal.xsl',
-+        'manpage-bold-literal.xsl',
-+      ],
-       output: manpage_path,
-       install: true,
-       install_dir: get_option('mandir') / 'man' + category.to_string(),
-@@ -368,9 +373,10 @@ foreach manpage, category : manpages
-         '--backend=' + asciidoc_html,
-         '--doctype=manpage',
-         '--out-file=@OUTPUT@',
--        meson.current_source_dir() / manpage,
-+        '@INPUT@',
-       ],
-       depends: documentation_deps,
-+      input: manpage,
-       output: fs.stem(manpage) + '.html',
-       install: true,
-       install_dir: get_option('datadir') / 'doc/git-doc',
 
 -- 
 2.48.0.rc0.311.gb6c66824c1.dirty
