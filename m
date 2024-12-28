@@ -1,70 +1,70 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1C4156C6F
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 11:42:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419F0156886
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 11:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735386158; cv=none; b=TY1DxZypmNSBPvprBAQZ6cJ29J8sm/SExlP2lchAX6ttOh4e1TWEv4QyZN9MgJLMLcYvMsjmR7fHmJ34QO3FLvBo0975imMjbgNe4pueU7CfWN6UhkrjTr0AHWNzwRKrnbkYQ478G7vpfjN4Q5mt5aDPyZ+Ed95jMN74cfWW0Jw=
+	t=1735386160; cv=none; b=hUDVuocWEIkbWL49WTez0ySlOz+J5H/te17/CzCgT0A0v9kqRTFwzTVw895HxFr4br0l9hLr7LDdelhQTpX59qq5vMKl2CoXZ6pDKXd+F7+jprS6dfpY5/ku4uTLf556UAOohatVu4cVine5XonuXAwO6tLdAYYeLiIZ0l4P52c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735386158; c=relaxed/simple;
-	bh=W4d9AZaAEgpNMcmPwfEqdGS/M5D7KzPRE5HQ4k2muL8=;
+	s=arc-20240116; t=1735386160; c=relaxed/simple;
+	bh=ssCkZVwTZ/7VR1sEJiNe9AdN+l7Mac2kQ5vrMNbZUjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmjia4W+tO20FXLeRn06DJIC62SwuLYpe2qtoSDWxuoHhuG582Gh0xxDoxNoTBrCsDDUNR4ZgsBQ6icLnvUivQ0eoDShvmTu/zWKVriikWkks3MJUbTscdKRdYGhiSVARYSGOt5K8ck+rmPXNA/1K7oL9HrTpX+RI0kCGNmBGmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=egxzisse; arc=none smtp.client-ip=209.85.208.48
+	 MIME-Version; b=j5j198GA5irf37aaLa6V2kp5vPX2ST6VmlpZ7pIQPf6mFTzyLPXaULZTv6TwcrH0cL1W++cqcFY+LqC6u60iyzPaEzEu6kvI+6HhMGCFivpaJBMty5DSnjdpl3xJVTcXYhkdMgyNfAKJWpecU5EcjIGTsfsdaa9H0fligHLGQ0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=Q1py4vP+; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="egxzisse"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5d3d479b1e6so10784817a12.2
-        for <git@vger.kernel.org>; Sat, 28 Dec 2024 03:42:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="Q1py4vP+"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-aaeef97ff02so611893666b.1
+        for <git@vger.kernel.org>; Sat, 28 Dec 2024 03:42:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1735386152; x=1735990952; darn=vger.kernel.org;
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1735386155; x=1735990955; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2aBoR9l7PvTqpOBwwZc54oz+N3CVnY0ABmNTPLNAuJo=;
-        b=egxzisseSxGvft/4wwU0Vem003qHz4IFFsMh7BWIt+GbeRE02TR1TmocxZRiVllKim
-         bJ7UvKYfEL3Sk+qcuAMAy5gBRoMeSjJUw2/vXfwZUiSHmiIXvC/YbBL4rSLYXD1MsxXJ
-         26zWf0Cg3BtHDqFWkSkroKa2F24GubyuWprHXzm2yskBErTkBPg5SMG1w+r/VJ425XQQ
-         kIMXw1351aUjzgQzYvdlxW4AHVaB9MbxWFL5gNV8f0b+KhoN8g++IUoUqbzmKp05c7+K
-         yZYU69W3k54WuFIK7ljTuSYCactfnQSIxBI2kcEfQtFm9VG64tIdDEktpKK4k723WYcq
-         lZ7g==
+        bh=fbSdW1vsH23n3kpHtk6MmSnVjssG/+w3O41gKlDgmb8=;
+        b=Q1py4vP+I63s4CbzzDTDJhvLphzz1+R198T0C6Hk+GuXC7OThPC7tzR0drTk7T6OEc
+         J9nd4Sr4q4h5U+QYVuZtoz1pJGrZx4wzo0Uim29rg+gg2JSbZgF7e6G5QTd7t9sJLN6W
+         qkKHEx44pUTzzy6NSNu7cP2FuFJvOOH7aK768hVjMke/urXUeIIjL/kWL/GR3Y5fkzRF
+         8zZrTgilwqROtPIcuqjJDYMN+vQgqm19RBD7V7PF7Eeqp9kaBou20FL7wHXEssUGew1k
+         4z7jXdVr2KNLdbTFAN2XZk9n07S5ofwXJs0ReZBnigMSk1IbJr/lBZLjEmCOM/F2h3kO
+         g19Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735386152; x=1735990952;
+        d=1e100.net; s=20230601; t=1735386155; x=1735990955;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2aBoR9l7PvTqpOBwwZc54oz+N3CVnY0ABmNTPLNAuJo=;
-        b=GscRf45EUsalRTbH2GMz9wmZRAquHC/wehR1+EJDOPBGH+0j1urjneZ0npF8MX/sLO
-         OZJfl35WFnZ3jY0eZSiSaWSnvTWyaRrGyPDnpPVVSGuoBw/JfAOkHf2pLq3HEmY1Rtpu
-         eDDPMrv5K41ApRNyij1nOv4pUQ4c4s2jy4JVTT3b0sgj+AZjzAucfRqWEVBy2sBGQP0f
-         aZI4CcQG4+upTotx9VbTfBfuU5qOx+QAOJohdnH0jcPkcha18Bn+HBTNJh2T6lXSQ3ES
-         ygqqmSYCf0RdrshvsneaKk3b8sEyqhF157hM4HCl5gW/vmbxpJdwNRM6V7y3L1AtME2X
-         LBjw==
-X-Gm-Message-State: AOJu0YxA4kUHpVER+DL5pcDQ8uKME644OTQmvuBT3czAGL+UzqbxNKv/
-	Muv5hSicSlP8sKPANCWBDVrenLulsmedXtZa9/HK/JhI+LZ54fd/OlpwwpEt41GUgV3sJW/hged
-	g
-X-Gm-Gg: ASbGncuu8I8gg4wUwUJESdjfMe3WcL0yXnZZupLV0g3J4gGjoEUBs+ziszVy6wXMGF3
-	xgukvO3uNIrlIn+JTbNKF4agdJpNOey78bF07L+t/9xAnhMCS3bKILjQj+9Sdf3f1jz5usOndUd
-	uCaUCZCN3qrS1iOaT9hWJ9KbaO01YGCguf6CZwDVo/2lsdRLZY+EriEIwGyJIrGd1MIlk1cJir2
-	tvnHHK4AInlr/aWfZQKH8XVVs7ceJ9SKnZRzcT5twCV1G33ujdevAuLM6c2RlX44rFKYrLB5zsK
-	TUC5
-X-Google-Smtp-Source: AGHT+IEZTr72PiSb6T2XgoKHdHeWv2iwvaxq1zjTRhucDB1/+aDQzosNexB2RyMZGzNiaUj0IKrCuA==
-X-Received: by 2002:a05:6402:5204:b0:5d0:ced8:d22d with SMTP id 4fb4d7f45d1cf-5d81de05c3fmr75729104a12.22.1735386152385;
-        Sat, 28 Dec 2024 03:42:32 -0800 (PST)
+        bh=fbSdW1vsH23n3kpHtk6MmSnVjssG/+w3O41gKlDgmb8=;
+        b=e9MDR75FYIg1+MuOX8Eh9JEZ7IBRHbJAUusNbarq0Vt3mgU0WHfa3AodFDg04n4HVg
+         exR/Jtannxk5jkKG9MaRRQ3CQ3ETX5fcw9dtk3dH8kXanLVCD4v0u9zXFPJjyDFZZKVI
+         Wxhd1bc29QjJrqdHqemvvC+DOpuvg6SnNOcoMjK4ps5nvzRFoZfQ+10oYU0DxUd18VWR
+         5FmIDAz4SdeVKxszQpa9y4zILlB9r2+iCGCuJYcRIrdoXFxFCnEKHPU4C/Cy6qI4Homr
+         N7/fQaWxcYIh8HVFRclhVFitbVbHkIDcaQXWA5Ir2At65Nt656e78FmtmTqX/uJsqcqM
+         FDCg==
+X-Gm-Message-State: AOJu0YxgjtnMOj7IXr4Zb0KMUUNH59zB25r5AhlOtt3tYFoMyWkSxd6X
+	d4SDC3T9mSJMkp5fdraOccPcX1Sz7Z3z9bsSF5bQ9Xq7b1qM/IeO7F/dCU2r73ong9KO2rMr2zC
+	M
+X-Gm-Gg: ASbGncuhxa8pzPO4XdqAlzlLNh6W7SyyqislKrzfdAclyfP0YWHgTlooUSJ1wEQC1nq
+	Z3Xq6u1Gi8REp3fe1fIkQfTrGWCFWSAwcPFdWqHdmAVpBxO1RBUdVRnkSK0WzuElrrS0joX0a0W
+	SZ9j/J5j+SbO2UuztLVOkZegeZM0cwnU0/FKlPX8+irLYc8RSB8JIoxkzXskIL0LBNCLozesSBk
+	1pesRIZNyfz0ZuUbkOCRoSqEmcL9gHkFOylu5rfz42ZSWgfWi2lDZ8twfYVVbrugvGLynIS2I9U
+	DfDs
+X-Google-Smtp-Source: AGHT+IF8Uyj+4IVWPaCoT44tVjtXKPoB3iNtY7wgeAjsKQGOZ6mT+U+G/8WkR1ir1X5hqG3z+XKFXg==
+X-Received: by 2002:a17:907:7f0f:b0:aac:1e96:e7cf with SMTP id a640c23a62f3a-aac334425abmr3020568666b.20.1735386155422;
+        Sat, 28 Dec 2024 03:42:35 -0800 (PST)
 Received: from localhost.localdomain ([165.225.240.157])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0efe4988sm1251511166b.124.2024.12.28.03.42.31
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0efe4988sm1251511166b.124.2024.12.28.03.42.34
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 28 Dec 2024 03:42:31 -0800 (PST)
+        Sat, 28 Dec 2024 03:42:35 -0800 (PST)
 From: Alexander Shopov <ash@kambanaria.org>
 To: git@vger.kernel.org,
 	gitster@pobox.com,
 	worldhello.net@gmail.com
 Cc: Alexander Shopov <ash@kambanaria.org>
-Subject: [PATCH 4 0/1] Localize mark-up of placeholder text in the short help
-Date: Sat, 28 Dec 2024 12:42:17 +0100
-Message-ID: <20241228114221.10351-3-ash@kambanaria.org>
+Subject: [PATCH 4 1/1] parse-options: localize mark-up of placeholder text in the short help
+Date: Sat, 28 Dec 2024 12:42:18 +0100
+Message-ID: <20241228114221.10351-4-ash@kambanaria.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <xmqqjzhm7jgl.fsf@gitster.g>
 References: <xmqqjzhm7jgl.fsf@gitster.g>
@@ -76,54 +76,78 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi Junio,
+i18n: expose substitution hint chars in functions and macros to
+translators
 
-I am resubmitting this patch to make the substitution placeholder text
-localizable.  Fuller explanation and example are given in the commit
-message.
+For example (based on builtin/commit.c and shortened): the "--author"
+option takes a name.  In source this can be represented as:
 
-I have reworked the translator comments to be fuller, clearer and
-prompt the proper default in case of doubt.
+  OPT_STRING(0, "author", &force_author, N_("author"), N_("override author")),
 
-Last time you asked me why I am localizing the `<>' characters for
-substitution but not the `[]' for optional values.
+When the command is run with "-h" (short help) option (git commit -h),
+the above definition is displayed as:
 
-There are several reasons:
+  --[no-]author <author>    override author
 
-1. No one has asked for such a feature so currently there seems to be
-no need for that.  If someone asks - it is easy to provide the feature
-then.
+Git does not use translated option names so the first part of the
+above, "--[no-]author", is given as-is (it is based on the 2nd
+argument of OPT_STRING).  However the string "author" in the pair of
+"<>", and the explanation "override author for commit" may be
+translated into user's language.
 
-2. <> are much more dangerous in the shell than [] when copy-pasted
+The user's language may use a convention to mark a replaceable part of
+the command line (called a "placeholder string") differently from
+enclosing it inside a pair of "<>", but the implementation in
+parse-options.c hardcodes "<%s>".
 
-3. So far Bulgarian translation is the only user of the localizability
-of <> and the action there is to omit the characters entirely - they
-are not needed as the alphabets are different.  Omitting them makes
-messages shorter.  If you omit both <> and [] in messages for
-terseness - messages will be ambiguous.
+Allow translators to specify the presentation of a placeholder string
+for their languages by overriding the "<%s>".
 
-Please indicate whether this is fine. I will iterate on the patch
-until it is deemed acceptable.
+In case the translator's writing system is sufficiently different than
+Latin the "<>" characters can be substituted by an empty string thus
+effectively skipping them in the output.  For example languages with
+uppercase versions of characters can use that to deliniate
+replaceability.
 
-Here are links to previous times I submitted the patch:
+Alternatively a translator can decide to use characters that are
+visually close to "<>" but are not interpreted by the shell.
 
-3. https://lore.kernel.org/git/20240707153526.97984-1-ash@kambanaria.org/
-2. https://lore.kernel.org/git/20240525122514.2608-1-ash@kambanaria.org/
-1. https://lore.kernel.org/git/20240421180425.78940-1-ash@kambanaria.org/
-0. (check for other teams) https://lore.kernel.org/git/CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com/ 
-
-
-
-Kind regards:
-al_shopov
-
-
-Alexander Shopov (1):
-  parse-options: localize mark-up of placeholder text in the short help
-
+Signed-off-by: Alexander Shopov <ash@kambanaria.org>
+---
  parse-options.c | 18 +++++++++++++++---
  1 file changed, 15 insertions(+), 3 deletions(-)
 
+diff --git a/parse-options.c b/parse-options.c
+index 33bfba0ed4..8904345c07 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1076,11 +1076,23 @@ static int usage_argh(const struct option *opts, FILE *outfile)
+ 		!opts->argh || !!strpbrk(opts->argh, "()<>[]|");
+ 	if (opts->flags & PARSE_OPT_OPTARG)
+ 		if (opts->long_name)
+-			s = literal ? "[=%s]" : "[=<%s>]";
++			s = literal ? "[=%s]" :
++			  /* TRANSLATORS: %s is a command line argument name, `<>' prompt the user to supply a value for it.
++			     Change only the `<>' characters to something else if you use another convention for this.
++			     Most translations leave this message as is. */
++			  _("[=<%s>]");
+ 		else
+-			s = literal ? "[%s]" : "[<%s>]";
++			s = literal ? "[%s]" :
++			  /* TRANSLATORS: %s is a command line argument name, `<>' prompt the user to supply a value for it.
++			     Change only the `<>' characters to something else if you use another convention for this.
++			     Most translations leave this message as is. */
++			  _("[<%s>]");
+ 	else
+-		s = literal ? " %s" : " <%s>";
++		s = literal ? " %s" :
++		  /* TRANSLATORS: %s is a command line argument name, `<>' prompt the user to supply a value for it.
++		     Change only the `<>' characters to something else if you use another convention for this.
++		     Most translations leave this message as is. */
++		  _(" <%s>");
+ 	return utf8_fprintf(outfile, s, opts->argh ? _(opts->argh) : _("..."));
+ }
+ 
 -- 
 2.47.1
 
