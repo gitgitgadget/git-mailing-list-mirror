@@ -1,62 +1,57 @@
-Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
+Received: from mail-40130.protonmail.ch (mail-40130.protonmail.ch [185.70.40.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692DCB644
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 01:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F193770E2
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 01:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735350475; cv=none; b=n6BYQQbBjGBm9OQuWFxpnkIgcF0l3MzZwOaKOGpqZycpcfHJKV9MljD9TdOuAha1XqC3TSTRinGT96H4Oa4BPjoofY4TJRlPBHHHsuvQy23tTbV04FCbiGbl3AHRADuK18SNnFliRpxKNM175WTsDcFRl3ayqunKK/LmI/ehReU=
+	t=1735350601; cv=none; b=dt+YZu5D9y9Z2QngeF2TaOCwy1/DRCiIczI+R9F5LvFWEvnqYt25u2DFL0YkCt3kLOvg9+cji3T0Ywb1tUjhR8JPXkCzpVf09VBNwua25dTrlQPib0OoQq8ZhQzpgdGlhUuK8d/dulqCW+TdBhfbA3p8q3cgBhFcF0teJs3s09M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735350475; c=relaxed/simple;
-	bh=f0MG2Y5isJPA6KHGIyiNrqxbWtU0ayjyxaM9fw/CmMY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hofab3ey+ucedS9MmnYq3qq+bwwo8JW8V4FPnpzqDweLcbxYgCpGu52efaPpko/i3zb3krKWEPdbADVKECELvEc+Xl0H5kHIo0PwN74U2hiLR3DvlQoLjMrjg6LxGv131HjhA9jRPqqZ3j+jkwQkgb0LlcHD+HIpj+gHODsx0aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=UGi0RuY4; arc=none smtp.client-ip=185.70.43.166
+	s=arc-20240116; t=1735350601; c=relaxed/simple;
+	bh=ybQjoXrdNU7k7Bs57WrIzAJNYZedO0J+M9dEfoEo92c=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=a9X6D4pAHgRxnkXr68PYxu8kYCQTEkvgCbZhVVliK9rT/GPsBC2mgaBK155/3FutD/+oBcUiu5RKWFjZVbb/zqT0ctNEktJWN1UEwTu7dizevi9wBDrF93feHkiZcYLcW15xpbw0Ohx0gy7vzcaMkKyCjQpRUMg07b1MQ3TUSCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=iII1gY28; arc=none smtp.client-ip=185.70.40.130
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="UGi0RuY4"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="iII1gY28"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=qufcb3fbt5gz7a3wp63fsclsq4.protonmail; t=1735350465; x=1735609665;
-	bh=+VLknPxjyYYjs+utfsiRUnN9Jyx8mHZCThzxuUDAN/k=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=UGi0RuY4aoDO+Nara0dxdGxTExviGmHBfaXULTtv8XD/4c13qg5ggCbfSHfHEtIpZ
-	 xMdf2h4axw6t/ry/x8lvzhCitEaF1toYKu+9YTIsQ0jmvA+0iKIfJERhQglQo7bW14
-	 qubXnm+ftxX9bmUHRA+qFORiU0yNdsCKClzA3LFaVg+la3aqRlEOf4ee7H3LYcXu/O
-	 T93KmrP05CzWDQ/XD9P+meh5vDarciV7VlPOc6+r3W0tjEwOHiP4KcB4++ovumriOg
-	 PwAgRblHnwJ0cgvS4AILCT/ghY4xp6wuDC6vU5zYHBX0uDgvEwkAHiSz+10esxJtXp
-	 IANmYN5hqEuQA==
-Date: Sat, 28 Dec 2024 01:47:41 +0000
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+	s=2q6hxntcj5fwvduxpug5g63mqm.protonmail; t=1735350592; x=1735609792;
+	bh=ybQjoXrdNU7k7Bs57WrIzAJNYZedO0J+M9dEfoEo92c=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=iII1gY287vEnji6Yqu0jNApNmSAWWzZoL0llK+z1AwD9blJTjx1T7IgGiqIiRKIXv
+	 frIVGauC7PuoP0L1Tes1K23qRDeo2pNPYb50ED+6SAcl5dEKNsYC9TUNWv2jvjRFfj
+	 Jw6oLMvVAhca1ZiahFgcRgAJitIigLtGqgRLJb3OZTv9XXos75Prg4FCyc8IHMF3/D
+	 WCUrbhiVXkAGTsGzcBAysBqZtRrBiEdyj4xDMSjeS9TmHDvrx91qBYfy5bquXZfSyT
+	 fzeWeGD84GEBAsDxyJhx6Pmehl8zerbTW8LjONaYJq31mphyy6YkA30nAfmsLXqjfr
+	 HtaURIsCZciAQ==
+Date: Sat, 28 Dec 2024 01:49:48 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
 From: A bughunter <A_bughunter@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [help] can nobody get me an email
-Message-ID: <LXWuYLP6FfmXIxPdj7pH1ueaTpIgQG3iDpz2VAWqlYj1UQLT5tRNzZwSq0p64JAdtfhDeBJIpinA0rhAzJQccSKFPO6T7r7J8gYq4QeIwHk=@proton.me>
-In-Reply-To: <20241227-positive-cyber-guan-b3891e@lemur>
-References: <4wL3MobzQEJEcq565GgPg4K-l5xzGERtmFhRm9FgCnlyU5rOMCgLMaWB3qzFR5httauT4gi7peWUjIfR0j_nBtiatlTpqp5xfTXnz-kX0Jw=@proton.me> <hzyhvw4pe42yqbuqdbgl5bgnxz2kd5mxxh6jnklnqwvembueqv@b6oaetnegprl> <s44De1e7kjF5OIY_YVaSJ0DdAavD-4WeZ3XrrA7XJLJO67ShZWLM9Sb1ywSUq58wmCWOTkRfhBBOvw1qCpiiUyygy53wFTetUECruyO1SEw=@proton.me> <TpuMiCTLZ7JDXxJPgVNqcYXWFavK4asar9Gk9uJiiYp1nbqmKlP22mX6xiDOKHKr5yaN7ZH7jXoISqIY67wmbFfz8i8MsYokeomQu_6Ytis=@proton.me> <ErRnPDWInS44QmxYjAyDuZ9aaZgBwRoP0xRdx0qln2dHF_I6JK6zYErrx41iQaN6GOb0iOWeEMMEXtWzlVr4ayLUUX9L6yDkpj23O8ubNPg=@proton.me> <20241227-positive-cyber-guan-b3891e@lemur>
+Subject: UNSUBSCRIBE
+Message-ID: <thCuYDojPSKiZRI6YraCZDd2hWhoa637c0kUbWicSqbSqyAVS-KQEqkdj8PMfP1HqKSN00JdHI1bq4MKC46pBTUCscArPIF0ytBKb_KrZus=@proton.me>
 Feedback-ID: 120910843:user:proton
-X-Pm-Message-ID: b239f5d95063dc80515ca974b5d70eba9b225abb
+X-Pm-Message-ID: 9c3142b1da61cca55a589178c6f66ae8537ccfba
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------6d3b19a026653dcb67ede765e674351d62343b422ea28e56c53e74c28fd82834"; charset=utf-8
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------bc2b8f62aa8cf8f1c8fb537a64cae8b25fc8acdf04ab44cd630a4ffd950c4700"; charset=utf-8
 
 This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------6d3b19a026653dcb67ede765e674351d62343b422ea28e56c53e74c28fd82834
-Content-Type: multipart/mixed; boundary=-------------------bae7223522f07d3f790a879fbb84f0b5
+--------bc2b8f62aa8cf8f1c8fb537a64cae8b25fc8acdf04ab44cd630a4ffd950c4700
+Content-Type: multipart/mixed; boundary=-------------------7f5cef08fb075be3fa876a5622c82143
 
----------------------bae7223522f07d3f790a879fbb84f0b5
+---------------------7f5cef08fb075be3fa876a5622c82143
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=utf-8
 
->  https://brennan.io/2021/05/05/kernel-mailing-lists-thunderbird-nntp/=0A=
-=0ADoes this not work on Thunderbird Mobile for android? Look's not.
----------------------bae7223522f07d3f790a879fbb84f0b5
+UNSUBSCRIBE
+---------------------7f5cef08fb075be3fa876a5622c82143
 Content-Transfer-Encoding: base64
 Content-Type: application/pgp-keys; filename="=?UTF-8?B?cHVibGlja2V5IC0gQV9
  idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="; name="=?UTF-8?B?cHVi
@@ -65,8 +60,8 @@ Content-Disposition: attachment; filename="=?UTF-8?B?cHVibGlja2V5IC0gQV9idW
  dodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="; name="=?UTF-8?B?cHVibGl
  ja2V5IC0gQV9idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="
 
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246IEdvcGVuUEdQIDI
- uOC4wCkNvbW1lbnQ6IGh0dHBzOi8vZ29wZW5wZ3Aub3JnCgp4ak1FWnUwWDF4WUpLd1lCQkFIY
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCkNvbW1lbnQ6IGh0dHBzOi8vZ29
+ wZW5wZ3Aub3JnClZlcnNpb246IEdvcGVuUEdQIDIuOC4wCgp4ak1FWnUwWDF4WUpLd1lCQkFIY
  VJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0h4YTh5CjArZG1ONWJOTFV
  GZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBY0hKdmRHOXUKT
  G0xbFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRV0FBSUJ
@@ -78,8 +73,8 @@ LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246IEdvcGVuUEdQIDI
  VJabE9WQ3U4cGtBQUppOEFRQytmbk9tNFZqOVFtSDRIMEdWdDdSdU9RSyt3T1ExUFJ2cHltU2o
  KZXlCSk93RDlHWXV2eE9BVks4aUF1cEorcHB3TXIzNlZ1a0llMXBYdUhvOVJoanZlQXcwPQo9R
  lFGdwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0t
----------------------bae7223522f07d3f790a879fbb84f0b5--
---------6d3b19a026653dcb67ede765e674351d62343b422ea28e56c53e74c28fd82834
+---------------------7f5cef08fb075be3fa876a5622c82143--
+--------bc2b8f62aa8cf8f1c8fb537a64cae8b25fc8acdf04ab44cd630a4ffd950c4700
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 Content-Disposition: attachment; filename="signature.asc"
@@ -87,13 +82,13 @@ Content-Disposition: attachment; filename="signature.asc"
 -----BEGIN PGP SIGNATURE-----
 Version: ProtonMail
 
-wqoEARYIAF0FgmdvWLwJkKkWZTlQrvKZNRQAAAAAABwAEHNhbHRAbm90YXRp
-b25zLm9wZW5wZ3Bqcy5vcmfzB2CH5c/81b5oYotrMubPFiEEZlQIBcAycZ2l
-O9z2qRZlOVCu8pkAAB/mAP9zZuk3f8raMHAXH1GLpByathwmeQLS0GV/5pUp
-BnMhMAD43x/3JJntXen9FgoyD3DVBd+DBGX0vvXh28Am/SbmCA==
-=GxA1
+wqsEARYIAF0FgmdvWTsJkKkWZTlQrvKZNRQAAAAAABwAEHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmfWryou7ZoU6diD0Pys914LFiEEZlQIBcAycZ2l
+O9z2qRZlOVCu8pkAAH4gAP9JCY4f2y6jKGes5PhoFbm3AVpc7bcoy1rVFUV8
+W5wXowEAxqwHwP2h/xwt9q42Oqns5dR3rn5z+I32DvKvneVIEwo=
+=yJMQ
 -----END PGP SIGNATURE-----
 
 
---------6d3b19a026653dcb67ede765e674351d62343b422ea28e56c53e74c28fd82834--
+--------bc2b8f62aa8cf8f1c8fb537a64cae8b25fc8acdf04ab44cd630a4ffd950c4700--
 
