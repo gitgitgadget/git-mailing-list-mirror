@@ -1,372 +1,129 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDFB435952
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 10:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1C4156C6F
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 11:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735380467; cv=none; b=kgY9nIgYanpRsUNiCXEmSOvAE5fywinRnEAgyANaUqRyyWa+n7LUpLRNHAE3YaBI3IxXo5ToKRSjGvbWETh4ox5ZOOiXcVc/vTSGcjFODRkjwVp9CwU/E9mUfyeCct8V06G7NPLSoo68oIK0mlcZMSUespcPK61gKRmFfV7RaMM=
+	t=1735386158; cv=none; b=TY1DxZypmNSBPvprBAQZ6cJ29J8sm/SExlP2lchAX6ttOh4e1TWEv4QyZN9MgJLMLcYvMsjmR7fHmJ34QO3FLvBo0975imMjbgNe4pueU7CfWN6UhkrjTr0AHWNzwRKrnbkYQ478G7vpfjN4Q5mt5aDPyZ+Ed95jMN74cfWW0Jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735380467; c=relaxed/simple;
-	bh=u9Z8y0f6SDWnX4CfExn7RHytw1QwrekbOZi4Nnzj1VA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=aG8Q9/H2KKP+ON+W2VUf00zCgqEpjqIHKQIl//8jWlCWbB1bkGQUO3Krw82m8sODtoK9W5+398wZiA1DUm647ViEsLjn605nOBhp1dn5w+hJUAQpTlmH27aaHad8dHhl5W+FDrxtQaC7iR0aDFOo5CANx+tgz0SzJMg/gkWHlwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MWnmky93; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735386158; c=relaxed/simple;
+	bh=W4d9AZaAEgpNMcmPwfEqdGS/M5D7KzPRE5HQ4k2muL8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pmjia4W+tO20FXLeRn06DJIC62SwuLYpe2qtoSDWxuoHhuG582Gh0xxDoxNoTBrCsDDUNR4ZgsBQ6icLnvUivQ0eoDShvmTu/zWKVriikWkks3MJUbTscdKRdYGhiSVARYSGOt5K8ck+rmPXNA/1K7oL9HrTpX+RI0kCGNmBGmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=egxzisse; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MWnmky93"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-385df53e559so6128186f8f.3
-        for <git@vger.kernel.org>; Sat, 28 Dec 2024 02:07:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="egxzisse"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5d3d479b1e6so10784817a12.2
+        for <git@vger.kernel.org>; Sat, 28 Dec 2024 03:42:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735380464; x=1735985264; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1735386152; x=1735990952; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dFbrw3U+WHrB1oi4DyHs4s2N44TeyAswWHYdRF83lUs=;
-        b=MWnmky932Hvq/wKhLVYbt6qvRVaf6k0oam3XvN2FGa09W1BtpIiZSGZr3OdTJbf5TU
-         K5bvF4CKg4kXqIKn8QMOkC9w9wKg7L6SoUS91yLFY2z6QVstrRtx7VgrEqaj0HJcYZvk
-         oMDixqSPWsO07UPISIBhYyFcgZDaOhQ1yOl2f4/nUaVfOT0DnaQajjcR8n2mkcnMiGfG
-         w3477YS3QnRWWUBVwuhZ5MG5qiVv/+rCbLxaTv7t6PIF272XXXgrOocAeYWhmRxaImzj
-         xFVt2/Lw7HrKaZINV3/oG20HpU2CGVD9gmPget/q/mLtpYe3skQ9bJyTWr2lw1EHHWnK
-         pLIg==
+        bh=2aBoR9l7PvTqpOBwwZc54oz+N3CVnY0ABmNTPLNAuJo=;
+        b=egxzisseSxGvft/4wwU0Vem003qHz4IFFsMh7BWIt+GbeRE02TR1TmocxZRiVllKim
+         bJ7UvKYfEL3Sk+qcuAMAy5gBRoMeSjJUw2/vXfwZUiSHmiIXvC/YbBL4rSLYXD1MsxXJ
+         26zWf0Cg3BtHDqFWkSkroKa2F24GubyuWprHXzm2yskBErTkBPg5SMG1w+r/VJ425XQQ
+         kIMXw1351aUjzgQzYvdlxW4AHVaB9MbxWFL5gNV8f0b+KhoN8g++IUoUqbzmKp05c7+K
+         yZYU69W3k54WuFIK7ljTuSYCactfnQSIxBI2kcEfQtFm9VG64tIdDEktpKK4k723WYcq
+         lZ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735380464; x=1735985264;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1735386152; x=1735990952;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dFbrw3U+WHrB1oi4DyHs4s2N44TeyAswWHYdRF83lUs=;
-        b=QbHG7bkvrg27TIuUi8Fx0G6Pj8nRONI9MFGqCu5ZRzY6An7syXzWBwd7FvVpY7/9v4
-         4+ACb1r1FOGrr8As+J4LMkEs8RnEL96dohCorPUQlfRfkkpSpPHUtAsQklAtrZ1A97K4
-         oAhFrBG2Vo4zp8lMPcY4n2+NzLmib8Nqi8LfC7pUB5N6UcofMUlY1MQrqPmanAL4Wsie
-         GYerdwGVNTAgZZwFkAx/LAZzEl031E+42hnPwwiwKNbiKsuKW/8DqxNRvI6KCt0RAZpu
-         NydU44DNFj7bzX5cx4NJBfxn3qzZKqY38gkAvAWFAvfeBmF+Gt7HJt63J5rmfjER+Ky+
-         k7Nw==
-X-Gm-Message-State: AOJu0YzsHykhmtMfIJIsnfaWwH8nNZWsEiFRrxUl2LnfMSeXigq+4u6z
-	/uhQDcShpX1wvJTFhJeu+GRyH8eY+UwC4Ne4xj3UNnuZryqMt18yAbX/XA==
-X-Gm-Gg: ASbGncuTAhLdy6NYbkOnuxdBnN4ayQ5fmA77fRZglAzAZI5yCt3Sb04wmHtZerVETzz
-	GP1eAU0jyMG9p17QzwCuuQXH5XyuZ4vOJiFRR1OabLum/dCEKHVcHQPtkdEVNK1//98o8EkMksH
-	yzIZHJN1OfkLczyjef0uq2ly1Vbsmxisyik++vKZoQX+iAWe1NMaUvZ30X++nKAjgDP3Em5KHgg
-	+thkGCimmMq7gR6zYcipNJJvsBRQ1+ux/NhVaqU3pre2dGn/qW1FJg2Yw==
-X-Google-Smtp-Source: AGHT+IFIzB7m1zh7udzp6wQh+C4Z6IOPJDNh2iLz3h2ZfMnqFB/dJgPqYGs47YOWnvnH0s1yBUPAMA==
-X-Received: by 2002:adf:a443:0:b0:38a:3732:4462 with SMTP id ffacd0b85a97d-38a37324578mr10683360f8f.48.1735380463399;
-        Sat, 28 Dec 2024 02:07:43 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c847263sm24406136f8f.50.2024.12.28.02.07.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Dec 2024 02:07:42 -0800 (PST)
-Message-Id: <pull.1838.v2.git.1735380461980.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1838.git.1734946566885.gitgitgadget@gmail.com>
-References: <pull.1838.git.1734946566885.gitgitgadget@gmail.com>
-From: "Shubham Kanodia via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 28 Dec 2024 10:07:41 +0000
-Subject: [PATCH v2] maintenance: add prune-remote-refs task
+        bh=2aBoR9l7PvTqpOBwwZc54oz+N3CVnY0ABmNTPLNAuJo=;
+        b=GscRf45EUsalRTbH2GMz9wmZRAquHC/wehR1+EJDOPBGH+0j1urjneZ0npF8MX/sLO
+         OZJfl35WFnZ3jY0eZSiSaWSnvTWyaRrGyPDnpPVVSGuoBw/JfAOkHf2pLq3HEmY1Rtpu
+         eDDPMrv5K41ApRNyij1nOv4pUQ4c4s2jy4JVTT3b0sgj+AZjzAucfRqWEVBy2sBGQP0f
+         aZI4CcQG4+upTotx9VbTfBfuU5qOx+QAOJohdnH0jcPkcha18Bn+HBTNJh2T6lXSQ3ES
+         ygqqmSYCf0RdrshvsneaKk3b8sEyqhF157hM4HCl5gW/vmbxpJdwNRM6V7y3L1AtME2X
+         LBjw==
+X-Gm-Message-State: AOJu0YxA4kUHpVER+DL5pcDQ8uKME644OTQmvuBT3czAGL+UzqbxNKv/
+	Muv5hSicSlP8sKPANCWBDVrenLulsmedXtZa9/HK/JhI+LZ54fd/OlpwwpEt41GUgV3sJW/hged
+	g
+X-Gm-Gg: ASbGncuu8I8gg4wUwUJESdjfMe3WcL0yXnZZupLV0g3J4gGjoEUBs+ziszVy6wXMGF3
+	xgukvO3uNIrlIn+JTbNKF4agdJpNOey78bF07L+t/9xAnhMCS3bKILjQj+9Sdf3f1jz5usOndUd
+	uCaUCZCN3qrS1iOaT9hWJ9KbaO01YGCguf6CZwDVo/2lsdRLZY+EriEIwGyJIrGd1MIlk1cJir2
+	tvnHHK4AInlr/aWfZQKH8XVVs7ceJ9SKnZRzcT5twCV1G33ujdevAuLM6c2RlX44rFKYrLB5zsK
+	TUC5
+X-Google-Smtp-Source: AGHT+IEZTr72PiSb6T2XgoKHdHeWv2iwvaxq1zjTRhucDB1/+aDQzosNexB2RyMZGzNiaUj0IKrCuA==
+X-Received: by 2002:a05:6402:5204:b0:5d0:ced8:d22d with SMTP id 4fb4d7f45d1cf-5d81de05c3fmr75729104a12.22.1735386152385;
+        Sat, 28 Dec 2024 03:42:32 -0800 (PST)
+Received: from localhost.localdomain ([165.225.240.157])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0efe4988sm1251511166b.124.2024.12.28.03.42.31
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 28 Dec 2024 03:42:31 -0800 (PST)
+From: Alexander Shopov <ash@kambanaria.org>
+To: git@vger.kernel.org,
+	gitster@pobox.com,
+	worldhello.net@gmail.com
+Cc: Alexander Shopov <ash@kambanaria.org>
+Subject: [PATCH 4 0/1] Localize mark-up of placeholder text in the short help
+Date: Sat, 28 Dec 2024 12:42:17 +0100
+Message-ID: <20241228114221.10351-3-ash@kambanaria.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <xmqqjzhm7jgl.fsf@gitster.g>
+References: <xmqqjzhm7jgl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    Shubham Kanodia <shubham.kanodia10@gmail.com>,
-    Shubham Kanodia <shubham.kanodia10@gmail.com>
 
-From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Hi Junio,
 
-Remote-tracking refs can accumulate in local repositories even as branches
-are deleted on remotes, impacting git performance negatively. Existing
-alternatives to keep refs pruned have a few issues — 
+I am resubmitting this patch to make the substitution placeholder text
+localizable.  Fuller explanation and example are given in the commit
+message.
 
-1. Running `git fetch` with either `--prune` or `fetch.prune=true` set will
-prune stale refs, but requires a manual operation and also pulls in new
-refs from remote which can be an undesirable side-effect.
+I have reworked the translator comments to be fuller, clearer and
+prompt the proper default in case of doubt.
 
-2.`git remote prune` cleans up refs without adding to the existing list
-but requires periodic user intervention.
+Last time you asked me why I am localizing the `<>' characters for
+substitution but not the `[]' for optional values.
 
-This adds a new maintenance task 'prune-remote-refs' that runs
-'git remote prune' for each configured remote daily. This provides an
-automated way to clean up stale remote-tracking refs — especially when
-users may not do a full fetch.
+There are several reasons:
 
-This task is disabled by default.
+1. No one has asked for such a feature so currently there seems to be
+no need for that.  If someone asks - it is easy to provide the feature
+then.
 
-Signed-off-by: Shubham Kanodia <shubham.kanodia10@gmail.com>
----
-    maintenance: add prune-remote-refs task
-    
-    As discussed previously on:
-    https://lore.kernel.org/git/xmqqwmfr112w.fsf@gitster.g/T/#t
-    
-    Remote-tracking refs can accumulate in local repositories even as
-    branches are deleted on remotes, impacting git performance negatively.
-    Existing alternatives to keep refs pruned have a few issues — 
-    
-     1. The fetch.prune config automatically cleans up remote ref on fetch,
-        but also pulls in new ref from remote which is an undesirable
-        side-effect.
-    
-    2.git remote prune cleans up refs without adding to the existing list
-    but requires periodic user intervention.
-    
-    This adds a new maintenance task 'prune-remote-refs' that runs 'git
-    remote prune' for each configured remote daily. This provides an
-    automated way to clean up stale remote-tracking refs — especially when
-    users may not do a full fetch.
-    
-    This task is disabled by default.
+2. <> are much more dangerous in the shell than [] when copy-pasted
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1838%2Fpastelsky%2Fsk%2Fadd-remote-prune-maintenance-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1838/pastelsky/sk/add-remote-prune-maintenance-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1838
+3. So far Bulgarian translation is the only user of the localizability
+of <> and the action there is to omit the characters entirely - they
+are not needed as the alphabets are different.  Omitting them makes
+messages shorter.  If you omit both <> and [] in messages for
+terseness - messages will be ambiguous.
 
-Range-diff vs v1:
+Please indicate whether this is fine. I will iterate on the patch
+until it is deemed acceptable.
 
- 1:  72e27d3ebe6 ! 1:  4d6c143c970 maintenance: add prune-remote-refs task
-     @@ Commit message
-          are deleted on remotes, impacting git performance negatively. Existing
-          alternatives to keep refs pruned have a few issues — 
-      
-     -    1. The `fetch.prune` config automatically cleans up remote ref on fetch,
-     -    but also pulls in new ref from remote which is an undesirable side-effect.
-     +    1. Running `git fetch` with either `--prune` or `fetch.prune=true` set will
-     +    prune stale refs, but requires a manual operation and also pulls in new
-     +    refs from remote which can be an undesirable side-effect.
-      
-          2.`git remote prune` cleans up refs without adding to the existing list
-          but requires periodic user intervention.
-     @@ Documentation/git-maintenance.txt: pack-refs::
-      ++
-      +--
-      +* When using selective fetching (e.g., `git fetch origin +foo:refs/remotes/origin/foo`)
-     -+  where `fetch.prune` would not affect refs outside the fetched hierarchy
-     ++  where `fetch.prune` would only affect refs that are explicitly fetched.
-      +* When third-party tools might perform unexpected full fetches, and you want
-     -+  periodic cleanup independently of fetch operations
-     ++  periodic cleanup independently of fetch operations.
-      +--
-      +
-       OPTIONS
-     @@ builtin/gc.c: static int maintenance_opt_schedule(const struct option *opt, cons
-       	return 0;
-       }
-       
-     -+static int collect_remote(struct remote *remote, void *cb_data)
-     ++static int prune_remote(struct remote *remote, void *cb_data UNUSED)
-      +{
-     -+	struct string_list *list = cb_data;
-     ++	struct child_process child = CHILD_PROCESS_INIT;
-      +
-      +	if (!remote->url.nr)
-      +		return 0;
-      +
-     -+	string_list_append(list, remote->name);
-     -+	return 0;
-     ++	child.git_cmd = 1;
-     ++	strvec_pushl(&child.args, "remote", "prune", remote->name, NULL);
-     ++
-     ++	return !!run_command(&child);
-      +}
-      +
-     -+static int maintenance_task_prune_remote(struct maintenance_run_opts *opts UNUSED,
-     ++static int maintenance_task_prune_remote(struct maintenance_run_opts *opts,
-      +					 struct gc_config *cfg UNUSED)
-      +{
-     -+	struct string_list_item *item;
-     -+	struct string_list remotes_list = STRING_LIST_INIT_NODUP;
-     -+	struct child_process child = CHILD_PROCESS_INIT;
-     -+	int result = 0;
-     -+
-     -+	for_each_remote(collect_remote, &remotes_list);
-     -+
-     -+	for_each_string_list_item (item, &remotes_list) {
-     -+		const char *remote_name = item->string;
-     -+		child.git_cmd = 1;
-     -+		strvec_pushl(&child.args, "remote", "prune", remote_name, NULL);
-     -+
-     -+		if (run_command(&child))
-     -+			result = error(_("failed to prune '%s'"), remote_name);
-     ++	if (for_each_remote(prune_remote, opts)) {
-     ++		error(_("failed to prune remotes"));
-     ++		return 1;
-      +	}
-      +
-     -+	string_list_clear(&remotes_list, 0);
-     -+	return result;
-     ++	return 0;
-      +}
-      +
-       /* Remember to update object flag allocation in object.h */
+Here are links to previous times I submitted the patch:
+
+3. https://lore.kernel.org/git/20240707153526.97984-1-ash@kambanaria.org/
+2. https://lore.kernel.org/git/20240525122514.2608-1-ash@kambanaria.org/
+1. https://lore.kernel.org/git/20240421180425.78940-1-ash@kambanaria.org/
+0. (check for other teams) https://lore.kernel.org/git/CAP6f5Mmi=f4DPcFwfvEiJMdKMa0BUyZ019mc8uFXyOufgD4NjA@mail.gmail.com/ 
 
 
- Documentation/git-maintenance.txt | 20 ++++++++++++++
- builtin/gc.c                      | 32 ++++++++++++++++++++++
- t/t7900-maintenance.sh            | 44 +++++++++++++++++++++++++++++++
- 3 files changed, 96 insertions(+)
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index 6e6651309d3..8b3e496c8ef 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -158,6 +158,26 @@ pack-refs::
- 	need to iterate across many references. See linkgit:git-pack-refs[1]
- 	for more information.
- 
-+prune-remote-refs::
-+	The `prune-remote-refs` task runs `git remote prune` on each remote
-+	repository registered in the local repository. This task helps clean
-+	up deleted remote branches, improving the performance of operations
-+	that iterate through the refs. See linkgit:git-remote[1] for more
-+	information. This task is disabled by default.
-++
-+NOTE: This task is opt-in to prevent unexpected removal of remote refs
-+for users of git-maintenance. For most users, configuring `fetch.prune=true`
-+is a acceptable solution, as it will automatically clean up stale remote-tracking
-+branches during normal fetch operations. However, this task can be useful in
-+specific scenarios:
-++
-+--
-+* When using selective fetching (e.g., `git fetch origin +foo:refs/remotes/origin/foo`)
-+  where `fetch.prune` would only affect refs that are explicitly fetched.
-+* When third-party tools might perform unexpected full fetches, and you want
-+  periodic cleanup independently of fetch operations.
-+--
-+
- OPTIONS
- -------
- --auto::
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 4ae5196aedf..329c764f300 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -20,6 +20,7 @@
- #include "lockfile.h"
- #include "parse-options.h"
- #include "run-command.h"
-+#include "remote.h"
- #include "sigchain.h"
- #include "strvec.h"
- #include "commit.h"
-@@ -913,6 +914,30 @@ static int maintenance_opt_schedule(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
-+static int prune_remote(struct remote *remote, void *cb_data UNUSED)
-+{
-+	struct child_process child = CHILD_PROCESS_INIT;
-+
-+	if (!remote->url.nr)
-+		return 0;
-+
-+	child.git_cmd = 1;
-+	strvec_pushl(&child.args, "remote", "prune", remote->name, NULL);
-+
-+	return !!run_command(&child);
-+}
-+
-+static int maintenance_task_prune_remote(struct maintenance_run_opts *opts,
-+					 struct gc_config *cfg UNUSED)
-+{
-+	if (for_each_remote(prune_remote, opts)) {
-+		error(_("failed to prune remotes"));
-+		return 1;
-+	}
-+
-+	return 0;
-+}
-+
- /* Remember to update object flag allocation in object.h */
- #define SEEN		(1u<<0)
- 
-@@ -1375,6 +1400,7 @@ enum maintenance_task_label {
- 	TASK_GC,
- 	TASK_COMMIT_GRAPH,
- 	TASK_PACK_REFS,
-+	TASK_PRUNE_REMOTE_REFS,
- 
- 	/* Leave as final value */
- 	TASK__COUNT
-@@ -1411,6 +1437,10 @@ static struct maintenance_task tasks[] = {
- 		maintenance_task_pack_refs,
- 		pack_refs_condition,
- 	},
-+	[TASK_PRUNE_REMOTE_REFS] = {
-+		"prune-remote-refs",
-+		maintenance_task_prune_remote,
-+	},
- };
- 
- static int compare_tasks_by_selection(const void *a_, const void *b_)
-@@ -1505,6 +1535,8 @@ static void initialize_maintenance_strategy(void)
- 		tasks[TASK_LOOSE_OBJECTS].schedule = SCHEDULE_DAILY;
- 		tasks[TASK_PACK_REFS].enabled = 1;
- 		tasks[TASK_PACK_REFS].schedule = SCHEDULE_WEEKLY;
-+		tasks[TASK_PRUNE_REMOTE_REFS].enabled = 0;
-+		tasks[TASK_PRUNE_REMOTE_REFS].schedule = SCHEDULE_DAILY;
- 	}
- }
- 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 0ce4ba1cbef..60a0c3f8353 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -446,6 +446,50 @@ test_expect_success 'pack-refs task' '
- 	test_subcommand git pack-refs --all --prune <pack-refs.txt
- '
- 
-+test_expect_success 'prune-remote-refs task not enabled by default' '
-+	git clone . prune-test &&
-+	(
-+		cd prune-test &&
-+		GIT_TRACE2_EVENT="$(pwd)/prune.txt" git maintenance run 2>err &&
-+		test_subcommand ! git remote prune origin <prune.txt
-+	)
-+'
-+
-+test_expect_success 'prune-remote-refs task cleans stale remote refs' '
-+	test_commit initial &&
-+
-+	# Create two separate remote repos
-+	git clone . remote1 &&
-+	git clone . remote2 &&
-+
-+	git clone . prune-test-clean &&
-+	(
-+		cd prune-test-clean &&
-+		git config maintenance.prune-remote-refs.enabled true &&
-+
-+		# Add both remotes
-+		git remote add remote1 "../remote1" &&
-+		git remote add remote2 "../remote2" &&
-+
-+		# Create and push branches to both remotes
-+		git branch -f side2 HEAD &&
-+		git push remote1 side2 &&
-+		git push remote2 side2 &&
-+
-+		# Rename branches in each remote to simulate a stale branch
-+		git -C ../remote1 branch -m side2 side3 &&
-+		git -C ../remote2 branch -m side2 side4 &&
-+
-+		GIT_TRACE2_EVENT="$(pwd)/prune.txt" git maintenance run --task=prune-remote-refs &&
-+
-+		# Verify pruning happened for both remotes
-+		test_subcommand git remote prune remote1 <prune.txt &&
-+		test_subcommand git remote prune remote2 <prune.txt &&
-+		test_must_fail git rev-parse refs/remotes/remote1/side2 &&
-+		test_must_fail git rev-parse refs/remotes/remote2/side2
-+	)
-+'
-+
- test_expect_success '--auto and --schedule incompatible' '
- 	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
- 	test_grep "at most one" err
+Kind regards:
+al_shopov
 
-base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
+
+Alexander Shopov (1):
+  parse-options: localize mark-up of placeholder text in the short help
+
+ parse-options.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
 -- 
-gitgitgadget
+2.47.1
+
