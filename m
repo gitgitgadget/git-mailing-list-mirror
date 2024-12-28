@@ -1,130 +1,168 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from libero.it (smtp-18-vd.italiaonline.it [213.209.8.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0061BB67F
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 15:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C24F2AE84
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 15:50:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.209.8.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735400341; cv=none; b=kxUs/YW7aQlPANFacWrexjGEgG2Gz/zHq0T+mRFYS1qMBa/pQHq/HElAtaJh2czwtbcmRqJhODID51GQJLT7hBi3CA4VKhFJ4+iT1+ekhlq2UhzTSp5wtjcCEn1wUKwCXB9dXYe6wdqQ9Li0zhGG7kN2f/yQZQPnYLqT3MLILrA=
+	t=1735401016; cv=none; b=PDC8phpfuriy1PxmJkc2kVuYSh5p0nauHR+7t3OEy46EGMuWTAmscTtEXLAhSP/+p+oQBYvt5Qk+C5j7p2Gd4Cu9An8ISk7AvhRMuBJ0NrleSisQntK6QOn4v2awFgXCGLkgOVvhELPDQ6u5OuNl3lcpgDBcDzcUd4wJPmSCukg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735400341; c=relaxed/simple;
-	bh=/m6HaNmw9C2+Wmj5ssG8Ds2VIHTt3JOH6zT8B1EVX9w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cdqneg1k9vjMhQPUFTRX1lSEh588mIKaaNu/ydvf38EGVgssXin9u+oK7WdSPLefMa6nmepV955t39H27wKpFuoiTpBPtiZ9RRP4Mv7kw9lFWz+FtBKhTkpx0OXHUWLf5gHitcJQI1TW9skePzLN+QQbK/21VzEG406ZUJYZnfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XrqJvh/B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LNmw6CIG; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735401016; c=relaxed/simple;
+	bh=jr6WDkbMhpB+CA6Fwbj4bxck2Pts/paMtOSjPqWOnlI=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=j4Hp/0MH4lDQb7ikjffgOBPKh3wNcL1/76RgI7Kt6HlA86w97g/Ab1ea7RsGF12vmIPss82WqPEYaH8BhBWTvtPLcaKy8COj8el0BLdQAGG4WV12C+zi/Bxu2lCMcxYuI2xqLwaKR2H63nT+nvSIffPnkt9y1v1CTpq0nG90EdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=libero.it; spf=pass smtp.mailfrom=libero.it; dkim=pass (2048-bit key) header.d=libero.it header.i=@libero.it header.b=MGIMeyTK; arc=none smtp.client-ip=213.209.8.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=libero.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=libero.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XrqJvh/B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LNmw6CIG"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED30D1140108;
-	Sat, 28 Dec 2024 10:38:57 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sat, 28 Dec 2024 10:38:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735400337; x=1735486737; bh=CXuttmswko
-	eQUAoKnj5XniI0pg+LU0xThfjXMPwWd/0=; b=XrqJvh/BpcWTRKUTavq+KrOAFr
-	A/KHmTZTljhV/VYFc55yy58B0UjibIWRUxAgnhb0DXg7s3PITBAGEn8zWuSV2laS
-	N7KDPC+Rxupnx+KQSjXKElMfKdUgCXJQ+RsRvw2z3udrjrn2t4SCp2s+W4C/7jtw
-	CtVXqyZtyEuUKTFv7NLGsQC+piBS7Z609Xuh8a36t55fs32S6Wqk9MGprafpTJUf
-	ZZ6tATZtarTXeTr8MmyCM0h6L5nCc1wbD4C/ov9w2sxnZI8AYzspPXHO5if4frpL
-	f2p+qAyBRuffpGpEVJXzfZ4l36i/Pm97lY7/dAirnJjIVgRBSXAhBcvLgNDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735400337; x=1735486737; bh=CXuttmswkoeQUAoKnj5XniI0pg+LU0xThfj
-	XMPwWd/0=; b=LNmw6CIGH1Qwb0BIM9BaJmIzXoD57RT30kik/YdEZHxqQy4z3s3
-	UXHSAYT9mMyPNBg76x9FAzVie7E/o6JoanNOmF/utomO757vzdibgEuElOaK2Y4l
-	YAwYcy5xuFsVNfPmItGsP/KqExGDMA3GEbebwGw/v98phHPSiCMU7t9qgHOUutJO
-	/Ha1+8niXYVylitrY+HlC2O+Daa/aSXr8/+KlmkhmbNmAscgVoITHehCJOqLajfT
-	reVFA0AhO5uqp65nwz9uWWjBRpk9VN6CGzdOUApX/xVmEQwsNUPYR1N1ZA+OMxZg
-	08iFzix7uRsXHcFCkaXEiQDM+zQ92SP7XZQ==
-X-ME-Sender: <xms:kRtwZ1x3jVvWVckHCni1RB_0qH8gAzhqrBprB6Kf2u96Vhw_dOVrrA>
-    <xme:kRtwZ1SWPi3HNw3ekiN5Gv60c7nZRXQXzZxF5gdbnzP_AXz2X8FTbTa3MJjCNty93
-    dlLj-vbstyHQAZqRw>
-X-ME-Received: <xmr:kRtwZ_XRheO88qoVcJGhBmCScGPq_SKwLYCabRVKKoXEW4bbiGvYJcW5oNfCAxLYwifjU_aO2gwlurPOCeOw-S2uk1pcYWLTnA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvvddgkeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:kRtwZ3jvW2Nlp9IwI--PE9E1t7iFo_4y8In5XjHmqLdpAQXFZsXOGg>
-    <xmx:kRtwZ3CKLvaaRDYULLXbiAXiTr9DKLv8PNV6MKgvXiLCqopCGy65WA>
-    <xmx:kRtwZwIuWOK7VokzM11p7mYqhW6v4Lg90XVtgVLQrUVj9CXhXcpyzQ>
-    <xmx:kRtwZ2D0VjF0cktldDG5SpW47sMImTguCNOyGWj6mDu7loPMDz1fsQ>
-    <xmx:kRtwZy-vzqS5e_005HqVwqWNelcO2MiYCHsxazSfK9k9Lhn2rOtDtTJI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 28 Dec 2024 10:38:57 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/9] commit-reach: -Wsign-compare follow-ups
-In-Reply-To: <Z2-2dbYVuuLxpNmK@pks.im> (Patrick Steinhardt's message of "Sat,
-	28 Dec 2024 09:27:41 +0100")
-References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
-	<xmqqbjwwucvy.fsf@gitster.g> <xmqq7c7kubx8.fsf@gitster.g>
-	<xmqqbjww65i1.fsf@gitster.g> <Z2-2dbYVuuLxpNmK@pks.im>
-Date: Sat, 28 Dec 2024 07:38:56 -0800
-Message-ID: <xmqq1pxr6cmn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=libero.it header.i=@libero.it header.b="MGIMeyTK"
+Received: from [192.168.0.129] ([188.27.146.10])
+	by smtp-18.iol.local with ESMTPA
+	id RZ2Gti1WcgetmRZ2LtPgYz; Sat, 28 Dec 2024 16:47:35 +0100
+x-libjamoibt: 1601
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=libero.it; s=s2021;
+	t=1735400855; bh=xoCVZHPtifBtPX6Ut7Dg2l6WEB+2O77lenlIL/suU4k=;
+	h=From;
+	b=MGIMeyTKvDqG/fOteK6i2XBiO3GhA1YPkdTi/GkepKtkWmTfaiDU7a/7HdFepu5do
+	 2T0A6efH4r0OY8r8mMC83FhzuPYfdfTaIyYH23nOImoDMASHx4BKiZv5+C6Jq6/36z
+	 Ku9aomdHNVJ7Y++nNCjZQXOHAfB6vqB0D77uS5jJeubQ90vL5KuDme+2aE6bICatCh
+	 D2JNzelfU3f2Q7ckeGR7dKFjM9gMA7rR8e/cocbs30fBgBEVC6a1Ceqx0aWAaZczkB
+	 tXuF//OKVRT3ECSHYsM6voGu4h3BK5eM/IZKj/WNCltnteUCW94Ta5ZqUSixQiapQV
+	 vh7yFKcclXHSg==
+X-CNFS-Analysis: v=2.4 cv=QPmjRRLL c=1 sm=1 tr=0 ts=67701d97 cx=a_exe
+ a=nouTapptOgoxzTc4WCMdog==:117 a=nouTapptOgoxzTc4WCMdog==:17
+ a=IkcTkHD0fZMA:10 a=f7IdgyKtn90A:10 a=logazWH7uhjONDQgVrkA:9 a=QEXdDO2ut3YA:10
+To: git@vger.kernel.org
+From: crstml@libero.it
+Subject: connecting the local main branch to the remote origin/main without
+ pushing
+Message-ID: <a69c4e2e-cbb0-c242-a34a-8997a84fefb7@libero.it>
+Date: Sat, 28 Dec 2024 16:47:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 SeaMonkey/2.53.18.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfP3L8suG5xWZkUolkmJPa13qEmVw/v/5m4Yp+V0emXuVhfM4BG8R9w6WYtlNVDuYX1n5kLJpYVwS4FBalvb+UUwt94pOpwslKx/aQBmVGkwI7SSZT4nJ
+ FJ0te7xoESSSabk06q/baONJUogQNo6Xi4rSYImj4pTgYJgb8cwKDN4z8a2nI+R1Cjwo3lgUWl2rAg==
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hello all
 
-> Thanks for your fix. I'll have a look at whether I can include a 32 bit
-> job into GitLab CI for improved test coverage here so that it does not
-> fall on you to fix up things like this going forward.
+I would like to put a set of files under version control and I
+have some issues with the workflow. Let me explain:
 
-I noticed it since it failed GitHub actions thing which already has 32-bit
-job.
+First I create the bare repository with the command:
 
->   - t5616-partial-clone regularly fails on macOS. [1] This seems like a
->     race condition or to me:
+     git init --bare -b main ~/rps/project-x.git
 
-I've seen it before as well at GitHub actions side.  Running
-"t5616-*.sh --stress" locally on Debian (x86-64) did not help
-isolate it very well.
-
->   - The leak-checking jobs fail quite regularly in t0003 with something
->     that feels like either a race caused by a leak or an issue with the
->     sanitizer itself [2]:
-
-This one I am not aware of.
-
->   - Windows has been quite flaky since adding it to GitLab CI. No idea
->     whether it's the same for GitHub Actions.
-
-Similar on GitHub CI front.  Not that I am playing favors between
-GitHub and GitLab, but for historical reasons I've pushed to the
-former myself but not to the latter, so I do not notice breakages on
-the latter.
+Then I can proceed in one of the following ways:
 
 
-> The thing is, the less reliable it becomes the more likely it is that
-> people are simply going to ignore its results.
+---- Method 1 ----
 
-Indeed.  Also, for macOS and Windows, I have no access to an
-environment to let me debug, so it is really up to the platform
-stakeholders to see what they can do to help.
+    By first cloning the remote repository locally and next
+    putting the files under version control. All running the
+    following commands:
 
-Thanks.
+    1    cd ~/projects;
+    2    git clone ~/rps/project-x.git project-x
+    3    cp ~/my-existing-project-x-files/* project-x
+    4    cd project-x
+    5    git add .
+    6    git commit -m "fc"
+    7    git push origin
+    8    rm -rf ~/my-existing-project-x-files   # clean your home folder
 
+---- Method 2 ----
+
+    By putting the existing files under version control and next
+    adding the remote. Running the following commands:
+
+    1    cd ~/projects/project-x
+    2    git init -b main
+    3    git add .
+    4    git commit -m "fc"
+    5    git remote add origin ~/rps/project-x.git
+    6    git push --set-upstream origin main
+
+
+Let me discuss both these methods:
+
+Method 1:
+
+   Everything works but the cp statement may be problematic. If
+   you have hidden files (starting with .) or if you want to
+   preserve the file permissions and owenership, the invokation
+   of the cp command is trickier.
+
+   After you copy the files all the next statements work well.
+   The main branch in the cloned repository is connected to the
+   upstream origin/main branch and "git push" will work.
+
+   There is one more small problem with this workflow: the
+   statement 8 is ugly.
+
+
+
+Method 2
+
+   Everything is very clean (apparently). We don't have to think
+   to file permissions, hidden files, tricky cp invocations and
+   there is no need to clean your home folder at the end. We are
+   interested to put files under version control, so we focus only
+   the version control system.
+
+
+   The problem  with this workflow (from my point of view) is the
+   statement 6. This statement makes two things which is contrary
+   to the UNIX philosophy: programs that do one thing and do it well.
+
+       1) The command connects the local main branch to the
+          remote origin/main branch.
+
+       2) Pushes the files to the remote.
+
+   From my point of view instead of executing the statement 6 I would
+   like to execute the following two statements that I will number
+   here as 6.1 and 6.2:
+
+    6.1  # To connect the main branch to origin/main
+         #
+         git branch -u origin/main main
+
+    6.2  # To push to the remote.
+         #
+         git push origin
+
+    However, the statement 6.1 does not work. Git prints the following
+    message.
+
+    hint: If you are planning on basing your work on an upstream
+    hint: branch that already exists at the remote, you may need to
+    hint: run "git fetch" to retrieve it.
+    hint:
+    hint: If you are planning to push out a new local branch that
+    hint: will track its remote counterpart, you may want to use
+    hint: "git push -u" to set the upstream config as you push.
+    hint: Disable this message with "git config advice.setUpstreamFailure false"
+
+    The end solution it suggests to use with "git push -u" which
+    is the same as the statement on line 6 that I would like to
+    avoid.  I would add that by issuing a "git fecth" before 6.1
+    would not bring the remote branch origin/main in the local
+    repository.
+
+    The core of the problem is that the local branch main is not connected
+    to the origin/main branch.
+
+My question is:
+      Is it possible when applying the method 2 to have (without pushing)
+      the local main branch connected to the remote origin/main branch as
+      in the case of method 1 which by cloning connects these branches.
+
+Thank you
+Cristian
