@@ -1,123 +1,185 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D73E1448F2
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 16:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C80E1448F2
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 16:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735401928; cv=none; b=IJnu3p/cLxXKH6MTVgCeFDC3XqF2TgfkZs54Y/PsdLnB5itIG3RHAz+iFa0NNbiS1/xWvfpqRE/W8dH3GYVuxybm5NtOSKLtpxpdvX4Nk+mKV4v2cmH1u5UTgODtTZQc2dYigReDQ8CTTTxRA9aIbzyRadANZ8Pp2AuyBkJrOy8=
+	t=1735402316; cv=none; b=UEtNCaZ41kwO+bkzgndvRanzFMCdxVjuwqYMKBpEFXLCixDBAlC86gMbBIfOFmip80Hcm3gpNmepKqkqvBKQx5lEnpA8juhorDUlKcYdYsndhDrIzoYdu9yUlDQoj4ZVu+HYjundph2wZd6r2u4NTjYNAEhriMLx+a39XE/YLVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735401928; c=relaxed/simple;
-	bh=p7CRNfhRXJYKGkRm1vnym2AKD5DlpVLmuxvWa6E9Z3s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PVKp/+N7d1yh9hEblkWIjQwCkQ2LISh+5NOpTUonO9hRz8d8AN9jhSw2BX02N4/QRxj5ya9Rn1xMwDbKgFsjOmXMwzXG8W/RonUImepZHQhkfXHgR6ZGhLTjUL6jFQ3wEQEMd+gys00W/o69Uzz6TQP9oZ0LO3STn1M8F/L0Irk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eD1KBQtx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NCFnfCXh; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eD1KBQtx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NCFnfCXh"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 154B71380199;
-	Sat, 28 Dec 2024 11:05:25 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Sat, 28 Dec 2024 11:05:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735401925; x=1735488325; bh=lhwJ3k5nyt
-	6J4ZptTFkK14ut9/4a+PWLkUJSvLrNv2g=; b=eD1KBQtx6/91eKJv6QIThJIN/P
-	Qkjf5sKkbXwC68PyrGBwbP57OJXEGzneoRbTbU4m5Xmw0uOhGSCOD119Zp5nluzv
-	iA0SmqR7Lp0pdWoqKxk1HJTtvrxhUWSeWvTcppdLEu7cYrTw2w/AJa+CvKoMb+lo
-	Q66JROc/iKaUcGZDkdzIV9VbtSB2iSu3ylR9vW5ES/1IGl5uJswAJEdF7NvbHIYc
-	ZlKbSyvTtSKVGNE4u2KrHTaBMWQkH7qxVRstcWc3rtUX6MZwjTHhQFTegCptiVES
-	Tu9cJehiPNdoHuEnWd6gwH5PIZwgjGevOc2PTEJU2o+svKsANLAScaaiFMew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735401925; x=1735488325; bh=lhwJ3k5nyt6J4ZptTFkK14ut9/4a+PWLkUJ
-	SvLrNv2g=; b=NCFnfCXhyrkzHWzHXs9Rvs7WD74Gpl+3D9sRIJ58m5olyU1xCRO
-	qkToVvM4mVc4bm0iroGJs4HFg91CqEQegol13sOdBTQosA63TZpjzc8Cnr1UJMf4
-	ta7enAC48ue6/1SJqsnbrWr7vbV9ZbYGVazBxZC7ufxYNRTsKzfUJNvQm7a6e/4v
-	fO3f9RY+dZkiOj5ZOQaiWbB93KMDolYBGZX5I+f+bbfp0OQGBSNfflD8cneWTyVb
-	oNKfs6qnmIuQrQIib5uQdG335qNDNEX+UqE2KuPExDnVp+n2zYIqsWYWl9rIiXiJ
-	9KhZclJRqXuUpW52RSQYh/eEEp6Vge+rp+A==
-X-ME-Sender: <xms:xCFwZ7qZX2F_536O0uBvMTy_SrbP94Rvs8CYCwu4BvU-pvzFTBr3DA>
-    <xme:xCFwZ1qsP6Ws3vp1RTCL7DHyaL-ed6mImgBSgCgiBuJwg-bEqSudEdbC0d9UlZHTr
-    T_VGUH2ROsWWNk1uQ>
-X-ME-Received: <xmr:xCFwZ4OWTXfqpEPYJsrXUeHVsy45DBL9BVdowTMhD4YJHejyhjThLWgCrip-IPuWZwnd9HXFSBp2ngOgd2p8dm7Y6epxg_DVow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvvddgkeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhuhgshhgrmhdrkh
-    grnhhoughirgdutdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xCFwZ-4z6iB70puVMXUgQyQVSocvuZ010-nccLdR_1JSqYNSjHwDMg>
-    <xmx:xCFwZ660C-7i3SMQlwlaUXG2Tp3BSxy9pWICMo4Rvo-mWNxqszPM1A>
-    <xmx:xCFwZ2jentQu8VbFhnAFlvxfjH7gHQedngoIaaQ9yjSkKLPqDc9fOg>
-    <xmx:xCFwZ86z8-0Fzm1CGwyv6HlBdcrauzojYv9i9wTK8jY35tpC5I1xgA>
-    <xmx:xSFwZ8TBrPy-72AWITaNxsf-Ar8h8GE2jc2CU2-0JD73PfWVjOnOUonS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 28 Dec 2024 11:05:24 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Shubham Kanodia <shubham.kanodia10@gmail.com>
-Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH] maintenance: add prune-remote-refs task
-In-Reply-To: <CAG=Um+0a+ugf+gWUDS3htj3u2tewzOrH+xGbF+2A+w4ofjQfKg@mail.gmail.com>
-	(Shubham Kanodia's message of "Sat, 28 Dec 2024 15:28:39 +0530")
-References: <pull.1838.git.1734946566885.gitgitgadget@gmail.com>
-	<xmqqed1tv6hu.fsf@gitster.g>
-	<CAG=Um+0a+ugf+gWUDS3htj3u2tewzOrH+xGbF+2A+w4ofjQfKg@mail.gmail.com>
-Date: Sat, 28 Dec 2024 08:05:22 -0800
-Message-ID: <xmqqr05r4wu5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1735402316; c=relaxed/simple;
+	bh=cWcq0pCeckC8tb1eLt8XKSHwF+mrFExywLgDTiHT/pg=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SvZGMhRM2oRUEuXWr3qjgi18JUhJKPq09kzP3zMa72ShTUv1jwU8YJcFXJJuFfpS1sMjbD6V4k6TtTWk2I/AOpmzZc3T2Tf9NHP0w0vGKKolakjXvpXlgeuJjt/ZmSmI+NJES7H8mqvwqr6D9YbsSL+lVPUzpx289s6vvHqQe1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 4BSGBncf3918877
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 28 Dec 2024 16:11:49 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: <crstml@libero.it>, <git@vger.kernel.org>
+References: <a69c4e2e-cbb0-c242-a34a-8997a84fefb7@libero.it>
+In-Reply-To: <a69c4e2e-cbb0-c242-a34a-8997a84fefb7@libero.it>
+Subject: RE: connecting the local main branch to the remote origin/main without pushing
+Date: Sat, 28 Dec 2024 11:11:45 -0500
+Organization: Nexbridge Inc.
+Message-ID: <027f01db5943$340b2c70$9c218550$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJOjts6fzJ/non6LHwWNa+ljJww/bIVZlUA
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 241228-2, 12/28/2024), Outbound message
+X-Antivirus-Status: Clean
 
-Shubham Kanodia <shubham.kanodia10@gmail.com> writes:
-
->> Hmph, is there a reason why you need two loops, instead of
->> for-each-remote calling a function that does the run_command()
->> thing?
+On December 28, 2024 10:47 AM crstml@libero.it wrote:
+>I would like to put a set of files under version control and I have =
+some issues with
+>the workflow. Let me explain:
 >
-> It can be collapsed into one.
-
-Sorry, but that is not an answer, as my question was not a
-suggestion to change anything.
-
-It was a question asking you if there was a specific reason why the
-code was structured the way it was written.  If there is another way
-to write it, you need to answer why the alternative wasn't picked.
-
->> This loop does not stop at the first error, but returns a non-zero
->> error after noticing even a single remote fail to run prune, which
->> sounds like a seneible design.  Would an error percolate up the same
->> way when two different tasks run and one of them fails in the
->> control folow in "git maintenance"?  Just want to see if we are
->> being consistent with the surrounding code.
+>First I create the bare repository with the command:
 >
-> Fair point. I'll make the process flow identical to the prefetch refs
-> task that works similarly across remotes.
-> It returns as soon as the first remote fails (without necessarily
-> affecting other tasks).
+>     git init --bare -b main ~/rps/project-x.git
+>
+>Then I can proceed in one of the following ways:
+>
+>
+>---- Method 1 ----
+>
+>    By first cloning the remote repository locally and next
+>    putting the files under version control. All running the
+>    following commands:
+>
+>    1    cd ~/projects;
+>    2    git clone ~/rps/project-x.git project-x
+>    3    cp ~/my-existing-project-x-files/* project-x
+>    4    cd project-x
+>    5    git add .
+>    6    git commit -m "fc"
+>    7    git push origin
+>    8    rm -rf ~/my-existing-project-x-files   # clean your home =
+folder
+>
+>---- Method 2 ----
+>
+>    By putting the existing files under version control and next
+>    adding the remote. Running the following commands:
+>
+>    1    cd ~/projects/project-x
+>    2    git init -b main
+>    3    git add .
+>    4    git commit -m "fc"
+>    5    git remote add origin ~/rps/project-x.git
+>    6    git push --set-upstream origin main
+>
+>
+>Let me discuss both these methods:
+>
+>Method 1:
+>
+>   Everything works but the cp statement may be problematic. If
+>   you have hidden files (starting with .) or if you want to
+>   preserve the file permissions and owenership, the invokation
+>   of the cp command is trickier.
+>
+>   After you copy the files all the next statements work well.
+>   The main branch in the cloned repository is connected to the
+>   upstream origin/main branch and "git push" will work.
+>
+>   There is one more small problem with this workflow: the
+>   statement 8 is ugly.
+>
+>
+>
+>Method 2
+>
+>   Everything is very clean (apparently). We don't have to think
+>   to file permissions, hidden files, tricky cp invocations and
+>   there is no need to clean your home folder at the end. We are
+>   interested to put files under version control, so we focus only
+>   the version control system.
+>
+>
+>   The problem  with this workflow (from my point of view) is the
+>   statement 6. This statement makes two things which is contrary
+>   to the UNIX philosophy: programs that do one thing and do it well.
+>
+>       1) The command connects the local main branch to the
+>          remote origin/main branch.
+>
+>       2) Pushes the files to the remote.
+>
+>   From my point of view instead of executing the statement 6 I would
+>   like to execute the following two statements that I will number
+>   here as 6.1 and 6.2:
+>
+>    6.1  # To connect the main branch to origin/main
+>         #
+>         git branch -u origin/main main
+>
+>    6.2  # To push to the remote.
+>         #
+>         git push origin
+>
+>    However, the statement 6.1 does not work. Git prints the following
+>    message.
+>
+>    hint: If you are planning on basing your work on an upstream
+>    hint: branch that already exists at the remote, you may need to
+>    hint: run "git fetch" to retrieve it.
+>    hint:
+>    hint: If you are planning to push out a new local branch that
+>    hint: will track its remote counterpart, you may want to use
+>    hint: "git push -u" to set the upstream config as you push.
+>    hint: Disable this message with "git config =
+advice.setUpstreamFailure false"
+>
+>    The end solution it suggests to use with "git push -u" which
+>    is the same as the statement on line 6 that I would like to
+>    avoid.  I would add that by issuing a "git fecth" before 6.1
+>    would not bring the remote branch origin/main in the local
+>    repository.
+>
+>    The core of the problem is that the local branch main is not =
+connected
+>    to the origin/main branch.
+>
+>My question is:
+>      Is it possible when applying the method 2 to have (without =
+pushing)
+>      the local main branch connected to the remote origin/main branch =
+as
+>      in the case of method 1 which by cloning connects these branches.
 
-... and the first failure signals the caller a failure?  That would
-match what you did in your new feature, which is perfect.
+I think method 2 is failing for you because you do not have origin/main =
+in your
+local repository. That requires a git fetch. Git fetch will not =
+overwrite your
+working area, but is needed so that tracking can occur with an existing
+remote branch.
 
-Thanks.
+The reason git push -u works is that the resolution of your branch =
+tracking
+can be worked out by git as part of the push, where the remote reference
+is known. Without that, the git branch -u does not work (no reference).
+
+So do the git fetch as 5.9 in Method 2, then 6.1 should work, assuming =
+origin/main
+exists in your remote. This downloads the clone history without =
+modifying
+your work area, so it should be fine.
+
+--Randall
+
