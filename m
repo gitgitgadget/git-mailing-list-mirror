@@ -1,166 +1,161 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE7C78F34
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 18:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45972744D
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 19:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735412287; cv=none; b=MmMigohReurT4y7Ra0GMai1QzWeKh/rB3zS+z10wMV+UhyMD4cdWItW69yaLdxjF1OThdrtxx5QTeV3TIdoggQprdvt3kW+8GJsHUj4qjzd4cIhYUu2nHlBxjVQqbGPesoA6kuup3WUB6CEzNtGL1alZsWib47BFDtMOYjc4XJ8=
+	t=1735412748; cv=none; b=AwHtRtRMmaVD3gToGeSkPDluKbmKFvg8kJJqNn1n0+YZSicmT4U3nj+5kxmZXzxxmcEBqlHdZ22eiMBuc570m6rh+nMJoJA5VUTX7Axvhl5AQjv1foBMY8bW57iaYWcvBK8buPw5VWiNh5TDU6lg69dgSCcb+Nh5/QWqjxMgy5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735412287; c=relaxed/simple;
-	bh=lzJGXONi3IEbWLndo0SAAQLnyTNP7mC+3fE4IpCzSzA=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=bX+wwm8OpfybpgNGsGrQv2Pf3Kj/hcvjd/bAHi2fet14LFUS8oBXSYkmD9H5BXX+19jfph9YnHkBCV8NvK2Bmt/JkTKtugHzwhi3ghjdkM2IzqkkfCd/16CJ/ZEViPNDpmMyyzxGIkkirhctYByKvosKcabkRBmLkOb6Nn6Sjl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=byoungchan.lee@gmx.com header.b=h8KuPQM4; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+	s=arc-20240116; t=1735412748; c=relaxed/simple;
+	bh=cGjhYHjWrJXc+nvvDke4bJDhJHtmlqk+W+WwCfIIy3I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aosFfTCjFT6qNXCxVYK2IDWNunfZ8RsN3GLThB1UrcQviWM6AB5O2ovcR2E8mbNDgR4kmngUbOOINk1SY+oyx7TSfJJ6HxOpMBJfXovXCdB1F5ic4l9yzuY7w+UE1yPRZqLw6cF6pqEe9c/T59fkGhfIwV0W/Wp23Er1HBmNQEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CPcZ3S2+; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.com header.i=byoungchan.lee@gmx.com header.b="h8KuPQM4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1735412282; x=1736017082; i=byoungchan.lee@gmx.com;
-	bh=ySuDck6ZqmPn2IN8TleofKuVBV7htZErgzYqkQih6kA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=h8KuPQM42P3VWLru9uQJnX5Vmmdd1l7K6RRce+HwaPM69CUpf3jBXGNeZd5jHO1y
-	 CxZZr6DTNhrlPMcEbI7FRHb0EzlNED9NvtoQopCmUBJhUCBRhlSGk5ZLMKeSoaChX
-	 pYOY9AfG7/GHM17a3kbQoMaCGBLxeb5HAb+Olnt4VQHyTq/XjrgbucIGH4jzGCbka
-	 5RXo05Wb8FnBhwJ+b50aYV+DBsKN6mqSjcsVw/FQdm05Fk1rcQQPrf8i9irLDKBkn
-	 Ff9jnxWAmVha4RsXZ0vnHJjjTY6SRO6X6GbsO7Hq/sBuWFUhkSyQd+y6lAlN1O8Bj
-	 NYjw8AHCbVOQXUpNcw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.0.2] ([220.70.31.140]) by mail.gmx.net (mrgmx104
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1MVNB1-1t36je4AYZ-00SbPN; Sat, 28
- Dec 2024 19:58:02 +0100
-Message-ID: <24ba736c-6700-4037-8147-40ae8c789969@gmx.com>
-Date: Sun, 29 Dec 2024 03:57:52 +0900
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CPcZ3S2+"
+Received: (qmail 24545 invoked by uid 109); 28 Dec 2024 19:05:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=cGjhYHjWrJXc+nvvDke4bJDhJHtmlqk+W+WwCfIIy3I=; b=CPcZ3S2+Nwq1jhAUvNozpIk5xD7UIlsgaAh+CGe6ZgYQDd+MJP0LOVWk+D/JelkarVhM975AP4kLcPqmi2RZWhhOYr08rMtdqmGzlgpXZgLRFAZtYEM7mdsHwGwD6yNvP+HIRF3btV5598LbZCbcKZt6GI4j4UjJPoAj964pRimATj/tgBuIY63qU/YWNrERnC31PggeB+hXfLaHocbfXwcZ+oDoS7hI2tqhpfMc8JBvOWAp63nvLu7V2GNpk82wPn9D5y+vQNKrkNziK6ADWOmK5PCL81pNUfXtgLFNrxfxWrxRvysmAmEfdIkGbX3tUfdYidJmd6g5kGrFj2JonQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 28 Dec 2024 19:05:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29945 invoked by uid 111); 28 Dec 2024 19:05:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 28 Dec 2024 14:05:42 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sat, 28 Dec 2024 14:05:41 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: racy leak sanitizer builds, was Re: [PATCH 0/9] commit-reach:
+ -Wsign-compare follow-ups
+Message-ID: <20241228190541.GA815586@coredump.intra.peff.net>
+References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+ <xmqqbjwwucvy.fsf@gitster.g>
+ <xmqq7c7kubx8.fsf@gitster.g>
+ <xmqqbjww65i1.fsf@gitster.g>
+ <Z2-2dbYVuuLxpNmK@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: gitster@pobox.com
-Cc: byoungchan.lee@gmx.com, git@vger.kernel.org, stolee@gmail.com
-References: <xmqqmsgf3faf.fsf@gitster.g>
-Subject: Re: [PATCH] builtin/gc: Ignore random minute field when registering
- macOS services
-Content-Language: en-US
-From: Byoungchan Lee <byoungchan.lee@gmx.com>
-In-Reply-To: <xmqqmsgf3faf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NHiNztGO5bOK8tCkyjUyLvK5VqhEsrfOiyS5qOJGJInDJ3t1+Oq
- tqjEOESVmTijSG9G1zUCJO0/xf6RVJCh9q3vJi05Rgy3CMFPWSGMW/uMDZl0AlbwXOmX9Ig
- TISIJltOgOpjDe33zt8d/X3M/fmqeNcA8PlY/WBlNEQgBhhAczhK0jdc72w4eMc1krwXL6z
- uW0rwSeVOGZN+W1b+54ag==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:+ojZhoev7B0=;pQLIXyhoSKZPwhDvBvqaPysWVOI
- MWT1C/kuLQIwH6SAh15+ibaw3u4750JzO9yN7nTqPWkyytHFRhsXAsCa4Tz3deT+oUDrGtTkH
- jqxLUCAASvKyjcs2cEdEw3rsZ2XKUnTnbJeVLI9XtEwx7+h7IumDUGb7UBwQAZ1Y2stTq7JHD
- 3UuJoJq/Z8ihMltZd3nBh0tKwmP5vs+Hd40bpRFONv1zpAOD4UD+Xx17vqPT3/nUiXcS9ykoC
- 8WEQJBL2/H+Pn+Htbp7Q/nPgrZjLeyhXHdgyW8BiSBhU+TntRcZZzgNGzSt62iXe8OBC+O2Ni
- JqDbw9iwaLWzIg9Ddd5q6GaTMmmRfXo2pnI3lBXsvlrsA2QWJwqWHWb1UJC/+jiuqarfaJvlB
- YK5zqVCtGjXlLCWgwxf/4oLzKLHJGnyiEC5NpuS3RAHcB2Kc494qpLp/SP8Sl1tzIZzDQ6K1l
- cRA7itL/BxH4XSWyNDAnNFaE6ujtOmYDovgBTU+UFxOxu7AjGFF4r3gYmpuz1xdp538oXD0s6
- 3bU5nVxGxLp1ygdWr7qMwrwRo4fnSBnk9e36WIU/rBnB1IAwz6pB8TLGVxvq/1Bmmjed1VUcZ
- 6jEFXBkNL1aMSwTq94O9umPG4UTpAOa2HPqlKlT9Xx0YmnY9EV3f48ML35HixUUokcwohjY5p
- 6HNyKVnEcu0/bica/QoIj9UArBM1oYH1JYoHTQ9URJqPz5mt6Vc0hSEpcQi3xlO2wwuepFwYD
- qABKjC2pciRsC9gFTUVrQnMCo3raNtn/PFAGHDZhnsdBz3Yy45PXpBoqWEgkL7vrv+IXlhYm+
- UO7EYA/gFJwAg8iU9uZbxcIJUQpGu0WuyH97vYPH48Gii+MNM1vqC/oEjYXxsO1zcsrBxz0nR
- klK1crJCgb8FP/BI6rygjJ85ZGTsW7+34UWtzamjjgjkXHP1AAOkVFzmagXTEWu4SIH2BySfl
- YrYTrno1mD88U3gqPYg74za6YPShpsw/ko1XUhtBTGxDk7jAfNKEy+XAGdVBh6zN+p8XUbgSE
- SfgOWkiy84zRO/hPxvrhl9/ZKICtUJ2GKPCvKThZ3OKisDKX0QmTcHq/CbjZp0gkXV1HhjoCw
- VS4BUyNYdekobUu2jySxWDyJvmlXpi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z2-2dbYVuuLxpNmK@pks.im>
 
-On 24. 12. 29. 02:09, Junio C Hamano wrote:
-> Byoungchan Lee <byoungchan.lee@gmx.com> writes:
->
->> In macOS, `git-maintenance` registers several launchctl services
->> to periodically run Git maintenance tasks by creating plist files
->> in `~/Library/LaunchAgents/`.
->> To avoid re-registering services unnecessarily, we check if a service
->> is already registered by verifying the existence and contents
->> of the corresponding plist file.
->>
->> However, these plist files include a random value in the minute field
->> to distribute maintenance tasks over time. Because this value changes
->> with each registration attempt, a direct comparison of the entire file
->> (via `strbuf_cmp()`) often fails, causing services to be erroneously
->> re-registered. As a result, users may see multiple services registered
->> and receive repeated =E2=80=9CBackground Items Added=E2=80=9D notificat=
-ions.
->>
->> To resolve this, introduce `launchctl_plist_cmp_ignore_minute()`,
->> which compares the content of the plist file while ignoring
->> the random minute field. This ensures that services are not
->> needlessly re-registered when the only difference in the plist file
->> is the randomized minute value.
->>
->> Signed-off-by: Byoungchan Lee <byoungchan.lee@gmx.com>
->> ---
->>  builtin/gc.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++----
->>  1 file changed, 47 insertions(+), 4 deletions(-)
-> A few comments on the design.
->
-> "ah, the minute part needs to be ignored when comparing with the
-> existing configuration" smells like a poor strategy for two reasons.
->
->    (1) maybe the part that gets fuzzed would become different over
->        time and this new code may need to ignore differently.
->
->    (2) the need to compare with the existing configuration would not
->        be limited to macOS, would it?  If anybody wants to avoid
->        re-registering with the same configuration again, such a
->        selective comparison needs to be reimplemented on every
->        backends.
+On Sat, Dec 28, 2024 at 09:27:41AM +0100, Patrick Steinhardt wrote:
 
+>   - The leak-checking jobs fail quite regularly in t0003 with something
+>     that feels like either a race caused by a leak or an issue with the
+>     sanitizer itself [2]:
+> 
+>     ==git==17055==ERROR: LeakSanitizer: detected memory leaks
+>     Direct leak of 32 byte(s) in 1 object(s) allocated from:
+>     #0 0x7aa0d03c7713 in realloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:98
+>     #1 0x7aa0d0221f69 in pthread_getattr_np (/lib/x86_64-linux-gnu/libc.so.6+0x9df69) (BuildId: 6d64b17fbac799e68da7ebd9985ddf9b5cb375e6)
+>     #2 0x7aa0d03d9544 in __sanitizer::GetThreadStackTopAndBottom(bool, unsigned long*, unsigned long*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_linux_libcdep.cpp:150
+>     #3 0x7aa0d03d96fa in __sanitizer::GetThreadStackAndTls(bool, unsigned long*, unsigned long*, unsigned long*, unsigned long*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_linux_libcdep.cpp:614
+>     #4 0x7aa0d03cb2b9 in __lsan::ThreadStart(unsigned int, unsigned long long, __sanitizer::ThreadType) ../../../../src/libsanitizer/lsan/lsan_posix.cpp:53
+>     #5 0x7aa0d03c756a in ThreadStartFunc<false> ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:431
+>     #6 0x7aa0d0220a93  (/lib/x86_64-linux-gnu/libc.so.6+0x9ca93) (BuildId: 6d64b17fbac799e68da7ebd9985ddf9b5cb375e6)
+>     #7 0x7aa0d02adc3b  (/lib/x86_64-linux-gnu/libc.so.6+0x129c3b) (BuildId: 6d64b17fbac799e68da7ebd9985ddf9b5cb375e6)
+>     DEDUP_TOKEN: ___interceptor_realloc--pthread_getattr_np--__sanitizer::GetThreadStackTopAndBottom(bool, unsigned long*, unsigned long*)--__sanitizer::GetThreadStackAndTls(bool, unsigned long*, unsigned long*, unsigned long*, unsigned long*)--__lsan::ThreadStart(unsigned int, unsigned long long, __sanitizer::ThreadType)--ThreadStartFunc<false>----
+>     SUMMARY: LeakSanitizer: 32 byte(s) leaked in 1 allocation(s).
 
-For justifying my design, I believe we do not need any additional
-randomization.
+I did a bit of digging on this last week, but didn't come up with a very
+satisfactory solution. You can reproduce easily by building with
+SANITIZE=leak and running t0003 with --stress.
 
-Minute-level randomization is sufficient for tasks repeated on an hourly
-basis,
+It's the same issue we tried to address in 993d38a066 (index-pack: spawn
+threads atomically, 2024-01-05): one thread calls exit() and takes down
+the process while other threads are still being spawned (so the leak
+checker runs while those other threads are in a weird state where lsan
+has allocated some memory but not yet set up the thread stack as a place
+to look for reachable memory).
 
-so no further extensibility is necessary.
+There we dealt with it by making sure no thread started work (and thus
+hit the exit call) until all of them were sanitized. I tried doing
+something similar here, like:
 
+  diff --git a/builtin/grep.c b/builtin/grep.c
+  index 98b85c7fca..866645e6f8 100644
+  --- a/builtin/grep.c
+  +++ b/builtin/grep.c
+  @@ -233,18 +233,20 @@ static void start_threads(struct grep_opt *opt)
+                  strbuf_init(&todo[i].out, 0);
+          }
 
-I also aimed for practicality, because this issue (the repeated
-annoyance messages)
+  +       grep_lock();
+          CALLOC_ARRAY(threads, num_threads);
+          for (i = 0; i < num_threads; i++) {
+                  int err;
+                  struct grep_opt *o = grep_opt_dup(opt);
+                  o->output = strbuf_out;
+                  compile_grep_patterns(o);
+                  err = pthread_create(&threads[i], NULL, run, o);
 
-only occurred on macOS. I also use Linux with systemd for programming,=C2=
-=A0
+                  if (err)
+                          die(_("grep: failed to create thread: %s"),
+                              strerror(err));
+          }
+  +       grep_unlock();
+   }
 
-but Linux does not bother me. I am unsure about other operating systems.
+   static int wait_all(void)
 
-> I wonder if we want to tweak get_random_minute() logic to be
-> deterministic to avoid need for such a fuzzy comparison at its root.
->
-> A few possible ideas are to read the value from the existing
-> configuration and reuse that instead of coming up with a new random
-> value, or to hash the hostname (or something similar that is
-> reasonably stable) to use the result as the seed.  Derrick, what do
-> you think?
->
->
-> As to the patch, as I suspect we may not want a code with the
-> proposed design, I won't look at it deeply at this point, but please
-> consult Documentation/CodingGuidelines and/or make sure your patch
-> will not be whitespace damaged during transit from your repository
-> to people's mailbox.  For example:
->
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> index a9b1c36de2..6405f4d332 100644
->> --- a/builtin/gc.c
->> +++ b/builtin/gc.c
->> @@ -1951,6 +1951,51 @@ static char *launchctl_get_uid(void)
->>   return xstrfmt("gui/%d", getuid());
->>  }
-> These two lines are supposed to be what already appear in our
-> codebase, but we of course do not use a single-space indent.  There
-> is something funny going on.
->
-> Thanks.
->
+but it doesn't work. In fact, this does nothing at all because each
+thread will start by looking for work to do via get_work(), and we do
+not call add_work() to give them anything to do until all threads are
+spawned.
+
+So I suspect the race is actually trickier, and that the "weird state"
+is not something that happens just while pthread_create() is being
+called, but is actually running _in the thread itself_. So even though
+pthread_create() has returned for each thread, they are still setting
+themselves up before running.
+
+It mostly worked in 993d38a066 because index-pack has to do more work to
+get to the exit() call. So delaying the start of the threads was enough
+to usually win the race. But here, the individual grep threads get to
+the exit() call very quickly, and it's not enough.
+
+Which would mean that 993d38a066 is not actually a full fix, either. And
+indeed, I can get t5309 to fail even with that patch (which is weird,
+because that was how I tested it originally; I wonder if anything on the
+LSan side changed?).
+
+So a full fix would actually require synchronization where we spawn each
+thread, then wait for all of them to hit the barrier to declare
+themselves ready, and then let them all start running. There is a
+pthread_barrier type that would help with this, but we've never used it
+before (so we'd probably need to at least provide a Windows compat
+layer).
+
+One quick workaround is this:
+
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 3c98b622f2..7ecaf8f4e3 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -443,7 +443,7 @@ test_expect_success 'diff without repository with attr source' '
+ 		cat >expect <<-EOF &&
+ 		fatal: cannot use --attr-source or GIT_ATTR_SOURCE without repo
+ 		EOF
+-		test_must_fail env GIT_ATTR_SOURCE=HEAD git grep --no-index foo file 2>err &&
++		test_must_fail env GIT_ATTR_SOURCE=HEAD git grep --threads=1 --no-index foo file 2>err &&
+ 		test_cmp expect err
+ 	)
+ '
+
+Or you could even imagine automatically forcing online_cpus() to "1" for
+LSan builds, which would fix it everywhere. But then we'd miss any leaks
+that are specific to the threaded code.
+
+Or of course we could try to engage with LSan folks about whether this
+can be fixed there. I don't think we've reported it anywhere there.
+
+-Peff
