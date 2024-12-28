@@ -1,40 +1,40 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5AD433A4
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 09:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54546433A4
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 09:49:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735379340; cv=none; b=aDogWw1d30LBi+xP4uz86X0nHn5hKMniiQMVRKOtnhdE82q+yvgCRPBCswg3nz1f0t/OOvBZgpHg18FiuWlDlwXtJTbJWnT1JtK3VyhwCe4ZAOnQTdAzHXPbDr5fJOqeCfg/8fvz8cvtclsVGJd1tGKvcC+kc+Sk/TMdAIaha9s=
+	t=1735379385; cv=none; b=oLGj5lAwFCeMVN07ALI/445cpXWJOLSOyqnVxfV+99A+/m6ZOKAo55ps6Jk3b2N5NvG7IoUjQOCKqbimfSw0H8pK8WRO8wSuyW+gAeGcfTERHJkgqqGbA4YGleTiKJ1vloUzBkHedJVM83NgK5HWyUg5j8scPH2nAJhute5QtHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735379340; c=relaxed/simple;
-	bh=BT3ZlamRjlTQ/Q1prjgXuyg7Xvp7GA+x9fRxobDZtCg=;
+	s=arc-20240116; t=1735379385; c=relaxed/simple;
+	bh=OXlRXF3AqxENeuz8kmkXHvJehkPWhRN7W7f/yJxugCA=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=GBkdQOSRyAwWF6APKW+NYwBzHCkxcgzgIkDY7hLuV0QQ/wZyxAJHQq8YrH4ZkmwjfGWu901Opbvhofxe+Hp4tKMQ4TJNB8dn+xItJTz+sF56YjjnURxP2bzshEV8G1Xj5fUl3xLpdE5oZUTzfEylqmxZHzcuxEnE5usWMl+C04s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=MFRNmCQa; arc=none smtp.client-ip=212.227.15.3
+	 In-Reply-To:Content-Type; b=rNHEgD16SBt4jd6tYwC1bx0LpLt5/ffJYi+XjcL+Y5Axy04LKo7e6UL8ymeyneBozdl1JO1DGOLP1bvtFMc96DcdI4PLdFYiBERwui1FkQbTiqOYc+ELitTR0ISnQDFM9QMHmiv7wx+aGPz6Dnke9/yCbRCjFO2rQ7h2/HlnB+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=kXbEgyFw; arc=none smtp.client-ip=212.227.15.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="MFRNmCQa"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="kXbEgyFw"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1735379331; x=1735984131; i=l.s.r@web.de;
-	bh=WhvwdGGVHmi193NooQ/nKPF9sG6V7N0tx6bM2/tX8eo=;
+	s=s29768273; t=1735379379; x=1735984179; i=l.s.r@web.de;
+	bh=kcrkxjD2WV/GHRFksAJCFRvefRGq+noNEUMGS9ew4v0=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=MFRNmCQaHubKcasyaVFRTTcavo5xhnAQLvu9IuC/l+h+lJSR6jDun+Psx6u/UybC
-	 YQJyWa8lxoNj/L9doxhHcRALGrt+S+ZB/alPrI4DbeUUUfF3wyfavyzOKnKnfQVAP
-	 6MQqPEDPs243HR/m+eNmbMBb+9V1HZVtnr+q1FPynAmSws38+jAAB1BfpLGkGepWP
-	 oMfsewQIqR0xlENn+/TfRaVKJ0Dz3iQpCvriOGsHY/VwByGuMuYIlLPQlpgKVDxsp
-	 LK9Bwejpemf/0g5guswAZw4HnhWVSyg/n3pmC47PmHc1siNygnzBPVBi2kw81UFcl
-	 oUC3xfYMTxa0p3/ZZA==
+	b=kXbEgyFw6AqH3bOHg2/U4aKa+r9pRe8CgWJBAcLab6n2tdfjLpsHvq7jsUTpLSuy
+	 mwz3B3MO30vI3jcX43+KqgdRUMrPOMkIJ5RpUYWkhtRQ5ECf4dH7yXbH4X4wELUe0
+	 gMIzFaCypGpUKSNNggNbfzuGJEOn7LBmadZuQqY3WX/u1tKq0UIlVxJ/xX/nOEeaZ
+	 sdn5igu+2s41J9bzYJwCDHmUovdcVNneJK8VtLzFXQofwnpF4D/OghNLxXL1/1Q5F
+	 lxztQ9ludVy9gmXWiLWBBAmUBjT2ZO7Ue2bsts1clQInkKXdEUTDGgphm+WWRxILu
+	 bzFVSr6sBJuW1NOMTA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.20.45]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MDvDU-1tHc5G3g6W-00GNOc; Sat, 28
- Dec 2024 10:48:50 +0100
-Message-ID: <c2cd277b-ba9d-41cb-b9bd-c519b445d179@web.de>
-Date: Sat, 28 Dec 2024 10:48:50 +0100
+Received: from [192.168.178.29] ([79.203.20.45]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MlbHC-1trDkH0Ows-00kJlX; Sat, 28
+ Dec 2024 10:49:39 +0100
+Message-ID: <e6274b50-e826-4150-9a9f-4f7a2214a134@web.de>
+Date: Sat, 28 Dec 2024 10:49:38 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 3/4] reftable: handle realloc error in parse_names()
+Subject: [PATCH v2 4/4] t-reftable-merged: handle realloc errors
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
@@ -52,52 +52,58 @@ Content-Language: en-US
 In-Reply-To: <f4677194-0a3a-4f07-b003-c0295b51c100@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:VLBu1z+BAJZ40YVt8rFIkBraaZFSMIMUOEwL2PKqdwuGraz1oN5
- AninCvoSvITlIub9Oo0sdbMURLvWBnFeu02ZjGE2dwA0LjLuizXzmN4QuRb5Q0bWpu4B5NN
- jVoyWoyjTWgyi4AT+QqfM+hGFv+dtl6QkMRY86t8VLajQ9s3PhCjw9v2bhku5iaF5eyFqwt
- /Mj9jjmG6qZ81SdELBA1A==
+X-Provags-ID: V03:K1:+XAPQ8oVS6W+kTPooz0bRvfuf4SvHPq+MTs4EFIl8mXt/3hRImh
+ chDtaow/JvTlO2wMKq0n6y5yhCM8NXc1MQFeF/6g7zYiXx0VKTMYXU7CNKmcXWXFTMz7WxZ
+ djh7gWgupmdHvU8pEdIcgPIqIpucZOA0qPn0SBNgOKEgbZm9Fshv9Rhngqt5MmcoCGMW+cu
+ AwFtA3wEc+MTV97Cp/Ezw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:yGmUcUL069Q=;AF1zzZDLlw2dF/vIXQ9oEQgmG7J
- qqEvUJ9IgY3HvfEj6SosQgQ5TFX22nZ7p0nEBmyd5S7XcZO4UlgXnKv8xwArbiYtG3pfXE19g
- Z5n+gt6A5WGNnMhzJjiQ6lNzERlYGKOdL/bVLQ7zFVXRudf2ic20hu0Qe5zsM+x9M/Ehi6eDy
- LgAwNojfeawV0HbZK66IIywQwdgfdIThaIpba68amDfDqfqZRlo/4f7wxfuGOJv563p1uRHsZ
- UpXL96n/9We7Xwh6N/udVc3lHpIXEEJyaH2BveAeUiw5YLhWXY6U195RmOz1r0lTANW/A/CQo
- HbIKG4F1fwba10sNm36vkEAUGqPLruLltAIw0wTpUsrCaMI0npFBwFSoxJOcoiU4rX8d90X2q
- OhC3cGED1qTK3WxVR/URzfvJQR2DjMwABy2XvMxjHY9dTWVjOyqkAOPwlhZNH44MqSHi7Ztyl
- tFZXUwdLrAcJbrFuWckxVnvIQo09tr6cM2oEp2qme3Us+otqlIcwKbd9K77sAXv+fqIkzTCgw
- Oauoo3du5dsVBxQ4WbrlRTctrn0BigeRdER1pYO2Vl1vN8AH3D265IB0hyEmtwo4q/HUbY/Fa
- 7ogU0nR9enT3vmoY4a1pfxuW+hPZgweaHk0CTjPgJQyuBr8tVXoaOW+a1FoP7AfSUw3+lndCc
- c3NsF3RWgxJ7dZtxRXQ1hYkUb417e1d6Oulote/o6Qj3IeE+vJ6ZX0IeOtITTy4147t/Q4DFe
- 9jctYegxOFgHcsxTxyzqy7imBWRHlDyG1hERdY1TvEsRTxSCR5c7fF+Ouu4WJDH23KWVvn5wO
- Th9UXg227GESRIuBbwa+c1LUFDStSIgheORgZpMngmBkXlPusisakce15jkmXRlRdozJ62yaj
- 6lTUancEARzNVwIWyRWDvkQnnTr+RSw5+EEhwV91OzTAfHcIMdyw1s9Yvg51pV4+kX1FTSxJj
- i7ghwyE5BuO3yPFAKS8HSqKbjgYmBD9uptya45YPcGz4e9BvsapSaIJkoYBPZlse0WmSMt6CL
- hKQd8reR3PGvfCgZeTHADooYCdlxePWEaDMZa98qqODu9eWYZvxZbnYSoJa+RzSZilK7rCEfs
- 2NyS9uAvk=
+UI-OutboundReport: notjunk:1;M01:P0:zV79Dv+bPeM=;cIglaNM7OYpynX5Mj5uOH6Q/NP2
+ RI2Jq/oKLmkD38nz6/ukEW5ApL9Og9FBYJV/fcKVLz7jmC/9b/ycJHlD8rk93iq1dn61YoqbH
+ 910e5S8iq9jCLIErOxOofuy8Lkp/GLHU+/xPUaeqWObefBt5asMkWGrFng1l1kM5uNg3H5Vtf
+ ifud3l1pLGyN46c6/B2sY+fdzicmDSlhVV2U4UPnuK3xg8R/HkKGYy0MPlk6JpYT/qOXxApuM
+ G79Pjp0XsJeKO4wtOcWq0fZCS0yPZ4XowpsJqBElmoOxurB+tUzK1Ct3zQ6HMmyC+yC1B5vWu
+ OQg4NmXSkDmYYBHV2BsDQ2dsxt6DB+WFa5GTN0XAd0v/lWNZhZEL5liLU45OTbo7daxMLUJjs
+ ZR/dvl2RsSZFHFu4j73updf0wRRRV18zL1yLqA1fqn8RiwdQrtDxv523sGbq4uzS23Vp3PAqL
+ 9arIJ8/hcXYk1STnPn6TbVBFtw0JCV2LtPLVO5ypkDRvXslLS7PNFveMMwPTRUJ6tNvo5mn/a
+ xR4bTgLwwVKKxa2aYetWbKNHu0YAiGBwJnO7DOxDdyrkOWXhKIBeOxi/+HCXncS4hnKnBIiqd
+ Ai5FtI5+6rGGBRt9GjsSvt93LUVS1GgADb/ig0zaW0oarNfsVZo9M47SsBqUa3bTBONDmX78F
+ z3xynvLY6er0jvmJkaKsUy6/p6kXuiV4671NLN54DfNiDdZkMgbxvDn4lBSTAII/HGOCvS6WY
+ wb7IjzP6eZiySuClUkdr6XAIpVRGKvKgKY8KlJk1gy+ZV253/BPm63JU4eNWHtBdhkch+AL2l
+ 5lxEN3uUhRytlQ/gUjp72cRgZYuoawVcLsvElOV05/qLuHXZgP2KXp7KQmN64z7Yf7td7K2Xr
+ NLVRPoO140EyAq4LfRP0cDr1F9qgl6/en0jddosWExQNqpXdDW9Wp5MgqGu4CMsIUyNMJMy0+
+ NdMYW44QUMBv9ElJta8MkaGKR4n1w6P3v7iGIvS2ZO3uwKKFgtRXfxHdXGyFcTvDLYZGmtBXV
+ 1P9zeBQn5mzXm9m/rzeJXU3n0pVIuqetB9Ma6FHSzw41y8dYv7qRF4ZZ7PyBi6+kao+ePsbDd
+ zCPN71hWI=
 
-Check the final reallocation for adding the terminating NULL and handle
-it just like those in the loop.  Simply use REFTABLE_ALLOC_GROW instead
-of keeping the REFTABLE_REALLOC_ARRAY call and adding code to preserve
-the original pointer value around it.
+Check reallocation errors in unit tests, like everywhere else.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- reftable/basics.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/unit-tests/t-reftable-merged.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index cd6b39dbe9..fe2b83ff83 100644
-=2D-- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -241,7 +241,8 @@ char **parse_names(char *buf, int size)
- 		p =3D next + 1;
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-me=
+rged.c
+index a12bd0e1a3..60836f80d6 100644
+=2D-- a/t/unit-tests/t-reftable-merged.c
++++ b/t/unit-tests/t-reftable-merged.c
+@@ -178,7 +178,7 @@ static void t_merged_refs(void)
+ 		if (err > 0)
+ 			break;
+
+-		REFTABLE_ALLOC_GROW(out, len + 1, cap);
++		check(!REFTABLE_ALLOC_GROW(out, len + 1, cap));
+ 		out[len++] =3D ref;
  	}
+ 	reftable_iterator_destroy(&it);
+@@ -459,7 +459,7 @@ static void t_merged_logs(void)
+ 		if (err > 0)
+ 			break;
 
--	REFTABLE_REALLOC_ARRAY(names, names_len + 1);
-+	if (REFTABLE_ALLOC_GROW(names, names_len + 1, names_cap))
-+		goto err;
- 	names[names_len] =3D NULL;
-
- 	return names;
+-		REFTABLE_ALLOC_GROW(out, len + 1, cap);
++		check(!REFTABLE_ALLOC_GROW(out, len + 1, cap));
+ 		out[len++] =3D log;
+ 	}
+ 	reftable_iterator_destroy(&it);
 =2D-
 2.47.1
