@@ -1,505 +1,63 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E702126C05
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 22:23:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD01126C05
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 22:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735424643; cv=none; b=a9HhhajhrDnNiWCXmDEKXvDKgrMLjLgRACdOBH4XNO1rdNCoHJs8vyY9PgIgkIc3BxpMBKpxNP7enHE4A/u9K6qMeBLLRzNrmFGD37WK5Yg6Jev+bzNQ3hgHtk6w7qO/3Br/+fObk9t94xNRdOLpynRwZoOcbzQeCRbV7Y2bO6o=
+	t=1735424848; cv=none; b=N+li5IhHGc9t98vTYnPJWN65+Exg8CrmH7wKEaJ66GrhV3nFS6yHDjupQLyfRxe8HLZMg5pM7PPm3vV2ZX6pByEjIHoPMMw75B9H1wMd/ct8yFNm9wxCoxeG0/KauUJPbEyV8Su6DFVd6UY5+U6ZwDc55jvTn1YBQqZgNJei1jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735424643; c=relaxed/simple;
-	bh=EMitIJbzOm3vQEATlyqLrO8KnxzKHNqydNhLisXGZzw=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rtrDjEOIEC8IADfHiqSJB+VIZ/lI4FLixVwB8qz/PY4B4ml3DDMVs9U5HoXyRgIjXPtS1mu7AEzjmYIGR3hp2p9c4cKXeSiayS5NDOM/ntHxwrQzRhdO/jPeCKOnIgNFJhvLLjs58iTAKzKUR/zMQ0CS6z7q9EAAzLSQfsbhyyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=st7oRvJi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I8RC2qPs; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735424848; c=relaxed/simple;
+	bh=EkROcoi1o6j6twKhXURdW23TJ2xjp1XldjWP6wqbEX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CmPZd6nkzW4J+3/DO02gEwoYUUvWEsquOIhDfLcXJieH8RSAn7WoDZOH184dXKbHuVCrz5GCAM3Xy8eh35rt86dOZ5Q7CDVeikPV9xvuAy2sah7vA9Pag9J7sYjq12iWMKia/gDiFCqQ55nwH3dfpM4UWTPYuM0Ng4PmzCR+WzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGQC5O3x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="st7oRvJi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I8RC2qPs"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0B4EF11400AA;
-	Sat, 28 Dec 2024 17:23:59 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Sat, 28 Dec 2024 17:23:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1735424638; x=1735511038; bh=sE/o2qHshJoEKWCx39RXIOxlwb0+u3wZ
-	fkmUTMQa2iw=; b=st7oRvJi0jph8wVv8AnaOj2UwwK8aHtw3SO6RPn823BmVp5N
-	VuFC/r3kQAkdD7SkjLdp0971SyIqpwAB6bdnBtZj2pZqZaz7DwDmZHcZJ4dN8RpO
-	/ft7kAgb+ZYPHNo9yN9snvNOe60oNlIIXuecTVIHGdmgL4Ll65YU94Ve03Yhv80m
-	yWMr45YibCyx49NKGCNavfU1zQhYYOxPcB3Jsv1ukTqdLl7msDcCjXPgSo6hQ1r+
-	qngoZZ22ddVydc77fhXpWRMF7SizoJLnznoIwzPbyTl0LNBspB/nPVyrASy2xK60
-	XdPXI3aZYTQCfBQ3mx0ixy4mvajc34DW0qwFVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735424638; x=
-	1735511038; bh=sE/o2qHshJoEKWCx39RXIOxlwb0+u3wZfkmUTMQa2iw=; b=I
-	8RC2qPst4fmwpSEtAm+LQk9vxTJnFibUgzGmy5dc/alL0+Nj2HxKE71K/doy3Jxq
-	IA2y1yeLU5KB6t1Dqxg6MgPyXWOkj/IJggO7Vnj/GWefd6PJPQvF4tHg0CqBdGyP
-	lHbH1MskLrVPn8hWUCyxI0paH8c9mTYwKTWxefn9M2jCvOSmjQBm6rcBm34xvXM2
-	fgOF5wpVH11+JazavRrA9cugVCylWi4LQUAerxF2OjRhvRbOaPh3K+FwDOSM/sNF
-	H4koAStR0QFsqdLTIFlH+81n/3Fb/4MRhDbXm+aZPd8WmzsclVN+sHrR3hX+Hwky
-	Z15GhUvxsYUnjfW4YC5Pg==
-X-ME-Sender: <xms:fnpwZ4XNsBUIvKYiAVYWO7TCArw7RYTCojlp5Vc2uswgTrrm0nNh5A>
-    <xme:fnpwZ8kbfyl51V4Wj8YCV43efrzfJTDJ3IsUW1FZPReEb85vAKmwZW-Kmn-E7pNxh
-    LHtve03iEPOFmVt0Q>
-X-ME-Received: <xmr:fnpwZ8bCwcAeJoBIcc7t53BnuF4gcMKSU4krBPJyg6sMSvV1Kh5Lq8I1pfAP6JcQyt5nF3fjuIo-gbPKFkjcSfsdGSDMA5041w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvvddgudeiudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtff
-    homhgrihhnucdlgeelmdenucfjughrpefhvffufffkfgggtgesthdtredttdertdenucfh
-    rhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnheptdetjedugfejtdfgudeffeejkeelkeeiuddutefh
-    jeeigedtleekveeigffgieetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpohhrrd
-    gtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpghhithhl
-    rggsrdgtohhmpdifohhrughprhgvshhsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvght
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:fnpwZ3U-6a4sdJZOO3Jox4nxJzHfzy_ZXU-pUejTO9emU67Ch-t7qA>
-    <xmx:fnpwZyl6jE3b6thGeCtpkQHvDXP-53o2vtpyiw4H3zInhWkEIcz-dw>
-    <xmx:fnpwZ8d1Q-cNT3UVsZ4YlNh90QzEfGBlHsSpFZmeNeNOzlcoYQr1TQ>
-    <xmx:fnpwZ0GBm6sX7rw1Pb_cIWiiIpnEBpVFWNBUjRZJrtpudmCKp9gWdg>
-    <xmx:fnpwZ0gtRDpwoDgtPrf6iA8Drru--51HKOf0WeE-OOMCtJcA7Li3ilKI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 28 Dec 2024 17:23:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Dec 2024, #10; Sat, 28)
-X-master-at: df2faf1a65fc821384e618b3c291a184fbed039e
-X-next-at: bfe548d87ed7786f06c2d9519f69c38ed47176e6
-Date: Sat, 28 Dec 2024 14:23:56 -0800
-Message-ID: <xmqq34i730qr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGQC5O3x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70876C4CECD;
+	Sat, 28 Dec 2024 22:27:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1735424846;
+	bh=EkROcoi1o6j6twKhXURdW23TJ2xjp1XldjWP6wqbEX8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pGQC5O3xpbbaBP3fKVM3QZ2o0bRNrd9dL0ZSO/BPpY2Ejx7jtZoNqV/zpAh0BBAmF
+	 n/GtttDquRu2Y9RatdzwiMidrx7+aBA7G7QL6liQpt1JZWrGeVXKJVnsHYd2lcTzKH
+	 7eU72aVyG0exVEhmRbjIKGJJoWF5icP2Fl/49sXM=
+Date: Sat, 28 Dec 2024 17:27:22 -0500
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: A bughunter <A_bughunter@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [fingerprint] of github.com
+Message-ID: <20241228-naughty-satisfied-binturong-32b43b@lemur>
+References: <ROrCxOsQ6KcZqO7YsIr2BGbPsmyUYAHXgF-l3Pwg0-7Z12oBWFrwy4yzgax9Zq6whGT4Fh4gKQxMNlHEoEOBljSvucyX9sQyc3rtT3NT0us=@proton.me>
+ <20241228-stylish-beetle-of-joy-9be836@lemur>
+ <Ai7oUOle2gNhbxgAMTtbayo6Quf4YRgJbFIYYSqUHdgNoJL89fv7P7gYIHNnmlzLn77z0n3KI6HI09_VUmsku4qZ1wmudP0eEb9GN89PmMo=@proton.me>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Hopefully we can tag -rc1 40-hours+ from now.
-
-Extra testing the tip of 'master' before we actually tag it is as
-always very much appreciated.
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* as/gitk-git-gui-repo-update (2024-12-26) 1 commit
-  (merged to 'next' on 2024-12-26 at 10b9e8227b)
- + Update the official repo of gitk
-
- The developer documentation has been updated to give the latest
- info on gitk and git-gui maintainer.
- 
- source: <20241224122912.20666-2-ash@kambanaria.org>
-
---------------------------------------------------
-[New Topics]
-
-* sk/strlen-returns-size_t (2024-12-26) 1 commit
- - date.c: Fix type missmatch warings from msvc
-
- Code clean-up.
-
- The remainder needs to be reviewed.
- source: <20241223110407.3308-3-soekkle@freenet.de>
-
-
-* ms/t7611-test-path-is-file (2024-12-27) 1 commit
-  (merged to 'next' on 2024-12-28 at b08a0c8e23)
- + t7611: replace test -f with test_path_is* helpers
-
- Test modernization.
-
- Will merge to 'master'.
- source: <20241227105345.10184-1-meetsoni3017@gmail.com>
-
-
-* ps/meson-test-wo-gitweb (2024-12-27) 3 commits
-  (merged to 'next' on 2024-12-28 at 39938f41fd)
- + meson: enable auto-discovered "gitweb"
- + GIT-BUILD-OPTIONS: wire up NO_GITWEB option
- + GIT-BUILD-OPTIONS: sort variables alphabetically
-
- meson-based build without GitWeb failed the self tests.
-
- Will merge to 'master'.
- source: <20241227-b4-pks-meson-wo-gitweb-v1-0-14ca8515bb3b@pks.im>
-
-
-* ps/more-sign-compare (2024-12-27) 10 commits
- - sign-compare: avoid comparing ptrdiff with an int/unsigned
- - commit-reach: use `size_t` to track indices when computing merge bases
- - shallow: fix -Wsign-compare warnings
- - builtin/log: fix remaining -Wsign-compare warnings
- - builtin/log: use `size_t` to track indices
- - commit-reach: use `size_t` to track indices in `get_reachable_subset()`
- - commit-reach: use `size_t` to track indices in `remove_redundant()`
- - commit-reach: fix type of `min_commit_date`
- - commit-reach: fix index used to loop through unsigned integer
- - prio-queue: fix type of `insertion_ctr`
-
- More -Wsign-compare fixes.
-
- Expecting a reroll?
- cf. <Z2-2dbYVuuLxpNmK@pks.im>
- cf. https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
- source: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
-
-
-* as/long-option-help-i18n (2024-12-28) 2 commits
- - SQUASH???
- - parse-options: localize mark-up of placeholder text in the short help
-
- Tweak the help text used for the option value placeholders by
- parse-options API so that translations can customize the "<>"
- placeholder signal (e.g. "--option=<value>").
-
- Will merge to 'next' after squashing the fix-up in?
- source: <20241228114221.10351-4-ash@kambanaria.org>
-
-
-* sk/maintenance-remote-prune (2024-12-28) 1 commit
- - maintenance: add prune-remote-refs task
-
- A new periodic maintenance task to run "git remote prune" has been
- introduced.
-
- Will merge to 'next'?
- source: <pull.1838.v2.git.1735380461980.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[Cooking]
-
-* rs/reftable-realloc-errors (2024-12-28) 4 commits
- - t-reftable-merged: handle realloc errors
- - reftable: handle realloc error in parse_names()
- - reftable: fix allocation count on realloc error
- - reftable: avoid leaks on realloc error
-
- The custom allocator code in the reftable library did not handle
- failing realloc() very well, which has been addressed.
-
- Will merge to 'next'?
- source: <f4677194-0a3a-4f07-b003-c0295b51c100@web.de>
-
-
-* jc/show-index-h-update (2024-12-20) 1 commit
- - show-index: the short help should say the command reads from its input
-
- Doc and short-help text for "show-index" has been clarified to
- stress that the command reads its data from the standard input.
-
- Comments?
- source: <xmqqfrmidyhk.fsf@gitster.g>
-
-
-* ps/the-repository (2024-12-18) 15 commits
- - match-trees: stop using `the_repository`
- - graph: stop using `the_repository`
- - add-interactive: stop using `the_repository`
- - tmp-objdir: stop using `the_repository`
- - resolve-undo: stop using `the_repository`
- - credential: stop using `the_repository`
- - mailinfo: stop using `the_repository`
- - diagnose: stop using `the_repository`
- - server-info: stop using `the_repository`
- - send-pack: stop using `the_repository`
- - serve: stop using `the_repository`
- - trace: stop using `the_repository`
- - pager: stop using `the_repository`
- - progress: stop using `the_repository`
- - Merge branch 'ps/build-sign-compare' into ps/the-repository
-
- More code paths have a repository passed through the callchain,
- instead of assuming the primary the_repository object.
- source: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
-
-
-* ps/build-meson-html (2024-12-27) 12 commits
- - Documentation: wire up sanity checks for Meson
- - t/Makefile: make "check-meson" work with Dash
- - meson: install static files for HTML documentation
- - meson: generate articles
- - Documentation: refactor "howto-index.sh" for out-of-tree builds
- - Documentation: refactor "api-index.sh" for out-of-tree builds
- - meson: generate user manual
- - Documentation: inline user-manual.conf
- - meson: generate HTML pages for all man page categories
- - meson: fix generation of merge tools
- - meson: properly wire up dependencies for our docs
- - meson: wire up support for AsciiDoctor
-
- The build procedure based on meson learned to generate HTML
- documention pages.
-
- Needs review. On hold.
- source: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
-
-
-* jc/doc-attr-tree (2024-12-14) 1 commit
- - doc: give attr.tree a bit more visibility
-
- Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
- attr.tree configuration variables appear at the same places in the
- documentation.
-
- On hold.
- cf. <20241216111112.GA2201417@coredump.intra.peff.net>
- source: <xmqq5xnladwi.fsf@gitster.g>
-
-
-* ps/3.0-remote-deprecation (2024-12-12) 6 commits
- - remote: announce removal of "branches/" and "remotes/"
- - builtin/pack-redundant: remove subcommand with breaking changes
- - ci: repurpose "linux-gcc" job for deprecations
- - ci: merge linux-gcc-default into linux-gcc
- - Makefile: wire up build option for deprecated features
- - Merge branch 'ps/build' into ps/3.0-remote-deprecation
-
- Following the procedure we established to introduce breaking
- changes for Git 3.0, allow an early opt-in for removing support of
- $GIT_DIR/branches/ and $GIT_DIR/remotes/ directories to configure
- remotes.
-
- Needs review.
- source: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
-
-
-* cc/lop-remote (2024-12-07) 5 commits
- . doc: add technical design doc for large object promisors
- . promisor-remote: check advertised name or URL
- . Add 'promisor-remote' capability to protocol v2
- . strbuf: refactor strbuf_trim_trailing_ch()
- . version: refactor strbuf_sanitize()
-
- Expecting a reroll.
- cf. <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
- source: <20241206124248.160494-1-christian.couder@gmail.com>
-
-
-* ds/backfill (2024-12-20) 6 commits
- - backfill: assume --sparse when sparse-checkout is enabled
- - backfill: add --sparse option
- - backfill: add --min-batch-size=<n> option
- - backfill: basic functionality and tests
- - backfill: add builtin boilerplate
- - Merge branch 'ds/path-walk-1' into ds/backfill
- (this branch uses ds/path-walk-1.)
-
- Lazy-loading missing files in a blobless clone on demand is costly
- as it tends to be one-blob-at-a-time.  "git backfill" is introduced
- to help bulk-download necessary files beforehand.
-
- Comments?
- source: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
-
-
-* re/submodule-parse-opt (2024-12-11) 7 commits
-  (merged to 'next' on 2024-12-21 at 9e65a56a63)
- + git-submodule.sh: rename some variables
- + git-submodule.sh: improve variables readability
- + git-submodule.sh: add some comments
- + git-submodule.sh: get rid of unused variable
- + git-submodule.sh: get rid of isnumber
- + git-submodule.sh: improve parsing of short options
- + git-submodule.sh: improve parsing of some long options
-
- "git submodule" learned various ways to spell the same option,
- e.g. "--branch=B" can be spelled "--branch B" or "-bB".
-
- Will cook in 'next'.
- source: <20241211063234.7610-1-royeldar0@gmail.com>
-
-
-* tb/unsafe-hash-test (2024-11-21) 2 commits
- - t/helper/test-tool: implement sha1-unsafe helper
- - t/helper/test-sha1: prepare for an unsafe mode
-
- Preliminary addition to the test tool to allow a plain SHA-1 hash
- algorithm without collision protection.
-
- Comments?
- cf. <xmqqr073antj.fsf@gitster.g>
- source: <cover.1730833506.git.me@ttaylorr.com>
-
-
-* tb/incremental-midx-part-2 (2024-11-20) 15 commits
- - midx: implement writing incremental MIDX bitmaps
- - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
- - pack-bitmap.c: keep track of each layer's type bitmaps
- - ewah: implement `struct ewah_or_iterator`
- - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
- - pack-bitmap.c: compute disk-usage with incremental MIDXs
- - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
- - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
- - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
- - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
- - pack-bitmap.c: open and store incremental bitmap layers
- - pack-revindex: prepare for incremental MIDX bitmaps
- - Documentation: describe incremental MIDX bitmaps
- - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
- - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
-
- Incrementally updating multi-pack index files.
-
- Needs review.
- source: <cover.1732054032.git.me@ttaylorr.com>
-
-
-* ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
- - transport: don't ignore git-receive-pack(1) exit code on atomic push
- - t5504: modernize test by moving heredocs into test bodies
-
- "git push --atomic --porcelain" used to ignore failures from the
- other side, losing the error status from the child process, which
- has been corrected.
-
- Needs to see if competing parallel topic needs to replace this one.
- source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
-
-
-* jc/move-is-bare-repository-cfg-variable-to-repo (2024-11-07) 3 commits
- . repository: BUG when is_bare_cfg is not initialized
- . setup: initialize is_bare_cfg
- . git: remove is_bare_repository_cfg global variable
-
- Code rewrite to turn the is_bare_repository_cfg global variable
- into a member in the the_repo singleton repository object.
-
- Waiting for response to reviews.
- cf. <xmqqy116xvr3.fsf@gitster.g>
- Seems to break t0021-conversion on Windows.
- cf. https://lore.kernel.org/git/xmqqzfl1hl52.fsf@gitster.g/
- source: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
-
-
-* ds/name-hash-tweaks (2024-12-20) 8 commits
- - pack-objects: add third name hash version
- - pack-objects: prevent name hash version change
- - test-tool: add helper for name-hash values
- - p5313: add size comparison test
- - pack-objects: add GIT_TEST_NAME_HASH_VERSION
- - repack: add --name-hash-version option
- - pack-objects: add --name-hash-version option
- - pack-objects: create new name-hash function version
-
- "git pack-objects" and its wrapper "git repack" learned an option
- to use an alternative path-hash function to improve delta-base
- selection to produce a packfile with deeper history than window
- size.
-
- Comments?
- source: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
-
-
-* ds/path-walk-1 (2024-12-20) 7 commits
- - path-walk: reorder object visits
- - path-walk: mark trees and blobs as UNINTERESTING
- - path-walk: visit tags and cached objects
- - path-walk: allow consumer to specify object types
- - t6601: add helper for testing path-walk API
- - test-lib-functions: add test_cmp_sorted
- - path-walk: introduce an object walk by path
- (this branch is used by ds/backfill.)
-
- Introduce a new API to visit objects in batches based on a common
- path, or by type.
-
- Comments?
- source: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
-
-
-* km/config-remote-by-name (2024-10-21) 1 commit
- - config: support remote name in includeIf.hasconfig condition
-
- Support conditionally including configuration by remote name, instead
- of just URL.
-
- Will discard?
- source: <20241020173216.40852-2-ken@kmatsui.me>
-
-
-* y5/diff-pager (2024-10-21) 1 commit
- - diff: setup pager only before diff contents truly ready
-
- Delay setting up the pager in 'git diff' until after the diff contents
- itself is fully prepared.
-
- Will discard?
- source: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
-
-
-* ej/cat-file-remote-object-info (2024-11-25) 6 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - cat-file: add declaration of variable i inside its for loop
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Expecting a reroll.
- cf. <Z0RIrKwUnaWWm_gJ@pks.im>
- source: <20241125053616.25170-1-eric.peijian@gmail.com>
-
-
-* js/libgit-rust (2024-10-16) 5 commits
- - Makefile: add option to build and test libgit-rs and libgit-rs-sys
- - libgit: add higher-level libgit crate
- - libgit-sys: also export some config_set functions
- - libgit-sys: introduce Rust wrapper for libgit.a
- - common-main: split init and exit code into new files
-
- A rust binding to libgit.a functions has been introduced.
-
- Will discard?
- source: <cover.1729032373.git.steadmon@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Ai7oUOle2gNhbxgAMTtbayo6Quf4YRgJbFIYYSqUHdgNoJL89fv7P7gYIHNnmlzLn77z0n3KI6HI09_VUmsku4qZ1wmudP0eEb9GN89PmMo=@proton.me>
+
+On Sat, Dec 28, 2024 at 09:12:14PM +0000, A bughunter wrote:
+> >  Please do a modicum of effort before posting to the list. This is literally
+> >  the first hit on the search engines:
+> >  https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
+> >  
+> 
+> Yeah, but you should post the keys in the community incase an attacker would
+> intercept, block, or change those posted in the official location.
+
+You have to keep two things in mind:
+
+1. This mailing list has no relationship with GitHub.com. This list is about
+   the software, not the hosting service that uses it.
+
+2. The attacker (e.g. me) can also modify the archives of this mailing list to
+   put whatever they want there, so you should absolutely not use the archives
+   as a source of any kind of truth. :)
+
+-K
