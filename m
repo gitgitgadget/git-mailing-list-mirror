@@ -1,85 +1,49 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8D22AE84
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 17:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569E18E373
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 17:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735405789; cv=none; b=DfUpDqBmAdNWAxssLtBvOGu6/cScA6C1t5eUQ+mLelfX137xSzSYuruiN38+Fl/yPfQRR0ZiY3b6tYguf6VUmbECTjwvY3LSuwfNbIxcGx9aMkZg4Q4OrBaJTSK1KKzD10npDBt9ZdqF6P4xJhAUcRx/unYFexeU8vFxyZwNsbk=
+	t=1735406116; cv=none; b=EYBnfrM3vHgdGxkGk23tgoFlCFs8skmUfmrO44PznFCscZ1dEb+wzvRf4hDaj+oy3cx0hMCbFLGkVSNG9lXIrhVvarPE6QQkfEeAIb9r5JLNnvwdbgnersSLeywmV8lNP4R9YONk8QB4CHDY8VibEcDqunMi/TBEFooAauU89wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735405789; c=relaxed/simple;
-	bh=TG363M2zPJrpVDaGeNTXRIPnV9u6AFIgfU8WA2irQ9I=;
+	s=arc-20240116; t=1735406116; c=relaxed/simple;
+	bh=cse1SXiJunkaH1hXGVLsZkU4DXes4UJDJ9yA2l9WmbA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RKN+RYcsgD9TgOp2pyPKjKd1MvxMlKw0I3UwpuNXe2MWW+NnZz2yRHTgj0FKE27C0Vm0aJ4eEdPrsiIr9m/ezLGGRyFNWG/IU0Zd/HqXXh49uxa6oMsLyvi1MrbnjSyxWpPMfMiOUBmbDXNM9HjTTAIxxQBY5IMSt4IW/13Lw98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bDmgRDQ7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nqASXtOw; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bDmgRDQ7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nqASXtOw"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1E7FE114002D;
-	Sat, 28 Dec 2024 12:09:46 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Sat, 28 Dec 2024 12:09:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1735405786;
-	 x=1735492186; bh=1GMVK4HQUNEHL+CkevjpNQ0vhtULEXVwoFHBib1cd8c=; b=
-	bDmgRDQ79i1vTwWk0bi0n/qVL/R+79FCwo3CsseTlazAKRga7KWWqMzx2nftlfe9
-	5czWqi0yH3kzOr8OGUDevtgmQQhIUZuZrpQiQV4dpz49BGYhGXwJnri9zYWhd2Dk
-	CHA8nyA/zqxDhFAoEi3dLwfF0hCGhEUUouAj6hnQUjftC9jxagfVYpE08zo35fwS
-	BBiCEYDoIeaAmw2lCG+xV/zRqn2vz3rxuouu5SCfeq6ZKH91wBIOY1YLVJgSzNQW
-	zTzZnbD4ficFnwcHDXw3Wt51dRHpcQr3RCA5dnF8sIEQ35ACndyT6L2YoR3o9puI
-	8FJEWlRfOx0K7dkyseYwaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735405786; x=
-	1735492186; bh=1GMVK4HQUNEHL+CkevjpNQ0vhtULEXVwoFHBib1cd8c=; b=n
-	qASXtOwfrNc9ipYtF0nNJMqWNRyv5xA0ni/Qo0Eva1cE8WgQo18lvpWtQuljhdBL
-	vySl1OAB0PtysdP02ScoX3cCGiylpzO7TpvFBWgbp3UynB0IjwUwA8DeDmbs5Vt5
-	zNZjTCGdQuXCE5T6SJbYcn2nLtM1oF88DECx4IJzidGb2tlWP/ufYB3okW4mKnnn
-	ftztlHZ9pqWUxkqk3NriGXLHVhv8kZRb8i7kaM6P6ZV3SfqfZNUCQPGkDdNIBNIE
-	AgMoYfVAmrrTlvmkpGJswnrqMNXTdt+7GIl4haAF5f22jEv+HaN+xzePGZXvqQii
-	5YjA8sOi/EsijZFdo83gA==
-X-ME-Sender: <xms:2TBwZ_aqJjvHH0G9J_BTKThp2MmqNuSDF8R3_Q7puA7-2lGSCslRqw>
-    <xme:2TBwZ-bqzSOpmJ9g1ls8eHHgf0Sc_kN5Dvm_DUlRwj3LR6cUjxWbUMZkiMiXvIKYp
-    YR-oZFwlyoznhA5LA>
-X-ME-Received: <xmr:2TBwZx8AIDdOFi8zJbmO6TsFiAKfgQ_nd920PYhbL3y2VzuxUivRWe-4MKw6gCZzSn-Vg7dIn3G1S60sEpwobx_4PRXtuhX89Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvvddgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepsgihohhunhhgtghhrghnrdhlvggvsehgmhigrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:2TBwZ1pTM3wz-yB3eFXQTn1rBV0ij1WAayt0yLt64SDwi-zjtaLjsQ>
-    <xmx:2TBwZ6od-R1G52We5ImncPjZlWz5ZpfmgwfhhiO0B8kcCuLQAs-sRg>
-    <xmx:2TBwZ7T5VtmfRPzDdviSPcUsM6BnrACb0eUS4mHrST0yICi8zRtuOw>
-    <xmx:2TBwZyqb7WqGsLhvHIgfJLDjTZP1IaT9d_RFu5B4Ly166A5LdrCBEQ>
-    <xmx:2jBwZzmlAzQp5yD2xWP058egfaJhs-gDNdBS1yN3kvrZIjDXi7lphOWL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 28 Dec 2024 12:09:45 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org, Byoungchan Lee <byoungchan.lee@gmx.com>
-Subject: Re: [PATCH] builtin/gc: Ignore random minute field when registering
- macOS services
-In-Reply-To: <CABbmNUHA5F_ZMzngYHBzuqLLJ-3+87yVU_gZxGxhCYuMP64QKg@mail.gmail.com>
-	(Byoungchan Lee's message of "Sat, 28 Dec 2024 12:13:03 +0900")
-References: <CABbmNUHA5F_ZMzngYHBzuqLLJ-3+87yVU_gZxGxhCYuMP64QKg@mail.gmail.com>
-Date: Sat, 28 Dec 2024 09:09:44 -0800
-Message-ID: <xmqqmsgf3faf.fsf@gitster.g>
+	 MIME-Version:Content-Type; b=L1FLiX+Bt0iwrbLtpIB2OMaG8CKRcvC/3s1SslaZxUOOmUf6X4ut4guOAsrdO45Lnx1kjNTzqaPwu0JQUdJHmIlrkscWAhs2qWHaWmhv4kxfepJewzGv/Zl/PGBlX7uG9u1jEyUP8Zr+QchAmyv6f64bvLDvnwkxL2Xd2E83bGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4YL8BG6NHTz1qsPp;
+	Sat, 28 Dec 2024 18:15:02 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 4YL8BG5kCTz1qqlS;
+	Sat, 28 Dec 2024 18:15:02 +0100 (CET)
+X-Virus-Scanned: amavis at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+ by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
+ with ESMTP id ZMnH3XEghbKP; Sat, 28 Dec 2024 18:15:02 +0100 (CET)
+X-Auth-Info: 3C0p7L6zQndGZ3NoioddPNG4NdB6vFSFtfINzTwhfMtBoKdr3/0YWlHhqyS1OjwB
+Received: from igel.home (aftr-82-135-83-134.dynamic.mnet-online.de [82.135.83.134])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Sat, 28 Dec 2024 18:15:02 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+	id CD2B42C1A00; Sat, 28 Dec 2024 18:15:01 +0100 (CET)
+From: Andreas Schwab <schwab@linux-m68k.org>
+To: crstml@libero.it
+Cc: git@vger.kernel.org
+Subject: Re: connecting the local main branch to the remote origin/main
+ without pushing
+In-Reply-To: <a69c4e2e-cbb0-c242-a34a-8997a84fefb7@libero.it>
+	(crstml@libero.it's message of "Sat, 28 Dec 2024 16:47:27 +0100")
+References: <a69c4e2e-cbb0-c242-a34a-8997a84fefb7@libero.it>
+X-Yow: Used staples are good with SOY SAUCE!
+Date: Sat, 28 Dec 2024 18:15:01 +0100
+Message-ID: <87h66nk9uy.fsf@igel.home>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,76 +51,21 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Byoungchan Lee <byoungchan.lee@gmx.com> writes:
+On Dez 28 2024, crstml@libero.it wrote:
 
-> In macOS, `git-maintenance` registers several launchctl services
-> to periodically run Git maintenance tasks by creating plist files
-> in `~/Library/LaunchAgents/`.
-> To avoid re-registering services unnecessarily, we check if a service
-> is already registered by verifying the existence and contents
-> of the corresponding plist file.
->
-> However, these plist files include a random value in the minute field
-> to distribute maintenance tasks over time. Because this value changes
-> with each registration attempt, a direct comparison of the entire file
-> (via `strbuf_cmp()`) often fails, causing services to be erroneously
-> re-registered. As a result, users may see multiple services registered
-> and receive repeated “Background Items Added” notifications.
->
-> To resolve this, introduce `launchctl_plist_cmp_ignore_minute()`,
-> which compares the content of the plist file while ignoring
-> the random minute field. This ensures that services are not
-> needlessly re-registered when the only difference in the plist file
-> is the randomized minute value.
->
-> Signed-off-by: Byoungchan Lee <byoungchan.lee@gmx.com>
-> ---
->  builtin/gc.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 47 insertions(+), 4 deletions(-)
+> My question is:
+>      Is it possible when applying the method 2 to have (without pushing)
+>      the local main branch connected to the remote origin/main branch as
+>      in the case of method 1 which by cloning connects these branches.
 
-A few comments on the design.
+You can establish the effect by setting two config entries:
 
-"ah, the minute part needs to be ignored when comparing with the
-existing configuration" smells like a poor strategy for two reasons.
+$ git config branch.main.remote origin
+$ git config branch.main.merge refs/heads/main
 
-   (1) maybe the part that gets fuzzed would become different over
-       time and this new code may need to ignore differently.
-
-   (2) the need to compare with the existing configuration would not
-       be limited to macOS, would it?  If anybody wants to avoid
-       re-registering with the same configuration again, such a
-       selective comparison needs to be reimplemented on every
-       backends.
-
-I wonder if we want to tweak get_random_minute() logic to be
-deterministic to avoid need for such a fuzzy comparison at its root.
-
-A few possible ideas are to read the value from the existing
-configuration and reuse that instead of coming up with a new random
-value, or to hash the hostname (or something similar that is
-reasonably stable) to use the result as the seed.  Derrick, what do
-you think?
-
-
-As to the patch, as I suspect we may not want a code with the
-proposed design, I won't look at it deeply at this point, but please
-consult Documentation/CodingGuidelines and/or make sure your patch
-will not be whitespace damaged during transit from your repository
-to people's mailbox.  For example:
-
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index a9b1c36de2..6405f4d332 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -1951,6 +1951,51 @@ static char *launchctl_get_uid(void)
->   return xstrfmt("gui/%d", getuid());
->  }
-
-These two lines are supposed to be what already appear in our
-codebase, but we of course do not use a single-space indent.  There
-is something funny going on.
-
-Thanks.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
