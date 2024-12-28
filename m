@@ -1,125 +1,208 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC0435958
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 08:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBFF635
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 09:43:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735375287; cv=none; b=rinaFWgu1GcsVVbgSwssdq/jzu4LtFg49+d8v31bxGNGT2z5vtA2TR+JsPF9m1TWtTP1NPK6G3umQVdyN42pbI2VrG8TZRzWWDUJOZI/sgHFG/gye5KVy6cMcr+G2zRXozG1E/fi2f5nRcgZZpFFe47l2hzqEYb6cWrnMgDt2H8=
+	t=1735379029; cv=none; b=HjOtukMoeUKPiqo4mFhijHF6vE97s6J/m6FIIJRiOUX9q/Rnmg2S14b18mB7+Luz7SxmSz0BNKwE0cCPzeIzHM1pvAFJtsH8isLmuEZay7bX4xqUGkSHvae48ut0Elhh5tbaoUcCU7Tp4zBH9oBGAIFgXHF6QNVqyUYgP5YJIYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735375287; c=relaxed/simple;
-	bh=SqbnMiH3WZL87vaDru4OPa6aZ/J5fFADCFxxcctRLLQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h5XhsgXctH2gA5YviXH2pbFo/hDKDj3w37msmUU3eR8cwUiRCCNEjtSfhbLK9nQYmu0QVMhgXfkeHfeES+XpfU1+e7Y9cbcDy+Ddxrlf7sX2otgL9rgO/xY23WU60ebB5ZyYXwiBDGC/TKGgG31fFV/oT1ZQ1y9TVenuqZX8aBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yp3BMw+m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mjO6dPp2; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1735379029; c=relaxed/simple;
+	bh=h8xhGxgkC25Ypasq04KsyChz8Nki7rcTqdKzylahrhU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=cES1hinugGqxlj1NJ4MWBYMrMGWZ3ERJG7Q4YucJdDQEWpHYB2Lb5ciENYOBc/IpGdeD6c+r3soZxwjI2HcyDpoPM+QHQwjIlGwWx+NvYKjXSjZbUNGjQ8JTg0GBIqePMO7mYsvwEy6m1zhASlYbz7wykBC0DTYP25lYhNlH8og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=l2gKhMue; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yp3BMw+m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mjO6dPp2"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 280CC114013D;
-	Sat, 28 Dec 2024 03:41:24 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Sat, 28 Dec 2024 03:41:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1735375284; x=1735461684; bh=P8FfHrp3bM
-	XsZmGJkNMxqH44jeRGBHhpzu5SMxZjvPk=; b=Yp3BMw+mDQkzpN0XhF2IuDuXgU
-	N72axZRuTrVaCvpz9q167LMcmqnpbDFcpPqerYxySdtNYKYgYaI+0A2E8m6BkyJi
-	t3OoOAsY6a4gbbx6jfQdH9nXrpbiLlMgzB3joO4xJLERXE3Ewo+XAjTd7jOF2sSK
-	3jBdxNlxYme864Vm34j8tvQvaDdWTqPy5xGmt1+dGvVowiPNyuIN9V8ocM0dahit
-	4LRZm3EOPdWjXVriG21vqjmgkXadg8dXvCRB8XXgX+DLygMeIxaHPZtYfizT6ry2
-	GH4LhgguBtFqPARoM4inOg6FVGR2jXFT/RwovfWKfo0/NxxeftZgIjL/yQmw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735375284; x=1735461684; bh=P8FfHrp3bMXsZmGJkNMxqH44jeRGBHhpzu5
-	SMxZjvPk=; b=mjO6dPp2lqVMt8WxbcXzgZzmuWgkWewps5SVgzDDTEd8RsuIUKC
-	8or6Ksw1uM97iBJTV1FsGjRMpl2ytmGkQunB7Q1veWgSM4hzAhD9gyctfbBKz8Pa
-	Unwfe5UkPYn/3MxiTa+ZjPjBl+7JWmA+Pgd8zZ9SWZlrJL0fnet5FsMNnv0uEvFl
-	dAvRd9raf1QWQ0kLQNd8hXjsnjQJgUmAw5rUaDqbM1MX0EBB+4eZuit19/Ka8t+s
-	DYng4t4569Evvre7eAiQEbFquATSkrcmrR2QuL4Dgii+7YJuAShozWvFCdGMHQGm
-	TUvDeo5iir2Je/ha3jylQA7sZKZoM/RQdsA==
-X-ME-Sender: <xms:s7lvZzk9Pxi2mCyqqej0UvIhRIvMU-yrICRl-xacFP36gXHUddCL8A>
-    <xme:s7lvZ21jcEptkOrZuuh3CvVmy7eh9wBu0nC0PlH7y3L51WD1C3QDB8jBo8Ptel665
-    YdLKVs9qqFyXarZKg>
-X-ME-Received: <xmr:s7lvZ5qbCtHvS3a4jVDx96wd4pIvA3p9dJVm5IdRglDziLEJFVSC972u_2YNchzpmWk2MShotlKmuEr0vb2BUOaWhRm_zSF_yhiwqbeZg4dn_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvuddguddvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:s7lvZ7kILMwud5HU4h5oL0nYfgYlIS8O_BuZtCAv7-v7qAJ3lXmMdQ>
-    <xmx:s7lvZx2xZTMqMTtdiHUHWLMqUwZu475qyzcerPyJUaAobiQ3TVHAuA>
-    <xmx:s7lvZ6sTDy0l-TJRmc0zO7-L2uzjKvukA3L8CL0udwnFE7YnqDOvqw>
-    <xmx:s7lvZ1WTWJna_AaR5kZHrgIaVjEF1ZLVjTH7cOn_ywRZWPHVXdD4ZQ>
-    <xmx:s7lvZ6wjiB7eUfF6Oqp7mesVYiRMUHA4BLxLMMDt28OlEwSRkclxbOBf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 28 Dec 2024 03:41:22 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cb592961 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 28 Dec 2024 08:39:34 +0000 (UTC)
-Date: Sat, 28 Dec 2024 09:41:02 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/9] commit-reach: -Wsign-compare follow-ups
-Message-ID: <Z2-5nnBzPKP3iPxl@pks.im>
-References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
- <xmqqbjwwucvy.fsf@gitster.g>
- <xmqq7c7kubx8.fsf@gitster.g>
- <20241227213729.GA796141@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="l2gKhMue"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1735379021; x=1735983821; i=l.s.r@web.de;
+	bh=Ty2EktHQsAocKN80L7uv3IsK19zXhH8dHKbhzqnnBVU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=l2gKhMueh4rn1np2plzlhX3UbiqxLgVtc0828hLZT6v4KcjdFP3EWvSKZ1F3uFOd
+	 f6qtyaCDTHVn9w6Delxmx9vVs7YHMeAioGaZQCcI6h+igmukxaReNM2oG283VJ3gE
+	 9t/L/MiSDcw6CeIi8RLUkG1RIPVQ6hFQWcOGMiTZiZiuQQo51LCmfD4P1BQ5DJhoE
+	 grh8ZABqB0ism8EJs0yo1EqzpNOTjBD4H2GIuPykRGAQHFyALCpeoeUNt74KoxEcb
+	 I3ZigkIVI08g1RG8k9Bm1+s4zoDOsCtYM6YsAS4yeaDmU6/L2E5tWvRZEpEv8Rahs
+	 otjhMt15URz1Wf2FKg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.20.45]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N3ouq-1ta6I93M2a-012Oqw; Sat, 28
+ Dec 2024 10:43:41 +0100
+Message-ID: <f4677194-0a3a-4f07-b003-c0295b51c100@web.de>
+Date: Sat, 28 Dec 2024 10:43:41 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241227213729.GA796141@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v2 0/4] reftable: fix realloc error handling
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Git List <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+References: <2b9fba8d-be63-4145-9d25-a2151e422cfa@web.de>
+Content-Language: en-US
+In-Reply-To: <2b9fba8d-be63-4145-9d25-a2151e422cfa@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:7c7L4xaN0j/HEhUZuaBQnLlodIESciXrujRGjPnMRz8MbpiuuZm
+ zV9ory61WF7L+EKGL+q1rrcxz6GIAV2iXP0fcRO5soxA26uFDPQmjnKXJamhLK4/+JuDxTw
+ C7kRLNQgmRwduiWcDa0rfDTaw7J8CQLPqisLf8zrGE3VvLAPzAGEgRnAVGjXUiuuQKGoQck
+ 4uF3D6St78W6RlKi0u5tQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:uQ3HAywTxRQ=;nOxMeU8eW+6g2DUByT5NnAl+deU
+ nbwR6bMjZKOppIskValUcwqlHvPgPL4ml5pKaytVvR35wE4P2lNcJzWXaYStT/zGFOXoRX+gm
+ 0qhncZJOLdMzC4hGHRtNw39Id4LHJuImvgOdXsoOxaihDka2owa0GsVIogzvJQaxOD0onXcgi
+ 61tWLf4FBa8p3ge+Y/vDgFcs6N3AL6GL6jzG/ApTExUvDMT9Ne1pBDXE78SWN1+VxHKr5+uFv
+ OBpIV0GrCl+vm581H0w1LzV9Dla6GCjVIUflL7zvtpPXYRVSDWR7N9GSQ+wHwI2/8aRB5rZfi
+ fLqVRYn6Eq5GSA+16LTub9tzO1goJM8ku0cYOxmqdWaE3AGraSZDAf5jjvBYDeZvFr7RSgdV1
+ sNCGKnYEgs9lR/ZyN5EhQjowd6xXvPG75bvRUUSoZdh5N5iXDqbchZJOqjcOfYMKw40js2mgd
+ 9ETVRZ6PFnJwV26icarjml/B1YPLv9e6cMIEqdeWrA9q6sf1shuUq6PrjUD938WGm4wUCebtV
+ AnxXsFVmRHvvQZawR+chFqfyo4S+C9Ht+Ubq6BoxFWRjPPUpNgxYXPG1GjrUwQ51w1A5pfhTB
+ Fmk1I8lodAxRdl0SOPjEXacIBW2AHnC9ogKs5cKIWBSXgC31EY4KDgLBjEk9MtwXfx8pZwLUA
+ nE7CkqQSaMdDZWU48PPwkmEt6Djmfxrmh1IZKdmdQyc6VY1sdh3QtfVSzMLhtV2Vg0OCy7fuK
+ aWpGnX+qgWcFYzfMD9wGhsSe3X1c4jP4A7tpeDPYggorXIc+V0ha9RsxOJgEjTCeRMhMh81n7
+ QMoFHQQANXtBFAJBsW9TSK4cDqxuBlZxdDqRSj/NsvU3gn4X/yX2inZyi6HV5KPqtJcepWlX9
+ p2wegG7PYMaHq8v4W96ezwJzmTdHIquCL7usgkqGrEZsqVTXfbcHskak8CafaRcq/Pu38T5RT
+ Cxfa7F1VQ7qUfx8b9cWMIBvE5IK4d/8ygS0VKZrOVc1z5wUGO4V41fCCswCv02Tf0eV47NxSc
+ 3q9FIspbaDETf3oV6y2qORvEj/PXO0oolVyuxVqffP9JYIMhGg1h9VIOUzoTWDljqZ6W7vSmM
+ ikA0CQi3A=
 
-On Fri, Dec 27, 2024 at 04:37:29PM -0500, Jeff King wrote:
-> On Fri, Dec 27, 2024 at 12:08:03PM -0800, Junio C Hamano wrote:
-> I doubt there is a way to tell the compiler that (or that a compiler
-> could even switch to an unsigned ptrdiff type if it knew that). But I
-> wonder if there is a generalized helper we can devise that would avoid
-> simply casting here. I guess that could be a checked cast like:
-> 
->   static inline size_t ptrdiff_to_size(ptrdiff_t v)
->   {
-> 	if (v < 0)
-> 		BUG("surprising negative value: %"PRIdMAX, v);
-> 	return (size_t)v;
->   }
-> 
-> or even:
-> 
->   static inline bool has_space(const void *vs, const void *ve, size_t want)
->   {
-> 	const char *s = vs, e = ve;
-> 	return want <= ptrdiff_to_size(ve - vs);
->   }
-> 
-> I don't love hiding basic things like this behind macros or inlines. But
-> allocation and bounds comparisons do have gotchas (especially against an
-> adversary that can try to create pathological situations). Maybe it's worth
-> having an easy way to do them safely without having to think about each
-> one. I dunno.
+Changes since v1:
+- added unit tests
+- explicitly set pointer to NULL on REFTABLE_ALLOC_GROW_OR_NULL failure
+  in patch 2; omission found by unit test
 
-I think having a wrapper like `cast_ptrdiff_to_size_t()` would be a
-sensible solution for now, also because it fits in nicely with
-`cast_size_t_to_int()`. I'll introduce such a wrapper once I've got a
-good excuse to do so.
+  reftable: avoid leaks on realloc error
+  reftable: fix allocation count on realloc error
+  reftable: handle realloc error in parse_names()
+  t-reftable-merged: handle realloc errors
 
-Patrick
+ reftable/basics.c                | 14 +++-----
+ reftable/basics.h                | 41 ++++++++++++++++++-----
+ reftable/block.c                 | 10 +++---
+ reftable/pq.c                    |  2 +-
+ reftable/record.c                | 12 +++----
+ reftable/stack.c                 |  8 +++--
+ reftable/writer.c                |  5 +--
+ t/unit-tests/t-reftable-basics.c | 56 ++++++++++++++++++++++++++++++++
+ t/unit-tests/t-reftable-merged.c |  4 +--
+ 9 files changed, 116 insertions(+), 36 deletions(-)
+
+Range-diff against v1:
+1:  b41547720d ! 1:  b3cad92038 reftable: avoid leaks on realloc error
+    @@ reftable/writer.c: static int writer_flush_nonempty_block(struct re=
+ftable_writer
+      	if (!w->index)
+      		return REFTABLE_OUT_OF_MEMORY_ERROR;
+
+    +
+    + ## t/unit-tests/t-reftable-basics.c ##
+    +@@ t/unit-tests/t-reftable-basics.c: static int integer_needle_lesseq=
+(size_t i, void *_args)
+    + 	return args->needle <=3D args->haystack[i];
+    + }
+    +
+    ++static void *realloc_stub(void *p UNUSED, size_t size UNUSED)
+    ++{
+    ++	return NULL;
+    ++}
+    ++
+    + int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+    + {
+    + 	if_test ("binary search with binsearch works") {
+    +@@ t/unit-tests/t-reftable-basics.c: int cmd_main(int argc UNUSED, co=
+nst char *argv[] UNUSED)
+    + 		check_int(in, =3D=3D, out);
+    + 	}
+    +
+    ++	if_test ("REFTABLE_ALLOC_GROW_OR_NULL works") {
+    ++		int *arr =3D NULL;
+    ++		size_t alloc =3D 0, old_alloc;
+    ++
+    ++		REFTABLE_ALLOC_GROW_OR_NULL(arr, 1, alloc);
+    ++		check(arr !=3D NULL);
+    ++		check_uint(alloc, >=3D, 1);
+    ++		arr[0] =3D 42;
+    ++
+    ++		old_alloc =3D alloc;
+    ++		REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
+    ++		check(arr !=3D NULL);
+    ++		check_uint(alloc, >, old_alloc);
+    ++		arr[alloc - 1] =3D 42;
+    ++
+    ++		old_alloc =3D alloc;
+    ++		reftable_set_alloc(malloc, realloc_stub, free);
+    ++		REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
+    ++		check(arr =3D=3D NULL);
+    ++		check_uint(alloc, =3D=3D, 0);
+    ++		reftable_set_alloc(malloc, realloc, free);
+    ++
+    ++		reftable_free(arr);
+    ++	}
+    ++
+    + 	return test_done();
+    + }
+2:  bde2f0e4a5 ! 2:  62a1042825 reftable: fix allocation count on realloc =
+error
+    @@ reftable/basics.h: char *reftable_strdup(const char *str);
+     -		reftable_free(reftable_alloc_grow_or_null_orig_ptr); \
+     +	size_t reftable_alloc_grow_or_null_alloc =3D alloc; \
+     +	if (REFTABLE_ALLOC_GROW((x), (nr), reftable_alloc_grow_or_null_allo=
+c)) { \
+    -+		reftable_free(x); \
+    ++		REFTABLE_FREE_AND_NULL(x); \
+      		alloc =3D 0; \
+     +	} else { \
+     +		alloc =3D reftable_alloc_grow_or_null_alloc; \
+      	} \
+      } while (0)
+
+    +
+    + ## t/unit-tests/t-reftable-basics.c ##
+    +@@ t/unit-tests/t-reftable-basics.c: int cmd_main(int argc UNUSED, co=
+nst char *argv[] UNUSED)
+    + 		check_int(in, =3D=3D, out);
+    + 	}
+    +
+    ++	if_test ("REFTABLE_ALLOC_GROW works") {
+    ++		int *arr =3D NULL, *old_arr;
+    ++		size_t alloc =3D 0, old_alloc;
+    ++
+    ++		check(!REFTABLE_ALLOC_GROW(arr, 1, alloc));
+    ++		check(arr !=3D NULL);
+    ++		check_uint(alloc, >=3D, 1);
+    ++		arr[0] =3D 42;
+    ++
+    ++		old_alloc =3D alloc;
+    ++		old_arr =3D arr;
+    ++		reftable_set_alloc(malloc, realloc_stub, free);
+    ++		check(REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
+    ++		check(arr =3D=3D old_arr);
+    ++		check_uint(alloc, =3D=3D, old_alloc);
+    ++
+    ++		old_alloc =3D alloc;
+    ++		reftable_set_alloc(malloc, realloc, free);
+    ++		check(!REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
+    ++		check(arr !=3D NULL);
+    ++		check_uint(alloc, >, old_alloc);
+    ++		arr[alloc - 1] =3D 42;
+    ++
+    ++		reftable_free(arr);
+    ++	}
+    ++
+    + 	if_test ("REFTABLE_ALLOC_GROW_OR_NULL works") {
+    + 		int *arr =3D NULL;
+    + 		size_t alloc =3D 0, old_alloc;
+3:  7c9f044813 =3D 3:  ed1a292622 reftable: handle realloc error in parse_=
+names()
+4:  3d9493f48a =3D 4:  916032657e t-reftable-merged: handle realloc errors
+=2D-
+2.47.1
+
