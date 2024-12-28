@@ -1,105 +1,127 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBAC3595F
-	for <git@vger.kernel.org>; Sat, 28 Dec 2024 20:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28DB73446
+	for <git@vger.kernel.org>; Sat, 28 Dec 2024 21:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735416829; cv=none; b=j7FK8c1FYJY/CR7QFr0dmbq2R9xcxA9+xzTxGXNfk+aJHG2XeFN09T5iGEDg+/32Mx7TTvA+IijVAuDgA8gJue9P33QjzN8Kf7t/dy0wZXrvfZ5WC9nD6ymKKG9YveIPZNJZDYp8ppPKlrMx4f0u5dZlODhxn9DOCvZSVeE2Aok=
+	t=1735420343; cv=none; b=WCm+011tbw31y30ydjT/Wf3u7POvmt9PnZdENxo5Np7KRet3FRsKyb+bNG25EJEThJazK0wAaUz2yaU9isb8WndtNWRBgDjDNpliigOGzAXbORWJnDR+yRuN6eYkblOtCug9T5ae0Ay4S+Oy89r39DfXAxZOcgQT2j6WNSBwjx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735416829; c=relaxed/simple;
-	bh=YpmMLK+FohC46Lmys0VeksoUkEMyqU70gyphe+iGxWQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IQwu4sPy/U+Dl4EDK2MsAmtxC/CITRvF7iGTEiWYdLXb3ARj15+4tHA8XI1yuuGGxtjDtghYIrl7MbVktUnqKzcBvLddC+HFjpNzbzOA3PLouSg0REcBe3cYnHxh3TRpOX5aDzhmaBYFywGzs134QFfskkh3SjZw96qHKnfvp24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d1V+hJmk; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735420343; c=relaxed/simple;
+	bh=SyW8e9lHZsBkXqnk3qk7w7XXK2Y4VhtsdgQGN02DUxc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YZAeyaPUhDtlvIB/ryzK7b6kN7LissAczLzch5WAEl1NDJTdinVRMXVRA+Agqlx/ZaWro7P9xjPCbr8iZeza2CT5Z9kSK42J6K0foc+H4fDCas7AjspR5DzPzm8NXGDWcGcse4u7q8xjKymokoaOyNzN2mRcVkc3U5cokCSG1OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=SN7CVGsa; arc=none smtp.client-ip=185.70.43.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d1V+hJmk"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21654fdd5daso96856775ad.1
-        for <git@vger.kernel.org>; Sat, 28 Dec 2024 12:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735416827; x=1736021627; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YpmMLK+FohC46Lmys0VeksoUkEMyqU70gyphe+iGxWQ=;
-        b=d1V+hJmkwRhoGctwv0pM58Ga9QgLHIrYJ3bXGFcmnsv2eN1SGdEIeRy+2anM8ZaXqM
-         gWw6THmjumHNm/41pEzXCHYJ0XI+cxMz7/TSoCnTFB9iL5iu+lu8kfrEVwuV8S5pjQAc
-         b6Nc6OaVc6eJ2EmM0RYhHZjoINh6FJQ7D99EebrckvI7QcnGT+Jt4HnlYZJ69/SRkURR
-         aMvvpaQpIHkMiyVwRiY3t/YApmkXi6XSmY2DOjJsLwHTuna10j9wM3lhaMtEtn5NUZd3
-         oV6VHb57tV1Zkx2xUpDQNJ3roOSP4tZJvBGcstRm9eBxQuKuBX4/MloTaIfExTqDA3FJ
-         +4hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735416827; x=1736021627;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YpmMLK+FohC46Lmys0VeksoUkEMyqU70gyphe+iGxWQ=;
-        b=vbeliOhsUDjlWf717Slr8hHQflX+nHQ6QR/byAulVEdH/QF8XZEOU54JZDFsIoYwVD
-         XlVjmRNCnrt20UeCFgiIwveE4u2abZOlJQB2n1XCcWAfICcZt1Z1/79887Mn9NJ87onu
-         llPnawWm4tP/yZEI4GTeZtYD8HSDYiBwHYdymzKRA3p81lICXdHc6JCOo+j9ZKEIg2bU
-         BMo3A0jtMshsBt9oirxg7JHxIEWIu3SOn977/IcDjXbpL8IymKxuHbfe3dtoFzQKhLgI
-         8ttMqQRdAs+mQhdjPfrZuwutx5BaiVgiHvSxr1XB8aHCgL2sgoJp1Yyf00YtTeA5qZWT
-         q3DA==
-X-Forwarded-Encrypted: i=1; AJvYcCVJofYZdVDZ235aqMkDQMc3CYWTATBAzes8VZ/5ifVyKE3gdOsqyP3BYz4hRTgcM4f7aRQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLmVGrhwyWGdVkVnuinc7R3t3/NGwGZhr+nkzUyzDqbekmCpSx
-	Dq6Ft2lFKM1RkhyrErqg9f9ugoqeQM2jb5RWHzIvrlIoI5Ob9Jke9Liq7quFRub+5pljA8Xva86
-	N7k4e4e0es0nO9V3cpqqZ5HFzCGQ=
-X-Gm-Gg: ASbGnct2vHhHfchqzjmydlmQJCfIUnZQbgHStxPAokUYWAUH4ZVJ2iMqki+c6YknNyi
-	K0svvq/13dIMorVzNCsUBAZOf/tqjkTSB9GVaEg==
-X-Google-Smtp-Source: AGHT+IFr16hEWZcTdFxVLYgn8/gk5A1AfuQHNcYUlIv0vNa84L/RJPDMb+FvoxgwwNVyG/j1KDnUL00CP6I3yBJDp2Q=
-X-Received: by 2002:a05:6a00:414a:b0:728:e745:23d8 with SMTP id
- d2e1a72fcca58-72abdeb53f3mr48359397b3a.24.1735416827340; Sat, 28 Dec 2024
- 12:13:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="SN7CVGsa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1735420338; x=1735679538;
+	bh=8nC6ety4dTd/+8w2li7wvgvRZ+frCTezHjhHRRmChgA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
+	b=SN7CVGsaj59U+bdOknJ3/O1sCvTkHwJJW6SZio/3LydHi+Dn7bqgjYqAyuDoJ5Zix
+	 OE8iVnAcD500f8JZvAgxh63KhucmTmLzZNcf32KEK52LTxNGj+2tujF1dK75wNbxA9
+	 OusRZ4iofhxOfcDgD3NA5g4BmCm5Kcgi2IMXa+m8FNmRspyIymc6Uf8UtW9wAWekbV
+	 Xg1g5kvrMQUmLKuWUbelz49PbQ/IdonZ99o3x/cvvuiPk+mwfRh41OV+Wc7LCB5TYe
+	 KBs0030xV7yKOL2Q/8iVcmoEPnccj9Fg7Od6NeeE7IjujsJJkkmhYtqyOWwDaZEvRY
+	 D5K+hu86h8zbw==
+Date: Sat, 28 Dec 2024 21:12:14 +0000
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+From: A bughunter <A_bughunter@proton.me>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [fingerprint] of github.com
+Message-ID: <Ai7oUOle2gNhbxgAMTtbayo6Quf4YRgJbFIYYSqUHdgNoJL89fv7P7gYIHNnmlzLn77z0n3KI6HI09_VUmsku4qZ1wmudP0eEb9GN89PmMo=@proton.me>
+In-Reply-To: <20241228-stylish-beetle-of-joy-9be836@lemur>
+References: <ROrCxOsQ6KcZqO7YsIr2BGbPsmyUYAHXgF-l3Pwg0-7Z12oBWFrwy4yzgax9Zq6whGT4Fh4gKQxMNlHEoEOBljSvucyX9sQyc3rtT3NT0us=@proton.me> <20241228-stylish-beetle-of-joy-9be836@lemur>
+Feedback-ID: 120910843:user:proton
+X-Pm-Message-ID: 9af18bc5673877954e28597105e92627d2421c31
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADMKT2-vsUUi-23YGexvxbW9wj0Br+cQcv34eStnw-0EDRiKMw@mail.gmail.com>
- <20241219054222.GA2310556@coredump.intra.peff.net> <CADMKT28cZcdW8UJ59vZHoMa0WEbyAccx4A10-jk3MiBkhZLxEg@mail.gmail.com>
- <xmqqmsgrncr6.fsf@gitster.g> <20241220090533.GC133148@coredump.intra.peff.net>
- <CADMKT2_QonR_XbZ5297Df34FrrTpbJp04Qy5BGjPb_Ov=uFF4A@mail.gmail.com> <20241228194428.GB1535629@coredump.intra.peff.net>
-In-Reply-To: <20241228194428.GB1535629@coredump.intra.peff.net>
-From: Boomman <boomman37@gmail.com>
-Date: Sat, 28 Dec 2024 12:13:29 -0800
-Message-ID: <CADMKT2-kK=CNp4aeL2JciugQdNWed62VRmkc-CTaUNxoMxZNwQ@mail.gmail.com>
-Subject: Re: git gc does not clean tmp_pack* files
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------ebbc90e47f2440fbc4caf5c387095a77ab178df383cee0db3c6b719ed3265a63"; charset=utf-8
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------ebbc90e47f2440fbc4caf5c387095a77ab178df383cee0db3c6b719ed3265a63
+Content-Type: multipart/mixed; boundary=-------------------e9ffcb6a54c55d8e8a910199097fcaad
+
+---------------------e9ffcb6a54c55d8e8a910199097fcaad
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
 
-Right, but you know the *intent* of why each pack was created, right?
-This is push, this is pull, this is gc. Clearly some of those are
-expected to not run in parallel in normal scenarios, like gc. I
-imagine there are more: fetch from a single remote, push to a single
-remote? Why not make their packs names contain an operation identifier
-that's supposed to be unique by default instead of a random string:
-tmp_fetch_myremote, tmp_push_myotherremote. This way you can reduce
-the number of trash from failed operations, since the same location is
-going to be overwritten each call, plus the folder contents will be
-much more comprehensible at a glance.
+My reply and answer here.=0A=0Afrom A_bughunter@proton.me=0A=0ASent from P=
+roton Mail Android=0A=0A=0A-------- Original Message --------=0AOn 12/28/2=
+4 2:07 AM, Konstantin Ryabitsev <konstantin@linuxfoundation.org> wrote:=0A=
+=0A>  On Sat, Dec 28, 2024 at 03:05:11AM +0000, A bughunter wrote:=0A>  > =
+How would you confirm the correct SSH server fingerprint of github.com upo=
+n initial connection? Does GitHub post valid FP anywhere?=0A>  =0A>  Pleas=
+e do a modicum of effort before posting to the list. This is literally=0A>  =
+the first hit on the search engines:=0A>  https://docs.github.com/en/authe=
+ntication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprint=
+s=0A>  =0A=0AYeah, but you should post the keys in the community incase an =
+attacker would intercept, block, or change those posted in the official lo=
+cation. That is the great benifit of community support. These are GitHub's =
+public key fingerprints:=0A=0ASHA256:uNiVztksCsDhcc0u9e8BujQXVUpKZIDTMczCv=
+j3tD2s (RSA)=0ASHA256:br9IjFspm1vxR3iA35FWE+4VTyz1hYVLIE2t1/CeyWQ (DSA - c=
+losing down)=0ASHA256:p2QAMXNIC1TJYWeIOttrVc98/R1BUFWu3/LiyKgUfQM (ECDSA)=0A=
+SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU (Ed25519)=0AYou can add =
+the following ssh key entries to your ~/.ssh/known_hosts file to avoid man=
+ually verifying GitHub hosts:=0A=0Agithub.com ssh-ed25519 AAAAC3NzaC1lZDI1=
+NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl=0Agithub.com ecdsa-sh=
+a2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQE=
+ezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpo=
+ckg=3D=0Agithub.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCj7ndNxQowgcQnjs=
+hcLrqPEiiphnt+VTTvDP6mHBL9j1aNUkY4Ue1gvwnGLVlOhGeYrnZaMgRK6+PKCUXaDbC7qtbW=
+8gIkhL7aGCsOr/C56SJMy/BCZfxd1nWzAOxSDPgVsmerOBYfNqltV9/hWCqBywINIR+5dIg6JT=
+J72pcEpEjcYgXkE2YEFXV1JHnsKgbLWNlhScqb2UmyRkQyytRLtL+38TGxkxCflmO+5Z8CSSNY=
+7GidjMIZ7Q4zMjA2n1nGrlTDkzwDCsw+wqFPGQA179cnfGWOWRVruj16z6XyvxvjJwbz0wQZ75=
+XK5tKSb7FNyeIEs4TT4jk+S4dhPeAUC5y+bDYirYgM4GC7uEnztnZyaVWQ7B381AK4Qdrwt51Z=
+qExKbQpTUNn+EjqoTwvqNj4kqx5QUCI0ThS/YkOxJCXmPUWZbhjpCg56i+2aB6CmK2JGhn57K5=
+mj0MNdBXA4/WnwH6XoPWJzK5Nyu2zB3nAZp+S5hpQs+p1vN1/wsjk=3D=0A=0A=0A=0A=0A=0A=
+=0A
+---------------------e9ffcb6a54c55d8e8a910199097fcaad
+Content-Transfer-Encoding: base64
+Content-Type: application/pgp-keys; filename="=?UTF-8?B?cHVibGlja2V5IC0gQV9
+ idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="; name="=?UTF-8?B?cHVi
+ bGlja2V5IC0gQV9idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="
+Content-Disposition: attachment; filename="=?UTF-8?B?cHVibGlja2V5IC0gQV9idW
+ dodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="; name="=?UTF-8?B?cHVibGl
+ ja2V5IC0gQV9idWdodW50ZXJAcHJvdG9uLm1lIC0gMHg2NjU0MDgwNS5hc2M=?="
 
--Vitaly
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCkNvbW1lbnQ6IGh0dHBzOi8vZ29
+ wZW5wZ3Aub3JnClZlcnNpb246IEdvcGVuUEdQIDIuOC4wCgp4ak1FWnUwWDF4WUpLd1lCQkFIY
+ VJ3OEJBUWRBSDBJNDdqRHNQWjZndmIrWVVHQm5BeDdKeWYxNEFWT0h4YTh5CjArZG1ONWJOTFV
+ GZlluVm5hSFZ1ZEdWeVFIQnliM1J2Ymk1dFpTQThRVjlpZFdkb2RXNTBaWEpBY0hKdmRHOXUKT
+ G0xbFBzS01CQkFXQ2dBK0JZSm03UmZYQkFzSkJ3Z0prS2tXWlRsUXJ2S1pBeFVJQ2dRV0FBSUJ
+ BaGtCQXBzRApBaDRCRmlFRVpsUUlCY0F5Y1oybE85ejJxUlpsT1ZDdThwa0FBRDlGQVA5L2RkV
+ DY1NkdrYTlOdE12bWRvWTVrCnROZ3FiWTVYYmQ5Zng2a1BFNS80dFFEL1hpaWFsS1FIam13QXR
+ iY1NlMVErM2N4WUx4TmhqVTdteW5Rc3B2OWQKeEFET09BUm03UmZYRWdvckJnRUVBWmRWQVFVQ
+ kFRZEFuZnAvejJGd1JrcHZVZ2Y3bXFZSTlSS25UVmFkd0dmZwphUUxobXdnM0x4TURBUWdId25
+ nRUdCWUtBQ29GZ21idEY5Y0prS2tXWlRsUXJ2S1pBcHNNRmlFRVpsUUlCY0F5CmNaMmxPOXoyc
+ VJabE9WQ3U4cGtBQUppOEFRQytmbk9tNFZqOVFtSDRIMEdWdDdSdU9RSyt3T1ExUFJ2cHltU2o
+ KZXlCSk93RDlHWXV2eE9BVks4aUF1cEorcHB3TXIzNlZ1a0llMXBYdUhvOVJoanZlQXcwPQo9R
+ lFGdwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0t
+---------------------e9ffcb6a54c55d8e8a910199097fcaad--
+--------ebbc90e47f2440fbc4caf5c387095a77ab178df383cee0db3c6b719ed3265a63
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-On Sat, Dec 28, 2024 at 11:44=E2=80=AFAM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Dec 20, 2024 at 05:17:50PM -0800, Boomman wrote:
->
-> > For me, two "git gc" on a same repo fail to run:
-> > fatal: gc is already running on machine 'WIN-blah' pid 40304 (use
-> > --force if not)
-> >
-> > If you're already colliding on this, then I don't see why you can't
-> > use a normal looking name without a randomized string like
-> > "tmp_garbagecollecting", so that each execution would at least
-> > overwrite the same location. In this case --force could append _1
-> > probably.
->
-> git-gc is not the only thing that writes packs. There might be
-> simultaneous packs written by incoming pushes or fetches, for example.
->
-> -Peff
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wqsEARYIAF0FgmdwaawJkKkWZTlQrvKZNRQAAAAAABwAEHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmdW/GupZt4pjZsjb5kkN3SAFiEEZlQIBcAycZ2l
+O9z2qRZlOVCu8pkAAN48APwKhDcGxdEs6OXAMtC3IGpbViChE/Q9bkmB5Ili
+9tRKsgD+KPvN9S8nTUURH++LMqDypDamDm4FVFgNQpfsfgLQKQ4=
+=TtY1
+-----END PGP SIGNATURE-----
+
+
+--------ebbc90e47f2440fbc4caf5c387095a77ab178df383cee0db3c6b719ed3265a63--
+
