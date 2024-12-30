@@ -1,37 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2193171C9
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 04:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988F9171C9
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 04:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735532612; cv=none; b=e5A9dWdGRBRsj8nzZkVGI5w3VAOw19yr8hnzzVCUlP/8TX9aQeg0AS4RALP6+pbh0aUpu+TLfN4ASY7kq5BxEj3OxQ66QkZw+vu47tyyVfzKZRUs4/EYyvYQu9iLwXbKmdkVec1Z/lKtOb07fTgn42I03PFlAQ6BqTVdwAVgbwI=
+	t=1735532645; cv=none; b=i+cSecMBkhJSB+vF4leKxxfqTF9B+Dqe7lRXhLqdcj/bitbJNhxbD7y3WDQq4w1S2IphaeADRzYhiPiU/32NTF4WbhLJVickdqp0fMwSycGYA34cXdiMHQOgvB7iQdpUntQyQkokE0OpyUBk3S4WXMLTR5w2qi30PQhhDY74a+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735532612; c=relaxed/simple;
-	bh=f4GL0aJB2Ialky9Etj6w72O1REE6QzfVWMhFLOj5ECg=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Nm0nb19gaNNgenS981jf+KwJTQB4SDT4zVxgw9MC3f6itE01C0cKuURkVsDSAROTSQmOXkdKl/zNUkTOlbMinFE6XDiDdwSTp+VG0SsektdgnovtuVTCD+TdiUHKgPI9unp/xlfnXlfml/CcKtsWCWZmw/jiB5RWaFq+/ZT6Y84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bgOUXH6i; arc=none smtp.client-ip=104.130.231.41
+	s=arc-20240116; t=1735532645; c=relaxed/simple;
+	bh=GiO5OvRdz0p7pbNPcPLRUv3+HxC4hT+NN0Be+YdOR4U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kLhvW4LeDZVCLNwqTo3Oqu83vyL5oUir3bfGPsoKAxU338Opcd9hVvklNa3cu8ik6PcKQHxUiLBelXBrjo0yS1sasbzIer2SW6pxtTxoH7KB2W195pF0szHLsBFZAdPxtl/6l3WzEi3Klb7NQxb8hOr/FknErsUHSDwgSjhHfSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KTZa7i2G; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bgOUXH6i"
-Received: (qmail 14705 invoked by uid 109); 30 Dec 2024 04:23:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=f4GL0aJB2Ialky9Etj6w72O1REE6QzfVWMhFLOj5ECg=; b=bgOUXH6iSxM/o9RLRrZ/6rS7u4FaYINXF813ynejKR1fWmr4Ew7yw5dW+omSR3BUefWh53P2dW7yHRC05Iz4gk8Xb9djgyVSKIvAzBnro6Du78t1scyHme9NPoehAr/KO5RqnLFCw/Og9/oQ5ksnPN9ll6gMU1E6/WQQf5FdIZQABSe6wZzVUIaoJbBswrIV0o0c7mfk/ZCsJhbC/R07AL8SuyPfX0XvSZXTpsfUnDuOKivGOSn5GSn6V5KgkvHwkS7uIPLwRTSSwXC4fEpdyl2q7/d5xcWr8GqJb0lDNJghKPEXmK8B1EkskgMNnRpuza0LOEvZBoElVG9e7RuHpg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KTZa7i2G"
+Received: (qmail 14718 invoked by uid 109); 30 Dec 2024 04:24:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GiO5OvRdz0p7pbNPcPLRUv3+HxC4hT+NN0Be+YdOR4U=; b=KTZa7i2Gc7oX3aX83x9q1k/GWuqldip8uZuae1SMv2pQOMWGmjFOxTJIqbxUEuu3wQG67YlWF9u5/A8pZ6Jcn0UcwKTSPFV0T76ILaOhle6+sKRIQ6q0Hg4ifoBdvxA5WBtSJNQaFQIO8Y8k2FxCHPDKKX35Crj1l5auN0P/uNEW46gA3T0faVNjTm88K4eiQdVEsB9QVQo1yahyf3AS6amHDDFxlW7ffSoy8pRgxV8H59RlwtwSBf35y7Do9vN7U6DHv+eQEi+UpkM0AAGscmlZvyZuKdmCI+gkLLXSmerS+CwCCMVw+ILJsQowffgvqjWE4SZ1l1KyL6csUgFPwg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Dec 2024 04:23:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Dec 2024 04:24:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14237 invoked by uid 111); 30 Dec 2024 04:23:26 -0000
+Received: (qmail 14249 invoked by uid 111); 30 Dec 2024 04:24:02 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 29 Dec 2024 23:23:26 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 29 Dec 2024 23:24:02 -0500
 Authentication-Results: peff.net; auth=none
-Date: Sun, 29 Dec 2024 23:23:25 -0500
+Date: Sun, 29 Dec 2024 23:24:01 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
 	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 0/5] fixing thread races in linux-leaks CI
-Message-ID: <20241230042325.GA112439@coredump.intra.peff.net>
+Subject: [PATCH 1/5] test-lib: use individual lsan dir for --stress runs
+Message-ID: <20241230042401.GA113400@coredump.intra.peff.net>
+References: <20241230042325.GA112439@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,82 +41,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20241230042325.GA112439@coredump.intra.peff.net>
 
-This series should fix the races we see in linux-leaks CI jobs. Or at
-least some of them. We tried previously in 993d38a066 (index-pack: spawn
-threads atomically, 2024-01-05), but it wasn't enough. This series
-covers index-pack as well as git-grep, which are the two I've seen in
-practice. We may run into more, but the general pattern should be
-applicable if we do.
+When storing output in test-results/, we usually give each numbered run
+in a --stress set its own output file. But we don't do that for storing
+LSan logs, so something like:
 
-This series takes the minimal approach, and only provides a knob to use
-pthread_barrier_t if your system supports it (and then turns it on for
-our CI jobs). The obvious alternative is to actually implement wrappers
-for other systems, and then use it everywhere. That doesn't buy us much
-for this problem, but it's possible we'd find a use for barriers
-elsewhere.
+  ./t0003-attributes.sh --stress
 
-The even farther alternatives are:
+will have many scripts simultaneously creating, writing to, and deleting
+the test-results/t0003-attributes.leak directory. This can cause logs
+from one run to be attributed to another, spurious failures when
+creation and deletion race, and so on.
 
-  1. Do nothing. This is arguably an LSan bug, which should be doing its
-     own locking to synchronize the at-exit leak check with the
-     per-thread setup code. I don't think we've even reported it there,
-     so one option would be to work with them. Even if we do that, it
-     might be nice to remove the false positive pain in the meantime
-     with a series like this (and certainly patches 1 and 2 here are
-     worth applying independently).
+This has always been broken, but nobody noticed because it's rare to do
+a --stress run with LSan (since the point is for the code to run quickly
+many times in order to hit races). But if you're trying to find a race
+in the leak sanitizing code, it makes sense to use these together.
 
-  2. Change our posture on thread exit. In index-pack, the issue is that
-     one worker thread calls exit() via die(), taking down the whole
-     program (including other worker threads in unknown states). If it
-     installed a die() handler that called pthread_exit() instead, then
-     the main thread could see that failure and cancel/join the
-     remaining threads.
+We can fix it by using $TEST_RESULTS_BASE, which already incorporates
+the stress job suffix.
 
-     But I suspect it's not so simple:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/test-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-       a. We still want the error in the worker thread to cancel ongoing
-	  work immediately. Right now index-pack just called
-	  pthread_join() in sequence to wait for all threads to finish.
-	  But instead we'd need to use some synchronization primitives
-	  to report the error. Probably not too hard, but new
-	  potentially tricky code.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 1a67adb207..96f2dfb69d 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -331,7 +331,7 @@ TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME$TEST_STRESS_JOB_SFX"
+ TEST_RESULTS_SAN_FILE_PFX=trace
+ TEST_RESULTS_SAN_DIR_SFX=leak
+ TEST_RESULTS_SAN_FILE=
+-TEST_RESULTS_SAN_DIR="$TEST_RESULTS_DIR/$TEST_NAME.$TEST_RESULTS_SAN_DIR_SFX"
++TEST_RESULTS_SAN_DIR="$TEST_RESULTS_BASE.$TEST_RESULTS_SAN_DIR_SFX"
+ TRASH_DIRECTORY="trash directory.$TEST_NAME$TEST_STRESS_JOB_SFX"
+ test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+ case "$TRASH_DIRECTORY" in
+-- 
+bar
 
-       b. In the git-grep case, it's actually the main thread that calls
-	  die(). So the rule is not really "threads should install a die
-	  handler that calls pthread_exit()", but _any_ die() call when
-	  threads are established would need to cleanly ask all threads
-	  to stop (whether by signaling them via the work queue, or just
-	  hitting them with pthread_cancel; and that's assuming that
-	  there's no race between LSan's setup code and cancel).
-
-       c. When we call die(), all bets are off about what state various
-          data structures are in. For example, a thread could be holding
-	  a lock, and if it's cancelled by another thread, that lock
-	  will remain. So it's not safe to do any real work in the other
-	  threads, unless we start setting up pthread_cleanup handlers,
-	  etc. That seems like a recipe for obscure, racy deadlocks.
-
-     I think that may be an appealing direction in the long run,
-     especially since die() itself is not thread-safe. But coupled with
-     libification, we probably want less "threads can die() cleanly" and
-     more "threads pass errors up the stack and report the problem back
-     to the work queue". Either way, though, it's a much bigger approach
-     change than I think we want just to try to address LSan races.
-
-So I think we want something like this (either this, or the variant
-where we really implement barriers everywhere) in the near-term.
-
-  [1/5]: test-lib: use individual lsan dir for --stress runs
-  [2/5]: Revert "index-pack: spawn threads atomically"
-  [3/5]: thread-utils: introduce optional barrier type
-  [4/5]: index-pack: work around LSan threading race with barrier
-  [5/5]: grep: work around LSan threading race with barrier
-
- Makefile             |  7 +++++++
- builtin/grep.c       |  8 ++++++++
- builtin/index-pack.c |  8 ++++++--
- ci/lib.sh            |  1 +
- t/test-lib.sh        |  2 +-
- thread-utils.h       | 17 +++++++++++++++++
- 6 files changed, 40 insertions(+), 3 deletions(-)
