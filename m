@@ -1,133 +1,126 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310757DA88
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 14:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C242194A60
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 14:54:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735570211; cv=none; b=opK+XFcq2dJNp3dk1w4dGfz+7mWQE5TxrI8MWNw38fQD8ZkJubXbkYg/wWWwL+UlYnKl1nwx/wf3Z0QAxONKNI80mI59DuXORq2Wl1YDTtK2+tbZbZH9WLQOYD+lUxA9u/xIslf7WLGhNlpcb57PJtLFUDcAvvWBayTPlTW7bZA=
+	t=1735570471; cv=none; b=frrrLxUcCWMHuTL8TN0Usvl2F7kH6CpnF1TeF8gjJXk3d+sRbUDz7in4v72ywpXX8S4dL5HpEEKyWgrlJabfpW7DLMqLmILZpNrByyVeMJizeyGSu4mS+4ZmvBaWLn7Og3eVQLhp8q/wfqA1YYwHENEpjnOxHPEpM7biS1eGOZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735570211; c=relaxed/simple;
-	bh=HklM8AVVAh+C1qOS8QUS0kNBidWhpMy1ARabCwwalRs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rqmmRAcKJti3NoHDDmZncQYeekBkH0+UI1LT1/SX8VS9ywXGM8t+t/0f4Cz33izWkKu27Hu0cbHZmRrZT/l2WhMuTZtZDOhFNj5akaYh4EOEfUmK6ioGvGQkGKtR+Ie8JvG78pQ9uwdXHCGiuzKbzpIhRSl1f3GQNTZqkDLtFb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aT0OV0iX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fn/xXlcu; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1735570471; c=relaxed/simple;
+	bh=eWo575pxLnaqL0UZlw6KIOuWU9Wr20xi9DiSD+bj/2E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KiGMYB2h6akqJeyN70xp3LWl8fQyJiNY6i48Z0y+OwhwgcYIjDE3tRy/Zdu9reNrMXPJQDMgwlh7YVYuow07KRMU2hXPt5THk1jl3FTDY4JZ9hf2dZK/qgzy9l5mP5Fy1SzYOzC+JMTM1qorQmmWSXtFG8Dwp7Aju0O0R/vImaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BSgDXsrZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTkXBPSh; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aT0OV0iX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fn/xXlcu"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3B6A225401E8;
-	Mon, 30 Dec 2024 09:50:09 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Mon, 30 Dec 2024 09:50:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BSgDXsrZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTkXBPSh"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 06CD611401C6;
+	Mon, 30 Dec 2024 09:54:27 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Mon, 30 Dec 2024 09:54:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1735570209; x=1735656609; bh=cmUDRn+gd7
-	nB3sDy5YtE+x7jvc4lwbTtt1z+J30E+6c=; b=aT0OV0iXEJtN61i8P91IV9F8tD
-	v5UmGCtR+qfW2Njqa6z9B2pPKWnZKKgu7GIBVhbveH3l2Wbh8V/CUXIBrgZLRL6d
-	UCfvR49PSiulN48l4vphgGwulfj9733d3vAD9FEFi0SGIs1hhNQzL7sbTeHk3RpF
-	1rfYlt2xzR1bDFPzkxO94z3iLBDcSt+gEmUu/J/hI0EZOQbW7p/yrHnNdHU7Gqxr
-	h+7dww1ctWj/F0zBo/GeFAoK0iJGZebrAYE0PbHHe6sRJl37BAB37yjPuj+vSk4K
-	nCdAj4H1z/FbebEVMvnn7M7zy7dHkQTqgfPQ0t5RQhokLviqWT+6r5coN+4Q==
+	:subject:to:to; s=fm1; t=1735570467; x=1735656867; bh=xnvy1todGx
+	5wlqra+krVPi9B0CGAh8p1z8cfqPyEWJI=; b=BSgDXsrZSkNmIivWEF2KRLXj9w
+	rrUIIhTFIqTVVswmGS9tmwepp1VcO/67QAQhy+a738xxmMJMj0ATHHoKeqcuzgZ/
+	IWLF81vgRNpP5xM9Dy+V82pnVQXSN9lsYoKF+vELWuJd2D+mV8009D1lQGwL/9r/
+	dS1edS1/MmijAFNHx4VdznTALB4AMvLFMqQFaX/svNm01TPUjKWqwEt1ja3YrOci
+	ZJ8+ha0c9Ja7tgRBPX5fbtG3UbrGhOzzdkstv1GaeIKRfw9R56g0o9hYXOT+5Xfh
+	z/kicDspfHTCaadxKHT2vo9DjJGXSGodCkk0Wlxufk3K9hPkxhLJDjsyNqeA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735570209; x=1735656609; bh=cmUDRn+gd7nB3sDy5YtE+x7jvc4lwbTtt1z
-	+J30E+6c=; b=Fn/xXlcuHGn7rWOoIj+r4a5RM++lhxpwLKe87RTZ86bdFAai4G9
-	v6Grnuso9Wyy5zPGXLWo73bKVAyEclmYFTRJxVd18In0p2F5/zkDwK3A0d+wL21s
-	/QE2Ed5NsF3n2BjWP3I7g7zH8hKtBmZQg1ZLP5vh+ftk7+8bGHjigNAvFPo2idLn
-	4E3UjGaK9RwbnzZe2a46ik0lV4Yenbs5wCCTRREVDlF0WtWwutHzGJN2x8bONOBV
-	CwKEUIX0LY5l3+0OaQlF0NhcPxhZl4UkRwkm4wZA/aMga/1qPxW7vcyc01lvPy3A
-	zkHE7OUdi7L7QG9JgjE1YmwGXI19BoOS+dg==
-X-ME-Sender: <xms:ILNyZ-jWgb-PlJs5ouRBcQ0IfVI4hsMB1RWwqdBAyNb6Z5hj8BfGYg>
-    <xme:ILNyZ_AMM8d62j5lpjq-Essjf3ugrR5di9HVgqreZM6y1mnUEzIg0nP_dmc38EP33
-    QEwrk3lmCVAmoSLXw>
-X-ME-Received: <xmr:ILNyZ2F6_LJg-cfHntzWgAe_jt52aSH3AjuvshPQm2uTBYnuUZqfx6sc9n84Qn2vBhTvu50QHUnBu3VWz68SoyR_ExIW8d_qOtZY6R0M8tPEpZl2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgjedtucetufdoteggodetrfdotf
+	1735570467; x=1735656867; bh=xnvy1todGx5wlqra+krVPi9B0CGAh8p1z8c
+	fqPyEWJI=; b=lTkXBPShlF8d8FYFShnf3GAyixABanRdSI/wmod3MauXzL1fvwJ
+	2W5JNTvrBvNkCU87uVZu8Fz61LqbvQ0ECkm2hQN64DQYdPnrFWxfczIMwIuHyJQ/
+	AF5hIxQsGDgyH9m8Gblhcj7wDuyddmFtnkUhvOQEeq6Le83JT2LG1YkJCnrhUgr9
+	oqOA/HYPB8DKtxMNkjYqCUubcoC4oxaRcxsasQg7hJDS18Qp5/xu7PmSGOIDY4n0
+	X6/UnCWt1pGTp8HgfQ5Offv4a0Am5WymynyCrIXqUw6nSgCfnqhJFkECeUDKyKCC
+	oOg6YhSroiPhyU7xMEhXhELGMwt1XUTaqvA==
+X-ME-Sender: <xms:IrRyZ70uiPt_-H5qHqHsM79590Xhvs2TUoCvBCFKNLtFfqLUjpeq-A>
+    <xme:IrRyZ6HQK7drmOmCEZCOLX68PGdr9WHyvOsClsoLVp3UXJHC91HxtXbkQ9wtXPbnw
+    RkfwUW4qZpABcKo1w>
+X-ME-Received: <xmr:IrRyZ77S5ETA7FTEMpkROmCTlowmTVCQPTNUmJFLuTcwnzOpzkCYBMSKCKPbkugw3eRyuEvkRBuzQWlgpwLehCXqSdxD-lGZPQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgjeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
-    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgv
-    sehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:ILNyZ3Stwj9CIADZV-K7hCKjOpqZcDz1gvgvA6znTSeZ-uDy0XCO-w>
-    <xmx:ILNyZ7zW7ciRR1O8WqFftKyl_n0miPcBNnPdnY7nEcYflqOWD8RNNw>
-    <xmx:ILNyZ17yZ7p8PoK1sCi2Z9Y32Ydm9S6BiBnNu7BxkulPh_vcL2A91w>
-    <xmx:ILNyZ4w3SCdHusRq2jb-zYA-pZbBq6Lk3e8Sbwu5aDpKKyHprMbWPg>
-    <xmx:IbNyZ9ur_DqeBS4AVZ4Kg3nFqoLs-PHJnD1DEleHZ_qvPwBqhglALvzl>
-Feedback-ID: i197146af:Fastmail
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:IrRyZw3bzzoXlh9oJD0WDXyFHfne8K-g3ok5niuBnu1pNeji_gPFog>
+    <xmx:IrRyZ-G2jTtZ65RX_u4y8e9KCWKANqyoS4wapwrWs2aMcz9QIUulNg>
+    <xmx:IrRyZx-g9-OnQ25XfcURdgadSJ5JNWw22njWOh6vNfwS0jUAYv94mg>
+    <xmx:IrRyZ7mYfHvKo31vbQ3Ix2M_FU_myRRTV0RfSQyCd5bhLcg8MPq6oA>
+    <xmx:IrRyZ7PuMuDH-ZQgqRquQhLv34xTEHh2DhvDVpnKpBJmv4cg0_ghLm43>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Dec 2024 09:50:07 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 78fd863e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 30 Dec 2024 14:50:05 +0000 (UTC)
-Date: Mon, 30 Dec 2024 15:50:04 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Taylor Blau <me@ttaylorr.com>
+ 30 Dec 2024 09:54:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
+ <me@ttaylorr.com>
 Subject: Re: [PATCH] object-file: fix race in object collision check
-Message-ID: <Z3KzHJagr_3Fkz67@pks.im>
+In-Reply-To: <Z3KzHJagr_3Fkz67@pks.im> (Patrick Steinhardt's message of "Mon,
+	30 Dec 2024 15:50:04 +0100")
 References: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
- <xmqqy0zxz11m.fsf@gitster.g>
+	<xmqqy0zxz11m.fsf@gitster.g> <Z3KzHJagr_3Fkz67@pks.im>
+Date: Mon, 30 Dec 2024 06:54:24 -0800
+Message-ID: <xmqqseq5z0f3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy0zxz11m.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Dec 30, 2024 at 06:40:53AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > By definition, two files cannot collide with each other when one of them
-> > has been removed. We can thus trivially fix the issue by ignoring ENOENT
-> > when opening either of the files we're about to check for collision.
-> 
-> Thanks for digging it down to the cause.
-> 
-> It is more like even if these two files collided (i.e. have the same
-> name based on what the hash function says, with different contents),
-> when one of them has been removed, we have no way to check if the
-> collision is benign, and even if it were not, we cannot do anything
-> about it, isn't it?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Depends on what "benign" means in this context, I guess. We can only
-assert the most trivial case of it being "benign", namely that we have
-computed a packfile that actually is the exact same. This is also going
-to be the most common case, as everything else would depend on a
-cryptographic collision of the packfile contents. And in that case... we
-cannot do anything about it, yes.
+> On Mon, Dec 30, 2024 at 06:40:53AM -0800, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> 
+>> > By definition, two files cannot collide with each other when one of them
+>> > has been removed. We can thus trivially fix the issue by ignoring ENOENT
+>> > when opening either of the files we're about to check for collision.
+>> 
+>> Thanks for digging it down to the cause.
+>> 
+>> It is more like even if these two files collided (i.e. have the same
+>> name based on what the hash function says, with different contents),
+>> when one of them has been removed, we have no way to check if the
+>> collision is benign, and even if it were not, we cannot do anything
+>> about it, isn't it?
+>
+> Depends on what "benign" means in this context, I guess. We can only
+> assert the most trivial case of it being "benign", namely that we have
+> computed a packfile that actually is the exact same. This is also going
+> to be the most common case, as everything else would depend on a
+> cryptographic collision of the packfile contents. And in that case... we
+> cannot do anything about it, yes.
 
-> I do like the simplicity of the solution.  I wonder given bad enough
-> race, we could fall into a case where both files are missing?
+Yes, the whole point of this collision check is to notice the rare
+case where we are under attack with cryptographic collision, so
+"most of the time it is OK so not being able to check is fine" is
+not an impression we want to give readers.
 
-I was wondering about that, too, but it would very much feel like a bug
-to me if that were ever to happen. So I briefly considered whether I
-should treat the passed-in filenames differently: 
+> The idea would be to only handle ENOENT for the second case. But in the
+> end I don't think it's worth the complexity because `check_collision()`
+> is used before rename(3p)ing the former into place, and that function
+> would already notice ENOENT anyway. So we would eventually just die the
+> same.
 
-  - One that must exist non-racily. This is our temporary object or
-    packfile that we want to move into place.
-
-  - And one that may have been removed racily. This is our target file
-    path that we want to overwrite, unless there is a collision.
-
-The idea would be to only handle ENOENT for the second case. But in the
-end I don't think it's worth the complexity because `check_collision()`
-is used before rename(3p)ing the former into place, and that function
-would already notice ENOENT anyway. So we would eventually just die the
-same.
-
-Patrick
+Thanks for thinking it through.  Queued.
