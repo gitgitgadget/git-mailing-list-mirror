@@ -1,89 +1,121 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256E940BF5
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 03:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2193171C9
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 04:23:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735527788; cv=none; b=Qzc7XDGk8nyV5pKPBIjs8b/7pEpB5DXlyG5/Gw6jQgwHDDufYRG73Od/AzKCp9qwyU5TlfCrwxvD+xkdVL53O3O2Ig6u7QcCWACNInAZppHSyPjD/W1C2Fj7bC1QXU/AsssjlnDvxY6Uvmkata1qN8a63XYXvJg9TEuImhYr3mU=
+	t=1735532612; cv=none; b=e5A9dWdGRBRsj8nzZkVGI5w3VAOw19yr8hnzzVCUlP/8TX9aQeg0AS4RALP6+pbh0aUpu+TLfN4ASY7kq5BxEj3OxQ66QkZw+vu47tyyVfzKZRUs4/EYyvYQu9iLwXbKmdkVec1Z/lKtOb07fTgn42I03PFlAQ6BqTVdwAVgbwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735527788; c=relaxed/simple;
-	bh=gbxaNfDWAXP1T3uy20TBstp+SPwi1VqXd7G7Eaj2ZDE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pjju0Nkc8lC9qXJpJOKMr5a8Iz9Fk85H6GUmknQLZQoMJANsCZ4WV5eEVbD73mXhG0j1FigxaEC+FsRc8DbKNgQXnrZgYGEv+8DJeduHt3Kqq3y6Vrx4RuBwAwmAOak5Wc7hD288T4MyzDT7t37vF7vQR/lvbmmDECFDavg7TzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bed6V5lL; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735532612; c=relaxed/simple;
+	bh=f4GL0aJB2Ialky9Etj6w72O1REE6QzfVWMhFLOj5ECg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Nm0nb19gaNNgenS981jf+KwJTQB4SDT4zVxgw9MC3f6itE01C0cKuURkVsDSAROTSQmOXkdKl/zNUkTOlbMinFE6XDiDdwSTp+VG0SsektdgnovtuVTCD+TdiUHKgPI9unp/xlfnXlfml/CcKtsWCWZmw/jiB5RWaFq+/ZT6Y84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bgOUXH6i; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bed6V5lL"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e460717039fso10053166276.0
-        for <git@vger.kernel.org>; Sun, 29 Dec 2024 19:03:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735527786; x=1736132586; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2oHac6aCs3LOlQ749Yu1vDjOEDQXx504ZVBoPLWmhUs=;
-        b=bed6V5lLNg77IZCPqsSbXF1+mheAauD1Kl3Gg4h2QATb6mqOXTMVdjXghTDNsBz90W
-         LtgWmD2XgPeh/0G5QAxJoJsFdi6yOOCNGTWVdZdCl5w/kBYRLCEJBWMNRCdMXFmfm1Tw
-         ZBR8sO7lKpoJCWkwJ/b9fH0cD54jQ9uFbmICb3SZAh2dNWZ9Zfxd6M+IYCpENo60NxQt
-         0MFf/csUJVbKTZ/OiPot5A72MA7IfCY6QYDFTNerkTBH0MiON6GgY+MgcNtQvfG0rXZA
-         653sjUKBSFKlj5ZMwLybjZlmiTYyrtGt46RBd/+dAaqti3OkBrIlBs3vqp4RQ6AMZi9i
-         RhrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735527786; x=1736132586;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2oHac6aCs3LOlQ749Yu1vDjOEDQXx504ZVBoPLWmhUs=;
-        b=qqyxbccyBG74yIdeXt2O1Rez0FWpZVz8PSsN3+XabF7h7XCvmjHKTyZB++0S8Ycdu+
-         MHVHmbLVxnAeOr675FxUpNxe/yqQMQ8LRtYhKxTXn9hj1zeNwQjdbRaqN1wSc8clW9f4
-         gzaaAZFBJFQZJhAlSI6fpbSoXBf2Q3XinOqaAtKJuolhPsQugmaiE2uP4/IKIcvpG2P9
-         n1+sigjA42jSlRv/D79WbBGmnitBvfeK7IQpDlDT29spLW86/Zu0FLQfA1qcw+8upMg2
-         rIemZoP84H6MoNU6Su8U9ZQdlbNxXylm9uNQVq3+V1DQWVDoMxOJBzwfKLT1lXuyciJX
-         4hqg==
-X-Forwarded-Encrypted: i=1; AJvYcCXiar0CrK8Ib1qrnoO4L19u9BNtlGoAvd7McDp4+QpZwcjgvhdAKH1UewMMXrEH1G3aYU4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfapRLrNOhVU8Onyd/t7EDNXFp71ff7kQqSzTyo7LxuZJ87ISd
-	W0XgWJr1SAi5vZk2A1wz8zLERynkbpNScnHHuPlcNd86ZzFThcKbEWakPCJqgaJlnmggjBkc42E
-	cEE/R6Pw0sD0tAgDftuB/AjBgThtylD02
-X-Gm-Gg: ASbGnctcKYFfrNYwKjH4EaxQF5nzrE0AzwIWalj5Pi0y4OLXs6Ji21GIA/4vsWsYLIh
-	M6JA0X8cwKZUH+WrQxXyg1iBYx/IwFy1dF/qPA44=
-X-Google-Smtp-Source: AGHT+IFdOvJAwvCgHj0n+SX5AeWtuz4bxyJvsOaAEumAEwT7yZXoi7P6//BUC+ehHt0CTteC1KHessKh+qowAiHz2vg=
-X-Received: by 2002:a05:690c:6005:b0:6e2:ada7:ab3e with SMTP id
- 00721157ae682-6f3f821a3femr226288697b3.30.1735527786032; Sun, 29 Dec 2024
- 19:03:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bgOUXH6i"
+Received: (qmail 14705 invoked by uid 109); 30 Dec 2024 04:23:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=20240930; bh=f4GL0aJB2Ialky9Etj6w72O1REE6QzfVWMhFLOj5ECg=; b=bgOUXH6iSxM/o9RLRrZ/6rS7u4FaYINXF813ynejKR1fWmr4Ew7yw5dW+omSR3BUefWh53P2dW7yHRC05Iz4gk8Xb9djgyVSKIvAzBnro6Du78t1scyHme9NPoehAr/KO5RqnLFCw/Og9/oQ5ksnPN9ll6gMU1E6/WQQf5FdIZQABSe6wZzVUIaoJbBswrIV0o0c7mfk/ZCsJhbC/R07AL8SuyPfX0XvSZXTpsfUnDuOKivGOSn5GSn6V5KgkvHwkS7uIPLwRTSSwXC4fEpdyl2q7/d5xcWr8GqJb0lDNJghKPEXmK8B1EkskgMNnRpuza0LOEvZBoElVG9e7RuHpg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 30 Dec 2024 04:23:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14237 invoked by uid 111); 30 Dec 2024 04:23:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 29 Dec 2024 23:23:26 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sun, 29 Dec 2024 23:23:25 -0500
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] fixing thread races in linux-leaks CI
+Message-ID: <20241230042325.GA112439@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqjzhm7jgl.fsf@gitster.g> <20241228114221.10351-4-ash@kambanaria.org>
- <xmqqy0zz3fxv.fsf@gitster.g> <CAP6f5MkYL8PgRyf_paCYxL-LE5nUa2U1GQMsu2scLzJPSS=9Ag@mail.gmail.com>
-In-Reply-To: <CAP6f5MkYL8PgRyf_paCYxL-LE5nUa2U1GQMsu2scLzJPSS=9Ag@mail.gmail.com>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Mon, 30 Dec 2024 11:02:55 +0800
-Message-ID: <CANYiYbE+4AsbKjCjEJj+MjA7vxfSW4XWbYZrNaobnp6=TsboPg@mail.gmail.com>
-Subject: Re: [PATCH 4 1/1] parse-options: localize mark-up of placeholder text
- in the short help
-To: Alexander Shopov <ash@kambanaria.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-On Sun, Dec 29, 2024 at 1:12=E2=80=AFAM Alexander Shopov <ash@kambanaria.or=
-g> wrote:
->
-> Thanks a lot for applying and especially for the  feedback.
->
-> > you have to fight the tool to have them produce "[PATCH 4 1/1]"
-> The command I used was
-> git format-patch ... --subject-prefix 'PATCH 4' ...
-> I guess I should use --subject-prefix 'PATCH v4' unless there is some oth=
-er trick I am missing.
+This series should fix the races we see in linux-leaks CI jobs. Or at
+least some of them. We tried previously in 993d38a066 (index-pack: spawn
+threads atomically, 2024-01-05), but it wasn't enough. This series
+covers index-pack as well as git-grep, which are the two I've seen in
+practice. We may run into more, but the general pattern should be
+applicable if we do.
 
-You should use "git format-patch --thread -v4" or "--reroll-count=3D4" inst=
-ead.
+This series takes the minimal approach, and only provides a knob to use
+pthread_barrier_t if your system supports it (and then turns it on for
+our CI jobs). The obvious alternative is to actually implement wrappers
+for other systems, and then use it everywhere. That doesn't buy us much
+for this problem, but it's possible we'd find a use for barriers
+elsewhere.
 
---
-Jiang Xin
+The even farther alternatives are:
+
+  1. Do nothing. This is arguably an LSan bug, which should be doing its
+     own locking to synchronize the at-exit leak check with the
+     per-thread setup code. I don't think we've even reported it there,
+     so one option would be to work with them. Even if we do that, it
+     might be nice to remove the false positive pain in the meantime
+     with a series like this (and certainly patches 1 and 2 here are
+     worth applying independently).
+
+  2. Change our posture on thread exit. In index-pack, the issue is that
+     one worker thread calls exit() via die(), taking down the whole
+     program (including other worker threads in unknown states). If it
+     installed a die() handler that called pthread_exit() instead, then
+     the main thread could see that failure and cancel/join the
+     remaining threads.
+
+     But I suspect it's not so simple:
+
+       a. We still want the error in the worker thread to cancel ongoing
+	  work immediately. Right now index-pack just called
+	  pthread_join() in sequence to wait for all threads to finish.
+	  But instead we'd need to use some synchronization primitives
+	  to report the error. Probably not too hard, but new
+	  potentially tricky code.
+
+       b. In the git-grep case, it's actually the main thread that calls
+	  die(). So the rule is not really "threads should install a die
+	  handler that calls pthread_exit()", but _any_ die() call when
+	  threads are established would need to cleanly ask all threads
+	  to stop (whether by signaling them via the work queue, or just
+	  hitting them with pthread_cancel; and that's assuming that
+	  there's no race between LSan's setup code and cancel).
+
+       c. When we call die(), all bets are off about what state various
+          data structures are in. For example, a thread could be holding
+	  a lock, and if it's cancelled by another thread, that lock
+	  will remain. So it's not safe to do any real work in the other
+	  threads, unless we start setting up pthread_cleanup handlers,
+	  etc. That seems like a recipe for obscure, racy deadlocks.
+
+     I think that may be an appealing direction in the long run,
+     especially since die() itself is not thread-safe. But coupled with
+     libification, we probably want less "threads can die() cleanly" and
+     more "threads pass errors up the stack and report the problem back
+     to the work queue". Either way, though, it's a much bigger approach
+     change than I think we want just to try to address LSan races.
+
+So I think we want something like this (either this, or the variant
+where we really implement barriers everywhere) in the near-term.
+
+  [1/5]: test-lib: use individual lsan dir for --stress runs
+  [2/5]: Revert "index-pack: spawn threads atomically"
+  [3/5]: thread-utils: introduce optional barrier type
+  [4/5]: index-pack: work around LSan threading race with barrier
+  [5/5]: grep: work around LSan threading race with barrier
+
+ Makefile             |  7 +++++++
+ builtin/grep.c       |  8 ++++++++
+ builtin/index-pack.c |  8 ++++++--
+ ci/lib.sh            |  1 +
+ t/test-lib.sh        |  2 +-
+ thread-utils.h       | 17 +++++++++++++++++
+ 6 files changed, 40 insertions(+), 3 deletions(-)
