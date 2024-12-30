@@ -1,104 +1,556 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D7C7BAEC
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 17:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2007BAEC
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 17:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735579898; cv=none; b=VkRtFczHrFHHDuCgXzGJWF/b2+Q8VW+r6zXenqkEPj1gCVqmd+K1R2RONldzJnWALvvTD0WVo8ZawQSspnoCaJeBafoZ1wMjqMzraizHKlIaSV2k3OVBNyTxJIwvWXIOS1Wo4/Xz96vSf9ys1hsIqqG7rBfSPWYNRVl+/g4aHRU=
+	t=1735580006; cv=none; b=ewQQeQKduGOO12QD3Y6dT67RKOKiWjhCRdtjPOpo3zYbgwaiAzZhluTIH9FW0IW0MGRK0HhhCAMeZyK1E4baRkWL3755B0jYsMMspnPoozYjlsTpKAG2fTLkQoCoR8N8O2J19/mVPGFQICU9EhOttwlbN3tjjVs+ifn5QhIW5tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735579898; c=relaxed/simple;
-	bh=1OSBne3mSYTBnhMkT4K1s3k7dsWQ7oLG5SDNEFos2Qo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RsiydN7t0l8jiASVtXGDOrOhYMXAyfFiiHua5cPRu8QzPue/hPBf+lzxHy4jL0LXRjv6vKHgIPxPo80T8EnAgZX6b6YyHtqJgK8lJ+vJHPeb4tGemK+uGxEi1mFXqkLNHCyfhd+KXtBzC5mgVfPATFPU+dBVIe2q0Pmg5BcPyc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=sHx1A5uT; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1735580006; c=relaxed/simple;
+	bh=CYTx5otigkxM2EHD8sPAm3uLyRcxcmCoYYgvqQtbCQk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=N75Gdip4GkHaUYQtweol8HIi5yvcYebVOOURc4d96ZJS3BqcQLN6CA0lWpmwUP1OvtsLliZa2ula7zmomrfkqoIE0X801L8G3bRrsUtUBrI5ejmFI8dohrQyzVzPlhbSUJppn//gp4odxe/lKArS9neGDl92CcG7r5E3LrvGbZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LORtgbvJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DyXuwRd+; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="sHx1A5uT"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e4a6b978283so11998765276.0
-        for <git@vger.kernel.org>; Mon, 30 Dec 2024 09:31:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1735579895; x=1736184695; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3UaTwa06ILhN2K2jJa+5KxjtcKDQxIZcFjt+ah/nBJc=;
-        b=sHx1A5uTIZVnOuM1/rhEdwhk8/OZuRH4rhBBi3Um/HnDBkMWzo7UZlQ2x6RzKshMT2
-         mq/4xe1VjHfIJZ5032OdiOF2emgkAnMWvIjTxdEu4gAAyL9ekNdQj3eLmdL0NhkktXh0
-         qKv/KEhmBp+QHpYzFbJBMhFpwKgywcklk/vucQh+NqC1FrEDg6Yx9Jly6MySK+zQ0JVJ
-         ZtctHKIORjUovdVtb+X9ecMVNSLHBaLepUJC3zKXMr8410eYTjJEF4/kxbtvHHp70255
-         yPPUCToGmBMkklRkZAzuSHJNOl6pgLpn9jGiaYZvVcCHNX7tg77sOtuxnSvWfWFmnBAe
-         iYYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735579895; x=1736184695;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3UaTwa06ILhN2K2jJa+5KxjtcKDQxIZcFjt+ah/nBJc=;
-        b=wZfprxOCr+cdtH6ovCm5DV7WPAda88jI+/Mu+DqSeTNZfM6JtQ0dTxpX9gPfIhWZf1
-         J4DUj0nfnp0AEkq1KPGBvRy1JcPsZuAEXd/5RQ6hl9TYKozZgJO9WmbmUc6h10lW20eZ
-         xMGImpApIIhZFXkJXhsRauD1+qbTwbzaDJKTGIE0MRHbU9KG7027m9cufmuW/gD/WWav
-         PlxNa+d/7UP5TjDZcXCctyxNAVFCH2o9+Zp+RAV/U+/YsJNHLUcON9ALIQ+XqgmaX+5r
-         X/Z6nQfcfov4/0HGVnoupTcuisg7117w3j4Mam2uBYftaf3s63FKG4jSWqaml5H1Dr/D
-         hCXw==
-X-Gm-Message-State: AOJu0YyNWSzA+vcERCtfmFBfJVTHdIDdPdSo0xZxDiZtrI40hdjPuQ/I
-	t5EHOveIYs2KB4MWw3XJDSEF4d2pGK24xa0YvvUBvUw2d+5tHkl8PYFtdiwwPaY=
-X-Gm-Gg: ASbGnctW6OSu3s3Ien5ZqyYzgxPw0spjm9mjkMA5D1MP5zJ0QYEOF/Rqg0jfvAV/njM
-	ctmP+gVULY4so4LarmzJP10R/bJCT4FY1GjyryRnwDv0/4au5QQ9WdhgC1BjUlKzK3jLIx0MkuF
-	7QxelyB+vm2xDMzX0uaws2GgObAnhdCINn5HUru4Zvh9AgBrzs/ONExv1oFddJbri9yPj8W3oBB
-	GviYi2ByJ4ubX8VBYGcC3WjVr1Ohsg+nHuLuIqMYyYBEFd7uvdjCyV5sOQ0BDBOkty4wPuGjcvu
-	Mxz2QYJAZoWQjpOOfyU4O3TJWCU9
-X-Google-Smtp-Source: AGHT+IHO5pD6UxNAdfHx/N0+1ZwOTPjdy9ZtWjudZwnvFXxeA9E34ygEn/pHbU3BtgwiGjv+DbePsg==
-X-Received: by 2002:a05:690c:6b87:b0:6ee:55c7:6128 with SMTP id 00721157ae682-6f3f7e1ca9dmr235853247b3.5.1735579895604;
-        Mon, 30 Dec 2024 09:31:35 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f3e77ee173sm56893247b3.90.2024.12.30.09.31.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2024 09:31:35 -0800 (PST)
-Date: Mon, 30 Dec 2024 12:31:34 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/10] ci: exercise unsafe OpenSSL backend
-Message-ID: <Z3LY9gLVdQQWk0Zc@nand.local>
-References: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
- <20241230-pks-meson-sha1-unsafe-v1-3-efb276e171f5@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LORtgbvJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DyXuwRd+"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DD59D1140145;
+	Mon, 30 Dec 2024 12:33:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 30 Dec 2024 12:33:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1735580002; x=1735666402; bh=XYm54kLUQ8imroYS0x36Ot/nxuX8Qx8P
+	7pqQ9qLZPYo=; b=LORtgbvJlplDU1UddFRevRcDtsjj56IUY72isb8bWJVNHY2S
+	q4N9Ox1kkfkoEdK3O3XK/jpIEjaXGt00fkQ79J4Kz3YjvGO5oSCZ8eHDbpqD8JLR
+	svyswHT28ew+nwB3OOjmYRXNcMdK5E1cw0hfKYPD7NOTGddGds8wZOl9lLz8Hvh3
+	Vfyqo5jk+l47eWzyAUYQlU/4YEa2pVVI2/+W1t+wabGH4ucnTx/kYyPXVGTUJYTJ
+	AXKnuHcQkyG2X7GKI40fD16GJRNwXDqxE0Cr8pMs0KkM8z4DzH9Lla1d4DLdYdW0
+	2vWm+pj+TgZ4n+1PuOLYZ7JZEyMzLpdDlOGzDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735580002; x=
+	1735666402; bh=XYm54kLUQ8imroYS0x36Ot/nxuX8Qx8P7pqQ9qLZPYo=; b=D
+	yXuwRd+D08dsV8iaPvCehcorat4flFNKuFbfndmQdc/t7d52YqmICkZ5ZyZ40geq
+	9YS8o734op4ZHg8r+vCYToGCMm8SnSjCy8C0f54OlfDSpG0MpyExVk2iMrwZJWmN
+	GIkwJgMiLei+s8jKPcQW7N1GyskaWtyOAo7HvVpMEpcQs2PD/JbRkTbtSvJ0OMvo
+	+kB6laadxURLmq1we0Yrs977RNiAqmky/lRSIgsSg5/HjGO6vctd4jxjsLIaiwVC
+	v/gadzNA2LusZSA7+NzZJtKyrJU9f/JvnrkrJZR6DWVfIiUp9G9NmzZsF8KCAQ6L
+	oosNHxPegBu7ySlvbFbVQ==
+X-ME-Sender: <xms:YtlyZ8VUquMOWp-J3buyOUPpDQe0mLf9MR-g-n3oKDkpVKNIhEkqng>
+    <xme:YtlyZwkyQTuPHbzFCmeY7SQdsnhVmCRFv91hU6tnqSeqPVYjx69-RLKx04O8mqhHr
+    nqiyM8SlcQLOmHSQw>
+X-ME-Received: <xmr:YtlyZwa8YrOtit_jN902262ySXVYZisFeYj0D8skWm-ljkz2T4jPEM1OIvEdDk3lE7roidLCJNIjb-_UuUu7wZzZNSzSEwh2og>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtff
+    homhgrihhnucdlgeelmdenucfjughrpefhvffufffkfgggtgesthdtredttdertdenucfh
+    rhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtg
+    homheqnecuggftrfgrthhtvghrnheptdetjedugfejtdfgudeffeejkeelkeeiuddutefh
+    jeeigedtleekveeigffgieetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpohhrrd
+    gtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpghhithhl
+    rggsrdgtohhmpdifohhrughprhgvshhsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvght
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:YtlyZ7XeYuSpnqHxjkIMqgR7XJTWNjvmf8vp8ew_r3wOqYtZ0gGcFw>
+    <xmx:YtlyZ2k1T5PSrxikKPWATY2i82WL44kEzPNeK1PjOtik_jOQEVxbZw>
+    <xmx:YtlyZwewaK5Sa4goM4ho_-XxKzZ4UcyTjFfqoN-JKnXjhhE9dyUbeQ>
+    <xmx:YtlyZ4HOyhv4_1WXALqIDRzvMz-wpg2CfetqhEbmNuy7p5E1EXHbKA>
+    <xmx:YtlyZ4hvfjApbg71zD1r9QGUZdJ_ON0pmeTnSowLY572xa2gTPUzQLuE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Dec 2024 12:33:22 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Dec 2024, #11; Mon, 30)
+X-master-at: bc2c65770dca70c1d4e151fad971bc7c7235a702
+X-next-at: 8677dc54d23642379db0014f8fa76565a086b1d5
+Date: Mon, 30 Dec 2024 09:33:20 -0800
+Message-ID: <xmqqpll9xehr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241230-pks-meson-sha1-unsafe-v1-3-efb276e171f5@pks.im>
+Content-Type: text/plain
 
-On Mon, Dec 30, 2024 at 03:24:03PM +0100, Patrick Steinhardt wrote:
-> In the preceding commit we have fixed a segfault when using an unsafe
-> SHA1 backend that is different from the safe one. This segfault only
-> went by unnoticed because we never set up an unsafe backend in our CI
-> systems. Fix this ommission by setting `OPENSSL_SHA1_UNSAFE` in our
-> TEST-vars job.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  ci/run-build-and-tests.sh | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-> index c4a41bba0b84df57f6e60aeac2de29dbc0e27dc1..76667a1277720d74e09e8da227b5e0832003e0e2 100755
-> --- a/ci/run-build-and-tests.sh
-> +++ b/ci/run-build-and-tests.sh
-> @@ -17,6 +17,7 @@ linux-gcc)
->  	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->  	;;
->  linux-TEST-vars)
-> +	export OPENSSL_SHA1_UNSAFE=YesPlease
->  	export GIT_TEST_SPLIT_INDEX=yes
->  	export GIT_TEST_MERGE_ALGORITHM=recursive
->  	export GIT_TEST_FULL_IN_PACK_ARRAY=true
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-I think that this is a great idea, thanks for adding it!
+It has been a very slow week, and I expect this week will also be
+slow.  Git 2.48-rc1 has been tagged.  Hopefully we can have 2.48
+final around the end of next week.
 
-Thanks,
-Taylor
+Extra testing the tip of 'master' before we actually tag it is as
+always very much appreciated.
+
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
+
+With maint, master, next, seen, todo:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[New Topics]
+
+* jk/lsan-race-with-barrier (2024-12-30) 5 commits
+  (merged to 'next' on 2024-12-30 at 3fc0e14928)
+ + grep: work around LSan threading race with barrier
+ + index-pack: work around LSan threading race with barrier
+ + thread-utils: introduce optional barrier type
+ + Revert "index-pack: spawn threads atomically"
+ + test-lib: use individual lsan dir for --stress runs
+
+ CI jobs that run threaded programs under LSan has been giving false
+ positives from time to time, which has been worked around.
+
+ Will merge to 'master'.
+ source: <20241230042325.GA112439@coredump.intra.peff.net>
+
+
+* ps/meson-weak-sha1-build (2024-12-30) 8 commits
+ - meson: provide a summary of configured backends
+ - meson: wire up unsafe SHA1 backend
+ - meson: add missing dots for build options
+ - meson: simplify conditions for HTTPS and SHA1 dependencies
+ - meson: require SecurityFramework when it's used as SHA1 backend
+ - meson: deduplicate access to SHA1/SHA256 backend options
+ - meson: consistenlty spell 'CommonCrypto'
+ - Merge branch 'ps/weak-sha1-for-tail-sum-fix' into ps/meson-weak-sha1-build
+ (this branch uses ps/weak-sha1-for-tail-sum-fix.)
+
+ meson-based build now supports the unsafe-sha1 build knob.
+
+ Will merge to 'next'.
+ source: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
+
+
+* ps/object-collision-check (2024-12-30) 1 commit
+  (merged to 'next' on 2024-12-30 at e083ea3154)
+ + object-file: fix race in object collision check
+
+ CI jobs gave sporadic failures, which turns out that that the
+ object finalization code was giving an error when it did not have
+ to.
+
+ Will merge to 'master'.
+ source: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
+
+
+* ps/weak-sha1-for-tail-sum-fix (2024-12-30) 3 commits
+  (merged to 'next' on 2024-12-30 at c24783e99d)
+ + ci: exercise unsafe OpenSSL backend
+ + builtin/fast-import: fix segfault with unsafe SHA1 backend
+ + bulk-checkin: fix segfault with unsafe SHA1 backend
+ (this branch is used by ps/meson-weak-sha1-build.)
+
+ An earlier "csum-file checksum does not have to be computed with
+ sha1dc" topic had a few code paths that had initialized an
+ implementation of a hash function to be used by an unmatching hash
+ by mistake, which have been corrected.
+
+ Will merge to 'master'.
+ source: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* ms/t7611-test-path-is-file (2024-12-27) 1 commit
+  (merged to 'next' on 2024-12-28 at b08a0c8e23)
+ + t7611: replace test -f with test_path_is* helpers
+
+ Test modernization.
+ 
+ source: <20241227105345.10184-1-meetsoni3017@gmail.com>
+
+
+* ps/meson-test-wo-gitweb (2024-12-27) 3 commits
+  (merged to 'next' on 2024-12-28 at 39938f41fd)
+ + meson: enable auto-discovered "gitweb"
+ + GIT-BUILD-OPTIONS: wire up NO_GITWEB option
+ + GIT-BUILD-OPTIONS: sort variables alphabetically
+
+ meson-based build without GitWeb failed the self tests.
+ source: <20241227-b4-pks-meson-wo-gitweb-v1-0-14ca8515bb3b@pks.im>
+
+--------------------------------------------------
+[Cooking]
+
+* sk/strlen-returns-size_t (2024-12-26) 1 commit
+ - date.c: Fix type missmatch warings from msvc
+
+ Code clean-up.
+
+ The remainder needs to be reviewed.
+ source: <20241223110407.3308-3-soekkle@freenet.de>
+
+
+* ps/more-sign-compare (2024-12-27) 10 commits
+ - sign-compare: avoid comparing ptrdiff with an int/unsigned
+ - commit-reach: use `size_t` to track indices when computing merge bases
+ - shallow: fix -Wsign-compare warnings
+ - builtin/log: fix remaining -Wsign-compare warnings
+ - builtin/log: use `size_t` to track indices
+ - commit-reach: use `size_t` to track indices in `get_reachable_subset()`
+ - commit-reach: use `size_t` to track indices in `remove_redundant()`
+ - commit-reach: fix type of `min_commit_date`
+ - commit-reach: fix index used to loop through unsigned integer
+ - prio-queue: fix type of `insertion_ctr`
+
+ More -Wsign-compare fixes.
+
+ Will merge to 'next'.
+ cf. https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
+ source: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+
+
+* as/long-option-help-i18n (2024-12-30) 1 commit
+  (merged to 'next' on 2024-12-30 at 900c79808f)
+ + parse-options: localize mark-up of placeholder text in the short help
+
+ Tweak the help text used for the option value placeholders by
+ parse-options API so that translations can customize the "<>"
+ placeholder signal (e.g. "--option=<value>").
+
+ Will cook in 'next'.
+ source: <20241228114221.10351-4-ash@kambanaria.org>
+
+
+* sk/maintenance-remote-prune (2024-12-28) 1 commit
+ - maintenance: add prune-remote-refs task
+
+ A new periodic maintenance task to run "git remote prune" has been
+ introduced.
+
+ Expecting a reroll.
+ cf. <Z3JLdIG4C9D2-1ZT@pks.im>
+ source: <pull.1838.v2.git.1735380461980.gitgitgadget@gmail.com>
+
+
+* rs/reftable-realloc-errors (2024-12-28) 4 commits
+  (merged to 'next' on 2024-12-30 at ebc9625a4c)
+ + t-reftable-merged: handle realloc errors
+ + reftable: handle realloc error in parse_names()
+ + reftable: fix allocation count on realloc error
+ + reftable: avoid leaks on realloc error
+
+ The custom allocator code in the reftable library did not handle
+ failing realloc() very well, which has been addressed.
+
+ Will merge to 'master'?
+ cf. <Z3JLdIG4C9D2-1ZT@pks.im>
+ source: <f4677194-0a3a-4f07-b003-c0295b51c100@web.de>
+
+
+* jc/show-index-h-update (2024-12-20) 1 commit
+ - show-index: the short help should say the command reads from its input
+
+ Doc and short-help text for "show-index" has been clarified to
+ stress that the command reads its data from the standard input.
+
+ Comments?
+ source: <xmqqfrmidyhk.fsf@gitster.g>
+
+
+* ps/the-repository (2024-12-18) 15 commits
+ - match-trees: stop using `the_repository`
+ - graph: stop using `the_repository`
+ - add-interactive: stop using `the_repository`
+ - tmp-objdir: stop using `the_repository`
+ - resolve-undo: stop using `the_repository`
+ - credential: stop using `the_repository`
+ - mailinfo: stop using `the_repository`
+ - diagnose: stop using `the_repository`
+ - server-info: stop using `the_repository`
+ - send-pack: stop using `the_repository`
+ - serve: stop using `the_repository`
+ - trace: stop using `the_repository`
+ - pager: stop using `the_repository`
+ - progress: stop using `the_repository`
+ - Merge branch 'ps/build-sign-compare' into ps/the-repository
+
+ More code paths have a repository passed through the callchain,
+ instead of assuming the primary the_repository object.
+ source: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+
+
+* ps/build-meson-html (2024-12-27) 12 commits
+ - Documentation: wire up sanity checks for Meson
+ - t/Makefile: make "check-meson" work with Dash
+ - meson: install static files for HTML documentation
+ - meson: generate articles
+ - Documentation: refactor "howto-index.sh" for out-of-tree builds
+ - Documentation: refactor "api-index.sh" for out-of-tree builds
+ - meson: generate user manual
+ - Documentation: inline user-manual.conf
+ - meson: generate HTML pages for all man page categories
+ - meson: fix generation of merge tools
+ - meson: properly wire up dependencies for our docs
+ - meson: wire up support for AsciiDoctor
+
+ The build procedure based on meson learned to generate HTML
+ documention pages.
+
+ Needs review. On hold.
+ source: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
+
+
+* jc/doc-attr-tree (2024-12-14) 1 commit
+ - doc: give attr.tree a bit more visibility
+
+ Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
+ attr.tree configuration variables appear at the same places in the
+ documentation.
+
+ On hold.
+ cf. <20241216111112.GA2201417@coredump.intra.peff.net>
+ source: <xmqq5xnladwi.fsf@gitster.g>
+
+
+* ps/3.0-remote-deprecation (2024-12-12) 6 commits
+ - remote: announce removal of "branches/" and "remotes/"
+ - builtin/pack-redundant: remove subcommand with breaking changes
+ - ci: repurpose "linux-gcc" job for deprecations
+ - ci: merge linux-gcc-default into linux-gcc
+ - Makefile: wire up build option for deprecated features
+ - Merge branch 'ps/build' into ps/3.0-remote-deprecation
+
+ Following the procedure we established to introduce breaking
+ changes for Git 3.0, allow an early opt-in for removing support of
+ $GIT_DIR/branches/ and $GIT_DIR/remotes/ directories to configure
+ remotes.
+
+ Needs review.
+ source: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
+
+
+* cc/lop-remote (2024-12-07) 5 commits
+ . doc: add technical design doc for large object promisors
+ . promisor-remote: check advertised name or URL
+ . Add 'promisor-remote' capability to protocol v2
+ . strbuf: refactor strbuf_trim_trailing_ch()
+ . version: refactor strbuf_sanitize()
+
+ Expecting a reroll.
+ cf. <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
+ source: <20241206124248.160494-1-christian.couder@gmail.com>
+
+
+* ds/backfill (2024-12-20) 6 commits
+ - backfill: assume --sparse when sparse-checkout is enabled
+ - backfill: add --sparse option
+ - backfill: add --min-batch-size=<n> option
+ - backfill: basic functionality and tests
+ - backfill: add builtin boilerplate
+ - Merge branch 'ds/path-walk-1' into ds/backfill
+ (this branch uses ds/path-walk-1.)
+
+ Lazy-loading missing files in a blobless clone on demand is costly
+ as it tends to be one-blob-at-a-time.  "git backfill" is introduced
+ to help bulk-download necessary files beforehand.
+
+ Comments?
+ source: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
+
+
+* re/submodule-parse-opt (2024-12-11) 7 commits
+  (merged to 'next' on 2024-12-21 at 9e65a56a63)
+ + git-submodule.sh: rename some variables
+ + git-submodule.sh: improve variables readability
+ + git-submodule.sh: add some comments
+ + git-submodule.sh: get rid of unused variable
+ + git-submodule.sh: get rid of isnumber
+ + git-submodule.sh: improve parsing of short options
+ + git-submodule.sh: improve parsing of some long options
+
+ "git submodule" learned various ways to spell the same option,
+ e.g. "--branch=B" can be spelled "--branch B" or "-bB".
+
+ Will cook in 'next'.
+ source: <20241211063234.7610-1-royeldar0@gmail.com>
+
+
+* tb/unsafe-hash-test (2024-11-21) 2 commits
+ - t/helper/test-tool: implement sha1-unsafe helper
+ - t/helper/test-sha1: prepare for an unsafe mode
+
+ Preliminary addition to the test tool to allow a plain SHA-1 hash
+ algorithm without collision protection.
+
+ Comments?
+ cf. <xmqqr073antj.fsf@gitster.g>
+ source: <cover.1730833506.git.me@ttaylorr.com>
+
+
+* tb/incremental-midx-part-2 (2024-11-20) 15 commits
+ - midx: implement writing incremental MIDX bitmaps
+ - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+ - pack-bitmap.c: keep track of each layer's type bitmaps
+ - ewah: implement `struct ewah_or_iterator`
+ - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+ - pack-bitmap.c: compute disk-usage with incremental MIDXs
+ - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+ - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+ - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+ - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+ - pack-bitmap.c: open and store incremental bitmap layers
+ - pack-revindex: prepare for incremental MIDX bitmaps
+ - Documentation: describe incremental MIDX bitmaps
+ - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+ - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+
+ Incrementally updating multi-pack index files.
+
+ Needs review.
+ source: <cover.1732054032.git.me@ttaylorr.com>
+
+
+* ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
+ - transport: don't ignore git-receive-pack(1) exit code on atomic push
+ - t5504: modernize test by moving heredocs into test bodies
+
+ "git push --atomic --porcelain" used to ignore failures from the
+ other side, losing the error status from the child process, which
+ has been corrected.
+
+ Needs to see if competing parallel topic needs to replace this one.
+ source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
+
+
+* jc/move-is-bare-repository-cfg-variable-to-repo (2024-11-07) 3 commits
+ . repository: BUG when is_bare_cfg is not initialized
+ . setup: initialize is_bare_cfg
+ . git: remove is_bare_repository_cfg global variable
+
+ Code rewrite to turn the is_bare_repository_cfg global variable
+ into a member in the the_repo singleton repository object.
+
+ Waiting for response to reviews.
+ cf. <xmqqy116xvr3.fsf@gitster.g>
+ Seems to break t0021-conversion on Windows.
+ cf. https://lore.kernel.org/git/xmqqzfl1hl52.fsf@gitster.g/
+ source: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
+
+
+* ds/name-hash-tweaks (2024-12-20) 8 commits
+ - pack-objects: add third name hash version
+ - pack-objects: prevent name hash version change
+ - test-tool: add helper for name-hash values
+ - p5313: add size comparison test
+ - pack-objects: add GIT_TEST_NAME_HASH_VERSION
+ - repack: add --name-hash-version option
+ - pack-objects: add --name-hash-version option
+ - pack-objects: create new name-hash function version
+
+ "git pack-objects" and its wrapper "git repack" learned an option
+ to use an alternative path-hash function to improve delta-base
+ selection to produce a packfile with deeper history than window
+ size.
+
+ Comments?
+ source: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+
+
+* ds/path-walk-1 (2024-12-20) 7 commits
+ - path-walk: reorder object visits
+ - path-walk: mark trees and blobs as UNINTERESTING
+ - path-walk: visit tags and cached objects
+ - path-walk: allow consumer to specify object types
+ - t6601: add helper for testing path-walk API
+ - test-lib-functions: add test_cmp_sorted
+ - path-walk: introduce an object walk by path
+ (this branch is used by ds/backfill.)
+
+ Introduce a new API to visit objects in batches based on a common
+ path, or by type.
+
+ Comments?
+ source: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
+
+
+* km/config-remote-by-name (2024-10-21) 1 commit
+ - config: support remote name in includeIf.hasconfig condition
+
+ Support conditionally including configuration by remote name, instead
+ of just URL.
+
+ Will discard?
+ source: <20241020173216.40852-2-ken@kmatsui.me>
+
+
+* y5/diff-pager (2024-10-21) 1 commit
+ - diff: setup pager only before diff contents truly ready
+
+ Delay setting up the pager in 'git diff' until after the diff contents
+ itself is fully prepared.
+
+ Will discard?
+ source: <pull.1817.git.git.1729370390416.gitgitgadget@gmail.com>
+
+
+* ej/cat-file-remote-object-info (2024-11-25) 6 commits
+ - cat-file: add remote-object-info to batch-command
+ - transport: add client support for object-info
+ - serve: advertise object-info feature
+ - fetch-pack: move fetch initialization
+ - fetch-pack: refactor packet writing
+ - cat-file: add declaration of variable i inside its for loop
+
+ "git cat-file --batch" and friends can optionally ask a remote
+ server about objects it does not have.
+
+ Expecting a reroll.
+ cf. <Z0RIrKwUnaWWm_gJ@pks.im>
+ source: <20241125053616.25170-1-eric.peijian@gmail.com>
+
+
+* js/libgit-rust (2024-10-16) 5 commits
+ - Makefile: add option to build and test libgit-rs and libgit-rs-sys
+ - libgit: add higher-level libgit crate
+ - libgit-sys: also export some config_set functions
+ - libgit-sys: introduce Rust wrapper for libgit.a
+ - common-main: split init and exit code into new files
+
+ A rust binding to libgit.a functions has been introduced.
+
+ Will discard?
+ source: <cover.1729032373.git.steadmon@google.com>
