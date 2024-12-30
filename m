@@ -1,54 +1,54 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C242194A60
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 14:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB7733C9
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 17:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735570471; cv=none; b=frrrLxUcCWMHuTL8TN0Usvl2F7kH6CpnF1TeF8gjJXk3d+sRbUDz7in4v72ywpXX8S4dL5HpEEKyWgrlJabfpW7DLMqLmILZpNrByyVeMJizeyGSu4mS+4ZmvBaWLn7Og3eVQLhp8q/wfqA1YYwHENEpjnOxHPEpM7biS1eGOZ8=
+	t=1735578521; cv=none; b=V5PjLeMwVrGXWQYdasTJXQTXL8dUn91IqLT5OW7tAEF+HFnpDgtc5p2C7hDsGgbaFBebaBjwSUI+oAcbMJcH1oAR7kkT+rcaFhBRRQzALFBxQYaOKaqvdmbx0NWtqGPbXNzoYX9LoYQ+TktgIexaYOXD9Ri4xG1hsk4Hy7DWkL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735570471; c=relaxed/simple;
-	bh=eWo575pxLnaqL0UZlw6KIOuWU9Wr20xi9DiSD+bj/2E=;
+	s=arc-20240116; t=1735578521; c=relaxed/simple;
+	bh=KNRzxVSl4TZKHLvppaYqw7Mc7O+/1ofgxsAmFI3yv6c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KiGMYB2h6akqJeyN70xp3LWl8fQyJiNY6i48Z0y+OwhwgcYIjDE3tRy/Zdu9reNrMXPJQDMgwlh7YVYuow07KRMU2hXPt5THk1jl3FTDY4JZ9hf2dZK/qgzy9l5mP5Fy1SzYOzC+JMTM1qorQmmWSXtFG8Dwp7Aju0O0R/vImaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BSgDXsrZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTkXBPSh; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=S1lVjgT2zY80vj+T3RrC6+xoGLKUlYyXyfAtd5OfJeOYom8wLJJi/RT9ACMSDS0+ci88PqKZWSMgN+3wYAzu9IDJb2QlsmxbY2yLKoP+Et63SID0gEUbYBiHOco9dGF0iv8iLefOupEpD1gdYIkqjhk2j5Gme1bPZu+jy4yhJFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KkUkDfgy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZSX6Zwo2; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BSgDXsrZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTkXBPSh"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KkUkDfgy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZSX6Zwo2"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 06CD611401C6;
-	Mon, 30 Dec 2024 09:54:27 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0288B11400A3;
+	Mon, 30 Dec 2024 12:08:38 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 30 Dec 2024 09:54:27 -0500
+  by phl-compute-09.internal (MEProxy); Mon, 30 Dec 2024 12:08:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735570467; x=1735656867; bh=xnvy1todGx
-	5wlqra+krVPi9B0CGAh8p1z8cfqPyEWJI=; b=BSgDXsrZSkNmIivWEF2KRLXj9w
-	rrUIIhTFIqTVVswmGS9tmwepp1VcO/67QAQhy+a738xxmMJMj0ATHHoKeqcuzgZ/
-	IWLF81vgRNpP5xM9Dy+V82pnVQXSN9lsYoKF+vELWuJd2D+mV8009D1lQGwL/9r/
-	dS1edS1/MmijAFNHx4VdznTALB4AMvLFMqQFaX/svNm01TPUjKWqwEt1ja3YrOci
-	ZJ8+ha0c9Ja7tgRBPX5fbtG3UbrGhOzzdkstv1GaeIKRfw9R56g0o9hYXOT+5Xfh
-	z/kicDspfHTCaadxKHT2vo9DjJGXSGodCkk0Wlxufk3K9hPkxhLJDjsyNqeA==
+	:subject:to:to; s=fm1; t=1735578517; x=1735664917; bh=roD5qBfPVf
+	R9wGClsPH3flwVgQnMK9tMsPku95QGswQ=; b=KkUkDfgyvnGczRYvWSMarZU441
+	EQMstjDf5bvU/Us+m9YrzWVnPHKKQg9FfEuLPkeg8HfMknejsMWwdDzgX0H/EESX
+	hgFbZoWA04JRZAW8GgkRWUjz7fIJZijhvtblljw57KsYL2InyqkqtZU9kWmrEoHQ
+	CbEk6QgXM4SPiOphZ64tBwMsufBpWYbTTiU270uxoeHe/FHMbFGKn5LKy4nfF8QO
+	SN6VHvJnUJKb/M8VZlyWt1EUG6XL4jj5LXeM4NuTIKhHHTNTHilem0opTt1EBYhT
+	WJzuZpW/P783Ou6XT4iwG7BblCryISujNG6r2wrjgVhFMpyhyBJZh/GQO3xA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735570467; x=1735656867; bh=xnvy1todGx5wlqra+krVPi9B0CGAh8p1z8c
-	fqPyEWJI=; b=lTkXBPShlF8d8FYFShnf3GAyixABanRdSI/wmod3MauXzL1fvwJ
-	2W5JNTvrBvNkCU87uVZu8Fz61LqbvQ0ECkm2hQN64DQYdPnrFWxfczIMwIuHyJQ/
-	AF5hIxQsGDgyH9m8Gblhcj7wDuyddmFtnkUhvOQEeq6Le83JT2LG1YkJCnrhUgr9
-	oqOA/HYPB8DKtxMNkjYqCUubcoC4oxaRcxsasQg7hJDS18Qp5/xu7PmSGOIDY4n0
-	X6/UnCWt1pGTp8HgfQ5Offv4a0Am5WymynyCrIXqUw6nSgCfnqhJFkECeUDKyKCC
-	oOg6YhSroiPhyU7xMEhXhELGMwt1XUTaqvA==
-X-ME-Sender: <xms:IrRyZ70uiPt_-H5qHqHsM79590Xhvs2TUoCvBCFKNLtFfqLUjpeq-A>
-    <xme:IrRyZ6HQK7drmOmCEZCOLX68PGdr9WHyvOsClsoLVp3UXJHC91HxtXbkQ9wtXPbnw
-    RkfwUW4qZpABcKo1w>
-X-ME-Received: <xmr:IrRyZ77S5ETA7FTEMpkROmCTlowmTVCQPTNUmJFLuTcwnzOpzkCYBMSKCKPbkugw3eRyuEvkRBuzQWlgpwLehCXqSdxD-lGZPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgjeduucetufdoteggodetrfdotf
+	1735578517; x=1735664917; bh=roD5qBfPVfR9wGClsPH3flwVgQnMK9tMsPk
+	u95QGswQ=; b=ZSX6Zwo2oxF+bPT0t/IrEM7RgtHN/P3Ru0f4ia5nIWpmtrIxWzU
+	w7LfofAJQP72IqFROPHiDujchnORwFYaGADvbjlJeS4Br6OBjGta5dQj6Szl7nvR
+	7yYVrGl2ReUbaqI1wZFL7UjIe7vMPLaFs45FwCt2VUGhO6nVt9sVgQ6jgivaFf9l
+	gIYhjBJ2Dj4oe32NXCAytiwPFgtDv8u4wwxfxjuurt9frIGgCAFBM+Oxe6KVsSuW
+	5EhYl2RGbmOU1wE4gwAENZL8b2hBWtu14qGAAT3Q++QzOWdPzMW+0lphXEcZk+AE
+	WQlHlRdqIloHtPNQJgyCKhnofi3ZN1nPGTA==
+X-ME-Sender: <xms:ldNyZ6e7Q0wDTXAJf911tnTIYOmWsDbsmJQBd2uvHSRwYictXmL0bA>
+    <xme:ldNyZ0MMWWsvnlWkGpn3s_oXXW8CAAKlPqaHEmcQu9Q8M56CVpt4IwqD-WVYhthgB
+    mE9kKtuLKTJ3yBWWg>
+X-ME-Received: <xmr:ldNyZ7jCEhWFoS_2Zgl4pVVSmkohl0z-8RVJ35n00gYsr0uVSKA6PxxxITRfXJafLGdsPp6fv1ciaXRN04Cs9TwlzRVtm4B08g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgleelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,29 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgjeduucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:IrRyZw3bzzoXlh9oJD0WDXyFHfne8K-g3ok5niuBnu1pNeji_gPFog>
-    <xmx:IrRyZ-G2jTtZ65RX_u4y8e9KCWKANqyoS4wapwrWs2aMcz9QIUulNg>
-    <xmx:IrRyZx-g9-OnQ25XfcURdgadSJ5JNWw22njWOh6vNfwS0jUAYv94mg>
-    <xmx:IrRyZ7mYfHvKo31vbQ3Ix2M_FU_myRRTV0RfSQyCd5bhLcg8MPq6oA>
-    <xmx:IrRyZ7PuMuDH-ZQgqRquQhLv34xTEHh2DhvDVpnKpBJmv4cg0_ghLm43>
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ldNyZ3-kcSqZcdtWAiFhlgm9e3ehv3xXvwOdT_Ckct8KMvMwLNeKhw>
+    <xmx:ldNyZ2vohC8sFErYGo2iCrw8r6SBKJnZEvzYBGacc4z0Voa6J9iHqw>
+    <xmx:ldNyZ-Gz8THMau7nzTrI1xbCXzagG10dJY9hJFUxm9mFFCV_lR9uIg>
+    <xmx:ldNyZ1NOj89W1yZEA4MQi3ItIw9Syt6LP_E9sI-k4Ez0Nt6sm5elow>
+    <xmx:ldNyZ4UdxzL4ysOru9PnkBNhz1DEVEqlCSwKwTY2rQJwbNC_lMVOy_0E>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Dec 2024 09:54:26 -0500 (EST)
+ 30 Dec 2024 12:08:37 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [PATCH] object-file: fix race in object collision check
-In-Reply-To: <Z3KzHJagr_3Fkz67@pks.im> (Patrick Steinhardt's message of "Mon,
-	30 Dec 2024 15:50:04 +0100")
-References: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
-	<xmqqy0zxz11m.fsf@gitster.g> <Z3KzHJagr_3Fkz67@pks.im>
-Date: Mon, 30 Dec 2024 06:54:24 -0800
-Message-ID: <xmqqseq5z0f3.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH 1/5] test-lib: use individual lsan dir for --stress runs
+In-Reply-To: <20241230042401.GA113400@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 29 Dec 2024 23:24:01 -0500")
+References: <20241230042325.GA112439@coredump.intra.peff.net>
+	<20241230042401.GA113400@coredump.intra.peff.net>
+Date: Mon, 30 Dec 2024 09:08:36 -0800
+Message-ID: <xmqqcyh9yu7f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,39 +89,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Dec 30, 2024 at 06:40:53AM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> > By definition, two files cannot collide with each other when one of them
->> > has been removed. We can thus trivially fix the issue by ignoring ENOENT
->> > when opening either of the files we're about to check for collision.
->> 
->> Thanks for digging it down to the cause.
->> 
->> It is more like even if these two files collided (i.e. have the same
->> name based on what the hash function says, with different contents),
->> when one of them has been removed, we have no way to check if the
->> collision is benign, and even if it were not, we cannot do anything
->> about it, isn't it?
+> When storing output in test-results/, we usually give each numbered run
+> in a --stress set its own output file. But we don't do that for storing
+> LSan logs, so something like:
 >
-> Depends on what "benign" means in this context, I guess. We can only
-> assert the most trivial case of it being "benign", namely that we have
-> computed a packfile that actually is the exact same. This is also going
-> to be the most common case, as everything else would depend on a
-> cryptographic collision of the packfile contents. And in that case... we
-> cannot do anything about it, yes.
+>   ./t0003-attributes.sh --stress
+>
+> will have many scripts simultaneously creating, writing to, and deleting
+> the test-results/t0003-attributes.leak directory. This can cause logs
+> from one run to be attributed to another, spurious failures when
+> creation and deletion race, and so on.
+>
+> This has always been broken, but nobody noticed because it's rare to do
+> a --stress run with LSan (since the point is for the code to run quickly
+> many times in order to hit races). But if you're trying to find a race
+> in the leak sanitizing code, it makes sense to use these together.
 
-Yes, the whole point of this collision check is to notice the rare
-case where we are under attack with cryptographic collision, so
-"most of the time it is OK so not being able to check is fine" is
-not an impression we want to give readers.
+Makes sense.
 
-> The idea would be to only handle ENOENT for the second case. But in the
-> end I don't think it's worth the complexity because `check_collision()`
-> is used before rename(3p)ing the former into place, and that function
-> would already notice ENOENT anyway. So we would eventually just die the
-> same.
+> We can fix it by using $TEST_RESULTS_BASE, which already incorporates
+> the stress job suffix.
 
-Thanks for thinking it through.  Queued.
+Thanks.  Queued.
