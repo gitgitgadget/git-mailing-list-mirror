@@ -1,147 +1,177 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EDE8F4A
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 07:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F48B139D19
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 10:32:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735543674; cv=none; b=J3Fdy6TnUv5WlcPtB2aVJVXmGCSewG4K8njIq4vx+zIxSxoB1n5iPiHvrEUn4ZRYUrAi2nh6g6mJRXG9nmWJpn/bEUZ9AsNBLzEfZC49pQVrVKcxu00/9RbfJysewQShX0F5vO85a63IyX7Mk3FMclYYEGfGrwcDVtZpHdK14FE=
+	t=1735554763; cv=none; b=fzAYByX1l6IkK8bqmoMEVn8DQrwjX6nYy8m62v9XMbgWPG0YhjapbCjPdPtoFCrswMhqqrMjHHtuKU00pQNd97CpHIvOnPlObYU07Bxm+opwJanAWi2K4RCFj+QiAIopWKEWfXEsGecfwWB/hXwflCPGJIhJnN4CoNr491MnbDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735543674; c=relaxed/simple;
-	bh=OvxrCikcpBpYQPd0szmKuXc/7q0I16rqFMq+Gbkwr7o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jhPlOisH7LKrAP69F5uezT8DxpUxmjiBky1bzUoOJh7g6M1jIsQO1NfTZeTxHmDq3xKF79vu+wZcXKWiwvLJFYZq8wA22EzmvXeveiCgu1z/HW3xWv5L0GwVA1GxB0d7MRd1ZdEk6osOnLFPUlEQQtCSCF3LM32SSyeIBYx3qG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i3aP7ETG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K8Vvn2s/; arc=none smtp.client-ip=103.168.172.158
+	s=arc-20240116; t=1735554763; c=relaxed/simple;
+	bh=46PkaCKZD+hQxubR1ik65os5VI17IByBnijWb0/m3kc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=KGa4oj2UUdwSSf4KK2HrSwM8NQP+pmYfJDofUrjbPQUrBZYH1nbaA3CdxMKe28DjAgXoIDqQIS5L0CDbacb27K/PSZwdBvinBAYWcLmwO3bAKEvTS7VhUZUokRdyhWGQ3agZPXj13se2wrtLC5tolys/0kDUB9CGImSwHXeJvo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gx9l62rP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rD/di2sp; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i3aP7ETG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K8Vvn2s/"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D59A114017A;
-	Mon, 30 Dec 2024 02:27:52 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gx9l62rP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rD/di2sp"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2D3561140142;
+	Mon, 30 Dec 2024 05:32:40 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 30 Dec 2024 02:27:52 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 30 Dec 2024 05:32:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1735543672; x=1735630072; bh=OWKDFnN/uz
-	972vyOIDbWEYhhNsebSRXm01IJQPoKqhY=; b=i3aP7ETG7mo/8Lz8v1WdiwMBIg
-	v8t1aoCDI7rkvH1dhaPo53uMvN9P4Ieh1uZYn+OD98dKlcdU+djYn8ayCNLoXPo0
-	ZSy3VcUFWthji9eg7AgOe5bFNx6PkBoeEjGEWEfxCaSHE5rxfKC2akg4WXPvkHXl
-	hi5JQ8rT9OkRRx0+7VY7B7Y9xNdDi6q+DqALh07g8/AGhTcouO3SegFi4NvsZ3mf
-	LP5OlnRtIBEZ+WQQGSFvY21cRZUsT8xhPBDqkMfJHYACMI95GMnnmGo0GW5krOnU
-	vHBpi19Q0JfuL2UDPNM6kk1EsDic1EK9F3AFOiqvG7nYyISznFUthVXRAysQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1735554760; x=1735641160; bh=sIZ4gTiae4
+	jamCZ+uBHKLfbODRrV3mY1Az/VCFp864k=; b=gx9l62rP+u9jZc95bGT5g9M9E0
+	7eRtmQ7sNJYhpFHpoPw42bnGEIJdJevpgp6XdoUjmhBUU6LYILhepK7+a3v4qPHe
+	2l1lShF+TWR9gQ09V9ilqZYPboezux9f6iZwsyKzf9erqD6EhyJCwOrhX4SHWxr8
+	Eb6PoqOUVVXNyIu5mafkEKdcq/ymH4C6kCsAvxF21nnZ9cIAsU45o46zzK0t2QfA
+	8/EFl/LMoTdtFSVMk9pvHb49IHuGCAtZycmySv+77577qXcsK4T+xW8i9JYDEm2E
+	PYqfz/kMqbSQI2oq/40UufeJHK4ByvAGnpTaGnIhoudfNUW+2KppVQPxdJcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735543672; x=1735630072; bh=OWKDFnN/uz972vyOIDbWEYhhNsebSRXm01I
-	JQPoKqhY=; b=K8Vvn2s/6yVakBKQmuBhAhtPqNsbOtQSMOA7U1QoC+ZTgCPDiAs
-	IvN2kF2WBuRK9kJELgCaT+yaHipQ82zoCsze+Pn/aGXF3FbkIZoEAZbtILCKRghR
-	Hb4AzksjRanyuy+I/lFA3uMAbRLYeMpAwmAHfbyU+yJs2gqd5cbHIoemYP6a3+t9
-	LkkjotqqW9FYzlU54Rl7Ox99aYwYeXt07MwhNU+ULYbWgpwbjDSajmyFNDfUk0SG
-	YkJEZE6GupmrmDf6CFoADzZf/7sbaqYwJ9M3N0qGf1TjAseOvLzymSe/Hv1dxykj
-	ce/WJEHnJnZP4Z9HXgqSS7wlGrlriMJkVTA==
-X-ME-Sender: <xms:d0tyZ7dNhqxudQxafxkF0cGC0Wov33Y06zRAnuLv2wLmd0Vd2Jzq9Q>
-    <xme:d0tyZxOdq72sL3KcjrawbF2G5gqXOLTJ-zfAaThhd2mpYEcq6bEYyY5jkfkYEQsFv
-    WPuekB-ZVnWZHGyvg>
-X-ME-Received: <xmr:d0tyZ0hLFTA4dK31S_2lb3Bvh0CbipZIt3DybmD3uKCR6PPujLR3LiQBx3pq_6eSWx3FGHYpbqJpBDwhELHfI6Y36bRL1xzVVzum5jtpIC1Su8dv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddvhedguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtff
-    homhgrihhnucdlgeelmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffgeeuieekgfdugefgvefgjedtveduvdduffeigeff
-    vdevteelffegjeduudeitdenucffohhmrghinhepfihorhguphhrvghsshdrtghomhdphi
-    gvthdrshhknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:d0tyZ88p97VpTdyK1yvpNMFxdK52Swffa-Nuf5am6vSY617YqZZBrQ>
-    <xmx:d0tyZ3uL5NInRZ2CBZBpjX-1Lp127Xb7DlZkar5-pVI1J1RWg4yAOw>
-    <xmx:d0tyZ7GB6uD-d2X61Zo03_UTARxRxw_oX5ziEQfKrHy88Pectby1PQ>
-    <xmx:d0tyZ-PPJ_R2YNffzvSjPNegYOGfmHbgE4OUNipqXXYebrZbqBhlNQ>
-    <xmx:eEtyZw5tqWzxSiGIvnoo5FpK_daNXFrHJFcWHKDILnhrH6RVGmc-MYQH>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1735554760; x=1735641160; bh=sIZ4gTiae4jamCZ+uBHKLfbODRrV
+	3mY1Az/VCFp864k=; b=rD/di2sppth/vlBHy83SjfxNFsfSZeji0j8iOSai0aGD
+	5wLwxRHd079PopR8k+kIyaRCfocgIRReXqdFi4hg1FbW2DfNjr7JP+KlgFch6+72
+	n8PHh1zUuyL+tqrHLTrfv1Wh57FJHEfEC2+tSy/ykvM74hKAkQeJY+uYU7JWGwPv
+	CpMPCWNBnbD6l2sAkXtkdg1GQQuTrz0KvgImo3wcZr7Prlv7Bq47WJrmILfEQL5D
+	+EVVnpCmQUGSGLCHOd63DDMBhAtZ5SB25MbNrsHBak1UWn02DUI6eZ/rRWn10zNN
+	XXpwpa/IWxERzDm2bAdMA1rXFZnEsnmfdunqo+O41A==
+X-ME-Sender: <xms:x3ZyZ3ChLedFLLmlRYPQpjVsCFrZxeUNFW0SCwQsRLV2esVOrjAlDA>
+    <xme:x3ZyZ9h4rqiVsXiW2mlJdNKBbb4M15wJe3lJ1Rm42-WXATXZ74R8cHVXdYZ8Cg0yy
+    Ito0XkNWWfUx1LNxg>
+X-ME-Received: <xmr:x3ZyZyncW0EIwovRCWcf8W_Ld91gNrDoqclT9nQEBG60bfSJ5wgVpBwtfG_fVtXNZWi-gtvF-7XpBvI06aBeqrwi130FxSDlmgJp0mQ_pwNv5ecx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgudejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffdtudfhtdekgf
+    dujeehtdegheefheevteeffeefgfdvgfdvffeuuefgveefueeunecuffhomhgrihhnpehi
+    nhgtrhgvmhgvnhhtrghlqdhrvghprggtkhdrrghuthhonecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:x3ZyZ5z_mCSfvZG9WMya4x7v75xBnCsOav5TTRiM-NXZ4KnAwp6l_w>
+    <xmx:x3ZyZ8TB3jIjZ5TIc_5smPcKkZ2RxwKaa9UenqWsCOb6ZxEiL-lHGw>
+    <xmx:x3ZyZ8Y0heRSlByud4X0GbbYeSMk8EseZwmKjucZjrT3vTylcezkIw>
+    <xmx:x3ZyZ9TtRsc3LP-Fut2q88agDBJWeLb8YhZlm0kZx3i1LLa4DWd3jw>
+    <xmx:yHZyZyPjcB6uDNM9b5AR6Hkgu1zU9wliR2Ukq4sg-reFTYbPceGlz4WT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Dec 2024 02:27:51 -0500 (EST)
+ 30 Dec 2024 05:32:38 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f8e031f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 30 Dec 2024 07:27:49 +0000 (UTC)
-Date: Mon, 30 Dec 2024 08:27:48 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0f92b281 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 30 Dec 2024 10:32:35 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2024, #10; Sat, 28)
-Message-ID: <Z3JLdIG4C9D2-1ZT@pks.im>
-References: <xmqq34i730qr.fsf@gitster.g>
+Date: Mon, 30 Dec 2024 11:32:23 +0100
+Subject: [PATCH] object-file: fix race in object collision check
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq34i730qr.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
+X-B4-Tracking: v=1; b=H4sIALZ2cmcC/x2NQQqDMBAAvyJ7dsGNVkK/UjzEda1bg5FERBH/3
+ uBxDjNzQZKokuBdXBBl16RhyUBlATy55SuoQ2YwlWnI1BX2Da5zwtD/hDcc1QtGxydy8P6xkSf
+ hGVvj7EAva4layLU1yqjHc/p09/0H2yGu63kAAAA=
+X-Change-ID: 20241230-b4-pks-object-file-racy-collision-check-62a8d1588116
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
+ Taylor Blau <me@ttaylorr.com>
+X-Mailer: b4 0.14.2
 
-On Sat, Dec 28, 2024 at 02:23:56PM -0800, Junio C Hamano wrote:
-> * ps/more-sign-compare (2024-12-27) 10 commits
->  - sign-compare: avoid comparing ptrdiff with an int/unsigned
->  - commit-reach: use `size_t` to track indices when computing merge bases
->  - shallow: fix -Wsign-compare warnings
->  - builtin/log: fix remaining -Wsign-compare warnings
->  - builtin/log: use `size_t` to track indices
->  - commit-reach: use `size_t` to track indices in `get_reachable_subset()`
->  - commit-reach: use `size_t` to track indices in `remove_redundant()`
->  - commit-reach: fix type of `min_commit_date`
->  - commit-reach: fix index used to loop through unsigned integer
->  - prio-queue: fix type of `insertion_ctr`
-> 
->  More -Wsign-compare fixes.
-> 
->  Expecting a reroll?
->  cf. <Z2-2dbYVuuLxpNmK@pks.im>
->  cf. https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
->  source: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+One of the tests in t5616 asserts that git-fetch(1) with `--refetch`
+triggers repository maintenance with the correct set of arguments. This
+test is flaky and causes us to fail sometimes:
 
-There wasn't anything yet that needs addressing, unless I have missed
-something. Peff acked a couple of patches, and the questions from Jialuo
-have been addressed. So no rerolled is planney (yet).
+    ++ git -c protocol.version=0 -c gc.autoPackLimit=0 -c maintenance.incremental-repack.auto=1234 -C pc1 fetch --refetch origin
+    error: unable to open .git/objects/pack/pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.pack: No such file or directory
+    fatal: unable to rename temporary file to '.git/objects/pack/pack-029d08823bd8a8eab510ad6ac75c823cfd3ed31e.pack'
+    fatal: could not finish pack-objects to repack local links
+    fatal: index-pack failed
+    error: last command exited with $?=128
 
-> * sk/maintenance-remote-prune (2024-12-28) 1 commit
->  - maintenance: add prune-remote-refs task
-> 
->  A new periodic maintenance task to run "git remote prune" has been
->  introduced.
-> 
->  Will merge to 'next'?
->  source: <pull.1838.v2.git.1735380461980.gitgitgadget@gmail.com>
+The error message is quite confusing as it talks about trying to rename
+a temporary packfile. A first hunch would thus be that this packfile
+gets written by git-fetch(1), but removed by git-maintenance(1) while it
+hasn't yet been finalized, which shouldn't ever happen. And indeed, when
+looking closer one notices that the file that is supposedly of temporary
+nature does not have the typical `tmp_pack_` prefix.
 
-I've had another look at this series just now.
+As it turns out, the "unable to rename temporary file" fatal error is a
+red herring and the real error is "unable to open". That error is raised
+by `check_collision()`, which is called by `finalize_object_file()` when
+moving the new packfile into place. Because t5616 re-fetches objects, we
+end up with the exact same pack as we already have in the repository. So
+when the concurrent git-maintenance(1) process rewrites the preexisting
+pack and unlinks it exactly at the point in time where git-fetch(1)
+wants to check the old and new packfiles for equality we will see ENOENT
+and thus `check_collision()` returns an error, which gets bubbled up by
+`finalize_object_file()` and is then handled by `rename_tmp_packfile()`.
+That function does not know about the exact root cause of the error and
+instead just claims that the rename has failed.
 
-> --------------------------------------------------
-> [Cooking]
-> 
-> * rs/reftable-realloc-errors (2024-12-28) 4 commits
->  - t-reftable-merged: handle realloc errors
->  - reftable: handle realloc error in parse_names()
->  - reftable: fix allocation count on realloc error
->  - reftable: avoid leaks on realloc error
-> 
->  The custom allocator code in the reftable library did not handle
->  failing realloc() very well, which has been addressed.
-> 
->  Will merge to 'next'?
->  source: <f4677194-0a3a-4f07-b003-c0295b51c100@web.de>
+This race is thus caused by b1b8dfde69 (finalize_object_file():
+implement collision check, 2024-09-26), where we have newly introduced
+the collision check.
 
-I'm not a 100% happy with the split for reallocators that this series
-introduces, but don't think that the series is to blame because it
-simply fixes the underlying problem. So this is a good first iteration
-and we can improve the status quo in a follow-up.
+By definition, two files cannot collide with each other when one of them
+has been removed. We can thus trivially fix the issue by ignoring ENOENT
+when opening either of the files we're about to check for collision.
 
-So yes, I think this can be merged.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
+
+this patch is the follow-up for [1], where I've mentioned a couple of CI
+flakes that happen rather regularly. As it turns out, this race was a
+real bug hiding in the newly nitroduced object collision check in case
+one of the files got unlinked while performing the check.
+
+Thanks!
 
 Patrick
+
+[1]: <Z2-2dbYVuuLxpNmK@pks.im>
+---
+ object-file.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/object-file.c b/object-file.c
+index 5b792b3dd42cecde43a1b18abc164fd368cbcd69..f84dcd2f2a7b88716ab47bc00ee7a605a82e8d21 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1978,13 +1978,15 @@ static int check_collision(const char *filename_a, const char *filename_b)
+ 
+ 	fd_a = open(filename_a, O_RDONLY);
+ 	if (fd_a < 0) {
+-		ret = error_errno(_("unable to open %s"), filename_a);
++		if (errno != ENOENT)
++			ret = error_errno(_("unable to open %s"), filename_a);
+ 		goto out;
+ 	}
+ 
+ 	fd_b = open(filename_b, O_RDONLY);
+ 	if (fd_b < 0) {
+-		ret = error_errno(_("unable to open %s"), filename_b);
++		if (errno != ENOENT)
++			ret = error_errno(_("unable to open %s"), filename_b);
+ 		goto out;
+ 	}
+ 
+
+---
+base-commit: 306ab352f4e98f6809ce52fc4e5d63fb947d0635
+change-id: 20241230-b4-pks-object-file-racy-collision-check-62a8d1588116
+
