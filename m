@@ -1,118 +1,124 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676511A0BF8
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 11:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1131113633F
+	for <git@vger.kernel.org>; Mon, 30 Dec 2024 13:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735559933; cv=none; b=s2iJT3AXtEXjzTd3gUuBsXXZ395mAzPR6bJFb9VGWs0b7bm2ikX1U+h9L9cUnV7wtsf4qcNODnxAOLS7ufVLVJooYlC2fkM7ssrwb3pTSzz6STLqwI+0q4+isH6gs1O4OBax7YSehgR8BS4PCfPHhPE8SznHBZS2QPthgFnmT10=
+	t=1735566412; cv=none; b=aGkNrDkhig6Rk5mWEWcIrRnv0rXpoqogb0SzQq+UU47AEKSPOr5pFgGHqOtgAM47IJHlOfQGEqYaNAqmnw3UaFi/16iRI765LOv3ZT3FiQ5Qyk/p+3wIawkoNlYyb+YRAwkmltmtwbYUnUXKeoRgPZbMDbywjX6Ydp6idOE56Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735559933; c=relaxed/simple;
-	bh=7JL3oW5gaqv3E2y5Jp4x6HJLTl4lEpvAtuB2df9Kmw0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oopOTbkQ+p8XQbEGt9cN9wWv7EjrKNQb07Xa5dpjJ2/27/EkXhKarqZNC6EHsy4xw/bi5d9onPf3OPrSZZvLzLz6nU8zdYb6wLa/EcwH0gtgNlbWB+0HzuQpv9qQhql443gNdNfkmj/YC0FB0mqgA7OKf5fWvUajNsfMq7Of51Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j6yZPyZB; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735566412; c=relaxed/simple;
+	bh=5Jm2I9A2OssDZirDwAlkPbwwWPP0t7W/oBZY6yS7pD8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CyNTz+868GaM/wAeO7G9s7JY682SFT7o3nfLq/YXi9n/pNEqca488euBBMsEo87HF5cFlUhlQFfnxTeCxW+vWTXkkhFQec3+nFYPViN12nPtot6M+Dsg5Vde0Gr6jpUGZdT2D8vI0k3R4XcEKBJ7t2oAgHlY8ct9fdgGOLZuLpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=4CeLsdO0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oTj3H9OX; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6yZPyZB"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-aaecf50578eso1097171966b.2
-        for <git@vger.kernel.org>; Mon, 30 Dec 2024 03:58:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735559930; x=1736164730; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UB7kwPFS6QFZv4f8NlbLjZLYxA0e+NTOGxNB9w8lG00=;
-        b=j6yZPyZBAtMAHflpQwCQCbi+m6AvFPhL9hfaABLAS3gcOpKFYmaBB5bGMwfRkvtaxL
-         AE9AIL+Wcet6bhnMG8z57dqz+3LPd1I01GFNwTYY2N1YP0Glte9ITrrpzS5Om/+ZUaVj
-         u16tRD+uTeaQRqGGWS9tx0vZ5DX+VQOCAmJ5lHvgg04z/jeJAAKBAGirjkNircrMb2YP
-         NiwqQAqO/ZGFejSDjx+IIfBuooKhRgCLzpwfJByLKXXyU2W2ZP3bBxrFhFgd9c0E7vIv
-         tbr0dPp2oNTbQ1hEo5g+GpgfSehcGZlMemLD4sbR2R1hh1zteaK67hNJclL2V/AXj2sP
-         BgpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735559930; x=1736164730;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UB7kwPFS6QFZv4f8NlbLjZLYxA0e+NTOGxNB9w8lG00=;
-        b=Q9UW8YL3qKYrISKBlhwgDKI3LfMLBPzKLuFscQBhJ3vm3irFn2dbngsiLZ33e1mWW2
-         O+cGNxcPJMqGKHURfUdTU8r6JlXx94pEGjtAJhb5f0X8kYOi29q2R0zcXT9WFT4mYQ8w
-         ZqHMQ5w2aDdZ5F8PvZ89Ge5LkGhFezpbVn9+d7e9yXAG8bh8/p16vy2V/HqoGCAsVkdd
-         1FCl9VjzlGgUWj7baIyIFewJy8BTNvXNnakOFisObPqCLiCDatvcUSVR1P5fj+y4LMyc
-         9kB83+9DuEjIcEh8LJSnHRnKK40WSPja9yhD+crLPaP/3UlbRWec1CULkHVCQ4MamYhL
-         ailw==
-X-Forwarded-Encrypted: i=1; AJvYcCXTx2p46bgGLbC+M8SH4ABh2YrMy+eYZlQXzHNh5jtpurpGxWem0FQE81LSGlsSqy6D830=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/d77TiFuS+NsBL/BYS7lW3BoY+YbHi/u8RuRsBUDk+mcnXm+C
-	ibBQwaltTsNTUF42acySZ7IiluXaspZfqW/BNn+EZw8wRrHifraCxMJpJjgZvR862s/NUVz5d2H
-	hNckhIzQnmgbnCjHaWFC1yXInNe9m4cbVu98=
-X-Gm-Gg: ASbGncu20593AbuAvFrfQS/kjYQzngjhRxDNDIpTfo0w84Ng55hct7ocMluzAbHj7QC
-	qX3uBuLHLWZcZcZCEzA5WTEm90PwqFTvuD3kTUQ==
-X-Google-Smtp-Source: AGHT+IG2WNUez1PM07yD1HRF8ya2fUBQ/qyqVV8g50I4Sjrc9ZUcyKStqX1XyG9BXyW1b7qTPnYaB0FWPfU3BJyshHg=
-X-Received: by 2002:a17:907:8689:b0:aa6:8600:24f3 with SMTP id
- a640c23a62f3a-aac2ba3f4dbmr3401960766b.25.1735559929588; Mon, 30 Dec 2024
- 03:58:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="4CeLsdO0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oTj3H9OX"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1207A1140121;
+	Mon, 30 Dec 2024 08:46:49 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 30 Dec 2024 08:46:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1735566409; x=1735652809; bh=S+QuM0oeuX
+	bN+jMFtKPQIb+9pECBDU9dII3+Y4vEK3I=; b=4CeLsdO0pqLTU+FB7RFI4Vm1LX
+	tNZhz6uW+sq2UEuGRcnejkQla/L6XVk6fhhY8Mr1wJiu3wWkAor0Bc7gT4UtgIEr
+	/K1ys6IdxDVYq5FD5iXsAxDF31PWyOapzBt0EfOr6661hGB8JsxT2idA9quSkOYy
+	DSoUd+eJ6aw3QsDmKkBzOB36Ud40NDZMwQXPpAAdjUgYtbNx4dBfM/JCW5yqC+fe
+	VzOrDW840b+LdOLo3VedhuvUY3EoqvGVnw8guNKPjUpvVjhOSYx8E1hjw82Cy2ZO
+	YgPimv5QahZcji4Gm0YEqVVwZs7AH+ve6N1dZ4vS27D812nU2qgeSYlWgJ7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735566409; x=1735652809; bh=S+QuM0oeuXbN+jMFtKPQIb+9pECBDU9dII3
+	+Y4vEK3I=; b=oTj3H9OXIk6jeBXoNaQabwioEn+BedMfj6LwuPhdB/5XlhnS6+R
+	UYHpIKElNWQCcW/kpXsuoulhOnaJMFpDcsgWTynwyOjXktq/8wLaOc2MlWTRHcGA
+	7R03ygjP5GeyCa1X1VM2yzP6L7m/hDiK4yXjNy8BORjM630JBRpMvAYBqdTIZw3w
+	Ki+FbQKhgmk+Kg5bDVqHmbwMKGyx3VPVig9FZ9/TtOS3tnomYleTWdcr8esby7U+
+	PjbMM1YiHhGMj/iyQr/FMJH1oL9j2IxUQp3L6jP4wGeX82XKGT2sNdCyyZ5evpRk
+	NWdjO53aUYEC+Pul5C6iOoUilQ5O077d/aA==
+X-ME-Sender: <xms:SKRyZ98BDv_R0r0VVuztyT_pkFPfLp5CybamsnFII9FKTq_EV9MCEA>
+    <xme:SKRyZxtCL5LArA6vdDWOzLvj0Z3yLP6Z_ZnbfE586HGoFUZRDBHeD2a1tJyQydwzy
+    sDShxiUfIqJGOJ3qA>
+X-ME-Received: <xmr:SKRyZ7C_xwUKXDbOI1J58Y9RYN-U2ib8sbIhji4i6yfBW1c83JKb1vKXD5JbKSmnaj58hS4ueptj82hGEv72aBptTjMhiJYcSw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddruddviedgheejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:SKRyZxcqaIchHZo2kvT1k64NOfov10cegUly0qrIMNhEM7VQcvPtrw>
+    <xmx:SKRyZyNaojhuiOS2vnI_5UiFA3fLhCAf155eSSyWhAyzpEsByn5HNw>
+    <xmx:SKRyZzlvRu2QzEhlS1QIfkm62UxZ-AX-Di9fr0srwnLuoPGDgRZ2fA>
+    <xmx:SKRyZ8siFLi6LDLqy4VdA2BG6QW7fRKI3vY0jsR_kPlB4SY1-AKE1A>
+    <xmx:SaRyZ50vwsNr0KtRGg5Ht3wNPkFsEk5ssgCaib9WXbLeC3D_QAWG1JIu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Dec 2024 08:46:48 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Patrick Steinhardt
+ <ps@pks.im>,
+  git@vger.kernel.org
+Subject: Re: racy leak sanitizer builds, was Re: [PATCH 0/9] commit-reach:
+ -Wsign-compare follow-ups
+In-Reply-To: <20241229165715.GA3158370@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 29 Dec 2024 11:57:15 -0500")
+References: <20241227-b4-pks-commit-reach-sign-compare-v1-0-07c59c2aa632@pks.im>
+	<xmqqbjwwucvy.fsf@gitster.g> <xmqq7c7kubx8.fsf@gitster.g>
+	<xmqqbjww65i1.fsf@gitster.g> <Z2-2dbYVuuLxpNmK@pks.im>
+	<20241228190541.GA815586@coredump.intra.peff.net>
+	<20241228192307.GC815586@coredump.intra.peff.net>
+	<965bd864-3ac0-454f-b7bb-f8e0214e9969@web.de>
+	<20241229165715.GA3158370@coredump.intra.peff.net>
+Date: Mon, 30 Dec 2024 05:46:46 -0800
+Message-ID: <xmqqy0zx1dx5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOLTT8Q0cH3Q=yPnTYKAwn8bC+iDW7onibsLF=bzVr8tGw5J0Q@mail.gmail.com>
- <CABvF+3ZU=96jQBmGw3eWmAQ4DjCdcm1VT7fHMVz_MxvW2xxPng@mail.gmail.com>
- <CAOLTT8TraRjBObcLotNr7+a9Ap7Fy8VVy7HjHLLWwEB_LvBrUQ@mail.gmail.com> <20241226152347.GA68791@coredump.intra.peff.net>
-In-Reply-To: <20241226152347.GA68791@coredump.intra.peff.net>
-From: ZheNing Hu <adlternative@gmail.com>
-Date: Mon, 30 Dec 2024 19:58:38 +0800
-Message-ID: <CAOLTT8R3WRiTcNjYzHdiazK9F0ppC9RG5m+9gyX6KrcTEF6jyw@mail.gmail.com>
-Subject: Re: [Possible Bug] --cruft option not work with git gc --prune=now
-To: Jeff King <peff@peff.net>
-Cc: Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Jeff King <peff@peff.net> =E4=BA=8E2024=E5=B9=B412=E6=9C=8826=E6=97=A5=E5=
-=91=A8=E5=9B=9B 23:23=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Thu, Dec 26, 2024 at 02:19:56PM +0800, ZheNing Hu wrote:
->
-> > Okay, I know that gc doesn't have an --expire-to parameter,
-> > but here I was hoping to use git gc --prune=3Dnow --expire-to=3D<dir>,
-> > where expired and unreachable objects would be stored in <dir> for
-> > easy recovery in case of repository corruption. Moreover, it's more
-> > convenient compared to using git repack + git prune
-> > (isn't a single gc command much simpler? Plus, most users are
-> > likely familiar with gc rather than repack and prune).
->
-> I don't think there is any reason that gc _can't_ support --expire-to as
-> you want. But any patch to do so would have to adjust how it calls
-> git-repack.
->
-> Up until now, "--prune=3Dnow" meant it was fine to run "repack -ad", sinc=
-e
-> that would just discard any unreachable packed objects without further
-> consideration.  If we're keeping any objects, then we have to tell
-> repack what to do with them (which traditionally was just passing
-> --unpack-unreachable, but these days can include --cruft).
->
-> With --expire-to, that logic wouldn't be valid anymore; even if we are
-> expiring all objects, we still might want to tell repack where to put
-> the expired ones. So I think you'd want to adjust the if/else in
-> add_repack_all_option() to pass --cruft, etc, when you see --expire-to
-> (but still continue to "repack -ad" otherwise to keep the traditional
-> "git gc --prune=3Dnow" as cheap as possible).
->
+Jeff King <peff@peff.net> writes:
 
-You're right. Only when using `--cruft` and `--expire-to=3D<dir>` in git-gc=
-,
-the behavior of `--prune=3Dnow` should change: it should pass
-`--cruft-expiration=3Dnow` to repack instead of passing `-a`.
+> One of the reasons I hadn't sent anything is that I was waffling between
+> two approaches:
+>
+>   - implement barriers everywhere and just use them. More work, but we'd
+>     have the tool if we wanted to use it later, and all builds behave
+>     the same.
+>
+>   - make a "maybe_barrier" interface that might be a noop, and let most
+>     platforms compile without them. They are not needed for correct
+>     operation in most cases, but only to work around a sanitizer problem.
+>     And it is not even a problem that comes up frequently; it is a race
+>     that we occasionally see in CI. So enabling it only for our
+>     linux-leaks CI job would be enough to dull the pain.
+>
+>     And there is no risk of any portability or run-time issues, because
+>     the code is a noop for most builds.
 
-I will cc you in the patch for supporting --expired-to=3D<dir> in git
-gc. Thank you :)
+I love when people think before committing to an approach, and after
+seeing these two cohices, I tend to have slight preference for the
+latter over the former.  The work will not be wasted even if it
+later turns out that we need a full-blown barrier implementation for
+other platforms.
 
-> -Peff
+Thanks.
 
---
-ZheNing Hu
