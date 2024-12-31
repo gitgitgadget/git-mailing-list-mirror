@@ -1,113 +1,115 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391FB13B2B8
-	for <git@vger.kernel.org>; Tue, 31 Dec 2024 02:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC95E186E27
+	for <git@vger.kernel.org>; Tue, 31 Dec 2024 06:42:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735611521; cv=none; b=DvEyPWC4sfYKRdStzVAU9OXztKAhbxByChQ53v5LdWtlwBuopSXc3byXQvDZmShim7cxIvmQLmTcOyvV9D3KScGZhxXKlskqpn/jsZwbeL+7ftP4jBnJjYWWEpFG6I4gSZaoWDPzzL//3Uy9yC8CYTvymcz22a/ppHAnBVewZdM=
+	t=1735627347; cv=none; b=OiDHMn7n2wzPVLmTZM41lG34YW+0e7sOD/2HQws+gr1Y5p8IwVREskQQgq18GH92s+VJJ/ma0cHonZOKi/9dX2r8eBTdUYm81sCM/uKtK6AKZhB7oYwbiYddyRZMXAMZ8c6iEfADoArREekjsIP47LoFdKKkEKQRVYQ4xA51eA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735611521; c=relaxed/simple;
-	bh=oV2K3RMAEeTgYxf1BJ0PaJ4cc7u/M5GQ67eKQZgqkW8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OXA5RPEM7CHbe0hRAQMlq23fxc2bxHV4jFuOXCTwS1cTWtfWHda4JuXfJK8rpMdpyj+YSIntIAqIsUXQLnYr54kD1zie8fJ73zBRX3IFR3LoMnYow7TKK9WaJSnb3odulnAK9rNX4ww65IHOt/VHC6AZ+Q3Rf0Ufn1g7Lokg574=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i1pEFJsp; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1735627347; c=relaxed/simple;
+	bh=6ptHT3skAUWJpyKTX+0bfNTc2bnLkWbYYvPYXdzbFec=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=XgwC29eb2ecfoX5oq7q30pPc8G3EhypfNieU291uy18O/VdXpz39CEkajKGOuwUBI9xpwhvmHXM+tfJjiUgPPaUHSmp7YZG0TpF8L3b15WA+ZBINVAzCVDEZVIKlhWz8eVPG0mBETxImATzWTgXMf8A2NDEaMYxu9caGVXDGpZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LOewZoHd; arc=none smtp.client-ip=209.85.217.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i1pEFJsp"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-436281c8a38so69539735e9.3
-        for <git@vger.kernel.org>; Mon, 30 Dec 2024 18:18:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LOewZoHd"
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-4b11a110e4eso2785456137.1
+        for <git@vger.kernel.org>; Mon, 30 Dec 2024 22:42:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735611518; x=1736216318; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q26BvtnsuSsvW6l1iFQ2+lkiaTIpu/8kYVIAVV3ESWo=;
-        b=i1pEFJspZa9vbeG/yVzU2NRn0DnqlIu/OXRVIQ68/bZfVItNB7h2Dr97Wp48+ORIY5
-         vhcTF2iTcXmbVTRH4KvUs5Pg3U9pd1PvK092Y0nMxHEqImy54uA8H2rCPgbdwVGWZoi3
-         O3hGDhkesuUGHdsmi31K0ZHaF8319jbfC4adzBbDkfosPLClpqz2J1T7Cn0LjBuwA3Z9
-         K9pK8/iQtmfPFVHuRnPG4xI6E0DBynuvbRKm8BLmth+ZFs8UmQmH5YKXPokqjgBoN74u
-         2+DtmvEl3PeqUsENEAKOc+qyhFsEsHlIObdywxuSVKislwaotlMYmmWuTGtih0nBo2iC
-         Zenw==
+        d=gmail.com; s=20230601; t=1735627345; x=1736232145; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6ptHT3skAUWJpyKTX+0bfNTc2bnLkWbYYvPYXdzbFec=;
+        b=LOewZoHddSdgXl81qE6K23RTDd8gQgqAOD2lKvPSmBSjVvbNb5cBPvfW1gHS93Pbyc
+         Rzvlgab09PyVn/pq/wm0mQWDXkJqUHX9iGd+C002Ps+8asyDGd5gQ2SVVOTxera58AoE
+         BDRdrE/QaqujWpdeRmWnLy/Jv4VnHrVNmZDKntjrQ0Y/P0hJvOBOjF+XdYC34j9w83us
+         xfUgd5b3DpQzjUuoDMRqPCTAsp8A6e8eppyXG8SbeS/AcRuacDgWR7/JySbpPvFLrwv2
+         45X2aZr555eF5WsD55AhL/tLELAw2FvqK96hmT2sb1Z0a7cVFblStCi62B7hD0oAruEF
+         6VxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735611518; x=1736216318;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q26BvtnsuSsvW6l1iFQ2+lkiaTIpu/8kYVIAVV3ESWo=;
-        b=Kfh8VxVGgjI1wuK3m18WMXXcwITIlzGllLFAHPxk1/x6s9XKIB/FZTlqS+rcMEH2l7
-         QlWq1/Ua6dP3/ftZ9RZzvGAmVf597Lta6UPR3GWYKDGJwTW5wImZYCckDDTOhLqiMSAF
-         GedspdpfZXX+S879vmRWsdaJNg6Oj39Vyzi445LHjhhvxPYP1MK3LFEHMr+5Qtd9Sy8/
-         CiK87XUzMBO7zbBJrKFLYeFPnxCL/0bIe0m1m15Vfh3FHNu/st9WsPrz14pUMWtXtiGS
-         8ncZ5vWwU8AyXWe9N5uaDNwZjXnATQt53LV9cpJBHxYhdECG0oF5S1jPd+Sd3Btz049V
-         ddZg==
-X-Gm-Message-State: AOJu0Yw0gM+MiU7qJlHmGqvpwUH5NkYfv3FbrunDH1cDcSH8bmTeayww
-	hbbIJoplHFQMcwTf4d/O5Gio1haCXnTqUIzhAYAEQCEtTEL+/wPHAqVBQQ==
-X-Gm-Gg: ASbGncuyNm16fwyb7Da7Bc9QitgDP+gsn5QqU5JCE6s4tKKBX8EmyJxLiIWKf3fbNvO
-	SP4Q6kbxzz0e5x68QVk7Qivn1DoxUrXOk9cupcM76Wk6Nv1rxwQlHOlKUCRWAZMIImfDcO7B9j8
-	LJa7xf9TDgI9Y3/+H57wSg5zS+OrM/Scj4z2PnZuX63dE1gxjitXt5flA37nBdwq1OzN8uDJnoJ
-	dtNArmSgkWg1mSXsSMma/RicPwz+ne5dRpsLuPXCDKy8QUJZLd+NPW2zg==
-X-Google-Smtp-Source: AGHT+IGw8rXP8ip6aa7iJ52uAJ9Z+icd1FI7yOkaNty/P7qsbllnEpWvjObxN19MYzUJSclsbE2IaA==
-X-Received: by 2002:a05:600c:45cd:b0:434:effb:9f8a with SMTP id 5b1f17b1804b1-4366864619dmr341031415e9.15.1735611518022;
-        Mon, 30 Dec 2024 18:18:38 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43656af6c66sm415788365e9.5.2024.12.30.18.18.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2024 18:18:37 -0800 (PST)
-Message-Id: <579757957d21faaa8dd9228a191d82f663e93c03.1735611513.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com>
-References: <pull.1843.git.1735041177817.gitgitgadget@gmail.com>
-	<pull.1843.v2.git.1735611513.gitgitgadget@gmail.com>
-From: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 31 Dec 2024 02:18:33 +0000
-Subject: [PATCH v2 2/2] fix(gc): make --prune=now compatible with --expire-to
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1735627345; x=1736232145;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6ptHT3skAUWJpyKTX+0bfNTc2bnLkWbYYvPYXdzbFec=;
+        b=vzuYdYTBIjGPl2tJ7XpGK71iwaomzFKWTl710pegTWyp6yrvf7+XFROXmqGgq7qzFc
+         nbmQeFey+f1AZp0ff59WdRoJys3+BOSlgsSJNnK+bX39THjbVfdzaUlll58SdyNjGSOY
+         D5iOcv4UMHHJYq6FoPXqsFhhtGf10cGO/Eu6YpT6olNWBF0Q4rDajSNnAwKBW4dmnjwn
+         TAPO6xCiz1jbgulKppQ2P91tTaGh5HeBZpJOjLPpGN9WJ87u43Ehcrsc+8YGnJYdZBDo
+         MYfPhOseeIzeV2CM2ibli6W2eADCy+MAw+wQGAq7GskId3dJlYPL2vGJfoix263cjbvR
+         w0PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWE12qKQ2urHGkZ7xRxklr7MxScXth/ucDfkaEIDIuHjE+oM/kPMTJ3sXn2eHrehKoFWyQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywgg935Tj4+/O1CsP0t3QsBmBwZJafay2mA8tgerNHXIGVc4tM3
+	zGT8VAgt9icwBPuly4kl10+9nGhxTmeWpURsAqLtFwhB18/wshpBb3xFb/WGNDRI6YnmifWrFvH
+	TFR7Qc+pK0B/nPCVxq7+Up4jkqiQdLg==
+X-Gm-Gg: ASbGncv1z0R9H4o9aTmYKCXdJHY2GwPTF2gyj0mRoHWsbHJtJJRa97ORb+dmeURApQ3
+	T4Edvo+50Ocq5HGsHbJlgltzOkQDQ63NUH+2j/hw=
+X-Google-Smtp-Source: AGHT+IGzATbH/Xy+zF4wnzOnYlZYAbtdbFUNGSxzdPodB7Ap6PEuRKKpG52tZFsnrT+X9Fz17BsDKQBe5YmvE4cl4B4=
+X-Received: by 2002:a05:6102:dd1:b0:4b2:af3b:90e2 with SMTP id
+ ada2fe7eead31-4b2cc35dd51mr31456579137.8.1735627344677; Mon, 30 Dec 2024
+ 22:42:24 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 30 Dec 2024 22:42:24 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-1-0dba48bcc239@pks.im>
+References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+ <20241217-pks-use-the-repository-conversion-v1-1-0dba48bcc239@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    me@ttaylorr.com,
-    ZheNing Hu <adlternative@gmail.com>,
-    ZheNing Hu <adlternative@gmail.com>
+Date: Mon, 30 Dec 2024 22:42:24 -0800
+Message-ID: <CAOLa=ZRgzD8SPpfKcF5Ztr1f4oVfjP7HumvSVTTLbdLWW7PmSQ@mail.gmail.com>
+Subject: Re: [PATCH 01/14] progress: stop using `the_repository`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000057ac04062a8b3bb0"
 
-From: ZheNing Hu <adlternative@gmail.com>
+--00000000000057ac04062a8b3bb0
+Content-Type: text/plain; charset="UTF-8"
 
-The original `git gc --prune=now` attempted to delete all
-unreachable objects. However, after the introduction of
-`--cruft` and `--expire-to=<dir>` in git gc, `--prune=now`
-can now compress unreachable objects into a cruft pack and
-store them in the specified <dir> instead of deleting them
-directly. This is beneficial for recovery in case of data
-corruption during repository GC. Therefore, update the
-handling logic of `--prune=now` in gc so that `-a` parameter
-is only passed to the repack command when neither `--cruft`
-nor `--expire-to` are used.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: ZheNing Hu <adlternative@gmail.com>
----
- builtin/gc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+> Stop using `the_repository` in the "progress" subsystem by passing in a
+> repository when initializing `struct progress`. Furthermore, store a
+> pointer to the repository in that struct so that we can pass it to the
+> trace2 API when logging information.
+>
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 77904694c9f..8656e1caff0 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -433,7 +433,8 @@ static int keep_one_pack(struct string_list_item *item, void *data UNUSED)
- static void add_repack_all_option(struct gc_config *cfg,
- 				  struct string_list *keep_pack)
- {
--	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now"))
-+	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
-+		&& !(cfg->cruft_packs && cfg->repack_expire_to))
- 		strvec_push(&repack, "-a");
- 	else if (cfg->cruft_packs) {
- 		strvec_push(&repack, "--cruft");
--- 
-gitgitgadget
+So that's the only usage of `the_repository` in the progress subsystem
+currently. Makes sense.
+
+> Adjust callers accordingly by using `the_repository`. While there may be
+> some callers that have a repository available in their context, this
+> trivial conversion allows for easier verification and bubbles up the use
+> of `the_repository` by one level.
+>
+
+I think this is a good approach. I would be vary if we ended up
+introducing more instances of the `USE_THE_REPOSITORY_VARIABLE`
+definition. But that's not the case here, we only do so in
+`t/helper/test-progress.c`, which is expected. The patch looks good!
+
+--00000000000057ac04062a8b3bb0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 288c7e8dcefb42c5_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1kemtqZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mejhmQy85eXZvVFJhczRxME9LeWxreENLQUlveDB0QgpuNVJySzg5aFVt
+RFRDRjhXUUFJZ0Z5WkFtOTVrTHlZdTJJQitGKzdRNStGRStrNWZBeUt6YTNRcU9Ud0Z2b2NJCnZy
+cjhmWHFzNTdIN2lEL0dDMUxmcjRRaS9xSVh6QjdkV3lhSVBMZmxlSWZpNUZoZWdtMFFobDJyRUZ2
+OVZ2NGUKUlNXSjA2RVBjdlI0dk5GdzJnSW5WUnZOY0JuRkRHb1gzNjRSK1V0OVZmVnp1MkgzdmNW
+NFF0QnJoSWc4WGJRcApwNU84QWVWeUJuSmdpS1l5S29BcldMVGtadVE2VUFYZk1wSFUwM05GMjlC
+VXN4ZGdpWlluQzRLbFZlRmxCcEUvCkozUzJ3M2FnWlBuUG9JRGNCaUdIRk53eEV4dFl2Rk03RVlH
+VXlNcnYrUVhkbCs0aDkrcGpJM2tKc01wS0VKZlcKNUdDUVFRazg4bm1xZk4zOEdjb2xGOEtRWGE4
+UkJ2VGdWVmhJNjN6WFFmUEp5N254NWthU0hGdmlNSkRieGswZApyVEdqNUJGZXlOTmpYV2s5MHdz
+YVVaZjM2TUVGcllMSExQTWlwbDhuSXgrMDV2UStScWFEenQvRXU1QXNRaTByCkFPajFjVW9iOUx2
+TUszeS9FNTU3U0hOYjVHN3FtNDlKYkRKNVNjST0KPVl4UzQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000057ac04062a8b3bb0--
