@@ -1,124 +1,324 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C1D18784A
-	for <git@vger.kernel.org>; Mon, 30 Dec 2024 23:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83E1163
+	for <git@vger.kernel.org>; Tue, 31 Dec 2024 00:12:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735601135; cv=none; b=KVdI3H5cmtInU5QCtaSHpsxItvGZeVLAYpwA97o6eQmxlt0UAUXq1f3f72rzhr+XTeH1AIN7Htd6+VdFNBS6HUjG9nKyzYk7l+XByOhMpQsOKaoO3Pwj/JNpkjLlDIrwX1kZbjXfdAIhLthNSajcHZnm9P3SiKNT3i4pjsTmVKU=
+	t=1735603964; cv=none; b=AqqFC+jq/SXe6ho+RHQ9AMdfIFtJEpWeTIwN4CevD4AG2DwQEufJ44AeKAchKgV7/iRHFukPL9QaBdfLxAivZMTSVdiblVWZBvczaVyri3i0Bza4OG+Dx3K+au0LlQ/uceygdhyGZw76ym84vRIf4Jw0vD84lpFptt1AI3qI7mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735601135; c=relaxed/simple;
-	bh=M0nYWWU0lk9hB1oIGwMn8fbJNbhSrbNdRqLi1kP87iE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=S3NXvacGyNv4rH1YnNoA/nI3aJxY1jTes3d10eAcIsDsFOjEVm/5B8J5faCr76qlMGmBp4fwSYumRlQsCRHNLlMx/JVY9RWy5eGkweKkHtzs3rPUZ51lfPZIL+YyRbfv6qXtu2XsS1eJRinSPXzDdtdGm8UUu1JCkAmEsuPVejU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mxW536GY; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1735603964; c=relaxed/simple;
+	bh=SAVu4yNEacyGvmkLLgccj2CCpgtxI+jbOy0UkfafAx4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=By2JsqXgAWcLag4WQiBlWlBYd32eR9Jqq4/fFwWNKJ/oYQPAOWuE9d+z3DUETu2Jqc2T4bvB8XQriRM0g3rFvQVnlsr8ca1PDc8aaUanSis+xUqSroIgvSJZqk//o6yDojXsn50/F/4b1Lv8Qet6ZQTtjKVoUO9Eqwz767ysqpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VERP6pGU; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mxW536GY"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e3c8ae3a3b2so10492455276.0
-        for <git@vger.kernel.org>; Mon, 30 Dec 2024 15:25:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VERP6pGU"
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ffa49f623cso123826431fa.1
+        for <git@vger.kernel.org>; Mon, 30 Dec 2024 16:12:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735601132; x=1736205932; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZdEAA/lndBTf06Tg0M6JZ7tCOBw/waICJCNxEgbp44E=;
-        b=mxW536GYgXRChqfANh/eRjYdR117Mq8yrHjda7VPkREGir8w8Fw5CmyTqHbRwwERX5
-         rvNDxdaYygvAy/jElHVoDYMBhWONMQCxWppfjbN+y9gDg+Ne8wROIWDN5Hp6cioAWK4J
-         oaE7teWrvU4EhJuYqVz/Pzese7KtPMPDdnr3kPYVL8SOk+yjWM6aJX9BwIN4UGg6sl/0
-         DokF0IxeXEOpzkvasbRiv+0tZchwnlN8Dyl0bsW0UHpLNpwJL26LMXjHTzFPoPPkb4JY
-         7CUmrbZ51tkQiuGiqBbnOpntAOQK7zfrSGv3EOf32iZLG/vH2HUDLItqaHGnNqSY73c6
-         yDQg==
+        d=gmail.com; s=20230601; t=1735603961; x=1736208761; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d9a/VL1ZA9qSUqB7SuOmq59l1IU1jFfyEUf4Sd5MnSk=;
+        b=VERP6pGU5RO+jFKGmUlsxlS8N/wRWjj91Tefn2uzm9Ej0p+1hiDwlWstmUEl4+kLFB
+         VjLXb4iWhPiB+LGI//INTGV/HXANe+eJZL5AsGK2+IiyklFMKf4gD6joG2/0W3fLijAS
+         COpGrUS8UVCXELp0yuz8koccUpma1mzrQ/XpLjH6cwVQtihM6/etecT6nvxdTgD9S5ky
+         mfDuuu0PDApG1ywvegwsYaq9kqFJrjKKh1pMzzqzOIfyb6IyZRYmGKda5MFzjwH9oTlL
+         Dyl0i9zaRO2aJzuqiY5tePjb+i6f2ze/6ZHD7f0hLJjoz4WGLL6kRoC6IsQUEwlNuJgh
+         pezw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735601132; x=1736205932;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZdEAA/lndBTf06Tg0M6JZ7tCOBw/waICJCNxEgbp44E=;
-        b=WONPL4anwItSqj50sZM7kE3lBHmlTb+Xw+bloApx0hyS2tgO1Xw/DOIOmS/duNsPoI
-         y5rpm8SS5g68DhmdSXB/Kim5l4mRXUMUmTOHfWvQaq/dYqh2flT97PrzetvQlaf7MqWi
-         g0Q9CSk4NVxmlpXs4kEgqcXB+7R7xIiMAhCNkSGhamTi82BPO1GE55GA9r3Q97HcFV5z
-         hQ+qvZ8eAax/zPzPK1TAoVowqPBMDESTSwIIMD5U5C1hIWo0LIkezdtCSsskIWyeu63K
-         8Rbf5+e1mUd9pYnEfq/t8sA0Bo6Yhh2xYMbaYBbT28VmfU4jbTrNatGE5GB9d+qJ6zEd
-         4RKw==
-X-Gm-Message-State: AOJu0YzeBTCxU8DiE+lOKAi4pSX9r5vaQQTGu7M4j1d4QkVm8o9Pmskl
-	8lzPUTheo+7UrzjR6zeGB++UlYRhvVLUY17rVSyE2SKUbmOF+eHSyZ5P/0uW6cihzrhW5qHicsB
-	amFOdkiAhZKZmCqnW0QHOk8VrWHY=
-X-Gm-Gg: ASbGnct4ARI3RE2amHnYsvzQ8IR4MGKW8FvSLIGgnvkqNLfJn5MOf5BfJSD6rM5aXzL
-	JtyE3TUva48c87t/Pl4To5Ls4cfGemC1GbYayJrfW
-X-Google-Smtp-Source: AGHT+IGoissAGsv0CnrRXz+KYoQCTlq4hQWpuoi96H6wx/EthSydo2ONLDt/ixdcqntRo5B5aCTpP1rlWoL5YnvkrP4=
-X-Received: by 2002:a05:690c:6487:b0:6ef:6d37:181d with SMTP id
- 00721157ae682-6f3f80d59b9mr291799297b3.8.1735601132632; Mon, 30 Dec 2024
- 15:25:32 -0800 (PST)
+        d=1e100.net; s=20230601; t=1735603961; x=1736208761;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=d9a/VL1ZA9qSUqB7SuOmq59l1IU1jFfyEUf4Sd5MnSk=;
+        b=m0ijH6LUYOkt2rIzOIQ7WB1rJfaoTeujGPzoAzFeg19CFXg14HzZ9+BJphBdCZ8bQv
+         99RRNo7ScXEG2iUTxL4qXmQY4dBY1YBieCXCNc6NeSzPlZMHM4ghbqG6BAEjPCcVGN2F
+         WhsTw4OOtCeKLjNJLwkOC6bmRHFH/qHIkp59aG8xNeV4FEgr2SewQmxgPeDiEdZRv9hQ
+         I8CaO4i7avd4mNVqYQbRVd3BJk8KmzUyfdhPGAmSDuYc3KQNZ2ZoeUvOZfioI4y9NI2V
+         d9olusgniloVm0MNN61eecBM99FEc+EFo3/bINTjpQwoz5HlOat6pzakr8wnCeRvzV4F
+         LD3g==
+X-Gm-Message-State: AOJu0YyuStRRNa4o8Ys4X0C41w6zFcdRmcQWrGmfp7vKdzFBqvB49Ns+
+	mbbXgIwt53wFiYMjzWxg6HxBm+LTzQVevSWgrcA0sPWa6vf6eBjKGVMRiA==
+X-Gm-Gg: ASbGncu6NpJCPxHdXtQFvmI/yaTMr3xhkwCQHeM2fJQNcGgE6RXcDRc9R6OfQMUPJDT
+	iWz2E9Suj2VzG4UrTT+A/C4vX2Zi1J4r1FSwLIbqfcYrSe7499ICshfyBD1rJUfaCXHKT9vzo4J
+	jJaAd4Kx60MCgZ0woSdU2xlZT/O1vGuUvBBV0AUyTQp3Nwo6aq6loqpjE9W46NzD2RcwEV4xpUN
+	WqBk9ykgovEhYy5uTCUSWqKoTRA7ZYx3dQ51JEmrA/zC/uKrbeo3AJr
+X-Google-Smtp-Source: AGHT+IEkOkE4YPy/CUmwN8zlke3Zdn9UDFmXH0EnmP7FU7v31MWRpcv1PCoLwqKURxHyWZLd+rlfjA==
+X-Received: by 2002:a2e:a9a8:0:b0:304:68e5:eabd with SMTP id 38308e7fff4ca-30468e5f2f1mr97386201fa.3.1735603960607;
+        Mon, 30 Dec 2024 16:12:40 -0800 (PST)
+Received: from fedora.play.pl ([2a02:a319:4086:2580::b7c7])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045b06a1easm36279651fa.73.2024.12.30.16.12.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Dec 2024 16:12:39 -0800 (PST)
+From: Bartosz Pracz <bartosz.pracz.92@gmail.com>
+To: git@vger.kernel.org
+Cc: Bartosz Pracz <bartosz.pracz.92@gmail.com>
+Subject: [PATCH] all: standardize headers to reflect Git's purpose as a DVCS
+Date: Tue, 31 Dec 2024 01:12:34 +0100
+Message-ID: <20241231001234.1182828-1-bartosz.pracz.92@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241223232523.76236-1-eric.peijian@gmail.com> <xmqqpllew1k6.fsf@gitster.g>
-In-Reply-To: <xmqqpllew1k6.fsf@gitster.g>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Mon, 30 Dec 2024 19:25:21 -0400
-Message-ID: <CAN2LT1Dx5TK208Tc_-XRyysE_Et+0M6C4kvqCPzjUvKUt5a_mg@mail.gmail.com>
-Subject: Re: [PATCH v8 0/6] add remote-object-info to batch-command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Sorry for the noise. I forgot to CC others, so I am resending it.
+Updated headers across multiple files to reflect Git's role as a distributed version control system (DVCS).
+This change replaces outdated or informal descriptions, enhancing professionalism and consistency
+throughout the codebase.
 
-On Thu, Dec 26, 2024 at 5:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Eric Ju <eric.peijian@gmail.com> writes:
->
-> > Range-diff against v7:
-> > -:  ---------- > 1:  c09e21a9d6 cat-file: add declaration of variable i=
- inside its for loop
-> > -:  ---------- > 2:  ed04a4a7c4 fetch-pack: refactor packet writing
-> > -:  ---------- > 3:  bc52c4f80c fetch-pack: move fetch initialization
-> > -:  ---------- > 4:  4c1b989c41 serve: advertise object-info feature
-> > -:  ---------- > 5:  dbc95a9ae5 transport: add client support for objec=
-t-info
-> > -:  ---------- > 6:  f244ec8a2f cat-file: add remote-object-info to bat=
-ch-command
->
-> This is curious.  Did you compare the right things?
->
+No functional changes were made, and this commit is purely cosmetic.
 
+Signed-off-by: Bartosz Pracz <bartosz.pracz.92@gmail.com>
+---
+ Documentation/MyFirstObjectWalk.txt | 2 +-
+ builtin/cat-file.c                  | 2 +-
+ builtin/check-ref-format.c          | 2 +-
+ builtin/commit-tree.c               | 2 +-
+ builtin/diff-files.c                | 2 +-
+ builtin/hash-object.c               | 2 +-
+ builtin/init-db.c                   | 2 +-
+ builtin/ls-tree.c                   | 2 +-
+ builtin/read-tree.c                 | 2 +-
+ builtin/update-index.c              | 2 +-
+ builtin/var.c                       | 2 +-
+ builtin/write-tree.c                | 2 +-
+ config.c                            | 2 +-
+ date.c                              | 2 +-
+ object-file.c                       | 2 +-
+ read-cache.c                        | 2 +-
+ t/t4100/t-apply-3.patch             | 4 ++--
+ trace.c                             | 2 +-
+ usage.c                             | 2 +-
+ 19 files changed, 20 insertions(+), 20 deletions(-)
 
-Thank you.
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index dec8afe5b1..ac84a03e17 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -376,7 +376,7 @@ $ ./bin-wrappers/git walken
+ 
+ You should see all of the subject lines of all the commits in
+ your tree's history, in order, ending with the initial commit, "Initial revision
+-of "git", the information manager from hell". Congratulations! You've written
++of "git", Distributed version control system". Congratulations! You've written
+ your first revision walk. You can play with printing some additional fields
+ from each commit if you're curious; have a look at the functions available in
+ `commit.h`.
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index b13561cf73..34f4553da4 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+index cef1ffe3ce..c3e3a6371f 100644
+--- a/builtin/check-ref-format.c
++++ b/builtin/check-ref-format.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  */
+ #include "builtin.h"
+ #include "refs.h"
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 2ca1a57ebb..7bb4dbb6fa 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 604b04bb2c..837b9b496a 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+index a25f0403f4..69dcd59333 100644
+--- a/builtin/hash-object.c
++++ b/builtin/hash-object.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  * Copyright (C) Junio C Hamano, 2005
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 096f96b9c4..f74b75acb5 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 8542b5d53e..3fb4645c73 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index d2a807a828..4571612dd7 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 74bbad9f87..9b57946177 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/builtin/var.c b/builtin/var.c
+index 1449656cc9..276aa923c9 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Eric Biederman, 2005
+  */
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index 43f233e69b..2d890c55ec 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/config.c b/config.c
+index 50f2d17b39..e3ff33be04 100644
+--- a/config.c
++++ b/config.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  * Copyright (C) Johannes Schindelin, 2005
+diff --git a/date.c b/date.c
+index a1b26a8dce..a5ad6682f4 100644
+--- a/date.c
++++ b/date.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/object-file.c b/object-file.c
+index 5b792b3dd4..5e457688f5 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  *
+diff --git a/read-cache.c b/read-cache.c
+index 15d79839c2..777a261fa1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+diff --git a/t/t4100/t-apply-3.patch b/t/t4100/t-apply-3.patch
+index cac172e779..08b51e01b3 100644
+--- a/t/t4100/t-apply-3.patch
++++ b/t/t4100/t-apply-3.patch
+@@ -63,7 +63,7 @@ dissimilarity index 82%
+ +++ ls-tree.c
+ @@ -1,212 +1,247 @@
+ -/*
+-- * GIT - The information manager from hell
++- * GIT - Distributed version control system
+ - *
+ - * Copyright (C) Linus Torvalds, 2005
+ - */
+@@ -275,7 +275,7 @@ dissimilarity index 82%
+ -	return 0;
+ -}
+ +/*
+-+ * GIT - The information manager from hell
+++ * GIT - Distributed version control system
+ + *
+ + * Copyright (C) Linus Torvalds, 2005
+ + */
+diff --git a/trace.c b/trace.c
+index 2cfd25942e..ae43433196 100644
+--- a/trace.c
++++ b/trace.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) 2000-2002 Michael R. Elkins <me@mutt.org>
+  * Copyright (C) 2002-2004 Oswald Buddenhagen <ossi@users.sf.net>
+diff --git a/usage.c b/usage.c
+index 47709006c1..af0a32af98 100644
+--- a/usage.c
++++ b/usage.c
+@@ -1,5 +1,5 @@
+ /*
+- * GIT - The information manager from hell
++ * GIT - Distributed version control system
+  *
+  * Copyright (C) Linus Torvalds, 2005
+  */
+-- 
+2.47.0
 
-I think I may compare it wrong.
-
->     --
->     2.47.0
->
->     Information Footer:
->     base-commit: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
->     Merge Request: https://gitlab.com/gitlab-org/git/-/merge_requests/168
->
-> If the base-commit information is relevant, please do not write it
-> below the "signature" like (i.e. a line that consists only of
-> dash-dash-space near the end of the message), as some e-mail programs
-> consider them irrelevant and omit from quoting.
->
-
-Roger that.
-
-> I tried to apply them on top of 8f8d6eee (The seventh batch,
-> 2024-11-01) but the last step [6/6] fails to apply (the first five
-> applied cleanly, and matched what I already had).
->
-> Could you help to figure out what is going wrong on your end?
->
-
-Should I resend v8 or send a v9 instead?
-
-> Thanks.
