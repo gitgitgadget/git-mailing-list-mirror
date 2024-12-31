@@ -1,324 +1,155 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83E1163
-	for <git@vger.kernel.org>; Tue, 31 Dec 2024 00:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DAC747F
+	for <git@vger.kernel.org>; Tue, 31 Dec 2024 01:42:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735603964; cv=none; b=AqqFC+jq/SXe6ho+RHQ9AMdfIFtJEpWeTIwN4CevD4AG2DwQEufJ44AeKAchKgV7/iRHFukPL9QaBdfLxAivZMTSVdiblVWZBvczaVyri3i0Bza4OG+Dx3K+au0LlQ/uceygdhyGZw76ym84vRIf4Jw0vD84lpFptt1AI3qI7mA=
+	t=1735609351; cv=none; b=SFV5l1GWiX5ks+qFgS4syHuTRdMwYvizNxgTQ1N9uSGYVaIDExC8p51AK8O8DTeaSwQdR8IV9Axw25v9IjB3lL3o6vOrXA0JA4suQ30K3agjb5OT2Qs1L9GB+DH4/D9LlgFcrJPvo1j0j7TgT8SbaVv5SQWdlGHvoypukV5P2ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735603964; c=relaxed/simple;
-	bh=SAVu4yNEacyGvmkLLgccj2CCpgtxI+jbOy0UkfafAx4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=By2JsqXgAWcLag4WQiBlWlBYd32eR9Jqq4/fFwWNKJ/oYQPAOWuE9d+z3DUETu2Jqc2T4bvB8XQriRM0g3rFvQVnlsr8ca1PDc8aaUanSis+xUqSroIgvSJZqk//o6yDojXsn50/F/4b1Lv8Qet6ZQTtjKVoUO9Eqwz767ysqpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VERP6pGU; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735609351; c=relaxed/simple;
+	bh=0XKLDiaXUakgJhATWEWPcXveReIu/LMNmOePMWf4PG4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UECruyPD7nTf/O3bVYYlRPfs1W6/F8bmur/vZsxWV1AZILEYQKdEnbf1197hzuxw72ZIZe/ZvkwW25Gt+3TPSRdb9ywC4I1ino25xDQeBmUthqfy2H6rdpVZ42c2RsKQcpvX/UNikP6kNpBw6IxyRop7VbPjeffRuzQfjaXlfmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MMWO9Msg; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VERP6pGU"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2ffa49f623cso123826431fa.1
-        for <git@vger.kernel.org>; Mon, 30 Dec 2024 16:12:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735603961; x=1736208761; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=d9a/VL1ZA9qSUqB7SuOmq59l1IU1jFfyEUf4Sd5MnSk=;
-        b=VERP6pGU5RO+jFKGmUlsxlS8N/wRWjj91Tefn2uzm9Ej0p+1hiDwlWstmUEl4+kLFB
-         VjLXb4iWhPiB+LGI//INTGV/HXANe+eJZL5AsGK2+IiyklFMKf4gD6joG2/0W3fLijAS
-         COpGrUS8UVCXELp0yuz8koccUpma1mzrQ/XpLjH6cwVQtihM6/etecT6nvxdTgD9S5ky
-         mfDuuu0PDApG1ywvegwsYaq9kqFJrjKKh1pMzzqzOIfyb6IyZRYmGKda5MFzjwH9oTlL
-         Dyl0i9zaRO2aJzuqiY5tePjb+i6f2ze/6ZHD7f0hLJjoz4WGLL6kRoC6IsQUEwlNuJgh
-         pezw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735603961; x=1736208761;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d9a/VL1ZA9qSUqB7SuOmq59l1IU1jFfyEUf4Sd5MnSk=;
-        b=m0ijH6LUYOkt2rIzOIQ7WB1rJfaoTeujGPzoAzFeg19CFXg14HzZ9+BJphBdCZ8bQv
-         99RRNo7ScXEG2iUTxL4qXmQY4dBY1YBieCXCNc6NeSzPlZMHM4ghbqG6BAEjPCcVGN2F
-         WhsTw4OOtCeKLjNJLwkOC6bmRHFH/qHIkp59aG8xNeV4FEgr2SewQmxgPeDiEdZRv9hQ
-         I8CaO4i7avd4mNVqYQbRVd3BJk8KmzUyfdhPGAmSDuYc3KQNZ2ZoeUvOZfioI4y9NI2V
-         d9olusgniloVm0MNN61eecBM99FEc+EFo3/bINTjpQwoz5HlOat6pzakr8wnCeRvzV4F
-         LD3g==
-X-Gm-Message-State: AOJu0YyuStRRNa4o8Ys4X0C41w6zFcdRmcQWrGmfp7vKdzFBqvB49Ns+
-	mbbXgIwt53wFiYMjzWxg6HxBm+LTzQVevSWgrcA0sPWa6vf6eBjKGVMRiA==
-X-Gm-Gg: ASbGncu6NpJCPxHdXtQFvmI/yaTMr3xhkwCQHeM2fJQNcGgE6RXcDRc9R6OfQMUPJDT
-	iWz2E9Suj2VzG4UrTT+A/C4vX2Zi1J4r1FSwLIbqfcYrSe7499ICshfyBD1rJUfaCXHKT9vzo4J
-	jJaAd4Kx60MCgZ0woSdU2xlZT/O1vGuUvBBV0AUyTQp3Nwo6aq6loqpjE9W46NzD2RcwEV4xpUN
-	WqBk9ykgovEhYy5uTCUSWqKoTRA7ZYx3dQ51JEmrA/zC/uKrbeo3AJr
-X-Google-Smtp-Source: AGHT+IEkOkE4YPy/CUmwN8zlke3Zdn9UDFmXH0EnmP7FU7v31MWRpcv1PCoLwqKURxHyWZLd+rlfjA==
-X-Received: by 2002:a2e:a9a8:0:b0:304:68e5:eabd with SMTP id 38308e7fff4ca-30468e5f2f1mr97386201fa.3.1735603960607;
-        Mon, 30 Dec 2024 16:12:40 -0800 (PST)
-Received: from fedora.play.pl ([2a02:a319:4086:2580::b7c7])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3045b06a1easm36279651fa.73.2024.12.30.16.12.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2024 16:12:39 -0800 (PST)
-From: Bartosz Pracz <bartosz.pracz.92@gmail.com>
-To: git@vger.kernel.org
-Cc: Bartosz Pracz <bartosz.pracz.92@gmail.com>
-Subject: [PATCH] all: standardize headers to reflect Git's purpose as a DVCS
-Date: Tue, 31 Dec 2024 01:12:34 +0100
-Message-ID: <20241231001234.1182828-1-bartosz.pracz.92@gmail.com>
-X-Mailer: git-send-email 2.47.1
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MMWO9Msg"
+Received: (qmail 29865 invoked by uid 109); 31 Dec 2024 01:42:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0XKLDiaXUakgJhATWEWPcXveReIu/LMNmOePMWf4PG4=; b=MMWO9MsgToJxF78ZLiGkGf1OHRllJxTtZkbKHp+I7lfaZf8d5bP3t30pROdsSfa4sRAAsLQXKKs/32yI5rYMfBLJ5J+ygTo/tRAnObOANfYZ7FPyUjMMkaL8i0X2XfEghSuei01siF/tS8lkv1Hl8gzQsYWyQd/mS2FyA2b191TyaNYjw+BL6tcmkJBKHkfFc0sws9k2/0bvqxtHtZuyzp0Kxlx5wlqMX2Xbz5QkiIRl4c3Z7DOagoyLF/O2TABgPIqQq99x3/+EcRygstboRF0Q/XQCblnc/3Xu4r3Y9+mw63/fJquJlBaF7eVD3GkKs4NA285/SSCNCiZ+J94ePg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 31 Dec 2024 01:42:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24821 invoked by uid 111); 31 Dec 2024 01:42:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 30 Dec 2024 20:42:21 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 30 Dec 2024 20:42:20 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] object-file: fix race in object collision check
+Message-ID: <20241231014220.GA225521@coredump.intra.peff.net>
+References: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
+ <xmqqy0zxz11m.fsf@gitster.g>
+ <Z3KzHJagr_3Fkz67@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z3KzHJagr_3Fkz67@pks.im>
 
-Updated headers across multiple files to reflect Git's role as a distributed version control system (DVCS).
-This change replaces outdated or informal descriptions, enhancing professionalism and consistency
-throughout the codebase.
+On Mon, Dec 30, 2024 at 03:50:04PM +0100, Patrick Steinhardt wrote:
 
-No functional changes were made, and this commit is purely cosmetic.
+> On Mon, Dec 30, 2024 at 06:40:53AM -0800, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> > > By definition, two files cannot collide with each other when one of them
+> > > has been removed. We can thus trivially fix the issue by ignoring ENOENT
+> > > when opening either of the files we're about to check for collision.
+> > 
+> > Thanks for digging it down to the cause.
+> > 
+> > It is more like even if these two files collided (i.e. have the same
+> > name based on what the hash function says, with different contents),
+> > when one of them has been removed, we have no way to check if the
+> > collision is benign, and even if it were not, we cannot do anything
+> > about it, isn't it?
+> 
+> Depends on what "benign" means in this context, I guess. We can only
+> assert the most trivial case of it being "benign", namely that we have
+> computed a packfile that actually is the exact same. This is also going
+> to be the most common case, as everything else would depend on a
+> cryptographic collision of the packfile contents. And in that case... we
+> cannot do anything about it, yes.
 
-Signed-off-by: Bartosz Pracz <bartosz.pracz.92@gmail.com>
----
- Documentation/MyFirstObjectWalk.txt | 2 +-
- builtin/cat-file.c                  | 2 +-
- builtin/check-ref-format.c          | 2 +-
- builtin/commit-tree.c               | 2 +-
- builtin/diff-files.c                | 2 +-
- builtin/hash-object.c               | 2 +-
- builtin/init-db.c                   | 2 +-
- builtin/ls-tree.c                   | 2 +-
- builtin/read-tree.c                 | 2 +-
- builtin/update-index.c              | 2 +-
- builtin/var.c                       | 2 +-
- builtin/write-tree.c                | 2 +-
- config.c                            | 2 +-
- date.c                              | 2 +-
- object-file.c                       | 2 +-
- read-cache.c                        | 2 +-
- t/t4100/t-apply-3.patch             | 4 ++--
- trace.c                             | 2 +-
- usage.c                             | 2 +-
- 19 files changed, 20 insertions(+), 20 deletions(-)
+There is one gotcha here, though. We call this collision check only if
+we got EEXIST trying to move the tempfile into place. If the destination
+file then goes away, we can't do the collision check. But is it right to
+quietly return success?
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index dec8afe5b1..ac84a03e17 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -376,7 +376,7 @@ $ ./bin-wrappers/git walken
- 
- You should see all of the subject lines of all the commits in
- your tree's history, in order, ending with the initial commit, "Initial revision
--of "git", the information manager from hell". Congratulations! You've written
-+of "git", Distributed version control system". Congratulations! You've written
- your first revision walk. You can play with printing some additional fields
- from each commit if you're curious; have a look at the functions available in
- `commit.h`.
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b13561cf73..34f4553da4 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-index cef1ffe3ce..c3e3a6371f 100644
---- a/builtin/check-ref-format.c
-+++ b/builtin/check-ref-format.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  */
- #include "builtin.h"
- #include "refs.h"
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 2ca1a57ebb..7bb4dbb6fa 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 604b04bb2c..837b9b496a 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index a25f0403f4..69dcd59333 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  * Copyright (C) Junio C Hamano, 2005
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 096f96b9c4..f74b75acb5 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index 8542b5d53e..3fb4645c73 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index d2a807a828..4571612dd7 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index 74bbad9f87..9b57946177 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/builtin/var.c b/builtin/var.c
-index 1449656cc9..276aa923c9 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Eric Biederman, 2005
-  */
-diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-index 43f233e69b..2d890c55ec 100644
---- a/builtin/write-tree.c
-+++ b/builtin/write-tree.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/config.c b/config.c
-index 50f2d17b39..e3ff33be04 100644
---- a/config.c
-+++ b/config.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  * Copyright (C) Johannes Schindelin, 2005
-diff --git a/date.c b/date.c
-index a1b26a8dce..a5ad6682f4 100644
---- a/date.c
-+++ b/date.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/object-file.c b/object-file.c
-index 5b792b3dd4..5e457688f5 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  *
-diff --git a/read-cache.c b/read-cache.c
-index 15d79839c2..777a261fa1 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-diff --git a/t/t4100/t-apply-3.patch b/t/t4100/t-apply-3.patch
-index cac172e779..08b51e01b3 100644
---- a/t/t4100/t-apply-3.patch
-+++ b/t/t4100/t-apply-3.patch
-@@ -63,7 +63,7 @@ dissimilarity index 82%
- +++ ls-tree.c
- @@ -1,212 +1,247 @@
- -/*
--- * GIT - The information manager from hell
-+- * GIT - Distributed version control system
- - *
- - * Copyright (C) Linus Torvalds, 2005
- - */
-@@ -275,7 +275,7 @@ dissimilarity index 82%
- -	return 0;
- -}
- +/*
--+ * GIT - The information manager from hell
-++ * GIT - Distributed version control system
- + *
- + * Copyright (C) Linus Torvalds, 2005
- + */
-diff --git a/trace.c b/trace.c
-index 2cfd25942e..ae43433196 100644
---- a/trace.c
-+++ b/trace.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) 2000-2002 Michael R. Elkins <me@mutt.org>
-  * Copyright (C) 2002-2004 Oswald Buddenhagen <ossi@users.sf.net>
-diff --git a/usage.c b/usage.c
-index 47709006c1..af0a32af98 100644
---- a/usage.c
-+++ b/usage.c
-@@ -1,5 +1,5 @@
- /*
-- * GIT - The information manager from hell
-+ * GIT - Distributed version control system
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
--- 
-2.47.0
+If the contents of the two were the same, that's fine. We don't need the
+extra copy.
 
+But if the contents were not the same, we'd prefer either to actually
+copy the contents into place, or to return an error.
+
+Of course we can't know, because the destination file has gone away. In
+the common case they will be the same, but the whole point of this check
+is to allow loosening the cryptographic collision of the packfile
+contents. So the safest thing would be to retain the tempfile, copying
+it into the destination file. That errs on the side of keeping data when
+we cannot make a determination.
+
+IOW, if we see ENOENT on filename_b, should we then loop back in the
+caller to try the link() again?
+
+> > I do like the simplicity of the solution.  I wonder given bad enough
+> > race, we could fall into a case where both files are missing?
+> 
+> I was wondering about that, too, but it would very much feel like a bug
+> to me if that were ever to happen. So I briefly considered whether I
+> should treat the passed-in filenames differently: 
+> 
+>   - One that must exist non-racily. This is our temporary object or
+>     packfile that we want to move into place.
+> 
+>   - And one that may have been removed racily. This is our target file
+>     path that we want to overwrite, unless there is a collision.
+> 
+> The idea would be to only handle ENOENT for the second case. But in the
+> end I don't think it's worth the complexity because `check_collision()`
+> is used before rename(3p)ing the former into place, and that function
+> would already notice ENOENT anyway. So we would eventually just die the
+> same.
+
+I think check_collision() is used _after_ the attempt to rename() into
+place. So there's a race when the tempfile goes away, but I think the
+outcome is made a bit worse by your patch.
+
+Consider a sequence like this:
+
+  a. Process A writes tmp_pack_foo.
+
+  b. Process A tries to link tmp_pack_foo to pack-<hash> but finds it
+     already exists.
+
+  c. Process A opens both tmp_pack_foo and pack-<hash>.
+
+  d. Process A compares the two byte-for-byte, and then returns
+     success/failure based on whether they were actually identical.
+
+Now imagine there is a process B that deletes the file (maybe an
+over-zealous "gc --prune=now" deletes the in-use temporary file):
+
+ - if process B deletes it between steps (a) and (b), process A returns
+   an error (there is nothing to link). The caller knows that the data
+   was not stored.
+
+ - if process B deletes it between (b) and (c), then before your patch
+   we see an error (because we can't compare the files). After your
+   patch, we continue on and return success. The caller knows the data
+   was stored (via the original file, not our new copy).
+
+ - if process B deletes it between (c) and (d), then process A has no
+   idea. But at this point it does not matter. If the files were
+   identical, we return success (and in fact, process A deletes the file
+   itself). And if not identical, then we return error, and the callers
+   knows the data was not stored.
+
+So even though the exact behavior may depend on where we hit the race, I
+think ignoring an ENOENT open() error on the tempfile meaningfully
+changes what happens in the middle case.
+
+In practice I don't really expect this to happen, and "gc --prune=now"
+is inherently risky in a live repository. But I think we're probably
+better off to continue treating it as an error if we can't open our own
+tempfile.
+
+-Peff
