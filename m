@@ -1,42 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B40E3209
-	for <git@vger.kernel.org>; Wed,  1 Jan 2025 18:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00741E0DDF
+	for <git@vger.kernel.org>; Wed,  1 Jan 2025 18:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735755604; cv=none; b=FlKySH9BrPNvJ1TOzEQppL2sB2rgFDbygNDjJRY/9e+ffMeAaAp9cbDj89xPIYzvXHbXDxXLyuvy8WTFH1I2dRsj7uaHFTHgSjaKKCFHFqf7/xjm3fMsOBPMaAAF9BvsG878yphMjO3yY0hG7JtUyULWjGo0+DXDV85efDYa6Os=
+	t=1735756110; cv=none; b=GPp7kC9I/VmxovZcY7tnMJnoU/aHnUpyLlfcLnlZKJ8t886pPcSZ/mPKEk8jpyd9tg+CIJzT9YsJE0lVvB4B+RKOH9g6KyTprUzVlvY05EiKPJ8dW+Q69vrwMGVpldhEyYkbwYiDqKZrCezex5bYoYLe7CeG4XHsmTTQfjYIJxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735755604; c=relaxed/simple;
-	bh=dW7OwkM4AG2GrvskayQ7s6Xgdin3zyOaNwObX1DaNCw=;
+	s=arc-20240116; t=1735756110; c=relaxed/simple;
+	bh=1kliGFJmJp7tb17BuUM6glLUHo3fWTtItrh8/MPh3fw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oBnbo/gF7y/o3acxciWtcZyNC07Rsb0F8eUs7u764ZfOlgKGsNwxGyTI00JxSQGkxPgrMFlCKSIER7EKL41lQzAw3hGMMUg1r9q9tsroEUU93axRx6Wz5CzdSCl7KsR/324cRCVTY0+k388EMj0L1G8tKZlzZNsCDQSqL8Ddv0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gPInF1et; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=VtUoYpRl3FjhBDF7MvegFSjWrhjmUbcCG4mafdt3PY4C76Kl/RqOKCWy4NwbHo3CRVtAXbXWfVwpkT6a1/rmG7qiq/HaK7dECUlwGl3ZTViHTJFHc+cWEpxFGoqbp2nyoEnTRW+8DmcymzAAHlzsaIBc8BCK2o/nzN8+ZqO3hmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DJYYEjwu; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gPInF1et"
-Received: (qmail 20760 invoked by uid 109); 1 Jan 2025 18:19:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=dW7OwkM4AG2GrvskayQ7s6Xgdin3zyOaNwObX1DaNCw=; b=gPInF1etIF++gF1jHWHy6oZV138n0yYG7fs/tGhSo59mS+TbxLRl1JMexwrwTBxi15a4YusuujhqP9etEs8DL/T/piqVDnySqR3i1gZ9JwIYe3VrCFSH+h8XA+iBHpQqrBPIBK1nNyJCWpgkB/SdtneqnN7jYwXztcFRtM3mofAj3ReeKJ/FqFKG9+xkgB2rHnApUowonpj/9X5DLpeF6YWgCbMsYlKjF7VdU/Vf6G2Ba5FtF1JLkuhfCQYKYwEMDvAReTFQsEBDDDByFdQBeu6yfIkI9TvWWs/c6E+l6bstJRhJsJZLDTxSDrbRGcHDynZRNofOiuaddEpID0rKig==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DJYYEjwu"
+Received: (qmail 20789 invoked by uid 109); 1 Jan 2025 18:28:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=1kliGFJmJp7tb17BuUM6glLUHo3fWTtItrh8/MPh3fw=; b=DJYYEjwuP7I1waJGnswCLqSkBl09njcpT8ON55Vk88pzFgwwG+HWjzyTxRqFFkGvyznDQ/gXn6pMSCBYrvR6VwtL6Gd6adguokulVlSnKbszmeDvpp5QT9eUx5qsMiyaV/z/sJ8LPNA4rgy+K0HryUI3v2MhO5fvk/JXUeIb71ZwwIz2pxPTadm42JaUhImOhPLfDnc8zB1ENjbOkWaaKyf8G8eztoLFYt0kExySJwDUG0FQCD5Ue0CQ5bgKX7ohA5SA8cbtSD3N6YIrZbxSIEJd20I0sznrfA/erYkYTiIStqqxGdcuPJ+Jb+LajIzgZJ/IXtZFf71013udkmD+VA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jan 2025 18:19:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 01 Jan 2025 18:28:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10474 invoked by uid 111); 1 Jan 2025 18:19:52 -0000
+Received: (qmail 10606 invoked by uid 111); 1 Jan 2025 18:28:27 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jan 2025 13:19:52 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jan 2025 13:28:27 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 1 Jan 2025 13:19:52 -0500
+Date: Wed, 1 Jan 2025 13:28:26 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] object-file: fix race in object collision check
-Message-ID: <20250101181952.GA1391912@coredump.intra.peff.net>
-References: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
- <xmqqy0zxz11m.fsf@gitster.g>
- <Z3KzHJagr_3Fkz67@pks.im>
- <20241231014220.GA225521@coredump.intra.peff.net>
- <xmqq7c7exytw.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] thread-utils: introduce optional barrier type
+Message-ID: <20250101182826.GB1391912@coredump.intra.peff.net>
+References: <20241230042325.GA112439@coredump.intra.peff.net>
+ <20241230042830.GC113400@coredump.intra.peff.net>
+ <Z3JFyniivEd716aX@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,88 +43,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7c7exytw.fsf@gitster.g>
+In-Reply-To: <Z3JFyniivEd716aX@pks.im>
 
-On Wed, Jan 01, 2025 at 08:50:51AM -0800, Junio C Hamano wrote:
+On Mon, Dec 30, 2024 at 08:03:38AM +0100, Patrick Steinhardt wrote:
 
-> Jeff King <peff@peff.net> writes:
+> >   - we could turn it on only for LSan builds. But that would break
+> >     builds on non-Linux platforms (like macOS) that otherwise should
+> >     support sanitizers.
 > 
-> > There is one gotcha here, though. We call this collision check only if
-> > we got EEXIST trying to move the tempfile into place. If the destination
-> > file then goes away, we can't do the collision check. But is it right to
-> > quietly return success?
-> >
-> > If the contents of the two were the same, that's fine. We don't need the
-> > extra copy.
-> >
-> > But if the contents were not the same, we'd prefer either to actually
-> > copy the contents into place, or to return an error.
-> >
-> > Of course we can't know, because the destination file has gone away. In
-> > the common case they will be the same, but the whole point of this check
-> > is to allow loosening the cryptographic collision of the packfile
-> > contents. So the safest thing would be to retain the tempfile, copying
-> > it into the destination file. That errs on the side of keeping data when
-> > we cannot make a determination.
-> >
-> > IOW, if we see ENOENT on filename_b, should we then loop back in the
-> > caller to try the link() again?
+> Mh. I'm not a huge fan of having extra code for just a subset of our
+> builds and think that having the code generally enabled on platforms
+> that support it is preferable to reduce the number of build variants.
+> But...
 > 
-> Yuck, I think you're absolutely right.
-
-So I think this part, if adjusted as I suggested, would fix the race in
-the tests without making anything worse (it's just more code).
-
-And then this...
-
-> > I think check_collision() is used _after_ the attempt to rename() into
-> > place. So there's a race when the tempfile goes away, but I think the
-> > outcome is made a bit worse by your patch.
-> >
-> > Consider a sequence like this:
-> >
-> >   a. Process A writes tmp_pack_foo.
-> >
-> >   b. Process A tries to link tmp_pack_foo to pack-<hash> but finds it
-> >      already exists.
-> >
-> >   c. Process A opens both tmp_pack_foo and pack-<hash>.
-> >
-> >   d. Process A compares the two byte-for-byte, and then returns
-> >      success/failure based on whether they were actually identical.
-> >
-> > Now imagine there is a process B that deletes the file (maybe an
-> > over-zealous "gc --prune=now" deletes the in-use temporary file):
-> >
-> >  - if process B deletes it between steps (a) and (b), process A returns
-> >    an error (there is nothing to link). The caller knows that the data
-> >    was not stored.
-> >
-> >  - if process B deletes it between (b) and (c), then before your patch
-> >    we see an error (because we can't compare the files). After your
-> >    patch, we continue on and return success. The caller knows the data
-> >    was stored (via the original file, not our new copy).
-> >
-> >  - if process B deletes it between (c) and (d), then process A has no
-> >    idea. But at this point it does not matter. If the files were
-> >    identical, we return success (and in fact, process A deletes the file
-> >    itself). And if not identical, then we return error, and the callers
-> >    knows the data was not stored.
-> >
-> > So even though the exact behavior may depend on where we hit the race, I
-> > think ignoring an ENOENT open() error on the tempfile meaningfully
-> > changes what happens in the middle case.
-> >
-> > In practice I don't really expect this to happen, and "gc --prune=now"
-> > is inherently risky in a live repository. But I think we're probably
-> > better off to continue treating it as an error if we can't open our own
-> > tempfile.
+> >   - we could trigger only on the combination of Linux and LSan together.
+> >     This isn't too hard to do, but the uname check isn't completely
+> >     accurate. It is really about what your libc supports, and non-glibc
+> >     systems might not have it (though at least musl seems to).
+> > 
+> >     So we'd risk breaking builds on those systems, which would need to
+> >     add a new knob. Though the upside would be that running local "make
+> >     SANITIZE=leak test" would be protected automatically.
 > 
-> So we'd ignore the racy and flaky tests, as hiding the flake by
-> ignoring the error would only hurt the real world users.
+> ... this is a fair remark. So I dunno.
 
-...is all about ignoring ENOENT on the tmpfile itself. And I think we
-can just drop that hunk entirely. The tests do not care here (they are
-running simultaneous gc, but _not_ a simultaneous "--prune=now" gc).
+Yeah. I do not like having the behavior differ only for LSan, or only on
+Linux. But I also do not like having tricky threading code that we do
+not otherwise need in all of the other builds. So it is really about
+picking the least-bad option, and they all seem similarly bad to me. So
+I picked the one that involved writing the least amount of code. ;)
+
+> Okay. The Meson equivalent would be:
+> [...]
+
+Yeah, I figured it would need something similar (but for our CI it does
+not yet matter). Do you want to prepare that as a patch on top? (Though
+also see the message I'm about to send that we might be able to avoid
+this series entirely!).
+
+> > +#ifdef THREAD_BARRIER_PTHREAD
+> > +#define maybe_thread_barrier_t pthread_barrier_t
+> > +#define maybe_thread_barrier_init pthread_barrier_init
+> > +#define maybe_thread_barrier_wait pthread_barrier_wait
+> > +#define maybe_thread_barrier_destroy pthread_barrier_destroy
+> > +#else
+> > +#define maybe_thread_barrier_t int
+> 
+> Out of curiosity: why did you pick a define here and not a typedef?
+
+That's what we do for all of the NO_PTHREADS fallbacks, so I was just
+following that style. I suspect it matters more there, because you would
+not want to typedef pthread_t on a system that is building with
+NO_PTHREADS but actually does define that type (whereas the "maybe"
+variants are our own invention, so we can be confident those names won't
+conflict).
+
+I don't think it matters too much either way.
+
+> > +static inline int maybe_thread_barrier_init(maybe_thread_barrier_t *b UNUSED,
+> > +					    void *attr UNUSED,
+> > +					    unsigned nr UNUSED)
+> > +{
+> > +	errno = ENOSYS;
+> > +	return -1;
+> > +}
+> > +#define maybe_thread_barrier_wait(barrier)
+> > +#define maybe_thread_barrier_destroy(barrier)
+> 
+> So the way these wrappers are implemented it is not possible to check
+> for errors of `pthread_barrier_init()` et al. When the implementation
+> exists we do have return codes, but if it's stubbed out we don't.
+
+Yeah, again I was following the NO_PTHREADS fallbacks defined above.
+Perhaps those are different in that we wouldn't generally expect to ever
+call them if we don't have threads at all (whereas these "maybe" ones
+are meant to be quiet noops).
+
+> I think we should align these two implementations so that it does become
+> possible to check for errors, or otherwise we wouldn't be using the
+> pthread APIs correctly. It does raise the question though whether we
+> should really return `-1` in the stubbed-out variant or whether we
+> should instead pretend as if things were alright.
+
+You'd have to return a fake success if you expect to check errors, I'd
+think. Unless you want to introduce a bunch of conditional code to say
+"well, we tried to initialize a barrier but it didn't work, so let's not
+actually wait".
+
+For all of the existing pthread calls, we simply assume init stuff like
+pthread_mutex_init() doesn't fail. Possibly we should change that
+globally, but this is just following the same pattern.
+
+> An alternative would be to die in case the pthread-functions return an
+> error.
+
+That's certainly akin to xmalloc(). But probably we don't want to go
+that direction, simply because it works against libification in the long
+run.
 
 -Peff
