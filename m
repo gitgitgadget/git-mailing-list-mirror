@@ -1,54 +1,54 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2EA2942A
-	for <git@vger.kernel.org>; Wed,  1 Jan 2025 16:54:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6482942A
+	for <git@vger.kernel.org>; Wed,  1 Jan 2025 16:54:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735750443; cv=none; b=Ao4kt8B51DL+5VLsbqOl2uUT9lseVHr+/+SuURlu4fN0XTEexQlqGqSj8zLFn/BUrJar+fxjAA8srjNSWM0PGeNNHsenuW6dx1PZVJtS9iioKNGMiUtHVbFs1K3j92VfyltnH1BW4yDGI9PcMBPsoWMjHlU1vLopPB3XOU4JNnA=
+	t=1735750452; cv=none; b=rY9PYWKLa9/GjXIo1mmNqJXmyvG5uj9WyWRc856RSRgidhlRsjKHNpUyuaXZfEVlUoVq3TRxOuSeSBEn5Z1G8rqAK6ZlIkRl8CrsL0IiFDvP2KfDqiRGU5Da5PjwFK1nL9q01SvYaYLEyqj1Fh0XgcKEUyWPvR34Dawf6einp6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735750443; c=relaxed/simple;
-	bh=pSE/P9kOOJ1sv1+Pw8CIj181tI1RT+0n8ZQ4aCwqXa8=;
+	s=arc-20240116; t=1735750452; c=relaxed/simple;
+	bh=x+C1Y2Pysqb5wVHdQlnGudfZ7gPd7cadi3OF273vGno=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oJuXi15Hvazx13zO1uO96JbHZQDdXEWaYRzRwZ+gTUMM3t8HaQZaal2k/4CinM/e6d/+QuEFLHA5rdldj5VFpdPCUhNzMpIMrdqgZkQYaX7LRoMnvkag/LOFyzhBZmV+83V51N8m+i3FLph/S+YLz951KbC/vfq3JiJrPcqDoqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qpUaKjaS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H6QxNCye; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=IYWBw3kO3OtFqXPFCEQx0KQCYXlWYT7jbc+cmB679DOTudu3oaQAfVbNeeXxuPH3gg7PpoEshrE+0Zg8vTcyTkdgMzCMi+KZmRzePz92IIQyC3SuXpE4Iyu/ES3Bg0FmEmJKfIdVsuQ0cl7I+j4D+qdDpo/fG1LkcVEdrJ70iAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zPIZVxp3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AaZuEZCq; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qpUaKjaS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H6QxNCye"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 32372138021D;
-	Wed,  1 Jan 2025 11:54:01 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 01 Jan 2025 11:54:01 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zPIZVxp3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AaZuEZCq"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B5897114009F;
+	Wed,  1 Jan 2025 11:54:09 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Wed, 01 Jan 2025 11:54:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735750441; x=1735836841; bh=P5nhRHjGO+
-	d+RiNfj0UBgqPPAeiN8VpukUdlwDMkHOM=; b=qpUaKjaSoUKLAZoBU9qCLrn36l
-	8ehFMMb5Z6Xh8kpwab51HZ5+lvqTtaivR0AO1rOxJCvmeQ6+dVt20iEC8neHk56u
-	2Tu7+4QaH5DqEVN+nZuTXWkNWo3IzFCFQk2NCsgREYPnHyY07l0FDxUFCLlb4gjA
-	F+9MUhyOCzDsJdAEVjLhwqYYGHobG606ysoL/UKzLdw63yJRDqKc3Y3hDqsfbO3/
-	a/x5x0i/kBWnlpEn8TeBy63UnFFhnmsIIjKunGKKdQI36Qc1UAQA5wxlOXG7Tbzc
-	sG1TKFs0nWaw3tmCnxou5EhB+mwzb92yDFfh4OiENRqO7vw4fM2U0zjhrGSQ==
+	:subject:to:to; s=fm1; t=1735750449; x=1735836849; bh=x+C1Y2Pysq
+	b5wVHdQlnGudfZ7gPd7cadi3OF273vGno=; b=zPIZVxp3fOTHy+DmOvtXCJknqS
+	pGGLfjTmC9nayoXVIyJi5iHZgHeZv2Qyd/p25zyh+ztJmVwvdAAvVBvNvh9KPWaV
+	hThWJBa6qrZ8xdT9Rfak2eqpYoqzZLhJko+AROnvU+WUMrufpBlsVLgUfZPzsvJz
+	hHMMJr+RLOjlHQLyt7j+QPTwWe7cbKe+ikkPwmJoW08COZVQgWn1rgXDa/FueyKp
+	kpUG5Ka1vf4OwnjXpHKVWBBHD8+Z21LCfyIhQUZN+jrWFlkfXZqLsqp5Ufy0qz5t
+	UPgXasaupF+l7jiuj6YqEk/BRxDLtqYgR75kQos4UNnNXJcDogq9XZNqETKA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735750441; x=1735836841; bh=P5nhRHjGO+d+RiNfj0UBgqPPAeiN8VpukUd
-	lwDMkHOM=; b=H6QxNCyeLnmLe0AndTTSZKDPgSnny3CImw4oK49aB4vH6Odi4o6
-	G0iPz5dprafsh1Mr9p36z6WrhcNBy7atTjS/HgmLJ+Y5U2MF/s5QKB+eLXh5oYh4
-	QvVvlRJDSn8DKrxOw71HjpkFMSY0i42zgwIQrwYJv7pfOvx+vP7m5O7DxC2aLmld
-	/3UJ8eT1GMfUPAetpwNAFsPqYUFcZfwnWBrMN0s9vw1xHP3vQcOycPHAIRQQwTBq
-	ICa2Vh375SBgf+a1YOeRgYP9L6R0TmOMyMhU4qhIxs2GgyP7OAXqOkHu03Lt2QVP
-	Fbq83JWxUbwEvQvZU6jlliSYYT6OBxHsKQg==
-X-ME-Sender: <xms:KHN1Z9YFdLSu6ByJDWqFZITDnmeBrOPjI7mnxlRORncU076NCJeCAA>
-    <xme:KHN1Z0bc4k_PpHCK8CWWWqMAbzCxu-eKdfFXg9sA5xfdw1xU__t8eu9MNnrxu9_xj
-    9n2XhJjmGbfRFNUZg>
-X-ME-Received: <xmr:KHN1Z_8FZ5ELKHmBZZ-e0rP07VAhFb5dEFCenLSo_f4ZGpb73yB4RL9M7hBKOH_lzaVlei0woqWGJ5Q67bR-4lQx6F9mvmjWiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeftddgleeiucetufdoteggodetrfdotf
+	1735750449; x=1735836849; bh=x+C1Y2Pysqb5wVHdQlnGudfZ7gPd7cadi3O
+	F273vGno=; b=AaZuEZCqmht6cqxh5kyOV4f4jY8fDnSSOyZsu+hjZta1zgJRzUm
+	yHFL7MA02pAt+NFoLbMZCo1IHdPjz1yCrDV8orhSzgDVXSlPrCb7Gne6787cOBSk
+	S4YrYuztikTkuPP+49Uur/M/tC85umrdycy01mjap6WA6Y3xBXUApMjQ1ql+bRmM
+	e6rirJkSkGdFU6YBDiWevn1b3zy4eh/dOntg8wQMzQZccGFSaUUe1Fhis+de8n27
+	TPMGmQ170rZDMeYyCueg024yEUIZDi7QeudX1RWxatVwzQhKcN54Mg+c3X6NGnyc
+	TDZ3hhFJB+KrCMqz9Pm9wbnxG5EjgQdRVyw==
+X-ME-Sender: <xms:MXN1Z2fkTYF32qyaRKOgZJJV8WMb7cxRqMaUhJ1Qn738csDbo2QpSQ>
+    <xme:MXN1ZwPmSDI-q23SzefRIEuWUU3W881XTul2aFnab5KUFAVe58n0RWqRrH1YA4dkL
+    PooM7sHxnxOv7C_GA>
+X-ME-Received: <xmr:MXN1Z3j51IOc6-1_tx_j0uzGZ-N8T2DQ2_pc17MqPFvOpVVWtrnCyry4WvDQvfNzD_grmZHGBXj5VG1BPRfmqYe15nKDw8pWNg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeftddgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
     gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
@@ -56,27 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeftddgleeiucetufdoteggod
     etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
     shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
     hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehpjhhpsehfvgguohhrrghprhhojhgvtghtrdhorhhgpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:KHN1Z7oTOGZchFXY3B0vHOH1tYNAJFaW55JuPXf_6qErXmVQjEN_Dw>
-    <xmx:KHN1Z4pGVZ_uqauduJ5Xng8Fwb79VKGMXk1nNvEB3hkXhrSmVrawlg>
-    <xmx:KHN1ZxShzahLF5qz4Js5ljjLBzyGJw2atLmveNIJkHRv5RSYUrvW7w>
-    <xmx:KHN1ZwofU-cD1RnR8wV_nrLI1YXpgNCrJPddc1fOP_EzksUvJSTgHQ>
-    <xmx:KXN1ZzWVGRPkhnMVCZWqVT1jHfuTav8ZTiGcP_s386VIxmnSW0CM0Yrf>
+    rhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:MXN1Zz90U8mxccaSEal7oDZ7pszdQYoh4Ld_B8wKAAhvcKKDRJqY-g>
+    <xmx:MXN1ZyvdULtj4z9in5xY4E4xmsBNnWXMfVDggmwqMX2H1xKfiejWsw>
+    <xmx:MXN1Z6FprRbDM40R8NTxnPfrvU1_zWsqtNzo6BKYnwDtfqTpKE-Tsg>
+    <xmx:MXN1ZxMxxuWLDged0_HUmZ8b-5KDXRRYOKyNnyhptOZmG9ACsgSZAg>
+    <xmx:MXN1Z2IC48lpjc_qmMwIMQl0ZD-OVP-KUrWWA669HjoMlj35F5u_r8FV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jan 2025 11:54:00 -0500 (EST)
+ 1 Jan 2025 11:54:09 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Prasad Pandit <pjp@fedoraproject.org>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: File missing from git branch
-In-Reply-To: <1964163554.5326830.1735643984559@mail.yahoo.com> (Prasad
-	Pandit's message of "Tue, 31 Dec 2024 11:19:44 +0000 (UTC)")
-References: <1964163554.5326830.1735643984559.ref@mail.yahoo.com>
-	<1964163554.5326830.1735643984559@mail.yahoo.com>
-Date: Wed, 01 Jan 2025 08:53:59 -0800
-Message-ID: <xmqq1pxmxyoo.fsf@gitster.g>
+To: <rsbecker@nexbridge.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.48.0-rc1
+In-Reply-To: <043301db5ba8$323355a0$969a00e0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Tue, 31 Dec 2024 12:19:43
+	-0500")
+References: <xmqqjzbhxeho.fsf@gitster.g>
+	<043301db5ba8$323355a0$969a00e0$@nexbridge.com>
+Date: Wed, 01 Jan 2025 08:54:08 -0800
+Message-ID: <xmqqwmfewk3z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,19 +87,14 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Prasad Pandit <pjp@fedoraproject.org> writes:
+<rsbecker@nexbridge.com> writes:
 
-> * Generally committed local changes are visible across local
-> branches, right? Is there a way to see/access those locally added
-> files across local branches?
+> On December 30, 2024 12:33 PM, Junio C Hamano wrote:
+>>A release candidate Git v2.48.0-rc1 is now available for testing at the usual places.
+>>It is comprised of 549 non-merge commits since v2.47.0, contributed by 81 people,
+>>33 of which are new faces [*].
+>
+> FYI: NonStop builds/tests look good for this release candidate. Thank you for all your
+> efforts.
 
-Not at all.
-
-In fact, the contents on branch A is unmolested by the act of
-committing changes on branch B.  They are independent lines of
-development.  Otherwise your version control system is broken.
-
-Until you decide to consolidate the change you made on branch A
-into branch B, that is.  People call that operation "merging branch
-A to branch B".
-
+Thanks.
