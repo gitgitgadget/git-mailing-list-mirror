@@ -1,85 +1,85 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7B32942A
-	for <git@vger.kernel.org>; Wed,  1 Jan 2025 16:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145922942A
+	for <git@vger.kernel.org>; Wed,  1 Jan 2025 16:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735749948; cv=none; b=YRpk6n2eagteajGlM3P8A5AEhkz+xYA+jJ9BOGqYkTV4pDhK1O803YkPRcP10/FPJ3fpebA6GuGhy9SYy5W5+GlYogFuEeuvlz/rTQOXKcb0zySHUHDPKAdqPaenjfwddwhe7JxdAcu9v3l3dyn6rz0203sf+g20JtpuK75qI1Q=
+	t=1735750257; cv=none; b=bw7rz8WNtNBbm/hyHLGNKF+Yn56CyBAf1CCxsVoQbayN5xG1D7//jxQm75/kitL4N2QOR3n+/9hvj5FM7qiB74dFhVexk/4I/7HHpMBEpsCCdJtnaus9s9O5N7DxLpXGxphIWXxnWxsv/fTL6/mUwulqjP0w0NaWQiZNkERLSBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735749948; c=relaxed/simple;
-	bh=pWMnpgPqkIq3NRk4PLM3qRzhWViocSwYtfZJJL5ON0I=;
+	s=arc-20240116; t=1735750257; c=relaxed/simple;
+	bh=blzBNh0zETJjO7ZtQi16cTUZpHZSzzHOZ+xeb14JxI0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uKTD48M+HAo1pldmHnq5CIiUoG6mDP1O1FQG4oxsJnp1uprhwkRS4oFrgSNMTjDc1n1ROPFPmNFarutw8AuYzHjMxlm5Pf/nmQ2JfFhI8K16bUAB+kJ/Gr+qggPehsvWkIA+jY81v26s7qBeoGlestTMDZT+xaG867dbcd+8oFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sOlb/tzi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p6BLenHj; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=Rh9eI/0TWkjg3O9YL+YqdlU/meHTcQSpfKbn3qHC+c5pfJCME6ikNFAwCrodMx+OSODqwBgBmtckg3tkWucc19VwKCEL3w7zUjqL3zVK4Mzndk4NZgZV9x96oRww3GGCVr1JwRtGAKDgtL0aiOY7es+fLICmgn3X8bi5C37U7lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Rg+vDlYo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y/kZsMw7; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sOlb/tzi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p6BLenHj"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3350813801C9;
-	Wed,  1 Jan 2025 11:45:45 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Rg+vDlYo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y/kZsMw7"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 27D0E1380208;
+	Wed,  1 Jan 2025 11:50:54 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 01 Jan 2025 11:45:45 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 01 Jan 2025 11:50:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735749945; x=1735836345; bh=mvOxQA86UF
-	ab5B2DRqF1+86E9hm/YYUnEkDJdGF0MIk=; b=sOlb/tziFxkPxgMoX69gtfhQWW
-	FJGKyi14OglrnpDML6eE6yKC0QIA7Hfe7MM+AbhlOsDN0iG2/C7WQWgAUbWhW8MO
-	zLc0l0JeZCJ9TSJAnfs4gikz71HkmLenhm/1CnrUmHd+n7eRBW4YzJIWvzWUU00Q
-	eK8wfrJ16EUaYwE00SwROxBXQHr7M8IptS9xBsFMPUGpSaanFjgGoXxJhVck7SWX
-	ibrWwqkDMcnEIC2jgzntkaqQJ+ZmtKIXLQ1PqA9GxrTqmJ3MFVUgP5Bal0PlaYfg
-	TNXHW2AP3aicia6MaFRlzt/T4B9g3mi5Ys2L/EmL+HtqautHiadyCFFDtTbA==
+	:subject:to:to; s=fm1; t=1735750254; x=1735836654; bh=AmJPIHvGcT
+	KSB6SWWr4QKTWUrnlfbtsA+JA7JaCjmaA=; b=Rg+vDlYov0nI+FWHomBwR1tzNx
+	h1lUpeUQojLCUix2+D/8mEMxrZvKOQQinViuLEZm71LvpXSmreWaIv5zOi5qpQXs
+	4bamYMxw3Tndmq8pyA83RgyhFP3nNVDd710GIHbII/U8UXCrvWLtGSROV9Fpfux9
+	Usu1PQ03o7xPc5DxAdUNl5lJoePIQwkhxze+yfyW6sTJaAbiEqDrIVC0ucUAooVO
+	n/cBVwSWpgaG/xRqkEyLPoLTQLGuzWVTE812sWrhNgqgRkORoGV8OvaV3TgN1gci
+	ovLK4uhnBmw21tR16um7pocJR6Bkjx73v/HnOpGfaN3sNbSt0wItcpAjyr7Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735749945; x=1735836345; bh=mvOxQA86UFab5B2DRqF1+86E9hm/YYUnEkD
-	JdGF0MIk=; b=p6BLenHjJVwpAd5+fvWt6WX4mwc/JGEqO74OZMIGrC376tVQFaH
-	2J7Q/JrjFPsc35yIdz6hWq7gmtDCSlLGNjAIyJ3dQX8R3+HlrqzMa2baIenSC2yb
-	BsXST3GoMvbROLDoBMRAWyz/w9xbY73MAqBnpL3BihhVVywwktwxlT/InGoaTUwF
-	h9NQ+pDuVfg9WbLA/7IthSaHVUpatLhgBIiGcNiSHxsA5crIfA/X8aZi40KBPVlT
-	8mLbki5wXgWFV4GToPBXRHXdPeM2h1IlM26q0fEEWHAv6SVUg6OX5a9BjL04Ux0e
-	BIqNcqjyRpUA4jgNGRm2s563eGpv4EidFKw==
-X-ME-Sender: <xms:OHF1Z_G6SYUfCsBnysj2YhHj2OzhU51RVVffCmce95cljx2KT4USlg>
-    <xme:OHF1Z8U6e5pQf5AOiyYl3P7sdV5MR1Ja_F1jt7k8fTxAsyKiQzMJzO5ca7pnwx01P
-    XHWXWaYVu3r5Vn9Ig>
-X-ME-Received: <xmr:OHF1ZxJcQXiF7ObQLnL5ib3lyZ9sS_7UbZiKRX0sXtTvKbugxUzviavs5Be2Q0teZ8kK9wQ908BBgloe75Rveq8-BKrE18RxAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeftddgleegucetufdoteggodetrfdotf
+	1735750254; x=1735836654; bh=AmJPIHvGcTKSB6SWWr4QKTWUrnlfbtsA+JA
+	7JaCjmaA=; b=Y/kZsMw7wlkNhEayV5KLvkqmYhOqQ7LucHn1k9bA9fFWxF5i7bq
+	oKsTX6v5cqNKZyOz+Lgdepi7j/WR5FWBhiHIg3sIb3KLlXIDzBEKJUj1Q4wO6YyU
+	J/5aLxEFy6cOCMX/4ITeHoAr1phOJaZVkDDEh/PJqDc0YQYqxI06+xqwKqDg/OHD
+	jif7PMEswfCgIOjLXOaxZIst+SEkiWBgZ8it/URenQuOGvXenyyz666kJjA1EIK6
+	lUbIJD/6ns953UuaxN2aPTO8VNpJHKAC2uqsZXtzEo3c/zHRhNL4x3w8iw88gwM8
+	B9RocTTcWoddW1lXgHKbnSmM2+NTYPDi67g==
+X-ME-Sender: <xms:bXJ1Z_Tx_S18dN53STa7GZAIN5ZybHDmm-CAAHd_P9E8HvGY---Fhg>
+    <xme:bXJ1ZwxZZ6lSySxXPEZoyp3AB2Sm76xaLkMTP6WQO-tJPp1jd_tIqn-zCnnM49QO1
+    byMsl2eF3IO52EyqA>
+X-ME-Received: <xmr:bXJ1Z00KcnG_TiGaea0pIQXHM4YULTdQxGX7wwjw-fp0lUnjFFmbo4OpT4DaGXKUqhx5wxDAcYcd2Dm-TdE1S9sP0UT94RNYGA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeftddgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefh
-    tddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdgu
-    vgdprhgtphhtthhopehgihhtqdhfohhrqdifihhnughofihssehgohhoghhlvghgrhhouh
-    hpshdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithdqphgrtghkrghgvghrshesghhoohhglhgvghhrohhuphhsrdgtoh
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
     hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OXF1Z9HLB66DbkZGkF3qxaFg3I6yI_3C_NxKnISFFSN_acmre45tkQ>
-    <xmx:OXF1Z1VSX3mYnD4f1ivmLpXNAn_j-wj3gue_0cYlbnoOsYLNxDqOZQ>
-    <xmx:OXF1Z4MI0W7wTUgyTsI0SPWC9OLIehf1HO3ZdGX73Mo4AAexyFU4QA>
-    <xmx:OXF1Z03jB-LRa1df9MiOtdKu2zLaQYrU92pEqjLgxPiJwB_lceXGiA>
-    <xmx:OXF1ZzdEZ-w0oj7y78jr0fGg2HbANSpoGc9VxMoBsEqkfBWeHlTKxVIJ>
+X-ME-Proxy: <xmx:bXJ1Z_D8rkxeL171VB5tRcj0OoYIHBEkAdqS0fnKZVsK9rirsg2Lzw>
+    <xmx:bXJ1Z4gWRWddjUSKxheTmUgIiDjN3DPL8Hw1lXwF7HpFbYGphuLSkQ>
+    <xmx:bXJ1Zzpk70AfuYoIi3kzC91hshSzNU2gtMwHHaRaIDFwPO9TGG5XcQ>
+    <xmx:bXJ1ZzhaD95ckiDs8Qe0ePfJ7ehiD7b9UmsCN9VzcJLgqYytlwqo4Q>
+    <xmx:bnJ1ZybbGKmbcIJV7yfyhyfKIFJ5kdsnIYkG25WbAeTAe0yIQJP1JnMQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 1 Jan 2025 11:45:44 -0500 (EST)
+ 1 Jan 2025 11:50:53 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc: git-for-windows@googlegroups.com,  git@vger.kernel.org,
-  git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git for Windows 2.48.0-rc1
-In-Reply-To: <1MacSe-1u4zn60o7G-00obkK@mail.gmx.net> (Johannes Schindelin's
-	message of "Wed, 1 Jan 2025 10:23:29 +0100 (CET)")
-References: <1MacSe-1u4zn60o7G-00obkK@mail.gmx.net>
-Date: Wed, 01 Jan 2025 08:45:43 -0800
-Message-ID: <xmqqfrm2xz2g.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH] object-file: fix race in object collision check
+In-Reply-To: <20241231014220.GA225521@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 30 Dec 2024 20:42:20 -0500")
+References: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
+	<xmqqy0zxz11m.fsf@gitster.g> <Z3KzHJagr_3Fkz67@pks.im>
+	<20241231014220.GA225521@coredump.intra.peff.net>
+Date: Wed, 01 Jan 2025 08:50:51 -0800
+Message-ID: <xmqq7c7exytw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,43 +89,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> Dear Git users,
+> There is one gotcha here, though. We call this collision check only if
+> we got EEXIST trying to move the tempfile into place. If the destination
+> file then goes away, we can't do the collision check. But is it right to
+> quietly return success?
 >
-> I hereby announce that Git for Windows 2.48.0-rc1 is available from:
+> If the contents of the two were the same, that's fine. We don't need the
+> extra copy.
 >
->     https://github.com/git-for-windows/git/releases/tag/v2.48.0-rc1.windows.1
+> But if the contents were not the same, we'd prefer either to actually
+> copy the contents into place, or to return an error.
 >
-> Changes since Git for Windows v2.47.1 (November 25th 2024)
+> Of course we can't know, because the destination file has gone away. In
+> the common case they will be the same, but the whole point of this check
+> is to allow loosening the cryptographic collision of the packfile
+> contents. So the safest thing would be to retain the tempfile, copying
+> it into the destination file. That errs on the side of keeping data when
+> we cannot make a determination.
 >
-> New Features
->
->   * Comes with Git v2.48.0-rc1.
->   * Comes with cURL v8.11.1.
->   * Comes with MinTTY v3.7.7.
->   * Comes with the MSYS2 runtime (Git for Windows flavor) based on
->     Cygwin v3.5.5.
->
-> Bug Fixes
->
->   * The installer now correctly blocks the installation on Windows 7
->     and Windows 8 as these versions of Windows are no longer supported
->     since Git for Windows v2.47.0
->
-> Git-2.48.0-rc1-64-bit.exe | 205d78a134419d8c4cae8a8287f3cd43df1577e3548f9aa298023c95bbafec2b
-> Git-2.48.0-rc1-32-bit.exe | a0333a4a5f4f91aa91587efc0b2171940059445c39dde54284f320eec0b3975b
-> PortableGit-2.48.0-rc1-64-bit.7z.exe | 4547c8db412d7a1b840074701e16354458181a54b7eff838eec3ba3023e079ea
-> PortableGit-2.48.0-rc1-32-bit.7z.exe | 6fd50d8726793006d1961fd9d03c1cfc94a4994f78bacfd835c1ab58f1d5b56c
-> MinGit-2.48.0-rc1-64-bit.zip | 139255b6f7cdd14c696da58e17bd3284cd7f0975fb7c45f20f8cfca8115acdd2
-> MinGit-2.48.0-rc1-32-bit.zip | ea5eb4332d51455dd5850c9a4a265d158b8a7bd8d9d280a0bc7c485d4e77dcc5
-> MinGit-2.48.0-rc1-busybox-64-bit.zip | 769206ce840d18ad1d6185ba2fb56c8593aebfbb9a26aae9850dbd35b35a2a6b
-> MinGit-2.48.0-rc1-busybox-32-bit.zip | 92a16a3b491ba4c6c6f68d30ba29360bb75db014a834c8947cd543d427be784e
-> Git-2.48.0-rc1-64-bit.tar.bz2 | 399e604024fc3c3c476aea8d817c39a31d509c82741379a5c7cd49b50ba75b42
-> Git-2.48.0-rc1-32-bit.tar.bz2 | e055a18ac811ac77a6372eefe1833dacc91a0add9c8cd2d971b22a226a30f0b4
-> Git-2.48.0-rc1-arm64.tar.bz2 | f37ce1adbd91c195cf333f8713ae7964dbf169b1de5882353e03b727f4ec8e79
-> Git-2.48.0-rc1-arm64.exe | dcbf2a6ff870d498ae8aeb53c0d173a393ce6d7218bd6daa7ce2c416b78b743b
-> MinGit-2.48.0-rc1-arm64.zip | 8f56c87ceb5c5b41a5690554fe091b8b9aa08748bb20c39e933b0a2c8546ef01
-> PortableGit-2.48.0-rc1-arm64.7z.exe | 594ab37e5e378efb30a97796fa38f3a5d833f82da223d4056e596f311270fe21
+> IOW, if we see ENOENT on filename_b, should we then loop back in the
+> caller to try the link() again?
 
-Thanks, Dscho (and a happy new year ;-).
+Yuck, I think you're absolutely right.
+
+> I think check_collision() is used _after_ the attempt to rename() into
+> place. So there's a race when the tempfile goes away, but I think the
+> outcome is made a bit worse by your patch.
+>
+> Consider a sequence like this:
+>
+>   a. Process A writes tmp_pack_foo.
+>
+>   b. Process A tries to link tmp_pack_foo to pack-<hash> but finds it
+>      already exists.
+>
+>   c. Process A opens both tmp_pack_foo and pack-<hash>.
+>
+>   d. Process A compares the two byte-for-byte, and then returns
+>      success/failure based on whether they were actually identical.
+>
+> Now imagine there is a process B that deletes the file (maybe an
+> over-zealous "gc --prune=now" deletes the in-use temporary file):
+>
+>  - if process B deletes it between steps (a) and (b), process A returns
+>    an error (there is nothing to link). The caller knows that the data
+>    was not stored.
+>
+>  - if process B deletes it between (b) and (c), then before your patch
+>    we see an error (because we can't compare the files). After your
+>    patch, we continue on and return success. The caller knows the data
+>    was stored (via the original file, not our new copy).
+>
+>  - if process B deletes it between (c) and (d), then process A has no
+>    idea. But at this point it does not matter. If the files were
+>    identical, we return success (and in fact, process A deletes the file
+>    itself). And if not identical, then we return error, and the callers
+>    knows the data was not stored.
+>
+> So even though the exact behavior may depend on where we hit the race, I
+> think ignoring an ENOENT open() error on the tempfile meaningfully
+> changes what happens in the middle case.
+>
+> In practice I don't really expect this to happen, and "gc --prune=now"
+> is inherently risky in a live repository. But I think we're probably
+> better off to continue treating it as an error if we can't open our own
+> tempfile.
+
+So we'd ignore the racy and flaky tests, as hiding the flake by
+ignoring the error would only hurt the real world users.
+
