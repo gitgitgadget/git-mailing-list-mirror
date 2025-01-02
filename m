@@ -1,81 +1,112 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from flow-a7-smtp.messagingengine.com (flow-a7-smtp.messagingengine.com [103.168.172.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FB93FE4
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 12:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C011B3958
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 13:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735820256; cv=none; b=lEg3QBn6iZn4flLXqKcbARZ177t3sW+6jO15uz3qGwEsv+t5zYBuZ14HAnZV8zQPbbXJNSoZQ1pNS7gdLime02KRpyyHn0BLHwR4VzTFhNeQJ31hsJxYh/SsoTTrZU+gEWN6jEw+Rxv9qCJiWzO5mp5vPYrXFk4PDqdDYY3KEM0=
+	t=1735822830; cv=none; b=Fcqp2VWn3Bbkm0StiVFwH/wTBjK79+S9W8NAHkwA0MbhcKouJkuAZyaSTkz/7tw+NJ/ImIRaWGCU2YeKFzo2T499A21qNUAgUFBwju/jeXPCry5yWRZaCSL8PjycE8otUCmjdUi+zo8IfwQrVOMPW0vERVOrY417YRx+MYWyNcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735820256; c=relaxed/simple;
-	bh=n7PIMdDUox41u807sw/HF4ZWooVrzRJ3Kv52wQm9QxA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=c/vf0bB80dwKzPlnfkhO3g4ZfrFIfSMmp3AvE2qjSe43WHeYPBi70zg8fTENCkFgX0EX1ev6bqi+Pe/VJgM9NMTmATOX4LOXyOPguejJukbizF4YjaHf0KFrQBgEqK5n2JD/9gi+mioQST0gyvJDRVEAroWoTuqJTSvKH1bFWG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d9v2FRVm; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735822830; c=relaxed/simple;
+	bh=LNuaUgR1m/FjAYIB/6TkG5lzUudkJkOcl/CHIQ2pRz0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=ZlYmiKp37cnVHNLAsMkKwgTyUpwMJSXrniE5X1wBqqLEM1lwtZY+YVbIIcUpavuUH0B17Pqx1fCEDnoQzIgYE/1itiLO25Bn8XL3AzyaZMP49Hbf1a4jXyC6nJGwRtFv5A4Y3r9Vh3WWp56A+PQ34VM5y6F8Rvs23VlUhOY2IbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=IL5Na9T5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yW6oTl8r; arc=none smtp.client-ip=103.168.172.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d9v2FRVm"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-71e2766994bso5822617a34.3
-        for <git@vger.kernel.org>; Thu, 02 Jan 2025 04:17:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735820253; x=1736425053; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=I4wNNsgPLq3ibBiBv5MdibYjyL79STySLJCH2aSMM/c=;
-        b=d9v2FRVmmfuk/VanvkODEPIVGuuMakia3qplal3yNpyUFKt8I1xVid6yoHv6cqCBJf
-         nYKr9569TM3I5hLiH54OGQH1dGCyZrsNGE5J45ArHNDWYUaa/xulg2brfnZTDbo4HZRO
-         h2S9sgvzZDl6hmI0eVAMr2xYNU7LzNrPsbUAIMMG8oWg7dTeiiKh2AY4avq/WUJLqaLl
-         rbe5sathzTXnr0lw7pytRe0VeWLkxjUEOI3w4ozLDkbaL97iyAcM0TPZ8bi64xM8vHHz
-         YZX9K5M6nxTiRVfmdR13q8PRzjQUGUjeqk9iKF9QaKkI7BGSvceKMFYkLstp6e81j6+8
-         QERw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735820253; x=1736425053;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I4wNNsgPLq3ibBiBv5MdibYjyL79STySLJCH2aSMM/c=;
-        b=w58GSqCAMxfiLsDCxQU7UU/73OEz8/AqLpSaVU5Fj1w3oKMKj6fbzcT4mpWFZfYrUe
-         hf2MmoxS5JCdp9UMj4NtSGBeX9CLYE8UkAoCCxvTTD2TZClGl1Y62TIOl3QBKDga8ADj
-         ddwMEyUdFefapYjCrAlv5XBXOKQKH26+YwUodCs67dgHVi2ZuHy877rDMXC6rerPR17/
-         eVvCE8XISoybbJRheyqWOlqOSi1r1QYfdapY2vbyq9n8dKoQ1T5heaP97dvHiY/1ibf5
-         kPma74jEuuMbMPToPrPCIawDrXyRswlbulhTzQNA7LZRoDThj7rzEHsUequAAswA7Q0L
-         1Otg==
-X-Gm-Message-State: AOJu0Yz4AE9Ty04mlPQAQzawodidshWT8DXc3bIbY8Dp/pWyiNVZrsBJ
-	QCd9aUCmARHx4p9MeJqkdApQhOLJM4iftJG9LBaO4IFoXjMfdGaJ15x7YXM52r1i19ofFs22Wh1
-	vuhR2LrLWHW/HQ/BvBbWbl6lpAiOSghMa
-X-Gm-Gg: ASbGnctdhMUZDJt6XvQep5+O5CzaE1gGmi1rDRBiWbJX6J6fYSYMvP+xZweTLTJfkyS
-	z5yZ2tWOe+MBVWbEtFjMoCC5ILZbfK+ZYBXuJyQ==
-X-Google-Smtp-Source: AGHT+IFBiCDjMujCP7lxnHX9weK7GT78pzg1u6+QSkmSJ+XU9XJhNqe8gvHyyM8kNgQZSQ6geW0r503W3WMCyKrM8hc=
-X-Received: by 2002:a05:6870:430d:b0:29e:8485:197b with SMTP id
- 586e51a60fabf-2a7fb00afd6mr24861376fac.2.1735820253551; Thu, 02 Jan 2025
- 04:17:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="IL5Na9T5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yW6oTl8r"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailflow.phl.internal (Postfix) with ESMTP id A08B3200943;
+	Thu,  2 Jan 2025 08:00:24 -0500 (EST)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-01.internal (MEProxy); Thu, 02 Jan 2025 08:00:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1735822824;
+	 x=1735826424; bh=MDpA4ox8lY5Phy2Hx/gs0/rKfnNMVqmMPHDuOPGLv3k=; b=
+	IL5Na9T5FYPjIvp5LokykVbhqiFgvYYOn432WhZDywNM+foQHQX1/HUUIcRxH+8a
+	8fWPF7VmXlH9xl2k4PoP3WGok5o2VBaUKKeqF0RdibYgp1E+a4G6TcT7KQYt22Rl
+	308dD1VT8Evk+jDJ5/V0glIEYv5ltdi3Jt3nnZ5hK1KBSPUV2Yspnwz4oOZHe1jY
+	IiA9TvzozaodpizusnHY88ooL43WFWZHi3eHl7thGy7aCcmNFmxaxZQ3UoFhW1vk
+	ZdSo7G+pCi1vBRgZxjOBp+/btx7QsOsYZ4xMAIzEhCDHu1CUxtdAhTwjkal9OB1R
+	D+9BZLdNn5Ug7n/gqMjLsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1735822824; x=1735826424; bh=M
+	DpA4ox8lY5Phy2Hx/gs0/rKfnNMVqmMPHDuOPGLv3k=; b=yW6oTl8r3kwnXA4AG
+	fmJf3j4w/ZRzK6Pzcgh5ynwTKF1mgMibK3/bvTV6DCvku2qY2qphBTtXdFji8kgt
+	RlQogJwYjpVIoE3MEkmOlNu2gs3juHzGXB8ZAwNF9isjk47RBEfoWJs1k1aAGXcB
+	qu9yknVPYKpnJDQlss3N5RcSiA3CWdDuZRHyXR/pop0DWs3esIOKED3Q8hxc+KRN
+	NO4B7QqsWenIiQWCWXFDmXlS3WJJV1mNCAoW+6f4jkO7Kpb98xqiA70D0GDl8/sV
+	C51Yir7MpXRx6lqtYaknBssvC6DeR3HJPS8Qi63fchwVYpRuYfZ5gke9RBIBcVae
+	MnyZQ==
+X-ME-Sender: <xms:6I12Z8-65pACsqD4ZvPgLYuqFOqB16gbdO6dhFiWjyw3M3Luiloh4A>
+    <xme:6I12Z0ug3f60NymKMPagenhrsSXAyBkA2H12LqB4A-yLXyxGEwPAZZ4ohgqe92xzy
+    MUUXM91XHf8LkFIAQ8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefvddggeekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofgggfgtfffkuffhvffofhgjsehtqhertdertdej
+    necuhfhrohhmpeforghtvmhjucevvghplhcuoehmtggvphhlsegtvghplhdrvghuqeenuc
+    ggtffrrghtthgvrhhnpeehjeffffetleefhfelgfefiedtvefggfeiudejleeugeekheeu
+    vdetfeduffevhfenucffohhmrghinheptggvphhlohhvihdrtgiinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgtvghplhestggvphhlrdgv
+    uhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephh
+    honhhghihirdiihhgrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:6I12ZyD65GjDlJru_BkyBWT1oGtT_zuV6P3lRVDLOktx6f5_3bcYsw>
+    <xmx:6I12Z8ermvwjnmqksIUmsXKEl7NxUXms2zRF94dKKDXhaxGKgxu1iQ>
+    <xmx:6I12ZxOy560UQSEwkH_UvOlG4fIESTNm6KGa0cklAs-nfVFXcmfVTQ>
+    <xmx:6I12Z2mADloObTyQR5e6DsgQGtnfsTLgMxJb5-RT6I9iSA3SD2lNOA>
+    <xmx:6I12Z3YQABlv0vtfBquIIOczDtqMVhdX5xM-0G9ayIUa_E-rfCHMSO76>
+Feedback-ID: i8c5e488c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 265E7B0006A; Thu,  2 Jan 2025 08:00:24 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: Andy Koppe <andy.koppe@gmail.com>
-Date: Thu, 2 Jan 2025 12:17:22 +0000
-Message-ID: <CAHWeT-boK3x6mup11boEinNDQiAxxf0vwvZkxsGRc_GRvXYA8g@mail.gmail.com>
-Subject: meson-test syntax error
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 02 Jan 2025 14:00:23 +0100
+Message-Id: <D6RLU4BY374I.GQY9MLMV1AZJ@cepl.eu>
+Subject: Re: Change the grep command called by git with alternative tools,
+ such as ug.
+From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+To: "Hongyi Zhao" <hongyi.zhao@gmail.com>, "Git List" <git@vger.kernel.org>
+X-Mailer: aerc 0.18.2
+References: <CAGP6POJX9GFsNkgGd7o9Pr-tFoz0sgRk51vVG4P0Kn1DPZe+3Q@mail.gmail.com>
+In-Reply-To: <CAGP6POJX9GFsNkgGd7o9Pr-tFoz0sgRk51vVG4P0Kn1DPZe+3Q@mail.gmail.com>
 
-The new meson-test rule in t/Makefile causes a syntax error when the
-default shell does not support non-standard process substitution:
+On Thu Jan 2, 2025 at 12:49 PM CET, Hongyi Zhao wrote:
+> $ git grep -i jobflow
+>
+> I tried to replace grep with ug, but failed as follows:
 
-  make[1]: Entering directory '/src/git/t'
-  rm -f -r 'test-results'
-  /bin/sh: 10: Syntax error: "(" unexpected
-  make[1]: *** [Makefile:119: check-meson] Error 2
+AFAIK, git grep doesn=E2=80=99t use external grep(1) binary on its
+own, but rather it uses its own (and slightly different)
+algorithm. Certainly, calling git-ug (or git-rg) will do
+absolutely nothing as long as you have no git-ug binary in your
+$PATH.
 
-Due to this line:
+Best,
 
-  diff -u <(echo "$$meson_tests") <(echo "$$actual_tests");
+Mat=C4=9Bj
 
-This can of course be worked around with 'make test SHELL=/bin/bash',
-but is that expected?
+--=20
+http://matej.ceplovi.cz/blog/, @mcepl@en.osm.town
+GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
+=20
+When God put a calling on your life, He already factored in your
+stupidity.
+  -- Unknown, mentioned in a sermon
 
-Kind regards,
-Andy
