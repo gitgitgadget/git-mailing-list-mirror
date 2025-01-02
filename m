@@ -1,104 +1,127 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FF819D898
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 15:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C7D79D2
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 15:39:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735832274; cv=none; b=YAR+zyB5tRDTDAQa20a9jp+clqbU8UO0nw8+r7W5OIXDCp+3x1hKnky8szyky2iaFtYspenyZ9qeMKA4Up1phdZqvyaXQL1CbAi7J+NECpe47HPIH+jLjFGo1Q3RcEdhb/J1bxbpFCatZvYbieOuN82GjHqT5BgyjOTRpZkKMvs=
+	t=1735832400; cv=none; b=kNTK5R8yH8UZ3qInfwYmNuv65mtHAUMlLmNKOVxSj1ym6YfGOhWeu3VY4LlUgyYyQA6RubCVD63pvAzQOLb5q3YRnKvi4DrQhe5PSFWpxokhujHoarn8Qk16vx0DNdanmIbR5Au9pxwEnu9ZsETRuW4RmEstwNqXacKc519KrT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735832274; c=relaxed/simple;
-	bh=DjnRCkx/wi75n3wrxSEj5NJrkWL4TuRfxJA89eDmmjI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k4sEZpOktFgT4K2uzywHf+aRYLSbt7jopwYxm7nMO0HXA1Y3wZcMPl/zZ4d8l0CzU/3lVaAsPxHPT6p3lfEmoGr/NU3TzndrDPdvoZ6fH7sHJqW7b/TT3nVXJIoFCQZzNy63DglZaToqoIuQeYpda+bcF7aRoERsjUDi7mQiKvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ikGl3wU7; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735832400; c=relaxed/simple;
+	bh=xFBTGHQuPyWYtH7s/WW3KPwOCXuLn7Ab5z1CDnpJUKs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BihtRYUk5ufwYlsXIBEHuHFUjS2tpe5LLLp+vi0FDWUL5287uMMbpqZ0VwcQYQIH1+cKolysh5assirD7av8BDFBCLHRktmeR+YTzID4b+0/IdZKCWK0qItQYCOV825VflJd4WU3/XY6zctx1RIiR0o81OoZzzsjMXmZHuzMqwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0DJbvlfp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z5MDhyWb; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikGl3wU7"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2f42992f608so12631428a91.0
-        for <git@vger.kernel.org>; Thu, 02 Jan 2025 07:37:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735832272; x=1736437072; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4/bkri4I0kk65aXs30r8FhJGuR/9/bY5ZPTMh41OfT8=;
-        b=ikGl3wU7Z/OKDPC8aCPbTcTRDcDC7413zA68vnYkHK+wgXhWgmOiwP39HY+nZ+fhUJ
-         ZZKpCI31iKiwt+KyLHebORJfnG1NB46qSCzcTGQmVYStMOK+KPe4Fn10nHligG2ndMea
-         EkZtz2SymP1xE5tAO7abaHgZnXZbQ48KP7F6ummEUpTDD4EuZnPplTE2OMdVys24hQOT
-         yNMp6p0rKkfscey9PGhErm/PbUXlH0u+BbUxDbtiJhNWB7nIoZPPAJ2fgNfaddVykd4/
-         ksj7QNenvK5F4talA04w8fsVjwfGA9hlNhe63NugGoE5oHpQYVC6B+eNv8nzioW4dXOX
-         Mz/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735832272; x=1736437072;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4/bkri4I0kk65aXs30r8FhJGuR/9/bY5ZPTMh41OfT8=;
-        b=iZCVC0VWDFXpnvDGmCsrTHaajixvLUs41oxtrNlHcd3l/H3lQEItlreGPGSUeJ6OiA
-         UDht0Rf3diQFZgEvhKHaZAfqWNmulitv4XBcqvbah+6UolkqXMyGTRpTBpVg63iu8F2G
-         maLnjYIpwaCJAO55Q7BpY2XOvEZBNqvCLCipj28qJCQfKpT9m88gaLEZVJW7dQgdkIgo
-         Zyg2IaLBLUb8opiy01cEsrd5LuGG2gvpe2E6ws1VsIC79EQbwqCVcTm/yUW6kDChZlBZ
-         DBJXsM+cWAZWY2NTES8YcTnHhnkUHbe+K+2e6nSCyzhygb8Bmjo3WQKQVCpuTeTjxeWB
-         dQ/Q==
-X-Gm-Message-State: AOJu0YzdlyD4akbA7cxPaqHelDdlBiDsD5F7fsWFaio/4QbUGtbUNHx2
-	dYVkf6UPR2oZl4g15HU0dW+ISLDBY+L0ivL1gCjBr5k77ZmFc4W5/PJRrdGz
-X-Gm-Gg: ASbGncvQi/3VsHmI2aYr0qGYBv7qFaRp9J0JAeKNTDr6wpiT6BKXKj5+RAc6Mw5iYar
-	m+/kwmYgPk1RIk72gcJWuB75jRHtN9PYGgDI9qXFw++cLI7h3NiG4a17Z/E3WSY5SilKsnmylam
-	NxqzgnIUnJt7TDNSdfdp2v7e1KkgeSEouhPqw15ilWdHJy3F9qYhbuZYvuzGmAnle4nhVx0wbIE
-	7xwcxIf20iXwTrWSp/n8VL/14QzTmQwj1CxeTnmHWfCHie96EMqexvYzBZaWaXRhyRLAUHkklnG
-	OuQexqJ7lwPg5Ku3pQ==
-X-Google-Smtp-Source: AGHT+IFCyhfusuyW7z5w3OF+p4ZE4uN3K4urYxbhPTD8ogEJgTcTvVgUDYNHwNqVE10uR+zepwH64A==
-X-Received: by 2002:a17:90b:5251:b0:2ee:9b09:7d3d with SMTP id 98e67ed59e1d1-2f452e4cf19mr69246141a91.19.1735832271965;
-        Thu, 02 Jan 2025 07:37:51 -0800 (PST)
-Received: from google.com (56.166.125.34.bc.googleusercontent.com. [34.125.166.56])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f4fe30f5f3sm1914595a91.47.2025.01.02.07.37.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Jan 2025 07:37:51 -0800 (PST)
-Date: Thu, 2 Jan 2025 16:37:49 +0100
-From: Jonathan Nieder <jrnieder@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>,
-	Andy Koppe <andy.koppe@gmail.com>
-Subject: Re: [PATCH v2 11/12] t/Makefile: make "check-meson" work with Dash
-Message-ID: <Z3ayzUEfW1xd4Up0@google.com>
-References: <20241227-b4-pks-meson-docs-v2-0-f61e63edbfa1@pks.im>
- <20241227-b4-pks-meson-docs-v2-11-f61e63edbfa1@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0DJbvlfp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z5MDhyWb"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 943FB11400B6;
+	Thu,  2 Jan 2025 10:39:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 02 Jan 2025 10:39:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1735832396; x=1735918796; bh=wPWGy006Yp
+	EJ9zquzQt8MYcDMbkb2iKF0FF3eURp4uU=; b=0DJbvlfpmei3wBoE0DZH5U7Il6
+	z+0cJqMwsdln8MykZlE4uwIy3i3RmHy1UPbvTIy2kOL9q9oGZxKDdLjGrhE1gykO
+	4DFPVZ2qxVoZN41QnQsKIBNt+SpJuAT1cLbVNTD534FFCqHO2vQKGQQJQQ+KUJU9
+	gH61laqwjnuL4dS1wXjctELJy9VUD6JcfaPhV9g+yXY8dVgYjBJDt21Bd6zY4LGG
+	e5ITGe2fSvkrmHTHyZie+MnTmea+/A9IZQVtQM7WudS4MJkJdQpjBJ/dOQ9/2USP
+	VdzR3hjPbb6D+lES9LT1WP1RYkhdh66Vr6w6/fEO3sFWnSAdz23v4MuCpHDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735832396; x=1735918796; bh=wPWGy006YpEJ9zquzQt8MYcDMbkb2iKF0FF
+	3eURp4uU=; b=Z5MDhyWbZAE8sEoCSmTI3/2urRSSZpLKn5kiWUEzLu6WQTmhEaW
+	69rwiLZf8VnCKwWLGUm8nofxObOES3c8M9mXDeS4QxNwhieJtnkxKXwpmxIhyoa+
+	/425ErjVAFR0b9ONduW16HycZBOGsEPSEkAHSkVQ9w6ItMLL/YwqJ++PvLt14Nel
+	7NtJUEcLJECf2Pu2s29qb7ndM+cdKc1vPh2u/McflQWSfbklQVpk+K13ROM8bdR1
+	9NNHvceYS/OjhnB7mdYCRlNvtcR4hXFB9HxLI4xblFf+6K8KlWZ1NED24VQwVihh
+	4wlxd+ERZknC2WFlxFai4QUGgzg/xRxiIxg==
+X-ME-Sender: <xms:TLN2Z5k1lDVfmzCD1NYHTSePDMlTDiQtB7FMu4ucbbo6PYKJtRacCA>
+    <xme:TLN2Z01kRFfAmcHO2FTWxjLEWjVWwuR6Ya-eFZO3_YTnW745dVxKdnY7DPW3slwuj
+    6oeU0dFUaNJtSKjrA>
+X-ME-Received: <xmr:TLN2Z_o6mM7YNiRkq0ak9iXaUurG0X41aNpjsFTKI4EmOPpyO7aExHpdYdMF8V6RWHRhh-XQej2zWstAJD33gIqp49KJf6KUpA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefvddgjeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehjrhhnihgvuggvrhesghhmrghilhdrtghomhdprhgtphhtthho
+    pegrnhguhidrkhhophhpvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TLN2Z5kkKStOAumSAJZe8R7VvCc4k6-hcI8w72qxDT8a6ANzhdFrQQ>
+    <xmx:TLN2Z33Ptf6tp2GJum2sbDV8VB9zT5Al8hETT8x2hVKaJ5kMRI16NQ>
+    <xmx:TLN2Z4tC9vk5JdfiZ_E9BQG5Y3S2-FH4EBOnuNXBgCRj57895oR_cQ>
+    <xmx:TLN2Z7XIZAJJiVJ-Y0Ru3i4bE_3lHpuxIxP3m3hkwqESInu8mzc3DQ>
+    <xmx:TLN2Z3_CqyNuLHlMUbEXow1so7y2jjXF-zQS8sGOsxbQrJYG1z_0BIaA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Jan 2025 10:39:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: meson-test syntax error
+In-Reply-To: <Z3avRmaMr70FOs8A@google.com> (Jonathan Nieder's message of "Thu,
+	2 Jan 2025 16:22:46 +0100")
+References: <CAHWeT-boK3x6mup11boEinNDQiAxxf0vwvZkxsGRc_GRvXYA8g@mail.gmail.com>
+	<Z3ah2YQSx4ZreBpK@google.com> <xmqq5xmxwabj.fsf@gitster.g>
+	<Z3avRmaMr70FOs8A@google.com>
+Date: Thu, 02 Jan 2025 07:39:54 -0800
+Message-ID: <xmqqr05lusvp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241227-b4-pks-meson-docs-v2-11-f61e63edbfa1@pks.im>
+Content-Type: text/plain
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Patrick Steinhardt wrote:
-
-> The "check-meson" target uses process substitution to check whether
-> extracted contents from "meson.build" match expected contents. Process
-> substitution is unportable though and thus the target will fail when
-> using for example Dash.
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>> Andy Koppe wrote:
 >
-> Fix this by writing data into a temporary directory.
+>>>>   make[1]: Entering directory '/src/git/t'
+>>>>   rm -f -r 'test-results'
+>>>>   /bin/sh: 10: Syntax error: "(" unexpected
+>>>>   make[1]: *** [Makefile:119: check-meson] Error 2
+>>>>
+>>>> Due to this line:
+>>>>
+>>>>   diff -u <(echo "$$meson_tests") <(echo "$$actual_tests");
+> [...]
+>>> I ran into the same today.  Let's discuss in the review thread
+>>> (https://lore.kernel.org/git/20241213-pks-meson-ci-v2-5-634affccc694@pks.im/).
+>>
+>> Probably this one?
+>>
+>> <20241227-b4-pks-meson-docs-v2-11-f61e63edbfa1@pks.im>
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/.gitignore |  1 +
->  t/Makefile   | 12 +++++++-----
->  2 files changed, 8 insertions(+), 5 deletions(-)
+> Ah, yes, that's the one I mean.  Sorry for the noise.
 
-Without this, I get the error described in
-https://lore.kernel.org/git/CAHWeT-boK3x6mup11boEinNDQiAxxf0vwvZkxsGRc_GRvXYA8g@mail.gmail.com/
-('/bin/sh: 10: Syntax error: "(" unexpected'), and with this, the
-build in the Debian buildd environment succeeds.
+Sorry for being extra sloppy on this one.  A patch like that with
+blatant bash-ism shouldn't have slipped the review process.
 
-Tested-by: Jonathan Nieder <jrnieder@gmail.com>
+One thing I had trouble with is that, with /bin/sh linked to
+/bin/bash, none of these
 
-Thanks for fixing it.
+    $ SHELL=/bin/dash make test
+    $ cd t && SHELL=/bin/dash make test
+    $ cd t && SHELL=/bin/dash make check-meson
 
-Sincerely,
-Jonathan
+seem to fail for me.
