@@ -1,206 +1,101 @@
-Received: from mail-10697.protonmail.ch (mail-10697.protonmail.ch [79.135.106.97])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10831B414E
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 15:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.97
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CD516C687
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 15:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735830967; cv=none; b=lUMyYR5cdjCKTB0ZK2Nd2Xlv8OA0vvo9V5Y4Kv8ZjcgHhPszwaX7S3CM1zevF7M5o1Tj7WrZXu/exB34ME9XYoo/Jw7tKgP14eLuGbiztgUDQnsPTYipsUX/tmQS8rQxZpzRMHPUgpqjXMz9lyltvUkZLKtjp/zBmGCMgpE+O0M=
+	t=1735831376; cv=none; b=BzrVjTwiLt37/UdzDLuhaoRpXUJrH1nuhkW/6Nh2mSTQEWBL2Qe/mmPK9oO9Sxdsb9ZhqDvMxX5f3cPICjK//H5MBN8i5TrIaziuncPJ4KUzt5MgHG4icKJFHLEw07F2jCXGMEdAqqtgfi+lg9dEFZ7Z9lB34ciBD7Y0u+f5JLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735830967; c=relaxed/simple;
-	bh=u/UImrs09NzoP1HsHcXiGnDm8/3dyjLTAg4VRMxq/xg=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=rZlTodjrqMuDyM5VEnhIR4E/30NuVVWcN9RNPPEJAnUELe83EE9Ewu7kaRjS/kf7nkivFf/NHqG1YRN5M0joy7cUsOARptA+vXkFWP0HiuiQDjWt6szhs27Wf+rGfuP0+sAJ88R+A9JWKqhoLbC3Dumi2bKGYnbC187kG8anpXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Lhv2vck3; arc=none smtp.client-ip=79.135.106.97
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1735831376; c=relaxed/simple;
+	bh=MyO+f841HQJ9YMz49KSmdUM2/s/ImuwDV/96Iig1+Sg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Sd3EVlwDLEaDwkC7VBPte2D3ii2/J27XZNp1E0ohBrJi7b6Cq8erBFUloASH7X01DDNGUTsS0vJggC5swEPd+pupTd6nJejfxuqPZpM4/TYv12Sz8qM9SYjZPrHtsRi7+7QWjKcGAps46yn+Dd0DLeASIQawc+I1DsAR2UUrAcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iabcirpB; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Lhv2vck3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1735830955; x=1736090155;
-	bh=hzwX0qyt6jHc8KDPRr2915MkTSjuEeGovVbA1AcsWA4=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=Lhv2vck3XJNNsgpgAvhee1W7xrag/F5N1Fhq7TpYa5aTEqcuc7kUlnlGSztWxc49N
-	 x1V8U7IFbnsS/YtcxH7fU2KpjeJwWaA1bCrt4KaOzVxag0R4tdmAhK4GKFaLGLM+HB
-	 E7qoln8KGcBtjlzFsR2jVIdgUR2W0bcV17y3Wv98tvkRsdiEEfhVFjXPMCrLQib04r
-	 /tr+RLeDqipj/fiQ/beN65+OVDfYdW86SRwCAA2n2dxPSoau0Bx2hX7CglwoYiFzeZ
-	 Xu1c3a0czjkGuTH0kiou0SEQbMApdDUXzzZhHip+EYQN89Cw2FzMH/hjl8jzI2Mzsj
-	 MPoyCBuOaCxAA==
-Date: Thu, 02 Jan 2025 15:15:50 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Sarah Gastner <gastner2001@protonmail.com>
-Subject: git log date filter bug
-Message-ID: <gEmXX5Orp18U4lUPlWeCKoepi91ih8VkreogEnepOIzTOihbf_iNuXqvdhFcgnIpRabnUscWIKf_GH04iI5NeVpdWjbHnPIPa6ZAtkfITk0=@protonmail.com>
-Feedback-ID: 61900280:user:proton
-X-Pm-Message-ID: f979efacba19a3b15c238722145f821402d21645
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iabcirpB"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2162c0f6a39so163759825ad.0
+        for <git@vger.kernel.org>; Thu, 02 Jan 2025 07:22:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735831374; x=1736436174; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ODqmK+c9P95028+BgwzWs1VOYRQ9WLoqQDOMB28JNdY=;
+        b=iabcirpBSKOYhQqUE0uaDLExbURn/oykisvNNQp3wlAJqm/egKrLsBSfvpQ7lmPtmO
+         6tlBG6KmkYdo5oz++XIIDsvYY/sKpZNK7lwteMWlmTNEt1qDNlxl2XTFNPGhObH//6G6
+         G7TXIMKBCQq2SYqEblasi0UB2sYk29opAoMBYVOYdtw4MIGwKYwdE5WTyayMyFnsuGOw
+         86nlCOP/3J3Omniyase375xQrSHcb+155ZvVE0mtuUTR8sM2Ws8cuX0Lv3oiMFBHhs5C
+         TGyCdkqTlli1CosJMLzSvUMFSIhTfh+q1JY0+sGAvTg8gyf4aSriPt4hqByPyZ8bHuVv
+         t2tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735831374; x=1736436174;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ODqmK+c9P95028+BgwzWs1VOYRQ9WLoqQDOMB28JNdY=;
+        b=w4cKzvEqG+iOI8RBn6a+XYu87Hi9vrPTUsclbVi9RD8EHatA90RV7wXHtjR7nrDIr4
+         8Q1ehUH/DcxWwZAvZ8eUaXmgJgBzZdOG8lfgGW86Bf2Fe1IR6Oe5om6+HTdcjiDMVHjB
+         XI1v1meIqnTuVjFFZdMV17Ny9nozUii3GOzPVg0TgF3K9s1Koz1kKngzt6xSgGHAMVEe
+         520oMEXfkfIZcXwFbHw/UL/uN7Y0aWJ1uzYptUaom2ny3OfcPlmgAYumeirP5GJ0ocpb
+         ShWbZycLP0+PPF7EYFyUSnrS1YcdfZdH/Wn6RtdU7gebyj/4Jpm44UI7w3bi/kpxZTU4
+         9LBA==
+X-Forwarded-Encrypted: i=1; AJvYcCXDPN4J7T/wwAXNCXFgJI9wq4tLaF6nlnKrt0/uu46eEEOwKpnN8JwUfh2Ob3EVymJqA6M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkrloZNTl4M4ETwX3bUwi0s3vAjdkqcsPOfw+o5X6NY0n0/Fz5
+	WkSdZ6nrK81I6BhUTNhXITwU+zO7Wf8Bb6y0hv0BjIxRcIqRzyZW
+X-Gm-Gg: ASbGnctCINJdtoOUwtCHQ6lUjW9RREcIyNUEWN23NAmf22ZbIesusndEY8mjAcTsrDH
+	l7jUBIO8azHKr7PDVkOALApJp5vQFYUESKNmka1SgyR78e6OANCVXn1X8BoAgt00kQpKvNVWCGM
+	FLfOX3ArOIrCeNo9/RPQP8Z3m682bGZOD0SMh5kQEivmcZJfk1zG8CxdeHLRrA5BGtDf61gdOOx
+	8ppgGH/ZRneqca9wJKknlxMaoK0Mjqud5OyF1YKDBQzR5yCBeIHd++tHIp/j+NyJ+5InsZE0Xzh
+	2R4Ns4gxaelKDsUkYg==
+X-Google-Smtp-Source: AGHT+IE5VwtVXPOR8Q5OS1F11BItePE6q6keT3nx38Vs5QhEnv9bZaK+Lqugzf40NWGF65w+qeTcNQ==
+X-Received: by 2002:a05:6a21:6d96:b0:1d9:d5e:8297 with SMTP id adf61e73a8af0-1e5e1e269e1mr53474837637.6.1735831373859;
+        Thu, 02 Jan 2025 07:22:53 -0800 (PST)
+Received: from google.com (56.166.125.34.bc.googleusercontent.com. [34.125.166.56])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad90ba0asm24488593b3a.172.2025.01.02.07.22.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jan 2025 07:22:53 -0800 (PST)
+Date: Thu, 2 Jan 2025 16:22:46 +0100
+From: Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Andy Koppe <andy.koppe@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: meson-test syntax error
+Message-ID: <Z3avRmaMr70FOs8A@google.com>
+References: <CAHWeT-boK3x6mup11boEinNDQiAxxf0vwvZkxsGRc_GRvXYA8g@mail.gmail.com>
+ <Z3ah2YQSx4ZreBpK@google.com>
+ <xmqq5xmxwabj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5xmxwabj.fsf@gitster.g>
 
---b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Andy Koppe wrote:
 
-Good day,
+>>>   make[1]: Entering directory '/src/git/t'
+>>>   rm -f -r 'test-results'
+>>>   /bin/sh: 10: Syntax error: "(" unexpected
+>>>   make[1]: *** [Makefile:119: check-meson] Error 2
+>>>
+>>> Due to this line:
+>>>
+>>>   diff -u <(echo "$$meson_tests") <(echo "$$actual_tests");
+[...]
+>> I ran into the same today.  Let's discuss in the review thread
+>> (https://lore.kernel.org/git/20241213-pks-meson-ci-v2-5-634affccc694@pks.im/).
+>
+> Probably this one?
+>
+> <20241227-b4-pks-meson-docs-v2-11-f61e63edbfa1@pks.im>
 
-I encountered some weird behaviour that I think is a bug. I'll paste the bu=
-g report below and also attach it to this email.
+Ah, yes, that's the one I mean.  Sorry for the noise.
 
-Best regards
-
-Sarah Gastner
-
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-I used the command "git log --after=3D2023-03-10 before=3D2024-01-24" in th=
-e kubernetes repository (https://github.com/kubernetes/kubernetes), checked=
- out branch master (commit cb93d6ee69b8d4ca8701336e4f7cb278751f34e4).
-
-What did you expect to happen? (Expected behavior)
-The following commit (amongst others) to appear in the output:
-commit 501976cc34ed3bfea6e1c994d41cb9bc464d6c3b
-Author: Jiahui Feng <jhf@google.com>
-Date:   Mon Mar 13 14:40:47 2023 -0700
-
-    fix broken tests after dependency injection.
-
-What happened instead? (Actual behavior)
-The commit did not appear.
-
-What's different between what you expected and what actually happened?
-Both the author date and the commit date are 2023-03-13.=20
-The interval 2023-03-10 to 2024-01-24 should include this date and therefor=
-e this commit.
-
-Anything else you want to add:
-I was able to figure out the minimal date interval needed for this commit t=
-o appear: 2023-03-07 to 2023-03-14.
-The following command will only display the commit specified above: git log=
- --after=3D2023-03-07 --before=3D2023-03-14 --grep=3D"fix broken tests afte=
-r dependency injection."
-If you change the --after date to one day later (2023-03-08), there will be=
- no output.
-
-This issue appears in other repositories too.
-
-I observed this behaviour on Windows and WSL (Ubuntu).
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.47.1.windows.1
-cpu: x86_64
-built from commit: 2cd22437f64229935dc564db969cbcbfed5e9045
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.11.0
-OpenSSL: OpenSSL 3.2.3 3 Sep 2024
-zlib: 1.3.1
-uname: Windows 10.0 19045=20
-compiler info: gnuc: 14.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.ex=
-e
-
-
-[Enabled Hooks]
-
---b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg
-Content-Type: text/plain; name=git-bugreport-2025-01-02-1249.txt
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=git-bugreport-2025-01-02-1249.txt
-
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCkkgdXNlZCB0aGUgY29tbWFuZCAiZ2l0IGxvZyAtLWFmdGVyPTIw
-MjMtMDMtMTAgYmVmb3JlPTIwMjQtMDEtMjQiIGluIHRoZSBrdWJlcm5ldGVzIHJlcG9zaXRvcnkg
-KGh0dHBzOi8vZ2l0aHViLmNvbS9rdWJlcm5ldGVzL2t1YmVybmV0ZXMpLCBjaGVja2VkIG91dCBi
-cmFuY2ggbWFzdGVyIChjb21taXQgY2I5M2Q2ZWU2OWI4ZDRjYTg3MDEzMzZlNGY3Y2IyNzg3NTFm
-MzRlNCkuCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
-KQpUaGUgZm9sbG93aW5nIGNvbW1pdCAoYW1vbmdzdCBvdGhlcnMpIHRvIGFwcGVhciBpbiB0aGUg
-b3V0cHV0Ogpjb21taXQgNTAxOTc2Y2MzNGVkM2JmZWE2ZTFjOTk0ZDQxY2I5YmM0NjRkNmMzYgpB
-dXRob3I6IEppYWh1aSBGZW5nIDxqaGZAZ29vZ2xlLmNvbT4KRGF0ZTogICBNb24gTWFyIDEzIDE0
-OjQwOjQ3IDIwMjMgLTA3MDAKCiAgICBmaXggYnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kg
-aW5qZWN0aW9uLgoKV2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpUaGUg
-Y29tbWl0IGRpZCBub3QgYXBwZWFyLgoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91
-IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwpCb3RoIHRoZSBhdXRob3IgZGF0
-ZSBhbmQgdGhlIGNvbW1pdCBkYXRlIGFyZSAyMDIzLTAzLTEzLiAKVGhlIGludGVydmFsIDIwMjMt
-MDMtMTAgdG8gMjAyNC0wMS0yNCBzaG91bGQgaW5jbHVkZSB0aGlzIGRhdGUgYW5kIHRoZXJlZm9y
-ZSB0aGlzIGNvbW1pdC4KCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgpJIHdhcyBhYmxl
-IHRvIGZpZ3VyZSBvdXQgdGhlIG1pbmltYWwgZGF0ZSBpbnRlcnZhbCBuZWVkZWQgZm9yIHRoaXMg
-Y29tbWl0IHRvIGFwcGVhcjogMjAyMy0wMy0wNyB0byAyMDIzLTAzLTE0LgpUaGUgZm9sbG93aW5n
-IGNvbW1hbmQgd2lsbCBvbmx5IGRpc3BsYXkgdGhlIGNvbW1pdCBzcGVjaWZpZWQgYWJvdmU6IGdp
-dCBsb2cgLS1hZnRlcj0yMDIzLTAzLTA3IC0tYmVmb3JlPTIwMjMtMDMtMTQgLS1ncmVwPSJmaXgg
-YnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kgaW5qZWN0aW9uLiIKSWYgeW91IGNoYW5nZSB0
-aGUgLS1hZnRlciBkYXRlIHRvIG9uZSBkYXkgbGF0ZXIgKDIwMjMtMDMtMDgpLCB0aGVyZSB3aWxs
-IGJlIG5vIG91dHB1dC4KClRoaXMgaXNzdWUgYXBwZWFycyBpbiBvdGhlciByZXBvc2l0b3JpZXMg
-dG9vLgoKSSBvYnNlcnZlZCB0aGlzIGJlaGF2aW91ciBvbiBXaW5kb3dzIGFuZCBXU0wgKFVidW50
-dSkuCgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3Ug
-Y2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJ
-bmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40NS4xLndpbmRvd3MuMQpjcHU6IHg4Nl82
-NApidWlsdCBmcm9tIGNvbW1pdDogOTY1YjE2Nzk4ZGFiNjk2MmFkYTViMGQ4Y2YwZGNhNjhmMzg1
-YzQ0OApzaXplb2YtbG9uZzogNApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gK
-ZmVhdHVyZTogZnNtb25pdG9yLS1kYWVtb24KdW5hbWU6IFdpbmRvd3MgMTAuMCAxOTA0NSAKY29t
-cGlsZXIgaW5mbzogZ251YzogMTMuMgpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZh
-aWxhYmxlCiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IEM6XFByb2dyYW0g
-RmlsZXNcR2l0XHVzclxiaW5cYmFzaC5leGUKCgpbRW5hYmxlZCBIb29rc10K
-
---b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg
-Content-Type: text/plain; name=git-bugreport-2025-01-02-1249.txt
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=git-bugreport-2025-01-02-1249.txt
-
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCkkgdXNlZCB0aGUgY29tbWFuZCAiZ2l0IGxvZyAtLWFmdGVyPTIw
-MjMtMDMtMTAgYmVmb3JlPTIwMjQtMDEtMjQiIGluIHRoZSBrdWJlcm5ldGVzIHJlcG9zaXRvcnkg
-KGh0dHBzOi8vZ2l0aHViLmNvbS9rdWJlcm5ldGVzL2t1YmVybmV0ZXMpLCBjaGVja2VkIG91dCBi
-cmFuY2ggbWFzdGVyIChjb21taXQgY2I5M2Q2ZWU2OWI4ZDRjYTg3MDEzMzZlNGY3Y2IyNzg3NTFm
-MzRlNCkuCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
-KQpUaGUgZm9sbG93aW5nIGNvbW1pdCAoYW1vbmdzdCBvdGhlcnMpIHRvIGFwcGVhciBpbiB0aGUg
-b3V0cHV0Ogpjb21taXQgNTAxOTc2Y2MzNGVkM2JmZWE2ZTFjOTk0ZDQxY2I5YmM0NjRkNmMzYgpB
-dXRob3I6IEppYWh1aSBGZW5nIDxqaGZAZ29vZ2xlLmNvbT4KRGF0ZTogICBNb24gTWFyIDEzIDE0
-OjQwOjQ3IDIwMjMgLTA3MDAKCiAgICBmaXggYnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kg
-aW5qZWN0aW9uLgoKV2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpUaGUg
-Y29tbWl0IGRpZCBub3QgYXBwZWFyLgoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91
-IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwpCb3RoIHRoZSBhdXRob3IgZGF0
-ZSBhbmQgdGhlIGNvbW1pdCBkYXRlIGFyZSAyMDIzLTAzLTEzLiAKVGhlIGludGVydmFsIDIwMjMt
-MDMtMTAgdG8gMjAyNC0wMS0yNCBzaG91bGQgaW5jbHVkZSB0aGlzIGRhdGUgYW5kIHRoZXJlZm9y
-ZSB0aGlzIGNvbW1pdC4KCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgpJIHdhcyBhYmxl
-IHRvIGZpZ3VyZSBvdXQgdGhlIG1pbmltYWwgZGF0ZSBpbnRlcnZhbCBuZWVkZWQgZm9yIHRoaXMg
-Y29tbWl0IHRvIGFwcGVhcjogMjAyMy0wMy0wNyB0byAyMDIzLTAzLTE0LgpUaGUgZm9sbG93aW5n
-IGNvbW1hbmQgd2lsbCBvbmx5IGRpc3BsYXkgdGhlIGNvbW1pdCBzcGVjaWZpZWQgYWJvdmU6IGdp
-dCBsb2cgLS1hZnRlcj0yMDIzLTAzLTA3IC0tYmVmb3JlPTIwMjMtMDMtMTQgLS1ncmVwPSJmaXgg
-YnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kgaW5qZWN0aW9uLiIKSWYgeW91IGNoYW5nZSB0
-aGUgLS1hZnRlciBkYXRlIHRvIG9uZSBkYXkgbGF0ZXIgKDIwMjMtMDMtMDgpLCB0aGVyZSB3aWxs
-IGJlIG5vIG91dHB1dC4KClRoaXMgaXNzdWUgYXBwZWFycyBpbiBvdGhlciByZXBvc2l0b3JpZXMg
-dG9vLgoKSSBvYnNlcnZlZCB0aGlzIGJlaGF2aW91ciBvbiBXaW5kb3dzIGFuZCBXU0wgKFVidW50
-dSkuCgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3Ug
-Y2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJ
-bmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40Ny4xLndpbmRvd3MuMQpjcHU6IHg4Nl82
-NApidWlsdCBmcm9tIGNvbW1pdDogMmNkMjI0MzdmNjQyMjk5MzVkYzU2NGRiOTY5Y2JjYmZlZDVl
-OTA0NQpzaXplb2YtbG9uZzogNApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IEQ6L2dpdC1z
-ZGstNjQtYnVpbGQtaW5zdGFsbGVycy91c3IvYmluL3NoCmZlYXR1cmU6IGZzbW9uaXRvci0tZGFl
-bW9uCmxpYmN1cmw6IDguMTEuMApPcGVuU1NMOiBPcGVuU1NMIDMuMi4zIDMgU2VwIDIwMjQKemxp
-YjogMS4zLjEKdW5hbWU6IFdpbmRvd3MgMTAuMCAxOTA0NSAKY29tcGlsZXIgaW5mbzogZ251Yzog
-MTQuMgpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlCiRTSEVMTCAodHlw
-aWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IEM6XFByb2dyYW0gRmlsZXNcR2l0XHVzclxiaW5c
-YmFzaC5leGUKCgpbRW5hYmxlZCBIb29rc10K
-
---b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg--
-
+Jonathan
