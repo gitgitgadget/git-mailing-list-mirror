@@ -1,62 +1,96 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from s1.jo-so.de (s1.jo-so.de [37.221.195.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADE64C83
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 03:24:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CE5190477
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 09:46:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.221.195.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735788248; cv=none; b=EGHFgj3pg7hdElTSffrcx55wkb4KmM1+UYtd2adJq+3KsveEZesC+idVtLooftsWVx1Pa2sfpE8+liIuAA9nYrvIy65MydR8gtTwuBXhXNG8E9K+BcCtNGwPtUXdpgoL9+DulAk3X7XHFB/1qhZWvbhwhUQ4tdAmna1ABQaxmmA=
+	t=1735811182; cv=none; b=eyLsdI+Gm74dJsuZ2OSqp5CY8XnLpM6fA3OABh0FKUUaz7gvAVqSPMqqek/uPY7aPgMLunuJADbf1b6W0nPXt/X3mlFKBM5J/QdwZCQb1XQFRL9scDtiroAru+3S+sZReN/TZF4Mz/PJ6ZPi6s1kyV3/GzYODqi8JTsqW0nrZSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735788248; c=relaxed/simple;
-	bh=2luKSQlXlRfAjjZshmKaZmKOa8vTnWfEkgmMGXY7M5I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jgeNmH4I3/pJZ28lxRSJD3R8cVn1NAfjl2IoQBLyOtCSH+BuuyxpgA7hIxRTtFWQwnblmqMBW3eZqnEZuYdZVk3VmTwvMAdCUWmcKze6/Gp6aBBcZfylu4rBdsLRWLWOs5B/MaV6AMVDuRQJ5k4tfQKYeyRjnY5PXEL19wETNW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cMbl4tHe; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cMbl4tHe"
-Received: (qmail 27407 invoked by uid 109); 2 Jan 2025 03:24:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2luKSQlXlRfAjjZshmKaZmKOa8vTnWfEkgmMGXY7M5I=; b=cMbl4tHepBLlBmB5IhFX+jiIYNp3JUJ0p9WTfU339qlEYCihWHtL00BWPsvbrgUzvC6OWbl7iFy48KVW9JpQdTI7JePW2+5YnYrbivySxW23MVbYVuSiFNfcoYdTCs7fqahY9AfIp46UaYWiWOckUcfoIm5xPnCm3hCs1mSIlMNCx63E9WxHd9J8l52p+ppiJSR5c0dR4a43w3tDgBiYA3Pe1olqPI1aZ6hlAq494FleT06BmTLEasxkbzfpxr3KbOKSbveYnJCwyGTd2iuHvQZzDEhWmQQ+fC3Wr2ddvzEL6in0aJww3R7oldZOXqdzmkLRjD5GJoD2Cm8ana+8Kg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jan 2025 03:24:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15648 invoked by uid 111); 2 Jan 2025 03:24:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 01 Jan 2025 22:24:04 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 1 Jan 2025 22:24:04 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: a less-invasive racy-leak fix, was Re: What's cooking in git.git
- (Dec 2024, #11; Mon, 30)
-Message-ID: <20250102032404.GA817606@coredump.intra.peff.net>
-References: <xmqqpll9xehr.fsf@gitster.g>
- <20250101191422.GC1391912@coredump.intra.peff.net>
- <xmqqa5cavz8h.fsf@gitster.g>
+	s=arc-20240116; t=1735811182; c=relaxed/simple;
+	bh=kNPKfjDJyM3K19KD5ECHd4s4cFXjD6/3945UIn0FHTI=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=Dz08NRm/LDUTLgxkdWNlS4xV3FCi3q6RM307bcB42eXXnGfCsqNRYZJmySNA9NweCSN/npZI+TByzgaohIQsWYMcUwEnZ/sFLxV8PsSQnvcf11lNCHWnb8gxTwlGYePjizrmRwMyqkUDeVHp+C98DrVLNmcRq1PylLnAIb6GWuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jo-so.de; spf=pass smtp.mailfrom=jo-so.de; arc=none smtp.client-ip=37.221.195.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jo-so.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jo-so.de
+Received: from mail-relay (helo=jo-so.de)
+	by s1.jo-so.de with local-bsmtp (Exim 4.96)
+	(envelope-from <joerg@jo-so.de>)
+	id 1tTHWy-009V4v-27
+	for git@vger.kernel.org;
+	Thu, 02 Jan 2025 10:30:16 +0100
+Received: from joerg by zenbook.jo-so.de with local (Exim 4.98)
+	(envelope-from <joerg@jo-so.de>)
+	id 1tTHWx-00000000ZyT-46Py
+	for git@vger.kernel.org;
+	Thu, 02 Jan 2025 10:30:15 +0100
+Date: Thu, 2 Jan 2025 10:30:15 +0100
+From: =?utf-8?B?SsO2cmc=?= Sommer <joerg@jo-so.de>
+To: git@vger.kernel.org
+Subject: How to relocate common and workdir?
+Message-ID: <h7zchkwkm7djm5qrxnwyh7jvzymrtuzlc4rllnllrcxlrvgtx7@jiu7eiekjit5>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="gi66rdmrqfhzt7bc"
 Content-Disposition: inline
-In-Reply-To: <xmqqa5cavz8h.fsf@gitster.g>
 
-On Wed, Jan 01, 2025 at 04:25:02PM -0800, Junio C Hamano wrote:
 
-> > What do you think?
-> 
-> I like the small hack.  "This is ultimately LSan's racy-ness and not
-> ours, so let's avoid changing our code to work it around when we can
-> do the workaround somewhere else" is an attitude that I would endorse
-> fully.
+--gi66rdmrqfhzt7bc
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: How to relocate common and workdir?
+MIME-Version: 1.0
 
-BTW, in case anybody wants to follow along with what happens upstream, I
-reported it here:
+Hello,
 
-  https://github.com/google/sanitizers/issues/1836
+the KAS project currently discusses a patch [1] to relocate the common dir
+and adjust the .git file in the worktree to match the new location. Is there
+something else to adjust than just the .git file?
 
--Peff
+[1] https://groups.google.com/g/kas-devel/c/OM7bm-tjyLM
+
+The background is that the git repository gets mounted inside a Docker
+container at a fixed position /repo. This works fine for pure git
+repositories, but with shared worktrees this fails, because the location in
+the file /repo/.git is not inside the container.
+
+Now, the idea is to mount $(git rev-parse --common-dir) at /repo-common
+inside the container, and overlay /repo/.git (via bind-mount) with a new
+file that refers to /repo-common: `sed "s|gitdir: ${git_com_dir}/|gitdir:
+/repo-common/|" "${KAS_REPO_DIR}/.git"`.
+
+I saw that there are also the files *commondir* and *gitdir* in
+*.git/worktrees/=E2=80=A6*. I suspect there are circumstances these files n=
+eed
+adjustments, too.
+
+Is it really that easy and safe to modify the .git file and point to a new
+location of the common-dir, or has to be done more?
+
+
+Thanks for your help.
+
+Kind regards, J=C3=B6rg
+
+--=20
+Mit Statistik kann man alles zeigen =E2=80=93 sogar das Gegenteil.
+
+--gi66rdmrqfhzt7bc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHQEABEIAB0WIQS1pYxd0T/67YejVyF9LJoj0a6jdQUCZ3ZcpgAKCRB9LJoj0a6j
+dVBbAPibEKc4iUHZLN9zZivk705ntlZk/fBPwC7iJsOYeSihAP9kqA05ikQnmx50
+g7miHCa0HK2jAqToE5HpkBDiU+Frlw==
+=JywP
+-----END PGP SIGNATURE-----
+
+--gi66rdmrqfhzt7bc--
