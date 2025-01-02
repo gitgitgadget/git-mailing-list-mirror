@@ -1,142 +1,108 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from flow-a8-smtp.messagingengine.com (flow-a8-smtp.messagingengine.com [103.168.172.143])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3338C43ABD
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 14:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA524CA6B
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 14:57:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.143
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735828954; cv=none; b=SAeO3R5QlzEpuCKSli2ktCJG7TxH4TZ0VKYOu2YTVMe1kcV4I8O7IL+uCtZD9cUkwg/boMF6WnP5X3GOdSKCKNeo4IrVsNv3TVIE8R8AHHAc5DbjSTkKbnaPxDlmJQbRyL/5dQWgqdOenoREtrFcOqh0CP7yLyotwMV9KRFN6b0=
+	t=1735829884; cv=none; b=tiElV8uX4Rsak19hGfA7Tt1q0q6Ei1ZG45Yxt+bitz6eRgoIhkQujQdU/4KB4wFY+IPCPUhhwxZB7CSu7QUCRQtxxhAn6QgV/3FKe8JmrA4kJvGoOE2aJzXkju80NCVpG0VuT5B8SiBAh/cHCdtgZufyzaIdy+CcdLwWyBG1Wak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735828954; c=relaxed/simple;
-	bh=IL8XTrh9Z7wfTjHXyQLFJ+9lv0T4E6yz+zepTcQfddM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i9R+i4xWmtlBNX/RpuaA7iIyBjvnR9A/Rsc5NL2LSp7BFkVWIKaTRXmggyDuEyvABI42Csbq/jCp/2PI90wYCBCRA8lAsPo8XHaet+yH6MCmkT2DEWtwss1IDRNBnn6uuViKPuoswH7M45aU3W7zpN0CFf1ohaT24ZCuucaXTW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K8pntGjI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hHVijDGE; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735829884; c=relaxed/simple;
+	bh=HlQxG9RgfsK0MaSXP3JKHAXRv+MkKPiChQ5AFWFrpEg=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=JX8R0SfcGULe36lQQ2U+zy1qDGVMqySSCif9Yqyqc6b1Am5QlxvA1kcBGA/3YfzzCEkvRfsS9SKJbtOIpe/JJWyr9oy1vVIx1QdwkXEZj1eLuZnf56AzwN6zefDzpZWQQrUd8pW3BAfyXECKfJBIIBLAGZGg8nsVeuT7iuI5/So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=k3EoxfVN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a07nJRqH; arc=none smtp.client-ip=103.168.172.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K8pntGjI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hHVijDGE"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 69CB31380181;
-	Thu,  2 Jan 2025 09:42:32 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 02 Jan 2025 09:42:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735828952; x=1735915352; bh=zfIWD0O8pO
-	ZjBQQ0fQcILKTbb+cMxVev7MtUvfeFmho=; b=K8pntGjIRBCBGJRN/j3xxtm5lQ
-	/UP8i8X9U/9RlmemMylVWDhwV/zYtDo7EErbeBbxUDIajgTqV8iGuSy7fF3mm9iI
-	sQM3DWVO5kT0dv4cb/uBmFuZTKQ3nDRMQaJiGtpKOm/q98+SwyuR/i4uJLvsDmAG
-	bDA9eVVdowUYSUVJKnNK2M8Bl0+vdybEwq/oPjwk+a+JwkqOAUFJ+gYCbQPfMLDe
-	tPvs/EYJ26iNfbg5u3O5WiDDpFOEp562mkDFm/9fmgQRkjkHH0eiKgU3DhZwZmC3
-	3vib3yrFWbgtqgjO+OTEUXziQzbMutxFOcKhza7aRKSEZl/2oCw29qgj4qrQ==
+	dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="k3EoxfVN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a07nJRqH"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailflow.phl.internal (Postfix) with ESMTP id 82762200550;
+	Thu,  2 Jan 2025 09:57:58 -0500 (EST)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-01.internal (MEProxy); Thu, 02 Jan 2025 09:57:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1735829878;
+	 x=1735833478; bh=qNpSPV0D8kpxTO0vhDY3nVL0hORH+qiCOaIH7JbMl0w=; b=
+	k3EoxfVNTENYgDR6SsLnXzn7e1vlwV8cozjgP4zauRFkO35zo7ytUuYG4FevED/h
+	0qlNciSVyGFcM3mgOHCT6Juzj52E6B/Z7dLauaf+xKJHwM49Z4vulb5Idq3+OM9n
+	epGV/t36WI4qzgVyysQjsP4Y2GRvnRPj/yZQvxLmI+5TG2MvMqIwl20IBpEWzWWR
+	RWNdmI1AQ9dXmmP6ImGKsQHtt9nS7+76toeAqJbX3ijhkBKIS26G7M+YGcd3SAh4
+	nSk1pZiIPrN3Lk8QbyYeSWkBgbj+82+H7Sh1apvLWCd7Bw4xYwJAFEi5TRx7QO3C
+	y+croGOtwpf7p6+6pOKxSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735828952; x=1735915352; bh=zfIWD0O8pOZjBQQ0fQcILKTbb+cMxVev7Mt
-	UvfeFmho=; b=hHVijDGECE5VEL0MSFXmD7oTIFg6REFkt+7i0AMNRefH1XVB4Y3
-	1UBfXxPFky5EgYbqm+h/9kUGDFki6AYWYprU/9qyEHf6jX7pesDX6xowo+7I1yv8
-	5U6k9nijdeLKvpLbE1BnJ3KnZUf5UCfZgnMm4cnKR9LfpRBNYWQGia5NitehNcwx
-	8/7NSAC1yXd40eLcTUzT3/jTtzgyenK8rijLElxgh0v1hZb5/agTR4IhPt77m+tM
-	kqXEmeLQoesJAETKmbXcWykTRCurXja1lbGJejfF322p4WrN3POw60VgrrioTUiF
-	aKPlb7FMOL6az3KFM/ioqBlOyNGmNnqsmVg==
-X-ME-Sender: <xms:2KV2Z9wu-QtboYQsl0cLhLS8W4J4M8oJNp2r1ji6l-RTeKfShrbm1w>
-    <xme:2KV2Z9S3-Dtr8DSkydytbVhkJT-N2lFkK0WIkgcMOIn8QZwAoKiSvi4bNTl7uYatQ
-    7tpqvlodrLfaiEuvA>
-X-ME-Received: <xmr:2KV2Z3UV30TpgXUglXDjmT1P4T7DjCQt0AWCnqbd4GouCNMitqWSLn3pierQCM-0inVRMwrk5cL8tWZH3mXJiMtMVB-wCov2cw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefvddgieekucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735829878; x=
+	1735833478; bh=qNpSPV0D8kpxTO0vhDY3nVL0hORH+qiCOaIH7JbMl0w=; b=a
+	07nJRqHYn6h3B1C0a3w47hhBOPM0ru4z/KlWr4DRlG5PPbldiYbxWjMcvFYA5T2n
+	eHRgxehdnl70/Z5fIpLYcoO3QiyIkuczYgIl7nvh5imQb2a4weDpzEwkvRHz8TPY
+	QZMKuEd5fUr3NX3alc7PtDcWWpwzW5QJlyR2YwYChS0jGCmeuLmo3uC8a/Z81dx/
+	srklVwyu5ApYZnf1ThzT2jAXiDwzKayxmyipJg4gtEZi1inGCh8L66aPCN3YTV/N
+	3S3Tnb9v0UbHE6ezfS0qWE5aeC3aA0rMdJaMavkc8VtqAA69cSzsmddAFyguHFFN
+	nWhfhr/fhiqqsvvkVJU/w==
+X-ME-Sender: <xms:dal2Z6_bUBSOAoDVpHatKpc_9vttRuUR3f2OF7JXX7d7gs6aO-aICQ>
+    <xme:dal2Z6vfFtvvVkYNMrPUXdb4i0LlxuMFnGk3QxMjC_zQIL2m6q0DvV5PtQ5jWdhs4
+    ZibSZS2bg-n_a9HkS4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefvddgjeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:2KV2Z_isAkOySvaDbwOuR8Xn_YGClPDgbXQNLeKRAezdsK6TV7esNg>
-    <xmx:2KV2Z_A5brBcJUtOeK5gYqvnORQOyDwNBsUiHKpJkytaOjJ_ZbYBMg>
-    <xmx:2KV2Z4LnIjF2so7bEcYRBE6s0l2xE3lXAmtGFjJa1bzEufGv-Zh6Yw>
-    <xmx:2KV2Z-DvUOJwXGIDK0CLuy7tyK5oN8zsFXW6lv0xDG8vcMEr92sJCg>
-    <xmx:2KV2Z6-avJH7Xlh38yYyiae7ZtR0IQv2A-uSMsqkLDBAeKk0d7vr7GTl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Jan 2025 09:42:31 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: a less-invasive racy-leak fix, was Re: What's cooking in
- git.git (Dec 2024, #11; Mon, 30)
-In-Reply-To: <20250102023224.GA3853144@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 1 Jan 2025 21:32:24 -0500")
-References: <xmqqpll9xehr.fsf@gitster.g>
-	<20250101191422.GC1391912@coredump.intra.peff.net>
-	<xmqqa5cavz8h.fsf@gitster.g>
-	<20250102023224.GA3853144@coredump.intra.peff.net>
-Date: Thu, 02 Jan 2025 06:42:30 -0800
-Message-ID: <xmqqzfk9uvjd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    htshculddquddttddmnecujfgurhepofgggfgtfffkvefuhffvofhfjgesthhqredtredt
+    jeenucfhrhhomhepofgrthmvjhcuvegvphhluceomhgtvghplhestggvphhlrdgvuheqne
+    cuggftrfgrthhtvghrnhepvdetueejfeegvdehgfelfeeltddtgefgueefieeghfeiueej
+    iedugfegheehfeffnecuffhomhgrihhnpegtvghplhhovhhirdgtiienucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmtggvphhlsegtvghplhdr
+    vghupdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hhohhnghihihdriihhrghosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:dal2ZwA2tUijJBMPO7jMMOTS729CgADsFloUPGZ-Kn2yA8fTVcQsQA>
+    <xmx:dal2Zydqj9CFaZDuE8Jm_kW8q-O9lKgFa2VG6cY3FpUiQsR-mMROOQ>
+    <xmx:dal2Z_MAp5DiTyvT3nwDU_3QlHGUjO0V2gVfQjv0WLunocOJIYhk7Q>
+    <xmx:dal2Z8lV4LwZOkVQ0_Pgp8sQgOgMYcgTMYh8k8SzCQn9mkTH4n9Lzw>
+    <xmx:dal2Z1ZtedQssnUisz3kMdnSUn8E03HLksWNlHCceE67BGyPIBK4C-Av>
+Feedback-ID: i8c5e488c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 96D0BB0006A; Thu,  2 Jan 2025 09:57:57 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 02 Jan 2025 15:57:56 +0100
+Message-Id: <D6ROC4RAYQS1.3V2K2W5GMAEYR@cepl.eu>
+Cc: "Git List" <git@vger.kernel.org>
+Subject: Re: Change the grep command called by git with alternative tools,
+ such as ug.
+From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+To: "Hongyi Zhao" <hongyi.zhao@gmail.com>
+X-Mailer: aerc 0.18.2
+References: <CAGP6POJX9GFsNkgGd7o9Pr-tFoz0sgRk51vVG4P0Kn1DPZe+3Q@mail.gmail.com> <D6RLU4BY374I.GQY9MLMV1AZJ@cepl.eu> <CAGP6POKLdTpwsaGo-oyGAiYJMRzwXN06rv3+V7v5QbL6xtDROw@mail.gmail.com>
+In-Reply-To: <CAGP6POKLdTpwsaGo-oyGAiYJMRzwXN06rv3+V7v5QbL6xtDROw@mail.gmail.com>
 
-Jeff King <peff@peff.net> writes:
+On Thu Jan 2, 2025 at 2:39 PM CET, Hongyi Zhao wrote:
+> Do you mean: by linking ug as git-ug will do the trick?
 
-> On Wed, Jan 01, 2025 at 04:25:02PM -0800, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > On Mon, Dec 30, 2024 at 09:33:20AM -0800, Junio C Hamano wrote:
->> >
->> >> * jk/lsan-race-with-barrier (2024-12-30) 5 commits
->> > ...
->> > This graduated faster than I expected. :)
->> 
->> Heh, it is before -rc2 and the change is only about tests, so ...
->
-> Yeah, I figured as much. I also considered it of relatively low
-> importance during -rc, but I guess CI false positives do tend to annoy
-> everybody and waste their time. :)
->
-> It looks like you pushed out the version of 'master' with it merged. I
-> had figured you'd revert jk/lsan-race-with-barrier out of next, so I
-> wondered how we would proceed (revert the whole merge from master to
-> rebuild, or do a moral revert of the final three).
+No, you would have to rewrite git-grep to use external grep-like
+program. I am not sure whether there isn=E2=80=99t such project already
+out there.
 
-Revert the effect of the tip-part (except for the bottom two) and
-then queue the new ones, which would allow me to merge the whole
-thing in one go without losing the bottom two's effect (which would
-happen if we reverted the whole thing first, and then reused the
-bottom two commits to build the new iteration on top).
+Best,
 
-> Looking at jk/lsan-race-ignore-false-positive, it looks like you did the
-> moral revert via fc89d14c63 (Revert barrier-based LSan threading race
-> workaround, 2025-01-01). That commit's tree matches what I'd expect (I
-> guess you probably used "revert -n HEAD~3..HEAD" just like I did).
+Mat=C4=9Bj
 
-I actually did "read-tree -u -m" followed by "commit" ;-) 
+--=20
+http://matej.ceplovi.cz/blog/, @mcepl@en.osm.town
+GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
+=20
+To the well-organized mind, death is but the next great adventure.
+  -- Albus Dumbledore
 
-> It would be nice if the 3-commit revert mentioned the specific commits
-> it was reverting.
-
-True.  I should probably amend while I can.
-
-> I wonder if revert should have a "squash" mode that reverts all of the
-> commits (perhaps in reverse order of application in case they depend on
-> each other textually), and then gives you a commit message template
-> similar to git-fmt-merge-msg, where we list all of the commits, one per
-> line (though probably with their commit ids in this case).
-
-I am not sure if I follow.  Should "revert HEAD~3..HEAD" give such
-concatenation of messages, something similar to what "rebase -i"
-gives us when seeing multiple "squash"es in a row?
