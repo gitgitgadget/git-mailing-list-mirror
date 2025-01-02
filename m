@@ -1,90 +1,81 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FEEA95E
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 11:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FB93FE4
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 12:17:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735818537; cv=none; b=SISkL1E0YTS6ZPjRUA8ZGKBG3CAmnIcoHgSYzHjMgi3DMTH9iszExdVzeDqVpJ/0pHPiF5qyVnVSdYM874740mR/j9REHgHQIdOl/Ad/ycxR+UzSUBXPjJO2nXiY6xAvpCs2Sax6gfAFClMelcSTmjkkA8lQyvivEtYZ0uSpwK0=
+	t=1735820256; cv=none; b=lEg3QBn6iZn4flLXqKcbARZ177t3sW+6jO15uz3qGwEsv+t5zYBuZ14HAnZV8zQPbbXJNSoZQ1pNS7gdLime02KRpyyHn0BLHwR4VzTFhNeQJ31hsJxYh/SsoTTrZU+gEWN6jEw+Rxv9qCJiWzO5mp5vPYrXFk4PDqdDYY3KEM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735818537; c=relaxed/simple;
-	bh=2vZQPCiRuIrbeiSd5AWjhS2+/3TMbGjqEPYydSNStV0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=cNiM2HqdL/uIxjpGK+2c1Gk2i6PHqCNac8cC8PVFFhdMrREqiSz48gMG38DeozqKkDNjuT916uNeImWsVQk80Ks6agUKZFf83Nxa7UZEynxYpu6b0de9sDkfKlLRuYuC3+lJ6t5hUGvH6V06fNx01P83NwJ+aCSuusbqTinB/9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IQtE8Akt; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1735820256; c=relaxed/simple;
+	bh=n7PIMdDUox41u807sw/HF4ZWooVrzRJ3Kv52wQm9QxA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=c/vf0bB80dwKzPlnfkhO3g4ZfrFIfSMmp3AvE2qjSe43WHeYPBi70zg8fTENCkFgX0EX1ev6bqi+Pe/VJgM9NMTmATOX4LOXyOPguejJukbizF4YjaHf0KFrQBgEqK5n2JD/9gi+mioQST0gyvJDRVEAroWoTuqJTSvKH1bFWG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d9v2FRVm; arc=none smtp.client-ip=209.85.210.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IQtE8Akt"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21628b3fe7dso149424145ad.3
-        for <git@vger.kernel.org>; Thu, 02 Jan 2025 03:48:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d9v2FRVm"
+Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-71e2766994bso5822617a34.3
+        for <git@vger.kernel.org>; Thu, 02 Jan 2025 04:17:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735818534; x=1736423334; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1735820253; x=1736425053; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=RIf1mZxdyOWKz/a/BzWN0WGH/0ZqjIxF5SEI1TQ5lQA=;
-        b=IQtE8AktVnVW0bHvcyyXnYVPQ/ZIIYjF5BZBPifmP5XBrKWoK2nV/lq2p/RKOFUtCE
-         EbPfWR8bebT27GXyfbO6q5gmFO16aswNwt9wKeL0EgQpQ91hbCgxkHwRPJQasaZDpEwa
-         ZTgPs+O57sDfgygm0CJVt+iZCeNIR5U+GAs/ElcA7Qr/QgBBkRSeB8KkUIhc4JT/mLVN
-         u22Q6W8TYONssjTZC/cz1r3Iml5xOxKBlXKB+kl7iECsmDe0duSoXlF/zf2zOTgUBgTP
-         Snfc30z8W47HdcJFWxymtITKzj26u7Ni/k6ZWzjE4F7MXztFDvSDqRVTBTIDiRz7eeSq
-         5LLA==
+        bh=I4wNNsgPLq3ibBiBv5MdibYjyL79STySLJCH2aSMM/c=;
+        b=d9v2FRVmmfuk/VanvkODEPIVGuuMakia3qplal3yNpyUFKt8I1xVid6yoHv6cqCBJf
+         nYKr9569TM3I5hLiH54OGQH1dGCyZrsNGE5J45ArHNDWYUaa/xulg2brfnZTDbo4HZRO
+         h2S9sgvzZDl6hmI0eVAMr2xYNU7LzNrPsbUAIMMG8oWg7dTeiiKh2AY4avq/WUJLqaLl
+         rbe5sathzTXnr0lw7pytRe0VeWLkxjUEOI3w4ozLDkbaL97iyAcM0TPZ8bi64xM8vHHz
+         YZX9K5M6nxTiRVfmdR13q8PRzjQUGUjeqk9iKF9QaKkI7BGSvceKMFYkLstp6e81j6+8
+         QERw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735818534; x=1736423334;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=1e100.net; s=20230601; t=1735820253; x=1736425053;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RIf1mZxdyOWKz/a/BzWN0WGH/0ZqjIxF5SEI1TQ5lQA=;
-        b=Jn3vwGcKvIOqFG+PDTcaGxRAgkwTx55Ycsk6dKB5OXFmNnF3iQ7jzG12GU6pz/ICsi
-         hhjD/fdZ0+NUFFqpbIqIyPRzy9jK1H/0rLKs6zGSKOsGEXkfqaCTR6ff9Bsxr6SL4F4v
-         DJgLFz1cJIhPG5V+4PtZ7wYckt2CZC4GiOQKy9t1q5epSBn1RrG+cxGlD9WqddI3pP74
-         /zJ2K4bTbU59RWN8pQLpDb8ki2ehsn2NNUTRyIxwgm8JfBCivWFp7gsrvUApm7DeZD9w
-         VdACnpiH2syXhax0Zzo4/BVA1g+RfaX+mEOdUDXCFnu+J0OFLaQKINieDkBoD88VJOO5
-         JqhA==
-X-Gm-Message-State: AOJu0Yx3JaQPeA7ux/g2aoMTPRBqjgsBwPIDayAQdw5ksy6o2jsj1eXo
-	8pb+tCuZAem9oBr026eScEiEsUfNrBB+x7IOb+UtYwTGflyBpLqV5cbqVROuNQ/BEECr8gA0YVs
-	B7EMfcq/oR4aac70peVb2EBkuBcZ0RT1Fql6Q5A==
-X-Gm-Gg: ASbGncsXU7bB8Q8IHLHx7NWG0sq+L1DAaI5UgUNOFopdJCO4pLvx6xdOm56ONqsQcPb
-	lr5oK2PHHhBjfwPJuEZ/7WG+3oSToUbNGbG+9VA==
-X-Google-Smtp-Source: AGHT+IF9BvLM7fWtmfE7izNbmypmMOT8QGGAUgaoYQ1b96f47lPiCBqamp/op5WUUoc8NmxUq4a5/yvnR/QGuRrpzRU=
-X-Received: by 2002:a17:90b:538b:b0:2ee:5bc9:75b5 with SMTP id
- 98e67ed59e1d1-2f452dfccf6mr65844739a91.4.1735818534018; Thu, 02 Jan 2025
- 03:48:54 -0800 (PST)
+        bh=I4wNNsgPLq3ibBiBv5MdibYjyL79STySLJCH2aSMM/c=;
+        b=w58GSqCAMxfiLsDCxQU7UU/73OEz8/AqLpSaVU5Fj1w3oKMKj6fbzcT4mpWFZfYrUe
+         hf2MmoxS5JCdp9UMj4NtSGBeX9CLYE8UkAoCCxvTTD2TZClGl1Y62TIOl3QBKDga8ADj
+         ddwMEyUdFefapYjCrAlv5XBXOKQKH26+YwUodCs67dgHVi2ZuHy877rDMXC6rerPR17/
+         eVvCE8XISoybbJRheyqWOlqOSi1r1QYfdapY2vbyq9n8dKoQ1T5heaP97dvHiY/1ibf5
+         kPma74jEuuMbMPToPrPCIawDrXyRswlbulhTzQNA7LZRoDThj7rzEHsUequAAswA7Q0L
+         1Otg==
+X-Gm-Message-State: AOJu0Yz4AE9Ty04mlPQAQzawodidshWT8DXc3bIbY8Dp/pWyiNVZrsBJ
+	QCd9aUCmARHx4p9MeJqkdApQhOLJM4iftJG9LBaO4IFoXjMfdGaJ15x7YXM52r1i19ofFs22Wh1
+	vuhR2LrLWHW/HQ/BvBbWbl6lpAiOSghMa
+X-Gm-Gg: ASbGnctdhMUZDJt6XvQep5+O5CzaE1gGmi1rDRBiWbJX6J6fYSYMvP+xZweTLTJfkyS
+	z5yZ2tWOe+MBVWbEtFjMoCC5ILZbfK+ZYBXuJyQ==
+X-Google-Smtp-Source: AGHT+IFBiCDjMujCP7lxnHX9weK7GT78pzg1u6+QSkmSJ+XU9XJhNqe8gvHyyM8kNgQZSQ6geW0r503W3WMCyKrM8hc=
+X-Received: by 2002:a05:6870:430d:b0:29e:8485:197b with SMTP id
+ 586e51a60fabf-2a7fb00afd6mr24861376fac.2.1735820253551; Thu, 02 Jan 2025
+ 04:17:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Hongyi Zhao <hongyi.zhao@gmail.com>
-Date: Thu, 2 Jan 2025 19:48:41 +0800
-Message-ID: <CAGP6POJX9GFsNkgGd7o9Pr-tFoz0sgRk51vVG4P0Kn1DPZe+3Q@mail.gmail.com>
-Subject: Change the grep command called by git with alternative tools, such as ug.
-To: Git List <git@vger.kernel.org>
+From: Andy Koppe <andy.koppe@gmail.com>
+Date: Thu, 2 Jan 2025 12:17:22 +0000
+Message-ID: <CAHWeT-boK3x6mup11boEinNDQiAxxf0vwvZkxsGRc_GRvXYA8g@mail.gmail.com>
+Subject: meson-test syntax error
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
 Content-Type: text/plain; charset="UTF-8"
 
-Hi there,
+The new meson-test rule in t/Makefile causes a syntax error when the
+default shell does not support non-standard process substitution:
 
-Can I change the grep command called by git with alternative tools,
-such as ug [1]?
+  make[1]: Entering directory '/src/git/t'
+  rm -f -r 'test-results'
+  /bin/sh: 10: Syntax error: "(" unexpected
+  make[1]: *** [Makefile:119: check-meson] Error 2
 
-Say in the following command:
+Due to this line:
 
-$ git grep -i jobflow
+  diff -u <(echo "$$meson_tests") <(echo "$$actual_tests");
 
-I tried to replace grep with ug, but failed as follows:
+This can of course be worked around with 'make test SHELL=/bin/bash',
+but is that expected?
 
-$ git ug -i jobflow
-git: 'ug' is not a git command. See 'git --help'.
-
-The most similar command is
-    gui
-
-
-[1] https://github.com/Genivia/ugrep
-
-Regards,
-Zhao
--- 
-Assoc. Prof. Hongsheng Zhao <hongyi.zhao@gmail.com>
-Theory and Simulation of Materials
-Hebei Vocational University of Technology and Engineering
-No. 473, Quannan West Street, Xindu District, Xingtai, Hebei province
+Kind regards,
+Andy
