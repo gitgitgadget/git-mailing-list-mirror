@@ -1,119 +1,82 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D93AD51
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 17:27:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2DF7DA95
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 19:06:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735838838; cv=none; b=IgQHcvc21mjQhaR7QcekUDJ5OjhsC02tQzq1V5NLXVEpDifsfQW/lpx40LdA6uwqrXgHOU2Jesbf7h64qRbyFn1B3Z/PGx7mTJXLE07zRqygnEGR05l2yqkFxN0Va47gEIxrCsMHbiDP1D/GmOlQ9HPsFzQuc4+6LjU4rl1mmsA=
+	t=1735844796; cv=none; b=AUquxMFaxW5MoR27ZwryWSf6CMZgGD9Ci9lmsvoPECHkcywVS5zEV9Rx5YYRHpsi+naWYlFzLfJRL/6qzepVIKYaV6p1bcKSHoS8VOVvNzjXgaYibNPSv20VXosqcnYJ0jkRTROnBuTclsYGv/+maFCoSAxvx5TjT4K67Rsd2Cw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735838838; c=relaxed/simple;
-	bh=XKY8jZvYqUUllqLyBbv9oKLpxUD+baR8omb0q5DYlL4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u4ayGfPjmt8c//1IaMma+DOwbe9DdGyhEpUXuRY8xffWDzaRavjo4ntBjM4iKxVoDm/Ep5281Rb4brkl8z4PdnWD8+388oqV5DIHJW0siuObnJaofz7qPr0a4k+Ulx7/YFodQVfHJhlCu7yzFfk2IU9glMbkiXW3t5Du9K3+oTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zYLQtqVA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l9/MOWso; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735844796; c=relaxed/simple;
+	bh=AVxMBS2STZvtPTl3tDfzqC5IJ2hC22RvUj4/J+DeNYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t4X/EyA97y3Av8uVqNZ2C8QTMXMDthsEpDCfMKe8ueZ3DDPtO+l+qgNJV1SuaI5eQzjHoTx8JBkw3iJyiJNnFnNVsDgIUvKpvWhq+XMyD//SgSgD4cfOx14GBlHQR53FsCCw3s9rnq70Qv+XSDUM4yNn2qWI4vSVGaYl47aCsEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ev+pdVv7; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zYLQtqVA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l9/MOWso"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 70B8C1140172;
-	Thu,  2 Jan 2025 12:27:15 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 02 Jan 2025 12:27:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735838835; x=1735925235; bh=ijzl1P2Akt
-	BK5zllisgfaDBrO2ndsnS74RPWusaw+Kw=; b=zYLQtqVAhCmKfwl7+0r8T5xLub
-	UQqke6OUB6ozLPcUBj/Fd0Z+eixiib2PFHhhhQ0yyqBLw2ZTkrkPxs5tmaEs7Yrx
-	1kg1Yg/la76y98adfsXChZsz/TORejwmQ3lKyE6Ua1VuLQk9YD6yOvWk9wCvlOD3
-	t0Gq8LVrw4ohxdA++SsdPbyGH9JeFrLKR4WDqFosEz9IhBzl3QgpOKlbD2zIlSBx
-	ejxWr5ryDxVvw6jesouUn/P7h3smjsQAjV4VlRJff1AKYWXUgLGJsMv4vaf1x+QS
-	KsRd5qpldwcKSkoiwQPW0UIFY24DYw0Z6xiwAui1R9C5Cq2ORC2G7hd8OI0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735838835; x=1735925235; bh=ijzl1P2AktBK5zllisgfaDBrO2ndsnS74RP
-	Wusaw+Kw=; b=l9/MOWsoBElf8BRFwzTbKIjMzrByXrMFfTkJN9nE4lzbH+yo6Oy
-	1sq8UPtGSP4rRgXuRZo4ZYvVkWI8KbI42K9oaBpYABvtJsiWpyeZWkLYxxPv6NdT
-	OPVFKjo9hNlEGg3vmJvtIqRAXH7mZi2mX+2b9dcPOQNGh/W4xP60aK4Ib5cbPhO9
-	tQ1/twMucxaSpyinyVZmuhhBGeqCS2/a/b0mJUyH+4qYtM0sr6pNecPIyzaO+t74
-	MXOVWWMMjyCGtu4iyIuo447SY/FxhQVZdwrYgN4exUV9GMGiCP7WRdBs6NO3egUX
-	eNOc08S2+dLDU2I7KSOA9AKOeHBUmJtSdow==
-X-ME-Sender: <xms:c8x2ZxXwY6p69nhWQbZfM6Ve0FOcpV2m6tV0JsK5a7JXreInBQAKOg>
-    <xme:c8x2ZxkzkidPPDOyWONYXfEVuCP5HsqS9L4s9r-VZKuSxy2NENiGeaVMY_KOjo85o
-    NlLYvhBisb1WV23mQ>
-X-ME-Received: <xmr:c8x2Z9aPlPNtLR0cadhxqHjjqnJ72hm0Br8yUCDAA5JtxmQ2SNB8-AaFmB3i0ET8ggve1LNzb7E-meirmL3Zac7kgFVtqXTH0A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefvddguddtvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehstghhfigrsgeslh
-    hinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepjhhrnhhivgguvghrsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtoheprghnugihrdhkohhpphgvsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:c8x2Z0XupqE4V5lrT8SnEgBB5xH7XNfLf7vXDfP6-qonqRva9zNmNg>
-    <xmx:c8x2Z7k1BYjRe3kFAEkADgbjR7Z-2_Ma4Ux_Xorail2_M3qxULpPbQ>
-    <xmx:c8x2Zxey7g0s7rF3zmog1K-6mQvlZKUAnZHOBazsZiJSo3__gB8FJw>
-    <xmx:c8x2Z1EPdPRUPTRKrxxck2rt7YrxEPQwgHjditpELRsvE701nu6DYw>
-    <xmx:c8x2Z5aEMWBkCn02Wg7xvNX8_vJuqPY2khe4AVLHaz0fBN5w9XnobbBt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Jan 2025 12:27:14 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,  Andy Koppe
- <andy.koppe@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: meson-test syntax error
-In-Reply-To: <87a5c9uo3n.fsf@igel.home> (Andreas Schwab's message of "Thu, 02
-	Jan 2025 18:23:08 +0100")
-References: <CAHWeT-boK3x6mup11boEinNDQiAxxf0vwvZkxsGRc_GRvXYA8g@mail.gmail.com>
-	<Z3ah2YQSx4ZreBpK@google.com> <xmqq5xmxwabj.fsf@gitster.g>
-	<Z3avRmaMr70FOs8A@google.com> <xmqqr05lusvp.fsf@gitster.g>
-	<xmqqmsg9ussz.fsf@gitster.g> <xmqqed1luqqq.fsf@gitster.g>
-	<87a5c9uo3n.fsf@igel.home>
-Date: Thu, 02 Jan 2025 09:27:13 -0800
-Message-ID: <xmqqa5c9unwu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ev+pdVv7"
+Received: (qmail 5373 invoked by uid 109); 2 Jan 2025 19:06:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AVxMBS2STZvtPTl3tDfzqC5IJ2hC22RvUj4/J+DeNYY=; b=ev+pdVv7UDuRsd7OPSL1iTWIBFRnDWPlD00rmE8SE2HWdguWGdVgeTe656oCqfkRbdqvlewTUkI0IDMNldQ3sxVviZZnyyAhVRH9iNsvl/Vv3Vg8lFFzcmlYk+DgaShw9zESq8yFiKx5LwpSfpq5/mKlisa4D0HEkzBGeCx9+CKDn6Mtne3U5/8BopFxDN0eFV+3CEst4JSy4LSV91tFFWkCDvPl7naU4x/rzxF10rHrJo/hVxO8W6CVb36B3nC7anbFC+Qb1QvIkCgSpWhXgs+TuW1/zBnZkojmC+v+Zdu+s7KjUi2S3OyCbCMiTwhvB5DMc0SC/+QweICGKNaVJg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 02 Jan 2025 19:06:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23017 invoked by uid 111); 2 Jan 2025 19:06:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 02 Jan 2025 14:06:23 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 2 Jan 2025 14:06:23 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: a less-invasive racy-leak fix, was Re: What's cooking in git.git
+ (Dec 2024, #11; Mon, 30)
+Message-ID: <20250102190623.GA848764@coredump.intra.peff.net>
+References: <xmqqpll9xehr.fsf@gitster.g>
+ <20250101191422.GC1391912@coredump.intra.peff.net>
+ <xmqqa5cavz8h.fsf@gitster.g>
+ <20250102023224.GA3853144@coredump.intra.peff.net>
+ <xmqqzfk9uvjd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzfk9uvjd.fsf@gitster.g>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Thu, Jan 02, 2025 at 06:42:30AM -0800, Junio C Hamano wrote:
 
-> On Jan 02 2025, Junio C Hamano wrote:
->
->> And
->>
->> 	$ make SHELL=/bin/dash test
->>
->> does not seem to pass SHELL=/bin/dash down when it does this part of
->> the Makefile
->>
->>         test: all
->>                 $(MAKE) -C t/ all
->>
->> at the top level.  Oh well.
->
-> Command line options (which include macro definitions) are passed
-> implicitly to sub makes via the MAKEFLAGS env var.
+> > I wonder if revert should have a "squash" mode that reverts all of the
+> > commits (perhaps in reverse order of application in case they depend on
+> > each other textually), and then gives you a commit message template
+> > similar to git-fmt-merge-msg, where we list all of the commits, one per
+> > line (though probably with their commit ids in this case).
+> 
+> I am not sure if I follow.  Should "revert HEAD~3..HEAD" give such
+> concatenation of messages, something similar to what "rebase -i"
+> gives us when seeing multiple "squash"es in a row?
 
-Yes, that is what I thought.  My complaint was that it didn't seem
-to be happening, and it did not cause the bash-ism in check-meson
-target to barf.
+I don't think we need to concatenate all of the individual revert
+messages. I was thinking of producing something more like:
 
-Thanks.
+  <SUBJECT: DESCRIBE YOUR REVERT HERE>
+
+  Revert the following commits:
+
+     - 7a8d9efc26 (grep: work around LSan threading race with barrier, 2024-12-29)
+     - 526c0a851b (index-pack: work around LSan threading race with barrier, 2024-12-29)
+     - 7d0037b59a (thread-utils: introduce optional barrier type, 2024-12-29)
+
+You could perhaps even auto-populate the subject with:
+
+  Revert jk/lsan-race-with-barrier~3..jk/lsan-race-with-barrier
+
+similar to how git-merge uses "Merge branch ...". But it's a little
+clunky to read, and unlike merge, it's a lot easier to use names that
+are not very meaningful (e.g., I checked out a new branch based on that
+one and then used HEAD~3..HEAD, which is worthless to mention).
+
+-Peff
