@@ -1,108 +1,206 @@
-Received: from flow-a8-smtp.messagingengine.com (flow-a8-smtp.messagingengine.com [103.168.172.143])
+Received: from mail-10697.protonmail.ch (mail-10697.protonmail.ch [79.135.106.97])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA524CA6B
-	for <git@vger.kernel.org>; Thu,  2 Jan 2025 14:57:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.143
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10831B414E
+	for <git@vger.kernel.org>; Thu,  2 Jan 2025 15:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.97
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735829884; cv=none; b=tiElV8uX4Rsak19hGfA7Tt1q0q6Ei1ZG45Yxt+bitz6eRgoIhkQujQdU/4KB4wFY+IPCPUhhwxZB7CSu7QUCRQtxxhAn6QgV/3FKe8JmrA4kJvGoOE2aJzXkju80NCVpG0VuT5B8SiBAh/cHCdtgZufyzaIdy+CcdLwWyBG1Wak=
+	t=1735830967; cv=none; b=lUMyYR5cdjCKTB0ZK2Nd2Xlv8OA0vvo9V5Y4Kv8ZjcgHhPszwaX7S3CM1zevF7M5o1Tj7WrZXu/exB34ME9XYoo/Jw7tKgP14eLuGbiztgUDQnsPTYipsUX/tmQS8rQxZpzRMHPUgpqjXMz9lyltvUkZLKtjp/zBmGCMgpE+O0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735829884; c=relaxed/simple;
-	bh=HlQxG9RgfsK0MaSXP3JKHAXRv+MkKPiChQ5AFWFrpEg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=JX8R0SfcGULe36lQQ2U+zy1qDGVMqySSCif9Yqyqc6b1Am5QlxvA1kcBGA/3YfzzCEkvRfsS9SKJbtOIpe/JJWyr9oy1vVIx1QdwkXEZj1eLuZnf56AzwN6zefDzpZWQQrUd8pW3BAfyXECKfJBIIBLAGZGg8nsVeuT7iuI5/So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=k3EoxfVN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a07nJRqH; arc=none smtp.client-ip=103.168.172.143
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1735830967; c=relaxed/simple;
+	bh=u/UImrs09NzoP1HsHcXiGnDm8/3dyjLTAg4VRMxq/xg=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=rZlTodjrqMuDyM5VEnhIR4E/30NuVVWcN9RNPPEJAnUELe83EE9Ewu7kaRjS/kf7nkivFf/NHqG1YRN5M0joy7cUsOARptA+vXkFWP0HiuiQDjWt6szhs27Wf+rGfuP0+sAJ88R+A9JWKqhoLbC3Dumi2bKGYnbC187kG8anpXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=Lhv2vck3; arc=none smtp.client-ip=79.135.106.97
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="k3EoxfVN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a07nJRqH"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailflow.phl.internal (Postfix) with ESMTP id 82762200550;
-	Thu,  2 Jan 2025 09:57:58 -0500 (EST)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-01.internal (MEProxy); Thu, 02 Jan 2025 09:57:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1735829878;
-	 x=1735833478; bh=qNpSPV0D8kpxTO0vhDY3nVL0hORH+qiCOaIH7JbMl0w=; b=
-	k3EoxfVNTENYgDR6SsLnXzn7e1vlwV8cozjgP4zauRFkO35zo7ytUuYG4FevED/h
-	0qlNciSVyGFcM3mgOHCT6Juzj52E6B/Z7dLauaf+xKJHwM49Z4vulb5Idq3+OM9n
-	epGV/t36WI4qzgVyysQjsP4Y2GRvnRPj/yZQvxLmI+5TG2MvMqIwl20IBpEWzWWR
-	RWNdmI1AQ9dXmmP6ImGKsQHtt9nS7+76toeAqJbX3ijhkBKIS26G7M+YGcd3SAh4
-	nSk1pZiIPrN3Lk8QbyYeSWkBgbj+82+H7Sh1apvLWCd7Bw4xYwJAFEi5TRx7QO3C
-	y+croGOtwpf7p6+6pOKxSQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735829878; x=
-	1735833478; bh=qNpSPV0D8kpxTO0vhDY3nVL0hORH+qiCOaIH7JbMl0w=; b=a
-	07nJRqHYn6h3B1C0a3w47hhBOPM0ru4z/KlWr4DRlG5PPbldiYbxWjMcvFYA5T2n
-	eHRgxehdnl70/Z5fIpLYcoO3QiyIkuczYgIl7nvh5imQb2a4weDpzEwkvRHz8TPY
-	QZMKuEd5fUr3NX3alc7PtDcWWpwzW5QJlyR2YwYChS0jGCmeuLmo3uC8a/Z81dx/
-	srklVwyu5ApYZnf1ThzT2jAXiDwzKayxmyipJg4gtEZi1inGCh8L66aPCN3YTV/N
-	3S3Tnb9v0UbHE6ezfS0qWE5aeC3aA0rMdJaMavkc8VtqAA69cSzsmddAFyguHFFN
-	nWhfhr/fhiqqsvvkVJU/w==
-X-ME-Sender: <xms:dal2Z6_bUBSOAoDVpHatKpc_9vttRuUR3f2OF7JXX7d7gs6aO-aICQ>
-    <xme:dal2Z6vfFtvvVkYNMrPUXdb4i0LlxuMFnGk3QxMjC_zQIL2m6q0DvV5PtQ5jWdhs4
-    ZibSZS2bg-n_a9HkS4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefvddgjeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofgggfgtfffkvefuhffvofhfjgesthhqredtredt
-    jeenucfhrhhomhepofgrthmvjhcuvegvphhluceomhgtvghplhestggvphhlrdgvuheqne
-    cuggftrfgrthhtvghrnhepvdetueejfeegvdehgfelfeeltddtgefgueefieeghfeiueej
-    iedugfegheehfeffnecuffhomhgrihhnpegtvghplhhovhhirdgtiienucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmtggvphhlsegtvghplhdr
-    vghupdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hhohhnghihihdriihhrghosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:dal2ZwA2tUijJBMPO7jMMOTS729CgADsFloUPGZ-Kn2yA8fTVcQsQA>
-    <xmx:dal2Zydqj9CFaZDuE8Jm_kW8q-O9lKgFa2VG6cY3FpUiQsR-mMROOQ>
-    <xmx:dal2Z_MAp5DiTyvT3nwDU_3QlHGUjO0V2gVfQjv0WLunocOJIYhk7Q>
-    <xmx:dal2Z8lV4LwZOkVQ0_Pgp8sQgOgMYcgTMYh8k8SzCQn9mkTH4n9Lzw>
-    <xmx:dal2Z1ZtedQssnUisz3kMdnSUn8E03HLksWNlHCceE67BGyPIBK4C-Av>
-Feedback-ID: i8c5e488c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 96D0BB0006A; Thu,  2 Jan 2025 09:57:57 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="Lhv2vck3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1735830955; x=1736090155;
+	bh=hzwX0qyt6jHc8KDPRr2915MkTSjuEeGovVbA1AcsWA4=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=Lhv2vck3XJNNsgpgAvhee1W7xrag/F5N1Fhq7TpYa5aTEqcuc7kUlnlGSztWxc49N
+	 x1V8U7IFbnsS/YtcxH7fU2KpjeJwWaA1bCrt4KaOzVxag0R4tdmAhK4GKFaLGLM+HB
+	 E7qoln8KGcBtjlzFsR2jVIdgUR2W0bcV17y3Wv98tvkRsdiEEfhVFjXPMCrLQib04r
+	 /tr+RLeDqipj/fiQ/beN65+OVDfYdW86SRwCAA2n2dxPSoau0Bx2hX7CglwoYiFzeZ
+	 Xu1c3a0czjkGuTH0kiou0SEQbMApdDUXzzZhHip+EYQN89Cw2FzMH/hjl8jzI2Mzsj
+	 MPoyCBuOaCxAA==
+Date: Thu, 02 Jan 2025 15:15:50 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Sarah Gastner <gastner2001@protonmail.com>
+Subject: git log date filter bug
+Message-ID: <gEmXX5Orp18U4lUPlWeCKoepi91ih8VkreogEnepOIzTOihbf_iNuXqvdhFcgnIpRabnUscWIKf_GH04iI5NeVpdWjbHnPIPa6ZAtkfITk0=@protonmail.com>
+Feedback-ID: 61900280:user:proton
+X-Pm-Message-ID: f979efacba19a3b15c238722145f821402d21645
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg"
+
+--b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 02 Jan 2025 15:57:56 +0100
-Message-Id: <D6ROC4RAYQS1.3V2K2W5GMAEYR@cepl.eu>
-Cc: "Git List" <git@vger.kernel.org>
-Subject: Re: Change the grep command called by git with alternative tools,
- such as ug.
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: "Hongyi Zhao" <hongyi.zhao@gmail.com>
-X-Mailer: aerc 0.18.2
-References: <CAGP6POJX9GFsNkgGd7o9Pr-tFoz0sgRk51vVG4P0Kn1DPZe+3Q@mail.gmail.com> <D6RLU4BY374I.GQY9MLMV1AZJ@cepl.eu> <CAGP6POKLdTpwsaGo-oyGAiYJMRzwXN06rv3+V7v5QbL6xtDROw@mail.gmail.com>
-In-Reply-To: <CAGP6POKLdTpwsaGo-oyGAiYJMRzwXN06rv3+V7v5QbL6xtDROw@mail.gmail.com>
 
-On Thu Jan 2, 2025 at 2:39 PM CET, Hongyi Zhao wrote:
-> Do you mean: by linking ug as git-ug will do the trick?
+Good day,
 
-No, you would have to rewrite git-grep to use external grep-like
-program. I am not sure whether there isn=E2=80=99t such project already
-out there.
+I encountered some weird behaviour that I think is a bug. I'll paste the bu=
+g report below and also attach it to this email.
 
-Best,
+Best regards
 
-Mat=C4=9Bj
+Sarah Gastner
 
---=20
-http://matej.ceplovi.cz/blog/, @mcepl@en.osm.town
-GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
-=20
-To the well-organized mind, death is but the next great adventure.
-  -- Albus Dumbledore
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+I used the command "git log --after=3D2023-03-10 before=3D2024-01-24" in th=
+e kubernetes repository (https://github.com/kubernetes/kubernetes), checked=
+ out branch master (commit cb93d6ee69b8d4ca8701336e4f7cb278751f34e4).
+
+What did you expect to happen? (Expected behavior)
+The following commit (amongst others) to appear in the output:
+commit 501976cc34ed3bfea6e1c994d41cb9bc464d6c3b
+Author: Jiahui Feng <jhf@google.com>
+Date:   Mon Mar 13 14:40:47 2023 -0700
+
+    fix broken tests after dependency injection.
+
+What happened instead? (Actual behavior)
+The commit did not appear.
+
+What's different between what you expected and what actually happened?
+Both the author date and the commit date are 2023-03-13.=20
+The interval 2023-03-10 to 2024-01-24 should include this date and therefor=
+e this commit.
+
+Anything else you want to add:
+I was able to figure out the minimal date interval needed for this commit t=
+o appear: 2023-03-07 to 2023-03-14.
+The following command will only display the commit specified above: git log=
+ --after=3D2023-03-07 --before=3D2023-03-14 --grep=3D"fix broken tests afte=
+r dependency injection."
+If you change the --after date to one day later (2023-03-08), there will be=
+ no output.
+
+This issue appears in other repositories too.
+
+I observed this behaviour on Windows and WSL (Ubuntu).
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.47.1.windows.1
+cpu: x86_64
+built from commit: 2cd22437f64229935dc564db969cbcbfed5e9045
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.11.0
+OpenSSL: OpenSSL 3.2.3 3 Sep 2024
+zlib: 1.3.1
+uname: Windows 10.0 19045=20
+compiler info: gnuc: 14.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.ex=
+e
+
+
+[Enabled Hooks]
+
+--b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg
+Content-Type: text/plain; name=git-bugreport-2025-01-02-1249.txt
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=git-bugreport-2025-01-02-1249.txt
+
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCkkgdXNlZCB0aGUgY29tbWFuZCAiZ2l0IGxvZyAtLWFmdGVyPTIw
+MjMtMDMtMTAgYmVmb3JlPTIwMjQtMDEtMjQiIGluIHRoZSBrdWJlcm5ldGVzIHJlcG9zaXRvcnkg
+KGh0dHBzOi8vZ2l0aHViLmNvbS9rdWJlcm5ldGVzL2t1YmVybmV0ZXMpLCBjaGVja2VkIG91dCBi
+cmFuY2ggbWFzdGVyIChjb21taXQgY2I5M2Q2ZWU2OWI4ZDRjYTg3MDEzMzZlNGY3Y2IyNzg3NTFm
+MzRlNCkuCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
+KQpUaGUgZm9sbG93aW5nIGNvbW1pdCAoYW1vbmdzdCBvdGhlcnMpIHRvIGFwcGVhciBpbiB0aGUg
+b3V0cHV0Ogpjb21taXQgNTAxOTc2Y2MzNGVkM2JmZWE2ZTFjOTk0ZDQxY2I5YmM0NjRkNmMzYgpB
+dXRob3I6IEppYWh1aSBGZW5nIDxqaGZAZ29vZ2xlLmNvbT4KRGF0ZTogICBNb24gTWFyIDEzIDE0
+OjQwOjQ3IDIwMjMgLTA3MDAKCiAgICBmaXggYnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kg
+aW5qZWN0aW9uLgoKV2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpUaGUg
+Y29tbWl0IGRpZCBub3QgYXBwZWFyLgoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91
+IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwpCb3RoIHRoZSBhdXRob3IgZGF0
+ZSBhbmQgdGhlIGNvbW1pdCBkYXRlIGFyZSAyMDIzLTAzLTEzLiAKVGhlIGludGVydmFsIDIwMjMt
+MDMtMTAgdG8gMjAyNC0wMS0yNCBzaG91bGQgaW5jbHVkZSB0aGlzIGRhdGUgYW5kIHRoZXJlZm9y
+ZSB0aGlzIGNvbW1pdC4KCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgpJIHdhcyBhYmxl
+IHRvIGZpZ3VyZSBvdXQgdGhlIG1pbmltYWwgZGF0ZSBpbnRlcnZhbCBuZWVkZWQgZm9yIHRoaXMg
+Y29tbWl0IHRvIGFwcGVhcjogMjAyMy0wMy0wNyB0byAyMDIzLTAzLTE0LgpUaGUgZm9sbG93aW5n
+IGNvbW1hbmQgd2lsbCBvbmx5IGRpc3BsYXkgdGhlIGNvbW1pdCBzcGVjaWZpZWQgYWJvdmU6IGdp
+dCBsb2cgLS1hZnRlcj0yMDIzLTAzLTA3IC0tYmVmb3JlPTIwMjMtMDMtMTQgLS1ncmVwPSJmaXgg
+YnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kgaW5qZWN0aW9uLiIKSWYgeW91IGNoYW5nZSB0
+aGUgLS1hZnRlciBkYXRlIHRvIG9uZSBkYXkgbGF0ZXIgKDIwMjMtMDMtMDgpLCB0aGVyZSB3aWxs
+IGJlIG5vIG91dHB1dC4KClRoaXMgaXNzdWUgYXBwZWFycyBpbiBvdGhlciByZXBvc2l0b3JpZXMg
+dG9vLgoKSSBvYnNlcnZlZCB0aGlzIGJlaGF2aW91ciBvbiBXaW5kb3dzIGFuZCBXU0wgKFVidW50
+dSkuCgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3Ug
+Y2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJ
+bmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40NS4xLndpbmRvd3MuMQpjcHU6IHg4Nl82
+NApidWlsdCBmcm9tIGNvbW1pdDogOTY1YjE2Nzk4ZGFiNjk2MmFkYTViMGQ4Y2YwZGNhNjhmMzg1
+YzQ0OApzaXplb2YtbG9uZzogNApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IC9iaW4vc2gK
+ZmVhdHVyZTogZnNtb25pdG9yLS1kYWVtb24KdW5hbWU6IFdpbmRvd3MgMTAuMCAxOTA0NSAKY29t
+cGlsZXIgaW5mbzogZ251YzogMTMuMgpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZh
+aWxhYmxlCiRTSEVMTCAodHlwaWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IEM6XFByb2dyYW0g
+RmlsZXNcR2l0XHVzclxiaW5cYmFzaC5leGUKCgpbRW5hYmxlZCBIb29rc10K
+
+--b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg
+Content-Type: text/plain; name=git-bugreport-2025-01-02-1249.txt
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=git-bugreport-2025-01-02-1249.txt
+
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
+IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
+LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
+cm9kdWNlIHlvdXIgaXNzdWUpCkkgdXNlZCB0aGUgY29tbWFuZCAiZ2l0IGxvZyAtLWFmdGVyPTIw
+MjMtMDMtMTAgYmVmb3JlPTIwMjQtMDEtMjQiIGluIHRoZSBrdWJlcm5ldGVzIHJlcG9zaXRvcnkg
+KGh0dHBzOi8vZ2l0aHViLmNvbS9rdWJlcm5ldGVzL2t1YmVybmV0ZXMpLCBjaGVja2VkIG91dCBi
+cmFuY2ggbWFzdGVyIChjb21taXQgY2I5M2Q2ZWU2OWI4ZDRjYTg3MDEzMzZlNGY3Y2IyNzg3NTFm
+MzRlNCkuCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
+KQpUaGUgZm9sbG93aW5nIGNvbW1pdCAoYW1vbmdzdCBvdGhlcnMpIHRvIGFwcGVhciBpbiB0aGUg
+b3V0cHV0Ogpjb21taXQgNTAxOTc2Y2MzNGVkM2JmZWE2ZTFjOTk0ZDQxY2I5YmM0NjRkNmMzYgpB
+dXRob3I6IEppYWh1aSBGZW5nIDxqaGZAZ29vZ2xlLmNvbT4KRGF0ZTogICBNb24gTWFyIDEzIDE0
+OjQwOjQ3IDIwMjMgLTA3MDAKCiAgICBmaXggYnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kg
+aW5qZWN0aW9uLgoKV2hhdCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQpUaGUg
+Y29tbWl0IGRpZCBub3QgYXBwZWFyLgoKV2hhdCdzIGRpZmZlcmVudCBiZXR3ZWVuIHdoYXQgeW91
+IGV4cGVjdGVkIGFuZCB3aGF0IGFjdHVhbGx5IGhhcHBlbmVkPwpCb3RoIHRoZSBhdXRob3IgZGF0
+ZSBhbmQgdGhlIGNvbW1pdCBkYXRlIGFyZSAyMDIzLTAzLTEzLiAKVGhlIGludGVydmFsIDIwMjMt
+MDMtMTAgdG8gMjAyNC0wMS0yNCBzaG91bGQgaW5jbHVkZSB0aGlzIGRhdGUgYW5kIHRoZXJlZm9y
+ZSB0aGlzIGNvbW1pdC4KCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgpJIHdhcyBhYmxl
+IHRvIGZpZ3VyZSBvdXQgdGhlIG1pbmltYWwgZGF0ZSBpbnRlcnZhbCBuZWVkZWQgZm9yIHRoaXMg
+Y29tbWl0IHRvIGFwcGVhcjogMjAyMy0wMy0wNyB0byAyMDIzLTAzLTE0LgpUaGUgZm9sbG93aW5n
+IGNvbW1hbmQgd2lsbCBvbmx5IGRpc3BsYXkgdGhlIGNvbW1pdCBzcGVjaWZpZWQgYWJvdmU6IGdp
+dCBsb2cgLS1hZnRlcj0yMDIzLTAzLTA3IC0tYmVmb3JlPTIwMjMtMDMtMTQgLS1ncmVwPSJmaXgg
+YnJva2VuIHRlc3RzIGFmdGVyIGRlcGVuZGVuY3kgaW5qZWN0aW9uLiIKSWYgeW91IGNoYW5nZSB0
+aGUgLS1hZnRlciBkYXRlIHRvIG9uZSBkYXkgbGF0ZXIgKDIwMjMtMDMtMDgpLCB0aGVyZSB3aWxs
+IGJlIG5vIG91dHB1dC4KClRoaXMgaXNzdWUgYXBwZWFycyBpbiBvdGhlciByZXBvc2l0b3JpZXMg
+dG9vLgoKSSBvYnNlcnZlZCB0aGlzIGJlaGF2aW91ciBvbiBXaW5kb3dzIGFuZCBXU0wgKFVidW50
+dSkuCgpQbGVhc2UgcmV2aWV3IHRoZSByZXN0IG9mIHRoZSBidWcgcmVwb3J0IGJlbG93LgpZb3Ug
+Y2FuIGRlbGV0ZSBhbnkgbGluZXMgeW91IGRvbid0IHdpc2ggdG8gc2hhcmUuCgoKW1N5c3RlbSBJ
+bmZvXQpnaXQgdmVyc2lvbjoKZ2l0IHZlcnNpb24gMi40Ny4xLndpbmRvd3MuMQpjcHU6IHg4Nl82
+NApidWlsdCBmcm9tIGNvbW1pdDogMmNkMjI0MzdmNjQyMjk5MzVkYzU2NGRiOTY5Y2JjYmZlZDVl
+OTA0NQpzaXplb2YtbG9uZzogNApzaXplb2Ytc2l6ZV90OiA4CnNoZWxsLXBhdGg6IEQ6L2dpdC1z
+ZGstNjQtYnVpbGQtaW5zdGFsbGVycy91c3IvYmluL3NoCmZlYXR1cmU6IGZzbW9uaXRvci0tZGFl
+bW9uCmxpYmN1cmw6IDguMTEuMApPcGVuU1NMOiBPcGVuU1NMIDMuMi4zIDMgU2VwIDIwMjQKemxp
+YjogMS4zLjEKdW5hbWU6IFdpbmRvd3MgMTAuMCAxOTA0NSAKY29tcGlsZXIgaW5mbzogZ251Yzog
+MTQuMgpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlCiRTSEVMTCAodHlw
+aWNhbGx5LCBpbnRlcmFjdGl2ZSBzaGVsbCk6IEM6XFByb2dyYW0gRmlsZXNcR2l0XHVzclxiaW5c
+YmFzaC5leGUKCgpbRW5hYmxlZCBIb29rc10K
+
+--b1=_px4sP2oToWTVmnzSrzsgpDWGtzf9uS3IqDRvn0KJ7hg--
 
