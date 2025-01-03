@@ -1,55 +1,55 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3050D1FA82F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AB81FA8DB
 	for <git@vger.kernel.org>; Fri,  3 Jan 2025 14:47:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735915631; cv=none; b=MEuJIEj1Jfs7LRNTkQyOekkD1ncHeD2QoqU21f4/zSU9n/6WXqupfJ/fetg2dSiCckHLO4B1+8yVcPtc+l2gtBNPn5Gps1cKMunmaxeKNKKO5onCbr9eIM77uCC6gILNsWF8AhhDPUDk95N/5UMizLMjfez+PqsIkThCONowFtk=
+	t=1735915631; cv=none; b=Nar+5C2aqNChPxbgGwPvwKLPgY3J4lG+VJ6iPJ+5zLFNGprRY5VaLIh/MlBhaz6ioIUSQh/BRFUj2x8oE6cWxpXpLjD8dLfBczedwMQDIs/jtjEYEvcZPbO4ukCw0Z76QIYis1O4JaPhMPwP6uV6PbO2JCsKgpDvZwQYguKt5m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1735915631; c=relaxed/simple;
-	bh=HMH0fpUN1uI7/2bWhxXkqOcvNXEH6e4k46mtsF6SdSQ=;
+	bh=ghuyw6SYeYHbpzHzibb/6G6Xb9vwckZ6TOFdumvisKo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IGvLX6xulZZ8X+YdMAqAQA9EZ0TybzoVUKiyXIjqYlMLQfBvW6GHT72uWVZpuHwpLOuhAj9ixT5qzTDRWx+XMIjoaUkKtW2N52MtswWH0+Pnts9yjUUnkTf98yYij8AmGtYBR2wDGFYPF+AlCQJXp3YY4Nr8CAr7PznIrv25+po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uw5QUDR8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ORbCZFwo; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=ohS+S6dNRdcvZMf/gyWSrt7U5CTzXFWtj56C79PeJX42UpH/9XuJjP3IMhzL8XQx8IHVVtYAzc/6UwtbGbwZWO36yTS2bmJHry68vye7RolKJesgViRa1AmmY6U9xfEXUGvcntWqAena6noJDDtvXbu4FvoZ2PDHcsfgGU+A4SM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OWLUYbWF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hS/qSyA+; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uw5QUDR8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ORbCZFwo"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1A4B313806DA
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OWLUYbWF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hS/qSyA+"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 499071140161
 	for <git@vger.kernel.org>; Fri,  3 Jan 2025 09:47:08 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 03 Jan 2025 09:47:08 -0500
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Fri, 03 Jan 2025 09:47:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm2; t=1735915628;
-	 x=1736002028; bh=oML5C9rooFVckFk2VilofDdmvx3UowN2qmRzsP2cyEA=; b=
-	uw5QUDR8n9aTcuUw5rH2iZiZqXGZsBYn1DcAk4a8RTaRlDTR65b+lEVnSlgzU9EF
-	tN7QYq90Dm35f8xVZ1l6z1IQl+ESWjMZ7ueuoXkfbnyG29WEFZByr7ENigix4t4c
-	tTyBusn1tDXF7cV07KAeli7EK9N9MHCMP+PxpeceOiNi0o5+mUdDmeLLI7TXy6by
-	JaDrjHvtwDHncA36Oyx6Vlzdp5azcVj+EzSPcNLFLEywTz1Ts1Ee2o4WxXHdTcLo
-	UiMCC/PFJg38Eom/m2MuY4tG6Rs9LXau6n5iGhd759tzz4uzMnbue83rh+HborhQ
-	mMx6XUzh4fDgSF8PungeAg==
+	 x=1736002028; bh=M1utMMxCkHLW5BeP2wWQdzyI/KTXFh+zs1jcqmqGxCk=; b=
+	OWLUYbWF+U7O04cZL9MNYOAB4znBSIx6Dc+Z7Ju0AZPBgrF3FiDY2RvryG7mpkeD
+	IviXHBVAFSKOCZkg1IAEGJyYBDR6iGicV2407ynoSteQ123Inbnhpc5diow/KPJY
+	Sdy14kzku9dUGyv6Ak4wwGHnKoIyy2+L/kxAUUN2lZOKkZGz/zdhz7aLtGWd1e9/
+	tsN8n0MBD6ZJy45vuNg/BNTlmGe3VU+NCEg0mS3pWLkzHMbrhZoNXH8yhFkSF76A
+	Ve/Tx6t4EN+9Tp7AtPsLa4t3ivQDhpFqJiSiB/Du7D4Oaq8ZKSPcE8nUfb5tfi7Q
+	VTLVi7M9A33Kf1GWdBPWwg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735915628; x=
-	1736002028; bh=oML5C9rooFVckFk2VilofDdmvx3UowN2qmRzsP2cyEA=; b=O
-	RbCZFwouXJzjJgsVj2LKNbq8AS977yw/MMZr0RNG7ebAdH0tkrAlwvSG9zTGmGyN
-	HwwNFUQk+5btLW0dL1x8bC2eb4U9Nnkqb+fsKt0p8v5Nj6KutGs2x5o5zeyr6jgn
-	SULX7zZQ3Q2j28RCcQNyOnkwM+hTVfr4m9B51r/VOa8yZere75MONZ8lz1FM5mx0
-	6yI3PnUwLw5qgui699+CukKhZlR7C6R8vtAR3qiLAuvene8hd0NLOsU+axhUpRQl
-	Q+koduaeprq7V/7k5hgrsIdKP5P6DMoyVXvPfnhgl+sCsAfJgieRngv2j3LWaY/F
-	LmEa3uAXrDh5Bkkp5Si3w==
-X-ME-Sender: <xms:a_h3ZzLU1oA8o-pmWm7jDKfMBF8H8bVN36CFdl9_TzLVbEJhODIvHg>
-    <xme:a_h3Z3JhKyBvIIvrKet0DCoOI_PkAQTj2kQKwKSMqtJNjjXhXyth7boOvvaxpwxbq
-    JL2_1ZoykPzoDkv-g>
-X-ME-Received: <xmr:a_h3Z7tBfVSnbNW6guBDpcPNZR377buQg5tczArUIGh127Bv5K3uYDxGLEqWFVPlzzL5RXpXB-xTkgdpMCP6nQibOaw4E4FrkYFQxv0T0IyF9FQ>
+	1736002028; bh=M1utMMxCkHLW5BeP2wWQdzyI/KTXFh+zs1jcqmqGxCk=; b=h
+	S/qSyA+1OY9lKP2RtVKGgLBTFn2kQaqh79Bng1MgThd/VAKeRBUw9OQZdsbeqJmg
+	pzDAEt6D8sVAISaeUfhyC7A6/umqOHXT8kzHWvAykPxlnBW7wYeP0dQi1E4OVCUk
+	jEo2wc3UZaVb6IYwmEteXTaFQZB6pDV9HR7lA+7pCjLFDwivLZpF2P3FlrHtp8tH
+	bOf8Kp/h+NXtmJwp8hDm7ZoFOGKdT7V+C4Q153cuMa+yg5lSLdFzOqmdU1+KKLF0
+	uLIjBba8Tc/TdTN65KWK9+AgXD708ENJ34y4FgX97QW6K90cwsiTvBnoBO1OnHm7
+	5x0m9+wAlYBH5N9rYAp6g==
+X-ME-Sender: <xms:bPh3Z75RI4cF1Ni1LkJLpk82BXIeMerIoA8A9BD4eAZEZfzUYhiHSQ>
+    <xme:bPh3Zw6emKzv0OHDKXvBq501uhkX4m9h2JfqrOeNWLsk3Ap4tVwnIUTB3FNFsPlRW
+    vKS6L_0r9asMGmb4w>
+X-ME-Received: <xmr:bPh3Zyc4RGsGrOL62m8zB0XGimuRo3ck1BNth2zKsG7Xs4ZPWUi6_OmOL2aaBBfIBtjLK_quouwe-0y-Rdp-08dLiINaL-q61gk9ph0HN7CwRfM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedgieekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedgieekucetufdoteggod
     rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
     gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
     vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:a_h3Z8ZqqokxlSoUhiMswUmrfivjVo7dYtOk8b-cD81O9fIMJbPqJA>
-    <xmx:a_h3Z6YeSRhA40YjGeDymWyHOOFsWfXSFbOnmaE-vQayW_nDvhWOsg>
-    <xmx:a_h3ZwDNmb7yQ_m_qhlgoZkh3NcbVFMDI-scDA_DkZisGwEBckVVig>
-    <xmx:a_h3Z4baR8R-2afLN0PcuxH6xESpY3TWIA-cMkdtHBDlcaEGXbCKnA>
-    <xmx:bPh3Z9zIPRtG9Yj9i8DInYb32unvz15Yp0ZzgY47oTPHhKv19eF12M4w>
+X-ME-Proxy: <xmx:bPh3Z8JeVtEm6jrjhy5sUjkCh4L3Gvm1VFst3NPlZjSoMrCHKntynQ>
+    <xmx:bPh3Z_JoBI5oqR8XAMphu15-3uy3VQ6x4sdLywvuYPNAVAqvxVxBhw>
+    <xmx:bPh3Z1y3KIoccE_UU8CTqA84JRo6sM4a_Bw22pKXBohmBp8w_L9Urg>
+    <xmx:bPh3Z7JLgKtsOKlb3Kc95Kx5QwVT09zseBI7KSmpvvfrzPbqb-Mx7A>
+    <xmx:bPh3Z1jAXewATqwmw3n-4IIp-z-SUAbmPeUXO_Hzk1YkWbfLV_On1eum>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
  <git@vger.kernel.org>; Fri, 3 Jan 2025 09:47:07 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4bef1e97 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f7761f64 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 3 Jan 2025 14:47:04 +0000 (UTC)
+	Fri, 3 Jan 2025 14:47:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 03 Jan 2025 15:46:39 +0100
-Subject: [PATCH 02/10] t7422: fix flaky test caused by buffered stdout
+Date: Fri, 03 Jan 2025 15:46:40 +0100
+Subject: [PATCH 03/10] github: adapt containerized jobs to be rootless
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,76 +82,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250103-b4-pks-ci-fixes-v1-2-a9bb95dff833@pks.im>
+Message-Id: <20250103-b4-pks-ci-fixes-v1-3-a9bb95dff833@pks.im>
 References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
 In-Reply-To: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-One test in t7422 asserts that `git submodule status --recursive`
-properly handles SIGPIPE. This test is flaky though and may sometimes
-not see a SIGPIPE at all:
+The containerized jobs in GitHub Actions run as root, giving them
+special permissions to for example delete files even when the user
+shouldn't be able to due to file permissions. This limitation keeps us
+from using containerized jobs for most of our Ubuntu-based jobs as it
+causes a number of tests to fail.
 
-    expecting success of 7422.18 'git submodule status --recursive propagates SIGPIPE':
-            { git submodule status --recursive 2>err; echo $?>status; } |
-                    grep -q X/S &&
-            test_must_be_empty err &&
-            test_match_signal 13 "$(cat status)"
-    ++ git submodule status --recursive
-    ++ grep -q X/S
-    ++ echo 0
-    ++ test_must_be_empty err
-    ++ test 1 -ne 1
-    ++ test_path_is_file err
-    ++ test 1 -ne 1
-    ++ test -f err
-    ++ test -s err
-    +++ cat status
-    ++ test_match_signal 13 0
-    ++ test 0 = 141
-    ++ test 0 = 269
-    ++ return 1
-    error: last command exited with $?=1
-    not ok 18 - git submodule status --recursive propagates SIGPIPE
-
-The issue is caused by us using grep(1) to terminate the pipe on the
-first matching line in the recursing git-submodule(1) process. Standard
-streams are typically buffered though, so this condition is racy and may
-cause us to terminate the pipe after git-submodule(1) has already
-exited, and in that case we wouldn't see the expected signal.
-
-Fix the issue by converting standard streams to be unbuffered. I have
-only been able to reproduce this issue a single time after running t7422
-with `--stress` after an extended amount of time, so I cannot claim to
-be fully certain that this fix is sufficient.
+Adapt the jobs to create a separate user that executes the test suite.
+This follows similar infrastructure that we already have in GitLab CI.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t7422-submodule-output.sh | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ .github/workflows/main.yml | 6 ++++--
+ ci/install-dependencies.sh | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
-index f21e9203678b94701281d5339ae8bfe53d5de0ed..ba843c02c9c2da198578aec5716813de32960b86 100755
---- a/t/t7422-submodule-output.sh
-+++ b/t/t7422-submodule-output.sh
-@@ -166,9 +166,13 @@ do
- 	'
- done
- 
--test_expect_success !MINGW 'git submodule status --recursive propagates SIGPIPE' '
--	{ git submodule status --recursive 2>err; echo $?>status; } |
--		grep -q X/S &&
-+test_lazy_prereq STDBUF '
-+	stdbuf --version
-+'
-+
-+test_expect_success !MINGW,STDBUF 'git submodule status --recursive propagates SIGPIPE' '
-+	{ stdbuf -oL git submodule status --recursive 2>err; echo $?>status; } |
-+		stdbuf -i0 grep -q X/S &&
- 	test_must_be_empty err &&
- 	test_match_signal 13 "$(cat status)"
- '
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 900be9957a23fcaa64e1aefd0c8638c5f84b7997..b02f5873a540b458d38e7951b4ee3d5ca598ae23 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -371,10 +371,12 @@ jobs:
+       run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
+     - uses: actions/checkout@v4
+     - run: ci/install-dependencies.sh
+-    - run: ci/run-build-and-tests.sh
++    - run: useradd builder --create-home
++    - run: chown -R builder .
++    - run: sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh
+     - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      run: ci/print-test-failures.sh
++      run: sudo --preserve-env --set-home --user=builder ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       uses: actions/upload-artifact@v4
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index d1cb9fa8785388b3674fcea4dd682abc0725c968..ecb5b9d36c20d3e7e96148ac628a96c62642c308 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -31,7 +31,7 @@ alpine-*)
+ 	;;
+ fedora-*|almalinux-*)
+ 	dnf -yq update >/dev/null &&
+-	dnf -yq install make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
++	dnf -yq install shadow-utils sudo make gcc findutils diffutils perl python3 gettext zlib-devel expat-devel openssl-devel curl-devel pcre2-devel >/dev/null
+ 	;;
+ ubuntu-*|ubuntu32-*|debian-*)
+ 	# Required so that apt doesn't wait for user input on certain packages.
 
 -- 
 2.48.0.rc1.241.g6c04ab211c.dirty
