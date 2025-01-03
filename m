@@ -1,107 +1,182 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FF31B85FA
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 06:45:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5580318EFCC
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 06:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735886754; cv=none; b=ajqNaKW0UyUyLT0VgGrrfxNHoVxld6r84Rg26lbIytWhE/3edFNPrAJXwXIXWgE9JlscqaDahGdaFcpD1DpdPvkx8wlGwBiTkfXrNAI9oq17+7O6uT7cadNZjxK/yMWwjFMQx6nzblmEGkL/y/XeJc0YiYyoq9flwhpXgo6RxFQ=
+	t=1735887045; cv=none; b=Z3oVWCucNM3TjT6I2+y7mLj3bAvV5U8BDdrAGGy7XM+451kxX4al7XuFonbQIrfHmhokFYORx6rchWb3NYl3rQ9fBAmVVSL6ezxxLLLmXAk/COP2p6ZKU5eOFpNyEEmyvb72EsCODY5VR6Dj6actiu87vf13zagld6jF8clNTwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735886754; c=relaxed/simple;
-	bh=/fq+nr4MHYk9ovPoSuz2eOI+hbkteDpOMMHzLlXkGHc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JNZZ/q6Frs6h8ut9NOYhICZjwqSdnw3p4MKdmddAC11PqdvSI1oIAck1TcUpBCjIQsEYOtaeRytPblnfM4cuHOp9qEOo4j29RWQTlPD+P7A/HmNmdMTlyMRSGipBR6nMtTGDY11J4iSiwqi0NKE+oh0Zpp+5ZvwRxBFsDtsySzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gNlSE43K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rjbTJGtw; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1735887045; c=relaxed/simple;
+	bh=IjMQWvFSrhb4cX1IDpMm+PHfspjMql8oqHKizUbxTLg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X9CaTmlSrxPgTmRGSIpYVE3VxMwYIGiT19crbO7Zq53NGybBnkzL23kq1Mf9uWgxhOkzeHedvy4EEBY6WmWyjDbh2ZkMRK6yP2IjHQYk77n78g/Rv9SxV+XGSx+6R0mBV5LkR9cNgwASqsP4BBFpg4zz8nGRpReWQROMRagVmWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R4AUVg9W; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gNlSE43K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rjbTJGtw"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E8AEA114021D;
-	Fri,  3 Jan 2025 01:45:50 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 03 Jan 2025 01:45:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1735886750; x=1735973150; bh=Bul+2uAQkc
-	iVu4Tb/IDDkXhM5A07JUIykjte1/ZVdEM=; b=gNlSE43K7A8WvJQDfyfu0+nfco
-	Nx/H0WyAqfU5j48IOQLx9doRCObbmYOCLNbOmRePELPf+sWrGj6xNu2UAizJKrXw
-	obvsoaChx8qC3TOAeLpkCgOYoQln7dGx5E4Y4hbilVqS1E7l0K6uXdzvS+LWZxzR
-	kJTGYCVKHSM2r+Ebbvli8E27gQ3giiOfHS/si/+/POcfzRmzpHUgXphbMANRjhN3
-	NcutD1N3O7XtfkywigBVhUmUTri48xNlBr5lrTzznnV3oxu+gCX0JmN0D2gExUXd
-	FczZkqxhBRNgDNjA0FsZ0h9muBnfDVoJKOCEs58SwZk4+z9xyi60XpGDL0Qg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735886750; x=1735973150; bh=Bul+2uAQkciVu4Tb/IDDkXhM5A07JUIykjt
-	e1/ZVdEM=; b=rjbTJGtwRowZ2xPvQberdkiGa2yv5n2PE6TwJZancbIDo/6kFlJ
-	yuFmYDGBdcsFjbrLKHPwXvKbwcaSUQA86WF/+vU3KMWyL8tnJW0t6nA4gejqiIpe
-	V0qyhyRDjo33DjN4DIxYRY34pMp9Hg3mOd4+c+KXZCbl+q4rc+14oE/6JArPuevg
-	Ct43wwOiPWA8jXkrwUEd5EHsKUprUOdBDEi/UhIqzGTLvPrajGSJ4chg1KpxOkVJ
-	q19WRynxXzhHzmR28SQuZzZohgiDpy/gQikCBW7s23X+djqsS2+FQJBvemIOvdce
-	NtoZikUdPT4Qm2+2rZEz4QeBLD2YfUJ8q1A==
-X-ME-Sender: <xms:nod3ZwsBn5h8bXUuHQ_M4rrgXjOBvZBgGbVZxv8uGH2zhs8eW6nBXw>
-    <xme:nod3Z9dvvZ7eVzHE9OEdxus7WisHr1o-J8z-DXBswEq2s_lV0oJqvcYOfbKFJWtYs
-    mCpNNySf7VVgfX8_g>
-X-ME-Received: <xmr:nod3Z7wguEx745O5L-UR_-5srLPEUH-5q-qaC8G7RRKSs6Wrx4_6EJFNzztPG_O9cG8MsJWCcWY4tlF69xxF-305ikf6DNPdZPxf7RQKAk2KPZE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeffedgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheplhdr
-    shdrrhesfigvsgdruggv
-X-ME-Proxy: <xmx:nod3ZzNEApKTn79fcQp6zYemLJe-LuMZAqq0ZYA-Ndlxp3GHzXYPgw>
-    <xmx:nod3Zw-ghIkNNJw4Lr9_a-HJPKGa-eQOJbwO2y6knjUX1xE4SNrWGw>
-    <xmx:nod3Z7U8AMYBFaZIlSd6gFfGYe1tjEfY-_skKRUcpGHESPkIeEp-uw>
-    <xmx:nod3Z5cIHuRTv17_WrBwRNIzGBjYfbwfumJdtDWf3KctYBInwVVcyg>
-    <xmx:nod3Z0Zz-WqWKTwB8QL3ILNWPp-JZ6lGl-zzap6uSA0lbjx_giVf7sd6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 01:45:49 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 46ab49e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jan 2025 06:45:48 +0000 (UTC)
-Date: Fri, 3 Jan 2025 07:45:47 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] thread-utils: introduce optional barrier type
-Message-ID: <Z3eHm-X39LcE8vMy@pks.im>
-References: <20241230042325.GA112439@coredump.intra.peff.net>
- <20241230042830.GC113400@coredump.intra.peff.net>
- <Z3JFyniivEd716aX@pks.im>
- <20250101182826.GB1391912@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4AUVg9W"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21628b3fe7dso161393255ad.3
+        for <git@vger.kernel.org>; Thu, 02 Jan 2025 22:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735887044; x=1736491844; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v/xDsfK91VRJVmaLtn3UEztmnvHAxxCRqM6va9Nj7iE=;
+        b=R4AUVg9WKFq0oSgGSSbtziPt/FOzkxp/+5rnh4pRcRsT5asb/pfqqHbaBjIKNhyWIe
+         /eqQWY/z32i6YGiSyW7Zbx3J1NwRDKkD4OC5vjYkgn8iY8wYCe09qQij6VUuZBKkA5yB
+         xITT0xDJ+BOvlVf54MECVzCMlflpZXsCs1fjnoLj+LuXBqHYrLECDSo/THkjpZThTK+O
+         KflPcvTK7+ACg7nTs41uIIDc0MLos9O4t1rd0+64sbd9Rxa0mlvY76UTHhG65bTeJiAp
+         +SfsMrWlz8XCondRIl1Q8OEnVY7QdmwrvDFd99Hm9jKkC4ApYopNPo4LIwcvyoqkiSy2
+         cD1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735887044; x=1736491844;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v/xDsfK91VRJVmaLtn3UEztmnvHAxxCRqM6va9Nj7iE=;
+        b=IgDAmiE3dLBwJaMlrV5cdjZwCrMGQ3u/gpJfef72jOzKMvmEX7H+LnQ6Ps/Dsyfpmi
+         MOylYyrH83INZ3vfHzI8m72AzWcd3tElmavnv+GF2vg3TQMpS51oHXermkZxZ9ACQBeI
+         FEygPSaZb/QUWUj2YXKPfM5uFUhdX6XXtB8JsrhaKLiTWh8yS1ZLrSfPJg6snb6+mYbd
+         +DxTKEAeF6CUOnqOmfkBjIWwypmXMPnJKZoPj8grK6SGcU0c61Jmnvo1gDo4I8EHUyL5
+         eo61co3KuBAJV3yuLNmUFLab3OhrKsKevzRF68dUoZVjRf6t0B+rNMle2xTcspBUD1if
+         3sTg==
+X-Forwarded-Encrypted: i=1; AJvYcCWVhY6M37ftxnFyF+qAbHjnkq5w3yUL1Yxcxx7WX8SIdf8kJe9UTuPp1CY9/hGdl/m+V7c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX1pdscovvYCRGc/riEbXPg0wWC1flDSnpp19QpGFQQ8F1xqY6
+	W0kHX3pVL0DGyHS0jUUpV5/BSNA+zsQ7XArECQBVytuQxFnogaZeRonXurMr/OPDWvdA/jqlfQv
+	EPP3MSRdTBG31NusDEXROY+B4j8M=
+X-Gm-Gg: ASbGncvE00cR8Rz0MLg2x/G79QVk2yWDWio4lisOB4KBA2/WCgWvnXOojP0Q/fZPCdr
+	ioEude7kq0sfZw8kFe+BO9bQCtkZLmB81hKKLG5FWAThWzMQeMoonTg==
+X-Google-Smtp-Source: AGHT+IG7BnMSp8T5aFe5Mp0G7jaiGd+59tM1h499rNG2z3gaaJ1Mb0UwGkOtk1V7xNo1wkVPbLFBqEAgDIHvqKjkOo4=
+X-Received: by 2002:a05:6a20:7288:b0:1e1:aa24:2e5c with SMTP id
+ adf61e73a8af0-1e5e083f156mr68492462637.38.1735887043465; Thu, 02 Jan 2025
+ 22:50:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250101182826.GB1391912@coredump.intra.peff.net>
+References: <pull.1838.git.1734946566885.gitgitgadget@gmail.com>
+ <pull.1838.v2.git.1735380461980.gitgitgadget@gmail.com> <Z3JIpDQTDrQuoEN2@pks.im>
+ <xmqqh66l1d1n.fsf@gitster.g>
+In-Reply-To: <xmqqh66l1d1n.fsf@gitster.g>
+From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Date: Fri, 3 Jan 2025 12:20:07 +0530
+Message-ID: <CAG=Um+0fC3DcHB19du9YF19CdzCXkt9AYA1ndBJ5pbGAAMYREQ@mail.gmail.com>
+Subject: Re: [PATCH v2] maintenance: add prune-remote-refs task
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 01, 2025 at 01:28:26PM -0500, Jeff King wrote:
-> On Mon, Dec 30, 2024 at 08:03:38AM +0100, Patrick Steinhardt wrote:
-> > Okay. The Meson equivalent would be:
-> > [...]
-> 
-> Yeah, I figured it would need something similar (but for our CI it does
-> not yet matter). Do you want to prepare that as a patch on top? (Though
-> also see the message I'm about to send that we might be able to avoid
-> this series entirely!).
+On Mon, Dec 30, 2024 at 7:35=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+> > On Sat, Dec 28, 2024 at 10:07:41AM +0000, Shubham Kanodia via GitGitGad=
+get wrote:
+> >> diff --git a/Documentation/git-maintenance.txt b/Documentation/git-mai=
+ntenance.txt
+> >> index 6e6651309d3..8b3e496c8ef 100644
+> >> --- a/Documentation/git-maintenance.txt
+> >> +++ b/Documentation/git-maintenance.txt
+> >> @@ -158,6 +158,26 @@ pack-refs::
+> >>      need to iterate across many references. See linkgit:git-pack-refs=
+[1]
+> >>      for more information.
+> >>
+> >> +prune-remote-refs::
+> >> +    The `prune-remote-refs` task runs `git remote prune` on each remo=
+te
+> >> +    repository registered in the local repository. This task helps cl=
+ean
+> >> +    up deleted remote branches, improving the performance of operatio=
+ns
+> >> +    that iterate through the refs. See linkgit:git-remote[1] for more
+> >> +    information. This task is disabled by default.
+> >> ++
+> >> +NOTE: This task is opt-in to prevent unexpected removal of remote ref=
+s
+> >> +for users of git-maintenance. For most users, configuring `fetch.prun=
+e=3Dtrue`
+> >
+> > Do we want to make this linkgit:git-maintenance[1] even though this is
+> > self-referential?
+>
+> That certainly is a thought---the rule could be "whenever we refer
+> to a Git command, we refer to it in a uniform way".  An alternative
+> would be "of git-maintenance" -> "of this command" to weaken it.
+>
+> This refers to those users who want to use the command for other
+> reasons (you use the scheduled tasks driven by 'git maintenance'
+> only because you wanted the 'gc' and 'pack-refs' tasks to run, you
+> do not necessarily want to run a new kind of task the new version of
+> Git started supporting, especially when the task is destructive,
+> like this one).  We might want to stress that point, perhaps?  If a
+> reader reads this part of the documentation, finds this task useful
+> and decides to use 'git maintenance', the note would sound somewhat
+> nonsensical to them---"I thought about the ramifications, I decided
+> I wanted to use the command, why would it be opt-in?" is a plausible
+> confusion.
+>
+> >> +is a acceptable solution, as it will automatically clean up stale rem=
+ote-tracking
+> >> +branches during normal fetch operations. However, this task can be us=
+eful in
+> >> +specific scenarios:
+> >> ++
+> >> +--
+> >> +* When using selective fetching (e.g., `git fetch origin +foo:refs/re=
+motes/origin/foo`)
+> >> +  where `fetch.prune` would only affect refs that are explicitly fetc=
+hed.
+> >> +* When third-party tools might perform unexpected full fetches, and y=
+ou want
+> >> +  periodic cleanup independently of fetch operations.
+> >> +--
+> >
+> > Nicely explained. I wish we had more such documentation that is taking
+> > the user by their hand and explains why they may or may not want to hav=
+e
+> > a specific thing.
+>
+> Yes, a configuration or an option that are not for everybody and for
+> every situation need such a guidance, and this one is done nicely.
+>
+> >> +static int maintenance_task_prune_remote(struct maintenance_run_opts =
+*opts,
+> >> +                                     struct gc_config *cfg UNUSED)
+> >> +{
+> >> +    if (for_each_remote(prune_remote, opts)) {
+> >> +            error(_("failed to prune remotes"));
+> >> +            return 1;
+> >
+> > I wonder whether we should adapt the loop to be eager. Erroring out on
+> > the first failed remote would potentially mean that none of the other
+> > remotes may get pruned. So if you had a now-unreachable remote as first
+> > remote then none of your remotes would be pruned.
+>
+> I think the structure, hence the behaviour, is shared with an
+> existing prefetch task.  I think the current way is OK-ish, but
+> given that we are not in a hurry, we may want to correct the
+> semantics for both of them before unleashing this new task to the
+> world.
+>
+> For that, we need the callback functions given to for_each_remote
+> (i.e., fetch_remote and prune_remote) to always return "success" in
+> the sense to tell "I am done with this remote" to allow the loop to
+> continue to the next remote, and convey the failure from the
+> subcommand via some other means (like flipping a bit in the cbdata).
+>
+> Thanks.
 
-Looks like your version was reverted in favor of the new version you
-have sent. So I'll refrain from doing that :)
+Curious =E2=80=94 I submitted my patches through GGG, but Junio was kind
+enough to apply a few other fixes to it.
+Is there a place I can now get the whole diff (with the range diff
+patched in) so I can pull that into GGG?
 
-Patrick
+Thanks,
+Shubham
