@@ -1,79 +1,101 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393508F66
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:07:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCC91B21B9
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735931254; cv=none; b=QndD+ikRGKVSDJQ/DSPSS2z/3+VHBa241t4ThVP9T2y2ibX9iqSvbetZugA2HZOqjqjv3nJ49lyhnqjXfaRYUhmK9IfUWg23+ToyN4B8wohL/4BAXImJ08cnbtdsuUtiW6tHNNeR0nhxQU4hkpH3WUtk5jfG1Snk9evMgmpUf4M=
+	t=1735931379; cv=none; b=pBOui8tRLgDEgOTsue+aX4s74IDeOwKMhTmYUlvNqlwGCQIyKuK23acAHrCCV0umbYpbNUJMuP2ewsvOkA+kUbu2P3igK1NbvUQx7t3MJNUCPRVPF6tVPDLtDy/edQ4ote1Y4bAP0xoEhshsK4KuHA7zi0h0rkU5Hy9Ecuu68wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735931254; c=relaxed/simple;
-	bh=vKNH78vw95wpEbvV3jTsVe9qds69skBdgv+0ENNbJlo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JWlI64i+T82LADcjp+vQBzlPxGw1jELQYyAfjWY45OGZV06hqn1j/Mi44Nzj9R8pJ2kFSmaKQCo6r0FwQPSOnrmLOriIH+nuztwoFSJ/0Qo7YMLFjJ6Ys0eY+hMfp8f5mr46yLNOlYPXUP87YablHrkiVlbxAldYE6UT/KAoFN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=foawZefJ; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1735931379; c=relaxed/simple;
+	bh=hfjUY0NBQ/Iv2Ozq0n58AQ/XeaPS1ctqypIPFhMcbG4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZpHKt/Pwnnlkz4qZG07GuEfb7nAYJbfTZYZhBOc0bBCrpKh/mTVjaFdyUG8B6u1eo0JpE65ZuE+aYXBRC+EUwNFsY+QaH2oh1+ZfvJfBCWbG96LZprMy94Bd+3ZQBXfkYXyFd1xlY/qsjZMvihAbqso5uG7L1cwu9e4D39YjByU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l19kVLCp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ep62sWqg; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="foawZefJ"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4678cd314b6so120484911cf.3
-        for <git@vger.kernel.org>; Fri, 03 Jan 2025 11:07:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735931252; x=1736536052; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vKNH78vw95wpEbvV3jTsVe9qds69skBdgv+0ENNbJlo=;
-        b=foawZefJMbzA876MkKJIXBy9HwYb5ol3Ikew0jgft0Wz9nhwjIIhFOZPw24owY/yZH
-         WB4xrMJ0xW3Hf1Zx1ohX9nAOgNecZL93xdJANx0YBvC++/gOwi5YY4u0yVroLn43dl5D
-         9x1xiWPjLl9kI9a31e7RKIxij9ktqwVDtnrx7UVPkT6sZ9SqqX7PS8YXHabu0RezSHYF
-         IFbq2NoWXylTwyWafik4Ga+4ZzLPsayZDhcD+WsuYe9FcADJ+nIRvi5S9836nr7AMLRB
-         pFmxSNm5mELI2DXj6801OyhsQsdV3ZODYnD1MaIgps1KlqfxUXJ6EZEPg7j187va7TuL
-         GewQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735931252; x=1736536052;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vKNH78vw95wpEbvV3jTsVe9qds69skBdgv+0ENNbJlo=;
-        b=WefM906EPXGy51IxQINaXknm500KoQjbxZCPizI4qfHQbYQmdZEdMQfR+ZAuxq6sOt
-         Sj4++/se/Hjts3QM2lJJJAoW86qFSEgaygUKVLj3LGenJVkLhKIvTatodUwJOsJmAXq8
-         Vq/SEf+fzgTb3gSA6L/1pIE4D+PYG0CAft5NDIQr/bsT+WZgJp8dtfYBegLGHSGJDcjd
-         cK/Z8YzH2VBmZkKHkcO0Z4h+2n6UPBbuoGydv9XO5o339/UIj08X4tbN69klif7RuSRX
-         Zq8odxX+Z5zQS1r6rOYPryoyL20zkXoio87a9eERcgHVTTfCfgRMyAsuzBj20p+98+mf
-         vkTg==
-X-Gm-Message-State: AOJu0YynQjpk6DLgOY6uoQ14Q3G5ZFvG/9UYBanRAcvxqkXdtzEXYGH5
-	GfTYzdfAotZVXZMQewBxOQhmhCA3dxT+kMnHwdJKScWp3uokJuoFVgvEEcfOiefRiodRvuqCuxW
-	/BwZmdsjTLsIQ0I0CK5lEYz6tC/M=
-X-Gm-Gg: ASbGncv2cZL1rRG6dbVEJ6DlGP5dPmu91TtB9Gz5nofY1boqBppbXu8gUbUvXlnmzQe
-	+qF0FHQ0CSeYBUH9/J/v8JZZSUcixcfmz9C9FLR2mPuay/vbZ2X4xXpWzSS19hT+r5UbV
-X-Google-Smtp-Source: AGHT+IGSyVMPLDCYOABVE4mh/Wr+n3MW75NCtcRwCvI2+g23CYvv9LEbOGRAI6pVpR4AmRZ4gysqLbNGCoBwcmGCUcg=
-X-Received: by 2002:ac8:7dc8:0:b0:461:169e:d2dc with SMTP id
- d75a77b69052e-46a4a991a62mr788415731cf.49.1735931252167; Fri, 03 Jan 2025
- 11:07:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l19kVLCp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ep62sWqg"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4B52B1140168;
+	Fri,  3 Jan 2025 14:09:36 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Fri, 03 Jan 2025 14:09:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1735931376; x=1736017776; bh=d1eG3DBGuJ
+	RxCqt0HdXXJHZ/965zzAl5bXX8Kfd4ACA=; b=l19kVLCpG2qObSdFtGLYRhlD5Y
+	/H/cv/6IMp/t+4X+WapqxAuD/eIFUsJ6IL+P29kVIqwrGo/z10k8ylPWRSCiPWGN
+	9zj30FpUyB8inXrPTIYkuypmGUMS7IdeRHVXyt8gIpvKNMKe78ZlvUd4CRDNZQ5d
+	Y4rhAFJZJESyOjOwrcg4Y+zqaHBNGJPNnZ5WFM0opN3yWzRTT5toWrmH936y96Ut
+	1zLNAe2Ya45tIoU+/hX3r5JwJY9rj2Q6WEithM8eqSDCcbUHRmg30iICZJuW0RwW
+	Hmk/hXZEcQKDYPpXQxk/x4XoLSBOuKWRzu4imu6ir2nCvk05mYMwzsOnVMDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735931376; x=1736017776; bh=d1eG3DBGuJRxCqt0HdXXJHZ/965zzAl5bXX
+	8Kfd4ACA=; b=Ep62sWqgSKBxi0BOSOyhpEScVWgI+mZ64bfrHtK1sxaVxhEUFH1
+	5IWFSnFykqkd+WtkoNrZe7TrdFZDghFMSh/aCPpz7n7g4Py5jwhYqLW2fCnrDTuZ
+	UVUfdNgWLj1X6t86XcIiwOetixHsfxQ0WVXCtl1RLj0Cmtjm6Xd0qewems83p6ig
+	aa+Lov7JA21k4JWck8MNwuKTisBh5f9lxBR3SkGugHeZ4w9Ihqe2+YdlHKqBob0N
+	ihd5c27tbcBl68MxJW66lc9YHzjq/+/Wo0yP+H3Gq93AjcWZyN3Rhh0PaiEJJkww
+	pWHFtGb3NeuvoBLGYxf+Q82BiJ2yNRtZAQw==
+X-ME-Sender: <xms:7zV4Z_gTskmPBvUw-1NQD_hIKtSHNlShU1PNW4gS0l_x_h42_ki-9g>
+    <xme:7zV4Z8BsWR_7GJ5y1XT8hd5ZTOXrHsumDiNvNyvN6C-19ki1atW0H8SeWI096XSPp
+    N3tv_OfNTj8_xts5A>
+X-ME-Received: <xmr:7zV4Z_ElKGk8ntWkvHDSgv3RfOPeGad8iVJYu3VCToIkV4214psb3Eyca5SzV4fwPUihDZePTqVNFPMnyiAt3kAiS_sImwufKg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedguddvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7zV4Z8QZPhXBSm88lwrGYnBzjiXOHL39_eyC5MLzjuXYxt4OgCUWmQ>
+    <xmx:7zV4Z8zUissuwLN0TOMgsBsw7a_HoS2CATr5NsF3yTK7y8tb2nQlZw>
+    <xmx:7zV4Zy5_QvqV1CNys8CN8yJPPOxcel2sPz02WsfARXF69HwyIRX95Q>
+    <xmx:7zV4ZxwMmeGZOCdZOQwqWJ2dxCnfZ8G5JG-9IfoNz74pnFAemPAkiA>
+    <xmx:8DV4Z49c3mjN8m5A90wur7joYJdsejuA8D7XXRKe3t8Rs9aKJm_8d9Cq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 3 Jan 2025 14:09:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 05/10] github: simplify computation of the job's distro
+In-Reply-To: <20250103-b4-pks-ci-fixes-v1-5-a9bb95dff833@pks.im> (Patrick
+	Steinhardt's message of "Fri, 03 Jan 2025 15:46:42 +0100")
+References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
+	<20250103-b4-pks-ci-fixes-v1-5-a9bb95dff833@pks.im>
+Date: Fri, 03 Jan 2025 11:09:34 -0800
+Message-ID: <xmqq7c7br9xt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z3fM1bT2Z_0GoD4w@pks.im> <20250103130035.79376-1-matteobagnolini2003@gmail.com>
- <Z3fiREGwXdILl-M1@pks.im> <xmqqfrlzsw4j.fsf@gitster.g> <CADyPGv0T7Wwrf_FidWDtLGOH7A88DcisAG4-jU3eEax106XEcQ@mail.gmail.com>
- <xmqq7c7bsrel.fsf@gitster.g>
-In-Reply-To: <xmqq7c7bsrel.fsf@gitster.g>
-From: Matteo Bagnolini <matteobagnolini2003@gmail.com>
-Date: Fri, 3 Jan 2025 20:07:21 +0100
-X-Gm-Features: AbW1kvYA3GwgrF9NNjXxkmyN2aIWxERVXXBqxLJThJ7Ly8hiVYg9g9W1znV84Ys
-Message-ID: <CADyPGv2onyb-n80LMp+LNRij8oGZLstUkNpJXQcLKbVqcPzpEQ@mail.gmail.com>
-Subject: Re: [PATCH v2] t7110: replace `test -f` with `test_path_is_*` helpers
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Thanks for asking; if there are no other things that need fixing, I
-> can fix up while queuing.
+> We explicitly list the distro of Linux-based jobs, but it is equivalent
+> to the name of the image in almost all cases, except that colons are
+> replaced with dashes. Drop the redundant information and massage it in
+> our CI scripts, which is equivalent to how we do it in GitLab CI.
+>
+> There are a couple of exceptions:
+>
+>   - The "linux32" job, w whose distro name is different than the image
+>     name. This is handled by adapting all sites to use the new name.
 
-Yes, everything else should be OK. Thank you.
-
-Matteo
+"w whose"???
