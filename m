@@ -1,79 +1,79 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034228F66
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:07:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393508F66
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:07:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735931229; cv=none; b=muGuOT5VYfTRru6jh6Qq7hMXKl7JvAlg3EGJeNTPwLLqzdhX0O4sovTcRTSfZbjrpv3xMDM15pNvx5XYl9dLTkIGzwXg4Qa6Rv8QUc40zk5qxwynAleChpEOisTWSGH9O8ceKL6kEqjoLUTssoP+MUgGHPf833M2FBozTDbJ2pw=
+	t=1735931254; cv=none; b=QndD+ikRGKVSDJQ/DSPSS2z/3+VHBa241t4ThVP9T2y2ibX9iqSvbetZugA2HZOqjqjv3nJ49lyhnqjXfaRYUhmK9IfUWg23+ToyN4B8wohL/4BAXImJ08cnbtdsuUtiW6tHNNeR0nhxQU4hkpH3WUtk5jfG1Snk9evMgmpUf4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735931229; c=relaxed/simple;
-	bh=jKAeJR8b4eY+3cSMHoDIN2Yb3p9DV4YKAtOnL8UsPcg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RuHeB2tOPO1iGkFQL8LiMpM5bUmOWkXMKgwuBNkDOBQqhVqJAzlayWEDMIMWw6wFwluotY8+nrji5SNZNhzVfGbH/7apMSD3Hg+Gwahk6qwaR+1980FZ79GQV6HtUC0JdORzqlDmjGTPUZi8aWUjl1zEqvxBISoE4AVrw0Nbs3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZKsJ4C/0; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1735931254; c=relaxed/simple;
+	bh=vKNH78vw95wpEbvV3jTsVe9qds69skBdgv+0ENNbJlo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JWlI64i+T82LADcjp+vQBzlPxGw1jELQYyAfjWY45OGZV06hqn1j/Mi44Nzj9R8pJ2kFSmaKQCo6r0FwQPSOnrmLOriIH+nuztwoFSJ/0Qo7YMLFjJ6Ys0eY+hMfp8f5mr46yLNOlYPXUP87YablHrkiVlbxAldYE6UT/KAoFN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=foawZefJ; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZKsJ4C/0"
-Received: (qmail 18492 invoked by uid 109); 3 Jan 2025 19:07:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jKAeJR8b4eY+3cSMHoDIN2Yb3p9DV4YKAtOnL8UsPcg=; b=ZKsJ4C/0JxfIKXoiLrVOUhB186OrIp7AREiGKj4drAnqU0ksUbhmf1vo0u+D09rAw1WZpOD+Lvzuv+QgmIEScQDG0siwqUb0pNqdKsHTiX+KhFya1UL1tSgRhjqcwghO4LVn4OjXECFwBl0Lj4nMs1S1YP7AFGp8+nXOe0upj3DgBbg/iiATek0DNQvkyBlXh4vjcl59+o+c6zEnfEbzLnAAM8Rb4ay2CVVQQkV9DtTQxHWFDfrjOoZ4Uc8wFAukPXJHZ9XlMzeCuSaM3ndlsnO/qXOJKuV8AioUFYsBWfP4GXK6HyC6pTETXgQUsmcuQyDUkkLMr7GtfvEgWEMegg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 19:07:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4104 invoked by uid 111); 3 Jan 2025 19:06:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 14:06:59 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 3 Jan 2025 14:06:59 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 04/10] github: convert all Linux jobs to be containerized
-Message-ID: <20250103190659.GC3208749@coredump.intra.peff.net>
-References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
- <20250103-b4-pks-ci-fixes-v1-4-a9bb95dff833@pks.im>
- <20250103185640.GA3208749@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="foawZefJ"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4678cd314b6so120484911cf.3
+        for <git@vger.kernel.org>; Fri, 03 Jan 2025 11:07:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735931252; x=1736536052; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vKNH78vw95wpEbvV3jTsVe9qds69skBdgv+0ENNbJlo=;
+        b=foawZefJMbzA876MkKJIXBy9HwYb5ol3Ikew0jgft0Wz9nhwjIIhFOZPw24owY/yZH
+         WB4xrMJ0xW3Hf1Zx1ohX9nAOgNecZL93xdJANx0YBvC++/gOwi5YY4u0yVroLn43dl5D
+         9x1xiWPjLl9kI9a31e7RKIxij9ktqwVDtnrx7UVPkT6sZ9SqqX7PS8YXHabu0RezSHYF
+         IFbq2NoWXylTwyWafik4Ga+4ZzLPsayZDhcD+WsuYe9FcADJ+nIRvi5S9836nr7AMLRB
+         pFmxSNm5mELI2DXj6801OyhsQsdV3ZODYnD1MaIgps1KlqfxUXJ6EZEPg7j187va7TuL
+         GewQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735931252; x=1736536052;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vKNH78vw95wpEbvV3jTsVe9qds69skBdgv+0ENNbJlo=;
+        b=WefM906EPXGy51IxQINaXknm500KoQjbxZCPizI4qfHQbYQmdZEdMQfR+ZAuxq6sOt
+         Sj4++/se/Hjts3QM2lJJJAoW86qFSEgaygUKVLj3LGenJVkLhKIvTatodUwJOsJmAXq8
+         Vq/SEf+fzgTb3gSA6L/1pIE4D+PYG0CAft5NDIQr/bsT+WZgJp8dtfYBegLGHSGJDcjd
+         cK/Z8YzH2VBmZkKHkcO0Z4h+2n6UPBbuoGydv9XO5o339/UIj08X4tbN69klif7RuSRX
+         Zq8odxX+Z5zQS1r6rOYPryoyL20zkXoio87a9eERcgHVTTfCfgRMyAsuzBj20p+98+mf
+         vkTg==
+X-Gm-Message-State: AOJu0YynQjpk6DLgOY6uoQ14Q3G5ZFvG/9UYBanRAcvxqkXdtzEXYGH5
+	GfTYzdfAotZVXZMQewBxOQhmhCA3dxT+kMnHwdJKScWp3uokJuoFVgvEEcfOiefRiodRvuqCuxW
+	/BwZmdsjTLsIQ0I0CK5lEYz6tC/M=
+X-Gm-Gg: ASbGncv2cZL1rRG6dbVEJ6DlGP5dPmu91TtB9Gz5nofY1boqBppbXu8gUbUvXlnmzQe
+	+qF0FHQ0CSeYBUH9/J/v8JZZSUcixcfmz9C9FLR2mPuay/vbZ2X4xXpWzSS19hT+r5UbV
+X-Google-Smtp-Source: AGHT+IGSyVMPLDCYOABVE4mh/Wr+n3MW75NCtcRwCvI2+g23CYvv9LEbOGRAI6pVpR4AmRZ4gysqLbNGCoBwcmGCUcg=
+X-Received: by 2002:ac8:7dc8:0:b0:461:169e:d2dc with SMTP id
+ d75a77b69052e-46a4a991a62mr788415731cf.49.1735931252167; Fri, 03 Jan 2025
+ 11:07:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250103185640.GA3208749@coredump.intra.peff.net>
+References: <Z3fM1bT2Z_0GoD4w@pks.im> <20250103130035.79376-1-matteobagnolini2003@gmail.com>
+ <Z3fiREGwXdILl-M1@pks.im> <xmqqfrlzsw4j.fsf@gitster.g> <CADyPGv0T7Wwrf_FidWDtLGOH7A88DcisAG4-jU3eEax106XEcQ@mail.gmail.com>
+ <xmqq7c7bsrel.fsf@gitster.g>
+In-Reply-To: <xmqq7c7bsrel.fsf@gitster.g>
+From: Matteo Bagnolini <matteobagnolini2003@gmail.com>
+Date: Fri, 3 Jan 2025 20:07:21 +0100
+X-Gm-Features: AbW1kvYA3GwgrF9NNjXxkmyN2aIWxERVXXBqxLJThJ7Ly8hiVYg9g9W1znV84Ys
+Message-ID: <CADyPGv2onyb-n80LMp+LNRij8oGZLstUkNpJXQcLKbVqcPzpEQ@mail.gmail.com>
+Subject: Re: [PATCH v2] t7110: replace `test -f` with `test_path_is_*` helpers
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jan 03, 2025 at 01:56:40PM -0500, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I do wonder if it will affect run times. Presumably GitHub has made it
-> pretty fast to get things started on the bare runner image. Now we're
-> pulling docker images. That is hopefully pretty optimized and cached,
-> but it is extra work. Might be worth measuring.
+> Thanks for asking; if there are no other things that need fixing, I
+> can fix up while queuing.
 
-Just peeking at your CI run here:
+Yes, everything else should be OK. Thank you.
 
-  https://github.com/git/git/actions/runs/12597967146
-
-versus the latest run on Junio's master:
-
-  https://github.com/git/git/actions/runs/12589300693
-
-I see:
-
-  job                 |  old | new
-  --------------------|------|------
-  linux-TEST-vars      11m30s 10m54s
-  linux-asan-ubsan     30m26s 31m14s
-  linux-gcc             9m47s 10m6s
-  linux-gcc-default     9m47s  9m41s
-  linux-leaks          25m50s 25m21s
-  linux-meson          10m36s 10m41s
-  linux-reftable       10m25s 10m23s
-  linux-reftable-leaks 27m18s 27m28s
-  linux-sha256          9m54s 10m31s
-
-So it looks like any change is lost in the noise (sha256 is noticeably
-slower, but most jobs aren't, and some are even faster).
-
--Peff
+Matteo
