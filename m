@@ -1,54 +1,54 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DE71B21B9
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54E1FC7F3
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:16:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735931561; cv=none; b=J5XIV4L6miQFXjD8thlQKH4DzEA+1zlGD7IZu2UnAlGSK5hgz3HJqWhz3XPMnimQet/5O3cPin2zUuloIqdlrJHuXd6Qd7MyuEhCbOOFjTszByitcWGUh1otes4a9rKD0sXPcVhQnafEiKDPXBrzXBOiZ4y76ti4RhkhjqL1Jeg=
+	t=1735931791; cv=none; b=CGAMhldDrNBtd3TbTg/ujFM5WRd7Yh8ngJBwFXqD7kvQDNTb+h/wSWsC3oFspol2wzRsz1YDGeXUmMq01rDd8LWQZvRYiFXS4oLTKZ7lzj3Ub2+DVDXGkcSR3jYnpQYcplYjRfVVPJVgPP9JdgbXsDO3uCv+WxFCyIPObtAi+2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735931561; c=relaxed/simple;
-	bh=sNTtRB1nggkkZuWqwoebwJoz0O1i3llYMRuKtQoKpiQ=;
+	s=arc-20240116; t=1735931791; c=relaxed/simple;
+	bh=opqJrcD6gKe9Zh4a08oTPLbga7RFZ5Jv6GHQRIpLw4w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H2RZV3AyTS7jnbATr+xhL2e5sh+zzy9zU8F8AZzwE9T0in4yU6QLFrdsUj9xUGVJT7HiPPubWmSHdxuTAkBilzXPTZ287kL1+/GnwCTYDKsUVJC8JG4Lr5PQgzxn467Wt1UdrQ/T1IyRHi4IRV24g742jc5VQcYmuktywMwpIME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tIsZr7FZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T6AoC9sF; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=DwgVXJje4FzG+TgMfwJ+p2NQkScxdyAz4wCa7DMUzk+SRICRQr+7kxNorotmYI7iTp6N2efpqF22KdFDSx0MOYvVOal3n8H6Ufugr3MM9Jyhvqpz6DzfwUQVU2sAM0i+i/02ZWtXMN2Q3LtntqRlUvaFsYyc1pcwGbsJBOeFBRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mw2N32Fg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BqUPaCe8; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tIsZr7FZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T6AoC9sF"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7A6BA138022D;
-	Fri,  3 Jan 2025 14:12:38 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 03 Jan 2025 14:12:38 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mw2N32Fg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BqUPaCe8"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5EDB71140222;
+	Fri,  3 Jan 2025 14:16:28 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 03 Jan 2025 14:16:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735931558; x=1736017958; bh=sNTtRB1ngg
-	kkZuWqwoebwJoz0O1i3llYMRuKtQoKpiQ=; b=tIsZr7FZRWbhX7qBvIzUvkADw/
-	Qdeo5AQi/DFVVfoIKge22PCZ+E9k8ugR1scQo12bmzAtPO5yO0FOOwN3RZee1mUY
-	+WxDxu2KklkfR+xd7TcW5/Nsv9uYBooEf7RaDYLAj6aZ2TFos+8uPJj2Fmxejt8z
-	hmI0D6yX1BHvvxGUKiYEzaB7jV7r/1wFOwu8zKm3glrmBmZvmTftgjE6oj9UueRV
-	JtxdbeXliC7UYjx2x8GDjoCKJ8kKTQKh+dXJm+NxRvL8MLDAFaQYtMEydcL2PC+b
-	hSz3Vt48uvPW3hgleOU5sGtunZVMHROwYI2zCMuZEdBJxMgtgZo8kbSbping==
+	:subject:to:to; s=fm1; t=1735931788; x=1736018188; bh=UwOsJxmANn
+	5/GV93VZ+asGqmSpPy4JC6KrFjMweA3EA=; b=mw2N32FgGMksKHuw8oY7xOdveM
+	eHybG1fbcUNJ8r5FXrfhrh52yQYqAwBQ2ZJpxBqOet0XAKRkRzI9DnkfvOD3Uxl8
+	HfwfUxvJUUtpFmTz6XaEf6FpWQtRPZAan2ywpYwuFkefk1IuIflMqbKdFoS7wVun
+	H4jwnFb8vOmeXqJCIJk8Cfaj80V8kLxHuaP2EmKJyQ0VDHINKfPVOD4chbHfRKd4
+	kO1mjzeztSKb1NRkdaVlHyI6zPf0PeHTjlwBkZG7ZRsJsrRWbQGxvUhhu+tZOL2p
+	hqvl3YUyPcQv8ycY0PEuJThheXp87Lm9qmcfihFhpqEcLYX+IINYFUXwo7og==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735931558; x=1736017958; bh=sNTtRB1nggkkZuWqwoebwJoz0O1i3llYMRu
-	KtQoKpiQ=; b=T6AoC9sF2+e/NnHYIF98t4uCxyUoxH3dl61cCZvpTtBSnNMzq+H
-	KYwlOSxTFEYdoeiZQmOSU0tT0C6v+6nEErAYBLveE4frKM5CvqqJ3jh3tIPr5v+y
-	PbjwmTQ9vmRq9mU90a02q50mKw1Av9Uib4VfezUPPUgBF7LGaIE7lc1gHOG0nfb7
-	qzR1X/Uq93dsEJZ+CVO4PVL/GiTlZpsqqsFeL6oRuWQvg0xnmqXI4T9GMADtt8Mm
-	6LYGM+kNmrRWJa4RGUU2RR7ORo0VtDUicX1VldOd5Xah/opKYGgYpRx+KiEVh8O4
-	y/ahBYa0EzfkKt2+C6ow0voChCbCg+pffBA==
-X-ME-Sender: <xms:pjZ4Z5Dww8OwLw_waNgZCJvoFKBmG1D5lmhIImkzLzAlFXuK9gRtEQ>
-    <xme:pjZ4Z3jpRFE6PGAJjPzXovANjY78vIWodmW1gTE2w-iT7veG0exgR9OZdQqor2AiI
-    rc7rSfbpEN44H4LYw>
-X-ME-Received: <xmr:pjZ4Z0mQGcbMiEPCukok2IN_my4jVuU5i8OtsHZGd5OpjtQ87YnPGLnaXVXif4wVRF-BP5YTmhuSR7XsxHTIGjqhi32mDd4QIA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedguddvudcutefuodetggdotefrod
+	1735931788; x=1736018188; bh=UwOsJxmANn5/GV93VZ+asGqmSpPy4JC6KrF
+	jMweA3EA=; b=BqUPaCe8cFSKoMbepKKpYEk21I2C5b+QVnfGiHVF/GabP/NXuxH
+	PQDpWJ/uIETZwm74Up/qDHBcsnh5vnzTFs/JmHusqHqev0037VxHJsgaWw/NWelm
+	B512pLm7JIyP5cDlFXd2eZK4da0d2xGhmCrZdvHul4D1Pexc1A3ljunVSex/RrKx
+	kmYUJFZt5xZShr8Rerny6s8M5Q5+ZR7jPYDqSnZLNy8Nfnrcj/UfR78ZawmfV6AA
+	O6URXpEJi7pvKa7qMznM+gnH05iPvChPm/3lU2BRC4O8FkU6yV62GsdZAdbwploC
+	UAjX4FwzIpPTPOlfzN0BMYaqtGSkrRjRUXA==
+X-ME-Sender: <xms:jDd4Z8hog6cla622ePrwjICdQ54xa5HXsc8IrnTauWoRWQs8JJkiSA>
+    <xme:jDd4Z1BpbbPperC4la9dHX-nFc2BlF1VtqRh9k7_jL8V4fGK8_55F00iRHLly44eo
+    b9y9f04bwM1LKwP0Q>
+X-ME-Received: <xmr:jDd4Z0EPVB8JZhkriMbNKL9mZSKswNKPwbo__abwF5Fs_W-XgCufw3G6C7NWxytI80eWDUq7tZD9uYj7TuLqLPws-OgN4KuB8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedguddvvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -59,24 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedguddvudcutefuodetgg
     phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:pjZ4Zzxxs-YxCLvQ0C6PwvrpIlwrYZAdZ5XCPDCOpJe3-OKAjj-jtA>
-    <xmx:pjZ4Z-Tithnf35tpDD3uwDcRzcPcCmSFGbxPr-9sv4e62dl1nRJ4hg>
-    <xmx:pjZ4Z2YPzqWb2Ps7Ax8zULvwBZUvB5m-Lghcfgu22C-zDsVJwcwGLw>
-    <xmx:pjZ4Z_TDN9NGF8dI8u-FTMNaEP7vs2UF7KySwlZLN4zeFEgJ7rp3vA>
-    <xmx:pjZ4Z8e7htSAETYUcKJcRPnaO_Dqc49U-QREbjKU0b74SUpMCE2M99p0>
+X-ME-Proxy: <xmx:jDd4Z9RQTo_QFWP0C5H52bcBUxtDOj7g_cXTq0bWJ7_0KNxUBPgi1w>
+    <xmx:jDd4Z5ymqvjUWJZw5vzWweeKNdMJxGrvtDrGs_yiXLhPQ1nG_t_BWQ>
+    <xmx:jDd4Z760D5OU-6P2Sens6T6CFQjzmNNLGaL-3jzpzvGOaFPElIxsWQ>
+    <xmx:jDd4Z2w62I-TcFmzFUPL6q7iUIuFbx1-kjs5P1UTfasCssjEcZvXpA>
+    <xmx:jDd4Zx-0Zr3HO7jisP35qB7MqPljRVI4eMapsZiVfuZxE-BbZ4tNjIjM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 14:12:37 -0500 (EST)
+ 3 Jan 2025 14:16:27 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 06/10] gitlab-ci: remove the "linux-old" job
-In-Reply-To: <20250103-b4-pks-ci-fixes-v1-6-a9bb95dff833@pks.im> (Patrick
-	Steinhardt's message of "Fri, 03 Jan 2025 15:46:43 +0100")
+Subject: Re: [PATCH 04/10] github: convert all Linux jobs to be containerized
+In-Reply-To: <20250103-b4-pks-ci-fixes-v1-4-a9bb95dff833@pks.im> (Patrick
+	Steinhardt's message of "Fri, 03 Jan 2025 15:46:41 +0100")
 References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
-	<20250103-b4-pks-ci-fixes-v1-6-a9bb95dff833@pks.im>
-Date: Fri, 03 Jan 2025 11:12:36 -0800
-Message-ID: <xmqq34hzr9sr.fsf@gitster.g>
+	<20250103-b4-pks-ci-fixes-v1-4-a9bb95dff833@pks.im>
+Date: Fri, 03 Jan 2025 11:16:26 -0800
+Message-ID: <xmqqwmfbpv1x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,12 +88,16 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The "linux-old" job was historically testing against the oldest
-> supported LTS release of Ubuntu. But with c85bcb5de1 (gitlab-ci: switch
-> from Ubuntu 16.04 to 20.04, 2024-10-31) it has been converted to test
-> against Ubuntu 20.04, which already gets exercised in a couple of other
-> CI jobs. It's thus not adding any significant test coverage.
->
-> Drop the job.
+> ... The containerized
+> jobs shouldn't cause a significant slowdown, either, so they do not have
+> any significant upside to the best of my knowlegde.
 
-Dropping and reducing is always welcomed ;-)
+"shouldn't" is a somewhat hand-wavy word.
+
+"knowlegde" -> "knowledge".
+
+Are there security implications for us to worry about?  How tightly
+are these container images controlled, relative to the way forges
+prepare their selected environments?
+
+Thanks.
