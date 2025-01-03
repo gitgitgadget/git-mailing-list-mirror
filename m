@@ -1,173 +1,133 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic308-19.consmr.mail.sg3.yahoo.com (sonic308-19.consmr.mail.sg3.yahoo.com [106.10.241.209])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399C1946B9
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 08:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58E21885B8
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 10:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=106.10.241.209
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735893336; cv=none; b=byzPKfLD+RxTA3qTrfv3kKQlQyVL7mihw4H670IKIXcfKlBoo2XNlRZvlKNk/133BqJx6wQT/zaEnyIcgSDpNBWjTXKAIENRFLDUabNkPmiR5qeYYvcW9PmNAhVkeUfvo/SKILoV+v7zQx5fbOu9RcKxShr/vIXe9nO/vdcSboQ=
+	t=1735901802; cv=none; b=rdd1djoqVe/gdocj3RBr5qAOTlgZ0UqO/cxU0f6F4xrhphPOl3JzKM6kkdnOOsAUMF/Ti+6tpuG4sr6W1lMtrZGJ+Trzujm3wNjdUwcFkka99/DPlY8+lXxMxWecjxW9Q97Rm/PjKd3eAymisz7jxyJ1wzyMOK7W2Z2LYutOBYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735893336; c=relaxed/simple;
-	bh=7Mh+Hp+F45ahvGMtedRWEAd6gWxFujWzXZXwjGrElw0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gS0NvrAOsNNBgZPRurdeT53V5zikJeMCLNuAIjCsBL3O1w+v0tMz1/MP1xHNau61kMhJbQ73Q+70jtPlFkUhgl+ON40uhxljF8glNJRcEk3l2e5ra0ZAsde4whFRJH0zwiLxZpx3YjT5lMQev0JZWvuvbg5MwtQzEc34Vby8OAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VAJM4cpX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tFItR4zR; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1735901802; c=relaxed/simple;
+	bh=qNNbYwmVbSCsXOT+5Cwh0lmk9FQVo43XfOcIhGFx4j4=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=h5pSfcP9uBKqiI7EYVQm1UcpgRDOaiq3YhnIWxVOCeKAWxAzKqyogGbOyl0Vw+EafTfF2IISUm+ahMssq/bzcOekv+QXY/GpSzBcxPUCQBJvzrs9JRz9fh3vZzlzYnWL1t4NAwfp5H4C8rkQqZXAuPUclfGmOwvbMwoltSaxHts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=fail smtp.mailfrom=fedoraproject.org; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=cBdMKIko; arc=none smtp.client-ip=106.10.241.209
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=fedoraproject.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VAJM4cpX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tFItR4zR"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7394B138052D;
-	Fri,  3 Jan 2025 03:35:33 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 03 Jan 2025 03:35:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1735893333; x=1735979733; bh=8oXSdqS7qV
-	eBI/UM529unCLIs99CdZjifNWrdcIZFvk=; b=VAJM4cpXZEqIwrwoTdgRLfhWRl
-	vpz8xBV9FahX47MH+Ns+oMK8HC16x11fH2JK0EemF0n3ADQEX6nRlfHgy1ny3+dd
-	0pAbfjxOeJwnRNqBML2xLEw/3BbIDqri0H9poJFZCUBOWhpseZ/6AxwUeAMpapQx
-	gJWWAP4Lhx9P8eLDnLTxz9yvwjUxdECzE5plJGp4OB+01WdLFMw7QLn4BtsVQ/Uo
-	a0M6uyHEmw1//xUZCUuTcigWFDWRXb70Eg2XNRUId37FIJGuCgPS3J/n9nM5gNCB
-	+4dgP5k0aWbxhUNasSUVNu1sLxkEoiPn9vMLXIU2yN4gD2vMumeI/oHdoXqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735893333; x=1735979733; bh=8oXSdqS7qVeBI/UM529unCLIs99CdZjifNW
-	rdcIZFvk=; b=tFItR4zRYnSKCYAXmonYD7RND1jxeahlBDJjgbAAcB2H/AXTI7f
-	nguC3r5xk3jjlC3b1/tqz4ifhve5Q/3W2hwL13IoKVGS+iVwTjdiULtvTRERl+HN
-	CWpQlvJKGTtNtXUU3CyLWAbpfhDU951e6yARQ9IQ2db9JXLaEoE1hUHbfzrAUtYD
-	nQ07Z40WziXl0m0YXf0pkivBjhayqGZxrKNsnWpS0RouizoRvqUVgLSFmvvzYHmI
-	cdaGnKJRcHg6OufldJyIO0vWxlKcI9al1X7Ffg4d/ZRF2mJRWrrG6tYMOD6Go9kc
-	DFwlZXa2MGkzHkYPqbUwwXZqDFUaXx/nssg==
-X-ME-Sender: <xms:VaF3Z5Y5DOZfcdY_wV4r9zwbCudU0iDM4XCew2YklHda-yo2XCP9Rw>
-    <xme:VaF3ZwZlL2GBNyl3ZvWWtZWtIN9c2m3xDoTOEdIBkjd4D0ETjTcq-4Lk9KnkTKjx_
-    kTrAQRKrtU5wrI1yg>
-X-ME-Received: <xmr:VaF3Z7-_2UICp5X-JhI0OocE0xKYjgIfvCkyGVv4TTlJ-UmCvbzDKxPCtPNo5Ie6KYXwytvCjakJundddZt942awdUOmJTfYBNoN263gM8ElJb0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeffedguddvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:VaF3Z3qq88MnOTfnLhsU4JZScl2fBueotBUClZvmM5caA7A88FVZWQ>
-    <xmx:VaF3Z0r2pIqHSzVQEnxW09ooVxX61n5MJTI8fd3Rvx0HSCYB0zG24A>
-    <xmx:VaF3Z9T1ofaMZeczbp_D33mKlvXfhcplU1tsoDRCLU8IshpFfemfIg>
-    <xmx:VaF3Z8q0329v1DzZOVjgUhA4djyRPgQSAwzbAZCf8hEJ9sKGS94EZg>
-    <xmx:VaF3Z73CuJ-STSh5vk4lPK2HjJOKcsTOx7nK-Ra0zeRGpev70xcm7uHJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 03:35:32 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f8ffd8b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jan 2025 08:35:30 +0000 (UTC)
-Date: Fri, 3 Jan 2025 09:35:29 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: How to use Meson (was: [PATCH 00/10] meson: wire up missing HTML
- documentation])
-Message-ID: <Z3ehR4uaG_j3iWy7@pks.im>
-References: <20241213-b4-pks-meson-docs-v1-0-0c7895952cd3@pks.im>
- <87wmfqfwh1.fsf@iotcl.com>
- <Z26ygb_4-DP7Ufab@pks.im>
- <874j2gl46v.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="cBdMKIko"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1735901797; bh=qNNbYwmVbSCsXOT+5Cwh0lmk9FQVo43XfOcIhGFx4j4=; h=Date:From:Reply-To:To:Cc:In-Reply-To:References:Subject:From:Subject:Reply-To; b=cBdMKIkogeEPaiO9KKoCpRDWdNW2+dlUXEWJb3ayC8UlU8b0n/FRCRJoJPicAMJzv6rG1ijhEfCbUrBS4V0ORLIQ6bl+T1yyvyoqgX1fD2jSBiI0n7IniACGFBZwO6Ly3El3G9DySf1wM41UZVdlG0pe+s5SvUXEnHAspl0ZQ6O+kDfNTjndXzrkzXu8eqhPxEZ+K62j4grdia0+hh+Z3/S2S5OseYRb688JNQvM/TsEy88zjn/yzJ42Qxap6NRGHge8HyvhDZ+6ADwvu7pd+mnslI/SmHOMB9hrAC5xQqEsNacSDQT5duXTMsrrJ4CQc7ubIY9NKy32ofl8NFZwjg==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1735901797; bh=40MdsoDOvUdqEe+9F3e1rEJ8v8SFRpcvRoxcWb1P/zG=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=oxu2cVeXUuHA4+8eGQ94Xf3gY+ZI+iALNpvm4uJGR8J4vLv0Pe6tcEV9nTtJNJAk8x7mDhLUgCNGOsmb19z+smAZ7VdxL3PMsC8qZ0Cik4iNicaJ91TUxrG34vNlRJbKOK45EGJ13p+tjGNXGSP5WYlkU+/ONHsX7ku8E59PqFuvT3KjuqtRZnvIGJQTxFjWRcHdexyC3cZ3vNXAtVtDUxMUg6nl6jRm/ObsMq8GzPJHjLCoP8ZSRkxxJXub3GwoT/9dmTjVosT6E2Y23mtuRb7RskGXQTMpzjS+wSXLnheEOX5swTVBtNA0Do4CgmvPJsELCDR/JyerVNpMIDCQTw==
+X-YMail-OSG: DhJ26MkVM1ljCWdWW4RXEaY0suRi7TpXhkmD6jSWjzA1rtmdywiQdvihA.Tg3aR
+ PKWBtFdnOTuIo6zsh7xhG5ULn6jOG6y06f4adKVhAxDSOIqOi6lThpd889SKPW9m7GnTPo6C48Ch
+ JHtZvvLWCy7L5vHUPLfhljpWRSUXtADONgGjNNIUCYoSRcsdisZIzTosLmRMb9GYk.NTUlKlqSpZ
+ hC5sy1xHqwgOJXVLcc6gfb2c5apHecNjXWv9KPxDW95am2E_KI8BPV3llu0eGgJULS8a428ucbxu
+ Uu0xfDZZK_EH5wgChx1PBbj3cOu5dAEPYqGRDh_GGcTRHdCV8YwdESc8CjDO69Un.pGyLJCgLO7T
+ vGhN6OzMXfZR_38CuNUL1gnIwnzw_mTfj3QJU3yIrAhcmR9YFEmlG_DMocAegJiXvMdLgU08xKfO
+ 95eLemkVaQ47UxBz3XaW4taxLpsuzUnbq0qfyJY8eFJKSMTS2kkb3fwYUeeK4Um.cm_AfxpWwdID
+ Nw9CFGojMpeBRNf1eHLiUY6.AXIiT8Q4G2s5rK_8VU1zOhdFcT8GkzzyptErGnBQcA0HHZYjEz20
+ 66KKLFlCXvvuizQun9KWrYARCb3q2pIT49nKfCICrw6b2z4PFkLZ8BbDTJCzkc5C7BPOHGO1dSg6
+ WDfSMiIczNXI.etb5tIo7qYoxW5yXAtx3_FZdj9QY2ZPzUoUNASDc95H3LKQ0uOsmUrSerGGSiwt
+ _e1eM78J6NvKMhnGcfe_Xan4piYNa4.4NXUJu.3DRNjABokTGZDd7R_68MdUG4g_i6mf83kPYhgO
+ kR3ARqKiKdjfSpmridzmFpybuJPYiARACDKf3zpoafOl71NbuiIWp7JiJ9mryRzuwhU6WkZyl4bg
+ doZSvrc10uaz3iqLuNErG_GiRz43fmjexLsQOA5LRks7u8BlJ7rkbknUdpXAAWwbq4wvxwDfQ96b
+ f665hFKHDYqf5z_qDpseEdyUG.YCEfJ2heRVxVHlUEVcW08GG_dQ3JyfyfjjQnAO_9uydqnvTfum
+ Cz391SWaBcx77g9vFt71ZFYPWTCZRgpI9u0hH_fpM1pt4Bm1UvLSMwS0qbnwx6GIgz.W3Mn0IOTe
+ ZNKe5m8vrnPOdJj9aitqSDBZikJsucmd0z.uDdSxUW7JEtG3mSOj0ZI85lIS6g7y3klq.Sp8liZL
+ jnmgN.l0r9qiGmxT.iqZ_f5Bk3f98pPiDD6rQEco8IWi3An6GYf2mKm7E1JF1aVVMBjtmEgx7r1c
+ LYhNJ90IuPhNcmusoYfX4fZELm22TDTfx3u6LnHuGQj.xgxPu0rhUyuMXi4UZJxYfULABf5JhYk5
+ iMc0yAaUW7mHT2jBu.WT9IDNV4xb61uAmB9H..DbPAx.wmRAbOoheJMMrWibPUGRqYA1blZ2zR3l
+ Rg6BiZwYB2G331pDWQSm6nzMZmN8SLko4mDYNXSGP.vceGPtEvT5Qx_H.LVjL_fxSGWbgEh0_o1J
+ yZBpl6jsXL3qfLd8OYc8DbBzlc_muCi6GgX.RM.a.ca7Mixj21a97tQNqqmgPfd3AMOwS000Z9TR
+ PHfnOCLIUGsvYAqUHo1KE4ioFXe8A3gl0d3jWYn4CsehzGo8gAA6_oHYPs7JLyROIIw_nWWccSzU
+ PUVxclh8e8swfE..EMbWogv0Wx_QcaMTHWL8GHmnFgoVtqLe_83nmb8MhnewDGJKoW0lHc7HFLPj
+ ufOXJNAKutGcjqNbxuF_DvdZiqUQQQKos.I_W.P138QiKVOamrKtyevPMhZh2boggdnzWatdfNwI
+ ggJ_7YMJ2dT8bLW4XEP71NxI5Sx5Vz9d0e06JUxoMEdoqQ7pg1mMIWJFBM2V.cqKdFFZhlrMKKi4
+ NB17cXVPAzJf9nM56WfqmYgu6Ba99k6L3SisxA1hUowxJdeBe91vIovIBoRZrbg_V1o5OSHe8mmp
+ eMPlg8bly47kGymEfFr9M1.vY3zcuskT_diCzcVh1zsaKswdQo0mDvT4epJDEt3wccJu7_zFH.R0
+ j_kjP1jp0M..wRiQLNZcH21GHnGEnSlNurFwEt5Nhe4ftXOiZ5whLIucw.z6p07t5zjeM1kuAtTK
+ ZvVclSi60rymc_GqdaMXp127T.UTSXQ6yTl.Q_gVNhBc18k_I2atwY0w6gkXNumbQQLiP3OvIRgn
+ ywrO9u3r_tyWBKp.NH4I8KKPa.kJj03jjkNmmXDeHmurv57zZxHJ9wXzIM8KRz5_F2XH0vbdkpdD
+ RxaErP76b3Dyl6DyrRp5SNNkV5aJivvl1WJJjdGRyIqwmemMBxryAZ3U_wM19iwrF6vduf6xQltD
+ IOkQe0NmHz35PQTA_e6SFCkDtM2D7
+X-Sonic-MF: <pjp@fedoraproject.org>
+X-Sonic-ID: 968fc34e-6a5e-46d3-946e-6fd9323bebcf
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.sg3.yahoo.com with HTTP; Fri, 3 Jan 2025 10:56:37 +0000
+Date: Fri, 3 Jan 2025 10:26:10 +0000 (UTC)
+From: Prasad Pandit <pjp@fedoraproject.org>
+Reply-To: Prasad Pandit <pj.pandit@yahoo.in>
+To: Chris Torek <chris.torek@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Message-ID: <394850972.5946685.1735899970546@mail.yahoo.com>
+In-Reply-To: <CAPx1GvdmrTn0x-F8yOoGrSrhXPN6At54svch=Wf=9rcz9Ri=7Q@mail.gmail.com>
+References: <1964163554.5326830.1735643984559.ref@mail.yahoo.com> <1964163554.5326830.1735643984559@mail.yahoo.com> <xmqq1pxmxyoo.fsf@gitster.g> <2075804114.5670956.1735812672910@mail.yahoo.com> <CAPx1GvdmrTn0x-F8yOoGrSrhXPN6At54svch=Wf=9rcz9Ri=7Q@mail.gmail.com>
+Subject: Re: File missing from git branch
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <874j2gl46v.fsf@iotcl.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: WebService/1.1.23040 YMailNorrin
 
-On Fri, Jan 03, 2025 at 08:58:00AM +0100, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > Yup, you are always expected to set up the top-level source directory,
-> > not any of the subdirectories. The build instructions are then processed
-> > linearly in Meson, so variables declared before a call to `subdir()`
-> > would be accessible in the subdirectory, as well.
-> 
-> With Makefiles I can build individual targets (like `make docs`), or run
-> `make` in the docs/ subdir, is something like that also possible with
-> Meson? Or are you always configuring what to build in `meson configure`
-> and building all that with `meson compile`?
+Hello Chris,
 
-You can in theory. It's already possible to build individual parts of
-Git, e.g.:
+* Thank you for the elaborate reply, I appreciate it.
 
-    # We need to discern these two `git` targets because the same name
-    # is defined once as a static library and once as an executable.
-    $ meson compile git:static_library
-    $ meson compile git:executable
-    $ meson compile Documentation/git-add.1
+On Thursday 2 January, 2025 at 05:10:26 pm IST, Chris Torek <chris.torek@gm=
+ail.com> wrote:=C2=A0
+>Git is different.=C2=A0 A branch is -- depending on your point of
+>view -- simply a *temporary name* for *one particular commit*.
+>From another point of view, it is *that commit and every
+>commit reachable by working backwards from that commit's
+>history*.
+>
+...
+>One of these metadata items is a list of raw hash IDs of
+>*previous* commits, usually exactly one entry long.
+>We call that hash ID the parent, or parents if it's
+>longer than one entry, of the commit.
 
-We can also have a target equivalent to `make docs` by adding
-`alias_target()`s to Meson. I ain't got these wired up yet, but it could
-look like the patch at the end of this mail. And then you can simply say
-`meson compile docs`. It does require you to have docs configured
-though, otherwise the 'Documentation/' subdirectory does not get pulled
-included in the first place.
+* The parent-child connection between commits is fairly convoluted and unin=
+tuitive to understand. Especially when user does not even see the parent of=
+ non-merge commits easily. For merge commits git-log(1) shows parents.
 
-Patrick
+* In my case what seems to happen is, the commits pulled from upstream repo=
+sitory come with their own parent commits and my local commits in the 'main=
+' branch are not merged with them OR those pulled commits are not linked wi=
+th the local commits history. Something like say
 
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 2a26fa8a5f..4f8e2e7ebb 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -204,6 +204,8 @@ manpages = {
-   'gitworkflows.txt' : 7,
- }
- 
-+docs_target = []
-+
- docs_backend = get_option('docs_backend')
- if docs_backend == 'auto'
-   if find_program('asciidoc', required: false).found()
-@@ -364,10 +366,12 @@ foreach manpage, category : manpages
-       install: true,
-       install_dir: get_option('mandir') / 'man' + category.to_string(),
-     )
-+
-+    docs_target += manpage_target
-   endif
- 
-   if get_option('docs').contains('html')
--    custom_target(
-+    docs_target += custom_target(
-       command: asciidoc_common_options + [
-         '--backend=' + asciidoc_html,
-         '--doctype=manpage',
-@@ -419,7 +423,7 @@ if get_option('docs').contains('html')
-     depends: documentation_deps,
-   )
- 
--  custom_target(
-+  docs_target += custom_target(
-     command: [
-       xsltproc,
-       '--xinclude',
-@@ -447,7 +451,7 @@ if get_option('docs').contains('html')
-   ]
- 
-   foreach article : articles
--    custom_target(
-+    docs_target += custom_target(
-       command: asciidoc_common_options + [
-         '--backend=' + asciidoc_html,
-         '--out-file=@OUTPUT@',
-@@ -502,3 +506,5 @@ if configured_manpages != actual_manpages
-     error('Man page configured, but not found:\n\n - ' + '\n - '.join(superfluous_manpage))
-   endif
- endif
-+
-+alias_target('docs', docs_target)
+=C2=A0 =C2=A0main-branch -> uc1 ... ucN =C2=A0 =C2=A0<=3D forked and upstre=
+am repository are same.
+
+We add local commits to it
+
+=C2=A0 =C2=A0main-branch -> lc1 -> lc2 -> uc1 ... ucN
+
+Here lc1 and lc2 are local commits and uc1 onward are upstream commits. Aft=
+er $ git pull from upstream repository maybe it changes to
+
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0lc1 -> lc2
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 / =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0\
+=C2=A0 =C2=A0main-branch -> uc1 -> uc2 -> [mc] -> =C2=A0- =C2=A0- =C2=A0-> =
+uc3 ... ucN =C2=A0(<=3D earlier uc1 becomes uc3 here)
+
+* I wonder if there's a way to merge those histories with git pull(1) as
+
+=C2=A0 =C2=A0main-branch -> uc1 -> uc2 -> lc1 -> lc2 -> uc3 ... ucN
+
+And whether that wouldn't create new issues of it's own. I guess the divers=
+ion comes because of the merge commits '[mc]', which essentially creates tw=
+o paths to traverse history. And as the number of merge commits '[mc]' incr=
+ease, number of paths also increase.
+
+
+Thank you.
+---
+=C2=A0 -Prasad
