@@ -1,39 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9C4186A
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 20:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6751C5F24
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 20:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735936008; cv=none; b=cPl8J/NBH76KYwnwGcH/i7FOJVJpAeQsGuhIsXmuSzWDvi4R7yrk4S6o8DTjHwZgSOjdLlk+2lwkEZ2hRifbZVu5Ey+0Uu8iv7bR2dMJeg9i8BpP8GqrldhcLF9jNhqoRGFFTBwMTA5BvgtTVhEiirgGPtTivCrbZUsuimRCmI4=
+	t=1735937200; cv=none; b=F9+TaEV2gbHvhNn2o3fsdwaD1EqkugFzeq06VwDxYdw05m5rDAnQpiIcDav8ORvHGMJ+GotxT1gsuuG7smaay3r1y0CCrjTv9kxC8d5J9ANPW57WaGETrDcD1QZpespHhUvZg1njn2NGjDkXyklp1RafHb5JqAbmpjObitmsWPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735936008; c=relaxed/simple;
-	bh=IJ+EHOorWobI96AcIk9wxSUHQJaywl162izvwDlS454=;
+	s=arc-20240116; t=1735937200; c=relaxed/simple;
+	bh=SNqFONrkTbuPxewdfsVKjG2TUmsGAFGumbMAPDTcLkU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k6dgsSxG1ggigGaXP2gEt2LkEOs+3HEaoGtW4z8vVvd/UXHTDfLdE48QTiB5sFA9W4x5ShSGjlqQbFscLP50w0MEqsnS7UWbB7w7nP3YvFnZVUrFYazAr3Ria7w+PKGhbUxP9ntmSNq3jhci0SGcSbOo6LOsaPxLhm5kKR3fkC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BjT4PeVJ; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=pT12XVfrx1TT4EdGprLu10YO7e7pUKX+4jcIbAvWDQpm35vYsC6E8Y+0mquVqOrDNrnRQ/Z+67R20WXkorZ6wfby+zD1ORcvltmN3JGg50st3jnUVtZdHWuX8ri7Qukh7yUwAXxJswD+r2jKwNZBzRvJPkF9DKLO8hoBQez/rMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UwTLeuAs; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BjT4PeVJ"
-Received: (qmail 19061 invoked by uid 109); 3 Jan 2025 20:26:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=IJ+EHOorWobI96AcIk9wxSUHQJaywl162izvwDlS454=; b=BjT4PeVJLnFM8I6purtS52il3se2Fps2QZuaKvhpFJ5DoPH+d2K9e81z1JeuLjREJ7xgKLo2QEx6Ya7xsUDMLu+RgRw4qF3KYdOQe2eL3WqhF0C3ZesLDtsg399lhjVnB2ppOzK1v/MMo3i3/PSDkpHkiMcn2Ez/sl92FDEJ4vVZf3tSDpOgoPgXUU7Hs6f+mTZenUeNoZ0UjjKO5GorTHKD6YF5WkwtjuzvMX6cfDH+r3oYcu9LkCrKj+sOLnMnL5TOVqbCwrK+mSRDwihiTV9ivWRuvvYPuHRNEgnU81N9aJDP5/2BSqqofSt0+/qoJcoFA3OHlkQbBakwCm+Jfg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UwTLeuAs"
+Received: (qmail 19376 invoked by uid 109); 3 Jan 2025 20:46:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=SNqFONrkTbuPxewdfsVKjG2TUmsGAFGumbMAPDTcLkU=; b=UwTLeuAsiHZ5Tmc93Xu7q+USQOBhLZ5B0ik1wX9KM/YEfzTD91oKGFax2ahFwlENBaTzQWH3P3CN0Cm9GVusffk3dOQiqFwg1/ZvMy7huNAVZFPMPomoZJkOC3CmYX/Fan2g/JfNHV4lYDzXh7h9sAUEjDCWKdFuu4PCfSDUUG1c4+Thvnyojgbx0KFAVAP5B0xhb8lI3KQeY3uJqINg65O4m7Y/X7xCkUYBlVxnvkmpd1ni4lhF91xJkWfMG9LzN1+6857ZwGno9TmmHIPa/eaOjlAGdk7Esui77EXB9/mXTWKeZD1VTxxuTXAys/p0TKugwyuEqbBNE69AfV8zdQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 20:26:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 20:46:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4909 invoked by uid 111); 3 Jan 2025 20:26:45 -0000
+Received: (qmail 5084 invoked by uid 111); 3 Jan 2025 20:46:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 15:26:45 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 15:46:25 -0500
 Authentication-Results: peff.net; auth=none
-Date: Fri, 3 Jan 2025 15:26:45 -0500
+Date: Fri, 3 Jan 2025 15:46:24 -0500
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 6/6] test-lib: ignore leaks in the sanitizer's thread code
-Message-ID: <20250103202645.GD3212696@coredump.intra.peff.net>
-References: <20250101201226.GA3304465@coredump.intra.peff.net>
- <20250101202124.GF3305462@coredump.intra.peff.net>
- <Z3fSnK21nRBrjyfM@pks.im>
+To: Wink Saville <wink@saville.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [BUGREPORT] git diff-tree --cc SEGFAUTs
+Message-ID: <20250103204624.GE3212696@coredump.intra.peff.net>
+References: <CAKk8isqpAXLoiXxOP3uAc00M+OM0FaU3Uhnt5R1FnFMD=xGARg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,29 +40,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z3fSnK21nRBrjyfM@pks.im>
+In-Reply-To: <CAKk8isqpAXLoiXxOP3uAc00M+OM0FaU3Uhnt5R1FnFMD=xGARg@mail.gmail.com>
 
-On Fri, Jan 03, 2025 at 01:05:48PM +0100, Patrick Steinhardt wrote:
+On Fri, Jan 03, 2025 at 11:28:47AM -0800, Wink Saville wrote:
 
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index c9487d0805..d1f62adbf8 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -1177,7 +1177,8 @@ check_test_results_san_file_empty_ () {
-> >  	! find "$TEST_RESULTS_SAN_DIR" \
-> >  		-type f \
-> >  		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
-> > -	xargs grep -q ^DEDUP_TOKEN
-> > +	xargs grep ^DEDUP_TOKEN |
-> > +	grep -qv sanitizer::GetThreadStackTopAndBottom
-> >  }
-> 
-> It would be nice to provide some more context here in the form of a
-> comment so that one doesn't have to blame the commit.
+> `git diff-tree --cc` SEGFAUTs after adding trace_printf to diff_tree_combined.
 
-We can add that on top, but I'm not sure what it should say. Do you want
-something along the lines of "add false positives to ignore here..." or
-are an explanation of why we are ignoring this particular false
-positive?
+Hmm, is it really a bug in Git if you had to add new code which contains
+the bug? :)
+
+> @@ -1595,8 +1597,16 @@ void diff_tree_combined(const struct object_id *oid,
+>  	}
+>  
+>  	/* find out number of surviving paths */
+> -	for (num_paths = 0, p = paths; p; p = p->next)
+> +	trace_printf("Wink diff_tree_combined: find number of surviving paths num_parent=%d\n", num_parent);
+> +	for (num_paths = 0, p = paths; p; p = p->next) {
+> +		trace_printf("Wink diff_tree_combined: num_paths=%d &p=%p mode=%0x, oid=%s path=%s\n", num_paths, p, p->mode, oid_to_hex(&p->oid), p->path);
+> +		for (i = 0; i < num_parent; i++) {
+> +			trace_printf("Wink diff_tree_combined:  &p->parent[%d]=%p status=%c mode=%x oid=%s path.buf=%p contents path.buf=%s\n",
+> +				 i, &p->parent[i], p->parent[i].status, p->parent[i].mode, oid_to_hex(&p->parent[i].oid), p->parent[i].path.buf, p->parent[i].path.buf);
+> +		}
+
+The parent "path" strbufs are only initialized in intersect_paths() if
+combined_all_paths is set, and if there was an actual path change (a
+copy or rename).
+
+So you'd probably need something like this:
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 455bc19087..1e58809c4e 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1601,8 +1601,11 @@ void diff_tree_combined(const struct object_id *oid,
+ 	for (num_paths = 0, p = paths; p; p = p->next) {
+ 		trace_printf("Wink diff_tree_combined: num_paths=%d &p=%p mode=%0x, oid=%s path=%s\n", num_paths, p, p->mode, oid_to_hex(&p->oid), p->path);
+ 		for (i = 0; i < num_parent; i++) {
++			const char *path = rev->combine_all_paths &&
++					   filename_changed(p->parent[i].status) ?
++					   p->parent[i].path.buf : NULL;
+ 			trace_printf("Wink diff_tree_combined:  &p->parent[%d]=%p status=%c mode=%x oid=%s path.buf=%p contents path.buf=%s\n",
+-				 i, &p->parent[i], p->parent[i].status, p->parent[i].mode, oid_to_hex(&p->parent[i].oid), p->parent[i].path.buf, p->parent[i].path.buf);
++				     i, &p->parent[i], p->parent[i].status, p->parent[i].mode, oid_to_hex(&p->parent[i].oid), path, path);
+ 		}
+ 		num_paths++;
+ 	}
 
 -Peff
