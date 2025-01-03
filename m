@@ -1,109 +1,136 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6790B1B532F
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 18:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD401E535
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 18:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735927624; cv=none; b=Cmfwf4cJN8hQdsyo4L/O+t3/tv3XVNWMPtMUTPTtR3uCORUiPW62zPidfakJmkR7oIWHPstCzpFk81T/VxCK2XaCWr0cVOOVV1/FOnTGODPU5ZA3Y5Bqoi/vMqc/FNdlxWfsOJESa2YpTmvCyx5BKKH3iPpt5Vi2X/VVxQe7WFM=
+	t=1735927656; cv=none; b=ufJGurbT1BgLH+YGPuoRcAIH6jZOROT9M6X9LD639vmSMUsCI+xvjwEk8hrFcSh2TE6h/+IALqWTZsVFEzzFR6g3v2Tde6vQO4pE56534dz/2Z7gkHqpbnCA5ANB1kPbQa2pgjO6JKsrySyBjqzTS9FFJqzPPP4qfGQnJ4Z/3eM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735927624; c=relaxed/simple;
-	bh=weRnLrweBNVX1bQrCY1j5AlgOBQuJ/VEeDNb5otLHhs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=irWwc8Ml7bc3ZNQabiFLJRqTGjgOiKVh74x0oUzD3kMmktKRXgXXOQPl42DaLKs2NQdsPgA6SssS4wyPe3VOXynb6gXiAtjdRhn1b/gh+pQha8s97cPZVsCROoXOs9cirtRu4DdR0x96cMDP9oMD10IIUQ+MiVshxDzDdKVW9bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h4iUih20; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=inVlqshx; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735927656; c=relaxed/simple;
+	bh=lH7UbvIBjhqn93+bGtbnbt67+B6RLeveHyhDg+lfxv0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RwYUbKe06Hs1SX+ROlH7SfQMiqGXFIr6yUEwrKR5cCmtUkhul4lk9/iPNqz+L3rB1d8SztvmAqfAtXhYXNEyhhvnlQkTHoqEnz2rSl0RfarGIjc/0N76NqlIxhd9AdNEVTDWufBtXts+Yd03ACBUbwEnpCfqg8ViosXOmWT0uyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mPCoNApn; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h4iUih20";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="inVlqshx"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 21CF41140230;
-	Fri,  3 Jan 2025 13:07:00 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 03 Jan 2025 13:07:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735927620; x=1736014020; bh=weRnLrweBN
-	VX1bQrCY1j5AlgOBQuJ/VEeDNb5otLHhs=; b=h4iUih20z/c/Ev42wmhX6240Tg
-	Qy0MBAcbCNmFGryH6otDzS+OyVq+dr41eEeJopOcMNghNqG35bmh6+NlwjTfEzw8
-	FseUB/boBkiaZSOvkZUXtfasVyP4w9IkIaHLUUCe+lOCwixaI//jr7ShhZOR6wjW
-	cLStYZqj1wjXehhI9JJOLSQkGw9xtV4zW0sdeBlyTNdGrJuqFr/q6VEAaL9KyxtS
-	PU1iTZSWmceajlqx80U2M1zFm7BeV/6sqZ2oCeqvvpmpqgXyJbg3DopLXBpJYe0+
-	TZvKNy3ehOrBW581HQ4XG/9Lh646oHxKqvm8OEnkoJLC069NKX7Hcmst1pBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735927620; x=1736014020; bh=weRnLrweBNVX1bQrCY1j5AlgOBQuJ/VEeDN
-	b5otLHhs=; b=inVlqshx6eFuJ7KsIqp1jKUEAg8a+cPuzTq6z2gno6m4Y432Nlw
-	dpO2dRhEtQtWuxR2D1ZOSPHW1cDpIKPTL6xqimJrb9OScp+Y8q+c8zvXIiPtHkm9
-	O6P6q+QvjXYZXJgl/ErDP+phmQ48zMGfDA9YIZ3XQVEpzjNLB4+SxDATLCWxqlCC
-	XbZtw+oKpUtfuU2OPhpFZvkiTfUyMVYyA262y++1ur8IjPXaN0TaXI3xHfOJdtU4
-	rmjOlyz6bRUOCXfuWNYiU1uIrrNuDz/k0gvZVmhBfwSGF/0vfST71vWgvR2hCrbs
-	VPhU7k5gm7q/pjkD9K5q2GYovagYcQycuUQ==
-X-ME-Sender: <xms:Qyd4Z_R0f94C6XJlDcgKGsNazNmWWKXxDmxAwoC8O-qpNo4QDQp29Q>
-    <xme:Qyd4ZwwgPvDoRWoud8CLk6vEnia8AznmPDXy8LEBauQec5V0myPaNEuFoKyE2HyRT
-    mpISy1YBKJmu1X6LQ>
-X-ME-Received: <xmr:Qyd4Z03FrgVBP41nMNlswLHLZk_AYs8SPTCoU6NWjJmEnxFYPXH_HwWv4VE-4GNN8jAg2I1bArmJbMTdNM4CmsfjnOoG6eONbA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedguddtjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghtthgvohgsrg
-    hgnhholhhinhhivddttdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Qyd4Z_CbjF6cM6NCKJLnr042AtthBE9l9bVRKdQkQN5BY25NLT_2_w>
-    <xmx:Qyd4Z4jJe7MJ4B-vg5YfDztUehw_pei5sI5LcyAtWceMPeeYKwD0yQ>
-    <xmx:Qyd4ZzqbC90j8Ny6HFm0AELtVt_oIt9EXjLP0mESHKsXNEDl2MgOgg>
-    <xmx:Qyd4ZzjFfGOSgSd7xvlfYmLy8uDlqPBcSyr-EVvHPuKxmjaSkN8iWg>
-    <xmx:RCd4ZyZKtO31vMxZol6Tw0SHbMqRxYer0Zr46f-psEpan5unMKmSCjen>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 13:06:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Matteo Bagnolini <matteobagnolini2003@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  ps@pks.im
-Subject: Re: [PATCH v2] t7110: replace `test -f` with `test_path_is_*` helpers
-In-Reply-To: <CADyPGv0T7Wwrf_FidWDtLGOH7A88DcisAG4-jU3eEax106XEcQ@mail.gmail.com>
-	(Matteo Bagnolini's message of "Fri, 3 Jan 2025 18:27:45 +0100")
-References: <Z3fM1bT2Z_0GoD4w@pks.im>
-	<20250103130035.79376-1-matteobagnolini2003@gmail.com>
-	<Z3fiREGwXdILl-M1@pks.im> <xmqqfrlzsw4j.fsf@gitster.g>
-	<CADyPGv0T7Wwrf_FidWDtLGOH7A88DcisAG4-jU3eEax106XEcQ@mail.gmail.com>
-Date: Fri, 03 Jan 2025 10:06:58 -0800
-Message-ID: <xmqq7c7bsrel.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mPCoNApn"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5d3bbb0f09dso21589269a12.2
+        for <git@vger.kernel.org>; Fri, 03 Jan 2025 10:07:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735927653; x=1736532453; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KPN5JhZMMIzuzAzpF8rfIfQsmU96r7RZynbQkI/56Yk=;
+        b=mPCoNApnsiBzYaNOzY2n16dWlRzRPRWtiW/GSnAhQPuzCb2iDS7PdmdF9lWUAmzOND
+         ONGwJWznXUpFKSk+kPWkKNrNBKa7C4qTLERd9WZj3Jk+SDCEWs13RIpHXzQx4u7rZGQR
+         dhlR/gR67YTHaaYwpfbn1EZDgNEgeVf2YNiwDU8zpK1ckGDg71b7cVP3NInWsSMlb5IE
+         io2VFaNsDlcszP9G7G/EdE+kaGjfert+XcAu/CrfeyBDTQPjQvCkNemAtVsVH2N4PhLc
+         QDWub0oAlsN0liCYiHadk3V9Edrrc98EALVuVZ6MKsp2sPaUgQp3UwSOixPpurK5/2t/
+         cL1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735927653; x=1736532453;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KPN5JhZMMIzuzAzpF8rfIfQsmU96r7RZynbQkI/56Yk=;
+        b=E4uIepOWW3Dpne51MoYbtG50QMONTW8q2QrzzqHQOEI6v4pyDXmCLZ5OXPhLjqYUrn
+         r120Fl/HJWP1b5MF2+H0flWeasi5opqI8Sf0OLEoBp/XPCDE9gTNQ25OtspewYMH5nS/
+         RrEGCNDKr3PlrecYa80ZPljXPXpSDnrCXwnid6xA8A/ne26y50WkVjnL7fdny6IfYg8i
+         QBgRmW2y5hTatduYl7euNFer3KpCxqlY0rXbpC8gF8XGyAjXv8gBy8RkoPEw1XpHHbbo
+         z3l7xAMOtdii0tEpIFQH2W84RJkj5rS0CETroKHjYcsFkW3hSDIUE++NAojh4rj8RXN9
+         hZSg==
+X-Forwarded-Encrypted: i=1; AJvYcCVgHhnTsHDo2yKAJ0glVo5VQPipIgUzaWNu5GlGqmAaaUF70BB2G8zKy/oZwRTwDcqZV3c=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxlnkdHUdTAzi0eyEiHeCgsI0X523dCRWvcUF8hz3RhYwrqvgfK
+	T14zTpGtVK3+6ZU0vWsiSh6X8KAmGMuguwuZbvvj1kFLxSY0Ql/5DfKkEDXgbn4eAssgq0HKE0z
+	ls1yrcz10HoazoyrrlDOP5ujRZ5E=
+X-Gm-Gg: ASbGncsKD0y8hIqGU0faKIc587HW33lXG4vDi1QqxL/yeapDPOtEQfbhvq+aMh7PhsR
+	2WCF7ev/cMrY4a4g14xkxvGU88tj81c9kVNLCQoiEEIuga2SquTo+1kzixfeFgqKTs3E=
+X-Google-Smtp-Source: AGHT+IEAe6/h7x6o3qJ0xCVqNyjGR+SVHQ0H51asaQec3gHOqbJzjUWrNJKM8xQtZRwortk2mN/dn1VjPCu4WQ9kFX8=
+X-Received: by 2002:a05:6402:35d6:b0:5d0:f9f1:cd73 with SMTP id
+ 4fb4d7f45d1cf-5d81ddf3befmr47064069a12.13.1735927652918; Fri, 03 Jan 2025
+ 10:07:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1860.git.git.1735516831782.gitgitgadget@gmail.com> <4060690e-39b0-678a-75ef-af30beb439f3@gmail.com>
+In-Reply-To: <4060690e-39b0-678a-75ef-af30beb439f3@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Fri, 3 Jan 2025 13:07:21 -0500
+Message-ID: <CALnO6CDpH4w8nOx7YDygtnY+G5NTBRbMGs7HTTDUHguYkCELiw@mail.gmail.com>
+Subject: Re: [PATCH] completion: repair config completion for Zsh
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Matteo Bagnolini <matteobagnolini2003@gmail.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jan 3, 2025 at 12:21=E2=80=AFPM Philippe Blain
+<levraiphilippeblain@gmail.com> wrote:
 >
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > On Fri, Jan 03, 2025 at 02:00:35PM +0100, Matteo Bagnolini wrote:
->> >> From: matteobagnolini <matteobagnolini2003@gmail.com>
->>
->> This must match the author ident on the Signed-off-by: line.
+> Hi Ben,
 >
-> So should I send another patch with this correction?
-> Sorry for questioning, but as you might have noticed, this is my first time
-> contributing and I'm slowly trying to learn the process.
+> Le 2024-12-29 =C3=A0 19:00, D. Ben Knoble via GitGitGadget a =C3=A9crit :
+> > From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+> >
+> > Commit 1e0ee4087e (completion: add and use
+> > __git_compute_first_level_config_vars_for_section, 2024-02-10) uses an
+> > indirect variable syntax that is only valid for Bash, but the Zsh
+> > completion code relies on the Bash completion code to function. Zsh
+> > supports a different indirect variable expansion using ${(P)var}, but i=
+n
+> > `emulate ksh` mode does not support Bash's ${!var}.
+> >
+> > This manifests as completing strange config options like
+> > "__git_first_level_config_vars_for_section_remote" as a choice for the
+> > command line
+> >
+> >     git config set remote.
+>
+> Sorry for breaking the zsh completion with this change. Tip: it is custom=
+ary
+> in this project to CC commit authors when you identify a commit that
+> caused a regression :)
 
-Thanks for asking; if there are no other things that need fixing, I
-can fix up while queuing.
+Once upon a time I knew that ;) thanks for the reminder.
+
+>
+> > [wall of text]
+>
+> I'm not sure this wall of text brings valuable information to the
+> commit message.
+
+How about something like the range-diff (pushed to the remote) pasted to th=
+e PR?
+
+> Thanks, I verified that this indeed works, at least with on my (old) syst=
+em
+> with Bash 3.2.57 and Zsh 5.0.8.
+
+Excellent!
+
+>
+> I'm wondering what could be done to prevent regressions like this in
+> the future. In [1], brian mentions a way to test the whole test suite wit=
+h Zsh
+> in "sh" mode, which could be added to one of our CI jobs.
+>
+> But the completion test script (t9902-completion.sh) is really Bash-speci=
+fic
+> and does 'exec bash' if it detects it is not running in Bash, so this wou=
+ld not
+> help us anyway...
+>
+> [1] https://lore.kernel.org/git/20240426221154.2194139-1-sandals@crustyto=
+othpaste.net/
+
+I have no real thoughts on the testing bit, but it would be nice to
+avoid. Long-term, it may be necessary to either split the completion
+scripts (as Bash/Zsh diverge?) or document non-portable constructs
+specific to the completion setup? Neither is automatic of the kind you
+had in mind :(
