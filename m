@@ -1,161 +1,95 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BB11CDA2F
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 11:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE22F1B87FA
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 11:59:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735904492; cv=none; b=HGGHd/rRCBIc8bTOpf6DPo1fTf1fNrn/xbwfxRv+t26ZJcM3W3fNk2MgpFjncxxV1FkY/fqnc6ukIuYqO8I6mPxxtEWhvJgu9uFrO8nYHb0c6PQMZj8lhsfPqYvJZ3ebaZ4rMcMT9D0gDAkp86CYqqquIzF5j87PkujxwG5wWHs=
+	t=1735905563; cv=none; b=IH7xRPYcExmLLZ0c+Fghk+RCaTQ8uFjPJZb6VxhNeyviO/3t+cRiJj9o1L/7hW9z9lbFhMeWJvoylx0aEcHanuUXzLPtNF3kB+jpP09msLNP4ocUqIjzQtUDBRK/LxKPOkcKcAlcsDbGAPOyUSYpHqbjZxStwZYb4DAF7LSzFZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735904492; c=relaxed/simple;
-	bh=1CWJOaimB+H7+dhIFweU1EtRgaozauUN6hzgsNu4oZA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gTEjZpJJLjlyXmiV1J9XdqUsgpXnRmXqHpJwBmuljFY0bfpPQmUMdfkLWOTPX7kiVnzz973yCowDt5U3GVMQcpTUfpjfJ2Q8myUR1qIhLDwWWST8+sKQ+fkSMD9CwBIREzzTh/5PMhNCU31bjhfQaetd/5j43kJ9dnqbW12HiSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rXtvKzVJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y6ys39tt; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1735905563; c=relaxed/simple;
+	bh=7FC51RXd6Z/apNhGRShDpg6xEGIAhHzqvtn7OIQ+Nq8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H0i4A+gPHw8M3Tsn8Jd25u5GFFwwVIcC6g0aQ7A5Cy8SO4TVLLZ4P/tYMFu1qq0hOsG5fxQpZuM16k2TJi8KD05cKv+o0qCfO68HZ1HiC0iQE5WHBF3RWobpNbUjKUM16yxWctpYl6qJUaCC7sUS1lH80Nut+5fD5xRJCm3bA/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HxUQ1aWt; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rXtvKzVJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y6ys39tt"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 110B91140168;
-	Fri,  3 Jan 2025 06:41:29 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 03 Jan 2025 06:41:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1735904489; x=1735990889; bh=j4whGboHmQ
-	l/SIZSWydr4tRxVAPERfD5Bo8jluT/72U=; b=rXtvKzVJ9nY5y50UqeAYQhrRHJ
-	HwRX3WiWrn+H6WrCrwUzUG8Pa/W9+PWcEffVX3mmu3OXms5SgkFStXs7t8pswy1N
-	E+UsPk58ujD1yVCrp3262zqI0vLPCnLWkr6uZjvA0a8Ag33+HiOad1H2ux3xB2hU
-	qPWze3TgFiOKF4ogMSxHtY1fiPqTz6NfatKUzAPRWxtaduk46dx2/wGBEJeAWRv5
-	BQlH5Sr7Z4p1GuIwkdMsqG7OdX60nZ0Ua/6EvpXsXcN8xAYdsNNZFJanb2dpN+q6
-	bUvoVQpspcdZ+EPhpChUTao4hRv7sJzxxYQ0BKUZ5lHRlHV2pYjUK/UQ3JVw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735904489; x=1735990889; bh=j4whGboHmQl/SIZSWydr4tRxVAPERfD5Bo8
-	jluT/72U=; b=Y6ys39ttDIPbHMuCHHbAbCFkhIrCN95CZqeP82Dv/xBY0sae7Q1
-	eeEkIOY0SoeICpN0sMHrhxIDQXTLjCkDo+v++wPOZ6gt6+gwqUnS7im6w9M/De7c
-	Nxu4WQC+tKNfZFARMCtgyKaC9p/Z1w0fIKgMDGWJdMNFuUBeeZ7ShusfVKA/iNTh
-	VUg2oso/C82UfXRmx0PqPSiEp60Oxe8Wr77weLYK9SejhEHB9wXQDWJUGAUw4P/T
-	hRVsDgMk3LlwJVj4Vm9BHu/pJ358kIBXkuL8iVPEkGMIy/31y2oVL6zxCs6ieRzC
-	JeVdCN2BWiJnJ8i/mGf8PUr7JZkzt0gehvg==
-X-ME-Sender: <xms:6Mx3Z84N-kaZV8WLDAU_o5aYnF9pRazgbPN2dLCh_EvndXTffOVnjw>
-    <xme:6Mx3Z94QvYa3wDRaGkLDQ20MdZyhtpmhefXkJ2GmKiGhPC0y1DA2f-5YOC5nbIKoh
-    kVqC1g1hKC02hkVeA>
-X-ME-Received: <xmr:6Mx3Z7f6r0PNBp18w3V_tfH9scsd_f6hP7j7aIujZova84l2iVKC-HSrDOitWi2syNdHCFzT3UlkW6XPwATdhRRbPmChyWcYDhHP3zdyTyrRdxA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedgfeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehmrghtthgvohgsrghgnhholhhinhhivddttdefsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjoh
-    hhnhgtrghikeeisehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:6Mx3ZxKWxQQRbdna9I62m0im1l9sDYBnpu5LqRT0dwQ_xZdbWtTQ4g>
-    <xmx:6Mx3ZwLW0L0tHLN8VQNjcOEuF4Vy4QtGttbaVPBI23nsMoWhE__XFw>
-    <xmx:6Mx3ZyyH7_iIP47DoZsQe83ONCGk86ULFVRSGlzps2kRyLBuRSYYXw>
-    <xmx:6Mx3Z0Knm2jEEGJZ9IcM2-ck_Yydj8lqgNH27rvBYRkKkz7tbJvYYg>
-    <xmx:6cx3Z1EcbqixSwCDC3wy-aHKX2hjRzkS9xrgqQhjsNHMV61QByToXr1N>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 06:41:27 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e08ba859 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jan 2025 11:41:25 +0000 (UTC)
-Date: Fri, 3 Jan 2025 12:41:24 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: matteobagnolini <matteobagnolini2003@gmail.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7110: Replace `test -f` and `! test -f` with
- `test_path_is_file` and `test_path_is_missing` for improved debuggability
- when failing.
-Message-ID: <Z3fM1bT2Z_0GoD4w@pks.im>
-References: <20250101225915.65185-1-matteobagnolini2003@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HxUQ1aWt"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4362bae4d7dso87467545e9.1
+        for <git@vger.kernel.org>; Fri, 03 Jan 2025 03:59:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1735905560; x=1736510360; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vpLnVuXDdn2LhdNObRY+RZxw6s1GhVCoLhlhNErXr6M=;
+        b=HxUQ1aWt7ZJdjvOGISOl1o6hk+x6RtRS1pUtP2VfClj5RIIpeSqsFFQhCLENYs8GCO
+         RtHY61pdQM6ctNfuC0wKEVFm2VjhxQAKF6GmJroVXK3sU+cZbKFpRan6Kaa1pnpYdLlO
+         dRe+vFlP12X2iIIOBw78WRr/D0UTP0i6KzgOfJbL9v2X5NH9ZK6wEBoqqD2KcxsrRAFu
+         7LMSFl7QOr+Wv95xN2B+wFoJ8aTITUwm493HQH2LK6lmYLhvNeCU5v8sWfsv5+CTGpya
+         0hAkarVdx+1WtS5TKFj6U2VCeth6PHR7I1OT1wtaHXcMT8uZ5cj8jO8esshE+pjCl++J
+         /gdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1735905560; x=1736510360;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vpLnVuXDdn2LhdNObRY+RZxw6s1GhVCoLhlhNErXr6M=;
+        b=qZ/tpmN9IPHkSVx48lh5UHtiUi9O6xAecs6DeJXU5R1oS4EtjYCxWM7J4bdfwDQAT5
+         qUVxD90e4Boqyj7m5eIQ74how3ILEWAqZol59ZwJtUEyP8uBshJgQHjVZgWflzSH7Mk/
+         SYvjruWCv1f3MzSOwrjY7fBnX3Du9V0xWfA67e8eB7agkz9Uy/zcIIOrAYUvjgGu/VDW
+         tBoVD5uSuj/xBlX87WAv7gSh7cWNZQA6///fYNYSAsjRHbU/itZDewEApCq8uEORCipP
+         jJMhHocjrJUU9pFEH3M0u4fzA+qoeiHb0+XWI02k3SAzu+nG9RDV5o7y+vEz2TbI7oqT
+         ozfA==
+X-Gm-Message-State: AOJu0Yx1XdeNctgxIjYpUswyBuH2zeBC/bulqycLvb6f1WOS6uHBHC4u
+	fxEZzMeaqgJoYsXFQe2088PP79I+mvFcloZ20n7HKqSE4xvSxN4g1KlaPSshQ17eyUPqe8RJDrD
+	oScPWkOAiUiWvVNGZ73HSCfKtb5tmAuRH
+X-Gm-Gg: ASbGncugtsPHWXF5n0FJR4fQ2Iz8Ip3PSM/8IbWcBN5iJrtTJx5IljVwSVbCOGdJrC/
+	w7QKd5ndds1b1YuaFCDCPlOb2TgWmeJLN5Pfy
+X-Google-Smtp-Source: AGHT+IGb94GCx2LfW89BiRl6lglqs5SrtvtVAXF3i92ehIxDJg4qkQhgeHy9DQgfyJZTegCOE7dGCVlkNgmO/dQCq3A=
+X-Received: by 2002:a05:600c:1396:b0:42f:7e87:3438 with SMTP id
+ 5b1f17b1804b1-4366790cd9bmr462254815e9.0.1735905559883; Fri, 03 Jan 2025
+ 03:59:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250101225915.65185-1-matteobagnolini2003@gmail.com>
+References: <cover.1735903029.git.martin.agren@gmail.com> <CAPig+cQoFC_2M-S0d7SLBPFvusXQC93pbk3QP2+qhsa7BJGnuQ@mail.gmail.com>
+In-Reply-To: <CAPig+cQoFC_2M-S0d7SLBPFvusXQC93pbk3QP2+qhsa7BJGnuQ@mail.gmail.com>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Fri, 3 Jan 2025 12:59:08 +0100
+Message-ID: <CAN0heSqKsAoeQdhUhP1fK8V3H2Xi=UeoHGM1GH-=QdysC99qwA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] documentation fixes for 2.48.0
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Alejandro Barreto <alejandro.barreto@ni.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 01, 2025 at 11:59:14PM +0100, matteobagnolini wrote:
+On Fri, 3 Jan 2025 at 12:39, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Fri, Jan 3, 2025 at 6:34=E2=80=AFAM Martin =C3=85gren <martin.agren@gm=
+ail.com> wrote:
+> > These two patches fix some misrenderings of the built documentation,
+> > introduced during the 2.48 cycle. As usual, the exact current behaviors
+> > (symptoms) differ a bit between AsciiDoc and Asciidoctor.
+>
+> Both patches make sense. Out of curiosity, how are you discovering
+> these problems? Are you, for instance, running doc-diff and manually
+> scanning the output?
 
-The commit subject is overly long. We typically try to restrict them to
-at most 72 characters. Furthermore, the part after the subsystem should
-start with a lower-case letter. Suggestion:
+Yes, exactly. Something like
 
-    t7110: replace `test -f` with `test_path_is_*` helpers
+  ./doc-diff v2.47.0 v2.48.0-rc1
 
-> `test -f` and `! test -f` do not provide clear error messages when they fail.
-> To enanche debuggability, use `test_path_is_file` and `test_path_is_missing`,
+is a nice way of finding out what's new. Occasionally, some oddity like
+these stick out.
 
-s/enanche/enhance
+(The diff can easily look huge, but often several pages contain the same
+content, so the 2nd/3rd/4th/... instance of a particular diff can be
+skipped. Inclusion of diff-options.txt would be the typical example.)
 
-> which instead provides more informative error messages.
-
-s/provides/provide
-
-It looks like you intended to start a new paragraph here. These should
-typically be separated by an empty line.
-
-> Note that `! test -f` checks if a path is not a file, while
-> `test_path_is_missing` verifies that a path does not exist. In this specific
-> case the tests are meant to check the absence of the path, making
-> `test_path_is_missing` a valid replacement.
-
-Makes sense.
-
-> Signed-off-by: matteobagnolini <matteobagnolini2003@gmail.com>
-
-We typically prefer proper legal names in the SOB.
-
-> diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-> index 61669a2d21..9a335071af 100755
-> --- a/t/t7110-reset-merge.sh
-> +++ b/t/t7110-reset-merge.sh
-> @@ -270,13 +270,13 @@ test_expect_success '--merge is ok with added/deleted merge' '
->  	git reset --hard third &&
->  	rm -f file2 &&
->  	test_must_fail git merge branch3 &&
-> -	! test -f file2 &&
-> -	test -f file3 &&
-> +	test_path_is_missing file2 &&
-> +	test_path_is_file file3 &&
->  	git diff --exit-code file3 &&
->  	git diff --exit-code branch3 file3 &&
->  	git reset --merge HEAD &&
-> -	! test -f file3 &&
-> -	! test -f file2 &&
-> +	test_path_is_missing file3 &&
-> +	test_path_is_missing file2 &&
->  	git diff --exit-code --cached
->  '
->  
-> @@ -284,8 +284,8 @@ test_expect_success '--keep fails with added/deleted merge' '
->  	git reset --hard third &&
->  	rm -f file2 &&
->  	test_must_fail git merge branch3 &&
-> -	! test -f file2 &&
-> -	test -f file3 &&
-> +	test_path_is_missing file2 &&
-> +	test_path_is_file file3 &&
->  	git diff --exit-code file3 &&
->  	git diff --exit-code branch3 file3 &&
->  	test_must_fail git reset --keep HEAD 2>err.log &&
-
-The changes themselves look obviously good to me, thanks!
-
-Patrick
+Martin
