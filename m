@@ -1,116 +1,82 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFEABE4F
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 18:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07061FA24D
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 18:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735928526; cv=none; b=fsdXJTj15+HvunoJbH/URiuDP4nSDjx3ypXUex8IrE4PI0bQ7HrSFgHYO8AMkiokkkuDGMhph8sCCCflqHZB0fc4zgXDvuvds4ZF+i9lCu9+9ycuX7LwAJi+QYANxqbBmFhfd5rrO4tj774CJO2aJFpkIKmsYn8w2Bpd08Gk1Rw=
+	t=1735930604; cv=none; b=JPibEpPzVHLWWKFi2TKOVGtX90kEWy7o+IEv2Yoc1PvQUEpC3l+XInUDdNnDS634fYuti+CnJBX2xd+MtyEs0s2poLjt4gez9/JSDWytSxZofOhRUXyY7GlJCjhSH0GuwDEBDm/fQ8cZ6pa0xhlQ4VqaGQX408LTmZhsdCaPqig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735928526; c=relaxed/simple;
-	bh=jPr8LRfvRvfDkHft9Q9y35uQmc1o6CMa8ShONHW40ig=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QwBzpdEk2OS3wFLz0I8uO7omUqFzMetDW20INGmJMbQPxwIaU0Qg86OKKQlfowUleDfob9CjUBwn0Q+tZ+8W1ag8+YBLcRxNJDJoPsOYYSKq9PMq8vCCnCA4l1tjq2DOwTFcU0sfbZXJvqzfi2mTbEr8sU9vJ2IDsjk7EnC8YHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 503ILtZY815302
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 3 Jan 2025 18:21:55 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Ankit agarwal'" <agarwal.ankit51@gmail.com>, <git@vger.kernel.org>
-References: <CADQbHxG_dop-Lti7N9Uh02YeRuFt9apXTXWRVQb47kHOSCmKgw@mail.gmail.com>
-In-Reply-To: <CADQbHxG_dop-Lti7N9Uh02YeRuFt9apXTXWRVQb47kHOSCmKgw@mail.gmail.com>
-Subject: RE: Help with Git Subtree Push
-Date: Fri, 3 Jan 2025 13:21:50 -0500
-Organization: Nexbridge Inc.
-Message-ID: <059601db5e0c$5efbcb60$1cf36220$@nexbridge.com>
+	s=arc-20240116; t=1735930604; c=relaxed/simple;
+	bh=Ae+S5f4kstx5QDD8ktY6wisGCVpcfNfifT8CzpmJhn4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IWPQl4x7UcOqz50kbhn56kDv3ay83CfvKqr6pSlHMUfdzmyg/1UbtuEaZp66KNsu4y0ZBkoRI8WkMAPlIOdL6mPGP5e7Q5PWFHS+InvdYKUQJXgir9ZPunJTJDtzNCjngSgVqNGF3JtpBnbV4EWy/PwTcBHV1PNL+c370Ay1u44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aJd2z8wz; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aJd2z8wz"
+Received: (qmail 18363 invoked by uid 109); 3 Jan 2025 18:56:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Ae+S5f4kstx5QDD8ktY6wisGCVpcfNfifT8CzpmJhn4=; b=aJd2z8wzQI5D9CUGe+64HQ/n5cTMXsk27kfgplEAkDy6maxtVvTrd+OonCVlC5LTm3E9tF09ujKhuLGDFXWAXXx2U/qC4dZpM8twBdMBs6aac/qWlSLHRDqUz2UkUvzLax6VFJS7sJDAobwgxw5x1h7SUms2yfeWysb7j6aBrJy5AFJkmvA+8jYwtYF+S1kWdy8uAN5GJ1cwdaTcNxUHQuwR83u4E7YTQwh3gbkDp5AQO7gF9LqiAZW4SyWS8Y/Q0mqj6hmuGR1espQJe4CO00P2k4wtoff6rh0Jqg54mk2sAUNPw8UEBougZubvR/UTJ4QK0FrzNGo9lV2I4Zmq6w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 18:56:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3975 invoked by uid 111); 3 Jan 2025 18:56:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 13:56:41 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 3 Jan 2025 13:56:40 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 04/10] github: convert all Linux jobs to be containerized
+Message-ID: <20250103185640.GA3208749@coredump.intra.peff.net>
+References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
+ <20250103-b4-pks-ci-fixes-v1-4-a9bb95dff833@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFDoaQycAZfPAvPHg/vtiUzOIJmgrQ01CRw
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 250103-4, 1/3/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250103-b4-pks-ci-fixes-v1-4-a9bb95dff833@pks.im>
 
-On January 3, 2025 12:28 PM, Ankit Agarwal wrote:
->We are currently facing an issue with the use of git subtree in our =
-project. Below is the structure of our main repository:
->Main Repository =20
->-src =20
-> =E2=94=9C=E2=94=80=E2=94=80 java
->  =E2=94=9C=E2=94=80=E2=94=80 test =20
->-commons (git subtree linked to external repository: =
-mailto:git@github.com:MSILDigital/MSIL-EDS-Transformation.git) =20
->-README.MD =20
->
->When attempting to perform a git subtree push from the main repository =
-using the following command:
->git subtree push --prefix=3Dcommons =
-mailto:git@github.com:MSILDigital/MSIL-EDS-Transformation.git =
-feature-branch =20
->
->It fails to create the feature-branch in the external repository: =
-mailto:git@github.com:MSILDigital/MSIL-EDS-Transformation.git.
->To debug, we executed the command with --debug enabled:
->git subtree push --prefix=3Dcommons =
-mailto:git@github.com:MSILDigital/MSIL-EDS-Transformation.git =
-feature-branch --debug =20
->
->Here are the relevant logs:
->command: {push}
->quiet: {}
->dir: {commons}
->opts: mailto:{git@github.com:MSILDigital/MSIL-EDS-Transformation.git =
-feature-branch}
->git push using:  =
-mailto:git@github.com:MSILDigital/MSIL-EDS-Transformation.git =
-feature-branch
->Splitting commons...
->Using cachedir: =
-/Users/anagarwa/Desktop/Code/msil/arena/.git/subtree-cache/97237
->Looking for prior splits...
->  Main is: '78dfdb9f6dcc729a5f99a03b8ba061b28f4db97b'
->    Prior: 78dfdb9f6dcc729a5f99a03b8ba061b28f4db97b -> =
-067b015de01bd0aa8d1694b1c9c7b3b9e836e06f
->  Main is: ''
->    Squash: 7aca20022503ddc3374be82ee39089da07094a5b from =
-6ce1ce18cb63e5992ff4a29e9e17e92a1af1afa2
->  Main is: 'c5352df744e1eebca0eb03ae62ca8c52cd501fe0'
->    Prior: c5352df744e1eebca0eb03ae62ca8c52cd501fe0 -> =
-f152501eeaacbcc982bf5cce28c0f3d7b843d780
->progress: 1/     199 (0) [0]
->Processing commit: 1b0c28da208f38245ba61dcfe1fbb7d0c0f0bb78
->  parents: c3f464ce8a03eb1034782b649bd1786589d2a95c
->    incorrect order: c3f464ce8a03eb1034782b649bd1786589d2a95c
->progress: 1/     199 (1) [1]
->
->The complete debug output is attached for your reference.
->Interestingly, this command works as expected for some team members.
->Could you please guide us on what might be causing this behavior and =
-how we can resolve it to successfully execute the git subtree push?
->Looking forward to your insights.
+On Fri, Jan 03, 2025 at 03:46:41PM +0100, Patrick Steinhardt wrote:
 
-AFAIK, git subtree is not part of standard git installations or in the =
-base git code.
-It is a contribution. I would suggest contacting the contributor, =
-apenwarr@gmail.com
-For assistance. At least in the CC.
+> We have split the CI jobs in GitHub Workflows into two categories:
+> 
+>   - Those running on a machine pool directly.
+> 
+>   - Those running in a container on the machine pool.
+> 
+> The latter is more flexible because it allows us to freely pick whatever
+> container image we want to use for a specific job, while the former only
+> allows us to pick from a handful of different distros. The containerized
+> jobs shouldn't cause a significant slowdown, either, so they do not have
+> any significant upside to the best of my knowlegde. The only upside that
+> they did have before the preceding commit is that they run as a non-root
+> user, but that has been addressed now.
 
-You might want to consider moving to submodules in a recent git for what =
-you are
-attempting.
+I remember running into a few issues recently with containerized jobs,
+so I dug in the archive a bit. The issue there was that the container
+was not equipped to support the dynamically-linked version of node that
+was being mounted into place (whereas the runner image from the CI
+provider would work fine).
 
---Randall
+I guess that's probably not a big deal for us here. These are roughly
+the same environments, just pulling from docker instead of relying on
+the runner images. It's possible that Actions scripts might depend on
+something special in the runner image, but in practice I think they try
+to keep the dependencies pretty light.
 
+So we're probably OK to proceed here, and deal with any problems in the
+unlikely event that they come up.
+
+I do wonder if it will affect run times. Presumably GitHub has made it
+pretty fast to get things started on the bare runner image. Now we're
+pulling docker images. That is hopefully pretty optimized and cached,
+but it is extra work. Might be worth measuring.
+
+-Peff
