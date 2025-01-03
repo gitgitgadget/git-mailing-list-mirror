@@ -1,189 +1,173 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7300D1B0F2F
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 08:20:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9399C1946B9
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 08:35:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735892403; cv=none; b=BLbfjMo1lL4I4LtvNn2gY71hyBgh8wXaO1Bo8GeSnLGt81W//U/EQsXIPlh/1x4zCHv/87heru+1gqf1FXe+XxN5+1JDzU/yeuHUAm+EtRBPJfqbYBiCRHu0l4NQ//S/f8SVM7vBoeyEpV8bYnjqB/zo6UxiJYImjYwt3o7uhYo=
+	t=1735893336; cv=none; b=byzPKfLD+RxTA3qTrfv3kKQlQyVL7mihw4H670IKIXcfKlBoo2XNlRZvlKNk/133BqJx6wQT/zaEnyIcgSDpNBWjTXKAIENRFLDUabNkPmiR5qeYYvcW9PmNAhVkeUfvo/SKILoV+v7zQx5fbOu9RcKxShr/vIXe9nO/vdcSboQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735892403; c=relaxed/simple;
-	bh=Yecie3bOF+oz3gJFjP7BQeueiq/+WLtZclQ4XTLqj9w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=okSWUBBZZtnfvBNnPAUU1OGTuGRmy5U6zJrwVFmKv4zD/bnRKvaA2zVQaXdsmAt1IWqqoY/luJFS048hORGMl2HawS5XgTxo8QU9GGW8hHuo37HdyL8UeLyESr0TP3U+qIF9m87pr2enVerQpmLMeCHoPRcK7TGkVp146wXQWR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PdDPA1SY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QufSZn7T; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1735893336; c=relaxed/simple;
+	bh=7Mh+Hp+F45ahvGMtedRWEAd6gWxFujWzXZXwjGrElw0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gS0NvrAOsNNBgZPRurdeT53V5zikJeMCLNuAIjCsBL3O1w+v0tMz1/MP1xHNau61kMhJbQ73Q+70jtPlFkUhgl+ON40uhxljF8glNJRcEk3l2e5ra0ZAsde4whFRJH0zwiLxZpx3YjT5lMQev0JZWvuvbg5MwtQzEc34Vby8OAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VAJM4cpX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tFItR4zR; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PdDPA1SY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QufSZn7T"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 457271380765;
-	Fri,  3 Jan 2025 03:20:00 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VAJM4cpX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tFItR4zR"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7394B138052D;
+	Fri,  3 Jan 2025 03:35:33 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 03 Jan 2025 03:20:00 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 03 Jan 2025 03:35:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1735892400;
-	 x=1735978800; bh=5JiR9G63LBfT6y54TeulAYvTl95J6xjuYddh42Vt1j8=; b=
-	PdDPA1SYMwcAX2E2TlojwaGRQNoU5o1W7LyuaALQjY1fesU3trROrWRD2giSrDXn
-	ScedKb0hNf60Te3G6ycYGKF+6BTtA1BdVgtb3dBTxXLoyySYW4MZnq9Dwuv6EMS4
-	5jxIzMfzfWZ1GD1lr35uXv41EUWowa57caOaW53k6BEzSao5g9Ej0D1CzXq2j29V
-	vHoenX1XQcW8Wi2gqCiFeMjNQXS2zzmODSD3PWzU3GZSohUljdWDjVjKSseb+xC3
-	mkw/eetaRwR/R6iMqG9XRyzXZkGBSC7MCkmTsDyoFCiJi69H8JlN/NCmvTMft7PT
-	frQmkWo6+KuFayP1C//F4Q==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1735893333; x=1735979733; bh=8oXSdqS7qV
+	eBI/UM529unCLIs99CdZjifNWrdcIZFvk=; b=VAJM4cpXZEqIwrwoTdgRLfhWRl
+	vpz8xBV9FahX47MH+Ns+oMK8HC16x11fH2JK0EemF0n3ADQEX6nRlfHgy1ny3+dd
+	0pAbfjxOeJwnRNqBML2xLEw/3BbIDqri0H9poJFZCUBOWhpseZ/6AxwUeAMpapQx
+	gJWWAP4Lhx9P8eLDnLTxz9yvwjUxdECzE5plJGp4OB+01WdLFMw7QLn4BtsVQ/Uo
+	a0M6uyHEmw1//xUZCUuTcigWFDWRXb70Eg2XNRUId37FIJGuCgPS3J/n9nM5gNCB
+	+4dgP5k0aWbxhUNasSUVNu1sLxkEoiPn9vMLXIU2yN4gD2vMumeI/oHdoXqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735892400; x=
-	1735978800; bh=5JiR9G63LBfT6y54TeulAYvTl95J6xjuYddh42Vt1j8=; b=Q
-	ufSZn7TiDxIVh61H8V9Cx1hGuDTgPOjFrHzoJYIQNdyjGapTxjnqczNgKsxcjR+c
-	Z8Da8NqSk3PgMv1XvTU64X2sYFSl/CjGkacIaWEI/Z/nwq5f3TorXoNuPZVp8dU9
-	R8x/B7uVuP+9BaCJwkrQbHJxs84Y5rjb2bH7NFuzsXDzdVzvvns5qSBf58N4CMhy
-	nL+66sbG7kkmkmDBsoQv3WdtoQajQG/n+FZankkPY5+4Y9OBggnuBL45DPIBbAKP
-	fZ97rl8R2+lV5I1AMG+3EPbftfbqWTgJh50PaMH+qC4Mo4/otC2wiMq4lG2zoNDN
-	kaIVCxaCBjbJ6vIXzThmw==
-X-ME-Sender: <xms:sJ13Z7VJHznxsLT7rKQYO-g0eg6jd5z3jNmQFvA4lrWDzAJ2zVHgfA>
-    <xme:sJ13ZzkcXZ9bFFV9RpJiekmNTU5uKf-k_pyFcdgQ_qG2k4QpGA95Tlbx6y3UDvubm
-    wLOF6wP-lTSmfHKEA>
-X-ME-Received: <xmr:sJ13Z3aS7OvadQfazlhwY3jKJ1SNO8jKPI9UB1_y0fytB3Lp12t2wxP_AHu19YCFvAbgM9rJAg-PA5n-SM7GF-qYN8Z5X82ie9HndqxFSBG1IqY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeffedguddulecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1735893333; x=1735979733; bh=8oXSdqS7qVeBI/UM529unCLIs99CdZjifNW
+	rdcIZFvk=; b=tFItR4zRYnSKCYAXmonYD7RND1jxeahlBDJjgbAAcB2H/AXTI7f
+	nguC3r5xk3jjlC3b1/tqz4ifhve5Q/3W2hwL13IoKVGS+iVwTjdiULtvTRERl+HN
+	CWpQlvJKGTtNtXUU3CyLWAbpfhDU951e6yARQ9IQ2db9JXLaEoE1hUHbfzrAUtYD
+	nQ07Z40WziXl0m0YXf0pkivBjhayqGZxrKNsnWpS0RouizoRvqUVgLSFmvvzYHmI
+	cdaGnKJRcHg6OufldJyIO0vWxlKcI9al1X7Ffg4d/ZRF2mJRWrrG6tYMOD6Go9kc
+	DFwlZXa2MGkzHkYPqbUwwXZqDFUaXx/nssg==
+X-ME-Sender: <xms:VaF3Z5Y5DOZfcdY_wV4r9zwbCudU0iDM4XCew2YklHda-yo2XCP9Rw>
+    <xme:VaF3ZwZlL2GBNyl3ZvWWtZWtIN9c2m3xDoTOEdIBkjd4D0ETjTcq-4Lk9KnkTKjx_
+    kTrAQRKrtU5wrI1yg>
+X-ME-Received: <xmr:VaF3Z7-_2UICp5X-JhI0OocE0xKYjgIfvCkyGVv4TTlJ-UmCvbzDKxPCtPNo5Ie6KYXwytvCjakJundddZt942awdUOmJTfYBNoN263gM8ElJb0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeffedguddvvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
-    ggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiud
-    ejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:sJ13Z2XM-5xHJebZprM_GXT6vnkI3jKiaMMOg6GtEmsJXE2iJcuk9g>
-    <xmx:sJ13Z1mJOFBPHpgonaM_pLwxyAHF8_EOxwTOWldZaF26Xtk3PhRo_g>
-    <xmx:sJ13ZzcNa0CSk6dsGv_v9ZPEtczEOOFAIhQZ5zzwJuN6uV9TXwyrXw>
-    <xmx:sJ13Z_Gbxe7RrFaWGUGIZkuZsnMOE8y8PEuym4rn5VSJU0CxGQB1zQ>
-    <xmx:sJ13Z7hCncJ-C9-Lt9ntRcM4JrRAhISIXh_hIEjEYPmEanK9n9XKJRnf>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:VaF3Z3qq88MnOTfnLhsU4JZScl2fBueotBUClZvmM5caA7A88FVZWQ>
+    <xmx:VaF3Z0r2pIqHSzVQEnxW09ooVxX61n5MJTI8fd3Rvx0HSCYB0zG24A>
+    <xmx:VaF3Z9T1ofaMZeczbp_D33mKlvXfhcplU1tsoDRCLU8IshpFfemfIg>
+    <xmx:VaF3Z8q0329v1DzZOVjgUhA4djyRPgQSAwzbAZCf8hEJ9sKGS94EZg>
+    <xmx:VaF3Z73CuJ-STSh5vk4lPK2HjJOKcsTOx7nK-Ra0zeRGpev70xcm7uHJ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 03:19:59 -0500 (EST)
+ 3 Jan 2025 03:35:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a82ed682 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 3 Jan 2025 08:19:57 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f8ffd8b0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 3 Jan 2025 08:35:30 +0000 (UTC)
+Date: Fri, 3 Jan 2025 09:35:29 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 03 Jan 2025 09:19:55 +0100
-Subject: [PATCH 2/2] object-file: retry linking file into place when
- occluding file vanishes
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: How to use Meson (was: [PATCH 00/10] meson: wire up missing HTML
+ documentation])
+Message-ID: <Z3ehR4uaG_j3iWy7@pks.im>
+References: <20241213-b4-pks-meson-docs-v1-0-0c7895952cd3@pks.im>
+ <87wmfqfwh1.fsf@iotcl.com>
+ <Z26ygb_4-DP7Ufab@pks.im>
+ <874j2gl46v.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250103-b4-pks-object-file-racy-collision-check-v1-2-6ef9e2da1f87@pks.im>
-References: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
-In-Reply-To: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <874j2gl46v.fsf@iotcl.com>
 
-In a preceding commit, we have adapted `check_collision()` to ignore
-the case where either of the colliding files vanishes. This should be
-safe in general when we assume that the contents of these two files were
-the same. But the check is all about detecting collisions, so that
-assumption may be too optimistic.
+On Fri, Jan 03, 2025 at 08:58:00AM +0100, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > Yup, you are always expected to set up the top-level source directory,
+> > not any of the subdirectories. The build instructions are then processed
+> > linearly in Meson, so variables declared before a call to `subdir()`
+> > would be accessible in the subdirectory, as well.
+> 
+> With Makefiles I can build individual targets (like `make docs`), or run
+> `make` in the docs/ subdir, is something like that also possible with
+> Meson? Or are you always configuring what to build in `meson configure`
+> and building all that with `meson compile`?
 
-Adapt the code to retry linking the object into place when we see that
-the destination file has racily vanished. This should generally succeed
-as we have just observed that the destination file does not exist
-anymore, except in the very unlikely event that it gets recreated by
-another concurrent process again.
+You can in theory. It's already possible to build individual parts of
+Git, e.g.:
 
-Furthermore, stop treating `ENOENT` specially for the source file. It
-shouldn't happen that the source vanishes as we're using a fresh
-temporary file for it, so if it does vanish it indicates an actual
-error.
+    # We need to discern these two `git` targets because the same name
+    # is defined once as a static library and once as an executable.
+    $ meson compile git:static_library
+    $ meson compile git:executable
+    $ meson compile Documentation/git-add.1
 
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-file.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+We can also have a target equivalent to `make docs` by adding
+`alias_target()`s to Meson. I ain't got these wired up yet, but it could
+look like the patch at the end of this mail. And then you can simply say
+`meson compile docs`. It does require you to have docs configured
+though, otherwise the 'Documentation/' subdirectory does not get pulled
+included in the first place.
 
-diff --git a/object-file.c b/object-file.c
-index e1989236ca87e565dea4d003f57882f257889ecf..88432cc9c07c3c56ce31a298a0ee90e5b5acbaff 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1970,6 +1970,8 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
- 	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
+Patrick
+
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index 2a26fa8a5f..4f8e2e7ebb 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -204,6 +204,8 @@ manpages = {
+   'gitworkflows.txt' : 7,
  }
  
-+#define CHECK_COLLISION_DEST_VANISHED -2
++docs_target = []
 +
- static int check_collision(const char *source, const char *dest)
- {
- 	char buf_source[4096], buf_dest[4096];
-@@ -1978,8 +1980,7 @@ static int check_collision(const char *source, const char *dest)
- 
- 	fd_source = open(source, O_RDONLY);
- 	if (fd_source < 0) {
--		if (errno != ENOENT)
--			ret = error_errno(_("unable to open %s"), source);
-+		ret = error_errno(_("unable to open %s"), source);
- 		goto out;
- 	}
- 
-@@ -1987,6 +1988,8 @@ static int check_collision(const char *source, const char *dest)
- 	if (fd_dest < 0) {
- 		if (errno != ENOENT)
- 			ret = error_errno(_("unable to open %s"), dest);
-+		else
-+			ret = CHECK_COLLISION_DEST_VANISHED;
- 		goto out;
- 	}
- 
-@@ -2034,8 +2037,10 @@ int finalize_object_file(const char *tmpfile, const char *filename)
- int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 			       enum finalize_object_file_flags flags)
- {
--	struct stat st;
--	int ret = 0;
-+	int ret;
+ docs_backend = get_option('docs_backend')
+ if docs_backend == 'auto'
+   if find_program('asciidoc', required: false).found()
+@@ -364,10 +366,12 @@ foreach manpage, category : manpages
+       install: true,
+       install_dir: get_option('mandir') / 'man' + category.to_string(),
+     )
 +
-+retry:
-+	ret = 0;
++    docs_target += manpage_target
+   endif
  
- 	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
- 		goto try_rename;
-@@ -2056,6 +2061,8 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 	 * left to unlink.
- 	 */
- 	if (ret && ret != EEXIST) {
-+		struct stat st;
+   if get_option('docs').contains('html')
+-    custom_target(
++    docs_target += custom_target(
+       command: asciidoc_common_options + [
+         '--backend=' + asciidoc_html,
+         '--doctype=manpage',
+@@ -419,7 +423,7 @@ if get_option('docs').contains('html')
+     depends: documentation_deps,
+   )
+ 
+-  custom_target(
++  docs_target += custom_target(
+     command: [
+       xsltproc,
+       '--xinclude',
+@@ -447,7 +451,7 @@ if get_option('docs').contains('html')
+   ]
+ 
+   foreach article : articles
+-    custom_target(
++    docs_target += custom_target(
+       command: asciidoc_common_options + [
+         '--backend=' + asciidoc_html,
+         '--out-file=@OUTPUT@',
+@@ -502,3 +506,5 @@ if configured_manpages != actual_manpages
+     error('Man page configured, but not found:\n\n - ' + '\n - '.join(superfluous_manpage))
+   endif
+ endif
 +
- 	try_rename:
- 		if (!stat(filename, &st))
- 			ret = EEXIST;
-@@ -2071,9 +2078,13 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 			errno = saved_errno;
- 			return error_errno(_("unable to write file %s"), filename);
- 		}
--		if (!(flags & FOF_SKIP_COLLISION_CHECK) &&
--		    check_collision(tmpfile, filename))
-+		if (!(flags & FOF_SKIP_COLLISION_CHECK)) {
-+			ret = check_collision(tmpfile, filename);
-+			if (ret == CHECK_COLLISION_DEST_VANISHED)
-+				goto retry;
-+			else if (ret)
- 				return -1;
-+		}
- 		unlink_or_warn(tmpfile);
- 	}
- 
-
--- 
-2.48.0.rc1.241.g6c04ab211c.dirty
-
++alias_target('docs', docs_target)
