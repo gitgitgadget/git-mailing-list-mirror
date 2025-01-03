@@ -1,265 +1,179 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250081BD9D0
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:28:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C80526281
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 19:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735932542; cv=none; b=lyIXk4fCBXCqQ/KmPDo+XN8eDBZ8HW5CUhg8VKMZcnTMeCHAb8vaD+OBdSd2yJckjP+edSbY0P0xcGSj6xC3NyVa8xlOb19lBinWBRuG4qbVmsWhbHFVyQWBaEtxyHTbilwK7xAr5AzxvYKvIPjmNQd1t9YdFy7BPCjjUjF2Cvw=
+	t=1735933262; cv=none; b=VxxzwGiN16QpwueQYQlEJiIZTb/V4bAQc286LMocflJvMpMO+NuAgRzDGERxoiFc/x6tu3NBZjj9rll49d1LDS9uMqkUfnsx7tgYCLFNVq0AEaxZcE4eJvk/GnY78f3Xpe91ACLJlcZ/GAoXOqhLOCd8DCo5/u16/Wf3DHYqw2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735932542; c=relaxed/simple;
-	bh=bw0VU9qiYXmjrFFPl3PutgJIbNrbadCi6O49iBWJx/8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=FZ+Vl1Lw/4d6m1U40ZLXVnJfB9wkj1u4qg5NRBWBp9/2OolWgWGo9T10IrrkyZZwpoPG9iooxpU4/0va04D4giza6z93EkpgtUdHTRmWdBjPhiEEzh2Fx07jehWFL/2rUTczMpzCeMeNcmSZVMpYs7xj5ZwGQMNgwGWgf5Zkkvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=saville.com; spf=none smtp.mailfrom=saville.com; dkim=pass (2048-bit key) header.d=saville-com.20230601.gappssmtp.com header.i=@saville-com.20230601.gappssmtp.com header.b=jjxeWVML; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=saville.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=saville.com
+	s=arc-20240116; t=1735933262; c=relaxed/simple;
+	bh=gSmdeq+SmIC27MQpgpsiWLVVcNGQ/JVYxcVP2PqE1XI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kgH37iJpHn/tR2U4w4fnW/83IRgjMGPlbB89SI6XVfTZESOxI6yNgY8/q3kUY1hy6Dce+4u/nSMFHnpsIBFtJwV4mhoJfg2yV1U/7VqnlaxxFBwm+ijBq5F12kCdiutf1W5sH1OGls6enhqK0PPMQdj2iVXs8MD3nMFd/+imI10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ecGz6cN2; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=saville-com.20230601.gappssmtp.com header.i=@saville-com.20230601.gappssmtp.com header.b="jjxeWVML"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e3978c00a5aso16407488276.1
-        for <git@vger.kernel.org>; Fri, 03 Jan 2025 11:28:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20230601.gappssmtp.com; s=20230601; t=1735932539; x=1736537339; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7KO6rUuSoNvxhbq0ELzZm3B6sJi9qfdyY3ZZ+b9fISY=;
-        b=jjxeWVML2t/Fptik7QWCoqTXcuKKM9+hKX1OyauT/kjP8eRWRxCzdq9mhJT6NZyxx1
-         kZEwvyUhwrJQvcgRIRDUheuEn7tYs1FKe2IhMfq7jPHkx8LdS6qqFve0G7FBLXT7WjxQ
-         Iys5OnWX9qGvme/w9x4Ca78bOlnKntAAYRJS8opPGf6scRlMILhykbgVkAL5m5yCIbTt
-         uSqyrpJRSO3UdqnLpqKq79VJYBa7cTzRcoZJKDbRZRyaFe6AM3TLsL6ZEX8QnJaKr486
-         UIxF7lcz7SArtF4RFqO8Hk+k91Xexd3ujBTaL/SW6dA0soyyovr1JcGUhNPF/YPPznxv
-         w6mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735932539; x=1736537339;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7KO6rUuSoNvxhbq0ELzZm3B6sJi9qfdyY3ZZ+b9fISY=;
-        b=RkBuWDprOcSqW0pZuHAOGsTvQoCWy+erIfpe3MBjB6SvdZMAVsNs69y4jwLTsF14r8
-         AjsRHUVqkLnCfyIWYS5f1HmPjya8MkWQWqVsZfSaaBz4MQfUwUMKtuLhdovzuGpxsYiK
-         wnQVgV3A9LYrG0DrQsrcVcfnWJ8kk1cRlhNe1ImovT+r2tyNtbcQIy73o+b9Y7qv3VXE
-         xPKPzQ5KVjlcXnJe6lhH8vZMgBOzoWJOJRj+jjbZiNLPkYheL5Lka5fHbgYE9ZC76AQ4
-         9gIedqGPILx8W6FfVPbm2nwr1U3/2hSqVX0dmBcAEW+pDMNasoNC7NB9l3nBs/gEVjQN
-         0zlw==
-X-Gm-Message-State: AOJu0Ywv9Qb41JxZErnp3TQhRTWCbZ3GbB4WHpRNPrZ7pBwf6X/448Jt
-	Q+eso69XyWyspeZYIKxN3a/XxSzzebXyIWLKdP+nPZDjmlfY73L2tY46mYG+L89/XL4zG5hdqc7
-	mapVx8bQhMFPKU0jIZ1q0+hAn1yFIYIOKog9AJRJPU4UXcN1kxcc=
-X-Gm-Gg: ASbGncu2NNnncxBhXjE5vxQAXTKKrfr1unGcBIZ5iLLXiKwN25RYClY45SXCqUJ0UFm
-	Ouu31W2QfLYWlPCZp+ia1vKbCcuw5zUU5A0Fr
-X-Google-Smtp-Source: AGHT+IF+DIhyC6r/HkoXyoV91bJXmA1kxrxQm93HSj5HGLI+48mRmdSZZhgX1gsKJPgEdc2gx2oVX+PC3Sk4/XEwjY8=
-X-Received: by 2002:a25:b118:0:b0:e39:9764:4f62 with SMTP id
- 3f1490d57ef6-e53ca659d70mr22308483276.10.1735932538889; Fri, 03 Jan 2025
- 11:28:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ecGz6cN2"
+Received: (qmail 18636 invoked by uid 109); 3 Jan 2025 19:40:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gSmdeq+SmIC27MQpgpsiWLVVcNGQ/JVYxcVP2PqE1XI=; b=ecGz6cN2ZHsLghVyOZL+qupbbBnRs7VXgAA3wvqRLfTiQuXno1KApYh+bueeLtaXzeEcpPCwX27nl1ybeRm5SvhViVeAnezDLTDWVgSzNcBtU7hSyJ9fKwpofSYFD/aO/irf7ydwan0Aa8O2q9lnHsncPNniC4cqYsPIRsnR0s7+5Xxw/LZ6H0kSy46Av9HRE1h6b6oWyhDslQU7q9/arJvgn2c6OgodWRYJaTGa3sMTgih9nIE/AT9CExEMdGSY5svbZ1OniT/HIHZ+UiwzhqhRMjxH2fJOOUceuW9cKG++Yp5CuaNDwuHPreJfRpnh3Z1akEsD3Cy0ApTDi/Ol9A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 19:40:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4461 invoked by uid 111); 3 Jan 2025 19:40:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 14:40:58 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 3 Jan 2025 14:40:58 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] object-file: retry linking file into place when
+ occluding file vanishes
+Message-ID: <20250103194058.GE3208749@coredump.intra.peff.net>
+References: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
+ <20250103-b4-pks-object-file-racy-collision-check-v1-2-6ef9e2da1f87@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Wink Saville <wink@saville.com>
-Date: Fri, 3 Jan 2025 11:28:47 -0800
-Message-ID: <CAKk8isqpAXLoiXxOP3uAc00M+OM0FaU3Uhnt5R1FnFMD=xGARg@mail.gmail.com>
-Subject: [BUGREPORT] git diff-tree --cc SEGFAUTs
-To: Git List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="00000000000055f91e062ad24a04"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250103-b4-pks-object-file-racy-collision-check-v1-2-6ef9e2da1f87@pks.im>
 
---00000000000055f91e062ad24a04
-Content-Type: text/plain; charset="UTF-8"
+On Fri, Jan 03, 2025 at 09:19:55AM +0100, Patrick Steinhardt wrote:
 
-`git diff-tree --cc` SEGFAUTs after adding trace_printf to diff_tree_combined.
+> In a preceding commit, we have adapted `check_collision()` to ignore
 
-Details in attached git-bugreport.
+If it's in next and we are building on top, I think we can mention it by
+name: 0ad3d65652 (object-file: fix race in object collision check,
+2024-12-30).
 
---00000000000055f91e062ad24a04
-Content-Type: text/plain; charset="UTF-8"; name="git-bugreport-2025-01-02-1731.txt"
-Content-Disposition: attachment; 
-	filename="git-bugreport-2025-01-02-1731.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_m5h5e3gq0>
-X-Attachment-Id: f_m5h5e3gq0
+> the case where either of the colliding files vanishes. This should be
+> safe in general when we assume that the contents of these two files were
+> the same. But the check is all about detecting collisions, so that
+> assumption may be too optimistic.
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5zd2Vy
-IHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3VyIGlzc3Vl
-LgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8gcmVw
-cm9kdWNlIHlvdXIgaXNzdWUpCgpJJ20gbGVhcm5pbmcgc29tZSBpbm5lciB3b3JraW5ncyBvZiBn
-aXQgc28gSSd2ZSBhZGRlZCBgdHJhY2VfcHJpbnRmYCBzdGF0ZW1lbnRzCnRvIHRoZSBgZGlmZl90
-cmVlX2NvbWJpbmVkYCBmdW5jdGlvbiBhbmQgb3RoZXJzLiBXaGlsZSBydW5uaW5nIC4vZ2l0IEkg
-cmFuIGludG8gYQpwcm9ibGVtIHdoZXJlIGBnaXQgZGlmZi10cmVlIC0tY2NgIGZhaWxzIHdpdGgg
-YSBTRUdGQVVMVC4KClRoaXMgYnVnIHJlcG9ydCBpcyBhICJtaW5pbWFsIiBjaGFuZ2UgdG8gYGRp
-ZmZfdHJlZV9jb21iaW5lZGAgb2YgdGhlIGBnaXRAZ2l0aHViLmNvbTpnaXQvZ2l0YApyZXBvIHRo
-YXQgcmVwcm9kdWNlcyB0aGUgcHJvYmxlbS4gVGhlIGNoYW5nZSBhZGRzIGFuIGFkZGl0aW9uYWwg
-Zm9yIGxvb3AgaW5zaWRlIHRoZSBsb29wIHRoYXQgY291bnRzCnRoZSBudW1iZXIgb2YgInN1cnZp
-bmcgcGF0aHMiIGFuZCBpdCBwcmludHMgdGhlIGBzdHJ1Y3QgY29tYmluZWRfZGlmZl9wYXRoYCBm
-aWVsZHMgc28gSSBjYW4gc2VlCnRoZSBsaXN0IG9mIHBhdGhzIHRoYXQgbWFrZSB1cCBtZXJnZSBj
-b21taXRzIHdpdGggY2hhbmdlcy4KCkJlbG93IGlzIHRoZSBkaWZmIHdoaWNoIGlzIGFwcGxpZWQg
-dG8gdGhlIGBuZXh0YCBicmFuY2gsIGl0IGlzIGFsc28gYXZhaWxhYmxlIG9uIG15IGZvcmsgb24g
-Z2l0aHViOgogICBodHRwczovL2dpdGh1Yi5jb20vd2lua3NhdmlsbGUvZ2l0L3RyZWUvd2luay1z
-ZWdmYXVsdC13aXRoLW1pbmltYWwtY2hhbmdlcwpgYGAKd2lua0Bmd2xhcHRvcCAyNS0wMS0wM1Qx
-ODo0MzowNC4zMzBaOn4vcHJncy9mb3Jrcy9naXQgKHdpbmstc2VnZmF1bHQtd2l0aC1taW5pbWFs
-LWNoYW5nZXMpCiQgZ2l0IC0tbm8tcGFnZXIgZGlmZiBuZXh0CmRpZmYgLS1naXQgYS9jb21iaW5l
-LWRpZmYuYyBiL2NvbWJpbmUtZGlmZi5jCmluZGV4IDY0MWJjOTJkYmQuLjQ1NWJjMTkwODcgMTAw
-NjQ0Ci0tLSBhL2NvbWJpbmUtZGlmZi5jCisrKyBiL2NvbWJpbmUtZGlmZi5jCkBAIC0yMCw2ICsy
-MCw4IEBACiAjaW5jbHVkZSAib2lkLWFycmF5LmgiCiAjaW5jbHVkZSAicmV2aXNpb24uaCIKIAor
-I2luY2x1ZGUgInRyYWNlLmgiCisKIHN0YXRpYyBpbnQgY29tcGFyZV9wYXRocyhjb25zdCBzdHJ1
-Y3QgY29tYmluZV9kaWZmX3BhdGggKm9uZSwKIAkJCSAgY29uc3Qgc3RydWN0IGRpZmZfZmlsZXNw
-ZWMgKnR3bykKIHsKQEAgLTE1OTUsOCArMTU5NywxNiBAQCB2b2lkIGRpZmZfdHJlZV9jb21iaW5l
-ZChjb25zdCBzdHJ1Y3Qgb2JqZWN0X2lkICpvaWQsCiAJfQogCiAJLyogZmluZCBvdXQgbnVtYmVy
-IG9mIHN1cnZpdmluZyBwYXRocyAqLwotCWZvciAobnVtX3BhdGhzID0gMCwgcCA9IHBhdGhzOyBw
-OyBwID0gcC0+bmV4dCkKKwl0cmFjZV9wcmludGYoIldpbmsgZGlmZl90cmVlX2NvbWJpbmVkOiBm
-aW5kIG51bWJlciBvZiBzdXJ2aXZpbmcgcGF0aHMgbnVtX3BhcmVudD0lZFxuIiwgbnVtX3BhcmVu
-dCk7CisJZm9yIChudW1fcGF0aHMgPSAwLCBwID0gcGF0aHM7IHA7IHAgPSBwLT5uZXh0KSB7CisJ
-CXRyYWNlX3ByaW50ZigiV2luayBkaWZmX3RyZWVfY29tYmluZWQ6IG51bV9wYXRocz0lZCAmcD0l
-cCBtb2RlPSUweCwgb2lkPSVzIHBhdGg9JXNcbiIsIG51bV9wYXRocywgcCwgcC0+bW9kZSwgb2lk
-X3RvX2hleCgmcC0+b2lkKSwgcC0+cGF0aCk7CisJCWZvciAoaSA9IDA7IGkgPCBudW1fcGFyZW50
-OyBpKyspIHsKKwkJCXRyYWNlX3ByaW50ZigiV2luayBkaWZmX3RyZWVfY29tYmluZWQ6ICAmcC0+
-cGFyZW50WyVkXT0lcCBzdGF0dXM9JWMgbW9kZT0leCBvaWQ9JXMgcGF0aC5idWY9JXAgY29udGVu
-dHMgcGF0aC5idWY9JXNcbiIsCisJCQkJIGksICZwLT5wYXJlbnRbaV0sIHAtPnBhcmVudFtpXS5z
-dGF0dXMsIHAtPnBhcmVudFtpXS5tb2RlLCBvaWRfdG9faGV4KCZwLT5wYXJlbnRbaV0ub2lkKSwg
-cC0+cGFyZW50W2ldLnBhdGguYnVmLCBwLT5wYXJlbnRbaV0ucGF0aC5idWYpOworCQl9CiAJCW51
-bV9wYXRocysrOworCX0KKwl0cmFjZV9wcmludGYoIldpbmsgZGlmZl90cmVlX2NvbWJpbmVkOiBm
-b3VuZCAlZCBzdXJ2aXZpbmcgcGF0aHNcbiIsIG51bV9wYXRocyk7CiAKIAkvKiBvcmRlciBwYXRo
-cyBhY2NvcmRpbmcgdG8gZGlmZmNvcmVfb3JkZXIgKi8KIAlpZiAob3B0LT5vcmRlcmZpbGUgJiYg
-bnVtX3BhdGhzKSB7CndpbmtAZndsYXB0b3AgMjUtMDEtMDNUMTg6NDM6MTguNjk1Wjp+L3ByZ3Mv
-Zm9ya3MvZ2l0ICh3aW5rLXNlZ2ZhdWx0LXdpdGgtbWluaW1hbC1jaGFuZ2VzKQpgYGAKCkkgbWFk
-ZSB0aG9zZSBjaGFuZ2VzIG9uIHRoZSBgbmV4dGAgYnJhbmNoIG9mIGdpdC9naXQgcmVwbyBhcyBv
-ZiB5ZXN0ZXJkYXksIDEvMi8yNSwKaGVyZSBhcmUgdGhlIHRoZSByZWxhdmFudCBsb2dzOgpgYGAK
-d2lua0Bmd2xhcHRvcCAyNS0wMS0wM1QxODo0MzoxOC42OTVaOn4vcHJncy9mb3Jrcy9naXQgKHdp
-bmstc2VnZmF1bHQtd2l0aC1taW5pbWFsLWNoYW5nZXMpCiQgZ2l0IGxvZyAtMiAtLW9uZWxpbmUK
-ZWRmMzRlM2FiNCAoSEVBRCAtPiB3aW5rLXNlZ2ZhdWx0LXdpdGgtbWluaW1hbC1jaGFuZ2VzLCBv
-cmlnaW4vd2luay1zZWdmYXVsdC13aXRoLW1pbmltYWwtY2hhbmdlcykgYnVnOiBTRUdGQVVMVCB3
-aXRoIG1pbmltYWwgY2hhbmdlczoKNmMwNGFiMjExYyAodXBzdHJlYW0vbmV4dCwgb3JpZ2luL25l
-eHQsIG5leHQpIFN5bmMgd2l0aCAnbWFzdGVyJwp3aW5rQGZ3bGFwdG9wIDI1LTAxLTAzVDE4OjQ0
-OjEzLjk3Nlo6fi9wcmdzL2ZvcmtzL2dpdCAod2luay1zZWdmYXVsdC13aXRoLW1pbmltYWwtY2hh
-bmdlcykKYGBgCgpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2
-aW9yKQoKV2hlbiBJIHVzZSBgZ2l0IGRpZmYtdHJlZSAtLWNjYCBvbiBhIG1lcmdlIGNvbW1pdCB3
-aXRoIGNoYW5nZXMgSSBleHBlY3QgdG8gc2VlCm15IHRyYWNlX3ByaW50ZiBzdGF0ZW1lbnRzIHBy
-aW50IHRoZSBgc3RydWN0IGNvbWJpbmVkX2RpZmZfcGF0aGAgbWVtYmVycyBhbmQKYWxzbyB0aGUg
-b3V0cHV0IGRpZmYtdHJlZSAtY2MgcmVzdWx0cyB3aXRoIHRoZSAiY29tYmluZWQgY2hhbmdlcyIg
-YXMgY2FuIGJlCnNlZW4gYmVsb3c6CmBgYAp3aW5rQGZ3bGFwdG9wIDI1LTAxLTAzVDE4OjQ2OjU4
-LjQ3Mlo6fi9wcmdzL2ZvcmtzL2dpdCAod2luay1zZWdmYXVsdC13aXRoLW1pbmltYWwtY2hhbmdl
-cykKJCBHSVRfVFJBQ0U9MSAuL2dpdCBkaWZmLXRyZWUgLS1jYyA2ZjhhZTk1NWJkYThhZDI0NmNj
-MWY1ZjdhMTVmMWMzYjFjMDQ2OTZhCjEwOjQ3OjA0LjI1OTUwNCBnaXQuYzo0NzYgICAgICAgICAg
-ICAgICB0cmFjZTogYnVpbHQtaW46IGdpdCBkaWZmLXRyZWUgLS1jYyA2ZjhhZTk1NWJkYThhZDI0
-NmNjMWY1ZjdhMTVmMWMzYjFjMDQ2OTZhCjZmOGFlOTU1YmRhOGFkMjQ2Y2MxZjVmN2ExNWYxYzNi
-MWMwNDY5NmEKMTA6NDc6MDQuMjc4MjIwIGNvbWJpbmUtZGlmZi5jOjE2MDAgICAgIFdpbmsgZGlm
-Zl90cmVlX2NvbWJpbmVkOiBmaW5kIG51bWJlciBvZiBzdXJ2aXZpbmcgcGF0aHMgbnVtX3BhcmVu
-dD0yCjEwOjQ3OjA0LjI3ODI0NSBjb21iaW5lLWRpZmYuYzoxNjAyICAgICBXaW5rIGRpZmZfdHJl
-ZV9jb21iaW5lZDogbnVtX3BhdGhzPTAgJnA9MHg1ZGQ1OTA4ODNmNjAgbW9kZT04MWE0LCBvaWQ9
-MGY0MWIyZmQ0YTZiNjc5YTFjZmNhYTlhNTg0YzM4MjA2ODE0NjIxMiBwYXRoPXJlZnMuYwoxMDo0
-NzowNC4yNzgyNTMgY29tYmluZS1kaWZmLmM6MTYwNCAgICAgV2luayBkaWZmX3RyZWVfY29tYmlu
-ZWQ6ICAmcC0+cGFyZW50WzBdPTB4NWRkNTkwODgzZjk4IHN0YXR1cz1NIG1vZGU9ODFhNCBvaWQ9
-N2RkNWU5ZmEzMzIzMTExZjA2MzAzNjc0YjIxM2FlMjRlZDJkMDRiNiBwYXRoLmJ1Zj0obmlsKSBj
-b250ZW50cyBwYXRoLmJ1Zj0obnVsbCkKMTA6NDc6MDQuMjc4MjYwIGNvbWJpbmUtZGlmZi5jOjE2
-MDQgICAgIFdpbmsgZGlmZl90cmVlX2NvbWJpbmVkOiAgJnAtPnBhcmVudFsxXT0weDVkZDU5MDg4
-M2ZlMCBzdGF0dXM9TSBtb2RlPTgxYTQgb2lkPWM1NTU4Mzk4Njk0MGQ4ZWYxZTFjODM5MzY0YzAz
-Y2Q5MmQ0ZjcxMTQgcGF0aC5idWY9KG5pbCkgY29udGVudHMgcGF0aC5idWY9KG51bGwpCjEwOjQ3
-OjA0LjI3ODI2NSBjb21iaW5lLWRpZmYuYzoxNjAyICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5l
-ZDogbnVtX3BhdGhzPTEgJnA9MHg1ZGQ1OTA4OGI0NTAgbW9kZT04MWE0LCBvaWQ9YTBjZGQ5OTI1
-MGU4Mjg2YjU1ODA4YjY5N2IwYTk0YWZhYzVkODMxOSBwYXRoPXJlZnMuaAoxMDo0NzowNC4yNzgy
-NzAgY29tYmluZS1kaWZmLmM6MTYwNCAgICAgV2luayBkaWZmX3RyZWVfY29tYmluZWQ6ICAmcC0+
-cGFyZW50WzBdPTB4NWRkNTkwODhiNDg4IHN0YXR1cz1NIG1vZGU9ODFhNCBvaWQ9MDliZTQ3YWZi
-ZWU1MWU5OWY0YWU0OTU4OGNkNjU1OTZjY2ZjYjA3ZSBwYXRoLmJ1Zj0obmlsKSBjb250ZW50cyBw
-YXRoLmJ1Zj0obnVsbCkKMTA6NDc6MDQuMjc4Mjc0IGNvbWJpbmUtZGlmZi5jOjE2MDQgICAgIFdp
-bmsgZGlmZl90cmVlX2NvbWJpbmVkOiAgJnAtPnBhcmVudFsxXT0weDVkZDU5MDg4YjRkMCBzdGF0
-dXM9TSBtb2RlPTgxYTQgb2lkPWIwZGZjNjVlZDJlNTljNGI2Njk2Nzg0MDMzOWY4MWU3NzQ2YTk2
-ZDMgcGF0aC5idWY9KG5pbCkgY29udGVudHMgcGF0aC5idWY9KG51bGwpCjEwOjQ3OjA0LjI3ODI3
-OCBjb21iaW5lLWRpZmYuYzoxNjAyICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5lZDogbnVtX3Bh
-dGhzPTIgJnA9MHg1ZGQ1OTA4OGI1MzAgbW9kZT04MWE0LCBvaWQ9NWNmYjhiN2NhODY3OGUxNzFi
-OGU4YTdhZDZkYWYxYWY3NGE4MWI1OSBwYXRoPXJlZnMvZmlsZXMtYmFja2VuZC5jCjEwOjQ3OjA0
-LjI3ODI4MyBjb21iaW5lLWRpZmYuYzoxNjA0ICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5lZDog
-ICZwLT5wYXJlbnRbMF09MHg1ZGQ1OTA4OGI1Njggc3RhdHVzPU0gbW9kZT04MWE0IG9pZD00Njdm
-ZTM0N2ZhN2U3ZDgyZWQ3YTI4MzZlNDNlYTc0OWJiOTBhZDdkIHBhdGguYnVmPShuaWwpIGNvbnRl
-bnRzIHBhdGguYnVmPShudWxsKQoxMDo0NzowNC4yNzgyODcgY29tYmluZS1kaWZmLmM6MTYwNCAg
-ICAgV2luayBkaWZmX3RyZWVfY29tYmluZWQ6ICAmcC0+cGFyZW50WzFdPTB4NWRkNTkwODhiNWIw
-IHN0YXR1cz1NIG1vZGU9ODFhNCBvaWQ9ODk1M2QxYzZkMzdiMTNiMGRiNzAxODg4YjNkYjkyZmQ4
-N2E2OGFhYSBwYXRoLmJ1Zj0obmlsKSBjb250ZW50cyBwYXRoLmJ1Zj0obnVsbCkKMTA6NDc6MDQu
-Mjc4MjkxIGNvbWJpbmUtZGlmZi5jOjE2MDIgICAgIFdpbmsgZGlmZl90cmVlX2NvbWJpbmVkOiBu
-dW1fcGF0aHM9MyAmcD0weDVkZDU5MDg4YjYyMCBtb2RlPTgxYTQsIG9pZD0xNjU1MDg2MmQzZWJl
-M2IzNTdjNTIyNTQwODhiMTQzYzdiYTAwMGQ2IHBhdGg9cmVmcy9yZWZzLWludGVybmFsLmgKMTA6
-NDc6MDQuMjc4Mjk2IGNvbWJpbmUtZGlmZi5jOjE2MDQgICAgIFdpbmsgZGlmZl90cmVlX2NvbWJp
-bmVkOiAgJnAtPnBhcmVudFswXT0weDVkZDU5MDg4YjY1OCBzdGF0dXM9TSBtb2RlPTgxYTQgb2lk
-PTY2ZTY2ZTBmYzFlODEyZWJlYmQxZDRiMDExOTg5OWM4NGJmMWMwYWUgcGF0aC5idWY9KG5pbCkg
-Y29udGVudHMgcGF0aC5idWY9KG51bGwpCjEwOjQ3OjA0LjI3ODMwMCBjb21iaW5lLWRpZmYuYzox
-NjA0ICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5lZDogICZwLT5wYXJlbnRbMV09MHg1ZGQ1OTA4
-OGI2YTAgc3RhdHVzPU0gbW9kZT04MWE0IG9pZD03OWIyODdjNWVjNWM3ZDhmNzU5ODY5Y2Y5M2Nk
-YTQwNTY0MDE4NmRjIHBhdGguYnVmPShuaWwpIGNvbnRlbnRzIHBhdGguYnVmPShudWxsKQoxMDo0
-NzowNC4yNzgzMDUgY29tYmluZS1kaWZmLmM6MTYwMiAgICAgV2luayBkaWZmX3RyZWVfY29tYmlu
-ZWQ6IG51bV9wYXRocz00ICZwPTB4NWRkNTkwODhiNzEwIG1vZGU9ODFhNCwgb2lkPTAwZDk1YTlh
-MmY0MmNlNzRjNWNiNGE0MjE3NWIwOTUzMjg3ODUxYTYgcGF0aD1yZWZzL3JlZnRhYmxlLWJhY2tl
-bmQuYwoxMDo0NzowNC4yNzgzMDkgY29tYmluZS1kaWZmLmM6MTYwNCAgICAgV2luayBkaWZmX3Ry
-ZWVfY29tYmluZWQ6ICAmcC0+cGFyZW50WzBdPTB4NWRkNTkwODhiNzQ4IHN0YXR1cz1NIG1vZGU9
-ODFhNCBvaWQ9OGEyYTViODQ3YzNkODYzMzJlMzE5ZGE2OWJmYjVjOGE1NmExMGU4NiBwYXRoLmJ1
-Zj0obmlsKSBjb250ZW50cyBwYXRoLmJ1Zj0obnVsbCkKMTA6NDc6MDQuMjc4MzE0IGNvbWJpbmUt
-ZGlmZi5jOjE2MDQgICAgIFdpbmsgZGlmZl90cmVlX2NvbWJpbmVkOiAgJnAtPnBhcmVudFsxXT0w
-eDVkZDU5MDg4Yjc5MCBzdGF0dXM9TSBtb2RlPTgxYTQgb2lkPWJlYzU5NjJkZWJlYTdiNjI1NzJk
-MDhmNmZhOGZkMzhhYjRjZDhhZjYgcGF0aC5idWY9KG5pbCkgY29udGVudHMgcGF0aC5idWY9KG51
-bGwpCjEwOjQ3OjA0LjI3ODMxOCBjb21iaW5lLWRpZmYuYzoxNjA5ICAgICBXaW5rIGRpZmZfdHJl
-ZV9jb21iaW5lZDogZm91bmQgNSBzdXJ2aXZpbmcgcGF0aHMKZGlmZiAtLWNjIHJlZnMvZmlsZXMt
-YmFja2VuZC5jCmluZGV4IDQ2N2ZlMzQ3ZmEsODk1M2QxYzZkMy4uNWNmYjhiN2NhOAotLS0gYS9y
-ZWZzL2ZpbGVzLWJhY2tlbmQuYworKysgYi9yZWZzL2ZpbGVzLWJhY2tlbmQuYwpAQEAgLTI1MzMs
-OSAtMjUzOSwxNSArMjU0MywxNSBAQEAgc3RhdGljIGludCBjaGVja19vbGRfb2lkKHN0cnVjdCBy
-ZWZfdXBkCiAgCQkJICAgIG9pZF90b19oZXgob2lkKSwKICAJCQkgICAgb2lkX3RvX2hleCgmdXBk
-YXRlLT5vbGRfb2lkKSk7CiAgCiAtCXJldHVybiAtMTsKICsJcmV0dXJuIHJldDsKICB9CiAgCisg
-c3RydWN0IGZpbGVzX3RyYW5zYWN0aW9uX2JhY2tlbmRfZGF0YSB7CisgCXN0cnVjdCByZWZfdHJh
-bnNhY3Rpb24gKnBhY2tlZF90cmFuc2FjdGlvbjsKKyAJaW50IHBhY2tlZF9yZWZzX2xvY2tlZDsK
-KyAJc3RydWN0IHN0cm1hcCByZWZfbG9ja3M7CisgfTsKKyAKICAvKgogICAqIFByZXBhcmUgZm9y
-IGNhcnJ5aW5nIG91dCB1cGRhdGU6CiAgICogLSBMb2NrIHRoZSByZWZlcmVuY2UgcmVmZXJyZWQg
-dG8gYnkgdXBkYXRlLgp3aW5rQGZ3bGFwdG9wIDI1LTAxLTAzVDE4OjQ3OjA0LjI5NVo6fi9wcmdz
-L2ZvcmtzL2dpdCAod2luay1zZWdmYXVsdC13aXRoLW1pbmltYWwtY2hhbmdlcykKYGBgCgpUaGUg
-YWJvdmUgd29ya3MgYmVjYXVzZSBpdCBoYXMgYSBoYWNrIGZpeCBJIGludHJvZHVjZWQgYW5kIHRo
-dXMgaXQgd29ya3MuIFRoZSBoYWNrIGlzIHRvIGFsd2F5cwp1c2UgYGZpbmRfcGF0aHNfZ2VuZXJp
-Y2AgcmF0aGVyIHRoYW4gYGZpbmRfcGF0aHNfbXVsdGl0cmVlYC4gVG8gZG8gdGhpcyBJIGFkZGVk
-CmBuZWVkX2dlbmVyaWNfcGF0aHNjYW4gPSB0cnVlO2Agb24gdG9wIG9mIHRoZSBhYm92ZSBjaGFu
-Z2UgdG8gaGF2ZSBpdCBydW4gcHJvcGVybHk6CmBgYAp3aW5rQGZ3bGFwdG9wIDI1LTAxLTAzVDE4
-OjQ3OjA0LjI5NVo6fi9wcmdzL2ZvcmtzL2dpdCAod2luay1zZWdmYXVsdC13aXRoLW1pbmltYWwt
-Y2hhbmdlcykKJCBnaXQgZGlmZgpkaWZmIC0tZ2l0IGEvY29tYmluZS1kaWZmLmMgYi9jb21iaW5l
-LWRpZmYuYwppbmRleCA0NTViYzE5MDg3Li5mMDNmZjZmODIwIDEwMDY0NAotLS0gYS9jb21iaW5l
-LWRpZmYuYworKysgYi9jb21iaW5lLWRpZmYuYwpAQCAtMTU2Myw3ICsxNTYzLDcgQEAgdm9pZCBk
-aWZmX3RyZWVfY29tYmluZWQoY29uc3Qgc3RydWN0IG9iamVjdF9pZCAqb2lkLAogICAgICAgICAg
-ICAgICAgICAgICAgICAob3B0LT5waWNrYXhlX29wdHMgJgogICAgICAgICAgICAgICAgICAgICAg
-ICAgKERJRkZfUElDS0FYRV9LSU5EU19NQVNLICYgfkRJRkZfUElDS0FYRV9LSU5EX09CSkZJTkQp
-KSB8fAogICAgICAgICAgICAgICAgICAgICAgICBvcHQtPmZpbHRlcjsKLQorICAgIG5lZWRfZ2Vu
-ZXJpY19wYXRoc2NhbiA9IHRydWU7CiAgICAgICAgaWYgKG5lZWRfZ2VuZXJpY19wYXRoc2Nhbikg
-ewogICAgICAgICAgICAgICAgLyoKICAgICAgICAgICAgICAgICAqIE5PVEUgZ2VuZXJpYyBjYXNl
-IGFsc28gaGFuZGxlcyAtLXN0YXQsIGFzIGl0IGNvbXB1dGVzCndpbmtAZndsYXB0b3AgMjUtMDEt
-MDNUMTg6NDk6NTYuOTAwWjp+L3ByZ3MvZm9ya3MvZ2l0ICh3aW5rLXNlZ2ZhdWx0LXdpdGgtbWlu
-aW1hbC1jaGFuZ2VzKQpgYGAKCgpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZp
-b3IpCgpJZiBJIGRvbid0IHVzZSBteSBoYWNrIGEgU0VHRkFVTFQgb2NjdXJzOgpgYGAKd2lua0Bm
-d2xhcHRvcCAyNS0wMS0wM1QxODo1MTozMi4yNDJaOn4vcHJncy9mb3Jrcy9naXQgKHdpbmstc2Vn
-ZmF1bHQtd2l0aC1taW5pbWFsLWNoYW5nZXMpCiQgR0lUX1RSQUNFPTEgLi9naXQgZGlmZi10cmVl
-IC0tY2MgNmY4YWU5NTViZGE4YWQyNDZjYzFmNWY3YTE1ZjFjM2IxYzA0Njk2YQoxMDo1MTozNy4y
-MTE5OTIgZ2l0LmM6NDc2ICAgICAgICAgICAgICAgdHJhY2U6IGJ1aWx0LWluOiBnaXQgZGlmZi10
-cmVlIC0tY2MgNmY4YWU5NTViZGE4YWQyNDZjYzFmNWY3YTE1ZjFjM2IxYzA0Njk2YQo2ZjhhZTk1
-NWJkYThhZDI0NmNjMWY1ZjdhMTVmMWMzYjFjMDQ2OTZhCjEwOjUxOjM3LjIxNjUwMCBjb21iaW5l
-LWRpZmYuYzoxNjAwICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5lZDogZmluZCBudW1iZXIgb2Yg
-c3Vydml2aW5nIHBhdGhzIG51bV9wYXJlbnQ9MgoxMDo1MTozNy4yMTY1MTYgY29tYmluZS1kaWZm
-LmM6MTYwMiAgICAgV2luayBkaWZmX3RyZWVfY29tYmluZWQ6IG51bV9wYXRocz0wICZwPTB4NjMy
-NWFkZDkxZjYwIG1vZGU9ODFhNCwgb2lkPTBmNDFiMmZkNGE2YjY3OWExY2ZjYWE5YTU4NGMzODIw
-NjgxNDYyMTIgcGF0aD1yZWZzLmMKMTA6NTE6MzcuMjE2NTI0IGNvbWJpbmUtZGlmZi5jOjE2MDQg
-ICAgIFdpbmsgZGlmZl90cmVlX2NvbWJpbmVkOiAgJnAtPnBhcmVudFswXT0weDYzMjVhZGQ5MWY5
-OCBzdGF0dXM9TSBtb2RlPTgxYTQgb2lkPTdkZDVlOWZhMzMyMzExMWYwNjMwMzY3NGIyMTNhZTI0
-ZWQyZDA0YjYgcGF0aC5idWY9KG5pbCkgY29udGVudHMgcGF0aC5idWY9KG51bGwpCjEwOjUxOjM3
-LjIxNjUzMCBjb21iaW5lLWRpZmYuYzoxNjA0ICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5lZDog
-ICZwLT5wYXJlbnRbMV09MHg2MzI1YWRkOTFmZTAgc3RhdHVzPU0gbW9kZT04MWE0IG9pZD1jNTU1
-ODM5ODY5NDBkOGVmMWUxYzgzOTM2NGMwM2NkOTJkNGY3MTE0IHBhdGguYnVmPTB4NjMyNTg4ZTQz
-YTAwIGNvbnRlbnRzIHBhdGguYnVmPe+/vUPXrSVjCjEwOjUxOjM3LjIxNjUzNiBjb21iaW5lLWRp
-ZmYuYzoxNjAyICAgICBXaW5rIGRpZmZfdHJlZV9jb21iaW5lZDogbnVtX3BhdGhzPTEgJnA9MHg2
-MzI1YWRkOTkwYzAgbW9kZT04MWE0LCBvaWQ9YTBjZGQ5OTI1MGU4Mjg2YjU1ODA4YjY5N2IwYTk0
-YWZhYzVkODMxOSBwYXRoPXJlZnMuaApTZWdtZW50YXRpb24gZmF1bHQgKGNvcmUgZHVtcGVkKQp3
-aW5rQGZ3bGFwdG9wIDI1LTAxLTAzVDE4OjUxOjM3LjM1MFo6fi9wcmdzL2ZvcmtzL2dpdCAod2lu
-ay1zZWdmYXVsdC13aXRoLW1pbmltYWwtY2hhbmdlcykKYGBgCgpXaGF0J3MgZGlmZmVyZW50IGJl
-dHdlZW4gd2hhdCB5b3UgZXhwZWN0ZWQgYW5kIHdoYXQgYWN0dWFsbHkgaGFwcGVuZWQ/CgpUaGVy
-ZSBzaG91bGQgYmUgbm8gU0VHRkFVTFQKCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOgoK
-SSBoYXZlIGEgZ3Vlc3Mgb24gd2hhdCB0aGUgcHJvYmxlbSBtaWdodCBiZTsgdGhhdCBgZmluZF9w
-YXRoc19tdWx0aXRyZWVgIGlzIG5vdCBwcm9wZXJseQppbml0aWFsaXppbmcgcGF0aC5idWYuIEkg
-ZGV0ZXJtaW5lZCB0aGlzIGJlY2F1c2UsIGluIG15IGxpbWl0ZWQgdGVzdGluZywgaWYgSSBhbHdh
-eXMgdXNlCmBmaW5kX3BhdGhzX2dlbmVyaWNgIHdlIHNlZSB0aGF0IGFsbCB0aGUgcG9pbnRlcnMg
-YXJlIE5VTEwgYW5kIHdlIGRvbid0IFNFR0ZBVUxULgoKUGxlYXNlIHJldmlldyB0aGUgcmVzdCBv
-ZiB0aGUgYnVnIHJlcG9ydCBiZWxvdy4KWW91IGNhbiBkZWxldGUgYW55IGxpbmVzIHlvdSBkb24n
-dCB3aXNoIHRvIHNoYXJlLgoKCltTeXN0ZW0gSW5mb10KZ2l0IHZlcnNpb246CmdpdCB2ZXJzaW9u
-IDIuNDguMC5yYzEuMjQyLmdlZGYzNGUzYWI0IApjcHU6IHg4Nl82NApubyBjb21taXQgYXNzb2Np
-YXRlZCB3aXRoIHRoaXMgYnVpbGQKc2l6ZW9mLWxvbmc6IDgKc2l6ZW9mLXNpemVfdDogOApzaGVs
-bC1wYXRoOiAvYmluL3NoCmxpYmN1cmw6IDguMTEuMApPcGVuU1NMOiBPcGVuU1NMIDMuNC4wIDIy
-IE9jdCAyMDI0CnpsaWI6IDEuMy4xCnVuYW1lOiBMaW51eCA2LjEyLjYtYXJjaDEtMSAjMSBTTVAg
-UFJFRU1QVF9EWU5BTUlDIFRodSwgMTkgRGVjIDIwMjQgMjE6Mjk6MDEgKzAwMDAgeDg2XzY0CmNv
-bXBpbGVyIGluZm86IGdudWM6IDE0LjIKbGliYyBpbmZvOiBnbGliYzogMi40MAokU0hFTEwgKHR5
-cGljYWxseSwgaW50ZXJhY3RpdmUgc2hlbGwpOiAvYmluL2Jhc2gKCgpbRW5hYmxlZCBIb29rc10K
---00000000000055f91e062ad24a04--
+I found this a little vague about what "too optimistic" means. ;)
+Maybe something like:
+
+  Prior to 0ad3d65652, callers could expect that a successful return
+  from finalize_object_file() means that either the file was moved into
+  place, or the identical bytes were already present. If neither of
+  those happens, we'd return an error.
+
+  Since that commit, if the destination file disappears between our
+  link() call and the collision check, we'd return success without
+  actually checking the contents, and without retrying the link. This
+  solves the common case that the files were indeed the same, but it
+  means that we may corrupt the repository if they weren't (this implies
+  a hash collision, but the whole point of this function is protecting
+  against hash collisions).
+
+  We can't be pessimistic and assume they're different; that hurts the
+  common case that 0ad3d65652 was trying to fix. But after seeing that
+  the destination file went away, we can retry linking again...
+
+> Furthermore, stop treating `ENOENT` specially for the source file. It
+> shouldn't happen that the source vanishes as we're using a fresh
+> temporary file for it, so if it does vanish it indicates an actual
+> error.
+
+OK. I think this is worth doing, but I'd probably have put it into its
+own commit.
+
+> @@ -1987,6 +1988,8 @@ static int check_collision(const char *source, const char *dest)
+>  	if (fd_dest < 0) {
+>  		if (errno != ENOENT)
+>  			ret = error_errno(_("unable to open %s"), dest);
+> +		else
+> +			ret = CHECK_COLLISION_DEST_VANISHED;
+>  		goto out;
+>  	}
+
+OK. We're depending on error() never using "-2" itself, but I think that
+is a reasonable thing.
+
+> @@ -2034,8 +2037,10 @@ int finalize_object_file(const char *tmpfile, const char *filename)
+>  int finalize_object_file_flags(const char *tmpfile, const char *filename,
+>  			       enum finalize_object_file_flags flags)
+>  {
+> -	struct stat st;
+> -	int ret = 0;
+> +	int ret;
+> +
+> +retry:
+> +	ret = 0;
+>  
+>  	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
+>  		goto try_rename;
+> @@ -2056,6 +2061,8 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
+>  	 * left to unlink.
+>  	 */
+>  	if (ret && ret != EEXIST) {
+> +		struct stat st;
+> +
+
+OK, we move the stat struct here where it's needed. I think that's
+somewhat orthogonal to your patch, but reduced scoping does help make
+the goto's less confusing.
+
+I suspect there's a way to write this as a loop that would be more
+structured, but it would be a bigger refactor. Bonus points if it also
+get rid of the try_rename goto, too. ;)
+
+I'm OK punting on that, though.
+
+> @@ -2071,9 +2078,13 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
+>  			errno = saved_errno;
+>  			return error_errno(_("unable to write file %s"), filename);
+>  		}
+> -		if (!(flags & FOF_SKIP_COLLISION_CHECK) &&
+> -		    check_collision(tmpfile, filename))
+> +		if (!(flags & FOF_SKIP_COLLISION_CHECK)) {
+> +			ret = check_collision(tmpfile, filename);
+> +			if (ret == CHECK_COLLISION_DEST_VANISHED)
+> +				goto retry;
+> +			else if (ret)
+>  				return -1;
+> +		}
+>  		unlink_or_warn(tmpfile);
+>  	}
+
+I share Junio's uneasiness with looping forever based on external input
+from the filesystem (even though you _should_ eventually win the race,
+that's not guaranteed, and of course a weird filesystem might confuse
+us). Could we put a stop-gap in it like:
+
+diff --git a/object-file.c b/object-file.c
+index 88432cc9c0..262a2f3df2 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -2038,6 +2038,7 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
+ 			       enum finalize_object_file_flags flags)
+ {
+ 	int ret;
++	int retries = 0;
+ 
+ retry:
+ 	ret = 0;
+@@ -2080,8 +2081,11 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
+ 		}
+ 		if (!(flags & FOF_SKIP_COLLISION_CHECK)) {
+ 			ret = check_collision(tmpfile, filename);
+-			if (ret == CHECK_COLLISION_DEST_VANISHED)
++			if (ret == CHECK_COLLISION_DEST_VANISHED) {
++				if (retries++ > 5)
++					return error(_("unable to write repeatedly vanishing file %s"), filename);
+ 				goto retry;
++			}
+ 			else if (ret)
+ 				return -1;
+ 		}
+
+Otherwise, I think the logic looks good.
+
+-Peff
