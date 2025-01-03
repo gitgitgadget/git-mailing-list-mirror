@@ -1,138 +1,70 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4998C186A
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 20:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9C4186A
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 20:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735935943; cv=none; b=MvqzDJcrDGkqNT0rmT8LeAL4LdTfSyijjwcreYN6HHD0f+pd54MUgvyH/9RXr3ms7B4f13c7EIPgrWzo5wljkZr0uboAFuJR+PwBCKewIkPrrXQQBSAYJ0Gikjyh2AG/zz1lfIXisEH9LEEirM/FCDhO1JwAHzmcx20iKtOoyLI=
+	t=1735936008; cv=none; b=cPl8J/NBH76KYwnwGcH/i7FOJVJpAeQsGuhIsXmuSzWDvi4R7yrk4S6o8DTjHwZgSOjdLlk+2lwkEZ2hRifbZVu5Ey+0Uu8iv7bR2dMJeg9i8BpP8GqrldhcLF9jNhqoRGFFTBwMTA5BvgtTVhEiirgGPtTivCrbZUsuimRCmI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735935943; c=relaxed/simple;
-	bh=ubLqVHYkqO4c9ofVhokpunQFxGS6ntdfzA8iPyyLfWE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LnypY82noeCw+YgwN1RxBUPDGaX+HH2oyP6VbuXY+qxCHuc33TgTG3j4qIpGKd+wZyE4+mI057w9lKxz99pntTMEKUaV94J6L4ktyKxzvU6uyflqoeJzUAcCYrED4FmGSkk9G0eUOSgLQX7yNK3JU+RSh6L7naD20wb31vVpltU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZezOBfEN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wXvHy8+5; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1735936008; c=relaxed/simple;
+	bh=IJ+EHOorWobI96AcIk9wxSUHQJaywl162izvwDlS454=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k6dgsSxG1ggigGaXP2gEt2LkEOs+3HEaoGtW4z8vVvd/UXHTDfLdE48QTiB5sFA9W4x5ShSGjlqQbFscLP50w0MEqsnS7UWbB7w7nP3YvFnZVUrFYazAr3Ria7w+PKGhbUxP9ntmSNq3jhci0SGcSbOo6LOsaPxLhm5kKR3fkC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BjT4PeVJ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZezOBfEN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wXvHy8+5"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 67D53138037E;
-	Fri,  3 Jan 2025 15:25:40 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 03 Jan 2025 15:25:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1735935940; x=1736022340; bh=DlrVaCSmLD
-	glpsE7+tiSGMYNNqTEBcy5LdQ5QB6ws1E=; b=ZezOBfENDRh2umL16WWf5BePD4
-	BWKzOA3spdEzQoEWj0HYuE3ZzdQ+CtbLb3nT0+6BvGITONEk9/HnGXzCc+GdwpzB
-	L81jZc1GziiojztZfCIlUU6GHKmt1VpNj0ueekoceS6/qIU+3TpxElkws3x7zHPL
-	QsNND1B5dLU1mdh73V//FeXuLDz8OnxIBIwqtFatYiSBDvWy1BO5DfD5Jf9NoKLq
-	SyZdJHWPBtf6DjPrw2yg34F0XTy58Ft1fxOEgMpdCNaCAVcwv1LlkBKgr/mu/83c
-	4BgthtUmS1nxrGDX8NOShl0U1uU/a0Li0Ve0XyBllK0wZATphDOOBBY7wYdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1735935940; x=1736022340; bh=DlrVaCSmLDglpsE7+tiSGMYNNqTEBcy5LdQ
-	5QB6ws1E=; b=wXvHy8+5b5f5J5RYTsjZ6UptMjazNbueGSEmDsCHeTVGP8eaOYz
-	GiXTz8U81CkVi6XpXWPs0wFL0MK/cGFqqM7hPy9dWR3r2lyXuW4AvWDtI579D7iu
-	Bs2K/1eu+U1PZo1mmKVU6uZQXWbqZ0YL2r74UPt5Bn3QeAyJDjfSL10/KNB20R+g
-	gYVqfFQhwHxpY/mjkWB9K4BDzoTYalIM2Za+7HX6/5QTUCisydjc2CAN9G36+O9f
-	I98ZIXkDp8hpA7FVUh82hlHHLnvr1ecebD9IElre9PnbhE9v3C69IhusTYE3aHEG
-	N3kQvStH/me49dBEO3yDoJyuoByV2Q10gvQ==
-X-ME-Sender: <xms:w0d4Z2rq9jHKIE6J9UXaLBQSK8wmaTps_jOqKgNp0Ass3UvZnT6VvA>
-    <xme:w0d4Z0ona2ojsYtpEpv_VItc77xasybWehJT7MXppLISMZaXNI012PK1eSZnpvdQ1
-    YJ5ta5qGCrFVMbofA>
-X-ME-Received: <xmr:w0d4Z7OOhPDqKNGfTLDFy6VuMmlxkT2NTGFhhFuKKflzSAD8VMUOqlHiWevXPJikZqDlU3Rq5Ih-Di8ymHjA4DpYaP53QLYV7Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefgedgudefiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:xEd4Z14AjYwQ2NS0IBirufjo_SqrkMqo3iBstuLhiBg5ctwQlDf5pw>
-    <xmx:xEd4Z15gSZ3Z8ClrioYMdN-nDTm6DmPGZ6ElYlJRIEDjBCCDXHUo7Q>
-    <xmx:xEd4Z1gYYcDBHnE6d_3OY_ZVCrfHz5rLLgZgSMp_fpyYTNE3XWkLtQ>
-    <xmx:xEd4Z_7-81j0W8SqV2RKcLKf77hxkzTTm7T1lazcBn-wDjk28gJ7rQ>
-    <xmx:xEd4Z40ve_S921jx1Im-xMP6gB6bBErP92crn3X4kKhrMrHTHKoP3ZAg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 15:25:39 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 2/2] object-file: retry linking file into place when
- occluding file vanishes
-In-Reply-To: <20250103194058.GE3208749@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 3 Jan 2025 14:40:58 -0500")
-References: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
-	<20250103-b4-pks-object-file-racy-collision-check-v1-2-6ef9e2da1f87@pks.im>
-	<20250103194058.GE3208749@coredump.intra.peff.net>
-Date: Fri, 03 Jan 2025 12:25:38 -0800
-Message-ID: <xmqqsepzprul.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BjT4PeVJ"
+Received: (qmail 19061 invoked by uid 109); 3 Jan 2025 20:26:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=IJ+EHOorWobI96AcIk9wxSUHQJaywl162izvwDlS454=; b=BjT4PeVJLnFM8I6purtS52il3se2Fps2QZuaKvhpFJ5DoPH+d2K9e81z1JeuLjREJ7xgKLo2QEx6Ya7xsUDMLu+RgRw4qF3KYdOQe2eL3WqhF0C3ZesLDtsg399lhjVnB2ppOzK1v/MMo3i3/PSDkpHkiMcn2Ez/sl92FDEJ4vVZf3tSDpOgoPgXUU7Hs6f+mTZenUeNoZ0UjjKO5GorTHKD6YF5WkwtjuzvMX6cfDH+r3oYcu9LkCrKj+sOLnMnL5TOVqbCwrK+mSRDwihiTV9ivWRuvvYPuHRNEgnU81N9aJDP5/2BSqqofSt0+/qoJcoFA3OHlkQbBakwCm+Jfg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 20:26:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4909 invoked by uid 111); 3 Jan 2025 20:26:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 15:26:45 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 3 Jan 2025 15:26:45 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 6/6] test-lib: ignore leaks in the sanitizer's thread code
+Message-ID: <20250103202645.GD3212696@coredump.intra.peff.net>
+References: <20250101201226.GA3304465@coredump.intra.peff.net>
+ <20250101202124.GF3305462@coredump.intra.peff.net>
+ <Z3fSnK21nRBrjyfM@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z3fSnK21nRBrjyfM@pks.im>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jan 03, 2025 at 01:05:48PM +0100, Patrick Steinhardt wrote:
 
-> I share Junio's uneasiness with looping forever based on external input
-> from the filesystem (even though you _should_ eventually win the race,
-> that's not guaranteed, and of course a weird filesystem might confuse
-> us).
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index c9487d0805..d1f62adbf8 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1177,7 +1177,8 @@ check_test_results_san_file_empty_ () {
+> >  	! find "$TEST_RESULTS_SAN_DIR" \
+> >  		-type f \
+> >  		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
+> > -	xargs grep -q ^DEDUP_TOKEN
+> > +	xargs grep ^DEDUP_TOKEN |
+> > +	grep -qv sanitizer::GetThreadStackTopAndBottom
+> >  }
+> 
+> It would be nice to provide some more context here in the form of a
+> comment so that one doesn't have to blame the commit.
 
-Yeah, "a weird filesystem" would be a lot more plausible than a
-determined and accurate attacker to break it.  The only thing they
-have to do is to yield EEXIST when failing link() for some other
-reason.
+We can add that on top, but I'm not sure what it should say. Do you want
+something along the lines of "add false positives to ignore here..." or
+are an explanation of why we are ignoring this particular false
+positive?
 
-> Could we put a stop-gap in it like:
->
-> diff --git a/object-file.c b/object-file.c
-> index 88432cc9c0..262a2f3df2 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -2038,6 +2038,7 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
->  			       enum finalize_object_file_flags flags)
->  {
->  	int ret;
-> +	int retries = 0;
->  
->  retry:
->  	ret = 0;
-> @@ -2080,8 +2081,11 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
->  		}
->  		if (!(flags & FOF_SKIP_COLLISION_CHECK)) {
->  			ret = check_collision(tmpfile, filename);
-> -			if (ret == CHECK_COLLISION_DEST_VANISHED)
-> +			if (ret == CHECK_COLLISION_DEST_VANISHED) {
-> +				if (retries++ > 5)
-> +					return error(_("unable to write repeatedly vanishing file %s"), filename);
->  				goto retry;
-> +			}
->  			else if (ret)
->  				return -1;
->  		}
-
-Sounds sensible.
-
-> Otherwise, I think the logic looks good.
->
-> -Peff
-
-Thanks.
+-Peff
