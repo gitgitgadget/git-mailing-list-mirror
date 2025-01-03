@@ -1,78 +1,79 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7F31C3BF8
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 08:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D361C7B62
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 08:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735892401; cv=none; b=DYHIp2FjNp8pMD7TVYR5q3joFPqdHqFIoChsHZ3CoCMLjl9kmSOqroZEMhlDlY46eSS2g4epcjHUoUuhaau+sjcGK0jYXPSPrSsdS9VaFugMRRTtVRODKZJ/d/a2PwLVGT2NsiHiN75aw7Sx0G8PPq97P5pbs87eEuYMBjU3bug=
+	t=1735892402; cv=none; b=Xb0O8E0qQRncUDu+9C30080LiDppE0ODT5BUibjOVmtomUUsjxH9239lIe0u0M87zRy2Mn2XU4W7XuOUJ4eQueBJChd/fZOsyyGqPalB+rUd6W1+Z5g9xr0Km2xPynOP6ePjivN3Gg/Ibxz/7WrtOxYnMPpZqFVPCanpj8+sOQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735892401; c=relaxed/simple;
-	bh=wiTtGOMboaTkVD8Gp1zt9Vlrw8Dg/eRHtxdzpyMOIf0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TOJ8K7CCn0w0sChnczfzMAZhzsAUjBr6srqHsRYgrC7Nubu58G7H5GbszBjc1offM+m4zOVLdx1bOGdrzYk63aA6PIpy6H2+TXmy5dNzW1zsAyh3gLCf3gHNy9uiMgXNtSB6F834DoUlihnpCioL80xS5UJp+4AQVWUxIgNMurY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ivPX3CSg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VFVFxoFf; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1735892402; c=relaxed/simple;
+	bh=vUlH2rYpgL7UYDgIYch0FjQee+4qaqBcalnhqPAwZGM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UfLot4RCkWODe+95u+R9qoJggC5PgKR/S1OSnyL/axw5iy0fuDgtzuvO2uk+Wbv5unxORvHlRS/yeZdusruLCtF5UyqhyX6T//+r2hJ9yfxTqerFVlPmzxmME0s6tUV6MSCTkrdUG7+5GQiHOvtXWIRb/1auv65YYdpdwLMGoSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=s32853bQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KxD9AAmM; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ivPX3CSg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VFVFxoFf"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5112F1140224;
-	Fri,  3 Jan 2025 03:19:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s32853bQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KxD9AAmM"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7F655114022B;
+	Fri,  3 Jan 2025 03:19:59 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 03 Jan 2025 03:19:58 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 03 Jan 2025 03:19:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1735892398; x=1735978798; bh=nZpZ7lj+9B
-	Y3wAEvu8Bf1m+F/xWpWy1g7txsbde8NcU=; b=ivPX3CSg43I0j1CFrWzQlJFTD5
-	MM4RUKcskKCyg9o8rA5u9bWW+JRBD8fd0Mcdny3gUeThF2z60FSXiO6xcM+hCS2H
-	PKUnUDDuTToAwCIv60f4vdo8zAZGSmc2mqPp+g63301mSwH+3kzlkEke4wKt5cMe
-	z42xOaRu/MsFMEuh3F15D6i9QOVkXRqy37JE9qVQgq1z4G2C+ES71HZpxOlNsu3/
-	onnH+N2yjY36qXL9fZtzmmBouWqzETc52KaxxXzZwQukjlRuOZYnlaL7p9izUdAn
-	hpYLgujX9IBHQHUxESdx5t5Fpl07QL0dTNSyO0j51ZFnDgmxBGqYEbPgLGPQ==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1735892399;
+	 x=1735978799; bh=2jl7SD9NIMNiRobtMc0O3TvOTZ1z8eMZ4tbF4Ua8DL4=; b=
+	s32853bQcA+p8G523mSXeHZCmd1m7ybNp/perZAqQ7IHR1OThpvjijKDR+VSMJJI
+	jJfLZXwS7ZNyg4jlhHOq7NW45rGL4rPx9ayTmczAmwfyIhUYyRcTgasrZk8f4r7B
+	vlrTZ91M7b1fKkRBTkPzL9E619hIG2+QnLpEM0zfjpFCnEY4PvibHfzxi6CDGEsj
+	S4734S/KZok1U5D/3nQwvV8MNYoVAhRT7JC60NZZ7WxMlTxhzTUrmNEXS1vISNT/
+	n/hTCwHpfLXpqmCSM//+PvnNSTfsYeynYqVlh2oEZTuDi0Z83r/mVKoc3njlYaa+
+	xITcKuiTf2n80y7MtHZV5A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1735892398; x=1735978798; bh=nZpZ7lj+9BY3wAEvu8Bf1m+F/xWp
-	Wy1g7txsbde8NcU=; b=VFVFxoFf8UaySTmnvh4mbbEgxM4vwSJLMBDpQG4bQBCQ
-	q9HuWWd6ausdHxxaQraQmoXIU9dzX1dhVlgUD3mKZU/0+2RMuuyQgod1cnthhI3s
-	EfInAff5ulit81x50WOF3PjjK6HTxmTrTpSqiU0PmHypVjpRl4pktULqJQG7a7CP
-	CI5tmWYGPDibba/35sKeZD7Bt1STfDe0GJVw2LR8qJnsxyXrMlSQ4RufxIQM7yaa
-	Vc+Gf4sNFXruKVqt19Ts1DN3iTYcPiMGJDoj6HynF+g0HVCU33bA4pBQhqUzOrXv
-	DDyH4th+lbdA/Sjh0TQqDZempzLOCHODZX4GgiioYg==
-X-ME-Sender: <xms:rp13ZznxifvfqwSVDb-Rh_PMxnTB1A34rV0aXJez-6vRz3eMIrg83w>
-    <xme:rp13Z20H9x52RmHYkDnR8DQR97d6QOvtityvZJhSWm1U42m4kmXa0qrVoCcU6EYw1
-    TV1ZX43dVY4CvS3IA>
-X-ME-Received: <xmr:rp13Z5pvtnV1q9GWTEruCyZaDKId4khLuorv7x6-dMKq23N06-nEYemoAnBfIb1C54GJzOQra_Bd56yxYtq15IBpg12ISWKtOuNEW1GzYhoeL_0>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1735892399; x=
+	1735978799; bh=2jl7SD9NIMNiRobtMc0O3TvOTZ1z8eMZ4tbF4Ua8DL4=; b=K
+	xD9AAmMeQihnNpIH/dO3n33kQW9lnCPlTdswe0giXV31RYbyAne1RuX3i2EiuXJ7
+	jWtsz2+et7WuEwvn0TMtFTTi2EW1KcuTwUXdmpOzA6dVFQiH7YlXDKG4U/fDJQ2l
+	n+O0LXUdn8LKh+nabposqMiLEdhd88sMy2ax/U1Oghm17GCIgRtMq0wObmegF+x2
+	x9SQWGuxJWZ7bts69W52AXysC+KT/xPTLeKMWJ09VNB7Opz1sKEJikGfFsa36+ZC
+	llj8FFEPcAVT6tNVzvTbu7S8spSUFBAb2jAo9zw7zC/omHDRx95xW/waplcR81NJ
+	2BuhfbtDyOl3A8ORxZw/Q==
+X-ME-Sender: <xms:r513Z774URmSNul_jmq2CYLLAC1xHn2bjD-cNwrxmPgTwhZrbVEhPQ>
+    <xme:r513Zw65f8iY3UDNSnlnhxDH6OPiVtJdMt1-byIl6uU8yVlUcani5OEJhgRZP5ekH
+    02pFR2oeh2iFuVO0A>
+X-ME-Received: <xmr:r513Zye37NJSEKUj2jul_mVjjLKaOqqm6DfMbTDIXMfOHNfz8ugsZUI4CTiXhJaXx1JwRsSRjtakei6bOxhhdVKN8-QFkQ-u93L5wvsmC0QXmLw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeffedguddulecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffuff
-    fkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevueegkedtte
-    eigeejueehuedugfevleefveehueehgfetffffvefhuefhueekveenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:rp13Z7lMzbn0BYprBvroP3qQRicyF8h0AHNkG0a5Lh6EZ6gJEnUcQA>
-    <xmx:rp13Zx2lJ_RFV2veqMyHnro24MNzEXjz1jqRTqPhQXuWNIEmP9Jd5g>
-    <xmx:rp13Z6v323D8cDrzN77JBkbph9wU2c7uUlwbt6nGBp7vVrh_Hpbz6Q>
-    <xmx:rp13Z1Wnbbyonv_vqeOPFyvpxh143MKeENfW7k99qWQth-Omkh9Qpw>
-    <xmx:rp13Z6yHjRHJ3TFZ6CDHuqg0dj-CS1l71myrsLBP0BSwd2VApePEBhIW>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
+    ggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiud
+    ejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:r513Z8JxLmrYhaugJr_7_wOc-jU9GBLFWkNJkfO_S9AyUJedXh1Xxg>
+    <xmx:r513Z_J_FkfHezfhCbc9ydemNzo2YD7M5ordZi0lLWBhLcaXz8nnWg>
+    <xmx:r513Z1yChsvKW53xhcMF3-CdDvgREQFlZ_H7KHv2aYcs8yBmdieoxA>
+    <xmx:r513Z7K60ei7Gscb8mR54WFmPkKo63o_bGl1g4sPs6onwzKcqpLldQ>
+    <xmx:r513Z31XQqjhYLQ6TT5N6JZjNcPc16IWBdqnHu9IHJn8z2Rv6qFobSXK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jan 2025 03:19:57 -0500 (EST)
+ 3 Jan 2025 03:19:58 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0ecd17d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id d7aba7db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Fri, 3 Jan 2025 08:19:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/2] object-file: retry linking file into place when
- occluding file vanishes
-Date: Fri, 03 Jan 2025 09:19:53 +0100
-Message-Id: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
+Date: Fri, 03 Jan 2025 09:19:54 +0100
+Subject: [PATCH 1/2] object-file: rename variables in `check_collision()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,43 +82,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKmdd2cC/x2NwQrCMBAFf6Xs2QdprIX4K+IhWTd2bWhKIqKU/
- ruhxznMzEZVikqla7dRkY9WzUuD/tQRT355CvTRmKyxF9ObM8KAda7I4SX8RtQkKJ5/4JzSYYM
- n4Rl+HFwI0Y3eWWq1tUjU73G63ff9D2tJQyV5AAAA
-X-Change-ID: 20250103-b4-pks-object-file-racy-collision-check-a649bbf96a92
+Message-Id: <20250103-b4-pks-object-file-racy-collision-check-v1-1-6ef9e2da1f87@pks.im>
+References: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
+In-Reply-To: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+Rename variables used in `check_collision()` to clearly identify which
+file is the source and which is the destination. This will make the next
+step easier to reason about when we start to treat those files different
+from one another.
 
-this small patch series adapts the race fix for collision checks when
-moving object files into place [1] to retry linking the object into
-place instead of silently ignoring the error, as suggested by Peff in
-[2].
-
-The series at [1] has already been merged into 'next', so this is built
-on top of 1b4e9a5f8b (Merge branch 'ps/build-meson-html', 2025-01-02)
-with ps/object-collision-check at 0ad3d65652 (object-file: fix race in
-object collision check, 2024-12-30) merged into it.
-
-Thanks!
-
-Patrick
-
-[1]: <20241230-b4-pks-object-file-racy-collision-check-v1-1-11571294e60a@pks.im>
-[2]: <20241231014220.GA225521@coredump.intra.peff.net>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      object-file: rename variables in `check_collision()`
-      object-file: retry linking file into place when occluding file vanishes
+ object-file.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
- object-file.c | 61 +++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 36 insertions(+), 25 deletions(-)
+diff --git a/object-file.c b/object-file.c
+index f84dcd2f2a7b88716ab47bc00ee7a605a82e8d21..e1989236ca87e565dea4d003f57882f257889ecf 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1970,56 +1970,56 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
+ 	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
+ }
+ 
+-static int check_collision(const char *filename_a, const char *filename_b)
++static int check_collision(const char *source, const char *dest)
+ {
+-	char buf_a[4096], buf_b[4096];
+-	int fd_a = -1, fd_b = -1;
++	char buf_source[4096], buf_dest[4096];
++	int fd_source = -1, fd_dest = -1;
+ 	int ret = 0;
+ 
+-	fd_a = open(filename_a, O_RDONLY);
+-	if (fd_a < 0) {
++	fd_source = open(source, O_RDONLY);
++	if (fd_source < 0) {
+ 		if (errno != ENOENT)
+-			ret = error_errno(_("unable to open %s"), filename_a);
++			ret = error_errno(_("unable to open %s"), source);
+ 		goto out;
+ 	}
+ 
+-	fd_b = open(filename_b, O_RDONLY);
+-	if (fd_b < 0) {
++	fd_dest = open(dest, O_RDONLY);
++	if (fd_dest < 0) {
+ 		if (errno != ENOENT)
+-			ret = error_errno(_("unable to open %s"), filename_b);
++			ret = error_errno(_("unable to open %s"), dest);
+ 		goto out;
+ 	}
+ 
+ 	while (1) {
+ 		ssize_t sz_a, sz_b;
+ 
+-		sz_a = read_in_full(fd_a, buf_a, sizeof(buf_a));
++		sz_a = read_in_full(fd_source, buf_source, sizeof(buf_source));
+ 		if (sz_a < 0) {
+-			ret = error_errno(_("unable to read %s"), filename_a);
++			ret = error_errno(_("unable to read %s"), source);
+ 			goto out;
+ 		}
+ 
+-		sz_b = read_in_full(fd_b, buf_b, sizeof(buf_b));
++		sz_b = read_in_full(fd_dest, buf_dest, sizeof(buf_dest));
+ 		if (sz_b < 0) {
+-			ret = error_errno(_("unable to read %s"), filename_b);
++			ret = error_errno(_("unable to read %s"), dest);
+ 			goto out;
+ 		}
+ 
+-		if (sz_a != sz_b || memcmp(buf_a, buf_b, sz_a)) {
++		if (sz_a != sz_b || memcmp(buf_source, buf_dest, sz_a)) {
+ 			ret = error(_("files '%s' and '%s' differ in contents"),
+-				    filename_a, filename_b);
++				    source, dest);
+ 			goto out;
+ 		}
+ 
+-		if (sz_a < sizeof(buf_a))
++		if (sz_a < sizeof(buf_source))
+ 			break;
+ 	}
+ 
+ out:
+-	if (fd_a > -1)
+-		close(fd_a);
+-	if (fd_b > -1)
+-		close(fd_b);
++	if (fd_source > -1)
++		close(fd_source);
++	if (fd_dest > -1)
++		close(fd_dest);
+ 	return ret;
+ }
+ 
 
-
----
-base-commit: 2be278337fd02495a86577a89fbf9387b2df6523
-change-id: 20250103-b4-pks-object-file-racy-collision-check-a649bbf96a92
+-- 
+2.48.0.rc1.241.g6c04ab211c.dirty
 
