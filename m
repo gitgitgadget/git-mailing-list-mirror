@@ -1,559 +1,553 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E6746B5
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 17:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7C512C499
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 17:21:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735924223; cv=none; b=Rf1X6xyci1cHeSEcymjrUcttunY4KO1aVaJLgH4JqIMztHMS9L4aHzN0cqfjS7OIiivOcjdYFOtrvE1MTfV8diznoekSI0bAohdAKVjfdUNvsCt4yJQegFoGxUSP5vxvpvlK/bUoDDaaLZoB1qFYeovISs3JqSWGP4ikmd0fcbU=
+	t=1735924870; cv=none; b=Kij+O9ZSGHj4lDli0/Rt0+NWE1sug01iFcCizQ4F5KLClrc/m7rgWsDHMzDULA0AG87HQRUUorLdMySG8n5v1WWAhaOqwGcLrlXLVSDDwdkYIrFBH+qBaFSvEzCQ9134+Ss2QJjPUpqnp+AeoMm8kvR/nANlu8Aaq4MTau1Tou4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735924223; c=relaxed/simple;
-	bh=MKVsbVMnWmReqDG1Oo+r45y8wI25/Qstpt2VhnpWmEw=;
-	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=ek38ugC1f0OthJ7zG9vJ9v1uc2Fsyd+Cn91oWRuQQav5vzIjIDcQO1OgtAebdzAOIPTTpmdKv1T9KPDMpQx2pbL4qAcGeoY0QMZ0utx2AH+j9+U6PHhVfzmKCmGQve53HkEa/ZL/Bh69c93UXALcKlOKyYnt/lUVFycbBWf25Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EgL0uWBO; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1735924870; c=relaxed/simple;
+	bh=lWzvT7t5BN7o5NvbwikDE/CEGnwssgi3dqf2Vvihk9s=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=np3IZgsY1KsLXF2BzX8fTGrfiMwrCbQVc6XURfuhK/EZpv7lDdTBiIGf18paOUuyW2B3335YYCcWQ2CfRxkJ3i6HLK3xg3NbJzC+AFTkuNyFe3q+AV+ibr/XJwlx1fvFAwj+jZ/4OrUjEtzUGvG1kcWa9PnCwCsJpox+oKtZccQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g4Gom89q; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EgL0uWBO"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-436341f575fso129193625e9.1
-        for <git@vger.kernel.org>; Fri, 03 Jan 2025 09:10:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g4Gom89q"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7b7041273ddso890042885a.3
+        for <git@vger.kernel.org>; Fri, 03 Jan 2025 09:21:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1735924218; x=1736529018; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=KFV5WbM+eNZi3Rh4H8Pwi8xlwr9GtfJMdjBAWU/dg7c=;
-        b=EgL0uWBO2I98NUiSDklI1JiXYxbWx9a77QeUy8Wt9IIJkmbZaQ2pqJ8ChOx66X6k4Q
-         OGZU9gt+szRBBiLdvRl+jadVSmf0b2kF6dP+R3e7yT1my44gjdqZVORat2Bv/TafpGkZ
-         GzN8ZX8VFFjcQGc0+UwXBF4RvN4Bnp63VPlz6Kaf42oRBmhOknQ0Su/OZSvI0QARzmTV
-         dJs1ocnM5DFxLzm4EI8KREdBucsWZ3OlXez2SkO7TuCl7aNlogs6j/c+jQVCTEd7ui9r
-         IwNX8wjHTooIo3DR7OYeNkO6jjBr9tetiLnpaSjk+FEa/2swWj731kiyP/LhO86rjHNz
-         FDYg==
+        d=gmail.com; s=20230601; t=1735924867; x=1736529667; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lWzvT7t5BN7o5NvbwikDE/CEGnwssgi3dqf2Vvihk9s=;
+        b=g4Gom89qYf4mqoMJ/8eybz3Mat6xlDRM09NOZzvq/ahxIF/DU+5Y/UY6wlLYNzdAwA
+         eUkrTuXJ8ORirzYlGGOsxr24Z2w6gZF4GdU44J2PqziJQ2ti4lUi+N7Ro1a3EcsYmCUQ
+         dHRus0HgdDx5SRLQAgHH7F094kEPPW2XS3dC0Jm+LuLoBlIVZg9JYFFh3S5PgH6jvRgp
+         xvVcdhbLpvyt+2fyztTt766VabSj7/HbMmukmuOokhuF+y3OZALgObcLguzMFKyzD2Yk
+         zTZhqfXD72ZZwCQt+Ynz2K9FN8YqLBD5LpT6VQArSH5SDOKLLNJbXdoXtaPyghFpAau4
+         7m4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735924218; x=1736529018;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KFV5WbM+eNZi3Rh4H8Pwi8xlwr9GtfJMdjBAWU/dg7c=;
-        b=M2a5YdKj/+c0dN5xyrM3b7FgOvZLlVD7n/qfXpIQ4cvONjc9cLAboR9yOvvv9AwROF
-         rAPuOTr/IgiqKsS3KQEw+drC91zZZiD384JS8dm5bvL5/XVjwxxJZtjTPxqpJTm5aoRJ
-         /XzU541Bo3vXqJEwBKsIJDZ7kNhVKkvdhoc/lamnHCJGyIZTsAZK1DAqo6RDoMN00tpb
-         1XYc4V1CjJI2ixnq3ntTPbrWwkwYCf4ulKm4H9MDYuzzQivYTGZzUu60fdWSfRhrPY9Y
-         qxyogrbk6PZohn0FZW7KO5Th8SL+FjoLsB0nFCmSp7iq6X+cYG5J+2pQvUtZ4b9chun5
-         hT3g==
-X-Gm-Message-State: AOJu0YzQ19hLq6zrJLP70HwOrHE1XZ/1U9bakpvaM++hiuUSqkjuMr5R
-	p+irWANyvvBtixGfkuYjMt6URcY7UIKsfOGTsuCDRamdQR0VXbqQIi/Owg==
-X-Gm-Gg: ASbGncuZ31UDdjTN/0pq2Gn1SAXQ9NE6v8J5Lt9JcS0XtPHNqzoSMu+mr90bjs1utfZ
-	HiTktag+igWYX2G6iVLorhj2mxIBCyUgBcQij28NKuvMmUKSkBaXeLYTIkC9O3kGmV2VkXhk3iQ
-	J4UqeognOIlTbYMY2kIxpcjpWl8K8cc/S2aJsMmfSWDz4qyZ5+N3wLRpBPncONzRHE76Psp/Vq/
-	EQCyCFLMVtkUy51cbVmISmxZn2Lp4RdMOlvjDNU2o0IjwIzxTSbskWpjQ==
-X-Google-Smtp-Source: AGHT+IFgSsbIpIlU2NJ3caQDeu20EZ9VXMMzvdbv7y6rutci151ZmN+VXa6veiHcnB5xo50/+DI9lg==
-X-Received: by 2002:a05:600c:35c9:b0:434:f753:6012 with SMTP id 5b1f17b1804b1-436686440bemr464032625e9.17.1735924218047;
-        Fri, 03 Jan 2025 09:10:18 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43661219a08sm493721775e9.25.2025.01.03.09.10.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2025 09:10:17 -0800 (PST)
-Message-Id: <pull.1846.git.1735924216993.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 03 Jan 2025 17:10:16 +0000
-Subject: [PATCH] doc: git-notes.txt: migrate to new documentation format
+        d=1e100.net; s=20230601; t=1735924867; x=1736529667;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lWzvT7t5BN7o5NvbwikDE/CEGnwssgi3dqf2Vvihk9s=;
+        b=QlE5uBUysqqWym2dhqCk90MQcl1LoVD62velgzvR6kTSvDbJkKzLixjvSA6hNH7x+b
+         S2PTRN5Y9+RvRnKnsvhxjZe3Hvfr1bXIs6pUmJIFveeTOZyAF1bvMtiSV99E0FKg67l4
+         sYmYS5lSNAP2CFFfAxQVWu5onJx/U6DhC5knQ8VyfmgVM0QXPyo42RANGbxC0jqnnuyt
+         0EFIj4SGpNqkOhiMifE8BDbOoAVJRZn5MD833j/RLP9GaY3f4jx/Lb2OCDib1ZLGA+AU
+         WUMYsrYKLWm56Jk4VdaM81mWml0/qXnJtm5b33LWgS9MDRNuroGna2RmVeXkCBf/kzKJ
+         Bl3w==
+X-Forwarded-Encrypted: i=1; AJvYcCWCdG02GTZKqCL5k7QERWdJPSWky+xMKqeUVuB68Zu4aJLDqiya516ILTb5bcY6w6XnjgQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzvaw30f+ol0yJtklvq/jhjcJmLqTciZ5Y38fZc2G43USON98AX
+	Ub/vhzl20XEz7ZY5DlzzMobzcGluLkWOlxuD2ImezdLwvQFWJYKL
+X-Gm-Gg: ASbGncv+fGqfxaFoctTcW210rGgLnk0QNcUgt/VwSMRO+UtI5r47uccNsInP5cOPdAv
+	hUMPhtv3ysC4tXgjobA8ld1iysQ8bN6MZhNsKTNzflC0B7QmCihjHLzHlb88KzB1i25g8psZjx3
+	UiNBtd3v4xTa3gT72WYW4VZ+pzbmaQlk3qX0LOA2jdNt4m9RVOuQ7C4rHjFPc89SXlnU2HtJVtj
+	l/21s78aNItZPyIiSsI/gHugw6K0EDl2rGbIsWLl6IoTmLAIO9jcKNckB8H4wabXkUVKf3mcmE6
+	5sZajnNqSaxlkoRc9l+ROu/7TbKB4p/Kqeo3AKwGpuL0ouvDJZkRTw==
+X-Google-Smtp-Source: AGHT+IHnSpdq/WvWy6lsc/WYqa4cZkI1KtGFVxHgh58etEZijGJiLXsJs/2VhmEmhMDVyRbkJDMKBw==
+X-Received: by 2002:a05:620a:650a:b0:7b6:6634:5a42 with SMTP id af79cd13be357-7b9ba79b290mr7069323285a.23.1735924866821;
+        Fri, 03 Jan 2025 09:21:06 -0800 (PST)
+Received: from ?IPv6:2606:6d00:17:9cb:4dbc:5280:f690:4e5d? ([2606:6d00:17:9cb:4dbc:5280:f690:4e5d])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b9ac2dfeaesm1280588285a.40.2025.01.03.09.21.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Jan 2025 09:21:06 -0800 (PST)
+Subject: Re: [PATCH] completion: repair config completion for Zsh
+To: "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>
+References: <pull.1860.git.git.1735516831782.gitgitgadget@gmail.com>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <4060690e-39b0-678a-75ef-af30beb439f3@gmail.com>
+Date: Fri, 3 Jan 2025 12:20:59 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+In-Reply-To: <pull.1860.git.git.1735516831782.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: base64
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-
-The git-notes manpage files were converted to the new documentation
-format:
-
-- switching the synopsis to a synopsis block which will automatically
-  format placeholders in italics and keywords in monospace
-- use _<placeholder>_ instead of <placeholder> in the description
-- use `backticks for keywords and more complex option
-descriptions`. The new rendering engine will apply synopsis rules to
-these spans.
-
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
-    doc: git-notes.txt: migrate to new documentation format
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1846%2Fjnavila%2Fgit-notes-new-format-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1846/jnavila/git-notes-new-format-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1846
-
- Documentation/config/notes.txt |  32 +++---
- Documentation/git-notes.txt    | 193 +++++++++++++++++----------------
- 2 files changed, 113 insertions(+), 112 deletions(-)
-
-diff --git a/Documentation/config/notes.txt b/Documentation/config/notes.txt
-index 43db8e808d7..70859f5c574 100644
---- a/Documentation/config/notes.txt
-+++ b/Documentation/config/notes.txt
-@@ -1,4 +1,4 @@
--notes.mergeStrategy::
-+`notes.mergeStrategy`::
- 	Which merge strategy to choose by default when resolving notes
- 	conflicts.  Must be one of `manual`, `ours`, `theirs`, `union`, or
- 	`cat_sort_uniq`.  Defaults to `manual`.  See the "NOTES MERGE STRATEGIES"
-@@ -7,17 +7,17 @@ notes.mergeStrategy::
- This setting can be overridden by passing the `--strategy` option to
- linkgit:git-notes[1].
- 
--notes.<name>.mergeStrategy::
-+`notes.<name>.mergeStrategy`::
- 	Which merge strategy to choose when doing a notes merge into
--	refs/notes/<name>.  This overrides the more general
--	"notes.mergeStrategy".  See the "NOTES MERGE STRATEGIES" section in
-+	`refs/notes/<name>`.  This overrides the more general
-+	`notes.mergeStrategy`.  See the "NOTES MERGE STRATEGIES" section in
- 	linkgit:git-notes[1] for more information on the available strategies.
- 
--notes.displayRef::
-+`notes.displayRef`::
- 	Which ref (or refs, if a glob or specified more than once), in
- 	addition to the default set by `core.notesRef` or
- 	`GIT_NOTES_REF`, to read notes from when showing commit
--	messages with the 'git log' family of commands.
-+	messages with the `git log` family of commands.
- +
- This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
- environment variable, which must be a colon separated list of refs or
-@@ -26,27 +26,27 @@ globs.
- A warning will be issued for refs that do not exist,
- but a glob that does not match any refs is silently ignored.
- +
--This setting can be disabled by the `--no-notes` option to the 'git
--log' family of commands, or by the `--notes=<ref>` option accepted by
-+This setting can be disabled by the `--no-notes` option to the `git
-+log` family of commands, or by the `--notes=<ref>` option accepted by
- those commands.
- +
--The effective value of "core.notesRef" (possibly overridden by
--GIT_NOTES_REF) is also implicitly added to the list of refs to be
-+The effective value of `core.notesRef` (possibly overridden by
-+`GIT_NOTES_REF`) is also implicitly added to the list of refs to be
- displayed.
- 
--notes.rewrite.<command>::
--	When rewriting commits with <command> (currently `amend` or
-+`notes.rewrite.<command>`::
-+	When rewriting commits with _<command>_ (currently `amend` or
- 	`rebase`), if this variable is `false`, git will not copy
- 	notes from the original to the rewritten commit.  Defaults to
--	`true`.  See also "`notes.rewriteRef`" below.
-+	`true`.  See also `notes.rewriteRef` below.
- +
- This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
- environment variable, which must be a colon separated list of refs or
- globs.
- 
--notes.rewriteMode::
-+`notes.rewriteMode`::
- 	When copying notes during a rewrite (see the
--	"notes.rewrite.<command>" option), determines what to do if
-+	`notes.rewrite.<command>` option), determines what to do if
- 	the target commit already has a note.  Must be one of
- 	`overwrite`, `concatenate`, `cat_sort_uniq`, or `ignore`.
- 	Defaults to `concatenate`.
-@@ -54,7 +54,7 @@ notes.rewriteMode::
- This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
- environment variable.
- 
--notes.rewriteRef::
-+`notes.rewriteRef`::
- 	When copying notes during a rewrite, specifies the (fully
- 	qualified) ref whose notes should be copied.  May be a glob,
- 	in which case notes in all matching refs will be copied.  You
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 84022f99d76..02a3495986a 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -7,19 +7,19 @@ git-notes - Add or inspect object notes
- 
- SYNOPSIS
- --------
--[verse]
--'git notes' [list [<object>]]
--'git notes' add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [-e] [<object>]
--'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
--'git notes' append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [-e] [<object>]
--'git notes' edit [--allow-empty] [<object>] [--[no-]stripspace]
--'git notes' show [<object>]
--'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
--'git notes' merge --commit [-v | -q]
--'git notes' merge --abort [-v | -q]
--'git notes' remove [--ignore-missing] [--stdin] [<object>...]
--'git notes' prune [-n] [-v]
--'git notes' get-ref
-+[synopsis]
-+git notes [list [<object>]]
-+git notes add [-f] [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [-e] [<object>]
-+git notes copy [-f] ( --stdin | <from-object> [<to-object>] )
-+git notes append [--allow-empty] [--[no-]separator | --separator=<paragraph-break>] [--[no-]stripspace] [-F <file> | -m <msg> | (-c | -C) <object>] [-e] [<object>]
-+git notes edit [--allow-empty] [<object>] [--[no-]stripspace]
-+git notes show [<object>]
-+git notes merge [-v | -q] [-s <strategy> ] <notes-ref>
-+git notes merge --commit [-v | -q]
-+git notes merge --abort [-v | -q]
-+git notes remove [--ignore-missing] [--stdin] [<object>...]
-+git notes prune [-n] [-v]
-+git notes get-ref
- 
- 
- DESCRIPTION
-@@ -33,34 +33,34 @@ ENVIRONMENT sections below.  If this ref does not exist, it will be
- quietly created when it is first needed to store a note.
- 
- A typical use of notes is to supplement a commit message without
--changing the commit itself. Notes can be shown by 'git log' along with
-+changing the commit itself. Notes can be shown by `git log` along with
- the original commit message. To distinguish these notes from the
- message stored in the commit object, the notes are indented like the
--message, after an unindented line saying "Notes (<refname>):" (or
--"Notes:" for `refs/notes/commits`).
-+message, after an unindented line saying "`Notes (<refname>):`" (or
-+"`Notes:`" for `refs/notes/commits`).
- 
- Notes can also be added to patches prepared with `git format-patch` by
- using the `--notes` option. Such notes are added as a patch commentary
- after a three dash separator line.
- 
--To change which notes are shown by 'git log', see the
--"notes.displayRef" discussion in <<CONFIGURATION>>.
-+To change which notes are shown by `git log`, see the
-+`notes.displayRef` discussion in <<CONFIGURATION,CONFIGURATION>>.
- 
--See the "notes.rewrite.<command>" configuration for a way to carry
-+See the `notes.rewrite.<command>` configuration for a way to carry
- notes across commands that rewrite commits.
- 
- 
- SUBCOMMANDS
- -----------
- 
--list::
-+`list`::
- 	List the notes object for a given object. If no object is
- 	given, show a list of all note objects and the objects they
--	annotate (in the format "<note-object> <annotated-object>").
-+	annotate (in the format "`<note-object> <annotated-object>`").
- 	This is the default subcommand if no subcommand is given.
- 
--add::
--	Add notes for a given object (defaults to HEAD). Abort if the
-+`add`::
-+	Add notes for a given object (defaults to `HEAD`). Abort if the
- 	object already has notes (use `-f` to overwrite existing notes).
- 	However, if you're using `add` interactively (using an editor
- 	to supply the notes contents), then - instead of aborting -
-@@ -71,10 +71,10 @@ add::
- 	fine-tune the message(s) supplied from `-m` and `-F` options
- 	interactively (using an editor) before adding the note.
- 
--copy::
-+`copy`::
- 	Copy the notes for the first object onto the second object (defaults to
--	HEAD). Abort if the second object already has notes, or if the first
--	object has none (use -f to overwrite existing notes to the
-+	`HEAD`). Abort if the second object already has notes, or if the first
-+	object has none (use `-f` to overwrite existing notes to the
- 	second object). This subcommand is equivalent to:
- 	`git notes add [-f] -C $(git notes list <from-object>) <to-object>`
- +
-@@ -84,27 +84,27 @@ In `--stdin` mode, take lines in the format
- <from-object> SP <to-object> [ SP <rest> ] LF
- ----------
- +
--on standard input, and copy the notes from each <from-object> to its
--corresponding <to-object>.  (The optional `<rest>` is ignored so that
-+on standard input, and copy the notes from each _<from-object>_ to its
-+corresponding _<to-object>_.  (The optional _<rest>_ is ignored so that
- the command can read the input given to the `post-rewrite` hook.)
- 
--append::
-+`append`::
- 	Append new message(s) given by `-m` or `-F` options to an
- 	existing note, or add them as a new note if one does not
--	exist, for the object (defaults to HEAD).  When appending to
-+	exist, for the object (defaults to `HEAD`).  When appending to
- 	an existing note, a blank line is added before each new
- 	message as an inter-paragraph separator.  The separator can
- 	be customized with the `--separator` option.
- 	Edit the notes to be appended given by `-m` and `-F` options with
- 	`-e` interactively (using an editor) before appending the note.
- 
--edit::
--	Edit the notes for a given object (defaults to HEAD).
-+`edit`::
-+	Edit the notes for a given object (defaults to `HEAD`).
- 
--show::
--	Show the notes for a given object (defaults to HEAD).
-+`show`::
-+	Show the notes for a given object (defaults to `HEAD`).
- 
--merge::
-+`merge`::
- 	Merge the given notes ref into the current notes ref.
- 	This will try to merge the changes made by the given
- 	notes ref (called "remote") since the merge-base (if
-@@ -112,35 +112,35 @@ merge::
- +
- If conflicts arise and a strategy for automatically resolving
- conflicting notes (see the "NOTES MERGE STRATEGIES" section) is not given,
--the "manual" resolver is used. This resolver checks out the
-+the `manual` resolver is used. This resolver checks out the
- conflicting notes in a special worktree (`.git/NOTES_MERGE_WORKTREE`),
- and instructs the user to manually resolve the conflicts there.
- When done, the user can either finalize the merge with
--'git notes merge --commit', or abort the merge with
--'git notes merge --abort'.
-+`git notes merge --commit`, or abort the merge with
-+`git notes merge --abort`.
- 
--remove::
--	Remove the notes for given objects (defaults to HEAD). When
-+`remove`::
-+	Remove the notes for given objects (defaults to `HEAD`). When
- 	giving zero or one object from the command line, this is
- 	equivalent to specifying an empty note message to
- 	the `edit` subcommand.
- 
--prune::
-+`prune`::
- 	Remove all notes for non-existing/unreachable objects.
- 
--get-ref::
-+`get-ref`::
- 	Print the current notes ref. This provides an easy way to
- 	retrieve the current notes ref (e.g. from scripts).
- 
- OPTIONS
- -------
---f::
----force::
-+`-f`::
-+`--force`::
- 	When adding notes to an object that already has notes,
- 	overwrite the existing notes (instead of aborting).
- 
---m <msg>::
----message=<msg>::
-+`-m <msg>`::
-+`--message=<msg>`::
- 	Use the given note message (instead of prompting).
- 	If multiple `-m` options are given, their values
- 	are concatenated as separate paragraphs.
-@@ -148,95 +148,96 @@ OPTIONS
- 	single line between paragraphs will be stripped out.
- 	If you wish to keep them verbatim, use `--no-stripspace`.
- 
---F <file>::
----file=<file>::
--	Take the note message from the given file.  Use '-' to
-+`-F <file>`::
-+`--file=<file>`::
-+	Take the note message from the given file.  Use `-` to
- 	read the note message from the standard input.
- 	Lines starting with `#` and empty lines other than a
- 	single line between paragraphs will be stripped out.
- 	If you wish to keep them verbatim, use `--no-stripspace`.
- 
---C <object>::
----reuse-message=<object>::
-+`-C <object>`::
-+`--reuse-message=<object>`::
- 	Take the given blob object (for example, another note) as the
- 	note message. (Use `git notes copy <object>` instead to
- 	copy notes between objects.).  By default, message will be
- 	copied verbatim, but if you wish to strip out the lines
- 	starting with `#` and empty lines other than a single line
--	between paragraphs, use with`--stripspace` option.
-+	between paragraphs, use with `--stripspace` option.
- 
---c <object>::
----reedit-message=<object>::
--	Like '-C', but with `-c` the editor is invoked, so that
-+`-c <object>`::
-+`--reedit-message=<object>`::
-+	Like `-C`, but with `-c` the editor is invoked, so that
- 	the user can further edit the note message.
- 
----allow-empty::
-+`--allow-empty`::
- 	Allow an empty note object to be stored. The default behavior is
- 	to automatically remove empty notes.
- 
----[no-]separator, --separator=<paragraph-break>::
-+`--[no-]separator`::
-+`--separator=<paragraph-break>`::
- 	Specify a string used as a custom inter-paragraph separator
- 	(a newline is added at the end as needed). If `--no-separator`, no
- 	separators will be added between paragraphs.  Defaults to a blank
- 	line.
- 
----[no-]stripspace::
-+`--[no-]stripspace`::
- 	Strip leading and trailing whitespace from the note message.
- 	Also strip out empty lines other than a single line between
- 	paragraphs. Lines starting with `#` will be stripped out
- 	in non-editor cases like `-m`, `-F` and `-C`, but not in
- 	editor case like `git notes edit`, `-c`, etc.
- 
----ref <ref>::
--	Manipulate the notes tree in <ref>.  This overrides
--	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
-+`--ref <ref>`::
-+	Manipulate the notes tree in _<ref>_.  This overrides
-+	`GIT_NOTES_REF` and the `core.notesRef` configuration.  The ref
- 	specifies the full refname when it begins with `refs/notes/`; when it
- 	begins with `notes/`, `refs/` and otherwise `refs/notes/` is prefixed
- 	to form a full name of the ref.
- 
----ignore-missing::
-+`--ignore-missing`::
- 	Do not consider it an error to request removing notes from an
- 	object that does not have notes attached to it.
- 
----stdin::
-+`--stdin`::
- 	Also read the object names to remove notes from the standard
- 	input (there is no reason you cannot combine this with object
- 	names from the command line).
- 
---n::
----dry-run::
-+`-n`::
-+`--dry-run`::
- 	Do not remove anything; just report the object names whose notes
- 	would be removed.
- 
---s <strategy>::
----strategy=<strategy>::
-+`-s <strategy>`::
-+`--strategy=<strategy>`::
- 	When merging notes, resolve notes conflicts using the given
--	strategy. The following strategies are recognized: "manual"
--	(default), "ours", "theirs", "union" and "cat_sort_uniq".
--	This option overrides the "notes.mergeStrategy" configuration setting.
-+	strategy. The following strategies are recognized: `manual`
-+	(default), `ours`, `theirs`, `union` and `cat_sort_uniq`.
-+	This option overrides the `notes.mergeStrategy` configuration setting.
- 	See the "NOTES MERGE STRATEGIES" section below for more
- 	information on each notes merge strategy.
- 
----commit::
--	Finalize an in-progress 'git notes merge'. Use this option
--	when you have resolved the conflicts that 'git notes merge'
--	stored in .git/NOTES_MERGE_WORKTREE. This amends the partial
--	merge commit created by 'git notes merge' (stored in
--	.git/NOTES_MERGE_PARTIAL) by adding the notes in
--	.git/NOTES_MERGE_WORKTREE. The notes ref stored in the
--	.git/NOTES_MERGE_REF symref is updated to the resulting commit.
--
----abort::
--	Abort/reset an in-progress 'git notes merge', i.e. a notes merge
-+`--commit`::
-+	Finalize an in-progress `git notes merge`. Use this option
-+	when you have resolved the conflicts that `git notes merge`
-+	stored in `.git/NOTES_MERGE_WORKTREE`. This amends the partial
-+	merge commit created by `git notes merge` (stored in
-+	`.git/NOTES_MERGE_PARTIAL`) by adding the notes in
-+	`.git/NOTES_MERGE_WORKTREE`. The notes ref stored in the
-+	`.git/NOTES_MERGE_REF` symref is updated to the resulting commit.
-+
-+`--abort`::
-+	Abort/reset an in-progress `git notes merge`, i.e. a notes merge
- 	with conflicts. This simply removes all files related to the
- 	notes merge.
- 
---q::
----quiet::
-+`-q`::
-+`--quiet`::
- 	When merging notes, operate quietly.
- 
---v::
----verbose::
-+`-v`::
-+`--verbose`::
- 	When merging notes, be more verbose.
- 	When pruning notes, report all object names whose notes are
- 	removed.
-@@ -270,28 +271,28 @@ object, in which case the history of the notes can be read with
- NOTES MERGE STRATEGIES
- ----------------------
- 
--The default notes merge strategy is "manual", which checks out
-+The default notes merge strategy is `manual`, which checks out
- conflicting notes in a special work tree for resolving notes conflicts
- (`.git/NOTES_MERGE_WORKTREE`), and instructs the user to resolve the
- conflicts in that work tree.
- When done, the user can either finalize the merge with
--'git notes merge --commit', or abort the merge with
--'git notes merge --abort'.
-+`git notes merge --commit`, or abort the merge with
-+`git notes merge --abort`.
- 
- Users may select an automated merge strategy from among the following using
--either -s/--strategy option or configuring notes.mergeStrategy accordingly:
-+either `-s`/`--strategy` option or configuring `notes.mergeStrategy` accordingly:
- 
--"ours" automatically resolves conflicting notes in favor of the local
-+`ours` automatically resolves conflicting notes in favor of the local
- version (i.e. the current notes ref).
- 
--"theirs" automatically resolves notes conflicts in favor of the remote
-+`theirs` automatically resolves notes conflicts in favor of the remote
- version (i.e. the given notes ref being merged into the current notes
- ref).
- 
--"union" automatically resolves notes conflicts by concatenating the
-+`union` automatically resolves notes conflicts by concatenating the
- local and remote versions.
- 
--"cat_sort_uniq" is similar to "union", but in addition to concatenating
-+`cat_sort_uniq` is similar to `union`, but in addition to concatenating
- the local and remote versions, this strategy also sorts the resulting
- lines, and removes duplicate lines from the result. This is equivalent
- to applying the "cat | sort | uniq" shell pipeline to the local and
-@@ -320,7 +321,7 @@ Notes:
- 
- In principle, a note is a regular Git blob, and any kind of
- (non-)format is accepted.  You can binary-safely create notes from
--arbitrary files using 'git hash-object':
-+arbitrary files using `git hash-object`:
- 
- ------------
- $ cc *.c
-@@ -331,7 +332,7 @@ $ git notes --ref=built add --allow-empty -C "$blob" HEAD
- (You cannot simply use `git notes --ref=built add -F a.out HEAD`
- because that is not binary-safe.)
- Of course, it doesn't make much sense to display non-text-format notes
--with 'git log', so if you use such notes, you'll probably need to write
-+with `git log`, so if you use such notes, you'll probably need to write
- some special-purpose tools to do something useful with them.
- 
- 
-@@ -339,7 +340,7 @@ some special-purpose tools to do something useful with them.
- CONFIGURATION
- -------------
- 
--core.notesRef::
-+`core.notesRef`::
- 	Notes ref to read and manipulate instead of
- 	`refs/notes/commits`.  Must be an unabbreviated ref name.
- 	This setting can be overridden through the environment and
-
-base-commit: 1b4e9a5f8b5f048972c21fe8acafe0404096f694
--- 
-gitgitgadget
+SGkgQmVuLA0KDQpMZSAyMDI0LTEyLTI5IMOgIDE5OjAwLCBELiBCZW4gS25vYmxlIHZpYSBH
+aXRHaXRHYWRnZXQgYSDDqWNyaXTCoDoNCj4gRnJvbTogIkQuIEJlbiBLbm9ibGUiIDxiZW4u
+a25vYmxlK2dpdGh1YkBnbWFpbC5jb20+DQo+IA0KPiBDb21taXQgMWUwZWU0MDg3ZSAoY29t
+cGxldGlvbjogYWRkIGFuZCB1c2UNCj4gX19naXRfY29tcHV0ZV9maXJzdF9sZXZlbF9jb25m
+aWdfdmFyc19mb3Jfc2VjdGlvbiwgMjAyNC0wMi0xMCkgdXNlcyBhbg0KPiBpbmRpcmVjdCB2
+YXJpYWJsZSBzeW50YXggdGhhdCBpcyBvbmx5IHZhbGlkIGZvciBCYXNoLCBidXQgdGhlIFpz
+aA0KPiBjb21wbGV0aW9uIGNvZGUgcmVsaWVzIG9uIHRoZSBCYXNoIGNvbXBsZXRpb24gY29k
+ZSB0byBmdW5jdGlvbi4gWnNoDQo+IHN1cHBvcnRzIGEgZGlmZmVyZW50IGluZGlyZWN0IHZh
+cmlhYmxlIGV4cGFuc2lvbiB1c2luZyAkeyhQKXZhcn0sIGJ1dCBpbg0KPiBgZW11bGF0ZSBr
+c2hgIG1vZGUgZG9lcyBub3Qgc3VwcG9ydCBCYXNoJ3MgJHshdmFyfS4NCj4gDQo+IFRoaXMg
+bWFuaWZlc3RzIGFzIGNvbXBsZXRpbmcgc3RyYW5nZSBjb25maWcgb3B0aW9ucyBsaWtlDQo+
+ICJfX2dpdF9maXJzdF9sZXZlbF9jb25maWdfdmFyc19mb3Jfc2VjdGlvbl9yZW1vdGUiIGFz
+IGEgY2hvaWNlIGZvciB0aGUNCj4gY29tbWFuZCBsaW5lDQo+IA0KPiAgICAgZ2l0IGNvbmZp
+ZyBzZXQgcmVtb3RlLg0KDQpTb3JyeSBmb3IgYnJlYWtpbmcgdGhlIHpzaCBjb21wbGV0aW9u
+IHdpdGggdGhpcyBjaGFuZ2UuIFRpcDogaXQgaXMgY3VzdG9tYXJ5DQppbiB0aGlzIHByb2pl
+Y3QgdG8gQ0MgY29tbWl0IGF1dGhvcnMgd2hlbiB5b3UgaWRlbnRpZnkgYSBjb21taXQgdGhh
+dA0KY2F1c2VkIGEgcmVncmVzc2lvbiA6KSANCg0KPiANCj4gVXNpbmcgWnNoJ3MgQy14ID8g
+X2NvbXBsZXRlX2RlYnVnIHdpZGdldCB3aXRoIHRoZSBjdXJzb3IgYXQgdGhlIGVuZCBvZg0K
+PiB0aGF0IGNvbW1hbmQgbGluZSBjYXB0dXJlcyBhIHRyYWNlLCBpbiB3aGljaCB3ZSBzZWUN
+Cj4gDQo+ICAgICArX19naXRfY29tcGxldGVfY29uZmlnX3ZhcmlhYmxlX25hbWU6Nz4gX19n
+aXRfY29tcHV0ZV9maXJzdF9sZXZlbF9jb25maWdfdmFyc19mb3Jfc2VjdGlvbiByZW1vdGUN
+Cj4gICAgICArX19naXRfY29tcHV0ZV9maXJzdF9sZXZlbF9jb25maWdfdmFyc19mb3Jfc2Vj
+dGlvbjo3PiBsb2NhbCBzZWN0aW9uPXJlbW90ZQ0KPiAgICAgICtfX2dpdF9jb21wdXRlX2Zp
+cnN0X2xldmVsX2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uOjc+IF9fZ2l0X2NvbXB1dGVfY29u
+ZmlnX3ZhcnMNCj4gICAgICAgK19fZ2l0X2NvbXB1dGVfY29uZmlnX3ZhcnM6Nz4gdGVzdCAt
+biAkJ2FkZC5pZ25vcmVFcnJvcnNcbmFkdmljZS5hZGRFbWJlZGRlZFJlcG9cbmFkdmljZS5h
+ZGRFbXB0eVBhdGhzcGVjXG5hZHZpY2UuYWRkSWdub3JlZEZpbGVcbmFkdmljZS5hbVdvcmtE
+aXJcbmFkdmljZS5hbWJpZ3VvdXNGZXRjaFJlZnNwZWNcbmFkdmljZS5jaGVja291dEFtYmln
+dW91c1JlbW90ZUJyYW5jaE5hbWVcbmFkdmljZS5jb21taXRCZWZvcmVNZXJnZVxuYWR2aWNl
+LmRldGFjaGVkSGVhZFxuYWR2aWNlLmRpdmVyZ2luZ1xuYWR2aWNlLmZldGNoU2hvd0ZvcmNl
+ZFVwZGF0ZXNcbmFkdmljZS5mb3JjZURlbGV0ZUJyYW5jaFxuYWR2aWNlLmdyYWZ0RmlsZURl
+cHJlY2F0ZWRcbmFkdmljZS5pZ25vcmVkSG9va1xuYWR2aWNlLmltcGxpY2l0SWRlbnRpdHlc
+bmFkdmljZS5tZXJnZUNvbmZsaWN0XG5hZHZpY2UubmVzdGVkVGFnXG5hZHZpY2Uub2JqZWN0
+TmFtZVdhcm5pbmdcbmFkdmljZS5wdXNoQWxyZWFkeUV4aXN0c1xuYWR2aWNlLnB1c2hGZXRj
+aEZpcnN0XG5hZHZpY2UucHVzaE5lZWRzRm9yY2VcbmFkdmljZS5wdXNoTm9uRkZDdXJyZW50
+XG5hZHZpY2UucHVzaE5vbkZGTWF0Y2hpbmdcbmFkdmljZS5wdXNoTm9uRmFzdEZvcndhcmRc
+bmFkdmljZS5wdXNoUmVmTmVlZHNVcGRhdGVcbmFkdmljZS5wdXNoVW5xdWFsaWZpZWRSZWZO
+YW1lXG5hZHZpY2UucHVzaFVwZGF0ZVJlamVjdGVkXG5hZHZpY2UucmViYXNlVG9kb0Vycm9y
+XG5hZHZpY2UucmVmU3ludGF4XG5hZHZpY2UucmVzZXROb1JlZnJlc2hcbmFkdmljZS5yZXNv
+bHZlQ29uZmxpY3RcbmFkdmljZS5ybUhpbnRzXG5hZHZpY2Uuc2VxdWVuY2VySW5Vc2VcbmFk
+dmljZS5zZXRVcHN0cmVhbUZhaWx1cmVcbmFkdmljZS5za2lwcGVkQ2hlcnJ5UGlja3NcbmFk
+dmljZS5zcGFyc2VJbmRleEV4cGFuZGVkXG5hZHZpY2Uuc3RhdHVzQWhlYWRCZWhpbmRXYXJu
+aW5nXG5hZHZpY2Uuc3RhdHVzSGludHNcbmFkdmljZS5zdGF0dXNVb3B0aW9uXG5hZHZpY2Uu
+c3VibW9kdWxlQWx0ZXJuYXRlRXJyb3JTdHJhdGVneURpZVxuYWR2aWNlLnN1Ym1vZHVsZU1l
+cmdlQ29uZmxpY3RcbmFkdmljZS5zdWJtb2R1bGVzTm90VXBkYXRlZFxuYWR2aWNlLnN1Z2dl
+c3REZXRhY2hpbmdIZWFkXG5hZHZpY2UudXBkYXRlU3BhcnNlUGF0aFxuYWR2aWNlLndhaXRp
+bmdGb3JFZGl0b3JcbmFkdmljZS53b3JrdHJlZUFkZE9ycGhhblxuYWxpYXMuXG5hbS5rZWVw
+Y3JcbmFtLnRocmVlV2F5XG5hcHBseS5pZ25vcmVXaGl0ZXNwYWNlXG5hcHBseS53aGl0ZXNw
+YWNlXG5hdHRyLnRyZWVcbmF1dGhvci5lbWFpbFxuYXV0aG9yLm5hbWVcbmJpdG1hcFBzZXVk
+b01lcmdlLlxuYmxhbWUuYmxhbmtCb3VuZGFyeVxuYmxhbWUuY29sb3JpbmdcbmJsYW1lLmRh
+dGVcbmJsYW1lLmlnbm9yZVJldnNGaWxlXG5ibGFtZS5tYXJrSWdub3JlZExpbmVzXG5ibGFt
+ZS5tYXJrVW5ibGFtYWJsZUxpbmVzXG5ibGFtZS5zaG93RW1haWxcbmJsYW1lLnNob3dSb290
+XG5icmFuY2guXG5icmFuY2guYXV0b1NldHVwTWVyZ2VcbmJyYW5jaC5hdXRvU2V0dXBSZWJh
+c2VcbmJyYW5jaC5zb3J0XG5icm93c2VyLlxuYnVuZGxlLlxuYnVuZGxlLmhldXJpc3RpY1xu
+YnVuZGxlLm1vZGVcbmJ1bmRsZS52ZXJzaW9uXG5jaGVja291dC5kZWZhdWx0UmVtb3RlXG5j
+aGVja291dC5ndWVzc1xuY2hlY2tvdXQudGhyZXNob2xkRm9yUGFyYWxsZWxpc21cbmNoZWNr
+b3V0LndvcmtlcnNcbmNsZWFuLnJlcXVpcmVGb3JjZVxuY29sb3IuYWR2aWNlXG5jb2xvci5h
+ZHZpY2UuaGludFxuY29sb3IuYmxhbWUuaGlnaGxpZ2h0UmVjZW50XG5jb2xvci5ibGFtZS5y
+ZXBlYXRlZExpbmVzXG5jb2xvci5icmFuY2hcbmNvbG9yLmJyYW5jaC5jdXJyZW50XG5jb2xv
+ci5icmFuY2gubG9jYWxcbmNvbG9yLmJyYW5jaC5wbGFpblxuY29sb3IuYnJhbmNoLnJlbW90
+ZVxuY29sb3IuYnJhbmNoLnJlc2V0XG5jb2xvci5icmFuY2gudXBzdHJlYW1cbmNvbG9yLmJy
+YW5jaC53b3JrdHJlZVxuY29sb3IuZGVjb3JhdGUuSEVBRFxuY29sb3IuZGVjb3JhdGUuYnJh
+bmNoXG5jb2xvci5kZWNvcmF0ZS5ncmFmdGVkXG5jb2xvci5kZWNvcmF0ZS5yZW1vdGVCcmFu
+Y2hcbmNvbG9yLmRlY29yYXRlLnN0YXNoXG5jb2xvci5kZWNvcmF0ZS50YWdcbmNvbG9yLmRp
+ZmZcbmNvbG9yLmRpZmYuY29tbWl0XG5jb2xvci5kaWZmLmNvbnRleHRcbmNvbG9yLmRpZmYu
+Y29udGV4dEJvbGRcbmNvbG9yLmRpZmYuY29udGV4dERpbW1lZFxuY29sb3IuZGlmZi5mcmFn
+XG5jb2xvci5kaWZmLmZ1bmNcbmNvbG9yLmRpZmYubWV0YVxuY29sb3IuZGlmZi5uZXdcbmNv
+bG9yLmRpZmYubmV3Qm9sZFxuY29sb3IuZGlmZi5uZXdEaW1tZWRcbmNvbG9yLmRpZmYubmV3
+TW92ZWRcbmNvbG9yLmRpZmYubmV3TW92ZWRBbHRlcm5hdGl2ZVxuY29sb3IuZGlmZi5uZXdN
+b3ZlZEFsdGVybmF0aXZlRGltbWVkXG5jb2xvci5kaWZmLm5ld01vdmVkRGltbWVkXG5jb2xv
+ci5kaWZmLm9sZFxuY29sb3IuZGlmZi5vbGRCb2xkXG5jb2xvci5kaWZmLm9sZERpbW1lZFxu
+Y29sb3IuZGlmZi5vbGRNb3ZlZFxuY29sb3IuZGlmZi5vbGRNb3ZlZEFsdGVybmF0aXZlXG5j
+b2xvci5kaWZmLm9sZE1vdmVkQWx0ZXJuYXRpdmVEaW1tZWRcbmNvbG9yLmRpZmYub2xkTW92
+ZWREaW1tZWRcbmNvbG9yLmRpZmYucGxhaW5cbmNvbG9yLmRpZmYud2hpdGVzcGFjZVxuY29s
+b3IuZ3JlcFxuY29sb3IuZ3JlcC5jb2x1bW5cbmNvbG9yLmdyZXAuY29udGV4dFxuY29sb3Iu
+Z3JlcC5maWxlbmFtZVxuY29sb3IuZ3JlcC5mdW5jdGlvblxuY29sb3IuZ3JlcC5saW5lTnVt
+YmVyXG5jb2xvci5ncmVwLm1hdGNoXG5jb2xvci5ncmVwLm1hdGNoQ29udGV4dFxuY29sb3Iu
+Z3JlcC5tYXRjaFNlbGVjdGVkXG5jb2xvci5ncmVwLnNlbGVjdGVkXG5jb2xvci5ncmVwLnNl
+cGFyYXRvclxuY29sb3IuaW50ZXJhY3RpdmVcbmNvbG9yLmludGVyYWN0aXZlLmVycm9yXG5j
+b2xvci5pbnRlcmFjdGl2ZS5oZWFkZXJcbmNvbG9yLmludGVyYWN0aXZlLmhlbHBcbmNvbG9y
+LmludGVyYWN0aXZlLnBsYWluXG5jb2xvci5pbnRlcmFjdGl2ZS5wcm9tcHRcbmNvbG9yLmlu
+dGVyYWN0aXZlLnJlc2V0XG5jb2xvci5wYWdlclxuY29sb3IucHVzaFxuY29sb3IucHVzaC5l
+cnJvclxuY29sb3IucmVtb3RlXG5jb2xvci5yZW1vdGUuZXJyb3JcbmNvbG9yLnJlbW90ZS5o
+aW50XG5jb2xvci5yZW1vdGUuc3VjY2Vzc1xuY29sb3IucmVtb3RlLndhcm5pbmdcbmNvbG9y
+LnNob3dCcmFuY2hcbmNvbG9yLnN0YXR1c1xuY29sb3Iuc3RhdHVzLmFkZGVkXG5jb2xvci5z
+dGF0dXMuYnJhbmNoXG5jb2xvci5zdGF0dXMuY2hhbmdlZFxuY29sb3Iuc3RhdHVzLmhlYWRl
+clxuY29sb3Iuc3RhdHVzLmxvY2FsQnJhbmNoXG5jb2xvci5zdGF0dXMubm9CcmFuY2hcbmNv
+bG9yLnN0YXR1cy5yZW1vdGVCcmFuY2hcbmNvbG9yLnN0YXR1cy51bm1lcmdlZFxuY29sb3Iu
+c3RhdHVzLnVudHJhY2tlZFxuY29sb3Iuc3RhdHVzLnVwZGF0ZWRcbmNvbG9yLnRyYW5zcG9y
+dFxuY29sb3IudHJhbnNwb3J0LnJlamVjdGVkXG5jb2xvci51aVxuY29sdW1uLmJyYW5jaFxu
+Y29sdW1uLmNsZWFuXG5jb2x1bW4uc3RhdHVzXG5jb2x1bW4udGFnXG5jb2x1bW4udWlcbmNv
+bW1pdC5jbGVhbnVwXG5jb21taXQuZ3BnU2lnblxuY29tbWl0LnN0YXR1c1xuY29tbWl0LnRl
+bXBsYXRlXG5jb21taXQudmVyYm9zZVxuY29tbWl0R3JhcGguY2hhbmdlZFBhdGhzVmVyc2lv
+blxuY29tbWl0R3JhcGguZ2VuZXJhdGlvblZlcnNpb25cbmNvbW1pdEdyYXBoLm1heE5ld0Zp
+bHRlcnNcbmNvbW1pdEdyYXBoLnJlYWRDaGFuZ2VkUGF0aHNcbmNvbW1pdHRlci5lbWFpbFxu
+Y29tbWl0dGVyLm5hbWVcbmNvbXBsZXRpb24uY29tbWFuZHNcbmNvcmUuYWJicmV2XG5jb3Jl
+LmFsdGVybmF0ZVJlZnNDb21tYW5kXG5jb3JlLmFsdGVybmF0ZVJlZnNQcmVmaXhlc1xuY29y
+ZS5hc2tQYXNzXG5jb3JlLmF0dHJpYnV0ZXNGaWxlXG5jb3JlLmF1dG9jcmxmXG5jb3JlLmJh
+cmVcbmNvcmUuYmlnRmlsZVRocmVzaG9sZFxuY29yZS5jaGVja1JvdW5kdHJpcEVuY29kaW5n
+XG5jb3JlLmNoZWNrU3RhdFxuY29yZS5jb21tZW50Q2hhclxuY29yZS5jb21tZW50U3RyaW5n
+XG5jb3JlLmNvbW1pdEdyYXBoXG5jb3JlLmNvbXByZXNzaW9uXG5jb3JlLmNyZWF0ZU9iamVj
+dFxuY29yZS5kZWx0YUJhc2VDYWNoZUxpbWl0XG5jb3JlLmVkaXRvclxuY29yZS5lb2xcbmNv
+cmUuZXhjbHVkZXNGaWxlXG5jb3JlLmZpbGVNb2RlXG5jb3JlLmZpbGVzUmVmTG9ja1RpbWVv
+dXRcbmNvcmUuZnNtb25pdG9yXG5jb3JlLmZzbW9uaXRvckhvb2tWZXJzaW9uXG5jb3JlLmZz
+eW5jXG5jb3JlLmZzeW5jTWV0aG9kXG5jb3JlLmZzeW5jT2JqZWN0RmlsZXNcbmNvcmUuZ2l0
+UHJveHlcbmNvcmUuaGlkZURvdEZpbGVzXG5jb3JlLmhvb2tzUGF0aFxuY29yZS5pZ25vcmVD
+YXNlXG5jb3JlLmlnbm9yZVN0YXRcbmNvcmUubG9nQWxsUmVmVXBkYXRlc1xuY29yZS5sb29z
+ZUNvbXByZXNzaW9uXG5jb3JlLm1heFRyZWVEZXB0aFxuY29yZS5tdWx0aVBhY2tJbmRleFxu
+Y29yZS5ub3Rlc1JlZlxuY29yZS5wYWNrZWRHaXRMaW1pdFxuY29yZS5wYWNrZWRHaXRXaW5k
+b3dTaXplXG5jb3JlLnBhY2tlZFJlZnNUaW1lb3V0XG5jb3JlLnBhZ2VyXG5jb3JlLnByZWNv
+bXBvc2VVbmljb2RlXG5jb3JlLnByZWZlclN5bWxpbmtSZWZzXG5jb3JlLnByZWxvYWRJbmRl
+eFxuY29yZS5wcm90ZWN0SEZTXG5jb3JlLnByb3RlY3ROVEZTXG5jb3JlLnF1b3RlUGF0aFxu
+Y29yZS5yZXBvc2l0b3J5Rm9ybWF0VmVyc2lvblxuY29yZS5yZXN0cmljdGluaGVyaXRlZGhh
+bmRsZXNcbmNvcmUuc2FmZWNybGZcbmNvcmUuc2hhcmVkUmVwb3NpdG9yeVxuY29yZS5zcGFy
+c2VDaGVja291dFxuY29yZS5zcGFyc2VDaGVja291dENvbmVcbmNvcmUuc3BsaXRJbmRleFxu
+Y29yZS5zc2hDb21tYW5kXG5jb3JlLnN5bWxpbmtzXG5jb3JlLnRydXN0Y3RpbWVcbmNvcmUu
+dW5zZXRlbnZ2YXJzXG5jb3JlLnVudHJhY2tlZENhY2hlXG5jb3JlLnVzZVJlcGxhY2VSZWZz
+XG5jb3JlLndhcm5BbWJpZ3VvdXNSZWZzXG5jb3JlLndoaXRlc3BhY2VcbmNvcmUud29ya3Ry
+ZWVcbmNyZWRlbnRpYWwuXG5jcmVkZW50aWFsLmhlbHBlclxuY3JlZGVudGlhbC5pbnRlcmFj
+dGl2ZVxuY3JlZGVudGlhbC51c2VIdHRwUGF0aFxuY3JlZGVudGlhbC51c2VybmFtZVxuY3Jl
+ZGVudGlhbENhY2hlLmlnbm9yZVNJR0hVUFxuY3JlZGVudGlhbFN0b3JlLmxvY2tUaW1lb3V0
+TVNcbmRpZmYuXG5kaWZmLmFsZ29yaXRobVxuZGlmZi5hdXRvUmVmcmVzaEluZGV4XG5kaWZm
+LmNvbG9yTW92ZWRcbmRpZmYuY29sb3JNb3ZlZFdTXG5kaWZmLmNvbnRleHRcbmRpZmYuZGly
+c3RhdFxuZGlmZi5kc3RQcmVmaXhcbmRpZmYuZXh0ZXJuYWxcbmRpZmYuZ3VpdG9vbFxuZGlm
+Zi5pZ25vcmVTdWJtb2R1bGVzXG5kaWZmLmluZGVudEhldXJpc3RpY1xuZGlmZi5pbnRlckh1
+bmtDb250ZXh0XG5kaWZmLm1uZW1vbmljUHJlZml4XG5kaWZmLm5vUHJlZml4XG5kaWZmLm9y
+ZGVyRmlsZVxuZGlmZi5yZWxhdGl2ZVxuZGlmZi5yZW5hbWVMaW1pdFxuZGlmZi5yZW5hbWVz
+XG5kaWZmLnNyY1ByZWZpeFxuZGlmZi5zdGF0R3JhcGhXaWR0aFxuZGlmZi5zdGF0TmFtZVdp
+ZHRoXG5kaWZmLnN1Ym1vZHVsZVxuZGlmZi5zdXBwcmVzc0JsYW5rRW1wdHlcbmRpZmYudG9v
+bFxuZGlmZi50cnVzdEV4aXRDb2RlXG5kaWZmLndvcmRSZWdleFxuZGlmZi53c0Vycm9ySGln
+aGxpZ2h0XG5kaWZmdG9vbC5cbmRpZmZ0b29sLmd1aURlZmF1bHRcbmRpZmZ0b29sLnByb21w
+dFxuZGlmZnRvb2wudHJ1c3RFeGl0Q29kZVxuZXh0ZW5zaW9ucy5jb21wYXRPYmplY3RGb3Jt
+YXRcbmV4dGVuc2lvbnMub2JqZWN0Rm9ybWF0XG5leHRlbnNpb25zLnJlZlN0b3JhZ2VcbmV4
+dGVuc2lvbnMud29ya3RyZWVDb25maWdcbmZhc3RpbXBvcnQudW5wYWNrTGltaXRcbmZlYXR1
+cmUuXG5mZWF0dXJlLmV4cGVyaW1lbnRhbFxuZmVhdHVyZS5tYW55RmlsZXNcbmZldGNoLmFs
+bFxuZmV0Y2guYnVuZGxlQ3JlYXRpb25Ub2tlblxuZmV0Y2guYnVuZGxlVVJJXG5mZXRjaC5m
+c2NrLlxuZmV0Y2guZnNjay5za2lwTGlzdFxuZmV0Y2guZnNja09iamVjdHNcbmZldGNoLm5l
+Z290aWF0aW9uQWxnb3JpdGhtXG5mZXRjaC5vdXRwdXRcbmZldGNoLnBhcmFsbGVsXG5mZXRj
+aC5wcnVuZVxuZmV0Y2gucHJ1bmVUYWdzXG5mZXRjaC5yZWN1cnNlU3VibW9kdWxlc1xuZmV0
+Y2guc2hvd0ZvcmNlZFVwZGF0ZXNcbmZldGNoLnVucGFja0xpbWl0XG5mZXRjaC53cml0ZUNv
+bW1pdEdyYXBoXG5maWx0ZXIuXG5mb3JtYXQuYXR0YWNoXG5mb3JtYXQuY2NcbmZvcm1hdC5j
+b3ZlckZyb21EZXNjcmlwdGlvblxuZm9ybWF0LmNvdmVyTGV0dGVyXG5mb3JtYXQuZW5jb2Rl
+RW1haWxIZWFkZXJzXG5mb3JtYXQuZmlsZW5hbWVNYXhMZW5ndGhcbmZvcm1hdC5mb3JjZUlu
+Qm9keUZyb21cbmZvcm1hdC5mcm9tXG5mb3JtYXQuaGVhZGVyc1xuZm9ybWF0Lm1ib3hyZFxu
+Zm9ybWF0Lm5vcHJlZml4XG5mb3JtYXQubm90ZXNcbmZvcm1hdC5udW1iZXJlZFxuZm9ybWF0
+Lm91dHB1dERpcmVjdG9yeVxuZm9ybWF0LnByZXR0eVxuZm9ybWF0LnNpZ25PZmZcbmZvcm1h
+dC5zaWduYXR1cmVcbmZvcm1hdC5zaWduYXR1cmVGaWxlXG5mb3JtYXQuc3ViamVjdFByZWZp
+eFxuZm9ybWF0LnN1ZmZpeFxuZm9ybWF0LnRocmVhZFxuZm9ybWF0LnRvXG5mb3JtYXQudXNl
+QXV0b0Jhc2VcbmZzY2suYmFkRGF0ZVxuZnNjay5iYWREYXRlT3ZlcmZsb3dcbmZzY2suYmFk
+RW1haWxcbmZzY2suYmFkRmlsZW1vZGVcbmZzY2suYmFkTmFtZVxuZnNjay5iYWRPYmplY3RT
+aGExXG5mc2NrLmJhZFBhcmVudFNoYTFcbmZzY2suYmFkUmVmRmlsZXR5cGVcbmZzY2suYmFk
+UmVmTmFtZVxuZnNjay5iYWRUYWdOYW1lXG5mc2NrLmJhZFRpbWV6b25lXG5mc2NrLmJhZFRy
+ZWVcbmZzY2suYmFkVHJlZVNoYTFcbmZzY2suYmFkVHlwZVxuZnNjay5kdXBsaWNhdGVFbnRy
+aWVzXG5mc2NrLmVtcHR5TmFtZVxuZnNjay5leHRyYUhlYWRlckVudHJ5XG5mc2NrLmZ1bGxQ
+YXRobmFtZVxuZnNjay5naXRhdHRyaWJ1dGVzQmxvYlxuZnNjay5naXRhdHRyaWJ1dGVzTGFy
+Z2VcbmZzY2suZ2l0YXR0cmlidXRlc0xpbmVMZW5ndGhcbmZzY2suZ2l0YXR0cmlidXRlc01p
+c3NpbmdcbmZzY2suZ2l0YXR0cmlidXRlc1N5bWxpbmtcbmZzY2suZ2l0aWdub3JlU3ltbGlu
+a1xuZnNjay5naXRtb2R1bGVzQmxvYlxuZnNjay5naXRtb2R1bGVzTGFyZ2VcbmZzY2suZ2l0
+bW9kdWxlc01pc3NpbmdcbmZzY2suZ2l0bW9kdWxlc05hbWVcbmZzY2suZ2l0bW9kdWxlc1Bh
+cnNlXG5mc2NrLmdpdG1vZHVsZXNQYXRoXG5mc2NrLmdpdG1vZHVsZXNTeW1saW5rXG5mc2Nr
+LmdpdG1vZHVsZXNVcGRhdGVcbmZzY2suZ2l0bW9kdWxlc1VybFxuZnNjay5oYXNEb3RcbmZz
+Y2suaGFzRG90ZG90XG5mc2NrLmhhc0RvdGdpdFxuZnNjay5sYXJnZVBhdGhuYW1lXG5mc2Nr
+Lm1haWxtYXBTeW1saW5rXG5mc2NrLm1pc3NpbmdBdXRob3JcbmZzY2subWlzc2luZ0NvbW1p
+dHRlclxuZnNjay5taXNzaW5nRW1haWxcbmZzY2subWlzc2luZ05hbWVCZWZvcmVFbWFpbFxu
+ZnNjay5taXNzaW5nT2JqZWN0XG5mc2NrLm1pc3NpbmdTcGFjZUJlZm9yZURhdGVcbmZzY2su
+bWlzc2luZ1NwYWNlQmVmb3JlRW1haWxcbmZzY2subWlzc2luZ1RhZ1xuZnNjay5taXNzaW5n
+VGFnRW50cnlcbmZzY2subWlzc2luZ1RhZ2dlckVudHJ5XG5mc2NrLm1pc3NpbmdUcmVlXG5m
+c2NrLm1pc3NpbmdUeXBlXG5mc2NrLm1pc3NpbmdUeXBlRW50cnlcbmZzY2subXVsdGlwbGVB
+dXRob3JzXG5mc2NrLm51bEluQ29tbWl0XG5mc2NrLm51bEluSGVhZGVyXG5mc2NrLm51bGxT
+aGExXG5mc2NrLnNraXBMaXN0XG5mc2NrLnRyZWVOb3RTb3J0ZWRcbmZzY2sudW5rbm93blR5
+cGVcbmZzY2sudW50ZXJtaW5hdGVkSGVhZGVyXG5mc2NrLnplcm9QYWRkZWREYXRlXG5mc2Nr
+Lnplcm9QYWRkZWRGaWxlbW9kZVxuZnNtb25pdG9yLmFsbG93UmVtb3RlXG5mc21vbml0b3Iu
+c29ja2V0RGlyXG5nYy5cbmdjLmFnZ3Jlc3NpdmVEZXB0aFxuZ2MuYWdncmVzc2l2ZVdpbmRv
+d1xuZ2MuYXV0b1xuZ2MuYXV0b0RldGFjaFxuZ2MuYXV0b1BhY2tMaW1pdFxuZ2MuYmlnUGFj
+a1RocmVzaG9sZFxuZ2MuY3J1ZnRQYWNrc1xuZ2MubG9nRXhwaXJ5XG5nYy5tYXhDcnVmdFNp
+emVcbmdjLnBhY2tSZWZzXG5nYy5wcnVuZUV4cGlyZVxuZ2MucmVjZW50T2JqZWN0c0hvb2tc
+bmdjLnJlZmxvZ0V4cGlyZVxuZ2MucmVmbG9nRXhwaXJlVW5yZWFjaGFibGVcbmdjLnJlcGFj
+a0ZpbHRlclxuZ2MucmVwYWNrRmlsdGVyVG9cbmdjLnJlcmVyZVJlc29sdmVkXG5nYy5yZXJl
+cmVVbnJlc29sdmVkXG5nYy53b3JrdHJlZVBydW5lRXhwaXJlXG5nYy53cml0ZUNvbW1pdEdy
+YXBoXG5naXRjdnMuYWxsQmluYXJ5XG5naXRjdnMuY29tbWl0TXNnQW5ub3RhdGlvblxuZ2l0
+Y3ZzLmRiRHJpdmVyXG5naXRjdnMuZGJOYW1lXG5naXRjdnMuZGJQYXNzXG5naXRjdnMuZGJU
+YWJsZU5hbWVQcmVmaXhcbmdpdGN2cy5kYlVzZXJcbmdpdGN2cy5lbmFibGVkXG5naXRjdnMu
+bG9nRmlsZVxuZ2l0Y3ZzLnVzZWNybGZhdHRyXG5naXR3ZWIuYXZhdGFyXG5naXR3ZWIuYmxh
+bWVcbmdpdHdlYi5jYXRlZ29yeVxuZ2l0d2ViLmRlc2NyaXB0aW9uXG5naXR3ZWIuZ3JlcFxu
+Z2l0d2ViLmhpZ2hsaWdodFxuZ2l0d2ViLm93bmVyXG5naXR3ZWIucGF0Y2hlc1xuZ2l0d2Vi
+LnBpY2theGVcbmdpdHdlYi5yZW1vdGVfaGVhZHNcbmdpdHdlYi5zaG93U2l6ZXNcbmdpdHdl
+Yi5zbmFwc2hvdFxuZ2l0d2ViLnVybFxuZ3BnLlxuZ3BnLmZvcm1hdFxuZ3BnLm1pblRydXN0
+TGV2ZWxcbmdwZy5wcm9ncmFtXG5ncGcuc3NoLmFsbG93ZWRTaWduZXJzRmlsZVxuZ3BnLnNz
+aC5kZWZhdWx0S2V5Q29tbWFuZFxuZ3BnLnNzaC5yZXZvY2F0aW9uRmlsZVxuZ3JlcC5jb2x1
+bW5cbmdyZXAuZXh0ZW5kZWRSZWdleHBcbmdyZXAuZmFsbGJhY2tUb05vSW5kZXhcbmdyZXAu
+ZnVsbE5hbWVcbmdyZXAubGluZU51bWJlclxuZ3JlcC5wYXR0ZXJuVHlwZVxuZ3JlcC50aHJl
+YWRzXG5ndWkuYmxhbWVoaXN0b3J5Y3R4XG5ndWkuY29tbWl0TXNnV2lkdGhcbmd1aS5jb3B5
+QmxhbWVUaHJlc2hvbGRcbmd1aS5kaWZmQ29udGV4dFxuZ3VpLmRpc3BsYXlVbnRyYWNrZWRc
+bmd1aS5lbmNvZGluZ1xuZ3VpLmZhc3RDb3B5QmxhbWVcbmd1aS5tYXRjaFRyYWNraW5nQnJh
+bmNoXG5ndWkubmV3QnJhbmNoVGVtcGxhdGVcbmd1aS5wcnVuZUR1cmluZ0ZldGNoXG5ndWku
+c3BlbGxpbmdEaWN0aW9uYXJ5XG5ndWkudHJ1c3RtdGltZVxuZ3VpdG9vbC5cbmhlbHAuYXV0
+b0NvcnJlY3RcbmhlbHAuYnJvd3NlclxuaGVscC5mb3JtYXRcbmhlbHAuaHRtbFBhdGhcbmh0
+dHAuXG5odHRwLmNvb2tpZUZpbGVcbmh0dHAuY3VybG9wdFJlc29sdmVcbmh0dHAuZGVsZWdh
+dGlvblxuaHR0cC5lbXB0eUF1dGhcbmh0dHAuZXh0cmFIZWFkZXJcbmh0dHAuZm9sbG93UmVk
+aXJlY3RzXG5odHRwLmxvd1NwZWVkTGltaXRcbmh0dHAubG93U3BlZWRUaW1lXG5odHRwLm1h
+eFJlcXVlc3RzXG5odHRwLm1pblNlc3Npb25zXG5odHRwLm5vRVBTVlxuaHR0cC5waW5uZWRQ
+dWJrZXlcbmh0dHAucG9zdEJ1ZmZlclxuaHR0cC5wcm9hY3RpdmVBdXRoXG5odHRwLnByb3h5
+XG5odHRwLnByb3h5QXV0aE1ldGhvZFxuaHR0cC5wcm94eVNTTENBSW5mb1xuaHR0cC5wcm94
+eVNTTENlcnRcbmh0dHAucHJveHlTU0xDZXJ0UGFzc3dvcmRQcm90ZWN0ZWRcbmh0dHAucHJv
+eHlTU0xLZXlcbmh0dHAuc2F2ZUNvb2tpZXNcbmh0dHAuc2NoYW5uZWxDaGVja1Jldm9rZVxu
+aHR0cC5zY2hhbm5lbFVzZVNTTENBSW5mb1xuaHR0cC5zc2xCYWNrZW5kXG5odHRwLnNzbENB
+SW5mb1xuaHR0cC5zc2xDQVBhdGhcbmh0dHAuc3NsQ2VydFxuaHR0cC5zc2xDZXJ0UGFzc3dv
+cmRQcm90ZWN0ZWRcbmh0dHAuc3NsQ2lwaGVyTGlzdFxuaHR0cC5zc2xLZXlcbmh0dHAuc3Ns
+VHJ5XG5odHRwLnNzbFZlcmlmeVxuaHR0cC5zc2xWZXJzaW9uXG5odHRwLnVzZXJBZ2VudFxu
+aHR0cC52ZXJzaW9uXG5pMThuLmNvbW1pdEVuY29kaW5nXG5pMThuLmxvZ091dHB1dEVuY29k
+aW5nXG5pbWFwLmF1dGhNZXRob2RcbmltYXAuZm9sZGVyXG5pbWFwLmhvc3RcbmltYXAucGFz
+c1xuaW1hcC5wb3J0XG5pbWFwLnByZWZvcm1hdHRlZEhUTUxcbmltYXAuc3NsdmVyaWZ5XG5p
+bWFwLnR1bm5lbFxuaW1hcC51c2VyXG5pbmNsdWRlLnBhdGhcbmluY2x1ZGVJZi5cbmluZGV4
+LnJlY29yZEVuZE9mSW5kZXhFbnRyaWVzXG5pbmRleC5yZWNvcmRPZmZzZXRUYWJsZVxuaW5k
+ZXguc2tpcEhhc2hcbmluZGV4LnNwYXJzZVxuaW5kZXgudGhyZWFkc1xuaW5kZXgudmVyc2lv
+blxuaW5zdGF3ZWIuYnJvd3NlclxuaW5zdGF3ZWIuaHR0cGRcbmluc3Rhd2ViLmxvY2FsXG5p
+bnN0YXdlYi5tb2R1bGVQYXRoXG5pbnN0YXdlYi5wb3J0XG5pbnRlcmFjdGl2ZS5kaWZmRmls
+dGVyXG5pbnRlcmFjdGl2ZS5zaW5nbGVLZXlcbmxvZy5hYmJyZXZDb21taXRcbmxvZy5kYXRl
+XG5sb2cuZGVjb3JhdGVcbmxvZy5kaWZmTWVyZ2VzXG5sb2cuZXhjbHVkZURlY29yYXRpb25c
+bmxvZy5mb2xsb3dcbmxvZy5ncmFwaENvbG9yc1xubG9nLmluaXRpYWxEZWNvcmF0aW9uU2V0
+XG5sb2cubWFpbG1hcFxubG9nLnNob3dSb290XG5sb2cuc2hvd1NpZ25hdHVyZVxubHNyZWZz
+LnVuYm9yblxubWFpbGluZm8uc2Npc3NvcnNcbm1haWxtYXAuYmxvYlxubWFpbG1hcC5maWxl
+XG5tYWludGVuYW5jZS5cbm1haW50ZW5hbmNlLmF1dG9cbm1haW50ZW5hbmNlLmF1dG9EZXRh
+Y2hcbm1haW50ZW5hbmNlLmNvbW1pdC1ncmFwaC5hdXRvXG5tYWludGVuYW5jZS5pbmNyZW1l
+bnRhbC1yZXBhY2suYXV0b1xubWFpbnRlbmFuY2UubG9vc2Utb2JqZWN0cy5hdXRvXG5tYWlu
+dGVuYW5jZS5zdHJhdGVneVxubWFuLlxubWFuLnZpZXdlclxubWVyZ2UuXG5tZXJnZS5hdXRv
+U3Rhc2hcbm1lcmdlLmJyYW5jaGRlc2Ncbm1lcmdlLmNvbmZsaWN0U3R5bGVcbm1lcmdlLmRl
+ZmF1bHRUb1Vwc3RyZWFtXG5tZXJnZS5kaXJlY3RvcnlSZW5hbWVzXG5tZXJnZS5mZlxubWVy
+Z2UuZ3VpdG9vbFxubWVyZ2UubG9nXG5tZXJnZS5yZW5hbWVMaW1pdFxubWVyZ2UucmVuYW1l
+c1xubWVyZ2UucmVub3JtYWxpemVcbm1lcmdlLnN0YXRcbm1lcmdlLnN1cHByZXNzRGVzdFxu
+bWVyZ2UudG9vbFxubWVyZ2UudmVyYm9zaXR5XG5tZXJnZS52ZXJpZnlTaWduYXR1cmVzXG5t
+ZXJnZXRvb2wuXG5tZXJnZXRvb2wuZ3VpRGVmYXVsdFxubWVyZ2V0b29sLmhpZGVSZXNvbHZl
+ZFxubWVyZ2V0b29sLmtlZXBCYWNrdXBcbm1lcmdldG9vbC5rZWVwVGVtcG9yYXJpZXNcbm1l
+cmdldG9vbC5tZWxkLmhhc091dHB1dFxubWVyZ2V0b29sLm1lbGQudXNlQXV0b01lcmdlXG5t
+ZXJnZXRvb2wucHJvbXB0XG5tZXJnZXRvb2wud3JpdGVUb1RlbXBcbm5vdGVzLlxubm90ZXMu
+ZGlzcGxheVJlZlxubm90ZXMubWVyZ2VTdHJhdGVneVxubm90ZXMucmV3cml0ZS5cbm5vdGVz
+LnJld3JpdGVNb2RlXG5ub3Rlcy5yZXdyaXRlUmVmXG5wYWNrLmFsbG93UGFja1JldXNlXG5w
+YWNrLmNvbXByZXNzaW9uXG5wYWNrLmRlbHRhQ2FjaGVMaW1pdFxucGFjay5kZWx0YUNhY2hl
+U2l6ZVxucGFjay5kZXB0aFxucGFjay5pbmRleFZlcnNpb25cbnBhY2suaXNsYW5kXG5wYWNr
+LmlzbGFuZENvcmVcbnBhY2sucGFja1NpemVMaW1pdFxucGFjay5wcmVmZXJCaXRtYXBUaXBz
+XG5wYWNrLnJlYWRSZXZlcnNlSW5kZXhcbnBhY2sudGhyZWFkc1xucGFjay51c2VCaXRtYXBC
+b3VuZGFyeVRyYXZlcnNhbFxucGFjay51c2VCaXRtYXBzXG5wYWNrLnVzZVNwYXJzZVxucGFj
+ay53aW5kb3dcbnBhY2sud2luZG93TWVtb3J5XG5wYWNrLndyaXRlQml0bWFwSGFzaENhY2hl
+XG5wYWNrLndyaXRlQml0bWFwTG9va3VwVGFibGVcbnBhY2sud3JpdGVSZXZlcnNlSW5kZXhc
+bnBhZ2VyLlxucHJldHR5LlxucHJvbWlzb3IucXVpZXRcbnByb3RvY29sLlxucHJvdG9jb2wu
+YWxsb3dcbnByb3RvY29sLnZlcnNpb25cbnB1bGwuZmZcbnB1bGwub2N0b3B1c1xucHVsbC5y
+ZWJhc2VcbnB1bGwudHdvaGVhZFxucHVzaC5hdXRvU2V0dXBSZW1vdGVcbnB1c2guZGVmYXVs
+dFxucHVzaC5mb2xsb3dUYWdzXG5wdXNoLmdwZ1NpZ25cbnB1c2gubmVnb3RpYXRlXG5wdXNo
+LnB1c2hPcHRpb25cbnB1c2gucmVjdXJzZVN1Ym1vZHVsZXNcbnB1c2gudXNlQml0bWFwc1xu
+cHVzaC51c2VGb3JjZUlmSW5jbHVkZXNcbnJlYmFzZS5hYmJyZXZpYXRlQ29tbWFuZHNcbnJl
+YmFzZS5hdXRvU3F1YXNoXG5yZWJhc2UuYXV0b1N0YXNoXG5yZWJhc2UuYmFja2VuZFxucmVi
+YXNlLmZvcmtQb2ludFxucmViYXNlLmluc3RydWN0aW9uRm9ybWF0XG5yZWJhc2UubWF4TGFi
+ZWxMZW5ndGhcbnJlYmFzZS5taXNzaW5nQ29tbWl0c0NoZWNrXG5yZWJhc2UucmViYXNlTWVy
+Z2VzXG5yZWJhc2UucmVzY2hlZHVsZUZhaWxlZEV4ZWNcbnJlYmFzZS5zdGF0XG5yZWJhc2Uu
+dXBkYXRlUmVmc1xucmVjZWl2ZS5hZHZlcnRpc2VBdG9taWNcbnJlY2VpdmUuYWR2ZXJ0aXNl
+UHVzaE9wdGlvbnNcbnJlY2VpdmUuYXV0b2djXG5yZWNlaXZlLmNlcnROb25jZVNlZWRcbnJl
+Y2VpdmUuY2VydE5vbmNlU2xvcFxucmVjZWl2ZS5kZW55Q3VycmVudEJyYW5jaFxucmVjZWl2
+ZS5kZW55RGVsZXRlQ3VycmVudFxucmVjZWl2ZS5kZW55RGVsZXRlc1xucmVjZWl2ZS5kZW55
+Tm9uRmFzdEZvcndhcmRzXG5yZWNlaXZlLmZzY2suYmFkRGF0ZVxucmVjZWl2ZS5mc2NrLmJh
+ZERhdGVPdmVyZmxvd1xucmVjZWl2ZS5mc2NrLmJhZEVtYWlsXG5yZWNlaXZlLmZzY2suYmFk
+RmlsZW1vZGVcbnJlY2VpdmUuZnNjay5iYWROYW1lXG5yZWNlaXZlLmZzY2suYmFkT2JqZWN0
+U2hhMVxucmVjZWl2ZS5mc2NrLmJhZFBhcmVudFNoYTFcbnJlY2VpdmUuZnNjay5iYWRSZWZG
+aWxldHlwZVxucmVjZWl2ZS5mc2NrLmJhZFJlZk5hbWVcbnJlY2VpdmUuZnNjay5iYWRUYWdO
+YW1lXG5yZWNlaXZlLmZzY2suYmFkVGltZXpvbmVcbnJlY2VpdmUuZnNjay5iYWRUcmVlXG5y
+ZWNlaXZlLmZzY2suYmFkVHJlZVNoYTFcbnJlY2VpdmUuZnNjay5iYWRUeXBlXG5yZWNlaXZl
+LmZzY2suZHVwbGljYXRlRW50cmllc1xucmVjZWl2ZS5mc2NrLmVtcHR5TmFtZVxucmVjZWl2
+ZS5mc2NrLmV4dHJhSGVhZGVyRW50cnlcbnJlY2VpdmUuZnNjay5mdWxsUGF0aG5hbWVcbnJl
+Y2VpdmUuZnNjay5naXRhdHRyaWJ1dGVzQmxvYlxucmVjZWl2ZS5mc2NrLmdpdGF0dHJpYnV0
+ZXNMYXJnZVxucmVjZWl2ZS5mc2NrLmdpdGF0dHJpYnV0ZXNMaW5lTGVuZ3RoXG5yZWNlaXZl
+LmZzY2suZ2l0YXR0cmlidXRlc01pc3NpbmdcbnJlY2VpdmUuZnNjay5naXRhdHRyaWJ1dGVz
+U3ltbGlua1xucmVjZWl2ZS5mc2NrLmdpdGlnbm9yZVN5bWxpbmtcbnJlY2VpdmUuZnNjay5n
+aXRtb2R1bGVzQmxvYlxucmVjZWl2ZS5mc2NrLmdpdG1vZHVsZXNMYXJnZVxucmVjZWl2ZS5m
+c2NrLmdpdG1vZHVsZXNNaXNzaW5nXG5yZWNlaXZlLmZzY2suZ2l0bW9kdWxlc05hbWVcbnJl
+Y2VpdmUuZnNjay5naXRtb2R1bGVzUGFyc2VcbnJlY2VpdmUuZnNjay5naXRtb2R1bGVzUGF0
+aFxucmVjZWl2ZS5mc2NrLmdpdG1vZHVsZXNTeW1saW5rXG5yZWNlaXZlLmZzY2suZ2l0bW9k
+dWxlc1VwZGF0ZVxucmVjZWl2ZS5mc2NrLmdpdG1vZHVsZXNVcmxcbnJlY2VpdmUuZnNjay5o
+YXNEb3RcbnJlY2VpdmUuZnNjay5oYXNEb3Rkb3RcbnJlY2VpdmUuZnNjay5oYXNEb3RnaXRc
+bnJlY2VpdmUuZnNjay5sYXJnZVBhdGhuYW1lXG5yZWNlaXZlLmZzY2subWFpbG1hcFN5bWxp
+bmtcbnJlY2VpdmUuZnNjay5taXNzaW5nQXV0aG9yXG5yZWNlaXZlLmZzY2subWlzc2luZ0Nv
+bW1pdHRlclxucmVjZWl2ZS5mc2NrLm1pc3NpbmdFbWFpbFxucmVjZWl2ZS5mc2NrLm1pc3Np
+bmdOYW1lQmVmb3JlRW1haWxcbnJlY2VpdmUuZnNjay5taXNzaW5nT2JqZWN0XG5yZWNlaXZl
+LmZzY2subWlzc2luZ1NwYWNlQmVmb3JlRGF0ZVxucmVjZWl2ZS5mc2NrLm1pc3NpbmdTcGFj
+ZUJlZm9yZUVtYWlsXG5yZWNlaXZlLmZzY2subWlzc2luZ1RhZ1xucmVjZWl2ZS5mc2NrLm1p
+c3NpbmdUYWdFbnRyeVxucmVjZWl2ZS5mc2NrLm1pc3NpbmdUYWdnZXJFbnRyeVxucmVjZWl2
+ZS5mc2NrLm1pc3NpbmdUcmVlXG5yZWNlaXZlLmZzY2subWlzc2luZ1R5cGVcbnJlY2VpdmUu
+ZnNjay5taXNzaW5nVHlwZUVudHJ5XG5yZWNlaXZlLmZzY2subXVsdGlwbGVBdXRob3JzXG5y
+ZWNlaXZlLmZzY2subnVsSW5Db21taXRcbnJlY2VpdmUuZnNjay5udWxJbkhlYWRlclxucmVj
+ZWl2ZS5mc2NrLm51bGxTaGExXG5yZWNlaXZlLmZzY2suc2tpcExpc3RcbnJlY2VpdmUuZnNj
+ay50cmVlTm90U29ydGVkXG5yZWNlaXZlLmZzY2sudW5rbm93blR5cGVcbnJlY2VpdmUuZnNj
+ay51bnRlcm1pbmF0ZWRIZWFkZXJcbnJlY2VpdmUuZnNjay56ZXJvUGFkZGVkRGF0ZVxucmVj
+ZWl2ZS5mc2NrLnplcm9QYWRkZWRGaWxlbW9kZVxucmVjZWl2ZS5mc2NrT2JqZWN0c1xucmVj
+ZWl2ZS5oaWRlUmVmc1xucmVjZWl2ZS5rZWVwQWxpdmVcbnJlY2VpdmUubWF4SW5wdXRTaXpl
+XG5yZWNlaXZlLnByb2NSZWNlaXZlUmVmc1xucmVjZWl2ZS5zaGFsbG93VXBkYXRlXG5yZWNl
+aXZlLnVucGFja0xpbWl0XG5yZWNlaXZlLnVwZGF0ZVNlcnZlckluZm9cbnJlZnRhYmxlLmJs
+b2NrU2l6ZVxucmVmdGFibGUuZ2VvbWV0cmljRmFjdG9yXG5yZWZ0YWJsZS5pbmRleE9iamVj
+dHNcbnJlZnRhYmxlLmxvY2tUaW1lb3V0XG5yZWZ0YWJsZS5yZXN0YXJ0SW50ZXJ2YWxcbnJl
+bW90ZS5cbnJlbW90ZS5wdXNoRGVmYXVsdFxucmVtb3Rlcy5cbnJlcGFjay5jcnVmdERlcHRo
+XG5yZXBhY2suY3J1ZnRUaHJlYWRzXG5yZXBhY2suY3J1ZnRXaW5kb3dcbnJlcGFjay5jcnVm
+dFdpbmRvd01lbW9yeVxucmVwYWNrLnBhY2tLZXB0T2JqZWN0c1xucmVwYWNrLnVwZGF0ZVNl
+cnZlckluZm9cbnJlcGFjay51c2VEZWx0YUJhc2VPZmZzZXRcbnJlcGFjay51c2VEZWx0YUlz
+bGFuZHNcbnJlcGFjay53cml0ZUJpdG1hcHNcbnJlcmVyZS5hdXRvVXBkYXRlXG5yZXJlcmUu
+ZW5hYmxlZFxucmV2ZXJ0LnJlZmVyZW5jZVxuc2FmZS5iYXJlUmVwb3NpdG9yeVxuc2FmZS5k
+aXJlY3RvcnlcbnNlbmRlbWFpbC5cbnNlbmRlbWFpbC5hbGlhc0ZpbGVUeXBlXG5zZW5kZW1h
+aWwuYWxpYXNlc0ZpbGVcbnNlbmRlbWFpbC5hbm5vdGF0ZVxuc2VuZGVtYWlsLmJjY1xuc2Vu
+ZGVtYWlsLmNjXG5zZW5kZW1haWwuY2NDbWRcbnNlbmRlbWFpbC5jaGFpblJlcGx5VG9cbnNl
+bmRlbWFpbC5jb25maXJtXG5zZW5kZW1haWwuZW52ZWxvcGVTZW5kZXJcbnNlbmRlbWFpbC5m
+b3JiaWRTZW5kbWFpbFZhcmlhYmxlc1xuc2VuZGVtYWlsLmZyb21cbnNlbmRlbWFpbC5oZWFk
+ZXJDbWRcbnNlbmRlbWFpbC5pZGVudGl0eVxuc2VuZGVtYWlsLm1haWxtYXBcbnNlbmRlbWFp
+bC5tYWlsbWFwLmJsb2JcbnNlbmRlbWFpbC5tYWlsbWFwLmZpbGVcbnNlbmRlbWFpbC5tdWx0
+aUVkaXRcbnNlbmRlbWFpbC5zaWduZWRPZmZCeUNjXG5zZW5kZW1haWwuc210cEJhdGNoU2l6
+ZVxuc2VuZGVtYWlsLnNtdHBEb21haW5cbnNlbmRlbWFpbC5zbXRwRW5jcnlwdGlvblxuc2Vu
+ZGVtYWlsLnNtdHBQYXNzXG5zZW5kZW1haWwuc210cFJlbG9naW5EZWxheVxuc2VuZGVtYWls
+LnNtdHBTU0xDZXJ0UGF0aFxuc2VuZGVtYWlsLnNtdHBTZXJ2ZXJcbnNlbmRlbWFpbC5zbXRw
+U2VydmVyT3B0aW9uXG5zZW5kZW1haWwuc210cFNlcnZlclBvcnRcbnNlbmRlbWFpbC5zbXRw
+VXNlclxuc2VuZGVtYWlsLnN1cHByZXNzQ2NcbnNlbmRlbWFpbC5zdXBwcmVzc0Zyb21cbnNl
+bmRlbWFpbC50aHJlYWRcbnNlbmRlbWFpbC50b1xuc2VuZGVtYWlsLnRvQ21kXG5zZW5kZW1h
+aWwudHJhbnNmZXJFbmNvZGluZ1xuc2VuZGVtYWlsLnZhbGlkYXRlXG5zZW5kZW1haWwueG1h
+aWxlclxuc2VxdWVuY2UuZWRpdG9yXG5zaG93QnJhbmNoLmRlZmF1bHRcbnNwYXJzZS5leHBl
+Y3RGaWxlc091dHNpZGVPZlBhdHRlcm5zXG5zcGxpdEluZGV4Lm1heFBlcmNlbnRDaGFuZ2Vc
+bnNwbGl0SW5kZXguc2hhcmVkSW5kZXhFeHBpcmVcbnNzaC52YXJpYW50XG5zdGFzaC5zaG93
+SW5jbHVkZVVudHJhY2tlZFxuc3Rhc2guc2hvd1BhdGNoXG5zdGFzaC5zaG93U3RhdFxuc3Rh
+dHVzLmFoZWFkQmVoaW5kXG5zdGF0dXMuYnJhbmNoXG5zdGF0dXMuZGlzcGxheUNvbW1lbnRQ
+cmVmaXhcbnN0YXR1cy5yZWxhdGl2ZVBhdGhzXG5zdGF0dXMucmVuYW1lTGltaXRcbnN0YXR1
+cy5yZW5hbWVzXG5zdGF0dXMuc2hvcnRcbnN0YXR1cy5zaG93U3Rhc2hcbnN0YXR1cy5zaG93
+VW50cmFja2VkRmlsZXNcbnN0YXR1cy5zdWJtb2R1bGVTdW1tYXJ5XG5zdWJtb2R1bGUuXG5z
+dWJtb2R1bGUuYWN0aXZlXG5zdWJtb2R1bGUuYWx0ZXJuYXRlRXJyb3JTdHJhdGVneVxuc3Vi
+bW9kdWxlLmFsdGVybmF0ZUxvY2F0aW9uXG5zdWJtb2R1bGUuZmV0Y2hKb2JzXG5zdWJtb2R1
+bGUucHJvcGFnYXRlQnJhbmNoZXNcbnN1Ym1vZHVsZS5yZWN1cnNlXG50YWcuZm9yY2VTaWdu
+QW5ub3RhdGVkXG50YWcuZ3BnU2lnblxudGFnLnNvcnRcbnRhci51bWFza1xudHJhY2UyLmNv
+bmZpZ1BhcmFtc1xudHJhY2UyLmRlc3RpbmF0aW9uRGVidWdcbnRyYWNlMi5lbnZWYXJzXG50
+cmFjZTIuZXZlbnRCcmllZlxudHJhY2UyLmV2ZW50TmVzdGluZ1xudHJhY2UyLmV2ZW50VGFy
+Z2V0XG50cmFjZTIubWF4RmlsZXNcbnRyYWNlMi5ub3JtYWxCcmllZlxudHJhY2UyLm5vcm1h
+bFRhcmdldFxudHJhY2UyLnBlcmZCcmllZlxudHJhY2UyLnBlcmZUYXJnZXRcbnRyYW5zZmVy
+LmFkdmVydGlzZU9iamVjdEluZm9cbnRyYW5zZmVyLmFkdmVydGlzZVNJRFxudHJhbnNmZXIu
+YnVuZGxlVVJJXG50cmFuc2Zlci5jcmVkZW50aWFsc0luVXJsXG50cmFuc2Zlci5mc2NrT2Jq
+ZWN0c1xudHJhbnNmZXIuaGlkZVJlZnNcbnRyYW5zZmVyLnVucGFja0xpbWl0XG51cGxvYWRh
+cmNoaXZlLmFsbG93VW5yZWFjaGFibGVcbnVwbG9hZHBhY2suYWxsb3dBbnlTSEExSW5XYW50
+XG51cGxvYWRwYWNrLmFsbG93RmlsdGVyXG51cGxvYWRwYWNrLmFsbG93UmVhY2hhYmxlU0hB
+MUluV2FudFxudXBsb2FkcGFjay5hbGxvd1JlZkluV2FudFxudXBsb2FkcGFjay5hbGxvd1Rp
+cFNIQTFJbldhbnRcbnVwbG9hZHBhY2suaGlkZVJlZnNcbnVwbG9hZHBhY2sua2VlcEFsaXZl
+XG51cGxvYWRwYWNrLnBhY2tPYmplY3RzSG9va1xudXBsb2FkcGFja2ZpbHRlci5cbnVwbG9h
+ZHBhY2tmaWx0ZXIuYWxsb3dcbnVwbG9hZHBhY2tmaWx0ZXIudHJlZS5tYXhEZXB0aFxudXJs
+LlxudXNlci5lbWFpbFxudXNlci5uYW1lXG51c2VyLnNpZ25pbmdLZXlcbnVzZXIudXNlQ29u
+ZmlnT25seVxudmVyc2lvbnNvcnQuc3VmZml4XG53ZWIuYnJvd3Nlclxud29ya3RyZWUuZ3Vl
+c3NSZW1vdGUnDQo+ICAgICAgK19fZ2l0X2NvbXB1dGVfZmlyc3RfbGV2ZWxfY29uZmlnX3Zh
+cnNfZm9yX3NlY3Rpb246Nz4gbG9jYWwgdGhpc19zZWN0aW9uPV9fZ2l0X2ZpcnN0X2xldmVs
+X2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uX3JlbW90ZQ0KPiAgICAgICtfX2dpdF9jb21wdXRl
+X2ZpcnN0X2xldmVsX2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uOjc+IHRlc3QgLW4gX19naXRf
+Zmlyc3RfbGV2ZWxfY29uZmlnX3ZhcnNfZm9yX3NlY3Rpb25fcmVtb3RlDQo+ICAgICArX19n
+aXRfY29tcGxldGVfY29uZmlnX3ZhcmlhYmxlX25hbWU6Nz4gbG9jYWwgdGhpc19zZWN0aW9u
+PV9fZ2l0X2ZpcnN0X2xldmVsX2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uX3JlbW90ZQ0KPiAg
+ICAgK19fZ2l0X2NvbXBsZXRlX2NvbmZpZ192YXJpYWJsZV9uYW1lOjc+IF9fZ2l0Y29tcF9u
+bF9hcHBlbmQgX19naXRfZmlyc3RfbGV2ZWxfY29uZmlnX3ZhcnNfZm9yX3NlY3Rpb25fcmVt
+b3RlIHJlbW90ZS4gJycgJyAnDQo+ICAgICAgK19fZ2l0Y29tcF9ubF9hcHBlbmQ6Nz4gX19n
+aXRjb21wX25sIF9fZ2l0X2ZpcnN0X2xldmVsX2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uX3Jl
+bW90ZSByZW1vdGUuICcnICcgJw0KPiAgICAgICArX19naXRjb21wX25sOjc+IGVtdWxhdGUg
+LUwgenNoDQo+ICAgICAgICtfX2dpdGNvbXBfbmw6Nz4gY29tcHNldCAtUCAnKls9Ol0nDQo+
+ICAgICAgICtfX2dpdGNvbXBfbmw6Nz4gY29tcGFkZCAtUSAtUyAnICcgLXAgcmVtb3RlLiAt
+LSBfX2dpdF9maXJzdF9sZXZlbF9jb25maWdfdmFyc19mb3Jfc2VjdGlvbl9yZW1vdGUNCg0K
+SSdtIG5vdCBzdXJlIHRoaXMgd2FsbCBvZiB0ZXh0IGJyaW5ncyB2YWx1YWJsZSBpbmZvcm1h
+dGlvbiB0byB0aGUNCmNvbW1pdCBtZXNzYWdlLg0KIA0KPiBXZSBwZXJmb3JtIHRoZSB0ZXN0
+IGZvciBfX2dpdF9jb21wdXRlX2NvbmZpZ192YXJzIGNvcnJlY3RseSwgYnV0IHRoZQ0KPiAk
+eyF0aGlzX3NlY3Rpb259IHJlZmVyZW5jZXMgYXJlIG5vdCBleHBhbmRlZCBhcyBleHBlY3Rl
+ZC4NCg0KSnVzdCB0aGlzIHBhcnQgd291bGQgYmUgZW5vdWdoLCBJIHRoaW5rLg0KDQoNCj4g
+SW5zdGVhZCwgcG9ydGFibHkgZXhwYW5kIGluZGlyZWN0IHJlZmVyZW5jZXMgdGhyb3VnaCB0
+aGUgbmV3DQo+IF9fZ2l0X2luZGlyZWN0LiBDb250cmFyeSB0byBzb21lIHZlcnNpb25zIHlv
+dSBtaWdodCBmaW5kIG9ubGluZSBbMV0sDQo+IHRoaXMgdmVyc2lvbiBhdm9pZHMgZWNobyBu
+b24tcG9ydGFiaWxpdGllcyBbMl0gWzNdIGFuZCBjb3JyZWN0bHkgcXVvdGVzDQo+IHRoZSBp
+bmRpcmVjdCBleHBhbnNpb24gYWZ0ZXIgZXZhbCAoc28gdGhhdCB0aGUgcmVzdWx0IGlzIG5v
+dCBzcGxpdCBvcg0KPiBnbG9iYmVkIGJlZm9yZSBiZWluZyBoYW5kZWQgdG8gcHJpbnRmKS4N
+Cj4gDQo+IFsxXTogaHR0cHM6Ly91bml4LnN0YWNrZXhjaGFuZ2UuY29tL2EvNDE0MDkvMzAx
+MDczDQo+IFsyXTogaHR0cHM6Ly9hc2t1YnVudHUuY29tL3F1ZXN0aW9ucy83MTU3NjUvbXlz
+dGVyaW91cy1iZWhhdmlvci1vZi1lY2hvLWNvbW1hbmQjY29tbWVudDEwNTYwMzhfNzE1NzY5
+DQo+IFszXTogaHR0cHM6Ly9teXdpa2kud29vbGVkZ2Uub3JnL0NhdEVjaG9Mcw0KPiANCj4g
+VGhlIGZvbGxvd2luZyBkZW1vIHByb2dyYW0gZGVtb25zdHJhdGVzIGhvdyB0aGlzIHdvcmtz
+Og0KPiANCj4gICAgIGI9MQ0KPiAgICAgaW5kaXJlY3QoKSB7DQo+ICAgICAgIGV2YWwgcHJp
+bnRmICclcycgIlwiXCQkMVwiIg0KPiAgICAgfQ0KPiAgICAgZigpIHsNCj4gICAgICAgIyBD
+b21tZW50IHRoaXMgb3V0IHRvIHNlZSB0aGF0IGl0IHdvcmtzIGZvciBnbG9iYWxzLCB0b28u
+IE9yLCB1c2UNCj4gICAgICAgIyBhIHZhbHVlIHdpdGggc3BhY2VzIGxpa2UgJzIgMyA0JyB0
+byBzZWUgaG93IGl0IGhhbmRsZXMgdGhvc2UuDQo+ICAgICAgIGxvY2FsIGI9Mg0KPiAgICAg
+ICBsb2NhbCBhPWINCj4gICAgICAgdGVzdCAtbiAiJChpbmRpcmVjdCAkYSkiICYmIGVjaG8g
+bmljZQ0KPiAgICAgfQ0KPiAgICAgZg0KPiANCj4gV2hlbiBwbGFjZWQgaW4gYSBmaWxlICJk
+ZW1vIiwgdGhlbiBib3RoDQo+ICAgICBiYXNoIC14IGRlbW8NCj4gYW5kDQo+ICAgICB6c2gg
+LXhjICdlbXVsYXRlIGtzaCAtYyAiLiAuL2RlbW8iJyB8JiB0YWlsDQo+IHByb3ZpZGUgdHJh
+Y2VzIHNob3dpbmcgdGhhdCAiJChpbmRpcmVjdCAkYSkiIHByb2R1Y2VzIDIgKG9yIDEsIHdp
+dGggdGhlDQo+IGdsb2JhbCwgb3IgIjIgMyA0IiBhcyBhIHNpbmdsZSBzdHJpbmcsIGV0Yy4p
+Lg0KDQpUaGFua3MsIEkgdmVyaWZpZWQgdGhhdCB0aGlzIGluZGVlZCB3b3JrcywgYXQgbGVh
+c3Qgd2l0aCBvbiBteSAob2xkKSBzeXN0ZW0NCndpdGggQmFzaCAzLjIuNTcgYW5kIFpzaCA1
+LjAuOC4NCg0KSSdtIHdvbmRlcmluZyB3aGF0IGNvdWxkIGJlIGRvbmUgdG8gcHJldmVudCBy
+ZWdyZXNzaW9ucyBsaWtlIHRoaXMgaW4gDQp0aGUgZnV0dXJlLiBJbiBbMV0sIGJyaWFuIG1l
+bnRpb25zIGEgd2F5IHRvIHRlc3QgdGhlIHdob2xlIHRlc3Qgc3VpdGUgd2l0aCBac2gNCmlu
+ICJzaCIgbW9kZSwgd2hpY2ggY291bGQgYmUgYWRkZWQgdG8gb25lIG9mIG91ciBDSSBqb2Jz
+LiANCg0KQnV0IHRoZSBjb21wbGV0aW9uIHRlc3Qgc2NyaXB0ICh0OTkwMi1jb21wbGV0aW9u
+LnNoKSBpcyByZWFsbHkgQmFzaC1zcGVjaWZpYyANCmFuZCBkb2VzICdleGVjIGJhc2gnIGlm
+IGl0IGRldGVjdHMgaXQgaXMgbm90IHJ1bm5pbmcgaW4gQmFzaCwgc28gdGhpcyB3b3VsZCBu
+b3QgDQpoZWxwIHVzIGFueXdheS4uLiANCg0KWzFdIGh0dHBzOi8vbG9yZS5rZXJuZWwub3Jn
+L2dpdC8yMDI0MDQyNjIyMTE1NC4yMTk0MTM5LTEtc2FuZGFsc0BjcnVzdHl0b290aHBhc3Rl
+Lm5ldC8NCg0KPiANCj4gU2lnbmVkLW9mZi1ieTogRC4gQmVuIEtub2JsZSA8YmVuLmtub2Js
+ZStnaXRodWJAZ21haWwuY29tPg0KPiAtLS0NCj4gICAgIGNvbXBsZXRpb246IHJlcGFpciBj
+b25maWcgY29tcGxldGlvbiBmb3IgWnNoDQo+ICAgICANCj4gICAgIFNlZSBjb21taXQgZm9y
+IGRldGFpbHMuDQo+IA0KPiBQdWJsaXNoZWQtQXM6IGh0dHBzOi8vZ2l0aHViLmNvbS9naXRn
+aXRnYWRnZXQvZ2l0L3JlbGVhc2VzL3RhZy9wci1naXQtMTg2MCUyRmJlbmtub2JsZSUyRmZp
+eC16c2gtY29uZmlnLWNvbXBsZXRpb24tdjENCj4gRmV0Y2gtSXQtVmlhOiBnaXQgZmV0Y2gg
+aHR0cHM6Ly9naXRodWIuY29tL2dpdGdpdGdhZGdldC9naXQgcHItZ2l0LTE4NjAvYmVua25v
+YmxlL2ZpeC16c2gtY29uZmlnLWNvbXBsZXRpb24tdjENCj4gUHVsbC1SZXF1ZXN0OiBodHRw
+czovL2dpdGh1Yi5jb20vZ2l0L2dpdC9wdWxsLzE4NjANCj4gDQo+ICBjb250cmliL2NvbXBs
+ZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaCB8IDE3ICsrKysrKysrKysrLS0tLS0tDQo+ICAx
+IGZpbGUgY2hhbmdlZCwgMTEgaW5zZXJ0aW9ucygrKSwgNiBkZWxldGlvbnMoLSkNCj4gDQo+
+IGRpZmYgLS1naXQgYS9jb250cmliL2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaCBi
+L2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoDQo+IGluZGV4IGIzYjZh
+YTNiYWUyLi40MTM5MTFiZTNiZSAxMDA2NDQNCj4gLS0tIGEvY29udHJpYi9jb21wbGV0aW9u
+L2dpdC1jb21wbGV0aW9uLmJhc2gNCj4gKysrIGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1j
+b21wbGV0aW9uLmJhc2gNCj4gQEAgLTI3MzcsMTIgKzI3MzcsMTcgQEAgX19naXRfY29tcHV0
+ZV9jb25maWdfdmFyc19hbGwgKCkNCj4gIAlfX2dpdF9jb25maWdfdmFyc19hbGw9IiQoZ2l0
+IC0tbm8tcGFnZXIgaGVscCAtLWNvbmZpZykiDQo+ICB9DQo+ICANCj4gK19fZ2l0X2luZGly
+ZWN0KCkNCj4gK3sNCj4gKwlldmFsIHByaW50ZiAnJXMnICJcIlwkJDFcIiINCj4gK30NCj4g
+Kw0KPiAgX19naXRfY29tcHV0ZV9maXJzdF9sZXZlbF9jb25maWdfdmFyc19mb3Jfc2VjdGlv
+biAoKQ0KPiAgew0KPiAgCWxvY2FsIHNlY3Rpb249IiQxIg0KPiAgCV9fZ2l0X2NvbXB1dGVf
+Y29uZmlnX3ZhcnMNCj4gIAlsb2NhbCB0aGlzX3NlY3Rpb249Il9fZ2l0X2ZpcnN0X2xldmVs
+X2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uXyR7c2VjdGlvbn0iDQo+IC0JdGVzdCAtbiAiJHsh
+dGhpc19zZWN0aW9ufSIgfHwNCj4gKwl0ZXN0IC1uICIkKF9fZ2l0X2luZGlyZWN0ICIke3Ro
+aXNfc2VjdGlvbn0iKSIgfHwNCj4gIAlwcmludGYgLXYgIl9fZ2l0X2ZpcnN0X2xldmVsX2Nv
+bmZpZ192YXJzX2Zvcl9zZWN0aW9uXyR7c2VjdGlvbn0iICVzIFwNCj4gIAkJIiQoZWNobyAi
+JF9fZ2l0X2NvbmZpZ192YXJzIiB8IGF3ayAtRi4gIi9eJHtzZWN0aW9ufVwuW2Etel0vIHsg
+cHJpbnQgXCQyIH0iKSINCj4gIH0NCj4gQEAgLTI3NTIsNyArMjc1Nyw3IEBAIF9fZ2l0X2Nv
+bXB1dGVfc2Vjb25kX2xldmVsX2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uICgpDQo+ICAJbG9j
+YWwgc2VjdGlvbj0iJDEiDQo+ICAJX19naXRfY29tcHV0ZV9jb25maWdfdmFyc19hbGwNCj4g
+IAlsb2NhbCB0aGlzX3NlY3Rpb249Il9fZ2l0X3NlY29uZF9sZXZlbF9jb25maWdfdmFyc19m
+b3Jfc2VjdGlvbl8ke3NlY3Rpb259Ig0KPiAtCXRlc3QgLW4gIiR7IXRoaXNfc2VjdGlvbn0i
+IHx8DQo+ICsJdGVzdCAtbiAiJChfX2dpdF9pbmRpcmVjdCAiJHt0aGlzX3NlY3Rpb259Iiki
+IHx8DQo+ICAJcHJpbnRmIC12ICJfX2dpdF9zZWNvbmRfbGV2ZWxfY29uZmlnX3ZhcnNfZm9y
+X3NlY3Rpb25fJHtzZWN0aW9ufSIgJXMgXA0KPiAgCQkiJChlY2hvICIkX19naXRfY29uZmln
+X3ZhcnNfYWxsIiB8IGF3ayAtRi4gIi9eJHtzZWN0aW9ufVwuPC8geyBwcmludCBcJDMgfSIp
+Ig0KPiAgfQ0KPiBAQCAtMjkwNyw3ICsyOTEyLDcgQEAgX19naXRfY29tcGxldGVfY29uZmln
+X3ZhcmlhYmxlX25hbWUgKCkNCj4gIAkJbG9jYWwgc2VjdGlvbj0iJHtwZnglLioufSINCj4g
+IAkJX19naXRfY29tcHV0ZV9zZWNvbmRfbGV2ZWxfY29uZmlnX3ZhcnNfZm9yX3NlY3Rpb24g
+IiR7c2VjdGlvbn0iDQo+ICAJCWxvY2FsIHRoaXNfc2VjdGlvbj0iX19naXRfc2Vjb25kX2xl
+dmVsX2NvbmZpZ192YXJzX2Zvcl9zZWN0aW9uXyR7c2VjdGlvbn0iDQo+IC0JCV9fZ2l0Y29t
+cCAiJHshdGhpc19zZWN0aW9ufSIgIiRwZngiICIkY3VyXyIgIiRzZngiDQo+ICsJCV9fZ2l0
+Y29tcCAiJChfX2dpdF9pbmRpcmVjdCAiJHt0aGlzX3NlY3Rpb259IikiICIkcGZ4IiAiJGN1
+cl8iICIkc2Z4Ig0KPiAgCQlyZXR1cm4NCj4gIAkJOzsNCj4gIAlicmFuY2guKikNCj4gQEAg
+LTI5MTcsNyArMjkyMiw3IEBAIF9fZ2l0X2NvbXBsZXRlX2NvbmZpZ192YXJpYWJsZV9uYW1l
+ICgpDQo+ICAJCV9fZ2l0Y29tcF9kaXJlY3QgIiQoX19naXRfaGVhZHMgIiRwZngiICIkY3Vy
+XyIgIi4iKSINCj4gIAkJX19naXRfY29tcHV0ZV9maXJzdF9sZXZlbF9jb25maWdfdmFyc19m
+b3Jfc2VjdGlvbiAiJHtzZWN0aW9ufSINCj4gIAkJbG9jYWwgdGhpc19zZWN0aW9uPSJfX2dp
+dF9maXJzdF9sZXZlbF9jb25maWdfdmFyc19mb3Jfc2VjdGlvbl8ke3NlY3Rpb259Ig0KPiAt
+CQlfX2dpdGNvbXBfbmxfYXBwZW5kICIkeyF0aGlzX3NlY3Rpb259IiAiJHBmeCIgIiRjdXJf
+IiAiJHtzZng6LSB9Ig0KPiArCQlfX2dpdGNvbXBfbmxfYXBwZW5kICIkKF9fZ2l0X2luZGly
+ZWN0ICIke3RoaXNfc2VjdGlvbn0iKSIgIiRwZngiICIkY3VyXyIgIiR7c2Z4Oi0gfSINCj4g
+IAkJcmV0dXJuDQo+ICAJCTs7DQo+ICAJcGFnZXIuKikNCj4gQEAgLTI5MzQsNyArMjkzOSw3
+IEBAIF9fZ2l0X2NvbXBsZXRlX2NvbmZpZ192YXJpYWJsZV9uYW1lICgpDQo+ICAJCV9fZ2l0
+Y29tcF9ubCAiJChfX2dpdF9yZW1vdGVzKSIgIiRwZngiICIkY3VyXyIgIi4iDQo+ICAJCV9f
+Z2l0X2NvbXB1dGVfZmlyc3RfbGV2ZWxfY29uZmlnX3ZhcnNfZm9yX3NlY3Rpb24gIiR7c2Vj
+dGlvbn0iDQo+ICAJCWxvY2FsIHRoaXNfc2VjdGlvbj0iX19naXRfZmlyc3RfbGV2ZWxfY29u
+ZmlnX3ZhcnNfZm9yX3NlY3Rpb25fJHtzZWN0aW9ufSINCj4gLQkJX19naXRjb21wX25sX2Fw
+cGVuZCAiJHshdGhpc19zZWN0aW9ufSIgIiRwZngiICIkY3VyXyIgIiR7c2Z4Oi0gfSINCj4g
+KwkJX19naXRjb21wX25sX2FwcGVuZCAiJChfX2dpdF9pbmRpcmVjdCAiJHt0aGlzX3NlY3Rp
+b259IikiICIkcGZ4IiAiJGN1cl8iICIke3NmeDotIH0iDQo+ICAJCXJldHVybg0KPiAgCQk7
+Ow0KPiAgCXN1Ym1vZHVsZS4qKQ0KPiBAQCAtMjk0NCw3ICsyOTQ5LDcgQEAgX19naXRfY29t
+cGxldGVfY29uZmlnX3ZhcmlhYmxlX25hbWUgKCkNCj4gIAkJX19naXRjb21wX25sICIkKF9f
+Z2l0IGNvbmZpZyAtZiAiJChfX2dpdCByZXYtcGFyc2UgLS1zaG93LXRvcGxldmVsKS8uZ2l0
+bW9kdWxlcyIgLS1nZXQtcmVnZXhwICdzdWJtb2R1bGUuKi5wYXRoJyB8IGF3ayAtRi4gJ3tw
+cmludCAkMn0nKSIgIiRwZngiICIkY3VyXyIgIi4iDQo+ICAJCV9fZ2l0X2NvbXB1dGVfZmly
+c3RfbGV2ZWxfY29uZmlnX3ZhcnNfZm9yX3NlY3Rpb24gIiR7c2VjdGlvbn0iDQo+ICAJCWxv
+Y2FsIHRoaXNfc2VjdGlvbj0iX19naXRfZmlyc3RfbGV2ZWxfY29uZmlnX3ZhcnNfZm9yX3Nl
+Y3Rpb25fJHtzZWN0aW9ufSINCj4gLQkJX19naXRjb21wX25sX2FwcGVuZCAiJHshdGhpc19z
+ZWN0aW9ufSIgIiRwZngiICIkY3VyXyIgIiR7c2Z4Oi0gfSINCj4gKwkJX19naXRjb21wX25s
+X2FwcGVuZCAiJChfX2dpdF9pbmRpcmVjdCAiJHt0aGlzX3NlY3Rpb259IikiICIkcGZ4IiAi
+JGN1cl8iICIke3NmeDotIH0iDQo+ICAJCXJldHVybg0KPiAgCQk7Ow0KPiAgCSouKikNCj4g
+DQo+IGJhc2UtY29tbWl0OiAzMDZhYjM1MmY0ZTk4ZjY4MDljZTUyZmM0ZTVkNjNmYjk0N2Qw
+NjM1DQo+IA0KDQp0aGUgY29kZSBjaGFuZ2VzIGxvb2sgZ29vZCB0byBtZS4NCg0KVGhhbmtz
+LA0KUGhpbGlwcGUuDQo=
