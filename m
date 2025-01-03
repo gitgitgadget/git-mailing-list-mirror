@@ -1,202 +1,192 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AD51BC077
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 23:35:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DE11386C9
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 23:43:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735947312; cv=none; b=hrsmPbP4/UgL+bXQTLERLKRGd5KnJkQPnatBwRrmFfRUdynfqnk4f4Aye1PfG36YM7YlWym//xy283mQmralzuu52LCJdJ9mEezSImfMDNx/QjpRlg7pvsCWe31BKc/rPMUemAwMRMA70OPDK0OkHSatZN7s0NZXu9Y7jxSrbtI=
+	t=1735947828; cv=none; b=VmXGLi9W2VCAsTtHyZqA+tONHLsOhkqUXyYZzxThnYkPTVJ5PYFVvRI1qizJy1R1hpFKWvB3W1kioDrAc4rjq8Sifl9TcjDQ+iKO9wcpKHZy6uZbNEMbDFPH79zkaemG60fJZCzZRVSfwuMcs8cesIjtO5h1vK7n8EKOyxE6nsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735947312; c=relaxed/simple;
-	bh=NP0dbyCs8KgUAbmAuIMU3pshTtCsZ/gIvnQpO8jv+tE=;
+	s=arc-20240116; t=1735947828; c=relaxed/simple;
+	bh=sHCp1YKAcOWVj9K3o0lqO5bLOuJGfC+MQwPqzQuRfXU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Iyf/gL5QUMRgHkG3U5YUKo+IiaD4Pz/UGW0MRSSmnRgXFIEL2nv+68iyosAE//B020Cvyt+X2keI6WuYsA8GqII/2hNKAIXGgnQGC289IEadG24/PHj06d6+Fdh6RhahRGhL6FSgI2BCaYGDtmi28tVL3l9NRIt7f22rxsYpX3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=saville.com; spf=none smtp.mailfrom=saville.com; dkim=pass (2048-bit key) header.d=saville-com.20230601.gappssmtp.com header.i=@saville-com.20230601.gappssmtp.com header.b=v/XeJ18r; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=saville.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=saville.com
+	 To:Cc:Content-Type; b=eNWjSfe+iDHgYgX5+45JcUU4gLjY2zO80gTTJM1obbFbqG9W92RapH5EaXWZnRaWEOMecfubnntP7fCFZWdX5qV2z3G6z0ea07aQUBOEMrmjNUbyFCfi4rVT0hyu1C7YF7ioSnZdMOA8CBWEFMSskI6H91Vhv4M74JMJyeSeClQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m9txG8QK; arc=none smtp.client-ip=209.85.166.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=saville-com.20230601.gappssmtp.com header.i=@saville-com.20230601.gappssmtp.com header.b="v/XeJ18r"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e53c9035003so14726144276.2
-        for <git@vger.kernel.org>; Fri, 03 Jan 2025 15:35:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m9txG8QK"
+Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-844bff5ba1dso1013836439f.1
+        for <git@vger.kernel.org>; Fri, 03 Jan 2025 15:43:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=saville-com.20230601.gappssmtp.com; s=20230601; t=1735947309; x=1736552109; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1735947826; x=1736552626; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0UEf0dQ+kTUkAB+gev9XAt04zusRNlZmaRa8w7vn1Q4=;
-        b=v/XeJ18rXtzyhyiR5UnENmWWqlj6V+tJRZVPdWdlh0kh2gRkwOJy45Gb89Kgd+ZtJs
-         amDuP+aIeJE4IBpFUqOzXs0Sj3TyCeklqv0ZrQpl3vMGokk6w5LLfCRoDrMfEKkKBBTo
-         R2O7NhywvpCK41Ir6I+iCXvcOuBJHORzoCEDEM3JrTQe2uxydqdwidOeZ8EvNg2rWRhQ
-         ci7Vmyq+Zlaz4BYISk1b/N8CKPRWt9fTCuhz/JyQehHdoNfSm+hI/fU5yJIDVZEg8pKm
-         XEziNVnhtNVBkvODcwE4uuafeV5bU1or5rg+8ybQ6HI+8hqJGp72J2pOnGJN+dL3SciA
-         pz4Q==
+        bh=SiTOduYF2Kyy6MiaiMQIkHp7mHj86e2G8xPGcr5Wghk=;
+        b=m9txG8QK3/wTFgvXe2cNQShO6gpf/Mqd5lp1jQMXNtXaT5mzxl8bRUOalxDRsYsmBr
+         cLg58FV1cBITDbrBnjey01D6zV629eE830KjdKUZUuBUg3AzP6xyjls+aNb0m96os2Kw
+         5w1vDURm/ZqtPiXsLWBaxopwKq6zBWNxWDudhJnwK7m/PrLc86U4JlHuYzz66c8RpYs+
+         V6ey3gJQ1Dig7PvxdzgAOJWKg7EVZEI6hF8GnuoD81I8HMFPbNK6ZFaDICaw/TEb/6hJ
+         dldz+GsWrkmzA7WTz1uL3JGfkt61RYqI/0SrT3gB7tJMKiV+9TkIXmuX5SWdmb0I8e9C
+         UeLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1735947310; x=1736552110;
+        d=1e100.net; s=20230601; t=1735947826; x=1736552626;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0UEf0dQ+kTUkAB+gev9XAt04zusRNlZmaRa8w7vn1Q4=;
-        b=dCCnWQjTJdHIKZLJO81GMiJ3No1suiDbG2SePx1d7N5RnRWgk9kV10Ygl/BJnxiJcx
-         0VjMWI1ZgdXFcic+14tnOuGW1I1w1G8BoLnFtDvA8Jr7x8mvwAbcl0fkXxn8O2MZoWH4
-         rtS/DfKP3zJVX68IgjxSMV4ClEa3haD8PmPwS5zW1Fn+vfkWeF6S/+/4RTY7RS0shOnp
-         GdIGUmxTsaGMmEdLPZa6ivo2+GIcuvsF4+Yk1avWdbIGOuG83mMxrhuHSkorX7zQBuUW
-         flUHT81rNq7/7KWdQQJazbhrPYo3x4Thn9ktxao9gIHo3o3e2CrFYPO4MmRayDy9pmmH
-         NMgg==
-X-Gm-Message-State: AOJu0Yxzu5bmv5yfSd4omqLSLKdEaUUJTxyLu3eiCQSefkmX181FIS4D
-	1oQ/Fkve0c3OSmRITUlwwjiEbBcqxCNFEdMO/Y+QmRwSj4m8QPobcJRg3MkZ+ZUO7PNME21cGVp
-	X3ZaocdATlIlKxPWe2oiSUUGfp38VQCKskjyNRl8ZAhnGUPLo2n8=
-X-Gm-Gg: ASbGncvVvaTWanfkATCeanANxfLockO8CXEL0cLMCb+geX0tcKRlPn/N8mwgd2EAPSf
-	uVxtFu/q5oPhCx1JSQf2b5KWjX01qBDPbKEdVFWI=
-X-Google-Smtp-Source: AGHT+IGtW9lhvc3toycoVmPVaaJfrPnUfhCE/7shv1sxaGcVQ/mbvzScVz1+fRXU1lApixpUQk7vUIdpOivZucNLnxo=
-X-Received: by 2002:a05:6902:13cb:b0:e53:7760:5401 with SMTP id
- 3f1490d57ef6-e548eb17cc9mr3131410276.22.1735947309617; Fri, 03 Jan 2025
- 15:35:09 -0800 (PST)
+        bh=SiTOduYF2Kyy6MiaiMQIkHp7mHj86e2G8xPGcr5Wghk=;
+        b=l91dC5AsBdMnN+7F9Iid9pRZtZtJ30Fo2JymPXX2dWMJ3re1+6vkAklYOqJPs8YtoJ
+         CSe+LReAZD36In54KAiyS9aWm/eW4PefXT7o4UqDaKtpKnTBxiZQ5nJBRbg11gx16Fu7
+         SKjRI79uIG9FiAz5+qXLIyx4NEZYL7EULC5mGz58iN+myIURYnad0Oy1ezgcYvBgyBkQ
+         JLSfjn0ePqOvfi4RXLQFA8s7knwaUQhvFChFoRYgKnDxy6SlkYd+stenuLKta59jVecu
+         knMbdGo7WyTW0BidLBv/8+oncfD9HYufHD6C1KiN6Mf8+iWfIVvE21XZ1AnlIAq+9b9v
+         JLrg==
+X-Forwarded-Encrypted: i=1; AJvYcCX8HRcqgRG/S6UkMqJcFEEeWC5ey4bIPNjTixc9PaXits3aTlJijAoMZNPlOl5uSAbZ6Bc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfuamERUbhfWnsD92cViMZSv571tXsq5X0nSCm0RkZgflzDZSG
+	h52C03/N1FghQqNG3A6GreIXmGMJsOeMRhY1B8q1kOze1IwFBGWtiC48PDEonSaJnL0IFPCRwfC
+	M8LhEzgMBVDTfLd86vtnV2B1laDo=
+X-Gm-Gg: ASbGnctGCUlcHvB/jcZNRI8lkSJD2ZdDON8TYormQAk4ETwP5LYvIzCP6/zk4VXf5S3
+	E7PHnRUf8uvZUpbH6SHcuIo+ieEAmzcm0PYvaPlcnCIU76ef+bgsJ
+X-Google-Smtp-Source: AGHT+IF26dMihh6hukLiBM6BcBRAuco5Qv8kuO991mUiF6Hq0oLAOdkHsLf2PGZpI3totzX/jLHlBxduCTYm7m3aX0Y=
+X-Received: by 2002:a05:6602:1495:b0:83b:2b89:a14e with SMTP id
+ ca18e2360f4ac-8499e67a005mr4000811839f.13.1735947825990; Fri, 03 Jan 2025
+ 15:43:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKk8isqpAXLoiXxOP3uAc00M+OM0FaU3Uhnt5R1FnFMD=xGARg@mail.gmail.com>
- <20250103204624.GE3212696@coredump.intra.peff.net>
-In-Reply-To: <20250103204624.GE3212696@coredump.intra.peff.net>
-From: Wink Saville <wink@saville.com>
-Date: Fri, 3 Jan 2025 15:34:58 -0800
-Message-ID: <CAKk8isrz1NQ=3=2aZ3tANymo0eSsCy=r6W5yKgn6gxmOom54CA@mail.gmail.com>
-Subject: Re: [BUGREPORT] git diff-tree --cc SEGFAUTs
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>
+References: <pull.1844.git.1735699989371.gitgitgadget@gmail.com> <Z3ec0768O64j-JeJ@pks.im>
+In-Reply-To: <Z3ec0768O64j-JeJ@pks.im>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 3 Jan 2025 15:43:34 -0800
+Message-ID: <CABPp-BF7QQ02OFOzSaUsSU57yB9SZFRT=KnuDx86ABRAAob4Pw@mail.gmail.com>
+Subject: Re: [PATCH] object-name: fix resolution of object names containing
+ curly braces
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 3, 2025 at 12:46=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+On Fri, Jan 3, 2025 at 12:16=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> On Fri, Jan 03, 2025 at 11:28:47AM -0800, Wink Saville wrote:
->
-> > `git diff-tree --cc` SEGFAUTs after adding trace_printf to diff_tree_co=
-mbined.
->
-> Hmm, is it really a bug in Git if you had to add new code which contains
-> the bug? :)
->
-> > @@ -1595,8 +1597,16 @@ void diff_tree_combined(const struct object_id *=
-oid,
-> >       }
+> On Wed, Jan 01, 2025 at 02:53:09AM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > From: Elijah Newren <newren@gmail.com>
 > >
-> >       /* find out number of surviving paths */
-> > -     for (num_paths =3D 0, p =3D paths; p; p =3D p->next)
-> > +     trace_printf("Wink diff_tree_combined: find number of surviving p=
-aths num_parent=3D%d\n", num_parent);
-> > +     for (num_paths =3D 0, p =3D paths; p; p =3D p->next) {
-> > +             trace_printf("Wink diff_tree_combined: num_paths=3D%d &p=
-=3D%p mode=3D%0x, oid=3D%s path=3D%s\n", num_paths, p, p->mode, oid_to_hex(=
-&p->oid), p->path);
-> > +             for (i =3D 0; i < num_parent; i++) {
-> > +                     trace_printf("Wink diff_tree_combined:  &p->paren=
-t[%d]=3D%p status=3D%c mode=3D%x oid=3D%s path.buf=3D%p contents path.buf=
-=3D%s\n",
-> > +                              i, &p->parent[i], p->parent[i].status, p=
-->parent[i].mode, oid_to_hex(&p->parent[i].oid), p->parent[i].path.buf, p->=
-parent[i].path.buf);
+> > Given a branch name of 'foo{bar', commands like
+> >
+> >     git cat-file -p foo{bar:README.md
+> >
+> > should succeed (assuming that branch had a README.md file, of course).
+> > However, the change in cce91a2caef9 (Change 'master@noon' syntax to
+> > 'master@{noon}'., 2006-05-19) presumed that curly braces would always
+> > come after an '@' and be paired, causing 'foo{bar:README.md' to
+> > entirely miss the ':' and assume there's no object being referenced.
+> > In short, git would report:
+> >
+> >     fatal: Not a valid object name foo{bar:README.md
+> >
+> > Change the parsing to only make the assumption of paired curly braces
+> > immediately after a '@' character appears.
+> >
+> > Add tests for both this and 'foo@@{...}' cases, which an initial versio=
+n
+> > of this patch broke.
+>
+> Curious. I was kind of surprised to see that it's perfectly legal to
+> have branch names with curly braces in them in the first place.
+
+I was surprised too, but apparently they are valid and we have real
+world repositories where people have used such bad names.
+
+> Even
+> something like `foo{bar}` is legal, even though it might be confusing
+> when one knows the above syntax. But sans your finding, this should be
+> fine given that curly braces are only interpreted specially when
+> preceded by '@', and the '@{' sequence is indeed disallowed by
+> `check_refname_compoment()`.
+>
+> > diff --git a/object-name.c b/object-name.c
+> > index c892fbe80aa..e92f26b3256 100644
+> > --- a/object-name.c
+> > +++ b/object-name.c
+> > @@ -2087,12 +2087,14 @@ static enum get_oid_result get_oid_with_context=
+_1(struct repository *repo,
+> >               return -1;
+> >       }
+> >       for (cp =3D name, bracket_depth =3D 0; *cp; cp++) {
+> > -             if (*cp =3D=3D '{')
+> > +             if (*cp =3D=3D '@' && *(cp+1) =3D=3D '{') {
+> > +                     cp++;
+> >                       bracket_depth++;
+> > -             else if (bracket_depth && *cp =3D=3D '}')
+> > +             } else if (bracket_depth && *cp =3D=3D '}') {
+> >                       bracket_depth--;
+> > -             else if (!bracket_depth && *cp =3D=3D ':')
+> > +             } else if (!bracket_depth && *cp =3D=3D ':') {
+> >                       break;
 > > +             }
+> >       }
+> >       if (*cp =3D=3D ':') {
+> >               struct object_id tree_oid;
 >
-> The parent "path" strbufs are only initialized in intersect_paths() if
-> combined_all_paths is set, and if there was an actual path change (a
-> copy or rename).
+> Makes sense. Only the first hunk actually changes anything, the
+> remaining changes are only required to make us stick to our coding
+> style.
 >
-> So you'd probably need something like this:
+> I wonder though: does this have any impact on '<rev>^{<type>}' and other
+> syntaxes where we use '^' instead of '@'?
+
+<type> is pretty limited, so I see no problem there.  However
+<rev>^{/<search text>} is problematic, as Junio pointed out.  I've
+fixed up the patch and added a testcase to cover all the '^{...}'
+cases.
+
+> > diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+> > index d36cd7c0863..252485dac78 100755
+> > --- a/t/t1006-cat-file.sh
+> > +++ b/t/t1006-cat-file.sh
+> > @@ -603,6 +603,23 @@ test_expect_success FUNNYNAMES '--batch-check, -Z =
+with newline in input' '
+> >       test_cmp expect actual
+> >  '
+> >
+> > +test_expect_success FUNNYNAMES 'setup with curly braches in input' '
+> > +     git branch "foo{bar" &&
+> > +     git branch "foo@"
+> > +'
+> > +
+> > +test_expect_success FUNNYNAMES 'object reference with curly brace' '
+> > +     git cat-file -p "foo{bar:hello" >actual &&
+> > +     git cat-file -p HEAD:hello >expect &&
+> > +     test_cmp expect actual
+> > +'
+> > +
+> > +test_expect_success FUNNYNAMES 'object reference with at-sign' '
+> > +     git cat-file -p "foo@@{0}:hello" >actual &&
+> > +     git cat-file -p HEAD:hello >expect &&
+> > +     test_cmp expect actual
+> > +'
 >
-> diff --git a/combine-diff.c b/combine-diff.c
-> index 455bc19087..1e58809c4e 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -1601,8 +1601,11 @@ void diff_tree_combined(const struct object_id *oi=
-d,
->         for (num_paths =3D 0, p =3D paths; p; p =3D p->next) {
->                 trace_printf("Wink diff_tree_combined: num_paths=3D%d &p=
-=3D%p mode=3D%0x, oid=3D%s path=3D%s\n", num_paths, p, p->mode, oid_to_hex(=
-&p->oid), p->path);
->                 for (i =3D 0; i < num_parent; i++) {
-> +                       const char *path =3D rev->combine_all_paths &&
-> +                                          filename_changed(p->parent[i].=
-status) ?
-> +                                          p->parent[i].path.buf : NULL;
->                         trace_printf("Wink diff_tree_combined:  &p->paren=
-t[%d]=3D%p status=3D%c mode=3D%x oid=3D%s path.buf=3D%p contents path.buf=
-=3D%s\n",
-> -                                i, &p->parent[i], p->parent[i].status, p=
-->parent[i].mode, oid_to_hex(&p->parent[i].oid), p->parent[i].path.buf, p->=
-parent[i].path.buf);
-> +                                    i, &p->parent[i], p->parent[i].statu=
-s, p->parent[i].mode, oid_to_hex(&p->parent[i].oid), path, path);
->                 }
->                 num_paths++;
->         }
->
-> -Peff
+> Do these really need the FUNNYNAMES prereq? The prereq seems to only be
+> about embedded quotes, tabs and newlines and is disallowed on MinGW. But
+> I think both '{' and '@' should work alright there, shouldn't they?
 
-TYVM!
+Oh, I misread the failures.  It turns out the FUNNYNAMES prereq fixed
+things in CI on windows for me because the only commit ever created in
+the repository is created by a testcase with a FUNNYNAMES prereq.
+Since the setup for my tests relied on HEAD existing (because I run
+   git branch "foo{bar" HEAD
+in a setup test of my own), the tests were failing.  I didn't look
+closely enough and assumed that command was failing because Windows
+didn't like a branch name with a curly brace, but the real reason it
+was failing was because HEAD didn't exist.
 
-That worked but changed the name and fixed a typo in `combined_all_paths`:
-```
-wink@3900x 25-01-03T23:06:08.344Z:~/data/prgs/forks/git
-(wink-segfault-with-minimal-changes)
-$ git diff
-diff --git a/combine-diff.c b/combine-diff.c
-index 455bc19087..70394c3350 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1601,8 +1601,9 @@ void diff_tree_combined(const struct object_id *oid,
-        for (num_paths =3D 0, p =3D paths; p; p =3D p->next) {
-                trace_printf("Wink diff_tree_combined: num_paths=3D%d
-&p=3D%p mode=3D%0x, oid=3D%s path=3D%s\n", num_paths, p, p->mode,
-oid_to_hex(&p->oid), p->path);
-                for (i =3D 0; i < num_parent; i++) {
-+                       const char *parent_path =3D
-rev->combined_all_paths && filename_changed(p->parent[i].status) ?
-p->parent[i].path.buf : NULL;
-                        trace_printf("Wink diff_tree_combined:
-&p->parent[%d]=3D%p status=3D%c mode=3D%x oid=3D%s path.buf=3D%p contents
-path.buf=3D%s\n",
--                                i, &p->parent[i],
-p->parent[i].status, p->parent[i].mode, oid_to_hex(&p->parent[i].oid),
-p->parent[i].path.buf, p->parent[i].path.buf);
-+                                i, &p->parent[i],
-p->parent[i].status, p->parent[i].mode, oid_to_hex(&p->parent[i].oid),
-parent_path, parent_path);
-                }
-                num_paths++;
-        }
-```
-
-But having to protect yourself is unobvious and especially if it isn't nece=
-ssary
-when using the `fetch_paths_generic`.
-
-In addition, from strbuf.h `buf` is never NULL:
-
-"
-* strbufs have some invariants that are very important to keep in mind:
- *
- *  - The `buf` member is never NULL, so it can be used in any usual C
- *    string operations safely. strbufs _have_ to be initialized either by
- *    `strbuf_init()` or by `=3D STRBUF_INIT` before the invariants, though=
+I'll tweak one of the earlier setup tests to create a commit so HEAD exists=
 .
- *
-"
 
-So I'd say this could be considered a bug in git at least in how
-combine_diff_path
-is being managed. I assume you agree that neither find_paths_generic or
-find_paths_multitree are adhering to at least that strbuf invariant and I w=
-onder
-if the other strbuf invariants are being upheld.
-
-So, should this bug be "closed" and a new one "created"?
-
-Actually, using the mailing list to identify bugs and initially discuss
-them, seems fine. But is there a place where there is a list of current bug=
-s and
-their state?
-
--- wink
+Thanks for pointing this out.
