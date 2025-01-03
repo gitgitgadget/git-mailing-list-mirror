@@ -1,119 +1,102 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84F0185935
-	for <git@vger.kernel.org>; Fri,  3 Jan 2025 20:13:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E1F186A
+	for <git@vger.kernel.org>; Fri,  3 Jan 2025 20:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1735935205; cv=none; b=hPNQp47LjK7TTTT87jkRD/vTo5xQg0qcdN039qP8rXGvAMBrCwmuZbNlwSMaYdTKqZFqh66I679jxfKQxCdbH4PeguyFhIYEe291SFd1SYfG+5LcCEEYCBhzS3D2oBFkweQhRQkYhqfkObd0HIC1tXHZ0AuRV1i5U1Ggm9d4y+M=
+	t=1735935853; cv=none; b=UdPNegpt0kz7z/xNkh7uzKZQ7sKqDUAgp8E4eAZDBvSB8HeaaL2B5hkbjEoDFjDKc5vQ1dRk51Dy4dC1wtGo+IcT+36Aqlbh2VaVuFNltKswyVGq6ftyso9/3GQpC8vflWpGkwdejf8+NhZcqTcGKiVOJzDLiGEilfHcDe19FDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1735935205; c=relaxed/simple;
-	bh=LQODUD+d+ub+YYeEDk41g8vsn+TjCQFBGhJtgY/mi08=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=aLeSNCLSelA827Gk1RdtFgPIvpPBZ7VgL3mD+n9aId1mJ+zZRLk3XGkkEqRWqaPEm+BhIg1ShyZRGQRxKXZuEhdbYdMWDx0Il+mdcPak49KwZolenBG6SMXPkovSeJxSuaU9RYKRgPZRVz6qKwuAS6+zypuGqcyQRWnKsdu6zGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Xsngh8X2; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1735935853; c=relaxed/simple;
+	bh=x2+WJlhMtrdY7PvWZTkyhv5WuCiY0xjThzUa0DpTu70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=flKjNAubS4s/If8gRJTYBWVcWb5RyNTLVLJ/tqcp+q4sF4UnNg3YXnGIo91/TeTX8dReSzLpCXi5NlXPLLnewTClrNPt4o3aD+6whvBBFxEEmfrfS71LHkVIJnGB0eUqvYVz1nD5KZcLJrdHgyO1BbXf0/JgKpRdcGweHm1d3wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EWmbUdcc; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Xsngh8X2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1735935198; x=1736539998; i=l.s.r@web.de;
-	bh=rO7a12SoQ4KG5FRbkOmND0VtG5lgOaTS7aCsnoI13BM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=Xsngh8X2GLwcNnUy5ydPH8O1fPMhm9hpMisV09HTP+rrsTn6ji4nltU91fGrw2Xx
-	 i5PvbkDB97tj30qZ83ZdgKwhZ3AfVhyt9p3R2iKYKqfmDIsUW6jbJf3DDRtfTJkJ6
-	 bjFGqJQ3s80eUiVnKKYkInrrNTB3mIguLQ+CEUN5ahWNPsasTBpSG+BAlgR4NhAOv
-	 /Da5Z8cFTRtRKgwTF+LS+fIDo9nBOzBMuALSP363/1I4WPULvRP8RYqaxpfdTK9XP
-	 zmxWWvN6m3gyzhoSX0kAxkyCuUsTzaEwCcrDfAYIF/7onNf7OP3um7DMMXGZgPhuA
-	 I6BuuSj/KfCtS1cCcw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.20.45]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N0Icn-1tj0wL2ShD-00uAaD; Fri, 03
- Jan 2025 21:13:18 +0100
-Message-ID: <5796785f-134b-487b-90e4-e7aaf78cb912@web.de>
-Date: Fri, 3 Jan 2025 21:13:18 +0100
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EWmbUdcc"
+Received: (qmail 19028 invoked by uid 109); 3 Jan 2025 20:24:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=x2+WJlhMtrdY7PvWZTkyhv5WuCiY0xjThzUa0DpTu70=; b=EWmbUdccY6/sPT4zmPUjiZQro4zJFI74rMowYqc71Rh7V3CTE0bfBiV4xD2cqu53k2fn0PzVNbKm8p+J5Ho85xUtwIOXqePYsTHUsJFsWgkzKPf1PTeZoRoAfY9G5cGli72+xZi3dBFHXLoHj4fdrRLHW9motNcGotgOSZDIW+qgNVlAZqCe26nDIXJhn2qx9dTGpEiZIJ9wuf/XedGdA4fBwYu+R39O+5gwh1gFAVg09g3AubA1r4kW9xxr1l7LE+olpOukzn/B4OVrJmQx5/5Sql/MA3TA2NjNxio90TVEOvYAofsKv1MsAA37xi0xCGy2s4ti+dAuB3HrhvDp5w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 03 Jan 2025 20:24:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4856 invoked by uid 111); 3 Jan 2025 20:24:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 03 Jan 2025 15:24:10 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 3 Jan 2025 15:24:10 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/6] test-lib: simplify leak-log checking
+Message-ID: <20250103202410.GC3212696@coredump.intra.peff.net>
+References: <20250101201226.GA3304465@coredump.intra.peff.net>
+ <20250101201721.GD3305462@coredump.intra.peff.net>
+ <Z3fSmSYoWs-a6afW@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git log date filter bug
-To: Sarah Gastner <gastner2001@protonmail.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <gEmXX5Orp18U4lUPlWeCKoepi91ih8VkreogEnepOIzTOihbf_iNuXqvdhFcgnIpRabnUscWIKf_GH04iI5NeVpdWjbHnPIPa6ZAtkfITk0=@protonmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <gEmXX5Orp18U4lUPlWeCKoepi91ih8VkreogEnepOIzTOihbf_iNuXqvdhFcgnIpRabnUscWIKf_GH04iI5NeVpdWjbHnPIPa6ZAtkfITk0=@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:VbssnYXs623w9+peTwxKuIWkxCBwz8+46PuowsIEXW8zmV1Mi+o
- zPiIvTG3X3T2TOvdpqkmU9VMn7NVJ9DPrdmtLzsutd/vcL/7NIpuyVjBkEJxAZDbUywOaRJ
- DzzuxiEDJfzp5uwdZ22YxWcXKLk7VJazbx2txWo4AbU9Q0Dn/orkVuFEZlUIX8F4DY4NJDM
- w1MU1qajRQQdhSLz83I1g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:KWpNOqCP8Ao=;EsUqo4cJU5kNpqM9UjV6lz18NKT
- Jnxa98UdgTr1H+hhkqwKKFrdDhAe3L1e/EIsGCG4bI6X+f4YXVsNPS1tJFar43C+L3oatRJuh
- cqRbRrfcw/GQWLNn5jwnT9aSWw+GfQ0VmObzRRX8E87E4NfZBLMkkJEufSYsZW7/rcvAls7cv
- YV/vXeSlGOd1S6R2uDy/xYI9gHEyCGTki/JcZ+pNNAXIAG4avh5cbyejHzJv1IanTncc2RBem
- y+3Ygji90uQkFZbwTzYFvRsonz7qjgjvmRCHY1qkUnJQ9EQtbemtJycCE0Pf9tY3ByGRzWYor
- eC9oB3s80iM6X8QpnmLVOJGQW4hcL3VN0FlFxvLRm+pdggfQ0cUhrdyPBG1Ofv+45j7H23xcd
- wwc3U9J/ydSRLof/kLL/iaB43Ov/NHqRcSoDORVYvU81jq/tgzB0Q2YXNiLyWJz3+UF9Evue7
- 9C9+prpsnnSNLB7M5FNiLcHb8T8HvecRckgPX5gLbnZ8bfiKhsa8LtYORGLL+ID7WBmu1EbDW
- h7sV5uNxnf7Fs/LPw5rPiSMOvJA7penp6dpMcwrNOWlynO+EVNpzilkDyazf7eWZs0Sd2TrZC
- +rCItuNfOKONIp0+el0QUjkNdP7vG1dEAtA2SACKO0Y7OMDwzr/SWxW2Z2/bb7ZcaoN8JzMSI
- qqX8yHJugvf88EblG00dPD0XhDzMlPdtz12nuBuRSV+Fq0t4wBQWVi2LzOR+NBh9OF3+LUtT7
- LNimzpM0W+48Qtbd4HNo0V5qZDJpP0v+Kd+7yoQrUD+Wv47lTnu1DQ/SSc4zsA5ExtIvUFtSV
- TeA4u8xy4Vlgree2QkEu/anUxAxjUtAIt160Xp6R6A6LwhytBLIGiAa0tPEAxhv4hxBvDTQD0
- J6y2If6/tIq7xd/FBSPidCWHWlEcNlZVb2sadNQ3fR3QgwLUqRJr3owt1XeEvlMQRYpYfWI8M
- oS24UKzZEHvLd0bOYB7kJDXyBwL9zO6IXfxI68ssXGKXv5oslAVvD1iPk+HOKyHP8Njd69zRq
- cpGrfIXWrLLagQECYwqLkjlsBxXJeK/ccC9S5uwyowUn9FqQaiKaIqUMrf0Jegl/7vnD63brs
- OVkpEPMQo=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z3fSmSYoWs-a6afW@pks.im>
 
-Am 02.01.25 um 16:15 schrieb Sarah Gastner:
-> I encountered some weird behaviour that I think is a bug. I'll paste
-> the bug report below and also attach it to this email.
-The following command shows the offending commit along with its parent,
-child and grandchild; the format shows commit time, author time, commit
-hash and parent commit hash:
+On Fri, Jan 03, 2025 at 01:05:45PM +0100, Patrick Steinhardt wrote:
 
-$ git log --format=3D"%ci %ai %h %p" --max-count=3D4 82eb24156a1
-2023-03-08 15:01:06 -0800 2023-03-08 15:01:06 -0800 82eb24156a1 4346c5e5e2=
-9
-2023-03-07 15:51:09 -0800 2023-03-07 15:51:09 -0800 4346c5e5e29 501976cc34=
-e
-2023-03-13 14:40:47 -0700 2023-03-13 14:40:47 -0700 501976cc34e feb18b3f5f=
-9
-2023-03-07 15:49:19 -0800 2023-03-07 15:49:19 -0800 feb18b3f5f9 54283a1d38=
-3
+> On Wed, Jan 01, 2025 at 03:17:21PM -0500, Jeff King wrote:
+> > @@ -1181,8 +1170,14 @@ test_atexit_handler () {
+> >  }
+> >  
+> >  check_test_results_san_file_empty_ () {
+> > -	test -z "$TEST_RESULTS_SAN_FILE" ||
+> > -	test "$(nr_san_dir_leaks_)" = 0
+> > +	test -z "$TEST_RESULTS_SAN_FILE" && return 0
+> > +
+> > +	# stderr piped to /dev/null because the directory may have
+> > +	# been "rmdir"'d already.
+> > +	! find "$TEST_RESULTS_SAN_DIR" \
+> > +		-type f \
+> > +		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
+> > +	xargs grep -qv "Unable to get registers from thread"
+> 
+> Can't we use `-exec grep -qv "Unable to get registers from thread" {}
+> \+` instead of using xargs? Or is that unportable? Might make it a bit
+> easier to reason about the `!` in the presence of a pipe.
 
-So 501976cc34e was ostensibly committed six days after its child commit
-4346c5e5e29, which would require time travel capabilities.  Or, more
-likely, someone edited the commit history, but did not update the
-commit times, possibly with git rebase --committer-date-is-author-date.
+I don't think that saves us from negating, though. The "grep" will tell
+us if it matched any "real" lines, but we want to report that we found
+no real lines.
 
-git log assumes that commit dates are chronological and stops
-traversing the history if it encounters a commit with a timestamp
-older than the time given with --after.  That is a reasonable
-assumption usually.
+Plus I don't think "find" propagates the exit code from -exec anyway. I
+think you can check the exit status with more find logic, so you'd then
+use a conditional -print for each file like:
 
-Not sure what git log could do better here.  It could add some slack to
-the specified time and look deeper than actually asked for to try and
-catch such time travel artifacts, but how much exactly?  History can be
-arbitrarily deep and history editing can move commits arbitrarily far.
+  find ... \
+    -exec grep -qv "Unable to get registers from thread" \{} \; \
+    -print
 
-Should it go all the way down to the root commits to be safe?  That's
-expensive.  Should out-of-order commits be put on some kind of special
-list for special treatment?  Sounds complicated.  The current deal of:
-"You want to mess up commit dates, then tell your collaborators to add
-some slack to commit date options" is not ideal, but fair in a  way.
+and you have to check whether the output is empty. The easiest way to do
+that is with another grep! Which also needs negated. ;)
 
-Perhaps someone has a better idea?
+I think if we really want to drop the negation, we'd be best to flip the
+function's return, like:
 
-Ren=C3=A9
+  have_leaks() {
+	# not leak-checking
+	test -z "$TEST_RESULTS_SAN_FILE" && return 1
 
+	find "$TEST_RESULTS_SAN_DIR" \
+		-type f \
+		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
+	xargs grep ^DEDUP_TOKEN |
+	grep -qv sanitizer::GetThreadStackTopAndBottom
+  }
+
+And then you could switch the initial "grep" to -exec if you want, but
+there's no negation to get rid of, so it is only a preference of -exec
+versus xargs.
+
+-Peff
