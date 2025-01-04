@@ -1,130 +1,157 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE45CA932
-	for <git@vger.kernel.org>; Sat,  4 Jan 2025 15:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127CE28EC
+	for <git@vger.kernel.org>; Sat,  4 Jan 2025 17:19:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736006141; cv=none; b=RSYC182EbW8Pozkux1IsZfjtiIoLYL5Nvsw9EUfo1tTTDnL9/OmPvLHV3Jz77JyUNQ//26/XH6HIOumtugl3RXQw5tJUdmNPRDWJEDu+EWjCpkMHRuJakIOLkp8cFrEwgpz9Nbq9iXXTfKxV6doHlghu9FxaeglxYZ08zg0Wcxk=
+	t=1736011159; cv=none; b=MUuywQTpSVRYLq92a6mm9TjeJok0RpJmr4Vx915p+N2UOhAnrANUaflDbEK1dmpODnMHXoUd98ymeuWOPDVmoXN7FdUNFk8E1vW2OHahbFiebc1wsIksDTvHVAg+EhMLk4jHRqOrJIMbfRxx4oU/jtiGiC/qSlO7WJzURF4TC5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736006141; c=relaxed/simple;
-	bh=8druj0QOYrybLKTIqOwusDRnDodnUJG6eGL0bgG/3LM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gvMXLntBwE72puHECg4tiQgxjdUP/GfEvxPP2SY5BQXWgnDu9GFfpgA8CnJ9Z7mm/akfPqaEECmLC/shlwkGkBEAcILZo5/8pHASelCQyU5s1YW7eNvSQRD08Cv3b1k6FwRLgZtZIh+pRaw3UoJrDVqyGMZKvu+Xr5+hC2u8be4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ad4oTpr4; arc=none smtp.client-ip=209.85.166.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736011159; c=relaxed/simple;
+	bh=3kNEY71WV42w37Dqs9+cdYK7hsvpjl0Odo/hzJE4t8U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t+G+ZmIrE4u+lV8bRVjkYo4ynjlxJdgbZrOVbHtFVU0NX0EpWQJYMjv19Du/rgHdzPhPkvAqkYfx2vGqlzJCm4+5FMQid/phdv/PcHtI3r2B6pBObFOsh7EPmQNW6brju3bh1kYXO/hetopTLRIGLAVx0wzh6jfnfkgXw0vnCQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IRkBFHMf; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ad4oTpr4"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-8442ec2adc7so487817639f.2
-        for <git@vger.kernel.org>; Sat, 04 Jan 2025 07:55:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736006139; x=1736610939; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lHhl/pNY5uBtQpPuo3Y86bAn0f49YfSH2Kn2oWKTIFM=;
-        b=Ad4oTpr4n2xpnp5sx2jE10+Wb5oL7IBYWhXXuOy+PGveT7MjAovNtAYRgRYTglP+ST
-         VNPsvW3zSQuLmxmDhS9Ry1S8LwvXN5zPS1sU3yEqZKC7xsFHexjx3eziqembD/iTItYA
-         bzjXfmWpC3xjORspIdThTiWofWpyhY/M629iZ14nk+9Hv3BsNnXEN7V6MMst57N4fhns
-         9PWbq13itcXhpv9Ly07gPYEcyFAqPClS+est5E/KVm9Fl6jQaY6PhopsGa3lKIfe0RBP
-         kRcTQFs701W4m/dutVPuipltleZt38S8IutBBpRjb6wRkoggY6RwQ2usmbmvRhFWz+NX
-         5mzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736006139; x=1736610939;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lHhl/pNY5uBtQpPuo3Y86bAn0f49YfSH2Kn2oWKTIFM=;
-        b=EIyk/AzBIN/b/dNrQS+iss+xcHpQOJEc4KzTJEYYHHTZXnnjk6vtZAeWJCvzfd1Z7q
-         FbFzB+hbnBAiQzyiyCm+rCuZp89EQUQLjvw0XnYQlSJ9CD6/OsDqtjb2xNe9R5BYxWIJ
-         HYYRR2nOj9vuZsShXGRngPI94vsTTshgdDMq5iP2qIWTMdDJLsl+vBEsbMKWZL+6jU0O
-         c7P+iPLusCJn+D+CG11N/Y63NYG5gaE1iyswQWNF3w5YaZdxJI5CicwzwvGonUYbgOAK
-         hPRl1+kYBI2n02w0gmI56RyFbMT5xcMGO5wlIoXKCEQXs2wiAy/F+M/6O0vUmwy8K35l
-         xofw==
-X-Forwarded-Encrypted: i=1; AJvYcCU82zrVuMmzIzya8A02VInyMibVqzSZkmFAYumg3MM6oI8GRLZXHfmQ5y7e7uZxj1kZTxM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvUPQh+JzsioUsjiTIC4c48bufuZQTORuAKIPWuyGlRZ1JOnSd
-	qL8yD8u2VTtTrXBKxDN2/9FCVlLCMPFjf51npVEdNOLe4vkynXyZgNf+AQi16LwneacH95RWstS
-	dTxSYktnb0/e8e9tttdMkSxJDYqY=
-X-Gm-Gg: ASbGncuszrdJ3hYWWWGAXwmvoeWKo3tLvJDxtUworBJG8E5R9VUZIti/8zR3gkOW1Aj
-	d5cqY3VwMommJcKmjB5mImO1uxhT3Ot1T5OM5fSeCwSoRWQxB9byn
-X-Google-Smtp-Source: AGHT+IHbmlo8jnncKJF2HFW5g8/5Srit85XVieoIiQec/QiY8JKmQbWzvxcRuO+8ssjBcy5O96mxgtkN0wt6gQQn01Q=
-X-Received: by 2002:a05:6e02:1d02:b0:3a6:b445:dc92 with SMTP id
- e9e14a558f8ab-3c2d2568b0emr434191915ab.10.1736006138826; Sat, 04 Jan 2025
- 07:55:38 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IRkBFHMf"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1736010790;
+	bh=3kNEY71WV42w37Dqs9+cdYK7hsvpjl0Odo/hzJE4t8U=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=IRkBFHMfdjdmH6v3gx0ZNs3X1z27GEWLmUvBtI3tQSuIWHVJEUitBxhpCdV1QsCuf
+	 eH6fOeZn+tXwIXiTSBFcHmiFAlQmIbvGOOF0y5ZkPmPVKvgpnuj2CkmGXHCGFlU3UG
+	 7xHKJnmbn0frAmK3Afnb30zKlmtOgne2LzSsTDgxQuI/CFljDzZEl6rwi+27uxvN9e
+	 wiXgZ2OyNZDFvhJ9AJJA0Ido9Bd8Ix550M8+cYkM0rwT9o55esDUnATviGnAxvaIMJ
+	 us8Lu2YYBCsbUKZJx1OeeQRRx7j+n2SOX0oCzmHdeGh4ekrQbnp1iAQzWNx/YUQQaH
+	 GJqSmKhEFGmgm46cJHWt24XHovN0XQ/ARxpNk9Zj1XS9IyCpAYdp0bddhb3d3yB4P5
+	 lOnJOelj6Gn3YhmwpJqi+rCqcmJjbD8hWZkZD6zaSBeso+EG3e6LO6omnHV92EJjIS
+	 on1lxrt99N3LfHbTjtRb0Sld9VkjkPrto+wYiE/qO5VvY5W9ita
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 83406209B7;
+	Sat,  4 Jan 2025 17:13:10 +0000 (UTC)
+Date: Sat, 4 Jan 2025 17:13:09 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Youtian WANG <wangyoutian@msn.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Full absolute path in a commit makes checkout fail
+Message-ID: <Z3lsJZt-9N9IWoe-@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Youtian WANG <wangyoutian@msn.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <TYCPR01MB1173678128DCC128099726865AB162@TYCPR01MB11736.jpnprd01.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1844.git.1735699989371.gitgitgadget@gmail.com>
- <pull.1844.v2.git.1735949870.gitgitgadget@gmail.com> <xmqqed1i4pga.fsf@gitster.g>
-In-Reply-To: <xmqqed1i4pga.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 4 Jan 2025 07:55:27 -0800
-Message-ID: <CABPp-BEzKyXY7YZOzedwQzAFqLiE_9oWsD=GByiDhi7go2aXNw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] object-name: fix resolution of object names
- containing curly braces
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QMKAb3UraYtFHjYw"
+Content-Disposition: inline
+In-Reply-To: <TYCPR01MB1173678128DCC128099726865AB162@TYCPR01MB11736.jpnprd01.prod.outlook.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--QMKAb3UraYtFHjYw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 4, 2025 at 6:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> >  * Added a second patch for another bug discovered by the same reporter=
-,
-> >    where branch:path/to/file/named/major-gaffed is interpreted as a req=
-uest
-> >    for a commit (namely affed) rather than a blob. (At least, assuming
-> >    commit affed exists)
-> >
-> > The second patch has some backward compatibility concerns. People used =
-to be
-> > able to do e.g. git show ${garbage}-g${hash}. I tightened it to
-> > ${valid_refname}-${number}-g${hash}, but do we want to allow e.g.
-> > ${valid_refname}-g${hash} (allowing the count to be omitted) or maybe e=
-ven
-> > allow a subset of invalid refnames?
->
-> My take on it is that it is an absolute no-no if we require that
-> ${valid_refname} exists locally, and it is still iffy if we checked
-> ${valid_refname} with check_format() (because the definition of
-> validity can change over time, and we would not know the rules that
-> were valid back when the reference to the commit was written).
+On 2025-01-04 at 14:21:46, Youtian WANG wrote:
+> In a commit of a public repo (which might still require a sign in using g=
+ithub account, etc, due to possibly the service maintainer's configuration):
+>=20
+> https://gitee.com/whyyouteach/erg4eye/commit/f5e2c1ea25aaee24868a1790cf59=
+ccd0a8288c3c
+>=20
+> , a file of full absolute path (including the volume, also known as drive=
+ letter, in windows operating system) shows up:
+>=20
+> C:\erg4eye_3\xiangxun23080202=C2=A0
+>=20
+> ; I'm not sure how that path gets into the repo, as this is a repo for a =
+pack of students. Maybe it's due to a 3rd party tool, or a direct upload vi=
+a the web page of the git service.  I noticed that in:
+>=20
+> https://github.com/gitkraken/vscode-gitlens/issues/932
+>=20
+> , some similar issues appeared involving a vsCode extension for git.
+>=20
+> I cannot checkout outWith the above described commit; the error message i=
+s:
+>=20
+> error: invalid path 'C:\erg4eye_3\xiangxun23080202'
+>=20
+> ;
+>=20
+> My question is:
+> 1) Per git design, such full absolute is not allowed as it might be out o=
+f repo, right?
 
-Fair enough.  However...
+This is not a full absolute path as Git stores it.  Git uses the
+standard Unix slash character, and only that character, as the path
+separator internally, unless you're on Windows.  So this is a single
+file in the top-level of the repository called
+`C:\erg4eye_3\xiangxun23080202`.
 
-> Otherwise a tightened rule would make "${garbage}-g${hash}" less
-> useful to copy-and-paste from a text file to command line.
->
-> In general what would we do if a string can be interpreted in
-> multiple ways in _different_ parts of the object-name codepaths.  We
-> all know that "affed" would trigger the "ambiguous object name"
-> error if there are more than one object whose object name begins
-> with "affed", but if "${garbage}-gaffed" can be interpreted as the
-> name of an object whose object name begins with "affed" and also can
-> be interpreted as the name of another object that sits at a path
-> that ends with "-gaffed" in some tree object, regardless of how the
-> leading part "${garbage}" looks like, it would be desirable if we
-> declared such a string as "ambiguous" the same way.
+I'm on Linux, and I did this to test, and it works just fine:
 
-How would that be desirable?  There's no possible way to disambiguate.
-While abbreviated revisions can just be modified to be less
-abbreviated, paths cannot be spelled any other way.  How would you
-spell
-      master:path/to/who-gabbed
-in a "less ambiguous" way to differentiate it from commit abbed?  As
-far as I can tell, this proposal just leaves the user stuck with an
-error with no way to get the path they want.
+----
+$ git init test-repo
+Initialized empty Git repository in /tmp/user/1000/test-repo/.git/
+$ cd test-repo
+$ touch 'C:\erg4eye_3\xiangxun23080202'
+$ git add C:\\erg4eye_3\\xiangxun23080202
+$ git commit -m +
+[dev (root-commit) 0d1da07] +
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 "C:\\erg4eye_3\\xiangxun23080202"
+----
 
-If you don't like check_format() being called on the leading part of
-the string, can we at least enforce that there is no ':', so that we
-can successfully request explicit paths of given revisions and know
-that we'll get them?  (That'd disallow e.g. next^{/doc:}-12-gabbed,
-but that clearly was never a valid describe output anyway.)
+Now, this clearly won't work on Windows, as you pointed out, but nor
+will a file called `aux.h`, and we wouldn't want to exclude that from
+working (Linux contains such a file, for instance).  Windows contains a
+variety of filenames that are unacceptable for various reasons and users
+not using Windows shouldn't be negatively affected because of its
+less capable handling of filenames.
+
+I assume you're on Windows, so you could try using WSL to verify that it
+works just fine on Linux, provided you do it on a native Linux volume
+(and not on a Windows one).
+
+> 2) If it's done by a 3rd party tool which might be buggy, git.exe or the =
+git server would bury the problem in the repo history as long as it's not c=
+hecked out. As a git hosting service wouldnot bother to check it out, hence=
+ it will not be an issue with the server. But once it's cloned and that com=
+mit is checked out, an issue would emerge.  Is this understanding correct?
+
+Again, I don't think "buggy" is the right word, but it will remain
+hidden until you attempt to check it out _on a Windows system_.  Some
+hosting platforms contain checks for paths that are problematic on
+various OSes, such as pairs of files that differ only in case, so it may
+be caught on push to such a platform as well.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--QMKAb3UraYtFHjYw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.45 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ3lsJQAKCRB8DEliiIei
+gR7xAQCMzsNCF91wRvN2fo0/QwocHqMi+gXJqWulWsr5GuGLjgEArHJuz8xWJyeY
+t9HTovdBD4lcloTQGgsagTkq+oQZnAo=
+=rf7l
+-----END PGP SIGNATURE-----
+
+--QMKAb3UraYtFHjYw--
