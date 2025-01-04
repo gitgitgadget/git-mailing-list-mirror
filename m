@@ -1,157 +1,116 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127CE28EC
-	for <git@vger.kernel.org>; Sat,  4 Jan 2025 17:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA4F36C
+	for <git@vger.kernel.org>; Sat,  4 Jan 2025 17:26:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736011159; cv=none; b=MUuywQTpSVRYLq92a6mm9TjeJok0RpJmr4Vx915p+N2UOhAnrANUaflDbEK1dmpODnMHXoUd98ymeuWOPDVmoXN7FdUNFk8E1vW2OHahbFiebc1wsIksDTvHVAg+EhMLk4jHRqOrJIMbfRxx4oU/jtiGiC/qSlO7WJzURF4TC5A=
+	t=1736011611; cv=none; b=VV7RVs7zZjLMJFl8Pgsc20XmK/MPvHdbetNC6n0uUdiVmnDidu0aCrgP+GwpTkdFEAL6i3qcCcN2dIsqpO/Vp05JNjKrPFKmQqy67jWExaw9WKIUaeJng/10fE60epXntKjJlu9PFhjOjJJboUPC7jVNvaupVrVi+sLBnC1cDSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736011159; c=relaxed/simple;
-	bh=3kNEY71WV42w37Dqs9+cdYK7hsvpjl0Odo/hzJE4t8U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t+G+ZmIrE4u+lV8bRVjkYo4ynjlxJdgbZrOVbHtFVU0NX0EpWQJYMjv19Du/rgHdzPhPkvAqkYfx2vGqlzJCm4+5FMQid/phdv/PcHtI3r2B6pBObFOsh7EPmQNW6brju3bh1kYXO/hetopTLRIGLAVx0wzh6jfnfkgXw0vnCQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IRkBFHMf; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1736011611; c=relaxed/simple;
+	bh=r9Cj+CUbLxXS7/pajDbLbXK0C+mxUDiQZBidrph7l2Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cBmyPxIlhs/9uzN5ZdnRAOYNIedwqFQoipn1WcXSLDPJJX9ibTZyVMF89BNuFKw3xsFGjimV29/W7dDzooDQJpmE63rTw9CnYDxUSf9Y3zX/+dQYwGqTpXdisPoBz4bwj0wDX6NNtNF882nAS42IweCnh2ma65As5X523LhdDss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oEkeXJum; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yaf7UHSv; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IRkBFHMf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736010790;
-	bh=3kNEY71WV42w37Dqs9+cdYK7hsvpjl0Odo/hzJE4t8U=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=IRkBFHMfdjdmH6v3gx0ZNs3X1z27GEWLmUvBtI3tQSuIWHVJEUitBxhpCdV1QsCuf
-	 eH6fOeZn+tXwIXiTSBFcHmiFAlQmIbvGOOF0y5ZkPmPVKvgpnuj2CkmGXHCGFlU3UG
-	 7xHKJnmbn0frAmK3Afnb30zKlmtOgne2LzSsTDgxQuI/CFljDzZEl6rwi+27uxvN9e
-	 wiXgZ2OyNZDFvhJ9AJJA0Ido9Bd8Ix550M8+cYkM0rwT9o55esDUnATviGnAxvaIMJ
-	 us8Lu2YYBCsbUKZJx1OeeQRRx7j+n2SOX0oCzmHdeGh4ekrQbnp1iAQzWNx/YUQQaH
-	 GJqSmKhEFGmgm46cJHWt24XHovN0XQ/ARxpNk9Zj1XS9IyCpAYdp0bddhb3d3yB4P5
-	 lOnJOelj6Gn3YhmwpJqi+rCqcmJjbD8hWZkZD6zaSBeso+EG3e6LO6omnHV92EJjIS
-	 on1lxrt99N3LfHbTjtRb0Sld9VkjkPrto+wYiE/qO5VvY5W9ita
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 83406209B7;
-	Sat,  4 Jan 2025 17:13:10 +0000 (UTC)
-Date: Sat, 4 Jan 2025 17:13:09 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Youtian WANG <wangyoutian@msn.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Full absolute path in a commit makes checkout fail
-Message-ID: <Z3lsJZt-9N9IWoe-@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Youtian WANG <wangyoutian@msn.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <TYCPR01MB1173678128DCC128099726865AB162@TYCPR01MB11736.jpnprd01.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oEkeXJum";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yaf7UHSv"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D113B11400EA;
+	Sat,  4 Jan 2025 12:26:47 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Sat, 04 Jan 2025 12:26:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736011607; x=1736098007; bh=d5iwIFQ886
+	yR1LlX90SArCxwKq4H6/lTY3ryzuxn7xg=; b=oEkeXJumhuLAyXt7fUhqeqh4Gh
+	ZEiCokwsk+1lvXcLUX4BKDbdBtMIcHKMAnaq5xsaZqueazC00u0Uv7kcqJY/oaHX
+	MEfloe19zTwZdigWgldfUMGfjS0499fx2AN3irdPybLyvLyAZwyDi2efwgVk6q6U
+	5O/LNDFWgoJdIbBzUr85ELoGC4v+f6oeYb5JJUDsSG590wfMQaXpDX3o7zTVnn6v
+	m/Nr90dwoKtlnYqbpvxOwOQas2zmvlXjLl4CZpK/ZSLeOJfQyOp+IgLCdmj1D6i9
+	q1e2aS5g8r76OTi27p/512YOnNnXsUzYPi6EpnEQf9PNZRaLgD8rCygk6oIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736011607; x=1736098007; bh=d5iwIFQ886yR1LlX90SArCxwKq4H6/lTY3r
+	yzuxn7xg=; b=Yaf7UHSv3XPsiNoqrfPveBwYZOwWfFScfBjGS3czftQKmMUKkun
+	Zt+mvIjldRbV5Za2EU2XzlQaAm5zfHaZVKzF4b78kUnTfmX4Oxq+HZUiuB1i4/mM
+	IFgNwSrJL0EAdMka0nnVjXjJG07qE1A36Em/Ntc4rP0KAwd5k7O6XSU2AXACp1wn
+	EwZodzmtvNXPJvRa6DgA0XDBt5hN8OXLzpYxMuTuCBJnjN04NFVzYAaY5g/lAfgv
+	MrGJygZpAQ5WlzhKswqhkOWzM3I/eb9D9IoI7GfJDG6VpwzdciRwkkxwgpNK8c4K
+	RRAs/AeTcVbQ7t71TbTUayfJK3VweTX6fBw==
+X-ME-Sender: <xms:V295Z5SVdNuLtCIHZm4n8JjP7CwI87Z8zla3dM3PjvxpSEjuI17bkg>
+    <xme:V295ZyzEbLNJCf7Pa71vv_oy7goByNUNNv_H1oB5C7ePDfa_iCzuB0xKm6tdA9jhU
+    LUvDFWbKFw6ZwAb1g>
+X-ME-Received: <xmr:V295Z-1mfxWLejbLFaBEQSi5f4-OhJhxVzF9s0TXj2rL8pVDEeyl5zu_HA_wfab96e-_8_OLp5JdI8s8-oN-wf2PSatDwcfWs3Tt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefiedguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrh
+    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:V295ZxAtF0vfjm-1VXPKuMOUj7nLd_1PUZMCQ4oa1SX1Rcfu_ovUbg>
+    <xmx:V295ZyhUXnIo5dF8k8RjCgPuBqAZTBFr9qnc22J7kpla_X6mzCaZ2Q>
+    <xmx:V295Z1phjDcIj4up8dzuS7Np61crsqh8UTjB2mNp11rvnUjitnzIVA>
+    <xmx:V295Z9jg0QMnh6WdMsBvaheVe4pAqDxJd94lUmGii9rLNmROejlifg>
+    <xmx:V295Z0YRJIlcXzGf5huYlccW3i4KCf9Xmk5FkmgVQikp1cseMg5vDuB7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 4 Jan 2025 12:26:47 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [PATCH v2 1/2] object-name: fix resolution of object names
+ containing curly braces
+In-Reply-To: <13f68bebe90549ba19452f12abb6fea41c2517fb.1735949870.git.gitgitgadget@gmail.com>
+	(Elijah Newren via GitGitGadget's message of "Sat, 04 Jan 2025
+	00:17:49 +0000")
+References: <pull.1844.git.1735699989371.gitgitgadget@gmail.com>
+	<pull.1844.v2.git.1735949870.gitgitgadget@gmail.com>
+	<13f68bebe90549ba19452f12abb6fea41c2517fb.1735949870.git.gitgitgadget@gmail.com>
+Date: Sat, 04 Jan 2025 09:26:45 -0800
+Message-ID: <xmqq34hy4hii.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QMKAb3UraYtFHjYw"
-Content-Disposition: inline
-In-Reply-To: <TYCPR01MB1173678128DCC128099726865AB162@TYCPR01MB11736.jpnprd01.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---QMKAb3UraYtFHjYw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>  	for (cp = name, bracket_depth = 0; *cp; cp++) {
+> -		if (*cp == '{')
+> +		if (*(cp+1) == '{' && (*cp == '@' || *cp == '^')) {
+> +			cp++;
+>  			bracket_depth++;
 
-On 2025-01-04 at 14:21:46, Youtian WANG wrote:
-> In a commit of a public repo (which might still require a sign in using g=
-ithub account, etc, due to possibly the service maintainer's configuration):
->=20
-> https://gitee.com/whyyouteach/erg4eye/commit/f5e2c1ea25aaee24868a1790cf59=
-ccd0a8288c3c
->=20
-> , a file of full absolute path (including the volume, also known as drive=
- letter, in windows operating system) shows up:
->=20
-> C:\erg4eye_3\xiangxun23080202=C2=A0
->=20
-> ; I'm not sure how that path gets into the repo, as this is a repo for a =
-pack of students. Maybe it's due to a 3rd party tool, or a direct upload vi=
-a the web page of the git service.  I noticed that in:
->=20
-> https://github.com/gitkraken/vscode-gitlens/issues/932
->=20
-> , some similar issues appeared involving a vsCode extension for git.
->=20
-> I cannot checkout outWith the above described commit; the error message i=
-s:
->=20
-> error: invalid path 'C:\erg4eye_3\xiangxun23080202'
->=20
-> ;
->=20
-> My question is:
-> 1) Per git design, such full absolute is not allowed as it might be out o=
-f repo, right?
+Checking cp[1] before even knowing if cp[0] is the end of the string
+(hence cp[1] is an out of bounds access) smells fishy.  If it were
+something like ...
 
-This is not a full absolute path as Git stores it.  Git uses the
-standard Unix slash character, and only that character, as the path
-separator internally, unless you're on Windows.  So this is a single
-file in the top-level of the repository called
-`C:\erg4eye_3\xiangxun23080202`.
+	if (cp[0] && strchr("@^", cp[0]) && cp[1] == '{')
 
-I'm on Linux, and I did this to test, and it works just fine:
+... it may be a bit more palatable, perhaps?  At least writing it
+this way we can easily scale when we find the third character we
+need to special case, hopefully, but again, I do prefer if we can
+find a solution that does not have such an intimate knowledge about
+"@^", which I just failed to do here X-<.
 
-----
-$ git init test-repo
-Initialized empty Git repository in /tmp/user/1000/test-repo/.git/
-$ cd test-repo
-$ touch 'C:\erg4eye_3\xiangxun23080202'
-$ git add C:\\erg4eye_3\\xiangxun23080202
-$ git commit -m +
-[dev (root-commit) 0d1da07] +
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 "C:\\erg4eye_3\\xiangxun23080202"
-----
+Thanks.
 
-Now, this clearly won't work on Windows, as you pointed out, but nor
-will a file called `aux.h`, and we wouldn't want to exclude that from
-working (Linux contains such a file, for instance).  Windows contains a
-variety of filenames that are unacceptable for various reasons and users
-not using Windows shouldn't be negatively affected because of its
-less capable handling of filenames.
-
-I assume you're on Windows, so you could try using WSL to verify that it
-works just fine on Linux, provided you do it on a native Linux volume
-(and not on a Windows one).
-
-> 2) If it's done by a 3rd party tool which might be buggy, git.exe or the =
-git server would bury the problem in the repo history as long as it's not c=
-hecked out. As a git hosting service wouldnot bother to check it out, hence=
- it will not be an issue with the server. But once it's cloned and that com=
-mit is checked out, an issue would emerge.  Is this understanding correct?
-
-Again, I don't think "buggy" is the right word, but it will remain
-hidden until you attempt to check it out _on a Windows system_.  Some
-hosting platforms contain checks for paths that are problematic on
-various OSes, such as pairs of files that differ only in case, so it may
-be caught on push to such a platform as well.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---QMKAb3UraYtFHjYw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.45 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ3lsJQAKCRB8DEliiIei
-gR7xAQCMzsNCF91wRvN2fo0/QwocHqMi+gXJqWulWsr5GuGLjgEArHJuz8xWJyeY
-t9HTovdBD4lcloTQGgsagTkq+oQZnAo=
-=rf7l
------END PGP SIGNATURE-----
-
---QMKAb3UraYtFHjYw--
