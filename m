@@ -1,66 +1,68 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59484849C
-	for <git@vger.kernel.org>; Sun,  5 Jan 2025 13:47:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F90849C
+	for <git@vger.kernel.org>; Sun,  5 Jan 2025 13:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736084826; cv=none; b=dTRU1XQuGhhQl8eRsAPIxTYO46jTwZVthSEOCCWXq2C/6xVZ4mIYe+mUTYH3fBs/vADlcxlFYOV78eohMmy0v1J1CrsqedJNY1HSWCIyJjHdeFieNvsjSyuhmSAdA5IZFkmNwltsvRyELw3TPagHcyx+v3ShjWYOubWrpuXG4iw=
+	t=1736084957; cv=none; b=JpJ0dVMa82XS6YpURvb+wcw+ZRKe8hA3zirplwBhOEnZ4uzxQsCfCNZUcrFcqVcFWgKYGJmA8ocAbd73AWM3oBAPnk8JXfHf9+HACKS+wdOJRhpl7wYGoK+9/G1Zv74pGjeSpir5TVKMbgsf0OmKp5nVgVJ5UkO7O7d6xDR2aDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736084826; c=relaxed/simple;
-	bh=8dYz6wVzJaiaKXMaNmIVDZ+hqHY53Ryf1Ql1oj/EDrY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=TUFX6gq2J2MWleRo7PjAciLeGa9IVATDOQIwaShtbdfNC8XcrTg5i12RLkdMho6ItxFJM/p3AqbeeKwKRjIjMRWVthF9DpUn9mpu/cduWEY8HhqrpwV1a+o6R+TMQBT69LRRM6yvZWKFamnh68qtxbnbvO8afGAnm0uLOXYByYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hr9knu/l; arc=none smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1736084957; c=relaxed/simple;
+	bh=WAWnmXpVNRml7p2qjdvfC6Ocv2EN15hGeSPwmqahlQk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ja5kP74cMGtB84MonZX/orqzBXyczCov3iZDiYv/INopyWnl3EtitZLPVmFYSuzR8V13v2WgpFCS+xwFzwEZAzylt+QD+m8Z7kFfYH0mt+FtiCjfNVmVX91erYLbLj5WdkgtuuRHbFeyjfBK+rZFLnb1J6OIZz1+1TS6BmoAMOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MdcxdozM; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hr9knu/l"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2ee989553c1so19244698a91.3
-        for <git@vger.kernel.org>; Sun, 05 Jan 2025 05:47:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MdcxdozM"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2ef6c56032eso14281425a91.2
+        for <git@vger.kernel.org>; Sun, 05 Jan 2025 05:49:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736084824; x=1736689624; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zHJT304b51+yBeiv1K698cUlgDgtTZVIIls/jJxHZDM=;
-        b=hr9knu/l60PIJIGgrxIdcIAXjsuzizenfdSs7CsuzG6jyr+k4tiCwARvC4Po3IWO/I
-         Dn6DptakawBcx/jxXv1eMhwjaPogGsCviRRtEbI8OH3SZjm3eX/NE7y+T7ZB6b9Nux7Z
-         fWp0JeqCgobASxLR4FRxRFRr0RdfykFgPRSAlhLazY3WaN3ZwXjcap1VrD5ReA/0gnL7
-         Jiv17P6e+8vMH2F68B5GwQIHOkw4Zf4aLPUVs2NLqR3X5wzeBU/i947xnS1eH8AR7EOI
-         0AADqPA90NVWaFZNnvfPLaHrqu59sfioec5oO08UGDtbUdEIGrYmG+08Ryl996XKL1wx
-         qHvg==
+        d=gmail.com; s=20230601; t=1736084954; x=1736689754; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=C+fVAmzLQ4Om50kyTFGW++t5pk9Lgq8uMnlI+JyO7Hg=;
+        b=MdcxdozMMOAg2spWQ7SwViwQFPHrl7d0wfoAvwR6P+5BDyGfKR/ytLPTPseAIhtXi2
+         lkzIZOjJt7XTf/LSqaTRCJ9vchcdRcz2YyzdsRYp1yQG+I0Op1sjupY8pht5SYRcwrdL
+         XJtxhvEphocI8t16b4kvoKcoMFlSrslbrWUyXlLv/OPIr/Xq3tWwa78dgjqRwd0i2389
+         kBOGKiwWSTz436glSBLLZ7pAD9Mn9eSOxGYggOYm6ZaF3kYPnNj38oJVi7Ws/nzLCXRN
+         t12kThO1SOVJbHZqi6WqM0crFE5u3cdmxHCLFZInsjZt9RZKdQELSa9o8mxn1kmqtGWR
+         h10Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736084824; x=1736689624;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zHJT304b51+yBeiv1K698cUlgDgtTZVIIls/jJxHZDM=;
-        b=rkFxGHYHoyrYyhCSHMcoxX5KtSM3n2z1E42TNuzq7RFHQV7hHyn7EVQesihSMAKO37
-         N4vrvlS2Q/AmphehRV4vL8/3xa2zPmByCb35k5CckrGb7KhkUgvnAVY5mNlauFXIjRJa
-         JNznX7u/ChKX2keWAmZW02GFgdwSiWT8j397ZeAVeeV+zXb3mVIgbK3JAGvGoLJMWkSz
-         BbzvSK8vcAtSFL/e4q6wwiA7CuZQlAjQrM+k9KifIFa5Z2PoikPoUKD5rtK1LH9ACfab
-         8z/201X8086Swbc/WRCFRK6Yy9g1ZY1RX6bmzisGwWnb+M/zmRPD/1gQDL3xxkSpeag9
-         yUCA==
-X-Gm-Message-State: AOJu0YzsMv2IhVb/XbPUJkT6ofaGwuRkSjZn9lWoWrsPMgu8lJqD+vSv
-	yMD42KdNbB4LY40hchQ40PlNSnyVhCNdjAOwnpVIN9piRiLmaObn5KqADQ==
-X-Gm-Gg: ASbGnct8VoYCk73T2FtqMAxWNlIxnOqI445KbRYli/IaZXEyNbxqO/c46txyl9VVcbY
-	fsOd+q4Dw4meiI1cAOUMIeazK8m7tnTAatlfk5dh8xjONV7FreypofzGg/K/JrIEKCzkRaEwD9S
-	ca1xBd+/QwLDJJPPaQzVo+taAAxUyveH51FA1CUGoijHX95Giv8GpAQi2VQhnv1CGYtKYHnlbCz
-	pA0s/TgL/ep2/1WpDmLiPSDpfQ66G7zB+w=
-X-Google-Smtp-Source: AGHT+IFuazS2XMAIQyMb+kDSc6/gaIAxZ4JUVecx5cfqAmfpeuEv984K37hlbHPkOS824RhPsc1/gQ==
-X-Received: by 2002:a17:90a:c2c6:b0:2ea:3d2e:a0d7 with SMTP id 98e67ed59e1d1-2f452e227ddmr89714295a91.15.1736084823734;
-        Sun, 05 Jan 2025 05:47:03 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736084954; x=1736689754;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C+fVAmzLQ4Om50kyTFGW++t5pk9Lgq8uMnlI+JyO7Hg=;
+        b=Dh9An5RtG/yBGdqcR9K+VbnBk+qVv88YnKwJUExTLpHVTbLzAPBGA7s107L/bk43QY
+         oFVVLRVocz5ZhhsayFpJPAojcMbfx8gJTcsToRiKbbtuFtzyc48dZysmhn+kNFqyxn/l
+         WyOqpt/6E9AO7afzMTiMu7xz3SsIRoKIoqbcakEXh0DJCcj+mXCq6d/WIkT7AttvXX/t
+         Kd25WgpMNsrLxgn83jD/NZh3eyP4b5oUeBsaE8DNoJIvbonJi6P97eDd5zjJATNyiUvQ
+         5Z9sY2ZWhTmat2PzPhJPSqNMRamsQO8hwkQXjhm5Nxeq8Ey6oa3spdrZdMSxPZrhON2b
+         GOng==
+X-Gm-Message-State: AOJu0Yz8F/6JU8fxev8D3aszsuPs0uszfmPBx3qe15htKWkbNW9b8WxU
+	swVgtfAvwuazhJ3+5mlzNeNwvgwRGzi+JUA6WDAIFx3gCISockqYx4LhNA==
+X-Gm-Gg: ASbGncsl/JBLdXLE4/M0RZ0BX5sjyJQfPuhCRhKSj1Era8e11h5L5IaU9En9Ci3bp/Q
+	q8Qeao1VJCKjluodoR3+nC/jnFIZLTgL7Nh12ISK9424tXkcUw8T+KJxyjTylHslPlauoHbUxSu
+	iOZ23mb2AMU/IEMxDjSesoCwIwxoQmlcZ59EmAxUE9eDRzl91fgYBXnPRI2NEdcmRoLIBjECfFp
+	iIirnsxXn4QyyidDUyQLxDCspoYDgkBZCU=
+X-Google-Smtp-Source: AGHT+IEH+5/WWJQHDU801v1xcBBkFboutv0epXrh1ekCR1zYNXv9pHq+MGIRet3WjXiznkfyc/gMKw==
+X-Received: by 2002:a17:90a:da8e:b0:2ee:fdf3:38dd with SMTP id 98e67ed59e1d1-2f452ec2919mr72851492a91.23.1736084954134;
+        Sun, 05 Jan 2025 05:49:14 -0800 (PST)
 Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9f738asm270517155ad.205.2025.01.05.05.47.02
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dca02e91sm275612925ad.274.2025.01.05.05.49.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jan 2025 05:47:03 -0800 (PST)
-Date: Sun, 5 Jan 2025 21:46:58 +0800
+        Sun, 05 Jan 2025 05:49:13 -0800 (PST)
+Date: Sun, 5 Jan 2025 21:49:09 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH 00/10] add more ref consistency checks
-Message-ID: <Z3qNUizvHJLgMx1y@ArchLinux>
+Subject: [PATCH 01/10] files-backend: add object check for regular ref
+Message-ID: <Z3qN1T3lJoj82ckl@ArchLinux>
+References: <Z3qNUizvHJLgMx1y@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,52 +71,172 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <Z3qNUizvHJLgMx1y@ArchLinux>
 
-Hi all:
+Although we use "parse_loose_ref_content" to check whether the object id
+is correct, we never parse it into the "struct object" structure thus we
+ignore checking whether there is a real object existing in the repo and
+whether the object type is correct.
 
-This patch mainly does the following three things:
+Use "parse_object" to parse the oid for the regular ref content. If the
+object does not exist, report the error to the user by reusing the fsck
+message "BAD_REF_CONTENT".
 
-1. Add some extra checks which I have ignored in the previous patches
-   for files-backend in
-2. Add ref checks for packed-backend.
-   1. Check whether the type of "packed-refs" is correct.
-   2. Check whether the syntax of "packed-refs" is correct by using the
-      rules from "packed-backend.c::create_snapshot" and
-      "packed-backend.c::next_record".
-   3. Check whether the pointed object exists and whether the
-      "packed-refs" file is sorted.
-3. Call "git refs verify" for "git-fsck(1)".
+Then, we need to check the type of the object. Just like "git-fsck(1)",
+we only report "not a commit" error when the ref is a branch. Last,
+update the test to exercise the code.
 
-Although I am not mentored by Patrick and Karthik in this patch. I'd
-like to add "Mentored-by" filed for them due to the reason that I
-continue my GSoC work.
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: shejialuo <shejialuo@gmail.com>
+---
+ refs/files-backend.c     | 50 ++++++++++++++++++++++++++++++++--------
+ t/t0602-reffiles-fsck.sh | 30 ++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+), 10 deletions(-)
 
-Thanks,
-Jialuo
-
-shejialuo (10):
-  files-backend: add object check for regular ref
-  builtin/refs.h: get worktrees without reading head info
-  packed-backend: check whether the "packed-refs" is regular
-  packed-backend: add "packed-refs" header consistency check
-  packed-backend: check whether the refname contains NULL binaries
-  packed-backend: add "packed-refs" entry consistency check
-  packed-backend: create "fsck_packed_ref_entry" to store parsing info
-  packed-backend: add check for object consistency
-  packed-backend: check whether the "packed-refs" is sorted
-  builtin/fsck: add `git refs verify` child process
-
- Documentation/fsck-msgids.txt |  22 ++
- builtin/fsck.c                |  28 +++
- builtin/refs.c                |   2 +-
- fsck.h                        |   8 +
- refs/files-backend.c          |  54 ++++-
- refs/packed-backend.c         | 413 +++++++++++++++++++++++++++++++++-
- t/t0602-reffiles-fsck.sh      | 209 +++++++++++++++++
- worktree.c                    |   5 +
- worktree.h                    |   6 +
- 9 files changed, 723 insertions(+), 24 deletions(-)
-
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 64f51f0da9..0a4912c009 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -20,6 +20,7 @@
+ #include "../lockfile.h"
+ #include "../object.h"
+ #include "../object-file.h"
++#include "../packfile.h"
+ #include "../path.h"
+ #include "../dir.h"
+ #include "../chdir-notify.h"
+@@ -3589,6 +3590,34 @@ static int files_fsck_symref_target(struct fsck_options *o,
+ 	return ret;
+ }
+ 
++static int files_fsck_refs_oid(struct fsck_options *o,
++			       struct ref_store *ref_store,
++			       struct fsck_ref_report report,
++			       const char *target_name,
++			       struct object_id *oid)
++{
++	struct object *obj;
++	int ret = 0;
++
++	if (is_promisor_object(ref_store->repo, oid))
++		return 0;
++
++	obj = parse_object(ref_store->repo, oid);
++	if (!obj) {
++		ret |= fsck_report_ref(o, &report,
++				       FSCK_MSG_BAD_REF_CONTENT,
++				       "points to non-existing object %s",
++				       oid_to_hex(oid));
++	} else if (obj->type != OBJ_COMMIT && is_branch(target_name)) {
++		ret |= fsck_report_ref(o, &report,
++				       FSCK_MSG_BAD_REF_CONTENT,
++				       "points to non-commit object %s",
++				       oid_to_hex(oid));
++	}
++
++	return ret;
++}
++
+ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 				   struct fsck_options *o,
+ 				   const char *target_name,
+@@ -3654,18 +3683,19 @@ static int files_fsck_refs_content(struct ref_store *ref_store,
+ 	}
+ 
+ 	if (!(type & REF_ISSYMREF)) {
++		ret |= files_fsck_refs_oid(o, ref_store, report, target_name, &oid);
++
+ 		if (!*trailing) {
+-			ret = fsck_report_ref(o, &report,
+-					      FSCK_MSG_REF_MISSING_NEWLINE,
+-					      "misses LF at the end");
+-			goto cleanup;
+-		}
+-		if (*trailing != '\n' || *(trailing + 1)) {
+-			ret = fsck_report_ref(o, &report,
+-					      FSCK_MSG_TRAILING_REF_CONTENT,
+-					      "has trailing garbage: '%s'", trailing);
+-			goto cleanup;
++			ret |= fsck_report_ref(o, &report,
++					       FSCK_MSG_REF_MISSING_NEWLINE,
++					       "misses LF at the end");
++		} else if (*trailing != '\n' || *(trailing + 1)) {
++			ret |= fsck_report_ref(o, &report,
++					       FSCK_MSG_TRAILING_REF_CONTENT,
++					       "has trailing garbage: '%s'", trailing);
+ 		}
++
++		goto cleanup;
+ 	} else {
+ 		ret = files_fsck_symref_target(o, &report, &referent, 0);
+ 		goto cleanup;
+diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+index d4a08b823b..75f234a94a 100755
+--- a/t/t0602-reffiles-fsck.sh
++++ b/t/t0602-reffiles-fsck.sh
+@@ -161,8 +161,10 @@ test_expect_success 'regular ref content should be checked (individual)' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
++	tag_dir_prefix=.git/refs/tags &&
+ 	cd repo &&
+ 	test_commit default &&
++	git branch branch-1 &&
+ 	mkdir -p "$branch_dir_prefix/a/b" &&
+ 
+ 	git refs verify 2>err &&
+@@ -198,6 +200,28 @@ test_expect_success 'regular ref content should be checked (individual)' '
+ 	rm $branch_dir_prefix/branch-no-newline &&
+ 	test_cmp expect err &&
+ 
++	for non_existing_oid in "$(test_oid 001)" "$(test_oid 002)"
++	do
++		printf "%s\n" $non_existing_oid >$branch_dir_prefix/invalid-commit &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: refs/heads/invalid-commit: badRefContent: points to non-existing object $non_existing_oid
++		EOF
++		rm $branch_dir_prefix/invalid-commit &&
++		test_cmp expect err || return 1
++	done &&
++
++	for tree_oid in "$(git rev-parse main^{tree})" "$(git rev-parse branch-1^{tree})"
++	do
++		printf "%s\n" $tree_oid >$branch_dir_prefix/branch-tree &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: refs/heads/branch-tree: badRefContent: points to non-commit object $tree_oid
++		EOF
++		rm $branch_dir_prefix/branch-tree &&
++		test_cmp expect err || return 1
++	done &&
++
+ 	for trailing_content in " garbage" "    more garbage"
+ 	do
+ 		printf "%s" "$(git rev-parse main)$trailing_content" >$branch_dir_prefix/branch-garbage &&
+@@ -244,15 +268,21 @@ test_expect_success 'regular ref content should be checked (aggregate)' '
+ 	bad_content_1=$(git rev-parse main)x &&
+ 	bad_content_2=xfsazqfxcadas &&
+ 	bad_content_3=Xfsazqfxcadas &&
++	non_existing_oid=$(test_oid 001) &&
++	tree_oid=$(git rev-parse main^{tree}) &&
+ 	printf "%s" $bad_content_1 >$tag_dir_prefix/tag-bad-1 &&
+ 	printf "%s" $bad_content_2 >$tag_dir_prefix/tag-bad-2 &&
+ 	printf "%s" $bad_content_3 >$branch_dir_prefix/a/b/branch-bad &&
+ 	printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
+ 	printf "%s garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage &&
++	printf "%s\n" $non_existing_oid >$branch_dir_prefix/branch-non-existing-oid &&
++	printf "%s\n" $tree_oid >$branch_dir_prefix/branch-tree &&
+ 
+ 	test_must_fail git refs verify 2>err &&
+ 	cat >expect <<-EOF &&
+ 	error: refs/heads/a/b/branch-bad: badRefContent: $bad_content_3
++	error: refs/heads/branch-non-existing-oid: badRefContent: points to non-existing object $non_existing_oid
++	error: refs/heads/branch-tree: badRefContent: points to non-commit object $tree_oid
+ 	error: refs/tags/tag-bad-1: badRefContent: $bad_content_1
+ 	error: refs/tags/tag-bad-2: badRefContent: $bad_content_2
+ 	warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
 -- 
 2.47.1
 
