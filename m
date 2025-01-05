@@ -1,145 +1,91 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD3915CD41
-	for <git@vger.kernel.org>; Sun,  5 Jan 2025 16:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAEB2158538
+	for <git@vger.kernel.org>; Sun,  5 Jan 2025 16:15:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736093652; cv=none; b=bxj+pBOCQ40hJe1a3q2NsDyFJNwPs9g6bmomAwdhno7zId3HLkB9/QdRZ7y+JfbPdfMl9hRB98E4RngwFTa0MeqLe5USK16WErDChenQ613Ig0Yee7gxPti1AyS8tGnoQsUSeEL1RFbysU0sGu9Nmlyf7YNlD0UuQ//e6jwDBX4=
+	t=1736093754; cv=none; b=qBCWkAyvWXyeIblWCH6QGdQ1luO7PCRC1Q7gLFiSAx+uoioMWJrVaGsOO8wb7qcx7+oR9knaFryw1hYlxEqtFdpQhHmG3BfDboLlBjlKuhxIfmTfgFqP9icFd305rPkPGsAQNWSSVDxc6Qln+dEiW6De08BxkHw1+uYA7WH/2Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736093652; c=relaxed/simple;
-	bh=wsakQebgbOZNK2gLZFcFoyW2nE9Jn5gisHxigvHMBzQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sUKEVbB4VReCqhRZH1gfVhSWtX5+S9r024ZJ7vXG9vIcBVtquncxOIeHpteXfWcutxGAvBbageh5IeYM0TgwnwW+RAx0eU4I0ZCSWxYZqgpZurFMpI4UsUICpfxoCYRWMu5ZyY3L4MNMOVdIrzcUU8Q6TCUbQBIOW6OxxKGU1Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ySFr7oDz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xSb0EoC8; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736093754; c=relaxed/simple;
+	bh=PjQNB/p7vA4V2z8uC/c4NPRxMt7pNr1r6RJRtuij00w=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=CZzUUGqe4pFLyCGE3e0qjU7hDLb6lYI79agifwNITycoS+6ZcETn2SKq6y0LuGALXvjhmCyrMtSJeXQZ0Qndw0ljadTqvqaq5LGXLXZCCNDxMOBhB528K6WORNqN9PehFXoJL1IToHiBcAt7zSfhc8UddLJEgHUQ/XT0/Y+TDQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=d3NRExZF; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ySFr7oDz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xSb0EoC8"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 02B9F2540162;
-	Sun,  5 Jan 2025 11:14:08 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Sun, 05 Jan 2025 11:14:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736093648;
-	 x=1736180048; bh=91xT9jbxHDPEq+SS44glkK/yGbzcJMQppZhzF/RdFYY=; b=
-	ySFr7oDzuALPLPsdGjuNzvdu0YZb0sxz2K3D5ZzzgTaGHp+FlbuqsycxGEpePwEq
-	V+o+aIbyp8DGxJV70b8YjoTVlVruos6aj+rtnyIedt5YpvFQk5qPs11Hq6On08rx
-	Orto3Bq+mb0UnwFRf+VZdR+mUfetJ4GZupC84t4wUDiPomCZ7l/7xey7x2b4Fsfn
-	34IGL7/ojPAcGIOR5sKtFucra57N8jm2IycH9BXv3hYdstty1RwAatDT5TRRgmeR
-	nIe6ozQ3GoIYlOzxH5L8QOsQDsoRocSEGt2V2aN7IjVhefMMqyE1P7o3kqD2EPV6
-	uUefH72AI879bf3xsdK9qg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736093648; x=
-	1736180048; bh=91xT9jbxHDPEq+SS44glkK/yGbzcJMQppZhzF/RdFYY=; b=x
-	Sb0EoC8Zh/GycXi+2cdAJKWA+Y0O00pdgc/8dUsBldCOPI7WcQUy8R9ad4zlaNhE
-	Xdg0ZDpPhPCVQeXA9e0n4y1sOqSsZ5pZrs6AR7HLK55+XEOU+UkLpdJEBZG9FZAQ
-	g2aO1JSXCNB5hr3TMSoYbhbOb121VWw+/BZgyKYcKTGvtB/AKcM4Xn2xKZLz0btu
-	wHxXwl05gBsrKPCD0N3xaAwmBCn23kyYPSxF7XOe691sBKWMKldnD/FMzlqLQVXb
-	GQILd9vuLiA//ne5qX0hnQL2e5+sRwmAK+xMmnCrFOPgeU/qEfhNasTOpOAXaco5
-	FA83LR26NBKp42PWZwMag==
-X-ME-Sender: <xms:0K96Z2jaEK8oExI3f3MrHI2BCqtcDGMsCyAAK0B6q86OKxsJjNebBw>
-    <xme:0K96Z3CKPH6_Kf26TpkY-TrC02OJ3TgTdLjHLwmlgX96GXpN13an_FH5pKs1vJpCH
-    nRHdAdX_RNLO1TJ3w>
-X-ME-Received: <xmr:0K96Z-Hpx9rdV6Fi72LbP47VyyTdRZ3Zpau8-4_8BBu1x06vC1bfV63llinLyGJHUJ9YVzSQWsTbzahYfOzkLWZNt8XsGWFh2yxC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefkedgkeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:0K96Z_QmjsFLobIbu_ONBh92Hwp9sV51GpXR0ip3FAMR2jyAsVMkQA>
-    <xmx:0K96ZzySud0GhfYprvVmUYP4oSTx_bVEzfcE_SF_UDMr9LDTfAfT-g>
-    <xmx:0K96Z97Hm3nUo31zGpRljpy45qhvPjqCa7lrmZfUX5r7XQe5X8DP7Q>
-    <xmx:0K96ZwwfK_TV8PZVt3762uhcfnpetmby7t_zXqyfmRNdgMOIdmmQ9A>
-    <xmx:0K96Z-ol02o_WLzSY9aGYYYbJ1To7g5TPSMjXfWvtXV3GtPrc3mJ9bY6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 5 Jan 2025 11:14:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v2 1/2] object-name: fix resolution of object names
- containing curly braces
-In-Reply-To: <13f68bebe90549ba19452f12abb6fea41c2517fb.1735949870.git.gitgitgadget@gmail.com>
-	(Elijah Newren via GitGitGadget's message of "Sat, 04 Jan 2025
-	00:17:49 +0000")
-References: <pull.1844.git.1735699989371.gitgitgadget@gmail.com>
-	<pull.1844.v2.git.1735949870.gitgitgadget@gmail.com>
-	<13f68bebe90549ba19452f12abb6fea41c2517fb.1735949870.git.gitgitgadget@gmail.com>
-Date: Sun, 05 Jan 2025 08:14:06 -0800
-Message-ID: <xmqqmsg52q7l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="d3NRExZF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=7kOxR9R0Zd0j5ftTNb3YD7QN+SSbIzZWNb/1yRLwW70=;
+ b=d3NRExZFJ6YirYiayLyczBdT0IW5yllFG2SEkKJyCZ24TVOhFGB2aHQUNqWWcnLxmoxZ06Xkyt/O
+   Sa3dSdE0EGRjIzcfbX9sHkGA2yAKgrze8MDDa0vy0lvWomVDNc7eXjPEN60f1ouIoSVs485upVQ0
+   kigcgetzjGSGzy9soNOnBC01QCtPQ3F+X32VfpYb6f2vbQuGdm8rO36kXPbADJMc2+e3bmmvlkUV
+   lyrHhxO3Q966cEE9+t4kCt69iAe6InMtEreL7sh5CiqHjtA8HfURdwJVKJk6mVY3EbqUkf7QIo9l
+   3cyvhHTUjjIiSfq96ErxNvLCCZdBmh1Bcd03pA==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SPM0021MI9UJ550@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 05 Jan 2025 16:10:42 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: Johannes.Schindelin@gmx.de,	karthik.188@gmail.com,	l.s.r@web.de,
+	me@ttaylorr.com,	phillip.wood@dunelm.org.uk,	ps@pks.im,
+	"Teng Long" <dyroneteng@gmail.com>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH] fetch: fix erroneous set_head advice message
+Date: Sun,  5 Jan 2025 17:09:40 +0100
+Message-id: <20250105161017.210412-1-bence@ferdinandy.com>
+In-reply-to: <20250105114201.35079-1-tenglong.tl@alibaba-inc.com>
+References: <20250105114201.35079-1-tenglong.tl@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+MIME-version: 1.0
+Content-transfer-encoding: 8bit
+Reporting-Meta:
+ AAFBIT4dEOBGz7BK91AbWKz2TtlIzd3GMBMS8dCWPbdG14EkF4aXr+vJ2uW5q8Mh
+ YNBAYt6o1xXBpKBMOtXI0rN0Qxl+LAI+BF+WhbIKiAB6EKuCSCGibLRD8d4D6sTz
+ JjIK2jyi8NsnrRcws8OTpvmTc/1fIOhy18Tora1ZKRTxWgVHrq3MvLWBBeeCjIze
+ mONi4GonOY0gq4nXd7nAgMaRsfyiKFjIt83tm2ahiR9LJr1GLjvwieZ/oTHCYwYI
+ CaDIh3Z47RunDSvLxk2ndoW7aIRBlHu+F2hNn06lFCijvKMEL4O3CJpk2ZLhc/OA
+ W4wWny/RoTwzHTlmb7Agfl2zBAB73rXfATk3nq6YdE31JJGWt2cZjeV2W+HVc5IX
+ WM2gBjOEsERpm9/iyn/QK/zXD13i/q5MZ7HxePaku0ZfKK/3q9/bSei+FtRtqFcl
+ 7i5E75iTAfjF4jOGjWP16aKkpigMX/jS+Qjnno//ZNVzSBYiy8c1rioo
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+9e2b7005be (fetch set_head: add warn-if-not-$branch option, 2024-12-05)
+tried to expand the advice message for set_head with the new option, but
+unfortunately did not manage to add the right incantation. Fix the
+advice message with the correct usage of warn-if-not-$branch.
 
-> Given a branch name of 'foo{bar', commands like
->
->     git cat-file -p foo{bar:README.md
->
-> should succeed (assuming that branch had a README.md file, of course).
-> However, the change in cce91a2caef9 (Change 'master@noon' syntax to
-> 'master@{noon}'., 2006-05-19) presumed that curly braces would always
-> come after an '@' or '^' and be paired, causing e.g. 'foo{bar:README.md'
-> to entirely miss the ':' and assume there's no object being referenced.
-> In short, git would report:
->
->     fatal: Not a valid object name foo{bar:README.md
+Reported-by: Teng Long <dyroneteng@gmail.com>
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
+ builtin/fetch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Naïvely, it seems that a solution is to parse from left to right,
-i.e., (1) notice there is a colon, (2) see if everything before that
-colon resolves to a treeish, and (3) see if everything after it is a
-path that appears in the treeish.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 2d37a378ba..fe2b26c74a 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1588,8 +1588,8 @@ static void set_head_advice_msg(const char *remote, const char *head_name)
+ 	N_("Run 'git remote set-head %s %s' to follow the change, or set\n"
+ 	   "'remote.%s.followRemoteHEAD' configuration option to a different value\n"
+ 	   "if you do not want to see this message. Specifically running\n"
+-	   "'git config set remote.%s.followRemoteHEAD %s' will disable the warning\n"
+-	   "until the remote changes HEAD to something else.");
++	   "'git config set remote.%s.followRemoteHEAD warn-if-not-branch-%s'\n"
++	   "will disable the warning until the remote changes HEAD to something else.");
+ 
+ 	advise_if_enabled(ADVICE_FETCH_SET_HEAD_WARN, _(message_advice_set_head),
+ 			remote, head_name, remote, remote, head_name);
 
- - When we are given foo@{some:thing}, if we did that, we realize
-   that "foo@{some" is not a valid tree-ish object name (since "@{"
-   cannot appear in a refname) and then can backtrack by realizing
-   "foo" is a ref, and @{...} could be a reflog reference (most
-   likely a way to spell some sort of timestamp), and try that.
-
- - Similarly, for foo:path-gaffed, we would notice "foo" is a valid
-   tree-ish object name, and if path-gaffed is a path in it, we'd be
-   happy.  Or foo may not be a tree-ish, or path-gaffed may not
-   exist in that tree-ish.  In which case, we can backtrack and see
-   foo:path-g is an allowed prefix in a desribe name.
-
-Now in the above description, I have assumed that an alternative
-interpretation kicks in only as a fallback when we backtrack, but
-we could make sure we try all possibilities and notice ambiguity if
-we wanted to.
-
-In any case, such an updated structure of the parsing code paths
-(whether alternative interpretations are treated as fallbacks or
-equally plausible candidates subject to disambiguation) would be
-a vast departure from what we currently have, so a targeted "fix"
-like these two patches attempt would be more appropriate as an
-initial approach, I think.
-
-Thanks, will queue, but probably we'd look at in any seriousness
-after the 2.48 final gets tagged.
-
+base-commit: 1b4e9a5f8b5f048972c21fe8acafe0404096f694
+-- 
+2.48.0.rc0.146.g306ab352f4
 
