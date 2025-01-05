@@ -1,144 +1,134 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A7F153BF8
-	for <git@vger.kernel.org>; Sat,  4 Jan 2025 18:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC421E4A6
+	for <git@vger.kernel.org>; Sun,  5 Jan 2025 01:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736016956; cv=none; b=KRYWk6ay28O9WeeaVXmxN6s8oT8jiLKl2+aMgC5A9FcbXRsMUH07k4GXbozRzfHFfa+yZ+TiWJfVShGuT56h7aGpwRK0iabHdnnifJnhu4e1yEcQ9TIcl0LcouXcjUxDeOEYf/sVlQsMPeI9pQ+VAjLZFv0p17iFiuzZYzyMzlQ=
+	t=1736038909; cv=none; b=WPBEpjLCacMamscj3hF9xiqXZBUsfuM0kN9drIGp2u9vYQGw/+/pycEdsF+ZK7XnYK1qqEPaB9KyPJcoL9NuTQUdJ3It7Ste/7Q3i83cy3PKKaTnOeyhnl8k04dOq5rThPr8pq2bgLhN8Xhxmsx1Oz7WeGyX33GimZbl0+UDadU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736016956; c=relaxed/simple;
-	bh=URM/m6YtSZszFAekZfcZC0D2ZJCQcjDlrxMiVo22GAk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Mg9Py+80uXoBGykRakdcY69JeFfF0Stmbnohvi7TaiHPwZF2Br1u5mbN72nEApSicoQjCKwVYuUZISddDC1wpjWfY9CR07fTR/D+Cy+dqAzrNmKdqSd71t0Iena9yqAGli4phE8LH4S6GZW583kWGjukHKVNtrkoz9CAeJEfx2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aFw+WpKa; arc=none smtp.client-ip=209.85.166.42
+	s=arc-20240116; t=1736038909; c=relaxed/simple;
+	bh=kU8z2HCmS7GWy9Az2ruAgooDErwgjgcE5U1RNsatHbc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O4N5fh/+PfJ95+oizwLHDDHCvMjTT/tgDoh2oELvTNRHUpWd46hrYxGK1f0lIbVhysYwtiGmgr/F7nTevzshvqxl/q7x2m8go6hZ0KgOoiZVD+awG8uI6JXFTMOCDhLTfrDK4GhZ8dRk/laaMa4cRHhp9uUimr7viHom7OsCt1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W87OUSEe; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aFw+WpKa"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-844e9b7e50dso1211743239f.3
-        for <git@vger.kernel.org>; Sat, 04 Jan 2025 10:55:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W87OUSEe"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2166022c5caso165980375ad.2
+        for <git@vger.kernel.org>; Sat, 04 Jan 2025 17:01:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736016954; x=1736621754; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SVoiDMWSr9oYs5bLr7L9scVH63qNaezLTagWqCaTQNA=;
-        b=aFw+WpKaWBEaHGzYQqWge55TxKHVCX9vyCsiFLdh8Rg/wDV1KIzmiuV5xhq4YRtxyu
-         EekFd86VfktHkRITzhChlWtSHSQ9HEbLMbJJGeyATN83CcPSTXgGdnpvDToMP2N+jj8j
-         qfScgj4VdGG4NEzdkubgqWqJi+KECM5VNWrMYKjDugoWIAk10FRP3YqhjXlvycXAg29S
-         3cL0NeBO465Fpo67n3A9JnBKw5CB2x8WDC31bFFsDTJUApKYjGQbx6gphExA9KUpRdoM
-         ZIQlfrtealQ0g2A/cdLIFtZfDsGvOip7Fu4A2kLORuc6UKeVlk/ioyDojsOfVaCvlRv9
-         1Bew==
+        d=gmail.com; s=20230601; t=1736038905; x=1736643705; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jCZ/4dPyKPj3YvPYcmf1w58NXfS9HUXC4L1h+4D+83U=;
+        b=W87OUSEeqGAb0/c414oCF8Ge0JFCuzMVet4yX8wgeBMBWq93AxMDa0Q5zuCXyy1tmf
+         MeYm0JPM1dlG59Z5pcN2cOxvaiPWPypY77q5ZYMbro1ELRIuWGE31ivscTYh15jUM1ii
+         13Pu14bzgMUEqm5RUnvxf5ZZTZRqUAC9XcBGCZTvUCwTmuideeWUWl27TEP6sbt5IFla
+         RaJ/D2JY03iSS5DUSSFjoOXnXFit+G32ltspzlwbOHaHbtMFfTpSrrd9HqbOsi0Vwz2A
+         oiCKREq2lEiOAaxh2YstUjJd3YYINXGzuhz1Y8ZF91PJc6cuukH2msIQRLQLQfyzTcA8
+         iw9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736016954; x=1736621754;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SVoiDMWSr9oYs5bLr7L9scVH63qNaezLTagWqCaTQNA=;
-        b=da4oMzC3Uu6fyD+TJ9Ph41gcz3bfj/xTYlhve7JZD+GWGc+tYLFuEROoPdIcyK6t7z
-         DsiB08JhcV8KukovTAxXFnmApE2FL19hC8o4hj+a6+iIG/9itzMlhPZQdCvarOg+mo+W
-         hApu4NvfaAzi1qJaSRL+Xk3MOXMe507XTxqhUo3sMH3EXoXHOBKQeJPbGOKwj0zHI93I
-         jXf3KQHsukrDfXCj1Lqauo0d3oLssU1ElTSgUX5ckGMxdqzIqnYp6UXoUdOzLHFO0WWq
-         MFiHcZ4X+PvaSRDPxQeEmsPTaYAXUQgd3m9FcNo+imW+MpLpPjI1B3ORIXTCkvq6GNMm
-         9YCg==
-X-Forwarded-Encrypted: i=1; AJvYcCW7ehWDv/jo5/yuNxJsxjIpcSbxnoxeDX5uwPNZ0aoBQxxtXjRofE/U7+J9iX6YrZAA1og=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAM3bxoq0pSkzhdrB3WtPTiTmwaxo7EgxRaP8OLTK3e3lLPdbR
-	fBus2PVAJ/rzQRJkCULiHrN7PiOcA44cmahfdDNmPo2/uI/dbmQx/vVal+c6ORgvfcyur/1co+c
-	j5GnmImmBeGDGZDCoww1jQ9HBM4c=
-X-Gm-Gg: ASbGncs2PO3o9M1b81Xq2bFoknG7Q3EcbXgXWxYprd1bGGsbktfi0BhlwGSgAyMW4Oy
-	koayz8Lgj466uX5ZJWkQ7genaGz1OWTYdVvEJFbfKUFOQcbl+sxsd5tu/2A9xM99NDLZmnV0=
-X-Google-Smtp-Source: AGHT+IG4q3ZAoeSbnC8ahR6BjiBl++qQFTSXLIIEDyBHiEVkfCPgCUmj4uNCvvxlyyixvMRwBgPx0jr5jm7K828dDVs=
-X-Received: by 2002:a05:6602:6b86:b0:83b:5221:2a87 with SMTP id
- ca18e2360f4ac-8499e4f30d2mr5510461339f.3.1736016953816; Sat, 04 Jan 2025
- 10:55:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736038905; x=1736643705;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jCZ/4dPyKPj3YvPYcmf1w58NXfS9HUXC4L1h+4D+83U=;
+        b=swc2q4Bml5DXe1EULpWlOjPHEJMr5dP4lfZPH269hSstZoKvwnzkJbLlivzlVdEnfi
+         9w2s2YX+BYWVobU5GwkUi7gBJOlUqzFApqtnJtXW107+FOi9EVN7okRYEP9WvIYygL3e
+         LSIfpXuSJQhrlDt5yOzeJzvWcx8BgjlmNbmzwRO3NV+cxS5kcnT5qzsX9Puf+umbVHVY
+         46fztv/VGvb53vVHbb/Zj8EMfrEvi3VuktMn6NIZRWaGryOS1Y16iQ8yCxgQUEbFWCv/
+         edD/gfmtFCWVPgMw/qSXanUk7MhmSK1LsjgguzXYDKTHCjZPiM3RZPl9AKYHm7FCOu4X
+         qswA==
+X-Gm-Message-State: AOJu0YwDVaWvCVlBbAw0zwCo0Uor0s0sagBid4or5ikYdwsLJPJiidD4
+	PlXUaoTYBDNnC/5YVYWBWzzW0BVYit67nMDhh6/gz/3xBNenghG9
+X-Gm-Gg: ASbGncthMfq60+3v++w1PbHNGzFpG+3KfYszL8UAytgtOa1dBzHtJd0IRBTMjBN+iUX
+	/3zKtCOu9QesRCNwq6wpFobTNdFBryZyQRXBD1Bz5gQJXwyTsthUyfgJEyM9binHAx9JPs5pMlV
+	S9G7oXLK3Z8qRRDINyYzMd6jXOSeSilYtcNaoUeFLbbfum5i4RQwfe8gfR3Bav04keZWc3l//VD
+	O5hR3y/HxoN6Ln3FleGKAcad6WlLklVONfKoLZ4CJuGsJkyahZ2
+X-Google-Smtp-Source: AGHT+IFxxUqUL/W3SOonGVHY+6IOP84Z4lVijUpXSVTobe+vduWFhdVQIeu5TB5A09UsflfWI9rwLg==
+X-Received: by 2002:a05:6a20:2443:b0:1e1:90bd:2190 with SMTP id adf61e73a8af0-1e5e0819124mr85778120637.44.1736038904706;
+        Sat, 04 Jan 2025 17:01:44 -0800 (PST)
+Received: from gmail.com ([172.56.120.18])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72aad8dbab4sm28579028b3a.94.2025.01.04.17.01.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Jan 2025 17:01:44 -0800 (PST)
+Date: Sat, 4 Jan 2025 17:01:41 -0800
+From: David Aguilar <davvid@gmail.com>
+To: Bartosz Pracz <bartosz.pracz.92@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] all: standardize headers to reflect Git's purpose as a
+ DVCS
+Message-ID: <Z3nZ9YXIDTWOjhZV@gmail.com>
+References: <20241231001234.1182828-1-bartosz.pracz.92@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1844.git.1735699989371.gitgitgadget@gmail.com>
- <pull.1844.v2.git.1735949870.gitgitgadget@gmail.com> <xmqqed1i4pga.fsf@gitster.g>
- <CABPp-BEzKyXY7YZOzedwQzAFqLiE_9oWsD=GByiDhi7go2aXNw@mail.gmail.com> <xmqqy0zq31s3.fsf@gitster.g>
-In-Reply-To: <xmqqy0zq31s3.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 4 Jan 2025 10:55:42 -0800
-Message-ID: <CABPp-BF5Sw=DY3rahmoS8NXg3GZX+nAKC0v0Y49vgq1i38DR3g@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] object-name: fix resolution of object names
- containing curly braces
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241231001234.1182828-1-bartosz.pracz.92@gmail.com>
 
-On Sat, Jan 4, 2025 at 9:51=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> In general what would we do if a string can be interpreted in
-> >> multiple ways in _different_ parts of the object-name codepaths.  We
-> >> all know that "affed" would trigger the "ambiguous object name"
-> >> error if there are more than one object whose object name begins
-> >> with "affed", but if "${garbage}-gaffed" can be interpreted as the
-> >> name of an object whose object name begins with "affed" and also can
-> >> be interpreted as the name of another object that sits at a path
-> >> that ends with "-gaffed" in some tree object, regardless of how the
-> >> leading part "${garbage}" looks like, it would be desirable if we
-> >> declared such a string as "ambiguous" the same way.
-> >
-> > How would that be desirable?
->
-> In "a:b/c-0-gabcde", *if* "a:b/c-0" *were* a valid way to spell a
-> valid refname, then the whole thing is an ambiguous object name,
-> i.e. it could be "something reachable from object 'a:b/c' whose
-> object name begins with abcde", or it could be "object at the path
-> b/c-0-gabcde in a tree-ish a", and in such a case our code should be
-> set up to allow us to give a "that's ambiguous" error, instead of
-> yielding the first possible interpretation (i.e. if we happen to
-> have checked the describe name first and "$garbage-0-gabcde", we
-> yield "abcde" before even checking if $garbage part gives a possible
-> leading part of a tree-ish; but if a future refactoring of the code
-> flips the order of checking, we may end up yielding 'an object at a
-> path, which ends with -0-gabcde, sitting in a tree-ish', without
-> checking if that could be a valid describe name).
->
-> Of course we should make sure that the syntax cannot be ambiguous
-> when we introduce a new syntax to represent a new feature ;-)
->
-> Now, I think ":" has always been a byte that is invalid as a part of
-> any refname, so "${garbage}-gabcde" with a colon in ${garbage}
-> cannot be a describe name.  So in the above about "a:b/c-0" is an
-> impossible example, but I was wondering more about the general
-> principle we should follow.
+On Tue, Dec 31, 2024 at 01:12:34AM +0100, Bartosz Pracz wrote:
+> Updated headers across multiple files to reflect Git's role as a distributed version control system (DVCS).
+> This change replaces outdated or informal descriptions, enhancing professionalism and consistency
+> throughout the codebase.
 
-Are you only interested in the general principle for the "possible
-examples"?  What about the general principle for the "impossible
-examples"?  Things like "master:path/to/who-gabbed" are unambiguously
-a reference to a path within a revision that cannot be spelled any
-alternate way, but the code currently gives the user a commit instead.
-What's the right way to fix these "impossible examples"?  I've given
-three proposals and implemented the first of them:
-  - ${POSSIBLY_VALID_REFNAME}-${INTEGER}-g${HASH}
-  - ${POSSIBLY_VALID_REFNAME}-g${HASH}
-  - ${ANYTHING_WITHOUT_A_COLON}-g${HASH}
+These changes drop Linus's original comments. IMO those comments bring
+levity and were a tongue-in-cheek description of the system during its
+inception.
 
-You said you don't like the first two because check_refname() rules
-might change, and not commented on the third.
+"The (blank) from hell," is a phrase coined and popularized by the late
+comedian Richard Lewis. I'll leave it to others as to whether this is
+frowned upon, but I've personally always understood it as a
+light-hearted (and self-deprecating) joke.
 
-Also, as far as I can tell, the set of "possible examples" you are
-focusing on is currently the empty set.  A change of syntax might in
-the future expand that to a non-empty-set, and then bring us backward
-compatibility headaches because we have been allowing
-"${garbage}-g${hash}" to mean a reference to ${hash} and we'd then
-have to deal with it becoming ambiguous (and potentially also having
-no way to disambiguate those cases, similar to how if colon is allowed
-in garbage then we have no way to disambiguate paths).  If we want to
-allow future object naming extensions, it seems like we should lock
-down and rule out as many existing forms of known ${garbage} as we
-can, but that'd push us towards the
-${POSSIBLY_VALID_REFNAME}-${INTEGER}-g${HASH} solution I implemented
-that you don't seem to like.  Is there a middle ground that you do
-like?
+
+> No functional changes were made, and this commit is purely cosmetic.
+
+Besides my personal opinion above, there is one technical issue below.
+
+
+> diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+> index dec8afe5b1..ac84a03e17 100644
+> --- a/Documentation/MyFirstObjectWalk.txt
+> +++ b/Documentation/MyFirstObjectWalk.txt
+> @@ -376,7 +376,7 @@ $ ./bin-wrappers/git walken
+>  
+>  You should see all of the subject lines of all the commits in
+>  your tree's history, in order, ending with the initial commit, "Initial revision
+> -of "git", the information manager from hell". Congratulations! You've written
+> +of "git", Distributed version control system". Congratulations! You've written
+>  your first revision walk. You can play with printing some additional fields
+>  from each commit if you're curious; have a look at the functions available in
+>  `commit.h`.
+
+These changes make the paragraph above incorrect.
+
+The object walk will still land on the initial commit, and that commit's
+description will continue to say, "The information manager from hell,"
+irrespective of your changes. Git's history is immutable.
+
+
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index b13561cf73..34f4553da4 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -1,5 +1,5 @@
+>  /*
+> - * GIT - The information manager from hell
+> + * GIT - Distributed version control system
+
+"Distribute version control" sans "system" might be slightly better?
+
+While I'm not sure if this is something worth changing, others
+on this list may think otherwise. If no one else responds then the
+likely explanation is that it's not something folks want to change.
+
+
+cheers,
+-- 
+David
