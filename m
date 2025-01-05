@@ -1,104 +1,87 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916ED481AF
-	for <git@vger.kernel.org>; Sun,  5 Jan 2025 11:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F65849C
+	for <git@vger.kernel.org>; Sun,  5 Jan 2025 12:12:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736077330; cv=none; b=PsK4CfkfVJnRVYBtPuUbiNimvmdhQz6RQDY/LYHGi9/QesQ+3BCZJr4kf1V79j2j2DH/tlXEtf6eD5GrtqYyZSLBEyIq2BBDOoGnGWY20mz0IQczPKyVprd0JOAiGeZNvgW9u+pdvAu3Cv1d/PiVRLBU9ZtC5SaLXRI/cnGyuG0=
+	t=1736079151; cv=none; b=Ou3yFk6ZpMNttQ4g92+EO0ziLbX70Z4jLC/9pHgr5KajyT7f2tqkepJmr0EEz+iwD1skX9VEaK6tXpEPHoGcnmUqUL8+fs0m788G9dKjp5qorHuO7SPUUgbPEV2i+gz9OOgnHql27SQ1iamaSGpZ07HJxIkVBHtL0Pf5H1YBjfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736077330; c=relaxed/simple;
-	bh=RGyGRSmFIMgbbrMZ6/box6xHWheSCjes3VA0+2M+960=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qRLdKk+ProUE0s4+1H3rJtnXTkz2PYdv3E1uQaT8PXhNlYzaihTfYq6b9tbZs9xwJIQXMqEGu3ErBBaZM7SgDShmDpk8E0wybGB20Pu/b1B6DjX6n24mSd5tqq2MhM+hzzXu96du7/6lZvmPxdQUgz2xEMhHAOxCv0wSHtMy4Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PDSxU2Qf; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1736079151; c=relaxed/simple;
+	bh=m852lghkSkAUjpctC1wt29znzuGu/kgD2/hU/rHUxrM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=i4Q7O7eKVaO9uSSNJx1TkGg5HsOzu4hfAdQTPmeijRgpxK3u04RLVpi2xZW3uKkGLZSs9oIb/rhtAP0XckQVCPxgcBvloXuQWWpoUd+nNhmTrLFyCorb4byWQyMm3nMliqb3cHi9HUU2ZkEWLh82n8BMv1BJU8OzjfeNRx7hHdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J3lT4cC7; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDSxU2Qf"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21654fdd5daso178082445ad.1
-        for <git@vger.kernel.org>; Sun, 05 Jan 2025 03:42:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J3lT4cC7"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30227ccf803so155770781fa.2
+        for <git@vger.kernel.org>; Sun, 05 Jan 2025 04:12:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736077329; x=1736682129; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HiZ3lo/JGsL4q/F3Oaf+GVt4g/wjdnOjK4Aj1/ojRlk=;
-        b=PDSxU2Qf3CCEFqxLRT+XNSDfhSOvhH9J3hDeUI9zz6xm/8sCFLVs7kOB4DNTaVuBi8
-         XzHpDsq3wZcUnHsNdZKFuzwVW+nCg6BVqWO7owlxBXokE/uXiCuGai/86jfx2Jlb47WM
-         u8EVXTi02301xjrNRZCJtP3XnHgLpeySVShOTVNnoDmLvBRgomwm4T2V5AWaUKZiHnC5
-         WjteysZhkG3iWrjxM4AN2o84gda2w3yThlt1ihZ6K76ptHgEmAtLoi3KEMFg9PQUnTmg
-         jEo3U0rXIZ7DosGOOnB8nqFjXD03lqiQ0/op+cCO4T8HmvkW2W+tBbI5ugxu7ANMUIPt
-         Yeog==
+        d=gmail.com; s=20230601; t=1736079147; x=1736683947; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=m852lghkSkAUjpctC1wt29znzuGu/kgD2/hU/rHUxrM=;
+        b=J3lT4cC7X109ep9eJ6Yrg2aUjx8CD6ZIgxDiEx8iPMa/sZxEKBoyE6b5Rsm5kLqtAp
+         QjnJc4/ORKmHnhkHX3jpJ4zdec2CWsbCHymgRMDUL0MS9TmJqIKBAXPKHZFKsNQhMT/0
+         B6lFIIpC3/01SKlkciU8VR54HeoEXr/MhaWwOgKE9AhI5ALGBiE0rVX8H0Js6b2s/g//
+         Dvxms6fcMyhDgKwIWKwLIkTP3KSpguFttdghnYs0Pjkg5Aa86savS+UrQN1hlY/A4mBJ
+         cxk4BByoEnI5WqW1ejtxElevWGy9V0KmK3MoSeiXqQiQKxgrtBpuWhzRU8V9kojJf60N
+         EBDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736077329; x=1736682129;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HiZ3lo/JGsL4q/F3Oaf+GVt4g/wjdnOjK4Aj1/ojRlk=;
-        b=fSgPp+WXQI9QpxyN55eObB98SUU8J4ZiuiFz0Lo+BAOc0pZiVByhB2io6DPT/fDU9Z
-         vkHf+fIKXAt2Q1pQMAut6vVGklM8XBQJW1ITcsxuGejJv3AF8ZASUEghoORj9WNYu0Ec
-         XPgyEW4hEHJqm2zMXdMl7uvopziSW1vzOke55mJciWgs76K44mLN8d0PbtTwr31xB32n
-         +PDWeDeD/Yx+b7Llyq0mQi4Cc9dFSOa8I+Z2YJzcjmn8U6Q3hYOZhRnqUF1sWuJ5GDMR
-         F6NnA7AogWxkDz3b5hJNOo58gOqyr7vinHk3v+xPQKPZ5CFNn0rW4gus/ujxlNCDh0Lt
-         1j9g==
-X-Forwarded-Encrypted: i=1; AJvYcCW5ETSpHsp1q+14xTWeHu6tdXdP7g9diEgY2jmcAkF9iaOmwR3t3meWlL9fL+4bzfMrH+w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFDCksEToq3SR5ZYATNZgLS/DiUJ+EZSTTfMV0OxBMlWRzasXE
-	AyG7TKkcerAUa7+y8GKEKL9CemVfde1cldaBCf8GiyAUoOFeyTZe
-X-Gm-Gg: ASbGncvRfiD1y+dmbrc+WbbLyoJi3Qs1XX+o6IGxjKemmJzN1bTUXAbdSbqx4CO6T3c
-	cJ++mdIUYWLGnW6szuEnklbGzQ2BAzNqh8LIPtyjcjAQDoeIkBoMkV5pqu0ZN7fXLFhbAanh9K/
-	/xbBvI8/g6hYOxUi01amgpWCUypVNRtUH4nqrmMRjFKAzIDW1qkBMg/yUpm4sx3ii4xA6BSsQmG
-	MEkBdjwBLPJCFOLpUxESxH+c120tTt+OLZpcAXxP/5q9dfpxjSNUbGqnR2FXkq9TI4dNSeh+1ty
-	lisAtYktnOUBvA==
-X-Google-Smtp-Source: AGHT+IGbdNoIdgRhRF4Wweoahg+y6lD6td4l+1FdeUZj/bQLtyRmDREwaPEdEfZHeVpKdzF+3QBEwQ==
-X-Received: by 2002:a17:903:2346:b0:216:3eaf:3781 with SMTP id d9443c01a7336-219e6f2eb9amr835619595ad.43.1736077328741;
-        Sun, 05 Jan 2025 03:42:08 -0800 (PST)
-Received: from localhost.localdomain ([122.235.242.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dca01940sm274208965ad.237.2025.01.05.03.42.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jan 2025 03:42:08 -0800 (PST)
-From: Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To: bence@ferdinandy.com
-Cc: Johannes.Schindelin@gmx.de,
-	git@vger.kernel.org,
-	karthik.188@gmail.com,
-	l.s.r@web.de,
-	me@ttaylorr.com,
-	phillip.wood@dunelm.org.uk,
-	ps@pks.im
-Subject: [PATCH v3 2/3] fetch set_head: add warn-if-not-$branch option
-Date: Sun,  5 Jan 2025 19:42:01 +0800
-Message-ID: <20250105114201.35079-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.43.0.rc1.4.g79da3975.dirty
-In-Reply-To: <20241205121737.1181695-2-bence@ferdinandy.com>
-References: <20241205121737.1181695-2-bence@ferdinandy.com>
+        d=1e100.net; s=20230601; t=1736079147; x=1736683947;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=m852lghkSkAUjpctC1wt29znzuGu/kgD2/hU/rHUxrM=;
+        b=Z7/siyP6YKv9zPzI97YMQIlN5dfnIEgD6zi0y9pLEUneSTsfBuGCBpS1RVzfMXZtt5
+         g3+hjuMy1MNnZ7rOYx4ZnRLtGmSSecG1sMTi/Cr/Vt0DEq43iofq5ZPx8CAugi1KaeHo
+         1XcjGb4GLHPw6I3F6nJEtKo8kC4W8Tbb039QDCf5Nf5IlLZa1TwSAUeDLP+fNhyetDcb
+         hipL2ip6sWssCMlEQgPmQaqTMhBKM0OMa5GH9sQSX+x99gFl6p0UvJIkr4eDE9tPO5gV
+         2gYni0SIK3XlNO8SUJoiRbzquV37J7xHzmc6qQvqqqMvjRQRTNHJ+1iRofx6sU1F+yiE
+         YK7A==
+X-Gm-Message-State: AOJu0YzZl93N8i9KbuA8VZKJQfp6jreNc+2ShQU3YWMa/ZMStZmxrDug
+	gv3ydlFaTPJHpYqkDoix2AQRKiHpnxfkPqr64SfEKjV41CLgfliFawhsFiLtW5PidjLKFNeL7KV
+	XA/BDfzF0JN7dcrg+Hb4ARJwcHnOCiky/
+X-Gm-Gg: ASbGncusSXh+hBelEBqMcrwLPwmaJUbILhupCgBw+JMob37q3yv2XDV2oXwjaE4EKTw
+	1lBDMQtFI58enr4v0Wvfk5Fxkwtv9xiPHGT3T
+X-Google-Smtp-Source: AGHT+IH6hqFu7xcAx3Vpg/r4eXWeOKyVSGug38vkddAbBEGZghcca+7b268NMvzq7DmMNpTzL3uCX/zauV/Xk0hyNfo=
+X-Received: by 2002:a05:651c:508:b0:303:4589:d700 with SMTP id
+ 38308e7fff4ca-30468517a24mr158015901fa.5.1736079146252; Sun, 05 Jan 2025
+ 04:12:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: Ross Goldberg <ross.goldberg@gmail.com>
+Date: Sun, 5 Jan 2025 07:12:14 -0500
+X-Gm-Features: AbW1kvZpB0-lBSTxp1S_2VIJo_tPX5Iv4zh-TGJ8rkzgo6YMxTi_4aXuZM3NOy0
+Message-ID: <CAAEcvMp8obN4b-zpG4wUtt7-O17j4mEMSHLbu0wZ0XWUKKn6Tw@mail.gmail.com>
+Subject: Add --untracked-is-dirty option to git describe
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Could you possibly add an option like --untracked-is-dirty to git
+describe? (the name can obviously be changed to whatever you think is
+best)
 
-Bence Ferdinandy <bence@ferdinandy.com> wrote:
+From what I gather, git describe --dirty[=<mark>] applies to deleted &
+modified tracked files, regardless if the change is staged or not, but
+only to new files if they are staged. If an untracked file that is not
+ignored by git exists in the repo, it doesn't seem to trigger
+--dirty[=<mark>]. Please let me know if my understanding is incorrect.
 
-> @@ -1584,10 +1584,12 @@ static void set_head_advice_msg(const char *remote, const char *head_name)
->  	const char message_advice_set_head[] =
->  	N_("Run 'git remote set-head %s %s' to follow the change, or set\n"
->  	   "'remote.%s.followRemoteHEAD' configuration option to a different value\n"
-> -	   "if you do not want to see this message.");
-> +	   "if you do not want to see this message. Specifically running\n"
-> +	   "'git config set remote.%s.followRemoteHEAD %s' will disable the warning\n"
-> +	   "until the remote changes HEAD to something else.");
-> 
->  	advise_if_enabled(ADVICE_FETCH_SET_HEAD_WARN, _(message_advice_set_head),
-> -			remote, head_name, remote);
-> +			remote, head_name, remote, remote, head_name);
-> 
+My proposed --untracked-is-dirty option would make untracked files
+that aren't ignored by git trigger --dirty[=<mark>]. It would only be
+valid if --dirty[=<mark>] has been specified. If you don't want to add
+in a whole new option, you could have an alternate syntax for dirty
+that activates this proposed behavior, maybe --dirty:[<mark>] (the =
+has been replaced by a : to activate considering untracked non-ignored
+files as dirty)
 
-Seems like the config is unsupported to be feed a variable named "head_name"?
+Are there any other categories of file statuses that someone might
+want to be considered dirty? If so, then any solution should take them
+into account, too.
 
 Thanks.
-
