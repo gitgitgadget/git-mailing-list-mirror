@@ -1,109 +1,159 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E790150285
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 22:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387D31E87B
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 22:58:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736202924; cv=none; b=np0m5RNiwlebh/ycy+OXJuOIPQD9EMbMxbm0skwE/1HVeQcRNoQei0ePvAeo9oo0wfK8AjapPq8d8i3OIIoeT653ZIgQX/CBUGKI7jm8SI/XTrN3vuDagC8OiqBvHzq/L6ddZLbcA1L1l1lgjzGGb95J821X3XKpM8pEpgyiv28=
+	t=1736204282; cv=none; b=Qd2Q9TpfOcG2GVogq/vefrmH1xoA8uM/LEmsIY6vBSZPs8lF7dRGvcdVvOAGqqeJVAwWiLRLuFj/2+9EoU2eDUzKBmiMWbVezsTrTrKgkldqr8xnCXtYgQgcX1Zmp+vsuV6bNb9M8zuPt2rOCmVBwr0FubFB4HcNU4EzvlpcuyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736202924; c=relaxed/simple;
-	bh=EQMpGptMBbJ7eDFRyOQVXOXW8u1T8/JW6FajqM/mPiw=;
+	s=arc-20240116; t=1736204282; c=relaxed/simple;
+	bh=X7tjpr79/hRLjKNIrIPAWphrZ0GiancIh0tli0ESL8o=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eKNW9thEer1V0QTyPW4jNVPNzGnajUbX+Zf1OQlb5yee8monUm7mMahgfA/Aiev8HvYY4ZT5MvN9BiHOqFWB2CmPNKEWo34fuF5TsnjzgEOvNr3jEZPk1G3+wbN3nL0RTb2a8FuZwQ0NntYE70MPXdOYXK+8hE0wI0NWwZ2b7/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	 To:Content-Type; b=LsXlfifBAmcBx/wNuek2Fq2JDGGZvktNf7aqKIyskWk0hj/KIxMOmtFUljZrFHFSqKke8Bxa+0Kc6NwOKHn0dO+h/QIT5Kt8Ny2jdjG5BjcX6diFTma4Gyubkx1C7CJZwtR5OZfScMvsXK5vEzAhYVMylONW818O30z7y3o9qDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KFc/loOq; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6df8f7f9442so281736d6.0
-        for <git@vger.kernel.org>; Mon, 06 Jan 2025 14:35:22 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KFc/loOq"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-aaf34ec42a5so88327566b.3
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 14:57:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736204278; x=1736809078; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ux11Di+0MrO0HZRTQIRdedrnI5u6gAa3y/5inHNMCd0=;
+        b=KFc/loOqR6179z3YkVcL/mK3iGi6fyv1I8S68qPhUtKdD/yduN2LxPEzhQKU+nFK5s
+         dtHbHQlef3yL2/ORkd1RsVfshBstnkzt8C5WHGTmIOQXezWf6qWHfQhtb0zeFJnZFE+n
+         SxOdHWGS2T65zOUgbD7p1ZWrB4c0Iz59o2aHHXeZC92H0Zrn81tlSVzklIwSM/LH/8KK
+         +stegw+B26aJJLGdaW0DYjTy1BeHXRwGZ5J2Mz0K7ECgvircvvrtU0R1e/PaHgZ3Eea7
+         3nrEtGkGnvENIj7SDvXv0qsG9LzXiKVlFu1MV/FJpeiwimM8kAO95DBNuxZIs0LXBVZm
+         qXjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736202922; x=1736807722;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dtm1T3H91NhGOAhB0G4WVmf/lK6sxwnA3cp26JEClos=;
-        b=h71vUTqFO/OAXIDMiQT8fWIsep1XI562XKY4rFo+cfph80t//cCYL3MYxRFheJwMYh
-         wjnJijU3KRn+ul7ZP5z291flFAQDdvE6qDrL9LabD/Y9j5bIBxsIfFkkhitol6mlvWBM
-         EKAwvDg0u4WdbJoAoGLCyffqO8fcWvoAG3fzm5JKyKQrYnvJj0GbE8eiCytkD7COxJ0l
-         tP0NlDH6pnXn5++2zLBkNXue7HBbjiHMhwhvp5PNkXTtFVUGNU2PVQVJRgx/7X+zM+z9
-         xR9ptuZzrboJ0rFvspd93LZLijY6jseGrXH7qFpqpD7nGxUmOKoivHx17u15uC0DDAoP
-         2v/Q==
-X-Gm-Message-State: AOJu0YyuGAi31V//kSTMecEToP7DjmFjRKfBAKs+A3VEM9GQN8P1gtTL
-	wJKB1ZD7SsBZ6Ags24jF8a0iLvWZeG3HyLGLjxQBD3hobBHmKsOP9Bqa1v16qaYxQqNTniHMd+p
-	CoYjt8HbSdG+kdAtrXncNjlIgKlI=
-X-Gm-Gg: ASbGncvvJoMptyjs23yiAZ8SIQg51CxL0HO9jwsC6hHTnU3kfyuFPVGt6bVZTgTx94L
-	AlhwO99dT9XxHMohtifoV5OtmJ313uQMghkwU4KiBScnXVIHDy8VbOrQFRh+Cm/wYEiGoXnI=
-X-Google-Smtp-Source: AGHT+IHEiFyzJKEJNww6ecO9fzHbjIVE0DefCa9rNx7J3QOQ2kwbjk/U7Vk9NuRb7T9SR6qZFl6QOBk/OORCuAs/Qsc=
-X-Received: by 2002:a05:6214:27c2:b0:6d8:8915:bd8d with SMTP id
- 6a1803df08f44-6dd2339c746mr347604596d6.8.1736202921891; Mon, 06 Jan 2025
- 14:35:21 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736204278; x=1736809078;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ux11Di+0MrO0HZRTQIRdedrnI5u6gAa3y/5inHNMCd0=;
+        b=ONJAuTveboCFZUc1p7pXSUGmed4tjJHHV+AHynNEIHT62wpQkxbTNihgoyWqHQhqtl
+         6uuKLRNB7QVcYAMP3z+FHxW02nJ+/yB/xgMXUnfyDlSP4d4flr684kb8CxwYbXHUJHLP
+         y789H3MTGfXArZEP8+BzVGg8TU3FzMwd/FY5rpmkh/LlVP/+1SJjalzjYAkFRVQhNrUy
+         l/i0Gmdv6VRONkqW9f3THLyV3MB7TMsJeQ6ITLsgThkcGiVAWYPyabENCnrVvb+0iOQa
+         D7TjpovWwqzuXQVi166BDVa5CEw6qy7gglQ7CLlEJpntJqbmVdS+JYM0x0Lt63crKHVB
+         Ex4A==
+X-Forwarded-Encrypted: i=1; AJvYcCU0XJ17x1yTmFJoZfmQ1IttRt8YamYs7CmRyDHFmapqdQUNNaiEphzuzgDsq/zDlnd6igM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLf0Ce4gz8AR9ogv0cg7Rv0f1eoHZ+XagHsiK/Ov69iXGLyTCM
+	E1BYUDh2RFUvkAkVciBpnzb882no9ZDVNdZ4zLg8B0h8PAW8Q1qj9MtoS7kTfii23kE0mn/pVcC
+	oLgss5MK+g8QOT1tD6XET1vxYuVE=
+X-Gm-Gg: ASbGnctY8ZOzXDMQq+7TDy6eqBx5wzMEtP4not6Of7EzEH1ZoVKFZQ6GF6Fcc2/mwsd
+	wfoCCLdpjw6K5pguM5IhCQBmkOOl4W32BG8U6
+X-Google-Smtp-Source: AGHT+IHCl7n2ZSkUSgewLLyAaaM5rSyTJLG5hqFrDiUjqHPR2D3mHRjNXpNP1jPpy0kr9oRyNDkoVsxavrtYZgP0iiM=
+X-Received: by 2002:a17:907:9447:b0:aa6:35b1:5c02 with SMTP id
+ a640c23a62f3a-aac33514901mr1891334166b.9.1736204278250; Mon, 06 Jan 2025
+ 14:57:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com> <20250106103713.1452035-2-usmanakinyemi202@gmail.com>
-In-Reply-To: <20250106103713.1452035-2-usmanakinyemi202@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 6 Jan 2025 17:35:11 -0500
-Message-ID: <CAPig+cQz+2Q7Z=uMYvKNrK2MACQC130u5iiMcsUPjNTifeWSbw@mail.gmail.com>
-Subject: Re: [PATCH 1/4] version: refactor redact_non_printables()
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
-	ps@pks.im, johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
-	phillip.wood@dunelm.org.uk, Christian Couder <chriscool@tuxfamily.org>
+References: <pull.1842.git.1734729534213.gitgitgadget@gmail.com>
+ <pull.1842.v2.git.1736193131798.gitgitgadget@gmail.com> <Z3xaE_v45G447HQe@tapette.crustytoothpaste.net>
+In-Reply-To: <Z3xaE_v45G447HQe@tapette.crustytoothpaste.net>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Mon, 6 Jan 2025 22:57:06 +0000
+X-Gm-Features: AbW1kvYMvjYXImWdRx5jj_SajfRmfRxpfsAIlY_vCkIFRQocMwQvB61ygHg3GbM
+Message-ID: <CAGJzqsn6kV4LeYKk=qWu3GvbtNrJ5LG9LvbDVMQoHqibR9ieSA@mail.gmail.com>
+Subject: Re: [PATCH v2] credential-cache: respect request capabilities
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	M Hickford via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	M Hickford <mirth.hickford@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 6, 2025 at 5:37=E2=80=AFAM Usman Akinyemi
-<usmanakinyemi202@gmail.com> wrote:
-> The git_user_agent_sanitized() function performs some sanitizing to
-> avoid special characters being sent over the line and possibly messing
-> up with the protocol or with the parsing on the other side.
+On Mon, 6 Jan 2025 at 22:32, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> Let's extract this sanitizing into a new redact_non_printables() function=
-,
-> as we will want to reuse it in a following patch.
+> On 2025-01-06 at 19:52:11, M Hickford via GitGitGadget wrote:
+> > From: M Hickford <mirth.hickford@gmail.com>
+> >
+> > Previously, credential-cache responded with capability[]=authtype
+> > regardless of request.
 >
-> For now the new redact_non_printables() function is still static as
-> it's only needed locally.
+> That's the correct behaviour.
 >
-> While at it, let's also make a few small improvements:
->   - use 'size_t' for 'i' instead of 'int',
->   - move the declaration of 'i' inside the 'for ( ... )',
-
-Regarding the above two items...
-
->   - use strbuf_detach() to explicitly detach the string contained by
->     the 'buf' strbuf.
+> > The capabilities in a credential helper response should be a subset of
+> > the capabilities in the request.
 >
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> ---
-> diff --git a/version.c b/version.c
-> @@ -6,6 +6,20 @@
-> +static void redact_non_printables(struct strbuf *buf)
-> +{
-> +       strbuf_trim(buf);
-> +       for (size_t i =3D 0; i < buf->len; i++) {
-> +               if (buf->buf[i] <=3D 32 || buf->buf[i] >=3D 127)
-> +                       buf->buf[i] =3D '.';
-> +       }
-> +}
-> @@ -27,12 +41,8 @@ const char *git_user_agent_sanitized(void)
->                 strbuf_addstr(&buf, git_user_agent());
-> -               strbuf_trim(&buf);
-> -               for (size_t i =3D 0; i < buf.len; i++) {
+> No, it should not.  Otherwise, it's impossible for Git to know whether
+> the helper does or does not support the capability.  We rely on that
+> information to correctly pass data back when saving data.
+>
+> > diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+> > index bc22f5c6d24..692216cf83c 100644
+> > --- a/builtin/credential-cache--daemon.c
+> > +++ b/builtin/credential-cache--daemon.c
+> > @@ -134,17 +134,16 @@ static void serve_one_client(FILE *in, FILE *out)
+> >       else if (!strcmp(action.buf, "get")) {
+> >               struct credential_cache_entry *e = lookup_credential(&c);
+> >               if (e) {
+> > -                     e->item.capa_authtype.request_initial = 1;
+> > -                     e->item.capa_authtype.request_helper = 1;
+> > -
+> > -                     fprintf(out, "capability[]=authtype\n");
+> > +                     if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE)) {
+> > +                             fprintf(out, "capability[]=authtype\n");
+> > +                     }
+>
+> This part is not correct.
 
-... the original code appears to have already been using `size_t` and
-declaring the loop variable inside the `for` statement, despite what
-the commit message says. So, is the commit message out of date? Or are
-the patches out of order? Or something else?
+Thanks for the review. I'll revert this part and amend the commit message.
 
-> -                       if (buf.buf[i] <=3D 32 || buf.buf[i] >=3D 127)
-> -                               buf.buf[i] =3D '.';
-> -               }
-> -               agent =3D buf.buf;
-> +               redact_non_printables(&buf);
-> +               agent =3D strbuf_detach(&buf, NULL);
+>
+> >                       if (e->item.username)
+> >                               fprintf(out, "username=%s\n", e->item.username);
+> >                       if (e->item.password)
+> >                               fprintf(out, "password=%s\n", e->item.password);
+> > -                     if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_HELPER) && e->item.authtype)
+> > +                     if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE) && e->item.authtype)
+> >                               fprintf(out, "authtype=%s\n", e->item.authtype);
+> > -                     if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_HELPER) && e->item.credential)
+> > +                     if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE) && e->item.credential)
+>
+> This part may very well be correct.
+>
+> >                               fprintf(out, "credential=%s\n", e->item.credential);
+> >                       if (e->item.password_expiry_utc != TIME_MAX)
+> >                               fprintf(out, "password_expiry_utc=%"PRItime"\n",
+> > diff --git a/t/lib-credential.sh b/t/lib-credential.sh
+> > index 58b9c740605..324ecc792d5 100644
+> > --- a/t/lib-credential.sh
+> > +++ b/t/lib-credential.sh
+> > @@ -566,6 +566,21 @@ helper_test_authtype() {
+> >               EOF
+> >       '
+> >
+> > +     test_expect_success "helper ($HELPER) get authtype only if request has authtype capability" '
+> > +             check fill $HELPER <<-\EOF
+> > +             protocol=https
+> > +             host=git.example.com
+> > +             --
+> > +             protocol=https
+> > +             host=git.example.com
+> > +             username=askpass-username
+> > +             password=askpass-password
+> > +             --
+> > +             askpass: Username for '\''https://git.example.com'\'':
+> > +             askpass: Password for '\''https://askpass-username@git.example.com'\'':
+> > +             EOF
+> > +     '
+> > +
+> >       test_expect_success "helper ($HELPER) stores authtype and credential with username" '
+> >               check approve $HELPER <<-\EOF
+> >               capability[]=authtype
+> >
+> > base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
+> > --
+> > gitgitgadget
+>
+> --
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
