@@ -1,56 +1,56 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6FD20326
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 07:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F31E511
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 07:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736146811; cv=none; b=aHbl+aV9EfKkZPYOYXuyNlU7UFqXW+AI2pJQTWiOA0yrTQwnlUPowimhPVXHBN3kXCfp4Tq1CWDGdgUJ8ma0iZADKN40oCGvGybnnTU1eUBouWGM6n/+03Lyq+Q5PB8UDIoJcBCrSit0rS9ZnvpqMKo9LUg/wSGWtltkqupU3eI=
+	t=1736149106; cv=none; b=IU+6bQCJRlocbhrVkw60czTDoGS8AD509V4kSEumTRCM+rwK9rAiR1EohpxjCMTGuPULOeVVNL0nyNPiV6+PlfLu64ABmKog34C8PF8R4BNNNUXJJt5QMv+MJUkUUg+e4MZ4936mpj9+PNZn5IYw5wA6/bOi8u+WTfifpIvaS6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736146811; c=relaxed/simple;
-	bh=9nC9VlNu38lnOt3Bu/3YDP35yY9C+EPtgAGzGYWhOQ0=;
+	s=arc-20240116; t=1736149106; c=relaxed/simple;
+	bh=lm+KOtUaI5ibwXsJXVG5StGS8yvUjuifUSGWZWCcwSI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jS83l/2JRD2A7XKyB0ZPSmmIPgzi6Dtah84L29fTduAS2scrcti8lS8FK1gbrCXDhyhVlk+iPj1uSi3J8SIQs3YPtFqnqImFGgks/nziVNallfWTJVuduNQcno2vLudAq10WUqSsOgCkQL9/3jkhay38dhDjsg5qPRml/xxeIiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jWSo34iA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QKje6shn; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=LtYcjgIRJcTI00guer2uZwWdQRtBkrhIvh2tZyY6dxf8CGF0U0xTm2EWAe87jjiAKYbOWIYkJEX28Dxk1+AV043+SWTfEKzRQSATXtfCLrKlj1oGegYqzZLXjv94BoiC75E2ySb80neZISFOqJQrR5vTlv0eyoyWPfJtzJVmGGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZKwasmql; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvcIWKeW; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jWSo34iA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QKje6shn"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 74B121380169;
-	Mon,  6 Jan 2025 02:00:05 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 06 Jan 2025 02:00:05 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZKwasmql";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvcIWKeW"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 208581380949;
+	Mon,  6 Jan 2025 02:38:23 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 06 Jan 2025 02:38:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736146805;
-	 x=1736233205; bh=gVCHPWi9lMN9B/Yu9eIH8mHh3fiNQqrEp7TcLAvy7MA=; b=
-	jWSo34iAJ5Q67HqrCOHTxQx4nUo5hdbwCDURC6+X6PKRVrwI8n4JZFwCDd4TahNS
-	MU+vMiX/pR0blqyXuKfC2EfIXigPPbMCzQHH7WaAwMPnFcehpKZJYtXe/KcJNvy9
-	Q7T+s4PBjF+Z5EJLvM8BadOheiJLf3kxC9jxjfGFJB8kvzSkWhsKWZmS3M+Ola2I
-	mq+fhI4K/1YEDNw2DlDqPWwCGeQUMndV9eZ8AftdnLGkJajrOdnaS1NycbrrAeWN
-	H8EHLuighJnQXpQcyrjjbw+7AEOiYRWuitIMEkMh7EX5wU7mN5HOu1RNEVby+dD3
-	mmMI2fdtYvMPTHkQ710EHg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736149103;
+	 x=1736235503; bh=zR+0FhdSgNlytVF4B5Y1EcdifxWWznlm3Qn/FYiC6O4=; b=
+	ZKwasmqlL4kP4RGdqv/HkZAKBdrTXKDssHhkjUC1NNZw/0P828tI4CE2P3SKWgvn
+	p0OiTtfecHq/sG+xgN90aY39iLSrh4LP/E9uYnTdIAOAKHG6C26QTsVUFsClH2H+
+	qxO+kkCbjBDo43eY0HN7gsmBqJ4gIVIJS7ckHzUNwXZMu0tX0M0LFySr2gJFoE2o
+	Zwxju1rn2KPS79ip9dfnRQfpicfvqrEBREzFPYyX1zHVDhDm5L18NZJ88g0H2m3+
+	XTt6m7klF6QerQr0klA6TJJjNwRgtaR9E8RWUQTFxZYPF+O+aLlkYneXIMGIS6oO
+	Eahq/ZHRjMDKVEgkVQiNiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736146805; x=
-	1736233205; bh=gVCHPWi9lMN9B/Yu9eIH8mHh3fiNQqrEp7TcLAvy7MA=; b=Q
-	Kje6shnSTKXpBXjxXkhvrQ0vkI6qC3uFa2BRymfL8abLOi9BeXeSD/Ol/DiRJMF+
-	kwm0l90/l7EkJP6Ai8ohS+QOcTiLbrMgpBHYkuZH2Eu9DUOFKJu9WP/6i9rT/xyz
-	131sIj0ChXuDOLI2UZ+sDgtIOhhHaMQui+ZFbdpJZAnXjPWkErqy2eBuJMmhkVl+
-	0DaESA4fhJNo92WB7dy57eVCwuw7Ss9LVmoZSG+9DvIb3kvFS9S7ThDfGImrBsq9
-	BMHgakzeNqR85wdd8LU9RtOWHiO7m0r8qEasWDG0NSWayIf629QapzLjtX+7bC1K
-	97XW3wqSiuc2XCs81UNiQ==
-X-ME-Sender: <xms:dX97ZwXMzD3Ht7RD-NuN6ZCyj2oC7dYC3m8_ACxb7vKkkScaRFbnzg>
-    <xme:dX97Z0l4EQLf0RYEZUREUFFKxnN9LwCzrYln-7lMO6Nj69jda3Kjc-rgV2r129Sqt
-    Knl38wDOyE-agIX0g>
-X-ME-Received: <xmr:dX97Z0YlLryt3MsyO4tgY5aIEGGII0MtWutAetA4cpeI323aO5-JenCw60QspECjMdufTxvNHEuqu_PQos6X86AXgmJEh1HzfcNbxrwd19HPSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefledguddtvdcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736149103; x=
+	1736235503; bh=zR+0FhdSgNlytVF4B5Y1EcdifxWWznlm3Qn/FYiC6O4=; b=j
+	vcIWKeW53eBelc6fYy3/GsXMZEj30X2LKk5sra9ptJHOWN3dF5SnkhhLUpHiizUQ
+	yo4c4niE7jR2zS++1Lc7FTpJXdaiOW0RRp4ZyypY2SN4O2bpt2xA5KF1K5M+ufBC
+	t4htOvFun6mp0z6/aINdGBZkXs1FHhcIkW2ELWww70u2FrIOHEJzn0CK0ea01fxQ
+	d2OLESp2tXQ3PJ+P0DROinIFt3SbZ7a53wPSMPOwh+wJ+N/g6aYxB89eR/E2zhXD
+	sUbtkEQASGMKMX6lVTYUqQrNvgvkl9h+G27Ji6L53a5HtAmRrvhqnlT6VcJEIRhK
+	LbJXOWRmaG2rb2P1HLrlw==
+X-ME-Sender: <xms:boh7Zx2nvbtaqKvKY10RN7AVTYqaMZdGk784kJoLKgMs_9AFBgFcvA>
+    <xme:boh7Z4FRltDpyaA7lHnXQEIR4q5SCS6_fRACXImz1FHKBIeuUclp5pcDBUvRoaWb7
+    uEPHbYje-wbIeTjXA>
+X-ME-Received: <xmr:boh7Zx7yhtW9WZHxECBFt_qPLPlqIME9_DM4pxcLLnINzkjmIhjMwoxBOFtdV13cVUULQjlrIC5s_uV-ylaliLqliZtNF48mHXsnfgVaPmTPZw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefledguddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
@@ -61,25 +61,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefledguddtvdcutefuodetgg
     pehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtg
     hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
     ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:dX97Z_UujuqVQ_WyqNH4fjnttH6gc740lUPkR52Zqd1h7VvJEY1ZaQ>
-    <xmx:dX97Z6ng2Zi3XCYVXs7tyBbA0LLH3-oy9eyXO_hxUaIhDoaRK57Z6Q>
-    <xmx:dX97Z0caT__lRyJaRJOxWye65mHJrfbAABRvUvc5Cx8yNdC-bvMwig>
-    <xmx:dX97Z8GLWwTUeOHQs3cMfsw0-QssBMCJ903CXSCBJCRVe0y3QnDtvA>
-    <xmx:dX97Z8jhb9VMxdEFgjv2GsBxPm-elbylXeKP7GmTJKG5Lz0TNS7ethoz>
+X-ME-Proxy: <xmx:b4h7Z-12h6SlwMo2-74fM8jqxSzFT-mnaQdAO4rWd4GUlmEmLtvJog>
+    <xmx:b4h7Z0FVRiecb30htnKf0j0je2hrSFKzp41RYfqm7UO0KoWeO0Io2g>
+    <xmx:b4h7Z_9OXWDgtu_t6CVDIA4gxc-RwXHSAy2OykfTpidjvlrBogr6Qg>
+    <xmx:b4h7ZxlOZURwrd9nC4f4OKxW4kSUV0yQ24kp_P5e1SMaOVk3Mlg6_g>
+    <xmx:b4h7Z4D1mhFUbPys3Ys-VBtJPpCB3z2IdMI8tPVMdEdAwM7dG0ldnK0U>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 02:00:04 -0500 (EST)
+ 6 Jan 2025 02:38:22 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 47676500 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jan 2025 07:00:02 +0000 (UTC)
-Date: Mon, 6 Jan 2025 08:00:01 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 099836e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jan 2025 07:38:20 +0000 (UTC)
+Date: Mon, 6 Jan 2025 08:38:19 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,
 	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] doc: git-notes.txt: migrate to new documentation format
-Message-ID: <Z3t_GvqfZL9y-_9p@pks.im>
-References: <pull.1846.git.1735924216993.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/3] doc: git-commit: apply new documentation guidelines
+Message-ID: <Z3uIZA0bIXzaUxlH@pks.im>
+References: <pull.1845.git.1735912046.gitgitgadget@gmail.com>
+ <dfd907fc3147b438222bbfad9b0a7ca61df642a5.1735912046.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,13 +90,14 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <pull.1846.git.1735924216993.gitgitgadget@gmail.com>
+In-Reply-To: <dfd907fc3147b438222bbfad9b0a7ca61df642a5.1735912046.git.gitgitgadget@gmail.com>
 
-On Fri, Jan 03, 2025 at 05:10:16PM +0000, Jean-Noël Avila via GitGitGadget wrote:
+On Fri, Jan 03, 2025 at 01:47:24PM +0000, Jean-Noël Avila via GitGitGadget wrote:
 > From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 > 
-> The git-notes manpage files were converted to the new documentation
-> format:
+> The documentation for git-commit has been updated to follow the new
+> documentation guidelines. The following changes have been applied to
+> the series of patches:
 > 
 > - switching the synopsis to a synopsis block which will automatically
 >   format placeholders in italics and keywords in monospace
@@ -103,58 +105,76 @@ On Fri, Jan 03, 2025 at 05:10:16PM +0000, Jean-Noël Avila via GitGitGadget wrot
 > - use `backticks for keywords and more complex option
 > descriptions`. The new rendering engine will apply synopsis rules to
 > these spans.
+> 
+> Additionally, some option descriptions have been turned into
+> imperative mood to make them more consistent with the rest of the
+> documentation.
 
-I think it might be a bit easier to send related changes like this and
-your changes to git-restore(1) in a single patch series going forward.
-It allows the reviewer to bundle related reviews together, which
-requires less context switching. It also allows them to more easily
-refer to similar review feedbacks sent for preceding patches.
+Same comment here regarding the commit message as on the other two
+series. We should use imperative mood for it, as well :)
 
-Other than that I've got the same comments here regarding the style of
-the commit message as with your git-restore(1) patch. Ah, I also noticed
-that the subject should probably be amended because we don't typically
-specify multiple subsystems with colons. For example:
-
-    Documentation: migrate git-restore(1) to new style format
-
-> diff --git a/Documentation/config/notes.txt b/Documentation/config/notes.txt
-> index 43db8e808d7..70859f5c574 100644
-> --- a/Documentation/config/notes.txt
-> +++ b/Documentation/config/notes.txt
-> @@ -26,27 +26,27 @@ globs.
->  A warning will be issued for refs that do not exist,
->  but a glob that does not match any refs is silently ignored.
->  +
-> -This setting can be disabled by the `--no-notes` option to the 'git
-> -log' family of commands, or by the `--notes=<ref>` option accepted by
-> +This setting can be disabled by the `--no-notes` option to the `git
-> +log` family of commands, or by the `--notes=<ref>` option accepted by
->  those commands.
-
-Should this rather use "to the linkgit:git-log[1] family of commands,
-..."?
-
-> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-> index 84022f99d76..02a3495986a 100644
-> --- a/Documentation/git-notes.txt
-> +++ b/Documentation/git-notes.txt
-> @@ -33,34 +33,34 @@ ENVIRONMENT sections below.  If this ref does not exist, it will be
->  quietly created when it is first needed to store a note.
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+> index c822113c111..b08a398e31d 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -58,139 +58,139 @@ summary of what is included by any of the above for the next
+> --z::
+> ---null::
+> +`-z`::
+> +`--null`::
+>  	When showing `short` or `porcelain` status output, print the
+> -	filename verbatim and terminate the entries with NUL, instead of LF.
+> +	filename verbatim and terminate the entries with _NUL_, instead of _LF_.
+>  	If no format is given, implies the `--porcelain` output format.
+>  	Without the `-z` option, filenames with "unusual" characters are
+>  	quoted as explained for the configuration variable `core.quotePath`
+>  	(see linkgit:git-config[1]).
 >  
->  A typical use of notes is to supplement a commit message without
-> -changing the commit itself. Notes can be shown by 'git log' along with
-> +changing the commit itself. Notes can be shown by `git log` along with
->  the original commit message. To distinguish these notes from the
->  message stored in the commit object, the notes are indented like the
-> -message, after an unindented line saying "Notes (<refname>):" (or
-> -"Notes:" for `refs/notes/commits`).
-> +message, after an unindented line saying "`Notes (<refname>):`" (or
-> +"`Notes:`" for `refs/notes/commits`).
+> --F <file>::
+> ---file=<file>::
+> -	Take the commit message from the given file.  Use '-' to
+> +`-F <file>`::
+> +`--file=<file>`::
+> +	Take the commit message from _<file>_.  Use `-` to
 
-Curious. I'm not familiar with the modern best practices around where to
-apply what kind of quoting, so why is it "`foo`" here and not `"foo"` or
-`foo:`?
+I think it would make sense to move changes like this, where the actual
+wording changes, into a separate commit. That'd make it way easier to
+spot the non-mechanical changes from those that may require some
+discussion.
 
-Thanks!
+> @@ -257,19 +256,18 @@ default::
+>  The default can be changed by the `commit.cleanup` configuration
+>  variable (see linkgit:git-config[1]).
+>  
+> --e::
+> ---edit::
+> -	The message taken from file with `-F`, command line with
+> -	`-m`, and from commit object with `-C` are usually used as
+> -	the commit log message unmodified. This option lets you
+> -	further edit the message taken from these sources.
+> +`-e`::
+> +`--edit`::
+> +	Let the user further edit the message taken from  file
+
+There's a double space here. I was also wondering whether this should
+say _<file>_ here to further clarify that this refers to the same
+placeholder as the placeholder in `-F`. Might be confusing though, I
+dunno.
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index ef5e622c077..a7315ed67cc 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -44,7 +44,7 @@
+>  #include "trailer.h"
+>  
+>  static const char * const builtin_commit_usage[] = {
+> -	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
+> +	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]\n"
+>  	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]\n"
+>  	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
+>  	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
+
+I guess this change is required to make t0450 happy?
 
 Patrick
