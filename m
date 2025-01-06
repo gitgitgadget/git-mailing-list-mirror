@@ -1,187 +1,435 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35B11E0B7D
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 20:51:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDF01DFE1D
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 20:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736196668; cv=none; b=p424Z5cGOB88qrKlkWmEKNYxbIkdEixrEUzscBrVtoEjUmHFE4g9ufsqxAnmNN5O9NjN5QgTnpswbLsX213DEc8TPXl6ylMsC9QTcRA6BZIxYDUTMFvwDvWl5w2wTrPPEthShOcURDCtcQnHvELJvTetX3S5J8FmFCnA/Y7itfs=
+	t=1736197068; cv=none; b=CuoSjSP8W9it51vGNetvVf31U+lVBwho6fiTkr4c0AyptJU/UY6DYgu2Ee1MHnomgy77iS1XmEK5RQRwpxDaRXC+0tSpVpnjPB5YIjysikLBIcLOlGJiWPubD4GqtwIC7OnWcWrJ8OrESZgXsLB4sGjOEGBFRwP9EId6xyRICQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736196668; c=relaxed/simple;
-	bh=CnHclgGlR0WAI+/HgNvrzyGvWgO6MI4nUv9Q4N00XTE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l8JcjAFM1a2/3g8zL1fEE5XEctiHDhSzG0pd40vAM9wqP2riC24I+xxZbUt9ONb30lUvYUFXDhcqiqbCz78myswJk/9EVh4r3sFK8UhFUNIOeNfM0tvoypiRAiRIVQoTEWygY6IRGvgahW2FPRqyiXLw5wGKnj8o8lkNXQ0l13s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ToYZ74au; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736197068; c=relaxed/simple;
+	bh=nTIaaTRbilIXKHZm4hrUMXaaQgo2xDNK4BJgWBwoOB4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ovrtI4Ci1yLNHX8O2bL5CDTAjjZySvTHwCaEhbjh5aK3HCeDgX4PoW91uPpXPfXTzZDnx+gRBze9P0Q/EIdCaTjq1lSoD5LgenMfXDeAyUQYsOk4CRhN7MoieIzPP8l8OOy+RvPZhqX6ayZjXNxjR9mPpzvR75Ux6nCN0NisJTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=nulW/CIN; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ToYZ74au"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e53c9035003so18167195276.2
-        for <git@vger.kernel.org>; Mon, 06 Jan 2025 12:51:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736196666; x=1736801466; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wUve0VZUElP9Xkgt1uWiwF/aQv/QgvHd9iHHZF5Dwo4=;
-        b=ToYZ74autWtSJ+udBIVeHcSLggUPas5YTUtfkHa32Q7A7sP5mc6K1CF8dECnoU08ZS
-         FjJtz5eEYIqHlNSHqkbFTkzBHSt67r7oEOug8iJcZbsItk/PSKp757TvvsKd2ajLF2Dp
-         f6mIfNvH/Vwi9WwSvkV+scFLzo3zFnG2zPIdPyGG5+LKWXs7gKwSG/ahNlUqvCeBUlLM
-         0Hun/vMNbU6aD99FjzroXZDkntgyZT7803CBlONvavh0IN3W/V1UKM9IMa6vOsoVvSnu
-         vZyCc69nU93QgcSDfNTbB6VjILBzphZVH1/YQrI8lt2APp+Mzh6ncM+9LX1aG6itkHda
-         1G6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736196666; x=1736801466;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wUve0VZUElP9Xkgt1uWiwF/aQv/QgvHd9iHHZF5Dwo4=;
-        b=cAAjePfMygL74SfUPLiWPEdd+MxHD0m8VqVkhtERp6TRtJnq7101c2F82ghYyh2B5Z
-         v8RcUwzozco9asHHUMDYNuXseLiGoMtPHdHHVrcl+zIz4JvMXMi58VaRjdU/Ikmh7das
-         +kYggbsGe6K0vx9soy0FjTHUaRWmPI+S9+0ZoJYySDO9uR9Fo08JghRtP6HJDhNLj4xm
-         /Z+nfsYYo4z6aDYEGbJBti4R9rEQcMt+3QDbbh6pD9oUipIojjRLFJ1J+JjRO/GndZvZ
-         y2pqfCdCxSBSERE97ad9JRmc9cCNHsB0DYBPBeLIY3dcGAtHsttBL6OPJUVP2YTtYn5V
-         DyMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXTZnF95Sw23MiZ6WjrKkhnFixEZmHeBjq+sTvZSCDJ1Vzgmf1m5zWwvm9ecX9hIRdNSR4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBgHxkUakqyRxryRU0AMDmN0aQgNzUzxDYNPHGR/4ms4qTgkDK
-	eZgeSysKCf7m+jtkEUQIyvgOQuNp4s4wXfaN8a75p9bXq4539eKEmDM7CGzMXjOb3E1DNaIA3Pm
-	s2hvR66x/5AajjO4rfB3JJKwnRkU=
-X-Gm-Gg: ASbGncsabVwh1G5djIVfEvwuIf5YTkZVvH61ydgwvw6ggnCtH960OqOezA+nUA7FZVg
-	l95CAuBBcyu8A6xPR8YHrnlkGzUJWlui+kG6m
-X-Google-Smtp-Source: AGHT+IFmsH4HYQB0K5e14Lc88osV9wLGnsZehfeRPseeDIRYQd66tKslL+my583c/5jEJ6kdzzqSwD5nRmm4J5+yV4I=
-X-Received: by 2002:a05:690c:490c:b0:6e3:323f:d8fb with SMTP id
- 00721157ae682-6f3f81152c3mr438253497b3.14.1736196665732; Mon, 06 Jan 2025
- 12:51:05 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="nulW/CIN"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1736197060;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tM19Ej9yeU5uow0qgLJNEe9hEzGwHHOb0ItKVSH+nXM=;
+	b=nulW/CINo56Rm53VaSoLabLDr0QJLXYQQyDqplSpzJhRaOUdFvgPgurEl+d5iJsRBAy0FJ
+	c7szQJKLMx9JDmiVPYBjnPzQJgWoAi0qvA2zjyP8U5+kYjw0RWs6RiJForqoOxpKFaVO0m
+	On++PMIDRFx/m8n4/2Okp99t7TkR/9Y=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 01/14] progress: stop using `the_repository`
+In-Reply-To: <20241217-pks-use-the-repository-conversion-v1-1-0dba48bcc239@pks.im>
+References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+ <20241217-pks-use-the-repository-conversion-v1-1-0dba48bcc239@pks.im>
+Date: Mon, 06 Jan 2025 21:57:26 +0100
+Message-ID: <87v7urk6dl.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFOYHZDQs-mftqLQn5HiFgBWcFN6Z-WDscJt=zVLRyGTo36=HQ@mail.gmail.com>
- <20250106065121.GA8844@tb-raspi4> <xmqqsepw0xk7.fsf@gitster.g>
-In-Reply-To: <xmqqsepw0xk7.fsf@gitster.g>
-From: Chris Packham <judge.packham@gmail.com>
-Date: Tue, 7 Jan 2025 09:50:54 +1300
-X-Gm-Features: AbW1kvbHbpQPS2g61w0DfqEUDrgkNgrFLerRGbrHVOjwJTQj4xflFgh_9XFRmNY
-Message-ID: <CAFOYHZCWhwmHDUsB0jyz+kDLwMOtOX_W+8PXisi2NBP=HYARVA@mail.gmail.com>
-Subject: Re: Testing for existence of a remote branch from a script
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>, 
-	GIT <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Jan 7, 2025 at 4:30=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->
-> >> changes are fetched from one branch (e.g. 'foo') but are pushed to a
-> >> different one ('foo_incoming'). Our CI system runs to test the changes
-> >> and when they pass 'foo_incoming' is merged (fast-forward most of the
-> >> time) into 'foo'.
-> >> ...
-> >> Is there a better way of checking for the existence of a remote branch=
-?
-> >
-> > I may have missed something, would that work:
-> > git fetch -p
-> > git branch -r
->
-> Or "git ls-remote origin refs/heads/foo-incoming" and see if it
-> yields anything?
+Patrick Steinhardt <ps@pks.im> writes:
 
-git ls-remote --exit-code origin refs/heads/foo_incoming would work
-for me. And I think it would save me a fetch to get past one
-bootstrapping issue.
+> Stop using `the_repository` in the "progress" subsystem by passing in a
+> repository when initializing `struct progress`. Furthermore, store a
+> pointer to the repository in that struct so that we can pass it to the
+> trace2 API when logging information.
+>
+> Adjust callers accordingly by using `the_repository`. While there may be
+> some callers that have a repository available in their context, this
+> trivial conversion allows for easier verification and bubbles up the use
+> of `the_repository` by one level.
+
+I'm not sure I agree here. Below I've marked all places where I think we
+are able to get the repo from somewhere else than `the_repository`. For
+example, looking at diffcore-rename.c, the already present calls to
+trace2_*() use `options->repo`, why shouldn't we do the same?
+
+I understand what your angle is, you want to bubble up `the_repository`
+and make the changes easier to reason about, but it feels to me we're
+creating extra work. If most people disagree with me, I'm happy to take
+your approach.
 
 >
-> The "workflow" makes me wonder how it would be bootstrapped, though.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/blame.c          |  4 +++-
+>  builtin/commit-graph.c   |  1 +
+>  builtin/fsck.c           | 12 ++++++++----
+>  builtin/index-pack.c     |  7 +++++--
+>  builtin/log.c            |  3 ++-
+>  builtin/pack-objects.c   | 21 ++++++++++++++-------
+>  builtin/prune.c          |  3 ++-
+>  builtin/remote.c         |  3 ++-
+>  builtin/rev-list.c       |  3 ++-
+>  builtin/unpack-objects.c |  3 ++-
+>  commit-graph.c           | 20 +++++++++++++++++---
+>  delta-islands.c          |  3 ++-
+>  diffcore-rename.c        |  1 +
+>  entry.c                  |  4 +++-
+>  midx-write.c             | 11 ++++++++---
+>  midx.c                   | 13 +++++++++----
+>  pack-bitmap-write.c      |  6 ++++--
+>  pack-bitmap.c            |  4 +++-
+>  preload-index.c          |  4 +++-
+>  progress.c               | 34 ++++++++++++++++++++--------------
+>  progress.h               | 13 +++++++++----
+>  prune-packed.c           |  3 ++-
+>  pseudo-merge.c           |  3 ++-
+>  read-cache.c             |  3 ++-
+>  t/helper/test-progress.c |  6 +++++-
+>  unpack-trees.c           |  4 +++-
+>  walker.c                 |  3 ++-
+>  27 files changed, 136 insertions(+), 59 deletions(-)
 >
-
-Currently we require the first person to know what they're doing and
-do the initial push as `HEAD:refs/heads/foo_incoming` the CI tooling
-we have set up knows to create `foo` if it doesn't already exist.
-That's probably not too bad because for an unborn branch you'd need to
-say `HEAD:refs/heads/foo` anyway before subsequent pushes would work
-without the refspec.
-
-Our workflow does require some discipline as that first push should
-just be either an existing commit (when branching in an existing repo)
-or a largely empty "Initial commit" for a new repository. That all
-relies on a "gentlepersons's agreement" that the first push to one of
-these branches doesn't require review because there's nothing really
-to enforce that policy. Pushing to the non-incoming branch is
-restricted to the CI user via a hook on the server for plain git or
-with access permissions for gerrit.
-
-> When you add a new branch, "bar", to be pre-reviewed before getting
-> merged at the server side, you want people to push to
-> "bar-incoming".  Before the very initial update to "bar-incoming"
-> that pushes into "bar-incoming" and creates it, there wouldn't be
-> "bar-incoming" on the remote side, would there?  So "see if
-> foo-incoming exists and change the behaviour on the client end
-> accordingly" may not be a strategy to pursue.
-
-I know git has some tooling for a triangular workflow
-(branch.<name>.pushRemote) I'm not sure if that can be setup to push
-to a differently named branch. Some kind of branch.<name>.pushRefSpec
-might help if it could support *:*_incoming.
-
-The main thing I'm scripting on top of is Gerrit's magic refs/for/* so
-even if git supported our version of a triangular workflow workflow
-I'd still need something to decide when to use refs/for/foo or
-refs/for/foo_incoming when dealing with Gerrit.
-
-> If we wanted to support the "workflow" natively, the way we would do
-> so would be to introduce a protocol capability that allows the
-> server side to advertise:
+> [snip]
 >
->     If you want to update branch B, you are not allowed to do so
->     directly.  Instead, you are expected to push your changes to
->     update 'refs/for/B'
->
-> and then "git push" on the client end would notice the capability
-> and turns "git push origin B" (or, more likely, the user is on local
-> branch B that is to build on the remote branch B from 'origin', and
-> "git push" with no arguments would do the right thing) into such an
-> update.
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index 0196c54eb68ee54c22de72d64b3f31602594e50b..7a4dcb0716052ff1b9236ea66b8901960fe1c55d 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -197,7 +197,8 @@ static int traverse_reachable(void)
+>  	unsigned int nr = 0;
+>  	int result = 0;
+>  	if (show_progress)
+> -		progress = start_delayed_progress(_("Checking connectivity"), 0);
+> +		progress = start_delayed_progress(the_repository,
+> +						  _("Checking connectivity"), 0);
+>  	while (pending.nr) {
+>  		result |= traverse_one_object(object_array_pop(&pending));
+>  		display_progress(progress, ++nr);
+> @@ -703,7 +704,8 @@ static void fsck_object_dir(const char *path)
+>  		fprintf_ln(stderr, _("Checking object directory"));
+>  
+>  	if (show_progress)
+> -		progress = start_progress(_("Checking object directories"), 256);
+> +		progress = start_progress(the_repository,
+> +					  _("Checking object directories"), 256);
+>  
+>  	for_each_loose_file_in_objdir(path, fsck_loose, fsck_cruft, fsck_subdir,
+>  				      &cb_data);
+> @@ -879,7 +881,8 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+>  	if (show_progress) {
+>  		for (struct packed_git *p = get_all_packs(r); p; p = p->next)
+>  			pack_count++;
+> -		progress = start_delayed_progress("Verifying reverse pack-indexes", pack_count);
+> +		progress = start_delayed_progress(the_repository,
 
-For the most part we're happy with using a pre-receive hook on the
-server to block updates when required. We're able to put out an error
-message that tells the user to push to foo_incoming.
+I think we should use `r` here.
 
-Having some kind of config that made `git push` do the right thing
-would be great as it would save the user some typing. I don't know how
-much advertising from the git server this would really require (we
-could easily update our reject hook to advertise some `git config`
-settings).
+> +						  "Verifying reverse pack-indexes", pack_count);
+>  		pack_count = 0;
+>  	}
+>
+> [snip]
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 0df66e5a243390bc1224b28e2b55c541f9d93fb1..2a2999a6b886905276a0c39dda6135f0c92aa361 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1534,6 +1534,7 @@ static void close_reachable(struct write_commit_graph_context *ctx)
+>  
+>  	if (ctx->report_progress)
+>  		ctx->progress = start_delayed_progress(
 
+Shall we use `ctx->r` here? And same for all other changes in this file.
+
+> +					the_repository,
+>  					_("Loading known commits in commit graph"),
+>  					ctx->oids.nr);
+>  	for (i = 0; i < ctx->oids.nr; i++) {
+> @@ -1551,6 +1552,7 @@ static void close_reachable(struct write_commit_graph_context *ctx)
+>  	 */
+>  	if (ctx->report_progress)
+>  		ctx->progress = start_delayed_progress(
+> +					the_repository,
+>  					_("Expanding reachable commits in commit graph"),
+>  					0);
+>  	for (i = 0; i < ctx->oids.nr; i++) {
+> @@ -1571,6 +1573,7 @@ static void close_reachable(struct write_commit_graph_context *ctx)
+>  
+>  	if (ctx->report_progress)
+>  		ctx->progress = start_delayed_progress(
+> +					the_repository,
+>  					_("Clearing commit marks in commit graph"),
+>  					ctx->oids.nr);
+>  	for (i = 0; i < ctx->oids.nr; i++) {
+> @@ -1688,6 +1691,7 @@ static void compute_topological_levels(struct write_commit_graph_context *ctx)
+>  	if (ctx->report_progress)
+>  		info.progress = ctx->progress
+>  			      = start_delayed_progress(
+> +					the_repository,
+>  					_("Computing commit graph topological levels"),
+>  					ctx->commits.nr);
+>  
+> @@ -1722,6 +1726,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+>  	if (ctx->report_progress)
+>  		info.progress = ctx->progress
+>  			      = start_delayed_progress(
+> +					the_repository,
+>  					_("Computing commit graph generation numbers"),
+>  					ctx->commits.nr);
+>  
+> @@ -1798,6 +1803,7 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+>  
+>  	if (ctx->report_progress)
+>  		progress = start_delayed_progress(
+> +			the_repository,
+>  			_("Computing commit changed paths Bloom filters"),
+>  			ctx->commits.nr);
+>  
+> @@ -1877,6 +1883,7 @@ int write_commit_graph_reachable(struct object_directory *odb,
+>  	data.commits = &commits;
+>  	if (flags & COMMIT_GRAPH_WRITE_PROGRESS)
+>  		data.progress = start_delayed_progress(
+> +			the_repository,
+>  			_("Collecting referenced commits"), 0);
+>  
+>  	refs_for_each_ref(get_main_ref_store(the_repository), add_ref_to_set,
+> @@ -1908,7 +1915,8 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
+>  			       "Finding commits for commit graph in %"PRIuMAX" packs",
+>  			       pack_indexes->nr),
+>  			    (uintmax_t)pack_indexes->nr);
+> -		ctx->progress = start_delayed_progress(progress_title.buf, 0);
+> +		ctx->progress = start_delayed_progress(the_repository,
+> +						       progress_title.buf, 0);
+>  		ctx->progress_done = 0;
+>  	}
+>  	for (i = 0; i < pack_indexes->nr; i++) {
+> @@ -1959,6 +1967,7 @@ static void fill_oids_from_all_packs(struct write_commit_graph_context *ctx)
+>  {
+>  	if (ctx->report_progress)
+>  		ctx->progress = start_delayed_progress(
+> +			the_repository,
+>  			_("Finding commits for commit graph among packed objects"),
+>  			ctx->approx_nr_objects);
+>  	for_each_packed_object(ctx->r, add_packed_commits, ctx,
+> @@ -1977,6 +1986,7 @@ static void copy_oids_to_commits(struct write_commit_graph_context *ctx)
+>  	ctx->num_extra_edges = 0;
+>  	if (ctx->report_progress)
+>  		ctx->progress = start_delayed_progress(
+> +			the_repository,
+>  			_("Finding extra edges in commit graph"),
+>  			ctx->oids.nr);
+>  	oid_array_sort(&ctx->oids);
+> @@ -2136,6 +2146,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
+>  			       get_num_chunks(cf)),
+>  			    get_num_chunks(cf));
+>  		ctx->progress = start_delayed_progress(
+> +			the_repository,
+>  			progress_title.buf,
+>  			st_mult(get_num_chunks(cf), ctx->commits.nr));
+>  	}
+> @@ -2348,6 +2359,7 @@ static void sort_and_scan_merged_commits(struct write_commit_graph_context *ctx)
+>  
+>  	if (ctx->report_progress)
+>  		ctx->progress = start_delayed_progress(
+> +					the_repository,
+>  					_("Scanning merged commits"),
+>  					ctx->commits.nr);
+>  
+> @@ -2392,7 +2404,8 @@ static void merge_commit_graphs(struct write_commit_graph_context *ctx)
+>  		current_graph_number--;
+>  
+>  		if (ctx->report_progress)
+> -			ctx->progress = start_delayed_progress(_("Merging commit-graph"), 0);
+> +			ctx->progress = start_delayed_progress(the_repository,
+> +							       _("Merging commit-graph"), 0);
+>  
+>  		merge_commit_graph(ctx, g);
+>  		stop_progress(&ctx->progress);
+> @@ -2874,7 +2887,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags)
+>  		if (!(flags & COMMIT_GRAPH_VERIFY_SHALLOW))
+>  			total += g->num_commits_in_base;
+>  
+> -		progress = start_progress(_("Verifying commits in commit graph"),
+> +		progress = start_progress(the_repository,
+> +					  _("Verifying commits in commit graph"),
+>  					  total);
+>  	}
+>  
+> diff --git a/delta-islands.c b/delta-islands.c
+> index 1c465a6041914538bcb8be51c500653d8fa1a626..3aec43fada36f7052b825dcb2ac0e1ad79f028b7 100644
+> --- a/delta-islands.c
+> +++ b/delta-islands.c
+> @@ -267,7 +267,8 @@ void resolve_tree_islands(struct repository *r,
+>  	QSORT(todo, nr, tree_depth_compare);
+>  
+>  	if (progress)
+> -		progress_state = start_progress(_("Propagating island marks"), nr);
+> +		progress_state = start_progress(the_repository,
+
+Here we can use `r`.
+
+> +						_("Propagating island marks"), nr);
+>  
+>  	for (i = 0; i < nr; i++) {
+>  		struct object_entry *ent = todo[i].entry;
+> diff --git a/diffcore-rename.c b/diffcore-rename.c
+> index 10bb0321b10d5896aaa6a26a624d2066598bf51f..91b77993c7827f9ddc7b444b42f480b8209fd821 100644
+> --- a/diffcore-rename.c
+> +++ b/diffcore-rename.c
+> @@ -1567,6 +1567,7 @@ void diffcore_rename_extended(struct diff_options *options,
+>  	trace2_region_enter("diff", "inexact renames", options->repo);
+>  	if (options->show_rename_progress) {
+>  		progress = start_delayed_progress(
+> +				the_repository,
+
+Can we use `options->repo` here?
+
+If we do, we ideally should also replace occurrences of
+`the_repository->hash_algo` in this function, although I realize that's
+outside the scope of this commit.
+
+>  				_("Performing inexact rename detection"),
+>  				(uint64_t)num_destinations * (uint64_t)num_sources);
+>  	}
+> 
+> [snip]
 >
-> I am not suggesting that we jump to the above immediately.  But the
-> reason why I am bringing it up is because The "how would I see if
-> they have foo-incoming?" smells like seeking a way to implement such
-> a custom capability advertisement outside Git.
+> diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+> index 4f8be53c2bd75f83a0555e2a5510c2bbca07b36d..a06a1f35c619b3b01e63a506a6d4312e14cf181c 100644
+> --- a/pack-bitmap-write.c
+> +++ b/pack-bitmap-write.c
+> @@ -590,7 +590,8 @@ int bitmap_writer_build(struct bitmap_writer *writer)
+>  	int closed = 1; /* until proven otherwise */
+>  
+>  	if (writer->show_progress)
+> -		writer->progress = start_progress("Building bitmaps",
+> +		writer->progress = start_progress(the_repository,
+
+Unsure, but can we use `writer->to_pack->repo`? Although I see some
+trace2_* functions also use `the_repository`, so consistency in this
+function would be nice.
+
+> +						  "Building bitmaps",
+>  						  writer->selected_nr);
+>  	trace2_region_enter("pack-bitmap-write", "building_bitmaps_total",
+>  			    the_repository);
+> @@ -710,7 +711,8 @@ void bitmap_writer_select_commits(struct bitmap_writer *writer,
+>  	}
+>  
+>  	if (writer->show_progress)
+> -		writer->progress = start_progress("Selecting bitmap commits", 0);
+> +		writer->progress = start_progress(the_repository,
+
+Same, can we use `writer->to_pack->repo`?
+
+> +						  "Selecting bitmap commits", 0);
+>  
+>  	for (;;) {
+>  		struct commit *chosen = NULL;
 >
-> A few random thoughts.
+> [snip]
 >
->  - Would it be useful if we introduced the ability to advertise
->    "custom capabilities" from the receiving end of the connection,
->    that does not affect how the rest of Git behaves at all?  It
->    would be sort of the reverse of --server-option, which is a
->    mechanism to let the client to tell the other side out of band
->    information that the rest of Git is oblivious.
+> diff --git a/preload-index.c b/preload-index.c
+> index ab94d6f39967ea4358f51ff8384aa60927bfe259..40ab2abafb8de500a5f2ec678a584a5fd5e1bc16 100644
+> --- a/preload-index.c
+> +++ b/preload-index.c
+> @@ -132,7 +132,9 @@ void preload_index(struct index_state *index,
+>  
+>  	memset(&pd, 0, sizeof(pd));
+>  	if (refresh_flags & REFRESH_PROGRESS && isatty(2)) {
+> -		pd.progress = start_delayed_progress(_("Refreshing index"), index->cache_nr);
+> +		pd.progress = start_delayed_progress(the_repository,
+
+Can we use `index->repo` here?
+
+> [snip]
 >
->    The other side of course needs a way to inspect what capabilities
->    are advertised.  For "--server-option", I do not think our server
->    end does anything special, but other implementations can act on
->    them.  This new thing can start the same way.
+> diff --git a/pseudo-merge.c b/pseudo-merge.c
+> index 971f54cfe1a895aed00f6d0a65c62aafc83a0cc8..893b763fe45490875ea226eaffff0c7cb1dafb06 100644
+> --- a/pseudo-merge.c
+> +++ b/pseudo-merge.c
+> @@ -459,7 +459,8 @@ void select_pseudo_merges(struct bitmap_writer *writer)
+>  		return;
+>  
+>  	if (writer->show_progress)
+> -		progress = start_progress("Selecting pseudo-merge commits",
+> +		progress = start_progress(the_repository,
+
+Also a candidate for `writer->to_pack->repo`?
+
+> +					  "Selecting pseudo-merge commits",
+>  					  writer->pseudo_merge_groups.nr);
+>  
+>  	refs_for_each_ref(get_main_ref_store(the_repository),
+> diff --git a/read-cache.c b/read-cache.c
+> index 15d79839c205176f9161f537aa706dac44b3023c..38c36caa7fef4d44da74c29e059839d88426df15 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1523,7 +1523,8 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+>  	int t2_sum_scan = 0;
+>  
+>  	if (flags & REFRESH_PROGRESS && isatty(2))
+> -		progress = start_delayed_progress(_("Refresh index"),
+> +		progress = start_delayed_progress(the_repository,
+
+I think also `istate->repo` would work here.
+
+> +						  _("Refresh index"),
+>  						  istate->cache_nr);
+>  
+>  	trace_performance_enter();
 >
->  - If this is a poor-man's custom capability advertisement, perhaps
->    the server end can create a ref "refs/capabilities/incoming"
->    (whose value does not really matter) and your client side can see
->    if there is such a ref with "ls-remote"?  That may be a more
->    robust thing to do instead, perhaps, as you do not need to worry
->    about "What about a new branch 'bar'?" bootstrapping issues.
+> [snip]
 >
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index b3be5d542f5fc5a02b8838101f7334ff44b2c626..334cb84f6531b588688d5a43c538c8d1a5f7e768 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -372,7 +372,8 @@ static struct progress *get_progress(struct unpack_trees_options *o,
+>  			total++;
+>  	}
+>  
+> -	return start_delayed_progress(_("Updating files"), total);
+> +	return start_delayed_progress(the_repository,
+
+Maybe also use `index->repo` here?
+
+> +				      _("Updating files"), total);
+>  }
+>  
+>  static void setup_collided_checkout_detection(struct checkout *state,
+> @@ -1773,6 +1774,7 @@ static int clear_ce_flags(struct index_state *istate,
+>  	strbuf_reset(&prefix);
+>  	if (show_progress)
+>  		istate->progress = start_delayed_progress(
+> +					the_repository,
+>  					_("Updating index flags"),
+>  					istate->cache_nr);
+>  
+> diff --git a/walker.c b/walker.c
+> index 7cc9dbea46d64d6bd3336025d640f284a6202157..1cf3da02193531a17fd11dbd2e8aadf36f38b200 100644
+> --- a/walker.c
+> +++ b/walker.c
+> @@ -172,7 +172,8 @@ static int loop(struct walker *walker)
+>  	uint64_t nr = 0;
+>  
+>  	if (walker->get_progress)
+> -		progress = start_delayed_progress(_("Fetching objects"), 0);
+> +		progress = start_delayed_progress(the_repository,
+> +						  _("Fetching objects"), 0);
+>  
+>  	while (process_queue) {
+>  		struct object *obj = process_queue->item;
+>
+> -- 
+> 2.48.0.rc0.184.g0fc57dec57.dirty
+
